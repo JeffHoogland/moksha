@@ -18,17 +18,17 @@
 #define ICON_HEIGHT 10
 #define RESOLUTION_TXT_MAX_LENGTH 50
 
-Evas_Object *e_config_randr_dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas);
-Eina_Bool e_config_randr_dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-Eina_Bool e_config_randr_dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-void e_config_randr_dialog_subdialog_resolutions_update_list(Evas_Object *crtc);
-void e_config_randr_dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata);
-void e_config_randr_dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata);
+Evas_Object *dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas);
+Eina_Bool dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+Eina_Bool dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+void dialog_subdialog_resolutions_update_list(Evas_Object *crtc);
+void dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata);
+void dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata);
 
 extern E_Config_Dialog_Data *e_config_runtime_info;
 
    Eina_Bool
-e_config_randr_dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
+dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    Ecore_X_Randr_Mode_Info *mi;
@@ -60,7 +60,7 @@ e_config_randr_dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cf
 }
 
    Evas_Object *
-e_config_randr_dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas)
+dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas)
 {
    Evas_Object *subdialog;
 
@@ -75,7 +75,7 @@ e_config_randr_dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas)
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
+dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    //Apply new mode
    Ecore_X_Randr_Mode_Info* selected_mode;
@@ -145,7 +145,7 @@ e_config_randr_dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *c
 }
 
    Eina_Bool
-e_config_randr_dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
+dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Ecore_X_Randr_Mode_Info* selected_mode;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
@@ -156,7 +156,7 @@ e_config_randr_dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog 
 }
 
    void
-e_config_randr_dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
+dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
 {
    Eina_List *iter, *modelist = NULL;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
@@ -224,7 +224,7 @@ e_config_randr_dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
 
 
 void
-e_config_randr_dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata)
+dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    Eina_List *iter;
@@ -242,7 +242,7 @@ e_config_randr_dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *c
 }
 
    void
-e_config_randr_dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata)
+dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    Eina_List *iter;

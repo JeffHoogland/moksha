@@ -47,40 +47,40 @@ static Evas_Object      *basic_create_widgets                (E_Config_Dialog *c
 static Eina_Bool         _deferred_noxrandr_error            (void *data);
 
 // Functions for the arrangement subdialog interaction
-extern Eina_Bool         e_config_randr_dialog_subdialog_arrangement_create_data                    (E_Config_Dialog_Data *cfdata);
-extern Evas_Object      *e_config_randr_dialog_subdialog_arrangement_basic_create_widgets           (Evas *canvas);
-extern Eina_Bool         e_config_randr_dialog_subdialog_arrangement_basic_check_changed            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern Eina_Bool         e_config_randr_dialog_subdialog_arrangement_basic_apply_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_arrangement_free_data                      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_arrangement_keep_changes                   (E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_arrangement_discard_changes                (E_Config_Dialog_Data *cfdata);
+extern Eina_Bool         dialog_subdialog_arrangement_create_data                    (E_Config_Dialog_Data *cfdata);
+extern Evas_Object      *dialog_subdialog_arrangement_basic_create_widgets           (Evas *canvas);
+extern Eina_Bool         dialog_subdialog_arrangement_basic_check_changed            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern Eina_Bool         dialog_subdialog_arrangement_basic_apply_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_arrangement_free_data                      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_arrangement_keep_changes                   (E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_arrangement_discard_changes                (E_Config_Dialog_Data *cfdata);
 
 // Functions for the policies subdialog interaction
-extern Eina_Bool         e_config_randr_dialog_subdialog_policies_create_data                       (E_Config_Dialog_Data *cfdata);
-extern Evas_Object      *e_config_randr_dialog_subdialog_policies_basic_create_widgets              (Evas *canvas);
-extern Eina_Bool         e_config_randr_dialog_subdialog_policies_basic_check_changed               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern Eina_Bool         e_config_randr_dialog_subdialog_policies_basic_apply_data                  (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_policies_keep_changes                      (E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_policies_discard_changes                   (E_Config_Dialog_Data *cfdata);
+extern Eina_Bool         dialog_subdialog_policies_create_data                       (E_Config_Dialog_Data *cfdata);
+extern Evas_Object      *dialog_subdialog_policies_basic_create_widgets              (Evas *canvas);
+extern Eina_Bool         dialog_subdialog_policies_basic_check_changed               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern Eina_Bool         dialog_subdialog_policies_basic_apply_data                  (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_policies_keep_changes                      (E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_policies_discard_changes                   (E_Config_Dialog_Data *cfdata);
 
 // Functions for the resolutions subdialog interaction
-extern Eina_Bool         e_config_randr_dialog_subdialog_resolutions_create_data                    (E_Config_Dialog_Data *cfdata);
-extern Evas_Object      *e_config_randr_dialog_subdialog_resolutions_basic_create_widgets           (Evas *canvas);
-extern Eina_Bool         e_config_randr_dialog_subdialog_resolutions_basic_check_changed            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern Eina_Bool         e_config_randr_dialog_subdialog_resolutions_basic_apply_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_resolutions_update_list                    (Evas *canvas, Evas_Object *crtc);
-extern void              e_config_randr_dialog_subdialog_resolutions_keep_changes                   (E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_resolutions_discard_changes                (E_Config_Dialog_Data *cfdata);
+extern Eina_Bool         dialog_subdialog_resolutions_create_data                    (E_Config_Dialog_Data *cfdata);
+extern Evas_Object      *dialog_subdialog_resolutions_basic_create_widgets           (Evas *canvas);
+extern Eina_Bool         dialog_subdialog_resolutions_basic_check_changed            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern Eina_Bool         dialog_subdialog_resolutions_basic_apply_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_resolutions_update_list                    (Evas *canvas, Evas_Object *crtc);
+extern void              dialog_subdialog_resolutions_keep_changes                   (E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_resolutions_discard_changes                (E_Config_Dialog_Data *cfdata);
 
 // Functions for the orientation subdialog interaction
-extern Eina_Bool         e_config_randr_dialog_subdialog_orientation_create_data                    (E_Config_Dialog_Data *cfdata);
-extern Evas_Object      *e_config_randr_dialog_subdialog_orientation_basic_create_widgets           (Evas *canvas);
-extern Eina_Bool         e_config_randr_dialog_subdialog_orientation_basic_check_changed            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern Eina_Bool         e_config_randr_dialog_subdialog_orientation_basic_apply_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_orientation_update_radio_buttons           (Evas_Object *crtc);
-extern void              e_config_randr_dialog_subdialog_orientation_update_edje                    (Evas_Object *crtc);
-extern void              e_config_randr_dialog_subdialog_orientation_keep_changes                   (E_Config_Dialog_Data *cfdata);
-extern void              e_config_randr_dialog_subdialog_orientation_discard_changes                (E_Config_Dialog_Data *cfdata);
+extern Eina_Bool         dialog_subdialog_orientation_create_data                    (E_Config_Dialog_Data *cfdata);
+extern Evas_Object      *dialog_subdialog_orientation_basic_create_widgets           (Evas *canvas);
+extern Eina_Bool         dialog_subdialog_orientation_basic_check_changed            (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern Eina_Bool         dialog_subdialog_orientation_basic_apply_data               (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_orientation_update_radio_buttons           (Evas_Object *crtc);
+extern void              dialog_subdialog_orientation_update_edje                    (Evas_Object *crtc);
+extern void              dialog_subdialog_orientation_keep_changes                   (E_Config_Dialog_Data *cfdata);
+extern void              dialog_subdialog_orientation_discard_changes                (E_Config_Dialog_Data *cfdata);
 
 /* actual module specifics */
 E_Config_Dialog_Data *e_config_runtime_info = NULL;
@@ -88,7 +88,7 @@ extern E_Module *conf_randr_module;
 char _theme_file_path[PATH_MAX];
 
    E_Config_Randr_Dialog_Output_Dialog_Data *
-_e_config_randr_dialog_output_dialog_data_new(E_Randr_Crtc_Info *crtc_info, E_Randr_Output_Info *output_info)
+_dialog_output_dialog_data_new(E_Randr_Crtc_Info *crtc_info, E_Randr_Output_Info *output_info)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
 
@@ -134,16 +134,16 @@ create_data(E_Config_Dialog *cfd)
         //is open.
         if (output_info->connection_status != ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
           continue;
-        if ((odd = _e_config_randr_dialog_output_dialog_data_new(output_info->crtc, output_info)))
+        if ((odd = _dialog_output_dialog_data_new(output_info->crtc, output_info)))
           EINA_SAFETY_ON_FALSE_GOTO((e_config_runtime_info->output_dialog_data_list = eina_list_append(e_config_runtime_info->output_dialog_data_list, odd)), _e_conf_randr_create_data_failed_free_data);
      }
 
    fprintf(stderr, "CONF_RANDR: Added %d output data structs.\n", eina_list_count(e_config_runtime_info->output_dialog_data_list));
    //FIXME: Properly (stack-like) free data when creation fails
-   EINA_SAFETY_ON_FALSE_GOTO(e_config_randr_dialog_subdialog_arrangement_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
-   EINA_SAFETY_ON_FALSE_GOTO(e_config_randr_dialog_subdialog_resolutions_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
-   EINA_SAFETY_ON_FALSE_GOTO(e_config_randr_dialog_subdialog_policies_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
-   EINA_SAFETY_ON_FALSE_GOTO(e_config_randr_dialog_subdialog_orientation_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
+   EINA_SAFETY_ON_FALSE_GOTO(dialog_subdialog_arrangement_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
+   EINA_SAFETY_ON_FALSE_GOTO(dialog_subdialog_resolutions_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
+   EINA_SAFETY_ON_FALSE_GOTO(dialog_subdialog_policies_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
+   EINA_SAFETY_ON_FALSE_GOTO(dialog_subdialog_orientation_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
 
    return e_config_runtime_info;
 
@@ -156,7 +156,7 @@ _e_conf_randr_create_data_failed_free_data:
 free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    EINA_SAFETY_ON_TRUE_RETURN(!e_randr_screen_info);
-   e_config_randr_dialog_subdialog_arrangement_free_data(cfd, cfdata);
+   dialog_subdialog_arrangement_free_data(cfd, cfdata);
 
    if (cfdata) free(cfdata);
    cfdata = NULL;
@@ -215,10 +215,10 @@ _e_conf_randr_confirmation_dialog_keep_cb(void *data, E_Dialog *dia)
 
    if (!cdd) return;
 
-   e_config_randr_dialog_subdialog_arrangement_keep_changes(cdd->cfdata);
-   e_config_randr_dialog_subdialog_orientation_keep_changes(cdd->cfdata);
-   e_config_randr_dialog_subdialog_policies_keep_changes(cdd->cfdata);
-   e_config_randr_dialog_subdialog_resolutions_keep_changes(cdd->cfdata);
+   dialog_subdialog_arrangement_keep_changes(cdd->cfdata);
+   dialog_subdialog_orientation_keep_changes(cdd->cfdata);
+   dialog_subdialog_policies_keep_changes(cdd->cfdata);
+   dialog_subdialog_resolutions_keep_changes(cdd->cfdata);
    _e_conf_randr_confirmation_dialog_delete_cb(dia->win);
 }
 
@@ -229,10 +229,10 @@ _e_conf_randr_confirmation_dialog_discard_cb(void *data, E_Dialog *dia)
 
    if (!cdd) return;
 
-   e_config_randr_dialog_subdialog_arrangement_discard_changes(cdd->cfdata);
-   e_config_randr_dialog_subdialog_orientation_discard_changes(cdd->cfdata);
-   e_config_randr_dialog_subdialog_policies_discard_changes(cdd->cfdata);
-   e_config_randr_dialog_subdialog_resolutions_discard_changes(cdd->cfdata);
+   dialog_subdialog_arrangement_discard_changes(cdd->cfdata);
+   dialog_subdialog_orientation_discard_changes(cdd->cfdata);
+   dialog_subdialog_policies_discard_changes(cdd->cfdata);
+   dialog_subdialog_resolutions_discard_changes(cdd->cfdata);
    _e_conf_randr_confirmation_dialog_delete_cb(dia->win);
 }
 
@@ -287,13 +287,13 @@ basic_create_widgets (E_Config_Dialog *cfd, Evas *canvas, E_Config_Dialog_Data *
    EINA_SAFETY_ON_TRUE_RETURN_VAL (!e_randr_screen_info || (e_randr_screen_info->randr_version < ECORE_X_RANDR_1_2), NULL);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((!canvas || !cfdata), NULL);
 
-   if(!(cfdata->gui.subdialogs.arrangement.dialog = e_config_randr_dialog_subdialog_arrangement_basic_create_widgets(canvas))) goto _e_config_randr_dialog_create_subdialog_arrangement_fail;
-   if(!(cfdata->gui.subdialogs.policies.dialog = e_config_randr_dialog_subdialog_policies_basic_create_widgets(canvas))) goto _e_config_randr_dialog_create_subdialog_policies_fail;
-   if(!(cfdata->gui.subdialogs.resolutions.dialog = e_config_randr_dialog_subdialog_resolutions_basic_create_widgets(canvas))) goto _e_config_randr_dialog_create_subdialog_resolutions_fail;
-   if(!(cfdata->gui.subdialogs.orientation.dialog = e_config_randr_dialog_subdialog_orientation_basic_create_widgets(canvas))) goto _e_config_randr_dialog_create_subdialog_orientation_fail;
+   if(!(cfdata->gui.subdialogs.arrangement.dialog = dialog_subdialog_arrangement_basic_create_widgets(canvas))) goto _dialog_create_subdialog_arrangement_fail;
+   if(!(cfdata->gui.subdialogs.policies.dialog = dialog_subdialog_policies_basic_create_widgets(canvas))) goto _dialog_create_subdialog_policies_fail;
+   if(!(cfdata->gui.subdialogs.resolutions.dialog = dialog_subdialog_resolutions_basic_create_widgets(canvas))) goto _dialog_create_subdialog_resolutions_fail;
+   if(!(cfdata->gui.subdialogs.orientation.dialog = dialog_subdialog_orientation_basic_create_widgets(canvas))) goto _dialog_create_subdialog_orientation_fail;
 
-   EINA_SAFETY_ON_FALSE_GOTO((table = e_widget_table_add(canvas, EINA_FALSE)), _e_config_randr_dialog_create_widgets_fail);
-   EINA_SAFETY_ON_FALSE_GOTO((wl = e_widget_list_add(canvas, EINA_FALSE, EINA_TRUE)), _e_config_randr_dialog_create_widget_list_fail);
+   EINA_SAFETY_ON_FALSE_GOTO((table = e_widget_table_add(canvas, EINA_FALSE)), _dialog_create_widgets_fail);
+   EINA_SAFETY_ON_FALSE_GOTO((wl = e_widget_list_add(canvas, EINA_FALSE, EINA_TRUE)), _dialog_create_widget_list_fail);
 
    //e_widget_table_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h);
    e_widget_table_object_append(table, cfdata->gui.subdialogs.arrangement.dialog, 1, 1, 1, 1, EVAS_HINT_FILL, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
@@ -315,17 +315,17 @@ basic_create_widgets (E_Config_Dialog *cfd, Evas *canvas, E_Config_Dialog_Data *
 
    return cfdata->gui.dialog;
 
-_e_config_randr_dialog_create_widget_list_fail:
+_dialog_create_widget_list_fail:
    evas_object_del(table);
-_e_config_randr_dialog_create_widgets_fail:
+_dialog_create_widgets_fail:
    evas_object_del(cfdata->gui.subdialogs.orientation.dialog);
-_e_config_randr_dialog_create_subdialog_orientation_fail:
+_dialog_create_subdialog_orientation_fail:
    evas_object_del(cfdata->gui.subdialogs.resolutions.dialog);
-_e_config_randr_dialog_create_subdialog_resolutions_fail:
+_dialog_create_subdialog_resolutions_fail:
    evas_object_del(cfdata->gui.subdialogs.policies.dialog);
-_e_config_randr_dialog_create_subdialog_policies_fail:
+_dialog_create_subdialog_policies_fail:
    evas_object_del(cfdata->gui.subdialogs.arrangement.dialog);
-_e_config_randr_dialog_create_subdialog_arrangement_fail:
+_dialog_create_subdialog_arrangement_fail:
    return NULL;
 }
 
@@ -341,26 +341,26 @@ static int
    if (!cfdata) return EINA_FALSE;
 
    //the order matters except for policies!
-   if (e_config_randr_dialog_subdialog_policies_basic_check_changed(cfd, cfdata))
+   if (dialog_subdialog_policies_basic_check_changed(cfd, cfdata))
    {
-       ret &= e_config_randr_dialog_subdialog_policies_basic_apply_data(cfd, cfdata);
+       ret &= dialog_subdialog_policies_basic_apply_data(cfd, cfdata);
        if (!ret) return EINA_FALSE;
    }
 
-   if (e_config_randr_dialog_subdialog_resolutions_basic_check_changed(cfd, cfdata))
+   if (dialog_subdialog_resolutions_basic_check_changed(cfd, cfdata))
    {
-       ret &= e_config_randr_dialog_subdialog_resolutions_basic_apply_data(cfd, cfdata);
+       ret &= dialog_subdialog_resolutions_basic_apply_data(cfd, cfdata);
        if (!ret) return EINA_FALSE;
    }
 
-   if (e_config_randr_dialog_subdialog_arrangement_basic_check_changed(cfd, cfdata))
+   if (dialog_subdialog_arrangement_basic_check_changed(cfd, cfdata))
    {
-       ret &= e_config_randr_dialog_subdialog_arrangement_basic_apply_data(cfd, cfdata);
+       ret &= dialog_subdialog_arrangement_basic_apply_data(cfd, cfdata);
        if (!ret) return EINA_FALSE;
    }
 
-   if (e_config_randr_dialog_subdialog_orientation_basic_check_changed(cfd, cfdata))
-       ret &= e_config_randr_dialog_subdialog_orientation_basic_apply_data(cfd, cfdata);
+   if (dialog_subdialog_orientation_basic_check_changed(cfd, cfdata))
+       ret &= dialog_subdialog_orientation_basic_apply_data(cfd, cfdata);
 
    _e_conf_randr_confirmation_dialog_new(cfd);
 
@@ -414,9 +414,9 @@ basic_check_changed (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (!cfdata) return EINA_FALSE;
    else
-     return (e_config_randr_dialog_subdialog_arrangement_basic_check_changed(cfd, cfdata)
-           || e_config_randr_dialog_subdialog_policies_basic_check_changed(cfd, cfdata)
-           || e_config_randr_dialog_subdialog_orientation_basic_check_changed(cfd, cfdata)
-           || e_config_randr_dialog_subdialog_resolutions_basic_check_changed(cfd, cfdata));
+     return (dialog_subdialog_arrangement_basic_check_changed(cfd, cfdata)
+           || dialog_subdialog_policies_basic_check_changed(cfd, cfdata)
+           || dialog_subdialog_orientation_basic_check_changed(cfd, cfdata)
+           || dialog_subdialog_resolutions_basic_check_changed(cfd, cfdata));
 }
 
