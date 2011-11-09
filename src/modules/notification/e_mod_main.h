@@ -117,6 +117,7 @@ struct _Popup_Data
   const char  *app_name;
   Evas_Object *app_icon;
   Ecore_Timer *timer;
+  E_Zone *zone;
 };
 
 

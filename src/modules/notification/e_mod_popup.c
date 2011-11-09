@@ -253,6 +253,9 @@ _notification_popup_new(E_Notification *n)
    E_Container *con;
    Popup_Data *popup;
    char buf[PATH_MAX];
+   const Eina_List *l, *screens;
+   E_Screen *scr;
+   E_Zone *zone;
 
    if (popups_displayed > POPUP_LIMIT) return 0;
    popup = E_NEW(Popup_Data, 1);
@@ -261,9 +264,27 @@ _notification_popup_new(E_Notification *n)
    popup->notif = n;
 
    con = e_container_current_get(e_manager_current_get());
+   screens = e_xinerama_screens_get();
+   if (notification_cfg->dual_screen &&
+       ((notification_cfg->corner == CORNER_BR) ||
+       (notification_cfg->corner == CORNER_TR)))
+     l = eina_list_last(screens);
+   else
+     l = screens;
+   if (l)
+     {
+        scr = eina_list_data_get(l);
+        EINA_SAFETY_ON_NULL_GOTO(scr, error);
+        EINA_LIST_FOREACH(con->zones, l, zone)
+          if ((int)zone->num == scr->screen) break;
+        if ((int)zone->num != scr->screen) goto error;
+     }
+   else
+     zone = e_zone_current_get(con);
+   popup->zone = zone;
 
    /* Create the popup window */
-   popup->win = e_popup_new(e_zone_current_get(con), 0, 0, 0, 0);
+   popup->win = e_popup_new(zone, 0, 0, 0, 0);
    e_popup_edje_bg_object_set(popup->win, popup->theme);
    popup->e = popup->win->evas;
 
@@ -297,6 +318,10 @@ _notification_popup_new(E_Notification *n)
    popups_displayed++;
 
    return popup;
+error:
+   free(popup);
+   e_notification_unref(n);
+   return NULL;
 }
 
 static int
@@ -306,16 +331,9 @@ _notification_popup_place(Popup_Data *popup,
    int w, h, sw, sh;
    int gap = 10;
    int to_edge = 15;
-   E_Container *con;
 
-   if (notification_cfg->dual_screen)
-     {
-        con = e_container_current_get(e_manager_current_get());
-        sw = con->w;
-        sh = con->h;
-     }
-   else
-     ecore_x_randr_screen_current_size_get(e_manager_current_get()->root, &sw, &sh, NULL, NULL);
+   sw = popup->zone->w;
+   sh = popup->zone->h;
    evas_object_geometry_get(popup->theme, NULL, NULL, &w, &h);
 
    /* XXX for now ignore placement requests */
