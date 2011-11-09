@@ -41,7 +41,7 @@ dialog_subdialog_orientation_create_data(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata || !cfdata->output_dialog_data_list) return EINA_FALSE;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         ci = odd->crtc;
         if (!ci || !ci->current_mode) continue;
@@ -312,7 +312,7 @@ dialog_subdialog_orientation_keep_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         if (!odd || ((int)odd->previous_orientation == Ecore_X_Randr_Unset)) continue;
         odd->previous_orientation = odd->new_orientation;
@@ -328,7 +328,7 @@ dialog_subdialog_orientation_discard_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         if (!odd->crtc || ((int)odd->previous_orientation == Ecore_X_Randr_Unset)) continue;
         if (ecore_x_randr_crtc_orientation_set(cfdata->manager->root, odd->crtc->xid, odd->previous_orientation))

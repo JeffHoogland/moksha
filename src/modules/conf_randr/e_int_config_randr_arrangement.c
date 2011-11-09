@@ -80,7 +80,7 @@ dialog_subdialog_arrangement_create_data(E_Config_Dialog_Data *data)
    Eina_List *iter;
    E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
 
-   EINA_LIST_FOREACH (data->output_dialog_data_list, iter, dialog_data)
+   EINA_LIST_FOREACH(data->output_dialog_data_list, iter, dialog_data)
      {
         _dialog_subdialog_arrangement_output_dialog_data_fill(dialog_data);
      }
@@ -108,7 +108,7 @@ dialog_subdialog_arrangement_basic_create_widgets(Evas *canvas)
    fprintf(stderr, "CONF_RANDR: Arrangement subdialog added (%p).\n", subdialog);
 
    //only use information we can restore.
-   EINA_LIST_FOREACH (e_config_runtime_info->output_dialog_data_list, iter, output_dialog_data)
+   EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, output_dialog_data)
      {
         if ((!output_dialog_data->crtc && !output_dialog_data->output))
           continue;
@@ -200,7 +200,7 @@ _dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj, Evas_Coord w,
 
    lst = evas_object_smart_members_get(obj);
    //Calc average aspect ratio from all available monitors
-   EINA_LIST_FOREACH (lst, itr, output)
+   EINA_LIST_FOREACH(lst, itr, output)
      {
         if (output == e_config_runtime_info->gui.subdialogs.arrangement.clipper) continue;
         output_dialog_data = evas_object_data_get(output, "output_info");
@@ -289,7 +289,7 @@ _dialog_subdialog_arrangement_output_mouse_down_cb(void *data __UNUSED__, Evas *
    Eina_List *iter;
    Eina_Bool crtc_selected = EINA_FALSE;
 
-   EINA_LIST_FOREACH (evas_object_smart_members_get(evas_object_smart_parent_get(obj)), iter, element)
+   EINA_LIST_FOREACH(evas_object_smart_members_get(evas_object_smart_parent_get(obj)), iter, element)
      {
         if (e_config_runtime_info->gui.subdialogs.arrangement.clipper == obj) continue;
         if (element != obj)
@@ -433,7 +433,7 @@ _dialog_subdialog_arrangement_make_suggestion(Evas_Object *obj)
         dya = tmp;
      }
    //iterate crtc list
-   EINA_LIST_FOREACH (crtcs, li, crtc)
+   EINA_LIST_FOREACH(crtcs, li, crtc)
      {
         if ((crtc == obj) || (crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper)) continue;
         evas_object_geometry_get(crtc, &crtc_geo.x, &crtc_geo.y, &crtc_geo.w, &crtc_geo.h);
@@ -526,7 +526,7 @@ dialog_subdialog_arrangement_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config
 
    EINA_SAFETY_ON_NULL_RETURN(cfdata);
 
-   EINA_LIST_FREE (cfdata->output_dialog_data_list, dialog_data)
+   EINA_LIST_FREE(cfdata->output_dialog_data_list, dialog_data)
      {
         if (!dialog_data) continue;
         if (dialog_data->bg)
@@ -551,7 +551,7 @@ _dialog_subdialog_arrangement_neighbors_get(Evas_Object *obj)
 
    EINA_SAFETY_ON_FALSE_RETURN_VAL((dialog_data = evas_object_data_get(obj, "output_info")), NULL);
    evas_object_geometry_get(obj, &geo.x, &geo.y, &geo.w, &geo.h);
-   EINA_LIST_FOREACH (crtcs, iter, crtc)
+   EINA_LIST_FOREACH(crtcs, iter, crtc)
      {
         if ((crtc == obj)
             || (crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper)) continue;
@@ -601,7 +601,7 @@ _dialog_subdialog_arrangement_determine_positions_recursive(Evas_Object *obj)
    if ((dialog_data->new_pos.x != 0) || (dialog_data->new_pos.y != 0))
      {
         // Find neighbor object we can calculate our own coordinates from
-        EINA_LIST_FOREACH (neighbors, iter, crtc)
+        EINA_LIST_FOREACH(neighbors, iter, crtc)
           {
              evas_object_geometry_get(crtc, &neighbor_geo.x, &neighbor_geo.y, &neighbor_geo.w, &neighbor_geo.h);
              if (!(neighbor_info = evas_object_data_get(crtc, "output_info"))) continue;
@@ -665,7 +665,7 @@ _dialog_subdialog_arrangement_determine_positions_recursive(Evas_Object *obj)
      {
         //Only wander all neighbors recursively, if they can use the current
         //element as reference for their position
-        EINA_LIST_FOREACH (neighbors, iter, crtc)
+        EINA_LIST_FOREACH(neighbors, iter, crtc)
           {
              neighbor_info = evas_object_data_get(crtc, "output_info");
              if ((neighbor_info->new_pos.x == Ecore_X_Randr_Unset)
@@ -695,7 +695,7 @@ dialog_subdialog_arrangement_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
 
    //Create virtual borders around the displayed representations by finding
    //relative x and y as virtual 0x0
-   EINA_LIST_FOREACH (crtcs, iter, crtc)
+   EINA_LIST_FOREACH(crtcs, iter, crtc)
      {
         if (crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper) continue;
         //Already reset values for upcoming calculation
@@ -721,7 +721,7 @@ dialog_subdialog_arrangement_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
    e_config_runtime_info->gui.subdialogs.arrangement.relative_zero.y = relz.y;
    if (top_left) _dialog_subdialog_arrangement_determine_positions_recursive(top_left);
 
-   EINA_LIST_FOREACH (crtcs, iter, crtc)
+   EINA_LIST_FOREACH(crtcs, iter, crtc)
      {
         if ((crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper) || !(odd = evas_object_data_get(crtc, "output_info")) || !odd->crtc
             || ((odd->new_pos.x == Ecore_X_Randr_Unset) || (odd->new_pos.y == Ecore_X_Randr_Unset))) continue;
@@ -750,7 +750,7 @@ dialog_subdialog_arrangement_basic_check_changed(E_Config_Dialog *cfd __UNUSED__
    Eina_List *iter;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, output_dialog_data)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, output_dialog_data)
      {
         if ((output_dialog_data->previous_pos.x != output_dialog_data->new_pos.x)
             || (output_dialog_data->previous_pos.y != output_dialog_data->new_pos.y)
@@ -767,7 +767,7 @@ dialog_subdialog_arrangement_keep_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         if (!odd->crtc || ((odd->new_pos.x == Ecore_X_Randr_Unset) || (odd->new_pos.y == Ecore_X_Randr_Unset))) continue;
         odd->previous_pos.x = odd->new_pos.x;
@@ -785,7 +785,7 @@ dialog_subdialog_arrangement_discard_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         if (!odd->crtc || ((odd->previous_pos.x == Ecore_X_Randr_Unset) || (odd->previous_pos.y == Ecore_X_Randr_Unset))) continue;
         if (ecore_x_randr_crtc_pos_set(cfdata->manager->root, odd->crtc->xid, odd->previous_pos.x, odd->previous_pos.y))

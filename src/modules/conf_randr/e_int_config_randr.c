@@ -103,9 +103,6 @@ _dialog_output_dialog_data_new(E_Randr_Crtc_Info *crtc_info, E_Randr_Output_Info
         dialog_data->output = output_info;
      }
    return dialog_data;
-
-   free(dialog_data);
-   return NULL;
 }
 
 static void *

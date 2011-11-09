@@ -36,7 +36,7 @@ dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata || !cfdata->output_dialog_data_list) return EINA_FALSE;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         if (odd->previous_mode || odd->preferred_mode)
           {
@@ -103,7 +103,7 @@ dialog_subdialog_resolutions_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
         fprintf(stderr, "CONF_RANDR: Trying to find a CRTC for output %x, %d crtcs are possible.\n", output_dialog_data->output->xid, eina_list_count(output_dialog_data->output->possible_crtcs));
         output = &output_dialog_data->output->xid;
         noutputs = 1;
-        EINA_LIST_FOREACH (output_dialog_data->output->possible_crtcs, iter, crtc_iter)
+        EINA_LIST_FOREACH(output_dialog_data->output->possible_crtcs, iter, crtc_iter)
           {
              if (!crtc_iter->outputs)
                {
@@ -189,7 +189,7 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
         else
           modelist = output_dialog_data->output->modes;
      }
-   EINA_LIST_FOREACH (modelist, iter, mode_info)
+   EINA_LIST_FOREACH(modelist, iter, mode_info)
      {
         //calculate refresh rate
         if (!mode_info) continue;
@@ -230,7 +230,7 @@ dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         if (odd && odd->new_mode && (odd->new_mode != odd->previous_mode))
           {
@@ -248,7 +248,7 @@ dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         //for now, there is no way to redisable an output during discartion
         if (!odd->crtc || !odd->previous_mode) continue;

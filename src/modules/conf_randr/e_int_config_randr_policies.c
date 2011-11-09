@@ -43,7 +43,7 @@ dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_inf
 
    if (!e_config_runtime_info || !e_config_runtime_info->output_dialog_data_list) return EINA_FALSE;
 
-   EINA_LIST_FOREACH (e_config_runtime_info->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, odd)
      {
         E_Randr_Output_Info *oi;
         if (odd->crtc)
@@ -279,7 +279,7 @@ dialog_subdialog_policies_keep_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         if (!odd || ((int)odd->previous_policy == Ecore_X_Randr_Unset)) continue;
         odd->previous_policy = odd->new_policy;
@@ -295,7 +295,7 @@ dialog_subdialog_policies_discard_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         if (!odd->crtc || ((int)odd->previous_policy == Ecore_X_Randr_Unset)) continue;
         odd->new_policy = odd->previous_policy;
