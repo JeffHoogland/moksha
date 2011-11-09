@@ -139,7 +139,7 @@ _dialog_subdialog_arrangement_output_add(Evas *canvas, E_Config_Randr_Dialog_Out
 
    if (!canvas || !output_dialog_data || !e_config_runtime_info) return NULL;
 
-   EINA_SAFETY_ON_FALSE_RETURN_VAL((output = edje_object_add(canvas)), NULL);
+   output = edje_object_add(canvas);
 
    //set instance data for output
    evas_object_data_set(output, "output_info", output_dialog_data);
@@ -221,11 +221,13 @@ _dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj, Evas_Coord w,
    scaling_factor = (((float)parent_geo.w / (float)real_sum_w) < ((float)parent_geo.h / (float)real_sum_h)) ? ((float)parent_geo.w / (float)real_sum_w) : ((float)parent_geo.h / (float)real_sum_h);
    scaling_factor *= e_scale;
 
-   EINA_LIST_FOREACH (lst, itr, output)
+   EINA_LIST_FOREACH(lst, itr, output)
      {
         //Skip elements that are either the clipped smart object or falsely added
         //to the list of outputs (which should not happen)
-        if ((output == e_config_runtime_info->gui.subdialogs.arrangement.clipper) || !(output_dialog_data = evas_object_data_get(output, "output_info"))) continue;
+        if (output == e_config_runtime_info->gui.subdialogs.arrangement.clipper) continue;
+        output_dialog_data = evas_object_data_get(output, "output_info");
+        if (!output_dialog_data) continue;
         if (output_dialog_data->previous_mode)
           {
              new_geo.w = (int)((float)output_dialog_data->previous_mode->width * scaling_factor);
@@ -335,30 +337,28 @@ _dialog_subdialog_arrangement_output_mouse_move_cb(void *data __UNUSED__, Evas *
    Eina_Rectangle geo, parent;
    Evas_Coord_Point delta, new;
 
-   if (ev->buttons == 1)
-     {
-        evas_object_geometry_get (obj, &geo.x, &geo.y, &geo.w, &geo.h);
-        evas_object_geometry_get (evas_object_smart_parent_get(obj), &parent.x, &parent.y, &parent.w, &parent.h);
-        delta.x = ev->cur.canvas.x - ev->prev.canvas.x;
-        delta.y = ev->cur.canvas.y - ev->prev.canvas.y;
+   if (ev->buttons != 1) return;
+   evas_object_geometry_get (obj, &geo.x, &geo.y, &geo.w, &geo.h);
+   evas_object_geometry_get (evas_object_smart_parent_get(obj), &parent.x, &parent.y, &parent.w, &parent.h);
+   delta.x = ev->cur.canvas.x - ev->prev.canvas.x;
+   delta.y = ev->cur.canvas.y - ev->prev.canvas.y;
 
-        new.x = geo.x + delta.x;
-        new.y = geo.y + delta.y;
-        //respect container borders
-        if (new.x < parent.x + 1)
-          new.x = parent.x + 1;
-        else if (new.x > parent.x + parent.w - geo.w)
-          new.x = parent.x + parent.w - geo.w;
-        if (new.y < parent.y + 1)
-          new.y = parent.y + 1;
-        else if (new.y > parent.y + parent.h - geo.h)
-          new.y = parent.y + parent.h - geo.h;
-        //only take action if position changed
-        if ((geo.x != new.x) || (geo.y != new.y))
-          {
-             evas_object_move(obj, new.x, new.y);
-             _dialog_subdialog_arrangement_make_suggestion(obj);
-          }
+   new.x = geo.x + delta.x;
+   new.y = geo.y + delta.y;
+   //respect container borders
+   if (new.x < parent.x + 1)
+     new.x = parent.x + 1;
+   else if (new.x > parent.x + parent.w - geo.w)
+     new.x = parent.x + parent.w - geo.w;
+   if (new.y < parent.y + 1)
+     new.y = parent.y + 1;
+   else if (new.y > parent.y + parent.h - geo.h)
+     new.y = parent.y + parent.h - geo.h;
+   //only take action if position changed
+   if ((geo.x != new.x) || (geo.y != new.y))
+     {
+        evas_object_move(obj, new.x, new.y);
+        _dialog_subdialog_arrangement_make_suggestion(obj);
      }
 }
 

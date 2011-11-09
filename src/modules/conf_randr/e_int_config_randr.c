@@ -133,7 +133,7 @@ create_data(E_Config_Dialog *cfd)
         if (output_info->connection_status != ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
           continue;
         if ((odd = _dialog_output_dialog_data_new(output_info->crtc, output_info)))
-          EINA_SAFETY_ON_FALSE_GOTO((e_config_runtime_info->output_dialog_data_list = eina_list_append(e_config_runtime_info->output_dialog_data_list, odd)), _e_conf_randr_create_data_failed_free_data);
+          e_config_runtime_info->output_dialog_data_list = eina_list_append(e_config_runtime_info->output_dialog_data_list, odd);
      }
 
    fprintf(stderr, "CONF_RANDR: Added %d output data structs.\n", eina_list_count(e_config_runtime_info->output_dialog_data_list));
