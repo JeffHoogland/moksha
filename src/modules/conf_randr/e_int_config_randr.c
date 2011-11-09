@@ -153,6 +153,11 @@ free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    EINA_SAFETY_ON_TRUE_RETURN(!e_randr_screen_info);
    dialog_subdialog_arrangement_free_data(cfd, cfdata);
 
+   evas_object_del(cfdata->gui.subdialogs.arrangement.dialog);
+   evas_object_del(cfdata->gui.subdialogs.policies.dialog);
+   evas_object_del(cfdata->gui.subdialogs.resolutions.dialog);
+   evas_object_del(cfdata->gui.subdialogs.orientation.dialog);
+
    free(cfdata);
 }
 
