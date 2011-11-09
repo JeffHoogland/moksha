@@ -42,8 +42,8 @@ extern void              dialog_subdialog_orientation_update_edje(Evas_Object *c
 // Functions for the orientation subdialog interaction
 extern void              dialog_subdialog_policies_update_radio_buttons(Evas_Object *crtc);
 
-Evas_Smart_Class screen_setup_smart_class = EVAS_SMART_CLASS_INIT_NAME_VERSION("EvasObjectSmartScreenSetup");
-Evas_Smart *screen_setup_smart;
+static Evas_Smart_Class screen_setup_smart_class = EVAS_SMART_CLASS_INIT_NAME_VERSION("EvasObjectSmartScreenSetup");
+static Evas_Smart *screen_setup_smart = NULL;
 
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern char _theme_file_path[];

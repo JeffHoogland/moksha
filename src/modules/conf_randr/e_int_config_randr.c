@@ -156,8 +156,7 @@ free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    EINA_SAFETY_ON_TRUE_RETURN(!e_randr_screen_info);
    dialog_subdialog_arrangement_free_data(cfd, cfdata);
 
-   if (cfdata) free(cfdata);
-   cfdata = NULL;
+   free(cfdata);
 }
 
 static Eina_Bool
