@@ -11,7 +11,7 @@ E_Module *conf_randr_module = NULL;
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-     "Settings - Screen Setup"
+   "Settings - Screen Setup"
 };
 
 EAPI void *
@@ -28,7 +28,8 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
-   while ((cfd = e_config_dialog_get("E", "screen/randr"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "screen/randr")))
+     e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("screen/randr");
    e_configure_registry_category_del("screen");
    conf_randr_module = NULL;
@@ -40,3 +41,4 @@ e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }
+

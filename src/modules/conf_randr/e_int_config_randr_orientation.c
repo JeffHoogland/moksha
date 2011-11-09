@@ -2,37 +2,37 @@
 #include "e_randr.h"
 
 #ifndef  Ecore_X_Randr_Unset
-#define Ecore_X_Randr_Unset             -1
+#define Ecore_X_Randr_Unset          -1
 #endif
 
 #define RANDR_DIALOG_ORIENTATION_ALL (ECORE_X_RANDR_ORIENTATION_ROT_0 | ECORE_X_RANDR_ORIENTATION_ROT_90 | ECORE_X_RANDR_ORIENTATION_ROT_180 | ECORE_X_RANDR_ORIENTATION_ROT_270 | ECORE_X_RANDR_ORIENTATION_ROT_270 | ECORE_X_RANDR_ORIENTATION_FLIP_X | ECORE_X_RANDR_ORIENTATION_FLIP_Y)
 
-Eina_Bool dialog_subdialog_orientation_create_data (E_Config_Dialog_Data *cfdata);
+Eina_Bool    dialog_subdialog_orientation_create_data(E_Config_Dialog_Data *cfdata);
 Evas_Object *dialog_subdialog_orientation_basic_create_widgets(Evas *canvas);
-Eina_Bool dialog_subdialog_orientation_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-Eina_Bool dialog_subdialog_orientation_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-Eina_Bool dialog_subdialog_orientation_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-void dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc);
-void dialog_subdialog_orientation_update_edje(Evas_Object *crtc);
+Eina_Bool    dialog_subdialog_orientation_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+Eina_Bool    dialog_subdialog_orientation_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+Eina_Bool    dialog_subdialog_orientation_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+void         dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc);
+void         dialog_subdialog_orientation_update_edje(Evas_Object *crtc);
 
 //static void _dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern char _theme_file_path[];
 
 /*
-static void
-_dialog_subdialog_orientation_radio_add_callbacks(void)
-{
+   static void
+   _dialog_subdialog_orientation_radio_add_callbacks(void)
+   {
    evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_vertical, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
    evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_horizontal, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
    evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot270, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
    evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot180, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
    evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot90, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
    evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_normal, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
-}
-*/
+   }
+ */
 
-   Eina_Bool
+Eina_Bool
 dialog_subdialog_orientation_create_data(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
@@ -41,7 +41,7 @@ dialog_subdialog_orientation_create_data(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata || !cfdata->output_dialog_data_list) return EINA_FALSE;
 
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
      {
         ci = odd->crtc;
         if (!ci || !ci->current_mode) continue;
@@ -65,7 +65,7 @@ dialog_subdialog_orientation_basic_create_widgets(Evas *canvas)
    if (!(subdialog = e_widget_framelist_add(canvas, _("Display Orientation"), EINA_FALSE))) return NULL;
 
    // Add radio buttons
-   if(!(rg = e_widget_radio_group_new(&e_config_runtime_info->gui.subdialogs.orientation.radio_val))) goto _dialog_subdialog_orientation_radio_add_fail;
+   if (!(rg = e_widget_radio_group_new(&e_config_runtime_info->gui.subdialogs.orientation.radio_val))) goto _dialog_subdialog_orientation_radio_add_fail;
 
    //IMPROVABLE: use enum to determine objects via 'switch'-statement
    e_config_runtime_info->gui.subdialogs.orientation.radio_normal = e_widget_radio_add(canvas, _("Normal"), ECORE_X_RANDR_OUTPUT_POLICY_ABOVE, rg);
@@ -89,14 +89,14 @@ dialog_subdialog_orientation_basic_create_widgets(Evas *canvas)
    //_dialog_subdialog_orientation_radio_add_callbacks();
 
    /*
-   // Add orientation demonstration edje
-   if (!(e_config_runtime_info->gui.subdialogs.orientation.swallowing_edje = edje_object_add(canvas)))
-     goto _dialog_subdialog_orientation_edje_add_fail;
-   if (!edje_object_file_set(e_config_runtime_info->gui.subdialogs.orientation.swallowing_edje, _theme_file_path, "e/conf/randr/dialog/subdialog/orientation"))
-     goto _dialog_subdialog_orientation_edje_set_fail;
+      // Add orientation demonstration edje
+      if (!(e_config_runtime_info->gui.subdialogs.orientation.swallowing_edje = edje_object_add(canvas)))
+      goto _dialog_subdialog_orientation_edje_add_fail;
+      if (!edje_object_file_set(e_config_runtime_info->gui.subdialogs.orientation.swallowing_edje, _theme_file_path, "e/conf/randr/dialog/subdialog/orientation"))
+      goto _dialog_subdialog_orientation_edje_set_fail;
 
-   e_widget_table_object_align_append(subdialog, e_config_runtime_info->gui.subdialogs.orientation.swallowing_edje, 1, 0, 1, 1, 1, 1, 1, 1, 1.0, 1.0);
-   */
+      e_widget_table_object_align_append(subdialog, e_config_runtime_info->gui.subdialogs.orientation.swallowing_edje, 1, 0, 1, 1, 1, 1, 1, 1, 1.0, 1.0);
+    */
 
    //disable widgets, if no CRTC is selected
    dialog_subdialog_orientation_update_radio_buttons(e_config_runtime_info->gui.selected_eo);
@@ -106,14 +106,14 @@ dialog_subdialog_orientation_basic_create_widgets(Evas *canvas)
    return subdialog;
 
    /*
-_dialog_subdialog_orientation_edje_set_fail:
-   evas_object_del(ol);
-   evas_object_del(e_config_runtime_info->gui.subdialogs.orientation.swallowing_edje);
-_dialog_subdialog_orientation_edje_add_fail:
-   fprintf(stderr, "CONF_RANDR: Couldn't set edj for orientation subdialog!\n");
-   evas_object_del(subdialog);
-   return NULL;
-   */
+      _dialog_subdialog_orientation_edje_set_fail:
+      evas_object_del(ol);
+      evas_object_del(e_config_runtime_info->gui.subdialogs.orientation.swallowing_edje);
+      _dialog_subdialog_orientation_edje_add_fail:
+      fprintf(stderr, "CONF_RANDR: Couldn't set edj for orientation subdialog!\n");
+      evas_object_del(subdialog);
+      return NULL;
+    */
 _dialog_subdialog_orientation_radio_add_fail:
    evas_object_del(subdialog);
    fprintf(stderr, "CONF_RANDR: Could not add radio group!\n");
@@ -121,7 +121,7 @@ _dialog_subdialog_orientation_radio_add_fail:
 }
 
 #if 0
-   static void
+static void
 _dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    char signal[40];
@@ -147,9 +147,10 @@ _dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas *e, Evas_Objec
 
    fprintf(stderr, "CONF_RANDR: mouse button released. Emitted signal to orientation: %s\n", signal);
 }
+
 #endif
 
-   void
+void
 dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
@@ -157,15 +158,15 @@ dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc)
 
    //disable widgets, if no crtc is selected
    if (!crtc)
-   {
-     e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_normal, EINA_TRUE);
-     e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot90, EINA_TRUE);
-     e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot180, EINA_TRUE);
-     e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot270, EINA_TRUE);
-     e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_horizontal, EINA_TRUE);
-     e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_vertical, EINA_TRUE);
-     return;
-   }
+     {
+        e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_normal, EINA_TRUE);
+        e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot90, EINA_TRUE);
+        e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot180, EINA_TRUE);
+        e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot270, EINA_TRUE);
+        e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_horizontal, EINA_TRUE);
+        e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_vertical, EINA_TRUE);
+        return;
+     }
 
    if (!(output_dialog_data = evas_object_data_get(crtc, "output_info"))) return;
 
@@ -217,26 +218,31 @@ dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc)
    switch (ori)
      {
       case ECORE_X_RANDR_ORIENTATION_ROT_90:
-         e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot90, EINA_TRUE);
-         break;
+        e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot90, EINA_TRUE);
+        break;
+
       case ECORE_X_RANDR_ORIENTATION_ROT_180:
-         e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot180, EINA_TRUE);
-         break;
+        e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot180, EINA_TRUE);
+        break;
+
       case ECORE_X_RANDR_ORIENTATION_ROT_270:
-         e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot270, EINA_TRUE);
-         break;
+        e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_rot270, EINA_TRUE);
+        break;
+
       case ECORE_X_RANDR_ORIENTATION_FLIP_X:
-         e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_horizontal, EINA_TRUE);
-         break;
+        e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_horizontal, EINA_TRUE);
+        break;
+
       case ECORE_X_RANDR_ORIENTATION_FLIP_Y:
-         e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_vertical, EINA_TRUE);
-         break;
+        e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_vertical, EINA_TRUE);
+        break;
+
       default: //== ECORE_X_RANDR_ORIENTATION_ROT_0:
-         e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_normal, EINA_TRUE);
+        e_widget_radio_toggle_set(e_config_runtime_info->gui.subdialogs.orientation.radio_normal, EINA_TRUE);
      }
 }
 
-   void
+void
 dialog_subdialog_orientation_update_edje(Evas_Object *crtc)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
@@ -265,8 +271,8 @@ dialog_subdialog_orientation_update_edje(Evas_Object *crtc)
    edje_object_signal_emit(crtc, signal, "e");
 }
 
-   Eina_Bool
-dialog_subdialog_orientation_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
+Eina_Bool
+dialog_subdialog_orientation_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    Ecore_X_Randr_Orientation orientation;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
@@ -288,17 +294,17 @@ dialog_subdialog_orientation_basic_apply_data (E_Config_Dialog *cfd, E_Config_Di
      return EINA_FALSE;
 }
 
-   Eina_Bool
+Eina_Bool
 dialog_subdialog_orientation_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
    if (!e_config_runtime_info->gui.subdialogs.orientation.dialog || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "output_info"))) return EINA_FALSE;
 
-   return ((int)output_dialog_data->previous_orientation != (int)e_config_runtime_info->gui.subdialogs.orientation.radio_val);
+   return (int)output_dialog_data->previous_orientation != (int)e_config_runtime_info->gui.subdialogs.orientation.radio_val;
 }
 
-   void
+void
 dialog_subdialog_orientation_keep_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
@@ -306,7 +312,7 @@ dialog_subdialog_orientation_keep_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
      {
         if (!odd || ((int)odd->previous_orientation == Ecore_X_Randr_Unset)) continue;
         odd->previous_orientation = odd->new_orientation;
@@ -314,7 +320,7 @@ dialog_subdialog_orientation_keep_changes(E_Config_Dialog_Data *cfdata)
      }
 }
 
-   void
+void
 dialog_subdialog_orientation_discard_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
@@ -322,7 +328,7 @@ dialog_subdialog_orientation_discard_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
      {
         if (!odd->crtc || ((int)odd->previous_orientation == Ecore_X_Randr_Unset)) continue;
         if (ecore_x_randr_crtc_orientation_set(cfdata->manager->root, odd->crtc->xid, odd->previous_orientation))
@@ -333,3 +339,4 @@ dialog_subdialog_orientation_discard_changes(E_Config_Dialog_Data *cfdata)
           }
      }
 }
+

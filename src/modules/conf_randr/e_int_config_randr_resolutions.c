@@ -4,30 +4,30 @@
 
 #ifdef  Ecore_X_Randr_Unset
 #undef  Ecore_X_Randr_Unset
-#define Ecore_X_Randr_Unset             -1
+#define Ecore_X_Randr_Unset -1
 #else
-#define Ecore_X_Randr_Unset             -1
+#define Ecore_X_Randr_Unset -1
 #endif
 
 #ifdef  Ecore_X_Randr_None
 #undef  Ecore_X_Randr_None
 #endif
-#define Ecore_X_Randr_None   0
+#define Ecore_X_Randr_None        0
 
-#define ICON_WIDTH 10
-#define ICON_HEIGHT 10
+#define ICON_WIDTH                10
+#define ICON_HEIGHT               10
 #define RESOLUTION_TXT_MAX_LENGTH 50
 
 Evas_Object *dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas);
-Eina_Bool dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-Eina_Bool dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-void dialog_subdialog_resolutions_update_list(Evas_Object *crtc);
-void dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata);
-void dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata);
+Eina_Bool    dialog_subdialog_resolutions_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+Eina_Bool    dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+void         dialog_subdialog_resolutions_update_list(Evas_Object *crtc);
+void         dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata);
+void         dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata);
 
 extern E_Config_Dialog_Data *e_config_runtime_info;
 
-   Eina_Bool
+Eina_Bool
 dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
@@ -36,7 +36,7 @@ dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata || !cfdata->output_dialog_data_list) return EINA_FALSE;
 
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
      {
         if (odd->previous_mode || odd->preferred_mode)
           {
@@ -46,20 +46,20 @@ dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
           }
         if (odd->crtc)
           {
-             if(!(mi = odd->crtc->current_mode))
-               mi = (Ecore_X_Randr_Mode_Info*)eina_list_data_get(eina_list_last(odd->crtc->outputs_common_modes));
+             if (!(mi = odd->crtc->current_mode))
+               mi = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->crtc->outputs_common_modes));
              odd->previous_mode = mi;
           }
         else if (odd->output)
           {
-             odd->preferred_mode = (Ecore_X_Randr_Mode_Info*)eina_list_data_get(eina_list_last(odd->output->preferred_modes));
+             odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->preferred_modes));
           }
      }
 
    return EINA_TRUE;
 }
 
-   Evas_Object *
+Evas_Object *
 dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas)
 {
    Evas_Object *subdialog;
@@ -74,11 +74,11 @@ dialog_subdialog_resolutions_basic_create_widgets(Evas *canvas)
    return subdialog;
 }
 
-   Eina_Bool
-dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
+Eina_Bool
+dialog_subdialog_resolutions_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    //Apply new mode
-   Ecore_X_Randr_Mode_Info* selected_mode;
+   Ecore_X_Randr_Mode_Info *selected_mode;
    Ecore_X_ID selected_mode_xid;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
    Ecore_X_Randr_Output *output = NULL;
@@ -103,7 +103,7 @@ dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Di
         fprintf(stderr, "CONF_RANDR: Trying to find a CRTC for output %x, %d crtcs are possible.\n", output_dialog_data->output->xid, eina_list_count(output_dialog_data->output->possible_crtcs));
         output = &output_dialog_data->output->xid;
         noutputs = 1;
-        EINA_LIST_FOREACH(output_dialog_data->output->possible_crtcs, iter, crtc_iter)
+        EINA_LIST_FOREACH (output_dialog_data->output->possible_crtcs, iter, crtc_iter)
           {
              if (!crtc_iter->outputs)
                {
@@ -119,7 +119,7 @@ dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Di
         return EINA_FALSE;
      }
    //get selected mode
-   if ((selected_mode = (Ecore_X_Randr_Mode_Info*)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)))
+   if ((selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)))
      {
         selected_mode_xid = selected_mode->xid;
      }
@@ -144,18 +144,18 @@ dialog_subdialog_resolutions_basic_apply_data (E_Config_Dialog *cfd, E_Config_Di
    return EINA_FALSE;
 }
 
-   Eina_Bool
+Eina_Bool
 dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
-   Ecore_X_Randr_Mode_Info* selected_mode;
+   Ecore_X_Randr_Mode_Info *selected_mode;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   if (!e_config_runtime_info->gui.selected_eo || !(selected_mode = (Ecore_X_Randr_Mode_Info*)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)) || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "output_info"))) return EINA_FALSE;
+   if (!e_config_runtime_info->gui.selected_eo || !(selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)) || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "output_info"))) return EINA_FALSE;
 
-   return (selected_mode != output_dialog_data->previous_mode);
+   return selected_mode != output_dialog_data->previous_mode;
 }
 
-   void
+void
 dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
 {
    Eina_List *iter, *modelist = NULL;
@@ -189,13 +189,13 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
         else
           modelist = output_dialog_data->output->modes;
      }
-   EINA_LIST_FOREACH(modelist, iter, mode_info)
+   EINA_LIST_FOREACH (modelist, iter, mode_info)
      {
         //calculate refresh rate
         if (!mode_info) continue;
         if (mode_info->hTotal && mode_info->vTotal)
-          rate = ((float) mode_info->dotClock /
-                ((float) mode_info->hTotal * (float) mode_info->vTotal));
+          rate = ((float)mode_info->dotClock /
+                  ((float)mode_info->hTotal * (float)mode_info->vTotal));
         else
           rate = 0.0;
 
@@ -209,7 +209,7 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
 
         //select currently enabled mode
         if (mode_info == current_mode)
-            e_widget_ilist_selected_set(e_config_runtime_info->gui.subdialogs.resolutions.dialog, i);
+          e_widget_ilist_selected_set(e_config_runtime_info->gui.subdialogs.resolutions.dialog, i);
         i++;
      }
 
@@ -222,7 +222,6 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
    e_widget_ilist_thaw(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
 }
 
-
 void
 dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata)
 {
@@ -231,7 +230,7 @@ dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
      {
         if (odd && odd->new_mode && (odd->new_mode != odd->previous_mode))
           {
@@ -241,7 +240,7 @@ dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfdata)
      }
 }
 
-   void
+void
 dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
@@ -249,7 +248,7 @@ dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata) return;
 
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH (cfdata->output_dialog_data_list, iter, odd)
      {
         //for now, there is no way to redisable an output during discartion
         if (!odd->crtc || !odd->previous_mode) continue;
@@ -262,3 +261,4 @@ dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata)
           }
      }
 }
+
