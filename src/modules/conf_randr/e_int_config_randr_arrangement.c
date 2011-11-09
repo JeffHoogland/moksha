@@ -204,7 +204,10 @@ _e_config_randr_dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj
    //Calc average aspect ratio from all available monitors
    EINA_LIST_FOREACH(lst, itr, output)
      {
-        if ((output == e_config_runtime_info->gui.subdialogs.arrangement.clipper) || !(output_dialog_data = evas_object_data_get(output, "output_info")) || (!output_dialog_data->previous_mode && !output_dialog_data->preferred_mode)) continue;
+        if (output == e_config_runtime_info->gui.subdialogs.arrangement.clipper) continue;
+        output_dialog_data = evas_object_data_get(output, "output_info");
+        if (!output_dialog_data) continue;
+        if ((!output_dialog_data->previous_mode) && (!output_dialog_data->preferred_mode)) continue;
         if (output_dialog_data->previous_mode)
           {
              real_sum_w += output_dialog_data->previous_mode->width;
@@ -530,21 +533,18 @@ e_config_randr_dialog_subdialog_arrangement_free_data(E_Config_Dialog *cfd __UNU
 
    EINA_LIST_FREE(cfdata->output_dialog_data_list, dialog_data)
      {
-        if (dialog_data)
+        if (!dialog_data) continue;
+        if (dialog_data->bg)
           {
-             if (dialog_data->bg)
-               {
-                  evas_object_del(dialog_data->bg);
-                  dialog_data->bg = NULL;
-               }
-             free(dialog_data);
-             dialog_data = NULL;
+             evas_object_del(dialog_data->bg);
+             dialog_data->bg = NULL;
           }
+        free(dialog_data);
      }
 }
 
-   static Eina_List
-*_e_config_randr_dialog_subdialog_arrangement_neighbors_get(Evas_Object *obj)
+   static Eina_List *
+_e_config_randr_dialog_subdialog_arrangement_neighbors_get(Evas_Object *obj)
 {
    Evas_Object *smart_parent, *crtc;
    Eina_List *crtcs, *iter, *neighbors = NULL;
