@@ -331,6 +331,29 @@ _connman_service_free(E_Connman_Service *service)
    E_FREE(service);
 }
 
+static const char *
+_connman_service_security_find(const E_Connman_Element *element)
+{
+   const E_Connman_Array *security;
+
+   if (!e_connman_service_security_get(element, &security))
+     return NULL;
+   if (!security)
+     return NULL;
+
+   if (security->type != DBUS_TYPE_STRING)
+     {
+        ERR("security array expected to have type '%c' but got '%c'",
+            DBUS_TYPE_STRING, security->type);
+        return NULL;
+     }
+
+   if (eina_array_count_get(security->array) < 1)
+     return NULL;
+
+   return security->array->data[0];
+}
+
 static void
 _connman_service_changed(void                    *data,
                          const E_Connman_Element *element)
@@ -351,8 +374,10 @@ _connman_service_changed(void                    *data,
    GSTR(mode, e_connman_service_mode_get);
    GSTR(state, e_connman_service_state_get);
    GSTR(error, e_connman_service_error_get);
-   GSTR(security, e_connman_service_security_get);
    GSTR(ipv4_method, e_connman_service_ipv4_configuration_method_get);
+
+   str = _connman_service_security_find(element);
+   eina_stringshare_replace(&service->security, str);
 
    if (service->ipv4_method && strcmp(service->ipv4_method, "dhcp") == 0)
      {
@@ -442,11 +467,13 @@ _connman_service_new(E_Connman_Module_Context *ctxt,
    GSTR(mode, e_connman_service_mode_get);
    GSTR(state, e_connman_service_state_get);
    GSTR(error, e_connman_service_error_get);
-   GSTR(security, e_connman_service_security_get);
    GSTR(ipv4_method, e_connman_service_ipv4_method_get);
    GSTR(ipv4_address, e_connman_service_ipv4_address_get);
    GSTR(ipv4_netmask, e_connman_service_ipv4_netmask_get);
 #undef GSTR
+
+   str = _connman_service_security_find(element);
+   eina_stringshare_replace(&service->security, str);
 
    if ((service->state != e_str_failure) && (service->error))
      eina_stringshare_replace(&service->error, NULL);
