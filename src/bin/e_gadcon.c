@@ -450,7 +450,8 @@ e_gadcon_populate(E_Gadcon *gc)
 		  else if (gcc->o_base)
 		    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
 
-		  e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
+                  if (!gcc->autoscroll_set)
+                    e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
 //		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
 		  if (gcc->client_class->func.orient)
 		    gcc->client_class->func.orient(gcc, gc->orient);
@@ -523,7 +524,8 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 		  else if (gcc->o_base)
 		    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
 
-		  e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
+                  if (!gcc->autoscroll_set)
+                    e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
 //		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
 		  if (gcc->client_class->func.orient)
 		    gcc->client_class->func.orient(gcc, gc->orient); 
@@ -1171,6 +1173,7 @@ e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
    gcc->autoscroll = autoscroll;
+   gcc->autoscroll_set = 1;
 /*   
    if (gcc->autoscroll)
      {

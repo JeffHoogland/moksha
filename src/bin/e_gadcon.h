@@ -195,9 +195,9 @@ struct _E_Gadcon_Client
    const char *style;
    unsigned char autoscroll : 1;
    unsigned char resizable : 1;
-   
    unsigned char moving : 1;
    unsigned char resizing : 1;
+   unsigned char autoscroll_set : 1;
    Evas_Coord dx, dy;
 
    struct 

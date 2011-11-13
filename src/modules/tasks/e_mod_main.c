@@ -124,6 +124,7 @@ e_modapi_init(E_Module *m)
         Config_Item *config;
         
         tasks_config = E_NEW(Config, 1);
+        
         config = E_NEW(Config_Item, 1);
         config->id = eina_stringshare_add("0");
         config->show_all = 0;
@@ -217,7 +218,7 @@ e_modapi_save(E_Module *m __UNUSED__)
 /**************************************************************/
 
 static E_Gadcon_Client *
-_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
+_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style __UNUSED__)
 {
    Tasks *tasks;
    Evas_Object *o;
@@ -228,7 +229,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    tasks = _tasks_new(gc->evas, gc->zone, id);
    
    o = tasks->o_items;
-   gcc = e_gadcon_client_new(gc, name, id, style, o);
+   gcc = e_gadcon_client_new(gc, name, id, E_GADCON_CLIENT_STYLE_INSET, o);
    gcc->data = tasks;
    tasks->gcc = gcc;
    
@@ -237,9 +238,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    
    tasks_config->tasks = eina_list_append(tasks_config->tasks, tasks);
 
+   e_gadcon_client_autoscroll_set(gcc, 1);
    // Fill on initial config
    _tasks_config_updated(tasks->config);
-
    return gcc;
 }
 
@@ -395,6 +396,8 @@ _tasks_refill(Tasks *tasks)
                                             h * eina_list_count(tasks->items));
           }
      }
+   else
+     e_gadcon_client_min_size_set(tasks->gcc, 0, 0);
 }
 
 static void
@@ -621,6 +624,8 @@ _tasks_config_item_get(const char *id)
    config = E_NEW(Config_Item, 1);
    config->id = eina_stringshare_add(id);
    config->show_all = 0;
+   config->minw = 100;
+   config->minh = 32;
 
    tasks_config->items = eina_list_append(tasks_config->items, config);
 
