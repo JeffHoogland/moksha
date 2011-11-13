@@ -84,8 +84,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/everything", "e/modules/everything/gadget");
-   
-   if ((p = evry_plugin_find(inst->cfg->plugin)))
+
+   if ((strcmp(inst->cfg->plugin, "Start") != 0) &&
+       (p = evry_plugin_find(inst->cfg->plugin)))
      {
 	Evas_Object *oo = evry_util_icon_get(EVRY_ITEM(p), gc->evas);
 	if (oo)
