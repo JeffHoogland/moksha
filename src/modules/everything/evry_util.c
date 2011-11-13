@@ -445,13 +445,17 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
    Evas_Object *o = NULL;
 
    if (it->icon_get)
-     o = it->icon_get(it, e);
-   if (o) return o;
+     {
+        o = it->icon_get(it, e);
+        if (o) return o;
+     }
 
    if ((it->icon) && (it->icon[0] == '/'))
-     o = evry_icon_theme_get(it->icon, e);
-   if (o) return o;
-   
+     {
+        o = evry_icon_theme_get(it->icon, e);
+        if (o) return o;
+     }
+
    if (CHECK_TYPE(it, EVRY_TYPE_FILE))
      {
 	const char *icon;
@@ -460,8 +464,10 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
 	GET_FILE(file, it);
 
 	if (it->browseable)
-	  o = evry_icon_theme_get("folder", e);
-	if (o) return o;
+          {
+             o = evry_icon_theme_get("folder", e);
+             if (o) return o;
+          }
 	
 	if ((!it->icon) && (file->mime) &&
 	    (/*(!strncmp(file->mime, "image/", 6)) || */
@@ -512,15 +518,18 @@ evry_util_icon_get(Evry_Item *it, Evas *e)
      }
 
    if (it->icon)
-     o = evry_icon_theme_get(it->icon, e);
-   if (o) return o;
-   
+     {
+        o = evry_icon_theme_get(it->icon, e);
+        if (o) return o;
+     }
+
    if (it->browseable)
-     o = evry_icon_theme_get("folder", e);
-   if (o) return o;
+     {
+        o = evry_icon_theme_get("folder", e);
+        if (o) return o;
+     }
 
    o = evry_icon_theme_get("unknown", e);
-   
    return o;
 }
 

@@ -22,6 +22,7 @@ static int _e_module_evry_log_dom = -1;
 Evry_API *evry = NULL;
 Evry_Config *evry_conf = NULL;
 int _evry_events[NUM_EVRY_EVENTS];
+E_Module *_mod_evry = NULL;
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -46,6 +47,8 @@ e_modapi_init(E_Module *m)
 	  ("impossible to create a log domain for everything module");
 	return NULL;
      }
+
+   _mod_evry = m;
 
    /* add module supplied action */
    act = e_action_add("everything");
@@ -242,6 +245,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    EINA_LIST_FREE(_refd, it)
      printf("%d %s\n", it->ref, it->label);
 #endif
+
+   _mod_evry = NULL;
 
    return 1;
 }

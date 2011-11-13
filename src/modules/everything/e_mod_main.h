@@ -348,6 +348,7 @@ extern Evry_API *evry;
 extern Evry_History *evry_hist;
 extern Evry_Config  *evry_conf;
 extern int  _evry_events[NUM_EVRY_EVENTS];
+extern E_Module *_mod_evry;
 
 /*** E Module ***/
 EAPI void *e_modapi_init     (E_Module *m);

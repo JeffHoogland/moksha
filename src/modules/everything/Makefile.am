@@ -4,7 +4,9 @@ MODULE = everything
 # data files for the module
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 files_DATA = \
-e-module-$(MODULE).edj module.desktop
+e-module-$(MODULE).edj \
+e-module-$(MODULE)-start.edj \
+module.desktop
 
 EXTRA_DIST = $(files_DATA) everything.pc.in module.desktop.in
 

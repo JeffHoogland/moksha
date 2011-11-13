@@ -56,7 +56,7 @@ static const E_Gadcon_Client_Class _gadcon_class =
 };
 
 static Eina_Bool
-_illume_running()
+_illume_running(void)
 {
    /* hack to find out out if illume is running, dont grab if
       this is the case... */
@@ -173,14 +173,14 @@ _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 static Evas_Object *
 _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas __UNUSED__)
 {
-   /* Evas_Object *o; */
-   /* char buf[4096];
-    *
-    * o = edje_object_add(evas);
-    * snprintf(buf, sizeof(buf), "%s/e-module-start.edj",
-    * 	    e_module_dir_get(start_module));
-    * edje_object_file_set(o, buf, "icon"); */
-   return NULL;
+   Evas_Object *o;
+   char buf[PATH_MAX];
+
+   o = edje_object_add(evas);
+   snprintf(buf, sizeof(buf), "%s/e-module-everything-start.edj",
+	    e_module_dir_get(_mod_evry));
+   edje_object_file_set(o, buf, "icon");
+   return o;
 }
 
 static Gadget_Config *
@@ -203,10 +203,7 @@ _conf_item_get(const char *id)
 static const char *
 _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   Gadget_Config *gc = NULL;
-
-   gc = _conf_item_get(NULL);
-
+   Gadget_Config *gc = _conf_item_get(NULL);
    return gc->id;
 }
 
