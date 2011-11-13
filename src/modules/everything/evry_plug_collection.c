@@ -11,7 +11,6 @@ struct _Plugin
 };
 
 static Eina_List *plugins = NULL;
-static const char _module_icon[] = "preferences-plugin";
 static Evry_Type COLLECTION_PLUGIN;
 static Plugin_Config plugin_config;
 
@@ -139,7 +138,7 @@ _add_plugin(const char *name)
    char path[4096];
    char title[4096];
 
-   p = EVRY_PLUGIN_BASE(name, _module_icon, COLLECTION_PLUGIN,
+   p = EVRY_PLUGIN_BASE(name, NULL, COLLECTION_PLUGIN,
 			_begin, _finish, _fetch);
    p->browse = &_browse;
 
@@ -173,6 +172,8 @@ evry_plug_collection_init(void)
 
    p = _add_plugin("Plugins");
    p->begin = &_begin_all;
+   EVRY_ITEM_ICON_SET(p, "preferences-plugin");
+
    if (evry_plugin_register(p, EVRY_PLUGIN_SUBJECT, 100))
      {
 	p->config->aggregate = EINA_TRUE;
@@ -183,6 +184,7 @@ evry_plug_collection_init(void)
    EINA_LIST_FOREACH(evry_conf->collections, l, pc)
      {
 	p = _add_plugin(pc->name); 
+	EVRY_ITEM_ICON_SET(p, "start-here");
 	p->config = pc;
 	pc->plugin = p;
 

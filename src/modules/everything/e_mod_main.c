@@ -150,17 +150,6 @@ e_modapi_init(E_Module *m)
    evry_view_help_init();
    evry_gadget_init();
 
-   /* hack to get start icon right */
-   {
-      Evry_Plugin *p = evry_plugin_find("Start");
-      if (p)
-        {
-           Evry_Item *it = EVRY_ITEM(p);
-           eina_stringshare_replace(&it->icon, "start-here");
-        }
-   }
-
-
    e_module_priority_set(m, -1000);
    e_module_delayed_set(m, 1);
 
