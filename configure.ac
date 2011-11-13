@@ -462,6 +462,7 @@ ecore-file >= 1.0.999 \
 ecore-ipc >= 1.0.999 \
 eet >= 1.4.0 \
 efreet >= 1.0.999 \
+edbus >= 1.0.999 \
 eina >= 1.0.999"
 efm_requires+=" $eeze_mount $dbus_mount $hal_mount $udisks_mount"
 
