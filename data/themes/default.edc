@@ -32192,6 +32192,7 @@ collections {
    //Standard Emblem Icons
    ICON("emblem-symbolic-link","icon_dummy.png",64)                // EFMBUTTON("symlink")
    //Standard Place Icons
+   ICON("start-here","logo_white_128.png",128)                     // "enlightenment/e"
    ICON("folder","icon_efm_folder.png",64)                         // "fileman/folder"
    ICON("user-home","icon_efm_home.png",64)                        // "fileman/home"
    ICON("user-temp","icon_efm_tmp.png",64)                  // *** // "fileman/tmp"
