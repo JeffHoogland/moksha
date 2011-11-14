@@ -1,7 +1,8 @@
 /* Setup if we need connman? */
 #include "e.h"
 #include "e_mod_main.h"
-#ifdef HAVE_ECONNMAN             
+#ifdef HAVE_ECONNMAN
+#define E_CONNMAN_I_KNOW_THIS_API_IS_SUBJECT_TO_CHANGE 1
 #include <E_Connman.h>
 #endif
 
