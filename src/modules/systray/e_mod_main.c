@@ -1102,7 +1102,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
    _systray_size_apply(inst);
 }
 
-static char *
+static const char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("Systray");

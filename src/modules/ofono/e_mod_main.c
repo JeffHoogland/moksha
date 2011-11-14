@@ -503,7 +503,7 @@ _gc_orient(E_Gadcon_Client       *gcc,
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
-static char *
+static const char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _(_e_ofono_Name);
