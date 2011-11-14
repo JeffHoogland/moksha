@@ -134,7 +134,7 @@ struct _E_Gadcon_Client_Class
 	E_Gadcon_Client *(*init)     (E_Gadcon *gc, const char *name, const char *id, const char *style);
 	void             (*shutdown) (E_Gadcon_Client *gcc);
 	void             (*orient)   (E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-	char            *(*label)    (E_Gadcon_Client_Class *client_class);
+	const char      *(*label)    (E_Gadcon_Client_Class *client_class);
 	Evas_Object     *(*icon)     (E_Gadcon_Client_Class *client_class, Evas *evas);
 	/* All members below are part of version 2 */
 	/* Create new id, so that the gadcon client can refer to a config set inside the module */

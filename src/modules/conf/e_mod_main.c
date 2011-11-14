@@ -20,7 +20,7 @@ static void _config_pre_activate_cb(void *data, E_Menu *m);
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-static char *_gc_label(E_Gadcon_Client_Class *client_class);
+static const char *_gc_label(E_Gadcon_Client_Class *client_class);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
 static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
 static void _cb_action_conf(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -96,7 +96,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
    e_gadcon_client_min_size_set(gcc, mw, mh);
 }
 
-static char *
+static const char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("Settings");
