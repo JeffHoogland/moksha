@@ -371,7 +371,6 @@ _connman_service_changed(void                    *data,
 
    GSTR(name, e_connman_service_name_get);
    GSTR(type, e_connman_service_type_get);
-   GSTR(mode, e_connman_service_mode_get);
    GSTR(state, e_connman_service_state_get);
    GSTR(error, e_connman_service_error_get);
    GSTR(ipv4_method, e_connman_service_ipv4_configuration_method_get);
@@ -464,7 +463,6 @@ _connman_service_new(E_Connman_Module_Context *ctxt,
 
    GSTR(name, e_connman_service_name_get);
    GSTR(type, e_connman_service_type_get);
-   GSTR(mode, e_connman_service_mode_get);
    GSTR(state, e_connman_service_state_get);
    GSTR(error, e_connman_service_error_get);
    GSTR(ipv4_method, e_connman_service_ipv4_method_get);
