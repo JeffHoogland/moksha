@@ -1,7 +1,6 @@
-#include "e_int_config_randr.h"
-#include "e_widget_toolbook.h"
 #include "e.h"
 #include "e_randr.h"
+#include "e_int_config_randr.h"
 
 /*
  * BUGS:
