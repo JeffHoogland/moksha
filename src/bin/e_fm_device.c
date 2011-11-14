@@ -9,7 +9,7 @@
 
 static void _e_fm2_volume_write(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_volume_erase(E_Volume *v) EINA_ARG_NONNULL(1);
-static void _e_fm2_device_mount_free(E_Fm2_Mount *m); EINA_ARG_NONNULL(1);
+static void _e_fm2_device_mount_free(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 static void _e_fm2_device_mount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 static void _e_fm2_device_mount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 static void _e_fm2_device_unmount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
