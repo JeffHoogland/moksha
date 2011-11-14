@@ -21,7 +21,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
    Evry_Plugin *pp;
    Eina_List *l, *ll, *lp = NULL;
    Evry_Item *it, *it2;
-   int top_level = 0, subj_sel = 0, inp_len = 0, cnt = 0;
+   int top_level = 0, subj_sel = 0,  cnt = 0;
+   size_t inp_len;
    Eina_List *items = NULL;
    const char *context = NULL;
    char buf[128];

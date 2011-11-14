@@ -101,7 +101,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   int len = input ? strlen(input) : 0;
+   size_t len = input ? strlen(input) : 0;
    
    GET_PLUGIN(p, plugin);
 

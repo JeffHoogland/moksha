@@ -1084,7 +1084,7 @@ _recentf_fetch(Evry_Plugin *plugin, const char *input)
    GET_PLUGIN(p, plugin);
    Evry_Item_File *file;
    History_Types *ht;
-   int len = (input ? strlen(input) : 0);
+   size_t len = (input ? strlen(input) : 0);
 
    IF_RELEASE(p->input);
 

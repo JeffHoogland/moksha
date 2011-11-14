@@ -2772,7 +2772,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
    Evry_Item *it;
    Evry_Window *win = sel->win;
    const char *input = NULL;
-   int len_inp = 0;
+   size_t len_inp = 0;
 
    s->changed = 1;
    s->request++;

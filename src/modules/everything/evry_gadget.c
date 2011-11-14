@@ -667,6 +667,7 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, E_Config_Dialog_Data *cfdata)
    evas_event_thaw(evas);
 }
 
+#if 0
 static void
 _list_select_cb(void *data __UNUSED__, Evas_Object *obj)
 {
@@ -675,6 +676,7 @@ _list_select_cb(void *data __UNUSED__, Evas_Object *obj)
    e_widget_ilist_nth_data_get(obj, sel);
    
 }
+#endif
 
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *e, E_Config_Dialog_Data *cfdata)
