@@ -6,7 +6,7 @@ static E_Gadcon_Client *_gc_init(E_Gadcon   *gc,
                                  const char *id,
                                  const char *style);
 static void         _gc_shutdown(E_Gadcon_Client *gcc);
-static char        *_gc_label(E_Gadcon_Client_Class *client_class);
+static const char  *_gc_label(E_Gadcon_Client_Class *client_class);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class,
                              Evas                  *evas);
 static const char  *_gc_id_new(E_Gadcon_Client_Class *client_class);
@@ -122,7 +122,7 @@ _gc_orient(E_Gadcon_Client *gcc,
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
-static char *
+static const char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("Notification Box");
