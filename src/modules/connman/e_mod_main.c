@@ -334,24 +334,14 @@ _connman_service_free(E_Connman_Service *service)
 static const char *
 _connman_service_security_find(const E_Connman_Element *element)
 {
-   const E_Connman_Array *security;
+   const char **security;
+   unsigned int count;
 
-   if (!e_connman_service_security_get(element, &security))
+   if (!e_connman_service_security_get(element, &count, &security))
      return NULL;
-   if (!security)
+   if ((!security) || (count < 1))
      return NULL;
-
-   if (security->type != DBUS_TYPE_STRING)
-     {
-        ERR("security array expected to have type '%c' but got '%c'",
-            DBUS_TYPE_STRING, security->type);
-        return NULL;
-     }
-
-   if (eina_array_count_get(security->array) < 1)
-     return NULL;
-
-   return security->array->data[0];
+   return security[0];
 }
 
 static void
