@@ -156,6 +156,8 @@ _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
    EINA_LIST_FREE(sources, sink)
      pulse_sink_free(sink);
 
+   printf("PULSEAUDIO: disconnected at %g\n", ecore_time_unix_get());
+
    if (last_disc && (ecore_time_unix_get() - last_disc < 1))
      {
         e_mixer_pulse_shutdown();
