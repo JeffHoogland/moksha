@@ -796,7 +796,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
               E_RANDR: relative to crtc: %d\n \
               E_RANDR: relative to mode: %d\n \
               E_RANDR: relative to orientation: %d\n \
-              E_RANDR: relative to connction: %d (connected = %d, disconnected = %d, unknown %d)\n \
+              E_RANDR: relative to connection: %d (connected = %d, disconnected = %d, unknown %d)\n \
               E_RANDR: relative to subpixel_order: %d\n",
                 event->win, event->output, event->crtc, event->mode, event->orientation, event->connection, ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED, ECORE_X_RANDR_CONNECTION_STATUS_DISCONNECTED, ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN, event->subpixel_order);
 
