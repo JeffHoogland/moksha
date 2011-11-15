@@ -1649,7 +1649,7 @@ e_config_profile_save(void)
                        e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.%i.cfg", i - 1);
                        e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.%i.cfg", i);
                        if ((ecore_file_exists(bsrc)) &&
-                           (!ecore_file_size(bsrc)))
+                           (ecore_file_size(bsrc)))
                          {
                             ret = ecore_file_mv(bsrc, bdst);
                             if (!ret)
@@ -1722,7 +1722,7 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
                        e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/%s/%s.%i.cfg", _e_config_profile, domain, i - 1);
                        e_user_dir_snprintf(bdst, sizeof(bdst), "config/%s/%s.%i.cfg", _e_config_profile, domain, i);
                        if ((ecore_file_exists(bsrc)) &&
-                           (!ecore_file_size(bsrc)))
+                           (ecore_file_size(bsrc)))
                          {
                             ecore_file_mv(bsrc, bdst);
                          }
