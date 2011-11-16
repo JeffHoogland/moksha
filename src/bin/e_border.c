@@ -8813,16 +8813,23 @@ _e_border_cb_ping_poller(void *data)
      }
    else
      {
-        if (!bd->hung)
+        /* if time between last ping and now is greater
+         * than half the ping interval... */
+        if ((ecore_loop_time_get() - bd->ping) > 
+            ((e_config->ping_clients_interval * 
+              ecore_poller_poll_interval_get(ECORE_POLLER_CORE)) / 2.0))
           {
-             bd->hung = 1;
-             edje_object_signal_emit(bd->bg_object, "e,state,hung", "e");
-             /* FIXME: if below dialog is up - hide it now */
-          }
-        if (bd->delete_requested)
-          {
-             /* FIXME: pop up dialog saying app is hung - kill client, or pid */
-              e_border_act_kill_begin(bd);
+             if (!bd->hung)
+               {
+                  bd->hung = 1;
+                  edje_object_signal_emit(bd->bg_object, "e,state,hung", "e");
+                  /* FIXME: if below dialog is up - hide it now */
+               }
+             if (bd->delete_requested)
+               {
+                  /* FIXME: pop up dialog saying app is hung - kill client, or pid */
+                  e_border_act_kill_begin(bd);
+               }
           }
      }
    bd->ping_poller = NULL;
