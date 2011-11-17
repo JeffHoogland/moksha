@@ -19,6 +19,7 @@
 #include <err.h>
 #endif
 
+#include <Eina.h>
 #include <Ecore.h>
 #include <Ecore_File.h>
 

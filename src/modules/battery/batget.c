@@ -30,6 +30,7 @@
 # include <ps/IOPowerSources.h>
 #endif
 
+#include <Eina.h>
 #include <Ecore.h>
 #include <Ecore_File.h>
 #include <Ecore_Con.h>
