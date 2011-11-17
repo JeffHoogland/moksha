@@ -6,6 +6,7 @@
 void
 msg_recv_creds(Pulse *conn, Pulse_Tag *tag)
 {
+#ifdef __linux__
    int r;
    struct msghdr mh;
    struct iovec iov;
@@ -36,11 +37,16 @@ msg_recv_creds(Pulse *conn, Pulse_Tag *tag)
         DBG("%zu bytes left", sizeof(tag->header) - r);
         tag->pos += r;
      }
+#else
+   conn = NULL;
+   tag = NULL;
+#endif   
 }
 
 Eina_Bool
 msg_recv(Pulse *conn, Pulse_Tag *tag)
 {
+#ifdef __linux__
    long r;
    struct msghdr mh;
    struct iovec iov;
@@ -74,12 +80,17 @@ msg_recv(Pulse *conn, Pulse_Tag *tag)
      }
    else
      tag->pos += r;
+#else
+   conn = NULL;
+   tag = NULL;
+#endif   
    return EINA_FALSE;
 }
 
 void
 msg_sendmsg_creds(Pulse *conn, Pulse_Tag *tag)
 {
+#ifdef __linux__   
    int r;
    struct msghdr mh;
    struct iovec iov;
@@ -118,11 +129,16 @@ msg_sendmsg_creds(Pulse *conn, Pulse_Tag *tag)
      }
    else
      tag->pos += r;
+#else
+   conn = NULL;
+   tag = NULL;
+#endif   
 }
 
 void
 msg_send_creds(Pulse *conn, Pulse_Tag *tag)
 {
+#ifdef __linux__   
    int r;
 
    INF("trying to send 20 byte auth header");
@@ -135,11 +151,16 @@ msg_send_creds(Pulse *conn, Pulse_Tag *tag)
      }
    else
      tag->pos += r;
+#else
+   conn = NULL;
+   tag = NULL;
+#endif
 }
 
 Eina_Bool
 msg_send(Pulse *conn, Pulse_Tag *tag)
 {
+#ifdef __linux__
    int r;
 
    INF("trying to send %zu bytes", tag->dsize - tag->pos);
@@ -158,5 +179,9 @@ msg_send(Pulse *conn, Pulse_Tag *tag)
      }
    else
      tag->pos += r;
+#else
+   conn = NULL;
+   tag = NULL;
+#endif
    return EINA_FALSE;
 }
