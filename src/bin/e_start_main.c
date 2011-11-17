@@ -351,9 +351,40 @@ main(int argc, char **argv)
      }
 done:
    
+   /* mtrack memory tracker support */
+   p = getenv("HOME");
+   if (p)
+     {
+        FILE *f;
+
+        /* if you have ~/.e-mtrack, then the tracker will be enabled
+         * using the content of this file as the path to the mtrack.so
+         * shared object that is the mtrack preload */
+        snprintf(buf, sizeof(buf), "%s/.e-mtrack", p);
+        f = fopen(buf, "r");
+        if (f)
+          {
+             if (fgets(buf, sizeof(buf), f))
+               {
+                  int len = strlen(buf);
+                  if ((len > 1) && (buf[len - 1] == '\n'))
+                    {
+                       buf[len - 1] = 0;
+                       len--;
+                    }
+                  env_set("LD_PRELOAD", buf);
+                  env_set("MTRACK", "track");
+                  env_set("E_START_MTRACK", "track");
+                  snprintf(buf, sizeof(buf), "%s/.e-mtrack.log", p);
+                  env_set("MTRACK_TRACE_FILE", buf);
+               }
+             fclose(f);
+          }
+     }
+   
    /* try dbus-launch */
    snprintf(buf, sizeof(buf), "%s/enlightenment", eina_prefix_bin_get(pfx));
-   
+
    args = alloca((argc + 2 + VALGRIND_MAX_ARGS) * sizeof(char *));
    if ((!getenv("DBUS_SESSION_BUS_ADDRESS")) &&
        (!getenv("DBUS_LAUNCHD_SESSION_BUS_SOCKET")))

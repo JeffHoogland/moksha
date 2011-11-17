@@ -73,6 +73,8 @@ e_alert_show(int sig)
      }
 
  restart_e:
+   if (getenv("E_START_MTRACK"))
+     e_util_env_set("MTRACK", "track");
    ecore_app_restart();
 }
 

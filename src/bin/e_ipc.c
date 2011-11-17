@@ -207,6 +207,8 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
              switch (e->minor)
                {
                 case E_ALERT_OP_RESTART:
+                  if (getenv("E_START_MTRACK"))
+                    e_util_env_set("MTRACK", "track");
                   ecore_app_restart();
                   break;
                 case E_ALERT_OP_EXIT:
