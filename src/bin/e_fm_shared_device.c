@@ -8,16 +8,16 @@ _e_fm_shared_device_storage_free(E_Storage *s)
    EINA_LIST_FREE(s->volumes, v)
      {
         v->storage = NULL;
-	       _e_fm_shared_device_volume_free(v);
+        _e_fm_shared_device_volume_free(v);
      }
-   if (s->udi) eina_stringshare_del(s->udi);
-   if (s->bus) eina_stringshare_del(s->bus);
-   if (s->drive_type) eina_stringshare_del(s->drive_type);
-   if (s->model) eina_stringshare_del(s->model);
-   if (s->vendor) eina_stringshare_del(s->vendor);
-   if (s->serial) eina_stringshare_del(s->serial);
-   if (s->icon.drive) eina_stringshare_del(s->icon.drive);
-   if (s->icon.volume) eina_stringshare_del(s->icon.volume);
+   eina_stringshare_del(s->udi);
+   eina_stringshare_del(s->bus);
+   eina_stringshare_del(s->drive_type);
+   eina_stringshare_del(s->model);
+   eina_stringshare_del(s->vendor);
+   eina_stringshare_del(s->serial);
+   eina_stringshare_del(s->icon.drive);
+   eina_stringshare_del(s->icon.volume);
 #ifdef HAVE_EEZE_MOUNT
    if (s->disk) eeze_disk_free(s->disk);
 #endif
