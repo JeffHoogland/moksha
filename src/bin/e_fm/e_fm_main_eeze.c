@@ -541,7 +541,7 @@ _scanner_poll(void *data __UNUSED__)
 
    if (svr) return EINA_FALSE;
    tmp = getenv("TMPDIR");
-   if (!tmp) tmp = "/tmp";
+   if ((!tmp) || (!tmp[0])) tmp = "/tmp";
 
    snprintf(buf, sizeof(buf), "%s/.ecore_service|eeze_scanner|0", tmp);
    if (!stat(buf, &st))
@@ -699,7 +699,7 @@ _e_fm_main_eeze_init(void)
    eet_setup();
 
    tmp = getenv("TMPDIR");
-   if (!tmp) tmp = "/tmp";
+   if ((!tmp) || (!tmp[0])) tmp = "/tmp";
 
    snprintf(buf, sizeof(buf), "%s/.ecore_service|eeze_scanner|0", tmp);
    if (stat(buf, &st))
