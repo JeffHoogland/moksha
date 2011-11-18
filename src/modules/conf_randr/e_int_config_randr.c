@@ -175,15 +175,15 @@ _e_conf_randr_confirmation_dialog_timer_cb(void *data)
    if (cdd->countdown > 0)
      {
         snprintf(buf, sizeof(buf),
-                 _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<br>"
-                   "If you do not press a button, the previous settings will be<br>"
+                 _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<ps>"
+                   "If you do not press a button, the previous settings will be<ps>"
                    "restored in %d seconds."), cdd->countdown);
      }
    else
      {
         snprintf(buf, sizeof(buf),
-                 _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<br>"
-                   "If you do not press a button, the previous settings will be<br>"
+                 _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<ps>"
+                   "If you do not press a button, the previous settings will be<ps>"
                    "restored <highlight>IMMEDIATELY</highlight>."));
      }
 
@@ -275,8 +275,8 @@ _e_conf_randr_confirmation_dialog_new(E_Config_Dialog *cfd)
         e_dialog_icon_set(cd->dialog, "preferences-system-screen-resolution", 48);
         e_win_delete_callback_set(cd->dialog->win, _e_conf_randr_confirmation_dialog_delete_cb);
         snprintf(buf, sizeof(buf),
-                 _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<br>"
-                   "If you do not press a button, the previous settings will be<br>"
+                 _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<ps>"
+                   "If you do not press a button, the previous settings will be<ps>"
                    "restored in %d seconds."), cd->countdown);
         e_dialog_text_set(cd->dialog, buf);
         e_dialog_button_add(cd->dialog, _("Keep"), NULL, _e_conf_randr_confirmation_dialog_keep_cb, cd);
@@ -413,11 +413,11 @@ static Eina_Bool
 _deferred_noxrandr_error(void *data __UNUSED__)
 {
    e_util_dialog_show(_("Missing Features"),
-                      _("Your X Display Server is missing support for<br>"
-                        "the <hilight>XRandR</hilight> (X Resize and Rotate) extension version 1.2 or above.<br>"
-                        "You cannot change screen resolutions without<br>"
-                        "the support of this extension. It could also be<br>"
-                        "that at the time <hilight>ecore</hilight> was built, there<br>"
+                      _("Your X Display Server is missing support for<ps>"
+                        "the <hilight>XRandR</hilight> (X Resize and Rotate) extension version 1.2 or above.<ps>"
+                        "You cannot change screen resolutions without<ps>"
+                        "the support of this extension. It could also be<ps>"
+                        "that at the time <hilight>ecore</hilight> was built, there<ps>"
                         "was no XRandR support detected."));
    return ECORE_CALLBACK_CANCEL;
 }
