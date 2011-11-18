@@ -529,6 +529,14 @@ eet_setup(void)
 }
 
 static Eina_Bool
+_scanner_delay(void *data __UNUSED__)
+{
+   INF("Attempting scanner connection");
+   svr = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, "eeze_scanner", 0, NULL);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
 _scanner_poll(void *data __UNUSED__)
 {
    const char *tmp;
@@ -542,7 +550,7 @@ _scanner_poll(void *data __UNUSED__)
    snprintf(buf, sizeof(buf), "%s/.ecore_service|eeze_scanner|0", tmp);
    if (!stat(buf, &st))
      {
-        svr = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, "eeze_scanner", 0, NULL);
+        ecore_timer_add(1.0, _scanner_delay, NULL);
         return EINA_FALSE;
      }
    return EINA_TRUE;
