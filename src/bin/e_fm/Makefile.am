@@ -36,8 +36,8 @@ udisks_s =
 endif
 
 if HAVE_EEZE_MOUNT
-AM_CFLAGS += @EET_CFLAGS@
-LIBS += @EET_LIBS@
+AM_CFLAGS += @EEZE_CFLAGS@ @EET_CFLAGS@
+LIBS += @EEZE_LIBS@ @EET_LIBS@
 eeze_s = \
 ../e_prefix.c \
 e_fm_main_eeze.h \

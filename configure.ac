@@ -397,6 +397,10 @@ AC_MSG_RESULT([${e_cv_want_mount_eeze}])
 eeze_mount=
 EEZE_MOUNT_CONFIG=0
 if test "x$e_cv_want_mount_eeze" != "xno" ; then
+      CPPFLAGS_save="$CPPFLAGS"
+      LIBS_save="$LIBS"
+      CPPFLAGS="$EEZE_CFLAGS $CPPFLAGS"
+      LIBS="$EEZE_LIBS $LIBS"
       AC_CHECK_LIB([eeze], [eeze_disk_function],
         [
            eeze_mount="eeze >= 1.0.999 ecore-con >= 1.0.999"
@@ -409,6 +413,8 @@ if test "x$e_cv_want_mount_eeze" != "xno" ; then
            e_cv_want_mount_eeze=no
         ]
       )
+      CPPFLAGS="$CPPFLAGS_save"
+      LIBS="$LIBS_save"
 else
   AC_MSG_NOTICE([eeze mounting disabled])
 fi
