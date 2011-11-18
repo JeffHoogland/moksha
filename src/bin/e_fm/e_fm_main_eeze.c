@@ -625,6 +625,7 @@ _scanner_run(void)
 static Eina_Bool
 _scanner_con(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Del *ev __UNUSED__)
 {
+   INF("Scanner connected");
    es_con = eet_connection_new(_scanner_read, _scanner_write, NULL);
    return ECORE_CALLBACK_RENEW;
 }
@@ -632,7 +633,7 @@ _scanner_con(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_
 static Eina_Bool
 _scanner_disc(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Del *ev __UNUSED__)
 {
-   INF("lost connection to scanner");
+   INF("Scanner disconnected");
    if (_scanner_poll(NULL))
      _scanner_run();
    return ECORE_CALLBACK_RENEW;
@@ -641,7 +642,7 @@ _scanner_disc(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server
 static Eina_Bool
 _scanner_err(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Error *ev __UNUSED__)
 {
-   INF("error");
+   INF("Scanner connection error");
    return ECORE_CALLBACK_RENEW;
 }
 
