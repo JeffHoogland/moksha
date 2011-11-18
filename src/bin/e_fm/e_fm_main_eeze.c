@@ -521,11 +521,7 @@ eet_setup(void)
      }
 
    es_edd = eet_data_descriptor_stream_new(&eddc);
-#define DAT(MEMBER, TYPE) EET_DATA_DESCRIPTOR_ADD_BASIC(es_edd, Eeze_Scanner_Event, #MEMBER, MEMBER, EET_T_##TYPE)
-   DAT(device, INLINED_STRING);
-   DAT(type, UINT);
-   DAT(volume, UCHAR);
-#undef DAT
+   EEZE_SCANNER_EDD_SETUP(es_edd);
 }
 
 static Eina_Bool
