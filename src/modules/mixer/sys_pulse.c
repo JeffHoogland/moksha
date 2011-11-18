@@ -160,6 +160,7 @@ _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
 
    if (last_disc && (ecore_time_unix_get() - last_disc < 1))
      {
+        fprintf(stderr, "PULSEAUDIO: disconnecting too quickly, THROTTLED\n");
         e_mixer_pulse_shutdown();
         last_disc = 0;
         e_mod_mixer_pulse_ready(EINA_FALSE);
