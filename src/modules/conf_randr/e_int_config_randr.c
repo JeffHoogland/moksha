@@ -259,6 +259,8 @@ _e_conf_randr_confirmation_dialog_new(E_Config_Dialog *cfd)
 {
    E_Config_Randr_Dialog_Confirmation_Dialog_Data *cd = E_NEW(E_Config_Randr_Dialog_Confirmation_Dialog_Data, 1);
 
+   char buf[4096];
+
    if (!cd) return;
 
    cd->cfd = cfd;
@@ -272,6 +274,11 @@ _e_conf_randr_confirmation_dialog_new(E_Config_Dialog *cfd)
         cd->dialog->data = cd;
         e_dialog_icon_set(cd->dialog, "preferences-system-screen-resolution", 48);
         e_win_delete_callback_set(cd->dialog->win, _e_conf_randr_confirmation_dialog_delete_cb);
+        snprintf(buf, sizeof(buf),
+                 _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<br>"
+                   "If you do not press a button, the previous settings will be<br>"
+                   "restored in %d seconds."), cd->countdown);
+        e_dialog_text_set(cd->dialog, buf);
         e_dialog_button_add(cd->dialog, _("Keep"), NULL, _e_conf_randr_confirmation_dialog_keep_cb, cd);
         e_dialog_button_add(cd->dialog, _("Store Permanently"), NULL, _e_conf_randr_confirmation_dialog_store_cb, cd);
         e_dialog_button_add(cd->dialog, _("Restore"), NULL, _e_conf_randr_confirmation_dialog_discard_cb, cd);
