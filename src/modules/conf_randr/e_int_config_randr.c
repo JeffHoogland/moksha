@@ -174,13 +174,15 @@ _e_conf_randr_confirmation_dialog_timer_cb(void *data)
      {
         snprintf(buf, sizeof(buf),
                  _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<br>"
-                   "If you do not press a button, the previous settings will be restored in %d seconds."), cdd->countdown);
+                   "If you do not press a button, the previous settings will be<br>"
+                   "restored in %d seconds."), cdd->countdown);
      }
    else
      {
         snprintf(buf, sizeof(buf),
                  _("Does this look OK? Click <hilight>Keep</hilight> if it does, or Restore if not.<br>"
-                   "If you do not press a button, the previous settings will be restored <highlight>IMMEDIATELY</highlight>."));
+                   "If you do not press a button, the previous settings will be<br>"
+                   "restored <highlight>IMMEDIATELY</highlight>."));
      }
 
    e_dialog_text_set(cdd->dialog, buf);
