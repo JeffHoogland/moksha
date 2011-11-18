@@ -80,6 +80,8 @@ extern void         dialog_subdialog_orientation_update_edje(Evas_Object *crtc);
 extern void         dialog_subdialog_orientation_keep_changes(E_Config_Dialog_Data *cfdata);
 extern void         dialog_subdialog_orientation_discard_changes(E_Config_Dialog_Data *cfdata);
 
+static void _e_conf_randr_confirmation_dialog_discard_cb(void *data, E_Dialog *dia);
+
 /* actual module specifics */
 E_Config_Dialog_Data *e_config_runtime_info = NULL;
 extern E_Module *conf_randr_module;
@@ -187,7 +189,12 @@ _e_conf_randr_confirmation_dialog_timer_cb(void *data)
 
    e_dialog_text_set(cdd->dialog, buf);
 
-   return (cdd->countdown > 0) ? ECORE_CALLBACK_RENEW : ECORE_CALLBACK_CANCEL;
+   if (cdd->countdown == 0)
+      {
+         _e_conf_randr_confirmation_dialog_discard_cb(cdd, cdd->dialog);
+         return ECORE_CALLBACK_CANCEL;
+      }
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
