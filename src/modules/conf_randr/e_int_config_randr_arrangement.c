@@ -65,7 +65,13 @@ _dialog_subdialog_arrangement_output_dialog_data_fill(E_Config_Randr_Dialog_Outp
         //disabled monitor
         //try to get a mode from the preferred list, else use default list
         if (!(odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->preferred_modes))))
-          odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->modes));
+          {
+             if (odd->output->modes)
+               odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->modes));
+             else
+               odd->preferred_mode = NULL;
+          }
+
         odd->previous_pos.x = Ecore_X_Randr_Unset;
         odd->previous_pos.y = Ecore_X_Randr_Unset;
      }
@@ -79,11 +85,21 @@ dialog_subdialog_arrangement_create_data(E_Config_Dialog_Data *data)
 {
    Eina_List *iter;
    E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
+   char *disabled_output_width, *disabled_output_height;
+   Evas_Object *display;
 
    EINA_LIST_FOREACH(data->output_dialog_data_list, iter, dialog_data)
      {
         _dialog_subdialog_arrangement_output_dialog_data_fill(dialog_data);
      }
+
+   if(!(disabled_output_width = edje_file_data_get(_theme_file_path, "disabled_output_width")))
+     disabled_output_width = "1024";
+   if(!(disabled_output_height = edje_file_data_get(_theme_file_path, "disabled_output_height")))
+     disabled_output_height = "768";
+
+   data->gui.subdialogs.arrangement.disabled_output_size.w = atoi(disabled_output_width);
+   data->gui.subdialogs.arrangement.disabled_output_size.h = atoi(disabled_output_height);
 
    return EINA_TRUE;
 }
@@ -211,10 +227,15 @@ _dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj, Evas_Coord w,
              real_sum_w += output_dialog_data->previous_mode->width;
              real_sum_h += output_dialog_data->previous_mode->height;
           }
-        else
+        else if (output_dialog_data->preferred_mode)
           {
              real_sum_w += output_dialog_data->preferred_mode->width;
              real_sum_h += output_dialog_data->preferred_mode->height;
+          }
+        else
+          {
+             real_sum_w += e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w;
+             real_sum_h += e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h;
           }
      }
 
@@ -240,8 +261,9 @@ _dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj, Evas_Coord w,
           }
         else
           {
-             fprintf(stderr, "CONF_RANDR: Can't resize thumb, as neither mode nor preferred mode are avavailable for %x\n", (output_dialog_data->crtc ? output_dialog_data->crtc->xid : output_dialog_data->output->xid));
-             continue;
+             new_geo.w = (int)((float)e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w * scaling_factor);
+             new_geo.h = (int)((float)e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h * scaling_factor);
+             fprintf(stderr, "CONF_RANDR: Neither mode nor preferred mode are avavailable for %x. Using %dx%d.\n", (output_dialog_data->crtc ? output_dialog_data->crtc->xid : output_dialog_data->output->xid), e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w, e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h);
           }
         if ((new_geo.w <= 0) || (new_geo.h <= 0))
           {
@@ -557,6 +579,7 @@ _dialog_subdialog_arrangement_neighbors_get(Evas_Object *obj)
             || (crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper)) continue;
         evas_object_geometry_get(crtc, &neighbor_geo.x, &neighbor_geo.y, &neighbor_geo.w, &neighbor_geo.h);
         if (!(neighbor_info = evas_object_data_get(crtc, "output_info"))) continue;
+        if (!neighbor_info->previous_mode) continue;
 
         if (((geo.x + geo.w) == neighbor_geo.x)
             || (geo.x == (neighbor_geo.x + neighbor_geo.w))

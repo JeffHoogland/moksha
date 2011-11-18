@@ -283,6 +283,8 @@ dialog_subdialog_policies_keep_changes(E_Config_Dialog_Data *cfdata)
      {
         if (!odd || ((int)odd->previous_policy == Ecore_X_Randr_Unset)) continue;
         odd->previous_policy = odd->new_policy;
+        if (odd->output)
+          odd->output->policy = odd->new_policy;
         odd->new_policy = Ecore_X_Randr_Unset;
      }
 }

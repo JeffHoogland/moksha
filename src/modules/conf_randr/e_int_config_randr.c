@@ -125,11 +125,6 @@ create_data(E_Config_Dialog *cfd)
    e_config_runtime_info->manager = e_manager_current_get();
    EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->outputs, iter, output_info)
      {
-        //Create basic data struct for every connected output.
-        //Data would have to be recreated if a monitor is connected while dialog
-        //is open.
-        if (output_info->connection_status != ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
-          continue;
         if ((odd = _dialog_output_dialog_data_new(output_info->crtc, output_info)))
           e_config_runtime_info->output_dialog_data_list = eina_list_append(e_config_runtime_info->output_dialog_data_list, odd);
      }

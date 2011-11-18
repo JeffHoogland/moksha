@@ -23,6 +23,7 @@ struct _E_Config_Dialog_Data
              struct {
                   Evas_Object *dialog, *swallowing_edje, *smart_parent, *suggestion, *clipper;
                   Evas_Coord_Point previous_pos, relative_zero;
+                  Evas_Coord_Rectangle disabled_output_size;
                   int suggestion_dist_min;
              } arrangement;
              struct {

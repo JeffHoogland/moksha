@@ -8,6 +8,11 @@ images {
    image: "display-glass-shine.png" COMP;
 }
 
+data {
+   item: "disabled_output_width" "1024";
+   item: "disabled_output_height" "768";
+}
+
 collections {
 
    // The icon used in the settings dialog
