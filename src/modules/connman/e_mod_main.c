@@ -337,7 +337,7 @@ _connman_service_security_find(const E_Connman_Element *element)
    const char **security;
    unsigned int count;
 
-   if (!e_connman_service_security2_get(element, &count, &security))
+   if (!e_connman_service_security_get(element, &count, &security))
      return NULL;
    if ((!security) || (count < 1))
      return NULL;
