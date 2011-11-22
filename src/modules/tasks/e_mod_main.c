@@ -576,7 +576,7 @@ _tasks_item_fill(Tasks_Item *item)
      _tasks_item_signal_emit(item, "e,state,focused", "e");
    else
      _tasks_item_signal_emit(item, "e,state,unfocused", "e");
-   if (item->border->client.icccm.urgent)
+   if (item->border->client.icccm.urgent && !item->border->focused)
      _tasks_item_signal_emit(item, "e,state,urgent", "e");
    else
      _tasks_item_signal_emit(item, "e,state,not_urgent", "e");
@@ -839,6 +839,9 @@ _tasks_cb_event_border_urgent_change(void *data __UNUSED__, int type __UNUSED__,
    E_Event_Border_Urgent_Change *ev;
 
    ev = event;
+
+   if (ev->border->focused) return EINA_TRUE;
+
    if (ev->border->client.icccm.urgent)
      _tasks_signal_emit(ev->border, "e,state,urgent", "e");
    else
