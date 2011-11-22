@@ -559,13 +559,15 @@ _e_desklock_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *even
 static void
 _e_desklock_passwd_update(void)
 {
-   char passwd_hidden[PASSWD_LEN] = "", *p, *pp;
+   int len, i;
+   char passwd_hidden[PASSWD_LEN] = "", *pp;
    E_Desklock_Popup_Data *edp;
    Eina_List *l;
 
    if (!edd) return;
 
-   for (p = edd->passwd, pp = passwd_hidden; *p; p++, pp++)
+   len = eina_unicode_utf8_get_len(edd->passwd);
+   for (i = 0, pp = passwd_hidden ; i < len ; i++, pp++)
      *pp = '*';
    *pp = 0;
 
