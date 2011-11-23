@@ -609,7 +609,7 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
 	edje_object_part_swallow(pw->o_window, "e.swallow.icon", o);
      }
 
-   if (border->client.icccm.urgent)
+   if (border->client.icccm.urgent && !border->focused)
      {
 	if (!(border->iconic))
 	  edje_object_signal_emit(pd->o_desk, "e,state,urgent", "e");
@@ -1357,7 +1357,7 @@ _pager_cb_event_border_urgent_change(void *data __UNUSED__, int type __UNUSED__,
 	     pw = _pager_desk_window_find(pd, ev->border);
 	     if (pw)
 	       {
-		  if (urgent)
+		  if (urgent && !ev->border->focused)
 		    {
 		       if (!(ev->border->iconic))
 			 {
