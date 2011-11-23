@@ -3,7 +3,7 @@
 #include "e_mod_main.h"
 #ifdef HAVE_ECONNMAN
 #define E_CONNMAN_I_KNOW_THIS_API_IS_SUBJECT_TO_CHANGE 1
-#include <econnman0_7x/E_Connman.h>
+#include <connman0_7x/E_Connman.h>
 #endif
 
 static Ecore_Event_Handler *handler = NULL;
