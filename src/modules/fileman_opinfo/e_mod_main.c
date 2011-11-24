@@ -336,11 +336,17 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    E_Gadcon_Client *gcc;
    Instance *inst;
    int mw, mh;
+   int r;
 
    inst = E_NEW(Instance, 1);
 
-   asprintf(&inst->theme_file, "%s/e-module-fileman_opinfo.edj",
-            e_module_dir_get(opinfo_module));
+   r = asprintf(&inst->theme_file, "%s/e-module-fileman_opinfo.edj",
+                e_module_dir_get(opinfo_module));
+   if (r < 0)
+     {
+        E_FREE(inst);
+        return NULL;
+     }
 
    // main object
    inst->o_box = e_box_add(gc->evas);
