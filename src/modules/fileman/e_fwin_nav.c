@@ -39,6 +39,7 @@ static void _cb_favorites_click(void *data, Evas_Object *obj, const char *emissi
 static void _cb_changed(void *data, Evas_Object *obj, void *event_info);
 static void _cb_dir_changed(void *data, Evas_Object *obj, void *event_info);
 static void _cb_button_click(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void _box_button_append(Instance *inst, const char *label, void (*func)(void *data, Evas_Object *obj, const char *emission, const char *source));
 
 static Eina_List *instances = NULL;
@@ -153,6 +154,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    e_scrollframe_child_set(inst->o_scroll, inst->o_box);
    evas_object_show(inst->o_box);
 
+   evas_object_event_callback_add(inst->o_scroll, EVAS_CALLBACK_RESIZE,
+				  _cb_scroll_resize, inst);
+   
    edje_object_part_swallow(inst->o_base, "e.swallow.pathbar", inst->o_scroll);
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_base);
@@ -420,6 +424,17 @@ _cb_button_click(void *data, Evas_Object *obj, const char *emission __UNUSED__, 
         strcat(path, "/");
      }
    e_fm2_path_set(inst->o_fm, "/", path);
+}
+
+static void
+_cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   Instance *inst = data;
+   Evas_Coord mw = 0, mh = 0;
+   
+   evas_object_geometry_get(inst->o_box, NULL, NULL, &mw, NULL);
+   evas_object_geometry_get(inst->o_scroll, NULL, NULL, NULL, &mh);
+   evas_object_resize(inst->o_box, mw, mh);
 }
 
 static void
