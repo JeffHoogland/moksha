@@ -156,17 +156,15 @@ main(int argc, char **argv)
    last = argc - 1;
    i = 2;
 
-   if (strcmp(argv[1], "cp") == 0)
-     type = E_FM_OP_COPY;
-   else if (strcmp(argv[1], "mv") == 0)
-     type = E_FM_OP_MOVE;
-   else if (strcmp(argv[1], "rm") == 0)
-     type = E_FM_OP_REMOVE;
-   else if (strcmp(argv[1], "lns") == 0)
-     type = E_FM_OP_SYMLINK;
+   if (!strcmp(argv[1], "cp")) type = E_FM_OP_COPY;
+   else if (!strcmp(argv[1], "mv")) type = E_FM_OP_MOVE;
+   else if (!strcmp(argv[1], "rm")) type = E_FM_OP_REMOVE;
+   else if (!strcmp(argv[1], "lns")) type = E_FM_OP_SYMLINK;
    else return 0;
 
-   if ((type == E_FM_OP_COPY) || (type == E_FM_OP_MOVE) || (type == E_FM_OP_SYMLINK))
+   if ((type == E_FM_OP_COPY) || 
+       (type == E_FM_OP_SYMLINK) || 
+       (type == E_FM_OP_MOVE))
      {
 	if (argc < 4) goto quit;
 
@@ -783,7 +781,13 @@ _e_fm_op_scan_idler(void *data __UNUSED__)
                                         task->dst.name);
           }
         else
-          task->started = 1;
+          {
+             task->started = 1;
+             _e_fm_op_scan_queue =
+               eina_list_remove_list(_e_fm_op_scan_queue, node);
+             node = NULL;
+             _e_fm_op_scan_atom(task);
+          }
      }
    else if (dir && !task->started)
      {
