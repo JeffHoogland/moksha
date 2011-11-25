@@ -4122,29 +4122,29 @@ _e_fm2_icons_place(Evas_Object *obj)
      {
       case E_FM2_VIEW_MODE_ICONS:
         _e_fm2_icons_place_icons(sd);
-	sd->max.h += ICON_BOTTOM_SPACE;
+//	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_GRID_ICONS:
         _e_fm2_icons_place_grid_icons(sd);
-	sd->max.h += ICON_BOTTOM_SPACE;
+//	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_CUSTOM_ICONS:
         _e_fm2_icons_place_custom_icons(sd);
-	sd->max.h += ICON_BOTTOM_SPACE;
+//	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS:
         /* FIXME: not going to implement this at this stage */
         _e_fm2_icons_place_custom_grid_icons(sd);
-	sd->max.h += ICON_BOTTOM_SPACE;
+//	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_CUSTOM_SMART_GRID_ICONS:
         /* FIXME: not going to implement this at this stage */
         _e_fm2_icons_place_custom_smart_grid_icons(sd);
-	sd->max.h += ICON_BOTTOM_SPACE;
+//	sd->max.h += ICON_BOTTOM_SPACE;
         break;
 
       case E_FM2_VIEW_MODE_LIST:
