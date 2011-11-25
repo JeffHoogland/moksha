@@ -6261,13 +6261,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                      x = ev->x + (ic->x - ox) - ic->drag.x + sd->pos.x - sd->x;
                      y = ev->y + (ic->y - oy) - ic->drag.y + sd->pos.y - sd->y;
                    
-                   printf("drop ev x, y: %i %i \n", ev->x, ev->y);
-                   printf("ic x, y: %i %i \n", ic->x, ic->y);
-                   printf("orig x, y: %i %i \n", ox, oy);
-                   printf("ic->drag x, y: %i %i \n", ic->drag.x, ic->drag.y);
-                   printf("sd->pos x, y: %i %i \n", sd->pos.x, sd->pos.y);
-                   printf("x, y of drop: %i %i \n", x, y);
-
                      if (x < 0) x = 0;
                      if (y < 0) y = 0;
 
