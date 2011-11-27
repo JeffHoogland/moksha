@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2009-07-17 15:33+0800\n"
-"PO-Revision-Date: 2009-02-08 20:59+0000\n"
-"Last-Translator: Galatsanos Panagiotis <Unknown>\n"
+"PO-Revision-Date: 2011-11-20 22:32+0200\n"
+"Last-Translator: Alex-P. Natsios <drakevr@linuxteam.cs.teilar.gr>\n"
 "Language-Team: Greek <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/e_mod_box.c:675 ../src/e_mod_box.c:823
+#: ../src/e_mod_box.c:675
+#: ../src/e_mod_box.c:823
 msgid "Configuration"
-msgstr ""
+msgstr "Ρύθμιση"
 
 #: ../src/e_mod_main.c:121
 msgid "Notification Box"
@@ -25,44 +26,37 @@ msgstr "Κουτί Ειδοποίησης"
 
 #: ../src/e_mod_main.c:206
 msgid "Enter Presentation Mode"
-msgstr ""
+msgstr "Εισέλθετε σε λειτουργία παρουσίασης"
 
 #: ../src/e_mod_main.c:207
-msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
-"screen saver, lock and power saving will be disabled so you are not "
-"interrupted."
-msgstr ""
+msgid "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, screen saver, lock and power saving will be disabled so you are not interrupted."
+msgstr "Το Enlightenment είναι σε λειτουργία <b>Παρουσίασης</b>.<br>κατά την λειτουργία παρουσίασης, η προφύλαξη οθόνης, το κλείδωμα και η εξοικονόμηση ενέργειας θα απενεργοποιηθούν ώστε να μην σας διακόψουν."
 
 #: ../src/e_mod_main.c:213
 msgid "Exited Presentation Mode"
-msgstr ""
+msgstr "Εξήλθατε από λειτουργία παρουσίασης."
 
 #: ../src/e_mod_main.c:214
-msgid ""
-"Presentation mode is over.<br>Now screen saver, lock and power saving "
-"settings will be restored."
-msgstr ""
+msgid "Presentation mode is over.<br>Now screen saver, lock and power saving settings will be restored."
+msgstr "Η λειτουργία παρουσίασης τελειωσε.<br>τώρα η προφύλαξη οθόνης, το κλείδωμα και οι ρυθμίσεις εξοικονομήσεις ενέργειας θα αποκατασταθούν."
 
 #: ../src/e_mod_main.c:229
 msgid "Enter Offline Mode"
-msgstr ""
+msgstr "Εισέλθετε σε λειτουργία εκτός σύνδεσης"
 
 #: ../src/e_mod_main.c:230
-msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
-"that use network will stop polling remote services."
-msgstr ""
+#, fuzzy
+msgid "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules that use network will stop polling remote services."
+msgstr "Το Enlightenment είναι σε λειτουργία <b>εκτος σύνδεσης</b>.<br> Κατά τι λειτουργία εκτος σύνδεσης, τα αρθρώματα που χρησιμοποιούν το δίκτυο θα σταματήσουν να αντλούν πληροφορίες."
 
 #: ../src/e_mod_main.c:236
 msgid "Exited Offline Mode"
-msgstr ""
+msgstr "Εξήλθατε από λειτουργία εκτός σύνδεσης"
 
 #: ../src/e_mod_main.c:237
-msgid ""
-"Now in <b>online</b> mode.<br>Now modules that use network will resume "
-"regular tasks."
-msgstr ""
+#, fuzzy
+msgid "Now in <b>online</b> mode.<br>Now modules that use network will resume regular tasks."
+msgstr "Τώρα σε λειτουργία<b>σύνδεσης</b>.<br>Τώρα τα αρθρώματα που χρησιμοποιούν το δίκτυο θα συνεχίσουν κανονικά την άντληση δεδομένων."
 
 #. register config panel entry
 #: ../src/e_mod_main.c:294
@@ -73,46 +67,33 @@ msgstr "Επεκτάσεις"
 msgid "Notification"
 msgstr "Ειδοποίηση"
 
-#: ../src/e_mod_main.c:340 ../src/e_mod_main.c:358
+#: ../src/e_mod_main.c:340
+#: ../src/e_mod_main.c:358
 msgid "Notification Configuration Updated"
 msgstr "Ρύθμιση Ειδοποιήσεων Ενημερώθηκε"
 
 #: ../src/e_mod_main.c:341
-msgid ""
-"Notification Module Configuration data needed upgrading. Your old "
-"configuration<br> has been wiped and a new set of defaults initialized. "
-"This<br>will happen regularly during development, so don't report a<br>bug. "
-"This simply means the Notification module needs new configuration<br>data by "
-"default for usable functionality that your old<br>configuration simply "
-"lacks. This new set of defaults will fix<br>that by adding it in. You can re-"
-"configure things now to your<br>liking. Sorry for the inconvenience.<br>"
+msgid "Notification Module Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the Notification module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
 msgstr ""
 
 #: ../src/e_mod_main.c:359
-msgid ""
-"Your Notification Module Configuration is NEWER than the Notification Module "
-"version. This is very<br>strange. This should not happen unless you "
-"downgraded<br>the Notification Module or copied the configuration from a "
-"place where<br>a newer version of the Notification Module was running. This "
-"is bad and<br>as a precaution your configuration has been now restored "
-"to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr ""
+msgid "Your Notification Module Configuration is NEWER than the Notification Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Notification Module or copied the configuration from a place where<br>a newer version of the Notification Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Η ρύθμιση σας για το άρθρωμα ενημερώσεων είναι ΝΕΟΤΕΡΗ από την έκδοση αρθρώματος ενημερώσεων. Αυτό είναι πολύ<br> παράξενο. Αυτό δεν πρέπει να συμβεί εκτός κι αν έχετε υποβαθμίσει το άρθρωμα Ενημερώσεων ή αντιγράψατε την ρύθμιση από ένα σύστημα το οποιο εκτελούσε νεότερη έκδοση. Αυτό είναι κακό και  για προληπτικούς λόγους οι ρυθμίσεις σας έχουν πλέον αποκατασταθεί στις <br> προεπιλογές. Λυπούμαστε για την ταλαιπωρία.<br>"
 
 #: ../src/e_mod_main.c:393
 msgid "Error During DBus Init!"
-msgstr ""
+msgstr "Λάθος κατά την αρχικοποίηση του DBus!"
 
 #: ../src/e_mod_main.c:394
-msgid ""
-"Error during DBus init! Please check if dbus is correctly installed and "
-"running."
-msgstr ""
+msgid "Error during DBus init! Please check if dbus is correctly installed and running."
+msgstr "Λάθος κατά την αρχικοποίηση του DBus! Παρακαλούμε ελέγξτε αν το dbus είναι σωστά εγκατεστημένο και εκτελείται."
 
 #: ../src/e_mod_config.c:43
 msgid "Notification Configuration"
 msgstr "Ρύθμιση Ειδοποίησης"
 
-#: ../src/e_mod_config.c:88 ../src/e_mod_config_item.c:91
+#: ../src/e_mod_config.c:88
+#: ../src/e_mod_config_item.c:91
 msgid "Urgency"
 msgstr "Προτεραιότητα"
 
@@ -120,26 +101,29 @@ msgstr "Προτεραιότητα"
 msgid "Levels of urgency to popup : "
 msgstr "Επίπεδα προτεραιότητας των ειδοποιήσεων : "
 
-#: ../src/e_mod_config.c:91 ../src/e_mod_config_item.c:94
+#: ../src/e_mod_config.c:91
+#: ../src/e_mod_config_item.c:94
 msgid "low"
 msgstr "χαμηλό"
 
-#: ../src/e_mod_config.c:93 ../src/e_mod_config_item.c:96
+#: ../src/e_mod_config.c:93
+#: ../src/e_mod_config_item.c:96
 msgid "normal"
 msgstr "κανονικό"
 
-#: ../src/e_mod_config.c:95 ../src/e_mod_config_item.c:98
+#: ../src/e_mod_config.c:95
+#: ../src/e_mod_config_item.c:98
 msgid "critical"
 msgstr "κρίσιμο"
 
 #: ../src/e_mod_config.c:99
 msgid "Default Timeout"
-msgstr ""
+msgstr "Προκαθορισμένο χρονικό περιθώριο"
 
 #: ../src/e_mod_config.c:100
 #, c-format
 msgid "%.1f seconds"
-msgstr ""
+msgstr "%.1f δευτερόλεπτα"
 
 #: ../src/e_mod_config.c:106
 msgid "Placement"
@@ -161,7 +145,7 @@ msgstr "Κατεύθυνση"
 
 #: ../src/e_mod_config.c:116
 msgid "Direction in which popups will stack themselves : "
-msgstr ""
+msgstr "Κατεύθυνση κατά την οποια θα στοιβάζονται τα αναδυόμενα : "
 
 #: ../src/e_mod_config.c:129
 msgid "Gap"
@@ -178,19 +162,20 @@ msgstr "%2.0f pixel"
 
 #: ../src/e_mod_config_item.c:37
 msgid "Notification Box Configuration"
-msgstr ""
+msgstr "Ρύθμιση Ειδοποιήσεων"
 
 #: ../src/e_mod_config_item.c:82
 msgid "General Settings"
-msgstr ""
+msgstr "Γενικές ρυθμίσεις"
 
 #: ../src/e_mod_config_item.c:83
 msgid "Show Icon Label"
-msgstr ""
+msgstr "Εμφανίστε την ετικέτα εικονιδίου"
 
 #: ../src/e_mod_config_item.c:85
+#, fuzzy
 msgid "Show the popup on mouse over"
-msgstr ""
+msgstr "Εμφάνιση αναδυόμενου κατά το mouse over"
 
 #: ../src/e_mod_config_item.c:87
 msgid "Focus the source window when clicking"
@@ -199,3 +184,4 @@ msgstr "Εστίασε στο παράθυρο προορισμού όταν κ�
 #: ../src/e_mod_config_item.c:92
 msgid "Levels of urgency to store : "
 msgstr "Επίπεδα επίγοντων για αποθήκευση: "
+
