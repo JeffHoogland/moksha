@@ -285,7 +285,6 @@ _notification_popup_new(E_Notification *n)
 
    /* Create the popup window */
    popup->win = e_popup_new(zone, 0, 0, 0, 0);
-   e_popup_edje_bg_object_set(popup->win, popup->theme);
    popup->e = popup->win->evas;
 
    /* Setup the theme */
