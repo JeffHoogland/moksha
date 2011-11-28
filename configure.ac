@@ -800,6 +800,7 @@ case "$host_os" in
       ;;
 esac
 
+CFLAGS+=" -Wno-trigraphs"
 
 AC_OUTPUT([
 Makefile
@@ -810,6 +811,8 @@ src/bin/Makefile
 src/bin/e_fm_shared_types.h
 src/bin/e_fm/Makefile
 src/modules/Makefile
+src/modules/birthday/Makefile
+src/modules/birthday/module.desktop
 src/modules/ibar/Makefile
 src/modules/ibar/module.desktop
 src/modules/dropshadow/Makefile
