@@ -5132,7 +5132,7 @@ _e_fm2_icon_make_visible(E_Fm2_Icon *ic)
 
         if (
           ((ic->y - ic->sd->pos.y) >= 0) &&
-          ((ic->y + ic->h + ICON_BOTTOM_SPACE - ic->sd->pos.y) <= (ic->sd->h)) &&
+          ((ic->y + ic->h/* + ICON_BOTTOM_SPACE*/ - ic->sd->pos.y) <= (ic->sd->h)) &&
           ((ic->x - ic->sd->pos.x) >= 0) &&
           ((ic->x + ic->w - ic->sd->pos.x) <= (ic->sd->w))
           )
@@ -5145,8 +5145,8 @@ _e_fm2_icon_make_visible(E_Fm2_Icon *ic)
         y = ic->sd->pos.y;
         if ((ic->y - ic->sd->pos.y) < 0)
           y = ic->y;
-        else if ((ic->y + ic->h + ICON_BOTTOM_SPACE - ic->sd->pos.y) > (ic->sd->h))
-          y = ic->y + ic->h + ICON_BOTTOM_SPACE - ic->sd->h;
+        else if ((ic->y + ic->h/* + ICON_BOTTOM_SPACE*/ - ic->sd->pos.y) > (ic->sd->h))
+          y = ic->y + ic->h/* + ICON_BOTTOM_SPACE*/ - ic->sd->h;
         e_fm2_pan_set(ic->sd->obj, x, y);
      }
    evas_object_smart_callback_call(ic->sd->obj, "pan_changed", NULL);
