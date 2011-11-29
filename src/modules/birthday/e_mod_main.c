@@ -1,5 +1,5 @@
 #include <e.h>
-#define FUN(X) (rand() % (2 * X - 1)) + X
+#define FUN(X) (((rand() % (3 * X + 1)) + 1) % 300) + 1
 #define COOKIES rand()
 static Eina_Bool captaincrunch_cb(void *d __UNUSED__); static void captaincrunch_new_under(E_Zone *cheaaaaaaaaaaaaaaaaaa);  static E_Module *module = NULL; static Eina_List *popups = NULL; static E_Popup *cannonball = NULL; static int fun = 0; typedef Evas_Object * BEARS;
 #define CAMELS case 7: case 17: case 47: case 77:
