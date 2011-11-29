@@ -166,13 +166,10 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
 	if (pc)
 	  {
-	     if (pc->trigger)
-	       eina_stringshare_del(pc->trigger);
-
-	     if (cfdata->page[i].trigger[0])
-	       pc->trigger = eina_stringshare_add(cfdata->page[i].trigger);
-	     else
-	       pc->trigger = NULL;
+             if (cfdata->page[i].trigger[0])
+               eina_stringshare_replace(&pc->trigger, cfdata->page[i].trigger);
+             else
+               eina_stringshare_replace(&pc->trigger, NULL);
 
 	     pc->trigger_only = cfdata->page[i].trigger_only;
 	     pc->view_mode    = cfdata->page[i].view_mode;
@@ -207,8 +204,9 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
      {
 	/* if (!(end = edje_object_add(evas))) break; */
 
-	if (!pc->plugin) continue;
-	
+	if (!pc->plugin && strcmp(pc->name, "All"))
+          continue;
+
 	/* if (e_theme_edje_object_set(end, "base/theme/widgets",
 	 * 			    "e/widgets/ilist/toggle_end"))
 	 *   {
@@ -239,17 +237,20 @@ _plugin_move(Plugin_Page *page, int dir)
 
    sel = e_widget_ilist_selected_get(page->list);
 
-   if ((page->collection) || (sel >= 1 && dir > 0) || (sel >= 2 && dir < 0))
+   if ((page->collection) ||
+       /* keep 'All' alway at top */
+       ((sel >= 1 && dir > 0) || (sel >= 2 && dir < 0)))
      {
-	Plugin_Config *pc;
+	Plugin_Config *pc, *pc2;
 	int prio = 0;
 
-	l1 = eina_list_nth_list(page->configs, sel);
-	l2 = eina_list_nth_list(page->configs, sel + dir);
-
+        pc  = e_widget_ilist_nth_data_get(page->list, sel);
+        pc2 = e_widget_ilist_nth_data_get(page->list, sel + dir);
+	l1 = eina_list_data_find_list(page->configs, pc);
+	l2 = eina_list_data_find_list(page->configs, pc2);
 	if (!l1 || !l2) return;
-	pc = l1->data;
-	l1->data = l2->data;
+
+	l1->data = pc2;
 	l2->data = pc;
 
 	_fill_list(page->configs, page->list, 0);
@@ -279,7 +280,7 @@ _list_select_cb (void *data, Evas_Object *obj)
    Plugin_Config *pc = NULL;
    Plugin_Page *page = data;
 
-   if (sel >= 0 && (pc = eina_list_nth(page->configs, sel)))
+   if (sel >= 0 && (pc = e_widget_ilist_nth_data_get(page->list, sel)))
      {
 	e_widget_entry_text_set(page->o_trigger, pc->trigger);
 	e_widget_disabled_set(page->o_trigger, 0);
