@@ -1296,12 +1296,14 @@ _plugins_init(const Evry_API *api)
    Evry_Action *act, *act_sort_date, *act_sort_name;
    Evry_Plugin *p;
    int prio = 0;
+   const char *config_path;
 
    evry = api;
 
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
+   config_path = eina_stringshare_add("launcher/everything-files");
    _mime_dir = eina_stringshare_add("inode/directory");
    _mime_mount = eina_stringshare_add("inode/mountpoint");
    _mime_unknown = eina_stringshare_add("unknown");
@@ -1346,7 +1348,7 @@ _plugins_init(const Evry_API *api)
    p->input_type = EVRY_TYPE_FILE;
    p->cb_key_down = &_cb_key_down;
    p->browse = &_browse;
-   p->config_path = "extensions/everything-files";
+   p->config_path = eina_stringshare_ref(config_path);
    p->actions = eina_list_append(p->actions, act_sort_date);
    p->actions = eina_list_append(p->actions, act_sort_name);
    _plugins = eina_list_append(_plugins, p);
@@ -1358,7 +1360,7 @@ _plugins_init(const Evry_API *api)
                         _begin, _finish, _fetch);
    p->cb_key_down = &_cb_key_down;
    p->browse = &_browse;
-   p->config_path = "extensions/everything-files";
+   p->config_path = eina_stringshare_ref(config_path);
    p->actions = eina_list_append(p->actions, act_sort_date);
    p->actions = eina_list_append(p->actions, act_sort_name);
    _plugins = eina_list_append(_plugins, p);
@@ -1370,7 +1372,7 @@ _plugins_init(const Evry_API *api)
    p = EVRY_PLUGIN_BASE("Recent Files", _module_icon, EVRY_TYPE_FILE,
                         _recentf_begin, _finish, _recentf_fetch);
    p->browse = &_recentf_browse;
-   p->config_path = "extensions/everything-files";
+   p->config_path = eina_stringshare_ref(config_path);
 
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
      {
@@ -1382,7 +1384,7 @@ _plugins_init(const Evry_API *api)
    p = EVRY_PLUGIN_BASE("Recent Files", _module_icon, EVRY_TYPE_FILE,
                         _recentf_begin, _finish, _recentf_fetch);
    p->browse = &_recentf_browse;
-   p->config_path = "extensions/everything-files";
+   p->config_path = eina_stringshare_ref(config_path);
 
    if (evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 3))
      {
@@ -1390,6 +1392,7 @@ _plugins_init(const Evry_API *api)
         p->config->min_query = 3;
      }
    _plugins = eina_list_append(_plugins, p);
+   eina_stringshare_del(config_path);
 
    return EINA_TRUE;
 }

@@ -1072,24 +1072,27 @@ _plugins_init(const Evry_API *api)
    int prio = 0;
    Eina_List *l;
    Evry_Action *act;
+   const char *config_path;
 
    evry = api;
 
    if (!evry->api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
+   config_path = eina_stringshare_add("launcher/everything-apps");
+
    p = EVRY_PLUGIN_BASE("Applications", _module_icon, EVRY_TYPE_APP,
                         _begin, _finish, _fetch);
    p->complete = &_complete;
    p->browse = &_browse;
-   p->config_path = "extensions/everything-apps";
+   p->config_path = eina_stringshare_ref(config_path);
    evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 1);
    _plugins = eina_list_append(_plugins, p);
 
    p = EVRY_PLUGIN_BASE("Exebuf", _module_icon, EVRY_TYPE_APP,
                         _begin_exe, _finish_exe, _fetch_exe);
    p->complete = &_complete;
-   p->config_path = "extensions/everything-apps";
+   p->config_path = eina_stringshare_ref(config_path);
    _plugins = eina_list_append(_plugins, p);
    if (evry->plugin_register(p, EVRY_PLUGIN_SUBJECT, 3))
      p->config->min_query = 3;
@@ -1097,13 +1100,13 @@ _plugins_init(const Evry_API *api)
    p = EVRY_PLUGIN_BASE("Applications", _module_icon, EVRY_TYPE_APP,
                         _begin_mime, _finish, _fetch);
    p->complete = &_complete;
-   p->config_path = "extensions/everything-apps";
+   p->config_path = eina_stringshare_ref(config_path);
    evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 1);
    _plugins = eina_list_append(_plugins, p);
 
    p = EVRY_PLUGIN_BASE("Open With...", _module_icon, EVRY_TYPE_APP,
                         _begin_mime, _finish_mime, _fetch_mime);
-   p->config_path = "extensions/everything-apps";
+   p->config_path = eina_stringshare_ref(config_path);
    evry->plugin_register(p, EVRY_PLUGIN_ACTION, 1);
    _plugins = eina_list_append(_plugins, p);
 
@@ -1175,6 +1178,7 @@ _plugins_init(const Evry_API *api)
        (handlers, ecore_event_handler_add
          (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _desktop_cache_update, NULL));
 
+   eina_stringshare_del(config_path);
    return EINA_TRUE;
 }
 
