@@ -287,4 +287,7 @@ struct _History_Types
   Eina_Hash *types;
 };
 
+void evry_item_app_free(Evry_Item_App *it);
+void evry_item_file_free(Evry_Item_File *it);
+
 #endif

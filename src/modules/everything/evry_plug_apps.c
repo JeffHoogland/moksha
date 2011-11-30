@@ -98,25 +98,12 @@ _exec_open_file_action(Evry_Action *act)
    return evry->util_exec_app(EVRY_ITEM(act), act->it1.item);
 }
 
-static void
-_cb_item_free(Evry_Item *item)
-{
-   GET_APP(app, item);
-
-   if (app->desktop)
-     efreet_desktop_free(app->desktop);
-   if (app->file)
-     eina_stringshare_del(app->file);
-
-   E_FREE(app);
-}
-
 static Evry_Item_App *
 _item_new(Plugin *p, const char *label, const char *id)
 {
    Evry_Item_App *app;
 
-   app = EVRY_ITEM_NEW(Evry_Item_App, p, label, NULL, _cb_item_free);
+   app = EVRY_ITEM_NEW(Evry_Item_App, p, label, NULL, evry_item_app_free);
    EVRY_ACTN(app)->action = &_exec_open_file_action;
    EVRY_ACTN(app)->it1.type = EVRY_TYPE_FILE;
    EVRY_ITEM(app)->id = eina_stringshare_add(id);
@@ -330,7 +317,7 @@ _begin_exe(Evry_Plugin *plugin, const Evry_Item *item)
 
    p->added = eina_hash_string_small_new(_hash_free);
 
-   app = EVRY_ITEM_NEW(Evry_Item_App, p, NULL, NULL, _cb_item_free);
+   app = EVRY_ITEM_NEW(Evry_Item_App, p, NULL, NULL, evry_item_app_free);
    EVRY_ACTN(app)->action = &_exec_open_file_action;
    EVRY_ACTN(app)->remember_context = EINA_TRUE;
    EVRY_ITEM(app)->subtype = EVRY_TYPE_ACTION;

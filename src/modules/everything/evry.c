@@ -3058,3 +3058,21 @@ _evry_cb_selection_notify(void *data, int type __UNUSED__, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
+void
+evry_item_app_free(Evry_Item_App *app)
+{
+   efreet_desktop_free(app->desktop);
+   eina_stringshare_del(app->file);
+
+   free(app);
+}
+
+void
+evry_item_file_free(Evry_Item_File *file)
+{
+   eina_stringshare_del(file->url);
+   eina_stringshare_del(file->path);
+   eina_stringshare_del(file->mime);
+
+   free(file);
+}

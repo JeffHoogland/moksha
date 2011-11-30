@@ -158,18 +158,6 @@ _cb_sort_date(const void *data1, const void *data2)
 }
 
 static void
-_item_free(Evry_Item *it)
-{
-   GET_FILE(file, it);
-
-   IF_RELEASE(file->url);
-   IF_RELEASE(file->path);
-   IF_RELEASE(file->mime);
-
-   E_FREE(file);
-}
-
-static void
 _scan_func(void *data, Ecore_Thread *thread)
 {
    Data *d = data;
@@ -185,7 +173,7 @@ _scan_func(void *data, Ecore_Thread *thread)
         if ((d->plugin->show_hidden) != (*(info->path + info->name_start) == '.'))
           continue;
 
-        file = EVRY_ITEM_NEW(Evry_Item_File, d->plugin, NULL, NULL, _item_free);
+        file = EVRY_ITEM_NEW(Evry_Item_File, d->plugin, NULL, NULL, evry_item_file_free);
         file->path = strdup(info->path);
         EVRY_ITEM(file)->label = strdup(info->path + info->name_start);
         EVRY_ITEM(file)->browseable = (info->type == EINA_FILE_DIR);
@@ -464,7 +452,7 @@ _dir_watcher(void *data, Ecore_File_Monitor *em __UNUSED__, Ecore_File_Event eve
       case ECORE_FILE_EVENT_CREATED_FILE:
         label = ecore_file_file_get(path);
 
-        file = EVRY_ITEM_NEW(Evry_Item_File, p, label, NULL, _item_free);
+        file = EVRY_ITEM_NEW(Evry_Item_File, p, label, NULL, evry_item_file_free);
         file->path = eina_stringshare_add(path);
 
         if (event == ECORE_FILE_EVENT_CREATED_DIRECTORY)
@@ -605,7 +593,7 @@ _folder_item_add(Plugin *p, const char *path, int prio)
 {
    Evry_Item_File *file;
 
-   file = EVRY_ITEM_NEW(Evry_Item_File, p, path, NULL, _item_free);
+   file = EVRY_ITEM_NEW(Evry_Item_File, p, path, NULL, evry_item_file_free);
    file->path = eina_stringshare_add(path);
    file->mime = eina_stringshare_ref(_mime_dir);
    EVRY_ITEM(file)->browseable = EINA_TRUE;
@@ -1000,7 +988,7 @@ _recentf_items_add_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *d
         return EINA_TRUE;
      }
 
-   file = EVRY_ITEM_NEW(Evry_Item_File, p, label, NULL, _item_free);
+   file = EVRY_ITEM_NEW(Evry_Item_File, p, label, NULL, evry_item_file_free);
    file->path = path;
 
    if (hi->data)

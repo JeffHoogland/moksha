@@ -50,6 +50,7 @@ typedef struct _Evry_Module Evry_Module;
 typedef struct _Evry_Event_Item_Changed     Evry_Event_Item_Changed;
 typedef struct _Evry_Event_Item_Selected    Evry_Event_Item_Selected;
 typedef struct _Evry_Event_Action_Performed Evry_Event_Action_Performed;
+typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
 
 struct _Evry_Module
 {
@@ -65,7 +66,7 @@ struct _Evry_API
 
   Evry_Item *(*item_new)(Evry_Item *base, Evry_Plugin *p, const char *label,
 			Evas_Object *(*icon_get) (Evry_Item *it, Evas *e),
-			void (*cb_free) (Evry_Item *item));
+			Evry_Item_Free_Cb item_free);
 
   void (*item_free)(Evry_Item *it);
   void (*item_ref)(Evry_Item *it);
@@ -164,7 +165,7 @@ struct _Evry_Event_Action_Performed
 #define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free) \
   (_base *) evry->item_new(EVRY_ITEM(E_NEW(_base, 1)),		\
 			   EVRY_PLUGIN(_plugin),		\
-			   _label, _icon_get, _free)
+			   _label, _icon_get, (Evry_Item_Free_Cb)_free)
 
 #define EVRY_ITEM_FREE(_item) evry->item_free((Evry_Item *)_item)
 #define EVRY_ITEM_REF(_item) evry->item_ref((Evry_Item *)_item)
@@ -248,8 +249,6 @@ struct _Evry_Event_Action_Performed
 #define EVRY_PLUGIN_MIN_QUERY(_p, _input)				\
   if (!(EVRY_PLUGIN(_p)->config->min_query) ||				\
       (_input && (strlen(_input) >= EVRY_PLUGIN(_p)->config->min_query)))
-
-typedef void (*Evry_Item_Free_Cb) (Evry_Item *it);
 
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p) {				\
      Evry_Item *it;						\
