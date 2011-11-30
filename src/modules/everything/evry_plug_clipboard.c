@@ -17,7 +17,7 @@ _action(Evry_Action *act)
 static int
 _check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 {
-   return (it && it->label && (strlen(it->label) > 0));
+   return it && it->label && (strlen(it->label) > 0);
 }
 
 Eina_Bool
@@ -31,9 +31,9 @@ evry_plug_clipboard_init(void)
 
 //FIXME: Icon name doesn't follow FDO Spec
    act = EVRY_ACTION_NEW("Copy to Clipboard",
-			 EVRY_TYPE_TEXT, 0,
-			 "everything-clipboard",
-			 _action, _check_item);
+                         EVRY_TYPE_TEXT, 0,
+                         "everything-clipboard",
+                         _action, _check_item);
    act->remember_context = EINA_TRUE;
    evry_action_register(act, 10);
 
@@ -48,3 +48,4 @@ evry_plug_clipboard_shutdown(void)
    ecore_x_window_free(clipboard_win);
    evry_action_free(act);
 }
+

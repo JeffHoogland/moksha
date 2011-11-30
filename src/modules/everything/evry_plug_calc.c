@@ -6,12 +6,12 @@ typedef struct _Plugin Plugin;
 
 struct _Plugin
 {
-  Evry_Plugin base;
+   Evry_Plugin base;
 };
 
-static Eina_Bool  _cb_data(void *data, int type, void *event);
-static Eina_Bool  _cb_error(void *data, int type, void *event);
-static Eina_Bool  _cb_del(void *data, int type, void *event);
+static Eina_Bool _cb_data(void *data, int type, void *event);
+static Eina_Bool _cb_error(void *data, int type, void *event);
+static Eina_Bool _cb_del(void *data, int type, void *event);
 
 static const Evry_API *evry = NULL;
 static Evry_Module *evry_module = NULL;
@@ -39,15 +39,15 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 
    if (history)
      {
-	const char *result;
+        const char *result;
 
-	EINA_LIST_FREE(history, result)
-	  {
-	     it = EVRY_ITEM_NEW(Evry_Item, p, result, NULL, NULL);
-	     it->context = eina_stringshare_ref(p->base.name);
-	     p->base.items = eina_list_prepend(p->base.items, it);
-	     eina_stringshare_del(result);
-	  }
+        EINA_LIST_FREE (history, result)
+          {
+             it = EVRY_ITEM_NEW(Evry_Item, p, result, NULL, NULL);
+             it->context = eina_stringshare_ref(p->base.name);
+             p->base.items = eina_list_prepend(p->base.items, it);
+             eina_stringshare_del(result);
+          }
      }
 
    it = EVRY_ITEM_NEW(Evry_Item, p, "0", NULL, NULL);
@@ -62,22 +62,22 @@ static int
 _run_bc(Plugin *p)
 {
    handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (ECORE_EXE_EVENT_DATA, _cb_data, p));
+       (handlers, ecore_event_handler_add
+         (ECORE_EXE_EVENT_DATA, _cb_data, p));
    handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (ECORE_EXE_EVENT_ERROR, _cb_error, p));
+       (handlers, ecore_event_handler_add
+         (ECORE_EXE_EVENT_ERROR, _cb_error, p));
    handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (ECORE_EXE_EVENT_DEL, _cb_del, p));
+       (handlers, ecore_event_handler_add
+         (ECORE_EXE_EVENT_DEL, _cb_del, p));
 
    exe = ecore_exe_pipe_run("bc -l",
-			    ECORE_EXE_PIPE_READ |
-			    ECORE_EXE_PIPE_READ_LINE_BUFFERED |
-			    ECORE_EXE_PIPE_WRITE |
-			    ECORE_EXE_PIPE_ERROR |
-			    ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
-			    NULL);
+                            ECORE_EXE_PIPE_READ |
+                            ECORE_EXE_PIPE_READ_LINE_BUFFERED |
+                            ECORE_EXE_PIPE_WRITE |
+                            ECORE_EXE_PIPE_ERROR |
+                            ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
+                            NULL);
    return !!exe;
 }
 
@@ -89,22 +89,22 @@ _finish(Evry_Plugin *plugin)
    Evry_Item *it;
    int items = 0;
 
-   EINA_LIST_FREE(p->base.items, it)
+   EINA_LIST_FREE (p->base.items, it)
      {
-   	if ((items++ > 1) && (items < 10))
-   	  history = eina_list_prepend(history, eina_stringshare_add(it->label));
+        if ((items++ > 1) && (items < 10))
+          history = eina_list_prepend(history, eina_stringshare_add(it->label));
 
-	EVRY_ITEM_FREE(it);
+        EVRY_ITEM_FREE(it);
      }
 
-   EINA_LIST_FREE(handlers, h)
+   EINA_LIST_FREE (handlers, h)
      ecore_event_handler_del(h);
 
    if (exe)
      {
-	ecore_exe_quit(exe);
-	ecore_exe_free(exe);
-	exe = NULL;
+        ecore_exe_quit(exe);
+        ecore_exe_free(exe);
+        exe = NULL;
      }
    active = EINA_FALSE;
 
@@ -128,18 +128,18 @@ _cb_action_performed(__UNUSED__ void *data, __UNUSED__ int type, void *event)
    /* remove duplicates */
    if (p->items->next)
      {
-	it = p->items->data;
+        it = p->items->data;
 
-	EINA_LIST_FOREACH(p->items->next, l, it2)
-	  {
-	     if (!strcmp(it->label, it2->label))
-	       {
-		  p->items = eina_list_promote_list(p->items, l);
-		  evry->item_changed(it, 0, 1);
-		  EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
-		  return ECORE_CALLBACK_PASS_ON;
-	       }
-	  }
+        EINA_LIST_FOREACH (p->items->next, l, it2)
+          {
+             if (!strcmp(it->label, it2->label))
+               {
+                  p->items = eina_list_promote_list(p->items, l);
+                  evry->item_changed(it, 0, 1);
+                  EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+                  return ECORE_CALLBACK_PASS_ON;
+               }
+          }
      }
 
    it_old = p->items->data;
@@ -176,8 +176,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
       second time...*/
    if (error)
      {
-	ecore_exe_send(exe, buf, strlen(buf));
-	error = 0;
+        ecore_exe_send(exe, buf, strlen(buf));
+        error = 0;
      }
 
    return EVRY_PLUGIN_HAS_ITEMS(p);
@@ -194,16 +194,17 @@ _cb_data(void *data, int type __UNUSED__, void *event)
 
    if (ev->lines)
      {
-	it = cur_item;
-	eina_stringshare_del(it->label);
-	it->label = eina_stringshare_add(ev->lines->line);
+        it = cur_item;
+        eina_stringshare_del(it->label);
+        it->label = eina_stringshare_add(ev->lines->line);
 
-	if (!(it = eina_list_data_get(p->items)) || (it != cur_item))
-	  {
-	     p->items = eina_list_prepend(p->items, cur_item);
-	     EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
-	  }
-	else if (it) evry->item_changed(it, 0, 0);
+        if (!(it = eina_list_data_get(p->items)) || (it != cur_item))
+          {
+             p->items = eina_list_prepend(p->items, cur_item);
+             EVRY_PLUGIN_UPDATE(p, EVRY_UPDATE_ADD);
+          }
+        else if (it)
+          evry->item_changed(it, 0, 0);
      }
 
    return ECORE_CALLBACK_PASS_ON;
@@ -246,23 +247,23 @@ _plugins_init(const Evry_API *_api)
      return EINA_FALSE;
 
    action_handler = evry->event_handler_add(EVRY_EVENT_ACTION_PERFORMED,
-					    _cb_action_performed, NULL);
+                                            _cb_action_performed, NULL);
 
    _plug = EVRY_PLUGIN_BASE("Calculator", _module_icon, EVRY_TYPE_TEXT,
-			    _begin, _finish, _fetch);
+                            _begin, _finish, _fetch);
 
-   _plug->history     = EINA_FALSE;
+   _plug->history = EINA_FALSE;
    _plug->async_fetch = EINA_TRUE;
 
    if (evry->plugin_register(_plug, EVRY_PLUGIN_SUBJECT, 0))
      {
-	Plugin_Config *pc = _plug->config;
-	pc->view_mode = VIEW_MODE_LIST;
-	pc->trigger = eina_stringshare_add("=");
-	pc->trigger_only = EINA_TRUE;
-	pc->aggregate = EINA_FALSE;
-	/* pc->top_level = EINA_FALSE; */
-	/* pc->min_query = 3; */
+        Plugin_Config *pc = _plug->config;
+        pc->view_mode = VIEW_MODE_LIST;
+        pc->trigger = eina_stringshare_add("=");
+        pc->trigger_only = EINA_TRUE;
+        pc->aggregate = EINA_FALSE;
+        /* pc->top_level = EINA_FALSE; */
+        /* pc->min_query = 3; */
      }
 
    return EINA_TRUE;
@@ -295,3 +296,4 @@ evry_plug_calc_shutdown(void)
 
 void
 evry_plug_calc_save(void){}
+

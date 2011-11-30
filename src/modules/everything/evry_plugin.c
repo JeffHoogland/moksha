@@ -13,10 +13,9 @@ evry_plugins_shutdown(void)
 {
    Evry_Action *act;
 
-   EINA_LIST_FREE(actions, act)
+   EINA_LIST_FREE (actions, act)
      evry_action_free(act);
 }
-
 
 static int
 _evry_cb_plugin_sort(const void *data1, const void *data2)
@@ -46,11 +45,11 @@ _evry_plugin_free(Evry_Item *it)
 
 Evry_Plugin *
 evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
-		const char *icon, Evry_Type item_type,
-		Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
-		void (*finish) (Evry_Plugin *p),
-		int  (*fetch) (Evry_Plugin *p, const char *input),
-		void (*cb_free) (Evry_Plugin *p))
+                const char *icon, Evry_Type item_type,
+                Evry_Plugin *(*begin)(Evry_Plugin * p, const Evry_Item * item),
+                void (*finish)(Evry_Plugin *p),
+                int (*fetch)(Evry_Plugin *p, const char *input),
+                void (*cb_free)(Evry_Plugin *p))
 {
    Evry_Plugin *p;
    Evry_Item *it;
@@ -63,19 +62,19 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
    it = evry_item_new(EVRY_ITEM(p), NULL, label, NULL, _evry_plugin_free);
    it->plugin = p;
    it->browseable = EINA_TRUE;
-   it->type  = EVRY_TYPE_PLUGIN;
+   it->type = EVRY_TYPE_PLUGIN;
    if (item_type)
      it->subtype = item_type;
    if (icon)
      it->icon = eina_stringshare_add(icon);
 
-   p->name   = eina_stringshare_add(name);
-   p->begin  = begin;
+   p->name = eina_stringshare_add(name);
+   p->begin = begin;
    p->finish = finish;
-   p->fetch  = fetch;
+   p->fetch = fetch;
 
    p->async_fetch = EINA_FALSE;
-   p->history     = EINA_TRUE;
+   p->history = EINA_TRUE;
 
    p->free = cb_free;
 
@@ -107,10 +106,10 @@ _evry_plugin_action_browse(Evry_Action *act)
 
    if ((p = pp->begin(pp, it)))
      {
-	plugins = eina_list_append(plugins, p);
+        plugins = eina_list_append(plugins, p);
 
-	if (!evry_state_push(sel, plugins))
-	  eina_list_free(plugins);
+        if (!evry_state_push(sel, plugins))
+          eina_list_free(plugins);
      }
 
    return 0;
@@ -134,37 +133,37 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
    else if (type == EVRY_PLUGIN_OBJECT)
      conf = evry_conf->conf_objects;
 
-   EINA_LIST_FOREACH(conf, l, pc)
+   EINA_LIST_FOREACH (conf, l, pc)
      if (pc->name && p->name && !strcmp(pc->name, p->name))
        break;
 
    /* check if module of same name is already loaded */
    /* if ((pc) && (pc->plugin))
     *   return 0; */
-   
+
    /* collection plugin sets its own config */
    if (!pc && p->config)
      {
-	conf = eina_list_append(conf, p->config);
-	pc = p->config;
+        conf = eina_list_append(conf, p->config);
+        pc = p->config;
      }
    else if (!pc)
      {
-	new_conf = 1;
-	pc = E_NEW(Plugin_Config, 1);
-	pc->name = eina_stringshare_add(p->name);
-	pc->enabled = 1;
-	pc->priority = priority ? priority : 100;
-	pc->view_mode = VIEW_MODE_NONE;
-	pc->aggregate = EINA_TRUE;
-	pc->top_level = EINA_TRUE;
+        new_conf = 1;
+        pc = E_NEW(Plugin_Config, 1);
+        pc->name = eina_stringshare_add(p->name);
+        pc->enabled = 1;
+        pc->priority = priority ? priority : 100;
+        pc->view_mode = VIEW_MODE_NONE;
+        pc->aggregate = EINA_TRUE;
+        pc->top_level = EINA_TRUE;
 
-	conf = eina_list_append(conf, pc);
+        conf = eina_list_append(conf, pc);
      }
    if (pc->trigger && strlen(pc->trigger) == 0)
      {
-	eina_stringshare_del(pc->trigger);
-	pc->trigger = NULL;
+        eina_stringshare_del(pc->trigger);
+        pc->trigger = NULL;
      }
 
    p->config = pc;
@@ -178,28 +177,28 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
      evry_conf->conf_actions = conf;
    else if (type == EVRY_PLUGIN_OBJECT)
      evry_conf->conf_objects = conf;
-   
+
    if ((type == EVRY_PLUGIN_SUBJECT) && (p->name && strcmp(p->name, "All")))
      {
-	char buf[256];
-	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
+        char buf[256];
+        snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
 
-	e_action_predef_name_set(_("Everything Launcher"), buf,
-				 "everything", p->name, NULL, 1);
+        e_action_predef_name_set(_("Everything Launcher"), buf,
+                                 "everything", p->name, NULL, 1);
      }
 
    if (p->input_type)
      {
-	Evry_Action *act;
-	char buf[256];
-	snprintf(buf, sizeof(buf), _("Browse %s"), EVRY_ITEM(p)->label);
+        Evry_Action *act;
+        char buf[256];
+        snprintf(buf, sizeof(buf), _("Browse %s"), EVRY_ITEM(p)->label);
 
-	act = EVRY_ACTION_NEW(buf, p->input_type, 0, EVRY_ITEM(p)->icon,
-			      _evry_plugin_action_browse, NULL);
-	EVRY_ITEM(act)->icon_get = EVRY_ITEM(p)->icon_get;
-	EVRY_ITEM(act)->data = p;
-	evry_action_register(act, 1);
-	actions = eina_list_append(actions, act);
+        act = EVRY_ACTION_NEW(buf, p->input_type, 0, EVRY_ITEM(p)->icon,
+                              _evry_plugin_action_browse, NULL);
+        EVRY_ITEM(act)->icon_get = EVRY_ITEM(p)->icon_get;
+        EVRY_ITEM(act)->data = p;
+        evry_action_register(act, 1);
+        actions = eina_list_append(actions, act);
      }
 
    return new_conf;
@@ -213,10 +212,10 @@ evry_plugin_unregister(Evry_Plugin *p)
 
    if (l && eina_list_data_find_list(l, p->config))
      {
-	char buf[256];
-   	snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
+        char buf[256];
+        snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
 
-   	e_action_predef_name_del(_("Everything"), buf);
+        e_action_predef_name_del(_("Everything"), buf);
      }
 }
 
@@ -227,11 +226,11 @@ evry_plugin_find(const char *name)
    Eina_List *l;
    const char *n = eina_stringshare_add(name);
 
-   EINA_LIST_FOREACH(evry_conf->conf_subjects, l, pc)
+   EINA_LIST_FOREACH (evry_conf->conf_subjects, l, pc)
      {
-	if (!pc->plugin) continue;
-	if (pc->name == n)
-	  break;
+        if (!pc->plugin) continue;
+        if (pc->name == n)
+          break;
      }
 
    eina_stringshare_del(n);
@@ -240,3 +239,4 @@ evry_plugin_find(const char *name)
 
    return pc->plugin;
 }
+

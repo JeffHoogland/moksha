@@ -1,15 +1,14 @@
 #include "e_mod_main.h"
 
-
 typedef struct _Tab Tab;
 
 struct _Tab
 {
-  Tab_View *tab_view;
-  Evry_Plugin *plugin;
-  Evas_Object *o_tab;
+   Tab_View    *tab_view;
+   Evry_Plugin *plugin;
+   Evas_Object *o_tab;
 
-  int cw, mw;
+   int          cw, mw;
 };
 
 static void _tabs_update(Tab_View *v);
@@ -46,14 +45,15 @@ _tab_cb_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *ev
 
    if (tab->plugin)
      {
-	_plugin_select(v, tab->plugin);
-	v->view->update(v->view);
+        _plugin_select(v, tab->plugin);
+        v->view->update(v->view);
      }
    else
      {
-	evry_browse_back(v->state->selector);
+        evry_browse_back(v->state->selector);
      }
 }
+
 static void
 _tabs_cb_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
@@ -62,15 +62,16 @@ _tabs_cb_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
 
    if (ev->z > 0)
      {
-	_plugin_next(v);
-	v->view->update(v->view);
+        _plugin_next(v);
+        v->view->update(v->view);
      }
    else if (ev->z < 0)
      {
-	_plugin_prev(v);
-	v->view->update(v->view);
+        _plugin_prev(v);
+        v->view->update(v->view);
      }
 }
+
 static Tab *
 _add_tab(Tab_View *v, Evry_Plugin *p)
 {
@@ -81,25 +82,25 @@ _add_tab(Tab_View *v, Evry_Plugin *p)
    o = edje_object_add(v->evas);
    if (p)
      {
-	e_theme_edje_object_set(o, "base/theme/modules/everything",
-	      "e/modules/everything/tab_item");
-	edje_object_part_text_set(o, "e.text.label", EVRY_ITEM(p)->label);
+        e_theme_edje_object_set(o, "base/theme/modules/everything",
+                                "e/modules/everything/tab_item");
+        edje_object_part_text_set(o, "e.text.label", EVRY_ITEM(p)->label);
      }
    else
      {
-	e_theme_edje_object_set(o, "base/theme/modules/everything",
-	      "e/modules/everything/tab_item/back");
-	edje_object_part_text_set(o, "e.text.label", _("Back"));
+        e_theme_edje_object_set(o, "base/theme/modules/everything",
+                                "e/modules/everything/tab_item/back");
+        edje_object_part_text_set(o, "e.text.label", _("Back"));
      }
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
-				  _tab_cb_down, tab);
+                                  _tab_cb_down, tab);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP,
-				  _tab_cb_up, tab);
+                                  _tab_cb_up, tab);
    tab->o_tab = o;
 
    edje_object_size_min_calc(o, &tab->cw, NULL);
-   edje_object_size_min_get(o,  &tab->mw, NULL);
+   edje_object_size_min_get(o, &tab->mw, NULL);
 
    v->tabs = eina_list_append(v->tabs, tab);
 
@@ -119,85 +120,84 @@ _tabs_update(Tab_View *v)
 
    if (s->delete_me)
      return;
-   
+
    edje_object_calc_force(v->o_tabs);
    evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
 
    if (!w && !v->timer)
      {
-   	v->timer = ecore_timer_add(0.001, _timer_cb, v); 
-   	return;
+        v->timer = ecore_timer_add(0.001, _timer_cb, v);
+        return;
      }
 
    /* remove tabs for not active plugins */
    e_box_freeze(v->o_tabs);
 
-   EINA_LIST_FOREACH(v->tabs, l, tab)
+   EINA_LIST_FOREACH (v->tabs, l, tab)
      {
-	if (!tab->plugin)
-	  continue;
+        if (!tab->plugin)
+          continue;
 
-	e_box_unpack(tab->o_tab);
-	evas_object_hide(tab->o_tab);
+        e_box_unpack(tab->o_tab);
+        evas_object_hide(tab->o_tab);
      }
 
    if (s->selector->states->next)
      {
-	cur++;
-	i++;
+        cur++;
+        i++;
 
-	if (!(tab = eina_list_data_get(v->tabs)))
-	  {
-	     tab = _add_tab(v, NULL);
+        if (!(tab = eina_list_data_get(v->tabs)))
+          {
+             tab = _add_tab(v, NULL);
 
-	     o = tab->o_tab;
-	     evas_object_show(o);
-	     e_box_pack_end(v->o_tabs, o);
-	     e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w/4, 10, w/3, 9999);
-	  }
+             o = tab->o_tab;
+             evas_object_show(o);
+             e_box_pack_end(v->o_tabs, o);
+             e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w / 4, 10, w / 3, 9999);
+          }
      }
 
-   for(l = s->cur_plugins; l; l = l->next, cur++)
+   for (l = s->cur_plugins; l; l = l->next, cur++)
      if (l->data == s->plugin) break;
 
    if (cur > 2)
      {
-	if ((cur + 1) == eina_list_count(s->cur_plugins))
-	  plugins = eina_list_nth_list(s->cur_plugins, cur - 3);
-	else
-	  plugins = eina_list_nth_list(s->cur_plugins, cur - 2);
+        if ((cur + 1) == eina_list_count(s->cur_plugins))
+          plugins = eina_list_nth_list(s->cur_plugins, cur - 3);
+        else
+          plugins = eina_list_nth_list(s->cur_plugins, cur - 2);
      }
    else
      {
-	plugins = s->cur_plugins;
+        plugins = s->cur_plugins;
      }
 
    /* show/update tabs of active plugins */
-   EINA_LIST_FOREACH(plugins, l, p)
+   EINA_LIST_FOREACH (plugins, l, p)
      {
-	EINA_LIST_FOREACH(v->tabs, ll, tab)
-	  if (tab->plugin == p) break;
+        EINA_LIST_FOREACH (v->tabs, ll, tab)
+          if (tab->plugin == p) break;
 
-	if (!tab && !(tab = _add_tab(v, p)))
-	  continue;
+        if (!tab && !(tab = _add_tab(v, p)))
+          continue;
 
-	o = tab->o_tab;
-	evas_object_show(o);
-	e_box_pack_end(v->o_tabs, o);
-	e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w/4, 10, w/3, 9999);
+        o = tab->o_tab;
+        evas_object_show(o);
+        e_box_pack_end(v->o_tabs, o);
+        e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w / 4, 10, w / 3, 9999);
 
-	if (s->plugin == p)
-	  edje_object_signal_emit(o, "e,state,selected", "e");
-	else
-	  edje_object_signal_emit(o, "e,state,unselected", "e");
+        if (s->plugin == p)
+          edje_object_signal_emit(o, "e,state,selected", "e");
+        else
+          edje_object_signal_emit(o, "e,state,unselected", "e");
 
-	if (++i > 3) break;
+        if (++i > 3) break;
      }
 
    e_box_align_set(v->o_tabs, 0.0, 0.5);
    e_box_thaw(v->o_tabs);
 }
-
 
 static void
 _tabs_clear(Tab_View *v)
@@ -206,13 +206,13 @@ _tabs_clear(Tab_View *v)
    Tab *tab;
 
    e_box_freeze(v->o_tabs);
-   EINA_LIST_FOREACH(v->tabs, l, tab)
+   EINA_LIST_FOREACH (v->tabs, l, tab)
      {
-	if (!tab->plugin)
-	  continue;
+        if (!tab->plugin)
+          continue;
 
-	e_box_unpack(tab->o_tab);
-	evas_object_hide(tab->o_tab);
+        e_box_unpack(tab->o_tab);
+        evas_object_hide(tab->o_tab);
      }
    e_box_thaw(v->o_tabs);
 }
@@ -254,23 +254,23 @@ _plugin_next_by_name(Tab_View *v, const char *key)
 
    if (!s->plugin) return;
 
-   EINA_LIST_FOREACH(s->cur_plugins, l, p)
+   EINA_LIST_FOREACH (s->cur_plugins, l, p)
      {
-	/* if (!p)
-	 *   {
-	 *      // FIXME how can this happen?
-	 *      ERR("plugin == NULL");
-	 *      continue;
-	 *   } */
+        /* if (!p)
+         *   {
+         *      // FIXME how can this happen?
+         *      ERR("plugin == NULL");
+         *      continue;
+         *   } */
 
-	if (EVRY_ITEM(p)->label && (!strncasecmp(EVRY_ITEM(p)->label, key, 1)))
-	  {
-	     if (!first) first = p;
+        if (EVRY_ITEM(p)->label && (!strncasecmp(EVRY_ITEM(p)->label, key, 1)))
+          {
+             if (!first) first = p;
 
-	     if (found && !next)
-	       next = p;
-	  }
-	if (p == s->plugin) found = 1;
+             if (found && !next)
+               next = p;
+          }
+        if (p == s->plugin) found = 1;
      }
 
    if (next)
@@ -298,14 +298,13 @@ _plugin_prev(Tab_View *v)
      p = l->prev->data;
    else
      {
-	l = eina_list_last(s->cur_plugins);
-	if (s->plugin != l->data)
-	  p = l->data;
+        l = eina_list_last(s->cur_plugins);
+        if (s->plugin != l->data)
+          p = l->data;
      }
 
    if (p) _plugin_select(v, p);
 }
-
 
 static int
 _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
@@ -316,39 +315,38 @@ _tabs_key_down(Tab_View *v, const Ecore_Event_Key *ev)
 
    if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
      {
-	if (!strcmp(key, "Next"))
-	  {
-	     _plugin_next(v);
-	     return 1;
-	  }
-	else if (!strcmp(key, "Prior"))
-	  {
-	     _plugin_prev(v);
-	     return 1;
-	  }
+        if (!strcmp(key, "Next"))
+          {
+             _plugin_next(v);
+             return 1;
+          }
+        else if (!strcmp(key, "Prior"))
+          {
+             _plugin_prev(v);
+             return 1;
+          }
      }
    else if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
      {
-	if (!strcmp(key, "Left"))
-	  {
-	     _plugin_prev(v);
-	     return 1;
-	  }
-	else if (!strcmp(key, "Right"))
-	  {
-	     _plugin_next(v);
-	     return 1;
-	  }
-	else if (ev->compose)
-	  {
-	     _plugin_next_by_name(v, key);
-	     return 1;
-	  }
+        if (!strcmp(key, "Left"))
+          {
+             _plugin_prev(v);
+             return 1;
+          }
+        else if (!strcmp(key, "Right"))
+          {
+             _plugin_next(v);
+             return 1;
+          }
+        else if (ev->compose)
+          {
+             _plugin_next_by_name(v, key);
+             return 1;
+          }
      }
 
    return 0;
 }
-
 
 Tab_View *
 evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e)
@@ -357,8 +355,8 @@ evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e)
    Evas_Object *o;
 
    v = E_NEW(Tab_View, 1);
-   v->update   = &_tabs_update;
-   v->clear    = &_tabs_clear;
+   v->update = &_tabs_update;
+   v->clear = &_tabs_clear;
    v->key_down = &_tabs_key_down;
    v->view = view;
    v->state = s;
@@ -368,7 +366,7 @@ evry_tab_view_new(Evry_View *view, const Evry_State *s, Evas *e)
    e_box_orientation_set(o, 1);
    e_box_homogenous_set(o, 1);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL,
-				  _tabs_cb_wheel, v);
+                                  _tabs_cb_wheel, v);
    v->o_tabs = o;
 
    return v;
@@ -379,11 +377,11 @@ evry_tab_view_free(Tab_View *v)
 {
    Tab *tab;
 
-   EINA_LIST_FREE(v->tabs, tab)
+   EINA_LIST_FREE (v->tabs, tab)
      {
-	e_box_unpack(tab->o_tab);
-	evas_object_del(tab->o_tab);
-	E_FREE(tab);
+        e_box_unpack(tab->o_tab);
+        evas_object_del(tab->o_tab);
+        E_FREE(tab);
      }
 
    evas_object_del(v->o_tabs);
@@ -396,3 +394,4 @@ evry_tab_view_free(Tab_View *v)
 
    E_FREE(v);
 }
+

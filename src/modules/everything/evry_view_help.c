@@ -27,30 +27,30 @@ _cb_key_down(Evry_View *v, const Ecore_Event_Key *ev)
 
    if (!strcmp(ev->key, "Down"))
      {
-	o = v->o_list;
-	evas_object_geometry_get(o, NULL, NULL, NULL, &h);
-	if (!h) h = 1;
-	e_box_align_get(o, NULL, &align);
+        o = v->o_list;
+        evas_object_geometry_get(o, NULL, NULL, NULL, &h);
+        if (!h) h = 1;
+        e_box_align_get(o, NULL, &align);
 
-	align = align - 10.0/(double)h;
-	if (align < 0.0) align = 0.0;
+        align = align - 10.0 / (double)h;
+        if (align < 0.0) align = 0.0;
 
-	e_box_align_set(v->o_list, 0.5, align);
+        e_box_align_set(v->o_list, 0.5, align);
 
-	return 1;
+        return 1;
      }
    else if (!strcmp(ev->key, "Up"))
      {
-	o = v->o_list;
-	evas_object_geometry_get(o, NULL, NULL, NULL, &h);
-	if (!h) h = 1;
-	e_box_align_get(o, NULL, &align);
+        o = v->o_list;
+        evas_object_geometry_get(o, NULL, NULL, NULL, &h);
+        if (!h) h = 1;
+        e_box_align_get(o, NULL, &align);
 
-	align = align + 10.0/(double)h;
-	if (align > 1.0) align = 1.0;
+        align = align + 10.0 / (double)h;
+        if (align > 1.0) align = 1.0;
 
-	e_box_align_set(v->o_list, 0.5, align);
-	return 1;
+        e_box_align_set(v->o_list, 0.5, align);
+        return 1;
      }
 
    evry_view_toggle(v->state, NULL);
@@ -62,7 +62,7 @@ _view_create(Evry_View *v, const Evry_State *s __UNUSED__, const Evas_Object *sw
 {
    Evas_Object *o;
    int mw, mh;
-   
+
    char *text =
      _("  Ok, here comes the explanation of <hilight>everything</hilight>...<br>"
        "  Just type a few letters of the thing you are looking for. <br>"
@@ -93,7 +93,7 @@ _view_create(Evry_View *v, const Evry_State *s __UNUSED__, const Evas_Object *sw
    e_box_freeze(v->o_list);
    o = edje_object_add(evas_object_evas_get(swallow));
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "e/modules/everything/textblock");
+                           "e/modules/everything/textblock");
 
    edje_object_part_text_set(o, "e.textblock.text", text);
    e_box_pack_start(v->o_list, o);
@@ -141,3 +141,4 @@ evry_view_help_shutdown(void)
    evry_view_unregister(view);
    E_FREE(view);
 }
+
