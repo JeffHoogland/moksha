@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION     29
+#define EVRY_API_VERSION     30
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -70,7 +70,7 @@ struct _Evry_API
 
   void (*item_free)(Evry_Item *it);
   void (*item_ref)(Evry_Item *it);
-  /* send EVRY_EVENT_ITEM_CHANGED event */
+  /* sends EVRY_EVENT_ITEM_CHANGED event */
   void  (*item_changed)(Evry_Item *it, int change_icon, int change_selected);
 
   Evry_Plugin *(*plugin_new)(Evry_Plugin *base, const char *name,
@@ -78,8 +78,7 @@ struct _Evry_API
 				  Evry_Type item_type,
 				  Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 				  void (*cleanup) (Evry_Plugin *p),
-				  int  (*fetch)   (Evry_Plugin *p, const char *input),
-				  void (*free) (Evry_Plugin *p));
+				  int  (*fetch)   (Evry_Plugin *p, const char *input));
 
   void (*plugin_free)(Evry_Plugin *p);
   /* when a new plugin config was created return val is 1. in this
@@ -162,6 +161,8 @@ struct _Evry_Event_Action_Performed
 #define GET_ITEM(_it, _any) Evry_Item *_it = (Evry_Item *) _any
 
 /*** Evry_Item macros ***/
+
+/* */
 #define EVRY_ITEM_NEW(_base, _plugin, _label, _icon_get, _free) \
   (_base *) evry->item_new(EVRY_ITEM(E_NEW(_base, 1)),		\
 			   EVRY_PLUGIN(_plugin),		\
@@ -177,24 +178,16 @@ struct _Evry_Event_Action_Performed
   ((Evry_Item *)_item)->data
 
 #define EVRY_ITEM_DETAIL_SET(_it, _detail)			\
-  if (EVRY_ITEM(_it)->detail)					\
-    eina_stringshare_del(EVRY_ITEM(_it)->detail);		\
-  EVRY_ITEM(_it)->detail = eina_stringshare_add(_detail);
+  eina_stringshare_replace(&(EVRY_ITEM(_it)->detail), _detail);
 
 #define EVRY_ITEM_LABEL_SET(_it, _label)			\
-  if (EVRY_ITEM(_it)->label)					\
-    eina_stringshare_del(EVRY_ITEM(_it)->label);		\
-  EVRY_ITEM(_it)->label = eina_stringshare_add(_label);
+  eina_stringshare_replace(&(EVRY_ITEM(_it)->label), _label);
 
 #define EVRY_ITEM_CONTEXT_SET(_it, _context)			\
-  if (EVRY_ITEM(_it)->context)					\
-    eina_stringshare_del(EVRY_ITEM(_it)->context);		\
-  EVRY_ITEM(_it)->context = eina_stringshare_add(_context);
+  eina_stringshare_replace(&(EVRY_ITEM(_it)->context), _context);
 
 #define EVRY_ITEM_ICON_SET(_it, _icon)				\
-  if (EVRY_ITEM(_it)->icon)					\
-    eina_stringshare_del(EVRY_ITEM(_it)->icon);			\
-  EVRY_ITEM(_it)->icon = eina_stringshare_add(_icon);
+  eina_stringshare_replace(&(EVRY_ITEM(_it)->icon), _icon);
 
 #define CHECK_TYPE(_item, _type) \
   (((Evry_Item *)_item)->type == _type)
@@ -205,13 +198,13 @@ struct _Evry_Event_Action_Performed
 #define IS_BROWSEABLE(_item) ((Evry_Item *)_item)->browseable
 
 /*** Evry_Plugin macros ***/
-#define EVRY_PLUGIN_NEW(_base, _name, _icon, _item_type, _begin, _finish, _fetch, _free) \
-  evry->plugin_new(EVRY_PLUGIN(E_NEW(_base, 1)), _name, _(_name), _icon, _item_type,     \
-		   _begin, _finish, _fetch, _free)
 
+/* creates a Evry_Plugin to be registered with evry */
 #define EVRY_PLUGIN_BASE(_name, _icon, _item_type, _begin, _finish, _fetch) \
-  EVRY_PLUGIN_NEW(Evry_Plugin, _name, _icon, _item_type, _begin, _finish, _fetch, NULL)
+  evry->plugin_new(EVRY_PLUGIN(E_NEW(Evry_Plugin, 1)), _name, _(_name), _icon, _item_type, \
+		   _begin, _finish, _fetch)
 
+/* creates the plugin instance '_p' for the Evry_Plugin '_plugin' */
 #define EVRY_PLUGIN_INSTANCE(_p, _plugin) {				\
      _p			   = E_NEW(Plugin, 1);				\
      _p->base              = *_plugin;					\
@@ -219,32 +212,43 @@ struct _Evry_Event_Action_Performed
      _p->base.base.ref     = 1;						\
      _p->base.base.plugin  = (Evry_Plugin*)_p;				\
      _p->base.base.free    = (Evry_Item_Free_Cb)_p->base.finish;	\
-     _p->base.base.label   = eina_stringshare_add(_plugin->base.label);	\
-     _p->base.base.detail  = eina_stringshare_add(_plugin->base.detail); \
-     _p->base.base.icon    = eina_stringshare_add(_plugin->base.icon);	\
-     _p->base.base.context = eina_stringshare_add(_plugin->base.context); \
-     _p->base.base.id      = eina_stringshare_add(_plugin->base.id);	\
+     _p->base.base.label   = eina_stringshare_ref(_plugin->base.label);	\
+     _p->base.base.detail  = eina_stringshare_ref(_plugin->base.detail); \
+     _p->base.base.icon    = eina_stringshare_ref(_plugin->base.icon);	\
+     _p->base.base.context = eina_stringshare_ref(_plugin->base.context); \
+     _p->base.base.id      = eina_stringshare_ref(_plugin->base.id);	\
 }
 
+/* free the plugin instance '_p' */
 #define EVRY_PLUGIN_FREE(_p) if (_p) evry->plugin_free(EVRY_PLUGIN(_p))
 
+/* call free on all items provided by plugin instance '_p' */
 #define EVRY_PLUGIN_ITEMS_FREE(_p) {				\
      Evry_Item *it;						\
      EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it)			\
        evry->item_free(it); }
 
+/* append '_item' to list of items provided by plugin instance '_p' */
+#define EVRY_PLUGIN_ITEM_APPEND(_p, _item)                              \
+  EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
+
+/* */
 #define EVRY_PLUGIN_ITEMS_ADD(_plugin, _items, _input, _match_detail, _set_usage) \
   evry->util_plugin_items_add(EVRY_PLUGIN(_plugin), _items, _input, _match_detail, _set_usage)
 
-#define EVRY_PLUGIN_UPDATE(_p, _action)	\
+/* call EVRY_PLUGIN_UPDATE when the list of items provided by plugin '_p' has
+ * changed. e.g. for files plugin when files were created or deleted
+ * while evry is active.
+ * '_action' can be EVRY_UPDATE_ADD (new items were added),
+ * EVRY_UPDATE_CLEAR (plugin does not provide any items) or
+ * EVRY_UPDATE_REFRESH (items have changed) */
+#define EVRY_PLUGIN_UPDATE(_p, _action)                 \
   if (_p) evry->plugin_update(EVRY_PLUGIN(_p), _action)
 
 #define EVRY_PLUGIN_ITEMS_SORT(_p, _sortcb)			\
   EVRY_PLUGIN(_p)->items = eina_list_sort			\
     (EVRY_PLUGIN(_p)->items, eina_list_count(EVRY_PLUGIN(_p)->items), _sortcb)
 
-#define EVRY_PLUGIN_ITEM_APPEND(_p, _item) \
-  EVRY_PLUGIN(_p)->items = eina_list_append(EVRY_PLUGIN(_p)->items, EVRY_ITEM(_item))
 
 #define EVRY_PLUGIN_MIN_QUERY(_p, _input)				\
   if (!(EVRY_PLUGIN(_p)->config->min_query) ||				\
@@ -263,6 +267,7 @@ struct _Evry_Event_Action_Performed
 
 #define EVRY_ACTION_FREE(_act) if (_act) evry->action_free(EVRY_ACTN(_act))
 
+/* register */
 #define EVRY_MODULE_NEW(_module, _evry, _init, _shutdown)	\
   {								\
      _module = E_NEW(Evry_Module, 1);				\

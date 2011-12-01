@@ -37,10 +37,7 @@ _evry_plugin_free(Evry_Item *it)
    if (p->config) p->config->plugin = NULL;
    if (p->name) eina_stringshare_del(p->name);
 
-   if (p->free)
-     p->free(p);
-   else
-     E_FREE(p);
+   E_FREE(p);
 }
 
 Evry_Plugin *
@@ -48,8 +45,7 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
                 const char *icon, Evry_Type item_type,
                 Evry_Plugin *(*begin)(Evry_Plugin * p, const Evry_Item * item),
                 void (*finish)(Evry_Plugin *p),
-                int (*fetch)(Evry_Plugin *p, const char *input),
-                void (*cb_free)(Evry_Plugin *p))
+                int (*fetch)(Evry_Plugin *p, const char *input))
 {
    Evry_Plugin *p;
    Evry_Item *it;
@@ -75,8 +71,6 @@ evry_plugin_new(Evry_Plugin *base, const char *name, const char *label,
 
    p->async_fetch = EINA_FALSE;
    p->history = EINA_TRUE;
-
-   p->free = cb_free;
 
    return p;
 }

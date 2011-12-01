@@ -260,8 +260,7 @@ Evry_Plugin *evry_plugin_new(Evry_Plugin *base, const char *name, const char *la
 			     Evry_Type item_type,
 			     Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item),
 			     void (*cleanup) (Evry_Plugin *p),
-			     int  (*fetch)   (Evry_Plugin *p, const char *input),
-			     void (*free) (Evry_Plugin *p));
+			     int  (*fetch)   (Evry_Plugin *p, const char *input));
 
 void  evry_plugin_free(Evry_Plugin *p);
 
@@ -358,11 +357,11 @@ EAPI E_Config_Dialog *evry_config_dialog(E_Container *con, const char *params);
 EAPI E_Config_Dialog *evry_collection_conf_dialog(E_Container *con, const char *params);
 EAPI extern E_Module_Api e_modapi;
 
-//#define CHECK_REFS 1
-//#define PRINT_REFS 1
-//#define CHECK_TIME 1
-//#undef DBG
-//#define DBG(...) ERR(__VA_ARGS__)
+/* #define CHECK_REFS 1
+ * #define PRINT_REFS 1
+ * #define CHECK_TIME 1
+ * #undef DBG
+ * #define DBG(...) ERR(__VA_ARGS__) */
 
 #ifdef CHECK_REFS
 extern Eina_List *_refd;

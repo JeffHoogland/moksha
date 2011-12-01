@@ -2,8 +2,8 @@
 
 //TODO min input for items not in history
 
-#define MAX_ITEMS  50
-#define MAX_PLUGIN 15
+#define MAX_ITEMS  100
+#define MAX_PLUGIN 25
 
 typedef struct _Plugin Plugin;
 
@@ -285,6 +285,8 @@ _finish(Evry_Plugin *plugin)
 
    EVRY_PLUGIN_ITEMS_FREE(p);
 
+   evry_item_free(p->warning);
+
    E_FREE(p);
 }
 
@@ -296,19 +298,10 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it __UNUSED__)
    GET_PLUGIN(base, plugin);
    EVRY_PLUGIN_INSTANCE(p, plugin);
 
-   p->warning = base->warning;
+   p->warning = evry_item_new(NULL, EVRY_PLUGIN(p), N_("No plugins loaded"), NULL, NULL);
+   p->warning->type = EVRY_TYPE_NONE;
 
    return EVRY_PLUGIN(p);
-}
-
-static void
-_free(Evry_Plugin *plugin)
-{
-   GET_PLUGIN(p, plugin);
-
-   evry_item_free(p->warning);
-
-   free(p);
 }
 
 Evry_Plugin *
@@ -316,17 +309,12 @@ evry_aggregator_new(int type)
 {
    Evry_Plugin *p;
 
-   p = EVRY_PLUGIN_NEW(Plugin, "All", NULL, 0, _begin, _finish, _fetch, _free);
+   p = EVRY_PLUGIN_BASE("All", NULL, 0, _begin, _finish, _fetch);
 
    if (evry_plugin_register(p, type, -1))
      {
         p->config->view_mode = VIEW_MODE_THUMB;
      }
-
-   GET_PLUGIN(pa, p);
-
-   pa->warning = evry_item_new(NULL, p, N_("No plugins loaded"), NULL, NULL);
-   pa->warning->type = EVRY_TYPE_NONE;
 
    return p;
 }

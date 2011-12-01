@@ -145,26 +145,34 @@ struct _Evry_Plugin
   /* identifier */
   const char *name;
 
-  /* list of items visible for everything after fetch */
+  /* list of items visible to everything */
   Eina_List *items;
 
-  /* required: get candidates matching string, fill 'items' list */
+  /* required:
+     Called each time Evry updates the state to which this plugin
+     instance belongs to, i.e. when the user typed something.
+     Query for candidates matching string.
+     return positive when items were found, zero otherwise. */
   int  (*fetch) (Evry_Plugin *p, const char *input);
 
-  /* required: run when state is removed in which this plugin is
-     active. free 'items' here */
-  void (*finish) (Evry_Plugin *p);
-
-  /* plugin is added to the list of current plugins and
-     queried for results when not returning NULL. The previous
-     selectors item is passed, i.e. a plugin registered as action
-     receives the subject, a plugin registered as object receives the
-     action item. here you can check wheter the plugin can be queried,
-     for given context (provided by item) */
+  /* required:
+     Called when an Evry_State is created in which this plugin could
+     be querid.  Return a new instance of base plugin 'p'. The plugin
+     instance is added to the list of current plugins and queried for
+     results when not returning NULL.
+     The previous selectors 'item' is passed, i.e. a plugin registered
+     as action receives the subject, a plugin registered as object
+     receives the action item. here you can check wheter the plugin
+     should be queried in given context (provided by item) */
   Evry_Plugin *(*begin) (Evry_Plugin *p, const Evry_Item *item);
 
-  /* optional: provide a list of subitems of 'item'. this function
-     must return a new instance which must be freed in 'finish' */
+  /* required:
+     Called when the Evry_State to which the plugin instance belongs
+     to is destroyed.
+     Free instance returned by 'begin' */
+  void (*finish) (Evry_Plugin *p);
+
+  /* optional: provide a list of subitems to 'item'. */
   Evry_Plugin *(*browse) (Evry_Plugin *p, const Evry_Item *item);
 
   /* optional: try to complete current item:
@@ -173,17 +181,13 @@ struct _Evry_Plugin
   int  (*complete) (Evry_Plugin *p, const Evry_Item *item, char **input);
 
   /* optional: handle key events: return positive when key was
-     handled */
+     handled by plugin */
   int  (*cb_key_down)  (Evry_Plugin *p, const Ecore_Event_Key *ev);
 
-  /* optional: use this when begin returned a new instance or you
-     have extended plugin struct */
-  void (*free) (Evry_Plugin *p);
-
-  /* optiona: actions only used with this plugin, dont require */
+  /* optional: list of Evry_Action that are specific for items of this plugin */
   Eina_List *actions;
   
-  /* optional: set type which the plugin can handle in begin */
+  /* optional: set type which the plugin can handle in 'begin' */
   Evry_Type input_type;
 
   /* optional: whether the plugin uses evry_async_update to add new items */
@@ -202,9 +206,10 @@ struct _Evry_Plugin
      'configure' button in everything config */
   const char *config_path;
 
-  /* set theme file to fetch icons from */
+  /* optional: set theme file to fetch icons from */
   const char *theme_path;
 
+  /* optional: provide a view that is specific for this plugins' items */
   Evry_View *view;
 };
 
