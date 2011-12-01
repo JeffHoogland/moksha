@@ -180,7 +180,7 @@ _notification_popup_merge(E_Notification *n)
    len += strlen(body_new);
    if (len < 65536) body_final = alloca(len + 5);
    else body_final = malloc(len + 5);
-   snprintf(body_final, len, "%s<ps>%s", body_old, body_new);
+   snprintf(body_final, len + 1, "%s<ps>%s", body_old, body_new);
    /* printf("set body %s\n", body_final); */
 
    e_notification_body_set(n, body_final);
