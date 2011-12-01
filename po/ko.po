@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-11-18 09:05+0900\n"
+"POT-Creation-Date: 2011-11-29 09:56+0900\n"
 "PO-Revision-Date: 2011-03-12 13:51-0800\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -73,7 +73,7 @@ msgstr "이 창을 강제종료 하시겠습니까?"
 #: src/bin/e_actions.c:380 src/bin/e_actions.c:1917 src/bin/e_actions.c:2014
 #: src/bin/e_actions.c:2077 src/bin/e_actions.c:2140 src/bin/e_actions.c:2208
 #: src/bin/e_actions.c:2271 src/bin/e_confirm_dialog.c:44
-#: src/bin/e_desklock.c:1048 src/bin/e_fm.c:9204 src/bin/e_fm.c:9458
+#: src/bin/e_desklock.c:1050 src/bin/e_fm.c:9205 src/bin/e_fm.c:9459
 #: src/bin/e_module.c:518 src/bin/e_screensaver.c:145
 msgid "Yes"
 msgstr "예"
@@ -81,7 +81,7 @@ msgstr "예"
 #: src/bin/e_actions.c:382 src/bin/e_actions.c:1919 src/bin/e_actions.c:2016
 #: src/bin/e_actions.c:2079 src/bin/e_actions.c:2142 src/bin/e_actions.c:2210
 #: src/bin/e_actions.c:2273 src/bin/e_confirm_dialog.c:45
-#: src/bin/e_desklock.c:1050 src/bin/e_fm.c:9202 src/bin/e_fm.c:9459
+#: src/bin/e_desklock.c:1052 src/bin/e_fm.c:9203 src/bin/e_fm.c:9460
 #: src/bin/e_module.c:519 src/bin/e_screensaver.c:147
 msgid "No"
 msgstr "아니오"
@@ -281,7 +281,7 @@ msgstr ""
 #: src/bin/e_actions.c:2927 src/bin/e_actions.c:2929 src/bin/e_actions.c:2931
 #: src/bin/e_actions.c:2933 src/bin/e_actions.c:2935 src/bin/e_actions.c:2937
 #: src/bin/e_actions.c:2939 src/bin/e_actions.c:3114 src/bin/e_actions.c:3119
-#: src/bin/e_fm.c:3267 src/bin/e_fm.c:3273 src/bin/e_fm.c:9985
+#: src/bin/e_fm.c:3267 src/bin/e_fm.c:3273 src/bin/e_fm.c:9986
 #: src/bin/e_fm_device.c:334 src/bin/e_fm_device.c:358
 #: src/bin/e_fm_device.c:637 src/bin/e_fm_device.c:664
 #: src/bin/e_int_menus.c:144 src/bin/e_int_shelf_config.c:247
@@ -718,7 +718,7 @@ msgstr "색 선택"
 #: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1611 src/bin/e_config.c:2229
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
-#: src/bin/e_fm.c:8716 src/bin/e_fm.c:9360 src/bin/e_fm_prop.c:507
+#: src/bin/e_fm.c:8717 src/bin/e_fm.c:9361 src/bin/e_fm_prop.c:507
 #: src/bin/e_int_border_remember.c:324 src/bin/e_int_border_remember.c:525
 #: src/bin/e_module.c:415 src/bin/e_sys.c:487 src/bin/e_sys.c:524
 #: src/bin/e_utils.c:707 src/modules/conf_dialogs/e_int_config_profiles.c:387
@@ -733,7 +733,7 @@ msgid "OK"
 msgstr "확인"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:856
-#: src/bin/e_eap_editor.c:920 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8718
+#: src/bin/e_eap_editor.c:920 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8719
 #: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1162
 #: src/modules/conf_dialogs/e_int_config_profiles.c:388
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
@@ -943,11 +943,11 @@ msgstr ""
 msgid "Please enter your unlock password"
 msgstr "비밀번호를 입력해주세요."
 
-#: src/bin/e_desklock.c:710
+#: src/bin/e_desklock.c:712
 msgid "Authentication System Error"
 msgstr "인증 시스템 에러"
 
-#: src/bin/e_desklock.c:711
+#: src/bin/e_desklock.c:713
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -955,22 +955,22 @@ msgid ""
 "happening. Please report this bug."
 msgstr ""
 
-#: src/bin/e_desklock.c:1039 src/bin/e_screensaver.c:136
+#: src/bin/e_desklock.c:1041 src/bin/e_screensaver.c:136
 msgid "Activate Presentation Mode?"
 msgstr "프리젠테이션 모드를 활성화하시겠습니까?"
 
-#: src/bin/e_desklock.c:1042
+#: src/bin/e_desklock.c:1044
 msgid ""
 "You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
 
-#: src/bin/e_desklock.c:1052 src/bin/e_screensaver.c:149
+#: src/bin/e_desklock.c:1054 src/bin/e_screensaver.c:149
 msgid "No, but increase timeout"
 msgstr ""
 
-#: src/bin/e_desklock.c:1054 src/bin/e_screensaver.c:151
+#: src/bin/e_desklock.c:1056 src/bin/e_screensaver.c:151
 msgid "No, and stop asking"
 msgstr ""
 
@@ -1065,22 +1065,22 @@ msgstr "아이콘 선택"
 msgid "Select an Executable"
 msgstr ""
 
-#: src/bin/e_entry.c:496 src/bin/e_fm.c:8207 src/bin/e_shelf.c:1703
+#: src/bin/e_entry.c:496 src/bin/e_fm.c:8208 src/bin/e_shelf.c:1703
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:108
 msgid "Delete"
 msgstr "삭제"
 
-#: src/bin/e_entry.c:506 src/bin/e_fm.c:8115
+#: src/bin/e_entry.c:506 src/bin/e_fm.c:8116
 msgid "Cut"
 msgstr "잘라내기"
 
-#: src/bin/e_entry.c:514 src/bin/e_fm.c:6163 src/bin/e_fm.c:8129
+#: src/bin/e_entry.c:514 src/bin/e_fm.c:6163 src/bin/e_fm.c:8130
 msgid "Copy"
 msgstr "복사"
 
-#: src/bin/e_entry.c:522 src/bin/e_fm.c:7953 src/bin/e_fm.c:8142
+#: src/bin/e_entry.c:522 src/bin/e_fm.c:7954 src/bin/e_fm.c:8143
 msgid "Paste"
 msgstr "붙여넣기"
 
@@ -1266,173 +1266,173 @@ msgstr ""
 msgid "%i Files"
 msgstr "%i개 파일"
 
-#: src/bin/e_fm.c:6176 src/bin/e_fm.c:7961 src/bin/e_fm.c:8150
+#: src/bin/e_fm.c:6176 src/bin/e_fm.c:7962 src/bin/e_fm.c:8151
 msgid "Link"
 msgstr "링크"
 
-#: src/bin/e_fm.c:6184 src/bin/e_fm.c:9142 src/bin/e_fm.c:9283
+#: src/bin/e_fm.c:6184 src/bin/e_fm.c:9143 src/bin/e_fm.c:9284
 msgid "Abort"
 msgstr "중지"
 
-#: src/bin/e_fm.c:7880 src/bin/e_fm.c:8040
+#: src/bin/e_fm.c:7881 src/bin/e_fm.c:8041
 msgid "Inherit parent settings"
 msgstr ""
 
-#: src/bin/e_fm.c:7889 src/bin/e_fm.c:8049
+#: src/bin/e_fm.c:7890 src/bin/e_fm.c:8050
 #: src/modules/fileman/e_mod_config.c:219
 msgid "View Mode"
 msgstr ""
 
-#: src/bin/e_fm.c:7896 src/bin/e_fm.c:8056
+#: src/bin/e_fm.c:7897 src/bin/e_fm.c:8057
 msgid "Refresh View"
 msgstr "새로 고침"
 
-#: src/bin/e_fm.c:7904 src/bin/e_fm.c:8064
+#: src/bin/e_fm.c:7905 src/bin/e_fm.c:8065
 msgid "Show Hidden Files"
 msgstr "숨김 파일 표시"
 
-#: src/bin/e_fm.c:7916 src/bin/e_fm.c:8076
+#: src/bin/e_fm.c:7917 src/bin/e_fm.c:8077
 msgid "Remember Ordering"
 msgstr "정렬순서 저장"
 
-#: src/bin/e_fm.c:7925 src/bin/e_fm.c:8085
+#: src/bin/e_fm.c:7926 src/bin/e_fm.c:8086
 msgid "Sort Now"
 msgstr "정렬"
 
-#: src/bin/e_fm.c:7937 src/bin/e_fm.c:8100
+#: src/bin/e_fm.c:7938 src/bin/e_fm.c:8101
 #: src/modules/conf_paths/e_int_config_paths.c:205
 msgid "New Directory"
 msgstr "새 디렉토리"
 
-#: src/bin/e_fm.c:8215
+#: src/bin/e_fm.c:8216
 msgid "Rename"
 msgstr "이름 변경"
 
-#: src/bin/e_fm.c:8234
+#: src/bin/e_fm.c:8235
 msgid "Unmount"
 msgstr ""
 
-#: src/bin/e_fm.c:8239
+#: src/bin/e_fm.c:8240
 msgid "Mount"
 msgstr ""
 
-#: src/bin/e_fm.c:8244
+#: src/bin/e_fm.c:8245
 msgid "Eject"
 msgstr ""
 
-#: src/bin/e_fm.c:8256
+#: src/bin/e_fm.c:8257
 msgid "Application Properties"
 msgstr "응용프로그램 속성"
 
-#: src/bin/e_fm.c:8262 src/bin/e_fm_prop.c:105
+#: src/bin/e_fm.c:8263 src/bin/e_fm_prop.c:105
 msgid "File Properties"
 msgstr "화일 속성"
 
-#: src/bin/e_fm.c:8499 src/bin/e_fm.c:8552
+#: src/bin/e_fm.c:8500 src/bin/e_fm.c:8553
 msgid "Use default"
 msgstr ""
 
-#: src/bin/e_fm.c:8525 src/modules/fileman/e_mod_config.c:224
+#: src/bin/e_fm.c:8526 src/modules/fileman/e_mod_config.c:224
 msgid "Grid Icons"
 msgstr ""
 
-#: src/bin/e_fm.c:8533 src/modules/fileman/e_mod_config.c:226
+#: src/bin/e_fm.c:8534 src/modules/fileman/e_mod_config.c:226
 msgid "Custom Icons"
 msgstr ""
 
-#: src/bin/e_fm.c:8541 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:8542 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:234
 msgid "List"
 msgstr ""
 
-#: src/bin/e_fm.c:8567
+#: src/bin/e_fm.c:8568
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "아이콘 사이즈 (%d)"
 
-#: src/bin/e_fm.c:8613 src/bin/e_fm.c:8819
+#: src/bin/e_fm.c:8614 src/bin/e_fm.c:8820
 msgid "Set background..."
 msgstr ""
 
-#: src/bin/e_fm.c:8618 src/bin/e_fm.c:8863
+#: src/bin/e_fm.c:8619 src/bin/e_fm.c:8864
 msgid "Set overlay..."
 msgstr ""
 
-#: src/bin/e_fm.c:8717 src/modules/conf_theme/e_int_config_theme.c:1032
+#: src/bin/e_fm.c:8718 src/modules/conf_theme/e_int_config_theme.c:1032
 msgid "Clear"
 msgstr ""
 
-#: src/bin/e_fm.c:8943
+#: src/bin/e_fm.c:8944
 msgid "Create a new Directory"
 msgstr "새 디렉토리 작성"
 
-#: src/bin/e_fm.c:8944
+#: src/bin/e_fm.c:8945
 msgid "New Directory Name:"
 msgstr "디렉토리 명:"
 
-#: src/bin/e_fm.c:8998
+#: src/bin/e_fm.c:8999
 #, c-format
 msgid "Rename %s to:"
 msgstr "%s 이름 변경:"
 
-#: src/bin/e_fm.c:9000
+#: src/bin/e_fm.c:9001
 msgid "Rename File"
 msgstr "이름 변경"
 
-#: src/bin/e_fm.c:9141 src/bin/e_fm.c:9282
+#: src/bin/e_fm.c:9142 src/bin/e_fm.c:9283
 msgid "Retry"
 msgstr "재시도"
 
-#: src/bin/e_fm.c:9145 src/bin/e_fm.c:9288
+#: src/bin/e_fm.c:9146 src/bin/e_fm.c:9289
 msgid "Error"
 msgstr "오류"
 
-#: src/bin/e_fm.c:9148
+#: src/bin/e_fm.c:9149
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: src/bin/e_fm.c:9203
+#: src/bin/e_fm.c:9204
 msgid "No to all"
 msgstr "전부 아니오"
 
-#: src/bin/e_fm.c:9205
+#: src/bin/e_fm.c:9206
 msgid "Yes to all"
 msgstr "전부 예"
 
-#: src/bin/e_fm.c:9208
+#: src/bin/e_fm.c:9209
 msgid "Warning"
 msgstr "경고"
 
-#: src/bin/e_fm.c:9211
+#: src/bin/e_fm.c:9212
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "파일이 이미 존재합니다, 덮어쓰기겠습니까?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:9284
+#: src/bin/e_fm.c:9285
 msgid "Ignore this"
 msgstr "무시"
 
-#: src/bin/e_fm.c:9285
+#: src/bin/e_fm.c:9286
 msgid "Ignore all"
 msgstr "전부 무시"
 
-#: src/bin/e_fm.c:9290
+#: src/bin/e_fm.c:9291
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:9461
+#: src/bin/e_fm.c:9462
 msgid "Confirm Delete"
 msgstr "삭제 확인"
 
-#: src/bin/e_fm.c:9466
+#: src/bin/e_fm.c:9467
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr "삭제하시겠습니까<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:9472
+#: src/bin/e_fm.c:9473
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -6906,7 +6906,7 @@ msgstr ""
 msgid "Filemanager is idle"
 msgstr ""
 
-#: src/modules/fileman_opinfo/e_mod_main.c:409
+#: src/modules/fileman_opinfo/e_mod_main.c:415
 msgid "EFM Operation Info"
 msgstr ""
 
