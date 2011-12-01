@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-11-28 07:52+0100\n"
-"PO-Revision-Date: 2011-11-28 13:05+0100\n"
+"POT-Creation-Date: 2011-12-01 06:34+0100\n"
+"PO-Revision-Date: 2011-12-01 12:18+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -905,7 +905,7 @@ msgstr "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasse
 
 #: src/bin/e_config.c:2161
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
-msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
+msgstr "Erreurs d' E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
 #: src/bin/e_config.c:2164
 msgid "You ran out of space while writing the file"
@@ -1115,7 +1115,7 @@ msgstr "Fichier desktop"
 #: src/bin/e_eap_editor.c:775
 #: src/modules/conf_performance/e_int_config_performance.c:115
 #: src/modules/everything/evry_config.c:378
-#: src/modules/everything/evry_plug_files.c:1491
+#: src/modules/everything/evry_plug_files.c:1476
 #: src/modules/pager/e_mod_config.c:126
 #: src/modules/pager/e_mod_config.c:213
 msgid "General"
@@ -1701,7 +1701,7 @@ msgstr "Supprimer"
 
 #: src/bin/e_gadcon.c:1991
 msgid "Stop moving"
-msgstr "Arrimer"
+msgstr "Insérer"
 
 #: src/bin/e_hints.c:152
 msgid ""
@@ -1882,7 +1882,7 @@ msgstr "Ajouter au menu des favoris"
 
 #: src/bin/e_int_border_menu.c:485
 msgid "Add to IBar"
-msgstr "Ajouter à l'IBar"
+msgstr "Ajouter à l' IBar"
 
 #: src/bin/e_int_border_menu.c:493
 msgid "Create Keyboard Shortcut"
@@ -2246,7 +2246,7 @@ msgid "Utilities"
 msgstr "Utilitaires"
 
 #: src/bin/e_int_config_modules.c:55
-#: src/modules/everything/evry_plug_files.c:1601
+#: src/modules/everything/evry_plug_files.c:1585
 #: src/modules/fileman/e_mod_main.c:56
 #: src/modules/fileman/e_mod_main.c:76
 #: src/modules/fileman/e_mod_main.c:420
@@ -2340,7 +2340,7 @@ msgstr "Applications favorites"
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_theme/e_mod_main.c:38
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: src/modules/everything/evry_plug_apps.c:1367
+#: src/modules/everything/evry_plug_apps.c:1354
 msgid "Applications"
 msgstr "Applications"
 
@@ -2709,7 +2709,7 @@ msgstr ""
 
 #: src/bin/e_main.c:589
 msgid "Setup ACPI"
-msgstr "Configuration de l'ACPI"
+msgstr "Configuration de l' ACPI"
 
 #: src/bin/e_main.c:596
 msgid "Setup Backlight"
@@ -3082,7 +3082,7 @@ msgstr "Le module ne contient pas toutes les fonctions nécessaires"
 #: src/bin/e_module.c:182
 #, c-format
 msgid "Module API Error<br>Error initializing Module: %s<br>It requires a minimum module API version of: %i.<br>The module API advertized by Enlightenment is: %i.<br>"
-msgstr "Erreur de l'API du module.<br>Erreur d'initialisation du module : %s<br>La version minimale de l'API du module requise est : %i.<br>La version de l'API retournée par Enlightenment est : %i.<br>"
+msgstr "Erreur de l' API du module.<br>Erreur d'initialisation du module : %s<br>La version minimale de l'API du module requise est : %i.<br>La version de l'API retournée par Enlightenment est : %i.<br>"
 
 #: src/bin/e_module.c:187
 #, c-format
@@ -3652,7 +3652,7 @@ msgstr "Configuration de Panneau de contrôle à jour"
 #: src/modules/conf_applications/e_int_config_apps.c:98
 #: src/modules/conf_applications/e_mod_main.c:33
 msgid "IBar Applications"
-msgstr "Applications dans l'IBar"
+msgstr "Applications dans l' IBar"
 
 #: src/modules/conf_applications/e_int_config_apps.c:113
 #: src/modules/conf_applications/e_mod_main.c:41
@@ -4749,11 +4749,11 @@ msgstr "Paramétrage du moteur"
 #: src/modules/conf_performance/e_int_config_engine.c:96
 #: src/modules/conf_performance/e_int_config_engine.c:138
 msgid "Use ARGB instead of shaped windows"
-msgstr "Fenêtres ARVB à la place de celles non rectangulaires"
+msgstr "Mode ARVB pour les fenêtres"
 
 #: src/modules/conf_performance/e_int_config_engine.c:140
 msgid "You have chosen to enable ARGB composite support,<br>but your current screen does not support composite.<br><br>Are you sure you wish to enable ARGB support ?"
-msgstr "Vous avez choisi d'activer l'extension composite ARVB,<br>mais votre écran actuel ne semble pas la supporter.<br><br>Voulez-vous tout de même activer l'extension ARVB ?"
+msgstr "Vous avez choisi d'activer l'extension composite ARVB<br>mais votre écran actuel ne semble pas la supporter.<br><br>Tenez-vous vraiment à activer cette extension ?"
 
 #: src/modules/conf_performance/e_int_config_performance.c:35
 msgid "Performance Settings"
@@ -6290,15 +6290,15 @@ msgstr "Configuration d'Omni"
 msgid "Show Everything Dialog"
 msgstr "Afficher la boîte de dialogue d'Omni"
 
-#: src/modules/everything/e_mod_main.c:422
+#: src/modules/everything/e_mod_main.c:420
 msgid "Everything Module"
 msgstr "Module Omni"
 
-#: src/modules/everything/e_mod_main.c:611
+#: src/modules/everything/e_mod_main.c:609
 msgid "Run Everything"
 msgstr "Omni"
 
-#: src/modules/everything/evry_config.c:79
+#: src/modules/everything/evry_config.c:78
 msgid "Everything Settings"
 msgstr "Paramétrage d'Omni"
 
@@ -6416,7 +6416,7 @@ msgid "Object Plugins"
 msgstr "Objet"
 
 #: src/modules/everything/evry_config.c:537
-#: src/modules/everything/evry_config.c:738
+#: src/modules/everything/evry_config.c:737
 msgid "Plugins"
 msgstr "Greffons"
 
@@ -6457,7 +6457,7 @@ msgstr "Taille du bord du pop-up"
 msgid "Geometry"
 msgstr "Géométrie"
 
-#: src/modules/everything/evry_config.c:633
+#: src/modules/everything/evry_config.c:632
 msgid "Everything Collection"
 msgstr "Collection Omni "
 
@@ -6465,7 +6465,7 @@ msgstr "Collection Omni "
 msgid "Items"
 msgstr "Éléments"
 
-#: src/modules/everything/evry_plug_aggregator.c:330
+#: src/modules/everything/evry_plug_aggregator.c:328
 msgid "No plugins loaded"
 msgstr "Aucun greffon activé"
 
@@ -6473,50 +6473,50 @@ msgstr "Aucun greffon activé"
 msgid "  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  Just type a few letters of the thing you are looking for. <br>  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  <hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    <hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr "  Voici des éclaircissements sur <hilight>Omni</hilight>...<br>  Tapez juste les premières lettres de ce que vous recherchez. <br>  Utilisez les touches <hilight>&lt;Flèche haut/bas&gt;</hilight> pour choisir dans la liste.<br>  Appuyez sur <hilight>&lt;Tabulation&gt;</hilight> pour sélectionner une action, puis sur  <hilight>&lt;Entrée&gt;</hilight>.<br>  Cette page ne s'affichera pas lors de la prochaine utilisation d' <hilight>Omni</hilight>.<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    <hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;tab&gt;</hilight> passe d'un selecteur à l'autre<br>    <hilight>&lt;Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche/droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut/bas&gt;</hilight> va au premier/dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage des vignettes."
 
-#: src/modules/everything/evry_plug_apps.c:1250
-#: src/modules/everything/evry_plug_apps.c:1387
+#: src/modules/everything/evry_plug_apps.c:1238
+#: src/modules/everything/evry_plug_apps.c:1373
 msgid "Everything Applications"
 msgstr "Omni applications"
 
-#: src/modules/everything/evry_plug_apps.c:1282
+#: src/modules/everything/evry_plug_apps.c:1270
 msgid "Commands"
 msgstr "Commandes"
 
-#: src/modules/everything/evry_plug_apps.c:1283
+#: src/modules/everything/evry_plug_apps.c:1271
 msgid "Terminal Command"
 msgstr "Commande du terminal"
 
-#: src/modules/everything/evry_plug_apps.c:1288
+#: src/modules/everything/evry_plug_apps.c:1276
 msgid "Sudo GUI"
 msgstr "Interface graphique sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1367
-#: src/modules/everything/evry_plug_files.c:1601
+#: src/modules/everything/evry_plug_apps.c:1354
+#: src/modules/everything/evry_plug_files.c:1585
 msgid "Everything Plugin"
 msgstr "Greffon Omni "
 
-#: src/modules/everything/evry_plug_files.c:1471
-#: src/modules/everything/evry_plug_files.c:1623
+#: src/modules/everything/evry_plug_files.c:1456
+#: src/modules/everything/evry_plug_files.c:1607
 msgid "Everything Files"
 msgstr "Omni fichiers"
 
-#: src/modules/everything/evry_plug_files.c:1498
+#: src/modules/everything/evry_plug_files.c:1483
 msgid "Show recent files"
 msgstr "Afficher les documents récents"
 
-#: src/modules/everything/evry_plug_files.c:1502
+#: src/modules/everything/evry_plug_files.c:1487
 msgid "Search recent files"
 msgstr "Rechercher dans les documents récents"
 
-#: src/modules/everything/evry_plug_files.c:1506
+#: src/modules/everything/evry_plug_files.c:1491
 msgid "Search cached files"
 msgstr "Rechercher dans le cache des documents"
 
-#: src/modules/everything/evry_plug_files.c:1510
+#: src/modules/everything/evry_plug_files.c:1495
 msgid "Cache visited directories"
 msgstr "Mettre en cache les dossiers visités"
 
-#: src/modules/everything/evry_plug_files.c:1514
+#: src/modules/everything/evry_plug_files.c:1499
 msgid "Clear cache"
 msgstr "Vider le cache"
 
@@ -7036,7 +7036,7 @@ msgstr "Sélectionner une fenêtre"
 
 #: src/modules/ibar/e_mod_config.c:52
 msgid "IBar Settings"
-msgstr "Paramétrage de l'IBar"
+msgstr "Paramétrage de l' IBar"
 
 #: src/modules/ibar/e_mod_config.c:98
 msgid "Selected Bar Source"
@@ -7094,7 +7094,7 @@ msgstr "Propriétés"
 
 #: src/modules/ibox/e_mod_config.c:48
 msgid "IBox Settings"
-msgstr "Paramétrage de l'Ibox"
+msgstr "Paramétrage de l' Ibox"
 
 #: src/modules/ibox/e_mod_config.c:101
 msgid "Display Name"
