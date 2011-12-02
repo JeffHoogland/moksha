@@ -350,7 +350,9 @@ con(Pulse *conn, int type __UNUSED__, Ecore_Con_Event_Server_Add *ev)
    INF("connected to %s", ecore_con_server_name_get(ev->server));
 
    conn->fd = dup(ecore_con_server_fd_get(ev->server));
+#ifdef SO_PASSCRED
    setsockopt(conn->fd, SOL_SOCKET, SO_PASSCRED, &on, sizeof(on));
+#endif
    setsockopt(conn->fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
    fcntl(conn->fd, F_SETFL, O_NONBLOCK | FD_CLOEXEC);
    conn->fdh = ecore_main_fd_handler_add(conn->fd, ECORE_FD_WRITE, (Ecore_Fd_Cb)fdh_func, conn, NULL, NULL);
