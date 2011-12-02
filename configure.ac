@@ -800,8 +800,6 @@ case "$host_os" in
       ;;
 esac
 
-CFLAGS+=" -Wno-trigraphs"
-
 AC_OUTPUT([
 Makefile
 enlightenment.spec

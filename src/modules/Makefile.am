@@ -1,6 +1,6 @@
 MAINTAINERCLEANFILES = Makefile.in
 
-SUBDIRS = birthday
+SUBDIRS =
 
 if USE_MODULE_IBAR
 SUBDIRS += ibar
