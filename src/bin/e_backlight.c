@@ -20,6 +20,7 @@ static Ecore_Animator *bl_anim = NULL;
 static void _e_backlight_update(E_Zone *zone);
 static void _e_backlight_set(E_Zone *zone, double val);
 static Eina_Bool _bl_anim(void *data, double pos);
+static Eina_Bool bl_avail = EINA_FALSE;
 #ifdef HAVE_EEZE
 static const char *bl_sysval = NULL;
 static Ecore_Event_Handler *bl_sys_exit_handler = NULL;
@@ -39,9 +40,14 @@ e_backlight_init(void)
 #ifdef HAVE_EEZE
    eeze_init();
 #endif
-   e_backlight_update();
-   e_backlight_level_set(NULL, 0.0, 0.0);
-   e_backlight_level_set(NULL, e_config->backlight.normal, 1.0);
+   bl_avail = ecore_x_randr_output_backlight_available();
+
+   if (bl_avail == EINA_TRUE)
+     {
+        e_backlight_update();
+        e_backlight_level_set(NULL, 0.0, 0.0);
+        e_backlight_level_set(NULL, e_config->backlight.normal, 1.0);
+     }
    return 1;
 }
 
@@ -77,13 +83,16 @@ e_backlight_update(void)
    E_Container *con;
    E_Zone *zone;
 
-   EINA_LIST_FOREACH(e_manager_list(), m, man)
+   if (bl_avail == EINA_TRUE)
      {
-        EINA_LIST_FOREACH(man->containers, c, con)
+        EINA_LIST_FOREACH(e_manager_list(), m, man)
           {
-             EINA_LIST_FOREACH(con->zones, z, zone)
+             EINA_LIST_FOREACH(man->containers, c, con)
                {
-                  _e_backlight_update(zone);
+                  EINA_LIST_FOREACH(con->zones, z, zone)
+                    {
+                       _e_backlight_update(zone);
+                    }
                }
           }
      }
