@@ -19,6 +19,7 @@ OPTIONS:
   -restart Restart Enlightenment
   -exit Exit Enlightenment
 
+  -module-list List all loaded modules
   -module-enable OPT1 Enable the module named 'OPT1'
   -module-disable OPT1 Disable the module named 'OPT1'
   -module-load OPT1 Loads the module named 'OPT1' into memory
@@ -229,6 +230,14 @@ er_module_enable(){
 }
 
 #-------------------------------------------------------------------------------
+#   E Module List
+#-------------------------------------------------------------------------------
+er_module_list(){
+   echo 'Module -- Status'
+   ERGMST org.enlightenment.wm.Module.List | \
+      sed -e 's/ 1/ -- Enabled/' -e 's/ 0/ -- Disabled/'
+}
+#-------------------------------------------------------------------------------
 #   E Module Load
 #-------------------------------------------------------------------------------
 er_module_load(){
@@ -359,6 +368,9 @@ case "$1" in
    -exit)
       er_exit 
    ;;
+   -module-list)
+      er_module_list
+   ;;
    -module-enable)
       er_module_enable "$@"
    ;;
@@ -423,7 +435,7 @@ esac
 ################################################################################
 ignore_this(){
 # IGNORE THIS SECTION
-# think at it just like as a TODO list or a list where are listed all the old options of enlightenmen_remote
+# think at it just like as a TODO list or a list where are listed all the old options of enlightenment_remote
 # Remember that the elements of this next list are removed every time they are implemented on this tool
 
 echo "
