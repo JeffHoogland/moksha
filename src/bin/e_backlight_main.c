@@ -33,24 +33,6 @@ _bl_write_file(const char *file, int val)
    return 0;
 }
 
-/* local subsystem globals */
-typedef struct _Bl_Entry
-{
-   char type;
-   const char *base;
-   const char *max;
-   const char *set;
-} Bl_Entry;
-
-static const Bl_Entry search[] =
-{
-   { 'F', "/sys/devices/virtual/backlight/acpi_video0", "max_brightness", "brightness" },
-   { 'D', "/sys/devices/virtual/backlight", "max_brightness", "brightness" },
-   { 'F', "/sys/class/leds/lcd-backlight", "max_brightness", "brightness" },
-   { 'F', "/sys/class/backlight/acpi_video0", "max_brightness", "brightness" },
-   { 'D', "/sys/class/backlight", "max_brightness", "brightness" }
-};
-
 /* externally accessible functions */
 int
 main(int argc, char **argv)
