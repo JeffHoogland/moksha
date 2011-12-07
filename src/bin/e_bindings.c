@@ -559,7 +559,7 @@ e_bindings_edge_del(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier
 
    EINA_LIST_FOREACH(edge_bindings, l, bind)
      {
-        if ((bind->edge == edge))
+        if (bind->edge == edge)
           {
              if ((bind->ctxt == ctxt) &&
                  (bind->mod == mod) &&

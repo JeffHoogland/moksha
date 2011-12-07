@@ -64,11 +64,11 @@ main(int argc, char **argv)
 		    "do not use it.\n");
 	     exit(0);
 	  }
-	else if ((i == 1))
+	else if (i == 1)
           sig = atoi(argv[i]); // signal
-        else if ((i == 2))
+        else if (i == 2)
           pid = atoi(argv[i]); // E's pid
-        else if ((i == 3))
+        else if (i == 3)
           comp_win = atoi(argv[i]); // Composite Alert Window
      }
 

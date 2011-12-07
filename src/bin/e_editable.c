@@ -377,7 +377,7 @@ e_editable_cursor_pos_set(Evas_Object *editable, int pos)
      return;
 
    pos = E_CLAMP(pos, 0, sd->unicode_length);
-   if ((sd->cursor_pos == pos)) return;
+   if (sd->cursor_pos == pos) return;
 
    sd->cursor_pos = pos;
    _e_editable_cursor_update(editable);
