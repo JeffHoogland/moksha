@@ -49,6 +49,12 @@ void *alloca (size_t);
 
 #define FREE(p) do { if (p) {free((void *)p); p = NULL;} } while (0)
 
+#define LG(fmt, args...) {\
+   FILE *f = fopen("log", "a"); \
+   if (f) fprintf(f, fmt, ##args); \
+   if (f) fclose(f); \
+}
+
 typedef struct _E_Fm_Op_Task E_Fm_Op_Task;
 typedef struct _E_Fm_Op_Copy_Data E_Fm_Op_Copy_Data;
 
@@ -678,8 +684,8 @@ _e_fm_op_work_idler(void *data __UNUSED__)
         // _e_fm_op_scan_error == 1
         // we can spin forever. why are we spinning at all? there are no
         // tasks to be done. we have an error. wait for it to be handled
-        if (!_e_fm_op_work_queue)
-           ecore_main_loop_quit();
+        if ((!_e_fm_op_work_queue) && (!_e_fm_op_scan_queue))
+          ecore_main_loop_quit();
 
         return ECORE_CALLBACK_RENEW;
      }
