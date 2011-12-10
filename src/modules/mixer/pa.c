@@ -223,7 +223,7 @@ pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh)
      }
    return tag;
 error:
-   CRI("Received error command %"PRIu32"!", x);
+   ERR("Received error command %"PRIu32"!", x);
    pulse_tag_free(tag);
    return NULL;
 }
@@ -680,7 +680,7 @@ pulse_new(void)
         buf = eina_stringshare_add(STATEDIR "/run/pulse/native");
         if (stat(buf, &st))
           {
-             CRI("could not locate local socket '%s'!", buf);
+             INF("could not locate local socket '%s'!", buf);
              free(conn);
              return NULL;
           }
