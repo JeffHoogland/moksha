@@ -1209,7 +1209,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
           }
         goto end;
      }
-   else if (!strcmp(key, "comma") || !strcmp(key, "semicolon"))
+   else if (!strcmp(key, "comma"))
      {
         if (!sd->cur_item)
           goto end;
@@ -1226,19 +1226,9 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
           }
 
         if (v->mode == VIEW_MODE_THUMB)
-          {
-             if (!strcmp(key, "comma"))
-               key = "Right";
-             else
-               key = "Left";
-          }
+          key = "Right";
         else
-          {
-             if (!strcmp(key, "comma"))
-               key = "Down";
-             else
-               key = "Up";
-          }
+          key = "Down";
      }
 
    if ((slide = v->tabs->key_down(v->tabs, ev)))
