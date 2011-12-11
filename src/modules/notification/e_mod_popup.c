@@ -256,7 +256,7 @@ _notification_popup_new(E_Notification *n)
    char buf[PATH_MAX];
    const Eina_List *l, *screens;
    E_Screen *scr;
-   E_Zone *zone;
+   E_Zone *zone = NULL;
 
    if (popups_displayed > POPUP_LIMIT) return 0;
    popup = E_NEW(Popup_Data, 1);
@@ -278,9 +278,9 @@ _notification_popup_new(E_Notification *n)
         EINA_SAFETY_ON_NULL_GOTO(scr, error);
         EINA_LIST_FOREACH(con->zones, l, zone)
           if ((int)zone->num == scr->screen) break;
-        if ((int)zone->num != scr->screen) goto error;
+        if (zone && ((int)zone->num != scr->screen)) goto error;
      }
-   else
+   if (!zone)
      zone = e_zone_current_get(con);
    popup->zone = zone;
 
