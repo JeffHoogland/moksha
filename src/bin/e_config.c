@@ -1598,7 +1598,7 @@ _e_config_mv_error(const char *from, const char *to)
              e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
              e_dialog_icon_set(dia, "dialog-error", 64);
              snprintf(buf, sizeof(buf), 
-                      _("Enlightenment has an error while moving config files<br>"
+                      _("Enlightenment has had an error while moving config files<br>"
                         "from:<br>"
                         "%s<br>"
                         "<br>"
@@ -2216,7 +2216,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 		  e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
 		  e_dialog_icon_set(dia, "dialog-error", 64);
 		  snprintf(buf, sizeof(buf), 
-                           _("Enlightenment has an error while writing<br>"
+                           _("Enlightenment has had an error while writing<br>"
                              "its config file.<br>"
                              "%s<br>"
                              "<br>"
