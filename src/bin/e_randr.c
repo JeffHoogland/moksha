@@ -544,7 +544,7 @@ static void
 _e_randr_crtc_info_set(E_Randr_Crtc_Info *crtc_info)
 {
    Ecore_X_Randr_Mode mode = 0;
-   fprintf(stderr, "Fillng CRTC %d (%p)\n", crtc_info->xid, crtc_info);
+   fprintf(stderr, "E_RANDR: Filling CRTC %d (%p)\n", crtc_info->xid, crtc_info);
    if (E_RANDR_NO_12 || !crtc_info) return;
 
    //get references to used and possible E_Randr_Output_Info structs
@@ -553,9 +553,9 @@ _e_randr_crtc_info_set(E_Randr_Crtc_Info *crtc_info)
    ecore_x_randr_crtc_geometry_get(e_randr_screen_info->root, crtc_info->xid, &crtc_info->geometry.x, &crtc_info->geometry.y, &crtc_info->geometry.w, &crtc_info->geometry.h);
    mode = ecore_x_randr_crtc_mode_get(e_randr_screen_info->root, crtc_info->xid);
    crtc_info->current_mode = _e_randr_mode_info_get(mode);
-   fprintf(stderr, "CRTC %x apparently is in mode %x, trying to find it in the list of modes..\n", crtc_info->xid, mode);
+   fprintf(stderr, "E_RANDR:\t CRTC %x apparently is in mode %x, trying to find it in the list of modes..\n", crtc_info->xid, mode);
    if (crtc_info->current_mode)
-     fprintf(stderr, "found CRTC %d in mode %d\n", crtc_info->xid, crtc_info->current_mode->xid);
+     fprintf(stderr, "E_RANDR:\t\t found CRTC %d in mode %d\n", crtc_info->xid, crtc_info->current_mode->xid);
    crtc_info->current_orientation = ecore_x_randr_crtc_orientation_get(e_randr_screen_info->root, crtc_info->xid);
    if (crtc_info->outputs_common_modes)
      {
@@ -1517,18 +1517,8 @@ e_randr_store_configuration(E_Randr_Screen_Info *screen_info, E_Randr_Configurat
 EAPI Eina_Bool
 e_randr_try_restore_configuration(E_Randr_Screen_Info *si)
 {
-   //if (!e_config || !e_config->randr_serialized_setup) return EINA_FALSE;
+   if (!e_config || !e_config->randr_serialized_setup) return EINA_FALSE;
 
-   if (!e_config)
-     {
-        fprintf(stderr, "E_RANDR: Trying to restore setup, but e_config isn't there!.\n");
-        return EINA_FALSE;
-     }
-   if (!e_config->randr_serialized_setup)
-     {
-        fprintf(stderr, "E_RANDR: Trying to restore setup, but no setup was stored!.\n");
-        return EINA_FALSE;
-     }
    if (si->randr_version == ECORE_X_RANDR_1_1)
      return _e_randr_try_restore_11(si->rrvd_info.randr_info_11);
    else if (si->randr_version >= ECORE_X_RANDR_1_2)
