@@ -13,6 +13,7 @@
 #endif
 
 Evas_Object *dialog_subdialog_policies_basic_create_widgets(Evas *canvas);
+Eina_Bool    dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_info);
 Eina_Bool    dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 Eina_Bool    dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 Eina_Bool    dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -21,6 +22,15 @@ void         dialog_subdialog_policies_update_radio_buttons(Evas_Object *crtc);
 static void  _dialog_subdialog_policies_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern char _theme_file_path[];
+
+static const char *_ECORE_X_RANDR_POLICIES_STRINGS[] = {
+     "ECORE_X_RANDR_OUTPUT_POLICY_ABOVE",
+     "ECORE_X_RANDR_OUTPUT_POLICY_RIGHT",
+     "ECORE_X_RANDR_OUTPUT_POLICY_BELOW",
+     "ECORE_X_RANDR_OUTPUT_POLICY_LEFT",
+     "ECORE_X_RANDR_OUTPUT_POLICY_CLONE",
+     "ECORE_X_RANDR_OUTPUT_POLICY_NONE"};
+
 
 /*
    static void
@@ -52,7 +62,7 @@ dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_inf
           oi = odd->output;
         else continue;
         odd->previous_policy = oi->policy;
-        odd->new_policy = Ecore_X_Randr_Unset;
+        odd->new_policy = oi->policy;
      }
 
    return EINA_TRUE;
@@ -189,7 +199,7 @@ dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Co
    //policy update
    e_config_runtime_info->gui.selected_output_dd->previous_policy = e_config_runtime_info->gui.selected_output_dd->new_policy;
    e_config_runtime_info->gui.selected_output_dd->new_policy = e_config_runtime_info->gui.subdialogs.policies.radio_val;
-   fprintf(stderr, "CONF_RANDR: 'New display attached'-policy set to %d\n", e_config_runtime_info->gui.selected_output_dd->new_policy);
+   fprintf(stderr, "CONF_RANDR: 'New display attached'-policy set to %s.\n", _ECORE_X_RANDR_POLICIES_STRINGS[e_config_runtime_info->gui.selected_output_dd->new_policy - 1]);
 
    return EINA_TRUE;
 }
@@ -281,11 +291,9 @@ dialog_subdialog_policies_keep_changes(E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd || ((int)odd->previous_policy == Ecore_X_Randr_Unset)) continue;
         odd->previous_policy = odd->new_policy;
         if (odd->output)
           odd->output->policy = odd->new_policy;
-        odd->new_policy = Ecore_X_Randr_Unset;
      }
 }
 
@@ -299,9 +307,7 @@ dialog_subdialog_policies_discard_changes(E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd->crtc || ((int)odd->previous_policy == Ecore_X_Randr_Unset)) continue;
         odd->new_policy = odd->previous_policy;
-        odd->previous_policy = Ecore_X_Randr_Unset;
      }
 }
 

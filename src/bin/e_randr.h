@@ -14,7 +14,21 @@ typedef struct _E_Randr_Serialized_Setup_11 E_Randr_Serialized_Setup_11;
 typedef struct _E_Randr_Serialized_Setup_12 E_Randr_Serialized_Setup_12;
 typedef struct _E_Randr_Serialized_Setup E_Randr_Serialized_Setup;
 
-EAPI void e_randr_store_configuration(E_Randr_Screen_Info *screen_info);
+typedef enum _E_Randr_Configuration_Store_Modifier
+{
+   E_RANDR_CONFIGURATION_STORE_POLICIES = (1 << 0),
+   E_RANDR_CONFIGURATION_STORE_RESOLUTIONS = (1 << 1),
+   E_RANDR_CONFIGURATION_STORE_ARRANGEMENT = (1 << 2),
+   E_RANDR_CONFIGURATION_STORE_ORIENTATIONS = (1 << 3),
+   E_RANDR_CONFIGURATION_STORE_ALL = (
+         E_RANDR_CONFIGURATION_STORE_POLICIES
+         | E_RANDR_CONFIGURATION_STORE_RESOLUTIONS
+         | E_RANDR_CONFIGURATION_STORE_ARRANGEMENT
+         | E_RANDR_CONFIGURATION_STORE_ORIENTATIONS)
+} E_Randr_Configuration_Store_Modifier;
+
+EAPI void e_randr_store_configuration(E_Randr_Screen_Info *screen_info, E_Randr_Configuration_Store_Modifier modifier);
+EAPI Eina_Bool e_randr_try_restore_configuration(E_Randr_Screen_Info *screen_info);
 
 #else
 #ifndef E_RANDR_H
