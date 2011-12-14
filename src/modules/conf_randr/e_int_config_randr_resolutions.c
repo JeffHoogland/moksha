@@ -52,6 +52,7 @@ dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
           }
         else if (odd->output)
           {
+             odd->previous_mode = NULL;
              odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->preferred_modes));
           }
      }
@@ -185,8 +186,6 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
      {
         current_mode = NULL;
         if (output_dialog_data->output->modes)
-          modelist = output_dialog_data->output->modes;
-        else
           modelist = output_dialog_data->output->modes;
      }
    EINA_LIST_FOREACH(modelist, iter, mode_info)

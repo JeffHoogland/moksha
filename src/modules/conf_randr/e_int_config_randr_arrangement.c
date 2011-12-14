@@ -63,6 +63,8 @@ _dialog_subdialog_arrangement_output_dialog_data_fill(E_Config_Randr_Dialog_Outp
    else if (odd->output)
      {
         //disabled monitor
+        odd->previous_mode = NULL;
+
         //try to get a mode from the preferred list, else use default list
         if (!(odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->preferred_modes))))
           {

@@ -545,10 +545,15 @@ _e_randr_crtc_info_set(E_Randr_Crtc_Info *crtc_info)
    ecore_x_randr_crtc_geometry_get(e_randr_screen_info->root, crtc_info->xid, &crtc_info->geometry.x, &crtc_info->geometry.y, &crtc_info->geometry.w, &crtc_info->geometry.h);
    mode = ecore_x_randr_crtc_mode_get(e_randr_screen_info->root, crtc_info->xid);
    crtc_info->current_mode = _e_randr_mode_info_get(mode);
-   fprintf(stderr, "CRTC %d apparently is in mode %d, trying to find it in the list of modes..\n", crtc_info->xid, mode);
+   fprintf(stderr, "CRTC %x apparently is in mode %x, trying to find it in the list of modes..\n", crtc_info->xid, mode);
    if (crtc_info->current_mode)
      fprintf(stderr, "found CRTC %d in mode %d\n", crtc_info->xid, crtc_info->current_mode->xid);
    crtc_info->current_orientation = ecore_x_randr_crtc_orientation_get(e_randr_screen_info->root, crtc_info->xid);
+   if (crtc_info->outputs_common_modes)
+     {
+        eina_list_free(crtc_info->outputs_common_modes);
+        crtc_info->outputs_common_modes = NULL;
+     }
    crtc_info->outputs_common_modes = _e_randr_outputs_common_modes_get(crtc_info->outputs, NULL);
 }
 
@@ -717,6 +722,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
    // mouse release or event mouse in or out, and in addition add a "poller"
    // that runs every 256 ticks maybe?
    if (!e_randr_screen_info) return ECORE_CALLBACK_RENEW;
+
    if (type == ECORE_X_EVENT_RANDR_CRTC_CHANGE)
      {
         Ecore_X_Event_Randr_Crtc_Change *event = (Ecore_X_Event_Randr_Crtc_Change *)ev;
@@ -736,10 +742,12 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
         crtc_info = _e_randr_crtc_info_get(event->crtc);
         if (!crtc_info) return ECORE_CALLBACK_RENEW;
 
+        // Update CRTC's information (Output(s), (Common) Mode(s), etc.)
+        _e_randr_crtc_info_set(crtc_info);
+
         if (event->mode != Ecore_X_Randr_None)
           {
              //switched (on)
-             mode_info = _e_randr_mode_info_get(event->mode);
              if(!crtc_info->outputs_common_modes)
                fprintf(stderr, "E_RANDR: Though this monitor was switched on, no outputs are known to be connected to CRTC %x. Therefore no common modes available.\n", crtc_info->xid);
              if ((crtc_info->current_mode != mode_info))
@@ -813,7 +821,10 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
                output_info->crtc->outputs = eina_list_append(output_info->crtc->outputs, output_info);
              //update the list of common modes for the crtc's connected outputs
              if (output_info->crtc->outputs_common_modes)
-               eina_list_free(output_info->crtc->outputs_common_modes);
+               {
+                  eina_list_free(output_info->crtc->outputs_common_modes);
+                  output_info->crtc->outputs_common_modes = NULL;
+               }
              output_info->crtc->outputs_common_modes = _e_randr_outputs_common_modes_get(output_info->crtc->outputs, NULL);
           }
 
@@ -825,20 +836,15 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
              if (event->crtc)
                output_info->crtc = _e_randr_crtc_info_get(event->crtc);
 
-             if (output_info && !output_info->crtc && !event->crtc && !event->mode)
+             if (output_info && !output_info->crtc && (event->crtc == Ecore_X_Randr_None) && (event->mode == Ecore_X_Randr_None))
                {
                   //Monitor was attached!
                   _e_randr_output_info_hw_info_set(output_info);
                   //make the crtcs aware of their possibly new output
                   _e_randr_crtcs_possible_output_update(output_info);
-                  /*
-                     if ((restore_info = _e_randr_config_find_suiting_config_12()))
-                     //maybe we have a suiting configuration
-                     //_e_randr_config_enable_12(restore_info);
-                     ;
-                     else
-                   */
-                  enabled = _e_randr_try_enable_output(output_info, EINA_FALSE);    //maybe give a success message?
+
+                  if (output_info->policy != ECORE_X_RANDR_OUTPUT_POLICY_NONE)
+                    enabled = _e_randr_try_enable_output(output_info, EINA_FALSE);    //maybe give a success message?
                }
              _e_randr_notify_output_change(output_info);
           }
@@ -1540,8 +1546,10 @@ _e_randr_find_matching_outputs(Eina_List *sois, Eina_List *ois)
 
    EINA_LIST_FOREACH (sois, s_output_iter, so)
      {
+        fprintf(stderr, "E_RANDR: Looking for serialized output %d(hash)\n", so->edid_hash.hash);
         EINA_LIST_FOREACH (ois, r_output_iter, oi)
           {
+             fprintf(stderr, "E_RANDR: \tComparing to output %d(hash)\n", oi->edid_hash.hash);
              if (so->edid_hash.hash == oi->edid_hash.hash)
                {
                   list = eina_list_append(list, oi);
@@ -1665,6 +1673,8 @@ _e_randr_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
     * apparently we don't have a CRTC to make use of the device
     */
    if (!usable_crtc) return EINA_FALSE;
+
+   fprintf(stderr, "E_RANDR: Try to enable output %x using policy %d.\n", output_info->xid, output_info->policy);
 
    //get the CRTC we will refer to, dependend on policy
    switch (output_info->policy)
@@ -1828,8 +1838,13 @@ _e_randr_crtc_outputs_refs_update(E_Randr_Crtc_Info *crtc_info)
    E_Randr_Output_Info *output_info;
    int i, noutputs;
 
+   if (!e_randr_screen_info->rrvd_info.randr_info_12->outputs) return;
+
+   if (crtc_info->outputs) eina_list_free(crtc_info->outputs);
+   if (crtc_info->possible_outputs) eina_list_free(crtc_info->possible_outputs);
+
    //get references to output_info structs which are related to this CRTC
-   if (e_randr_screen_info->rrvd_info.randr_info_12->outputs && (outputs = ecore_x_randr_crtc_outputs_get(e_randr_screen_info->root, crtc_info->xid, &noutputs)))
+   if ((outputs = ecore_x_randr_crtc_outputs_get(e_randr_screen_info->root, crtc_info->xid, &noutputs)))
      {
         for (i = 0; i < noutputs; i++)
           {
@@ -1840,7 +1855,7 @@ _e_randr_crtc_outputs_refs_update(E_Randr_Crtc_Info *crtc_info)
         free(outputs);
      }
    //get references to possible output_info structs which are related to this CRTC
-   if (e_randr_screen_info->rrvd_info.randr_info_12->outputs && (outputs = ecore_x_randr_crtc_possible_outputs_get(e_randr_screen_info->root, crtc_info->xid, &noutputs)))
+   if ((outputs = ecore_x_randr_crtc_possible_outputs_get(e_randr_screen_info->root, crtc_info->xid, &noutputs)))
      {
         for (i = 0; i < noutputs; i++)
           {
@@ -2021,7 +2036,7 @@ _e_randr_crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
      }
    if (!mode_info)
      {
-        eina_list_free(crtc_info->outputs_common_modes);
+        //eina_list_free(crtc_info->outputs_common_modes);
         return EINA_FALSE;
      }
    if ((outputs = _e_randr_outputs_to_array(crtc_info->outputs)))
@@ -2029,7 +2044,8 @@ _e_randr_crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
         ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, crtc_info->xid, outputs, eina_list_count(crtc_info->outputs), mode_info->xid);
         free(outputs);
      }
-   eina_list_free(crtc_info->outputs_common_modes);
+   //eina_list_free(crtc_info->outputs_common_modes);
+   //crtc_info->outputs_common_modes = NULL;
 
    ecore_x_randr_screen_reset(e_randr_screen_info->root);
 
@@ -2168,7 +2184,9 @@ _e_randr_output_info_hw_info_set(E_Randr_Output_Info *output_info)
    output_info->edid = ecore_x_randr_output_edid_get(e_randr_screen_info->root, output_info->xid, &output_info->edid_length);
    if (output_info->edid_length > 0)
      output_info->edid_hash.hash = eina_hash_superfast((char *)output_info->edid, output_info->edid_length);
+
    //get the outputs we can use on the same CRTC alongside this one.
+   if (output_info->clones) eina_list_free(output_info->clones);
    if ((outputs = ecore_x_randr_output_clones_get(e_randr_screen_info->root, output_info->xid, &num)))
      {
         for (i = 0; i < num; i++)
@@ -2180,6 +2198,7 @@ _e_randr_output_info_hw_info_set(E_Randr_Output_Info *output_info)
      }
 
    //get the CRTCs which are usable with this output.
+   if (output_info->possible_crtcs) eina_list_free(output_info->possible_crtcs);
    if ((crtcs = ecore_x_randr_output_possible_crtcs_get(e_randr_screen_info->root, output_info->xid, &num)))
      {
         for (i = 0; i < num; i++)
