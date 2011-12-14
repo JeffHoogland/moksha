@@ -708,6 +708,7 @@ static Eina_Bool
 _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
 {
    E_Randr_Crtc_Info *crtc_info;
+   Ecore_X_Randr_Mode_Info *mode_info;
    Eina_Bool enabled;
 
    // FIXME: ecore_x_randr_screen_primary_output_orientation_get() should
@@ -738,9 +739,12 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
         if (event->mode != Ecore_X_Randr_None)
           {
              //switched (on)
-             if ((crtc_info->current_mode != _e_randr_mode_info_get(event->mode)))
+             mode_info = _e_randr_mode_info_get(event->mode);
+             if(!crtc_info->outputs_common_modes)
+               fprintf(stderr, "E_RANDR: Though this monitor was switched on, no outputs are known to be connected to CRTC %x. Therefore no common modes available.\n", crtc_info->xid);
+             if ((crtc_info->current_mode != mode_info))
                {
-                  crtc_info->current_mode = _e_randr_mode_info_get(event->mode);
+                  crtc_info->current_mode = mode_info;
                   _e_randr_notify_crtc_mode_change(crtc_info);
                }
              else
@@ -790,14 +794,14 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
            Ecore_X_Render_Subpixel_Order   subpixel_order;
            };
          */
-        fprintf(stderr, "E_RANDR: Output connected!: \n \
-              E_RANDR: relative to win: %d\n \
-              E_RANDR: relative to output: %d\n \
-              E_RANDR: relative to crtc: %d\n \
-              E_RANDR: relative to mode: %d\n \
-              E_RANDR: relative to orientation: %d\n \
-              E_RANDR: relative to connection: %d (connected = %d, disconnected = %d, unknown %d)\n \
-              E_RANDR: relative to subpixel_order: %d\n",
+        fprintf(stderr, "E_RANDR: Output connected!: \n"
+              "E_RANDR: relative to win: %x\n"
+              "E_RANDR: output (xid): %x\n"
+              "E_RANDR: used by crtc (xid): %x\n"
+              "E_RANDR: mode: %x\n"
+              "E_RANDR: orientation: %d\n"
+              "E_RANDR: connection state: %d (connected = %d, disconnected = %d, unknown = %d)\n"
+              "E_RANDR: subpixel_order: %d\n",
                 event->win, event->output, event->crtc, event->mode, event->orientation, event->connection, ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED, ECORE_X_RANDR_CONNECTION_STATUS_DISCONNECTED, ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN, event->subpixel_order);
 
         output_info = _e_randr_output_info_get(event->output);
@@ -807,6 +811,10 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
           {
              if (!eina_list_data_find(output_info->crtc->outputs, output_info))
                output_info->crtc->outputs = eina_list_append(output_info->crtc->outputs, output_info);
+             //update the list of common modes for the crtc's connected outputs
+             if (output_info->crtc->outputs_common_modes)
+               eina_list_free(output_info->crtc->outputs_common_modes);
+             output_info->crtc->outputs_common_modes = _e_randr_outputs_common_modes_get(output_info->crtc->outputs, NULL);
           }
 
         output_info->connection_status = event->connection;
@@ -1390,6 +1398,7 @@ Eina_List *
 _e_randr_update_serialized_setup_12(Eina_List *setups_12, E_Randr_Screen_Info_12 *si_12)
 {
    E_Randr_Serialized_Setup_12 *ss_12;
+   Eina_List *li;
 
    if (setups_12)
      {
@@ -1398,7 +1407,11 @@ _e_randr_update_serialized_setup_12(Eina_List *setups_12, E_Randr_Screen_Info_12
          * connected in order to replace it
          */
         if ((ss_12 = _e_randr_find_matching_serialized_setup(setups_12, si_12)))
-          _e_randr_free_serialized_setup_12(ss_12);
+          {
+             //_e_randr_free_serialized_setup_12(ss_12);
+             li = eina_list_data_find_list(setups_12, ss_12);
+             setups_12 = eina_list_remove_list(setups_12, li);
+          }
      }
    ss_12 = _e_randr_create_serialized_setup_12(si_12);
    setups_12 = eina_list_append(setups_12, ss_12);

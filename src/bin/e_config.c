@@ -563,7 +563,7 @@ e_config_init(void)
 #define D _e_config_randr_serialized_output_edd
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, name_length, INT);
-   E_CONFIG_SUB(D, T, edid_hash, _e_config_randr_edid_hash_edd);
+   E_CONFIG_VAL(D, T, edid_hash.hash, INT);
    E_CONFIG_VAL(D, T, backlight_level, DOUBLE);
 
     _e_config_randr_serialized_mode_info_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Mode_Info", Ecore_X_Randr_Mode_Info);
