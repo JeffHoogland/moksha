@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-12-01 06:34+0100\n"
-"PO-Revision-Date: 2011-12-01 12:18+0100\n"
+"POT-Creation-Date: 2011-12-14 06:29+0100\n"
+"PO-Revision-Date: 2011-12-14 19:14+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -872,7 +872,7 @@ msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
 #: src/bin/e_config.c:1601
 #, c-format
-msgid "Enlightenment has an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
+msgid "Enlightenment has had an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Enlightenment a rencontré une erreur pendant<br>le déplacement de données de configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été abandonnée par sécurité.<br>"
 
 #: src/bin/e_config.c:2126
@@ -957,7 +957,7 @@ msgstr "Enlightenment ne reconnaît pas cette erreur."
 
 #: src/bin/e_config.c:2219
 #, c-format
-msgid "Enlightenment has an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgid "Enlightenment has had an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
 
 #: src/bin/e_config_dialog.c:210
@@ -5084,19 +5084,19 @@ msgstr "Texte de l'élément de liste sélectionné"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:108
 msgid "List Item Text (Even)"
-msgstr "Texte de l'élément de liste impair"
+msgstr "Texte de l'élément de liste pair"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:109
 msgid "List Item Background Base (Even)"
-msgstr "Fond de base de l'élément de liste impair"
+msgstr "Fond de base de l'élément de liste pair"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:110
 msgid "List Item Text (Odd)"
-msgstr "Texte de l'élément de liste pair"
+msgstr "Texte de l'élément de liste impair"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
 msgid "List Item Background Base (Odd)"
-msgstr "Fond de base de l'élément de liste pair"
+msgstr "Fond de base de l'élément de liste impair"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:112
 msgid "List Header Text (Even)"
@@ -6465,7 +6465,7 @@ msgstr "Collection Omni "
 msgid "Items"
 msgstr "Éléments"
 
-#: src/modules/everything/evry_plug_aggregator.c:328
+#: src/modules/everything/evry_plug_aggregator.c:301
 msgid "No plugins loaded"
 msgstr "Aucun greffon activé"
 
