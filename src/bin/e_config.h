@@ -580,6 +580,7 @@ extern EAPI E_Config *e_config;
 
 extern EAPI int E_EVENT_CONFIG_ICON_THEME;
 extern EAPI int E_EVENT_CONFIG_MODE_CHANGED;
+extern EAPI int E_EVENT_CONFIG_LOADED;
 
 #endif
 #endif

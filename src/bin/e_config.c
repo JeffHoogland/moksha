@@ -63,6 +63,7 @@ static E_Config_DD *_e_config_randr_serialized_crtc_edd = NULL;
 
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
 EAPI int E_EVENT_CONFIG_MODE_CHANGED = 0;
+EAPI int E_EVENT_CONFIG_LOADED = 0;
 
 static E_Dialog *_e_config_error_dialog = NULL;
 
@@ -117,6 +118,7 @@ e_config_init(void)
 {
    E_EVENT_CONFIG_ICON_THEME = ecore_event_type_new();
    E_EVENT_CONFIG_MODE_CHANGED = ecore_event_type_new();
+   E_EVENT_CONFIG_LOADED = ecore_event_type_new();
 
    _e_config_profile = getenv("E_CONF_PROFILE");
 
@@ -1333,6 +1335,8 @@ e_config_load(void)
    if (e_config->desklock_personal_passwd)
      eina_stringshare_del(e_config->desklock_personal_passwd);
    e_config->desklock_personal_passwd = NULL;
+
+   ecore_event_add(E_EVENT_CONFIG_LOADED, NULL, NULL, NULL);
 }
 
 EAPI int
