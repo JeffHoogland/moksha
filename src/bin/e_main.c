@@ -391,15 +391,6 @@ main(int argc, char **argv)
    TS("E_Xinerama Init Done");
    _e_main_shutdown_push(e_xinerama_shutdown);
 
-   TS("E_Randr Init");
-   if (!e_randr_init()) 
-     {
-        e_error_message_show(_("Enlightenment cannot initialize E_Randr!\n"));
-     }
-   else 
-     _e_main_shutdown_push(e_randr_shutdown);
-   TS("E_Randr Init Done");
-
    TS("E_Hints Init");
    e_hints_init();
    TS("E_Hints Init Done");
@@ -438,6 +429,15 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_config_shutdown);
 
    _fix_user_default_edj();
+
+   TS("E_Randr Init");
+   if (!e_randr_init())
+     {
+        e_error_message_show(_("Enlightenment cannot initialize E_Randr!\n"));
+     }
+   else
+     _e_main_shutdown_push(e_randr_shutdown);
+   TS("E_Randr Init Done");
 
    TS("E_Env Init");
    if (!e_env_init())
