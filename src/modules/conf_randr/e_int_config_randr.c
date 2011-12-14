@@ -242,11 +242,35 @@ static void
 _e_conf_randr_confirmation_dialog_store_cb(void *data, E_Dialog *dia)
 {
    E_Config_Randr_Dialog_Confirmation_Dialog_Data *cdd = (E_Config_Randr_Dialog_Confirmation_Dialog_Data *)data;
+   E_Randr_Configuration_Store_Modifier modifier = 0;
 
    if (!cdd) return;
 
-   _e_conf_randr_confirmation_dialog_keep_cb(data, dia);
-   e_randr_store_configuration(e_randr_screen_info);
+   //Create modifier
+   if (dialog_subdialog_policies_basic_check_changed(NULL, e_config_runtime_info))
+     modifier |= E_RANDR_CONFIGURATION_STORE_POLICIES;
+
+   if (dialog_subdialog_resolutions_basic_check_changed(NULL, e_config_runtime_info))
+     modifier |= E_RANDR_CONFIGURATION_STORE_RESOLUTIONS;
+
+   if (dialog_subdialog_arrangement_basic_check_changed(NULL, e_config_runtime_info))
+     modifier |= E_RANDR_CONFIGURATION_STORE_ARRANGEMENT;
+
+   if (dialog_subdialog_orientation_basic_check_changed(NULL, e_config_runtime_info))
+     modifier |= E_RANDR_CONFIGURATION_STORE_ORIENTATIONS;
+
+   //ordinary "keep" functionality
+   dialog_subdialog_arrangement_keep_changes(cdd->cfdata);
+   dialog_subdialog_orientation_keep_changes(cdd->cfdata);
+   dialog_subdialog_policies_keep_changes(cdd->cfdata);
+   dialog_subdialog_resolutions_keep_changes(cdd->cfdata);
+
+   //cleanup dialog
+   _e_conf_randr_confirmation_dialog_delete_cb(dia->win);
+
+   //but actually trigger saving the stuff
+   e_randr_store_configuration(e_randr_screen_info, modifier);
+
 }
 
 static void

@@ -92,7 +92,7 @@ _surebox_dialog_cb_yes(void *data, E_Dialog *dia)
    man = e_manager_current_get();
    ecore_x_randr_screen_primary_output_current_size_get(man->root, &c_size.width, &c_size.height, NULL, NULL, NULL);
 
-   e_randr_store_configuration(e_randr_screen_info);
+   e_randr_store_configuration(e_randr_screen_info, E_RANDR_CONFIGURATION_STORE_ALL);
 
    _fill_data(sb->cfdata);
    _load_resolutions(sb->cfdata);
