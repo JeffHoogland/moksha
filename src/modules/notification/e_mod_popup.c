@@ -178,10 +178,14 @@ _notification_popup_merge(E_Notification *n)
 
    len = strlen(body_old);
    len += strlen(body_new);
-   len += 3; /* \xE2\x80\xA9 - PS */
+   len += 4; /* \xE2\x80\xA9 or <PS> */
    if (len < 65536) body_final = alloca(len + 1);
    else body_final = malloc(len + 1);
-   snprintf(body_final, len + 1, "%s\xE2\x80\xA9%s", body_old, body_new);
+   /* Hack to allow e to include markup */
+   if (e_notification_replaces_id_get(n) == -1)
+      snprintf(body_final, len + 1, "%s<ps>%s", body_old, body_new);
+   else
+      snprintf(body_final, len + 1, "%s\xE2\x80\xA9%s", body_old, body_new);
    /* printf("set body %s\n", body_final); */
 
    e_notification_body_set(n, body_final);
@@ -580,6 +584,12 @@ _notification_format_message(Popup_Data *popup)
    const char *title = e_notification_summary_get(popup->notif);
    const char *b = e_notification_body_get(popup->notif);
    edje_object_part_text_set(o, "notification.text.title", title);
+   /* Hack to allow e to include markup */
+   if (e_notification_replaces_id_get(popup->notif) == -1)
+     {
+        edje_object_part_text_set(o, "notification.textblock.message", b);
+     }
+   else
      {
         char *tmp;
         tmp = evas_textblock_text_utf8_to_markup(NULL, b);

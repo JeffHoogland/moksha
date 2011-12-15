@@ -227,7 +227,7 @@ _notification_show_presentation(Eina_Bool enabled)
                  "power saving settings will be restored.");
      }
 
-   _notification_show_common(summary, body, 0);
+   _notification_show_common(summary, body, -1);
 }
 
 static void
@@ -250,7 +250,7 @@ _notification_show_offline(Eina_Bool enabled)
                  "resume regular tasks.");
      }
 
-   _notification_show_common(summary, body, 0);
+   _notification_show_common(summary, body, -1);
 }
 
 static Eina_Bool
