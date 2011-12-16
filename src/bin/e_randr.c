@@ -57,6 +57,7 @@
 
 static Eina_Bool                _e_randr_init(void);
 static void                     _e_randr_shutdown(void);
+static Eina_Bool                _e_randr_screen_info_refresh(void);
 static void                     _e_randr_event_listeners_add(void);
 static void                     _e_randr_event_listeners_remove(void);
 static Eina_Bool                _e_randr_event_cb(void *data, int type, void *e);
@@ -122,12 +123,35 @@ e_randr_shutdown(void)
    return 1;
 }
 
+EAPI Eina_Bool
+e_randr_screen_info_refresh(void)
+{
+   return _e_randr_screen_info_refresh();
+}
+
 static Eina_Bool
 _e_randr_init(void)
+{
+   EINA_SAFETY_ON_FALSE_RETURN_VAL(e_randr_screen_info_refresh(), EINA_FALSE);
+   _e_randr_event_listeners_add();
+   return EINA_TRUE;
+}
+
+static void
+_e_randr_shutdown(void)
+{
+   _e_randr_screen_info_free(e_randr_screen_info);
+}
+
+static Eina_Bool
+_e_randr_screen_info_refresh(void)
 {
    int n;
    Ecore_X_Window *roots;
    Ecore_X_Window root;
+
+   if (e_randr_screen_info)
+     _e_randr_screen_info_free(e_randr_screen_info);
 
    if (!(roots = ecore_x_window_root_list(&n))) return EINA_FALSE;
    /* first (and only) root window */
@@ -136,44 +160,34 @@ _e_randr_init(void)
 
    if ((!ecore_x_randr_query()) ||
        !(e_randr_screen_info = _e_randr_screen_info_new()))
-     goto ecore_x_randr_init_fail_free_screen;
+     goto e_randr_screen_info_refresh_fail_free_screen;
 
    if ((e_randr_screen_info->randr_version = ecore_x_randr_version_get()))
      e_randr_screen_info->root = root;
    if (e_randr_screen_info->randr_version == ECORE_X_RANDR_1_1)
      {
         if (!(e_randr_screen_info->rrvd_info.randr_info_11 = _e_randr_screen_info_11_new()))
-          goto ecore_x_randr_init_fail_free_screen;
+          goto e_randr_screen_info_refresh_fail_free_screen;
         _e_randr_screen_info_11_set();
      }
    else if (e_randr_screen_info->randr_version >= ECORE_X_RANDR_1_2)
      {
         if (!(e_randr_screen_info->rrvd_info.randr_info_12 = _e_randr_screen_info_12_new()))
-          goto ecore_x_randr_init_fail_free_screen;
+          goto e_randr_screen_info_refresh_fail_free_screen;
         _e_randr_screen_info_12_set(e_randr_screen_info->rrvd_info.randr_info_12);
-        _e_randr_event_listeners_add();
-        if (!_e_randr_screen_outputs_init())
-          goto ecore_x_randr_init_fail_free_screen;
-        if (!_e_randr_screen_crtcs_init())
-          goto ecore_x_randr_init_fail_free_screen;
+        if (!_e_randr_screen_outputs_init()
+              || !_e_randr_screen_crtcs_init())
+          goto e_randr_screen_info_refresh_fail_free_screen;
         _e_randr_screen_primary_output_assign(NULL);
      }
 
    return EINA_TRUE;
 
-   //FILO free stack in case we fail to allocate something/can't get hold of
-   //necessary information
-ecore_x_randr_init_fail_free_screen:
+e_randr_screen_info_refresh_fail_free_screen:
    if (e_randr_screen_info)
      _e_randr_screen_info_free(e_randr_screen_info);
 
    return EINA_FALSE;
-}
-
-static void
-_e_randr_shutdown(void)
-{
-   _e_randr_screen_info_free(e_randr_screen_info);
 }
 
 /**
