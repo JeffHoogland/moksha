@@ -10,6 +10,8 @@
 #define Ecore_X_Randr_None  0
 #define Ecore_X_Randr_Unset -1
 
+#define POLLINTERVAL 256
+
 /*
  * Save mechanism:
  * Single monitor:
@@ -62,6 +64,7 @@ static void                     _e_randr_event_listeners_add(void);
 static void                     _e_randr_event_listeners_remove(void);
 static Eina_Bool                _e_randr_event_cb(void *data, int type, void *e);
 static Eina_Bool                _e_event_config_loaded_cb(void *data, int type, void *e);
+static Eina_Bool                _e_randr_x_poll_cb(void *data __UNUSED__);
 static E_Randr_Screen_Info     *_e_randr_screen_info_new(void);
 static void                     _e_randr_screen_info_free(E_Randr_Screen_Info *screen_info);
 static E_Randr_Screen_Info_11  *_e_randr_screen_info_11_new(void);
@@ -109,6 +112,7 @@ static Eina_Bool                _e_randr_outputs_are_clones(E_Randr_Output_Info 
 
 EAPI E_Randr_Screen_Info * e_randr_screen_info = NULL;
 static Eina_List *_e_randr_event_handlers = NULL;
+static Ecore_Poller *poller = NULL;
 
 EINTERN Eina_Bool
 e_randr_init(void)
@@ -938,6 +942,14 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
+static Eina_Bool
+_e_randr_x_poll_cb(void *data __UNUSED__)
+{
+   ecore_x_randr_primary_output_get(e_randr_screen_info->root);
+
+   return ECORE_CALLBACK_RENEW;
+}
+
    static Eina_Bool
 _e_event_config_loaded_cb(void *data __UNUSED__, int type, void *ev __UNUSED__)
 {
@@ -957,6 +969,8 @@ _e_randr_event_listeners_add(void)
    _e_randr_event_handlers = eina_list_append(_e_randr_event_handlers, ecore_event_handler_add(ECORE_X_EVENT_RANDR_OUTPUT_CHANGE, _e_randr_event_cb, NULL));
    _e_randr_event_handlers = eina_list_append(_e_randr_event_handlers, ecore_event_handler_add(ECORE_X_EVENT_RANDR_OUTPUT_PROPERTY_NOTIFY, _e_randr_event_cb, NULL));
    _e_randr_event_handlers = eina_list_append(_e_randr_event_handlers, ecore_event_handler_add(E_EVENT_CONFIG_LOADED, _e_event_config_loaded_cb, NULL));
+   // WORKAROUND problem of X not sending events
+   poller = ecore_poller_add(ECORE_POLLER_CORE, POLLINTERVAL, _e_randr_x_poll_cb, NULL);
 }
 
 static void
@@ -965,6 +979,8 @@ _e_randr_event_listeners_remove(void)
    Ecore_Event_Handler *_event_handler = NULL;
    EINA_LIST_FREE (_e_randr_event_handlers, _event_handler)
      ecore_event_handler_del(_event_handler);
+   ecore_poller_del(poller);
+   poller = NULL;
 }
 
 static void
