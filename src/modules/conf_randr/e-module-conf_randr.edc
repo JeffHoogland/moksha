@@ -87,6 +87,30 @@ collections {
             description {
                state: "disabled" 0.0;
                inherit: "default" 0.0;
+               color: 128 128 128 255;
+            }
+         }
+
+         part {
+            name: "state_layer";
+            type: RECT; // Overlay for gray-out in case of disabled outputs
+
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+               rel1 {
+                  to: "e.swallow.content";
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  to: "e.swallow.content";
+                  relative: 1.0 1.0;
+               }
+            }
+
+            description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
                color: 255 255 255 128;
             }
          }
@@ -424,7 +448,7 @@ collections {
                signal: "disabled";
                source: "e";
                action: STATE_SET "disabled" 0.0;
-               target: "e.swallow.content";
+               target: "state_layer";
             }
 
             program {
@@ -432,7 +456,7 @@ collections {
                signal: "enabled";
                source: "e";
                action: STATE_SET "default" 0.0;
-               target: "e.swallow.content";
+               target: "state_layer";
             }
 
             program {
