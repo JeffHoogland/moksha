@@ -154,6 +154,7 @@ _dialog_subdialog_arrangement_output_add(Evas *canvas, E_Config_Randr_Dialog_Out
    E_Randr_Output_Info *output_info;
    Evas_Object *output;
    const char *output_name = NULL;
+   const char *state_signal;
 
    if (!canvas || !output_dialog_data || !e_config_runtime_info) return NULL;
 
@@ -166,9 +167,10 @@ _dialog_subdialog_arrangement_output_add(Evas *canvas, E_Config_Randr_Dialog_Out
    EINA_SAFETY_ON_FALSE_GOTO(edje_object_file_set(output, _theme_file_path, "e/conf/randr/dialog/subdialog/arrangement/output"), _dialog_subdialog_arrangement_output_add_edje_set_fail);
    //indicate monitor state
    if (!output_dialog_data->crtc || (output_dialog_data->crtc && !output_dialog_data->previous_mode))
-     edje_object_signal_emit(output, "disabled", "e");
+     state_signal = "disabled";
    else
-     edje_object_signal_emit(output, "enabled", "e");
+     state_signal = "enabled";
+   edje_object_signal_emit(output, state_signal, "e");
    //for now use deskpreview widget as background of output, maybe change this to
    //live image from comp module
    output_dialog_data->bg = e_widget_deskpreview_add(canvas, 1, 1);
