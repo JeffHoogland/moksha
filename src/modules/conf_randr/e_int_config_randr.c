@@ -115,12 +115,14 @@ create_data(E_Config_Dialog *cfd)
 
    // Prove we got all things to get going
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!e_randr_screen_info || (e_randr_screen_info->randr_version < ECORE_X_RANDR_1_2), NULL);
+   EINA_SAFETY_ON_FALSE_RETURN_VAL(e_randr_screen_info_refresh(), NULL);
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!(e_config_runtime_info = E_NEW(E_Config_Dialog_Data, 1)), NULL);
 
    e_config_runtime_info->cfd = cfd;
 
    //Compose theme's file path and name
    snprintf(_theme_file_path, sizeof(_theme_file_path), "%s%s", conf_randr_module->dir, THEME_FILENAME);
+
 
    e_config_runtime_info->manager = e_manager_current_get();
    EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->outputs, iter, output_info)
