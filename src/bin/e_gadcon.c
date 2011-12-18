@@ -1706,11 +1706,27 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
      {
 	if (e_box_orientation_get(gcc->o_box))
 	  {
-             w = gcc->min.w;
+             if ((gcc->aspect.w > 0) && (gcc->aspect.h > 0))
+               {
+                  w = (h * gcc->aspect.w) / gcc->aspect.h; // ZZZZ
+//                  w = gcc->min.w;
+               }
+             else
+               {
+                  w = gcc->min.w;
+               }
 	  }
 	else
 	  {
-             h = gcc->min.h;
+             if ((gcc->aspect.w > 0) && (gcc->aspect.h > 0))
+               {
+                  h = (w * gcc->aspect.h) / gcc->aspect.w; // ZZZZ
+//                  h = gcc->min.h;
+               }
+             else
+               {
+                  h = gcc->min.h;
+               }
 	  }
      }
    if (gcc->o_base)
