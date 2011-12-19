@@ -325,6 +325,7 @@ _dialog_subdialog_arrangement_output_mouse_down_cb(void *data __UNUSED__, Evas *
              edje_object_signal_emit(element, "select", "e");
              //update data for other dialogs
              e_config_runtime_info->gui.selected_eo = obj;
+             e_config_runtime_info->gui.selected_output_dd = evas_object_data_get(obj, "output_info");
 
              //update resolutions list
              dialog_subdialog_resolutions_update_list(obj);
@@ -342,6 +343,7 @@ _dialog_subdialog_arrangement_output_mouse_down_cb(void *data __UNUSED__, Evas *
      {
         //update data for other dialogs
         e_config_runtime_info->gui.selected_eo = NULL;
+        e_config_runtime_info->gui.selected_output_dd = NULL;
 
         //update resolutions list
         dialog_subdialog_resolutions_update_list(NULL);

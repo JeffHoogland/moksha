@@ -207,7 +207,7 @@ dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Co
 Eina_Bool
 dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   if (!e_randr_screen_info || !cfdata || !cfdata->gui.selected_output_dd) return EINA_FALSE;
+   if (!e_randr_screen_info || !cfdata || !cfdata->gui.selected_output_dd || !cfdata->gui.selected_output_dd->output) return EINA_FALSE;
 
    return (int)cfdata->gui.selected_output_dd->previous_policy != (int)cfdata->gui.subdialogs.policies.radio_val;
 }
@@ -285,29 +285,21 @@ void
 dialog_subdialog_policies_keep_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
-   Eina_List *iter;
+   if (!cfdata || !cfdata->gui.selected_output_dd || !cfdata->gui.selected_output_dd->output) return;
 
-   if (!cfdata) return;
-
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
-     {
-        odd->previous_policy = odd->new_policy;
-        if (odd->output)
-          odd->output->policy = odd->new_policy;
-     }
+   odd = cfdata->gui.selected_output_dd;
+   odd->previous_policy = odd->new_policy;
+   odd->output->policy = odd->new_policy;
 }
 
 void
 dialog_subdialog_policies_discard_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
-   Eina_List *iter;
 
-   if (!cfdata) return;
+   if (!cfdata || !cfdata->gui.selected_output_dd || !cfdata->gui.selected_output_dd->output) return;
 
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
-     {
-        odd->new_policy = odd->previous_policy;
-     }
+   odd = cfdata->gui.selected_output_dd;
+   odd->new_policy = odd->previous_policy;
 }
 
