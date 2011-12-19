@@ -82,6 +82,7 @@ static Eina_Bool                _e_randr_screen_crtcs_init(void);
 
 static Eina_Bool                _e_randr_try_restore_11(E_Randr_Screen_Info_11 *si_11);
 static Eina_Bool                _e_randr_try_restore_12(E_Randr_Screen_Info_12 *si_12);
+void                            _e_randr_restore_12_policies(E_Randr_Screen_Info_12 *si_12);
 static Eina_Bool                _e_randr_output_modes_add(E_Randr_Output_Info *output_info);
 static void                     _e_randr_notify_crtc_mode_change(E_Randr_Crtc_Info *crtc_info);
 static void                     _e_randr_notify_output_change(E_Randr_Output_Info *output_info);
@@ -183,6 +184,8 @@ _e_randr_screen_info_refresh(void)
               || !_e_randr_screen_crtcs_init())
           goto e_randr_screen_info_refresh_fail_free_screen;
         _e_randr_screen_primary_output_assign(NULL);
+        //also restore stored policies
+        _e_randr_restore_12_policies(e_randr_screen_info->rrvd_info.randr_info_12);
      }
 
    return EINA_TRUE;
@@ -1662,19 +1665,16 @@ _e_randr_find_matching_mode_info(Eina_List *modes, Ecore_X_Randr_Mode_Info *mode
    return NULL;
 }
 
-Eina_Bool
-_e_randr_try_restore_12(E_Randr_Screen_Info_12 *si_12)
+void
+_e_randr_restore_12_policies(E_Randr_Screen_Info_12 *si_12)
 {
-   E_Randr_Serialized_Setup_12 *ss_12;
-   E_Randr_Serialized_Crtc *sc;
-   E_Randr_Crtc_Info *ci;
-   Ecore_X_Randr_Output *outputs_array;
-   Ecore_X_Randr_Mode_Info *mi;
-   Eina_List *iter, *iter2, *outputs_list;
-   E_Randr_Serialized_Output_Policy *sop;
    E_Randr_Output_Info *output;
-   Eina_Bool ret = EINA_TRUE;
-   E_Manager *man;
+   E_Randr_Serialized_Output_Policy *sop;
+   Eina_List *iter, *iter2;
+
+   EINA_SAFETY_ON_NULL_RETURN(si_12);
+   EINA_SAFETY_ON_NULL_RETURN(e_config->randr_serialized_setup);
+   EINA_SAFETY_ON_NULL_RETURN(e_config->randr_serialized_setup->serialized_outputs_policies);
 
    // Restore policies
    EINA_LIST_FOREACH(si_12->outputs, iter, output)
@@ -1687,6 +1687,22 @@ _e_randr_try_restore_12(E_Randr_Screen_Info_12 *si_12)
                }
           }
      }
+}
+
+Eina_Bool
+_e_randr_try_restore_12(E_Randr_Screen_Info_12 *si_12)
+{
+   E_Randr_Serialized_Setup_12 *ss_12;
+   E_Randr_Serialized_Crtc *sc;
+   E_Randr_Crtc_Info *ci;
+   Ecore_X_Randr_Output *outputs_array;
+   Ecore_X_Randr_Mode_Info *mi;
+   Eina_List *iter;
+   Eina_Bool ret = EINA_TRUE;
+   E_Manager *man;
+
+   //Restore policies
+   _e_randr_restore_12_policies(si_12);
 
    /*
     * step by step. disable entire setup matching for now
