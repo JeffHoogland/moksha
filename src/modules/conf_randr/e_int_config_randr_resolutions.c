@@ -87,7 +87,7 @@ dialog_subdialog_resolutions_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
    Eina_List *iter;
    int noutputs = Ecore_X_Randr_Unset;
 
-   if (!e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "output_info")))
+   if (!e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info")))
      {
         fprintf(stderr, "CONF_RADNR: no crtc was selected or no output info could be retrieved for the selected crtc element (%p).\n", e_config_runtime_info->gui.selected_eo);
         return EINA_FALSE;
@@ -151,7 +151,7 @@ dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd __UNUSED__
    Ecore_X_Randr_Mode_Info *selected_mode;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   if (!e_config_runtime_info->gui.selected_eo || !(selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)) || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "output_info"))) return EINA_FALSE;
+   if (!e_config_runtime_info->gui.selected_eo || !(selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)) || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info"))) return EINA_FALSE;
 
    return selected_mode != output_dialog_data->previous_mode;
 }
@@ -173,7 +173,7 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
         e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.resolutions.dialog, EINA_TRUE);
         return;
      }
-   if (!(output_dialog_data = evas_object_data_get(crtc, "output_info")))
+   if (!(output_dialog_data = evas_object_data_get(crtc, "rep_info")))
      return;
 
    //select correct mode list

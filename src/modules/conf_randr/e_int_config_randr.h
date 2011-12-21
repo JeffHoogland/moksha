@@ -7,6 +7,7 @@
 
 typedef struct _E_Config_Randr_Dialog_Output_Dialog_Data  E_Config_Randr_Dialog_Output_Dialog_Data;
 typedef struct _E_Config_Randr_Dialog_Confirmation_Dialog_Data E_Config_Randr_Dialog_Confirmation_Dialog_Data;
+typedef struct _Config       Config;
 
 struct _E_Config_Dialog_Data
 {
@@ -16,15 +17,16 @@ struct _E_Config_Dialog_Data
    Eina_List *output_dialog_data_list;
    E_Manager *manager;
    struct {
+        Evas *canvas;
         Evas_Object *dialog, *widget_list, *selected_eo;
         E_Config_Randr_Dialog_Output_Dialog_Data *selected_output_dd;
         E_Config_Randr_Dialog_Confirmation_Dialog_Data *confirmation_dialog;
         struct {
              struct {
-                  Evas_Object *dialog, *swallowing_edje, *smart_parent, *suggestion, *clipper;
+                  Evas_Object *dialog, *widget_list, *swallowing_edje, *smart_parent, *suggestion, *clipper, *check_display_disabled_outputs;
                   Evas_Coord_Point previous_pos, relative_zero;
                   Evas_Coord_Rectangle disabled_output_size;
-                  int suggestion_dist_min;
+                  int suggestion_dist_min, check_val_display_disabled_outputs;
              } arrangement;
              struct {
                   Evas_Object *dialog;
@@ -66,6 +68,11 @@ struct _E_Config_Randr_Dialog_Confirmation_Dialog_Data
    E_Dialog *dialog;
    Ecore_Timer *timer;
    int countdown;
+};
+
+struct _Config
+{
+   Eina_Bool display_disabled_outputs;
 };
 
 E_Config_Dialog *e_int_config_randr(E_Container *con, const char *params __UNUSED__);

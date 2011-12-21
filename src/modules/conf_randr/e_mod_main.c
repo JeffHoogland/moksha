@@ -7,6 +7,10 @@
 /* actual module specifics */
 E_Module *conf_randr_module = NULL;
 
+Config *randr_dialog_config = NULL;
+
+static E_Config_DD *conf_edd = NULL;
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -21,6 +25,23 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("screen/randr", 20, _("Screen Setup"), NULL, "preferences-system-screen-resolution", e_int_config_randr);
    conf_randr_module = m;
    e_module_delayed_set(m, 1);
+
+   conf_edd = E_CONFIG_DD_NEW("RandRR_Dialog_Config", Config);
+#undef T
+#undef D
+#define T Config
+#define D conf_edd
+   E_CONFIG_VAL(D, T, display_disabled_outputs, UCHAR);
+#undef T
+#undef D
+
+   randr_dialog_config = e_config_domain_load("module.conf_randr", conf_edd);
+   if (!randr_dialog_config)
+     {
+        randr_dialog_config = E_NEW(Config, 1);
+        randr_dialog_config->display_disabled_outputs = EINA_FALSE;
+     }
+
    return m;
 }
 
@@ -39,6 +60,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
+   e_config_domain_save("module.conf_randr", conf_edd, randr_dialog_config);
    return 1;
 }
 

@@ -168,7 +168,7 @@ dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc)
         return;
      }
 
-   if (!(output_dialog_data = evas_object_data_get(crtc, "output_info"))) return;
+   if (!(output_dialog_data = evas_object_data_get(crtc, "rep_info"))) return;
 
    if (output_dialog_data->crtc)
      {
@@ -249,7 +249,7 @@ dialog_subdialog_orientation_update_edje(Evas_Object *crtc)
    Ecore_X_Randr_Orientation supported_oris, ori;
    char signal[40];
 
-   if (!e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(crtc, "output_info"))) return;
+   if (!e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(crtc, "rep_info"))) return;
 
    if (output_dialog_data->crtc)
      {
@@ -277,7 +277,7 @@ dialog_subdialog_orientation_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
    Ecore_X_Randr_Orientation orientation;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   if (!e_config_runtime_info->gui.subdialogs.orientation.dialog || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "output_info")) || !output_dialog_data->crtc) return EINA_FALSE;
+   if (!e_config_runtime_info->gui.subdialogs.orientation.dialog || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info")) || !output_dialog_data->crtc) return EINA_FALSE;
 
    orientation = e_config_runtime_info->gui.subdialogs.orientation.radio_val;
 
@@ -299,7 +299,7 @@ dialog_subdialog_orientation_basic_check_changed(E_Config_Dialog *cfd __UNUSED__
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   if (!e_config_runtime_info->gui.subdialogs.orientation.dialog || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "output_info"))) return EINA_FALSE;
+   if (!e_config_runtime_info->gui.subdialogs.orientation.dialog || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info"))) return EINA_FALSE;
 
    return (int)output_dialog_data->previous_orientation != (int)e_config_runtime_info->gui.subdialogs.orientation.radio_val;
 }

@@ -220,7 +220,7 @@ dialog_subdialog_policies_update_radio_buttons(Evas_Object *crtc)
    Ecore_X_Randr_Output_Policy policy;
 
    //disable widgets, if no crtc is selected
-   if (!crtc || !(output_dialog_data = evas_object_data_get(crtc, "output_info")))
+   if (!crtc || !(output_dialog_data = evas_object_data_get(crtc, "rep_info")))
      {
         //Evas_Object *radio_above, *radio_right, *radio_below, *radio_left, *radio_clone, *radio_none;
         e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.policies.radio_above, EINA_TRUE);

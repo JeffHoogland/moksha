@@ -321,6 +321,8 @@ basic_create_widgets(E_Config_Dialog *cfd, Evas *canvas, E_Config_Dialog_Data *c
    EINA_SAFETY_ON_TRUE_RETURN_VAL (!e_randr_screen_info || (e_randr_screen_info->randr_version < ECORE_X_RANDR_1_2), NULL);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((!canvas || !cfdata), NULL);
 
+   e_config_runtime_info->gui.canvas = canvas;
+
    if (!(cfdata->gui.subdialogs.arrangement.dialog = dialog_subdialog_arrangement_basic_create_widgets(canvas))) goto _dialog_create_subdialog_arrangement_fail;
    if (!(cfdata->gui.subdialogs.policies.dialog = dialog_subdialog_policies_basic_create_widgets(canvas))) goto _dialog_create_subdialog_policies_fail;
    if (!(cfdata->gui.subdialogs.resolutions.dialog = dialog_subdialog_resolutions_basic_create_widgets(canvas))) goto _dialog_create_subdialog_resolutions_fail;
