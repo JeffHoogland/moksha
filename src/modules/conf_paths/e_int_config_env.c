@@ -233,12 +233,14 @@ _del_cb(void *data, void *data2 __UNUSED__)
      }
 */
    sel_n = e_widget_ilist_selected_get(cfdata->gui.list);
-   evr = eina_list_nth(cfdata->env_vars, sel_n);
+   if (sel_n != -1)
+     evr = eina_list_nth(cfdata->env_vars, sel_n);
 
    if (evr && strcmp(cfdata->var_str, evr->var)) evr = NULL;
    if (evr)
      {
         cfdata->env_vars = eina_list_remove(cfdata->env_vars, evr);
+        e_env_unset(evr->var);
         eina_stringshare_del(evr->var);
         if (evr->val) eina_stringshare_del(evr->val);
         E_FREE(evr);
