@@ -163,12 +163,14 @@ _e_randr_screen_info_refresh(void)
    root = roots[0];
    free(roots);
 
-   if ((!ecore_x_randr_query()) ||
-       !(e_randr_screen_info = _e_randr_screen_info_new()))
+   if (!ecore_x_randr_query())
+     goto e_randr_screen_info_refresh_fail;
+   if (!(e_randr_screen_info = _e_randr_screen_info_new()))
      goto e_randr_screen_info_refresh_fail_free_screen;
 
-   if ((e_randr_screen_info->randr_version = ecore_x_randr_version_get()))
-     e_randr_screen_info->root = root;
+   e_randr_screen_info->randr_version = ecore_x_randr_version_get();
+   e_randr_screen_info->root = root;
+
    if (e_randr_screen_info->randr_version == ECORE_X_RANDR_1_1)
      {
         if (!(e_randr_screen_info->rrvd_info.randr_info_11 = _e_randr_screen_info_11_new()))
@@ -187,13 +189,15 @@ _e_randr_screen_info_refresh(void)
         //also restore stored policies
         _e_randr_restore_12_policies(e_randr_screen_info->rrvd_info.randr_info_12);
      }
+   else
+     goto e_randr_screen_info_refresh_fail_free_screen;
 
    return EINA_TRUE;
 
 e_randr_screen_info_refresh_fail_free_screen:
    if (e_randr_screen_info)
      _e_randr_screen_info_free(e_randr_screen_info);
-
+e_randr_screen_info_refresh_fail:
    return EINA_FALSE;
 }
 
@@ -1563,7 +1567,6 @@ e_randr_try_restore_configuration(E_Randr_Screen_Info *si)
 Eina_Bool
 _e_randr_try_restore_11(E_Randr_Screen_Info_11 *si_11)
 {
-   E_Manager *man;
    Eina_List *iter;
    Ecore_X_Randr_Screen_Size_MM *stored_size, *size;
    int i = 0;
@@ -1577,8 +1580,7 @@ _e_randr_try_restore_11(E_Randr_Screen_Info_11 *si_11)
             && (stored_size->width_mm == size->width_mm)
             && (stored_size->height_mm == size->height_mm))
           {
-             man = e_manager_current_get();
-             return ecore_x_randr_screen_primary_output_size_set(man->root, i);
+             return ecore_x_randr_screen_primary_output_size_set(e_randr_screen_info->root, i);
           }
         i++;
      }
@@ -1699,7 +1701,6 @@ _e_randr_try_restore_12(E_Randr_Screen_Info_12 *si_12)
    Ecore_X_Randr_Mode_Info *mi;
    Eina_List *iter;
    Eina_Bool ret = EINA_TRUE;
-   E_Manager *man;
 
    //Restore policies
    _e_randr_restore_12_policies(si_12);
@@ -1707,8 +1708,6 @@ _e_randr_try_restore_12(E_Randr_Screen_Info_12 *si_12)
    /*
     * step by step. disable entire setup matching for now
    if (!(ss_12 = _e_randr_find_matching_serialized_setup(e_config->randr_serialized_setup->serialized_setups_12, si_12))) return EINA_FALSE;
-
-   man = e_manager_current_get();
 
    EINA_LIST_FOREACH (ss_12->serialized_crtcs, iter, sc)
      {
@@ -1722,8 +1721,8 @@ _e_randr_try_restore_12(E_Randr_Screen_Info_12 *si_12)
              free(outputs_array);
              continue;
           }
-        ret &= ecore_x_randr_crtc_mode_set(man->root, ci->xid, outputs_array, eina_list_count(outputs_list), mi->xid);
-        ret &= ecore_x_randr_crtc_pos_set(man->root, ci->xid, sc->pos.x, sc->pos.y);
+        ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info->root, ci->xid, outputs_array, eina_list_count(outputs_list), mi->xid);
+        ret &= ecore_x_randr_crtc_pos_set(e_randr_screen_info->root, ci->xid, sc->pos.x, sc->pos.y);
      }
      */
    return ret;
