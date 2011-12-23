@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-12-14 06:29+0100\n"
-"PO-Revision-Date: 2011-12-14 19:14+0100\n"
+"POT-Creation-Date: 2011-12-23 08:48+0100\n"
+"PO-Revision-Date: 2011-12-23 19:05+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -810,8 +810,8 @@ msgid "Color Selector"
 msgstr "Sélecteur de couleur"
 
 #: src/bin/e_color_dialog.c:46
-#: src/bin/e_config.c:1611
-#: src/bin/e_config.c:2229
+#: src/bin/e_config.c:1615
+#: src/bin/e_config.c:2233
 #: src/bin/e_config_dialog.c:262
 #: src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918
@@ -856,106 +856,106 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:972
-#: src/bin/e_config.c:1005
+#: src/bin/e_config.c:974
+#: src/bin/e_config.c:1007
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:989
+#: src/bin/e_config.c:991
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration est PLUS RÉCENTE que la version actuelle de E.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente de E était en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
-#: src/bin/e_config.c:1598
-#: src/bin/e_config.c:2216
+#: src/bin/e_config.c:1602
+#: src/bin/e_config.c:2220
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
-#: src/bin/e_config.c:1601
+#: src/bin/e_config.c:1605
 #, c-format
 msgid "Enlightenment has had an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Enlightenment a rencontré une erreur pendant<br>le déplacement de données de configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2130
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2143
+#: src/bin/e_config.c:2147
 msgid "The EET file handle is bad."
 msgstr "Traitement du fichier EET incorrect."
 
-#: src/bin/e_config.c:2146
+#: src/bin/e_config.c:2150
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2149
+#: src/bin/e_config.c:2153
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Le fichier n'est pas éditable. Le disque est peut-être monté<br>en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2152
+#: src/bin/e_config.c:2156
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Veuillez libérer de la mémoire."
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2159
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2158
+#: src/bin/e_config.c:2162
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser quelques centaines de Ko."
 
-#: src/bin/e_config.c:2161
+#: src/bin/e_config.c:2165
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d' E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2164
+#: src/bin/e_config.c:2168
 msgid "You ran out of space while writing the file"
 msgstr "Plus assez d'espace disponible pour l'écriture."
 
-#: src/bin/e_config.c:2167
+#: src/bin/e_config.c:2171
 msgid "The file was closed on it while writing."
 msgstr "Le fichier s'est fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2170
+#: src/bin/e_config.c:2174
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2173
+#: src/bin/e_config.c:2177
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2176
+#: src/bin/e_config.c:2180
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2179
+#: src/bin/e_config.c:2183
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2182
+#: src/bin/e_config.c:2186
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2185
+#: src/bin/e_config.c:2189
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2188
+#: src/bin/e_config.c:2192
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un germe PRNG."
 
-#: src/bin/e_config.c:2191
+#: src/bin/e_config.c:2195
 msgid "Encryption failed."
 msgstr "Échec du cryptage."
 
-#: src/bin/e_config.c:2194
+#: src/bin/e_config.c:2198
 msgid "Decryption failed."
 msgstr "Échec du décryptage."
 
-#: src/bin/e_config.c:2197
+#: src/bin/e_config.c:2201
 msgid "The error is unknown to Enlightenment."
 msgstr "Enlightenment ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2219
+#: src/bin/e_config.c:2223
 #, c-format
 msgid "Enlightenment has had an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
@@ -1699,7 +1699,7 @@ msgstr "Aspect"
 msgid "Remove"
 msgstr "Supprimer"
 
-#: src/bin/e_gadcon.c:1991
+#: src/bin/e_gadcon.c:2007
 msgid "Stop moving"
 msgstr "Insérer"
 
@@ -2468,7 +2468,7 @@ msgstr "Délai avant masquage"
 #: src/bin/e_int_shelf_config.c:217
 #, c-format
 msgid "%.1f seconds"
-msgstr "%.1f secondes"
+msgstr "%.1f seconde(s)"
 
 #: src/bin/e_int_shelf_config.c:223
 msgid "Hide duration"
@@ -2478,7 +2478,7 @@ msgstr "Vitesse du masquage"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:852
 #, c-format
 msgid "%.2f seconds"
-msgstr "%.2f secondes"
+msgstr "%.2f seconde(s)"
 
 #: src/bin/e_int_shelf_config.c:232
 msgid "Auto Hide"
@@ -2624,11 +2624,7 @@ msgstr ""
 msgid "Enlightenment cannot initialize E_Xinerama!\n"
 msgstr "Enlightenment ne peut pas initialiser E_Xinerama !\n"
 
-#: src/bin/e_main.c:397
-msgid "Enlightenment cannot initialize E_Randr!\n"
-msgstr "Enlightenment ne peut pas initialiser E_Randr !\n"
-
-#: src/bin/e_main.c:415
+#: src/bin/e_main.c:406
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2637,13 +2633,17 @@ msgstr ""
 "Peut-être n'avez-vous pas de dossier personnel,\n"
 "ou que votre disque dur est plein ?"
 
-#: src/bin/e_main.c:425
+#: src/bin/e_main.c:416
 msgid "Enlightenment cannot set up its file registry system."
 msgstr "Enlightenment ne peut pas initialiser son registre de fichiers."
 
-#: src/bin/e_main.c:434
+#: src/bin/e_main.c:425
 msgid "Enlightenment cannot set up its config system."
 msgstr "Enlightenment ne peut pas initialiser son système de configuration."
+
+#: src/bin/e_main.c:436
+msgid "Enlightenment cannot initialize E_Randr!\n"
+msgstr "Enlightenment ne peut pas initialiser E_Randr !\n"
 
 #: src/bin/e_main.c:445
 msgid "Enlightenment cannot set up its environment."
@@ -6284,11 +6284,11 @@ msgstr "Afficher Omni"
 
 #: src/modules/everything/e_mod_main.c:75
 msgid "Everything Configuration"
-msgstr "Configuration d'Omni"
+msgstr "Configuration d' Omni"
 
 #: src/modules/everything/e_mod_main.c:211
 msgid "Show Everything Dialog"
-msgstr "Afficher la boîte de dialogue d'Omni"
+msgstr "Afficher la boîte de dialogue d' Omni"
 
 #: src/modules/everything/e_mod_main.c:420
 msgid "Everything Module"
@@ -6300,7 +6300,7 @@ msgstr "Omni"
 
 #: src/modules/everything/evry_config.c:78
 msgid "Everything Settings"
-msgstr "Paramétrage d'Omni"
+msgstr "Paramétrage d' Omni"
 
 #: src/modules/everything/evry_config.c:364
 msgid "Available Plugins"
@@ -7648,7 +7648,7 @@ msgstr "Zone de notification : erreur"
 
 #: src/modules/systray/e_mod_main.c:906
 msgid "Systray cannot work in a shelf that is set to below everything."
-msgstr "La zone de notification ne fonctionne pas dans un rack paramétré sur « en dessous de tout »."
+msgstr "La zone de notification ne fonctionne pas dans un rack « en dessous de tout »."
 
 #: src/modules/systray/e_mod_main.c:1108
 msgid "Systray"
