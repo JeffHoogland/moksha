@@ -254,7 +254,10 @@ _bl_sys_find(void)
         if (!devs) return;
      }
    EINA_LIST_FREE(devs, f)
-     bl_sysval = f;
+     {
+        eina_stringshare_replace(&bl_sysval, NULL);
+        bl_sysval = f;
+     }
 }
 
 static void
