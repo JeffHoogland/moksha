@@ -247,7 +247,12 @@ _bl_sys_find(void)
    const char *f;
 
    devs = eeze_udev_find_by_filter("backlight", NULL, NULL);
-   if (!devs) return;
+   if (!devs)
+     {
+        /* FIXME: need to make this more precise so we don't set keyboard LEDs or something */
+        devs = eeze_udev_find_by_filter("leds", NULL, NULL);
+        if (!devs) return;
+     }
    EINA_LIST_FREE(devs, f)
      bl_sysval = f;
 }

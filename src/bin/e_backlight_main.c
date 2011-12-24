@@ -73,7 +73,11 @@ main(int argc, char **argv)
 
    eeze_init();
    devs = eeze_udev_find_by_filter("backlight", NULL, NULL);
-   if (!devs) return -1;
+   if (!devs)
+     {
+        devs = eeze_udev_find_by_filter("leds", NULL, NULL);
+        if (!devs) return -1;
+     }
    EINA_LIST_FREE(devs, f)
      {
         const char *str;
