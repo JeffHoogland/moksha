@@ -104,6 +104,9 @@ main(int argc, char **argv)
              return _bl_write_file(buf, curlevel);
           }
         eina_stringshare_del(f);
+        /* Currently this will set brightness levels on ALL detected devices
+           If this is not desired, add a break here
+         */
      }
 
    return -1;
