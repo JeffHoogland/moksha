@@ -817,13 +817,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, wallpaper_import_last_dev, STR);
    E_CONFIG_VAL(D, T, wallpaper_import_last_path, STR);
 
-   E_CONFIG_VAL(D, T, wallpaper_grad_c1_r, INT);
-   E_CONFIG_VAL(D, T, wallpaper_grad_c1_g, INT);
-   E_CONFIG_VAL(D, T, wallpaper_grad_c1_b, INT);
-   E_CONFIG_VAL(D, T, wallpaper_grad_c2_r, INT);
-   E_CONFIG_VAL(D, T, wallpaper_grad_c2_g, INT);
-   E_CONFIG_VAL(D, T, wallpaper_grad_c2_b, INT);
-
    E_CONFIG_VAL(D, T, theme_default_border_style, STR);
 
    E_CONFIG_LIST(D, T, mime_icons, _e_config_mime_icon_edd); /**/

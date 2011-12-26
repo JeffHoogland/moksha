@@ -473,12 +473,6 @@ group "E_Config" struct {
   value "desk_flip_animate_time" double: 0.5000000000000000000000000;
   value "wallpaper_import_last_dev" string: "/tmp";
   value "wallpaper_import_last_path" string: "/";
-  value "wallpaper_grad_c1_r" int: 88;
-  value "wallpaper_grad_c1_g" int: 208;
-  value "wallpaper_grad_c1_b" int: 88;
-  value "wallpaper_grad_c2_r" int: 127;
-  value "wallpaper_grad_c2_g" int: 127;
-  value "wallpaper_grad_c2_b" int: 127;
   value "theme_default_border_style" string: "default";
   value "desk_auto_switch" int: 0;
   value "thumb_nice" int: 0;

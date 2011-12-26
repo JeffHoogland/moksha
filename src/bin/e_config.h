@@ -194,9 +194,9 @@ struct _E_Config
    unsigned char screensaver_ask_presentation; // GUI
    double        screensaver_ask_presentation_timeout; // GUI
    
-   unsigned char screensaver_suspend;
-   unsigned char screensaver_suspend_on_ac;
-   double        screensaver_suspend_delay;
+   unsigned char screensaver_suspend; // GUI
+   unsigned char screensaver_suspend_on_ac; // GUI
+   double        screensaver_suspend_delay; // GUI
 
    int         dpms_enable; // GUI
    int         dpms_standby_enable; // GUI
@@ -237,13 +237,6 @@ struct _E_Config
    const char *wallpaper_import_last_dev; // INTERNAL
    const char *wallpaper_import_last_path; // INTERNAL
 
-   int wallpaper_grad_c1_r; // INTERNAL
-   int wallpaper_grad_c1_g; // INTERNAL
-   int wallpaper_grad_c1_b; // INTERNAL
-   int wallpaper_grad_c2_r; // INTERNAL
-   int wallpaper_grad_c2_g; // INTERNAL
-   int wallpaper_grad_c2_b; // INTERNAL
-
    const char *theme_default_border_style; // GUI
 
    Eina_List *mime_icons; // GUI
@@ -259,19 +252,19 @@ struct _E_Config
    double thumbscroll_momentum_threshhold; // GUI
    double thumbscroll_friction; // GUI
 
-   int device_desktop;
-   int device_auto_mount;
-   int device_auto_open;
+   int device_desktop; // GUI
+   int device_auto_mount; // GUI
+   int device_auto_open; // GUI
 
    struct {
-      double timeout;
+      double timeout; // GUI
       struct {
-	 unsigned char dx;
-	 unsigned char dy;
+	 unsigned char dx; // GUI
+	 unsigned char dy; // GUI
       } move;
       struct {
-	 unsigned char dx;
-	 unsigned char dy;
+	 unsigned char dx; // GUI
+	 unsigned char dy; // GUI
       } resize;
    } border_keyboard;
 
@@ -287,7 +280,7 @@ struct _E_Config
    unsigned char show_cursor; // GUI
    unsigned char idle_cursor; // GUI
 
-   const char *default_system_menu;
+   const char *default_system_menu; // GUI
 
    unsigned char cfgdlg_normal_wins; // GUI
 
@@ -301,8 +294,8 @@ struct _E_Config
    } syscon;
 
    struct {
-      unsigned char presentation;
-      unsigned char offline;
+      unsigned char presentation; // INTERNAL
+      unsigned char offline; // INTERNAL
    } mode;
 
    struct {
@@ -311,33 +304,33 @@ struct _E_Config
       unsigned char show_exit_dialog;
    } exec;
    
-   unsigned char null_container_win;
+   unsigned char null_container_win; // HYPER-ADVANCED-ONLY - TURNING ON KILLS DESKTOP BG
    
-   Eina_List *env_vars;
+   Eina_List *env_vars; // GUI
    
    struct {
-      double normal;
-      double dim;
-      double transition;
+      double normal; // GUI
+      double dim; // GUI
+      double transition; // GUI
    } backlight;
    
    struct {
-      unsigned char load_xrdb;
-      unsigned char load_xmodmap;
-      unsigned char load_gnome;
-      unsigned char load_kde;
+      unsigned char load_xrdb; // GUI
+      unsigned char load_xmodmap; // GUI
+      unsigned char load_gnome; // GUI
+      unsigned char load_kde; // GUI
    } deskenv;
 
    struct {
-      unsigned char  enabled;
-      unsigned char  match_e17_theme;
-      unsigned char  match_e17_icon_theme;
+      unsigned char  enabled; // GUI
+      unsigned char  match_e17_theme; // GUI
+      unsigned char  match_e17_icon_theme; // GUI
       int            xft_antialias;
       int            xft_hinting;
       const char    *xft_hint_style;
       const char    *xft_rgba;
-      const char    *net_theme_name;
-      const char    *net_icon_theme_name;
+      const char    *net_theme_name; // GUI
+      const char    *net_icon_theme_name; // GUI
       const char    *gtk_font_name;
    } xsettings;
 };
