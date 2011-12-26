@@ -123,14 +123,14 @@ struct _E_Config
    int         allow_manip; // GUI
    int         border_fix_on_shelf_toggle; // GUI
    int         allow_above_fullscreen; // GUI
-   int         kill_if_close_not_possible;
-   int         kill_process;
-   double      kill_timer_wait;
-   int         ping_clients;
+   int         kill_if_close_not_possible; // GUI
+   int         kill_process; // GUI
+   double      kill_timer_wait; // GUI
+   int         ping_clients; // GUI
    const char *transition_start; // GUI
    const char *transition_desk; // GUI
    const char *transition_change; // GUI
-   Eina_List  *remembers;
+   Eina_List  *remembers; // GUI
    int         remember_internal_windows; // GUI
    int         move_info_follows; // GUI
    int         resize_info_follows; // GUI
@@ -251,7 +251,7 @@ struct _E_Config
 
    int thumb_nice;
 
-   int ping_clients_interval;
+   int ping_clients_interval; // GUI
    int cache_flush_poll_interval; // GUI
 
    int thumbscroll_enable; // GUI
