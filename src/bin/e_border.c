@@ -362,7 +362,7 @@ e_border_new(E_Container   *con,
    e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_focus_setup(bd);
-   bd->bg_ecore_evas = e_canvas_new(e_config->evas_engine_borders, bd->win,
+   bd->bg_ecore_evas = e_canvas_new(bd->win,
                                     0, 0, bd->w, bd->h, 1, 0,
                                     &(bd->bg_win));
    e_canvas_add(bd->bg_ecore_evas);
@@ -1125,7 +1125,7 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
    e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
    e_focus_setup(bd);
 
-   bd->bg_ecore_evas = e_canvas_new(e_config->evas_engine_borders, bd->win,
+   bd->bg_ecore_evas = e_canvas_new(bd->win,
                                     0, 0, bd->w, bd->h, 1, 0,
                                     &(bd->bg_win));
 

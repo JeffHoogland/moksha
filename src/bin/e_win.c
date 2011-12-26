@@ -41,8 +41,7 @@ e_win_new(E_Container *con)
    if (!win) return NULL;
    e_object_del_func_set(E_OBJECT(win), _e_win_del);
    win->container = con;
-   win->engine = e_canvas_engine_decide(e_config->evas_engine_win);
-   win->ecore_evas = e_canvas_new(e_config->evas_engine_win, con->manager->root,
+   win->ecore_evas = e_canvas_new(con->manager->root,
 				  0, 0, 1, 1, 1, 0,
 				  &(win->evas_win));
    e_canvas_add(win->ecore_evas);

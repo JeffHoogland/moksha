@@ -78,11 +78,11 @@ e_container_new(E_Manager *man)
      con->win = con->manager->win;
 
    if (!e_config->null_container_win)
-      con->bg_ecore_evas = e_canvas_new(e_config->evas_engine_container, con->win,
+      con->bg_ecore_evas = e_canvas_new(con->win,
                                         0, 0, con->w, con->h, 1, 1,
                                         &(con->bg_win));
    else
-      con->bg_ecore_evas = e_canvas_new(e_config->evas_engine_container, con->win,
+      con->bg_ecore_evas = e_canvas_new(con->win,
                                         0, 0, 1, 1, 1, 1,
                                         &(con->bg_win));
    e_canvas_add(con->bg_ecore_evas);

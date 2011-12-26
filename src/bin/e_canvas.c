@@ -44,35 +44,6 @@ e_canvas_del(Ecore_Evas *ee)
    _e_canvases = eina_list_remove(_e_canvases, ee);
 }
 
-EAPI int
-e_canvas_engine_decide(int engine)
-{
-   /* if use default - use it */
-   if (engine == E_EVAS_ENGINE_DEFAULT)
-     engine = e_config->evas_engine_default;
-   /* if engine is software-16 - do we support it? */
-   if (engine == E_EVAS_ENGINE_SOFTWARE_X11_16)
-     {
-	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_16_X11))
-	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
-     }
-   /* if engine is gl - do we support it? */
-   if (engine == E_EVAS_ENGINE_GL_X11)
-     {
-	/* if we dont - fall back to software x11 */
-	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
-	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
-     }
-   /* support xrender? */
-   if (engine == E_EVAS_ENGINE_XRENDER_X11)
-     {
-	/* if we dont - fall back to software x11 */
-	if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_XRENDER_X11))
-	  engine = E_EVAS_ENGINE_SOFTWARE_X11;
-     }
-   return engine;
-}
-
 EAPI void
 e_canvas_recache(void)
 {
@@ -172,62 +143,20 @@ e_canvas_rehint(void)
 }
 
 EAPI Ecore_Evas *
-e_canvas_new(int engine_hint, Ecore_X_Window win, int x, int y, int w, int h,
+e_canvas_new(Ecore_X_Window win, int x, int y, int w, int h,
 	     int direct_resize, int override, Ecore_X_Window *win_ret)
 {
    Ecore_Evas *ee;
-   int engine;
    
-   engine = e_canvas_engine_decide(engine_hint);
-   if (engine == E_EVAS_ENGINE_GL_X11)
+   ee = ecore_evas_software_x11_new(NULL, win, x, y, w, h);
+   if (ee)
      {
-	ee = ecore_evas_gl_x11_new(NULL, win, x, y, w, h);
-	if (ee)
-	  {
-	     ecore_evas_override_set(ee, override);
-	     if (direct_resize) ecore_evas_gl_x11_direct_resize_set(ee, 1);
-	     if (win_ret) *win_ret = ecore_evas_gl_x11_window_get(ee);
-	  }
-	else
-	  goto try2;
-     }
-   else if (engine == E_EVAS_ENGINE_XRENDER_X11)
-     {
-	ee = ecore_evas_xrender_x11_new(NULL, win, x, y, w, h);
-	if (ee)
-	  {
-	     ecore_evas_override_set(ee, override);
-	     if (direct_resize) ecore_evas_xrender_x11_direct_resize_set(ee, 1);
-	     if (win_ret) *win_ret = ecore_evas_xrender_x11_window_get(ee);
-	  }
-	else
-	  goto try2;
-     }
-   else if (engine == E_EVAS_ENGINE_SOFTWARE_X11_16)
-     {
-	ee = ecore_evas_software_x11_16_new(NULL, win, x, y, w, h);
-	if (ee)
-	  {
-	     ecore_evas_override_set(ee, override);
-	     if (direct_resize) ecore_evas_software_x11_16_direct_resize_set(ee, 1);
-	     if (win_ret) *win_ret = ecore_evas_software_x11_16_window_get(ee);
-	  }
-	else
-	  goto try2;
+        ecore_evas_override_set(ee, override);
+        if (direct_resize) ecore_evas_software_x11_direct_resize_set(ee, 1);
+        if (win_ret) *win_ret = ecore_evas_software_x11_window_get(ee);
      }
    else
-     {
-	try2:
-	ee = ecore_evas_software_x11_new(NULL, win, x, y, w, h);
-	if (ee)
-	  {
-	     ecore_evas_override_set(ee, override);
-	     if (direct_resize) ecore_evas_software_x11_direct_resize_set(ee, 1);
-	     if (win_ret) *win_ret = ecore_evas_software_x11_window_get(ee);
-	  }
-	else
-	  EINA_LOG_ERR("Impossible to build any Ecore_Evas window !!");
-     }
+     EINA_LOG_ERR("Impossible to build any Ecore_Evas window !!");
    return ee;
 }
 

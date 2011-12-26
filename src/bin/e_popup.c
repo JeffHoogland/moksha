@@ -47,7 +47,7 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
    pop->w = w;
    pop->h = h;
    pop->layer = 250;
-   pop->ecore_evas = e_canvas_new(e_config->evas_engine_popups, pop->zone->container->win,
+   pop->ecore_evas = e_canvas_new(pop->zone->container->win,
 				  pop->zone->x + pop->x, pop->zone->y + pop->y, pop->w, pop->h, 1, 1,
 				  &(pop->evas_win));
    if (!pop->ecore_evas)

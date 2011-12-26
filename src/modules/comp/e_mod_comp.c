@@ -3211,7 +3211,7 @@ _e_mod_comp_add(E_Manager *man)
 
    if (c->man->num == 0) e_alert_composite_win = c->win;
 
-   if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
+   if (_comp_mod->conf->engine == ENGINE_GL)
      {
         int opt[20];
         int opt_i = 0;
@@ -3247,7 +3247,7 @@ _e_mod_comp_add(E_Manager *man)
      }
    if (!c->ee)
      {
-        if (_comp_mod->conf->engine == E_EVAS_ENGINE_GL_X11)
+        if (_comp_mod->conf->engine == ENGINE_GL)
           {
              e_util_dialog_internal
                (_("Compositor Warning"),

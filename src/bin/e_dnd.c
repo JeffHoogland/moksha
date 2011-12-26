@@ -169,17 +169,11 @@ e_drag_new(E_Container *container, int x, int y,
    drag->layer = 250;
    drag->container = container;
    e_object_ref(E_OBJECT(drag->container));
-   drag->ecore_evas = e_canvas_new(e_config->evas_engine_drag, drag->container->win,
+   drag->ecore_evas = e_canvas_new(drag->container->win,
 				   drag->x, drag->y, drag->w, drag->h, 1, 1,
 				   &(drag->evas_win));
    if (e_config->use_composite)
-     {
-	ecore_evas_alpha_set(drag->ecore_evas, 1);
-	if (e_config->evas_engine_drag == ECORE_EVAS_ENGINE_SOFTWARE_16_X11)
-	  drag->evas_win = ecore_evas_software_x11_window_get(drag->ecore_evas);
-	else if (e_config->evas_engine_drag == ECORE_EVAS_ENGINE_XRENDER_X11)
-	  drag->evas_win = ecore_evas_xrender_x11_window_get(drag->ecore_evas);
-     }
+     ecore_evas_alpha_set(drag->ecore_evas, 1);
    else
      {
 	/* avoid excess exposes when shaped - set damage avoid to 1 */

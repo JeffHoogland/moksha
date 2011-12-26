@@ -72,7 +72,6 @@ static Eina_Bool _e_ipc_cb_server_data(void *data, int type, void *event);
 static Ecore_Ipc_Server *_e_ipc_server = NULL;
 static const char *theme = NULL;
 static int font_hinting = -1;
-static int engine = -1;
 static const char *title = NULL;
 static const char *verstr = NULL;
 static Eina_List *fpath = NULL;
@@ -108,7 +107,6 @@ main(int argc, char **argv)
 	     exit(0);
 	  }
 	else if (!theme) theme = argv[i];
-	else if (engine < 0) engine = atoi(argv[i]);
 	else if (font_hinting < 0) font_hinting = atoi(argv[i]);
 	else if (!title) title = argv[i];
 	else if (!verstr) verstr = argv[i];
@@ -465,39 +463,10 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
    Eina_List *l;
    const char *path;
 
-   if ((engine == 0) || (engine == 1))
-     {
-	ee = ecore_evas_software_x11_new(NULL, root, 0, 0, w, h);
-	ecore_evas_override_set(ee, 1);
-	ecore_evas_software_x11_direct_resize_set(ee, 1);
-	*winret = ecore_evas_software_x11_window_get(ee);
-     }
-   else if (engine == 2)
-     {
-	ee = ecore_evas_gl_x11_new(NULL, root, 0, 0, w, h);
-	ecore_evas_override_set(ee, 1);
-	ecore_evas_gl_x11_direct_resize_set(ee, 1);
-	*winret = ecore_evas_gl_x11_window_get(ee);
-     }
-   else if (engine == 3)
-     {
-	ee = ecore_evas_xrender_x11_new(NULL, root, 0, 0, w, h);
-	ecore_evas_override_set(ee, 1);
-	ecore_evas_xrender_x11_direct_resize_set(ee, 1);
-	*winret = ecore_evas_xrender_x11_window_get(ee);
-     }
-   else if (engine == 4)
-     {
-        ee = ecore_evas_software_x11_16_new(NULL, root, 0, 0, w, h);
-	ecore_evas_override_set(ee, 1);
-	ecore_evas_software_x11_16_direct_resize_set(ee, 1);
-	*winret = ecore_evas_software_x11_16_window_get(ee);
-     }
-   else
-     {
-	printf("The select engine is unknown or incorrectly set. Please specify a correct one.\n");
-	exit(0);
-     }
+   ee = ecore_evas_software_x11_new(NULL, root, 0, 0, w, h);
+   ecore_evas_override_set(ee, 1);
+   ecore_evas_software_x11_direct_resize_set(ee, 1);
+   *winret = ecore_evas_software_x11_window_get(ee);
 
    e = ecore_evas_get(ee);
 

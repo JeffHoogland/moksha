@@ -1,4 +1,5 @@
 #include "e.h"
+#include "e_mod_main.h"
 #include "e_mod_comp_cfdata.h"
 
 EAPI void
@@ -67,7 +68,7 @@ e_mod_comp_cfdata_config_new(void)
    cfg = E_NEW(Config, 1);
    cfg->shadow_file = NULL;
    cfg->shadow_style = eina_stringshare_add("default");
-   cfg->engine = E_EVAS_ENGINE_SOFTWARE_X11;
+   cfg->engine = ENGINE_SW;
    cfg->max_unmapped_pixels = 32 * 1024;  // implement
    cfg->max_unmapped_time = 10 * 3600; // implement
    cfg->min_unmapped_time = 5 * 60; // implement

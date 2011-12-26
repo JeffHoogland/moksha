@@ -126,9 +126,9 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata->use_shadow = _comp_mod->conf->use_shadow;
    cfdata->engine = _comp_mod->conf->engine;
-   if ((cfdata->engine != E_EVAS_ENGINE_SOFTWARE_X11) &&
-       (cfdata->engine != E_EVAS_ENGINE_GL_X11))
-     cfdata->engine = E_EVAS_ENGINE_SOFTWARE_X11;
+   if ((cfdata->engine != ENGINE_SW) &&
+       (cfdata->engine != ENGINE_GL))
+     cfdata->engine = ENGINE_SW;
    cfdata->indirect = _comp_mod->conf->indirect;
    cfdata->texture_from_pixmap = _comp_mod->conf->texture_from_pixmap;
    cfdata->smooth_windows = _comp_mod->conf->smooth_windows;
@@ -1207,13 +1207,13 @@ _basic_create_widgets(E_Config_Dialog      *cfd,
 
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->engine));
-   ob = e_widget_radio_add(evas, _("Software"), E_EVAS_ENGINE_SOFTWARE_X11, rg);
+   ob = e_widget_radio_add(evas, _("Software"), ENGINE_SW, rg);
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    if (!getenv("ECORE_X_NO_XLIB")) 
      {
         if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
           {
-             ob = e_widget_radio_add(evas, _("OpenGL"), E_EVAS_ENGINE_GL_X11, rg);
+             ob = e_widget_radio_add(evas, _("OpenGL"), ENGINE_GL, rg);
              e_widget_list_object_append(ol, ob, 1, 1, 0.5);
 
              of = e_widget_framelist_add(evas, _("OpenGL options"), 0);

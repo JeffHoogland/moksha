@@ -647,16 +647,6 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, use_virtual_roots, INT); /* should not make this a config option (for now) */
    E_CONFIG_VAL(D, T, show_desktop_icons, INT); /**/
    E_CONFIG_VAL(D, T, edge_flip_dragging, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_default, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_container, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_init, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_menus, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_borders, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_errors, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_popups, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_drag, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_win, INT); /**/
-   E_CONFIG_VAL(D, T, evas_engine_zone, INT); /**/
    E_CONFIG_VAL(D, T, use_composite, INT); /**/
    E_CONFIG_VAL(D, T, language, STR); /**/
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd); /**/
@@ -1494,31 +1484,6 @@ e_config_profile_del(const char *prof)
    if (e_user_dir_snprintf(buf, sizeof(buf), "config/%s", prof) >= sizeof(buf))
      return;
    ecore_file_recursive_rm(buf);
-}
-
-EAPI Eina_List *
-e_config_engine_list(void)
-{
-   Eina_List *l = NULL;
-   l = eina_list_append(l, strdup("SOFTWARE"));
-   /*
-    * DISABLE GL as an accessible engine - it does have problems, ESPECIALLY with
-    * shaped windows (it can't do them), and multiple gl windows and shared
-    * contexts, so for now just disable it. xrender is much more complete in
-    * this regard.
-    */
-#if 0 /* opengl cant do occludes for frames - only useful for compositor */
-   l = eina_list_append(l, strdup("GL"));
-#endif
-#if 0 /* xrender too incomplete these days */   
-   if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_XRENDER_X11))
-     l = eina_list_append(l, strdup("XRENDER"));
-#endif   
-#if 0 /* software-16 too incomplete and buggy */
-   if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_16_X11))
-     l = eina_list_append(l, strdup("SOFTWARE_16"));
-#endif   
-   return l;
 }
 
 EAPI void

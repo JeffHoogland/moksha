@@ -28,4 +28,7 @@ EAPI int   e_modapi_info(E_Module *m);
 void       _e_mod_config_new(E_Module *m);
 void       _e_mod_config_free(E_Module *m);
 
+#define ENGINE_SW 1
+#define ENGINE_GL 2
+
 #endif

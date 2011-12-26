@@ -496,8 +496,7 @@ _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
      {
         if (!Man->top_ee)
 	  {
-	     Man->top_ee = e_canvas_new(e_config->evas_engine_popups,
-					Man->container->win, 0, 0, 0, 0, 1, 1,
+	     Man->top_ee = e_canvas_new(Man->container->win, 0, 0, 0, 0, 1, 1,
 					&(Man->top_win));
 	  }
 

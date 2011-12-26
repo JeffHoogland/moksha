@@ -36,25 +36,6 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 #define E_CONFIG_FILE_GENERATION 0x0146
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
-#define E_EVAS_ENGINE_DEFAULT         0
-#define E_EVAS_ENGINE_SOFTWARE_X11    1
-#define E_EVAS_ENGINE_GL_X11          2
-#define E_EVAS_ENGINE_XRENDER_X11     3
-#define E_EVAS_ENGINE_SOFTWARE_X11_16 4
-
-typedef enum _E_Engine_Context
-{
-   E_ENGINE_CONTEXT_INIT,
-   E_ENGINE_CONTEXT_CONTAINER,
-   E_ENGINE_CONTEXT_ZONE,
-   E_ENGINE_CONTEXT_BORDER,
-   E_ENGINE_CONTEXT_MENU,
-   E_ENGINE_CONTEXT_ERROR,
-   E_ENGINE_CONTEXT_WIN,
-   E_ENGINE_CONTEXT_POPUP,
-   E_ENGINE_CONTEXT_DRAG
-} E_Engine_Context;
-
 struct _E_Config
 {
    int         config_version; // INTERNAL
@@ -81,16 +62,6 @@ struct _E_Config
    int         use_virtual_roots; // NO GUI - maybe remove?
    int         show_desktop_icons; // GUI
    int         edge_flip_dragging; // GUI
-   int         evas_engine_default; // GUI
-   int         evas_engine_container; // NO GUI - maybe remove?
-   int         evas_engine_init; // NO GUI - maybe remove?
-   int         evas_engine_menus; // NO GUI - maybe remove?
-   int         evas_engine_borders; // NO GUI - maybe remove?
-   int         evas_engine_errors; // NO GUI - maybe remove?
-   int         evas_engine_popups; // NO GUI - maybe remove?
-   int         evas_engine_drag; // NO GUI - maybe remove?
-   int         evas_engine_win; // NO GUI - maybe remove?
-   int         evas_engine_zone; // NO GUI - maybe remove?
    int	       use_composite; // GUI
    const char *language; // GUI
    Eina_List  *modules; // GUI
@@ -557,8 +528,6 @@ EAPI void       e_config_profile_set(const char *prof);
 EAPI Eina_List *e_config_profile_list(void);
 EAPI void       e_config_profile_add(const char *prof);
 EAPI void       e_config_profile_del(const char *prof);
-
-EAPI Eina_List *e_config_engine_list(void);
 
 EAPI void       e_config_save_block_set(int block);
 EAPI int        e_config_save_block_get(void);

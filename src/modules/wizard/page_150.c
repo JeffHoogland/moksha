@@ -3,6 +3,9 @@
 #include "e_mod_main.h"
 #include "e_mod_comp_cfdata.h"
 
+#define ENGINE_SW 1
+#define ENGINE_GL 2
+
 static int do_comp = 1;
 static int do_gl = 0;
 static int do_vsync = 0;
@@ -183,13 +186,13 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
         
         if (do_gl)
           {
-             cfg->engine = E_EVAS_ENGINE_GL_X11;
+             cfg->engine = ENGINE_GL;
              cfg->smooth_windows = 1;
              cfg->vsync = do_vsync;
           }
         else
           {
-             cfg->engine = E_EVAS_ENGINE_SOFTWARE_X11;
+             cfg->engine = ENGINE_SW;
              cfg->smooth_windows = 0;
              cfg->vsync = 0;
           }

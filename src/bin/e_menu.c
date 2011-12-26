@@ -1493,10 +1493,9 @@ _e_menu_realize(E_Menu *m)
 
    if (m->realized) return;
    m->realized = 1;
-   m->ecore_evas = 
-     e_canvas_new(e_config->evas_engine_menus, m->zone->container->win,
-                  m->cur.x, m->cur.y, m->cur.w, m->cur.h, 1, 1,
-                  &(m->evas_win));
+   m->ecore_evas = e_canvas_new(m->zone->container->win,
+                                m->cur.x, m->cur.y, m->cur.w, m->cur.h, 1, 1,
+                                &(m->evas_win));
    e_canvas_add(m->ecore_evas);
    eina_hash_add(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
    m->shape = e_container_shape_add(m->zone->container);
