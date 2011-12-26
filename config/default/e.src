@@ -17,19 +17,8 @@ group "E_Config" struct {
   value "edje_collection_cache" int: 30;
   value "zone_desks_x_count" int: 1;
   value "zone_desks_y_count" int: 1;
-  value "use_virtual_roots" int: 0;
   value "show_desktop_icons" int: 1;
   value "edge_flip_dragging" int: 0;
-  value "evas_engine_default" int: 1;
-  value "evas_engine_container" int: 0;
-  value "evas_engine_init" int: 0;
-  value "evas_engine_menus" int: 0;
-  value "evas_engine_borders" int: 0;
-  value "evas_engine_errors" int: 0;
-  value "evas_engine_popups" int: 0;
-  value "evas_engine_drag" int: 0;
-  value "evas_engine_win" int: 0;
-  value "evas_engine_zone" int: 0;
   value "use_composite" int: 0;
   group "modules" list {
     group "E_Config_Module" struct {

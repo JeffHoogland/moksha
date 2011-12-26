@@ -59,7 +59,6 @@ struct _E_Config
    int         edje_collection_cache; // GUI
    int         zone_desks_x_count; // GUI
    int         zone_desks_y_count; // GUI
-   int         use_virtual_roots; // NO GUI - maybe remove?
    int         show_desktop_icons; // GUI
    int         edge_flip_dragging; // GUI
    int	       use_composite; // GUI

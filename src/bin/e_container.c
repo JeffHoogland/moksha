@@ -67,15 +67,7 @@ e_container_new(E_Manager *man)
    con->manager->containers = eina_list_append(con->manager->containers, con);
    con->w = con->manager->w;
    con->h = con->manager->h;
-   if (e_config->use_virtual_roots)
-     {
-	con->win = ecore_x_window_override_new(con->manager->win, con->x, con->y, con->w, con->h);
-	ecore_x_icccm_title_set(con->win, "Enlightenment Container");
-	ecore_x_netwm_name_set(con->win, "Enlightenment Container");
-	ecore_x_window_raise(con->win);
-     }
-   else
-     con->win = con->manager->win;
+   con->win = con->manager->win;
 
    if (!e_config->null_container_win)
       con->bg_ecore_evas = e_canvas_new(con->win,

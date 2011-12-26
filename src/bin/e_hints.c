@@ -253,12 +253,6 @@ e_hints_manager_init(E_Manager *man)
 
 #if 0
     ecore_x_netwm_desk_count_set(man->root, num);
-#endif
-    if (e_config->use_virtual_roots)
-      {
-         ecore_x_netwm_desk_roots_set(man->root, vroots, num);
-      }
-#if 0
     /* No need for workarea without desktops */
     ecore_x_netwm_desk_workareas_set(man->root, num, areas);
 #endif

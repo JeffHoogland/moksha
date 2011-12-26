@@ -93,17 +93,7 @@ e_manager_new(Ecore_X_Window root, int num)
    man->root = root;
    man->num = num;
    ecore_x_window_size_get(man->root, &(man->w), &(man->h));
-   if (e_config->use_virtual_roots)
-     {
-	man->win = ecore_x_window_override_new(man->root, man->x, man->y, man->w, man->h);
-	ecore_x_icccm_title_set(man->win, "Enlightenment Manager");
-	ecore_x_netwm_name_set(man->win, "Enlightenment Manager");
-	ecore_x_window_raise(man->win);
-     }
-   else
-     {
-	man->win = man->root;
-     }
+   man->win = man->root;
 
    man->handlers = 
      eina_list_append(man->handlers, 
