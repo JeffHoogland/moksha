@@ -470,7 +470,7 @@ eet >= 1.4.0 \
 efreet >= 1.0.999 \
 edbus >= 1.0.999 \
 eina >= 1.0.999"
-efm_requires+=" $eeze_mount $dbus_mount $hal_mount $udisks_mount"
+efm_requires="$efm_requires $eeze_mount $dbus_mount $hal_mount $udisks_mount"
 
 PKG_CHECK_MODULES(E_FM, [$efm_requires])
 
