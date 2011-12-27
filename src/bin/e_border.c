@@ -9074,7 +9074,6 @@ _e_border_pointer_warp_to_center_timer(void *data __UNUSED__)
             (y - warp_y) > 5 || (y - warp_y) < -5)
           {
              /* User moved the mouse, so stop warping */
-             printf("user stopped pinter warp\n");
              warp_to = 0;
              goto cleanup;
           }
