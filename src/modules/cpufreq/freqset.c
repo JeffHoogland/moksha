@@ -10,6 +10,7 @@
 #endif
 
 static int sys_cpu_setall(const char *control, const char *value);
+static int sys_cpufreq_set(const char *control, const char *value);
 
 int
 main(int argc, char *argv[])
@@ -68,9 +69,9 @@ main(int argc, char *argv[])
              return 1;
           }
         if (!strcmp(argv[2], "ondemand"))
-          sys_cpu_setall("ondemand/ignore_nice_load", "0");
+          sys_cpufreq_set("ondemand/ignore_nice_load", "0");
         else if (!strcmp(argv[2], "conservative"))
-          sys_cpu_setall("conservative/ignore_nice_load", "0");
+          sys_cpufreq_set("conservative/ignore_nice_load", "0");
         return 0;
      }
    else
@@ -105,4 +106,27 @@ sys_cpu_setall(const char *control, const char *value)
 	num++;
      }
    return -1;
+}
+
+static int
+sys_cpufreq_set(const char *control, const char *value)
+{
+   char filename[4096];
+   FILE *f;
+
+   snprintf(filename, sizeof(filename), "/sys/devices/system/cpu/cpufreq/%s", control);
+   f = fopen(filename, "w");
+
+   if (!f)
+     {
+	if (sys_cpu_setall(control, value) > 0)
+	  return 1;
+	else
+	  return -1;
+     }
+
+   fprintf(f, "%s\n", value);
+   fclose(f);
+
+   return 1;
 }
