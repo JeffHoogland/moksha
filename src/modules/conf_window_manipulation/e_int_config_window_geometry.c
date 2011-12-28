@@ -22,11 +22,11 @@ struct _E_Config_Dialog_Data
         double timeout;
         struct
           {
-             int dx, dy;
+             int dx;
           } move;
         struct
           {
-             int dx, dy;
+             int dx;
           } resize;
      } border_keyboard;
 
@@ -69,9 +69,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->geometry_auto_move = e_config->geometry_auto_move;
    cfdata->border_keyboard.timeout = e_config->border_keyboard.timeout;
    cfdata->border_keyboard.move.dx = e_config->border_keyboard.move.dx;
-//   cfdata->border_keyboard.move.dy = e_config->border_keyboard.move.dy;
    cfdata->border_keyboard.resize.dx = e_config->border_keyboard.resize.dx;
-//   cfdata->border_keyboard.resize.dy = e_config->border_keyboard.resize.dy;
    return cfdata;
 }
 
@@ -93,10 +91,8 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->geometry_auto_move = cfdata->geometry_auto_move;  
    e_config->border_keyboard.timeout = cfdata->border_keyboard.timeout;
    e_config->border_keyboard.move.dx = cfdata->border_keyboard.move.dx;
-//   e_config->border_keyboard.move.dy = cfdata->border_keyboard.move.dy;
    e_config->border_keyboard.move.dy = cfdata->border_keyboard.move.dx;
    e_config->border_keyboard.resize.dx = cfdata->border_keyboard.resize.dx;
-//   e_config->border_keyboard.resize.dy = cfdata->border_keyboard.resize.dy;
    e_config->border_keyboard.resize.dy = cfdata->border_keyboard.resize.dx;
    e_config_save_queue();
    return 1; /* Apply was OK */
