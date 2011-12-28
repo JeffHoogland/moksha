@@ -286,10 +286,10 @@ struct _E_Config
 
    struct {
       struct {
-         int         icon_size;
+         int         icon_size; // GUI
       } main, secondary, extra;
-      double         timeout;
-      unsigned char  do_input;
+      double         timeout; // GUI
+      unsigned char  do_input; // GUI
       Eina_List     *actions;
    } syscon;
 

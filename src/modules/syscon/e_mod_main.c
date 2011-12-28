@@ -33,6 +33,8 @@ e_modapi_init(E_Module *m)
      }
    maug = e_int_menus_menu_augmentation_add_sorted
      ("main/8", _("System"), _e_mod_menu_add, NULL, NULL, NULL);
+   e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "preferences-advanced");
+   e_configure_registry_item_add("advanced/syscon", 10, _("Syscon"), NULL, "preferences-syscon", e_int_config_syscon);
    e_module_delayed_set(m, 1);
    return m;
 }
@@ -40,6 +42,10 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
+   E_Config_Dialog *cfd;
+   while ((cfd = e_config_dialog_get("E", "advanced/conf_syscon"))) e_object_del(E_OBJECT(cfd));
+   e_configure_registry_item_del("advanced/syscon");
+   e_configure_registry_category_del("advanced");
    /* remove module-supplied menu additions */
    if (maug)
      {
