@@ -728,9 +728,19 @@ _color_class_sort(const void *data1, const void *data2)
 }
 
 static void
-_fill_data_add_header(E_Config_Dialog_Data *cfdata, const char *name)
+_fill_data_add_header(E_Config_Dialog_Data *cfdata, const char *name, const char *icon)
 {
-   e_widget_ilist_header_append(cfdata->gui.ilist, NULL, name);
+   Evas_Object *ic;
+
+   if (icon)
+     {
+	ic = e_icon_add(cfdata->gui.evas);
+	e_util_icon_theme_set(ic, icon);
+     }
+   else
+     ic = NULL;
+
+   e_widget_ilist_header_append(cfdata->gui.ilist, ic, name);
 }
 
 static void
@@ -840,15 +850,15 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    Eina_List *todo = eina_list_clone(e_color_class_list());
    E_Color_Class *cc;
 
-   _fill_data_add_header(cfdata, _("Window Manager"));
+   _fill_data_add_header(cfdata, _("Window Manager"), NULL);
    _fill_data_add_batch(cfdata, &todo, _color_classes_wm);
-   _fill_data_add_header(cfdata, _("Widgets"));
+   _fill_data_add_header(cfdata, _("Widgets"), NULL);
    _fill_data_add_batch(cfdata, &todo, _color_classes_widgets);
-   _fill_data_add_header(cfdata, _("Modules"));
+   _fill_data_add_header(cfdata, _("Modules"), "preferences-plugin");
    _fill_data_add_batch(cfdata, &todo, _color_classes_modules);
 
    if (!todo) return;
-   _fill_data_add_header(cfdata, _("Others"));
+   _fill_data_add_header(cfdata, _("Others"), NULL);
    todo = eina_list_sort(todo, -1, _color_class_sort);
    EINA_LIST_FREE(todo, cc)
      {
