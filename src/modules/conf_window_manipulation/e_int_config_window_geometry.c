@@ -29,7 +29,16 @@ struct _E_Config_Dialog_Data
              int dx;
           } resize;
      } border_keyboard;
-
+   struct {
+      int    move;
+      int    resize;
+      int    raise;
+      int    lower;
+      int    layer;
+      int    desktop;
+      int    iconify;
+   } transient;
+   
    Eina_List *resistance_list;
 };
 
@@ -70,6 +79,13 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->border_keyboard.timeout = e_config->border_keyboard.timeout;
    cfdata->border_keyboard.move.dx = e_config->border_keyboard.move.dx;
    cfdata->border_keyboard.resize.dx = e_config->border_keyboard.resize.dx;
+   cfdata->transient.move = e_config->transient.move;
+   cfdata->transient.resize = e_config->transient.resize;
+   cfdata->transient.raise = e_config->transient.raise;
+   cfdata->transient.lower = e_config->transient.lower;
+   cfdata->transient.layer = e_config->transient.layer;
+   cfdata->transient.desktop = e_config->transient.desktop;
+   cfdata->transient.iconify = e_config->transient.iconify;
    return cfdata;
 }
 
@@ -94,6 +110,13 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->border_keyboard.move.dy = cfdata->border_keyboard.move.dx;
    e_config->border_keyboard.resize.dx = cfdata->border_keyboard.resize.dx;
    e_config->border_keyboard.resize.dy = cfdata->border_keyboard.resize.dx;
+   e_config->transient.move = cfdata->transient.move;
+   e_config->transient.resize = cfdata->transient.resize;
+   e_config->transient.raise = cfdata->transient.raise;
+   e_config->transient.lower = cfdata->transient.lower;
+   e_config->transient.layer = cfdata->transient.layer;
+   e_config->transient.desktop = cfdata->transient.desktop;
+   e_config->transient.iconify = cfdata->transient.iconify;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -111,7 +134,14 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 	   (e_config->border_keyboard.move.dx != cfdata->border_keyboard.move.dx) ||
 	   (e_config->border_keyboard.move.dy != cfdata->border_keyboard.move.dx) ||
 	   (e_config->border_keyboard.resize.dx != cfdata->border_keyboard.resize.dx) ||
-	   (e_config->border_keyboard.resize.dy != cfdata->border_keyboard.resize.dx));
+	   (e_config->border_keyboard.resize.dy != cfdata->border_keyboard.resize.dx) ||
+           (e_config->transient.move != cfdata->transient.move) ||
+           (e_config->transient.resize != cfdata->transient.resize) ||
+           (e_config->transient.raise != cfdata->transient.raise) ||
+           (e_config->transient.lower != cfdata->transient.lower) ||
+           (e_config->transient.layer != cfdata->transient.layer) ||
+           (e_config->transient.desktop != cfdata->transient.desktop) ||
+           (e_config->transient.iconify != cfdata->transient.iconify));
 }
 
 static Evas_Object *
@@ -187,6 +217,33 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                            &(cfdata->geometry_auto_move));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Automatic"), ol, 
+                                 1, 0, 1, 0, 0.5, 0.0);
+
+   /* Transient  */
+   ol = e_widget_list_add(evas, 0, 0);
+   ow = e_widget_check_add(evas, _("Follow Move"),
+                           &(cfdata->transient.move));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   ow = e_widget_check_add(evas, _("Follow Resize"), 
+                           &(cfdata->transient.resize));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   ow = e_widget_check_add(evas, _("Follow Raise"), 
+                           &(cfdata->transient.raise));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   ow = e_widget_check_add(evas, _("Follow Lower"), 
+                           &(cfdata->transient.lower));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   ow = e_widget_check_add(evas, _("Follow Layer"), 
+                           &(cfdata->transient.layer));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   ow = e_widget_check_add(evas, _("Follow Desktop"), 
+                           &(cfdata->transient.desktop));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   ow = e_widget_check_add(evas, _("Follow Iconify"), 
+                           &(cfdata->transient.iconify));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   
+   e_widget_toolbook_page_append(otb, NULL, _("Transients"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);

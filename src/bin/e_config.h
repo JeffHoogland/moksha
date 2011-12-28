@@ -145,13 +145,13 @@ struct _E_Config
    int         menu_autoscroll_cursor_margin; // GUI
    const char *input_method; // GUI
    struct {
-	int    move;
-	int    resize;
-	int    raise;
-	int    lower;
-	int    layer;
-	int    desktop;
-	int    iconify;
+	int    move; // GUI
+	int    resize; // GUI
+	int    raise; // GUI
+	int    lower; // GUI
+	int    layer; // GUI
+	int    desktop; // GUI
+	int    iconify; // GUI
    } transient;
    int         modal_windows;
    int         menu_eap_name_show; // GUI
