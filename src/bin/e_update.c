@@ -8,8 +8,6 @@ static E_Dialog      *dialog = NULL;
 static void
 _update_done(void)
 {
-   Ecore_Event_Handler *h;
-   
    if (url_up)
      {
         ecore_con_url_free(url_up);
