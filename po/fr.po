@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-12-27 06:29+0100\n"
-"PO-Revision-Date: 2011-12-27 10:14+0100\n"
+"POT-Creation-Date: 2011-12-29 17:07+0100\n"
+"PO-Revision-Date: 2011-12-29 19:52+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
@@ -751,8 +751,8 @@ msgstr "Activer/Désactiver le mode hors ligne"
 #: src/modules/gadman/e_mod_config.c:182
 #: src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35
-#: src/modules/syscon/e_mod_main.c:52
-#: src/modules/syscon/e_mod_main.c:119
+#: src/modules/syscon/e_mod_main.c:58
+#: src/modules/syscon/e_mod_main.c:125
 msgid "System"
 msgstr "Système"
 
@@ -810,8 +810,8 @@ msgid "Color Selector"
 msgstr "Sélecteur de couleur"
 
 #: src/bin/e_color_dialog.c:46
-#: src/bin/e_config.c:1572
-#: src/bin/e_config.c:2190
+#: src/bin/e_config.c:1580
+#: src/bin/e_config.c:2198
 #: src/bin/e_config_dialog.c:262
 #: src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918
@@ -856,106 +856,106 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:956
-#: src/bin/e_config.c:989
+#: src/bin/e_config.c:959
+#: src/bin/e_config.c:992
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Cela risque d'arriver en phase de<br>développement, aussi est-il inutile de faire un rapport de bogue.<br>Cela signifie simplement que Enlightenment a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:973
+#: src/bin/e_config.c:976
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "Votre configuration est PLUS RÉCENTE que la version actuelle de E.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente de E était en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
-#: src/bin/e_config.c:1559
-#: src/bin/e_config.c:2177
+#: src/bin/e_config.c:1567
+#: src/bin/e_config.c:2185
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Enlightenment"
 
-#: src/bin/e_config.c:1562
+#: src/bin/e_config.c:1570
 #, c-format
 msgid "Enlightenment has had an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "Enlightenment a rencontré une erreur pendant<br>le déplacement de données de configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:2087
+#: src/bin/e_config.c:2095
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2104
+#: src/bin/e_config.c:2112
 msgid "The EET file handle is bad."
 msgstr "Traitement du fichier EET incorrect."
 
-#: src/bin/e_config.c:2107
+#: src/bin/e_config.c:2115
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2118
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Le fichier n'est pas éditable. Le disque est peut-être monté<br>en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2113
+#: src/bin/e_config.c:2121
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Veuillez libérer de la mémoire."
 
-#: src/bin/e_config.c:2116
+#: src/bin/e_config.c:2124
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2119
+#: src/bin/e_config.c:2127
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser quelques centaines de Ko."
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2130
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d' E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2125
+#: src/bin/e_config.c:2133
 msgid "You ran out of space while writing the file"
 msgstr "Plus assez d'espace disponible pour l'écriture."
 
-#: src/bin/e_config.c:2128
+#: src/bin/e_config.c:2136
 msgid "The file was closed on it while writing."
 msgstr "Le fichier s'est fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2131
+#: src/bin/e_config.c:2139
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2142
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2137
+#: src/bin/e_config.c:2145
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2140
+#: src/bin/e_config.c:2148
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2143
+#: src/bin/e_config.c:2151
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2146
+#: src/bin/e_config.c:2154
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2149
+#: src/bin/e_config.c:2157
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un germe PRNG."
 
-#: src/bin/e_config.c:2152
+#: src/bin/e_config.c:2160
 msgid "Encryption failed."
 msgstr "Échec du cryptage."
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2163
 msgid "Decryption failed."
 msgstr "Échec du décryptage."
 
-#: src/bin/e_config.c:2158
+#: src/bin/e_config.c:2166
 msgid "The error is unknown to Enlightenment."
 msgstr "Enlightenment ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2180
+#: src/bin/e_config.c:2188
 #, c-format
 msgid "Enlightenment has had an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Enlightenment<br>était en train d'écrire.<br>%s<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
@@ -965,6 +965,7 @@ msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans 
 #: src/modules/conf/e_mod_main.c:275
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
+#: src/modules/syscon/e_mod_main.c:36
 msgid "Advanced"
 msgstr "Avancé"
 
@@ -991,7 +992,7 @@ msgstr "Extensions"
 #: src/bin/e_configure.c:32
 #: src/bin/e_configure.c:242
 #: src/modules/conf_paths/e_int_config_paths.c:80
-#: src/modules/conf_theme/e_int_config_color_classes.c:847
+#: src/modules/conf_theme/e_int_config_color_classes.c:857
 #: src/modules/conf_theme/e_int_config_fonts.c:98
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:234
 msgid "Modules"
@@ -2558,25 +2559,25 @@ msgstr ""
 "Enlightenment ne peut pas initialiser le gestionnaire de signal UTILISATEUR.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
-#: src/bin/e_main.c:274
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
-msgstr "Enlightenment ne peut pas initialiser Ecore_IMF !\n"
-
-#: src/bin/e_main.c:284
+#: src/bin/e_main.c:273
 msgid "Enlightenment cannot initialize Ecore_File!\n"
 msgstr "Enlightenment ne peut pas initialiser Ecore_File!\n"
 
-#: src/bin/e_main.c:293
+#: src/bin/e_main.c:282
 msgid "Enlightenment cannot initialize Ecore_Con!\n"
 msgstr "Enlightenment ne peut pas initialiser Ecore_Con !\n"
 
-#: src/bin/e_main.c:302
+#: src/bin/e_main.c:291
 msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
 msgstr "Enlightenment ne peut pas initialiser Ecore_Ipc !\n"
 
-#: src/bin/e_main.c:313
+#: src/bin/e_main.c:302
 msgid "Enlightenment cannot initialize Ecore_X!\n"
 msgstr "Enlightenment ne peut pas initialiser Ecore_X !\n"
+
+#: src/bin/e_main.c:314
+msgid "Enlightenment cannot initialize Ecore_IMF!\n"
+msgstr "Enlightenment ne peut pas initialiser Ecore_IMF !\n"
 
 #: src/bin/e_main.c:324
 msgid "Enlightenment cannot initialize Ecore_Evas!\n"
@@ -2901,34 +2902,38 @@ msgid "Enlightenment cannot initialize the XSettings system.\n"
 msgstr "Enlightenment ne peut pas initialiser le système Xsettings.\n"
 
 #: src/bin/e_main.c:877
+msgid "Enlightenment cannot initialize the Update system.\n"
+msgstr "Enlightenment ne peut pas initialiser son système d'actualisation.\n"
+
+#: src/bin/e_main.c:886
 msgid "Setup Desktop Environment"
 msgstr "Configuration de l'environnement de bureau"
 
-#: src/bin/e_main.c:881
+#: src/bin/e_main.c:890
 msgid "Enlightenment cannot initialize its desktop environment.\n"
 msgstr "Enlightenment ne peut pas initialiser son environnement de bureau.\n"
 
-#: src/bin/e_main.c:889
+#: src/bin/e_main.c:898
 msgid "Setup File Ordering"
 msgstr "Configuration du classement des fichiers"
 
-#: src/bin/e_main.c:893
+#: src/bin/e_main.c:902
 msgid "Enlightenment cannot set up its order file system."
 msgstr "Enlightenment ne peut pas configurer sa gestion des fichiers."
 
-#: src/bin/e_main.c:908
+#: src/bin/e_main.c:917
 msgid "Load Modules"
 msgstr "Activer les modules"
 
-#: src/bin/e_main.c:938
+#: src/bin/e_main.c:947
 msgid "Configure Shelves"
 msgstr "Configurer les racks"
 
-#: src/bin/e_main.c:949
+#: src/bin/e_main.c:958
 msgid "Almost Done"
 msgstr "Presque fini..."
 
-#: src/bin/e_main.c:1094
+#: src/bin/e_main.c:1103
 #, c-format
 msgid ""
 "Options:\n"
@@ -2978,7 +2983,7 @@ msgstr ""
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tSi vous avez besoin d'afficher l'aide, alors cette option n'est pas pour vous.\n"
 
-#: src/bin/e_main.c:1147
+#: src/bin/e_main.c:1156
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -2994,11 +2999,11 @@ msgstr ""
 "des chemins et de la gestion de tout autre service\n"
 "nécessaire, avant même le démarrage de enlightenment.\n"
 
-#: src/bin/e_main.c:1426
+#: src/bin/e_main.c:1435
 msgid "Testing Format Support"
 msgstr "Test du support des formats"
 
-#: src/bin/e_main.c:1430
+#: src/bin/e_main.c:1439
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3006,23 +3011,23 @@ msgstr ""
 "Enlightenment a détecté que Evas ne peut créer un canevas en mémoire.\n"
 "Vérifiez que Evas supporte le moteur de rendu logiciel en mémoire.\n"
 
-#: src/bin/e_main.c:1442
+#: src/bin/e_main.c:1451
 msgid "Enlightenment found Evas can't load SVG files. Check Evas has SVG loader support.\n"
 msgstr "Enlightenment a détecté que Evas ne peut charger les fichiers SVG. Vérifiez le support de SVG dans Evas.\n"
 
-#: src/bin/e_main.c:1452
+#: src/bin/e_main.c:1461
 msgid "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader support.\n"
 msgstr "Enlightenment a détecté que Evas ne peut charger les fichiers JPEG. Vérifiez le support de JPEG dans Evas.\n"
 
-#: src/bin/e_main.c:1462
+#: src/bin/e_main.c:1471
 msgid "Enlightenment found Evas can't load PNG files. Check Evas has PNG loader support.\n"
 msgstr "Enlightenment a détecté que Evas ne peut charger les fichiers PNG. Vérifiez le support de PNG dans Evas.\n"
 
-#: src/bin/e_main.c:1472
+#: src/bin/e_main.c:1481
 msgid "Enlightenment found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr "Enlightenment a détecté que Evas ne peut charger les fichiers EET. Vérifiez le support de EET dans Evas.\n"
 
-#: src/bin/e_main.c:1486
+#: src/bin/e_main.c:1495
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -3030,26 +3035,26 @@ msgstr ""
 "Enlightenment a détecté que Evas ne peut charger la police « Sans ». Vérifiez que Evas \n"
 "contient le support de fontconfig et que le système prend en charge la police « Sans ».\n"
 
-#: src/bin/e_main.c:1677
+#: src/bin/e_main.c:1686
 #, c-format
 msgid "Enlightenment crashed early on start and has<br>been restarted. There was an error loading<br>module named: %s. This module has been disabled<br>and will not be loaded."
 msgstr "Enlightenment a planté au démarrage et a<br>été redémarré. L'erreur s'est produite lors du<br>chargement du module : %s.<br>Ce module est désactivé et ne sera pas chargé."
 
-#: src/bin/e_main.c:1682
-#: src/bin/e_main.c:1699
+#: src/bin/e_main.c:1691
+#: src/bin/e_main.c:1708
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightenment a planté au démarrage et a été redémarré."
 
-#: src/bin/e_main.c:1683
+#: src/bin/e_main.c:1692
 #, c-format
 msgid "Enlightenment crashed early on start and has been restarted.<br>There was an error loading module named: %s<br><br>This module has been disabled and will not be loaded."
 msgstr "Enlightenment a planté au démarrage et a été redémarré.<br>L'erreur s'est produite lors du chargement du module : %s.<br><br>Ce module est désactivé et ne sera pas chargé."
 
-#: src/bin/e_main.c:1692
+#: src/bin/e_main.c:1701
 msgid "Enlightenment crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again."
 msgstr "Enlightenment a planté au démarrage et a<br>été redémarré. Tous les modules ont été désactivés<br>et ne seront pas chargés pour vous aider à supprimer<br>les modules problématiques de votre configuration.<br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
 
-#: src/bin/e_main.c:1700
+#: src/bin/e_main.c:1709
 msgid "Enlightenment crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
 msgstr "Enlightenment a planté au démarrage et a été redémarré.<br>Tous les modules ont été désactivés et ne seront pas chargés pour vous<br>aider à supprimer les modules problématiques de votre configuration.<br><br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
 
@@ -3916,7 +3921,7 @@ msgstr "Vitesse de l'animation"
 
 #: src/modules/conf_display/e_int_config_desks.c:197
 #: src/modules/conf_display/e_int_config_dpms.c:306
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:168
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:194
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:151
 #, c-format
 msgid "%1.1f sec"
@@ -4640,11 +4645,11 @@ msgstr "Marge"
 
 #: src/modules/conf_menus/e_int_config_menus.c:289
 #: src/modules/conf_menus/e_int_config_menus.c:294
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:136
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:145
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:154
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:173
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:178
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:162
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:171
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:180
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:199
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:204
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixels"
@@ -5200,16 +5205,16 @@ msgstr "Rendu des couleurs sur le texte."
 msgid "Colors depend on theme capabilities."
 msgstr "Les possibilités offertes dépendent du thème."
 
-#: src/modules/conf_theme/e_int_config_color_classes.c:843
+#: src/modules/conf_theme/e_int_config_color_classes.c:853
 msgid "Window Manager"
 msgstr "Gestionnaire de fenêtres"
 
-#: src/modules/conf_theme/e_int_config_color_classes.c:845
+#: src/modules/conf_theme/e_int_config_color_classes.c:855
 #: src/modules/conf_theme/e_int_config_fonts.c:81
 msgid "Widgets"
 msgstr "Objets graphiques"
 
-#: src/modules/conf_theme/e_int_config_color_classes.c:851
+#: src/modules/conf_theme/e_int_config_color_classes.c:861
 msgid "Others"
 msgstr "Autres"
 
@@ -5408,7 +5413,7 @@ msgid "Bytecode"
 msgstr "Bytecode"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:662
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
 #: src/modules/cpufreq/e_mod_main.c:227
 #: src/modules/cpufreq/e_mod_main.c:259
 msgid "Automatic"
@@ -5895,54 +5900,86 @@ msgstr "Rendre le focus quand il est perdu"
 msgid "Slide pointer to a new focused window"
 msgstr "Déplacer le curseur vers la nouvelle fenêtre focalisée"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:53
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:62
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
 msgid "Window Geometry"
 msgstr "Géométrie des fenêtres"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:130
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:156
 msgid "Resist obstacles"
 msgstr "Résistance aux obstacles"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:132
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:158
 msgid "Other windows"
 msgstr "Autres fenêtres"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:141
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:167
 msgid "Edge of the screen"
 msgstr "Bord de l'écran"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:150
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:176
 msgid "Desktop gadgets"
 msgstr "Gadgets de bureau"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:161
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:187
 msgid "Resistance"
 msgstr "Résistance"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:166
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:192
 msgid "Automatically accept changes after:"
 msgstr "Acceptation automatique des changements après :"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:171
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:197
 msgid "Move by"
 msgstr "Déplacer de :"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:176
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:202
 msgid "Resize by"
 msgstr "Redimensionner de :"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:181
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
 msgid "Keyboard"
 msgstr "Clavier"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:187
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
 msgid "Limit resize to useful geometry"
 msgstr "Limiter la géométrie du redimensionnement"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:190
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:216
 msgid "Move after resize"
 msgstr "Déplacer après redimensionnement"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:224
+msgid "Follow Move"
+msgstr "Suivi du déplacement"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
+msgid "Follow Resize"
+msgstr "Suivi du redimensionnement"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
+msgid "Follow Raise"
+msgstr "Suivi au-dessus"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:233
+msgid "Follow Lower"
+msgstr "Suivi au-dessous"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:236
+msgid "Follow Layer"
+msgstr "Suivi de la couche"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:239
+msgid "Follow Desktop"
+msgstr "Suivi du bureau"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:242
+msgid "Follow Iconify"
+msgstr "Suivi de la minimisation"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:246
+msgid "Transients"
+msgstr "transitoires"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
 #: src/modules/conf_window_manipulation/e_mod_main.c:22
@@ -7299,7 +7336,11 @@ msgstr "Démarrer"
 msgid "System Control"
 msgstr "Contrôle du système"
 
-#: src/modules/syscon/e_mod_main.c:52
+#: src/modules/syscon/e_mod_main.c:37
+msgid "Syscon"
+msgstr "Syscon"
+
+#: src/modules/syscon/e_mod_main.c:58
 msgid "System Controls"
 msgstr "Contrôles du système"
 
