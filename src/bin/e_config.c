@@ -899,6 +899,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, xsettings.net_icon_theme_name, STR);
    E_CONFIG_VAL(D, T, xsettings.gtk_font_name, STR);
 
+   E_CONFIG_VAL(D, T, update.check, UCHAR);
+   E_CONFIG_VAL(D, T, update.later, UCHAR);
+   
    e_config_load();
 
    e_config_save_queue();
@@ -1162,6 +1165,11 @@ e_config_load(void)
         COPYVAL(xsettings.enabled);
         COPYVAL(xsettings.match_e17_theme);
         COPYVAL(xsettings.match_e17_icon_theme);
+        IFCFGEND;
+
+        IFCFG(0x0147);
+        COPYVAL(update.check);
+        COPYVAL(update.later);
         IFCFGEND;
 
         e_config->config_version = E_CONFIG_FILE_VERSION;

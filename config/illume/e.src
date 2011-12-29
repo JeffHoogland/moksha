@@ -1681,4 +1681,6 @@ group "E_Config" struct {
     value "device_desktop" int: 0;
     value "device_auto_mount" int: 0;
     value "device_auto_open" int: 0;
+    value "update.check" uchar: 1;
+    value "update.later" uchar: 0;
 }

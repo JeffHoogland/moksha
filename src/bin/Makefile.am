@@ -150,6 +150,7 @@ e_theme_about.h \
 e_theme.h \
 e_thumb.h \
 e_toolbar.h \
+e_update.h \
 e_user.h \
 e_utils.h \
 e_widget_aspect.h \
@@ -296,6 +297,7 @@ e_theme_about.c \
 e_theme.c \
 e_thumb.c \
 e_toolbar.c \
+e_update.c \
 e_user.c \
 e_utils.c \
 e_widget_aspect.c \

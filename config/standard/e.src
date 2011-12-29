@@ -1851,4 +1851,6 @@ group "E_Config" struct {
     value "xsettings.enabled" uchar: 1;
     value "xsettings.match_e17_theme" uchar: 1;
     value "xsettings.match_e17_icon_theme" uchar: 1;
+    value "update.check" uchar: 1;
+    value "update.later" uchar: 0;
 }

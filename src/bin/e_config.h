@@ -33,7 +33,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0146
+#define E_CONFIG_FILE_GENERATION 0x0147
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -333,6 +333,11 @@ struct _E_Config
       const char    *net_icon_theme_name; // GUI
       const char    *gtk_font_name;
    } xsettings;
+   
+   struct {
+      unsigned char check; // INTERNAL
+      unsigned char later; // INTERNAL
+   } update;
 };
 
 struct _E_Config_Env_Var

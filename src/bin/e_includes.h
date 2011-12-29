@@ -141,3 +141,4 @@
 #include "e_backlight.h"
 #include "e_deskenv.h"
 #include "e_xsettings.h"
+#include "e_update.h"
