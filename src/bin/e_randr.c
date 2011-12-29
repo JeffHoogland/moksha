@@ -1947,7 +1947,7 @@ _e_randr_crtc_outputs_refs_update(E_Randr_Crtc_Info *crtc_info)
    E_Randr_Output_Info *output_info;
    int i, noutputs;
 
-   if (!e_randr_screen_info->rrvd_info.randr_info_12->outputs) return;
+   EINA_SAFETY_ON_NULL_RETURN(e_randr_screen_info->rrvd_info.randr_info_12->outputs);
 
    //get references to output_info structs which are related to this CRTC
    if ((outputs = ecore_x_randr_crtc_outputs_get(e_randr_screen_info->root, crtc_info->xid, &noutputs)))
@@ -1956,7 +1956,13 @@ _e_randr_crtc_outputs_refs_update(E_Randr_Crtc_Info *crtc_info)
         crtc_info->outputs = NULL;
         for (i = 0; i < noutputs; i++)
           {
-             output_info = _e_randr_output_info_get(outputs[i]);
+             if (!(output_info = _e_randr_output_info_get(outputs[i])))
+               {
+                  output_info = _e_randr_output_info_new(1);
+                  output_info->xid = outputs[i];
+                  _e_randr_output_info_set(output_info);
+                  e_randr_screen_info->rrvd_info.randr_info_12->outputs = eina_list_append(e_randr_screen_info->rrvd_info.randr_info_12->outputs, output_info);
+               }
              crtc_info->outputs = eina_list_append(crtc_info->outputs, output_info);
              output_info->crtc = crtc_info;
           }
