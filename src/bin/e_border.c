@@ -365,6 +365,7 @@ e_border_new(E_Container   *con,
    bd->bg_ecore_evas = e_canvas_new(bd->win,
                                     0, 0, bd->w, bd->h, 1, 0,
                                     &(bd->bg_win));
+   ecore_evas_ignore_events_set(bd->bg_ecore_evas, EINA_TRUE);
    e_canvas_add(bd->bg_ecore_evas);
    bd->event_win = ecore_x_window_input_new(bd->win, 0, 0, bd->w, bd->h);
    bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);
@@ -3753,7 +3754,6 @@ e_border_act_close_begin(E_Border *bd)
      }
    else if (e_config->kill_if_close_not_possible)
      {
-        printf("KILL win %x (dead)\n", bd->client.win);
         e_border_act_kill_begin(bd);
      }
 }
@@ -4095,12 +4095,24 @@ e_border_signal_move_begin(E_Border       *bd,
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
    if ((bd->resize_mode != RESIZE_NONE) || (bd->moving)) return;
    if (!_e_border_move_begin(bd)) return;
    bd->moving = 1;
    _e_border_pointer_move_begin(bd);
    e_zone_edge_disable();
    _e_border_moveinfo_gather(bd, sig);
+   if (bd->cur_mouse_action)
+     {
+        if ((!bd->cur_mouse_action->func.end_mouse) &&
+            (!bd->cur_mouse_action->func.end))
+          bd->cur_mouse_action = NULL;
+        else
+          e_object_unref(E_OBJECT(bd->cur_mouse_action));
+     }
+   bd->cur_mouse_action = e_action_find("window_move");
+   if (bd->cur_mouse_action)
+     e_object_ref(E_OBJECT(bd->cur_mouse_action));
 }
 
 EAPI void
@@ -4186,6 +4198,17 @@ e_border_signal_resize_begin(E_Border       *bd,
    _e_border_pointer_resize_begin(bd);
    _e_border_moveinfo_gather(bd, sig);
    GRAV_SET(bd, grav);
+   if (bd->cur_mouse_action)
+     {
+        if ((!bd->cur_mouse_action->func.end_mouse) &&
+            (!bd->cur_mouse_action->func.end))
+          bd->cur_mouse_action = NULL;
+        else
+          e_object_unref(E_OBJECT(bd->cur_mouse_action));
+     }
+   bd->cur_mouse_action = e_action_find("window_resize");
+   if (bd->cur_mouse_action)
+     e_object_ref(E_OBJECT(bd->cur_mouse_action));
 }
 
 EAPI void
@@ -5881,7 +5904,11 @@ _e_border_cb_mouse_in(void    *data,
 #endif
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-   evas_event_feed_mouse_in(bd->bg_evas, ev->time, NULL);
+   if (!bd->bg_evas_in)
+     {
+        evas_event_feed_mouse_in(bd->bg_evas, ev->time, NULL);
+        bd->bg_evas_in = EINA_TRUE;
+     }
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -5954,9 +5981,18 @@ _e_border_cb_mouse_out(void    *data,
 #endif
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-   if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
-     evas_event_feed_mouse_cancel(bd->bg_evas, ev->time, NULL);
-   evas_event_feed_mouse_out(bd->bg_evas, ev->time, NULL);
+   if (bd->bg_evas_in)
+     {
+        if (!((evas_event_down_count_get(bd->bg_evas) > 0) &&
+              (!((ev->mode == ECORE_X_EVENT_MODE_GRAB) &&
+                 (ev->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR)))))
+          {
+             if (ev->mode == ECORE_X_EVENT_MODE_GRAB)
+               evas_event_feed_mouse_cancel(bd->bg_evas, ev->time, NULL);
+             evas_event_feed_mouse_out(bd->bg_evas, ev->time, NULL);
+             bd->bg_evas_in = EINA_FALSE;
+          }
+     }
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -5970,7 +6006,8 @@ _e_border_cb_mouse_wheel(void    *data,
 
    ev = event;
    bd = data;
-   if (ev->event_window == bd->win)
+   if ((ev->event_window == bd->win) ||
+       (ev->event_window == bd->event_win))
      {
         bd->mouse.current.mx = ev->root.x;
         bd->mouse.current.my = ev->root.y;
@@ -5992,7 +6029,8 @@ _e_border_cb_mouse_down(void    *data,
 
    ev = event;
    bd = data;
-   if (ev->event_window == bd->win)
+   if ((ev->event_window == bd->win) ||
+       (ev->event_window == bd->event_win))
      {
         if ((ev->buttons >= 1) && (ev->buttons <= 3))
           {
@@ -6083,7 +6121,8 @@ _e_border_cb_mouse_up(void    *data,
 
    ev = event;
    bd = data;
-   if (ev->event_window == bd->win)
+   if ((ev->event_window == bd->win) ||
+       (ev->event_window == bd->event_win))
      {
         if ((ev->buttons >= 1) && (ev->buttons <= 3))
           {

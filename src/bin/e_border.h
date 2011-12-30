@@ -177,6 +177,7 @@ struct _E_Border
    Ecore_X_Window  event_win;
    const char     *internal_icon;
    const char     *internal_icon_key;
+   Eina_Bool       bg_evas_in : 1;
 
    struct {
       Ecore_X_Window shell_win;
