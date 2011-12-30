@@ -3164,10 +3164,30 @@ _e_mod_comp_add(E_Manager *man)
    E_Comp *c;
    Ecore_X_Window *wins;
    Ecore_X_Window_Attributes att;
+   Eina_Bool res;
    int i, num;
 
    c = calloc(1, sizeof(E_Comp));
    if (!c) return NULL;
+
+   res = ecore_x_screen_is_composited(man->num);
+   if (res)
+     {
+        e_util_dialog_internal
+           (_("Compositor Error"),
+           _("Another compositor is already running<br>"
+             "on your screen."));
+        free(c);
+        return NULL;
+     }
+
+   c->cm_selection = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
+   if (!c->cm_selection)
+     {
+        free(c);
+        return NULL;
+     }
+   ecore_x_screen_is_composited_set(man->num, c->cm_selection);
    
    ecore_x_e_comp_sync_supported_set(man->root, _comp_mod->conf->efl_sync);
 
@@ -3198,16 +3218,6 @@ _e_mod_comp_add(E_Manager *man)
         free(c);
         return NULL;
      }
-
-   /* FIXME check if already composited? */
-   c->cm_selection = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
-   if (!c->cm_selection)
-     {
-        ecore_x_composite_render_window_disable(c->win);
-        free(c);
-        return NULL;
-     }
-   ecore_x_screen_is_composited_set(c->man->num, c->cm_selection);
 
    if (c->man->num == 0) e_alert_composite_win = c->win;
 
@@ -3264,7 +3274,6 @@ _e_mod_comp_add(E_Manager *man)
    ecore_evas_show(c->ee);
 
    c->ee_win = ecore_evas_window_get(c->ee);
-   ecore_x_screen_is_composited_set(c->man->num, c->ee_win);
    ecore_x_composite_redirect_subwindows
      (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
 
@@ -3365,7 +3374,6 @@ _e_mod_comp_del(E_Comp *c)
         c->grabbed = 0;
         ecore_x_ungrab();
      }
-   ecore_x_screen_is_composited_set(c->man->num, 0);
    while (c->wins)
      {
         cw = (E_Comp_Win *)(c->wins);
@@ -3390,8 +3398,8 @@ _e_mod_comp_del(E_Comp *c)
    if (c->wins_list) eina_list_free(c->wins_list);
 
    ecore_x_window_free(c->cm_selection);
-   ecore_x_screen_is_composited_set(c->man->num, 0);
    ecore_x_e_comp_sync_supported_set(c->man->root, 0);
+   ecore_x_screen_is_composited_set(c->man->num, 0);
 
    free(c);
 }
