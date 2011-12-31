@@ -1545,7 +1545,7 @@ group "E_Config" struct {
             value "icon" string: "DESKTOP";
         }
     }
-    value "config_version" int: 65847;
+    value "config_version" int: 65863;
     value "show_splash" int: 1;
     value "init_default_theme" string: "default.edj";
     value "desktop_default_name" string: "Desktop %i, %i";
