@@ -74,6 +74,7 @@ e_table_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    sd->frozen++;
    return sd->frozen;
@@ -84,6 +85,7 @@ e_table_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    sd->frozen--;
    if (sd->frozen <= 0) _e_table_smart_reconfigure(sd);
@@ -95,6 +97,7 @@ e_table_homogenous_set(Evas_Object *obj, int homogenous)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (sd->homogenous == homogenous) return;
    sd->homogenous = homogenous;
@@ -108,6 +111,7 @@ e_table_pack(Evas_Object *obj, Evas_Object *child, int col, int row, int colspan
    E_Smart_Data *sd;
    E_Table_Item *ti;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    _e_table_smart_adopt(sd, child);
    sd->items = eina_list_append(sd->items, child);
@@ -166,6 +170,7 @@ e_table_col_row_size_get(Evas_Object *obj, int *cols, int *rows)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (sd->changed) _e_table_smart_extents_calcuate(sd);
    if (cols) *cols = sd->size.cols;
@@ -177,6 +182,7 @@ e_table_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (sd->changed) _e_table_smart_extents_calcuate(sd);
    if (minw) *minw = sd->min.w;
@@ -188,6 +194,7 @@ e_table_size_max_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (sd->changed) _e_table_smart_extents_calcuate(sd);
    if (maxw) *maxw = sd->max.w;
@@ -199,6 +206,7 @@ e_table_align_get(Evas_Object *obj, double *ax, double *ay)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (ax) *ax = sd->align.x;
    if (ay) *ay = sd->align.y;
@@ -209,6 +217,7 @@ e_table_align_set(Evas_Object *obj, double ax, double ay)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if ((sd->align.x == ax) && (sd->align.y == ay)) return;
    sd->align.x = ax;

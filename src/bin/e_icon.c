@@ -226,6 +226,7 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    int len;
 
    if (!file) return EINA_FALSE;
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
@@ -300,6 +301,7 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
@@ -342,6 +344,7 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
@@ -377,6 +380,7 @@ e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
    int len;
 
    if (!icon) return EINA_TRUE;
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (icon[0] == '/') return e_icon_file_set(obj, icon);
 
    if (!(sd = evas_object_smart_data_get(obj)))
@@ -422,6 +426,7 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    if (sd->timer) ecore_timer_del(sd->timer);
@@ -444,6 +449,7 @@ e_icon_file_get(const Evas_Object *obj)
    E_Smart_Data *sd;
    const char *file;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    if (!(sd = evas_object_smart_data_get(obj))) return NULL;
 #ifdef USE_ICON_CACHE
    if (sd->file) return sd->file;
@@ -462,6 +468,7 @@ e_icon_smooth_scale_set(Evas_Object *obj, Eina_Bool smooth)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    if (!strcmp(evas_object_type_get(sd->obj), "edje")) return;
    evas_object_image_smooth_scale_set(sd->obj, smooth);
@@ -472,6 +479,7 @@ e_icon_smooth_scale_get(const Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
      return EINA_FALSE;
@@ -483,6 +491,7 @@ e_icon_alpha_set(Evas_Object *obj, Eina_Bool alpha)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    if (!strcmp(evas_object_type_get(sd->obj), "edje")) return;
    evas_object_image_alpha_set(sd->obj, alpha);
@@ -493,6 +502,7 @@ e_icon_alpha_get(const Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
    if (!strcmp(evas_object_type_get(sd->obj), "edje")) return EINA_FALSE;
    return evas_object_image_alpha_get(sd->obj);
@@ -503,6 +513,7 @@ e_icon_preload_set(Evas_Object *obj, Eina_Bool preload)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    sd->preload = preload;
 }
@@ -512,6 +523,7 @@ e_icon_preload_get(const Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
    return sd->preload;
 }
@@ -521,6 +533,7 @@ e_icon_size_get(const Evas_Object *obj, int *w, int *h)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj)))
      {
 	if (w) *w = 0;
@@ -535,6 +548,7 @@ e_icon_fill_inside_get(const Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
    return sd->fill_inside;
 }
@@ -544,6 +558,7 @@ e_icon_fill_inside_set(Evas_Object *obj, Eina_Bool fill_inside)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    fill_inside = !!fill_inside;
    if (sd->fill_inside == fill_inside) return;
@@ -556,6 +571,7 @@ e_icon_scale_up_get(const Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
    return sd->scale_up;
 }
@@ -565,6 +581,7 @@ e_icon_scale_up_set(Evas_Object *obj, Eina_Bool scale_up)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    scale_up = !!scale_up;
    if (sd->scale_up == scale_up) return;
@@ -577,6 +594,7 @@ e_icon_data_set(Evas_Object *obj, void *data, int w, int h)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    if (!strcmp(evas_object_type_get(sd->obj), "edje")) return;
    evas_object_image_size_set(sd->obj, w, h);
@@ -588,6 +606,7 @@ e_icon_data_get(const Evas_Object *obj, int *w, int *h)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    if (!(sd = evas_object_smart_data_get(obj))) return NULL;
    if (!strcmp(evas_object_type_get(sd->obj), "edje")) return NULL;
    evas_object_image_size_get(sd->obj, w, h);
@@ -599,6 +618,7 @@ e_icon_scale_size_set(Evas_Object *obj, int size)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    sd->size = size;
    if (!strcmp(evas_object_type_get(sd->obj), "edje"))
@@ -611,6 +631,7 @@ e_icon_scale_size_get(const Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!(sd = evas_object_smart_data_get(obj))) return 0;
    return sd->size;
 }
@@ -620,6 +641,7 @@ e_icon_selected_set(const Evas_Object *obj, Eina_Bool selected)
 {
    E_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    if (strcmp(evas_object_type_get(sd->obj), "edje")) return;
    if (selected)
@@ -768,6 +790,8 @@ _e_icon_smart_del(Evas_Object *obj)
    if (sd->file) eina_stringshare_del(sd->file);
 #endif
    if (sd->timer) ecore_timer_del(sd->timer);
+   evas_object_smart_data_set(obj, NULL);
+   memset(sd, 0, sizeof(*sd));
    free(sd);
 }
 

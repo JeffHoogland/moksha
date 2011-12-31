@@ -345,6 +345,7 @@ e_spectrum_mode_set(Evas_Object *o, E_Color_Component mode)
 {
   E_Spectrum *sp;
 
+   if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
   sp = evas_object_smart_data_get(o);
   if (!sp) return;
 
@@ -358,6 +359,7 @@ e_spectrum_mode_get(Evas_Object *o)
 {
   E_Spectrum *sp;
 
+   if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERR(0);
   sp = evas_object_smart_data_get(o);
   if (!sp) return -1;
 
@@ -369,6 +371,7 @@ e_spectrum_color_value_set(Evas_Object *o, E_Color *cv)
 {
   E_Spectrum *sp;
 
+   if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
   sp = evas_object_smart_data_get(o);
   if (!sp) return;
 
@@ -381,6 +384,7 @@ e_spectrum_update(Evas_Object *o)
 {
   E_Spectrum *sp;
 
+   if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
   sp = evas_object_smart_data_get(o);
   if (!sp) return;
 

@@ -71,6 +71,7 @@ e_box_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    sd->frozen++;
@@ -82,6 +83,7 @@ e_box_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    sd->frozen--;
@@ -94,6 +96,7 @@ e_box_orientation_set(Evas_Object *obj, int horizontal)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->horizontal == horizontal) return;
@@ -107,6 +110,7 @@ e_box_orientation_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    return sd->horizontal;
@@ -117,6 +121,7 @@ e_box_homogenous_set(Evas_Object *obj, int homogenous)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->homogenous == homogenous) return;
@@ -131,6 +136,7 @@ e_box_pack_start(Evas_Object *obj, Evas_Object *child)
    E_Smart_Data *sd;
    
    if (!child) return 0;
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
@@ -146,10 +152,11 @@ e_box_pack_end(Evas_Object *obj, Evas_Object *child)
    E_Smart_Data *sd;
    
    if (!child) return 0;
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
-   sd->items = eina_list_append(sd->items, child);   
+   sd->items = eina_list_append(sd->items, child);
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
    return eina_list_count(sd->items) - 1;
@@ -164,6 +171,7 @@ e_box_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *before)
    Evas_Object *item;
    
    if (!child) return 0;
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
@@ -187,6 +195,7 @@ e_box_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after)
    Evas_Object *item;
    
    if (!child) return 0;
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_box_smart_adopt(sd, child);
@@ -207,6 +216,7 @@ e_box_pack_count_get(Evas_Object *obj)
    E_Smart_Data *sd;
    
    sd = evas_object_smart_data_get(obj);
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!sd) return 0;
    return eina_list_count(sd->items);
 }
@@ -216,6 +226,7 @@ e_box_pack_object_nth(Evas_Object *obj, int n)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
    return eina_list_nth(sd->items, n);
@@ -226,6 +237,7 @@ e_box_pack_object_first(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
    return eina_list_data_get(sd->items);
@@ -236,6 +248,7 @@ e_box_pack_object_last(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
    return eina_list_data_get(eina_list_last(sd->items));
@@ -284,6 +297,7 @@ e_box_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->changed) _e_box_smart_extents_calculate(sd);
@@ -296,6 +310,7 @@ e_box_size_max_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->changed) _e_box_smart_extents_calculate(sd);
@@ -308,6 +323,7 @@ e_box_align_get(Evas_Object *obj, double *ax, double *ay)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (ax) *ax = sd->align.x;
@@ -319,6 +335,7 @@ e_box_align_set(Evas_Object *obj, double ax, double ay)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if ((sd->align.x == ax) && (sd->align.y == ay)) return;
@@ -336,6 +353,7 @@ e_box_align_pixel_offset_get(Evas_Object *obj, int *x, int *y)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (x) *x = (sd->min.w - sd->w) * (1.0 - sd->align.x);

@@ -114,6 +114,7 @@ e_editable_theme_set(Evas_Object *editable, const char *category, const char *gr
    char *obj_group;
    const char *data;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    if ((!category) || (!group)) return;
@@ -165,6 +166,7 @@ e_editable_password_set(Evas_Object *editable, int password_mode)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    if (sd->password_mode == password_mode) return;
@@ -185,6 +187,7 @@ e_editable_password_get(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(0);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
    return sd->password_mode;
@@ -201,6 +204,7 @@ e_editable_text_set(Evas_Object *editable, const char *text)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
 
@@ -237,6 +241,7 @@ e_editable_text_get(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(NULL);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return NULL;
    return sd->text;
@@ -258,6 +263,7 @@ e_editable_text_range_get(Evas_Object *editable, int start, int end)
    char *range;
    int start_id = 0, end_id = 0, i;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(NULL);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return NULL;
 
@@ -293,6 +299,7 @@ e_editable_text_length_get(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(0);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
    return sd->unicode_length;
@@ -312,6 +319,7 @@ e_editable_insert(Evas_Object *editable, int pos, const char *text)
    E_Editable_Smart_Data *sd;
    int unicode_length;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(0);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
 
@@ -342,6 +350,7 @@ e_editable_delete(Evas_Object *editable, int start, int end)
    E_Editable_Smart_Data *sd;
    int unicode_length;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(0);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
 
@@ -373,6 +382,7 @@ e_editable_cursor_pos_set(Evas_Object *editable, int pos)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
 
@@ -394,6 +404,7 @@ e_editable_cursor_pos_get(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(0);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
    return sd->cursor_pos;
@@ -413,6 +424,7 @@ e_editable_cursor_geometry_get(Evas_Object *editable, Evas_Coord *cx, Evas_Coord
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
 
@@ -427,6 +439,7 @@ e_editable_cursor_geometry_get(Evas_Object *editable, Evas_Coord *cx, Evas_Coord
 EAPI void
 e_editable_cursor_move_to_start(Evas_Object *editable)
 {
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if (!editable)
      return;
    e_editable_cursor_pos_set(editable, 0);
@@ -442,6 +455,7 @@ e_editable_cursor_move_to_end(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    e_editable_cursor_pos_set(editable, sd->unicode_length);
@@ -457,6 +471,7 @@ e_editable_cursor_move_left(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    e_editable_cursor_pos_set(editable, sd->cursor_pos - 1);
@@ -472,6 +487,7 @@ e_editable_cursor_move_right(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    e_editable_cursor_pos_set(editable, sd->cursor_pos + 1);
@@ -487,6 +503,7 @@ e_editable_cursor_show(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    if (sd->cursor_visible) return;
@@ -509,6 +526,7 @@ e_editable_cursor_hide(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    if (!sd->cursor_visible) return;
@@ -528,6 +546,7 @@ e_editable_selection_pos_set(Evas_Object *editable, int pos)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
 
@@ -549,6 +568,7 @@ e_editable_selection_pos_get(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(0);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
    return sd->selection_pos;
@@ -562,6 +582,7 @@ e_editable_selection_pos_get(Evas_Object *editable)
 EAPI void
 e_editable_selection_move_to_start(Evas_Object *editable)
 {
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if (!editable)
      return;
    e_editable_selection_pos_set(editable, 0);
@@ -577,6 +598,7 @@ e_editable_selection_move_to_end(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    e_editable_selection_pos_set(editable, sd->unicode_length);
@@ -592,6 +614,7 @@ e_editable_selection_move_left(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    e_editable_selection_pos_set(editable, sd->selection_pos - 1);
@@ -607,6 +630,7 @@ e_editable_selection_move_right(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    e_editable_selection_pos_set(editable, sd->selection_pos + 1);
@@ -622,7 +646,7 @@ e_editable_selection_move_right(Evas_Object *editable)
 EAPI void
 e_editable_select_all(Evas_Object *editable)
 {
-   if (!editable) return;
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    e_editable_selection_move_to_start(editable);
    e_editable_cursor_move_to_end(editable);
 }
@@ -638,6 +662,7 @@ e_editable_unselect_all(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    e_editable_selection_pos_set(editable, sd->cursor_pos);
@@ -652,6 +677,7 @@ e_editable_select_word(Evas_Object *editable, int index)
    E_Editable_Smart_Data *sd;
    int spos = 0, epos = -1, i = 0, pos = 0;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    if ((index < 0) || (index >= sd->unicode_length)) return;
@@ -685,6 +711,7 @@ e_editable_selection_show(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    if (sd->selection_visible) return;
@@ -704,6 +731,7 @@ e_editable_selection_hide(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
    if (!sd->selection_visible) return;
@@ -733,6 +761,7 @@ e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y
    int index, pos, i, j;
    const char *text;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(0);
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
    if (!(text_obj = edje_object_part_object_get(sd->text_object, "e.text.text")))
@@ -797,6 +826,7 @@ e_editable_char_size_get(Evas_Object *editable, int *w, int *h)
 
    if (w) *w = 0;
    if (h) *h = 0;
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(evas = evas_object_evas_get(editable))))
      return;
    if (!(sd = evas_object_smart_data_get(editable))) return;
@@ -829,6 +859,7 @@ e_editable_enable(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
 
@@ -840,6 +871,7 @@ e_editable_disable(Evas_Object *editable)
 {
    E_Editable_Smart_Data *sd;
 
+   if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
 

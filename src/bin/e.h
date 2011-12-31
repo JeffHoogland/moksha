@@ -245,4 +245,8 @@ extern EAPI Eina_Bool x_fatal;
 
 extern EAPI unsigned long e_alert_composite_win;
 
+//#define SMARTERR(args...) abort()
+#define SMARTERRNR() return
+#define SMARTERR(x) return x
+
 #endif

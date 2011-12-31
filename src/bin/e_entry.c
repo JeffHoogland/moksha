@@ -130,6 +130,7 @@ e_entry_text_set(Evas_Object *entry, const char *text)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    
@@ -148,6 +149,7 @@ e_entry_text_get(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERR(NULL);
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return NULL;
    return e_editable_text_get(sd->editable_object);
@@ -161,6 +163,7 @@ e_entry_text_get(Evas_Object *entry)
 EAPI void
 e_entry_clear(Evas_Object *entry)
 {
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    e_entry_text_set(entry, "");
 }
 
@@ -177,6 +180,7 @@ e_entry_editable_object_get(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERR(NULL);
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return NULL;
    return sd->editable_object;
@@ -194,6 +198,7 @@ e_entry_password_set(Evas_Object *entry, int password_mode)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    e_editable_password_set(sd->editable_object, password_mode);
@@ -217,6 +222,7 @@ e_entry_size_min_get(Evas_Object *entry, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    
@@ -236,6 +242,7 @@ e_entry_focus(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (sd->focused)
@@ -277,6 +284,7 @@ e_entry_unfocus(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (!sd->focused)
@@ -306,6 +314,7 @@ e_entry_enable(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (sd->enabled)
@@ -329,6 +338,7 @@ e_entry_disable(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (!sd->enabled)

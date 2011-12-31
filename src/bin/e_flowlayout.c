@@ -76,6 +76,7 @@ e_flowlayout_freeze(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    sd->frozen++;
@@ -87,6 +88,7 @@ e_flowlayout_thaw(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    sd->frozen--;
@@ -99,6 +101,7 @@ e_flowlayout_orientation_set(Evas_Object *obj, int horizontal)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (((sd->horizontal) && (horizontal)) ||
@@ -113,6 +116,7 @@ e_flowlayout_orientation_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    return sd->horizontal;
@@ -123,6 +127,7 @@ e_flowlayout_flowdirection_set(Evas_Object *obj, int right, int bottom)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if ((((sd->flowbottom) && (bottom)) ||
@@ -140,6 +145,7 @@ e_flowlayout_flowdirection_get(Evas_Object *obj, int *right, int *bottom)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (right) *right = sd->flowright;
@@ -151,6 +157,7 @@ e_flowlayout_homogenous_set(Evas_Object *obj, int homogenous)
 {
    E_Smart_Data *sd;
   
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->homogenous == homogenous) return;
@@ -164,6 +171,7 @@ e_flowlayout_homogenous_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    return sd->homogenous;
@@ -174,6 +182,7 @@ e_flowlayout_fill_set(Evas_Object *obj, int fill)
 {
    E_Smart_Data *sd;
   
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->fill == fill) return;
@@ -187,6 +196,7 @@ e_flowlayout_fill_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    return sd->fill;
@@ -198,6 +208,7 @@ e_flowlayout_pack_start(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_flowlayout_smart_adopt(sd, child);
@@ -212,6 +223,7 @@ e_flowlayout_pack_end(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_flowlayout_smart_adopt(sd, child);
@@ -229,6 +241,7 @@ e_flowlayout_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *befo
    Eina_List *l;
    Evas_Object *item;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_flowlayout_smart_adopt(sd, child);
@@ -251,6 +264,7 @@ e_flowlayout_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after
    Eina_List *l;
    Evas_Object *item;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    _e_flowlayout_smart_adopt(sd, child);
@@ -270,6 +284,7 @@ e_flowlayout_pack_count_get(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    return eina_list_count(sd->items);
@@ -280,6 +295,7 @@ e_flowlayout_pack_object_nth(Evas_Object *obj, int n)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
    return eina_list_nth(sd->items, n);
@@ -290,6 +306,7 @@ e_flowlayout_pack_object_first(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
    return eina_list_data_get(sd->items);
@@ -300,6 +317,7 @@ e_flowlayout_pack_object_last(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
    return eina_list_data_get(eina_list_last(sd->items));
@@ -347,6 +365,7 @@ e_flowlayout_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->changed) _e_flowlayout_smart_extents_calcuate(sd);
@@ -359,6 +378,7 @@ e_flowlayout_size_max_get(Evas_Object *obj, Evas_Coord *maxw, Evas_Coord *maxh)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (sd->changed) _e_flowlayout_smart_extents_calcuate(sd);
@@ -371,6 +391,7 @@ e_flowlayout_max_children(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return -1;
    if (!sd->homogenous) return -1;
@@ -381,6 +402,7 @@ e_flowlayout_align_get(Evas_Object *obj, double *ax, double *ay)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (ax) *ax = sd->align.x;
@@ -392,6 +414,7 @@ e_flowlayout_align_set(Evas_Object *obj, double ax, double ay)
 {
    E_Smart_Data *sd;
    
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if ((sd->align.x == ax) && (sd->align.y == ay)) return;
