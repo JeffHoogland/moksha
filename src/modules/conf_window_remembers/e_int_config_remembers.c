@@ -212,6 +212,8 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
           e_widget_ilist_append(cfdata->list, NULL, rem->title, NULL, rem, NULL);
         else if (rem->role)
           e_widget_ilist_append(cfdata->list, NULL, rem->role, NULL, rem, NULL);
+        else
+          e_widget_ilist_append(cfdata->list, NULL, "???", NULL, rem, NULL);
      }
 
    ic = e_icon_add(evas);
