@@ -1614,7 +1614,7 @@ group "E_Config" struct {
     value "ping_clients" int: 1;
     value "transition_desk" string: "vswipe";
     value "transition_change" string: "crossfade";
-    value "remember_internal_windows" int: 0;
+    value "remember_internal_windows" int: 3;
     value "move_info_follows" int: 1;
     value "resize_info_follows" int: 1;
     value "move_info_visible" int: 0;
