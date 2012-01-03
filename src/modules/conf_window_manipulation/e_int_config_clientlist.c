@@ -24,7 +24,7 @@ e_int_config_clientlist(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "windows/client_list_menu")) 
+   if (e_config_dialog_find("E", "windows/window_list_menu")) 
      return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
@@ -33,8 +33,8 @@ e_int_config_clientlist(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply;
    v->basic.create_widgets = _basic_create;
 
-   cfd = e_config_dialog_new(con, _("Client List Settings"), "E", 
-			     "windows/client_list_menu",
+   cfd = e_config_dialog_new(con, _("Window List Menu Settings"), "E", 
+			     "windows/window_list_menu",
 			     "preferences-winlist", 0, v, NULL);
    return cfd;
 }

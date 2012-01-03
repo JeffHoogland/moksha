@@ -20,7 +20,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("windows/window_geometry", 30, _("Window Geometry"), NULL, "preferences-window-geometry", e_int_config_window_geometry);
    e_configure_registry_item_add("windows/window_stacking", 40, _("Window Stacking"), NULL, "preferences-window-stacking", e_int_config_window_stacking);
    e_configure_registry_item_add("windows/window_maxpolicy", 50, _("Window Maximize Policy"), NULL, "preferences-window-maximize", e_int_config_window_maxpolicy);
-   e_configure_registry_item_add("windows/client_list_menu", 60, _("Client List Menu"), NULL, "preferences-winlist", e_int_config_clientlist);
+   e_configure_registry_item_add("windows/window_list_menu", 60, _("Window List Menu"), NULL, "preferences-winlist", e_int_config_clientlist);
    e_configure_registry_item_add("windows/window_process", 70, _("Window Process Management"), NULL, "preferences-window-process", e_int_config_window_process);
    conf_module = m;
    e_module_delayed_set(m, 1);
@@ -32,14 +32,14 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    E_Config_Dialog *cfd;
    while ((cfd = e_config_dialog_get("E", "windows/window_process"))) e_object_del(E_OBJECT(cfd));
-   while ((cfd = e_config_dialog_get("E", "windows/client_list_menu"))) e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "windows/window_list_menu"))) e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "windows/window_maxpolicy_dialog"))) e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "windows/window_stacking_dialog"))) e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "windows/window_geometry"))) e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "windows/window_focus"))) e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "windows/window_display"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("windows/window_process");
-   e_configure_registry_item_del("windows/client_list_menu");
+   e_configure_registry_item_del("windows/window_list_menu");
    e_configure_registry_item_del("windows/window_maxpolicy");
    e_configure_registry_item_del("windows/window_stacking");
    e_configure_registry_item_del("windows/window_geometry");
