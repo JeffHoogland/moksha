@@ -112,7 +112,15 @@ group "E_Config" struct {
             value "icon" string: "THUMB";
         }
         group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/bmp";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
             value "mime" string: "image/x-icon";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/vnd.microsoft.icon";
             value "icon" string: "THUMB";
         }
         group "E_Config_Mime_Icon" struct {
@@ -125,6 +133,10 @@ group "E_Config" struct {
         }
         group "E_Config_Mime_Icon" struct {
             value "mime" string: "application/x-xcf";
+            value "icon" string: "THUMB";
+        }
+        group "E_Config_Mime_Icon" struct {
+            value "mime" string: "image/x-xcf";
             value "icon" string: "THUMB";
         }
         group "E_Config_Mime_Icon" struct {
@@ -294,8 +306,8 @@ group "E_Config" struct {
             value "overlap" int: 0;
             value "autohide" int: 0;
             value "autohide_show_action" int: 0;
-            value "hide_timeout" float: 1.0000000000000000000000000;
-            value "hide_duration" float: 1.0000000000000000000000000;
+            value "hide_timeout" float: 1.0;
+            value "hide_duration" float: 1.0;
             value "desk_show_mode" int: 0;
         }
     }
@@ -308,10 +320,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 0;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 2;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
@@ -324,10 +336,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 32;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 3;
                     value "state_info.flags" int: 0;
                     value "style" string: "inset";
@@ -340,10 +352,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 64;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 4;
                     value "state_info.flags" int: 0;
                     value "style" string: "inset";
@@ -356,10 +368,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 96;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 5;
                     value "state_info.flags" int: 0;
                     value "style" string: "inset";
@@ -372,10 +384,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 128;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 6;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
@@ -388,10 +400,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 160;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 7;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
@@ -404,10 +416,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 192;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 8;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
@@ -420,10 +432,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 224;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 9;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
@@ -436,11 +448,27 @@ group "E_Config" struct {
                     value "geom.pos" int: 256;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 10;
+                    value "state_info.flags" int: 0;
+                    value "style" string: "plain";
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "mixer";
+                    value "id" string: "mixer.0";
+                    value "geom.pos" int: 288;
+                    value "geom.size" int: 32;
+                    value "geom.res" int: 800;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
+                    value "state_info.seq" int: 11;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -449,14 +477,14 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "connman";
                     value "id" string: "connman";
-                    value "geom.pos" int: 288;
+                    value "geom.pos" int: 320;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 11;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
+                    value "state_info.seq" int: 12;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -465,14 +493,14 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "tasks";
                     value "id" string: "tasks.0";
-                    value "geom.pos" int: 320;
+                    value "geom.pos" int: 352;
                     value "geom.size" int: 32;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 12;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
+                    value "state_info.seq" int: 13;
                     value "state_info.flags" int: 0;
                     value "style" string: "inset";
                     value "autoscroll" uchar: 1;
@@ -490,10 +518,10 @@ group "E_Config" struct {
                     value "geom.pos" int: 720;
                     value "geom.size" int: 80;
                     value "geom.res" int: 800;
-                    value "geom.pos_x" double: 0.0000000000000000000000000;
-                    value "geom.pos_y" double: 0.0000000000000000000000000;
-                    value "geom.size_w" double: 0.0000000000000000000000000;
-                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 2;
                     value "state_info.flags" int: 0;
                     value "orient" int: 0;
@@ -1730,13 +1758,13 @@ group "E_Config" struct {
     value "show_splash" int: 1;
     value "init_default_theme" string: "default.edj";
     value "desktop_default_name" string: "Desktop %i, %i";
-    value "menus_scroll_speed" double: 1000.0000000000000000000000000;
-    value "menus_fast_mouse_move_threshhold" double: 300.0000000000000000000000000;
-    value "menus_click_drag_timeout" double: 0.2500000000000000000000000;
+    value "menus_scroll_speed" double: 1000.0;
+    value "menus_fast_mouse_move_threshhold" double: 300.0;
+    value "menus_click_drag_timeout" double: 0.25;
     value "border_shade_animate" int: 1;
     value "border_shade_transition" int: 3;
-    value "border_shade_speed" double: 3000.0000000000000000000000000;
-    value "framerate" double: 60.0000000000000000000000000;
+    value "border_shade_speed" double: 3000.0;
+    value "framerate" double: 60.0;
     value "priority" int: 3;
     value "image_cache" int: 4096;
     value "font_cache" int: 512;
@@ -1755,7 +1783,7 @@ group "E_Config" struct {
     value "always_click_to_raise" int: 0;
     value "always_click_to_focus" int: 0;
     value "use_auto_raise" int: 0;
-    value "auto_raise_delay" double: 0.5000000000000000000000000;
+    value "auto_raise_delay" double: 0.5;
     value "use_resist" int: 1;
     value "drag_resist" int: 16;
     value "desk_resist" int: 32;
@@ -1765,9 +1793,9 @@ group "E_Config" struct {
     value "geometry_auto_move" int: 1;
     value "winlist_warp_while_selecting" int: 1;
     value "winlist_warp_at_end" int: 1;
-    value "winlist_warp_speed" double: 0.1000000000000000055511151;
+    value "winlist_warp_speed" double: 0.1;
     value "winlist_scroll_animate" int: 1;
-    value "winlist_scroll_speed" double: 0.1000000000000000055511151;
+    value "winlist_scroll_speed" double: 0.1;
     value "winlist_list_show_iconified" int: 1;
     value "winlist_list_show_other_desk_iconified" int: 1;
     value "winlist_list_show_other_screen_iconified" int: 0;
@@ -1777,10 +1805,10 @@ group "E_Config" struct {
     value "winlist_list_jump_desk_while_selecting" int: 0;
     value "winlist_list_focus_while_selecting" int: 1;
     value "winlist_list_raise_while_selecting" int: 1;
-    value "winlist_pos_align_x" double: 0.5000000000000000000000000;
-    value "winlist_pos_align_y" double: 0.5000000000000000000000000;
-    value "winlist_pos_size_w" double: 0.5000000000000000000000000;
-    value "winlist_pos_size_h" double: 0.5000000000000000000000000;
+    value "winlist_pos_align_x" double: 0.5;
+    value "winlist_pos_align_y" double: 0.5;
+    value "winlist_pos_size_w" double: 0.5;
+    value "winlist_pos_size_h" double: 0.5;
     value "winlist_pos_min_w" int: 0;
     value "winlist_pos_min_h" int: 0;
     value "winlist_pos_max_w" int: 320;
@@ -1791,7 +1819,7 @@ group "E_Config" struct {
     value "allow_above_fullscreen" int: 0;
     value "kill_if_close_not_possible" int: 1;
     value "kill_process" int: 1;
-    value "kill_timer_wait" double: 10.0000000000000000000000000;
+    value "kill_timer_wait" double: 10.0;
     value "ping_clients" int: 1;
     value "transition_desk" string: "vswipe";
     value "transition_change" string: "crossfade";
@@ -1831,12 +1859,12 @@ group "E_Config" struct {
     value "desklock_start_locked" int: 0;
     value "desklock_on_suspend" int: 0;
     value "desklock_autolock_screensaver" int: 0;
-    value "desklock_post_screensaver_time" double: 0.0000000000000000000000000;
+    value "desklock_post_screensaver_time" double: 0.0;
     value "desklock_autolock_idle" int: 0;
-    value "desklock_autolock_idle_timeout" double: 300.0000000000000000000000000;
+    value "desklock_autolock_idle_timeout" double: 300.0;
     value "desklock_use_custom_desklock" int: 0;
     value "desklock_ask_presentation" uchar: 1;
-    value "desklock_ask_presentation_timeout" double: 30.0000000000000000000000000;
+    value "desklock_ask_presentation_timeout" double: 30.0;
     value "display_res_restore" int: 0;
     value "display_res_width" int: 1;
     value "display_res_height" int: 1;
@@ -1848,10 +1876,10 @@ group "E_Config" struct {
     value "screensaver_blanking" int: 2;
     value "screensaver_expose" int: 2;
     value "screensaver_ask_presentation" uchar: 1;
-    value "screensaver_ask_presentation_timeout" double: 30.0000000000000000000000000;
+    value "screensaver_ask_presentation_timeout" double: 30.0;
     value "screensaver_suspend" uchar: 0;
     value "screensaver_suspend_on_ac" uchar: 0;
-    value "screensaver_suspend_delay" double: 15.0000000000000000000000000;
+    value "screensaver_suspend_delay" double: 15.0;
     value "dpms_enable" int: 1;
     value "dpms_standby_enable" int: 1;
     value "dpms_suspend_enable" int: 1;
@@ -1879,7 +1907,7 @@ group "E_Config" struct {
     value "icon_theme_overrides" uchar: 0;
     value "desk_flip_animate_mode" int: 1;
     value "desk_flip_animate_interpolation" int: 0;
-    value "desk_flip_animate_time" double: 0.2000000000000000111022302;
+    value "desk_flip_animate_time" double: 0.2;
     value "wallpaper_import_last_dev" string: "~/";
     value "wallpaper_import_last_path" string: "/";
     value "theme_default_border_style" string: "default";
@@ -1891,12 +1919,11 @@ group "E_Config" struct {
     value "cache_flush_poll_interval" int: 512;
     value "thumbscroll_enable" int: 0;
     value "thumbscroll_threshhold" int: 8;
-    value "thumbscroll_momentum_threshhold" double: 100.0000000000000000000000000;
-    value "thumbscroll_friction" double: 1.0000000000000000000000000;
-    value "dbus_desktop" int: 1;
-    value "scale.min" double: 1.0000000000000000000000000;
-    value "scale.max" double: 3.0000000000000000000000000;
-    value "scale.factor" double: 1.0000000000000000000000000;
+    value "thumbscroll_momentum_threshhold" double: 100.0;
+    value "thumbscroll_friction" double: 1.0;
+    value "scale.min" double: 1.0;
+    value "scale.max" double: 3.0;
+    value "scale.factor" double: 1.0;
     value "scale.base_dpi" int: 90;
     value "scale.use_dpi" uchar: 0;
     value "scale.use_custom" uchar: 0;
@@ -1907,16 +1934,21 @@ group "E_Config" struct {
     value "syscon.main.icon_size" int: 64;
     value "syscon.secondary.icon_size" int: 48;
     value "syscon.extra.icon_size" int: 48;
-    value "syscon.timeout" double: 5.0000000000000000000000000;
+    value "syscon.timeout" double: 5.0;
     value "syscon.do_input" uchar: 1;
     value "mode.presentation" uchar: 0;
     value "mode.offline" uchar: 0;
-    value "exec.expire_timeout" double: 30.0000000000000000000000000;
+    value "exec.expire_timeout" double: 30.0;
     value "exec.show_run_dialog" uchar: 1;
     value "exec.show_exit_dialog" uchar: 1;
-    value "backlight.normal" double: 1.0000000000000000000000000;
-    value "backlight.dim" double: 0.2999999999999999888977698;
-    value "backlight.transition" double: 0.5000000000000000000000000;
+    value "null_container_win" uchar: 0;
+    value "backlight.normal" double: 1.0;
+    value "backlight.dim" double: 0.3;
+    value "backlight.transition" double: 0.5;
+    value "deskenv.load_xrdb" uchar: 1;
+    value "deskenv.load_xmodmap" uchar: 1;
+    value "deskenv.load_gnome" uchar: 1;
+    value "deskenv.load_kde" uchar: 1;
     value "device_desktop" int: 1;
     value "device_auto_mount" int: 0;
     value "device_auto_open" int: 0;
