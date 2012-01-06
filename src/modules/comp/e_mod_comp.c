@@ -2998,6 +2998,24 @@ _e_mod_comp_key_down(void *data __UNUSED__,
    return ECORE_CALLBACK_PASS_ON;
 }
 
+static Eina_Bool
+_e_mod_comp_signal_user(void *data __UNUSED__,
+                        int type   __UNUSED__,
+                        void      *event)
+{
+   Ecore_Event_Signal_User *ev = event;
+   
+   if (ev->number == 1)
+     {
+        // e17 uses this to pop up config panel
+     }
+   else if (ev->number == 2)
+     {
+        _e_mod_comp_fps_toggle();
+     }
+   return ECORE_CALLBACK_PASS_ON;
+}
+
 //////////////////////////////////////////////////////////////////////////
 static Evas *
 _e_mod_comp_evas_get_func(void          *data,
@@ -3430,6 +3448,7 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DAMAGE, _e_mod_comp_damage_win, NULL));
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_mod_comp_key_down, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER, _e_mod_comp_signal_user, NULL));
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE, _e_mod_comp_randr, NULL));
 
