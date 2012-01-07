@@ -253,6 +253,27 @@ _bl_sys_find(void)
         devs = eeze_udev_find_by_filter("leds", NULL, NULL);
         if (!devs) return;
      }
+   if (eina_list_count(devs) > 1)
+     {
+        const char *s = NULL;
+        Eina_List *l;
+        Eina_Bool use = EINA_FALSE;
+
+        /* prefer backlights of type "firmware" where available */
+        EINA_LIST_FOREACH(devs, l, f)
+          {
+             s = eeze_udev_syspath_get_sysattr(f, "type");
+             use = (s && (!strcmp(s, "firmware")));
+             eina_stringshare_del(s);
+             if (!use) continue;
+             l->data = NULL;
+             eina_stringshare_del(bl_sysval);
+             bl_sysval = f;
+             EINA_LIST_FREE(devs, f)
+               eina_stringshare_del(f);
+             return;
+          }
+     }
    EINA_LIST_FREE(devs, f)
      {
         eina_stringshare_replace(&bl_sysval, NULL);

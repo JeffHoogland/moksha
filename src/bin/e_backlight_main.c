@@ -78,6 +78,26 @@ main(int argc, char **argv)
         devs = eeze_udev_find_by_filter("leds", NULL, NULL);
         if (!devs) return -1;
      }
+   if (eina_list_count(devs) > 1)
+     {
+        const char *s = NULL;
+        Eina_List *l, *new = NULL;
+        Eina_Bool use = EINA_FALSE;
+
+        /* prefer backlights of type "firmware" where available */
+        EINA_LIST_FOREACH(devs, l, f)
+          {
+             s = eeze_udev_syspath_get_sysattr(f, "type");
+             use = (s && (!strcmp(s, "firmware")));
+             eina_stringshare_del(s);
+             if (!use) continue;
+             eina_list_move_list(&new, &devs, l);
+             EINA_LIST_FREE(devs, f)
+               eina_stringshare_del(f);
+             devs = new;
+             break;
+          }
+     }
    EINA_LIST_FREE(devs, f)
      {
         const char *str;
