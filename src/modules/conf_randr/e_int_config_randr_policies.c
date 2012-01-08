@@ -19,7 +19,7 @@ Eina_Bool    dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd,
 Eina_Bool    dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 void         dialog_subdialog_policies_update_radio_buttons(Evas_Object *crtc);
 
-static void  _dialog_subdialog_policies_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+//static void  _dialog_subdialog_policies_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern char _theme_file_path[];
 
@@ -164,19 +164,22 @@ _dialog_subdialog_policies_radio_add_fail:
    return NULL;
 }
 
+/*
+ * The current dialog does not demonstrate what the policies mean, so disabled
+ * for now.
+ *
 static void
 _dialog_subdialog_policies_policy_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    char signal[29];
    int policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
 
-   /*
     * IMPROVABLE:
     * "sadly" the evas callbacks are called before radio_val is set to its new
     * value. If that is ever changed, remove the used code below and just use the
     * 1-liner below.
     * snprintf(signal, sizeof(signal), "conf,randr,dialog,policies,%d", e_config_runtime_info->gui.subdialogs.policies.radio_val);
-    */
+    * /
    if (obj == e_config_runtime_info->gui.subdialogs.policies.radio_above) policy = ECORE_X_RANDR_OUTPUT_POLICY_ABOVE;
    if (obj == e_config_runtime_info->gui.subdialogs.policies.radio_right) policy = ECORE_X_RANDR_OUTPUT_POLICY_RIGHT;
    if (obj == e_config_runtime_info->gui.subdialogs.policies.radio_below) policy = ECORE_X_RANDR_OUTPUT_POLICY_BELOW;
@@ -190,6 +193,7 @@ _dialog_subdialog_policies_policy_mouse_up_cb(void *data __UNUSED__, Evas *e __U
 
    fprintf(stderr, "CONF_RANDR: mouse button released. Emitted signal to policy: %s\n", signal);
 }
+*/
 
 Eina_Bool
 dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)

@@ -886,6 +886,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
 
                   if (output_info->policy != ECORE_X_RANDR_OUTPUT_POLICY_NONE)
                     enabled = _e_randr_try_enable_output(output_info, EINA_FALSE);    //maybe give a success message?
+                  fprintf(stderr, "E_RANDR: Output %d %s.", output_info->xid, (enabled ? "was enabled sucessfully" : "could not be enabled"));
                }
              _e_randr_notify_output_change(output_info);
           }
@@ -1486,7 +1487,6 @@ Eina_List *
 _e_randr_update_serialized_setup_12(Eina_List *setups_12, E_Randr_Screen_Info_12 *si_12)
 {
    E_Randr_Serialized_Setup_12 *ss_12;
-   Eina_List *li;
 
    if (setups_12)
      {
@@ -1694,12 +1694,14 @@ _e_randr_restore_12_policies(E_Randr_Screen_Info_12 *si_12)
 Eina_Bool
 _e_randr_try_restore_12(E_Randr_Screen_Info_12 *si_12)
 {
+   /*
    E_Randr_Serialized_Setup_12 *ss_12;
    E_Randr_Serialized_Crtc *sc;
    E_Randr_Crtc_Info *ci;
    Ecore_X_Randr_Output *outputs_array;
    Ecore_X_Randr_Mode_Info *mi;
    Eina_List *iter;
+   */
    Eina_Bool ret = EINA_TRUE;
 
    //Restore policies

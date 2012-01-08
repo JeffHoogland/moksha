@@ -131,7 +131,6 @@ dialog_subdialog_arrangement_create_data(E_Config_Dialog_Data *data)
    Eina_List *iter;
    E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
    char *disabled_output_width, *disabled_output_height;
-   Evas_Object *display;
 
    EINA_LIST_FOREACH(data->output_dialog_data_list, iter, dialog_data)
      {
