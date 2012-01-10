@@ -31,6 +31,7 @@
 	     applications here -->
         <Not><Category>Accessibility</Category></Not>
         <Not><Category>System</Category></Not>
+        <Not><Category>Development</Category></Not>
       </And>
     </Include>
   </Menu> <!-- End Accessories -->
@@ -52,12 +53,12 @@
     <Name>Development</Name>
     <Directory>Development.directory</Directory>
     <Include>
-      <And>
+      <Or>
         <Category>Development</Category>
         <Category>X-KDE-KDevelopIDE</Category>
         <Category>Translation</Category>
         <Category>WebDevelopment</Category>
-      </And>
+      </Or>
       <Filename>emacs.desktop</Filename>
     </Include>
   </Menu> <!-- End Development Tools -->
