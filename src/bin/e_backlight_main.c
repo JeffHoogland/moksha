@@ -22,13 +22,14 @@ _bl_write_file(const char *file, int val)
         perror("open");
         return -1;
      }
-   snprintf(buf, sizeof(buf), "%i", val);
+   snprintf(buf, sizeof(buf), "%d", val);
    if (write(fd, buf, strlen(buf)) != (int)strlen(buf))
      {
         perror("write");
         close(fd);
         return -1;
      }
+   fprintf(stderr, "BACKLIGHT: %s -> %d", file, val);
    close(fd);
    return 0;
 }
