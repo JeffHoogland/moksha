@@ -27,6 +27,10 @@ INCLUDES               = -I. \
                          -I$(top_srcdir)/src/modules \
                          @e_cflags@ \
                          @cf_cflags@
+if HAVE_ENOTIFY
+INCLUDES              += @ENOTIFY_CFLAGS@
+endif
+
 pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
@@ -35,6 +39,9 @@ module_la_SOURCES      = e_mod_main.c \
 			 $(DEVICE_FILE)
 
 module_la_LIBADD       = @e_libs@ @cf_libs@ @dlopen_libs@
+if HAVE_ENOTIFY
+module_la_LIBADD       += @ENOTIFY_LIBS@
+endif
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
