@@ -1,5 +1,8 @@
 #include "e.h"
 #include "e_mod_main.h"
+#ifdef HAVE_ENOTIFY
+#include "E_Notify.h"
+#endif
 
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
@@ -427,9 +430,28 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    Evas *e = NULL;
    Evas_Object *rect = NULL, *popup_bg = NULL;
    int x,y,w,h;
+#ifdef HAVE_ENOTIFY
+   static E_Notification *notification;
+#endif
 
    if ((!inst) || (inst->warning)) return;
 
+#ifdef HAVE_ENOTIFY
+   if (battery_config && battery_config->desktop_notifications)
+     {
+        if (notification) return;
+        notification = e_notification_full_new("Enlightenment",
+                                      0,
+                                      "battery-low",
+                                      _("Your battery is low!"),
+                                      _("AC power is recommended."),
+                                      2);
+        e_notification_send(notification, NULL, NULL);
+        e_notification_unref(notification);
+        notification = NULL;
+        return;
+     }
+#endif
    inst->warning = e_gadcon_popup_new(inst->gcc);
    if (!inst->warning) return;
 

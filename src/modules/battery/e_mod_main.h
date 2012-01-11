@@ -44,6 +44,9 @@ struct _Config
    int                  time_full;
    int                  have_battery;
    int                  have_power;
+#ifdef HAVE_ENOTIFY
+   int              desktop_notifications;
+#endif
 #ifdef HAVE_EEZE
    Eeze_Udev_Watch     *acwatch;
    Eeze_Udev_Watch     *batwatch;
