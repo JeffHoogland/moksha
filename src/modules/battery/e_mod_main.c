@@ -440,12 +440,12 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    if (battery_config && battery_config->desktop_notifications)
      {
         if (notification) return;
-        notification = e_notification_full_new("Enlightenment",
+        notification = e_notification_full_new(_("Battery"),
                                       0,
                                       "battery-low",
                                       _("Your battery is low!"),
                                       _("AC power is recommended."),
-                                      2);
+                                      (battery_config->alert_timeout * 1000));
         e_notification_send(notification, NULL, NULL);
         e_notification_unref(notification);
         notification = NULL;
@@ -687,6 +687,10 @@ e_modapi_init(E_Module *m)
 {
    char buf[4096];
 
+#ifdef HAVE_ENOTIFY
+   e_notification_init();
+#endif
+
    conf_edd = E_CONFIG_DD_NEW("Battery_Config", Config);
 #undef T
 #undef D
@@ -700,6 +704,9 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, force_mode, INT);
 #if defined HAVE_EEZE || defined __OpenBSD__
    E_CONFIG_VAL(D, T, fuzzy, INT);
+#endif
+#ifdef HAVE_ENOTIFY
+   E_CONFIG_VAL(D, T, desktop_notifications, INT);
 #endif
 
    battery_config = e_config_domain_load("module.battery", conf_edd);
@@ -715,6 +722,9 @@ e_modapi_init(E_Module *m)
 #if defined HAVE_EEZE || defined __OpenBSD__
 	battery_config->fuzzy = 0;
 #endif
+#ifdef HAVE_ENOTIFY
+    battery_config->desktop_notifications = 0;
+#endif
      }
    E_CONFIG_LIMIT(battery_config->poll_interval, 4, 4096);
    E_CONFIG_LIMIT(battery_config->alert, 0, 60);
@@ -722,6 +732,9 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(battery_config->alert_timeout, 0, 300);
    E_CONFIG_LIMIT(battery_config->suspend_below, 0, 50);
    E_CONFIG_LIMIT(battery_config->force_mode, 0, 2);
+#ifdef HAVE_ENOTIFY
+   E_CONFIG_LIMIT(battery_config->desktop_notifications, 0, 1);
+#endif
 
    battery_config->module = m;
    battery_config->full = -2;
@@ -793,6 +806,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    _battery_dbus_stop();
 #endif
    
+
+#ifdef HAVE_ENOTIFY
+   e_notification_shutdown();
+#endif
+
    free(battery_config);
    battery_config = NULL;
    E_CONFIG_DD_FREE(conf_edd);
