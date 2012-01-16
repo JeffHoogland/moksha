@@ -82,7 +82,7 @@ static Ecore_Ipc_Server *server = NULL;
 static Eina_Bool
 delayed_ok(void *data __UNUSED__)
 {
-   kill(getppid(), SIGUSR2);
+   kill(getppid(), SIGUSR1);
    return ECORE_CALLBACK_CANCEL;
 }
 
