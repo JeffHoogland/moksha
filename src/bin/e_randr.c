@@ -747,7 +747,7 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
 {
    E_Randr_Crtc_Info *crtc_info;
    Ecore_X_Randr_Mode_Info *mode_info;
-   Eina_Bool enabled;
+   Eina_Bool enabled = EINA_FALSE;
 
    // FIXME: ecore_x_randr_screen_primary_output_orientation_get() should
    // get regularly called to push x into polling outputs so we get these
