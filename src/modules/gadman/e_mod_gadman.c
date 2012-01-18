@@ -44,7 +44,7 @@ static void _e_gadman_client_remove (void *data __UNUSED__, E_Gadcon_Client *gcc
 
 E_Gadcon_Client *current = NULL;
 Manager *Man = NULL;
-static E_Gadcon_Location * location = NULL;
+static E_Gadcon_Location *location = NULL;
 
 /* Implementation */
 void
@@ -70,9 +70,9 @@ gadman_init(E_Module *m)
    e_container_shape_change_callback_add(Man->container, on_shape_change, NULL);
 
    /* create and register "desktop" location */
-   location = e_gadcon_location_new ("Desktop", E_GADCON_SITE_DESKTOP, 
-				     _e_gadman_client_add, NULL, 
-				     _e_gadman_client_remove, NULL);
+   location = e_gadcon_location_new("Desktop", E_GADCON_SITE_DESKTOP, 
+				    _e_gadman_client_add, NULL, 
+				    _e_gadman_client_remove, NULL);
    e_gadcon_location_set_icon_name(location, "preferences-desktop");
    e_gadcon_location_register(location);
 
@@ -1108,7 +1108,7 @@ on_top(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const c
 
         if (h < current->min.h)
 	  {
-	     my -=current->min.h - h;
+	     my -= current->min.h - h;
 	     h = current->min.h;
 	  }
         /* don't go out of the screen */
