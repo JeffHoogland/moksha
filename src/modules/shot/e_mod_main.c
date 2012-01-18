@@ -200,7 +200,6 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
    const char *file;
 
    file = e_widget_fsel_selection_path_get(o_fsel);
-   printf("SAVE: %s\n", file);
    if (file) _save_to(file);
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
    if (win)
@@ -230,7 +229,9 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    
    dia = e_dialog_new(scon, "E", "_e_shot_fsel");
    e_dialog_title_set(dia, _("Select screenshot save location"));
-   o = e_widget_fsel_add(dia->win->evas, "~/", "/", "shot.jpg", NULL,
+   o = e_widget_fsel_add(dia->win->evas, "desktop", "/", 
+                         (quality == 100) ? "shot.png" : "shot.jpg", 
+                         NULL,
                          NULL, NULL,
                          NULL, NULL, 1);
    e_widget_fsel_window_object_set(o, E_OBJECT(dia->win));
