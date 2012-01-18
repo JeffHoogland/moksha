@@ -16,9 +16,6 @@ struct _E_Entry_Smart_Data
 #ifdef HAVE_ECORE_IMF
    Ecore_IMF_Context *imf_context;
 #endif
-   Ecore_Event_Handler *imf_ee_commit_handler;
-   Ecore_Event_Handler *imf_ee_preedit_changed_handler;
-   Ecore_Event_Handler *imf_ee_delete_handler;
 
    int enabled;
    int focused;
@@ -63,9 +60,9 @@ static void _e_entry_imf_cursor_info_set(Evas_Object *object);
 static void _e_entry_imf_context_reset(Evas_Object *object);
 #ifdef HAVE_ECORE_IMF
 static Eina_Bool _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx, char **text, int *cursor_pos);
-static Eina_Bool _e_entry_cb_imf_event_commit(void *data, int type, void *event);
-static Eina_Bool _e_entry_cb_imf_event_preedit_changed(void *data, int type __UNUSED__, void *event);
-static Eina_Bool _e_entry_cb_imf_event_delete_surrounding(void *data, int type, void *event);
+static void _e_entry_cb_imf_event_commit(void *data, Ecore_IMF_Context *ctx __UNUSED__, void *event_info);
+static void _e_entry_cb_imf_event_preedit_changed(void *data, Ecore_IMF_Context *ctx __UNUSED__, void *event_info);
+static void _e_entry_cb_imf_event_delete_surrounding(void *data, Ecore_IMF_Context *ctx __UNUSED__, void *event_info);
 #endif
 
 /* local subsystem globals */
@@ -252,9 +249,8 @@ e_entry_focus(Evas_Object *entry)
    edje_object_signal_emit(sd->entry_object, "e,state,focused", "e");
    if (!sd->selection_dragging)
      {
-        e_editable_cursor_move_to_end(sd->editable_object);
-
         _e_entry_imf_context_reset(entry);
+        e_editable_cursor_move_to_end(sd->editable_object);
         _e_entry_imf_cursor_info_set(entry);
 
         e_editable_selection_move_to_end(sd->editable_object);
@@ -264,10 +260,7 @@ e_entry_focus(Evas_Object *entry)
    e_editable_selection_show(sd->editable_object);
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
-     {
-        ecore_imf_context_reset(sd->imf_context);
-        ecore_imf_context_focus_in(sd->imf_context);
-     }
+     ecore_imf_context_focus_in(sd->imf_context);
 #endif
    sd->focused = 1;
 }
@@ -431,6 +424,8 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
      }
 #endif
 
+   _e_entry_imf_context_reset(obj);
+
    evas_object_geometry_get(sd->editable_object, &ox, &oy, NULL, NULL);
    pos = e_editable_pos_get_from_coords(sd->editable_object,
                                         event->canvas.x - ox,
@@ -549,7 +544,6 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
 			      E_MENU_POP_DIRECTION_DOWN, event->timestamp);
      }
 
-   _e_entry_imf_context_reset(obj);
    _e_entry_imf_cursor_info_set(obj);
 }
 
@@ -615,9 +609,8 @@ _e_entry_mouse_move_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
         pos = e_editable_pos_get_from_coords(sd->editable_object,
                                              event->cur.canvas.x - ox,
                                              event->cur.canvas.y - oy);
-        e_editable_cursor_pos_set(sd->editable_object, pos);
-
         _e_entry_imf_context_reset(obj);
+        e_editable_cursor_pos_set(sd->editable_object, pos);
         _e_entry_imf_cursor_info_set(obj);
      }
 }
@@ -727,6 +720,10 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
    start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
    end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
    selecting = (start_pos != end_pos);
+
+   if ((!strcmp(event->key, "Escape")) ||
+       (!strcmp(event->key, "Return")) || (!strcmp(event->key, "KP_Enter")))
+     _e_entry_imf_context_reset(entry);
    
    /* Move the cursor/selection to the left */
    if (strcmp(event->key, "Left") == 0)
@@ -850,7 +847,6 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
         changed |= e_editable_insert(editable, start_pos, event->string);
      }
 
-   _e_entry_imf_context_reset(entry);
    _e_entry_imf_cursor_info_set(entry);
 
    if (changed)
@@ -884,7 +880,11 @@ _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
    start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
    end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
    selecting = (start_pos != end_pos);
-   
+
+   if ((!strcmp(event->key, "Escape")) ||
+       (!strcmp(event->key, "Return")) || (!strcmp(event->key, "KP_Enter")))
+     _e_entry_imf_context_reset(entry);
+
    /* Move the cursor/selection to the left */
    if ((strcmp(event->key, "Left") == 0) ||
       ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
@@ -997,7 +997,6 @@ _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
 	     (event->string[0] >= 0x20 && event->string[0] != 0x7f)))
      changed = e_editable_insert(editable, cursor_pos, event->string);
 
-   _e_entry_imf_context_reset(entry);
    _e_entry_imf_cursor_info_set(entry);
 
    if (changed)
@@ -1056,15 +1055,9 @@ _e_entry_smart_add(Evas_Object *object)
         ecore_imf_context_retrieve_surrounding_callback_set(sd->imf_context,
                                                             _e_entry_cb_imf_retrieve_surrounding,
                                                             sd);
-        sd->imf_ee_commit_handler = 
-          ecore_event_handler_add(ECORE_IMF_EVENT_COMMIT,
-                                  _e_entry_cb_imf_event_commit, object);
-        sd->imf_ee_preedit_changed_handler =
-           ecore_event_handler_add(ECORE_IMF_EVENT_PREEDIT_CHANGED,
-                                   _e_entry_cb_imf_event_preedit_changed, object);
-        sd->imf_ee_delete_handler = 
-          ecore_event_handler_add(ECORE_IMF_EVENT_DELETE_SURROUNDING,
-                                  _e_entry_cb_imf_event_delete_surrounding, sd);
+        ecore_imf_context_event_callback_add(sd->imf_context, ECORE_IMF_CALLBACK_COMMIT, _e_entry_cb_imf_event_commit, object);
+        ecore_imf_context_event_callback_add(sd->imf_context, ECORE_IMF_CALLBACK_PREEDIT_CHANGED, _e_entry_cb_imf_event_preedit_changed, object);
+        ecore_imf_context_event_callback_add(sd->imf_context, ECORE_IMF_CALLBACK_DELETE_SURROUNDING, _e_entry_cb_imf_event_delete_surrounding, sd);
      }
 #endif
 
@@ -1116,12 +1109,10 @@ _e_entry_smart_del(Evas_Object *object)
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
      {
-	if (sd->imf_ee_commit_handler) 
-          ecore_event_handler_del(sd->imf_ee_commit_handler);
-	if (sd->imf_ee_preedit_changed_handler)
-          ecore_event_handler_del(sd->imf_ee_preedit_changed_handler);
-	if (sd->imf_ee_delete_handler) 
-          ecore_event_handler_del(sd->imf_ee_delete_handler);
+        ecore_imf_context_event_callback_del(sd->imf_context, ECORE_IMF_CALLBACK_COMMIT, _e_entry_cb_imf_event_commit);
+        ecore_imf_context_event_callback_del(sd->imf_context, ECORE_IMF_CALLBACK_PREEDIT_CHANGED, _e_entry_cb_imf_event_preedit_changed);
+        ecore_imf_context_event_callback_del(sd->imf_context, ECORE_IMF_CALLBACK_DELETE_SURROUNDING, _e_entry_cb_imf_event_delete_surrounding);
+
 	ecore_imf_context_del(sd->imf_context);
      }
 #endif
@@ -1413,23 +1404,23 @@ _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx __UNUSED
    return EINA_TRUE;
 }
 
-static Eina_Bool
-_e_entry_cb_imf_event_commit(void *data, int type __UNUSED__, void *event)
+static void
+_e_entry_cb_imf_event_commit(void *data, Ecore_IMF_Context *ctx __UNUSED__, void *event_info)
 {
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
-   Ecore_IMF_Event_Commit *ev = event;
    Evas_Object *editable;
+   char *commit_str = event_info;
    int cursor_pos, selection_pos;
    int start_pos, end_pos;
    int selecting;
    int changed = 0;
 
    if ((!(entry = data)) || (!(sd = evas_object_smart_data_get(entry))))
-     return ECORE_CALLBACK_PASS_ON;
+     return;
 
-   if ((!sd->imf_context) || (sd->imf_context != ev->ctx))
-     return ECORE_CALLBACK_PASS_ON;
+   if (!sd->imf_context)
+     return;
 
    editable = sd->editable_object;
    cursor_pos = e_editable_cursor_pos_get(editable);
@@ -1450,22 +1441,19 @@ _e_entry_cb_imf_event_commit(void *data, int type __UNUSED__, void *event)
         start_pos = sd->preedit_start_pos;
      }
 
-   changed |= e_editable_insert(editable, start_pos, ev->str);
+   changed |= e_editable_insert(editable, start_pos, commit_str);
 
    _e_entry_imf_cursor_info_set(entry);
 
    if (changed)
      evas_object_smart_callback_call(entry, "changed", NULL);
-
-   return ECORE_CALLBACK_DONE;
 }
 
-static Eina_Bool
-_e_entry_cb_imf_event_preedit_changed(void *data, int type __UNUSED__, void *event)
+static void
+_e_entry_cb_imf_event_preedit_changed(void *data, Ecore_IMF_Context *ctx __UNUSED__, void *event_info)
 {
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
-   Ecore_IMF_Event_Preedit_Changed *ev = event;
    Evas_Object *editable;
    int cursor_pos, selection_pos;
    char *preedit_string = NULL;
@@ -1474,14 +1462,14 @@ _e_entry_cb_imf_event_preedit_changed(void *data, int type __UNUSED__, void *eve
    int changed = 0;
 
    if ((!(entry = data)) || (!(sd = evas_object_smart_data_get(entry))))
-     return ECORE_CALLBACK_PASS_ON;
+     return;
 
-   if ((!sd->imf_context) || (sd->imf_context != ev->ctx))
-     return ECORE_CALLBACK_PASS_ON;
+   if (!sd->imf_context)
+     return;
 
    /* Get the preedit string from IMF */
    ecore_imf_context_preedit_string_get(sd->imf_context, &preedit_string, &cursor_pos);
-   if (!preedit_string) return ECORE_CALLBACK_PASS_ON;
+   if (!preedit_string) return;
 
    editable = sd->editable_object;
    cursor_pos = e_editable_cursor_pos_get(editable);
@@ -1519,29 +1507,25 @@ _e_entry_cb_imf_event_preedit_changed(void *data, int type __UNUSED__, void *eve
      evas_object_smart_callback_call(entry, "preedit,changed", NULL);
 
    free(preedit_string);
-
-   return ECORE_CALLBACK_DONE;
 }
 
-static Eina_Bool
-_e_entry_cb_imf_event_delete_surrounding(void *data, int type __UNUSED__, void *event)
+static void
+_e_entry_cb_imf_event_delete_surrounding(void *data, Ecore_IMF_Context *ctx __UNUSED__, void *event_info)
 {
    E_Entry_Smart_Data *sd;
-   Ecore_IMF_Event_Delete_Surrounding *ev = event;
+   Ecore_IMF_Event_Delete_Surrounding *ev = event_info;
    Evas_Object *editable;
    int cursor_pos;
 
    sd = data;
 
-   if (sd->imf_context != ev->ctx)
-     return ECORE_CALLBACK_PASS_ON;
+   if ((!sd) || (!sd->imf_context))
+     return;
 
    editable = sd->editable_object;
    cursor_pos = e_editable_cursor_pos_get(editable);
    e_editable_delete(editable,
                      cursor_pos + ev->offset,
                      cursor_pos + ev->offset + ev->n_chars);
-
-   return ECORE_CALLBACK_DONE;
 }
 #endif
