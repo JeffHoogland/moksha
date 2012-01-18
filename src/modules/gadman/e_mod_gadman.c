@@ -254,7 +254,7 @@ _gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer, E_C
          }
        else
          {
-           cf->style = strdup(src_cf->style);
+           cf->style = eina_stringshare_add(src_cf->style);
            cf->geom.pos_x = src_cf->geom.pos_x;
            cf->geom.pos_y = src_cf->geom.pos_y;
            cf->geom.size_w = src_cf->geom.size_w;
