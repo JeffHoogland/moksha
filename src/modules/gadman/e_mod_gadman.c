@@ -866,7 +866,7 @@ _get_bind_text(const char* action)
           }
         return strdup(b);
      }
-   return "(You must define a binding)";
+   return strdup("(You must define a binding)");
 }
 
 /* Callbacks */
