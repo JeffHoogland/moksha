@@ -40,9 +40,12 @@ e_backlight_init(void)
 #ifdef HAVE_EEZE
    eeze_init();
 #endif
-   bl_avail = ecore_x_randr_output_backlight_available();
+// why did someone do this? this makes it ONLY work if xrandr has bl support.
+// WRONG!   
+//   bl_avail = ecore_x_randr_output_backlight_available();
+   bl_avail = EINA_TRUE;
 
-   if (bl_avail == EINA_TRUE)
+//   if (bl_avail == EINA_TRUE)
      {
         e_backlight_update();
         e_backlight_level_set(NULL, 0.0, 0.0);
