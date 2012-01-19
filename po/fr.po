@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-01-12 06:11+0100\n"
-"PO-Revision-Date: 2012-01-12 13:12+0100\n"
+"POT-Creation-Date: 2012-01-19 05:56+0100\n"
+"PO-Revision-Date: 2012-01-19 09:31+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -1147,7 +1147,7 @@ msgstr "Sélectionner un icone"
 msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
-#: src/bin/e_entry.c:506
+#: src/bin/e_entry.c:501
 #: src/bin/e_fm.c:8241
 #: src/bin/e_shelf.c:1703
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
@@ -1156,24 +1156,24 @@ msgstr "Sélectionner un exécutable"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: src/bin/e_entry.c:516
+#: src/bin/e_entry.c:511
 #: src/bin/e_fm.c:8149
 msgid "Cut"
 msgstr "Couper"
 
-#: src/bin/e_entry.c:524
+#: src/bin/e_entry.c:519
 #: src/bin/e_fm.c:6196
 #: src/bin/e_fm.c:8163
 msgid "Copy"
 msgstr "Copier"
 
-#: src/bin/e_entry.c:532
+#: src/bin/e_entry.c:527
 #: src/bin/e_fm.c:7987
 #: src/bin/e_fm.c:8176
 msgid "Paste"
 msgstr "Coller"
 
-#: src/bin/e_entry.c:542
+#: src/bin/e_entry.c:537
 msgid "Select All"
 msgstr "Tout sélectionner"
 
@@ -1674,12 +1674,12 @@ msgid "Automatically scroll contents"
 msgstr "Défilement automatique"
 
 #: src/bin/e_gadcon.c:1434
-#: src/modules/gadman/e_mod_gadman.c:730
+#: src/modules/gadman/e_mod_gadman.c:729
 msgid "Plain"
 msgstr "En plein"
 
 #: src/bin/e_gadcon.c:1443
-#: src/modules/gadman/e_mod_gadman.c:738
+#: src/modules/gadman/e_mod_gadman.c:737
 msgid "Inset"
 msgstr "En creux"
 
@@ -1695,7 +1695,7 @@ msgstr "Aspect"
 #: src/modules/conf_applications/e_int_config_apps.c:239
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
-#: src/modules/gadman/e_mod_gadman.c:814
+#: src/modules/gadman/e_mod_gadman.c:813
 #: src/modules/ibar/e_mod_main.c:801
 msgid "Remove"
 msgstr "Supprimer"
@@ -2931,7 +2931,7 @@ msgstr "Configurer les racks"
 
 #: src/bin/e_main.c:958
 msgid "Almost Done"
-msgstr "Presque fini..."
+msgstr "Bientôt fini..."
 
 #: src/bin/e_main.c:1103
 #, c-format
@@ -4293,28 +4293,28 @@ msgstr "La séquence de raccourci que vous avez choisie est déjà utilisée<br>
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1310
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1366
-#: src/modules/gadman/e_mod_gadman.c:838
+#: src/modules/gadman/e_mod_gadman.c:837
 msgid "CTRL"
 msgstr "Ctrl"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1315
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1371
-#: src/modules/gadman/e_mod_gadman.c:843
+#: src/modules/gadman/e_mod_gadman.c:842
 msgid "ALT"
 msgstr "Alt"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1321
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1377
-#: src/modules/gadman/e_mod_gadman.c:849
+#: src/modules/gadman/e_mod_gadman.c:848
 msgid "SHIFT"
 msgstr "Majuscule"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1327
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1383
-#: src/modules/gadman/e_mod_gadman.c:855
+#: src/modules/gadman/e_mod_gadman.c:854
 msgid "WIN"
 msgstr "Logo"
 
@@ -4452,7 +4452,7 @@ msgstr "Enlightenment n'a pu importer la configuration.<br><br>Êtes-vous sûr q
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Enlightenment was unable to import the configuration<br>due to a copy error."
-msgstr "Enlightenment n'a pas pu importer cette configuration,<br>à cause d'une erreur de copie."
+msgstr "Enlightenment n'a pu importer cette configuration<br>à cause d'une erreur de copie."
 
 #: src/modules/conf_intl/e_int_config_intl.c:593
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -6009,13 +6009,13 @@ msgstr "Remplir l'espace disponible"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:758
+#: src/modules/gadman/e_mod_gadman.c:757
 msgid "Horizontal"
 msgstr "Horizontal(e)"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 #: src/modules/everything/evry_config.c:561
-#: src/modules/gadman/e_mod_gadman.c:766
+#: src/modules/gadman/e_mod_gadman.c:765
 msgid "Vertical"
 msgstr "Vertical(e)"
 
@@ -6081,7 +6081,7 @@ msgstr "Menu de la liste des fenêtres"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:24
 msgid "Window Process Management"
-msgstr "Processus liés aux fenêtres"
+msgstr "Processus des fenêtres"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:33
 #: src/modules/conf_window_remembers/e_mod_main.c:17
@@ -6692,7 +6692,7 @@ msgid "Show Toolbar"
 msgstr "Afficher la barre d'outils"
 
 #: src/modules/fileman/e_mod_config.c:278
-#: src/modules/gadman/e_mod_gadman.c:802
+#: src/modules/gadman/e_mod_gadman.c:801
 msgid "Behavior"
 msgstr "Comportement"
 
@@ -6888,27 +6888,27 @@ msgstr "Fond d'écran"
 msgid "Background Options"
 msgstr "Options du fond d'écran"
 
-#: src/modules/gadman/e_mod_gadman.c:719
+#: src/modules/gadman/e_mod_gadman.c:718
 msgid "Begin move/resize"
 msgstr "Déplacer/Redimensionner"
 
-#: src/modules/gadman/e_mod_gadman.c:750
+#: src/modules/gadman/e_mod_gadman.c:749
 msgid "Free"
 msgstr "Libre"
 
-#: src/modules/gadman/e_mod_gadman.c:774
+#: src/modules/gadman/e_mod_gadman.c:773
 msgid "Appearance"
 msgstr "Apparence"
 
-#: src/modules/gadman/e_mod_gadman.c:782
+#: src/modules/gadman/e_mod_gadman.c:781
 msgid "Always on desktop"
 msgstr "Toujours sur le bureau"
 
-#: src/modules/gadman/e_mod_gadman.c:792
+#: src/modules/gadman/e_mod_gadman.c:791
 msgid "On top pressing"
 msgstr "Au-dessus en appuyant sur"
 
-#: src/modules/gadman/e_mod_gadman.c:823
+#: src/modules/gadman/e_mod_gadman.c:822
 msgid "Add other gadgets"
 msgstr "Ajouter un autre gadget"
 
