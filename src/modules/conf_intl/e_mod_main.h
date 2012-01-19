@@ -19,7 +19,7 @@ EAPI int   e_modapi_save     (E_Module *m);
  * @addtogroup Optional_Conf
  * @{
  *
- * @defgroup Module_Conf_Intl Internationalization Configurations
+ * @defgroup Module_Conf_Intl Internationalization Configuration
  *
  * Configure language and input method (e.g. Asian languages)
  *
