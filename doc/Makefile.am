@@ -19,6 +19,7 @@ doc: all doc-clean
 	bzip2 -9 $(PACKAGE_DOCNAME).tar
 	rm -rf $(PACKAGE_DOCNAME)/
 	mv $(PACKAGE_DOCNAME).tar.bz2 $(top_builddir)
+	@echo "Documentation Package: $(top_builddir)/$(PACKAGE_DOCNAME).tar.bz2"
 
 clean-local: doc-clean
 

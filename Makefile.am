@@ -79,4 +79,4 @@ pkgconfig_DATA = enlightenment.pc
 
 doc:
 	@echo "entering doc/"
-	make -C doc doc
+	$(MAKE) -C doc doc

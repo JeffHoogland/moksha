@@ -1,7 +1,7 @@
 PROJECT_NAME           = Enlightenment
 PROJECT_NUMBER         =
 OUTPUT_DIRECTORY       = .
-INPUT                  = e.dox @top_srcdir@/src/bin
+INPUT                  = @builddir@/e.dox @top_srcdir@/src/bin
 IMAGE_PATH             = @srcdir@/img
 OUTPUT_LANGUAGE        = English
 GENERATE_HTML          = YES
@@ -56,7 +56,7 @@ MAX_INITIALIZER_LINES  = 30
 OPTIMIZE_OUTPUT_FOR_C  = YES
 OPTIMIZE_OUTPUT_JAVA   = NO
 SHOW_USED_FILES        = NO
-QUIET                  = YES
+QUIET                  = NO
 WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = YES
 WARN_FORMAT            = "$file:$line: $text"
