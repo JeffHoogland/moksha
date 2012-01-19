@@ -16,4 +16,18 @@ EAPI int   e_modapi_save     (E_Module *m);
 
 extern E_Module *wiz_module;
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Wizard Wizard
+ *
+ * Configures the whole Enlightenment in a nice walk-through wizard.
+ *
+ * Usually is presented on the first run of Enlightenment. The wizard
+ * pages are configurable and should be extended by distributions that
+ * want to ship Enlightenment as the default window manager.
+ *
+ * @}
+ */
 #endif

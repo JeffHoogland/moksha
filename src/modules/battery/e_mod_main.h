@@ -153,4 +153,16 @@ E_Config_Dialog *e_int_config_battery_module(E_Container *con, const char *param
 void _battery_config_updated(void);
 extern Config *battery_config;
 
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_Battery Battery
+ *
+ * Shows battery level and current status, may do actions given some
+ * thresholds.
+ *
+ * @}
+ */
+
 #endif

@@ -12,4 +12,15 @@ EAPI void *e_modapi_init(E_Module *m);
 EAPI int e_modapi_shutdown(E_Module *m);
 EAPI int e_modapi_save(E_Module *m);
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf_Window_Remembers Window Remembers Configuration
+ *
+ * Choose which windows and properties to remember, such as size,
+ * stacking, virtual desktop, position and so on.
+ *
+ * @}
+ */
 #endif

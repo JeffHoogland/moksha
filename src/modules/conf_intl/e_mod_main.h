@@ -15,4 +15,14 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf_Intl Internationalization Configurations
+ *
+ * Configure language and input method (e.g. Asian languages)
+ *
+ * @}
+ */
 #endif

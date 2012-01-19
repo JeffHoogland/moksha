@@ -7,4 +7,15 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Look
+ * @{
+ *
+ * @defgroup Module_Shot Screenshot
+ *
+ * Takes screen shots and can submit them to http://enlightenment.org
+ *
+ * @}
+ */
+
 #endif

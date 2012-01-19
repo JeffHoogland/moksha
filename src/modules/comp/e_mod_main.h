@@ -31,4 +31,18 @@ void       _e_mod_config_free(E_Module *m);
 #define ENGINE_SW 1
 #define ENGINE_GL 2
 
+
+/**
+ * @addtogroup Optional_Look
+ * @{
+ *
+ * @defgroup Module_Comp Comp (Composite Manager)
+ *
+ * Implements the X11 Composite Manager to support alpha blend,
+ * semi-transparent windows and drop shadow. Does support animations
+ * and effects such as coloring unfocused windows.
+ *
+ * @}
+ */
+
 #endif

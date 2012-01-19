@@ -32,4 +32,16 @@ void _config_tasks_module(Config_Item *ci);
 void _tasks_config_updated(Config_Item *ci);
 extern Config *tasks_config;
 
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_Tasks Tasks (Task Bar)
+ *
+ * Shows windows as buttons in a box.
+ *
+ * @see Module_IBox
+ *
+ * @}
+ */
 #endif

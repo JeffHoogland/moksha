@@ -113,4 +113,19 @@ _ofono_operation_error_show(const char *msg)
                       msg);
 }
 
+/**
+ * @addtogroup Optional_Devices
+ * @{
+ *
+ * @defgroup Module_OFono oFono (Telephony)
+ *
+ * oFono is the Linux Telephony stack and can be used to monitor
+ * network signal, send and receive SMS, connect to GPRS/Edge/3G/4G.
+ *
+ * @note The plugin is barebones and can just show devices, no SMS
+ *       management done yet.
+ *
+ * @see http://ofono.org/
+ * @}
+ */
 #endif

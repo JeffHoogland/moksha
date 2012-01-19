@@ -41,4 +41,14 @@ EAPI int   e_modapi_save     (E_Module *m);
 
 E_Config_Dialog *e_int_config_xsettings(E_Container *con, const char *params __UNUSED__);
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf_Theme Theme Configuration
+ *
+ * Changes the graphical user interface theme and wallpaper.
+ *
+ * @}
+ */
 #endif

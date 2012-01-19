@@ -25,4 +25,15 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf_Display Display Configuration
+ *
+ * Configures the physical and virtual display, including screen
+ * saver, screen lock and power saving settings (DPMS).
+ *
+ * @}
+ */
 #endif

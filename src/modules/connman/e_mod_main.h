@@ -181,4 +181,17 @@ _connman_ctxt_technology_find_stringshare(const E_Connman_Module_Context *ctxt,
    return NULL;
 }
 
+/**
+ * @addtogroup Optional_Devices
+ * @{
+ *
+ * @defgroup Module_Connman ConnMan (Connection Manager)
+ *
+ * Controls network connections for ethernet, wifi, 3G, GSM and
+ * bluetooth (PAN).
+ *
+ * @see http://connman.net/
+ * @}
+ */
+
 #endif

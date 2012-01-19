@@ -109,4 +109,16 @@ EAPI int   e_modapi_info     (E_Module *m);
 
 void  _dropshadow_cb_config_updated(void *data);
 
+
+/**
+ * @addtogroup Optional_Look
+ * @{
+ *
+ * @defgroup Module_Dropshadow Drop Shadow
+ *
+ * Drops shadow on desktop for visible windows. This is a poor's man
+ * solution for people that do not have @ref Module_Comp.
+ *
+ * @}
+ */
 #endif

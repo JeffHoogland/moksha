@@ -17,4 +17,16 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf_KeyBinding Key Bindings (Shortcuts) Configuration
+ *
+ * Configure global keyboard shortcuts.
+ *
+ * @see Module_Conf_MouseBinding
+ * @see Module_Conf_EdgeBinding
+ * @}
+ */
 #endif

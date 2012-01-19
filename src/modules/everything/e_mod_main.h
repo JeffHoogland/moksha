@@ -371,4 +371,18 @@ extern Eina_List *_refd;
 extern double _evry_time;
 #endif
 
+
+/**
+ * @addtogroup Optional_Launcher
+ * @{
+ *
+ * @defgroup Module_Everything Everything Launcher
+ *
+ * Flexible launcher with plugins. Can do search as you type
+ * filtering, browse directories, view pictures, simple math, spell
+ * checking and of course: launching programs and executing commands.
+ *
+ * @}
+ */
+
 #endif

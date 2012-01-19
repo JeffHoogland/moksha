@@ -37,4 +37,16 @@ void e_int_clock_instances_redo(void);
 
 extern Config *clock_config;
 
+
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_Clock Clock
+ *
+ * Shows current time and date.
+ *
+ * @}
+ */
+
 #endif

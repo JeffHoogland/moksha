@@ -33,4 +33,16 @@ void e_mod_config_menu_add(void *data, E_Menu *m);
 
 extern Config *conf;
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf Main Configuration Dialog
+ *
+ * Show the main configuration dialog used to access other
+ * configuration.
+ *
+ * @}
+ */
+
 #endif

@@ -19,4 +19,16 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf_Window_Manipulation Window Manipulation Configuration
+ *
+ * Configures how windows are placed, maximized, focused, stacked and
+ * so on.
+ *
+ * @see Module_Conf_Window_Remembers
+ * @}
+ */
 #endif

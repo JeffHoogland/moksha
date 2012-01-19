@@ -82,4 +82,16 @@ void config_temperature_module(Config_Face *inst);
 void temperature_face_update_config(Config_Face *inst);
 Eina_List *temperature_get_bus_files(const char* bus);
 
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_Temperature Temperature
+ *
+ * Monitors computer temperature sensors and may do actions given some
+ * thresholds.
+ *
+ * @see Module_CPUFreq
+ * @}
+ */
 #endif

@@ -2,6 +2,9 @@
 #include "e_mod_config.h"
 
 /**
+ * @addtogroup Module_Illume2
+ * @{
+ *
  * @defgroup E_Illume_Main_Group Illume API Information
  * 
  * The following group defines variables, structures, and functions available 
@@ -1004,3 +1007,7 @@ e_illume_quickpanel_hide(E_Zone *zone)
    ecore_x_e_illume_quickpanel_state_send(zone->black_win, 
                                           ECORE_X_ILLUME_QUICKPANEL_STATE_OFF);
 }
+
+/**
+ * @}
+ */

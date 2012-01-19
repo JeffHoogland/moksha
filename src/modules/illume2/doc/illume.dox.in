@@ -6,7 +6,7 @@
 
 @author Carsten Haitzler <raster\@rasterman.com>
 @author Christopher Michael <devilhorns\@comcast.net>
-@date 2000-2010
+@date 2000-2012
 
 @section intro Introduction
 
@@ -48,6 +48,11 @@ screens in more than one way using either xinerama or multi-head.
 // GROUP DEFINITIONS
 
 /**
+@addtogroup Module_Illume2
+@{
+*/
+
+/**
 @defgroup E_Illume_Keyboard_Group Illume Keyboard Information
 
 The following group defines information needed to interact with the 
@@ -76,4 +81,8 @@ The following group defines information pertaining to Illume Configuration.
 @defgroup E_Illume_Quickpanel_Group Illume Quickpanel Information
 
 The following group defines information pertaining to Illume Quickpanels.
+*/
+
+/**
+ @}
 */

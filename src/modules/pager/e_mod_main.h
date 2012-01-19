@@ -49,4 +49,15 @@ void _pager_cb_config_updated(void);
 void _config_pager_module(Config_Item *ci);
 extern Config *pager_config;
 
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_Pager Virtual Desktop Pager
+ *
+ * Shows the grid of virtual desktops and allows changing between
+ * them.
+ *
+ * @}
+ */
 #endif

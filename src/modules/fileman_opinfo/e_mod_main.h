@@ -7,4 +7,16 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Fileman
+ * @{
+ *
+ * @defgroup Module_Fileman_Opinfo File Manager Operation Information
+ *
+ * Shows information about file manager operations such as copy, move
+ * and delete.
+ *
+ * @}
+ */
+
 #endif

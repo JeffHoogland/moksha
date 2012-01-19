@@ -19,4 +19,15 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf_Applications Applications Configuration
+ *
+ * Configure application icons (launchers ".desktop"), which
+ * applications to use on start or restart of Enlightenment.
+ *
+ * @}
+ */
 #endif

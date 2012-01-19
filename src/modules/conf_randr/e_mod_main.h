@@ -16,4 +16,15 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Conf_RandR RandR (Screen Resize, Rotate and Mirror)
+ *
+ * Configures size, rotation and mirroring of screen. Uses the X11
+ * RandR protocol (does not work with NVidia proprietary drivers).
+ *
+ * @}
+ */
 #endif

@@ -15,4 +15,15 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Control
+ * @{
+ *
+ * @defgroup Module_Syscon SysCon (System Control)
+ *
+ * Controls your system actions such as shutdown, reboot, hibernate or
+ * suspend.
+ *
+ * @}
+ */
 #endif

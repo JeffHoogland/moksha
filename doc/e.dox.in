@@ -5,14 +5,89 @@
 @image html  e.png
 
 @version @PACKAGE_VERSION@
-@date 2000-2010
+@date 2000-2012
+
+Please see the @ref authors page for contact details.
 
 @section intro Introduction
 
-@section compiling How to compile using Enlightenment?
+The Enlightenment Window Manager is a lean, fast, modular and very
+extensible window manager for X11 and Linux. It is classed as a
+"desktop shell" providing the things you need to operate your desktop
+(or laptop), but is not a whole application suite. This covered
+launching applications, managing their windows and doing other system
+tasks like suspending, reboots, managing files etc.
+
+
+@section compiling How to compile modules?
+
+pkgconfig (.pc) files are installed for enlightenment. To compile a
+module you can use something like the following:
+
+@verbatim
+gcc module.c $(pkg-config enlightenment --cflags --libs)
+@endverbatim
+
+Note that modules are installed to $HOME (~/.e/e/modules) or
+system. One can know the system directory with the command:
+
+@verbatim
+pkg-config --variable=modules enlightenment
+@endverbatim
 
 @section install How is it installed?
 
+Just use the traditional autotools steps, the options will be
+autodetected. Note that it depend on EFL (Enlightenment Foundation
+Libraries): eina, eet, evas, ecore, e_dbus, embryo, edje, efreet and
+eeze.
+
+@verbatim
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+sudo make install
+@endverbatim
+
 @todo (0.17) Document API
+
+*/
+
+/**
+
+@page authors Authors
+
+@author The Rasterman (Carsten Haitzler) <raster@rasterman.com>
+@author Ibukun Olumuyiwa <ibukun@computer.org>
+@author Sebastian Dransfeld <sd@tango.flipp.net>
+@author HandyAndE (Andrew Williams) <andy@handyande.co.uk>
+@author CodeWarrior (Hisham Mardam Bey) <hisham@hisham.cc>
+@author dj2 (Dan Sinclair) <dj2@everburning.com>
+@author Tilman Sauerbeck <tilman@@code-monkey.de>
+@author Aleksej Struk <astruk@gmail.com>
+@author Brian Mattern <rephorm@rephorm.com>
+@author devilhorns (Christopher Michael) <devilhorns@comcast.net>
+@author /dev/urandom (Viktor Kojouharov) <vkojouharov@gmail.com>
+@author ilLogict (Chidambar Zinnoury) <illogict@online.fr>
+@author Stafford Horne <shorne@softhome.net>
+@author Cedric Bail <cedric.bail@free.fr>
+@author onefang (David Seikel) <onefang@gmail.com>
+@author okra (Stephen Houston) <smhouston88@gmail.com>
+@author Byron Hillis <metrics@score5.org>
+@author Ravenlock (Eric Schuele) <e.schuele@computer.org>
+@author ManoWarrior (Luchezar Petkov) <luchezar.petkov@gmail.com>
+@author morlenxus (Brian Miculcy) <morlenxus@gmx.net>
+@author Toma- (Tom Haste) <tomhaste@gmail.com>
+@author k-s (Gustavo Sverzut Barbieri) <barbieri@profusion.mobi>
+@author Peter van de Werken <pwerken-e@a-eskwadraat.nl>
+@author Florian Hackenberger <florian@hackenberger.at>
+@author Hannes Janetzek <hannes.janetzek@gmail.com>
+@author Mike Blumenkrantz (discomfitor/zmike) <michael.blumenkrantz@gmail.com>
+@author Leif Middelschulte <leif.middelschulte@gmail.com>
+@author yoz (Michael Bouchaud) <michael.bouchaud@gmail.com>
+@author billiob (Boris Faure) <billiob@gmail.com>
+@author Jihoon Kim <jihoon48.kim@samsung.com>
+@author Sthitha <iamsthitha@gmail>
+@author Doyoun Kang <doyoun.kang@samsung.com>
+@author Gwanglim Lee <gl77.lee@samsung.com>
 
 */

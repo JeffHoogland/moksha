@@ -151,4 +151,18 @@ extern E_Module *notification_mod;
 extern Config   *notification_cfg;
 extern const E_Gadcon_Client_Class _gc_class;
 
+/**
+ * @addtogroup Optional_Monitors
+ * @{
+ *
+ * @defgroup Module_Notification Notification (Notify-OSD)
+ *
+ * Presents notifications on screen as an unobtrusive popup. It
+ * implements the Notify-OSD and FreeDesktop.org standards.
+ *
+ * @see http://www.galago-project.org/specs/notification/0.9/
+ * @see https://wiki.ubuntu.com/NotifyOSD
+ * @}
+ */
+
 #endif

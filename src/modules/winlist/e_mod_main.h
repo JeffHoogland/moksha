@@ -15,4 +15,15 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+/**
+ * @addtogroup Optional_Control
+ * @{
+ *
+ * @defgroup Module_Winlist WinList (Windows Listing)
+ *
+ * Lists and switch windows, usually with "Alt-Tab" or "Alt-Shift-Tab"
+ * keyboard shortcuts. Can show a popup during the action.
+ *
+ * @}
+ */
 #endif

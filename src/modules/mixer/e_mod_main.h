@@ -126,4 +126,19 @@ extern E_Mixer_Cb e_mod_mixer_card_name_get;
 extern E_Mixer_Cb e_mod_mixer_cards_get;
 extern E_Mixer_Cb e_mod_mixer_cards_free;
 extern E_Mixer_Cb e_mod_mixer_card_default_get;
+
+/**
+ * @addtogroup Optional_Devices
+ * @{
+ *
+ * @defgroup Module_Mixer Audio Mixer (Volume Control)
+ *
+ * Controls the audio volume and mute status for both playback
+ * (output) and record (input) devices.
+ *
+ * Can work with ALSA (http://www.alsa-project.org/) or PulseAudio
+ * (http://www.pulseaudio.org/).
+ *
+ * @}
+ */
 #endif

@@ -48,4 +48,17 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_CPUFreq CPU Frequency Monitor
+ *
+ * Monitors CPU frequency and may do actions given some thresholds.
+ *
+ * @see Module_Temperature
+ * @see Module_Battery
+ * @}
+ */
 #endif

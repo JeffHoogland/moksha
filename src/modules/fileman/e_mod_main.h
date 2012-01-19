@@ -87,4 +87,17 @@ EAPI int   e_modapi_save     (E_Module *m);
 
 extern Config *fileman_config;
 
+/**
+ * @addtogroup Optional_Fileman
+ * @{
+ *
+ * @defgroup Module_Fileman File Manager
+ *
+ * Basic file manager with list and grid view, shows thumbnails, can
+ * copy, cut, paste, delete and rename files.
+ *
+ * @see Module_Fileman_Opinfo
+ * @}
+ */
+
 #endif

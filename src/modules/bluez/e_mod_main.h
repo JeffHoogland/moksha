@@ -141,4 +141,17 @@ _bluez_operation_error_show(const char *msg)
                       msg);
 }
 
+
+/**
+ * @addtogroup Optional_Devices
+ * @{
+ *
+ * @defgroup Module_Bluez BlueZ (Bluetooth)
+ *
+ * Controls bluetooth visibility, scan and pair devices.
+ *
+ * @see http://www.bluez.org/
+ * @}
+ */
+
 #endif

@@ -34,4 +34,15 @@ void _ibox_config_update(Config_Item *ci);
 void _config_ibox_module(Config_Item *ci);
 extern Config *ibox_config;
 
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_IBox IBox (Box of Iconified Windows)
+ *
+ * Keeps iconified (minimized) windows in a box, showing their icon
+ * and title.
+ *
+ * @}
+ */
 #endif

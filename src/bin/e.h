@@ -1,6 +1,15 @@
 #ifndef E_H
 # define E_H
 
+/**
+ * @defgroup API Enlightenment API
+ *
+ * Application programming interface to be used by modules to extend
+ * Enlightenment.
+ *
+ * @{
+ */
+
 # ifdef HAVE_CONFIG_H
 #  include "config.h"
 # endif
@@ -248,5 +257,26 @@ extern EAPI unsigned long e_alert_composite_win;
 //#define SMARTERR(args...) abort()
 #define SMARTERRNR() return
 #define SMARTERR(x) return x
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup Optional_Modules Optional Modules
+ * @{
+ *
+ * @defgroup Optional_Conf Configurations
+ * @defgroup Optional_Control Controls
+ * @defgroup Optional_Devices Devices & Hardware
+ * @defgroup Optional_Fileman File Managers
+ * @defgroup Optional_Gadgets Gadgets
+ * @defgroup Optional_Launcher Launchers
+ * @defgroup Optional_Layouts Layout Managers
+ * @defgroup Optional_Look Look & Feel
+ * @defgroup Optional_Monitors Monitors & Notifications
+ * @defgroup Optional_Mobile Mobile Specific Extensions
+ * @}
+ */
 
 #endif

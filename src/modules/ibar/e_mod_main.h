@@ -34,4 +34,15 @@ void _ibar_config_update(Config_Item *ci);
 void _config_ibar_module(Config_Item *ci);
 extern Config *ibar_config;
 
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_IBar IBar (Icon Launch Bar)
+ *
+ * Launches applications from an icon bar, usually placed on shelves.
+ *
+ * @}
+ */
+
 #endif
