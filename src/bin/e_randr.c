@@ -10,7 +10,7 @@
 #define Ecore_X_Randr_None  0
 #define Ecore_X_Randr_Unset -1
 
-#define POLLINTERVAL 256
+#define POLLINTERVAL 128
 
 /*
  * Save mechanism:
@@ -749,11 +749,6 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
    Ecore_X_Randr_Mode_Info *mode_info;
    Eina_Bool enabled = EINA_FALSE;
 
-   // FIXME: ecore_x_randr_screen_primary_output_orientation_get() should
-   // get regularly called to push x into polling outputs so we get these
-   // event callbacks - maybe do this every 100 mouse move events, or every
-   // mouse release or event mouse in or out, and in addition add a "poller"
-   // that runs every 256 ticks maybe?
    if (!e_randr_screen_info) return ECORE_CALLBACK_RENEW;
 
    if (type == ECORE_X_EVENT_RANDR_CRTC_CHANGE)
@@ -953,7 +948,9 @@ _e_randr_event_cb(void *data __UNUSED__, int type, void *ev)
 static Eina_Bool
 _e_randr_x_poll_cb(void *data __UNUSED__)
 {
-   ecore_x_randr_primary_output_get(e_randr_screen_info->root);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(e_randr_screen_info, ECORE_CALLBACK_CANCEL);
+
+   ecore_x_randr_screen_primary_output_orientations_get(e_randr_screen_info->root);
 
    return ECORE_CALLBACK_RENEW;
 }
