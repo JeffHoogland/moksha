@@ -2,6 +2,9 @@
 #include "e_mod_main.h"
 #include "e_mod_comp.h"
 #include "e_mod_comp_update.h"
+#ifdef HAVE_WAYLAND
+#include "e_mod_comp_wayland.h"
+#endif
 
 #define OVER_FLOW 2
 
@@ -3483,6 +3486,12 @@ e_mod_comp_init(void)
             "or Ecore was built without XDamage support."));
         return 0;
      }
+
+#ifdef HAVE_WAYLAND
+   if (!e_mod_comp_wayland_init())
+     EINA_LOG_ERR("Failed to initialize Wayland Client Support !!\n");
+#endif
+
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
         E_Comp *c;
@@ -3504,6 +3513,10 @@ e_mod_comp_shutdown(void)
    EINA_LIST_FREE(compositors, c) _e_mod_comp_del(c);
 
    E_FREE_LIST(handlers, ecore_event_handler_del);
+
+#ifdef HAVE_WAYLAND
+   e_mod_comp_wayland_shutdown();
+#endif
 
    if (damages) eina_hash_free(damages);
    if (windows) eina_hash_free(windows);
