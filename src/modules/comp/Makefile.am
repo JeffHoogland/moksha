@@ -30,10 +30,12 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_comp_update.c \
                          e_mod_comp_update.h \
                          e_mod_comp_cfdata.c \
-                         e_mod_comp_cfdata.h \
-                         e_mod_comp_wayland.h \
-                         e_mod_comp_wayland.c
-                         
+                         e_mod_comp_cfdata.h
+if HAVE_WAYLAND
+module_la_SOURCES += e_mod_comp_wayland.h \
+                     e_mod_comp_wayland.c
+endif
+
 module_la_LIBADD       = @e_libs@ @dlopen_libs@ @WAYLAND_LIBS@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h

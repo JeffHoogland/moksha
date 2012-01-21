@@ -15,6 +15,7 @@ typedef struct _Wayland_Shell Wayland_Shell;
 typedef struct _Wayland_Surface Wayland_Surface;
 typedef struct _Wayland_Shell_Surface Wayland_Shell_Surface;
 typedef struct _Wayland_Frame_Callback Wayland_Frame_Callback;
+typedef struct _Wayland_Shader Wayland_Shader;
 
 enum _Wayland_Shell_Surface_Type
 {
@@ -118,6 +119,16 @@ struct _Wayland_Frame_Callback
 {
    struct wl_resource resource;
    struct wl_list link;
+};
+
+struct _Wayland_Shader
+{
+   GLuint program;
+   GLuint vertex, fragment;
+   struct 
+     {
+        GLuint proj, tex, alpha, color;
+     } uniform;
 };
 
 struct wl_shell
