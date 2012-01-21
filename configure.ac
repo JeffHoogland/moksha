@@ -731,7 +731,7 @@ have_wayland=no
 AC_ARG_ENABLE([wayland-clients],
   AS_HELP_STRING([--enable-wayland-clients],[enable wayland clients in composite module @<:@default=disabled@:>@]),
   [e_cv_want_wayland_clients=$enableval],
-  [e_cv_want_wayland_clients=yes])
+  [e_cv_want_wayland_clients=no])
 
 AC_MSG_CHECKING([whether wayland client support is enabled])
 AC_MSG_RESULT([${e_cv_want_wayland_clients}])
