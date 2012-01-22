@@ -3,7 +3,7 @@
 #include "e_mod_comp.h"
 #include "e_mod_comp_update.h"
 #ifdef HAVE_WAYLAND
-#include "e_mod_comp_wayland.h"
+#include "e_mod_comp_wl.h"
 #endif
 
 #define OVER_FLOW 2
@@ -3488,7 +3488,7 @@ e_mod_comp_init(void)
      }
 
 #ifdef HAVE_WAYLAND
-   if (!e_mod_comp_wayland_init())
+   if (!e_mod_comp_wl_init())
      EINA_LOG_ERR("Failed to initialize Wayland Client Support !!\n");
 #endif
 
@@ -3515,7 +3515,7 @@ e_mod_comp_shutdown(void)
    E_FREE_LIST(handlers, ecore_event_handler_del);
 
 #ifdef HAVE_WAYLAND
-   e_mod_comp_wayland_shutdown();
+   e_mod_comp_wl_shutdown();
 #endif
 
    if (damages) eina_hash_free(damages);

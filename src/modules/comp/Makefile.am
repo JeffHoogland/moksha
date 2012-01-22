@@ -32,8 +32,20 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_comp_cfdata.c \
                          e_mod_comp_cfdata.h
 if HAVE_WAYLAND
-module_la_SOURCES += e_mod_comp_wayland.h \
-                     e_mod_comp_wayland.c
+module_la_SOURCES += e_mod_comp_wl.h \
+                     e_mod_comp_wl.c \
+                     e_mod_comp_wl_comp.h \
+                     e_mod_comp_wl_comp.c \
+                     e_mod_comp_wl_shm.h \
+                     e_mod_comp_wl_shm.c \
+                     e_mod_comp_wl_output.h \
+                     e_mod_comp_wl_output.c \
+                     e_mod_comp_wl_input.h \
+                     e_mod_comp_wl_input.c \
+                     e_mod_comp_wl_shell.h \
+                     e_mod_comp_wl_shell.c \
+                     e_mod_comp_wl_surface.h \
+                     e_mod_comp_wl_surface.c
 endif
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@ @WAYLAND_LIBS@
