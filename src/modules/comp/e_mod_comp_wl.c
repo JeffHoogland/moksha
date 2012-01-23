@@ -68,6 +68,8 @@ e_mod_comp_wl_init(void)
         return EINA_FALSE;
      }
 
+// NB: x11 compositor adds X event source to wayland event loop
+
    /* init shell */
    if (!e_mod_comp_wl_shell_init())
      {
@@ -94,16 +96,14 @@ e_mod_comp_wl_init(void)
 
    loop = wl_display_get_event_loop(_wl_disp);
    fd = wl_event_loop_get_fd(loop);
-   printf("Got Wayland Event Loop FD: %d\n", fd);
 
-   /* add handler */
    _wl_fd_handler = 
      ecore_main_fd_handler_add(fd, ECORE_FD_READ, 
                                _e_mod_comp_wl_fd_handle, _wl_disp, NULL, NULL);
 
    e_mod_comp_wl_comp_wake();
 
-//   wl_event_loop_dispatch(loop, 0);
+   wl_event_loop_dispatch(loop, 0);
 
    return EINA_TRUE;
 }
@@ -248,8 +248,16 @@ e_mod_comp_wl_buffer_attach(struct wl_buffer *buffer, struct wl_surface *surface
      }
    else
      {
-        /* TODO: Handle image */
-        printf("Handle Image\n");
+        Wayland_Compositor *comp;
+
+        comp = e_mod_comp_wl_comp_get();
+        if (ws->image != EGL_NO_IMAGE_KHR)
+          comp->destroy_image(comp->egl.display, ws->image);
+        ws->image = comp->create_image(comp->egl.display, NULL, 
+                                       EGL_WAYLAND_BUFFER_WL, buffer, NULL);
+        comp->image_target_texture_2d(GL_TEXTURE_2D, ws->image);
+        ws->visual = WAYLAND_ARGB_VISUAL;
+        ws->pitch = ws->width;
      }
 }
 
