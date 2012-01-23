@@ -16,7 +16,6 @@ static void _e_mod_comp_wl_output_pending_scanout_buffer_destroy(struct wl_liste
 static int _e_mod_comp_wl_output_finish_frame_handler(void *data);
 static void _e_mod_comp_wl_output_finish_frame(Wayland_Output *output, int secs);
 static void _e_mod_comp_wl_output_repaint(Wayland_Output *output, int secs);
-static void _e_mod_comp_wl_output_schedule_repaint(void);
 static Eina_Bool _e_mod_comp_wl_output_setup_scanout_surface(Wayland_Output *output, Wayland_Surface *ws);
 static int _e_mod_comp_wl_output_prepare_render(Wayland_Output *output);
 static int _e_mod_comp_wl_output_present(Wayland_Output *output);
@@ -374,20 +373,6 @@ _e_mod_comp_wl_output_repaint(Wayland_Output *output, int secs)
      }
 
    /* TODO: Handle animations */
-}
-
-static void 
-_e_mod_comp_wl_output_schedule_repaint(void)
-{
-   struct wl_event_loop *loop;
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   loop = wl_display_get_event_loop(_wl_disp);
-   _wl_output->repaint_needed = EINA_TRUE;
-   if (_wl_output->repaint_scheduled) return;
-   wl_event_loop_add_idle(loop, e_mod_comp_wl_output_idle_repaint, _wl_output);
-   _wl_output->repaint_scheduled = EINA_TRUE;
 }
 
 static Eina_Bool 
