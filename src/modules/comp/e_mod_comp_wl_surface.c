@@ -38,6 +38,7 @@ e_mod_comp_wl_surface_create(int32_t x, int32_t y, int32_t width, int32_t height
    surface->surface.resource.client = NULL;
 
    surface->visual = WAYLAND_NONE_VISUAL;
+   surface->image = EGL_NO_IMAGE_KHR;
    surface->saved_texture = 0;
    surface->x = x;
    surface->y = y;
@@ -162,6 +163,14 @@ e_mod_comp_wl_surface_destroy_surface(struct wl_resource *resource)
 
    if (ws->buffer)
      wl_list_remove(&ws->buffer_destroy_listener.link);
+
+   if (ws->image != EGL_NO_IMAGE_KHR) 
+     {
+        Wayland_Compositor *comp;
+
+        comp = e_mod_comp_wl_comp_get();
+        comp->destroy_image(comp->egl.display, ws->image);
+     }
 
    wl_list_remove(&ws->buffer_link);
 
