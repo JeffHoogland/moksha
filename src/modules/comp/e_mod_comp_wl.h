@@ -10,7 +10,7 @@
 #  include <EGL/eglext.h>
 #  include <wayland-server.h>
 
-# define LOGFNS 1
+//# define LOGFNS 1
 
 # ifdef LOGFNS
 #  include <stdio.h>
@@ -101,6 +101,11 @@ struct _Wayland_Compositor
 
    struct wl_event_source *idle_source;
 
+   PFNGLEGLIMAGETARGETRENDERBUFFERSTORAGEOESPROC
+     image_target_renderbuffer_storage;
+   PFNGLEGLIMAGETARGETTEXTURE2DOESPROC image_target_texture_2d;
+   PFNEGLCREATEIMAGEKHRPROC create_image;
+   PFNEGLDESTROYIMAGEKHRPROC destroy_image;
    PFNEGLBINDWAYLANDDISPLAYWL bind_display;
    PFNEGLUNBINDWAYLANDDISPLAYWL unbind_display;
    Eina_Bool has_bind : 1;
@@ -114,7 +119,7 @@ struct _Wayland_Output
 {
    int x, y, width, height;
    char *make, *model;
-   uint32_t subpixel;
+   uint32_t subpixel, flags;
 
    EGLSurface egl_surface;
 
@@ -162,6 +167,8 @@ struct _Wayland_Surface
 
    Wayland_Transform *transform;
    uint32_t visual, alpha;
+
+   EGLImageKHR image;
 
    struct wl_list link;
    struct wl_list buffer_link;
