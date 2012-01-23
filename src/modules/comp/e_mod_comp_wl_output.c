@@ -7,6 +7,8 @@
 # include "e_mod_comp_wl_surface.h"
 #endif
 
+# define WL_OUTPUT_FLIPPED 0x01
+
 /* local function prototypes */
 static void _e_mod_comp_wl_output_bind(struct wl_client *client, void *data, uint32_t version __UNUSED__, uint32_t id);
 static void _e_mod_comp_wl_output_scanout_buffer_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, uint32_t timestamp __UNUSED__);
@@ -53,14 +55,17 @@ e_mod_comp_wl_output_init(void)
    _wl_output->mode.flags = 
      (WL_OUTPUT_MODE_CURRENT | WL_OUTPUT_MODE_PREFERRED);
 
+   _wl_output->mode.width = rw;
+   _wl_output->mode.height = rh;
+   _wl_output->mode.refresh = 60;
+
+// weston output init
+
    _wl_output->x = 0;
    _wl_output->y = 0;
    _wl_output->width = rw;
    _wl_output->height = rh;
-
-   _wl_output->mode.width = rw;
-   _wl_output->mode.height = rh;
-   _wl_output->mode.refresh = 60;
+   _wl_output->flags = WL_OUTPUT_FLIPPED;
 
    _e_mod_comp_wl_output_move(_wl_output, 0, 0);
 
@@ -80,11 +85,13 @@ e_mod_comp_wl_output_init(void)
         return EINA_FALSE;
      }
 
+// NB: compositor-x11 has create output window
+
    comp = e_mod_comp_wl_comp_get();
 
    _wl_output->egl_surface = 
      eglCreateWindowSurface(comp->egl.display, comp->egl.config, 
-                            roots[0], NULL);
+                            roots[0], NULL); // NB: roots[0] == output->window
    free(roots);
 
    if (!_wl_output->egl_surface)
@@ -110,6 +117,8 @@ e_mod_comp_wl_output_init(void)
    _wl_output->present = _e_mod_comp_wl_output_present;
    _wl_output->prepare_scanout_surface = 
      _e_mod_comp_wl_output_prepare_scanout_surface;
+
+// TODO: Add output destroy function
 
    return EINA_TRUE;
 }
@@ -195,7 +204,7 @@ _e_mod_comp_wl_output_bind(struct wl_client *client, void *data, uint32_t versio
    if (!(output = data)) return;
 
    resource = 
-     wl_client_add_object(client, &wl_output_interface, NULL, id, output);
+     wl_client_add_object(client, &wl_output_interface, NULL, id, data);
 
    wl_resource_post_event(resource, WL_OUTPUT_GEOMETRY, output->x, output->y, 
                           output->width, output->height, output->subpixel, 
@@ -219,7 +228,7 @@ _e_mod_comp_wl_output_scanout_buffer_destroy(struct wl_listener *listener, struc
    output->scanout_buffer = NULL;
 
    if (!output->pending_scanout_buffer)
-     _e_mod_comp_wl_output_schedule_repaint();
+     e_mod_comp_wl_comp_schedule_repaint();
 }
 
 static void 
@@ -235,7 +244,7 @@ _e_mod_comp_wl_output_pending_scanout_buffer_destroy(struct wl_listener *listene
 
    output->pending_scanout_buffer = NULL;
 
-   _e_mod_comp_wl_output_schedule_repaint();
+   e_mod_comp_wl_comp_schedule_repaint();
 }
 
 static int 
@@ -298,7 +307,9 @@ _e_mod_comp_wl_output_repaint(Wayland_Output *output, int secs)
 
    /* start weston output repaint */
    output->prepare_render(output);
+
    glViewport(0, 0, output->width, output->height);
+
    glUseProgram(comp->texture_shader.program);
    glUniformMatrix4fv(comp->texture_shader.proj_uniform, 1, GL_FALSE, 
                       output->matrix.d);
@@ -387,7 +398,7 @@ _e_mod_comp_wl_output_setup_scanout_surface(Wayland_Output *output, Wayland_Surf
    if ((!output) || (!ws)) return EINA_FALSE;
 
    if ((ws->visual != WAYLAND_RGB_VISUAL) || 
-       (!output->prepare_scanout_surface(output, ws)))
+       (output->prepare_scanout_surface(output, ws) != 0))
      return EINA_FALSE;
 
    output->pending_scanout_buffer = ws->buffer;
@@ -450,19 +461,24 @@ _e_mod_comp_wl_output_prepare_scanout_surface(Wayland_Output *output __UNUSED__,
 static void 
 _e_mod_comp_wl_output_move(Wayland_Output *output, int32_t x, int32_t y)
 {
+   int flip;
+
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    if (!output) return;
 
    pixman_region32_init(&output->prev_damage);
-   pixman_region32_init_rect(&_wl_output->region, x, y, 
+   pixman_region32_init_rect(&output->region, x, y, 
                              output->width, output->height);
 
    e_mod_comp_wl_matrix_init(&output->matrix);
    e_mod_comp_wl_matrix_translate(&output->matrix, 
                                           -output->x - output->width / 2.0, 
                                           -output->y - output->height / 2.0, 0);
+
+   flip = (output->flags & WL_OUTPUT_FLIPPED) ? -1 : 1;
+
    e_mod_comp_wl_matrix_scale(&output->matrix, 2.0 / output->width, 
-                                      -1 * 2.0 / output->height, 1);
+                                      flip * 2.0 / output->height, 1);
    e_mod_comp_wl_output_damage(output);
 }
