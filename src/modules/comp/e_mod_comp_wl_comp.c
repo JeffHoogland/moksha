@@ -96,6 +96,8 @@ e_mod_comp_wl_comp_init(void)
 
    memset(_wl_comp, 0, sizeof(*_wl_comp));
 
+// open display, get X connection, create cursor
+
    if (!_e_mod_comp_wl_comp_egl_init())
      {
         EINA_LOG_ERR("Failed to init EGL\n");
@@ -104,6 +106,8 @@ e_mod_comp_wl_comp_init(void)
      }
 
    _wl_comp->destroy = _e_mod_comp_wl_comp_destroy;
+
+// weston_compositor_init
 
    if (!wl_display_add_global(_wl_disp, &wl_compositor_interface, _wl_comp, 
                               _e_mod_comp_wl_comp_bind))
@@ -114,6 +118,13 @@ e_mod_comp_wl_comp_init(void)
      }
 
    _wl_comp->shm = wl_shm_init(_wl_disp, &_wl_shm_callbacks);
+
+   _wl_comp->image_target_texture_2d =
+     (void *) eglGetProcAddress("glEGLImageTargetTexture2DOES");
+   _wl_comp->image_target_renderbuffer_storage = (void *)
+     eglGetProcAddress("glEGLImageTargetRenderbufferStorageOES");
+   _wl_comp->create_image = (void *) eglGetProcAddress("eglCreateImageKHR");
+   _wl_comp->destroy_image = (void *) eglGetProcAddress("eglDestroyImageKHR");
 
    _wl_comp->bind_display = 
      (void *)eglGetProcAddress("eglBindWaylandDisplayWL");
@@ -136,6 +147,9 @@ e_mod_comp_wl_comp_init(void)
      _wl_comp->bind_display(_wl_comp->egl.display, _wl_disp);
 
    wl_list_init(&_wl_comp->surfaces);
+
+// spring init
+// screenshooter init
 
    wl_data_device_manager_init(_wl_disp);
 
