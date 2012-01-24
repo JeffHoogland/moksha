@@ -182,10 +182,8 @@ _notification_popup_merge(E_Notification *n)
    if (len < 65536) body_final = alloca(len + 1);
    else body_final = malloc(len + 1);
    /* Hack to allow e to include markup */
-   if (e_notification_replaces_id_get(n) == -1)
-      snprintf(body_final, len + 1, "%s<ps>%s", body_old, body_new);
-   else
-      snprintf(body_final, len + 1, "%s\xE2\x80\xA9%s", body_old, body_new);
+   snprintf(body_final, len + 1, "%s<ps/>%s", body_old, body_new);
+
    /* printf("set body %s\n", body_final); */
 
    e_notification_body_set(n, body_final);
