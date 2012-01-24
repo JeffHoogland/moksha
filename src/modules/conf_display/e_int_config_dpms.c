@@ -9,6 +9,7 @@ static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 static void _cb_standby_slider_change(void *data, Evas_Object *obj);
 static void _cb_suspend_slider_change(void *data, Evas_Object *obj);
 static void _cb_off_slider_change(void *data, Evas_Object *obj);
+static void _cb_backlight_slider_change(void *data, Evas_Object *obj);
 
 static int _e_int_config_dpms_available(void);
 static int _e_int_config_dpms_capable(void);
@@ -22,11 +23,13 @@ struct _E_Config_Dialog_Data
    Evas_Object *standby_slider;
    Evas_Object *suspend_slider;
    Evas_Object *off_slider;
+   Evas_Object *backlight_slider;
 
    int enable_dpms;
    int enable_standby;
    int enable_suspend;
    int enable_off;
+   int enable_idle_dim;
 
    /*
     * The following timeouts are represented as minutes
@@ -39,6 +42,7 @@ struct _E_Config_Dialog_Data
    
    double backlight_normal;
    double backlight_dim;
+   double backlight_timeout;
    double backlight_transition;
 };
 
@@ -142,6 +146,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->backlight_normal = e_config->backlight.normal * 100.0;
    cfdata->backlight_dim = e_config->backlight.dim * 100.0;
    cfdata->backlight_transition = e_config->backlight.transition;
+   cfdata->enable_idle_dim = e_config->backlight.idle_dim;
+   cfdata->backlight_timeout = e_config->backlight.timer;
 }
 
 static void
@@ -192,6 +198,7 @@ _apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->backlight.normal = cfdata->backlight_normal / 100.0;
    e_config->backlight.dim = cfdata->backlight_dim / 100.0;
    e_config->backlight.transition = cfdata->backlight_transition;
+   e_config->backlight.timer = cfdata->backlight_timeout;
 
    e_backlight_mode_set(NULL, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(NULL, e_config->backlight.normal, -1.0);
@@ -214,7 +221,8 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
 	  (e_config->dpms_off_timeout / 60 != cfdata->off_timeout) ||
           (e_config->backlight.normal * 100.0 != cfdata->backlight_normal) ||
           (e_config->backlight.dim * 100.0 != cfdata->backlight_dim) ||
-          (e_config->backlight.transition != cfdata->backlight_transition);
+          (e_config->backlight.transition != cfdata->backlight_transition) ||
+          (e_config->backlight.timer != cfdata->backlight_timeout);
 }
 
 static int
@@ -301,6 +309,16 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 			    &(cfdata->backlight_dim), NULL, 100);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    
+   ob = e_widget_check_add(evas, _("Idle Fade Time"), &(cfdata->enable_off));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_disabled_set(ob, cfdata->enable_idle_dim); // set state from saved config
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 0.5, 90.0, 1.0, 0,
+			    &(cfdata->backlight_timeout), NULL, 100);
+   e_widget_on_change_hook_set(ob, _cb_backlight_slider_change, cfdata);
+   cfdata->backlight_slider = ob;
+   e_widget_disabled_set(ob, cfdata->enable_idle_dim); // set state from saved config
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   
    ob = e_widget_label_add(evas, _("Fade Time"));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 5.0, 0.1, 0,
@@ -362,6 +380,30 @@ _cb_suspend_slider_change(void *data, Evas_Object *obj __UNUSED__)
 }
 
 static void
+_cb_backlight_slider_change(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+
+   /* off-slider */
+   if (cfdata->backlight_timeout < cfdata->suspend_timeout)
+     {
+        cfdata->suspend_timeout = cfdata->backlight_timeout;
+        if (cfdata->suspend_slider)
+          e_widget_slider_value_double_set(cfdata->suspend_slider,
+               cfdata->suspend_timeout);
+
+        if (cfdata->suspend_timeout < cfdata->backlight_timeout)
+          {
+             cfdata->backlight_timeout = cfdata->suspend_timeout;
+             if (cfdata->backlight_slider)
+               e_widget_slider_value_double_set(cfdata->backlight_slider,
+             cfdata->backlight_timeout);
+          }
+     }
+   e_backlight_update();
+}
+
+static void
 _cb_off_slider_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -369,18 +411,18 @@ _cb_off_slider_change(void *data, Evas_Object *obj __UNUSED__)
    /* off-slider */
    if (cfdata->off_timeout < cfdata->suspend_timeout)
      {
-	cfdata->suspend_timeout = cfdata->off_timeout;
-	if (cfdata->suspend_slider)
-	  e_widget_slider_value_double_set(cfdata->suspend_slider,
-					   cfdata->suspend_timeout);
+        cfdata->suspend_timeout = cfdata->off_timeout;
+        if (cfdata->suspend_slider)
+          e_widget_slider_value_double_set(cfdata->suspend_slider,
+               cfdata->suspend_timeout);
 
-	if (cfdata->suspend_timeout < cfdata->standby_timeout)
-	  {
-	     cfdata->standby_timeout = cfdata->suspend_timeout;
-	     if (cfdata->standby_slider)
-	       e_widget_slider_value_double_set(cfdata->standby_slider,
-						cfdata->standby_timeout);
-	  }
+        if (cfdata->suspend_timeout < cfdata->standby_timeout)
+          {
+             cfdata->standby_timeout = cfdata->suspend_timeout;
+             if (cfdata->standby_slider)
+               e_widget_slider_value_double_set(cfdata->standby_slider,
+             cfdata->standby_timeout);
+          }
      }
 }
 

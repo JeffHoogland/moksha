@@ -882,6 +882,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, backlight.normal, DOUBLE);
    E_CONFIG_VAL(D, T, backlight.dim, DOUBLE);
    E_CONFIG_VAL(D, T, backlight.transition, DOUBLE);
+   E_CONFIG_VAL(D, T, backlight.idle_dim, UCHAR);
+   E_CONFIG_VAL(D, T, backlight.timer, DOUBLE);
 
    E_CONFIG_VAL(D, T, deskenv.load_xrdb, UCHAR);
    E_CONFIG_VAL(D, T, deskenv.load_xmodmap, UCHAR);
@@ -1159,6 +1161,8 @@ e_config_load(void)
         COPYVAL(backlight.normal);
         COPYVAL(backlight.dim);
         COPYVAL(backlight.transition);
+        COPYVAL(backlight.idle_dim);
+        COPYVAL(backlight.timer);
         IFCFGEND;
 
         IFCFG(0x0145);
