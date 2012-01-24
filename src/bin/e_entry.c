@@ -1450,7 +1450,7 @@ _e_entry_cb_imf_event_commit(void *data, Ecore_IMF_Context *ctx __UNUSED__, void
 }
 
 static void
-_e_entry_cb_imf_event_preedit_changed(void *data, Ecore_IMF_Context *ctx __UNUSED__, void *event_info)
+_e_entry_cb_imf_event_preedit_changed(void *data, Ecore_IMF_Context *ctx __UNUSED__, void *event_info __UNUSED__)
 {
    Evas_Object *entry;
    E_Entry_Smart_Data *sd;
