@@ -1,14 +1,14 @@
 # Arabic translation for enlightenment
 # Copyright (c) 2009 Free Software Foundation.
 # This file is distributed under the same license as the enlightenment package.
-# Nizar Kerkeni <nizar.kerkeni@gmail.com>, 2009.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2011-11-29 09:56+0900\n"
-"PO-Revision-Date: 2011-12-07 20:52+0300\n"
+"PO-Revision-Date: 2012-01-24 02:29+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "Language: ar\n"
@@ -52,7 +52,7 @@ msgstr "إنلايتنمينت"
 
 #: src/bin/e_about.c:23
 msgid "<title>Copyright &copy; 1999-2011, by the Enlightenment Development Team</><br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and it is not stable. Many features are incomplete or even non-existent yet and may have many bugs. You have been <hilight>WARNED!</>"
-msgstr "<title>حقوق التأليف والنشر © 1999-2011 ، من قبل فريق تطوير إنلايتنمنت. <br><br>نأمل أن تستمتع باستخدام هذا البرنامج بقدر ما تمتعنا به عند كتابته. <br><br>تم توفير هذا البرنامج بدون أي ضمان . كما أن هذا البرنامج مقيد بشروط الترخيص ، لذلك يرجى اﻹطلاع على ملفات الترخيص المثبت على نظامك. <br><br>لايزال انلايتنمنت تحت <hilight>التطوير المستمر</>كما أنه ليس مستقرا بشكل كامل. يجدر بنا اﻹشارة هنا أن العديد من الميزات غير مكتملة أو حتى غير موجودة بعد وربما تكون بها العديد من اﻷخطاء. لهذا قد تم <hilight>تحذيرك!</>"
+msgstr "<title>حقوق التأليف والنشر © 1999-2011 ، من قبل فريق تطوير إنلايتنمنت. </><br><br>نأمل أن تستمتع باستخدام هذا البرنامج بقدر ما تمتعنا به عند كتابته. <br><br>تم توفير هذا البرنامج بدون أي ضمان . كما أن هذا البرنامج مقيد بشروط الترخيص ، لذلك يرجى اﻹطلاع على ملفات الترخيص المثبت على نظامك. <br><br>لايزال انلايتنمنت تحت <hilight>التطوير المستمر</>كما أنه ليس مستقرا بشكل كامل. يجدر بنا اﻹشارة هنا أن العديد من الميزات غير مكتملة أو حتى غير موجودة بعد وربما تكون بها العديد من اﻷخطاء. لهذا قد تم <hilight>تحذيرك!</>"
 
 #: src/bin/e_about.c:48
 msgid "<title>The Team</><br><br>"
@@ -389,7 +389,7 @@ msgstr "اعرض سطح المكتب"
 
 #: src/bin/e_actions.c:2837
 msgid "Show The Shelf"
-msgstr "اعرض الدرج"
+msgstr "اعرض الرف"
 
 #: src/bin/e_actions.c:2842
 msgid "Flip Desktop To..."
@@ -858,11 +858,11 @@ msgstr "ألغ"
 #: src/bin/e_config.c:972
 #: src/bin/e_config.c:1005
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
-msgstr "إعدادات الضبط تحتاج للترقية. إعداداتك القديمة <br>قد تم محوها ، و مجموعة جديدة من اﻹعدادات الافتراضية تم تهيئتها. <br>هذا  يحدث بشكل منتظم خلال التطوير ، وبالتالي لا ترسل تقرير <br>بخطأ. هذا يعني ببساطة أن انليتمنت تحتاج ﻹعدادات جديدة <br>البيانات اﻷساسية للوظائف المستخدمة يمكن استخدامها في اﻹعدادات <br>القديمة ببساطة . هذه مجموعة جديدة من اﻹعدادات اﻹفتراضية التي ستقوم باﻹصلاح <br>بإضافتها يمكنك إعادة إعداد اﻷشياء اﻵن إلى حسابك <br>كما كانت. آسف للتدخل في اﻹعدادات الخاصة بك. <br>"
+msgstr "إعدادات الضبط تحتاج للترقية. إعداداتك القديمة <br>قد أُزيلت ، و واحدة أخرى جديدة و افتراضية قد هيئت. <br>سيحدث هذا بانتظام أثناء التطوير ، لذا لا تبلغ بوجود<br>علة. هذا يعني بكل بساطة أن إنلايتنمينت يحتاج لبيانات إعدادات جديدة <br>إفتراضيا لتحصل على أداء أفضل<br>كانت إعداداتك القديمة تفتقر لتوفيره .  هذه اﻹعدادات الجديدة ستصلح <br>ذلك عبر إضافتها فيها. يمكنك اﻵن إعادة إعداد اﻷشياء حسب<br>رغبتك. نأسف ﻹزعاجك.. <br>"
 
 #: src/bin/e_config.c:989
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "إعداداتك أحدث من إصدارة إنلايتنمينت هذه . هذا غريب<br>جدا. يجب أن لا يحدث هذا إلا إذا خفضت<br>إصدارة إنلايتنمينت أو نسخت إعدادات من مكان آخر<br> يحتوي على إصدارة جديدة من إنلايتنمينت. هذا سيء <br>و احتياطا فإن إعداداتك تم إرجاعها إلى <br>اﻹفتراضية. نأسف على اﻹزعاج.<br>"
+msgstr "إعداداتك أحدث من إصدار إنلايتنمينت. هذا غريب<br>جدا. لا يجب لهذا أن يحدث إلا إذا خفضت<br>إصدار إنلايتنمينت أو نسختَ اﻹعدادات من مكان آخر<br>يحتوي نسخة جديدة من إنلايتنمينت تعمل عليه. هذا سيء<br>و كإجراء إحترازي فإن إعداداتك ستعاد إلى<br>اﻹفتراضيات. نأسف ﻹزعاجك.<br>"
 
 #: src/bin/e_config.c:1598
 #: src/bin/e_config.c:2216
@@ -1020,7 +1020,7 @@ msgstr "فشل القفل"
 
 #: src/bin/e_desklock.c:237
 msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
-msgstr "فشل قفل سطح المكتب لئن بعض البرامج<br>مسكت إما لوحة المفاتيح أو الفأرة أو كليهما<br>ولايمكن كسر مسكتهم."
+msgstr "فشل قفل سطح المكتب لأن بعض البرامج<br>مسكت إما لوحة المفاتيح أو الفأرة أو كليهما<br>ولايمكن كسر مسكتهم."
 
 #: src/bin/e_desklock.c:322
 msgid "Please enter your unlock password"
@@ -1028,12 +1028,12 @@ msgstr "ادخل كلمة مرور فك القفل"
 
 #: src/bin/e_desklock.c:712
 msgid "Authentication System Error"
-msgstr "فشل التوثيق من النظام"
+msgstr "خطأ نظام التوثيق"
 
 #: src/bin/e_desklock.c:713
 #, c-format
 msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
-msgstr "حصلت أخطاء أثناء التوثيق عن طريق جلسة توثيق بام(PAM). كود الخلل هو <hilight>%i</hilight>. هذا سيئ ولا يجب أن يحدث. يرجى إبلاغنا بهذه العلة."
+msgstr "التوثيق عبر (PAM) به خطأ إعداد<br>جلسة التوثيق. شفرة الخطأ كانت<hilight>%i</hilight>.<br>هذا سيء و يجب أن لا يحدث. رجاء بلغ عن هذه العلة."
 
 #: src/bin/e_desklock.c:1041
 #: src/bin/e_screensaver.c:136
@@ -1042,7 +1042,7 @@ msgstr "تفعيل نمط العرض؟"
 
 #: src/bin/e_desklock.c:1044
 msgid "You unlocked desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
-msgstr "لقد قمت بإلغاء قفل سطح المكتب بشكل صحيح.<br><br>هل تريد تمكين <b>وضع</b> العرض و إيقاف قفل و حافظة الشاشة , وإدارة طاقتها بشكل مؤقت؟"
+msgstr "لقد قمت بفك قفل سطح المكتب بشكل سريع.<br><br>هل تريد تمكين وضع <b>العرض</b>  و تعطيل قفل حافظة الشاشة , وإدارة الطاقة بشكل مؤقت؟"
 
 #: src/bin/e_desklock.c:1054
 #: src/bin/e_screensaver.c:149
@@ -1056,11 +1056,11 @@ msgstr "لا, وتوقف عن السؤال"
 
 #: src/bin/e_eap_editor.c:174
 msgid "Incomplete Window Properties"
-msgstr "خيارات النافذة غير كاملة"
+msgstr "خصائص النافذة غير كاملة"
 
 #: src/bin/e_eap_editor.c:175
 msgid "The window you are creating an icon for<br>does not contain window name and class<br>properties, so the needed properties for<br>the icon so that it will be used for this<br>window cannot be guessed. You will need to<br>use the window title instead. This will only<br>work if the window title is the same at<br>the time the window starts up, and does not<br>change."
-msgstr "النافذة التي تحاول إنشاء أيقونه لها<br>لا تحتوي على إسم للنافذة ولا خصائص <br>التصنيف, لذلك فالخصائص المطلوبة لهذه اﻷيقونة ليتم إستخدامها<br>لهذه النافذة لا يمكن توقعها. أنت تحتاج إلى<br>إستخدام عنوان النافذة كبديل. هذا سيعمل فقط <br> في حالة أن عنوان النافذة متطابق في <br>نفس الوقت عمل النافذة الرئيسية , ولم<br>يتغير."
+msgstr "النافذة التي تحاول إنشاء أيقونه لها<br>لا تحتوي على إسم نافذة ولا خصائص <br>التصنيف, لذلك فالخصائص المطلوبة لهذه اﻷيقونة ليتم إستخدامها<br>لهذه النافذة لا يمكن توقعها. ستحتاج إلى<br>إستخدام عنوان النافذة كبديل. هذا سيعمل فقط <br> في حالة أن عنوان النافذة نفسه <br> وقت عمل النافذة , و لم<br>يتغير."
 
 #: src/bin/e_eap_editor.c:230
 #, fuzzy
@@ -1081,7 +1081,7 @@ msgstr "التعليق"
 
 #: src/bin/e_eap_editor.c:704
 msgid "URL"
-msgstr "URL"
+msgstr "الرابط"
 
 #: src/bin/e_eap_editor.c:726
 #: src/bin/e_eap_editor.c:735
@@ -1103,7 +1103,7 @@ msgstr "فئة النافذة"
 #: src/bin/e_eap_editor.c:751
 #: src/modules/fileman/e_int_config_mime.c:169
 msgid "Categories"
-msgstr "اﻷقسام"
+msgstr "المجموعات"
 
 #: src/bin/e_eap_editor.c:758
 msgid "Mime Types"
@@ -1141,11 +1141,11 @@ msgstr "خيارات"
 
 #: src/bin/e_eap_editor.c:817
 msgid "Select an Icon"
-msgstr "إختر أيقونة"
+msgstr "اختر أيقونة"
 
 #: src/bin/e_eap_editor.c:883
 msgid "Select an Executable"
-msgstr "إختر ملف تنفيذي"
+msgstr "اختر ملف تنفيذي"
 
 #: src/bin/e_entry.c:496
 #: src/bin/e_fm.c:8208
@@ -1154,7 +1154,7 @@ msgstr "إختر ملف تنفيذي"
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:108
 msgid "Delete"
-msgstr "حذف"
+msgstr "امح"
 
 #: src/bin/e_entry.c:506
 #: src/bin/e_fm.c:8116
@@ -1189,17 +1189,17 @@ msgstr "خلل في التشغيل"
 
 #: src/bin/e_exec.c:218
 msgid "Enlightenment was unable to get current directory"
-msgstr "عجز إنلايتنمينت عن الحصول على الدليل الحالي"
+msgstr "عجز إنلايتنمينت عن الحصول على المجلد الحالي"
 
 #: src/bin/e_exec.c:225
 #, c-format
 msgid "Enlightenment was unable to change to directory:<br><br>%s"
-msgstr "لا يستطيع إنلايتنمينت التغيير إلى الدليل:<br><br>%s<br>"
+msgstr "لا يستطيع إنلايتنمينت التغيير إلى المجلد:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:237
 #, c-format
 msgid "Enlightenment was unable to restore to directory:<br><br>%s"
-msgstr "لا يستطيع إنلايتنمينت اﻹستعادة إلى الدليل:<br><br>%s<br>"
+msgstr "لا يستطيع إنلايتنمينت اﻹستعادة إلى المجلد:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:261
 #, fuzzy, c-format
@@ -1213,7 +1213,7 @@ msgstr "خلل في تشغيل البرنامج"
 #: src/bin/e_exec.c:391
 #, c-format
 msgid "Enlightenment was unable to run the application:<br><br>%s<br><br>The application failed to start."
-msgstr "لا يستطيع إنلايتنمينت تشغيل البرنامج:<br><br>%s<br><br>لسبب فشل البرنامج في البدء."
+msgstr "لا يستطيع إنلايتنمينت تشغيل البرنامج:<br><br>%s<br><br>فشل البرنامج في البدء."
 
 #: src/bin/e_exec.c:491
 msgid "Application Execution Error"
@@ -1222,62 +1222,62 @@ msgstr "فشل تنفيذ البرنامج"
 #: src/bin/e_exec.c:503
 #, c-format
 msgid "%s stopped running unexpectedly."
-msgstr "%s فشل في التشغيل بشكل غير متوقع."
+msgstr "%s توقف عن التشغيل بشكل غير متوقع."
 
 #: src/bin/e_exec.c:509
 #, c-format
 msgid "An exit code of %i was returned from %s."
-msgstr "أمر خروج من %i عاد من %s."
+msgstr "تشفير خروج من %i عاد من %s."
 
 #: src/bin/e_exec.c:517
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
-msgstr "%s تم إعتراضه بواسطة إشارة إعتراض."
+msgstr "%s تمت مقاطعته بواسطة إشارة مقاطعة."
 
 #: src/bin/e_exec.c:520
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
-msgstr "%s تم إعتراضه بواسطة إشارة خروج"
+msgstr "%s تمت مقاطعته بواسطة إشارة خروج"
 
 #: src/bin/e_exec.c:524
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
-msgstr "%s تم إعتراضه بواسطة إشارة إلغاء"
+msgstr "%s تمت مقاطعته بواسطة إشارة إحباط"
 
 #: src/bin/e_exec.c:527
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
-msgstr "%s تم إعتراضه بواسطة خطأ النقطة العائمة(floating point)."
+msgstr "%s تمت مقاطعته بواسطة خطأ النقطة العائمة (floating point)."
 
 #: src/bin/e_exec.c:531
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
-msgstr "%s تم إعتراضه بواسطة إشارة قتل."
+msgstr "%s تمت مقاطعته بواسطة إشارة قتل."
 
 #: src/bin/e_exec.c:535
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
-msgstr "%s تم إعتراضه بواسطة خطأ في الترقيم(segmentation fault)."
+msgstr "%s تمت مقاطعته بواسطة خطأ في الترقيم (segmentation fault)."
 
 #: src/bin/e_exec.c:539
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
-msgstr "%s تم إعتراضه بسبب أنبوب مكسور (broken pipe)."
+msgstr "%s تمت مقاطعته بسبب أنبوب مكسور (broken pipe)."
 
 #: src/bin/e_exec.c:542
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
-msgstr "%s تم اﻹعتراض بسبب إشارة إنهاء"
+msgstr "%s تمت مقاطعته بسبب إشارة إنهاء"
 
 #: src/bin/e_exec.c:546
 #, c-format
 msgid "%s was interrupted by a Bus Error."
-msgstr "%s تم اﻹعتراض بسبب خطأ في المسار"
+msgstr "%s تمت مقاطعته بسبب خطأ في المسار"
 
 #: src/bin/e_exec.c:549
 #, c-format
 msgid "%s was interrupted by the signal number %i."
-msgstr " تمت مقاطعة %s بواسطة اﻹشارة رقم %i."
+msgstr "%s تمت مقاطعته بواسطة اﻹشارة رقم %i."
 
 #: src/bin/e_exec.c:605
 msgid "***The remaining output has been truncated. Save the output to view.***\n"
@@ -1303,24 +1303,24 @@ msgstr "احفظ هذه الرسالة"
 #: src/bin/e_exec.c:760
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
-msgstr "سجل الخطأ هذا سيتم حفظه في ملف باسم %s/%s.log"
+msgstr "سيُحفظ سجل الخطأ هذا باسم %s/%s.log"
 
 #: src/bin/e_exec.c:707
 msgid "Error Information"
-msgstr "خطأ في المعلومات"
+msgstr "معلومات الخطأ"
 
 #: src/bin/e_exec.c:715
 msgid "Error Signal Information"
-msgstr "خلل إشارة المعلومات"
+msgstr "معلومات خلل إشارة"
 
 #: src/bin/e_exec.c:725
 #: src/bin/e_exec.c:732
 msgid "Output Data"
-msgstr "معلومات المخرجات"
+msgstr "بيانات المخرجات"
 
 #: src/bin/e_exec.c:733
 msgid "There was no output."
-msgstr "لا يوجد مخرج."
+msgstr "لا يوجد مُخرج."
 
 #: src/bin/e_fm.c:976
 msgid "Nonexistent path"
@@ -1333,7 +1333,7 @@ msgstr "%s غير موجود."
 
 #: src/bin/e_fm.c:3045
 msgid "Mount Error"
-msgstr "خطأ عند التوصيل"
+msgstr "خطأ توصيل"
 
 #: src/bin/e_fm.c:3045
 msgid "Can't mount device"
@@ -1382,22 +1382,22 @@ msgstr "Inherit parent settings"
 #: src/bin/e_fm.c:8050
 #: src/modules/fileman/e_mod_config.c:219
 msgid "View Mode"
-msgstr "أسلوب العرض"
+msgstr "وضع العرض"
 
 #: src/bin/e_fm.c:7897
 #: src/bin/e_fm.c:8057
 msgid "Refresh View"
-msgstr "تحديث العرض"
+msgstr "حدِّث العرض"
 
 #: src/bin/e_fm.c:7905
 #: src/bin/e_fm.c:8065
 msgid "Show Hidden Files"
-msgstr "اظهر الملفات المخفية"
+msgstr "اعرض الملفات المخفية"
 
 #: src/bin/e_fm.c:7917
 #: src/bin/e_fm.c:8077
 msgid "Remember Ordering"
-msgstr "احفظ الترتيب"
+msgstr "تذكر الترتيب"
 
 #: src/bin/e_fm.c:7926
 #: src/bin/e_fm.c:8086
@@ -1420,7 +1420,7 @@ msgstr "افصل"
 
 #: src/bin/e_fm.c:8240
 msgid "Mount"
-msgstr "وصل"
+msgstr "أوصل"
 
 #: src/bin/e_fm.c:8245
 msgid "Eject"
@@ -1465,21 +1465,21 @@ msgstr "حجم اﻷيقونة (%d)"
 #: src/bin/e_fm.c:8614
 #: src/bin/e_fm.c:8820
 msgid "Set background..."
-msgstr "تعيين الخلفية..."
+msgstr "عين خلفية..."
 
 #: src/bin/e_fm.c:8619
 #: src/bin/e_fm.c:8864
 msgid "Set overlay..."
-msgstr "تعيين الغطاء..."
+msgstr "عين غطاء..."
 
 #: src/bin/e_fm.c:8718
 #: src/modules/conf_theme/e_int_config_theme.c:1032
 msgid "Clear"
-msgstr "مسح"
+msgstr "امح"
 
 #: src/bin/e_fm.c:8944
 msgid "Create a new Directory"
-msgstr "انشء مجلد جديد"
+msgstr "انشئ مجلد جديد"
 
 #: src/bin/e_fm.c:8945
 msgid "New Directory Name:"
@@ -1492,7 +1492,7 @@ msgstr "أعد تسمية %s إلى:"
 
 #: src/bin/e_fm.c:9001
 msgid "Rename File"
-msgstr "غير اسم الملف"
+msgstr "أعد تسمية الملف"
 
 #: src/bin/e_fm.c:9142
 #: src/bin/e_fm.c:9283
@@ -1511,11 +1511,11 @@ msgstr "%s"
 
 #: src/bin/e_fm.c:9204
 msgid "No to all"
-msgstr "لا للجميع"
+msgstr "لا للكل"
 
 #: src/bin/e_fm.c:9206
 msgid "Yes to all"
-msgstr "نعم للجميع"
+msgstr "نعم للكل"
 
 #: src/bin/e_fm.c:9209
 msgid "Warning"
@@ -1524,7 +1524,7 @@ msgstr "تحذير"
 #: src/bin/e_fm.c:9212
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
-msgstr "الملف موجود من قبل, اكتب فوقه؟<br><hilight>%s</hilight>"
+msgstr "الملف موجود من قبل, اكتب عليه؟<br><hilight>%s</hilight>"
 
 #: src/bin/e_fm.c:9285
 msgid "Ignore this"
@@ -1541,17 +1541,17 @@ msgstr "حدث خلل أثناء تنفيذ عملية.<br>%s"
 
 #: src/bin/e_fm.c:9462
 msgid "Confirm Delete"
-msgstr "تأكيد الحذف"
+msgstr "أكِّد المحو"
 
 #: src/bin/e_fm.c:9467
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
-msgstr "هل أنك متأكد من أنك تريد خذف<br><hilight>%s</hilight> ؟"
+msgstr "هل أنت متأكد من أنك تريد محو<br><hilight>%s</hilight> ؟"
 
 #: src/bin/e_fm.c:9473
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</hilight> ?"
-msgstr "هل تريد تأكيد مسح<br>الملفات %d التي إخترتها في:<br><hilight>%s</hilight> ?"
+msgstr "هل تريد تأكيد محو<br>الملفات %d التي إخترتها في:<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm_device.c:33
 #, c-format
@@ -1581,7 +1581,7 @@ msgstr "%llu بايت"
 #: src/bin/e_fm_device.c:74
 #, c-format
 msgid "Unknown Volume"
-msgstr "حجم غير معروفة"
+msgstr "حجم غير معروف"
 
 #: src/bin/e_fm_device.c:326
 msgid "Removable Device"
@@ -1646,7 +1646,7 @@ msgstr "اﻹفتراضي"
 
 #: src/bin/e_fm_prop.c:429
 msgid "Thumbnail"
-msgstr "صورة مصغرة"
+msgstr "مصغرة"
 
 #: src/bin/e_fm_prop.c:432
 #: src/modules/conf_display/e_int_config_desklock.c:298
@@ -1659,16 +1659,16 @@ msgstr "استخدم هذه اﻷيقونة لكل الملفات من هذا ا
 
 #: src/bin/e_fm_prop.c:450
 msgid "Link Information"
-msgstr "اربط المعلومة"
+msgstr "معلومات اﻹرتباط"
 
 #: src/bin/e_fm_prop.c:496
 msgid "Select an Image"
-msgstr "إختر صورة"
+msgstr "اختر صورة"
 
 #: src/bin/e_gadcon.c:1378
 #: src/bin/e_int_border_menu.c:118
 msgid "Move to"
-msgstr "إنقل إلى"
+msgstr "انقل إلى"
 
 #: src/bin/e_gadcon.c:1423
 msgid "Automatically scroll contents"
@@ -1699,7 +1699,7 @@ msgstr "المظهر"
 #: src/modules/gadman/e_mod_gadman.c:815
 #: src/modules/ibar/e_mod_main.c:801
 msgid "Remove"
-msgstr "حذف"
+msgstr "أزل"
 
 #: src/bin/e_gadcon.c:1991
 msgid "Stop moving"
@@ -1711,7 +1711,7 @@ msgid ""
 "on this screen. Aborting startup.\n"
 msgstr ""
 "هنالك نموذج من إنلايتنمينت لايزال قيد التفعيل\n"
-"في هذه الشاشة. تم إلغاء بدء التشغيل.\n"
+"على هذه الشاشة. أحبط بدء التشغيل.\n"
 
 #: src/bin/e_int_border_locks.c:64
 msgid "Window Locks"
@@ -1723,15 +1723,15 @@ msgstr "اﻷقفال العامة"
 
 #: src/bin/e_int_border_locks.c:283
 msgid "Lock the Window so it does only what I tell it to"
-msgstr "أقفل النافذة فلن تفعل إلى ما أأمرها بفعله"
+msgstr "أقفل النافذة فلن تفعل إلا ما آمرها بفعله"
 
 #: src/bin/e_int_border_locks.c:285
 msgid "Protect this window from me accidentally changing it"
-msgstr "أحمي هذه النافذة من أن اغيرها بالخطأ"
+msgstr "أحمِ هذه النافذة من أن اغيرها بالخطأ"
 
 #: src/bin/e_int_border_locks.c:287
 msgid "Protect this window from being accidentally closed because it is important"
-msgstr "احمي هذه النافذة من أن تغلق بالخطأ لئنها مهمة"
+msgstr "احمِ هذه النافذة من أن تغلق بالخطأ لأنها مهمة"
 
 #: src/bin/e_int_border_locks.c:289
 msgid "Do not allow the border to change on this window"
@@ -1739,7 +1739,7 @@ msgstr "لا تسمح للحدود بالتغير في هذه النافذة"
 
 #: src/bin/e_int_border_locks.c:292
 msgid "Remember these Locks for this window next time it appears"
-msgstr "تذكر هذه اﻷقفال لهذه النافذة ستظهر في المرة القادمة"
+msgstr "تذكر هذه اﻷقفال لهذه النافذة وقت ظهورها اﻵخر"
 
 #: src/bin/e_int_border_locks.c:305
 msgid "Lock program changing:"
@@ -1787,18 +1787,18 @@ msgstr "اﻹلتصاق"
 #: src/bin/e_int_border_locks.c:335
 #: src/bin/e_int_border_remember.c:729
 msgid "Shaded state"
-msgstr "حالة تضليل"
+msgstr "حالة مضللة"
 
 #: src/bin/e_int_border_locks.c:318
 #: src/bin/e_int_border_locks.c:337
 msgid "Maximized state"
-msgstr "حالة تكبير"
+msgstr "حالة مكبرة"
 
 #: src/bin/e_int_border_locks.c:320
 #: src/bin/e_int_border_locks.c:339
 #: src/bin/e_int_border_remember.c:732
 msgid "Fullscreen state"
-msgstr "حالة كامل الشاشة"
+msgstr "حالة ملء الشاشة"
 
 #: src/bin/e_int_border_locks.c:324
 msgid "Lock me from changing:"
@@ -1807,7 +1807,7 @@ msgstr "أقفلني من التغيير:"
 #: src/bin/e_int_border_locks.c:341
 #: src/bin/e_int_border_remember.c:717
 msgid "Border style"
-msgstr "نمط الحدود"
+msgstr "اسلوب الحدود"
 
 #: src/bin/e_int_border_locks.c:345
 msgid "Stop me from:"
@@ -1857,7 +1857,7 @@ msgstr "إعدادات"
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 msgid "Fullscreen"
-msgstr "كامل الشاشة"
+msgstr "ملء الشاشة"
 
 #: src/bin/e_int_border_menu.c:331
 msgid "Maximize vertically"
@@ -1889,7 +1889,7 @@ msgstr "أضف إلى  شريط التشغيل السريع IBar"
 
 #: src/bin/e_int_border_menu.c:493
 msgid "Create Keyboard Shortcut"
-msgstr "انشء إختصار لوحة المفاتيح"
+msgstr "انشئ إختصار لوحة المفاتيح"
 
 #: src/bin/e_int_border_menu.c:515
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:321
@@ -1916,19 +1916,19 @@ msgstr "NetWM"
 #: src/bin/e_int_border_menu.c:567
 #: src/bin/e_int_border_prop.c:472
 msgid "Sticky"
-msgstr "لاصق"
+msgstr "ملتصق"
 
 #: src/bin/e_int_border_menu.c:578
 msgid "Skip"
-msgstr "تخطى"
+msgstr "تخطَّ"
 
 #: src/bin/e_int_border_menu.c:620
 msgid "Iconify"
-msgstr "إجعله أيقونه"
+msgstr "صغِّر"
 
 #: src/bin/e_int_border_menu.c:632
 msgid "Shade"
-msgstr "مضلل"
+msgstr "ضلل"
 
 #: src/bin/e_int_border_menu.c:830
 #, c-format
@@ -1951,23 +1951,23 @@ msgstr "دائماً في اﻷسفل"
 
 #: src/bin/e_int_border_menu.c:975
 msgid "Pin to Desktop"
-msgstr "الصق في سطح المكتب"
+msgstr "علّق في سطح المكتب"
 
 #: src/bin/e_int_border_menu.c:986
 msgid "Unpin from Desktop"
-msgstr "أزل الصق من سطح المكتب"
+msgstr "أزل التعليق من سطح المكتب"
 
 #: src/bin/e_int_border_menu.c:1076
 msgid "Select Border Style"
-msgstr "إختر نمط الحدود"
+msgstr "اختر أسلوب الحدود"
 
 #: src/bin/e_int_border_menu.c:1088
 msgid "Use E17 Default Icon Preference"
-msgstr "استخدم إعدادات اﻷيقونات اﻹفتراضية لـE17"
+msgstr "استخدم تفضيلات اﻷيقونات اﻹفتراضية لـE17"
 
 #: src/bin/e_int_border_menu.c:1096
 msgid "Use Application Provided Icon "
-msgstr "استخدم اﻷيقونة المقدمة بواسطة التطبيق "
+msgstr "استخدم أيقونة التطبيق المقدمة"
 
 #: src/bin/e_int_border_menu.c:1104
 msgid "Use User Defined Icon"
@@ -1982,7 +1982,7 @@ msgstr "اقترح مقاومة "
 #: src/bin/e_int_border_menu.c:1173
 #: src/modules/winlist/e_mod_main.c:26
 msgid "Window List"
-msgstr "قائمة النوافذ"
+msgstr "قائمة النافذة"
 
 #: src/bin/e_int_border_menu.c:1183
 #: src/modules/pager/e_mod_main.c:257
@@ -2154,8 +2154,9 @@ msgid "You are trying to ask Enlightenment to remember to apply<br>properties (s
 msgstr "لقد طلبت من إنلايتنمينت أن لا ينسَ تطبيق<br>الخصائص (كمثل الحجم ، الموقع ، حدود ، مظهر .... ) على<br>النافذة التي <hilight>لا تملك خصائص متطابقة</hilight>.<br><br>هذا يعني أنها ستشارك خصائص اﻹسم / الصنف ، التنقل ، الوظيفة ..... <br>مع أكثر من نافذة واحدة على الشاشة وعدم نسيان <br>أن خصائص هذه النافذة سيتم تطبيقها على كل النوافذ اﻷخرى<br>التي تطابق هذه الخصائص.<br><br>هذا مجرد تحذير لك في حالة ما إذا كنت لا تنوي فعل هذا.<br>و إذا كنت قد عزمت ، فبكل بساطة اضغط <hilight>أحد زري</hilight> تطبيق <hilight>أو</hilight> موافق<br>و سيتم قبول اﻹعدادات. اضغط<hilight>إلغاء</hilight> إذا<br> لم تكن واثقا و لن يحدث أي شيء."
 
 #: src/bin/e_int_border_remember.c:516
+#, fuzzy
 msgid "No match properties set"
-msgstr "لا مجموعة خيارات متطابقة"
+msgstr "لا وجود لتطابق ضبط الخيارات"
 
 #: src/bin/e_int_border_remember.c:519
 msgid "You are trying to ask Enlightenment to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
@@ -2208,7 +2209,7 @@ msgstr "وقتية"
 
 #: src/bin/e_int_border_remember.c:704
 msgid "Properties to remember"
-msgstr "تذكر اﻹعدادات"
+msgstr "تذكر الخصائص"
 
 #: src/bin/e_int_border_remember.c:720
 msgid "Icon Preference"
@@ -2240,7 +2241,7 @@ msgstr "دائماً ركز عند البدء"
 
 #: src/bin/e_int_border_remember.c:766
 msgid "Keep current properties"
-msgstr "احتفظ باﻹعدادات الحالية"
+msgstr "احتفظ بالخصائص الحالية"
 
 #: src/bin/e_int_border_remember.c:772
 msgid "Start this program on login"
@@ -2295,7 +2296,7 @@ msgstr "تم إختيار أكثر من وحدة واحدة"
 
 #: src/bin/e_int_gadcon_config.c:38
 msgid "Shelf Contents"
-msgstr "محتويات الدرج"
+msgstr "محتويات الرف"
 
 #: src/bin/e_int_gadcon_config.c:44
 msgid "Toolbar Contents"
@@ -2383,7 +2384,7 @@ msgstr "وهمي"
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
-msgstr "الدروج"
+msgstr "الرفوف"
 
 #: src/bin/e_int_menus.c:298
 msgid "Show/Hide All Windows"
@@ -2400,7 +2401,7 @@ msgstr "عين أسطح مكتب إفتراضية"
 #: src/bin/e_int_menus.c:1132
 #: src/bin/e_int_menus.c:1316
 msgid "(No Windows)"
-msgstr "( لا نوافذ )"
+msgstr "( بلا نوافذ )"
 
 #: src/bin/e_int_menus.c:1226
 #: src/bin/e_int_menus.c:1328
@@ -2409,20 +2410,20 @@ msgstr "لا اسم!!"
 
 #: src/bin/e_int_menus.c:1419
 msgid "(No Shelves)"
-msgstr "( لا أدرج )"
+msgstr "( بلا رفوف )"
 
 #: src/bin/e_int_menus.c:1483
 msgid "Add A Shelf"
-msgstr "أضف درج"
+msgstr "أضف رفًّا"
 
 #: src/bin/e_int_menus.c:1490
 msgid "Delete A Shelf"
-msgstr "احذف درج"
+msgstr "احذف رفًّا"
 
 #: src/bin/e_int_shelf_config.c:43
 #: src/modules/conf_shelves/e_int_config_shelf.c:44
 msgid "Shelf Settings"
-msgstr "إعدادات الدرج"
+msgstr "إعدادات الرف"
 
 #: src/bin/e_int_shelf_config.c:123
 msgid "Above Everything"
@@ -2438,7 +2439,7 @@ msgstr "تحت كل شيئ"
 
 #: src/bin/e_int_shelf_config.c:129
 msgid "Allow windows to overlap the shelf"
-msgstr "اسمح للنوافذ بالتداخل مع الدرج"
+msgstr "اسمح للنوافذ بالتداخل مع الرف"
 
 #: src/bin/e_int_shelf_config.c:179
 #, c-format
@@ -2456,7 +2457,7 @@ msgstr "مظهر"
 
 #: src/bin/e_int_shelf_config.c:199
 msgid "Auto-hide the shelf"
-msgstr "إخفاء تلقائي للدرج"
+msgstr "إخفاء تلقائي للرف"
 
 #: src/bin/e_int_shelf_config.c:204
 msgid "Show on mouse in"
@@ -2891,7 +2892,7 @@ msgstr "لا يستطيع إنلايتنمينت ضبط نظام اﻹرتباط
 
 #: src/bin/e_main.c:835
 msgid "Setup Shelves"
-msgstr "ضبط الدروج"
+msgstr "ضبط الرفوف"
 
 #: src/bin/e_main.c:846
 msgid "Setup Thumbnailer"
@@ -2931,7 +2932,7 @@ msgstr "تحميل الوحدات"
 
 #: src/bin/e_main.c:938
 msgid "Configure Shelves"
-msgstr "التحكم في الدروج"
+msgstr "التحكم في الرفوف"
 
 #: src/bin/e_main.c:949
 msgid "Almost Done"
@@ -2989,7 +2990,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1442
 msgid "Enlightenment found Evas can't load SVG files. Check Evas has SVG loader support.\n"
-msgstr "وجد إنلايتنمينت أن Evas لا يستطيع  تحميل ملفات PNG. تفقّد دعم Evas لمحمّل SVG .\n"
+msgstr "وجد إنلايتنمينت أن Evas لا يستطيع  تحميل ملفاتSVG. تفقّد دعم Evas لمحمّل SVG .\n"
 
 #: src/bin/e_main.c:1452
 msgid "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader support.\n"
@@ -3080,16 +3081,16 @@ msgstr "لقد عطلت حافظة الشاشة بشكل سريع جدا.<br><br
 
 #: src/bin/e_shelf.c:165
 msgid "Shelf #"
-msgstr "الدرج #"
+msgstr "الرف #"
 
 #: src/bin/e_shelf.c:1304
 #: src/modules/conf_shelves/e_int_config_shelf.c:291
 msgid "Are you sure you want to delete this shelf?"
-msgstr "هل أنت متأكد أنك تريد حذف هذا الدرج؟"
+msgstr "هل أنت متأكد أنك تريد حذف هذا الرف؟"
 
 #: src/bin/e_shelf.c:1305
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
-msgstr "لقد طلبت حذف هذا الدرج.<br><br>هل أنت متاكد أنك تريد حذفه؟"
+msgstr "لقد طلبت حذف هذا الرف.<br><br>هل أنت متاكد أنك تريد حذفه؟"
 
 #: src/bin/e_shelf.c:1680
 msgid "Stop Moving/Resizing Gadgets"
@@ -3147,7 +3148,7 @@ msgstr "جاري تسجيل الخروج"
 
 #: src/bin/e_sys.c:426
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
-msgstr "جاري تسجيل الخروج.<br><hilight>يرجى اﻹنتضار.</hilight>"
+msgstr "جاري تسجيل الخروج.<br><hilight>يرجى اﻹنتظار.</hilight>"
 
 #: src/bin/e_sys.c:453
 #: src/bin/e_sys.c:503
@@ -3392,7 +3393,7 @@ msgstr "%s تم تحديث اﻹعدادات"
 
 #: src/bin/e_utils.c:1555
 msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "إعداداتك الخاصة بالوحدة أحدث من إصدارة الوحدة الحالية. هذا غريب<br>جدا. لن يحدث هذا إلا إذا قمت بتخفيض<br>إصدارة الوحدة أو نسخت اﻹعدادات من مكان آخر <br>يحتوي على إصدارة جديدة من الوحدة تعمل عليه. هذا سيء<br>و كإحتياط فإن إعداداتك قد تم استعادتها إلى  <br>اﻹفتراضيات. نأسف لهذا اﻹزعاج.<br>"
+msgstr "إعداداتك الخاصة بالوحدة أحدث من إصدار الوحدة الحالية. هذا غريب<br>جدا. لن يحدث هذا إلا إذا قمت بتخفيض<br>إصدارة الوحدة أو نسخت اﻹعدادات من مكان آخر <br>يحتوي على إصدارة جديدة من الوحدة تعمل عليه. هذا سيء<br>و كإحتياط فإن إعداداتك قد تم استعادتها إلى  <br>اﻹفتراضيات. نأسف لهذا اﻹزعاج.<br>"
 
 #: src/bin/e_widget_config_list.c:60
 #: src/modules/conf_applications/e_int_config_apps.c:235
@@ -3469,7 +3470,7 @@ msgstr "قراءة-كتابة"
 
 #: src/modules/battery/e_mod_config.c:60
 msgid "Battery Monitor Settings"
-msgstr "إعدادات مرقب البطارية"
+msgstr "إعدادات مراقب البطارية"
 
 #: src/modules/battery/e_mod_config.c:126
 msgid "Show alert when battery is low"
@@ -3499,7 +3500,7 @@ msgstr "%1.0f %%"
 
 #: src/modules/battery/e_mod_config.c:223
 msgid "Polling"
-msgstr "اﻹقتراع"
+msgstr "اﻹستطلاع"
 
 #: src/modules/battery/e_mod_config.c:227
 msgid "Show low battery alert"
@@ -3516,7 +3517,7 @@ msgstr "%1.0f دقيقة"
 
 #: src/modules/battery/e_mod_config.c:242
 msgid "Auto dismiss in..."
-msgstr "طرد تلقائي خلال..."
+msgstr "خروج تلقائي خلال..."
 
 #: src/modules/battery/e_mod_config.c:247
 #, c-format
@@ -3563,7 +3564,7 @@ msgstr "البطارية"
 
 #: src/modules/battery/e_mod_main.c:455
 msgid "Your battery is low!"
-msgstr "بطاريتك ضعيفة!"
+msgstr "بطارية الحاسب ضعيفة!"
 
 #: src/modules/battery/e_mod_main.c:457
 msgid "AC power is recommended."
@@ -3608,11 +3609,11 @@ msgstr "لوحة اﻹعدادات"
 
 #: src/modules/conf/e_mod_main.c:295
 msgid "Configuration Panel Module Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
-msgstr "إعدادات الضبط تحتاج للترقية. إعداداتك القديمة <br>قد تم محوها ، و مجموعة جديدة من اﻹعدادات الافتراضية تم تهيئتها. <br>هذا  يحدث بشكل منتظم خلال التطوير ، وبالتالي لا ترسل تقرير <br>بخطأ. هذا يعني ببساطة أن الوحدة هذه تحتاج ﻹعدادات جديدة <br>كما يمكنك بكل بساطة استخدام البيانات اﻷساسية للوظائف المستخدمة <br>في اﻹعدادات القديمة . و هذه مجموعة جديدة من اﻹعدادات اﻹفتراضية التي ستقوم باﻹصلاح <br>عبر إضافتها يمكنك ﻵن إعادة إعداد اﻷشياء  <br>حسب رغبتك. نأسف للتدخل في اﻹعدادات الخاصة بك. <br>"
+msgstr "إعدادات الضبط تحتاج للترقية. إعداداتك القديمة <br>مُحيت ، و مجموعة جديدة من اﻹعدادات الافتراضية تم تهيئتها. <br>هذا  يحدث بشكل منتظم خلال التطوير ، وبالتالي لا ترسل تقرير <br>بخطأ. هذا يعني ببساطة أن الوحدة تحتاج  لبيانات إعدادات جديدة <br>إفتراضيا لتحصل على أداء أفضل<br>كانت اﻹعدادات القديمة تفتقر إليها . و هذه مجموعة جديدة من اﻹعدادات اﻹفتراضية التي ستقوم باﻹصلاح <br>عبر إضافتها يمكنك ﻵن إعادة إعداد اﻷشياء  <br>حسب رغبتك. نأسف للتدخل في اﻹعدادات الخاصة بك. <br>"
 
 #: src/modules/conf/e_mod_main.c:312
 msgid "Your Configuration Panel Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "إعدادات وحدة لوحة إعداداتك أحدث من إصدارة الوحدة.  هذا غريب<br>جدا. لن يحدث هذا إلا إذا قمت بتخفيض<br>إصدارة الوحدة أو نسخت اﻹعدادات من مكان آخر <br>يحتوي على إصدارة جديدة من الوحدة تعمل عليه. هذا سيء<br>و كإحتياط فإن إعداداتك قد تم استعادتها إلى<br>اﻹفتراضيات. نأسف لهذا اﻹزعاج.<br>"
+msgstr "إعدادات وحدة لوحة إعداداتك أحدث من إصدار الوحدة.  هذا غريب<br>جدا. لن يحدث هذا إلا إذا قمت بتخفيض<br>إصدارة الوحدة أو نسخت اﻹعدادات من مكان آخر <br>يحتوي على إصدارة جديدة من الوحدة تعمل عليه. هذا سيء<br>و كإحتياط فإن إعداداتك قد تم استعادتها إلى<br>اﻹفتراضيات. نأسف لهذا اﻹزعاج.<br>"
 
 #: src/modules/conf/e_mod_main.c:443
 msgid "Presentation"
@@ -4832,7 +4833,7 @@ msgstr "المحرك"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:72
 msgid "Configured Shelves"
-msgstr "الدروج المعدلة"
+msgstr "الرفوف المعدلة"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:88
 #: src/modules/ibar/e_mod_config.c:110
@@ -4842,7 +4843,7 @@ msgstr "ضبط"
 #: src/modules/conf_shelves/e_int_config_shelf.c:287
 #, c-format
 msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this shelf?"
-msgstr "لقد طلبت حذف \"%s\".<br><br>هل أنت متأكد من رغبتك في حذف هذا الدرج؟"
+msgstr "لقد طلبت حذف \"%s\".<br><br>هل أنت متأكد من رغبتك في حذف هذا الرف؟"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:105
 msgid "Wallpaper Settings"
@@ -4935,7 +4936,7 @@ msgstr "تبادل الخلفيات"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:235
 msgid "Download"
-msgstr "تحميل"
+msgstr "تنزيل"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:254
 msgid "Getting data, please wait..."
@@ -5256,7 +5257,7 @@ msgstr "عن العنوان"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:70
 msgid "About Version"
-msgstr "عن النسخة"
+msgstr "عن اﻹصدار"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:71
 msgid "About Text"
@@ -5289,7 +5290,7 @@ msgstr "نص الشاشة الترحيبية"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:78
 msgid "Splash Version"
-msgstr "إصدارة الشاشة الترحيبية"
+msgstr "إصدار الشاشة الترحيبية"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:79
 msgid "Digital Clock"
@@ -6019,9 +6020,8 @@ msgid "Allow manipulation of maximized windows"
 msgstr "اسمح بالتعامل من النوافذ المكبرة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:183
-#, fuzzy
 msgid "Adjust windows on shelf hide"
-msgstr "نظم النوافذ عند إخفاء الدرج"
+msgstr "نظم النوافذ عند إخفاء الرف"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:49
 #: src/modules/conf_window_manipulation/e_mod_main.c:21
@@ -6630,7 +6630,7 @@ msgstr "Fileman Module Settings data needed upgrading. Your old configuration<br
 
 #: src/modules/fileman/e_mod_main.c:487
 msgid "Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>strange. This should not happen unless you downgraded<br>the Fileman Module or copied the configuration from a place where<br>a newer version of the Fileman Module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "إعداداتك الخاصة بوحدة مدير الملفات أحدث من إصدارة الوحدة الحالية. هذا <br>غريب جدا. لن يحدث هذا إلا إذا قمت بتخفيض<br>إصدارة الوحدة أو نسخت اﻹعدادات من مكان آخر<br>يحتوي على إصدارة جديدة من الوحدة تعمل عليه. هذا سيء<br>و كإحتياط فإن إعداداتك قد تم استعادتها إلى<br>اﻹفتراضيات. نأسف لهذا اﻹزعاج.<br>"
+msgstr "إعداداتك الخاصة بوحدة مدير الملفات أحدث من إصدارة الوحدة الحالية. هذا <br>غريب جدا. لن يحدث هذا إلا إذا قمت بتخفيض<br>إصدار الوحدة أو نسخت اﻹعدادات من مكان آخر<br>يحتوي على إصدارة جديدة من الوحدة تعمل عليه. هذا سيء<br>و كإحتياط فإن إعداداتك قد تم استعادتها إلى<br>اﻹفتراضيات. نأسف لهذا اﻹزعاج.<br>"
 
 #: src/modules/fileman/e_mod_main.c:557
 msgid "Fileman Settings Updated"
@@ -6839,8 +6839,9 @@ msgid "Filemanager is idle"
 msgstr "مدير اﻹتصال خامل"
 
 #: src/modules/fileman_opinfo/e_mod_main.c:415
+#, fuzzy
 msgid "EFM Operation Info"
-msgstr ""
+msgstr "معومات وظيفة EFM"
 
 #: src/modules/gadman/e_mod_config.c:53
 msgid "Gadgets Manager"
@@ -7301,7 +7302,7 @@ msgstr "تنبيه"
 
 #: src/modules/pager/e_mod_config.c:430
 msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus.<br>This button only works in the popup."
-msgstr "لا يمكنك إستخدام زر الفأرة اﻷيمن في<br>الدرج ﻷجل هذا ، كما أنه عطل بواسطة كود<br>داخلي ﻷجل قوائم السياق.<br>لايعمل الزر هذا اﻻ في المنبثقة فقط."
+msgstr "لا يمكنك إستخدام زر الفأرة اﻷيمن في<br>الرف ﻷجل هذا ، كما أنه عطل بواسطة كود<br>داخلي ﻷجل قوائم السياق.<br>لايعمل الزر هذا اﻻ في المنبثقة فقط."
 
 #: src/modules/pager/e_mod_main.c:2803
 msgid "Show Pager Popup"
@@ -7707,7 +7708,7 @@ msgstr "حاشية النظام"
 
 #: src/modules/systray/e_mod_main.c:906
 msgid "Systray cannot work in a shelf that is set to below everything."
-msgstr ""
+msgstr "حاشية النظام لا يمكنها العمل في رف ضُبِط على أن يكون اسفل كل شيء"
 
 #: src/modules/systray/e_mod_main.c:1108
 msgid "Systray"
