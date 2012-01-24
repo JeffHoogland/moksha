@@ -18,10 +18,22 @@ static Ecore_Event_Handler *pch = NULL;
 static Ecore_Event_Handler *pdh = NULL;
 static Eina_List *sinks = NULL;
 static Eina_List *sources = NULL;
+static Ecore_Poller *pulse_poller = NULL;
 
 static E_DBus_Connection *dbus = NULL;
 static E_DBus_Signal_Handler *dbus_handler = NULL;
 static double last_disc = 0;
+
+static Eina_Bool
+_pulse_poller_cb(void *d __UNUSED__)
+{
+   char buf[4096];
+
+   snprintf(buf, sizeof(buf), "%s/.pulse-cookie", getenv("HOME"));
+   if (ecore_file_exists(buf))
+     return !e_mixer_pulse_init();
+   return EINA_TRUE;
+}
 
 static void
 _dbus_poll(void *data   __UNUSED__,
@@ -218,6 +230,7 @@ e_mixer_pulse_init(void)
    if ((!conn) || (!pulse_connect(conn)))
      {
         DBusMessage *msg;
+        double interval;
 
         e_dbus_init();
         dbus = e_dbus_bus_get(DBUS_BUS_SESSION);
@@ -226,6 +239,13 @@ e_mixer_pulse_init(void)
           {
              e_dbus_shutdown();
              return EINA_FALSE;
+          }
+
+        if (!pulse_poller)
+          {
+             interval = ecore_poller_poll_interval_get(ECORE_POLLER_CORE);
+             /* polling every 5 seconds or so I guess ? */
+             pulse_poller = ecore_poller_add(ECORE_POLLER_CORE, 5.0 / interval, _pulse_poller_cb, NULL);
           }
         if (!dbus_handler)
           dbus_handler = e_dbus_signal_handler_add(dbus,
@@ -241,6 +261,7 @@ e_mixer_pulse_init(void)
         pulse_shutdown();
         return EINA_TRUE;
      }
+   pulse_poller = NULL;
    ph = ecore_event_handler_add(PULSE_EVENT_CONNECTED, (Ecore_Event_Handler_Cb)_pulse_connected, conn);
    pch = ecore_event_handler_add(PULSE_EVENT_CHANGE, (Ecore_Event_Handler_Cb)_pulse_update, conn);
    pdh = ecore_event_handler_add(PULSE_EVENT_DISCONNECTED, (Ecore_Event_Handler_Cb)_pulse_disconnected, conn);
