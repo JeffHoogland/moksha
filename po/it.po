@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-01-12 19:12+0100\n"
-"PO-Revision-Date: 2012-01-12 19:14+0100\n"
+"POT-Creation-Date: 2012-01-25 18:27+0100\n"
+"PO-Revision-Date: 2012-01-25 18:28+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -723,7 +723,7 @@ msgstr "Imposta come sfondo"
 msgid "Color Selector"
 msgstr "Selettore colore"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1580 src/bin/e_config.c:2198
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1584 src/bin/e_config.c:2202
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
 #: src/bin/e_fm.c:8750 src/bin/e_fm.c:9394 src/bin/e_fm_prop.c:507
@@ -753,7 +753,7 @@ msgstr "OK"
 msgid "Cancel"
 msgstr "Annulla"
 
-#: src/bin/e_config.c:959 src/bin/e_config.c:992
+#: src/bin/e_config.c:961 src/bin/e_config.c:994
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -773,7 +773,7 @@ msgstr ""
 "funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_config.c:976
+#: src/bin/e_config.c:978
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -788,11 +788,11 @@ msgstr ""
 "male, quindi la vostra configurazione è<br>stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/bin/e_config.c:1567 src/bin/e_config.c:2185
+#: src/bin/e_config.c:1571 src/bin/e_config.c:2189
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemi scrittura configurazione di Enlightenment"
 
-#: src/bin/e_config.c:1570
+#: src/bin/e_config.c:1574
 #, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>%"
@@ -803,19 +803,19 @@ msgstr ""
 "configurazione da:<br>%s<br><br>a:<br>%s<br><br>Il resto della scrittura è "
 "stato abortito per sicurezza.<br>"
 
-#: src/bin/e_config.c:2095
+#: src/bin/e_config.c:2099
 msgid "Settings Upgraded"
 msgstr "Impostazioni aggiornate"
 
-#: src/bin/e_config.c:2112
+#: src/bin/e_config.c:2116
 msgid "The EET file handle is bad."
 msgstr "La gestione del file EET è errata."
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2119
 msgid "The file data is empty."
 msgstr "Il file non contiene dati."
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2122
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -823,17 +823,17 @@ msgstr ""
 "Il file non è scrivibile. Forse il disco e' montato in sola<br>lettura o non "
 "si hanno più i propri permessi."
 
-#: src/bin/e_config.c:2121
+#: src/bin/e_config.c:2125
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "La memoria è andata esaurita mentre si preparava<br>la scrittura. Si prega "
 "di liberare memoria."
 
-#: src/bin/e_config.c:2124
+#: src/bin/e_config.c:2128
 msgid "This is a generic error."
 msgstr "Questo è un errore generico."
 
-#: src/bin/e_config.c:2127
+#: src/bin/e_config.c:2131
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -841,60 +841,60 @@ msgstr ""
 "Il file di impostazioni è troppo grande.<br>Dovrebbe essere molto piccolo "
 "(al massimo qualche centinaio di KB)."
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2134
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 "Ci sono errori di I/O sul disco.<br>Forse ha bisogno di essere sostituito?"
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2137
 msgid "You ran out of space while writing the file"
 msgstr "Lo spazio è andato esaurito mentre si scriveva il file."
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2140
 msgid "The file was closed on it while writing."
 msgstr "Il file è stato chiuso mentre lo si scriveva."
 
-#: src/bin/e_config.c:2139
+#: src/bin/e_config.c:2143
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "La mappatura in memoria (mmap) del file è fallita."
 
-#: src/bin/e_config.c:2142
+#: src/bin/e_config.c:2146
 msgid "X509 Encoding failed."
 msgstr "La codifica X509 è fallita."
 
-#: src/bin/e_config.c:2145
+#: src/bin/e_config.c:2149
 msgid "Signature failed."
 msgstr "Firma fallita."
 
-#: src/bin/e_config.c:2148
+#: src/bin/e_config.c:2152
 msgid "The signature was invalid."
 msgstr "La firma non era valida."
 
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:2155
 msgid "Not signed."
 msgstr "Non firmato."
 
-#: src/bin/e_config.c:2154
+#: src/bin/e_config.c:2158
 msgid "Feature not implemented."
 msgstr "Funzionalità non implementata."
 
-#: src/bin/e_config.c:2157
+#: src/bin/e_config.c:2161
 msgid "PRNG was not seeded."
 msgstr "Non è stato fornito il seme al PRNG."
 
-#: src/bin/e_config.c:2160
+#: src/bin/e_config.c:2164
 msgid "Encryption failed."
 msgstr "Crittazione fallita."
 
-#: src/bin/e_config.c:2163
+#: src/bin/e_config.c:2167
 msgid "Decryption failed."
 msgstr "Decrittazione fallita."
 
-#: src/bin/e_config.c:2166
+#: src/bin/e_config.c:2170
 msgid "The error is unknown to Enlightenment."
 msgstr "L'errore è sconosciuto a Enlightenment."
 
-#: src/bin/e_config.c:2188
+#: src/bin/e_config.c:2192
 #, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>%"
@@ -1108,26 +1108,26 @@ msgstr "Seleziona un'icona"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:506 src/bin/e_fm.c:8241 src/bin/e_shelf.c:1703
+#: src/bin/e_entry.c:501 src/bin/e_fm.c:8241 src/bin/e_shelf.c:1703
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:108
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_entry.c:516 src/bin/e_fm.c:8149
+#: src/bin/e_entry.c:511 src/bin/e_fm.c:8149
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_entry.c:524 src/bin/e_fm.c:6196 src/bin/e_fm.c:8163
+#: src/bin/e_entry.c:519 src/bin/e_fm.c:6196 src/bin/e_fm.c:8163
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_entry.c:532 src/bin/e_fm.c:7987 src/bin/e_fm.c:8176
+#: src/bin/e_entry.c:527 src/bin/e_fm.c:7987 src/bin/e_fm.c:8176
 msgid "Paste"
 msgstr "Incolla"
 
-#: src/bin/e_entry.c:542
+#: src/bin/e_entry.c:537
 msgid "Select All"
 msgstr "Seleziona tutto"
 
@@ -1604,11 +1604,11 @@ msgstr "Sposta in"
 msgid "Automatically scroll contents"
 msgstr "Scorri automaticamente contenuto"
 
-#: src/bin/e_gadcon.c:1434 src/modules/gadman/e_mod_gadman.c:730
+#: src/bin/e_gadcon.c:1434 src/modules/gadman/e_mod_gadman.c:729
 msgid "Plain"
 msgstr "Liscio"
 
-#: src/bin/e_gadcon.c:1443 src/modules/gadman/e_mod_gadman.c:738
+#: src/bin/e_gadcon.c:1443 src/modules/gadman/e_mod_gadman.c:737
 msgid "Inset"
 msgstr "Incassato"
 
@@ -1622,7 +1622,7 @@ msgstr "Aspetto"
 #: src/modules/conf_applications/e_int_config_apps.c:239
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
-#: src/modules/gadman/e_mod_gadman.c:814 src/modules/ibar/e_mod_main.c:801
+#: src/modules/gadman/e_mod_gadman.c:813 src/modules/ibar/e_mod_main.c:801
 msgid "Remove"
 msgstr "Elimina"
 
@@ -4083,7 +4083,7 @@ msgid "Animation speed"
 msgstr "Velocità animazione"
 
 #: src/modules/conf_display/e_int_config_desks.c:197
-#: src/modules/conf_display/e_int_config_dpms.c:306
+#: src/modules/conf_display/e_int_config_dpms.c:324
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:194
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:151
 #, c-format
@@ -4181,16 +4181,17 @@ msgstr "Blocca al superamento del tempo massimo"
 
 #: src/modules/conf_display/e_int_config_desklock.c:263
 #: src/modules/conf_display/e_int_config_screensaver.c:174
-#: src/modules/conf_display/e_int_config_dpms.c:248
-#: src/modules/conf_display/e_int_config_dpms.c:260
-#: src/modules/conf_display/e_int_config_dpms.c:272
+#: src/modules/conf_display/e_int_config_dpms.c:256
+#: src/modules/conf_display/e_int_config_dpms.c:268
+#: src/modules/conf_display/e_int_config_dpms.c:280
+#: src/modules/conf_display/e_int_config_dpms.c:315
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f minuti"
 
 #: src/modules/conf_display/e_int_config_desklock.c:268
 #: src/modules/conf_display/e_int_config_screensaver.c:185
-#: src/modules/conf_display/e_int_config_dpms.c:242
+#: src/modules/conf_display/e_int_config_dpms.c:250
 msgid "Timers"
 msgstr "Timer"
 
@@ -4288,49 +4289,53 @@ msgstr "Non consentire"
 msgid "Miscellaneous"
 msgstr "Opzioni varie"
 
-#: src/modules/conf_display/e_int_config_dpms.c:126
+#: src/modules/conf_display/e_int_config_dpms.c:130
 msgid "Display Power Management Settings"
 msgstr "Impostazioni gestione energetica dello schermo"
 
-#: src/modules/conf_display/e_int_config_dpms.c:238
+#: src/modules/conf_display/e_int_config_dpms.c:246
 msgid "Enable Display Power Management"
 msgstr "Abilita gestione energetica dello schermo"
 
-#: src/modules/conf_display/e_int_config_dpms.c:244
+#: src/modules/conf_display/e_int_config_dpms.c:252
 msgid "Standby time"
 msgstr "Standby"
 
-#: src/modules/conf_display/e_int_config_dpms.c:256
+#: src/modules/conf_display/e_int_config_dpms.c:264
 msgid "Suspend time"
 msgstr "Sospensione"
 
-#: src/modules/conf_display/e_int_config_dpms.c:268
+#: src/modules/conf_display/e_int_config_dpms.c:276
 msgid "Off time"
 msgstr "Spegnimento"
 
-#: src/modules/conf_display/e_int_config_dpms.c:287
+#: src/modules/conf_display/e_int_config_dpms.c:295
 msgid "DPMS"
 msgstr "DPMS"
 
-#: src/modules/conf_display/e_int_config_dpms.c:292
+#: src/modules/conf_display/e_int_config_dpms.c:300
 msgid "Normal Backlight"
 msgstr "Retroilluminazione normale"
 
-#: src/modules/conf_display/e_int_config_dpms.c:294
-#: src/modules/conf_display/e_int_config_dpms.c:300
+#: src/modules/conf_display/e_int_config_dpms.c:302
+#: src/modules/conf_display/e_int_config_dpms.c:308
 #, c-format
 msgid "%3.0f"
 msgstr "%3.0f"
 
-#: src/modules/conf_display/e_int_config_dpms.c:298
+#: src/modules/conf_display/e_int_config_dpms.c:306
 msgid "Dim Backlight"
 msgstr "Retroilluminazione bassa"
 
-#: src/modules/conf_display/e_int_config_dpms.c:304
+#: src/modules/conf_display/e_int_config_dpms.c:312
+msgid "Idle Fade Time"
+msgstr "Ritardo dissolvenza per inattività"
+
+#: src/modules/conf_display/e_int_config_dpms.c:322
 msgid "Fade Time"
 msgstr "Tempo di dissolvenza"
 
-#: src/modules/conf_display/e_int_config_dpms.c:310
+#: src/modules/conf_display/e_int_config_dpms.c:328
 msgid "Backlight"
 msgstr "Retroilluminazione"
 
@@ -4461,28 +4466,28 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1310
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1366
-#: src/modules/gadman/e_mod_gadman.c:838
+#: src/modules/gadman/e_mod_gadman.c:837
 msgid "CTRL"
 msgstr "Ctrl"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1315
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1371
-#: src/modules/gadman/e_mod_gadman.c:843
+#: src/modules/gadman/e_mod_gadman.c:842
 msgid "ALT"
 msgstr "Alt"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1321
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1377
-#: src/modules/gadman/e_mod_gadman.c:849
+#: src/modules/gadman/e_mod_gadman.c:848
 msgid "SHIFT"
 msgstr "Maiuscole"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1327
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1383
-#: src/modules/gadman/e_mod_gadman.c:855
+#: src/modules/gadman/e_mod_gadman.c:854
 msgid "WIN"
 msgstr "Windows"
 
@@ -6225,13 +6230,13 @@ msgstr "Riempitiva"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:758
+#: src/modules/gadman/e_mod_gadman.c:757
 msgid "Horizontal"
 msgstr "Orizzontale"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 #: src/modules/everything/evry_config.c:561
-#: src/modules/gadman/e_mod_gadman.c:766
+#: src/modules/gadman/e_mod_gadman.c:765
 msgid "Vertical"
 msgstr "Verticale"
 
@@ -6981,7 +6986,7 @@ msgid "Show Toolbar"
 msgstr "Mostra barra strumenti"
 
 #: src/modules/fileman/e_mod_config.c:278
-#: src/modules/gadman/e_mod_gadman.c:802
+#: src/modules/gadman/e_mod_gadman.c:801
 msgid "Behavior"
 msgstr "Comportamento"
 
@@ -7173,27 +7178,27 @@ msgstr "Sfondo"
 msgid "Background Options"
 msgstr "Opzioni dello sfondo"
 
-#: src/modules/gadman/e_mod_gadman.c:719
+#: src/modules/gadman/e_mod_gadman.c:718
 msgid "Begin move/resize"
 msgstr "Inizio spostamento/ridimensionamento"
 
-#: src/modules/gadman/e_mod_gadman.c:750
+#: src/modules/gadman/e_mod_gadman.c:749
 msgid "Free"
 msgstr "Libero"
 
-#: src/modules/gadman/e_mod_gadman.c:774
+#: src/modules/gadman/e_mod_gadman.c:773
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: src/modules/gadman/e_mod_gadman.c:782
+#: src/modules/gadman/e_mod_gadman.c:781
 msgid "Always on desktop"
 msgstr "Sempre sul desktop"
 
-#: src/modules/gadman/e_mod_gadman.c:792
+#: src/modules/gadman/e_mod_gadman.c:791
 msgid "On top pressing"
 msgstr "Sopra le finestre premendo"
 
-#: src/modules/gadman/e_mod_gadman.c:823
+#: src/modules/gadman/e_mod_gadman.c:822
 msgid "Add other gadgets"
 msgstr "Aggiungi altri gadget"
 
