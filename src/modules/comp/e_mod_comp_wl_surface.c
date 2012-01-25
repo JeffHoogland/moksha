@@ -54,6 +54,8 @@ e_mod_comp_wl_surface_create(int32_t x, int32_t y, int32_t width, int32_t height
    surface->buffer_destroy_listener.func = 
      _e_mod_comp_wl_surface_buffer_destroy_handle;
 
+   surface->transform = NULL;
+
    return surface;
 }
 
