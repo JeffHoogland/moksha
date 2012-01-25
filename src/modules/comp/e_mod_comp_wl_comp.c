@@ -120,11 +120,11 @@ e_mod_comp_wl_comp_init(void)
    _wl_comp->shm = wl_shm_init(_wl_disp, &_wl_shm_callbacks);
 
    _wl_comp->image_target_texture_2d =
-     (void *) eglGetProcAddress("glEGLImageTargetTexture2DOES");
+     (void *)eglGetProcAddress("glEGLImageTargetTexture2DOES");
    _wl_comp->image_target_renderbuffer_storage = (void *)
      eglGetProcAddress("glEGLImageTargetRenderbufferStorageOES");
-   _wl_comp->create_image = (void *) eglGetProcAddress("eglCreateImageKHR");
-   _wl_comp->destroy_image = (void *) eglGetProcAddress("eglDestroyImageKHR");
+   _wl_comp->create_image = (void *)eglGetProcAddress("eglCreateImageKHR");
+   _wl_comp->destroy_image = (void *)eglGetProcAddress("eglDestroyImageKHR");
 
    _wl_comp->bind_display = 
      (void *)eglGetProcAddress("eglBindWaylandDisplayWL");
@@ -267,10 +267,10 @@ _e_mod_comp_wl_comp_egl_init(void)
    const char *extensions;
    EGLint config_attribs[] = 
      {
-        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-        EGL_RED_SIZE, 1, EGL_GREEN_SIZE, 1, EGL_BLUE_SIZE, 1,
-        EGL_DEPTH_SIZE, 1,
-        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL_NONE
+        EGL_RED_SIZE, 8, EGL_GREEN_SIZE, 8, EGL_BLUE_SIZE, 8, 
+        EGL_ALPHA_SIZE, 1, EGL_DEPTH_SIZE, 0, EGL_STENCIL_SIZE, 0, 
+        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, EGL_SURFACE_TYPE, 
+        EGL_WINDOW_BIT, EGL_NONE
      };
    EGLint context_attribs[] = 
      {
