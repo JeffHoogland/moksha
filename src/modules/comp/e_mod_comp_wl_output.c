@@ -88,9 +88,17 @@ e_mod_comp_wl_output_init(void)
 
    comp = e_mod_comp_wl_comp_get();
 
+   /* NB: Fix me !! This is why wayland clients are not displaying. */
+   /* The default wayland compositor creates it's egl surface against an 
+    * 'output' window. Their output window is created with root window as 
+    * the parent. This does not work in E17 due to the way E is handling 
+    * backgrounds. Currently, wayland clients are getting created, but they 
+    * do not display...or rather, they display below the E17 background. 
+    * The fix here would be to use something other than roots[0] as the 
+    * 'parent' of the output surface */
    _wl_output->egl_surface = 
      eglCreateWindowSurface(comp->egl.display, comp->egl.config, 
-                            roots[0], NULL); // NB: roots[0] == output->window
+                            roots[0], NULL);
    free(roots);
 
    if (!_wl_output->egl_surface)
