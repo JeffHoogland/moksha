@@ -4,35 +4,20 @@
 # include "e_mod_comp_wl.h"
 # include "e_mod_comp_wl_comp.h"
 # include "e_mod_comp_wl_shm.h"
-# include "e_mod_comp_wl_input.h"
-# include "e_mod_comp_wl_output.h"
 # include "e_mod_comp_wl_surface.h"
 #endif
 
 /* local function prototypes */
 static Eina_Bool _e_mod_comp_wl_comp_egl_init(void);
 static void _e_mod_comp_wl_comp_egl_shutdown(void);
-static Eina_Bool _e_mod_comp_wl_comp_shader_init(Wayland_Shader *shader, const char *vertex_source, const char *fragment_source);
-/* static void _e_mod_comp_wl_comp_shader_shutdown(void); */
-static Eina_Bool _e_mod_comp_wl_comp_solid_shader_init(Wayland_Shader *shader, GLuint vertex_shader, const char *fragment_source);
-/* static void _e_mod_comp_wl_comp_solid_shader_shutdown(); */
-static int _e_mod_comp_wl_comp_compile_shader(GLenum type, const char *source);
 static void _e_mod_comp_wl_comp_destroy(void);
 static void _e_mod_comp_wl_comp_bind(struct wl_client *client, void *data, uint32_t version __UNUSED__, uint32_t id);
 static void _e_mod_comp_wl_comp_surface_create(struct wl_client *client, struct wl_resource *resource, uint32_t id);
-static int _e_mod_comp_wl_comp_idle_handler(void *data);
 
 /* wayland interfaces */
 static const struct wl_compositor_interface _wl_comp_interface = 
 {
    _e_mod_comp_wl_comp_surface_create
-};
-
-static const struct wl_shm_callbacks _wl_shm_callbacks = 
-{
-   e_mod_comp_wl_shm_buffer_created,
-   e_mod_comp_wl_shm_buffer_damaged,
-   e_mod_comp_wl_shm_buffer_destroyed
 };
 static const struct wl_surface_interface _wl_surface_interface = 
 {
@@ -44,47 +29,11 @@ static const struct wl_surface_interface _wl_surface_interface =
 
 /* private variables */
 static Wayland_Compositor *_wl_comp;
-static const char vertex_shader[] = 
-{
-   "uniform mat4 proj;\n"
-   "attribute vec2 position;\n"
-   "attribute vec2 texcoord;\n"
-   "varying vec2 v_texcoord;\n"
-   "void main()\n"
-   "{\n"
-   "   gl_Position = proj * vec4(position, 0.0, 1.0);\n"
-   "   v_texcoord = texcoord;\n"
-   "}\n"
-};
-
-static const char texture_fragment_shader[] = 
-{
-   "precision mediump float;\n"
-   "varying vec2 v_texcoord;\n"
-   "uniform sampler2D tex;\n"
-   "uniform float alpha;\n"
-   "void main()\n"
-   "{\n"
-   "   gl_FragColor = texture2D(tex, v_texcoord)\n;"
-   "   gl_FragColor = alpha * gl_FragColor;\n"
-   "}\n"
-};
-
-static const char solid_fragment_shader[] = 
-{
-   "precision mediump float;\n"
-   "uniform vec4 color;\n"
-   "void main()\n"
-   "{\n"
-   "   gl_FragColor = color\n;"
-   "}\n"
-};
 
 Eina_Bool 
 e_mod_comp_wl_comp_init(void)
 {
    const char *extensions;
-   struct wl_event_loop *loop;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -96,18 +45,14 @@ e_mod_comp_wl_comp_init(void)
 
    memset(_wl_comp, 0, sizeof(*_wl_comp));
 
-// open display, get X connection, create cursor
-
    if (!_e_mod_comp_wl_comp_egl_init())
      {
-        EINA_LOG_ERR("Failed to init EGL\n");
+        EINA_LOG_ERR("Could not initialize egl\n");
         free(_wl_comp);
         return EINA_FALSE;
      }
 
    _wl_comp->destroy = _e_mod_comp_wl_comp_destroy;
-
-// weston_compositor_init
 
    if (!wl_display_add_global(_wl_disp, &wl_compositor_interface, _wl_comp, 
                               _e_mod_comp_wl_comp_bind))
@@ -116,8 +61,6 @@ e_mod_comp_wl_comp_init(void)
         free(_wl_comp);
         return EINA_FALSE;
      }
-
-   _wl_comp->shm = wl_shm_init(_wl_disp, &_wl_shm_callbacks);
 
    _wl_comp->image_target_texture_2d =
      (void *)eglGetProcAddress("glEGLImageTargetTexture2DOES");
@@ -146,117 +89,25 @@ e_mod_comp_wl_comp_init(void)
    if (_wl_comp->has_bind) 
      _wl_comp->bind_display(_wl_comp->egl.display, _wl_disp);
 
-   wl_list_init(&_wl_comp->surfaces);
-
-// spring init
-// screenshooter init
-
    wl_data_device_manager_init(_wl_disp);
 
-   glActiveTexture(GL_TEXTURE0);
-
-   /* init shader */
-   if (!_e_mod_comp_wl_comp_shader_init(&_wl_comp->texture_shader, 
-                                       vertex_shader, texture_fragment_shader))
-     {
-        EINA_LOG_ERR("Failed to initialize texture shader\n");
-        free(_wl_comp);
-        return EINA_FALSE;
-     }
-
-   /* init solid shader */
-   if (!_e_mod_comp_wl_comp_solid_shader_init(&_wl_comp->solid_shader, 
-                                              _wl_comp->texture_shader.vertex_shader, 
-                                              solid_fragment_shader))
-     {
-        EINA_LOG_ERR("Failed to initialize solid shader\n");
-        free(_wl_comp);
-        return EINA_FALSE;
-     }
-
-   loop = wl_display_get_event_loop(_wl_disp);
-   _wl_comp->idle_source = 
-     wl_event_loop_add_timer(loop, _e_mod_comp_wl_comp_idle_handler, _wl_comp);
-   wl_event_source_timer_update(_wl_comp->idle_source, 300 * 1000);
-
-   e_mod_comp_wl_comp_schedule_repaint();
+   wl_list_init(&_wl_comp->surfaces);
 
    return EINA_TRUE;
 }
 
-Eina_Bool 
+void 
 e_mod_comp_wl_comp_shutdown(void)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   if (!_wl_comp) return EINA_TRUE;
-   if (_wl_comp->destroy) _wl_comp->destroy();
-   return EINA_TRUE;
+   if (_wl_comp) _wl_comp->destroy();
 }
 
 Wayland_Compositor *
 e_mod_comp_wl_comp_get(void)
 {
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
    return _wl_comp;
-}
-
-void 
-e_mod_comp_wl_comp_repick(void)
-{
-   Wayland_Input *device;
-   uint32_t timestamp;
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   device = e_mod_comp_wl_input_get();
-   timestamp = e_mod_comp_wl_time_get();
-   e_mod_comp_wl_input_repick(&device->input_device, timestamp);
-}
-
-Wayland_Surface *
-e_mod_comp_wl_comp_surface_pick(int32_t x, int32_t y, int32_t *sx, int32_t *sy)
-{
-   Wayland_Surface *surface;
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   wl_list_for_each(surface, &_wl_comp->surfaces, link)
-     {
-        if (!surface->surface.resource.client) continue;
-        e_mod_comp_wl_surface_transform(surface, x, y, sx, sy);
-        if ((0 <= *sx) && (*sx < surface->width) && 
-            (0 <= *sy) && (*sy < surface->height))
-          return surface;
-     }
-
-   return NULL;
-}
-
-void 
-e_mod_comp_wl_comp_schedule_repaint(void)
-{
-   Wayland_Output *output;
-   struct wl_event_loop *loop;
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   if (!(output = e_mod_comp_wl_output_get())) return;
-   loop = wl_display_get_event_loop(_wl_disp);
-   output->repaint_needed = EINA_TRUE;
-   if (output->repaint_scheduled) return;
-   wl_event_loop_add_idle(loop, e_mod_comp_wl_output_idle_repaint, output);
-   output->repaint_scheduled = EINA_TRUE;
-}
-
-void 
-e_mod_comp_wl_comp_wake(void)
-{
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   wl_event_source_timer_update(_wl_comp->idle_source, 
-                                300 * 1000);
 }
 
 /* local functions */
@@ -346,109 +197,6 @@ _e_mod_comp_wl_comp_egl_shutdown(void)
    eglReleaseThread();
 }
 
-static Eina_Bool 
-_e_mod_comp_wl_comp_shader_init(Wayland_Shader *shader, const char *vertex_source, const char *fragment_source)
-{
-   GLint status;
-   char msg[512];
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   shader->vertex_shader = 
-     _e_mod_comp_wl_comp_compile_shader(GL_VERTEX_SHADER, vertex_source);
-   shader->fragment_shader = 
-     _e_mod_comp_wl_comp_compile_shader(GL_FRAGMENT_SHADER, fragment_source);
-
-   shader->program = glCreateProgram();
-   glAttachShader(shader->program, shader->vertex_shader);
-   glAttachShader(shader->program, shader->fragment_shader);
-   glBindAttribLocation(shader->program, 0, "position");
-   glBindAttribLocation(shader->program, 1, "texcoord");
-
-   glLinkProgram(shader->program);
-   glGetProgramiv(shader->program, GL_LINK_STATUS, &status);
-   if (!status) 
-     {
-        glGetProgramInfoLog(shader->program, sizeof(msg), NULL, msg);
-        EINA_LOG_ERR("Link info: %s\n", msg);
-        return EINA_FALSE;
-     }
-
-   shader->proj_uniform = glGetUniformLocation(shader->program, "proj");
-   shader->tex_uniform = glGetUniformLocation(shader->program, "tex");
-   shader->alpha_uniform = glGetUniformLocation(shader->program, "alpha");
-
-   return EINA_TRUE;
-}
-
-/* static void  */
-/* _e_mod_comp_wl_comp_shader_shutdown(void) */
-/* { */
-
-/* } */
-
-static Eina_Bool 
-_e_mod_comp_wl_comp_solid_shader_init(Wayland_Shader *shader, GLuint vertex_shader, const char *fragment_source)
-{
-   GLint status;
-   char msg[512];
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   shader->vertex_shader = vertex_shader;
-   shader->fragment_shader =
-     _e_mod_comp_wl_comp_compile_shader(GL_FRAGMENT_SHADER, fragment_source);
-
-   shader->program = glCreateProgram();
-   glAttachShader(shader->program, shader->vertex_shader);
-   glAttachShader(shader->program, shader->fragment_shader);
-   glBindAttribLocation(shader->program, 0, "position");
-   glBindAttribLocation(shader->program, 1, "texcoord");
-
-   glLinkProgram(shader->program);
-   glGetProgramiv(shader->program, GL_LINK_STATUS, &status);
-   if (!status) 
-     {
-        glGetProgramInfoLog(shader->program, sizeof(msg), NULL, msg);
-        EINA_LOG_ERR("Link info: %s\n", msg);
-        return EINA_FALSE;
-     }
- 
-   shader->proj_uniform = glGetUniformLocation(shader->program, "proj");
-   shader->color_uniform = glGetUniformLocation(shader->program, "color");
-
-   return EINA_TRUE;
-}
-
-/* static void  */
-/* _e_mod_comp_wl_comp_solid_shader_shutdown() */
-/* { */
-
-/* } */
-
-static int 
-_e_mod_comp_wl_comp_compile_shader(GLenum type, const char *source)
-{
-   GLuint s;
-   GLint status;
-   char msg[512];
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   s = glCreateShader(type);
-   glShaderSource(s, 1, &source, NULL);
-   glCompileShader(s);
-   glGetShaderiv(s, GL_COMPILE_STATUS, &status);
-   if (!status) 
-     {
-        glGetShaderInfoLog(s, sizeof(msg), NULL, msg);
-        EINA_LOG_ERR("shader info: %s\n", msg);
-        return GL_NONE;
-     }
-
-   return s;
-}
-
 static void 
 _e_mod_comp_wl_comp_destroy(void)
 {
@@ -457,15 +205,9 @@ _e_mod_comp_wl_comp_destroy(void)
    if (_wl_comp->has_bind)
      _wl_comp->unbind_display(_wl_comp->egl.display, _wl_disp);
 
-   if (_wl_comp->idle_source) wl_event_source_remove(_wl_comp->idle_source);
-
-   wl_shm_finish(_wl_comp->shm);
-
-   wl_array_release(&_wl_comp->vertices);
-   wl_array_release(&_wl_comp->indices);
-
    _e_mod_comp_wl_comp_egl_shutdown();
 
+   if (&_wl_comp->surfaces) wl_list_remove(&_wl_comp->surfaces);
    free(_wl_comp);
 }
 
@@ -481,38 +223,22 @@ _e_mod_comp_wl_comp_bind(struct wl_client *client, void *data, uint32_t version 
 static void 
 _e_mod_comp_wl_comp_surface_create(struct wl_client *client, struct wl_resource *resource, uint32_t id)
 {
-   Wayland_Surface *surface;
+   Wayland_Surface *ws;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   if (!(surface = e_mod_comp_wl_surface_create(0, 0, 0, 0))) 
+   if (!(ws = e_mod_comp_wl_surface_create(0, 0, 0, 0)))
      {
         wl_resource_post_no_memory(resource);
         return;
      }
 
-   surface->surface.resource.destroy = e_mod_comp_wl_surface_destroy_surface;
-   surface->surface.resource.object.id = id;
-   surface->surface.resource.object.interface = &wl_surface_interface;
-   surface->surface.resource.object.implementation = 
+   ws->surface.resource.destroy = e_mod_comp_wl_surface_destroy_surface;
+   ws->surface.resource.object.id = id;
+   ws->surface.resource.object.interface = &wl_surface_interface;
+   ws->surface.resource.object.implementation = 
      (void (**)(void))&_wl_surface_interface;
-   surface->surface.resource.data = surface;
+   ws->surface.resource.data = ws;
 
-   wl_client_add_resource(client, &surface->surface.resource);
-}
-
-static int 
-_e_mod_comp_wl_comp_idle_handler(void *data)
-{
-   Wayland_Compositor *wc;
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   if (!(wc = data)) return 1;
-
-   /* TODO: Check idle inhibit */
-
-   /* TODO: fade */
-
-   return 1;
+   wl_client_add_resource(client, &ws->surface.resource);
 }

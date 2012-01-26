@@ -45,7 +45,9 @@ module_la_SOURCES += e_mod_comp_wl.h \
                      e_mod_comp_wl_shell.h \
                      e_mod_comp_wl_shell.c \
                      e_mod_comp_wl_surface.h \
-                     e_mod_comp_wl_surface.c
+                     e_mod_comp_wl_surface.c \
+                     e_mod_comp_wl_buffer.h \
+                     e_mod_comp_wl_buffer.c
 endif
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@ @WAYLAND_LIBS@

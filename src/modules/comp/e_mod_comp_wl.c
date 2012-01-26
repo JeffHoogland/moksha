@@ -1,15 +1,14 @@
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_mod_comp.h"
 #ifdef HAVE_WAYLAND
+# include <xcb/xcb_image.h>
 # include "e_mod_comp_wl.h"
 # include "e_mod_comp_wl_comp.h"
+# include "e_mod_comp_wl_shm.h"
 # include "e_mod_comp_wl_output.h"
 # include "e_mod_comp_wl_input.h"
 # include "e_mod_comp_wl_shell.h"
 #endif
-#include <assert.h>
-#include <wayland-client.h>
 
 /* local function prototypes */
 static Eina_Bool _e_mod_comp_wl_fd_handle(void *data, Ecore_Fd_Handler *hdl __UNUSED__);
@@ -31,29 +30,34 @@ e_mod_comp_wl_init(void)
    /* init wayland display */
    if (!(_wl_disp = wl_display_create()))
      {
-        printf("Failed to create wayland display\n");
         EINA_LOG_ERR("Failed to create wayland display\n");
         return EINA_FALSE;
      }
 
-   /* TODO: Add signal handlers ? */
-
-   /* init wayland compositor */
+   /* init a wayland compositor ?? */
    if (!e_mod_comp_wl_comp_init())
      {
         wl_display_terminate(_wl_disp);
-        printf("Failed to initialize compositor\n");
-        EINA_LOG_ERR("Failed to initialize compositor\n");
+        EINA_LOG_ERR("Failed to create wayland shm\n");
+        return EINA_FALSE;
+     }
+
+   /* init shm */
+   if (!e_mod_comp_wl_shm_init())
+     {
+        e_mod_comp_wl_comp_shutdown();
+        wl_display_terminate(_wl_disp);
+        EINA_LOG_ERR("Failed to create wayland shm\n");
         return EINA_FALSE;
      }
 
    /* init output */
-   if (!e_mod_comp_wl_output_init()) 
+   if (!e_mod_comp_wl_output_init())
      {
+        e_mod_comp_wl_shm_shutdown();
         e_mod_comp_wl_comp_shutdown();
         wl_display_terminate(_wl_disp);
-        printf("Failed to initialize output\n");
-        EINA_LOG_ERR("Failed to initialize output\n");
+        EINA_LOG_ERR("Failed to create wayland output\n");
         return EINA_FALSE;
      }
 
@@ -61,24 +65,22 @@ e_mod_comp_wl_init(void)
    if (!e_mod_comp_wl_input_init())
      {
         e_mod_comp_wl_output_shutdown();
+        e_mod_comp_wl_shm_shutdown();
         e_mod_comp_wl_comp_shutdown();
         wl_display_terminate(_wl_disp);
-        printf("Failed to initialize input\n");
-        EINA_LOG_ERR("Failed to initialize input\n");
+        EINA_LOG_ERR("Failed to create wayland input\n");
         return EINA_FALSE;
      }
 
-// NB: x11 compositor adds X event source to wayland event loop
-
-   /* init shell */
+   /* init a wayland shell */
    if (!e_mod_comp_wl_shell_init())
      {
         e_mod_comp_wl_input_shutdown();
         e_mod_comp_wl_output_shutdown();
+        e_mod_comp_wl_shm_shutdown();
         e_mod_comp_wl_comp_shutdown();
         wl_display_terminate(_wl_disp);
-        printf("Failed to initialize shell\n");
-        EINA_LOG_ERR("Failed to initialize shell\n");
+        EINA_LOG_ERR("Failed to create wayland shell\n");
         return EINA_FALSE;
      }
 
@@ -87,10 +89,10 @@ e_mod_comp_wl_init(void)
         e_mod_comp_wl_shell_shutdown();
         e_mod_comp_wl_input_shutdown();
         e_mod_comp_wl_output_shutdown();
+        e_mod_comp_wl_shm_shutdown();
         e_mod_comp_wl_comp_shutdown();
         wl_display_terminate(_wl_disp);
-        printf("Failed to add display socket\n");
-        EINA_LOG_ERR("Failed to add display socket\n");
+        EINA_LOG_ERR("Failed to add socket to wayland display\n");
         return EINA_FALSE;
      }
 
@@ -99,9 +101,7 @@ e_mod_comp_wl_init(void)
 
    _wl_fd_handler = 
      ecore_main_fd_handler_add(fd, ECORE_FD_READ, 
-                               _e_mod_comp_wl_fd_handle, _wl_disp, NULL, NULL);
-
-   e_mod_comp_wl_comp_wake();
+                               _e_mod_comp_wl_fd_handle, NULL, NULL, NULL);
 
    wl_event_loop_dispatch(loop, 0);
 
@@ -113,11 +113,18 @@ e_mod_comp_wl_shutdown(void)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
+   if (_wl_fd_handler)
+     ecore_main_fd_handler_del(_wl_fd_handler);
+   _wl_fd_handler = NULL;
+
    e_mod_comp_wl_shell_shutdown();
    e_mod_comp_wl_input_shutdown();
    e_mod_comp_wl_output_shutdown();
+   e_mod_comp_wl_shm_shutdown();
    e_mod_comp_wl_comp_shutdown();
-   wl_display_terminate(_wl_disp);
+
+   if (_wl_disp) wl_display_terminate(_wl_disp);
+   _wl_disp = NULL;
 }
 
 uint32_t 
@@ -125,164 +132,70 @@ e_mod_comp_wl_time_get(void)
 {
    struct timeval tv;
 
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
    gettimeofday(&tv, NULL);
    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
-void 
-e_mod_comp_wl_matrix_init(Wayland_Matrix *matrix)
+Ecore_X_Pixmap 
+e_mod_comp_wl_pixmap_get(Ecore_X_Window win)
 {
-   static const Wayland_Matrix identity = 
-     {
-        { 1, 0, 0, 0,  0, 1, 0, 0,  0, 0, 1, 0,  0, 0, 0, 1 }
-     };
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   memcpy(matrix, &identity, sizeof(identity));
-}
-
-void 
-e_mod_comp_wl_matrix_translate(Wayland_Matrix *matrix, GLfloat x, GLfloat y, GLfloat z)
-{
-   Wayland_Matrix translate = 
-     {
-        { 1, 0, 0, 0,  0, 1, 0, 0,  0, 0, 1, 0,  x, y, z, 1 }
-     };
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   e_mod_comp_wl_matrix_multiply(matrix, &translate);
-}
-
-void 
-e_mod_comp_wl_matrix_scale(Wayland_Matrix *matrix, GLfloat x, GLfloat y, GLfloat z)
-{
-   Wayland_Matrix scale = 
-     {
-        { x, 0, 0, 0,  0, y, 0, 0,  0, 0, z, 0,  0, 0, 0, 1 }
-     };
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   e_mod_comp_wl_matrix_multiply(matrix, &scale);
-}
-
-void 
-e_mod_comp_wl_matrix_multiply(Wayland_Matrix *m, const Wayland_Matrix *n)
-{
-   Wayland_Matrix tmp;
-   const GLfloat *row, *column;
-   div_t d;
-   int i, j;
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   for (i = 0; i < 16; i++) {
-      tmp.d[i] = 0;
-      d = div(i, 4);
-      row = m->d + d.quot * 4;
-      column = n->d + d.rem;
-      for (j = 0; j < 4; j++)
-        tmp.d[i] += row[j] * column[j * 4];
-   }
-   memcpy(m, &tmp, sizeof tmp);
-}
-
-void 
-e_mod_comp_wl_matrix_transform(Wayland_Matrix *matrix, Wayland_Vector *v)
-{
-   int i, j;
-   Wayland_Vector t;
-
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   for (i = 0; i < 4; i++) 
-     {
-        t.f[i] = 0;
-        for (j = 0; j < 4; j++)
-          t.f[i] += v->f[j] * matrix->d[i + j * 4];
-     }
-
-   *v = t;
-}
-
-void 
-e_mod_comp_wl_buffer_attach(struct wl_buffer *buffer, struct wl_surface *surface)
-{
+   Wayland_Compositor *comp;
    Wayland_Surface *ws;
+   struct wl_list *list;
+   Ecore_X_Pixmap pmap = 0;
 
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   ws = (Wayland_Surface *)surface;
-
-   if (ws->saved_texture != 0) 
-     ws->texture = ws->saved_texture;
-
-   glBindTexture(GL_TEXTURE_2D, ws->texture);
-
-   if (wl_buffer_is_shm(buffer))
+   comp = e_mod_comp_wl_comp_get();
+   list = &comp->surfaces;
+   wl_list_for_each(ws, list, link)
      {
-        struct wl_list *attached;
-
-        ws->pitch = wl_shm_buffer_get_stride(buffer) / 4;
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_BGRA_EXT, ws->pitch, buffer->height, 
-                     0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, 
-                     wl_shm_buffer_get_data(buffer));
-
-        switch (wl_shm_buffer_get_format(buffer))
+        if ((ws->win) && (ws->win->border->win == win))
           {
-           case WL_SHM_FORMAT_ARGB8888:
-             ws->visual = WAYLAND_ARGB_VISUAL;
-             break;
-           case WL_SHM_FORMAT_XRGB8888:
-             ws->visual = WAYLAND_RGB_VISUAL;
-             break;
+             if (ws->buffer)
+               {
+                  Ecore_X_Connection *conn;
+                  Ecore_X_GC gc;
+                  uint8_t *pix;
+                  int depth;
+
+                  depth = ecore_x_window_depth_get(win);
+                  conn = ecore_x_connection_get();
+
+                  pmap = xcb_generate_id(conn);
+                  xcb_create_pixmap(conn, depth, pmap, win, ws->w, ws->h);
+
+                  if (wl_buffer_is_shm(ws->buffer))
+                    pix = (uint8_t *)wl_shm_buffer_get_data(ws->buffer);
+                  else
+                    {
+                       /* FIXME: egl buffer ?? */
+                       printf("Wayland Buffer is NOT SHM !!\n");
+                       return 0;
+                    }
+
+                  gc = ecore_x_gc_new(pmap, 0, NULL);
+                  xcb_put_image(conn, 2, pmap, gc, ws->w, ws->h, 
+                                0, 0, 0, depth, 
+                                (ws->w * ws->h * sizeof(int)), pix);
+                  ecore_x_gc_free(gc);
+               }
+             else if (ws->image)
+               {
+                  /* NB: No buffer means it may be an egl surface */
+                  printf("Get Pixmap Data from EGL Surface !!!\n");
+               }
           }
-
-        attached = buffer->user_data;
-        wl_list_remove(&ws->buffer_link);
-        wl_list_insert(attached, &ws->buffer_link);
      }
-   else
-     {
-        Wayland_Compositor *comp;
 
-        comp = e_mod_comp_wl_comp_get();
-        if (ws->image != EGL_NO_IMAGE_KHR)
-          comp->destroy_image(comp->egl.display, ws->image);
-        ws->image = comp->create_image(comp->egl.display, NULL, 
-                                       EGL_WAYLAND_BUFFER_WL, buffer, NULL);
-        comp->image_target_texture_2d(GL_TEXTURE_2D, ws->image);
-        ws->visual = WAYLAND_ARGB_VISUAL;
-        ws->pitch = ws->width;
-     }
-}
-
-void 
-e_mod_comp_wl_buffer_post_release(struct wl_buffer *buffer)
-{
-   if (--buffer->busy_count > 0) return;
-   assert(buffer->resource.client != NULL);
-   wl_resource_queue_event(&buffer->resource, WL_BUFFER_RELEASE);
+   return pmap;
 }
 
 /* local functions */
 static Eina_Bool 
-_e_mod_comp_wl_fd_handle(void *data, Ecore_Fd_Handler *hdl __UNUSED__)
+_e_mod_comp_wl_fd_handle(void *data __UNUSED__, Ecore_Fd_Handler *hdl __UNUSED__)
 {
-   struct wl_display *disp;
    struct wl_event_loop *loop;
 
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   if (!(disp = data)) return ECORE_CALLBACK_RENEW;
-   if (disp != _wl_disp) return ECORE_CALLBACK_RENEW;
-
-   loop = wl_display_get_event_loop(disp);
+   loop = wl_display_get_event_loop(_wl_disp);
    wl_event_loop_dispatch(loop, 0);
-
    return ECORE_CALLBACK_RENEW;
 }

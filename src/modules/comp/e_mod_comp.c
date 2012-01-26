@@ -513,7 +513,11 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      {
         Ecore_X_Pixmap pm;
 
-        pm = ecore_x_composite_name_window_pixmap_get(cw->win);
+#ifdef HAVE_WAYLAND
+        pm = e_mod_comp_wl_pixmap_get(cw->win);
+#endif
+
+        if (!pm) pm = ecore_x_composite_name_window_pixmap_get(cw->win);
         if (pm)
           {
              Ecore_X_Pixmap oldpm;
