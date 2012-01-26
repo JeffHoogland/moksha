@@ -737,7 +737,7 @@ AC_MSG_CHECKING([whether wayland client support is enabled])
 AC_MSG_RESULT([${e_cv_want_wayland_clients}])
 
 if test "x$e_cv_want_wayland_clients" != "xno";then
-  PKG_CHECK_MODULES([WAYLAND], [wayland-server egl >= 7.10 glesv2 gl pixman-1],
+  PKG_CHECK_MODULES([WAYLAND], [wayland-server egl >= 7.10 glesv2 gl pixman-1 xcb-image],
     [
       have_wayland=yes
       AC_DEFINE_UNQUOTED([HAVE_WAYLAND],[1],[enable wayland client support])
