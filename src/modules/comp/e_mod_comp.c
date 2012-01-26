@@ -598,6 +598,9 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->rects))
      {
+#ifdef HAVE_WAYLAND
+        DBG("DEBUG - pm now %x\n", e_mod_comp_wl_pixmap_get(cw->win));
+#endif
         DBG("DEBUG - pm now %x\n", ecore_x_composite_name_window_pixmap_get(cw->win));
         evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
         EINA_LIST_FOREACH(cw->obj_mirror, l, o)
@@ -1114,7 +1117,12 @@ nocomp:
                        printf("^^^^ redirect2 %x\n", cw->win);
                        printf("  redr\n");
                        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-                       cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
+
+#ifdef HAVE_WAYLAND
+                       cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win);
+#endif
+                       if (!cw->pixmap)
+                         cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
                        if (cw->pixmap)
                          {
                             ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
@@ -2052,38 +2060,42 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
      cw->dmg_updates = 1;
    if ((!cw->redirected) || (!cw->pixmap))
      {
-// we redirect all subwindows anyway
-//        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-              cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
-              if (cw->pixmap)
-                {
-                   ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
-                   _e_mod_comp_win_ready_timeout_setup(cw);
-                }
-              else
-                {
-                   cw->pw = 0;
-                   cw->ph = 0;
-                }
-              if ((cw->pw <= 0) || (cw->ph <= 0))
-                {
-                   if (cw->pixmap)
-                     {
-                        ecore_x_pixmap_free(cw->pixmap);
-                        cw->pixmap = 0;
-                     }
-//             cw->show_ready = 0; // hmm maybe not needed?
-                }
-              cw->redirected = 1;
-              DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
-              e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
-              e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
-              evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
-              EINA_LIST_FOREACH(cw->obj_mirror, l, o)
-                {
-                   evas_object_image_size_set(o, cw->pw, cw->ph);
-                }
-              ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
+        // we redirect all subwindows anyway
+        //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+#ifdef HAVE_WAYLAND
+        cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win);
+#endif
+        if (!cw->pixmap)
+          cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
+        if (cw->pixmap)
+          {
+             ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
+             _e_mod_comp_win_ready_timeout_setup(cw);
+          }
+        else
+          {
+             cw->pw = 0;
+             cw->ph = 0;
+          }
+        if ((cw->pw <= 0) || (cw->ph <= 0))
+          {
+             if (cw->pixmap)
+               {
+                  ecore_x_pixmap_free(cw->pixmap);
+                  cw->pixmap = 0;
+               }
+             //             cw->show_ready = 0; // hmm maybe not needed?
+          }
+        cw->redirected = 1;
+        DBG("  [0x%x] up resize %ix%i\n", cw->win, cw->pw, cw->ph);
+        e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+        e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+        evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+        EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+          {
+             evas_object_image_size_set(o, cw->pw, cw->ph);
+          }
+        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
      }
    if ((cw->dmg_updates >= 1) && (cw->show_ready))
      {
