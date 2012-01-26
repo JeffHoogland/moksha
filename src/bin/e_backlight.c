@@ -82,11 +82,14 @@ e_backlight_init(void)
    _e_backlight_handler_desk_show = ecore_event_handler_add
      (E_EVENT_DESK_SHOW, _e_backlight_handler, NULL);
 
-//   if (bl_avail == EINA_TRUE)
+   if (bl_avail)
      {
         e_backlight_update();
-        e_backlight_level_set(NULL, 0.0, 0.0);
-        e_backlight_level_set(NULL, e_config->backlight.normal, 1.0);
+        if (!getenv("E_RESTART"))
+          {
+             e_backlight_level_set(NULL, 0.0, 0.0);
+             e_backlight_level_set(NULL, e_config->backlight.normal, 1.0);
+          }
      }
    return 1;
 }
