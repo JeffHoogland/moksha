@@ -513,11 +513,11 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      {
         Ecore_X_Pixmap pm;
 
-#ifdef HAVE_WAYLAND
-        pm = e_mod_comp_wl_pixmap_get(cw->win);
-#endif
+/* #ifdef HAVE_WAYLAND */
+/*         pm = e_mod_comp_wl_pixmap_get(cw->win); */
+/* #endif */
 
-        if (!pm) pm = ecore_x_composite_name_window_pixmap_get(cw->win);
+        pm = ecore_x_composite_name_window_pixmap_get(cw->win);
         if (pm)
           {
              Ecore_X_Pixmap oldpm;
@@ -598,9 +598,9 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->rects))
      {
-#ifdef HAVE_WAYLAND
-        DBG("DEBUG - pm now %x\n", e_mod_comp_wl_pixmap_get(cw->win));
-#endif
+/* #ifdef HAVE_WAYLAND */
+/*         DBG("DEBUG - pm now %x\n", e_mod_comp_wl_pixmap_get(cw->win)); */
+/* #endif */
         DBG("DEBUG - pm now %x\n", ecore_x_composite_name_window_pixmap_get(cw->win));
         evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
         EINA_LIST_FOREACH(cw->obj_mirror, l, o)
@@ -1118,11 +1118,11 @@ nocomp:
                        printf("  redr\n");
                        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
 
-#ifdef HAVE_WAYLAND
-                       cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win);
-#endif
-                       if (!cw->pixmap)
-                         cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
+/* #ifdef HAVE_WAYLAND */
+/*                        cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win); */
+/* #endif */
+/*                        if (!cw->pixmap) */
+                       cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
                        if (cw->pixmap)
                          {
                             ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
@@ -2062,11 +2062,11 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
      {
         // we redirect all subwindows anyway
         //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-#ifdef HAVE_WAYLAND
-        cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win);
-#endif
-        if (!cw->pixmap)
-          cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
+/* #ifdef HAVE_WAYLAND */
+/*         cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win); */
+/* #endif */
+/*         if (!cw->pixmap) */
+        cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
         if (cw->pixmap)
           {
              ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
