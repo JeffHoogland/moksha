@@ -144,11 +144,17 @@ e_mod_comp_wl_pixmap_get(Ecore_X_Window win)
    struct wl_list *list;
    Ecore_X_Pixmap pmap = 0;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    comp = e_mod_comp_wl_comp_get();
+   if (wl_list_empty(&comp->surfaces)) return 0;
+
    list = &comp->surfaces;
    wl_list_for_each(ws, list, link)
      {
-        if ((ws->win) && (ws->win->border->win == win))
+        if (!ws->buffer) continue;
+        if (((ws->win) && (ws->win->border)) 
+            && (ws->win->border->win == win))
           {
              if (ws->buffer)
                {
