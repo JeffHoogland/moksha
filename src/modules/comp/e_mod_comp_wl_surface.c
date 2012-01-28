@@ -221,7 +221,11 @@ e_mod_comp_wl_surface_activate(Wayland_Surface *ws, Wayland_Input *wi, uint32_t 
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   if (ws->win) e_win_show(ws->win);
+   if (ws->win) 
+     {
+        e_win_show(ws->win);
+        ws->win->border->borderless = EINA_TRUE;
+     }
 
    _e_mod_comp_wl_surface_raise(ws);
    wl_input_device_set_keyboard_focus(&wi->input_device, &ws->surface, timestamp);
