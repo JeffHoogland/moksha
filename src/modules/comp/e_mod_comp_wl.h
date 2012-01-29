@@ -151,6 +151,7 @@ struct _Wayland_Input
    struct wl_input_device input_device;
    int32_t hotspot_x, hotspot_y;
    struct wl_list link;
+   uint32_t modifier_state;
 };
 
 struct wl_shell
