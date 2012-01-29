@@ -141,7 +141,7 @@ e_mod_comp_wl_pixmap_get(Ecore_X_Window win)
 {
    Wayland_Compositor *comp;
    Wayland_Surface *ws;
-   struct wl_list *list;
+//   struct wl_list *list;
    Ecore_X_Pixmap pmap = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -149,46 +149,49 @@ e_mod_comp_wl_pixmap_get(Ecore_X_Window win)
    comp = e_mod_comp_wl_comp_get();
    if (wl_list_empty(&comp->surfaces)) return 0;
 
-   list = &comp->surfaces;
-   wl_list_for_each(ws, list, link)
+//   list = &comp->surfaces;
+   wl_list_for_each(ws, &comp->surfaces, link)
      {
         if (!ws->buffer) continue;
         if (((ws->win) && (ws->win->border)) 
             && (ws->win->border->win == win))
           {
+             Ecore_X_Connection *conn;
+             Ecore_X_GC gc;
+             uint8_t *pix = 0;
+             int depth;
+
              if (ws->buffer)
                {
-                  Ecore_X_Connection *conn;
-                  Ecore_X_GC gc;
-                  uint8_t *pix;
-                  int depth;
-
-                  depth = ecore_x_window_depth_get(win);
-                  conn = ecore_x_connection_get();
-
-                  pmap = xcb_generate_id(conn);
-                  xcb_create_pixmap(conn, depth, pmap, win, ws->w, ws->h);
-
                   if (wl_buffer_is_shm(ws->buffer))
                     pix = (uint8_t *)wl_shm_buffer_get_data(ws->buffer);
                   else
                     {
-                       /* FIXME: egl buffer ?? */
-                       printf("Wayland Buffer is NOT SHM !!\n");
-                       return 0;
+                       if (ws->texture) pix = (uint8_t *)ws->texture;
+                       else if (ws->saved_texture) 
+                         pix = (uint8_t *)ws->saved_texture;
                     }
-
-                  gc = ecore_x_gc_new(pmap, 0, NULL);
-                  xcb_put_image(conn, 2, pmap, gc, ws->w, ws->h, 
-                                0, 0, 0, depth, 
-                                (ws->w * ws->h * sizeof(int)), pix);
-                  ecore_x_gc_free(gc);
                }
              else if (ws->image)
                {
-                  /* NB: No buffer means it may be an egl surface */
-                  printf("Get Pixmap Data from EGL Surface !!!\n");
+                  if (ws->texture) pix = (uint8_t *)ws->texture;
+                  else if (ws->saved_texture) 
+                    pix = (uint8_t *)ws->saved_texture;
                }
+
+             if (!pix) return 0;
+
+             depth = ecore_x_window_depth_get(win);
+             conn = ecore_x_connection_get();
+
+             pmap = xcb_generate_id(conn);
+             xcb_create_pixmap(conn, depth, pmap, win, ws->w, ws->h);
+
+             gc = ecore_x_gc_new(pmap, 0, NULL);
+             xcb_put_image(conn, 2, pmap, gc, ws->w, ws->h, 
+                           0, 0, 0, depth, 
+                           (ws->w * ws->h * sizeof(int)), pix);
+             ecore_x_gc_free(gc);
           }
      }
 
