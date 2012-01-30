@@ -598,7 +598,7 @@ group "E_Config" struct {
         group "E_Config_Binding_Acpi" struct {
             value "context" int: 0;
             value "type" int: 5;
-            value "status" int: -1;
+            value "status" int: 1;
             value "action" string: "suspend";
             value "params" string: "now";
         }
