@@ -329,10 +329,13 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
    i = 0;
    while (buff[i] != ':') i++;
    while (!isalnum(buff[i])) i++;
+   ret = &(buff[i]);
+   while (isalnum(buff[i])) i++;
+   buff[i] = 0;
 
    /* compare value from state file and return something sane */
-   if (!strcmp(buff, "open")) return E_ACPI_LID_OPEN;
-   else if (!strcmp(buff, "closed")) return E_ACPI_LID_CLOSED;
+   if (!strcmp(ret, "open")) return E_ACPI_LID_OPEN;
+   else if (!strcmp(ret, "closed")) return E_ACPI_LID_CLOSED;
    else return E_ACPI_LID_UNKNOWN;
 }
 
