@@ -727,7 +727,7 @@ define([CHECK_MODULE_OFONO],
 AC_SUBST(EOFONO_CFLAGS)
 AC_SUBST(EOFONO_LIBS)
 
-have_wayland=no
+have_wayland_clients=no
 AC_ARG_ENABLE([wayland-clients],
   AS_HELP_STRING([--enable-wayland-clients],[enable wayland clients in composite module @<:@default=disabled@:>@]),
   [e_cv_want_wayland_clients=$enableval],
@@ -739,15 +739,15 @@ AC_MSG_RESULT([${e_cv_want_wayland_clients}])
 if test "x$e_cv_want_wayland_clients" != "xno";then
   PKG_CHECK_MODULES([WAYLAND], [wayland-server egl >= 7.10 glesv2 gl pixman-1 xcb-image],
     [
-      have_wayland=yes
-      AC_DEFINE_UNQUOTED([HAVE_WAYLAND],[1],[enable wayland client support])
+      have_wayland_clients=yes
+      AC_DEFINE_UNQUOTED([HAVE_WAYLAND_CLIENTS],[1],[enable wayland client support])
     ],
-    [have_wayland=no])
+    [have_wayland_clients=no])
 else
-  have_wayland=no
+  have_wayland_clients=no
 fi
 
-AM_CONDITIONAL([HAVE_WAYLAND], [test "x${have_wayland}" = "xyes"])
+AM_CONDITIONAL([HAVE_WAYLAND_CLIENTS], [test "x${have_wayland_clients}" = "xyes"])
 
 
 AC_E_OPTIONAL_MODULE([ibar], true)

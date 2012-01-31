@@ -2,7 +2,7 @@
 #include "e_mod_main.h"
 #include "e_mod_comp.h"
 #include "e_mod_comp_update.h"
-#ifdef HAVE_WAYLAND
+#ifdef HAVE_WAYLAND_CLIENTS
 #include "e_mod_comp_wl.h"
 #endif
 
@@ -513,7 +513,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      {
         Ecore_X_Pixmap pm = 0;
 
-#ifdef HAVE_WAYLAND
+#ifdef HAVE_WAYLAND_CLIENTS
         if ((cw->bd) && (cw->bd->borderless))
           pm = e_mod_comp_wl_pixmap_get(cw->win);
 #endif
@@ -598,7 +598,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
        (!cw->shaped) && (!cw->rects))
      {
-/* #ifdef HAVE_WAYLAND */
+/* #ifdef HAVE_WAYLAND_CLIENTS */
 /*         DBG("DEBUG - pm now %x\n", e_mod_comp_wl_pixmap_get(cw->win)); */
 /* #endif */
         /* DBG("DEBUG - pm now %x\n", ecore_x_composite_name_window_pixmap_get(cw->win)); */
@@ -1118,7 +1118,7 @@ nocomp:
                        printf("  redr\n");
                        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
 
-#ifdef HAVE_WAYLAND
+#ifdef HAVE_WAYLAND_CLIENTS
                        if ((cw->bd) && (cw->bd->borderless))
                          cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win);
 #endif
@@ -2064,7 +2064,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
      {
         // we redirect all subwindows anyway
         //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-#ifdef HAVE_WAYLAND
+#ifdef HAVE_WAYLAND_CLIENTS
         if ((cw->bd) && (cw->bd->borderless))
           cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win);
 #endif
@@ -3506,7 +3506,7 @@ e_mod_comp_init(void)
         return 0;
      }
 
-#ifdef HAVE_WAYLAND
+#ifdef HAVE_WAYLAND_CLIENTS
    if (!e_mod_comp_wl_init())
      EINA_LOG_ERR("Failed to initialize Wayland Client Support !!\n");
 #endif
@@ -3533,7 +3533,7 @@ e_mod_comp_shutdown(void)
 
    E_FREE_LIST(handlers, ecore_event_handler_del);
 
-#ifdef HAVE_WAYLAND
+#ifdef HAVE_WAYLAND_CLIENTS
    e_mod_comp_wl_shutdown();
 #endif
 

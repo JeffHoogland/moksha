@@ -1,7 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_comp.h"
-#ifdef HAVE_WAYLAND
+#ifdef HAVE_WAYLAND_CLIENTS
 # include "e_mod_comp_wl.h"
 # include "e_mod_comp_wl_buffer.h"
 # include "e_mod_comp_wl_comp.h"

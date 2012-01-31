@@ -31,7 +31,7 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_comp_update.h \
                          e_mod_comp_cfdata.c \
                          e_mod_comp_cfdata.h
-if HAVE_WAYLAND
+if HAVE_WAYLAND_CLIENTS
 module_la_SOURCES += e_mod_comp_wl.h \
                      e_mod_comp_wl.c \
                      e_mod_comp_wl_comp.h \
