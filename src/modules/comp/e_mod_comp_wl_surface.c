@@ -143,6 +143,7 @@ void
 e_mod_comp_wl_surface_destroy_surface(struct wl_resource *resource)
 {
    Wayland_Surface *ws;
+   Wayland_Input *input;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -151,15 +152,15 @@ e_mod_comp_wl_surface_destroy_surface(struct wl_resource *resource)
    /* TODO: damage below */
    /* TODO: flush damage */
 
+   input = e_mod_comp_wl_input_get();
+
    if (ws->win)
      e_object_del(E_OBJECT(ws->win));
 
    wl_list_remove(&ws->link);
+   e_mod_comp_wl_comp_repick(&input->input_device, e_mod_comp_wl_time_get());
 
-   if (!ws->saved_texture)
-     glDeleteTextures(1, &ws->texture);
-   else
-     glDeleteTextures(1, &ws->saved_texture);
+   if (ws->texture) glDeleteTextures(1, &ws->texture);
 
    if (ws->buffer)
      wl_list_remove(&ws->buffer_destroy_listener.link);
@@ -194,6 +195,9 @@ e_mod_comp_wl_surface_configure(Wayland_Surface *ws, int32_t x, int32_t y, int32
    ws->w = width;
    ws->h = height;
 
+   if (ws->win)
+     e_win_move_resize(ws->win, ws->x, ws->y, ws->w, ws->h);
+
    if (!wl_list_empty(&ws->frame_callbacks))
      {
         Wayland_Output *output;
@@ -211,9 +215,6 @@ e_mod_comp_wl_surface_configure(Wayland_Surface *ws, int32_t x, int32_t y, int32
      pixman_region32_init_rect(&ws->opaque, ws->x, ws->y, ws->w, ws->h);
    else
      pixman_region32_init(&ws->opaque);
-
-   if (ws->win)
-     e_win_move_resize(ws->win, ws->x, ws->y, ws->w, ws->h);
 }
 
 void 
@@ -256,13 +257,16 @@ static void
 _e_mod_comp_wl_surface_raise(Wayland_Surface *ws)
 {
    Wayland_Compositor *comp;
+   Wayland_Input *input;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    comp = e_mod_comp_wl_comp_get();
+   input = e_mod_comp_wl_input_get();
+
    wl_list_remove(&ws->link);
    wl_list_insert(&comp->surfaces, &ws->link);
-   /* TODO: repick */
+   e_mod_comp_wl_comp_repick(&input->input_device, e_mod_comp_wl_time_get());
    e_mod_comp_wl_surface_damage_surface(ws);
 }
 

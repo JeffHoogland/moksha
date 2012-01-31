@@ -24,10 +24,23 @@ e_mod_comp_wl_buffer_attach(struct wl_buffer *buffer, struct wl_surface *surface
 
    ws = (Wayland_Surface *)surface;
 
-   if (ws->saved_texture != 0)
-     ws->texture = ws->saved_texture;
+   if (!ws->texture)
+     {
+        glGenTextures(1, &ws->texture);
+        glBindTexture(GL_TEXTURE_2D, ws->texture);
+        glTexParameteri(GL_TEXTURE_2D, 
+                        GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, 
+                        GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+//        ws->shader = &ws->texture_shader;
+     }
+   else
+     glBindTexture(GL_TEXTURE_2D, ws->texture);
 
-   glBindTexture(GL_TEXTURE_2D, ws->texture);
+   /* if (ws->saved_texture != 0) */
+   /*   ws->texture = ws->saved_texture; */
+
+   /* glBindTexture(GL_TEXTURE_2D, ws->texture); */
 
    if (wl_buffer_is_shm(buffer))
      {

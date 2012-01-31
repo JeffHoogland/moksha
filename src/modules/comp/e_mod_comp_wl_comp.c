@@ -40,7 +40,6 @@ static Eina_Bool _e_mod_comp_wl_cb_mouse_up(void *data __UNUSED__, int type __UN
 static Eina_Bool _e_mod_comp_wl_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool _e_mod_comp_wl_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event);
 
-static void _e_mod_comp_wl_comp_repick(struct wl_input_device *device, uint32_t timestamp);
 static Wayland_Surface *_e_mod_comp_wl_comp_pick_surface(int32_t x __UNUSED__, int32_t y __UNUSED__, int32_t *sx, int32_t *sy);
 static void _e_mod_comp_wl_comp_update_modifier(Wayland_Input *input, uint32_t key, uint32_t state);
 
@@ -178,6 +177,32 @@ Wayland_Compositor *
 e_mod_comp_wl_comp_get(void)
 {
    return _wl_comp;
+}
+
+void 
+e_mod_comp_wl_comp_repick(struct wl_input_device *device, uint32_t timestamp)
+{
+   Wayland_Surface *ws, *focus;
+
+   ws = 
+     _e_mod_comp_wl_comp_pick_surface(device->x, device->y, 
+                                      &device->current_x, &device->current_y);
+   if (!ws) return;
+   if (&ws->surface != device->current)
+     {
+        const struct wl_grab_interface *interface;
+
+        interface = device->grab->interface;
+        interface->focus(device->grab, timestamp, &ws->surface, 
+                         device->current_x, device->current_y);
+        device->current = &ws->surface;
+     }
+
+   if ((focus = (Wayland_Surface *)device->grab->focus))
+     {
+        device->grab->x = device->x - focus->x;
+        device->grab->y = device->y - focus->y;
+     }
 }
 
 /* local functions */
@@ -378,7 +403,7 @@ _e_mod_comp_wl_cb_mouse_in(void *data __UNUSED__, int type __UNUSED__, void *eve
    input->input_device.y = ev->y;
 
    timestamp = e_mod_comp_wl_time_get();
-   _e_mod_comp_wl_comp_repick(&input->input_device, timestamp);
+   e_mod_comp_wl_comp_repick(&input->input_device, timestamp);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -397,7 +422,7 @@ _e_mod_comp_wl_cb_mouse_out(void *data __UNUSED__, int type __UNUSED__, void *ev
    input = e_mod_comp_wl_input_get();
 
    timestamp = e_mod_comp_wl_time_get();
-   _e_mod_comp_wl_comp_repick(&input->input_device, timestamp);
+   e_mod_comp_wl_comp_repick(&input->input_device, timestamp);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -422,7 +447,7 @@ _e_mod_comp_wl_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *e
    device->y = ev->y;
 
    timestamp = e_mod_comp_wl_time_get();
-   _e_mod_comp_wl_comp_repick(device, timestamp);
+   e_mod_comp_wl_comp_repick(device, timestamp);
 
    interface = device->grab->interface;
    interface->motion(device->grab, timestamp, device->grab->x, device->grab->y);
@@ -588,32 +613,6 @@ _e_mod_comp_wl_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event
                             WL_INPUT_DEVICE_KEY, timestamp, key, 0);
 
    return ECORE_CALLBACK_PASS_ON;
-}
-
-static void 
-_e_mod_comp_wl_comp_repick(struct wl_input_device *device, uint32_t timestamp)
-{
-   Wayland_Surface *ws, *focus;
-
-   ws = 
-     _e_mod_comp_wl_comp_pick_surface(device->x, device->y, 
-                                      &device->current_x, &device->current_y);
-   if (!ws) return;
-   if (&ws->surface != device->current)
-     {
-        const struct wl_grab_interface *interface;
-
-        interface = device->grab->interface;
-        interface->focus(device->grab, timestamp, &ws->surface, 
-                         device->current_x, device->current_y);
-        device->current = &ws->surface;
-     }
-
-   if ((focus = (Wayland_Surface *)device->grab->focus))
-     {
-        device->grab->x = device->x - focus->x;
-        device->grab->y = device->y - focus->y;
-     }
 }
 
 static Wayland_Surface *
