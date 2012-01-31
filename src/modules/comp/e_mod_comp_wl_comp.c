@@ -320,6 +320,7 @@ _e_mod_comp_wl_cb_focus_in(void *data __UNUSED__, int type __UNUSED__, void *eve
    Wayland_Input *input;
    Wayland_Surface *ws;
    Ecore_X_Event_Window_Focus_In *ev;
+   uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -332,8 +333,10 @@ _e_mod_comp_wl_cb_focus_in(void *data __UNUSED__, int type __UNUSED__, void *eve
         if (((ws->win) && (ws->win->border)) 
             && (ws->win->border->win == ev->win))
           {
+             timestamp = e_mod_comp_wl_time_get();
              wl_input_device_set_keyboard_focus(&input->input_device, 
-                                                &ws->surface, ev->time);
+                                                &ws->surface, timestamp);
+             wl_data_device_set_keyboard_focus(&input->input_device);
              break;
           }
      }
@@ -346,12 +349,15 @@ _e_mod_comp_wl_cb_focus_out(void *data __UNUSED__, int type __UNUSED__, void *ev
 {
    Wayland_Input *input;
    Ecore_X_Event_Window_Focus_Out *ev;
+   uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    ev = event;
    input = e_mod_comp_wl_input_get();
-   wl_input_device_set_keyboard_focus(&input->input_device, NULL, ev->time);
+   timestamp = e_mod_comp_wl_time_get();
+   wl_input_device_set_keyboard_focus(&input->input_device, NULL, timestamp);
+   wl_data_device_set_keyboard_focus(&input->input_device);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -361,6 +367,7 @@ _e_mod_comp_wl_cb_mouse_in(void *data __UNUSED__, int type __UNUSED__, void *eve
 {
    Wayland_Input *input;
    Ecore_X_Event_Mouse_In *ev;
+   uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -370,7 +377,8 @@ _e_mod_comp_wl_cb_mouse_in(void *data __UNUSED__, int type __UNUSED__, void *eve
    input->input_device.x = ev->x;
    input->input_device.y = ev->y;
 
-   _e_mod_comp_wl_comp_repick(&input->input_device, ev->time);
+   timestamp = e_mod_comp_wl_time_get();
+   _e_mod_comp_wl_comp_repick(&input->input_device, timestamp);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -380,6 +388,7 @@ _e_mod_comp_wl_cb_mouse_out(void *data __UNUSED__, int type __UNUSED__, void *ev
 {
    Wayland_Input *input;
    Ecore_X_Event_Mouse_Out *ev;
+   uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -387,7 +396,8 @@ _e_mod_comp_wl_cb_mouse_out(void *data __UNUSED__, int type __UNUSED__, void *ev
    if (wl_list_empty(&_wl_comp->surfaces)) return ECORE_CALLBACK_PASS_ON;
    input = e_mod_comp_wl_input_get();
 
-   _e_mod_comp_wl_comp_repick(&input->input_device, ev->time);
+   timestamp = e_mod_comp_wl_time_get();
+   _e_mod_comp_wl_comp_repick(&input->input_device, timestamp);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -399,6 +409,7 @@ _e_mod_comp_wl_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *e
    Ecore_Event_Mouse_Move *ev;
    struct wl_input_device *device;
    const struct wl_grab_interface *interface;
+   uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -410,11 +421,11 @@ _e_mod_comp_wl_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *e
    device->x = ev->x;
    device->y = ev->y;
 
-   _e_mod_comp_wl_comp_repick(device, ev->timestamp);
+   timestamp = e_mod_comp_wl_time_get();
+   _e_mod_comp_wl_comp_repick(device, timestamp);
 
    interface = device->grab->interface;
-   interface->motion(device->grab, ev->timestamp, 
-                     device->grab->x, device->grab->y);
+   interface->motion(device->grab, timestamp, device->grab->x, device->grab->y);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -426,8 +437,9 @@ _e_mod_comp_wl_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *e
    Ecore_Event_Mouse_Button *ev;
    struct wl_input_device *device;
    int btn = 0;
+   uint32_t timestamp;
 
-//   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    ev = event;
    if (wl_list_empty(&_wl_comp->surfaces)) return ECORE_CALLBACK_PASS_ON;
@@ -447,10 +459,11 @@ _e_mod_comp_wl_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *e
 
    input = e_mod_comp_wl_input_get();
    device = &input->input_device;
+   timestamp = e_mod_comp_wl_time_get();
    if (device->button_count == 0)
      {
         device->grab_button = btn;
-        device->grab_time = ev->timestamp;
+        device->grab_time = timestamp;
         device->grab_x = device->x;
         device->grab_y = device->y;
      }
@@ -458,7 +471,7 @@ _e_mod_comp_wl_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *e
    device->button_count++;
 
    /* TODO: Run binding ?? */
-   device->grab->interface->button(device->grab, ev->timestamp, btn, 1);
+   device->grab->interface->button(device->grab, timestamp, btn, 1);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -470,6 +483,7 @@ _e_mod_comp_wl_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *eve
    Ecore_Event_Mouse_Button *ev;
    struct wl_input_device *device;
    int btn = 0;
+   uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -495,7 +509,8 @@ _e_mod_comp_wl_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *eve
    device->button_count--;
 
    /* TODO: Run binding ?? */
-   device->grab->interface->button(device->grab, ev->timestamp, btn, 0);
+   timestamp = e_mod_comp_wl_time_get();
+   device->grab->interface->button(device->grab, timestamp, btn, 0);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -507,6 +522,7 @@ _e_mod_comp_wl_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *eve
    Ecore_Event_Key *ev;
    struct wl_input_device *device;
    uint32_t *k, *end, key = 0;
+   uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -515,9 +531,11 @@ _e_mod_comp_wl_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *eve
 
    input = e_mod_comp_wl_input_get();
    device = &input->input_device;
+   timestamp = e_mod_comp_wl_time_get();
 
    key = ecore_x_keysym_keycode_get(ev->key);
 
+   input->modifier_state = 0;
    _e_mod_comp_wl_comp_update_modifier(input, key, 1);
 
    end = device->keys.data + device->keys.size;
@@ -530,7 +548,7 @@ _e_mod_comp_wl_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *eve
 
    if (device->keyboard_focus_resource)
      wl_resource_post_event(device->keyboard_focus_resource, 
-                            WL_INPUT_DEVICE_KEY, ev->timestamp, key, 1);
+                            WL_INPUT_DEVICE_KEY, timestamp, key, 1);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -542,6 +560,7 @@ _e_mod_comp_wl_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event
    Ecore_Event_Key *ev;
    struct wl_input_device *device;
    uint32_t *k, *end, key = 0;
+   uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -550,6 +569,7 @@ _e_mod_comp_wl_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event
 
    input = e_mod_comp_wl_input_get();
    device = &input->input_device;
+   timestamp = e_mod_comp_wl_time_get();
 
    key = ecore_x_keysym_keycode_get(ev->key);
 
@@ -565,7 +585,7 @@ _e_mod_comp_wl_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event
 
    if (device->keyboard_focus_resource)
      wl_resource_post_event(device->keyboard_focus_resource, 
-                            WL_INPUT_DEVICE_KEY, ev->timestamp, key, 0);
+                            WL_INPUT_DEVICE_KEY, timestamp, key, 0);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -578,6 +598,7 @@ _e_mod_comp_wl_comp_repick(struct wl_input_device *device, uint32_t timestamp)
    ws = 
      _e_mod_comp_wl_comp_pick_surface(device->x, device->y, 
                                       &device->current_x, &device->current_y);
+   if (!ws) return;
    if (&ws->surface != device->current)
      {
         const struct wl_grab_interface *interface;
