@@ -1601,8 +1601,11 @@ _e_randr_find_matching_crtc(Eina_List *crtcs, E_Randr_Serialized_Crtc *sc)
           {
              EINA_LIST_FOREACH (ci->possible_outputs, p_output_iter, oi)
                {
-                  if (!strncmp(s_output_name, oi->name, oi->name_length))
-                    return ci;
+                  if (oi->name)
+                    {
+                       if (!strncmp(s_output_name, oi->name, oi->name_length))
+                         return ci;
+                    }
                }
           }
      }
@@ -1680,9 +1683,12 @@ _e_randr_restore_12_policies(E_Randr_Screen_Info_12 *si_12)
      {
         EINA_LIST_FOREACH(e_config->randr_serialized_setup->serialized_outputs_policies, iter2, sop)
           {
-             if (strncmp(sop->name, output->name, sop->name_length) == 0)
+             if (output->name)
                {
-                  output->policy = sop->policy;
+                  if (strncmp(sop->name, output->name, sop->name_length) == 0)
+                    {
+                       output->policy = sop->policy;
+                    }
                }
           }
      }
