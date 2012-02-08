@@ -443,6 +443,8 @@ fallback:
         cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_LEFT_PTR);
       else if (!strcmp(type, "plus"))
         cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_PLUS);
+      else if (!strcmp(type, "hand"))
+        cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_HAND1);
       else
         {
            printf("Unknown pointer type: %s\n", type);
