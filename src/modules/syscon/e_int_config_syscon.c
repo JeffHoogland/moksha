@@ -105,6 +105,14 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->syscon.extra.icon_size = cfdata->extra.icon_size;
    e_config->syscon.timeout = cfdata->timeout;
    e_config->syscon.do_input = cfdata->do_input;
+   EINA_LIST_FREE(e_config->syscon.actions, sa)
+     {
+        if (sa->action) eina_stringshare_del(sa->action);
+        if (sa->params) eina_stringshare_del(sa->params);
+        if (sa->button) eina_stringshare_del(sa->button);
+        if (sa->icon) eina_stringshare_del(sa->icon);
+        E_FREE(sa);
+     }
    EINA_LIST_FOREACH(cfdata->actions, l, sa)
      {
         sa2 = E_NEW(E_Config_Syscon_Action, 1);
