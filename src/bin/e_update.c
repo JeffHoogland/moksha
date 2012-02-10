@@ -4,6 +4,7 @@ static Ecore_Con_Url *url_up = NULL;
 static Eina_List     *handlers = NULL;
 static Ecore_Timer   *update_timer = NULL;
 static E_Dialog      *dialog = NULL;
+static char          *machid = NULL;
 
 static void
 _update_done(void)
@@ -148,15 +149,81 @@ _upload_complete_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
 }
 
 static void
+_update_machid_get(void)
+{
+   FILE *f;
+   char buf[PATH_MAX], *c;
+   size_t len;
+   
+   f = fopen("/etc/machine-id", "r");
+   if (!f) f = fopen("/var/lib/dbus/machine-id", "r");
+   if (!f)
+     {
+        e_user_dir_concat_static(buf, ".machid");
+        f = fopen(buf, "r");
+     }
+   if (f)
+     {
+        len = fread(buf, 1, sizeof(buf) - 1, f);
+        if (len > 10)
+          {
+             buf[len] = 0;
+             for (c = buf; *c; c++)
+               {
+                  if (!isalnum(*c))
+                    {
+                       *c = 0;
+                       break;
+                    }
+               }
+             machid = strdup(buf);
+             fclose(f);
+             return;
+          }
+        fclose(f);
+     }
+   
+   // generate ID
+   e_user_dir_concat_static(buf, ".machid");
+   f = fopen(buf, "w");
+   if (f)
+     {
+        double t;
+        fwrite("GEN-", 4, 1, f);
+        t = ecore_time_unix_get();
+        fprintf(f, "%1.16f-%i-%i\n", t, rand(), rand());
+        fclose(f);
+        _update_machid_get();
+        return;
+     }
+   // this just is all a wash - just use this
+   machid = strdup("NOIDEAWHATTHEIDOFTHISMACHINEIS");
+}
+
+static void
+_update_post_generate(char *buf, int size)
+{
+   if (!machid) _update_machid_get();
+   if (!machid) return;
+   snprintf(buf, size, 
+            "CLIENT %s\n"
+            "UPDATE enlightenment %s",
+            machid, VERSION);
+}
+
+static void
 _update_check(void)
 {
    char buf[1024];
-   
+
    if (url_up) _update_done();
-   snprintf(buf, sizeof(buf), "UPDATE enlightenment %s", VERSION);
    url_up = ecore_con_url_new("http://www.enlightenment.org/update.php");
    if (url_up)
-     ecore_con_url_post(url_up, buf, strlen(buf), "text/plain");
+     {
+        _update_post_generate(buf, sizeof(buf));
+        ecore_con_url_http_version_set(url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
+        ecore_con_url_post(url_up, buf, strlen(buf), "text/plain");
+     }
    else
      _update_done();
 }
@@ -218,6 +285,11 @@ e_update_shutdown(void)
    if (dialog) e_object_del(E_OBJECT(dialog));
    dialog = NULL;
    _update_done();
+   if (machid)
+     {
+        free(machid);
+        machid = NULL;
+     }
    return 1;
 }
 
