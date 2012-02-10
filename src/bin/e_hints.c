@@ -365,7 +365,7 @@ e_hints_client_stacking_set(void)
                                                  "Please report this.\n");
                             break;
                          }
-                       clients[i++] = b->win;
+                       clients[i++] = b->client.win;
                     }
                   e_container_border_list_free(bl);
                }
