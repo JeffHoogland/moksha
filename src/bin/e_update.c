@@ -37,9 +37,9 @@ static void
 _bother_me_later_cb(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
 {
    e_object_del(E_OBJECT(dialog));
-   // 12 * 12 * 1hr === about 6 days. limit, so bother-me later will wait
-   // a week in between botherings. botherings reset on e start or restart
-   if (e_config->update.later < 12)
+   // 5 * 5 * 1hr === about 1 day limit, so bother-me later will wait
+   // a day in between botherings. botherings reset on e start or restart
+   if (e_config->update.later < 5)
      {
         e_config->update.later++;
         e_config_save_queue();
