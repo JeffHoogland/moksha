@@ -2666,7 +2666,7 @@ e_border_fullscreen(E_Border    *bd,
 
         /* e_zone_fullscreen_set(bd->zone, 1); */
         if (!e_config->allow_above_fullscreen)
-          e_border_layer_set(bd, 200);
+          e_border_layer_set(bd, 300);
 
         if ((eina_list_count(bd->zone->container->zones) > 1) ||
             (policy == E_FULLSCREEN_RESIZE) || (!ecore_x_randr_query()))
