@@ -1081,6 +1081,13 @@ group "E_Config" struct {
         group "E_Config_Binding_Key" struct {
             value "context" int: 9;
             value "modifiers" int: 6;
+            value "key" string: "f";
+            value "action" string: "window_fullscreen_toggle";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 6;
             value "key" string: "i";
             value "action" string: "window_iconic_toggle";
             value "any_mod" uchar: 0;
