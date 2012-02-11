@@ -62,6 +62,7 @@ pkg_LTLIBRARIES        = module.la \
                          page_140.la \
                          page_150.la \
                          page_160.la \
+                         page_170.la \
                          page_200.la
 
 module_la_SOURCES      = e_mod_main.c \
@@ -163,7 +164,7 @@ page_140_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_140_la_LDFLAGS      = -module -avoid-version
 page_140_la_DEPENDENCIES = $(top_builddir)/config.h
 
-#Auto - do we need temperature?
+#Request if compositing is wanted
 page_150_la_SOURCES      = page_150.c $(top_srcdir)/src/modules/comp/e_mod_comp_cfdata.c
 page_150_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_150_la_LDFLAGS      = -module -avoid-version
@@ -174,6 +175,12 @@ page_160_la_SOURCES      = page_160.c
 page_160_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_160_la_LDFLAGS      = -module -avoid-version
 page_160_la_DEPENDENCIES = $(top_builddir)/config.h
+
+#Request if user agrees to checking for updates
+page_170_la_SOURCES      = page_170.c
+page_170_la_LIBADD       = @e_libs@ @dlopen_libs@
+page_170_la_LDFLAGS      = -module -avoid-version
+page_170_la_DEPENDENCIES = $(top_builddir)/config.h
 
 #Auto - finish up applying
 page_200_la_SOURCES      = page_200.c
