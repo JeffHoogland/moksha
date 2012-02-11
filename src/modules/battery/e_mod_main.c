@@ -440,12 +440,15 @@ _battery_warning_popup(Instance *inst, int time, double percent)
    if (battery_config && battery_config->desktop_notifications)
      {
         if (notification) return;
-        notification = e_notification_full_new(_("Battery"),
-                                      0,
-                                      "battery-low",
-                                      _("Your battery is low!"),
-                                      _("AC power is recommended."),
-                                      (battery_config->alert_timeout * 1000));
+        notification = e_notification_full_new
+          (
+              _("Battery"),
+              0,
+              "battery-low",
+              _("Your battery is low!"),
+              _("AC power is recommended."),
+              (battery_config->alert_timeout * 1000)
+          );
         e_notification_send(notification, NULL, NULL);
         e_notification_unref(notification);
         notification = NULL;
@@ -568,16 +571,35 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
                _battery_face_time_set(inst->popup_battery, 
                                       time_full);
           }
-        if (have_battery && (!have_power) && (full < 100) &&
-            (((time_left > 0) && battery_config->alert && ((time_left / 60) <= battery_config->alert)) || 
-             (battery_config->alert_p && (full <= battery_config->alert_p)))
+        if (have_battery && 
+            (!have_power) && 
+            (full < 100) &&
+            (
+                (
+                    (time_left > 0) && 
+                    battery_config->alert && 
+                    ((time_left / 60) <= battery_config->alert)
+                ) ||
+                (
+                    battery_config->alert_p && 
+                    (full <= battery_config->alert_p)
+                )
             )
+           )
           {
              double t;
              
+             printf("-------------------------------------- bat warn .. why below\n");
+             printf("have_battery = %i\n", (int)have_battery);
+             printf("have_power = %i\n", (int)have_power);
+             printf("full = %i\n", (int)full);
+             printf("time_left = %i\n", (int)time_left);
+             printf("battery_config->alert = %i\n", (int)battery_config->alert);
+             printf("battery_config->alert_p = %i\n", (int)battery_config->alert_p);
              t = ecore_time_get();
              if ((t - debounce_time) > 30.0)
                {
+                  printf("t-debounce = %3.3f\n", (t - debounce_time));
                   debounce_time = t;
                   if ((t - init_time) > 5.0)
                     _battery_warning_popup(inst, time_left, (double)full / 100.0);
