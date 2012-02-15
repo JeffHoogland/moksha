@@ -23,7 +23,9 @@ e_mod_sft_win_new(E_Zone *zone)
 {
    Sft_Win *swin;
    Ecore_X_Window_State states[2];
-
+   Evas_Coord mw = 0, mh = 0;
+   
+   printf("@@@@@@@@@@@@@@@@@@@@22 e_mod_sft_win_new()\n");
    /* create our new softkey window object */
    swin = E_OBJECT_ALLOC(Sft_Win, SFT_WIN_TYPE, _e_mod_sft_win_cb_free);
    if (!swin) return NULL;
@@ -85,13 +87,16 @@ e_mod_sft_win_new(E_Zone *zone)
    /* create default buttons */
    _e_mod_sft_win_create_extra_buttons(swin);
 
+   edje_object_size_min_calc(swin->o_base, &mw, &mh);
+   printf("@@@@@@@@@@@------------: %ix%i\n", mw, mh);
+   
    /* set minimum size of this window */
-   e_win_size_min_set(swin->win, zone->w, (il_sft_cfg->height * e_scale));
+   e_win_size_min_set(swin->win, zone->w, mh);
 
    /* position and resize this window */
    e_win_move_resize(swin->win, zone->x, 
                      (zone->y + zone->h - (il_sft_cfg->height * e_scale)), 
-                     zone->w, (il_sft_cfg->height * e_scale));
+                     zone->w, mh);
 
    /* show the window */
    e_win_show(swin->win);
