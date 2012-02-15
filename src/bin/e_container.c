@@ -1132,20 +1132,26 @@ _e_container_resize_handle(E_Container *con)
      {
 	EINA_LIST_FOREACH(con->zones, l, zone)
 	  zones = eina_list_append(zones, zone);
+        con->zones = NULL;
 	EINA_LIST_FOREACH(screens, l, scr)
 	  {
+             printf("@@@ SCREENS: %i %i | %i %i %ix%i\n", scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 	     zone = e_container_zone_id_get(con, scr->escreen);
 	     if (zone)
 	       {
+                  printf("@@@ FOUND ZONE %i %i\n", zone->num, zone->id);
 		  e_zone_move_resize(zone, scr->x, scr->y, scr->w, scr->h);
 		  e_shelf_zone_move_resize_handle(zone);	
 		  zones = eina_list_remove(zones, zone);
+                  con->zones = eina_list_append(con->zones, zone);
+                  zone->num = scr->screen;
 	       }
 	     else
 	       {
 		  Eina_List *ll;
   		  E_Config_Shelf *cf_es;
 
+                  printf("@@@ container resize handle\n");
 		  zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 		  /* find any shelves configured for this zone and add them in */
 		  EINA_LIST_FOREACH(e_config->shelves, ll, cf_es)

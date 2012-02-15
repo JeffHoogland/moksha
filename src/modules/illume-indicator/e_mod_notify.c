@@ -256,7 +256,7 @@ _e_mod_notify_new(E_Notification *n)
    ecore_x_e_illume_quickpanel_set(nwin->win->evas_win, EINA_TRUE);
    ecore_x_e_illume_quickpanel_priority_major_set(nwin->win->evas_win, 
                                                   e_notification_hint_urgency_get(n));
-   ecore_x_e_illume_quickpanel_zone_set(nwin->win->evas_win, zone->id);
+   ecore_x_e_illume_quickpanel_zone_set(nwin->win->evas_win, zone->num);
 
    states[0] = ECORE_X_WINDOW_STATE_SKIP_TASKBAR;
    states[1] = ECORE_X_WINDOW_STATE_SKIP_PAGER;

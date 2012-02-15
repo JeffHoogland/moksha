@@ -118,7 +118,7 @@ e_mod_quickpanel_show(E_Illume_Quickpanel *qp)
    duration = _e_illume_cfg->animation.quickpanel.duration;
 
    /* grab the height of the indicator */
-   cz = e_illume_zone_config_get(qp->zone->id);
+   cz = e_illume_zone_config_get(qp->zone->num);
    qp->vert.isize = cz->indicator.size;
 
    /* check animation duration */

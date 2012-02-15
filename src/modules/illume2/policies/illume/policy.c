@@ -307,7 +307,7 @@ _policy_zone_layout_indicator(E_Border *bd, E_Illume_Config_Zone *cz)
         return;
      }
 
-//   printf("\tLayout Indicator: %d\n", bd->zone->id);
+//   printf("\tLayout Indicator: %d\n", bd->zone->num);
 
    /* lock indicator window from dragging if we need to */
    if ((cz->mode.dual == 1) && (cz->mode.side == 0)) 
@@ -1127,7 +1127,7 @@ _policy_border_del(E_Border *bd)
 	E_Illume_Config_Zone *cz;
 
 	/* get the config for this zone */
-	cz = e_illume_zone_config_get(bd->zone->id);
+	cz = e_illume_zone_config_get(bd->zone->num);
 	cz->softkey.size = 0;
 	_policy_zone_layout_update(bd->zone);
      }
@@ -1136,7 +1136,7 @@ _policy_border_del(E_Border *bd)
 	E_Illume_Config_Zone *cz;
 
 	/* get the config for this zone */
-	cz = e_illume_zone_config_get(bd->zone->id);
+	cz = e_illume_zone_config_get(bd->zone->num);
 	cz->indicator.size = 0;
 	_policy_zone_layout_update(bd->zone);
      }
@@ -1338,10 +1338,10 @@ _policy_zone_layout(E_Zone *zone)
 
    if (!zone) return;
 
-//   printf("Zone Layout: %d\n", zone->id);
+//   printf("Zone Layout: %d\n", zone->num);
 
    /* get the config for this zone */
-   cz = e_illume_zone_config_get(zone->id);
+   cz = e_illume_zone_config_get(zone->num);
 
    /* loop through border list and update layout */
    EINA_LIST_FOREACH(e_border_client_list(), l, bd) 
@@ -1492,12 +1492,12 @@ _policy_zone_mode_change(E_Zone *zone, Ecore_X_Atom mode)
    E_Border *bd;
    int count;
 
-//   printf("Zone mode change: %d\n", zone->id);
+//   printf("Zone mode change: %d\n", zone->num);
 
    if (!zone) return;
 
    /* get the config for this zone */
-   cz = e_illume_zone_config_get(zone->id);
+   cz = e_illume_zone_config_get(zone->num);
 
    /* update config with new mode */
    if (mode == ECORE_X_ATOM_E_ILLUME_MODE_SINGLE) 

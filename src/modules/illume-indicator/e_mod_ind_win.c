@@ -28,7 +28,7 @@ e_mod_ind_win_new(E_Zone *zone)
 {
    Ind_Win *iwin;
    Ecore_X_Window_State states[2];
-   Evas_Coord h = 0;
+   Evas_Coord h = 0, mw = 0, mh = 0;
 
    /* create our new indicator window object */
    iwin = E_OBJECT_ALLOC(Ind_Win, IND_WIN_TYPE, _e_mod_ind_win_cb_free);
@@ -86,9 +86,9 @@ e_mod_ind_win_new(E_Zone *zone)
    evas_object_show(iwin->o_base);
 
    /* create our gadget container */
-   iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", zone->id, 
+   iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", zone->num, 
                                          iwin->o_base, "e.swallow.content");
-   edje_extern_object_min_size_set(iwin->gadcon->o_container, zone->w, h);
+   edje_extern_object_min_size_set(iwin->gadcon->o_container, h, h);
    e_gadcon_min_size_request_callback_set(iwin->gadcon, 
                                           _e_mod_ind_win_cb_min_size_request, 
                                           iwin);
@@ -131,11 +131,14 @@ e_mod_ind_win_new(E_Zone *zone)
                                               _e_mod_ind_win_cb_border_show, 
                                               iwin));
 
-   /* set minimum size of this window & popup */
-   e_win_size_min_set(iwin->win, zone->w, h);
+   edje_object_size_min_calc(iwin->o_base, &mw, &mh);
+   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
+   
+   /* set minimum size of this window */
+   e_win_size_min_set(iwin->win, zone->w, mh);
 
    /* position and resize this window */
-   e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, h);
+   e_win_move_resize(iwin->win, zone->x, zone->y, zone->w, mh);
 
    /* show the window */
    e_win_show(iwin->win);
@@ -152,7 +155,7 @@ e_mod_ind_win_new(E_Zone *zone)
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(zone->black_win, zone->x, zone->y, 
-                                           zone->w, h);
+                                           zone->w, mh);
 
    return iwin;
 }
@@ -201,7 +204,7 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
 {
    Ind_Win *iwin;
    Ecore_X_Event_Window_Property *ev;
-   Evas_Coord h = 0;
+   Evas_Coord h = 0, mw = 0, mh = 0;
 
    ev = event;
 
@@ -212,8 +215,10 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
 
    h = (il_ind_cfg->height * e_scale);
 
+   edje_object_size_min_calc(iwin->o_base, &mw, &mh);
+   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
    /* set minimum size of this window */
-   e_win_size_min_set(iwin->win, iwin->zone->w, h);
+   e_win_size_min_set(iwin->win, iwin->zone->w, mh);
 
    /* NB: Not sure why, but we need to tell this border to fetch icccm 
     * size position hints now :( (NOTE: This was not needed a few days ago) 
@@ -221,12 +226,12 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    iwin->win->border->client.icccm.fetch.size_pos_hints = 1;
 
    /* resize this window */
-   e_win_resize(iwin->win, iwin->zone->w, h);
+   e_win_resize(iwin->win, iwin->zone->w, mh);
 
    /* tell conformant apps our position and size */
    ecore_x_e_illume_indicator_geometry_set(iwin->zone->black_win, 
                                            iwin->win->x, iwin->win->y, 
-                                           iwin->win->w, h);
+                                           iwin->win->w, mh);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -236,16 +241,18 @@ _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event)
 {
    Ind_Win *iwin;
    E_Event_Zone_Move_Resize *ev;
-   Evas_Coord h = 0;
+   Evas_Coord h = 0, mw = 0, mh = 0;
 
    ev = event;
    if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
    if (ev->zone != iwin->zone) return ECORE_CALLBACK_PASS_ON;
 
    h = (il_ind_cfg->height * e_scale);
+   edje_object_size_min_calc(iwin->o_base, &mw, &mh);
+   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
 
    /* set minimum size of this window to match zone size */
-   e_win_size_min_set(iwin->win, ev->zone->w, h);
+   e_win_size_min_set(iwin->win, ev->zone->w, mh);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -259,8 +266,10 @@ _e_mod_ind_win_cb_resize(E_Win *win)
    if (iwin->o_event) evas_object_resize(iwin->o_event, win->w, win->h);
    if (iwin->o_base) evas_object_resize(iwin->o_base, win->w, win->h);
    if (iwin->gadcon->o_container)
-     edje_extern_object_min_size_set(iwin->gadcon->o_container, 
-                                     win->w, win->h);
+     {
+//        edje_extern_object_min_size_set(iwin->gadcon->o_container, 
+//                                        win->w, win->h);
+     }
 }
 
 static void 
@@ -440,7 +449,7 @@ _e_mod_ind_win_cb_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_
    if (!(iwin = data)) return;
    if (gc != iwin->gadcon) return;
    if (h < iwin->win->h) h = iwin->win->h;
-   edje_extern_object_min_size_set(iwin->gadcon->o_container, w, h);
+//   edje_extern_object_min_size_set(iwin->gadcon->o_container, w, h);
 }
 
 static void 

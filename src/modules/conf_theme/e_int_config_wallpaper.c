@@ -379,7 +379,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
         z = e_zone_current_get(c);
         d = e_desk_current_get(z);
 
-        cfbg = e_bg_config_get(c->num, z->id, d->x, d->y);
+        cfbg = e_bg_config_get(c->num, z->num, d->x, d->y);
         /* if we have a config for this bg, use it. */
         if (cfbg)
           {

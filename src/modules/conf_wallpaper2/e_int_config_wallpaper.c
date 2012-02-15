@@ -1126,11 +1126,11 @@ wp_browser_new(E_Container *con)
    zone = e_util_zone_current_get(con->manager);
    desk = e_desk_current_get(zone);
    info->con_num = con->num;
-   info->zone_num = zone->id;
+   info->zone_num = zone->num;
    info->desk_x = desk->x;
    info->desk_y = desk->y;
    info->mode = 0;
-   cfbg = e_bg_config_get(con->num, zone->id, desk->x, desk->y);
+   cfbg = e_bg_config_get(con->num, zone->num, desk->x, desk->y);
    if (cfbg)
      {
         if ((cfbg->container >= 0) && (cfbg->zone >= 0))

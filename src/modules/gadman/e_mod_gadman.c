@@ -140,7 +140,7 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 
    EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
      {
-        if (cf_gcc->name && cc->name && !strcmp(cf_gcc->name, cc->name) && (gc->cf->zone == gc->zone->id))
+        if (cf_gcc->name && cc->name && !strcmp(cf_gcc->name, cc->name) && (gc->cf->zone == gc->zone->num))
 	  {
 	     EINA_LIST_FOREACH(Man->gadgets[layer], ll, gcc) 
 	       {
@@ -560,7 +560,7 @@ _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
    gc->cf = NULL;
    EINA_LIST_FOREACH(e_config->gadcons, l, cg)
      {
-        if ((!strcmp(cg->name, name)) && (cg->zone == zone->id))
+        if ((!strcmp(cg->name, name)) && (cg->zone == zone->num))
           {
              gc->cf = cg;
              break;
@@ -573,7 +573,7 @@ _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
         gc->cf = E_NEW(E_Config_Gadcon, 1);
         gc->cf->name = eina_stringshare_add(name);
         gc->cf->id = gc->id;
-        gc->cf->zone = zone->id;
+        gc->cf->zone = zone->num;
         gc->cf->clients = NULL;
         e_config->gadcons = eina_list_append(e_config->gadcons, gc->cf);
         e_config_save_queue();

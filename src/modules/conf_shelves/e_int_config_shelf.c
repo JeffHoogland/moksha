@@ -225,7 +225,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
    cfg = E_NEW(E_Config_Shelf, 1);
    cfg->name = eina_stringshare_add("shelf");
    cfg->container = con->num;
-   cfg->zone = zone->id;
+   cfg->zone = zone->num;
    cfg->popup = 1;
    cfg->layer = 200;
    cfg->orient = E_GADCON_ORIENT_CORNER_BR;

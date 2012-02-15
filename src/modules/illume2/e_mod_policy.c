@@ -78,7 +78,7 @@ e_mod_policy_init(void)
                   Ecore_X_Illume_Mode mode = ECORE_X_ILLUME_MODE_SINGLE;
 
                   /* check for zone config */
-                  if (!(cz = e_illume_zone_config_get(zone->id))) 
+                  if (!(cz = e_illume_zone_config_get(zone->num))) 
                     continue;
 
                   /* set mode on this zone */
