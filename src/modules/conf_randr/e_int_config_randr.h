@@ -23,10 +23,10 @@ struct _E_Config_Dialog_Data
         E_Config_Randr_Dialog_Confirmation_Dialog_Data *confirmation_dialog;
         struct {
              struct {
-                  Evas_Object *dialog, *widget_list, *swallowing_edje, *smart_parent, *suggestion, *clipper, *check_display_disabled_outputs;
+                  Evas_Object *dialog, *widget_list, *swallowing_edje, *smart_parent, *suggestion, *clipper, *check_display_disconnected_outputs;
                   Evas_Coord_Point previous_pos, relative_zero;
                   Evas_Coord_Rectangle disabled_output_size;
-                  int suggestion_dist_min, check_val_display_disabled_outputs;
+                  int suggestion_dist_min, check_val_display_disconnected_outputs;
              } arrangement;
              struct {
                   Evas_Object *dialog;
@@ -72,7 +72,7 @@ struct _E_Config_Randr_Dialog_Confirmation_Dialog_Data
 
 struct _Config
 {
-   Eina_Bool display_disabled_outputs;
+   Eina_Bool display_disconnected_outputs;
 };
 
 E_Config_Dialog *e_int_config_randr(E_Container *con, const char *params __UNUSED__);

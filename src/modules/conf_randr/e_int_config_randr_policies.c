@@ -12,6 +12,8 @@
 #define Ecore_X_Randr_Unset -1
 #endif
 
+#define E_RANDR_12 (e_randr_screen_info.rrvd_info.randr_info_12)
+
 Evas_Object *dialog_subdialog_policies_basic_create_widgets(Evas *canvas);
 Eina_Bool    dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_info);
 Eina_Bool    dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -198,7 +200,7 @@ _dialog_subdialog_policies_policy_mouse_up_cb(void *data __UNUSED__, Evas *e __U
 Eina_Bool
 dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
-   if (!e_randr_screen_info || !e_config_runtime_info->gui.selected_output_dd) return EINA_FALSE;
+   if (!E_RANDR_12 || !e_config_runtime_info->gui.selected_output_dd) return EINA_FALSE;
 
    //policy update
    e_config_runtime_info->gui.selected_output_dd->previous_policy = e_config_runtime_info->gui.selected_output_dd->new_policy;
@@ -211,7 +213,7 @@ dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Co
 Eina_Bool
 dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   if (!e_randr_screen_info || !cfdata || !cfdata->gui.selected_output_dd || !cfdata->gui.selected_output_dd->output) return EINA_FALSE;
+   if (!E_RANDR_12 || !cfdata || !cfdata->gui.selected_output_dd || !cfdata->gui.selected_output_dd->output) return EINA_FALSE;
 
    return (int)cfdata->gui.selected_output_dd->previous_policy != (int)cfdata->gui.subdialogs.policies.radio_val;
 }

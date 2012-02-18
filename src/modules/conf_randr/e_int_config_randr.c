@@ -36,6 +36,7 @@
 
 #define THEME_FILENAME      "/e-module-conf_randr.edj"
 #define TOOLBAR_ICONSIZE    16
+#define E_RANDR_12 (e_randr_screen_info.rrvd_info.randr_info_12)
 
 static void        *create_data(E_Config_Dialog *cfd);
 static void         free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -92,13 +93,18 @@ _dialog_output_dialog_data_new(E_Randr_Crtc_Info *crtc_info, E_Randr_Output_Info
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
 
-   if ((!crtc_info && !output_info) || !(dialog_data = E_NEW(E_Config_Randr_Dialog_Output_Dialog_Data, 1))) return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(output_info, NULL);
+
+   dialog_data = E_NEW(E_Config_Randr_Dialog_Output_Dialog_Data, 1);
+
+   fprintf(stderr, "CONF_RANDR: Added output data struct for Output %d/CRTC %d.\n", output_info->xid, (output_info->crtc ? output_info->crtc->xid : Ecore_X_Randr_None));
    if (crtc_info)
      {
-        //already enabled screen
+        //already enabled screen, output info is already available in crtc
+        //struct
         dialog_data->crtc = crtc_info;
      }
-   else if (output_info)
+   else
      {
         //disabled monitor
         dialog_data->output = output_info;
@@ -114,24 +120,27 @@ create_data(E_Config_Dialog *cfd)
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
 
    // Prove we got all things to get going
-   EINA_SAFETY_ON_TRUE_RETURN_VAL(!e_randr_screen_info || (e_randr_screen_info->randr_version < ECORE_X_RANDR_1_2), NULL);
-   EINA_SAFETY_ON_FALSE_RETURN_VAL(e_randr_screen_info_refresh(), NULL);
-   EINA_SAFETY_ON_TRUE_RETURN_VAL(!(e_config_runtime_info = E_NEW(E_Config_Dialog_Data, 1)), NULL);
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(!E_RANDR_12, NULL);
+   e_randr_screen_info_refresh();
+   e_config_runtime_info = E_NEW(E_Config_Dialog_Data, 1);
 
    e_config_runtime_info->cfd = cfd;
 
    //Compose theme's file path and name
    snprintf(_theme_file_path, sizeof(_theme_file_path), "%s%s", conf_randr_module->dir, THEME_FILENAME);
 
-
    e_config_runtime_info->manager = e_manager_current_get();
-   EINA_LIST_FOREACH(e_randr_screen_info->rrvd_info.randr_info_12->outputs, iter, output_info)
+   e_config_runtime_info->output_dialog_data_list = NULL;
+   EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_12->outputs, iter, output_info)
      {
+        if (!output_info)
+          {
+             fprintf(stderr, "CONF_RANDR: WWWWWWWWWWWWOOOOOOOOOOOOOTTTT an output_info of the central struct is NULL!\n");
+             continue;
+          }
         if ((odd = _dialog_output_dialog_data_new(output_info->crtc, output_info)))
           e_config_runtime_info->output_dialog_data_list = eina_list_append(e_config_runtime_info->output_dialog_data_list, odd);
      }
-
-   fprintf(stderr, "CONF_RANDR: Added %d output data structs.\n", eina_list_count(e_config_runtime_info->output_dialog_data_list));
    //FIXME: Properly (stack-like) free data when creation fails
    EINA_SAFETY_ON_FALSE_GOTO(dialog_subdialog_arrangement_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
    EINA_SAFETY_ON_FALSE_GOTO(dialog_subdialog_resolutions_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
@@ -148,13 +157,22 @@ _e_conf_randr_create_data_failed_free_data:
 static void
 free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   EINA_SAFETY_ON_TRUE_RETURN(!e_randr_screen_info);
+   E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
+
+   EINA_SAFETY_ON_TRUE_RETURN(!E_RANDR_12);
+
    dialog_subdialog_arrangement_free_data(cfd, cfdata);
 
    evas_object_del(cfdata->gui.subdialogs.arrangement.dialog);
    evas_object_del(cfdata->gui.subdialogs.policies.dialog);
    evas_object_del(cfdata->gui.subdialogs.resolutions.dialog);
    evas_object_del(cfdata->gui.subdialogs.orientation.dialog);
+
+   EINA_LIST_FREE(cfdata->output_dialog_data_list, dialog_data)
+     {
+        free(dialog_data);
+     }
+   cfdata->output_dialog_data_list = NULL;
 
    free(cfdata);
 }
@@ -271,7 +289,7 @@ _e_conf_randr_confirmation_dialog_store_cb(void *data, E_Dialog *dia)
    _e_conf_randr_confirmation_dialog_delete_cb(dia->win);
 
    //but actually trigger saving the stuff
-   e_randr_store_configuration(e_randr_screen_info, modifier);
+   e_randr_store_configuration(modifier);
 
 }
 
@@ -318,7 +336,7 @@ basic_create_widgets(E_Config_Dialog *cfd, Evas *canvas, E_Config_Dialog_Data *c
 {
    Evas_Object *table = NULL, *wl = NULL;
 
-   EINA_SAFETY_ON_TRUE_RETURN_VAL (!e_randr_screen_info || (e_randr_screen_info->randr_version < ECORE_X_RANDR_1_2), NULL);
+   EINA_SAFETY_ON_TRUE_RETURN_VAL (!E_RANDR_12 || (e_randr_screen_info.randr_version < ECORE_X_RANDR_1_2), NULL);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((!canvas || !cfdata), NULL);
 
    e_config_runtime_info->gui.canvas = canvas;
@@ -408,7 +426,7 @@ e_int_config_randr(E_Container *con, const char *params __UNUSED__){
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (!e_randr_screen_info || (e_randr_screen_info->randr_version < ECORE_X_RANDR_1_2))
+   if (!E_RANDR_12 || (e_randr_screen_info.randr_version < ECORE_X_RANDR_1_2))
      {
         ecore_timer_add(0.5, _deferred_noxrandr_error, NULL);
         fprintf(stderr, "CONF_RANDR: XRandR version >= 1.2 necessary to work.\n");

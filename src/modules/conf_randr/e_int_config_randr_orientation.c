@@ -281,7 +281,7 @@ dialog_subdialog_orientation_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
 
    orientation = e_config_runtime_info->gui.subdialogs.orientation.radio_val;
 
-   fprintf(stderr, "CONF_RANDR: Change orientation of crtc %x to %d.\n", output_dialog_data->crtc->xid, orientation);
+   fprintf(stderr, "CONF_RANDR: Change orientation of crtc %d to %d.\n", output_dialog_data->crtc->xid, orientation);
 
    if (ecore_x_randr_crtc_orientation_set(cfd->con->manager->root, output_dialog_data->crtc->xid, orientation))
      {

@@ -31,7 +31,7 @@ e_modapi_init(E_Module *m)
 #undef D
 #define T Config
 #define D conf_edd
-   E_CONFIG_VAL(D, T, display_disabled_outputs, UCHAR);
+   E_CONFIG_VAL(D, T, display_disconnected_outputs, UCHAR);
 #undef T
 #undef D
 
@@ -39,7 +39,7 @@ e_modapi_init(E_Module *m)
    if (!randr_dialog_config)
      {
         randr_dialog_config = E_NEW(Config, 1);
-        randr_dialog_config->display_disabled_outputs = EINA_FALSE;
+        randr_dialog_config->display_disconnected_outputs = EINA_FALSE;
      }
 
    return m;

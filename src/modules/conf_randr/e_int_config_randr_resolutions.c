@@ -26,6 +26,7 @@ void         dialog_subdialog_resolutions_keep_changes(E_Config_Dialog_Data *cfd
 void         dialog_subdialog_resolutions_discard_changes(E_Config_Dialog_Data *cfdata);
 
 extern E_Config_Dialog_Data *e_config_runtime_info;
+static Ecore_X_Randr_Mode_Info disabled_mode = {.xid = Ecore_X_Randr_None};
 
 Eina_Bool
 dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
@@ -50,10 +51,10 @@ dialog_subdialog_resolutions_create_data(E_Config_Dialog_Data *cfdata)
                mi = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->crtc->outputs_common_modes));
              odd->previous_mode = mi;
           }
-        else if (odd->output)
+        else if (odd->output && odd->output->monitor)
           {
              odd->previous_mode = NULL;
-             odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->preferred_modes));
+             odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->monitor->preferred_modes));
           }
      }
 
@@ -80,9 +81,9 @@ dialog_subdialog_resolutions_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
 {
    //Apply new mode
    Ecore_X_Randr_Mode_Info *selected_mode;
-   Ecore_X_ID selected_mode_xid;
+   Ecore_X_Randr_Mode mode;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
-   Ecore_X_Randr_Output *output = NULL;
+   Ecore_X_Randr_Output *outputs = NULL;
    E_Randr_Crtc_Info *crtc_info = NULL, *crtc_iter;
    Eina_List *iter;
    int noutputs = Ecore_X_Randr_Unset;
@@ -101,8 +102,8 @@ dialog_subdialog_resolutions_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
    else if (output_dialog_data->output)
      {
         //CRTC not assigned yet. Let's try to find a non occupied one.
-        fprintf(stderr, "CONF_RANDR: Trying to find a CRTC for output %x, %d crtcs are possible.\n", output_dialog_data->output->xid, eina_list_count(output_dialog_data->output->possible_crtcs));
-        output = &output_dialog_data->output->xid;
+        fprintf(stderr, "CONF_RANDR: Trying to find a CRTC for output %d, %d crtcs are possible.\n", output_dialog_data->output->xid, eina_list_count(output_dialog_data->output->possible_crtcs));
+        outputs = &output_dialog_data->output->xid;
         noutputs = 1;
         EINA_LIST_FOREACH(output_dialog_data->output->possible_crtcs, iter, crtc_iter)
           {
@@ -122,22 +123,24 @@ dialog_subdialog_resolutions_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
    //get selected mode
    if ((selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)))
      {
-        selected_mode_xid = selected_mode->xid;
+        mode = selected_mode->xid;
      }
-   else
+   if (selected_mode == crtc_info->current_mode)
      {
-        selected_mode_xid = Ecore_X_Randr_None;
+        if (output_dialog_data->output && (eina_list_data_find(crtc_info->outputs, output_dialog_data->output)))
+          {
+             fprintf(stderr, "CONF_RANDR: Nothing to be done for output %s.\n", output_dialog_data->output->name);
+             return EINA_TRUE;
+          }
+        fprintf(stderr, "CONF_RANDR: Resolution remains unchanged for CRTC %d.\n", crtc_info->xid);
+        return EINA_TRUE;
      }
+   fprintf(stderr, "CONF_RANDR: Changing mode of crtc %d to %d.\n", crtc_info->xid, mode);
 
-   fprintf(stderr, "CONF_RANDR: Change mode of crtc %x to %x.\n", crtc_info->xid, selected_mode_xid);
-
-   if (ecore_x_randr_crtc_mode_set(cfd->con->manager->root, crtc_info->xid, output, noutputs, selected_mode_xid))
+   if (ecore_x_randr_crtc_mode_set(cfd->con->manager->root, crtc_info->xid, outputs, noutputs, mode))
      {
-        //remove unused space
-        ecore_x_randr_screen_reset(cfd->con->manager->root);
         //update information
-        if (!output_dialog_data->crtc)
-          output_dialog_data->crtc = crtc_info;
+        output_dialog_data->crtc = crtc_info;
         output_dialog_data->new_mode = selected_mode;
         return EINA_TRUE;
      }
@@ -157,7 +160,7 @@ dialog_subdialog_resolutions_basic_check_changed(E_Config_Dialog *cfd __UNUSED__
 }
 
 void
-dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
+dialog_subdialog_resolutions_update_list(Evas_Object *rep)
 {
    Eina_List *iter, *modelist = NULL;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
@@ -165,16 +168,13 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
    char resolution_text[RESOLUTION_TXT_MAX_LENGTH];
    float rate;
    int str_ret, i = 0;
+   Eina_Bool enable = EINA_FALSE;
 
    e_widget_ilist_freeze(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
    e_widget_ilist_clear(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
-   if (!crtc)
-     {
-        e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.resolutions.dialog, EINA_TRUE);
-        return;
-     }
-   if (!(output_dialog_data = evas_object_data_get(crtc, "rep_info")))
-     return;
+
+   if (!rep || !(output_dialog_data = evas_object_data_get(rep, "rep_info")))
+     goto _go_and_return;
 
    //select correct mode list
    if (output_dialog_data->crtc)
@@ -182,12 +182,15 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
         current_mode = output_dialog_data->crtc->current_mode;
         modelist = output_dialog_data->crtc->outputs_common_modes;
      }
-   else if (output_dialog_data->output)
+   else if (output_dialog_data->output && output_dialog_data->output->monitor)
      {
         current_mode = NULL;
-        if (output_dialog_data->output->modes)
-          modelist = output_dialog_data->output->modes;
+        if (output_dialog_data->output->monitor->modes)
+          modelist = output_dialog_data->output->monitor->modes;
      }
+   if (!modelist)
+     goto _go_and_return;
+
    EINA_LIST_FOREACH(modelist, iter, mode_info)
      {
         //calculate refresh rate
@@ -213,10 +216,13 @@ dialog_subdialog_resolutions_update_list(Evas_Object *crtc)
      }
 
    //append 'disabled' mode
-   e_widget_ilist_append(e_config_runtime_info->gui.subdialogs.resolutions.dialog, NULL, _("Disabled"), NULL, NULL, NULL);
+   e_widget_ilist_append(e_config_runtime_info->gui.subdialogs.resolutions.dialog, NULL, _("Disabled"), NULL, &disabled_mode, NULL);
 
    //reenable widget
-   e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.resolutions.dialog, EINA_FALSE);
+   enable = EINA_TRUE;
+
+   _go_and_return:
+   e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.resolutions.dialog, enable);
    e_widget_ilist_go(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
    e_widget_ilist_thaw(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
 }

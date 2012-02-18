@@ -68,14 +68,18 @@ _dialog_subdialog_arrangement_rep_dialog_data_fill(E_Config_Randr_Dialog_Output_
      {
         //disabled monitor
         odd->previous_mode = NULL;
-
-        //try to get a mode from the preferred list, else use default list
-        if (!(odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->preferred_modes))))
+        if (odd->output->monitor)
           {
-             if (odd->output->modes)
-               odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->modes));
-             else
-               odd->preferred_mode = NULL;
+             //try to get a mode from the preferred list, else use default list
+             if (!(odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->monitor->preferred_modes))))
+               {
+                  if (odd->output->monitor->modes)
+                    odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->monitor->modes));
+               }
+          }
+        else
+          {
+             odd->preferred_mode = NULL;
           }
 
         odd->previous_pos.x = Ecore_X_Randr_Unset;
@@ -97,6 +101,8 @@ _dialog_subdialog_arrangement_update(void)
 
    if (!e_config_runtime_info || !e_config_runtime_info->gui.canvas || !e_config_runtime_info->output_dialog_data_list || !area) return;
 
+   fprintf(stderr, "CONF_RANDR: Display disconnected outputs %d\n", randr_dialog_config->display_disconnected_outputs);
+
    EINA_LIST_FOREACH(evas_object_smart_members_get(area), iter, rep)
      {
         //skip clipper
@@ -108,12 +114,9 @@ _dialog_subdialog_arrangement_update(void)
 
    EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, output_dialog_data)
      {
-        fprintf(stderr, "CONF_RANDR: Display disabled outputs %d\n", randr_dialog_config->display_disabled_outputs);
-        if (!output_dialog_data->crtc)
-          {
-             if(!output_dialog_data->output || (randr_dialog_config && !randr_dialog_config->display_disabled_outputs))
-               continue;
-          }
+        if(!output_dialog_data->crtc &&
+              (!output_dialog_data->output->monitor && (randr_dialog_config && !randr_dialog_config->display_disconnected_outputs)))
+          continue;
 
         rep = _dialog_subdialog_arrangement_rep_add(e_config_runtime_info->gui.canvas, output_dialog_data);
 
@@ -159,11 +162,11 @@ dialog_subdialog_arrangement_basic_create_widgets(Evas *canvas)
    subdialog = e_widget_list_add(canvas, 0, 1);
 
    //Add checkbox
-   check = e_widget_check_add(canvas, _("Display disabled outputs"), &e_config_runtime_info->gui.subdialogs.arrangement.check_val_display_disabled_outputs);
+   check = e_widget_check_add(canvas, _("Display disconnected outputs"), &e_config_runtime_info->gui.subdialogs.arrangement.check_val_display_disconnected_outputs);
    if (randr_dialog_config)
-     e_widget_check_checked_set(check, randr_dialog_config->display_disabled_outputs);
+     e_widget_check_checked_set(check, randr_dialog_config->display_disconnected_outputs);
    evas_object_event_callback_add(check, EVAS_CALLBACK_MOUSE_DOWN, _dialog_subdialog_arrangement_check_mouse_down_cb, NULL);
-   e_config_runtime_info->gui.subdialogs.arrangement.check_display_disabled_outputs = check;
+   e_config_runtime_info->gui.subdialogs.arrangement.check_display_disconnected_outputs = check;
 
    //Add smart move area with outputs
    //initialize smart object
@@ -222,8 +225,9 @@ _dialog_subdialog_arrangement_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output
      output_info = output_dialog_data->output;
    if (output_info)
      {
-        if (ecore_x_randr_edid_has_valid_header(output_info->edid, output_info->edid_length))
-          output_name = ecore_x_randr_edid_display_name_get(output_info->edid, output_info->edid_length);
+        if (output_info->monitor &&
+              ecore_x_randr_edid_has_valid_header(output_info->monitor->edid, output_info->monitor->edid_length))
+          output_name = ecore_x_randr_edid_display_name_get(output_info->monitor->edid, output_info->monitor->edid_length);
         else if (output_info->name)
           output_name = output_info->name;
      }
@@ -334,7 +338,7 @@ _dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj, Evas_Coord w,
           {
              new_geo.w = (int)((float)e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w * scaling_factor);
              new_geo.h = (int)((float)e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h * scaling_factor);
-             fprintf(stderr, "CONF_RANDR: Neither mode nor preferred mode are avavailable for %x. Using %dx%d.\n", (output_dialog_data->crtc ? output_dialog_data->crtc->xid : output_dialog_data->output->xid), e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w, e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h);
+             fprintf(stderr, "CONF_RANDR: Neither mode nor preferred mode are avavailable for %d. Using %dx%d.\n", (output_dialog_data->crtc ? output_dialog_data->crtc->xid : output_dialog_data->output->xid), e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w, e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h);
           }
         if ((new_geo.w <= 0) || (new_geo.h <= 0))
           {
@@ -380,10 +384,10 @@ _dialog_subdialog_arrangement_check_mouse_down_cb(void *data __UNUSED__, Evas *e
 {
    if (!obj || !e_config_runtime_info || !randr_dialog_config) return;
 
-   if (obj == e_config_runtime_info->gui.subdialogs.arrangement.check_display_disabled_outputs)
+   if (obj == e_config_runtime_info->gui.subdialogs.arrangement.check_display_disconnected_outputs)
      {
         //this is bad. The events are called _before_ the value is updated.
-        randr_dialog_config->display_disabled_outputs ^= EINA_TRUE;
+        randr_dialog_config->display_disconnected_outputs ^= EINA_TRUE;
         _dialog_subdialog_arrangement_update();
      }
 }
@@ -631,18 +635,17 @@ void
 dialog_subdialog_arrangement_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
+   Eina_List *iter;
 
    EINA_SAFETY_ON_NULL_RETURN(cfdata);
 
-   EINA_LIST_FREE(cfdata->output_dialog_data_list, dialog_data)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, dialog_data)
      {
-        if (!dialog_data) continue;
         if (dialog_data->bg)
           {
              evas_object_del(dialog_data->bg);
              dialog_data->bg = NULL;
           }
-        free(dialog_data);
      }
 }
 
@@ -836,7 +839,7 @@ dialog_subdialog_arrangement_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dia
             || ((odd->new_pos.x == Ecore_X_Randr_Unset) || (odd->new_pos.y == Ecore_X_Randr_Unset))) continue;
         if ((odd->previous_pos.x != odd->new_pos.x) || (odd->previous_pos.y != odd->new_pos.y))
           {
-             fprintf(stderr, "CONF_RANDR: CRTC %x is moved to %dx%d\n", odd->crtc->xid, odd->new_pos.x, odd->new_pos.y);
+             fprintf(stderr, "CONF_RANDR: CRTC %d is moved to %dx%d\n", odd->crtc->xid, odd->new_pos.x, odd->new_pos.y);
              if (!ecore_x_randr_crtc_pos_set(cfd->con->manager->root, odd->crtc->xid, odd->new_pos.x, odd->new_pos.y))
                {
                   arrangement_failed = EINA_TRUE;
