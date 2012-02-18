@@ -276,6 +276,13 @@ e_popup.c \
 e_powersave.c \
 e_prefix.c \
 e_randr.c \
+e_randr_serialization.c \
+e_randr_11.c \
+e_randr_11_serialization.c \
+e_randr_12.c \
+e_randr_12_output.c \
+e_randr_12_crtc.c \
+e_randr_12_serialization.c \
 e_remember.c \
 e_resist.c \
 e_scale.c \

@@ -57,7 +57,7 @@ static E_Config_DD *_e_config_randr_serialized_setup_11_edd = NULL;
 static E_Config_DD *_e_config_randr_serialized_setup_12_edd = NULL;
 static E_Config_DD *_e_config_randr_serialized_output_policy_edd = NULL;
 static E_Config_DD *_e_config_randr_serialized_output_edd = NULL;
-static E_Config_DD *_e_config_randr_serialized_mode_info_edd = NULL;
+static E_Config_DD *_e_config_randr_mode_info_edd = NULL;
 static E_Config_DD *_e_config_randr_serialized_crtc_edd = NULL;
 
 
@@ -555,7 +555,6 @@ e_config_init(void)
 #define T E_Randr_Serialized_Output_Policy
 #define D _e_config_randr_serialized_output_policy_edd
    E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, name_length, INT);
    E_CONFIG_VAL(D, T, policy, INT);
 
     _e_config_randr_serialized_output_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Output", E_Randr_Serialized_Output);
@@ -564,15 +563,14 @@ e_config_init(void)
 #define T E_Randr_Serialized_Output
 #define D _e_config_randr_serialized_output_edd
    E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, name_length, INT);
-   E_CONFIG_VAL(D, T, edid_hash.hash, INT);
    E_CONFIG_VAL(D, T, backlight_level, DOUBLE);
 
-    _e_config_randr_serialized_mode_info_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Mode_Info", Ecore_X_Randr_Mode_Info);
+    _e_config_randr_mode_info_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Mode_Info", Ecore_X_Randr_Mode_Info);
 #undef T
 #undef D
 #define T Ecore_X_Randr_Mode_Info
-#define D _e_config_randr_serialized_mode_info_edd
+#define D _e_config_randr_mode_info_edd
+   E_CONFIG_VAL(D, T, xid, INT);
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_VAL(D, T, height, INT);
    E_CONFIG_VAL(D, T, dotClock, LL);
@@ -592,11 +590,10 @@ e_config_init(void)
 #undef D
 #define T E_Randr_Serialized_Crtc
 #define D _e_config_randr_serialized_crtc_edd
-   E_CONFIG_LIST(D, T, serialized_outputs, _e_config_randr_serialized_output_edd);
-   E_CONFIG_SUB(D, T, mode_info, _e_config_randr_serialized_mode_info_edd);
+   E_CONFIG_LIST(D, T, outputs, _e_config_randr_serialized_output_edd);
+   E_CONFIG_SUB(D, T, mode_info, _e_config_randr_mode_info_edd);
    E_CONFIG_VAL(D, T, pos.x, INT);
    E_CONFIG_VAL(D, T, pos.y, INT);
-   EET_DATA_DESCRIPTOR_ADD_LIST_STRING(D, T, "Crtc_Possible_Outputs_Names", possible_outputs_names);
    E_CONFIG_VAL(D, T, orientation, INT);
 
    _e_config_randr_serialized_setup_12_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Setup_12", E_Randr_Serialized_Setup_12);
@@ -605,8 +602,8 @@ e_config_init(void)
 #define T E_Randr_Serialized_Setup_12
 #define D _e_config_randr_serialized_setup_12_edd
    E_CONFIG_VAL(D, T, timestamp, DOUBLE);
-   E_CONFIG_LIST(D, T, serialized_crtcs, _e_config_randr_serialized_crtc_edd);
-   E_CONFIG_LIST(D, T, serialized_edid_hashes, _e_config_randr_edid_hash_edd);
+   E_CONFIG_LIST(D, T, crtcs, _e_config_randr_serialized_crtc_edd);
+   E_CONFIG_LIST(D, T, edid_hashes, _e_config_randr_edid_hash_edd);
 
    _e_config_randr_serialized_setup_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Setup", E_Randr_Serialized_Setup);
 #undef T
@@ -615,7 +612,7 @@ e_config_init(void)
 #define D _e_config_randr_serialized_setup_edd
    E_CONFIG_SUB(D, T, serialized_setup_11, _e_config_randr_serialized_setup_11_edd);
    E_CONFIG_LIST(D, T, serialized_setups_12, _e_config_randr_serialized_setup_12_edd);
-   E_CONFIG_LIST(D, T, serialized_outputs_policies, _e_config_randr_serialized_output_policy_edd);
+   E_CONFIG_LIST(D, T, outputs_policies, _e_config_randr_serialized_output_policy_edd);
 
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
@@ -936,7 +933,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_mime_icon_edd);
    E_CONFIG_DD_FREE(_e_config_syscon_action_edd);
    E_CONFIG_DD_FREE(_e_config_env_var_edd);
-   E_CONFIG_DD_FREE(_e_config_randr_serialized_setup_edd);
+   //E_CONFIG_DD_FREE(_e_config_randr_serialized_setup_edd);
    return 1;
 }
 
@@ -1881,14 +1878,7 @@ _e_config_free(E_Config *ecf)
    E_Color_Class *cc;
    E_Path_Dir *epd;
    E_Remember *rem;
-   E_Randr_Serialized_Setup_12 *serialized_setup_12;
-   E_Randr_Serialized_Crtc *serialized_crtc;
-   E_Randr_Serialized_Output_Policy *serialized_output_policy;
-   E_Randr_Serialized_Output *serialized_output;
-   E_Randr_Edid_Hash *edid_hash;
-   char *output_name;
    E_Config_Env_Var *evr;
-
 
    if (!ecf) return;
 
@@ -2039,44 +2029,8 @@ _e_config_free(E_Config *ecf)
      }
    if(ecf->randr_serialized_setup)
      {
-           free (ecf->randr_serialized_setup->serialized_setup_11);
-           if (ecf->randr_serialized_setup->serialized_setups_12)
-             {
-                EINA_LIST_FREE(ecf->randr_serialized_setup->serialized_setups_12, serialized_setup_12)
-                  {
-                     EINA_LIST_FREE(serialized_setup_12->serialized_crtcs, serialized_crtc)
-                       {
-                          if (!serialized_crtc) continue;
-                          EINA_LIST_FREE(serialized_crtc->serialized_outputs, serialized_output)
-                            {
-                               if (!serialized_output) continue;
-                               free(serialized_output->name);
-                               free(serialized_output);
-                            }
-                          EINA_LIST_FREE(serialized_crtc->possible_outputs_names, output_name)
-                            {
-                               if (output_name) free(output_name);
-                            }
-                          if (serialized_crtc->mode_info.name)
-                            free(serialized_crtc->mode_info.name);
-                          free(serialized_crtc);
-                       }
-                     EINA_LIST_FREE(serialized_setup_12->serialized_edid_hashes, edid_hash)
-                       {
-                          if (edid_hash) free(edid_hash);
-                       }
-                     free(serialized_setup_12);
-                  }
-             }
-           EINA_LIST_FREE(ecf->randr_serialized_setup->serialized_outputs_policies, serialized_output_policy)
-             {
-                if (!serialized_output_policy) continue;
-                free(serialized_output_policy->name);
-                free(serialized_output_policy);
-             }
-           free(ecf->randr_serialized_setup);
+         e_randr_serialized_setup_free(ecf->randr_serialized_setup);
      }
-
    EINA_LIST_FREE(ecf->env_vars, evr)
      {
         if (evr->var) eina_stringshare_del(evr->var);
