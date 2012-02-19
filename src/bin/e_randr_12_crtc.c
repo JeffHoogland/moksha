@@ -193,7 +193,7 @@ _crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
  * which means that e.g. when a crtc should be placed at a position < 0, all
  * other crtcs are accordingly moved instead, so the result is the same.
  */
-   const Eina_Bool
+Eina_Bool
 _crtc_move_policy(E_Randr_Crtc_Info *new_crtc)
 {
    const E_Randr_Crtc_Info *crtc_rel;

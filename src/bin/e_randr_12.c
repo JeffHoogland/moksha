@@ -23,8 +23,8 @@ static Eina_Bool _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool 
 
 static Ecore_Poller *poller = NULL;
 static Eina_List *_event_handlers = NULL;
-const static char *_CONNECTION_STATES_STRINGS[] = {"CONNECTED", "DISCONNECTED", "UNKNOWN"};
-const static char *_POLICIES_STRINGS[] = {"ABOVE", "RIGHT", "BELOW", "LEFT", "CLONE", "NONE"};
+static const char *_CONNECTION_STATES_STRINGS[] = {"CONNECTED", "DISCONNECTED", "UNKNOWN"};
+static const char *_POLICIES_STRINGS[] = {"ABOVE", "RIGHT", "BELOW", "LEFT", "CLONE", "NONE"};
 
 //"New" helper functions
 /**
@@ -88,7 +88,8 @@ _structs_init(void)
    while (--noutputs >= 0)
      {
         output_info = _output_info_new(outputs[noutputs]);
-        e_randr_screen_info.rrvd_info.randr_info_12->outputs = eina_list_append(e_randr_screen_info.rrvd_info.randr_info_12->outputs, output_info);
+        if (output_info)
+          e_randr_screen_info.rrvd_info.randr_info_12->outputs = eina_list_append(e_randr_screen_info.rrvd_info.randr_info_12->outputs, output_info);
      }
    free(outputs);
 
