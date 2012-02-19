@@ -150,7 +150,7 @@ struct _E_Randr_Serialized_Crtc
    Evas_Coord_Point pos;
    Ecore_X_Randr_Orientation orientation;
    //the serialized mode_info
-   Ecore_X_Randr_Mode_Info mode_info;
+   Ecore_X_Randr_Mode_Info *mode_info;
 };
 
 struct _E_Randr_Serialized_Setup_12

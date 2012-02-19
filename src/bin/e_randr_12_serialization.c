@@ -70,11 +70,12 @@ e_randr_12_serialized_output_policy_free(E_Randr_Serialized_Output_Policy *polic
 }
 
    void
-_serialized_mode_info_free(Ecore_X_Randr_Mode_Info *mode_info)
+_mode_info_free(Ecore_X_Randr_Mode_Info *mode_info)
 {
    EINA_SAFETY_ON_NULL_RETURN(mode_info);
 
    free(mode_info->name);
+   free(mode_info);
 }
 
    void
@@ -86,7 +87,7 @@ _serialized_crtc_free(E_Randr_Serialized_Crtc *sc)
 
    EINA_LIST_FREE (sc->outputs, so)
       _serialized_output_free(so);
-   _serialized_mode_info_free(&sc->mode_info);
+   _mode_info_free(sc->mode_info);
    free(sc);
 }
 
@@ -117,36 +118,35 @@ _eina_list_data_index_get(const Eina_List *list, const void *data)
    return -1;
 }
 
-void
-_mode_info_clone(Ecore_X_Randr_Mode_Info *dst, const Ecore_X_Randr_Mode_Info *src)
+Ecore_X_Randr_Mode_Info
+*_mode_info_clone(const Ecore_X_Randr_Mode_Info *src)
 {
-   EINA_SAFETY_ON_NULL_RETURN(dst);
+   Ecore_X_Randr_Mode_Info *mi = NULL;
 
-   if (!src)
-     {
-        dst->xid = Ecore_X_Randr_None;
-        dst->name = NULL;
-        return;
-     }
+   EINA_SAFETY_ON_NULL_RETURN_VAL(src, NULL);
 
-   dst->xid = src->xid;
-   dst->width = src->width;
-   dst->height = src->height;
-   dst->dotClock = src->dotClock;
-   dst->hSyncStart = src->hSyncStart;
-   dst->hSyncEnd = src->hSyncEnd;
-   dst->hTotal = src->hTotal;
-   dst->hSkew = src->hSkew;
-   dst->vSyncStart = src->vSyncStart;
-   dst->vSyncEnd = src->vSyncEnd;
-   dst->vTotal = src->vTotal;
+   mi = E_NEW(Ecore_X_Randr_Mode_Info, 1);
+
+   mi->xid = src->xid;
+   mi->width = src->width;
+   mi->height = src->height;
+   mi->dotClock = src->dotClock;
+   mi->hSyncStart = src->hSyncStart;
+   mi->hSyncEnd = src->hSyncEnd;
+   mi->hTotal = src->hTotal;
+   mi->hSkew = src->hSkew;
+   mi->vSyncStart = src->vSyncStart;
+   mi->vSyncEnd = src->vSyncEnd;
+   mi->vTotal = src->vTotal;
    if (src->nameLength > 0)
      {
-        dst->name = malloc(src->nameLength + 1);
-        strncpy(dst->name, src->name, src->nameLength);
+        mi->name = malloc(src->nameLength + 1);
+        strncpy(mi->name, src->name, src->nameLength);
      }
-   dst->nameLength = src->nameLength;
-   dst->modeFlags = src->modeFlags;
+   mi->nameLength = src->nameLength;
+   mi->modeFlags = src->modeFlags;
+
+   return mi;
 }
 
 E_Randr_Edid_Hash
@@ -224,6 +224,7 @@ _serialized_crtc_new(E_Randr_Crtc_Info *crtc_info)
 
    //Get relative index of CRTC
    sc->index = _eina_list_data_index_get(e_randr_screen_info.rrvd_info.randr_info_12->crtcs, crtc_info);
+
    //Create list of serialized outputs
    EINA_LIST_FOREACH(crtc_info->outputs, iter, output_info)
      {
@@ -236,7 +237,7 @@ _serialized_crtc_new(E_Randr_Crtc_Info *crtc_info)
    sc->pos.y = crtc_info->geometry.y;
    sc->orientation = crtc_info->current_orientation;
    //Clone mode
-   _mode_info_clone(&sc->mode_info, crtc_info->current_mode);
+   sc->mode_info = _mode_info_clone(crtc_info->current_mode);
 
    return sc;
 }
@@ -266,7 +267,7 @@ _12_serialized_setup_new(void)
         if (!sc)
           continue;
         ss->crtcs = eina_list_append(ss->crtcs, sc);
-        fprintf(stderr, "E_RANDR: Serialized CRTC %d (index %d) in mode %s.\n", ci->xid, sc->index, sc->mode_info.name ? sc->mode_info.name : "(disabled)");
+        fprintf(stderr, "E_RANDR: Serialized CRTC %d (index %d) in mode %s.\n", ci->xid, sc->index, (sc->mode_info ? sc->mode_info->name : "(disabled)"));
      }
 
    /*
@@ -395,7 +396,7 @@ _12_try_restore_configuration(void)
    E_Randr_Crtc_Info *ci;
    Ecore_X_Randr_Output *outputs_array;
    E_Randr_Output_Info *output_info;
-   Ecore_X_Randr_Mode_Info *mi;
+   Ecore_X_Randr_Mode_Info *mi = NULL;
    Ecore_X_Randr_Mode mode;
    Eina_List *iter, *outputs_list, *outputs_iter;
    Eina_Bool ret = EINA_TRUE;
@@ -413,12 +414,12 @@ _12_try_restore_configuration(void)
         outputs_list = _find_matching_outputs(sc->outputs);
         outputs_array = _outputs_to_array(outputs_list);
         fprintf(stderr, "E_RANDR: \tSerialized mode ");
-        if (sc->mode_info.xid == Ecore_X_Randr_None)
+        if (!sc->mode_info)
           {
              fprintf(stderr, "was disabled.\n");
              mode = Ecore_X_Randr_None;
           }
-        else if ((mi = _find_matching_mode_info(&sc->mode_info)))
+        else if ((mi = _find_matching_mode_info(sc->mode_info)))
           {
              fprintf(stderr, "is now known under the name %s.\n", mi->name);
              mode = mi->xid;
@@ -428,8 +429,8 @@ _12_try_restore_configuration(void)
              // The serialized mode is no longer available
              mi->name = malloc(MODE_STR_LENGTH_MAX);
              //IMPROVABLE: Use random string, like mktemp for files
-             snprintf(mi->name, (MODE_STR_LENGTH_MAX - 1), "%ux%u,%lu,%lu", sc->mode_info.width, sc->mode_info.height, sc->mode_info.dotClock, sc->mode_info.modeFlags);
-             mi = &sc->mode_info;
+             snprintf(mi->name, (MODE_STR_LENGTH_MAX - 1), "%ux%u,%lu,%lu", sc->mode_info->width, sc->mode_info->height, sc->mode_info->dotClock, sc->mode_info->modeFlags);
+             mi = sc->mode_info;
              mode = ecore_x_randr_mode_info_add(e_randr_screen_info.root, mi);
              if (mode == Ecore_X_Randr_None)
                {
