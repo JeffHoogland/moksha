@@ -94,9 +94,8 @@ _output_info_new(Ecore_X_Randr_Output output)
    E_Randr_Output_Info *output_info = NULL;
 
    EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, NULL);
-   EINA_SAFETY_ON_TRUE_RETURN_VAL((output == Ecore_X_Randr_None), NULL);
 
-   output_info = malloc(sizeof(E_Randr_Output_Info));
+   output_info = E_NEW(E_Randr_Output_Info, 1);
 
    output_info->xid = output;
 
