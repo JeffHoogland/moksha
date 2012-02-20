@@ -698,7 +698,16 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
            }
          if ((ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid)))
            {
-              ret &= _crtc_move_policy(usable_crtc);
+              //WORKAROUND
+              //Reason: the CRTC event, that'd bring the new info about the set
+              //mode is arriving too late here.
+              usable_crtc->current_mode = mode_info;
+              crtc_info->geometry.x = 0;
+              crtc_info->geometry.y = 0;
+              crtc_info->geometry.w = mode_info->width;
+              crtc_info->geometry.h = mode_info->height;
+              //WORKAROUND END
+              ret &= _crtc_move_policy(usable_crtc, output_info->policy);
            }
      }
    if (ret)

@@ -61,7 +61,7 @@ E_Randr_Crtc_Info *      _crtc_info_new(Ecore_X_Randr_Crtc crtc);
 void                     _crtc_info_free(E_Randr_Crtc_Info *crtc_info);
 void                     _crtc_refs_set(E_Randr_Crtc_Info *crtc_info);
 void                     _crtc_outputs_refs_set(E_Randr_Crtc_Info *crtc_info);
-Eina_Bool                _crtc_move_policy(E_Randr_Crtc_Info *new_crtc);
+Eina_Bool                _crtc_move_policy(E_Randr_Crtc_Info *new_crtc, Ecore_X_Randr_Output_Policy policy);
 const E_Randr_Crtc_Info *_crtc_according_to_policy_get(E_Randr_Crtc_Info *but, Ecore_X_Randr_Output_Policy policy);
 
 #endif

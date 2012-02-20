@@ -194,24 +194,25 @@ _crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
  * other crtcs are accordingly moved instead, so the result is the same.
  */
 Eina_Bool
-_crtc_move_policy(E_Randr_Crtc_Info *new_crtc)
+_crtc_move_policy(E_Randr_Crtc_Info *new_crtc, Ecore_X_Randr_Output_Policy policy)
 {
    const E_Randr_Crtc_Info *crtc_rel;
-   E_Randr_Output_Info *first_output = NULL;
    int dx = Ecore_X_Randr_None, dy = Ecore_X_Randr_None;
    Eina_Bool ret = EINA_TRUE;
 
-   //use the policy of the new crtc's first output
-   first_output = (E_Randr_Output_Info *)eina_list_data_get(new_crtc->outputs);
-   if (!first_output)
-     return EINA_FALSE;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new_crtc, EINA_FALSE);
+
    //get the crtc we will place our's relative to. If it's NULL, this is the
    //only output attached, work done.
-   if (!(crtc_rel = _crtc_according_to_policy_get(new_crtc, first_output->policy)))
-     return EINA_TRUE;
+   if (!(crtc_rel = _crtc_according_to_policy_get(new_crtc, policy)))
+     {
+        fprintf(stderr, "E_RANDR: Moving CRTC %d, there is no other CRTC to move this one relative to.\n", new_crtc->xid);
+        return EINA_TRUE;
+     }
 
+   fprintf(stderr, "E_RANDR: Moved CRTC %d has geometry (x,y,wxh): %d, %d, %dx%d.\n", new_crtc->xid, new_crtc->geometry.x, new_crtc->geometry.y, new_crtc->geometry.w, new_crtc->geometry.h);
    //following is policy dependend.
-   switch (first_output->policy)
+   switch (policy)
      {
       case ECORE_X_RANDR_OUTPUT_POLICY_ABOVE:
         dy = (crtc_rel->geometry.y - new_crtc->geometry.h);
@@ -224,6 +225,7 @@ _crtc_move_policy(E_Randr_Crtc_Info *new_crtc)
                                                     1,
                                                     dx,
                                                     dy);
+             fprintf(stderr, "E_RANDR: Moving all CRTCs but %d, by %dx%d delta.\n", new_crtc->xid, dx, dy);
           }
         break;
 
@@ -238,13 +240,14 @@ _crtc_move_policy(E_Randr_Crtc_Info *new_crtc)
                                                     1,
                                                     dx,
                                                     dy);
+             fprintf(stderr, "E_RANDR: Moving all CRTCs but %d, by %dx%d delta.\n", new_crtc->xid, dx, dy);
           }
         break;
 
       default:
         break;
      }
-   ret &= ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, new_crtc->xid, crtc_rel->xid, first_output->policy, e_randr_screen_info.rrvd_info.randr_info_12->alignment);
+   ret &= ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, new_crtc->xid, crtc_rel->xid, policy, e_randr_screen_info.rrvd_info.randr_info_12->alignment);
 
    return ret;
 }

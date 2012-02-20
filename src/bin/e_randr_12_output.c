@@ -24,9 +24,9 @@ _monitor_modes_refs_set(E_Randr_Monitor_Info *mi, Ecore_X_Randr_Output o)
              mode_info = ecore_x_randr_mode_info_get(e_randr_screen_info.root, modes[nmodes]);
              e_randr_screen_info.rrvd_info.randr_info_12->modes = eina_list_append(e_randr_screen_info.rrvd_info.randr_info_12->modes, mode_info);
           }
-        mi->modes = eina_list_append(mi->modes, mode_info);
-        if (nmodes >= npreferred)
-          mi->preferred_modes = eina_list_append(mi->preferred_modes, mode_info);
+        mi->modes = eina_list_prepend(mi->modes, mode_info);
+        if (nmodes <= npreferred)
+          mi->preferred_modes = eina_list_prepend(mi->preferred_modes, mode_info);
      }
    free(modes);
 }
@@ -106,6 +106,7 @@ _output_info_new(Ecore_X_Randr_Output output)
    output_info->signalformats = Ecore_X_Randr_Unset;
    output_info->signalformat = Ecore_X_Randr_Unset;
    output_info->connector_number = 0;
+   output_info->monitor = NULL;
    output_info->connector_type = Ecore_X_Randr_Unset;
    output_info->policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
    output_info->compatibility_list = NULL;
