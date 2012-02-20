@@ -121,7 +121,7 @@ create_data(E_Config_Dialog *cfd)
 
    // Prove we got all things to get going
    EINA_SAFETY_ON_TRUE_RETURN_VAL(!E_RANDR_12, NULL);
-   e_randr_screen_info_refresh();
+   //e_randr_screen_info_refresh();
    e_config_runtime_info = E_NEW(E_Config_Dialog_Data, 1);
 
    e_config_runtime_info->cfd = cfd;

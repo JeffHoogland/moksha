@@ -220,15 +220,14 @@ _dialog_subdialog_arrangement_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output
    //Try to get the name of the monitor connected to the output's last output via edid
    //else use the output's name
    if (output_dialog_data->crtc)
-     output_info = (E_Randr_Output_Info *)eina_list_data_get(eina_list_last(output_dialog_data->crtc->outputs));
+     output_info = (E_Randr_Output_Info *)eina_list_data_get(output_dialog_data->crtc->outputs);
    else
      output_info = output_dialog_data->output;
    if (output_info)
      {
-        if (output_info->monitor &&
-              ecore_x_randr_edid_has_valid_header(output_info->monitor->edid, output_info->monitor->edid_length))
+        if (output_info->monitor)
           output_name = ecore_x_randr_edid_display_name_get(output_info->monitor->edid, output_info->monitor->edid_length);
-        else if (output_info->name)
+        if (!output_name && output_info->name)
           output_name = output_info->name;
      }
    if (output_name)

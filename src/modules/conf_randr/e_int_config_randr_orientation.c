@@ -15,7 +15,7 @@ Eina_Bool    dialog_subdialog_orientation_basic_apply_data(E_Config_Dialog *cfd,
 void         dialog_subdialog_orientation_update_radio_buttons(Evas_Object *crtc);
 void         dialog_subdialog_orientation_update_edje(Evas_Object *crtc);
 
-//static void _dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+//static void _dialog_subdialog_orientation_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern char _theme_file_path[];
 
@@ -23,12 +23,12 @@ extern char _theme_file_path[];
    static void
    _dialog_subdialog_orientation_radio_add_callbacks(void)
    {
-   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_vertical, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_horizontal, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot270, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot180, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot90, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_normal, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_policy_mouse_up_cb, NULL);
+   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_vertical, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_mouse_up_cb, NULL);
+   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_reflect_horizontal, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_mouse_up_cb, NULL);
+   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot270, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_mouse_up_cb, NULL);
+   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot180, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_mouse_up_cb, NULL);
+   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_rot90, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_mouse_up_cb, NULL);
+   evas_object_event_callback_add (e_config_runtime_info->gui.subdialogs.orientation.radio_normal, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_orientation_mouse_up_cb, NULL);
    }
  */
 
@@ -122,7 +122,7 @@ _dialog_subdialog_orientation_radio_add_fail:
 
 #if 0
 static void
-_dialog_subdialog_orientation_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+_dialog_subdialog_orientation_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
 {
    char signal[40];
    int orientation = ECORE_X_RANDR_ORIENTATION_ROT_0;
