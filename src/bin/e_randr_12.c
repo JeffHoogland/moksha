@@ -357,9 +357,9 @@ _12_event_listeners_add(void)
 _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
 {
    Ecore_X_Event_Randr_Output_Change *oce = (Ecore_X_Event_Randr_Output_Change*)ev;
-   E_Randr_Output_Info *output_info;
+   E_Randr_Output_Info *output_info = NULL;
    E_Randr_Crtc_Info *crtc_info = NULL;
-   Eina_Bool policy_success = EINA_FALSE;
+   Eina_Bool policy_success = EINA_FALSE, con_state_changed = EINA_FALSE;
 
    EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, ECORE_CALLBACK_CANCEL);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((type != ECORE_X_EVENT_RANDR_OUTPUT_CHANGE), ECORE_CALLBACK_RENEW);
@@ -411,10 +411,11 @@ _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
         _monitor_modes_refs_set(output_info->monitor, output_info->xid);
      }
 
+   con_state_changed = (Eina_Bool)(output_info->connection_status != oce->connection);
    output_info->connection_status = oce->connection;
    output_info->subpixel_order = oce->subpixel_order;
 
-   if (output_info->connection_status != oce->connection)
+   if (con_state_changed)
      {
          _monitor_info_free(output_info->monitor);
          output_info->monitor = NULL;
