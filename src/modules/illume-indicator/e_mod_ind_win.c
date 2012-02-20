@@ -562,7 +562,7 @@ _e_mod_ind_win_cb_border_hide(void *data, int type __UNUSED__, void *event)
    if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
    ev = event;
    if (ev->border != iwin->win->border) return ECORE_CALLBACK_PASS_ON;
-   e_win_hide(iwin->win);
+//   e_win_hide(iwin->win);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -575,6 +575,6 @@ _e_mod_ind_win_cb_border_show(void *data, int type __UNUSED__, void *event)
    if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
    ev = event;
    if (ev->border != iwin->win->border) return ECORE_CALLBACK_PASS_ON;
-   e_win_show(iwin->win);
+//   e_win_show(iwin->win);
    return ECORE_CALLBACK_PASS_ON;
 }
