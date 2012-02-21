@@ -51,7 +51,7 @@ Eina_Bool
 dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_info)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
-   E_Randr_Output_Info *oi;
+   E_Randr_Output_Info *oi = NULL;
    Eina_List *iter;
 
    if (!e_config_runtime_info || !e_config_runtime_info->output_dialog_data_list) return EINA_FALSE;
@@ -62,7 +62,8 @@ dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_inf
           oi = eina_list_data_get(odd->crtc->outputs);
         else if (odd->output)
           oi = odd->output;
-        else continue;
+        if (!oi)
+          continue;
         odd->previous_policy = oi->policy;
         odd->new_policy = oi->policy;
         fprintf(stderr, "CONF_RANDR: Read in policy of %d as %s.\n", oi->xid, _POLICIES_STRINGS[odd->new_policy - 1]);
