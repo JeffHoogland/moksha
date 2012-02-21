@@ -358,8 +358,9 @@ _binding_label_get(E_Config_Binding_Acpi *bind)
      return _("Fan");
    if (bind->type == E_ACPI_TYPE_LID)
      {
-        if (bind->status == 0) return _("Lid Closed");
-        if (bind->status == 1) return _("Lid Opened");
+        if (bind->status == E_ACPI_LID_UNKNOWN) return _("Lid Unknown");
+        if (bind->status == E_ACPI_LID_CLOSED) return _("Lid Closed");
+        if (bind->status == E_ACPI_LID_OPEN) return _("Lid Opened");
         return _("Lid");
      }
    if (bind->type == E_ACPI_TYPE_POWER)
