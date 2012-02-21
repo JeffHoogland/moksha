@@ -52,7 +52,10 @@ _crtc_refs_set(E_Randr_Crtc_Info *crtc_info)
      {
         output_info = _12_screen_info_output_info_get(poutputs[npoutputs]);
         if (!output_info)
-          fprintf(stderr, "E_RANDR: Could not find output struct for output %d.\n", poutputs[npoutputs]);
+          {
+             fprintf(stderr, "E_RANDR: Could not find output struct for output %d.\n", poutputs[npoutputs]);
+             continue;
+          }
         crtc_info->possible_outputs = eina_list_append(crtc_info->possible_outputs, output_info);
      }
 
@@ -73,8 +76,6 @@ _crtc_info_new(Ecore_X_Randr_Crtc crtc)
    EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, NULL);
 
    crtc_info = E_NEW(E_Randr_Crtc_Info, 1);
-
-   EINA_SAFETY_ON_TRUE_RETURN_VAL((crtc == Ecore_X_Randr_None), crtc_info);
 
    crtc_info->xid = crtc;
    crtc_info->panning.x = Ecore_X_Randr_Unset;
