@@ -9,7 +9,7 @@ _monitor_modes_refs_set(E_Randr_Monitor_Info *mi, Ecore_X_Randr_Output o)
 {
    Ecore_X_Randr_Mode *modes = NULL;
    Ecore_X_Randr_Mode_Info *mode_info = NULL;
-   int nmodes, npreferred;
+   int nmodes = 0, npreferred = 0;
 
    EINA_SAFETY_ON_NULL_RETURN(mi);
    EINA_SAFETY_ON_TRUE_RETURN(o == Ecore_X_Randr_None);

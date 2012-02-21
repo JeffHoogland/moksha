@@ -10,7 +10,7 @@ _crtc_outputs_refs_set(E_Randr_Crtc_Info *crtc_info)
 {
    E_Randr_Output_Info *output_info = NULL;
    Ecore_X_Randr_Output *outputs = NULL;
-   int noutputs;
+   int noutputs = 0;
 
    EINA_SAFETY_ON_NULL_RETURN(crtc_info);
 
@@ -23,6 +23,7 @@ _crtc_outputs_refs_set(E_Randr_Crtc_Info *crtc_info)
           fprintf(stderr, "E_RANDR: Could not find output struct for output %d.\n", outputs[noutputs]);
         crtc_info->outputs = eina_list_append(crtc_info->outputs, output_info);
      }
+   free(outputs);
    crtc_info->outputs_common_modes = _outputs_common_modes_get(crtc_info->outputs, NULL);
 }
 
@@ -33,7 +34,7 @@ _crtc_refs_set(E_Randr_Crtc_Info *crtc_info)
    Ecore_X_Randr_Mode_Info *mode_info = NULL;
    Ecore_X_Randr_Output *poutputs = NULL;
    E_Randr_Output_Info *output_info = NULL;
-   int npoutputs;
+   int npoutputs = 0;
 
    EINA_SAFETY_ON_NULL_RETURN(crtc_info);
 
@@ -58,6 +59,7 @@ _crtc_refs_set(E_Randr_Crtc_Info *crtc_info)
           }
         crtc_info->possible_outputs = eina_list_append(crtc_info->possible_outputs, output_info);
      }
+   free(poutputs);
 
    _crtc_outputs_refs_set(crtc_info);
 }
