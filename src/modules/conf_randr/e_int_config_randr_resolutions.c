@@ -167,8 +167,8 @@ dialog_subdialog_resolutions_update_list(Evas_Object *rep)
    Ecore_X_Randr_Mode_Info *mode_info, *current_mode;
    char resolution_text[RESOLUTION_TXT_MAX_LENGTH];
    float rate;
-   int str_ret, i = 0;
    Eina_Bool enable = EINA_FALSE;
+   int i = 0;
 
    e_widget_ilist_freeze(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
    e_widget_ilist_clear(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
@@ -201,12 +201,7 @@ dialog_subdialog_resolutions_update_list(Evas_Object *rep)
         else
           rate = 0.0;
 
-        str_ret = snprintf(resolution_text, RESOLUTION_TXT_MAX_LENGTH, "%dx%d@%.1fHz", mode_info->width, mode_info->height, rate);
-        if (str_ret < 0 || str_ret > (RESOLUTION_TXT_MAX_LENGTH - 1))
-          {
-             fprintf(stderr, "CONF_RANDR: Resolution text could not be created.");
-             continue;
-          }
+        snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), "%dx%d@%.1fHz", mode_info->width, mode_info->height, rate);
         e_widget_ilist_append(e_config_runtime_info->gui.subdialogs.resolutions.dialog, NULL, resolution_text, NULL, mode_info, NULL);
 
         //select currently enabled mode
