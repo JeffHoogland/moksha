@@ -208,6 +208,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
         strncpy(sdata, str, (int)(p - str));
         sdata[p - str] = 0;
         /* parse out this acpi string into separate pieces */
+        printf("DBG ACPI: ACPI Event string: '%s'\n", sdata);
         if (sscanf(sdata, "%1023s %1023s %x %x", 
                    device, bus, &sig, &status) == 4)
           {
@@ -320,6 +321,8 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
    snprintf(buff, sizeof(buff), "/proc/acpi/%s/%s/state", device, bus);
    if (!(f = fopen(buff, "r"))) return E_ACPI_LID_UNKNOWN;
 
+   printf("DBG ACPI: Lid state string: '%s'\n", buff);
+   
    /* read the line from state file */
    buff[0] = '\0';
    ret = fgets(buff, 1024, f);
@@ -333,6 +336,8 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
    while (isalnum(buff[i])) i++;
    buff[i] = 0;
 
+   printf("DBG ACPI: Lid string '%s'\n", ret);
+   
    /* compare value from state file and return something sane */
    if (!strcmp(ret, "open")) return E_ACPI_LID_OPEN;
    else if (!strcmp(ret, "closed")) return E_ACPI_LID_CLOSED;
