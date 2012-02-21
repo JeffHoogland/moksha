@@ -51,6 +51,8 @@ _serialized_output_free(E_Randr_Serialized_Output *so)
 {
    EINA_SAFETY_ON_NULL_RETURN(so);
 
+   eina_stringshare_del(so->name);
+
    free(so);
 }
 
@@ -59,7 +61,7 @@ _serialized_output_policy_free(E_Randr_Serialized_Output_Policy *sop)
 {
    EINA_SAFETY_ON_NULL_RETURN(sop);
 
-   free(sop->name);
+   eina_stringshare_del(sop->name);
    free(sop);
 }
 
@@ -74,7 +76,7 @@ _mode_info_free(Ecore_X_Randr_Mode_Info *mode_info)
 {
    EINA_SAFETY_ON_NULL_RETURN(mode_info);
 
-   free(mode_info->name);
+   eina_stringshare_del(mode_info->name);
    free(mode_info);
 }
 
