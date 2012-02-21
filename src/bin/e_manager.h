@@ -26,6 +26,7 @@ struct _E_Manager
    Ecore_X_Window       initwin;
    
    E_Manager_Comp      *comp;
+   Ecore_Timer         *clear_timer;
 };
 
 struct _E_Manager_Comp

@@ -16,6 +16,7 @@ static Eina_Bool _e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED
 						  const void *key __UNUSED__,
 						  void *data, void *fdata __UNUSED__);
 static E_Manager *_e_manager_get_for_root(Ecore_X_Window root);
+static Eina_Bool _e_manager_clear_timer(void *data);
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
 static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
@@ -86,7 +87,6 @@ e_manager_new(Ecore_X_Window root, int num)
    E_Manager *man;
 
    if (!ecore_x_window_manage(root)) return NULL;
-   ecore_x_window_background_color_set(root, 0, 0, 0);
    man = E_OBJECT_ALLOC(E_Manager, E_MANAGER_TYPE, _e_manager_free);
    if (!man) return NULL;
    managers = eina_list_append(managers, man);
@@ -138,6 +138,9 @@ e_manager_new(Ecore_X_Window root, int num)
 
    man->pointer = e_pointer_window_new(man->root, 1);
 
+   ecore_x_window_background_color_set(man->root, 0, 0, 0);
+   
+   man->clear_timer = ecore_timer_add(10.0, _e_manager_clear_timer, man);
    return man;
 }
 
@@ -694,6 +697,7 @@ _e_manager_free(E_Manager *man)
      }
    if (man->pointer) e_object_del(E_OBJECT(man->pointer));
    managers = eina_list_remove(managers, man);
+   if (man->clear_timer) ecore_timer_del(man->clear_timer);
    free(man);
 }
 
@@ -1047,6 +1051,14 @@ _e_manager_get_for_root(Ecore_X_Window root)
    return eina_list_data_get(managers);
 }
 
+static Eina_Bool
+_e_manager_clear_timer(void *data)
+{
+   E_Manager *man = data;
+   ecore_x_window_background_color_set(man->root, 0, 0, 0);
+   man->clear_timer = NULL;
+   return EINA_FALSE;
+}
 
 #if 0 /* use later - maybe */
 static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev){return 1;}
