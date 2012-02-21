@@ -305,7 +305,8 @@ _12_screen_info_refresh(void)
 {
    EINA_SAFETY_ON_TRUE_RETURN(e_randr_screen_info.randr_version < ECORE_X_RANDR_1_2);
 
-   _12_screen_info_free(e_randr_screen_info.rrvd_info.randr_info_12);
+   if (e_randr_screen_info.rrvd_info.randr_info_12)
+     _12_screen_info_free(e_randr_screen_info.rrvd_info.randr_info_12);
    e_randr_screen_info.rrvd_info.randr_info_12 = _screen_info_12_new();
    _structs_init();
    _screen_primary_output_assign(NULL);

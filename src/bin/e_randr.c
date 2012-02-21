@@ -63,7 +63,9 @@ _init(void)
 
    if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
      {
-        _12_policies_restore();
+        if ((e_config->randr_serialized_setup) && 
+            (e_config->randr_serialized_setup->outputs_policies))
+          _12_policies_restore();
      }
 
    return EINA_TRUE;
@@ -142,13 +144,16 @@ _event_listeners_add(void)
    static void
 _try_restore_configuration(void)
 {
-   if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
+   if (e_config->randr_serialized_setup)
      {
-        _11_try_restore_configuration();
-     }
-   else if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
-     {
-        _12_try_restore_configuration();
+        if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
+          {
+             _11_try_restore_configuration();
+          }
+        else if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
+          {
+             _12_try_restore_configuration();
+          }
      }
 }
 
