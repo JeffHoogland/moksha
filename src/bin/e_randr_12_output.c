@@ -200,6 +200,8 @@ Eina_List
      {
         EINA_LIST_FOREACH(outputs, output_iter, output_info)
           {
+             if (!output_info->monitor)
+               continue;
              if (!eina_list_data_find(output_info->monitor->modes, mode_info))
                common_modes = eina_list_remove(common_modes, mode_info);
           }
