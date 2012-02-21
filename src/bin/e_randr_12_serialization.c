@@ -3,7 +3,7 @@
 
 #define MODE_STR_LENGTH_MAX 100
 
-const static char *_POLICIES_STRINGS[] = {"ABOVE", "RIGHT", "BELOW", "LEFT", "CLONE", "NONE"};
+static const char *_POLICIES_STRINGS[] = {"ABOVE", "RIGHT", "BELOW", "LEFT", "CLONE", "NONE"};
 
 static E_Randr_Serialized_Crtc  *_serialized_crtc_new(E_Randr_Crtc_Info *crtc_info);
 static inline int                _sort_by_number_of_edids(const void *d1, const void *d2);
