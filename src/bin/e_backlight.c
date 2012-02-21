@@ -301,7 +301,7 @@ _e_backlight_update(E_Zone *zone)
    root = zone->container->manager->root;
    // try randr
    out = ecore_x_randr_window_outputs_get(root, &num);
-   if ((out) && (num > 0))
+   if ((out) && (num > 0) && (ecore_x_randr_output_backlight_available()))
       x_bl = ecore_x_randr_output_backlight_level_get(root, out[0]);
    if (out) free(out);
    if (x_bl >= 0.0)
