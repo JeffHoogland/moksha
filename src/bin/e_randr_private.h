@@ -25,14 +25,14 @@
 // RandRR == 1.1
 E_Randr_Screen_Info_11 *_11_screen_info_new(void);
 void                    _11_screen_info_free(E_Randr_Screen_Info_11 *screen_info_11);
-void                    _11_screen_info_refresh(void);
+Eina_Bool               _11_screen_info_refresh(void);
 Eina_Bool               _11_try_restore_configuration(void);
 void                    _11_store_configuration(E_Randr_Configuration_Store_Modifier modifier);
 
 // RandRR >= 1.2
 E_Randr_Screen_Info_12 *_12_screen_info_new(void);
 void                    _12_screen_info_free(E_Randr_Screen_Info_12 *screen_info_12);
-void                    _12_screen_info_refresh(void);
+Eina_Bool               _12_screen_info_refresh(void);
 void                    _12_policies_restore(void);
 void                    _12_event_listeners_add(void);
 void                    _12_event_listeners_remove(void);

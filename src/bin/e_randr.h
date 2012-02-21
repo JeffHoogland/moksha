@@ -181,7 +181,7 @@ struct _E_Randr_Serialized_Setup
 };
 
 EINTERN Eina_Bool e_randr_init(void);
-EAPI void e_randr_screen_info_refresh(void);
+EAPI Eina_Bool e_randr_screen_info_refresh(void);
 EINTERN int e_randr_shutdown(void);
 EINTERN void e_randr_serialized_setup_free(E_Randr_Serialized_Setup *ss);
 EINTERN void e_randr_11_serialized_setup_free(E_Randr_Serialized_Setup_11 *ss_11);

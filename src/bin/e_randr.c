@@ -25,7 +25,7 @@
 
 static Eina_Bool _init(void);
 static void      _shutdown(void);
-static void      _screen_info_refresh(void);
+static Eina_Bool _screen_info_refresh(void);
 static Eina_Bool _e_event_config_loaded_cb(void *data, int type, void *e);
 static void      _try_restore_configuration(void);
 static void      _event_listeners_add(void);
@@ -47,16 +47,17 @@ e_randr_shutdown(void)
    return 1;
 }
 
-EAPI void
+EAPI Eina_Bool
 e_randr_screen_info_refresh(void)
 {
-   _screen_info_refresh();
+   return _screen_info_refresh();
 }
 
 static Eina_Bool
 _init(void)
 {
-   e_randr_screen_info_refresh();
+   if (!e_randr_screen_info_refresh())
+     return EINA_FALSE;
    _event_listeners_add();
 
    _try_restore_configuration();
@@ -91,7 +92,7 @@ _shutdown(void)
 /**
  * @return EINA_TRUE if info could be refreshed, else EINA_FALSE
  */
-static void
+static Eina_Bool
 _screen_info_refresh(void)
 {
    Ecore_X_Window *roots;
@@ -112,12 +113,14 @@ _screen_info_refresh(void)
    // Value set/retrieval helper functions
    if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
      {
-        _11_screen_info_refresh();
+        return _11_screen_info_refresh();
      }
    else if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
      {
-        _12_screen_info_refresh();
+        return _12_screen_info_refresh();
      }
+
+   return EINA_FALSE;
 }
 
    static Eina_Bool
