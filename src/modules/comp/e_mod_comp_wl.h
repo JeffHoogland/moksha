@@ -98,7 +98,7 @@ struct _Wayland_Shell_Surface
 
    struct 
      {
-        struct wl_grab grab;
+        struct wl_pointer_grab grab;
         uint32_t timestamp;
         int32_t x, y;
      } popup;

@@ -23,8 +23,9 @@ static void _e_mod_comp_wl_shell_surface_move(struct wl_client *client __UNUSED_
 static void _e_mod_comp_wl_shell_surface_resize(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp, uint32_t edges);
 static void _e_mod_comp_wl_shell_surface_set_toplevel(struct wl_client *client __UNUSED__, struct wl_resource *resource);
 static void _e_mod_comp_wl_shell_surface_set_transient(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags __UNUSED__);
-static void _e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, struct wl_resource *resource);
+static void _e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, struct wl_resource *resource, uint32_t method __UNUSED__, uint32_t framerate __UNUSED__, struct wl_resource *output_resource __UNUSED__);
 static void _e_mod_comp_wl_shell_surface_set_popup(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource  __UNUSED__, uint32_t timestamp  __UNUSED__, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags  __UNUSED__);
+static void _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client, struct wl_resource *resource, struct wl_resource *output_resource __UNUSED__);
 
 static void _e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, uint32_t timestamp);
 static Wayland_Shell_Surface *_e_mod_comp_wl_shell_get_shell_surface(Wayland_Surface *ws);
@@ -42,7 +43,8 @@ static const struct wl_shell_surface_interface _wl_shell_surface_interface =
    _e_mod_comp_wl_shell_surface_set_toplevel,
    _e_mod_comp_wl_shell_surface_set_transient,
    _e_mod_comp_wl_shell_surface_set_fullscreen,
-   _e_mod_comp_wl_shell_surface_set_popup
+   _e_mod_comp_wl_shell_surface_set_popup,
+   _e_mod_comp_wl_shell_surface_set_maximized
 };
 
 /* private variables */
@@ -336,7 +338,7 @@ _e_mod_comp_wl_shell_surface_set_transient(struct wl_client *client __UNUSED__, 
 }
 
 static void 
-_e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, struct wl_resource *resource)
+_e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, struct wl_resource *resource, uint32_t method __UNUSED__, uint32_t framerate __UNUSED__, struct wl_resource *output_resource __UNUSED__)
 {
    Wayland_Shell_Surface *wss;
    Wayland_Surface *ws;
@@ -371,6 +373,19 @@ _e_mod_comp_wl_shell_surface_set_popup(struct wl_client *client __UNUSED__, stru
    wss->parent = parent_resource->data;
    wss->popup.x = x;
    wss->popup.y = y;
+}
+
+static void 
+_e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *output_resource __UNUSED__)
+{
+   Wayland_Shell_Surface *wss;
+   Wayland_Surface *ws;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   wss = resource->data;
+   ws = wss->surface;
+   /* FIXME: Implement */
 }
 
 static void 

@@ -190,18 +190,18 @@ e_mod_comp_wl_comp_repick(struct wl_input_device *device, uint32_t timestamp)
    if (!ws) return;
    if (&ws->surface != device->current)
      {
-        const struct wl_grab_interface *interface;
+        const struct wl_pointer_grab_interface *interface;
 
-        interface = device->grab->interface;
-        interface->focus(device->grab, timestamp, &ws->surface, 
+        interface = device->pointer_grab->interface;
+        interface->focus(device->pointer_grab, timestamp, &ws->surface, 
                          device->current_x, device->current_y);
         device->current = &ws->surface;
      }
 
-   if ((focus = (Wayland_Surface *)device->grab->focus))
+   if ((focus = (Wayland_Surface *)device->pointer_grab->focus))
      {
-        device->grab->x = device->x - focus->x;
-        device->grab->y = device->y - focus->y;
+        device->pointer_grab->x = device->x - focus->x;
+        device->pointer_grab->y = device->y - focus->y;
      }
 }
 
@@ -433,7 +433,7 @@ _e_mod_comp_wl_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *e
    Wayland_Input *input;
    Ecore_Event_Mouse_Move *ev;
    struct wl_input_device *device;
-   const struct wl_grab_interface *interface;
+   const struct wl_pointer_grab_interface *interface;
    uint32_t timestamp;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -449,8 +449,9 @@ _e_mod_comp_wl_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *e
    timestamp = e_mod_comp_wl_time_get();
    e_mod_comp_wl_comp_repick(device, timestamp);
 
-   interface = device->grab->interface;
-   interface->motion(device->grab, timestamp, device->grab->x, device->grab->y);
+   interface = device->pointer_grab->interface;
+   interface->motion(device->pointer_grab, timestamp, 
+                     device->pointer_grab->x, device->pointer_grab->y);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -496,7 +497,8 @@ _e_mod_comp_wl_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *e
    device->button_count++;
 
    /* TODO: Run binding ?? */
-   device->grab->interface->button(device->grab, timestamp, btn, 1);
+   device->pointer_grab->interface->button(device->pointer_grab, 
+                                           timestamp, btn, 1);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -535,7 +537,8 @@ _e_mod_comp_wl_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *eve
 
    /* TODO: Run binding ?? */
    timestamp = e_mod_comp_wl_time_get();
-   device->grab->interface->button(device->grab, timestamp, btn, 0);
+   device->pointer_grab->interface->button(device->pointer_grab, 
+                                           timestamp, btn, 0);
 
    return ECORE_CALLBACK_PASS_ON;
 }
