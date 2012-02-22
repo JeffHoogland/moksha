@@ -314,7 +314,6 @@ _dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj, Evas_Coord w,
      }
 
    scaling_factor = (((float)parent_geo.w / (float)real_sum_w) < ((float)parent_geo.h / (float)real_sum_h)) ? ((float)parent_geo.w / (float)real_sum_w) : ((float)parent_geo.h / (float)real_sum_h);
-   scaling_factor *= e_scale;
 
    EINA_LIST_FOREACH(lst, itr, rep)
      {
@@ -371,7 +370,6 @@ _dialog_subdialog_arrangement_smart_class_resize(Evas_Object *obj, Evas_Coord w,
         //resize edje element
         evas_object_resize(rep, new_geo.w, new_geo.h);
         //also resize bg
-        e_thumb_icon_size_set(output_dialog_data->bg, new_geo.w, new_geo.h); //need to clarify the usage of e_thumb. Usable without e_thumb_icon_file_set??!!
         evas_object_move(rep, new_geo.x, new_geo.y);
         fprintf(stderr, "CONF_RANDR: output representation %p was resized to %d x %d\n", rep, new_geo.w, new_geo.h);
         fprintf(stderr, "CONF_RANDR: output representation %p was moved to %d x %d\n", rep, new_geo.x, new_geo.y);
