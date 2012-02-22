@@ -565,11 +565,13 @@ _output_property_change_event_cb(void *data __UNUSED__, int type, void *ev)
 _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
 {
    Eina_List *iter, *outputs_list = NULL, *common_modes = NULL;
-   E_Randr_Crtc_Info *crtc_info, *usable_crtc = NULL;
+   E_Randr_Crtc_Info *crtc_info = NULL, *usable_crtc = NULL;
+   const E_Randr_Crtc_Info *crtc_rel = NULL;
    E_Randr_Output_Info *primary_output;
    Ecore_X_Randr_Output *outputs;
    Ecore_X_Randr_Mode_Info *mode_info;
-   Eina_Bool ret = EINA_FALSE;
+   int dx = Ecore_X_Randr_None, dy = Ecore_X_Randr_None;
+   Eina_Bool ret = EINA_TRUE;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(output_info, EINA_FALSE);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((output_info->crtc && output_info->crtc->current_mode), EINA_FALSE);
@@ -637,7 +639,7 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
                      outputs_list = eina_list_append(outputs_list, output_info);
                      outputs = _outputs_to_array(outputs_list);
                      primary_output->crtc->outputs = NULL;
-                     ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, primary_output->crtc->xid, outputs, eina_list_count(outputs_list), primary_output->crtc->current_mode->xid);
+                     ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, primary_output->crtc->xid, outputs, eina_list_count(outputs_list), primary_output->crtc->current_mode->xid);
                      free(outputs);
                      eina_list_free(outputs_list);
                      return ret;
@@ -651,8 +653,9 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
                      /*
                       * 2a. exact mode.
                       */
-                     ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, primary_output->crtc->current_mode->xid);
-                     return ret && ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info.rrvd_info.randr_info_12->alignment);
+                     ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, primary_output->crtc->current_mode->xid);
+                     ret &= ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info.rrvd_info.randr_info_12->alignment);
+                     return ret;
                   }
              }
            else
@@ -662,8 +665,9 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
                  */
                 if (primary_output->crtc && (mode_info = _mode_geo_identical_find(output_info->monitor->modes, primary_output->crtc->current_mode)))
                   {
-                     ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid);
-                     return ret && ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info.rrvd_info.randr_info_12->alignment);
+                     ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid);
+                     ret &= ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info.rrvd_info.randr_info_12->alignment);
+                     return ret;
                   }
                 /*
                  * 3.  Find the highest resolution mode common to enable on primary output's CRTC and the new one.
@@ -677,9 +681,9 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
                             {
                                eina_list_free(common_modes);
                                fprintf(stderr, "Will try to set mode: %dx%d for primary and clone.\n", mode_info->width, mode_info->height);
-                               ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, primary_output->crtc->xid, ((Ecore_X_Randr_Output *)Ecore_X_Randr_Unset), Ecore_X_Randr_Unset, mode_info->xid);
-                               ret = (ret && ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid));
-                               ret = (ret && ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info.rrvd_info.randr_info_12->alignment));
+                               ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, primary_output->crtc->xid, ((Ecore_X_Randr_Output *)Ecore_X_Randr_Unset), Ecore_X_Randr_Unset, mode_info->xid);
+                               ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid);
+                               ret &= ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info.rrvd_info.randr_info_12->alignment);
                             }
                        }
                      eina_list_free(outputs_list);
@@ -701,20 +705,91 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
               ret = EINA_FALSE;
               break;
            }
-         if ((ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid)))
+
+         //get the crtc we will place our's relative to. If it's NULL, this is the
+         //only output attached, work done.
+         if (!(crtc_rel = _crtc_according_to_policy_get(usable_crtc, output_info->policy)))
+           {
+              fprintf(stderr, "E_RANDR: CRTC %d enabled. No other CRTC had to be moved.\n", usable_crtc->xid);
+              ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid);
+              return ret;
+           }
+
+         //Calculate new CRTC's position according to policy
+         switch (output_info->policy)
+           {
+            case ECORE_X_RANDR_OUTPUT_POLICY_ABOVE:
+               usable_crtc->geometry.x = crtc_rel->geometry.x;
+               usable_crtc->geometry.y = 0;
+               break;
+            case ECORE_X_RANDR_OUTPUT_POLICY_RIGHT:
+               usable_crtc->geometry.x = (crtc_rel->geometry.x + crtc_rel->geometry.w);
+               usable_crtc->geometry.y = crtc_rel->geometry.y;
+               break;
+            case ECORE_X_RANDR_OUTPUT_POLICY_BELOW:
+               usable_crtc->geometry.x = crtc_rel->geometry.x;
+               usable_crtc->geometry.y = (crtc_rel->geometry.y + crtc_rel->geometry.h);
+               break;
+            case ECORE_X_RANDR_OUTPUT_POLICY_LEFT:
+               usable_crtc->geometry.y = crtc_rel->geometry.y;
+               usable_crtc->geometry.x = 0;
+               break;
+            default:
+               usable_crtc->geometry.y = 0;
+               usable_crtc->geometry.x = 0;
+            }
+
+         if ((ret &= ecore_x_randr_crtc_settings_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, usable_crtc->geometry.x, usable_crtc->geometry.y, mode_info->xid, ECORE_X_RANDR_ORIENTATION_ROT_0)))
            {
               //WORKAROUND
               //Reason: the CRTC event, that'd bring the new info about the set
               //mode is arriving too late here.
               usable_crtc->current_mode = mode_info;
-              crtc_info->geometry.x = 0;
-              crtc_info->geometry.y = 0;
-              crtc_info->geometry.w = mode_info->width;
-              crtc_info->geometry.h = mode_info->height;
+              usable_crtc->geometry.w = mode_info->width;
+              usable_crtc->geometry.h = mode_info->height;
               //WORKAROUND END
-              ret &= _crtc_move_policy(usable_crtc, output_info->policy);
+
+              fprintf(stderr, "E_RANDR: Moved CRTC %d has geometry (x,y,wxh): %d, %d, %dx%d.\n", usable_crtc->xid, usable_crtc->geometry.x, usable_crtc->geometry.y, usable_crtc->geometry.w, usable_crtc->geometry.h);
+              //following is policy dependend.
+              switch (output_info->policy)
+                {
+                 case ECORE_X_RANDR_OUTPUT_POLICY_ABOVE:
+                    dy = (crtc_rel->geometry.y - usable_crtc->geometry.h);
+                    if (dy < 0)
+                      {
+                         //virtual move (move other CRTCs as nessesary)
+                         dy = -dy;
+                         ret &= ecore_x_randr_move_all_crtcs_but(e_randr_screen_info.root,
+                               &usable_crtc->xid,
+                               1,
+                               dx,
+                               dy);
+                         fprintf(stderr, "E_RANDR: Moving all CRTCs but %d, by %dx%d delta.\n", usable_crtc->xid, dx, dy);
+                      }
+                    break;
+
+                 case ECORE_X_RANDR_OUTPUT_POLICY_LEFT:
+                    dx = (crtc_rel->geometry.x - usable_crtc->geometry.w);
+                    if (dx < 0)
+                      {
+                         //virtual move (move other CRTCs as nessesary)
+                         dx = -dx;
+                         ret &= ecore_x_randr_move_all_crtcs_but(e_randr_screen_info.root,
+                               &usable_crtc->xid,
+                               1,
+                               dx,
+                               dy);
+                         fprintf(stderr, "E_RANDR: Moving all CRTCs but %d, by %dx%d delta.\n", usable_crtc->xid, dx, dy);
+                      }
+                    break;
+
+                 default:
+                    break;
+                }
+
            }
      }
+
    if (ret)
      ecore_x_randr_screen_reset(e_randr_screen_info.root);
 

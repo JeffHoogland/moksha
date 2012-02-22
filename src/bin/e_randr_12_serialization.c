@@ -453,11 +453,9 @@ _12_try_restore_configuration(void)
         fprintf(stderr, ".\n");
         // DEBUG END
 
-        ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, ci->xid, outputs_array, eina_list_count(outputs_list), mode);
+        ret &= ecore_x_randr_crtc_settings_set(e_randr_screen_info.root, ci->xid, outputs_array, eina_list_count(outputs_list), sc->pos.x, sc->pos.y, mode, sc->orientation);
         eina_list_free(outputs_list);
         free(outputs_array);
-        ret &= ecore_x_randr_crtc_pos_set(e_randr_screen_info.root, ci->xid, sc->pos.x, sc->pos.y);
-        ret &= ecore_x_randr_crtc_orientation_set(e_randr_screen_info.root, ci->xid, sc->orientation);
      }
    return ret;
 }
