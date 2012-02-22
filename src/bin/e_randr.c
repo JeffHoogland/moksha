@@ -99,9 +99,9 @@ _screen_info_refresh(void)
    Ecore_X_Window root;
    int n;
 
-   EINA_SAFETY_ON_FALSE_RETURN(ecore_x_randr_query());
+   EINA_SAFETY_ON_FALSE_RETURN_VAL(ecore_x_randr_query(), EINA_FALSE);
 
-   if (!(roots = ecore_x_window_root_list(&n))) return;
+   if (!(roots = ecore_x_window_root_list(&n))) return EINA_FALSE;
    /* first (and only) root window */
    root = roots[0];
    free(roots);

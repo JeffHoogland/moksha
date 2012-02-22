@@ -96,8 +96,10 @@ _11_screen_info_free(E_Randr_Screen_Info_11 *screen_info)
 Eina_Bool
 _11_screen_info_refresh(void)
 {
-   EINA_SAFETY_ON_TRUE_RETURN(E_RANDR_11_NO);
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_11_NO, EINA_FALSE);
 
    _11_screen_info_free(e_randr_screen_info.rrvd_info.randr_info_11);
-   return ((e_randr_screen_info.rrvd_info.randr_info_11 = _11_screen_info_new()));
+   e_randr_screen_info.rrvd_info.randr_info_11 = _11_screen_info_new();
+
+   return (e_randr_screen_info.rrvd_info.randr_info_11 != NULL);
 }

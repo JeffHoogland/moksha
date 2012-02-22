@@ -303,7 +303,7 @@ _mode_geo_identical_find(Eina_List *modes, Ecore_X_Randr_Mode_Info *mode)
    Eina_Bool
 _12_screen_info_refresh(void)
 {
-   EINA_SAFETY_ON_TRUE_RETURN(e_randr_screen_info.randr_version < ECORE_X_RANDR_1_2);
+   EINA_SAFETY_ON_TRUE_RETURN_VAL((e_randr_screen_info.randr_version < ECORE_X_RANDR_1_2), EINA_FALSE);
 
    if (e_randr_screen_info.rrvd_info.randr_info_12)
      _12_screen_info_free(e_randr_screen_info.rrvd_info.randr_info_12);
@@ -312,6 +312,8 @@ _12_screen_info_refresh(void)
      return EINA_FALSE;
 
    _screen_primary_output_assign(NULL);
+
+   return EINA_TRUE;
 }
 
 /******************************************************************
