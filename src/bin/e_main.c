@@ -859,7 +859,7 @@ main(int argc, char **argv)
         e_error_message_show(_("Enlightenment cannot initialize the Icon Cache system.\n"));
         _e_main_shutdown(-1);
      }
-   TS("E_Thumb Init Done");
+   TS("E_Icon Init Done");
    _e_main_shutdown_push(e_icon_shutdown);
 
    TS("E_XSettings Init");
