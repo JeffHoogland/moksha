@@ -14,14 +14,14 @@
 
 #define E_RANDR_12 (e_randr_screen_info.rrvd_info.randr_info_12)
 
-Evas_Object *dialog_subdialog_policies_basic_create_widgets(Evas *canvas);
-Eina_Bool    dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_info);
-Eina_Bool    dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-Eina_Bool    dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-Eina_Bool    dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-void         dialog_subdialog_policies_update_radio_buttons(Evas_Object *rep);
+Evas_Object *policy_widget_basic_create_widgets(Evas *canvas);
+Eina_Bool    policy_widget_create_data(E_Config_Dialog_Data *e_config_runtime_info);
+Eina_Bool    policy_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+Eina_Bool    policy_widget_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+Eina_Bool    policy_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+void         policy_widget_update_radio_buttons(Evas_Object *rep);
 
-//static void  _dialog_subdialog_policies_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+//static void  _policy_widget_policy_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern char _theme_file_path[];
 
@@ -36,19 +36,19 @@ static const char *_POLICIES_STRINGS[] = {
 
 /*
    static void
-   _dialog_subdialog_policies_radio_add_callbacks(void)
+   _policy_widget_radio_add_callbacks(void)
    {
-   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_none, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_policies_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_clone, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_policies_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_left, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_policies_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_below, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_policies_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_above, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_policies_policy_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_right, EVAS_CALLBACK_MOUSE_UP, _dialog_subdialog_policies_policy_mouse_up_cb, NULL);
+   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_none, EVAS_CALLBACK_MOUSE_UP, _policy_widget_policy_mouse_up_cb, NULL);
+   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_clone, EVAS_CALLBACK_MOUSE_UP, _policy_widget_policy_mouse_up_cb, NULL);
+   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_left, EVAS_CALLBACK_MOUSE_UP, _policy_widget_policy_mouse_up_cb, NULL);
+   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_below, EVAS_CALLBACK_MOUSE_UP, _policy_widget_policy_mouse_up_cb, NULL);
+   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_above, EVAS_CALLBACK_MOUSE_UP, _policy_widget_policy_mouse_up_cb, NULL);
+   evas_object_event_callback_add(e_config_runtime_info->gui.subdialogs.policies.radio_right, EVAS_CALLBACK_MOUSE_UP, _policy_widget_policy_mouse_up_cb, NULL);
    }
  */
 
 Eina_Bool
-dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_info)
+policy_widget_create_data(E_Config_Dialog_Data *e_config_runtime_info)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    E_Randr_Output_Info *oi = NULL;
@@ -73,7 +73,7 @@ dialog_subdialog_policies_create_data(E_Config_Dialog_Data *e_config_runtime_inf
 }
 
 Evas_Object *
-dialog_subdialog_policies_basic_create_widgets(Evas *canvas)
+policy_widget_basic_create_widgets(Evas *canvas)
 {
    Evas_Object *subdialog;
    E_Radio_Group *rg;
@@ -86,7 +86,7 @@ dialog_subdialog_policies_basic_create_widgets(Evas *canvas)
    if (!(subdialog = e_widget_framelist_add(canvas, _("Screen attachement policy"), EINA_FALSE))) return NULL;
 
    // Add radio buttons
-   if (!(rg = e_widget_radio_group_new(&e_config_runtime_info->gui.subdialogs.policies.radio_val))) goto _dialog_subdialog_policies_radio_add_fail;
+   if (!(rg = e_widget_radio_group_new(&e_config_runtime_info->gui.subdialogs.policies.radio_val))) goto _policy_widget_radio_add_fail;
 
    //IMPROVABLE: use enum to determine objects via 'switch'-statement
    e_config_runtime_info->gui.subdialogs.policies.radio_above = e_widget_radio_add(canvas, _("Above"), ECORE_X_RANDR_OUTPUT_POLICY_ABOVE, rg);
@@ -107,18 +107,18 @@ dialog_subdialog_policies_basic_create_widgets(Evas *canvas)
    e_config_runtime_info->gui.subdialogs.policies.radio_none = e_widget_radio_add(canvas, _("No reaction"), ECORE_X_RANDR_OUTPUT_POLICY_NONE, rg);
    e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.subdialogs.policies.radio_none);
 
-   //_dialog_subdialog_policies_radio_add_callbacks();
+   //_policy_widget_radio_add_callbacks();
 
    /*
       // Add policies demonstration edje
       if (!(e_config_runtime_info->gui.subdialogs.policies.swallowing_edje = edje_object_add(canvas)))
       {
-        goto _dialog_subdialog_policies_edje_add_fail;
+        goto _policy_widget_edje_add_fail;
 
       }
       if (!edje_object_file_set(e_config_runtime_info->gui.subdialogs.policies.swallowing_edje, _theme_file_path, "e/conf/randr/dialog/subdialog/policies"))
       {
-        goto _dialog_subdialog_policies_edje_set_fail;
+        goto _policy_widget_edje_set_fail;
       }
 
       e_widget_table_object_align_append(subdialog, e_config_runtime_info->gui.subdialogs.policies.swallowing_edje, 1, 0, 1, 1, 1, 1, 1, 1, 1.0, 1.0);
@@ -156,14 +156,14 @@ dialog_subdialog_policies_basic_create_widgets(Evas *canvas)
    return subdialog;
 
    /*
-      _dialog_subdialog_policies_edje_set_fail:
+      _policy_widget_edje_set_fail:
       evas_object_del(e_config_runtime_info->gui.subdialogs.policies.swallowing_edje);
-      _dialog_subdialog_policies_edje_add_fail:
+      _policy_widget_edje_add_fail:
       fprintf(stderr, "CONF_RANDR: Couldn't set edj for policies subdialog!\n");
       evas_object_del(subdialog);
       return NULL;
     */
-_dialog_subdialog_policies_radio_add_fail:
+_policy_widget_radio_add_fail:
    evas_object_del(subdialog);
    return NULL;
 }
@@ -173,7 +173,7 @@ _dialog_subdialog_policies_radio_add_fail:
  * for now.
  *
 static void
-_dialog_subdialog_policies_policy_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+_policy_widget_policy_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    char signal[29];
    int policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
@@ -200,7 +200,7 @@ _dialog_subdialog_policies_policy_mouse_up_cb(void *data __UNUSED__, Evas *e __U
 */
 
 Eina_Bool
-dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
+policy_widget_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    if (!E_RANDR_12 || !e_config_runtime_info->gui.selected_output_dd) return EINA_FALSE;
 
@@ -213,7 +213,7 @@ dialog_subdialog_policies_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Co
 }
 
 Eina_Bool
-dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+policy_widget_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (!E_RANDR_12 || !cfdata || !cfdata->gui.selected_output_dd || !cfdata->gui.selected_output_dd->output) return EINA_FALSE;
 
@@ -221,7 +221,7 @@ dialog_subdialog_policies_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E
 }
 
 void
-dialog_subdialog_policies_update_radio_buttons(Evas_Object *rep)
+policy_widget_update_radio_buttons(Evas_Object *rep)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
    Ecore_X_Randr_Output_Policy policy;
@@ -279,7 +279,7 @@ dialog_subdialog_policies_update_radio_buttons(Evas_Object *rep)
 }
 
 void
-dialog_subdialog_policies_keep_changes(E_Config_Dialog_Data *cfdata)
+policy_widget_keep_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    E_Randr_Output_Info *oi;
@@ -305,7 +305,7 @@ dialog_subdialog_policies_keep_changes(E_Config_Dialog_Data *cfdata)
 }
 
 void
-dialog_subdialog_policies_discard_changes(E_Config_Dialog_Data *cfdata)
+policy_widget_discard_changes(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
 
