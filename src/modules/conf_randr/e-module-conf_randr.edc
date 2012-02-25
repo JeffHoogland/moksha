@@ -38,7 +38,7 @@ collections {
 
    //The graphical representation of a single monitor, including its decorations
    group {
-      name: "e/conf/randr/dialog/subdialog/arrangement/output";
+      name: "e/conf/randr/dialog/widget/arrangement/output";
 
       styles {
          style {
@@ -471,7 +471,7 @@ collections {
    //representation is dragged. Its size matches the size of the monitor
    //dragged.
    group{
-      name: "e/conf/randr/dialog/subdialog/arrangement/suggestion";
+      name: "e/conf/randr/dialog/widget/arrangement/suggestion";
       data {
          item: "distance_min" "20";
       }
@@ -552,7 +552,7 @@ collections {
    /************Subdialog - Policies**************/
    /**********************************************/
    group{
-      name: "e/conf/randr/dialog/subdialog/policies";
+      name: "e/conf/randr/dialog/widget/policies";
       parts {
          part {
             name: "current_displays_setup/clipper";
@@ -828,7 +828,7 @@ collections {
 
    // Text objects for rotation and reflection
    group {
-      name: "e/conf/randr/dialog/subdialog/orientation";
+      name: "e/conf/randr/dialog/widget/orientation";
 
       parts {
          part {

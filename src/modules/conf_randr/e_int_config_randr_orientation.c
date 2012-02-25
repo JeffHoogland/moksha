@@ -55,36 +55,36 @@ orientation_widget_create_data(E_Config_Dialog_Data *cfdata)
 Evas_Object *
 orientation_widget_basic_create_widgets(Evas *canvas)
 {
-   Evas_Object *subdialog;
+   Evas_Object *widget;
    E_Radio_Group *rg;
    //char signal[29];
 
    if (!canvas || !e_config_runtime_info) return NULL;
-   if (e_config_runtime_info->gui.widgets.orientation.dialog) return e_config_runtime_info->gui.widgets.orientation.dialog;
+   if (e_config_runtime_info->gui.widgets.orientation.widget) return e_config_runtime_info->gui.widgets.orientation.widget;
 
-   if (!(subdialog = e_widget_framelist_add(canvas, _("Display Orientation"), EINA_FALSE))) return NULL;
+   if (!(widget = e_widget_framelist_add(canvas, _("Display Orientation"), EINA_FALSE))) return NULL;
 
    // Add radio buttons
    if (!(rg = e_widget_radio_group_new(&e_config_runtime_info->gui.widgets.orientation.radio_val))) goto _orientation_widget_radio_add_fail;
 
    //IMPROVABLE: use enum to determine objects via 'switch'-statement
    e_config_runtime_info->gui.widgets.orientation.radio_normal = e_widget_radio_add(canvas, _("Normal"), ECORE_X_RANDR_OUTPUT_POLICY_ABOVE, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.orientation.radio_normal);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.orientation.radio_normal);
 
    e_config_runtime_info->gui.widgets.orientation.radio_rot90 = e_widget_radio_add(canvas, _("Rotated, 90°"), ECORE_X_RANDR_OUTPUT_POLICY_RIGHT, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.orientation.radio_rot90);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.orientation.radio_rot90);
 
    e_config_runtime_info->gui.widgets.orientation.radio_rot180 = e_widget_radio_add(canvas, _("Rotated, 180°"), ECORE_X_RANDR_OUTPUT_POLICY_BELOW, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.orientation.radio_rot180);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.orientation.radio_rot180);
 
    e_config_runtime_info->gui.widgets.orientation.radio_rot270 = e_widget_radio_add(canvas, _("Rotated, 270°"), ECORE_X_RANDR_OUTPUT_POLICY_LEFT, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.orientation.radio_rot270);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.orientation.radio_rot270);
 
    e_config_runtime_info->gui.widgets.orientation.radio_reflect_horizontal = e_widget_radio_add(canvas, _("Flipped, horizontally"), ECORE_X_RANDR_OUTPUT_POLICY_CLONE, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.orientation.radio_reflect_horizontal);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.orientation.radio_reflect_horizontal);
 
    e_config_runtime_info->gui.widgets.orientation.radio_reflect_vertical = e_widget_radio_add(canvas, _("Flipped, vertically"), ECORE_X_RANDR_OUTPUT_POLICY_NONE, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.orientation.radio_reflect_vertical);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.orientation.radio_reflect_vertical);
 
    //_orientation_widget_radio_add_callbacks();
 
@@ -92,10 +92,10 @@ orientation_widget_basic_create_widgets(Evas *canvas)
       // Add orientation demonstration edje
       if (!(e_config_runtime_info->gui.widgets.orientation.swallowing_edje = edje_object_add(canvas)))
       goto _orientation_widget_edje_add_fail;
-      if (!edje_object_file_set(e_config_runtime_info->gui.widgets.orientation.swallowing_edje, _theme_file_path, "e/conf/randr/dialog/subdialog/orientation"))
+      if (!edje_object_file_set(e_config_runtime_info->gui.widgets.orientation.swallowing_edje, _theme_file_path, "e/conf/randr/dialog/widget/orientation"))
       goto _orientation_widget_edje_set_fail;
 
-      e_widget_table_object_align_append(subdialog, e_config_runtime_info->gui.widgets.orientation.swallowing_edje, 1, 0, 1, 1, 1, 1, 1, 1, 1.0, 1.0);
+      e_widget_table_object_align_append(widget, e_config_runtime_info->gui.widgets.orientation.swallowing_edje, 1, 0, 1, 1, 1, 1, 1, 1, 1.0, 1.0);
     */
 
    //disable widgets, if no CRTC is selected
@@ -103,19 +103,19 @@ orientation_widget_basic_create_widgets(Evas *canvas)
 
    //evas_object_show(e_config_runtime_info->gui.widgets.orientation.swallowing_edje);
 
-   return subdialog;
+   return widget;
 
    /*
       _orientation_widget_edje_set_fail:
       evas_object_del(ol);
       evas_object_del(e_config_runtime_info->gui.widgets.orientation.swallowing_edje);
       _orientation_widget_edje_add_fail:
-      fprintf(stderr, "CONF_RANDR: Couldn't set edj for orientation subdialog!\n");
-      evas_object_del(subdialog);
+      fprintf(stderr, "CONF_RANDR: Couldn't set edj for orientation widget!\n");
+      evas_object_del(widget);
       return NULL;
     */
 _orientation_widget_radio_add_fail:
-   evas_object_del(subdialog);
+   evas_object_del(widget);
    fprintf(stderr, "CONF_RANDR: Could not add radio group!\n");
    return NULL;
 }
@@ -277,7 +277,7 @@ orientation_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *
    Ecore_X_Randr_Orientation orientation;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   if (!e_config_runtime_info->gui.widgets.orientation.dialog || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info")) || !output_dialog_data->crtc) return EINA_FALSE;
+   if (!e_config_runtime_info->gui.widgets.orientation.widget || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info")) || !output_dialog_data->crtc) return EINA_FALSE;
 
    orientation = e_config_runtime_info->gui.widgets.orientation.radio_val;
 
@@ -299,7 +299,7 @@ orientation_widget_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   if (!e_config_runtime_info->gui.widgets.orientation.dialog || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info"))) return EINA_FALSE;
+   if (!e_config_runtime_info->gui.widgets.orientation.widget || !e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info"))) return EINA_FALSE;
 
    return (int)output_dialog_data->previous_orientation != (int)e_config_runtime_info->gui.widgets.orientation.radio_val;
 }

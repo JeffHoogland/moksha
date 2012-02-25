@@ -75,37 +75,37 @@ policy_widget_create_data(E_Config_Dialog_Data *e_config_runtime_info)
 Evas_Object *
 policy_widget_basic_create_widgets(Evas *canvas)
 {
-   Evas_Object *subdialog;
+   Evas_Object *widget;
    E_Radio_Group *rg;
    //char signal[29];
 
    if (!canvas || !e_config_runtime_info) return NULL;
 
-   if (e_config_runtime_info->gui.widgets.policies.dialog) return e_config_runtime_info->gui.widgets.policies.dialog;
+   if (e_config_runtime_info->gui.widgets.policies.widget) return e_config_runtime_info->gui.widgets.policies.widget;
 
-   if (!(subdialog = e_widget_framelist_add(canvas, _("Screen attachement policy"), EINA_FALSE))) return NULL;
+   if (!(widget = e_widget_framelist_add(canvas, _("Screen attachement policy"), EINA_FALSE))) return NULL;
 
    // Add radio buttons
    if (!(rg = e_widget_radio_group_new(&e_config_runtime_info->gui.widgets.policies.radio_val))) goto _policy_widget_radio_add_fail;
 
    //IMPROVABLE: use enum to determine objects via 'switch'-statement
    e_config_runtime_info->gui.widgets.policies.radio_above = e_widget_radio_add(canvas, _("Above"), ECORE_X_RANDR_OUTPUT_POLICY_ABOVE, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.policies.radio_above);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policies.radio_above);
 
    e_config_runtime_info->gui.widgets.policies.radio_right = e_widget_radio_add(canvas, _("Right"), ECORE_X_RANDR_OUTPUT_POLICY_RIGHT, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.policies.radio_right);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policies.radio_right);
 
    e_config_runtime_info->gui.widgets.policies.radio_below = e_widget_radio_add(canvas, _("Below"), ECORE_X_RANDR_OUTPUT_POLICY_BELOW, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.policies.radio_below);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policies.radio_below);
 
    e_config_runtime_info->gui.widgets.policies.radio_left = e_widget_radio_add(canvas, _("Left"), ECORE_X_RANDR_OUTPUT_POLICY_LEFT, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.policies.radio_left);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policies.radio_left);
 
    e_config_runtime_info->gui.widgets.policies.radio_clone = e_widget_radio_add(canvas, _("Clone display content"), ECORE_X_RANDR_OUTPUT_POLICY_CLONE, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.policies.radio_clone);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policies.radio_clone);
 
    e_config_runtime_info->gui.widgets.policies.radio_none = e_widget_radio_add(canvas, _("No reaction"), ECORE_X_RANDR_OUTPUT_POLICY_NONE, rg);
-   e_widget_framelist_object_append(subdialog, e_config_runtime_info->gui.widgets.policies.radio_none);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policies.radio_none);
 
    //_policy_widget_radio_add_callbacks();
 
@@ -116,12 +116,12 @@ policy_widget_basic_create_widgets(Evas *canvas)
         goto _policy_widget_edje_add_fail;
 
       }
-      if (!edje_object_file_set(e_config_runtime_info->gui.widgets.policies.swallowing_edje, _theme_file_path, "e/conf/randr/dialog/subdialog/policies"))
+      if (!edje_object_file_set(e_config_runtime_info->gui.widgets.policies.swallowing_edje, _theme_file_path, "e/conf/randr/dialog/widget/policies"))
       {
         goto _policy_widget_edje_set_fail;
       }
 
-      e_widget_table_object_align_append(subdialog, e_config_runtime_info->gui.widgets.policies.swallowing_edje, 1, 0, 1, 1, 1, 1, 1, 1, 1.0, 1.0);
+      e_widget_table_object_align_append(widget, e_config_runtime_info->gui.widgets.policies.swallowing_edje, 1, 0, 1, 1, 1, 1, 1, 1, 1.0, 1.0);
     */
 
    /*
@@ -151,20 +151,20 @@ policy_widget_basic_create_widgets(Evas *canvas)
       edje_object_part_swallow(e_config_runtime_info->gui.widgets.policies.swallowing_edje, "current_displays_setup.swallow.content", e_config_runtime_info->gui.widgets.policies.current_displays_setup);
     */
 
-   evas_object_show(subdialog);
+   evas_object_show(widget);
 
-   return subdialog;
+   return widget;
 
    /*
       _policy_widget_edje_set_fail:
       evas_object_del(e_config_runtime_info->gui.widgets.policies.swallowing_edje);
       _policy_widget_edje_add_fail:
-      fprintf(stderr, "CONF_RANDR: Couldn't set edj for policies subdialog!\n");
-      evas_object_del(subdialog);
+      fprintf(stderr, "CONF_RANDR: Couldn't set edj for policies widget!\n");
+      evas_object_del(widget);
       return NULL;
     */
 _policy_widget_radio_add_fail:
-   evas_object_del(subdialog);
+   evas_object_del(widget);
    return NULL;
 }
 

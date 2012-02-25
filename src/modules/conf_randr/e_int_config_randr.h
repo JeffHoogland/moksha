@@ -23,21 +23,21 @@ struct _E_Config_Dialog_Data
         E_Config_Randr_Dialog_Confirmation_Dialog_Data *confirmation_dialog;
         struct {
              struct {
-                  Evas_Object *dialog, *area, *widget_list, *swallowing_edje, *suggestion, *check_display_disconnected_outputs;
+                  Evas_Object *widget, *area, *widget_list, *swallowing_edje, *suggestion, *check_display_disconnected_outputs;
                   int suggestion_dist_min, check_val_display_disconnected_outputs;
              } arrangement;
              struct {
-                  Evas_Object *dialog;
+                  Evas_Object *widget;
                   //Evas_Object *swallowing_edje;
                   Evas_Object *radio_above, *radio_right, *radio_below, *radio_left, *radio_clone, *radio_none;
                   int radio_val;
                   //Evas_Object *current_displays_setup, *current_displays_setup_background, *new_display, *new_display_background;
              } policies;
              struct {
-                  Evas_Object *dialog;
+                  Evas_Object *widget;
              } resolutions;
              struct {
-                  Evas_Object *dialog;
+                  Evas_Object *widget;
                   //Evas_Object *swallowing_edje;
                   Evas_Object *radio_normal, *radio_rot90, *radio_rot180, *radio_rot270, *radio_reflect_horizontal, *radio_reflect_vertical;
                   int radio_val;
@@ -75,7 +75,7 @@ struct _Config
 
 E_Config_Dialog *e_int_config_randr(E_Container *con, const char *params __UNUSED__);
 
-// Functions for the arrangement subdialog interaction
+// Functions for the arrangement widget interaction
 Eina_Bool    arrangement_widget_create_data(E_Config_Dialog_Data *cfdata);
 Evas_Object *arrangement_widget_basic_create_widgets(Evas *canvas);
 Eina_Bool    arrangement_widget_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -84,7 +84,7 @@ void         arrangement_widget_free_data(E_Config_Dialog *cfd, E_Config_Dialog_
 void         arrangement_widget_keep_changes(E_Config_Dialog_Data *cfdata);
 void         arrangement_widget_discard_changes(E_Config_Dialog_Data *cfdata);
 
-// Functions for the policies subdialog interaction
+// Functions for the policies widget interaction
 Eina_Bool    policy_widget_create_data(E_Config_Dialog_Data *cfdata);
 Evas_Object *policy_widget_basic_create_widgets(Evas *canvas);
 Eina_Bool    policy_widget_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -93,7 +93,7 @@ void         policy_widget_keep_changes(E_Config_Dialog_Data *cfdata);
 void         policy_widget_discard_changes(E_Config_Dialog_Data *cfdata);
 void             policy_widget_update_radio_buttons(Evas_Object *crtc);
 
-// Functions for the resolutions subdialog interaction
+// Functions for the resolutions widget interaction
 Eina_Bool    resolution_widget_create_data(E_Config_Dialog_Data *cfdata);
 Evas_Object *resolution_widget_basic_create_widgets(Evas *canvas);
 Eina_Bool    resolution_widget_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -102,7 +102,7 @@ void         resolution_widget_keep_changes(E_Config_Dialog_Data *cfdata);
 void         resolution_widget_discard_changes(E_Config_Dialog_Data *cfdata);
 void             resolution_widget_update_list(Evas_Object *crtc);
 
-// Functions for the orientation subdialog interaction
+// Functions for the orientation widget interaction
 Eina_Bool    orientation_widget_create_data(E_Config_Dialog_Data *cfdata);
 Evas_Object *orientation_widget_basic_create_widgets(Evas *canvas);
 Eina_Bool    orientation_widget_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);

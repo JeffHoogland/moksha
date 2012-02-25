@@ -200,7 +200,7 @@ _arrangement_widget_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Da
    evas_object_data_set(rep, "rep_info", output_dialog_data);
 
    //set theme for monitor representation
-   EINA_SAFETY_ON_FALSE_GOTO(edje_object_file_set(rep, _theme_file_path, "e/conf/randr/dialog/subdialog/arrangement/output"), _arrangement_widget_rep_add_edje_set_fail);
+   EINA_SAFETY_ON_FALSE_GOTO(edje_object_file_set(rep, _theme_file_path, "e/conf/randr/dialog/widget/arrangement/output"), _arrangement_widget_rep_add_edje_set_fail);
    //indicate monitor state
    if (!(output_dialog_data->crtc && output_dialog_data->crtc->current_mode))
      state_signal = "disabled";
@@ -376,7 +376,7 @@ _arrangement_widget_suggestion_add(Evas *evas)
    const char *theme_data_item = NULL;
 
    e_config_runtime_info->gui.widgets.arrangement.suggestion = edje_object_add(evas);
-   edje_object_file_set(e_config_runtime_info->gui.widgets.arrangement.suggestion, _theme_file_path, "e/conf/randr/dialog/subdialog/arrangement/suggestion");
+   edje_object_file_set(e_config_runtime_info->gui.widgets.arrangement.suggestion, _theme_file_path, "e/conf/randr/dialog/widget/arrangement/suggestion");
    if ((theme_data_item = edje_object_data_get(e_config_runtime_info->gui.widgets.arrangement.suggestion, "distance_min")))
      e_config_runtime_info->gui.widgets.arrangement.suggestion_dist_min = MIN(MAX(atoi(theme_data_item), 0), 100);
    else
