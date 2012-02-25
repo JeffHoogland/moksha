@@ -23,7 +23,7 @@ struct _E_Config_Dialog_Data
         E_Config_Randr_Dialog_Confirmation_Dialog_Data *confirmation_dialog;
         struct {
              struct {
-                  Evas_Object *widget, *area, *widget_list, *swallowing_edje, *suggestion, *check_display_disconnected_outputs;
+                  Evas_Object *widget, *scrollframe, *area, *widget_list, *swallowing_edje, *suggestion, *check_display_disconnected_outputs;
                   int suggestion_dist_min, check_val_display_disconnected_outputs;
              } arrangement;
              struct {

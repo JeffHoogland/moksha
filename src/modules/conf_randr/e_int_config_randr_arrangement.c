@@ -115,7 +115,8 @@ _arrangement_widget_update(void)
               (!odd->output->monitor && (randr_dialog_config && !randr_dialog_config->display_disconnected_outputs)))
           continue;
 
-        odd->rep = _arrangement_widget_rep_add(e_config_runtime_info->gui.canvas, odd);
+        if(!(odd->rep = _arrangement_widget_rep_add(e_config_runtime_info->gui.canvas, odd)))
+          continue;
         if (odd->crtc && odd->crtc->current_mode)
           {
              geo.x = odd->crtc->geometry.x;
@@ -155,7 +156,7 @@ arrangement_widget_create_data(E_Config_Dialog_Data *data)
 Evas_Object *
 arrangement_widget_basic_create_widgets(Evas *canvas)
 {
-   Evas_Object *widget, *area, *check;
+   Evas_Object *widget, *scrollframe, *area, *check;
 
    if (!canvas || !e_config_runtime_info || !e_config_runtime_info->output_dialog_data_list) return NULL;
 
@@ -171,13 +172,17 @@ arrangement_widget_basic_create_widgets(Evas *canvas)
 
    area = e_layout_add(canvas);
    e_config_runtime_info->gui.widgets.arrangement.area = area;
+   evas_object_resize(area, 400, 200);
+   evas_object_show(area);
    _arrangement_widget_update();
 
-   // Append both objects to widget list
-   e_widget_list_object_append(widget, area, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_FILL);
-   e_widget_list_object_append(widget, check, 0, 0, 1.0);
+   scrollframe = e_scrollframe_add(canvas);
+   e_scrollframe_child_set(scrollframe, area);
+   e_config_runtime_info->gui.widgets.arrangement.scrollframe = scrollframe;
 
-   evas_object_show(area);
+   // Append both objects to widget list
+   e_widget_list_object_append(widget, scrollframe, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_FILL);
+   e_widget_list_object_append(widget, check, 0, 0, 1.0);
 
    e_config_runtime_info->gui.widgets.arrangement.widget_list = widget;
 
