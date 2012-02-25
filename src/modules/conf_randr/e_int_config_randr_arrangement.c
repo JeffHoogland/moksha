@@ -22,13 +22,10 @@ Evas_Object             *arrangement_widget_basic_create_widgets(Evas *canvas);
 Eina_Bool                arrangement_widget_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 Eina_Bool                arrangement_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 void                     arrangement_widget_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static inline Eina_List *_arrangement_widget_neighbors_get(Evas_Object *obj);
-static void              _arrangement_widget_determine_positions_recursive(Evas_Object *obj);
 
 //static inline E_Config_Randr_Dialog_Output_Dialog_Data *_arrangement_widget_rep_dialog_data_new        (E_Randr_Crtc_Info *crtc_info, E_Randr_Output_Info *output_info);
 static inline void       _arrangement_widget_suggestion_add(Evas *evas);
 static inline void       _arrangement_widget_make_suggestion(Evas_Object *obj);
-static void              _arrangement_widget_smart_class_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 static Evas_Object      *_arrangement_widget_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data);
 static void              _arrangement_widget_rep_del(Evas_Object *output);
 static void              _arrangement_widget_rep_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -36,9 +33,6 @@ static void              _arrangement_widget_rep_mouse_move_cb(void *data, Evas 
 static void              _arrangement_widget_rep_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void              _arrangement_widget_check_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void              _arrangement_widget_update(void);
-
-static Evas_Smart_Class screen_setup_smart_class = EVAS_SMART_CLASS_INIT_NAME_VERSION("EvasObjectSmartScreenSetup");
-static Evas_Smart *screen_setup_smart = NULL;
 
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern Config *randr_dialog_config;
@@ -74,111 +68,120 @@ _arrangement_widget_rep_dialog_data_fill(E_Config_Randr_Dialog_Output_Dialog_Dat
              odd->preferred_mode = NULL;
           }
 
-        odd->previous_pos.x = Ecore_X_Randr_Unset;
-        odd->previous_pos.y = Ecore_X_Randr_Unset;
+        odd->previous_pos.x = 0;
+        odd->previous_pos.y = 0;
      }
-
-   odd->new_pos.x = Ecore_X_Randr_Unset;
-   odd->new_pos.y = Ecore_X_Randr_Unset;
 }
 
 void
 _arrangement_widget_update(void)
 {
-   Evas_Object *area, *rep;
+   static Evas_Object *area = NULL;
+   E_Config_Randr_Dialog_Output_Dialog_Data *odd = NULL;
+   static Eina_Rectangle default_geo;
+   Eina_Rectangle geo = {.x = 0, .y = 0, .w = 0, .h = 0};
+   static char *edje_data_item = NULL;
    Eina_List *iter;
-   E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   area = e_config_runtime_info->gui.subdialogs.arrangement.smart_parent;
+   area = e_config_runtime_info->gui.widgets.arrangement.area;
 
    if (!e_config_runtime_info || !e_config_runtime_info->gui.canvas || !e_config_runtime_info->output_dialog_data_list || !area) return;
 
-   fprintf(stderr, "CONF_RANDR: Display disconnected outputs %d\n", randr_dialog_config->display_disconnected_outputs);
+   fprintf(stderr, "CONF_RANDR: Display disconnected outputs: %s\n", (randr_dialog_config->display_disconnected_outputs ? "YES" : "NO"));
 
-   EINA_LIST_FOREACH(evas_object_smart_members_get(area), iter, rep)
+   if (!edje_data_item)
      {
-        //skip clipper
-        if (rep == e_config_runtime_info->gui.subdialogs.arrangement.clipper)
-          continue;
-        evas_object_smart_member_del(rep);
-        _arrangement_widget_rep_del(rep);
+        if(!(edje_data_item = edje_file_data_get(_theme_file_path, "disabled_output_width")))
+          edje_data_item = "1024";
+        default_geo.w = atoi(edje_data_item);
+
+        if(!(edje_data_item = edje_file_data_get(_theme_file_path, "disabled_output_height")))
+          edje_data_item = "768";
+        default_geo.h = atoi(edje_data_item);
+
+        default_geo.x = e_randr_screen_info.rrvd_info.randr_info_12->max_size.width - default_geo.w;
+        default_geo.y = 0;
      }
 
-   EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, output_dialog_data)
+   e_layout_freeze(area);
+   e_layout_unpack(area);
+   e_layout_virtual_size_set(area, e_randr_screen_info.rrvd_info.randr_info_12->max_size.width, e_randr_screen_info.rrvd_info.randr_info_12->max_size.height);
+   fprintf(stderr, "CONF_RANDR: Set virtual size of arrangement e_layout to %dx%d\n", e_randr_screen_info.rrvd_info.randr_info_12->max_size.width, e_randr_screen_info.rrvd_info.randr_info_12->max_size.height);
+   EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, odd)
      {
-        if(!output_dialog_data->crtc &&
-              (!output_dialog_data->output->monitor && (randr_dialog_config && !randr_dialog_config->display_disconnected_outputs)))
+        _arrangement_widget_rep_del(odd->rep);
+
+        if(!odd->crtc &&
+              (!odd->output->monitor && (randr_dialog_config && !randr_dialog_config->display_disconnected_outputs)))
           continue;
 
-        rep = _arrangement_widget_rep_add(e_config_runtime_info->gui.canvas, output_dialog_data);
+        odd->rep = _arrangement_widget_rep_add(e_config_runtime_info->gui.canvas, odd);
+        if (odd->crtc && odd->crtc->current_mode)
+          {
+             geo.x = odd->crtc->geometry.x;
+             geo.y = odd->crtc->geometry.y;
+             geo.w = odd->crtc->geometry.w;
+             geo.h = odd->crtc->geometry.h;
+          }
+        else
+          {
+             memcpy(&geo, &default_geo, sizeof(geo));
+          }
+        e_layout_child_raise(odd->rep);
+        e_layout_child_resize(odd->rep, geo.w, geo.h);
+        e_layout_child_move(odd->rep, geo.x, geo.y);
+        evas_object_show(odd->rep);
 
-        if (!rep) continue;
-        evas_object_show(rep);
-
-        evas_object_smart_member_add(rep, area);
-        fprintf(stderr, "CONF_RANDR: Representation (%p) added to arrangement subdialog (%p).\n", rep, area);
+        e_layout_pack(area, odd->rep);
+        fprintf(stderr, "CONF_RANDR: Representation (%p) added with geo %d.%d %dx%d.\n", odd->rep, geo.x, geo.y, geo.w, geo.h);
      }
+   e_layout_thaw(area);
 }
 
-Eina_Bool
+   Eina_Bool
 arrangement_widget_create_data(E_Config_Dialog_Data *data)
 {
    Eina_List *iter;
    E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data;
-   char *disabled_output_width, *disabled_output_height;
 
    EINA_LIST_FOREACH(data->output_dialog_data_list, iter, dialog_data)
      {
         _arrangement_widget_rep_dialog_data_fill(dialog_data);
      }
 
-   if(!(disabled_output_width = edje_file_data_get(_theme_file_path, "disabled_output_width")))
-     disabled_output_width = "1024";
-   if(!(disabled_output_height = edje_file_data_get(_theme_file_path, "disabled_output_height")))
-     disabled_output_height = "768";
-
-   data->gui.subdialogs.arrangement.disabled_output_size.w = atoi(disabled_output_width);
-   data->gui.subdialogs.arrangement.disabled_output_size.h = atoi(disabled_output_height);
-
    return EINA_TRUE;
 }
 
-//IMPROVABLE: Clean up properly if instances can't be created
 Evas_Object *
 arrangement_widget_basic_create_widgets(Evas *canvas)
 {
-   Evas_Object *subdialog, *area, *check;
+   Evas_Object *widget, *area, *check;
 
    if (!canvas || !e_config_runtime_info || !e_config_runtime_info->output_dialog_data_list) return NULL;
 
-   subdialog = e_widget_list_add(canvas, 0, 1);
+   widget = e_widget_list_add(canvas, 0, 1);
+   fprintf(stderr, "CONF_RANDR: Arrangement widget added (%p).\n", widget);
 
    //Add checkbox
-   check = e_widget_check_add(canvas, _("Display disconnected outputs"), &e_config_runtime_info->gui.subdialogs.arrangement.check_val_display_disconnected_outputs);
+   check = e_widget_check_add(canvas, _("Display disconnected outputs"), &e_config_runtime_info->gui.widgets.arrangement.check_val_display_disconnected_outputs);
    if (randr_dialog_config)
      e_widget_check_checked_set(check, randr_dialog_config->display_disconnected_outputs);
    evas_object_event_callback_add(check, EVAS_CALLBACK_MOUSE_DOWN, _arrangement_widget_check_mouse_down_cb, NULL);
-   e_config_runtime_info->gui.subdialogs.arrangement.check_display_disconnected_outputs = check;
+   e_config_runtime_info->gui.widgets.arrangement.check_display_disconnected_outputs = check;
 
-   //Add smart move area with outputs
-   //initialize smart object
-   evas_object_smart_clipped_smart_set(&screen_setup_smart_class);
-   screen_setup_smart_class.resize = _arrangement_widget_smart_class_resize;
-   screen_setup_smart = evas_smart_class_new(&screen_setup_smart_class);
-
-   area = evas_object_smart_add(canvas, screen_setup_smart);
-   e_config_runtime_info->gui.subdialogs.arrangement.clipper = evas_object_smart_clipped_clipper_get(area);
-   e_config_runtime_info->gui.subdialogs.arrangement.smart_parent = area;
+   area = e_layout_add(canvas);
+   e_config_runtime_info->gui.widgets.arrangement.area = area;
    _arrangement_widget_update();
-   fprintf(stderr, "CONF_RANDR: Arrangement subdialog added (%p).\n", subdialog);
 
    // Append both objects to widget list
-   e_widget_list_object_append(subdialog, area, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_FILL);
-   e_widget_list_object_append(subdialog, check, 0, 0, 1.0);
+   e_widget_list_object_append(widget, area, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_FILL);
+   e_widget_list_object_append(widget, check, 0, 0, 1.0);
 
-   e_config_runtime_info->gui.subdialogs.arrangement.widget_list = subdialog;
+   evas_object_show(area);
 
-   return subdialog;
+   e_config_runtime_info->gui.widgets.arrangement.widget_list = widget;
+
+   return widget;
 }
 
 static Evas_Object *
@@ -199,7 +202,7 @@ _arrangement_widget_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Da
    //set theme for monitor representation
    EINA_SAFETY_ON_FALSE_GOTO(edje_object_file_set(rep, _theme_file_path, "e/conf/randr/dialog/subdialog/arrangement/output"), _arrangement_widget_rep_add_edje_set_fail);
    //indicate monitor state
-   if (!output_dialog_data->crtc || (output_dialog_data->crtc && !output_dialog_data->previous_mode))
+   if (!(output_dialog_data->crtc && output_dialog_data->crtc->current_mode))
      state_signal = "disabled";
    else
      state_signal = "enabled";
@@ -207,6 +210,7 @@ _arrangement_widget_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Da
    //for now use deskpreview widget as background of rep, maybe change this to
    //live image from comp module
    output_dialog_data->bg = e_widget_deskpreview_add(canvas, 1, 1);
+   //output_dialog_data->bg = e_livethumb_add(canvas);
    edje_object_part_swallow(rep, "e.swallow.content", output_dialog_data->bg);
 
    //Try to get the name of the monitor connected to the output's last output via edid
@@ -225,9 +229,6 @@ _arrangement_widget_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Da
    if (output_name)
      edje_object_part_text_set(rep, "output_txt", output_name);
 
-   //set output orientation
-   orientation_widget_update_edje(rep);
-
    evas_object_event_callback_add (rep, EVAS_CALLBACK_MOUSE_DOWN, _arrangement_widget_rep_mouse_down_cb, NULL);
    evas_object_event_callback_add (rep, EVAS_CALLBACK_MOUSE_MOVE, _arrangement_widget_rep_mouse_move_cb, NULL);
    evas_object_event_callback_add (rep, EVAS_CALLBACK_MOUSE_UP, _arrangement_widget_rep_mouse_up_cb, NULL);
@@ -244,128 +245,26 @@ _arrangement_widget_rep_del(Evas_Object *rep)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   EINA_SAFETY_ON_NULL_RETURN(rep);
+   if (!rep)
+     return;
 
    evas_object_hide(rep);
-   //get instance data for output
-   output_dialog_data = evas_object_data_get(rep, "rep_info");
-
-   edje_object_part_unswallow(rep, output_dialog_data->bg);
-   evas_object_del(output_dialog_data->bg);
 
    evas_object_event_callback_del(rep, EVAS_CALLBACK_MOUSE_DOWN, _arrangement_widget_rep_mouse_down_cb);
    evas_object_event_callback_del(rep, EVAS_CALLBACK_MOUSE_MOVE, _arrangement_widget_rep_mouse_move_cb);
    evas_object_event_callback_del(rep, EVAS_CALLBACK_MOUSE_UP, _arrangement_widget_rep_mouse_up_cb);
 
-   //set output orientation
+   //get instance data for output
+   if((output_dialog_data = evas_object_data_get(rep, "rep_info")))
+     {
+        edje_object_part_unswallow(rep, output_dialog_data->bg);
+        evas_object_del(output_dialog_data->bg);
+     }
+
+   //update output orientation
    orientation_widget_update_edje(NULL);
 
    evas_object_del(rep);
-}
-
-static void
-_arrangement_widget_smart_class_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
-{
-   Evas_Object *rep;
-   Evas_Coord real_sum_w = 0, real_sum_h = 0;
-   Eina_Rectangle parent_geo, new_geo;
-   Evas_Coord_Point offset = {.x = 0, .y = 0};
-   Evas_Coord offset_x_max = 0;
-   float scaling_factor = 0.1;
-   Eina_List *lst, *itr;
-   const E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
-
-   evas_object_geometry_get(obj, &parent_geo.x, &parent_geo.y, &parent_geo.w, &parent_geo.h);
-   fprintf(stderr, "CONF_RANDR: Arrangement dialog shall be resized to %d x %d\n", w, h);
-   fprintf(stderr, "CONF_RANDR: Arrangement dialog Smart object geo: %d x %d, %d x %d\n", parent_geo.x, parent_geo.y, parent_geo.w, parent_geo.h);
-   if ((w < 1) || (h < 1)) return;
-
-   lst = evas_object_smart_members_get(obj);
-   //Calc average aspect ratio from all available monitors
-   EINA_LIST_FOREACH(lst, itr, rep)
-     {
-        if (rep == e_config_runtime_info->gui.subdialogs.arrangement.clipper) continue;
-        output_dialog_data = evas_object_data_get(rep, "rep_info");
-        if (!output_dialog_data) continue;
-        if ((!output_dialog_data->previous_mode) && (!output_dialog_data->preferred_mode)) continue;
-        if (output_dialog_data->previous_mode)
-          {
-             real_sum_w += output_dialog_data->previous_mode->width;
-             real_sum_h += output_dialog_data->previous_mode->height;
-          }
-        else if (output_dialog_data->preferred_mode)
-          {
-             real_sum_w += output_dialog_data->preferred_mode->width;
-             real_sum_h += output_dialog_data->preferred_mode->height;
-          }
-        else
-          {
-             real_sum_w += e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w;
-             real_sum_h += e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h;
-          }
-     }
-
-   scaling_factor = (((float)parent_geo.w / (float)real_sum_w) < ((float)parent_geo.h / (float)real_sum_h)) ? ((float)parent_geo.w / (float)real_sum_w) : ((float)parent_geo.h / (float)real_sum_h);
-
-   EINA_LIST_FOREACH(lst, itr, rep)
-     {
-        //Skip elements that are either the clipped smart object or falsely added
-        //to the list of outputs (which should not happen)
-        if (rep == e_config_runtime_info->gui.subdialogs.arrangement.clipper) continue;
-        output_dialog_data = evas_object_data_get(rep, "rep_info");
-        if (!output_dialog_data) continue;
-        if (output_dialog_data->previous_mode)
-          {
-             new_geo.w = (int)((float)output_dialog_data->previous_mode->width * scaling_factor);
-             new_geo.h = (int)((float)output_dialog_data->previous_mode->height * scaling_factor);
-          }
-        else if (output_dialog_data->preferred_mode)
-          {
-             new_geo.w = (int)((float)output_dialog_data->preferred_mode->width * scaling_factor);
-             new_geo.h = (int)((float)output_dialog_data->preferred_mode->height * scaling_factor);
-          }
-        else
-          {
-             new_geo.w = (int)((float)e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w * scaling_factor);
-             new_geo.h = (int)((float)e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h * scaling_factor);
-             fprintf(stderr, "CONF_RANDR: Neither mode nor preferred mode are avavailable for %d. Using %dx%d.\n", (output_dialog_data->crtc ? output_dialog_data->crtc->xid : output_dialog_data->output->xid), e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.w, e_config_runtime_info->gui.subdialogs.arrangement.disabled_output_size.h);
-          }
-        if ((new_geo.w <= 0) || (new_geo.h <= 0))
-          {
-             //this is an effect, occuring during dialog closing.
-             //If we don't return here, e_thumb will segfault!
-             return;
-          }
-        if ((output_dialog_data->previous_pos.x == Ecore_X_Randr_Unset) || (output_dialog_data->previous_pos.y == Ecore_X_Randr_Unset))
-          {
-             //this is a non enabled monitor
-             new_geo.x = parent_geo.x + parent_geo.w - new_geo.w - offset.x;
-             new_geo.y = parent_geo.y + offset.y;
-             offset.y = new_geo.y + new_geo.h;
-             if (offset_x_max < new_geo.w)
-               {
-                  //adopt new max value for x
-                  offset_x_max = new_geo.w;
-               }
-             if ((offset.y + new_geo.h) > (parent_geo.y + parent_geo.h))
-               {
-                  //reset offset.y and adjust offset.x
-                  offset.y = 0;
-                  offset.x += offset_x_max;
-               }
-          }
-        else
-          {
-             new_geo.x = ((int)((float)output_dialog_data->previous_pos.x * scaling_factor)) + parent_geo.x;
-             new_geo.y = ((int)((float)output_dialog_data->previous_pos.y * scaling_factor)) + parent_geo.y;
-          }
-        //resize edje element
-        evas_object_resize(rep, new_geo.w, new_geo.h);
-        //also resize bg
-        evas_object_move(rep, new_geo.x, new_geo.y);
-        fprintf(stderr, "CONF_RANDR: output representation %p was resized to %d x %d\n", rep, new_geo.w, new_geo.h);
-        fprintf(stderr, "CONF_RANDR: output representation %p was moved to %d x %d\n", rep, new_geo.x, new_geo.y);
-     }
 }
 
 static void
@@ -373,7 +272,7 @@ _arrangement_widget_check_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED_
 {
    if (!obj || !e_config_runtime_info || !randr_dialog_config) return;
 
-   if (obj == e_config_runtime_info->gui.subdialogs.arrangement.check_display_disconnected_outputs)
+   if (obj == e_config_runtime_info->gui.widgets.arrangement.check_display_disconnected_outputs)
      {
         //this is bad. The events are called _before_ the value is updated.
         randr_dialog_config->display_disconnected_outputs ^= EINA_TRUE;
@@ -384,35 +283,31 @@ _arrangement_widget_check_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED_
 static void
 _arrangement_widget_rep_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   Evas_Object *element = NULL;
+   Evas_Object *rep = NULL;
    Eina_List *iter;
-   Eina_Bool crtc_selected = EINA_FALSE;
 
-   EINA_LIST_FOREACH(evas_object_smart_members_get(evas_object_smart_parent_get(obj)), iter, element)
+   EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, rep)
      {
-        if (e_config_runtime_info->gui.subdialogs.arrangement.clipper == obj) continue;
-        if (element != obj)
-          edje_object_signal_emit(element, "deselect", "e");
-        else
-          {
-             edje_object_signal_emit(element, "select", "e");
-             //update data for other dialogs
-             e_config_runtime_info->gui.selected_eo = obj;
-             e_config_runtime_info->gui.selected_output_dd = evas_object_data_get(obj, "rep_info");
-
-             //update resolutions list
-             resolution_widget_update_list(obj);
-
-             //update orientation radio buttons
-             orientation_widget_update_radio_buttons(obj);
-
-             //update policy radio buttons
-             policy_widget_update_radio_buttons(obj);
-
-             crtc_selected = EINA_TRUE;
-          }
+        if (rep == obj)
+          continue;
+        edje_object_signal_emit(rep, "deselect", "e");
      }
-   if (!crtc_selected)
+
+   edje_object_signal_emit(obj, "select", "e");
+   //update data for other dialogs
+   e_config_runtime_info->gui.selected_eo = obj;
+   e_config_runtime_info->gui.selected_output_dd = evas_object_data_get(obj, "rep_info");
+
+   //update resolutions list
+   resolution_widget_update_list(obj);
+
+   //update orientation radio buttons
+   orientation_widget_update_radio_buttons(obj);
+
+   //update policy radio buttons
+   policy_widget_update_radio_buttons(obj);
+
+   if (!obj)
      {
         //update data for other dialogs
         e_config_runtime_info->gui.selected_eo = NULL;
@@ -427,8 +322,6 @@ _arrangement_widget_rep_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__,
         //update policy radio buttons
         policy_widget_update_radio_buttons(NULL);
      }
-
-   evas_object_geometry_get(obj, &e_config_runtime_info->gui.subdialogs.arrangement.previous_pos.x, &e_config_runtime_info->gui.subdialogs.arrangement.previous_pos.y, NULL, NULL);
 }
 
 static void
@@ -440,7 +333,8 @@ _arrangement_widget_rep_mouse_move_cb(void *data __UNUSED__, Evas *e __UNUSED__,
 
    if (ev->buttons != 1) return;
    evas_object_geometry_get (obj, &geo.x, &geo.y, &geo.w, &geo.h);
-   evas_object_geometry_get (evas_object_smart_parent_get(obj), &parent.x, &parent.y, &parent.w, &parent.h);
+   EINA_RECTANGLE_SET(&parent, 0, 0, e_randr_screen_info.rrvd_info.randr_info_12->current_size.width, e_randr_screen_info.rrvd_info.randr_info_12->current_size.height);
+
    delta.x = ev->cur.canvas.x - ev->prev.canvas.x;
    delta.y = ev->cur.canvas.y - ev->prev.canvas.y;
 
@@ -468,15 +362,11 @@ _arrangement_widget_rep_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, E
 {
    Evas_Coord_Point coords;
 
-   if (evas_object_visible_get(e_config_runtime_info->gui.subdialogs.arrangement.suggestion))
+   if (evas_object_visible_get(e_config_runtime_info->gui.widgets.arrangement.suggestion))
      {
-        edje_object_signal_emit(e_config_runtime_info->gui.subdialogs.arrangement.suggestion, "hide", "e");
-        evas_object_geometry_get(e_config_runtime_info->gui.subdialogs.arrangement.suggestion, &coords.x, &coords.y, NULL, NULL);
+        edje_object_signal_emit(e_config_runtime_info->gui.widgets.arrangement.suggestion, "hide", "e");
+        evas_object_geometry_get(e_config_runtime_info->gui.widgets.arrangement.suggestion, &coords.x, &coords.y, NULL, NULL);
         evas_object_move(obj, coords.x, coords.y);
-     }
-   else
-     {
-        evas_object_move(obj, e_config_runtime_info->gui.subdialogs.arrangement.previous_pos.x, e_config_runtime_info->gui.subdialogs.arrangement.previous_pos.y);
      }
 }
 
@@ -485,34 +375,33 @@ _arrangement_widget_suggestion_add(Evas *evas)
 {
    const char *theme_data_item = NULL;
 
-   e_config_runtime_info->gui.subdialogs.arrangement.suggestion = edje_object_add(evas);
-   edje_object_file_set(e_config_runtime_info->gui.subdialogs.arrangement.suggestion, _theme_file_path, "e/conf/randr/dialog/subdialog/arrangement/suggestion");
-   if ((theme_data_item = edje_object_data_get(e_config_runtime_info->gui.subdialogs.arrangement.suggestion, "distance_min")))
-     e_config_runtime_info->gui.subdialogs.arrangement.suggestion_dist_min = MIN(MAX(atoi(theme_data_item), 0), 100);
+   e_config_runtime_info->gui.widgets.arrangement.suggestion = edje_object_add(evas);
+   edje_object_file_set(e_config_runtime_info->gui.widgets.arrangement.suggestion, _theme_file_path, "e/conf/randr/dialog/subdialog/arrangement/suggestion");
+   if ((theme_data_item = edje_object_data_get(e_config_runtime_info->gui.widgets.arrangement.suggestion, "distance_min")))
+     e_config_runtime_info->gui.widgets.arrangement.suggestion_dist_min = MIN(MAX(atoi(theme_data_item), 0), 100);
    else
-     e_config_runtime_info->gui.subdialogs.arrangement.suggestion_dist_min = 20;
+     e_config_runtime_info->gui.widgets.arrangement.suggestion_dist_min = 20;
 }
 
 void
 _arrangement_widget_make_suggestion(Evas_Object *obj)
 {
-   Eina_List *li, *crtcs = evas_object_smart_members_get(evas_object_smart_parent_get(obj));
-   Evas_Object *crtc = NULL;
-   Eina_Rectangle p_geo, geo, crtc_geo, s_geo;
-   int dxa = 10000, dya = 10000, tmp, min_dist;
+   Evas_Object *rep = NULL;
+   Eina_Rectangle p_geo = {.x = 0, .y = 0, .w = 0, .h = 0}, geo, rep_geo, s_geo;
+   int dxa = INT_MAX, dya = INT_MAX, tmp, min_dist;
+   Eina_List *li;
 
    if (!obj) return;
 
-   if (!e_config_runtime_info->gui.subdialogs.arrangement.suggestion)
+   if (!e_config_runtime_info->gui.widgets.arrangement.suggestion)
      {
         _arrangement_widget_suggestion_add(evas_object_evas_get(obj));
-        evas_object_show(e_config_runtime_info->gui.subdialogs.arrangement.suggestion);
+        evas_object_show(e_config_runtime_info->gui.widgets.arrangement.suggestion);
      }
 
-   min_dist = e_config_runtime_info->gui.subdialogs.arrangement.suggestion_dist_min;
+   min_dist = e_config_runtime_info->gui.widgets.arrangement.suggestion_dist_min;
 
-   evas_object_geometry_get(evas_object_smart_parent_get(obj), &p_geo.x, &p_geo.y, &p_geo.w, &p_geo.h);
-   evas_object_geometry_get(obj, &geo.x, &geo.y, &geo.w, &geo.h);
+   e_layout_child_geometry_get(obj, &geo.x, &geo.y, &geo.w, &geo.h);
 
    s_geo.x = geo.x;
    s_geo.y = geo.y;
@@ -533,66 +422,65 @@ _arrangement_widget_make_suggestion(Evas_Object *obj)
         s_geo.y = p_geo.y;
         dya = tmp;
      }
-   //iterate crtc list
-   EINA_LIST_FOREACH(crtcs, li, crtc)
+   //iterate rep list
+   EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, li, rep)
      {
-        if ((crtc == obj) || (crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper)) continue;
-        evas_object_geometry_get(crtc, &crtc_geo.x, &crtc_geo.y, &crtc_geo.w, &crtc_geo.h);
+        e_layout_child_geometry_get(rep, &rep_geo.x, &rep_geo.y, &rep_geo.w, &rep_geo.h);
         //X-Axis
-        tmp = abs(s_geo.x - crtc_geo.x);
+        tmp = abs(s_geo.x - rep_geo.x);
         if ((tmp < dxa) && (tmp < min_dist))
           {
-             s_geo.x = crtc_geo.x;
-             dxa = abs(s_geo.x - crtc_geo.x);
+             s_geo.x = rep_geo.x;
+             dxa = abs(s_geo.x - rep_geo.x);
           }
 
-        tmp = abs(s_geo.x - (crtc_geo.x + crtc_geo.w));
+        tmp = abs(s_geo.x - (rep_geo.x + rep_geo.w));
         if ((tmp < dxa) && (tmp < min_dist))
           {
-             s_geo.x = (crtc_geo.x + crtc_geo.w);
+             s_geo.x = (rep_geo.x + rep_geo.w);
              dxa = tmp;
           }
 
-        tmp = abs((s_geo.x + s_geo.w) - (crtc_geo.x - 1));
+        tmp = abs((s_geo.x + s_geo.w) - (rep_geo.x - 1));
         if ((tmp < dxa) && (tmp < min_dist))
           {
-             s_geo.x = (crtc_geo.x - s_geo.w);
+             s_geo.x = (rep_geo.x - s_geo.w);
              dxa = tmp;
           }
 
-        tmp = abs((s_geo.x + s_geo.w) - (crtc_geo.x + crtc_geo.w));
+        tmp = abs((s_geo.x + s_geo.w) - (rep_geo.x + rep_geo.w));
         if ((tmp < dxa) && (tmp < min_dist))
           {
-             s_geo.x = (crtc_geo.x + crtc_geo.w - s_geo.w);
+             s_geo.x = (rep_geo.x + rep_geo.w - s_geo.w);
              dxa = tmp;
           }
 
         //Y-Axis
-        tmp = abs(s_geo.y - crtc_geo.y);
+        tmp = abs(s_geo.y - rep_geo.y);
         if ((tmp < dya) && (tmp < min_dist))
           {
-             s_geo.y = crtc_geo.y;
-             dya = abs(s_geo.y - crtc_geo.y);
+             s_geo.y = rep_geo.y;
+             dya = abs(s_geo.y - rep_geo.y);
           }
 
-        tmp = abs(s_geo.y - (crtc_geo.y + crtc_geo.h));
+        tmp = abs(s_geo.y - (rep_geo.y + rep_geo.h));
         if ((tmp < dya) && (tmp < min_dist))
           {
-             s_geo.y = (crtc_geo.y + crtc_geo.h);
+             s_geo.y = (rep_geo.y + rep_geo.h);
              dya = tmp;
           }
 
-        tmp = abs((s_geo.y + s_geo.h) - (crtc_geo.y - 1));
+        tmp = abs((s_geo.y + s_geo.h) - (rep_geo.y - 1));
         if ((tmp < dya) && (tmp < min_dist))
           {
-             s_geo.y = (crtc_geo.y - s_geo.h);
+             s_geo.y = (rep_geo.y - s_geo.h);
              dya = tmp;
           }
 
-        tmp = abs((s_geo.y + s_geo.h) - (crtc_geo.y + crtc_geo.h));
+        tmp = abs((s_geo.y + s_geo.h) - (rep_geo.y + rep_geo.h));
         if ((tmp < dya) && (tmp < min_dist))
           {
-             s_geo.y = (crtc_geo.y + crtc_geo.h - s_geo.h);
+             s_geo.y = (rep_geo.y + rep_geo.h - s_geo.h);
              dya = tmp;
           }
      }
@@ -604,19 +492,19 @@ _arrangement_widget_make_suggestion(Evas_Object *obj)
         if (s_geo.y < p_geo.y) s_geo.y = p_geo.y;
         if ((s_geo.y + s_geo.h) > (p_geo.y + p_geo.h)) s_geo.y = ((p_geo.y + p_geo.h) - s_geo.h);
 
-        if (!evas_object_visible_get(e_config_runtime_info->gui.subdialogs.arrangement.suggestion))
+        if (!evas_object_visible_get(e_config_runtime_info->gui.widgets.arrangement.suggestion))
           {
-             evas_object_show(e_config_runtime_info->gui.subdialogs.arrangement.suggestion);
-             edje_object_signal_emit(e_config_runtime_info->gui.subdialogs.arrangement.suggestion, "show", "e");
+             evas_object_show(e_config_runtime_info->gui.widgets.arrangement.suggestion);
+             edje_object_signal_emit(e_config_runtime_info->gui.widgets.arrangement.suggestion, "show", "e");
           }
 
-        evas_object_resize(e_config_runtime_info->gui.subdialogs.arrangement.suggestion, s_geo.w, s_geo.h);
-        evas_object_move(e_config_runtime_info->gui.subdialogs.arrangement.suggestion, s_geo.x, s_geo.y);
+        evas_object_resize(e_config_runtime_info->gui.widgets.arrangement.suggestion, s_geo.w, s_geo.h);
+        evas_object_move(e_config_runtime_info->gui.widgets.arrangement.suggestion, s_geo.x, s_geo.y);
      }
    else
      {
-        edje_object_signal_emit(e_config_runtime_info->gui.subdialogs.arrangement.suggestion, "hide", "e");
-        evas_object_hide(e_config_runtime_info->gui.subdialogs.arrangement.suggestion);
+        edje_object_signal_emit(e_config_runtime_info->gui.widgets.arrangement.suggestion, "hide", "e");
+        evas_object_hide(e_config_runtime_info->gui.widgets.arrangement.suggestion);
      }
 }
 
@@ -638,244 +526,61 @@ arrangement_widget_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Da
      }
 }
 
-static Eina_List *
-_arrangement_widget_neighbors_get(Evas_Object *obj)
-{
-   Evas_Object *smart_parent, *crtc;
-   Eina_List *crtcs, *iter, *neighbors = NULL;
-   Eina_Rectangle geo, neighbor_geo;
-   E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data, *neighbor_info;
-
-   smart_parent = evas_object_smart_parent_get(obj);
-   crtcs = evas_object_smart_members_get(smart_parent);
-
-   EINA_SAFETY_ON_FALSE_RETURN_VAL((dialog_data = evas_object_data_get(obj, "rep_info")), NULL);
-   evas_object_geometry_get(obj, &geo.x, &geo.y, &geo.w, &geo.h);
-   EINA_LIST_FOREACH(crtcs, iter, crtc)
-     {
-        if ((crtc == obj)
-            || (crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper)) continue;
-        evas_object_geometry_get(crtc, &neighbor_geo.x, &neighbor_geo.y, &neighbor_geo.w, &neighbor_geo.h);
-        if (!(neighbor_info = evas_object_data_get(crtc, "rep_info"))) continue;
-        if (!neighbor_info->previous_mode) continue;
-
-        if (((geo.x + geo.w) == neighbor_geo.x)
-            || (geo.x == (neighbor_geo.x + neighbor_geo.w))
-            || (geo.x == neighbor_geo.x)
-            || ((geo.x + geo.w) == (neighbor_geo.x + neighbor_geo.w))
-            || ((geo.y + geo.h) == neighbor_geo.y)
-            || (geo.y == (neighbor_geo.y + neighbor_geo.h))
-            || (geo.y == neighbor_geo.y)
-            || ((geo.y + geo.h) == (neighbor_geo.y + neighbor_geo.h)))
-          {
-             neighbors = eina_list_append(neighbors, crtc);
-          }
-     }
-
-   return neighbors;
-}
-
-static void
-_arrangement_widget_determine_positions_recursive(Evas_Object *obj)
-{
-   Eina_List *neighbors, *iter;
-   Evas_Object *smart_parent, *crtc;
-   E_Config_Randr_Dialog_Output_Dialog_Data *dialog_data, *neighbor_info;
-   Eina_Rectangle geo, neighbor_geo, smart_geo;
-
-   // Each object is seen as a tree. All its edges are compared to their
-   // neighbors and wandered recusively.
-   EINA_SAFETY_ON_NULL_RETURN(obj);
-
-   smart_parent = e_config_runtime_info->gui.subdialogs.arrangement.smart_parent;
-   evas_object_geometry_get(smart_parent, &smart_geo.x, &smart_geo.y, &smart_geo.w, &smart_geo.h);
-   //fprintf(stderr, "CONF_RANDR: Smart Parent is at %dx%d\n", smart_geo.x, smart_geo.y);
-   neighbors = _arrangement_widget_neighbors_get(obj);
-
-   EINA_SAFETY_ON_FALSE_RETURN((dialog_data = evas_object_data_get(obj, "rep_info")));
-   evas_object_geometry_get(obj, &geo.x, &geo.y, &geo.w, &geo.h);
-
-   //fprintf(stderr, "CONF_RANDR: Traversed element (%p) is at %dx%d\n", obj, geo.x, geo.y);
-   if (geo.x == e_config_runtime_info->gui.subdialogs.arrangement.relative_zero.x) dialog_data->new_pos.x = 0;
-   if (geo.y == e_config_runtime_info->gui.subdialogs.arrangement.relative_zero.y) dialog_data->new_pos.y = 0;
-
-   if ((dialog_data->new_pos.x != 0) || (dialog_data->new_pos.y != 0))
-     {
-        // Find neighbor object we can calculate our own coordinates from
-        EINA_LIST_FOREACH(neighbors, iter, crtc)
-          {
-             evas_object_geometry_get(crtc, &neighbor_geo.x, &neighbor_geo.y, &neighbor_geo.w, &neighbor_geo.h);
-             if (!(neighbor_info = evas_object_data_get(crtc, "rep_info"))) continue;
-
-             evas_object_geometry_get(crtc, &neighbor_geo.x, &neighbor_geo.y, &neighbor_geo.w, &neighbor_geo.h);
-
-             if ((dialog_data->new_pos.x == Ecore_X_Randr_Unset) && (neighbor_info->new_pos.x != Ecore_X_Randr_Unset))
-               {
-                  if ((geo.x + geo.w) == neighbor_geo.x)
-                    {
-                       dialog_data->new_pos.x = neighbor_info->new_pos.x - dialog_data->previous_mode->width;
-                    }
-
-                  if (geo.x == (neighbor_geo.x + neighbor_geo.w))
-                    {
-                       dialog_data->new_pos.x = neighbor_info->new_pos.x + neighbor_info->previous_mode->width;
-                    }
-
-                  if (geo.x == neighbor_geo.x)
-                    {
-                       dialog_data->new_pos.x = neighbor_info->new_pos.x;
-                    }
-
-                  if ((geo.x + geo.w) == (neighbor_geo.x + neighbor_geo.w))
-                    {
-                       dialog_data->new_pos.x = (neighbor_info->new_pos.x + neighbor_info->previous_mode->width) - dialog_data->previous_mode->width;
-                    }
-               }
-
-             if ((dialog_data->new_pos.y == Ecore_X_Randr_Unset) && (neighbor_info->new_pos.y != Ecore_X_Randr_Unset))
-               {
-                  if ((geo.y + geo.h) == neighbor_geo.y)
-                    {
-                       dialog_data->new_pos.y = neighbor_info->new_pos.y - dialog_data->previous_mode->height;
-                    }
-
-                  if (geo.y == (neighbor_geo.y + neighbor_geo.h))
-                    {
-                       dialog_data->new_pos.y = neighbor_info->new_pos.y + neighbor_info->previous_mode->height;
-                    }
-
-                  if (geo.y == neighbor_geo.y)
-                    {
-                       dialog_data->new_pos.y = neighbor_info->new_pos.y;
-                    }
-
-                  if ((geo.y + geo.h) == (neighbor_geo.y + neighbor_geo.h))
-                    {
-                       dialog_data->new_pos.y = (neighbor_info->new_pos.y + neighbor_info->previous_mode->height) - dialog_data->previous_mode->height;
-                    }
-               }
-             if ((dialog_data->new_pos.x != Ecore_X_Randr_Unset)
-                 && (dialog_data->new_pos.y != Ecore_X_Randr_Unset))
-               {
-                  //fprintf(stderr, "CONF_RANDR: Determined position for %p: %dx%d\n", obj, dialog_data->new_pos.x, dialog_data->new_pos.y);
-                  break;
-               }
-          }
-     }
-   if ((dialog_data->new_pos.x != Ecore_X_Randr_Unset) || (dialog_data->new_pos.y != Ecore_X_Randr_Unset))
-     {
-        //Only wander all neighbors recursively, if they can use the current
-        //element as reference for their position
-        EINA_LIST_FOREACH(neighbors, iter, crtc)
-          {
-             neighbor_info = evas_object_data_get(crtc, "rep_info");
-             if ((neighbor_info->new_pos.x == Ecore_X_Randr_Unset)
-                 || (neighbor_info->new_pos.y == Ecore_X_Randr_Unset))
-               {
-                  //fprintf(stderr, "CONF_RANDR: Now going to travel %p.\n", crtc);
-                  _arrangement_widget_determine_positions_recursive(crtc);
-               }
-          }
-     }
-   eina_list_free(neighbors);
-}
-
 Eina_Bool
-arrangement_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata __UNUSED__)
+arrangement_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *crtcs, *iter;
-   Evas_Object *smart_parent, *crtc, *top_left = NULL;
-   Eina_Rectangle geo, smart_geo;
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
-   Evas_Coord_Point relz = { .x = 10000, .y = 10000};
-   Eina_Bool arrangement_failed = EINA_FALSE;
+   Evas_Coord_Point pos = {.x = 0, .y = 0};
+   Eina_Bool success = EINA_TRUE;
+   Eina_List *iter;
 
-   smart_parent = e_config_runtime_info->gui.subdialogs.arrangement.smart_parent;
-   evas_object_geometry_get(smart_parent, &smart_geo.x, &smart_geo.y, &smart_geo.w, &smart_geo.h);
-   crtcs = evas_object_smart_members_get(smart_parent);
-
-   //Create virtual borders around the displayed representations by finding
-   //relative x and y as virtual 0x0
-   EINA_LIST_FOREACH(crtcs, iter, crtc)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper) continue;
-        //Already reset values for upcoming calculation
-        if (!(odd = evas_object_data_get(crtc, "rep_info"))) continue;
-        odd->new_pos.x = Ecore_X_Randr_Unset;
-        odd->new_pos.y = Ecore_X_Randr_Unset;
-        odd = NULL;
-
-        //See whether this element is closer to 0x0 than any before
-        evas_object_geometry_get(crtc, &geo.x, &geo.y, &geo.w, &geo.h);
-        if (geo.x < relz.x)
-          {
-             relz.x = geo.x;
-             top_left = crtc;
-          }
-        if (geo.y < relz.y)
-          {
-             relz.y = geo.y;
-             top_left = crtc;
-          }
+        if (!odd->crtc || !odd->crtc->current_mode)
+          continue;
+        e_layout_child_geometry_get(odd->rep, &pos.x, &pos.y, NULL, NULL);
+        fprintf(stderr, "CONF_RANDR: Rearranging CRTC %d to (x.y): %d.%d\n", odd->crtc->xid, pos.x, pos.y);
+        /*
+#define EQL(c) (pos.c == odd->crtc->geometry.c)
+        if (!EQL(x) || !EQL(y))
+          success |= ecore_x_randr_crtc_pos_set(cfd->con->manager->root, odd->crtc->xid, pos.x, pos.y);
+#undef EQL
+*/
+        odd->previous_pos.x = odd->crtc->geometry.x;
+        odd->previous_pos.y = odd->crtc->geometry.y;
      }
-   e_config_runtime_info->gui.subdialogs.arrangement.relative_zero.x = relz.x;
-   e_config_runtime_info->gui.subdialogs.arrangement.relative_zero.y = relz.y;
-   if (top_left) _arrangement_widget_determine_positions_recursive(top_left);
-
-   EINA_LIST_FOREACH(crtcs, iter, crtc)
-     {
-        if ((crtc == e_config_runtime_info->gui.subdialogs.arrangement.clipper) || !(odd = evas_object_data_get(crtc, "rep_info")) || !odd->crtc
-            || ((odd->new_pos.x == Ecore_X_Randr_Unset) || (odd->new_pos.y == Ecore_X_Randr_Unset))) continue;
-        if ((odd->previous_pos.x != odd->new_pos.x) || (odd->previous_pos.y != odd->new_pos.y))
-          {
-             fprintf(stderr, "CONF_RANDR: CRTC %d is moved to %dx%d\n", odd->crtc->xid, odd->new_pos.x, odd->new_pos.y);
-             if (!ecore_x_randr_crtc_pos_set(cfd->con->manager->root, odd->crtc->xid, odd->new_pos.x, odd->new_pos.y))
-               {
-                  arrangement_failed = EINA_TRUE;
-                  break;
-               }
-          }
-     }
-   if (arrangement_failed)
-     return EINA_FALSE;
-   else
-     {
-        ecore_x_randr_screen_reset(cfd->con->manager->root);
-        return EINA_TRUE;
-     }
+   /*
+   if (success)
+     ecore_x_randr_screen_reset(cfd->con->manager->root);
+     */
+   return success;
 }
 
 Eina_Bool
 arrangement_widget_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   E_Config_Randr_Dialog_Output_Dialog_Data *odd = NULL;
+   Evas_Coord_Point pos = {.x = 0, .y = 0};
    Eina_List *iter;
-   E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, output_dialog_data)
+   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if ((output_dialog_data->previous_pos.x != output_dialog_data->new_pos.x)
-            || (output_dialog_data->previous_pos.y != output_dialog_data->new_pos.y)
-            ) return EINA_TRUE;
+        if (!odd->crtc || !odd->crtc->current_mode)
+          continue;
+        e_layout_child_geometry_get(odd->rep, &pos.x, &pos.y, NULL, NULL);
+        fprintf(stderr, "CONF_RANDR: Checking coord of CRTC %d. They are: %d.%d\n", odd->crtc->xid, pos.x, pos.y);
+#define EQL(c) (pos.c == odd->crtc->geometry.c)
+        if (!EQL(x) || !EQL(y))
+          return EINA_TRUE;
+#undef EQL
      }
    return EINA_FALSE;
 }
 
 void
-arrangement_widget_keep_changes(E_Config_Dialog_Data *cfdata)
+arrangement_widget_keep_changes(E_Config_Dialog_Data *cfdata __UNUSED__)
 {
-   E_Config_Randr_Dialog_Output_Dialog_Data *odd;
-   Eina_List *iter;
-
-   if (!cfdata) return;
-
-   EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
-     {
-        if (!odd->crtc || ((odd->new_pos.x == Ecore_X_Randr_Unset) || (odd->new_pos.y == Ecore_X_Randr_Unset))) continue;
-        odd->previous_pos.x = odd->new_pos.x;
-        odd->previous_pos.y = odd->new_pos.y;
-        odd->new_pos.x = Ecore_X_Randr_Unset;
-        odd->new_pos.y = Ecore_X_Randr_Unset;
-     }
+   return;
 }
 
 void
@@ -891,10 +596,10 @@ arrangement_widget_discard_changes(E_Config_Dialog_Data *cfdata)
         if (!odd->crtc || ((odd->previous_pos.x == Ecore_X_Randr_Unset) || (odd->previous_pos.y == Ecore_X_Randr_Unset))) continue;
         if (ecore_x_randr_crtc_pos_set(cfdata->manager->root, odd->crtc->xid, odd->previous_pos.x, odd->previous_pos.y))
           {
-             odd->new_pos.x = odd->previous_pos.x;
-             odd->new_pos.y = odd->previous_pos.y;
-             odd->previous_pos.x = Ecore_X_Randr_Unset;
-             odd->previous_pos.y = Ecore_X_Randr_Unset;
+#define EQL(c) (odd->previous_pos.c == odd->crtc->geometry.c)
+             if (!EQL(x) || !EQL(y))
+               ecore_x_randr_crtc_pos_set(cfdata->manager->root, odd->crtc->xid, odd->previous_pos.x, odd->previous_pos.y);
+#undef EQL
              ecore_x_randr_screen_reset(cfdata->manager->root);
           }
      }

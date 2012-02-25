@@ -23,9 +23,7 @@ struct _E_Config_Dialog_Data
         E_Config_Randr_Dialog_Confirmation_Dialog_Data *confirmation_dialog;
         struct {
              struct {
-                  Evas_Object *dialog, *widget_list, *swallowing_edje, *smart_parent, *suggestion, *clipper, *check_display_disconnected_outputs;
-                  Evas_Coord_Point previous_pos, relative_zero;
-                  Evas_Coord_Rectangle disabled_output_size;
+                  Evas_Object *dialog, *area, *widget_list, *swallowing_edje, *suggestion, *check_display_disconnected_outputs;
                   int suggestion_dist_min, check_val_display_disconnected_outputs;
              } arrangement;
              struct {
@@ -44,7 +42,7 @@ struct _E_Config_Dialog_Data
                   Evas_Object *radio_normal, *radio_rot90, *radio_rot180, *radio_rot270, *radio_reflect_horizontal, *radio_reflect_vertical;
                   int radio_val;
              } orientation;
-        } subdialogs;
+        } widgets;
    } gui;
    Ecore_X_Randr_Screen_Size screen_size;
 
@@ -54,11 +52,11 @@ struct _E_Config_Randr_Dialog_Output_Dialog_Data
 {
    E_Randr_Crtc_Info *crtc;
    E_Randr_Output_Info *output;
-   Evas_Coord_Point previous_pos, new_pos;
+   Evas_Coord_Point previous_pos;
    Ecore_X_Randr_Mode_Info *previous_mode, *new_mode, *preferred_mode;
    Ecore_X_Randr_Orientation previous_orientation, new_orientation;
    Ecore_X_Randr_Output_Policy previous_policy, new_policy;
-   Evas_Object *bg;
+   Evas_Object *bg, *rep;
 };
 
 struct _E_Config_Randr_Dialog_Confirmation_Dialog_Data

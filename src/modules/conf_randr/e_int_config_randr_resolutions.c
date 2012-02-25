@@ -66,7 +66,7 @@ resolution_widget_basic_create_widgets(Evas *canvas)
 {
    Evas_Object *subdialog;
 
-   if (!canvas || !e_config_runtime_info || e_config_runtime_info->gui.subdialogs.resolutions.dialog || !(subdialog = e_widget_ilist_add(canvas, ICON_WIDTH * e_scale, ICON_HEIGHT * e_scale, NULL))) return NULL;
+   if (!canvas || !e_config_runtime_info || e_config_runtime_info->gui.widgets.resolutions.dialog || !(subdialog = e_widget_ilist_add(canvas, ICON_WIDTH * e_scale, ICON_HEIGHT * e_scale, NULL))) return NULL;
 
    e_widget_ilist_multi_select_set(subdialog, EINA_FALSE);
    e_widget_disabled_set(subdialog, EINA_TRUE);
@@ -121,7 +121,7 @@ resolution_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *c
         return EINA_FALSE;
      }
    //get selected mode
-   if ((selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)))
+   if ((selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.widgets.resolutions.dialog)))
      {
         mode = selected_mode->xid;
      }
@@ -154,7 +154,7 @@ resolution_widget_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_
    Ecore_X_Randr_Mode_Info *selected_mode;
    E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
 
-   if (!e_config_runtime_info->gui.selected_eo || !(selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.subdialogs.resolutions.dialog)) || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info"))) return EINA_FALSE;
+   if (!e_config_runtime_info->gui.selected_eo || !(selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.widgets.resolutions.dialog)) || !(output_dialog_data = evas_object_data_get(e_config_runtime_info->gui.selected_eo, "rep_info"))) return EINA_FALSE;
 
    return selected_mode != output_dialog_data->previous_mode;
 }
@@ -170,8 +170,8 @@ resolution_widget_update_list(Evas_Object *rep)
    Eina_Bool enable = EINA_FALSE;
    int i = 0;
 
-   e_widget_ilist_freeze(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
-   e_widget_ilist_clear(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
+   e_widget_ilist_freeze(e_config_runtime_info->gui.widgets.resolutions.dialog);
+   e_widget_ilist_clear(e_config_runtime_info->gui.widgets.resolutions.dialog);
 
    if (!rep || !(output_dialog_data = evas_object_data_get(rep, "rep_info")))
      goto _go_and_return;
@@ -202,24 +202,24 @@ resolution_widget_update_list(Evas_Object *rep)
           rate = 0.0;
 
         snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), "%dx%d@%.1fHz", mode_info->width, mode_info->height, rate);
-        e_widget_ilist_append(e_config_runtime_info->gui.subdialogs.resolutions.dialog, NULL, resolution_text, NULL, mode_info, NULL);
+        e_widget_ilist_append(e_config_runtime_info->gui.widgets.resolutions.dialog, NULL, resolution_text, NULL, mode_info, NULL);
 
         //select currently enabled mode
         if (mode_info == current_mode)
-          e_widget_ilist_selected_set(e_config_runtime_info->gui.subdialogs.resolutions.dialog, i);
+          e_widget_ilist_selected_set(e_config_runtime_info->gui.widgets.resolutions.dialog, i);
         i++;
      }
 
    //append 'disabled' mode
-   e_widget_ilist_append(e_config_runtime_info->gui.subdialogs.resolutions.dialog, NULL, _("Disabled"), NULL, &disabled_mode, NULL);
+   e_widget_ilist_append(e_config_runtime_info->gui.widgets.resolutions.dialog, NULL, _("Disabled"), NULL, &disabled_mode, NULL);
 
    //reenable widget
    enable = EINA_TRUE;
 
    _go_and_return:
-   e_widget_disabled_set(e_config_runtime_info->gui.subdialogs.resolutions.dialog, enable);
-   e_widget_ilist_go(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
-   e_widget_ilist_thaw(e_config_runtime_info->gui.subdialogs.resolutions.dialog);
+   e_widget_disabled_set(e_config_runtime_info->gui.widgets.resolutions.dialog, enable);
+   e_widget_ilist_go(e_config_runtime_info->gui.widgets.resolutions.dialog);
+   e_widget_ilist_thaw(e_config_runtime_info->gui.widgets.resolutions.dialog);
 }
 
 void
