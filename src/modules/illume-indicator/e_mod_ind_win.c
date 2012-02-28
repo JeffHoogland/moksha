@@ -11,8 +11,8 @@ static void _e_mod_ind_win_cb_resize(E_Win *win);
 static void _e_mod_ind_win_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static void _e_mod_ind_win_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static void _e_mod_ind_win_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
-static void _e_mod_ind_win_cb_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
-static void _e_mod_ind_win_cb_size_request(void *data __UNUSED__, E_Gadcon *gc __UNUSED__, Evas_Coord w __UNUSED__, Evas_Coord h __UNUSED__);
+static void _e_mod_ind_win_cb_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w __UNUSED__, Evas_Coord h);
+/* static void _e_mod_ind_win_cb_size_request(void *data __UNUSED__, E_Gadcon *gc __UNUSED__, Evas_Coord w __UNUSED__, Evas_Coord h __UNUSED__); */
 static Evas_Object *_e_mod_ind_win_cb_frame_request(void *data __UNUSED__, E_Gadcon_Client *gcc __UNUSED__, const char *style __UNUSED__);
 static void _e_mod_ind_win_cb_menu_items_append(void *data, E_Gadcon_Client *gcc __UNUSED__, E_Menu *mn);
 static void _e_mod_ind_win_cb_menu_append(Ind_Win *iwin, E_Menu *mn);
@@ -20,8 +20,6 @@ static void _e_mod_ind_win_cb_menu_pre(void *data, E_Menu *mn);
 static void _e_mod_ind_win_cb_menu_post(void *data, E_Menu *mn __UNUSED__);
 static void _e_mod_ind_win_cb_menu_contents(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void _e_mod_ind_win_cb_menu_edit(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__);
-static Eina_Bool _e_mod_ind_win_cb_border_hide(void *data, int type __UNUSED__, void *event);
-static Eina_Bool _e_mod_ind_win_cb_border_show(void *data, int type __UNUSED__, void *event);
 
 Ind_Win *
 e_mod_ind_win_new(E_Zone *zone) 
@@ -92,8 +90,8 @@ e_mod_ind_win_new(E_Zone *zone)
    e_gadcon_min_size_request_callback_set(iwin->gadcon, 
                                           _e_mod_ind_win_cb_min_size_request, 
                                           iwin);
-   e_gadcon_size_request_callback_set(iwin->gadcon, 
-                                      _e_mod_ind_win_cb_size_request, iwin);
+   /* e_gadcon_size_request_callback_set(iwin->gadcon,  */
+   /*                                    _e_mod_ind_win_cb_size_request, iwin); */
    e_gadcon_frame_request_callback_set(iwin->gadcon, 
                                        _e_mod_ind_win_cb_frame_request, iwin);
    e_gadcon_orient(iwin->gadcon, E_GADCON_ORIENT_FLOAT);
@@ -119,21 +117,9 @@ e_mod_ind_win_new(E_Zone *zone)
                                               _e_mod_ind_win_cb_zone_resize, 
                                               iwin));
 
-   iwin->hdls = 
-     eina_list_append(iwin->hdls, 
-                      ecore_event_handler_add(E_EVENT_BORDER_HIDE, 
-                                              _e_mod_ind_win_cb_border_hide, 
-                                              iwin));
-
-   iwin->hdls = 
-     eina_list_append(iwin->hdls, 
-                      ecore_event_handler_add(E_EVENT_BORDER_SHOW, 
-                                              _e_mod_ind_win_cb_border_show, 
-                                              iwin));
-
    edje_object_size_min_calc(iwin->o_base, &mw, &mh);
-   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
-   
+//   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
+
    /* set minimum size of this window */
    e_win_size_min_set(iwin->win, zone->w, mh);
 
@@ -216,7 +202,8 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    h = (il_ind_cfg->height * e_scale);
 
    edje_object_size_min_calc(iwin->o_base, &mw, &mh);
-   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
+//   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
+
    /* set minimum size of this window */
    e_win_size_min_set(iwin->win, iwin->zone->w, mh);
 
@@ -249,7 +236,7 @@ _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event)
 
    h = (il_ind_cfg->height * e_scale);
    edje_object_size_min_calc(iwin->o_base, &mw, &mh);
-   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
+//   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
 
    /* set minimum size of this window to match zone size */
    e_win_size_min_set(iwin->win, ev->zone->w, mh);
@@ -442,7 +429,7 @@ _e_mod_ind_win_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj
 }
 
 static void 
-_e_mod_ind_win_cb_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h) 
+_e_mod_ind_win_cb_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w __UNUSED__, Evas_Coord h) 
 {
    Ind_Win *iwin;
 
@@ -452,11 +439,11 @@ _e_mod_ind_win_cb_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_
 //   edje_extern_object_min_size_set(iwin->gadcon->o_container, w, h);
 }
 
-static void 
-_e_mod_ind_win_cb_size_request(void *data __UNUSED__, E_Gadcon *gc __UNUSED__, Evas_Coord w __UNUSED__, Evas_Coord h __UNUSED__) 
-{
-   return;
-}
+/* static void  */
+/* _e_mod_ind_win_cb_size_request(void *data __UNUSED__, E_Gadcon *gc __UNUSED__, Evas_Coord w __UNUSED__, Evas_Coord h __UNUSED__)  */
+/* { */
+/*    return; */
+/* } */
 
 static Evas_Object *
 _e_mod_ind_win_cb_frame_request(void *data __UNUSED__, E_Gadcon_Client *gcc __UNUSED__, const char *style __UNUSED__) 
@@ -551,30 +538,4 @@ _e_mod_ind_win_cb_menu_edit(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi _
      e_gadcon_edit_end(iwin->gadcon);
    else
      e_gadcon_edit_begin(iwin->gadcon);
-}
-
-static Eina_Bool 
-_e_mod_ind_win_cb_border_hide(void *data, int type __UNUSED__, void *event) 
-{
-   Ind_Win *iwin;
-   E_Event_Border_Hide *ev;
-
-   if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
-   ev = event;
-   if (ev->border != iwin->win->border) return ECORE_CALLBACK_PASS_ON;
-//   e_win_hide(iwin->win);
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool 
-_e_mod_ind_win_cb_border_show(void *data, int type __UNUSED__, void *event) 
-{
-   Ind_Win *iwin;
-   E_Event_Border_Show *ev;
-
-   if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
-   ev = event;
-   if (ev->border != iwin->win->border) return ECORE_CALLBACK_PASS_ON;
-//   e_win_show(iwin->win);
-   return ECORE_CALLBACK_PASS_ON;
 }
