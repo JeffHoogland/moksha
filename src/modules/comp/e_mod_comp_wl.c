@@ -34,6 +34,18 @@ e_mod_comp_wl_init(void)
         return EINA_FALSE;
      }
 
+   if (wl_display_add_socket(_wl_disp, NULL))
+     {
+        /* e_mod_comp_wl_shell_shutdown(); */
+        /* e_mod_comp_wl_input_shutdown(); */
+        /* e_mod_comp_wl_output_shutdown(); */
+        /* e_mod_comp_wl_shm_shutdown(); */
+        /* e_mod_comp_wl_comp_shutdown(); */
+        wl_display_terminate(_wl_disp);
+        EINA_LOG_ERR("Failed to add socket to wayland display\n");
+        return EINA_FALSE;
+     }
+
    /* init a wayland compositor ?? */
    if (!e_mod_comp_wl_comp_init())
      {
@@ -81,18 +93,6 @@ e_mod_comp_wl_init(void)
         e_mod_comp_wl_comp_shutdown();
         wl_display_terminate(_wl_disp);
         EINA_LOG_ERR("Failed to create wayland shell\n");
-        return EINA_FALSE;
-     }
-
-   if (wl_display_add_socket(_wl_disp, NULL))
-     {
-        e_mod_comp_wl_shell_shutdown();
-        e_mod_comp_wl_input_shutdown();
-        e_mod_comp_wl_output_shutdown();
-        e_mod_comp_wl_shm_shutdown();
-        e_mod_comp_wl_comp_shutdown();
-        wl_display_terminate(_wl_disp);
-        EINA_LOG_ERR("Failed to add socket to wayland display\n");
         return EINA_FALSE;
      }
 

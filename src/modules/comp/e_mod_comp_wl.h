@@ -29,6 +29,7 @@ typedef struct _Wayland_Compositor Wayland_Compositor;
 typedef struct _Wayland_Mode Wayland_Mode;
 typedef struct _Wayland_Output Wayland_Output;
 typedef struct _Wayland_Input Wayland_Input;
+typedef struct _Wayland_Region Wayland_Region;
 
 enum _Wayland_Visual
 {
@@ -65,7 +66,7 @@ struct _Wayland_Surface
    struct wl_listener buffer_destroy_listener;
    struct wl_list frame_callbacks;
 
-   pixman_region32_t damage, opaque;
+   pixman_region32_t damage, opaque, clip, input;
    GLuint texture, saved_texture;
 
    int32_t x, y, w, h;
@@ -152,6 +153,12 @@ struct _Wayland_Input
    int32_t hotspot_x, hotspot_y;
    struct wl_list link;
    uint32_t modifier_state;
+};
+
+struct _Wayland_Region
+{
+   struct wl_resource resource;
+   pixman_region32_t region;
 };
 
 struct wl_shell

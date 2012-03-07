@@ -140,6 +140,51 @@ e_mod_comp_wl_surface_frame(struct wl_client *client, struct wl_resource *resour
 }
 
 void 
+e_mod_comp_wl_surface_set_opaque_region(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *region_resource)
+{
+   Wayland_Surface *ws;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   ws = resource->data;
+   pixman_region32_fini(&ws->opaque);
+   if (region_resource)
+     {
+        Wayland_Region *region;
+
+        region = region_resource->data;
+        pixman_region32_init_rect(&ws->opaque, 0, 0, ws->w, ws->h);
+        pixman_region32_intersect(&ws->opaque, &ws->opaque, &region->region);
+     }
+   else
+     pixman_region32_init(&ws->opaque);
+}
+
+void 
+e_mod_comp_wl_surface_set_input_region(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *region_resource)
+{
+   Wayland_Surface *ws;
+   Wayland_Input *input;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   ws = resource->data;
+   if (region_resource)
+     {
+        Wayland_Region *region;
+
+        region = region_resource->data;
+        pixman_region32_init_rect(&ws->input, 0, 0, ws->w, ws->h);
+        pixman_region32_intersect(&ws->input, &ws->input, &region->region);
+     }
+   else
+     pixman_region32_init_rect(&ws->input, 0, 0, ws->w, ws->h);
+
+   input = e_mod_comp_wl_input_get();
+   e_mod_comp_wl_comp_repick(&input->input_device, e_mod_comp_wl_time_get());
+}
+
+void 
 e_mod_comp_wl_surface_destroy_surface(struct wl_resource *resource)
 {
    Wayland_Surface *ws;

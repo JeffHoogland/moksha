@@ -6,6 +6,7 @@
 # include "e_mod_comp_wl_shm.h"
 # include "e_mod_comp_wl_input.h"
 # include "e_mod_comp_wl_surface.h"
+# include "e_mod_comp_wl_region.h"
 #endif
 
 #ifdef __linux__
@@ -30,6 +31,8 @@ static void _e_mod_comp_wl_comp_egl_shutdown(void);
 static void _e_mod_comp_wl_comp_destroy(void);
 static void _e_mod_comp_wl_comp_bind(struct wl_client *client, void *data, uint32_t version __UNUSED__, uint32_t id);
 static void _e_mod_comp_wl_comp_surface_create(struct wl_client *client, struct wl_resource *resource, uint32_t id);
+static void _e_mod_comp_wl_comp_region_create(struct wl_client *client, struct wl_resource *resource, unsigned int id);
+static void _e_mod_comp_wl_comp_region_destroy(struct wl_resource *resource);
 static Eina_Bool _e_mod_comp_wl_cb_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool _e_mod_comp_wl_cb_focus_out(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool _e_mod_comp_wl_cb_mouse_in(void *data __UNUSED__, int type __UNUSED__, void *event);
@@ -46,14 +49,23 @@ static void _e_mod_comp_wl_comp_update_modifier(Wayland_Input *input, uint32_t k
 /* wayland interfaces */
 static const struct wl_compositor_interface _wl_comp_interface = 
 {
-   _e_mod_comp_wl_comp_surface_create
+   _e_mod_comp_wl_comp_surface_create,
+   _e_mod_comp_wl_comp_region_create
 };
 static const struct wl_surface_interface _wl_surface_interface = 
 {
    e_mod_comp_wl_surface_destroy,
    e_mod_comp_wl_surface_attach,
    e_mod_comp_wl_surface_damage,
-   e_mod_comp_wl_surface_frame
+   e_mod_comp_wl_surface_frame,
+   e_mod_comp_wl_surface_set_opaque_region,
+   e_mod_comp_wl_surface_set_input_region
+};
+static const struct wl_region_interface _wl_region_interface = 
+{
+   e_mod_comp_wl_region_destroy,
+   e_mod_comp_wl_region_add,
+   e_mod_comp_wl_region_subtract
 };
 
 /* private variables */
@@ -338,6 +350,38 @@ _e_mod_comp_wl_comp_surface_create(struct wl_client *client, struct wl_resource 
    wl_client_add_resource(client, &ws->surface.resource);
 }
 
+static void 
+_e_mod_comp_wl_comp_region_create(struct wl_client *client, struct wl_resource *resource, unsigned int id)
+{
+   Wayland_Region *region;
+
+   region = malloc(sizeof(*region));
+   if (!region)
+     {
+        wl_resource_post_no_memory(resource);
+        return;
+     }
+
+   region->resource.destroy = _e_mod_comp_wl_comp_region_destroy;
+   region->resource.object.id = id;
+   region->resource.object.interface = &wl_region_interface;
+   region->resource.object.implementation = 
+     (void (**)(void))&_wl_region_interface;
+   region->resource.data = region;
+
+   pixman_region32_init(&region->region);
+   wl_client_add_resource(client, &region->resource);
+}
+
+static void 
+_e_mod_comp_wl_comp_region_destroy(struct wl_resource *resource)
+{
+   Wayland_Region *region;
+
+   region = container_of(resource, Wayland_Region, resource);
+   pixman_region32_fini(&region->region);
+   free(region);
+}
 
 static Eina_Bool 
 _e_mod_comp_wl_cb_focus_in(void *data __UNUSED__, int type __UNUSED__, void *event)
