@@ -809,11 +809,19 @@ _connman_request_scan_cb(void *data       __UNUSED__,
                          DBusMessage *msg __UNUSED__,
                          DBusError       *error)
 {
+   static int perr = 0;
+   
    if (error && dbus_error_is_set(error))
      {
-        ERR("%s method failed with message \'%s\'", error->name, error->message);
+        if (perr != 1)
+          {
+             ERR("%s method failed with message \'%s\'", error->name, error->message);
+          }
+        perr = 1;
         dbus_error_free(error);
      }
+   else
+     perr = 0;
 
    return;
 }
