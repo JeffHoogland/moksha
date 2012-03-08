@@ -128,12 +128,12 @@ _arrangement_widget_update(void)
           {
              memcpy(&geo, &default_geo, sizeof(geo));
           }
+        evas_object_show(odd->rep);
+        e_layout_pack(area, odd->rep);
         e_layout_child_raise(odd->rep);
         e_layout_child_resize(odd->rep, geo.w, geo.h);
         e_layout_child_move(odd->rep, geo.x, geo.y);
-        evas_object_show(odd->rep);
 
-        e_layout_pack(area, odd->rep);
         fprintf(stderr, "CONF_RANDR: Representation (%p) added with geo %d.%d %dx%d.\n", odd->rep, geo.x, geo.y, geo.w, geo.h);
      }
    e_layout_thaw(area);
@@ -181,7 +181,7 @@ arrangement_widget_basic_create_widgets(Evas *canvas)
    e_config_runtime_info->gui.widgets.arrangement.scrollframe = scrollframe;
 
    // Append both objects to widget list
-   e_widget_list_object_append(widget, scrollframe, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_FILL);
+   e_widget_list_object_append(widget, scrollframe, 1, 1, 0.0);
    e_widget_list_object_append(widget, check, 0, 0, 1.0);
 
    e_config_runtime_info->gui.widgets.arrangement.widget_list = widget;

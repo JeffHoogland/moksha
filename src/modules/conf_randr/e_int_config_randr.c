@@ -313,7 +313,7 @@ basic_create_widgets(E_Config_Dialog *cfd, Evas *canvas, E_Config_Dialog_Data *c
    EINA_SAFETY_ON_FALSE_GOTO((wl = e_widget_list_add(canvas, EINA_FALSE, EINA_TRUE)), _dialog_create_widget_list_fail);
 
    //e_widget_table_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h);
-   e_widget_table_object_append(table, cfdata->gui.widgets.arrangement.widget, 1, 1, 1, 1, EVAS_HINT_FILL, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   e_widget_table_object_append(table, cfdata->gui.widgets.arrangement.widget, 1, 1, 1, 1, 1, 1, 1, 1);
    /*
       e_widget_table_object_append(table, cfdata->gui.widgets.policies.widget, 1, 2, 1, 1, 0, 0, 0, 0);
       e_widget_table_object_append(table, cfdata->gui.widgets.orientation.widget, 2, 2, 1, 1, 0, 0, 0, 0);
