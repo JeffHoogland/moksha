@@ -12,13 +12,13 @@
  **********************************************************************
  */
 
-   E_Randr_Serialized_Setup *
+E_Randr_Serialized_Setup *
 _new_serialized_setup(void)
 {
    return E_NEW(E_Randr_Serialized_Setup, 1);
 }
 
-   EAPI void
+EAPI void
 e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
 {
    if (!e_config->randr_serialized_setup)

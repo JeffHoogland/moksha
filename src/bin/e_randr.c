@@ -123,7 +123,7 @@ _screen_info_refresh(void)
    return EINA_FALSE;
 }
 
-   static Eina_Bool
+static Eina_Bool
 _e_event_config_loaded_cb(void *data __UNUSED__, int type, void *ev __UNUSED__)
 {
    if (type != E_EVENT_CONFIG_LOADED) return EINA_TRUE;
@@ -133,7 +133,7 @@ _e_event_config_loaded_cb(void *data __UNUSED__, int type, void *ev __UNUSED__)
    return EINA_FALSE;
 }
 
-   static void
+static void
 _event_listeners_add(void)
 {
    _event_handlers = eina_list_append(_event_handlers, ecore_event_handler_add(E_EVENT_CONFIG_LOADED, _e_event_config_loaded_cb, NULL));
@@ -144,7 +144,7 @@ _event_listeners_add(void)
      }
 }
 
-   static void
+static void
 _try_restore_configuration(void)
 {
    if (e_config->randr_serialized_setup)

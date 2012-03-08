@@ -163,7 +163,7 @@ _output_refs_set(E_Randr_Output_Info *output_info)
      output_info->monitor = NULL;
 }
 
-   Ecore_X_Randr_Output *
+Ecore_X_Randr_Output *
 _outputs_to_array(Eina_List *outputs_info)
 {
    Ecore_X_Randr_Output *ret = NULL;
@@ -223,7 +223,7 @@ Eina_List
    return common_modes;
 }
 
-    static int
+static int
 _modes_size_sort_cb(const void *d1, const void *d2)
 {
    Ecore_X_Randr_Mode_Info *mode1 = ((Ecore_X_Randr_Mode_Info *)d1), *mode2 = ((Ecore_X_Randr_Mode_Info *)d2);

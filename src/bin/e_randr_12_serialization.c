@@ -46,7 +46,7 @@ static inline Ecore_X_Randr_Mode_Info *_find_matching_mode_info(Ecore_X_Randr_Mo
  */
 //"Free" helper functions
 
-   void
+void
 _serialized_output_free(E_Randr_Serialized_Output *so)
 {
    EINA_SAFETY_ON_NULL_RETURN(so);
@@ -56,7 +56,7 @@ _serialized_output_free(E_Randr_Serialized_Output *so)
    free(so);
 }
 
-   void
+void
 _serialized_output_policy_free(E_Randr_Serialized_Output_Policy *sop)
 {
    EINA_SAFETY_ON_NULL_RETURN(sop);
@@ -71,7 +71,7 @@ e_randr_12_serialized_output_policy_free(E_Randr_Serialized_Output_Policy *polic
    _serialized_output_policy_free(policy);
 }
 
-   void
+void
 _mode_info_free(Ecore_X_Randr_Mode_Info *mode_info)
 {
    EINA_SAFETY_ON_NULL_RETURN(mode_info);
@@ -80,7 +80,7 @@ _mode_info_free(Ecore_X_Randr_Mode_Info *mode_info)
    free(mode_info);
 }
 
-   void
+void
 _serialized_crtc_free(E_Randr_Serialized_Crtc *sc)
 {
    E_Randr_Serialized_Output *so;
@@ -165,7 +165,7 @@ E_Randr_Edid_Hash
    return edid_hash;
 }
 
-   Eina_List *
+Eina_List *
 _outputs_policies_list_new(Eina_List *outputs)
 {
    E_Randr_Serialized_Output_Policy *sop;
@@ -188,7 +188,7 @@ _outputs_policies_list_new(Eina_List *outputs)
    return list;
 }
 
-   E_Randr_Serialized_Output *
+E_Randr_Serialized_Output *
 _serialized_output_new(E_Randr_Output_Info *output_info)
 {
    E_Randr_Serialized_Output *so;
@@ -212,7 +212,7 @@ _serialized_output_new(E_Randr_Output_Info *output_info)
    return so;
 }
 
-   E_Randr_Serialized_Crtc *
+E_Randr_Serialized_Crtc *
 _serialized_crtc_new(E_Randr_Crtc_Info *crtc_info)
 {
    E_Randr_Serialized_Crtc *sc = NULL;
@@ -244,7 +244,7 @@ _serialized_crtc_new(E_Randr_Crtc_Info *crtc_info)
    return sc;
 }
 
-   E_Randr_Serialized_Setup_12 *
+E_Randr_Serialized_Setup_12 *
 _12_serialized_setup_new(void)
 {
    E_Randr_Serialized_Setup_12 *ss = NULL;
@@ -290,7 +290,7 @@ _12_serialized_setup_new(void)
 
 //Update (also retrieval) helper functions
 
-   E_Randr_Serialized_Setup_12 *
+E_Randr_Serialized_Setup_12 *
 _matching_serialized_setup_get(Eina_List *setups_12)
 {
    E_Randr_Serialized_Setup_12 *ss_12;
@@ -329,7 +329,7 @@ _setup_12_skip:
    return NULL;
 }
 
-   Eina_List *
+Eina_List *
 _outputs_policies_update(Eina_List *sops)
 {
    E_Randr_Serialized_Output_Policy *sop;
@@ -342,7 +342,7 @@ _outputs_policies_update(Eina_List *sops)
    return _outputs_policies_list_new(e_randr_screen_info.rrvd_info.randr_info_12->outputs);
 }
 
-   Eina_List *
+Eina_List *
 _12_serialized_setup_update(Eina_List *setups_12)
 {
    E_Randr_Serialized_Setup_12 *ss_12;
@@ -365,7 +365,7 @@ _12_serialized_setup_update(Eina_List *setups_12)
    return setups_12;
 }
 
-   void
+void
 _12_policies_restore(void)
 {
    E_Randr_Output_Info *output;
@@ -390,7 +390,7 @@ _12_policies_restore(void)
      }
 }
 
-   Eina_Bool
+Eina_Bool
 _12_try_restore_configuration(void)
 {
    E_Randr_Serialized_Setup_12 *ss_12;
@@ -460,7 +460,7 @@ _12_try_restore_configuration(void)
    return ret;
 }
 
-   void
+void
 _12_serialized_setup_free(E_Randr_Serialized_Setup_12 *ss_12)
 {
    E_Randr_Serialized_Crtc *sc;
@@ -484,7 +484,7 @@ e_randr_12_serialized_setup_free(E_Randr_Serialized_Setup_12 *ss_12)
     _12_serialized_setup_free(ss_12);
 }
 
-   void
+void
 _12_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
 {
    if (modifier & (E_RANDR_CONFIGURATION_STORE_RESOLUTIONS | E_RANDR_CONFIGURATION_STORE_ARRANGEMENT | E_RANDR_CONFIGURATION_STORE_ORIENTATIONS))
@@ -502,7 +502,7 @@ _12_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
 //Retrievel functions for the current e_randr_screen_info context
 
 // Find entities for restoration in current e_randr_screen_info context
-   static E_Randr_Crtc_Info *
+static E_Randr_Crtc_Info *
 _find_matching_crtc(E_Randr_Serialized_Crtc *sc)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(sc, NULL);
@@ -518,7 +518,7 @@ _find_matching_crtc(E_Randr_Serialized_Crtc *sc)
  * @return List of E_Randr_Output* elements or NULL, if not all outputs could be
  * found or monitors are connected to different outputs
  */
-   static Eina_List *
+static Eina_List *
 _find_matching_outputs(Eina_List *sois)
 {
    Eina_List *r_output_iter, *s_output_iter, *list = NULL;
@@ -548,7 +548,7 @@ _find_matching_outputs(Eina_List *sois)
    return list;
 }
 
-   static Ecore_X_Randr_Mode_Info *
+static Ecore_X_Randr_Mode_Info *
 _find_matching_mode_info(Ecore_X_Randr_Mode_Info *mode)
 {
    Eina_List *iter;
@@ -579,7 +579,7 @@ _find_matching_mode_info(Ecore_X_Randr_Mode_Info *mode)
    return NULL;
 }
 
-    static int
+static int
 _sort_by_number_of_edids(const void *d1, const void *d2)
 {
     const E_Randr_Serialized_Setup_12 *ss1 = (const E_Randr_Serialized_Setup_12*)d1;

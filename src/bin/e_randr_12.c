@@ -31,7 +31,7 @@ static const char *_POLICIES_STRINGS[] = {"ABOVE", "RIGHT", "BELOW", "LEFT", "CL
  * @return array of E_Randr_Screen_Info_12 elements, or in case not all could
  * be created or parameter 'nrequested'==0, NULL
  */
-   static E_Randr_Screen_Info_12 *
+static E_Randr_Screen_Info_12 *
 _screen_info_12_new(void)
 {
    E_Randr_Screen_Info_12 *randr_info_12 = NULL;
@@ -65,7 +65,7 @@ _screen_info_12_new(void)
    return randr_info_12;
 }
 
-   static Eina_Bool
+static Eina_Bool
 _structs_init(void)
 {
    //Output stuff
@@ -119,7 +119,7 @@ _structs_init(void)
 
 //Set value / retrieval helper functions
 
-   static void
+static void
 _crtcs_init(void)
 {
    E_Randr_Crtc_Info *crtc = NULL;
@@ -131,7 +131,7 @@ _crtcs_init(void)
       _crtc_refs_set(crtc);
 }
 
-   static void
+static void
 _outputs_init(void)
 {
    E_Randr_Output_Info *output = NULL;
@@ -147,7 +147,7 @@ _outputs_init(void)
      }
 }
 
-   static void
+static void
 _screen_primary_output_assign(E_Randr_Output_Info *removed)
 {
    Eina_List *iter;
@@ -173,7 +173,7 @@ _screen_primary_output_assign(E_Randr_Output_Info *removed)
 /**
  * @param screen_info the screen info to be freed.
  */
-   void
+void
 _12_screen_info_free(E_Randr_Screen_Info_12 *screen_info)
 {
    Ecore_X_Randr_Mode_Info *mode_info;
@@ -213,7 +213,7 @@ _12_screen_info_free(E_Randr_Screen_Info_12 *screen_info)
  *
  * ********************************************
  */
-   Ecore_X_Randr_Mode_Info *
+Ecore_X_Randr_Mode_Info *
 _12_screen_info_mode_info_get(const Ecore_X_Randr_Mode mode)
 {
    Eina_List *iter;
@@ -228,7 +228,7 @@ _12_screen_info_mode_info_get(const Ecore_X_Randr_Mode mode)
    return NULL;
 }
 
-   E_Randr_Output_Info *
+E_Randr_Output_Info *
 _12_screen_info_output_info_get(const Ecore_X_Randr_Output output)
 {
    Eina_List *iter;
@@ -243,7 +243,7 @@ _12_screen_info_output_info_get(const Ecore_X_Randr_Output output)
    return NULL;
 }
 
-   E_Randr_Crtc_Info *
+E_Randr_Crtc_Info *
 _12_screen_info_crtc_info_get(const Ecore_X_Randr_Crtc crtc)
 {
    Eina_List *iter;
@@ -258,7 +258,7 @@ _12_screen_info_crtc_info_get(const Ecore_X_Randr_Crtc crtc)
    return NULL;
 }
 
-   Eina_Bool
+Eina_Bool
 _12_screen_info_edid_is_available(const E_Randr_Edid_Hash *hash)
 {
    Eina_List *iter;
@@ -280,7 +280,7 @@ _12_screen_info_edid_is_available(const E_Randr_Edid_Hash *hash)
  * returns a mode within a given list of modes that is gemetrically identical.
  * If none is found, NULL is returned.
  */
-   static Ecore_X_Randr_Mode_Info *
+static Ecore_X_Randr_Mode_Info *
 _mode_geo_identical_find(Eina_List *modes, Ecore_X_Randr_Mode_Info *mode)
 {
    Eina_List *iter;
@@ -300,7 +300,7 @@ _mode_geo_identical_find(Eina_List *modes, Ecore_X_Randr_Mode_Info *mode)
  *
  *****************************************************************
  */
-   Eina_Bool
+Eina_Bool
 _12_screen_info_refresh(void)
 {
    EINA_SAFETY_ON_TRUE_RETURN_VAL((e_randr_screen_info.randr_version < ECORE_X_RANDR_1_2), EINA_FALSE);
@@ -323,7 +323,7 @@ _12_screen_info_refresh(void)
  ******************************************************************
  */
 
-   static Eina_Bool
+static Eina_Bool
 _x_poll_cb(void *data __UNUSED__)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(e_randr_screen_info.rrvd_info.randr_info_12, ECORE_CALLBACK_CANCEL);
@@ -333,7 +333,7 @@ _x_poll_cb(void *data __UNUSED__)
    return ECORE_CALLBACK_RENEW;
 }
 
-   void
+void
 _12_event_listeners_add(void)
 {
    EINA_SAFETY_ON_TRUE_RETURN(E_RANDR_12_NO);
@@ -358,7 +358,7 @@ _12_event_listeners_add(void)
  * When the mode of a CRTC is changed only events 2 and 3 are triggered
  *
  */
-   static Eina_Bool
+static Eina_Bool
 _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
 {
    Ecore_X_Event_Randr_Output_Change *oce = (Ecore_X_Event_Randr_Output_Change*)ev;
@@ -462,7 +462,7 @@ _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
-   static Eina_Bool
+static Eina_Bool
 _crtc_change_event_cb(void *data __UNUSED__, int type, void *ev)
 {
    Ecore_X_Event_Randr_Crtc_Change *cce = (Ecore_X_Event_Randr_Crtc_Change*)ev;
@@ -533,7 +533,7 @@ _crtc_change_event_cb(void *data __UNUSED__, int type, void *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
-   static Eina_Bool
+static Eina_Bool
 _output_property_change_event_cb(void *data __UNUSED__, int type, void *ev)
 {
    Ecore_X_Event_Randr_Output_Property_Notify *opce = (Ecore_X_Event_Randr_Output_Property_Notify*)ev;
@@ -561,7 +561,7 @@ _output_property_change_event_cb(void *data __UNUSED__, int type, void *ev)
  * - try to share the output of a CRTC with other outputs already using it
  *   (clone).
  */
-   static Eina_Bool
+static Eina_Bool
 _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
 {
    Eina_List *iter, *outputs_list = NULL, *common_modes = NULL;
@@ -796,7 +796,7 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
    return ret;
 }
 
-   void
+void
 _12_event_listeners_remove(void)
 {
    Ecore_Event_Handler *_event_handler = NULL;

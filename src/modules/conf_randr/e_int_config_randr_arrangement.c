@@ -139,7 +139,7 @@ _arrangement_widget_update(void)
    e_layout_thaw(area);
 }
 
-   Eina_Bool
+Eina_Bool
 arrangement_widget_create_data(E_Config_Dialog_Data *data)
 {
    Eina_List *iter;

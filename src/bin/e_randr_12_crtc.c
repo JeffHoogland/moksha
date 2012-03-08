@@ -73,7 +73,7 @@ _crtc_refs_set(E_Randr_Crtc_Info *crtc_info)
  * given, a struct with only the xid will be set
  * @return E_Randr_Crtc_Info element
  */
-   E_Randr_Crtc_Info *
+E_Randr_Crtc_Info *
 _crtc_info_new(Ecore_X_Randr_Crtc crtc)
 {
    E_Randr_Crtc_Info *crtc_info = NULL;
@@ -113,7 +113,7 @@ _crtc_info_new(Ecore_X_Randr_Crtc crtc)
 /**
  * @param crtc_info the crtc info to be freed.
  */
-   void
+void
 _crtc_info_free(E_Randr_Crtc_Info *crtc_info)
 {
    EINA_SAFETY_ON_NULL_RETURN(crtc_info);
@@ -207,7 +207,7 @@ _crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
  *                      -bottom
  *                      most CRTC and return it.
  */
-   const E_Randr_Crtc_Info *
+const E_Randr_Crtc_Info *
 _crtc_according_to_policy_get(E_Randr_Crtc_Info *but, Ecore_X_Randr_Output_Policy policy)
 {
    Eina_List *iter, *possible_crtcs = NULL;

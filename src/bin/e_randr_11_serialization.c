@@ -10,7 +10,7 @@
 
 //New helper functions
 
-   E_Randr_Serialized_Setup_11 *
+E_Randr_Serialized_Setup_11 *
 _serialized_setup_11_new(void)
 {
    E_Randr_Serialized_Setup_11 *ss;
@@ -32,7 +32,7 @@ _serialized_setup_11_new_failed_free_ss:
 }
 
 //Update/value set helper functions
-   E_Randr_Serialized_Setup_11 *
+E_Randr_Serialized_Setup_11 *
 _serialized_setup_11_update(E_Randr_Serialized_Setup_11 *ss_11)
 {
    Ecore_X_Randr_Screen_Size_MM *size;
@@ -56,7 +56,7 @@ _update_serialized_setup_11_failed_free_ss:
 }
 
 //Free helper functions
-   void
+void
 _e_randr_serialized_setup_11_free(E_Randr_Serialized_Setup_11 *ss11)
 {
    free(ss11);
@@ -68,7 +68,7 @@ e_randr_11_serialized_setup_free(E_Randr_Serialized_Setup_11 *ss_11)
    _e_randr_serialized_setup_11_free(ss_11);
 }
 
-   Eina_Bool
+Eina_Bool
 _11_try_restore_configuration(void)
 {
    Ecore_X_Randr_Screen_Size_MM *stored_size, *size;
@@ -92,7 +92,7 @@ _11_try_restore_configuration(void)
    return EINA_FALSE;
 }
 
-   void
+void
 _11_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
 {
    if (e_config->randr_serialized_setup->serialized_setup_11)
