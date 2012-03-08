@@ -36,7 +36,7 @@ EAPI void e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modif
 
 struct _E_Randr_Crtc_Info
 {
-   Ecore_X_ID xid;
+   Ecore_X_Randr_Crtc xid;
    Eina_Rectangle geometry;
    Eina_Rectangle panning;
    Eina_Rectangle tracking;
@@ -70,7 +70,7 @@ struct _E_Randr_Monitor_Info
 
 struct _E_Randr_Output_Info
 {
-   Ecore_X_ID xid;
+   Ecore_X_Randr_Output xid;
    char *name;
    int name_length;
    E_Randr_Crtc_Info *crtc;
