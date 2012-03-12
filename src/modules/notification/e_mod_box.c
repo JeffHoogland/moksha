@@ -153,7 +153,7 @@ notification_box_config_item_get(const char *id)
    GADCON_CLIENT_CONFIG_GET(Config_Item, notification_cfg->items, _gc_class, id);
 
    ci = E_NEW(Config_Item, 1);
-   ci->id = eina_stringshare_ref(id);
+   ci->id = eina_stringshare_add(id);
    ci->show_label = 1;
    ci->show_popup = 1;
    ci->focus_window = 1;
