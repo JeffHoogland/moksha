@@ -27,7 +27,7 @@ void                     arrangement_widget_free_data(E_Config_Dialog *cfd, E_Co
 static inline void       _arrangement_widget_suggestion_add(Evas *evas);
 static inline void       _arrangement_widget_make_suggestion(Evas_Object *obj);
 static Evas_Object      *_arrangement_widget_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data);
-static void              _arrangement_widget_rep_del(Evas_Object *output);
+static void              _arrangement_widget_rep_del(E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data);
 static void              _arrangement_widget_rep_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void              _arrangement_widget_rep_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void              _arrangement_widget_rep_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -109,14 +109,17 @@ _arrangement_widget_update(void)
    fprintf(stderr, "CONF_RANDR: Set virtual size of arrangement e_layout to %dx%d\n", e_randr_screen_info.rrvd_info.randr_info_12->max_size.width, e_randr_screen_info.rrvd_info.randr_info_12->max_size.height);
    EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, odd)
      {
-        _arrangement_widget_rep_del(odd->rep);
+        _arrangement_widget_rep_del(odd);
 
         if(!odd->crtc &&
               (!odd->output->monitor && (randr_dialog_config && !randr_dialog_config->display_disconnected_outputs)))
           continue;
 
         if(!(odd->rep = _arrangement_widget_rep_add(e_config_runtime_info->gui.canvas, odd)))
-          continue;
+          {
+             fprintf(stderr, "CONF_RANDR: Could not add rep for CRTC %p/ output %p.\n", odd->crtc, odd->output);
+             continue;
+          }
         if (odd->crtc && odd->crtc->current_mode)
           {
              geo.x = odd->crtc->geometry.x;
@@ -160,7 +163,7 @@ arrangement_widget_basic_create_widgets(Evas *canvas)
 
    if (!canvas || !e_config_runtime_info || !e_config_runtime_info->output_dialog_data_list) return NULL;
 
-   widget = e_widget_list_add(canvas, 0, 1);
+   widget = e_widget_list_add(canvas, 0, 0);
    fprintf(stderr, "CONF_RANDR: Arrangement widget added (%p).\n", widget);
 
    //Add checkbox
@@ -172,9 +175,9 @@ arrangement_widget_basic_create_widgets(Evas *canvas)
 
    area = e_layout_add(canvas);
    e_config_runtime_info->gui.widgets.arrangement.area = area;
+   _arrangement_widget_update();
    evas_object_resize(area, 400, 200);
    evas_object_show(area);
-   _arrangement_widget_update();
 
    scrollframe = e_scrollframe_add(canvas);
    e_scrollframe_child_set(scrollframe, area);
@@ -194,15 +197,11 @@ _arrangement_widget_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Da
 {
    E_Randr_Output_Info *output_info;
    Evas_Object *rep;
-   const char *output_name = NULL;
-   const char *state_signal;
+   const char *output_name = NULL, *state_signal;
 
    if (!canvas || !output_dialog_data || !e_config_runtime_info) return NULL;
 
    rep = edje_object_add(canvas);
-
-   //set instance data for output
-   evas_object_data_set(rep, "rep_info", output_dialog_data);
 
    //set theme for monitor representation
    EINA_SAFETY_ON_FALSE_GOTO(edje_object_file_set(rep, _theme_file_path, "e/conf/randr/dialog/widget/arrangement/output"), _arrangement_widget_rep_add_edje_set_fail);
@@ -218,7 +217,7 @@ _arrangement_widget_rep_add(Evas *canvas, E_Config_Randr_Dialog_Output_Dialog_Da
    //output_dialog_data->bg = e_livethumb_add(canvas);
    edje_object_part_swallow(rep, "e.swallow.content", output_dialog_data->bg);
 
-   //Try to get the name of the monitor connected to the output's last output via edid
+   //Try to get the name of the monitor connected to the CRTC's first output via edid
    //else use the output's name
    if (output_dialog_data->crtc)
      output_info = (E_Randr_Output_Info *)eina_list_data_get(output_dialog_data->crtc->outputs);
@@ -246,30 +245,27 @@ _arrangement_widget_rep_add_edje_set_fail:
 }
 
 static void
-_arrangement_widget_rep_del(Evas_Object *rep)
+_arrangement_widget_rep_del(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 {
-   E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
-
-   if (!rep)
+   if (!odd)
      return;
 
-   evas_object_hide(rep);
+   evas_object_hide(odd->rep);
 
-   evas_object_event_callback_del(rep, EVAS_CALLBACK_MOUSE_DOWN, _arrangement_widget_rep_mouse_down_cb);
-   evas_object_event_callback_del(rep, EVAS_CALLBACK_MOUSE_MOVE, _arrangement_widget_rep_mouse_move_cb);
-   evas_object_event_callback_del(rep, EVAS_CALLBACK_MOUSE_UP, _arrangement_widget_rep_mouse_up_cb);
+   evas_object_event_callback_del(odd->rep, EVAS_CALLBACK_MOUSE_DOWN, _arrangement_widget_rep_mouse_down_cb);
+   evas_object_event_callback_del(odd->rep, EVAS_CALLBACK_MOUSE_MOVE, _arrangement_widget_rep_mouse_move_cb);
+   evas_object_event_callback_del(odd->rep, EVAS_CALLBACK_MOUSE_UP, _arrangement_widget_rep_mouse_up_cb);
 
    //get instance data for output
-   if((output_dialog_data = evas_object_data_get(rep, "rep_info")))
-     {
-        edje_object_part_unswallow(rep, output_dialog_data->bg);
-        evas_object_del(output_dialog_data->bg);
-     }
+   edje_object_part_unswallow(odd->rep, odd->bg);
+   evas_object_del(odd->bg);
+   odd->bg = NULL;
 
    //update output orientation
    orientation_widget_update_edje(NULL);
 
-   evas_object_del(rep);
+   evas_object_del(odd->rep);
+   odd->rep = NULL;
 }
 
 static void
