@@ -541,7 +541,7 @@ arrangement_widget_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Da
 }
 
 Eina_Bool
-arrangement_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+arrangement_widget_basic_apply_data(E_Config_Dialog *cfd __UNUSED__ , E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    Evas_Coord_Point pos = {.x = 0, .y = 0};

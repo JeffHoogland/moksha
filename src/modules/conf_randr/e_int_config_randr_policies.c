@@ -48,15 +48,15 @@ static const char *_POLICIES_STRINGS[] = {
  */
 
 Eina_Bool
-policy_widget_create_data(E_Config_Dialog_Data *e_config_runtime_info)
+policy_widget_create_data(E_Config_Dialog_Data *data)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    E_Randr_Output_Info *oi = NULL;
    Eina_List *iter;
 
-   if (!e_config_runtime_info || !e_config_runtime_info->output_dialog_data_list) return EINA_FALSE;
+   if (!data || !data->output_dialog_data_list) return EINA_FALSE;
 
-   EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, iter, odd)
+   EINA_LIST_FOREACH(data->output_dialog_data_list, iter, odd)
      {
         if (odd->crtc)
           oi = eina_list_data_get(odd->crtc->outputs);
