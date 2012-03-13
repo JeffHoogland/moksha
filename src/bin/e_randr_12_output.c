@@ -228,8 +228,8 @@ _modes_size_sort_cb(const void *d1, const void *d2)
 {
    Ecore_X_Randr_Mode_Info *mode1 = ((Ecore_X_Randr_Mode_Info *)d1), *mode2 = ((Ecore_X_Randr_Mode_Info *)d2);
 
-   EINA_SAFETY_ON_NULL_RETURN_VAL(d1, 1);
-   EINA_SAFETY_ON_NULL_RETURN_VAL(d2, -1);
+   if (!d1) return 1;
+   if (!d2) return -1;
 
    return (mode1->width * mode1->height) - (mode2->width * mode2->height);
 }

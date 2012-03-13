@@ -583,7 +583,7 @@ static int
 _sort_by_number_of_edids(const void *d1, const void *d2)
 {
     const E_Randr_Serialized_Setup_12 *ss1 = (const E_Randr_Serialized_Setup_12*)d1;
-    const E_Randr_Serialized_Setup_12 *ss2 = (const E_Randr_Serialized_Setup_12*)d1;
+    const E_Randr_Serialized_Setup_12 *ss2 = (const E_Randr_Serialized_Setup_12*)d2;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(ss1, 1);
    EINA_SAFETY_ON_NULL_RETURN_VAL(ss2, -1);
