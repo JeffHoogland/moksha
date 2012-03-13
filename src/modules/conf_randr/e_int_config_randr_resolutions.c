@@ -201,7 +201,11 @@ resolution_widget_update_list(Evas_Object *rep)
         else
           rate = 0.0;
 
-        snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), "%dx%d@%.1fHz", mode_info->width, mode_info->height, rate);
+        if (mode_info->name)
+          snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), "%s@%.1fHz", mode_info->name, rate);
+        else
+          snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), "%dx%d@%.1fHz", mode_info->width, mode_info->height, rate);
+
         e_widget_ilist_append(e_config_runtime_info->gui.widgets.resolutions.widget, NULL, resolution_text, NULL, mode_info, NULL);
 
         //select currently enabled mode
