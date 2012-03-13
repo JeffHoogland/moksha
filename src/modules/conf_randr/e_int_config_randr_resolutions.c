@@ -32,7 +32,6 @@ Eina_Bool
 resolution_widget_create_data(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Randr_Dialog_Output_Dialog_Data *odd;
-   Ecore_X_Randr_Mode_Info *mi;
    Eina_List *iter;
 
    if (!cfdata || !cfdata->output_dialog_data_list) return EINA_FALSE;
@@ -47,14 +46,13 @@ resolution_widget_create_data(E_Config_Dialog_Data *cfdata)
           }
         if (odd->crtc)
           {
-             if (!(mi = odd->crtc->current_mode))
-               mi = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->crtc->outputs_common_modes));
-             odd->previous_mode = mi;
+             odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(odd->crtc->outputs_common_modes);
+             odd->previous_mode = odd->crtc->current_mode;
           }
         else if (odd->output && odd->output->monitor)
           {
              odd->previous_mode = NULL;
-             odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(eina_list_last(odd->output->monitor->preferred_modes));
+             odd->preferred_mode = (Ecore_X_Randr_Mode_Info *)eina_list_data_get(odd->output->monitor->preferred_modes);
           }
      }
 
