@@ -414,6 +414,15 @@ _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
         eina_list_free(output_info->monitor->preferred_modes);
         output_info->monitor->preferred_modes = NULL;
         _monitor_modes_refs_set(output_info->monitor, output_info->xid);
+        //Also update common modes of the used CRTC
+        if (crtc_info && crtc_info->current_mode)
+          {
+             eina_list_free(crtc_info->outputs);
+             crtc_info->outputs = NULL;
+             eina_list_free(crtc_info->outputs_common_modes);
+             crtc_info->outputs_common_modes = NULL;
+             _crtc_outputs_refs_set(crtc_info);
+          }
      }
 
    con_state_changed = (Eina_Bool)(output_info->connection_status != oce->connection);
@@ -523,8 +532,11 @@ _crtc_change_event_cb(void *data __UNUSED__, int type, void *ev)
    //if still enabled, update references to outputs
    if (crtc_info->current_mode)
      {
+        eina_list_free(crtc_info->outputs);
+        crtc_info->outputs = NULL;
+        eina_list_free(crtc_info->outputs_common_modes);
+        crtc_info->outputs_common_modes = NULL;
         _crtc_outputs_refs_set(crtc_info);
-        crtc_info->outputs_common_modes = _outputs_common_modes_get(crtc_info->outputs, NULL);
      }
 
    //crop the screen
