@@ -58,8 +58,8 @@ e_widget_textblock_markup_set(Evas_Object *obj, const char *text)
    evas_object_resize(wd->o_textblock, 0, 0);
 
    edje_object_part_text_set(wd->o_textblock, "e.textblock.text", text);
-   edje_object_size_min_calc(wd->o_textblock, &mw, &mh);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
+   edje_object_size_min_restricted_calc(wd->o_textblock, &mw, &mh, vw, 0);
    if (vw > mw) mw = vw;
    if (vh > mh) mh = vh;
    evas_object_resize(wd->o_textblock, mw, mh);
@@ -165,8 +165,8 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __
    Evas_Coord mw, mh, vw, vh;
 
    wd = data;
-   edje_object_size_min_calc(wd->o_textblock, &mw, &mh);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
+   edje_object_size_min_restricted_calc(wd->o_textblock, &mw, &mh, vw, 0);
    if (vw > mw) mw = vw;
    if (vh > mh) mh = vh;
    evas_object_resize(wd->o_textblock, mw, mh);
