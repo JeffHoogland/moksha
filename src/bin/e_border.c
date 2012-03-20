@@ -6826,13 +6826,26 @@ _e_border_eval0(E_Border *bd)
              free(bd->client.netwm.icons);
           }
         if (!ecore_x_netwm_icons_get(bd->client.win,
-                                     &bd->client.netwm.icons, &bd->client.netwm.num_icons))
+                                     &bd->client.netwm.icons,
+                                     &bd->client.netwm.num_icons))
           {
              bd->client.netwm.icons = NULL;
              bd->client.netwm.num_icons = 0;
           }
         else
-          bd->changes.icon = 1;
+          {
+             int i;
+             
+             // um;ess the rest of e17 uses border icons OTHER than icon # 0
+             // then free the rest that we don't need anymore.
+             for (i = 1; i < bd->client.netwm.num_icons; i++)
+               {
+                  free(bd->client.netwm.icons[i].data);
+                  bd->client.netwm.icons[i].data = NULL;
+               }
+             bd->client.netwm.num_icons = 1;
+             bd->changes.icon = 1;
+          }
         bd->client.netwm.fetch.icon = 0;
      }
    if (bd->client.netwm.fetch.user_time)
