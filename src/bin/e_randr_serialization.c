@@ -18,6 +18,12 @@ _new_serialized_setup(void)
    return E_NEW(E_Randr_Serialized_Setup, 1);
 }
 
+EINTERN E_Randr_Serialized_Setup *
+e_randr_serialized_setup_new(void)
+{
+    return _new_serialized_setup();
+}
+
 EAPI void
 e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
 {
@@ -43,12 +49,18 @@ _try_restore_configuration(void)
    EINA_SAFETY_ON_NULL_RETURN_VAL(e_config, EINA_FALSE);
    EINA_SAFETY_ON_NULL_RETURN_VAL(e_config->randr_serialized_setup, EINA_FALSE);
 
-   if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
+   if ((e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1) ||
+       ((e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_1) && e_config->randr_serialized_setup->serialized_setup_11 && !e_config->randr_serialized_setup->serialized_setups_12)) // either be 1.1 or maybe we have stored a resolution using the old conf_display dialog (which uses randr 1.1)
      return _11_try_restore_configuration();
    else if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
      return _12_try_restore_configuration();
 
    return EINA_FALSE;
+}
+
+EINTERN void e_randr_try_restore_configuration(void)
+{
+   return _try_restore_configuration();
 }
 
 EINTERN void e_randr_serialized_setup_free(E_Randr_Serialized_Setup *ss)

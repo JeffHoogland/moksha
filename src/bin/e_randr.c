@@ -27,7 +27,6 @@ static Eina_Bool _init(void);
 static void      _shutdown(void);
 static Eina_Bool _screen_info_refresh(void);
 static Eina_Bool _e_event_config_loaded_cb(void *data, int type, void *e);
-static void      _try_restore_configuration(void);
 static void      _event_listeners_add(void);
 static void      _event_listeners_remove(void);
 
@@ -60,13 +59,15 @@ _init(void)
      return EINA_FALSE;
    _event_listeners_add();
 
-   _try_restore_configuration();
-
-   if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
+   if (e_config->randr_serialized_setup)
      {
-        if ((e_config->randr_serialized_setup) && 
-            (e_config->randr_serialized_setup->outputs_policies))
-          _12_policies_restore();
+        e_randr_try_restore_configuration();
+
+        if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
+          {
+             if (e_config->randr_serialized_setup->outputs_policies)
+               _12_policies_restore();
+          }
      }
 
    return EINA_TRUE;
@@ -141,22 +142,6 @@ _event_listeners_add(void)
    if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
      {
         _12_event_listeners_add();
-     }
-}
-
-static void
-_try_restore_configuration(void)
-{
-   if (e_config->randr_serialized_setup)
-     {
-        if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
-          {
-             _11_try_restore_configuration();
-          }
-        else if (e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_2)
-          {
-             _12_try_restore_configuration();
-          }
      }
 }
 

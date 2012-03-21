@@ -15,14 +15,30 @@ _serialized_setup_11_new(void)
 {
    E_Randr_Serialized_Setup_11 *ss;
    Ecore_X_Randr_Screen_Size_MM *size;
+   Ecore_X_Randr_Orientation ori;
+   Ecore_X_Randr_Refresh_Rate rate;
 
    ss = malloc(sizeof(*ss));
 
-   if (!(size = (Ecore_X_Randr_Screen_Size_MM *)eina_list_data_get(eina_list_nth(e_randr_screen_info.rrvd_info.randr_info_11->sizes, e_randr_screen_info.rrvd_info.randr_info_11->csize_index)))) goto _serialized_setup_11_new_failed_free_ss;
-   ss->size.width = size->width;
-   ss->size.height = size->height;
-   ss->refresh_rate = e_randr_screen_info.rrvd_info.randr_info_11->current_rate;
-   ss->orientation = e_randr_screen_info.rrvd_info.randr_info_11->corientation;
+   if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
+     {
+        if (!(size = (Ecore_X_Randr_Screen_Size_MM *)eina_list_data_get(eina_list_nth(e_randr_screen_info.rrvd_info.randr_info_11->sizes, e_randr_screen_info.rrvd_info.randr_info_11->csize_index)))) goto _serialized_setup_11_new_failed_free_ss;
+        rate = e_randr_screen_info.rrvd_info.randr_info_11->current_rate;
+        ori = e_randr_screen_info.rrvd_info.randr_info_11->corientation;
+        ss->size.width = size->width;
+        ss->size.width_mm = size->width_mm;
+        ss->size.height = size->height;
+        ss->size.height_mm = size->height_mm;
+     }
+   else if (e_randr_screen_info.randr_version > ECORE_X_RANDR_1_1)
+     {
+        ecore_x_randr_screen_primary_output_current_size_get(e_randr_screen_info.root, &ss->size.width, &ss->size.height, &ss->size.width_mm, &ss->size.height_mm, NULL);
+        rate = ecore_x_randr_screen_primary_output_current_refresh_rate_get(e_randr_screen_info.root);
+        ori = ecore_x_randr_screen_primary_output_orientation_get(e_randr_screen_info.root);
+     }
+
+   ss->refresh_rate = rate;
+   ss->orientation = ori;
 
    return ss;
 
@@ -35,24 +51,31 @@ _serialized_setup_11_new_failed_free_ss:
 E_Randr_Serialized_Setup_11 *
 _serialized_setup_11_update(E_Randr_Serialized_Setup_11 *ss_11)
 {
-   Ecore_X_Randr_Screen_Size_MM *size;
-
    if (ss_11)
-     {
-        if (!(size = (Ecore_X_Randr_Screen_Size_MM *)eina_list_data_get(eina_list_nth(e_randr_screen_info.rrvd_info.randr_info_11->sizes, e_randr_screen_info.rrvd_info.randr_info_11->csize_index)))) return NULL;
-        if (!memcpy(&ss_11->size, size, sizeof(Ecore_X_Randr_Screen_Size_MM)))
-          goto _update_serialized_setup_11_failed_free_ss;
-        ss_11->refresh_rate = e_randr_screen_info.rrvd_info.randr_info_11->current_rate;
-        ss_11->orientation = e_randr_screen_info.rrvd_info.randr_info_11->corientation;
-     }
-   else
-     ss_11 = _serialized_setup_11_new();
+     e_randr_11_serialized_setup_free(ss_11);
+
+   ss_11 = _serialized_setup_11_new();
 
    return ss_11;
+}
 
-_update_serialized_setup_11_failed_free_ss:
-   free(ss_11);
-   return NULL;
+void
+_11_store_configuration(E_Randr_Configuration_Store_Modifier modifier __UNUSED__)
+{
+   if (!e_config->randr_serialized_setup)
+     e_config->randr_serialized_setup = e_randr_serialized_setup_new();
+
+   if (e_config->randr_serialized_setup->serialized_setup_11)
+     e_config->randr_serialized_setup->serialized_setup_11 = _serialized_setup_11_update(e_config->randr_serialized_setup->serialized_setup_11);
+   else
+     e_config->randr_serialized_setup->serialized_setup_11 = _serialized_setup_11_new();
+}
+
+
+EAPI void e_randr_11_store_configuration(E_Randr_Configuration_Store_Modifier modifier __UNUSED__)
+{
+   _11_store_configuration(modifier);
+   e_config_save_queue();
 }
 
 //Free helper functions
@@ -71,32 +94,42 @@ e_randr_11_serialized_setup_free(E_Randr_Serialized_Setup_11 *ss_11)
 Eina_Bool
 _11_try_restore_configuration(void)
 {
-   Ecore_X_Randr_Screen_Size_MM *stored_size, *size;
+   Ecore_X_Randr_Screen_Size_MM *stored_size, *size, *sizes;
    Eina_List *iter;
-   int i = 0;
+   int i = 0, nsizes;
+
+#define SIZE_EQUAL(size) \
+   ((stored_size->width == (size).width) \
+    && (stored_size->height == (size).height) \
+    && (stored_size->width_mm == (size).width_mm) \
+    && (stored_size->height_mm == (size).height_mm))
 
    if (!e_config->randr_serialized_setup->serialized_setup_11) return EINA_FALSE;
    stored_size = &e_config->randr_serialized_setup->serialized_setup_11->size;
-   EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_11->sizes, iter, size)
+   if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
      {
-        if ((stored_size->width == size->width)
-              && (stored_size->height == size->height)
-              && (stored_size->width_mm == size->width_mm)
-              && (stored_size->height_mm == size->height_mm))
+        EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_11->sizes, iter, size)
           {
-             return ecore_x_randr_screen_primary_output_size_set(e_randr_screen_info.root, i);
+             if (SIZE_EQUAL(*size))
+               {
+                  return ecore_x_randr_screen_primary_output_size_set(e_randr_screen_info.root, i);
+               }
+             i++;
           }
-        i++;
      }
+   else if (e_randr_screen_info.randr_version > ECORE_X_RANDR_1_1)
+     {
+        sizes = ecore_x_randr_screen_primary_output_sizes_get(e_randr_screen_info.root, &nsizes);
+        for (i = 0; i < nsizes; i++)
+          {
+             if (SIZE_EQUAL(sizes[i]))
+               {
+                  free(sizes);
+                  return ecore_x_randr_screen_primary_output_size_set(e_randr_screen_info.root, i);
+               }
+          }
+     }
+#undef SIZE_EQUAL
 
    return EINA_FALSE;
-}
-
-void
-_11_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
-{
-   if (e_config->randr_serialized_setup->serialized_setup_11)
-     e_config->randr_serialized_setup->serialized_setup_11 = _serialized_setup_11_update(e_config->randr_serialized_setup->serialized_setup_11);
-   else
-     e_config->randr_serialized_setup->serialized_setup_11 = _serialized_setup_11_new();
 }

@@ -50,7 +50,6 @@ static E_Config_DD *_e_config_mime_icon_edd = NULL;
 static E_Config_DD *_e_config_syscon_action_edd = NULL;
 static E_Config_DD *_e_config_env_var_edd = NULL;
 static E_Config_DD *_e_config_randr_size_edd = NULL;
-static E_Config_DD *_e_config_randr_size_mm_edd = NULL;
 static E_Config_DD *_e_config_randr_edid_hash_edd = NULL;
 static E_Config_DD *_e_config_randr_serialized_setup_edd = NULL;
 static E_Config_DD *_e_config_randr_serialized_setup_11_edd = NULL;
@@ -520,18 +519,6 @@ e_config_init(void)
 #define D _e_config_randr_size_edd
    E_CONFIG_VAL(D, T, width, INT);
    E_CONFIG_VAL(D, T, height, INT);
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, height, INT);
-
-   _e_config_randr_size_mm_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size_MM", Ecore_X_Randr_Screen_Size_MM);
-#undef T
-#undef D
-#define T Ecore_X_Randr_Screen_Size_MM
-#define D _e_config_randr_size_mm_edd
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, height, INT);
-   E_CONFIG_VAL(D, T, width_mm, INT);
-   E_CONFIG_VAL(D, T, height_mm, INT);
 
    _e_config_randr_edid_hash_edd = E_CONFIG_DD_NEW("E_Randr_Edid_Hash", E_Randr_Edid_Hash);
 #undef T
@@ -545,7 +532,10 @@ e_config_init(void)
 #undef D
 #define T E_Randr_Serialized_Setup_11
 #define D _e_config_randr_serialized_setup_11_edd
-   E_CONFIG_SUB(D, T, size, _e_config_randr_size_edd);
+   E_CONFIG_VAL(D, T, size.width, INT);
+   E_CONFIG_VAL(D, T, size.height, INT);
+   E_CONFIG_VAL(D, T, size.width_mm, INT);
+   E_CONFIG_VAL(D, T, size.height_mm, INT);
    E_CONFIG_VAL(D, T, orientation, INT);
    E_CONFIG_VAL(D, T, refresh_rate, SHORT);
 
