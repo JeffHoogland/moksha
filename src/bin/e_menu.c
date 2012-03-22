@@ -2916,7 +2916,7 @@ _e_menu_cb_item_submenu_post_default(void *data __UNUSED__, E_Menu *m __UNUSED__
 
 
 static Eina_Bool
-_e_menu_categories_free_cb(const Eina_Hash __UNUSED__ *hash, const void __UNUSED__ *key, void *data, void *fdata __UNUSED__)
+_e_menu_categories_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
    E_Menu_Category_Callback *cb;
    E_Menu_Category *cat;
