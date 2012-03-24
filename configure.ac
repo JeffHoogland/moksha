@@ -252,7 +252,7 @@ ALL_LINGUAS="bg ca cs da de el eo es fi fr fr_CH he hu it ja ko nb nl pl pt_BR r
 AC_SUBST(ALL_LINGUAS)
 
 m4_ifdef([AM_GNU_GETTEXT_VERSION], [
-AM_GNU_GETTEXT_VERSION([0.18])
+AM_GNU_GETTEXT_VERSION([0.17])
 ])
 
 m4_ifdef([AM_GNU_GETTEXT], [
@@ -471,6 +471,8 @@ efreet >= 1.2.0 \
 edbus >= 1.2.0 \
 eina >= 1.2.0"
 efm_requires="$efm_requires $eeze_mount $dbus_mount $hal_mount $udisks_mount"
+
+AC_MSG_WARN([EFM requirements : $efm_requires])
 
 PKG_CHECK_MODULES(E_FM, [$efm_requires])
 
