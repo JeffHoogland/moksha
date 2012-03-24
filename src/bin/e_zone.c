@@ -1460,6 +1460,7 @@ _e_zone_free(E_Zone *zone)
      {
         e_canvas_del(zone->black_ecore_evas);
         ecore_evas_free(zone->black_ecore_evas);
+        zone->black_ecore_evas = NULL;
      }
    if (zone->cur_mouse_action)
      {
