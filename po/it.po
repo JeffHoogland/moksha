@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-25 15:08+0900\n"
-"PO-Revision-Date: 2012-01-26 18:13+0100\n"
+"POT-Creation-Date: 2012-03-26 22:35+0200\n"
+"PO-Revision-Date: 2012-03-26 22:36+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -800,8 +799,8 @@ msgstr "Problemi scrittura configurazione di Enlightenment"
 #: src/bin/e_config.c:1561
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
-"%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
+"Enlightenment has had an error while moving config files<br>from:<br>%"
+"s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
 "Enlightenment ha restituito un errore nello spostamento<br>dei file di "
@@ -902,16 +901,16 @@ msgstr "L'errore è sconosciuto a Enlightenment."
 #: src/bin/e_config.c:2136
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
-"%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
+"Enlightenment has had an error while writing<br>its config file.<br>%"
+"s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment ha avuto un errore mentre<br>scriveva il suo file di "
-"configurazione<br>%s<br><br>Il file dove è avvenuto l'errore è:<br>"
-"%s<br><br>Questo file è stato cancellato per evitare<br>corruzione di dati."
+"configurazione<br>%s<br><br>Il file dove è avvenuto l'errore è:<br>%"
+"s<br><br>Questo file è stato cancellato per evitare<br>corruzione di dati."
 "<br>"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:778
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/syscon/e_mod_main.c:36
@@ -1173,8 +1172,8 @@ msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
-"Enlightenment non ha potuto avviare l'applicazione:<br><br>"
-"%s<br><br>L'applicazione non è partita"
+"Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
+"s<br><br>L'applicazione non è partita"
 
 #: src/bin/e_exec.c:491
 msgid "Application Execution Error"
@@ -2925,8 +2924,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -3593,74 +3592,82 @@ msgstr "Proibito"
 msgid "Read-Write"
 msgstr "Lettura-scrittura"
 
-#: src/modules/battery/e_mod_config.c:63
+#: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
 msgstr "Impostazioni di Battery"
 
-#: src/modules/battery/e_mod_config.c:132
+#: src/modules/battery/e_mod_config.c:134
 msgid "Show alert when battery is low"
 msgstr "Allarme se il livello batteria è basso"
 
-#: src/modules/battery/e_mod_config.c:136
+#: src/modules/battery/e_mod_config.c:138
 msgid "Use desktop notifications for alert."
 msgstr "Usa notifiche sul desktop per gli allarmi"
 
-#: src/modules/battery/e_mod_config.c:233
+#: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
 msgstr "Controlla ogni:"
 
-#: src/modules/battery/e_mod_config.c:235
+#: src/modules/battery/e_mod_config.c:237
 #: src/modules/conf_performance/e_int_config_performance.c:121
 #: src/modules/temperature/e_mod_config.c:233
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f tick"
 
-#: src/modules/battery/e_mod_config.c:239
+#: src/modules/battery/e_mod_config.c:242
+msgid "Suspend when below:"
+msgstr "Sospendi quando sotto:"
+
+#: src/modules/battery/e_mod_config.c:245
 msgid "Hibernate when below:"
 msgstr "Iberna quando sotto:"
 
-#: src/modules/battery/e_mod_config.c:241
-#: src/modules/battery/e_mod_config.c:260
+#: src/modules/battery/e_mod_config.c:248
+msgid "Shutdown when below:"
+msgstr "Spegni quando sotto:"
+
+#: src/modules/battery/e_mod_config.c:251
+#: src/modules/battery/e_mod_config.c:270
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
 
-#: src/modules/battery/e_mod_config.c:245
+#: src/modules/battery/e_mod_config.c:255
 msgid "Polling"
 msgstr "Campionamento"
 
-#: src/modules/battery/e_mod_config.c:249
+#: src/modules/battery/e_mod_config.c:259
 msgid "Show low battery alert"
 msgstr "Mostra allarme carica bassa"
 
-#: src/modules/battery/e_mod_config.c:253
+#: src/modules/battery/e_mod_config.c:263
 msgid "Alert when at:"
 msgstr "Soglia allarme:"
 
-#: src/modules/battery/e_mod_config.c:256
+#: src/modules/battery/e_mod_config.c:266
 #, c-format
 msgid "%1.0f min"
 msgstr "%1.0f min"
 
-#: src/modules/battery/e_mod_config.c:264
+#: src/modules/battery/e_mod_config.c:274
 msgid "Auto dismiss in..."
 msgstr "Distacco automatico in..."
 
-#: src/modules/battery/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:279
 #, c-format
 msgid "%1.0f sec"
 msgstr "%1.0f sec"
 
-#: src/modules/battery/e_mod_config.c:276
+#: src/modules/battery/e_mod_config.c:286
 msgid "Alert"
 msgstr "Allarme"
 
-#: src/modules/battery/e_mod_config.c:282
+#: src/modules/battery/e_mod_config.c:292
 msgid "Auto Detect"
 msgstr "Rileva automaticamente"
 
-#: src/modules/battery/e_mod_config.c:285
+#: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:52
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
@@ -3668,20 +3675,20 @@ msgstr "Rileva automaticamente"
 msgid "Internal"
 msgstr "Interno"
 
-#: src/modules/battery/e_mod_config.c:289
+#: src/modules/battery/e_mod_config.c:299
 #: src/modules/temperature/e_mod_config.c:271
 msgid "udev"
 msgstr "udev"
 
-#: src/modules/battery/e_mod_config.c:292
+#: src/modules/battery/e_mod_config.c:302
 msgid "Fuzzy Mode"
 msgstr "Modalità ponderata"
 
-#: src/modules/battery/e_mod_config.c:296
+#: src/modules/battery/e_mod_config.c:306
 msgid "HAL"
 msgstr "HAL"
 
-#: src/modules/battery/e_mod_config.c:301
+#: src/modules/battery/e_mod_config.c:311
 #: src/modules/temperature/e_mod_config.c:273
 msgid "Hardware"
 msgstr "Hardware"
@@ -3702,12 +3709,12 @@ msgstr "Consigliata alimentazione AC."
 msgid "N/A"
 msgstr "N/D"
 
-#: src/modules/battery/e_mod_main.c:656 src/modules/battery/e_mod_main.c:658
-#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:667
+#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:665
+#: src/modules/battery/e_mod_main.c:672 src/modules/battery/e_mod_main.c:674
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: src/modules/battery/e_mod_main.c:780
+#: src/modules/battery/e_mod_main.c:787
 msgid "Battery Meter"
 msgstr "Indicatore di carica"
 
@@ -3961,8 +3968,8 @@ msgid ""
 msgstr ""
 "Si vede bene? Se è così premere <hilight>Salvate</hilight>, altrimenti "
 "Ripristinate.<br>Se non si preme alcun bottone verrà "
-"<hilight>IMMEDIATAMENTE</hilight> ripristinata<br>la vecchia risoluzione di "
-"%dx%d."
+"<hilight>IMMEDIATAMENTE</hilight> ripristinata<br>la vecchia risoluzione di %"
+"dx%d."
 
 #: src/modules/conf_display/e_int_config_display.c:185
 msgid "Resolution change"
@@ -4467,8 +4474,8 @@ msgstr "Errore azione sul bordo"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1173
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding edge sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 "La sequenza sul bordo dello schermo che avete scelto è già<br>usata "
 "dall'azione <hilight>%s</hilight>.<br>Si prega di scegliere una sequenza "
@@ -4723,8 +4730,8 @@ msgstr "Errore di associazione"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La combinazione di tasti che avete scelto è già usata<br>dall'azione "
 "<hilight>%s</hilight>.<br>Si prega di scegliere una combinazione diversa."
