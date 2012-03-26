@@ -19,6 +19,10 @@ typedef struct _Config       Config;
 #define NOSUBSYSTEM 1
 #define SUBSYSTEM 2
 
+#define SUSPEND 0
+#define HIBERNATE 1
+#define SHUTDOWN 2
+
 #define POPUP_DEBOUNCE_CYCLES  2
 
 struct _Config
@@ -28,7 +32,8 @@ struct _Config
    int              alert;	/* Alert on minutes remaining */
    int	            alert_p;    /* Alert on percentage remaining */
    int              alert_timeout;  /* Popup dismissal timeout */
-   int              suspend_below;  /* Suspend if batter drops below this level */
+   int              suspend_below;  /* Suspend if battery drops below this level */
+   int              suspend_method; /* Method used to suspend the machine */
    int              force_mode; /* force use of batget or hal */
    /* just config state */
    E_Module        *module;
