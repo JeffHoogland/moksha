@@ -4,7 +4,6 @@
 # include <xcb/xcb_image.h>
 # include "e_mod_comp_wl.h"
 # include "e_mod_comp_wl_comp.h"
-# include "e_mod_comp_wl_shm.h"
 # include "e_mod_comp_wl_output.h"
 # include "e_mod_comp_wl_input.h"
 # include "e_mod_comp_wl_shell.h"
@@ -36,11 +35,6 @@ e_mod_comp_wl_init(void)
 
    if (wl_display_add_socket(_wl_disp, NULL))
      {
-        /* e_mod_comp_wl_shell_shutdown(); */
-        /* e_mod_comp_wl_input_shutdown(); */
-        /* e_mod_comp_wl_output_shutdown(); */
-        /* e_mod_comp_wl_shm_shutdown(); */
-        /* e_mod_comp_wl_comp_shutdown(); */
         wl_display_terminate(_wl_disp);
         EINA_LOG_ERR("Failed to add socket to wayland display\n");
         return EINA_FALSE;
@@ -50,23 +44,13 @@ e_mod_comp_wl_init(void)
    if (!e_mod_comp_wl_comp_init())
      {
         wl_display_terminate(_wl_disp);
-        EINA_LOG_ERR("Failed to create wayland shm\n");
-        return EINA_FALSE;
-     }
-
-   /* init shm */
-   if (!e_mod_comp_wl_shm_init())
-     {
-        e_mod_comp_wl_comp_shutdown();
-        wl_display_terminate(_wl_disp);
-        EINA_LOG_ERR("Failed to create wayland shm\n");
+        EINA_LOG_ERR("Failed to create wayland compositor\n");
         return EINA_FALSE;
      }
 
    /* init output */
    if (!e_mod_comp_wl_output_init())
      {
-        e_mod_comp_wl_shm_shutdown();
         e_mod_comp_wl_comp_shutdown();
         wl_display_terminate(_wl_disp);
         EINA_LOG_ERR("Failed to create wayland output\n");
@@ -77,7 +61,6 @@ e_mod_comp_wl_init(void)
    if (!e_mod_comp_wl_input_init())
      {
         e_mod_comp_wl_output_shutdown();
-        e_mod_comp_wl_shm_shutdown();
         e_mod_comp_wl_comp_shutdown();
         wl_display_terminate(_wl_disp);
         EINA_LOG_ERR("Failed to create wayland input\n");
@@ -89,7 +72,6 @@ e_mod_comp_wl_init(void)
      {
         e_mod_comp_wl_input_shutdown();
         e_mod_comp_wl_output_shutdown();
-        e_mod_comp_wl_shm_shutdown();
         e_mod_comp_wl_comp_shutdown();
         wl_display_terminate(_wl_disp);
         EINA_LOG_ERR("Failed to create wayland shell\n");
@@ -120,7 +102,6 @@ e_mod_comp_wl_shutdown(void)
    e_mod_comp_wl_shell_shutdown();
    e_mod_comp_wl_input_shutdown();
    e_mod_comp_wl_output_shutdown();
-   e_mod_comp_wl_shm_shutdown();
    e_mod_comp_wl_comp_shutdown();
 
    if (_wl_disp) wl_display_terminate(_wl_disp);

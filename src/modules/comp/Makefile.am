@@ -36,8 +36,6 @@ module_la_SOURCES += e_mod_comp_wl.h \
                      e_mod_comp_wl.c \
                      e_mod_comp_wl_comp.h \
                      e_mod_comp_wl_comp.c \
-                     e_mod_comp_wl_shm.h \
-                     e_mod_comp_wl_shm.c \
                      e_mod_comp_wl_output.h \
                      e_mod_comp_wl_output.c \
                      e_mod_comp_wl_input.h \

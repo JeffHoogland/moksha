@@ -3,7 +3,6 @@
 #ifdef HAVE_WAYLAND_CLIENTS
 # include "e_mod_comp_wl.h"
 # include "e_mod_comp_wl_comp.h"
-# include "e_mod_comp_wl_shm.h"
 # include "e_mod_comp_wl_input.h"
 # include "e_mod_comp_wl_surface.h"
 # include "e_mod_comp_wl_region.h"
