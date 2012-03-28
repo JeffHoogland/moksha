@@ -29,7 +29,7 @@ env_set(const char *var, const char *val)
 	char *buf;
         size_t size = strlen(var) + 1 + strlen(val) + 1;
 
-	buf = alloca(size;
+	buf = alloca(size);
 	snprintf(buf, size, "%s=%s", var, val);
 	if (getenv(var)) putenv(buf);
 	else putenv(strdup(buf));
