@@ -191,14 +191,14 @@ if USE_MODULE_TASKS
 SUBDIRS += tasks
 endif
 
-if HAVE_WAYLAND_DRM
- SUBDIRS += wl_drm
-endif
+#if HAVE_WAYLAND_DRM
+# SUBDIRS += wl_drm
+#endif
 
-if HAVE_WAYLAND_SHELL
- SUBDIRS += wl_shell
-endif
+#if HAVE_WAYLAND_SHELL
+# SUBDIRS += wl_shell
+#endif
 
-if HAVE_WAYLAND_SCREENSHOT
- SUBDIRS += wl_screenshot
-endif
+#if HAVE_WAYLAND_SCREENSHOT
+# SUBDIRS += wl_screenshot
+#endif
