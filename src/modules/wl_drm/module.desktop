@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Wayland Drm
+Icon=e-module-wl_drm
+Comment=Enlightenment DRM Composite Manager
+X-Enlightenment-ModuleType=look

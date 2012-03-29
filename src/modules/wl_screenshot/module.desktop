@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Wayland Screenshot
+Icon=e-module-wl_screenshot.edj
+Comment=Enlightenment Wayland Screenshot Module
+X-Enlightenment-ModuleType=look
