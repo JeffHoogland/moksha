@@ -343,7 +343,7 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
    if (s->system_internal) goto error; /* only track non internal */
    str = e_ukit_property_string_get(ret, "IdUsage", &err);
    /* if not of filesystem usage type - skip it  - testing on ubuntu 10.04 */
-   if (!((str) && (!strcmp(str, "filesystem")))) goto error;
+   //if (!((str) && (!strcmp(str, "filesystem")))) goto error;
    /* force it to be removable if it passed the above tests */
    s->removable = EINA_TRUE;
    
@@ -478,7 +478,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
           
         if (!err)
           {
-             if (v->parent)
+             if (v->parent && v->partition)
                {
                   s = e_storage_find(v->parent);
                   if (s)
@@ -490,9 +490,21 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
                }
              else
                {
+                  if (v->parent)
+                     eina_stringshare_del(v->parent);
+                  v->parent = eina_stringshare_add(v->udi);
+		  s = e_storage_find(v->udi);
+                  if (s)
+                    {
+                       v->storage = s;
+                       if (!eina_list_data_find_list(s->volumes, v))
+                         s->volumes = eina_list_append(s->volumes, v);
+                    }
+                  else 
+                    {
                   v->storage = _e_fm_main_udisks_storage_add(v->udi); /* disk is both storage and volume */
                   if (v->storage) v->storage->volumes = eina_list_append(v->storage->volumes, v);
-                  v->parent = v->udi;
+                    }
                }
           }
      }
@@ -709,7 +721,7 @@ static Eina_Bool
 _e_fm_main_udisks_cb_vol_ejecting_after_unmount(E_Volume *v)
 {
    v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_eject_timeout, v);
-   v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->udi, NULL);
+   v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->parent/*v->udi*/, NULL);
 
    return ECORE_CALLBACK_CANCEL;
 }
@@ -846,7 +858,7 @@ _e_fm_main_udisks_volume_eject(E_Volume *v)
    else
      {
         v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_eject_timeout, v);
-        v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->udi, NULL);
+        v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->parent/*v->udi*/, NULL);
      }
    v->optype = E_VOLUME_OP_TYPE_EJECT;
 }
