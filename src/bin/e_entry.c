@@ -726,7 +726,8 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
      _e_entry_imf_context_reset(entry);
    
    /* Move the cursor/selection to the left */
-   if (strcmp(event->key, "Left") == 0)
+   if (strcmp(event->key, "Left") == 0 ||
+       ((strcmp(event->key, "KP_Left") == 0) && (!event->string)))
      {
         if (evas_key_modifier_is_set(event->modifiers, "Shift"))
           {
@@ -748,7 +749,8 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
           }
      }
    /* Move the cursor/selection to the right */
-   else if (strcmp(event->key, "Right") == 0)
+   else if (strcmp(event->key, "Right") == 0 ||
+            ((strcmp(event->key, "KP_Right") == 0) && (!event->string)))
      {
         if (evas_key_modifier_is_set(event->modifiers, "Shift"))
           {
@@ -770,7 +772,8 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
           }
      }
    /* Move the cursor/selection to the start of the entry */
-   else if (strcmp(event->keyname, "Home") == 0)
+   else if (strcmp(event->keyname, "Home") == 0 ||
+            ((strcmp(event->key, "KP_Home") == 0) && (!event->string)))
      {
         e_editable_cursor_move_to_start(editable);
         if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
@@ -780,7 +783,8 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
           selection_changed = 1;
      }
    /* Move the cursor/selection to the end of the entry */
-   else if (strcmp(event->keyname, "End") == 0)
+   else if (strcmp(event->keyname, "End") == 0 ||
+            ((strcmp(event->key, "KP_End") == 0) && (!event->string)))
      {
         e_editable_cursor_move_to_end(editable);
         if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
@@ -798,7 +802,8 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
           changed = e_editable_delete(editable, cursor_pos - 1, cursor_pos);
      }
    /* Delete the next character */
-   else if ((sd->enabled) && (strcmp(event->keyname, "Delete") == 0))
+   else if ((sd->enabled) && ((strcmp(event->keyname, "Delete") == 0) ||
+            ((strcmp(event->key, "KP_Delete") == 0) && (!event->string))))
      {
         if (selecting)
           changed = e_editable_delete(editable, start_pos, end_pos);
