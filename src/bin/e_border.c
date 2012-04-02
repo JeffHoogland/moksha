@@ -2048,7 +2048,8 @@ e_border_focus_set(E_Border *bd,
                   bd->want_focus = 1;
                   bd->changed = 1;
                }
-             else if ((!bd->focused) || (focus_next && (bd != eina_list_data_get(focus_next))))
+             else if ((!bd->focused) || 
+                      (focus_next && (bd != eina_list_data_get(focus_next))))
                {
                   Eina_List *l;
 
@@ -2085,7 +2086,8 @@ e_border_focus_set(E_Border *bd,
 
              if ((set) && (!focus_next) && (!focusing))
                {
-                  e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
+                  e_grabinput_focus(bd->zone->container->bg_win,
+                                    E_FOCUS_METHOD_PASSIVE);
                }
           }
      }
@@ -2113,6 +2115,11 @@ e_border_focus_set(E_Border *bd,
 
         ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
                         _e_border_event_border_focus_out_free, NULL);
+        if ((bd->zone == bd_unfocus->zone) &&
+            ((bd->desk == bd_unfocus->desk) ||
+             (bd->sticky) || (bd_unfocus->sticky)) &&
+            (bd_unfocus->fullscreen))
+          e_border_iconify(bd_unfocus);
      }
 
    if (focus_changed)
