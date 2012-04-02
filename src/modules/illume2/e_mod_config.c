@@ -124,6 +124,7 @@ e_mod_illume_config_shutdown(void)
 int 
 e_mod_illume_config_save(void) 
 {
+   if ((!_il_conf_edd) || (!_e_illume_cfg)) return 0;
    return e_config_domain_save("module.illume2", _il_conf_edd, _e_illume_cfg);
 }
 
