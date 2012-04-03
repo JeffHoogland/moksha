@@ -2115,10 +2115,12 @@ e_border_focus_set(E_Border *bd,
 
         ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
                         _e_border_event_border_focus_out_free, NULL);
-        if ((bd->zone == bd_unfocus->zone) &&
+        if ((bd_unfocus->fullscreen) &&
+            (bd != bd_unfocus) &&
+            (bd->zone == bd_unfocus->zone) &&
             ((bd->desk == bd_unfocus->desk) ||
-             (bd->sticky) || (bd_unfocus->sticky)) &&
-            (bd_unfocus->fullscreen))
+             (bd->sticky) || (bd_unfocus->sticky)))
+            
           e_border_iconify(bd_unfocus);
      }
 
