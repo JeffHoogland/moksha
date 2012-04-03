@@ -58,7 +58,7 @@ _try_restore_configuration(void)
    return EINA_FALSE;
 }
 
-EINTERN void e_randr_try_restore_configuration(void)
+EINTERN Eina_Bool e_randr_try_restore_configuration(void)
 {
    return _try_restore_configuration();
 }
