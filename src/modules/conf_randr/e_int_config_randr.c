@@ -105,8 +105,8 @@ create_data(E_Config_Dialog *cfd)
           e_config_runtime_info->output_dialog_data_list = eina_list_append(e_config_runtime_info->output_dialog_data_list, odd);
      }
    //FIXME: Properly (stack-like) free data when creation fails
-   EINA_SAFETY_ON_FALSE_GOTO(arrangement_widget_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
    EINA_SAFETY_ON_FALSE_GOTO(resolution_widget_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
+   EINA_SAFETY_ON_FALSE_GOTO(arrangement_widget_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
    EINA_SAFETY_ON_FALSE_GOTO(policy_widget_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
    EINA_SAFETY_ON_FALSE_GOTO(orientation_widget_create_data(e_config_runtime_info), _e_conf_randr_create_data_failed_free_data);
 
@@ -124,12 +124,17 @@ free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    EINA_SAFETY_ON_TRUE_RETURN(!E_RANDR_12);
 
-   arrangement_widget_free_data(cfd, cfdata);
+   arrangement_widget_free_cfdata(cfd, cfdata);
+   policy_widget_free_cfdata(cfd, cfdata);
+   resolution_widget_free_cfdata(cfd, cfdata);
+   orientation_widget_free_cfdata(cfd, cfdata);
 
+   /*
    evas_object_del(cfdata->gui.widgets.arrangement.widget);
-   evas_object_del(cfdata->gui.widgets.policies.widget);
-   evas_object_del(cfdata->gui.widgets.resolutions.widget);
+   evas_object_del(cfdata->gui.widgets.policy.widget);
+   evas_object_del(cfdata->gui.widgets.resolution.widget);
    evas_object_del(cfdata->gui.widgets.orientation.widget);
+   */
 
    EINA_LIST_FREE(cfdata->output_dialog_data_list, dialog_data)
      {
@@ -200,10 +205,13 @@ _e_conf_randr_confirmation_dialog_keep_cb(void *data, E_Dialog *dia)
 
    if (!cdd) return;
 
+   //ordinary "keep" functionality
    arrangement_widget_keep_changes(cdd->cfdata);
    orientation_widget_keep_changes(cdd->cfdata);
    policy_widget_keep_changes(cdd->cfdata);
    resolution_widget_keep_changes(cdd->cfdata);
+
+   //cleanup dialog
    _e_conf_randr_confirmation_dialog_delete_cb(dia->win);
 }
 
@@ -242,14 +250,7 @@ _e_conf_randr_confirmation_dialog_store_cb(void *data, E_Dialog *dia)
    if (orientation_widget_basic_check_changed(NULL, e_config_runtime_info))
      modifier |= E_RANDR_CONFIGURATION_STORE_ORIENTATIONS;
 
-   //ordinary "keep" functionality
-   arrangement_widget_keep_changes(cdd->cfdata);
-   orientation_widget_keep_changes(cdd->cfdata);
-   policy_widget_keep_changes(cdd->cfdata);
-   resolution_widget_keep_changes(cdd->cfdata);
-
-   //cleanup dialog
-   _e_conf_randr_confirmation_dialog_delete_cb(dia->win);
+   _e_conf_randr_confirmation_dialog_keep_cb(data, dia);
 
    //but actually trigger saving the stuff
    e_randr_store_configuration(modifier);
@@ -305,8 +306,8 @@ basic_create_widgets(E_Config_Dialog *cfd, Evas *canvas, E_Config_Dialog_Data *c
    e_config_runtime_info->gui.canvas = canvas;
 
    if (!(cfdata->gui.widgets.arrangement.widget = arrangement_widget_basic_create_widgets(canvas))) goto _dialog_create_widget_arrangement_fail;
-   if (!(cfdata->gui.widgets.policies.widget = policy_widget_basic_create_widgets(canvas))) goto _dialog_create_widget_policies_fail;
-   if (!(cfdata->gui.widgets.resolutions.widget = resolution_widget_basic_create_widgets(canvas))) goto _dialog_create_widget_resolutions_fail;
+   if (!(cfdata->gui.widgets.policy.widget = policy_widget_basic_create_widgets(canvas))) goto _dialog_create_widget_policies_fail;
+   if (!(cfdata->gui.widgets.resolution.widget = resolution_widget_basic_create_widgets(canvas))) goto _dialog_create_widget_resolutions_fail;
    if (!(cfdata->gui.widgets.orientation.widget = orientation_widget_basic_create_widgets(canvas))) goto _dialog_create_widget_orientation_fail;
 
    EINA_SAFETY_ON_FALSE_GOTO((table = e_widget_table_add(canvas, EINA_FALSE)), _dialog_create_widgets_fail);
@@ -315,14 +316,14 @@ basic_create_widgets(E_Config_Dialog *cfd, Evas *canvas, E_Config_Dialog_Data *c
    //e_widget_table_object_append(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h);
    e_widget_table_object_append(table, cfdata->gui.widgets.arrangement.widget, 1, 1, 1, 1, 1, 1, 1, 1);
    /*
-      e_widget_table_object_append(table, cfdata->gui.widgets.policies.widget, 1, 2, 1, 1, 0, 0, 0, 0);
+      e_widget_table_object_append(table, cfdata->gui.widgets.policy.widget, 1, 2, 1, 1, 0, 0, 0, 0);
       e_widget_table_object_append(table, cfdata->gui.widgets.orientation.widget, 2, 2, 1, 1, 0, 0, 0, 0);
-      e_widget_table_object_append(table, cfdata->gui.widgets.resolutions.widget, 3, 2, 1, 1, EVAS_HINT_FILL, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+      e_widget_table_object_append(table, cfdata->gui.widgets.resolution.widget, 3, 2, 1, 1, EVAS_HINT_FILL, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
     */
    //e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int expand, double align);
-   e_widget_list_object_append(wl, cfdata->gui.widgets.policies.widget, 0, 0, 0.0);
+   e_widget_list_object_append(wl, cfdata->gui.widgets.policy.widget, 0, 0, 0.0);
    e_widget_list_object_append(wl, cfdata->gui.widgets.orientation.widget, 0, 0, 0.0);
-   e_widget_list_object_append(wl, cfdata->gui.widgets.resolutions.widget, EVAS_HINT_FILL, EVAS_HINT_EXPAND, 1.0);
+   e_widget_list_object_append(wl, cfdata->gui.widgets.resolution.widget, EVAS_HINT_FILL, EVAS_HINT_EXPAND, 1.0);
    e_widget_table_object_append(table, wl, 1, 2, 1, 1, EVAS_HINT_FILL, EVAS_HINT_FILL, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
    cfdata->gui.widget_list = wl;
 
@@ -337,9 +338,9 @@ _dialog_create_widget_list_fail:
 _dialog_create_widgets_fail:
    evas_object_del(cfdata->gui.widgets.orientation.widget);
 _dialog_create_widget_orientation_fail:
-   evas_object_del(cfdata->gui.widgets.resolutions.widget);
+   evas_object_del(cfdata->gui.widgets.resolution.widget);
 _dialog_create_widget_resolutions_fail:
-   evas_object_del(cfdata->gui.widgets.policies.widget);
+   evas_object_del(cfdata->gui.widgets.policy.widget);
 _dialog_create_widget_policies_fail:
    evas_object_del(cfdata->gui.widgets.arrangement.widget);
 _dialog_create_widget_arrangement_fail:
@@ -429,11 +430,12 @@ _deferred_noxrandr_error(void *data __UNUSED__)
 static int
 basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
-   if (!cfdata) return EINA_FALSE;
-   else
-     return arrangement_widget_basic_check_changed(cfd, cfdata)
-            || policy_widget_basic_check_changed(cfd, cfdata)
-            || orientation_widget_basic_check_changed(cfd, cfdata)
-            || resolution_widget_basic_check_changed(cfd, cfdata);
+   if (!cfdata)
+     return EINA_FALSE;
+
+   return (arrangement_widget_basic_check_changed(cfd, cfdata)
+         || policy_widget_basic_check_changed(cfd, cfdata)
+         || orientation_widget_basic_check_changed(cfd, cfdata)
+         || resolution_widget_basic_check_changed(cfd, cfdata));
 }
 

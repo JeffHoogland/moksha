@@ -140,14 +140,17 @@ _crtc_mode_intersects_crtcs(E_Randr_Crtc_Info *crtc_info, Ecore_X_Randr_Mode_Inf
 {
    Eina_List *iter;
    E_Randr_Crtc_Info *tmp;
+   int width, height;
 
    EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_12->crtcs, iter, tmp)
      {
         if ((tmp == crtc_info) ||
             ((tmp->geometry.w <= 0) || (tmp->geometry.h <= 0)))
           continue;
+        width = (mode->width > INT_MAX) ? INT_MAX : mode->width;
+        height = (mode->height > INT_MAX) ? INT_MAX : mode->height;
         if (E_INTERSECTS(crtc_info->geometry.x, crtc_info->geometry.y,
-                         mode->width, mode->height, tmp->geometry.x,
+                         width, height, tmp->geometry.x,
                          tmp->geometry.y, tmp->geometry.w, tmp->geometry.h)
             && ((crtc_info->geometry.x != tmp->geometry.x) &&
                 (crtc_info->geometry.y != tmp->geometry.y)))

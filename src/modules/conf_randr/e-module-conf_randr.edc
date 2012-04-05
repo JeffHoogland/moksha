@@ -473,7 +473,7 @@ collections {
    group{
       name: "e/conf/randr/dialog/widget/arrangement/suggestion";
       data {
-         item: "distance_min" "20";
+         item: "distance_max" "100"; // real pixel delta in the e_layout between output and suggested element
       }
 
       /*

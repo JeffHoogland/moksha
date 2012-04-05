@@ -34,9 +34,9 @@ pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
                          e_int_config_randr_orientation.c \
-                         e_int_config_randr_resolutions.c \
+                         e_int_config_randr_resolution.c \
                          e_int_config_randr_arrangement.c \
-                         e_int_config_randr_policies.c \
+                         e_int_config_randr_policy.c \
                          e_int_config_randr.c \
                          e_int_config_randr.h
 

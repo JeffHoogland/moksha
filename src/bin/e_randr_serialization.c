@@ -30,7 +30,12 @@ e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
    if (!e_config->randr_serialized_setup)
      e_config->randr_serialized_setup = _new_serialized_setup();
 
-   fprintf(stderr, "E_RANDR: Configuration shall be stored using the following modifier: %d.\n", modifier);
+   fprintf(stderr, "E_RANDR: Configuration shall be stored using the following modifier:%s\n%s%s%s%s",
+         ((!modifier) ? "NONE" : ""),
+         ((modifier & E_RANDR_CONFIGURATION_STORE_POLICIES) ? "\tPOLICIES\n" : ""),
+         ((modifier & E_RANDR_CONFIGURATION_STORE_RESOLUTIONS) ? "\tRESOLUTIONS\n" : ""),
+         ((modifier & E_RANDR_CONFIGURATION_STORE_ARRANGEMENT) ? "\tARRANGEMENTS\n" : ""),
+         ((modifier & E_RANDR_CONFIGURATION_STORE_ORIENTATIONS) ? "\tORIENTATIONS\n" : ""));
 
    if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
      {
