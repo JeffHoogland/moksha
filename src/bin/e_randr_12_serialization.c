@@ -142,8 +142,7 @@ Ecore_X_Randr_Mode_Info
    mi->vTotal = src->vTotal;
    if (src->nameLength > 0)
      {
-        mi->name = malloc(src->nameLength + 1);
-        strncpy(mi->name, src->name, src->nameLength);
+        mi->name = eina_stringshare_add(src->name);
      }
    mi->nameLength = src->nameLength;
    mi->modeFlags = src->modeFlags;
@@ -179,8 +178,7 @@ _outputs_policies_list_new(Eina_List *outputs)
         if (!oi->name) continue;
 
         sop = E_NEW(E_Randr_Serialized_Output_Policy, 1);
-        sop->name = malloc(oi->name_length + 1);
-        strncpy(sop->name, oi->name, oi->name_length);
+        sop->name = eina_stringshare_add(oi->name);
         sop->policy = oi->policy;
         list = eina_list_append(list, sop);
      }
@@ -198,8 +196,7 @@ _serialized_output_new(E_Randr_Output_Info *output_info)
 
    so = E_NEW(E_Randr_Serialized_Output, 1);
 
-   so->name = malloc(output_info->name_length + 1);
-   strncpy(so->name, output_info->name, output_info->name_length);
+   so->name = eina_stringshare_add(output_info->name);
    if (output_info->monitor)
      {
         so->backlight_level = output_info->monitor->backlight_level;

@@ -72,7 +72,7 @@ struct _E_Randr_Monitor_Info
 struct _E_Randr_Output_Info
 {
    Ecore_X_Randr_Output xid;
-   char *name;
+   Eina_Stringshare *name;
    int name_length;
    E_Randr_Crtc_Info *crtc;
    Eina_List *wired_clones;
@@ -133,13 +133,13 @@ struct _E_Randr_Screen_Info
 
 struct _E_Randr_Serialized_Output_Policy
 {
-   char *name;
+   Eina_Stringshare *name;
    Ecore_X_Randr_Output_Policy policy;
 };
 
 struct _E_Randr_Serialized_Output
 {
-   char *name;
+   Eina_Stringshare *name;
    double backlight_level;
 };
 

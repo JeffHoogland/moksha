@@ -112,7 +112,7 @@ _output_info_new(Ecore_X_Randr_Output output)
    output_info->compatibility_list = NULL;
    output_info->subpixel_order = Ecore_X_Randr_Unset;
 
-   output_info->name = ecore_x_randr_output_name_get(e_randr_screen_info.root, output_info->xid, &output_info->name_length);
+   output_info->name = eina_stringshare_add(ecore_x_randr_output_name_get(e_randr_screen_info.root, output_info->xid, &output_info->name_length));
    output_info->connection_status = ecore_x_randr_output_connection_status_get(e_randr_screen_info.root, output_info->xid);
 
    return output_info;
@@ -126,7 +126,7 @@ _output_info_free(E_Randr_Output_Info *output_info)
     eina_list_free(output_info->wired_clones);
     eina_list_free(output_info->possible_crtcs);
     eina_list_free(output_info->compatibility_list);
-    free(output_info->name);
+    eina_stringshare_del(output_info->name);
     _monitor_info_free(output_info->monitor);
     output_info->monitor = NULL;
     free(output_info);
