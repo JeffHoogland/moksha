@@ -19,9 +19,8 @@
 #define RESOLUTION_TXT_MAX_LENGTH 50
 
 extern E_Config_Dialog_Data *e_config_runtime_info;
-static Ecore_X_Randr_Mode_Info disabled_mode = {.xid = Ecore_X_Randr_None};
-void _resolution_widget_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__);
-
+static Ecore_X_Randr_Mode_Info disabled_mode = {.xid = Ecore_X_Randr_None, .name = "Disabled"};
+static void _resolution_widget_selected_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__);
 Eina_Bool
 resolution_widget_create_data(E_Config_Dialog_Data *cfdata)
 {
@@ -51,7 +50,7 @@ resolution_widget_create_data(E_Config_Dialog_Data *cfdata)
 void
 resolution_widget_free_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   evas_object_event_callback_del(cfdata->gui.widgets.resolution.widget, EVAS_CALLBACK_MOUSE_UP, _resolution_widget_mouse_up_cb);
+   evas_object_smart_callback_del(cfdata->gui.widgets.resolution.widget, "selected", _resolution_widget_selected_cb);
 }
 
 Evas_Object *
@@ -64,7 +63,7 @@ resolution_widget_basic_create_widgets(Evas *canvas)
    else if (!canvas || !e_config_runtime_info || !(widget = e_widget_ilist_add(canvas, ICON_WIDTH * e_scale, ICON_HEIGHT * e_scale, NULL)))
      return NULL;
 
-   evas_object_event_callback_add(widget, EVAS_CALLBACK_MOUSE_UP, _resolution_widget_mouse_up_cb, NULL);
+   evas_object_smart_callback_add(widget, "selected", _resolution_widget_selected_cb, NULL);
    e_widget_ilist_multi_select_set(widget, EINA_FALSE);
    e_widget_disabled_set(widget, EINA_TRUE);
    evas_object_show(widget);
@@ -251,8 +250,8 @@ resolution_widget_discard_changes(E_Config_Dialog_Data *cfdata)
    ecore_x_randr_screen_reset(cfdata->manager->root);
 }
 
-void
-_resolution_widget_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+static void
+_resolution_widget_selected_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Ecore_X_Randr_Mode_Info *selected_mode;
    if (!e_config_runtime_info->gui.selected_output_dd)
