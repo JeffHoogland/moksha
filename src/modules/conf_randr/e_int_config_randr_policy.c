@@ -51,10 +51,13 @@ policy_widget_create_data(E_Config_Dialog_Data *data)
      {
         if (odd->crtc)
           oi = eina_list_data_get(odd->crtc->outputs);
-        else if (odd->output)
+        else
           oi = odd->output;
+
         odd->previous_policy = oi ? oi->policy : Ecore_X_Randr_Unset;
         odd->new_policy = Ecore_X_Randr_Unset;
+        if (!oi) //Not of interest for dbg output
+          continue;
         fprintf(stderr, "CONF_RANDR: Read in policy of %d as %s.\n", oi->xid, ((odd->previous_policy != Ecore_X_Randr_Unset) ? _POLICIES_STRINGS[odd->previous_policy - 1] : "unset"));
      }
 
