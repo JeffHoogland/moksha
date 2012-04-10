@@ -21,6 +21,7 @@
 extern E_Config_Dialog_Data *e_config_runtime_info;
 static Ecore_X_Randr_Mode_Info disabled_mode = {.xid = Ecore_X_Randr_None, .name = "Disabled"};
 static void _resolution_widget_selected_cb(void *data);
+
 Eina_Bool
 resolution_widget_create_data(E_Config_Dialog_Data *cfdata)
 {
@@ -48,7 +49,7 @@ resolution_widget_create_data(E_Config_Dialog_Data *cfdata)
 }
 
 void
-resolution_widget_free_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+resolution_widget_free_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
 }
 
@@ -262,7 +263,7 @@ _resolution_widget_selected_cb(void *data)
         return;
      }
 
-   if ((selected_mode = selected_mode))
+   if (selected_mode)
      e_config_runtime_info->gui.selected_output_dd->new_mode = selected_mode;
 
    fprintf(stderr, "CONF_RANDR: Mode %s was selected for crtc/output %d!\n", (selected_mode ? selected_mode->name : "None"), (e_config_runtime_info->gui.selected_output_dd->crtc ? e_config_runtime_info->gui.selected_output_dd->crtc->xid :  e_config_runtime_info->gui.selected_output_dd->output->xid));
