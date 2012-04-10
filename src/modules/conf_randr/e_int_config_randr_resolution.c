@@ -20,7 +20,7 @@
 
 extern E_Config_Dialog_Data *e_config_runtime_info;
 static Ecore_X_Randr_Mode_Info disabled_mode = {.xid = Ecore_X_Randr_None, .name = "Disabled"};
-static void _resolution_widget_selected_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__);
+static void _resolution_widget_selected_cb(void *data);
 Eina_Bool
 resolution_widget_create_data(E_Config_Dialog_Data *cfdata)
 {
@@ -50,7 +50,6 @@ resolution_widget_create_data(E_Config_Dialog_Data *cfdata)
 void
 resolution_widget_free_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   evas_object_smart_callback_del(cfdata->gui.widgets.resolution.widget, "selected", _resolution_widget_selected_cb);
 }
 
 Evas_Object *
@@ -63,7 +62,6 @@ resolution_widget_basic_create_widgets(Evas *canvas)
    else if (!canvas || !e_config_runtime_info || !(widget = e_widget_ilist_add(canvas, ICON_WIDTH * e_scale, ICON_HEIGHT * e_scale, NULL)))
      return NULL;
 
-   evas_object_smart_callback_add(widget, "selected", _resolution_widget_selected_cb, NULL);
    e_widget_ilist_multi_select_set(widget, EINA_FALSE);
    e_widget_disabled_set(widget, EINA_TRUE);
    evas_object_show(widget);
@@ -195,7 +193,7 @@ resolution_widget_update_list(Evas_Object *rep)
         else
           snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), "%dx%d@%.1fHz", mode_info->width, mode_info->height, rate);
 
-        e_widget_ilist_append(e_config_runtime_info->gui.widgets.resolution.widget, NULL, resolution_text, NULL, mode_info, NULL);
+        e_widget_ilist_append(e_config_runtime_info->gui.widgets.resolution.widget, NULL, resolution_text, _resolution_widget_selected_cb, mode_info, NULL);
 
         //select currently enabled mode
         if (mode_info == current_mode)
@@ -251,16 +249,20 @@ resolution_widget_discard_changes(E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_resolution_widget_selected_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+_resolution_widget_selected_cb(void *data)
 {
-   Ecore_X_Randr_Mode_Info *selected_mode;
+   Ecore_X_Randr_Mode_Info *selected_mode = (Ecore_X_Randr_Mode_Info*)data;
+
+   if (!selected_mode)
+     return;
+
    if (!e_config_runtime_info->gui.selected_output_dd)
      {
         fprintf(stderr, "CONF_RANDR: Can't set newly selected resolution, because no odd was set \"selected\" yet!\n");
         return;
      }
 
-   if ((selected_mode = (Ecore_X_Randr_Mode_Info *)e_widget_ilist_selected_data_get(e_config_runtime_info->gui.widgets.resolution.widget)))
+   if ((selected_mode = selected_mode))
      e_config_runtime_info->gui.selected_output_dd->new_mode = selected_mode;
 
    fprintf(stderr, "CONF_RANDR: Mode %s was selected for crtc/output %d!\n", (selected_mode ? selected_mode->name : "None"), (e_config_runtime_info->gui.selected_output_dd->crtc ? e_config_runtime_info->gui.selected_output_dd->crtc->xid :  e_config_runtime_info->gui.selected_output_dd->output->xid));
