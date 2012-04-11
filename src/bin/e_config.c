@@ -582,6 +582,7 @@ e_config_init(void)
 #define D _e_config_randr_serialized_crtc_edd
    E_CONFIG_LIST(D, T, outputs, _e_config_randr_serialized_output_edd);
    E_CONFIG_SUB(D, T, mode_info, _e_config_randr_mode_info_edd);
+   E_CONFIG_VAL(D, T, index, INT);
    E_CONFIG_VAL(D, T, pos.x, INT);
    E_CONFIG_VAL(D, T, pos.y, INT);
    E_CONFIG_VAL(D, T, orientation, INT);

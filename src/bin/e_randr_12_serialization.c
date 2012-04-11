@@ -142,7 +142,7 @@ Ecore_X_Randr_Mode_Info
    mi->vTotal = src->vTotal;
    if (src->nameLength > 0)
      {
-        mi->name = eina_stringshare_add(src->name);
+        mi->name = (char*)eina_stringshare_add(src->name);
      }
    mi->nameLength = src->nameLength;
    mi->modeFlags = src->modeFlags;
@@ -352,6 +352,7 @@ _12_serialized_setup_update(Eina_List *setups_12)
          */
         if ((ss_12 = _matching_serialized_setup_get(setups_12)))
           {
+             fprintf(stderr, "E_RANDR: Found stored configuration that matches current setup. It was created at %f. Freeing it...\n", ss_12->timestamp);
              _12_serialized_setup_free(ss_12);
              setups_12 = eina_list_remove(setups_12, ss_12);
           }
@@ -410,6 +411,11 @@ _12_try_restore_configuration(void)
    EINA_LIST_FOREACH(ss_12->crtcs, iter, sc)
      {
         ci = _find_matching_crtc(sc);
+        if (!ci)
+          {
+             fprintf(stderr, "E_RANDR: Cannot find a matching CRTC for serialized CRTC index %d.\n", sc->index);
+             return EINA_FALSE;
+          }
         outputs_list = _find_matching_outputs(sc->outputs);
         outputs_array = _outputs_to_array(outputs_list);
         fprintf(stderr, "E_RANDR: \tSerialized mode ");
@@ -505,6 +511,7 @@ _find_matching_crtc(E_Randr_Serialized_Crtc *sc)
    EINA_SAFETY_ON_NULL_RETURN_VAL(sc, NULL);
    EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, NULL);
 
+   fprintf(stderr, "E_RANDR: Setup restore.. Runtime system knows about %d CRTCs. Requested CRTC has index %d\n", eina_list_count(e_randr_screen_info.rrvd_info.randr_info_12->crtcs), sc->index);
    return eina_list_nth(e_randr_screen_info.rrvd_info.randr_info_12->crtcs, sc->index);
 }
 

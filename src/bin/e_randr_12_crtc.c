@@ -42,9 +42,9 @@ _crtc_refs_set(E_Randr_Crtc_Info *crtc_info)
    EINA_SAFETY_ON_NULL_RETURN(crtc_info);
 
    mode = ecore_x_randr_crtc_mode_get(e_randr_screen_info.root, crtc_info->xid);
-   if (!(mode_info = _12_screen_info_mode_info_get(mode)))
+   if (!(mode_info = _12_screen_info_mode_info_get(mode)) && (mode != Ecore_X_Randr_None))
      {
-        //Mode unknown to the global structure, so add it
+        //Mode does not equal "disabled" and is unknown to the global structure, so add it
         mode_info = ecore_x_randr_mode_info_get(e_randr_screen_info.root, mode);
         e_randr_screen_info.rrvd_info.randr_info_12->modes = eina_list_append(e_randr_screen_info.rrvd_info.randr_info_12->modes, mode_info);
      }
