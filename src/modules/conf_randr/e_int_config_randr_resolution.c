@@ -78,7 +78,24 @@ resolution_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *c
    E_Randr_Crtc_Info *crtc_info = NULL;
    Eina_List *it, *it2;
    int noutputs = Ecore_X_Randr_Unset;
-   Eina_Bool success = EINA_TRUE;
+   Eina_Bool success = EINA_TRUE, another_one_enabled = EINA_FALSE;
+
+   //make sure at least one other output is not disabled
+   EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, it, odd)
+     {
+        if ((!odd->new_mode && odd->previous_mode && (odd->previous_mode != &disabled_mode)) || (odd->new_mode && (odd->new_mode != &disabled_mode)))
+          {
+             another_one_enabled = EINA_TRUE;
+             break;
+          }
+     }
+
+   if (!another_one_enabled)
+     {
+        e_util_dialog_show("Invalid configuration!", "At least one monitor has to remain enabled!");
+        fprintf(stderr, "CONF_RANDR: No other monitor is enabled, aborting reconfiguration.\n");
+        return EINA_FALSE;
+     }
 
    EINA_LIST_FOREACH(e_config_runtime_info->output_dialog_data_list, it, odd)
      {
@@ -147,7 +164,7 @@ void
 resolution_widget_update_list(Evas_Object *rep)
 {
    Eina_List *iter, *modelist = NULL;
-   E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
+   E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    Ecore_X_Randr_Mode_Info *mode_info, *current_mode = NULL;
    char resolution_text[RESOLUTION_TXT_MAX_LENGTH];
    float rate;
@@ -157,24 +174,24 @@ resolution_widget_update_list(Evas_Object *rep)
    e_widget_ilist_freeze(e_config_runtime_info->gui.widgets.resolution.widget);
    e_widget_ilist_clear(e_config_runtime_info->gui.widgets.resolution.widget);
 
-   if (!rep || !(output_dialog_data = evas_object_data_get(rep, "rep_info")))
+   if (!rep || !(odd = evas_object_data_get(rep, "rep_info")))
      goto _go_and_return;
 
    //select correct mode list
-   if (output_dialog_data->new_mode)
-     current_mode = output_dialog_data->new_mode;
-   else if (output_dialog_data->crtc)
+   if (odd->new_mode)
+     current_mode = odd->new_mode;
+   else if (odd->crtc)
      {
-        if (!output_dialog_data->crtc->current_mode)
+        if (!odd->crtc->current_mode)
           current_mode = &disabled_mode;
         else
-          current_mode = output_dialog_data->crtc->current_mode;
+          current_mode = odd->crtc->current_mode;
      }
 
-   if (output_dialog_data->crtc)
-     modelist = output_dialog_data->crtc->outputs_common_modes;
-   else if (output_dialog_data->output && output_dialog_data->output->monitor)
-     modelist = output_dialog_data->output->monitor->modes;
+   if (odd->crtc)
+     modelist = odd->crtc->outputs_common_modes;
+   else if (odd->output && odd->output->monitor)
+     modelist = odd->output->monitor->modes;
 
    if (!modelist)
      goto _go_and_return;
@@ -196,14 +213,20 @@ resolution_widget_update_list(Evas_Object *rep)
 
         e_widget_ilist_append(e_config_runtime_info->gui.widgets.resolution.widget, NULL, resolution_text, _resolution_widget_selected_cb, mode_info, NULL);
 
-        //select currently enabled mode
-        if (mode_info == current_mode)
+        if (mode_info != current_mode)
+          i++;
+        else
           e_widget_ilist_selected_set(e_config_runtime_info->gui.widgets.resolution.widget, i);
-        i++;
      }
 
    //append 'disabled' mode
    e_widget_ilist_append(e_config_runtime_info->gui.widgets.resolution.widget, NULL, _("Disabled"), NULL, &disabled_mode, NULL);
+   if (current_mode == &disabled_mode) //select currently enabled mode
+     {
+        i = eina_list_count(modelist);
+        e_widget_ilist_selected_set(e_config_runtime_info->gui.widgets.resolution.widget, i);
+     }
+
 
    //reenable widget
    enable = EINA_TRUE;
@@ -226,7 +249,7 @@ resolution_widget_keep_changes(E_Config_Dialog_Data *cfdata)
      {
         if (!odd || !odd->new_mode || (odd->new_mode == odd->previous_mode))
           continue;
-        odd->previous_mode = odd->new_mode;
+        odd->previous_mode = (odd->new_mode == &disabled_mode) ? NULL : odd->new_mode;
         odd->new_mode = NULL;
      }
 }
@@ -263,8 +286,7 @@ _resolution_widget_selected_cb(void *data)
         return;
      }
 
-   if (selected_mode)
-     e_config_runtime_info->gui.selected_output_dd->new_mode = selected_mode;
+   e_config_runtime_info->gui.selected_output_dd->new_mode = selected_mode;
 
    fprintf(stderr, "CONF_RANDR: Mode %s was selected for crtc/output %d!\n", (selected_mode ? selected_mode->name : "None"), (e_config_runtime_info->gui.selected_output_dd->crtc ? e_config_runtime_info->gui.selected_output_dd->crtc->xid :  e_config_runtime_info->gui.selected_output_dd->output->xid));
 }
