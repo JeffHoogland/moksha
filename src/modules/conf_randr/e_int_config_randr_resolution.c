@@ -289,4 +289,5 @@ _resolution_widget_selected_cb(void *data)
    e_config_runtime_info->gui.selected_output_dd->new_mode = selected_mode;
 
    fprintf(stderr, "CONF_RANDR: Mode %s was selected for crtc/output %d!\n", (selected_mode ? selected_mode->name : "None"), (e_config_runtime_info->gui.selected_output_dd->crtc ? e_config_runtime_info->gui.selected_output_dd->crtc->xid :  e_config_runtime_info->gui.selected_output_dd->output->xid));
+   arrangement_widget_rep_update(e_config_runtime_info->gui.selected_output_dd);
 }
