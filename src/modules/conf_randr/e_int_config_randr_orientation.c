@@ -141,6 +141,8 @@ _orientation_widget_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_
 
    e_config_runtime_info->gui.selected_output_dd->new_orientation = orientation;
 
+   arrangement_widget_rep_update(e_config_runtime_info->gui.selected_output_dd);
+
    //edje_object_signal_emit(e_config_runtime_info->gui.widgets.orientation.swallowing_edje, signal, "e");
 
    //fprintf(stderr, "CONF_RANDR: mouse button released. Emitted signal to orientation: %s\n", signal);

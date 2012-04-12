@@ -9,10 +9,10 @@
 #define ECORE_X_RANDR_1_3   ((1 << 16) | 3)
 #endif
 
-#ifdef  POS_UNSET
-#undef  POS_UNSET
+#ifdef  Ecore_X_Randr_Unset
+#undef  Ecore_X_Randr_Unset
 #endif
-#define POS_UNSET -1
+#define Ecore_X_Randr_Unset -1
 
 #define DOUBLECLICK_TIMEOUT 0.2
 #define CRTC_THUMB_SIZE_W   300
@@ -102,8 +102,8 @@ _arrangement_widget_rep_dialog_data_fill(E_Config_Randr_Dialog_Output_Dialog_Dat
 {
    if (!odd) return;
 
-   odd->new_pos.x = POS_UNSET;
-   odd->new_pos.y = POS_UNSET;
+   odd->new_pos.x = Ecore_X_Randr_Unset;
+   odd->new_pos.y = Ecore_X_Randr_Unset;
 
    if (odd->crtc)
      {
@@ -113,8 +113,8 @@ _arrangement_widget_rep_dialog_data_fill(E_Config_Randr_Dialog_Output_Dialog_Dat
      }
    else
      {
-        odd->previous_pos.x = POS_UNSET;
-        odd->previous_pos.y = POS_UNSET;
+        odd->previous_pos.x = Ecore_X_Randr_Unset;
+        odd->previous_pos.y = Ecore_X_Randr_Unset;
      }
 }
 
@@ -122,6 +122,7 @@ void
 arrangement_widget_rep_update(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 {
    Eina_Rectangle geo = {.x = 0, .y = 0, .w = 0, .h = 0};
+   Ecore_X_Randr_Orientation orientation = Ecore_X_Randr_Unset;
 
    //Get width, height
    if (odd->new_mode)
@@ -146,7 +147,7 @@ arrangement_widget_rep_update(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
      }
 
    //Get x, y
-   if ((odd->new_pos.x != POS_UNSET) && (odd->new_pos.y != POS_UNSET))
+   if ((odd->new_pos.x != Ecore_X_Randr_Unset) && (odd->new_pos.y != Ecore_X_Randr_Unset))
      {
         geo.x = odd->new_pos.x;
         geo.y = odd->new_pos.y;
@@ -162,9 +163,22 @@ arrangement_widget_rep_update(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
         geo.y = e_config_runtime_info->gui.widgets.arrangement.dummy_geo.y;
      }
 
-   e_layout_child_raise(odd->rep);
-   e_layout_child_resize(odd->rep, geo.w, geo.h);
+   if (odd->crtc)
+     {
+        orientation = (odd->new_orientation != Ecore_X_Randr_Unset) ? odd->new_orientation : odd->previous_orientation;
+     }
+   switch (orientation)
+     {
+      case ECORE_X_RANDR_ORIENTATION_ROT_90:
+      case ECORE_X_RANDR_ORIENTATION_ROT_270:
+         e_layout_child_resize(odd->rep, geo.h, geo.w);
+         break;
+      default:
+         e_layout_child_resize(odd->rep, geo.w, geo.h);
+         break;
+     }
    e_layout_child_move(odd->rep, geo.x, geo.y);
+   e_layout_child_raise(odd->rep);
    fprintf(stderr, "CONF_RANDR: Representation (%p) updated with geo %d.%d %dx%d.\n", odd->rep, geo.x, geo.y, geo.w, geo.h);
 }
 
@@ -520,28 +534,28 @@ _arrangement_widget_make_suggestion(Evas_Object *obj)
 
    e_layout_child_geometry_get(obj, &o_geo.x, &o_geo.y, &o_geo.w, &o_geo.h);
 
-   if (ps->pos.x != POS_UNSET)
+   if (ps->pos.x != Ecore_X_Randr_Unset)
      {
         odd->new_pos.x = ps->pos.x;
-        if ((odd->new_pos.x + o_geo.w) > e_randr_screen_info.rrvd_info.randr_info_12->max_size.width)
-          odd->new_pos.x = POS_UNSET;
+        if ((odd->new_pos.x + o_geo.w) > e_randr_screen_info.rrvd_info.randr_info_12->max_size.width) //FIXME:Rotation
+          odd->new_pos.x = Ecore_X_Randr_Unset;
         else if (odd->new_pos.x < 0)
           odd->new_pos.x = 0;
      }
 
-   if (ps->pos.y != POS_UNSET)
+   if (ps->pos.y != Ecore_X_Randr_Unset)
      {
         odd->new_pos.y = ps->pos.y;
-        if ((odd->new_pos.y + o_geo.h) > e_randr_screen_info.rrvd_info.randr_info_12->max_size.height)
-          odd->new_pos.y = POS_UNSET;
+        if ((odd->new_pos.y + o_geo.h) > e_randr_screen_info.rrvd_info.randr_info_12->max_size.height) //FIXME: Rotation
+          odd->new_pos.y = Ecore_X_Randr_Unset;
         else if (odd->new_pos.y < 0)
           odd->new_pos.y = 0;
      }
 
    if (_arrangemnet_rep_illegal_overlapping(odd) || ps->distance > max_dist)
-     odd->new_pos.x = odd->new_pos.y = POS_UNSET;
+     odd->new_pos.x = odd->new_pos.y = Ecore_X_Randr_Unset;
 
-   if ((odd->new_pos.x != POS_UNSET) && (odd->new_pos.y != POS_UNSET))
+   if ((odd->new_pos.x != Ecore_X_Randr_Unset) && (odd->new_pos.y != Ecore_X_Randr_Unset))
      {
         if (!visible)
           {
@@ -590,7 +604,7 @@ arrangement_widget_basic_apply_data(E_Config_Dialog *cfd __UNUSED__ , E_Config_D
    //create list of all evas objects we concern
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd->crtc || !odd->crtc->current_mode || (odd->new_pos.x == POS_UNSET) || (odd->new_pos.y == POS_UNSET))
+        if (!odd->crtc || !odd->crtc->current_mode || (odd->new_pos.x == Ecore_X_Randr_Unset) || (odd->new_pos.y == Ecore_X_Randr_Unset))
           continue;
         fprintf(stderr, "CONF_RANDR: Rearranging CRTC %d to %d,%d\n", odd->crtc->xid, odd->new_pos.x, odd->new_pos.y);
 #define EQL(c) (odd->new_pos.c == odd->crtc->geometry.c)
@@ -618,7 +632,7 @@ arrangement_widget_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         fprintf(stderr, "CONF_RANDR: Checking coord of odd %p. new_pos is: %d,%d\n", odd, odd->new_pos.x, odd->new_pos.y);
-        if (!odd->crtc || !odd->crtc->current_mode || (odd->new_pos.x == POS_UNSET) || (odd->new_pos.y == POS_UNSET))
+        if (!odd->crtc || !odd->crtc->current_mode || (odd->new_pos.x == Ecore_X_Randr_Unset) || (odd->new_pos.y == Ecore_X_Randr_Unset))
           continue;
 #define EQL(c) (odd->new_pos.c == odd->crtc->geometry.c)
         if (!EQL(x) || !EQL(y))
@@ -636,12 +650,12 @@ arrangement_widget_keep_changes(E_Config_Dialog_Data *cfdata __UNUSED__)
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd->crtc || !odd->crtc->current_mode || (odd->new_pos.x == POS_UNSET) || (odd->new_pos.y == POS_UNSET))
+        if (!odd->crtc || !odd->crtc->current_mode || (odd->new_pos.x == Ecore_X_Randr_Unset) || (odd->new_pos.y == Ecore_X_Randr_Unset))
           continue;
         //FIXME Rely on RandRR events to update data!
         odd->previous_pos.x = odd->new_pos.x;
         odd->previous_pos.y = odd->new_pos.y;
-        odd->new_pos.x = odd->new_pos.y = POS_UNSET;
+        odd->new_pos.x = odd->new_pos.y = Ecore_X_Randr_Unset;
      }
 }
 
@@ -655,7 +669,7 @@ arrangement_widget_discard_changes(E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
-        if (!odd->crtc || ((odd->previous_pos.x == POS_UNSET) || (odd->previous_pos.y == POS_UNSET))) continue;
+        if (!odd->crtc || ((odd->previous_pos.x == Ecore_X_Randr_Unset) || (odd->previous_pos.y == Ecore_X_Randr_Unset))) continue;
 #define EQL(c) (odd->previous_pos.c == odd->crtc->geometry.c)
         if (!EQL(x) || !EQL(y))
           ecore_x_randr_crtc_pos_set(cfdata->manager->root, odd->crtc->xid, odd->previous_pos.x, odd->previous_pos.y);
@@ -695,7 +709,7 @@ static Position_Suggestion
    //initialize returned object
    ps = E_NEW(Position_Suggestion, 1);
    ps->closest_objects.pos_rel.x = ps->closest_objects.pos_rel.y = EVAS_OBJECT_REL_POS_NONE;
-   ps->pos.x = ps->pos.y = POS_UNSET;
+   ps->pos.x = ps->pos.y = Ecore_X_Randr_Unset;
 
    EINA_LIST_FOREACH(children, iter, io)
      {
