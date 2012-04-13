@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-13 15:39+0200\n"
+"POT-Creation-Date: 2012-03-25 15:08+0900\n"
 "PO-Revision-Date: 2012-02-07 20:46+0200\n"
 "Last-Translator: Danny Moshnakov <admin@moshnakov.org>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -727,7 +727,7 @@ msgstr "Установить как фон"
 msgid "Color Selector"
 msgstr "Диалог выбора цвета"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1572 src/bin/e_config.c:2147
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1571 src/bin/e_config.c:2146
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
 #: src/bin/e_fm.c:8750 src/bin/e_fm.c:9394 src/bin/e_fm_prop.c:507
@@ -757,7 +757,7 @@ msgstr "ОК"
 msgid "Cancel"
 msgstr "Отменить"
 
-#: src/bin/e_config.c:949 src/bin/e_config.c:982
+#: src/bin/e_config.c:948 src/bin/e_config.c:981
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -773,7 +773,7 @@ msgstr ""
 "конфига, который и был<br> инициализирован. Можете настроить все заново. "
 "Извините за неудобства.<br>"
 
-#: src/bin/e_config.c:966
+#: src/bin/e_config.c:965
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -787,11 +787,11 @@ msgstr ""
 "версия Enlightenment.<br>Это неправильно, и поэтому ваша конфигурация "
 "была<br>восстановлена на стандартную. Извините за неудобство.<br>"
 
-#: src/bin/e_config.c:1559 src/bin/e_config.c:2134
+#: src/bin/e_config.c:1558 src/bin/e_config.c:2133
 msgid "Enlightenment Settings Write Problems"
 msgstr "Проблемы сохранения параметров Enlightenment"
 
-#: src/bin/e_config.c:1562
+#: src/bin/e_config.c:1561
 #, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -801,19 +801,19 @@ msgstr ""
 "Enlightenment обнаружил сбой при перемещении файлов конфигурации<br>из:<br>"
 "%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br> "
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2043
 msgid "Settings Upgraded"
 msgstr "Параметры обновлены"
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2060
 msgid "The EET file handle is bad."
 msgstr "Поврежденный хэндл ЕЕТ файла."
 
-#: src/bin/e_config.c:2064
+#: src/bin/e_config.c:2063
 msgid "The file data is empty."
 msgstr "Файл данных пуст."
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2066
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -821,16 +821,16 @@ msgstr ""
 "Не получилось записать файл. Возможно диск защищен от записи<br>либо у вас "
 "нет прав на файлы."
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2069
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Кончилась память при подготовке к записи.<br>Пожалуйста освободите память."
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2072
 msgid "This is a generic error."
 msgstr "Это стандартная ошибка."
 
-#: src/bin/e_config.c:2076
+#: src/bin/e_config.c:2075
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -838,59 +838,59 @@ msgstr ""
 "Файл настроек слишком большой.<br>Реально он гораздо меньше (максимум "
 "несколько сотен KB)."
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2078
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "На диске замечены ошибки ввода-вывода.<br>Возможно стоит его заменить?"
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2081
 msgid "You ran out of space while writing the file"
 msgstr "Закончилось место во время записи файла."
 
-#: src/bin/e_config.c:2085
+#: src/bin/e_config.c:2084
 msgid "The file was closed on it while writing."
 msgstr "Файл был закрыт в момент записи."
 
-#: src/bin/e_config.c:2088
+#: src/bin/e_config.c:2087
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Отображение файла в память (mmap) не удалось."
 
-#: src/bin/e_config.c:2091
+#: src/bin/e_config.c:2090
 msgid "X509 Encoding failed."
 msgstr "Кодирование X509 не удалось."
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2093
 msgid "Signature failed."
 msgstr "Подпись ошибочна."
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2096
 msgid "The signature was invalid."
 msgstr "Подпись не валидна."
 
-#: src/bin/e_config.c:2100
+#: src/bin/e_config.c:2099
 msgid "Not signed."
 msgstr "Не подписано."
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2102
 msgid "Feature not implemented."
 msgstr "Функция не реализована"
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2105
 msgid "PRNG was not seeded."
 msgstr "PRNG was not seeded."
 
-#: src/bin/e_config.c:2109
+#: src/bin/e_config.c:2108
 msgid "Encryption failed."
 msgstr "Ошибка шифрования."
 
-#: src/bin/e_config.c:2112
+#: src/bin/e_config.c:2111
 msgid "Decryption failed."
 msgstr "Ошибка дешифровки."
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2114
 msgid "The error is unknown to Enlightenment."
 msgstr "Эта ошибка не известна Enlightenment."
 
-#: src/bin/e_config.c:2137
+#: src/bin/e_config.c:2136
 #, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -901,7 +901,7 @@ msgstr ""
 "файле.<br>%s<br><br>Файл в котором возникла ошибка:<br>%s<br><br>Этот файл "
 "был удалён для предотвращения повреждения данных. <br>"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:778
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/syscon/e_mod_main.c:36
@@ -3506,84 +3506,74 @@ msgstr "Запрещено"
 msgid "Read-Write"
 msgstr "Чтение-Запись"
 
-#: src/modules/battery/e_mod_config.c:64
+#: src/modules/battery/e_mod_config.c:63
 msgid "Battery Monitor Settings"
 msgstr "Параметры монитора батареи"
 
-#: src/modules/battery/e_mod_config.c:134
+#: src/modules/battery/e_mod_config.c:132
 msgid "Show alert when battery is low"
 msgstr "Предупреждать при низком уровне заряда"
 
-#: src/modules/battery/e_mod_config.c:138
+#: src/modules/battery/e_mod_config.c:136
 msgid "Use desktop notifications for alert."
 msgstr "Использовать уведомления рабочего стола для предупреждений."
 
-#: src/modules/battery/e_mod_config.c:235
+#: src/modules/battery/e_mod_config.c:233
 msgid "Check every:"
 msgstr "Проверять каждые:"
 
-#: src/modules/battery/e_mod_config.c:237
+#: src/modules/battery/e_mod_config.c:235
 #: src/modules/conf_performance/e_int_config_performance.c:121
 #: src/modules/temperature/e_mod_config.c:233
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f тиков"
 
-#: src/modules/battery/e_mod_config.c:242
-#, fuzzy
-msgid "Suspend when below:"
-msgstr "Заморозить когда менее:"
-
-#: src/modules/battery/e_mod_config.c:245
+#: src/modules/battery/e_mod_config.c:239
 msgid "Hibernate when below:"
 msgstr "Заморозить когда менее:"
 
-#: src/modules/battery/e_mod_config.c:248
-#, fuzzy
-msgid "Shutdown when below:"
-msgstr "Заморозить когда менее:"
-
-#: src/modules/battery/e_mod_config.c:251
-#: src/modules/battery/e_mod_config.c:270
+#: src/modules/battery/e_mod_config.c:241
+#: src/modules/battery/e_mod_config.c:260
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
 
-#: src/modules/battery/e_mod_config.c:255
+#: src/modules/battery/e_mod_config.c:245
 msgid "Polling"
 msgstr "Пуллинг"
 
-#: src/modules/battery/e_mod_config.c:259
+#: src/modules/battery/e_mod_config.c:249
 msgid "Show low battery alert"
 msgstr "Показывать предупреждение низкого заряда"
 
-#: src/modules/battery/e_mod_config.c:263
+#: src/modules/battery/e_mod_config.c:253
 msgid "Alert when at:"
 msgstr "Предупреждать когда:"
 
-#: src/modules/battery/e_mod_config.c:266
+#: src/modules/battery/e_mod_config.c:256
 #, c-format
 msgid "%1.0f min"
 msgstr "%1.0f мин"
 
-#: src/modules/battery/e_mod_config.c:274
+#: src/modules/battery/e_mod_config.c:264
 msgid "Auto dismiss in..."
 msgstr "Автоматически скрыть через..."
 
-#: src/modules/battery/e_mod_config.c:279
+#: src/modules/battery/e_mod_config.c:269
 #, c-format
 msgid "%1.0f sec"
 msgstr "%1.0f сек"
 
-#: src/modules/battery/e_mod_config.c:286
+#: src/modules/battery/e_mod_config.c:276
 msgid "Alert"
 msgstr "Предупреждение"
 
-#: src/modules/battery/e_mod_config.c:292
+#: src/modules/battery/e_mod_config.c:282
 msgid "Auto Detect"
 msgstr "Автоопределение"
 
-#: src/modules/battery/e_mod_config.c:295
+#: src/modules/battery/e_mod_config.c:285
 #: src/modules/conf_applications/e_mod_main.c:52
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
@@ -3591,20 +3581,20 @@ msgstr "Автоопределение"
 msgid "Internal"
 msgstr "Встроеный"
 
-#: src/modules/battery/e_mod_config.c:299
+#: src/modules/battery/e_mod_config.c:289
 #: src/modules/temperature/e_mod_config.c:271
 msgid "udev"
 msgstr "udev"
 
-#: src/modules/battery/e_mod_config.c:302
+#: src/modules/battery/e_mod_config.c:292
 msgid "Fuzzy Mode"
 msgstr "Нечеткий режим"
 
-#: src/modules/battery/e_mod_config.c:306
+#: src/modules/battery/e_mod_config.c:296
 msgid "HAL"
 msgstr "HAL"
 
-#: src/modules/battery/e_mod_config.c:311
+#: src/modules/battery/e_mod_config.c:301
 #: src/modules/temperature/e_mod_config.c:273
 msgid "Hardware"
 msgstr "Устройства"
@@ -3625,12 +3615,12 @@ msgstr "Рекомменуется запитаться от сети"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:665
-#: src/modules/battery/e_mod_main.c:672 src/modules/battery/e_mod_main.c:674
+#: src/modules/battery/e_mod_main.c:656 src/modules/battery/e_mod_main.c:658
+#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:667
 msgid "ERROR"
 msgstr "ОШИБКА"
 
-#: src/modules/battery/e_mod_main.c:787
+#: src/modules/battery/e_mod_main.c:780
 msgid "Battery Meter"
 msgstr "Индикатор батареи"
 

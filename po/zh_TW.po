@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-13 15:39+0200\n"
+"POT-Creation-Date: 2012-03-25 15:08+0900\n"
 "PO-Revision-Date: 2007-11-06 20:25+0800\n"
 "Last-Translator: Chia-I Wu <olv@openmoko.com>\n"
 "Language-Team: none\n"
@@ -751,7 +751,7 @@ msgstr "設定為桌布"
 msgid "Color Selector"
 msgstr "Profile 選擇器"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1572 src/bin/e_config.c:2147
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1571 src/bin/e_config.c:2146
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
 #: src/bin/e_fm.c:8750 src/bin/e_fm.c:9394 src/bin/e_fm_prop.c:507
@@ -781,7 +781,7 @@ msgstr "確定"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/bin/e_config.c:949 src/bin/e_config.c:982
+#: src/bin/e_config.c:948 src/bin/e_config.c:981
 #, fuzzy
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
@@ -797,7 +797,7 @@ msgstr ""
 "資料未能提供的功能。<br>新的組態會加入這些功能。您現在可以重新配置您的桌面設"
 "定。<br>抱歉打斷您的配置。<br>"
 
-#: src/bin/e_config.c:966
+#: src/bin/e_config.c:965
 #, fuzzy
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
@@ -810,12 +810,12 @@ msgstr ""
 "Enlightenment 或是從其它地方複製了新版的組態檔<br>否則這不應該發生。這是不好"
 "的，所以為防萬一，您的組態檔已被<br>恢復成預設值。很抱歉為您帶來不便。<br>"
 
-#: src/bin/e_config.c:1559 src/bin/e_config.c:2134
+#: src/bin/e_config.c:1558 src/bin/e_config.c:2133
 #, fuzzy
 msgid "Enlightenment Settings Write Problems"
 msgstr "Enlightenment 組態寫入發生問題"
 
-#: src/bin/e_config.c:1562
+#: src/bin/e_config.c:1561
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -825,97 +825,97 @@ msgstr ""
 "Enlightment 要寫入的設定檔未預期的被關閉了。<br>這很不尋常。<br><br>發生錯誤"
 "的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2043
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "桌面設定"
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2060
 msgid "The EET file handle is bad."
 msgstr ""
 
-#: src/bin/e_config.c:2064
+#: src/bin/e_config.c:2063
 msgid "The file data is empty."
 msgstr ""
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2066
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
 msgstr ""
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2069
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2072
 msgid "This is a generic error."
 msgstr ""
 
-#: src/bin/e_config.c:2076
+#: src/bin/e_config.c:2075
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2078
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2081
 msgid "You ran out of space while writing the file"
 msgstr ""
 
-#: src/bin/e_config.c:2085
+#: src/bin/e_config.c:2084
 msgid "The file was closed on it while writing."
 msgstr ""
 
-#: src/bin/e_config.c:2088
+#: src/bin/e_config.c:2087
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr ""
 
-#: src/bin/e_config.c:2091
+#: src/bin/e_config.c:2090
 msgid "X509 Encoding failed."
 msgstr ""
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2093
 #, fuzzy
 msgid "Signature failed."
 msgstr "無法休眠"
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2096
 msgid "The signature was invalid."
 msgstr ""
 
-#: src/bin/e_config.c:2100
+#: src/bin/e_config.c:2099
 #, fuzzy
 msgid "Not signed."
 msgstr "（無任何視窗）"
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2102
 msgid "Feature not implemented."
 msgstr ""
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2105
 msgid "PRNG was not seeded."
 msgstr ""
 
-#: src/bin/e_config.c:2109
+#: src/bin/e_config.c:2108
 #, fuzzy
 msgid "Encryption failed."
 msgstr "待機時間"
 
-#: src/bin/e_config.c:2112
+#: src/bin/e_config.c:2111
 #, fuzzy
 msgid "Decryption failed."
 msgstr "待機時間"
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2114
 #, fuzzy
 msgid "The error is unknown to Enlightenment."
 msgstr "歡迎來到 Enlightenment 東京"
 
-#: src/bin/e_config.c:2137
+#: src/bin/e_config.c:2136
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -925,7 +925,7 @@ msgstr ""
 "Enlightment 要寫入的設定檔未預期的被關閉了。<br>這很不尋常。<br><br>發生錯誤"
 "的檔案為:<br>%s<br><br>此檔案已刪除以防止損壞設定。<br>"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:778
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/syscon/e_mod_main.c:36
@@ -3559,92 +3559,82 @@ msgstr "禁止讀寫"
 msgid "Read-Write"
 msgstr "讀寫"
 
-#: src/modules/battery/e_mod_config.c:64
+#: src/modules/battery/e_mod_config.c:63
 #, fuzzy
 msgid "Battery Monitor Settings"
 msgstr "電池監控組態"
 
-#: src/modules/battery/e_mod_config.c:134
+#: src/modules/battery/e_mod_config.c:132
 msgid "Show alert when battery is low"
 msgstr "電量不足時發出警告"
 
-#: src/modules/battery/e_mod_config.c:138
+#: src/modules/battery/e_mod_config.c:136
 msgid "Use desktop notifications for alert."
 msgstr ""
 
-#: src/modules/battery/e_mod_config.c:235
+#: src/modules/battery/e_mod_config.c:233
 #, fuzzy
 msgid "Check every:"
 msgstr "電量檢查間隔:"
 
-#: src/modules/battery/e_mod_config.c:237
+#: src/modules/battery/e_mod_config.c:235
 #: src/modules/conf_performance/e_int_config_performance.c:121
 #: src/modules/temperature/e_mod_config.c:233
 #, fuzzy, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f 筆"
 
-#: src/modules/battery/e_mod_config.c:242
-#, fuzzy
-msgid "Suspend when below:"
-msgstr "休眠"
-
-#: src/modules/battery/e_mod_config.c:245
+#: src/modules/battery/e_mod_config.c:239
 #, fuzzy
 msgid "Hibernate when below:"
 msgstr "休眠"
 
-#: src/modules/battery/e_mod_config.c:248
-#, fuzzy
-msgid "Shutdown when below:"
-msgstr "休眠"
-
-#: src/modules/battery/e_mod_config.c:251
-#: src/modules/battery/e_mod_config.c:270
+#: src/modules/battery/e_mod_config.c:241
+#: src/modules/battery/e_mod_config.c:260
 #, fuzzy, c-format
 msgid "%1.0f %%"
 msgstr "%3.0f%%"
 
-#: src/modules/battery/e_mod_config.c:255
+#: src/modules/battery/e_mod_config.c:245
 #, fuzzy
 msgid "Polling"
 msgstr "一般"
 
-#: src/modules/battery/e_mod_config.c:259
+#: src/modules/battery/e_mod_config.c:249
 #, fuzzy
 msgid "Show low battery alert"
 msgstr "電量不足時發出警告"
 
-#: src/modules/battery/e_mod_config.c:263
+#: src/modules/battery/e_mod_config.c:253
 #, fuzzy
 msgid "Alert when at:"
 msgstr "可用電量低於此時間時發出警告:"
 
-#: src/modules/battery/e_mod_config.c:266
+#: src/modules/battery/e_mod_config.c:256
 #, fuzzy, c-format
 msgid "%1.0f min"
 msgstr "%1.0f 分鐘"
 
-#: src/modules/battery/e_mod_config.c:274
+#: src/modules/battery/e_mod_config.c:264
 msgid "Auto dismiss in..."
 msgstr ""
 
-#: src/modules/battery/e_mod_config.c:279
+#: src/modules/battery/e_mod_config.c:269
 #, fuzzy, c-format
 msgid "%1.0f sec"
 msgstr "%1.1f 秒"
 
-#: src/modules/battery/e_mod_config.c:286
+#: src/modules/battery/e_mod_config.c:276
 #, fuzzy
 msgid "Alert"
 msgstr "加速"
 
-#: src/modules/battery/e_mod_config.c:292
+#: src/modules/battery/e_mod_config.c:282
 #, fuzzy
 msgid "Auto Detect"
 msgstr "自動隱藏"
 
-#: src/modules/battery/e_mod_config.c:295
+#: src/modules/battery/e_mod_config.c:285
 #: src/modules/conf_applications/e_mod_main.c:52
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
@@ -3652,22 +3642,22 @@ msgstr "自動隱藏"
 msgid "Internal"
 msgstr "內部"
 
-#: src/modules/battery/e_mod_config.c:299
+#: src/modules/battery/e_mod_config.c:289
 #: src/modules/temperature/e_mod_config.c:271
 msgid "udev"
 msgstr ""
 
-#: src/modules/battery/e_mod_config.c:302
+#: src/modules/battery/e_mod_config.c:292
 #, fuzzy
 msgid "Fuzzy Mode"
 msgstr "模糊"
 
-#: src/modules/battery/e_mod_config.c:306
+#: src/modules/battery/e_mod_config.c:296
 #, fuzzy
 msgid "HAL"
 msgstr "ALT"
 
-#: src/modules/battery/e_mod_config.c:311
+#: src/modules/battery/e_mod_config.c:301
 #: src/modules/temperature/e_mod_config.c:273
 msgid "Hardware"
 msgstr ""
@@ -3689,12 +3679,12 @@ msgstr ""
 msgid "N/A"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:665
-#: src/modules/battery/e_mod_main.c:672 src/modules/battery/e_mod_main.c:674
+#: src/modules/battery/e_mod_main.c:656 src/modules/battery/e_mod_main.c:658
+#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:667
 msgid "ERROR"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:787
+#: src/modules/battery/e_mod_main.c:780
 #, fuzzy
 msgid "Battery Meter"
 msgstr "電池"
