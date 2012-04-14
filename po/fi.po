@@ -43,7 +43,7 @@ msgstr "Enlightenment"
 #: src/bin/e_about.c:23
 #, fuzzy
 msgid ""
-"<title>Copyright &copy; 1999-2011, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>This software is provided as-is with no explicit or implied "
 "warranty. This software is governed by licensing conditions, so please see "
