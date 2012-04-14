@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-25 15:08+0900\n"
+"POT-Creation-Date: 2012-04-14 16:41+0200\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -262,8 +262,9 @@ msgid "Set Border"
 msgstr "מסגרת"
 
 #: src/bin/e_actions.c:2811
+#, fuzzy
 msgid "Cycle between Borders"
-msgstr ""
+msgstr "מחזור בין גבולות"
 
 #: src/bin/e_actions.c:2817
 msgid "Toggle Pinned State"
@@ -500,36 +501,44 @@ msgid "Send Mouse Forward/Back Screens..."
 msgstr "שלח את העכבר קדימה/אחורה בין המסכים..."
 
 #: src/bin/e_actions.c:2969
+#, fuzzy
 msgid "Dim"
-msgstr ""
+msgstr "עמום"
 
 #: src/bin/e_actions.c:2972
+#, fuzzy
 msgid "Undim"
-msgstr ""
+msgstr "Undim"
 
 #: src/bin/e_actions.c:2975
+#, fuzzy
 msgid "Backlight Set"
-msgstr ""
+msgstr "תאורה אחורית הגדר"
 
 #: src/bin/e_actions.c:2977
+#, fuzzy
 msgid "Backlight Min"
-msgstr ""
+msgstr "תאורה אחורית מינימום"
 
 #: src/bin/e_actions.c:2979
+#, fuzzy
 msgid "Backlight Mid"
-msgstr ""
+msgstr "תאורה אחורית אמצע"
 
 #: src/bin/e_actions.c:2981
+#, fuzzy
 msgid "Backlight Max"
-msgstr ""
+msgstr "תאורה אחורית מקס"
 
 #: src/bin/e_actions.c:2984
+#, fuzzy
 msgid "Backlight Adjust"
-msgstr ""
+msgstr "התאמת תאורה אחורית"
 
 #: src/bin/e_actions.c:2986
+#, fuzzy
 msgid "Backlight Up"
-msgstr ""
+msgstr "תאורה אחורית עד"
 
 #: src/bin/e_actions.c:2988
 #, fuzzy
@@ -539,7 +548,7 @@ msgstr "כיבוי"
 #: src/bin/e_actions.c:2993
 #, fuzzy
 msgid "Move To Center"
-msgstr "העברת טקסט"
+msgstr "לעבור למרכז"
 
 #: src/bin/e_actions.c:2997
 #, fuzzy
@@ -559,7 +568,7 @@ msgstr "שנה גודל"
 #: src/bin/e_actions.c:3014
 #, fuzzy
 msgid "Push in Direction..."
-msgstr "הפוך את כיוון שולחן העבודה..."
+msgstr "לדחוף לכיוון ..."
 
 #: src/bin/e_actions.c:3020
 #, fuzzy
@@ -723,7 +732,7 @@ msgstr "הגדרה כרקע"
 msgid "Color Selector"
 msgstr "בוחר צבע"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1571 src/bin/e_config.c:2146
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1572 src/bin/e_config.c:2147
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
 #: src/bin/e_fm.c:8750 src/bin/e_fm.c:9394 src/bin/e_fm_prop.c:507
@@ -753,7 +762,7 @@ msgstr "אישור"
 msgid "Cancel"
 msgstr "ביטול"
 
-#: src/bin/e_config.c:948 src/bin/e_config.c:981
+#: src/bin/e_config.c:949 src/bin/e_config.c:982
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -764,7 +773,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:965
+#: src/bin/e_config.c:966
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -773,11 +782,11 @@ msgid ""
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1558 src/bin/e_config.c:2133
+#: src/bin/e_config.c:1559 src/bin/e_config.c:2134
 msgid "Enlightenment Settings Write Problems"
 msgstr "בעיות בכתיבה להגדרות Enlightenment"
 
-#: src/bin/e_config.c:1561
+#: src/bin/e_config.c:1562
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -788,93 +797,110 @@ msgstr ""
 "את<br>מקור השגיאה.<br><br>הקובץ בו ארעה השגיאה הינו:<br>%s<br><br>קובץ זה "
 "נמחק מחשש לנתונים פגומים.<br>"
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "Settings Upgraded"
 msgstr "ההגדרות שודרגו"
 
-#: src/bin/e_config.c:2060
+#: src/bin/e_config.c:2061
+#, fuzzy
 msgid "The EET file handle is bad."
-msgstr ""
+msgstr "ידית קובץ EET רע."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2064
+#, fuzzy
 msgid "The file data is empty."
-msgstr ""
+msgstr "קובץ נתונים ריק."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2067
+#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
 msgstr ""
+"הקובץאינו ניתן לכתיבה. אולי הדיסק הוא לקריאה בלבד<br>או איבדת הרשאות לקבצים."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2070
+#, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
-msgstr ""
+msgstr "זיכרון נגמר בעת הכנתהכתיבה.<br>אנא זיכרון עד בחינם."
 
-#: src/bin/e_config.c:2072
+#: src/bin/e_config.c:2073
+#, fuzzy
 msgid "This is a generic error."
-msgstr ""
+msgstr "זוהי שגיאה כללית."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2076
+#, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
+"קובץ הגדרות גדול מדי.<br>זה צריך להיות קטן מאוד (כמה מאות KB לכל היותר)."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2079
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2082
+#, fuzzy
 msgid "You ran out of space while writing the file"
-msgstr ""
+msgstr "אתה רץ מתוך שטח בעת כתיבתקובץ"
 
-#: src/bin/e_config.c:2084
+#: src/bin/e_config.c:2085
+#, fuzzy
 msgid "The file was closed on it while writing."
-msgstr ""
+msgstr "התיק נסגר על זה בזמן הכתיבה."
 
-#: src/bin/e_config.c:2087
+#: src/bin/e_config.c:2088
+#, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
-msgstr ""
+msgstr "זיכרון , מיפוי (mmap) של הקובץ נכשלה."
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2091
+#, fuzzy
 msgid "X509 Encoding failed."
-msgstr ""
+msgstr "X509 קידוד נכשלה."
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2094
+#, fuzzy
 msgid "Signature failed."
-msgstr ""
+msgstr "החתימה נכשל."
 
-#: src/bin/e_config.c:2096
+#: src/bin/e_config.c:2097
+#, fuzzy
 msgid "The signature was invalid."
-msgstr ""
+msgstr "החתימהלא תקין."
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2100
 #, fuzzy
 msgid "Not signed."
 msgstr "(אין חלונות)"
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2103
+#, fuzzy
 msgid "Feature not implemented."
-msgstr ""
+msgstr "תכונה לא מיושם."
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2106
+#, fuzzy
 msgid "PRNG was not seeded."
-msgstr ""
+msgstr "PRNG לא זרע."
 
-#: src/bin/e_config.c:2108
+#: src/bin/e_config.c:2109
+#, fuzzy
 msgid "Encryption failed."
-msgstr ""
+msgstr "הצפנת נכשל."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2112
 #, fuzzy
 msgid "Decryption failed."
 msgstr "תיאור: לא זמין"
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2115
 msgid "The error is unknown to Enlightenment."
 msgstr ""
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2137
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -885,7 +911,7 @@ msgstr ""
 "את<br>מקור השגיאה.<br><br>הקובץ בו ארעה השגיאה הינו:<br>%s<br><br>קובץ זה "
 "נמחק מחשש לנתונים פגומים.<br>"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:778
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/syscon/e_mod_main.c:36
@@ -979,18 +1005,21 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_desklock.c:1054 src/bin/e_screensaver.c:149
+#, fuzzy
 msgid "No, but increase timeout"
-msgstr ""
+msgstr "לא, אבל להגדיל את פסק הזמן"
 
 #: src/bin/e_desklock.c:1056 src/bin/e_screensaver.c:151
+#, fuzzy
 msgid "No, and stop asking"
-msgstr ""
+msgstr "לא, להפסיק לשאול"
 
 #: src/bin/e_eap_editor.c:174
 msgid "Incomplete Window Properties"
 msgstr "מאפייני החלון אינם מלאים"
 
 #: src/bin/e_eap_editor.c:175
+#, fuzzy
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties, so the needed properties for<br>the icon so that it "
@@ -998,6 +1027,10 @@ msgid ""
 "the window title instead. This will only<br>work if the window title is the "
 "same at<br>the time the window starts up, and does not<br>change."
 msgstr ""
+"חלון שאתה יוצרהסמל של<br>אינה מכילה את שם החלון<br>תכונות בכיתה , אז את "
+"המאפיינים הדרושים עבור<br>הסמלים כך הוא ישמש עבור החלון הזה<br>לא ניתן לנחש. "
+"יהיה עליך<br>להשתמשכותרת החלון במקום. זה עובד רק אם<br>כותרת החלון היא אותה "
+"ב<br>הזמן החלון מתחיל לעלות , והאם השינוי לא<br>."
 
 #: src/bin/e_eap_editor.c:230
 msgid "Desktop Entry Editor"
@@ -1015,8 +1048,9 @@ msgid "Comment"
 msgstr "הערה"
 
 #: src/bin/e_eap_editor.c:704
+#, fuzzy
 msgid "URL"
-msgstr ""
+msgstr "כתובת האתר"
 
 #: src/bin/e_eap_editor.c:726 src/bin/e_eap_editor.c:735
 #: src/bin/e_fm_prop.c:394 src/modules/conf_theme/e_int_config_fonts.c:95
@@ -1252,28 +1286,34 @@ msgid "%s doesn't exist."
 msgstr "%s לא קיים."
 
 #: src/bin/e_fm.c:3078
+#, fuzzy
 msgid "Mount Error"
-msgstr ""
+msgstr "הר שגיאה"
 
 #: src/bin/e_fm.c:3078
+#, fuzzy
 msgid "Can't mount device"
-msgstr ""
+msgstr "לא יכול לעלות המכשיר"
 
 #: src/bin/e_fm.c:3094
+#, fuzzy
 msgid "Unmount Error"
-msgstr ""
+msgstr "נתק שגיאה"
 
 #: src/bin/e_fm.c:3094
+#, fuzzy
 msgid "Can't unmount device"
-msgstr ""
+msgstr "לא ניתן לנתק את המכשיר"
 
 #: src/bin/e_fm.c:3109
+#, fuzzy
 msgid "Eject Error"
-msgstr ""
+msgstr "הוצא שגיאה"
 
 #: src/bin/e_fm.c:3109
+#, fuzzy
 msgid "Can't eject device"
-msgstr ""
+msgstr "אין אפשרות להוציא את המכשיר"
 
 #: src/bin/e_fm.c:3781
 #, c-format
@@ -1281,16 +1321,18 @@ msgid "%i Files"
 msgstr "%i קבצים"
 
 #: src/bin/e_fm.c:6209 src/bin/e_fm.c:7995 src/bin/e_fm.c:8184
+#, fuzzy
 msgid "Link"
-msgstr ""
+msgstr "קשר"
 
 #: src/bin/e_fm.c:6217 src/bin/e_fm.c:9176 src/bin/e_fm.c:9317
 msgid "Abort"
 msgstr "בטל"
 
 #: src/bin/e_fm.c:7914 src/bin/e_fm.c:8074
+#, fuzzy
 msgid "Inherit parent settings"
-msgstr ""
+msgstr "לרשת הגדרות הוריות"
 
 #: src/bin/e_fm.c:7923 src/bin/e_fm.c:8083
 #: src/modules/fileman/e_mod_config.c:219
@@ -1323,16 +1365,19 @@ msgid "Rename"
 msgstr "שינוי שם"
 
 #: src/bin/e_fm.c:8268
+#, fuzzy
 msgid "Unmount"
-msgstr ""
+msgstr "נתק"
 
 #: src/bin/e_fm.c:8273
+#, fuzzy
 msgid "Mount"
-msgstr ""
+msgstr "הר"
 
 #: src/bin/e_fm.c:8278
+#, fuzzy
 msgid "Eject"
-msgstr ""
+msgstr "לפלוט"
 
 #: src/bin/e_fm.c:8290
 #, fuzzy
@@ -1367,16 +1412,19 @@ msgid "Icon Size (%d)"
 msgstr "גודל הסמל (%d)"
 
 #: src/bin/e_fm.c:8647 src/bin/e_fm.c:8853
+#, fuzzy
 msgid "Set background..."
-msgstr ""
+msgstr "הגדר ברקע ..."
 
 #: src/bin/e_fm.c:8652 src/bin/e_fm.c:8897
+#, fuzzy
 msgid "Set overlay..."
-msgstr ""
+msgstr "הגדרת כיסוי ..."
 
 #: src/bin/e_fm.c:8751 src/modules/conf_theme/e_int_config_theme.c:1032
+#, fuzzy
 msgid "Clear"
-msgstr ""
+msgstr "נקה"
 
 #: src/bin/e_fm.c:8977
 msgid "Create a new Directory"
@@ -1417,8 +1465,9 @@ msgid "Yes to all"
 msgstr "כן להכול"
 
 #: src/bin/e_fm.c:9242
+#, fuzzy
 msgid "Warning"
-msgstr ""
+msgstr "אזהרה"
 
 #: src/bin/e_fm.c:9245
 #, c-format
@@ -1598,8 +1647,9 @@ msgid "Remove"
 msgstr "הסר"
 
 #: src/bin/e_gadcon.c:2007
+#, fuzzy
 msgid "Stop moving"
-msgstr ""
+msgstr "להפסיק לנוע"
 
 #: src/bin/e_hints.c:152
 msgid ""
@@ -1752,22 +1802,23 @@ msgstr "צור סמל"
 #: src/bin/e_int_border_menu.c:464
 #, fuzzy
 msgid "Add to Favorites Menu"
-msgstr "הוסף למועדפים"
+msgstr "להוסיף לתפריט מועדפים"
 
 #: src/bin/e_int_border_menu.c:469
 #, fuzzy
 msgid "Add to IBar"
-msgstr "הוסף למועדפים"
+msgstr "הוסף IBar"
 
 #: src/bin/e_int_border_menu.c:477
 #, fuzzy
 msgid "Create Keyboard Shortcut"
-msgstr "קיצורי מקשים"
+msgstr "צור קיצור דרך במקלדת"
 
 #: src/bin/e_int_border_menu.c:497
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
+#, fuzzy
 msgid "Placement"
-msgstr ""
+msgstr "מיקום"
 
 #: src/bin/e_int_border_menu.c:519
 msgid "Skip"
@@ -1843,21 +1894,22 @@ msgid "Use User Defined Icon"
 msgstr "השתמש בסמל שהוגדר על ידי המשתמש"
 
 #: src/bin/e_int_border_menu.c:1147 src/bin/e_int_border_remember.c:747
+#, fuzzy, c-format
 msgid "Offer Resistance"
-msgstr ""
+msgstr "להציע התנגדות"
 
 #: src/bin/e_int_border_menu.c:1207 src/modules/winlist/e_mod_main.c:26
 msgid "Window List"
 msgstr "רשימת חלונות"
 
 #: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2796 src/modules/pager/e_mod_main.c:2803
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2812
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2816
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2820
-#: src/modules/pager/e_mod_main.c:2853 src/modules/pager/e_mod_main.c:2854
-#: src/modules/pager/e_mod_main.c:2855 src/modules/pager/e_mod_main.c:2856
-#: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2797 src/modules/pager/e_mod_main.c:2804
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2817
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2821
+#: src/modules/pager/e_mod_main.c:2854 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2856 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2858 src/modules/pager/e_mod_main.c:2859
 msgid "Pager"
 msgstr "מחליף סביבות עבודה"
 
@@ -2041,20 +2093,23 @@ msgid "Size, Position and Locks"
 msgstr "גודל, מיקומים ונעילות"
 
 #: src/bin/e_int_border_remember.c:625 src/modules/conf/e_mod_main.c:245
+#, fuzzy
 msgid "All"
-msgstr ""
+msgstr "כל"
 
 #: src/bin/e_int_border_remember.c:638
 msgid "Remember using"
 msgstr "זכור באמצעות"
 
 #: src/bin/e_int_border_remember.c:641
+#, fuzzy
 msgid "Window name"
-msgstr ""
+msgstr "החלון שם"
 
 #: src/bin/e_int_border_remember.c:653
+#, fuzzy
 msgid "Window class"
-msgstr ""
+msgstr "חלון הכיתה"
 
 #: src/bin/e_int_border_remember.c:677
 msgid "Window Role"
@@ -2065,8 +2120,9 @@ msgid "Window type"
 msgstr "סוג החלון"
 
 #: src/bin/e_int_border_remember.c:697
+#, fuzzy
 msgid "wildcard matches are allowed"
-msgstr ""
+msgstr "matches כלליים מותר"
 
 #: src/bin/e_int_border_remember.c:699
 msgid "Transience"
@@ -2093,8 +2149,9 @@ msgid "Skip Window List"
 msgstr "דילוג על רשימת החלונות"
 
 #: src/bin/e_int_border_remember.c:750
+#, fuzzy
 msgid "Application file or name (.desktop)"
-msgstr ""
+msgstr "יישום קובץ או שם (. שולחן העבודה."
 
 #: src/bin/e_int_border_remember.c:758
 msgid "Match only one window"
@@ -2105,23 +2162,26 @@ msgid "Always focus on start"
 msgstr "תמיד התמקד בהפעלה"
 
 #: src/bin/e_int_border_remember.c:766
+#, fuzzy
 msgid "Keep current properties"
-msgstr ""
+msgstr "שמור על נכסים שוטפים"
 
 #: src/bin/e_int_border_remember.c:772
 msgid "Start this program on login"
 msgstr "הפעלת תוכנית זו עם הכניסה"
 
 #: src/bin/e_int_config_modules.c:52
+#, fuzzy
 msgid "Utilities"
-msgstr ""
+msgstr "כלי עזר"
 
 #: src/bin/e_int_config_modules.c:55
 #: src/modules/everything/evry_plug_files.c:1585
 #: src/modules/fileman/e_mod_main.c:56 src/modules/fileman/e_mod_main.c:76
 #: src/modules/fileman/e_mod_main.c:420
+#, fuzzy
 msgid "Files"
-msgstr ""
+msgstr "קבצים"
 
 #: src/bin/e_int_config_modules.c:56 src/modules/everything/e_mod_main.c:69
 #, fuzzy
@@ -2130,8 +2190,9 @@ msgstr "הפעל"
 
 #: src/bin/e_int_config_modules.c:57
 #: src/modules/conf_theme/e_int_config_fonts.c:57
+#, fuzzy
 msgid "Core"
-msgstr ""
+msgstr "Core"
 
 #: src/bin/e_int_config_modules.c:58
 #, fuzzy
@@ -2146,7 +2207,7 @@ msgstr "מודולים"
 #: src/modules/conf_theme/e_int_config_cursor.c:133
 #: src/modules/ibar/e_mod_main.c:307 src/modules/ibar/e_mod_main.c:787
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:690
-#: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:233
+#: src/modules/pager/e_mod_main.c:791 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1323
 msgid "Settings"
 msgstr "הגדרות"
@@ -2156,8 +2217,9 @@ msgid "Module Settings"
 msgstr "הגדרות המודול"
 
 #: src/bin/e_int_config_modules.c:176
+#, fuzzy
 msgid "Load"
-msgstr ""
+msgstr "לטעון"
 
 #: src/bin/e_int_config_modules.c:181
 #, fuzzy
@@ -2165,12 +2227,14 @@ msgid "Unload"
 msgstr "פריקת מודול"
 
 #: src/bin/e_int_config_modules.c:307 src/bin/e_int_config_modules.c:591
+#, fuzzy
 msgid "No modules selected."
-msgstr ""
+msgstr "מודולים לא נבחרו."
 
 #: src/bin/e_int_config_modules.c:589
+#, fuzzy
 msgid "More than one module selected."
-msgstr ""
+msgstr "מודול אחד או יותר שנבחרו."
 
 #: src/bin/e_int_gadcon_config.c:38
 msgid "Shelf Contents"
@@ -2202,11 +2266,14 @@ msgid "Input Method Error"
 msgstr "שגיאה בשיטת הקלט"
 
 #: src/bin/e_intl.c:353
+#, fuzzy
 msgid ""
 "Error starting the input method executable<br><br>please make sure that your "
 "input<br>method configuration is correct and<br>that your "
 "configuration's<br>executable is in your PATH<br>"
 msgstr ""
+"שגיאה בהפעלתשיטת הזנה הפעלה<br><br>ודא<br>הקלט תצורת שיטה נכונה<br>כי "
+"הפעלה<br>התצורה של המחשב הוא<br>PATH שלך"
 
 #: src/bin/e_int_menus.c:99
 msgid "Main"
@@ -2270,8 +2337,9 @@ msgid "(No Applications)"
 msgstr "(אין יישומים)"
 
 #: src/bin/e_int_menus.c:757
+#, fuzzy
 msgid "Set Virtual Desktops"
-msgstr ""
+msgstr "להגדיר שולחנות עבודה וירטואליים"
 
 #: src/bin/e_int_menus.c:1132 src/bin/e_int_menus.c:1316
 msgid "(No Windows)"
@@ -2322,12 +2390,13 @@ msgstr "%3.0f פיקסלים"
 #: src/bin/e_int_shelf_config.c:182
 #, fuzzy
 msgid "Shrink to Content Width"
-msgstr "צמצמם לגודל התוכן"
+msgstr "כווץ רוחב תוכן"
 
 #: src/bin/e_int_shelf_config.c:193
 #: src/modules/conf_theme/e_int_config_fonts.c:630
+#, fuzzy
 msgid "Style"
-msgstr ""
+msgstr "סגנון"
 
 #: src/bin/e_int_shelf_config.c:199
 msgid "Auto-hide the shelf"
@@ -2625,7 +2694,7 @@ msgstr "Enlightenment לא הצליחה להגדיר את שומר המסך של
 #: src/bin/e_main.c:629
 #, fuzzy
 msgid "Setup Powersave Modes"
-msgstr "הגדרת מצבי חסכון בחשמל"
+msgstr "הגדרת מצבי חיסכון בחשמל"
 
 #: src/bin/e_main.c:633
 msgid "Enlightenment cannot set up its powersave modes."
@@ -2650,7 +2719,7 @@ msgstr "Enlightenment לא הצליחה להגדיר את מערכת חלוני�
 #: src/bin/e_main.c:665
 #, fuzzy
 msgid "Setup Message Bus"
-msgstr "הגדרת מערכת ההודעות"
+msgstr "הודעה הגדרת אוטובוס"
 
 #: src/bin/e_main.c:672
 #, fuzzy
@@ -2707,8 +2776,9 @@ msgid "Enlightenment cannot set up its dnd system."
 msgstr "Enlightenment לא הצליחה להגדיר את מערכת ה־dnd שלה."
 
 #: src/bin/e_main.c:748
+#, fuzzy
 msgid "Setup Grab Input Handling"
-msgstr ""
+msgstr "גזל הגדרת קלט טיפול"
 
 #: src/bin/e_main.c:752
 #, fuzzy
@@ -2799,8 +2869,9 @@ msgid "Enlightenment cannot initialize the Update system.\n"
 msgstr "Enlightenment לא הצליחה להפעיל את מערכת פיקוד המערכת.\n"
 
 #: src/bin/e_main.c:886
+#, fuzzy
 msgid "Setup Desktop Environment"
-msgstr ""
+msgstr "הגדרת סביבת שולחן העבודה"
 
 #: src/bin/e_main.c:890
 #, fuzzy
@@ -2810,7 +2881,7 @@ msgstr "Enlightenment לא הצליחה להגדיר את מערכת ערכות 
 #: src/bin/e_main.c:898
 #, fuzzy
 msgid "Setup File Ordering"
-msgstr "הגדרת סידור הקבצים"
+msgstr "הגדרת קובץ הזמנה"
 
 #: src/bin/e_main.c:902
 msgid "Enlightenment cannot set up its order file system."
@@ -3106,66 +3177,79 @@ msgid "Enlightenment is busy with another request"
 msgstr "Enlightenment עסוקה בטיפול בבקשה אחרת."
 
 #: src/bin/e_sys.c:458
+#, fuzzy
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
-msgstr ""
+msgstr "התנתקות.<br>אתה לא יכול לבצע פעולות אחרות במערכת<br>פעםלהתנתקות החלה."
 
 #: src/bin/e_sys.c:464
+#, fuzzy
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
 msgstr ""
+"את היכולות.<br>אתה לא יכול לעשות שום פעולה אחרת<br>מערכתכיבוי פעם אחת כבר "
+"החלה."
 
 #: src/bin/e_sys.c:469
+#, fuzzy
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
-msgstr ""
+msgstr "איפוס.<br>אתה לא יכול לעשות שום<br>פעולות אחרות במערכת פעם מחדשהחלה."
 
 #: src/bin/e_sys.c:474
+#, fuzzy
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
-msgstr ""
+msgstr "השעיית.<br>להשעות עד סיום לא ניתן לבצע כל פעולה<br>מערכת אחרים."
 
 #: src/bin/e_sys.c:479
+#, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
-msgstr ""
+msgstr "שנת החורף.<br>אתה לא יכול לבצע כל פעולה אחרת<br>המערכת עד זה הושלמה."
 
 #: src/bin/e_sys.c:484 src/bin/e_sys.c:521
 msgid "EEK! This should not happen"
 msgstr "לעזאזל! זה לא אמור לקרות"
 
 #: src/bin/e_sys.c:509
+#, fuzzy
 msgid "Power off failed."
-msgstr ""
+msgstr "כבה נכשל."
 
 #: src/bin/e_sys.c:512
+#, fuzzy
 msgid "Reset failed."
-msgstr ""
+msgstr "איפוס נכשל."
 
 #: src/bin/e_sys.c:515
+#, fuzzy
 msgid "Suspend failed."
-msgstr ""
+msgstr "להשעות נכשל."
 
 #: src/bin/e_sys.c:518
+#, fuzzy
 msgid "Hibernate failed."
-msgstr ""
+msgstr "שינה נכשל."
 
 #: src/bin/e_sys.c:581
+#, fuzzy
 msgid "Power off"
-msgstr ""
+msgstr "כבה"
 
 #: src/bin/e_sys.c:584
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: src/bin/e_sys.c:611
+#, fuzzy
 msgid "Resetting"
-msgstr ""
+msgstr "איפוס"
 
 #: src/bin/e_sys.c:614
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
@@ -3204,8 +3288,9 @@ msgid "Begin Moving/Resizing Items"
 msgstr "התחלת הזזה/שינוי גודל לפריטים"
 
 #: src/bin/e_toolbar.c:344
+#, fuzzy
 msgid "Set Toolbar Contents"
-msgstr ""
+msgstr "הגדרת תכולת סרגל הכלים"
 
 #: src/bin/e_utils.c:231 src/modules/conf_intl/e_int_config_imc.c:266
 #: src/modules/conf_intl/e_int_config_imc.c:514
@@ -3296,46 +3381,54 @@ msgstr "לא ידוע"
 #: src/bin/e_utils.c:1156
 #, fuzzy
 msgid "Image Import Settings"
-msgstr "הגדרות מעקב הסוללה"
+msgstr "ייבוא ​​תמונה הגדרות"
 
 #: src/bin/e_utils.c:1160
+#, fuzzy
 msgid "Import"
-msgstr ""
+msgstr "יבוא"
 
 #: src/bin/e_utils.c:1177
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:169
+#, fuzzy
 msgid "Fill and Stretch Options"
-msgstr ""
+msgstr "מלא ולמתוח אפשרויות"
 
 #: src/bin/e_utils.c:1185
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:172
+#, fuzzy
 msgid "Stretch"
-msgstr ""
+msgstr "למתוח"
 
 #: src/bin/e_utils.c:1186
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:177
+#, fuzzy
 msgid "Center"
-msgstr ""
+msgstr "מרכז"
 
 #: src/bin/e_utils.c:1188
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:187
+#, fuzzy
 msgid "Within"
-msgstr ""
+msgstr "בתוך"
 
 #: src/bin/e_utils.c:1189
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:192
+#, fuzzy
 msgid "Fill"
-msgstr ""
+msgstr "למלא"
 
 #: src/bin/e_utils.c:1194
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:204
+#, fuzzy
 msgid "File Quality"
-msgstr ""
+msgstr "קובץ איכות"
 
 #: src/bin/e_utils.c:1196
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:206
+#, fuzzy
 msgid "Use original file"
-msgstr ""
+msgstr "השתמש הקובץ המקורי"
 
 #: src/bin/e_utils.c:1200
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:209
@@ -3344,6 +3437,7 @@ msgid "%3.0f%%"
 msgstr ""
 
 #: src/bin/e_utils.c:1529
+#, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br> has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -3353,6 +3447,12 @@ msgid ""
 "fix<br>that by adding it in. You can re-configure things now to "
 "your<br>liking. Sorry for the inconvenience.<br>"
 msgstr ""
+"נתוני התצורה צורך לשדרג.<br>התצורה הישנה שלך נמחק ולא ערכה חדשה של ברירות "
+"מחדל לאתחל.<br>זה יקרה באופן סדיר במהלך פיתוח , לכן אינם מדווחים על "
+"בעיה<br>. זה פשוט אומר מודולצרכים חדשים<br>תצורה נתונים כברירת מחדל עבור "
+"פונקציונליות שמיש כי תצורת<br>הישן שלך פשוט חסר. זו קבוצה חדשה של ברירת "
+"המחדל יהיה לתקן<br>כי על ידי הוספת אותו פנימה אתה יכול להגדיר מחדש את הדברים "
+"עכשיו טעם<br>שלך. סליחה על אי הנוחות.<br>"
 
 #: src/bin/e_utils.c:1542 src/bin/e_utils.c:1566
 #, fuzzy, c-format
@@ -3360,6 +3460,7 @@ msgid "%s Configuration Updated"
 msgstr "מסך ההסתרה"
 
 #: src/bin/e_utils.c:1555
+#, fuzzy
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -3367,6 +3468,10 @@ msgid ""
 "module was running. This is bad and<br>as a precaution your configuration "
 "has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
+"תצורת מודול שלך חדשה יותר מהגירסהמודול. זה<br>מאוד מוזר. זה לא יקרה אלא אם "
+"כן הורידו<br>מודול או להעתיק את התצורה ממקום בו<br>גרסה חדשה יותר של "
+"מודולרץ. זה רע<br>כאמצעי זהירות התצורה שלך שוחזרה לברירות המחדל<br>. סליחה "
+"על אי הנוחות.<br>"
 
 #: src/bin/e_widget_config_list.c:60
 #: src/modules/conf_applications/e_int_config_apps.c:235
@@ -3440,76 +3545,93 @@ msgstr "אסור"
 msgid "Read-Write"
 msgstr "קריאה־כתיבה"
 
-#: src/modules/battery/e_mod_config.c:63
+#: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
 msgstr "הגדרות מעקב הסוללה"
 
-#: src/modules/battery/e_mod_config.c:132
+#: src/modules/battery/e_mod_config.c:134
 msgid "Show alert when battery is low"
 msgstr "הצג התרעה כאשר הסוללה חלשה"
 
-#: src/modules/battery/e_mod_config.c:136
+#: src/modules/battery/e_mod_config.c:138
+#, fuzzy
 msgid "Use desktop notifications for alert."
-msgstr ""
-
-#: src/modules/battery/e_mod_config.c:233
-msgid "Check every:"
-msgstr ""
+msgstr "השתמש הודעות שולחן עבודה עבור ההתראה."
 
 #: src/modules/battery/e_mod_config.c:235
+#, fuzzy
+msgid "Check every:"
+msgstr "לבדוק כל:"
+
+#: src/modules/battery/e_mod_config.c:237
 #: src/modules/conf_performance/e_int_config_performance.c:121
 #: src/modules/temperature/e_mod_config.c:233
 #, c-format
 msgid "%1.0f ticks"
 msgstr ""
 
-#: src/modules/battery/e_mod_config.c:239
+#: src/modules/battery/e_mod_config.c:242
+#, fuzzy
+msgid "Suspend when below:"
+msgstr "להשעות כאשר להלן;"
+
+#: src/modules/battery/e_mod_config.c:245
 #, fuzzy
 msgid "Hibernate when below:"
-msgstr "עבור למצב שינה"
+msgstr "שינה כאשר להלן;"
 
-#: src/modules/battery/e_mod_config.c:241
-#: src/modules/battery/e_mod_config.c:260
+#: src/modules/battery/e_mod_config.c:248
+#, fuzzy
+msgid "Shutdown when below:"
+msgstr "כיבוי כאשר להלן;"
+
+#: src/modules/battery/e_mod_config.c:251
+#: src/modules/battery/e_mod_config.c:270
 #, c-format
 msgid "%1.0f %%"
 msgstr ""
 
-#: src/modules/battery/e_mod_config.c:245
+#: src/modules/battery/e_mod_config.c:255
+#, fuzzy
 msgid "Polling"
-msgstr ""
+msgstr "הסקרים"
 
-#: src/modules/battery/e_mod_config.c:249
+#: src/modules/battery/e_mod_config.c:259
 #, fuzzy
 msgid "Show low battery alert"
-msgstr "הצג התרעה כאשר הסוללה חלשה"
+msgstr "הצג התראת סוללה חלשה"
 
-#: src/modules/battery/e_mod_config.c:253
+#: src/modules/battery/e_mod_config.c:263
+#, fuzzy
 msgid "Alert when at:"
-msgstr ""
+msgstr "התראה כאשר ב:"
 
-#: src/modules/battery/e_mod_config.c:256
+#: src/modules/battery/e_mod_config.c:266
 #, c-format
 msgid "%1.0f min"
 msgstr ""
 
-#: src/modules/battery/e_mod_config.c:264
+#: src/modules/battery/e_mod_config.c:274
+#, fuzzy
 msgid "Auto dismiss in..."
-msgstr ""
+msgstr "אוטומטי לפטר פנימה .."
 
-#: src/modules/battery/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:279
 #, c-format
 msgid "%1.0f sec"
 msgstr ""
 
-#: src/modules/battery/e_mod_config.c:276
+#: src/modules/battery/e_mod_config.c:286
+#, fuzzy
 msgid "Alert"
-msgstr ""
+msgstr "ערני"
 
-#: src/modules/battery/e_mod_config.c:282
+#: src/modules/battery/e_mod_config.c:292
+#, fuzzy
 msgid "Auto Detect"
-msgstr ""
+msgstr "Auto Detect"
 
-#: src/modules/battery/e_mod_config.c:285
+#: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:52
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
@@ -3517,23 +3639,27 @@ msgstr ""
 msgid "Internal"
 msgstr "פנימי"
 
-#: src/modules/battery/e_mod_config.c:289
+#: src/modules/battery/e_mod_config.c:299
 #: src/modules/temperature/e_mod_config.c:271
+#, fuzzy
 msgid "udev"
-msgstr ""
+msgstr "udev"
 
-#: src/modules/battery/e_mod_config.c:292
+#: src/modules/battery/e_mod_config.c:302
+#, fuzzy
 msgid "Fuzzy Mode"
-msgstr ""
+msgstr "מצב Fuzzy"
 
-#: src/modules/battery/e_mod_config.c:296
+#: src/modules/battery/e_mod_config.c:306
+#, fuzzy
 msgid "HAL"
-msgstr ""
+msgstr "HAL"
 
-#: src/modules/battery/e_mod_config.c:301
+#: src/modules/battery/e_mod_config.c:311
 #: src/modules/temperature/e_mod_config.c:273
+#, fuzzy
 msgid "Hardware"
-msgstr ""
+msgstr "חומרה"
 
 #: src/modules/battery/e_mod_main.c:148 src/modules/battery/e_mod_main.c:445
 msgid "Battery"
@@ -3551,12 +3677,12 @@ msgstr "מומלץ לחבר לרשת החשמל."
 msgid "N/A"
 msgstr "לא זמין"
 
-#: src/modules/battery/e_mod_main.c:656 src/modules/battery/e_mod_main.c:658
-#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:667
+#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:665
+#: src/modules/battery/e_mod_main.c:672 src/modules/battery/e_mod_main.c:674
 msgid "ERROR"
 msgstr "שגיאה"
 
-#: src/modules/battery/e_mod_main.c:780
+#: src/modules/battery/e_mod_main.c:787
 msgid "Battery Meter"
 msgstr "מד הסוללה"
 
@@ -3581,6 +3707,7 @@ msgid "Configuration Panel"
 msgstr "מסך ההסתרה"
 
 #: src/modules/conf/e_mod_main.c:295
+#, fuzzy
 msgid ""
 "Configuration Panel Module Configuration data needed upgrading. Your old "
 "configuration<br> has been wiped and a new set of defaults initialized. "
@@ -3590,8 +3717,15 @@ msgid ""
 "set of defaults will fix<br>that by adding it in. You can re-configure "
 "things now to your<br>liking. Sorry for the inconvenience.<br>"
 msgstr ""
+"לוח תצורת מודול נתוני התצורה צורך לשדרג.<br>התצורה הישנה שלך נמחק ולא ערכה "
+"חדשה של ברירות מחדל לאתחל.<br>זה יקרה באופן סדיר במהלך פיתוח , לכן אינם "
+"מדווחים על בעיה<br>. זה פשוט אומר מודולצרכים חדשים<br>תצורה נתונים כברירת "
+"מחדל עבור פונקציונליות שמיש כי תצורת<br>הישן שלך פשוט חסר. זו קבוצה חדשה של "
+"ברירת המחדל יהיה לתקן<br>כי על ידי הוספת אותו פנימה אתה יכול להגדיר מחדש את "
+"הדברים עכשיו טעם<br>שלך. סליחה על אי הנוחות.<br>"
 
 #: src/modules/conf/e_mod_main.c:312
+#, fuzzy
 msgid ""
 "Your Configuration Panel Module configuration is NEWER than the module "
 "version. This is very<br>strange. This should not happen unless you "
@@ -3600,38 +3734,49 @@ msgid ""
 "your configuration has been now restored to<br>defaults. Sorry for the "
 "inconvenience.<br>"
 msgstr ""
+"תצורת מודול התצורה לוח חדשה יותר מהגירסהמודול. זה<br>מאוד מוזר. זה לא יקרה "
+"אלא אם כן הורידו<br>מודול או להעתיק את התצורה ממקום בו<br>גרסה חדשה יותר של "
+"מודולרץ. זה רע<br>כאמצעי זהירות התצורה שלך שוחזרה לברירות המחדל<br>. סליחה "
+"על אי הנוחות.<br>"
 
 #: src/modules/conf/e_mod_main.c:443
+#, fuzzy
 msgid "Presentation"
-msgstr ""
+msgstr "הצגה"
 
 #: src/modules/conf/e_mod_main.c:450
+#, fuzzy
 msgid "Offline"
-msgstr ""
+msgstr "לא מחובר"
 
 #: src/modules/conf/e_mod_main.c:479
+#, fuzzy
 msgid "Modes"
-msgstr ""
+msgstr "מצבי"
 
 #: src/modules/conf/e_mod_main.c:510
+#, fuzzy
 msgid "Configuration Panel Configuration Updated"
-msgstr ""
+msgstr "תצורת לוח תצורת עודכן"
 
 #: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_int_config_apps.c:98
 #: src/modules/conf_applications/e_mod_main.c:33
+#, fuzzy
 msgid "IBar Applications"
-msgstr ""
+msgstr "IBar יישומים"
 
 #: src/modules/conf_applications/e_int_config_apps.c:113
 #: src/modules/conf_applications/e_mod_main.c:41
+#, fuzzy
 msgid "Startup Applications"
-msgstr ""
+msgstr "אתחול יישומים"
 
 #: src/modules/conf_applications/e_int_config_apps.c:129
 #: src/modules/conf_applications/e_mod_main.c:37
+#, fuzzy
 msgid "Restart Applications"
-msgstr ""
+msgstr "הפעלה מחדש של יישומים"
 
 #: src/modules/conf_applications/e_int_config_apps.c:284
 #, fuzzy
@@ -3648,8 +3793,9 @@ msgid "Create Launcher"
 msgstr "הפעל"
 
 #: src/modules/conf_applications/e_mod_main.c:25
+#, fuzzy
 msgid "Delete Personal Launchers"
-msgstr ""
+msgstr "מחק את משגרי אישיים"
 
 #: src/modules/conf_applications/e_mod_main.c:45
 #, fuzzy
@@ -3662,25 +3808,30 @@ msgid "Desktop Environments"
 msgstr "קובץ שולחן העבודה"
 
 #: src/modules/conf_applications/e_mod_main.c:54
+#, fuzzy
 msgid "IBar Other"
-msgstr ""
+msgstr "אחר IBar"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:54
+#, fuzzy
 msgid "Profile Selector"
-msgstr ""
+msgstr "פרופיל בורר"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:106
+#, fuzzy
 msgid "Available Profiles"
-msgstr ""
+msgstr "זמין פרופילים"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
 #: src/modules/wizard/page_020.c:121
+#, fuzzy
 msgid "Select a profile"
-msgstr ""
+msgstr "בחר פרופיל"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:138
+#, fuzzy
 msgid "Reset"
-msgstr ""
+msgstr "לאתחל"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:268
 #, fuzzy, c-format
@@ -3693,68 +3844,82 @@ msgid "You want to delete the \"%s\" profile.<br><br>Are you sure?"
 msgstr ""
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:306
+#, fuzzy
 msgid "Delete OK?"
-msgstr ""
+msgstr "מחק את בסדר?"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:372
+#, fuzzy
 msgid "Add New Profile"
-msgstr ""
+msgstr "הוסף פרופיל חדש"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:375
 #: src/modules/conf_display/e_int_config_desk.c:154
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
+#, fuzzy
 msgid "Name:"
-msgstr ""
+msgstr "שם:"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:38
+#, fuzzy
 msgid "Dialog Settings"
-msgstr ""
+msgstr "שיח הגדרות"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:651
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:96
 #: src/modules/mixer/conf_gadget.c:191 src/modules/mixer/conf_module.c:91
+#, fuzzy
 msgid "General Settings"
-msgstr ""
+msgstr "הגדרות כלליות"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:111
+#, fuzzy
 msgid "Disable Confirmation Dialogs"
-msgstr ""
+msgstr "בטל Dialogs אישור"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:113
+#, fuzzy
 msgid "Normal Windows"
-msgstr ""
+msgstr "רגיל של Windows"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:120
+#, fuzzy
 msgid "Default Settings Dialogs Mode"
-msgstr ""
+msgstr "הגדרות ברירת המחדל Dialogs מצב"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:122
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:166
+#, fuzzy
 msgid "Basic Mode"
-msgstr ""
+msgstr "מצב בסיסי"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:124
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:168
+#, fuzzy
 msgid "Advanced Mode"
-msgstr ""
+msgstr "מצב מתקדם"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:129
+#, fuzzy
 msgid "Remember size and position of dialogs"
-msgstr ""
+msgstr "זכור הגודל והמיקום של דיאלוגים"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:163
+#, fuzzy
 msgid "Default Dialog Mode"
-msgstr ""
+msgstr "מצב ברירת המחדל של דיאלוג"
 
 #: src/modules/conf_dialogs/e_mod_main.c:18
+#, fuzzy
 msgid "Dialogs"
-msgstr ""
+msgstr "דיאלוגים"
 
 #: src/modules/conf_dialogs/e_mod_main.c:19
+#, fuzzy
 msgid "Profiles"
-msgstr ""
+msgstr "פרופילים"
 
 #: src/modules/conf_display/e_int_config_display.c:124
 #, c-format
@@ -3789,44 +3954,54 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:185
+#, fuzzy
 msgid "Resolution change"
-msgstr ""
+msgstr "שינוי רזולוציה"
 
 #: src/modules/conf_display/e_int_config_display.c:189
+#, fuzzy
 msgid "Save"
-msgstr ""
+msgstr "להציל"
 
 #: src/modules/conf_display/e_int_config_display.c:190
+#, fuzzy
 msgid "Restore"
-msgstr ""
+msgstr "לשחזר"
 
 #: src/modules/conf_display/e_int_config_display.c:223
+#, fuzzy
 msgid "Screen Resolution Settings"
-msgstr ""
+msgstr "רזולוציית המסך הגדרות"
 
 #: src/modules/conf_display/e_int_config_display.c:388
+#, fuzzy
 msgid "Resolution"
-msgstr ""
+msgstr "החלטה"
 
 #: src/modules/conf_display/e_int_config_display.c:395
+#, fuzzy
 msgid "Restore on login"
-msgstr ""
+msgstr "שחזור התחברות"
 
 #: src/modules/conf_display/e_int_config_display.c:399
+#, fuzzy
 msgid "Refresh"
-msgstr ""
+msgstr "לרענן"
 
 #: src/modules/conf_display/e_int_config_display.c:459
+#, fuzzy
 msgid "Rotation"
-msgstr ""
+msgstr "רוטציה"
 
 #: src/modules/conf_display/e_int_config_display.c:478
+#, fuzzy
 msgid "Mirroring"
-msgstr ""
+msgstr "שיקוף"
 
 #: src/modules/conf_display/e_int_config_display.c:624
+#, fuzzy
 msgid "Missing Features"
-msgstr ""
+msgstr "חסרים תכונות"
 
 #: src/modules/conf_display/e_int_config_display.c:625
 msgid ""
@@ -3838,8 +4013,9 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_display.c:637
+#, fuzzy
 msgid "No Refresh Rates Found"
-msgstr ""
+msgstr "לא נמצאו שיעורים רענן"
 
 #: src/modules/conf_display/e_int_config_display.c:638
 msgid ""
@@ -3851,13 +4027,15 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_desks.c:49
-#: src/modules/pager/e_mod_main.c:801
+#: src/modules/pager/e_mod_main.c:802
+#, fuzzy
 msgid "Virtual Desktops Settings"
-msgstr ""
+msgstr "שולחניים וירטואליים הגדרות"
 
 #: src/modules/conf_display/e_int_config_desks.c:150
+#, fuzzy
 msgid "Number of Desktops"
-msgstr ""
+msgstr "מספר מחשבים"
 
 #: src/modules/conf_display/e_int_config_desks.c:157
 #: src/modules/conf_display/e_int_config_desks.c:162
@@ -3880,33 +4058,40 @@ msgid "Desktop Flip"
 msgstr "קובץ שולחן העבודה"
 
 #: src/modules/conf_display/e_int_config_desks.c:170
+#, fuzzy
 msgid "Flip when dragging objects to the screen edge"
-msgstr ""
+msgstr "הפוך כאשר גרירת חפצים לקצה המסך"
 
 #: src/modules/conf_display/e_int_config_desks.c:173
+#, fuzzy
 msgid "Wrap desktops around when flipping"
-msgstr ""
+msgstr "עוטפים סביב שולחנות עבודה , כאשר היפוך"
 
 #: src/modules/conf_display/e_int_config_desks.c:179
+#, fuzzy
 msgid "Desktops"
-msgstr ""
+msgstr "מחשבים שולחניים"
 
 #: src/modules/conf_display/e_int_config_desks.c:184
 #: src/modules/everything/evry_config.c:495
+#, fuzzy
 msgid "Off"
-msgstr ""
+msgstr "את"
 
 #: src/modules/conf_display/e_int_config_desks.c:187
+#, fuzzy
 msgid "Pane"
-msgstr ""
+msgstr "חלונית"
 
 #: src/modules/conf_display/e_int_config_desks.c:190
+#, fuzzy
 msgid "Zoom"
-msgstr ""
+msgstr "זום"
 
 #: src/modules/conf_display/e_int_config_desks.c:194
+#, fuzzy
 msgid "Animation speed"
-msgstr ""
+msgstr "אנימציה מהירות"
 
 #: src/modules/conf_display/e_int_config_desks.c:197
 #: src/modules/conf_display/e_int_config_dpms.c:324
@@ -3917,30 +4102,35 @@ msgid "%1.1f sec"
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_desks.c:202
+#, fuzzy
 msgid "Flip Animation"
-msgstr ""
+msgstr "הפוך אנימציה"
 
 #: src/modules/conf_display/e_int_config_desk.c:52
+#, fuzzy
 msgid "Desk Settings"
-msgstr ""
+msgstr "דלפק הגדרות"
 
 #: src/modules/conf_display/e_int_config_desk.c:153
+#, fuzzy
 msgid "Desktop Name"
-msgstr ""
+msgstr "שולחן העבודה שם"
 
 #: src/modules/conf_display/e_int_config_desk.c:160
+#, fuzzy
 msgid "Desktop Wallpaper"
-msgstr ""
+msgstr "טפט"
 
 #: src/modules/conf_display/e_int_config_desk.c:166
 #: src/modules/fileman/e_int_config_mime.c:183
+#, fuzzy
 msgid "Set"
-msgstr ""
+msgstr "לקבוע"
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:41
 #, fuzzy
 msgid "Select a Background..."
-msgstr "הגדרה כרקע"
+msgstr "בחררקע ..."
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
 #: src/modules/conf_intl/e_int_config_imc.c:803
@@ -3950,26 +4140,29 @@ msgstr "הגדרה כרקע"
 #: src/modules/conf_theme/e_int_config_theme.c:392
 #: src/modules/conf_theme/e_int_config_theme.c:792
 #: src/modules/gadman/e_mod_config.c:178
+#, fuzzy
 msgid "Personal"
-msgstr ""
+msgstr "אישי"
 
 #: src/modules/conf_display/e_int_config_desklock.c:76
+#, fuzzy
 msgid "Screen Lock Settings"
-msgstr ""
+msgstr "נעל מסך הגדרות"
 
 #: src/modules/conf_display/e_int_config_desklock.c:204
 #, fuzzy
 msgid "Lock on Startup"
-msgstr "השהיה"
+msgstr "נעל על אתחול"
 
 #: src/modules/conf_display/e_int_config_desklock.c:207
 #, fuzzy
 msgid "Lock on Suspend"
-msgstr "השהיה"
+msgstr "נעל על השהיה"
 
 #: src/modules/conf_display/e_int_config_desklock.c:211
+#, fuzzy
 msgid "Custom Screenlock Command"
-msgstr ""
+msgstr "התאמה אישית Screenlock פיקוד"
 
 #: src/modules/conf_display/e_int_config_desklock.c:215
 #, fuzzy
@@ -3979,12 +4172,12 @@ msgstr "נעל"
 #: src/modules/conf_display/e_int_config_desklock.c:221
 #, fuzzy
 msgid "Show on all screens"
-msgstr "הצג על כל שולחנות העבודה"
+msgstr "הצג על מסכי כל"
 
 #: src/modules/conf_display/e_int_config_desklock.c:226
 #, fuzzy
 msgid "Show on current screen"
-msgstr "המסך הנוכחי"
+msgstr "הצג על המסך הנוכחי"
 
 #: src/modules/conf_display/e_int_config_desklock.c:231
 #, fuzzy
@@ -3992,12 +4185,14 @@ msgid "Show on screen #:"
 msgstr "הצג עם כניסת העכבר"
 
 #: src/modules/conf_display/e_int_config_desklock.c:241
+#, fuzzy
 msgid "Login Box"
-msgstr ""
+msgstr "כניסה Box"
 
 #: src/modules/conf_display/e_int_config_desklock.c:246
+#, fuzzy
 msgid "Lock after X screensaver activates"
-msgstr ""
+msgstr "לאחר נעילת מפעיל צילומי שומר המסך"
 
 #: src/modules/conf_display/e_int_config_desklock.c:252
 #: src/modules/conf_display/e_int_config_desklock.c:277
@@ -4009,8 +4204,9 @@ msgid "%1.0f seconds"
 msgstr "%1.0f שניות"
 
 #: src/modules/conf_display/e_int_config_desklock.c:258
+#, fuzzy
 msgid "Lock when idle time exceeded"
-msgstr ""
+msgstr "נעל , כאשר זמן ההמתנה חרג"
 
 #: src/modules/conf_display/e_int_config_desklock.c:263
 #: src/modules/conf_display/e_int_config_screensaver.c:174
@@ -4025,13 +4221,15 @@ msgstr "%1.0f דקות"
 #: src/modules/conf_display/e_int_config_desklock.c:268
 #: src/modules/conf_display/e_int_config_screensaver.c:185
 #: src/modules/conf_display/e_int_config_dpms.c:250
+#, fuzzy
 msgid "Timers"
-msgstr ""
+msgstr "טיימרים"
 
 #: src/modules/conf_display/e_int_config_desklock.c:273
 #: src/modules/conf_display/e_int_config_screensaver.c:190
+#, fuzzy
 msgid "Suggest if deactivated before"
-msgstr ""
+msgstr "הצע אם מנוטרל לפני"
 
 #: src/modules/conf_display/e_int_config_desklock.c:282
 #: src/modules/conf_display/e_int_config_screensaver.c:201
@@ -4041,12 +4239,14 @@ msgstr "החלפת מצב הצגה"
 
 #: src/modules/conf_display/e_int_config_desklock.c:289
 #: src/modules/gadman/e_mod_config.c:140
+#, fuzzy
 msgid "Theme Defined"
-msgstr ""
+msgstr "נושא מוגדר"
 
 #: src/modules/conf_display/e_int_config_desklock.c:292
+#, fuzzy
 msgid "Theme Wallpaper"
-msgstr ""
+msgstr "נושא טפט"
 
 #: src/modules/conf_display/e_int_config_desklock.c:295
 #, fuzzy
@@ -4058,30 +4258,34 @@ msgstr "הגדרת רקע שולחן העבודה"
 #: src/modules/conf_theme/e_mod_main.c:32
 #: src/modules/conf_theme/e_mod_main.c:67
 #: src/modules/conf_theme/e_mod_main.c:162
+#, fuzzy
 msgid "Wallpaper"
-msgstr ""
+msgstr "טפט"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:60
+#, fuzzy
 msgid "Screen Saver Settings"
-msgstr ""
+msgstr "שומר מסך הגדרות"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:145
 #, fuzzy
 msgid "Enable X Screensaver"
-msgstr "הגדרת שומר המסך"
+msgstr "אפשר שומר מסך."
 
 #: src/modules/conf_display/e_int_config_screensaver.c:150
 #, fuzzy
 msgid "Suspend on blank"
-msgstr "השהיה לכונן"
+msgstr "להשעות על ריק"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:154
+#, fuzzy
 msgid "Even if on power"
-msgstr ""
+msgstr "גם אם על הכוח"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:158
+#, fuzzy
 msgid "Delay until suspend"
-msgstr ""
+msgstr "עיכוב עד להשעות"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:166
 #, fuzzy
@@ -4094,67 +4298,82 @@ msgid "Initial timeout"
 msgstr "מצב התחלתי"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:178
+#, fuzzy
 msgid "Alternation timeout"
-msgstr ""
+msgstr "לסירוגין פסק זמן"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:206
+#, fuzzy
 msgid "Blanking"
-msgstr ""
+msgstr "וממסך"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:211
+#, fuzzy
 msgid "Preferred"
-msgstr ""
+msgstr "מועדפת"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:214
+#, fuzzy
 msgid "Not Preferred"
-msgstr ""
+msgstr "לא מועדף"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:219
+#, fuzzy
 msgid "Exposure Events"
-msgstr ""
+msgstr "חשיפה אירועים"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:224
+#, fuzzy
 msgid "Allow"
-msgstr ""
+msgstr "להתיר"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:227
+#, fuzzy
 msgid "Don't Allow"
-msgstr ""
+msgstr "לא מרשים"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:232
 #: src/modules/conf_menus/e_int_config_menus.c:316
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:262
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:186
+#, fuzzy
 msgid "Miscellaneous"
-msgstr ""
+msgstr "שונות"
 
 #: src/modules/conf_display/e_int_config_dpms.c:130
+#, fuzzy
 msgid "Display Power Management Settings"
-msgstr ""
+msgstr "הצגת הגדרות ניהול צריכת חשמל"
 
 #: src/modules/conf_display/e_int_config_dpms.c:246
+#, fuzzy
 msgid "Enable Display Power Management"
-msgstr ""
+msgstr "אפשר ניהול צריכת חשמל תצוגה"
 
 #: src/modules/conf_display/e_int_config_dpms.c:252
+#, fuzzy
 msgid "Standby time"
-msgstr ""
+msgstr "זמן המתנה"
 
 #: src/modules/conf_display/e_int_config_dpms.c:264
+#, fuzzy
 msgid "Suspend time"
-msgstr ""
+msgstr "זמן השהיה"
 
 #: src/modules/conf_display/e_int_config_dpms.c:276
+#, fuzzy
 msgid "Off time"
-msgstr ""
+msgstr "את הזמן"
 
 #: src/modules/conf_display/e_int_config_dpms.c:295
+#, fuzzy
 msgid "DPMS"
-msgstr ""
+msgstr "dpms"
 
 #: src/modules/conf_display/e_int_config_dpms.c:300
+#, fuzzy
 msgid "Normal Backlight"
-msgstr ""
+msgstr "תאורה אחורית רגילה"
 
 #: src/modules/conf_display/e_int_config_dpms.c:302
 #: src/modules/conf_display/e_int_config_dpms.c:308
@@ -4163,52 +4382,63 @@ msgid "%3.0f"
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_dpms.c:306
+#, fuzzy
 msgid "Dim Backlight"
-msgstr ""
+msgstr "דים תאורה אחורית"
 
 #: src/modules/conf_display/e_int_config_dpms.c:312
+#, fuzzy
 msgid "Idle Fade Time"
-msgstr ""
+msgstr "זמן המתנה להמוג"
 
 #: src/modules/conf_display/e_int_config_dpms.c:322
+#, fuzzy
 msgid "Fade Time"
-msgstr ""
+msgstr "לדעוך זמן"
 
 #: src/modules/conf_display/e_int_config_dpms.c:328
+#, fuzzy
 msgid "Backlight"
-msgstr ""
+msgstr "תאורה אחורית"
 
 #: src/modules/conf_display/e_mod_main.c:21
+#, fuzzy
 msgid "Virtual Desktops"
-msgstr ""
+msgstr "שולחנות עבודה וירטואליים"
 
 #: src/modules/conf_display/e_mod_main.c:24
+#, fuzzy
 msgid "Screen Resolution"
-msgstr ""
+msgstr "רזולוציית מסך"
 
 #: src/modules/conf_display/e_mod_main.c:28
+#, fuzzy
 msgid "Screen Lock"
-msgstr ""
+msgstr "מסך הנעילה"
 
 #: src/modules/conf_display/e_mod_main.c:32
+#, fuzzy
 msgid "Screen Saver"
-msgstr ""
+msgstr "שומר מסך"
 
 #: src/modules/conf_display/e_mod_main.c:36
+#, fuzzy
 msgid "Power Management"
-msgstr ""
+msgstr "ניהול צריכת חשמל"
 
 #: src/modules/conf_display/e_mod_main.c:44
+#, fuzzy
 msgid "Desk"
-msgstr ""
+msgstr "שולחן כתיבה"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:3
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:10
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
+#, fuzzy
 msgid "<None>"
-msgstr ""
+msgstr "<None>"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
 msgid ""
@@ -4220,74 +4450,87 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
 #, fuzzy
 msgid "Edge Bindings Settings"
-msgstr "הגדרות רשימת הלקוח"
+msgstr "איגודי קצה הגדרות"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:253
 #: src/modules/conf_edgebindings/e_mod_main.c:20
+#, fuzzy
 msgid "Edge Bindings"
-msgstr ""
+msgstr "קצה Bindings"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:249
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:281
+#, fuzzy
 msgid "Add Binding"
-msgstr ""
+msgstr "הוסף עקידת"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:261
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:252
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:283
+#, fuzzy
 msgid "Delete Binding"
-msgstr ""
+msgstr "מחק את עקידת"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:265
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:256
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:287
+#, fuzzy
 msgid "Modify Binding"
-msgstr ""
+msgstr "שינוי מחייב"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:269
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:260
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:291
+#, fuzzy
 msgid "Delete All"
-msgstr ""
+msgstr "מחק הכל"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:273
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:264
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:295
+#, fuzzy
 msgid "Restore Default Bindings"
-msgstr ""
+msgstr "שחזור Bindings ברירת מחדל"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:269
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:301
+#, fuzzy
 msgid "Action"
-msgstr ""
+msgstr "פעולה"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:285
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:276
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
+#, fuzzy
 msgid "Action Params"
-msgstr ""
+msgstr "פעולה params"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:295
+#, fuzzy
 msgid "General Options"
-msgstr ""
+msgstr "אפשרויות כלליות"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#, fuzzy
 msgid "Allow binding activation with fullscreen windows"
-msgstr ""
+msgstr "לאפשר הפעלה מחייב עם חלונות מסך מלא"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:840
+#, fuzzy
 msgid "Edge Binding Sequence"
-msgstr ""
+msgstr "Edge איגוד רצף"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:857
+#, fuzzy
 msgid "Clickable edge"
-msgstr ""
+msgstr "ללחיצה קצה"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1172
+#, fuzzy
 msgid "Binding Edge Error"
-msgstr ""
+msgstr "Edge מחייב שגיאה"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1173
 #, c-format
@@ -4300,52 +4543,61 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1366
 #: src/modules/gadman/e_mod_gadman.c:837
+#, fuzzy
 msgid "CTRL"
-msgstr ""
+msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1315
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1371
 #: src/modules/gadman/e_mod_gadman.c:842
+#, fuzzy
 msgid "ALT"
-msgstr ""
+msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1321
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1377
 #: src/modules/gadman/e_mod_gadman.c:848
+#, fuzzy
 msgid "SHIFT"
-msgstr ""
+msgstr "SHIFT לחוץ"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1327
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1383
 #: src/modules/gadman/e_mod_gadman.c:854
+#, fuzzy
 msgid "WIN"
-msgstr ""
+msgstr "לנצח"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
 #: src/modules/mixer/app_mixer.c:277 src/modules/mixer/app_mixer.c:295
+#, fuzzy
 msgid "Input"
-msgstr ""
+msgstr "קלט"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:36
+#, fuzzy
 msgid "Interaction Settings"
-msgstr ""
+msgstr "אינטראקציה הגדרות"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:95
+#, fuzzy
 msgid "Thumbscroll"
-msgstr ""
+msgstr "Thumbscroll"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:97
+#, fuzzy
 msgid "Enable Thumbscroll"
-msgstr ""
+msgstr "אפשר Thumbscroll"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:102
+#, fuzzy
 msgid "Threshold for a thumb drag"
-msgstr ""
+msgstr "סף גרורהאגודל"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:105
 #: src/modules/conf_theme/e_int_config_cursor.c:141
@@ -4354,8 +4606,9 @@ msgid "%1.0f pixels"
 msgstr ""
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:110
+#, fuzzy
 msgid "Threshold for applying drag momentum"
-msgstr ""
+msgstr "סף להחלת המומנטום דראג"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:113
 #, c-format
@@ -4363,8 +4616,9 @@ msgid "%1.0f pixels/sec"
 msgstr ""
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:119
+#, fuzzy
 msgid "Friction slowdown"
-msgstr ""
+msgstr "החיכוך להאטה"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:122
 #, c-format
@@ -4372,24 +4626,29 @@ msgid "%1.2f sec"
 msgstr ""
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:36
+#, fuzzy
 msgid "Mouse Settings"
-msgstr ""
+msgstr "עכבר הגדרות"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:102
+#, fuzzy
 msgid "Mouse Hand"
-msgstr ""
+msgstr "עכבר ביד"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:110
+#, fuzzy
 msgid "Mouse Acceleration"
-msgstr ""
+msgstr "האצת העכבר"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:112
+#, fuzzy
 msgid "Acceleration"
-msgstr ""
+msgstr "האצה"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:118
+#, fuzzy
 msgid "Threshold"
-msgstr ""
+msgstr "סף"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 #, fuzzy
@@ -4403,55 +4662,67 @@ msgstr "השמישים ביותר"
 
 #: src/modules/conf_intl/e_int_config_imc.c:104
 #: src/modules/conf_intl/e_mod_main.c:24
+#, fuzzy
 msgid "Input Method Settings"
-msgstr ""
+msgstr "שיטת הזנה הגדרות"
 
 #: src/modules/conf_intl/e_int_config_imc.c:283
+#, fuzzy
 msgid "Input Method Selector"
-msgstr ""
+msgstr "שיטות קלט בורר"
 
 #: src/modules/conf_intl/e_int_config_imc.c:286
 #: src/modules/conf_intl/e_int_config_imc.c:874
+#, fuzzy
 msgid "Use No Input Method"
-msgstr ""
+msgstr "שימוש לא שיטות קלט"
 
 #: src/modules/conf_intl/e_int_config_imc.c:292
 #: src/modules/conf_intl/e_int_config_imc.c:941
+#, fuzzy
 msgid "Setup Selected Input Method"
-msgstr ""
+msgstr "הגדרת שיטת הזנה נבחרים"
 
 #: src/modules/conf_intl/e_int_config_imc.c:881
+#, fuzzy
 msgid "New"
-msgstr ""
+msgstr "חדש"
 
 #: src/modules/conf_intl/e_int_config_imc.c:883
+#, fuzzy
 msgid "Import..."
-msgstr ""
+msgstr "ייבוא ​​..."
 
 #: src/modules/conf_intl/e_int_config_imc.c:888
+#, fuzzy
 msgid "Input Method Parameters"
-msgstr ""
+msgstr "שיטת הזנה פרמטרים"
 
 #: src/modules/conf_intl/e_int_config_imc.c:898
+#, fuzzy
 msgid "Execute Command"
-msgstr ""
+msgstr "לבצע פקודה"
 
 #: src/modules/conf_intl/e_int_config_imc.c:905
+#, fuzzy
 msgid "Setup Command"
-msgstr ""
+msgstr "הגדרת פיקוד"
 
 #: src/modules/conf_intl/e_int_config_imc.c:914
+#, fuzzy
 msgid "Exported Environment Variables"
-msgstr ""
+msgstr "משתני סביבה המיוצאים"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:67
+#, fuzzy
 msgid "Select an Input Method Settings..."
-msgstr ""
+msgstr "בחר שיטת הגדרות קלט ..."
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:283
 #: src/modules/conf_intl/e_int_config_imc_import.c:299
+#, fuzzy
 msgid "Input Method Config Import Error"
-msgstr ""
+msgstr "שיטות קלט Config ייבוא ​​שגיאה"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
@@ -4466,12 +4737,14 @@ msgstr ""
 
 #: src/modules/conf_intl/e_int_config_intl.c:593
 #: src/modules/conf_intl/e_mod_main.c:20
+#, fuzzy
 msgid "Language Settings"
-msgstr ""
+msgstr "הגדרות שפה"
 
 #: src/modules/conf_intl/e_int_config_intl.c:893
+#, fuzzy
 msgid "Possible Locale problems"
-msgstr ""
+msgstr "זירת בעיות אפשריות"
 
 #: src/modules/conf_intl/e_int_config_intl.c:894
 #, c-format
@@ -4484,29 +4757,34 @@ msgstr ""
 
 #: src/modules/conf_intl/e_int_config_intl.c:949
 #: src/modules/conf_intl/e_int_config_intl.c:1041
+#, fuzzy
 msgid "Language Selector"
-msgstr ""
+msgstr "בורר השפות"
 
 #: src/modules/conf_intl/e_int_config_intl.c:980
 #: src/modules/conf_intl/e_int_config_intl.c:1431
 #: src/modules/conf_menus/e_int_config_menus.c:169
 #: src/modules/wizard/page_010.c:155
+#, fuzzy
 msgid "System Default"
-msgstr ""
+msgstr "ברירת המחדל של המערכת"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1014
 #: src/modules/conf_intl/e_int_config_intl.c:1092
+#, fuzzy
 msgid "Locale Selected"
-msgstr ""
+msgstr "אזור נבחרים"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1015
 #: src/modules/conf_intl/e_int_config_intl.c:1093
+#, fuzzy
 msgid "Locale"
-msgstr ""
+msgstr "אזור"
 
 #: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:146
+#, fuzzy
 msgid "Language"
-msgstr ""
+msgstr "שפה"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:4
 msgid ""
@@ -4514,25 +4792,29 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
+#, fuzzy
 msgid "Single key"
-msgstr ""
+msgstr "אחת מפתח"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:110
 #, fuzzy
 msgid "Key Bindings Settings"
-msgstr "הגדרות רשימת הלקוח"
+msgstr "מפתח איגודי הגדרות"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:244
+#, fuzzy
 msgid "Key Bindings"
-msgstr ""
+msgstr "מפתח Bindings"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:969
+#, fuzzy
 msgid "Key Binding Sequence"
-msgstr ""
+msgstr "רצף איגוד מפתח"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
+#, fuzzy
 msgid "Binding Key Error"
-msgstr ""
+msgstr "שגיאה מפתח מחייב"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
@@ -4551,40 +4833,48 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:112
 #, fuzzy
 msgid "Mouse Bindings Settings"
-msgstr "הגדרות המודול"
+msgstr "איגודי עכבר הגדרות"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:275
+#, fuzzy
 msgid "Mouse Bindings"
-msgstr ""
+msgstr "עכבר Bindings"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:315
+#, fuzzy
 msgid "Action Context"
-msgstr ""
+msgstr "פעולה ההקשר"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:317
+#, fuzzy
 msgid "Any"
-msgstr ""
+msgstr "כל"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:329
+#, fuzzy
 msgid "Win List"
-msgstr ""
+msgstr "רשימת לנצח"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:333
 #: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:248
+#, fuzzy
 msgid "Popup"
-msgstr ""
+msgstr "קופץ"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:337
+#, fuzzy
 msgid "Zone"
-msgstr ""
+msgstr "אזור"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:341
+#, fuzzy
 msgid "Container"
-msgstr ""
+msgstr "מכולה"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:345
+#, fuzzy
 msgid "Manager"
-msgstr ""
+msgstr "מנהל"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:349
 #: src/modules/conf_theme/e_int_config_fonts.c:666
@@ -4598,12 +4888,14 @@ msgid "None"
 msgstr "ללא"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1273
+#, fuzzy
 msgid "Mouse Binding Sequence"
-msgstr ""
+msgstr "עכבר איגוד רצף"
 
 #: src/modules/conf_keybindings/e_mod_main.c:21
+#, fuzzy
 msgid "Keys"
-msgstr ""
+msgstr "מפתחות"
 
 #: src/modules/conf_keybindings/e_mod_main.c:25
 #, fuzzy
@@ -4611,13 +4903,15 @@ msgid "Mouse Buttons"
 msgstr "הגדרות המודול"
 
 #: src/modules/conf_keybindings/e_mod_main.c:29
+#, fuzzy
 msgid "Hardware Switches"
-msgstr ""
+msgstr "חומרה מתגים"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
+#, fuzzy
 msgid "Menu Settings"
-msgstr ""
+msgstr "תפריט הגדרות"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
 #, fuzzy
@@ -4636,8 +4930,9 @@ msgstr "הצג תפריט ראשי"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
 #: src/modules/fileman/e_mod_main.c:364
+#, fuzzy
 msgid "Favorites"
-msgstr ""
+msgstr "המועדפים"
 
 #: src/modules/conf_menus/e_int_config_menus.c:264
 #, fuzzy
@@ -4658,13 +4953,14 @@ msgstr "הערה"
 #: src/modules/gadman/e_mod_config.c:162 src/modules/gadman/e_mod_main.c:27
 #: src/modules/gadman/e_mod_main.c:77 src/modules/gadman/e_mod_main.c:84
 #: src/modules/gadman/e_mod_main.c:120 src/modules/gadman/e_mod_main.c:150
+#, fuzzy
 msgid "Gadgets"
-msgstr ""
+msgstr "גאדג'טים"
 
 #: src/modules/conf_menus/e_int_config_menus.c:274
 #, fuzzy
 msgid "Show gadget settings in top-level"
-msgstr "הצגה בתפריטים"
+msgstr "הצג את הגדרות הגאדג'ט ברמה העליונה"
 
 #: src/modules/conf_menus/e_int_config_menus.c:277
 #: src/modules/conf_menus/e_mod_main.c:17
@@ -4688,16 +4984,19 @@ msgid "%2.0f pixels"
 msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:292
+#, fuzzy
 msgid "Cursor Margin"
-msgstr ""
+msgstr "הסמן שוליים"
 
 #: src/modules/conf_menus/e_int_config_menus.c:297
+#, fuzzy
 msgid "Autoscroll"
-msgstr ""
+msgstr "Autoscroll"
 
 #: src/modules/conf_menus/e_int_config_menus.c:301
+#, fuzzy
 msgid "Menu Scroll Speed"
-msgstr ""
+msgstr "תפריט גלילה מהירות"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 #, c-format
@@ -4705,8 +5004,9 @@ msgid "%5.0f pixels/sec"
 msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:306
+#, fuzzy
 msgid "Fast Mouse Move Threshhold"
-msgstr ""
+msgstr "עכבר מהיר העבר סף"
 
 #: src/modules/conf_menus/e_int_config_menus.c:308
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:187
@@ -4715,8 +5015,9 @@ msgid "%4.0f pixels/sec"
 msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:311
+#, fuzzy
 msgid "Click Drag Timeout"
-msgstr ""
+msgstr "לחץ גררו פסק זמן"
 
 #: src/modules/conf_menus/e_int_config_menus.c:313
 #, fuzzy, c-format
@@ -4724,27 +5025,32 @@ msgid "%2.2f sec"
 msgstr "%.1f שניות"
 
 #: src/modules/conf_paths/e_int_config_paths.c:59
+#, fuzzy, c-format
 msgid "Search Path Settings"
-msgstr ""
+msgstr "נתיב חיפוש הגדרות"
 
 #: src/modules/conf_paths/e_int_config_paths.c:70
+#, fuzzy
 msgid "Data"
-msgstr ""
+msgstr "נתונים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:72
+#, fuzzy
 msgid "Images"
-msgstr ""
+msgstr "תמונות"
 
 #: src/modules/conf_paths/e_int_config_paths.c:74
 #: src/modules/conf_theme/e_int_config_fonts.c:434
 #: src/modules/conf_theme/e_mod_main.c:44
+#, fuzzy
 msgid "Fonts"
-msgstr ""
+msgstr "גופנים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
 #: src/modules/conf_theme/e_int_config_theme.c:1020
+#, fuzzy
 msgid "Themes"
-msgstr ""
+msgstr "נושאים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/everything/evry_config.c:438
@@ -4753,56 +5059,70 @@ msgid "Icons"
 msgstr "סמלים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:82
+#, fuzzy
 msgid "Backgrounds"
-msgstr ""
+msgstr "רקעים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:84
+#, fuzzy
 msgid "Messages"
-msgstr ""
+msgstr "הודעות"
 
 #: src/modules/conf_paths/e_int_config_paths.c:165
+#, fuzzy
 msgid "E Paths"
-msgstr ""
+msgstr "ה נתיבים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:196
+#, fuzzy
 msgid "Default Directories"
-msgstr ""
+msgstr "ברירת מחדל מדריכים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:203
+#, fuzzy
 msgid "User Defined Directories"
-msgstr ""
+msgstr "הגדרת משתמש מדריכים"
 
 #: src/modules/conf_paths/e_mod_main.c:20
+#, fuzzy
 msgid "Search Directories"
-msgstr ""
+msgstr "חיפוש מדריכים"
 
 #: src/modules/conf_paths/e_mod_main.c:24
+#, fuzzy
 msgid "Environment Variables"
-msgstr ""
+msgstr "משתני סביבה"
 
 #: src/modules/conf_performance/e_int_config_engine.c:37
+#, fuzzy
 msgid "Engine Settings"
-msgstr ""
+msgstr "מנוע הגדרות"
 
 #: src/modules/conf_performance/e_int_config_engine.c:87
 #: src/modules/conf_performance/e_int_config_engine.c:109
+#, fuzzy
 msgid "Use ARGB instead of shaped windows"
-msgstr ""
+msgstr "השתמש ARGB במקום חלונות בצורת"
 
 #: src/modules/conf_performance/e_int_config_engine.c:111
+#, fuzzy
 msgid ""
 "You have chosen to enable ARGB composite support,<br>but your current screen "
 "does not support composite.<br><br>Are you sure you wish to enable ARGB "
 "support ?"
 msgstr ""
+"בחרת לאפשר תמיכה ARGB כללי,<br>אבל המסך הנוכחי שלך לא תומך מורכב.<br><br>האם "
+"אתה בטוח שברצונך לאפשר תמיכה ARGB."
 
 #: src/modules/conf_performance/e_int_config_performance.c:35
+#, fuzzy
 msgid "Performance Settings"
-msgstr ""
+msgstr "ביצועים הגדרות"
 
 #: src/modules/conf_performance/e_int_config_performance.c:103
+#, fuzzy
 msgid "Framerate"
-msgstr ""
+msgstr "framerate"
 
 #: src/modules/conf_performance/e_int_config_performance.c:105
 #, c-format
@@ -4815,12 +5135,14 @@ msgid "Applications priority"
 msgstr "יישומים"
 
 #: src/modules/conf_performance/e_int_config_performance.c:119
+#, fuzzy
 msgid "Cache flush interval"
-msgstr ""
+msgstr "מטמון פלאש מרווח"
 
 #: src/modules/conf_performance/e_int_config_performance.c:125
+#, fuzzy
 msgid "Font cache size"
-msgstr ""
+msgstr "מטמון גודל גופן"
 
 #: src/modules/conf_performance/e_int_config_performance.c:127
 #, c-format
@@ -4828,8 +5150,9 @@ msgid "%1.1f MB"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_performance.c:131
+#, fuzzy
 msgid "Image cache size"
-msgstr ""
+msgstr "מטמון גודל תמונה"
 
 #: src/modules/conf_performance/e_int_config_performance.c:133
 #, c-format
@@ -4842,8 +5165,9 @@ msgid "Caches"
 msgstr "ביטול"
 
 #: src/modules/conf_performance/e_int_config_performance.c:141
+#, fuzzy
 msgid "Number of Edje files to cache"
-msgstr ""
+msgstr "מספר הקבצים Edje אל המטמון"
 
 #: src/modules/conf_performance/e_int_config_performance.c:143
 #, c-format
@@ -4851,8 +5175,9 @@ msgid "%1.0f files"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_performance.c:147
+#, fuzzy
 msgid "Number of Edje collections to cache"
-msgstr ""
+msgstr "מספר אוספים Edje אל המטמון"
 
 #: src/modules/conf_performance/e_int_config_performance.c:149
 #, c-format
@@ -4865,21 +5190,25 @@ msgid "Edje Cache"
 msgstr "ביטול"
 
 #: src/modules/conf_performance/e_mod_main.c:18
+#, fuzzy
 msgid "Performance"
-msgstr ""
+msgstr "ביצועים"
 
 #: src/modules/conf_performance/e_mod_main.c:19
+#, fuzzy
 msgid "Engine"
-msgstr ""
+msgstr "מנוע"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:72
+#, fuzzy
 msgid "Configured Shelves"
-msgstr ""
+msgstr "מוגדר מדפים"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:88
 #: src/modules/ibar/e_mod_config.c:110
+#, fuzzy
 msgid "Setup"
-msgstr ""
+msgstr "הגדרת"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:288
 #, c-format
@@ -4889,47 +5218,57 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:105
+#, fuzzy
 msgid "Wallpaper Settings"
-msgstr ""
+msgstr "טפט הגדרות"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:499
 #: src/modules/conf_theme/e_int_config_wallpaper.c:619
+#, fuzzy
 msgid "Use Theme Wallpaper"
-msgstr ""
+msgstr "השתמש טפט Theme"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:504
 #: src/modules/conf_theme/e_int_config_wallpaper.c:624
+#, fuzzy
 msgid "Picture..."
-msgstr ""
+msgstr "תמונה ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:511
 #: src/modules/conf_theme/e_int_config_wallpaper.c:631
+#, fuzzy
 msgid "Online..."
-msgstr ""
+msgstr "באינטרנט ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:646
+#, fuzzy
 msgid "Where to place the Wallpaper"
-msgstr ""
+msgstr "היכן למקם את הטפט"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:647
+#, fuzzy
 msgid "All Desktops"
-msgstr ""
+msgstr "כל המחשבים השולחניים"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:649
+#, fuzzy
 msgid "This Desktop"
-msgstr ""
+msgstr "זה שולחן העבודה"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:651
+#, fuzzy
 msgid "This Screen"
-msgstr ""
+msgstr "מסך זה"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:126
+#, fuzzy
 msgid "Wallpaper settings..."
-msgstr ""
+msgstr "טפט הגדרות ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:182
+#, fuzzy
 msgid "Tile"
-msgstr ""
+msgstr "אריח"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:197
 #, fuzzy
@@ -4937,12 +5276,14 @@ msgid "Pan"
 msgstr "פשוט"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:286
+#, fuzzy
 msgid "Select a Picture..."
-msgstr ""
+msgstr "בחרתמונה ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:696
+#, fuzzy
 msgid "Picture Import Error"
-msgstr ""
+msgstr "ייבוא ​​תמונה שגיאה"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:697
 msgid ""
@@ -4953,8 +5294,9 @@ msgstr ""
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:794
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:876
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:886
+#, fuzzy
 msgid "Wallpaper Import Error"
-msgstr ""
+msgstr "טפט שגיאה ייבוא"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:785
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:877
@@ -4970,16 +5312,19 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:162
+#, fuzzy
 msgid "By"
-msgstr ""
+msgstr "על ידי"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:198
+#, fuzzy
 msgid "Error getting data !"
-msgstr ""
+msgstr "שגיאה בקבלת נתונים."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:233
+#, fuzzy
 msgid "Exchange wallpapers"
-msgstr ""
+msgstr "שערי טפטים"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:235
 #, fuzzy
@@ -4987,16 +5332,19 @@ msgid "Download"
 msgstr "פריקת מודול"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:254
+#, fuzzy
 msgid "Getting data, please wait..."
-msgstr ""
+msgstr "קבלת הנתונים , אנא המתן ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:266
+#, fuzzy
 msgid "Select a background from the list."
-msgstr ""
+msgstr "בחר רקע מתוך הרשימה."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:281
+#, fuzzy
 msgid "Error: can't start the request."
-msgstr ""
+msgstr "שגיאה : לא יכול להתחיל את הבקשה."
 
 #: src/modules/conf_theme/e_int_config_borders.c:30
 #: src/modules/conf_theme/e_int_config_borders.c:201
@@ -5004,12 +5352,14 @@ msgid "Default Border Style"
 msgstr "סגנון המסגרת כברירת המחדל"
 
 #: src/modules/conf_theme/e_int_config_borders.c:50
+#, fuzzy
 msgid "Window Border Selection"
-msgstr ""
+msgstr "הגבול חלון בחירה"
 
 #: src/modules/conf_theme/e_int_config_borders.c:247
+#, fuzzy
 msgid "Remember this Border for this window next time it appears"
-msgstr ""
+msgstr "זכור את הגבול חלון זה בפעם הבאה שהוא מופיע"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:75
 msgid "Border Title"
@@ -5018,7 +5368,7 @@ msgstr "כותרת המסגרת"
 #: src/modules/conf_theme/e_int_config_color_classes.c:76
 #, fuzzy
 msgid "Border Title Active"
-msgstr "כותרת המסגרת"
+msgstr "כותרת הגבול פעיל"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:77
 #, fuzzy
@@ -5028,7 +5378,7 @@ msgstr "סגנון המסגרת"
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
 #, fuzzy
 msgid "Border Frame Active"
-msgstr "כותרת המסגרת"
+msgstr "מסגרת גבול פעיל"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
 msgid "Error Text"
@@ -5037,7 +5387,7 @@ msgstr "טקסט השגיאה"
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 #, fuzzy
 msgid "Menu Background Base"
-msgstr "הגדרה כרקע"
+msgstr "רקע תפריט בסיס"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:81
 #: src/modules/conf_theme/e_int_config_fonts.c:61
@@ -5045,8 +5395,9 @@ msgid "Menu Title"
 msgstr "כותרת התפריט"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:82
+#, fuzzy
 msgid "Menu Title Active"
-msgstr ""
+msgstr "תפריט כותרת פעיל"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:83
 #: src/modules/conf_theme/e_int_config_fonts.c:60
@@ -5054,13 +5405,14 @@ msgid "Menu Item"
 msgstr "פריט בתפריט"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:84
+#, fuzzy
 msgid "Menu Item Active"
-msgstr ""
+msgstr "תפריט הפריט הפעיל"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:85
 #, fuzzy
 msgid "Menu Item Disabled"
-msgstr "פריט בתפריט"
+msgstr "פריט תפריט לנכים"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:65
@@ -5073,49 +5425,56 @@ msgid "Resize Text"
 msgstr "שינוי גודל הטקסט"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:88
+#, fuzzy
 msgid "Winlist Item"
-msgstr ""
+msgstr "Winlist פריט"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:89
+#, fuzzy
 msgid "Winlist Item Active"
-msgstr ""
+msgstr "Winlist הפריט הפעיל"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:90
+#, fuzzy
 msgid "Winlist Label"
-msgstr ""
+msgstr "Winlist Label"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:91
 #: src/modules/conf_theme/e_int_config_fonts.c:67
+#, fuzzy
 msgid "Winlist Title"
-msgstr ""
+msgstr "Winlist כותרת"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:92
+#, fuzzy
 msgid "Dialog Background Base"
-msgstr ""
+msgstr "רקע שיח מאגר"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:93
 #, fuzzy
 msgid "Shelf Background Base"
-msgstr "הגדרה כרקע"
+msgstr "רקע מדף מאגר"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:94
 #, fuzzy
 msgid "File Manager Background Base"
-msgstr "מנהל הקבצים"
+msgstr "מנהל הקבצים רקע בסיס"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:99
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:230
 #: src/modules/winlist/e_int_config_winlist.c:214
+#, fuzzy
 msgid "Focus"
-msgstr ""
+msgstr "להתמקד"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:100
 msgid "Button Text"
 msgstr "טקסט הלחצן"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:101
+#, fuzzy
 msgid "Button Text Disabled"
-msgstr ""
+msgstr "טקסט לחצן לנכים"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:102
 msgid "Check Text"
@@ -5126,93 +5485,110 @@ msgid "Check Text Disabled"
 msgstr "טקסט הבדיקה מבוטל"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:104
+#, fuzzy
 msgid "Entry Text"
-msgstr ""
+msgstr "הזנת טקסט"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:105
 #, fuzzy
 msgid "Entry Text Disabled"
-msgstr "טקסט הבדיקה מבוטל"
+msgstr "הזנת טקסט לנכים"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:106
+#, fuzzy
 msgid "Label Text"
-msgstr ""
+msgstr "תווית טקסט"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:107
+#, fuzzy
 msgid "List Item Text Selected"
-msgstr ""
+msgstr "פריט רשימה טקסט נבחר"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:108
+#, fuzzy
 msgid "List Item Text (Even)"
-msgstr ""
+msgstr "פריט טקסט הרשימה (גם."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:109
+#, fuzzy
 msgid "List Item Background Base (Even)"
-msgstr ""
+msgstr "פריט רשימה מאגר רקע (גם."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:110
+#, fuzzy
 msgid "List Item Text (Odd)"
-msgstr ""
+msgstr "פריט הטקסט ברשימה (מוזר."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
+#, fuzzy
 msgid "List Item Background Base (Odd)"
-msgstr ""
+msgstr "פריט רשימה מאגר רקע (מוזר."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:112
 #, fuzzy
 msgid "List Header Text (Even)"
-msgstr "כותרת הרשימה"
+msgstr "כותרת טקסט הרשימה (גם."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:113
+#, fuzzy
 msgid "List Header Background Base (Even)"
-msgstr ""
+msgstr "כותרת הרשימה בסיס רקע (גם."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:114
 #, fuzzy
 msgid "List Header Text (Odd)"
-msgstr "כותרת הרשימה"
+msgstr "כותרת רשימת טקסט (מוזר."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:116
+#, fuzzy
 msgid "List Header Background Base (Odd)"
-msgstr ""
+msgstr "כותרת הרשימה בסיס רקע (מוזר."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:117
+#, fuzzy
 msgid "Radio Text"
-msgstr ""
+msgstr "טקסט רדיו"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:118
+#, fuzzy
 msgid "Radio Text Disabled"
-msgstr ""
+msgstr "טקסט רדיו לנכים"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:119
+#, fuzzy
 msgid "Slider Text"
-msgstr ""
+msgstr "המחוון טקסט"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:120
+#, fuzzy
 msgid "Slider Text Disabled"
-msgstr ""
+msgstr "המחוון טקסט לנכים"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:121
 #, fuzzy
 msgid "Frame Background Base"
-msgstr "הגדרה כרקע"
+msgstr "רקע במסגרת מאגר"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:122
+#, fuzzy
 msgid "Scroller Frame Background Base"
-msgstr ""
+msgstr "רקע גלילה מסגרת בסיס"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:127
+#, fuzzy
 msgid "Module Label"
-msgstr ""
+msgstr "מודול Label"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:128
+#, fuzzy
 msgid "Composite Focus-out Color"
-msgstr ""
+msgstr "צבע Composite Focus -out"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:161
 #: src/modules/conf_theme/e_mod_main.c:41
+#, fuzzy
 msgid "Colors"
-msgstr ""
+msgstr "צבעים"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:269
 #, fuzzy, c-format
@@ -5236,8 +5612,9 @@ msgstr "הגדרת מחלקות צבע."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:286
 #: src/modules/conf_theme/e_int_config_color_classes.c:545
+#, fuzzy
 msgid "No selected color class"
-msgstr ""
+msgstr "לא בכיתה צבע נבחר"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:548
 #, fuzzy
@@ -5245,12 +5622,14 @@ msgid "Custom colors"
 msgstr "סמלים מותאמים אישית"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:554
+#, fuzzy
 msgid "Object:"
-msgstr ""
+msgstr "האובייקט:"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:560
+#, fuzzy
 msgid "Outline:"
-msgstr ""
+msgstr "מתאר:"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:566
 #, fuzzy
@@ -5258,12 +5637,14 @@ msgid "Shadow:"
 msgstr "מוצלל"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:598
+#, fuzzy
 msgid "Text with applied colors."
-msgstr ""
+msgstr "טקסט עם צבעים שימושית."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:604
+#, fuzzy
 msgid "Colors depend on theme capabilities."
-msgstr ""
+msgstr "צבעים תלויים ביכולות נושא."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:853
 msgid "Window Manager"
@@ -5280,120 +5661,148 @@ msgid "Others"
 msgstr "אחר"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:59
+#, fuzzy
 msgid "Title Bar"
-msgstr ""
+msgstr "כותרת בר"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:62
+#, fuzzy
 msgid "Textblock Plain"
-msgstr ""
+msgstr "Textblock רגיל"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:63
+#, fuzzy
 msgid "Textblock Light"
-msgstr ""
+msgstr "Textblock אור"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:64
+#, fuzzy
 msgid "Textblock Big"
-msgstr ""
+msgstr "Textblock הגדול"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:68
+#, fuzzy
 msgid "Settings Heading"
-msgstr ""
+msgstr "הגדרות כותרת"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:69
+#, fuzzy
 msgid "About Title"
-msgstr ""
+msgstr "על כותרת"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:70
+#, fuzzy
 msgid "About Version"
-msgstr ""
+msgstr "על הגירסה"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:71
+#, fuzzy
 msgid "About Text"
-msgstr ""
+msgstr "על טקסט"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:72
+#, fuzzy
 msgid "Desklock Title"
-msgstr ""
+msgstr "Desklock כותרת"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:73
+#, fuzzy
 msgid "Desklock Password"
-msgstr ""
+msgstr "Desklock סיסמה"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:74
+#, fuzzy
 msgid "Dialog Error"
-msgstr ""
+msgstr "שיח שגיאה"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:75
+#, fuzzy
 msgid "Exebuf Command"
-msgstr ""
+msgstr "Exebuf פיקוד"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:76
+#, fuzzy
 msgid "Splash Title"
-msgstr ""
+msgstr "Splash כותרת"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:77
+#, fuzzy
 msgid "Splash Text"
-msgstr ""
+msgstr "Splash טקסט"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:78
+#, fuzzy
 msgid "Splash Version"
-msgstr ""
+msgstr "Splash גרסה"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:79
+#, fuzzy
 msgid "Digital Clock"
-msgstr ""
+msgstr "שעון דיגיטלי"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:82
+#, fuzzy
 msgid "Entry"
-msgstr ""
+msgstr "כניסה"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:83
+#, fuzzy
 msgid "Frame"
-msgstr ""
+msgstr "מסגרת"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:84
+#, fuzzy
 msgid "Label"
-msgstr ""
+msgstr "לייבל"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:85
+#, fuzzy
 msgid "Buttons"
-msgstr ""
+msgstr "לחצנים"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:86
+#, fuzzy
 msgid "Slider"
-msgstr ""
+msgstr "Slider"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:87
+#, fuzzy
 msgid "Radio Buttons"
-msgstr ""
+msgstr "רדיו לחצנים"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:88
+#, fuzzy
 msgid "Check Buttons"
-msgstr ""
+msgstr "בדוק לחצנים"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:89
+#, fuzzy
 msgid "Text List Item"
-msgstr ""
+msgstr "רשימת טקסט פריט"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:90
+#, fuzzy
 msgid "List Item"
-msgstr ""
+msgstr "פריט רשימה"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:91
 msgid "List Header"
 msgstr "כותרת הרשימה"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:93
+#, fuzzy
 msgid "Filemanager"
-msgstr ""
+msgstr "מנהל הקבצים"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:94
+#, fuzzy
 msgid "Typebuf"
-msgstr ""
+msgstr "Typebuf"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:96
+#, fuzzy
 msgid "Desktop Icon"
-msgstr ""
+msgstr "שולחן העבודה סמל"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:99
 #: src/modules/conf_theme/e_int_config_fonts.c:258
@@ -5405,32 +5814,38 @@ msgid "Large"
 msgstr "גדול"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:102
+#, fuzzy
 msgid "Small Styled"
-msgstr ""
+msgstr "קטן מנוסח"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:103
+#, fuzzy
 msgid "Normal Styled"
-msgstr ""
+msgstr "רגיל מנוסח"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:104
+#, fuzzy
 msgid "Large Styled"
-msgstr ""
+msgstr "גדול מנוסח"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:167
+#, fuzzy
 msgid "Font Settings"
-msgstr ""
+msgstr "הגדרות הגופן"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:252
 msgid "Tiny"
 msgstr "זעיר"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:270
+#, fuzzy
 msgid "Big"
-msgstr ""
+msgstr "גדול"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:276
+#, fuzzy
 msgid "Really Big"
-msgstr ""
+msgstr "ממש גדול"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:282
 msgid "Huge"
@@ -5442,91 +5857,110 @@ msgid "%d pixels"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_fonts.c:427
+#, fuzzy
 msgid "Enable Custom Font Classes"
-msgstr ""
+msgstr "אפשר שיעורים גופנים מותאמים אישית"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:451
+#, fuzzy
 msgid "Basic preview text: 123: 我的天空！"
-msgstr ""
+msgstr "תצוגה מקדימה של הטקסט הבסיסי , 123 ;我 的 天空!"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:606
+#, fuzzy
 msgid "Font Classes"
-msgstr ""
+msgstr "גופן חוגים"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:614
+#, fuzzy
 msgid "Enable Font Class"
-msgstr ""
+msgstr "אפשר מחלקה גופן"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:621
+#, fuzzy
 msgid "Font"
-msgstr ""
+msgstr "גופן"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:647
+#, fuzzy
 msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr ""
+msgstr "תצוגה מקדימה טקסט מתקדם .. 我 真的 会 写 中文"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:655
+#, fuzzy
 msgid "Hinting"
-msgstr ""
+msgstr "רמז"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:658
+#, fuzzy
 msgid "Bytecode"
-msgstr ""
+msgstr "bytecode"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:662
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
 #: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:259
+#, fuzzy
 msgid "Automatic"
-msgstr ""
+msgstr "אוטומטי"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:671
+#, fuzzy
 msgid "Font Fallbacks"
-msgstr ""
+msgstr "גופן Fallbacks"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:672
+#, fuzzy
 msgid "Fallback Name"
-msgstr ""
+msgstr "שחזור שם"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:684
+#, fuzzy
 msgid "Enable Fallbacks"
-msgstr ""
+msgstr "אפשר Fallbacks"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:693
 msgid "Hinting / Fallbacks"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:53
+#, fuzzy
 msgid "Icon Theme Settings"
-msgstr ""
+msgstr "ערכת הצלמיות הגדרות"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:276
+#, fuzzy
 msgid "Enable icon theme"
-msgstr ""
+msgstr "אפשר ערכת הצלמיות"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:281
 #, fuzzy
 msgid "Use icon theme for applications"
-msgstr "היישומים הנבחרים"
+msgstr "השתמש בערכת נושא הסמל של יישומים"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:285
+#, fuzzy
 msgid "Icons override general theme"
-msgstr ""
+msgstr "סמלים לעקוף הנושא הכללי"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:38
+#, fuzzy
 msgid "Cursor Settings"
-msgstr ""
+msgstr "הסמן הגדרות"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:129
+#, fuzzy
 msgid "Show Cursor"
-msgstr ""
+msgstr "הצג הסמן"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:150
+#, fuzzy
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:160
+#, fuzzy
 msgid "Idle effects"
-msgstr ""
+msgstr "סרק אפקטים"
 
 #: src/modules/conf_theme/e_int_config_scale.c:55
 #, fuzzy
@@ -5534,16 +5968,19 @@ msgid "Scale Settings"
 msgstr "הגדרות מדף"
 
 #: src/modules/conf_theme/e_int_config_scale.c:99
+#, fuzzy
 msgid "Scale with DPI"
-msgstr ""
+msgstr "סולם עם DPI"
 
 #: src/modules/conf_theme/e_int_config_scale.c:103
+#, fuzzy
 msgid "Relative"
-msgstr ""
+msgstr "קרוב משפחה"
 
 #: src/modules/conf_theme/e_int_config_scale.c:104
+#, fuzzy
 msgid "Base DPI to scale relative to"
-msgstr ""
+msgstr "מאגר DPI בהיקף יחסית"
 
 #: src/modules/conf_theme/e_int_config_scale.c:107
 #: src/modules/conf_theme/e_int_config_scale.c:182
@@ -5557,12 +5994,14 @@ msgid "Currently %i DPI"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_scale.c:170
+#, fuzzy
 msgid "Don't Scale"
-msgstr ""
+msgstr "לא קנה מידה"
 
 #: src/modules/conf_theme/e_int_config_scale.c:173
+#, fuzzy
 msgid "Scale relative to screen DPI"
-msgstr ""
+msgstr "יחסית למסך DPI קנה מידה"
 
 #: src/modules/conf_theme/e_int_config_scale.c:178
 #, c-format
@@ -5570,8 +6009,9 @@ msgid "Base DPI (Currently %i DPI)"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_scale.c:186
+#, fuzzy
 msgid "Custom scaling factor"
-msgstr ""
+msgstr "קנה מידה מותאם אישית גורם"
 
 #: src/modules/conf_theme/e_int_config_scale.c:189
 #, fuzzy, c-format
@@ -5580,12 +6020,14 @@ msgstr "%.1f שניות"
 
 #: src/modules/conf_theme/e_int_config_scale.c:193
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:155
+#, fuzzy, c-format
 msgid "Policy"
-msgstr ""
+msgstr "מדיניות"
 
 #: src/modules/conf_theme/e_int_config_scale.c:199
+#, fuzzy
 msgid "Minimum"
-msgstr ""
+msgstr "מינימום"
 
 #: src/modules/conf_theme/e_int_config_scale.c:202
 #: src/modules/conf_theme/e_int_config_scale.c:209
@@ -5594,79 +6036,97 @@ msgid "%1.2f times"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_scale.c:206
+#, fuzzy
 msgid "Maximum"
-msgstr ""
+msgstr "מקסימום"
 
 #: src/modules/conf_theme/e_int_config_scale.c:213
+#, fuzzy
 msgid "Constraints"
-msgstr ""
+msgstr "אילוצים"
 
 #: src/modules/conf_theme/e_int_config_startup.c:38
+#, fuzzy
 msgid "Startup Settings"
-msgstr ""
+msgstr "אתחול והגדרות"
 
 #: src/modules/conf_theme/e_int_config_startup.c:317
+#, fuzzy
 msgid "Show Splash Screen on Login"
-msgstr ""
+msgstr "הצג מסך הפתיחה על התחברות"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:44
+#, fuzzy
 msgid "Transition Settings"
-msgstr ""
+msgstr "מעבר הגדרות"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:154
+#, fuzzy
 msgid "Events"
-msgstr ""
+msgstr "אירועים"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:162
 #: src/modules/conf_theme/e_mod_main.c:62
+#, fuzzy
 msgid "Startup"
-msgstr ""
+msgstr "אתחול"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:163
+#, fuzzy
 msgid "Desk Change"
-msgstr ""
+msgstr "דלפק שנה"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:164
+#, fuzzy
 msgid "Background Change"
-msgstr ""
+msgstr "רקע שינוי"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:172
 #: src/modules/conf_theme/e_mod_main.c:56
+#, fuzzy
 msgid "Transitions"
-msgstr ""
+msgstr "מעברים"
 
 #: src/modules/conf_theme/e_int_config_theme.c:87
+#, fuzzy
 msgid "Theme Selector"
-msgstr ""
+msgstr "הנושא בורר"
 
 #: src/modules/conf_theme/e_int_config_theme.c:432
+#, fuzzy
 msgid " Import..."
-msgstr ""
+msgstr " ייבוא ​​..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:436
+#, fuzzy
 msgid " Online..."
-msgstr ""
+msgstr " באינטרנט ..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:1011
+#, fuzzy
 msgid "Theme Categories"
-msgstr ""
+msgstr "נושא קטגוריות"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1029
+#, fuzzy
 msgid "Assign"
-msgstr ""
+msgstr "להקצות"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1035
+#, fuzzy
 msgid "Clear All"
-msgstr ""
+msgstr "נקה הכל"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:67
+#, fuzzy
 msgid "Select a Theme..."
-msgstr ""
+msgstr "בחרנושא ..."
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
+#, fuzzy
 msgid "Theme Import Error"
-msgstr ""
+msgstr "ייבוא ​​נושא שגיאה"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:285
 msgid ""
@@ -5679,29 +6139,33 @@ msgid "Enlightenment was unable to import the theme<br>due to a copy error."
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_theme_web.c:126
+#, fuzzy
 msgid "Exchange themes"
-msgstr ""
+msgstr "חילופי ערכות נושא"
 
 #: src/modules/conf_theme/e_mod_main.c:47
 msgid "Borders"
 msgstr "מסגרות"
 
 #: src/modules/conf_theme/e_mod_main.c:50
+#, fuzzy
 msgid "Icon Theme"
-msgstr ""
+msgstr "סמל נושא"
 
 #: src/modules/conf_theme/e_mod_main.c:53
+#, fuzzy
 msgid "Mouse Cursor"
-msgstr ""
+msgstr "סמן העכבר"
 
 #: src/modules/conf_theme/e_mod_main.c:59
+#, fuzzy
 msgid "Scaling"
-msgstr ""
+msgstr "דרוג"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:36
 #, fuzzy
 msgid "Window List Menu Settings"
-msgstr "הגדרות רשימת הלקוח"
+msgstr "רשימת חלון התפריט הגדרות"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:97
 msgid "Group By"
@@ -5714,7 +6178,7 @@ msgstr "כלול חלונות ממסכים אחרים"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:110
 #, fuzzy
 msgid "Seperate Groups By"
-msgstr "הפרד קבוצות לפי"
+msgstr "להפריד קבוצות לפי"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:114
 msgid "Using separator bars"
@@ -5734,8 +6198,9 @@ msgid "Alphabetical"
 msgstr "אלפביתי"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:131
+#, fuzzy
 msgid "Window stacking layer"
-msgstr ""
+msgstr "חלון לערום שכבה"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:134
 msgid "Most recently used"
@@ -5759,8 +6224,9 @@ msgid "Separate group"
 msgstr "הפרדת קבוצות"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:151
+#, fuzzy
 msgid "Warp to owning desktop"
-msgstr ""
+msgstr "עיוות את הבעלות שולחן העבודה"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:154
 msgid "Iconified Windows"
@@ -5782,8 +6248,9 @@ msgstr "אפשרויות"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:45
 #: src/modules/conf_window_manipulation/e_mod_main.c:18
+#, fuzzy
 msgid "Window Display"
-msgstr ""
+msgstr "חלון הראווה"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:125
 #, fuzzy
@@ -5792,14 +6259,15 @@ msgstr "העברת טקסט"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:126
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:137
+#, fuzzy
 msgid "Display information"
-msgstr ""
+msgstr "הצגת מידע"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:129
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:140
 #, fuzzy
 msgid "Follows the window"
-msgstr "לסגור את החלון"
+msgstr "הבא את החלון"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:136
 #, fuzzy
@@ -5808,8 +6276,9 @@ msgstr "שינוי גודל הטקסט"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:146
 #: src/modules/winlist/e_int_config_winlist.c:210
+#, fuzzy
 msgid "Display"
-msgstr ""
+msgstr "להציג"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:152
 #, fuzzy
@@ -5827,25 +6296,29 @@ msgid "Border Icon"
 msgstr "מסגרת"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
+#, fuzzy
 msgid "Smart Placement"
-msgstr ""
+msgstr "חכם מיקום"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:166
+#, fuzzy
 msgid "Don't hide Gadgets"
-msgstr ""
+msgstr "אל תסתיר גאדג'טים"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:169
+#, fuzzy
 msgid "Place at mouse pointer"
-msgstr ""
+msgstr "מקום סמן העכבר"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:172
+#, fuzzy
 msgid "Place manually with the mouse"
-msgstr ""
+msgstr "מניחים באופן ידני באמצעות העכבר"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:176
 #, fuzzy
 msgid "Switch to desktop of new window"
-msgstr "החלף לשולחן העבודה 0"
+msgstr "עבורלשולחןעבודה של חלון חדש"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:179
 #, fuzzy
@@ -5853,44 +6326,54 @@ msgid "New Windows"
 msgstr "מתחת לחלונות"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:184
+#, fuzzy
 msgid "Animate"
-msgstr ""
+msgstr "להנפיש"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:196
+#, fuzzy
 msgid "Linear"
-msgstr ""
+msgstr "שורתי"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:201
+#, fuzzy
 msgid "Accelerate, then decelerate"
-msgstr ""
+msgstr "להאיץ, ואז להאט"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:206
+#, fuzzy
 msgid "Accelerate"
-msgstr ""
+msgstr "להאיץ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:211
+#, fuzzy
 msgid "Decelerate"
-msgstr ""
+msgstr "להאט"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:216
+#, fuzzy
 msgid "Pronounced Accelerate"
-msgstr ""
+msgstr "ביטא האץ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:221
+#, fuzzy
 msgid "Pronounced Decelerate"
-msgstr ""
+msgstr "בולט להאט"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:226
+#, fuzzy
 msgid "Pronounced Acceleratem then decelerate"
-msgstr ""
+msgstr "Acceleratem בולט ואז להאט"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:231
+#, fuzzy
 msgid "Bounce"
-msgstr ""
+msgstr "לקפוץ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:236
+#, fuzzy
 msgid "Bounce more"
-msgstr ""
+msgstr "להקפיץ יותר"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:241
 #, fuzzy
@@ -5898,20 +6381,24 @@ msgid "Shading"
 msgstr "איסוף בערימה"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:51
+#, fuzzy
 msgid "Focus Settings"
-msgstr ""
+msgstr "מקדו את הגדרות"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:189
+#, fuzzy
 msgid "Click Window to Focus"
-msgstr ""
+msgstr "לחץ על חלון פוקוס"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:191
+#, fuzzy
 msgid "Window under the Mouse"
-msgstr ""
+msgstr "חלון תחת מאוס"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:193
+#, fuzzy
 msgid "Most recent Window under the Mouse"
-msgstr ""
+msgstr "חלון האחרונה תחת מאוס"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:211
 #: src/modules/wizard/page_060.c:34
@@ -5930,8 +6417,9 @@ msgid "Sloppy"
 msgstr "העתק"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:218
+#, fuzzy
 msgid "New Window Focus"
-msgstr ""
+msgstr "בחלון חדש פוקוס"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:220
 #, fuzzy
@@ -5944,51 +6432,60 @@ msgid "All windows"
 msgstr "חלונות"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:224
+#, fuzzy
 msgid "Only dialogs"
-msgstr ""
+msgstr "רק דיאלוגים"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:226
+#, fuzzy
 msgid "Only dialogs with focused parent"
-msgstr ""
+msgstr "דיאלוגים רק עם ההורה ממוקד"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:235
+#, fuzzy
 msgid "Other Settings"
-msgstr ""
+msgstr "הגדרות אחרות"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:236
+#, fuzzy
 msgid "Always pass click events to programs"
-msgstr ""
+msgstr "תמיד לעבור על האירועים לתוכניות"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:239
 #, fuzzy
 msgid "Click raises the window"
-msgstr "לסגור את החלון"
+msgstr "לחץ מעלה את החלון"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:242
 #, fuzzy
 msgid "Click focuses the window"
-msgstr "לסגור את החלון"
+msgstr "לחץ מתמקדחלון"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:245
+#, fuzzy
 msgid "Refocus last window on desktop switch"
-msgstr ""
+msgstr "להתרכז בחלון האחרון על מתג שולחני"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:248
+#, fuzzy
 msgid "Revert focus when it is lost"
-msgstr ""
+msgstr "לחזור להתמקד כאשר הוא איבד"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:258
+#, fuzzy
 msgid "Slide pointer to a new focused window"
-msgstr ""
+msgstr "החלק המצביע לחלוןממוקדת חדשה"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:62
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
+#, fuzzy
 msgid "Window Geometry"
-msgstr ""
+msgstr "מימדי החלון"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:156
+#, fuzzy
 msgid "Resist obstacles"
-msgstr ""
+msgstr "לעמוד בפני מכשולים"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:158
 #, fuzzy
@@ -5998,7 +6495,7 @@ msgstr "לסגור את החלון"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:167
 #, fuzzy
 msgid "Edge of the screen"
-msgstr "כלול חלונות ממסכים אחרים"
+msgstr "קצה של המסך"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:176
 #, fuzzy
@@ -6006,12 +6503,14 @@ msgid "Desktop gadgets"
 msgstr "קובץ שולחן העבודה"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:187
+#, fuzzy
 msgid "Resistance"
-msgstr ""
+msgstr "התנגדות"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:192
+#, fuzzy
 msgid "Automatically accept changes after:"
-msgstr ""
+msgstr "קבל אוטומטית לאחר שינויים:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:197
 #, fuzzy
@@ -6029,17 +6528,19 @@ msgid "Keyboard"
 msgstr "קיצורי מקשים"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
+#, fuzzy
 msgid "Limit resize to useful geometry"
-msgstr ""
+msgstr "הגבל את גודל גיאומטריה שימושית"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:216
 #, fuzzy
 msgid "Move after resize"
-msgstr "בעל גודל הניתן לשינוי"
+msgstr "להעביר לאחר שינוי גודל"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:224
+#, fuzzy
 msgid "Follow Move"
-msgstr ""
+msgstr "עקוב העבר"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #, fuzzy
@@ -6047,8 +6548,9 @@ msgid "Follow Resize"
 msgstr "שנה גודל"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
+#, fuzzy
 msgid "Follow Raise"
-msgstr ""
+msgstr "עקוב הרם"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:233
 #, fuzzy
@@ -6056,8 +6558,9 @@ msgid "Follow Lower"
 msgstr "לסגור את החלון"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:236
+#, fuzzy
 msgid "Follow Layer"
-msgstr ""
+msgstr "עקוב אחר שכבה"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:239
 #, fuzzy
@@ -6076,38 +6579,45 @@ msgstr "ארעיות"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
 #: src/modules/conf_window_manipulation/e_mod_main.c:22
+#, fuzzy
 msgid "Window Maximize Policy"
-msgstr ""
+msgstr "הגדלת חלון מדיניות"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
+#, fuzzy
 msgid "Maximize Policy"
-msgstr ""
+msgstr "למקסם את מדיניות"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:123
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:148
+#, fuzzy
 msgid "Smart expansion"
-msgstr ""
+msgstr "חכם הרחבה"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:127
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
+#, fuzzy
 msgid "Fill available space"
-msgstr ""
+msgstr "מלא מקום פנוי"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:568
 #: src/modules/gadman/e_mod_gadman.c:757
+#, fuzzy
 msgid "Horizontal"
-msgstr ""
+msgstr "מאוזן"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 #: src/modules/everything/evry_config.c:561
 #: src/modules/gadman/e_mod_gadman.c:765
+#, fuzzy
 msgid "Vertical"
-msgstr ""
+msgstr "אנכי"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:165
+#, fuzzy
 msgid "Both"
-msgstr ""
+msgstr "שניהם"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:167
 #, fuzzy
@@ -6115,163 +6625,198 @@ msgid "Direction"
 msgstr "פעולה מעוכבת"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:180
+#, fuzzy
 msgid "Allow manipulation of maximized windows"
-msgstr ""
+msgstr "לאפשר מניפולציה של Windows מוגדל"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:183
+#, fuzzy
 msgid "Adjust windows on shelf hide"
-msgstr ""
+msgstr "התאם חלונות על המדף להסתיר"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:49
 #: src/modules/conf_window_manipulation/e_mod_main.c:21
+#, fuzzy
 msgid "Window Stacking"
-msgstr ""
+msgstr "חלון הערמה"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:123
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:144
+#, fuzzy
 msgid "Raise windows on mouse over"
-msgstr ""
+msgstr "להעלות את Windows על העכבר מעל"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:127
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:169
+#, fuzzy
 msgid "Allow windows above fullscreen window"
-msgstr ""
+msgstr "אפשר חלונות מעל חלון מסך מלא"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:143
+#, fuzzy
 msgid "Autoraise"
-msgstr ""
+msgstr "Autoraise"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:147
+#, fuzzy
 msgid "Delay before raising:"
-msgstr ""
+msgstr "עיכוב לפני גיוס:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:161
+#, fuzzy
 msgid "Raise Window"
-msgstr ""
+msgstr "להעלות את חלון"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:163
+#, fuzzy
 msgid "Raise when starting to move or resize"
-msgstr ""
+msgstr "להעלות כאשר מתחילים להעביר או לשנות גודל"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:166
+#, fuzzy
 msgid "Raise when clicking to focus"
-msgstr ""
+msgstr "להעלות כאשר לחיצה להתמקד"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:19
 #: src/modules/wizard/page_060.c:28
+#, fuzzy
 msgid "Window Focus"
-msgstr ""
+msgstr "חלון פוקוס"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:23
 #, fuzzy
 msgid "Window List Menu"
-msgstr "רשימת חלונות"
+msgstr "רשימת חלון התפריט"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:24
 #, fuzzy
 msgid "Window Process Management"
-msgstr "מנהל החלונות"
+msgstr "תהליך חלון ניהול"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:33
 #: src/modules/conf_window_remembers/e_mod_main.c:17
+#, fuzzy
 msgid "Window Remembers"
-msgstr ""
+msgstr "חלון זוכר"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:119
+#, fuzzy
 msgid "Remember internal dialogs"
-msgstr ""
+msgstr "זכור דיאלוגים פנימיים"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:122
+#, fuzzy
 msgid "Remember file manager windows"
-msgstr ""
+msgstr "זכור מנהל הקבצים של Windows"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:126
+#, fuzzy
 msgid "Delete Remember(s)"
-msgstr ""
+msgstr "מחק זכור (ים)"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:136
+#, fuzzy
 msgid "Details"
-msgstr ""
+msgstr "פרטים"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:308
+#, fuzzy
 msgid "<No Name>"
-msgstr ""
+msgstr "<No name>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:144
+#, fuzzy
 msgid "Class:"
-msgstr ""
+msgstr "בכיתה:"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:148
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:310
+#, fuzzy
 msgid "<No Class>"
-msgstr ""
+msgstr "<No Class>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:151
+#, fuzzy
 msgid "Title:"
-msgstr ""
+msgstr "כותרת:"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:155
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:312
+#, fuzzy
 msgid "<No Title>"
-msgstr ""
+msgstr "<No Title>"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:158
+#, fuzzy
 msgid "Role:"
-msgstr ""
+msgstr "התפקיד:"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:162
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:314
+#, fuzzy
 msgid "<No Role>"
-msgstr ""
+msgstr "<No Role>"
 
 #: src/modules/cpufreq/e_mod_main.c:132
+#, fuzzy
 msgid "Cpufreq"
-msgstr ""
+msgstr "Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:181
+#, fuzzy
 msgid "Fast (4 ticks)"
-msgstr ""
+msgstr "מהיר (4 קרציות."
 
 #: src/modules/cpufreq/e_mod_main.c:188
+#, fuzzy
 msgid "Medium (8 ticks)"
-msgstr ""
+msgstr "בינוני (8 קרציות."
 
 #: src/modules/cpufreq/e_mod_main.c:195
+#, fuzzy
 msgid "Normal (32 ticks)"
-msgstr ""
+msgstr "רגיל (32 קרציות."
 
 #: src/modules/cpufreq/e_mod_main.c:202
+#, fuzzy
 msgid "Slow (64 ticks)"
-msgstr ""
+msgstr "איטי (64 קרציות."
 
 #: src/modules/cpufreq/e_mod_main.c:209
+#, fuzzy
 msgid "Very Slow (256 ticks)"
-msgstr ""
+msgstr "איטי מאוד (256 קרציות."
 
 #: src/modules/cpufreq/e_mod_main.c:225
+#, fuzzy
 msgid "Manual"
-msgstr ""
+msgstr "ידני"
 
 #: src/modules/cpufreq/e_mod_main.c:229 src/modules/cpufreq/e_mod_main.c:261
+#, fuzzy
 msgid "Lower Power Automatic"
-msgstr ""
+msgstr "חשמל נמוכה אוטומטי"
 
 #: src/modules/cpufreq/e_mod_main.c:231 src/modules/cpufreq/e_mod_main.c:263
+#, fuzzy
 msgid "Minimum Speed"
-msgstr ""
+msgstr "מינימום מהירות"
 
 #: src/modules/cpufreq/e_mod_main.c:233 src/modules/cpufreq/e_mod_main.c:265
+#, fuzzy
 msgid "Maximum Speed"
-msgstr ""
+msgstr "מקסימום מהירות"
 
 #: src/modules/cpufreq/e_mod_main.c:244
+#, fuzzy
 msgid "Restore CPU Power Policy"
-msgstr ""
+msgstr "שחזור מדיניות CPU Power"
 
 #: src/modules/cpufreq/e_mod_main.c:278
+#, fuzzy
 msgid "Automatic powersaving"
-msgstr ""
+msgstr "אוטומטי powersaving"
 
 #: src/modules/cpufreq/e_mod_main.c:297
 #, c-format
@@ -6284,135 +6829,171 @@ msgid "%i.%i GHz"
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:313
+#, fuzzy
 msgid "Time Between Updates"
-msgstr ""
+msgstr "הזמן בין עדכונים"
 
 #: src/modules/cpufreq/e_mod_main.c:319
+#, fuzzy
 msgid "Set CPU Power Policy"
-msgstr ""
+msgstr "קביעת מדיניות כוח מעבד"
 
 #: src/modules/cpufreq/e_mod_main.c:326
+#, fuzzy
 msgid "Set CPU Speed"
-msgstr ""
+msgstr "קביעת מהירות מעבד"
 
 #: src/modules/cpufreq/e_mod_main.c:332
+#, fuzzy
 msgid "Powersaving behavior"
-msgstr ""
+msgstr "Powersaving התנהגות"
 
 #: src/modules/cpufreq/e_mod_main.c:412
+#, fuzzy
 msgid ""
 "There was an error trying to set the<br>cpu frequency governor via the "
 "module's<br>setfreq utility."
 msgstr ""
+"ארעה שגיאה בניסיון להגדיר את המושל תדר CPU<br>באמצעות השירות<br>setfreqשל "
+"מודול."
 
 #: src/modules/cpufreq/e_mod_main.c:440
+#, fuzzy
 msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
 "support this feature."
 msgstr ""
+"הקרנל שלך לא תומך בקביעתתדר המעבד<br>בכלל. אתה עלול להיות חסר מודולי "
+"קרנל<br>או תכונות או מעבד<br>שלך פשוט לא תומך בתכונה זו."
 
 #: src/modules/cpufreq/e_mod_main.c:466
+#, fuzzy
 msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
 "module's<br>setfreq utility."
 msgstr ""
+"ארעה שגיאה בניסיון להגדיר את ה-CPU בתדר<br>הגדרה באמצעות השירות<br>setfreqשל "
+"מודול."
 
 #: src/modules/dropshadow/e_mod_config.c:39
+#, fuzzy
 msgid "Dropshadow Settings"
-msgstr ""
+msgstr "Dropshadow הגדרות"
 
 #: src/modules/dropshadow/e_mod_config.c:107
+#, fuzzy
 msgid "Quality"
-msgstr ""
+msgstr "איכות"
 
 #: src/modules/dropshadow/e_mod_config.c:110
+#, fuzzy
 msgid "High Quality"
-msgstr ""
+msgstr "איכות גבוהה"
 
 #: src/modules/dropshadow/e_mod_config.c:112
+#, fuzzy
 msgid "Medium Quality"
-msgstr ""
+msgstr "איכות בינונית"
 
 #: src/modules/dropshadow/e_mod_config.c:114
+#, fuzzy
 msgid "Low Quality"
-msgstr ""
+msgstr "איכות נמוכה"
 
 #: src/modules/dropshadow/e_mod_config.c:118
+#, fuzzy
 msgid "Blur Type"
-msgstr ""
+msgstr "לטשטש סוג"
 
 #: src/modules/dropshadow/e_mod_config.c:121
+#, fuzzy
 msgid "Very Fuzzy"
-msgstr ""
+msgstr "Fuzzy מאוד"
 
 #: src/modules/dropshadow/e_mod_config.c:123
+#, fuzzy
 msgid "Fuzzy"
-msgstr ""
+msgstr "מעורפל"
 
 #: src/modules/dropshadow/e_mod_config.c:125
 msgid "Medium"
 msgstr "בינוני"
 
 #: src/modules/dropshadow/e_mod_config.c:127
+#, fuzzy
 msgid "Sharp"
-msgstr ""
+msgstr "חד"
 
 #: src/modules/dropshadow/e_mod_config.c:129
+#, fuzzy
 msgid "Very Sharp"
-msgstr ""
+msgstr "חד מאוד"
 
 #: src/modules/dropshadow/e_mod_config.c:133
+#, fuzzy
 msgid "Shadow Distance"
-msgstr ""
+msgstr "צל מרחק"
 
 #: src/modules/dropshadow/e_mod_config.c:136
+#, fuzzy
 msgid "Very Far"
-msgstr ""
+msgstr "רחוק מאוד"
 
 #: src/modules/dropshadow/e_mod_config.c:138
+#, fuzzy
 msgid "Far"
-msgstr ""
+msgstr "רחוק"
 
 #: src/modules/dropshadow/e_mod_config.c:140
+#, fuzzy
 msgid "Near"
-msgstr ""
+msgstr "ליד"
 
 #: src/modules/dropshadow/e_mod_config.c:142
+#, fuzzy
 msgid "Very Near"
-msgstr ""
+msgstr "קרוב מאוד"
 
 #: src/modules/dropshadow/e_mod_config.c:144
+#, fuzzy
 msgid "Extremely Near"
-msgstr ""
+msgstr "מאוד קרוב"
 
 #: src/modules/dropshadow/e_mod_config.c:146
+#, fuzzy
 msgid "Underneath"
-msgstr ""
+msgstr "מתחת"
 
 #: src/modules/dropshadow/e_mod_config.c:150
+#, fuzzy
 msgid "Shadow Darkness"
-msgstr ""
+msgstr "צל החושך"
 
 #: src/modules/dropshadow/e_mod_config.c:153
+#, fuzzy
 msgid "Very Dark"
-msgstr ""
+msgstr "כהה מאוד"
 
 #: src/modules/dropshadow/e_mod_config.c:155
+#, fuzzy
 msgid "Dark"
-msgstr ""
+msgstr "אפל"
 
 #: src/modules/dropshadow/e_mod_config.c:157
+#, fuzzy
 msgid "Light"
-msgstr ""
+msgstr "אור"
 
 #: src/modules/dropshadow/e_mod_config.c:159
+#, fuzzy
 msgid "Very Light"
-msgstr ""
+msgstr "קל מאוד"
 
 #: src/modules/dropshadow/e_mod_main.c:90
+#, fuzzy
 msgid "Dropshadow"
-msgstr ""
+msgstr "Dropshadow"
 
 #: src/modules/everything/e_mod_main.c:60
 #: src/modules/everything/e_mod_main.c:210
@@ -6423,7 +7004,7 @@ msgstr "הכל"
 #: src/modules/everything/e_mod_main.c:61
 #, fuzzy
 msgid "Show Everything Launcher"
-msgstr "הכל"
+msgstr "הצג מפעיל הכל"
 
 #: src/modules/everything/e_mod_main.c:75
 #, fuzzy
@@ -6433,7 +7014,7 @@ msgstr "מסך ההסתרה"
 #: src/modules/everything/e_mod_main.c:211
 #, fuzzy
 msgid "Show Everything Dialog"
-msgstr "מתחת להכל"
+msgstr "שיח הצגת הכל"
 
 #: src/modules/everything/e_mod_main.c:420
 #, fuzzy
@@ -6482,23 +7063,27 @@ msgstr "הצגה בתפריטים"
 #: src/modules/everything/evry_config.c:397
 #, fuzzy
 msgid "Show in top-level"
-msgstr "הצגה בתפריטים"
+msgstr "הצג ב ברמה העליונה"
 
 #: src/modules/everything/evry_config.c:403
+#, fuzzy
 msgid "Minimum characters for search"
-msgstr ""
+msgstr "מינימום תווים לחיפוש"
 
 #: src/modules/everything/evry_config.c:412
+#, fuzzy
 msgid "Plugin Trigger"
-msgstr ""
+msgstr "תוסף טריגר"
 
 #: src/modules/everything/evry_config.c:417
+#, fuzzy
 msgid "Search only when triggered"
-msgstr ""
+msgstr "חיפוש רק כאשר מופעלת"
 
 #: src/modules/everything/evry_config.c:424
+#, fuzzy
 msgid "Plugin View"
-msgstr ""
+msgstr "תוסף בפרופיל"
 
 #: src/modules/everything/evry_config.c:434
 #: src/modules/everything/evry_config.c:462
@@ -6512,16 +7097,18 @@ msgid "Default View"
 msgstr "ברירת מחדל"
 
 #: src/modules/everything/evry_config.c:467
+#, fuzzy
 msgid "Animate scrolling"
-msgstr ""
+msgstr "הנפשת גלילה"
 
 #: src/modules/everything/evry_config.c:474
 msgid "Up/Down select next item in icon view"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:483
+#, fuzzy
 msgid "Hide input when inactive"
-msgstr ""
+msgstr "הסתר קלט בעת פעילות"
 
 #: src/modules/everything/evry_config.c:488
 #, fuzzy
@@ -6529,16 +7116,19 @@ msgid "Hide list"
 msgstr "משך הזמן עד להסתרה"
 
 #: src/modules/everything/evry_config.c:493
+#, fuzzy
 msgid "Quick Navigation"
-msgstr ""
+msgstr "ניווט מהיר"
 
 #: src/modules/everything/evry_config.c:497
+#, fuzzy
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
-msgstr ""
+msgstr "Emacs סגנון (ALT N, P , F , B, מ ', ט)"
 
 #: src/modules/everything/evry_config.c:499
+#, fuzzy
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
-msgstr ""
+msgstr "וי בסגנון (ALT H , J , K, L, N, P , M, I)"
 
 #: src/modules/everything/evry_config.c:503
 #, fuzzy
@@ -6551,8 +7141,9 @@ msgid "No Sorting"
 msgstr "מתחיל"
 
 #: src/modules/everything/evry_config.c:508
+#, fuzzy
 msgid "By usage"
-msgstr ""
+msgstr "על ידי שימוש"
 
 #: src/modules/everything/evry_config.c:511
 #, fuzzy
@@ -6565,16 +7156,19 @@ msgid "Last used"
 msgstr "שונה לאחרונה:"
 
 #: src/modules/everything/evry_config.c:526
+#, fuzzy
 msgid "Subject Plugins"
-msgstr ""
+msgstr "נושא תוספים"
 
 #: src/modules/everything/evry_config.c:530
+#, fuzzy
 msgid "Action Plugins"
-msgstr ""
+msgstr "פעולה תוספים"
 
 #: src/modules/everything/evry_config.c:534
+#, fuzzy
 msgid "Object Plugins"
-msgstr ""
+msgstr "אובייקט תוספים"
 
 #: src/modules/everything/evry_config.c:537
 #: src/modules/everything/evry_config.c:737
@@ -6583,22 +7177,26 @@ msgid "Plugins"
 msgstr "פשוט"
 
 #: src/modules/everything/evry_config.c:544
+#, fuzzy
 msgid "Popup Size"
-msgstr ""
+msgstr "קופץ גודל"
 
 #: src/modules/everything/evry_config.c:545
 #: src/modules/everything/evry_config.c:578
+#, fuzzy
 msgid "Popup Width"
-msgstr ""
+msgstr "קופץ רוחב"
 
 #: src/modules/everything/evry_config.c:552
 #: src/modules/everything/evry_config.c:585
+#, fuzzy
 msgid "Popup Height"
-msgstr ""
+msgstr "קופץ הגובה"
 
 #: src/modules/everything/evry_config.c:560
+#, fuzzy
 msgid "Popup Align"
-msgstr ""
+msgstr "קופץ ישר"
 
 #: src/modules/everything/evry_config.c:563
 #: src/modules/everything/evry_config.c:570
@@ -6611,8 +7209,9 @@ msgid "%1.2f"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:577
+#, fuzzy
 msgid "Edge Popup Size"
-msgstr ""
+msgstr "אדג' קופץ גודל"
 
 #: src/modules/everything/evry_config.c:594
 #: src/modules/winlist/e_int_config_winlist.c:286
@@ -6626,12 +7225,14 @@ msgid "Everything Collection"
 msgstr "יישומים מועדפים"
 
 #: src/modules/everything/evry_plug_aggregator.c:121
+#, fuzzy
 msgid "Items"
-msgstr ""
+msgstr "פריטים"
 
 #: src/modules/everything/evry_plug_aggregator.c:301
+#, fuzzy
 msgid "No plugins loaded"
-msgstr ""
+msgstr "אין תוספים טעון"
 
 #: src/modules/everything/evry_view_help.c:67
 msgid ""
@@ -6671,8 +7272,9 @@ msgid "Terminal Command"
 msgstr "פקודה מוגדרת"
 
 #: src/modules/everything/evry_plug_apps.c:1276
+#, fuzzy
 msgid "Sudo GUI"
-msgstr ""
+msgstr "sudo GUI"
 
 #: src/modules/everything/evry_plug_apps.c:1354
 #: src/modules/everything/evry_plug_files.c:1585
@@ -6689,69 +7291,82 @@ msgstr "הכל"
 #: src/modules/everything/evry_plug_files.c:1483
 #, fuzzy
 msgid "Show recent files"
-msgstr "הצג קבצים מוסתרים"
+msgstr "הצג קבצים האחרונות"
 
 #: src/modules/everything/evry_plug_files.c:1487
+#, fuzzy
 msgid "Search recent files"
-msgstr ""
+msgstr "חיפוש קבצים האחרונות"
 
 #: src/modules/everything/evry_plug_files.c:1491
+#, fuzzy
 msgid "Search cached files"
-msgstr ""
+msgstr "חיפוש קבצים המאוחסנים במטמון"
 
 #: src/modules/everything/evry_plug_files.c:1495
+#, fuzzy
 msgid "Cache visited directories"
-msgstr ""
+msgstr "מטמון ביקרו בספריות"
 
 #: src/modules/everything/evry_plug_files.c:1499
+#, fuzzy
 msgid "Clear cache"
-msgstr ""
+msgstr "נקה מטמון"
 
 #: src/modules/fileman/e_int_config_mime.c:61
 #: src/modules/fileman/e_mod_main.c:61
+#, fuzzy
 msgid "File Icons"
-msgstr ""
+msgstr "קובץ סמלים"
 
 #: src/modules/fileman/e_int_config_mime.c:176
+#, fuzzy
 msgid "File Types"
-msgstr ""
+msgstr "סוגי קבצים"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:71
+#, fuzzy
 msgid "File Icon"
-msgstr ""
+msgstr "file icon"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:138
 msgid "Basic Info"
 msgstr "נתונים בסיסיים"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:139
+#, fuzzy
 msgid "Mime:"
-msgstr ""
+msgstr "פנטומימה:"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:149
+#, fuzzy
 msgid "Use Generated Thumbnail"
-msgstr ""
+msgstr "השתמש תמונה ממוזערת נוצר"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:152
+#, fuzzy
 msgid "Use Theme Icon"
-msgstr ""
+msgstr "השתמש סמל נושא"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:155
+#, fuzzy
 msgid "Use Edje File"
-msgstr ""
+msgstr "השתמש קובץ Edje"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:158
+#, fuzzy
 msgid "Use Image"
-msgstr ""
+msgstr "השתמש תמונה"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:161
+#, fuzzy
 msgid "Use Default"
-msgstr ""
+msgstr "השתמש ברירת מחדל"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:290
 #, fuzzy
 msgid "Select an Edje file"
-msgstr "בחר קובץהפעלה"
+msgstr "בחר קובץ Edje"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:292
 #, fuzzy
@@ -6764,12 +7379,14 @@ msgid "File Manager"
 msgstr "מנהל הקבצים"
 
 #: src/modules/fileman/e_mod_main.c:352
+#, fuzzy
 msgid "Home"
-msgstr ""
+msgstr "בית"
 
 #: src/modules/fileman/e_mod_main.c:376
+#, fuzzy
 msgid "Root"
-msgstr ""
+msgstr "שורש"
 
 #: src/modules/fileman/e_mod_main.c:474
 msgid ""
@@ -6801,71 +7418,85 @@ msgid "Fileman Settings"
 msgstr ""
 
 #: src/modules/fileman/e_mod_config.c:238
+#, fuzzy
 msgid "Icon Size"
-msgstr ""
+msgstr "סמל גודל"
 
 #: src/modules/fileman/e_mod_config.c:244
+#, fuzzy
 msgid "View"
-msgstr ""
+msgstr "לראות"
 
 #: src/modules/fileman/e_mod_config.c:247
+#, fuzzy
 msgid "Open Dirs In Place"
-msgstr ""
+msgstr "Dirs הפתוח במקום"
 
 #: src/modules/fileman/e_mod_config.c:251
+#, fuzzy
 msgid "Sort Dirs First"
-msgstr ""
+msgstr "מיין Dirs ראשון"
 
 #: src/modules/fileman/e_mod_config.c:254
+#, fuzzy
 msgid "Case Sensitive"
-msgstr ""
+msgstr "במקרה רגיש"
 
 #: src/modules/fileman/e_mod_config.c:258
+#, fuzzy
 msgid "Use Single Click"
-msgstr ""
+msgstr "השתמש לחץ בית"
 
 #: src/modules/fileman/e_mod_config.c:261
+#, fuzzy
 msgid "Use Alternate Selection Modifiers"
-msgstr ""
+msgstr "השתמש המשנים בחירה חלופיים"
 
 #: src/modules/fileman/e_mod_config.c:265
+#, fuzzy
 msgid "Show Icon Extension"
-msgstr ""
+msgstr "הצג סיומת אייקון"
 
 #: src/modules/fileman/e_mod_config.c:268
+#, fuzzy
 msgid "Show Full Path"
-msgstr ""
+msgstr "הצג את הנתיב המלא"
 
 #: src/modules/fileman/e_mod_config.c:271
+#, fuzzy
 msgid "Show Desktop Icons"
-msgstr ""
+msgstr "הצג סמלים בשולחן העבודה"
 
 #: src/modules/fileman/e_mod_config.c:274
+#, fuzzy
 msgid "Show Toolbar"
-msgstr ""
+msgstr "הצג את סרגל הכלים"
 
 #: src/modules/fileman/e_mod_config.c:278
 #: src/modules/gadman/e_mod_gadman.c:801
+#, fuzzy
 msgid "Behavior"
-msgstr ""
+msgstr "התנהגות"
 
 #: src/modules/fileman/e_mod_config.c:282
 #, fuzzy
 msgid "Show UDisks icons on desktop"
-msgstr "הצג על כל שולחנות העבודה"
+msgstr "הצג UDisks הסמלים בשולחן העבודה"
 
 #: src/modules/fileman/e_mod_config.c:284
 #, fuzzy
 msgid "Show device icons on desktop"
-msgstr "הצג על כל שולחנות העבודה"
+msgstr "הצגת סמלים המכשיר על שולחן העבודה"
 
 #: src/modules/fileman/e_mod_config.c:288
+#, fuzzy
 msgid "Mount volumes on insert"
-msgstr ""
+msgstr "הר כרכים על הכנס"
 
 #: src/modules/fileman/e_mod_config.c:291
+#, fuzzy
 msgid "Open filemanager on mount"
-msgstr ""
+msgstr "מנהל הקבצים פתוח בהר"
 
 #: src/modules/fileman/e_mod_config.c:295
 #, fuzzy
@@ -6873,60 +7504,67 @@ msgid "Device"
 msgstr "תצוגה מקדימה"
 
 #: src/modules/fileman/e_fwin.c:1601
+#, fuzzy
 msgid "Go to Parent Directory"
-msgstr ""
+msgstr "ללכת לספרייה אב"
 
 #: src/modules/fileman/e_fwin.c:1668
+#, fuzzy
 msgid "Other application..."
-msgstr ""
+msgstr "אחר יישום ..."
 
 #: src/modules/fileman/e_fwin.c:1690 src/modules/fileman/e_fwin.c:2021
+#, fuzzy
 msgid "Open"
-msgstr ""
+msgstr "לפתוח"
 
 #: src/modules/fileman/e_fwin.c:1695 src/modules/fileman/e_fwin.c:2019
+#, fuzzy
 msgid "Open with..."
-msgstr ""
+msgstr "פתח באמצעות ..."
 
 #: src/modules/fileman/e_fwin.c:2039
+#, fuzzy
 msgid "Known Applications"
-msgstr ""
+msgstr "מוכרות יישומים"
 
 #: src/modules/fileman/e_fwin.c:2049
+#, fuzzy
 msgid "Specific Applications"
-msgstr ""
+msgstr "יישומים ספציפיים"
 
 #: src/modules/fileman/e_fwin.c:2074
 msgid "All Applications"
 msgstr "כל היישומים"
 
 #: src/modules/fileman/e_fwin.c:2097
+#, fuzzy
 msgid "Custom Command"
-msgstr ""
+msgstr "התאמה אישית פיקוד"
 
 #: src/modules/fileman/e_fwin.c:2382
 #: src/modules/fileman_opinfo/e_mod_main.c:89
-#, c-format
+#, fuzzy
 msgid "Copying is aborted"
-msgstr ""
+msgstr "ההעתקה הופסק"
 
 #: src/modules/fileman/e_fwin.c:2386
 #: src/modules/fileman_opinfo/e_mod_main.c:92
-#, c-format
+#, fuzzy
 msgid "Moving is aborted"
-msgstr ""
+msgstr "נעה היא בוטלה"
 
 #: src/modules/fileman/e_fwin.c:2390
 #: src/modules/fileman_opinfo/e_mod_main.c:95
-#, c-format
+#, fuzzy
 msgid "Deleting is aborted"
-msgstr ""
+msgstr "מחיקת היא בוטלה"
 
 #: src/modules/fileman/e_fwin.c:2394
 #: src/modules/fileman_opinfo/e_mod_main.c:98
-#, c-format
+#, fuzzy
 msgid "Unknown operation from slave is aborted"
-msgstr ""
+msgstr "המבצע לא ידוע של עבדים היא בוטלה"
 
 #: src/modules/fileman/e_fwin.c:2404
 #: src/modules/fileman_opinfo/e_mod_main.c:108
@@ -6954,15 +7592,15 @@ msgstr ""
 
 #: src/modules/fileman/e_fwin.c:2418
 #: src/modules/fileman_opinfo/e_mod_main.c:120
-#, c-format
+#, fuzzy
 msgid "Delete done"
-msgstr ""
+msgstr "מחק לעשות"
 
 #: src/modules/fileman/e_fwin.c:2420
 #: src/modules/fileman_opinfo/e_mod_main.c:122
-#, c-format
+#, fuzzy
 msgid "Deleting files..."
-msgstr ""
+msgstr "מחיקת קבצים ..."
 
 #: src/modules/fileman/e_fwin.c:2424
 #: src/modules/fileman_opinfo/e_mod_main.c:125
@@ -6972,8 +7610,9 @@ msgstr ""
 
 #: src/modules/fileman_opinfo/e_mod_main.c:133
 #: src/modules/fileman_opinfo/e_mod_main.c:143
+#, fuzzy
 msgid "(no information)"
-msgstr ""
+msgstr "(אין מידע."
 
 #: src/modules/fileman_opinfo/e_mod_main.c:137
 #, c-format
@@ -6996,16 +7635,19 @@ msgid "Processing %d operation(s)"
 msgstr ""
 
 #: src/modules/fileman_opinfo/e_mod_main.c:328
+#, fuzzy
 msgid "Filemanager is idle"
-msgstr ""
+msgstr "מנהל הקבצים אינו פעיל"
 
 #: src/modules/fileman_opinfo/e_mod_main.c:415
+#, fuzzy
 msgid "EFM Operation Info"
-msgstr ""
+msgstr "EFM פרטי מבצע"
 
 #: src/modules/gadman/e_mod_config.c:53
+#, fuzzy
 msgid "Gadgets Manager"
-msgstr ""
+msgstr "גאדג'טים Manager"
 
 #: src/modules/gadman/e_mod_config.c:107
 msgid "Available Gadgets"
@@ -7017,29 +7659,35 @@ msgid "Mode"
 msgstr "העבר"
 
 #: src/modules/gadman/e_mod_config.c:143 src/modules/gadman/e_mod_config.c:175
+#, fuzzy
 msgid "Custom Image"
-msgstr ""
+msgstr "תמונה מותאמת אישית"
 
 #: src/modules/gadman/e_mod_config.c:147 src/modules/gadman/e_mod_config.c:168
+#, fuzzy
 msgid "Custom Color"
-msgstr ""
+msgstr "צבע מותאמת אישית"
 
 #: src/modules/gadman/e_mod_config.c:151
+#, fuzzy
 msgid "Transparent"
-msgstr ""
+msgstr "שקוף"
 
 #: src/modules/gadman/e_mod_config.c:158
 #: src/modules/winlist/e_int_config_winlist.c:256
+#, fuzzy
 msgid "Animations"
-msgstr ""
+msgstr "אנימציות"
 
 #: src/modules/gadman/e_mod_config.c:159
+#, fuzzy
 msgid "Background"
-msgstr ""
+msgstr "רקע"
 
 #: src/modules/gadman/e_mod_config.c:234
+#, fuzzy
 msgid "Background Options"
-msgstr ""
+msgstr "רקע אפשרויות"
 
 #: src/modules/gadman/e_mod_gadman.c:718
 #, fuzzy
@@ -7047,42 +7695,47 @@ msgid "Begin move/resize"
 msgstr "התחל בהזזת/שינוי הגודל של חפיץ זה"
 
 #: src/modules/gadman/e_mod_gadman.c:749
+#, fuzzy
 msgid "Free"
-msgstr ""
+msgstr "ללא תשלום"
 
 #: src/modules/gadman/e_mod_gadman.c:773
 msgid "Appearance"
 msgstr "חזות"
 
 #: src/modules/gadman/e_mod_gadman.c:781
+#, fuzzy
 msgid "Always on desktop"
-msgstr ""
+msgstr "תמיד על שולחן העבודה"
 
 #: src/modules/gadman/e_mod_gadman.c:791
+#, fuzzy
 msgid "On top pressing"
-msgstr ""
+msgstr "על גבי הקשת"
 
 #: src/modules/gadman/e_mod_gadman.c:822
+#, fuzzy
 msgid "Add other gadgets"
-msgstr ""
+msgstr "הוסף גאדג'טים אחרים"
 
 #: src/modules/gadman/e_mod_main.c:84 src/modules/gadman/e_mod_main.c:120
 msgid "Show/hide gadgets"
 msgstr ""
 
 #: src/modules/winlist/e_int_config_winlist.c:58
+#, fuzzy
 msgid "Window List Settings"
-msgstr ""
+msgstr "רשימת חלון הגדרות"
 
 #: src/modules/winlist/e_int_config_winlist.c:190
 #, fuzzy
 msgid "Windows from other desks"
-msgstr "כלול חלונות ממסכים אחרים"
+msgstr "Windows של שולחנות אחרים"
 
 #: src/modules/winlist/e_int_config_winlist.c:193
 #, fuzzy
 msgid "Windows from other screens"
-msgstr "כלול חלונות ממסכים אחרים"
+msgstr "Windows של מסכי אחרים"
 
 #: src/modules/winlist/e_int_config_winlist.c:196
 #, fuzzy
@@ -7092,28 +7745,32 @@ msgstr "מצב ממוזער"
 #: src/modules/winlist/e_int_config_winlist.c:200
 #, fuzzy
 msgid "Iconified from other desks"
-msgstr "כלול חלונות ממסכים אחרים"
+msgstr "Iconified של שולחנות אחרים"
 
 #: src/modules/winlist/e_int_config_winlist.c:205
 #, fuzzy
 msgid "Iconified from other screens"
-msgstr "כלול חלונות ממסכים אחרים"
+msgstr "Iconified מ מסכי אחרים"
 
 #: src/modules/winlist/e_int_config_winlist.c:218
+#, fuzzy
 msgid "Uncover"
-msgstr ""
+msgstr "לחשוף"
 
 #: src/modules/winlist/e_int_config_winlist.c:220
+#, fuzzy
 msgid "Warp mouse while selecting"
-msgstr ""
+msgstr "עיוות העכבר תוך בחירת"
 
 #: src/modules/winlist/e_int_config_winlist.c:224
+#, fuzzy
 msgid "Warp mouse at end"
-msgstr ""
+msgstr "עכבר עיוות בסוף"
 
 #: src/modules/winlist/e_int_config_winlist.c:228
+#, fuzzy
 msgid "Jump to desk"
-msgstr ""
+msgstr "קפיצה אל השולחן"
 
 #: src/modules/winlist/e_int_config_winlist.c:230
 #, fuzzy
@@ -7121,8 +7778,9 @@ msgid "Selecting"
 msgstr "הגדרות"
 
 #: src/modules/winlist/e_int_config_winlist.c:234
+#, fuzzy
 msgid "Warp speed"
-msgstr ""
+msgstr "עיוות מהירות"
 
 #: src/modules/winlist/e_int_config_winlist.c:242
 #, fuzzy
@@ -7130,8 +7788,9 @@ msgid "Scroll Animation"
 msgstr "כל היישומים"
 
 #: src/modules/winlist/e_int_config_winlist.c:247
+#, fuzzy
 msgid "Scroll speed"
-msgstr ""
+msgstr "מהירות הגלילה"
 
 #: src/modules/winlist/e_int_config_winlist.c:260
 #, fuzzy
@@ -7162,12 +7821,14 @@ msgid "Maximum height"
 msgstr "הגודל המירבי"
 
 #: src/modules/winlist/e_int_config_winlist.c:290
+#, fuzzy
 msgid "Horizontal alignment"
-msgstr ""
+msgstr "יישור אופקי"
 
 #: src/modules/winlist/e_int_config_winlist.c:295
+#, fuzzy
 msgid "Vertical alignment"
-msgstr ""
+msgstr "יישור אנכי"
 
 #: src/modules/winlist/e_int_config_winlist.c:300
 #, fuzzy
@@ -7183,41 +7844,44 @@ msgstr "Enlightenment"
 #: src/modules/winlist/e_mod_main.c:74 src/modules/winlist/e_mod_main.c:76
 #: src/modules/winlist/e_mod_main.c:78 src/modules/winlist/e_mod_main.c:79
 #: src/modules/winlist/e_mod_main.c:80 src/modules/winlist/e_mod_main.c:81
+#, fuzzy
 msgid "Window : List"
-msgstr ""
+msgstr "חלון , רשימת"
 
 #: src/modules/winlist/e_mod_main.c:35 src/modules/winlist/e_mod_main.c:73
+#, fuzzy
 msgid "Next Window"
-msgstr ""
+msgstr "חלון הבא"
 
 #: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:72
+#, fuzzy
 msgid "Previous Window"
-msgstr ""
+msgstr "הקודם חלון"
 
 #: src/modules/winlist/e_mod_main.c:40 src/modules/winlist/e_mod_main.c:77
 #, fuzzy
 msgid "Next window of same class"
-msgstr "שם החלון והמחלקה"
+msgstr "בחלון הבא של מעמד זהה"
 
 #: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:75
 #, fuzzy
 msgid "Previous window of same class"
-msgstr "שם החלון והמחלקה"
+msgstr "החלון הקודם של מעמד זהה"
 
 #: src/modules/winlist/e_mod_main.c:46
 #, fuzzy
 msgid "Next window class"
-msgstr "שם החלון והמחלקה"
+msgstr "בחלון הבא בכיתה"
 
 #: src/modules/winlist/e_mod_main.c:49
 #, fuzzy
 msgid "Previous window class"
-msgstr "שם החלון והמחלקה"
+msgstr "חלון בכיתה הקודמת"
 
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:78
 #, fuzzy
 msgid "Window on the Left"
-msgstr "כלול חלונות ממסכים אחרים"
+msgstr "חלוןשמאל"
 
 #: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:79
 #, fuzzy
@@ -7232,47 +7896,57 @@ msgstr "סוג החלון"
 #: src/modules/winlist/e_mod_main.c:57 src/modules/winlist/e_mod_main.c:81
 #, fuzzy
 msgid "Window on the Right"
-msgstr "חלון : מצב"
+msgstr "חלון עלהעכבר"
 
 #: src/modules/winlist/e_winlist.c:168
+#, fuzzy
 msgid "Select a window"
-msgstr ""
+msgstr "בחר חלון"
 
 #: src/modules/ibar/e_mod_config.c:52
+#, fuzzy
 msgid "IBar Settings"
-msgstr ""
+msgstr "IBar הגדרות"
 
 #: src/modules/ibar/e_mod_config.c:98
+#, fuzzy
 msgid "Selected Bar Source"
-msgstr ""
+msgstr "בר נבחרה מקור"
 
 #: src/modules/ibar/e_mod_config.c:119
+#, fuzzy
 msgid "Icon Labels"
-msgstr ""
+msgstr "סמל תוויות"
 
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibox/e_mod_config.c:97
+#, fuzzy
 msgid "Show Icon Label"
-msgstr ""
+msgstr "הצג תווית אייקון"
 
 #: src/modules/ibar/e_mod_config.c:126
+#, fuzzy
 msgid "Display App Name"
-msgstr ""
+msgstr "שם לתצוגה App"
 
 #: src/modules/ibar/e_mod_config.c:130
+#, fuzzy
 msgid "Display App Comment"
-msgstr ""
+msgstr "הצגת תגובה App"
 
 #: src/modules/ibar/e_mod_config.c:134
+#, fuzzy
 msgid "Display App Generic"
-msgstr ""
+msgstr "הצגת App גנרי"
 
 #: src/modules/ibar/e_mod_config.c:164
+#, fuzzy
 msgid "Create new IBar source"
-msgstr ""
+msgstr "יצירת מקור IBar חדש"
 
 #: src/modules/ibar/e_mod_config.c:165
+#, fuzzy
 msgid "Enter a name for this new source:"
-msgstr ""
+msgstr "הזן שם עבור מקור חדש;"
 
 #: src/modules/ibar/e_mod_config.c:179
 #, c-format
@@ -7282,89 +7956,108 @@ msgid ""
 msgstr ""
 
 #: src/modules/ibar/e_mod_config.c:183
+#, fuzzy
 msgid "Are you sure you want to delete this bar source?"
-msgstr ""
+msgstr "האם אתה בטוח שברצונך למחוק זאת מקור בר."
 
 #: src/modules/ibar/e_mod_main.c:211
+#, fuzzy
 msgid "IBar"
-msgstr ""
+msgstr "IBar"
 
 #: src/modules/ibar/e_mod_main.c:770
 #, fuzzy
 msgid "Create new Icon"
-msgstr "צור סמל"
+msgstr "ליצור אייקון חדש"
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Properties"
 msgstr "מאפיינים"
 
 #: src/modules/ibox/e_mod_config.c:48
+#, fuzzy
 msgid "IBox Settings"
-msgstr ""
+msgstr "פתרונות מתקדמים הגדרות"
 
 #: src/modules/ibox/e_mod_config.c:101
+#, fuzzy
 msgid "Display Name"
-msgstr ""
+msgstr "שם לתצוגה"
 
 #: src/modules/ibox/e_mod_config.c:106
+#, fuzzy
 msgid "Display Title"
-msgstr ""
+msgstr "הצגת כותרת"
 
 #: src/modules/ibox/e_mod_config.c:111
+#, fuzzy
 msgid "Display Class"
-msgstr ""
+msgstr "הצגת מחזור"
 
 #: src/modules/ibox/e_mod_config.c:116
+#, fuzzy
 msgid "Display Icon Name"
-msgstr ""
+msgstr "הצגת שם אייקון"
 
 #: src/modules/ibox/e_mod_config.c:121
+#, fuzzy
 msgid "Display Border Caption"
-msgstr ""
+msgstr "הצגת כיתוב הגבול"
 
 #: src/modules/ibox/e_mod_config.c:151
+#, fuzzy
 msgid "Show windows from all screens"
-msgstr ""
+msgstr "הצג את כל החלונות של מסכי"
 
 #: src/modules/ibox/e_mod_config.c:156
+#, fuzzy
 msgid "Show windows from current screen"
-msgstr ""
+msgstr "הצג חלונות של המסך הנוכחי"
 
 #: src/modules/ibox/e_mod_config.c:165
+#, fuzzy
 msgid "Show windows from all desktops"
-msgstr ""
+msgstr "הצג את כל חלונות משולחן העבודה"
 
 #: src/modules/ibox/e_mod_config.c:170
+#, fuzzy
 msgid "Show windows from active desktop"
-msgstr ""
+msgstr "הצג חלונות משולחן העבודה הפעיל"
 
 #: src/modules/ibox/e_mod_main.c:216
+#, fuzzy
 msgid "IBox"
-msgstr ""
+msgstr "פתרונות מתקדמים"
 
 #: src/modules/pager/e_mod_config.c:75
+#, fuzzy
 msgid "Pager Settings"
-msgstr ""
+msgstr "זימונית הגדרות"
 
 #: src/modules/pager/e_mod_config.c:127 src/modules/pager/e_mod_config.c:179
+#, fuzzy
 msgid "Flip desktop on mouse wheel"
-msgstr ""
+msgstr "להפוך שולחן העבודה על גלגל העכבר"
 
 #: src/modules/pager/e_mod_config.c:130 src/modules/pager/e_mod_config.c:182
+#, fuzzy
 msgid "Show desktop names"
-msgstr ""
+msgstr "הצג שמות של שולחן העבודה"
 
 #: src/modules/pager/e_mod_config.c:136 src/modules/pager/e_mod_config.c:218
+#, fuzzy
 msgid "Show popup on desktop change"
-msgstr ""
+msgstr "הצג קופץ על שינוי שולחן העבודה"
 
 #: src/modules/pager/e_mod_config.c:139
+#, fuzzy
 msgid "Show popup for urgent windows"
-msgstr ""
+msgstr "הצג קופץ ל-Windows דחוף"
 
 #: src/modules/pager/e_mod_config.c:185
+#, fuzzy
 msgid "Resistance to dragging"
-msgstr ""
+msgstr "התנגדות גוררת"
 
 #: src/modules/pager/e_mod_config.c:187 src/modules/pager/e_mod_config.c:226
 #: src/modules/pager/e_mod_config.c:245
@@ -7373,31 +8066,36 @@ msgid "%.0f px"
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:192
+#, fuzzy
 msgid "Select and Slide button"
-msgstr ""
+msgstr "בחר והחלק כפתור"
 
 #: src/modules/pager/e_mod_config.c:194 src/modules/pager/e_mod_config.c:202
 #: src/modules/pager/e_mod_config.c:208 src/modules/pager/e_mod_config.c:338
 #: src/modules/pager/e_mod_config.c:343 src/modules/pager/e_mod_config.c:347
-#, c-format
+#, fuzzy
 msgid "Click to set"
-msgstr ""
+msgstr "לחץ כדי להגדיר"
 
 #: src/modules/pager/e_mod_config.c:200
+#, fuzzy
 msgid "Drag and Drop button"
-msgstr ""
+msgstr "גרור ושחרר את הלחצן"
 
 #: src/modules/pager/e_mod_config.c:206
+#, fuzzy
 msgid "Drag whole desktop"
-msgstr ""
+msgstr "גרור את שולחן העבודה כולו"
 
 #: src/modules/pager/e_mod_config.c:222
+#, fuzzy
 msgid "Popup pager height"
-msgstr ""
+msgstr "קופץ הגובה הביפר"
 
 #: src/modules/pager/e_mod_config.c:232
+#, fuzzy
 msgid "Popup speed"
-msgstr ""
+msgstr "קופץ במהירות"
 
 #: src/modules/pager/e_mod_config.c:236 src/modules/pager/e_mod_config.c:273
 #, c-format
@@ -7405,25 +8103,29 @@ msgid "%1.1f seconds"
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:243
+#, fuzzy
 msgid "Pager action popup height"
-msgstr ""
+msgstr "זימונית פעולה קופץ הגובה"
 
 #: src/modules/pager/e_mod_config.c:253
+#, fuzzy
 msgid "Show popup on urgent window"
-msgstr ""
+msgstr "הצג קופץ על החלון דחוף"
 
 #: src/modules/pager/e_mod_config.c:257
+#, fuzzy
 msgid "Urgent popup sticks on screen"
-msgstr ""
+msgstr "מקלות קופץ דחופים על המסך"
 
 #: src/modules/pager/e_mod_config.c:263
 #, fuzzy
 msgid "Show popup for focused windows"
-msgstr "הצג עם כניסת העכבר"
+msgstr "הצג קופץ על Windows ממוקד"
 
 #: src/modules/pager/e_mod_config.c:269
+#, fuzzy
 msgid "Urgent popup speed"
-msgstr ""
+msgstr "מהירות קופץ דחוף"
 
 #: src/modules/pager/e_mod_config.c:280
 #, fuzzy
@@ -7437,8 +8139,9 @@ msgid "Button %i"
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:372
+#, fuzzy
 msgid "Pager Button Grab"
-msgstr ""
+msgstr "זימונית גזל לחצן"
 
 #: src/modules/pager/e_mod_config.c:374
 msgid ""
@@ -7452,83 +8155,104 @@ msgid "Attention"
 msgstr "הרחבות"
 
 #: src/modules/pager/e_mod_config.c:430
+#, fuzzy
 msgid ""
 "You cannot use the right mouse button in the<br>shelf for this as it is "
 "already taken by internal<br>code for context menus.<br>This button only "
 "works in the popup."
 msgstr ""
+"אתה לא יכול להשתמש בלחצן הימני של העכבר על המדף<br>לכך כפי שהוא כבר תפוס על "
+"ידי קוד<br>פנימי תפריטים ההקשר.<br>לחצן זה עובד רקקופץ."
 
-#: src/modules/pager/e_mod_main.c:2803
+#: src/modules/pager/e_mod_main.c:2804
+#, fuzzy
 msgid "Show Pager Popup"
-msgstr ""
+msgstr "הצג זימונית Popup"
 
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2853
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2854
+#, fuzzy
 msgid "Popup Desk Right"
-msgstr ""
+msgstr "דלפק קופץ העכבר"
 
-#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2854
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2855
+#, fuzzy
 msgid "Popup Desk Left"
-msgstr ""
+msgstr "דלפק קופץ שמאלה"
 
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2856
+#, fuzzy
 msgid "Popup Desk Up"
-msgstr ""
+msgstr "דלפק קופץ למעלה"
 
-#: src/modules/pager/e_mod_main.c:2816 src/modules/pager/e_mod_main.c:2856
+#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2857
+#, fuzzy
 msgid "Popup Desk Down"
-msgstr ""
+msgstr "דלפק קופץ למטה"
 
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2858
+#, fuzzy
 msgid "Popup Desk Next"
-msgstr ""
+msgstr "דלפק קופץ הבא"
 
-#: src/modules/pager/e_mod_main.c:2820 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2859
+#, fuzzy
 msgid "Popup Desk Previous"
-msgstr ""
+msgstr "דלפק קופץ הקודם"
 
 #: src/modules/start/e_mod_main.c:102
+#, fuzzy
 msgid "Start"
-msgstr ""
+msgstr "להפעיל"
 
 #: src/modules/syscon/e_mod_main.c:31
+#, fuzzy
 msgid "System Control"
-msgstr ""
+msgstr "מערכת בקרה"
 
 #: src/modules/syscon/e_mod_main.c:37
+#, fuzzy
 msgid "Syscon"
-msgstr ""
+msgstr "Syscon"
 
 #: src/modules/syscon/e_mod_main.c:58
+#, fuzzy
 msgid "System Controls"
-msgstr ""
+msgstr "מערכת בקרת"
 
 #: src/modules/temperature/e_mod_config.c:56
+#, fuzzy
 msgid "Temperature Settings"
-msgstr ""
+msgstr "טמפרטורה הגדרות"
 
 #: src/modules/temperature/e_mod_config.c:217
+#, fuzzy
 msgid "Sensors"
-msgstr ""
+msgstr "חיישנים"
 
 #: src/modules/temperature/e_mod_config.c:223
+#, fuzzy
 msgid "Celsius"
-msgstr ""
+msgstr "צלסיוס"
 
 #: src/modules/temperature/e_mod_config.c:226
+#, fuzzy
 msgid "Fahrenheit"
-msgstr ""
+msgstr "פרנהייט"
 
 #: src/modules/temperature/e_mod_config.c:229
+#, fuzzy
 msgid "Display Units"
-msgstr ""
+msgstr "הצגת יחידות"
 
 #: src/modules/temperature/e_mod_config.c:236
+#, fuzzy
 msgid "Check Interval"
-msgstr ""
+msgstr "יש לבדוק את מרווח"
 
 #: src/modules/temperature/e_mod_config.c:240
+#, fuzzy
 msgid "High Temperature"
-msgstr ""
+msgstr "טמפרטורה גבוהה"
 
 #: src/modules/temperature/e_mod_config.c:244
 #: src/modules/temperature/e_mod_config.c:256
@@ -7547,45 +8271,53 @@ msgid "%1.0f C"
 msgstr ""
 
 #: src/modules/temperature/e_mod_config.c:252
+#, fuzzy
 msgid "Low Temperature"
-msgstr ""
+msgstr "טמפרטורה נמוכה"
 
 #: src/modules/temperature/e_mod_config.c:264
+#, fuzzy
 msgid "Temperatures"
-msgstr ""
+msgstr "בטמפרטורות"
 
 #: src/modules/temperature/e_mod_main.c:176
+#, fuzzy
 msgid "Temperature"
-msgstr ""
+msgstr "טמפרטורה"
 
 #: src/modules/wizard/e_wizard.c:221
+#, fuzzy
 msgid "Next"
-msgstr ""
+msgstr "הבא"
 
 #: src/modules/wizard/e_wizard.c:286
 msgid "Welcome to Enlightenment"
 msgstr ""
 
 #: src/modules/wizard/page_010.c:147 src/modules/wizard/page_020.c:58
+#, fuzzy
 msgid "Select one"
-msgstr ""
+msgstr "בחר אחת"
 
 #: src/modules/wizard/page_020.c:57
+#, fuzzy
 msgid "Profile"
-msgstr ""
+msgstr "פרופיל"
 
 #: src/modules/wizard/page_050.c:128
+#, fuzzy
 msgid "Sizing"
-msgstr ""
+msgstr "מדידות"
 
 #: src/modules/wizard/page_050.c:130
 #, fuzzy
 msgid "Select preferred size"
-msgstr "יישומונים נבחרים"
+msgstr "בחר גודל המועדפת"
 
 #: src/modules/wizard/page_060.c:30
+#, fuzzy
 msgid "Focus by ..."
-msgstr ""
+msgstr "פוקוס על ..."
 
 #: src/modules/wizard/page_060.c:37
 #, fuzzy
@@ -7593,104 +8325,129 @@ msgid "Mouse Over"
 msgstr "השמישים ביותר"
 
 #: src/modules/mixer/app_mixer.c:161
+#, fuzzy
 msgid "Capture"
-msgstr ""
+msgstr "ללכוד"
 
 #: src/modules/mixer/app_mixer.c:163
+#, fuzzy
 msgid "Playback"
-msgstr ""
+msgstr "השמעה"
 
 #: src/modules/mixer/app_mixer.c:283
+#, fuzzy
 msgid "Output"
-msgstr ""
+msgstr "פלט"
 
 #: src/modules/mixer/app_mixer.c:356
+#, fuzzy
 msgid "Cards"
-msgstr ""
+msgstr "כרטיסים"
 
 #: src/modules/mixer/app_mixer.c:369 src/modules/mixer/conf_gadget.c:278
+#, fuzzy
 msgid "Channels"
-msgstr ""
+msgstr "ערוצים"
 
 #: src/modules/mixer/app_mixer.c:379
+#, fuzzy
 msgid "Card:"
-msgstr ""
+msgstr "כרטיס:"
 
 #: src/modules/mixer/app_mixer.c:383
+#, fuzzy
 msgid "Channel:"
-msgstr ""
+msgstr "ערוץ:"
 
 #: src/modules/mixer/app_mixer.c:387
+#, fuzzy
 msgid "Type:"
-msgstr ""
+msgstr "סוג:"
 
 #: src/modules/mixer/app_mixer.c:391
+#, fuzzy
 msgid "Left:"
-msgstr ""
+msgstr "עזבו;"
 
 #: src/modules/mixer/app_mixer.c:396
+#, fuzzy
 msgid "Right:"
-msgstr ""
+msgstr "נכון;"
 
 #: src/modules/mixer/app_mixer.c:401 src/modules/mixer/e_mod_main.c:696
+#, fuzzy
 msgid "Mute"
-msgstr ""
+msgstr "השתקה"
 
 #: src/modules/mixer/app_mixer.c:404 src/modules/mixer/conf_gadget.c:194
+#, fuzzy
 msgid "Lock Sliders"
-msgstr ""
+msgstr "נעל Sliders"
 
 #: src/modules/mixer/app_mixer.c:408
+#, fuzzy
 msgid "Edit"
-msgstr ""
+msgstr "לערוך"
 
 #: src/modules/mixer/conf_gadget.c:200
+#, fuzzy
 msgid "Show both sliders when locked"
-msgstr ""
+msgstr "הצג את שני המחוונים כאשר נעול"
 
 #: src/modules/mixer/conf_gadget.c:205
+#, fuzzy
 msgid "Show Popup on volume change via keybindings"
-msgstr ""
+msgstr "הצג קופץ על הירידה בכמות דרך keybindings"
 
 #: src/modules/mixer/conf_gadget.c:316
+#, fuzzy
 msgid "Sound Cards"
-msgstr ""
+msgstr "כרטיסי קול"
 
 #: src/modules/mixer/conf_gadget.c:377
+#, fuzzy
 msgid "Mixer Settings"
-msgstr ""
+msgstr "מערבל הגדרות"
 
 #: src/modules/mixer/conf_module.c:93
+#, fuzzy
 msgid "Mixer to use for global actions:"
-msgstr ""
+msgstr "מיקסר לשימוש עבור פעולות גלובליות:"
 
 #: src/modules/mixer/conf_module.c:118
+#, fuzzy
 msgid "Diplay desktop notifications on volume change"
-msgstr ""
+msgstr "Diplay הודעות שולחן עבודה על הירידה בכמות"
 
 #: src/modules/mixer/conf_module.c:154
+#, fuzzy
 msgid "Launch mixer..."
-msgstr ""
+msgstr "הפעל את המיקסר ..."
 
 #: src/modules/mixer/conf_module.c:189
+#, fuzzy
 msgid "Mixer Module Settings"
-msgstr ""
+msgstr "מודול מערבל הגדרות"
 
 #: src/modules/mixer/e_mod_main.c:54
+#, fuzzy
 msgid "New volume"
-msgstr ""
+msgstr "ניו נפח"
 
 #: src/modules/mixer/e_mod_main.c:67
+#, fuzzy
 msgid "Mixer"
-msgstr ""
+msgstr "מיקסר"
 
 #: src/modules/mixer/e_mod_main.c:67
+#, fuzzy
 msgid "Volume changed"
-msgstr ""
+msgstr "נפח השתנה"
 
 #: src/modules/mixer/e_mod_main.c:187
+#, fuzzy
 msgid "Mixer Settings Updated"
-msgstr ""
+msgstr "הגדרות מערבל עודכן"
 
 #: src/modules/mixer/e_mod_main.c:1334
 #, fuzzy
@@ -7699,20 +8456,24 @@ msgstr "מצב תצוגה"
 
 #: src/modules/connman/e_mod_main.c:85 src/modules/connman/e_mod_main.c:112
 #: src/modules/connman/e_mod_main.c:1065 src/modules/connman/e_mod_main.c:1819
+#, fuzzy
 msgid "Cannot toggle system's offline mode."
-msgstr ""
+msgstr "לא ניתן לעבור למצב לא מקוון של המערכת."
 
 #: src/modules/connman/e_mod_main.c:96 src/modules/connman/e_mod_main.c:1057
+#, fuzzy
 msgid "ConnMan Daemon is not running."
-msgstr ""
+msgstr "ConnMan Daemon אינו פועל."
 
 #: src/modules/connman/e_mod_main.c:103
+#, fuzzy
 msgid "Query system's offline mode."
-msgstr ""
+msgstr "מצב לא מקוון של מערכת שאילתה."
 
 #: src/modules/connman/e_mod_main.c:246
+#, fuzzy
 msgid "ConnMan needs your passphrase"
-msgstr ""
+msgstr "ConnMan הצרכים שלכם ססמה"
 
 #: src/modules/connman/e_mod_main.c:258
 #, c-format
@@ -7722,30 +8483,36 @@ msgid ""
 msgstr ""
 
 #: src/modules/connman/e_mod_main.c:282
+#, fuzzy
 msgid "Show passphrase as clear text"
-msgstr ""
+msgstr "הצג ססמה כטקסט ברור"
 
 #: src/modules/connman/e_mod_main.c:298
+#, fuzzy
 msgid "Ok"
-msgstr ""
+msgstr "בסדר"
 
 #: src/modules/connman/e_mod_main.c:576 src/modules/connman/e_mod_main.c:589
+#, fuzzy
 msgid "Disconnect from network service."
-msgstr ""
+msgstr "התנתקות של הרשת הסלולרית."
 
 #: src/modules/connman/e_mod_main.c:634 src/modules/connman/e_mod_main.c:703
 #: src/modules/connman/e_mod_main.c:729
+#, fuzzy
 msgid "Service does not exist anymore"
-msgstr ""
+msgstr "השירות לא קיים"
 
 #: src/modules/connman/e_mod_main.c:642 src/modules/connman/e_mod_main.c:654
 #: src/modules/connman/e_mod_main.c:682
+#, fuzzy
 msgid "Connect to network service."
-msgstr ""
+msgstr "התחברות לשירות הרשת."
 
 #: src/modules/connman/e_mod_main.c:751
+#, fuzzy
 msgid "Could not set service's passphrase"
-msgstr ""
+msgstr "לא ניתן להגדיר של שירות ססמה"
 
 #: src/modules/connman/e_mod_main.c:1253
 #, fuzzy
@@ -7753,24 +8520,29 @@ msgid "Offline mode"
 msgstr "החלפת מצב בלתי מקוון"
 
 #: src/modules/connman/e_mod_main.c:1262
+#, fuzzy
 msgid "Controls"
-msgstr ""
+msgstr "בקרות"
 
 #: src/modules/connman/e_mod_main.c:1433
+#, fuzzy
 msgid "No ConnMan"
-msgstr ""
+msgstr "לא ConnMan"
 
 #: src/modules/connman/e_mod_main.c:1435
+#, fuzzy
 msgid "No ConnMan server found."
-msgstr ""
+msgstr "לא שרת ConnMan נמצא."
 
 #: src/modules/connman/e_mod_main.c:1448
+#, fuzzy
 msgid "Offline mode: all radios are turned off"
-msgstr ""
+msgstr "מצב לא מקוון : רדיו כל מבוטלים"
 
 #: src/modules/connman/e_mod_main.c:1473
+#, fuzzy
 msgid "No Connection"
-msgstr ""
+msgstr "אין חיבור"
 
 #: src/modules/connman/e_mod_main.c:1477
 #, fuzzy
@@ -7778,8 +8550,9 @@ msgid "Not connected"
 msgstr "מוגן"
 
 #: src/modules/connman/e_mod_main.c:1480 src/modules/connman/e_mod_main.c:1897
+#, fuzzy
 msgid "disconnect"
-msgstr ""
+msgstr "לנתק"
 
 #: src/modules/connman/e_mod_main.c:1503
 #, fuzzy
@@ -7807,8 +8580,9 @@ msgid "configuration"
 msgstr "מסך ההסתרה"
 
 #: src/modules/connman/e_mod_main.c:1894
+#, fuzzy
 msgid "ready"
-msgstr ""
+msgstr "מוכן"
 
 #: src/modules/connman/e_mod_main.c:1895
 #, fuzzy
@@ -7821,8 +8595,9 @@ msgid "online"
 msgstr "תפקיד"
 
 #: src/modules/connman/e_mod_main.c:1898
+#, fuzzy
 msgid "failure"
-msgstr ""
+msgstr "כשלון"
 
 #: src/modules/connman/e_mod_main.c:1899
 #, fuzzy
@@ -7845,24 +8620,29 @@ msgid "offline"
 msgstr "תפקיד"
 
 #: src/modules/systray/e_mod_main.c:896
+#, fuzzy
 msgid "Another systray exists"
-msgstr ""
+msgstr "Systray עוד קיים"
 
 #: src/modules/systray/e_mod_main.c:897
+#, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
-msgstr ""
+msgstr "לא יכול להיות רק 1 גאדג 'ט Systray ואחד אחר כבר קיים."
 
 #: src/modules/systray/e_mod_main.c:905
+#, fuzzy
 msgid "Systray Error"
-msgstr ""
+msgstr "Systray שגיאה"
 
 #: src/modules/systray/e_mod_main.c:906
+#, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
-msgstr ""
+msgstr "Systray לא יכול לעבוד המדףהמוגדר להלן הכל."
 
 #: src/modules/systray/e_mod_main.c:1108
+#, fuzzy
 msgid "Systray"
-msgstr ""
+msgstr "Systray"
 
 #~ msgid "Client List Menu"
 #~ msgstr "תפריט רשימת הלקוחות"

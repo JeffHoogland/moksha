@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-25 15:08+0900\n"
+"POT-Creation-Date: 2012-04-14 16:41+0200\n"
 "PO-Revision-Date: 2012-01-24 20:45+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -271,7 +271,7 @@ msgstr "اضبط العنوان"
 #: src/bin/e_actions.c:2811
 #, fuzzy
 msgid "Cycle between Borders"
-msgstr "أدِر بين العناوين"
+msgstr "دورة بين حدود"
 
 #: src/bin/e_actions.c:2817
 msgid "Toggle Pinned State"
@@ -723,7 +723,7 @@ msgstr "عين كخلفية"
 msgid "Color Selector"
 msgstr "منتقي اﻵلوان"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1571 src/bin/e_config.c:2146
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1572 src/bin/e_config.c:2147
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
 #: src/bin/e_fm.c:8750 src/bin/e_fm.c:9394 src/bin/e_fm_prop.c:507
@@ -753,7 +753,7 @@ msgstr "موافق"
 msgid "Cancel"
 msgstr "ألغ"
 
-#: src/bin/e_config.c:948 src/bin/e_config.c:981
+#: src/bin/e_config.c:949 src/bin/e_config.c:982
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -770,7 +770,7 @@ msgstr ""
 "هذه اﻹعدادات الجديدة ستصلح <br>ذلك عبر إضافتها فيها. يمكنك اﻵن إعادة إعداد "
 "اﻷشياء حسب<br>رغبتك. نأسف ﻹزعاجك.. <br>"
 
-#: src/bin/e_config.c:965
+#: src/bin/e_config.c:966
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -783,11 +783,11 @@ msgstr ""
 "جديدة من إنلايتنمينت تعمل عليه. هذا سيء<br>و كإجراء إحترازي فإن إعداداتك "
 "ستعاد إلى<br>اﻹفتراضيات. نأسف ﻹزعاجك.<br>"
 
-#: src/bin/e_config.c:1558 src/bin/e_config.c:2133
+#: src/bin/e_config.c:1559 src/bin/e_config.c:2134
 msgid "Enlightenment Settings Write Problems"
 msgstr "خلل في كتابة أعدادات إنلايتنمينت"
 
-#: src/bin/e_config.c:1561
+#: src/bin/e_config.c:1562
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -797,19 +797,19 @@ msgstr ""
 "حصل إنلايتنمينت على خطأ أثناء نقل ملفات اﻹعداد<br>من:<br>%s<br><br>إلى:<br>"
 "%s<br><br>بقية الكتابة أُلغيت ﻷجل سلامة الملفات<br>"
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "Settings Upgraded"
 msgstr "تم ترقية اﻹعدادات"
 
-#: src/bin/e_config.c:2060
+#: src/bin/e_config.c:2061
 msgid "The EET file handle is bad."
 msgstr "تعامل ملف EET سيء."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2064
 msgid "The file data is empty."
 msgstr "بيانات الملف فارغة"
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2067
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -817,15 +817,15 @@ msgstr ""
 "الملف غير قابل للكتابة عليه. ربما لكون القرص مخصصا للقراءة فقط<br>أو فقدت "
 "الأذونات إلى ملفاتك."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2070
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "نفِدت الذاكرة أثناء اﻹعداد للكتابة.<br>رجاءا حرر مساحة من الذاكرة."
 
-#: src/bin/e_config.c:2072
+#: src/bin/e_config.c:2073
 msgid "This is a generic error."
 msgstr "هذا خطأ عام"
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2076
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -833,60 +833,61 @@ msgstr ""
 "ملف إعدادات الضبط كبير جدا.<br>بينما يجب أن يكون صغيرا (بعض مئات من "
 "الكيلوبايتات)."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2079
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "لديك أخطاء I/O على القرص.<br>ربما تحتاج لتبديله؟"
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2082
 msgid "You ran out of space while writing the file"
 msgstr "نفِدَت المساحة الشاغرة لديك أثناء كتابة الملف"
 
-#: src/bin/e_config.c:2084
+#: src/bin/e_config.c:2085
 msgid "The file was closed on it while writing."
 msgstr "أُغلِق الملف على ذلك أثناء الكتابة"
 
-#: src/bin/e_config.c:2087
+#: src/bin/e_config.c:2088
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "فشِل تكوين خريطة - mmap - ذاكرة الملف "
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2091
 msgid "X509 Encoding failed."
 msgstr "فشِل الترميز X509"
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2094
 msgid "Signature failed."
 msgstr "فشل التوقيع."
 
-#: src/bin/e_config.c:2096
+#: src/bin/e_config.c:2097
 msgid "The signature was invalid."
 msgstr "التوقيع غير صالح"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2100
 msgid "Not signed."
 msgstr "لم تُوقّع"
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2103
 msgid "Feature not implemented."
 msgstr "ميزة لم تنفّذ"
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2106
+#, fuzzy
 msgid "PRNG was not seeded."
-msgstr ""
+msgstr "ولم يكن المصنف مولد الأعداد العشوائية المزيفة."
 
-#: src/bin/e_config.c:2108
+#: src/bin/e_config.c:2109
 msgid "Encryption failed."
 msgstr "فشل التشفير."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2112
 #, fuzzy
 msgid "Decryption failed."
 msgstr "فشل فك التشفير."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2115
 msgid "The error is unknown to Enlightenment."
 msgstr "الخطأ مجهول لدى إنلايتنمينت"
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2137
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -896,7 +897,7 @@ msgstr ""
 "حصل إنلايتنمينت على خطأ أثناء <br>كتابة ملف إعداداته<br>%s<br>الملف اللذي "
 "حدث فيه الخلل:<br>%s<br>تم حذف هذا الملف لتفادي تعليق أو افساد البيانات<br>"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:778
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/syscon/e_mod_main.c:36
@@ -1016,7 +1017,7 @@ msgstr ""
 #: src/bin/e_eap_editor.c:230
 #, fuzzy
 msgid "Desktop Entry Editor"
-msgstr "محرر مدخل سطح المكتب"
+msgstr "سطح المكتب دخول محرر"
 
 #: src/bin/e_eap_editor.c:671 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467
@@ -1304,7 +1305,7 @@ msgstr "إحباط"
 #: src/bin/e_fm.c:7914 src/bin/e_fm.c:8074
 #, fuzzy
 msgid "Inherit parent settings"
-msgstr "Inherit parent settings"
+msgstr "ترث إعدادات الوالدين"
 
 #: src/bin/e_fm.c:7923 src/bin/e_fm.c:8083
 #: src/modules/fileman/e_mod_config.c:219
@@ -1609,8 +1610,9 @@ msgid "Remove"
 msgstr "أزل"
 
 #: src/bin/e_gadcon.c:2007
+#, fuzzy
 msgid "Stop moving"
-msgstr ""
+msgstr "يتوقف عن الحركة"
 
 #: src/bin/e_hints.c:152
 msgid ""
@@ -1858,13 +1860,13 @@ msgid "Window List"
 msgstr "قائمة النافذة"
 
 #: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2796 src/modules/pager/e_mod_main.c:2803
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2812
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2816
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2820
-#: src/modules/pager/e_mod_main.c:2853 src/modules/pager/e_mod_main.c:2854
-#: src/modules/pager/e_mod_main.c:2855 src/modules/pager/e_mod_main.c:2856
-#: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2797 src/modules/pager/e_mod_main.c:2804
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2817
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2821
+#: src/modules/pager/e_mod_main.c:2854 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2856 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2858 src/modules/pager/e_mod_main.c:2859
 msgid "Pager"
 msgstr "عارض أسطح المكاتب"
 
@@ -2035,7 +2037,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:516
 #, fuzzy
 msgid "No match properties set"
-msgstr "لا وجود لتطابق ضبط الخيارات"
+msgstr "لا خصائص مباراة تحديد"
 
 #: src/bin/e_int_border_remember.c:519
 msgid ""
@@ -2086,8 +2088,9 @@ msgid "Window type"
 msgstr "نوع النافذة"
 
 #: src/bin/e_int_border_remember.c:697
+#, fuzzy
 msgid "wildcard matches are allowed"
-msgstr ""
+msgstr "ويسمح لل مباريات البدل"
 
 #: src/bin/e_int_border_remember.c:699
 msgid "Transience"
@@ -2165,7 +2168,7 @@ msgstr "تنقل"
 #: src/modules/conf_theme/e_int_config_cursor.c:133
 #: src/modules/ibar/e_mod_main.c:307 src/modules/ibar/e_mod_main.c:787
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:690
-#: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:233
+#: src/modules/pager/e_mod_main.c:791 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1323
 msgid "Settings"
 msgstr "إعدادات"
@@ -2662,7 +2665,7 @@ msgstr "لا يستطيع إنلايتنمينت ضبط نظام النوافذ 
 #: src/bin/e_main.c:665
 #, fuzzy
 msgid "Setup Message Bus"
-msgstr "ضبط نظام الرسائل"
+msgstr "إعداد رسالة حافلة"
 
 #: src/bin/e_main.c:672
 msgid "Setup Paths"
@@ -2719,7 +2722,7 @@ msgstr "لا يستطيع إنلايتنمينت ضبط نظام dnd."
 #: src/bin/e_main.c:748
 #, fuzzy
 msgid "Setup Grab Input Handling"
-msgstr "اضبط معالجة نزع المدخلات"
+msgstr "التعامل مع الإعداد الاستيلاء على الإدخال"
 
 #: src/bin/e_main.c:752
 #, fuzzy
@@ -3464,76 +3467,86 @@ msgstr "ممنوع"
 msgid "Read-Write"
 msgstr "قراءة-كتابة"
 
-#: src/modules/battery/e_mod_config.c:63
+#: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
 msgstr "إعدادات مراقب البطارية"
 
-#: src/modules/battery/e_mod_config.c:132
+#: src/modules/battery/e_mod_config.c:134
 msgid "Show alert when battery is low"
 msgstr "أظهر تنبيه عندما تكون البطارية ضعيفة"
 
-#: src/modules/battery/e_mod_config.c:136
+#: src/modules/battery/e_mod_config.c:138
 #, fuzzy
 msgid "Use desktop notifications for alert."
-msgstr "اعرض تنبيهات سطح المكتب عند تغيير القيم و الحجم"
+msgstr "استخدام سطح المكتب لل إخطارات في حالة تأهب."
 
-#: src/modules/battery/e_mod_config.c:233
+#: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
 msgstr "افحص كل:"
 
-#: src/modules/battery/e_mod_config.c:235
+#: src/modules/battery/e_mod_config.c:237
 #: src/modules/conf_performance/e_int_config_performance.c:121
 #: src/modules/temperature/e_mod_config.c:233
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f لحظات"
 
-#: src/modules/battery/e_mod_config.c:239
+#: src/modules/battery/e_mod_config.c:242
+#, fuzzy
+msgid "Suspend when below:"
+msgstr "تعليق عندما أدناه؛"
+
+#: src/modules/battery/e_mod_config.c:245
 #, fuzzy
 msgid "Hibernate when below:"
-msgstr "عِّلق عند اقل من:"
+msgstr "السبات عندما أدناه؛"
 
-#: src/modules/battery/e_mod_config.c:241
-#: src/modules/battery/e_mod_config.c:260
+#: src/modules/battery/e_mod_config.c:248
+#, fuzzy
+msgid "Shutdown when below:"
+msgstr "اغلاق عندما أدناه؛"
+
+#: src/modules/battery/e_mod_config.c:251
+#: src/modules/battery/e_mod_config.c:270
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
 
-#: src/modules/battery/e_mod_config.c:245
+#: src/modules/battery/e_mod_config.c:255
 msgid "Polling"
 msgstr "اﻹستطلاع"
 
-#: src/modules/battery/e_mod_config.c:249
+#: src/modules/battery/e_mod_config.c:259
 msgid "Show low battery alert"
 msgstr "اظهر تنبيه البطارية الضعيفة"
 
-#: src/modules/battery/e_mod_config.c:253
+#: src/modules/battery/e_mod_config.c:263
 msgid "Alert when at:"
 msgstr "تنبيه عندما على:"
 
-#: src/modules/battery/e_mod_config.c:256
+#: src/modules/battery/e_mod_config.c:266
 #, c-format
 msgid "%1.0f min"
 msgstr "%1.0f دقيقة"
 
-#: src/modules/battery/e_mod_config.c:264
+#: src/modules/battery/e_mod_config.c:274
 msgid "Auto dismiss in..."
 msgstr "خروج تلقائي خلال..."
 
-#: src/modules/battery/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:279
 #, c-format
 msgid "%1.0f sec"
 msgstr "%1.0f ثانية"
 
-#: src/modules/battery/e_mod_config.c:276
+#: src/modules/battery/e_mod_config.c:286
 msgid "Alert"
 msgstr "تنبيه"
 
-#: src/modules/battery/e_mod_config.c:282
+#: src/modules/battery/e_mod_config.c:292
 msgid "Auto Detect"
 msgstr "اكتشاف تلقائى"
 
-#: src/modules/battery/e_mod_config.c:285
+#: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:52
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
@@ -3541,20 +3554,20 @@ msgstr "اكتشاف تلقائى"
 msgid "Internal"
 msgstr "داخلي"
 
-#: src/modules/battery/e_mod_config.c:289
+#: src/modules/battery/e_mod_config.c:299
 #: src/modules/temperature/e_mod_config.c:271
 msgid "udev"
 msgstr "udev"
 
-#: src/modules/battery/e_mod_config.c:292
+#: src/modules/battery/e_mod_config.c:302
 msgid "Fuzzy Mode"
 msgstr "وضع مبهم"
 
-#: src/modules/battery/e_mod_config.c:296
+#: src/modules/battery/e_mod_config.c:306
 msgid "HAL"
 msgstr "\"هال\""
 
-#: src/modules/battery/e_mod_config.c:301
+#: src/modules/battery/e_mod_config.c:311
 #: src/modules/temperature/e_mod_config.c:273
 msgid "Hardware"
 msgstr "العتاد"
@@ -3575,12 +3588,12 @@ msgstr "يستحسن استخدام الطاقة الكهربائية."
 msgid "N/A"
 msgstr "غير موجود"
 
-#: src/modules/battery/e_mod_main.c:656 src/modules/battery/e_mod_main.c:658
-#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:667
+#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:665
+#: src/modules/battery/e_mod_main.c:672 src/modules/battery/e_mod_main.c:674
 msgid "ERROR"
 msgstr "خطأ"
 
-#: src/modules/battery/e_mod_main.c:780
+#: src/modules/battery/e_mod_main.c:787
 msgid "Battery Meter"
 msgstr "مقياس البطارية"
 
@@ -3758,7 +3771,7 @@ msgstr "النوافذ العادية"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:120
 #, fuzzy
 msgid "Default Settings Dialogs Mode"
-msgstr "وضع حوارات الضبط اﻻفتراضية"
+msgstr "الوضع الافتراضي إعدادات الحوارات"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:122
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:166
@@ -3901,7 +3914,7 @@ msgstr ""
 "<hilight>ضررا</hilight> لشاشتك."
 
 #: src/modules/conf_display/e_int_config_desks.c:49
-#: src/modules/pager/e_mod_main.c:801
+#: src/modules/pager/e_mod_main.c:802
 msgid "Virtual Desktops Settings"
 msgstr "إعدادات أسطح المكتب اﻹفتراضية"
 
@@ -3936,7 +3949,7 @@ msgstr "قلب عند تحريك عناصر إلى حدود الشاشة"
 #: src/modules/conf_display/e_int_config_desks.c:173
 #, fuzzy
 msgid "Wrap desktops around when flipping"
-msgstr "لف أسطح المكاتب دائريا عند القلب"
+msgstr "التفاف حول سطح المكتب عند التقليب"
 
 #: src/modules/conf_display/e_int_config_desks.c:179
 msgid "Desktops"
@@ -4114,7 +4127,7 @@ msgstr "تمكين حافظة الشاشة إكس"
 #: src/modules/conf_display/e_int_config_screensaver.c:150
 #, fuzzy
 msgid "Suspend on blank"
-msgstr "التعليق"
+msgstr "تعليق على بياض"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:154
 msgid "Even if on power"
@@ -4190,8 +4203,9 @@ msgid "Off time"
 msgstr "وقت اﻹطفاء"
 
 #: src/modules/conf_display/e_int_config_dpms.c:295
+#, fuzzy
 msgid "DPMS"
-msgstr ""
+msgstr "DPMS"
 
 #: src/modules/conf_display/e_int_config_dpms.c:300
 msgid "Normal Backlight"
@@ -4210,7 +4224,7 @@ msgstr "إضاءة خلفية خافتة"
 #: src/modules/conf_display/e_int_config_dpms.c:312
 #, fuzzy
 msgid "Idle Fade Time"
-msgstr "وقت اﻹضمحلال"
+msgstr "تضاؤل ​​الوقت الضائع"
 
 #: src/modules/conf_display/e_int_config_dpms.c:322
 #, fuzzy
@@ -4266,7 +4280,7 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
 #, fuzzy
 msgid "Edge Bindings Settings"
-msgstr "إعدادات إرتباطات المحرك"
+msgstr "الربط حافة إعدادات"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:253
 #: src/modules/conf_edgebindings/e_mod_main.c:20
@@ -4323,12 +4337,12 @@ msgstr "الخيارات العامة"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
 #, fuzzy
 msgid "Allow binding activation with fullscreen windows"
-msgstr "تمكين تفعيل اﻹرتباطات مع نوافذ ملء الشاشة"
+msgstr "السماح التنشيط ملزم مع ويندوز ملء الشاشة"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:840
 #, fuzzy
 msgid "Edge Binding Sequence"
-msgstr "تسلسل إرتباط الهوامش"
+msgstr "تسلسل حافة تجليد"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:857
 msgid "Clickable edge"
@@ -4337,7 +4351,7 @@ msgstr "هامش قابل للنقر"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1172
 #, fuzzy
 msgid "Binding Edge Error"
-msgstr "خطأ هامش اﻹرتباط"
+msgstr "ملزم حافة خطأ"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1173
 #, c-format
@@ -4398,7 +4412,7 @@ msgstr "تمكين Thumbscroll"
 #: src/modules/conf_interaction/e_int_config_interaction.c:102
 #, fuzzy
 msgid "Threshold for a thumb drag"
-msgstr "عتبة لسحب المصغرات"
+msgstr "الحد الأدنى ل عملية السحب الإبهام"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:105
 #: src/modules/conf_theme/e_int_config_cursor.c:141
@@ -4657,7 +4671,7 @@ msgstr "لا شيء"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1273
 #, fuzzy
 msgid "Mouse Binding Sequence"
-msgstr "تسلسل إرتباطات الفأرة"
+msgstr "تسلسل الماوس تجليد"
 
 #: src/modules/conf_keybindings/e_mod_main.c:21
 msgid "Keys"
@@ -4715,7 +4729,7 @@ msgstr "اﻷدوات"
 #: src/modules/conf_menus/e_int_config_menus.c:274
 #, fuzzy
 msgid "Show gadget settings in top-level"
-msgstr "اعرض في المستوى اﻷعلى"
+msgstr "إظهار إعدادات الأداة في المستوى الأعلى"
 
 #: src/modules/conf_menus/e_int_config_menus.c:277
 #: src/modules/conf_menus/e_mod_main.c:17
@@ -4757,7 +4771,7 @@ msgstr "%5.0f بسكل\\ثانية"
 #: src/modules/conf_menus/e_int_config_menus.c:306
 #, fuzzy
 msgid "Fast Mouse Move Threshhold"
-msgstr "بداية حركة الفأرة السريعة"
+msgstr "بسرعة حاجز ال حرك المؤشر"
 
 #: src/modules/conf_menus/e_int_config_menus.c:308
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:187
@@ -4839,7 +4853,7 @@ msgstr "إعدادات المحرك"
 #: src/modules/conf_performance/e_int_config_engine.c:109
 #, fuzzy
 msgid "Use ARGB instead of shaped windows"
-msgstr "استخدم ARGB بدلامن النوافذ المتشكلة"
+msgstr "استخدم ARGB بدلا من النوافذ على شكل"
 
 #: src/modules/conf_performance/e_int_config_engine.c:111
 #, fuzzy
@@ -4848,8 +4862,8 @@ msgid ""
 "does not support composite.<br><br>Are you sure you wish to enable ARGB "
 "support ?"
 msgstr ""
-"لقد إخترت تمكين دعم المركب ARGB ،<br>لكن شاشتك الحالية لا تدعم المركب."
-"<br><br>أتريد تأكيد تمكين دعم المركب ARGB ؟"
+"كنت قد اخترت لتمكين ARGB الدعم مركب ،<br>لكن الشاشة الحالية لا تدعم مركب."
+"<br><br>هل أنت متأكد أنك ترغب في تفعيل ARGB الدعم؟"
 
 #: src/modules/conf_performance/e_int_config_performance.c:35
 msgid "Performance Settings"
@@ -5078,7 +5092,7 @@ msgstr "إطار العنوان"
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
 #, fuzzy
 msgid "Border Frame Active"
-msgstr "تفعيل إطار العنوان"
+msgstr "حدود الإطار النشط"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
 msgid "Error Text"
@@ -5186,7 +5200,7 @@ msgstr "نص العلامة"
 #: src/modules/conf_theme/e_int_config_color_classes.c:107
 #, fuzzy
 msgid "List Item Text Selected"
-msgstr "تم اختيار  نص عنصر القائمة"
+msgstr "قائمة نص العنصر المحدد"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:108
 msgid "List Item Text (Even)"
@@ -5195,7 +5209,7 @@ msgstr "نص عنصر قائمة (منتظم)"
 #: src/modules/conf_theme/e_int_config_color_classes.c:109
 #, fuzzy
 msgid "List Item Background Base (Even)"
-msgstr "قاعدة خلفية عنصر القائمة (( منتظم ))"
+msgstr "قائمة قاعدة خلفية البند (حتى."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:110
 msgid "List Item Text (Odd)"
@@ -5204,7 +5218,7 @@ msgstr "نص عنصر قائمة (غير منتظم)"
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
 #, fuzzy
 msgid "List Item Background Base (Odd)"
-msgstr "قاعدة خلفية عنصر القائمة (( غير منتظم ))"
+msgstr "قائمة قاعدة خلفية البند (الفردية)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:112
 msgid "List Header Text (Even)"
@@ -5213,7 +5227,7 @@ msgstr "نص رأس القائمة (( منتظم ))"
 #: src/modules/conf_theme/e_int_config_color_classes.c:113
 #, fuzzy
 msgid "List Header Background Base (Even)"
-msgstr "قاعدة خلفية رأس القائمة (( منتظم ))"
+msgstr "قائمة قاعدة خلفية الرأس (حتى."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:114
 msgid "List Header Text (Odd)"
@@ -5239,7 +5253,7 @@ msgstr "نص شريحة"
 #: src/modules/conf_theme/e_int_config_color_classes.c:120
 #, fuzzy
 msgid "Slider Text Disabled"
-msgstr "نص شريحة غير مفعل"
+msgstr "نص التمرير معطل"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:121
 msgid "Frame Background Base"
@@ -5248,7 +5262,7 @@ msgstr "قاعدة خلفية اﻹطارات"
 #: src/modules/conf_theme/e_int_config_color_classes.c:122
 #, fuzzy
 msgid "Scroller Frame Background Base"
-msgstr "قاعدة خلفية إطار شريط التمرير"
+msgstr "سكرولر قاعدة خلفية الإطار"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:127
 msgid "Module Label"
@@ -5307,7 +5321,7 @@ msgstr "ظل:"
 #: src/modules/conf_theme/e_int_config_color_classes.c:598
 #, fuzzy
 msgid "Text with applied colors."
-msgstr "نص مع ألوان مطبقة "
+msgstr "نص مع الألوان تطبيقها."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:604
 msgid "Colors depend on theme capabilities."
@@ -5590,15 +5604,16 @@ msgstr "إعدادات النطاق"
 #: src/modules/conf_theme/e_int_config_scale.c:99
 #, fuzzy
 msgid "Scale with DPI"
-msgstr "جدول مع DPI"
+msgstr "النطاق مع إدارة شؤون الإعلام"
 
 #: src/modules/conf_theme/e_int_config_scale.c:103
 msgid "Relative"
 msgstr "نسبي"
 
 #: src/modules/conf_theme/e_int_config_scale.c:104
+#, fuzzy
 msgid "Base DPI to scale relative to"
-msgstr ""
+msgstr "قاعدة لإدارة شؤون الإعلام لرفع نسبة إلى"
 
 #: src/modules/conf_theme/e_int_config_scale.c:107
 #: src/modules/conf_theme/e_int_config_scale.c:182
@@ -5619,7 +5634,7 @@ msgstr "لا تجدول"
 #: src/modules/conf_theme/e_int_config_scale.c:173
 #, fuzzy
 msgid "Scale relative to screen DPI"
-msgstr "جدول النسبة إلى شاشة DPI"
+msgstr "بالنسبة ل إدارة شؤون الإعلام و شاشة مقياس"
 
 #: src/modules/conf_theme/e_int_config_scale.c:178
 #, c-format
@@ -5627,8 +5642,9 @@ msgid "Base DPI (Currently %i DPI)"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_scale.c:186
+#, fuzzy
 msgid "Custom scaling factor"
-msgstr ""
+msgstr "عرف عامل القياس"
 
 #: src/modules/conf_theme/e_int_config_scale.c:189
 #, fuzzy, c-format
@@ -5760,7 +5776,7 @@ msgstr "تحجيم"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:36
 #, fuzzy
 msgid "Window List Menu Settings"
-msgstr "إعدادات قائمة النافذة"
+msgstr "نافذة إعدادات قائمة القائمة"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:97
 msgid "Group By"
@@ -5935,12 +5951,14 @@ msgid "Pronounced Acceleratem then decelerate"
 msgstr "تسارع ، ثم تباطأ بوضوح"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:231
+#, fuzzy
 msgid "Bounce"
-msgstr ""
+msgstr "وثب"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:236
+#, fuzzy
 msgid "Bounce more"
-msgstr ""
+msgstr "ترتد أكثر"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:241
 msgid "Shading"
@@ -6002,7 +6020,7 @@ msgstr "إعدادات أخرى"
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:236
 #, fuzzy
 msgid "Always pass click events to programs"
-msgstr "عادة مرر النقر إلى البرامج "
+msgstr "تمر دائما فوق الأحداث لبرامج"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:239
 msgid "Click raises the window"
@@ -6074,8 +6092,9 @@ msgid "Move after resize"
 msgstr "حرّك بعد التحجيم"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:224
+#, fuzzy
 msgid "Follow Move"
-msgstr ""
+msgstr "متابعة التحرك"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #, fuzzy
@@ -6083,8 +6102,9 @@ msgid "Follow Resize"
 msgstr "تحجيم"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
+#, fuzzy
 msgid "Follow Raise"
-msgstr ""
+msgstr "متابعة رفع"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:233
 #, fuzzy
@@ -6092,8 +6112,9 @@ msgid "Follow Lower"
 msgstr "اتبع النافذة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:236
+#, fuzzy
 msgid "Follow Layer"
-msgstr ""
+msgstr "اتبع طبقة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:239
 #, fuzzy
@@ -6152,7 +6173,7 @@ msgstr "اتجاه"
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:180
 #, fuzzy
 msgid "Allow manipulation of maximized windows"
-msgstr "اسمح بالتعامل من النوافذ المكبرة"
+msgstr "السماح لل تلاعب من ويندوز مكبر"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:183
 msgid "Adjust windows on shelf hide"
@@ -6201,12 +6222,12 @@ msgstr "التركيز على النافذة"
 #: src/modules/conf_window_manipulation/e_mod_main.c:23
 #, fuzzy
 msgid "Window List Menu"
-msgstr "قائمة النوافذ"
+msgstr "نافذة قائمة القائمة"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:24
 #, fuzzy
 msgid "Window Process Management"
-msgstr "إدارة الطاقة"
+msgstr "نافذة عملية إدارة"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:33
 #: src/modules/conf_window_remembers/e_mod_main.c:17
@@ -6221,7 +6242,7 @@ msgstr "تذكر الحوارات الداخلية"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:122
 #, fuzzy
 msgid "Remember file manager windows"
-msgstr "تذكر نوافذ مدير الملف"
+msgstr "تذكر ملف مدير ويندوز"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:126
 #, fuzzy
@@ -6513,7 +6534,7 @@ msgstr "اعرض في \"الكل\""
 #: src/modules/everything/evry_config.c:397
 #, fuzzy
 msgid "Show in top-level"
-msgstr "اعرض في المستوى اﻷعلى"
+msgstr "وتظهر في المستوى الأعلى"
 
 #: src/modules/everything/evry_config.c:403
 msgid "Minimum characters for search"
@@ -6637,7 +6658,7 @@ msgstr "%1.2f"
 #: src/modules/everything/evry_config.c:577
 #, fuzzy
 msgid "Edge Popup Size"
-msgstr "حجم حدود منبثق"
+msgstr "الحجم حافة قافزة"
 
 #: src/modules/everything/evry_config.c:594
 #: src/modules/winlist/e_int_config_winlist.c:286
@@ -6772,7 +6793,7 @@ msgstr "استخدم سمة أيقونات"
 #: src/modules/fileman/e_int_config_mime_edit.c:155
 #, fuzzy
 msgid "Use Edje File"
-msgstr "استخدم ملف هامشي"
+msgstr "استخدام ملف Edje"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:158
 msgid "Use Image"
@@ -6785,7 +6806,7 @@ msgstr "استخدم اﻹفتراضي"
 #: src/modules/fileman/e_int_config_mime_edit.c:290
 #, fuzzy
 msgid "Select an Edje file"
-msgstr "إختر ملف هامشي"
+msgstr "حدد ملف Edje"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:292
 msgid "Select an image"
@@ -7044,7 +7065,7 @@ msgstr "مدير اﻹتصال خامل"
 #: src/modules/fileman_opinfo/e_mod_main.c:415
 #, fuzzy
 msgid "EFM Operation Info"
-msgstr "معومات وظيفة EFM"
+msgstr "هذه الآلية العملية معلومات"
 
 #: src/modules/gadman/e_mod_config.c:53
 msgid "Gadgets Manager"
@@ -7235,12 +7256,12 @@ msgstr "النافذة السابقة من نفس الصنف"
 #: src/modules/winlist/e_mod_main.c:46
 #, fuzzy
 msgid "Next window class"
-msgstr "النافذة التالية من نفس الصنف"
+msgstr "القادم نافذة الطبقة"
 
 #: src/modules/winlist/e_mod_main.c:49
 #, fuzzy
 msgid "Previous window class"
-msgstr "النافذة السابقة من نفس الصنف"
+msgstr "نافذة الطبقة السابقة"
 
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:78
 msgid "Window on the Left"
@@ -7289,7 +7310,7 @@ msgstr "أعرض تعليق التطبيق"
 #: src/modules/ibar/e_mod_config.c:134
 #, fuzzy
 msgid "Display App Generic"
-msgstr "اعرض عام التطبيق "
+msgstr "عرض التطبيق عام"
 
 #: src/modules/ibar/e_mod_config.c:164
 msgid "Create new IBar source"
@@ -7345,7 +7366,7 @@ msgstr "اسم أيقونة العرض"
 #: src/modules/ibox/e_mod_config.c:121
 #, fuzzy
 msgid "Display Border Caption"
-msgstr "اعرض توضيح الحدود"
+msgstr "عرض توضيحية الحدود"
 
 #: src/modules/ibox/e_mod_config.c:151
 msgid "Show windows from all screens"
@@ -7390,7 +7411,7 @@ msgstr "أظهر النوافذ المنبثقة من النوافذ العاج�
 #: src/modules/pager/e_mod_config.c:185
 #, fuzzy
 msgid "Resistance to dragging"
-msgstr "مقاومة السحب"
+msgstr "المقاومة ل سحب"
 
 #: src/modules/pager/e_mod_config.c:187 src/modules/pager/e_mod_config.c:226
 #: src/modules/pager/e_mod_config.c:245
@@ -7420,7 +7441,7 @@ msgstr "اسحب سطح المكتب بأكمله"
 #: src/modules/pager/e_mod_config.c:222
 #, fuzzy
 msgid "Popup pager height"
-msgstr "إرتفاع عارض الوافذ المنبثقة"
+msgstr "المنبثقة بيجر ارتفاع"
 
 #: src/modules/pager/e_mod_config.c:232
 msgid "Popup speed"
@@ -7434,15 +7455,16 @@ msgstr "%1.1f ثواني"
 #: src/modules/pager/e_mod_config.c:243
 #, fuzzy
 msgid "Pager action popup height"
-msgstr "إرتفاع منبثقة أحداث عاض أسطح المكاتب"
+msgstr "بيجر عمل ارتفاع منبثقة"
 
 #: src/modules/pager/e_mod_config.c:253
 msgid "Show popup on urgent window"
 msgstr "اعرض منبثقة على النافذة المستعجلة"
 
 #: src/modules/pager/e_mod_config.c:257
+#, fuzzy
 msgid "Urgent popup sticks on screen"
-msgstr ""
+msgstr "المنبثقة العصي عاجلة على الشاشة"
 
 #: src/modules/pager/e_mod_config.c:263
 msgid "Show popup for focused windows"
@@ -7465,7 +7487,7 @@ msgstr "الزر %i"
 #: src/modules/pager/e_mod_config.c:372
 #, fuzzy
 msgid "Pager Button Grab"
-msgstr "إمساك زر عارض أسطح المكاتب"
+msgstr "نداء الاستيلاء على زر"
 
 #: src/modules/pager/e_mod_config.c:374
 msgid ""
@@ -7488,38 +7510,39 @@ msgstr ""
 "لا يمكنك إستخدام زر الفأرة اﻷيمن في<br>الرف ﻷجل هذا ، كما أنه عطل بواسطة "
 "كود<br>داخلي ﻷجل قوائم السياق.<br>لايعمل الزر هذا اﻻ في المنبثقة فقط."
 
-#: src/modules/pager/e_mod_main.c:2803
+#: src/modules/pager/e_mod_main.c:2804
 msgid "Show Pager Popup"
 msgstr "إعرض النافذة المنبثقة لعارض اسطح المكاتب "
 
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2853
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2854
 #, fuzzy
 msgid "Popup Desk Right"
-msgstr "يمين مكتب المنبثقة"
+msgstr "المنبثقة مكتب يمين"
 
-#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2854
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2855
 #, fuzzy
 msgid "Popup Desk Left"
-msgstr "يسار مكتب المنبثقة"
+msgstr "بقي من مكتب تعداد"
 
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2856
 #, fuzzy
 msgid "Popup Desk Up"
-msgstr "أعلى مكتب المنبثقة"
+msgstr "المنبثقة مكتب لل"
 
-#: src/modules/pager/e_mod_main.c:2816 src/modules/pager/e_mod_main.c:2856
+#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2857
 #, fuzzy
 msgid "Popup Desk Down"
-msgstr "أسفل مكتب المنبثقة"
+msgstr "المنبثقة مكتب أسفل"
 
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2858
 #, fuzzy
 msgid "Popup Desk Next"
-msgstr "مكتب المنبثقة التالية"
+msgstr "المنبثقة مكتب التالي"
 
-#: src/modules/pager/e_mod_main.c:2820 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2859
+#, fuzzy
 msgid "Popup Desk Previous"
-msgstr ""
+msgstr "مكتب تعداد السابق"
 
 #: src/modules/start/e_mod_main.c:102
 msgid "Start"
@@ -7530,8 +7553,9 @@ msgid "System Control"
 msgstr "وحدة تحكم النظام"
 
 #: src/modules/syscon/e_mod_main.c:37
+#, fuzzy
 msgid "Syscon"
-msgstr ""
+msgstr "SYSCON"
 
 #: src/modules/syscon/e_mod_main.c:58
 msgid "System Controls"
@@ -7620,7 +7644,7 @@ msgstr "اختر الحجم المفضل"
 #: src/modules/wizard/page_060.c:30
 #, fuzzy
 msgid "Focus by ..."
-msgstr "ركِّز بواسطة..."
+msgstr "تركز من قبل ..."
 
 #: src/modules/wizard/page_060.c:37
 #, fuzzy
@@ -7698,7 +7722,7 @@ msgstr "إعدادات الخالط"
 #: src/modules/mixer/conf_module.c:93
 #, fuzzy
 msgid "Mixer to use for global actions:"
-msgstr "خالط يتم إستخدامه ﻹجراءات عالمية:"
+msgstr "خلاط لاستخدامه في الإجراءات العالمية؛"
 
 #: src/modules/mixer/conf_module.c:118
 msgid "Diplay desktop notifications on volume change"

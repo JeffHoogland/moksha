@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.0.1\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-14 08:17+0200\n"
+"POT-Creation-Date: 2012-04-14 16:41+0200\n"
 "PO-Revision-Date: 2009-07-19 16:59+0000\n"
 "Last-Translator: DiegoJ <diegojromerolopez@gmail.com>\n"
 "Language-Team: Spanish <>\n"
@@ -1923,13 +1923,13 @@ msgid "Window List"
 msgstr "Lista de ventanas"
 
 #: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2796 src/modules/pager/e_mod_main.c:2803
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2812
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2816
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2820
-#: src/modules/pager/e_mod_main.c:2853 src/modules/pager/e_mod_main.c:2854
-#: src/modules/pager/e_mod_main.c:2855 src/modules/pager/e_mod_main.c:2856
-#: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2797 src/modules/pager/e_mod_main.c:2804
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2817
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2821
+#: src/modules/pager/e_mod_main.c:2854 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2856 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2858 src/modules/pager/e_mod_main.c:2859
 msgid "Pager"
 msgstr "Paginador"
 
@@ -2240,7 +2240,7 @@ msgstr "Módulos"
 #: src/modules/conf_theme/e_int_config_cursor.c:133
 #: src/modules/ibar/e_mod_main.c:307 src/modules/ibar/e_mod_main.c:787
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:690
-#: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:233
+#: src/modules/pager/e_mod_main.c:791 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1323
 msgid "Settings"
 msgstr "Preferencias"
@@ -4068,7 +4068,7 @@ msgstr ""
 "hilight> a su pantalla."
 
 #: src/modules/conf_display/e_int_config_desks.c:49
-#: src/modules/pager/e_mod_main.c:801
+#: src/modules/pager/e_mod_main.c:802
 msgid "Virtual Desktops Settings"
 msgstr "Opciones de escritorios virtuales"
 
@@ -4392,7 +4392,7 @@ msgid "%3.0f"
 msgstr "%3.0f%%"
 
 #: src/modules/conf_display/e_int_config_dpms.c:306
-#, fuzzy, c-format
+#, fuzzy
 msgid "Dim Backlight"
 msgstr "Iluminación tenue"
 
@@ -7283,7 +7283,7 @@ msgstr "Copia abortada"
 
 #: src/modules/fileman/e_fwin.c:2386
 #: src/modules/fileman_opinfo/e_mod_main.c:92
-#, fuzzy
+#, fuzzy, c-format
 msgid "Moving is aborted"
 msgstr "Mover se aborta"
 
@@ -7849,32 +7849,32 @@ msgstr ""
 "ya que esta siendo utilizado por el código<br>interno para los menús "
 "contextuales.<br>Este botón sólo funciona en la ventana emergente."
 
-#: src/modules/pager/e_mod_main.c:2803
+#: src/modules/pager/e_mod_main.c:2804
 msgid "Show Pager Popup"
 msgstr "Mostrar Paginador Emergente"
 
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2853
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2854
 msgid "Popup Desk Right"
 msgstr "Emerger Escritorio Derecha"
 
-#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2854
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2855
 msgid "Popup Desk Left"
 msgstr "Emerger Escritorio Izquierda"
 
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2856
 msgid "Popup Desk Up"
 msgstr "Emerger Escritorio Arriba"
 
-#: src/modules/pager/e_mod_main.c:2816 src/modules/pager/e_mod_main.c:2856
+#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2857
 msgid "Popup Desk Down"
 msgstr "Emerger Escritorio Abajo"
 
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2858
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "Información emergente Siguiente"
 
-#: src/modules/pager/e_mod_main.c:2820 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2859
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "Información anterior Popup"

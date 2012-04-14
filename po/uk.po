@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-25 15:08+0900\n"
+"POT-Creation-Date: 2012-04-14 16:41+0200\n"
 "PO-Revision-Date: 2009-12-13 21:16+0000\n"
 "Last-Translator: Sergio Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -270,8 +270,9 @@ msgid "Set Border"
 msgstr "Рамка"
 
 #: src/bin/e_actions.c:2811
+#, fuzzy
 msgid "Cycle between Borders"
-msgstr ""
+msgstr "Цикл між кордонів"
 
 #: src/bin/e_actions.c:2817
 msgid "Toggle Pinned State"
@@ -508,45 +509,54 @@ msgid "Send Mouse Forward/Back Screens..."
 msgstr "Переслати мишу вперед/назад..."
 
 #: src/bin/e_actions.c:2969
+#, fuzzy
 msgid "Dim"
-msgstr ""
+msgstr "тьмяний"
 
 #: src/bin/e_actions.c:2972
+#, fuzzy
 msgid "Undim"
-msgstr ""
+msgstr "Undim"
 
 #: src/bin/e_actions.c:2975
+#, fuzzy
 msgid "Backlight Set"
-msgstr ""
+msgstr "підсвічування Set"
 
 #: src/bin/e_actions.c:2977
+#, fuzzy
 msgid "Backlight Min"
-msgstr ""
+msgstr "підсвічування хв"
 
 #: src/bin/e_actions.c:2979
+#, fuzzy
 msgid "Backlight Mid"
-msgstr ""
+msgstr "підсвічування середнього"
 
 #: src/bin/e_actions.c:2981
+#, fuzzy
 msgid "Backlight Max"
-msgstr ""
+msgstr "підсвічування Макс"
 
 #: src/bin/e_actions.c:2984
+#, fuzzy
 msgid "Backlight Adjust"
-msgstr ""
+msgstr "підсвічування Настройка"
 
 #: src/bin/e_actions.c:2986
+#, fuzzy
 msgid "Backlight Up"
-msgstr ""
+msgstr "підсвічування вверх"
 
 #: src/bin/e_actions.c:2988
+#, fuzzy
 msgid "Backlight Down"
-msgstr ""
+msgstr "підсвічування вниз"
 
 #: src/bin/e_actions.c:2993
 #, fuzzy
 msgid "Move To Center"
-msgstr "Рухати текст"
+msgstr "Перемістити до центр"
 
 #: src/bin/e_actions.c:2997
 #, fuzzy
@@ -566,7 +576,7 @@ msgstr "Змінити розмір на:"
 #: src/bin/e_actions.c:3014
 #, fuzzy
 msgid "Push in Direction..."
-msgstr "Перенести стільницю в напрямку..."
+msgstr "Натисніть в напрямку ..."
 
 #: src/bin/e_actions.c:3020
 #, fuzzy
@@ -730,7 +740,7 @@ msgstr "Встановити як фон"
 msgid "Color Selector"
 msgstr "Вибір кольору"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1571 src/bin/e_config.c:2146
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1572 src/bin/e_config.c:2147
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
 #: src/bin/e_fm.c:8750 src/bin/e_fm.c:9394 src/bin/e_fm_prop.c:507
@@ -760,7 +770,7 @@ msgstr "Гаразд"
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: src/bin/e_config.c:948 src/bin/e_config.c:981
+#: src/bin/e_config.c:949 src/bin/e_config.c:982
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -778,7 +788,7 @@ msgstr ""
 "виправлений<br>шляхом додавання старих. Ви можете повторно налаштувати "
 "систему<br>за власним смаком. Вибачте за незручності<br>."
 
-#: src/bin/e_config.c:965
+#: src/bin/e_config.c:966
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -792,11 +802,11 @@ msgstr ""
 "версією Enlightenment.<br>Це неправильно, тому ваша конфігурація<br "
 ">відновлена до стандартної. Вибачте за незручності.<br>"
 
-#: src/bin/e_config.c:1558 src/bin/e_config.c:2133
+#: src/bin/e_config.c:1559 src/bin/e_config.c:2134
 msgid "Enlightenment Settings Write Problems"
 msgstr "Проблеми під час збереження параметрів Enlightenment"
 
-#: src/bin/e_config.c:1561
+#: src/bin/e_config.c:1562
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -807,96 +817,113 @@ msgstr ""
 "ньому. Це дуже дивно.<br><br>Файл, в якому сталася помилка:<br>%s<br><br>Цей "
 "файл був вилучений, щоб уникнути недостовірних даних.<br>"
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "Settings Upgraded"
 msgstr "Параметри оновлено"
 
-#: src/bin/e_config.c:2060
+#: src/bin/e_config.c:2061
+#, fuzzy
 msgid "The EET file handle is bad."
-msgstr ""
+msgstr "EET дескриптор файлу погано."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2064
+#, fuzzy
 msgid "The file data is empty."
-msgstr ""
+msgstr "Файл даних порожній."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2067
+#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
 msgstr ""
+"Файл не доступний для запису. Можливо , диск тільки для читання<br>або ви "
+"втратили дозволів на файли."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2070
+#, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
-msgstr ""
+msgstr "Пам'ять вибіг при підготовці запису.<br>ласка вільної пам'яті вгору."
 
-#: src/bin/e_config.c:2072
+#: src/bin/e_config.c:2073
+#, fuzzy
 msgid "This is a generic error."
-msgstr ""
+msgstr "Це загальна помилка."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2076
+#, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
+"Налаштування файлу занадто великий.<br>Це має бути дуже маленьким (кілька "
+"сотень Кб в більшості)."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2079
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2082
+#, fuzzy
 msgid "You ran out of space while writing the file"
-msgstr ""
+msgstr "Ви вибігли з простору під час запису файлу"
 
-#: src/bin/e_config.c:2084
+#: src/bin/e_config.c:2085
+#, fuzzy
 msgid "The file was closed on it while writing."
-msgstr ""
+msgstr "Файл був закритий, на ньому під час запису."
 
-#: src/bin/e_config.c:2087
+#: src/bin/e_config.c:2088
+#, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
-msgstr ""
+msgstr "Memory -відображення (спроектована) файлу не вдалося."
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2091
+#, fuzzy
 msgid "X509 Encoding failed."
-msgstr ""
+msgstr "X509 кодування не вдалася."
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2094
 #, fuzzy
 msgid "Signature failed."
 msgstr "Помилка під час переходу в режим сну."
 
-#: src/bin/e_config.c:2096
+#: src/bin/e_config.c:2097
+#, fuzzy
 msgid "The signature was invalid."
-msgstr ""
+msgstr "Підпис недійсною."
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2100
 #, fuzzy
 msgid "Not signed."
 msgstr "(Немає вікон)"
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2103
+#, fuzzy
 msgid "Feature not implemented."
-msgstr ""
+msgstr "Функція не реалізована."
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2106
+#, fuzzy
 msgid "PRNG was not seeded."
-msgstr ""
+msgstr "PRNG не була заповнена."
 
-#: src/bin/e_config.c:2108
+#: src/bin/e_config.c:2109
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Помилка під час переходу в режим очікування."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2112
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Помилка під час переходу в режим очікування."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2115
 #, fuzzy
 msgid "The error is unknown to Enlightenment."
 msgstr "Ласкаво просимо до Enlightenment"
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2137
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -907,7 +934,7 @@ msgstr ""
 "ньому. Це дуже дивно.<br><br>Файл, в якому сталася помилка:<br>%s<br><br>Цей "
 "файл був вилучений, щоб уникнути недостовірних даних.<br>"
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:778
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/syscon/e_mod_main.c:36
@@ -1045,8 +1072,9 @@ msgid "Comment"
 msgstr "Коментар"
 
 #: src/bin/e_eap_editor.c:704
+#, fuzzy
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: src/bin/e_eap_editor.c:726 src/bin/e_eap_editor.c:735
 #: src/bin/e_fm_prop.c:394 src/modules/conf_theme/e_int_config_fonts.c:95
@@ -1629,8 +1657,9 @@ msgid "Remove"
 msgstr "Вилучити"
 
 #: src/bin/e_gadcon.c:2007
+#, fuzzy
 msgid "Stop moving"
-msgstr ""
+msgstr "зупинити рухомий"
 
 #: src/bin/e_hints.c:152
 msgid ""
@@ -1747,7 +1776,7 @@ msgstr "Вікна"
 #: src/bin/e_int_border_menu.c:104 src/bin/e_int_border_menu.c:943
 #, fuzzy
 msgid "Always on Top"
-msgstr "Завжди зверху"
+msgstr "Завжди поверх інших вікон"
 
 #: src/bin/e_int_border_menu.c:119 src/bin/e_int_border_menu.c:606
 #: src/bin/e_int_border_prop.c:472
@@ -1783,17 +1812,17 @@ msgstr "Створити піктограму"
 #: src/bin/e_int_border_menu.c:464
 #, fuzzy
 msgid "Add to Favorites Menu"
-msgstr "Долучити до улюблених"
+msgstr "Додати в меню Вибране"
 
 #: src/bin/e_int_border_menu.c:469
 #, fuzzy
 msgid "Add to IBar"
-msgstr "Долучити до улюблених"
+msgstr "Додати в IBar"
 
 #: src/bin/e_int_border_menu.c:477
 #, fuzzy
 msgid "Create Keyboard Shortcut"
-msgstr "Комбінація Клавіш"
+msgstr "Створити Поєднання клавіш"
 
 #: src/bin/e_int_border_menu.c:497
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
@@ -1884,13 +1913,13 @@ msgid "Window List"
 msgstr "Перелік вікон"
 
 #: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2796 src/modules/pager/e_mod_main.c:2803
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2812
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2816
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2820
-#: src/modules/pager/e_mod_main.c:2853 src/modules/pager/e_mod_main.c:2854
-#: src/modules/pager/e_mod_main.c:2855 src/modules/pager/e_mod_main.c:2856
-#: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2797 src/modules/pager/e_mod_main.c:2804
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2817
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2821
+#: src/modules/pager/e_mod_main.c:2854 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2856 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2858 src/modules/pager/e_mod_main.c:2859
 msgid "Pager"
 msgstr "Пейджер"
 
@@ -2162,8 +2191,9 @@ msgid "Start this program on login"
 msgstr "Запустити цю програму під час входу в систему"
 
 #: src/bin/e_int_config_modules.c:52
+#, fuzzy
 msgid "Utilities"
-msgstr ""
+msgstr "комунальні послуги"
 
 #: src/bin/e_int_config_modules.c:55
 #: src/modules/everything/evry_plug_files.c:1585
@@ -2195,7 +2225,7 @@ msgstr "Модулі"
 #: src/modules/conf_theme/e_int_config_cursor.c:133
 #: src/modules/ibar/e_mod_main.c:307 src/modules/ibar/e_mod_main.c:787
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:690
-#: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:233
+#: src/modules/pager/e_mod_main.c:791 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1323
 msgid "Settings"
 msgstr "Налаштування"
@@ -2217,11 +2247,12 @@ msgstr "Вивантажити модуль"
 #: src/bin/e_int_config_modules.c:307 src/bin/e_int_config_modules.c:591
 #, fuzzy
 msgid "No modules selected."
-msgstr "Вибрана локаль"
+msgstr "Немає обраних модулів."
 
 #: src/bin/e_int_config_modules.c:589
+#, fuzzy
 msgid "More than one module selected."
-msgstr ""
+msgstr "Більше одного обраного модуля."
 
 #: src/bin/e_int_gadcon_config.c:38
 msgid "Shelf Contents"
@@ -2376,7 +2407,7 @@ msgstr "%3.0f пікселів"
 #: src/bin/e_int_shelf_config.c:182
 #, fuzzy
 msgid "Shrink to Content Width"
-msgstr "Стискати до обсягу вмісту"
+msgstr "Стиснути до ширини вмісту"
 
 #: src/bin/e_int_shelf_config.c:193
 #: src/modules/conf_theme/e_int_config_fonts.c:630
@@ -2689,7 +2720,7 @@ msgstr "Enlightenment не може налаштувати збереження 
 #: src/bin/e_main.c:629
 #, fuzzy
 msgid "Setup Powersave Modes"
-msgstr "Налаштувати режими енергозбереження"
+msgstr "Налаштування режимів енергозбереження"
 
 #: src/bin/e_main.c:633
 msgid "Enlightenment cannot set up its powersave modes."
@@ -2714,7 +2745,7 @@ msgstr "Enlightenment не може налаштувати свою систем
 #: src/bin/e_main.c:665
 #, fuzzy
 msgid "Setup Message Bus"
-msgstr "Налаштування системи повідомлень"
+msgstr "Налаштування роботи шини повідомлення"
 
 #: src/bin/e_main.c:672
 #, fuzzy
@@ -2864,8 +2895,9 @@ msgid "Enlightenment cannot initialize the Update system.\n"
 msgstr "Enlightenment не може налаштувати систему системних команд.\n"
 
 #: src/bin/e_main.c:886
+#, fuzzy
 msgid "Setup Desktop Environment"
-msgstr ""
+msgstr "Налаштування робочого навколишнього середовища"
 
 #: src/bin/e_main.c:890
 #, fuzzy
@@ -2875,7 +2907,7 @@ msgstr "Enlightenment не може налаштувати свою систем
 #: src/bin/e_main.c:898
 #, fuzzy
 msgid "Setup File Ordering"
-msgstr "Налаштувати черговість файлів"
+msgstr "Установчий файл для замовлення"
 
 #: src/bin/e_main.c:902
 msgid "Enlightenment cannot set up its order file system."
@@ -3238,8 +3270,8 @@ msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
 msgstr ""
-"Перехід в режим сну.<br>Ви не можете виконувати інші дії<br>доки перехід не "
-"завершиться."
+"Сплячки.<br>Ви не можете виконувати будь-які інші дії системи<br>до "
+"завершення цього."
 
 #: src/bin/e_sys.c:484 src/bin/e_sys.c:521
 msgid "EEK! This should not happen"
@@ -3404,7 +3436,7 @@ msgstr "Невідомий"
 #: src/bin/e_utils.c:1156
 #, fuzzy
 msgid "Image Import Settings"
-msgstr "Налаштування пейджера"
+msgstr "Параметри імпорту зображень"
 
 #: src/bin/e_utils.c:1160
 #, fuzzy
@@ -3563,76 +3595,87 @@ msgstr "Заборонено"
 msgid "Read-Write"
 msgstr "Читання-запис"
 
-#: src/modules/battery/e_mod_config.c:63
+#: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
 msgstr "Параметри монітора батарей"
 
-#: src/modules/battery/e_mod_config.c:132
+#: src/modules/battery/e_mod_config.c:134
 msgid "Show alert when battery is low"
 msgstr "Попереджати про низький заряд батареї"
 
-#: src/modules/battery/e_mod_config.c:136
+#: src/modules/battery/e_mod_config.c:138
+#, fuzzy
 msgid "Use desktop notifications for alert."
-msgstr ""
+msgstr "Використання повідомлень робочого столу для оповіщення."
 
-#: src/modules/battery/e_mod_config.c:233
+#: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
 msgstr "Перевіряти кожні:"
 
-#: src/modules/battery/e_mod_config.c:235
+#: src/modules/battery/e_mod_config.c:237
 #: src/modules/conf_performance/e_int_config_performance.c:121
 #: src/modules/temperature/e_mod_config.c:233
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f тактів"
 
-#: src/modules/battery/e_mod_config.c:239
+#: src/modules/battery/e_mod_config.c:242
+#, fuzzy
+msgid "Suspend when below:"
+msgstr "Призупинити , коли нижче;"
+
+#: src/modules/battery/e_mod_config.c:245
 #, fuzzy
 msgid "Hibernate when below:"
-msgstr "Режим сну"
+msgstr "Сплячий режим, коли нижче:"
 
-#: src/modules/battery/e_mod_config.c:241
-#: src/modules/battery/e_mod_config.c:260
+#: src/modules/battery/e_mod_config.c:248
+#, fuzzy
+msgid "Shutdown when below:"
+msgstr "Shutdown , коли нижче;"
+
+#: src/modules/battery/e_mod_config.c:251
+#: src/modules/battery/e_mod_config.c:270
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
 
-#: src/modules/battery/e_mod_config.c:245
+#: src/modules/battery/e_mod_config.c:255
 msgid "Polling"
 msgstr "Опитування"
 
-#: src/modules/battery/e_mod_config.c:249
+#: src/modules/battery/e_mod_config.c:259
 #, fuzzy
 msgid "Show low battery alert"
-msgstr "Показувати попередження про низький заряд"
+msgstr "Показати низькою попередження батареї"
 
-#: src/modules/battery/e_mod_config.c:253
+#: src/modules/battery/e_mod_config.c:263
 msgid "Alert when at:"
 msgstr "Попереджати якщо:"
 
-#: src/modules/battery/e_mod_config.c:256
+#: src/modules/battery/e_mod_config.c:266
 #, c-format
 msgid "%1.0f min"
 msgstr "%1.0f хв."
 
-#: src/modules/battery/e_mod_config.c:264
+#: src/modules/battery/e_mod_config.c:274
 msgid "Auto dismiss in..."
 msgstr "Авто-звільнення в..."
 
-#: src/modules/battery/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:279
 #, c-format
 msgid "%1.0f sec"
 msgstr "%1.0f сек"
 
-#: src/modules/battery/e_mod_config.c:276
+#: src/modules/battery/e_mod_config.c:286
 msgid "Alert"
 msgstr "Попередження"
 
-#: src/modules/battery/e_mod_config.c:282
+#: src/modules/battery/e_mod_config.c:292
 msgid "Auto Detect"
 msgstr "Автовизначення"
 
-#: src/modules/battery/e_mod_config.c:285
+#: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:52
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
@@ -3640,21 +3683,22 @@ msgstr "Автовизначення"
 msgid "Internal"
 msgstr "Вбудований"
 
-#: src/modules/battery/e_mod_config.c:289
+#: src/modules/battery/e_mod_config.c:299
 #: src/modules/temperature/e_mod_config.c:271
+#, fuzzy
 msgid "udev"
-msgstr ""
+msgstr "Udev"
 
-#: src/modules/battery/e_mod_config.c:292
+#: src/modules/battery/e_mod_config.c:302
 #, fuzzy
 msgid "Fuzzy Mode"
 msgstr "Розмита"
 
-#: src/modules/battery/e_mod_config.c:296
+#: src/modules/battery/e_mod_config.c:306
 msgid "HAL"
 msgstr "HAL"
 
-#: src/modules/battery/e_mod_config.c:301
+#: src/modules/battery/e_mod_config.c:311
 #: src/modules/temperature/e_mod_config.c:273
 msgid "Hardware"
 msgstr "Обладнання"
@@ -3675,12 +3719,12 @@ msgstr "Рекомендоване мережеве живлення."
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/modules/battery/e_mod_main.c:656 src/modules/battery/e_mod_main.c:658
-#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:667
+#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:665
+#: src/modules/battery/e_mod_main.c:672 src/modules/battery/e_mod_main.c:674
 msgid "ERROR"
 msgstr "ПОМИЛКА"
 
-#: src/modules/battery/e_mod_main.c:780
+#: src/modules/battery/e_mod_main.c:787
 msgid "Battery Meter"
 msgstr "Індикатор Батареї"
 
@@ -3752,8 +3796,9 @@ msgid "Modes"
 msgstr "Режими"
 
 #: src/modules/conf/e_mod_main.c:510
+#, fuzzy
 msgid "Configuration Panel Configuration Updated"
-msgstr ""
+msgstr "Конфігурація Конфігурація групи Оновлено"
 
 #: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_int_config_apps.c:98
@@ -3786,8 +3831,9 @@ msgid "Create Launcher"
 msgstr "Запустити"
 
 #: src/modules/conf_applications/e_mod_main.c:25
+#, fuzzy
 msgid "Delete Personal Launchers"
-msgstr ""
+msgstr "Видалення особистих пускових"
 
 #: src/modules/conf_applications/e_mod_main.c:45
 #, fuzzy
@@ -4009,7 +4055,7 @@ msgstr ""
 "здатності, і це може <hilight>пошкодити</hilight> ваш екран."
 
 #: src/modules/conf_display/e_int_config_desks.c:49
-#: src/modules/pager/e_mod_main.c:801
+#: src/modules/pager/e_mod_main.c:802
 msgid "Virtual Desktops Settings"
 msgstr "Налаштування віртуальних стільниць"
 
@@ -4099,7 +4145,7 @@ msgstr "Встановити"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:41
 #, fuzzy
 msgid "Select a Background..."
-msgstr "Встановити фон..."
+msgstr "Виберіть тло ..."
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
 #: src/modules/conf_intl/e_int_config_imc.c:803
@@ -4119,17 +4165,17 @@ msgstr "Налаштування блокування екрана"
 #: src/modules/conf_display/e_int_config_desklock.c:204
 #, fuzzy
 msgid "Lock on Startup"
-msgstr "Призупинити"
+msgstr "Блокування при запуску"
 
 #: src/modules/conf_display/e_int_config_desklock.c:207
 #, fuzzy
 msgid "Lock on Suspend"
-msgstr "Призупинити"
+msgstr "Блокування по Призупинити"
 
 #: src/modules/conf_display/e_int_config_desklock.c:211
 #, fuzzy
 msgid "Custom Screenlock Command"
-msgstr "Нетипове блокування екрана"
+msgstr "Користувальницькі ScreenLock командної"
 
 #: src/modules/conf_display/e_int_config_desklock.c:215
 #, fuzzy
@@ -4139,12 +4185,12 @@ msgstr "Заблокувати"
 #: src/modules/conf_display/e_int_config_desklock.c:221
 #, fuzzy
 msgid "Show on all screens"
-msgstr "Показувати на всіх екранах"
+msgstr "Показати на всіх екранах"
 
 #: src/modules/conf_display/e_int_config_desklock.c:226
 #, fuzzy
 msgid "Show on current screen"
-msgstr "Показувати на чинному екрані"
+msgstr "Показати на поточний екран"
 
 #: src/modules/conf_display/e_int_config_desklock.c:231
 #, fuzzy
@@ -4159,7 +4205,7 @@ msgstr "Параметри вікна реєстрації"
 #: src/modules/conf_display/e_int_config_desklock.c:246
 #, fuzzy
 msgid "Lock after X screensaver activates"
-msgstr "Блокувати, якщо Х активує заставку"
+msgstr "Блокування включається після того , як X заставки"
 
 #: src/modules/conf_display/e_int_config_desklock.c:252
 #: src/modules/conf_display/e_int_config_desklock.c:277
@@ -4194,7 +4240,7 @@ msgstr "Таймери"
 #: src/modules/conf_display/e_int_config_screensaver.c:190
 #, fuzzy
 msgid "Suggest if deactivated before"
-msgstr "Якщо вимкнено раніше"
+msgstr "Запропонувати якщо відключена до"
 
 #: src/modules/conf_display/e_int_config_desklock.c:282
 #: src/modules/conf_display/e_int_config_screensaver.c:201
@@ -4231,20 +4277,22 @@ msgstr "Налаштування зберігача екрана"
 #: src/modules/conf_display/e_int_config_screensaver.c:145
 #, fuzzy
 msgid "Enable X Screensaver"
-msgstr "Ввімкнути зберігач екрана"
+msgstr "Включити X Screensaver"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:150
 #, fuzzy
 msgid "Suspend on blank"
-msgstr "Призупинити"
+msgstr "Призупинити на порожній"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:154
+#, fuzzy
 msgid "Even if on power"
-msgstr ""
+msgstr "Навіть якщо на владі"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:158
+#, fuzzy
 msgid "Delay until suspend"
-msgstr ""
+msgstr "Затримка до призупинення"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:166
 #, fuzzy
@@ -4257,8 +4305,9 @@ msgid "Initial timeout"
 msgstr "Початковий стан"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:178
+#, fuzzy
 msgid "Alternation timeout"
-msgstr ""
+msgstr "чергування тайм - аут"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:206
 msgid "Blanking"
@@ -4313,12 +4362,14 @@ msgid "Off time"
 msgstr "Час перебування у вимкненому стані"
 
 #: src/modules/conf_display/e_int_config_dpms.c:295
+#, fuzzy
 msgid "DPMS"
-msgstr ""
+msgstr "DPMS"
 
 #: src/modules/conf_display/e_int_config_dpms.c:300
+#, fuzzy
 msgid "Normal Backlight"
-msgstr ""
+msgstr "Нормальна підсвічування"
 
 #: src/modules/conf_display/e_int_config_dpms.c:302
 #: src/modules/conf_display/e_int_config_dpms.c:308
@@ -4327,20 +4378,24 @@ msgid "%3.0f"
 msgstr "%3.0f%%"
 
 #: src/modules/conf_display/e_int_config_dpms.c:306
+#, fuzzy, c-format
 msgid "Dim Backlight"
-msgstr ""
+msgstr "підсвічування"
 
 #: src/modules/conf_display/e_int_config_dpms.c:312
+#, fuzzy
 msgid "Idle Fade Time"
-msgstr ""
+msgstr "Idle Fade Time"
 
 #: src/modules/conf_display/e_int_config_dpms.c:322
+#, fuzzy
 msgid "Fade Time"
-msgstr ""
+msgstr "Fade Time"
 
 #: src/modules/conf_display/e_int_config_dpms.c:328
+#, fuzzy
 msgid "Backlight"
-msgstr ""
+msgstr "підсвічування"
 
 #: src/modules/conf_display/e_mod_main.c:21
 msgid "Virtual Desktops"
@@ -4387,7 +4442,7 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
 #, fuzzy
 msgid "Edge Bindings Settings"
-msgstr "Налаштування прив'язок до країв"
+msgstr "Прикордонний прив'язки параметрів"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:253
 #: src/modules/conf_edgebindings/e_mod_main.c:20
@@ -4643,8 +4698,9 @@ msgid "Language Settings"
 msgstr "Налаштування мови"
 
 #: src/modules/conf_intl/e_int_config_intl.c:893
+#, fuzzy
 msgid "Possible Locale problems"
-msgstr ""
+msgstr "Можливі проблеми мови"
 
 #: src/modules/conf_intl/e_int_config_intl.c:894
 #, c-format
@@ -4696,7 +4752,7 @@ msgstr "Використовувати один клік"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:110
 #, fuzzy
 msgid "Key Bindings Settings"
-msgstr "Налаштування прив’язок клавіш"
+msgstr "Основні параметри прив'язки"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:244
 msgid "Key Bindings"
@@ -4732,7 +4788,7 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:112
 #, fuzzy
 msgid "Mouse Bindings Settings"
-msgstr "Налаштування прив'язок миші"
+msgstr "Миша прив'язки параметрів"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:275
 msgid "Mouse Bindings"
@@ -4783,8 +4839,9 @@ msgid "Mouse Binding Sequence"
 msgstr "Послідовність прив'язок миші"
 
 #: src/modules/conf_keybindings/e_mod_main.c:21
+#, fuzzy
 msgid "Keys"
-msgstr ""
+msgstr "ключі"
 
 #: src/modules/conf_keybindings/e_mod_main.c:25
 #, fuzzy
@@ -4846,7 +4903,7 @@ msgstr "Ґаджети"
 #: src/modules/conf_menus/e_int_config_menus.c:274
 #, fuzzy
 msgid "Show gadget settings in top-level"
-msgstr "Показувати в меню"
+msgstr "Показати налаштування гаджета на вищому рівні"
 
 #: src/modules/conf_menus/e_int_config_menus.c:277
 #: src/modules/conf_menus/e_mod_main.c:17
@@ -4971,8 +5028,9 @@ msgstr "Налаштування рушія"
 
 #: src/modules/conf_performance/e_int_config_engine.c:87
 #: src/modules/conf_performance/e_int_config_engine.c:109
+#, fuzzy
 msgid "Use ARGB instead of shaped windows"
-msgstr ""
+msgstr "Використовуйте ARGB замість форми вікон"
 
 #: src/modules/conf_performance/e_int_config_engine.c:111
 #, fuzzy
@@ -4981,8 +5039,8 @@ msgid ""
 "does not support composite.<br><br>Are you sure you wish to enable ARGB "
 "support ?"
 msgstr ""
-"Ви ввімкнули підтримку композиції,<br>але ваш чинний екран не підтримує "
-"композиції.<br><br>Ви впевнені в тому, що хочете ввімкнути композицію?"
+"Ви вибрали щоб ​​ARGB композитних підтримку, але<br>поточний екран не "
+"підтримує складові.<br><br>ви, що ви хочете включити підтримку ARGB."
 
 #: src/modules/conf_performance/e_int_config_performance.c:35
 msgid "Performance Settings"
@@ -5005,11 +5063,12 @@ msgstr "Пріоритет програми"
 #: src/modules/conf_performance/e_int_config_performance.c:119
 #, fuzzy
 msgid "Cache flush interval"
-msgstr "Інтервал очищення кешу"
+msgstr "Кеш -пам'яті інтервал"
 
 #: src/modules/conf_performance/e_int_config_performance.c:125
+#, fuzzy
 msgid "Font cache size"
-msgstr ""
+msgstr "Розмір шрифту кеш"
 
 #: src/modules/conf_performance/e_int_config_performance.c:127
 #, c-format
@@ -5017,8 +5076,9 @@ msgid "%1.1f MB"
 msgstr "%1.1f Мб"
 
 #: src/modules/conf_performance/e_int_config_performance.c:131
+#, fuzzy
 msgid "Image cache size"
-msgstr ""
+msgstr "Розмір зображення кеш"
 
 #: src/modules/conf_performance/e_int_config_performance.c:133
 #, c-format
@@ -5033,7 +5093,7 @@ msgstr "Скасувати"
 #: src/modules/conf_performance/e_int_config_performance.c:141
 #, fuzzy
 msgid "Number of Edje files to cache"
-msgstr "Кількість кешованих edje файлів"
+msgstr "Кількість Edje файли кешу"
 
 #: src/modules/conf_performance/e_int_config_performance.c:143
 #, c-format
@@ -5043,7 +5103,7 @@ msgstr "%1.0f файлів"
 #: src/modules/conf_performance/e_int_config_performance.c:147
 #, fuzzy
 msgid "Number of Edje collections to cache"
-msgstr "Кількість кешованих колекцій edje"
+msgstr "Кількість Edje колекції кеш"
 
 #: src/modules/conf_performance/e_int_config_performance.c:149
 #, c-format
@@ -5164,12 +5224,14 @@ msgstr ""
 "файл фону?"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:162
+#, fuzzy
 msgid "By"
-msgstr ""
+msgstr "за"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:198
+#, fuzzy
 msgid "Error getting data !"
-msgstr ""
+msgstr "Помилка при отриманні даних!"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:233
 msgid "Exchange wallpapers"
@@ -5181,16 +5243,19 @@ msgid "Download"
 msgstr "Вивантажити модуль"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:254
+#, fuzzy
 msgid "Getting data, please wait..."
-msgstr ""
+msgstr "Отримання даних , будь ласка, почекайте ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:266
+#, fuzzy
 msgid "Select a background from the list."
-msgstr ""
+msgstr "Виберіть тло зі списку."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:281
+#, fuzzy
 msgid "Error: can't start the request."
-msgstr ""
+msgstr "Помилка , не вдається запустити запит."
 
 #: src/modules/conf_theme/e_int_config_borders.c:30
 #: src/modules/conf_theme/e_int_config_borders.c:201
@@ -5212,7 +5277,7 @@ msgstr "Заголовок рамки"
 #: src/modules/conf_theme/e_int_config_color_classes.c:76
 #, fuzzy
 msgid "Border Title Active"
-msgstr "Активний заголовок меню"
+msgstr "Прикордонний Назва активність"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:77
 #, fuzzy
@@ -5222,7 +5287,7 @@ msgstr "Стиль рамки"
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
 #, fuzzy
 msgid "Border Frame Active"
-msgstr "Активний заголовок меню"
+msgstr "Кордон рамки активність"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
 msgid "Error Text"
@@ -5231,7 +5296,7 @@ msgstr "Текст помилки"
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 #, fuzzy
 msgid "Menu Background Base"
-msgstr "Тло"
+msgstr "База меню фону"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:81
 #: src/modules/conf_theme/e_int_config_fonts.c:61
@@ -5254,7 +5319,7 @@ msgstr "Активний пункт меню"
 #: src/modules/conf_theme/e_int_config_color_classes.c:85
 #, fuzzy
 msgid "Menu Item Disabled"
-msgstr "Активний пункт меню"
+msgstr "Пункт меню відключено"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:65
@@ -5273,7 +5338,7 @@ msgstr "Пункт списку вікон"
 #: src/modules/conf_theme/e_int_config_color_classes.c:89
 #, fuzzy
 msgid "Winlist Item Active"
-msgstr "Пункт списку вікон"
+msgstr "Winlist Пункт активність"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:90
 msgid "Winlist Label"
@@ -5287,17 +5352,17 @@ msgstr "Заголовок списку вікон"
 #: src/modules/conf_theme/e_int_config_color_classes.c:92
 #, fuzzy
 msgid "Dialog Background Base"
-msgstr "Тло"
+msgstr "Діалог бази фону"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:93
 #, fuzzy
 msgid "Shelf Background Base"
-msgstr "Тло"
+msgstr "База Термін фону"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:94
 #, fuzzy
 msgid "File Manager Background Base"
-msgstr "Файловий менеджер"
+msgstr "Файловий менеджер фону бази"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:99
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:230
@@ -5328,7 +5393,7 @@ msgstr "Введення тексту"
 #: src/modules/conf_theme/e_int_config_color_classes.c:105
 #, fuzzy
 msgid "Entry Text Disabled"
-msgstr "Текст на кнопках вимкнено"
+msgstr "Введення тексту інвалідів"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:106
 msgid "Label Text"
@@ -5337,43 +5402,47 @@ msgstr "Текст ярлика"
 #: src/modules/conf_theme/e_int_config_color_classes.c:107
 #, fuzzy
 msgid "List Item Text Selected"
-msgstr "Текст пункту в списку"
+msgstr "Приклад виділений текст"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:108
 #, fuzzy
 msgid "List Item Text (Even)"
-msgstr "Текст пункту в списку"
+msgstr "Список елементів тексту (навіть)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:109
+#, fuzzy
 msgid "List Item Background Base (Even)"
-msgstr ""
+msgstr "Приклад Фон бази (навіть)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:110
 #, fuzzy
 msgid "List Item Text (Odd)"
-msgstr "Текст пункту в списку"
+msgstr "Список елементів тексту (непарні."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
+#, fuzzy
 msgid "List Item Background Base (Odd)"
-msgstr ""
+msgstr "Приклад Фон бази (непарні."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:112
 #, fuzzy
 msgid "List Header Text (Even)"
-msgstr "Заголовок списку"
+msgstr "Список Заголовок тексту (навіть)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:113
+#, fuzzy
 msgid "List Header Background Base (Even)"
-msgstr ""
+msgstr "Список фону заголовка бази (навіть)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:114
 #, fuzzy
 msgid "List Header Text (Odd)"
-msgstr "Заголовок списку"
+msgstr "Текст заголовка списку (непарні."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:116
+#, fuzzy
 msgid "List Header Background Base (Odd)"
-msgstr ""
+msgstr "Список фону заголовка бази (непарні."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:117
 msgid "Radio Text"
@@ -5394,19 +5463,21 @@ msgstr "Текст повзунка вимкнено"
 #: src/modules/conf_theme/e_int_config_color_classes.c:121
 #, fuzzy
 msgid "Frame Background Base"
-msgstr "Тло"
+msgstr "База кадрів фону"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:122
+#, fuzzy
 msgid "Scroller Frame Background Base"
-msgstr ""
+msgstr "Scroller кадрів фону бази"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:127
 msgid "Module Label"
 msgstr "Ярлик модуля"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:128
+#, fuzzy
 msgid "Composite Focus-out Color"
-msgstr ""
+msgstr "Композитний фокус - з квітів"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:161
 #: src/modules/conf_theme/e_mod_main.c:41
@@ -5435,8 +5506,9 @@ msgstr "Налаштування класів кольорів"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:286
 #: src/modules/conf_theme/e_int_config_color_classes.c:545
+#, fuzzy
 msgid "No selected color class"
-msgstr ""
+msgstr "Немає вибраний колір класу"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:548
 #, fuzzy
@@ -5459,12 +5531,14 @@ msgid "Shadow:"
 msgstr "Колір тіні"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:598
+#, fuzzy
 msgid "Text with applied colors."
-msgstr ""
+msgstr "Текст , що застосовуються кольору."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:604
+#, fuzzy
 msgid "Colors depend on theme capabilities."
-msgstr ""
+msgstr "Колір залежить від теми можливостями."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:853
 msgid "Window Manager"
@@ -5541,8 +5615,9 @@ msgid "Splash Version"
 msgstr "Версія в заставці"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:79
+#, fuzzy
 msgid "Digital Clock"
-msgstr ""
+msgstr "цифровий годинник"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:82
 msgid "Entry"
@@ -5703,17 +5778,17 @@ msgstr "Налаштування теми піктограми"
 #: src/modules/conf_theme/e_int_config_icon_themes.c:276
 #, fuzzy
 msgid "Enable icon theme"
-msgstr "Ввімкнути композицію"
+msgstr "Включення теми значків"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:281
 #, fuzzy
 msgid "Use icon theme for applications"
-msgstr "Виберіть програму"
+msgstr "Використання теми значків додатків"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:285
 #, fuzzy
 msgid "Icons override general theme"
-msgstr "Тема піктограм заміняє основну тему"
+msgstr "Іконки змінити загальну тему"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:38
 msgid "Cursor Settings"
@@ -5724,12 +5799,14 @@ msgid "Show Cursor"
 msgstr "Показувати курсор"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:150
+#, fuzzy
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:160
+#, fuzzy
 msgid "Idle effects"
-msgstr ""
+msgstr "Idle ефекти"
 
 #: src/modules/conf_theme/e_int_config_scale.c:55
 #, fuzzy
@@ -5906,7 +5983,7 @@ msgstr "Масштаб"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:36
 #, fuzzy
 msgid "Window List Menu Settings"
-msgstr "Налаштування списку вікон"
+msgstr "Вікно настройки списку меню"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:97
 msgid "Group By"
@@ -5919,7 +5996,7 @@ msgstr "Разом з вікнами з інших екранів"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:110
 #, fuzzy
 msgid "Seperate Groups By"
-msgstr "Розділяти групи"
+msgstr "Роздільний групи."
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:114
 msgid "Using separator bars"
@@ -6004,7 +6081,7 @@ msgstr "Показувати інформацію"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:140
 #, fuzzy
 msgid "Follows the window"
-msgstr "Закрити це вікно"
+msgstr "Слід вікна"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:136
 #, fuzzy
@@ -6050,7 +6127,7 @@ msgstr "Розташовувати вручну мишкою"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:176
 #, fuzzy
 msgid "Switch to desktop of new window"
-msgstr "Автоматично переходити на стільницю нового вікна"
+msgstr "Перейдіть на робочому столі в новому вікні"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:179
 #, fuzzy
@@ -6069,7 +6146,7 @@ msgstr "Лінійно"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:201
 #, fuzzy
 msgid "Accelerate, then decelerate"
-msgstr "Гладенькі прискорення та уповільнення"
+msgstr "Прискорення , то сповільнюватися"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:206
 msgid "Accelerate"
@@ -6092,15 +6169,17 @@ msgstr "Сповільнювати"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:226
 #, fuzzy
 msgid "Pronounced Acceleratem then decelerate"
-msgstr "Гладенькі прискорення та уповільнення"
+msgstr "Виражена Acceleratem потім уповільнює"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:231
+#, fuzzy
 msgid "Bounce"
-msgstr ""
+msgstr "відскакувати"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:236
+#, fuzzy
 msgid "Bounce more"
-msgstr ""
+msgstr "відмов більше"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:241
 #, fuzzy
@@ -6161,7 +6240,7 @@ msgstr "Діалоги"
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:226
 #, fuzzy
 msgid "Only dialogs with focused parent"
-msgstr "Тільки нові діалоги отримують фокус"
+msgstr "Тільки діалоги з батьками зосереджені"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:235
 msgid "Other Settings"
@@ -6170,27 +6249,27 @@ msgstr "Інші опції"
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:236
 #, fuzzy
 msgid "Always pass click events to programs"
-msgstr "Передавати програмам спіймані натискання"
+msgstr "Завжди проходить натисніть подій програми"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:239
 #, fuzzy
 msgid "Click raises the window"
-msgstr "Закрити це вікно"
+msgstr "Натисніть піднімає вікно"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:242
 #, fuzzy
 msgid "Click focuses the window"
-msgstr "Клацніть для фокусування вікон"
+msgstr "Натисніть фокусує вікно"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:245
 #, fuzzy
 msgid "Refocus last window on desktop switch"
-msgstr "Під час переходу на стільницю фокус на вікно, яке останнім мало фокус"
+msgstr "Переорієнтація останньому вікні на робочому столі перемикач"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:248
 #, fuzzy
 msgid "Revert focus when it is lost"
-msgstr "Повертати фокус під час мінімізації або закриття вікна"
+msgstr "Повернути увагу, коли він втратив"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:258
 msgid "Slide pointer to a new focused window"
@@ -6214,7 +6293,7 @@ msgstr "Внутрішні Вікна"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:167
 #, fuzzy
 msgid "Edge of the screen"
-msgstr "Протидія біля краю екрана:"
+msgstr "Край екрану"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:176
 #, fuzzy
@@ -6245,17 +6324,19 @@ msgid "Keyboard"
 msgstr "Комбінація Клавіш"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
+#, fuzzy
 msgid "Limit resize to useful geometry"
-msgstr ""
+msgstr "Граничні розміри корисних геометрії"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:216
 #, fuzzy
 msgid "Move after resize"
-msgstr "Може змінювати розмір"
+msgstr "Переміщення після зміни розмірів"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:224
+#, fuzzy
 msgid "Follow Move"
-msgstr ""
+msgstr "дотримуйтесь Переміщення"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #, fuzzy
@@ -6263,8 +6344,9 @@ msgid "Follow Resize"
 msgstr "Змінити розмір"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
+#, fuzzy
 msgid "Follow Raise"
-msgstr ""
+msgstr "дотримуйтесь Підніміть"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:233
 #, fuzzy
@@ -6272,8 +6354,9 @@ msgid "Follow Lower"
 msgstr "Закрити це вікно"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:236
+#, fuzzy
 msgid "Follow Layer"
-msgstr ""
+msgstr "дотримуйтесь шару"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:239
 #, fuzzy
@@ -6337,9 +6420,7 @@ msgstr "Дозволити маніпулювання максимізовани
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:183
 #, fuzzy
 msgid "Adjust windows on shelf hide"
-msgstr ""
-"Автоматично перемістити/змінити розмір вікна під час авто-приховування "
-"полички"
+msgstr "Налаштування вікон на шельфі шкуру"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:49
 #: src/modules/conf_window_manipulation/e_mod_main.c:21
@@ -6350,13 +6431,13 @@ msgstr "Штабелювання вікон"
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:144
 #, fuzzy
 msgid "Raise windows on mouse over"
-msgstr "Автоматично піднімати вікна під мишкою"
+msgstr "Підніміть вікон при наведенні миші"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:127
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:169
 #, fuzzy
 msgid "Allow windows above fullscreen window"
-msgstr "Дозволяти вікна поверх повноекранного вікна"
+msgstr "Дозвольте вікна над повноекранного вікна"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:143
 msgid "Autoraise"
@@ -6386,12 +6467,12 @@ msgstr "Фокусування вікна"
 #: src/modules/conf_window_manipulation/e_mod_main.c:23
 #, fuzzy
 msgid "Window List Menu"
-msgstr "Перелік вікон"
+msgstr "Меню Список вікон"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:24
 #, fuzzy
 msgid "Window Process Management"
-msgstr "Керування живленням"
+msgstr "Управління вікнами процесу"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:33
 #: src/modules/conf_window_remembers/e_mod_main.c:17
@@ -6405,7 +6486,7 @@ msgstr "Пам'ятати внутрішні діалоги"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:122
 #, fuzzy
 msgid "Remember file manager windows"
-msgstr "Пам'ятати fileman вікна"
+msgstr "Пам'ятайте , файловий менеджер вікон"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:126
 msgid "Delete Remember(s)"
@@ -6651,7 +6732,7 @@ msgstr "Все"
 #: src/modules/everything/e_mod_main.c:61
 #, fuzzy
 msgid "Show Everything Launcher"
-msgstr "Все"
+msgstr "Показати все Launcher"
 
 #: src/modules/everything/e_mod_main.c:75
 #, fuzzy
@@ -6661,7 +6742,7 @@ msgstr "(немає інформації)"
 #: src/modules/everything/e_mod_main.c:211
 #, fuzzy
 msgid "Show Everything Dialog"
-msgstr "Під усім"
+msgstr "Показати все Діалог"
 
 #: src/modules/everything/e_mod_main.c:420
 #, fuzzy
@@ -6710,23 +6791,27 @@ msgstr "Показувати в меню"
 #: src/modules/everything/evry_config.c:397
 #, fuzzy
 msgid "Show in top-level"
-msgstr "Показувати в меню"
+msgstr "Показати на вищому рівні"
 
 #: src/modules/everything/evry_config.c:403
+#, fuzzy
 msgid "Minimum characters for search"
-msgstr ""
+msgstr "Мінімальна символів для пошуку"
 
 #: src/modules/everything/evry_config.c:412
+#, fuzzy
 msgid "Plugin Trigger"
-msgstr ""
+msgstr "плагін Trigger"
 
 #: src/modules/everything/evry_config.c:417
+#, fuzzy
 msgid "Search only when triggered"
-msgstr ""
+msgstr "Шукати тільки при спрацьовуванні"
 
 #: src/modules/everything/evry_config.c:424
+#, fuzzy
 msgid "Plugin View"
-msgstr ""
+msgstr "Plugin View"
 
 #: src/modules/everything/evry_config.c:434
 #: src/modules/everything/evry_config.c:462
@@ -6749,8 +6834,9 @@ msgid "Up/Down select next item in icon view"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:483
+#, fuzzy
 msgid "Hide input when inactive"
-msgstr ""
+msgstr "Приховати вхід в неактивному"
 
 #: src/modules/everything/evry_config.c:488
 #, fuzzy
@@ -6758,16 +6844,19 @@ msgid "Hide list"
 msgstr "Час затримки до приховування"
 
 #: src/modules/everything/evry_config.c:493
+#, fuzzy
 msgid "Quick Navigation"
-msgstr ""
+msgstr "Швидкий перехід"
 
 #: src/modules/everything/evry_config.c:497
+#, fuzzy
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
-msgstr ""
+msgstr "Emacs стиль (ALT п, р, F , B , M , I)"
 
 #: src/modules/everything/evry_config.c:499
+#, fuzzy
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
-msgstr ""
+msgstr "Vi стиль (ALT H , J , K , L , N, P , M , I)"
 
 #: src/modules/everything/evry_config.c:503
 #, fuzzy
@@ -6780,8 +6869,9 @@ msgid "No Sorting"
 msgstr "Запускається"
 
 #: src/modules/everything/evry_config.c:508
+#, fuzzy
 msgid "By usage"
-msgstr ""
+msgstr "щодо використання"
 
 #: src/modules/everything/evry_config.c:511
 #, fuzzy
@@ -6794,8 +6884,9 @@ msgid "Last used"
 msgstr "Остання зміна:"
 
 #: src/modules/everything/evry_config.c:526
+#, fuzzy
 msgid "Subject Plugins"
-msgstr ""
+msgstr "тема плагіни"
 
 #: src/modules/everything/evry_config.c:530
 #, fuzzy
@@ -6848,7 +6939,7 @@ msgstr "%1.2f"
 #: src/modules/everything/evry_config.c:577
 #, fuzzy
 msgid "Edge Popup Size"
-msgstr "Підказка"
+msgstr "Прикордонний Popup розмір"
 
 #: src/modules/everything/evry_config.c:594
 #: src/modules/winlist/e_int_config_winlist.c:286
@@ -6862,12 +6953,14 @@ msgid "Everything Collection"
 msgstr "Рестарт-програми"
 
 #: src/modules/everything/evry_plug_aggregator.c:121
+#, fuzzy
 msgid "Items"
-msgstr ""
+msgstr "Товари"
 
 #: src/modules/everything/evry_plug_aggregator.c:301
+#, fuzzy
 msgid "No plugins loaded"
-msgstr ""
+msgstr "Модулі не завантажені"
 
 #: src/modules/everything/evry_view_help.c:67
 msgid ""
@@ -6907,8 +7000,9 @@ msgid "Terminal Command"
 msgstr "Запуск команди"
 
 #: src/modules/everything/evry_plug_apps.c:1276
+#, fuzzy
 msgid "Sudo GUI"
-msgstr ""
+msgstr "Sudo GUI"
 
 #: src/modules/everything/evry_plug_apps.c:1354
 #: src/modules/everything/evry_plug_files.c:1585
@@ -6925,22 +7019,22 @@ msgstr "Все"
 #: src/modules/everything/evry_plug_files.c:1483
 #, fuzzy
 msgid "Show recent files"
-msgstr "Показати приховані файли"
+msgstr "Показати останні файли"
 
 #: src/modules/everything/evry_plug_files.c:1487
 #, fuzzy
 msgid "Search recent files"
-msgstr "Пошук в каталогах"
+msgstr "Пошук останніх файлів"
 
 #: src/modules/everything/evry_plug_files.c:1491
 #, fuzzy
 msgid "Search cached files"
-msgstr "Налаштування пошукового шляху"
+msgstr "Пошук кешовані файли"
 
 #: src/modules/everything/evry_plug_files.c:1495
 #, fuzzy
 msgid "Cache visited directories"
-msgstr "Каталоги визначені користувачем"
+msgstr "Кеш відвідав каталоги"
 
 #: src/modules/everything/evry_plug_files.c:1499
 #, fuzzy
@@ -6991,12 +7085,12 @@ msgstr "Типово"
 #: src/modules/fileman/e_int_config_mime_edit.c:290
 #, fuzzy
 msgid "Select an Edje file"
-msgstr "Вибрати файл edj"
+msgstr "Виберіть файл Edje"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:292
 #, fuzzy
 msgid "Select an image"
-msgstr "Вибрати зображення"
+msgstr "Виберіть зображення"
 
 #: src/modules/fileman/e_mod_main.c:58 src/modules/fileman/e_mod_main.c:72
 #: src/modules/fileman/e_mod_main.c:160
@@ -7104,12 +7198,12 @@ msgstr "Поведінка"
 #: src/modules/fileman/e_mod_config.c:282
 #, fuzzy
 msgid "Show UDisks icons on desktop"
-msgstr "Показувати піктограми HAL на стільниці"
+msgstr "Показати UDisks іконки на робочому столі"
 
 #: src/modules/fileman/e_mod_config.c:284
 #, fuzzy
 msgid "Show device icons on desktop"
-msgstr "Показувати піктограми HAL на стільниці"
+msgstr "Показати пристрій іконки на робочому столі"
 
 #: src/modules/fileman/e_mod_config.c:288
 msgid "Mount volumes on insert"
@@ -7330,12 +7424,12 @@ msgstr "Налаштування списку вікон"
 #: src/modules/winlist/e_int_config_winlist.c:190
 #, fuzzy
 msgid "Windows from other desks"
-msgstr "Показувати вікна з інших стільниць"
+msgstr "Вікна з інших столів"
 
 #: src/modules/winlist/e_int_config_winlist.c:193
 #, fuzzy
 msgid "Windows from other screens"
-msgstr "Показувати вікна з інших екранів"
+msgstr "Вікна з інших екранів"
 
 #: src/modules/winlist/e_int_config_winlist.c:196
 #, fuzzy
@@ -7345,31 +7439,32 @@ msgstr "Згорнутий стан"
 #: src/modules/winlist/e_int_config_winlist.c:200
 #, fuzzy
 msgid "Iconified from other desks"
-msgstr "Показувати згорнуті вікна з інших стільниць"
+msgstr "Iconified від інших столів"
 
 #: src/modules/winlist/e_int_config_winlist.c:205
 #, fuzzy
 msgid "Iconified from other screens"
-msgstr "Показувати згорнуті вікна з інших екранів"
+msgstr "Iconified від інших екранів"
 
 #: src/modules/winlist/e_int_config_winlist.c:218
+#, fuzzy
 msgid "Uncover"
-msgstr ""
+msgstr "відкривати"
 
 #: src/modules/winlist/e_int_config_winlist.c:220
 #, fuzzy
 msgid "Warp mouse while selecting"
-msgstr "Прив'язувати мишку до вікна під час виділення"
+msgstr "Деформація миші при виборі"
 
 #: src/modules/winlist/e_int_config_winlist.c:224
 #, fuzzy
 msgid "Warp mouse at end"
-msgstr "Викривлення в кінці"
+msgstr "Деформація миші в кінці"
 
 #: src/modules/winlist/e_int_config_winlist.c:228
 #, fuzzy
 msgid "Jump to desk"
-msgstr "Переходити на стільницю під час виділення"
+msgstr "Перейти до столу"
 
 #: src/modules/winlist/e_int_config_winlist.c:230
 #, fuzzy
@@ -7455,28 +7550,29 @@ msgid "Previous Window"
 msgstr "Попереднє вікно"
 
 #: src/modules/winlist/e_mod_main.c:40 src/modules/winlist/e_mod_main.c:77
+#, fuzzy
 msgid "Next window of same class"
-msgstr ""
+msgstr "Наступне вікно того ж класу"
 
 #: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:75
 #, fuzzy
 msgid "Previous window of same class"
-msgstr "Попереднє вікно"
+msgstr "Попереднє вікно того ж класу"
 
 #: src/modules/winlist/e_mod_main.c:46
 #, fuzzy
 msgid "Next window class"
-msgstr "Клас вікна"
+msgstr "Далі клас вікна"
 
 #: src/modules/winlist/e_mod_main.c:49
 #, fuzzy
 msgid "Previous window class"
-msgstr "Попереднє вікно"
+msgstr "Попередня класу вікна"
 
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:78
 #, fuzzy
 msgid "Window on the Left"
-msgstr "Вікно під мишкою"
+msgstr "Вікно зліва"
 
 #: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:79
 #, fuzzy
@@ -7491,7 +7587,7 @@ msgstr "Тип вікна"
 #: src/modules/winlist/e_mod_main.c:57 src/modules/winlist/e_mod_main.c:81
 #, fuzzy
 msgid "Window on the Right"
-msgstr "Вікно під мишкою"
+msgstr "Вікно по праву"
 
 #: src/modules/winlist/e_winlist.c:168
 msgid "Select a window"
@@ -7552,7 +7648,7 @@ msgstr "IBar"
 #: src/modules/ibar/e_mod_main.c:770
 #, fuzzy
 msgid "Create new Icon"
-msgstr "Створити нову піктограму"
+msgstr "Створити новий"
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Properties"
@@ -7667,7 +7763,7 @@ msgstr "%1.1f сек"
 #: src/modules/pager/e_mod_config.c:243
 #, fuzzy
 msgid "Pager action popup height"
-msgstr "Висота вікна підказки задіяного клавішею"
+msgstr "Пейджер дія спливаюче висоті"
 
 #: src/modules/pager/e_mod_config.c:253
 msgid "Show popup on urgent window"
@@ -7676,17 +7772,17 @@ msgstr "Показувати підказку в терміновому вікн
 #: src/modules/pager/e_mod_config.c:257
 #, fuzzy
 msgid "Urgent popup sticks on screen"
-msgstr "Підказка залипає на екрані в терміновому вікні"
+msgstr "Терміново спливаючих палички на екрані"
 
 #: src/modules/pager/e_mod_config.c:263
 #, fuzzy
 msgid "Show popup for focused windows"
-msgstr "Показувати підказку для термінових вікон"
+msgstr "Показати спливаючі вікна для цілеспрямованого"
 
 #: src/modules/pager/e_mod_config.c:269
 #, fuzzy
 msgid "Urgent popup speed"
-msgstr "Швидкість підказки"
+msgstr "Терміново спливаючих швидкості"
 
 #: src/modules/pager/e_mod_config.c:280
 #, fuzzy
@@ -7723,39 +7819,39 @@ msgid ""
 "already taken by internal<br>code for context menus.<br>This button only "
 "works in the popup."
 msgstr ""
-"Ви не можете використовувати праву кнопку мишки<br>для цього в поличках, "
-"тому що вона вже зайнята<br>внутрішнім кодом для контекстних меню.<br>Ця "
-"кнопка працює тільки в підказках"
+"Ви не можете використовувати праву кнопку миші в<br>полки для цього, як вже "
+"прийнято внутрішній код<br>для контекстних меню.<br>Ця кнопка працює тільки "
+"в спливаючому вікні."
 
-#: src/modules/pager/e_mod_main.c:2803
+#: src/modules/pager/e_mod_main.c:2804
 msgid "Show Pager Popup"
 msgstr "Показувати підказку пейджера"
 
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2853
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2854
 msgid "Popup Desk Right"
 msgstr "Пересунути підказку праворуч"
 
-#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2854
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2855
 msgid "Popup Desk Left"
 msgstr "Пересунути підказку ліворуч"
 
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2856
 msgid "Popup Desk Up"
 msgstr "Пересунути підказку вверх"
 
-#: src/modules/pager/e_mod_main.c:2816 src/modules/pager/e_mod_main.c:2856
+#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2857
 msgid "Popup Desk Down"
 msgstr "Пересунути підказку вниз"
 
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2858
 #, fuzzy
 msgid "Popup Desk Next"
-msgstr "Пересунути підказку ліворуч"
+msgstr "Popup бюро Далі"
 
-#: src/modules/pager/e_mod_main.c:2820 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2859
 #, fuzzy
 msgid "Popup Desk Previous"
-msgstr "Пересунути підказку ліворуч"
+msgstr "Popup бюро Попередня"
 
 #: src/modules/start/e_mod_main.c:102
 msgid "Start"
@@ -7766,8 +7862,9 @@ msgid "System Control"
 msgstr "Керування системою"
 
 #: src/modules/syscon/e_mod_main.c:37
+#, fuzzy
 msgid "Syscon"
-msgstr ""
+msgstr "SYSCON"
 
 #: src/modules/syscon/e_mod_main.c:58
 msgid "System Controls"
@@ -7848,17 +7945,19 @@ msgid "Profile"
 msgstr "Профіль"
 
 #: src/modules/wizard/page_050.c:128
+#, fuzzy
 msgid "Sizing"
-msgstr ""
+msgstr "калібрування"
 
 #: src/modules/wizard/page_050.c:130
 #, fuzzy
 msgid "Select preferred size"
-msgstr "Вибрати профіль"
+msgstr "Виберіть потрібний розмір"
 
 #: src/modules/wizard/page_060.c:30
+#, fuzzy
 msgid "Focus by ..."
-msgstr ""
+msgstr "Фокус на ..."
 
 #: src/modules/wizard/page_060.c:37
 #, fuzzy
@@ -7922,8 +8021,9 @@ msgid "Show both sliders when locked"
 msgstr "Показувати обидва повзунки під час блокування"
 
 #: src/modules/mixer/conf_gadget.c:205
+#, fuzzy
 msgid "Show Popup on volume change via keybindings"
-msgstr ""
+msgstr "Показати Popup на зміну обсягу за допомогою комбінації клавіш"
 
 #: src/modules/mixer/conf_gadget.c:316
 msgid "Sound Cards"
@@ -7938,8 +8038,9 @@ msgid "Mixer to use for global actions:"
 msgstr "Мікшер для глобальних дій:"
 
 #: src/modules/mixer/conf_module.c:118
+#, fuzzy
 msgid "Diplay desktop notifications on volume change"
-msgstr ""
+msgstr "Diplay повідомлень робочого столу на зміну обсягу"
 
 #: src/modules/mixer/conf_module.c:154
 msgid "Launch mixer..."
@@ -7950,12 +8051,14 @@ msgid "Mixer Module Settings"
 msgstr "Налаштування модулів мікшера"
 
 #: src/modules/mixer/e_mod_main.c:54
+#, fuzzy
 msgid "New volume"
-msgstr ""
+msgstr "новий обсяг"
 
 #: src/modules/mixer/e_mod_main.c:67
+#, fuzzy
 msgid "Mixer"
-msgstr ""
+msgstr "змішувач"
 
 #: src/modules/mixer/e_mod_main.c:67
 #, fuzzy
@@ -7973,20 +8076,24 @@ msgstr "Налаштування модулів мікшера"
 
 #: src/modules/connman/e_mod_main.c:85 src/modules/connman/e_mod_main.c:112
 #: src/modules/connman/e_mod_main.c:1065 src/modules/connman/e_mod_main.c:1819
+#, fuzzy
 msgid "Cannot toggle system's offline mode."
-msgstr ""
+msgstr "Не можу перемикати автономному режимі системи."
 
 #: src/modules/connman/e_mod_main.c:96 src/modules/connman/e_mod_main.c:1057
+#, fuzzy
 msgid "ConnMan Daemon is not running."
-msgstr ""
+msgstr "ConnMan Daemon не працює."
 
 #: src/modules/connman/e_mod_main.c:103
+#, fuzzy
 msgid "Query system's offline mode."
-msgstr ""
+msgstr "Повідомлення запиту системи режиму."
 
 #: src/modules/connman/e_mod_main.c:246
+#, fuzzy
 msgid "ConnMan needs your passphrase"
-msgstr ""
+msgstr "ConnMan потребує вашої фрази"
 
 #: src/modules/connman/e_mod_main.c:258
 #, c-format
@@ -7996,30 +8103,36 @@ msgid ""
 msgstr ""
 
 #: src/modules/connman/e_mod_main.c:282
+#, fuzzy
 msgid "Show passphrase as clear text"
-msgstr ""
+msgstr "Показати пароль у відкритому вигляді"
 
 #: src/modules/connman/e_mod_main.c:298
+#, fuzzy
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: src/modules/connman/e_mod_main.c:576 src/modules/connman/e_mod_main.c:589
+#, fuzzy
 msgid "Disconnect from network service."
-msgstr ""
+msgstr "Відключення від послуг мережі."
 
 #: src/modules/connman/e_mod_main.c:634 src/modules/connman/e_mod_main.c:703
 #: src/modules/connman/e_mod_main.c:729
+#, fuzzy
 msgid "Service does not exist anymore"
-msgstr ""
+msgstr "Служби більше не існує"
 
 #: src/modules/connman/e_mod_main.c:642 src/modules/connman/e_mod_main.c:654
 #: src/modules/connman/e_mod_main.c:682
+#, fuzzy
 msgid "Connect to network service."
-msgstr ""
+msgstr "Підключення до мережі обслуговування."
 
 #: src/modules/connman/e_mod_main.c:751
+#, fuzzy
 msgid "Could not set service's passphrase"
-msgstr ""
+msgstr "Не вдалося встановити служби фразу"
 
 #: src/modules/connman/e_mod_main.c:1253
 #, fuzzy
@@ -8031,16 +8144,19 @@ msgid "Controls"
 msgstr "Канали"
 
 #: src/modules/connman/e_mod_main.c:1433
+#, fuzzy
 msgid "No ConnMan"
-msgstr ""
+msgstr "немає ConnMan"
 
 #: src/modules/connman/e_mod_main.c:1435
+#, fuzzy
 msgid "No ConnMan server found."
-msgstr ""
+msgstr "Сервер не знайдений ConnMan."
 
 #: src/modules/connman/e_mod_main.c:1448
+#, fuzzy
 msgid "Offline mode: all radios are turned off"
-msgstr ""
+msgstr "Автономний режим, всі радіостанції повинні бути вимкнені"
 
 #: src/modules/connman/e_mod_main.c:1473
 #, fuzzy
@@ -8053,8 +8169,9 @@ msgid "Not connected"
 msgstr "Захищено"
 
 #: src/modules/connman/e_mod_main.c:1480 src/modules/connman/e_mod_main.c:1897
+#, fuzzy
 msgid "disconnect"
-msgstr ""
+msgstr "відключати"
 
 #: src/modules/connman/e_mod_main.c:1503
 #, fuzzy
@@ -8082,8 +8199,9 @@ msgid "configuration"
 msgstr "(немає інформації)"
 
 #: src/modules/connman/e_mod_main.c:1894
+#, fuzzy
 msgid "ready"
-msgstr ""
+msgstr "готовий"
 
 #: src/modules/connman/e_mod_main.c:1895
 #, fuzzy
@@ -8096,8 +8214,9 @@ msgid "online"
 msgstr "Рушій"
 
 #: src/modules/connman/e_mod_main.c:1898
+#, fuzzy
 msgid "failure"
-msgstr ""
+msgstr "провал"
 
 #: src/modules/connman/e_mod_main.c:1899
 #, fuzzy
@@ -8133,8 +8252,9 @@ msgid "Systray Error"
 msgstr "Системний лоток"
 
 #: src/modules/systray/e_mod_main.c:906
+#, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
-msgstr ""
+msgstr "Systray не може працювати в полку, який встановлюється на всі нижче."
 
 #: src/modules/systray/e_mod_main.c:1108
 msgid "Systray"

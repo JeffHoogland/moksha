@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Marc Furtià  i Puig<br>\\\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-03-25 15:08+0900\n"
+"POT-Creation-Date: 2012-04-14 16:41+0200\n"
 "PO-Revision-Date: 2010-01-29 18:45+0100\n"
 "Last-Translator: marc furtià puig <marc.furtia@gmail.com>\n"
 "Language-Team: \n"
@@ -272,8 +272,9 @@ msgid "Set Border"
 msgstr "Vora"
 
 #: src/bin/e_actions.c:2811
+#, fuzzy
 msgid "Cycle between Borders"
-msgstr ""
+msgstr "Cicle entre les fronteres"
 
 #: src/bin/e_actions.c:2817
 msgid "Toggle Pinned State"
@@ -510,36 +511,44 @@ msgid "Send Mouse Forward/Back Screens..."
 msgstr "Envia el Ratolí Endavant/Endarrera Pantalles"
 
 #: src/bin/e_actions.c:2969
+#, fuzzy
 msgid "Dim"
-msgstr ""
+msgstr "fosc"
 
 #: src/bin/e_actions.c:2972
+#, fuzzy
 msgid "Undim"
-msgstr ""
+msgstr "Undim"
 
 #: src/bin/e_actions.c:2975
+#, fuzzy
 msgid "Backlight Set"
-msgstr ""
+msgstr "llum de fons Conjunt"
 
 #: src/bin/e_actions.c:2977
+#, fuzzy
 msgid "Backlight Min"
-msgstr ""
+msgstr "llum de fons Min"
 
 #: src/bin/e_actions.c:2979
+#, fuzzy
 msgid "Backlight Mid"
-msgstr ""
+msgstr "Mitjana llum de fons"
 
 #: src/bin/e_actions.c:2981
+#, fuzzy
 msgid "Backlight Max"
-msgstr ""
+msgstr "llum de fons Max"
 
 #: src/bin/e_actions.c:2984
+#, fuzzy
 msgid "Backlight Adjust"
-msgstr ""
+msgstr "llum de fons Ajust"
 
 #: src/bin/e_actions.c:2986
+#, fuzzy
 msgid "Backlight Up"
-msgstr ""
+msgstr "llum de fons"
 
 #: src/bin/e_actions.c:2988
 #, fuzzy
@@ -549,7 +558,7 @@ msgstr "Aturada"
 #: src/bin/e_actions.c:2993
 #, fuzzy
 msgid "Move To Center"
-msgstr "Mou Text"
+msgstr "Moure al Centre de"
 
 #: src/bin/e_actions.c:2997
 #, fuzzy
@@ -569,7 +578,7 @@ msgstr "Re-dimensiona"
 #: src/bin/e_actions.c:3014
 #, fuzzy
 msgid "Push in Direction..."
-msgstr "Canvia de Taula de Treball en Direcció ..."
+msgstr "Prema en la Direcció ..."
 
 #: src/bin/e_actions.c:3020
 #, fuzzy
@@ -652,12 +661,12 @@ msgstr "Enlightenment: Moda "
 #: src/bin/e_actions.c:3078
 #, fuzzy
 msgid "Presentation Mode Toggle"
-msgstr "Mostra a Pantalla Completa"
+msgstr "Presentació Canviar la manera de"
 
 #: src/bin/e_actions.c:3083
 #, fuzzy
 msgid "Offline Mode Toggle"
-msgstr "Mode d'Ombrejat Toggle"
+msgstr "Alternar perfil fora de línia"
 
 #: src/bin/e_actions.c:3087 src/bin/e_actions.c:3091 src/bin/e_actions.c:3095
 #: src/bin/e_actions.c:3099 src/bin/e_actions.c:3103 src/bin/e_actions.c:3107
@@ -682,12 +691,14 @@ msgid "Log Out"
 msgstr "Surt"
 
 #: src/bin/e_actions.c:3091
+#, fuzzy
 msgid "Power Off Now"
-msgstr ""
+msgstr "Apagat Ara"
 
 #: src/bin/e_actions.c:3095
+#, fuzzy
 msgid "Power Off"
-msgstr ""
+msgstr "apagat"
 
 #: src/bin/e_actions.c:3099
 msgid "Reboot"
@@ -736,7 +747,7 @@ msgstr "Posa com a Fons de Pantalla"
 msgid "Color Selector"
 msgstr "Selector de Color"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1571 src/bin/e_config.c:2146
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1572 src/bin/e_config.c:2147
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:398
 #: src/bin/e_fm.c:8750 src/bin/e_fm.c:9394 src/bin/e_fm_prop.c:507
@@ -766,7 +777,7 @@ msgstr "D'acord"
 msgid "Cancel"
 msgstr "Cancel·la "
 
-#: src/bin/e_config.c:948 src/bin/e_config.c:981
+#: src/bin/e_config.c:949 src/bin/e_config.c:982
 #, fuzzy
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
@@ -785,7 +796,7 @@ msgstr ""
 "configuració.<br>Pot re-configurar les coses ara. Disculpa per les molèsties "
 "per la teva configuració<br>"
 
-#: src/bin/e_config.c:965
+#: src/bin/e_config.c:966
 #, fuzzy
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
@@ -801,12 +812,12 @@ msgstr ""
 "fitxers de configuració han estat <br> restaurats per defecte. Perdona els "
 "inconvenients.<br>"
 
-#: src/bin/e_config.c:1558 src/bin/e_config.c:2133
+#: src/bin/e_config.c:1559 src/bin/e_config.c:2134
 #, fuzzy
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problemes al Escriure la Configuració de l'Enlightenment"
 
-#: src/bin/e_config.c:1561
+#: src/bin/e_config.c:1562
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -818,97 +829,116 @@ msgstr ""
 "succeït l'error és :<br> %s <br><br> Aquest fitxer ha estat borrat per dades "
 "incorrectes ."
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "Paràmetres de Pantalla"
 
-#: src/bin/e_config.c:2060
+#: src/bin/e_config.c:2061
+#, fuzzy
 msgid "The EET file handle is bad."
-msgstr ""
+msgstr "L'identificador d'arxiu EET és dolent."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2064
+#, fuzzy
 msgid "The file data is empty."
-msgstr ""
+msgstr "El fitxer de dades és buida."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2067
+#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
 msgstr ""
+"L'arxiu no té permisos d'escriptura. Potser el disc és de només lectura<br>o "
+"ha perdut els permisos als arxius."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2070
+#, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
+"Es va quedar sense memòria mentre es prepara l'escriptura.<br>Si us plau , "
+"alliberar memòria."
 
-#: src/bin/e_config.c:2072
+#: src/bin/e_config.c:2073
+#, fuzzy
 msgid "This is a generic error."
-msgstr ""
+msgstr "Aquest és un error genèric."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2076
+#, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
+"L'arxiu de configuració és massa gran.<br>Ha de ser molt petit (uns pocs "
+"centenars de KB com a màxim)."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2079
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2082
+#, fuzzy
 msgid "You ran out of space while writing the file"
-msgstr ""
+msgstr "Vostè es va quedar sense espai en escriure el fitxer"
 
-#: src/bin/e_config.c:2084
+#: src/bin/e_config.c:2085
+#, fuzzy
 msgid "The file was closed on it while writing."
-msgstr ""
+msgstr "L'expedient es va arxivar el que en escriure."
 
-#: src/bin/e_config.c:2087
+#: src/bin/e_config.c:2088
+#, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
-msgstr ""
+msgstr "L'assignació de memòria (mmap) de l'arxiu ha fallat."
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2091
+#, fuzzy
 msgid "X509 Encoding failed."
-msgstr ""
+msgstr "X509 Codificació fracassat."
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2094
 #, fuzzy
 msgid "Signature failed."
 msgstr "Hibernació fallada."
 
-#: src/bin/e_config.c:2096
+#: src/bin/e_config.c:2097
+#, fuzzy
 msgid "The signature was invalid."
-msgstr ""
+msgstr "La signatura no és vàlida."
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2100
 #, fuzzy
 msgid "Not signed."
 msgstr "(No Ha Ha Finestres)"
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2103
+#, fuzzy
 msgid "Feature not implemented."
-msgstr ""
+msgstr "Funció no implementada."
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2106
+#, fuzzy
 msgid "PRNG was not seeded."
-msgstr ""
+msgstr "PRNG no es va sembrar."
 
-#: src/bin/e_config.c:2108
+#: src/bin/e_config.c:2109
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Suspensió fallada."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2112
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Suspensió fallada."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2115
 #, fuzzy
 msgid "The error is unknown to Enlightenment."
 msgstr "Sobre Enlightenment"
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2137
 #, fuzzy, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -920,7 +950,7 @@ msgstr ""
 "succeït l'error és :<br> %s <br><br> Aquest fitxer ha estat borrat per dades "
 "incorrectes ."
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:778
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/syscon/e_mod_main.c:36
@@ -1004,8 +1034,9 @@ msgstr ""
 "d'estar passant.Si us plau, reporta aquest bug."
 
 #: src/bin/e_desklock.c:1041 src/bin/e_screensaver.c:136
+#, fuzzy
 msgid "Activate Presentation Mode?"
-msgstr ""
+msgstr "Activa més modes presentació?"
 
 #: src/bin/e_desklock.c:1044
 msgid ""
@@ -1015,12 +1046,14 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_desklock.c:1054 src/bin/e_screensaver.c:149
+#, fuzzy
 msgid "No, but increase timeout"
-msgstr ""
+msgstr "No, però augmenten de temps d'espera"
 
 #: src/bin/e_desklock.c:1056 src/bin/e_screensaver.c:151
+#, fuzzy
 msgid "No, and stop asking"
-msgstr ""
+msgstr "No , i deixar de fer"
 
 #: src/bin/e_eap_editor.c:174
 msgid "Incomplete Window Properties"
@@ -1056,8 +1089,9 @@ msgid "Comment"
 msgstr "Comentari"
 
 #: src/bin/e_eap_editor.c:704
+#, fuzzy
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: src/bin/e_eap_editor.c:726 src/bin/e_eap_editor.c:735
 #: src/bin/e_fm_prop.c:394 src/modules/conf_theme/e_int_config_fonts.c:95
@@ -1288,8 +1322,9 @@ msgid "There was no output."
 msgstr "No hi ha sortida"
 
 #: src/bin/e_fm.c:977
+#, fuzzy
 msgid "Nonexistent path"
-msgstr ""
+msgstr "ruta inexistent"
 
 #: src/bin/e_fm.c:980
 #, c-format
@@ -1301,24 +1336,27 @@ msgid "Mount Error"
 msgstr "Error en Montar"
 
 #: src/bin/e_fm.c:3078
+#, fuzzy
 msgid "Can't mount device"
-msgstr ""
+msgstr "No es pot muntar el dispositiu"
 
 #: src/bin/e_fm.c:3094
 msgid "Unmount Error"
 msgstr "Error en Desmontar"
 
 #: src/bin/e_fm.c:3094
+#, fuzzy
 msgid "Can't unmount device"
-msgstr ""
+msgstr "No es pot desmuntar el dispositiu"
 
 #: src/bin/e_fm.c:3109
 msgid "Eject Error"
 msgstr "Error en Extreure"
 
 #: src/bin/e_fm.c:3109
+#, fuzzy
 msgid "Can't eject device"
-msgstr ""
+msgstr "No es pot expulsar el dispositiu"
 
 #: src/bin/e_fm.c:3781
 #, c-format
@@ -1336,7 +1374,7 @@ msgstr "Aborta"
 #: src/bin/e_fm.c:7914 src/bin/e_fm.c:8074
 #, fuzzy
 msgid "Inherit parent settings"
-msgstr "Paràmetres de Configuració "
+msgstr "Heretar configuració de"
 
 #: src/bin/e_fm.c:7923 src/bin/e_fm.c:8083
 #: src/modules/fileman/e_mod_config.c:219
@@ -1369,16 +1407,18 @@ msgid "Rename"
 msgstr "Canvia el Nom"
 
 #: src/bin/e_fm.c:8268
+#, fuzzy
 msgid "Unmount"
-msgstr ""
+msgstr "desmuntar"
 
 #: src/bin/e_fm.c:8273
 msgid "Mount"
 msgstr "Monta"
 
 #: src/bin/e_fm.c:8278
+#, fuzzy
 msgid "Eject"
-msgstr ""
+msgstr "expulsar"
 
 #: src/bin/e_fm.c:8290
 #, fuzzy
@@ -1459,12 +1499,14 @@ msgid "%s"
 msgstr ""
 
 #: src/bin/e_fm.c:9237
+#, fuzzy
 msgid "No to all"
-msgstr ""
+msgstr "No a tot"
 
 #: src/bin/e_fm.c:9239
+#, fuzzy
 msgid "Yes to all"
-msgstr ""
+msgstr "Sí a tots els"
 
 #: src/bin/e_fm.c:9242
 #, fuzzy
@@ -1477,12 +1519,14 @@ msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Fitxer ja existeix, sobrescriure'l ? <br> <hilight> %s</hilight>?"
 
 #: src/bin/e_fm.c:9318
+#, fuzzy
 msgid "Ignore this"
-msgstr ""
+msgstr "no feu cas d'aquest"
 
 #: src/bin/e_fm.c:9319
+#, fuzzy
 msgid "Ignore all"
-msgstr ""
+msgstr "no feu cas de totes les"
 
 #: src/bin/e_fm.c:9324
 #, c-format
@@ -1650,8 +1694,9 @@ msgid "Remove"
 msgstr "Borra"
 
 #: src/bin/e_gadcon.c:2007
+#, fuzzy
 msgid "Stop moving"
-msgstr ""
+msgstr "deixi de moure"
 
 #: src/bin/e_hints.c:152
 #, fuzzy
@@ -1771,7 +1816,7 @@ msgstr "Finestres"
 #: src/bin/e_int_border_menu.c:104 src/bin/e_int_border_menu.c:943
 #, fuzzy
 msgid "Always on Top"
-msgstr "Sempre davant"
+msgstr "Sempre en primer pla"
 
 #: src/bin/e_int_border_menu.c:119 src/bin/e_int_border_menu.c:606
 #: src/bin/e_int_border_prop.c:472
@@ -1807,22 +1852,23 @@ msgstr "Crea Icona"
 #: src/bin/e_int_border_menu.c:464
 #, fuzzy
 msgid "Add to Favorites Menu"
-msgstr "Afegeix a Aplicacions Favorites "
+msgstr "Afegir a Favorits Menú"
 
 #: src/bin/e_int_border_menu.c:469
 #, fuzzy
 msgid "Add to IBar"
-msgstr "Afegeix a Aplicacions Preferents"
+msgstr "Afegir a Ibar"
 
 #: src/bin/e_int_border_menu.c:477
 #, fuzzy
 msgid "Create Keyboard Shortcut"
-msgstr "Teclat i Ratolí "
+msgstr "Crear un accés directe del teclat"
 
 #: src/bin/e_int_border_menu.c:497
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
+#, fuzzy
 msgid "Placement"
-msgstr ""
+msgstr "Col·locació"
 
 #: src/bin/e_int_border_menu.c:519
 msgid "Skip"
@@ -1876,7 +1922,7 @@ msgstr "Sempre Darrera"
 #: src/bin/e_int_border_menu.c:1009
 #, fuzzy
 msgid "Pin to Desktop"
-msgstr "Envia a la Taula de Treball"
+msgstr "Pin en l'Escriptori"
 
 #: src/bin/e_int_border_menu.c:1020
 msgid "Unpin from Desktop"
@@ -1908,13 +1954,13 @@ msgid "Window List"
 msgstr "Llista de Finestres"
 
 #: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2796 src/modules/pager/e_mod_main.c:2803
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2812
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2816
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2820
-#: src/modules/pager/e_mod_main.c:2853 src/modules/pager/e_mod_main.c:2854
-#: src/modules/pager/e_mod_main.c:2855 src/modules/pager/e_mod_main.c:2856
-#: src/modules/pager/e_mod_main.c:2857 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2797 src/modules/pager/e_mod_main.c:2804
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2813
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2817
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2821
+#: src/modules/pager/e_mod_main.c:2854 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2856 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2858 src/modules/pager/e_mod_main.c:2859
 msgid "Pager"
 msgstr "Paginador"
 
@@ -2140,12 +2186,14 @@ msgid "Window type"
 msgstr "Tipus de Finestra"
 
 #: src/bin/e_int_border_remember.c:697
+#, fuzzy
 msgid "wildcard matches are allowed"
-msgstr ""
+msgstr "els partits de comodins estan permesos"
 
 #: src/bin/e_int_border_remember.c:699
+#, fuzzy
 msgid "Transience"
-msgstr " "
+msgstr "transitorietat"
 
 #: src/bin/e_int_border_remember.c:704
 msgid "Properties to remember"
@@ -2170,20 +2218,21 @@ msgstr "Ignora la llista de Finestres"
 #: src/bin/e_int_border_remember.c:750
 #, fuzzy
 msgid "Application file or name (.desktop)"
-msgstr "Error al fer Córrer l'Aplicació"
+msgstr "Sol·licitud d'arxiu o el nom (. De escriptori."
 
 #: src/bin/e_int_border_remember.c:758
 msgid "Match only one window"
 msgstr "﻿Lligua només amb una finestra"
 
 #: src/bin/e_int_border_remember.c:762
+#, fuzzy
 msgid "Always focus on start"
-msgstr ""
+msgstr "Sempre es centren en l'arrencada"
 
 #: src/bin/e_int_border_remember.c:766
 #, fuzzy
 msgid "Keep current properties"
-msgstr "Canvia les Propietats de l'Icona"
+msgstr "Mantenir les propietats actuals"
 
 #: src/bin/e_int_border_remember.c:772
 msgid "Start this program on login"
@@ -2208,8 +2257,9 @@ msgstr "Executa"
 
 #: src/bin/e_int_config_modules.c:57
 #: src/modules/conf_theme/e_int_config_fonts.c:57
+#, fuzzy
 msgid "Core"
-msgstr ""
+msgstr "nucli"
 
 #: src/bin/e_int_config_modules.c:58
 #, fuzzy
@@ -2224,7 +2274,7 @@ msgstr "Mosambic "
 #: src/modules/conf_theme/e_int_config_cursor.c:133
 #: src/modules/ibar/e_mod_main.c:307 src/modules/ibar/e_mod_main.c:787
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:690
-#: src/modules/pager/e_mod_main.c:790 src/modules/temperature/e_mod_main.c:233
+#: src/modules/pager/e_mod_main.c:791 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1323
 #, fuzzy
 msgid "Settings"
@@ -2247,11 +2297,12 @@ msgstr "Mòduls Descarregats "
 #: src/bin/e_int_config_modules.c:307 src/bin/e_int_config_modules.c:591
 #, fuzzy
 msgid "No modules selected."
-msgstr "Locals Seleccionades "
+msgstr "No hi ha mòduls seleccionats."
 
 #: src/bin/e_int_config_modules.c:589
+#, fuzzy
 msgid "More than one module selected."
-msgstr ""
+msgstr "Més d'un mòdul seleccionat."
 
 #: src/bin/e_int_gadcon_config.c:38
 msgid "Shelf Contents"
@@ -2359,7 +2410,7 @@ msgstr "(Sense Aplicacions) "
 #: src/bin/e_int_menus.c:757
 #, fuzzy
 msgid "Set Virtual Desktops"
-msgstr "Taules de Treball Virtuals"
+msgstr "Set de escriptoris virtuals"
 
 #: src/bin/e_int_menus.c:1132 src/bin/e_int_menus.c:1316
 msgid "(No Windows)"
@@ -2408,8 +2459,9 @@ msgid "Height (%3.0f pixels)"
 msgstr "%3.0f pixels"
 
 #: src/bin/e_int_shelf_config.c:182
+#, fuzzy
 msgid "Shrink to Content Width"
-msgstr ""
+msgstr "Reduir fins amplada del contingut"
 
 #: src/bin/e_int_shelf_config.c:193
 #: src/modules/conf_theme/e_int_config_fonts.c:630
@@ -2454,12 +2506,12 @@ msgstr "Auto oculta "
 #: src/bin/e_int_shelf_config.c:238
 #, fuzzy
 msgid "Show on all Desktops"
-msgstr "Mostra la Taula de Treball"
+msgstr "Mostra a tots els ordinadors de sobretaula"
 
 #: src/bin/e_int_shelf_config.c:240
 #, fuzzy
 msgid "Show on specified Desktops"
-msgstr "Mostra la Taula de Treball"
+msgstr "Mostrar en els ordinadors de sobretaula especificats"
 
 #: src/bin/e_ipc.c:46
 #, c-format
@@ -2660,8 +2712,9 @@ msgid "Enlightenment cannot set up its init screen."
 msgstr "Enlightenment no pot carregar aquest tema de sistema."
 
 #: src/bin/e_main.c:541
+#, fuzzy
 msgid "Starting International Support"
-msgstr ""
+msgstr "A partir de Suport Internacional"
 
 #: src/bin/e_main.c:545
 msgid "Enlightenment cannot set up its intl system."
@@ -2706,8 +2759,9 @@ msgid "Enlightenment cannot configure the backlight."
 msgstr "Enlightenment no pot configurar els paràmetres DPMS"
 
 #: src/bin/e_main.c:607
+#, fuzzy
 msgid "Setup DPMS"
-msgstr ""
+msgstr "DPMS d'instal·lació"
 
 #: src/bin/e_main.c:611
 msgid "Enlightenment cannot configure the DPMS settings."
@@ -2724,7 +2778,7 @@ msgstr "Enlightenment no pot configurar el Salva-Pantalles de X"
 #: src/bin/e_main.c:629
 #, fuzzy
 msgid "Setup Powersave Modes"
-msgstr "Recorda"
+msgstr "Configuració dels modes d'estalvi d'energia"
 
 #: src/bin/e_main.c:633
 #, fuzzy
@@ -2741,8 +2795,9 @@ msgid "Enlightenment cannot set up its desk locking system."
 msgstr "Enlightenment no pot bloquejar la pantalla."
 
 #: src/bin/e_main.c:651
+#, fuzzy
 msgid "Setup Popups"
-msgstr ""
+msgstr "popups d'instal·lació"
 
 #: src/bin/e_main.c:655
 msgid "Enlightenment cannot set up its popup system."
@@ -2751,7 +2806,7 @@ msgstr ""
 #: src/bin/e_main.c:665
 #, fuzzy
 msgid "Setup Message Bus"
-msgstr "Missatges"
+msgstr "Configuració de bus de missatges"
 
 #: src/bin/e_main.c:672
 #, fuzzy
@@ -2759,8 +2814,9 @@ msgid "Setup Paths"
 msgstr "Inicia Aplicacions"
 
 #: src/bin/e_main.c:678
+#, fuzzy
 msgid "Setup System Controls"
-msgstr ""
+msgstr "Controls de configuració del sistema"
 
 #: src/bin/e_main.c:682
 #, fuzzy
@@ -2777,8 +2833,9 @@ msgid "Enlightenment cannot set up its actions system."
 msgstr "Enlightenment no pot fer aquestes accions de sistema."
 
 #: src/bin/e_main.c:700
+#, fuzzy
 msgid "Setup Execution System"
-msgstr ""
+msgstr "Configuració del sistema d'execució"
 
 #: src/bin/e_main.c:704
 msgid "Enlightenment cannot set up its exec system."
@@ -2795,24 +2852,27 @@ msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment no pot inicialitzar el Manegador de Fitxers. <br>  "
 
 #: src/bin/e_main.c:726
+#, fuzzy
 msgid "Setup Message System"
-msgstr ""
+msgstr "Configuració del sistema de missatges"
 
 #: src/bin/e_main.c:730
 msgid "Enlightenment cannot set up its msg system."
 msgstr ""
 
 #: src/bin/e_main.c:737
+#, fuzzy
 msgid "Setup DND"
-msgstr ""
+msgstr "configuració NOM"
 
 #: src/bin/e_main.c:741
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 
 #: src/bin/e_main.c:748
+#, fuzzy
 msgid "Setup Grab Input Handling"
-msgstr ""
+msgstr "Grab Configuració de l'entrada manipulació"
 
 #: src/bin/e_main.c:752
 #, fuzzy
@@ -2862,8 +2922,9 @@ msgid "Enlightenment cannot set up its desktop background system."
 msgstr "Enlightenment no pot carregar aquest fons de pantalla d'escriptori"
 
 #: src/bin/e_main.c:814
+#, fuzzy
 msgid "Setup Mouse"
-msgstr ""
+msgstr "configuració del ratolí"
 
 #: src/bin/e_main.c:818
 #, fuzzy
@@ -2909,8 +2970,9 @@ msgid "Enlightenment cannot initialize the Update system.\n"
 msgstr "Enlightenment no pot inicialitzar el sistema d'Ungla.<br>"
 
 #: src/bin/e_main.c:886
+#, fuzzy
 msgid "Setup Desktop Environment"
-msgstr ""
+msgstr "Configuració de l' escriptori"
 
 #: src/bin/e_main.c:890
 #, fuzzy
@@ -2920,7 +2982,7 @@ msgstr "Enlightenment no pot carregar aquest tema de sistema."
 #: src/bin/e_main.c:898
 #, fuzzy
 msgid "Setup File Ordering"
-msgstr "Configura Tecles Ràpides"
+msgstr "Arxiu de configuració de comanda"
 
 #: src/bin/e_main.c:902
 msgid "Enlightenment cannot set up its order file system."
@@ -2935,8 +2997,9 @@ msgid "Configure Shelves"
 msgstr "Configura Lleixes "
 
 #: src/bin/e_main.c:958
+#, fuzzy
 msgid "Almost Done"
-msgstr ""
+msgstr "gairebé Llest"
 
 #: src/bin/e_main.c:1103
 #, fuzzy, c-format
@@ -2987,8 +3050,9 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_main.c:1435
+#, fuzzy, c-format
 msgid "Testing Format Support"
-msgstr ""
+msgstr "Prova de compatibilitat amb formats"
 
 #: src/bin/e_main.c:1439
 #, fuzzy
@@ -3182,13 +3246,15 @@ msgid "Starting"
 msgstr "Arrancant "
 
 #: src/bin/e_sys.c:175
+#, fuzzy
 msgid "Checking System Permissions"
-msgstr ""
+msgstr "Verificació dels permisos del sistema"
 
 #: src/bin/e_sys.c:221 src/bin/e_sys.c:232 src/bin/e_sys.c:241
 #: src/bin/e_sys.c:250
+#, fuzzy
 msgid "System Check Done"
-msgstr ""
+msgstr "Comprovació del sistema Fet"
 
 #: src/bin/e_sys.c:317
 #, fuzzy, c-format
@@ -3236,8 +3302,8 @@ msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
-"Enlightenment s'ha sobrecarregat sortint.<br> No es poden executar altres "
-"accions de <br> sistema fins que no s'hagi sortit"
+"Tancament de sessió.<br>No es pot realitzar un altre sistema<br>accions un "
+"cop en tancar la sessió ha començat."
 
 #: src/bin/e_sys.c:464
 #, fuzzy
@@ -3245,8 +3311,8 @@ msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
 msgstr ""
-"Enlightenment està parant el sistema. <br> No pot executar més accions del "
-"sistema <br> ja que la parada ha estat executada."
+"Apagat.<br>No es pot fer qualsevol altre sistema<br>accions una vegada a la "
+"parada s'ha iniciat."
 
 #: src/bin/e_sys.c:469
 #, fuzzy
@@ -3254,8 +3320,8 @@ msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
 msgstr ""
-"Enlightenment està  re-iniciant el sistema.<br> No es poden executar altres "
-"accions de <br> sistema ja que el sistema s'està  re-iniciant"
+"Restabliment.<br>No es pot fer qualsevol altre sistema<br>accions una vegada "
+"en iniciar el sistema ha començat."
 
 #: src/bin/e_sys.c:474
 #, fuzzy
@@ -3263,8 +3329,8 @@ msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
 msgstr ""
-"Enlightenment està  suspenent el sistema.<br> Fins que la suspensió del "
-"sistema no sigui completa no <br>pot executar altres accions de sistema."
+"Suspendre.<br>Fins suspensió és completa no es pot realitzar qualsevol "
+"acció<br>del sistema."
 
 #: src/bin/e_sys.c:479
 #, fuzzy
@@ -3272,16 +3338,18 @@ msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
 msgstr ""
-"Enlightenment està  hibernant el sistema.<br>No es poden executar altres "
-"accions de sistema <br> fins que l'hibernació sigui completa"
+"Hibernar.<br>No es pot realitzar qualsevol altre sistema<br>accions fins que "
+"aquest s'ha completat."
 
 #: src/bin/e_sys.c:484 src/bin/e_sys.c:521
+#, fuzzy
 msgid "EEK! This should not happen"
-msgstr ""
+msgstr "EEK. Això no hauria de passar"
 
 #: src/bin/e_sys.c:509
+#, fuzzy
 msgid "Power off failed."
-msgstr ""
+msgstr "Apagueu fracassat."
 
 #: src/bin/e_sys.c:512
 msgid "Reset failed."
@@ -3296,8 +3364,9 @@ msgid "Hibernate failed."
 msgstr "Hibernació fallada."
 
 #: src/bin/e_sys.c:581
+#, fuzzy
 msgid "Power off"
-msgstr ""
+msgstr "Apagueu"
 
 #: src/bin/e_sys.c:584
 #, fuzzy
@@ -3335,7 +3404,7 @@ msgstr "Sobre Tema"
 #: src/bin/e_theme.c:36
 #, fuzzy
 msgid "Set As Theme"
-msgstr "Escull un Tema"
+msgstr "Establir com a tema"
 
 #: src/bin/e_toolbar.c:329
 msgid "Stop Moving/Resizing Items"
@@ -3348,7 +3417,7 @@ msgstr "Començar a Moure/Re-dimensionar Elements"
 #: src/bin/e_toolbar.c:344
 #, fuzzy
 msgid "Set Toolbar Contents"
-msgstr "Continguts de la LLeixa"
+msgstr "Establir Contingut de la barra"
 
 #: src/bin/e_utils.c:231 src/modules/conf_intl/e_int_config_imc.c:266
 #: src/modules/conf_intl/e_int_config_imc.c:514
@@ -3437,7 +3506,7 @@ msgstr "Desconegut"
 #: src/bin/e_utils.c:1156
 #, fuzzy
 msgid "Image Import Settings"
-msgstr "Paràmetres"
+msgstr "Configuració de la imatge d'importació"
 
 #: src/bin/e_utils.c:1160
 msgid "Import"
@@ -3445,13 +3514,15 @@ msgstr "Importa"
 
 #: src/bin/e_utils.c:1177
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:169
+#, fuzzy
 msgid "Fill and Stretch Options"
-msgstr ""
+msgstr "Omplir i estirar les opcions"
 
 #: src/bin/e_utils.c:1185
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:172
+#, fuzzy
 msgid "Stretch"
-msgstr ""
+msgstr "estirar"
 
 #: src/bin/e_utils.c:1186
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:177
@@ -3460,13 +3531,15 @@ msgstr "Centre"
 
 #: src/bin/e_utils.c:1188
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:187
+#, fuzzy
 msgid "Within"
-msgstr ""
+msgstr "dins d'"
 
 #: src/bin/e_utils.c:1189
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:192
+#, fuzzy
 msgid "Fill"
-msgstr ""
+msgstr "omplir"
 
 #: src/bin/e_utils.c:1194
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:204
@@ -3596,80 +3669,92 @@ msgstr "Oblidat"
 msgid "Read-Write"
 msgstr "Escriptura-Lectura"
 
-#: src/modules/battery/e_mod_config.c:63
+#: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
 msgstr "Configuració Monitor Bateria"
 
-#: src/modules/battery/e_mod_config.c:132
+#: src/modules/battery/e_mod_config.c:134
 msgid "Show alert when battery is low"
 msgstr "Mostrem una alerta quan la bateria estigui baixa"
 
-#: src/modules/battery/e_mod_config.c:136
+#: src/modules/battery/e_mod_config.c:138
+#, fuzzy
 msgid "Use desktop notifications for alert."
-msgstr ""
+msgstr "Usar les notificacions d'escriptori per a les alertes."
 
-#: src/modules/battery/e_mod_config.c:233
+#: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
 msgstr "Xaqueja cada:"
 
-#: src/modules/battery/e_mod_config.c:235
+#: src/modules/battery/e_mod_config.c:237
 #: src/modules/conf_performance/e_int_config_performance.c:121
 #: src/modules/temperature/e_mod_config.c:233
 #, fuzzy, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f fitxers..."
 
-#: src/modules/battery/e_mod_config.c:239
+#: src/modules/battery/e_mod_config.c:242
+#, fuzzy
+msgid "Suspend when below:"
+msgstr "Suspendre quan estigui per sota:"
+
+#: src/modules/battery/e_mod_config.c:245
 #, fuzzy
 msgid "Hibernate when below:"
-msgstr "Hiberna"
+msgstr "Hivernar quan estigui per sota:"
 
-#: src/modules/battery/e_mod_config.c:241
-#: src/modules/battery/e_mod_config.c:260
+#: src/modules/battery/e_mod_config.c:248
+#, fuzzy
+msgid "Shutdown when below:"
+msgstr "Apagar quan a continuació:"
+
+#: src/modules/battery/e_mod_config.c:251
+#: src/modules/battery/e_mod_config.c:270
 #, fuzzy, c-format
 msgid "%1.0f %%"
 msgstr "%3.0f%%"
 
-#: src/modules/battery/e_mod_config.c:245
+#: src/modules/battery/e_mod_config.c:255
 #, fuzzy
 msgid "Polling"
 msgstr "Text Pla"
 
-#: src/modules/battery/e_mod_config.c:249
+#: src/modules/battery/e_mod_config.c:259
 #, fuzzy
 msgid "Show low battery alert"
-msgstr "Mostrem una alerta quan la bateria estigui baixa"
+msgstr "Mostra alerta de bateria baixa"
 
-#: src/modules/battery/e_mod_config.c:253
+#: src/modules/battery/e_mod_config.c:263
 #, fuzzy
 msgid "Alert when at:"
-msgstr "Avisa'm quan la bateria estigui per sota de :"
+msgstr "Alerta si més no:"
 
-#: src/modules/battery/e_mod_config.c:256
+#: src/modules/battery/e_mod_config.c:266
 #, fuzzy, c-format
 msgid "%1.0f min"
 msgstr "%1.0f minuts"
 
-#: src/modules/battery/e_mod_config.c:264
+#: src/modules/battery/e_mod_config.c:274
+#, fuzzy, c-format
 msgid "Auto dismiss in..."
-msgstr ""
+msgstr "Auto desestimar in .."
 
-#: src/modules/battery/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:279
 #, fuzzy, c-format
 msgid "%1.0f sec"
 msgstr "%1.1f sec"
 
-#: src/modules/battery/e_mod_config.c:276
+#: src/modules/battery/e_mod_config.c:286
 #, fuzzy
 msgid "Alert"
 msgstr "Acceleració"
 
-#: src/modules/battery/e_mod_config.c:282
+#: src/modules/battery/e_mod_config.c:292
 #, fuzzy
 msgid "Auto Detect"
 msgstr "Auto oculta "
 
-#: src/modules/battery/e_mod_config.c:285
+#: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:52
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:23
@@ -3677,25 +3762,27 @@ msgstr "Auto oculta "
 msgid "Internal"
 msgstr "Intern"
 
-#: src/modules/battery/e_mod_config.c:289
+#: src/modules/battery/e_mod_config.c:299
 #: src/modules/temperature/e_mod_config.c:271
+#, fuzzy
 msgid "udev"
-msgstr ""
+msgstr "udev"
 
-#: src/modules/battery/e_mod_config.c:292
+#: src/modules/battery/e_mod_config.c:302
 #, fuzzy
 msgid "Fuzzy Mode"
 msgstr "Inacabat"
 
-#: src/modules/battery/e_mod_config.c:296
+#: src/modules/battery/e_mod_config.c:306
 #, fuzzy
 msgid "HAL"
 msgstr "ALT"
 
-#: src/modules/battery/e_mod_config.c:301
+#: src/modules/battery/e_mod_config.c:311
 #: src/modules/temperature/e_mod_config.c:273
+#, fuzzy
 msgid "Hardware"
-msgstr ""
+msgstr "maquinari"
 
 #: src/modules/battery/e_mod_main.c:148 src/modules/battery/e_mod_main.c:445
 msgid "Battery"
@@ -3704,22 +3791,24 @@ msgstr "Bateria"
 #: src/modules/battery/e_mod_main.c:448 src/modules/battery/e_mod_main.c:480
 #, fuzzy
 msgid "Your battery is low!"
-msgstr "Mostrem una alerta quan la bateria estigui baixa"
+msgstr "La bateria és baix!"
 
 #: src/modules/battery/e_mod_main.c:449 src/modules/battery/e_mod_main.c:482
+#, fuzzy
 msgid "AC power is recommended."
-msgstr ""
+msgstr "Alimentació de CA es recomana."
 
 #: src/modules/battery/e_mod_main.c:557
 msgid "N/A"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:656 src/modules/battery/e_mod_main.c:658
-#: src/modules/battery/e_mod_main.c:665 src/modules/battery/e_mod_main.c:667
+#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:665
+#: src/modules/battery/e_mod_main.c:672 src/modules/battery/e_mod_main.c:674
+#, fuzzy
 msgid "ERROR"
-msgstr ""
+msgstr "ERROR"
 
-#: src/modules/battery/e_mod_main.c:780
+#: src/modules/battery/e_mod_main.c:787
 #, fuzzy
 msgid "Battery Meter"
 msgstr "Bateria"
@@ -3798,7 +3887,7 @@ msgstr "Mòduls"
 #: src/modules/conf/e_mod_main.c:510
 #, fuzzy
 msgid "Configuration Panel Configuration Updated"
-msgstr "Configuració Actualitzada"
+msgstr "Configuració del panell de configuració actualitzat"
 
 #: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_int_config_apps.c:98
@@ -3832,8 +3921,9 @@ msgid "Create Launcher"
 msgstr "Executa"
 
 #: src/modules/conf_applications/e_mod_main.c:25
+#, fuzzy
 msgid "Delete Personal Launchers"
-msgstr ""
+msgstr "Eliminar Llançadors personals"
 
 #: src/modules/conf_applications/e_mod_main.c:45
 #, fuzzy
@@ -3861,7 +3951,7 @@ msgstr "Perfils Autoritzats"
 #: src/modules/wizard/page_020.c:121
 #, fuzzy
 msgid "Select a profile"
-msgstr "Seleccioneu Fitxer Edj"
+msgstr "Seleccioneu un perfil"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:138
 #, fuzzy
@@ -3918,7 +4008,7 @@ msgstr "(No Ha Ha Finestres)"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:120
 #, fuzzy
 msgid "Default Settings Dialogs Mode"
-msgstr "Mode de Diàleg per Defecte"
+msgstr "Configuració per defecte el mode de quadres de diàleg"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:122
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:166
@@ -3931,8 +4021,9 @@ msgid "Advanced Mode"
 msgstr "Mode avançat"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:129
+#, fuzzy
 msgid "Remember size and position of dialogs"
-msgstr ""
+msgstr "Recordeu que la mida i la posició dels quadres de diàleg"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:163
 msgid "Default Dialog Mode"
@@ -4023,12 +4114,14 @@ msgid "Rotation"
 msgstr "Rotació:"
 
 #: src/modules/conf_display/e_int_config_display.c:478
+#, fuzzy
 msgid "Mirroring"
-msgstr ""
+msgstr "reflectint"
 
 #: src/modules/conf_display/e_int_config_display.c:624
+#, fuzzy
 msgid "Missing Features"
-msgstr ""
+msgstr "característiques que falten"
 
 #: src/modules/conf_display/e_int_config_display.c:625
 #, fuzzy
@@ -4046,8 +4139,9 @@ msgstr ""
 "havia suport per XRandr."
 
 #: src/modules/conf_display/e_int_config_display.c:637
+#, fuzzy
 msgid "No Refresh Rates Found"
-msgstr ""
+msgstr "No s'han trobat Taxa de refresc"
 
 #: src/modules/conf_display/e_int_config_display.c:638
 msgid ""
@@ -4059,7 +4153,7 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_desks.c:49
-#: src/modules/pager/e_mod_main.c:801
+#: src/modules/pager/e_mod_main.c:802
 msgid "Virtual Desktops Settings"
 msgstr "Configuració de Taules de Treball Virtuals "
 
@@ -4092,8 +4186,9 @@ msgid "Flip when dragging objects to the screen edge"
 msgstr "Salta quan s'arrastrin objectes a l'extrem de la Pantalla"
 
 #: src/modules/conf_display/e_int_config_desks.c:173
+#, fuzzy
 msgid "Wrap desktops around when flipping"
-msgstr ""
+msgstr "Emboliqui al voltant del llançar ordinadors d'escriptori"
 
 #: src/modules/conf_display/e_int_config_desks.c:179
 msgid "Desktops"
@@ -4150,7 +4245,7 @@ msgstr "Selecciona"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:41
 #, fuzzy
 msgid "Select a Background..."
-msgstr "Fons de Pantalla ..."
+msgstr "Seleccioneu un fons ..."
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
 #: src/modules/conf_intl/e_int_config_imc.c:803
@@ -4170,17 +4265,17 @@ msgstr "Configuració del Bloqueig de Pantalla "
 #: src/modules/conf_display/e_int_config_desklock.c:204
 #, fuzzy
 msgid "Lock on Startup"
-msgstr "Suspendre l'ordinador"
+msgstr "Bloquegeu l'inici"
 
 #: src/modules/conf_display/e_int_config_desklock.c:207
 #, fuzzy
 msgid "Lock on Suspend"
-msgstr "Suspendre l'ordinador"
+msgstr "Bloqueig de suspensió"
 
 #: src/modules/conf_display/e_int_config_desklock.c:211
 #, fuzzy
 msgid "Custom Screenlock Command"
-msgstr "Executa Comanda"
+msgstr "Custom ScreenLock Comando"
 
 #: src/modules/conf_display/e_int_config_desklock.c:215
 #, fuzzy
@@ -4190,12 +4285,12 @@ msgstr "Bloqueix"
 #: src/modules/conf_display/e_int_config_desklock.c:221
 #, fuzzy
 msgid "Show on all screens"
-msgstr "Mostra en totes les zones de pantalla"
+msgstr "Mostra en totes les pantalles"
 
 #: src/modules/conf_display/e_int_config_desklock.c:226
 #, fuzzy
 msgid "Show on current screen"
-msgstr "Mostra en aquesta zona de pantalla"
+msgstr "Mostra a la pantalla actual"
 
 #: src/modules/conf_display/e_int_config_desklock.c:231
 #, fuzzy
@@ -4210,7 +4305,7 @@ msgstr "Paràmetres de Configuració de la Finestra d'Entrada"
 #: src/modules/conf_display/e_int_config_desklock.c:246
 #, fuzzy
 msgid "Lock after X screensaver activates"
-msgstr "Bloqueja quan el salva pantalles estigui activat"
+msgstr "Bloquejar després activar l'estalvi de pantalla."
 
 #: src/modules/conf_display/e_int_config_desklock.c:252
 #: src/modules/conf_display/e_int_config_desklock.c:277
@@ -4244,8 +4339,9 @@ msgstr "Temes"
 
 #: src/modules/conf_display/e_int_config_desklock.c:273
 #: src/modules/conf_display/e_int_config_screensaver.c:190
+#, fuzzy
 msgid "Suggest if deactivated before"
-msgstr ""
+msgstr "Suggerir si es desactiva abans de"
 
 #: src/modules/conf_display/e_int_config_desklock.c:282
 #: src/modules/conf_display/e_int_config_screensaver.c:201
@@ -4282,20 +4378,22 @@ msgstr "Opcions de Salva Pantalles"
 #: src/modules/conf_display/e_int_config_screensaver.c:145
 #, fuzzy
 msgid "Enable X Screensaver"
-msgstr "Autoritza el Salva-pantalla d' X"
+msgstr "Habilitar Screensaver."
 
 #: src/modules/conf_display/e_int_config_screensaver.c:150
 #, fuzzy
 msgid "Suspend on blank"
-msgstr "Suspendre a Disc l'ordinador"
+msgstr "Suspendre en blanc"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:154
+#, fuzzy
 msgid "Even if on power"
-msgstr ""
+msgstr "Fins i tot si el poder"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:158
+#, fuzzy
 msgid "Delay until suspend"
-msgstr ""
+msgstr "Retard fins a la suspensió"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:166
 #, fuzzy
@@ -4308,24 +4406,28 @@ msgid "Initial timeout"
 msgstr "Estat Inicial"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:178
+#, fuzzy
 msgid "Alternation timeout"
-msgstr ""
+msgstr "alternança de temps d'espera"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:206
+#, fuzzy
 msgid "Blanking"
-msgstr ""
+msgstr "blanking"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:211
 msgid "Preferred"
 msgstr "Preferit"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:214
+#, fuzzy
 msgid "Not Preferred"
-msgstr ""
+msgstr "no preferent"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:219
+#, fuzzy
 msgid "Exposure Events"
-msgstr ""
+msgstr "esdeveniments de l'exposició"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:224
 msgid "Allow"
@@ -4352,24 +4454,29 @@ msgid "Enable Display Power Management"
 msgstr "Autoritza Mostrar el Manegador d'Energia"
 
 #: src/modules/conf_display/e_int_config_dpms.c:252
+#, fuzzy
 msgid "Standby time"
-msgstr ""
+msgstr "temps en espera"
 
 #: src/modules/conf_display/e_int_config_dpms.c:264
+#, fuzzy
 msgid "Suspend time"
-msgstr ""
+msgstr "suspendre el temps"
 
 #: src/modules/conf_display/e_int_config_dpms.c:276
+#, fuzzy
 msgid "Off time"
-msgstr ""
+msgstr "temps de desconnexió"
 
 #: src/modules/conf_display/e_int_config_dpms.c:295
+#, fuzzy
 msgid "DPMS"
-msgstr ""
+msgstr "DPMS"
 
 #: src/modules/conf_display/e_int_config_dpms.c:300
+#, fuzzy
 msgid "Normal Backlight"
-msgstr ""
+msgstr "llum de fons normal"
 
 #: src/modules/conf_display/e_int_config_dpms.c:302
 #: src/modules/conf_display/e_int_config_dpms.c:308
@@ -4378,16 +4485,19 @@ msgid "%3.0f"
 msgstr "%3.0f%%"
 
 #: src/modules/conf_display/e_int_config_dpms.c:306
+#, fuzzy, c-format
 msgid "Dim Backlight"
-msgstr ""
+msgstr "Il·luminació tènue"
 
 #: src/modules/conf_display/e_int_config_dpms.c:312
+#, fuzzy
 msgid "Idle Fade Time"
-msgstr ""
+msgstr "Fade Time Idle"
 
 #: src/modules/conf_display/e_int_config_dpms.c:322
+#, fuzzy
 msgid "Fade Time"
-msgstr ""
+msgstr "Fade Time"
 
 #: src/modules/conf_display/e_int_config_dpms.c:328
 #, fuzzy
@@ -4436,7 +4546,7 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
 #, fuzzy
 msgid "Edge Bindings Settings"
-msgstr "Opcions de Key Binding"
+msgstr "Fixacions Edge Configuració"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:253
 #: src/modules/conf_edgebindings/e_mod_main.c:20
@@ -4491,22 +4601,24 @@ msgid "General Options"
 msgstr "Opcions Generals"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#, fuzzy
 msgid "Allow binding activation with fullscreen windows"
-msgstr ""
+msgstr "Permetre l'activació d'unió amb les finestres de pantalla completa"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:840
 #, fuzzy
 msgid "Edge Binding Sequence"
-msgstr "Seqüència de Bindatge de Tecles"
+msgstr "Enquadernació per la vora de seqüència"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:857
+#, fuzzy
 msgid "Clickable edge"
-msgstr ""
+msgstr "Feu clic a la vora"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1172
 #, fuzzy
 msgid "Binding Edge Error"
-msgstr "Error de Bindatge de Tecles"
+msgstr "Error Enquadernació de vora"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1173
 #, fuzzy, c-format
@@ -4564,12 +4676,14 @@ msgid "Thumbscroll"
 msgstr "Ungla"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:97
+#, fuzzy
 msgid "Enable Thumbscroll"
-msgstr ""
+msgstr "habilitar Thumbscroll"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:102
+#, fuzzy
 msgid "Threshold for a thumb drag"
-msgstr ""
+msgstr "Llindar per a un llast per al polze"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:105
 #: src/modules/conf_theme/e_int_config_cursor.c:141
@@ -4578,8 +4692,9 @@ msgid "%1.0f pixels"
 msgstr "%1.0f pixels"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:110
+#, fuzzy
 msgid "Threshold for applying drag momentum"
-msgstr ""
+msgstr "Llindar per a l'aplicació de força d'arrossegament"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:113
 #, fuzzy, c-format
@@ -4587,8 +4702,9 @@ msgid "%1.0f pixels/sec"
 msgstr "%5.0f pixels/seg"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:119
+#, fuzzy, c-format
 msgid "Friction slowdown"
-msgstr ""
+msgstr "la fricció desacceleració"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:122
 #, fuzzy, c-format
@@ -4614,8 +4730,9 @@ msgid "Acceleration"
 msgstr "Acceleració"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:118
+#, fuzzy
 msgid "Threshold"
-msgstr ""
+msgstr "llindar"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 #, fuzzy
@@ -4633,8 +4750,9 @@ msgid "Input Method Settings"
 msgstr "Paràmetres del Mètode d'Entrada"
 
 #: src/modules/conf_intl/e_int_config_imc.c:283
+#, fuzzy
 msgid "Input Method Selector"
-msgstr ""
+msgstr "De mètodes d'entrada de selecció"
 
 #: src/modules/conf_intl/e_int_config_imc.c:286
 #: src/modules/conf_intl/e_int_config_imc.c:874
@@ -4655,8 +4773,9 @@ msgid "Import..."
 msgstr "Importa..."
 
 #: src/modules/conf_intl/e_int_config_imc.c:888
+#, fuzzy
 msgid "Input Method Parameters"
-msgstr ""
+msgstr "Paràmetres de mètodes d'entrada"
 
 #: src/modules/conf_intl/e_int_config_imc.c:898
 msgid "Execute Command"
@@ -4673,12 +4792,13 @@ msgstr "Exporta les Variables d'Entorn"
 #: src/modules/conf_intl/e_int_config_imc_import.c:67
 #, fuzzy
 msgid "Select an Input Method Settings..."
-msgstr "Sel·lecciona una configuració pel mètode d'entrada"
+msgstr "Seleccioneu una configuració de mètodes d'entrada ..."
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:283
 #: src/modules/conf_intl/e_int_config_imc_import.c:299
+#, fuzzy
 msgid "Input Method Config Import Error"
-msgstr ""
+msgstr "Mètode d'entrada de configuració d'error d'importació"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
@@ -4699,8 +4819,9 @@ msgid "Language Settings"
 msgstr "Paràmetres de Llengua"
 
 #: src/modules/conf_intl/e_int_config_intl.c:893
+#, fuzzy
 msgid "Possible Locale problems"
-msgstr ""
+msgstr "Els possibles problemes de configuració regional"
 
 #: src/modules/conf_intl/e_int_config_intl.c:894
 #, c-format
@@ -4746,13 +4867,14 @@ msgstr ""
 "hilight> per avortar."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
+#, fuzzy
 msgid "Single key"
-msgstr ""
+msgstr "una sola tecla"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:110
 #, fuzzy
 msgid "Key Bindings Settings"
-msgstr "Opcions de Key Binding"
+msgstr "Configuració de dreceres de teclat"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:244
 msgid "Key Bindings"
@@ -4785,19 +4907,21 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:112
 #, fuzzy
 msgid "Mouse Bindings Settings"
-msgstr "Configuració del Bindatge del Ratolí"
+msgstr "Fixacions Configuració del ratolí"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:275
 msgid "Mouse Bindings"
 msgstr "Bindatje del Ratolí "
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:315
+#, fuzzy
 msgid "Action Context"
-msgstr ""
+msgstr "acció Context"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:317
+#, fuzzy
 msgid "Any"
-msgstr ""
+msgstr "qualsevol"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:329
 msgid "Win List"
@@ -4805,8 +4929,9 @@ msgstr "Llistat de Finestres"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:333
 #: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:248
+#, fuzzy
 msgid "Popup"
-msgstr ""
+msgstr "popup"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:337
 msgid "Zone"
@@ -4846,8 +4971,9 @@ msgid "Mouse Buttons"
 msgstr "Configuració del Mòdul"
 
 #: src/modules/conf_keybindings/e_mod_main.c:29
+#, fuzzy
 msgid "Hardware Switches"
-msgstr ""
+msgstr "interruptors de maquinari"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -4901,7 +5027,7 @@ msgstr "Afegir Gadget "
 #: src/modules/conf_menus/e_int_config_menus.c:274
 #, fuzzy
 msgid "Show gadget settings in top-level"
-msgstr "Mostra en els Menús"
+msgstr "Mostra la configuració del gadget en nivell superior"
 
 #: src/modules/conf_menus/e_int_config_menus.c:277
 #: src/modules/conf_menus/e_mod_main.c:17
@@ -4935,8 +5061,9 @@ msgid "Autoscroll"
 msgstr "Configuració de l'Auto-scroll"
 
 #: src/modules/conf_menus/e_int_config_menus.c:301
+#, fuzzy
 msgid "Menu Scroll Speed"
-msgstr ""
+msgstr "Menú velocitat de desplaçament"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 #, c-format
@@ -4944,8 +5071,9 @@ msgid "%5.0f pixels/sec"
 msgstr "%5.0f pixels/seg"
 
 #: src/modules/conf_menus/e_int_config_menus.c:306
+#, fuzzy
 msgid "Fast Mouse Move Threshhold"
-msgstr ""
+msgstr "Moure el ratolí ràpid llindar"
 
 #: src/modules/conf_menus/e_int_config_menus.c:308
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:187
@@ -4954,8 +5082,9 @@ msgid "%4.0f pixels/sec"
 msgstr "%4.0f pixels/seg"
 
 #: src/modules/conf_menus/e_int_config_menus.c:311
+#, fuzzy
 msgid "Click Drag Timeout"
-msgstr ""
+msgstr "Feu clic a Temps d'espera de Arrossegament"
 
 #: src/modules/conf_menus/e_int_config_menus.c:313
 #, fuzzy, c-format
@@ -4965,7 +5094,7 @@ msgstr "%1.1f sec"
 #: src/modules/conf_paths/e_int_config_paths.c:59
 #, fuzzy
 msgid "Search Path Settings"
-msgstr "Paràmetres d'Arrancada"
+msgstr "Configuració de cerca de ruta"
 
 #: src/modules/conf_paths/e_int_config_paths.c:70
 msgid "Data"
@@ -5028,23 +5157,29 @@ msgstr "Configuració de la Mida"
 
 #: src/modules/conf_performance/e_int_config_engine.c:87
 #: src/modules/conf_performance/e_int_config_engine.c:109
+#, fuzzy
 msgid "Use ARGB instead of shaped windows"
-msgstr ""
+msgstr "Utilitzeu ARGB en lloc de finestres en forma de"
 
 #: src/modules/conf_performance/e_int_config_engine.c:111
+#, fuzzy
 msgid ""
 "You have chosen to enable ARGB composite support,<br>but your current screen "
 "does not support composite.<br><br>Are you sure you wish to enable ARGB "
 "support ?"
 msgstr ""
+"Vostè ha triat per habilitar el suport ARGB compost ,<br>, però la pantalla "
+"actual no admet compost.<br><br>Segur que voleu activar el suport de ARGB."
 
 #: src/modules/conf_performance/e_int_config_performance.c:35
+#, fuzzy
 msgid "Performance Settings"
-msgstr ""
+msgstr "Configuració de rendiment"
 
 #: src/modules/conf_performance/e_int_config_performance.c:103
+#, fuzzy
 msgid "Framerate"
-msgstr ""
+msgstr "imatges per segon"
 
 #: src/modules/conf_performance/e_int_config_performance.c:105
 #, c-format
@@ -5059,11 +5194,12 @@ msgstr "Error al fer Córrer l'Aplicació"
 #: src/modules/conf_performance/e_int_config_performance.c:119
 #, fuzzy
 msgid "Cache flush interval"
-msgstr "Interval de Refresc"
+msgstr "Interval de neteja de memòria cau"
 
 #: src/modules/conf_performance/e_int_config_performance.c:125
+#, fuzzy
 msgid "Font cache size"
-msgstr ""
+msgstr "Font mida de la memòria cau"
 
 #: src/modules/conf_performance/e_int_config_performance.c:127
 #, c-format
@@ -5071,8 +5207,9 @@ msgid "%1.1f MB"
 msgstr "%1.1f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:131
+#, fuzzy
 msgid "Image cache size"
-msgstr ""
+msgstr "Imatge de mida de la memòria cau"
 
 #: src/modules/conf_performance/e_int_config_performance.c:133
 #, c-format
@@ -5085,8 +5222,9 @@ msgid "Caches"
 msgstr "Cancel·la "
 
 #: src/modules/conf_performance/e_int_config_performance.c:141
+#, fuzzy
 msgid "Number of Edje files to cache"
-msgstr ""
+msgstr "Nombre d'arxius de memòria cau edje"
 
 #: src/modules/conf_performance/e_int_config_performance.c:143
 #, c-format
@@ -5094,8 +5232,9 @@ msgid "%1.0f files"
 msgstr "%1.0f fitxers..."
 
 #: src/modules/conf_performance/e_int_config_performance.c:147
+#, fuzzy
 msgid "Number of Edje collections to cache"
-msgstr ""
+msgstr "Nombre de col·leccions edje de memòria cau"
 
 #: src/modules/conf_performance/e_int_config_performance.c:149
 #, c-format
@@ -5150,12 +5289,14 @@ msgstr "Imatge"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:511
 #: src/modules/conf_theme/e_int_config_wallpaper.c:631
+#, fuzzy
 msgid "Online..."
-msgstr ""
+msgstr "En línia ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:646
+#, fuzzy
 msgid "Where to place the Wallpaper"
-msgstr ""
+msgstr "On col·locar el fons de pantalla"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:647
 msgid "All Desktops"
@@ -5217,12 +5358,14 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:162
+#, fuzzy
 msgid "By"
-msgstr ""
+msgstr "per"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:198
+#, fuzzy
 msgid "Error getting data !"
-msgstr ""
+msgstr "Error en obtenir les dades!"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:233
 #, fuzzy
@@ -5235,16 +5378,19 @@ msgid "Download"
 msgstr "Mòduls Descarregats "
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:254
+#, fuzzy
 msgid "Getting data, please wait..."
-msgstr ""
+msgstr "Obtenció de dades , si us plau esperi ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:266
+#, fuzzy
 msgid "Select a background from the list."
-msgstr ""
+msgstr "Seleccioneu un fons de la llista."
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:281
+#, fuzzy
 msgid "Error: can't start the request."
-msgstr ""
+msgstr "Error , no es pot iniciar la sol·licitud."
 
 #: src/modules/conf_theme/e_int_config_borders.c:30
 #: src/modules/conf_theme/e_int_config_borders.c:201
@@ -5268,7 +5414,7 @@ msgstr "Títol de Vora"
 #: src/modules/conf_theme/e_int_config_color_classes.c:76
 #, fuzzy
 msgid "Border Title Active"
-msgstr "Títol del Menú Actiu"
+msgstr "Frontera de títols activa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:77
 #, fuzzy
@@ -5278,7 +5424,7 @@ msgstr "Estil de Vora"
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
 #, fuzzy
 msgid "Border Frame Active"
-msgstr "Títol del Menú Actiu"
+msgstr "Vora del marc actiu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
 msgid "Error Text"
@@ -5287,7 +5433,7 @@ msgstr "Text d'Error"
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 #, fuzzy
 msgid "Menu Background Base"
-msgstr "Fons de Pantalla"
+msgstr "Menú Base de Antecedents"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:81
 #: src/modules/conf_theme/e_int_config_fonts.c:61
@@ -5300,17 +5446,19 @@ msgstr "Títol del Menú Actiu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:83
 #: src/modules/conf_theme/e_int_config_fonts.c:60
+#, fuzzy
 msgid "Menu Item"
-msgstr ""
+msgstr "element del menú"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:84
+#, fuzzy
 msgid "Menu Item Active"
-msgstr ""
+msgstr "Element de menú actiu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:85
 #, fuzzy
 msgid "Menu Item Disabled"
-msgstr "Comprovació de Text Inhabilitat "
+msgstr "Element de menú Desactivat"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:65
@@ -5323,37 +5471,40 @@ msgid "Resize Text"
 msgstr "Redimenciona Text"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:88
+#, fuzzy
 msgid "Winlist Item"
-msgstr ""
+msgstr "Winlist article"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:89
 #, fuzzy
 msgid "Winlist Item Active"
-msgstr "Títol del Menú Actiu"
+msgstr "Winlist element actiu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:90
+#, fuzzy
 msgid "Winlist Label"
-msgstr ""
+msgstr "Winlist Label"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:91
 #: src/modules/conf_theme/e_int_config_fonts.c:67
+#, fuzzy
 msgid "Winlist Title"
-msgstr ""
+msgstr "Winlist Títol"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:92
 #, fuzzy
 msgid "Dialog Background Base"
-msgstr "Fons de Pantalla"
+msgstr "Base de Antecedents de diàleg"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:93
 #, fuzzy
 msgid "Shelf Background Base"
-msgstr "Fons de Pantalla"
+msgstr "Plataforma Base de Antecedents"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:94
 #, fuzzy
 msgid "File Manager Background Base"
-msgstr "Manegador de Fitxers "
+msgstr "Administrador d'arxius d'antecedents Base"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:99
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:230
@@ -5384,7 +5535,7 @@ msgstr "Entra Text"
 #: src/modules/conf_theme/e_int_config_color_classes.c:105
 #, fuzzy
 msgid "Entry Text Disabled"
-msgstr "Botó de Text Des-habilitat "
+msgstr "Entrada de text discapacitats"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:106
 msgid "Label Text"
@@ -5393,43 +5544,47 @@ msgstr "Text d'Etiqueta"
 #: src/modules/conf_theme/e_int_config_color_classes.c:107
 #, fuzzy
 msgid "List Item Text Selected"
-msgstr "﻿Text d'Element de Llista"
+msgstr "Llista de text element seleccionat"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:108
 #, fuzzy
 msgid "List Item Text (Even)"
-msgstr "﻿Text d'Element de Llista"
+msgstr "Llista de text de l'article (parell)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:109
+#, fuzzy
 msgid "List Item Background Base (Even)"
-msgstr ""
+msgstr "Article de Fons Base (parell)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:110
 #, fuzzy
 msgid "List Item Text (Odd)"
-msgstr "﻿Text d'Element de Llista"
+msgstr "Llista de text de l'article (imparell)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
+#, fuzzy
 msgid "List Item Background Base (Odd)"
-msgstr ""
+msgstr "Article de Fons Base (imparell)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:112
 #, fuzzy
 msgid "List Header Text (Even)"
-msgstr "Capçaleres de Llista"
+msgstr "Llista de text de capçalera (parell)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:113
+#, fuzzy
 msgid "List Header Background Base (Even)"
-msgstr ""
+msgstr "Capçalera de llista Base de fons (parell)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:114
 #, fuzzy
 msgid "List Header Text (Odd)"
-msgstr "Capçaleres de Llista"
+msgstr "Llista de text de capçalera (imparell)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:116
+#, fuzzy
 msgid "List Header Background Base (Odd)"
-msgstr ""
+msgstr "Capçalera de llista Antecedents Base (imparell)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:117
 msgid "Radio Text"
@@ -5440,29 +5595,33 @@ msgid "Radio Text Disabled"
 msgstr "Text de Radio Inhabilitat "
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:119
+#, fuzzy
 msgid "Slider Text"
-msgstr ""
+msgstr "control lliscant de text"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:120
+#, fuzzy
 msgid "Slider Text Disabled"
-msgstr ""
+msgstr "Text lliscant Desactivat"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:121
 #, fuzzy
 msgid "Frame Background Base"
-msgstr "Fons de Pantalla"
+msgstr "Marc Base de Antecedents"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:122
+#, fuzzy
 msgid "Scroller Frame Background Base"
-msgstr ""
+msgstr "Marc scroller Antecedents Base"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:127
 msgid "Module Label"
 msgstr "Etiqueta de Mòdul"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:128
+#, fuzzy
 msgid "Composite Focus-out Color"
-msgstr ""
+msgstr "Compost de Focus - a color"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:161
 #: src/modules/conf_theme/e_mod_main.c:41
@@ -5491,8 +5650,9 @@ msgstr "Configura Tipus de Color"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:286
 #: src/modules/conf_theme/e_int_config_color_classes.c:545
+#, fuzzy
 msgid "No selected color class"
-msgstr ""
+msgstr "No hi ha color seleccionat de classe"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:548
 #, fuzzy
@@ -5515,12 +5675,14 @@ msgid "Shadow:"
 msgstr "Color d'Ombra"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:598
+#, fuzzy
 msgid "Text with applied colors."
-msgstr ""
+msgstr "Text amb els colors aplicats."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:604
+#, fuzzy
 msgid "Colors depend on theme capabilities."
-msgstr ""
+msgstr "Els colors depenen de les característiques del tema."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:853
 msgid "Window Manager"
@@ -5528,8 +5690,9 @@ msgstr "Manegador de Finestra"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:855
 #: src/modules/conf_theme/e_int_config_fonts.c:81
+#, fuzzy
 msgid "Widgets"
-msgstr ""
+msgstr "Ginys"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:861
 #, fuzzy
@@ -5541,16 +5704,19 @@ msgid "Title Bar"
 msgstr "Títol de la Barra"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:62
+#, fuzzy
 msgid "Textblock Plain"
-msgstr ""
+msgstr "Textblock Plain"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:63
+#, fuzzy
 msgid "Textblock Light"
-msgstr ""
+msgstr "Textblock Llum"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:64
+#, fuzzy
 msgid "Textblock Big"
-msgstr ""
+msgstr "Textblock Big"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:68
 #, fuzzy
@@ -5582,8 +5748,9 @@ msgid "Dialog Error"
 msgstr "Error de Diàleg"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:75
+#, fuzzy
 msgid "Exebuf Command"
-msgstr ""
+msgstr "Exebuf Comando"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:76
 msgid "Splash Title"
@@ -5598,16 +5765,18 @@ msgid "Splash Version"
 msgstr "Versió de Splash"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:79
+#, fuzzy
 msgid "Digital Clock"
-msgstr ""
+msgstr "Rellotge Digital"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:82
 msgid "Entry"
 msgstr "Entrada"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:83
+#, fuzzy
 msgid "Frame"
-msgstr ""
+msgstr "marc"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:84
 msgid "Label"
@@ -5618,8 +5787,9 @@ msgid "Buttons"
 msgstr "Botons"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:86
+#, fuzzy
 msgid "Slider"
-msgstr ""
+msgstr "control lliscant"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:87
 msgid "Radio Buttons"
@@ -5646,8 +5816,9 @@ msgid "Filemanager"
 msgstr "Manegador de Fitxers "
 
 #: src/modules/conf_theme/e_int_config_fonts.c:94
+#, fuzzy
 msgid "Typebuf"
-msgstr ""
+msgstr "Typebuf"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:96
 #, fuzzy
@@ -5664,16 +5835,19 @@ msgid "Large"
 msgstr "Gran"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:102
+#, fuzzy
 msgid "Small Styled"
-msgstr ""
+msgstr "petits amb estil"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:103
+#, fuzzy
 msgid "Normal Styled"
-msgstr ""
+msgstr "normal amb estil"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:104
+#, fuzzy
 msgid "Large Styled"
-msgstr ""
+msgstr "estil gran"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:167
 msgid "Font Settings"
@@ -5684,12 +5858,14 @@ msgid "Tiny"
 msgstr "Molt petit"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:270
+#, fuzzy
 msgid "Big"
-msgstr ""
+msgstr "gran"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:276
+#, fuzzy
 msgid "Really Big"
-msgstr ""
+msgstr "realment Gran"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:282
 msgid "Huge"
@@ -5701,12 +5877,14 @@ msgid "%d pixels"
 msgstr "%d pixels"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:427
+#, fuzzy
 msgid "Enable Custom Font Classes"
-msgstr ""
+msgstr "Permeten a les classes personalitzades de font"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:451
+#, fuzzy
 msgid "Basic preview text: 123: 我的天空！"
-msgstr ""
+msgstr "Vista prèvia del text de base; 123;我 的 天空!"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:606
 msgid "Font Classes"
@@ -5721,16 +5899,19 @@ msgid "Font"
 msgstr "Font"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:647
+#, fuzzy
 msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr ""
+msgstr "Text vista prèvia avançada .. 我 真的 会 写 中文"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:655
+#, fuzzy
 msgid "Hinting"
-msgstr ""
+msgstr "donant a entendre"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:658
+#, fuzzy
 msgid "Bytecode"
-msgstr ""
+msgstr "bytecode"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:662
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
@@ -5739,16 +5920,19 @@ msgid "Automatic"
 msgstr "Automàtic"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:671
+#, fuzzy
 msgid "Font Fallbacks"
-msgstr ""
+msgstr "reculades de font"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:672
+#, fuzzy
 msgid "Fallback Name"
-msgstr ""
+msgstr "nom de reserva"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:684
+#, fuzzy
 msgid "Enable Fallbacks"
-msgstr ""
+msgstr "habilitar retrocessos"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:693
 msgid "Hinting / Fallbacks"
@@ -5759,17 +5943,19 @@ msgid "Icon Theme Settings"
 msgstr "Preferències de Tema d'Icona"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:276
+#, fuzzy
 msgid "Enable icon theme"
-msgstr ""
+msgstr "Habilitació del tema d'icones"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:281
 #, fuzzy
 msgid "Use icon theme for applications"
-msgstr "Aplicacions Específiques"
+msgstr "Utilitzeu tema d'icones per a aplicacions"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:285
+#, fuzzy
 msgid "Icons override general theme"
-msgstr ""
+msgstr "Icones reemplaçar tema general"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:38
 msgid "Cursor Settings"
@@ -5781,12 +5967,14 @@ msgid "Show Cursor"
 msgstr "Color d'Ombra"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:150
+#, fuzzy
 msgid "X"
-msgstr ""
+msgstr "X"
 
 #: src/modules/conf_theme/e_int_config_cursor.c:160
+#, fuzzy
 msgid "Idle effects"
-msgstr ""
+msgstr "efectes d'inactivitat"
 
 #: src/modules/conf_theme/e_int_config_scale.c:55
 #, fuzzy
@@ -5794,8 +5982,9 @@ msgid "Scale Settings"
 msgstr "Configuració de Diàlegs"
 
 #: src/modules/conf_theme/e_int_config_scale.c:99
+#, fuzzy
 msgid "Scale with DPI"
-msgstr ""
+msgstr "Escala amb el DIP"
 
 #: src/modules/conf_theme/e_int_config_scale.c:103
 #, fuzzy
@@ -5803,8 +5992,9 @@ msgid "Relative"
 msgstr "Augment"
 
 #: src/modules/conf_theme/e_int_config_scale.c:104
+#, fuzzy
 msgid "Base DPI to scale relative to"
-msgstr ""
+msgstr "Base DPI a escala en relació amb"
 
 #: src/modules/conf_theme/e_int_config_scale.c:107
 #: src/modules/conf_theme/e_int_config_scale.c:182
@@ -5823,8 +6013,9 @@ msgid "Don't Scale"
 msgstr "No Autoritzat"
 
 #: src/modules/conf_theme/e_int_config_scale.c:173
+#, fuzzy
 msgid "Scale relative to screen DPI"
-msgstr ""
+msgstr "Escala relativa a la pantalla de DPI"
 
 #: src/modules/conf_theme/e_int_config_scale.c:178
 #, c-format
@@ -5832,8 +6023,9 @@ msgid "Base DPI (Currently %i DPI)"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_scale.c:186
+#, fuzzy
 msgid "Custom scaling factor"
-msgstr ""
+msgstr "Factor d'escala personalitzada"
 
 #: src/modules/conf_theme/e_int_config_scale.c:189
 #, fuzzy, c-format
@@ -5880,8 +6072,9 @@ msgid "Transition Settings"
 msgstr "Paràmetres de Transició"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:154
+#, fuzzy
 msgid "Events"
-msgstr ""
+msgstr "esdeveniments"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:162
 #: src/modules/conf_theme/e_mod_main.c:62
@@ -5911,8 +6104,9 @@ msgid " Import..."
 msgstr "Importa..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:436
+#, fuzzy
 msgid " Online..."
-msgstr ""
+msgstr " En línia ..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:1011
 msgid "Theme Categories"
@@ -5973,7 +6167,7 @@ msgstr "Apilant"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:36
 #, fuzzy
 msgid "Window List Menu Settings"
-msgstr "Preferències en el Menú Principal "
+msgstr "Finestra Configuració de la llista del menú"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:97
 msgid "Group By"
@@ -5986,7 +6180,7 @@ msgstr "Inclou finestres d'altres pantalles"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:110
 #, fuzzy
 msgid "Seperate Groups By"
-msgstr "Separa Grups Per"
+msgstr "Separar grups per"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:114
 msgid "Using separator bars"
@@ -6006,8 +6200,9 @@ msgid "Alphabetical"
 msgstr "Alfabètic "
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:131
+#, fuzzy
 msgid "Window stacking layer"
-msgstr ""
+msgstr "Finestra d'apilament de capa"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:134
 msgid "Most recently used"
@@ -6031,16 +6226,18 @@ msgid "Separate group"
 msgstr "Grup separat"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:151
+#, fuzzy
 msgid "Warp to owning desktop"
-msgstr ""
+msgstr "Warp a ser amo d'escriptori"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:154
 msgid "Iconified Windows"
 msgstr "Finestres Iconificades"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:158
+#, fuzzy
 msgid "Limit caption length"
-msgstr ""
+msgstr "Límit la longitud del peu de foto"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:161
 #, c-format
@@ -6071,7 +6268,7 @@ msgstr "Mostra Informació"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:140
 #, fuzzy
 msgid "Follows the window"
-msgstr "Tancant la finestra"
+msgstr "Segueix la finestra"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:136
 #, fuzzy
@@ -6099,12 +6296,14 @@ msgid "Border Icon"
 msgstr "Vora"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
+#, fuzzy
 msgid "Smart Placement"
-msgstr ""
+msgstr "la col·locació intel·ligent"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:166
+#, fuzzy
 msgid "Don't hide Gadgets"
-msgstr ""
+msgstr "No t'amaguis Gadgets"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:169
 msgid "Place at mouse pointer"
@@ -6117,7 +6316,7 @@ msgstr "Col·loca manualment amb el ratolí "
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:176
 #, fuzzy
 msgid "Switch to desktop of new window"
-msgstr "Canvia a la Taula de Treball 0"
+msgstr "Canviar a l'escriptori de la nova finestra"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:179
 #, fuzzy
@@ -6134,8 +6333,9 @@ msgid "Linear"
 msgstr "Lineal "
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:201
+#, fuzzy
 msgid "Accelerate, then decelerate"
-msgstr ""
+msgstr "Accelerar , desacelerarlo"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:206
 msgid "Accelerate"
@@ -6156,16 +6356,19 @@ msgid "Pronounced Decelerate"
 msgstr "Desacceleració"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:226
+#, fuzzy
 msgid "Pronounced Acceleratem then decelerate"
-msgstr ""
+msgstr "Es pronuncia Acceleratem desacelerarlo"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:231
+#, fuzzy
 msgid "Bounce"
-msgstr ""
+msgstr "rebotar"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:236
+#, fuzzy
 msgid "Bounce more"
-msgstr ""
+msgstr "Bounce més"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:241
 #, fuzzy
@@ -6177,16 +6380,19 @@ msgid "Focus Settings"
 msgstr "Configuració del Focus"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:189
+#, fuzzy
 msgid "Click Window to Focus"
-msgstr ""
+msgstr "Feu clic a Finestra de Enfocament"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:191
+#, fuzzy
 msgid "Window under the Mouse"
-msgstr ""
+msgstr "Finestra en el marc del ratolí"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:193
+#, fuzzy
 msgid "Most recent Window under the Mouse"
-msgstr ""
+msgstr "Finestra més recent en el ratolí"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:211
 #: src/modules/wizard/page_060.c:34
@@ -6226,37 +6432,41 @@ msgstr "Diàlegs "
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:226
 #, fuzzy
 msgid "Only dialogs with focused parent"
-msgstr "Només els nous diàlegs tenen focus"
+msgstr "Només els quadres de diàleg amb els pares es va centrar"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:235
 msgid "Other Settings"
 msgstr "Altres Configuracions"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:236
+#, fuzzy
 msgid "Always pass click events to programs"
-msgstr ""
+msgstr "Sempre passi , feu clic en els esdeveniments als programes de"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:239
 #, fuzzy
 msgid "Click raises the window"
-msgstr "Tancant la finestra"
+msgstr "Manual planteja la finestra"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:242
 #, fuzzy
 msgid "Click focuses the window"
-msgstr "Tancant la finestra"
+msgstr "Feu clic a la finestra se centra"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:245
+#, fuzzy
 msgid "Refocus last window on desktop switch"
-msgstr ""
+msgstr "Centrar finestra per última vegada l'interruptor d'escriptori"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:248
+#, fuzzy
 msgid "Revert focus when it is lost"
-msgstr ""
+msgstr "Revertir el focus quan es perd"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:258
+#, fuzzy
 msgid "Slide pointer to a new focused window"
-msgstr ""
+msgstr "Feu lliscar el punter a una nova finestra centrada"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:62
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
@@ -6277,7 +6487,7 @@ msgstr "Finestres Internes"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:167
 #, fuzzy
 msgid "Edge of the screen"
-msgstr "Resistència "
+msgstr "Vora de la pantalla"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:176
 #, fuzzy
@@ -6291,7 +6501,7 @@ msgstr "Resistència"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:192
 #, fuzzy
 msgid "Automatically accept changes after:"
-msgstr "Mostra automàticament els continguts"
+msgstr "Automàticament després d'acceptar els canvis:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:197
 #, fuzzy
@@ -6309,17 +6519,19 @@ msgid "Keyboard"
 msgstr "Teclat i Ratolí "
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
+#, fuzzy
 msgid "Limit resize to useful geometry"
-msgstr ""
+msgstr "Límit la mida de la geometria útil"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:216
 #, fuzzy
 msgid "Move after resize"
-msgstr "Autoritzat a ser re-dimensionat"
+msgstr "Moure després de canviar la mida de"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:224
+#, fuzzy
 msgid "Follow Move"
-msgstr ""
+msgstr "Seguiu Moure"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #, fuzzy
@@ -6327,8 +6539,9 @@ msgid "Follow Resize"
 msgstr "Re-dimensiona"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
+#, fuzzy
 msgid "Follow Raise"
-msgstr ""
+msgstr "Seguiu Llevant"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:233
 #, fuzzy
@@ -6336,8 +6549,9 @@ msgid "Follow Lower"
 msgstr "Tancant la finestra"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:236
+#, fuzzy
 msgid "Follow Layer"
-msgstr ""
+msgstr "Seguiu la capa d'"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:239
 #, fuzzy
@@ -6352,27 +6566,30 @@ msgstr "Iconifica"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:246
 #, fuzzy
 msgid "Transients"
-msgstr " "
+msgstr "transitoris"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:44
 #: src/modules/conf_window_manipulation/e_mod_main.c:22
 #, fuzzy
 msgid "Window Maximize Policy"
-msgstr "Colors del Manegador de Finestra"
+msgstr "Maximitzar la finestra Política"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:119
+#, fuzzy
 msgid "Maximize Policy"
-msgstr ""
+msgstr "maximitzar la Política"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:123
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:148
+#, fuzzy
 msgid "Smart expansion"
-msgstr ""
+msgstr "l'expansió intel·ligent"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:127
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:152
+#, fuzzy
 msgid "Fill available space"
-msgstr ""
+msgstr "Omplir l'espai disponible"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:568
@@ -6387,8 +6604,9 @@ msgid "Vertical"
 msgstr "Vertical"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:165
+#, fuzzy
 msgid "Both"
-msgstr ""
+msgstr "Tots dos"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:167
 #, fuzzy
@@ -6396,13 +6614,14 @@ msgid "Direction"
 msgstr "Seleccioneu una Icona"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:180
+#, fuzzy
 msgid "Allow manipulation of maximized windows"
-msgstr ""
+msgstr "Permetre la manipulació de les finestres maximitzades"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:183
 #, fuzzy
 msgid "Adjust windows on shelf hide"
-msgstr "Automàticament finestres de moviment/mida enlleixes d'auto-amagades "
+msgstr "Ajustar les finestres a la pell de la plataforma"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:49
 #: src/modules/conf_window_manipulation/e_mod_main.c:21
@@ -6414,33 +6633,37 @@ msgstr "Apilant"
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:144
 #, fuzzy
 msgid "Raise windows on mouse over"
-msgstr "Modifica la mida de la Finestra quan el ratolí estigui sobre"
+msgstr "Elevar les finestres de punter del ratolí sobre"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:127
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:169
 #, fuzzy
 msgid "Allow windows above fullscreen window"
-msgstr "Mostra les Finestres de Totes les Pantalles"
+msgstr "Permetre que les finestres per sobre de finestra a pantalla completa"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:143
+#, fuzzy
 msgid "Autoraise"
-msgstr ""
+msgstr "Autoraise"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:147
+#, fuzzy
 msgid "Delay before raising:"
-msgstr ""
+msgstr "Retard abans de pujar:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:161
 msgid "Raise Window"
 msgstr "Finestra d'Augment"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:163
+#, fuzzy
 msgid "Raise when starting to move or resize"
-msgstr ""
+msgstr "Llevant quan es comença a moure o canviar la mida de"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_stacking.c:166
+#, fuzzy
 msgid "Raise when clicking to focus"
-msgstr ""
+msgstr "Elevar al fer clic per centrar-"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:19
 #: src/modules/wizard/page_060.c:28
@@ -6450,12 +6673,12 @@ msgstr "Focus de Finestra"
 #: src/modules/conf_window_manipulation/e_mod_main.c:23
 #, fuzzy
 msgid "Window List Menu"
-msgstr "Llista de Finestres"
+msgstr "Menú de la finestra Llista d'"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:24
 #, fuzzy
 msgid "Window Process Management"
-msgstr "Manegament d'Energia"
+msgstr "Finestra de Gestió de Processos"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:33
 #: src/modules/conf_window_remembers/e_mod_main.c:17
@@ -6466,12 +6689,12 @@ msgstr "Recorda la Finestra"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:119
 #, fuzzy
 msgid "Remember internal dialogs"
-msgstr "Recorda aquesta aparença"
+msgstr "Recordeu que els diàlegs interns"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:122
 #, fuzzy
 msgid "Remember file manager windows"
-msgstr "Recorda aquesta aparença"
+msgstr "Recordeu gestor de fitxers de Windows"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:126
 #, fuzzy
@@ -6529,35 +6752,36 @@ msgstr "Freqüència de Cpu"
 #: src/modules/cpufreq/e_mod_main.c:181
 #, fuzzy
 msgid "Fast (4 ticks)"
-msgstr "Ràpida (0.5 seg)"
+msgstr "Ràpida (4 passos)"
 
 #: src/modules/cpufreq/e_mod_main.c:188
 #, fuzzy
 msgid "Medium (8 ticks)"
-msgstr "Mitjana (1 seg)"
+msgstr "Mitjà (8 passos)"
 
 #: src/modules/cpufreq/e_mod_main.c:195
 #, fuzzy
 msgid "Normal (32 ticks)"
-msgstr "Normal (2 seg)"
+msgstr "Normal (32 ticks."
 
 #: src/modules/cpufreq/e_mod_main.c:202
 #, fuzzy
 msgid "Slow (64 ticks)"
-msgstr "Lenta (5 seg)"
+msgstr "Reduïu la velocitat (64 ticks."
 
 #: src/modules/cpufreq/e_mod_main.c:209
 #, fuzzy
 msgid "Very Slow (256 ticks)"
-msgstr "Molt Lenta (30 seg)"
+msgstr "Molt lent (256 ticks."
 
 #: src/modules/cpufreq/e_mod_main.c:225
 msgid "Manual"
 msgstr "Manual"
 
 #: src/modules/cpufreq/e_mod_main.c:229 src/modules/cpufreq/e_mod_main.c:261
+#, fuzzy
 msgid "Lower Power Automatic"
-msgstr ""
+msgstr "Baixa d'energia automàtic"
 
 #: src/modules/cpufreq/e_mod_main.c:231 src/modules/cpufreq/e_mod_main.c:263
 msgid "Minimum Speed"
@@ -6568,8 +6792,9 @@ msgid "Maximum Speed"
 msgstr "Màxima Velocitat"
 
 #: src/modules/cpufreq/e_mod_main.c:244
+#, fuzzy
 msgid "Restore CPU Power Policy"
-msgstr ""
+msgstr "Restaurar Política d'energia de la CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:278
 #, fuzzy
@@ -6587,20 +6812,23 @@ msgid "%i.%i GHz"
 msgstr "%i.%i GHz"
 
 #: src/modules/cpufreq/e_mod_main.c:313
+#, fuzzy
 msgid "Time Between Updates"
-msgstr ""
+msgstr "Temps entre les actualitzacions"
 
 #: src/modules/cpufreq/e_mod_main.c:319
+#, fuzzy
 msgid "Set CPU Power Policy"
-msgstr ""
+msgstr "Establir la política d'energia de la CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:326
 msgid "Set CPU Speed"
 msgstr "Posa la Velocitat de CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:332
+#, fuzzy
 msgid "Powersaving behavior"
-msgstr ""
+msgstr "Powersaving el comportament"
 
 #: src/modules/cpufreq/e_mod_main.c:412
 msgid ""
@@ -6650,8 +6878,9 @@ msgid "Low Quality"
 msgstr "Baixa Qualitat"
 
 #: src/modules/dropshadow/e_mod_config.c:118
+#, fuzzy
 msgid "Blur Type"
-msgstr ""
+msgstr "tipus de Blur"
 
 #: src/modules/dropshadow/e_mod_config.c:121
 msgid "Very Fuzzy"
@@ -6698,8 +6927,9 @@ msgid "Extremely Near"
 msgstr "Extremadament Aprop "
 
 #: src/modules/dropshadow/e_mod_config.c:146
+#, fuzzy
 msgid "Underneath"
-msgstr ""
+msgstr "per sota de"
 
 #: src/modules/dropshadow/e_mod_config.c:150
 msgid "Shadow Darkness"
@@ -6722,8 +6952,9 @@ msgid "Very Light"
 msgstr "Molt Lluminós"
 
 #: src/modules/dropshadow/e_mod_main.c:90
+#, fuzzy
 msgid "Dropshadow"
-msgstr ""
+msgstr "ombra"
 
 #: src/modules/everything/e_mod_main.c:60
 #: src/modules/everything/e_mod_main.c:210
@@ -6734,7 +6965,7 @@ msgstr "Tot"
 #: src/modules/everything/e_mod_main.c:61
 #, fuzzy
 msgid "Show Everything Launcher"
-msgstr "Tot"
+msgstr "Mostra Llançador de Tot"
 
 #: src/modules/everything/e_mod_main.c:75
 #, fuzzy
@@ -6744,7 +6975,7 @@ msgstr "Configuració de Paginació "
 #: src/modules/everything/e_mod_main.c:211
 #, fuzzy
 msgid "Show Everything Dialog"
-msgstr "Per sota de tot"
+msgstr "Mostra quadre de diàleg Tot"
 
 #: src/modules/everything/e_mod_main.c:420
 #, fuzzy
@@ -6793,23 +7024,27 @@ msgstr "Mostra en els Menús"
 #: src/modules/everything/evry_config.c:397
 #, fuzzy
 msgid "Show in top-level"
-msgstr "Mostra en els Menús"
+msgstr "Mostra en el nivell superior"
 
 #: src/modules/everything/evry_config.c:403
+#, fuzzy
 msgid "Minimum characters for search"
-msgstr ""
+msgstr "Caràcters mínims per a la recerca"
 
 #: src/modules/everything/evry_config.c:412
+#, fuzzy
 msgid "Plugin Trigger"
-msgstr ""
+msgstr "plugin de tret"
 
 #: src/modules/everything/evry_config.c:417
+#, fuzzy
 msgid "Search only when triggered"
-msgstr ""
+msgstr "Cerca només quan s'activa"
 
 #: src/modules/everything/evry_config.c:424
+#, fuzzy
 msgid "Plugin View"
-msgstr ""
+msgstr "plugin de Vista"
 
 #: src/modules/everything/evry_config.c:434
 #: src/modules/everything/evry_config.c:462
@@ -6832,8 +7067,9 @@ msgid "Up/Down select next item in icon view"
 msgstr ""
 
 #: src/modules/everything/evry_config.c:483
+#, fuzzy
 msgid "Hide input when inactive"
-msgstr ""
+msgstr "Amaga l'entrada quan està inactiu"
 
 #: src/modules/everything/evry_config.c:488
 #, fuzzy
@@ -6841,16 +7077,19 @@ msgid "Hide list"
 msgstr "Temps d'Amagar"
 
 #: src/modules/everything/evry_config.c:493
+#, fuzzy
 msgid "Quick Navigation"
-msgstr ""
+msgstr "navegació Ràpida"
 
 #: src/modules/everything/evry_config.c:497
+#, fuzzy
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
-msgstr ""
+msgstr "Emacs estil (ALT n , p , f , b , m , i)"
 
 #: src/modules/everything/evry_config.c:499
+#, fuzzy
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
-msgstr ""
+msgstr "Vaig veure l'estil (ALT h , j , k , l, n , p , m , i)"
 
 #: src/modules/everything/evry_config.c:503
 #, fuzzy
@@ -6863,8 +7102,9 @@ msgid "No Sorting"
 msgstr "Arrancant "
 
 #: src/modules/everything/evry_config.c:508
+#, fuzzy
 msgid "By usage"
-msgstr ""
+msgstr "per l'ús de"
 
 #: src/modules/everything/evry_config.c:511
 #, fuzzy
@@ -6877,8 +7117,9 @@ msgid "Last used"
 msgstr "Última Modificació"
 
 #: src/modules/everything/evry_config.c:526
+#, fuzzy
 msgid "Subject Plugins"
-msgstr ""
+msgstr "plugins Assumpte"
 
 #: src/modules/everything/evry_config.c:530
 #, fuzzy
@@ -6931,7 +7172,7 @@ msgstr "%1.2f"
 #: src/modules/everything/evry_config.c:577
 #, fuzzy
 msgid "Edge Popup Size"
-msgstr "Paràmetres de Popups"
+msgstr "Edge emergent Mida"
 
 #: src/modules/everything/evry_config.c:594
 #: src/modules/winlist/e_int_config_winlist.c:286
@@ -6949,8 +7190,9 @@ msgid "Items"
 msgstr "Elements"
 
 #: src/modules/everything/evry_plug_aggregator.c:301
+#, fuzzy
 msgid "No plugins loaded"
-msgstr ""
+msgstr "No hi ha plugins carregats"
 
 #: src/modules/everything/evry_view_help.c:67
 msgid ""
@@ -6990,8 +7232,9 @@ msgid "Terminal Command"
 msgstr "Definició de Comanda"
 
 #: src/modules/everything/evry_plug_apps.c:1276
+#, fuzzy
 msgid "Sudo GUI"
-msgstr ""
+msgstr "sudo interfície gràfica d'usuari"
 
 #: src/modules/everything/evry_plug_apps.c:1354
 #: src/modules/everything/evry_plug_files.c:1585
@@ -7008,22 +7251,22 @@ msgstr "Tot"
 #: src/modules/everything/evry_plug_files.c:1483
 #, fuzzy
 msgid "Show recent files"
-msgstr "Mostra els Fitxers Ocults"
+msgstr "Mostrar tots els fitxers recents"
 
 #: src/modules/everything/evry_plug_files.c:1487
 #, fuzzy
 msgid "Search recent files"
-msgstr "Directoris de Cerca :"
+msgstr "Cercar en els arxius dels últims"
 
 #: src/modules/everything/evry_plug_files.c:1491
 #, fuzzy
 msgid "Search cached files"
-msgstr "Paràmetres d'Arrancada"
+msgstr "Cerca pels arxius emmagatzemats en memòria cau"
 
 #: src/modules/everything/evry_plug_files.c:1495
 #, fuzzy
 msgid "Cache visited directories"
-msgstr "Directoris Definits per L'usuari:"
+msgstr "Memòria cau de directoris visitats"
 
 #: src/modules/everything/evry_plug_files.c:1499
 #, fuzzy
@@ -7048,8 +7291,9 @@ msgid "Basic Info"
 msgstr "Informació Bàsica"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:139
+#, fuzzy
 msgid "Mime:"
-msgstr ""
+msgstr "mim:"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:149
 msgid "Use Generated Thumbnail"
@@ -7074,12 +7318,12 @@ msgstr "Ajusta a Predeterminat"
 #: src/modules/fileman/e_int_config_mime_edit.c:290
 #, fuzzy
 msgid "Select an Edje file"
-msgstr "Seleccioneu Fitxer Edj"
+msgstr "Seleccioneu un arxiu de Edje"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:292
 #, fuzzy
 msgid "Select an image"
-msgstr "Seleccioneu una Imatge"
+msgstr "Seleccioneu una imatge"
 
 #: src/modules/fileman/e_mod_main.c:58 src/modules/fileman/e_mod_main.c:72
 #: src/modules/fileman/e_mod_main.c:160
@@ -7088,8 +7332,9 @@ msgid "File Manager"
 msgstr "Manegador de Fitxers "
 
 #: src/modules/fileman/e_mod_main.c:352
+#, fuzzy
 msgid "Home"
-msgstr ""
+msgstr "casa"
 
 #: src/modules/fileman/e_mod_main.c:376
 #, fuzzy
@@ -7153,12 +7398,14 @@ msgid "View"
 msgstr "Mode Bàsic"
 
 #: src/modules/fileman/e_mod_config.c:247
+#, fuzzy
 msgid "Open Dirs In Place"
-msgstr ""
+msgstr "Dirs oberts en el seu lloc"
 
 #: src/modules/fileman/e_mod_config.c:251
+#, fuzzy
 msgid "Sort Dirs First"
-msgstr ""
+msgstr "Dirs ordenar."
 
 #: src/modules/fileman/e_mod_config.c:254
 #, fuzzy
@@ -7166,26 +7413,29 @@ msgid "Case Sensitive"
 msgstr "Mida Bàsica"
 
 #: src/modules/fileman/e_mod_config.c:258
+#, fuzzy
 msgid "Use Single Click"
-msgstr ""
+msgstr "Utilitza sol clic"
 
 #: src/modules/fileman/e_mod_config.c:261
+#, fuzzy
 msgid "Use Alternate Selection Modifiers"
-msgstr ""
+msgstr "Utilitzar els modificadors d'alternatives de selecció"
 
 #: src/modules/fileman/e_mod_config.c:265
 #, fuzzy
 msgid "Show Icon Extension"
-msgstr "Mostra l'Etiqueta d'Icona"
+msgstr "Mostra icona d'Extensió"
 
 #: src/modules/fileman/e_mod_config.c:268
+#, fuzzy
 msgid "Show Full Path"
-msgstr ""
+msgstr "Mostra el camí complet"
 
 #: src/modules/fileman/e_mod_config.c:271
 #, fuzzy
 msgid "Show Desktop Icons"
-msgstr "Mostra els icones de Taula de Treball"
+msgstr "Mostra icones de l'escriptori"
 
 #: src/modules/fileman/e_mod_config.c:274
 #, fuzzy
@@ -7194,26 +7444,29 @@ msgstr "Color d'Ombra"
 
 #: src/modules/fileman/e_mod_config.c:278
 #: src/modules/gadman/e_mod_gadman.c:801
+#, fuzzy
 msgid "Behavior"
-msgstr ""
+msgstr "comportament"
 
 #: src/modules/fileman/e_mod_config.c:282
 #, fuzzy
 msgid "Show UDisks icons on desktop"
-msgstr "Mostra la Taula de Treball"
+msgstr "Mostra icones a l'escriptori udisks"
 
 #: src/modules/fileman/e_mod_config.c:284
 #, fuzzy
 msgid "Show device icons on desktop"
-msgstr "Mostra la Taula de Treball"
+msgstr "Mostra icones de dispositiu a l'escriptori"
 
 #: src/modules/fileman/e_mod_config.c:288
+#, fuzzy
 msgid "Mount volumes on insert"
-msgstr ""
+msgstr "Muntanya els volums en l'insert"
 
 #: src/modules/fileman/e_mod_config.c:291
+#, fuzzy
 msgid "Open filemanager on mount"
-msgstr ""
+msgstr "Obrir gestor de fitxers a la muntanya"
 
 #: src/modules/fileman/e_mod_config.c:295
 #, fuzzy
@@ -7257,27 +7510,27 @@ msgstr "Executa Comanda"
 
 #: src/modules/fileman/e_fwin.c:2382
 #: src/modules/fileman_opinfo/e_mod_main.c:89
-#, c-format
+#, fuzzy
 msgid "Copying is aborted"
-msgstr ""
+msgstr "La còpia s'avorta"
 
 #: src/modules/fileman/e_fwin.c:2386
 #: src/modules/fileman_opinfo/e_mod_main.c:92
-#, c-format
+#, fuzzy
 msgid "Moving is aborted"
-msgstr ""
+msgstr "Moure s'avorta"
 
 #: src/modules/fileman/e_fwin.c:2390
 #: src/modules/fileman_opinfo/e_mod_main.c:95
-#, c-format
+#, fuzzy
 msgid "Deleting is aborted"
-msgstr ""
+msgstr "Esborrar es cancel·la"
 
 #: src/modules/fileman/e_fwin.c:2394
 #: src/modules/fileman_opinfo/e_mod_main.c:98
-#, c-format
+#, fuzzy
 msgid "Unknown operation from slave is aborted"
-msgstr ""
+msgstr "L'operació desconeguda d'esclau s'avorta"
 
 #: src/modules/fileman/e_fwin.c:2404
 #: src/modules/fileman_opinfo/e_mod_main.c:108
@@ -7350,11 +7603,12 @@ msgstr "Durada de l'ocultació "
 #: src/modules/fileman_opinfo/e_mod_main.c:328
 #, fuzzy
 msgid "Filemanager is idle"
-msgstr "Manegador de Fitxers "
+msgstr "Gestor de fitxers està inactiu"
 
 #: src/modules/fileman_opinfo/e_mod_main.c:415
+#, fuzzy
 msgid "EFM Operation Info"
-msgstr ""
+msgstr "EFM Informació Operació"
 
 #: src/modules/gadman/e_mod_config.c:53
 #, fuzzy
@@ -7418,34 +7672,36 @@ msgstr "Aparença"
 #: src/modules/gadman/e_mod_gadman.c:781
 #, fuzzy
 msgid "Always on desktop"
-msgstr "Sempre davant"
+msgstr "Sempre a l'escriptori"
 
 #: src/modules/gadman/e_mod_gadman.c:791
+#, fuzzy
 msgid "On top pressing"
-msgstr ""
+msgstr "A la part superior pressionant"
 
 #: src/modules/gadman/e_mod_gadman.c:822
 #, fuzzy
 msgid "Add other gadgets"
-msgstr "Afegir Gadget "
+msgstr "Afegir altres gadgets"
 
 #: src/modules/gadman/e_mod_main.c:84 src/modules/gadman/e_mod_main.c:120
 msgid "Show/hide gadgets"
 msgstr ""
 
 #: src/modules/winlist/e_int_config_winlist.c:58
+#, fuzzy
 msgid "Window List Settings"
-msgstr ""
+msgstr "Configuració de la finestra Llista d'"
 
 #: src/modules/winlist/e_int_config_winlist.c:190
 #, fuzzy
 msgid "Windows from other desks"
-msgstr "Mostra les Finestres des de altres escriptoris "
+msgstr "Windows des d'altres taules"
 
 #: src/modules/winlist/e_int_config_winlist.c:193
 #, fuzzy
 msgid "Windows from other screens"
-msgstr "Mostra les Finestres des de altres pantalles"
+msgstr "Windows des d'altres pantalles"
 
 #: src/modules/winlist/e_int_config_winlist.c:196
 #, fuzzy
@@ -7455,28 +7711,32 @@ msgstr "Estat iconificat"
 #: src/modules/winlist/e_int_config_winlist.c:200
 #, fuzzy
 msgid "Iconified from other desks"
-msgstr "Mostra les Finestres Iconificades des de altres escriptoris "
+msgstr "Minimitzat en els escriptoris d'altres"
 
 #: src/modules/winlist/e_int_config_winlist.c:205
 #, fuzzy
 msgid "Iconified from other screens"
-msgstr "Mostra les Finestres Iconificades des de altres pantalles"
+msgstr "Minimitzat des d'altres pantalles"
 
 #: src/modules/winlist/e_int_config_winlist.c:218
+#, fuzzy
 msgid "Uncover"
-msgstr ""
+msgstr "descobrir"
 
 #: src/modules/winlist/e_int_config_winlist.c:220
+#, fuzzy
 msgid "Warp mouse while selecting"
-msgstr ""
+msgstr "Ordit del ratolí mentre que la selecció"
 
 #: src/modules/winlist/e_int_config_winlist.c:224
+#, fuzzy
 msgid "Warp mouse at end"
-msgstr ""
+msgstr "Ordit del ratolí a l'extrem"
 
 #: src/modules/winlist/e_int_config_winlist.c:228
+#, fuzzy
 msgid "Jump to desk"
-msgstr ""
+msgstr "Vés a la taula"
 
 #: src/modules/winlist/e_int_config_winlist.c:230
 #, fuzzy
@@ -7564,27 +7824,27 @@ msgstr "Finestra Prèvia "
 #: src/modules/winlist/e_mod_main.c:40 src/modules/winlist/e_mod_main.c:77
 #, fuzzy
 msgid "Next window of same class"
-msgstr "Nom de Finestra i Classe"
+msgstr "La següent finestra de la mateixa classe"
 
 #: src/modules/winlist/e_mod_main.c:43 src/modules/winlist/e_mod_main.c:75
 #, fuzzy
 msgid "Previous window of same class"
-msgstr "Finestra Prèvia "
+msgstr "Finestra anterior de la mateixa classe"
 
 #: src/modules/winlist/e_mod_main.c:46
 #, fuzzy
 msgid "Next window class"
-msgstr "Nom de Finestra i Classe"
+msgstr "Classe de la finestra següent"
 
 #: src/modules/winlist/e_mod_main.c:49
 #, fuzzy
 msgid "Previous window class"
-msgstr "Finestra Prèvia "
+msgstr "Classe de la finestra anterior"
 
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:78
 #, fuzzy
 msgid "Window on the Left"
-msgstr "Mostra les Finestres des de altres escriptoris "
+msgstr "Finestra de l'esquerra"
 
 #: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:79
 #, fuzzy
@@ -7599,7 +7859,7 @@ msgstr "Tipus de Finestra"
 #: src/modules/winlist/e_mod_main.c:57 src/modules/winlist/e_mod_main.c:81
 #, fuzzy
 msgid "Window on the Right"
-msgstr "Finestra : Llista"
+msgstr "Finestra de la dreta"
 
 #: src/modules/winlist/e_winlist.c:168
 msgid "Select a window"
@@ -7611,8 +7871,9 @@ msgid "IBar Settings"
 msgstr "Paràmetres"
 
 #: src/modules/ibar/e_mod_config.c:98
+#, fuzzy
 msgid "Selected Bar Source"
-msgstr ""
+msgstr "Barra seleccionada Font"
 
 #: src/modules/ibar/e_mod_config.c:119
 msgid "Icon Labels"
@@ -7662,7 +7923,7 @@ msgstr "IBar"
 #: src/modules/ibar/e_mod_main.c:770
 #, fuzzy
 msgid "Create new Icon"
-msgstr "Crea Icona"
+msgstr "Crear nova icona"
 
 #: src/modules/ibar/e_mod_main.c:796
 msgid "Properties"
@@ -7692,7 +7953,7 @@ msgstr "Mostra el Nom de l'Icona "
 #: src/modules/ibox/e_mod_config.c:121
 #, fuzzy
 msgid "Display Border Caption"
-msgstr "Mostra Informació"
+msgstr "Mostra Llegenda Frontera"
 
 #: src/modules/ibox/e_mod_config.c:151
 msgid "Show windows from all screens"
@@ -7725,17 +7986,17 @@ msgstr "Canvia de Taula de Treballi quan el ratolí estigui a l'extrem"
 #: src/modules/pager/e_mod_config.c:130 src/modules/pager/e_mod_config.c:182
 #, fuzzy
 msgid "Show desktop names"
-msgstr "Mostra els icones de Taula de Treball"
+msgstr "Mostra els noms d'escriptori"
 
 #: src/modules/pager/e_mod_config.c:136 src/modules/pager/e_mod_config.c:218
 #, fuzzy
 msgid "Show popup on desktop change"
-msgstr "Mostra l'Indicador de Taula de Treball en canviar"
+msgstr "Mostra finestra emergent en el canvi d'escriptori"
 
 #: src/modules/pager/e_mod_config.c:139
 #, fuzzy
 msgid "Show popup for urgent windows"
-msgstr "Mostra el Popup en una Finestra Urgent"
+msgstr "Mostrar les finestres popup d'urgència"
 
 #: src/modules/pager/e_mod_config.c:185
 msgid "Resistance to dragging"
@@ -7759,18 +8020,19 @@ msgid "Click to set"
 msgstr "Click al conjunt"
 
 #: src/modules/pager/e_mod_config.c:200
+#, fuzzy
 msgid "Drag and Drop button"
-msgstr ""
+msgstr "Arrossegar i deixar anar el botó"
 
 #: src/modules/pager/e_mod_config.c:206
 #, fuzzy
 msgid "Drag whole desktop"
-msgstr "Taula de Treball Virtual"
+msgstr "Arrossegueu tot l'escriptori"
 
 #: src/modules/pager/e_mod_config.c:222
 #, fuzzy
 msgid "Popup pager height"
-msgstr "Velocitat Desplegable"
+msgstr "Popup alçada de localitzador"
 
 #: src/modules/pager/e_mod_config.c:232
 #, fuzzy
@@ -7783,27 +8045,29 @@ msgid "%1.1f seconds"
 msgstr "%1.1f segons"
 
 #: src/modules/pager/e_mod_config.c:243
+#, fuzzy
 msgid "Pager action popup height"
-msgstr ""
+msgstr "Localitzador d'acció emergent d'alçada"
 
 #: src/modules/pager/e_mod_config.c:253
 #, fuzzy
 msgid "Show popup on urgent window"
-msgstr "Mostra el Popup en una Finestra Urgent"
+msgstr "Mostra en la finestra emergent d'urgència"
 
 #: src/modules/pager/e_mod_config.c:257
+#, fuzzy
 msgid "Urgent popup sticks on screen"
-msgstr ""
+msgstr "Urgents pals emergents a la pantalla"
 
 #: src/modules/pager/e_mod_config.c:263
 #, fuzzy
 msgid "Show popup for focused windows"
-msgstr "Mostra el Popup en una Finestra Urgent"
+msgstr "Mostra finestra emergent centrada en les finestres"
 
 #: src/modules/pager/e_mod_config.c:269
 #, fuzzy
 msgid "Urgent popup speed"
-msgstr "Velocitat Desplegable"
+msgstr "Velocitat emergent urgent"
 
 #: src/modules/pager/e_mod_config.c:280
 #, fuzzy
@@ -7817,8 +8081,9 @@ msgid "Button %i"
 msgstr "Botó %i"
 
 #: src/modules/pager/e_mod_config.c:372
+#, fuzzy
 msgid "Pager Button Grab"
-msgstr ""
+msgstr "Localitzador del botó Grab"
 
 #: src/modules/pager/e_mod_config.c:374
 msgid ""
@@ -7840,43 +8105,44 @@ msgid ""
 "already taken by internal<br>code for context menus.<br>This button only "
 "works in the popup."
 msgstr ""
-"No es pot usar el botó dret del ratolí.<br> Aquest botó està  essent usat "
-"per menús de context"
+"No podeu fer servir el botó dret del ratolí a la plataforma<br>per això ja "
+"que està sent utilitzat pel codi<br>intern per als menús contextuals."
+"<br>Aquest botó només funciona en la finestra emergent."
 
-#: src/modules/pager/e_mod_main.c:2803
+#: src/modules/pager/e_mod_main.c:2804
 #, fuzzy
 msgid "Show Pager Popup"
-msgstr "Paràmetres de Popups"
+msgstr "Mostra Pager Popup"
 
-#: src/modules/pager/e_mod_main.c:2810 src/modules/pager/e_mod_main.c:2853
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2854
 #, fuzzy
 msgid "Popup Desk Right"
-msgstr "Salta a la Taula de Treball de la Dreta"
+msgstr "Dret Informació Popup"
 
-#: src/modules/pager/e_mod_main.c:2812 src/modules/pager/e_mod_main.c:2854
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2855
 #, fuzzy
 msgid "Popup Desk Left"
-msgstr "Salta a la Taula de Treball de l'Esquerra"
+msgstr "Informació emergent esquerra"
 
-#: src/modules/pager/e_mod_main.c:2814 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2856
 #, fuzzy
 msgid "Popup Desk Up"
-msgstr "Salta a la Taula de Treball de Dalt"
+msgstr "Informació emergent fins"
 
-#: src/modules/pager/e_mod_main.c:2816 src/modules/pager/e_mod_main.c:2856
+#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2857
 #, fuzzy
 msgid "Popup Desk Down"
-msgstr "Salta a la Taula de Treball de Baix"
+msgstr "Informació emergent de Down"
 
-#: src/modules/pager/e_mod_main.c:2818 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2858
 #, fuzzy
 msgid "Popup Desk Next"
-msgstr "Salta a la Taula de Treball de l'Esquerra"
+msgstr "Informació emergent Següent"
 
-#: src/modules/pager/e_mod_main.c:2820 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2859
 #, fuzzy
 msgid "Popup Desk Previous"
-msgstr "Salta a la Taula de Treball de l'Esquerra"
+msgstr "Informació anterior Popup"
 
 #: src/modules/start/e_mod_main.c:102
 msgid "Start"
@@ -7888,12 +8154,14 @@ msgid "System Control"
 msgstr "Sistema"
 
 #: src/modules/syscon/e_mod_main.c:37
+#, fuzzy
 msgid "Syscon"
-msgstr ""
+msgstr "Syscon"
 
 #: src/modules/syscon/e_mod_main.c:58
+#, fuzzy
 msgid "System Controls"
-msgstr ""
+msgstr "controls del sistema"
 
 #: src/modules/temperature/e_mod_config.c:56
 #, fuzzy
@@ -7975,17 +8243,19 @@ msgid "Profile"
 msgstr "Perfils"
 
 #: src/modules/wizard/page_050.c:128
+#, fuzzy
 msgid "Sizing"
-msgstr ""
+msgstr "aprest"
 
 #: src/modules/wizard/page_050.c:130
 #, fuzzy
 msgid "Select preferred size"
-msgstr "Seleccioneu Fitxer Edj"
+msgstr "Seleccioneu la mida preferit"
 
 #: src/modules/wizard/page_060.c:30
+#, fuzzy
 msgid "Focus by ..."
-msgstr ""
+msgstr "Enfocament de ..."
 
 #: src/modules/wizard/page_060.c:37
 #, fuzzy
@@ -7998,8 +8268,9 @@ msgid "Capture"
 msgstr "Freqüència de Cpu"
 
 #: src/modules/mixer/app_mixer.c:163
+#, fuzzy
 msgid "Playback"
-msgstr ""
+msgstr "reproducció"
 
 #: src/modules/mixer/app_mixer.c:283
 #, fuzzy
@@ -8032,8 +8303,9 @@ msgid "Type:"
 msgstr "Tipus de Fitxer"
 
 #: src/modules/mixer/app_mixer.c:391
+#, fuzzy
 msgid "Left:"
-msgstr ""
+msgstr "A l'esquerra:"
 
 #: src/modules/mixer/app_mixer.c:396
 #, fuzzy
@@ -8041,8 +8313,9 @@ msgid "Right:"
 msgstr "Lluminós"
 
 #: src/modules/mixer/app_mixer.c:401 src/modules/mixer/e_mod_main.c:696
+#, fuzzy
 msgid "Mute"
-msgstr ""
+msgstr "silenci"
 
 #: src/modules/mixer/app_mixer.c:404 src/modules/mixer/conf_gadget.c:194
 #, fuzzy
@@ -8055,16 +8328,19 @@ msgid "Edit"
 msgstr "Surt"
 
 #: src/modules/mixer/conf_gadget.c:200
+#, fuzzy
 msgid "Show both sliders when locked"
-msgstr ""
+msgstr "Mostra els dos lliscadors d'una vegada tancades"
 
 #: src/modules/mixer/conf_gadget.c:205
+#, fuzzy
 msgid "Show Popup on volume change via keybindings"
-msgstr ""
+msgstr "Mostra pop en el canvi de volum a través de dreceres de teclat"
 
 #: src/modules/mixer/conf_gadget.c:316
+#, fuzzy
 msgid "Sound Cards"
-msgstr ""
+msgstr "Targetes de So"
 
 #: src/modules/mixer/conf_gadget.c:377
 #, fuzzy
@@ -8072,12 +8348,14 @@ msgid "Mixer Settings"
 msgstr "Configuració de la Mida"
 
 #: src/modules/mixer/conf_module.c:93
+#, fuzzy
 msgid "Mixer to use for global actions:"
-msgstr ""
+msgstr "Mesclador d'utilitzar per a les accions globals:"
 
 #: src/modules/mixer/conf_module.c:118
+#, fuzzy
 msgid "Diplay desktop notifications on volume change"
-msgstr ""
+msgstr "Diplay notificacions d'escriptori en el canvi de volum"
 
 #: src/modules/mixer/conf_module.c:154
 #, fuzzy
@@ -8087,15 +8365,17 @@ msgstr "Afegir al Llançador"
 #: src/modules/mixer/conf_module.c:189
 #, fuzzy
 msgid "Mixer Module Settings"
-msgstr "Configuració del Mòdul"
+msgstr "La configuració del mesclador del mòdul"
 
 #: src/modules/mixer/e_mod_main.c:54
+#, fuzzy
 msgid "New volume"
-msgstr ""
+msgstr "nou volum"
 
 #: src/modules/mixer/e_mod_main.c:67
+#, fuzzy
 msgid "Mixer"
-msgstr ""
+msgstr "mesclador"
 
 #: src/modules/mixer/e_mod_main.c:67
 #, fuzzy
@@ -8105,7 +8385,7 @@ msgstr "Canvi de Resolució"
 #: src/modules/mixer/e_mod_main.c:187
 #, fuzzy
 msgid "Mixer Settings Updated"
-msgstr "Configuració Actualitzada"
+msgstr "La configuració del mesclador Actualitzat"
 
 #: src/modules/mixer/e_mod_main.c:1334
 #, fuzzy
@@ -8114,20 +8394,24 @@ msgstr "Configuració del Mòdul"
 
 #: src/modules/connman/e_mod_main.c:85 src/modules/connman/e_mod_main.c:112
 #: src/modules/connman/e_mod_main.c:1065 src/modules/connman/e_mod_main.c:1819
+#, fuzzy
 msgid "Cannot toggle system's offline mode."
-msgstr ""
+msgstr "No es pot canviar la manera en línia del sistema."
 
 #: src/modules/connman/e_mod_main.c:96 src/modules/connman/e_mod_main.c:1057
+#, fuzzy
 msgid "ConnMan Daemon is not running."
-msgstr ""
+msgstr "ConnMan dimoni no s'executa."
 
 #: src/modules/connman/e_mod_main.c:103
+#, fuzzy
 msgid "Query system's offline mode."
-msgstr ""
+msgstr "Mode fora de línia sistema de consulta."
 
 #: src/modules/connman/e_mod_main.c:246
+#, fuzzy
 msgid "ConnMan needs your passphrase"
-msgstr ""
+msgstr "ConnMan necessita la teva contrasenya"
 
 #: src/modules/connman/e_mod_main.c:258
 #, c-format
@@ -8137,30 +8421,36 @@ msgid ""
 msgstr ""
 
 #: src/modules/connman/e_mod_main.c:282
+#, fuzzy
 msgid "Show passphrase as clear text"
-msgstr ""
+msgstr "Mostra la contrasenya com a text sense xifrar"
 
 #: src/modules/connman/e_mod_main.c:298
+#, fuzzy
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: src/modules/connman/e_mod_main.c:576 src/modules/connman/e_mod_main.c:589
+#, fuzzy
 msgid "Disconnect from network service."
-msgstr ""
+msgstr "Desconnectar del servei de xarxa."
 
 #: src/modules/connman/e_mod_main.c:634 src/modules/connman/e_mod_main.c:703
 #: src/modules/connman/e_mod_main.c:729
+#, fuzzy
 msgid "Service does not exist anymore"
-msgstr ""
+msgstr "Servei ja no existeix"
 
 #: src/modules/connman/e_mod_main.c:642 src/modules/connman/e_mod_main.c:654
 #: src/modules/connman/e_mod_main.c:682
+#, fuzzy
 msgid "Connect to network service."
-msgstr ""
+msgstr "Connectar a servei de xarxa."
 
 #: src/modules/connman/e_mod_main.c:751
+#, fuzzy
 msgid "Could not set service's passphrase"
-msgstr ""
+msgstr "No s'ha pogut establir el servei de contrasenya"
 
 #: src/modules/connman/e_mod_main.c:1253
 #, fuzzy
@@ -8173,16 +8463,19 @@ msgid "Controls"
 msgstr "Comores"
 
 #: src/modules/connman/e_mod_main.c:1433
+#, fuzzy
 msgid "No ConnMan"
-msgstr ""
+msgstr "no ConnMan"
 
 #: src/modules/connman/e_mod_main.c:1435
+#, fuzzy
 msgid "No ConnMan server found."
-msgstr ""
+msgstr "No hi ha cap servidor ConnMan trobat."
 
 #: src/modules/connman/e_mod_main.c:1448
+#, fuzzy
 msgid "Offline mode: all radios are turned off"
-msgstr ""
+msgstr "El fora de línia , totes les ràdios s'apaguen"
 
 #: src/modules/connman/e_mod_main.c:1473
 #, fuzzy
@@ -8195,8 +8488,9 @@ msgid "Not connected"
 msgstr "Protegit"
 
 #: src/modules/connman/e_mod_main.c:1480 src/modules/connman/e_mod_main.c:1897
+#, fuzzy
 msgid "disconnect"
-msgstr ""
+msgstr "desconnectar"
 
 #: src/modules/connman/e_mod_main.c:1503
 #, fuzzy
@@ -8264,12 +8558,16 @@ msgid "offline"
 msgstr "Parat"
 
 #: src/modules/systray/e_mod_main.c:896
+#, fuzzy
 msgid "Another systray exists"
-msgstr ""
+msgstr "Una altra safata del sistema hi"
 
 #: src/modules/systray/e_mod_main.c:897
+#, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
+"Només pot haver un gadget de la safata del sistema i una altra que ja "
+"existeix."
 
 #: src/modules/systray/e_mod_main.c:905
 #, fuzzy
@@ -8277,8 +8575,9 @@ msgid "Systray Error"
 msgstr "Sistema"
 
 #: src/modules/systray/e_mod_main.c:906
+#, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
-msgstr ""
+msgstr "Systray no pot treballar en un prestatge que es troba per sota de tot."
 
 #: src/modules/systray/e_mod_main.c:1108
 #, fuzzy
