@@ -10,7 +10,7 @@ EAPI E_About *
 e_about_new(E_Container *con)
 {
    E_Obj_Dialog *od;
-   
+
    od = e_obj_dialog_new(con, _("About Enlightenment"), "E", "_about");
    if (!od) return NULL;
    e_obj_dialog_obj_theme_set(od, "base/theme/about", "e/widgets/about/main");
@@ -20,7 +20,7 @@ e_about_new(E_Container *con)
    e_obj_dialog_obj_part_text_set
      (od, "e.textblock.about",
       _(
-	"<title>Copyright &copy; 1999-2011, by the Enlightenment "
+	"<title>Copyright &copy; 1999-2012, by the Enlightenment "
 	"Development Team</><br>"
 	"<br>"
 	"We hope you enjoy using this software as much as we enjoyed "
@@ -36,7 +36,7 @@ e_about_new(E_Container *con)
 	"yet and may have many bugs. You have been <hilight>WARNED!</>"
 	)
       );
-   
+
      {
 	FILE *f;
 	char buf[4096], buf2[4096], *tbuf;
@@ -52,7 +52,7 @@ e_about_new(E_Container *con)
 
 		  len = strlen(buf);
 		  if (len > 0)
-		    {  
+		    {
 		       if (buf[len - 1] == '\n')
 			 {
 			    buf[len - 1] = 0;
