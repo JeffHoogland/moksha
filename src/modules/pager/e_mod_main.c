@@ -391,7 +391,8 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
      {
 	Pager_Win *pw;
 
-	if ((bd->new_client) || ((bd->desk != desk) && (!bd->sticky))) 
+	if ((bd->new_client) || (bd->zone != desk->zone) ||
+	    ((bd->desk != desk) && (!bd->sticky))) 
 	  continue;
 	pw = _pager_window_new(pd, bd);
 	if (pw) pd->wins = eina_list_append(pd->wins, pw);
