@@ -97,16 +97,16 @@ _e_xinerama_update(void)
 	n = ecore_x_xinerama_screen_count_get();
 	if (n < 1)
 	  {
-	     E_Screen *scr;
+	     E_Screen *screen;
 
-	     scr = E_NEW(E_Screen, 1);
-	     scr->screen = 0;
-             scr->escreen = scr->screen;
-	     scr->x = 0;
-	     scr->y = 0;
-	     scr->w = rw;
-	     scr->h = rh;
-	     all_screens = eina_list_append(all_screens, scr);
+	     screen = E_NEW(E_Screen, 1);
+	     screen->screen = 0;
+             screen->escreen = screen->screen;
+	     screen->x = 0;
+	     screen->y = 0;
+	     screen->w = rw;
+	     screen->h = rh;
+	     all_screens = eina_list_append(all_screens, screen);
 	  }
 	else
 	  {
@@ -117,19 +117,19 @@ _e_xinerama_update(void)
 		  /* get each xinerama screen geometry */
 		  if (ecore_x_xinerama_screen_geometry_get(i, &x, &y, &w, &h))
 		    {
-		       E_Screen *scr;
+		       E_Screen *screen;
 
 		       printf("E17 INIT: XINERAMA SCREEN: [%i], %ix%i+%i+%i\n",
 			      i, w, h, x, y);
 		       /* add it to our list */
-		       scr = E_NEW(E_Screen, 1);
-		       scr->screen = i;
-		       scr->escreen = scr->screen;
-		       scr->x = x;
-		       scr->y = y;
-		       scr->w = w;
-		       scr->h = h;
-		       all_screens = eina_list_append(all_screens, scr);
+		       screen = E_NEW(E_Screen, 1);
+		       screen->screen = i;
+		       screen->escreen = screen->screen;
+		       screen->x = x;
+		       screen->y = y;
+		       screen->w = w;
+		       screen->h = h;
+		       all_screens = eina_list_append(all_screens, screen);
 		    }
 	       }
 	  }

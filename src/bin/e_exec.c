@@ -125,12 +125,12 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
 }
 
 EAPI Efreet_Desktop *
-e_exec_startup_id_pid_find(int startup_id, pid_t pid)
+e_exec_startup_id_pid_find(int id, pid_t pid)
 {
    E_Exec_Search search;
 
    search.desktop = NULL;
-   search.startup_id = startup_id;
+   search.startup_id = id;
    search.pid = pid;
    eina_hash_foreach(e_exec_instances, _e_exec_startup_id_pid_find, &search);
    return search.desktop;
@@ -459,8 +459,8 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
 }
 
 static void    
-_e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *event,
-		     Ecore_Exe_Event_Data *error, Ecore_Exe_Event_Data *read)
+_e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *exe_event,
+		     Ecore_Exe_Event_Data *exe_error, Ecore_Exe_Event_Data *exe_read)
 {
    E_Config_Dialog_View *v;
    E_Config_Dialog_Data *cfdata;
@@ -477,9 +477,9 @@ _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_
    cfdata->desktop = desktop;
    if (cfdata->desktop) efreet_desktop_ref(cfdata->desktop);
    if (exec) cfdata->exec = strdup(exec);
-   cfdata->error = error;
-   cfdata->read = read;
-   cfdata->event = *event;
+   cfdata->error = exe_error;
+   cfdata->read = exe_read;
+   cfdata->event = *exe_event;
 
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;

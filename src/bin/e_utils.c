@@ -116,36 +116,36 @@ e_util_zone_current_get(E_Manager *man)
 }
 
 EAPI int
-e_util_glob_match(const char *str, const char *glob)
+e_util_glob_match(const char *str, const char *pattern)
 {
-   if ((!str) || (!glob)) return 0;
-   if (glob[0] == 0)
+   if ((!str) || (!pattern)) return 0;
+   if (pattern[0] == 0)
      {
 	if (str[0] == 0) return 1;
 	return 0;
      }
-   if (!strcmp(glob, "*")) return 1;
-   if (!fnmatch(glob, str, 0)) return 1;
+   if (!strcmp(pattern, "*")) return 1;
+   if (!fnmatch(pattern, str, 0)) return 1;
    return 0;
 }
 
 EAPI int
-e_util_glob_case_match(const char *str, const char *glob)
+e_util_glob_case_match(const char *str, const char *pattern)
 {
    const char *p;
    char *tstr, *tglob, *tp;
 
-   if (glob[0] == 0)
+   if (pattern[0] == 0)
      {
 	if (str[0] == 0) return 1;
 	return 0;
      }
-   if (!strcmp(glob, "*")) return 1;
+   if (!strcmp(pattern, "*")) return 1;
    tstr = alloca(strlen(str) + 1);
    for (tp = tstr, p = str; *p != 0; p++, tp++) *tp = tolower(*p);
    *tp = 0;
-   tglob = alloca(strlen(glob) + 1);
-   for (tp = tglob, p = glob; *p != 0; p++, tp++) *tp = tolower(*p);
+   tglob = alloca(strlen(pattern) + 1);
+   for (tp = tglob, p = pattern; *p != 0; p++, tp++) *tp = tolower(*p);
    *tp = 0;
    if (!fnmatch(tglob, tstr, 0)) return 1;
    return 0;

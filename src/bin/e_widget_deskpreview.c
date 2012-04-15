@@ -180,12 +180,12 @@ _e_wid_reconfigure(E_Widget_Data *wd)
         else sx = wd->cx;
         for (x = sx; x < wd->dx; x++) 
           {
-             Evas_Object *dw;
+             Evas_Object *dp;
 
-             dw = e_widget_deskpreview_desk_add(wd->obj, zone, x, y, mw, mh);
-	     evas_object_size_hint_aspect_set(dw, EVAS_ASPECT_CONTROL_BOTH, zone->w, zone->h);
-             evas_object_table_pack(wd->table, dw, x, y, 1, 1);
-             wd->desks = eina_list_append(wd->desks, dw);
+             dp = e_widget_deskpreview_desk_add(wd->obj, zone, x, y, mw, mh);
+	     evas_object_size_hint_aspect_set(dp, EVAS_ASPECT_CONTROL_BOTH, zone->w, zone->h);
+             evas_object_table_pack(wd->table, dp, x, y, 1, 1);
+             wd->desks = eina_list_append(wd->desks, dp);
           }
      }
 

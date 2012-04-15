@@ -427,13 +427,13 @@ _e_thumb_cb_exe_event_del(void *data __UNUSED__, int type __UNUSED__, void *even
      {
 	while ((int) eina_list_count(_thumbnailers_exe) < _num_thumbnailers)
 	  {
-	     Ecore_Exe *exe;
+	     Ecore_Exe *exe_thumb;
              char buf[4096];
 
 	     snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_thumb --nice=%d", e_prefix_lib_get(),
 		      e_config->thumb_nice);
-	     exe = ecore_exe_run(buf, NULL);
-	     _thumbnailers_exe = eina_list_append(_thumbnailers_exe, exe);
+	     exe_thumb = ecore_exe_run(buf, NULL);
+	     _thumbnailers_exe = eina_list_append(_thumbnailers_exe, exe_thumb);
 	  }
      }
    return ECORE_CALLBACK_PASS_ON;

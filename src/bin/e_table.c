@@ -569,18 +569,18 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
 	     EINA_LIST_FOREACH(sd->items, l, obj)
 	       {
 		  E_Table_Item *ti;
-		  Evas_Coord ww, hh, ow, oh, i;
+		  Evas_Coord ww, hh, ow, oh, idx;
 		  
 		  ti = evas_object_data_get(obj, "e_table_data");
 		  
 		  xx = x;
-		  for (i = 0; i < ti->col; i++) xx += cols[i];
+		  for (idx = 0; idx < ti->col; idx++) xx += cols[idx];
 		  ww = 0;
-		  for (i = ti->col; i < (ti->col + ti->colspan); i++) ww += cols[i];
+		  for (idx = ti->col; idx < (ti->col + ti->colspan); idx++) ww += cols[idx];
 		  yy = y;
-		  for (i = 0; i < ti->row; i++) yy += rows[i];
+		  for (idx = 0; idx < ti->row; idx++) yy += rows[idx];
 		  hh = 0;
-		  for (i = ti->row; i < (ti->row + ti->rowspan); i++) hh += rows[i];
+		  for (idx = ti->row; idx < (ti->row + ti->rowspan); idx++) hh += rows[idx];
 
 		  ow = ti->min.w;
 		  if (ti->fill_w) ow = ww;

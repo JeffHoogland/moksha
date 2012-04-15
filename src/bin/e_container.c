@@ -86,12 +86,12 @@ e_container_new(E_Manager *man)
    if (!getenv("EVAS_RENDER_MODE"))
      {
         int have_comp = 0;
-        Eina_List *l;
+        Eina_List *ll;
         E_Config_Module *em;
         
         // FIXME: major hack. checking in advance for comp. eventully comp
         // will be rolled into e17 core and this won't be needed
-        EINA_LIST_FOREACH(e_config->modules, l, em)
+        EINA_LIST_FOREACH(e_config->modules, ll, em)
           {
              if (!strcmp(em->name, "comp"))
                {
@@ -1174,7 +1174,7 @@ _e_container_resize_handle(E_Container *con)
 	       }
 	     EINA_LIST_FREE(zones, zone)
 	       {
-		  Eina_List *shelves, *ll, *del_shelves;
+		  Eina_List *shelves, *ll2, *del_shelves;
 		  E_Shelf *es;
 		  E_Border_List *bl;
 		  E_Border *bd;
@@ -1182,7 +1182,7 @@ _e_container_resize_handle(E_Container *con)
 		  /* delete any shelves on this zone */
 		  shelves = e_shelf_list();
 		  del_shelves = NULL;
-		  EINA_LIST_FOREACH(shelves, ll, es)
+		  EINA_LIST_FOREACH(shelves, ll2, es)
 		    {
 		       if (es->zone == zone)
 			 del_shelves = eina_list_append(del_shelves, es);
@@ -1207,11 +1207,11 @@ _e_container_resize_handle(E_Container *con)
      }
    else
      {
-	E_Zone *zone;
+	E_Zone *z;
 
-	zone = e_container_zone_number_get(con, 0);
-	e_zone_move_resize(zone, 0, 0, con->w, con->h);
-	e_shelf_zone_move_resize_handle(zone);	
+	z = e_container_zone_number_get(con, 0);
+	e_zone_move_resize(z, 0, 0, con->w, con->h);
+	e_shelf_zone_move_resize_handle(z);	
      }
 
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);

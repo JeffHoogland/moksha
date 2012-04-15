@@ -172,16 +172,16 @@ e_config_init(void)
         if (!_e_config_profile)
 	  {
 	     /* no profile config - try other means */
-	     char *link = NULL;
+	     char *lnk = NULL;
 
 	     /* check symlink - if default is a symlink to another dir */
 	     e_prefix_data_concat_static(buf, "data/config/default");
-	     link = ecore_file_readlink(buf);
+	     lnk = ecore_file_readlink(buf);
 	     /* if so use just the filename as the profile - must be a local link */
-	     if (link)
+	     if (lnk)
 	       {
-		  _e_config_profile = strdup(ecore_file_file_get(link));
-		  free(link);
+		  _e_config_profile = strdup(ecore_file_file_get(lnk));
+		  free(lnk);
 	       }
 	     else
 	       _e_config_profile = strdup("default");

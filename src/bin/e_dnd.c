@@ -1387,15 +1387,15 @@ _e_dnd_cb_event_dnd_selection(void *data __UNUSED__, int type __UNUSED__, void *
    else if (_type_text_x_moz_url == _xdnd->type)
      {
 	/* FIXME: Create a ecore x parser for this type */
-	Ecore_X_Selection_Data *data;
+	Ecore_X_Selection_Data *sdata;
 	Eina_List *l = NULL;
 	char file[PATH_MAX];
 	char *text;
 	int size;
 
-	data = ev->data;
-	text = (char *)data->data;
-	size = MIN(data->length, PATH_MAX - 1);
+	sdata = ev->data;
+	text = (char *)sdata->data;
+	size = MIN(sdata->length, PATH_MAX - 1);
 	/* A moz url _shall_ contain a space */
 	/* FIXME: The data is two-byte unicode. Somewhere it
 	 * is written that the url and the text is separated by

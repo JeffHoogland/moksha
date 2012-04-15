@@ -916,7 +916,7 @@ EAPI void
 e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
    E_Fm2_Smart_Data *sd;
-   const char *realpath;
+   const char *real_path;
 
    if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
@@ -956,10 +956,10 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         sd->config->theme.fixed = EINA_FALSE;
      }
 
-   realpath = _e_fm2_dev_path_map(dev, path);
+   real_path = _e_fm2_dev_path_map(dev, path);
    /* If the path doesn't exist, popup a dialog */
    if (dev && strncmp(dev, "removable:", 10)
-       && !ecore_file_exists(realpath))
+       && !ecore_file_exists(real_path))
      {
         E_Manager *man;
         E_Container *con;
@@ -977,7 +977,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         e_dialog_title_set(dialog, _("Nonexistent path"));
         e_dialog_icon_set(dialog, "dialog-error", 64);
 
-        snprintf(text, sizeof(text), _("%s doesn't exist."), realpath);
+        snprintf(text, sizeof(text), _("%s doesn't exist."), real_path);
 
         e_dialog_text_set(dialog, text);
         e_win_centered_set(dialog->win, 1);
@@ -991,7 +991,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    eina_stringshare_replace(&sd->dev, dev);
    eina_stringshare_replace(&sd->path, path);
    eina_stringshare_del(sd->realpath);
-   sd->realpath = realpath;
+   sd->realpath = real_path;
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
    _e_fm2_icons_free(obj);
@@ -1445,7 +1445,7 @@ e_fm2_all_list_get(Evas_Object *obj)
 }
 
 EAPI void
-e_fm2_select_set(Evas_Object *obj, const char *file, int select)
+e_fm2_select_set(Evas_Object *obj, const char *file, int select_)
 {
    E_Fm2_Smart_Data *sd;
    Eina_List *l;
@@ -1460,7 +1460,7 @@ e_fm2_select_set(Evas_Object *obj, const char *file, int select)
      {
         if ((file) && (!strcmp(ic->info.file, file)))
           {
-             if (select) _e_fm2_icon_select(ic);
+             if (select_) _e_fm2_icon_select(ic);
              else _e_fm2_icon_deselect(ic);
           }
         else
@@ -3267,12 +3267,12 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
               */
              if (custom_desktop_dir)
                {
-                 size_t len;
+                 size_t length;
 
                  custom_desktop_dir = e_util_shell_env_path_eval(custom_desktop_dir);
-                 len = strlen(custom_desktop_dir);
+                 length = strlen(custom_desktop_dir);
 
-                 if (len >= sizeof(buf))
+                 if (length >= sizeof(buf))
                    {
                       free(custom_desktop_dir);
                       return NULL;
@@ -3282,13 +3282,13 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
 
                  if (strcmp(path, "/"))
                    {
-                      if (len + 1 + strlen(path) >= sizeof(buf))
+                      if (length + 1 + strlen(path) >= sizeof(buf))
                         {
                            free(custom_desktop_dir);
                            return NULL;
                         }
-                      buf[len++] = '-';
-                      strncpy(buf + len, path, sizeof(buf) - len);
+                      buf[length++] = '-';
+                      strncpy(buf + length, path, sizeof(buf) - length);
                    }
                    free(custom_desktop_dir);
                }
@@ -3496,16 +3496,16 @@ _e_fm2_buffer_fill(Evas_Object *obj)
    Eina_List *sel;
    char buf[PATH_MAX], *pfile;
    int bufused, buffree;
-   const char *realpath;
+   const char *real_path;
    const E_Fm2_Icon_Info *ici;
 
    sel = e_fm2_selected_list_get(obj);
    if (!sel) return EINA_FALSE;
 
-   realpath = e_fm2_real_path_get(obj);
-   if (!realpath) return EINA_FALSE;
+   real_path = e_fm2_real_path_get(obj);
+   if (!real_path) return EINA_FALSE;
 
-   bufused = eina_strlcpy(buf, realpath, sizeof(buf));
+   bufused = eina_strlcpy(buf, real_path, sizeof(buf));
    if (bufused >= (int)sizeof(buf) - 2) return EINA_FALSE;
 
    if ((bufused > 0) && (buf[bufused - 1] != '/'))
@@ -6769,7 +6769,7 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
              E_Drag *d;
              Evas_Object *o, *o2;
              Evas_Coord x, y, w, h;
-             const char *drag_types[] = { "text/uri-list" }, *realpath;
+             const char *drag_types[] = { "text/uri-list" }, *real_path;
              char buf[PATH_MAX + 8], *p, *sel = NULL;
              E_Container *con = NULL;
              Eina_List *sl;
@@ -6808,8 +6808,8 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
              if (ic->obj_icon) evas_object_hide(ic->obj_icon);
              ic->drag.start = EINA_FALSE;
              evas_object_geometry_get(ic->obj, &x, &y, &w, &h);
-             realpath = e_fm2_real_path_get(ic->sd->obj);
-             p_offset = eina_strlcpy(buf, realpath, sizeof(buf));
+             real_path = e_fm2_real_path_get(ic->sd->obj);
+             p_offset = eina_strlcpy(buf, real_path, sizeof(buf));
              if ((p_offset < 1) || (p_offset >= (int)sizeof(buf) - 2)) return;
              if (buf[p_offset - 1] != '/')
                {

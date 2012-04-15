@@ -417,7 +417,7 @@ _e_thumb_generate(E_Thumb *eth)
                                  if (data)
                                    {
                                       unsigned int *data3;
-                                      unsigned char id[(21 * 4) + 1];
+                                      unsigned char id2[(21 * 4) + 1];
                                       int n, i;
                                       int hi, si, vi;
                                       float h, s, v;
@@ -448,11 +448,11 @@ _e_thumb_generate(E_Thumb *eth)
   vi = 20 * v;                                         \
   if (si < 2) hi = 25;
 #define SAVEHSV(h, s, v) \
-  id[n++] = 'a' + h;     \
-  id[n++] = 'a' + v;     \
-  id[n++] = 'a' + s;
+  id2[n++] = 'a' + h;     \
+  id2[n++] = 'a' + v;     \
+  id2[n++] = 'a' + s;
 #define SAVEX(x) \
-  id[n++] = 'a' + x;
+  id2[n++] = 'a' + x;
 #if 0
                                       HSV(data3[0]);
                                       SAVEHSV(hi, si, vi);
@@ -504,8 +504,8 @@ _e_thumb_generate(E_Thumb *eth)
                                            SAVEX(si);
                                         }
 #endif
-                                      id[n++] = 0;
-                                      eet_write(ef, "/thumbnail/sort_id", id, n, 1);
+                                      id2[n++] = 0;
+                                      eet_write(ef, "/thumbnail/sort_id", id2, n, 1);
                                       free(data3);
                                    }
                                  free(data2);

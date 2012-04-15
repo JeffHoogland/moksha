@@ -198,24 +198,24 @@ e_fm2_mime_handler_mime_add(E_Fm2_Mime_Handler *handler, const char *mime)
 
 /* associate a certain glob with a handler */
 EAPI Eina_Bool
-e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob)
+e_fm2_mime_handler_glob_add(E_Fm2_Mime_Handler *handler, const char *glob_)
 {
    Eina_List *handlers = NULL;
 
-   if ((!handler) || (!glob)) return 0;
+   if ((!handler) || (!glob_)) return 0;
 
    /* if there's an entry for this glob already, then append to its list */
-   if ((handlers = eina_hash_find(_glob_handlers, glob)))
+   if ((handlers = eina_hash_find(_glob_handlers, glob_)))
      {
 	handlers = eina_list_append(handlers, handler);
-	eina_hash_modify(_glob_handlers, glob, handlers);
+	eina_hash_modify(_glob_handlers, glob_, handlers);
      }
    else
      {
 	/* no previous entry for this glob, lets add one */
 	handlers = eina_list_append(handlers, handler);
 	if (!_glob_handlers) _glob_handlers = eina_hash_string_superfast_new(NULL);
-	eina_hash_add(_glob_handlers, glob, handlers);
+	eina_hash_add(_glob_handlers, glob_, handlers);
      }
 
    return 1;
@@ -249,21 +249,21 @@ e_fm2_mime_handler_mime_del(E_Fm2_Mime_Handler *handler, const char *mime)
 
 /* delete a certain handler for a certain glob */
 EAPI void
-e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob)
+e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob_)
 {
    Eina_List *handlers = NULL;
 
-   if ((!handler) || (!glob)) return;
+   if ((!handler) || (!glob_)) return;
 
    /* if there's an entry for this glob already, then remove from list */
-   if ((handlers = eina_hash_find(_glob_handlers, glob)))
+   if ((handlers = eina_hash_find(_glob_handlers, glob_)))
      {
 	handlers = eina_list_remove(handlers, handler);
 	if (handlers)
-	  eina_hash_modify(_glob_handlers, glob, handlers);
+	  eina_hash_modify(_glob_handlers, glob_, handlers);
 	else
 	  {
-	    eina_hash_del(_glob_handlers, glob, handlers);
+	    eina_hash_del(_glob_handlers, glob_, handlers);
 	    if (!eina_hash_population(_glob_handlers))
 	      {
 		eina_hash_free(_glob_handlers);
@@ -285,16 +285,16 @@ e_fm2_mime_handler_mime_handlers_get(const char *mime)
 /* get the list of glob handlers for a glob.
  NOTE: the list should be free()'ed */
 EAPI Eina_List *
-e_fm2_mime_handler_glob_handlers_get(const char *glob)
+e_fm2_mime_handler_glob_handlers_get(const char *glob_)
 {
    E_Fm2_Mime_Handler_Tuple *tuple = NULL;
    Eina_List *handlers = NULL;
 
-   if ((!glob) || (!_glob_handlers)) return NULL;
+   if ((!glob_) || (!_glob_handlers)) return NULL;
 
    tuple = E_NEW(E_Fm2_Mime_Handler_Tuple, 1);
    tuple->list = NULL;
-   tuple->str = glob;
+   tuple->str = glob_;
    eina_hash_foreach(_glob_handlers, _e_fm2_mime_handler_glob_match_foreach, tuple);
    handlers = tuple->list;
    E_FREE(tuple);
@@ -346,15 +346,15 @@ e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, co
 
 /* call all handlers related to a certain glob */
 EAPI void
-e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, const char *glob)
+e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, const char *glob_)
 {
    Eina_List *handlers = NULL;
    Eina_List *l = NULL;
    E_Fm2_Mime_Handler *handler = NULL;
 
-   if ((!obj) || (!path) || (!glob)) return;
+   if ((!obj) || (!path) || (!glob_)) return;
 
-   handlers = e_fm2_mime_handler_glob_handlers_get(glob);
+   handlers = e_fm2_mime_handler_glob_handlers_get(glob_);
    if (!handlers) return;
 
    EINA_LIST_FOREACH(handlers, l, handler)

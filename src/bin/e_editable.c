@@ -672,7 +672,7 @@ e_editable_unselect_all(Evas_Object *editable)
  * Selects the word at the provided character index
  */
 EAPI void
-e_editable_select_word(Evas_Object *editable, int index)
+e_editable_select_word(Evas_Object *editable, int idx)
 {
    E_Editable_Smart_Data *sd;
    int spos = 0, epos = -1, i = 0, pos = 0;
@@ -680,14 +680,14 @@ e_editable_select_word(Evas_Object *editable, int index)
    if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERRNR();
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return;
-   if ((index < 0) || (index >= sd->unicode_length)) return;
+   if ((idx < 0) || (idx >= sd->unicode_length)) return;
 
    while (i < sd->char_length)
      {
 	if (sd->text[i] == ' ')
 	  {
-	     if (pos < index) spos = pos + 1;
-	     else if (pos > index)
+	     if (pos < idx) spos = pos + 1;
+	     else if (pos > idx)
 	       {
 		  epos = pos;
 		  break;
@@ -758,7 +758,7 @@ e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y
    Evas_Coord tx, ty, tw, th;
    Evas_Coord cx, cw;
    Evas_Coord canvas_x, canvas_y;
-   int index, pos, i, j;
+   int idx, pos, i, j;
    const char *text;
 
    if (evas_object_smart_smart_get(editable) != _e_editable_smart) SMARTERR(0);
@@ -778,18 +778,18 @@ e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y
      pos = sd->unicode_length;
    else
      {
-        index = evas_object_text_char_coords_get(text_obj,
+        idx = evas_object_text_char_coords_get(text_obj,
                                                  canvas_x - tx, canvas_y - ty,
                                                  &cx, NULL, &cw, NULL);
         text = evas_object_text_text_get(text_obj);
-        if ((index >= 0) && (text))
+        if ((idx >= 0) && (text))
           {
-             if ((canvas_x - tx) > (cx + (cw / 2))) index++;
+             if ((canvas_x - tx) > (cx + (cw / 2))) idx++;
 
              i = 0;
              j = -1;
              pos = 0;
-             while ((i < index) && (j != i))
+             while ((i < idx) && (j != i))
                {
                   pos++;
                   j = i;
@@ -887,7 +887,7 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
    E_Editable_Smart_Data *sd;
    int char_length = -1, unicode_length = -1;
    int prev_char_length, new_char_length, new_unicode_length;
-   int index = 0, i = 0;
+   int idx = 0, i = 0;
 
    if ((!editable) || (!(sd = evas_object_smart_data_get(editable))))
      return 0;
@@ -904,7 +904,7 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
      }
 
    for (i = 0; i < pos; i++)
-     index = evas_string_char_next_get(sd->text, index, NULL);
+     idx = evas_string_char_next_get(sd->text, idx, NULL);
 
    if ((unicode_length <= 0) || (char_length <= 0)) return 0;
 
@@ -947,9 +947,9 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
    sd->unicode_length = new_unicode_length;
    sd->char_length = new_char_length;
 
-   if (prev_char_length > index)
-     memmove(&sd->text[index + char_length], &sd->text[index], prev_char_length - index);
-   strncpy(&sd->text[index], text, char_length);
+   if (prev_char_length > idx)
+     memmove(&sd->text[idx + char_length], &sd->text[idx], prev_char_length - idx);
+   strncpy(&sd->text[idx], text, char_length);
    sd->text[sd->char_length] = '\0';
 
    _e_editable_text_update(editable);
@@ -1143,7 +1143,7 @@ _e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_
    const Evas_Object *text_obj;
    const char *text;
    Evas_Coord x, w;
-   int index = 0, i, last_pos, ret;
+   int idx = 0, i, last_pos, ret;
 
    if (cx) *cx = 0;
    if (cy) *cy = 0;
@@ -1172,9 +1172,9 @@ _e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_
           last_pos = 0;
 
         for (i = 0; i < utf_pos; i++)
-          index = evas_string_char_next_get(text, index, NULL);
+          idx = evas_string_char_next_get(text, idx, NULL);
 
-        ret = evas_object_text_char_pos_get(text_obj, index, &x, cy, &w, ch);
+        ret = evas_object_text_char_pos_get(text_obj, idx, &x, cy, &w, ch);
         if (cx) *cx = x - 1 + (last_pos ? w : 0);
         if (cw) *cw = last_pos ? 1 : w;
         return ret;

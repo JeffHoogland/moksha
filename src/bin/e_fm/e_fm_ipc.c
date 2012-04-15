@@ -647,7 +647,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 	  {
 	     Eina_List *l;
 	     E_Dir *ed;
-	     double stime;
+	     double sync_time;
 
 	     EINA_LIST_FOREACH(_e_dirs, l, ed)
 	       {
@@ -655,13 +655,13 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 		    {
 		       if (ed->sync == e->response)
 			 {
-			    stime = ecore_time_get() - ed->sync_time;
+			    sync_time = ecore_time_get() - ed->sync_time;
 			    /* try keep round trips to round trip tolerance */
 			    if
-			      (stime < (DEF_ROUND_TRIP - DEF_ROUND_TRIP_TOLERANCE))
+			      (sync_time < (DEF_ROUND_TRIP - DEF_ROUND_TRIP_TOLERANCE))
 			      ed->sync_num += 1;
 			    else if
-			      (stime > (DEF_ROUND_TRIP + DEF_ROUND_TRIP_TOLERANCE))
+			      (sync_time > (DEF_ROUND_TRIP + DEF_ROUND_TRIP_TOLERANCE))
 			      ed->sync_num -= 1;
 			    /* always sync at least 1 file */
 			    if (ed->sync_num < 1) ed->sync_num = 1;

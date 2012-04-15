@@ -15,7 +15,7 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
 {
    unsigned int digest[5], word[80], wa, wb, wc, wd, we, t;
    unsigned char buf[64], *d;
-   int index, left, i;
+   int idx, left, i;
    const unsigned int magic[4] = 
      {
         0x5a827999,
@@ -24,7 +24,7 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
 	  0xca62c1d6
      };
    
-   index = 0;
+   idx = 0;
    digest[0] = 0x67452301;
    digest[1] = 0xefcdab89;
    digest[2] = 0x98badcfe;
@@ -34,7 +34,7 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
    memset(buf, 0, sizeof(buf));
    for (left = size, d = data; left > 0; left--, d++)
      {
-	if ((index == 0) && (left < 64))
+	if ((idx == 0) && (left < 64))
 	  {
 	     memset(buf, 0, 60);
 	     buf[60] = (size >> 24) & 0xff;
@@ -42,11 +42,11 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
 	     buf[62] = (size >>  8) & 0xff;
 	     buf[63] = (size      ) & 0xff;
 	  }
-	buf[index] = *d;
-	index++;
-	if ((index == 64) || (left == 1))
+	buf[idx] = *d;
+	idx++;
+	if ((idx == 64) || (left == 1))
 	  {
-	     if ((left == 1) && (index < 64)) buf[index] = 0x80;
+	     if ((left == 1) && (idx < 64)) buf[idx] = 0x80;
 	     for (i = 0; i < 16; i++)
 	       {
 		  word[i]  = (unsigned int)buf[(i * 4)    ] << 24;
@@ -88,7 +88,7 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
 	     digest[2] += wc;
 	     digest[3] += wd;
 	     digest[4] += we;
-	     index = 0;
+	     idx = 0;
 	  }
      }
    

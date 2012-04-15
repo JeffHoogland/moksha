@@ -229,12 +229,12 @@ init_done:
      }
    if (!in_list)
      {
-	E_Config_Module *em;
+	E_Config_Module *module;
 
-	em = E_NEW(E_Config_Module, 1);
-	em->name = eina_stringshare_add(m->name);
-	em->enabled = 0;
-	e_config->modules = eina_list_append(e_config->modules, em);
+	module = E_NEW(E_Config_Module, 1);
+	module->name = eina_stringshare_add(m->name);
+	module->enabled = 0;
+	e_config->modules = eina_list_append(e_config->modules, module);
 	e_config_save_queue();
      }
    if (modpath) eina_stringshare_del(modpath);

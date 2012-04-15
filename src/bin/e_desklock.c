@@ -465,7 +465,7 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
    Ecore_X_Window win;
    E_Desklock_Popup_Data *edp;
    Eina_List *l;
-   Eina_Bool raise = EINA_TRUE;
+   Eina_Bool raise_win = EINA_TRUE;
 
    if (type == ECORE_X_EVENT_WINDOW_STACK)
      win = ((Ecore_X_Event_Window_Stack*) event)->event_win;
@@ -480,12 +480,12 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
      {
 	if (win == edp->popup_wnd->evas_win)
 	  {
-	     raise = EINA_FALSE;	     
+	     raise_win = EINA_FALSE;	     
 	     break;
 	  }
      }
 
-   if (raise)
+   if (raise_win)
      {
 	EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
 	  ecore_evas_raise(edp->popup_wnd->ecore_evas);
@@ -661,18 +661,18 @@ _e_desklock_state_set(int state)
 {
    Eina_List *l;
    E_Desklock_Popup_Data *edp;
-   const char *signal, *text;
+   const char *signal_desklock, *text;
    if (!edd) return;
 
    edd->state = state;
    if (state == E_DESKLOCK_STATE_CHECKING)
      {
-	signal = "e,state,checking";
+	signal_desklock = "e,state,checking";
 	text = "Authenticating...";
      }
    else if (state == E_DESKLOCK_STATE_INVALID)
      {
-	signal = "e,state,invalid";
+	signal_desklock = "e,state,invalid";
 	text = "The password you entered is invalid. Try again.";
      }
    else
@@ -680,8 +680,8 @@ _e_desklock_state_set(int state)
 
    EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      {
-	edje_object_signal_emit(edp->login_box, signal, "e.desklock");
-	edje_object_signal_emit(edp->bg_object, signal, "e.desklock");
+	edje_object_signal_emit(edp->login_box, signal_desklock, "e.desklock");
+	edje_object_signal_emit(edp->bg_object, signal_desklock, "e.desklock");
 	edje_object_part_text_set(edp->login_box, "e.text.title", text);
      }
 }

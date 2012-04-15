@@ -85,14 +85,14 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
    desk = e_desk_current_get(e_zone_current_get(con));
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
-	Eina_List *ll;
+	Eina_List *ll2;
 	E_Config_Shelf_Desk *sd;
 
 	if (es->zone->container == con)
 	  {
 	     if (es->cfg->desk_show_mode)
 	       {
-		  EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
+		  EINA_LIST_FOREACH(es->cfg->desk_list, ll2, sd)
 		    {
 		       if (!sd) continue;
 		       if ((sd->x == desk->x) && (sd->y == desk->y))

@@ -131,12 +131,12 @@ e_widget_flist_has_parent_get(Evas_Object *obj)
 }
 
 EAPI void 
-e_widget_flist_select_set(Evas_Object *obj, const char *file, int select) 
+e_widget_flist_select_set(Evas_Object *obj, const char *file, int s) 
 {
    E_Widget_Data *wd = NULL;
 
    wd = e_widget_data_get(obj);
-   e_fm2_select_set(wd->o_fm, file, select);
+   e_fm2_select_set(wd->o_fm, file, s);
 }
 
 EAPI void 
