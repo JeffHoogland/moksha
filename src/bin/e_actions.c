@@ -2527,12 +2527,9 @@ _delayed_action_list_parse(Delayed_Action *da, const char *params)
    if ((a1start) && (a2start) && (a1stop) && (a2stop))
      {
 	char *a1, *a2;
-	const char *action, *params;
 
 	a1 = alloca(a1stop - a1start + 1);
 	eina_strlcpy(a1, a1start, a1stop - a1start + 1);
-	action = NULL;
-	params = NULL;
 	_delayed_action_list_parse_action(a1, &delay, &da->def.action, &da->def.params);
 
 	a2 = alloca(a1stop - a1start + 1);
