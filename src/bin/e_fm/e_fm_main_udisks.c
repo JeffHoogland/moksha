@@ -262,7 +262,7 @@ _e_fm_main_udisks_cb_dev_del(void *data   __UNUSED__,
    if ((v = _e_fm_main_udisks_volume_find(udi)))
      {
         if (v->optype == E_VOLUME_OP_TYPE_EJECT)
-          _e_fm_main_udisks_cb_vol_ejected(v, msg, &err);  
+          _e_fm_main_udisks_cb_vol_ejected(v, msg, &err);
      }
    _e_fm_main_udisks_volume_del(udi);
    _e_fm_main_udisks_storage_del(udi);
@@ -346,9 +346,9 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
    //if (!((str) && (!strcmp(str, "filesystem")))) goto error;
    /* force it to be removable if it passed the above tests */
    s->removable = EINA_TRUE;
-   
+
 // ubuntu 10.04 - only dvd is reported as removable. usb storage and mmcblk
-// is not - but its not "system internal".   
+// is not - but its not "system internal".
 //   if (!s->removable) goto error; /* only track removable media */
    s->media_available = e_ukit_property_bool_get(ret, "DeviceIsMediaAvailable", &err);
    s->media_size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
@@ -434,7 +434,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
 
    if (!v->encrypted)
      {
-        const Eina_List *l;   
+        const Eina_List *l;
 
         l = e_ukit_property_strlist_get(ret, "DeviceMountPaths", &err);
         if (err) goto error;
@@ -475,7 +475,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    else
      {
         v->parent = e_ukit_property_string_get(ret, "PartitionSlave", &err);
-          
+
         if (!err)
           {
              if (v->parent && v->partition)
@@ -500,7 +500,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
                        if (!eina_list_data_find_list(s->volumes, v))
                          s->volumes = eina_list_append(s->volumes, v);
                     }
-                  else 
+                  else
                     {
                   v->storage = _e_fm_main_udisks_storage_add(v->udi); /* disk is both storage and volume */
                   if (v->storage) v->storage->volumes = eina_list_append(v->storage->volumes, v);
@@ -918,7 +918,7 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_mount_timeout, v);
 // on ubuntu 10.04 if we request mount with opt - it fails. unknown why right
 // now, but lets try without and maybe we need to try 2 mounts - one with
-// opts and one without?   
+// opts and one without?
 //   v->op = e_udisks_volume_mount(_e_fm_main_udisks_conn, v->udi,
 //                                        v->fstype, opt);
    v->op = e_udisks_volume_mount(_e_fm_main_udisks_conn, v->udi,
@@ -1004,4 +1004,3 @@ _e_fm_main_udisks_storage_find(const char *udi)
      }
    return NULL;
 }
-

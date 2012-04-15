@@ -73,11 +73,11 @@ void *alloca (size_t);
 static Efm_Mode mode = EFM_MODE_USING_RASTER_MOUNT;
 
 /* FIXME: things to add to the slave enlightenment_fm process and ipc to e:
- * 
+ *
  * * reporting results of fop's (current status - what has been don, what failed etc.)
  * * dbus removable device monitoring (in e17 itself now via e_dbus - move to enlightenment_fm and ipc removable device add/del and anything else)
  * * mount/umount of removable devices (to go along with removable device support - put it in here and message back mount success/failure and where it is now mounted - remove from e17 itself)
- * 
+ *
  */
 
 #ifndef EAPI
@@ -153,9 +153,9 @@ main(int argc, char **argv)
    ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_ipc_slave_data_cb, NULL);
    ecore_event_handler_add(ECORE_EXE_EVENT_ERROR, _e_fm_ipc_slave_error_cb, NULL);
    ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_fm_ipc_slave_del_cb, NULL);
-   
+
    ecore_main_loop_begin();
-  
+
    if (_e_fm_ipc_server)
      {
         ecore_ipc_server_del(_e_fm_ipc_server);

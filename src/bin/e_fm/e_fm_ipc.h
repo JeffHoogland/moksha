@@ -19,4 +19,5 @@ EAPI E_Volume *e_volume_find(const char *udi);
 EAPI void      e_volume_mount(E_Volume *v);
 EAPI void      e_volume_unmount(E_Volume *v);
 EAPI void      e_volume_eject(E_Volume *v);
+
 #endif

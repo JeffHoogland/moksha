@@ -170,7 +170,7 @@ int
 _e_fm_ipc_init(void)
 {
    char *sdir;
-   
+
    sdir = getenv("E_IPC_SOCKET");
    if (!sdir)
      {
@@ -186,11 +186,11 @@ _e_fm_ipc_init(void)
         printf("Cannot connect to enlightenment - abort\n");
         return 0;
      }
-   
+
    ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _e_fm_ipc_cb_server_add, NULL);
    ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DEL, _e_fm_ipc_cb_server_del, NULL);
    ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DATA, _e_fm_ipc_cb_server_data, NULL);
-   
+
    return 1;
 }
 
@@ -198,11 +198,11 @@ static Eina_Bool
 _e_fm_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
-   
+
    e = event;
-   ecore_ipc_server_send(e->server, 
+   ecore_ipc_server_send(e->server,
 			 6/*E_IPC_DOMAIN_FM*/,
-			 E_FM_OP_HELLO, 
+			 E_FM_OP_HELLO,
 			 0, 0, 0, NULL, 0); /* send hello */
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -241,10 +241,10 @@ static void
 _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
 {
    E_Dir *ed, *ped = NULL;
-   
+
    DIR *dir;
    Eina_List *l;
-   
+
    /* look for any previous dir entries monitoring this dir */
    EINA_LIST_FOREACH(_e_dirs, l, ed)
      {
@@ -272,14 +272,14 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
 	int dot_order = 0;
 	char buf[4096];
 	FILE *f;
-	
+
 	/* create a new dir entry */
 	ed = calloc(1, sizeof(E_Dir));
 	ed->id = task->id;
 	ed->dir = eina_stringshare_add(task->src);
 	if (!ped)
 	  {
-	     /* if no previous monitoring dir exists - this one 
+	     /* if no previous monitoring dir exists - this one
 	      * becomes the master monitor enty */
 	     ed->mon = ecore_file_monitor_add(ed->dir, _e_fm_ipc_cb_file_monitor, ed);
 	     ed->mon_ref = 1;
@@ -291,13 +291,13 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
 	     ped->mon_ref++;
 	  }
 	_e_dirs = eina_list_append(_e_dirs, ed);
-	
+
 	/* read everything except a .order, . and .. */
 	while ((dp = readdir(dir)))
 	  {
 	     if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, "..")))
 	       continue;
-	     if (!strcmp(dp->d_name, ".order")) 
+	     if (!strcmp(dp->d_name, ".order"))
 	       {
 		  dot_order = 1;
 		  continue;
@@ -315,8 +315,8 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
 		  Eina_List *f2 = NULL;
 		  int len;
 		  char *s;
-		  
-		  /* inset files in order if the existed in file 
+
+		  /* inset files in order if the existed in file
 		   * list before */
 		  while (fgets(buf, sizeof(buf), f))
 		    {
@@ -367,7 +367,7 @@ _e_fm_ipc_monitor_end(int id, const char *path)
    E_Fm_Task *task;
    Eina_List *l;
 	E_Dir *ed;
-	
+
    EINA_LIST_FOREACH(_e_dirs, l, ed)
 	/* look for the dire entry to stop monitoring */
 	if ((id == ed->id) && (!strcmp(ed->dir, path)))
@@ -434,7 +434,7 @@ _e_fm_ipc_task_remove(E_Fm_Task *task)
       case E_FM_OP_MONITOR_START:
 	   {
 	      E_Dir ted;
-	      
+
 	      /* we can't open the dir - tell E the dir is deleted as
 	       * * we can't look in it */
 	      memset(&ted, 0, sizeof(E_Dir));
@@ -531,7 +531,7 @@ static Eina_Bool
 _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
-   
+
    e = event;
    if (e->major != 6/*E_IPC_DOMAIN_FM*/) return ECORE_CALLBACK_PASS_ON;
    switch (e->minor)
@@ -555,7 +555,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
       case E_FM_OP_TRASH: /* fop trash file/dir */
 	  {
 	     E_Fop *fop;
-	     
+
 	     fop = calloc(1, sizeof(E_Fop));
 	     if (fop)
 	       {
@@ -585,7 +585,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 	  {
 	     const char *src, *rel;
 	     int rel_to, x, y;
-	     
+
 	     src = e->data;
 	     rel = src + strlen(src) + 1;
 	     memcpy(&rel_to, rel + strlen(rel) + 1, sizeof(int));
@@ -599,8 +599,8 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 	  {
 	     E_Volume *v;
 	     const char *udi, *mountpoint;
-	     
-	     udi = e->data;          
+
+	     udi = e->data;
 	     mountpoint = udi + strlen(udi) + 1;
 	     v = e_volume_find(udi);
 //             printf("REQ M %p (find from %s -> %s)\n", v, udi, mountpoint); fflush(stdout);
@@ -619,7 +619,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 	  {
 	     E_Volume *v;
 	     const char *udi;
-	     
+
 	     udi = e->data;
 	     v = e_volume_find(udi);
 	     if (v)
@@ -633,7 +633,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
           {
              E_Volume *v;
              const char *udi;
-             
+
              udi = e->data;
              v = e_volume_find(udi);
              if (v)
@@ -648,7 +648,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 	     Eina_List *l;
 	     E_Dir *ed;
 	     double stime;
-	     
+
 	     EINA_LIST_FOREACH(_e_dirs, l, ed)
 	       {
 		  if (ed->fq)
@@ -657,7 +657,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 			 {
 			    stime = ecore_time_get() - ed->sync_time;
 			    /* try keep round trips to round trip tolerance */
-			    if 
+			    if
 			      (stime < (DEF_ROUND_TRIP - DEF_ROUND_TRIP_TOLERANCE))
 			      ed->sync_num += 1;
 			    else if
@@ -678,7 +678,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
              if (slave)
                 _e_fm_ipc_slave_send(slave, e->minor, NULL, 0);
           }
-        break; 
+        break;
       case E_FM_OP_ERROR_RESPONSE_IGNORE_THIS:
       case E_FM_OP_ERROR_RESPONSE_IGNORE_ALL:
       case E_FM_OP_ERROR_RESPONSE_ABORT:
@@ -711,7 +711,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
 	     p += strlen(relative) + 1;
 
 	     after = *((int *)p);
-             
+
 	     _e_fm_ipc_reorder(file, dst, relative, after);
 	  }
 	break;
@@ -720,7 +720,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
      }
    /* always send back an "OK" for each request so e can basically keep a
     * count of outstanding requests - maybe for balancing between fm
-    * slaves later. ref_to is set to the the ref id in the request to 
+    * slaves later. ref_to is set to the the ref id in the request to
     * allow for async handling later */
    ecore_ipc_server_send(_e_fm_ipc_server,
 			 6/*E_IPC_DOMAIN_FM*/,
@@ -745,13 +745,13 @@ static int _e_fm_ipc_slave_run(E_Fm_Op_Type type, const char *args, int id)
    slave = malloc(sizeof(E_Fm_Slave));
 
    if (!slave) return 0;
-	     
+
    command = eina_stringshare_add(_e_fm_ipc_prepare_command(type, args));
 
    slave->id = id;
    slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave );
 //   printf("EFM command: %s\n", command);
-   
+
    eina_stringshare_del(command);
 
    _e_fm_ipc_slaves = eina_list_append(_e_fm_ipc_slaves, slave);
@@ -966,7 +966,7 @@ _e_fm_ipc_cb_recent_clean(void *data)
    Eina_List *l, *pl;
    E_Mod *m;
    double t_now;
-   
+
    ed = data;
    ed->cleaning = 1;
    t_now = ecore_time_unix_get();
@@ -983,7 +983,7 @@ _e_fm_ipc_cb_recent_clean(void *data)
    ed->recent_clean = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
-			       
+
 
 static void
 _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing)
@@ -994,7 +994,7 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
    int bsz = 0;
    unsigned char *p, buf
      /* file add/change format is as follows:
-      * 
+      *
       * stat_info[stat size] + broken_link[1] + path[n]\0 + lnk[n]\0 + rlnk[n]\0 */
      [sizeof(struct stat) + 1 + 4096 + 4096 + 4096];
 
@@ -1005,7 +1005,7 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
 	E_Mod *m;
 	double t_now;
 	int skip = 0;
-	
+
 	t_now = ecore_time_unix_get();
 	EINA_LIST_FOREACH(ed->recent_mods, l, m)
 	  {
@@ -1055,19 +1055,19 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
     * change */
    memcpy(buf, &st, sizeof(struct stat));
    p += sizeof(struct stat);
-   
+
    p[0] = broken_lnk;
    p += 1;
-   
+
    strcpy((char *)p, path);
    p += strlen(path) + 1;
-   
+
    strcpy((char *)p, lnk);
    p += strlen(lnk) + 1;
-   
+
    strcpy((char *)p, rlnk);
    p += strlen(rlnk) + 1;
-   
+
    bsz = p - buf;
    ecore_ipc_server_send(_e_fm_ipc_server, 6/*E_IPC_DOMAIN_FM*/, op, 0, ed->id,
 			 listing, buf, bsz);
@@ -1134,7 +1134,7 @@ _e_fm_ipc_cb_file_mon_list_idler(void *data)
    E_Dir *ed;
    int n = 0;
    char *file, buf[4096];
-   
+
    ed = data;
    /* FIXME: spool off files in idlers and handle sync req's */
    while (ed->fq)
@@ -1181,7 +1181,7 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
    struct tm *lt;
    time_t t;
 
-   /* FIXME: For now, this will only implement 'home trash' 
+   /* FIXME: For now, this will only implement 'home trash'
     * Later, implement mount/remote/removable device trash, if wanted. */
 
    fop = (E_Fop *)data;
@@ -1202,18 +1202,18 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
    /* Find path for info file. Pointer address is part of the filename to
     * alleviate some of the looping in case of multiple filenames with the
     * same name. Also use the name of the file to help */
-   do 
+   do
      {
-	snprintf(buf, sizeof(buf), "%s/file%s.%p.%u", trash_dir, escname, 
+	snprintf(buf, sizeof(buf), "%s/file%s.%p.%u", trash_dir, escname,
 		 fop, i++);
      }
    while (ecore_file_exists(buf));
    dest = eina_stringshare_add(buf);
-   
+
    /* Try to move the file */
-   if (rename(fop->src, dest)) 
+   if (rename(fop->src, dest))
      {
-	if (errno == EXDEV) 
+	if (errno == EXDEV)
 	  {
 	     /* Move failed. Spec says delete files that can't be trashed */
 	     ecore_file_unlink(fop->src);
@@ -1222,16 +1222,16 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
      }
 
    /* Move worked. Create info file */
-   snprintf(buf, sizeof(buf), "%s/info%s.%p.%u.trashinfo", trash_dir, 
+   snprintf(buf, sizeof(buf), "%s/info%s.%p.%u.trashinfo", trash_dir,
 	    escname, fop, --i);
    info = fopen(buf, "w");
-   if (info) 
+   if (info)
      {
 	t = time(NULL);
 	lt = localtime(&t);
 
 	/* Insert info for trashed file */
-	fprintf(info, 
+	fprintf(info,
 		"[Trash Info]\nPath=%s\nDeletionDate=%04u%02u%02uT%02u:%02u:%02u",
 		fop->src, lt->tm_year+1900, lt->tm_mon+1, lt->tm_mday,
 		lt->tm_hour, lt->tm_min, lt->tm_sec);
@@ -1255,7 +1255,7 @@ _e_str_list_remove(Eina_List **list, char *str)
 {
    Eina_List *l;
 	char *s;
-	
+
    EINA_LIST_FOREACH(*list, l, s)
 	if (!strcmp(s, str))
 	  {
@@ -1282,13 +1282,13 @@ _e_fm_ipc_reorder(const char *file, const char *dst, const char *relative, int a
 	FILE *forder;
 	Eina_List *files = NULL, *l;
 	char *str;
-	
+
 	forder = fopen(order, "r");
 	if (forder)
 	  {
 	     int len;
-	     
-	     /* inset files in order if the existed in file 
+
+	     /* inset files in order if the existed in file
 	      * list before */
 	     while (fgets(buffer, sizeof(buffer), forder))
 	       {
@@ -1381,8 +1381,8 @@ _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
 
    length = 256 + strlen(getenv("E_LIB_DIR")) + strlen(args);
    buffer = malloc(length);
-   snprintf(buffer, length, 
-                     "%s/enlightenment/utils/enlightenment_fm_op %s %s", 
+   snprintf(buffer, length,
+                     "%s/enlightenment/utils/enlightenment_fm_op %s %s",
                      getenv("E_LIB_DIR"), command, args);
 
    return buffer;

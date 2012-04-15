@@ -597,7 +597,7 @@ _scanner_read(const void *data, size_t size, void *d __UNUSED__)
         if (ev->volume) _e_fm_main_eeze_volume_rescan(ev->device);
         else _e_fm_main_eeze_storage_rescan(ev->device);
         break;
-     }       
+     }
    eina_stringshare_del(ev->device);
    free(ev);
    return EINA_TRUE;
@@ -624,7 +624,7 @@ _scanner_run(void)
      }
    scanner = ecore_exe_pipe_run(buf, ECORE_EXE_NOT_LEADER, pfx);
 }
- 
+
 
 static Eina_Bool
 _scanner_con(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Del *ev __UNUSED__)
@@ -687,7 +687,7 @@ _e_fm_main_eeze_init(void)
    ecore_event_handler_add(EEZE_EVENT_DISK_UNMOUNT, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_unmounted, NULL);
    ecore_event_handler_add(EEZE_EVENT_DISK_EJECT, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_ejected, NULL);
    ecore_event_handler_add(EEZE_EVENT_DISK_ERROR, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_error, NULL);
-   
+
    ecore_event_handler_add(ECORE_EXE_EVENT_ADD, (Ecore_Event_Handler_Cb)_scanner_add, pfx);
    ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)_scanner_del, pfx);
 
@@ -799,7 +799,7 @@ _e_fm_main_eeze_storage_add(const char *syspath)
    if (s->removable)
      {
         int64_t size, sector_size;
-        
+
         s->media_available = EINA_TRUE; /* all storage with removable=1 in udev has media available */
         str = eeze_disk_udev_get_sysattr(s->disk, "queue/hw_sector_size");
         if (str)
@@ -894,4 +894,3 @@ _e_fm_main_eeze_storage_find(const char *syspath)
      }
    return NULL;
 }
-
