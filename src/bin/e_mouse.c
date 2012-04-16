@@ -7,8 +7,8 @@ e_mouse_update(void)
    int n;
 
    if (!ecore_x_pointer_control_set(e_config->mouse_accel_numerator,
-				    e_config->mouse_accel_denominator,
-				    e_config->mouse_accel_threshold))
+                                    e_config->mouse_accel_denominator,
+                                    e_config->mouse_accel_threshold))
      return 0;
 
    if (!ecore_x_pointer_mapping_get(map, 256)) return 0;
@@ -34,7 +34,8 @@ e_mouse_update(void)
         map[0] = 3;
         map[2] = 1;
      }
-   if (ecore_x_pointer_mapping_set(map, n)) return 0;
+
+   if (!ecore_x_pointer_mapping_set(map, n)) return 0;
 
    return 1;
 }
