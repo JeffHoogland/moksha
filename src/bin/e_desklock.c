@@ -469,7 +469,7 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
 
    if (type == ECORE_X_EVENT_WINDOW_STACK)
      win = ((Ecore_X_Event_Window_Stack*) event)->event_win;
-   else if (type == ECORE_X_EVENT_WINDOW_STACK)
+   else if (type == ECORE_X_EVENT_WINDOW_CONFIGURE)
      win = ((Ecore_X_Event_Window_Configure*) event)->event_win;
    else if (type == ECORE_X_EVENT_WINDOW_CREATE)
      win = ((Ecore_X_Event_Window_Create*) event)->win;
