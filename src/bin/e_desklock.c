@@ -462,7 +462,7 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
 			    int   type,
 			    void *event)
 {
-   Ecore_X_Window win;
+   Ecore_X_Window win, win2 = 0;
    E_Desklock_Popup_Data *edp;
    Eina_List *l;
    Eina_Bool raise_win = EINA_TRUE;
@@ -470,7 +470,10 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
    if (type == ECORE_X_EVENT_WINDOW_STACK)
      win = ((Ecore_X_Event_Window_Stack*) event)->event_win;
    else if (type == ECORE_X_EVENT_WINDOW_CONFIGURE)
-     win = ((Ecore_X_Event_Window_Configure*) event)->event_win;
+     {
+        win = ((Ecore_X_Event_Window_Configure*) event)->event_win;
+        win2 = ((Ecore_X_Event_Window_Configure*) event)->win;
+     }
    else if (type == ECORE_X_EVENT_WINDOW_CREATE)
      win = ((Ecore_X_Event_Window_Create*) event)->win;
    else 
@@ -478,7 +481,8 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
    
    EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      {
-	if (win == edp->popup_wnd->evas_win)
+	if ((win == edp->popup_wnd->evas_win) ||
+            ((win2) && (win2 == edp->popup_wnd->evas_win)))
 	  {
 	     raise_win = EINA_FALSE;	     
 	     break;
