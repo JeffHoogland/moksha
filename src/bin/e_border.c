@@ -7321,7 +7321,6 @@ _e_border_eval0(E_Border *bd)
              if (zone) e_border_zone_set(bd, zone);
              desk = e_desk_at_xy_get(bd->zone, inst->desk_x, inst->desk_y);
              if (desk) e_border_desk_set(bd, desk);
-             printf("bd->placed = %i\n", bd->placed);
           }
         
         if (0) // keep all windows of one app/group on the same screen/desk
