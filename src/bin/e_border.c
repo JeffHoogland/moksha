@@ -7321,6 +7321,47 @@ _e_border_eval0(E_Border *bd)
              if (zone) e_border_zone_set(bd, zone);
              desk = e_desk_at_xy_get(bd->zone, inst->desk_x, inst->desk_y);
              if (desk) e_border_desk_set(bd, desk);
+             printf("bd->placed = %i\n", bd->placed);
+          }
+        
+        if (0) // keep all windows of one app/group on the same screen/desk
+          {
+             E_Border *bdl = NULL;
+             
+             bdl = bd->parent;
+             if (!bdl)
+               {
+                  if (bd->leader) bdl = bd->leader;
+               }
+             if (!bdl)
+               {
+                  E_Border *child;
+                  E_Border_List *bl;
+                  
+                  bl = e_container_border_list_first(bd->zone->container);
+                  while ((child = e_container_border_list_next(bl)))
+                    {
+                       if (child == bd) continue;
+                       if (e_object_is_del(E_OBJECT(child))) continue;
+                       if ((bd->client.icccm.client_leader) &&
+                           (child->client.icccm.client_leader ==
+                               bd->client.icccm.client_leader))
+                         {
+                            bdl = child;
+                            break;
+                         }
+                    }
+                  e_container_border_list_free(bl);
+               }
+             if (bdl)
+               {
+                  if (bdl->zone)
+                    e_border_zone_set(bd, bdl->zone);
+                  if (bdl->desk)
+                    e_border_desk_set(bd, bdl->desk);
+                  else
+                    e_border_stick(bd);
+               }
           }
      }
 
@@ -7722,9 +7763,14 @@ _e_border_eval(E_Border *bd)
              if ((e_config->window_placement_policy == E_WINDOW_PLACEMENT_SMART) || (e_config->window_placement_policy == E_WINDOW_PLACEMENT_ANTIGADGET))
                {
                   skiplist = eina_list_append(skiplist, bd);
-                  e_place_zone_region_smart(bd->zone, skiplist,
-                                            bd->x, bd->y, bd->w, bd->h,
-                                            &new_x, &new_y);
+                  if (bd->desk)
+                    e_place_desk_region_smart(bd->desk, skiplist,
+                                              bd->x, bd->y, bd->w, bd->h,
+                                              &new_x, &new_y);
+                  else
+                    e_place_zone_region_smart(bd->zone, skiplist,
+                                              bd->x, bd->y, bd->w, bd->h,
+                                              &new_x, &new_y);
                   eina_list_free(skiplist);
                }
              else if (e_config->window_placement_policy == E_WINDOW_PLACEMENT_MANUAL)
