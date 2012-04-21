@@ -16,6 +16,7 @@ struct _E_Exec_Instance
    Ecore_Timer    *expire_timer;
    int             screen;
    int             desk_x, desk_y;
+   int             used;
 };
 
 EINTERN int  e_exec_init(void);

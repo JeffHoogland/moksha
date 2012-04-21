@@ -7310,16 +7310,12 @@ _e_border_eval0(E_Border *bd)
         
         inst = e_exec_startup_id_pid_instance_find(bd->client.netwm.startup_id,
                                                    bd->client.netwm.pid);
-        printf("MATCH %p [stid/pid = %i %i\n",
-               inst,
-               bd->client.netwm.startup_id,
-               bd->client.netwm.pid);
-        if (inst)
+        if ((inst) && (inst->used == 0))
           {
              E_Zone *zone;
              E_Desk *desk;
              
-             printf("match s/d: %i/%i,%i\n", inst->screen, inst->desk_x, inst->desk_y);
+             inst->used++;
              zone = e_container_zone_number_get(bd->zone->container,
                                                 inst->screen);
              if (zone) e_border_zone_set(bd, zone);
