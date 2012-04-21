@@ -20,7 +20,7 @@ struct _E_Exec_Launch
 
 struct _E_Exec_Search
 {
-   Efreet_Desktop *desktop;
+   E_Exec_Instance *inst;
    int startup_id;
    pid_t pid;
 };
@@ -121,19 +121,32 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
      }
    else
      inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
+   inst->screen = zone->num;
+   inst->desk_x = e_desk_current_get(zone)->x;
+   inst->desk_y = e_desk_current_get(zone)->y;
    return inst;
+}
+
+EAPI E_Exec_Instance *
+e_exec_startup_id_pid_instance_find(int id, pid_t pid)
+{
+   E_Exec_Search search;
+
+   search.inst = NULL;
+   search.startup_id = id;
+   search.pid = pid;
+   eina_hash_foreach(e_exec_instances, _e_exec_startup_id_pid_find, &search);
+   return search.inst;
 }
 
 EAPI Efreet_Desktop *
 e_exec_startup_id_pid_find(int id, pid_t pid)
 {
-   E_Exec_Search search;
-
-   search.desktop = NULL;
-   search.startup_id = id;
-   search.pid = pid;
-   eina_hash_foreach(e_exec_instances, _e_exec_startup_id_pid_find, &search);
-   return search.desktop;
+   E_Exec_Instance *inst;
+   
+   inst = e_exec_startup_id_pid_instance_find(id, pid);
+   if (!inst) return NULL;
+   return inst->desktop;
 }
 
 /* local subsystem functions */
@@ -451,7 +464,7 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
             ((inst->exe) && (search->pid > 1) && 
              (search->pid == ecore_exe_pid_get(inst->exe))))
           {
-             search->desktop = inst->desktop;
+             search->inst = inst;
              return EINA_FALSE;
           }
      }

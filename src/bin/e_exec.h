@@ -14,13 +14,17 @@ struct _E_Exec_Instance
    int             startup_id;
    double          launch_time;
    Ecore_Timer    *expire_timer;
+   int             screen;
+   int             desk_x, desk_y;
 };
 
 EINTERN int  e_exec_init(void);
 EINTERN int  e_exec_shutdown(void);
 EAPI E_Exec_Instance *e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec, Eina_List *files, const char *launch_method);
 
+EAPI E_Exec_Instance *e_exec_startup_id_pid_instance_find(int id, pid_t pid);
 EAPI Efreet_Desktop *e_exec_startup_id_pid_find(int startup_id, pid_t pid);
+
 
 #endif
 #endif
