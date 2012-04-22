@@ -1,4 +1,4 @@
-#include "e.h"
+#nclude "e.h"
 
 #define MAX_OUTPUT_CHARACTERS 5000
 
@@ -121,9 +121,12 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
      }
    else
      inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
-   inst->screen = zone->num;
-   inst->desk_x = e_desk_current_get(zone)->x;
-   inst->desk_y = e_desk_current_get(zone)->y;
+   if (inst)
+     {
+        inst->screen = zone->num;
+        inst->desk_x = e_desk_current_get(zone)->x;
+        inst->desk_y = e_desk_current_get(zone)->y;
+     }
    return inst;
 }
 
