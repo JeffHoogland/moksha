@@ -121,11 +121,11 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
      }
    else
      inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
-   if (inst)
+   if ((zone) && (inst))
      {
         inst->screen = zone->num;
-        inst->desk_x = e_desk_current_get(zone)->x;
-        inst->desk_y = e_desk_current_get(zone)->y;
+        inst->desk_x = zone->desk_x_current;
+        inst->desk_y = zone->desk_y_current;
      }
    return inst;
 }
