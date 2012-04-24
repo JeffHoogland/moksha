@@ -1116,7 +1116,7 @@ static void
 _e_container_resize_handle(E_Container *con)
 {
    E_Event_Container_Resize *ev;
-   Eina_List *l, *screens, *zones = NULL;
+   Eina_List *l, *screens, *zones = NULL, *ll;
    E_Zone *zone;
    E_Screen *scr;
    int i;
@@ -1135,8 +1135,14 @@ _e_container_resize_handle(E_Container *con)
         con->zones = NULL;
 	EINA_LIST_FOREACH(screens, l, scr)
 	  {
+             zone = NULL;
+             
              printf("@@@ SCREENS: %i %i | %i %i %ix%i\n", scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
-	     zone = e_container_zone_id_get(con, scr->escreen);
+             EINA_LIST_FOREACH(zones, ll, zone)
+               {
+                  if (zone->id == scr->escreen) break;
+                  zone = NULL;
+               }
 	     if (zone)
 	       {
                   printf("@@@ FOUND ZONE %i %i\n", zone->num, zone->id);
@@ -1151,7 +1157,7 @@ _e_container_resize_handle(E_Container *con)
 		  Eina_List *ll;
   		  E_Config_Shelf *cf_es;
 
-                  printf("@@@ container resize handle\n");
+                  printf("@@@ container resize handle - new zone\n");
 		  zone = e_zone_new(con, scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
 		  /* find any shelves configured for this zone and add them in */
 		  EINA_LIST_FOREACH(e_config->shelves, ll, cf_es)
@@ -1164,14 +1170,9 @@ _e_container_resize_handle(E_Container *con)
 	if (zones)
 	  {
 	     E_Zone *spare_zone = NULL;
-	     Eina_List *ll;
 
-	     EINA_LIST_FOREACH(con->zones, ll, spare_zone)
-	       {
-		  if (eina_list_data_find(zones, spare_zone))
-		    spare_zone = NULL;
-		  else break;
-	       }
+             if (con->zones) spare_zone = con->zones->data;
+             
 	     EINA_LIST_FREE(zones, zone)
 	       {
 		  Eina_List *shelves, *ll2, *del_shelves;
@@ -1210,8 +1211,11 @@ _e_container_resize_handle(E_Container *con)
 	E_Zone *z;
 
 	z = e_container_zone_number_get(con, 0);
-	e_zone_move_resize(z, 0, 0, con->w, con->h);
-	e_shelf_zone_move_resize_handle(z);	
+        if (z)
+          {
+             e_zone_move_resize(z, 0, 0, con->w, con->h);
+             e_shelf_zone_move_resize_handle(z);
+          }
      }
 
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
