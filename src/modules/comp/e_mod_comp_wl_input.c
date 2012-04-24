@@ -8,7 +8,7 @@
 /* local function prototypes */
 static void _e_mod_comp_wl_input_bind(struct wl_client *client, void *data, uint32_t version __UNUSED__, uint32_t id);
 static void _e_mod_comp_wl_input_unbind(struct wl_resource *resource);
-static void _e_mod_comp_wl_input_attach(struct wl_client *client, struct wl_resource *resource, uint32_t timestamp, struct wl_resource *buffer_resource __UNUSED__, int32_t x, int32_t y);
+static void _e_mod_comp_wl_input_attach(struct wl_client *client, struct wl_resource *resource, uint32_t serial, struct wl_resource *buffer_resource __UNUSED__, int32_t x, int32_t y);
 
 /* wayland interfaces */
 static const struct wl_input_device_interface _wl_input_interface = 
@@ -90,14 +90,14 @@ _e_mod_comp_wl_input_unbind(struct wl_resource *resource)
 }
 
 static void 
-_e_mod_comp_wl_input_attach(struct wl_client *client, struct wl_resource *resource, uint32_t timestamp, struct wl_resource *buffer_resource __UNUSED__, int32_t x, int32_t y)
+_e_mod_comp_wl_input_attach(struct wl_client *client, struct wl_resource *resource, uint32_t serial, struct wl_resource *buffer_resource __UNUSED__, int32_t x, int32_t y)
 {
    Wayland_Input *wi;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    wi = resource->data;
-   if (timestamp < wi->input_device.pointer_focus_time) return;
+   if (serial < wi->input_device.pointer_focus_serial) return;
    if (!wi->input_device.pointer_focus) return;
    if (wi->input_device.pointer_focus->resource.client != client) return;
    wi->hotspot_x = x;

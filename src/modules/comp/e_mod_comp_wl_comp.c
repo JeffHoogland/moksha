@@ -191,7 +191,7 @@ e_mod_comp_wl_comp_get(void)
 }
 
 void 
-e_mod_comp_wl_comp_repick(struct wl_input_device *device, uint32_t timestamp)
+e_mod_comp_wl_comp_repick(struct wl_input_device *device, uint32_t timestamp __UNUSED__)
 {
    Wayland_Surface *ws, *focus;
 
@@ -204,7 +204,7 @@ e_mod_comp_wl_comp_repick(struct wl_input_device *device, uint32_t timestamp)
         const struct wl_pointer_grab_interface *interface;
 
         interface = device->pointer_grab->interface;
-        interface->focus(device->pointer_grab, timestamp, &ws->surface, 
+        interface->focus(device->pointer_grab, &ws->surface, 
                          device->current_x, device->current_y);
         device->current = &ws->surface;
      }
@@ -403,7 +403,7 @@ _e_mod_comp_wl_cb_focus_in(void *data __UNUSED__, int type __UNUSED__, void *eve
           {
              timestamp = e_mod_comp_wl_time_get();
              wl_input_device_set_keyboard_focus(&input->input_device, 
-                                                &ws->surface, timestamp);
+                                                &ws->surface);
              wl_data_device_set_keyboard_focus(&input->input_device);
              break;
           }
@@ -424,7 +424,7 @@ _e_mod_comp_wl_cb_focus_out(void *data __UNUSED__, int type __UNUSED__, void *ev
    ev = event;
    input = e_mod_comp_wl_input_get();
    timestamp = e_mod_comp_wl_time_get();
-   wl_input_device_set_keyboard_focus(&input->input_device, NULL, timestamp);
+   wl_input_device_set_keyboard_focus(&input->input_device, NULL);
    wl_data_device_set_keyboard_focus(&input->input_device);
 
    return ECORE_CALLBACK_PASS_ON;

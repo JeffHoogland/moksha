@@ -11,7 +11,7 @@
 #endif
 
 /* local function prototypes */
-static void _e_mod_comp_wl_surface_buffer_destroy_handle(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, uint32_t timestamp __UNUSED__);
+static void _e_mod_comp_wl_surface_buffer_destroy_handle(struct wl_listener *listener, void *data __UNUSED__);
 static void _e_mod_comp_wl_surface_raise(Wayland_Surface *ws);
 static void _e_mod_comp_wl_surface_damage_rectangle(Wayland_Surface *ws, int32_t x, int32_t y, int32_t width, int32_t height);
 static void _e_mod_comp_wl_surface_frame_destroy_callback(struct wl_resource *resource);
@@ -51,7 +51,7 @@ e_mod_comp_wl_surface_create(int32_t x, int32_t y, int32_t w, int32_t h)
 
    wl_list_init(&ws->frame_callbacks);
 
-   ws->buffer_destroy_listener.func = 
+   ws->buffer_destroy_listener.notify = 
      _e_mod_comp_wl_surface_buffer_destroy_handle;
 
    /* ws->transform = NULL; */
@@ -64,7 +64,7 @@ e_mod_comp_wl_surface_destroy(struct wl_client *client __UNUSED__, struct wl_res
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   wl_resource_destroy(resource, e_mod_comp_wl_time_get());
+   wl_resource_destroy(resource);
 }
 
 void 
@@ -90,8 +90,8 @@ e_mod_comp_wl_surface_attach(struct wl_client *client __UNUSED__, struct wl_reso
 
    buffer->busy_count++;
    ws->buffer = buffer;
-   wl_list_insert(ws->buffer->resource.destroy_listener_list.prev, 
-                  &ws->buffer_destroy_listener.link);
+   wl_signal_add(&ws->buffer->resource.destroy_signal,
+                  &ws->buffer_destroy_listener);
 
    if (!ws->visual)
      shell->shell.map(&shell->shell, ws, buffer->width, buffer->height);
@@ -263,7 +263,7 @@ e_mod_comp_wl_surface_configure(Wayland_Surface *ws, int32_t x, int32_t y, int32
 }
 
 void 
-e_mod_comp_wl_surface_activate(Wayland_Surface *ws, Wayland_Input *wi, uint32_t timestamp)
+e_mod_comp_wl_surface_activate(Wayland_Surface *ws, Wayland_Input *wi, uint32_t timestamp __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -274,7 +274,7 @@ e_mod_comp_wl_surface_activate(Wayland_Surface *ws, Wayland_Input *wi, uint32_t 
      }
 
    _e_mod_comp_wl_surface_raise(ws);
-   wl_input_device_set_keyboard_focus(&wi->input_device, &ws->surface, timestamp);
+   wl_input_device_set_keyboard_focus(&wi->input_device, &ws->surface);
    wl_data_device_set_keyboard_focus(&wi->input_device);
 }
 
@@ -288,7 +288,7 @@ e_mod_comp_wl_surface_damage_surface(Wayland_Surface *ws)
 
 /* local functions */
 static void 
-_e_mod_comp_wl_surface_buffer_destroy_handle(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, uint32_t timestamp __UNUSED__)
+_e_mod_comp_wl_surface_buffer_destroy_handle(struct wl_listener *listener, void *data __UNUSED__)
 {
    Wayland_Surface *ws;
 

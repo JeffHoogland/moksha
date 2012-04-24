@@ -9,7 +9,7 @@
 void 
 e_mod_comp_wl_region_destroy(struct wl_client *client __UNUSED__, struct wl_resource *resource)
 {
-   wl_resource_destroy(resource, e_mod_comp_wl_time_get());
+   wl_resource_destroy(resource);
 }
 
 void 

@@ -19,6 +19,7 @@ static void _e_mod_comp_wl_shell_destroy(Wayland_Shell *base);
 static void _e_mod_comp_wl_shell_activate(Wayland_Shell *base, Wayland_Surface *surface, uint32_t timestamp);
 
 static void _e_mod_comp_wl_shell_shell_surface_get(struct wl_client *client, struct wl_resource *resource, uint32_t id, struct wl_resource *surface_resource);
+static void _e_mod_comp_wl_shell_surface_pong(struct wl_client *client __UNUSED__, struct wl_resource *resource, unsigned int serial);
 static void _e_mod_comp_wl_shell_surface_move(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp);
 static void _e_mod_comp_wl_shell_surface_resize(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp, uint32_t edges);
 static void _e_mod_comp_wl_shell_surface_set_toplevel(struct wl_client *client __UNUSED__, struct wl_resource *resource);
@@ -27,7 +28,7 @@ static void _e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client
 static void _e_mod_comp_wl_shell_surface_set_popup(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource  __UNUSED__, uint32_t timestamp  __UNUSED__, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags  __UNUSED__);
 static void _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client, struct wl_resource *resource, struct wl_resource *output_resource __UNUSED__);
 
-static void _e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, uint32_t timestamp);
+static void _e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, void *data __UNUSED__);
 static Wayland_Shell_Surface *_e_mod_comp_wl_shell_get_shell_surface(Wayland_Surface *ws);
 static void _e_mod_comp_wl_shell_surface_destroy(struct wl_resource *resource);
 
@@ -38,6 +39,7 @@ static const struct wl_shell_interface _wl_shell_interface =
 };
 static const struct wl_shell_surface_interface _wl_shell_surface_interface = 
 {
+   _e_mod_comp_wl_shell_surface_pong,
    _e_mod_comp_wl_shell_surface_move,
    _e_mod_comp_wl_shell_surface_resize,
    _e_mod_comp_wl_shell_surface_set_toplevel,
@@ -274,15 +276,26 @@ _e_mod_comp_wl_shell_shell_surface_get(struct wl_client *client, struct wl_resou
    wss->resource.data = wss;
 
    wss->surface = ws;
-   wss->surface_destroy_listener.func = 
+   wss->surface_destroy_listener.notify = 
      _e_mod_comp_wl_shell_surface_destroy_handle;
-   wl_list_insert(ws->surface.resource.destroy_listener_list.prev, 
-                  &wss->surface_destroy_listener.link);
+   wl_signal_add(&ws->surface.resource.destroy_signal, 
+                  &wss->surface_destroy_listener);
 
    wl_list_init(&wss->link);
 
    wss->type = SHELL_SURFACE_NONE;
    wl_client_add_resource(client, &wss->resource);
+}
+
+static void 
+_e_mod_comp_wl_shell_surface_pong(struct wl_client *client __UNUSED__, struct wl_resource *resource, unsigned int serial)
+{
+   Wayland_Shell_Surface *wss;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   wss = resource->data;
+   /* TODO: handle ping timer */
 }
 
 static void 
@@ -389,7 +402,7 @@ _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client __UNUSED__, 
 }
 
 static void 
-_e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, uint32_t timestamp)
+_e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, void *data __UNUSED__)
 {
    Wayland_Shell_Surface *wss;
 
@@ -397,24 +410,22 @@ _e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, struct
 
    wss = container_of(listener, Wayland_Shell_Surface, surface_destroy_listener);
    wss->surface = NULL;
-   wl_resource_destroy(&wss->resource, timestamp);
+   wl_resource_destroy(&wss->resource);
 }
 
 static Wayland_Shell_Surface *
 _e_mod_comp_wl_shell_get_shell_surface(Wayland_Surface *ws)
 {
-   struct wl_list *list;
    struct wl_listener *listener;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   list = &ws->surface.resource.destroy_listener_list;
-   wl_list_for_each(listener, list, link)
-     {
-        if (listener->func == _e_mod_comp_wl_shell_surface_destroy_handle)
-          return container_of(listener, Wayland_Shell_Surface, 
-                              surface_destroy_listener);
-     }
+   listener = 
+     wl_signal_get(&ws->surface.resource.destroy_signal, 
+                   _e_mod_comp_wl_shell_surface_destroy_handle);
+   if (listener)
+     return container_of(listener, Wayland_Shell_Surface, 
+                         surface_destroy_listener);
    return NULL;
 }
 
