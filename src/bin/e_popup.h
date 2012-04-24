@@ -12,7 +12,7 @@ struct _E_Popup
 {
    E_Object             e_obj_inherit;
    
-   int                  x, y, w, h;
+   int                  x, y, w, h, zx, zy;
    int                  layer;
    unsigned char        visible : 1;
    unsigned char        shaped : 1;
