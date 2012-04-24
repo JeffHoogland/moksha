@@ -4,23 +4,24 @@
 /* local function prototypes */
 static void _shell_cb_lock(E_Shell *base);
 static void _shell_cb_unlock(E_Shell *base);
-static void _shell_cb_map(E_Shell *base, E_Surface *surface, int w, int h, int sx, int sy);
-static void _shell_cb_configure(E_Shell *base, E_Surface *surface, GLfloat x, GLfloat y, int w, int h);
+/* static void _shell_cb_map(E_Shell *base, E_Surface *surface, int w, int h, int sx, int sy); */
+/* static void _shell_cb_configure(E_Shell *base, E_Surface *surface, GLfloat x, GLfloat y, int w, int h); */
 static void _shell_cb_destroy(E_Shell *base);
 static void _shell_cb_destroy_shell_surface(struct wl_resource *resource);
 static void _shell_cb_bind(struct wl_client *client, void *data, unsigned int version __UNUSED__, unsigned int id);
 static void _shell_cb_bind_desktop(struct wl_client *client, void *data, unsigned int version __UNUSED__, unsigned int id);
 static void _shell_cb_unbind_desktop(struct wl_resource *resource);
 static void _shell_cb_get_shell_surface(struct wl_client *client, struct wl_resource *resource, unsigned int id, struct wl_resource *surface_resource);
-static void _shell_cb_handle_surface_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp);
-static void _shell_cb_handle_lock_surface_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp __UNUSED__);
-static void _shell_cb_activate(E_Shell *base, E_Surface *es, E_Input_Device *eid, unsigned int timestamp);
+static void _shell_cb_handle_surface_destroy(struct wl_listener *listener, void *data __UNUSED__);
+static void _shell_cb_handle_lock_surface_destroy(struct wl_listener *listener, void *data __UNUSED__);
+/* static void _shell_cb_activate(E_Shell *base, E_Surface *es, E_Input_Device *eid, unsigned int timestamp); */
 
 static void _shell_cb_desktop_set_background(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *output_resource, struct wl_resource *surface_resource);
 static void _shell_cb_desktop_set_panel(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *output_resource, struct wl_resource *surface_resource);
 static void _shell_cb_desktop_set_lock_surface(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *surface_resource);
 static void _shell_cb_desktop_unlock(struct wl_client *client __UNUSED__, struct wl_resource *resource);
 
+static void _shell_cb_shell_surface_pong(struct wl_client *client __UNUSED__, struct wl_resource *resource, unsigned int serial);
 static void _shell_cb_shell_surface_move(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, unsigned int timestamp);
 static void _shell_cb_shell_surface_resize(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, unsigned int timestamp, unsigned int edges);
 static void _shell_cb_shell_surface_set_toplevel(struct wl_client *client __UNUSED__, struct wl_resource *resource);
@@ -31,19 +32,19 @@ static void _shell_cb_shell_surface_set_maximized(struct wl_client *client __UNU
 
 static E_Shell_Surface *_shell_get_shell_surface(E_Surface *es);
 static int _shell_reset_shell_surface_type(E_Shell_Surface *ess);
-static void _shell_center_on_output(E_Surface *es, E_Output *output);
-static void _shell_map_fullscreen(E_Shell_Surface *ess);
-static void _shell_configure_fullscreen(E_Shell_Surface *ess);
-static void _shell_stack_fullscreen(E_Shell_Surface *ess);
+/* static void _shell_center_on_output(E_Surface *es, E_Output *output); */
+/* static void _shell_map_fullscreen(E_Shell_Surface *ess); */
+/* static void _shell_configure_fullscreen(E_Shell_Surface *ess); */
+/* static void _shell_stack_fullscreen(E_Shell_Surface *ess); */
 static void _shell_unset_fullscreen(E_Shell_Surface *ess);
-static struct wl_shell *_shell_surface_get_shell(E_Shell_Surface *ess);
-static E_Surface *_shell_create_black_surface(E_Compositor *comp, GLfloat x, GLfloat y, int w, int h);
-static E_Shell_Surface_Type _shell_get_shell_surface_type(E_Surface *es);
+/* static struct wl_shell *_shell_surface_get_shell(E_Shell_Surface *ess); */
+/* static E_Surface *_shell_create_black_surface(E_Compositor *comp, GLfloat x, GLfloat y, int w, int h); */
+/* static E_Shell_Surface_Type _shell_get_shell_surface_type(E_Surface *es); */
 
-static void _shell_map_popup(E_Shell_Surface *ess, unsigned int timestamp);
-static void _shell_cb_popup_grab_focus(struct wl_pointer_grab *grab, unsigned int timestamp, struct wl_surface *surface, int x, int y);
+/* static void _shell_map_popup(E_Shell_Surface *ess, unsigned int timestamp __UNUSED__); */
+static void _shell_cb_popup_grab_focus(struct wl_pointer_grab *grab, struct wl_surface *surface, int x, int y);
 static void _shell_cb_popup_grab_motion(struct wl_pointer_grab *grab, unsigned int timestamp, int sx, int sy);
-static void _shell_cb_popup_grab_button(struct wl_pointer_grab *grab, unsigned int timestamp, int button, int state);
+static void _shell_cb_popup_grab_button(struct wl_pointer_grab *grab, unsigned int timestamp, unsigned int button, int state);
 
 /* local variables */
 
@@ -61,6 +62,7 @@ static const struct desktop_shell_interface _e_desktop_shell_interface =
 };
 static const struct wl_shell_surface_interface _e_shell_surface_interface = 
 {
+   _shell_cb_shell_surface_pong,
    _shell_cb_shell_surface_move,
    _shell_cb_shell_surface_resize,
    _shell_cb_shell_surface_set_toplevel,
@@ -73,7 +75,7 @@ static const struct wl_pointer_grab_interface _e_popup_grab_interface =
 {
    _shell_cb_popup_grab_focus,
    _shell_cb_popup_grab_motion,
-   _shell_cb_popup_grab_button
+   _shell_cb_popup_grab_button,
 };
 
 /* external variables */
@@ -97,8 +99,8 @@ e_modapi_init(E_Module *m)
    shell->compositor = comp;
    shell->shell.lock = _shell_cb_lock;
    shell->shell.unlock = _shell_cb_unlock;
-   shell->shell.map = _shell_cb_map;
-   shell->shell.configure = _shell_cb_configure;
+   /* shell->shell.map = _shell_cb_map; */
+   /* shell->shell.configure = _shell_cb_configure; */
    shell->shell.destroy = _shell_cb_destroy;
 
    wl_list_init(&shell->backgrounds);
@@ -180,8 +182,7 @@ _shell_cb_lock(E_Shell *base)
 
    timestamp = e_compositor_get_time();
    wl_list_for_each(device, &shell->compositor->inputs, link)
-     wl_input_device_set_keyboard_focus(&device->input_device, NULL, 
-                                        timestamp);
+     wl_input_device_set_keyboard_focus(&device->input_device, NULL);
 }
 
 static void 
@@ -208,175 +209,166 @@ _shell_cb_unlock(E_Shell *base)
    shell->prepare_event_sent = EINA_TRUE;
 }
 
-static void 
-_shell_cb_map(E_Shell *base, E_Surface *surface, int w, int h, int sx, int sy)
-{
-   struct wl_shell *shell;
-   E_Compositor *comp;
-   E_Shell_Surface *ess;
-   E_Shell_Surface_Type type = E_SHELL_SURFACE_NONE;
-   E_Surface *parent;
+/* static void  */
+/* _shell_cb_map(E_Shell *base, E_Surface *surface, int w, int h, int sx, int sy) */
+/* { */
+/*    struct wl_shell *shell; */
+/*    E_Compositor *comp; */
+/*    E_Shell_Surface *ess; */
+/*    E_Shell_Surface_Type type = E_SHELL_SURFACE_NONE; */
+/*    E_Surface *parent; */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   shell = container_of(base, struct wl_shell, shell);
-   comp = shell->compositor;
+/*    shell = container_of(base, struct wl_shell, shell); */
+/*    comp = shell->compositor; */
 
-   if ((ess = _shell_get_shell_surface(surface)))
-     type = ess->type;
+/*    if ((ess = _shell_get_shell_surface(surface))) */
+/*      type = ess->type; */
 
-   surface->geometry.w = w;
-   surface->geometry.h = h;
-   surface->geometry.dirty = EINA_TRUE;
+/*    surface->geometry.w = w; */
+/*    surface->geometry.h = h; */
+/*    surface->geometry.dirty = EINA_TRUE; */
 
-   /* TODO: e_comp_update_drag_surfaces */
+/*    switch (type) */
+/*      { */
+/*       case E_SHELL_SURFACE_TOPLEVEL: */
+/*         e_surface_set_position(surface, surface->geometry.x, surface->geometry.y); */
+/*         break; */
+/*       case E_SHELL_SURFACE_SCREENSAVER: */
+/*         _shell_center_on_output(surface, ess->fullscreen_output); */
+/*         break; */
+/*       case E_SHELL_SURFACE_FULLSCREEN: */
+/*         _shell_map_fullscreen(ess); */
+/*         break; */
+/*       case E_SHELL_SURFACE_MAXIMIZED: */
+/*         e_surface_set_position(surface, surface->output->x, surface->output->y); */
+/*         break; */
+/*       case E_SHELL_SURFACE_LOCK: */
+/*         _shell_center_on_output(surface, e_output_get_default(comp)); */
+/*         break; */
+/*       case E_SHELL_SURFACE_POPUP: */
+/*         _shell_map_popup(ess, ess->popup.timestamp); */
+/*         break; */
+/*       case E_SHELL_SURFACE_NONE: */
+/*         e_surface_set_position(surface, surface->geometry.x + sx,  */
+/*                                surface->geometry.y + sy); */
+/*         break; */
+/*       default: */
+/*         break; */
+/*      } */
 
-   /* initial position */
-   switch (type)
-     {
-      case E_SHELL_SURFACE_TOPLEVEL:
-        e_surface_set_position(surface, surface->geometry.x, surface->geometry.y);
-        break;
-      case E_SHELL_SURFACE_SCREENSAVER:
-        _shell_center_on_output(surface, ess->fullscreen_output);
-        break;
-      case E_SHELL_SURFACE_FULLSCREEN:
-        _shell_map_fullscreen(ess);
-        break;
-      case E_SHELL_SURFACE_MAXIMIZED:
-        /* TODO: account for panel height ? */
-        e_surface_set_position(surface, surface->output->x, surface->output->y);
-        break;
-      case E_SHELL_SURFACE_LOCK:
-        _shell_center_on_output(surface, e_output_get_default(comp));
-        break;
-      case E_SHELL_SURFACE_POPUP:
-        _shell_map_popup(ess, ess->popup.timestamp);
-        break;
-      case E_SHELL_SURFACE_NONE:
-        e_surface_set_position(surface, surface->geometry.x + sx, 
-                               surface->geometry.y + sy);
-        break;
-      default:
-        break;
-     }
+/*    switch (type) */
+/*      { */
+/*       case E_SHELL_SURFACE_BACKGROUND: */
+/*         wl_list_insert(&shell->background_layer.surfaces, &surface->layers); */
+/*         break; */
+/*       case E_SHELL_SURFACE_PANEL: */
+/*         wl_list_insert(&shell->panel_layer.surfaces, &surface->layers); */
+/*         break; */
+/*       case E_SHELL_SURFACE_LOCK: */
+/*         wl_list_insert(&shell->lock_layer.surfaces, &surface->layers); */
+/*         e_compositor_wake(comp); */
+/*         break; */
+/*       case E_SHELL_SURFACE_SCREENSAVER: */
+/*         if (shell->locked) */
+/*           { */
+/*              e_compositor_wake(comp); */
+/*              if (!shell->lock_surface) */
+/*                comp->state = E_COMPOSITOR_STATE_IDLE; */
+/*           } */
+/*         break; */
+/*       case E_SHELL_SURFACE_POPUP: */
+/*       case E_SHELL_SURFACE_TRANSIENT: */
+/*         parent = ess->parent->surface; */
+/*         wl_list_insert(parent->layers.prev, &surface->layers); */
+/*         break; */
+/*       case E_SHELL_SURFACE_FULLSCREEN: */
+/*       case E_SHELL_SURFACE_NONE: */
+/*         break; */
+/*       default: */
+/*         wl_list_insert(&shell->toplevel_layer.surfaces, &surface->layers); */
+/*         break; */
+/*      } */
 
-   /* stacking */
-   switch (type)
-     {
-      case E_SHELL_SURFACE_BACKGROUND:
-        wl_list_insert(&shell->background_layer.surfaces, &surface->layers);
-        break;
-      case E_SHELL_SURFACE_PANEL:
-        wl_list_insert(&shell->panel_layer.surfaces, &surface->layers);
-        break;
-      case E_SHELL_SURFACE_LOCK:
-        wl_list_insert(&shell->lock_layer.surfaces, &surface->layers);
-        e_compositor_wake(comp);
-        break;
-      case E_SHELL_SURFACE_SCREENSAVER:
-        if (shell->locked)
-          {
-             /* TODO: show screensaver */
-             /* TODO: set idle time ? */
-             e_compositor_wake(comp);
-             if (!shell->lock_surface)
-               comp->state = E_COMPOSITOR_STATE_IDLE;
-          }
-        break;
-      case E_SHELL_SURFACE_POPUP:
-      case E_SHELL_SURFACE_TRANSIENT:
-        parent = ess->parent->surface;
-        wl_list_insert(parent->layers.prev, &surface->layers);
-        break;
-      case E_SHELL_SURFACE_FULLSCREEN:
-      case E_SHELL_SURFACE_NONE:
-        break;
-      default:
-        wl_list_insert(&shell->toplevel_layer.surfaces, &surface->layers);
-        break;
-     }
+/*    if (type != E_SHELL_SURFACE_NONE) */
+/*      { */
+/*         e_surface_assign_output(surface); */
+/*         if (type == E_SHELL_SURFACE_MAXIMIZED) */
+/*           surface->output = ess->output; */
+/*      } */
 
-   if (type != E_SHELL_SURFACE_NONE)
-     {
-        e_surface_assign_output(surface);
-        if (type == E_SHELL_SURFACE_MAXIMIZED)
-          surface->output = ess->output;
-     }
+/*    switch (type) */
+/*      { */
+/*       case E_SHELL_SURFACE_TOPLEVEL: */
+/*       case E_SHELL_SURFACE_TRANSIENT: */
+/*       case E_SHELL_SURFACE_FULLSCREEN: */
+/*       case E_SHELL_SURFACE_MAXIMIZED: */
+/*         if (!shell->locked) */
+/*           _shell_cb_activate(base, surface,  */
+/*                              (E_Input_Device *)comp->input_device,  */
+/*                              e_compositor_get_time()); */
+/*         break; */
+/*       default: */
+/*         break; */
+/*      } */
 
-   switch (type)
-     {
-      case E_SHELL_SURFACE_TOPLEVEL:
-      case E_SHELL_SURFACE_TRANSIENT:
-      case E_SHELL_SURFACE_FULLSCREEN:
-      case E_SHELL_SURFACE_MAXIMIZED:
-        if (!shell->locked)
-          _shell_cb_activate(base, surface, 
-                             (E_Input_Device *)comp->input_device, 
-                             e_compositor_get_time());
-        break;
-      default:
-        break;
-     }
+/*    if (type == E_SHELL_SURFACE_TOPLEVEL) */
+/*      { */
+/*      } */
+/* } */
 
-   if (type == E_SHELL_SURFACE_TOPLEVEL)
-     {
-        /* TODO: run zoom ? */
-     }
-}
+/* static void  */
+/* _shell_cb_configure(E_Shell *base, E_Surface *surface, GLfloat x, GLfloat y, int w, int h) */
+/* { */
+/*    struct wl_shell *shell; */
+/*    E_Shell_Surface_Type type = E_SHELL_SURFACE_NONE; */
+/*    E_Shell_Surface_Type ptype = E_SHELL_SURFACE_NONE; */
+/*    E_Shell_Surface *ess; */
 
-static void 
-_shell_cb_configure(E_Shell *base, E_Surface *surface, GLfloat x, GLfloat y, int w, int h)
-{
-   struct wl_shell *shell;
-   E_Shell_Surface_Type type = E_SHELL_SURFACE_NONE;
-   E_Shell_Surface_Type ptype = E_SHELL_SURFACE_NONE;
-   E_Shell_Surface *ess;
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    shell = container_of(base, struct wl_shell, shell); */
 
-   shell = container_of(base, struct wl_shell, shell);
+/*    if ((ess = _shell_get_shell_surface(surface))) */
+/*      type = ess->type; */
 
-   if ((ess = _shell_get_shell_surface(surface)))
-     type = ess->type;
+/*    surface->geometry.x = x; */
+/*    surface->geometry.y = y; */
+/*    surface->geometry.w = w; */
+/*    surface->geometry.h = h; */
+/*    surface->geometry.dirty = EINA_TRUE; */
 
-   surface->geometry.x = x;
-   surface->geometry.y = y;
-   surface->geometry.w = w;
-   surface->geometry.h = h;
-   surface->geometry.dirty = EINA_TRUE;
+/*    switch (type) */
+/*      { */
+/*       case E_SHELL_SURFACE_SCREENSAVER: */
+/*         _shell_center_on_output(surface, ess->fullscreen_output); */
+/*         break; */
+/*       case E_SHELL_SURFACE_FULLSCREEN: */
+/*         _shell_configure_fullscreen(ess); */
+/*         if (ptype != E_SHELL_SURFACE_FULLSCREEN) */
+/*           _shell_stack_fullscreen(ess); */
+/*         break; */
+/*       case E_SHELL_SURFACE_MAXIMIZED: */
+/*         surface->geometry.x = surface->output->x; */
+/*         surface->geometry.y = surface->output->y; */
+/*         break; */
+/*       case E_SHELL_SURFACE_TOPLEVEL: */
+/*         break; */
+/*       default: */
+/*         break; */
+/*      } */
 
-   switch (type)
-     {
-      case E_SHELL_SURFACE_SCREENSAVER:
-        _shell_center_on_output(surface, ess->fullscreen_output);
-        break;
-      case E_SHELL_SURFACE_FULLSCREEN:
-        _shell_configure_fullscreen(ess);
-        if (ptype != E_SHELL_SURFACE_FULLSCREEN)
-          _shell_stack_fullscreen(ess);
-        break;
-      case E_SHELL_SURFACE_MAXIMIZED:
-        surface->geometry.x = surface->output->x;
-        /* TODO: handle panel height ? */
-        surface->geometry.y = surface->output->y;
-        break;
-      case E_SHELL_SURFACE_TOPLEVEL:
-        break;
-      default:
-        break;
-     }
+/*    if (surface->output) */
+/*      { */
+/*         e_surface_assign_output(surface); */
+/*         if (type == E_SHELL_SURFACE_SCREENSAVER) */
+/*           surface->output = ess->output; */
+/*         else if (type == E_SHELL_SURFACE_MAXIMIZED) */
+/*           surface->output = ess->output; */
+/*      } */
+/* } */
 
-   if (surface->output)
-     {
-        e_surface_assign_output(surface);
-        if (type == E_SHELL_SURFACE_SCREENSAVER)
-          surface->output = ess->output;
-        else if (type == E_SHELL_SURFACE_MAXIMIZED)
-          surface->output = ess->output;
-     }
-}
-   
 static void 
 _shell_cb_destroy(E_Shell *base)
 {
@@ -397,7 +389,7 @@ _shell_cb_destroy_shell_surface(struct wl_resource *resource)
 
    ess = resource->data;
    if (ess->popup.grab.input_device)
-     wl_input_device_end_pointer_grab(ess->popup.grab.input_device, 0);
+     wl_input_device_end_pointer_grab(ess->popup.grab.input_device);
    if (ess->surface)
      wl_list_remove(&ess->surface_destroy_listener.link);
    if (ess->fullscreen.black_surface)
@@ -486,9 +478,9 @@ _shell_cb_get_shell_surface(struct wl_client *client, struct wl_resource *resour
    ess->fullscreen.black_surface = NULL;
    wl_list_init(&ess->fullscreen.transform.link);
 
-   ess->surface_destroy_listener.func = _shell_cb_handle_surface_destroy;
-   wl_list_insert(es->surface.resource.destroy_listener_list.prev, 
-                  &ess->surface_destroy_listener.link);
+   ess->surface_destroy_listener.notify = _shell_cb_handle_surface_destroy;
+   wl_signal_add(&es->surface.resource.destroy_signal,
+                 &ess->surface_destroy_listener);
 
    wl_list_init(&ess->link);
    wl_list_init(&ess->rotation.transform.link);
@@ -500,7 +492,7 @@ _shell_cb_get_shell_surface(struct wl_client *client, struct wl_resource *resour
 }
 
 static void 
-_shell_cb_handle_surface_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp)
+_shell_cb_handle_surface_destroy(struct wl_listener *listener, void *data __UNUSED__)
 {
    E_Shell_Surface *ess;
 
@@ -508,11 +500,11 @@ _shell_cb_handle_surface_destroy(struct wl_listener *listener, struct wl_resourc
 
    ess = container_of(listener, E_Shell_Surface, surface_destroy_listener);
    ess->surface = NULL;
-   wl_resource_destroy(&ess->resource, timestamp);
+   wl_resource_destroy(&ess->resource);
 }
 
 static void 
-_shell_cb_handle_lock_surface_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp __UNUSED__)
+_shell_cb_handle_lock_surface_destroy(struct wl_listener *listener, void *data __UNUSED__)
 {
    struct wl_shell *shell;
 
@@ -522,38 +514,38 @@ _shell_cb_handle_lock_surface_destroy(struct wl_listener *listener, struct wl_re
    shell->lock_surface = NULL;
 }
 
-static void 
-_shell_cb_activate(E_Shell *base, E_Surface *es, E_Input_Device *eid, unsigned int timestamp)
-{
-   struct wl_shell *shell;
-   E_Compositor *comp;
-   E_Shell_Surface_Type type = E_SHELL_SURFACE_NONE;
+/* static void  */
+/* _shell_cb_activate(E_Shell *base, E_Surface *es, E_Input_Device *eid, unsigned int timestamp) */
+/* { */
+/*    struct wl_shell *shell; */
+/*    E_Compositor *comp; */
+/*    E_Shell_Surface_Type type = E_SHELL_SURFACE_NONE; */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   shell = container_of(base, struct wl_shell, shell);
-   comp = shell->compositor;
+/*    shell = container_of(base, struct wl_shell, shell); */
+/*    comp = shell->compositor; */
 
-   e_surface_activate(es, eid, timestamp);
+/*    e_surface_activate(es, eid, timestamp); */
 
-   type = _shell_get_shell_surface_type(es);
-   switch (type)
-     {
-      case E_SHELL_SURFACE_BACKGROUND:
-      case E_SHELL_SURFACE_PANEL:
-      case E_SHELL_SURFACE_LOCK:
-        break;
-      case E_SHELL_SURFACE_SCREENSAVER:
-        if (shell->lock_surface)
-          e_surface_restack(es, &shell->lock_surface->surface->layers);
-        break;
-      case E_SHELL_SURFACE_FULLSCREEN:
-        break;
-      default:
-        e_surface_restack(es, &shell->toplevel_layer.surfaces);
-        break;
-     }
-}
+/*    type = _shell_get_shell_surface_type(es); */
+/*    switch (type) */
+/*      { */
+/*       case E_SHELL_SURFACE_BACKGROUND: */
+/*       case E_SHELL_SURFACE_PANEL: */
+/*       case E_SHELL_SURFACE_LOCK: */
+/*         break; */
+/*       case E_SHELL_SURFACE_SCREENSAVER: */
+/*         if (shell->lock_surface) */
+/*           e_surface_restack(es, &shell->lock_surface->surface->layers); */
+/*         break; */
+/*       case E_SHELL_SURFACE_FULLSCREEN: */
+/*         break; */
+/*       default: */
+/*         e_surface_restack(es, &shell->toplevel_layer.surfaces); */
+/*         break; */
+/*      } */
+/* } */
 
 static void 
 _shell_cb_desktop_set_background(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *output_resource, struct wl_resource *surface_resource)
@@ -647,9 +639,9 @@ _shell_cb_desktop_set_lock_surface(struct wl_client *client __UNUSED__, struct w
    if (!shell->locked) return;
 
    shell->lock_surface = ess;
-   shell->lock_surface_listener.func = _shell_cb_handle_lock_surface_destroy;
-   wl_list_insert(&surface_resource->destroy_listener_list, 
-                  &shell->lock_surface_listener.link);
+   shell->lock_surface_listener.notify = _shell_cb_handle_lock_surface_destroy;
+   wl_signal_add(&surface_resource->destroy_signal,
+                 &shell->lock_surface_listener);
 
    shell->lock_surface->type = E_SHELL_SURFACE_LOCK;
 }
@@ -667,6 +659,17 @@ _shell_cb_desktop_unlock(struct wl_client *client __UNUSED__, struct wl_resource
      {
         /* TODO: resume desktop */
      }
+}
+
+static void 
+_shell_cb_shell_surface_pong(struct wl_client *client __UNUSED__, struct wl_resource *resource, unsigned int serial)
+{
+   E_Shell_Surface *ess;
+
+   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   ess = resource->data;
+   /* TODO: handle ping timer */
 }
 
 static void 
@@ -772,8 +775,8 @@ _shell_cb_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, stru
 
    if (es->output) ess->surface->force_configure = EINA_TRUE;
 
-   wl_shell_surface_send_configure(&ess->resource, e_compositor_get_time(), 
-                                   0, ess->output->current->w, 
+   wl_shell_surface_send_configure(&ess->resource, 0, 
+                                   ess->output->current->w, 
                                    ess->output->current->h);
 }
 
@@ -818,8 +821,8 @@ _shell_cb_shell_surface_set_maximized(struct wl_client *client __UNUSED__, struc
    /* TODO: handle getting panel size ?? */
 
    edges = WL_SHELL_SURFACE_RESIZE_TOP | WL_SHELL_SURFACE_RESIZE_LEFT;
-   wl_shell_surface_send_configure(&ess->resource, e_compositor_get_time(), 
-                                   edges, es->output->current->w, 
+   wl_shell_surface_send_configure(&ess->resource, edges, 
+                                   es->output->current->w, 
                                    es->output->current->h);
    ess->type = E_SHELL_SURFACE_MAXIMIZED;
 }
@@ -827,16 +830,14 @@ _shell_cb_shell_surface_set_maximized(struct wl_client *client __UNUSED__, struc
 static E_Shell_Surface *
 _shell_get_shell_surface(E_Surface *es)
 {
-   struct wl_list *list;
    struct wl_listener *listener;
 
    SLOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   list = &es->surface.resource.destroy_listener_list;
-
-   wl_list_for_each(listener, list, link)
-     if (listener->func == _shell_cb_handle_surface_destroy)
-       return container_of(listener, E_Shell_Surface, surface_destroy_listener);
+   listener = wl_signal_get(&es->surface.resource.destroy_signal, 
+                            _shell_cb_handle_surface_destroy);
+   if (listener)
+     return container_of(listener, E_Shell_Surface, surface_destroy_listener);
 
    return NULL;
 }
@@ -878,98 +879,98 @@ _shell_reset_shell_surface_type(E_Shell_Surface *ess)
    return 0;
 }
 
-static void 
-_shell_center_on_output(E_Surface *es, E_Output *output)
-{
-   E_Output_Mode *mode;
-   GLfloat x, y;
+/* static void  */
+/* _shell_center_on_output(E_Surface *es, E_Output *output) */
+/* { */
+/*    E_Output_Mode *mode; */
+/*    GLfloat x, y; */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   mode = output->current;
-   x = (mode->w - es->geometry.w) / 2;
-   y = (mode->h - es->geometry.h) / 2;
-   e_surface_set_position(es, output->x + x, output->y + y);
-}
+/*    mode = output->current; */
+/*    x = (mode->w - es->geometry.w) / 2; */
+/*    y = (mode->h - es->geometry.h) / 2; */
+/*    e_surface_set_position(es, output->x + x, output->y + y); */
+/* } */
 
-static void 
-_shell_map_fullscreen(E_Shell_Surface *ess)
-{
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/* static void  */
+/* _shell_map_fullscreen(E_Shell_Surface *ess) */
+/* { */
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   _shell_configure_fullscreen(ess);
-   _shell_stack_fullscreen(ess);
-}
+/*    _shell_configure_fullscreen(ess); */
+/*    _shell_stack_fullscreen(ess); */
+/* } */
 
-static void 
-_shell_configure_fullscreen(E_Shell_Surface *ess)
-{
-   E_Output *output;
-   E_Surface *es;
-   E_Matrix *matrix;
-   float scale;
+/* static void  */
+/* _shell_configure_fullscreen(E_Shell_Surface *ess) */
+/* { */
+/*    E_Output *output; */
+/*    E_Surface *es; */
+/*    E_Matrix *matrix; */
+/*    float scale; */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   output = ess->fullscreen_output;
-   es = ess->surface;
+/*    output = ess->fullscreen_output; */
+/*    es = ess->surface; */
 
-   _shell_center_on_output(es, output);
+/*    _shell_center_on_output(es, output); */
 
-   if (!ess->fullscreen.black_surface)
-     {
-        ess->fullscreen.black_surface = 
-          _shell_create_black_surface(es->compositor, output->x, output->y, 
-                                     output->current->w, output->current->h);
-     }
+/*    if (!ess->fullscreen.black_surface) */
+/*      { */
+/*         ess->fullscreen.black_surface =  */
+/*           _shell_create_black_surface(es->compositor, output->x, output->y,  */
+/*                                      output->current->w, output->current->h); */
+/*      } */
 
-   wl_list_remove(&ess->fullscreen.black_surface->layers);
-   wl_list_insert(&es->layers, &ess->fullscreen.black_surface->layers);
-   ess->fullscreen.black_surface->output = output;
+/*    wl_list_remove(&ess->fullscreen.black_surface->layers); */
+/*    wl_list_insert(&es->layers, &ess->fullscreen.black_surface->layers); */
+/*    ess->fullscreen.black_surface->output = output; */
 
-   switch (ess->fullscreen.type)
-     {
-      case WL_SHELL_SURFACE_FULLSCREEN_METHOD_DEFAULT:
-        break;
-      case WL_SHELL_SURFACE_FULLSCREEN_METHOD_SCALE:
-        matrix = &ess->fullscreen.transform.matrix;
-        e_matrix_init(matrix);
-        scale = (float)output->current->w / (float)es->geometry.w;
-        e_matrix_scale(matrix, scale, scale, 1);
-        wl_list_remove(&ess->fullscreen.transform.link);
-        wl_list_insert(es->geometry.transforms.prev, 
-                       &ess->fullscreen.transform.link);
-        e_surface_set_position(es, output->x, output->y);
-        break;
-      case WL_SHELL_SURFACE_FULLSCREEN_METHOD_DRIVER:
-        break;
-      case WL_SHELL_SURFACE_FULLSCREEN_METHOD_FILL:
-        break;
-      default:
-        break;
-     }
-}
+/*    switch (ess->fullscreen.type) */
+/*      { */
+/*       case WL_SHELL_SURFACE_FULLSCREEN_METHOD_DEFAULT: */
+/*         break; */
+/*       case WL_SHELL_SURFACE_FULLSCREEN_METHOD_SCALE: */
+/*         matrix = &ess->fullscreen.transform.matrix; */
+/*         e_matrix_init(matrix); */
+/*         scale = (float)output->current->w / (float)es->geometry.w; */
+/*         e_matrix_scale(matrix, scale, scale, 1); */
+/*         wl_list_remove(&ess->fullscreen.transform.link); */
+/*         wl_list_insert(es->geometry.transforms.prev,  */
+/*                        &ess->fullscreen.transform.link); */
+/*         e_surface_set_position(es, output->x, output->y); */
+/*         break; */
+/*       case WL_SHELL_SURFACE_FULLSCREEN_METHOD_DRIVER: */
+/*         break; */
+/*       case WL_SHELL_SURFACE_FULLSCREEN_METHOD_FILL: */
+/*         break; */
+/*       default: */
+/*         break; */
+/*      } */
+/* } */
 
-static void 
-_shell_stack_fullscreen(E_Shell_Surface *ess)
-{
-   E_Surface *es;
-   struct wl_shell *shell;
+/* static void  */
+/* _shell_stack_fullscreen(E_Shell_Surface *ess) */
+/* { */
+/*    E_Surface *es; */
+/*    struct wl_shell *shell; */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   es = ess->surface;
-   shell = _shell_surface_get_shell(ess);
+/*    es = ess->surface; */
+/*    shell = _shell_surface_get_shell(ess); */
 
-   wl_list_remove(&es->layers);
-   wl_list_remove(&ess->fullscreen.black_surface->layers);
+/*    wl_list_remove(&es->layers); */
+/*    wl_list_remove(&ess->fullscreen.black_surface->layers); */
 
-   wl_list_insert(&shell->fullscreen_layer.surfaces, &es->layers);
-   wl_list_insert(&es->layers, &ess->fullscreen.black_surface->layers);
+/*    wl_list_insert(&shell->fullscreen_layer.surfaces, &es->layers); */
+/*    wl_list_insert(&es->layers, &ess->fullscreen.black_surface->layers); */
 
-   e_surface_damage(es);
-   e_surface_damage(ess->fullscreen.black_surface);
-}
+/*    e_surface_damage(es); */
+/*    e_surface_damage(ess->fullscreen.black_surface); */
+/* } */
 
 static void 
 _shell_unset_fullscreen(E_Shell_Surface *ess)
@@ -987,86 +988,86 @@ _shell_unset_fullscreen(E_Shell_Surface *ess)
    e_surface_set_position(ess->surface, ess->sx, ess->sy);
 }
 
-static struct wl_shell *
-_shell_surface_get_shell(E_Shell_Surface *ess)
-{
-   E_Surface *es;
-   E_Shell *shell;
+/* static struct wl_shell * */
+/* _shell_surface_get_shell(E_Shell_Surface *ess) */
+/* { */
+/*    E_Surface *es; */
+/*    E_Shell *shell; */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   es = ess->surface;
-   shell = es->compositor->shell;
-   return (struct wl_shell *)container_of(shell, struct wl_shell, shell);
-}
+/*    es = ess->surface; */
+/*    shell = es->compositor->shell; */
+/*    return (struct wl_shell *)container_of(shell, struct wl_shell, shell); */
+/* } */
 
-static E_Surface *
-_shell_create_black_surface(E_Compositor *comp, GLfloat x, GLfloat y, int w, int h)
-{
-   E_Surface *es = NULL;
+/* static E_Surface * */
+/* _shell_create_black_surface(E_Compositor *comp, GLfloat x, GLfloat y, int w, int h) */
+/* { */
+/*    E_Surface *es = NULL; */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   if (!(es = e_surface_create(comp)))
-     return NULL;
+/*    if (!(es = e_surface_create(comp))) */
+/*      return NULL; */
 
-   e_surface_configure(es, x, y, w, h);
-   e_surface_set_color(es, 0.0, 0.0, 0.0, 1);
+/*    e_surface_configure(es, x, y, w, h); */
+/*    e_surface_set_color(es, 0.0, 0.0, 0.0, 1); */
 
-   return es;
-}
+/*    return es; */
+/* } */
 
-static E_Shell_Surface_Type 
-_shell_get_shell_surface_type(E_Surface *es)
-{
-   E_Shell_Surface *ess;
+/* static E_Shell_Surface_Type  */
+/* _shell_get_shell_surface_type(E_Surface *es) */
+/* { */
+/*    E_Shell_Surface *ess; */
 
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   if (!(ess = _shell_get_shell_surface(es)))
-     return E_SHELL_SURFACE_NONE;
+/*    if (!(ess = _shell_get_shell_surface(es))) */
+/*      return E_SHELL_SURFACE_NONE; */
 
-   return ess->type;
-}
+/*    return ess->type; */
+/* } */
+
+/* static void  */
+/* _shell_map_popup(E_Shell_Surface *ess, unsigned int timestamp __UNUSED__) */
+/* { */
+/*    struct wl_input_device *device; */
+/*    E_Surface *es, *parent; */
+
+/*    SLOGFN(__FILE__, __LINE__, __FUNCTION__); */
+
+/*    es = ess->surface; */
+/*    parent = ess->parent->surface; */
+/*    es->output = parent->output; */
+/*    device = es->compositor->input_device; */
+
+/*    ess->popup.grab.interface = &_e_popup_grab_interface; */
+/*    e_surface_update_transform(parent); */
+/*    if (parent->transform.enabled) */
+/*      ess->popup.parent_transform.matrix = parent->transform.matrix; */
+/*    else */
+/*      { */
+/*         e_matrix_init(&ess->popup.parent_transform.matrix); */
+/*         ess->popup.parent_transform.matrix.d[12] = parent->geometry.x; */
+/*         ess->popup.parent_transform.matrix.d[13] = parent->geometry.y; */
+/*      } */
+
+/*    wl_list_insert(es->geometry.transforms.prev,  */
+/*                   &ess->popup.parent_transform.link); */
+/*    e_surface_set_position(es, ess->popup.x, ess->popup.y); */
+
+/*    ess->popup.grab.input_device = device; */
+/*    ess->popup.timestamp = device->grab_time; */
+/*    ess->popup.initial_up = EINA_FALSE; */
+
+/*    wl_input_device_start_pointer_grab(ess->popup.grab.input_device,  */
+/*                                       &ess->popup.grab); */
+/* } */
 
 static void 
-_shell_map_popup(E_Shell_Surface *ess, unsigned int timestamp)
-{
-   struct wl_input_device *device;
-   E_Surface *es, *parent;
-
-   SLOGFN(__FILE__, __LINE__, __FUNCTION__);
-
-   es = ess->surface;
-   parent = ess->parent->surface;
-   es->output = parent->output;
-   device = es->compositor->input_device;
-
-   ess->popup.grab.interface = &_e_popup_grab_interface;
-   e_surface_update_transform(parent);
-   if (parent->transform.enabled)
-     ess->popup.parent_transform.matrix = parent->transform.matrix;
-   else
-     {
-        e_matrix_init(&ess->popup.parent_transform.matrix);
-        ess->popup.parent_transform.matrix.d[12] = parent->geometry.x;
-        ess->popup.parent_transform.matrix.d[13] = parent->geometry.y;
-     }
-
-   wl_list_insert(es->geometry.transforms.prev, 
-                  &ess->popup.parent_transform.link);
-   e_surface_set_position(es, ess->popup.x, ess->popup.y);
-
-   ess->popup.grab.input_device = device;
-   ess->popup.timestamp = device->grab_time;
-   ess->popup.initial_up = EINA_FALSE;
-
-   wl_input_device_start_pointer_grab(ess->popup.grab.input_device, 
-                                      &ess->popup.grab, ess->popup.timestamp);
-}
-
-static void 
-_shell_cb_popup_grab_focus(struct wl_pointer_grab *grab, unsigned int timestamp, struct wl_surface *surface, int x, int y)
+_shell_cb_popup_grab_focus(struct wl_pointer_grab *grab, struct wl_surface *surface, int x, int y)
 {
    struct wl_input_device *device;
    E_Shell_Surface *priv;
@@ -1080,12 +1081,12 @@ _shell_cb_popup_grab_focus(struct wl_pointer_grab *grab, unsigned int timestamp,
 
    if ((surface) && (surface->resource.client == client))
      {
-        wl_input_device_set_pointer_focus(device, surface, timestamp, x, y);
+        wl_input_device_set_pointer_focus(device, surface, x, y);
         grab->focus = surface;
      }
    else
      {
-        wl_input_device_set_pointer_focus(device, NULL, timestamp, 0, 0);
+        wl_input_device_set_pointer_focus(device, NULL, 0, 0);
         grab->focus = NULL;
      }
 }
@@ -1113,7 +1114,7 @@ _shell_cb_popup_grab_motion(struct wl_pointer_grab *grab, unsigned int timestamp
 }
 
 static void 
-_shell_cb_popup_grab_button(struct wl_pointer_grab *grab, unsigned int timestamp, int button, int state)
+_shell_cb_popup_grab_button(struct wl_pointer_grab *grab, unsigned int timestamp, unsigned int button, int state)
 {
    /* struct wl_input_device *device; */
 
@@ -1132,13 +1133,20 @@ _shell_cb_popup_grab_button(struct wl_pointer_grab *grab, unsigned int timestamp
    ess = container_of(grab, E_Shell_Surface, popup.grab);
 
    if ((resource = grab->input_device->pointer_focus_resource))
-     wl_input_device_send_button(resource, timestamp, button, state);
+     {
+        struct wl_display *disp;
+        unsigned int serial = 0;
+
+        disp = wl_client_get_display(resource->client);
+        serial = wl_display_get_serial(disp);
+        wl_input_device_send_button(resource, serial, timestamp, button, state);
+     }
    else if ((state == 0) && 
             ((ess->popup.initial_up) || 
                 (timestamp - ess->popup.timestamp > 500)))
      {
         wl_shell_surface_send_popup_done(&ess->resource);
-        wl_input_device_end_pointer_grab(grab->input_device, timestamp);
+        wl_input_device_end_pointer_grab(grab->input_device);
         ess->popup.grab.input_device = NULL;
      }
 

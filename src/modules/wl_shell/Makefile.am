@@ -21,9 +21,7 @@ pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH
 pkg_LTLIBRARIES        = module.la
 
 module_la_SOURCES      = e_mod_main.c \
-                         e_mod_main.h \
-                         e_desktop_shell_protocol.c \
-                         e_desktop_shell_protocol.h
+                         e_mod_main.h
 
 module_la_LIBADD       = @e_wl_libs@ @dlopen_libs@ @WAYLAND_SHELL_LIBS@
 module_la_LDFLAGS      = -module -avoid-version
