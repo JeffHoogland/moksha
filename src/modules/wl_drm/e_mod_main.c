@@ -293,8 +293,8 @@ _cb_drm_page_flip(int fd __UNUSED__, unsigned int frame __UNUSED__, unsigned int
      {
         doutput->scanout_buffer = doutput->pending_scanout_buffer;
         wl_list_remove(&doutput->pending_scanout_buffer_destroy_listener.link);
-        wl_list_insert(doutput->scanout_buffer->resource.destroy_listener_list.prev, 
-                       &doutput->scanout_buffer_destroy_listener.link);
+        wl_signal_add(&doutput->scanout_buffer->resource.destroy_signal,
+                       &doutput->scanout_buffer_destroy_listener);
         doutput->pending_scanout_buffer = NULL;
         doutput->fs_surf_fb_id = doutput->pending_fs_surf_fb_id;
         doutput->pending_fs_surf_fb_id = 0;
@@ -327,8 +327,8 @@ _cb_drm_vblank(int fd __UNUSED__, unsigned int frame __UNUSED__, unsigned int se
    if (es->pending_surface)
      {
         wl_list_remove(&es->pending_destroy_listener.link);
-        wl_list_insert(es->pending_surface->buffer->resource.destroy_listener_list.prev, 
-                       &es->destroy_listener.link);
+        wl_signal_add(&es->pending_surface->buffer->resource.destroy_signal,
+                       &es->destroy_listener);
         es->surface = es->pending_surface;
         es->pending_surface = NULL;
         es->fb_id = es->pending_fb_id;
@@ -587,9 +587,9 @@ _output_create(E_Drm_Compositor *dcomp, drmModeRes *res, drmModeConnector *conn,
 
    wl_list_insert(dcomp->base.outputs.prev, &output->base.link);
 
-   output->scanout_buffer_destroy_listener.func = 
+   output->scanout_buffer_destroy_listener.notify = 
      e_drm_output_scanout_buffer_destroy;
-   output->pending_scanout_buffer_destroy_listener.func = 
+   output->pending_scanout_buffer_destroy_listener.notify = 
      e_drm_output_pending_scanout_buffer_destroy;
 
    output->pending_fs_surf_fb_id = 0;

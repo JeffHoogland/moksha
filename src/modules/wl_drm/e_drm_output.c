@@ -66,7 +66,7 @@ e_drm_output_set_modes(E_Drm_Compositor *dcomp)
 }
 
 EINTERN void 
-e_drm_output_scanout_buffer_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp __UNUSED__)
+e_drm_output_scanout_buffer_destroy(struct wl_listener *listener, void *data __UNUSED__)
 {
    E_Drm_Output *output;
 
@@ -79,7 +79,7 @@ e_drm_output_scanout_buffer_destroy(struct wl_listener *listener, struct wl_reso
 }
 
 EINTERN void 
-e_drm_output_pending_scanout_buffer_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp __UNUSED__)
+e_drm_output_pending_scanout_buffer_destroy(struct wl_listener *listener, void *data __UNUSED__)
 {
    E_Drm_Output *output;
 
@@ -307,8 +307,8 @@ e_drm_output_prepare_scanout_surface(E_Drm_Output *output)
    output->pending_scanout_buffer = es->buffer;
    output->pending_scanout_buffer->busy_count++;
 
-   wl_list_insert(output->pending_scanout_buffer->resource.destroy_listener_list.prev, 
-                  &output->pending_scanout_buffer_destroy_listener.link);
+   wl_signal_add(&output->pending_scanout_buffer->resource.destroy_signal,
+                  &output->pending_scanout_buffer_destroy_listener);
 
    pixman_region32_fini(&es->damage);
    pixman_region32_init(&es->damage);
@@ -470,8 +470,8 @@ e_drm_output_prepare_overlay_surface(E_Output *base, E_Surface *es, pixman_regio
    s->sh = (box->y2 - box->y1) << 16;
    pixman_region32_fini(&srect);
 
-   wl_list_insert(es->buffer->resource.destroy_listener_list.prev, 
-                  &s->pending_destroy_listener.link);
+   wl_signal_add(&es->buffer->resource.destroy_signal,
+                  &s->pending_destroy_listener);
 
    return 0;
 }

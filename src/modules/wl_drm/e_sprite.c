@@ -2,8 +2,8 @@
 #include "e_mod_main.h"
 
 /* local function prototypes */
-static void _e_sprite_cb_buffer_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp __UNUSED__);
-static void _e_sprite_cb_pending_buffer_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp __UNUSED__);
+static void _e_sprite_cb_buffer_destroy(struct wl_listener *listener, void *data __UNUSED__);
+static void _e_sprite_cb_pending_buffer_destroy(struct wl_listener *listener, void *data __UNUSED__);
 
 /* local variables */
 /* wayland interfaces */
@@ -30,8 +30,8 @@ e_sprite_create(E_Drm_Compositor *dcomp, drmModePlane *plane)
    es->pending_surface = NULL;
    es->fb_id = 0;
    es->pending_fb_id = 0;
-   es->destroy_listener.func = _e_sprite_cb_buffer_destroy;
-   es->pending_destroy_listener.func = _e_sprite_cb_pending_buffer_destroy;
+   es->destroy_listener.notify = _e_sprite_cb_buffer_destroy;
+   es->pending_destroy_listener.notify = _e_sprite_cb_pending_buffer_destroy;
    es->format_count = plane->count_formats;
    memcpy(es->formats, plane->formats, 
           plane->count_formats * sizeof(plane->formats[0]));
@@ -66,7 +66,7 @@ e_sprite_crtc_supported(E_Output *output, unsigned int supported)
 
 /* local functions */
 static void 
-_e_sprite_cb_buffer_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp __UNUSED__)
+_e_sprite_cb_buffer_destroy(struct wl_listener *listener, void *data __UNUSED__)
 {
    E_Sprite *es;
 
@@ -77,7 +77,7 @@ _e_sprite_cb_buffer_destroy(struct wl_listener *listener, struct wl_resource *re
 }
 
 static void 
-_e_sprite_cb_pending_buffer_destroy(struct wl_listener *listener, struct wl_resource *resource __UNUSED__, unsigned int timestamp __UNUSED__)
+_e_sprite_cb_pending_buffer_destroy(struct wl_listener *listener, void *data __UNUSED__)
 {
    E_Sprite *es;
 
