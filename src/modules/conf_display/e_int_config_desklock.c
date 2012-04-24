@@ -211,6 +211,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Custom Screenlock Command"), 0);
    ow = e_widget_entry_add(evas, &(cfdata->custom_lock_cmd), NULL, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
+
+   ow = e_widget_check_add(evas, _("Use Custom Screenlock Command"), &cfdata->custom_lock);
+   e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Locking"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
