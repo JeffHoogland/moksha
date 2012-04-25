@@ -1789,7 +1789,6 @@ _e_zone_object_del_attach(void *o)
    E_Zone *zone;
    E_Event_Zone_Del *ev;
 
-   if (e_object_is_del(E_OBJECT(o))) return;
    zone = o;
    ev = E_NEW(E_Event_Zone_Del, 1);
    ev->zone = zone;
