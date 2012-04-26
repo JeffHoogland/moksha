@@ -247,13 +247,14 @@ arrangement_widget_create_data(E_Config_Dialog_Data *data)
    e_config_runtime_info->gui.widgets.arrangement.suggestion_dist_max = max_dist;
 
 
-   dummy_geo.x = e_randr_screen_info.rrvd_info.randr_info_12->max_size.width - dummy_geo.w;
-   dummy_geo.y = 0;
    //Read in size used for disabled outputs
    theme_data_item = edje_file_data_get(_theme_file_path, "disabled_output_width");
    dummy_geo.w = theme_data_item ? atoi(theme_data_item) : 1024;
    theme_data_item = edje_file_data_get(_theme_file_path, "disabled_output_height");
    dummy_geo.h = theme_data_item ? atoi(theme_data_item) : 768;
+
+   dummy_geo.x = e_randr_screen_info.rrvd_info.randr_info_12->max_size.width - dummy_geo.w;
+   dummy_geo.y = 0;
 
    memcpy(&e_config_runtime_info->gui.widgets.arrangement.dummy_geo, &dummy_geo, sizeof(e_config_runtime_info->gui.widgets.arrangement.dummy_geo));
 
