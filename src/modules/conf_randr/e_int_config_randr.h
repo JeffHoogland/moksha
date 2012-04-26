@@ -18,7 +18,7 @@ struct _E_Config_Dialog_Data
    E_Manager *manager;
    struct {
         Evas *canvas;
-        Evas_Object *dialog, *widget_list, *selected_eo;
+        Evas_Object *dialog, *widget_list;
         E_Config_Randr_Dialog_Output_Dialog_Data *selected_output_dd;
         E_Config_Randr_Dialog_Confirmation_Dialog_Data *confirmation_dialog;
         struct {
@@ -95,7 +95,7 @@ Eina_Bool    policy_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialo
 void         policy_widget_free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 void         policy_widget_keep_changes(E_Config_Dialog_Data *cfdata);
 void         policy_widget_discard_changes(E_Config_Dialog_Data *cfdata);
-void         policy_widget_update_radio_buttons(Evas_Object *crtc);
+void         policy_widget_update_radio_buttons(E_Config_Randr_Dialog_Output_Dialog_Data *odd);
 
 // Functions for the resolutions widget interaction
 Eina_Bool    resolution_widget_create_data(E_Config_Dialog_Data *cfdata);
@@ -105,7 +105,7 @@ Eina_Bool    resolution_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_D
 void         resolution_widget_free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 void         resolution_widget_keep_changes(E_Config_Dialog_Data *cfdata);
 void         resolution_widget_discard_changes(E_Config_Dialog_Data *cfdata);
-void         resolution_widget_update_list(Evas_Object *crtc);
+void         resolution_widget_update_list(E_Config_Randr_Dialog_Output_Dialog_Data *odd);
 
 // Functions for the orientation widget interaction
 Eina_Bool    orientation_widget_create_data(E_Config_Dialog_Data *cfdata);
@@ -113,8 +113,8 @@ Evas_Object *orientation_widget_basic_create_widgets(Evas *canvas);
 Eina_Bool    orientation_widget_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 Eina_Bool    orientation_widget_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 void         orientation_widget_free_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-void         orientation_widget_update_radio_buttons(Evas_Object *crtc);
-void         orientation_widget_update_edje(Evas_Object *crtc);
+void         orientation_widget_update_radio_buttons(E_Config_Randr_Dialog_Output_Dialog_Data *odd);
+void         orientation_widget_update_edje(E_Config_Randr_Dialog_Output_Dialog_Data *odd);
 void         orientation_widget_keep_changes(E_Config_Dialog_Data *cfdata);
 void         orientation_widget_discard_changes(E_Config_Dialog_Data *cfdata);
 

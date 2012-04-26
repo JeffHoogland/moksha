@@ -407,17 +407,16 @@ _arrangement_widget_rep_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__,
 
    e_layout_child_geometry_get(obj, &e_config_runtime_info->gui.widgets.arrangement.sel_rep_previous_pos.x, &e_config_runtime_info->gui.widgets.arrangement.sel_rep_previous_pos.y, NULL, NULL);
    //update data for other logs
-   e_config_runtime_info->gui.selected_eo = obj;
    e_config_runtime_info->gui.selected_output_dd = (E_Config_Randr_Dialog_Output_Dialog_Data*)evas_object_data_get(obj, "rep_info");
 
    //update resolutions list
-   resolution_widget_update_list(obj);
+   resolution_widget_update_list(e_config_runtime_info->gui.selected_output_dd);
 
    //update orientation radio buttons
-   orientation_widget_update_radio_buttons(obj);
+   orientation_widget_update_radio_buttons(e_config_runtime_info->gui.selected_output_dd);
 
    //update policy radio buttons
-   policy_widget_update_radio_buttons(obj);
+   policy_widget_update_radio_buttons(e_config_runtime_info->gui.selected_output_dd);
 }
 
 static void

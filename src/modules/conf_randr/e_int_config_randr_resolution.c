@@ -161,10 +161,9 @@ resolution_widget_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_
 }
 
 void
-resolution_widget_update_list(Evas_Object *rep)
+resolution_widget_update_list(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 {
    Eina_List *iter, *modelist = NULL;
-   E_Config_Randr_Dialog_Output_Dialog_Data *odd;
    Ecore_X_Randr_Mode_Info *mode_info, *current_mode = NULL;
    char resolution_text[RESOLUTION_TXT_MAX_LENGTH];
    float rate;
@@ -174,7 +173,7 @@ resolution_widget_update_list(Evas_Object *rep)
    e_widget_ilist_freeze(e_config_runtime_info->gui.widgets.resolution.widget);
    e_widget_ilist_clear(e_config_runtime_info->gui.widgets.resolution.widget);
 
-   if (!rep || !(odd = evas_object_data_get(rep, "rep_info")))
+   if (!odd)
      goto _go_and_return;
 
    //select correct mode list

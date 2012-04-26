@@ -31,7 +31,7 @@ orientation_widget_create_data(E_Config_Dialog_Data *cfdata)
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         odd->new_orientation = Ecore_X_Randr_Unset;
-        odd->previous_orientation = odd->crtc ? odd->crtc->current_orientation :  Ecore_X_Randr_Unset;
+        odd->previous_orientation = odd->crtc ? odd->crtc->current_orientation : Ecore_X_Randr_Unset;
      }
 
    return EINA_TRUE;
@@ -95,7 +95,7 @@ orientation_widget_basic_create_widgets(Evas *canvas)
     */
 
    //disable widgets, if no CRTC is selected
-   orientation_widget_update_radio_buttons(e_config_runtime_info->gui.selected_eo);
+   orientation_widget_update_radio_buttons(e_config_runtime_info->gui.selected_output_dd);
 
    //evas_object_show(e_config_runtime_info->gui.widgets.orientation.swallowing_edje);
 
@@ -149,13 +149,12 @@ _orientation_widget_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_
 }
 
 void
-orientation_widget_update_radio_buttons(Evas_Object *crtc)
+orientation_widget_update_radio_buttons(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 {
-   E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
    Ecore_X_Randr_Orientation supported_oris, ori;
 
    //disable widgets, if no crtc is selected
-   if (!crtc)
+   if (!odd)
      {
         e_widget_disabled_set(e_config_runtime_info->gui.widgets.orientation.radio_normal, EINA_TRUE);
         e_widget_disabled_set(e_config_runtime_info->gui.widgets.orientation.radio_rot90, EINA_TRUE);
@@ -166,13 +165,11 @@ orientation_widget_update_radio_buttons(Evas_Object *crtc)
         return;
      }
 
-   if (!(output_dialog_data = evas_object_data_get(crtc, "rep_info"))) return;
-
-   if (output_dialog_data->crtc)
+   if (odd->crtc)
      {
         //enabled monitor
-        supported_oris = output_dialog_data->crtc->orientations;
-        ori = (output_dialog_data->new_orientation != Ecore_X_Randr_Unset) ? output_dialog_data->new_orientation : output_dialog_data->crtc->current_orientation;
+        supported_oris = odd->crtc->orientations;
+        ori = (odd->new_orientation != Ecore_X_Randr_Unset) ? odd->new_orientation : odd->crtc->current_orientation;
      }
    else
      {
@@ -246,19 +243,19 @@ orientation_widget_update_radio_buttons(Evas_Object *crtc)
 
 /*
 void
-orientation_widget_update_edje(Evas_Object *crtc)
+orientation_widget_update_edje(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 {
-   E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
    Ecore_X_Randr_Orientation supported_oris, ori;
    char signal[40];
 
-   if (!e_config_runtime_info->gui.selected_eo || !(output_dialog_data = evas_object_data_get(crtc, "rep_info"))) return;
+   if (!odd)
+     return;
 
-   if (output_dialog_data->crtc)
+   if (odd->crtc)
      {
         //enabled monitor
-        supported_oris = output_dialog_data->crtc->orientations;
-        ori = output_dialog_data->crtc->current_orientation;
+        supported_oris = odd->crtc->orientations;
+        ori = odd->crtc->current_orientation;
      }
    else
      {

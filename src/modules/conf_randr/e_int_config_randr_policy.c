@@ -250,13 +250,12 @@ policy_widget_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dial
 }
 
 void
-policy_widget_update_radio_buttons(Evas_Object *rep)
+policy_widget_update_radio_buttons(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 {
-   E_Config_Randr_Dialog_Output_Dialog_Data *output_dialog_data;
    Ecore_X_Randr_Output_Policy policy;
 
    //disable widgets, if no rep is selected
-   if (!rep || !(output_dialog_data = evas_object_data_get(rep, "rep_info")))
+   if (!odd)
      {
         //Evas_Object *radio_above, *radio_right, *radio_below, *radio_left, *radio_clone, *radio_none;
         e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_above, EINA_TRUE);
@@ -277,7 +276,7 @@ policy_widget_update_radio_buttons(Evas_Object *rep)
         e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_none, EINA_FALSE);
      }
 
-   policy = (output_dialog_data->new_policy != Ecore_X_Randr_Unset) ? output_dialog_data->new_policy : output_dialog_data->previous_policy;
+   policy = (odd->new_policy != Ecore_X_Randr_Unset) ? odd->new_policy : odd->previous_policy;
    //toggle the switch of the currently used policies
    switch (policy)
      {
