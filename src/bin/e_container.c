@@ -1112,6 +1112,14 @@ _e_container_shape_change_call(E_Container_Shape *es, E_Container_Shape_Change c
      }
 }
 
+static int
+_e_container_cb_zone_sort(const void *data1, const void *data2)
+{
+   E_Zone *z1 = data1, *z2 = data2;
+   
+   return z2->num - z1->num;
+}
+
 static void
 _e_container_resize_handle(E_Container *con)
 {
@@ -1169,6 +1177,8 @@ _e_container_resize_handle(E_Container *con)
 		    }
 	       }
 	  }
+        con->zones = eina_list_sort(con->zones, eina_list_count(con->zones),
+                                    _e_container_cb_zone_sort);
 	if (zones)
 	  {
 	     E_Zone *spare_zone = NULL;
