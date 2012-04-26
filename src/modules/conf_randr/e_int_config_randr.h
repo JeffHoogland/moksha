@@ -46,8 +46,6 @@ struct _E_Config_Dialog_Data
              } orientation;
         } widgets;
    } gui;
-   Ecore_X_Randr_Screen_Size screen_size;
-
 };
 
 struct _E_Config_Randr_Dialog_Output_Dialog_Data
