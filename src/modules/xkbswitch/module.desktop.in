@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=XKBSwitch
+Icon=e-module-xkbswitch
+X-Enlightenment-ModuleType=utils
+Comment=Keyboard layout configuration and switcher

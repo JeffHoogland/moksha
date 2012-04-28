@@ -246,3 +246,10 @@ src/modules/mixer/conf_module.c
 src/modules/mixer/e_mod_main.c
 src/modules/connman/e_mod_main.c
 src/modules/systray/e_mod_main.c
+src/modules/shot/e_mod_main.c
+src/modules/tasks/e_mod_main.c
+src/modules/tasks/e_mod_config.c
+src/modules/xkbswitch/e_mod_main.c
+src/modules/xkbswitch/e_mod_config.c
+src/modules/xkbswitch/e_mod_keybindings.c
+src/modules/xkbswitch/e_mod_parse.c

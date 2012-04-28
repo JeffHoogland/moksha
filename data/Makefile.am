@@ -7,5 +7,5 @@ xsession \
 input_methods \
 etc \
 icons \
-backgrounds
-
+backgrounds \
+flags

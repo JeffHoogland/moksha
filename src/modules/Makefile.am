@@ -191,6 +191,10 @@ if USE_MODULE_TASKS
 SUBDIRS += tasks
 endif
 
+if USE_MODULE_XKBSWITCH
+SUBDIRS += xkbswitch
+endif
+
 #if HAVE_WAYLAND_DRM
 # SUBDIRS += wl_drm
 #endif
