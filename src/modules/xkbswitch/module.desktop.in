@@ -1,6 +1,9 @@
 [Desktop Entry]
 Type=Link
 Name=XKBSwitch
+Name[fr]=Services XKB
 Icon=e-module-xkbswitch
 X-Enlightenment-ModuleType=utils
 Comment=Keyboard layout configuration and switcher
+Comment[fr]=Pour configurer et basculer l'agencement du clavier.
+Comment[it]=Per configurare e commutare il layout di tastiera.

@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-26 13:56+0900\n"
-"PO-Revision-Date: 2012-04-24 20:37+0200\n"
+"POT-Creation-Date: 2012-04-28 15:12+0200\n"
+"PO-Revision-Date: 2012-04-28 15:38+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -485,7 +484,8 @@ msgstr "Passa al desktop... (tutti gli schermi)"
 #: src/bin/e_actions.c:2974 src/bin/e_actions.c:2976 src/bin/e_actions.c:2978
 #: src/bin/e_actions.c:2981 src/bin/e_actions.c:2983 src/bin/e_actions.c:2985
 #: src/modules/conf_display/e_mod_main.c:17
-#: src/modules/ibox/e_mod_config.c:131
+#: src/modules/ibox/e_mod_config.c:131 src/modules/shot/e_mod_main.c:640
+#: src/modules/shot/e_mod_main.c:804 src/modules/shot/e_mod_main.c:833
 msgid "Screen"
 msgstr "Schermo"
 
@@ -742,6 +742,8 @@ msgstr "Selettore colore"
 #: src/modules/cpufreq/e_mod_main.c:415 src/modules/cpufreq/e_mod_main.c:444
 #: src/modules/cpufreq/e_mod_main.c:469
 #: src/modules/fileman/e_int_config_mime_edit.c:303
+#: src/modules/shot/e_mod_main.c:242 src/modules/shot/e_mod_main.c:482
+#: src/modules/xkbswitch/e_mod_config.c:486
 msgid "OK"
 msgstr "OK"
 
@@ -755,6 +757,8 @@ msgstr "OK"
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:304
 #: src/modules/syscon/e_syscon.c:120 src/modules/connman/e_mod_main.c:300
+#: src/modules/shot/e_mod_main.c:244 src/modules/shot/e_mod_main.c:483
+#: src/modules/shot/e_mod_main.c:698 src/modules/xkbswitch/e_mod_config.c:487
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -800,8 +804,8 @@ msgstr "Problemi scrittura configurazione di Enlightenment"
 #: src/bin/e_config.c:1562
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
-"%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
+"Enlightenment has had an error while moving config files<br>from:<br>%"
+"s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
 "Enlightenment ha restituito un errore nello spostamento<br>dei file di "
@@ -902,13 +906,13 @@ msgstr "L'errore è sconosciuto a Enlightenment."
 #: src/bin/e_config.c:2137
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
-"%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
+"Enlightenment has had an error while writing<br>its config file.<br>%"
+"s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 "Enlightenment ha avuto un errore mentre<br>scriveva il suo file di "
-"configurazione<br>%s<br><br>Il file dove è avvenuto l'errore è:<br>"
-"%s<br><br>Questo file è stato cancellato per evitare<br>corruzione di dati."
+"configurazione<br>%s<br><br>Il file dove è avvenuto l'errore è:<br>%"
+"s<br><br>Questo file è stato cancellato per evitare<br>corruzione di dati."
 "<br>"
 
 #: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
@@ -1086,6 +1090,7 @@ msgstr "File desktop"
 #: src/modules/everything/evry_config.c:378
 #: src/modules/everything/evry_plug_files.c:1476
 #: src/modules/pager/e_mod_config.c:126 src/modules/pager/e_mod_config.c:213
+#: src/modules/xkbswitch/e_mod_config.c:263
 msgid "General"
 msgstr "Impostazioni generali"
 
@@ -1102,6 +1107,7 @@ msgid "Show in Menus"
 msgstr "Mostra in menù"
 
 #: src/bin/e_eap_editor.c:786 src/bin/e_int_border_remember.c:757
+#: src/modules/xkbswitch/e_mod_config.c:299
 msgid "Options"
 msgstr "Opzioni"
 
@@ -1173,8 +1179,8 @@ msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
-"Enlightenment non ha potuto avviare l'applicazione:<br><br>"
-"%s<br><br>L'applicazione non è partita"
+"Enlightenment non ha potuto avviare l'applicazione:<br><br>%"
+"s<br><br>L'applicazione non è partita"
 
 #: src/bin/e_exec.c:507
 msgid "Application Execution Error"
@@ -1629,6 +1635,7 @@ msgstr "Aspetto"
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
 #: src/modules/gadman/e_mod_gadman.c:813 src/modules/ibar/e_mod_main.c:801
+#: src/modules/xkbswitch/e_mod_config.c:234
 msgid "Remove"
 msgstr "Elimina"
 
@@ -2084,6 +2091,7 @@ msgid "Size, Position and Locks"
 msgstr "Dimensione, posizione e blocchi"
 
 #: src/bin/e_int_border_remember.c:625 src/modules/conf/e_mod_main.c:245
+#: src/modules/shot/e_mod_main.c:644
 msgid "All"
 msgstr "Tutto"
 
@@ -2189,6 +2197,8 @@ msgstr "Mobile"
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:690
 #: src/modules/pager/e_mod_main.c:791 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1323
+#: src/modules/tasks/e_mod_main.c:680 src/modules/xkbswitch/e_mod_main.c:588
+#: src/modules/xkbswitch/e_mod_main.c:633
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -2925,8 +2935,8 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800"
+"+0\n"
 "\t-profile CONF_PROFILE\n"
 "\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
 "default or just \"default\".\n"
@@ -3528,16 +3538,19 @@ msgstr ""
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:106
+#: src/modules/xkbswitch/e_mod_config.c:229
 msgid "Add"
 msgstr "Aggiungi"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:272
+#: src/modules/xkbswitch/e_mod_config.c:217
 msgid "Up"
 msgstr "Su"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:276
+#: src/modules/xkbswitch/e_mod_config.c:223
 msgid "Down"
 msgstr "Giù"
 
@@ -3969,14 +3982,15 @@ msgid ""
 msgstr ""
 "Si vede bene? Se è così premere <hilight>Salvate</hilight>, altrimenti "
 "Ripristinate.<br>Se non si preme alcun bottone verrà "
-"<hilight>IMMEDIATAMENTE</hilight> ripristinata<br>la vecchia risoluzione di "
-"%dx%d."
+"<hilight>IMMEDIATAMENTE</hilight> ripristinata<br>la vecchia risoluzione di %"
+"dx%d."
 
 #: src/modules/conf_display/e_int_config_display.c:185
 msgid "Resolution change"
 msgstr "Cambio risoluzione"
 
 #: src/modules/conf_display/e_int_config_display.c:189
+#: src/modules/shot/e_mod_main.c:694
 msgid "Save"
 msgstr "Salva"
 
@@ -4479,8 +4493,8 @@ msgstr "Errore azione sul bordo"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1173
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding edge sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 "La sequenza sul bordo dello schermo che avete scelto è già<br>usata "
 "dall'azione <hilight>%s</hilight>.<br>Si prega di scegliere una sequenza "
@@ -4518,6 +4532,7 @@ msgstr "Windows"
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
 #: src/modules/mixer/app_mixer.c:277 src/modules/mixer/app_mixer.c:295
+#: src/modules/xkbswitch/e_mod_main.c:96
 msgid "Input"
 msgstr "Input"
 
@@ -4735,8 +4750,8 @@ msgstr "Errore di associazione"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>%"
+"s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La combinazione di tasti che avete scelto è già usata<br>dall'azione "
 "<hilight>%s</hilight>.<br>Si prega di scegliere una combinazione diversa."
@@ -5987,6 +6002,7 @@ msgstr "Geometria ridimensionamento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:146
 #: src/modules/winlist/e_int_config_winlist.c:210
+#: src/modules/tasks/e_mod_config.c:73
 msgid "Display"
 msgstr "Visualizzazioni"
 
@@ -6480,7 +6496,7 @@ msgstr ""
 msgid "Dropshadow Settings"
 msgstr "Impostazioni di Dropshadow"
 
-#: src/modules/dropshadow/e_mod_config.c:107
+#: src/modules/dropshadow/e_mod_config.c:107 src/modules/shot/e_mod_main.c:618
 msgid "Quality"
 msgstr "Qualità"
 
@@ -6508,7 +6524,7 @@ msgstr "Molto sfumata"
 msgid "Fuzzy"
 msgstr "Sfumata"
 
-#: src/modules/dropshadow/e_mod_config.c:125
+#: src/modules/dropshadow/e_mod_config.c:125 src/modules/shot/e_mod_main.c:626
 msgid "Medium"
 msgstr "Media"
 
@@ -7466,7 +7482,7 @@ msgstr "Mostra finestre di tutti gli schermi"
 msgid "Show windows from current screen"
 msgstr "Mostra finestre dello schermo attuale"
 
-#: src/modules/ibox/e_mod_config.c:165
+#: src/modules/ibox/e_mod_config.c:165 src/modules/tasks/e_mod_config.c:74
 msgid "Show windows from all desktops"
 msgstr "Mostra finestre di tutti i desktop"
 
@@ -7991,3 +8007,198 @@ msgstr ""
 #: src/modules/systray/e_mod_main.c:1108
 msgid "Systray"
 msgstr "Systray"
+
+#: src/modules/shot/e_mod_main.c:134 src/modules/shot/e_mod_main.c:146
+msgid "Error - Unknown format"
+msgstr "Errore - formato sconosciuto"
+
+#: src/modules/shot/e_mod_main.c:135
+msgid ""
+"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
+"extensions<br>only as other formats are not<br>supported currently."
+msgstr ""
+"Il nome del file non ha un'estensione.<br>Si prega di usare solo "
+"estensioni '.jpg' or '.png',<br>poiché al momento non sono supportati "
+"altri formati."
+
+#: src/modules/shot/e_mod_main.c:147
+msgid ""
+"File has an unrecognized extension.<br>Please use '.jpg' or '.png' "
+"extensions<br>only as other formats are not<br>supported currently."
+msgstr ""
+"Il nome del file ha un'estensione sconosciuta.<br>Si prega di usare "
+"solo estensioni '.jpg' or '.png',<br>poiché al momento non sono "
+"supportati altri formati."
+
+#: src/modules/shot/e_mod_main.c:231
+msgid "Select screenshot save location"
+msgstr "Selezionare la directory di salvataggio"
+
+#: src/modules/shot/e_mod_main.c:357
+msgid "Error - Upload Failed"
+msgstr "Errore - upload fallito"
+
+#: src/modules/shot/e_mod_main.c:358
+#, c-format
+msgid "Upload failed with status code:<br>%i"
+msgstr "L'upload è fallito col seguente codice d'uscita:<br>%i"
+
+#: src/modules/shot/e_mod_main.c:384
+msgid "Error - Can't create File"
+msgstr "Errore - impossibile creare il file"
+
+#: src/modules/shot/e_mod_main.c:385
+#, c-format
+msgid ""
+"Cannot create temporary file:\n"
+"%s"
+msgstr ""
+"Impossibile creare il file temporaneo:\n"
+"%s"
+
+#: src/modules/shot/e_mod_main.c:463
+msgid "Uploading screenshot"
+msgstr "Upload dell'immagine"
+
+#: src/modules/shot/e_mod_main.c:468
+msgid "Uploading ..."
+msgstr "Upload in corso ..."
+
+#: src/modules/shot/e_mod_main.c:473
+msgid "Screenshot is available at this location:"
+msgstr "L'immagine è disponibile in questa locazione:"
+
+#: src/modules/shot/e_mod_main.c:566
+msgid "Where to put Screenshot..."
+msgstr "Dove salvare l'immagine"
+
+#: src/modules/shot/e_mod_main.c:622
+msgid "Perfect"
+msgstr "Perfetta"
+
+#: src/modules/shot/e_mod_main.c:624
+msgid "High"
+msgstr "Alta"
+
+#: src/modules/shot/e_mod_main.c:628
+msgid "Low"
+msgstr "Bassa"
+
+#: src/modules/shot/e_mod_main.c:696
+msgid "Share"
+msgstr "Condivisione"
+
+#: src/modules/shot/e_mod_main.c:782 src/modules/shot/e_mod_main.c:804
+#: src/modules/shot/e_mod_main.c:808 src/modules/shot/e_mod_main.c:833
+msgid "Take Screenshot"
+msgstr "Scatta istantanea"
+
+#: src/modules/tasks/e_mod_main.c:305 src/modules/tasks/e_mod_main.c:687
+msgid "Tasks"
+msgstr "Tasks"
+
+#: src/modules/tasks/e_mod_config.c:31
+msgid "Tasks Configuration"
+msgstr "Configurazione di Tasks"
+
+#: src/modules/tasks/e_mod_config.c:77
+msgid "Minimum Width"
+msgstr "Larghezza minima"
+
+#: src/modules/tasks/e_mod_config.c:79 src/modules/tasks/e_mod_config.c:84
+#, c-format
+msgid "%1.0f px"
+msgstr "%1.0f px"
+
+#: src/modules/tasks/e_mod_config.c:82
+msgid "Minimum Height"
+msgstr "Altezza minima"
+
+#: src/modules/xkbswitch/e_mod_main.c:99
+#: src/modules/xkbswitch/e_mod_main.c:492
+msgid "XKB Switcher"
+msgstr "Commutatore tastiera"
+
+#: src/modules/xkbswitch/e_mod_main.c:151
+msgid ""
+"XKB Switcher Module Configuration data needed upgrading. Your old "
+"configuration<br> has been wiped and a new set of defaults initialized. "
+"This<br>will happen regularly during development, so don't report a<br>bug. "
+"This simply means the module needs new configuration<br>data by default for "
+"usable functionality that your old<br>configuration simply lacks. This new "
+"set of defaults will fix<br>that by adding it in. You can re-configure "
+"things now to your<br>liking. Sorry for the inconvenience.<br>"
+msgstr ""
+"I dati di configurazione del modulo XKBswitcher avevano bisogno di essere "
+"aggiornati.<br>La vecchia configurazione è stata sostituita con un nuovo set "
+"di impostazioni predefinite.<br>Questo avverrà spesso durante lo sviluppo, "
+"quindi non riportate bug in proposito. Significa<br>semplicemente che il "
+"modulo ha bisogno di nuovi dati di configurazione predefinita da usare<br>"
+"per funzionalità che non erano presenti nella vecchia configurazione. Questo "
+"nuovo set di<br>impostazioni predefinite sistemerà il tutto aggiungendo le "
+"nuove funzionalità. Adesso è<br>possibile riconfigurare le cose a proprio "
+"piacimento. Ci scusiamo per il disagio.<br>"
+
+#: src/modules/xkbswitch/e_mod_main.c:170
+msgid ""
+"Your XKB Switcher Module configuration is NEWER than the module version. "
+"This is very<br>strange. This should not happen unless you downgraded<br>the "
+"module or copied the configuration from a place where<br>a newer version of "
+"the module was running. This is bad and<br>as a precaution your "
+"configuration has been now restored to<br>defaults. Sorry for the "
+"inconvenience.<br>"
+msgstr ""
+"La vostra configurazione del modulo XKBswitcher è più NUOVA della sua versione."
+"<br>Questo è molto strano. Non dovrebbe accadere a meno che si sia passati ad "
+"una versione<br>precedente del modulo o si abbia copiato la configurazione da "
+"una macchina su cui<br>gira una versione più recente del modulo. Questo è "
+"male, quindi la vostra<br>configurazione è stata ripristinata a scopo "
+"precauzionale ai valori predefiniti. Ci scusiamo<br>per l'inconveniente.<br>"
+
+#: src/modules/xkbswitch/e_mod_main.c:567
+msgid "XKB Switcher Configuration Updated"
+msgstr "Configurazione di XKBswitcher aggiornata"
+
+#: src/modules/xkbswitch/e_mod_config.c:49
+msgid "XKB Switcher Module"
+msgstr "Modulo XKBswitcher"
+
+#: src/modules/xkbswitch/e_mod_config.c:243
+msgid "Configurations"
+msgstr "Configurazioni"
+
+#: src/modules/xkbswitch/e_mod_config.c:252
+msgid "Models"
+msgstr "Modelli"
+
+#: src/modules/xkbswitch/e_mod_config.c:265
+msgid "Label only"
+msgstr "Solo etichette"
+
+#: src/modules/xkbswitch/e_mod_config.c:444
+msgid "Add New Configuration"
+msgstr "Aggiungi nuova configurazione"
+
+#: src/modules/xkbswitch/e_mod_config.c:454
+msgid "Available"
+msgstr "Disponibile"
+
+#: src/modules/xkbswitch/e_mod_config.c:461
+msgid "Model"
+msgstr "Modello"
+
+#: src/modules/xkbswitch/e_mod_config.c:468
+msgid "Variant"
+msgstr "Variante"
+
+#: src/modules/xkbswitch/e_mod_keybindings.c:5
+msgid "Keyboard Layouts"
+msgstr "Layout di tastiera"
+
+#: src/modules/xkbswitch/e_mod_keybindings.c:6
+msgid "Switch to the next layout"
+msgstr "Passa al layout successivo"
+
+#: src/modules/xkbswitch/e_mod_keybindings.c:7
+msgid "Switch to the previous layout"
+msgstr "Passa al layout precedente"

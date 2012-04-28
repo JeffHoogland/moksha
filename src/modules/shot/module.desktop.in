@@ -1,13 +1,13 @@
 [Desktop Entry]
 Type=Link
 Name=Shot
-Name[fr]=Déclic
+Name[fr]=Capture d'écran
 Name[ko]=스크린샷
 Name[pt]=Capturas de ecrã
 Icon=e-module-shot
 X-Enlightenment-ModuleType=utils
 Comment=Simple screenshot+save/upload module
-Comment[fr]=Module pour faire des captures d'écran et les partager.
+Comment[fr]=Pour enregistrer des captures d'écran du bureau et/ou les partager.
 Comment[it]=Semplice modulo per il salvataggio e l'upload di istantanee del desktop.
 Comment[ko]=간단한 스크린샷 저장/공유 모듈
 Comment[pt]=Módulo para capturar, gravar e enviar capturas de ecrã 
