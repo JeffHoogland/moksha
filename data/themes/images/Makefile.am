@@ -446,4 +446,5 @@ batt_over.png \
 batt_power.png \
 bg_shadow.png \
 bg_over.png \
-bg_base.png
+bg_base.png \
+xkbshad.png

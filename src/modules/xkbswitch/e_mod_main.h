@@ -90,6 +90,10 @@ void e_xkb_update_layout(void);
 void e_xkb_layout_next(void);
 void e_xkb_layout_prev(void);
 
+const char *e_xkb_layout_name_reduce(const char *name);
+void e_xkb_e_icon_flag_setup(Evas_Object *eicon, const char *name);
+void e_xkb_flag_file_get(char *buf, size_t bufsize, const char *name);
+
 E_Config_Dialog *e_xkb_cfg_dialog(E_Container *con, const char *params);
 
 extern E_XKB_Config *e_xkb_cfg;

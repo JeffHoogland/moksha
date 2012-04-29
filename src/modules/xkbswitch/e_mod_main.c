@@ -284,28 +284,20 @@ e_xkb_update_icon(void)
              e_theme_edje_object_set(inst->o_xkbswitch, 
                                      "base/theme/modules/xkbswitch", 
                                      "modules/xkbswitch/noflag");
-             edje_object_part_text_set(inst->o_xkbswitch, "label", name);
+             edje_object_part_text_set(inst->o_xkbswitch, "e.text.label", name);
           }
      }
    else
      {
-        char buf[PATH_MAX];
-        
-        snprintf(buf, sizeof(buf), "%s/data/flags/%s_flag.png",
-                 e_prefix_data_get(), name);
-        
         EINA_LIST_FOREACH(instances, l, inst)
           {
              if (!inst->o_xkbflag)
-               {
-                  inst->o_xkbflag = e_icon_add(inst->gcc->gadcon->evas);
-                  e_icon_file_set(inst->o_xkbflag, buf);
-                  edje_object_part_swallow(inst->o_xkbswitch, "flag",
-                                           inst->o_xkbflag);
-               }
-             else
-               e_icon_file_set(inst->o_xkbflag, buf);
-             edje_object_part_text_set(inst->o_xkbswitch, "label", name);
+               inst->o_xkbflag = e_icon_add(inst->gcc->gadcon->evas);
+             e_xkb_e_icon_flag_setup(inst->o_xkbflag, name);
+             edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
+                                      inst->o_xkbflag);
+             edje_object_part_text_set(inst->o_xkbswitch, "e.text.label",
+                                       e_xkb_layout_name_reduce(name));
           }
      }
 }
@@ -316,7 +308,7 @@ e_xkb_update_layout(void)
    E_XKB_Config_Layout *cl;
    E_XKB_Config_Option *op;
    Eina_List *l;
-   char buf[PATH_MAX];
+   Eina_Strbuf *buf;
    
    if (!e_xkb_cfg->used_layouts) return;
 
@@ -324,41 +316,45 @@ e_xkb_update_layout(void)
     * set options.
     */
  
-   // XXX: this is unsafe. doesn't keep into account size of buf
-   snprintf(buf, sizeof(buf), "setxkbmap ");
+   buf = eina_strbuf_new();
+   eina_strbuf_append(buf, "setxkbmap '");
    EINA_LIST_FOREACH(e_xkb_cfg->used_layouts, l, cl)
      {
-        strcat(buf, cl->name);
+        eina_strbuf_append(buf, cl->name);
         break;
-        if (l->next) strcat(buf, ",");
+        //if (l->next) eina_strbuf_append(buf, ",");
      }
-   
-   strcat(buf, " -variant ");
+   eina_strbuf_append(buf, "'");
+  
+   eina_strbuf_append(buf, " -variant '");
    EINA_LIST_FOREACH(e_xkb_cfg->used_layouts, l, cl)
      {
-        strcat(buf, cl->variant);
-        strcat(buf, ",");
+        eina_strbuf_append(buf, cl->variant);
+        eina_strbuf_append(buf, ",");
         break;
      }
+   eina_strbuf_append(buf, "'");
    
-   strcat(buf, " -model ");
+   eina_strbuf_append(buf, " -model '");
    cl = eina_list_data_get(e_xkb_cfg->used_layouts);
-   
    if (strcmp(cl->model, "default"))
-     strcat(buf, cl->model);
+     eina_strbuf_append(buf, cl->model);
    else if (strcmp(e_xkb_cfg->default_model, "default"))
-     strcat(buf, e_xkb_cfg->default_model);
+     eina_strbuf_append(buf, e_xkb_cfg->default_model);
    else
-     strcat(buf, "default");
+     eina_strbuf_append(buf, "default");
+   eina_strbuf_append(buf, "'");
    
    EINA_LIST_FOREACH(e_xkb_cfg->used_options, l, op)
      {
-        strcat(buf, " -option ");
-        strcat(buf, op->name);
+        eina_strbuf_append(buf, " -option '");
+        eina_strbuf_append(buf, op->name);
+        eina_strbuf_append(buf, "'");
         break;
      }
-   printf("RUN: '%s'\n", buf);
-   ecore_exe_run(buf, NULL);
+   printf("RUN: '%s'\n", eina_strbuf_string_get(buf));
+   ecore_exe_run(eina_strbuf_string_get(buf), NULL);
+   eina_strbuf_free(buf);
 }
 
 void
@@ -399,6 +395,36 @@ e_xkb_layout_prev(void)
    e_xkb_update_layout();
 }
 
+const char *
+e_xkb_layout_name_reduce(const char *name)
+{
+   if ((name) && (strchr(name, '/'))) name = strchr(name, '/') + 1;
+   return name;
+}
+
+void
+e_xkb_e_icon_flag_setup(Evas_Object *eicon, const char *name)
+{
+   int w, h;
+   char buf[PATH_MAX];
+
+   e_xkb_flag_file_get(buf, sizeof(buf), name);
+   e_icon_file_set(eicon, buf);
+   e_icon_size_get(eicon, &w, &h);
+   edje_extern_object_aspect_set(eicon, EDJE_ASPECT_CONTROL_BOTH, w, h);
+}
+
+void
+e_xkb_flag_file_get(char *buf, size_t bufsize, const char *name)
+{
+   name = e_xkb_layout_name_reduce(name);
+   snprintf(buf, bufsize, "%s/data/flags/%s_flag.png",
+            e_prefix_data_get(), name ? name : "unknown");
+   if (!ecore_file_exists(buf))
+     snprintf(buf, bufsize, "%s/data/flags/unknown_flag.png",
+              e_prefix_data_get());
+}
+
 /* LOCAL STATIC FUNCTIONS */
 
 static E_Gadcon_Client *
@@ -407,23 +433,19 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    Instance   *inst;
    const char *name;
    
-   char buf[PATH_MAX];
-   
    if (e_xkb_cfg->used_layouts)
      name = ((E_XKB_Config_Layout*)eina_list_data_get(e_xkb_cfg->used_layouts))->name;
    else name = NULL;
 
-   if ((name) && (strchr(name, '/'))) name = strchr(name, '/') + 1;
-   
    /* The instance */
    inst = E_NEW(Instance, 1);
    /* The gadget */
    inst->o_xkbswitch = edje_object_add(gc->evas);
-   //XXX add to theme
    e_theme_edje_object_set(inst->o_xkbswitch,
                            "base/theme/modules/xkbswitch", 
                            "modules/xkbswitch/main");
-   if (name) edje_object_part_text_set(inst->o_xkbswitch, "label", name);
+   edje_object_part_text_set(inst->o_xkbswitch, "e.text.label",
+                             e_xkb_layout_name_reduce(name));
    /* The gadcon client */
    inst->gcc = e_gadcon_client_new(gc, gcname, id, style, inst->o_xkbswitch);
    inst->gcc->data = inst;
@@ -431,11 +453,10 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    if (!e_xkb_cfg->only_label)
      {
         inst->o_xkbflag = e_icon_add(gc->evas);
-        snprintf(buf, sizeof(buf), "%s/data/flags/%s_flag.png",
-                 e_prefix_data_get(), name ? name : "unknown");
-        e_icon_file_set(inst->o_xkbflag, buf);
+        e_xkb_e_icon_flag_setup(inst->o_xkbflag, name);
         /* The icon is part of the gadget. */
-        edje_object_part_swallow(inst->o_xkbswitch, "flag", inst->o_xkbflag);
+        edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
+                                 inst->o_xkbflag);
      }
    else inst->o_xkbflag = NULL;
    
@@ -648,12 +669,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
                   e_menu_item_radio_group_set(mi, 1);
                   e_menu_item_toggle_set(mi, 
                                          (l == e_xkb_cfg->used_layouts) ? 1 : 0);
-                  if (strchr(name, '/')) name = strchr(name, '/') + 1;
-                  snprintf(buf, sizeof(buf), "%s/data/flags/%s_flag.png",
-                           e_prefix_data_get(), name);
-                  if (!ecore_file_exists(buf))
-                    snprintf(buf, sizeof(buf), "%s/data/flags/unknown_flag.png",
-                             e_prefix_data_get());
+                  e_xkb_flag_file_get(buf, sizeof(buf), name);
                   e_menu_item_icon_file_set(mi, buf);
                   snprintf(buf, sizeof(buf), "%s (%s, %s)", cl->name, 
                            cl->model, cl->variant);
