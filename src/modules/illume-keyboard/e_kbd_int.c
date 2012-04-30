@@ -1790,7 +1790,7 @@ e_kbd_int_new(const char *themedir, const char *syskbds, const char *sysdicts)
    if (il_kbd_cfg->dict)
      ki->kbuf = e_kbd_buf_new(ki->sysdicts, il_kbd_cfg->dict);
    else
-     ki->kbuf = e_kbd_buf_new(ki->sysdicts, "English_(US).dic");
+     ki->kbuf = e_kbd_buf_new(ki->sysdicts, "English_US.dic");
 
    _e_kbd_int_layouts_list_update(ki);
 
