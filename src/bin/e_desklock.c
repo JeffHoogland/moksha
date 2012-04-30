@@ -113,11 +113,15 @@ e_desklock_init(void)
 EINTERN int
 e_desklock_shutdown(void)
 {
+   Eina_Bool waslocked = EINA_FALSE;
+   
+   if (edd) waslocked = EINA_TRUE;
    if (!x_fatal)
       e_desklock_hide();
    if (e_config->desklock_background)
      e_filereg_deregister(e_config->desklock_background);
-
+   
+   if (waslocked) e_util_env_set("E_DESKLOCK_LOCKED", "locked");
    return 1;
 }
 
@@ -405,6 +409,8 @@ e_desklock_show(void)
    ev = E_NEW(E_Event_Desklock, 1);
    ev->on = 1;
    ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
+   
+   e_util_env_set("E_DESKLOCK_LOCKED", "locked");
    return 1;
 }
 
@@ -470,6 +476,7 @@ e_desklock_hide(void)
 
 	_e_desklock_autolock_time = 0.0;
      }
+   e_util_env_set("E_DESKLOCK_LOCKED", "freefreefree");
 }
 
 static Eina_Bool

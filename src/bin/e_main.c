@@ -132,6 +132,7 @@ main(int argc, char **argv)
    Eina_Bool nostartup = EINA_FALSE;
    Eina_Bool safe_mode = EINA_FALSE;
    Eina_Bool after_restart = EINA_FALSE;
+   Eina_Bool waslocked = EINA_FALSE;
    double t = 0.0, tstart = 0.0;
    char *s = NULL, buff[32];
    struct sigaction action;
@@ -451,6 +452,9 @@ main(int argc, char **argv)
    e_util_env_set("E_ICON_THEME", e_config->icon_theme);
    ecore_exe_run_priority_set(e_config->priority);
    locked |= e_config->desklock_start_locked;
+   
+   s = getenv("E_DESKLOCK_LOCKED");
+   if ((s) && (!strcmp(s, "locked"))) waslocked = EINA_TRUE;
 
    TS("E_Scale Init");
    if (!e_scale_init())
@@ -660,6 +664,7 @@ main(int argc, char **argv)
 
    if ((locked) && ((!e_config->show_splash) && (!after_restart)))
      e_desklock_show();
+   else if (waslocked) e_desklock_show();
 
    if (e_config->show_splash)
      e_init_status_set(_("Setup Message Bus"));
