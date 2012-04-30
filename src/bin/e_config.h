@@ -20,6 +20,9 @@ typedef struct _E_Config_Shelf_Desk         E_Config_Shelf_Desk;
 typedef struct _E_Config_Mime_Icon          E_Config_Mime_Icon;
 typedef struct _E_Config_Syscon_Action      E_Config_Syscon_Action;
 typedef struct _E_Config_Env_Var            E_Config_Env_Var;
+typedef struct _E_Config_XKB_Layout         E_Config_XKB_Layout;
+typedef struct _E_Config_XKB_Option         E_Config_XKB_Option;
+
 typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 
 #else
@@ -33,7 +36,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0148
+#define E_CONFIG_FILE_GENERATION 0x0149
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -340,6 +343,13 @@ struct _E_Config
       unsigned char check; // INTERNAL
       unsigned char later; // INTERNAL
    } update;
+   
+   struct {
+      Eina_List  *used_layouts;
+      Eina_List  *used_options;
+      int         only_label;
+      const char *default_model;
+   } xkb;
 };
 
 struct _E_Config_Env_Var
@@ -510,6 +520,18 @@ struct _E_Config_Mime_Icon
 struct _E_Event_Config_Icon_Theme
 {
    const char *icon_theme;
+};
+
+struct _E_Config_XKB_Layout
+{
+   const char *name;
+   const char *model;
+   const char *variant;
+};
+
+struct _E_Config_XKB_Option
+{
+   const char *name;
 };
 
 EINTERN int        e_config_init(void);

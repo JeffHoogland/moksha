@@ -1,38 +1,20 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_mod_parse.h"
-#include "e_mod_keybindings.h"
-
-/* Static functions
- * The static functions specific to the current code unit.
- */
 
 /* GADCON */
-
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
-
 static void _gc_shutdown(E_Gadcon_Client *gcc);
-static void _gc_orient  (E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-
-static const char *_gc_label (E_Gadcon_Client_Class *client_class);
+static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+static const char *_gc_label(E_Gadcon_Client_Class *client_class);
 static const char *_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__);
-
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
 
-/* CONFIG */
-
-static void _e_xkb_cfg_new (void);
-static void _e_xkb_cfg_free(void);
-
-static Eina_Bool _e_xkb_cfg_timer(void *data);
-
 /* EVENTS */
-
+static Eina_Bool _xkb_changed(void *data, int type, void *event_info);
 static void _e_xkb_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
-
 static void _e_xkb_cb_menu_post(void *data, E_Menu *menu __UNUSED__);
 static void _e_xkb_cb_menu_configure(void *data, E_Menu *mn, E_Menu_Item *mi __UNUSED__);
-
 static void _e_xkb_cb_lmenu_post(void *data, E_Menu *menu __UNUSED__);
 static void _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__);
 
@@ -56,18 +38,12 @@ typedef struct _Instance
 /* LIST OF INSTANCES */
 static Eina_List *instances = NULL;
 
-/* EET STRUCTURES */
-
-static E_Config_DD *e_xkb_cfg_edd        = NULL;
-static E_Config_DD *e_xkb_cfg_layout_edd = NULL;
-static E_Config_DD *e_xkb_cfg_option_edd = NULL;
-
 /* Global variables
  * Global variables shared across the module.
  */
 
 /* CONFIG STRUCTURE */
-E_XKB_Config *e_xkb_cfg = NULL;
+Xkb _xkb = { NULL, NULL };
 
 static const E_Gadcon_Client_Class _gc_class = 
 {
@@ -98,100 +74,11 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("keyboard_and_mouse/xkbswitch", 110,
                                  _("XKB Switcher"),  NULL,
                                  "preferences-desktop-locale", 
-                                 e_xkb_cfg_dialog);
-   e_xkb_cfg_layout_edd = E_CONFIG_DD_NEW("E_XKB_Config_Layout", E_XKB_Config_Layout);
-#undef T
-#undef D
-#define T E_XKB_Config_Layout
-#define D e_xkb_cfg_layout_edd
-   E_CONFIG_VAL(D, T, name,    STR);
-   E_CONFIG_VAL(D, T, model,   STR);
-   E_CONFIG_VAL(D, T, variant, STR);
-   
-   e_xkb_cfg_option_edd = E_CONFIG_DD_NEW("E_XKB_Config_Option", E_XKB_Config_Option);
-#undef T
-#undef D
-#define T E_XKB_Config_Option
-#define D e_xkb_cfg_option_edd
-   E_CONFIG_VAL(D, T, name, STR);
-   
-   e_xkb_cfg_edd = E_CONFIG_DD_NEW("e_xkb_cfg", E_XKB_Config);
-#undef T
-#undef D
-#define T E_XKB_Config
-#define D e_xkb_cfg_edd
-   E_CONFIG_LIST(D, T, used_layouts, e_xkb_cfg_layout_edd);
-   E_CONFIG_LIST(D, T, used_options, e_xkb_cfg_option_edd);
-   E_CONFIG_VAL(D, T, layout_next_key.context, INT);
-   E_CONFIG_VAL(D, T, layout_next_key.modifiers, INT);
-   E_CONFIG_VAL(D, T, layout_next_key.key, STR);
-   E_CONFIG_VAL(D, T, layout_next_key.action, STR);
-   E_CONFIG_VAL(D, T, layout_next_key.params, STR);
-   E_CONFIG_VAL(D, T, layout_next_key.any_mod, UCHAR);
-   E_CONFIG_VAL(D, T, layout_prev_key.context, INT);
-   E_CONFIG_VAL(D, T, layout_prev_key.modifiers, INT);
-   E_CONFIG_VAL(D, T, layout_prev_key.key, STR);
-   E_CONFIG_VAL(D, T, layout_prev_key.action, STR);
-   E_CONFIG_VAL(D, T, layout_prev_key.params, STR);
-   E_CONFIG_VAL(D, T, layout_prev_key.any_mod, UCHAR);
-   E_CONFIG_VAL(D, T, default_model, STR);
-   E_CONFIG_VAL(D, T, only_label, INT);
-   E_CONFIG_VAL(D, T, version, INT);
-   
-   /* Version check */
-   e_xkb_cfg = e_config_domain_load("module.xkbswitch", e_xkb_cfg_edd);
-   if (e_xkb_cfg) 
-     {
-        /* Check config version */
-        if ((e_xkb_cfg->version >> 16) < MOD_CONFIG_FILE_EPOCH) 
-          {
-             /* config too old */
-             _e_xkb_cfg_free();
-             ecore_timer_add(1.0, _e_xkb_cfg_timer,
-                             _("XKB Switcher Module Configuration data needed "
-                               "upgrading. Your old configuration<br> has been"
-                               " wiped and a new set of defaults initialized. "
-                               "This<br>will happen regularly during "
-                               "development, so don't report a<br>bug. "
-                               "This simply means the module needs "
-                               "new configuration<br>data by default for "
-                               "usable functionality that your old<br>"
-                               "configuration simply lacks. This new set of "
-                               "defaults will fix<br>that by adding it in. "
-                               "You can re-configure things now to your<br>"
-                               "liking. Sorry for the inconvenience.<br>"));
-          }
-        /* Ardvarks */
-        else if (e_xkb_cfg->version > MOD_CONFIG_FILE_VERSION) 
-          {
-             /* config too new...wtf ? */
-             _e_xkb_cfg_free();
-             ecore_timer_add(1.0, _e_xkb_cfg_timer, 
-                             _("Your XKB Switcher Module configuration is NEWER "
-                               "than the module version. This is "
-                               "very<br>strange. This should not happen unless"
-                               " you downgraded<br>the module or "
-                               "copied the configuration from a place where"
-                               "<br>a newer version of the module "
-                               "was running. This is bad and<br>as a "
-                               "precaution your configuration has been now "
-                               "restored to<br>defaults. Sorry for the "
-                               "inconvenience.<br>"));
-          }
-     }
-   
-   if (!e_xkb_cfg) _e_xkb_cfg_new();
-   e_xkb_cfg->module = m;
-   /* Rules */
-   find_rules();
-   /* Update the layout - can't update icon, gadgets are not there yet */
-   e_xkb_update_layout();
+                                 _xkb_cfg_dialog);
+   _xkb.module = m;
+   _xkb.evh = ecore_event_handler_add(E_EVENT_XKB_CHANGED, _xkb_changed, NULL);
    /* Gadcon */
    e_gadcon_provider_register(&_gc_class);
-   /* Bindings */
-   e_xkb_register_module_actions();
-   e_xkb_register_module_keybindings();
-   
    return m;
 }
 
@@ -202,47 +89,14 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
-   E_XKB_Config_Layout *cl;
-   E_XKB_Config_Option *op;
-   
    e_configure_registry_item_del("keyboard_and_mouse/xkbswitch");
    e_configure_registry_category_del("keyboard_and_mouse");
-   
-   if (e_xkb_cfg->cfd) e_object_del(E_OBJECT(e_xkb_cfg->cfd));
-   
-   e_xkb_cfg->cfd    = NULL;
-   e_xkb_cfg->module = NULL;
-   
+
+   if (_xkb.evh) ecore_event_handler_del(_xkb.evh);
+   if (_xkb.cfd) e_object_del(E_OBJECT(_xkb.cfd));
+   _xkb.cfd    = NULL;
+   _xkb.module = NULL;
    e_gadcon_provider_unregister(&_gc_class);
-   
-   e_xkb_unregister_module_actions();
-   e_xkb_unregister_module_keybindings();
-   
-   EINA_LIST_FREE(e_xkb_cfg->used_layouts, cl)
-     {
-        eina_stringshare_del(cl->name);
-        eina_stringshare_del(cl->model);
-        eina_stringshare_del(cl->variant);
-        
-        E_FREE(cl);
-     }
-   
-   EINA_LIST_FREE(e_xkb_cfg->used_options, op)
-     {
-        eina_stringshare_del(op->name);
-        E_FREE(op);
-     }
-   
-   if (e_xkb_cfg->default_model)
-     eina_stringshare_del(e_xkb_cfg->default_model);
-   
-   E_FREE(e_xkb_cfg);
-   
-   E_CONFIG_DD_FREE(e_xkb_cfg_layout_edd);
-   E_CONFIG_DD_FREE(e_xkb_cfg_option_edd);
-   E_CONFIG_DD_FREE(e_xkb_cfg_edd);
-   
-   clear_rules();
    
    return 1;
 }
@@ -253,7 +107,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
-   e_config_domain_save("module.xkbswitch", e_xkb_cfg_edd, e_xkb_cfg);
    return 1;
 }
 
@@ -261,17 +114,19 @@ e_modapi_save(E_Module *m __UNUSED__)
  * current layout state.
  */
 void
-e_xkb_update_icon(void)
+_xkb_update_icon(void)
 {
-   Instance  *inst;
+   Instance *inst;
    Eina_List *l;
+   const char *name;
    
-   if (!e_xkb_cfg->used_layouts) return;
-   const char *name = ((E_XKB_Config_Layout*)eina_list_data_get(e_xkb_cfg->used_layouts))->name;
+   if (!e_config->xkb.used_layouts) return;
+   name = ((E_Config_XKB_Layout*)
+           eina_list_data_get(e_config->xkb.used_layouts))->name;
 
    if ((name) && (strchr(name, '/'))) name = strchr(name, '/') + 1;
    
-   if (e_xkb_cfg->only_label)
+   if (e_config->xkb.only_label)
      {
         EINA_LIST_FOREACH(instances, l, inst)
           {
@@ -302,129 +157,6 @@ e_xkb_update_icon(void)
      }
 }
 
-void
-e_xkb_update_layout(void)
-{
-   E_XKB_Config_Layout *cl;
-   E_XKB_Config_Option *op;
-   Eina_List *l;
-   Eina_Strbuf *buf;
-   
-   if (!e_xkb_cfg->used_layouts) return;
-
-   /* We put an empty -option here in order to override all previously
-    * set options.
-    */
- 
-   buf = eina_strbuf_new();
-   eina_strbuf_append(buf, "setxkbmap '");
-   EINA_LIST_FOREACH(e_xkb_cfg->used_layouts, l, cl)
-     {
-        eina_strbuf_append(buf, cl->name);
-        break;
-        //if (l->next) eina_strbuf_append(buf, ",");
-     }
-   eina_strbuf_append(buf, "'");
-  
-   eina_strbuf_append(buf, " -variant '");
-   EINA_LIST_FOREACH(e_xkb_cfg->used_layouts, l, cl)
-     {
-        eina_strbuf_append(buf, cl->variant);
-        eina_strbuf_append(buf, ",");
-        break;
-     }
-   eina_strbuf_append(buf, "'");
-   
-   eina_strbuf_append(buf, " -model '");
-   cl = eina_list_data_get(e_xkb_cfg->used_layouts);
-   if (strcmp(cl->model, "default"))
-     eina_strbuf_append(buf, cl->model);
-   else if (strcmp(e_xkb_cfg->default_model, "default"))
-     eina_strbuf_append(buf, e_xkb_cfg->default_model);
-   else
-     eina_strbuf_append(buf, "default");
-   eina_strbuf_append(buf, "'");
-   
-   EINA_LIST_FOREACH(e_xkb_cfg->used_options, l, op)
-     {
-        eina_strbuf_append(buf, " -option '");
-        eina_strbuf_append(buf, op->name);
-        eina_strbuf_append(buf, "'");
-        break;
-     }
-   printf("RUN: '%s'\n", eina_strbuf_string_get(buf));
-   ecore_exe_run(eina_strbuf_string_get(buf), NULL);
-   eina_strbuf_free(buf);
-}
-
-void
-e_xkb_layout_next(void)
-{
-   void *odata, *ndata;
-   Eina_List *l;
-   
-   odata = eina_list_data_get(e_xkb_cfg->used_layouts);
-   
-   EINA_LIST_FOREACH(eina_list_next(e_xkb_cfg->used_layouts), l, ndata)
-     {
-        eina_list_data_set(eina_list_prev(l), ndata);
-     }
-   
-   eina_list_data_set(eina_list_last(e_xkb_cfg->used_layouts), odata);
-   e_xkb_update_icon();
-   e_xkb_update_layout();
-}
-
-void
-e_xkb_layout_prev(void)
-{
-   void *odata, *ndata;
-   Eina_List *l;
-   
-   odata = eina_list_data_get(eina_list_last(e_xkb_cfg->used_layouts));
-   
-   for (l = e_xkb_cfg->used_layouts, ndata = eina_list_data_get(l);
-        l; l = eina_list_next(l))
-     {
-        if (eina_list_next(l))
-          ndata = eina_list_data_set(eina_list_next(l), ndata);
-     }
-   
-   eina_list_data_set(e_xkb_cfg->used_layouts, odata);
-   e_xkb_update_icon();
-   e_xkb_update_layout();
-}
-
-const char *
-e_xkb_layout_name_reduce(const char *name)
-{
-   if ((name) && (strchr(name, '/'))) name = strchr(name, '/') + 1;
-   return name;
-}
-
-void
-e_xkb_e_icon_flag_setup(Evas_Object *eicon, const char *name)
-{
-   int w, h;
-   char buf[PATH_MAX];
-
-   e_xkb_flag_file_get(buf, sizeof(buf), name);
-   e_icon_file_set(eicon, buf);
-   e_icon_size_get(eicon, &w, &h);
-   edje_extern_object_aspect_set(eicon, EDJE_ASPECT_CONTROL_BOTH, w, h);
-}
-
-void
-e_xkb_flag_file_get(char *buf, size_t bufsize, const char *name)
-{
-   name = e_xkb_layout_name_reduce(name);
-   snprintf(buf, bufsize, "%s/data/flags/%s_flag.png",
-            e_prefix_data_get(), name ? name : "unknown");
-   if (!ecore_file_exists(buf))
-     snprintf(buf, bufsize, "%s/data/flags/unknown_flag.png",
-              e_prefix_data_get());
-}
-
 /* LOCAL STATIC FUNCTIONS */
 
 static E_Gadcon_Client *
@@ -433,8 +165,9 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    Instance   *inst;
    const char *name;
    
-   if (e_xkb_cfg->used_layouts)
-     name = ((E_XKB_Config_Layout*)eina_list_data_get(e_xkb_cfg->used_layouts))->name;
+   if (e_config->xkb.used_layouts)
+     name = ((E_Config_XKB_Layout*)
+             eina_list_data_get(e_config->xkb.used_layouts))->name;
    else name = NULL;
 
    /* The instance */
@@ -450,7 +183,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    inst->gcc = e_gadcon_client_new(gc, gcname, id, style, inst->o_xkbswitch);
    inst->gcc->data = inst;
    /* The flag icon */
-   if (!e_xkb_cfg->only_label)
+   if (!e_config->xkb.only_label)
      {
         inst->o_xkbflag = e_icon_add(gc->evas);
         e_xkb_e_icon_flag_setup(inst->o_xkbflag, name);
@@ -525,68 +258,17 @@ _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
    Evas_Object *o;
    char buf[PATH_MAX];
    
-   snprintf(buf, sizeof(buf), "%s/e-module-xkbswitch.edj",
-            e_xkb_cfg->module->dir);
+   snprintf(buf, sizeof(buf), "%s/e-module-xkbswitch.edj", _xkb.module->dir);
    o = edje_object_add(evas);
    edje_object_file_set(o, buf, "icon");
    return o;
 }
 
-static void
-_e_xkb_cfg_new(void) 
-{
-   e_xkb_cfg = E_NEW(E_XKB_Config, 1);
-   
-   e_xkb_cfg->used_layouts = NULL;
-   e_xkb_cfg->used_options = NULL;
-   e_xkb_cfg->version = MOD_CONFIG_FILE_VERSION;
-   e_xkb_cfg->default_model = eina_stringshare_add("default");
-   
-#define BIND(act, actname) \
-   e_xkb_cfg->layout_##act##_key.context = E_BINDING_CONTEXT_ANY; \
-   e_xkb_cfg->layout_##act##_key.key = eina_stringshare_add("comma"); \
-   e_xkb_cfg->layout_##act##_key.modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT; \
-   e_xkb_cfg->layout_##act##_key.any_mod = 0; \
-   e_xkb_cfg->layout_##act##_key.action = eina_stringshare_add(actname); \
-   e_xkb_cfg->layout_##act##_key.params = NULL
-   
-   BIND(next, E_XKB_NEXT_ACTION);
-   BIND(prev, E_XKB_PREV_ACTION);
-#undef BIND
-   
-   e_config_save_queue();
-}
-
-static void
-_e_xkb_cfg_free(void) 
-{
-   E_XKB_Config_Layout *cl;
-   E_XKB_Config_Option *op;
-   
-   EINA_LIST_FREE(e_xkb_cfg->used_layouts, cl)
-     {
-        eina_stringshare_del(cl->name);
-        eina_stringshare_del(cl->model);
-        eina_stringshare_del(cl->variant);
-        E_FREE(cl);
-     }
-   
-   EINA_LIST_FREE(e_xkb_cfg->used_options, op)
-     {
-        eina_stringshare_del(op->name);
-        E_FREE(op);
-     }
-   
-   if (e_xkb_cfg->default_model)
-     eina_stringshare_del(e_xkb_cfg->default_model);
-   E_FREE(e_xkb_cfg);
-}
-
 static Eina_Bool
-_e_xkb_cfg_timer(void *data) 
+_xkb_changed(void *data, int type, void *event_info)
 {
-   e_util_dialog_internal( _("XKB Switcher Configuration Updated"), data);
-   return EINA_FALSE;
+   _xkb_update_icon();
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -643,7 +325,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
 
         if (inst->lmenu)
           {
-             E_XKB_Config_Layout *cl;
+             E_Config_XKB_Layout *cl;
              E_Menu_Item *mi;
              Eina_List *l;
              int dir;
@@ -659,7 +341,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
              e_menu_item_separator_set(mi, 1);
              
              /* Append all the layouts */
-             EINA_LIST_FOREACH(e_xkb_cfg->used_layouts, l, cl)
+             EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
                {
                   const char *name = cl->name;
                   
@@ -668,7 +350,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
                   e_menu_item_radio_set(mi, 1);
                   e_menu_item_radio_group_set(mi, 1);
                   e_menu_item_toggle_set(mi, 
-                                         (l == e_xkb_cfg->used_layouts) ? 1 : 0);
+                                         (l == e_config->xkb.used_layouts) ? 1 : 0);
                   e_xkb_flag_file_get(buf, sizeof(buf), name);
                   e_menu_item_icon_file_set(mi, buf);
                   snprintf(buf, sizeof(buf), "%s (%s, %s)", cl->name, 
@@ -763,8 +445,8 @@ _e_xkb_cb_lmenu_post(void *data, E_Menu *menu __UNUSED__)
 static void
 _e_xkb_cb_menu_configure(void *data __UNUSED__, E_Menu *mn, E_Menu_Item *mi __UNUSED__)
 {
-   if (!e_xkb_cfg || e_xkb_cfg->cfd) return;
-   e_xkb_cfg_dialog(mn->zone->container, NULL);
+   if (_xkb.cfd) return;
+   _xkb_cfg_dialog(mn->zone->container, NULL);
 }
 
 static void
@@ -772,15 +454,13 @@ _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED_
 {
    Eina_List *l;
    void *ndata;
-   void *odata = eina_list_data_get(e_xkb_cfg->used_layouts);
+   void *odata = eina_list_data_get(e_config->xkb.used_layouts);
 
-   EINA_LIST_FOREACH(e_xkb_cfg->used_layouts, l, ndata)
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, ndata)
      {
         if (ndata == data) eina_list_data_set(l, odata);
      }
-   
-   eina_list_data_set(e_xkb_cfg->used_layouts, data);
-   
-   e_xkb_update_icon();
-   e_xkb_update_layout();
+   eina_list_data_set(e_config->xkb.used_layouts, data);
+   e_xkb_update();
+   _xkb_update_icon();
 }

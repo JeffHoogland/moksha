@@ -1,5 +1,5 @@
 group "E_Config" struct {
-    value "config_version" int: 65864;
+    value "config_version" int: 65865;
     value "show_splash" int: 1;
     value "init_default_theme" string: "default.edj";
     value "desktop_default_name" string: "Desktop %i, %i";
@@ -1978,4 +1978,13 @@ group "E_Config" struct {
             value "priority" int: 0;
         }
     }
+    group "xkb.used_layouts" list {   
+        group "E_Config_XKB_Layout" struct {
+           value "name" string: "us";
+           value "model" string: "default";
+           value "variant" string: "basic";
+        }
+    }
+    value "xkb.only_label" int: 0;
+    value "xkb.default_model" string: "default";
 }

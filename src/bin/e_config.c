@@ -58,6 +58,8 @@ static E_Config_DD *_e_config_randr_serialized_output_policy_edd = NULL;
 static E_Config_DD *_e_config_randr_serialized_output_edd = NULL;
 static E_Config_DD *_e_config_randr_mode_info_edd = NULL;
 static E_Config_DD *_e_config_randr_serialized_crtc_edd = NULL;
+static E_Config_DD *_e_config_xkb_layout_edd = NULL;
+static E_Config_DD *_e_config_xkb_option_edd = NULL;
 
 
 EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
@@ -605,6 +607,24 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, serialized_setups_12, _e_config_randr_serialized_setup_12_edd);
    E_CONFIG_LIST(D, T, outputs_policies, _e_config_randr_serialized_output_policy_edd);
 
+   _e_config_xkb_layout_edd = E_CONFIG_DD_NEW("E_Config_XKB_Layout",
+                                              E_Config_XKB_Layout);
+#undef T
+#undef D
+#define T E_Config_XKB_Layout
+#define D _e_config_xkb_layout_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   E_CONFIG_VAL(D, T, model, STR);
+   E_CONFIG_VAL(D, T, variant, STR);
+
+   _e_config_xkb_option_edd = E_CONFIG_DD_NEW("E_Config_XKB_Option",
+                                              E_Config_XKB_Option);
+#undef T
+#undef D
+#define T E_Config_XKB_Option
+#define D _e_config_xkb_option_edd
+   E_CONFIG_VAL(D, T, name, STR);
+   
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
 #undef D
@@ -891,7 +911,12 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, update.check, UCHAR);
    E_CONFIG_VAL(D, T, update.later, UCHAR);
-   
+
+   E_CONFIG_LIST(D, T, xkb.used_layouts, _e_config_xkb_layout_edd);
+   E_CONFIG_LIST(D, T, xkb.used_options, _e_config_xkb_option_edd);
+   E_CONFIG_VAL(D, T, xkb.only_label, INT);
+   E_CONFIG_VAL(D, T, xkb.default_model, STR); 
+  
    e_config_load();
 
    e_config_save_queue();
@@ -924,6 +949,8 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_mime_icon_edd);
    E_CONFIG_DD_FREE(_e_config_syscon_action_edd);
    E_CONFIG_DD_FREE(_e_config_env_var_edd);
+   E_CONFIG_DD_FREE(_e_config_xkb_layout_edd);
+   E_CONFIG_DD_FREE(_e_config_xkb_option_edd);
    //E_CONFIG_DD_FREE(_e_config_randr_serialized_setup_edd);
    return 1;
 }
@@ -1870,9 +1897,28 @@ _e_config_free(E_Config *ecf)
    E_Path_Dir *epd;
    E_Remember *rem;
    E_Config_Env_Var *evr;
+   E_Config_XKB_Layout *cl;
+   E_Config_XKB_Option *op;
 
    if (!ecf) return;
 
+   if (e_config->xkb.default_model)
+     eina_stringshare_del(e_config->xkb.default_model);
+   
+   EINA_LIST_FREE(e_config->xkb.used_layouts, cl)
+     {
+        eina_stringshare_del(cl->name);
+        eina_stringshare_del(cl->model);
+        eina_stringshare_del(cl->variant);
+        E_FREE(cl);
+     }
+   
+   EINA_LIST_FREE(e_config->xkb.used_options, op)
+     {
+        eina_stringshare_del(op->name);
+        E_FREE(op);
+     }
+   
    EINA_LIST_FREE(ecf->modules, em)
      {
         if (em->name) eina_stringshare_del(em->name);

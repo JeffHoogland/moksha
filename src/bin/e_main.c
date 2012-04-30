@@ -819,6 +819,13 @@ main(int argc, char **argv)
 	_e_main_shutdown(-1);
      }
    TS("E_Mouse Init Done");
+   TS("E_Xkb Init");
+   if (!e_xkb_init()) 
+     {
+	e_error_message_show(_("Enlightenment cannot setup XKB Keyboard layouts."));
+	_e_main_shutdown(-1);
+     }
+   TS("E_Xkb Init Done");
 
    if (e_config->show_splash) 
      e_init_status_set(_("Setup Bindings"));

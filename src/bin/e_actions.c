@@ -2672,6 +2672,22 @@ ACT_FN_GO(backlight_adjust, )
    e_backlight_level_set(zone, e_backlight_level_get(zone) + ((double)v / 100.0), -1.0);
 }
 
+ACT_FN_GO(kbd_layout, )
+{
+   if (!params) return;
+//   e_xkb_layout_set(params);
+}
+
+ACT_FN_GO(kbd_layout_next, __UNUSED__)
+{
+//   e_xkb_layout_next();
+}
+
+ACT_FN_GO(kbd_layout_prev, __UNUSED__)
+{
+//   e_xkb_layout_prev();
+}
+
 /* local subsystem globals */
 static Eina_Hash *actions = NULL;
 static Eina_List *action_list = NULL;
@@ -3133,6 +3149,19 @@ e_actions_init(void)
    ACT_END_KEY(delayed_action);
    ACT_END_MOUSE(delayed_action);
 
+   /* xkb */
+   ACT_GO(kbd_layout);
+   e_action_predef_name_set(N_("Keyboard Layouts"), 
+                            N_("Use keyboard layout"), "kbd_layout",
+			    NULL, "syntax: Keyboard-layout-name, example: us", 1);
+   ACT_GO(kbd_layout_next);
+   e_action_predef_name_set(N_("Keyboard Layouts"), 
+                            N_("Next keyboard layout"), "kbd_layout_next",
+			    NULL, NULL, 0);
+   ACT_GO(kbd_layout_prev);
+   e_action_predef_name_set(N_("Keyboard Layouts"), 
+                            N_("Previous keyboard layout"), "kbd_layout_prev",
+			    NULL, NULL, 0);
    return 1;
 }
 

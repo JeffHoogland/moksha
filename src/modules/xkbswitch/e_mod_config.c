@@ -2,6 +2,30 @@
 #include "e_mod_main.h"
 #include "e_mod_parse.h"
 
+struct _E_Config_Dialog_Data
+{
+   Evas *evas, *dlg_evas;
+   Evas_Object *layout_list, *used_list;
+   Evas_Object *dmodel_list, *model_list, *variant_list;
+   Evas_Object *btn_add, *btn_del, *btn_up, *btn_down;
+   Ecore_Timer *fill_delay;
+   Ecore_Timer *dlg_fill_delay;
+   
+   Eina_List  *cfg_layouts;
+   Eina_List  *cfg_options;
+   const char *default_model;
+   
+   int only_label;
+   
+   E_Dialog *dlg_add_new;
+};
+
+typedef struct _E_XKB_Dialog_Option
+{
+   int enabled;
+   const char *name;
+} E_XKB_Dialog_Option;
+
 /* Local prototypes */
 
 static void *_create_data(E_Config_Dialog *cfd);
@@ -32,7 +56,7 @@ static Eina_Bool _cb_fill_delay(void *data);
 /* Externals */
 
 E_Config_Dialog *
-e_xkb_cfg_dialog(E_Container *con, const char *params __UNUSED__)
+_xkb_cfg_dialog(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -47,11 +71,11 @@ e_xkb_cfg_dialog(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata   = _basic_apply;
    
    cfd = e_config_dialog_new(con, _("XKB Switcher Module"), "XKB Switcher", 
-                             "keyboard_and_mouse/xkbswitch", "preferences-desktop-locale",
+                             "keyboard_and_mouse/xkbswitch",
+                             "preferences-desktop-locale",
                              0, v, NULL);
-   
    e_dialog_resizable_set(cfd->dia, 1);
-   e_xkb_cfg->cfd = cfd;
+   _xkb.cfd = cfd;
    return cfd;
 }
 
@@ -62,19 +86,20 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *l, *ll, *lll;
-   E_XKB_Config_Layout *cl, *nl;
+   E_Config_XKB_Layout *cl, *nl;
    E_XKB_Dialog_Option *od;
    E_XKB_Option *op;
    E_XKB_Option_Group *gr;
-   
+
+   find_rules();
    parse_rules(); /* XXX: handle in case nothing was found? */
    
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    
    cfdata->cfg_layouts = NULL;
-   EINA_LIST_FOREACH(e_xkb_cfg->used_layouts, l, cl)
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
      {
-        nl          = E_NEW(E_XKB_Config_Layout, 1);
+        nl          = E_NEW(E_Config_XKB_Layout, 1);
         nl->name    = eina_stringshare_add(cl->name);
         nl->model   = eina_stringshare_add(cl->model);
         nl->variant = eina_stringshare_add(cl->variant);
@@ -84,10 +109,10 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    
    /* Initialize options */
    
-   cfdata->only_label  = e_xkb_cfg->only_label;
+   cfdata->only_label  = e_config->xkb.only_label;
    cfdata->cfg_options = NULL;
    
-   lll = e_xkb_cfg->used_options;
+   lll = e_config->xkb.used_options;
    EINA_LIST_FOREACH(optgroups, l, gr)
      {
         EINA_LIST_FOREACH(gr->options, ll, op)
@@ -95,7 +120,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
              od = E_NEW(E_XKB_Dialog_Option, 1);
              od->name = eina_stringshare_add(op->name);
              if (lll && 
-                 (od->name == ((E_XKB_Config_Option*)eina_list_data_get(lll))->name))
+                 (od->name == ((E_Config_XKB_Option *)
+                               eina_list_data_get(lll))->name))
                {
                   od->enabled = 1;
                   lll = eina_list_next(lll);
@@ -111,10 +137,10 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   E_XKB_Config_Layout *cl;
+   E_Config_XKB_Layout *cl;
    E_XKB_Dialog_Option *od;
    
-   e_xkb_cfg->cfd = NULL;
+   _xkb.cfd = NULL;
    
    EINA_LIST_FREE(cfdata->cfg_layouts, cl)
      {
@@ -139,11 +165,11 @@ static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l;
-   E_XKB_Config_Layout *cl, *nl;
-   E_XKB_Config_Option *oc;
+   E_Config_XKB_Layout *cl, *nl;
+   E_Config_XKB_Option *oc;
    E_XKB_Dialog_Option *od;
    
-   EINA_LIST_FREE(e_xkb_cfg->used_layouts, cl)
+   EINA_LIST_FREE(e_config->xkb.used_layouts, cl)
      {
         eina_stringshare_del(cl->name);
         eina_stringshare_del(cl->model);
@@ -153,24 +179,24 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    
    EINA_LIST_FOREACH(cfdata->cfg_layouts, l, cl)
      {
-        nl          = E_NEW(E_XKB_Config_Layout, 1);
+        nl          = E_NEW(E_Config_XKB_Layout, 1);
         nl->name    = eina_stringshare_add(cl->name);
         nl->model   = eina_stringshare_add(cl->model);
         nl->variant = eina_stringshare_add(cl->variant);
         
-        e_xkb_cfg->used_layouts =
-          eina_list_append(e_xkb_cfg->used_layouts, nl);
+        e_config->xkb.used_layouts =
+          eina_list_append(e_config->xkb.used_layouts, nl);
      }
    
-   if (e_xkb_cfg->default_model)
-     eina_stringshare_del(e_xkb_cfg->default_model);
+   if (e_config->xkb.default_model)
+     eina_stringshare_del(e_config->xkb.default_model);
    
-   e_xkb_cfg->default_model = eina_stringshare_add(cfdata->default_model);
+   e_config->xkb.default_model = eina_stringshare_add(cfdata->default_model);
    
    /* Save options */
-   e_xkb_cfg->only_label = cfdata->only_label;
+   e_config->xkb.only_label = cfdata->only_label;
    
-   EINA_LIST_FREE(e_xkb_cfg->used_options, oc)
+   EINA_LIST_FREE(e_config->xkb.used_options, oc)
      {
         eina_stringshare_del(oc->name);
         E_FREE(oc);
@@ -180,13 +206,12 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      {
         if (!od->enabled) continue;
         
-        oc = E_NEW(E_XKB_Config_Option, 1);
+        oc = E_NEW(E_Config_XKB_Option, 1);
         oc->name = eina_stringshare_add(od->name);
-        e_xkb_cfg->used_options = eina_list_append(e_xkb_cfg->used_options, oc);
+        e_config->xkb.used_options = eina_list_append(e_config->xkb.used_options, oc);
     }
    
-   e_xkb_update_icon();
-   e_xkb_update_layout();
+   e_xkb_update();
    
    e_config_save_queue();
    return 1;
@@ -278,7 +303,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                   EINA_LIST_FOREACH(group->options, ll, option)
                     {
                        Evas_Object *chk = e_widget_check_add(evas, option->description,
-                                                             &(((E_XKB_Dialog_Option*)
+                                                             &(((E_XKB_Dialog_Option *)
                                                                 eina_list_data_get(lll))->enabled));
                        e_widget_framelist_object_append(grp, chk);
                        lll = eina_list_next(lll);
@@ -433,7 +458,7 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
    Evas *evas;
    Evas_Coord mw, mh;
    
-   if (!(dlg = e_dialog_new(e_xkb_cfg->cfd->con, "E", "xkbswitch_config_add_dialog"))) return NULL;
+   if (!(dlg = e_dialog_new(_xkb.cfd->con, "E", "xkbswitch_config_add_dialog"))) return NULL;
    
    dlg->data = cfdata;
    
@@ -499,7 +524,7 @@ static void
 _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
 {
    E_Config_Dialog_Data *cfdata = dlg->data;
-   E_XKB_Config_Layout  *cl;
+   E_Config_XKB_Layout  *cl;
    char buf[PATH_MAX];
    /* Configuration information */
    const char *layout = e_widget_ilist_selected_value_get(cfdata->layout_list);
@@ -507,7 +532,7 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
    const char *variant = e_widget_ilist_selected_value_get(cfdata->variant_list);
    
    /* The new configuration */
-   cl          = E_NEW(E_XKB_Config_Layout, 1);
+   cl          = E_NEW(E_Config_XKB_Layout, 1);
    cl->name    = eina_stringshare_add(layout);
    cl->model   = eina_stringshare_add(model);
    cl->variant = eina_stringshare_add(variant);
@@ -665,7 +690,7 @@ _cb_fill_delay(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *l;
-   E_XKB_Config_Layout *cl;
+   E_Config_XKB_Layout *cl;
    E_XKB_Model *model;
    int n = 0;
    char buf[PATH_MAX];
@@ -703,7 +728,7 @@ _cb_fill_delay(void *data)
         snprintf(buf, sizeof(buf), "%s (%s)", model->description, model->name);
         e_widget_ilist_append(cfdata->dmodel_list, NULL, buf, NULL,
                               cfdata, model->name);
-        if (model->name == e_xkb_cfg->default_model)
+        if (model->name == e_config->xkb.default_model)
           e_widget_ilist_selected_set(cfdata->dmodel_list, n);
         n++;
      }

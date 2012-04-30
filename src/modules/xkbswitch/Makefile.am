@@ -22,9 +22,7 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
                          e_mod_config.c \
                          e_mod_parse.c \
-                         e_mod_parse.h \
-                         e_mod_keybindings.c \
-                         e_mod_keybindings.h
+                         e_mod_parse.h
                                                 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version

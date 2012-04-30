@@ -183,6 +183,7 @@ e_widget_toolbar.h \
 e_widget_toolbook.h \
 e_win.h \
 e_xinerama.h \
+e_xkb.h \
 e_xsettings.h \
 e_zone.h
 
@@ -337,6 +338,7 @@ e_widget_toolbar.c \
 e_widget_toolbook.c \
 e_win.c \
 e_xinerama.c \
+e_xkb.c \
 e_xsettings.c \
 e_zone.c \
 $(ENLIGHTENMENTHEADERS)

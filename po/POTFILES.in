@@ -125,6 +125,7 @@ src/bin/e_widget_table.c
 src/bin/e_widget_textblock.c
 src/bin/e_win.c
 src/bin/e_xinerama.c
+src/bin/e_xkb.c
 src/bin/e_zone.c
 src/modules/battery/e_mod_config.c
 src/modules/battery/e_mod_main.c

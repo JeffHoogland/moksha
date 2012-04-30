@@ -142,3 +142,4 @@
 #include "e_deskenv.h"
 #include "e_xsettings.h"
 #include "e_update.h"
+#include "e_xkb.h"
