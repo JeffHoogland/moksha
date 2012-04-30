@@ -190,6 +190,7 @@ _clock_month_update(Instance *inst)
      {
         od = edje_object_part_table_child_get(oi, "e.table.daynames", x, 0);
         edje_object_part_text_set(od, "e.text.label", inst->daynames[x]);
+        edje_object_message_signal_process(od);
      }
 
    for (y = 0; y < 6; y++)
@@ -213,8 +214,10 @@ _clock_month_update(Instance *inst)
                 edje_object_signal_emit(od, "e,state,today", "e");
              else
                 edje_object_signal_emit(od, "e,state,someday", "e");
+             edje_object_message_signal_process(od);
           }
      }
+   edje_object_message_signal_process(oi);
 }
 
 static void
@@ -308,6 +311,7 @@ _clock_popup_new(Instance *inst)
                                    _clock_month_prev_cb, inst);
    edje_object_signal_callback_add(oi, "e,action,next", "*",
                                    _clock_month_next_cb, inst);
+   edje_object_message_signal_process(oi);
    evas_object_resize(oi, 500, 500);
    edje_object_size_min_restricted_calc(oi, &mw, &mh, 128, 128);
 
@@ -425,6 +429,7 @@ e_int_clock_instances_redo(void)
            edje_object_signal_emit(o, "e,state,seconds,off", "e");
 
         edje_object_part_text_set(o, "e.text.today", todaystr);
+        edje_object_message_signal_process(o);
         _eval_instance_size(inst);
 
         if (inst->o_popclock)
@@ -447,6 +452,7 @@ e_int_clock_instances_redo(void)
                edje_object_signal_emit(o, "e,state,seconds,off", "e");
 
              edje_object_part_text_set(o, "e.text.today", todaystr);
+             edje_object_message_signal_process(o);
           }
      }
 }
