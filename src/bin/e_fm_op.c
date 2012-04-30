@@ -731,8 +731,7 @@ _e_fm_op_scan_idler(void *data __UNUSED__)
    static Eina_List *node = NULL;
    E_Fm_Op_Task *task = NULL;
    char buf[PATH_MAX];
-   static struct dirent *de = NULL;
-   static DIR *dir = NULL;
+   static Eina_Iterator *dir = NULL;
    E_Fm_Op_Task *ntask = NULL;
 
    if (!node) node = _e_fm_op_scan_queue;
@@ -780,7 +779,7 @@ _e_fm_op_scan_idler(void *data __UNUSED__)
 	  {
 	     /* If it's a dir, then look through it and add a task for each. */
 
-             dir = opendir(task->src.name);
+             dir = eina_file_direct_ls(task->src.name);
              if (!dir)
                _E_FM_OP_ERROR_SEND_SCAN(task, E_FM_OP_ERROR, 
                                         "Cannot open directory '%s': %s.", 
@@ -797,9 +796,9 @@ _e_fm_op_scan_idler(void *data __UNUSED__)
      }
    else if (dir && !task->started)
      {
-        de = readdir(dir);
+        Eina_File_Direct_Info *info;
 
-        if (!de)
+        if (!eina_iterator_next(dir, (void**) &info))
           {
              ntask = _e_fm_op_task_new();
              ntask->type = E_FM_OP_COPY_STAT_INFO;
@@ -819,23 +818,19 @@ _e_fm_op_scan_idler(void *data __UNUSED__)
                eina_list_append(_e_fm_op_scan_queue, ntask);
 
              task->started = 1;
-             closedir(dir);
+             eina_iterator_free(dir);
              dir = NULL;
              node = NULL;
              return ECORE_CALLBACK_RENEW;
           }
 
-        if ((!strcmp(de->d_name, ".") || (!strcmp(de->d_name, ".."))))
-          return ECORE_CALLBACK_RENEW;
-
         ntask = _e_fm_op_task_new();
         ntask->type = task->type;
-        snprintf(buf, sizeof(buf), "%s/%s", task->src.name, de->d_name);
-        ntask->src.name = eina_stringshare_add(buf);
+        ntask->src.name = eina_stringshare_add(info->path);
 
         if (task->dst.name)
           {
-             snprintf(buf, sizeof(buf), "%s/%s", task->dst.name, de->d_name);
+             snprintf(buf, sizeof(buf), "%s/%s", task->dst.name, info->path + info->name_start);
              ntask->dst.name = eina_stringshare_add(buf);
           }
         else

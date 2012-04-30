@@ -2815,12 +2815,12 @@ _evry_matches_update(Evry_Selector *sel, int async)
    /* check if input matches plugin trigger */
    if (input)
      {
-        int len_trigger = 0;
+        size_t len_trigger = 0;
 
         EINA_LIST_FOREACH (s->plugins, l, p)
           {
              if (!p->config->trigger) continue;
-             int len = strlen(p->config->trigger);
+             size_t len = strlen(p->config->trigger);
 
              if (len_trigger && len != len_trigger)
                continue;
@@ -2884,7 +2884,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
              /* skip non-toplevel plugins when input < min_query */
              if ((!p->config->top_level) &&
-                 (p->config->min_query > len_inp))
+                 ((size_t) p->config->min_query > len_inp))
                goto next;
           }
 

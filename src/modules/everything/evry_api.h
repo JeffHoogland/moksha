@@ -224,9 +224,9 @@ struct _Evry_Event_Action_Performed
 
 /* call free on all items provided by plugin instance '_p' */
 #define EVRY_PLUGIN_ITEMS_FREE(_p) {				\
-     Evry_Item *it;						\
-     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it)			\
-       evry->item_free(it); }
+     Evry_Item *_it;						\
+     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, _it)		\
+       evry->item_free(_it); }
 
 /* append '_item' to list of items provided by plugin instance '_p' */
 #define EVRY_PLUGIN_ITEM_APPEND(_p, _item)                              \
@@ -255,9 +255,9 @@ struct _Evry_Event_Action_Performed
       (_input && (strlen(_input) >= EVRY_PLUGIN(_p)->config->min_query)))
 
 #define EVRY_PLUGIN_ITEMS_CLEAR(_p) {				\
-     Evry_Item *it;						\
-     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, it)			\
-       if (it) it->fuzzy_match = 0; }
+     Evry_Item *_it;						\
+     EINA_LIST_FREE(EVRY_PLUGIN(_p)->items, _it)		\
+       if (_it) _it->fuzzy_match = 0; }
 
 #define EVRY_PLUGIN_HAS_ITEMS(_p) !!(EVRY_PLUGIN(_p)->items)
 
@@ -273,9 +273,9 @@ struct _Evry_Event_Action_Performed
      _module = E_NEW(Evry_Module, 1);				\
      _module->init     = &_init;				\
      _module->shutdown = &_shutdown;				\
-     Eina_List *l = e_datastore_get("evry_modules");		\
-     l = eina_list_append(l, _module);				\
-     e_datastore_set("evry_modules", l);			\
+     Eina_List *_l = e_datastore_get("evry_modules");		\
+     _l = eina_list_append(_l, _module);			\
+     e_datastore_set("evry_modules", _l);			\
      if ((_evry = e_datastore_get("evry_api")))			\
        _module->active = _init(_evry);				\
   }
@@ -284,9 +284,9 @@ struct _Evry_Event_Action_Performed
   {							\
      if (_module->active) _module->shutdown();		\
      _module->active = EINA_FALSE;			\
-     Eina_List *l = e_datastore_get("evry_modules");	\
-     l = eina_list_remove(l, _module);			\
-     if (l) e_datastore_set("evry_modules", l);		\
+     Eina_List *_l = e_datastore_get("evry_modules");	\
+     _l = eina_list_remove(_l, _module);		\
+     if (_l) e_datastore_set("evry_modules", _l);	\
      else e_datastore_del("evry_modules");		\
      E_FREE(_module);					\
   }

@@ -21,7 +21,7 @@ struct _Info
    int iw, ih;
    Eina_List *dirs;
    char *curdir;
-   DIR *dir;
+   Eina_Iterator *dir;
    Ecore_Idler *idler;
    int scans;
    int con_num, zone_num, desk_x, desk_y;
@@ -1050,8 +1050,7 @@ _wp_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__
 static Eina_Bool
 _idler(void *data)
 {
-   struct dirent *dp;
-   char buf[PATH_MAX];
+   Eina_File_Direct_Info *st;
    Info *info = data;
 
    if (!info->dir)
@@ -1059,29 +1058,25 @@ _idler(void *data)
         info->idler = NULL;
         return ECORE_CALLBACK_CANCEL;
      }
-   dp = readdir(info->dir);
-   if (!dp)
+   if (!eina_iterator_next(info->dir, (void**) &st))
      {
         free(info->curdir);
         info->curdir = NULL;
-        closedir(info->dir);
+        eina_iterator_free(info->dir);
         info->dir = NULL;
         info->idler = NULL;
         _scan(info);
         return ECORE_CALLBACK_CANCEL;
      }
-   if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, "..")))
+   if ((st->path[st->name_start]) == '.')
      return ECORE_CALLBACK_RENEW;
-   if (dp->d_name[0] == '.')
-     return ECORE_CALLBACK_RENEW;
-   snprintf(buf, sizeof(buf), "%s/%s", info->curdir, dp->d_name);
-   if (ecore_file_is_dir(buf))
+   if (st->type == EINA_FILE_DIR)
      {
-        info->dirs = eina_list_append(info->dirs, strdup(buf));
+        info->dirs = eina_list_append(info->dirs, strdup(st->path));
         return ECORE_CALLBACK_RENEW;
      }
    info->scans++;
-   _pan_file_add(info->span, buf, 0, 0);
+   _pan_file_add(info->span, st->path, 0, 0);
 
    e_util_wakeup();
    return ECORE_CALLBACK_RENEW;
@@ -1102,7 +1097,7 @@ _scan(Info *info)
         if (info->curdir) free(info->curdir);
         info->curdir = info->dirs->data;
         info->dirs = eina_list_remove_list(info->dirs, info->dirs);
-        if (!info->dir) info->dir = opendir(info->curdir);
+        if (!info->dir) info->dir = eina_file_stat_ls(info->curdir);
         info->idler = ecore_idler_add(_idler, info);
      }
 }
@@ -1300,7 +1295,7 @@ wp_broser_free(Info *info)
 
    if (!info) return;
    e_object_del(E_OBJECT(info->win));
-   if (info->dir) closedir(info->dir);
+   if (info->dir) eina_iterator_free(info->dir);
    free(info->bg_file);
    free(info->curdir);
    EINA_LIST_FREE(info->dirs, s) 

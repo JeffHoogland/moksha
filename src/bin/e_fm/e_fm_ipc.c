@@ -158,7 +158,7 @@ static void _e_fm_ipc_file_mon_list_sync(E_Dir *ed);
 
 static Eina_Bool _e_fm_ipc_cb_file_mon_list_idler(void *data);
 static Eina_Bool _e_fm_ipc_cb_fop_trash_idler(void *data);
-static char *_e_str_list_remove(Eina_List **list, char *str);
+static char *_e_str_list_remove(Eina_List **list, const char *str, int len);
 static void _e_fm_ipc_reorder(const char *file, const char *dst, const char *relative, int after);
 static void _e_fm_ipc_dir_del(E_Dir *ed);
 
@@ -241,8 +241,8 @@ static void
 _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
 {
    E_Dir *ed, *ped = NULL;
+   Eina_Iterator *it;
 
-   DIR *dir;
    Eina_List *l;
 
    /* look for any previous dir entries monitoring this dir */
@@ -257,8 +257,8 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
      }
 
    /* open the dir to list */
-   dir = opendir(task->src);
-   if (!dir)
+   it = eina_file_direct_ls(task->src);
+   if (!it)
      {
 	char buf[PATH_MAX + 4096];
 
@@ -267,11 +267,9 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
      }
    else
      {
+        Eina_File_Direct_Info *info;
 	Eina_List *files = NULL;
-	struct dirent *dp;
-	int dot_order = 0;
-	char buf[4096];
-	FILE *f;
+	char *dot_order = NULL;
 
 	/* create a new dir entry */
 	ed = calloc(1, sizeof(E_Dir));
@@ -293,42 +291,66 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
 	_e_dirs = eina_list_append(_e_dirs, ed);
 
 	/* read everything except a .order, . and .. */
-	while ((dp = readdir(dir)))
+        EINA_ITERATOR_FOREACH(it,  info)
 	  {
-	     if ((!strcmp(dp->d_name, ".")) || (!strcmp(dp->d_name, "..")))
-	       continue;
-	     if (!strcmp(dp->d_name, ".order"))
+	     if (!strcmp(info->path + info->name_start, ".order"))
 	       {
-		  dot_order = 1;
+		  dot_order = strdup(info->path);
 		  continue;
 	       }
-	     files = eina_list_append(files, strdup(dp->d_name));
+	     files = eina_list_append(files, eina_stringshare_add(info->path + info->name_start));
 	  }
-	closedir(dir);
+        eina_iterator_free(it);
+
 	/* if there was a .order - we need to parse it */
 	if (dot_order)
 	  {
-	     snprintf(buf, sizeof(buf), "%s/.order", task->src);
-	     f = fopen(buf, "r");
-	     if (f)
-	       {
-		  Eina_List *f2 = NULL;
-		  int len;
-		  char *s;
+             Eina_File *f;
 
-		  /* inset files in order if the existed in file
-		   * list before */
-		  while (fgets(buf, sizeof(buf), f))
-		    {
-		       len = strlen(buf);
-		       if (len > 0) buf[len - 1] = 0;
-		       s = _e_str_list_remove(&files, buf);
-		       if (s) f2 = eina_list_append(f2, s);
-		    }
-		  fclose(f);
-		  /* append whats left */
-		  files = eina_list_merge(f2, files);
-	       }
+             f = eina_file_open(dot_order, EINA_FALSE);
+             if (f)
+               {
+                  Eina_List *f2 = NULL;
+                  char *map;
+
+                  /* This piece of code should really become generic and work like an iterator.
+                   * I plan to add this feature in eina, but that would be for next generation of E,
+                   * not E17.
+                   */
+                  map = eina_file_map_all(f, EINA_FILE_SEQUENTIAL);
+                  if (map)
+                    {
+                       const char *current = map;
+                       const char *found;
+                       size_t length = eina_file_size_get(f);
+                       
+                       /* inset files in order if the existed in file
+                        * list before */
+                       while ((found = memchr(current, '\n', length)))
+                         {
+                            if (found - current > 1)
+                              {
+                                 char *s =  _e_str_list_remove(&files, current, found - current - 1);
+                                 if (s) f2 = eina_list_append(f2, s);
+                              }
+                            length -= found - current - 1;
+                            current = found + 1;
+                         }
+
+                       if (found == NULL && length > 0)
+                         {
+                            char *s =  _e_str_list_remove(&files, current, length);
+                            if (s) f2 = eina_list_append(f2, s);
+                         }
+
+                       /* append whats left */
+                       files = eina_list_merge(f2, files);
+
+                       eina_file_map_free(f, map);
+                    }
+
+                  eina_file_close(f);
+               }
 	  }
 	ed->fq = files;
 	/* FIXME: if .order file- load it, sort all items int it
@@ -339,25 +361,23 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
 	 * .order file stuff here - but not today
 	 */
 	/* note that we had a .order at all */
-	ed->dot_order = dot_order;
+	ed->dot_order = dot_order ? EINA_TRUE : EINA_FALSE;
 	if (dot_order)
 	  {
 	     /* if we did - tell the E about this FIRST - it will
 	      * decide what to do if it first sees a .order or not */
-	     if (!strcmp(task->src, "/"))
-	       snprintf(buf, sizeof(buf), "/.order");
-	     else
-	       snprintf(buf, sizeof(buf), "%s/.order", task->src);
 	     if (eina_list_count(files) == 1)
-	       _e_fm_ipc_file_add(ed, buf, 2);
+	       _e_fm_ipc_file_add(ed, dot_order, 2);
 	     else
-	       _e_fm_ipc_file_add(ed, buf, 1);
+	       _e_fm_ipc_file_add(ed, dot_order, 1);
 	  }
 	/* send empty file - indicate empty dir */
 	if (!files) _e_fm_ipc_file_add(ed, "", 2);
 	/* and in an idler - list files, statting them etc. */
 	ed->idler = ecore_idler_add(_e_fm_ipc_cb_file_mon_list_idler, ed);
 	ed->sync_num = DEF_SYNC_NUM;
+
+        free(dot_order);
      }
 }
 
@@ -1148,7 +1168,7 @@ _e_fm_ipc_cb_file_mon_list_idler(void *data)
 	       snprintf(buf, sizeof(buf), "%s/%s", ed->dir, file);
 	     _e_fm_ipc_file_add(ed, buf, 1);
 	  }
-	free(file);
+	eina_stringshare_del(file);
 	ed->fq = eina_list_remove_list(ed->fq, ed->fq);
 	n++;
 	if (n == ed->sync_num)
@@ -1251,13 +1271,13 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
 }
 
 static char *
-_e_str_list_remove(Eina_List **list, char *str)
+_e_str_list_remove(Eina_List **list, const char *str, int len)
 {
    Eina_List *l;
 	char *s;
 
    EINA_LIST_FOREACH(*list, l, s)
-	if (!strcmp(s, str))
+     if (!strncmp(s, str, len))
 	  {
 	     *list = eina_list_remove_list(*list, l);
 	     return s;
@@ -1357,7 +1377,7 @@ _e_fm_ipc_dir_del(E_Dir *ed)
 	free(m);
      }
    EINA_LIST_FREE(ed->fq, data)
-     free(data);
+     eina_stringshare_del(data);
    free(ed);
 }
 

@@ -75,7 +75,7 @@ static Eina_List *exe_path = NULL;
 static Ecore_Idler *exe_scan_idler = NULL;
 static E_Config_DD *exelist_exe_edd = NULL;
 static E_Config_DD *exelist_edd = NULL;
-static DIR *exe_dir = NULL;
+static Eina_Iterator *exe_dir = NULL;
 static Eina_List *exe_list = NULL;
 static Eina_List *exe_list2 = NULL;
 static Eina_List *apps_cache = NULL;
@@ -231,7 +231,7 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 {
    GET_PLUGIN(p, plugin);
    Eina_List *l;
-   Evry_Item *it;
+   Evry_Item *eit;
    History_Types *ht;
    unsigned int len = (input ? strlen(input) : 0);
    double max = 0.0;
@@ -291,11 +291,11 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
           }
      }
 
-   EINA_LIST_FOREACH (plugin->items, l, it)
+   EINA_LIST_FOREACH (plugin->items, l, eit)
      {
-        evry->history_item_usage_set(it, input, NULL);
-        if (input && (it->usage > max) && !strncmp(input, it->label, len))
-          max = it->usage;
+        evry->history_item_usage_set(eit, input, NULL);
+        if (input && (eit->usage > max) && !strncmp(input, eit->label, len))
+          max = eit->usage;
      }
    EVRY_ITEM(p->command)->usage = (max * 2.0);
 
@@ -340,7 +340,7 @@ _finish_exe(Evry_Plugin *plugin)
 
    if (exe_dir)
      {
-        closedir(exe_dir);
+        eina_iterator_free(exe_dir);
         exe_dir = NULL;
      }
    EINA_LIST_FREE (exe_path, str)
@@ -1439,17 +1439,12 @@ evry_plug_apps_save(void)
 static Eina_Bool
 _scan_idler(void *data __UNUSED__)
 {
-   struct stat st;
-   struct dirent *dp;
    char *dir;
-   char buf[4096];
 
    /* no more path items left - stop scanning */
    if (!exe_path)
      {
         Eina_List *l, *l2;
-        E_Exe_List *el;
-        E_Exe *ee;
         int different = 0;
 
         /* FIXME: check wheter they match or not */
@@ -1464,39 +1459,41 @@ _scan_idler(void *data __UNUSED__)
         if ((l) || (l2)) different = 1;
         if (exe_list2)
           {
-             while (exe_list)
-               {
-                  free(eina_list_data_get(exe_list));
-                  exe_list = eina_list_remove_list(exe_list, exe_list);
-               }
+             void *tmp;
+
+             EINA_LIST_FREE(exe_list, tmp)
+               free(tmp);
              exe_list = exe_list2;
              exe_list2 = NULL;
           }
         if (different)
           {
+             const char *s;
+             E_Exe_List *el;
+             E_Exe *ee;
+
              el = calloc(1, sizeof(E_Exe_List));
-             if (el)
+             if (!el) return ECORE_CALLBACK_CANCEL;
+
+             el->list = NULL;
+
+             EINA_LIST_FOREACH(exe_list, l, s)
                {
-                  el->list = NULL;
-                  for (l = exe_list; l; l = l->next)
-                    {
-                       ee = malloc(sizeof(E_Exe));
-                       if (ee)
-                         {
-                            ee->path = eina_stringshare_add(l->data);
-                            el->list = eina_list_append(el->list, ee);
-                         }
-                    }
-                  e_config_domain_save("exebuf_exelist_cache", exelist_edd, el);
-                  while (el->list)
-                    {
-                       ee = eina_list_data_get(el->list);
-                       eina_stringshare_del(ee->path);
-                       free(ee);
-                       el->list = eina_list_remove_list(el->list, el->list);
-                    }
-                  free(el);
+                  ee = malloc(sizeof(E_Exe));
+                  if (!ee) continue ;
+
+                  ee->path = eina_stringshare_add(s);
+                  el->list = eina_list_append(el->list, ee);
                }
+
+             e_config_domain_save("exebuf_exelist_cache", exelist_edd, el);
+
+             EINA_LIST_FREE(el->list, ee)
+               {
+                  eina_stringshare_del(ee->path);
+                  free(ee);
+               }
+             free(el);
           }
         exe_scan_idler = NULL;
         return ECORE_CALLBACK_CANCEL;
@@ -1505,28 +1502,25 @@ _scan_idler(void *data __UNUSED__)
    if (!exe_dir)
      {
         dir = exe_path->data;
-        exe_dir = opendir(dir);
+        exe_dir = eina_file_direct_ls(dir);
      }
    /* if we have an opened dir - scan the next item */
    if (exe_dir)
      {
-        dir = exe_path->data;
+        Eina_File_Direct_Info *info;
 
-        dp = readdir(exe_dir);
-        if (dp)
+        if (eina_iterator_next(exe_dir, (void**) &info))
           {
-             if ((strcmp(dp->d_name, ".")) && (strcmp(dp->d_name, "..")))
+             Eina_Stat st;
+
+             if (eina_file_statat(eina_iterator_container_get(exe_dir), info, &st) &&
+                 (!S_ISDIR(st.mode)) &&
+                 (!access(info->path, X_OK)))
                {
-                  snprintf(buf, sizeof(buf), "%s/%s", dir, dp->d_name);
-                  if ((stat(buf, &st) == 0) &&
-                      ((!S_ISDIR(st.st_mode)) &&
-                       (!access(buf, X_OK))))
-                    {
-                       if (!exe_list)
-                         exe_list = eina_list_append(exe_list, strdup(dp->d_name));
-                       else
-                         exe_list2 = eina_list_append(exe_list2, strdup(dp->d_name));
-                    }
+                  if (!exe_list)
+                    exe_list = eina_list_append(exe_list, strdup(info->path + info->name_start));
+                  else
+                    exe_list2 = eina_list_append(exe_list2, strdup(info->path + info->name_start));
                }
           }
         else
@@ -1535,9 +1529,12 @@ _scan_idler(void *data __UNUSED__)
               * of the path list so we advance and next loop we will pick up
               * the next item, or if null- abort
               */
-             closedir(exe_dir);
+             dir = exe_path->data;
+             free(dir);
+
+             eina_iterator_free(exe_dir);
              exe_dir = NULL;
-             free(eina_list_data_get(exe_path));
+
              exe_path = eina_list_remove_list(exe_path, exe_path);
           }
      }
