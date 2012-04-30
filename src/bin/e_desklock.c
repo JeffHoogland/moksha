@@ -70,6 +70,9 @@ static Eina_Bool _e_desklock_cb_mouse_move(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_custom_desklock_exit(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_idle_poller(void *data);
 static Eina_Bool _e_desklock_cb_window_stack(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_zone_add(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_zone_del(void *data, int type, void *event);
+static Eina_Bool _e_desklock_cb_zone_move_resize(void *data, int type, void *event);
 
 static void _e_desklock_null(void);
 static void _e_desklock_passwd_update(void);
@@ -375,6 +378,18 @@ e_desklock_show(void)
      eina_list_append(edd->handlers,
 		      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CREATE,
 					      _e_desklock_cb_window_stack, NULL));
+   edd->handlers =
+     eina_list_append(edd->handlers,
+		      ecore_event_handler_add(E_EVENT_ZONE_ADD,
+					      _e_desklock_cb_zone_add, NULL));
+   edd->handlers =
+     eina_list_append(edd->handlers,
+		      ecore_event_handler_add(E_EVENT_ZONE_DEL,
+					      _e_desklock_cb_zone_del, NULL));
+   edd->handlers =
+     eina_list_append(edd->handlers,
+		      ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE,
+					      _e_desklock_cb_zone_move_resize, NULL));
 
    if ((total_zone_num > 1) && (e_config->desklock_login_box_zone == -2)) 
      {
@@ -467,6 +482,8 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
    Eina_List *l;
    Eina_Bool raise_win = EINA_TRUE;
 
+   if (!edd) return ECORE_CALLBACK_PASS_ON;
+   
    if (type == ECORE_X_EVENT_WINDOW_STACK)
      win = ((Ecore_X_Event_Window_Stack*) event)->event_win;
    else if (type == ECORE_X_EVENT_WINDOW_CONFIGURE)
@@ -495,6 +512,49 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
 	  ecore_evas_raise(edp->popup_wnd->ecore_evas);
      }
 
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Ecore_Job *_e_desklock_relock_job = NULL;
+
+static void
+_e_desklock_relock_cb(void *data __UNUSED__)
+{
+   e_desklock_hide();
+   e_desklock_show();
+   _e_desklock_relock_job = NULL;
+}
+
+static Eina_Bool
+_e_desklock_cb_zone_add(void *data __UNUSED__,
+                        int   type __UNUSED__,
+                        void *event __UNUSED__)
+{
+   if (!edd) return ECORE_CALLBACK_PASS_ON;
+   if (_e_desklock_relock_job) ecore_job_del(_e_desklock_relock_job);
+   _e_desklock_relock_job = ecore_job_add(_e_desklock_relock_cb, NULL);
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_desklock_cb_zone_del(void *data __UNUSED__,
+                        int   type __UNUSED__,
+                        void *event __UNUSED__)
+{
+   if (!edd) return ECORE_CALLBACK_PASS_ON;
+   if (_e_desklock_relock_job) ecore_job_del(_e_desklock_relock_job);
+   _e_desklock_relock_job = ecore_job_add(_e_desklock_relock_cb, NULL);
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_desklock_cb_zone_move_resize(void *data __UNUSED__,
+                                int   type __UNUSED__,
+                                void *event __UNUSED__)
+{
+   if (!edd) return ECORE_CALLBACK_PASS_ON;
+   if (_e_desklock_relock_job) ecore_job_del(_e_desklock_relock_job);
+   _e_desklock_relock_job = ecore_job_add(_e_desklock_relock_cb, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
 
