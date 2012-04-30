@@ -532,6 +532,25 @@ e_bindings_edge_flippable_get(E_Zone_Edge edge)
    return EINA_FALSE;
 }
 
+EAPI Eina_Bool
+e_bindings_edge_non_flippable_get(E_Zone_Edge edge)
+{
+   E_Binding_Edge *bind;
+   Eina_List *l;
+
+   EINA_LIST_FOREACH(edge_bindings, l, bind)
+     {
+        if ((bind->edge == edge) && (bind->action))
+          {
+             if ((!strcmp(bind->action, "desk_flip_in_direction")) ||
+                 (!strcmp(bind->action, "desk_flip_by")))
+                continue;
+             return EINA_TRUE;
+          }
+     }
+   return EINA_FALSE;
+}
+
 EAPI E_Binding_Edge *
 e_bindings_edge_get(const char *action, E_Zone_Edge edge, Eina_Bool click)
 {

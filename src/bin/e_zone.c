@@ -840,102 +840,53 @@ e_zone_edge_disable(void)
 EAPI void
 e_zone_edges_desk_flip_capable(E_Zone *zone, Eina_Bool l, Eina_Bool r, Eina_Bool t, Eina_Bool b)
 {
-   if (l)
-     {
-        if (e_bindings_edge_flippable_get(E_ZONE_EDGE_LEFT))
-          {
-             if (zone->edge.left) ecore_x_window_show(zone->edge.left);
-          }
-     }
-   else
-     {
-        if (zone->edge.left) ecore_x_window_hide(zone->edge.left);
-     }
-   if (r)
-     {
-        if (e_bindings_edge_flippable_get(E_ZONE_EDGE_RIGHT))
-          {
-             if (zone->edge.right) ecore_x_window_show(zone->edge.right);
-          }
-     }
-   else
-     {
-        if (zone->edge.right) ecore_x_window_hide(zone->edge.right);
-     }
-   if (t)
-     {
-        if (e_bindings_edge_flippable_get(E_ZONE_EDGE_TOP))
-          {
-             if (zone->edge.top) ecore_x_window_show(zone->edge.top);
-          }
-     }
-   else
-     {
-        if (zone->edge.top) ecore_x_window_hide(zone->edge.top);
-     }
-   if (b)
-     {
-        if (e_bindings_edge_flippable_get(E_ZONE_EDGE_BOTTOM))
-          {
-             if (zone->edge.bottom) ecore_x_window_show(zone->edge.bottom);
-          }
-     }
-   else
-     {
-        if (zone->edge.bottom) ecore_x_window_hide(zone->edge.bottom);
-     }
-   if ((!l) && (!t))
-     {
-        if (zone->corner.left_top) ecore_x_window_hide(zone->corner.left_top);
-        if (zone->corner.top_left) ecore_x_window_hide(zone->corner.top_left);
-     }
-   else
-     {
-        if (e_bindings_edge_flippable_get(E_ZONE_EDGE_TOP_LEFT))
-          {
-             if (zone->corner.left_top) ecore_x_window_show(zone->corner.left_top);
-             if (zone->corner.top_left) ecore_x_window_show(zone->corner.top_left);
-          }
-     }
-   if ((!r) && (!t))
-     {
-        if (zone->corner.right_top) ecore_x_window_hide(zone->corner.right_top);
-        if (zone->corner.top_right) ecore_x_window_hide(zone->corner.top_right);
-     }
-   else
-     {
-        if (e_bindings_edge_flippable_get(E_ZONE_EDGE_TOP_RIGHT))
-          {
-             if (zone->corner.right_top) ecore_x_window_show(zone->corner.right_top);
-             if (zone->corner.top_right) ecore_x_window_show(zone->corner.top_right);
-          }
-     }
-   if ((!l) && (!b))
-     {
-        if (zone->corner.left_bottom) ecore_x_window_hide(zone->corner.left_bottom);
-        if (zone->corner.bottom_left) ecore_x_window_hide(zone->corner.bottom_left);
-     }
-   else
-     {
-        if (e_bindings_edge_flippable_get(E_ZONE_EDGE_BOTTOM_LEFT))
-          {
-             if (zone->corner.left_bottom) ecore_x_window_show(zone->corner.left_bottom);
-             if (zone->corner.bottom_left) ecore_x_window_show(zone->corner.bottom_left);
-          }
-     }
-   if ((!r) && (!b))
-     {
-        if (zone->corner.right_bottom) ecore_x_window_hide(zone->corner.right_bottom);
-        if (zone->corner.bottom_right) ecore_x_window_hide(zone->corner.bottom_right);
-     }
-   else
-     {
-        if (e_bindings_edge_flippable_get(E_ZONE_EDGE_BOTTOM_RIGHT))
-          {
-             if (zone->corner.right_bottom) ecore_x_window_show(zone->corner.right_bottom);
-             if (zone->corner.bottom_right) ecore_x_window_show(zone->corner.bottom_right);
-          }
-     }
+#define NEED_FLIP_EDGE(x) \
+   (e_bindings_edge_flippable_get(x) || e_bindings_edge_non_flippable_get(x))
+#define NEED_EDGE(x) \
+   (e_bindings_edge_non_flippable_get(x))
+#define CHECK_EDGE(v, ed, win) \
+   do { \
+      if (v) { \
+         if (NEED_FLIP_EDGE(ed)) { if (zone->edge.win) ecore_x_window_show(zone->edge.win); } \
+         else if (zone->edge.win) ecore_x_window_hide(zone->edge.win); \
+      } \
+      else { \
+         if (NEED_EDGE(ed)) { if (zone->edge.win) ecore_x_window_show(zone->edge.win); } \
+         else if (zone->edge.win) ecore_x_window_hide(zone->edge.win); \
+      } \
+   } while (0)
+
+   CHECK_EDGE(l, E_ZONE_EDGE_LEFT, left);
+   CHECK_EDGE(r, E_ZONE_EDGE_RIGHT, right);
+   CHECK_EDGE(t, E_ZONE_EDGE_TOP, top);
+   CHECK_EDGE(b, E_ZONE_EDGE_BOTTOM, bottom);
+
+#define CHECK_CORNER(v1, v2, ed, win1, win2) \
+   if ((!v1) && (!v2)) { \
+      if (NEED_EDGE(ed)) { \
+         if (zone->corner.win1) ecore_x_window_show(zone->corner.win1); \
+         if (zone->corner.win2) ecore_x_window_show(zone->corner.win2); \
+      } \
+      else { \
+         if (zone->corner.win1) ecore_x_window_hide(zone->corner.win1); \
+         if (zone->corner.win2) ecore_x_window_hide(zone->corner.win2); \
+      } \
+   } \
+   else { \
+      if (NEED_FLIP_EDGE(ed)) { \
+         if (zone->corner.win1) ecore_x_window_show(zone->corner.win1); \
+         if (zone->corner.win2) ecore_x_window_show(zone->corner.win2); \
+      } \
+      else { \
+         if (zone->corner.win1) ecore_x_window_hide(zone->corner.win1); \
+         if (zone->corner.win2) ecore_x_window_hide(zone->corner.win2); \
+      } \
+   }
+
+   CHECK_CORNER(l, t, E_ZONE_EDGE_TOP_LEFT, left_top, top_left);
+   CHECK_CORNER(r, t, E_ZONE_EDGE_TOP_RIGHT, right_top, top_right);
+   CHECK_CORNER(l, b, E_ZONE_EDGE_BOTTOM_LEFT, left_bottom, bottom_left);
+   CHECK_CORNER(r, b, E_ZONE_EDGE_BOTTOM_RIGHT, right_bottom, bottom_right);
 }
 
 EAPI Eina_Bool
