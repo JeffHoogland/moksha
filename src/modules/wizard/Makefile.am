@@ -47,6 +47,7 @@ pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH
 pkg_LTLIBRARIES        = module.la \
                          page_000.la \
                          page_010.la \
+                         page_011.la \
                          page_020.la \
                          page_030.la \
                          page_040.la \
@@ -85,6 +86,12 @@ page_010_la_SOURCES      = page_010.c
 page_010_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_010_la_LDFLAGS      = -module -avoid-version
 page_010_la_DEPENDENCIES = $(top_builddir)/config.h
+
+#Choose kbd layout
+page_011_la_SOURCES      = page_011.c
+page_011_la_LIBADD       = @e_libs@ @dlopen_libs@
+page_011_la_LDFLAGS      = -module -avoid-version
+page_011_la_DEPENDENCIES = $(top_builddir)/config.h
 
 #Choose Profile
 page_020_la_SOURCES      = page_020.c

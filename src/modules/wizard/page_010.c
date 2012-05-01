@@ -188,7 +188,11 @@ wizard_page_show(E_Wizard_Page *pg)
      }
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);
-   if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
+   if (sel >= 0)
+     {
+        e_widget_ilist_selected_set(ob, sel);
+        e_widget_ilist_nth_show(ob, sel, 0);
+     }
 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
