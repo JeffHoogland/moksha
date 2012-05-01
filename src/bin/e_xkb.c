@@ -76,6 +76,7 @@ e_xkb_update(void)
           }
         break;
      }
+   printf("SEWT XKB RUN:\  %s\n", eina_strbuf_string_get(buf));
    ecore_exe_run(eina_strbuf_string_get(buf), NULL);
    eina_strbuf_free(buf);
 }
