@@ -43,7 +43,7 @@ static Eina_List *instances = NULL;
  */
 
 /* CONFIG STRUCTURE */
-Xkb _xkb = { NULL, NULL };
+Xkb _xkb = { NULL, NULL, NULL };
 
 static const E_Gadcon_Client_Class _gc_class = 
 {
@@ -265,10 +265,23 @@ _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 }
 
 static Eina_Bool
-_xkb_changed(void *data, int type, void *event_info)
+_xkb_changed(void *data __UNUSED__, int type __UNUSED__, void *event_info __UNUSED__)
 {
    _xkb_update_icon();
    return ECORE_CALLBACK_PASS_ON;
+}
+
+static int
+_xkb_menu_items_sort(const void *data1, const void *data2)
+{
+   const E_Config_XKB_Layout *cl1 = data1;
+   const E_Config_XKB_Layout *cl2 = data2;
+   int v;
+   
+   v = strcmp(cl1->name, cl2->name);
+   if (!v) v = strcmp(cl1->model, cl2->model);
+   if (!v) v = strcmp(cl1->variant, cl2->variant);
+   return v;
 }
 
 static void
@@ -330,6 +343,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
              Eina_List *l;
              int dir;
              char buf[PATH_MAX];
+             Eina_List *tlist = NULL;
              
              mi = e_menu_item_new(inst->lmenu);
              
@@ -340,8 +354,15 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
              mi = e_menu_item_new(inst->lmenu);
              e_menu_item_separator_set(mi, 1);
              
-             /* Append all the layouts */
              EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+               {
+                  tlist = eina_list_append(tlist, cl);
+               }
+             tlist = eina_list_sort(tlist, eina_list_count(tlist),
+                                    _xkb_menu_items_sort);
+             
+             /* Append all the layouts */
+             EINA_LIST_FOREACH(tlist, l, cl)
                {
                   const char *name = cl->name;
                   
@@ -349,8 +370,8 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
                   
                   e_menu_item_radio_set(mi, 1);
                   e_menu_item_radio_group_set(mi, 1);
-                  e_menu_item_toggle_set(mi, 
-                                         (l == e_config->xkb.used_layouts) ? 1 : 0);
+                  e_menu_item_toggle_set
+                    (mi, (cl == e_config->xkb.used_layouts->data) ? 1 : 0);
                   e_xkb_flag_file_get(buf, sizeof(buf), name);
                   e_menu_item_icon_file_set(mi, buf);
                   snprintf(buf, sizeof(buf), "%s (%s, %s)", cl->name, 
@@ -358,6 +379,8 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
                   e_menu_item_label_set(mi, buf);
                   e_menu_item_callback_set(mi, _e_xkb_cb_lmenu_set, cl);
                }
+             
+             if (tlist) eina_list_free(tlist);
              
              /* Deactivate callback */
              e_menu_post_deactivate_callback_set(inst->lmenu,
