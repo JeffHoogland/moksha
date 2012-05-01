@@ -30282,8 +30282,8 @@ collections {
          }
          part { name: "e.text.label"; type: TEXT;
             effect: SHADOW BOTTOM;
-            mouse_events: 1;
             scale: 1;
+            mouse_events: 0;
             description { state: "default" 0.0;
                min: 64 32;
                align: 0.5 1.0;
@@ -30346,19 +30346,19 @@ collections {
          }
          program { name: "button_click";
             signal: "mouse,down,1";
-            source: "e.text.label";
+            source: "button";
             action: STATE_SET "clicked" 0.0;
             target: "button";
          }
          program { name: "button_unclick";
             signal: "mouse,up,1";
-            source: "e.text.label";
+            source: "button";
             action: STATE_SET "default" 0.0;
             target: "button";
          }
          program { name: "button_unclick2";
             signal: "mouse,clicked,1";
-            source: "e.text.label";
+            source: "button";
             action: SIGNAL_EMIT "e,action,next" "";
          }
          program { name: "button_enable";
