@@ -22,6 +22,7 @@ ca_flag.png \
 cat_flag.png \
 cd_flag.png \
 ch_flag.png \
+cm_flag.png \
 cn_flag.png \
 cz_flag.png \
 de_flag.png \
