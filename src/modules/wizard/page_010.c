@@ -15,31 +15,44 @@ struct _E_Intl_Pair
 
 const E_Intl_Pair basic_language_predefined_pairs[ ] =
 {
-   {"bg_BG.UTF-8", "lang-bg_BG.png", "Български"},
-   {"ca_ES.UTF-8", "lang-ca_ES.png", "Català"},
-   {"zh_CN.UTF-8", "lang-zh_CN.png", "Chinese (Simplified)"},
-   {"zh_TW.UTF-8", "lang-zh_TW.png", "Chinese (Traditional)"},
-   {"cs_CZ.UTF-8", "lang-cs_CZ.png", "Čeština"},
-   {"da_DK.UTF-8", "lang-da_DK.png", "Dansk"},
-   {"nl_NL.UTF-8", "lang-nl_NL.png", "Nederlands"},
-   {"en_US.UTF-8", "lang-en_US.png", "English"},
-   {"en_GB.UTF-8", NULL,             "British English"},
-   {"fi_FI.UTF-8", "lang-fi_FI.png", "Suomi"},
-   {"fr_FR.UTF-8", "lang-fr_FR.png", "Français"},
-   {"de_DE.UTF-8", "lang-de_DE.png", "Deutsch"},
-   {"hu_HU.UTF-8", "lang-hu_HU.png", "Magyar"},
-   {"it_IT.UTF-8", "lang-it_IT.png", "Italiano"},
-   {"ja_JP.UTF-8", "lang-ja_JP.png", "日本語"},
-   {"ko_KR.UTF-8", "lang-ko_KR.png", "한국어"},
-   {"nb_NO.UTF-8", "lang-nb_NO.png", "Norsk Bokmål"},
-   {"pl_PL.UTF-8", "lang-pl_PL.png", "Polski"},
-   {"pt_BR.UTF-8", "lang-pt_BR.png", "Português"},
-   {"ru_RU.UTF-8", "lang-ru_RU.png", "Русский"},
-   {"sk_SK.UTF-8", "lang-sk_SK.png", "Slovenčina"},
-   {"sl_SI.UTF-8", "lang-sl_SI.png", "Slovenščina"},
-   {"es_AR.UTF-8", "lang-es_AR.png", "Español"},
-   {"sv_SE.UTF-8", "lang-sv_SE.png", "Svenska"},
-   {"el_GR.UTF-8", "lang-el_GR.png", "Ελληνικά"},
+   {"ar_AE.UTF-8", "ara_flag.png",   "العربية"},
+   {"bg_BG.UTF-8", "bg_flag.png",    "Български"},
+   {"ca_ES.UTF-8", "cat_flag.png",   "Català"},
+   {"cs_CZ.UTF-8", "cz_flag.png",    "Čeština"},
+   {"da_DK.UTF-8", "dk_flag.png",    "Dansk"},
+   {"de_DE.UTF-8", "de_flag.png",    "Deutsch"},
+   {"en_US.UTF-8", "us_flag.png",    "English"},
+   {"en_GB.UTF-8", "bg_flag.png",    "British English"},
+   {"el_GR.UTF-8", "gr_flag.png",    "Ελληνικά"},
+   {"eo.UTF-8",    "epo_flag.png",   "Esperanto"},
+   {"es_AR.UTF-8", "ar_flag.png",    "Español"},
+   {"et_ET.UTF-8", "ee_flag.png",    "Eesti keel"},
+   {"fi_FI.UTF-8", "fi_flag.png",    "Suomi"},
+   {"fo_FO.UTF-8", "fo_flag.png",    "Føroyskt"},
+   {"fr_CH.UTF-8", "ch_flag.png",    "Français (Suisse)"},
+   {"fr_FR.UTF-8", "fr_flag.png",    "Français"},
+   {"he_HE.UTF-8", "il_flag.png",    "עברית"},
+   {"hr_HR.UTF-8", "hr_flag.png",    "Hrvatski"},
+   {"hu_HU.UTF-8", "hu_flag.png",    "Magyar"},
+   {"it_IT.UTF-8", "it_flag.png",    "Italiano"},
+   {"ja_JP.UTF-8", "jp_flag.png",    "日本語"},
+   {"km_KM.UTF-8", "kh_flag.png",    "ភាសាខ្មែរ"},
+   {"ko_KR.UTF-8", "kr_flag.png",    "한국어"},
+   {"ku.UTF-8",    "ku_flag.png",    "یدروك"},
+   {"lt_LT.UTF-8", "lt_flag.png",    "Lietuvių kalba"},
+   {"ms_MY.UTF-8", "my_flag.png",    "Bahasa Melayu"},
+   {"nb_NO.UTF-8", "no_flag.png",    "Norsk Bokmål"},
+   {"nl_NL.UTF-8", "nl_flag.png",    "Nederlands"},
+   {"pl_PL.UTF-8", "pl_flag.png",    "Polski"},
+   {"pt_BR.UTF-8", "br_flag.png",    "Português"},
+   {"ru_RU.UTF-8", "ru_flag.png",    "Русский"},
+   {"sk_SK.UTF-8", "sk_flag.png",    "Slovenčina"},
+   {"sl_SI.UTF-8", "si_flag.png",    "Slovenščina"},
+   {"sv_SE.UTF-8", "se_flag.png",    "Svenska"},
+   {"tr_TR.UTF-8", "tr_flag.png",    "Türkçe"},
+   {"uk_UK.UTF-8", "ua_flag.png",    "Українська мова"},
+   {"zh_CN.UTF-8", "cn_flag.png",    "中文 (繁体)"},
+   {"zh_TW.UTF-8", "tw_flag.png",    "中文 (繁體)"},
    { NULL, NULL, NULL }
 };
 
@@ -150,7 +163,7 @@ wizard_page_show(E_Wizard_Page *pg)
 
    e_widget_ilist_freeze(ob);
 
-   e_prefix_data_snprintf(buf, sizeof(buf), "data/images/%s", "lang-system.png");
+   e_prefix_data_snprintf(buf, sizeof(buf), "data/flags/%s", "lang-system.png");
    ic = e_util_icon_add(buf, pg->evas);
    e_widget_ilist_append(ob, ic, _("System Default"),
                          NULL, NULL, NULL);
@@ -161,7 +174,7 @@ wizard_page_show(E_Wizard_Page *pg)
 	pair = l->data;
 	if (pair->locale_icon)
 	  {
-	     e_prefix_data_snprintf(buf, sizeof(buf), "data/images/%s", pair->locale_icon);
+	     e_prefix_data_snprintf(buf, sizeof(buf), "data/flags/%s", pair->locale_icon);
 	     ic = e_util_icon_add(buf, pg->evas);
 	  }
         else

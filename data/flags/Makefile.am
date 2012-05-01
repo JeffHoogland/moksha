@@ -6,6 +6,7 @@ af_flag.png \
 al_flag.png \
 am_flag.png \
 ara_flag.png \
+ar_flag.png \
 at_flag.png \
 az_flag.png \
 ba_flag.png \
@@ -18,6 +19,7 @@ bt_flag.png \
 bw_flag.png \
 by_flag.png \
 ca_flag.png \
+cat_flag.png \
 cd_flag.png \
 ch_flag.png \
 cn_flag.png \
@@ -50,8 +52,10 @@ ke_flag.png \
 kg_flag.png \
 kh_flag.png \
 kr_flag.png \
+ku_flag.png \
 kz_flag.png \
 la_flag.png \
+lang-system.png \
 latam_flag.png \
 lk_flag.png \
 lt_flag.png \
@@ -65,6 +69,7 @@ mm_flag.png \
 mn_flag.png \
 mt_flag.png \
 mv_flag.png \
+my_flag.png \
 ng_flag.png \
 nl_flag.png \
 no_flag.png \
