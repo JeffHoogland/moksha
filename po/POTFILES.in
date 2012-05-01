@@ -252,5 +252,4 @@ src/modules/tasks/e_mod_main.c
 src/modules/tasks/e_mod_config.c
 src/modules/xkbswitch/e_mod_main.c
 src/modules/xkbswitch/e_mod_config.c
-src/modules/xkbswitch/e_mod_keybindings.c
 src/modules/xkbswitch/e_mod_parse.c
