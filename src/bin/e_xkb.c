@@ -35,24 +35,20 @@ e_xkb_update(void)
    
    buf = eina_strbuf_new();
    eina_strbuf_append(buf, "setxkbmap '");
-   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
-     {
-        eina_strbuf_append(buf, cl->name);
-        break;
-        //if (l->next) eina_strbuf_append(buf, ",");
-     }
+
+   /* use first entry in used layouts */
+   cl = e_config->xkb.used_layouts->data;
+   
+   eina_strbuf_append(buf, cl->name);
    eina_strbuf_append(buf, "'");
    
    eina_strbuf_append(buf, " -variant '");
-   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
-     {
-        eina_strbuf_append(buf, cl->variant);
-        eina_strbuf_append(buf, ",");
-        break;
-     }
+   eina_strbuf_append(buf, cl->variant);
+   /* workaround xkb bug where japanese (only one with a / in name)
+    * doesnt work without a , at the end */
+   if ((cl->name) && (strchr(cl->name, '/'))) eina_strbuf_append(buf, ",");
    eina_strbuf_append(buf, "'");
    
-   cl = eina_list_data_get(e_config->xkb.used_layouts);
    if (cl->model)
      {
         eina_strbuf_append(buf, " -model '");
@@ -74,9 +70,8 @@ e_xkb_update(void)
              eina_strbuf_append(buf, op->name);
              eina_strbuf_append(buf, "'");
           }
-        break;
      }
-   printf("SEWT XKB RUN:\  %s\n", eina_strbuf_string_get(buf));
+   printf("SET XKB RUN:\n %s\n", eina_strbuf_string_get(buf));
    ecore_exe_run(eina_strbuf_string_get(buf), NULL);
    eina_strbuf_free(buf);
 }
