@@ -135,11 +135,11 @@ _xkb_update_icon(void)
                   evas_object_del(inst->o_xkbflag);
                   inst->o_xkbflag = NULL;
                }
-             
              e_theme_edje_object_set(inst->o_xkbswitch, 
                                      "base/theme/modules/xkbswitch", 
                                      "modules/xkbswitch/noflag");
-             edje_object_part_text_set(inst->o_xkbswitch, "e.text.label", name);
+             edje_object_part_text_set(inst->o_xkbswitch,
+                                       "e.text.label", name);
           }
      }
    else
@@ -148,6 +148,9 @@ _xkb_update_icon(void)
           {
              if (!inst->o_xkbflag)
                inst->o_xkbflag = e_icon_add(inst->gcc->gadcon->evas);
+             e_theme_edje_object_set(inst->o_xkbswitch,
+                                     "base/theme/modules/xkbswitch", 
+                                     "modules/xkbswitch/main");
              e_xkb_e_icon_flag_setup(inst->o_xkbflag, name);
              edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
                                       inst->o_xkbflag);
@@ -174,9 +177,14 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    /* The gadget */
    inst->o_xkbswitch = edje_object_add(gc->evas);
-   e_theme_edje_object_set(inst->o_xkbswitch,
-                           "base/theme/modules/xkbswitch", 
-                           "modules/xkbswitch/main");
+   if (e_config->xkb.only_label)
+     e_theme_edje_object_set(inst->o_xkbswitch, 
+                             "base/theme/modules/xkbswitch", 
+                             "modules/xkbswitch/noflag");
+   else
+     e_theme_edje_object_set(inst->o_xkbswitch,
+                             "base/theme/modules/xkbswitch", 
+                             "modules/xkbswitch/main");
    edje_object_part_text_set(inst->o_xkbswitch, "e.text.label",
                              e_xkb_layout_name_reduce(name));
    /* The gadcon client */

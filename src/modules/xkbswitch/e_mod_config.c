@@ -212,6 +212,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
     }
    
    e_xkb_update();
+   _xkb_update_icon();
    
    e_config_save_queue();
    return 1;
@@ -285,7 +286,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
              Eina_List *l, *ll, *lll;
              Evas_Coord mw, mh;
              
-             Evas_Object *general =  e_widget_framelist_add(evas, _("General"), 0);
+             Evas_Object *general =  e_widget_framelist_add(evas, _("Gadgets"), 0);
                {
                   Evas_Object *only_label = e_widget_check_add(evas, _("Label only"), &(cfdata->only_label));
                     {

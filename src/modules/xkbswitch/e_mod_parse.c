@@ -188,31 +188,35 @@ parse_rules(void)
              
              p += strlen(name);
              while (p[0] == ' ') ++p;
-             
-             if (!strchr(name, ':'))
+
+             /* skip "grp" options for switching kbd layouts */
+             if (!(!strncmp(name, "grp", 3)))
                {
-                  group = E_NEW(E_XKB_Option_Group, 1);
-                  
-                  /* A hack to get it to parse right if
-                   * the group name contains a space
-                   */
-                  if (strstr(p, "  "))
+                  if (!strchr(name, ':'))
                     {
-                       p = strstr(p, "  ");
-                       while (p[0] == ' ') ++p;
+                       group = E_NEW(E_XKB_Option_Group, 1);
+                       
+                       /* A hack to get it to parse right if
+                        * the group name contains a space
+                        */
+                       if (strstr(p, "  "))
+                         {
+                            p = strstr(p, "  ");
+                            while (p[0] == ' ') ++p;
+                         }
+                       
+                       group->description = eina_stringshare_add(p);
+                       
+                       optgroups = eina_list_append(optgroups, group);
                     }
-                  
-                  group->description = eina_stringshare_add(p);
-                  
-                  optgroups = eina_list_append(optgroups, group);
-               }
-             else
-               {
-                  option = E_NEW(E_XKB_Option, 1);
-                  option->name = eina_stringshare_add(name);
-                  option->description = eina_stringshare_add(p);
-                  
-                  group->options = eina_list_append(group->options, option);
+                  else
+                    {
+                       option = E_NEW(E_XKB_Option, 1);
+                       option->name = eina_stringshare_add(name);
+                       option->description = eina_stringshare_add(p);
+                       group->options = eina_list_append(group->options,
+                                                         option);
+                    }
                }
              
              free(tmp);
