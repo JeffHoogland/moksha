@@ -789,41 +789,42 @@ e_int_config_imc_update(E_Config_Dialog *dia, const char *file)
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ot, *of, *il, *ol;
+   Evas_Object *o, *rt, *ot;
+   Evas_Object *ow, *of;
    const char *path;
    E_Fm2_Config fmc;
    E_Radio_Group *rg;
 
-   ot = e_widget_table_add(evas, 0);
-   ol = e_widget_table_add(evas, 0);
-   il = e_widget_table_add(evas, 1);
+   o = e_widget_list_add(evas, 0, 1);
 
    rg = e_widget_radio_group_new(&(cfdata->fmdir));
+   ot = e_widget_table_add(evas, 0);
+   rt = e_widget_table_add(evas, 1);
 
-   o = e_widget_radio_add(evas, _("Personal"), 0, rg);
-   e_widget_table_object_append(il, o, 0, 0, 1, 1, 1, 1, 0, 0);
-   e_widget_on_change_hook_set(o, _cb_dir, cfdata);
-   cfdata->o_personal = o;
+   ow = e_widget_radio_add(evas, _("Personal"), 0, rg);
+   cfdata->o_personal = ow;
+   e_widget_on_change_hook_set(ow, _cb_dir, cfdata);
+   e_widget_table_object_append(rt, ow, 0, 0, 1, 1, 1, 1, 0, 0);
 
-   o = e_widget_radio_add(evas, _("System"), 1, rg);
-   e_widget_table_object_append(il, o, 1, 0, 1, 1, 1, 1, 0, 0);
-   e_widget_on_change_hook_set(o, _cb_dir, cfdata);
-   cfdata->o_system = o;
+   ow = e_widget_radio_add(evas, _("System"), 1, rg);
+   cfdata->o_system = ow;
+   e_widget_on_change_hook_set(ow, _cb_dir, cfdata);
+   e_widget_table_object_append(rt, ow, 1, 0, 1, 1, 1, 1, 0, 0);
 
-   e_widget_table_object_append(ol, il, 0, 0, 1, 1, 0, 0, 0, 0);
+   e_widget_table_object_append(ot, rt, 0, 0, 1, 1, 0, 0, 0, 0);
 
-   o = e_widget_button_add(evas, _("Go up a Directory"), "go-up", 
-			   _cb_button_up, cfdata, NULL);
-   cfdata->o_up_button = o;
-   e_widget_table_object_append(ol, o, 0, 1, 1, 1, 0, 0, 0, 0);
+   ow = e_widget_button_add(evas, _("Go up a Directory"), "go-up", 
+                            _cb_button_up, cfdata, NULL);
+   cfdata->o_up_button = ow;
+   e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 0, 0, 0, 0);
 
    if (cfdata->fmdir == 1)
      path = e_intl_imc_system_path_get();
    else
      path = e_intl_imc_personal_path_get();
 
-   o = e_fm2_add(evas);
-   cfdata->o_fm = o;
+   ow = e_fm2_add(evas);
+   cfdata->o_fm = ow;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
    fmc.view.open_dirs_in_place = 1;
@@ -841,109 +842,106 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    fmc.list.sort.dirs.last = 1;
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
-   e_fm2_config_set(o, &fmc);
-   e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_SHOW_HIDDEN);
+   e_fm2_config_set(ow, &fmc);
+   e_fm2_icon_menu_flags_set(ow, E_FM2_MENU_NO_SHOW_HIDDEN);
 
-   evas_object_smart_callback_add(o, "dir_changed",
+   evas_object_smart_callback_add(ow, "dir_changed",
 				  _cb_files_changed, cfdata);
-   evas_object_smart_callback_add(o, "selection_change",
+   evas_object_smart_callback_add(ow, "selection_change",
 				  _cb_files_selection_change, cfdata);
-   evas_object_smart_callback_add(o, "changed",
+   evas_object_smart_callback_add(ow, "changed",
 				  _cb_files_files_changed, cfdata);
-   evas_object_smart_callback_add(o, "files_deleted",
+   evas_object_smart_callback_add(ow, "files_deleted",
 				  _cb_files_files_deleted, cfdata);
    cfdata->o_frame = NULL;
-   e_fm2_path_set(o, path, "/");
+   e_fm2_path_set(ow, path, "/");
 
-   of = e_widget_scrollframe_pan_add(evas, o,
+   of = e_widget_scrollframe_pan_add(evas, ow,
 				     e_fm2_pan_set,
 				     e_fm2_pan_get,
 				     e_fm2_pan_max_get,
 				     e_fm2_pan_child_size_get);
    cfdata->o_frame = of;
    e_widget_size_min_set(of, 160, 160);
-   e_widget_table_object_append(ol, of, 0, 2, 1, 1, 1, 1, 1, 1);
-   e_widget_table_object_append(ot, ol, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
-   of = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, 0);
 
-   /* Disable imc checkbox */
-   /* il( o[Check], ol( o[Button], o[Button] ) ) */
-   il = e_widget_list_add(evas, 0, 1);
+   ow = e_widget_check_add(evas, _("Use No Input Method"), 
+                           &(cfdata->imc_disable));
+   cfdata->gui.imc_advanced_disable = ow;
+   e_widget_table_object_append(ot, ow, 0, 0, 1, 1, 1, 0, 0, 0);
 
-   o = e_widget_check_add(evas, _("Use No Input Method"), 
-			  &(cfdata->imc_disable));
-   cfdata->gui.imc_advanced_disable = o;
-   e_widget_list_object_append(il, o, 1, 0, 0.5);
+   ow = e_widget_button_add(evas, _("New"), "document-new", 
+                            _cb_new, cfdata, NULL);
+   e_widget_table_object_append(ot, ow, 1, 0, 1, 1, 1, 0, 0, 0);
 
-   ol = e_widget_list_add(evas, 1, 1);
+   ow = e_widget_button_add(evas, _("Import..."), "preferences-imc", 
+                            _cb_import, cfdata, NULL);
+   e_widget_table_object_append(ot, ow, 2, 0, 1, 1, 1, 0, 0, 0);
 
-   o = e_widget_button_add(evas, _("New"), "document-new", _cb_new, cfdata, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   o = e_widget_button_add(evas, _("Import..."), "preferences-imc", _cb_import, cfdata, NULL);
-   e_widget_list_object_append(ol, o, 1, 0, 0.5);
-   e_widget_list_object_append(il, ol, 1, 0, 0.5);
-   e_widget_list_object_append(of, il, 1, 0, 0.0);
+   of = e_widget_frametable_add(evas, _("Input Method Parameters"), 0);
+   e_widget_frametable_content_align_set(of, 0.0, 0.0);
 
-   ol = e_widget_frametable_add(evas, _("Input Method Parameters"), 0);
-   e_widget_frametable_content_align_set(ol, 0.0, 0.0);
+   ow = e_widget_label_add(evas, _("Name"));
+   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_entry_add(evas, &(cfdata->imc.e_im_name), NULL, NULL, NULL);
+   e_widget_on_change_hook_set(ow, _e_imc_entry_change_cb, cfdata);
+   cfdata->gui.e_im_name = ow;
+   e_widget_frametable_object_append(of, ow, 1, 0, 1, 1, 1, 1, 1, 0);
 
-   o = e_widget_label_add(evas, _("Name"));
-   e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_name), NULL, NULL, NULL);
-   e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
-   cfdata->gui.e_im_name = o;
-   e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 0);
+   ow = e_widget_label_add(evas, _("Execute Command"));
+   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_entry_add(evas, &(cfdata->imc.e_im_exec), NULL, NULL, NULL);
+   e_widget_on_change_hook_set(ow, _e_imc_entry_change_cb, cfdata);
+   cfdata->gui.e_im_exec = ow;
+   e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 1, 1, 1, 0);
 
-   o = e_widget_label_add(evas, _("Execute Command"));
-   e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_exec), NULL, NULL, NULL);
-   e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
-   cfdata->gui.e_im_exec = o;
-   e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 0);
+   ow = e_widget_label_add(evas, _("Setup Command"));
+   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_entry_add(evas, &(cfdata->imc.e_im_setup_exec), NULL, NULL, NULL);
+   e_widget_on_change_hook_set(ow, _e_imc_entry_change_cb, cfdata);
+   cfdata->gui.e_im_setup_exec = ow;
+   e_widget_frametable_object_append(of, ow, 1, 2, 1, 1, 1, 1, 1, 0);
 
-   o = e_widget_label_add(evas, _("Setup Command"));
-   e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.e_im_setup_exec), NULL, NULL, NULL);
-   e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
-   cfdata->gui.e_im_setup_exec = o;
-   e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 1, 3, 1, 1, 1, 1, 1);
 
-   e_widget_list_object_append(of, ol, 0, 1, 0.5);
+   of = e_widget_frametable_add(evas, _("Exported Environment Variables"), 0);
+   e_widget_frametable_content_align_set(of, 0.0, 0.0);
 
-   ol = e_widget_frametable_add(evas, _("Exported Environment Variables"), 0);
-   e_widget_frametable_content_align_set(ol, 0.0, 0.0);
+   ow = e_widget_label_add(evas, "GTK_IM_MODULE");
+   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_entry_add(evas, &(cfdata->imc.gtk_im_module), NULL, NULL, NULL);
+   e_widget_on_change_hook_set(ow, _e_imc_entry_change_cb, cfdata);
+   cfdata->gui.gtk_im_module = ow;
+   e_widget_frametable_object_append(of, ow, 1, 0, 1, 1, 1, 1, 1, 0);
 
-   o = e_widget_label_add(evas, "GTK_IM_MODULE");
-   e_widget_frametable_object_append(ol, o, 0, 0, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.gtk_im_module), NULL, NULL, NULL);
-   e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
-   cfdata->gui.gtk_im_module = o;
-   e_widget_frametable_object_append(ol, o, 1, 0, 1, 1, 1, 1, 1, 0);
+   ow = e_widget_label_add(evas, "QT_IM_MODULE");
+   e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_entry_add(evas, &(cfdata->imc.qt_im_module), NULL, NULL, NULL);
+   e_widget_on_change_hook_set(ow, _e_imc_entry_change_cb, cfdata);
+   cfdata->gui.qt_im_module = ow;
+   e_widget_frametable_object_append(of, ow, 1, 1, 1, 1, 1, 1, 1, 0);
 
-   o = e_widget_label_add(evas, "QT_IM_MODULE");
-   e_widget_frametable_object_append(ol, o, 0, 1, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.qt_im_module), NULL, NULL, NULL);
-   e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
-   cfdata->gui.qt_im_module = o;
-   e_widget_frametable_object_append(ol, o, 1, 1, 1, 1, 1, 1, 1, 0);
+   ow = e_widget_label_add(evas, "XMODIFIERS");
+   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 1, 0, 0);
+   ow = e_widget_entry_add(evas, &(cfdata->imc.xmodifiers), NULL, NULL, NULL);
+   e_widget_on_change_hook_set(ow, _e_imc_entry_change_cb, cfdata);
+   cfdata->gui.xmodifiers = ow;
+   e_widget_frametable_object_append(of, ow, 1, 2, 1, 1, 1, 1, 1, 0);
 
-   o = e_widget_label_add(evas, "XMODIFIERS");
-   e_widget_frametable_object_append(ol, o, 0, 2, 1, 1, 1, 1, 0, 0);
-   o = e_widget_entry_add(evas, &(cfdata->imc.xmodifiers), NULL, NULL, NULL);
-   e_widget_on_change_hook_set(o, _e_imc_entry_change_cb, cfdata);
-   cfdata->gui.xmodifiers = o;
-   e_widget_frametable_object_append(ol, o, 1, 2, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 2, 3, 1, 1, 1, 1, 1);
 
-   e_widget_list_object_append(of, ol, 0, 1, 0.5);
-   e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_button_add(evas, _("Setup Selected Input Method"), "configure", _e_imc_adv_setup_cb, cfdata, NULL);
+   e_widget_table_object_append(ot, ow, 0, 3, 3, 1, 1, 1, 1, 0);
+   cfdata->gui.imc_advanced_setup = ow;
 
-   o = e_widget_button_add(evas, _("Setup Selected Input Method"), "configure", _e_imc_adv_setup_cb, cfdata, NULL);
-   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 1, 0);
-   cfdata->gui.imc_advanced_setup = o;
+   e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
    e_dialog_resizable_set(cfd->dia, 1);
 
    _e_imc_form_fill(cfdata);
-   return ot;
+
+   return o;
 }
