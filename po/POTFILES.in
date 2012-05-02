@@ -250,6 +250,9 @@ src/modules/systray/e_mod_main.c
 src/modules/shot/e_mod_main.c
 src/modules/tasks/e_mod_main.c
 src/modules/tasks/e_mod_config.c
+src/modules/tiling/e_mod_config.c
+src/modules/tiling/e_mod_tiling.c
+src/modules/tiling/e_mod_tiling.h
 src/modules/xkbswitch/e_mod_main.c
 src/modules/xkbswitch/e_mod_config.c
 src/modules/xkbswitch/e_mod_parse.c

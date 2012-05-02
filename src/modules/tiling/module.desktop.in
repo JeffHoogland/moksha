@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Link
+Name=Tiling
+Name[fr]=E-pavage
+Icon=e-module-tiling
+Comment=Positions/resizes your windows tilingly.
+Comment[fr]=Place/Redimensionne les fenêtres sans les superposer.
+Comment[it]=Posiziona/ridimensiona le finestre affiancandole.
+Comment[pt]=Posiciona/ajusta as janelas em mosaicos
+X-Enlightenment-ModuleType=core
