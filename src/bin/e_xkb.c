@@ -42,12 +42,15 @@ e_xkb_update(void)
    eina_strbuf_append(buf, cl->name);
    eina_strbuf_append(buf, "'");
    
-   eina_strbuf_append(buf, " -variant '");
-   eina_strbuf_append(buf, cl->variant);
-   /* workaround xkb bug where japanese (only one with a / in name)
-    * doesnt work without a , at the end */
-   if ((cl->name) && (strchr(cl->name, '/'))) eina_strbuf_append(buf, ",");
-   eina_strbuf_append(buf, "'");
+   if (cl->variant)
+     {
+        eina_strbuf_append(buf, " -variant '");
+        eina_strbuf_append(buf, cl->variant);
+        /* workaround xkb bug where basic variants work with ',' at the
+         * end, but dvorak (and mayby others) don't */
+        if (!strcmp(cl->variant, "basic")) eina_strbuf_append(buf, ",");
+        eina_strbuf_append(buf, "'");
+     }
    
    if (cl->model)
      {
