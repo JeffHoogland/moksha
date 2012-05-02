@@ -67,6 +67,10 @@ e_xkb_update(void)
         eina_strbuf_append(buf, "'");
      }
    
+   /* clear options */
+   eina_strbuf_append(buf, " -option ");
+   
+   /* add in selected options */
    EINA_LIST_FOREACH(e_config->xkb.used_options, l, op)
      {
         if (op->name)
@@ -86,7 +90,7 @@ e_xkb_layout_next(void)
 {  
    void *odata, *ndata;
    Eina_List *l;
-   
+
    odata = eina_list_data_get(e_config->xkb.used_layouts);
    
    EINA_LIST_FOREACH(eina_list_next(e_config->xkb.used_layouts), l, ndata)

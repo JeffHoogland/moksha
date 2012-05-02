@@ -2675,17 +2675,17 @@ ACT_FN_GO(backlight_adjust, )
 ACT_FN_GO(kbd_layout, )
 {
    if (!params) return;
-//   e_xkb_layout_set(params);
+   e_xkb_layout_set(params);
 }
 
 ACT_FN_GO(kbd_layout_next, __UNUSED__)
 {
-//   e_xkb_layout_next();
+   e_xkb_layout_next();
 }
 
 ACT_FN_GO(kbd_layout_prev, __UNUSED__)
 {
-//   e_xkb_layout_prev();
+   e_xkb_layout_prev();
 }
 
 /* local subsystem globals */
