@@ -271,7 +271,6 @@ e_container_resize(E_Container *con, int w, int h)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-   if ((w == con->w) && (h == con->h)) return;
    con->w = w;
    con->h = h;
    if (con->win != con->manager->win)
@@ -288,7 +287,6 @@ e_container_move_resize(E_Container *con, int x, int y, int w, int h)
 {
    E_OBJECT_CHECK(con);
    E_OBJECT_TYPE_CHECK(con, E_CONTAINER_TYPE);
-   if ((x == con->x) && (y == con->y) && (w == con->w) && (h == con->h)) return;
    con->x = x;
    con->y = y;
    con->w = w;
