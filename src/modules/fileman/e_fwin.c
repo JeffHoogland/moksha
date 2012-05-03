@@ -470,16 +470,18 @@ _e_fwin_new(E_Container *con,
    fwin->pages = eina_list_append(fwin->pages, page);
    fwin->cur_page = page;
 
-   o = e_icon_add(e_win_evas_get(fwin->win));
-   e_icon_scale_size_set(o, 0);
-   e_icon_fill_inside_set(o, 0);
+   o = edje_object_add(fwin->win->evas);
+//   o = e_icon_add(e_win_evas_get(fwin->win));
+//   e_icon_scale_size_set(o, 0);
+//   e_icon_fill_inside_set(o, 0);
    edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", o);
    evas_object_pass_events_set(o, 1);
    fwin->under_obj = o;
 
-   o = e_icon_add(e_win_evas_get(fwin->win));
-   e_icon_scale_size_set(o, 0);
-   e_icon_fill_inside_set(o, 0);
+   o = edje_object_add(fwin->win->evas);
+//   o = e_icon_add(e_win_evas_get(fwin->win));
+//   e_icon_scale_size_set(o, 0);
+//   e_icon_fill_inside_set(o, 0);
    edje_object_part_swallow(e_scrollframe_edje_object_get(page->scrollframe_obj), "e.swallow.overlay", o);
    evas_object_pass_events_set(o, 1);
    fwin->over_obj = o;
@@ -606,6 +608,7 @@ _e_fwin_page_create(E_Fwin *fwin)
                                 _e_fwin_pan_child_size_get);
    evas_object_propagate_events_set(page->fm_obj, 0);
    page->scrollframe_obj = o;
+//   edje_object_part_swallow(fwin->bg_obj, "e.swallow.content", o);
    evas_object_move(o, 0, 0);
    evas_object_show(o);
 
@@ -1251,12 +1254,14 @@ _e_fwin_changed(void            *data,
     */
    snprintf(buf, sizeof(buf), "%s/.directory.desktop", e_fm2_real_path_get(page->fm_obj));
    ef = efreet_desktop_new(buf);
+   printf("EF=%p for %s\n", ef, buf);
    if (ef)
      {
         fwin->wallpaper_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->wallpaper_file, "X-Enlightenment-Directory-Wallpaper");
         fwin->overlay_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->overlay_file, "X-Enlightenment-Directory-Overlay");
         fwin->scrollframe_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->scrollframe_file, "X-Enlightenment-Directory-Scrollframe");
         fwin->theme_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->theme_file, "X-Enlightenment-Directory-Theme");
+        printf("fwin->wallpaper_file = %s\n", fwin->wallpaper_file);
         efreet_desktop_free(ef);
      }
    else
@@ -1273,29 +1278,32 @@ _e_fwin_changed(void            *data,
         evas_object_hide(fwin->under_obj);
         if (fwin->wallpaper_file)
           {
-             ext = strrchr(fwin->wallpaper_file, '.');
-             if (ext && !strcasecmp(ext, ".edj"))
-               e_icon_file_edje_set(fwin->under_obj, fwin->wallpaper_file, "e/desktop/background");
-             else
-               e_icon_file_set(fwin->under_obj, fwin->wallpaper_file);
+             edje_object_file_set(fwin->under_obj, fwin->wallpaper_file, "e/desktop/background");
+//             ext = strrchr(fwin->wallpaper_file, '.');
+//             if (ext && !strcasecmp(ext, ".edj"))
+//               e_icon_file_edje_set(fwin->under_obj, fwin->wallpaper_file, "e/desktop/background");
+//             else
+//               e_icon_file_set(fwin->under_obj, fwin->wallpaper_file);
           }
-        else
-          e_icon_file_edje_set(fwin->under_obj, NULL, NULL);
+//        else
+//          e_icon_file_edje_set(fwin->under_obj, NULL, NULL);
         evas_object_show(fwin->under_obj);
      }
    if (fwin->over_obj)
      {
+        printf("over obj\n");
         evas_object_hide(fwin->over_obj);
         if (fwin->overlay_file)
           {
-             ext = strrchr(fwin->overlay_file, '.');
-             if (ext && !strcasecmp(ext, ".edj"))
-               e_icon_file_edje_set(fwin->over_obj, fwin->overlay_file, "e/desktop/background");
-             else
-               e_icon_file_set(fwin->over_obj, fwin->overlay_file);
+             edje_object_file_set(fwin->over_obj, fwin->overlay_file, "e/desktop/background");
+//             ext = strrchr(fwin->overlay_file, '.');
+//             if (ext && !strcasecmp(ext, ".edj"))
+//               e_icon_file_edje_set(fwin->over_obj, fwin->overlay_file, "e/desktop/background");
+//             else
+//               e_icon_file_set(fwin->over_obj, fwin->overlay_file);
           }
-        else
-          e_icon_file_edje_set(fwin->over_obj, NULL, NULL);
+//        else
+//          e_icon_file_edje_set(fwin->over_obj, NULL, NULL);
         evas_object_show(fwin->over_obj);
      }
    if (page->scrollframe_obj)
