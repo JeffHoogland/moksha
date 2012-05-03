@@ -3100,7 +3100,7 @@ e_border_find_by_window(Ecore_X_Window win)
 }
 
 EAPI E_Border *
-e_border_find_by_alarm(Ecore_X_Sync_Alarm alarm)
+e_border_find_by_alarm(Ecore_X_Sync_Alarm al)
 {
    Eina_List *l;
    E_Border *bd;
@@ -3108,7 +3108,7 @@ e_border_find_by_alarm(Ecore_X_Sync_Alarm alarm)
    EINA_LIST_FOREACH(borders, l, bd)
      {
         if ((bd) && (!e_object_is_del(E_OBJECT(bd))) &&
-            (bd->client.netwm.sync.alarm == alarm))
+            (bd->client.netwm.sync.alarm == al))
           return bd;
      }
    return NULL;
