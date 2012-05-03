@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-05-01 19:06+0200\n"
-"PO-Revision-Date: 2012-05-01 19:34+0200\n"
+"POT-Creation-Date: 2012-05-03 14:03+0200\n"
+"PO-Revision-Date: 2012-05-03 19:34+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -661,7 +661,7 @@ msgstr "Commuta modalità disconnessa"
 #: src/bin/e_int_config_modules.c:53
 #: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
-#: src/modules/conf_intl/e_int_config_imc.c:808
+#: src/modules/conf_intl/e_int_config_imc.c:809
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:588
 #: src/modules/conf_theme/e_int_config_startup.c:258
@@ -760,7 +760,7 @@ msgstr "Selettore colore"
 #: src/modules/cpufreq/e_mod_main.c:469
 #: src/modules/fileman/e_int_config_mime_edit.c:303
 #: src/modules/shot/e_mod_main.c:242 src/modules/shot/e_mod_main.c:482
-#: src/modules/xkbswitch/e_mod_config.c:511
+#: src/modules/xkbswitch/e_mod_config.c:512
 msgid "OK"
 msgstr "OK"
 
@@ -775,7 +775,7 @@ msgstr "OK"
 #: src/modules/fileman/e_int_config_mime_edit.c:304
 #: src/modules/syscon/e_syscon.c:120 src/modules/connman/e_mod_main.c:300
 #: src/modules/shot/e_mod_main.c:244 src/modules/shot/e_mod_main.c:483
-#: src/modules/shot/e_mod_main.c:698 src/modules/xkbswitch/e_mod_config.c:512
+#: src/modules/shot/e_mod_main.c:698 src/modules/xkbswitch/e_mod_config.c:513
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -1062,7 +1062,7 @@ msgstr "Editor file desktop"
 
 #: src/bin/e_eap_editor.c:671 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467
-#: src/modules/conf_intl/e_int_config_imc.c:891
+#: src/modules/conf_intl/e_int_config_imc.c:887
 #: src/modules/conf_menus/e_int_config_menus.c:265
 msgid "Name"
 msgstr "Nome"
@@ -1107,7 +1107,7 @@ msgstr "File desktop"
 #: src/modules/everything/evry_config.c:378
 #: src/modules/everything/evry_plug_files.c:1476
 #: src/modules/pager/e_mod_config.c:126 src/modules/pager/e_mod_config.c:213
-#: src/modules/xkbswitch/e_mod_config.c:288
+#: src/modules/tiling/e_mod_config.c:172
 msgid "General"
 msgstr "Impostazioni generali"
 
@@ -1124,7 +1124,7 @@ msgid "Show in Menus"
 msgstr "Mostra in menù"
 
 #: src/bin/e_eap_editor.c:786 src/bin/e_int_border_remember.c:757
-#: src/modules/xkbswitch/e_mod_config.c:324
+#: src/modules/xkbswitch/e_mod_config.c:325
 msgid "Options"
 msgstr "Opzioni"
 
@@ -1652,7 +1652,7 @@ msgstr "Aspetto"
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
 #: src/modules/gadman/e_mod_gadman.c:813 src/modules/ibar/e_mod_main.c:801
-#: src/modules/xkbswitch/e_mod_config.c:259
+#: src/modules/xkbswitch/e_mod_config.c:260
 msgid "Remove"
 msgstr "Elimina"
 
@@ -2214,8 +2214,8 @@ msgstr "Mobile"
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:690
 #: src/modules/pager/e_mod_main.c:791 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1323
-#: src/modules/tasks/e_mod_main.c:680 src/modules/xkbswitch/e_mod_main.c:304
-#: src/modules/xkbswitch/e_mod_main.c:350
+#: src/modules/tasks/e_mod_main.c:680 src/modules/xkbswitch/e_mod_main.c:312
+#: src/modules/xkbswitch/e_mod_main.c:358
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -2302,7 +2302,7 @@ msgstr "Applicazioni"
 #: src/bin/e_int_menus.c:151 src/bin/e_int_menus.c:1126
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
-#: src/modules/winlist/e_mod_main.c:25
+#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3781
 msgid "Windows"
 msgstr "Finestre"
 
@@ -3559,19 +3559,19 @@ msgstr ""
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:106
-#: src/modules/xkbswitch/e_mod_config.c:254
+#: src/modules/xkbswitch/e_mod_config.c:255
 msgid "Add"
 msgstr "Aggiungi"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:272
-#: src/modules/xkbswitch/e_mod_config.c:242
+#: src/modules/xkbswitch/e_mod_config.c:243
 msgid "Up"
 msgstr "Su"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:276
-#: src/modules/xkbswitch/e_mod_config.c:248
+#: src/modules/xkbswitch/e_mod_config.c:249
 msgid "Down"
 msgstr "Giù"
 
@@ -3581,7 +3581,7 @@ msgstr "Aggiungi ai preferiti"
 
 #: src/bin/e_widget_fsel.c:302
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
-#: src/modules/conf_intl/e_int_config_imc.c:815
+#: src/modules/conf_intl/e_int_config_imc.c:816
 #: src/modules/conf_theme/e_int_config_wallpaper.c:472
 #: src/modules/conf_theme/e_int_config_wallpaper.c:594
 #: src/modules/conf_theme/e_int_config_startup.c:266
@@ -4099,6 +4099,7 @@ msgstr "Numero di desktop"
 #: src/modules/everything/evry_config.c:580
 #: src/modules/everything/evry_config.c:587
 #: src/modules/fileman/e_mod_config.c:240
+#: src/modules/tiling/e_mod_config.c:124
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
@@ -4170,7 +4171,7 @@ msgid "Select a Background..."
 msgstr "Seleziona uno sfondo..."
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
-#: src/modules/conf_intl/e_int_config_imc.c:803
+#: src/modules/conf_intl/e_int_config_imc.c:804
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:584
 #: src/modules/conf_theme/e_int_config_startup.c:253
@@ -4398,6 +4399,7 @@ msgid "Backlight"
 msgstr "Retroilluminazione"
 
 #: src/modules/conf_display/e_mod_main.c:21
+#: src/modules/tiling/e_mod_config.c:190
 msgid "Virtual Desktops"
 msgstr "Desktop virtuali"
 
@@ -4635,36 +4637,36 @@ msgid "Input Method Selector"
 msgstr "Selettore metodo di input"
 
 #: src/modules/conf_intl/e_int_config_imc.c:286
-#: src/modules/conf_intl/e_int_config_imc.c:874
+#: src/modules/conf_intl/e_int_config_imc.c:871
 msgid "Use No Input Method"
 msgstr "Non usare metodo di input"
 
 #: src/modules/conf_intl/e_int_config_imc.c:292
-#: src/modules/conf_intl/e_int_config_imc.c:941
+#: src/modules/conf_intl/e_int_config_imc.c:936
 msgid "Setup Selected Input Method"
 msgstr "Configura metodo di input selezionato"
 
-#: src/modules/conf_intl/e_int_config_imc.c:881
+#: src/modules/conf_intl/e_int_config_imc.c:876
 msgid "New"
 msgstr "Nuovo"
 
-#: src/modules/conf_intl/e_int_config_imc.c:883
+#: src/modules/conf_intl/e_int_config_imc.c:880
 msgid "Import..."
 msgstr "Importa..."
 
-#: src/modules/conf_intl/e_int_config_imc.c:888
+#: src/modules/conf_intl/e_int_config_imc.c:884
 msgid "Input Method Parameters"
 msgstr "Parametri metodo di input"
 
-#: src/modules/conf_intl/e_int_config_imc.c:898
+#: src/modules/conf_intl/e_int_config_imc.c:894
 msgid "Execute Command"
 msgstr "Comando di esecuzione"
 
-#: src/modules/conf_intl/e_int_config_imc.c:905
+#: src/modules/conf_intl/e_int_config_imc.c:901
 msgid "Setup Command"
 msgstr "Comando di configurazione"
 
-#: src/modules/conf_intl/e_int_config_imc.c:914
+#: src/modules/conf_intl/e_int_config_imc.c:910
 msgid "Exported Environment Variables"
 msgstr "Variabili d'ambiente esportate"
 
@@ -4889,6 +4891,7 @@ msgstr "Commenti"
 #: src/modules/gadman/e_mod_config.c:162 src/modules/gadman/e_mod_main.c:27
 #: src/modules/gadman/e_mod_main.c:77 src/modules/gadman/e_mod_main.c:84
 #: src/modules/gadman/e_mod_main.c:120 src/modules/gadman/e_mod_main.c:150
+#: src/modules/xkbswitch/e_mod_config.c:289
 msgid "Gadgets"
 msgstr "Gadget"
 
@@ -8134,8 +8137,42 @@ msgstr "%1.0f px"
 msgid "Minimum Height"
 msgstr "Altezza minima"
 
+#: src/modules/tiling/e_mod_config.c:130
+msgid "columns"
+msgstr "colonne"
+
+#: src/modules/tiling/e_mod_config.c:132
+msgid "rows"
+msgstr "righe"
+
+#: src/modules/tiling/e_mod_config.c:174
+msgid "Tile dialog windows as well"
+msgstr "Metti in griglia anche le finestre di dialogo"
+
+#: src/modules/tiling/e_mod_config.c:177
+msgid "Show window titles"
+msgstr "Mostra i titoli delle finestre"
+
+#: src/modules/tiling/e_mod_config.c:181
+msgid "Key hints"
+msgstr "Suggerimenti sui tasti"
+
+#: src/modules/tiling/e_mod_config.c:192
+msgid "Number of columns used to tile per desk (0 → tiling disabled):"
+msgstr "Numero di colonne da usare per desktop (0 → griglia disabilitata)"
+
+#: src/modules/tiling/e_mod_config.c:329
+msgid "Tiling Configuration"
+msgstr "Configurazione di Tiling"
+
+#: src/modules/tiling/e_mod_tiling.c:3754
+#: src/modules/tiling/e_mod_tiling.c:3783
+#: src/modules/tiling/e_mod_tiling.c:3872
+msgid "Tiling"
+msgstr "Tiling"
+
 #: src/modules/xkbswitch/e_mod_main.c:75
-#: src/modules/xkbswitch/e_mod_main.c:246
+#: src/modules/xkbswitch/e_mod_main.c:254
 msgid "XKB Switcher"
 msgstr "Commutatore tastiera"
 
@@ -8143,30 +8180,30 @@ msgstr "Commutatore tastiera"
 msgid "XKB Switcher Module"
 msgstr "Modulo XKBswitcher"
 
-#: src/modules/xkbswitch/e_mod_config.c:268
+#: src/modules/xkbswitch/e_mod_config.c:269
 msgid "Configurations"
 msgstr "Configurazioni"
 
-#: src/modules/xkbswitch/e_mod_config.c:277
+#: src/modules/xkbswitch/e_mod_config.c:278
 msgid "Models"
 msgstr "Modelli"
 
-#: src/modules/xkbswitch/e_mod_config.c:290
+#: src/modules/xkbswitch/e_mod_config.c:291
 msgid "Label only"
 msgstr "Solo etichette"
 
-#: src/modules/xkbswitch/e_mod_config.c:469
+#: src/modules/xkbswitch/e_mod_config.c:470
 msgid "Add New Configuration"
 msgstr "Aggiungi nuova configurazione"
 
-#: src/modules/xkbswitch/e_mod_config.c:479
+#: src/modules/xkbswitch/e_mod_config.c:480
 msgid "Available"
 msgstr "Disponibile"
 
-#: src/modules/xkbswitch/e_mod_config.c:486
+#: src/modules/xkbswitch/e_mod_config.c:487
 msgid "Model"
 msgstr "Modello"
 
-#: src/modules/xkbswitch/e_mod_config.c:493
+#: src/modules/xkbswitch/e_mod_config.c:494
 msgid "Variant"
 msgstr "Variante"

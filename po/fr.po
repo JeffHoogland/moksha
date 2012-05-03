@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-05-01 16:57+0200\n"
-"PO-Revision-Date: 2012-05-01 18:41+0100\n"
+"POT-Creation-Date: 2012-05-03 06:57+0200\n"
+"PO-Revision-Date: 2012-05-03 12:15+0100\n"
 "Last-Translator: dazibao <dazibao@sfr.fr>\n"
 "Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
 "Language: fr\n"
@@ -746,7 +746,7 @@ msgstr "Activer/Désactiver le mode hors ligne"
 #: src/bin/e_int_config_modules.c:53
 #: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
-#: src/modules/conf_intl/e_int_config_imc.c:808
+#: src/modules/conf_intl/e_int_config_imc.c:809
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:588
 #: src/modules/conf_theme/e_int_config_startup.c:258
@@ -863,7 +863,7 @@ msgstr "Sélecteur de couleur"
 #: src/modules/fileman/e_int_config_mime_edit.c:303
 #: src/modules/shot/e_mod_main.c:242
 #: src/modules/shot/e_mod_main.c:482
-#: src/modules/xkbswitch/e_mod_config.c:511
+#: src/modules/xkbswitch/e_mod_config.c:512
 msgid "OK"
 msgstr "OK"
 
@@ -885,7 +885,7 @@ msgstr "OK"
 #: src/modules/shot/e_mod_main.c:244
 #: src/modules/shot/e_mod_main.c:483
 #: src/modules/shot/e_mod_main.c:698
-#: src/modules/xkbswitch/e_mod_config.c:512
+#: src/modules/xkbswitch/e_mod_config.c:513
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -1103,7 +1103,7 @@ msgstr "Éditeur de fichier desktop"
 #: src/bin/e_eap_editor.c:671
 #: src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467
-#: src/modules/conf_intl/e_int_config_imc.c:891
+#: src/modules/conf_intl/e_int_config_imc.c:887
 #: src/modules/conf_menus/e_int_config_menus.c:265
 msgid "Name"
 msgstr "Nom"
@@ -1152,7 +1152,7 @@ msgstr "Fichier desktop"
 #: src/modules/everything/evry_plug_files.c:1476
 #: src/modules/pager/e_mod_config.c:126
 #: src/modules/pager/e_mod_config.c:213
-#: src/modules/xkbswitch/e_mod_config.c:288
+#: src/modules/tiling/e_mod_config.c:172
 msgid "General"
 msgstr "Général"
 
@@ -1170,7 +1170,7 @@ msgstr "Afficher dans les menus"
 
 #: src/bin/e_eap_editor.c:786
 #: src/bin/e_int_border_remember.c:757
-#: src/modules/xkbswitch/e_mod_config.c:324
+#: src/modules/xkbswitch/e_mod_config.c:325
 msgid "Options"
 msgstr "Options"
 
@@ -1224,22 +1224,22 @@ msgstr "Erreur d'exécution"
 
 #: src/bin/e_exec.c:234
 msgid "Enlightenment was unable to get current directory"
-msgstr "Enlightenment n'est pas en mesure de déterminer le répertoire courant"
+msgstr "Enlightenment est dans l'incapacité de déterminer le répertoire courant"
 
 #: src/bin/e_exec.c:241
 #, c-format
 msgid "Enlightenment was unable to change to directory:<br><br>%s"
-msgstr "Enlightenment n'est pas en mesure de changer de répertoire vers :<br><br>%s"
+msgstr "Enlightenment est dans l'incapacité de changer de répertoire vers :<br><br>%s"
 
 #: src/bin/e_exec.c:253
 #, c-format
 msgid "Enlightenment was unable to restore to directory:<br><br>%s"
-msgstr "Enlightenment n'est pas en mesure d'effectuer la restauration vers :<br><br>%s"
+msgstr "Enlightenment est dans l'incapacité d'effectuer la restauration vers :<br><br>%s"
 
 #: src/bin/e_exec.c:277
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s"
-msgstr "Enlightenment n'a pu cloner un processus fils :<br><br>%s"
+msgstr "Enlightenment est dans l'incapacité de cloner un processus fils :<br><br>%s"
 
 #: src/bin/e_exec.c:405
 msgid "Application run error"
@@ -1248,7 +1248,7 @@ msgstr "Erreur d'exécution de l'application"
 #: src/bin/e_exec.c:407
 #, c-format
 msgid "Enlightenment was unable to run the application:<br><br>%s<br><br>The application failed to start."
-msgstr "Enlightenment ne peut exécuter l'application :<br><br>%s<br><br>Son lancement a échoué."
+msgstr "Enlightenment est dans l'incapacité d'exécuter l'application :<br><br>%s<br><br>Son lancement a échoué."
 
 #: src/bin/e_exec.c:507
 msgid "Application Execution Error"
@@ -1733,7 +1733,7 @@ msgstr "Aspect"
 #: src/modules/conf_applications/e_int_config_apps.c:280
 #: src/modules/gadman/e_mod_gadman.c:813
 #: src/modules/ibar/e_mod_main.c:801
-#: src/modules/xkbswitch/e_mod_config.c:259
+#: src/modules/xkbswitch/e_mod_config.c:260
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -2310,8 +2310,8 @@ msgstr "Mobile"
 #: src/modules/mixer/e_mod_main.c:789
 #: src/modules/connman/e_mod_main.c:1323
 #: src/modules/tasks/e_mod_main.c:680
-#: src/modules/xkbswitch/e_mod_main.c:304
-#: src/modules/xkbswitch/e_mod_main.c:350
+#: src/modules/xkbswitch/e_mod_main.c:312
+#: src/modules/xkbswitch/e_mod_main.c:358
 msgid "Settings"
 msgstr "Configuration"
 
@@ -2397,6 +2397,7 @@ msgstr "Applications"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/winlist/e_mod_main.c:25
+#: src/modules/tiling/e_mod_tiling.c:3781
 msgid "Windows"
 msgstr "Fenêtres"
 
@@ -3475,19 +3476,19 @@ msgstr "Votre configuration du module est PLUS RÉCENTE que la version<br>actuel
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:106
-#: src/modules/xkbswitch/e_mod_config.c:254
+#: src/modules/xkbswitch/e_mod_config.c:255
 msgid "Add"
 msgstr "Ajouter"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:272
-#: src/modules/xkbswitch/e_mod_config.c:242
+#: src/modules/xkbswitch/e_mod_config.c:243
 msgid "Up"
 msgstr "Monter"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:276
-#: src/modules/xkbswitch/e_mod_config.c:248
+#: src/modules/xkbswitch/e_mod_config.c:249
 msgid "Down"
 msgstr "Descendre"
 
@@ -3497,7 +3498,7 @@ msgstr "Ajouter aux favoris"
 
 #: src/bin/e_widget_fsel.c:302
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
-#: src/modules/conf_intl/e_int_config_imc.c:815
+#: src/modules/conf_intl/e_int_config_imc.c:816
 #: src/modules/conf_theme/e_int_config_wallpaper.c:472
 #: src/modules/conf_theme/e_int_config_wallpaper.c:594
 #: src/modules/conf_theme/e_int_config_startup.c:266
@@ -3952,6 +3953,7 @@ msgstr "Nombre de bureaux"
 #: src/modules/everything/evry_config.c:580
 #: src/modules/everything/evry_config.c:587
 #: src/modules/fileman/e_mod_config.c:240
+#: src/modules/tiling/e_mod_config.c:124
 #, c-format
 msgid "%1.0f"
 msgstr "%1.0f"
@@ -4023,7 +4025,7 @@ msgid "Select a Background..."
 msgstr "Choisir un fond d'écran…"
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
-#: src/modules/conf_intl/e_int_config_imc.c:803
+#: src/modules/conf_intl/e_int_config_imc.c:804
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:584
 #: src/modules/conf_theme/e_int_config_startup.c:253
@@ -4251,6 +4253,7 @@ msgid "Backlight"
 msgstr "Rétroéclairage"
 
 #: src/modules/conf_display/e_mod_main.c:21
+#: src/modules/tiling/e_mod_config.c:190
 msgid "Virtual Desktops"
 msgstr "Bureaux virtuels"
 
@@ -4477,36 +4480,36 @@ msgid "Input Method Selector"
 msgstr "Sélection de la méthode de saisie"
 
 #: src/modules/conf_intl/e_int_config_imc.c:286
-#: src/modules/conf_intl/e_int_config_imc.c:874
+#: src/modules/conf_intl/e_int_config_imc.c:871
 msgid "Use No Input Method"
 msgstr "Pas de méthode de saisie"
 
 #: src/modules/conf_intl/e_int_config_imc.c:292
-#: src/modules/conf_intl/e_int_config_imc.c:941
+#: src/modules/conf_intl/e_int_config_imc.c:936
 msgid "Setup Selected Input Method"
 msgstr "Configuration de la méthode de saisie sélectionnée"
 
-#: src/modules/conf_intl/e_int_config_imc.c:881
+#: src/modules/conf_intl/e_int_config_imc.c:876
 msgid "New"
 msgstr "Nouveau"
 
-#: src/modules/conf_intl/e_int_config_imc.c:883
+#: src/modules/conf_intl/e_int_config_imc.c:880
 msgid "Import..."
 msgstr "Importer…"
 
-#: src/modules/conf_intl/e_int_config_imc.c:888
+#: src/modules/conf_intl/e_int_config_imc.c:884
 msgid "Input Method Parameters"
 msgstr "Paramétrage de la méthode de saisie"
 
-#: src/modules/conf_intl/e_int_config_imc.c:898
+#: src/modules/conf_intl/e_int_config_imc.c:894
 msgid "Execute Command"
 msgstr "Commande d'exécution"
 
-#: src/modules/conf_intl/e_int_config_imc.c:905
+#: src/modules/conf_intl/e_int_config_imc.c:901
 msgid "Setup Command"
 msgstr "Commande de configuration"
 
-#: src/modules/conf_intl/e_int_config_imc.c:914
+#: src/modules/conf_intl/e_int_config_imc.c:910
 msgid "Exported Environment Variables"
 msgstr "Variables d'environnement exportées"
 
@@ -4707,6 +4710,7 @@ msgstr "Commentaires"
 #: src/modules/gadman/e_mod_main.c:84
 #: src/modules/gadman/e_mod_main.c:120
 #: src/modules/gadman/e_mod_main.c:150
+#: src/modules/xkbswitch/e_mod_config.c:289
 msgid "Gadgets"
 msgstr "Gadgets"
 
@@ -7880,8 +7884,42 @@ msgstr "%1.0f px"
 msgid "Minimum Height"
 msgstr "Hauteur minimale"
 
+#: src/modules/tiling/e_mod_config.c:130
+msgid "columns"
+msgstr "Colonnes"
+
+#: src/modules/tiling/e_mod_config.c:132
+msgid "rows"
+msgstr "Lignes"
+
+#: src/modules/tiling/e_mod_config.c:174
+msgid "Tile dialog windows as well"
+msgstr "Inclure les boîtes de dialogue"
+
+#: src/modules/tiling/e_mod_config.c:177
+msgid "Show window titles"
+msgstr "Afficher le titre des fenêtres"
+
+#: src/modules/tiling/e_mod_config.c:181
+msgid "Key hints"
+msgstr "Touches rapides"
+
+#: src/modules/tiling/e_mod_config.c:192
+msgid "Number of columns used to tile per desk (0 → tiling disabled):"
+msgstr "Nombre de colonnes à utiliser pour le pavage par bureau (0 → pavage désactivé) :"
+
+#: src/modules/tiling/e_mod_config.c:329
+msgid "Tiling Configuration"
+msgstr "Configuration du pavage"
+
+#: src/modules/tiling/e_mod_tiling.c:3754
+#: src/modules/tiling/e_mod_tiling.c:3783
+#: src/modules/tiling/e_mod_tiling.c:3872
+msgid "Tiling"
+msgstr "Pavage"
+
 #: src/modules/xkbswitch/e_mod_main.c:75
-#: src/modules/xkbswitch/e_mod_main.c:246
+#: src/modules/xkbswitch/e_mod_main.c:254
 msgid "XKB Switcher"
 msgstr "Services XKB"
 
@@ -7889,31 +7927,31 @@ msgstr "Services XKB"
 msgid "XKB Switcher Module"
 msgstr "Module Services XKB"
 
-#: src/modules/xkbswitch/e_mod_config.c:268
+#: src/modules/xkbswitch/e_mod_config.c:269
 msgid "Configurations"
 msgstr "Tables"
 
-#: src/modules/xkbswitch/e_mod_config.c:277
+#: src/modules/xkbswitch/e_mod_config.c:278
 msgid "Models"
 msgstr "Modèles"
 
-#: src/modules/xkbswitch/e_mod_config.c:290
+#: src/modules/xkbswitch/e_mod_config.c:291
 msgid "Label only"
 msgstr "Texte seul"
 
-#: src/modules/xkbswitch/e_mod_config.c:469
+#: src/modules/xkbswitch/e_mod_config.c:470
 msgid "Add New Configuration"
 msgstr "Ajout d'une nouvelle configuration"
 
-#: src/modules/xkbswitch/e_mod_config.c:479
+#: src/modules/xkbswitch/e_mod_config.c:480
 msgid "Available"
 msgstr "Disponibilité"
 
-#: src/modules/xkbswitch/e_mod_config.c:486
+#: src/modules/xkbswitch/e_mod_config.c:487
 msgid "Model"
 msgstr "Modèle"
 
-#: src/modules/xkbswitch/e_mod_config.c:493
+#: src/modules/xkbswitch/e_mod_config.c:494
 msgid "Variant"
 msgstr "Variante"
 
@@ -8020,7 +8058,8 @@ msgstr "Variante"
 #~ "Enlightenment cannot initialize the connections system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenment ne parvient pas à initialiser le gestionnaire de connexions.\n"
+#~ "Enlightenment ne parvient pas à initialiser le gestionnaire de "
+#~ "connexions.\n"
 #~ "Peut-être êtes-vous à court de mémoire ?"
 
 #~ msgid ""
@@ -8042,7 +8081,8 @@ msgstr "Variante"
 #~ "Enlightenment cannot setup randr wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
-#~ "Enlightenment ne parvient pas à initialiser l'adaptateur (wrapper) pour randr.\n"
+#~ "Enlightenment ne parvient pas à initialiser l'adaptateur (wrapper) pour "
+#~ "randr.\n"
 #~ "Cela ne devrait pas se produire."
 
 #~ msgid ""
@@ -8066,7 +8106,8 @@ msgstr "Variante"
 #~ msgstr "Configuration du gestionnaire de fichiers"
 
 #~ msgid "Enlightenment cannot set up its shelf system."
-#~ msgstr "Enlightenment ne parvient pas à configurer son gestionnaire de racks."
+#~ msgstr ""
+#~ "Enlightenment ne parvient pas à configurer son gestionnaire de racks."
 
 #~ msgid "New Application"
 #~ msgstr "Nouvelle application"
@@ -9030,9 +9071,6 @@ msgstr "Variante"
 #~ msgid "Desktop %i, %i"
 #~ msgstr "Bureau %i, %i"
 
-#~ msgid "Toolbar Configuration"
-#~ msgstr "Configuration de la barre d'outils"
-
 #~ msgid "Enlightenment Configuration"
 #~ msgstr "Configuration de Enlightenment"
 
@@ -9104,7 +9142,8 @@ msgstr "Variante"
 #~ msgstr "Dans les deux directions"
 
 #~ msgid "Enlightenment cannot configure the mouse acceleration settings."
-#~ msgstr "Enlightenment ne parvient pas à configurer l'accélération de la souris."
+#~ msgstr ""
+#~ "Enlightenment ne parvient pas à configurer l'accélération de la souris."
 
 #~ msgid "Mouse Acceleration Settings"
 #~ msgstr "Paramètres de l'accélération souris"
