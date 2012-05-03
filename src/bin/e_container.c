@@ -1113,8 +1113,11 @@ _e_container_shape_change_call(E_Container_Shape *es, E_Container_Shape_Change c
 static int
 _e_container_cb_zone_sort(const void *data1, const void *data2)
 {
-   E_Zone *z1 = data1, *z2 = data2;
-   
+   const E_Zone *z1, *z2;
+
+   z1 = data1;
+   z2 = data2;
+
    return z2->num - z1->num;
 }
 
