@@ -217,7 +217,7 @@ policy_widget_basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_
              EINA_LIST_FOREACH(odd->crtc->outputs, it2, oi)
                {
                   oi->policy = odd->new_policy;
-                  fprintf(stderr, "CONF_RANDR: 'New display attached'-policy for output %d set to %s.\n", odd->output->xid, _POLICIES_STRINGS[odd->new_policy - 1]);
+		  fprintf(stderr, "CONF_RANDR: 'New display attached'-policy for output %d set to %s.\n", odd->output ? odd->output->xid : NULL, _POLICIES_STRINGS[odd->new_policy - 1]);
                }
           }
         else if (odd->output)
