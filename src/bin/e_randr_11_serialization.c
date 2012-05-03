@@ -15,8 +15,8 @@ _serialized_setup_11_new(void)
 {
    E_Randr_Serialized_Setup_11 *ss;
    Ecore_X_Randr_Screen_Size_MM *size;
-   Ecore_X_Randr_Orientation ori;
-   Ecore_X_Randr_Refresh_Rate rate;
+   Ecore_X_Randr_Orientation ori = ECORE_X_RANDR_ORIENTATION_ROT_0;
+   Ecore_X_Randr_Refresh_Rate rate = 0;
 
    ss = malloc(sizeof(*ss));
 

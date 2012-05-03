@@ -2,8 +2,8 @@
 #include "e_randr.h"
 
 // E_Randr_Crtc_Info helper functions
-static Eina_Bool                _crtc_mode_intersects_crtcs(E_Randr_Crtc_Info *crtc_info, Ecore_X_Randr_Mode_Info *mode);
-static Eina_Bool                _crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info);
+/* static Eina_Bool _crtc_mode_intersects_crtcs(E_Randr_Crtc_Info *crtc_info, Ecore_X_Randr_Mode_Info *mode); */
+/* static Eina_Bool _crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info); */
 
 void
 _crtc_outputs_refs_set(E_Randr_Crtc_Info *crtc_info)
@@ -135,66 +135,66 @@ _crtc_info_free(E_Randr_Crtc_Info *crtc_info)
  * returns EINA_TRUE if given CRTC would intersect with other CRTCs if set to
  * given mode
  */
-static Eina_Bool
-_crtc_mode_intersects_crtcs(E_Randr_Crtc_Info *crtc_info, Ecore_X_Randr_Mode_Info *mode)
-{
-   Eina_List *iter;
-   E_Randr_Crtc_Info *tmp;
-   int width, height;
+/* static Eina_Bool */
+/* _crtc_mode_intersects_crtcs(E_Randr_Crtc_Info *crtc_info, Ecore_X_Randr_Mode_Info *mode) */
+/* { */
+/*    Eina_List *iter; */
+/*    E_Randr_Crtc_Info *tmp; */
+/*    int width, height; */
 
-   EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_12->crtcs, iter, tmp)
-     {
-        if ((tmp == crtc_info) ||
-            ((tmp->geometry.w <= 0) || (tmp->geometry.h <= 0)))
-          continue;
-        width = (mode->width > INT_MAX) ? INT_MAX : mode->width;
-        height = (mode->height > INT_MAX) ? INT_MAX : mode->height;
-        if (E_INTERSECTS(crtc_info->geometry.x, crtc_info->geometry.y,
-                         width, height, tmp->geometry.x,
-                         tmp->geometry.y, tmp->geometry.w, tmp->geometry.h)
-            && ((crtc_info->geometry.x != tmp->geometry.x) &&
-                (crtc_info->geometry.y != tmp->geometry.y)))
-          return EINA_TRUE;
-     }
-   return EINA_FALSE;
-}
+/*    EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_12->crtcs, iter, tmp) */
+/*      { */
+/*         if ((tmp == crtc_info) || */
+/*             ((tmp->geometry.w <= 0) || (tmp->geometry.h <= 0))) */
+/*           continue; */
+/*         width = (mode->width > INT_MAX) ? INT_MAX : mode->width; */
+/*         height = (mode->height > INT_MAX) ? INT_MAX : mode->height; */
+/*         if (E_INTERSECTS(crtc_info->geometry.x, crtc_info->geometry.y, */
+/*                          width, height, tmp->geometry.x, */
+/*                          tmp->geometry.y, tmp->geometry.w, tmp->geometry.h) */
+/*             && ((crtc_info->geometry.x != tmp->geometry.x) && */
+/*                 (crtc_info->geometry.y != tmp->geometry.y))) */
+/*           return EINA_TRUE; */
+/*      } */
+/*    return EINA_FALSE; */
+/* } */
 
 /*
  * reconfigures a CRTC enabling the highest resolution amongst its outputs,
  * without touching any other CRTC currently activated
  */
-static Eina_Bool
-_crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info)
-{
-   Ecore_X_Randr_Mode_Info *mode_info;
-   Eina_List *iter;
-   Eina_Bool ret = EINA_TRUE;
-   Ecore_X_Randr_Output *outputs;
+/* static Eina_Bool */
+/* _crtc_outputs_mode_max_set(E_Randr_Crtc_Info *crtc_info) */
+/* { */
+/*    Ecore_X_Randr_Mode_Info *mode_info; */
+/*    Eina_List *iter; */
+/*    Eina_Bool ret = EINA_TRUE; */
+/*    Ecore_X_Randr_Output *outputs; */
 
-   if (!crtc_info || !crtc_info->outputs || !crtc_info->outputs_common_modes) return EINA_FALSE;
+/*    if (!crtc_info || !crtc_info->outputs || !crtc_info->outputs_common_modes) return EINA_FALSE; */
 
-   EINA_LIST_REVERSE_FOREACH(crtc_info->outputs_common_modes, iter, mode_info)
-     {
-        if (!_crtc_mode_intersects_crtcs(crtc_info, mode_info))
-          break;
-     }
-   if (!mode_info)
-     {
-        //eina_list_free(crtc_info->outputs_common_modes);
-        return EINA_FALSE;
-     }
-   if ((outputs = _outputs_to_array(crtc_info->outputs)))
-     {
-        ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, crtc_info->xid, outputs, eina_list_count(crtc_info->outputs), mode_info->xid);
-        free(outputs);
-     }
-   //eina_list_free(crtc_info->outputs_common_modes);
-   //crtc_info->outputs_common_modes = NULL;
+/*    EINA_LIST_REVERSE_FOREACH(crtc_info->outputs_common_modes, iter, mode_info) */
+/*      { */
+/*         if (!_crtc_mode_intersects_crtcs(crtc_info, mode_info)) */
+/*           break; */
+/*      } */
+/*    if (!mode_info) */
+/*      { */
+/*         //eina_list_free(crtc_info->outputs_common_modes); */
+/*         return EINA_FALSE; */
+/*      } */
+/*    if ((outputs = _outputs_to_array(crtc_info->outputs))) */
+/*      { */
+/*         ret = ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, crtc_info->xid, outputs, eina_list_count(crtc_info->outputs), mode_info->xid); */
+/*         free(outputs); */
+/*      } */
+/*    //eina_list_free(crtc_info->outputs_common_modes); */
+/*    //crtc_info->outputs_common_modes = NULL; */
 
-   ecore_x_randr_screen_reset(e_randr_screen_info.root);
+/*    ecore_x_randr_screen_reset(e_randr_screen_info.root); */
 
-   return ret;
-}
+/*    return ret; */
+/* } */
 
 /*
  * this retrieves a CRTC depending on a policy.
