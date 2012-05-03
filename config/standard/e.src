@@ -204,6 +204,13 @@ group "E_Config" struct {
     value "xsettings.xft_hinting" int: 0;
     value "update.check" uchar: 1;
     value "update.later" uchar: 0;
+    value "powersave.none" double: 0.25;
+    value "powersave.low" double: 5.0;
+    value "powersave.medium" double: 60.0;
+    value "powersave.high" double: 300.0;
+    value "powersave.extreme" double: 1200.0;
+    value "powersave.min" int: 0;
+    value "powersave.max" int: 5;
     group "syscon.actions" list {
         group "E_Config_Syscon_Action" struct {
             value "action" string: "halt";

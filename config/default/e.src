@@ -524,4 +524,11 @@ group "E_Config" struct {
   value "update.later" uchar: 0;
   value "xkb.only_label" int: 0;
   value "xkb.default_model" string: "default";
+  value "powersave.none" double: 0.25;
+  value "powersave.low" double: 5.0;
+  value "powersave.medium" double: 60.0;
+  value "powersave.high" double: 300.0;
+  value "powersave.extreme" double: 1200.0;
+  value "powersave.min" int: 0;
+  value "powersave.max" int: 5;
 }

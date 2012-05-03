@@ -8,6 +8,7 @@
 #undef E_TYPEDEFS
 #include "e_int_config_performance.h"
 #include "e_int_config_engine.h"
+#include "e_int_config_powermanagement.h"
 
 EAPI extern E_Module_Api e_modapi;
 

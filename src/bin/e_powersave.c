@@ -9,14 +9,17 @@ struct _E_Powersave_Deferred_Action
 
 /* local subsystem functions */
 static Eina_Bool _e_powersave_cb_deferred_timer(void *data);
+static Eina_Bool _e_powersave_cb_config(void *data);
 static void _e_powersave_mode_eval(void);
 static void _e_powersave_event_update_free(void *data __UNUSED__, void *event);
 
 /* local subsystem globals */
 EAPI int E_EVENT_POWERSAVE_UPDATE = 0;
+EAPI int E_EVENT_POWERSAVE_CONFIG_UPDATE = 0;
 static int walking_deferred_actions = 0;
 static Eina_List *deferred_actions = NULL;
 static Ecore_Timer *deferred_timer = NULL;
+static Ecore_Timer *config_timer = NULL;
 static E_Powersave_Mode powersave_mode_min = E_POWERSAVE_MODE_NONE;
 static E_Powersave_Mode powersave_mode_max = E_POWERSAVE_MODE_EXTREME;
 static E_Powersave_Mode powersave_mode = E_POWERSAVE_MODE_LOW;
@@ -28,6 +31,7 @@ e_powersave_init(void)
 {
    _e_powersave_mode_eval();
    E_EVENT_POWERSAVE_UPDATE = ecore_event_type_new();
+   E_EVENT_POWERSAVE_CONFIG_UPDATE = ecore_event_type_new();
    return 1;
 }
 
@@ -41,7 +45,7 @@ EAPI E_Powersave_Deferred_Action *
 e_powersave_deferred_action_add(void (*func) (void *data), const void *data)
 {
    E_Powersave_Deferred_Action *pa;
-   
+
    pa = calloc(1, sizeof(E_Powersave_Deferred_Action));
    if (!pa) return NULL;
    if (deferred_timer) ecore_timer_del(deferred_timer);
@@ -78,26 +82,12 @@ e_powersave_deferred_action_del(E_Powersave_Deferred_Action *pa)
 }
 
 EAPI void
-e_powersave_mode_min_set(E_Powersave_Mode mode)
-{
-   powersave_mode_min = mode;
-   e_powersave_mode_set(powersave_mode);
-}
-
-EAPI void
-e_powersave_mode_max_set(E_Powersave_Mode mode)
-{
-   powersave_mode_max = mode;
-   e_powersave_mode_set(powersave_mode);
-}
-
-EAPI void
 e_powersave_mode_set(E_Powersave_Mode mode)
 {
    E_Event_Powersave_Update *ev;
 
-   if (mode < powersave_mode_min) mode = powersave_mode_min;
-   else if (mode > powersave_mode_max) mode = powersave_mode_max;
+   if (mode < e_config->powersave.min) mode = e_config->powersave.min;
+   else if (mode > e_config->powersave.max) mode = e_config->powersave.max;
    if (powersave_mode == mode) return;
    printf("CHANGE PW SAVE MODE TO %i / %i\n", (int)mode, E_POWERSAVE_MODE_EXTREME);
    powersave_mode = mode;
@@ -108,22 +98,23 @@ e_powersave_mode_set(E_Powersave_Mode mode)
    _e_powersave_mode_eval();
 }
 
-EAPI E_Powersave_Mode
-e_powersave_mode_min_get(void)
-{
-   return powersave_mode_min;
-}
-
-EAPI E_Powersave_Mode
-e_powersave_mode_max_get(void)
-{
-   return powersave_mode_max;
-}
 
 EAPI E_Powersave_Mode
 e_powersave_mode_get(void)
 {
    return powersave_mode;
+}
+
+EAPI E_Powersave_Mode
+e_powersave_mode_min_get(void)
+{
+   return e_config->powersave.min;
+}
+
+EAPI E_Powersave_Mode
+e_powersave_mode_max_get(void)
+{
+   return e_config->powersave.max;
 }
 
 /* local subsystem functions */
@@ -148,24 +139,23 @@ static void
 _e_powersave_mode_eval(void)
 {
    double t = 0.0;
-   
+
    switch (powersave_mode)
      {
-	/* FIXME: these values are hardcoded - should be configurable */
       case E_POWERSAVE_MODE_NONE:
-	t = 0.25; /* time to defer "power expensive" activities */
+	t = e_config->powersave.none; /* time to defer "power expensive" activities */
 	break;
       case E_POWERSAVE_MODE_LOW:
-	t = 5.0;
+	t = e_config->powersave.low;
 	break;
       case E_POWERSAVE_MODE_MEDIUM:
-	t = 60.0;
+	t = e_config->powersave.medium;
 	break;
       case E_POWERSAVE_MODE_HIGH:
-	t = 300.0;
+	t = e_config->powersave.high;
 	break;
       case E_POWERSAVE_MODE_EXTREME:
-	t = 1200.0;
+	t = e_config->powersave.extreme;
 	break;
       default:
 	return;
@@ -186,3 +176,4 @@ _e_powersave_event_update_free(void *data __UNUSED__, void *event)
 {
    free(event);
 }
+

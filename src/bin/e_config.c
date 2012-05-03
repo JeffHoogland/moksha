@@ -898,6 +898,14 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, deskenv.load_gnome, UCHAR);
    E_CONFIG_VAL(D, T, deskenv.load_kde, UCHAR);
 
+   E_CONFIG_VAL(D, T, powersave.none, DOUBLE);
+   E_CONFIG_VAL(D, T, powersave.low, DOUBLE);
+   E_CONFIG_VAL(D, T, powersave.medium, DOUBLE);
+   E_CONFIG_VAL(D, T, powersave.high, DOUBLE);
+   E_CONFIG_VAL(D, T, powersave.extreme, DOUBLE);
+   E_CONFIG_VAL(D, T, powersave.min, INT);
+   E_CONFIG_VAL(D, T, powersave.max, INT);
+
    E_CONFIG_VAL(D, T, xsettings.enabled, UCHAR);
    E_CONFIG_VAL(D, T, xsettings.match_e17_theme, UCHAR);
    E_CONFIG_VAL(D, T, xsettings.match_e17_icon_theme, UCHAR);
@@ -1191,6 +1199,16 @@ e_config_load(void)
         COPYVAL(update.later);
         IFCFGEND;
 
+        IFCFG(0x0149);
+        COPYVAL(powersave.none);
+        COPYVAL(powersave.low);
+        COPYVAL(powersave.medium);
+        COPYVAL(powersave.high);
+        COPYVAL(powersave.extreme);
+        COPYVAL(powersave.min);
+        COPYVAL(powersave.max);
+        IFCFGEND;
+
         e_config->config_version = E_CONFIG_FILE_VERSION;
         _e_config_free(tcfg);
      }
@@ -1336,7 +1354,15 @@ e_config_load(void)
    E_CONFIG_LIMIT(e_config->exec.show_exit_dialog, 0, 1);
 
    E_CONFIG_LIMIT(e_config->null_container_win, 0, 1);
-   
+
+   E_CONFIG_LIMIT(e_config->powersave.none, 0.01, 5400.00);
+   E_CONFIG_LIMIT(e_config->powersave.low, 0.01, 5400.00);
+   E_CONFIG_LIMIT(e_config->powersave.medium, 0.01, 5400.00);
+   E_CONFIG_LIMIT(e_config->powersave.high, 0.01, 5400.00);
+   E_CONFIG_LIMIT(e_config->powersave.extreme, 0.01, 5400.00);
+   E_CONFIG_LIMIT(e_config->powersave.min, E_POWERSAVE_MODE_NONE, E_POWERSAVE_MODE_EXTREME);
+   E_CONFIG_LIMIT(e_config->powersave.max, E_POWERSAVE_MODE_NONE, E_POWERSAVE_MODE_EXTREME);
+
    /* FIXME: disabled auto apply because it causes problems */
    e_config->cfgdlg_auto_apply = 0;
    /* FIXME: desklock personalized password id disabled for security reasons */

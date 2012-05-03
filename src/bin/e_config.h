@@ -318,7 +318,17 @@ struct _E_Config
       unsigned char idle_dim; // GUI
       double timer; // GUI
    } backlight;
-   
+
+   struct {
+      double none;
+      double low;
+      double medium;
+      double high;
+      double extreme;
+      E_Powersave_Mode min;
+      E_Powersave_Mode max;
+   } powersave;
+
    struct {
       unsigned char load_xrdb; // GUI
       unsigned char load_xmodmap; // GUI

@@ -17,6 +17,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "preferences-advanced");
    e_configure_registry_item_add("advanced/performance", 20, _("Performance"), NULL, "preferences-system-performance", e_int_config_performance);   
    e_configure_registry_item_add("advanced/engine", 50, _("Engine"), NULL, "preferences-engine", e_int_config_engine);
+   e_configure_registry_item_add("advanced/powermanagement", 50, _("Power management"), NULL, "preferences-powermanagement", e_int_config_powermanagement);
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;
@@ -30,6 +31,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    while ((cfd = e_config_dialog_get("E", "advanced/performance"))) e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("advanced/engine");
    e_configure_registry_item_del("advanced/performance");
+   e_configure_registry_item_del("advanced/powermanagement");
    e_configure_registry_category_del("advanced");
    conf_module = NULL;
    return 1;

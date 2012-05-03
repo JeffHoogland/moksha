@@ -52,7 +52,10 @@ static void _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj
 static void _battery_warning_popup_destroy(Instance *inst);
 static void _battery_warning_popup(Instance *inst, int time, double percent);
 
+static Eina_Bool _powersave_cb_config_update(void *data, int type, void *event);
+
 static E_Config_DD *conf_edd = NULL;
+static Ecore_Event_Handler *_handler = NULL;
 
 Config *battery_config = NULL;
 
@@ -335,8 +338,6 @@ _battery_device_update(void)
    if (time_full < 1) time_full = -1;
    
    _battery_update(full, time_left, time_full, have_battery, have_power);
-   if ((acnum >= 0) && (batnum == 0))
-     e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
 }
 
 
@@ -509,6 +510,25 @@ _battery_warning_popup(Instance *inst, int time, double percent)
           ecore_timer_add(battery_config->alert_timeout, 
                           _battery_cb_warning_popup_timeout, inst);
      }
+}
+
+static Eina_Bool
+_powersave_cb_config_update(void *data, int type, void *event)
+{
+   if (!battery_config->have_battery)
+     e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
+   else
+     {
+        if (battery_config->have_power)
+          e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
+        else if (battery_config->full > 95)
+          e_powersave_mode_set(E_POWERSAVE_MODE_MEDIUM);
+        else if (battery_config->full > 30)
+          e_powersave_mode_set(E_POWERSAVE_MODE_HIGH);
+        else
+          e_powersave_mode_set(E_POWERSAVE_MODE_EXTREME);
+     }
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -778,6 +798,8 @@ e_modapi_init(E_Module *m)
    battery_config->batget_del_handler =
      ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
 			     _battery_cb_exe_del, NULL);
+   _handler = ecore_event_handler_add(E_EVENT_POWERSAVE_CONFIG_UPDATE,
+                                      _powersave_cb_config_update, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
 
