@@ -1,3 +1,4 @@
+
 #include "e.h"
 
 #define TEXT_NONE_ACTION_EDGE _("<None>")
@@ -1049,7 +1050,6 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
 {
    E_Config_Binding_Edge *bi = NULL, *bi2 = NULL;
    Eina_List *l;
-   char *label;
    int found = 0, n = -1;
 
 
@@ -1147,7 +1147,9 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
 	  }
 	else if (bi)
 	  {
-	     label = _edge_binding_text_get(bi->edge, bi->delay, bi->modifiers);
+             char *label;
+
+             label = _edge_binding_text_get(bi->edge, bi->delay, bi->modifiers);
 	     e_widget_ilist_nth_label_set(cfdata->gui.o_binding_list, n, label);
 	     free(label);
 	  }

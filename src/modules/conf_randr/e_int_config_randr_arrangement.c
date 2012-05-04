@@ -165,7 +165,7 @@ arrangement_widget_rep_update(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 
    if (odd->crtc)
      {
-        orientation = (odd->new_orientation != Ecore_X_Randr_Unset) ? odd->new_orientation : odd->previous_orientation;
+       orientation = (odd->new_orientation != (Ecore_X_Randr_Orientation) Ecore_X_Randr_Unset) ? odd->new_orientation : odd->previous_orientation;
      }
    switch (orientation)
      {

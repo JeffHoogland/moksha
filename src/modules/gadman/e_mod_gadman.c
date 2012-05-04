@@ -827,40 +827,40 @@ _attach_menu(void *data __UNUSED__, E_Gadcon_Client *gcc, E_Menu *menu)
 static char *
 _get_bind_text(const char* action)
 {
-   E_Binding_Key *bind;
+   E_Binding_Key *binding;
    char b[256] = "";
 
-   bind = e_bindings_key_get(action);   
-   if ((bind) && (bind->key))
+   binding = e_bindings_key_get(action);   
+   if ((binding) && (binding->key))
      {
-        if ((bind->mod) & (E_BINDING_MODIFIER_CTRL))
+        if ((binding->mod) & (E_BINDING_MODIFIER_CTRL))
           strcat(b, _("CTRL"));
 
-        if ((bind->mod) & (E_BINDING_MODIFIER_ALT))
+        if ((binding->mod) & (E_BINDING_MODIFIER_ALT))
           {
              if (b[0]) strcat(b, " + ");
              strcat(b, _("ALT"));
           }
 
-        if ((bind->mod) & (E_BINDING_MODIFIER_SHIFT))
+        if ((binding->mod) & (E_BINDING_MODIFIER_SHIFT))
           {
              if (b[0]) strcat(b, " + ");
              strcat(b, _("SHIFT"));
           }
 
-        if ((bind->mod) & (E_BINDING_MODIFIER_WIN))
+        if ((binding->mod) & (E_BINDING_MODIFIER_WIN))
           {
              if (b[0]) strcat(b, " + ");
              strcat(b, _("WIN"));
           }
 
-        if ((bind->key) && (bind->key[0]))
+        if ((binding->key) && (binding->key[0]))
           {
              char *l;
 
              if (b[0]) strcat(b, " + ");
-             l = strdup(bind->key);
-             l[0] = (char)toupper(bind->key[0]);
+             l = strdup(binding->key);
+             l[0] = (char)toupper(binding->key[0]);
              strcat(b, l);
              free(l);
           }

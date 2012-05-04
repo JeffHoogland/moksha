@@ -30,17 +30,17 @@ static void
 _finish(Evry_Plugin *plugin)
 {
    Settings_Item *it;
-   GET_PLUGIN(p, plugin);
+   GET_PLUGIN(pl, plugin);
 
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   EVRY_PLUGIN_ITEMS_CLEAR(pl);
 
-   EINA_LIST_FREE (p->items, it)
+   EINA_LIST_FREE (pl->items, it)
      EVRY_ITEM_FREE(it);
 
-   EINA_LIST_FREE (p->categories, it)
+   EINA_LIST_FREE (pl->categories, it)
      EVRY_ITEM_FREE(it);
 
-   E_FREE(p);
+   E_FREE(pl);
 }
 
 static Evas_Object *
@@ -62,7 +62,7 @@ _icon_get(Evry_Item *item, Evas *e __UNUSED__)
 static Evry_Plugin *
 _browse(Evry_Plugin *plugin, const Evry_Item *item)
 {
-   Plugin *p;
+   Plugin *pl;
    Eina_List *l;
    Settings_Item *it, *it2;
 
@@ -71,8 +71,8 @@ _browse(Evry_Plugin *plugin, const Evry_Item *item)
 
    it = (Settings_Item *)item;
 
-   EVRY_PLUGIN_INSTANCE(p, plugin);
-   p->parent = EINA_TRUE;
+   EVRY_PLUGIN_INSTANCE(pl, plugin);
+   pl->parent = EINA_TRUE;
 
    GET_PLUGIN(parent, item->plugin);
 
@@ -81,36 +81,36 @@ _browse(Evry_Plugin *plugin, const Evry_Item *item)
         if (it2->ecat == it->ecat)
           {
              EVRY_ITEM_REF(it2);
-             p->items = eina_list_append(p->items, it2);
+             pl->items = eina_list_append(pl->items, it2);
           }
      }
 
-   return EVRY_PLUGIN(p);
+   return EVRY_PLUGIN(pl);
 }
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 {
-   Plugin *p;
+   Plugin *pl;
 
-   EVRY_PLUGIN_INSTANCE(p, plugin);
+   EVRY_PLUGIN_INSTANCE(pl, plugin);
 
-   return EVRY_PLUGIN(p);
+   return EVRY_PLUGIN(pl);
 }
 
 static int
 _fetch(Evry_Plugin *plugin, const char *input)
 {
-   size_t len = input ? strlen(input) : 0;
+   int len = input ? strlen(input) : 0;
 
-   GET_PLUGIN(p, plugin);
+   GET_PLUGIN(pl, plugin);
 
-   EVRY_PLUGIN_ITEMS_CLEAR(p);
+   EVRY_PLUGIN_ITEMS_CLEAR(pl);
 
-   if ((!p->parent) && (len < plugin->config->min_query))
+   if ((!pl->parent) && (len < plugin->config->min_query))
      return 0;
 
-   if (!p->categories && !p->items)
+   if (!pl->categories && !pl->items)
      {
         Settings_Item *it;
         Eina_List *l, *ll;
@@ -122,46 +122,46 @@ _fetch(Evry_Plugin *plugin, const char *input)
              if ((ecat->pri < 0) || (!ecat->items)) continue;
              if (!strcmp(ecat->cat, "system")) continue;
 
-             it = EVRY_ITEM_NEW(Settings_Item, p, ecat->label, _icon_get, NULL);
+             it = EVRY_ITEM_NEW(Settings_Item, pl, ecat->label, _icon_get, NULL);
              it->ecat = ecat;
              EVRY_ITEM(it)->browseable = EINA_TRUE;
-             p->categories = eina_list_append(p->categories, it);
+             pl->categories = eina_list_append(pl->categories, it);
 
              EINA_LIST_FOREACH (ecat->items, ll, eci)
                {
                   if (eci->pri < 0) continue;
 
-                  it = EVRY_ITEM_NEW(Settings_Item, p, eci->label, _icon_get, NULL);
+                  it = EVRY_ITEM_NEW(Settings_Item, pl, eci->label, _icon_get, NULL);
                   it->eci = eci;
                   it->ecat = ecat;
                   EVRY_ITEM_DETAIL_SET(it, ecat->label);
 
-                  p->items = eina_list_append(p->items, it);
+                  pl->items = eina_list_append(pl->items, it);
                }
           }
      }
 
-   EVRY_PLUGIN_ITEMS_ADD(p, p->categories, input, 1, 1);
+   EVRY_PLUGIN_ITEMS_ADD(pl, pl->categories, input, 1, 1);
 
-   if (input || p->parent)
-     EVRY_PLUGIN_ITEMS_ADD(p, p->items, input, 1, 1);
+   if (input || pl->parent)
+     EVRY_PLUGIN_ITEMS_ADD(pl, pl->items, input, 1, 1);
 
-   return EVRY_PLUGIN_HAS_ITEMS(p);
+   return EVRY_PLUGIN_HAS_ITEMS(pl);
 }
 
 static int
-_action_check(Evry_Action *act __UNUSED__, const Evry_Item *item)
+_action_check(Evry_Action *action __UNUSED__, const Evry_Item *item)
 {
    return !!(((Settings_Item *)item)->eci);
 }
 
 static int
-_action(Evry_Action *act)
+_action(Evry_Action *action)
 {
    char buf[1024];
    Settings_Item *it;
 
-   it = (Settings_Item *)act->it1.item;
+   it = (Settings_Item *)action->it1.item;
 
    snprintf(buf, sizeof(buf), "%s/%s", it->ecat->cat, it->eci->item);
 

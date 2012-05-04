@@ -605,7 +605,7 @@ static void
 _systray_handle_request_dock(Instance *inst, Ecore_X_Event_Client_Message *ev)
 {
    Ecore_X_Window win = (Ecore_X_Window)ev->data.l[2];
-   Ecore_X_Time time;
+   Ecore_X_Time t;
    Ecore_X_Window_Attributes attr;
    const Eina_List *l;
    Icon *icon;
@@ -636,10 +636,10 @@ _systray_handle_request_dock(Instance *inst, Ecore_X_Event_Client_Message *ev)
 	return;
      }
 
-   time = ecore_x_current_time_get();
+   t = ecore_x_current_time_get();
    ecore_x_client_message32_send(win, _atom_xembed,
 				 ECORE_X_EVENT_MASK_NONE,
-				 time, XEMBED_EMBEDDED_NOTIFY, 0,
+				 t, XEMBED_EMBEDDED_NOTIFY, 0,
 				 inst->win.selection, 0);
 }
 
@@ -1021,7 +1021,7 @@ static void
 _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    Instance *inst = gcc->data;
-   const char *signal;
+   const char *sig;
    unsigned int systray_orient;
 
    if (!inst)
@@ -1030,74 +1030,74 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
    switch (orient)
      {
       case E_GADCON_ORIENT_FLOAT:
-	 signal = "e,action,orient,float";
+	 sig = "e,action,orient,float";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
 	 break;
       case E_GADCON_ORIENT_HORIZ:
-	 signal = "e,action,orient,horiz";
+	 sig = "e,action,orient,horiz";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
 	 break;
       case E_GADCON_ORIENT_VERT:
-	 signal = "e,action,orient,vert";
+	 sig = "e,action,orient,vert";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_LEFT:
-	 signal = "e,action,orient,left";
+	 sig = "e,action,orient,left";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_RIGHT:
-	 signal = "e,action,orient,right";
+	 sig = "e,action,orient,right";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_TOP:
-	 signal = "e,action,orient,top";
+	 sig = "e,action,orient,top";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
 	 break;
       case E_GADCON_ORIENT_BOTTOM:
-	 signal = "e,action,orient,bottom";
+	 sig = "e,action,orient,bottom";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
 	 break;
       case E_GADCON_ORIENT_CORNER_TL:
-	 signal = "e,action,orient,corner_tl";
+	 sig = "e,action,orient,corner_tl";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
 	 break;
       case E_GADCON_ORIENT_CORNER_TR:
-	 signal = "e,action,orient,corner_tr";
+	 sig = "e,action,orient,corner_tr";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
 	 break;
       case E_GADCON_ORIENT_CORNER_BL:
-	 signal = "e,action,orient,corner_bl";
+	 sig = "e,action,orient,corner_bl";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
 	 break;
       case E_GADCON_ORIENT_CORNER_BR:
-	 signal = "e,action,orient,corner_br";
+	 sig = "e,action,orient,corner_br";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
 	 break;
       case E_GADCON_ORIENT_CORNER_LT:
-	 signal = "e,action,orient,corner_lt";
+	 sig = "e,action,orient,corner_lt";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_CORNER_RT:
-	 signal = "e,action,orient,corner_rt";
+	 sig = "e,action,orient,corner_rt";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_CORNER_LB:
-	 signal = "e,action,orient,corner_lb";
+	 sig = "e,action,orient,corner_lb";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       case E_GADCON_ORIENT_CORNER_RB:
-	 signal = "e,action,orient,corner_rb";
+	 sig = "e,action,orient,corner_rb";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_VERT;
 	 break;
       default:
-	 signal = "e,action,orient,horiz";
+	 sig = "e,action,orient,horiz";
 	 systray_orient = _NET_SYSTEM_TRAY_ORIENTATION_HORZ;
      }
 
    ecore_x_window_prop_card32_set
      (inst->win.selection, _atom_st_orient, &systray_orient, 1);
 
-   edje_object_signal_emit(inst->ui.gadget, signal, _sig_source);
+   edje_object_signal_emit(inst->ui.gadget, sig, _sig_source);
    edje_object_message_signal_process(inst->ui.gadget);
    _systray_size_apply(inst);
 }

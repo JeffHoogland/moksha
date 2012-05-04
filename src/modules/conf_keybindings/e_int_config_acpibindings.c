@@ -92,18 +92,18 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l;
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
 
-   EINA_LIST_FOREACH(e_config->acpi_bindings, l, bind)
+   EINA_LIST_FOREACH(e_config->acpi_bindings, l, binding)
      {
         E_Config_Binding_Acpi *b2;
 
         b2 = E_NEW(E_Config_Binding_Acpi, 1);
-        b2->context = bind->context;
-        b2->type = bind->type;
-        b2->status = bind->status;
-        b2->action = eina_stringshare_ref(bind->action);
-        b2->params = eina_stringshare_ref(bind->params);
+        b2->context = binding->context;
+        b2->type = binding->type;
+        b2->status = binding->status;
+        b2->action = eina_stringshare_ref(binding->action);
+        b2->params = eina_stringshare_ref(binding->params);
         cfdata->bindings = eina_list_append(cfdata->bindings, b2);
      }
 }
@@ -112,14 +112,14 @@ static void
 _free_data(E_Config_Dialog *cfd  __UNUSED__,
            E_Config_Dialog_Data *cfdata)
 {
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
    Ecore_Event_Handler *hdl;
 
-   EINA_LIST_FREE(cfdata->bindings, bind)
+   EINA_LIST_FREE(cfdata->bindings, binding)
      {
-        if (bind->action) eina_stringshare_del(bind->action);
-        if (bind->params) eina_stringshare_del(bind->params);
-        E_FREE(bind);
+        if (binding->action) eina_stringshare_del(binding->action);
+        if (binding->params) eina_stringshare_del(binding->params);
+        E_FREE(binding);
      }
 
    /* free the handlers */
@@ -147,26 +147,26 @@ static int
 _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
              E_Config_Dialog_Data *cfdata)
 {
-   E_Config_Binding_Acpi *bind, *b2;
+   E_Config_Binding_Acpi *binding, *b2;
    Eina_List *l;
 
-   EINA_LIST_FREE(e_config->acpi_bindings, bind)
+   EINA_LIST_FREE(e_config->acpi_bindings, binding)
      {
-        e_bindings_acpi_del(bind->context, bind->type, bind->status,
-                            bind->action, bind->params);
-        if (bind->action) eina_stringshare_del(bind->action);
-        if (bind->params) eina_stringshare_del(bind->params);
-        E_FREE(bind);
+        e_bindings_acpi_del(binding->context, binding->type, binding->status,
+                            binding->action, binding->params);
+        if (binding->action) eina_stringshare_del(binding->action);
+        if (binding->params) eina_stringshare_del(binding->params);
+        E_FREE(binding);
      }
 
-   EINA_LIST_FOREACH(cfdata->bindings, l, bind)
+   EINA_LIST_FOREACH(cfdata->bindings, l, binding)
      {
         b2 = E_NEW(E_Config_Binding_Acpi, 1);
-        b2->context = bind->context;
-        b2->type = bind->type;
-        b2->status = bind->status;
-        b2->action = eina_stringshare_ref(bind->action);
-        b2->params = eina_stringshare_ref(bind->params);
+        b2->context = binding->context;
+        b2->type = binding->type;
+        b2->status = binding->status;
+        b2->action = eina_stringshare_ref(binding->action);
+        b2->params = eina_stringshare_ref(binding->params);
         e_config->acpi_bindings =
           eina_list_append(e_config->acpi_bindings, b2);
 
@@ -230,7 +230,7 @@ _fill_bindings(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Eina_List *l;
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
    int i = -1, mw;
 
    evas = evas_object_evas_get(cfdata->o_bindings);
@@ -239,7 +239,7 @@ _fill_bindings(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->o_bindings);
    e_widget_ilist_clear(cfdata->o_bindings);
 
-   EINA_LIST_FOREACH(cfdata->bindings, l, bind)
+   EINA_LIST_FOREACH(cfdata->bindings, l, binding)
      {
         const char *lbl;
         char buff[32];
@@ -247,7 +247,7 @@ _fill_bindings(E_Config_Dialog_Data *cfdata)
         i++;
         snprintf(buff, sizeof(buff), "%d", i);
 
-        lbl = _binding_label_get(bind);
+        lbl = _binding_label_get(binding);
 
         e_widget_ilist_append(cfdata->o_bindings, NULL, lbl,
                                 _cb_bindings_changed, cfdata, buff);
@@ -301,12 +301,12 @@ _fill_actions(E_Config_Dialog_Data *cfdata)
 static E_Config_Binding_Acpi *
 _selected_binding_get(E_Config_Dialog_Data *cfdata)
 {
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
 
    if ((!cfdata) || (!cfdata->bindex)) return NULL;
-   if (!(bind = eina_list_nth(cfdata->bindings, atoi(cfdata->bindex))))
+   if (!(binding = eina_list_nth(cfdata->bindings, atoi(cfdata->bindex))))
      return NULL;
-   return bind;
+   return binding;
 }
 
 static E_Action_Description *
@@ -341,55 +341,55 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
 }
 
 static const char *
-_binding_label_get(E_Config_Binding_Acpi *bind)
+_binding_label_get(E_Config_Binding_Acpi *binding)
 {
-   if (bind->type == E_ACPI_TYPE_UNKNOWN) return NULL;
-   if (bind->type == E_ACPI_TYPE_AC_ADAPTER)
+   if (binding->type == E_ACPI_TYPE_UNKNOWN) return NULL;
+   if (binding->type == E_ACPI_TYPE_AC_ADAPTER)
      {
-        if (bind->status == 0) return _("AC Adapter Unplugged");
-        if (bind->status == 1) return _("AC Adapter Plugged");
+        if (binding->status == 0) return _("AC Adapter Unplugged");
+        if (binding->status == 1) return _("AC Adapter Plugged");
         return _("Ac Adapter");
      }
-   if (bind->type == E_ACPI_TYPE_BATTERY)
+   if (binding->type == E_ACPI_TYPE_BATTERY)
      return _("Battery");
-   if (bind->type == E_ACPI_TYPE_BUTTON)
+   if (binding->type == E_ACPI_TYPE_BUTTON)
      return _("Button");
-   if (bind->type == E_ACPI_TYPE_FAN)
+   if (binding->type == E_ACPI_TYPE_FAN)
      return _("Fan");
-   if (bind->type == E_ACPI_TYPE_LID)
+   if (binding->type == E_ACPI_TYPE_LID)
      {
-        if (bind->status == E_ACPI_LID_UNKNOWN) return _("Lid Unknown");
-        if (bind->status == E_ACPI_LID_CLOSED) return _("Lid Closed");
-        if (bind->status == E_ACPI_LID_OPEN) return _("Lid Opened");
+        if (binding->status == E_ACPI_LID_UNKNOWN) return _("Lid Unknown");
+        if (binding->status == E_ACPI_LID_CLOSED) return _("Lid Closed");
+        if (binding->status == E_ACPI_LID_OPEN) return _("Lid Opened");
         return _("Lid");
      }
-   if (bind->type == E_ACPI_TYPE_POWER)
+   if (binding->type == E_ACPI_TYPE_POWER)
      return _("Power Button");
-   if (bind->type == E_ACPI_TYPE_PROCESSOR)
+   if (binding->type == E_ACPI_TYPE_PROCESSOR)
      return _("Processor");
-   if (bind->type == E_ACPI_TYPE_SLEEP)
+   if (binding->type == E_ACPI_TYPE_SLEEP)
      return _("Sleep Button");
-   if (bind->type == E_ACPI_TYPE_THERMAL)
+   if (binding->type == E_ACPI_TYPE_THERMAL)
      return _("Thermal");
-   if (bind->type == E_ACPI_TYPE_VIDEO)
+   if (binding->type == E_ACPI_TYPE_VIDEO)
      return _("Video");
-   if (bind->type == E_ACPI_TYPE_WIFI)
+   if (binding->type == E_ACPI_TYPE_WIFI)
      return _("Wifi");
-   if (bind->type == E_ACPI_TYPE_HIBERNATE)
+   if (binding->type == E_ACPI_TYPE_HIBERNATE)
      return _("Hibernate");
-   if (bind->type == E_ACPI_TYPE_ZOOM_OUT)
+   if (binding->type == E_ACPI_TYPE_ZOOM_OUT)
      return _("Zoom Out");
-   if (bind->type == E_ACPI_TYPE_ZOOM_IN)
+   if (binding->type == E_ACPI_TYPE_ZOOM_IN)
      return _("Zoom In");
-   if (bind->type == E_ACPI_TYPE_BRIGHTNESS_DOWN)
+   if (binding->type == E_ACPI_TYPE_BRIGHTNESS_DOWN)
      return _("Brightness Down");
-   if (bind->type == E_ACPI_TYPE_BRIGHTNESS_UP)
+   if (binding->type == E_ACPI_TYPE_BRIGHTNESS_UP)
      return _("Brightness Up");
-   if (bind->type == E_ACPI_TYPE_ASSIST)
+   if (binding->type == E_ACPI_TYPE_ASSIST)
      return _("Assist");
-   if (bind->type == E_ACPI_TYPE_S1)
+   if (binding->type == E_ACPI_TYPE_S1)
      return _("S1");
-   if (bind->type == E_ACPI_TYPE_VAIO)
+   if (binding->type == E_ACPI_TYPE_VAIO)
      return _("Vaio");
 
    return _("Unknown");
@@ -399,14 +399,14 @@ static void
 _cb_bindings_changed(void *data)
 {
    E_Config_Dialog_Data *cfdata;
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
    Eina_List *items;
    const E_Ilist_Item *item;
    int i = -1;
 
    if (!(cfdata = data)) return;
    e_widget_entry_clear(cfdata->o_params);
-   if (!(bind = _selected_binding_get(cfdata)))
+   if (!(binding = _selected_binding_get(cfdata)))
      {
         e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
         e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
@@ -422,7 +422,7 @@ _cb_bindings_changed(void *data)
 
         i++;
         if (!(val = e_widget_ilist_item_value_get(item))) continue;
-        if (strcmp(val, bind->action)) continue;
+        if (strcmp(val, binding->action)) continue;
         e_widget_ilist_selected_set(cfdata->o_actions, i);
         break;
      }
@@ -432,12 +432,12 @@ static void
 _cb_actions_changed(void *data)
 {
    E_Config_Dialog_Data *cfdata;
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
    E_Action_Description *dsc;
 
    if (!(cfdata = data)) return;
    e_widget_entry_clear(cfdata->o_params);
-   if (!(bind = _selected_binding_get(cfdata)))
+   if (!(binding = _selected_binding_get(cfdata)))
      {
         e_widget_disabled_set(cfdata->o_params, EINA_TRUE);
         e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
@@ -449,13 +449,13 @@ _cb_actions_changed(void *data)
         return;
      }
 
-   eina_stringshare_replace(&bind->action, dsc->act_cmd);
+   eina_stringshare_replace(&binding->action, dsc->act_cmd);
    e_widget_disabled_set(cfdata->o_params, !(dsc->editable));
 
    if ((!dsc->editable) && (dsc->act_params))
      e_widget_entry_text_set(cfdata->o_params, dsc->act_params);
-   else if (bind->params)
-     e_widget_entry_text_set(cfdata->o_params, bind->params);
+   else if (binding->params)
+     e_widget_entry_text_set(cfdata->o_params, binding->params);
    else
      {
         if ((!dsc->param_example) || (!dsc->param_example[0]))
@@ -470,14 +470,14 @@ _cb_entry_changed(void       *data,
                   void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
    E_Action_Description *dsc;
 
    if (!(cfdata = data)) return;
    if (!(dsc = _selected_action_get(cfdata))) return;
    if (!dsc->editable) return;
-   if (!(bind = _selected_binding_get(cfdata))) return;
-   eina_stringshare_replace(&bind->params,
+   if (!(binding = _selected_binding_get(cfdata))) return;
+   eina_stringshare_replace(&binding->params,
                             e_widget_entry_text_get(cfdata->o_params));
 }
 
@@ -528,22 +528,22 @@ _cb_del_binding(void       *data,
                 void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   E_Config_Binding_Acpi *bind, *bind2;
+   E_Config_Binding_Acpi *binding, *bind2;
    Eina_List *l;
 
    if (!(cfdata = data)) return;
-   if (!(bind = _selected_binding_get(cfdata))) return;
+   if (!(binding = _selected_binding_get(cfdata))) return;
 
    /* delete from e_config */
    EINA_LIST_FOREACH(e_config->acpi_bindings, l, bind2)
      {
-        if ((bind->context == bind2->context) && (bind->type == bind2->type) &&
-            (((bind->action) && (bind2->action) &&
-              (!strcmp(bind->action, bind2->action))) ||
-             ((!bind->action) && (!bind2->action))) &&
-            (((bind->params) && (bind2->params) &&
-              (!strcmp(bind->params, bind2->params))) ||
-             ((!bind->params) && (!bind2->params))))
+        if ((binding->context == bind2->context) && (binding->type == bind2->type) &&
+            (((binding->action) && (bind2->action) &&
+              (!strcmp(binding->action, bind2->action))) ||
+             ((!binding->action) && (!bind2->action))) &&
+            (((binding->params) && (bind2->params) &&
+              (!strcmp(binding->params, bind2->params))) ||
+             ((!binding->params) && (!bind2->params))))
           {
              if (bind2->action) eina_stringshare_del(bind2->action);
              if (bind2->params) eina_stringshare_del(bind2->params);
@@ -556,19 +556,19 @@ _cb_del_binding(void       *data,
      }
 
    /* delete from e_bindings */
-   e_bindings_acpi_del(bind->context, bind->type, bind->status,
-                       bind->action, bind->params);
+   e_bindings_acpi_del(binding->context, binding->type, binding->status,
+                       binding->action, binding->params);
 
    /* delete from dialog list */
    EINA_LIST_FOREACH(cfdata->bindings, l, bind2)
      {
-        if ((bind->context == bind2->context) && (bind->type == bind2->type) &&
-            (((bind->action) && (bind2->action) &&
-              (!strcmp(bind->action, bind2->action))) ||
-             ((!bind->action) && (!bind2->action))) &&
-            (((bind->params) && (bind2->params) &&
-              (!strcmp(bind->params, bind2->params))) ||
-             ((!bind->params) && (!bind2->params))))
+        if ((binding->context == bind2->context) && (binding->type == bind2->type) &&
+            (((binding->action) && (bind2->action) &&
+              (!strcmp(binding->action, bind2->action))) ||
+             ((!binding->action) && (!bind2->action))) &&
+            (((binding->params) && (bind2->params) &&
+              (!strcmp(binding->params, bind2->params))) ||
+             ((!binding->params) && (!bind2->params))))
           {
              if (bind2->action) eina_stringshare_del(bind2->action);
              if (bind2->params) eina_stringshare_del(bind2->params);
@@ -625,7 +625,7 @@ _cb_acpi_event(void          *data,
 {
    E_Event_Acpi *ev;
    E_Config_Dialog_Data *cfdata;
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
    Ecore_Event_Handler *hdl;
 
    ev = event;
@@ -646,12 +646,12 @@ _cb_acpi_event(void          *data,
    e_acpi_events_thaw();
 
    /* NB: This may need more testing/parsing for event status */
-   bind = E_NEW(E_Config_Binding_Acpi, 1);
-   bind->context = E_BINDING_CONTEXT_NONE;
-   bind->type = ev->type;
-   bind->status = ev->status;
-   bind->action = eina_stringshare_add("dim_screen");
-   bind->params = NULL;
+   binding = E_NEW(E_Config_Binding_Acpi, 1);
+   binding->context = E_BINDING_CONTEXT_NONE;
+   binding->type = ev->type;
+   binding->status = ev->status;
+   binding->action = eina_stringshare_add("dim_screen");
+   binding->params = NULL;
 
    cfdata->bindings = eina_list_append(cfdata->bindings, bind);
    _fill_bindings(cfdata);

@@ -1002,11 +1002,12 @@ _size_list_load(E_Config_Dialog_Data *cfdata, Eina_List *size_list, Evas_Font_Si
 static void
 _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font)
 {
-   int n;
+   const char *f;
    Eina_List *next;
    Evas_Object *ob;
    Evas *evas;
    Evas_Coord w;
+   int n;
 
    ob = cfdata->gui.font_list;
    evas = evas_object_evas_get(ob);
@@ -1036,13 +1037,8 @@ _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font)
    /* Load the list */
    if (cfdata->font_list)
      {
-	Eina_List *next;
-
-	for (next = cfdata->font_list; next; next = next->next)
+        EINA_LIST_FOREACH(cfdata->font_list, next, f)
 	  {
-	     const char *f;
-
-	     f = next->data;
 	     e_widget_ilist_append(ob, NULL, f, NULL, NULL, f);
 	  }
      }
@@ -1058,11 +1054,8 @@ _font_list_load(E_Config_Dialog_Data *cfdata, const char *cur_font)
 
    /* Select Current Font */
    n = 0;
-   for (next = cfdata->font_list; next; next = next->next)
+   EINA_LIST_FOREACH(cfdata->font_list, next, f)
      {
-	const char *f;
-
-	f = next->data;
 	if (!strcasecmp(f, cur_font))
 	  {
 	     e_widget_ilist_selected_set(ob, n);
@@ -1076,23 +1069,25 @@ static void
 _adv_style_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
+   E_Ilist_Item *i;
    Eina_List *l;
-   int n;
+   int n = 0;
 
    if (!(cfdata = data)) return;
 
    /* Setup the new style name */
-   for (n = 0, l = e_widget_ilist_items_get(cfdata->gui.class_list); l; l = l->next, n++)
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.class_list), l, i)
      {
-	E_Ilist_Item *i;
 	CFText_Class *tc;
+        const char *tmp;
 
-        if (!(i = l->data)) continue;
 	if (!i->selected) continue;
 
 	tc = eina_list_nth(cfdata->text_classes, n);
+        tmp = eina_stringshare_ref(cfdata->cur_style);
 	eina_stringshare_del(tc->style);
-	tc->style = eina_stringshare_ref(cfdata->cur_style);
+	tc->style = tmp;
+        n++;
      }
 
    _font_preview_update(cfdata);

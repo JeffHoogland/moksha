@@ -3,8 +3,8 @@
 #include "e_mod_notify.h"
 
 /* local function prototypes */
-static int _e_mod_notify_cb_add(E_Notification_Daemon *daemon __UNUSED__, E_Notification *n);
-static void _e_mod_notify_cb_del(E_Notification_Daemon *daemon __UNUSED__, unsigned int id);
+static int _e_mod_notify_cb_add(E_Notification_Daemon *d __UNUSED__, E_Notification *n);
+static void _e_mod_notify_cb_del(E_Notification_Daemon *d __UNUSED__, unsigned int id);
 static Ind_Notify_Win *_e_mod_notify_find(unsigned int id);
 static void _e_mod_notify_refresh(Ind_Notify_Win *nwin);
 static Ind_Notify_Win *_e_mod_notify_merge(E_Notification *n);
@@ -52,7 +52,7 @@ e_mod_notify_shutdown(void)
 }
 
 static int 
-_e_mod_notify_cb_add(E_Notification_Daemon *daemon __UNUSED__, E_Notification *n) 
+_e_mod_notify_cb_add(E_Notification_Daemon *d __UNUSED__, E_Notification *n) 
 {
    Ind_Notify_Win *nwin;
    unsigned int replace;
@@ -105,7 +105,7 @@ _e_mod_notify_cb_add(E_Notification_Daemon *daemon __UNUSED__, E_Notification *n
 }
 
 static void 
-_e_mod_notify_cb_del(E_Notification_Daemon *daemon __UNUSED__, unsigned int id) 
+_e_mod_notify_cb_del(E_Notification_Daemon *d __UNUSED__, unsigned int id) 
 {
    const Eina_List *l;
    Ind_Notify_Win *nwin;

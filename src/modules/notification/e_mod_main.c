@@ -435,14 +435,14 @@ e_modapi_save(E_Module *m __UNUSED__)
 
 /* Callbacks */
 static int
-_notification_cb_notify(E_Notification_Daemon *daemon __UNUSED__,
+_notification_cb_notify(E_Notification_Daemon *d __UNUSED__,
                         E_Notification        *n)
 {
    return _notification_notify(n);
 }
 
 static void
-_notification_cb_close_notification(E_Notification_Daemon *daemon __UNUSED__,
+_notification_cb_close_notification(E_Notification_Daemon *d __UNUSED__,
                                     unsigned int           id)
 {
    notification_popup_close(id);

@@ -43,7 +43,7 @@ get_vdesk(Eina_List *vdesks,
  *
  */
 static void *
-_create_data(E_Config_Dialog *cfd)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
     E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
 
@@ -77,7 +77,7 @@ _create_data(E_Config_Dialog *cfd)
 }
 
 static void
-_free_data(E_Config_Dialog      *cfd,
+_free_data(E_Config_Dialog      *cfd __UNUSED__,
            E_Config_Dialog_Data *cfdata)
 {
     eina_list_free(cfdata->config.vdesks);
@@ -141,7 +141,7 @@ _fill_zone_config(E_Zone               *zone,
 
 static void
 _cb_zone_change(void        *data,
-                Evas_Object *obj)
+                Evas_Object *obj __UNUSED__)
 {
     int n;
     E_Config_Dialog_Data *cfdata = data;
@@ -158,7 +158,7 @@ _cb_zone_change(void        *data,
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog      *cfd,
+_basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
                       Evas                 *evas,
                       E_Config_Dialog_Data *cfdata)
 {
@@ -223,7 +223,7 @@ _basic_create_widgets(E_Config_Dialog      *cfd,
 }
 
 static int
-_basic_apply_data(E_Config_Dialog      *cfd,
+_basic_apply_data(E_Config_Dialog      *cfd __UNUSED__,
                   E_Config_Dialog_Data *cfdata)
 {
     struct _Config_vdesk *vd;
@@ -307,7 +307,7 @@ _basic_apply_data(E_Config_Dialog      *cfd,
 
 E_Config_Dialog *
 e_int_config_tiling_module(E_Container *con,
-                           const char  *params)
+                           const char  *params __UNUSED__)
 {
     E_Config_Dialog *cfd;
     E_Config_Dialog_View *v;

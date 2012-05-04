@@ -181,12 +181,14 @@ _mixer_gadget_configuration_free_foreach(const Eina_Hash *hash __UNUSED__, const
    return 1;
 }
 
+#if 0
 static Eina_Bool
 _mixer_module_configuration_alert(void *data)
 {
    e_util_dialog_show(_("Mixer Settings Updated"), "%s", (char *)data);
    return ECORE_CALLBACK_CANCEL;
 }
+#endif
 
 static E_Mixer_Module_Config *
 _mixer_module_configuration_new(void)
@@ -506,18 +508,16 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
      {
         E_Action *act;
         Eina_List *l;
-        E_Config_Binding_Key *bind;
+        E_Config_Binding_Key *binding;
         E_Binding_Modifier mod;
         Eina_Bool handled = EINA_FALSE;
-        
-        for (l = e_config->key_bindings; l; l = l->next)
+
+	EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
           {
-             bind = l->data;
-             
-             if (bind->action && 
-                 (strcmp(bind->action, "volume_increase") &&
-                     strcmp(bind->action, "volume_decrease") &&
-                     strcmp(bind->action, "volume_mute")))
+             if (binding->action && 
+                 (strcmp(binding->action, "volume_increase") &&
+                     strcmp(binding->action, "volume_decrease") &&
+                     strcmp(binding->action, "volume_mute")))
                 continue;
              
              mod = 0;
@@ -531,14 +531,14 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                 mod |= E_BINDING_MODIFIER_WIN;
              
-             if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
-                 ((bind->modifiers == mod) || (bind->any_mod)))
+             if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+                 ((binding->modifiers == mod) || (binding->any_mod)))
                {
-                  if (!(act = e_action_find(bind->action))) continue;
+                  if (!(act = e_action_find(binding->action))) continue;
                   if (act->func.go_key)
-                     act->func.go_key(E_OBJECT(inst->gcc->gadcon->zone), bind->params, ev);
+                     act->func.go_key(E_OBJECT(inst->gcc->gadcon->zone), binding->params, ev);
                   else if (act->func.go)
-                     act->func.go(E_OBJECT(inst->gcc->gadcon->zone), bind->params);
+                     act->func.go(E_OBJECT(inst->gcc->gadcon->zone), binding->params);
                   handled = EINA_TRUE;
                }
           }

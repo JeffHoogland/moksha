@@ -494,7 +494,7 @@ e_mixer_system_set_volume(E_Mixer_System  *self,
                           int              left,
                           int              right)
 {
-   long range, min, max, div;
+   long range, min, max, divide;
    int mode;
 
    if ((!self) || (!channel))
@@ -502,10 +502,10 @@ e_mixer_system_set_volume(E_Mixer_System  *self,
 
    snd_mixer_handle_events(self);
    snd_mixer_selem_get_playback_volume_range(channel, &min, &max);
-   div = 100 + min;
-   if (div == 0)
+   divide = 100 + min;
+   if (divide == 0)
      {
-        div = 1; /* no zero-division */
+        divide = 1; /* no zero-division */
         min++;
      }
 
@@ -516,13 +516,13 @@ e_mixer_system_set_volume(E_Mixer_System  *self,
    mode = 0;
    if (left >= 0)
      {
-        left = (((range * left) + (range / 2)) / div) - min;
+        left = (((range * left) + (range / 2)) / divide) - min;
         mode |= 1;
      }
 
    if (right >= 0)
      {
-        right = (((range * right) + (range / 2)) / div) - min;
+        right = (((range * right) + (range / 2)) / divide) - min;
         mode |= 2;
      }
 

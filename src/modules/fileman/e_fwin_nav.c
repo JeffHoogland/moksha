@@ -468,7 +468,7 @@ static void
 _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Instance *inst;
-   const char *realpath;
+   const char *real_path;
    char *path, *dir, *p;
    Eina_List *l, *ll, *sel = NULL;
    Evas_Object *btn;
@@ -476,7 +476,7 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
 
    inst = data;
 
-   if (!(realpath = e_fm2_real_path_get(inst->o_fm))) return;
+   if (!(real_path = e_fm2_real_path_get(inst->o_fm))) return;
 
    /* update pathbar */
    if (!inst->l_buttons)
@@ -484,7 +484,7 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
    
    sel = inst->l_buttons;
    l = eina_list_next(sel);
-   p = path = ecore_file_realpath(realpath);
+   p = path = ecore_file_realpath(real_path);
 
    while (p)
      {
@@ -566,7 +566,7 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
      }
 
    /* update history */
-   if ((!inst->ignore_dir) && (eina_list_data_get(inst->current) != realpath))
+   if ((!inst->ignore_dir) && (eina_list_data_get(inst->current) != real_path))
      {
 	if (inst->current)
 	  {
@@ -578,12 +578,12 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
 	       }
 	  }
 	inst->history =
-	  eina_list_prepend(inst->history, eina_stringshare_ref(realpath));
+	  eina_list_prepend(inst->history, eina_stringshare_ref(real_path));
 	inst->current = inst->history;
      }
    inst->ignore_dir = 0;
 
-   if (!strcmp(realpath, "/"))
+   if (!strcmp(real_path, "/"))
      edje_object_signal_emit(inst->o_base, "e,state,up,disabled", "e");
    else
      edje_object_signal_emit(inst->o_base, "e,state,up,enabled", "e");

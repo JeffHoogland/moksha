@@ -229,15 +229,15 @@ _battery_face_level_set(Evas_Object *battery, double level)
 }
 
 static void 
-_battery_face_time_set(Evas_Object *battery, int time)
+_battery_face_time_set(Evas_Object *battery, int t)
 {
    char buf[256];
    int hrs, mins;
 
-   if (time < 0) return;
+   if (t < 0) return;
 
-   hrs = (time / 3600);
-   mins = ((time) / 60 - (hrs * 60));
+   hrs = (t / 3600);
+   mins = ((t) / 60 - (hrs * 60));
    if (hrs < 0) hrs = 0;
    if (mins < 0) mins = 0;
    snprintf(buf, sizeof(buf), "%i:%02i", hrs, mins);
@@ -426,7 +426,7 @@ _battery_warning_popup_destroy(Instance *inst)
 }
 
 static void
-_battery_warning_popup(Instance *inst, int time, double percent)
+_battery_warning_popup(Instance *inst, int t, double percent)
 {
    Evas *e = NULL;
    Evas_Object *rect = NULL, *popup_bg = NULL;
@@ -499,7 +499,7 @@ _battery_warning_popup(Instance *inst, int time, double percent)
         evas_object_show(rect);
      }
 
-   _battery_face_time_set(inst->popup_battery, time);
+   _battery_face_time_set(inst->popup_battery, t);
    _battery_face_level_set(inst->popup_battery, percent);
    edje_object_signal_emit(inst->popup_battery, "e,state,discharging", "e");
 
@@ -513,7 +513,7 @@ _battery_warning_popup(Instance *inst, int time, double percent)
 }
 
 static Eina_Bool
-_powersave_cb_config_update(void *data, int type, void *event)
+_powersave_cb_config_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    if (!battery_config->have_battery)
      e_powersave_mode_set(E_POWERSAVE_MODE_LOW);

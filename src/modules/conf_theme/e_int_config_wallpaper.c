@@ -199,18 +199,18 @@ _cb_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_
    E_Config_Dialog_Data *cfdata;
    Eina_List *selected;
    E_Fm2_Icon_Info *ici;
-   const char *realpath;
+   const char *real_path;
    char buf[PATH_MAX];
 
    cfdata = data;
    if (!cfdata->o_fm) return;
    if (!(selected = e_widget_flist_selected_list_get(cfdata->o_fm))) return;
    ici = selected->data;
-   realpath = e_widget_flist_real_path_get(cfdata->o_fm);
-   if (!strcmp(realpath, "/"))
+   real_path = e_widget_flist_real_path_get(cfdata->o_fm);
+   if (!strcmp(real_path, "/"))
      snprintf(buf, sizeof(buf), "/%s", ici->file);
    else
-     snprintf(buf, sizeof(buf), "%s/%s", realpath, ici->file);
+     snprintf(buf, sizeof(buf), "%s/%s", real_path, ici->file);
    eina_list_free(selected);
    if (ecore_file_is_dir(buf)) return;
 

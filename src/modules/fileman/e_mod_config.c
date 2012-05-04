@@ -8,7 +8,7 @@ struct _E_Config_Dialog_Data
    /* general view mode */
     struct
     {
-       int mode;
+       E_Fm2_View_Mode mode;
        int open_dirs_in_place;
        int selector;
        int single_click;
@@ -217,7 +217,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
 
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("View Mode"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->view.mode));
+   rg = e_widget_radio_group_new((int*)&(cfdata->view.mode));
 /*    ob = e_widget_radio_add(evas, _("Icons"), 0, rg); */
 /*    e_widget_disabled_set(ob, 1); */
 /*    e_widget_framelist_object_append(of, ob); */

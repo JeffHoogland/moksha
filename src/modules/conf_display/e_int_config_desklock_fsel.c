@@ -131,17 +131,17 @@ _cb_sel_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
    E_Config_Dialog_Data *cfdata;
    Eina_List *sel;
    E_Fm2_Icon_Info *ici;
-   const char *realpath;
+   const char *real_path;
    char buff[PATH_MAX];
 
    if (!(cfdata = data)) return;
    if (!(sel = e_widget_flist_selected_list_get(cfdata->o_list))) return;
    ici = sel->data;
-   realpath = e_widget_flist_real_path_get(cfdata->o_list);
-   if (!strcmp(realpath, "/"))
+   real_path = e_widget_flist_real_path_get(cfdata->o_list);
+   if (!strcmp(real_path, "/"))
      snprintf(buff, sizeof(buff), "/%s", ici->file);
    else
-     snprintf(buff, sizeof(buff), "%s/%s", realpath, ici->file);
+     snprintf(buff, sizeof(buff), "%s/%s", real_path, ici->file);
    eina_list_free(sel);
    if (ecore_file_is_dir(buff)) return;
    E_FREE(cfdata->bg);

@@ -396,6 +396,7 @@ e_winlist_prev(void)
 void
 e_winlist_left(E_Zone *zone)
 {
+   E_Border *bd;
    Eina_List *l;
    E_Desk *desk;
    E_Border *bd_orig;
@@ -414,9 +415,8 @@ e_winlist_left(E_Zone *zone)
 
    desk = e_desk_current_get(zone);
    e_border_focus_track_freeze();
-   for (l = e_border_focus_stack_get(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	E_Border *bd = l->data;
 	int center_next;
 	int delta_next;
 
@@ -515,6 +515,7 @@ e_winlist_left(E_Zone *zone)
 void
 e_winlist_down(E_Zone *zone)
 {
+   E_Border *bd;
    Eina_List *l;
    E_Desk *desk;
    E_Border *bd_orig;
@@ -533,9 +534,8 @@ e_winlist_down(E_Zone *zone)
 
    desk = e_desk_current_get(zone);
    e_border_focus_track_freeze();
-   for (l = e_border_focus_stack_get(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	E_Border *bd = l->data;
 	int center_next;
 	int delta_next;
 
@@ -634,6 +634,7 @@ e_winlist_down(E_Zone *zone)
 void
 e_winlist_up(E_Zone *zone)
 {
+   E_Border *bd;
    Eina_List *l;
    E_Desk *desk;
    E_Border *bd_orig;
@@ -652,9 +653,8 @@ e_winlist_up(E_Zone *zone)
 
    desk = e_desk_current_get(zone);
    e_border_focus_track_freeze();
-   for (l = e_border_focus_stack_get(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	E_Border *bd = l->data;
 	int center_next;
 	int delta_next;
 
@@ -753,6 +753,7 @@ e_winlist_up(E_Zone *zone)
 void
 e_winlist_right(E_Zone *zone)
 {
+   E_Border *bd;
    Eina_List *l;
    E_Desk *desk;
    E_Border *bd_orig;
@@ -771,9 +772,8 @@ e_winlist_right(E_Zone *zone)
 
    desk = e_desk_current_get(zone);
    e_border_focus_track_freeze();
-   for (l = e_border_focus_stack_get(); l; l = l->next)
+   EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	E_Border *bd = l->data;
 	int center_next;
 	int delta_next;
 
@@ -1311,14 +1311,12 @@ _e_winlist_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
 	E_Action *act;
 	Eina_List *l;
-	E_Config_Binding_Key *bind;
+	E_Config_Binding_Key *binding;
 	E_Binding_Modifier mod;
 
-	for (l = e_config->key_bindings; l; l = l->next)
+	EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
 	  {
-	     bind = l->data;
-
-	     if (bind->action && strcmp(bind->action, "winlist")) continue;
+	     if (binding->action && strcmp(binding->action, "winlist")) continue;
 
 	     mod = 0;
 
@@ -1331,14 +1329,14 @@ _e_winlist_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
 	     if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                mod |= E_BINDING_MODIFIER_WIN;
 
-	     if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
-		 ((bind->modifiers == mod) || (bind->any_mod)))
+	     if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+		 ((binding->modifiers == mod) || (binding->any_mod)))
 	       {
-		  if (!(act = e_action_find(bind->action))) continue;
+		  if (!(act = e_action_find(binding->action))) continue;
 		  if (act->func.go_key)
-		    act->func.go_key(E_OBJECT(_winlist->zone), bind->params, ev);
+		    act->func.go_key(E_OBJECT(_winlist->zone), binding->params, ev);
 		  else if (act->func.go)
-		    act->func.go(E_OBJECT(_winlist->zone), bind->params);
+		    act->func.go(E_OBJECT(_winlist->zone), binding->params);
 	       }
 	  }
      }
@@ -1351,7 +1349,7 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Event_Key *ev;
    E_Action *act;
    Eina_List *l;
-   E_Config_Binding_Key *bind;
+   E_Config_Binding_Key *binding;
    E_Binding_Modifier mod;
 
    ev = event;
@@ -1395,10 +1393,9 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 	  }
      }
 
-   for (l = e_config->key_bindings; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
      {
-	bind = l->data;
-	if (bind->action && strcmp(bind->action,"winlist")) continue;
+	if (binding->action && strcmp(binding->action,"winlist")) continue;
 	mod = 0;
 
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
@@ -1410,14 +1407,14 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 	if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
           mod |= E_BINDING_MODIFIER_WIN;
 
-	if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
-	    ((bind->modifiers == mod) || (bind->any_mod)))
+	if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+	    ((binding->modifiers == mod) || (binding->any_mod)))
 	  {
-	     if (!(act = e_action_find(bind->action))) continue;
+	     if (!(act = e_action_find(binding->action))) continue;
 	     if (act->func.end_key)
-	       act->func.end_key(E_OBJECT(_winlist->zone), bind->params, ev);
+	       act->func.end_key(E_OBJECT(_winlist->zone), binding->params, ev);
 	     else if (act->func.end)
-	       act->func.end(E_OBJECT(_winlist->zone), bind->params);
+	       act->func.end(E_OBJECT(_winlist->zone), binding->params);
 	  }
      }
 
@@ -1587,12 +1584,13 @@ static void
 _e_winlist_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info)
 {
    E_Winlist_Win *ww;
+   E_Winlist_Win *lww;
    Eina_List *l;
 
    if (!(ww = data)) return;
    if (!_wins) return;
-   for (l = _wins; l; l = l->next)
-     if (l->data == ww) break;
+   EINA_LIST_FOREACH(_wins, l, lww)
+     if (lww == ww) break;
    _e_winlist_deactivate();
    _win_selected = l;
    _e_winlist_show_active();

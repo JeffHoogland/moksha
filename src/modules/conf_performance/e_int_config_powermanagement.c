@@ -19,8 +19,8 @@ struct _E_Config_Dialog_Data
    double powersave_medium;
    double powersave_high;
    double powersave_extreme;
-   int powersave_min;
-   int powersave_max;
+   E_Powersave_Mode powersave_min;
+   E_Powersave_Mode powersave_max;
 };
 
 E_Config_Dialog *
@@ -110,8 +110,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
    cfdata->powersave_min = e_config->powersave.min;
    cfdata->powersave_max = e_config->powersave.max;
-   rmin = e_widget_radio_group_new(&(cfdata->powersave_min));
-   rmax = e_widget_radio_group_new(&(cfdata->powersave_max));
+   rmin = e_widget_radio_group_new((int*) &(cfdata->powersave_min));
+   rmax = e_widget_radio_group_new((int*) &(cfdata->powersave_max));
 
    ol = e_widget_table_add(evas, 0);
    ob = e_widget_label_add(evas, _("Min"));
@@ -360,7 +360,7 @@ _cb_max_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Evas_Object *o;
-   int toggle;
+
    cfdata = data;
    if (!cfdata) return;
    if (cfdata->powersave_min > cfdata->powersave_max)

@@ -31,7 +31,7 @@ orientation_widget_create_data(E_Config_Dialog_Data *cfdata)
    EINA_LIST_FOREACH(cfdata->output_dialog_data_list, iter, odd)
      {
         odd->new_orientation = Ecore_X_Randr_Unset;
-        odd->previous_orientation = odd->crtc ? odd->crtc->current_orientation : Ecore_X_Randr_Unset;
+        odd->previous_orientation = odd->crtc ? odd->crtc->current_orientation : (Ecore_X_Randr_Orientation) Ecore_X_Randr_Unset;
      }
 
    return EINA_TRUE;
@@ -169,7 +169,7 @@ orientation_widget_update_radio_buttons(E_Config_Randr_Dialog_Output_Dialog_Data
      {
         //enabled monitor
         supported_oris = odd->crtc->orientations;
-        ori = (odd->new_orientation != Ecore_X_Randr_Unset) ? odd->new_orientation : odd->crtc->current_orientation;
+        ori = (odd->new_orientation != (Ecore_X_Randr_Orientation) Ecore_X_Randr_Unset) ? odd->new_orientation : odd->crtc->current_orientation;
      }
    else
      {

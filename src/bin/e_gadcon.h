@@ -318,25 +318,26 @@ EAPI void e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu);
 #define GADCON_CLIENT_CONFIG_GET(_type, _items, _gc_class, _id)		\
   if (!_id)								\
     {									\
-       char buf[128];							\
-       int num = 0;							\
-       _type *ci;							\
+       char *_buf;							\
+       int _num = 0;							\
+       _type *_ci;							\
        if (_items)							\
 	 {								\
-	    const char *p;						\
-	    ci = eina_list_last(_items)->data;				\
-	    p = strrchr (ci->id, '.');					\
-	    if (p) num = atoi (p + 1) + 1;				\
+	    const char *_p;						\
+	    _ci = eina_list_last(_items)->data;				\
+	    _p = strrchr (_ci->id, '.');				\
+	    if (_p) _num = atoi (_p + 1) + 1;				\
 	 }								\
-       snprintf (buf, sizeof (buf), "%s.%d", _gc_class.name, num);	\
-       _id = buf;							\
+       _buf = alloca(sizeof (char) * ((_gc_class.name ? strlen( _gc_class.name) : 6) + 11)); \
+       sprintf (_buf, "%s.%d", _gc_class.name, _num);			\
+       _id = _buf;							\
     }									\
   else									\
     {									\
        Eina_List *l;							\
-       _type *ci;							\
-       EINA_LIST_FOREACH(_items, l, ci)					\
-	 if ((ci->id) && (!strcmp(ci->id, id))) return ci;		\
+       _type *_ci;							\
+       EINA_LIST_FOREACH(_items, l, _ci)				\
+	 if ((_ci->id) && (!strcmp(_ci->id, _id))) return _ci;	\
     }
 
 #endif

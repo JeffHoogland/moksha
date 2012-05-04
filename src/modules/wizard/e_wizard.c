@@ -20,25 +20,21 @@ static int next_prev = 0;
 EAPI int
 e_wizard_init(void)
 {
+   E_Manager *man;
    Eina_List *l;
 
-   for (l = e_manager_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	E_Manager *man;
+        E_Container *con;
 	Eina_List *l2;
 
-	man = l->data;
-	for (l2 = man->containers; l2; l2 = l2->next)
+        EINA_LIST_FOREACH(man->containers, l2, con)
 	  {
-	     E_Container *con;
 	     Eina_List *l3;
+             E_Zone *zone;
 
-	     con = l2->data;
-	     for (l3 = con->zones; l3; l3 = l3->next)
+             EINA_LIST_FOREACH(con->zones, l3, zone)
 	       {
-		  E_Zone *zone;
-
-		  zone = l3->data;
 		  if (!pop)
 		    pop = _e_wizard_main_new(zone);
 		  else
@@ -52,20 +48,19 @@ e_wizard_init(void)
 EAPI int
 e_wizard_shutdown(void)
 {
+   E_Wizard_Page *pg;
+   E_Object *eo;
+
    if (pop)
      {
 	e_object_del(E_OBJECT(pop));
 	pop = NULL;
      }
-   while (pops)
-     {
-	e_object_del(E_OBJECT(pops->data));
-	pops = eina_list_remove_list(pops, pops);
-     }
-   while (pages)
-     {
-	e_wizard_page_del(pages->data);
-     }
+
+   EINA_LIST_FREE(pops, eo)
+     e_object_del(eo);
+   EINA_LIST_FREE(pages, pg)
+     e_wizard_page_del(pg);
    return 1;
 }
 
@@ -108,20 +103,21 @@ e_wizard_apply(void)
 EAPI void
 e_wizard_next(void)
 {
+   E_Wizard_Page *page;
    Eina_List *l;
 
-   for (l = pages; l; l = l->next)
+   EINA_LIST_FOREACH(pages, l, page)
      {
-	if (l->data == curpage)
+	if (page == curpage)
 	  {
-	     if (l->next)
+	     if (eina_list_next(l))
 	       {
 		  if (curpage)
 		    {
 		       if (curpage->hide)
 			 curpage->hide(curpage);
 		    }
-		  curpage = l->next->data;
+		  curpage = eina_list_data_get(eina_list_next(l));
 		  if (!curpage->data)
 		    {
                        if (curpage->init)
@@ -165,11 +161,11 @@ e_wizard_page_show(Evas_Object *obj)
 
 EAPI E_Wizard_Page *
 e_wizard_page_add(void *handle,
-		  int (*init)     (E_Wizard_Page *pg),
-		  int (*shutdown) (E_Wizard_Page *pg),
-		  int (*show)     (E_Wizard_Page *pg),
-		  int (*hide)     (E_Wizard_Page *pg),
-		  int (*apply)    (E_Wizard_Page *pg)
+		  int (*init_cb)     (E_Wizard_Page *pg),
+		  int (*shutdown_cb) (E_Wizard_Page *pg),
+		  int (*show_cb)     (E_Wizard_Page *pg),
+		  int (*hide_cb)     (E_Wizard_Page *pg),
+		  int (*apply_cb)    (E_Wizard_Page *pg)
 		  )
 {
    E_Wizard_Page *pg;
@@ -180,11 +176,11 @@ e_wizard_page_add(void *handle,
    pg->handle = handle;
    pg->evas = pop->evas;
 
-   pg->init = init;
-   pg->shutdown = shutdown;
-   pg->show = show;
-   pg->hide = hide;
-   pg->apply = apply;
+   pg->init = init_cb;
+   pg->shutdown = shutdown_cb;
+   pg->show = show_cb;
+   pg->hide = hide_cb;
+   pg->apply = apply_cb;
 
    pages = eina_list_append(pages, pg);
 
@@ -245,29 +241,29 @@ _e_wizard_next_eval(void)
 static E_Popup *
 _e_wizard_main_new(E_Zone *zone)
 {
-   E_Popup *pop;
+   E_Popup *popup;
    Evas_Object *o;
    Evas_Modifier_Mask mask;
    Eina_Bool kg;
 
-   pop = e_popup_new(zone, 0, 0, zone->w, zone->h);
-   e_popup_layer_set(pop, 255);
-   o = edje_object_add(pop->evas);
+   popup = e_popup_new(zone, 0, 0, zone->w, zone->h);
+   e_popup_layer_set(popup, 255);
+   o = edje_object_add(popup->evas);
 
    e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/main");
    evas_object_move(o, 0, 0);
    evas_object_resize(o, zone->w, zone->h);
    evas_object_show(o);
    edje_object_signal_callback_add(o, "e,action,next", "",
-				   _e_wizard_cb_next, pop);
+				   _e_wizard_cb_next, popup);
    o_bg = o;
 
-   o = evas_object_rectangle_add(pop->evas);
+   o = evas_object_rectangle_add(popup->evas);
    mask = 0;
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
-   mask = evas_key_modifier_mask_get(pop->evas, "Shift");
+   mask = evas_key_modifier_mask_get(popup->evas, "Shift");
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
@@ -280,40 +276,40 @@ _e_wizard_main_new(E_Zone *zone)
    if (!kg)
      fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
-				  _e_wizard_cb_key_down, pop);
+				  _e_wizard_cb_key_down, popup);
 
    /* set up next/prev buttons */
    edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment"));
    edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
    e_wizard_labels_update();
 
-   e_popup_edje_bg_object_set(pop, o_bg);
-   e_popup_show(pop);
-   if (!e_grabinput_get(ecore_evas_software_x11_window_get(pop->ecore_evas),
-			1, ecore_evas_software_x11_window_get(pop->ecore_evas)))
+   e_popup_edje_bg_object_set(popup, o_bg);
+   e_popup_show(popup);
+   if (!e_grabinput_get(ecore_evas_software_x11_window_get(popup->ecore_evas),
+			1, ecore_evas_software_x11_window_get(popup->ecore_evas)))
      {
-	e_object_del(E_OBJECT(pop));
-	pop = NULL;
+	e_object_del(E_OBJECT(popup));
+	popup = NULL;
      }
-   return pop;
+   return popup;
 }
 
 static E_Popup *
 _e_wizard_extra_new(E_Zone *zone)
 {
-   E_Popup *pop;
+   E_Popup *popup;
    Evas_Object *o;
 
-   pop = e_popup_new(zone, 0, 0, zone->w, zone->h);
-   e_popup_layer_set(pop, 255);
-   o = edje_object_add(pop->evas);
+   popup = e_popup_new(zone, 0, 0, zone->w, zone->h);
+   e_popup_layer_set(popup, 255);
+   o = edje_object_add(popup->evas);
    e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/extra");
    evas_object_move(o, 0, 0);
    evas_object_resize(o, zone->w, zone->h);
    evas_object_show(o);
-   e_popup_edje_bg_object_set(pop, o);
-   e_popup_show(pop);
-   return pop;
+   e_popup_edje_bg_object_set(popup, o);
+   e_popup_show(popup);
+   return popup;
 }
 
 static void

@@ -485,11 +485,11 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                {
                   for (i = 0; i < cw->rects_num; i++)
                     {
-                       E_RECTS_CLIP_TO_RECT(cw->rects[i].x,
-                                            cw->rects[i].y,
-                                            cw->rects[i].width,
-                                            cw->rects[i].height,
-                                            0, 0, cw->w, cw->h);
+		      E_RECTS_CLIP_TO_RECT(cw->rects[i].x,
+					   cw->rects[i].y,
+					   cw->rects[i].width,
+					   cw->rects[i].height,
+					   0, 0, (int) cw->w, (int) cw->h);
                     }
                }
              if (!_e_mod_comp_win_shaped_check(cw, cw->rects, cw->rects_num))
@@ -1810,7 +1810,7 @@ _e_mod_comp_win_add(E_Comp        *c,
 	     for (i = 0; i < num; i++)
 	       E_RECTS_CLIP_TO_RECT(rects[i].x, rects[i].y,
 				    rects[i].width, rects[i].height,
-				    0, 0, att.w, att.h);
+				    0, 0, (int) att.w, (int) att.h);
 
              if (_e_mod_comp_shaped_check(att.w, att.h, rects, num))
 	       cw->shape_changed = 1;
@@ -2648,7 +2648,7 @@ _e_mod_comp_message(void *data __UNUSED__,
    
    if (ev->message_type == ECORE_X_ATOM_NET_WM_WINDOW_OPACITY)
      {
-        E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
+        cw = _e_mod_comp_win_find(ev->win);
         if (!cw) return ECORE_CALLBACK_PASS_ON;
         _e_mod_comp_win_opacity_set(cw);
         return ECORE_CALLBACK_PASS_ON;

@@ -997,26 +997,25 @@ linux_acpi_cb_event_fd_active(void *data        __UNUSED__,
 static void
 linux_acpi_init(void)
 {
-   Eina_List *powers;
-   Eina_List *bats;
+   Eina_Iterator *powers;
+   Eina_Iterator *bats;
 
-   bats = ecore_file_ls("/proc/acpi/battery");
+   bats = eina_file_direct_ls("/proc/acpi/battery");
    if (bats)
      {
-        char *name;
+        Eina_File_Direct_Info *info;
 
         have_power = 0;
-        powers = ecore_file_ls("/proc/acpi/ac_adapter");
+        powers = eina_file_direct_ls("/proc/acpi/ac_adapter");
         if (powers)
           {
-             char *name;
-
-             EINA_LIST_FREE(powers, name)
+             EINA_ITERATOR_FOREACH(powers, info)
                {
                   char buf[4096];
                   FILE *f;
 
-                  snprintf(buf, sizeof(buf), "/proc/acpi/ac_adapter/%s/state", name);
+                  strcpy(buf, info->path);
+                  strcat(buf, "/state");
                   f = fopen(buf, "r");
                   if (f)
                     {
@@ -1030,21 +1029,22 @@ linux_acpi_init(void)
                             if (!strcmp(tmp, "on-line")) have_power = 1;
                             free(tmp);
                          }
+		       fclose(f);
                     }
-
-                  free(name);
                }
+             eina_iterator_free(powers);
           }
 
         have_battery = 0;
         acpi_max_full = 0;
         acpi_max_design = 0;
-        EINA_LIST_FREE(bats, name)
+        EINA_ITERATOR_FOREACH(bats, info)
           {
              char buf[4096];
              FILE *f;
 
-             snprintf(buf, sizeof(buf), "/proc/acpi/battery/%s/info", name);
+             strcpy(buf, info->path);
+             strcat(buf, "/info");
              f = fopen(buf, "r");
              if (f)
                {
@@ -1076,9 +1076,9 @@ linux_acpi_init(void)
                     }
                   fclose(f);
                }
-
-             free(name);
           }
+
+        eina_iterator_free(bats);
      }
    if (!acpid)
      {

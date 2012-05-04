@@ -199,7 +199,7 @@ static void
 _battery_udev_battery_update(const char *syspath, Battery *bat)
 {
    const char *test;
-   double time, charge;
+   double t, charge;
    
    if (!bat)
      {
@@ -233,10 +233,10 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
 
         charge = strtod(test, NULL);
         eina_stringshare_del(test);
-        time = ecore_time_get();
+        t = ecore_time_get();
         if ((bat->got_prop) && (charge != bat->current_charge))
-          bat->charge_rate = ((charge - bat->current_charge) / (time - bat->last_update));
-        bat->last_update = time;
+          bat->charge_rate = ((charge - bat->current_charge) / (t - bat->last_update));
+        bat->last_update = t;
         bat->current_charge = charge;
         bat->percent = 100 * (bat->current_charge / bat->last_full_charge);
         if (bat->got_prop)

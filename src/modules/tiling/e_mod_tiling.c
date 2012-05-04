@@ -271,8 +271,8 @@ _theme_edje_object_set_aux(Evas_Object *obj, const char *group)
         _theme_edje_object_set_aux(_obj, _group);
 
 static Eina_Bool
-_info_hash_update(const Eina_Hash *hash, const void *key,
-                  void *data, void *fdata)
+_info_hash_update(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
+                  void *data, void *fdata __UNUSED__)
 {
     Tiling_Info *tinfo = data;
 
@@ -499,9 +499,9 @@ end_special_input(void)
 }
 
 static Eina_Bool
-overlay_key_down(void *data,
-          int type,
-          void *event)
+overlay_key_down(void *data __UNUSED__,
+		 int type __UNUSED__,
+		 void *event)
 {
     Ecore_Event_Key *ev = event;
     Border_Extra *extra;
@@ -545,7 +545,7 @@ stop:
 }
 
 static Eina_Bool
-_timeout_cb(void *data)
+_timeout_cb(void *data __UNUSED__)
 {
     end_special_input();
     return ECORE_CALLBACK_CANCEL;
@@ -1137,8 +1137,8 @@ change_desk_conf(struct _Config_vdesk *newconf)
 }
 
 static void
-_e_mod_action_add_stack_cb(E_Object   *obj,
-                           const char *params)
+_e_mod_action_add_stack_cb(E_Object   *obj __UNUSED__,
+                           const char *params __UNUSED__)
 {
     E_Desk *desk = get_current_desk();
 
@@ -1152,8 +1152,8 @@ _e_mod_action_add_stack_cb(E_Object   *obj,
 }
 
 static void
-_e_mod_action_remove_stack_cb(E_Object   *obj,
-                              const char *params)
+_e_mod_action_remove_stack_cb(E_Object   *obj __UNUSED__,
+                              const char *params __UNUSED__)
 {
     E_Desk *desk = get_current_desk();
 
@@ -1167,8 +1167,8 @@ _e_mod_action_remove_stack_cb(E_Object   *obj,
 }
 
 static void
-_e_mod_action_tg_stack_cb(E_Object   *obj,
-                          const char *params)
+_e_mod_action_tg_stack_cb(E_Object   *obj __UNUSED__,
+                          const char *params __UNUSED__)
 {
     E_Desk *desk = get_current_desk();
 
@@ -1633,8 +1633,8 @@ toggle_floating(E_Border *bd)
 }
 
 static void
-_e_mod_action_toggle_floating_cb(E_Object   *obj,
-                                 const char *params)
+_e_mod_action_toggle_floating_cb(E_Object   *obj __UNUSED__,
+                                 const char *params __UNUSED__)
 {
     end_special_input();
 
@@ -1706,8 +1706,8 @@ _action_swap(E_Border *bd_1,
 }
 
 static void
-_e_mod_action_swap_cb(E_Object   *obj,
-                      const char *params)
+_e_mod_action_swap_cb(E_Object   *obj __UNUSED__,
+                      const char *params __UNUSED__)
 {
     E_Desk *desk;
     E_Border *focused_bd;
@@ -2472,8 +2472,8 @@ _move_down_rows(void)
 }
 
 static Eina_Bool
-move_key_down(void *data,
-              int type,
+move_key_down(void *data __UNUSED__,
+              int type __UNUSED__,
               void *event)
 {
     Ecore_Event_Key *ev = event;
@@ -2531,8 +2531,8 @@ stop:
 }
 
 static void
-_e_mod_action_move_cb(E_Object   *obj,
-                      const char *params)
+_e_mod_action_move_cb(E_Object   *obj __UNUSED__,
+                      const char *params __UNUSED__)
 {
     E_Desk *desk;
     E_Border *focused_bd;
@@ -2768,8 +2768,8 @@ _transition_move_rows(tiling_move_t direction)
 }
 
 static Eina_Bool
-_transition_overlay_key_down(void *data,
-                             int type,
+_transition_overlay_key_down(void *data __UNUSED__,
+                             int type __UNUSED__,
                              void *event)
 {
     Ecore_Event_Key *ev = event;
@@ -3158,8 +3158,8 @@ _do_transition_overlay(void)
 }
 
 static void
-_e_mod_action_adjust_transitions(E_Object   *obj,
-                                 const char *params)
+_e_mod_action_adjust_transitions(E_Object   *obj __UNUSED__,
+                                 const char *params __UNUSED__)
 {
     E_Desk *desk;
 
@@ -3179,7 +3179,7 @@ _e_mod_action_adjust_transitions(E_Object   *obj,
 /* Go {{{ */
 
 static Eina_Bool
-_warp_timer(void *_)
+_warp_timer(void *data __UNUSED__)
 {
     if (_G.warp_timer) {
         double spd = TILING_WRAP_SPEED;
@@ -3205,7 +3205,7 @@ _warp_timer(void *_)
 }
 
 static void
-_action_go(E_Border *_,
+_action_go(E_Border *data __UNUSED__,
            Border_Extra *extra_2)
 {
     E_Border *bd = extra_2->border;
@@ -3219,8 +3219,8 @@ _action_go(E_Border *_,
 }
 
 static void
-_e_mod_action_go_cb(E_Object   *obj,
-                    const char *params)
+_e_mod_action_go_cb(E_Object   *obj __UNUSED__,
+                    const char *params __UNUSED__)
 {
     E_Desk *desk;
 
@@ -3240,7 +3240,7 @@ _e_mod_action_go_cb(E_Object   *obj,
 /* Hooks {{{*/
 
 static void
-_pre_border_assign_hook(void *data,
+_pre_border_assign_hook(void *data __UNUSED__,
                         E_Border *bd)
 {
     if (tiling_g.config->show_titles)
@@ -3429,7 +3429,7 @@ static void _move_or_resize(E_Border *bd)
 }
 
 static Eina_Bool
-_resize_hook(void *data, int type, E_Event_Border_Resize *event)
+_resize_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Resize *event)
 {
     E_Border *bd = event->border;
 
@@ -3439,7 +3439,7 @@ _resize_hook(void *data, int type, E_Event_Border_Resize *event)
 }
 
 static Eina_Bool
-_move_hook(void *data, int type, E_Event_Border_Move*event)
+_move_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Move*event)
 {
     E_Border *bd = event->border;
 
@@ -3449,7 +3449,7 @@ _move_hook(void *data, int type, E_Event_Border_Move*event)
 }
 
 static Eina_Bool
-_add_hook(void *data, int type, E_Event_Border_Add *event)
+_add_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Add *event)
 {
     E_Border *bd = event->border;
     int stack = -1;
@@ -3493,7 +3493,7 @@ _add_hook(void *data, int type, E_Event_Border_Add *event)
 }
 
 static Eina_Bool
-_remove_hook(void *data, int type, E_Event_Border_Remove *event)
+_remove_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Remove *event)
 {
     E_Border *bd = event->border;
 
@@ -3517,7 +3517,7 @@ _remove_hook(void *data, int type, E_Event_Border_Remove *event)
 }
 
 static bool
-_iconify_hook(void *_, int type, E_Event_Border_Iconify *event)
+_iconify_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Iconify *event)
 {
     E_Border *bd = event->border;
 
@@ -3537,7 +3537,7 @@ _iconify_hook(void *_, int type, E_Event_Border_Iconify *event)
 }
 
 static bool
-_uniconify_hook(void *_, int type, E_Event_Border_Uniconify *event)
+_uniconify_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Uniconify *event)
 {
     E_Border *bd = event->border;
     int stack = -1;
@@ -3568,21 +3568,21 @@ _uniconify_hook(void *_, int type, E_Event_Border_Uniconify *event)
 }
 
 static Eina_Bool
-_stick_hook(void *data, int type, void *event)
+_stick_hook(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
     DBG("TODO");
     return true;
 }
 
 static Eina_Bool
-_unstick_hook(void *data, int type, void *event)
+_unstick_hook(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
     DBG("TODO");
     return true;
 }
 
 static Eina_Bool
-_desk_show_hook(void *data, int type, void *event)
+_desk_show_hook(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
     _G.currently_switching_desktop = 0;
 
@@ -3592,7 +3592,7 @@ _desk_show_hook(void *data, int type, void *event)
 }
 
 static Eina_Bool
-_desk_before_show_hook(void *data, int type, void *event)
+_desk_before_show_hook(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
     end_special_input();
 
@@ -3602,7 +3602,7 @@ _desk_before_show_hook(void *data, int type, void *event)
 }
 
 static bool
-_desk_set_hook(void *data, int type, E_Event_Border_Desk_Set *ev)
+_desk_set_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Desk_Set *ev)
 {
     DBG("%p: from (%d,%d) to (%d,%d)", ev->border,
         ev->desk->x, ev->desk->y,
@@ -3632,7 +3632,7 @@ _desk_set_hook(void *data, int type, E_Event_Border_Desk_Set *ev)
 }
 
 static bool
-_container_resize_hook(void *_, int type, E_Event_Container_Resize *ev)
+_container_resize_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Container_Resize *ev)
 {
     Eina_List *l;
     E_Zone *zone;
@@ -3705,7 +3705,6 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-    char buf[PATH_MAX];
     E_Desk *desk;
 
     tiling_g.module = m;
@@ -3833,7 +3832,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
 
     if (tiling_g.log_domain >= 0) {
@@ -3908,7 +3907,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
     e_config_domain_save("module.tiling", _G.config_edd, tiling_g.config);
 

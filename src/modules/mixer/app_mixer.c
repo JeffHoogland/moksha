@@ -545,7 +545,7 @@ _find_channel_by_name(E_Mixer_App_Dialog_Data *app, const char *channel_name)
 
    if (app->channels_infos)
      {
-	struct channel_info *info = app->channels_infos->data;
+        info = app->channels_infos->data;
 
 	header_input = !!info->has_capture;
 	i = 1;

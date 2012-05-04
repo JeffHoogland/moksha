@@ -146,7 +146,7 @@ _e_mod_kbd_device_ignore_load_file(const char *file)
 
 #ifdef HAVE_EEZE
 static void 
-_e_mod_kbd_device_udev_event(const char *device, Eeze_Udev_Event event, void *data __UNUSED__, Eeze_Udev_Watch *watch __UNUSED__)
+_e_mod_kbd_device_udev_event(const char *device, Eeze_Udev_Event event, void *data __UNUSED__, Eeze_Udev_Watch *w __UNUSED__)
 {
    if ((!device) || (!event)) return;
 

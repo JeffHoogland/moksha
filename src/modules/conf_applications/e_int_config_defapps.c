@@ -432,8 +432,8 @@ _load_mimes(E_Config_Dialog_Data *cfdata, char *file)
    FILE *f;
    char buf[4096], mimetype[4096], ext[4096];
    char *p, *pp;
-   Config_Mime *mime;
-   Config_Glob *glob;
+   Config_Mime *config_mime;
+   Config_Glob *config_glob;
    
    if (!cfdata) return;
    
@@ -458,32 +458,32 @@ _load_mimes(E_Config_Dialog_Data *cfdata, char *file)
              while (!isblank(*p) && (*p != 0) && (*p != '\n')) p++;
              strncpy(ext, pp, (p - pp));
              ext[p - pp] = 0;
-             mime = _find_mime(cfdata, mimetype);
-             if (!mime)
+             config_mime = _find_mime(cfdata, mimetype);
+             if (!config_mime)
                {
-                  mime = E_NEW(Config_Mime, 1);
-                  if (mime)
+                  config_mime = E_NEW(Config_Mime, 1);
+                  if (config_mime)
                     {
-                       mime->mime = eina_stringshare_add(mimetype);
-                       if (!mime->mime)
-                          free(mime);
+                       config_mime->mime = eina_stringshare_add(mimetype);
+                       if (!config_mime->mime)
+                          free(config_mime);
                        else
                          {
-                            glob = E_NEW(Config_Glob, 1);
-                            glob->name = eina_stringshare_add(ext);
-                            mime->globs = eina_list_append(mime->globs, glob);
-                            cfdata->mimes = eina_list_append(cfdata->mimes, mime);
+                            config_glob = E_NEW(Config_Glob, 1);
+                            config_glob->name = eina_stringshare_add(ext);
+                            config_mime->globs = eina_list_append(config_mime->globs, config_glob);
+                            cfdata->mimes = eina_list_append(cfdata->mimes, config_mime);
                          }
                     }
                }
              else
                {
-                  glob = _find_glob(mime, ext);
-                  if (!glob)
+                  config_glob = _find_glob(config_mime, ext);
+                  if (!config_glob)
                     {
-                       glob = E_NEW(Config_Glob, 1);
-                       glob->name = eina_stringshare_add(ext);
-                       mime->globs = eina_list_append(mime->globs, glob);
+                       config_glob = E_NEW(Config_Glob, 1);
+                       config_glob->name = eina_stringshare_add(ext);
+                       config_mime->globs = eina_list_append(config_mime->globs, config_glob);
                     }
                }
           }
@@ -498,8 +498,8 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
    FILE *f;
    char buf[4096], mimetype[4096], ext[4096];
    char *p, *pp;
-   Config_Mime *mime;
-   Config_Glob *glob;
+   Config_Mime *config_mime;
+   Config_Glob *config_glob;
    
    if (!cfdata) return;
    
@@ -525,32 +525,32 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
              p++;
           }
         *pp = 0;
-        mime = _find_mime(cfdata, mimetype);
-        if (!mime)
+        config_mime = _find_mime(cfdata, mimetype);
+        if (!config_mime)
           {
-             mime = E_NEW(Config_Mime, 1);
-             if (mime)
+             config_mime = E_NEW(Config_Mime, 1);
+             if (config_mime)
                {
-                  mime->mime = eina_stringshare_add(mimetype);
-                  if (!mime->mime)
-                     free(mime);
+                  config_mime->mime = eina_stringshare_add(mimetype);
+                  if (!config_mime->mime)
+                     free(config_mime);
                   else
                     {
-                       glob = E_NEW(Config_Glob, 1);
-                       glob->name = eina_stringshare_add(ext);
-                       mime->globs = eina_list_append(mime->globs, glob);
-                       cfdata->mimes = eina_list_append(cfdata->mimes, mime);
+                       config_glob = E_NEW(Config_Glob, 1);
+                       config_glob->name = eina_stringshare_add(ext);
+                       config_mime->globs = eina_list_append(config_mime->globs, config_glob);
+                       cfdata->mimes = eina_list_append(cfdata->mimes, config_mime);
                     }
                }
           }
         else
           {
-             glob = _find_glob(mime, ext);
-             if (!glob)
+             config_glob = _find_glob(config_mime, ext);
+             if (!config_glob)
                {
-                  glob = E_NEW(Config_Glob, 1);
-                  glob->name = eina_stringshare_add(ext);
-                  mime->globs = eina_list_append(mime->globs, glob);
+                  config_glob = E_NEW(Config_Glob, 1);
+                  config_glob->name = eina_stringshare_add(ext);
+                  config_mime->globs = eina_list_append(config_mime->globs, config_glob);
                }
           }
      }
@@ -582,7 +582,7 @@ _find_mime(E_Config_Dialog_Data *cfdata, char *mime)
 }
 
 static Config_Glob *
-_find_glob(Config_Mime *mime, char *glob)
+_find_glob(Config_Mime *mime, char *globbing)
 {
    Config_Glob *g;
    Eina_List *l;
@@ -591,7 +591,7 @@ _find_glob(Config_Mime *mime, char *glob)
    EINA_LIST_FOREACH(mime->globs, l, g)
      {
         if (!g) continue;
-        if (strcmp(g->name, glob)) continue;
+        if (strcmp(g->name, globbing)) continue;
         return g;
      }
    return NULL;

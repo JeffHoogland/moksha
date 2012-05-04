@@ -389,7 +389,7 @@ _place_items(Smart_Data *sd)
 {
    Eina_List *l;
    Item *it;
-   int div;
+   int divider;
    Evas_Coord x = 0, y = 0, ww, hh, mw = 0, mh = 0;
 
    if (sd->view->mode == VIEW_MODE_LIST)
@@ -413,9 +413,9 @@ _place_items(Smart_Data *sd)
 
         if ((w > 0) && (h > 0))
           {
-             div = sd->w / w;
-             if (div < 1) div = 1;
-             ww = w + (sd->w - div * w) / div;
+             divider = sd->w / w;
+             if (divider < 1) divider = 1;
+             ww = w + (sd->w - divider * w) / divider;
              hh = ((double)h / (double)w * (double)ww);
           }
         else
@@ -427,16 +427,16 @@ _place_items(Smart_Data *sd)
              else
                ww = 192;
 
-             div = sd->w / ww;
-             if (div < 1) div = 1;
-             ww += (sd->w - div * ww) / div;
+             divider = sd->w / ww;
+             if (divider < 1) divider = 1;
+             ww += (sd->w - divider * ww) / divider;
 
-             div = sd->h / ww;
-             if (div < 1) div = 1;
-             hh = ww + (sd->h - div * ww) / div;
+             divider = sd->h / ww;
+             if (divider < 1) divider = 1;
+             hh = ww + (sd->h - divider * ww) / divider;
 
              if (hh > ww)
-               hh = ww + (sd->h - (div + 1) * ww) / (div + 1);
+               hh = ww + (sd->h - (divider + 1) * ww) / (divider + 1);
           }
      }
 
@@ -490,7 +490,7 @@ _e_smart_reconfigure_do(void *data)
    Eina_List *l;
    Item *it;
    Evas_Coord xx, yy;
-   double time;
+   double t;
 
    if (!sd)
      return ECORE_CALLBACK_CANCEL;
@@ -514,7 +514,7 @@ _e_smart_reconfigure_do(void *data)
         return ECORE_CALLBACK_RENEW;
      }
 
-   time = ecore_time_get();
+   t = ecore_time_get();
 
    EINA_LIST_FOREACH (sd->items, l, it)
      {
@@ -536,7 +536,7 @@ _e_smart_reconfigure_do(void *data)
           }
         it->changed = EINA_FALSE;
 
-        if (ecore_time_get() - time > 0.03)
+        if (ecore_time_get() - t > 0.03)
           return ECORE_CALLBACK_RENEW;
      }
 
@@ -691,10 +691,10 @@ _pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 }
 
 static void
-_pan_view_set(Evas_Object *obj, View *view)
+_pan_view_set(Evas_Object *obj, View *v)
 {
    Smart_Data *sd = evas_object_smart_data_get(obj);
-   sd->view = view;
+   sd->view = v;
 }
 
 static Item *
@@ -893,9 +893,9 @@ _clear_items(Evas_Object *obj)
 }
 
 static void
-_view_clear(Evry_View *view)
+_view_clear(Evry_View *ev)
 {
-   View *v = (View *)view;
+   View *v = (View *)ev;
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Item *it;
    if (!sd) return;
@@ -953,9 +953,9 @@ _update_frame(Evas_Object *obj)
 }
 
 static int
-_view_update(Evry_View *view)
+_view_update(Evry_View *ev)
 {
-   GET_VIEW(v, view);
+   GET_VIEW(v, ev);
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Item *v_it;
    Evry_Item *p_it;
@@ -975,7 +975,7 @@ _view_update(Evry_View *view)
 
    if (!p)
      {
-        _view_clear(view);
+        _view_clear(ev);
         return 1;
      }
 
@@ -1090,9 +1090,9 @@ _view_update(Evry_View *view)
 }
 
 static int
-_cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
+_cb_key_down(Evry_View *eview, const Ecore_Event_Key *ev)
 {
-   View *v = (View *)view;
+   View *v = (View *)eview;
    Smart_Data *sd = evas_object_smart_data_get(v->span);
    Eina_List *l = NULL, *ll;
    Item *it = NULL;
@@ -1234,7 +1234,7 @@ _cb_key_down(Evry_View *view, const Ecore_Event_Key *ev)
    if ((slide = v->tabs->key_down(v->tabs, ev)))
      {
         /* _view_update(view, -slide); */
-        _view_update(view);
+        _view_update(eview);
         return 1;
      }
 
@@ -1580,15 +1580,15 @@ _cb_list_show(void *data, Evas_Object *obj __UNUSED__, const char *emission __UN
 }
 
 static Evry_View *
-_view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
+_view_create(Evry_View *ev, const Evry_State *s, const Evas_Object *swallow)
 {
-   GET_VIEW(parent, view);
+   GET_VIEW(parent, ev);
 
    View *v;
    Ecore_Event_Handler *h;
 
    v = E_NEW(View, 1);
-   v->view = *view;
+   v->view = *ev;
    v->state = s;
    v->evas = evas_object_evas_get(swallow);
 
@@ -1661,13 +1661,13 @@ _view_create(Evry_View *view, const Evry_State *s, const Evas_Object *swallow)
 }
 
 static void
-_view_destroy(Evry_View *view)
+_view_destroy(Evry_View *ev)
 {
    Ecore_Event_Handler *h;
 
-   GET_VIEW(v, view);
+   GET_VIEW(v, ev);
 
-   _view_clear(view);
+   _view_clear(ev);
 
    evas_object_del(v->span);
    evas_object_del(v->bg);

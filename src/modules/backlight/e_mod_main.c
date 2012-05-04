@@ -142,14 +142,12 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
    else
      {
         Eina_List *l;
-        E_Config_Binding_Key *bind;
+        E_Config_Binding_Key *binding;
         E_Binding_Modifier mod;
-        
-        for (l = e_config->key_bindings; l; l = l->next)
+
+	EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
           {
-             bind = l->data;
-             
-             if (bind->action && strcmp(bind->action, "backlight")) continue;
+             if (binding->action && strcmp(binding->action, "backlight")) continue;
              
              mod = 0;
              
@@ -162,8 +160,8 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                 mod |= E_BINDING_MODIFIER_WIN;
              
-             if (bind->key && (!strcmp(bind->key, ev->keyname)) &&
-                 ((bind->modifiers == (int)mod) || (bind->any_mod)))
+             if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+                 ((binding->modifiers == mod) || (binding->any_mod)))
                {
                   _backlight_popup_free(inst);
                   break;

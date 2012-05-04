@@ -7,7 +7,6 @@ static void _policy_border_set_focus(E_Border *bd);
 static void _policy_border_move(E_Border *bd, int x, int y);
 static void _policy_border_resize(E_Border *bd, int w, int h);
 static void _policy_border_hide_below(E_Border *bd);
-static void _policy_border_show_below(E_Border *bd);
 static void _policy_zone_layout_update(E_Zone *zone);
 static void _policy_zone_layout_indicator(E_Border *bd, E_Illume_Config_Zone *cz);
 static void _policy_zone_layout_quickpanel(E_Border *bd);
@@ -164,6 +163,7 @@ _policy_border_hide_below(E_Border *bd)
      }
 }
 
+#if 0
 static void
 _policy_border_show_below(E_Border *bd)
 {
@@ -243,6 +243,7 @@ _policy_border_show_below(E_Border *bd)
    /* Fallback to focusing home if all above fails */
    _policy_focus_home(bd->zone);
 }
+#endif
 
 static void
 _policy_zone_layout_update(E_Zone *zone)

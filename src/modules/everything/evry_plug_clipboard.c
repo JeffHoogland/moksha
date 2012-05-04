@@ -4,9 +4,9 @@ static Evry_Action *act;
 static Ecore_X_Window clipboard_win = 0;
 
 static int
-_action(Evry_Action *act)
+_action(Evry_Action *action)
 {
-   const Evry_Item *it = act->it1.item;
+   const Evry_Item *it = action->it1.item;
 
    ecore_x_selection_primary_set(clipboard_win, it->label, strlen(it->label));
    ecore_x_selection_clipboard_set(clipboard_win, it->label, strlen(it->label));
@@ -15,7 +15,7 @@ _action(Evry_Action *act)
 }
 
 static int
-_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
+_check_item(Evry_Action *action __UNUSED__, const Evry_Item *it)
 {
    return it && it->label && (strlen(it->label) > 0);
 }

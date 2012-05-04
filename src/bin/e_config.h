@@ -471,10 +471,10 @@ struct _E_Config_Desktop_Name
 
 struct _E_Config_Gadcon
 {
-   const char *name;
-   int         id;
-   int         zone;
-   Eina_List  *clients;
+   const char  *name;
+   int          id;
+   unsigned int zone;
+   Eina_List   *clients;
 };
 
 struct _E_Config_Gadcon_Client

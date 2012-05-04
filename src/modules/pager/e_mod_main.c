@@ -1126,7 +1126,7 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
 	if (pd)
 	  {
 	     Pager_Win *pw2 = NULL;
-	     E_Border *bd;
+	     E_Border *bd_above;
 
 	     /* remove it from whatever desk it was on */
 	     pw->desk->wins = eina_list_remove(pw->desk->wins, pw);
@@ -1137,9 +1137,9 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
 	     pd->wins = eina_list_append(pd->wins, pw);
 	     e_layout_pack(pd->o_layout, pw->o_window);
 
-	     bd = e_util_desk_border_above(pw->border);
-	     if (bd)
-	       pw2 = _pager_desk_window_find(pd, bd);
+	     bd_above = e_util_desk_border_above(pw->border);
+	     if (bd_above)
+	       pw2 = _pager_desk_window_find(pd, bd_above);
 	     if (pw2)
 	       e_layout_child_lower_below(pw->o_window, pw2->o_window);
 	     else
@@ -1162,12 +1162,12 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
 		  if (pw)
 		    {
 		       Pager_Win *pw2 = NULL;
-		       E_Border *bd;
+		       E_Border *bd_above;
 
 		       pd->wins = eina_list_append(pd->wins, pw);
-		       bd = e_util_desk_border_above(pw->border);
-		       if (bd)
-			 pw2 = _pager_desk_window_find(pd, bd);
+		       bd_above = e_util_desk_border_above(pw->border);
+		       if (bd_above)
+			 pw2 = _pager_desk_window_find(pd, bd_above);
 		       if (pw2)
 			 e_layout_child_lower_below(pw->o_window, pw2->o_window);
 		       else
@@ -1186,12 +1186,12 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
 		  if (pw)
 		    {
 		       Pager_Win *pw2 = NULL;
-		       E_Border *bd;
+		       E_Border *bd_above;
 
 		       pd->wins = eina_list_append(pd->wins, pw);
-		       bd = e_util_desk_border_above(pw->border);
-		       if (bd)
-			 pw2 = _pager_desk_window_find(pd, bd);
+		       bd_above = e_util_desk_border_above(pw->border);
+		       if (bd_above)
+			 pw2 = _pager_desk_window_find(pd, bd_above);
 		       if (pw2)
 			 e_layout_child_lower_below(pw->o_window, pw2->o_window);
 		       else
@@ -1524,8 +1524,6 @@ _pager_cb_event_border_property(void *data __UNUSED__, int type __UNUSED__, void
 	     pd = _pager_desk_find(p, ev->border->desk);
 	     if (pd)
 	       {
-		  Pager_Win *pw;
-
 		  pw = _pager_window_new(pd, ev->border);
 		  if (pw)
 		    {
@@ -2581,14 +2579,14 @@ _pager_popup_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event
      _pager_popup_hide(0);
    else
      {
-	E_Config_Binding_Key *bind;
+	E_Config_Binding_Key *binding;
 	Eina_List *l;
 
-	EINA_LIST_FOREACH(e_config->key_bindings, l, bind)
+	EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
 	  {
 	     E_Binding_Modifier mod = 0;
 
-	     if ((bind->action) && (strcmp(bind->action,"pager_switch"))) 
+	     if ((binding->action) && (strcmp(binding->action,"pager_switch"))) 
                continue;
 
 	     if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) 
@@ -2600,17 +2598,17 @@ _pager_popup_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event
 	     if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) 
                mod |= E_BINDING_MODIFIER_WIN;
 
-	     if (bind->key && (!strcmp(bind->key, ev->keyname)) && 
-                 ((bind->modifiers == (int) mod)))
+	     if (binding->key && (!strcmp(binding->key, ev->keyname)) && 
+                 ((binding->modifiers == mod)))
 	       {
 		  E_Action *act;
 
-		  act = e_action_find(bind->action);
+		  act = e_action_find(binding->action);
 
 		  if (act)
 		    {
 		       if (act->func.go_key)
-			 act->func.go_key(NULL, bind->params, ev);
+			 act->func.go_key(NULL, binding->params, ev);
 		    }
 	       }
 	  }

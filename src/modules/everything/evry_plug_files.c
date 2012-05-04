@@ -379,14 +379,14 @@ _scan_end_func(void *data, Ecore_Thread *thread __UNUSED__)
      {
         EINA_LIST_FOREACH_SAFE (d->files, l, ll, item)
           {
-             GET_FILE(file, item);
+             GET_FILE(browse, item);
 
              if (item->browseable)
-               file->mime = _mime_dir;
+               browse->mime = _mime_dir;
              else if (ht)
-               _cache_mime_get(ht, file);
+               _cache_mime_get(ht, browse);
 
-             if (file->mime)
+             if (browse->mime)
                {
                   d->files = eina_list_remove_list(d->files, l);
                   _file_add(p, item);
@@ -676,10 +676,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
              return 0;
           }
-        int len = strlen(p->directory);
-        len = (len == 1) ? len : len + 1;
+        int lendir = p->directory ? strlen(p->directory) : 0;
+        lendir = (lendir <= 1) ? lendir : lendir + 1;
 
-        p->input = eina_stringshare_add(input + len);
+        p->input = eina_stringshare_add(input + lendir);
      }
    else if (p->directory && input && !strncmp(input, "..", 2))
      {
@@ -1071,7 +1071,7 @@ _recentf_fetch(Evry_Plugin *plugin, const char *input)
    GET_PLUGIN(p, plugin);
    Evry_Item_File *file;
    History_Types *ht;
-   size_t len = (input ? strlen(input) : 0);
+   int len = (input ? strlen(input) : 0);
 
    IF_RELEASE(p->input);
 

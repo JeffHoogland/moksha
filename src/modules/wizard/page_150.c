@@ -11,14 +11,14 @@ static int do_gl = 0;
 static int do_vsync = 0;
 
 static int
-match_file_glob(FILE *f, const char *glob)
+match_file_glob(FILE *f, const char *globbing)
 {
    char buf[32768];
    int found = 0;
    
    while (fgets(buf, sizeof(buf), f))
      {
-        if (e_util_glob_match(buf, glob))
+        if (e_util_glob_match(buf, globbing))
           {
              found = 1;
              break;
@@ -29,7 +29,7 @@ match_file_glob(FILE *f, const char *glob)
 }
 
 static int
-match_xorg_log(const char *glob)
+match_xorg_log(const char *globbing)
 {
    FILE *f;
    int i;
@@ -41,7 +41,7 @@ match_xorg_log(const char *glob)
         f = fopen(buf, "rb");
         if (f)
           {
-             if (match_file_glob(f, glob)) return 1;
+             if (match_file_glob(f, globbing)) return 1;
           }
      }
    return 0;

@@ -1243,7 +1243,7 @@ _e_fwin_changed(void            *data,
    E_Fwin *fwin;
    E_Fwin_Page *page;
    Efreet_Desktop *ef;
-   char buf[PATH_MAX], *ext;
+   char buf[PATH_MAX];
 
    page = data;
    fwin = page->fwin;
@@ -1417,14 +1417,14 @@ _e_fwin_cb_key_down(void            *data,
         if (!strcmp(ev->key, "w"))
           {
              int count = eina_list_count(fwin->pages);
-             E_Fwin_Page *page;
+             E_Fwin_Page *pagew;
 
              if (count > 2)
                {
                   Eina_List *l;
                   int i = 0;
 
-                  page = fwin->cur_page;
+                  pagew = fwin->cur_page;
                   if (fwin->page_index > 0)
                     {
                        if (fwin->tb_obj)
@@ -1438,10 +1438,10 @@ _e_fwin_cb_key_down(void            *data,
                     }
                   if (fwin->tb_obj)
                     e_widget_toolbar_item_remove(fwin->tb_obj, page->index);
-                  fwin->pages = eina_list_remove(fwin->pages, page);
-                  _e_fwin_page_free(page);
-                  EINA_LIST_FOREACH(fwin->pages, l, page)
-                    page->index = i++;
+                  fwin->pages = eina_list_remove(fwin->pages, pagew);
+                  _e_fwin_page_free(pagew);
+                  EINA_LIST_FOREACH(fwin->pages, l, pagew)
+                    pagew->index = i++;
                }
              else if (count > 1)
                {
@@ -1451,9 +1451,9 @@ _e_fwin_cb_key_down(void            *data,
                   fwin->page_index = 0;
                   fwin->pages = eina_list_remove(fwin->pages, fwin->cur_page);
                   _e_fwin_page_free(fwin->cur_page);
-                  page = fwin->pages->data;
-                  page->index = 0;
-                  _e_fwin_cb_page_change(fwin, page);
+                  pagew = fwin->pages->data;
+                  pagew->index = 0;
+                  _e_fwin_cb_page_change(fwin, pagew);
                   _e_fwin_cb_resize(fwin->win);
                }
              else

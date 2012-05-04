@@ -1216,7 +1216,7 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
         kil = E_NEW(E_Kbd_Int_Layout, 1);
         if (kil)
           {
-             char *s, *p;
+             char *s;
              FILE *f;
 
              kil->path = path;
@@ -1241,7 +1241,6 @@ _e_kbd_int_layouts_list_update(E_Kbd_Int *ki)
 
                   while (fgets(buf, sizeof(buf), f))
                     {
-                       int len;
                        char str[4096];
 
                        if (!isok)
