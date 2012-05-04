@@ -255,7 +255,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
 {
    E_Config_Shelf_Desk *sd;
-   int restart = 0;
+   int recreate = 0;
 
    if (!cfdata->escfg->style) 
      {
@@ -275,21 +275,21 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         cfdata->escfg->orient = cfdata->orient;
         e_shelf_orient(cfdata->es, cfdata->orient);
         e_shelf_position_calc(cfdata->es);
-        restart = 1;
+        recreate = 1;
      }
 
    if (cfdata->escfg->fit_along != cfdata->fit_along) 
      {
         cfdata->escfg->fit_along = cfdata->fit_along;
         cfdata->es->fit_along = cfdata->fit_along;
-        restart = 1;
+        recreate = 1;
      }
 
    if (cfdata->escfg->size != cfdata->size) 
      {
         cfdata->escfg->size = cfdata->size;
         cfdata->es->size = cfdata->size;
-        restart = 1;
+        recreate = 1;
      }
 
    if (cfdata->layer == 0) 
@@ -298,7 +298,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           {
              cfdata->escfg->popup = 0;
              cfdata->escfg->layer = 1;
-             restart = 1;
+             recreate = 1;
           }
      }
    else if (cfdata->layer == 1) 
@@ -307,7 +307,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           {
              cfdata->escfg->popup = 1;
              cfdata->escfg->layer = 0;
-             restart = 1;
+             recreate = 1;
           }
      }
    else if (cfdata->layer == 2) 
@@ -316,7 +316,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           {
              cfdata->escfg->popup = 1;
              cfdata->escfg->layer = 200;
-             restart = 1;
+             recreate = 1;
           }
      }
 
@@ -352,7 +352,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           }
      }
 
-   if (restart) 
+   if (recreate) 
      {
         E_Zone *zone;
 
@@ -375,7 +375,6 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
         E_Desk *desk;
         Eina_List *l;
-        E_Config_Shelf_Desk *sd;
         int show = 0;
 
         desk = e_desk_current_get(cfdata->es->zone);

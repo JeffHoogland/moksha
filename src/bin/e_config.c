@@ -2233,45 +2233,45 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 static void
 _e_config_acpi_bindings_add(void)
 {
-   E_Config_Binding_Acpi *bind;
+   E_Config_Binding_Acpi *binding;
 
-   bind = E_NEW(E_Config_Binding_Acpi, 1);
-   bind->context = E_BINDING_CONTEXT_NONE;
-   bind->type = E_ACPI_TYPE_AC_ADAPTER;
-   bind->status = 0;
-   bind->action = eina_stringshare_add("dim_screen");
-   bind->params = NULL;
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+   binding = E_NEW(E_Config_Binding_Acpi, 1);
+   binding->context = E_BINDING_CONTEXT_NONE;
+   binding->type = E_ACPI_TYPE_AC_ADAPTER;
+   binding->status = 0;
+   binding->action = eina_stringshare_add("dim_screen");
+   binding->params = NULL;
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
 
-   bind = E_NEW(E_Config_Binding_Acpi, 1);
-   bind->context = E_BINDING_CONTEXT_NONE;
-   bind->type = E_ACPI_TYPE_AC_ADAPTER;
-   bind->status = 1;
-   bind->action = eina_stringshare_add("undim_screen");
-   bind->params = NULL;
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+   binding = E_NEW(E_Config_Binding_Acpi, 1);
+   binding->context = E_BINDING_CONTEXT_NONE;
+   binding->type = E_ACPI_TYPE_AC_ADAPTER;
+   binding->status = 1;
+   binding->action = eina_stringshare_add("undim_screen");
+   binding->params = NULL;
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
 
-   bind = E_NEW(E_Config_Binding_Acpi, 1);
-   bind->context = E_BINDING_CONTEXT_NONE;
-   bind->type = E_ACPI_TYPE_LID;
-   bind->status = 0;
-   bind->action = eina_stringshare_add("suspend");
-   bind->params = eina_stringshare_add("now");
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+   binding = E_NEW(E_Config_Binding_Acpi, 1);
+   binding->context = E_BINDING_CONTEXT_NONE;
+   binding->type = E_ACPI_TYPE_LID;
+   binding->status = 0;
+   binding->action = eina_stringshare_add("suspend");
+   binding->params = eina_stringshare_add("now");
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
 
-   bind = E_NEW(E_Config_Binding_Acpi, 1);
-   bind->context = E_BINDING_CONTEXT_NONE;
-   bind->type = E_ACPI_TYPE_POWER;
-   bind->status = -1;
-   bind->action = eina_stringshare_add("halt_now");
-   bind->params = eina_stringshare_add("now");
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+   binding = E_NEW(E_Config_Binding_Acpi, 1);
+   binding->context = E_BINDING_CONTEXT_NONE;
+   binding->type = E_ACPI_TYPE_POWER;
+   binding->status = -1;
+   binding->action = eina_stringshare_add("halt_now");
+   binding->params = eina_stringshare_add("now");
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
 
-   bind = E_NEW(E_Config_Binding_Acpi, 1);
-   bind->context = E_BINDING_CONTEXT_NONE;
-   bind->type = E_ACPI_TYPE_SLEEP;
-   bind->status = -1;
-   bind->action = eina_stringshare_add("suspend");
-   bind->params = eina_stringshare_add("now");
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, bind);
+   binding = E_NEW(E_Config_Binding_Acpi, 1);
+   binding->context = E_BINDING_CONTEXT_NONE;
+   binding->type = E_ACPI_TYPE_SLEEP;
+   binding->status = -1;
+   binding->action = eina_stringshare_add("suspend");
+   binding->params = eina_stringshare_add("now");
+   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
 }

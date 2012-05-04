@@ -164,20 +164,16 @@ typedef struct _E_Rect E_Rect;
 # define E_NEW(s, n) (s *)calloc(n, sizeof(s))
 # define E_NEW_RAW(s, n) (s *)malloc(n * sizeof(s))
 # define E_FREE(p) do { free(p); p = NULL; } while (0)
-# define E_FREE_LIST(list, free) \
-   do \
-   { \
-      if (list) \
-        { \
-           void *data; \
-           EINA_LIST_FREE(list, data) \
-             { \
-                free(data); \
-             } \
-           list = NULL; \
-        } \
-   } \
-   while (0)
+# define E_FREE_LIST(list, free)      \
+  do				      \
+    {				      \
+      void *_tmp_;		      \
+      EINA_LIST_FREE(list, _tmp_)     \
+	{			      \
+	  free(_tmp_);		      \
+	}			      \
+    }				      \
+  while (0)
 
 # define E_CLAMP(x, min, max) (x < min ? min : (x > max ? max : x))
 # define E_RECTS_CLIP_TO_RECT(_x, _y, _w, _h, _cx, _cy, _cw, _ch) \

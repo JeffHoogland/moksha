@@ -380,7 +380,7 @@ _e_desktop_edit_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data 
 static void
 _e_desktop_edit_user_local_desktop_filename_generate(E_Config_Dialog_Data *cfdata, char *path)
 {
-   char basename[PATH_MAX];
+   char buf[PATH_MAX];
    const char *name;
    unsigned int i;
    int prefix;
@@ -396,20 +396,20 @@ _e_desktop_edit_user_local_desktop_filename_generate(E_Config_Dialog_Data *cfdat
    if (name)
      {
 	const char *s = name;
-	for (i = 0; i < sizeof(basename) && s[i]; i++)
+	for (i = 0; i < sizeof(buf) && s[i]; i++)
 	  {
 	     if (isalnum(s[i]))
-	       basename[i] = s[i];
+	       buf[i] = s[i];
 	     else
-	       basename[i] = '_';
+	       buf[i] = '_';
 	  }
-	basename[i] = '\0';
+	buf[i] = '\0';
      }
    else
-     eina_strlcpy(basename, "unnamed_desktop", sizeof(basename));
+     eina_strlcpy(buf, "unnamed_desktop", sizeof(buf));
 
    i = snprintf(path, PATH_MAX, "%s/applications/%s.desktop",
-		efreet_data_home_get(), basename);
+		efreet_data_home_get(), buf);
    if (i >= PATH_MAX)
      {
 	path[0] = '\0';

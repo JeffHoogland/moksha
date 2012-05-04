@@ -9,7 +9,6 @@ struct _E_Powersave_Deferred_Action
 
 /* local subsystem functions */
 static Eina_Bool _e_powersave_cb_deferred_timer(void *data);
-static Eina_Bool _e_powersave_cb_config(void *data);
 static void _e_powersave_mode_eval(void);
 static void _e_powersave_event_update_free(void *data __UNUSED__, void *event);
 
@@ -19,9 +18,6 @@ EAPI int E_EVENT_POWERSAVE_CONFIG_UPDATE = 0;
 static int walking_deferred_actions = 0;
 static Eina_List *deferred_actions = NULL;
 static Ecore_Timer *deferred_timer = NULL;
-static Ecore_Timer *config_timer = NULL;
-static E_Powersave_Mode powersave_mode_min = E_POWERSAVE_MODE_NONE;
-static E_Powersave_Mode powersave_mode_max = E_POWERSAVE_MODE_EXTREME;
 static E_Powersave_Mode powersave_mode = E_POWERSAVE_MODE_LOW;
 static double defer_time = 5.0;
 

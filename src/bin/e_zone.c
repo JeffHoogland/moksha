@@ -436,7 +436,7 @@ e_zone_flip_coords_handle(E_Zone *zone,
                           int     y)
 {
    E_Event_Zone_Edge *zev;
-   E_Binding_Edge *bind;
+   E_Binding_Edge *binding;
    E_Zone_Edge edge;
    Eina_List *l;
    E_Shelf *es;
@@ -553,9 +553,9 @@ noflip:
         break;
      }
    if (!ok) return;
-   bind = e_bindings_edge_get("desk_flip_in_direction", edge, 0);
-   if (!bind) bind = e_bindings_edge_get("desk_flip_by", edge, 0);
-   if (bind)
+   binding = e_bindings_edge_get("desk_flip_in_direction", edge, 0);
+   if (!binding) binding = e_bindings_edge_get("desk_flip_by", edge, 0);
+   if (binding)
      {
         zev = E_NEW(E_Event_Zone_Edge, 1);
         zev->zone = zone;
@@ -563,9 +563,9 @@ noflip:
         zev->y = y;
         zev->edge = edge;
         zone->flip.ev = zev;
-        zone->flip.bind = bind;
+        zone->flip.bind = binding;
         zone->flip.switching = 1;
-        bind->timer = ecore_timer_add(((double)bind->delay), _e_zone_cb_edge_timer, zone);
+        binding->timer = ecore_timer_add(((double)binding->delay), _e_zone_cb_edge_timer, zone);
      }
 }
 

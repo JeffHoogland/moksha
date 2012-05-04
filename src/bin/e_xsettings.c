@@ -207,7 +207,7 @@ _e_xsettings_string_set(const char *name, const char *value)
    s->last_change = ecore_x_current_time_get();
 }
 
-
+#if 0
 static void
 _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
 {
@@ -252,6 +252,7 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
    s->length = 12;
    s->length += OFFSET_ADD(strlen(name));
 }
+#endif
 
 static unsigned char *
 _e_xsettings_copy(unsigned char *buffer, Setting *s)
@@ -470,6 +471,7 @@ _e_xsettings_font_set(void)
    _e_xsettings_string_set(_setting_font_name, NULL);
 }
 
+#if 0
 static void
 _e_xsettings_xft_set(void)
 {
@@ -480,6 +482,7 @@ _e_xsettings_xft_set(void)
      _e_xsettings_int_set(_setting_xft_dpi, 0, EINA_FALSE);
 
 }
+#endif
 
 static void
 _e_xsettings_start(void)

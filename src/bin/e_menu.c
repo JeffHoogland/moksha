@@ -496,7 +496,7 @@ e_menu_category_data_set(char *category, void *data)
 }
 
 EAPI E_Menu_Category_Callback *
-e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (*free) (void *data), void *data)
+e_menu_category_callback_add(char *category, void (*create_cb) (E_Menu *m, void *category_data, void *data), void (*free_cb) (void *data), void *data)
 {
    E_Menu_Category *cat;
    E_Menu_Category_Callback *cb = NULL;
@@ -513,8 +513,8 @@ e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *ca
         if (cb)
           {
              cb->data = data;
-             cb->create = create;
-             cb->free = free;
+             cb->create = create_cb;
+             cb->free = free_cb;
              cb->category = eina_stringshare_add(category);
              cat->callbacks = eina_list_append(cat->callbacks, cb);
           }
@@ -1398,8 +1398,6 @@ _e_menu_item_realize(E_Menu_Item *mi)
 	       }
 	     else
 	       {
-		  int icon_w = 0, icon_h = 0;
-
 		  o = edje_object_add(mi->menu->evas);
 		  e_icon_size_get(mi->icon_object, &icon_w, &icon_h);
 		  mi->icon_w = icon_w;

@@ -3391,8 +3391,6 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
 
    EINA_LIST_FOREACH(sd->items, l, obj)
      {
-	E_Gadcon_Layout_Item *bi;
-
 	bi = evas_object_data_get(obj, "e_gadcon_layout_data");
 	if (!bi) continue;
 
@@ -3925,9 +3923,6 @@ _e_gadcon_layout_smart_gadcon_position_shrinked_mode(E_Smart_Data *sd)
 		  bi->gcc->state_info.resist = 0; 
 		  if (eina_list_prev(l))
 		    { 
-		       E_Gadcon_Layout_Item *bi2;
-		       void *tp;
-
 		       tp = eina_list_data_get(eina_list_prev(l));
 		       l->prev->data = eina_list_data_get(l);
 

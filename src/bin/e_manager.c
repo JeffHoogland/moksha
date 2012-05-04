@@ -781,7 +781,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
    Ecore_X_MWM_Hint_Decor decor;
    Ecore_X_Window_State *state;
    Frame_Extents *extents;
-   const char *border, *signal, *key;
+   const char *border, *sig, *key;
    int ok;
    unsigned int i, num;
 
@@ -815,7 +815,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	key = border;
      }
 
-   signal = NULL;
+   sig = NULL;
    ecore_x_netwm_window_state_get(e->win, &state, &num);
    if (state)
      {
@@ -852,7 +852,7 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	if ((maximized == 2) &&
 	    (e_config->maximize_policy == E_MAXIMIZE_FULLSCREEN))
 	  {
-	     signal = "e,action,maximize,fullscreen";
+	     sig = "e,action,maximize,fullscreen";
 	     key = "maximize,fullscreen";
 	  }
 	free(state);
@@ -874,9 +874,9 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
 	       {
 		  Evas_Coord x, y, w, h;
 
-		  if (signal)
+		  if (sig)
 		    {
-		       edje_object_signal_emit(o, signal, "e");
+		       edje_object_signal_emit(o, sig, "e");
 		       edje_object_message_signal_process(o);
 		    }
 

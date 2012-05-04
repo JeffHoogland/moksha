@@ -1,6 +1,6 @@
 #ifdef E_TYPEDEFS
 
-#define E_CONFIG_LIMIT(v, min, max) {if (v > max) v = max; else if (v < min) v = min;}
+#define E_CONFIG_LIMIT(v, min, max) {if (v >= max) v = max; else if (v <= min) v = min;}
 
 typedef struct _E_Config                    E_Config;
 typedef struct _E_Config_Module             E_Config_Module;
