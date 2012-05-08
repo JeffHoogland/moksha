@@ -3,7 +3,7 @@
 # include <Ecore_IMF.h>
 #endif
 
-#define MAX_LEVEL 55
+#define MAX_LEVEL 64
 
 #define TS_DO
 #ifdef TS_DO
