@@ -14,7 +14,9 @@ EDJE_FLAGS = -id $(top_srcdir)/src/modules/$(MODULE)/images \
 	     @EDJE_DEF@
 
 e-module-$(MODULE).edj:  e-module-$(MODULE).edc
-	$(EDJE_CC) $(EDJE_FLAGS) $< $@
+	$(EDJE_CC) $(EDJE_FLAGS) 	\
+	$(top_srcdir)/src/modules/$(MODULE)/e-module-$(MODULE).edc \
+	$(top_builddir)/src/modules/$(MODULE)/e-module-$(MODULE).edj
 
 # the module .so file
 INCLUDES               = -I. \
