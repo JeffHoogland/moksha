@@ -653,7 +653,7 @@ _cb_acpi_event(void          *data,
    binding->action = eina_stringshare_add("dim_screen");
    binding->params = NULL;
 
-   cfdata->bindings = eina_list_append(cfdata->bindings, bind);
+   cfdata->bindings = eina_list_append(cfdata->bindings, binding);
    _fill_bindings(cfdata);
    return ECORE_CALLBACK_DONE;
 }
