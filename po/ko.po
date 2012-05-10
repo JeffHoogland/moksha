@@ -340,7 +340,7 @@ msgstr "선형적으로 데스크톱을 뒤집 ..."
 
 #: src/bin/e_actions.c:2856
 msgid "Switch To Desktop 0"
-msgstr "데스크탑 0 으로 변경"
+msgstr "데스크탑 0으로 변경"
 
 #: src/bin/e_actions.c:2858
 msgid "Switch To Desktop 1"
@@ -515,7 +515,7 @@ msgstr "마우스를 화면 1로"
 
 #: src/bin/e_actions.c:2951
 msgid "Send Mouse To Screen..."
-msgstr "마우스를 화면으로 보내기"
+msgstr "마우스를 화면으로 보내기..."
 
 #: src/bin/e_actions.c:2957
 msgid "Send Mouse Forward 1 Screen"
@@ -670,7 +670,6 @@ msgid "Exit"
 msgstr "종료"
 
 #: src/bin/e_actions.c:3070
-#, fuzzy
 msgid "Exit Now"
 msgstr "지금 종료"
 
@@ -819,7 +818,7 @@ msgid ""
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 "현재 Enlightment가 사용하는 설정 형식보다 <br>최신 형식을 사용하시고 있습니"
-"다. <br>더 높은 버전의 Enlightenment 에서 쓰던 설정을 가져오시거나,<br> 전에 "
+"다. <br>더 높은 버전의 Enlightenment에서 쓰던 설정을 가져오시거나,<br> 전에 "
 "사용하시던 버전보다 더 낮은 Enlightement를 설치하신 것 같습니다.<br><br>예상"
 "치 못한 에러를 막기 위해 설정을 초기화하였습니다."
 
@@ -868,7 +867,7 @@ msgstr "쓰기 를 준비 하는 동안 메모리 도망.<br>무료로 최대 �
 #: src/bin/e_config.c:2073
 #, fuzzy
 msgid "This is a generic error."
-msgstr "이것은일반적인 오류입니다."
+msgstr "이것은 일반적인 오류입니다."
 
 #: src/bin/e_config.c:2076
 #, fuzzy
@@ -929,9 +928,8 @@ msgid "PRNG was not seeded."
 msgstr "PRNG 는 놓는 되지 않았습니다."
 
 #: src/bin/e_config.c:2109
-#, fuzzy
 msgid "Encryption failed."
-msgstr "암호화 에 실패했습니다."
+msgstr "암호화에 실패했습니다."
 
 #: src/bin/e_config.c:2112
 #, fuzzy
@@ -984,7 +982,6 @@ msgid "Modules"
 msgstr "모듈"
 
 #: src/bin/e_configure.c:364
-#, fuzzy
 msgid "Preferences"
 msgstr "환경 설정"
 
@@ -994,9 +991,8 @@ msgid "Container %d"
 msgstr ""
 
 #: src/bin/e_desklock.c:171
-#, fuzzy
 msgid "Error - no PAM support"
-msgstr "오류 - 노 PAM 지원"
+msgstr "오류 - PAM 지원안함"
 
 #: src/bin/e_desklock.c:172
 msgid ""
@@ -1004,7 +1000,6 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_desklock.c:236
-#, fuzzy
 msgid "Lock Failed"
 msgstr "잠금 실패"
 
@@ -1090,7 +1085,6 @@ msgid "Comment"
 msgstr "메모"
 
 #: src/bin/e_eap_editor.c:704
-#, fuzzy
 msgid "URL"
 msgstr "URL"
 
@@ -1115,12 +1109,10 @@ msgid "Categories"
 msgstr "분류"
 
 #: src/bin/e_eap_editor.c:758
-#, fuzzy
 msgid "Mime Types"
 msgstr "MIME 형식"
 
 #: src/bin/e_eap_editor.c:765
-#, fuzzy
 msgid "Desktop file"
 msgstr "데스크탑 파일"
 
@@ -1141,9 +1133,8 @@ msgid "Run in Terminal"
 msgstr "터미널에서 실행"
 
 #: src/bin/e_eap_editor.c:783
-#, fuzzy
 msgid "Show in Menus"
-msgstr "메뉴 에 표시"
+msgstr "메뉴에 표시"
 
 #: src/bin/e_eap_editor.c:786 src/bin/e_int_border_remember.c:757
 msgid "Options"
@@ -1231,7 +1222,7 @@ msgstr "%s 프로그램이 예상치 않게 종료되었습니다."
 #: src/bin/e_exec.c:525
 #, c-format
 msgid "An exit code of %i was returned from %s."
-msgstr "코드 %i 을(를) %s 프로그램이 남겼습니다."
+msgstr "코드 %i을(를) %s 프로그램이 남겼습니다."
 
 #: src/bin/e_exec.c:533
 #, c-format
@@ -1331,27 +1322,22 @@ msgid "%s doesn't exist."
 msgstr "%s는 존재하지 않음."
 
 #: src/bin/e_fm.c:3078
-#, fuzzy
 msgid "Mount Error"
 msgstr "마운트 오류"
 
 #: src/bin/e_fm.c:3078
-#, fuzzy
 msgid "Can't mount device"
 msgstr "장치를 마운트할 수 없습니다"
 
 #: src/bin/e_fm.c:3094
-#, fuzzy
 msgid "Unmount Error"
 msgstr "마운트 해제 오류"
 
 #: src/bin/e_fm.c:3094
-#, fuzzy
 msgid "Can't unmount device"
-msgstr "장치 를 마운트 해제 없습니다"
+msgstr "장치를 마운트 해제할 수 없습니다"
 
 #: src/bin/e_fm.c:3109
-#, fuzzy
 msgid "Eject Error"
 msgstr "꺼내기 오류"
 
@@ -1380,7 +1366,6 @@ msgstr "부모 설정을 상속"
 
 #: src/bin/e_fm.c:7923 src/bin/e_fm.c:8083
 #: src/modules/fileman/e_mod_config.c:219
-#, fuzzy
 msgid "View Mode"
 msgstr "보기 모드"
 
@@ -1410,17 +1395,14 @@ msgid "Rename"
 msgstr "이름 변경"
 
 #: src/bin/e_fm.c:8268
-#, fuzzy
 msgid "Unmount"
 msgstr "마운트 해제"
 
 #: src/bin/e_fm.c:8273
-#, fuzzy
 msgid "Mount"
 msgstr "마운트"
 
 #: src/bin/e_fm.c:8278
-#, fuzzy
 msgid "Eject"
 msgstr "꺼내기"
 
@@ -1450,7 +1432,6 @@ msgstr "사용자 정의 아이콘"
 #: src/bin/e_fm.c:8575 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:234
-#, fuzzy
 msgid "List"
 msgstr "목록"
 
@@ -1470,7 +1451,6 @@ msgid "Set overlay..."
 msgstr "오버레이 를 설정 ..."
 
 #: src/bin/e_fm.c:8751 src/modules/conf_theme/e_int_config_theme.c:1032
-#, fuzzy
 msgid "Clear"
 msgstr "지우기"
 
@@ -1614,15 +1594,15 @@ msgstr "다른사람이 읽을 수 있음"
 
 #: src/bin/e_fm_prop.c:369
 msgid "Others can write"
-msgstr "다른사람이 쓸수 있음"
+msgstr "다른사람이 쓸 수 있음"
 
 #: src/bin/e_fm_prop.c:371
 msgid "Owner can read"
-msgstr "소유자는 읽을수 있음"
+msgstr "소유자는 읽을 수 있음"
 
 #: src/bin/e_fm_prop.c:373
 msgid "Owner can write"
-msgstr "소유자는 쓸수 있음"
+msgstr "소유자는 쓸 수 있음"
 
 #: src/bin/e_fm_prop.c:379 src/bin/e_widget_fsel.c:310
 #: src/modules/conf_theme/e_int_config_icon_themes.c:263
@@ -1648,9 +1628,8 @@ msgid "Custom"
 msgstr "사용자 지정"
 
 #: src/bin/e_fm_prop.c:442
-#, fuzzy
 msgid "Use this icon for all files of this type"
-msgstr "이 유형의 모든 파일 에 대해 이 아이콘 을 사용"
+msgstr "이 유형의 모든 파일에 대해 이 아이콘을 사용"
 
 #: src/bin/e_fm_prop.c:450
 #, fuzzy
@@ -3266,7 +3245,7 @@ msgstr ""
 
 #: src/bin/e_sys.c:453 src/bin/e_sys.c:503
 msgid "Enlightenment is busy with another request"
-msgstr "Enlightenemnt 은 다른 요청으로 바쁩니다."
+msgstr "Enlightenment는 다른 요청으로 바쁩니다."
 
 #: src/bin/e_sys.c:458
 #, fuzzy
@@ -4061,7 +4040,7 @@ msgstr "해상도"
 
 #: src/modules/conf_display/e_int_config_display.c:395
 msgid "Restore on login"
-msgstr "로그인 할때 적용"
+msgstr "로그인 할 때 적용"
 
 #: src/modules/conf_display/e_int_config_display.c:399
 msgid "Refresh"
@@ -4136,7 +4115,7 @@ msgstr "객체를 화면 가장자리로 끌면 변경"
 
 #: src/modules/conf_display/e_int_config_desks.c:173
 msgid "Wrap desktops around when flipping"
-msgstr "바꿀때 데스크탑 주변에 있으면 변경"
+msgstr "바꿀 때 데스크탑 주변에 있으면 변경"
 
 #: src/modules/conf_display/e_int_config_desks.c:179
 #, fuzzy
@@ -6770,7 +6749,7 @@ msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:313
 msgid "Time Between Updates"
-msgstr "갱신할 시간"
+msgstr "업데이트할 시간"
 
 #: src/modules/cpufreq/e_mod_main.c:319
 msgid "Set CPU Power Policy"
@@ -6801,8 +6780,8 @@ msgid ""
 "missing<br>Kernel modules or features, or your CPU<br>simply does not "
 "support this feature."
 msgstr ""
-"커널 은 전혀<br>의 CPU 주파수 를 설정 지원하지 않습니다. 당신은<br>커널 모듈 "
-"또는 기능을 없을 수 있습니다 , ​​또는 CPU<br>는 단순히 이 기능 을 지원하지 않습"
+"커널은 전혀<br>의 CPU 클럭 설정을 지원하지 않습니다. 당신은<br>커널 모듈 "
+"또는 기능을 없을 수 있습니다 , ​​또는 CPU<br>는 단순히 이 기능을 지원하지 않습"
 "니다."
 
 #: src/modules/cpufreq/e_mod_main.c:466
@@ -6811,7 +6790,7 @@ msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
 "module's<br>setfreq utility."
 msgstr ""
-"모듈의<br>setfreq 유틸리티 를 통해<br>CPU 주파수 설정 을 설정 하는도중 오류"
+"모듈의<br>setfreq 유틸리티를 통해<br>CPU 주파수 설정을 설정 하는 도중 오류"
 "가 발생했습니다."
 
 #: src/modules/dropshadow/e_mod_config.c:39
@@ -8161,7 +8140,6 @@ msgid "Temperature"
 msgstr "온도"
 
 #: src/modules/wizard/e_wizard.c:221
-#, fuzzy
 msgid "Next"
 msgstr "다음"
 
@@ -8215,22 +8193,18 @@ msgid "Output"
 msgstr "출력"
 
 #: src/modules/mixer/app_mixer.c:356
-#, fuzzy
 msgid "Cards"
 msgstr "카드"
 
 #: src/modules/mixer/app_mixer.c:369 src/modules/mixer/conf_gadget.c:278
-#, fuzzy
 msgid "Channels"
 msgstr "채널"
 
 #: src/modules/mixer/app_mixer.c:379
-#, fuzzy
 msgid "Card:"
 msgstr "카드:"
 
 #: src/modules/mixer/app_mixer.c:383
-#, fuzzy
 msgid "Channel:"
 msgstr "채널:"
 
@@ -8250,7 +8224,6 @@ msgid "Right:"
 msgstr "오른쪽:"
 
 #: src/modules/mixer/app_mixer.c:401 src/modules/mixer/e_mod_main.c:696
-#, fuzzy
 msgid "Mute"
 msgstr "음소거"
 
@@ -8275,7 +8248,6 @@ msgid "Show Popup on volume change via keybindings"
 msgstr "keybindings 통해 볼륨 변화 에 팝업 보기"
 
 #: src/modules/mixer/conf_gadget.c:316
-#, fuzzy
 msgid "Sound Cards"
 msgstr "사운드 카드"
 
@@ -8295,12 +8267,10 @@ msgid "Diplay desktop notifications on volume change"
 msgstr "볼륨 변화에 바탕 화면 알림을 Diplay"
 
 #: src/modules/mixer/conf_module.c:154
-#, fuzzy
 msgid "Launch mixer..."
 msgstr "믹서를 시작 ..."
 
 #: src/modules/mixer/conf_module.c:189
-#, fuzzy
 msgid "Mixer Module Settings"
 msgstr "믹서 모듈 설정"
 
@@ -8310,14 +8280,13 @@ msgid "New volume"
 msgstr "새 볼륨"
 
 #: src/modules/mixer/e_mod_main.c:67
-#, fuzzy
 msgid "Mixer"
 msgstr "믹서"
 
 #: src/modules/mixer/e_mod_main.c:67
 #, fuzzy
 msgid "Volume changed"
-msgstr "해상도 변경"
+msgstr "볼륨 변경"
 
 #: src/modules/mixer/e_mod_main.c:187
 #, fuzzy
@@ -8348,7 +8317,7 @@ msgstr "쿼리 시스템의 오프라인 모드를 사용합니다."
 #: src/modules/connman/e_mod_main.c:246
 #, fuzzy
 msgid "ConnMan needs your passphrase"
-msgstr "ConnMan 는 암호를 필요로"
+msgstr "ConnMan은 암호를 필요로 합니다"
 
 #: src/modules/connman/e_mod_main.c:258
 #, c-format
@@ -8394,19 +8363,16 @@ msgid "Offline mode"
 msgstr "오프라인 모드"
 
 #: src/modules/connman/e_mod_main.c:1262
-#, fuzzy
 msgid "Controls"
 msgstr "컨트롤"
 
 #: src/modules/connman/e_mod_main.c:1433
-#, fuzzy
 msgid "No ConnMan"
-msgstr "아무 ConnMan 없음"
+msgstr "ConnMan 없음"
 
 #: src/modules/connman/e_mod_main.c:1435
-#, fuzzy
 msgid "No ConnMan server found."
-msgstr "어떤 ConnMan 서버 를 찾을 수 없습니다."
+msgstr "ConnMan 서버를 찾을 수 없습니다."
 
 #: src/modules/connman/e_mod_main.c:1448
 #, fuzzy
@@ -8430,7 +8396,7 @@ msgstr "분리"
 
 #: src/modules/connman/e_mod_main.c:1503
 msgid "Unknown Name"
-msgstr "알수없는 이름"
+msgstr "알 수 없는 이름"
 
 #: src/modules/connman/e_mod_main.c:1512
 #, fuzzy
