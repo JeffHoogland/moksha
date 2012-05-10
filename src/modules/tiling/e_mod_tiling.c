@@ -211,7 +211,8 @@ change_window_border(E_Border   *bd,
 static int
 get_stack(const E_Border *bd)
 {
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    int i;
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         if (EINA_LIST_IS_IN(_G.tinfo->stacks[i], bd))
             return i;
     }
@@ -221,7 +222,8 @@ get_stack(const E_Border *bd)
 static int
 get_stack_count(void)
 {
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    int i;
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         if (!_G.tinfo->stacks[i])
             return i;
     }
@@ -232,8 +234,9 @@ static int
 get_window_count(void)
 {
     int res = 0;
+    int i;
 
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         if (!_G.tinfo->stacks[i])
             break;
         res += eina_list_count(_G.tinfo->stacks[i]);
@@ -245,8 +248,9 @@ static int
 get_transition_count(void)
 {
     int res = 0;
+    int i;
 
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         if (!_G.tinfo->stacks[i])
             break;
         res += eina_list_count(_G.tinfo->stacks[i]);
@@ -439,6 +443,8 @@ _overlays_free_cb(void *data)
 static void
 end_special_input(void)
 {
+    int i;
+
     if (_G.input_mode == INPUT_MODE_NONE)
         return;
 
@@ -466,7 +472,7 @@ end_special_input(void)
 
     switch(_G.input_mode) {
       case INPUT_MODE_MOVING:
-        for (int i = 0; i < MOVE_COUNT; i++) {
+        for (i = 0; i < MOVE_COUNT; i++) {
             overlay_t *overlay = &_G.move_overlays[i];
 
             if (overlay->obj) {
@@ -562,6 +568,7 @@ _do_overlay(E_Border *focused_bd,
     int key_len;
     int n = 0;
     int nmax;
+    int i;
 
     end_special_input();
 
@@ -589,7 +596,7 @@ _do_overlay(E_Border *focused_bd,
         }
     }
 
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         Eina_List *l;
         E_Border *bd;
 
@@ -689,6 +696,8 @@ _do_overlay(E_Border *focused_bd,
 static void
 _reorganize_stack(int stack)
 {
+    Eina_List *l;
+
     if (stack < 0 || stack >= TILING_MAX_STACKS
         || !_G.tinfo->stacks[stack])
         return;
@@ -708,7 +717,7 @@ _reorganize_stack(int stack)
             w = zw / count;
             h = _G.tinfo->size[stack];
 
-            for (Eina_List *l = _G.tinfo->stacks[stack]; l; l = l->next, i++) {
+            for (l = _G.tinfo->stacks[stack]; l; l = l->next, i++) {
                 E_Border *bd = l->data;
                 Border_Extra *extra;
                 int d = (i * 2 * zw) % count
@@ -745,7 +754,7 @@ _reorganize_stack(int stack)
             w = _G.tinfo->size[stack];
             h = zh / count;
 
-            for (Eina_List *l = _G.tinfo->stacks[stack]; l; l = l->next, i++) {
+            for (l = _G.tinfo->stacks[stack]; l; l = l->next, i++) {
                 E_Border *bd = l->data;
                 Border_Extra *extra;
                 int d = (i * 2 * zh) % count
@@ -829,8 +838,9 @@ static void
 _move_resize_stack(int stack, int delta_pos, int delta_size)
 {
     Eina_List *list = _G.tinfo->stacks[stack];
+    Eina_List *l;
 
-    for (Eina_List *l = list; l; l = l->next) {
+    for (l = list; l; l = l->next) {
         E_Border *bd = l->data;
         Border_Extra *extra;
 
@@ -862,7 +872,8 @@ _move_resize_stack(int stack, int delta_pos, int delta_size)
 static void
 _set_stack_geometry(int stack, int pos, int size)
 {
-    for (Eina_List *l = _G.tinfo->stacks[stack]; l; l = l->next) {
+    Eina_List *l;
+    for (l = _G.tinfo->stacks[stack]; l; l = l->next) {
         E_Border *bd = l->data;
         Border_Extra *extra;
 
@@ -914,6 +925,8 @@ static void
 _add_stack(void)
 {
     int nb_borders;
+    Eina_List *l;
+    int i;
 
     if (_G.tinfo->conf->nb_stacks == TILING_MAX_STACKS)
         return;
@@ -921,7 +934,7 @@ _add_stack(void)
     _G.tinfo->conf->nb_stacks++;
 
     if (_G.tinfo->conf->nb_stacks == 1) {
-        for (Eina_List *l = e_border_focus_stack_get(); l; l = l->next) {
+        for (l = e_border_focus_stack_get(); l; l = l->next) {
             E_Border *bd;
 
             bd = l->data;
@@ -944,7 +957,7 @@ _add_stack(void)
             e_zone_useful_geometry_get(_G.tinfo->desk->zone,
                                        &pos, NULL, &s, NULL);
 
-        for (int i = 0; i <= nb_stacks; i++) {
+        for (i = 0; i <= nb_stacks; i++) {
             int size = 0;
 
             size = s / (nb_stacks + 1 - i);
@@ -954,7 +967,7 @@ _add_stack(void)
             s -= size;
             pos += size;
         }
-        for (int i = nb_stacks - 1; i >= 0; i--) {
+        for (i = nb_stacks - 1; i >= 0; i--) {
             if (eina_list_count(_G.tinfo->stacks[i]) == 1) {
                 _G.tinfo->stacks[i+1] = _G.tinfo->stacks[i];
                 _reorganize_stack(i+1);
@@ -976,14 +989,17 @@ _add_stack(void)
 static void
 _remove_stack(void)
 {
+    int i;
+    Eina_List *l;
+
     if (!_G.tinfo->conf->nb_stacks)
         return;
 
     _G.tinfo->conf->nb_stacks--;
 
     if (!_G.tinfo->conf->nb_stacks) {
-        for (int i = 0; i < TILING_MAX_STACKS; i++) {
-            for (Eina_List *l = _G.tinfo->stacks[i]; l; l = l->next) {
+        for (i = 0; i < TILING_MAX_STACKS; i++) {
+            for (l = _G.tinfo->stacks[i]; l; l = l->next) {
                 E_Border *bd = l->data;
 
                 _restore_border(bd);
@@ -1010,7 +1026,7 @@ _remove_stack(void)
             e_zone_useful_geometry_get(_G.tinfo->desk->zone,
                                        &pos, NULL, &s, NULL);
         }
-        for (int i = 0; i < nb_stacks; i++) {
+        for (i = 0; i < nb_stacks; i++) {
             int size = 0;
 
             size = s / (nb_stacks - i);
@@ -1026,12 +1042,13 @@ _remove_stack(void)
 static void
 _toggle_rows_cols(void)
 {
+    int i;
 #if 0
     Eina_List *wins = NULL;
     E_Border *bd;
 
     _G.tinfo->conf->use_rows = !_G.tinfo->conf->use_rows;
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         EINA_LIST_FREE(_G.tinfo->stacks[i], bd) {
             EINA_LIST_APPEND(wins, bd);
             _restore_border(bd);
@@ -1060,7 +1077,7 @@ _toggle_rows_cols(void)
         e_zone_useful_geometry_get(_G.tinfo->desk->zone,
                                    &pos, NULL, &s, NULL);
 
-    for (int i = 0; i < nb_stacks; i++) {
+    for (i = 0; i < nb_stacks; i++) {
         int size = 0;
 
         size = s / (nb_stacks - i);
@@ -1070,7 +1087,7 @@ _toggle_rows_cols(void)
         s -= size;
         pos += size;
     }
-    for (int i = 0; i < nb_stacks; i++) {
+    for (i = 0; i < nb_stacks; i++) {
         _reorganize_stack(i);
     }
 #endif
@@ -1085,6 +1102,8 @@ change_desk_conf(struct _Config_vdesk *newconf)
     E_Desk *d;
     int old_nb_stacks = 0,
         new_nb_stacks = newconf->nb_stacks;
+    int i;
+    Eina_List *l;
 
     m = e_manager_current_get();
     if (!m) return;
@@ -1114,8 +1133,8 @@ change_desk_conf(struct _Config_vdesk *newconf)
         return;
 
     if (new_nb_stacks == 0) {
-        for (int i = 0; i < TILING_MAX_STACKS; i++) {
-            for (Eina_List *l = _G.tinfo->stacks[i]; l; l = l->next) {
+        for (i = 0; i < TILING_MAX_STACKS; i++) {
+            for (l = _G.tinfo->stacks[i]; l; l = l->next) {
                 E_Border *bd = l->data;
 
                 _restore_border(bd);
@@ -1125,11 +1144,11 @@ change_desk_conf(struct _Config_vdesk *newconf)
         }
         e_place_zone_region_smart_cleanup(z);
     } else if (new_nb_stacks > old_nb_stacks) {
-        for (int i = new_nb_stacks; i > old_nb_stacks; i--) {
+        for (i = new_nb_stacks; i > old_nb_stacks; i--) {
             _add_stack();
         }
     } else {
-        for (int i = new_nb_stacks; i < old_nb_stacks; i++) {
+        for (i = new_nb_stacks; i < old_nb_stacks; i++) {
             _remove_stack();
         }
     }
@@ -1190,6 +1209,7 @@ _add_border(E_Border *bd)
 {
     Border_Extra *extra;
     int stack;
+    int i;
 
     if (!bd) {
         return;
@@ -1250,7 +1270,7 @@ _add_border(E_Border *bd)
 
             EINA_LIST_APPEND(_G.tinfo->stacks[nb_stacks], bd);
 
-            for (int i = 0; i < nb_stacks; i++) {
+            for (i = 0; i < nb_stacks; i++) {
 
                 size = s / (nb_stacks + 1 - i);
 
@@ -1326,6 +1346,7 @@ _remove_border(E_Border *bd)
 {
     int stack;
     int nb_stacks;
+    int i, j;
 
     nb_stacks = get_stack_count();
 
@@ -1349,7 +1370,7 @@ _remove_border(E_Border *bd)
 
             nb_stacks--;
 
-            for (int i = stack; i < nb_stacks; i++) {
+            for (i = stack; i < nb_stacks; i++) {
                 _G.tinfo->stacks[i] = _G.tinfo->stacks[i+1];
             }
             _G.tinfo->stacks[nb_stacks] = NULL;
@@ -1360,7 +1381,7 @@ _remove_border(E_Border *bd)
                 e_zone_useful_geometry_get(bd->zone,
                                            &pos, NULL, &s, NULL);
             }
-            for (int i = 0; i < nb_stacks; i++) {
+            for (i = 0; i < nb_stacks; i++) {
                 int size;
 
                 size = s / (nb_stacks - i);
@@ -1371,9 +1392,9 @@ _remove_border(E_Border *bd)
                 pos += size;
             }
         } else {
-            for (int i = stack+1; i < nb_stacks; i++) {
+            for (i = stack+1; i < nb_stacks; i++) {
                 if (eina_list_count(_G.tinfo->stacks[i]) > 1) {
-                    for (int j = stack; j < i - 1; j++) {
+                    for (j = stack; j < i - 1; j++) {
                         _G.tinfo->stacks[j] = _G.tinfo->stacks[j+1];
                         _reorganize_stack(j);
                     }
@@ -1387,7 +1408,7 @@ _remove_border(E_Border *bd)
                     return;
                 }
             }
-            for (int i = stack-1; i >= 0; i--) {
+            for (i = stack-1; i >= 0; i--) {
                 if (eina_list_count(_G.tinfo->stacks[i]) == 1) {
                     _G.tinfo->stacks[i+1] = _G.tinfo->stacks[i];
                     _reorganize_stack(i+1);
@@ -1654,6 +1675,7 @@ _action_swap(E_Border *bd_1,
               *l_2 = NULL;
     geom_t gt;
     unsigned int bd_2_maximized;
+    int i;
 
     extra_1 = eina_hash_find(_G.border_extras, &bd_1);
     if (!extra_1) {
@@ -1661,12 +1683,12 @@ _action_swap(E_Border *bd_1,
         return;
     }
 
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         if ((l_1 = eina_list_data_find_list(_G.tinfo->stacks[i], bd_1))) {
             break;
         }
     }
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         if ((l_2 = eina_list_data_find_list(_G.tinfo->stacks[i], bd_2))) {
             break;
         }
@@ -2067,6 +2089,7 @@ _move_left_cols(void)
     E_Border *bd = _G.focused_bd;
     Border_Extra *extra;
     int stack;
+    int i;
 
     stack = get_stack(_G.focused_bd);
     if (stack <= 0)
@@ -2086,11 +2109,11 @@ _move_left_cols(void)
 
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
-        for (int i = stack; i < nb_stacks; i++) {
+        for (i = stack; i < nb_stacks; i++) {
             _G.tinfo->stacks[i] = _G.tinfo->stacks[i+1];
         }
         _G.tinfo->stacks[nb_stacks] = NULL;
-        for (int i = 0; i < nb_stacks; i++) {
+        for (i = 0; i < nb_stacks; i++) {
 
             width = w / (nb_stacks - i);
 
@@ -2124,6 +2147,7 @@ _move_right_cols(void)
     int stack;
     int nb_stacks;
     Border_Extra *extra;
+    int i;
 
     stack = get_stack(bd);
     if (stack == TILING_MAX_STACKS - 1)
@@ -2156,7 +2180,7 @@ _move_right_cols(void)
 
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
-        for (int i = 0; i < nb_stacks; i++) {
+        for (i = 0; i < nb_stacks; i++) {
 
             width = w / (nb_stacks + 1 - i);
 
@@ -2189,11 +2213,11 @@ _move_right_cols(void)
         int width;
 
         e_zone_useful_geometry_get(_G.tinfo->desk->zone, &x, &y, &w, &h);
-        for (int i = stack; i < nb_stacks; i++) {
+        for (i = stack; i < nb_stacks; i++) {
              _G.tinfo->stacks[i] = _G.tinfo->stacks[i + 1];
         }
         nb_stacks--;
-        for (int i = 0; i < nb_stacks; i++) {
+        for (i = 0; i < nb_stacks; i++) {
             width = w / (nb_stacks - i);
 
             _set_stack_geometry(i, x, width);
@@ -2324,6 +2348,7 @@ _move_up_rows(void)
     E_Border *bd = _G.focused_bd;
     Border_Extra *extra;
     int stack;
+    int i;
 
     stack = get_stack(_G.focused_bd);
     if (stack <= 0)
@@ -2342,11 +2367,11 @@ _move_up_rows(void)
 
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
-        for (int i = stack; i < nb_stacks; i++) {
+        for (i = stack; i < nb_stacks; i++) {
             _G.tinfo->stacks[i] = _G.tinfo->stacks[i+1];
         }
         _G.tinfo->stacks[nb_stacks] = NULL;
-        for (int i = 0; i < nb_stacks; i++) {
+        for (i = 0; i < nb_stacks; i++) {
             int height = 0;
 
             height = h / (nb_stacks - i);
@@ -2381,6 +2406,7 @@ _move_down_rows(void)
     int stack;
     int nb_stacks;
     Border_Extra *extra;
+    int i;
 
     stack = get_stack(bd);
     if (stack == TILING_MAX_STACKS - 1)
@@ -2413,7 +2439,7 @@ _move_down_rows(void)
 
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
-        for (int i = 0; i < nb_stacks; i++) {
+        for (i = 0; i < nb_stacks; i++) {
 
             height = h / (nb_stacks + 1 - i);
 
@@ -2445,11 +2471,11 @@ _move_down_rows(void)
         int x, y, w, h;
 
         e_zone_useful_geometry_get(_G.tinfo->desk->zone, &x, &y, &w, &h);
-        for (int i = stack; i < nb_stacks; i++) {
+        for (i = stack; i < nb_stacks; i++) {
              _G.tinfo->stacks[i] = _G.tinfo->stacks[i + 1];
         }
         nb_stacks--;
-        for (int i = 0; i < nb_stacks; i++) {
+        for (i = 0; i < nb_stacks; i++) {
             int height;
 
             height = h / (nb_stacks - i);
@@ -2955,6 +2981,7 @@ _do_transition_overlay(void)
     int key_len;
     int n = 0;
     int nmax;
+    int i;
 
     end_special_input();
 
@@ -2979,7 +3006,7 @@ _do_transition_overlay(void)
     }
 
 
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         Eina_List *l;
         E_Border *bd;
 
@@ -3636,11 +3663,12 @@ _container_resize_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Conta
 {
     Eina_List *l;
     E_Zone *zone;
+    int x, y, i;
 
     EINA_LIST_FOREACH(ev->container->zones, l, zone) {
-        for (int x = 0; x < zone->desk_x_count; x++)
+        for (x = 0; x < zone->desk_x_count; x++)
         {
-            for (int y = 0; y < zone->desk_y_count; y++) {
+            for (y = 0; y < zone->desk_y_count; y++) {
                 E_Desk *desk = zone->desks[x + (y * zone->desk_x_count)];
                 Eina_List *wins = NULL;
                 E_Border *bd;
@@ -3650,7 +3678,7 @@ _container_resize_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Conta
                     continue;
                 }
 
-                for (int i = 0; i < TILING_MAX_STACKS; i++) {
+                for (i = 0; i < TILING_MAX_STACKS; i++) {
                     EINA_LIST_FREE(_G.tinfo->stacks[i], bd) {
                         EINA_LIST_APPEND(wins, bd);
                         _restore_border(bd);
@@ -3677,9 +3705,10 @@ static void
 _clear_info_hash(void *data)
 {
     Tiling_Info *ti = data;
+    int i;
 
     eina_list_free(ti->floating_windows);
-    for (int i = 0; i < TILING_MAX_STACKS; i++) {
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
         eina_list_free(ti->stacks[i]);
         ti->stacks[i] = NULL;
     }
@@ -3706,6 +3735,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
     E_Desk *desk;
+    Eina_List *l;
 
     tiling_g.module = m;
 
@@ -3812,7 +3842,7 @@ e_modapi_init(E_Module *m)
     E_CONFIG_LIMIT(tiling_g.config->tile_dialogs, 0, 1);
     E_CONFIG_LIMIT(tiling_g.config->show_titles, 0, 1);
 
-    for (Eina_List *l = tiling_g.config->vdesks; l; l = l->next) {
+    for (l = tiling_g.config->vdesks; l; l = l->next) {
         struct _Config_vdesk *vd;
 
         vd = l->data;

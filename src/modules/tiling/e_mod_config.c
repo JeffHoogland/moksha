@@ -24,7 +24,8 @@ get_vdesk(Eina_List *vdesks,
           int y,
           unsigned int zone_num)
 {
-    for (Eina_List *l = vdesks; l; l = l->next) {
+    Eina_List *l;
+    for (l = vdesks; l; l = l->next) {
         struct _Config_vdesk *vd = l->data;
 
         if (!vd)
@@ -45,7 +46,10 @@ get_vdesk(Eina_List *vdesks,
 static void *
 _create_data(E_Config_Dialog *cfd __UNUSED__)
 {
-    E_Config_Dialog_Data *cfdata = E_NEW(E_Config_Dialog_Data, 1);
+    E_Config_Dialog_Data *cfdata;
+    Eina_List *l;
+
+    cfdata = E_NEW(E_Config_Dialog_Data, 1);
 
     /* Because we save a lot of lines here by using memcpy,
      * the structs have to be ordered the same */
@@ -55,7 +59,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
     /* Handle things which can't be easily memcpy'd */
     cfdata->config.vdesks = NULL;
 
-    for (Eina_List *l = tiling_g.config->vdesks; l; l = l->next) {
+    for (l = tiling_g.config->vdesks; l; l = l->next) {
         struct _Config_vdesk *vd = l->data,
                              *newvd;
 
@@ -89,14 +93,17 @@ static void
 _fill_zone_config(E_Zone               *zone,
                   E_Config_Dialog_Data *cfdata)
 {
-    Evas *evas = cfdata->evas;
+    Evas *evas;
+    int i;
+
+    evas = cfdata->evas;
 
     /* Clear old entries first */
     evas_object_del(cfdata->o_desklist);
 
     cfdata->o_desklist = e_widget_list_add(evas, 1, 0);
 
-    for (int i = 0; i < zone->desk_y_count * zone->desk_x_count; i++) {
+    for (i = 0; i < zone->desk_y_count * zone->desk_x_count; i++) {
         E_Desk *desk = zone->desks[i];
         struct _Config_vdesk *vd;
         Evas_Object *list, *slider, *radio;
@@ -163,8 +170,11 @@ _basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
                       E_Config_Dialog_Data *cfdata)
 {
     Evas_Object *o, *oc, *of;
-    E_Container *con = e_container_current_get(e_manager_current_get());
+    E_Container *con;
     E_Zone *zone;
+    Eina_List *l;
+
+    con = e_container_current_get(e_manager_current_get());
 
     o = e_widget_list_add(evas, 0, 0);
 
@@ -198,7 +208,7 @@ _basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
     e_widget_ilist_multi_select_set(cfdata->o_zonelist, false);
     e_widget_size_min_set(cfdata->o_zonelist, 100, 100);
     e_widget_on_change_hook_set(cfdata->o_zonelist, _cb_zone_change, cfdata);
-    for (Eina_List *l = con->zones; l; l = l->next) {
+    for (l = con->zones; l; l = l->next) {
         if (!(zone = l->data))
             continue;
         e_widget_ilist_append(cfdata->o_zonelist, NULL, zone->name, NULL, zone, NULL);
@@ -227,6 +237,7 @@ _basic_apply_data(E_Config_Dialog      *cfd __UNUSED__,
                   E_Config_Dialog_Data *cfdata)
 {
     struct _Config_vdesk *vd;
+    Eina_List *l;
 
     tiling_g.config->tile_dialogs = cfdata->config.tile_dialogs;
     tiling_g.config->show_titles = cfdata->config.show_titles;
@@ -253,7 +264,7 @@ _basic_apply_data(E_Config_Dialog      *cfd __UNUSED__,
     }
 
     /* Check if the layout for one of the vdesks has changed */
-    for (Eina_List *l = tiling_g.config->vdesks; l; l = l->next) {
+    for (l = tiling_g.config->vdesks; l; l = l->next) {
         struct _Config_vdesk *newvd;
 
         vd = l->data;
@@ -279,7 +290,7 @@ _basic_apply_data(E_Config_Dialog      *cfd __UNUSED__,
         }
     }
 
-    for (Eina_List *l = cfdata->config.vdesks; l; l = l->next) {
+    for (l = cfdata->config.vdesks; l; l = l->next) {
         vd = l->data;
 
         if (!vd)
