@@ -185,7 +185,7 @@ _outputs_to_array(Eina_List *outputs_info)
 Eina_List
 *_outputs_common_modes_get(Eina_List *outputs, Ecore_X_Randr_Mode_Info *max_size_mode)
 {
-   Eina_List *common_modes = NULL, *mode_iter, *output_iter;
+   Eina_List *common_modes = NULL, *mode_iter, *output_iter, *mode_next, *output_next;
    E_Randr_Output_Info *output_info;
    Ecore_X_Randr_Mode_Info *mode_info;
 
@@ -196,9 +196,9 @@ Eina_List
    common_modes = eina_list_clone(e_randr_screen_info.rrvd_info.randr_info_12->modes);
    common_modes = eina_list_sort(common_modes, 0, _modes_size_sort_cb);
 
-   EINA_LIST_FOREACH(common_modes, mode_iter, mode_info)
+   EINA_LIST_FOREACH_SAFE(common_modes, mode_iter, mode_next, mode_info)
      {
-        EINA_LIST_FOREACH(outputs, output_iter, output_info)
+        EINA_LIST_FOREACH_SAFE(outputs, output_iter, output_next, output_info)
           {
              if (!output_info || !output_info->monitor)
                continue;
@@ -210,7 +210,7 @@ Eina_List
    if (max_size_mode)
      {
         //remove all modes that are larger than max_size_mode
-        EINA_LIST_FOREACH(common_modes, mode_iter, mode_info)
+        EINA_LIST_FOREACH_SAFE(common_modes, mode_iter, mode_next, mode_info)
           {
              if (_modes_size_sort_cb((void *)max_size_mode, (void *)mode_info) < 0)
                common_modes = eina_list_remove(common_modes, mode_info);
