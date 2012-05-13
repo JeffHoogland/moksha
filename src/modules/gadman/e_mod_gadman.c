@@ -346,6 +346,7 @@ gadman_gadgets_show(void)
 
    Man->visible = 1;
    ecore_evas_show(Man->top_ee);
+   
    if (Man->conf->bg_type == BG_STD)
      {
 	if (Man->conf->anim_bg)
@@ -530,6 +531,10 @@ _gadman_gadcon_new(const char* name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
         evas_object_move(Man->full_bg, 0, 0);
         evas_object_resize(Man->full_bg, Man->width, Man->height);
         evas_object_show(Man->full_bg);
+
+        e_drop_xdnd_register_set(Man->top_win, 1);
+        e_gadcon_xdnd_window_set(gc, Man->top_win);
+        e_gadcon_dnd_window_set(gc, Man->top_win);
      }
    /* ... or use the e background window */
    else
