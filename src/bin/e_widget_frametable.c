@@ -77,7 +77,7 @@ e_widget_frametable_object_append(Evas_Object *obj, Evas_Object *sobj, int col, 
 EAPI void
 e_widget_frametable_object_append_full(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h, double align_x, double align_y, Evas_Coord min_w, Evas_Coord min_h, Evas_Coord max_w, Evas_Coord max_h)
 {
-   E_Widget_Data *wd = e_widget_data_get(obj);;
+   E_Widget_Data *wd = e_widget_data_get(obj);
    Evas_Coord mw = 0, mh = 0;
 
    e_table_pack(wd->o_table, sobj, col, row, colspan, rowspan);

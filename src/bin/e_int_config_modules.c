@@ -292,6 +292,7 @@ _toolbar_select_cb(void *data, void *data2)
 {
    CFType *cft, *cft_cat;
    E_Config_Dialog_Data *cfdata;
+   Eina_List *l_type;
    Evas_Coord w, h;
 
    cfdata = data;
@@ -311,14 +312,13 @@ _toolbar_select_cb(void *data, void *data2)
    e_widget_ilist_freeze(cfdata->l_modules);
    e_widget_ilist_clear(cfdata->l_modules);
 
-   Eina_List *l_type;
    EINA_LIST_FOREACH(cfdata->types, l_type, cft)
      {
-        if (strcmp(cft->key, cft_cat->key))
-          continue;
-
         CFModule *cfm;
         Eina_List *l_module;
+
+        if (strcmp(cft->key, cft_cat->key))
+          continue;
 
         EINA_LIST_FOREACH(cft->modules, l_module, cfm)
           _list_item_append(cfdata, cfm);

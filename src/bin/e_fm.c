@@ -2568,13 +2568,14 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, 
 #else
    char *args = NULL;
    size_t size = 0, length = 0;
+   int r;
 
    args = _e_fm_string_append_quoted(args, &size, &length, path);
    args = _e_fm_string_append_char(args, &size, &length, ' ');
    args = _e_fm_string_append_quoted(args, &size, &length, dest);
 
    fputs("WARNING: using new E_FM_OP_SYMLINK, remove deprecated ASAP\n", stderr);
-   int r = _e_fm_client_file_symlink(args, e_fm);
+   r = _e_fm_client_file_symlink(args, e_fm);
    free(args);
    return r;
 #endif
@@ -3144,6 +3145,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
          char *src = NULL;
          char *dst = NULL;
          char *p = e->data;
+         E_Fm2_Op_Registry_Entry *ere;
 
          if (!e->data) return;
 
@@ -3157,7 +3159,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
          dst = p + strlen(src) + 1;
          // printf("%s:%s(%d) Progress from slave #%d:\n\t%d%% done,\n\t%d seconds left,\n\t%zd done,\n\t%zd total,\n\tsrc = %s,\n\tdst = %s.\n", __FILE__, __FUNCTION__, __LINE__, e->ref, percent, seconds, done, total, src, dst);
 
-         E_Fm2_Op_Registry_Entry *ere = e_fm2_op_registry_entry_get(e->ref);
+         ere = e_fm2_op_registry_entry_get(e->ref);
          if (!ere) return;
          ere->percent = percent;
          ere->done = done;
@@ -6243,6 +6245,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    Eina_List *fsel, *l, *ll, *il, *isel;
    char buf[4096];
    const char *fp;
+   Evas_Object *obj;
    Evas_Coord ox, oy, x, y;
    int adjust_icons = 0;
 
@@ -6424,7 +6427,6 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
    _e_fm2_list_walking++;
-   Evas_Object *obj;
    EINA_LIST_FOREACH(_e_fm2_list, l, obj)
      {
         if ((_e_fm2_list_walking > 0) &&
@@ -7260,6 +7262,7 @@ _e_fm2_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__
 {
    Evas_Event_Mouse_Move *ev;
    E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
    Eina_List *l = NULL;
    int x, y, w, h;
    int sel_change = 0;
@@ -7322,7 +7325,6 @@ _e_fm2_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__
    evas_object_smart_callback_call(sd->obj, "pan_changed", NULL);
  */
 
-   E_Fm2_Icon *ic;
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
         int ix, iy, iw, ih;
@@ -8550,8 +8552,10 @@ _e_fm2_toggle_inherit_dir_props(void *data, E_Menu *m, E_Menu_Item *mi)
 static void
 _e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
 {
+   char buf[64];
    E_Menu_Item *mi;
    char view_mode;
+   int icon_size;
 
    view_mode = _e_fm2_view_mode_get(sd);
 
@@ -8591,8 +8595,7 @@ _e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
    if (view_mode == E_FM2_VIEW_MODE_LIST)
      return;
 
-   char buf[64];
-   int icon_size = _e_fm2_icon_w_get(sd);
+   icon_size = _e_fm2_icon_w_get(sd);
 
    // show the icon size as selected (even if it might be influnced by e_scale)
    /* if (e_scale > 0.0)

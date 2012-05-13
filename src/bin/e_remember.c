@@ -295,6 +295,7 @@ EAPI int
 e_remember_default_match_set(E_Remember *rem, E_Border *bd)
 {
    const char *title, *clasz, *name, *role;
+   int match;
    
    if (rem->name) eina_stringshare_del(rem->name);
    if (rem->class) eina_stringshare_del(rem->class);
@@ -312,7 +313,7 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
    role = bd->client.icccm.window_role;
    if (!role || role[0] == 0) role = NULL;
    
-   int match = E_REMEMBER_MATCH_TRANSIENT;
+   match = E_REMEMBER_MATCH_TRANSIENT;
    if (bd->client.icccm.transient_for != 0)
      rem->transient = 1;
    else
