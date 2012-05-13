@@ -115,7 +115,7 @@ _basic_create_general(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data 
 
 
    e_widget_list_object_append(cfdata->ui.list, ui->frame, 1, 1, 0.5);
-   chk = e_widget_check_add(evas, _("Diplay desktop notifications on volume change"), &ctxt->desktop_notification);
+   chk = e_widget_check_add(evas, _("Display desktop notifications on volume change"), &ctxt->desktop_notification);
    e_widget_check_checked_set(chk, ctxt->conf->desktop_notification);
 #ifndef HAVE_ENOTIFY
    e_widget_disabled_set(chk, EINA_TRUE);
