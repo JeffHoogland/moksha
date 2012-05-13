@@ -1326,10 +1326,11 @@ e_zone_useful_geometry_get(E_Zone *zone,
                            int    *w,
                            int    *h)
 {
-   E_OBJECT_CHECK(zone);
-   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
    Eina_List *l;
    E_Shelf *shelf;
+
+   E_OBJECT_CHECK(zone);
+   E_OBJECT_TYPE_CHECK(zone, E_ZONE_TYPE);
 
    if (!zone->useful_geometry.dirty)
      {
