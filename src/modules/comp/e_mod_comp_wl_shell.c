@@ -27,6 +27,8 @@ static void _e_mod_comp_wl_shell_surface_set_transient(struct wl_client *client 
 static void _e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, struct wl_resource *resource, uint32_t method __UNUSED__, uint32_t framerate __UNUSED__, struct wl_resource *output_resource __UNUSED__);
 static void _e_mod_comp_wl_shell_surface_set_popup(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource  __UNUSED__, uint32_t timestamp  __UNUSED__, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags  __UNUSED__);
 static void _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client, struct wl_resource *resource, struct wl_resource *output_resource __UNUSED__);
+static void _e_mod_comp_wl_shell_surface_set_title(struct wl_client *client, struct wl_resource *resource, const char *title);
+static void _e_mod_comp_wl_shell_surface_set_class(struct wl_client *client, struct wl_resource *resource, const char *clas);
 
 static void _e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, void *data __UNUSED__);
 static Wayland_Shell_Surface *_e_mod_comp_wl_shell_get_shell_surface(Wayland_Surface *ws);
@@ -46,7 +48,9 @@ static const struct wl_shell_surface_interface _wl_shell_surface_interface =
    _e_mod_comp_wl_shell_surface_set_transient,
    _e_mod_comp_wl_shell_surface_set_fullscreen,
    _e_mod_comp_wl_shell_surface_set_popup,
-   _e_mod_comp_wl_shell_surface_set_maximized
+   _e_mod_comp_wl_shell_surface_set_maximized,
+   _e_mod_comp_wl_shell_surface_set_title,
+   _e_mod_comp_wl_shell_surface_set_class
 };
 
 /* private variables */
@@ -399,6 +403,30 @@ _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client __UNUSED__, 
    wss = resource->data;
    ws = wss->surface;
    /* FIXME: Implement */
+}
+
+static void 
+_e_mod_comp_wl_shell_surface_set_title(struct wl_client *client, struct wl_resource *resource, const char *title)
+{
+   Wayland_Shell_Surface *wss;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   wss = resource->data;
+   if (wss->title) free(wss->title);
+   wss->title = strdup(title);
+}
+
+static void 
+_e_mod_comp_wl_shell_surface_set_class(struct wl_client *client, struct wl_resource *resource, const char *clas)
+{
+   Wayland_Shell_Surface *wss;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   wss = resource->data;
+   if (wss->clas) free(wss->clas);
+   wss->clas = strdup(clas);
 }
 
 static void 

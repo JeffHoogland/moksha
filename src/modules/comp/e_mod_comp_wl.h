@@ -97,6 +97,8 @@ struct _Wayland_Shell_Surface
    int32_t saved_x, saved_y;
    Wayland_Shell_Surface_Type type;
 
+   char *title, *clas;
+
    struct 
      {
         struct wl_pointer_grab grab;
