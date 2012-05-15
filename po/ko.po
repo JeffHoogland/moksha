@@ -841,14 +841,12 @@ msgid "Settings Upgraded"
 msgstr "설정이 갱신되었습니다."
 
 #: src/bin/e_config.c:2061
-#, fuzzy
 msgid "The EET file handle is bad."
-msgstr "동부 유럽 표준시 파일 핸들 큰일이다."
+msgstr "EET 파일이 손상되었습니다."
 
 #: src/bin/e_config.c:2064
-#, fuzzy
 msgid "The file data is empty."
-msgstr "파일 데이터 가 비어 있습니다."
+msgstr "파일 데이터가 비어 있습니다."
 
 #: src/bin/e_config.c:2067
 #, fuzzy
@@ -1420,7 +1418,6 @@ msgid "Use default"
 msgstr "기본값을 사용하여"
 
 #: src/bin/e_fm.c:8559 src/modules/fileman/e_mod_config.c:224
-#, fuzzy
 msgid "Grid Icons"
 msgstr "그리드 아이콘"
 
@@ -3351,14 +3348,13 @@ msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: src/bin/e_theme_about.c:14
-#, fuzzy
 msgid "About Theme"
-msgstr "테마 에 관하여"
+msgstr "테마에 관하여"
 
 #: src/bin/e_theme.c:36
-#, fuzzy
+
 msgid "Set As Theme"
-msgstr "테마 로 설정"
+msgstr "테마로 설정"
 
 #: src/bin/e_toolbar.c:329
 msgid "Stop Moving/Resizing Items"
@@ -3371,7 +3367,7 @@ msgstr ""
 #: src/bin/e_toolbar.c:344
 #, fuzzy
 msgid "Set Toolbar Contents"
-msgstr "툴바 내용 을 설정"
+msgstr "툴바 내용을 설정"
 
 #: src/bin/e_utils.c:231 src/modules/conf_intl/e_int_config_imc.c:266
 #: src/modules/conf_intl/e_int_config_imc.c:514
@@ -3463,9 +3459,8 @@ msgid "Image Import Settings"
 msgstr "이미지 가져오기 설정"
 
 #: src/bin/e_utils.c:1160
-#, fuzzy
 msgid "Import"
-msgstr "가져오기..."
+msgstr "가져오기"
 
 #: src/bin/e_utils.c:1177
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:169
@@ -3560,13 +3555,11 @@ msgstr "추가"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:272
-#, fuzzy
 msgid "Up"
-msgstr "최대"
+msgstr "위로"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:276
-#, fuzzy
 msgid "Down"
 msgstr "아래로"
 
@@ -3586,9 +3579,8 @@ msgid "Go up a Directory"
 msgstr "상위 디렉토리로"
 
 #: src/bin/e_widget_fsel.c:331
-#, fuzzy
 msgid "Resolution:"
-msgstr "해상도"
+msgstr "해상도:"
 
 #: src/bin/e_widget_fsel.c:379
 msgid "Permissions:"
@@ -3624,7 +3616,6 @@ msgid "Read-Write"
 msgstr "읽기-쓰기"
 
 #: src/modules/battery/e_mod_config.c:64
-#, fuzzy
 msgid "Battery Monitor Settings"
 msgstr "배터리 모니터 설정"
 
@@ -3775,9 +3766,8 @@ msgstr "실행"
 
 #: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:268
 #: src/modules/conf/e_mod_main.c:367 src/modules/conf/e_mod_main.c:474
-#, fuzzy
 msgid "Settings Panel"
-msgstr "설정 패널"
+msgstr "제어판"
 
 #: src/modules/conf/e_mod_main.c:277
 msgid "Configuration Panel"
@@ -3855,7 +3845,7 @@ msgstr "테두리"
 #: src/modules/conf_applications/e_mod_main.c:18
 #, fuzzy
 msgid "Apps"
-msgstr "애플 리케이션"
+msgstr "애플리케이션"
 
 #: src/modules/conf_applications/e_mod_main.c:21
 #, fuzzy
@@ -3868,9 +3858,8 @@ msgid "Delete Personal Launchers"
 msgstr "개인 발사기 삭제"
 
 #: src/modules/conf_applications/e_mod_main.c:45
-#, fuzzy
 msgid "Default Applications"
-msgstr "응용프로그램 재시작"
+msgstr "기본 응용프로그램"
 
 #: src/modules/conf_applications/e_mod_main.c:49
 #, fuzzy
@@ -3883,20 +3872,18 @@ msgid "IBar Other"
 msgstr "기타 IBar"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:54
-#, fuzzy
 msgid "Profile Selector"
-msgstr "프로필 선택"
+msgstr "프로파일 선택"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:106
 #, fuzzy
 msgid "Available Profiles"
-msgstr "가용 프로필"
+msgstr "가용 프로파일"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
 #: src/modules/wizard/page_020.c:121
-#, fuzzy
 msgid "Select a profile"
-msgstr "프로파일 을 선택"
+msgstr "프로파일을 선택"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:138
 #, fuzzy
@@ -4026,7 +4013,6 @@ msgid "Save"
 msgstr "저장"
 
 #: src/modules/conf_display/e_int_config_display.c:190
-#, fuzzy
 msgid "Restore"
 msgstr "복원"
 
@@ -4118,7 +4104,6 @@ msgid "Wrap desktops around when flipping"
 msgstr "바꿀 때 데스크탑 주변에 있으면 변경"
 
 #: src/modules/conf_display/e_int_config_desks.c:179
-#, fuzzy
 msgid "Desktops"
 msgstr "데스크탑"
 
@@ -4166,7 +4151,6 @@ msgstr "데스크탑 배경화면"
 
 #: src/modules/conf_display/e_int_config_desk.c:166
 #: src/modules/fileman/e_int_config_mime.c:183
-#, fuzzy
 msgid "Set"
 msgstr "설정"
 
@@ -4670,9 +4654,8 @@ msgid "Touch"
 msgstr "터치"
 
 #: src/modules/conf_interaction/e_mod_main.c:24
-#, fuzzy
 msgid "Mouse"
-msgstr "이동"
+msgstr "마우스"
 
 #: src/modules/conf_intl/e_int_config_imc.c:104
 #: src/modules/conf_intl/e_mod_main.c:24
@@ -4795,7 +4778,6 @@ msgid "Single key"
 msgstr "단일."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:110
-#, fuzzy
 msgid "Key Bindings Settings"
 msgstr "키 바인딩 설정"
 
@@ -4805,11 +4787,11 @@ msgstr "단축키 설정"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:969
 msgid "Key Binding Sequence"
-msgstr "단축 글쇠 순서"
+msgstr "단축 키 순서"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
 msgid "Binding Key Error"
-msgstr "단축 글쇠 오류"
+msgstr "단축 키 오류"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
@@ -4826,7 +4808,6 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:112
-#, fuzzy
 msgid "Mouse Bindings Settings"
 msgstr "마우스 바인딩 설정"
 
@@ -4912,13 +4893,11 @@ msgid "Personal Default"
 msgstr "개인용"
 
 #: src/modules/conf_menus/e_int_config_menus.c:257
-#, fuzzy
 msgid "Main Menu"
-msgstr "메인 메뉴 표시"
+msgstr "메인 메뉴"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
 #: src/modules/fileman/e_mod_main.c:364
-#, fuzzy
 msgid "Favorites"
 msgstr "즐겨찾기"
 
@@ -5067,7 +5046,6 @@ msgid "Environment Variables"
 msgstr "가져온 환경 값"
 
 #: src/modules/conf_performance/e_int_config_engine.c:37
-#, fuzzy
 msgid "Engine Settings"
 msgstr "엔진 설정"
 
@@ -5157,14 +5135,13 @@ msgstr "%1.0f 개"
 #: src/modules/conf_performance/e_int_config_performance.c:152
 #, fuzzy
 msgid "Edje Cache"
-msgstr "Edje 캐시"
+msgstr "Edje 캐쉬"
 
 #: src/modules/conf_performance/e_mod_main.c:18
 msgid "Performance"
 msgstr "성능"
 
 #: src/modules/conf_performance/e_mod_main.c:19
-#, fuzzy
 msgid "Engine"
 msgstr "엔진"
 
@@ -5287,7 +5264,6 @@ msgid "Exchange wallpapers"
 msgstr "교환 배경 화면"
 
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:235
-#, fuzzy
 msgid "Download"
 msgstr "다운로드"
 
@@ -5894,7 +5870,7 @@ msgstr "아이콘 테마 사용"
 #: src/modules/conf_theme/e_int_config_icon_themes.c:281
 #, fuzzy
 msgid "Use icon theme for applications"
-msgstr "어플 리케이션에 아이콘 테마 를 사용하여"
+msgstr "어플리케이션에 아이콘 테마 를 사용하여"
 
 #: src/modules/conf_theme/e_int_config_icon_themes.c:285
 #, fuzzy
