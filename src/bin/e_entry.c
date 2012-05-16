@@ -88,30 +88,30 @@ e_entry_add(Evas *evas)
    if (!_e_entry_smart)
      {
         static const Evas_Smart_Class sc =
-	  {
-	     "e_entry",
-	       EVAS_SMART_CLASS_VERSION,
-	       _e_entry_smart_add,
-	       _e_entry_smart_del,
-	       _e_entry_smart_move,
-	       _e_entry_smart_resize,
-	       _e_entry_smart_show,
-	       _e_entry_smart_hide,
-	       _e_entry_color_set,
-	       _e_entry_clip_set,
-	       _e_entry_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL
-	  };
-	_e_entry_smart = evas_smart_class_new(&sc);
+          {
+             "e_entry",
+             EVAS_SMART_CLASS_VERSION,
+             _e_entry_smart_add,
+             _e_entry_smart_del,
+             _e_entry_smart_move,
+             _e_entry_smart_resize,
+             _e_entry_smart_show,
+             _e_entry_smart_hide,
+             _e_entry_color_set,
+             _e_entry_clip_set,
+             _e_entry_clip_unset,
+             NULL,
+             NULL,
+             NULL,
+             NULL,
+             NULL,
+             NULL,
+             NULL
+          };
+        _e_entry_smart = evas_smart_class_new(&sc);
         _e_entry_smart_use = 0;
      }
-   
+
    _e_entry_smart_use++;
    return evas_object_smart_add(evas, _e_entry_smart);
 }
@@ -126,11 +126,11 @@ EAPI void
 e_entry_text_set(Evas_Object *entry, const char *text)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-   
+
    e_editable_text_set(sd->editable_object, text);
    evas_object_smart_callback_call(entry, "changed", NULL);
 }
@@ -145,7 +145,7 @@ EAPI const char *
 e_entry_text_get(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERR(NULL);
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return NULL;
@@ -176,7 +176,7 @@ EAPI Evas_Object *
 e_entry_editable_object_get(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERR(NULL);
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return NULL;
@@ -194,7 +194,7 @@ EAPI void
 e_entry_password_set(Evas_Object *entry, int password_mode)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
@@ -203,7 +203,7 @@ e_entry_password_set(Evas_Object *entry, int password_mode)
    if (sd->imf_context)
      ecore_imf_context_input_mode_set(sd->imf_context,
                                       password_mode ? ECORE_IMF_INPUT_MODE_FULL & ECORE_IMF_INPUT_MODE_INVISIBLE :
-                                                      ECORE_IMF_INPUT_MODE_FULL);
+                                      ECORE_IMF_INPUT_MODE_FULL);
 #endif
 }
 
@@ -218,11 +218,11 @@ EAPI void
 e_entry_size_min_get(Evas_Object *entry, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-   
+
    if (minw) *minw = sd->min_width;
    if (minh) *minh = sd->height;
 }
@@ -238,13 +238,13 @@ EAPI void
 e_entry_focus(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (sd->focused)
-      return;
-   
+     return;
+
    evas_object_focus_set(entry, 1);
    edje_object_signal_emit(sd->entry_object, "e,state,focused", "e");
    if (!sd->selection_dragging)
@@ -256,7 +256,7 @@ e_entry_focus(Evas_Object *entry)
         e_editable_selection_move_to_end(sd->editable_object);
      }
    if (sd->enabled)
-      e_editable_cursor_show(sd->editable_object);
+     e_editable_cursor_show(sd->editable_object);
    e_editable_selection_show(sd->editable_object);
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
@@ -276,13 +276,13 @@ EAPI void
 e_entry_unfocus(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (!sd->focused)
      return;
-   
+
    evas_object_focus_set(entry, 0);
    edje_object_signal_emit(sd->entry_object, "e,state,unfocused", "e");
    e_editable_cursor_hide(sd->editable_object);
@@ -306,13 +306,13 @@ EAPI void
 e_entry_enable(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (sd->enabled)
      return;
-   
+
    edje_object_signal_emit(sd->entry_object, "e,state,enabled", "e");
    e_editable_enable(sd->editable_object);
    if (sd->focused)
@@ -330,13 +330,13 @@ EAPI void
 e_entry_disable(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (!sd->enabled)
      return;
-   
+
    edje_object_signal_emit(sd->entry_object, "e,state,disabled", "e");
    e_editable_disable(sd->editable_object);
    e_editable_cursor_hide(sd->editable_object);
@@ -358,13 +358,13 @@ _e_entry_key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
      {
-	Ecore_IMF_Event_Key_Down ev;
+        Ecore_IMF_Event_Key_Down ev;
 
-	ecore_imf_evas_event_key_down_wrap(event_info, &ev);
-	if (ecore_imf_context_filter_event(sd->imf_context,
-					   ECORE_IMF_EVENT_KEY_DOWN,
-					   (Ecore_IMF_Event *) &ev))
-	  return;
+        ecore_imf_evas_event_key_down_wrap(event_info, &ev);
+        if (ecore_imf_context_filter_event(sd->imf_context,
+                                           ECORE_IMF_EVENT_KEY_DOWN,
+                                           (Ecore_IMF_Event *) &ev))
+          return;
      }
 #endif
 
@@ -386,13 +386,13 @@ _e_entry_key_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, 
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
      {
-	Ecore_IMF_Event_Key_Up ev;
+        Ecore_IMF_Event_Key_Up ev;
 
-	ecore_imf_evas_event_key_up_wrap(event_info, &ev);
-	if (ecore_imf_context_filter_event(sd->imf_context,
-					   ECORE_IMF_EVENT_KEY_UP,
-					   (Ecore_IMF_Event *) &ev))
-	  return;
+        ecore_imf_evas_event_key_up_wrap(event_info, &ev);
+        if (ecore_imf_context_filter_event(sd->imf_context,
+                                           ECORE_IMF_EVENT_KEY_UP,
+                                           (Ecore_IMF_Event *) &ev))
+          return;
      }
 #endif
 }
@@ -405,7 +405,7 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
    Evas_Event_Mouse_Down *event;
    Evas_Coord ox, oy;
    int pos;
-   
+
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
    if (!(event = event_info))
@@ -414,13 +414,13 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
      {
-	Ecore_IMF_Event_Mouse_Down ev;
+        Ecore_IMF_Event_Mouse_Down ev;
 
-	ecore_imf_evas_event_mouse_down_wrap(event_info, &ev);
-	if (ecore_imf_context_filter_event(sd->imf_context,
-					   ECORE_IMF_EVENT_MOUSE_DOWN,
-					   (Ecore_IMF_Event *) &ev))
-	  return;
+        ecore_imf_evas_event_mouse_down_wrap(event_info, &ev);
+        if (ecore_imf_context_filter_event(sd->imf_context,
+                                           ECORE_IMF_EVENT_MOUSE_DOWN,
+                                           (Ecore_IMF_Event *) &ev))
+          return;
      }
 #endif
 
@@ -430,78 +430,78 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
    pos = e_editable_pos_get_from_coords(sd->editable_object,
                                         event->canvas.x - ox,
                                         event->canvas.y - oy);
-  
+
    if (event->button == 1)
      {
-	if (event->flags & EVAS_BUTTON_TRIPLE_CLICK)
-	  {
-	     e_editable_select_all(sd->editable_object);
-	     _e_entry_x_selection_update(obj);
-	  }
-	else if (event->flags & EVAS_BUTTON_DOUBLE_CLICK)
-	  {
-	     e_editable_select_word(sd->editable_object, pos);
-	     _e_entry_x_selection_update(obj);
-	  }
+        if (event->flags & EVAS_BUTTON_TRIPLE_CLICK)
+          {
+             e_editable_select_all(sd->editable_object);
+             _e_entry_x_selection_update(obj);
+          }
+        else if (event->flags & EVAS_BUTTON_DOUBLE_CLICK)
+          {
+             e_editable_select_word(sd->editable_object, pos);
+             _e_entry_x_selection_update(obj);
+          }
         else
           {
              e_editable_cursor_pos_set(sd->editable_object, pos);
              if (!evas_key_modifier_is_set(event->modifiers, "Shift"))
                e_editable_selection_pos_set(sd->editable_object, pos);
-             
+
              sd->selection_dragging = 1;
           }
      }
    else if (event->button == 2)
      {
         E_Win *win;
-        
+
         e_editable_cursor_pos_set(sd->editable_object, pos);
         e_editable_selection_pos_set(sd->editable_object, pos);
-        
+
         if ((win = e_win_evas_object_win_get(obj)))
           ecore_x_selection_primary_request(win->evas_win,
-					    ECORE_X_SELECTION_TARGET_UTF8_STRING);
+                                            ECORE_X_SELECTION_TARGET_UTF8_STRING);
      }
-   else if (event->button == 3) 
+   else if (event->button == 3)
      {
-	E_Menu_Item *mi;
-	E_Manager *man;
-	E_Container *con;
-	int x, y;
-	int cursor_pos, selection_pos;
-	int start_pos, end_pos;
+        E_Menu_Item *mi;
+        E_Manager *man;
+        E_Container *con;
+        int x, y;
+        int cursor_pos, selection_pos;
+        int start_pos, end_pos;
         int s_enabled, s_selecting, s_empty, s_passwd;
 
-	cursor_pos = e_editable_cursor_pos_get(sd->editable_object);
-	selection_pos = e_editable_selection_pos_get(sd->editable_object);
-	start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
-	end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
+        cursor_pos = e_editable_cursor_pos_get(sd->editable_object);
+        selection_pos = e_editable_selection_pos_get(sd->editable_object);
+        start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
+        end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
 
-	s_selecting = (start_pos != end_pos);
+        s_selecting = (start_pos != end_pos);
         s_enabled = sd->enabled;
         s_empty = !e_editable_text_length_get(sd->editable_object);
         s_passwd = e_editable_password_get(sd->editable_object);
-	
+
         if (!s_selecting && !s_enabled && s_empty) return;
 
-	man = e_manager_current_get();
-	con = e_container_current_get(man);
-	ecore_x_pointer_xy_get(con->win, &x, &y);
+        man = e_manager_current_get();
+        con = e_container_current_get(man);
+        ecore_x_pointer_xy_get(con->win, &x, &y);
 
-	/* Popup a menu */
-	sd->popup = e_menu_new();
-	e_menu_post_deactivate_callback_set(sd->popup, 
-					    _e_entry_cb_menu_post, sd);
+        /* Popup a menu */
+        sd->popup = e_menu_new();
+        e_menu_post_deactivate_callback_set(sd->popup,
+                                            _e_entry_cb_menu_post, sd);
         if (s_selecting)
-	  {
+          {
              if (s_enabled)
                {
                   mi = e_menu_item_new(sd->popup);
                   e_menu_item_label_set(mi, _("Delete"));
                   e_util_menu_item_theme_icon_set(mi, "edit-delete");
                   e_menu_item_callback_set(mi, _e_entry_cb_delete, sd);
-             
+
                   mi = e_menu_item_new(sd->popup);
                   e_menu_item_separator_set(mi, 1);
 
@@ -515,12 +515,12 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
                }
              if (!s_passwd)
                {
-		  mi = e_menu_item_new(sd->popup);
-		  e_menu_item_label_set(mi, _("Copy"));
-		  e_util_menu_item_theme_icon_set(mi, "edit-copy");
-		  e_menu_item_callback_set(mi, _e_entry_cb_copy, sd);
-	       }
-	  }
+                  mi = e_menu_item_new(sd->popup);
+                  e_menu_item_label_set(mi, _("Copy"));
+                  e_util_menu_item_theme_icon_set(mi, "edit-copy");
+                  e_menu_item_callback_set(mi, _e_entry_cb_copy, sd);
+               }
+          }
         if (sd->enabled)
           {
              mi = e_menu_item_new(sd->popup);
@@ -532,16 +532,16 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
           {
              mi = e_menu_item_new(sd->popup);
              e_menu_item_separator_set(mi, 1);
-             
+
              mi = e_menu_item_new(sd->popup);
              e_menu_item_label_set(mi, _("Select All"));
              e_util_menu_item_theme_icon_set(mi, "edit-select-all");
              e_menu_item_callback_set(mi, _e_entry_cb_select_all, sd);
           }
 
-	e_menu_activate_mouse(sd->popup, e_util_zone_current_get(man),
-			      x, y, 1, 1, 
-			      E_MENU_POP_DIRECTION_DOWN, event->timestamp);
+        e_menu_activate_mouse(sd->popup, e_util_zone_current_get(man),
+                              x, y, 1, 1,
+                              E_MENU_POP_DIRECTION_DOWN, event->timestamp);
      }
 
    _e_entry_imf_cursor_info_set(obj);
@@ -552,20 +552,20 @@ static void
 _e_entry_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
-   
+
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
      {
-	Ecore_IMF_Event_Mouse_Up ev;
+        Ecore_IMF_Event_Mouse_Up ev;
 
-	ecore_imf_evas_event_mouse_up_wrap(event_info, &ev);
-	if (ecore_imf_context_filter_event(sd->imf_context,
-					   ECORE_IMF_EVENT_MOUSE_UP,
-					   (Ecore_IMF_Event *) &ev))
-	  return;
+        ecore_imf_evas_event_mouse_up_wrap(event_info, &ev);
+        if (ecore_imf_context_filter_event(sd->imf_context,
+                                           ECORE_IMF_EVENT_MOUSE_UP,
+                                           (Ecore_IMF_Event *) &ev))
+          return;
      }
 #endif
 
@@ -584,7 +584,7 @@ _e_entry_mouse_move_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
    Evas_Event_Mouse_Move *event;
    Evas_Coord ox, oy;
    int pos;
-   
+
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
    if (!(event = event_info))
@@ -593,13 +593,13 @@ _e_entry_mouse_move_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
 #ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
      {
-	Ecore_IMF_Event_Mouse_Move ev;
+        Ecore_IMF_Event_Mouse_Move ev;
 
-	ecore_imf_evas_event_mouse_move_wrap(event_info, &ev);
-	if (ecore_imf_context_filter_event(sd->imf_context,
-					   ECORE_IMF_EVENT_MOUSE_MOVE,
-					   (Ecore_IMF_Event *) &ev))
-	  return;
+        ecore_imf_evas_event_mouse_move_wrap(event_info, &ev);
+        if (ecore_imf_context_filter_event(sd->imf_context,
+                                           ECORE_IMF_EVENT_MOUSE_MOVE,
+                                           (Ecore_IMF_Event *) &ev))
+          return;
      }
 #endif
 
@@ -627,19 +627,19 @@ _e_entry_x_selection_notify_handler(void *data, int type __UNUSED__, void *event
    int start_pos, end_pos;
    int selecting;
    int changed = 0;
-   
+
    if ((!(entry = data)) || (!(sd = evas_object_smart_data_get(entry))))
      return 1;
    if (!sd->focused)
      return 1;
-   
+
    editable = sd->editable_object;
    cursor_pos = e_editable_cursor_pos_get(editable);
    selection_pos = e_editable_selection_pos_get(editable);
    start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
    end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
    selecting = (start_pos != end_pos);
-   
+
    ev = event;
    if ((ev->selection == ECORE_X_SELECTION_CLIPBOARD) ||
        (ev->selection == ECORE_X_SELECTION_PRIMARY))
@@ -647,17 +647,17 @@ _e_entry_x_selection_notify_handler(void *data, int type __UNUSED__, void *event
         if (strcmp(ev->target, ECORE_X_SELECTION_TARGET_UTF8_STRING) == 0)
           {
              Ecore_X_Selection_Data_Text *text_data;
-             
+
              text_data = ev->data;
              if (selecting && !_e_entry_emacs_keybindings)
                changed |= e_editable_delete(editable, start_pos, end_pos);
              changed |= e_editable_insert(editable, start_pos, text_data->text);
           }
      }
-   
+
    if (changed)
      evas_object_smart_callback_call(entry, "changed", NULL);
-   
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -672,12 +672,12 @@ _e_entry_x_selection_update(Evas_Object *entry)
    int start_pos, end_pos;
    int selecting;
    char *text;
-   
+
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (!(win = e_win_evas_object_win_get(entry)))
      return;
-   
+
    editable = sd->editable_object;
    if (e_editable_password_get(editable)) return;
 
@@ -686,7 +686,7 @@ _e_entry_x_selection_update(Evas_Object *entry)
    start_pos = (cursor_pos <= selection_pos) ? cursor_pos : selection_pos;
    end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
    selecting = (start_pos != end_pos);
-  
+
    if ((!selecting) ||
        (!(text = e_editable_text_range_get(editable, start_pos, end_pos))))
      return;
@@ -696,7 +696,7 @@ _e_entry_x_selection_update(Evas_Object *entry)
 }
 
 /* Treats the "key down" event to mimick the behavior of Windows/Gtk2/Qt */
-static void 
+static void
 _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
 {
    E_Entry_Smart_Data *sd;
@@ -708,7 +708,7 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
    int selection_changed = 0;
    char *range;
    E_Win *win;
-   
+
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if ((!event) || (!event->keyname))
@@ -823,29 +823,29 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
           {
              if (!e_editable_password_get(editable) && selecting)
                {
-                 range = e_editable_text_range_get(editable, start_pos, end_pos);
-                 if (range)
-                   {
-                      if ((win = e_win_evas_object_win_get(entry)))
-                        ecore_x_selection_clipboard_set(win->evas_win,
-                                                        range,
-                                                        strlen(range) + 1);
-                      free(range);
-                   }
-                 if ((sd->enabled) && (strcmp(event->keyname, "x") == 0))
-                   changed = e_editable_delete(editable, start_pos, end_pos);
+                  range = e_editable_text_range_get(editable, start_pos, end_pos);
+                  if (range)
+                    {
+                       if ((win = e_win_evas_object_win_get(entry)))
+                         ecore_x_selection_clipboard_set(win->evas_win,
+                                                         range,
+                                                         strlen(range) + 1);
+                       free(range);
+                    }
+                  if ((sd->enabled) && (strcmp(event->keyname, "x") == 0))
+                    changed = e_editable_delete(editable, start_pos, end_pos);
                }
-           }
+          }
         else if ((sd->enabled) && (strcmp(event->keyname, "v") == 0))
           {
              if ((win = e_win_evas_object_win_get(entry)))
                ecore_x_selection_clipboard_request(win->evas_win,
-						   ECORE_X_SELECTION_TARGET_UTF8_STRING);
+                                                   ECORE_X_SELECTION_TARGET_UTF8_STRING);
           }
      }
    /* Otherwise, we insert the corresponding character */
    else if ((event->string) && ((sd->enabled)) &&
-          ((strlen(event->string) != 1) || (event->string[0] >= 0x20)))
+            ((strlen(event->string) != 1) || (event->string[0] >= 0x20)))
      {
         if (selecting)
           changed |= e_editable_delete(editable, start_pos, end_pos);
@@ -861,7 +861,7 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
 }
 
 /* Treats the "key down" event to mimick the behavior of Emacs */
-static void 
+static void
 _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
 {
    E_Entry_Smart_Data *sd;
@@ -873,7 +873,7 @@ _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
    int selection_changed = 0;
    char *range;
    E_Win *win;
-   
+
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if ((!event) || (!event->keyname))
@@ -892,32 +892,32 @@ _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
 
    /* Move the cursor/selection to the left */
    if ((strcmp(event->key, "Left") == 0) ||
-      ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
-       (strcmp(event->key, "b") == 0)))
+       ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
+        (strcmp(event->key, "b") == 0)))
      {
         e_editable_cursor_move_left(editable);
         if (sd->selection_mode)
           selection_changed = 1;
         else
-	  e_editable_selection_pos_set(editable,
-				       e_editable_cursor_pos_get(editable));
+          e_editable_selection_pos_set(editable,
+                                       e_editable_cursor_pos_get(editable));
      }
    /* Move the cursor/selection to the right */
    else if ((strcmp(event->key, "Right") == 0) ||
-      ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
-       (strcmp(event->key, "f") == 0)))
+            ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
+             (strcmp(event->key, "f") == 0)))
      {
         e_editable_cursor_move_right(editable);
         if (sd->selection_mode)
           selection_changed = 1;
         else
-	  e_editable_selection_pos_set(editable,
-				       e_editable_cursor_pos_get(editable));
+          e_editable_selection_pos_set(editable,
+                                       e_editable_cursor_pos_get(editable));
      }
    /* Move the cursor/selection to the start of the entry */
    else if ((strcmp(event->keyname, "Home") == 0) ||
-      ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
-       (strcmp(event->key, "a") == 0)))
+            ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
+             (strcmp(event->key, "a") == 0)))
      {
         e_editable_cursor_move_to_start(editable);
         if (sd->selection_mode)
@@ -928,8 +928,8 @@ _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
      }
    /* Move the cursor/selection to the end of the entry */
    else if ((strcmp(event->keyname, "End") == 0) ||
-      ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
-       (strcmp(event->key, "e") == 0)))
+            ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
+             (strcmp(event->key, "e") == 0)))
      {
         e_editable_cursor_move_to_end(editable);
         if (sd->selection_mode)
@@ -942,64 +942,64 @@ _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
    else if ((sd->enabled) && (strcmp(event->keyname, "BackSpace") == 0))
      changed = e_editable_delete(editable, cursor_pos - 1, cursor_pos);
    /* Delete the next character */
-   else if ((sd->enabled) && 
-      ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
-       (strcmp(event->key, "d") == 0)))
+   else if ((sd->enabled) &&
+            ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
+             (strcmp(event->key, "d") == 0)))
      changed = e_editable_delete(editable, cursor_pos, cursor_pos + 1);
    /* Delete until end of line */
-   else if ((sd->enabled) && 
-      ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
-       (strcmp(event->key, "k") == 0)))
+   else if ((sd->enabled) &&
+            ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
+             (strcmp(event->key, "k") == 0)))
      changed = e_editable_delete(editable, cursor_pos,
                                  e_editable_text_length_get(editable));
    /* Toggle the selection mode */
    else if ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
-       (strcmp(event->key, "space") == 0))
+            (strcmp(event->key, "space") == 0))
      {
         if (sd->selection_mode)
           {
-	     e_editable_selection_pos_set(editable, cursor_pos);
-	     sd->selection_mode = 0;
+             e_editable_selection_pos_set(editable, cursor_pos);
+             sd->selection_mode = 0;
           }
         else
-	  sd->selection_mode = 1;
+          sd->selection_mode = 1;
      }
    /* Cut/Copy */
    else if ((evas_key_modifier_is_set(event->modifiers, "Control") ||
-	     evas_key_modifier_is_set(event->modifiers, "Shift")) &&
-	    (strcmp(event->key, "w") == 0))
+             evas_key_modifier_is_set(event->modifiers, "Shift")) &&
+            (strcmp(event->key, "w") == 0))
      {
-	if (!e_editable_password_get(editable) && selecting)
+        if (!e_editable_password_get(editable) && selecting)
           {
-	     range = e_editable_text_range_get(editable, start_pos, end_pos);
-	     if (range)
-	       {
-		  if ((win = e_win_evas_object_win_get(entry)))
-		    ecore_x_selection_clipboard_set(win->evas_win,
-						    range,
-						    strlen(range) + 1);
-		  free(range);
-	       }
-	     if ((sd->enabled) && (evas_key_modifier_is_set(event->modifiers, "Control")))
-	       {
-		  changed = e_editable_delete(editable, start_pos, end_pos);
-		  sd->selection_mode = 0;
-	       }
-	  }
+             range = e_editable_text_range_get(editable, start_pos, end_pos);
+             if (range)
+               {
+                  if ((win = e_win_evas_object_win_get(entry)))
+                    ecore_x_selection_clipboard_set(win->evas_win,
+                                                    range,
+                                                    strlen(range) + 1);
+                  free(range);
+               }
+             if ((sd->enabled) && (evas_key_modifier_is_set(event->modifiers, "Control")))
+               {
+                  changed = e_editable_delete(editable, start_pos, end_pos);
+                  sd->selection_mode = 0;
+               }
+          }
      }
    /* Paste */
-   else if ((sd->enabled) && 
-	    ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
-	     (strcmp(event->key, "y") == 0)))
+   else if ((sd->enabled) &&
+            ((evas_key_modifier_is_set(event->modifiers, "Control")) &&
+             (strcmp(event->key, "y") == 0)))
      {
         if ((win = e_win_evas_object_win_get(entry)))
           ecore_x_selection_clipboard_request(win->evas_win,
-					      ECORE_X_SELECTION_TARGET_UTF8_STRING);
+                                              ECORE_X_SELECTION_TARGET_UTF8_STRING);
      }
    /* Otherwise, we insert the corresponding character */
    else if ((event->string) &&
-	    ((strlen(event->string) != 1) ||
-	     (event->string[0] >= 0x20 && event->string[0] != 0x7f)))
+            ((strlen(event->string) != 1) ||
+             (event->string[0] >= 0x20 && event->string[0] != 0x7f)))
      changed = e_editable_insert(editable, cursor_pos, event->string);
 
    _e_entry_imf_cursor_info_set(entry);
@@ -1012,7 +1012,7 @@ _e_entry_key_down_emacs(Evas_Object *entry, Evas_Event_Key_Down *event)
 
 /* Editable object's smart methods */
 
-static void 
+static void
 _e_entry_smart_add(Evas_Object *object)
 {
    Evas *evas;
@@ -1023,31 +1023,31 @@ _e_entry_smart_add(Evas_Object *object)
 #ifdef HAVE_ECORE_IMF
    const Ecore_IMF_Context_Info *ctx_info;
 #endif
-   
+
    if ((!object) || !(evas = evas_object_evas_get(object)))
      return;
 
    sd = calloc(1, sizeof(E_Entry_Smart_Data));
    if (!sd) return;
-   
+
    evas_object_smart_data_set(object, sd);
 
 #ifdef HAVE_ECORE_IMF
    ctx_id = ecore_imf_context_default_id_get();
    if (ctx_id)
      {
-	ctx_info = ecore_imf_context_info_by_id_get(ctx_id);
-	if (!ctx_info->canvas_type ||
-	    strcmp(ctx_info->canvas_type, "evas") == 0)
-	  sd->imf_context = ecore_imf_context_add(ctx_id);
-	else
-	  {
-	     ctx_id = ecore_imf_context_default_id_by_canvas_type_get("evas");
-	     if (ctx_id)
-	       sd->imf_context = ecore_imf_context_add(ctx_id);
-	     else
-	       sd->imf_context = NULL;
-	  }
+        ctx_info = ecore_imf_context_info_by_id_get(ctx_id);
+        if (!ctx_info->canvas_type ||
+            strcmp(ctx_info->canvas_type, "evas") == 0)
+          sd->imf_context = ecore_imf_context_add(ctx_id);
+        else
+          {
+             ctx_id = ecore_imf_context_default_id_by_canvas_type_get("evas");
+             if (ctx_id)
+               sd->imf_context = ecore_imf_context_add(ctx_id);
+             else
+               sd->imf_context = NULL;
+          }
      }
    else
      sd->imf_context = NULL;
@@ -1055,7 +1055,7 @@ _e_entry_smart_add(Evas_Object *object)
    if (sd->imf_context)
      {
         ecore_imf_context_client_window_set(sd->imf_context,
-					    (long *)ecore_evas_window_get(ecore_evas_ecore_evas_get(evas)));
+                                            (long *)ecore_evas_window_get(ecore_evas_ecore_evas_get(evas)));
         ecore_imf_context_client_canvas_set(sd->imf_context, evas);
         ecore_imf_context_retrieve_surrounding_callback_set(sd->imf_context,
                                                             _e_entry_cb_imf_retrieve_surrounding,
@@ -1071,12 +1071,12 @@ _e_entry_smart_add(Evas_Object *object)
    sd->selection_dragging = 0;
    sd->selection_mode = 0;
    sd->valign = 0.5;
-   
+
    o = edje_object_add(evas);
    sd->entry_object = o;
    e_theme_edje_object_set(o, "base/theme/widgets", "e/widgets/entry");
    evas_object_smart_member_add(o, object);
-   
+
    o = e_editable_add(evas);
    sd->editable_object = o;
    e_editable_theme_set(o, "base/theme/widgets", "e/widgets/entry");
@@ -1086,7 +1086,7 @@ _e_entry_smart_add(Evas_Object *object)
    edje_object_part_swallow(sd->entry_object, "e.swallow.text", o);
    edje_object_size_min_calc(sd->entry_object, &sd->min_width, &sd->height);
    evas_object_show(o);
-   
+
    evas_object_event_callback_add(object, EVAS_CALLBACK_KEY_DOWN,
                                   _e_entry_key_down_cb, NULL);
    evas_object_event_callback_add(object, EVAS_CALLBACK_KEY_UP,
@@ -1103,11 +1103,11 @@ _e_entry_smart_add(Evas_Object *object)
                                        object);
 }
 
-static void 
+static void
 _e_entry_smart_del(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
@@ -1118,7 +1118,7 @@ _e_entry_smart_del(Evas_Object *object)
         ecore_imf_context_event_callback_del(sd->imf_context, ECORE_IMF_CALLBACK_PREEDIT_CHANGED, _e_entry_cb_imf_event_preedit_changed);
         ecore_imf_context_event_callback_del(sd->imf_context, ECORE_IMF_CALLBACK_DELETE_SURROUNDING, _e_entry_cb_imf_event_delete_surrounding);
 
-	ecore_imf_context_del(sd->imf_context);
+        ecore_imf_context_del(sd->imf_context);
      }
 #endif
 
@@ -1133,94 +1133,94 @@ _e_entry_smart_del(Evas_Object *object)
    evas_object_event_callback_del(object, EVAS_CALLBACK_MOUSE_MOVE,
                                   _e_entry_mouse_move_cb);
 
-   if (sd->selection_handler) 
+   if (sd->selection_handler)
      ecore_event_handler_del(sd->selection_handler);
    evas_object_del(sd->editable_object);
    evas_object_del(sd->entry_object);
    free(sd);
 }
 
-static void 
+static void
 _e_entry_smart_move(Evas_Object *object, Evas_Coord x, Evas_Coord y)
 {
    E_Entry_Smart_Data *sd;
    Evas_Coord prev_x, prev_y;
    Evas_Coord ox, oy;
-   
+
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-   
+
    evas_object_geometry_get(object, &prev_x, &prev_y, NULL, NULL);
    evas_object_geometry_get(sd->entry_object, &ox, &oy, NULL, NULL);
    evas_object_move(sd->entry_object, ox + (x - prev_x), oy + (y - prev_y));
 }
 
-static void 
+static void
 _e_entry_smart_resize(Evas_Object *object, Evas_Coord w, Evas_Coord h)
 {
    E_Entry_Smart_Data *sd;
    Evas_Coord x, y;
-   
+
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-   
+
    evas_object_geometry_get(object, &x, &y, NULL, NULL);
    evas_object_move(sd->entry_object, x, y + ((h - sd->height) * sd->valign));
    evas_object_resize(sd->entry_object, w, sd->height);
 }
 
-static void 
+static void
 _e_entry_smart_show(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    evas_object_show(sd->entry_object);
 }
 
-static void 
+static void
 _e_entry_smart_hide(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    evas_object_hide(sd->entry_object);
 }
 
-static void 
+static void
 _e_entry_color_set(Evas_Object *object, int r, int g, int b, int a)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    evas_object_color_set(sd->entry_object, r, g, b, a);
 }
 
-static void 
+static void
 _e_entry_clip_set(Evas_Object *object, Evas_Object *clip)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    evas_object_clip_set(sd->entry_object, clip);
 }
 
-static void 
+static void
 _e_entry_clip_unset(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
-   
+
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
    evas_object_clip_unset(sd->entry_object);
 }
 
-static void 
-_e_entry_cb_menu_post(void *data, E_Menu *m __UNUSED__) 
+static void
+_e_entry_cb_menu_post(void *data, E_Menu *m __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
 
@@ -1230,8 +1230,8 @@ _e_entry_cb_menu_post(void *data, E_Menu *m __UNUSED__)
    sd->popup = NULL;
 }
 
-static void 
-_e_entry_cb_cut(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
+static void
+_e_entry_cb_cut(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
    Evas_Object *editable;
@@ -1243,7 +1243,7 @@ _e_entry_cb_cut(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 
    sd = data;
    if (!sd->enabled) return;
-   
+
    editable = sd->editable_object;
    cursor_pos = e_editable_cursor_pos_get(editable);
    selection_pos = e_editable_selection_pos_get(editable);
@@ -1251,22 +1251,22 @@ _e_entry_cb_cut(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
    selecting = (start_pos != end_pos);
    if (!selecting) return;
-   
+
    range = e_editable_text_range_get(editable, start_pos, end_pos);
    if (range)
      {
-	if ((win = e_win_evas_object_win_get(sd->entry_object)))
-	  ecore_x_selection_clipboard_set(win->evas_win,
-					  range, strlen(range) + 1);
-	free(range);
-     }   
+        if ((win = e_win_evas_object_win_get(sd->entry_object)))
+          ecore_x_selection_clipboard_set(win->evas_win,
+                                          range, strlen(range) + 1);
+        free(range);
+     }
    changed = e_editable_delete(editable, start_pos, end_pos);
    if (changed)
      evas_object_smart_callback_call(sd->entry_object, "changed", NULL);
 }
 
-static void 
-_e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
+static void
+_e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
    Evas_Object *editable;
@@ -1277,7 +1277,7 @@ _e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    E_Win *win;
 
    sd = data;
-   
+
    editable = sd->editable_object;
    cursor_pos = e_editable_cursor_pos_get(editable);
    selection_pos = e_editable_selection_pos_get(editable);
@@ -1285,33 +1285,33 @@ _e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    end_pos = (cursor_pos >= selection_pos) ? cursor_pos : selection_pos;
    selecting = (start_pos != end_pos);
    if (!selecting) return;
-   
+
    range = e_editable_text_range_get(editable, start_pos, end_pos);
    if (range)
      {
-	if ((win = e_win_evas_object_win_get(sd->entry_object)))
-	  ecore_x_selection_clipboard_set(win->evas_win,
-					  range, strlen(range) + 1);
-	free(range);
+        if ((win = e_win_evas_object_win_get(sd->entry_object)))
+          ecore_x_selection_clipboard_set(win->evas_win,
+                                          range, strlen(range) + 1);
+        free(range);
      }
 }
 
-static void 
-_e_entry_cb_paste(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
+static void
+_e_entry_cb_paste(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
    E_Win *win;
-   
+
    sd = data;
    if (!sd->enabled) return;
-   
+
    if ((win = e_win_evas_object_win_get(sd->entry_object)))
      ecore_x_selection_clipboard_request(win->evas_win,
-					 ECORE_X_SELECTION_TARGET_UTF8_STRING);
+                                         ECORE_X_SELECTION_TARGET_UTF8_STRING);
 }
 
-static void 
-_e_entry_cb_select_all(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
+static void
+_e_entry_cb_select_all(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
 
@@ -1320,8 +1320,8 @@ _e_entry_cb_select_all(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    _e_entry_x_selection_update(sd->entry_object);
 }
 
-static void 
-_e_entry_cb_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__) 
+static void
+_e_entry_cb_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
    Evas_Object *editable;
@@ -1344,9 +1344,9 @@ _e_entry_cb_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    range = e_editable_text_range_get(editable, start_pos, end_pos);
    if (range)
      {
-	e_editable_delete(editable, start_pos, end_pos);
-	evas_object_smart_callback_call(sd->entry_object, "changed", NULL);
-	free(range);
+        e_editable_delete(editable, start_pos, end_pos);
+        evas_object_smart_callback_call(sd->entry_object, "changed", NULL);
+        free(range);
      }
 }
 
@@ -1358,7 +1358,7 @@ _e_entry_imf_context_reset(Evas_Object *object)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-#ifdef HAVE_ECORE_IMF 
+#ifdef HAVE_ECORE_IMF
    if (sd->imf_context)
      ecore_imf_context_reset(sd->imf_context);
 #endif
@@ -1374,7 +1374,7 @@ _e_entry_imf_cursor_info_set(Evas_Object *object)
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
 
-#ifdef HAVE_ECORE_IMF 
+#ifdef HAVE_ECORE_IMF
    if (!sd || !sd->imf_context) return;
 
    editable = sd->editable_object;
@@ -1388,7 +1388,7 @@ _e_entry_imf_cursor_info_set(Evas_Object *object)
 }
 
 #ifdef HAVE_ECORE_IMF
-static Eina_Bool 
+static Eina_Bool
 _e_entry_cb_imf_retrieve_surrounding(void *data, Ecore_IMF_Context *ctx __UNUSED__, char **text, int *cursor_pos)
 {
    E_Entry_Smart_Data *sd;
