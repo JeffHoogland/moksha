@@ -2429,6 +2429,7 @@ _e_border_client_inset_calc(E_Border *bd)
    if (bd->bg_object)
      {
         evas_object_resize(bd->bg_object, 1000, 1000);
+        edje_object_message_signal_process(bd->bg_object);
         edje_object_calc_force(bd->bg_object);
         edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
         bd->client_inset.l = cx;
