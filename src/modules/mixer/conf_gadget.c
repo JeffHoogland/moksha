@@ -218,7 +218,7 @@ _clear_channels(E_Config_Dialog_Data *cfdata)
 static void
 _fill_channels(Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   struct mixer_config_ui_channels *ui = &cfdata->ui.channels;;
+   struct mixer_config_ui_channels *ui = &cfdata->ui.channels;
    Evas_Object *selected;
    Evas_Coord mw, mh;
    const char *name;

@@ -158,7 +158,7 @@ static Pager_Popup *_pager_popup_find(E_Zone *zone);
 static E_Config_Dialog *_pager_config_dialog(E_Container *con, const char *params);
 
 /* functions for pager popup on key actions */
-static int _pager_popup_show();
+static int _pager_popup_show(void);
 static void _pager_popup_hide(int switch_desk);
 static Eina_Bool _pager_popup_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool _pager_popup_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event);
@@ -2317,7 +2317,7 @@ _pager_popup_cb_timeout(void *data)
 /************************************************************************/
 /* popup-on-keyaction functions */
 static int
-_pager_popup_show()
+_pager_popup_show(void)
 {
    E_Zone *zone;
    int x, y, w, h;

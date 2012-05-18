@@ -166,6 +166,16 @@ _e_fileman_dbus_daemon_request_name_cb(void        *data,
 static E_Fileman_DBus_Daemon *
 _e_fileman_dbus_daemon_new(void)
 {
+   const struct
+   {
+      const char      *method;
+      const char      *signature;
+      const char      *ret_signature;
+      E_DBus_Method_Cb func;
+   } *itr, desc[] = {
+      {"OpenDirectory", "s", "", _e_fileman_dbus_daemon_open_directory_cb},
+      {NULL, NULL, NULL, NULL}
+   };
    E_Fileman_DBus_Daemon *d;
 
    d = calloc(1, sizeof(*d));
@@ -188,17 +198,6 @@ _e_fileman_dbus_daemon_new(void)
        _e_fileman_dbus_daemon_request_name_cb, d);
    if (!d->pending.request_name)
      goto error;
-
-   const struct
-   {
-      const char      *method;
-      const char      *signature;
-      const char      *ret_signature;
-      E_DBus_Method_Cb func;
-   } *itr, desc[] = {
-      {"OpenDirectory", "s", "", _e_fileman_dbus_daemon_open_directory_cb},
-      {NULL, NULL, NULL, NULL}
-   };
 
    for (itr = desc; itr->method; itr++)
      e_dbus_interface_method_add

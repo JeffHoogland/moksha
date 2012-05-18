@@ -201,8 +201,9 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 void
 evry_plugin_unregister(Evry_Plugin *p)
 {
-   DBG("%s", p->name);
    Eina_List *l = evry_conf->conf_subjects;
+
+   DBG("%s", p->name);
 
    if (l && eina_list_data_find_list(l, p->config))
      {

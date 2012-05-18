@@ -619,7 +619,7 @@ pulse_new(void)
 {
    Pulse *conn;
    Eina_Iterator *it;
-   const char *prev = NULL, *buf = NULL;;
+   const char *prev = NULL, *buf = NULL;
    time_t t = 0;
    char *home, h[4096];
    const Eina_File_Direct_Info *info;

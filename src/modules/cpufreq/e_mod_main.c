@@ -37,7 +37,7 @@ static void _menu_cb_post(void *data, E_Menu *m);
 static void _cpufreq_set_governor(const char *governor);
 static void _cpufreq_set_frequency(int frequency);
 static Eina_Bool _cpufreq_cb_check(void *data);
-static Status *_cpufreq_status_new();
+static Status *_cpufreq_status_new(void);
 static void _cpufreq_status_free(Status *s);
 static int _cpufreq_status_check_available(Status *s);
 static int _cpufreq_status_check_current(Status *s);
@@ -505,7 +505,7 @@ _cpufreq_cb_check(void *data __UNUSED__)
 }
 
 static Status *
-_cpufreq_status_new()
+_cpufreq_status_new(void)
 {
    Status *s;
 

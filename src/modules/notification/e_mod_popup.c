@@ -368,7 +368,7 @@ _notification_popup_place(Popup_Data *popup,
 }
 
 static void
-_notification_popups_place()
+_notification_popups_place(void)
 {
    Popup_Data *popup;
    Eina_List *l;

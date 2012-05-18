@@ -2817,8 +2817,10 @@ _evry_matches_update(Evry_Selector *sel, int async)
 
         EINA_LIST_FOREACH (s->plugins, l, p)
           {
+             size_t len;
+
              if (!p->config->trigger) continue;
-             size_t len = strlen(p->config->trigger);
+             len = strlen(p->config->trigger);
 
              if (len_trigger && len != len_trigger)
                continue;

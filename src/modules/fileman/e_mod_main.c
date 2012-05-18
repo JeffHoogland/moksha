@@ -346,6 +346,7 @@ _e_mod_menu_generate(void *data __UNUSED__,
    E_Menu_Item *mi;
    E_Volume *vol;
    const Eina_List *l;
+   Eina_Bool need_separator;
 
    /* Home */
    mi = e_menu_item_new(m);
@@ -377,7 +378,7 @@ _e_mod_menu_generate(void *data __UNUSED__,
    e_util_menu_item_theme_icon_set(mi, "computer");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, "/");
 
-   Eina_Bool need_separator = 1;
+   need_separator = 1;
 
    /* Volumes */
    Eina_Bool volumes_visible = 0;
