@@ -84,7 +84,7 @@ typedef int (*E_Mixer_Mute_Get_Cb)(E_Mixer_System *, E_Mixer_Channel *, int *);
 typedef int (*E_Mixer_Mute_Set_Cb)(E_Mixer_System *, E_Mixer_Channel *, int);
 typedef int (*E_Mixer_State_Get_Cb)(E_Mixer_System *, E_Mixer_Channel *, E_Mixer_Channel_State *);
 typedef int (*E_Mixer_Capture_Cb)(E_Mixer_System *, E_Mixer_Channel *);
-typedef void *(*E_Mixer_Cb)(void);
+typedef void *(*E_Mixer_Cb)();
 
 EAPI extern E_Module_Api e_modapi;
 EAPI void *e_modapi_init(E_Module *m);
