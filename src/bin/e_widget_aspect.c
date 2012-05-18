@@ -34,6 +34,12 @@ _e_wid_reconfigure(E_Widget_Data *wd)
 
    evas_object_geometry_get(wd->obj, &px, &py, &pw, &ph);
 
+   if (ph == 0)
+     {
+       evas_object_resize(wd->child, 0, 0);
+       return ;
+     }
+
    ap = (double)pw / ph;
    ad = (double)(wd->aspect_w) / wd->aspect_h;
    if (ap >= ad)
