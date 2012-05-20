@@ -34597,21 +34597,26 @@ collections {
          part {
             name: "base";
             type: RECT;
+            /* description {
+             *    state: "default" 0.0;
+             *    rel1 {
+             *       relative: 0.0 1.0;
+             *       to_x: "list_frame";
+             *       to_y: "input_base";
+             *    }
+             *    rel2 {
+             *       to_x: "list_frame";
+             *       to_y: "input_base";
+             *    }
+             * } */
             description {
                state: "default" 0.0;
+               /*inherit: "default" 0.0;*/
                rel1 {
                   relative: 0.0 1.0;
                   to_x: "list_frame";
                   to_y: "input_base";
                }
-               rel2 {
-                  to_x: "list_frame";
-                  to_y: "input_base";
-               }
-            }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
                rel2 {
                   to: "list_frame";
                   offset: -1 -1;
@@ -34621,22 +34626,29 @@ collections {
          part {
             name: "input_base";
             type: RECT;
+            /* description {
+             *    state: "default" 0.0;
+             *    rel1 {
+             *       to_x: "base";
+             *    }
+             * 
+             *    rel2 {
+             *       relative: 1.0 0.0;
+             *       to_x: "base";
+             *       offset: -1 1;
+             *    }
+             * } */
             description {
                state: "default" 0.0;
-              rel1 {
-              to_x: "base";
-              }
-
-              rel2 {
+               /* inherit: "default" 0.0; */
+               rel1 {
+                  to_x: "base";
+               }
+               rel2 {
                   relative: 1.0 0.0;
-               to_x: "base";
-               offset: -1 1;
-              }
-            }
-            description {
-               state: "visible" 0.0;
-               inherit: "default" 0.0;
-               rel2.offset: -1 28;
+                  to_x: "base";
+                  offset: -1 28;
+               }
             }
          }
          part {
