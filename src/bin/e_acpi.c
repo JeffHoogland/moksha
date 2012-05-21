@@ -209,68 +209,74 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
         sdata[p - str] = 0;
         /* parse out this acpi string into separate pieces */
         if (sscanf(sdata, "%1023s %1023s %x %x", 
-                   device, bus, &sig, &status) == 4)
+                   device, bus, &sig, &status) != 4)
           {
-             /* create new event structure to raise */
-             acpi_event = E_NEW(E_Event_Acpi, 1);
-             acpi_event->bus_id = eina_stringshare_add(bus);
-             acpi_event->signal = sig;
-             acpi_event->status = status;
-             
-             /* FIXME: add in a key faking layer */
-             if (!done)
-               {
-                  for (i = 0; _devices_multiplexed[i].name; i++)
-                    {
-                       // if device name matches
-                       if ((!strcmp(device, _devices_multiplexed[i].name)) &&
-                           // AND busname not set OR device name matches
-                           (!_devices_multiplexed[i].bus ||
-                               (_devices_multiplexed[i].bus &&
-                                   (!strcmp(bus, _devices_multiplexed[i].bus)))) &&
-                           // AND status matches
-                           (_devices_multiplexed[i].status == status))
-                         {
-                            acpi_event->type = _devices_multiplexed[i].type;
-                            done = 1;
-                            break;
-                         }
-                    }
-               }
-             if (!done)
+             sig = -1;
+             status = -1;
+             if (sscanf(sdata, "%1023s %1023s", device, bus) != 2)
+               goto done_event;
+          }
+        
+        /* create new event structure to raise */
+        acpi_event = E_NEW(E_Event_Acpi, 1);
+        acpi_event->bus_id = eina_stringshare_add(bus);
+        acpi_event->signal = sig;
+        acpi_event->status = status;
+        
+        /* FIXME: add in a key faking layer */
+        if ((!done) && (sig >= 0) && (status >= 0))
+          {
+             for (i = 0; _devices_multiplexed[i].name; i++)
                {
                   // if device name matches
-                  for (i = 0; _devices_simple[i].name; i++)
+                  if ((!strcmp(device, _devices_multiplexed[i].name)) &&
+                      // AND busname not set OR device name matches
+                      (!_devices_multiplexed[i].bus ||
+                          (_devices_multiplexed[i].bus &&
+                              (!strcmp(bus, _devices_multiplexed[i].bus)))) &&
+                      // AND status matches
+                      (_devices_multiplexed[i].status == status))
                     {
-                       if (!strcmp(device, _devices_simple[i].name))
-                         {
-                            acpi_event->type = _devices_simple[i].type;
-                            done = 1;
-                            break;
-                         }
-                    }
-               }
-             if (!done)
-               {
-                  free(acpi_event);
-                  acpi_event = NULL;
-               }
-             else
-               {
-                  switch (acpi_event->type)
-                    {
-                     case E_ACPI_TYPE_LID:
-                       acpi_event->status = 
-                          _e_acpi_lid_status_get(device, bus);
-                       break;
-                     default:
+                       acpi_event->type = _devices_multiplexed[i].type;
+                       done = 1;
                        break;
                     }
-                  /* actually raise the event */
-                  ecore_event_add(E_EVENT_ACPI, acpi_event, 
-                                  _e_acpi_cb_event_free, NULL);
                }
           }
+        if (!done)
+          {
+             // if device name matches
+             for (i = 0; _devices_simple[i].name; i++)
+               {
+                  if (!strcmp(device, _devices_simple[i].name))
+                    {
+                       acpi_event->type = _devices_simple[i].type;
+                       done = 1;
+                       break;
+                    }
+               }
+          }
+        if (!done)
+          {
+             free(acpi_event);
+             acpi_event = NULL;
+          }
+        else
+          {
+             switch (acpi_event->type)
+               {
+                case E_ACPI_TYPE_LID:
+                  acpi_event->status = 
+                    _e_acpi_lid_status_get(device, bus);
+                  break;
+                default:
+                  break;
+               }
+             /* actually raise the event */
+             ecore_event_add(E_EVENT_ACPI, acpi_event, 
+                             _e_acpi_cb_event_free, NULL);
+          }
+done_event:
         str = p + 1;
         p = strchr(str, '\n');
      }
