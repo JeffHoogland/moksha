@@ -199,6 +199,10 @@ if USE_MODULE_TILING
 SUBDIRS += tiling
 endif
 
+if USE_MODULE_ACCESS
+SUBDIRS += access
+endif
+
 #if HAVE_WAYLAND_DRM
 # SUBDIRS += wl_drm
 #endif

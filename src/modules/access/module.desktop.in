@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Access
+Icon=e-module-access
+X-Enlightenment-ModuleType=utils
+Comment=Accessibility module designed to improve ease of use for the vision impaired and the blind.
