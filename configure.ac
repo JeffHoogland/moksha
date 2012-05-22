@@ -799,6 +799,7 @@ AC_E_OPTIONAL_MODULE([tasks], true)
 AC_E_OPTIONAL_MODULE([conf_randr], true)
 AC_E_OPTIONAL_MODULE([xkbswitch], true)
 AC_E_OPTIONAL_MODULE([tiling], true)
+AC_E_OPTIONAL_MODULE([access], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -957,6 +958,8 @@ src/modules/xkbswitch/Makefile
 src/modules/xkbswitch/module.desktop
 src/modules/tiling/Makefile
 src/modules/tiling/module.desktop
+src/modules/access/Makefile
+src/modules/access/module.desktop
 src/preload/Makefile
 data/Makefile
 data/images/Makefile
