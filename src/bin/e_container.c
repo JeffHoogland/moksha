@@ -128,7 +128,7 @@ e_container_new(E_Manager *man)
    con->scratch_win = ecore_x_window_override_new(con->win, 0, 0, 7, 7);
    
    /* init layers */
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
 	con->layers[i].win = ecore_x_window_input_new(con->win, 0, 0, 1, 1);
 	ecore_x_window_lower(con->layers[i].win);
@@ -588,7 +588,7 @@ e_container_border_remove(E_Border *bd)
    if (!bd->zone) return;
    /* FIXME: Could revert to old behaviour, ->layer is consistent
     * with pos now. */
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
 	bd->zone->container->layers[i].clients =
 	   eina_list_remove(bd->zone->container->layers[i].clients, bd);
@@ -645,7 +645,7 @@ e_container_border_raise(E_Border *bd)
 
    if (!bd->zone) return NULL;
    /* Remove from old layer */
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
 	bd->zone->container->layers[i].clients =
 	   eina_list_remove(bd->zone->container->layers[i].clients, bd);
@@ -699,7 +699,7 @@ e_container_border_lower(E_Border *bd)
 
    if (!bd->zone) return NULL;
    /* Remove from old layer */
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
 	bd->zone->container->layers[i].clients =
 	   eina_list_remove(bd->zone->container->layers[i].clients, bd);
@@ -729,7 +729,7 @@ e_container_border_lower(E_Border *bd)
    else
      {
 	/* Need to check the layers above */
-	for (i = pos + 1; i < 7; i++)
+	for (i = pos + 1; i < 10; i++)
 	  {
 	     if (bd->zone->container->layers[i].clients)
 	       {
@@ -750,7 +750,7 @@ e_container_border_stack_above(E_Border *bd, E_Border *above)
 
    if (!bd->zone) return;
    /* Remove from old layer */
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
 	bd->zone->container->layers[i].clients =
 	   eina_list_remove(bd->zone->container->layers[i].clients, bd);
@@ -783,7 +783,7 @@ e_container_border_stack_below(E_Border *bd, E_Border *below)
 
    if (!bd->zone) return;
    /* Remove from old layer */
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
 	bd->zone->container->layers[i].clients =
 	   eina_list_remove(bd->zone->container->layers[i].clients, bd);
@@ -821,7 +821,7 @@ _e_container_border_list_new(E_Container *con)
    list->container = con;
    e_object_ref(E_OBJECT(list->container));
    eina_array_step_set(&(list->client_array), sizeof(list->client_array), 256);
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
         EINA_LIST_FOREACH(con->layers[i].clients, l, bd)
            eina_array_push(&(list->client_array), bd);
@@ -925,7 +925,7 @@ _e_container_free(E_Container *con)
    ecore_x_window_free(con->event_win);
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
         ecore_x_window_free(con->layers[i].win);
 /* FIXME: had to disable this as it was freeing already freed items during
@@ -1233,7 +1233,7 @@ _e_container_resize_handle(E_Container *con)
 
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
 
-   for (i = 0; i < 7; i++)
+   for (i = 0; i < 10; i++)
      {
 	Eina_List *tmp = NULL;
 	E_Border *bd;

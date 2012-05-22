@@ -3168,10 +3168,15 @@ e_actions_init(void)
 EINTERN int
 e_actions_shutdown(void)
 {
+   Eina_List *tlist = NULL, *l;
+   E_Action *act;
+   
    e_action_predef_name_all_del();
 
-   while(action_list)
-     e_object_del(action_list->data);
+   EINA_LIST_FOREACH(action_list, l, act)
+     tlist = eina_list_append(tlist, act);
+   EINA_LIST_FREE(tlist, act)
+     e_object_del(E_OBJECT(act));
 
    action_names = eina_list_free(action_names);
    eina_hash_free(actions);
