@@ -1,3 +1,4 @@
+
 #include "e.h"
 
 typedef struct _E_Thumb E_Thumb;
@@ -207,7 +208,7 @@ _e_thumb_key_load(E_Thumb *eth, const char *icon)
 {
    Eet_File *ef;
    int size = 0;
-   
+
    ef = eet_open(icon, EET_FILE_MODE_READ);
    if (!ef) return;
    eth->sort_id = eet_read(ef, "/thumbnail/sort_id", &size);
@@ -261,11 +262,10 @@ e_thumb_client_data(Ecore_Ipc_Event_Client_Data *e)
 		       if (_pending == 0) _e_thumb_thumbnailers_kill();
 		       if (ecore_file_exists(icon))
 			 {
-			    e_icon_preload_set(obj, 1);
 			    e_icon_file_key_set(obj, icon, "/thumbnail/data");
 			    _e_thumb_key_load(eth, icon);
+			    e_icon_preload_set(obj, 1);
 			 }
-
 		       evas_object_smart_callback_call(obj, "e_thumb_gen", NULL);
 		    }
 	       }
