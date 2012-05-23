@@ -325,9 +325,13 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    fsel->content_obj = o;
 
    fdev = e_config->wallpaper_import_last_dev;
-   snprintf(buf, sizeof(buf), "%s%s",fdev,e_config->wallpaper_import_last_path);
+   if (fdev)
+     snprintf(buf, sizeof(buf), "%s/%s",
+              fdev, e_config->wallpaper_import_last_path);
+   else
+     snprintf(buf, sizeof(buf), "%s", e_config->wallpaper_import_last_path);
 
-   if(!ecore_file_exists(ecore_file_realpath(buf)))
+   if (!ecore_file_exists(ecore_file_realpath(buf)))
      fpath = "/";
    else
      fpath = e_config->wallpaper_import_last_path;
@@ -338,6 +342,7 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
 	fpath = "/";
      }
 
+   printf("LAST: [%s] '%s' '%s'\n", buf, fdev, fpath);
    ofm = e_widget_fsel_add(evas, fdev, fpath, NULL, NULL, NULL, NULL,
 			   NULL, NULL, 1);
    e_widget_fsel_window_object_set(ofm, E_OBJECT(win));
