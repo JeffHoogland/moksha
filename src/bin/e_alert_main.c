@@ -12,6 +12,10 @@
 #include <xcb/xcb.h>
 #include <xcb/shape.h>
 
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif
+
 #define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 240
 
