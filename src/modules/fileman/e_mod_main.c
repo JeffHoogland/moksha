@@ -347,6 +347,7 @@ _e_mod_menu_generate(void *data __UNUSED__,
    E_Volume *vol;
    const Eina_List *l;
    Eina_Bool need_separator;
+   Eina_Bool volumes_visible = 0;
 
    /* Home */
    mi = e_menu_item_new(m);
@@ -381,7 +382,6 @@ _e_mod_menu_generate(void *data __UNUSED__,
    need_separator = 1;
 
    /* Volumes */
-   Eina_Bool volumes_visible = 0;
    EINA_LIST_FOREACH(e_fm2_device_volume_list_get(), l, vol)
      {
         if (vol->mount_point && !strcmp(vol->mount_point, "/")) continue;
