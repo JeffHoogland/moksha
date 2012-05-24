@@ -987,25 +987,25 @@ e_border_hide(E_Border *bd,
                     e_border_focus_set(bd->parent, 1, 1);
                   else if (e_config->focus_revert_on_hide_or_close)
                     {
-     /* When using pointer focus, the border under the
-      * pointer (if any) gets focused, in sloppy/click
-      * focus the last focused window on the current
-      * desk gets focus */
-                         if (e_config->focus_policy == E_FOCUS_MOUSE)
-                           {
-                              pbd = e_border_under_pointer_get(desk, bd);
-                              if (pbd)
-                                e_border_focus_set(pbd, 1, 1);
-                           }
-                         else
-                           e_desk_last_focused_focus(desk);
+                       /* When using pointer focus, the border under the
+                        * pointer (if any) gets focused, in sloppy/click
+                        * focus the last focused window on the current
+                        * desk gets focus */
+                       if (e_config->focus_policy == E_FOCUS_MOUSE)
+                         {
+                            pbd = e_border_under_pointer_get(desk, bd);
+                            if (pbd)
+                              e_border_focus_set(pbd, 1, 1);
+                         }
+                       else
+                         e_desk_last_focused_focus(desk);
                     }
                }
           }
         if (manage == 1)
           {
              /* Make sure that this border isn't deleted */
-              bd->await_hide_event++;
+             bd->await_hide_event++;
           }
         if (manage != 2)
           {
@@ -1013,7 +1013,7 @@ e_border_hide(E_Border *bd,
                ecore_x_window_hide(bd->client.win);
           }
      }
-
+   
    visible = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    if (!manage)
@@ -4785,22 +4785,22 @@ _e_border_cb_window_hide(void *data  __UNUSED__,
 //        printf("  Don't delete hidden or iconified windows\n");
 //        printf("  bd->iconic = %i, bd->visible = %i, bd->new_client = %i, bd->await_hide_event = %i\n",
 //               bd->iconic, bd->visible, bd->new_client, bd->await_hide_event);
-              if (bd->await_hide_event > 0)
-                {
-                   bd->await_hide_event--;
-                }
-              else
-                {
+        if (bd->await_hide_event > 0)
+          {
+             bd->await_hide_event--;
+          }
+        else
+          {
 //             printf("  hide really\n");
-     /* Only hide the border if it is visible */
-                      if (bd->visible) e_border_hide(bd, 1);
-                }
+             /* Only hide the border if it is visible */
+             if (bd->visible) e_border_hide(bd, 1);
+          }
      }
    else
      {
 //             printf("  hide2\n");
-          e_border_hide(bd, 0);
-          e_object_del(E_OBJECT(bd));
+        e_border_hide(bd, 0);
+        e_object_del(E_OBJECT(bd));
      }
    return ECORE_CALLBACK_PASS_ON;
 }

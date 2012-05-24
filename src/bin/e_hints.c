@@ -865,7 +865,7 @@ e_hints_window_state_update(E_Border                   *bd,
         break;
 
       case ECORE_X_WINDOW_STATE_HIDDEN:
-        /* Ignore */
+        /* XXX: fixme */
         break;
 
       case ECORE_X_WINDOW_STATE_FULLSCREEN:
@@ -986,7 +986,7 @@ e_hints_window_state_get(E_Border *bd)
              switch (state[i])
                {
                 case ECORE_X_WINDOW_STATE_ICONIFIED:
-     /* Ignore */
+                  /* Ignore */
                   break;
 
                 case ECORE_X_WINDOW_STATE_MODAL:
@@ -1034,11 +1034,11 @@ e_hints_window_state_get(E_Border *bd)
                   break;
 
                 case ECORE_X_WINDOW_STATE_DEMANDS_ATTENTION:
-     /* FIXME */
+                  /* FIXME */
                   break;
 
                 case ECORE_X_WINDOW_STATE_UNKNOWN:
-     /* Ignore */
+                  /* Ignore */
                   break;
                }
           }
