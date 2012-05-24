@@ -225,10 +225,18 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *mainn = e_widget_toolbook_add(evas, 24, 24);
      {
         /* Holds the used layouts ilist and the button table */
-        Evas_Object *layoutss = e_widget_list_add(evas, 0, 0);
+        Evas_Object *layoutss;
+        Evas_Object *modelss;
+        Evas_Object *options;
+
+        layoutss = e_widget_list_add(evas, 0, 0);
           {
              /* Holds the used layouts */
-             Evas_Object *configs = e_widget_ilist_add(evas, 32, 32, NULL);
+             Evas_Object *configs;
+             Evas_Object *buttons;
+
+             configs = e_widget_ilist_add(evas, 32, 32, NULL);
+
                {
                   e_widget_size_min_set(configs, 220, 160);
                   e_widget_ilist_go(configs);
@@ -238,7 +246,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                }
 
              /* Holds the buttons */
-             Evas_Object *buttons = e_widget_table_add(evas, 1);
+             buttons = e_widget_table_add(evas, 1);
                {
                   cfdata->btn_up = e_widget_button_add(evas, _("Up"), "go-up", _cb_up, cfdata, NULL);
                     {
@@ -270,7 +278,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
           }
 
         /* Holds the default models */
-        Evas_Object *modelss = e_widget_ilist_add(evas, 32, 32, &cfdata->default_model);
+        modelss = e_widget_ilist_add(evas, 32, 32, &cfdata->default_model);
           {
              e_widget_size_min_set(modelss, 220, 160);
              cfdata->dmodel_list = modelss;
@@ -279,14 +287,16 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
           }
 
         /* Holds the options */
-        Evas_Object *options = e_widget_list_add(evas, 0, 0);
+        options = e_widget_list_add(evas, 0, 0);
           {
              E_XKB_Option *option;
              E_XKB_Option_Group *group;
              Eina_List *l, *ll, *lll;
              Evas_Coord mw, mh;
+             Evas_Object *general;
+             Evas_Object *scroller;
 
-             Evas_Object *general =  e_widget_framelist_add(evas, _("Gadgets"), 0);
+             general =  e_widget_framelist_add(evas, _("Gadgets"), 0);
                {
                   Evas_Object *only_label = e_widget_check_add(evas, _("Label only"), &(cfdata->only_label));
                     {
@@ -319,7 +329,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
              evas_object_resize(options, mw, mh);
 
-             Evas_Object *scroller = e_widget_scrollframe_simple_add(evas, options);
+             scroller = e_widget_scrollframe_simple_add(evas, options);
              e_widget_size_min_set(scroller, 220, 160);
 
              e_widget_toolbook_page_append(mainn, NULL, _("Options"), scroller, 1, 1, 1, 1, 0.5, 0.0);
@@ -458,6 +468,7 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
    E_Dialog *dlg;
    Evas *evas;
    Evas_Coord mw, mh;
+   Evas_Object *mainn;
 
    if (!(dlg = e_dialog_new(_xkb.cfd->con, "E", "xkbswitch_config_add_dialog"))) return NULL;
 
@@ -470,10 +481,13 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
    e_dialog_title_set(dlg, _("Add New Configuration"));
 
    /* The main toolbook, holds the lists and tabs */
-   Evas_Object *mainn = e_widget_toolbook_add(evas, 24, 24);
+   mainn = e_widget_toolbook_add(evas, 24, 24);
      {
         /* Holds the available layouts */
         Evas_Object *available = e_widget_ilist_add(evas, 32, 32, NULL);
+        Evas_Object *modelss;
+        Evas_Object *variants;
+
           {
              e_widget_size_min_set(available, 220, 160);
              e_widget_ilist_go(available);
@@ -482,14 +496,14 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
           }
 
         /* Holds the available models */
-        Evas_Object *modelss = e_widget_ilist_add(evas, 32, 32, NULL);
+        modelss = e_widget_ilist_add(evas, 32, 32, NULL);
           {
              e_widget_toolbook_page_append(mainn, NULL, _("Model"), modelss, 1, 1, 1, 1, 0.5, 0.0);
              cfdata->model_list = modelss;
         }
 
         /* Holds the available variants */
-        Evas_Object *variants = e_widget_ilist_add(evas, 32, 32, NULL);
+        variants = e_widget_ilist_add(evas, 32, 32, NULL);
           {
              e_widget_toolbook_page_append(mainn, NULL, _("Variant"), variants, 1, 1, 1, 1, 0.5, 0.0);
              cfdata->variant_list = variants;

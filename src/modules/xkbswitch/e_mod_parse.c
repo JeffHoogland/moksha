@@ -38,19 +38,20 @@ find_rules(void)
 int
 parse_rules(void)
 {
+   char buf[4096];
    E_XKB_Model *model = NULL;
    E_XKB_Layout *layout = NULL;
    E_XKB_Option *option = NULL;
    E_XKB_Variant *variant = NULL;
    E_XKB_Option_Group *group = NULL;
-   char buf[4096];
+   FILE *f;
 
    if (!rules_file) return 0;
 
    layouts = NULL;
    models = NULL;
 
-   FILE *f = fopen(rules_file, "r");
+   f = fopen(rules_file, "r");
    if (!f) return 0;
 
    /* move on to next line, the first one is useless */
@@ -69,14 +70,18 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n = strchr(buf, '\n');
+             char *n;
+             char *p;
+             char *tmp;
+
+             n = strchr(buf, '\n');
              if (n) *n = '\0';
 
              /* means end of section */
              if (!buf[0]) break;
              /* get rid of initial 2 spaces here */
-             char *p   = buf + 2;
-             char *tmp = strdup(p);
+             p   = buf + 2;
+             tmp = strdup(p);
 
              model = E_NEW(E_XKB_Model, 1);
              model->name = eina_stringshare_add(strtok(tmp, " "));
@@ -102,13 +107,17 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n = strchr(buf, '\n');
+             char *n;
+             char *p;
+             char *tmp;
+
+             n = strchr(buf, '\n');
              if   (n) *n = '\0';
 
              if (!buf[0]) break;
 
-             char *p   = buf + 2;
-             char *tmp = strdup(p);
+             p   = buf + 2;
+             tmp = strdup(p);
 
              layout = E_NEW(E_XKB_Layout, 1);
              layout->name = eina_stringshare_add(strtok(tmp, " "));
@@ -139,18 +148,23 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n = strchr(buf, '\n');
+             char *n;
+             char *p;
+             char *tmp;
+             char   *tok;
+
+             n = strchr(buf, '\n');
              if   (n) *n = '\0';
 
              if (!buf[0]) break;
 
-             char *p   = buf + 2;
-             char *tmp = strdup(p);
+             p   = buf + 2;
+             tmp = strdup(p);
 
              variant = E_NEW(E_XKB_Variant, 1);
              variant->name = eina_stringshare_add(strtok(tmp, " "));
 
-             char   *tok = strtok(NULL, " ");
+             tok = strtok(NULL, " ");
              *strchr(tok, ':') = '\0';
 
              layout = eina_list_search_unsorted(layouts, layout_sort_by_name_cb, tok);
@@ -177,14 +191,19 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n = strchr(buf, '\n');
+             char *n;
+             char *p;
+             char *tmp;
+             char *name;
+
+             n = strchr(buf, '\n');
              if   (n) *n = '\0';
 
              if (!buf[0]) break;
 
-             char *p   = buf + 2;
-             char *tmp  = strdup(p);
-             char *name = strtok(tmp, " ");
+             p   = buf + 2;
+             tmp  = strdup(p);
+             name = strtok(tmp, " ");
 
              p += strlen(name);
              while (p[0] == ' ') ++p;
