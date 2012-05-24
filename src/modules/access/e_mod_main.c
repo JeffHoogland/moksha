@@ -317,8 +317,8 @@ _cb_zone_add(void    *data __UNUSED__,
              int      type __UNUSED__,
              void    *event __UNUSED__)
 {
-   _covers_init();
    _covers_shutdown();
+   _covers_init();
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -327,8 +327,8 @@ _cb_zone_del(void    *data __UNUSED__,
              int      type __UNUSED__,
              void    *event __UNUSED__)
 {
-   _covers_init();
    _covers_shutdown();
+   _covers_init();
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -337,8 +337,8 @@ _cb_zone_move_resize(void    *data __UNUSED__,
                      int      type __UNUSED__,
                      void    *event __UNUSED__)
 {
-   _covers_init();
    _covers_shutdown();
+   _covers_init();
    return ECORE_CALLBACK_PASS_ON;
 }
 
