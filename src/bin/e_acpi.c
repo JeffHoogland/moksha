@@ -336,8 +336,8 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
          */
         for (i = 0; i < 10; i++)
           {
-             snprintf(buff, sizeof(buff), "/proc/acpi/%s%i/%s/state",
-                      device, i, bus);
+             snprintf(buff, sizeof(buff), "/proc/acpi/%s/%s%i/state",
+                      device, bus, i);
              if ((f = fopen(buff, "r"))) break;
              f = NULL;
           }
