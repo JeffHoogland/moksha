@@ -324,7 +324,25 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
 
    /* open the state file from /proc */
    snprintf(buff, sizeof(buff), "/proc/acpi/%s/%s/state", device, bus);
-   if (!(f = fopen(buff, "r"))) return E_ACPI_LID_UNKNOWN;
+   if (!(f = fopen(buff, "r")))
+     {
+        /* hack around ppurka's Thinkpad (G460 + Linux) that reports lid
+         * state as "/proc/acpi/button/lid/LID0/state" but where the lid
+         * event says "button/lid LID close".
+         * 
+         * so let's take the base device name "LID" and add a numeric like
+         * 0, 1, 2, 3 so we have LID0, LID1, LID2 etc. - try up to LID9
+         * and then give up.
+         */
+        for (i = 0; i < 10; i++)
+          {
+             snprintf(buff, sizeof(buff), "/proc/acpi/%s%i/%s/state",
+                      device, i, bus);
+             if ((f = fopen(buff, "r"))) break;
+             f = NULL;
+          }
+        if (!f) return E_ACPI_LID_UNKNOWN;
+     }
 
    /* read the line from state file */
    buff[0] = '\0';
