@@ -374,7 +374,6 @@ _restore_border(E_Border *bd)
         bd->maximized = extra->orig.maximized;
     }
 
-
     change_window_border(bd, extra->orig.bordername);
 }
 
@@ -3270,6 +3269,8 @@ static void
 _pre_border_assign_hook(void *data __UNUSED__,
                         E_Border *bd)
 {
+    Border_Extra *extra;
+
     if (tiling_g.config->show_titles)
         return;
 
@@ -3293,6 +3294,8 @@ _pre_border_assign_hook(void *data __UNUSED__,
     if (bd->fullscreen) {
          return;
     }
+
+    extra = _get_or_create_border_extra(bd);
 
     if ((bd->bordername && strcmp(bd->bordername, "pixel"))
     ||  !bd->bordername)
