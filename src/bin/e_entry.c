@@ -375,8 +375,13 @@ _e_entry_key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj
 }
 
 /* Called when a key has been released by the user */
+#ifdef HAVE_ECORE_IMF
 static void
 _e_entry_key_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
+#else
+static void
+_e_entry_key_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+#endif
 {
    E_Entry_Smart_Data *sd;
 
@@ -548,8 +553,13 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
 }
 
 /* Called when the entry object is released by the mouse */
+#ifdef HAVE_ECORE_IMF
 static void
 _e_entry_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
+#else
+static void
+_e_entry_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+#endif
 {
    E_Entry_Smart_Data *sd;
 
@@ -1019,8 +1029,8 @@ _e_entry_smart_add(Evas_Object *object)
    E_Entry_Smart_Data *sd;
    Evas_Object *o;
    int cw, ch;
-   const char *ctx_id;
 #ifdef HAVE_ECORE_IMF
+   const char *ctx_id;
    const Ecore_IMF_Context_Info *ctx_info;
 #endif
 
@@ -1097,10 +1107,9 @@ _e_entry_smart_add(Evas_Object *object)
                                   _e_entry_mouse_up_cb, NULL);
    evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_MOVE,
                                   _e_entry_mouse_move_cb, NULL);
-   sd->selection_handler = ecore_event_handler_add(
-                                       ECORE_X_EVENT_SELECTION_NOTIFY,
-                                       _e_entry_x_selection_notify_handler,
-                                       object);
+   sd->selection_handler = 
+     ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
+                             _e_entry_x_selection_notify_handler, object);
 }
 
 static void
@@ -1368,8 +1377,10 @@ static void
 _e_entry_imf_cursor_info_set(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
+#ifdef HAVE_ECORE_IMF
    Evas_Coord cx, cy, cw, ch;
    Evas_Object *editable;
+#endif
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
