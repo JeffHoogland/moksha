@@ -3269,8 +3269,6 @@ static void
 _pre_border_assign_hook(void *data __UNUSED__,
                         E_Border *bd)
 {
-    Border_Extra *extra;
-
     if (tiling_g.config->show_titles)
         return;
 
@@ -3295,7 +3293,8 @@ _pre_border_assign_hook(void *data __UNUSED__,
          return;
     }
 
-    extra = _get_or_create_border_extra(bd);
+    /* Fill initial values if not already done */
+    _get_or_create_border_extra(bd);
 
     if ((bd->bordername && strcmp(bd->bordername, "pixel"))
     ||  !bd->bordername)
