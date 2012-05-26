@@ -401,7 +401,8 @@ check(void)
 	  {
 	     char dummy[4096];
 
-	     fgets(buf, sizeof(buf), f);
+            if (fgets(buf, sizeof(buf), f) == NULL) goto error;
+
              buf[sizeof(buf) - 1] = 0;
 	     if (sscanf(buf, "%s %s %i", dummy, dummy, &temp) == 3)
 	       ret = 1;
@@ -417,7 +418,8 @@ check(void)
 	f = fopen(sensor_path, "rb");
 	if (f)
 	  {
-	     fgets(buf, sizeof(buf), f);
+            if (fgets(buf, sizeof(buf), f) == NULL) goto error;
+
 	     fclose(f);
              buf[sizeof(buf) - 1] = 0;
 	     if (sscanf(buf, "%i", &temp) == 1)
@@ -434,7 +436,8 @@ check(void)
 	f = fopen(sensor_path, "r");
 	if (f)
 	  {
-	     fgets(buf, sizeof(buf), f);
+            if (fgets(buf, sizeof(buf), f) == NULL) goto error;
+
 	     buf[sizeof(buf) - 1] = 0;
 
 	     /* actually read the temp */
@@ -453,7 +456,8 @@ check(void)
 	f = fopen(sensor_path, "r");
 	if (f)
 	  {
-	     fgets(buf, sizeof(buf), f);
+            if (fgets(buf, sizeof(buf), f) == NULL) goto error;
+
 	     buf[sizeof(buf) - 1] = 0;
 
 	     /* actually read the temp */
@@ -474,7 +478,8 @@ check(void)
 	  {
 	     char *p, *q;
 
-             fgets(buf, sizeof(buf), f);
+             if (fgets(buf, sizeof(buf), f) == NULL) goto error;
+
              buf[sizeof(buf) - 1] = 0;
 	     fclose(f);
 	     p = strchr(buf, ':');
@@ -497,7 +502,8 @@ check(void)
 	f = fopen(sensor_path, "r");
 	if (f)
 	  {
-             fgets(buf, sizeof(buf), f);
+             if (fgets(buf, sizeof(buf), f) == NULL) goto error;
+
              buf[sizeof(buf) - 1] = 0;
 	     fclose(f);
              temp = atoi(buf);
