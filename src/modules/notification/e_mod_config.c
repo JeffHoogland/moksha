@@ -125,7 +125,7 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_radio_add(evas, _("Top right"), CORNER_TR, rg);
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Botton left"), CORNER_BL, rg);
+   ow = e_widget_radio_add(evas, _("Bottom left"), CORNER_BL, rg);
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_radio_add(evas, _("Bottom right"), CORNER_BR, rg);
    e_widget_framelist_object_append(of, ow);
