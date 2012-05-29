@@ -1134,6 +1134,9 @@ _grab_key_down_cb(void          *data,
                   else if (cfdata->locals.cur && cfdata->locals.cur[0])
                     {
                        char *label;
+		       E_Ilist_Item *it;
+		       int i = 0;
+
                        sscanf(cfdata->locals.cur, "k%d", &n);
                        bi = eina_list_nth(cfdata->binding.key, n);
 
@@ -1143,6 +1146,13 @@ _grab_key_down_cb(void          *data,
                        printf("blub\n");
 
                        label = _key_binding_text_get(bi);
+
+		       EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.o_binding_list), l, it)
+			 {
+			    if (it->header) n++;
+			    if (i++ >= n) break;
+			 }
+
                        e_widget_ilist_nth_label_set(cfdata->gui.o_binding_list, n, label);
                        free(label);
                     }
@@ -1180,8 +1190,8 @@ _grab_key_down_cb(void          *data,
 #endif
                   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.o_binding_list), l, it)
                     {
-                       if (i++ >= n) break;
                        if (it->header) n++;
+                       if (i++ >= n) break;
                     }
 
                   e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n - 1, 1);
