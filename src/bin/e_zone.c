@@ -186,8 +186,8 @@ e_zone_new(E_Container *con,
    zone->num = num;
    zone->id = id;
    e_zone_useful_geometry_dirty(zone);
-   
-   printf("@@@@@@@@@@ e_zone_new: %i %i | %i %i %ix%i = %p\n", num, id, x, y, w, h, zone);
+
+   //printf("@@@@@@@@@@ e_zone_new: %i %i | %i %i %ix%i = %p\n", num, id, x, y, w, h, zone);
 
    zone->handlers =
      eina_list_append(zone->handlers,
@@ -1385,7 +1385,7 @@ _e_zone_free(E_Zone *zone)
    E_Container *con;
    int x, y;
 
-   printf("@@@@@@@@@@ e_zone_free: %i %i | %i %i %ix%i = %p\n", zone->num, zone->id, zone->x, zone->y, zone->w, zone->h, zone);
+   //printf("@@@@@@@@@@ e_zone_free: %i %i | %i %i %ix%i = %p\n", zone->num, zone->id, zone->x, zone->y, zone->w, zone->h, zone);
    /* Delete the edge windows if they exist */
    if (zone->edge.top) ecore_x_window_free(zone->edge.top);
    if (zone->edge.bottom) ecore_x_window_free(zone->edge.bottom);
