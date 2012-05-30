@@ -19,7 +19,6 @@ static Eina_Bool _x_poll_cb(void *data __UNUSED__);
 static Eina_Bool _crtc_change_event_cb(void *data, int type, void *e);
 static Eina_Bool _output_change_event_cb(void *data, int type, void *e);
 static Eina_Bool _output_property_change_event_cb(void *data, int type, void *e);
-static Eina_Bool _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force);
 
 static Ecore_Poller *poller = NULL;
 static Eina_List *_event_handlers = NULL;
@@ -443,7 +442,7 @@ _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
              //only try to enable the monitor if there is no serialized setup
              if(!_12_try_restore_configuration())
                {
-                  policy_success = _try_enable_output(output_info, EINA_FALSE);    //maybe give a success message?
+                  policy_success = e_randr_12_try_enable_output(output_info, output_info->policy, EINA_FALSE);    //maybe give a success message?
                   fprintf(stderr, "E_RANDR: Policy \"%s\" was enforced %ssuccesfully.\n", _POLICIES_STRINGS[output_info->policy - 1], (policy_success ? "" : "un"));
                }
           }
@@ -573,8 +572,8 @@ _output_property_change_event_cb(void *data __UNUSED__, int type, void *ev)
  * - try to share the output of a CRTC with other outputs already using it
  *   (clone).
  */
-static Eina_Bool
-_try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
+EINTERN Eina_Bool
+e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Output_Policy policy, Eina_Bool force)
 {
    Eina_List *iter, *outputs_list = NULL, *common_modes = NULL;
    E_Randr_Crtc_Info *crtc_info = NULL, *usable_crtc = NULL;
@@ -607,10 +606,14 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
      return EINA_FALSE;
 
    //get the CRTC we will refer to, dependend on policy
-   switch (output_info->policy)
+   switch (policy)
      {
       case ECORE_X_RANDR_OUTPUT_POLICY_NONE:
          return EINA_TRUE;
+
+      case ECORE_X_RANDR_OUTPUT_POLICY_ASK:
+         e_randr_12_ask_dialog_new(output_info);
+         return EINA_TRUE; //This is a bit incorrect (dialog feedback is async), but probably not worth a lock.
 
       case ECORE_X_RANDR_OUTPUT_POLICY_CLONE:
          /*
@@ -720,7 +723,7 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
 
          //get the crtc we will place our's relative to. If it's NULL, this is the
          //only output attached, work done.
-         if (!(crtc_rel = _crtc_according_to_policy_get(usable_crtc, output_info->policy)))
+         if (!(crtc_rel = _crtc_according_to_policy_get(usable_crtc, policy)))
            {
               fprintf(stderr, "E_RANDR: CRTC %d enabled. No other CRTC had to be moved.\n", usable_crtc->xid);
               ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid);
@@ -728,7 +731,7 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
            }
 
          //Calculate new CRTC's position according to policy
-         switch (output_info->policy)
+         switch (policy)
            {
             case ECORE_X_RANDR_OUTPUT_POLICY_ABOVE:
                usable_crtc->geometry.x = crtc_rel->geometry.x;
@@ -763,7 +766,7 @@ _try_enable_output(E_Randr_Output_Info *output_info, Eina_Bool force)
 
               fprintf(stderr, "E_RANDR: Moved CRTC %d has geometry (x,y,wxh): %d, %d, %dx%d.\n", usable_crtc->xid, usable_crtc->geometry.x, usable_crtc->geometry.y, usable_crtc->geometry.w, usable_crtc->geometry.h);
               //following is policy dependend.
-              switch (output_info->policy)
+              switch (policy)
                 {
                  case ECORE_X_RANDR_OUTPUT_POLICY_ABOVE:
                     dy = (crtc_rel->geometry.y - usable_crtc->geometry.h);

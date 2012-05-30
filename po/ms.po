@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-04-26 13:56+0900\n"
+"POT-Creation-Date: 2012-05-30 21:07+0200\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -22,22 +22,22 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "Mengenai Enlightment"
 
-#: src/bin/e_about.c:17 src/bin/e_actions.c:2730 src/bin/e_config_dialog.c:272
+#: src/bin/e_about.c:17 src/bin/e_actions.c:2746 src/bin/e_config_dialog.c:272
 #: src/bin/e_fm.c:975 src/bin/e_int_border_menu.c:135
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
 #: src/modules/conf/e_conf.c:163
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:843
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:844
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:237
 #: src/modules/conf_theme/e_int_config_theme_web.c:129
-#: src/modules/fileman/e_fwin.c:2023 src/modules/mixer/app_mixer.c:514
+#: src/modules/fileman/e_fwin.c:2031 src/modules/mixer/app_mixer.c:514
 msgid "Close"
 msgstr "Tutup"
 
-#: src/bin/e_about.c:18 src/bin/e_actions.c:3062 src/bin/e_actions.c:3066
-#: src/bin/e_actions.c:3070 src/bin/e_int_menus.c:182 src/bin/e_main.c:534
+#: src/bin/e_about.c:18 src/bin/e_actions.c:3078 src/bin/e_actions.c:3082
+#: src/bin/e_actions.c:3086 src/bin/e_int_menus.c:182 src/bin/e_main.c:538
 #: src/modules/conf_theme/e_int_config_cursor.c:155
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:221
-#: src/modules/wizard/page_000.c:29
+#: src/modules/wizard/page_000.c:31
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -73,7 +73,7 @@ msgstr "Adakah anda pasti anda mahu untuk membunuh tetingkap ini."
 #: src/bin/e_actions.c:380 src/bin/e_actions.c:1917 src/bin/e_actions.c:2014
 #: src/bin/e_actions.c:2077 src/bin/e_actions.c:2140 src/bin/e_actions.c:2208
 #: src/bin/e_actions.c:2276 src/bin/e_confirm_dialog.c:44
-#: src/bin/e_desklock.c:1054 src/bin/e_fm.c:9238 src/bin/e_fm.c:9492
+#: src/bin/e_desklock.c:1121 src/bin/e_fm.c:9241 src/bin/e_fm.c:9495
 #: src/bin/e_module.c:518 src/bin/e_screensaver.c:145
 msgid "Yes"
 msgstr "Ya"
@@ -81,7 +81,7 @@ msgstr "Ya"
 #: src/bin/e_actions.c:382 src/bin/e_actions.c:1919 src/bin/e_actions.c:2016
 #: src/bin/e_actions.c:2079 src/bin/e_actions.c:2142 src/bin/e_actions.c:2210
 #: src/bin/e_actions.c:2278 src/bin/e_confirm_dialog.c:45
-#: src/bin/e_desklock.c:1056 src/bin/e_fm.c:9236 src/bin/e_fm.c:9493
+#: src/bin/e_desklock.c:1123 src/bin/e_fm.c:9239 src/bin/e_fm.c:9496
 #: src/bin/e_module.c:519 src/bin/e_screensaver.c:147
 msgid "No"
 msgstr "Tidak"
@@ -157,609 +157,610 @@ msgstr ""
 "Anda diminta untuk hibernate Komputer anda.<br><br>Adakah anda pasti anda "
 "mahu untuk menggantung ke cakera."
 
-#: src/bin/e_actions.c:2690 src/bin/e_actions.c:2701 src/bin/e_actions.c:2720
-#: src/bin/e_actions.c:2725 src/bin/e_actions.c:2730 src/bin/e_actions.c:2735
-#: src/bin/e_actions.c:2990 src/bin/e_actions.c:2994 src/bin/e_actions.c:2999
-#: src/bin/e_actions.c:3005 src/bin/e_actions.c:3011 src/bin/e_actions.c:3017
+#: src/bin/e_actions.c:2706 src/bin/e_actions.c:2717 src/bin/e_actions.c:2736
+#: src/bin/e_actions.c:2741 src/bin/e_actions.c:2746 src/bin/e_actions.c:2751
+#: src/bin/e_actions.c:3006 src/bin/e_actions.c:3010 src/bin/e_actions.c:3015
+#: src/bin/e_actions.c:3021 src/bin/e_actions.c:3027 src/bin/e_actions.c:3033
 #, fuzzy
 msgid "Window : Actions"
 msgstr "Tetingkap ; Tindakan"
 
-#: src/bin/e_actions.c:2690 src/bin/e_fm.c:6201 src/bin/e_gadcon.c:1410
+#: src/bin/e_actions.c:2706 src/bin/e_fm.c:6203 src/bin/e_gadcon.c:1410
 #: src/bin/e_int_border_menu.c:654
 msgid "Move"
 msgstr "Alihkan"
 
-#: src/bin/e_actions.c:2701 src/bin/e_int_border_menu.c:668
+#: src/bin/e_actions.c:2717 src/bin/e_int_border_menu.c:668
 #, fuzzy
 msgid "Resize"
 msgstr "mengubah saiz"
 
-#: src/bin/e_actions.c:2712 src/bin/e_actions.c:3038 src/bin/e_actions.c:3040
-#: src/bin/e_actions.c:3042 src/bin/e_actions.c:3044 src/bin/e_actions.c:3046
+#: src/bin/e_actions.c:2728 src/bin/e_actions.c:3054 src/bin/e_actions.c:3056
+#: src/bin/e_actions.c:3058 src/bin/e_actions.c:3060 src/bin/e_actions.c:3062
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:325
 msgid "Menu"
 msgstr "Menu"
 
-#: src/bin/e_actions.c:2712
+#: src/bin/e_actions.c:2728
 msgid "Window Menu"
 msgstr "Menu Tetingkap"
 
-#: src/bin/e_actions.c:2720 src/bin/e_int_border_menu.c:983
+#: src/bin/e_actions.c:2736 src/bin/e_int_border_menu.c:983
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Naik"
 
-#: src/bin/e_actions.c:2725 src/bin/e_int_border_menu.c:991
+#: src/bin/e_actions.c:2741 src/bin/e_int_border_menu.c:991
 #, fuzzy
 msgid "Lower"
 msgstr "Turunkan"
 
-#: src/bin/e_actions.c:2735 src/bin/e_int_border_menu.c:562
+#: src/bin/e_actions.c:2751 src/bin/e_int_border_menu.c:562
 #, fuzzy
 msgid "Kill"
 msgstr "membunuh"
 
-#: src/bin/e_actions.c:2740 src/bin/e_actions.c:2747 src/bin/e_actions.c:2754
-#: src/bin/e_actions.c:2761 src/bin/e_actions.c:2763 src/bin/e_actions.c:2766
-#: src/bin/e_actions.c:2769 src/bin/e_actions.c:2771 src/bin/e_actions.c:2773
-#: src/bin/e_actions.c:2775 src/bin/e_actions.c:2782 src/bin/e_actions.c:2784
-#: src/bin/e_actions.c:2786 src/bin/e_actions.c:2788 src/bin/e_actions.c:2790
-#: src/bin/e_actions.c:2797 src/bin/e_actions.c:2802 src/bin/e_actions.c:2808
-#: src/bin/e_actions.c:2814
+#: src/bin/e_actions.c:2756 src/bin/e_actions.c:2763 src/bin/e_actions.c:2770
+#: src/bin/e_actions.c:2777 src/bin/e_actions.c:2779 src/bin/e_actions.c:2782
+#: src/bin/e_actions.c:2785 src/bin/e_actions.c:2787 src/bin/e_actions.c:2789
+#: src/bin/e_actions.c:2791 src/bin/e_actions.c:2798 src/bin/e_actions.c:2800
+#: src/bin/e_actions.c:2802 src/bin/e_actions.c:2804 src/bin/e_actions.c:2806
+#: src/bin/e_actions.c:2813 src/bin/e_actions.c:2818 src/bin/e_actions.c:2824
+#: src/bin/e_actions.c:2830
 #, fuzzy
 msgid "Window : State"
 msgstr "Negara tetingkap."
 
-#: src/bin/e_actions.c:2740
+#: src/bin/e_actions.c:2756
 #, fuzzy
 msgid "Sticky Mode Toggle"
 msgstr "Melekit Mod Togol"
 
-#: src/bin/e_actions.c:2747
+#: src/bin/e_actions.c:2763
 #, fuzzy
 msgid "Iconic Mode Toggle"
 msgstr "Ikonik Mod Togol"
 
-#: src/bin/e_actions.c:2754
+#: src/bin/e_actions.c:2770
 #, fuzzy
 msgid "Fullscreen Mode Toggle"
 msgstr "Skrin penuh Mod Togol"
 
-#: src/bin/e_actions.c:2761 src/bin/e_int_border_menu.c:304
+#: src/bin/e_actions.c:2777 src/bin/e_int_border_menu.c:304
 #: src/bin/e_int_border_menu.c:629
 msgid "Maximize"
 msgstr "Maksimumkan"
 
-#: src/bin/e_actions.c:2763
+#: src/bin/e_actions.c:2779
 msgid "Maximize Vertically"
 msgstr "Maksimakan Menegak"
 
-#: src/bin/e_actions.c:2766
+#: src/bin/e_actions.c:2782
 msgid "Maximize Horizontally"
 msgstr "Maksimakan Mendatar"
 
-#: src/bin/e_actions.c:2769
+#: src/bin/e_actions.c:2785
 #, fuzzy
 msgid "Maximize Fullscreen"
 msgstr "memaksimumkan Fullscreen"
 
-#: src/bin/e_actions.c:2771
+#: src/bin/e_actions.c:2787
 msgid "Maximize Mode \"Smart\""
 msgstr ""
 
-#: src/bin/e_actions.c:2773
+#: src/bin/e_actions.c:2789
 msgid "Maximize Mode \"Expand\""
 msgstr ""
 
-#: src/bin/e_actions.c:2775
+#: src/bin/e_actions.c:2791
 msgid "Maximize Mode \"Fill\""
 msgstr ""
 
-#: src/bin/e_actions.c:2782
+#: src/bin/e_actions.c:2798
 #, fuzzy
 msgid "Shade Up Mode Toggle"
 msgstr "Teduh Up Mod Togol"
 
-#: src/bin/e_actions.c:2784
+#: src/bin/e_actions.c:2800
 #, fuzzy
 msgid "Shade Down Mode Toggle"
 msgstr "Teduh Down Mod Togol"
 
-#: src/bin/e_actions.c:2786
+#: src/bin/e_actions.c:2802
 #, fuzzy
 msgid "Shade Left Mode Toggle"
 msgstr "Teduh Mod Togol Kiri"
 
-#: src/bin/e_actions.c:2788
+#: src/bin/e_actions.c:2804
 #, fuzzy
 msgid "Shade Right Mode Toggle"
 msgstr "Teduh Mod Togol Hak"
 
-#: src/bin/e_actions.c:2790
+#: src/bin/e_actions.c:2806
 #, fuzzy
 msgid "Shade Mode Toggle"
 msgstr "Teduh Mod Togol"
 
-#: src/bin/e_actions.c:2797
+#: src/bin/e_actions.c:2813
 #, fuzzy
 msgid "Toggle Borderless State"
 msgstr "Togol Negeri tanpa sempadan"
 
-#: src/bin/e_actions.c:2802
+#: src/bin/e_actions.c:2818
 #, fuzzy
 msgid "Set Border"
 msgstr "Tetapkan Sempadan"
 
-#: src/bin/e_actions.c:2808
+#: src/bin/e_actions.c:2824
 #, fuzzy
 msgid "Cycle between Borders"
 msgstr "Kitaran antara sempadan"
 
-#: src/bin/e_actions.c:2814
+#: src/bin/e_actions.c:2830
 #, fuzzy
 msgid "Toggle Pinned State"
 msgstr "Togol Negeri pin"
 
-#: src/bin/e_actions.c:2819 src/bin/e_actions.c:2821 src/bin/e_actions.c:2823
-#: src/bin/e_actions.c:2825 src/bin/e_actions.c:2827 src/bin/e_actions.c:2833
-#: src/bin/e_actions.c:2839 src/bin/e_actions.c:2844 src/bin/e_actions.c:2850
-#: src/bin/e_actions.c:2856 src/bin/e_actions.c:2858 src/bin/e_actions.c:2860
-#: src/bin/e_actions.c:2862 src/bin/e_actions.c:2864 src/bin/e_actions.c:2866
-#: src/bin/e_actions.c:2868 src/bin/e_actions.c:2870 src/bin/e_actions.c:2872
-#: src/bin/e_actions.c:2874 src/bin/e_actions.c:2876 src/bin/e_actions.c:2878
-#: src/bin/e_actions.c:2880 src/bin/e_actions.c:2886 src/bin/e_actions.c:2888
+#: src/bin/e_actions.c:2835 src/bin/e_actions.c:2837 src/bin/e_actions.c:2839
+#: src/bin/e_actions.c:2841 src/bin/e_actions.c:2843 src/bin/e_actions.c:2849
+#: src/bin/e_actions.c:2855 src/bin/e_actions.c:2860 src/bin/e_actions.c:2866
+#: src/bin/e_actions.c:2872 src/bin/e_actions.c:2874 src/bin/e_actions.c:2876
+#: src/bin/e_actions.c:2878 src/bin/e_actions.c:2880 src/bin/e_actions.c:2882
+#: src/bin/e_actions.c:2884 src/bin/e_actions.c:2886 src/bin/e_actions.c:2888
 #: src/bin/e_actions.c:2890 src/bin/e_actions.c:2892 src/bin/e_actions.c:2894
-#: src/bin/e_actions.c:2900 src/bin/e_actions.c:2906 src/bin/e_actions.c:2912
-#: src/bin/e_actions.c:2917 src/bin/e_actions.c:2919 src/bin/e_actions.c:2921
-#: src/bin/e_actions.c:2923 src/bin/e_actions.c:2925 src/bin/e_actions.c:2927
-#: src/bin/e_actions.c:2929 src/bin/e_actions.c:2931 src/bin/e_actions.c:2933
-#: src/bin/e_actions.c:2935 src/bin/e_actions.c:2937 src/bin/e_actions.c:2939
-#: src/bin/e_actions.c:2941 src/bin/e_actions.c:3120 src/bin/e_actions.c:3125
-#: src/bin/e_fm.c:3300 src/bin/e_fm.c:3306 src/bin/e_fm.c:10019
+#: src/bin/e_actions.c:2896 src/bin/e_actions.c:2902 src/bin/e_actions.c:2904
+#: src/bin/e_actions.c:2906 src/bin/e_actions.c:2908 src/bin/e_actions.c:2910
+#: src/bin/e_actions.c:2916 src/bin/e_actions.c:2922 src/bin/e_actions.c:2928
+#: src/bin/e_actions.c:2933 src/bin/e_actions.c:2935 src/bin/e_actions.c:2937
+#: src/bin/e_actions.c:2939 src/bin/e_actions.c:2941 src/bin/e_actions.c:2943
+#: src/bin/e_actions.c:2945 src/bin/e_actions.c:2947 src/bin/e_actions.c:2949
+#: src/bin/e_actions.c:2951 src/bin/e_actions.c:2953 src/bin/e_actions.c:2955
+#: src/bin/e_actions.c:2957 src/bin/e_actions.c:3136 src/bin/e_actions.c:3141
+#: src/bin/e_fm.c:3302 src/bin/e_fm.c:3308 src/bin/e_fm.c:10022
 #: src/bin/e_fm_device.c:334 src/bin/e_fm_device.c:358
 #: src/bin/e_fm_device.c:637 src/bin/e_fm_device.c:664
 #: src/bin/e_int_menus.c:144 src/bin/e_int_shelf_config.c:247
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
-#: src/modules/fileman/e_mod_main.c:358 src/modules/ibox/e_mod_config.c:162
+#: src/modules/fileman/e_mod_main.c:360 src/modules/ibox/e_mod_config.c:162
 #, fuzzy
 msgid "Desktop"
 msgstr "desktop"
 
-#: src/bin/e_actions.c:2819
+#: src/bin/e_actions.c:2835
 #, fuzzy
 msgid "Flip Desktop Left"
 msgstr "Desktop flip kiri"
 
-#: src/bin/e_actions.c:2821
+#: src/bin/e_actions.c:2837
 #, fuzzy
 msgid "Flip Desktop Right"
 msgstr "Terbalikkan Hak Desktop"
 
-#: src/bin/e_actions.c:2823
+#: src/bin/e_actions.c:2839
 #, fuzzy
 msgid "Flip Desktop Up"
 msgstr "Terbalikkan Desktop Sehingga"
 
-#: src/bin/e_actions.c:2825
+#: src/bin/e_actions.c:2841
 #, fuzzy
 msgid "Flip Desktop Down"
 msgstr "Terbalikkan Desktop Down"
 
-#: src/bin/e_actions.c:2827
+#: src/bin/e_actions.c:2843
 #, fuzzy
 msgid "Flip Desktop By..."
 msgstr "Terbalikkan Desktop Dengan ..."
 
-#: src/bin/e_actions.c:2833
+#: src/bin/e_actions.c:2849
 #, fuzzy
 msgid "Show The Desktop"
 msgstr "Tunjukkan desktop"
 
-#: src/bin/e_actions.c:2839
+#: src/bin/e_actions.c:2855
 #, fuzzy
 msgid "Show The Shelf"
 msgstr "Tunjukkan rak"
 
-#: src/bin/e_actions.c:2844
+#: src/bin/e_actions.c:2860
 #, fuzzy
 msgid "Flip Desktop To..."
 msgstr "Terbalikkan Desktop Untuk ..."
 
-#: src/bin/e_actions.c:2850
+#: src/bin/e_actions.c:2866
 #, fuzzy
 msgid "Flip Desktop Linearly..."
 msgstr "Terbalikkan Desktop Lelurus ..."
 
-#: src/bin/e_actions.c:2856
+#: src/bin/e_actions.c:2872
 #, fuzzy
 msgid "Switch To Desktop 0"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2858
+#: src/bin/e_actions.c:2874
 #, fuzzy
 msgid "Switch To Desktop 1"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2860
+#: src/bin/e_actions.c:2876
 #, fuzzy
 msgid "Switch To Desktop 2"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2862
+#: src/bin/e_actions.c:2878
 #, fuzzy
 msgid "Switch To Desktop 3"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2864
+#: src/bin/e_actions.c:2880
 #, fuzzy
 msgid "Switch To Desktop 4"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2866
+#: src/bin/e_actions.c:2882
 #, fuzzy
 msgid "Switch To Desktop 5"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2868
+#: src/bin/e_actions.c:2884
 #, fuzzy
 msgid "Switch To Desktop 6"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2870
+#: src/bin/e_actions.c:2886
 #, fuzzy
 msgid "Switch To Desktop 7"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2872
+#: src/bin/e_actions.c:2888
 #, fuzzy
 msgid "Switch To Desktop 8"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2874
+#: src/bin/e_actions.c:2890
 #, fuzzy
 msgid "Switch To Desktop 9"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:2876
+#: src/bin/e_actions.c:2892
 #, fuzzy
 msgid "Switch To Desktop 10"
 msgstr "Beralih Untuk Desktop 10"
 
-#: src/bin/e_actions.c:2878
+#: src/bin/e_actions.c:2894
 #, fuzzy
 msgid "Switch To Desktop 11"
 msgstr "Beralih Untuk Desktop 11"
 
-#: src/bin/e_actions.c:2880
+#: src/bin/e_actions.c:2896
 #, fuzzy
 msgid "Switch To Desktop..."
 msgstr "Tukar Ke Desktop ..."
 
-#: src/bin/e_actions.c:2886
+#: src/bin/e_actions.c:2902
 #, fuzzy
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Flip kiri Desktop (Semua Skrin."
 
-#: src/bin/e_actions.c:2888
+#: src/bin/e_actions.c:2904
 #, fuzzy
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Hak Desktop flip (Semua Skrin."
 
-#: src/bin/e_actions.c:2890
+#: src/bin/e_actions.c:2906
 #, fuzzy
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Terbalikkan Desktop (Semua Skrin."
 
-#: src/bin/e_actions.c:2892
+#: src/bin/e_actions.c:2908
 #, fuzzy
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Terbalikkan Desktop Down (Semua Skrin."
 
-#: src/bin/e_actions.c:2894
+#: src/bin/e_actions.c:2910
 #, fuzzy
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Terbalikkan Desktop Dengan ... (Semua Skrin."
 
-#: src/bin/e_actions.c:2900
+#: src/bin/e_actions.c:2916
 #, fuzzy
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Terbalikkan Desktop Untuk ... (Semua Skrin."
 
-#: src/bin/e_actions.c:2906
+#: src/bin/e_actions.c:2922
 #, fuzzy
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Terbalikkan Desktop Lelurus ... (Semua Skrin."
 
-#: src/bin/e_actions.c:2912
+#: src/bin/e_actions.c:2928
 #, fuzzy
 msgid "Flip Desktop In Direction..."
 msgstr "Terbalikkan Desktop Di Arah ..."
 
-#: src/bin/e_actions.c:2917
+#: src/bin/e_actions.c:2933
 #, fuzzy
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Tukar Ke Desktop 0 (Semua Skrin."
 
-#: src/bin/e_actions.c:2919
+#: src/bin/e_actions.c:2935
 #, fuzzy
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Tukar Ke Desktop 1 (Semua Skrin."
 
-#: src/bin/e_actions.c:2921
+#: src/bin/e_actions.c:2937
 #, fuzzy
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Tukar Ke Desktop 2 (Semua Skrin."
 
-#: src/bin/e_actions.c:2923
+#: src/bin/e_actions.c:2939
 #, fuzzy
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Tukar Untuk Desktop 3 (Semua Skrin."
 
-#: src/bin/e_actions.c:2925
+#: src/bin/e_actions.c:2941
 #, fuzzy
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Tukar Ke Desktop 4 (Semua Skrin."
 
-#: src/bin/e_actions.c:2927
+#: src/bin/e_actions.c:2943
 #, fuzzy
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Tukar Ke Desktop 5 (Semua Skrin."
 
-#: src/bin/e_actions.c:2929
+#: src/bin/e_actions.c:2945
 #, fuzzy
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Tukar Ke Desktop 6 (Semua Skrin."
 
-#: src/bin/e_actions.c:2931
+#: src/bin/e_actions.c:2947
 #, fuzzy
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Tukar Ke Desktop 7 (Semua Skrin."
 
-#: src/bin/e_actions.c:2933
+#: src/bin/e_actions.c:2949
 #, fuzzy
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Tukar Untuk 8 Desktop (Semua Skrin."
 
-#: src/bin/e_actions.c:2935
+#: src/bin/e_actions.c:2951
 #, fuzzy
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Tukar Ke Desktop 9 (Semua Skrin."
 
-#: src/bin/e_actions.c:2937
+#: src/bin/e_actions.c:2953
 #, fuzzy
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Tukar Ke Desktop 10 (Semua Skrin."
 
-#: src/bin/e_actions.c:2939
+#: src/bin/e_actions.c:2955
 #, fuzzy
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Tukar Ke Desktop 11 (Semua Skrin."
 
-#: src/bin/e_actions.c:2941
+#: src/bin/e_actions.c:2957
 #, fuzzy
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Tukar Ke Desktop ... (Semua Skrin."
 
-#: src/bin/e_actions.c:2947 src/bin/e_actions.c:2949 src/bin/e_actions.c:2951
-#: src/bin/e_actions.c:2957 src/bin/e_actions.c:2959 src/bin/e_actions.c:2961
-#: src/bin/e_actions.c:2966 src/bin/e_actions.c:2969 src/bin/e_actions.c:2972
-#: src/bin/e_actions.c:2974 src/bin/e_actions.c:2976 src/bin/e_actions.c:2978
-#: src/bin/e_actions.c:2981 src/bin/e_actions.c:2983 src/bin/e_actions.c:2985
+#: src/bin/e_actions.c:2963 src/bin/e_actions.c:2965 src/bin/e_actions.c:2967
+#: src/bin/e_actions.c:2973 src/bin/e_actions.c:2975 src/bin/e_actions.c:2977
+#: src/bin/e_actions.c:2982 src/bin/e_actions.c:2985 src/bin/e_actions.c:2988
+#: src/bin/e_actions.c:2990 src/bin/e_actions.c:2992 src/bin/e_actions.c:2994
+#: src/bin/e_actions.c:2997 src/bin/e_actions.c:2999 src/bin/e_actions.c:3001
 #: src/modules/conf_display/e_mod_main.c:17
-#: src/modules/ibox/e_mod_config.c:131
+#: src/modules/ibox/e_mod_config.c:131 src/modules/shot/e_mod_main.c:640
+#: src/modules/shot/e_mod_main.c:804 src/modules/shot/e_mod_main.c:833
 #, fuzzy
 msgid "Screen"
 msgstr "skrin"
 
-#: src/bin/e_actions.c:2947
+#: src/bin/e_actions.c:2963
 #, fuzzy
 msgid "Send Mouse To Screen 0"
 msgstr "Menghantar Tetikus Untuk 0 Skrin"
 
-#: src/bin/e_actions.c:2949
+#: src/bin/e_actions.c:2965
 #, fuzzy
 msgid "Send Mouse To Screen 1"
 msgstr "Hantar Tetikus Kepada."
 
-#: src/bin/e_actions.c:2951
+#: src/bin/e_actions.c:2967
 #, fuzzy
 msgid "Send Mouse To Screen..."
 msgstr "Menghantar Tetikus Untuk Skrin ..."
 
-#: src/bin/e_actions.c:2957
+#: src/bin/e_actions.c:2973
 #, fuzzy
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Menghantar Tetikus Forward 1 Skrin"
 
-#: src/bin/e_actions.c:2959
+#: src/bin/e_actions.c:2975
 #, fuzzy
 msgid "Send Mouse Back 1 Screen"
 msgstr "Menghantar Tetikus Kembali 1 Skrin"
 
-#: src/bin/e_actions.c:2961
+#: src/bin/e_actions.c:2977
 msgid "Send Mouse Forward/Back Screens..."
 msgstr ""
 
-#: src/bin/e_actions.c:2966
+#: src/bin/e_actions.c:2982
 #, fuzzy
 msgid "Dim"
 msgstr "malap"
 
-#: src/bin/e_actions.c:2969
+#: src/bin/e_actions.c:2985
 #, fuzzy
 msgid "Undim"
 msgstr "undim"
 
-#: src/bin/e_actions.c:2972
+#: src/bin/e_actions.c:2988
 #, fuzzy
 msgid "Backlight Set"
 msgstr "Set latar"
 
-#: src/bin/e_actions.c:2974
+#: src/bin/e_actions.c:2990
 #, fuzzy
 msgid "Backlight Min"
 msgstr "Min cahaya latar"
 
-#: src/bin/e_actions.c:2976
+#: src/bin/e_actions.c:2992
 #, fuzzy
 msgid "Backlight Mid"
 msgstr "latar Julat"
 
-#: src/bin/e_actions.c:2978
+#: src/bin/e_actions.c:2994
 #, fuzzy
 msgid "Backlight Max"
 msgstr "Max latar"
 
-#: src/bin/e_actions.c:2981
+#: src/bin/e_actions.c:2997
 #, fuzzy
 msgid "Backlight Adjust"
 msgstr "latar Laraskan"
 
-#: src/bin/e_actions.c:2983
+#: src/bin/e_actions.c:2999
 #, fuzzy
 msgid "Backlight Up"
 msgstr "latar Up"
 
-#: src/bin/e_actions.c:2985
+#: src/bin/e_actions.c:3001
 #, fuzzy
 msgid "Backlight Down"
 msgstr "latar Down"
 
-#: src/bin/e_actions.c:2990
+#: src/bin/e_actions.c:3006
 #, fuzzy
 msgid "Move To Center"
 msgstr "Pindah Untuk Pusat"
 
-#: src/bin/e_actions.c:2994
+#: src/bin/e_actions.c:3010
 #, fuzzy
 msgid "Move To..."
 msgstr "Alihkan"
 
-#: src/bin/e_actions.c:2999
+#: src/bin/e_actions.c:3015
 #, fuzzy
 msgid "Move By..."
 msgstr "Alihkan"
 
-#: src/bin/e_actions.c:3005
+#: src/bin/e_actions.c:3021
 #, fuzzy
 msgid "Resize By..."
 msgstr "Mengubah saiz By ..."
 
-#: src/bin/e_actions.c:3011
+#: src/bin/e_actions.c:3027
 #, fuzzy
 msgid "Push in Direction..."
 msgstr "Tolak Arah ..."
 
-#: src/bin/e_actions.c:3017
+#: src/bin/e_actions.c:3033
 #, fuzzy
 msgid "Drag Icon..."
 msgstr "Seret Ikon ..."
 
-#: src/bin/e_actions.c:3022 src/bin/e_actions.c:3024 src/bin/e_actions.c:3026
-#: src/bin/e_actions.c:3032
+#: src/bin/e_actions.c:3038 src/bin/e_actions.c:3040 src/bin/e_actions.c:3042
+#: src/bin/e_actions.c:3048
 #, fuzzy
 msgid "Window : Moving"
 msgstr "Tetingkap ; Melangkah"
 
-#: src/bin/e_actions.c:3022
+#: src/bin/e_actions.c:3038
 #, fuzzy
 msgid "To Next Desktop"
 msgstr "Ke Ruang Kerja Seterusnya"
 
-#: src/bin/e_actions.c:3024
+#: src/bin/e_actions.c:3040
 #, fuzzy
 msgid "To Previous Desktop"
 msgstr "Ke Ruang Kerja Sebelumnya"
 
-#: src/bin/e_actions.c:3026
+#: src/bin/e_actions.c:3042
 msgid "By Desktop #..."
 msgstr ""
 
-#: src/bin/e_actions.c:3032
+#: src/bin/e_actions.c:3048
 #, fuzzy
 msgid "To Desktop..."
 msgstr "Ke Desktop ..."
 
-#: src/bin/e_actions.c:3038
+#: src/bin/e_actions.c:3054
 #, fuzzy
 msgid "Show Main Menu"
 msgstr "Tunjukkan Menu Utama"
 
-#: src/bin/e_actions.c:3040
+#: src/bin/e_actions.c:3056
 #, fuzzy
 msgid "Show Favorites Menu"
 msgstr "Menunjukkan Pilihan Menu"
 
-#: src/bin/e_actions.c:3042
+#: src/bin/e_actions.c:3058
 #, fuzzy
 msgid "Show All Applications Menu"
 msgstr "Show All Menu Aplikasi"
 
-#: src/bin/e_actions.c:3044
+#: src/bin/e_actions.c:3060
 #, fuzzy
 msgid "Show Clients Menu"
 msgstr "Menunjukkan Pelanggan Menu"
 
-#: src/bin/e_actions.c:3046
+#: src/bin/e_actions.c:3062
 #, fuzzy
 msgid "Show Menu..."
 msgstr "Menunjukkan Menu ..."
 
-#: src/bin/e_actions.c:3053 src/bin/e_actions.c:3058
+#: src/bin/e_actions.c:3069 src/bin/e_actions.c:3074
 #: src/modules/conf/e_mod_main.c:264 src/modules/conf/e_mod_main.c:367
 #: src/modules/fileman/e_mod_main.c:72 src/modules/fileman/e_mod_main.c:160
 #, fuzzy
 msgid "Launch"
 msgstr "Pelancaran"
 
-#: src/bin/e_actions.c:3053 src/bin/e_int_border_prop.c:439
+#: src/bin/e_actions.c:3069 src/bin/e_int_border_prop.c:439
 #, fuzzy
 msgid "Command"
 msgstr "perintah"
 
-#: src/bin/e_actions.c:3058 src/bin/e_eap_editor.c:692
+#: src/bin/e_actions.c:3074 src/bin/e_eap_editor.c:692
 #: src/bin/e_int_border_menu.c:73
 #, fuzzy, c-format
 msgid "Application"
 msgstr "permohonan"
 
-#: src/bin/e_actions.c:3062 src/bin/e_int_menus.c:206
+#: src/bin/e_actions.c:3078 src/bin/e_int_menus.c:206
 #, fuzzy
 msgid "Restart"
 msgstr "restart"
 
-#: src/bin/e_actions.c:3066 src/bin/e_int_menus.c:211
+#: src/bin/e_actions.c:3082 src/bin/e_int_menus.c:211
 #, fuzzy
 msgid "Exit"
 msgstr "keluar"
 
-#: src/bin/e_actions.c:3070
+#: src/bin/e_actions.c:3086
 #, fuzzy
 msgid "Exit Now"
 msgstr "keluar Sekarang"
 
-#: src/bin/e_actions.c:3074 src/bin/e_actions.c:3079
+#: src/bin/e_actions.c:3090 src/bin/e_actions.c:3095
 msgid "Enlightenment : Mode"
 msgstr ""
 
-#: src/bin/e_actions.c:3075
+#: src/bin/e_actions.c:3091
 #, fuzzy
 msgid "Presentation Mode Toggle"
 msgstr "Taklimat Mod Togol"
 
-#: src/bin/e_actions.c:3080
+#: src/bin/e_actions.c:3096
 #, fuzzy
 msgid "Offline Mode Toggle"
 msgstr "Offline Mod Togol"
 
-#: src/bin/e_actions.c:3084 src/bin/e_actions.c:3088 src/bin/e_actions.c:3092
-#: src/bin/e_actions.c:3096 src/bin/e_actions.c:3100 src/bin/e_actions.c:3104
-#: src/bin/e_actions.c:3108 src/bin/e_actions.c:3112 src/bin/e_configure.c:372
+#: src/bin/e_actions.c:3100 src/bin/e_actions.c:3104 src/bin/e_actions.c:3108
+#: src/bin/e_actions.c:3112 src/bin/e_actions.c:3116 src/bin/e_actions.c:3120
+#: src/bin/e_actions.c:3124 src/bin/e_actions.c:3128 src/bin/e_configure.c:372
 #: src/bin/e_int_config_modules.c:53
 #: src/modules/conf_applications/e_int_config_apps.c:244
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
-#: src/modules/conf_intl/e_int_config_imc.c:808
+#: src/modules/conf_intl/e_int_config_imc.c:809
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:588
 #: src/modules/conf_theme/e_int_config_startup.c:258
@@ -772,65 +773,84 @@ msgstr "Offline Mod Togol"
 msgid "System"
 msgstr "sistem"
 
-#: src/bin/e_actions.c:3084
+#: src/bin/e_actions.c:3100
 #, fuzzy
 msgid "Log Out"
 msgstr "Log Out"
 
-#: src/bin/e_actions.c:3088
+#: src/bin/e_actions.c:3104
 #, fuzzy
 msgid "Power Off Now"
 msgstr "Kuasa Off Sekarang"
 
-#: src/bin/e_actions.c:3092
+#: src/bin/e_actions.c:3108
 #, fuzzy
 msgid "Power Off"
 msgstr "kuasa Off"
 
-#: src/bin/e_actions.c:3096
+#: src/bin/e_actions.c:3112
 #, fuzzy
 msgid "Reboot"
 msgstr "reboot"
 
-#: src/bin/e_actions.c:3100
+#: src/bin/e_actions.c:3116
 #, fuzzy
 msgid "Suspend Now"
 msgstr "menggantung Sekarang"
 
-#: src/bin/e_actions.c:3104
+#: src/bin/e_actions.c:3120
 #, fuzzy
 msgid "Suspend"
 msgstr "menggantung"
 
-#: src/bin/e_actions.c:3108
+#: src/bin/e_actions.c:3124
 #, fuzzy
 msgid "Hibernate"
 msgstr "hibernate"
 
-#: src/bin/e_actions.c:3112
+#: src/bin/e_actions.c:3128
 #, fuzzy
 msgid "Hibernate Now"
 msgstr "hibernate Sekarang"
 
-#: src/bin/e_actions.c:3120
+#: src/bin/e_actions.c:3136
 #, fuzzy
 msgid "Lock"
 msgstr "mengunci"
 
-#: src/bin/e_actions.c:3125 src/bin/e_int_menus.c:1167
+#: src/bin/e_actions.c:3141 src/bin/e_int_menus.c:1167
 #, fuzzy
 msgid "Cleanup Windows"
 msgstr "pembersihan Windows"
 
-#: src/bin/e_actions.c:3130
+#: src/bin/e_actions.c:3146
 #, fuzzy
 msgid "Generic : Actions"
 msgstr "Tindakan ; generik"
 
-#: src/bin/e_actions.c:3130
+#: src/bin/e_actions.c:3146
 #, fuzzy
 msgid "Delayed Action"
 msgstr "Tindakan lambat"
+
+#: src/bin/e_actions.c:3154 src/bin/e_actions.c:3158 src/bin/e_actions.c:3162
+#, fuzzy
+msgid "Keyboard Layouts"
+msgstr "keyboard"
+
+#: src/bin/e_actions.c:3155
+#, fuzzy
+msgid "Use keyboard layout"
+msgstr "Buat Shortcut Keyboard"
+
+#: src/bin/e_actions.c:3159
+#, fuzzy
+msgid "Next keyboard layout"
+msgstr "Buat Shortcut Keyboard"
+
+#: src/bin/e_actions.c:3163
+msgid "Previous keyboard layout"
+msgstr ""
 
 #: src/bin/e_bg.c:34
 #, fuzzy
@@ -842,39 +862,43 @@ msgstr "Set sebagai latar belakang"
 msgid "Color Selector"
 msgstr "warna Pemilih"
 
-#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1572 src/bin/e_config.c:2147
+#: src/bin/e_color_dialog.c:46 src/bin/e_config.c:1625 src/bin/e_config.c:2219
 #: src/bin/e_config_dialog.c:262 src/bin/e_eap_editor.c:854
 #: src/bin/e_eap_editor.c:918 src/bin/e_entry_dialog.c:62 src/bin/e_exec.c:414
-#: src/bin/e_fm.c:8750 src/bin/e_fm.c:9394 src/bin/e_fm_prop.c:507
+#: src/bin/e_fm.c:8753 src/bin/e_fm.c:9397 src/bin/e_fm_prop.c:507
 #: src/bin/e_int_border_remember.c:324 src/bin/e_int_border_remember.c:525
 #: src/bin/e_module.c:415 src/bin/e_sys.c:487 src/bin/e_sys.c:524
 #: src/bin/e_utils.c:707 src/modules/conf_dialogs/e_int_config_profiles.c:387
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:222
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:352
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:357
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/cpufreq/e_mod_main.c:415 src/modules/cpufreq/e_mod_main.c:444
 #: src/modules/cpufreq/e_mod_main.c:469
 #: src/modules/fileman/e_int_config_mime_edit.c:303
+#: src/modules/shot/e_mod_main.c:242 src/modules/shot/e_mod_main.c:482
+#: src/modules/xkbswitch/e_mod_config.c:526
 #, fuzzy
 msgid "OK"
 msgstr "OK"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:856
-#: src/bin/e_eap_editor.c:920 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8752
+#: src/bin/e_eap_editor.c:920 src/bin/e_entry_dialog.c:63 src/bin/e_fm.c:8755
 #: src/bin/e_fm_prop.c:508 src/bin/e_utils.c:1162
 #: src/modules/conf_dialogs/e_int_config_profiles.c:388
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:226
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:356
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:361
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:304
 #: src/modules/syscon/e_syscon.c:120 src/modules/connman/e_mod_main.c:300
+#: src/modules/shot/e_mod_main.c:244 src/modules/shot/e_mod_main.c:483
+#: src/modules/shot/e_mod_main.c:698 src/modules/xkbswitch/e_mod_config.c:527
 #, fuzzy
 msgid "Cancel"
 msgstr "membatalkan"
 
-#: src/bin/e_config.c:949 src/bin/e_config.c:982
+#: src/bin/e_config.c:984 src/bin/e_config.c:1017
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -885,7 +909,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:966
+#: src/bin/e_config.c:1001
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -894,11 +918,11 @@ msgid ""
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1559 src/bin/e_config.c:2134
+#: src/bin/e_config.c:1612 src/bin/e_config.c:2206
 msgid "Enlightenment Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1562
+#: src/bin/e_config.c:1615
 #, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -906,22 +930,22 @@ msgid ""
 "<br>"
 msgstr ""
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2116
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "tetapan Dinaiktaraf"
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2133
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "Pemegang fail EET buruk."
 
-#: src/bin/e_config.c:2064
+#: src/bin/e_config.c:2136
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Data fail kosong."
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2139
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -930,19 +954,19 @@ msgstr ""
 "Fail terebut tidak boleh ditulis. Mungkin cakera adalah<br>baca sahaja atau "
 "anda kehilangan keizinan kepada fail anda."
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2142
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Memori berlari keluar sambil menyediakan tulis.<br>Sila memori sehingga "
 "percuma."
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2145
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Ini adalah satu kesilapan yang generik."
 
-#: src/bin/e_config.c:2076
+#: src/bin/e_config.c:2148
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -951,70 +975,70 @@ msgstr ""
 "Fail tetapan adalah terlalu besar.<br>Ia sepatutnya menjadi sangat kecil "
 "(beberapa ratus KB paling banyak)."
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2151
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2154
 #, fuzzy
 msgid "You ran out of space while writing the file"
 msgstr "Anda kehabisan ruang semasa menulis fail"
 
-#: src/bin/e_config.c:2085
+#: src/bin/e_config.c:2157
 #, fuzzy
 msgid "The file was closed on it while writing."
 msgstr "Fail yang telah ditutup pada semasa menulis."
 
-#: src/bin/e_config.c:2088
+#: src/bin/e_config.c:2160
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memori - pemetaan (mmap) fail gagal."
 
-#: src/bin/e_config.c:2091
+#: src/bin/e_config.c:2163
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Pengekodan gagal."
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2166
 #, fuzzy
 msgid "Signature failed."
 msgstr "Tandatangan gagal."
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2169
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Tandatangan adalah tidak sah."
 
-#: src/bin/e_config.c:2100
+#: src/bin/e_config.c:2172
 #, fuzzy
 msgid "Not signed."
 msgstr "Tidak ditandatangani."
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2175
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Mempunyai tidak dilaksanakan."
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2178
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG tidak membenihkan."
 
-#: src/bin/e_config.c:2109
+#: src/bin/e_config.c:2181
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Penyulitan gagal."
 
-#: src/bin/e_config.c:2112
+#: src/bin/e_config.c:2184
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Dekripsi gagal."
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2187
 msgid "The error is unknown to Enlightenment."
 msgstr ""
 
-#: src/bin/e_config.c:2137
+#: src/bin/e_config.c:2209
 #, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -1022,7 +1046,7 @@ msgid ""
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:785
+#: src/bin/e_config_dialog.c:210 src/modules/battery/e_mod_main.c:807
 #: src/modules/conf/e_mod_main.c:275 src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/syscon/e_mod_main.c:36
@@ -1036,7 +1060,7 @@ msgid "Basic"
 msgstr "asas"
 
 #: src/bin/e_config_dialog.c:264
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:842
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:843
 #: src/modules/conf_theme/e_int_config_wallpaper_web.c:236
 #, fuzzy
 msgid "Apply"
@@ -1068,22 +1092,22 @@ msgstr "Pilihan"
 msgid "Container %d"
 msgstr ""
 
-#: src/bin/e_desklock.c:171
+#: src/bin/e_desklock.c:178
 #, fuzzy
 msgid "Error - no PAM support"
 msgstr "Kesalahan - tiada sokongan PAM"
 
-#: src/bin/e_desklock.c:172
+#: src/bin/e_desklock.c:179
 msgid ""
 "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:243
 #, fuzzy
 msgid "Lock Failed"
 msgstr "kunci Gagal"
 
-#: src/bin/e_desklock.c:237
+#: src/bin/e_desklock.c:244
 #, fuzzy
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
@@ -1093,17 +1117,17 @@ msgstr ""
 "ada papan kekunci atau tetikus atau kedua-duanya<br>dan cekau mereka tidak "
 "dapat dipecahkan."
 
-#: src/bin/e_desklock.c:322
+#: src/bin/e_desklock.c:329
 #, fuzzy
 msgid "Please enter your unlock password"
 msgstr "Sila masukkan kata laluan buka kunci anda"
 
-#: src/bin/e_desklock.c:716
+#: src/bin/e_desklock.c:783
 #, fuzzy
 msgid "Authentication System Error"
 msgstr "Kesalahan pengesahan Sistem"
 
-#: src/bin/e_desklock.c:717
+#: src/bin/e_desklock.c:784
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1111,24 +1135,24 @@ msgid ""
 "happening. Please report this bug."
 msgstr ""
 
-#: src/bin/e_desklock.c:1045 src/bin/e_screensaver.c:136
+#: src/bin/e_desklock.c:1112 src/bin/e_screensaver.c:136
 #, fuzzy
 msgid "Activate Presentation Mode?"
 msgstr "Aktifkan Mod Persembahan."
 
-#: src/bin/e_desklock.c:1048
+#: src/bin/e_desklock.c:1115
 msgid ""
 "You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
 
-#: src/bin/e_desklock.c:1058 src/bin/e_screensaver.c:149
+#: src/bin/e_desklock.c:1125 src/bin/e_screensaver.c:149
 #, fuzzy
 msgid "No, but increase timeout"
 msgstr "Tidak, tetapi meningkatkan timeout"
 
-#: src/bin/e_desklock.c:1060 src/bin/e_screensaver.c:151
+#: src/bin/e_desklock.c:1127 src/bin/e_screensaver.c:151
 #, fuzzy
 msgid "No, and stop asking"
 msgstr "Tidak, dan berhenti mempersoalkan"
@@ -1161,7 +1185,7 @@ msgstr "Desktop Entry Editor"
 
 #: src/bin/e_eap_editor.c:671 src/bin/e_int_border_prop.c:420
 #: src/bin/e_int_border_prop.c:467
-#: src/modules/conf_intl/e_int_config_imc.c:891
+#: src/modules/conf_intl/e_int_config_imc.c:887
 #: src/modules/conf_menus/e_int_config_menus.c:265
 #, fuzzy
 msgid "Name"
@@ -1215,6 +1239,7 @@ msgstr "fail desktop"
 #: src/modules/everything/evry_config.c:378
 #: src/modules/everything/evry_plug_files.c:1476
 #: src/modules/pager/e_mod_config.c:126 src/modules/pager/e_mod_config.c:213
+#: src/modules/tiling/e_mod_config.c:182
 #, fuzzy
 msgid "General"
 msgstr "Ketua"
@@ -1235,6 +1260,7 @@ msgid "Show in Menus"
 msgstr "Tunjuk di Menu"
 
 #: src/bin/e_eap_editor.c:786 src/bin/e_int_border_remember.c:757
+#: src/modules/xkbswitch/e_mod_config.c:335
 #, fuzzy
 msgid "Options"
 msgstr "pilihan"
@@ -1249,7 +1275,7 @@ msgstr "Pilih Icon"
 msgid "Select an Executable"
 msgstr "Pilih laksana"
 
-#: src/bin/e_entry.c:501 src/bin/e_fm.c:8241 src/bin/e_shelf.c:1703
+#: src/bin/e_entry.c:506 src/bin/e_fm.c:8243 src/bin/e_shelf.c:1703
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:108
@@ -1257,22 +1283,22 @@ msgstr "Pilih laksana"
 msgid "Delete"
 msgstr "memadam"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:8149
+#: src/bin/e_entry.c:516 src/bin/e_fm.c:8151
 #, fuzzy
 msgid "Cut"
 msgstr "potong"
 
-#: src/bin/e_entry.c:519 src/bin/e_fm.c:6196 src/bin/e_fm.c:8163
+#: src/bin/e_entry.c:524 src/bin/e_fm.c:6198 src/bin/e_fm.c:8165
 #, fuzzy
 msgid "Copy"
 msgstr "menyalin"
 
-#: src/bin/e_entry.c:527 src/bin/e_fm.c:7987 src/bin/e_fm.c:8176
+#: src/bin/e_entry.c:532 src/bin/e_fm.c:7989 src/bin/e_fm.c:8178
 #, fuzzy
 msgid "Paste"
 msgstr "tampal"
 
-#: src/bin/e_entry.c:537
+#: src/bin/e_entry.c:542
 #, fuzzy
 msgid "Select All"
 msgstr "pilih Semua"
@@ -1436,241 +1462,241 @@ msgstr "laluan tidak wujud"
 msgid "%s doesn't exist."
 msgstr ""
 
-#: src/bin/e_fm.c:3078
+#: src/bin/e_fm.c:3079
 #, fuzzy
 msgid "Mount Error"
 msgstr "Ralat Gunung"
 
-#: src/bin/e_fm.c:3078
+#: src/bin/e_fm.c:3079
 #, fuzzy
 msgid "Can't mount device"
 msgstr "Tidak boleh melancarkan peranti"
 
-#: src/bin/e_fm.c:3094
+#: src/bin/e_fm.c:3095
 #, fuzzy
 msgid "Unmount Error"
 msgstr "Ralat Nyahlekap"
 
-#: src/bin/e_fm.c:3094
+#: src/bin/e_fm.c:3095
 #, fuzzy
 msgid "Can't unmount device"
 msgstr "Tidak boleh unmount peranti"
 
-#: src/bin/e_fm.c:3109
+#: src/bin/e_fm.c:3110
 #, fuzzy
 msgid "Eject Error"
 msgstr "Ralat lenting"
 
-#: src/bin/e_fm.c:3109
+#: src/bin/e_fm.c:3110
 #, fuzzy
 msgid "Can't eject device"
 msgstr "Tidak boleh mengusir peranti"
 
-#: src/bin/e_fm.c:3781
+#: src/bin/e_fm.c:3783
 #, c-format
 msgid "%i Files"
 msgstr ""
 
-#: src/bin/e_fm.c:6209 src/bin/e_fm.c:7995 src/bin/e_fm.c:8184
+#: src/bin/e_fm.c:6211 src/bin/e_fm.c:7997 src/bin/e_fm.c:8186
 #, fuzzy
 msgid "Link"
 msgstr "link"
 
-#: src/bin/e_fm.c:6217 src/bin/e_fm.c:9176 src/bin/e_fm.c:9317
+#: src/bin/e_fm.c:6219 src/bin/e_fm.c:9179 src/bin/e_fm.c:9320
 #, fuzzy
 msgid "Abort"
 msgstr "menggugurkan"
 
-#: src/bin/e_fm.c:7914 src/bin/e_fm.c:8074
+#: src/bin/e_fm.c:7916 src/bin/e_fm.c:8076
 #, fuzzy
 msgid "Inherit parent settings"
 msgstr "Mewarisi tetapan ibu bapa"
 
-#: src/bin/e_fm.c:7923 src/bin/e_fm.c:8083
+#: src/bin/e_fm.c:7925 src/bin/e_fm.c:8085
 #: src/modules/fileman/e_mod_config.c:219
 #, fuzzy
 msgid "View Mode"
 msgstr "Lihat Mod"
 
-#: src/bin/e_fm.c:7930 src/bin/e_fm.c:8090
+#: src/bin/e_fm.c:7932 src/bin/e_fm.c:8092
 #, fuzzy
 msgid "Refresh View"
 msgstr "Refresh View"
 
-#: src/bin/e_fm.c:7938 src/bin/e_fm.c:8098
+#: src/bin/e_fm.c:7940 src/bin/e_fm.c:8100
 #, fuzzy
 msgid "Show Hidden Files"
 msgstr "Papar Fail Tersembunyi"
 
-#: src/bin/e_fm.c:7950 src/bin/e_fm.c:8110
+#: src/bin/e_fm.c:7952 src/bin/e_fm.c:8112
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "Ingat Pesanan"
 
-#: src/bin/e_fm.c:7959 src/bin/e_fm.c:8119
+#: src/bin/e_fm.c:7961 src/bin/e_fm.c:8121
 #, fuzzy
 msgid "Sort Now"
 msgstr "Susun Sekarang"
 
-#: src/bin/e_fm.c:7971 src/bin/e_fm.c:8134
+#: src/bin/e_fm.c:7973 src/bin/e_fm.c:8136
 #: src/modules/conf_paths/e_int_config_paths.c:205
 #, fuzzy
 msgid "New Directory"
 msgstr "Direktori baru"
 
-#: src/bin/e_fm.c:8249
+#: src/bin/e_fm.c:8251
 #, fuzzy
 msgid "Rename"
 msgstr "menamakan semula"
 
-#: src/bin/e_fm.c:8268
+#: src/bin/e_fm.c:8270
 #, fuzzy
 msgid "Unmount"
 msgstr "nyahlekap"
 
-#: src/bin/e_fm.c:8273
+#: src/bin/e_fm.c:8275
 #, fuzzy
 msgid "Mount"
 msgstr "Gunung"
 
-#: src/bin/e_fm.c:8278
+#: src/bin/e_fm.c:8280
 #, fuzzy
 msgid "Eject"
 msgstr "lentingkan"
 
-#: src/bin/e_fm.c:8290
+#: src/bin/e_fm.c:8292
 #, fuzzy
 msgid "Application Properties"
 msgstr "permohonan Hartanah"
 
-#: src/bin/e_fm.c:8296 src/bin/e_fm_prop.c:105
+#: src/bin/e_fm.c:8298 src/bin/e_fm_prop.c:105
 #, fuzzy
 msgid "File Properties"
 msgstr "file Hartanah"
 
-#: src/bin/e_fm.c:8533 src/bin/e_fm.c:8586
+#: src/bin/e_fm.c:8535 src/bin/e_fm.c:8590
 #, fuzzy
 msgid "Use default"
 msgstr "Gunakan lalai"
 
-#: src/bin/e_fm.c:8559 src/modules/fileman/e_mod_config.c:224
+#: src/bin/e_fm.c:8563 src/modules/fileman/e_mod_config.c:224
 #, fuzzy
 msgid "Grid Icons"
 msgstr "grid Ikon"
 
-#: src/bin/e_fm.c:8567 src/modules/fileman/e_mod_config.c:226
+#: src/bin/e_fm.c:8571 src/modules/fileman/e_mod_config.c:226
 #, fuzzy
 msgid "Custom Icons"
 msgstr "Ikon adat"
 
-#: src/bin/e_fm.c:8575 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:8579 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:234
 #, fuzzy
 msgid "List"
 msgstr "senarai"
 
-#: src/bin/e_fm.c:8601
+#: src/bin/e_fm.c:8604
 #, c-format
 msgid "Icon Size (%d)"
 msgstr ""
 
-#: src/bin/e_fm.c:8647 src/bin/e_fm.c:8853
+#: src/bin/e_fm.c:8650 src/bin/e_fm.c:8856
 #, fuzzy
 msgid "Set background..."
 msgstr "Menetapkan latar belakang ..."
 
-#: src/bin/e_fm.c:8652 src/bin/e_fm.c:8897
+#: src/bin/e_fm.c:8655 src/bin/e_fm.c:8900
 #, fuzzy
 msgid "Set overlay..."
 msgstr "Tetapkan overlay ..."
 
-#: src/bin/e_fm.c:8751 src/modules/conf_theme/e_int_config_theme.c:1032
+#: src/bin/e_fm.c:8754 src/modules/conf_theme/e_int_config_theme.c:1032
 #, fuzzy
 msgid "Clear"
 msgstr "membersihkan"
 
-#: src/bin/e_fm.c:8977
+#: src/bin/e_fm.c:8980
 #, fuzzy
 msgid "Create a new Directory"
 msgstr "Buat Direktori baru"
 
-#: src/bin/e_fm.c:8978
+#: src/bin/e_fm.c:8981
 #, fuzzy
 msgid "New Directory Name:"
 msgstr "Direktori Nama baru:"
 
-#: src/bin/e_fm.c:9032
+#: src/bin/e_fm.c:9035
 #, c-format
 msgid "Rename %s to:"
 msgstr ""
 
-#: src/bin/e_fm.c:9034
+#: src/bin/e_fm.c:9037
 #, fuzzy
 msgid "Rename File"
 msgstr "menamakan semula fail"
 
-#: src/bin/e_fm.c:9175 src/bin/e_fm.c:9316
+#: src/bin/e_fm.c:9178 src/bin/e_fm.c:9319
 #, fuzzy
 msgid "Retry"
 msgstr "Cuba lagi"
 
-#: src/bin/e_fm.c:9179 src/bin/e_fm.c:9322
+#: src/bin/e_fm.c:9182 src/bin/e_fm.c:9325
 #, fuzzy
 msgid "Error"
 msgstr "kesilapan"
 
-#: src/bin/e_fm.c:9182
+#: src/bin/e_fm.c:9185
 #, c-format
 msgid "%s"
 msgstr ""
 
-#: src/bin/e_fm.c:9237
+#: src/bin/e_fm.c:9240
 #, fuzzy
 msgid "No to all"
 msgstr "Tidak untuk semua"
 
-#: src/bin/e_fm.c:9239
+#: src/bin/e_fm.c:9242
 #, fuzzy
 msgid "Yes to all"
 msgstr "Ya untuk semua"
 
-#: src/bin/e_fm.c:9242
+#: src/bin/e_fm.c:9245
 #, fuzzy
 msgid "Warning"
 msgstr "amaran"
 
-#: src/bin/e_fm.c:9245
+#: src/bin/e_fm.c:9248
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr ""
 
-#: src/bin/e_fm.c:9318
+#: src/bin/e_fm.c:9321
 #, fuzzy
 msgid "Ignore this"
 msgstr "abaikan ini"
 
-#: src/bin/e_fm.c:9319
+#: src/bin/e_fm.c:9322
 #, fuzzy
 msgid "Ignore all"
 msgstr "mengabaikan semua"
 
-#: src/bin/e_fm.c:9324
+#: src/bin/e_fm.c:9327
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:9495
+#: src/bin/e_fm.c:9498
 #, fuzzy
 msgid "Confirm Delete"
 msgstr "mengesahkan Potong"
 
-#: src/bin/e_fm.c:9500
+#: src/bin/e_fm.c:9503
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight> ?"
 msgstr ""
 
-#: src/bin/e_fm.c:9506
+#: src/bin/e_fm.c:9509
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected files in:<br><hilight>%s</"
@@ -1815,12 +1841,12 @@ msgstr "Alihkan"
 msgid "Automatically scroll contents"
 msgstr "Kandungan secara automatik tatal"
 
-#: src/bin/e_gadcon.c:1434 src/modules/gadman/e_mod_gadman.c:729
+#: src/bin/e_gadcon.c:1434 src/modules/gadman/e_mod_gadman.c:734
 #, fuzzy
 msgid "Plain"
 msgstr "Plain"
 
-#: src/bin/e_gadcon.c:1443 src/modules/gadman/e_mod_gadman.c:737
+#: src/bin/e_gadcon.c:1443 src/modules/gadman/e_mod_gadman.c:742
 #, fuzzy
 msgid "Inset"
 msgstr "Inset"
@@ -1836,7 +1862,8 @@ msgstr "melihat"
 #: src/modules/conf_applications/e_int_config_apps.c:239
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
-#: src/modules/gadman/e_mod_gadman.c:813 src/modules/ibar/e_mod_main.c:801
+#: src/modules/gadman/e_mod_gadman.c:818 src/modules/ibar/e_mod_main.c:801
+#: src/modules/xkbswitch/e_mod_config.c:268
 #, fuzzy
 msgid "Remove"
 msgstr "membuang"
@@ -2139,13 +2166,13 @@ msgid "Window List"
 msgstr "Senarai tetingkap"
 
 #: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
-#: src/modules/pager/e_mod_main.c:2797 src/modules/pager/e_mod_main.c:2804
-#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2813
-#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2817
-#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2821
+#: src/modules/pager/e_mod_main.c:2795 src/modules/pager/e_mod_main.c:2802
+#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2811
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2815
+#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2819
+#: src/modules/pager/e_mod_main.c:2852 src/modules/pager/e_mod_main.c:2853
 #: src/modules/pager/e_mod_main.c:2854 src/modules/pager/e_mod_main.c:2855
 #: src/modules/pager/e_mod_main.c:2856 src/modules/pager/e_mod_main.c:2857
-#: src/modules/pager/e_mod_main.c:2858 src/modules/pager/e_mod_main.c:2859
 #, fuzzy
 msgid "Pager"
 msgstr "alat kelui"
@@ -2369,6 +2396,7 @@ msgid "Size, Position and Locks"
 msgstr "Saiz, Jawatan dan Kunci"
 
 #: src/bin/e_int_border_remember.c:625 src/modules/conf/e_mod_main.c:245
+#: src/modules/shot/e_mod_main.c:644
 #, fuzzy
 msgid "All"
 msgstr "Semua"
@@ -2466,7 +2494,7 @@ msgstr "utiliti"
 #: src/bin/e_int_config_modules.c:55
 #: src/modules/everything/evry_plug_files.c:1585
 #: src/modules/fileman/e_mod_main.c:56 src/modules/fileman/e_mod_main.c:76
-#: src/modules/fileman/e_mod_main.c:420
+#: src/modules/fileman/e_mod_main.c:421
 #, fuzzy
 msgid "Files"
 msgstr "fail"
@@ -2488,8 +2516,8 @@ msgid "Mobile"
 msgstr "Alihkan"
 
 #: src/bin/e_int_config_modules.c:59 src/bin/e_int_menus.c:230
-#: src/bin/e_shelf.c:1695 src/modules/battery/e_mod_main.c:186
-#: src/modules/clock/e_mod_main.c:296 src/modules/clock/e_mod_main.c:540
+#: src/bin/e_shelf.c:1695 src/modules/battery/e_mod_main.c:189
+#: src/modules/clock/e_mod_main.c:299 src/modules/clock/e_mod_main.c:546
 #: src/modules/conf/e_conf.c:124 src/modules/conf/e_conf.c:134
 #: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_theme/e_int_config_cursor.c:133
@@ -2497,6 +2525,8 @@ msgstr "Alihkan"
 #: src/modules/ibox/e_mod_main.c:299 src/modules/ibox/e_mod_main.c:690
 #: src/modules/pager/e_mod_main.c:791 src/modules/temperature/e_mod_main.c:233
 #: src/modules/mixer/e_mod_main.c:789 src/modules/connman/e_mod_main.c:1323
+#: src/modules/tasks/e_mod_main.c:680 src/modules/xkbswitch/e_mod_main.c:312
+#: src/modules/xkbswitch/e_mod_main.c:358
 #, fuzzy
 msgid "Settings"
 msgstr "tetapan"
@@ -2516,7 +2546,7 @@ msgstr "memuatkan"
 msgid "Unload"
 msgstr "memunggah"
 
-#: src/bin/e_int_config_modules.c:307 src/bin/e_int_config_modules.c:591
+#: src/bin/e_int_config_modules.c:308 src/bin/e_int_config_modules.c:591
 #, fuzzy
 msgid "No modules selected."
 msgstr "Tiada modul yang dipilih."
@@ -2600,7 +2630,7 @@ msgstr "permohonan"
 #: src/bin/e_int_menus.c:151 src/bin/e_int_menus.c:1126
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
-#: src/modules/winlist/e_mod_main.c:25
+#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3812
 #, fuzzy
 msgid "Windows"
 msgstr "Windows"
@@ -2747,7 +2777,7 @@ msgid "Hide duration"
 msgstr "menyembunyikan tempoh"
 
 #: src/bin/e_int_shelf_config.c:227
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:852
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:853
 #, c-format
 msgid "%.2f seconds"
 msgstr ""
@@ -2787,422 +2817,426 @@ msgid ""
 "%s/enlightenment-%s\n"
 msgstr ""
 
-#: src/bin/e_main.c:190
+#: src/bin/e_main.c:191
 msgid "Enlightenment cannot initialize Eina!\n"
 msgstr ""
 
-#: src/bin/e_main.c:229
+#: src/bin/e_main.c:230
 msgid "Enlightenment cannot initialize Eet!\n"
 msgstr ""
 
-#: src/bin/e_main.c:238
+#: src/bin/e_main.c:239
 msgid "Enlightenment cannot initialize Ecore!\n"
 msgstr ""
 
-#: src/bin/e_main.c:250
+#: src/bin/e_main.c:251
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:257
+#: src/bin/e_main.c:258
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:264
+#: src/bin/e_main.c:265
 msgid ""
 "Enlightenment cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:273
+#: src/bin/e_main.c:274
 msgid "Enlightenment cannot initialize Ecore_File!\n"
 msgstr ""
 
-#: src/bin/e_main.c:282
+#: src/bin/e_main.c:283
 msgid "Enlightenment cannot initialize Ecore_Con!\n"
 msgstr ""
 
-#: src/bin/e_main.c:291
+#: src/bin/e_main.c:292
 msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
 msgstr ""
 
-#: src/bin/e_main.c:302
+#: src/bin/e_main.c:303
 msgid "Enlightenment cannot initialize Ecore_X!\n"
 msgstr ""
 
-#: src/bin/e_main.c:314
+#: src/bin/e_main.c:315
 msgid "Enlightenment cannot initialize Ecore_IMF!\n"
 msgstr ""
 
-#: src/bin/e_main.c:324
+#: src/bin/e_main.c:325
 msgid "Enlightenment cannot initialize Ecore_Evas!\n"
 msgstr ""
 
-#: src/bin/e_main.c:338
+#: src/bin/e_main.c:339
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
 
-#: src/bin/e_main.c:346
+#: src/bin/e_main.c:347
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
 
-#: src/bin/e_main.c:356
+#: src/bin/e_main.c:357
 msgid "Enlightenment cannot initialize Edje!\n"
 msgstr ""
 
-#: src/bin/e_main.c:368
+#: src/bin/e_main.c:369
 msgid "Enlightenment cannot initialize E_Intl!\n"
 msgstr ""
 
-#: src/bin/e_main.c:378
+#: src/bin/e_main.c:379
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
 
-#: src/bin/e_main.c:388
+#: src/bin/e_main.c:389
 msgid "Enlightenment cannot initialize E_Xinerama!\n"
 msgstr ""
 
-#: src/bin/e_main.c:406
+#: src/bin/e_main.c:407
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
 
-#: src/bin/e_main.c:416
+#: src/bin/e_main.c:417
 msgid "Enlightenment cannot set up its file registry system."
 msgstr ""
 
-#: src/bin/e_main.c:425
+#: src/bin/e_main.c:426
 msgid "Enlightenment cannot set up its config system."
 msgstr ""
 
-#: src/bin/e_main.c:436
+#: src/bin/e_main.c:437
 msgid "Enlightenment cannot initialize E_Randr!\n"
 msgstr ""
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:446
 msgid "Enlightenment cannot set up its environment."
 msgstr ""
 
-#: src/bin/e_main.c:458
+#: src/bin/e_main.c:462
 msgid "Enlightenment cannot set up its scale system."
 msgstr ""
 
-#: src/bin/e_main.c:467
+#: src/bin/e_main.c:471
 msgid "Enlightenment cannot set up its pointer system."
 msgstr ""
 
-#: src/bin/e_main.c:476
+#: src/bin/e_main.c:480
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:493
+#: src/bin/e_main.c:497
 msgid "Enlightenment cannot set up its font system."
 msgstr ""
 
-#: src/bin/e_main.c:510
+#: src/bin/e_main.c:514
 msgid "Enlightenment cannot set up its theme system."
 msgstr ""
 
-#: src/bin/e_main.c:526
+#: src/bin/e_main.c:530
 msgid "Enlightenment cannot set up its init screen."
 msgstr ""
 
-#: src/bin/e_main.c:541
+#: src/bin/e_main.c:545
 #, fuzzy
 msgid "Starting International Support"
 msgstr "Bermula Sokongan Antarabangsa"
 
-#: src/bin/e_main.c:545
+#: src/bin/e_main.c:549
 msgid "Enlightenment cannot set up its intl system."
 msgstr ""
 
-#: src/bin/e_main.c:554
+#: src/bin/e_main.c:558
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
 
-#: src/bin/e_main.c:577
+#: src/bin/e_main.c:581
 #, fuzzy
 msgid "Setup Screens"
 msgstr "persediaan Skrin"
 
-#: src/bin/e_main.c:581
+#: src/bin/e_main.c:585
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 
-#: src/bin/e_main.c:589
+#: src/bin/e_main.c:593
 #, fuzzy
 msgid "Setup ACPI"
 msgstr "setup ACPI"
 
-#: src/bin/e_main.c:596
+#: src/bin/e_main.c:600
 #, fuzzy
 msgid "Setup Backlight"
 msgstr "lampu latar persediaan"
 
-#: src/bin/e_main.c:600
+#: src/bin/e_main.c:604
 msgid "Enlightenment cannot configure the backlight."
 msgstr ""
 
-#: src/bin/e_main.c:607
+#: src/bin/e_main.c:611
 #, fuzzy
 msgid "Setup DPMS"
 msgstr "persediaan Managing Director"
 
-#: src/bin/e_main.c:611
+#: src/bin/e_main.c:615
 msgid "Enlightenment cannot configure the DPMS settings."
 msgstr ""
 
-#: src/bin/e_main.c:618
+#: src/bin/e_main.c:622
 #, fuzzy
 msgid "Setup Screensaver"
 msgstr "Skrin setup"
 
-#: src/bin/e_main.c:622
+#: src/bin/e_main.c:626
 msgid "Enlightenment cannot configure the X screensaver."
 msgstr ""
 
-#: src/bin/e_main.c:629
+#: src/bin/e_main.c:633
 #, fuzzy
 msgid "Setup Powersave Modes"
 msgstr "Persediaan Powersave Mod"
 
-#: src/bin/e_main.c:633
+#: src/bin/e_main.c:637
 msgid "Enlightenment cannot set up its powersave modes."
 msgstr ""
 
-#: src/bin/e_main.c:640
+#: src/bin/e_main.c:644
 #, fuzzy
 msgid "Setup Desklock"
 msgstr "setup Desklock"
 
-#: src/bin/e_main.c:644
+#: src/bin/e_main.c:648
 msgid "Enlightenment cannot set up its desk locking system."
 msgstr ""
 
-#: src/bin/e_main.c:651
+#: src/bin/e_main.c:655
 #, fuzzy
 msgid "Setup Popups"
 msgstr "persediaan popup"
 
-#: src/bin/e_main.c:655
+#: src/bin/e_main.c:659
 msgid "Enlightenment cannot set up its popup system."
 msgstr ""
 
-#: src/bin/e_main.c:665
+#: src/bin/e_main.c:670
 #, fuzzy
 msgid "Setup Message Bus"
 msgstr "Persediaan Mesej Bas"
 
-#: src/bin/e_main.c:672
+#: src/bin/e_main.c:677
 #, fuzzy
 msgid "Setup Paths"
 msgstr "persediaan Laluan"
 
-#: src/bin/e_main.c:678
+#: src/bin/e_main.c:683
 #, fuzzy
 msgid "Setup System Controls"
 msgstr "Persediaan Sistem Kawalan"
 
-#: src/bin/e_main.c:682
+#: src/bin/e_main.c:687
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:689
+#: src/bin/e_main.c:694
 #, fuzzy
 msgid "Setup Actions"
 msgstr "persediaan Tindakan"
 
-#: src/bin/e_main.c:693
+#: src/bin/e_main.c:698
 msgid "Enlightenment cannot set up its actions system."
 msgstr ""
 
-#: src/bin/e_main.c:700
+#: src/bin/e_main.c:705
 #, fuzzy
 msgid "Setup Execution System"
 msgstr "Sistem Persediaan Pelaksanaan"
 
-#: src/bin/e_main.c:704
+#: src/bin/e_main.c:709
 msgid "Enlightenment cannot set up its exec system."
 msgstr ""
 
-#: src/bin/e_main.c:715
+#: src/bin/e_main.c:720
 #, fuzzy
 msgid "Setup Filemanager"
 msgstr "pengurusfail persediaan"
 
-#: src/bin/e_main.c:719
+#: src/bin/e_main.c:724
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr ""
 
-#: src/bin/e_main.c:726
+#: src/bin/e_main.c:731
 #, fuzzy
 msgid "Setup Message System"
 msgstr "Sistem setup Mesej"
 
-#: src/bin/e_main.c:730
+#: src/bin/e_main.c:735
 msgid "Enlightenment cannot set up its msg system."
 msgstr ""
 
-#: src/bin/e_main.c:737
+#: src/bin/e_main.c:742
 #, fuzzy
 msgid "Setup DND"
 msgstr "setup DND"
 
-#: src/bin/e_main.c:741
+#: src/bin/e_main.c:746
 msgid "Enlightenment cannot set up its dnd system."
 msgstr ""
 
-#: src/bin/e_main.c:748
+#: src/bin/e_main.c:753
 #, fuzzy
 msgid "Setup Grab Input Handling"
 msgstr "Pengendalian Input Grab persediaan"
 
-#: src/bin/e_main.c:752
+#: src/bin/e_main.c:757
 msgid "Enlightenment cannot set up its grab input handling system."
 msgstr ""
 
-#: src/bin/e_main.c:759
+#: src/bin/e_main.c:764
 #, fuzzy
 msgid "Setup Modules"
 msgstr "persediaan Modul"
 
-#: src/bin/e_main.c:763 src/bin/e_main.c:839
+#: src/bin/e_main.c:768 src/bin/e_main.c:851
 msgid "Enlightenment cannot set up its module system."
 msgstr ""
 
-#: src/bin/e_main.c:770
+#: src/bin/e_main.c:775
 #, fuzzy
 msgid "Setup Remembers"
 msgstr "persediaan memperkaya"
 
-#: src/bin/e_main.c:774
+#: src/bin/e_main.c:779
 msgid "Enlightenment cannot setup remember settings."
 msgstr ""
 
-#: src/bin/e_main.c:781
+#: src/bin/e_main.c:786
 #, fuzzy
 msgid "Setup Color Classes"
 msgstr "Persediaan Kelas Warna"
 
-#: src/bin/e_main.c:785
+#: src/bin/e_main.c:790
 msgid "Enlightenment cannot set up its color class system."
 msgstr ""
 
-#: src/bin/e_main.c:792
+#: src/bin/e_main.c:797
 #, fuzzy
 msgid "Setup Gadcon"
 msgstr "setup Gadcon"
 
-#: src/bin/e_main.c:796
+#: src/bin/e_main.c:801
 msgid "Enlightenment cannot set up its gadget control system."
 msgstr ""
 
-#: src/bin/e_main.c:803
+#: src/bin/e_main.c:808
 #, fuzzy
 msgid "Setup Wallpaper"
 msgstr "setup Wallpaper"
 
-#: src/bin/e_main.c:807
+#: src/bin/e_main.c:812
 msgid "Enlightenment cannot set up its desktop background system."
 msgstr ""
 
-#: src/bin/e_main.c:814
+#: src/bin/e_main.c:819
 #, fuzzy
 msgid "Setup Mouse"
 msgstr "Tetikus persediaan"
 
-#: src/bin/e_main.c:818
+#: src/bin/e_main.c:823
 msgid "Enlightenment cannot configure the mouse settings."
 msgstr ""
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:830
+msgid "Enlightenment cannot setup XKB Keyboard layouts."
+msgstr ""
+
+#: src/bin/e_main.c:836
 #, fuzzy
 msgid "Setup Bindings"
 msgstr "persediaan pengikatan"
 
-#: src/bin/e_main.c:828
+#: src/bin/e_main.c:840
 msgid "Enlightenment cannot set up its bindings system."
 msgstr ""
 
-#: src/bin/e_main.c:835
+#: src/bin/e_main.c:847
 #, fuzzy
 msgid "Setup Shelves"
 msgstr "persediaan rak"
 
-#: src/bin/e_main.c:846
+#: src/bin/e_main.c:858
 #, fuzzy
 msgid "Setup Thumbnailer"
 msgstr "setup Thumbnailer"
 
-#: src/bin/e_main.c:850
+#: src/bin/e_main.c:862
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:859
+#: src/bin/e_main.c:871
 msgid "Enlightenment cannot initialize the Icon Cache system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:868
+#: src/bin/e_main.c:880
 msgid "Enlightenment cannot initialize the XSettings system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:877
+#: src/bin/e_main.c:889
 msgid "Enlightenment cannot initialize the Update system.\n"
-msgstr ""
-
-#: src/bin/e_main.c:886
-#, fuzzy
-msgid "Setup Desktop Environment"
-msgstr "Setup Desktop Alam Sekitar"
-
-#: src/bin/e_main.c:890
-msgid "Enlightenment cannot initialize its desktop environment.\n"
 msgstr ""
 
 #: src/bin/e_main.c:898
 #, fuzzy
+msgid "Setup Desktop Environment"
+msgstr "Setup Desktop Alam Sekitar"
+
+#: src/bin/e_main.c:902
+msgid "Enlightenment cannot initialize its desktop environment.\n"
+msgstr ""
+
+#: src/bin/e_main.c:910
+#, fuzzy
 msgid "Setup File Ordering"
 msgstr "Fail setup Susunan"
 
-#: src/bin/e_main.c:902
+#: src/bin/e_main.c:914
 msgid "Enlightenment cannot set up its order file system."
 msgstr ""
 
-#: src/bin/e_main.c:917
+#: src/bin/e_main.c:929
 #, fuzzy
 msgid "Load Modules"
 msgstr "beban Modul"
 
-#: src/bin/e_main.c:947
+#: src/bin/e_main.c:959
 #, fuzzy
 msgid "Configure Shelves"
 msgstr "Konfigurasi rak"
 
-#: src/bin/e_main.c:958
+#: src/bin/e_main.c:970
 #, fuzzy
 msgid "Almost Done"
 msgstr "hampir selesai"
 
-#: src/bin/e_main.c:1103
+#: src/bin/e_main.c:1115
 #, c-format
 msgid ""
 "Options:\n"
@@ -3231,7 +3265,7 @@ msgid ""
 "\t\tIf you need this help, you don't need this option.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1156
+#: src/bin/e_main.c:1168
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3241,49 +3275,49 @@ msgid ""
 "before enlightenment itself begins running.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1435
+#: src/bin/e_main.c:1447
 #, fuzzy
 msgid "Testing Format Support"
 msgstr "Menguji Sokongan Format"
 
-#: src/bin/e_main.c:1439
+#: src/bin/e_main.c:1451
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1451
+#: src/bin/e_main.c:1463
 msgid ""
 "Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1461
+#: src/bin/e_main.c:1473
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1471
+#: src/bin/e_main.c:1483
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1481
+#: src/bin/e_main.c:1493
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1495
+#: src/bin/e_main.c:1507
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1686
+#: src/bin/e_main.c:1698
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. There was an "
@@ -3291,11 +3325,11 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1691 src/bin/e_main.c:1708
+#: src/bin/e_main.c:1703 src/bin/e_main.c:1720
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr ""
 
-#: src/bin/e_main.c:1692
+#: src/bin/e_main.c:1704
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>There was an "
@@ -3303,7 +3337,7 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1701
+#: src/bin/e_main.c:1713
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -3311,7 +3345,7 @@ msgid ""
 "dialog should let you select your<br>modules again."
 msgstr ""
 
-#: src/bin/e_main.c:1709
+#: src/bin/e_main.c:1721
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -3670,8 +3704,8 @@ msgid "%li Minutes ago"
 msgstr ""
 
 #: src/bin/e_utils.c:924 src/modules/conf_dialogs/e_int_config_profiles.c:274
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1177
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1179
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1179
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1189
 #: src/modules/wizard/page_020.c:19 src/modules/wizard/page_020.c:30
 #, fuzzy
 msgid "Unknown"
@@ -3781,18 +3815,21 @@ msgstr ""
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:106
+#: src/modules/xkbswitch/e_mod_config.c:263
 #, fuzzy
 msgid "Add"
 msgstr "Tambah"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:272
+#: src/modules/xkbswitch/e_mod_config.c:251
 #, fuzzy
 msgid "Up"
 msgstr "sehingga"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:276
+#: src/modules/xkbswitch/e_mod_config.c:257
 #, fuzzy
 msgid "Down"
 msgstr "down"
@@ -3804,7 +3841,7 @@ msgstr "Tambah pada Kegemaran"
 
 #: src/bin/e_widget_fsel.c:302
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
-#: src/modules/conf_intl/e_int_config_imc.c:815
+#: src/modules/conf_intl/e_int_config_imc.c:816
 #: src/modules/conf_theme/e_int_config_wallpaper.c:472
 #: src/modules/conf_theme/e_int_config_wallpaper.c:594
 #: src/modules/conf_theme/e_int_config_startup.c:266
@@ -3974,43 +4011,43 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Perkakasan"
 
-#: src/modules/battery/e_mod_main.c:148 src/modules/battery/e_mod_main.c:445
+#: src/modules/battery/e_mod_main.c:151 src/modules/battery/e_mod_main.c:446
 #, fuzzy
 msgid "Battery"
 msgstr "bateri"
 
-#: src/modules/battery/e_mod_main.c:448 src/modules/battery/e_mod_main.c:480
+#: src/modules/battery/e_mod_main.c:449 src/modules/battery/e_mod_main.c:481
 #, fuzzy
 msgid "Your battery is low!"
 msgstr "Bateri anda adalah rendah."
 
-#: src/modules/battery/e_mod_main.c:449 src/modules/battery/e_mod_main.c:482
+#: src/modules/battery/e_mod_main.c:450 src/modules/battery/e_mod_main.c:483
 #, fuzzy
 msgid "AC power is recommended."
 msgstr "Kuasa AC disyorkan."
 
-#: src/modules/battery/e_mod_main.c:557
+#: src/modules/battery/e_mod_main.c:577
 msgid "N/A"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:663 src/modules/battery/e_mod_main.c:665
-#: src/modules/battery/e_mod_main.c:672 src/modules/battery/e_mod_main.c:674
+#: src/modules/battery/e_mod_main.c:683 src/modules/battery/e_mod_main.c:685
+#: src/modules/battery/e_mod_main.c:692 src/modules/battery/e_mod_main.c:694
 #, fuzzy
 msgid "ERROR"
 msgstr "RALAT"
 
-#: src/modules/battery/e_mod_main.c:787
+#: src/modules/battery/e_mod_main.c:809
 #, fuzzy
 msgid "Battery Meter"
 msgstr "Meter bateri"
 
-#: src/modules/clock/e_mod_main.c:652 src/modules/clock/e_mod_main.c:783
-#: src/modules/clock/e_mod_main.c:797
+#: src/modules/clock/e_mod_main.c:659 src/modules/clock/e_mod_main.c:790
+#: src/modules/clock/e_mod_main.c:804
 #, fuzzy
 msgid "Clock"
 msgstr "jam"
 
-#: src/modules/clock/e_mod_main.c:783 src/modules/clock/e_mod_main.c:797
+#: src/modules/clock/e_mod_main.c:790 src/modules/clock/e_mod_main.c:804
 #, fuzzy
 msgid "Show calendar"
 msgstr "menunjukkan kalendar"
@@ -4284,6 +4321,7 @@ msgid "Resolution change"
 msgstr "perubahan resolusi"
 
 #: src/modules/conf_display/e_int_config_display.c:189
+#: src/modules/shot/e_mod_main.c:694
 #, fuzzy
 msgid "Save"
 msgstr "Simpan"
@@ -4373,6 +4411,7 @@ msgstr "Bilangan daripada Desktops"
 #: src/modules/everything/evry_config.c:580
 #: src/modules/everything/evry_config.c:587
 #: src/modules/fileman/e_mod_config.c:240
+#: src/modules/tiling/e_mod_config.c:131
 #, c-format
 msgid "%1.0f"
 msgstr ""
@@ -4458,7 +4497,7 @@ msgid "Select a Background..."
 msgstr "Pilih Latar Belakang ..."
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
-#: src/modules/conf_intl/e_int_config_imc.c:803
+#: src/modules/conf_intl/e_int_config_imc.c:804
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:584
 #: src/modules/conf_theme/e_int_config_startup.c:253
@@ -4731,6 +4770,7 @@ msgid "Backlight"
 msgstr "latar"
 
 #: src/modules/conf_display/e_mod_main.c:21
+#: src/modules/tiling/e_mod_config.c:200
 #, fuzzy
 msgid "Virtual Desktops"
 msgstr "desktop maya"
@@ -4760,8 +4800,8 @@ msgstr "Pengurusan Power"
 msgid "Desk"
 msgstr "meja"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:3
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:10
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:11
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
@@ -4769,133 +4809,133 @@ msgstr "meja"
 msgid "<None>"
 msgstr "<none>"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:5
 msgid ""
 "Please select an edge,<br>or click <hilight>Close</hilight> to abort."
 "<br><br>You can either specify a delay of this<br> action using the slider, "
 "or make it<br>respond to edge clicks:"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:102
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:103
 #, fuzzy
 msgid "Edge Bindings Settings"
 msgstr "Pengikatan kelebihan Tetapan"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:253
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:254
 #: src/modules/conf_edgebindings/e_mod_main.c:20
 #, fuzzy
 msgid "Edge Bindings"
 msgstr "The Edge pengikatan"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:259
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:249
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:281
 #, fuzzy
 msgid "Add Binding"
 msgstr "Tambah Binding"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:261
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:262
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:252
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:283
 #, fuzzy
 msgid "Delete Binding"
 msgstr "memadam Binding"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:265
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:256
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:287
 #, fuzzy
 msgid "Modify Binding"
 msgstr "mengubahsuai Binding"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:269
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:260
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:291
 #, fuzzy
 msgid "Delete All"
 msgstr "Padam Semua"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:273
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:264
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:295
 #, fuzzy
 msgid "Restore Default Bindings"
 msgstr "Simpan semula pengikatan Default"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:279
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:269
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:301
 #, fuzzy
 msgid "Action"
 msgstr "tindakan"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:285
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:286
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:276
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
 #, fuzzy
 msgid "Action Params"
 msgstr "tindakan params"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:295
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
 #, fuzzy
 msgid "General Options"
 msgstr "Pilihan Umum"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:297
 #, fuzzy
 msgid "Allow binding activation with fullscreen windows"
 msgstr "Membenarkan pengaktifan mengikat dengan tingkap skrin penuh"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:840
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:841
 #, fuzzy
 msgid "Edge Binding Sequence"
 msgstr "The Edge Sequence Binding"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:857
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:858
 #, fuzzy
 msgid "Clickable edge"
 msgstr "kelebihan yang boleh diklik"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1172
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1174
 #, fuzzy
 msgid "Binding Edge Error"
 msgstr "The Edge Ralat mengikat"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1173
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1175
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
 "%s</hilight> action.<br>Please choose another binding edge sequence."
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1310
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1366
-#: src/modules/gadman/e_mod_gadman.c:837
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1344
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1376
+#: src/modules/gadman/e_mod_gadman.c:842
 #, fuzzy
 msgid "CTRL"
 msgstr "CTRL"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1315
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1371
-#: src/modules/gadman/e_mod_gadman.c:842
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1317
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1349
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1381
+#: src/modules/gadman/e_mod_gadman.c:847
 #, fuzzy
 msgid "ALT"
 msgstr "ALT"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1321
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1377
-#: src/modules/gadman/e_mod_gadman.c:848
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1323
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1355
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1387
+#: src/modules/gadman/e_mod_gadman.c:853
 #, fuzzy
 msgid "SHIFT"
 msgstr "SHIFT"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1327
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1383
-#: src/modules/gadman/e_mod_gadman.c:854
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1329
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1361
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1393
+#: src/modules/gadman/e_mod_gadman.c:859
 #, fuzzy
 msgid "WIN"
 msgstr "MENANG"
@@ -4904,6 +4944,7 @@ msgstr "MENANG"
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
 #: src/modules/mixer/app_mixer.c:277 src/modules/mixer/app_mixer.c:295
+#: src/modules/xkbswitch/e_mod_main.c:72
 #, fuzzy
 msgid "Input"
 msgstr "input"
@@ -5001,43 +5042,43 @@ msgid "Input Method Selector"
 msgstr "Input Kaedah Pemilih"
 
 #: src/modules/conf_intl/e_int_config_imc.c:286
-#: src/modules/conf_intl/e_int_config_imc.c:874
+#: src/modules/conf_intl/e_int_config_imc.c:871
 #, fuzzy
 msgid "Use No Input Method"
 msgstr "Menggunakan Tiada Kaedah Input"
 
 #: src/modules/conf_intl/e_int_config_imc.c:292
-#: src/modules/conf_intl/e_int_config_imc.c:941
+#: src/modules/conf_intl/e_int_config_imc.c:936
 #, fuzzy
 msgid "Setup Selected Input Method"
 msgstr "Persediaan Input Terpilih Kaedah"
 
-#: src/modules/conf_intl/e_int_config_imc.c:881
+#: src/modules/conf_intl/e_int_config_imc.c:876
 #, fuzzy
 msgid "New"
 msgstr "baru"
 
-#: src/modules/conf_intl/e_int_config_imc.c:883
+#: src/modules/conf_intl/e_int_config_imc.c:880
 #, fuzzy
 msgid "Import..."
 msgstr "Import ..."
 
-#: src/modules/conf_intl/e_int_config_imc.c:888
+#: src/modules/conf_intl/e_int_config_imc.c:884
 #, fuzzy
 msgid "Input Method Parameters"
 msgstr "Input Parameter Kaedah"
 
-#: src/modules/conf_intl/e_int_config_imc.c:898
+#: src/modules/conf_intl/e_int_config_imc.c:894
 #, fuzzy
 msgid "Execute Command"
 msgstr "Laksanakan Arahan"
 
-#: src/modules/conf_intl/e_int_config_imc.c:905
+#: src/modules/conf_intl/e_int_config_imc.c:901
 #, fuzzy
 msgid "Setup Command"
 msgstr "Perintah persediaan"
 
-#: src/modules/conf_intl/e_int_config_imc.c:914
+#: src/modules/conf_intl/e_int_config_imc.c:910
 #, fuzzy
 msgid "Exported Environment Variables"
 msgstr "Variabel dieksport"
@@ -5093,7 +5134,7 @@ msgstr "bahasa Pemilih"
 #: src/modules/conf_intl/e_int_config_intl.c:980
 #: src/modules/conf_intl/e_int_config_intl.c:1431
 #: src/modules/conf_menus/e_int_config_menus.c:169
-#: src/modules/wizard/page_010.c:155
+#: src/modules/wizard/page_010.c:168
 #, fuzzy
 msgid "System Default"
 msgstr "Default Sistem"
@@ -5110,7 +5151,7 @@ msgstr "locale Terpilih"
 msgid "Locale"
 msgstr "locale"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:146
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:159
 #, fuzzy
 msgid "Language"
 msgstr "bahasa"
@@ -5140,12 +5181,12 @@ msgstr "pengikatan utama"
 msgid "Key Binding Sequence"
 msgstr "Utama Sequence Binding"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 #, fuzzy
 msgid "Binding Key Error"
 msgstr "Mengikat Ralat Utama"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -5259,7 +5300,7 @@ msgid "Main Menu"
 msgstr "Menu Tetingkap"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
-#: src/modules/fileman/e_mod_main.c:364
+#: src/modules/fileman/e_mod_main.c:366
 #, fuzzy
 msgid "Favorites"
 msgstr "kegemaran"
@@ -5282,7 +5323,8 @@ msgstr "komen"
 #: src/modules/conf_menus/e_int_config_menus.c:273
 #: src/modules/gadman/e_mod_config.c:162 src/modules/gadman/e_mod_main.c:27
 #: src/modules/gadman/e_mod_main.c:77 src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:120 src/modules/gadman/e_mod_main.c:150
+#: src/modules/gadman/e_mod_main.c:109 src/modules/gadman/e_mod_main.c:139
+#: src/modules/xkbswitch/e_mod_config.c:299
 #, fuzzy
 msgid "Gadgets"
 msgstr "Alat"
@@ -5532,6 +5574,11 @@ msgstr "prestasi"
 msgid "Engine"
 msgstr "enjin"
 
+#: src/modules/conf_performance/e_mod_main.c:20
+#, fuzzy
+msgid "Power management"
+msgstr "Pengurusan Power"
+
 #: src/modules/conf_shelves/e_int_config_shelf.c:72
 #, fuzzy
 msgid "Configured Shelves"
@@ -5613,32 +5660,32 @@ msgstr "Pan"
 msgid "Select a Picture..."
 msgstr "Pilih gambar anda ..."
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:696
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:701
 #, fuzzy
 msgid "Picture Import Error"
 msgstr "Kesalahan gambar Import"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:697
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:702
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:784
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:794
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:876
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:886
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:789
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:799
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:881
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:891
 #, fuzzy
 msgid "Wallpaper Import Error"
 msgstr "Ralat kertas dinding Import"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:785
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:877
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:790
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:882
 msgid ""
 "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:795
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:887
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:800
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:892
 msgid ""
 "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
 "is a valid wallpaper?"
@@ -6638,6 +6685,7 @@ msgstr "mengubah saiz Geometri"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:146
 #: src/modules/winlist/e_int_config_winlist.c:210
+#: src/modules/tasks/e_mod_config.c:73
 #, fuzzy
 msgid "Display"
 msgstr "memaparkan"
@@ -6964,14 +7012,14 @@ msgstr "Isikan ruang yang ada"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:161
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:757
+#: src/modules/gadman/e_mod_gadman.c:762
 #, fuzzy
 msgid "Horizontal"
 msgstr "mendatar"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:163
 #: src/modules/everything/evry_config.c:561
-#: src/modules/gadman/e_mod_gadman.c:765
+#: src/modules/gadman/e_mod_gadman.c:770
 #, fuzzy
 msgid "Vertical"
 msgstr "menegak"
@@ -7244,7 +7292,7 @@ msgstr ""
 msgid "Dropshadow Settings"
 msgstr "dropshadow Tetapan"
 
-#: src/modules/dropshadow/e_mod_config.c:107
+#: src/modules/dropshadow/e_mod_config.c:107 src/modules/shot/e_mod_main.c:618
 #, fuzzy
 msgid "Quality"
 msgstr "kualiti"
@@ -7279,7 +7327,7 @@ msgstr "sangat kabur"
 msgid "Fuzzy"
 msgstr "kabur"
 
-#: src/modules/dropshadow/e_mod_config.c:125
+#: src/modules/dropshadow/e_mod_config.c:125 src/modules/shot/e_mod_main.c:626
 #, fuzzy
 msgid "Medium"
 msgstr "sederhana"
@@ -7744,17 +7792,17 @@ msgstr "Pilih imej"
 msgid "File Manager"
 msgstr "File Manager"
 
-#: src/modules/fileman/e_mod_main.c:352
+#: src/modules/fileman/e_mod_main.c:354
 #, fuzzy
 msgid "Home"
 msgstr "Laman Utama"
 
-#: src/modules/fileman/e_mod_main.c:376
+#: src/modules/fileman/e_mod_main.c:378
 #, fuzzy
 msgid "Root"
 msgstr "akar"
 
-#: src/modules/fileman/e_mod_main.c:474
+#: src/modules/fileman/e_mod_main.c:475
 msgid ""
 "Fileman Module Settings data needed upgrading. Your old configuration<br>has "
 "been wiped and a new set of defaults initialized. This<br>will happen "
@@ -7765,7 +7813,7 @@ msgid ""
 "to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:487
+#: src/modules/fileman/e_mod_main.c:488
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -7775,7 +7823,7 @@ msgid ""
 "for the inconvenience.<br>"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:557
+#: src/modules/fileman/e_mod_main.c:558
 msgid "Fileman Settings Updated"
 msgstr ""
 
@@ -7839,7 +7887,7 @@ msgid "Show Toolbar"
 msgstr "menunjukkan Toolbar"
 
 #: src/modules/fileman/e_mod_config.c:278
-#: src/modules/gadman/e_mod_gadman.c:801
+#: src/modules/gadman/e_mod_gadman.c:806
 #, fuzzy
 msgid "Behavior"
 msgstr "tingkah laku"
@@ -7869,107 +7917,107 @@ msgstr "Pengurusfail terbuka pada gunung"
 msgid "Device"
 msgstr "peranti"
 
-#: src/modules/fileman/e_fwin.c:1601
+#: src/modules/fileman/e_fwin.c:1609
 #, fuzzy
 msgid "Go to Parent Directory"
 msgstr "Pergi ke Parent Directory"
 
-#: src/modules/fileman/e_fwin.c:1668
+#: src/modules/fileman/e_fwin.c:1676
 #, fuzzy
 msgid "Other application..."
 msgstr "Aplikasi lain ..."
 
-#: src/modules/fileman/e_fwin.c:1690 src/modules/fileman/e_fwin.c:2021
+#: src/modules/fileman/e_fwin.c:1698 src/modules/fileman/e_fwin.c:2029
 #, fuzzy
 msgid "Open"
 msgstr "membuka"
 
-#: src/modules/fileman/e_fwin.c:1695 src/modules/fileman/e_fwin.c:2019
+#: src/modules/fileman/e_fwin.c:1703 src/modules/fileman/e_fwin.c:2027
 #, fuzzy
 msgid "Open with..."
 msgstr "Buka dengan ..."
 
-#: src/modules/fileman/e_fwin.c:2039
+#: src/modules/fileman/e_fwin.c:2047
 #, fuzzy
 msgid "Known Applications"
 msgstr "Permohonan yang diketahui"
 
-#: src/modules/fileman/e_fwin.c:2049
+#: src/modules/fileman/e_fwin.c:2057
 #, fuzzy
 msgid "Specific Applications"
 msgstr "Aplikasi khusus"
 
-#: src/modules/fileman/e_fwin.c:2074
+#: src/modules/fileman/e_fwin.c:2082
 #, fuzzy
 msgid "All Applications"
 msgstr "Semua permohonan"
 
-#: src/modules/fileman/e_fwin.c:2097
+#: src/modules/fileman/e_fwin.c:2105
 #, fuzzy
 msgid "Custom Command"
 msgstr "Perintah adat"
 
-#: src/modules/fileman/e_fwin.c:2382
+#: src/modules/fileman/e_fwin.c:2390
 #: src/modules/fileman_opinfo/e_mod_main.c:89
 #, fuzzy, c-format
 msgid "Copying is aborted"
 msgstr "Proses penyalinan yang digugurkan"
 
-#: src/modules/fileman/e_fwin.c:2386
+#: src/modules/fileman/e_fwin.c:2394
 #: src/modules/fileman_opinfo/e_mod_main.c:92
 #, fuzzy, c-format
 msgid "Moving is aborted"
 msgstr "Bergerak ini digugurkan"
 
-#: src/modules/fileman/e_fwin.c:2390
+#: src/modules/fileman/e_fwin.c:2398
 #: src/modules/fileman_opinfo/e_mod_main.c:95
 #, fuzzy, c-format
 msgid "Deleting is aborted"
 msgstr "Memotong yang digugurkan"
 
-#: src/modules/fileman/e_fwin.c:2394
+#: src/modules/fileman/e_fwin.c:2402
 #: src/modules/fileman_opinfo/e_mod_main.c:98
 #, fuzzy, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Operasi tidak diketahui dari hamba adalah dibatalkan"
 
-#: src/modules/fileman/e_fwin.c:2404
+#: src/modules/fileman/e_fwin.c:2412
 #: src/modules/fileman_opinfo/e_mod_main.c:108
 #, c-format
 msgid "Copy of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2406
+#: src/modules/fileman/e_fwin.c:2414
 #: src/modules/fileman_opinfo/e_mod_main.c:110
 #, c-format
 msgid "Copying %s (eta: %d sec)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2411
+#: src/modules/fileman/e_fwin.c:2419
 #: src/modules/fileman_opinfo/e_mod_main.c:114
 #, c-format
 msgid "Move of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2413
+#: src/modules/fileman/e_fwin.c:2421
 #: src/modules/fileman_opinfo/e_mod_main.c:116
 #, c-format
 msgid "Moving %s (eta: %d sec)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2418
+#: src/modules/fileman/e_fwin.c:2426
 #: src/modules/fileman_opinfo/e_mod_main.c:120
 #, fuzzy, c-format
 msgid "Delete done"
 msgstr "memadam dilakukan"
 
-#: src/modules/fileman/e_fwin.c:2420
+#: src/modules/fileman/e_fwin.c:2428
 #: src/modules/fileman_opinfo/e_mod_main.c:122
 #, fuzzy, c-format
 msgid "Deleting files..."
 msgstr "Menghapuskan fail ..."
 
-#: src/modules/fileman/e_fwin.c:2424
+#: src/modules/fileman/e_fwin.c:2432
 #: src/modules/fileman_opinfo/e_mod_main.c:125
 #, c-format
 msgid "Unknow operation from slave %d"
@@ -8057,36 +8105,36 @@ msgstr "latar belakang"
 msgid "Background Options"
 msgstr "latar belakang Pilihan"
 
-#: src/modules/gadman/e_mod_gadman.c:718
+#: src/modules/gadman/e_mod_gadman.c:723
 msgid "Begin move/resize"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:749
+#: src/modules/gadman/e_mod_gadman.c:754
 #, fuzzy
 msgid "Free"
 msgstr "percuma"
 
-#: src/modules/gadman/e_mod_gadman.c:773
+#: src/modules/gadman/e_mod_gadman.c:778
 #, fuzzy
 msgid "Appearance"
 msgstr "rupa"
 
-#: src/modules/gadman/e_mod_gadman.c:781
+#: src/modules/gadman/e_mod_gadman.c:786
 #, fuzzy
 msgid "Always on desktop"
 msgstr "Sentiasa di desktop"
 
-#: src/modules/gadman/e_mod_gadman.c:791
+#: src/modules/gadman/e_mod_gadman.c:796
 #, fuzzy
 msgid "On top pressing"
 msgstr "Di atas menekan"
 
-#: src/modules/gadman/e_mod_gadman.c:822
+#: src/modules/gadman/e_mod_gadman.c:827
 #, fuzzy
 msgid "Add other gadgets"
 msgstr "Tambah alat lain"
 
-#: src/modules/gadman/e_mod_main.c:84 src/modules/gadman/e_mod_main.c:120
+#: src/modules/gadman/e_mod_main.c:84 src/modules/gadman/e_mod_main.c:109
 msgid "Show/hide gadgets"
 msgstr ""
 
@@ -8383,7 +8431,7 @@ msgstr "Papar tetingkap dari semua skrin"
 msgid "Show windows from current screen"
 msgstr "Menunjukkan tingkap dari skrin semasa"
 
-#: src/modules/ibox/e_mod_config.c:165
+#: src/modules/ibox/e_mod_config.c:165 src/modules/tasks/e_mod_config.c:74
 #, fuzzy
 msgid "Show windows from all desktops"
 msgstr "Papar tetingkap dari semua desktop"
@@ -8534,37 +8582,37 @@ msgstr ""
 "ini kerana ia sudah diambil oleh kod<br>dalaman bagi menu konteks.<br>butang "
 "ini hanya berfungsi dalam popup."
 
-#: src/modules/pager/e_mod_main.c:2804
+#: src/modules/pager/e_mod_main.c:2802
 #, fuzzy
 msgid "Show Pager Popup"
 msgstr "Papar Pager Popup"
 
-#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2854
+#: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2852
 #, fuzzy
 msgid "Popup Desk Right"
 msgstr "Meja Hak pop"
 
-#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2855
+#: src/modules/pager/e_mod_main.c:2811 src/modules/pager/e_mod_main.c:2853
 #, fuzzy
 msgid "Popup Desk Left"
 msgstr "Meja pop kiri"
 
-#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2856
+#: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2854
 #, fuzzy
 msgid "Popup Desk Up"
 msgstr "Popup meja Up"
 
-#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2857
+#: src/modules/pager/e_mod_main.c:2815 src/modules/pager/e_mod_main.c:2855
 #, fuzzy
 msgid "Popup Desk Down"
 msgstr "Meja pop Down"
 
-#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2858
+#: src/modules/pager/e_mod_main.c:2817 src/modules/pager/e_mod_main.c:2856
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "Meja Seterusnya pop"
 
-#: src/modules/pager/e_mod_main.c:2821 src/modules/pager/e_mod_main.c:2859
+#: src/modules/pager/e_mod_main.c:2819 src/modules/pager/e_mod_main.c:2857
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "Popup meja sebelum"
@@ -8655,16 +8703,16 @@ msgstr "suhu"
 msgid "Temperature"
 msgstr "suhu"
 
-#: src/modules/wizard/e_wizard.c:221
+#: src/modules/wizard/e_wizard.c:217
 #, fuzzy
 msgid "Next"
 msgstr "Seterusnya"
 
-#: src/modules/wizard/e_wizard.c:286
+#: src/modules/wizard/e_wizard.c:282
 msgid "Welcome to Enlightenment"
 msgstr ""
 
-#: src/modules/wizard/page_010.c:147 src/modules/wizard/page_020.c:58
+#: src/modules/wizard/page_010.c:160 src/modules/wizard/page_020.c:58
 #, fuzzy
 msgid "Select one"
 msgstr "pilih salah satu"
@@ -8787,7 +8835,7 @@ msgstr "Pengadun menggunakan untuk tindakan global:"
 
 #: src/modules/mixer/conf_module.c:118
 #, fuzzy
-msgid "Diplay desktop notifications on volume change"
+msgid "Display desktop notifications on volume change"
 msgstr "Diplay pemberitahuan desktop pada perubahan isi padu"
 
 #: src/modules/mixer/conf_module.c:154
@@ -8815,7 +8863,7 @@ msgstr "pengadun"
 msgid "Volume changed"
 msgstr "isipadu berubah"
 
-#: src/modules/mixer/e_mod_main.c:187
+#: src/modules/mixer/e_mod_main.c:188
 #, fuzzy
 msgid "Mixer Settings Updated"
 msgstr "Tetapan pengadun dikemaskini"
@@ -9017,3 +9065,192 @@ msgstr ""
 #, fuzzy
 msgid "Systray"
 msgstr "systray"
+
+#: src/modules/shot/e_mod_main.c:134 src/modules/shot/e_mod_main.c:146
+#, fuzzy
+msgid "Error - Unknown format"
+msgstr "Maklumat kesilapan"
+
+#: src/modules/shot/e_mod_main.c:135
+msgid ""
+"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
+"extensions<br>only as other formats are not<br>supported currently."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:147
+msgid ""
+"File has an unrecognized extension.<br>Please use '.jpg' or '.png' "
+"extensions<br>only as other formats are not<br>supported currently."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:231
+msgid "Select screenshot save location"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:357
+#, fuzzy
+msgid "Error - Upload Failed"
+msgstr "Modul Ralat memuatkan"
+
+#: src/modules/shot/e_mod_main.c:358
+#, c-format
+msgid "Upload failed with status code:<br>%i"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:384
+msgid "Error - Can't create File"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:385
+#, c-format
+msgid ""
+"Cannot create temporary file:\n"
+"%s"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:463
+msgid "Uploading screenshot"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:468
+msgid "Uploading ..."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:473
+msgid "Screenshot is available at this location:"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:566
+msgid "Where to put Screenshot..."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:622
+msgid "Perfect"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:624
+msgid "High"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:628
+#, fuzzy
+msgid "Low"
+msgstr "Turunkan"
+
+#: src/modules/shot/e_mod_main.c:696
+#, fuzzy
+msgid "Share"
+msgstr "tajam"
+
+#: src/modules/shot/e_mod_main.c:782 src/modules/shot/e_mod_main.c:804
+#: src/modules/shot/e_mod_main.c:808 src/modules/shot/e_mod_main.c:833
+#, fuzzy
+msgid "Take Screenshot"
+msgstr "persediaan Skrin"
+
+#: src/modules/tasks/e_mod_main.c:305 src/modules/tasks/e_mod_main.c:687
+#, fuzzy
+msgid "Tasks"
+msgstr "taskbar"
+
+#: src/modules/tasks/e_mod_config.c:31
+#, fuzzy
+msgid "Tasks Configuration"
+msgstr "konfigurasi"
+
+#: src/modules/tasks/e_mod_config.c:77
+#, fuzzy
+msgid "Minimum Width"
+msgstr "lebar minimum"
+
+#: src/modules/tasks/e_mod_config.c:79 src/modules/tasks/e_mod_config.c:84
+#, c-format
+msgid "%1.0f px"
+msgstr ""
+
+#: src/modules/tasks/e_mod_config.c:82
+#, fuzzy
+msgid "Minimum Height"
+msgstr "ketinggian minimum"
+
+#: src/modules/tiling/e_mod_config.c:137
+msgid "columns"
+msgstr ""
+
+#: src/modules/tiling/e_mod_config.c:139
+msgid "rows"
+msgstr ""
+
+#: src/modules/tiling/e_mod_config.c:184
+msgid "Tile dialog windows as well"
+msgstr ""
+
+#: src/modules/tiling/e_mod_config.c:187
+#, fuzzy
+msgid "Show window titles"
+msgstr "Papar Fail Tersembunyi"
+
+#: src/modules/tiling/e_mod_config.c:191
+#, fuzzy
+msgid "Key hints"
+msgstr "pengikatan utama"
+
+#: src/modules/tiling/e_mod_config.c:202
+msgid "Number of columns used to tile per desk (0 → tiling disabled):"
+msgstr ""
+
+#: src/modules/tiling/e_mod_config.c:340
+#, fuzzy
+msgid "Tiling Configuration"
+msgstr "Konfigurasi segala-galanya"
+
+#: src/modules/tiling/e_mod_tiling.c:3785
+#: src/modules/tiling/e_mod_tiling.c:3814
+#: src/modules/tiling/e_mod_tiling.c:3903
+#, fuzzy
+msgid "Tiling"
+msgstr "mengundi"
+
+#: src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/xkbswitch/e_mod_main.c:254
+msgid "XKB Switcher"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:73
+#, fuzzy
+msgid "XKB Switcher Module"
+msgstr "Modul pengadun"
+
+#: src/modules/xkbswitch/e_mod_config.c:277
+#, fuzzy
+msgid "Configurations"
+msgstr "konfigurasi"
+
+#: src/modules/xkbswitch/e_mod_config.c:286
+#, fuzzy
+msgid "Models"
+msgstr "mod"
+
+#: src/modules/xkbswitch/e_mod_config.c:301
+#, fuzzy
+msgid "Label only"
+msgstr "label"
+
+#: src/modules/xkbswitch/e_mod_config.c:481
+#, fuzzy
+msgid "Add New Configuration"
+msgstr "konfigurasi"
+
+#: src/modules/xkbswitch/e_mod_config.c:494
+#, fuzzy
+msgid "Available"
+msgstr "boleh didapati"
+
+#: src/modules/xkbswitch/e_mod_config.c:501
+#, fuzzy
+msgid "Model"
+msgstr "Alihkan"
+
+#: src/modules/xkbswitch/e_mod_config.c:508
+msgid "Variant"
+msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-05-13 21:16+0200\n"
+"POT-Creation-Date: 2012-05-30 21:07+0200\n"
 "PO-Revision-Date: 2012-05-13 21:18+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -303,7 +303,7 @@ msgstr "Commuta stato attaccata"
 #: src/bin/e_fm_device.c:637 src/bin/e_fm_device.c:664
 #: src/bin/e_int_menus.c:144 src/bin/e_int_shelf_config.c:247
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
-#: src/modules/fileman/e_mod_main.c:358 src/modules/ibox/e_mod_config.c:162
+#: src/modules/fileman/e_mod_main.c:360 src/modules/ibox/e_mod_config.c:162
 msgid "Desktop"
 msgstr "Desktop"
 
@@ -754,13 +754,13 @@ msgstr "Selettore colore"
 #: src/bin/e_utils.c:707 src/modules/conf_dialogs/e_int_config_profiles.c:387
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:222
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:352
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:357
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/cpufreq/e_mod_main.c:415 src/modules/cpufreq/e_mod_main.c:444
 #: src/modules/cpufreq/e_mod_main.c:469
 #: src/modules/fileman/e_int_config_mime_edit.c:303
 #: src/modules/shot/e_mod_main.c:242 src/modules/shot/e_mod_main.c:482
-#: src/modules/xkbswitch/e_mod_config.c:512
+#: src/modules/xkbswitch/e_mod_config.c:526
 msgid "OK"
 msgstr "OK"
 
@@ -770,12 +770,12 @@ msgstr "OK"
 #: src/modules/conf_dialogs/e_int_config_profiles.c:388
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_wallpaper_import.c:226
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:356
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:361
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:304
 #: src/modules/syscon/e_syscon.c:120 src/modules/connman/e_mod_main.c:300
 #: src/modules/shot/e_mod_main.c:244 src/modules/shot/e_mod_main.c:483
-#: src/modules/shot/e_mod_main.c:698 src/modules/xkbswitch/e_mod_config.c:513
+#: src/modules/shot/e_mod_main.c:698 src/modules/xkbswitch/e_mod_config.c:527
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -1124,7 +1124,7 @@ msgid "Show in Menus"
 msgstr "Mostra in menù"
 
 #: src/bin/e_eap_editor.c:786 src/bin/e_int_border_remember.c:757
-#: src/modules/xkbswitch/e_mod_config.c:325
+#: src/modules/xkbswitch/e_mod_config.c:335
 msgid "Options"
 msgstr "Opzioni"
 
@@ -1136,26 +1136,26 @@ msgstr "Seleziona un'icona"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:501 src/bin/e_fm.c:8243 src/bin/e_shelf.c:1703
+#: src/bin/e_entry.c:506 src/bin/e_fm.c:8243 src/bin/e_shelf.c:1703
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_shelves/e_int_config_shelf.c:81
 #: src/modules/ibar/e_mod_config.c:108
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_entry.c:511 src/bin/e_fm.c:8151
+#: src/bin/e_entry.c:516 src/bin/e_fm.c:8151
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_entry.c:519 src/bin/e_fm.c:6198 src/bin/e_fm.c:8165
+#: src/bin/e_entry.c:524 src/bin/e_fm.c:6198 src/bin/e_fm.c:8165
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_entry.c:527 src/bin/e_fm.c:7989 src/bin/e_fm.c:8178
+#: src/bin/e_entry.c:532 src/bin/e_fm.c:7989 src/bin/e_fm.c:8178
 msgid "Paste"
 msgstr "Incolla"
 
-#: src/bin/e_entry.c:537
+#: src/bin/e_entry.c:542
 msgid "Select All"
 msgstr "Seleziona tutto"
 
@@ -1652,7 +1652,7 @@ msgstr "Aspetto"
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
 #: src/modules/gadman/e_mod_gadman.c:818 src/modules/ibar/e_mod_main.c:801
-#: src/modules/xkbswitch/e_mod_config.c:260
+#: src/modules/xkbswitch/e_mod_config.c:268
 msgid "Remove"
 msgstr "Elimina"
 
@@ -2187,7 +2187,7 @@ msgstr "Utilità"
 #: src/bin/e_int_config_modules.c:55
 #: src/modules/everything/evry_plug_files.c:1585
 #: src/modules/fileman/e_mod_main.c:56 src/modules/fileman/e_mod_main.c:76
-#: src/modules/fileman/e_mod_main.c:420
+#: src/modules/fileman/e_mod_main.c:421
 msgid "Files"
 msgstr "File"
 
@@ -2302,7 +2302,7 @@ msgstr "Applicazioni"
 #: src/bin/e_int_menus.c:151 src/bin/e_int_menus.c:1126
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
-#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3810
+#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3812
 msgid "Windows"
 msgstr "Finestre"
 
@@ -3459,7 +3459,7 @@ msgstr "%li minuti fa"
 
 #: src/bin/e_utils.c:924 src/modules/conf_dialogs/e_int_config_profiles.c:274
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1179
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1179
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1189
 #: src/modules/wizard/page_020.c:19 src/modules/wizard/page_020.c:30
 msgid "Unknown"
 msgstr "Sconosciuto"
@@ -3559,19 +3559,19 @@ msgstr ""
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_shelves/e_int_config_shelf.c:79
 #: src/modules/ibar/e_mod_config.c:106
-#: src/modules/xkbswitch/e_mod_config.c:255
+#: src/modules/xkbswitch/e_mod_config.c:263
 msgid "Add"
 msgstr "Aggiungi"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:272
-#: src/modules/xkbswitch/e_mod_config.c:243
+#: src/modules/xkbswitch/e_mod_config.c:251
 msgid "Up"
 msgstr "Su"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:276
-#: src/modules/xkbswitch/e_mod_config.c:249
+#: src/modules/xkbswitch/e_mod_config.c:257
 msgid "Down"
 msgstr "Giù"
 
@@ -4524,29 +4524,29 @@ msgstr ""
 "diversa."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1312
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1334
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1366
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1344
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1376
 #: src/modules/gadman/e_mod_gadman.c:842
 msgid "CTRL"
 msgstr "Ctrl"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1317
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1339
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1371
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1349
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1381
 #: src/modules/gadman/e_mod_gadman.c:847
 msgid "ALT"
 msgstr "Alt"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1323
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1345
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1377
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1355
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1387
 #: src/modules/gadman/e_mod_gadman.c:853
 msgid "SHIFT"
 msgstr "Maiuscole"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1329
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1351
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1383
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1361
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1393
 #: src/modules/gadman/e_mod_gadman.c:859
 msgid "WIN"
 msgstr "Windows"
@@ -4766,11 +4766,11 @@ msgstr "Combinazioni della tastiera"
 msgid "Key Binding Sequence"
 msgstr "Sequenza di tastiera"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
 msgstr "Errore di associazione"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -4871,7 +4871,7 @@ msgid "Main Menu"
 msgstr "Menù principale"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
-#: src/modules/fileman/e_mod_main.c:364
+#: src/modules/fileman/e_mod_main.c:366
 msgid "Favorites"
 msgstr "Preferiti"
 
@@ -4891,7 +4891,7 @@ msgstr "Commenti"
 #: src/modules/gadman/e_mod_config.c:162 src/modules/gadman/e_mod_main.c:27
 #: src/modules/gadman/e_mod_main.c:77 src/modules/gadman/e_mod_main.c:84
 #: src/modules/gadman/e_mod_main.c:109 src/modules/gadman/e_mod_main.c:139
-#: src/modules/xkbswitch/e_mod_config.c:289
+#: src/modules/xkbswitch/e_mod_config.c:299
 msgid "Gadgets"
 msgstr "Gadget"
 
@@ -5177,34 +5177,34 @@ msgstr "Estesa"
 msgid "Select a Picture..."
 msgstr "Selezionare un'immmagine..."
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:696
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:701
 msgid "Picture Import Error"
 msgstr "Errore importazione immagine"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:697
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:702
 msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr ""
 "Enlightenment non ha potuto importare l'immagine<br>a causa di errori di "
 "conversione."
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:784
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:794
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:876
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:886
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:789
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:799
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:881
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:891
 msgid "Wallpaper Import Error"
 msgstr "Errore importazione sfondo"
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:785
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:877
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:790
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:882
 msgid ""
 "Enlightenment was unable to import the wallpaper<br>due to a copy error."
 msgstr ""
 "Enlightenment non ha potuto importare lo sfondo<br>a causa di un errore di "
 "copia."
 
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:795
-#: src/modules/conf_theme/e_int_config_wallpaper_import.c:887
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:800
+#: src/modules/conf_theme/e_int_config_wallpaper_import.c:892
 msgid ""
 "Enlightenment was unable to import the wallpaper.<br><br>Are you sure this "
 "is a valid wallpaper?"
@@ -6951,15 +6951,15 @@ msgstr "Seleziona un'immagine"
 msgid "File Manager"
 msgstr "File manager"
 
-#: src/modules/fileman/e_mod_main.c:352
+#: src/modules/fileman/e_mod_main.c:354
 msgid "Home"
 msgstr "Home"
 
-#: src/modules/fileman/e_mod_main.c:376
+#: src/modules/fileman/e_mod_main.c:378
 msgid "Root"
 msgstr "Directory principale"
 
-#: src/modules/fileman/e_mod_main.c:474
+#: src/modules/fileman/e_mod_main.c:475
 msgid ""
 "Fileman Module Settings data needed upgrading. Your old configuration<br>has "
 "been wiped and a new set of defaults initialized. This<br>will happen "
@@ -6979,7 +6979,7 @@ msgstr ""
 "nuove funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
 "piacimento.<br>Ci scusiamo per il disagio.<br>"
 
-#: src/modules/fileman/e_mod_main.c:487
+#: src/modules/fileman/e_mod_main.c:488
 msgid ""
 "Your Fileman Module configuration is NEWER than Fileman Module version. This "
 "is very<br>strange. This should not happen unless you downgraded<br>the "
@@ -6996,7 +6996,7 @@ msgstr ""
 "configurazione è<br>stata ripristinata a scopo precauzionale ai valori "
 "predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
 
-#: src/modules/fileman/e_mod_main.c:557
+#: src/modules/fileman/e_mod_main.c:558
 msgid "Fileman Settings Updated"
 msgstr "Impostazioni di Fileman aggiornate"
 
@@ -8169,9 +8169,9 @@ msgstr "Numero di colonne da usare per desktop (0 → griglia disabilitata)"
 msgid "Tiling Configuration"
 msgstr "Configurazione di Tiling"
 
-#: src/modules/tiling/e_mod_tiling.c:3783
-#: src/modules/tiling/e_mod_tiling.c:3812
-#: src/modules/tiling/e_mod_tiling.c:3901
+#: src/modules/tiling/e_mod_tiling.c:3785
+#: src/modules/tiling/e_mod_tiling.c:3814
+#: src/modules/tiling/e_mod_tiling.c:3903
 msgid "Tiling"
 msgstr "Tiling"
 
@@ -8184,30 +8184,30 @@ msgstr "Commutatore tastiera"
 msgid "XKB Switcher Module"
 msgstr "Modulo XKBswitcher"
 
-#: src/modules/xkbswitch/e_mod_config.c:269
+#: src/modules/xkbswitch/e_mod_config.c:277
 msgid "Configurations"
 msgstr "Configurazioni"
 
-#: src/modules/xkbswitch/e_mod_config.c:278
+#: src/modules/xkbswitch/e_mod_config.c:286
 msgid "Models"
 msgstr "Modelli"
 
-#: src/modules/xkbswitch/e_mod_config.c:291
+#: src/modules/xkbswitch/e_mod_config.c:301
 msgid "Label only"
 msgstr "Solo etichette"
 
-#: src/modules/xkbswitch/e_mod_config.c:470
+#: src/modules/xkbswitch/e_mod_config.c:481
 msgid "Add New Configuration"
 msgstr "Aggiungi nuova configurazione"
 
-#: src/modules/xkbswitch/e_mod_config.c:480
+#: src/modules/xkbswitch/e_mod_config.c:494
 msgid "Available"
 msgstr "Disponibile"
 
-#: src/modules/xkbswitch/e_mod_config.c:487
+#: src/modules/xkbswitch/e_mod_config.c:501
 msgid "Model"
 msgstr "Modello"
 
-#: src/modules/xkbswitch/e_mod_config.c:494
+#: src/modules/xkbswitch/e_mod_config.c:508
 msgid "Variant"
 msgstr "Variante"

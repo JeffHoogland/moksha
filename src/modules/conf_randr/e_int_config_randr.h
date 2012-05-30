@@ -31,7 +31,7 @@ struct _E_Config_Dialog_Data
              struct {
                   Evas_Object *widget;
                   //Evas_Object *swallowing_edje;
-                  Evas_Object *radio_above, *radio_right, *radio_below, *radio_left, *radio_clone, *radio_none;
+                  Evas_Object *radio_above, *radio_right, *radio_below, *radio_left, *radio_clone, *radio_none, *radio_ask;
                   int radio_val;
                   //Evas_Object *current_displays_setup, *current_displays_setup_background, *new_display, *new_display_background;
              } policy;

@@ -24,12 +24,14 @@ static const char *_POLICIES_STRINGS[] = {
      "BELOW",
      "LEFT",
      "CLONE",
-     "NONE"};
+     "NONE",
+     "ASK"};
 
 
    static void
 _policy_widget_radio_add_callbacks(void)
 {
+   evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_ask, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
    evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_none, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
    evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_clone, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
    evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_left, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
@@ -87,6 +89,9 @@ policy_widget_basic_create_widgets(Evas *canvas)
    if (!(rg = e_widget_radio_group_new(&e_config_runtime_info->gui.widgets.policy.radio_val))) goto _policy_widget_radio_add_fail;
 
    //IMPROVABLE: use enum to determine objects via 'switch'-statement
+   e_config_runtime_info->gui.widgets.policy.radio_ask = e_widget_radio_add(canvas, _("Ask"), ECORE_X_RANDR_OUTPUT_POLICY_ASK, rg);
+   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_ask);
+
    e_config_runtime_info->gui.widgets.policy.radio_above = e_widget_radio_add(canvas, _("Above"), ECORE_X_RANDR_OUTPUT_POLICY_ABOVE, rg);
    e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_above);
 
@@ -181,6 +186,7 @@ _policy_widget_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Objec
     * 1-liner below.
     * snprintf(signal, sizeof(signal), "conf,randr,dialog,policies,%d", e_config_runtime_info->gui.widgets.policy.radio_val);
     */
+   if (obj == e_config_runtime_info->gui.widgets.policy.radio_ask) policy = ECORE_X_RANDR_OUTPUT_POLICY_ASK;
    if (obj == e_config_runtime_info->gui.widgets.policy.radio_above) policy = ECORE_X_RANDR_OUTPUT_POLICY_ABOVE;
    if (obj == e_config_runtime_info->gui.widgets.policy.radio_right) policy = ECORE_X_RANDR_OUTPUT_POLICY_RIGHT;
    if (obj == e_config_runtime_info->gui.widgets.policy.radio_below) policy = ECORE_X_RANDR_OUTPUT_POLICY_BELOW;
@@ -254,33 +260,27 @@ void
 policy_widget_update_radio_buttons(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 {
    Ecore_X_Randr_Output_Policy policy;
+   Eina_Bool enable = !odd;
 
    //disable widgets, if no rep is selected
-   if (!odd)
-     {
-        //Evas_Object *radio_above, *radio_right, *radio_below, *radio_left, *radio_clone, *radio_none;
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_above, EINA_TRUE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_right, EINA_TRUE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_below, EINA_TRUE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_left, EINA_TRUE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_clone, EINA_TRUE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_none, EINA_TRUE);
-        return;
-     }
-   else
-     {
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_above, EINA_FALSE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_right, EINA_FALSE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_below, EINA_FALSE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_left, EINA_FALSE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_clone, EINA_FALSE);
-        e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_none, EINA_FALSE);
-     }
+   e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_ask, enable);
+   e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_above, enable);
+   e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_right, enable);
+   e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_below, enable);
+   e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_left, enable);
+   e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_clone, enable);
+   e_widget_disabled_set(e_config_runtime_info->gui.widgets.policy.radio_none, enable);
+
+   if (!odd) return;
 
    policy = (odd->new_policy != (Ecore_X_Randr_Output_Policy) Ecore_X_Randr_Unset) ? odd->new_policy : odd->previous_policy;
    //toggle the switch of the currently used policies
    switch (policy)
      {
+      case ECORE_X_RANDR_OUTPUT_POLICY_ASK:
+        e_widget_radio_toggle_set(e_config_runtime_info->gui.widgets.policy.radio_ask, EINA_TRUE);
+        break;
+
       case ECORE_X_RANDR_OUTPUT_POLICY_RIGHT:
         e_widget_radio_toggle_set(e_config_runtime_info->gui.widgets.policy.radio_right, EINA_TRUE);
         break;
