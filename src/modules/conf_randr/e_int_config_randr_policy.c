@@ -14,7 +14,7 @@
 
 #define E_RANDR_12 (e_randr_screen_info.rrvd_info.randr_info_12)
 
-static void _policy_widget_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _policy_widget_mouse_up_cb(void *data, Evas_Object *obj, void *event_info);
 extern E_Config_Dialog_Data *e_config_runtime_info;
 extern char _theme_file_path[];
 
@@ -26,19 +26,6 @@ static const char *_POLICIES_STRINGS[] = {
      "CLONE",
      "NONE",
      "ASK"};
-
-
-   static void
-_policy_widget_radio_add_callbacks(void)
-{
-   evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_ask, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_none, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_clone, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_left, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_below, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_above, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
-   evas_object_event_callback_add(e_config_runtime_info->gui.widgets.policy.radio_right, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb, NULL);
-}
 
 Eina_Bool
 policy_widget_create_data(E_Config_Dialog_Data *data)
@@ -67,15 +54,14 @@ policy_widget_create_data(E_Config_Dialog_Data *data)
 }
 
 void
-policy_widget_free_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+policy_widget_free_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
-   evas_object_event_callback_del(cfdata->gui.widgets.policy.widget, EVAS_CALLBACK_MOUSE_UP, _policy_widget_mouse_up_cb);
 }
 
 Evas_Object *
 policy_widget_basic_create_widgets(Evas *canvas)
 {
-   Evas_Object *widget;
+   Evas_Object *widget, *ro;
    E_Radio_Group *rg;
    //char signal[29];
 
@@ -89,28 +75,41 @@ policy_widget_basic_create_widgets(Evas *canvas)
    if (!(rg = e_widget_radio_group_new(&e_config_runtime_info->gui.widgets.policy.radio_val))) goto _policy_widget_radio_add_fail;
 
    //IMPROVABLE: use enum to determine objects via 'switch'-statement
-   e_config_runtime_info->gui.widgets.policy.radio_ask = e_widget_radio_add(canvas, _("Ask"), ECORE_X_RANDR_OUTPUT_POLICY_ASK, rg);
-   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_ask);
+   ro = e_widget_radio_add(canvas, _("Ask"), ECORE_X_RANDR_OUTPUT_POLICY_ASK, rg);
+   evas_object_smart_callback_add(ro, "changed", _policy_widget_mouse_up_cb, NULL);
+   e_widget_framelist_object_append(widget, ro);
+   e_config_runtime_info->gui.widgets.policy.radio_ask = ro;
 
-   e_config_runtime_info->gui.widgets.policy.radio_above = e_widget_radio_add(canvas, _("Above"), ECORE_X_RANDR_OUTPUT_POLICY_ABOVE, rg);
-   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_above);
+   ro = e_widget_radio_add(canvas, _("Above"), ECORE_X_RANDR_OUTPUT_POLICY_ABOVE, rg);
+   evas_object_smart_callback_add(ro, "changed", _policy_widget_mouse_up_cb, NULL);
+   e_widget_framelist_object_append(widget, ro);
+   e_config_runtime_info->gui.widgets.policy.radio_above = ro;
 
-   e_config_runtime_info->gui.widgets.policy.radio_right = e_widget_radio_add(canvas, _("Right"), ECORE_X_RANDR_OUTPUT_POLICY_RIGHT, rg);
-   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_right);
+   ro = e_widget_radio_add(canvas, _("Right"), ECORE_X_RANDR_OUTPUT_POLICY_RIGHT, rg);
+   evas_object_smart_callback_add(ro, "changed", _policy_widget_mouse_up_cb, NULL);
+   e_widget_framelist_object_append(widget, ro);
+   e_config_runtime_info->gui.widgets.policy.radio_right = ro;
 
-   e_config_runtime_info->gui.widgets.policy.radio_below = e_widget_radio_add(canvas, _("Below"), ECORE_X_RANDR_OUTPUT_POLICY_BELOW, rg);
-   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_below);
+   ro = e_widget_radio_add(canvas, _("Below"), ECORE_X_RANDR_OUTPUT_POLICY_BELOW, rg);
+   evas_object_smart_callback_add(ro, "changed", _policy_widget_mouse_up_cb, NULL);
+   e_widget_framelist_object_append(widget, ro);
+   e_config_runtime_info->gui.widgets.policy.radio_below = ro;
 
-   e_config_runtime_info->gui.widgets.policy.radio_left = e_widget_radio_add(canvas, _("Left"), ECORE_X_RANDR_OUTPUT_POLICY_LEFT, rg);
-   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_left);
+   ro = e_widget_radio_add(canvas, _("Left"), ECORE_X_RANDR_OUTPUT_POLICY_LEFT, rg);
+   evas_object_smart_callback_add(ro, "changed", _policy_widget_mouse_up_cb, NULL);
+   e_widget_framelist_object_append(widget, ro);
+   e_config_runtime_info->gui.widgets.policy.radio_left = ro;
 
-   e_config_runtime_info->gui.widgets.policy.radio_clone = e_widget_radio_add(canvas, _("Clone display content"), ECORE_X_RANDR_OUTPUT_POLICY_CLONE, rg);
-   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_clone);
+   ro = e_widget_radio_add(canvas, _("Clone display content"), ECORE_X_RANDR_OUTPUT_POLICY_CLONE, rg);
+   evas_object_smart_callback_add(ro, "changed", _policy_widget_mouse_up_cb, NULL);
+   e_widget_framelist_object_append(widget, ro);
+   e_config_runtime_info->gui.widgets.policy.radio_clone = ro;
 
-   e_config_runtime_info->gui.widgets.policy.radio_none = e_widget_radio_add(canvas, _("No reaction"), ECORE_X_RANDR_OUTPUT_POLICY_NONE, rg);
-   e_widget_framelist_object_append(widget, e_config_runtime_info->gui.widgets.policy.radio_none);
+   ro = e_widget_radio_add(canvas, _("No reaction"), ECORE_X_RANDR_OUTPUT_POLICY_NONE, rg);
+   evas_object_smart_callback_add(ro, "changed", _policy_widget_mouse_up_cb, NULL);
+   e_widget_framelist_object_append(widget, ro);
+   e_config_runtime_info->gui.widgets.policy.radio_none = ro;
 
-   _policy_widget_radio_add_callbacks();
 
    /*
       // Add policies demonstration edje
@@ -172,34 +171,18 @@ _policy_widget_radio_add_fail:
 }
 
 static void
-_policy_widget_mouse_up_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+_policy_widget_mouse_up_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    //char signal[29];
-   int policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
-
    if (!e_config_runtime_info->gui.selected_output_dd)
      return;
-   /*
-    * IMPROVABLE:
-    * "sadly" the evas callbacks are called before radio_val is set to its new
-    * value. If that is ever changed, remove the used code below and just use the
-    * 1-liner below.
-    * snprintf(signal, sizeof(signal), "conf,randr,dialog,policies,%d", e_config_runtime_info->gui.widgets.policy.radio_val);
-    */
-   if (obj == e_config_runtime_info->gui.widgets.policy.radio_ask) policy = ECORE_X_RANDR_OUTPUT_POLICY_ASK;
-   if (obj == e_config_runtime_info->gui.widgets.policy.radio_above) policy = ECORE_X_RANDR_OUTPUT_POLICY_ABOVE;
-   if (obj == e_config_runtime_info->gui.widgets.policy.radio_right) policy = ECORE_X_RANDR_OUTPUT_POLICY_RIGHT;
-   if (obj == e_config_runtime_info->gui.widgets.policy.radio_below) policy = ECORE_X_RANDR_OUTPUT_POLICY_BELOW;
-   if (obj == e_config_runtime_info->gui.widgets.policy.radio_left) policy = ECORE_X_RANDR_OUTPUT_POLICY_LEFT;
-   if (obj == e_config_runtime_info->gui.widgets.policy.radio_clone) policy = ECORE_X_RANDR_OUTPUT_POLICY_CLONE;
-   if (obj == e_config_runtime_info->gui.widgets.policy.radio_none) policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
 
-   e_config_runtime_info->gui.selected_output_dd->new_policy = policy;
+   e_config_runtime_info->gui.selected_output_dd->new_policy = e_config_runtime_info->gui.widgets.policy.radio_val;
 /*
  * The current dialog does not demonstrate what the policies mean, so disabled
  * for now.
  *
-   snprintf(signal, sizeof(signal), "conf,randr,dialog,policies,%d", policy);
+ * snprintf(signal, sizeof(signal), "conf,randr,dialog,policies,%d", e_config_runtime_info->gui.widgets.policy.radio_val);
    //edje_object_signal_emit(e_config_runtime_info->gui.widgets.policy.swallowing_edje, signal, "e");
    fprintf(stderr, "CONF_RANDR: mouse button released. Emitted signal to policy: %s\n", signal);
 */
