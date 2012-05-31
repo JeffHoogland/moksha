@@ -367,6 +367,7 @@ _e_thumb_generate(E_Thumb *eth)
                   evas_object_image_fill_set(im, 0, 0, ww, hh);
                }
           }
+	ecore_evas_alpha_set(ee, alpha);
         evas_object_move(im, 0, 0);
         evas_object_resize(im, ww, hh);
         ecore_evas_resize(ee, ww, hh);
