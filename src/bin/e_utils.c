@@ -59,6 +59,8 @@ static Eina_Bool _e_util_image_import_exit(void *data, int type __UNUSED__, void
 static void _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle);
 static Evas_Object *_e_util_icon_add(const char *path, Evas *evas, int size);
 
+static void _e_util_cb_delayed_cancel(void *data, void *obj);
+
 /* local subsystem globals */
 static Ecore_Timer *_e_util_dummy_timer = NULL;
 
@@ -1056,7 +1058,12 @@ e_util_defer_object_del(E_Object *obj)
    if (stopping)
      e_object_del(obj);
    else
-     ecore_idle_enterer_before_add(_e_util_cb_delayed_del, obj);
+     {
+        Ecore_Idle_Enterer *idler;
+
+        idler = ecore_idle_enterer_before_add(_e_util_cb_delayed_del, obj);
+        if (idler) e_object_delfn_add(obj, _e_util_cb_delayed_cancel, idler);
+     }
 }
 
 EAPI const char *
@@ -1459,6 +1466,14 @@ _e_util_cb_delayed_del(void *data)
 {
    e_object_del(E_OBJECT(data));
    return ECORE_CALLBACK_CANCEL;
+}
+
+static void
+_e_util_cb_delayed_cancel(void *data, void *obj __UNUSED__)
+{
+   Ecore_Idle_Enterer *idler = data;
+
+   ecore_idle_enterer_del(idler);
 }
 
 static Eina_Bool
