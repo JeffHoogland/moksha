@@ -5713,7 +5713,7 @@ _e_border_cb_window_move_resize_request(void *data  __UNUSED__,
    if (!_e_border_resize_begin(bd))
      return ECORE_CALLBACK_PASS_ON;
 
-   switch(e->direction)
+   switch (e->direction)
      {
       case RESIZE_TL:
         bd->resize_mode = RESIZE_TL;
