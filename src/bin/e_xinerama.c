@@ -2,7 +2,7 @@
 
 static void _e_xinerama_clean(void);
 static void _e_xinerama_update(void);
-static int _e_xinerama_cb_screen_sort(const void *data1, const void *data2);
+static int  _e_xinerama_cb_screen_sort(const void *data1, const void *data2);
 
 static Eina_List *all_screens = NULL;
 static Eina_List *chosen_screens = NULL;
@@ -78,111 +78,111 @@ _e_xinerama_update(void)
    roots = ecore_x_window_root_list(&n);
    if (roots)
      {
-	int i;
-	int rw, rh;
-	Ecore_X_Window root;
+        int i;
+        int rw, rh;
+        Ecore_X_Window root;
 
-	/* more than 1 root window - xinerama wont be active */
-	if (n > 1)
-	  {
-	     free(roots);
-	     return;
-	  }
-	/* first (and only) root window */
-	root = roots[0];
-	free(roots);
-	/* get root size */
-	ecore_x_window_size_get(root, &rw, &rh);
-	/* get number of xinerama screens */
-	n = ecore_x_xinerama_screen_count_get();
-	if (n < 1)
-	  {
-	     E_Screen *screen;
+        /* more than 1 root window - xinerama wont be active */
+        if (n > 1)
+          {
+             free(roots);
+             return;
+          }
+        /* first (and only) root window */
+        root = roots[0];
+        free(roots);
+        /* get root size */
+        ecore_x_window_size_get(root, &rw, &rh);
+        /* get number of xinerama screens */
+        n = ecore_x_xinerama_screen_count_get();
+        if (n < 1)
+          {
+             E_Screen *screen;
 
-	     screen = E_NEW(E_Screen, 1);
-	     screen->screen = 0;
+             screen = E_NEW(E_Screen, 1);
+             screen->screen = 0;
              screen->escreen = screen->screen;
-	     screen->x = 0;
-	     screen->y = 0;
-	     screen->w = rw;
-	     screen->h = rh;
-	     all_screens = eina_list_append(all_screens, screen);
-	  }
-	else
-	  {
-	     for (i = 0; i < n; i++)
-	       {
-		  int x, y, w, h;
+             screen->x = 0;
+             screen->y = 0;
+             screen->w = rw;
+             screen->h = rh;
+             all_screens = eina_list_append(all_screens, screen);
+          }
+        else
+          {
+             for (i = 0; i < n; i++)
+               {
+                  int x, y, w, h;
 
-		  /* get each xinerama screen geometry */
-		  if (ecore_x_xinerama_screen_geometry_get(i, &x, &y, &w, &h))
-		    {
-		       E_Screen *screen;
+                  /* get each xinerama screen geometry */
+                  if (ecore_x_xinerama_screen_geometry_get(i, &x, &y, &w, &h))
+                    {
+                       E_Screen *screen;
 
-		       printf("E17 INIT: XINERAMA SCREEN: [%i][%i], %ix%i+%i+%i\n",
-			      i, i, w, h, x, y);
-		       /* add it to our list */
-		       screen = E_NEW(E_Screen, 1);
-		       screen->screen = i;
-		       screen->escreen = screen->screen;
-		       screen->x = x;
-		       screen->y = y;
-		       screen->w = w;
-		       screen->h = h;
-		       all_screens = eina_list_append(all_screens, screen);
-		    }
-	       }
-	  }
+                       printf("E17 INIT: XINERAMA SCREEN: [%i][%i], %ix%i+%i+%i\n",
+                              i, i, w, h, x, y);
+                       /* add it to our list */
+                       screen = E_NEW(E_Screen, 1);
+                       screen->screen = i;
+                       screen->escreen = screen->screen;
+                       screen->x = x;
+                       screen->y = y;
+                       screen->w = w;
+                       screen->h = h;
+                       all_screens = eina_list_append(all_screens, screen);
+                    }
+               }
+          }
      }
    /* now go through all_screens... and build a list of chosen screens */
-   EINA_LIST_FOREACH(all_screens, l, scr)
+   EINA_LIST_FOREACH (all_screens, l, scr)
      {
-	Eina_List *ll;
-	E_Screen *scr2;
-	int add = 1;
-	Eina_List *removes;
+        Eina_List *ll;
+        E_Screen *scr2;
+        int add = 1;
+        Eina_List *removes;
 
-	removes = NULL;
-	/* does this screen intersect with any we have chosen? */
-	EINA_LIST_FOREACH(chosen_screens, ll, scr2)
-	  {
-	     /* if they intersect */
-	     if (E_INTERSECTS(scr->x, scr->y, scr->w, scr->h,
-			      scr2->x, scr2->y, scr2->w, scr2->h))
-	       {
-		  int sz, sz2;
+        removes = NULL;
+        /* does this screen intersect with any we have chosen? */
+        EINA_LIST_FOREACH(chosen_screens, ll, scr2)
+          {
+             /* if they intersect */
+             if (E_INTERSECTS(scr->x, scr->y, scr->w, scr->h,
+                              scr2->x, scr2->y, scr2->w, scr2->h))
+               {
+                  int sz, sz2;
 
-		  /* calculate pixel area */
-		  sz = scr->w * scr->h;
-		  sz2 = scr2->w * scr2->h;
-		  /* if the one we already have is bigger, DONT add the new */
-		  if (sz > sz2)
-		    removes = eina_list_append(removes, scr2);
-		  /* add the old to a list to remove */
-		  else
-		    add = 0;
-	       }
-	  }
-	/* if there are screens to remove - remove them */
-	EINA_LIST_FREE(removes, scr2)
-	  {
-	     chosen_screens = eina_list_remove(chosen_screens, scr2);
-	  }
-	/* if this screen is to be added, add it */
-	if (add)
-	  chosen_screens = eina_list_append(chosen_screens, scr);
+                  /* calculate pixel area */
+                  sz = scr->w * scr->h;
+                  sz2 = scr2->w * scr2->h;
+                  /* if the one we already have is bigger, DONT add the new */
+                  if (sz > sz2)
+                    removes = eina_list_append(removes, scr2);
+                  /* add the old to a list to remove */
+                  else
+                    add = 0;
+               }
+          }
+        /* if there are screens to remove - remove them */
+        EINA_LIST_FREE(removes, scr2)
+          {
+             chosen_screens = eina_list_remove(chosen_screens, scr2);
+          }
+        /* if this screen is to be added, add it */
+        if (add)
+          chosen_screens = eina_list_append(chosen_screens, scr);
      }
    chosen_screens = eina_list_sort(chosen_screens,
-				   eina_list_count(chosen_screens),
-				   _e_xinerama_cb_screen_sort);
+                                   eina_list_count(chosen_screens),
+                                   _e_xinerama_cb_screen_sort);
    printf("======================= screens:\n");
    n = 0;
    EINA_LIST_FOREACH(chosen_screens, l, scr)
      {
-	scr->escreen = n;
-	printf("E17 INIT: XINERAMA CHOSEN: [%i][%i], %ix%i+%i+%i\n",
-	       scr->screen, scr->escreen, scr->w, scr->h, scr->x, scr->y);
-	n++;
+        scr->escreen = n;
+        printf("E17 INIT: XINERAMA CHOSEN: [%i][%i], %ix%i+%i+%i\n",
+               scr->screen, scr->escreen, scr->w, scr->h, scr->x, scr->y);
+        n++;
      }
 }
 
@@ -200,8 +200,9 @@ _e_xinerama_cb_screen_sort(const void *data1, const void *data2)
      return scr->y - scr2->y;
    else
      {
-       dif = (scr2->w * scr2->h) - (scr->w * scr->h);
-       if (dif == 0) return scr->screen - scr2->screen;
+        dif = (scr2->w * scr2->h) - (scr->w * scr->h);
+        if (dif == 0) return scr->screen - scr2->screen;
      }
    return dif;
 }
+
