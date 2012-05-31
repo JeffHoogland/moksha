@@ -1535,12 +1535,20 @@ _e_zone_cb_mouse_in(void    *data,
    E_Event_Zone_Edge *zev;
    E_Zone_Edge edge;
    E_Zone *zone;
+   Eina_List *l;
+   E_Screen *scr;
 
    ev = event;
    zone = data;
 
    edge = _e_zone_detect_edge(zone, ev->win);
    if (edge == E_ZONE_EDGE_NONE) return ECORE_CALLBACK_PASS_ON;
+
+   EINA_LIST_FOREACH(e_xinerama_screens_all_get(), l, scr)
+     {
+        if (abs(scr->x - ev->x) < 2) return ECORE_CALLBACK_PASS_ON;
+        if (abs(scr->y - ev->y) < 2) return ECORE_CALLBACK_PASS_ON;
+     }
 
    zev = E_NEW(E_Event_Zone_Edge, 1);
    zev->zone = zone;
