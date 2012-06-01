@@ -7,7 +7,7 @@ static void _e_randr_ask_memorize_monitor_cb(void *data, E_Dialog *dia);
 
 static E_Randr_Output_Info *_ask_output_info = NULL;
 
-EINTERN void e_randr_12_ask_dialog_new(E_Randr_Output_Info *oi)
+EAPI void e_randr_12_ask_dialog_new(E_Randr_Output_Info *oi)
 {
    E_Dialog *dia = NULL;
 
