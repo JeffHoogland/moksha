@@ -1660,7 +1660,8 @@ e_border_layer_set(E_Border *bd,
 
    oldraise = e_config->transient.raise;
 
-   bd->saved.layer = bd->layer;
+   if (bd->layer != 300)
+     bd->saved.layer = bd->layer;
    bd->layer = layer;
    if (e_config->transient.layer)
      {
@@ -2184,7 +2185,7 @@ e_border_focus_set(E_Border *bd,
                     }
                   bd_parent = bd->parent;
                }
-             if (!unfocus_is_parent)
+             if ((!unfocus_is_parent) && (!e_config->allow_above_fullscreen))
                e_border_iconify(bd_unfocus);
           }
      }
@@ -4400,19 +4401,21 @@ e_border_resize_limit(E_Border *bd,
 static void
 _e_border_free(E_Border *bd)
 {
-   if (bd->client.e.state.video_parent)
-     {
-        Eina_List *l;
-        E_Border *tmp;
-
-        EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
-          {
-             /* FIXME: cleanup memory */
-          }
-     }
    if (bd->client.e.state.video_child)
      {
-        /* FIXME: cleanup also */
+        E_Border *tmp;
+
+        EINA_LIST_FREE(bd->client.e.state.video_child, tmp)
+          {
+             tmp->client.e.state.video_parent_border = NULL;
+          }
+     }
+   if (bd->client.e.state.video_parent)
+     {
+        bd->client.e.state.video_parent_border->client.e.state.video_child = 
+          eina_list_remove
+          (bd->client.e.state.video_parent_border->client.e.state.video_child,
+              bd);
      }
    if (bd->desktop)
      {
@@ -7173,8 +7176,10 @@ _e_border_eval0(E_Border *bd)
         /* unlinking child/parent */
         if (bd->client.e.state.video_parent_border != NULL)
           {
-             bd->client.e.state.video_parent_border->client.e.state.video_child = eina_list_remove(bd->client.e.state.video_parent_border->client.e.state.video_child,
-                                                                                                   bd);
+             bd->client.e.state.video_parent_border->client.e.state.video_child = 
+               eina_list_remove
+               (bd->client.e.state.video_parent_border->client.e.state.video_child,
+                   bd);
           }
 
         ecore_x_window_prop_card32_get(bd->client.win,
