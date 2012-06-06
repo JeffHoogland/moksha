@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-05-30 21:07+0200\n"
-"PO-Revision-Date: 2012-05-13 20:55+0100\n"
-"Last-Translator: dazibao <dazibao@sfr.fr>\n"
-"Language-Team: Enlightenment French Team <sansgourou@gmail.com>\n"
+"PO-Revision-Date: 2012-06-06 09:50+0200\n"
+"Last-Translator: Chidambar 'ilLogict' Zinnoury <illogict@online.fr>\n"
+"Language-Team: Enlightenment French Team <enlightenment-intl@lists.sourceforge.net>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -642,7 +642,7 @@ msgstr "Application"
 
 #: src/bin/e_actions.c:3078 src/bin/e_int_menus.c:206
 msgid "Restart"
-msgstr "Redémarrer"
+msgstr "Relancer"
 
 #: src/bin/e_actions.c:3082 src/bin/e_int_menus.c:211
 msgid "Exit"
@@ -696,7 +696,7 @@ msgstr "Arrêt"
 
 #: src/bin/e_actions.c:3112
 msgid "Reboot"
-msgstr "Relance"
+msgstr "Redémarrer"
 
 #: src/bin/e_actions.c:3116
 msgid "Suspend Now"
@@ -824,7 +824,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1612 src/bin/e_config.c:2206
 msgid "Enlightenment Settings Write Problems"
-msgstr "Problèmes d'écriture de la configuration de Enlightenment"
+msgstr "Problèmes d'écriture de la configuration d'Enlightenment"
 
 #: src/bin/e_config.c:1615
 #, c-format
@@ -1675,7 +1675,7 @@ msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"Une instance précédente de Enlightenment est encore\n"
+"Une instance précédente d'Enlightenment est encore\n"
 "active sur cet écran. Abandon du démarrage.\n"
 
 #: src/bin/e_int_border_locks.c:64
@@ -3146,7 +3146,7 @@ msgstr ""
 #: src/bin/e_module.c:187
 #, c-format
 msgid "Enlightenment %s Module"
-msgstr "Module %s de Enlightenment"
+msgstr "Module %s d'Enlightenment"
 
 #: src/bin/e_module.c:513
 msgid "Would you like to unload this module?<br>"
