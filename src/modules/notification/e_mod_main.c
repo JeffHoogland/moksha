@@ -10,8 +10,6 @@ static const char  *_gc_label(E_Gadcon_Client_Class *client_class);
 static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class,
                              Evas                  *evas);
 static const char  *_gc_id_new(E_Gadcon_Client_Class *client_class);
-static void         _gc_id_del(E_Gadcon_Client_Class *client_class,
-                               const char            *id);
 
 /* Callback function protos */
 static int  _notification_cb_notify(E_Notification_Daemon *daemon,
@@ -35,7 +33,7 @@ const E_Gadcon_Client_Class _gc_class =
 {
    GADCON_CLIENT_CLASS_VERSION, "notification",
    {
-      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, _gc_id_del,
+      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
       e_gadcon_site_is_not_toolbar
    },
    E_GADCON_CLIENT_STYLE_PLAIN
@@ -151,20 +149,6 @@ _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 
    ci = notification_box_config_item_get(NULL);
    return ci->id;
-}
-
-static void
-_gc_id_del(E_Gadcon_Client_Class *client_class __UNUSED__,
-           const char            *id)
-{
-   Config_Item *ci;
-
-   notification_box_del(id);
-   ci = notification_box_config_item_get(id);
-   if (!ci) return;
-   eina_stringshare_del(ci->id);
-   notification_cfg->items = eina_list_remove(notification_cfg->items, ci);
-   free(ci);
 }
 
 static unsigned int
