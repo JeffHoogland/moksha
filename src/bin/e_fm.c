@@ -3261,56 +3261,14 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
           }
         else if (strcmp(dev, "desktop") == 0)
           {
-             char *custom_desktop_dir = getenv("XDG_DESKTOP_DIR");
              /* this is a virtual device - it's where your favorites list is
               * stored - a dir with
                 .desktop files or symlinks (in fact anything
               * you like
               */
-             if (custom_desktop_dir)
-               {
-                 size_t length;
-
-                 custom_desktop_dir = e_util_shell_env_path_eval(custom_desktop_dir);
-                 length = strlen(custom_desktop_dir);
-
-                 if (length >= sizeof(buf))
-                   {
-                      free(custom_desktop_dir);
-                      return NULL;
-                   }
-
-                 strncpy(buf, custom_desktop_dir, sizeof(buf));
-
-                 if (strcmp(path, "/"))
-                   {
-                      if (length + 1 + strlen(path) >= sizeof(buf))
-                        {
-                           free(custom_desktop_dir);
-                           return NULL;
-                        }
-                      buf[length++] = '-';
-                      strncpy(buf + length, path, sizeof(buf) - length);
-                   }
-                   free(custom_desktop_dir);
-               }
-             else
-               {
-                 if (strcmp(path, "/") == 0)
-                   {
-                      if (e_user_homedir_concat(buf, sizeof(buf),
-                                                _("Desktop")) >= sizeof(buf))
-                        return NULL;
-                   }
-                 else
-                   {
-                      if (e_user_homedir_snprintf(buf, sizeof(buf), "%s-%s",
-                                                  _("Desktop"), path)
-                          >= sizeof(buf))
-                        return NULL;
-                   }
-               }
-               ecore_file_mkpath(buf);
+             if (eina_strlcpy(buf, efreet_desktop_dir_get(), sizeof(buf)) >= sizeof(buf))
+               return NULL;
+             ecore_file_mkpath(buf);
           }
         else if (strcmp(dev, "temp") == 0)
           PRT("/tmp");
@@ -10012,14 +9970,15 @@ static void
 _e_fm2_volume_icon_update(E_Volume *v)
 {
    Evas_Object *o;
-   char file[PATH_MAX], fav[PATH_MAX], desk[PATH_MAX];
+   char file[PATH_MAX], fav[PATH_MAX];
+   const char *desk;
    Eina_List *l;
    E_Fm2_Icon *ic;
 
    if (!v || !v->storage) return;
 
    e_user_dir_snprintf(fav, sizeof(fav), "fileman/favorites");
-   e_user_homedir_concat(desk, sizeof(desk), _("Desktop"));
+   desk = efreet_desktop_dir_get();
    snprintf(file, sizeof(file), "|%s_%d.desktop",
             ecore_file_file_get(v->storage->udi), v->partition_number);
 
