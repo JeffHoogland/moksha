@@ -87,7 +87,7 @@ struct _E_Config_Dialog_Data
        Evas_Object *o_mod;
        Evas_Object *o_del_all;
        struct {
-	 Evas_Object *o_any, *o_border, *o_menu, *o_winlist, *o_popup, *o_zone,
+	 Evas_Object *o_any, *o_window, *o_menu, *o_winlist, *o_popup, *o_zone,
 		     *o_container, *o_manager, *o_none;
        } context;
     } gui;
@@ -319,7 +319,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_radio_add(evas, _("Window"), E_BINDING_CONTEXT_BORDER, rg);
-   cfdata->gui.context.o_border = ob;
+   cfdata->gui.context.o_window = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
    ob = e_widget_radio_add(evas, _("Menu"), E_BINDING_CONTEXT_MENU, rg);
@@ -935,7 +935,7 @@ _update_binding_context(E_Config_Dialog_Data *cfdata)
    /* disable all the radios. */
    e_widget_radio_toggle_set(cfdata->gui.context.o_any, 1);
    e_widget_disabled_set(cfdata->gui.context.o_any, 1);
-   e_widget_disabled_set(cfdata->gui.context.o_border, 1);
+   e_widget_disabled_set(cfdata->gui.context.o_window, 1);
    e_widget_disabled_set(cfdata->gui.context.o_menu, 1);
    e_widget_disabled_set(cfdata->gui.context.o_winlist, 1);
    e_widget_disabled_set(cfdata->gui.context.o_popup, 1);
@@ -964,7 +964,7 @@ _update_binding_context(E_Config_Dialog_Data *cfdata)
      return;
 
    e_widget_disabled_set(cfdata->gui.context.o_any, 0);
-   e_widget_disabled_set(cfdata->gui.context.o_border, 0);
+   e_widget_disabled_set(cfdata->gui.context.o_window, 0);
    e_widget_disabled_set(cfdata->gui.context.o_menu, 0);
    e_widget_disabled_set(cfdata->gui.context.o_winlist, 0);
    e_widget_disabled_set(cfdata->gui.context.o_popup, 0);
@@ -976,7 +976,7 @@ _update_binding_context(E_Config_Dialog_Data *cfdata)
    if (ctxt == E_BINDING_CONTEXT_ANY) 
      e_widget_radio_toggle_set(cfdata->gui.context.o_any, 1);
    else if (ctxt == E_BINDING_CONTEXT_BORDER)
-     e_widget_radio_toggle_set(cfdata->gui.context.o_border, 1);
+     e_widget_radio_toggle_set(cfdata->gui.context.o_window, 1);
    else if (ctxt == E_BINDING_CONTEXT_MENU)
      e_widget_radio_toggle_set(cfdata->gui.context.o_menu, 1);
    else if (ctxt == E_BINDING_CONTEXT_WINLIST)
