@@ -162,7 +162,7 @@ e_desklock_show(void)
 
    if (_e_custom_desklock_exe) return 0;
 
-   if (e_config->desklock_use_custom_desklock)
+   if (e_config->desklock_use_custom_desklock && e_config->desklock_custom_desklock_cmd && e_config->desklock_custom_desklock_cmd[0])
      {
 	_e_custom_desklock_exe_handler = 
 	  ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
