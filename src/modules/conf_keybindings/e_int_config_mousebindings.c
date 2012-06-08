@@ -1192,18 +1192,17 @@ _helper_wheel_name_get(E_Config_Binding_Wheel *bw)
    switch (bw->direction)
      {
       case 0:
-        if (bw->z >= 0)
-          name = strdup("Mouse Wheel Up");
-        else
-          name = strdup("Mouse Wheel Down");
-        break;
-
+	 if (bw->z < 0) 
+	   name = strdup("Mouse Wheel Up");
+	 else
+	   name = strdup("Mouse Wheel Down");
+	 break;
       default:
-        if (bw->z >= 0)
-          snprintf(buf, sizeof(buf), "Extra Wheel (%d) Up", bw->direction);
-        else
-          snprintf(buf, sizeof(buf), "Extra Wheel (%d) Down", bw->direction);
-        name = strdup(buf);
+	 if (bw->z < 0) 
+	   snprintf(buf, sizeof(buf), "Extra Wheel (%d) Up", bw->direction);
+	 else
+	   snprintf(buf, sizeof(buf), "Extra Wheel (%d) Down", bw->direction);
+	 name = strdup(buf);
      }
    return name;
 }
@@ -1466,7 +1465,7 @@ _grab_mouse_wheel_cb(void *data, __UNUSED__ int type, void *event)
    if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
      mod |= E_BINDING_MODIFIER_ALT;
    if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
-     mod |= E_BINDING_MODIFIER_WIN;
+     mod |= E_BINDING_MODIFIER_WIN; 
 
    if (cfdata->locals.add)
      {
