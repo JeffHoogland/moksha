@@ -204,7 +204,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l;
+   Eina_List *l, *l2;
    E_Config_Binding_Mouse *eb, *eb2;
    E_Config_Binding_Wheel *bw, *bw2;
 
@@ -244,8 +244,21 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         E_FREE(bw);
      }
 
-   EINA_LIST_FOREACH(cfdata->binding.wheel, l, bw)
+   EINA_LIST_FOREACH_SAFE(cfdata->binding.wheel, l, l2, bw)
      {
+        if ((!bw->modifiers) && ((bw->context == E_BINDING_CONTEXT_WINDOW) || (bw->context == E_BINDING_CONTEXT_ANY)))
+          {
+             const char *msg = _("Unable to set a mouse wheel binding without modifiers<br>"
+                                  "on a window: conflict with existing edje signal bindings.<br>"
+                                  "FIXME!!!");
+             e_util_dialog_internal(_("Mouse Binding Error"), msg);
+             cfdata->binding.wheel = eina_list_remove_list(cfdata->binding.wheel, l);
+             eina_stringshare_del(bw->action);
+             eina_stringshare_del(bw->params);
+             E_FREE(bw);
+             _update_mouse_binding_list(cfdata);
+             continue;
+          }
         bw2 = E_NEW(E_Config_Binding_Wheel, 1);
         bw2->context = bw->context;
         bw2->direction = bw->direction;
