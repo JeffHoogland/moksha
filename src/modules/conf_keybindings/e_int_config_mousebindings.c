@@ -318,7 +318,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.context.o_any = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Border"), E_BINDING_CONTEXT_BORDER, rg);
+   ob = e_widget_radio_add(evas, _("Window"), E_BINDING_CONTEXT_BORDER, rg);
    cfdata->gui.context.o_border = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
