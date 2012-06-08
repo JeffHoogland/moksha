@@ -9,24 +9,24 @@
 /* local config structure */
 struct _E_Config_Dialog_Data
 {
-   Eina_List *bindings;
-   Evas_Object *o_bindings, *o_actions, *o_params;
-   Evas_Object *o_add, *o_del;
-   const char *bindex;
+   Eina_List       *bindings;
+   Evas_Object     *o_bindings, *o_actions, *o_params;
+   Evas_Object     *o_add, *o_del;
+   const char      *bindex;
 
    E_Config_Dialog *cfd;
 };
 
 /* local function prototypes */
-static void        *_create_data(E_Config_Dialog *cfd);
-static void         _fill_data(E_Config_Dialog_Data *cfdata);
-static void         _free_data(E_Config_Dialog *cfd  __UNUSED__,
-                               E_Config_Dialog_Data *cfdata);
-static int          _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
-                                 E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create(E_Config_Dialog      *cfd,
-                                  Evas                 *evas,
-                                  E_Config_Dialog_Data *cfdata);
+static void                  *_create_data(E_Config_Dialog *cfd);
+static void                   _fill_data(E_Config_Dialog_Data *cfdata);
+static void                   _free_data(E_Config_Dialog *cfd  __UNUSED__,
+                                         E_Config_Dialog_Data *cfdata);
+static int                    _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
+                                           E_Config_Dialog_Data *cfdata);
+static Evas_Object           *_basic_create(E_Config_Dialog *cfd,
+                                            Evas *evas,
+                                            E_Config_Dialog_Data *cfdata);
 static void                   _fill_bindings(E_Config_Dialog_Data *cfdata);
 static void                   _fill_actions(E_Config_Dialog_Data *cfdata);
 static E_Config_Binding_Acpi *_selected_binding_get(E_Config_Dialog_Data *cfdata);
@@ -34,18 +34,18 @@ static E_Action_Description  *_selected_action_get(E_Config_Dialog_Data *cfdata)
 static const char            *_binding_label_get(E_Config_Binding_Acpi *bind);
 static void                   _cb_bindings_changed(void *data);
 static void                   _cb_actions_changed(void *data);
-static void                   _cb_entry_changed(void       *data,
+static void                   _cb_entry_changed(void *data,
                                                 void *data2 __UNUSED__);
-static void                   _cb_add_binding(void       *data,
+static void                   _cb_add_binding(void *data,
                                               void *data2 __UNUSED__);
-static void                   _cb_del_binding(void       *data,
+static void                   _cb_del_binding(void *data,
                                               void *data2 __UNUSED__);
-static Eina_Bool              _cb_grab_key_down(void    *data,
+static Eina_Bool              _cb_grab_key_down(void *data,
                                                 int type __UNUSED__,
-                                                void    *event);
-static Eina_Bool _cb_acpi_event(void *data,
-                                int   type,
-                                void *event);
+                                                void *event);
+static Eina_Bool              _cb_acpi_event(void *data,
+                                             int type,
+                                             void *event);
 
 /* local variables */
 static E_Dialog *grab_dlg = NULL;
@@ -53,7 +53,7 @@ static Ecore_X_Window grab_win = 0;
 static Eina_List *grab_hdls = NULL;
 
 E_Config_Dialog *
-e_int_config_acpibindings(E_Container       *con,
+e_int_config_acpibindings(E_Container *con,
                           const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
@@ -179,8 +179,8 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog      *cfd,
-              Evas                 *evas,
+_basic_create(E_Config_Dialog *cfd,
+              Evas *evas,
               E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ol, *of, *ow, *ot;
@@ -250,7 +250,7 @@ _fill_bindings(E_Config_Dialog_Data *cfdata)
         lbl = _binding_label_get(binding);
 
         e_widget_ilist_append(cfdata->o_bindings, NULL, lbl,
-                                _cb_bindings_changed, cfdata, buff);
+                              _cb_bindings_changed, cfdata, buff);
      }
 
    e_widget_ilist_go(cfdata->o_bindings);
@@ -332,7 +332,7 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
 //            (strcmp(grp->act_grp, "Launch"))) continue;
         EINA_LIST_FOREACH(grp->acts, ll, dsc)
           {
-             if ((dsc->act_name) && (!strcmp(dsc->act_name, lbl))) 
+             if ((dsc->act_name) && (!strcmp(dsc->act_name, lbl)))
                return dsc;
           }
      }
@@ -466,7 +466,7 @@ _cb_actions_changed(void *data)
 }
 
 static void
-_cb_entry_changed(void       *data,
+_cb_entry_changed(void *data,
                   void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -482,7 +482,7 @@ _cb_entry_changed(void       *data,
 }
 
 static void
-_cb_add_binding(void       *data,
+_cb_add_binding(void *data,
                 void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -524,7 +524,7 @@ _cb_add_binding(void       *data,
 }
 
 static void
-_cb_del_binding(void       *data,
+_cb_del_binding(void *data,
                 void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -587,9 +587,9 @@ _cb_del_binding(void       *data,
 }
 
 static Eina_Bool
-_cb_grab_key_down(void    *data,
+_cb_grab_key_down(void *data,
                   int type __UNUSED__,
-                  void    *event)
+                  void *event)
 {
    E_Config_Dialog_Data *cfdata;
    Ecore_Event_Key *ev;
@@ -619,9 +619,9 @@ _cb_grab_key_down(void    *data,
 }
 
 static Eina_Bool
-_cb_acpi_event(void          *data,
+_cb_acpi_event(void *data,
                __UNUSED__ int type,
-               void          *event)
+               void *event)
 {
    E_Event_Acpi *ev;
    E_Config_Dialog_Data *cfdata;

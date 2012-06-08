@@ -8,59 +8,59 @@
 #define TEXT_NO_MODIFIER_HEADER _("Single key")
 
 static void        *_create_data(E_Config_Dialog *cfd);
-static void         _free_data(E_Config_Dialog      *cfd,
+static void         _free_data(E_Config_Dialog *cfd,
                                E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data(E_Config_Dialog      *cfd,
+static int          _basic_apply_data(E_Config_Dialog *cfd,
                                       E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog      *cfd,
-                                          Evas                 *evas,
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
+                                          Evas *evas,
                                           E_Config_Dialog_Data *cfdata);
 
 /********* private functions ***************/
-static void _fill_actions_list(E_Config_Dialog_Data *cfdata);
+static void         _fill_actions_list(E_Config_Dialog_Data *cfdata);
 
 /**************** Updates ***********/
-static int  _update_key_binding_list(E_Config_Dialog_Data *cfdata,
-                                     E_Config_Binding_Key *bi);
-static void _update_action_list(E_Config_Dialog_Data *cfdata);
-static void _update_action_params(E_Config_Dialog_Data *cfdata);
-static void _update_buttons(E_Config_Dialog_Data *cfdata);
+static int          _update_key_binding_list(E_Config_Dialog_Data *cfdata,
+                                             E_Config_Binding_Key *bi);
+static void         _update_action_list(E_Config_Dialog_Data *cfdata);
+static void         _update_action_params(E_Config_Dialog_Data *cfdata);
+static void         _update_buttons(E_Config_Dialog_Data *cfdata);
 
 /**************** Callbacks *********/
-static void _binding_change_cb(void *data);
-static void _action_change_cb(void *data);
-static void _delete_all_key_binding_cb(void *data,
-                                       void *data2);
-static void _delete_key_binding_cb(void *data,
-                                   void *data2);
-static void _restore_key_binding_defaults_cb(void *data,
-                                             void *data2);
-static void _add_key_binding_cb(void *data,
-                                void *data2);
-static void _modify_key_binding_cb(void *data,
-                                   void *data2);
+static void         _binding_change_cb(void *data);
+static void         _action_change_cb(void *data);
+static void         _delete_all_key_binding_cb(void *data,
+                                               void *data2);
+static void         _delete_key_binding_cb(void *data,
+                                           void *data2);
+static void         _restore_key_binding_defaults_cb(void *data,
+                                                     void *data2);
+static void         _add_key_binding_cb(void *data,
+                                        void *data2);
+static void         _modify_key_binding_cb(void *data,
+                                           void *data2);
 
 /********* Helper *************************/
-static char *_key_binding_header_get(int modifiers);
-static char *_key_binding_text_get(E_Config_Binding_Key *bi);
-static void  _auto_apply_changes(E_Config_Dialog_Data *cfdata);
-static void  _find_key_binding_action(const char *action,
-                                      const char *params,
-                                      int        *g,
-                                      int        *a,
-                                      int        *n);
+static char        *_key_binding_header_get(int modifiers);
+static char        *_key_binding_text_get(E_Config_Binding_Key *bi);
+static void         _auto_apply_changes(E_Config_Dialog_Data *cfdata);
+static void         _find_key_binding_action(const char *action,
+                                             const char *params,
+                                             int *g,
+                                             int *a,
+                                             int *n);
 
 /********* Sorting ************************/
-static int _key_binding_sort_cb(const void *d1,
-                                const void *d2);
+static int       _key_binding_sort_cb(const void *d1,
+                                      const void *d2);
 
 /**************** grab window *******/
 static void      _grab_wnd_show(E_Config_Dialog_Data *cfdata);
 static Eina_Bool _grab_key_down_cb(void *data,
-                                   int   type,
+                                   int type,
                                    void *event);
 static Eina_Bool _grab_mouse_dumb_cb(void *data,
-                                     int   type,
+                                     int type,
                                      void *event);
 
 struct _E_Config_Dialog_Data
@@ -93,7 +93,7 @@ struct _E_Config_Dialog_Data
 
 E_Config_Dialog *
 e_int_config_keybindings(E_Container *con,
-                         const char  *params)
+                         const char *params)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -232,8 +232,8 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog      *cfd,
-                      Evas                 *evas,
+_basic_create_widgets(E_Config_Dialog *cfd,
+                      Evas *evas,
                       E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ot, *of, *ob;
@@ -328,7 +328,7 @@ _fill_actions_list(E_Config_Dialog_Data *cfdata)
 /**************** Callbacks *********/
 
 static void
-_add_key_binding_cb(void       *data,
+_add_key_binding_cb(void *data,
                     void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -342,7 +342,7 @@ _add_key_binding_cb(void       *data,
 }
 
 static void
-_modify_key_binding_cb(void       *data,
+_modify_key_binding_cb(void *data,
                        void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -384,7 +384,7 @@ _action_change_cb(void *data)
 }
 
 static void
-_delete_all_key_binding_cb(void       *data,
+_delete_all_key_binding_cb(void *data,
                            void *data2 __UNUSED__)
 {
    E_Config_Binding_Key *bi;
@@ -414,7 +414,7 @@ _delete_all_key_binding_cb(void       *data,
 }
 
 static void
-_delete_key_binding_cb(void       *data,
+_delete_key_binding_cb(void *data,
                        void *data2 __UNUSED__)
 {
    Eina_List *l = NULL;
@@ -461,13 +461,13 @@ _delete_key_binding_cb(void       *data,
      }
    else
      {
-	e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
-	e_widget_ilist_nth_show(cfdata->gui.o_binding_list, sel, 0);
+        e_widget_ilist_selected_set(cfdata->gui.o_binding_list, sel);
+        e_widget_ilist_nth_show(cfdata->gui.o_binding_list, sel, 0);
      }
 }
 
 static void
-_restore_key_binding_defaults_cb(void       *data,
+_restore_key_binding_defaults_cb(void *data,
                                  void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -680,7 +680,7 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
 
    if (j >= 0)
      {
-	cnt = e_widget_ilist_count(cfdata->gui.o_action_list);
+        cnt = e_widget_ilist_count(cfdata->gui.o_action_list);
         for (i = 0; i < cnt; i++)
           {
              if (i > j) break;
@@ -1013,9 +1013,9 @@ _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
 }
 
 static Eina_Bool
-_grab_key_down_cb(void          *data,
+_grab_key_down_cb(void *data,
                   __UNUSED__ int type,
-                  void          *event)
+                  void *event)
 {
    E_Config_Dialog_Data *cfdata;
    Ecore_Event_Key *ev;
@@ -1091,7 +1091,7 @@ _grab_key_down_cb(void          *data,
                          found = 1;
                     }
                }
-               
+
              if (!found)
                {
                   if (cfdata->locals.add)
@@ -1125,7 +1125,7 @@ _grab_key_down_cb(void          *data,
                                  e_widget_entry_text_set(cfdata->gui.o_params, cfdata->params);
                               }
                          }
-                       else 
+                       else
                          {
                             e_widget_entry_clear(cfdata->gui.o_params);
                             e_widget_disabled_set(cfdata->gui.o_params, 1);
@@ -1134,8 +1134,8 @@ _grab_key_down_cb(void          *data,
                   else if (cfdata->locals.cur && cfdata->locals.cur[0])
                     {
                        char *label;
-		       E_Ilist_Item *it;
-		       int i = 0;
+                       E_Ilist_Item *it;
+                       int i = 0;
 
                        sscanf(cfdata->locals.cur, "k%d", &n);
                        bi = eina_list_nth(cfdata->binding.key, n);
@@ -1147,11 +1147,11 @@ _grab_key_down_cb(void          *data,
 
                        label = _key_binding_text_get(bi);
 
-		       EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.o_binding_list), l, it)
-			 {
-			    if (it->header) n++;
-			    if (i++ >= n) break;
-			 }
+                       EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.o_binding_list), l, it)
+                         {
+                            if (it->header) n++;
+                            if (i++ >= n) break;
+                         }
 
                        e_widget_ilist_nth_label_set(cfdata->gui.o_binding_list, n, label);
                        free(label);
@@ -1162,10 +1162,10 @@ _grab_key_down_cb(void          *data,
                   int i = 0;
                   E_Ilist_Item *it;
 #if 0
-     /* this advice is rather irritating as one sees that the
-        key is bound to an action. if you want to set a
-        keybinding you dont care about whether there is
-        sth else set to it. */
+                  /* this advice is rather irritating as one sees that the
+                     key is bound to an action. if you want to set a
+                     keybinding you dont care about whether there is
+                     sth else set to it. */
                   int g, a, j;
                   const char *label = NULL;
                   E_Action_Group *actg = NULL;
@@ -1205,7 +1205,7 @@ _grab_key_down_cb(void          *data,
 
 static Eina_Bool
 _grab_mouse_dumb_cb(__UNUSED__ void *data,
-                    __UNUSED__ int   type,
+                    __UNUSED__ int type,
                     __UNUSED__ void *event)
 {
    return ECORE_CALLBACK_RENEW;
@@ -1266,9 +1266,9 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 static void
 _find_key_binding_action(const char *action,
                          const char *params,
-                         int        *g,
-                         int        *a,
-                         int        *n)
+                         int *g,
+                         int *a,
+                         int *n)
 {
    Eina_List *l, *l2;
    int gg = -1, aa = -1, nn = -1, found;
