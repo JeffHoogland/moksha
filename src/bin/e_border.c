@@ -393,8 +393,8 @@ e_border_new(E_Container   *con,
         bd->win = ecore_x_window_override_new(con->win, 0, 0, bd->w, bd->h);
         ecore_x_window_shape_events_select(bd->win, 1);
      }
-   e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
-   e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_mouse_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
+   e_bindings_wheel_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
    e_focus_setup(bd);
    bd->bg_ecore_evas = e_canvas_new(bd->win,
                                     0, 0, bd->w, bd->h, 1, 0,
@@ -421,8 +421,8 @@ e_border_new(E_Container   *con,
           e_canvas_del(bd->bg_ecore_evas);
           ecore_evas_free(bd->bg_ecore_evas);
           ecore_x_window_free(bd->client.shell_win);
-          e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-          e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+          e_bindings_mouse_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
+          e_bindings_wheel_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
           ecore_x_window_free(bd->win);
           free(bd);
           return NULL;
@@ -1129,8 +1129,8 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
    eina_hash_del(borders_hash, e_util_winid_str_get(bd->win), bd);
 
    e_focus_setdown(bd);
-   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
+   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
 
    if (bd->icon_object)
      evas_object_del(bd->icon_object);
@@ -1159,8 +1159,8 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
           0, 0, 0, 0, 0,
           win, ECORE_X_WINDOW_STACK_BELOW);
 
-   e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
-   e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_mouse_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
+   e_bindings_wheel_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
    e_focus_setup(bd);
 
    bd->bg_ecore_evas = e_canvas_new(bd->win,
@@ -3962,8 +3962,8 @@ e_border_button_bindings_ungrab_all(void)
    EINA_LIST_FOREACH(borders, l, bd)
      {
         e_focus_setdown(bd);
-        e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-        e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+        e_bindings_mouse_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
+        e_bindings_wheel_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
      }
 }
 
@@ -3975,8 +3975,8 @@ e_border_button_bindings_grab_all(void)
 
    EINA_LIST_FOREACH(borders, l, bd)
      {
-        e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
-        e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+        e_bindings_mouse_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
+        e_bindings_wheel_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
         e_focus_setup(bd);
      }
 }
@@ -4570,8 +4570,8 @@ _e_border_free(E_Border *bd)
    ecore_evas_free(bd->bg_ecore_evas);
    ecore_x_window_free(bd->client.shell_win);
    e_focus_setdown(bd);
-   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
+   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
    ecore_x_window_free(bd->win);
 
    eina_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd);
@@ -5931,7 +5931,7 @@ _e_border_cb_signal_bind(void            *data,
 
    bd = data;
    if (e_dnd_active()) return;
-   e_bindings_signal_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd),
+   e_bindings_signal_handle(E_BINDING_CONTEXT_WINDOW, E_OBJECT(bd),
                             emission, source);
 }
 
@@ -6100,7 +6100,7 @@ _e_border_cb_mouse_wheel(void    *data,
         bd->mouse.current.mx = ev->root.x;
         bd->mouse.current.my = ev->root.y;
         if (!bd->cur_mouse_action)
-          e_bindings_wheel_event_handle(E_BINDING_CONTEXT_BORDER,
+          e_bindings_wheel_event_handle(E_BINDING_CONTEXT_WINDOW,
                                         E_OBJECT(bd), ev);
      }
    evas_event_feed_mouse_wheel(bd->bg_evas, ev->direction, ev->z, ev->timestamp, NULL);
@@ -6141,7 +6141,7 @@ _e_border_cb_mouse_down(void    *data,
         if (!bd->cur_mouse_action)
           {
              bd->cur_mouse_action =
-               e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_BORDER,
+               e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_WINDOW,
                                                   E_OBJECT(bd), ev);
              if (bd->cur_mouse_action)
                {
@@ -6234,7 +6234,7 @@ _e_border_cb_mouse_up(void    *data,
           }
         else
           {
-             if (!e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_BORDER, E_OBJECT(bd), ev))
+             if (!e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_WINDOW, E_OBJECT(bd), ev))
                e_focus_event_mouse_up(bd);
           }
      }
@@ -6418,7 +6418,7 @@ _e_border_cb_grab_replay(void *data __UNUSED__,
                return ECORE_CALLBACK_DONE;
              if (ev->event_window == bd->win)
                {
-                  if (!e_bindings_mouse_down_find(E_BINDING_CONTEXT_BORDER,
+                  if (!e_bindings_mouse_down_find(E_BINDING_CONTEXT_WINDOW,
                                                   E_OBJECT(bd), ev, NULL))
                     return ECORE_CALLBACK_PASS_ON;
                }

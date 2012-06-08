@@ -319,7 +319,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->gui.context.o_any = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_add(evas, _("Window"), E_BINDING_CONTEXT_BORDER, rg);
+   ob = e_widget_radio_add(evas, _("Window"), E_BINDING_CONTEXT_WINDOW, rg);
    cfdata->gui.context.o_window = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
@@ -588,9 +588,9 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2 __UNUSED__)
   eb->params = _params == NULL ? NULL : eina_stringshare_add(_params);               \
   cfdata->binding.mouse = eina_list_append(cfdata->binding.mouse, eb)
 
-   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_BORDER, 1, E_BINDING_MODIFIER_ALT, 0, "window_move", NULL);
-   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_BORDER, 2, E_BINDING_MODIFIER_ALT, 0, "window_resize", NULL);
-   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_BORDER, 3, E_BINDING_MODIFIER_ALT, 0, "window_menu", NULL);
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_WINDOW, 1, E_BINDING_MODIFIER_ALT, 0, "window_move", NULL);
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_WINDOW, 2, E_BINDING_MODIFIER_ALT, 0, "window_resize", NULL);
+   CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_WINDOW, 3, E_BINDING_MODIFIER_ALT, 0, "window_menu", NULL);
    CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 1, 0, 0, "menu_show", "main");
    CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 2, 0, 0, "menu_show", "clients");
    CFG_MOUSEBIND_DFLT(E_BINDING_CONTEXT_ZONE, 3, 0, 0, "menu_show", "favorites");
@@ -614,13 +614,13 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2 __UNUSED__)
                       "desk_linear_flip_by", "1");
    CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_CONTAINER, 1, 1, E_BINDING_MODIFIER_ALT, 0,
                       "desk_linear_flip_by", "1");
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_BORDER, 0, -1, E_BINDING_MODIFIER_ALT, 0,
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_WINDOW, 0, -1, E_BINDING_MODIFIER_ALT, 0,
                       "desk_linear_flip_by", "-1");
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_BORDER, 1, -1, E_BINDING_MODIFIER_ALT, 0,
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_WINDOW, 1, -1, E_BINDING_MODIFIER_ALT, 0,
                       "desk_linear_flip_by", "-1");
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_BORDER, 0, 1, E_BINDING_MODIFIER_ALT, 0,
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_WINDOW, 0, 1, E_BINDING_MODIFIER_ALT, 0,
                       "desk_linear_flip_by", "1");
-   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_BORDER, 1, 1, E_BINDING_MODIFIER_ALT, 0,
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_WINDOW, 1, 1, E_BINDING_MODIFIER_ALT, 0,
                       "desk_linear_flip_by", "1");
 
    eina_stringshare_del(cfdata->locals.cur);
@@ -979,7 +979,7 @@ _update_binding_context(E_Config_Dialog_Data *cfdata)
 
    if (ctxt == E_BINDING_CONTEXT_ANY)
      e_widget_radio_toggle_set(cfdata->gui.context.o_any, 1);
-   else if (ctxt == E_BINDING_CONTEXT_BORDER)
+   else if (ctxt == E_BINDING_CONTEXT_WINDOW)
      e_widget_radio_toggle_set(cfdata->gui.context.o_window, 1);
    else if (ctxt == E_BINDING_CONTEXT_MENU)
      e_widget_radio_toggle_set(cfdata->gui.context.o_menu, 1);

@@ -116,13 +116,13 @@ e_focus_event_focus_in(E_Border *bd)
        (!e_config->always_click_to_focus))
      {
 	if (!bd->button_grabbed) return;
-	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-	e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+	e_bindings_mouse_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
+	e_bindings_wheel_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
 	ecore_x_window_button_ungrab(bd->win, 1, 0, 1);
 	ecore_x_window_button_ungrab(bd->win, 2, 0, 1);
 	ecore_x_window_button_ungrab(bd->win, 3, 0, 1);
-	e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
-	e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+	e_bindings_mouse_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
+	e_bindings_wheel_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
 	bd->button_grabbed = 0;
      }
 }
@@ -179,13 +179,13 @@ EAPI void
 e_focus_setdown(E_Border *bd)
 {
    if (!bd->button_grabbed) return;
-   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
-   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_mouse_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
+   e_bindings_wheel_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
    ecore_x_window_button_ungrab(bd->win, 1, 0, 1);
    ecore_x_window_button_ungrab(bd->win, 2, 0, 1);
    ecore_x_window_button_ungrab(bd->win, 3, 0, 1);
-   e_bindings_mouse_grab(E_BINDING_CONTEXT_BORDER, bd->win);
-   e_bindings_wheel_grab(E_BINDING_CONTEXT_BORDER, bd->win);
+   e_bindings_mouse_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
+   e_bindings_wheel_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
    bd->button_grabbed = 0;
 }
 
