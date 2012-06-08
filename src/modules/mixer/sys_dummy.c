@@ -1,6 +1,4 @@
 #include "e_mod_system.h"
-#include <stdlib.h>
-#include <string.h>
 
 static const char *_name = NULL;
 
@@ -22,12 +20,12 @@ e_mixer_system_new(const char *name)
 }
 
 void
-e_mixer_system_del(E_Mixer_System *self)
+e_mixer_system_del(E_Mixer_System *self __UNUSED__)
 {
 }
 
 int
-e_mixer_system_callback_set(E_Mixer_System *self, int (*func)(void *data, E_Mixer_System *self), void *data)
+e_mixer_system_callback_set(E_Mixer_System *self __UNUSED__, int (*func)(void *data, E_Mixer_System *self) __UNUSED__, void *data __UNUSED__)
 {
    return 0;
 }
@@ -66,7 +64,7 @@ e_mixer_system_get_card_name(const char *card)
 }
 
 Eina_List *
-e_mixer_system_get_channels(E_Mixer_System *self)
+e_mixer_system_get_channels(E_Mixer_System *self __UNUSED__)
 {
    return eina_list_append(NULL, (void *)-2);
 }
@@ -78,7 +76,7 @@ e_mixer_system_free_channels(Eina_List *channels)
 }
 
 Eina_List *
-e_mixer_system_get_channels_names(E_Mixer_System *self)
+e_mixer_system_get_channels_names(E_Mixer_System *self __UNUSED__)
 {
    _e_mixer_dummy_set();
 
@@ -92,7 +90,7 @@ e_mixer_system_free_channels_names(Eina_List *channels_names)
 }
 
 const char *
-e_mixer_system_get_default_channel_name(E_Mixer_System *self)
+e_mixer_system_get_default_channel_name(E_Mixer_System *self __UNUSED__)
 {
    _e_mixer_dummy_set();
 
@@ -100,7 +98,7 @@ e_mixer_system_get_default_channel_name(E_Mixer_System *self)
 }
 
 E_Mixer_Channel *
-e_mixer_system_get_channel_by_name(E_Mixer_System *self, const char *name)
+e_mixer_system_get_channel_by_name(E_Mixer_System *self __UNUSED__, const char *name)
 {
    _e_mixer_dummy_set();
 
@@ -111,12 +109,12 @@ e_mixer_system_get_channel_by_name(E_Mixer_System *self, const char *name)
 }
 
 void
-e_mixer_system_channel_del(E_Mixer_Channel *channel)
+e_mixer_system_channel_del(E_Mixer_Channel *channel __UNUSED__)
 {
 }
 
 const char *
-e_mixer_system_get_channel_name(E_Mixer_System *self, E_Mixer_Channel *channel)
+e_mixer_system_get_channel_name(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel)
 {
    if (channel == (E_Mixer_Channel *)-2)
       return eina_stringshare_ref(_name);
@@ -125,7 +123,7 @@ e_mixer_system_get_channel_name(E_Mixer_System *self, E_Mixer_Channel *channel)
 }
 
 int
-e_mixer_system_get_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int *left, int *right)
+e_mixer_system_get_volume(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__, int *left, int *right)
 {
    if (left)
       *left = 0;
@@ -136,19 +134,19 @@ e_mixer_system_get_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int *l
 }
 
 int
-e_mixer_system_set_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int left, int right)
+e_mixer_system_set_volume(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__, int left __UNUSED__, int right __UNUSED__)
 {
    return 0;
 }
 
 int
-e_mixer_system_can_mute(E_Mixer_System *self, E_Mixer_Channel *channel)
+e_mixer_system_can_mute(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__)
 {
    return 1;
 }
 
 int
-e_mixer_system_get_mute(E_Mixer_System *self, E_Mixer_Channel *channel, int *mute)
+e_mixer_system_get_mute(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__, int *mute)
 {
    if (mute)
       *mute = 1;
@@ -157,13 +155,13 @@ e_mixer_system_get_mute(E_Mixer_System *self, E_Mixer_Channel *channel, int *mut
 }
 
 int
-e_mixer_system_set_mute(E_Mixer_System *self, E_Mixer_Channel *channel, int mute)
+e_mixer_system_set_mute(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__, int mute __UNUSED__)
 {
    return 0;
 }
 
 int
-e_mixer_system_get_state(E_Mixer_System *self, E_Mixer_Channel *channel, E_Mixer_Channel_State *state)
+e_mixer_system_get_state(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__, E_Mixer_Channel_State *state)
 {
    const E_Mixer_Channel_State def = {1, 0, 0};
 
@@ -174,13 +172,13 @@ e_mixer_system_get_state(E_Mixer_System *self, E_Mixer_Channel *channel, E_Mixer
 }
 
 int
-e_mixer_system_set_state(E_Mixer_System *self, E_Mixer_Channel *channel, const E_Mixer_Channel_State *state)
+e_mixer_system_set_state(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__, const E_Mixer_Channel_State *state __UNUSED__)
 {
    return 0;
 }
 
 int
-e_mixer_system_has_capture(E_Mixer_System *self, E_Mixer_Channel *channel)
+e_mixer_system_has_capture(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__)
 {
    return 0;
 }
