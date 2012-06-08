@@ -479,7 +479,8 @@ _update_today_timer(void *data __UNUSED__)
    today.tm_hour = 0;
 
    t_tomorrow = mktime(&today) + 24 * 60 * 60;
-   ecore_timer_interval_set(update_today, t_tomorrow - t);
+   if (update_today) ecore_timer_interval_set(update_today, t_tomorrow - t);
+   else update_today = ecore_timer_add(t_tomorrow - t, _update_today_timer, NULL);
    return EINA_TRUE;
 }
 
