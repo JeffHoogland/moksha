@@ -145,7 +145,7 @@ main(int argc, char **argv)
    ecore_file_init();
    ecore_ipc_init();
    _e_storage_volume_edd_init();
-   _e_fm_ipc_init();
+   if (!_e_fm_ipc_init()) return -1;
    efm_log_dom = eina_log_domain_register("efm", EINA_COLOR_GREEN);
    eina_log_domain_level_set("efm", EINA_LOG_LEVEL_DBG);
    _e_fm_init();
@@ -168,6 +168,7 @@ main(int argc, char **argv)
    ecore_file_shutdown();
    ecore_shutdown();
    eina_shutdown();
+   return 0;
 }
 
 #ifdef HAVE_HAL_MOUNT
