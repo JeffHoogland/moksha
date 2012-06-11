@@ -211,7 +211,8 @@ _e_fm_main_udisks_cb_dev_verify(const char *udi,
          	INF("DB VOL+: %s", udi);
           _e_fm_main_udisks_volume_add(udi, EINA_TRUE);
      }
-   //eina_stringshare_del(udi);
+   else
+     eina_stringshare_del(udi);
 }
 
 static void
@@ -234,7 +235,8 @@ _e_fm_main_udisks_cb_dev_add_verify(const char *udi,
           INF("DB VOL+: %s", udi);
           _e_fm_main_udisks_volume_add(udi, EINA_FALSE);
      }
-   //eina_stringshare_del(udi);
+   else
+     eina_stringshare_del(udi);
 }
 
 static void
@@ -311,7 +313,7 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
                                 E_Ukit_Properties *ret,
                                 DBusError *error)
 {
-   //const char *str;
+   const char *str;
    int err = 0;
 
    if (!ret) goto error;
@@ -343,12 +345,12 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
    if (err) ERR("Error getting serial for %s", s->udi);
    s->serial = eina_stringshare_add(s->serial);
 
-   s->removable = e_ukit_property_bool_get(ret, "DeviceIsRemovable", &err);
+   //s->removable = e_ukit_property_bool_get(ret, "DeviceIsRemovable", &err);
    s->system_internal = e_ukit_property_bool_get(ret, "DeviceIsSystemInternal", &err);
    if (s->system_internal) goto error; /* only track non internal */
-   //str = e_ukit_property_string_get(ret, "IdUsage", &err);
-   /* if not of filesystem usage type - skip it  - testing on ubuntu 10.04 */
-   //if (!((str) && (!strcmp(str, "filesystem")))) goto error;
+   str = e_ukit_property_string_get(ret, "IdUsage", &err);
+   if (str && (!strcmp(str, "filesystem")))
+     _e_fm_main_udisks_volume_add(s->udi, EINA_TRUE);
    /* force it to be removable if it passed the above tests */
    s->removable = EINA_TRUE;
 
