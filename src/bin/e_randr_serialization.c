@@ -52,7 +52,7 @@ Eina_Bool
 _try_restore_configuration(void)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(e_config, EINA_FALSE);
-   EINA_SAFETY_ON_NULL_RETURN_VAL(e_config->randr_serialized_setup, EINA_FALSE);
+   if (!e_config->randr_serialized_setup) return EINA_FALSE;
 
    if ((e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1) ||
        ((e_randr_screen_info.randr_version >= ECORE_X_RANDR_1_1) && e_config->randr_serialized_setup->serialized_setup_11 && !e_config->randr_serialized_setup->serialized_setups_12)) // either be 1.1 or maybe we have stored a resolution using the old conf_display dialog (which uses randr 1.1)
