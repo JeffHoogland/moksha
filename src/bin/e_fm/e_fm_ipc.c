@@ -1,4 +1,7 @@
+#ifdef HAVE_CONFIG_H
 #include "config.h"
+#endif
+
 
 #ifndef _FILE_OFFSET_BITS
 #define _FILE_OFFSET_BITS 64
@@ -33,12 +36,11 @@
 #include <Efreet.h>
 #include <Eet.h>
 
-#include <eina_stringshare.h>
-
 #include "e.h"
 #include "e_fm_ipc.h"
 //#include "e_fm_shared_c.h"
 #include "e_fm_op.h"
+#include "e_fm_main.h"
 
 #define DEF_SYNC_NUM             8
 #define DEF_ROUND_TRIP           0.05
@@ -623,20 +625,22 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
       {
          E_Volume *v;
          const char *udi, *mountpoint;
+         int ulen;
 
          udi = e->data;
-         mountpoint = udi + strlen(udi) + 1;
          v = e_volume_find(udi);
-//             printf("REQ M %p (find from %s -> %s)\n", v, udi, mountpoint); fflush(stdout);
-         if (v)
+         if (!v) break;
+         ulen = strlen(udi);
+         if (ulen + 1 >= e->size)
+           WRN("No mount point available for %s, trying anyway", udi);
+         else
            {
+              mountpoint = udi + strlen(udi) + 1;
               if (mountpoint[0])
-                {
-                   if (v->mount_point) eina_stringshare_del(v->mount_point);
-                   v->mount_point = eina_stringshare_add(mountpoint);
-                }
-              e_volume_mount(v);
+                eina_stringshare_replace(&v->mount_point, mountpoint);
+//             printf("REQ M %p (find from %s -> %s)\n", v, udi, mountpoint); fflush(stdout);
            }
+         e_volume_mount(v);
       }
       break;
 
