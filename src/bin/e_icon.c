@@ -364,7 +364,7 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
 
    sd->obj = edje_object_add(evas_object_evas_get(obj));
    edje_object_file_set(sd->obj, file, part);
-   if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
+   if (edje_object_load_error_get(sd->obj) != EDJE_LOAD_ERROR_NONE)
      return EINA_FALSE;
    if (evas_object_visible_get(obj)) evas_object_show(sd->obj);
    evas_object_smart_member_add(sd->obj, obj);
