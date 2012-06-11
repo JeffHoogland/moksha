@@ -1254,14 +1254,14 @@ _e_fwin_changed(void            *data,
     */
    snprintf(buf, sizeof(buf), "%s/.directory.desktop", e_fm2_real_path_get(page->fm_obj));
    ef = efreet_desktop_new(buf);
-   printf("EF=%p for %s\n", ef, buf);
+   //printf("EF=%p for %s\n", ef, buf);
    if (ef)
      {
         fwin->wallpaper_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->wallpaper_file, "X-Enlightenment-Directory-Wallpaper");
         fwin->overlay_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->overlay_file, "X-Enlightenment-Directory-Overlay");
         fwin->scrollframe_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->scrollframe_file, "X-Enlightenment-Directory-Scrollframe");
         fwin->theme_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->theme_file, "X-Enlightenment-Directory-Theme");
-        printf("fwin->wallpaper_file = %s\n", fwin->wallpaper_file);
+        //printf("fwin->wallpaper_file = %s\n", fwin->wallpaper_file);
         efreet_desktop_free(ef);
      }
    else
@@ -1291,7 +1291,7 @@ _e_fwin_changed(void            *data,
      }
    if (fwin->over_obj)
      {
-        printf("over obj\n");
+        //printf("over obj\n");
         evas_object_hide(fwin->over_obj);
         if (fwin->overlay_file)
           {
