@@ -18,6 +18,7 @@ _monitor_modes_refs_set(E_Randr_Monitor_Info *mi, Ecore_X_Randr_Output o)
    modes = ecore_x_randr_output_modes_get(e_randr_screen_info.root, o, &nmodes, &npreferred);
    while (--nmodes >= 0)
      {
+        if (!modes[nmodes]) continue;
         if (!(mode_info = _12_screen_info_mode_info_get(modes[nmodes])))
           {
              //Mode unknown to the global structure, so add it
