@@ -493,9 +493,9 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
           }
      }
 
-   /* here we arbitrarily mount everything to /media regardless of fstab */
+   /* here we arbitrarily mount everything to $E_HOME/fileman/$UUID regardless of fstab */
    eina_stringshare_del(v->mount_point);
-   v->mount_point = eina_stringshare_printf("/media/%s", v->uuid);
+   v->mount_point = eina_stringshare_printf("%s/fileman/%s", e_user_dir_get(), v->uuid);
    eeze_disk_mount_point_set(v->disk, v->mount_point);
    eeze_disk_mountopts_set(v->disk, opts);
    if (!eeze_disk_mount_wrapper_get(v->disk))
@@ -529,6 +529,7 @@ _scanner_delay(void *data __UNUSED__)
 {
    INF("Attempting scanner connection");
    svr = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, "eeze_scanner", 0, NULL);
+   if (!svr) ERR("Could not create server connection!");
    return EINA_FALSE;
 }
 
@@ -708,7 +709,7 @@ _e_fm_main_eeze_init(void)
         _scanner_run();
         return;
      }
-   svr = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, "eeze_scanner", 0, NULL);
+   _scanner_delay(NULL);
 }
 
 void
