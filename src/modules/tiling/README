@@ -10,9 +10,3 @@ When there are more windows than possible columns, the remaining windows are
 packed in the last column.
 
 Resizing or moving a window will try to resize or move the column it is in.
-
-What is needed?
-===============
-
-An up-to-date enlightenment environment.
-…
