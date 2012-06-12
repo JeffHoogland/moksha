@@ -604,7 +604,7 @@ _cpufreq_status_check_available(Status *s)
 	     s->frequencies = NULL;
 	  }
 
-	fgets(buf, sizeof(buf), f);
+	if (fgets(buf, sizeof(buf), f) == NULL) return 1;
 	buf[sizeof(buf) - 1] = 0;
 	fclose(f);
 
@@ -638,7 +638,7 @@ _cpufreq_status_check_available(Status *s)
 	     s->governors = NULL;
 	  }
 
-	fgets(buf, sizeof(buf), f);
+	if (fgets(buf, sizeof(buf), f) == NULL) return 1;
 	buf[sizeof(buf) - 1] = 0;
 	fclose(f);
 
@@ -698,7 +698,7 @@ _cpufreq_status_check_current(Status *s)
       f = fopen(buf, "r");
       if (f)
         {
-          fgets(buf, sizeof(buf), f);
+          if (fgets(buf, sizeof(buf), f) == NULL) continue;
           buf[sizeof(buf) - 1] = 0;
           fclose(f);
           
@@ -740,7 +740,7 @@ _cpufreq_status_check_current(Status *s)
         char *p;
         
         buf[0] = 0;
-	fgets(buf, sizeof(buf), f);
+	if (fgets(buf, sizeof(buf), f) ==  NULL) return ret;;
 	buf[sizeof(buf) - 1] = 0;
 	fclose(f);
         for (p = buf; (*p != 0) && (isalnum(*p)); p++);
