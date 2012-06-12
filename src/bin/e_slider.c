@@ -525,7 +525,7 @@ _e_smart_add(Evas_Object *obj)
    evas_object_color_set(sd->event, 0, 0, 0, 0);
    evas_object_pass_events_set(sd->event, EINA_TRUE);
    edje_object_part_swallow(sd->edje_obj, "e.swallow.bar", sd->event);
-   evas_object_smart_member_add(sd->edje_obj, sd->event);
+   evas_object_smart_member_add(sd->event, sd->edje_obj);
 
    edje_object_signal_callback_add(sd->edje_obj, "drag", "*", _e_smart_signal_cb_drag, sd);
    edje_object_signal_callback_add(sd->edje_obj, "drag,start", "*", _e_smart_signal_cb_drag_start, sd);
