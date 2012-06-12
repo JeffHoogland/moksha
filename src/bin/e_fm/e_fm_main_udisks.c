@@ -420,6 +420,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    /* skip volumes that aren't filesystems */
    str = e_ukit_property_string_get(ret, "IdUsage", &err);
    EINA_SAFETY_ON_TRUE_GOTO(err || (!str), error);
+   if (!str[0]) goto error; /* probably removal event */
    if (strcmp(str, "filesystem"))
      {
         if (strcmp(str, "crypto"))
