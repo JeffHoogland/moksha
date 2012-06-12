@@ -1019,7 +1019,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
              sd->mount = e_fm2_device_mount(v,
                                             _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
                                             _e_fm2_cb_unmount_ok, NULL, obj);
-             if (v->efm_mode != EFM_MODE_USING_HAL_MOUNT) return;
+             if (v->efm_mode == EFM_MODE_USING_UDISKS_MOUNT) return;
           }
      }
    else if (sd->config->view.open_dirs_in_place == 0)
