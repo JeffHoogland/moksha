@@ -224,7 +224,7 @@ _e_fm_main_eeze_cb_vol_unmounted(void *user_data __UNUSED__,
 
    v->mounted = EINA_FALSE;
    INF("UNMOUNT: %s from %s", v->udi, v->mount_point);
-   if (!memcmp(v->mount_point, "/media/", 7))
+   if (!strncmp(v->mount_point, e_user_dir_get(), strlen(e_user_dir_get())))
      unlink(v->mount_point);
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
