@@ -349,7 +349,7 @@ _e_fm_main_eeze_volume_add(const char *syspath,
      v->partition = EINA_TRUE;
    eina_stringshare_del(str);
    if (v->mounted)
-     v->mount_point = eeze_disk_mount_point_get(v->disk);
+     v->mount_point = eina_stringshare_add(eeze_disk_mount_point_get(v->disk));
 
    if (v->partition)
      {
