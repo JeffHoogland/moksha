@@ -211,6 +211,8 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    _auto_apply_changes(cfdata);
 
    e_border_button_bindings_ungrab_all();
+   e_managers_keys_ungrab();
+
    EINA_LIST_FREE(e_config->mouse_bindings, eb)
      {
         e_bindings_mouse_del(eb->context, eb->button, eb->modifiers, eb->any_mod,
@@ -273,6 +275,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
                              bw2->any_mod, bw2->action, bw2->params);
      }
    e_border_button_bindings_grab_all();
+   e_managers_keys_grab();
 
    e_config_save_queue();
    return 1;
@@ -1302,8 +1305,8 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
    e_win_centered_set(cfdata->locals.dia->win, 1);
    e_win_borderless_set(cfdata->locals.dia->win, 1);
 
-   cfdata->locals.bind_win = ecore_x_window_input_new(man->root, 0, 0,
-                                                      man->w, man->h);
+   cfdata->locals.bind_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
+                                                      /* man->w, man->h); */
    ecore_x_window_show(cfdata->locals.bind_win);
    e_grabinput_get(cfdata->locals.bind_win, 0, cfdata->locals.bind_win);
 
@@ -1326,19 +1329,17 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
 static void
 _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
 {
-   while (cfdata->locals.handlers)
-     {
-        ecore_event_handler_del(cfdata->locals.handlers->data);
-        cfdata->locals.handlers =
-          eina_list_remove_list(cfdata->locals.handlers, cfdata->locals.handlers);
-     }
-   cfdata->locals.handlers = NULL;
-   e_grabinput_release(cfdata->locals.bind_win, cfdata->locals.bind_win);
-   ecore_x_window_free(cfdata->locals.bind_win);
-   cfdata->locals.bind_win = 0;
+   Ecore_Event_Handler *eh;
+
+   EINA_LIST_FREE(cfdata->locals.handlers, eh)
+     ecore_event_handler_del(eh);
 
    e_object_del(E_OBJECT(cfdata->locals.dia));
    cfdata->locals.dia = NULL;
+
+   e_grabinput_release(cfdata->locals.bind_win, cfdata->locals.bind_win);
+   ecore_x_window_free(cfdata->locals.bind_win);
+   cfdata->locals.bind_win = 0;
 }
 
 static Eina_Bool
@@ -1349,12 +1350,12 @@ _grab_mouse_down_cb(void *data, __UNUSED__ int type, void *event)
    E_Config_Binding_Mouse *eb = NULL;
    E_Config_Binding_Wheel *bw;
    int mod = E_BINDING_MODIFIER_NONE, n;
-
    Ecore_Event_Mouse_Button *ev;
 
    ev = event;
    cfdata = data;
 
+   if (!cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
    if (ev->window != cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
@@ -1444,7 +1445,7 @@ _grab_mouse_down_cb(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_grab_mouse_wheel_cb(void *data, __UNUSED__ int type, void *event)
+_grab_mouse_wheel_cb(void *data, int type __UNUSED__, void *event)
 {
    Eina_List *l;
    E_Config_Binding_Wheel *bw = NULL;
@@ -1456,6 +1457,7 @@ _grab_mouse_wheel_cb(void *data, __UNUSED__ int type, void *event)
    ev = event;
    cfdata = data;
 
+   if (!cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
    if (ev->window != cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
 
    if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
@@ -1558,13 +1560,14 @@ _grab_mouse_wheel_cb(void *data, __UNUSED__ int type, void *event)
 }
 
 static Eina_Bool
-_grab_key_down_cb(void *data, __UNUSED__ int type, void *event)
+_grab_key_down_cb(void *data, int type __UNUSED__, void *event)
 {
    E_Config_Dialog_Data *cfdata;
    Ecore_Event_Key *ev = event;
 
    cfdata = data;
 
+   if (!cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
    if (ev->window != cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
 
    if (!strcmp(ev->keyname, "Escape") &&
@@ -1575,6 +1578,6 @@ _grab_key_down_cb(void *data, __UNUSED__ int type, void *event)
      {
         _grab_wnd_hide(cfdata);
      }
+
    return ECORE_CALLBACK_PASS_ON;
 }
-
