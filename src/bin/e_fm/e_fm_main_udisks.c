@@ -411,10 +411,12 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
         ERR("err");
      }
 
-   EINA_SAFETY_ON_TRUE_GOTO(e_ukit_property_bool_get(ret, "DeviceIsSystemInternal", &err) || err, error);
+   if (e_ukit_property_bool_get(ret, "DeviceIsSystemInternal", &err)) goto error;
+   EINA_SAFETY_ON_TRUE_GOTO(err, error);
 
    /* skip volumes with volume.ignore set */
-   EINA_SAFETY_ON_TRUE_GOTO(e_ukit_property_bool_get(ret, "DeviceIsMediaChangeDetectionInhibited", &err) || err, error);
+   if (e_ukit_property_bool_get(ret, "DeviceIsMediaChangeDetectionInhibited", &err)) goto error;
+   EINA_SAFETY_ON_TRUE_GOTO(err, error);
    /* skip volumes that aren't filesystems */
    str = e_ukit_property_string_get(ret, "IdUsage", &err);
    EINA_SAFETY_ON_TRUE_GOTO(err || (!str), error);
@@ -425,7 +427,7 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
 
         if (!v->encrypted)
           {
-             ERR("encrypted filesystems not yet supported");
+             ERR("I don't know what's going on here but I don't like it.");
              goto error;
           }
      }
