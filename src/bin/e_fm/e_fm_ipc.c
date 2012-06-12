@@ -840,7 +840,7 @@ _e_fm_ipc_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size)
 }
 
 Eina_Bool
-_e_fm_ipc_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_data_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -852,6 +852,8 @@ _e_fm_ipc_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    slave = ecore_exe_data_get(e->exe);
    if (!slave) return ECORE_CALLBACK_RENEW;
+   if (data) return ECORE_CALLBACK_PASS_ON; /* ipc handlers have NULL data */
+   if (!eina_list_data_find(_e_fm_ipc_slaves, slave)) return ECORE_CALLBACK_PASS_ON;
 
    sdata = e->data;
    ssize = e->size;
@@ -893,7 +895,7 @@ _e_fm_ipc_slave_data_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 Eina_Bool
-_e_fm_ipc_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_error_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -902,6 +904,8 @@ _e_fm_ipc_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event
 
    slave = ecore_exe_data_get(e->exe);
    if (!slave) return ECORE_CALLBACK_RENEW;
+   if (data) return ECORE_CALLBACK_PASS_ON; /* ipc handlers have NULL data */
+   if (!eina_list_data_find(_e_fm_ipc_slaves, slave)) return ECORE_CALLBACK_PASS_ON;
 
    printf("EFM: Data from STDERR of slave #%d: %.*s", slave->id, e->size, (char *)e->data);
 
@@ -909,21 +913,25 @@ _e_fm_ipc_slave_error_cb(void *data __UNUSED__, int type __UNUSED__, void *event
 }
 
 Eina_Bool
-_e_fm_ipc_slave_del_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_del_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *e = event;
    E_Fm_Slave *slave;
+   Eina_List *l;
 
-   if (!e) return 1;
+   if (!e) return ECORE_CALLBACK_RENEW;
 
    slave = ecore_exe_data_get(e->exe);
-   if (!slave) return 1;
+   if (!slave) return ECORE_CALLBACK_RENEW;
+   if (data) return ECORE_CALLBACK_PASS_ON; /* ipc handlers have NULL data */
+   l = eina_list_data_find_list(_e_fm_ipc_slaves, slave);
+   if (!l) return ECORE_CALLBACK_PASS_ON;
    _e_fm_ipc_client_send(slave->id, E_FM_OP_QUIT, NULL, 0);
 
-   _e_fm_ipc_slaves = eina_list_remove(_e_fm_ipc_slaves, (void *)slave);
+   _e_fm_ipc_slaves = eina_list_remove(_e_fm_ipc_slaves, l);
    free(slave);
 
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
