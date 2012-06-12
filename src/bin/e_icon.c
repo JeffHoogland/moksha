@@ -540,7 +540,8 @@ e_icon_size_get(const Evas_Object *obj, int *w, int *h)
         if (h) *h = 0;
         return;
      }
-   evas_object_image_size_get(sd->obj, w, h);
+   if (strcmp(evas_object_type_get(sd->obj), "edje"))
+     evas_object_image_size_get(sd->obj, w, h);
 }
 
 EAPI Eina_Bool
