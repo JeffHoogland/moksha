@@ -327,6 +327,14 @@ _e_fm_main_eeze_volume_add(const char *syspath,
    v->label = eeze_disk_label_get(v->disk);
    v->fstype = eeze_disk_fstype_get(v->disk);
    v->parent = eeze_disk_udev_get_parent(v->disk);
+   {
+      /* check for device being its own parent: this is the case
+       * for devices such as cdroms
+       */
+      str = eeze_udev_syspath_get_subsystem(v->parent);
+      if (strcmp(str, "block"))
+        eina_stringshare_replace(&v->parent, v->udi);
+   }
    str = eeze_disk_udev_get_sysattr(v->disk, "queue/hw_sector_size");
    if (!str)
      str = eeze_udev_syspath_get_sysattr(v->parent, "queue/hw_sector_size");
@@ -500,9 +508,13 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
           }
      }
 
-   /* here we arbitrarily mount everything to $E_HOME/fileman/$UUID regardless of fstab */
+   /* here we arbitrarily mount everything to $E_HOME/fileman/$something regardless of fstab */
    eina_stringshare_del(v->mount_point);
-   v->mount_point = eina_stringshare_printf("%s/fileman/%s", e_user_dir_get(), v->uuid);
+   {
+      const char *str = v->uuid ?: v->label;
+      if (!str) str = eeze_disk_devpath_get(v->disk);
+      v->mount_point = eina_stringshare_printf("%s/fileman/%s", e_user_dir_get(), str);
+   }
    eeze_disk_mount_point_set(v->disk, v->mount_point);
    eeze_disk_mountopts_set(v->disk, opts);
    if (!eeze_disk_mount_wrapper_get(v->disk))
@@ -514,7 +526,8 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
      }
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_eeze_vol_mount_timeout, v);
    INF("MOUNT: %s", v->udi);
-   eeze_disk_mount(v->disk);
+   if (!eeze_disk_mount(v->disk))
+     CRI("ERROR WHEN ATTEMPTING TO MOUNT!");
 }
 
 static void
