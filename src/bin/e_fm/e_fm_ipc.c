@@ -1414,6 +1414,7 @@ static const char *
 _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
 {
    char *buffer;
+   const char *libdir;
    unsigned int length = 0;
    char command[4];
 
@@ -1428,7 +1429,8 @@ _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
    else
      strcpy(command, "???");
 
-   length = 256 + strlen(getenv("E_LIB_DIR")) + strlen(args);
+   libdir = getenv("E_LIB_DIR") ?: PACKAGE_LIB_DIR;
+   length = 256 + strlen(libdir) + strlen(args);
    buffer = malloc(length);
    snprintf(buffer, length,
             "%s/enlightenment/utils/enlightenment_fm_op %s %s",
