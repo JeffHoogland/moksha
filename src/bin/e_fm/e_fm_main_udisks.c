@@ -434,42 +434,39 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
      }
    str = NULL;
 
-   v->uuid = e_ukit_property_string_get(ret, "IdUuid", &err);
+   eina_stringshare_replace(&v->uuid, e_ukit_property_string_get(ret, "IdUuid", &err));
    EINA_SAFETY_ON_TRUE_GOTO(err, error);
-   v->uuid = eina_stringshare_add(v->uuid);
 
-   v->label = e_ukit_property_string_get(ret, "IdLabel", &err);
-   if (!v->label) v->label = v->uuid;
-   if (!v->label) v->label = e_ukit_property_string_get(ret, "DeviceFile", &err); /* avoid having blank labels */
-   v->label = eina_stringshare_add(v->label);
-
+   eina_stringshare_replace(&v->label, e_ukit_property_string_get(ret, "IdLabel", &err));
+   if (!v->label) eina_stringshare_replace(&v->label, v->uuid);
+   if (!v->label) eina_stringshare_replace(&v->label, e_ukit_property_string_get(ret, "DeviceFile", &err)); /* avoid having blank labels */
+   EINA_SAFETY_ON_TRUE_GOTO(err, error);
    if (!v->encrypted)
      {
         const Eina_List *l;
 
         l = e_ukit_property_strlist_get(ret, "DeviceMountPaths", &err);
         EINA_SAFETY_ON_TRUE_GOTO(err, error);
-        if (l) v->mount_point = eina_stringshare_add(l->data);
+        if (l) eina_stringshare_replace(&v->mount_point, eina_stringshare_add(l->data));
 
-        v->fstype = e_ukit_property_string_get(ret, "IdType", &err);
-        v->fstype = eina_stringshare_add(v->fstype);
-
+        eina_stringshare_replace(&v->fstype, e_ukit_property_string_get(ret, "IdType", &err));
+        EINA_SAFETY_ON_TRUE_GOTO(err, error);
         v->size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
-
+        EINA_SAFETY_ON_TRUE_GOTO(err, error);
         v->mounted = e_ukit_property_bool_get(ret, "DeviceIsMounted", &err);
         EINA_SAFETY_ON_TRUE_GOTO(err, error);
      }
    else
      v->unlocked = e_ukit_property_bool_get(ret, "DeviceIsLuksCleartext", &err);
 
+   EINA_SAFETY_ON_TRUE_GOTO(err, error);
    v->partition = e_ukit_property_bool_get(ret, "DeviceIsPartition", &err);
    EINA_SAFETY_ON_TRUE_GOTO(err, error);
 
    if (v->partition)
      {
         v->partition_number = e_ukit_property_int_get(ret, "PartitionNumber", NULL);
-        v->partition_label = e_ukit_property_string_get(ret, "PartitionLabel", NULL);
-        v->partition_label = eina_stringshare_add(v->partition_label);
+        eina_stringshare_replace(&v->partition_label, e_ukit_property_string_get(ret, "PartitionLabel", NULL));
      }
 
    if (v->unlocked)
@@ -479,13 +476,13 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
 
         enc = e_ukit_property_string_get(ret, "LuksCleartextSlave", &err);
         venc = _e_fm_main_udisks_volume_find(enc);
-        v->parent = eina_stringshare_add(venc->parent);
+        eina_stringshare_replace(&v->parent, venc->parent);
         v->storage = venc->storage;
         v->storage->volumes = eina_list_append(v->storage->volumes, v);
      }
    else
      {
-        v->parent = e_ukit_property_string_get(ret, "PartitionSlave", &err);
+        eina_stringshare_replace(&v->parent, e_ukit_property_string_get(ret, "PartitionSlave", &err));
 
         if (!err)
           {
@@ -498,7 +495,6 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
                        if (!eina_list_data_find_list(s->volumes, v))
                          s->volumes = eina_list_append(s->volumes, v);
                     }
-                  v->parent = eina_stringshare_add(v->parent);
                }
              else
                {
@@ -826,7 +822,6 @@ _e_fm_main_udisks_volume_del(const char *udi)
         ecore_timer_del(v->guard);
         v->guard = NULL;
      }
-   if (v->prop_handler) e_dbus_signal_handler_del(_e_fm_main_udisks_conn, v->prop_handler);
    if (v->validated)
      {
         INF("--VOL %s", v->udi);
@@ -836,6 +831,11 @@ _e_fm_main_udisks_volume_del(const char *udi)
                                  E_FM_OP_VOLUME_DEL,
                                  0, 0, 0, v->udi, eina_stringshare_strlen(v->udi) + 1);
      }
+   v->optype = E_VOLUME_OP_TYPE_NONE;
+   if (v->storage && v->storage->requires_eject) return; /* udisks is stupid about ejectable media, so we have to keep stuff
+                                   * around for all eternity instead of deleting it constantly. oh noes.
+                                   */
+   if (v->prop_handler) e_dbus_signal_handler_del(_e_fm_main_udisks_conn, v->prop_handler);
    _e_vols = eina_list_remove(_e_vols, v);
    _e_fm_shared_device_volume_free(v);
 }
