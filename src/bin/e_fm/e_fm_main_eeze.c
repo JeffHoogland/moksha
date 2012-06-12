@@ -310,12 +310,19 @@ _e_fm_main_eeze_volume_add(const char *syspath,
         return NULL;
      }
    INF("VOL+ %s", syspath);
+   eeze_disk_scan(v->disk);
+   if (eeze_disk_type_get(v->disk) == EEZE_DISK_TYPE_INTERNAL)
+     {
+        INF("VOL is internal, ignoring");
+        eeze_disk_free(v->disk);
+        free(v);
+        return NULL;
+     }
    eeze_disk_data_set(v->disk, v);
    v->udi = eina_stringshare_add(syspath);
    v->icon = NULL;
    v->first_time = first_time;
    _e_vols = eina_list_append(_e_vols, v);
-   eeze_disk_scan(v->disk);
    v->uuid = eeze_disk_uuid_get(v->disk);
    v->label = eeze_disk_label_get(v->disk);
    v->fstype = eeze_disk_fstype_get(v->disk);
@@ -506,6 +513,7 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
         eeze_disk_mount_wrapper_set(v->disk, buf);
      }
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_eeze_vol_mount_timeout, v);
+   INF("MOUNT: %s", v->udi);
    eeze_disk_mount(v->disk);
 }
 
