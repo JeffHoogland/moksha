@@ -779,18 +779,20 @@ _e_fm_main_eeze_storage_add(const char *syspath)
         s->drive_type = eina_stringshare_add("cdrom");
         break;
       case EEZE_DISK_TYPE_USB:
-        s->drive_type = eina_stringshare_add("usb");
-        break;
       case EEZE_DISK_TYPE_INTERNAL:
-        s->drive_type = eina_stringshare_add("ata");
+        s->drive_type = eina_stringshare_add("disk");
         break;
       case EEZE_DISK_TYPE_FLASH:
-        s->drive_type = eina_stringshare_add("sd_mmc");
+        s->drive_type = eina_stringshare_add("compact_flash");
         break;
       default:
-        s->drive_type = eina_stringshare_add("unknown");
+        s->drive_type = eina_stringshare_add("floppy");
         break;
      }
+   /* FIXME: this may not be congruent with the return types of other mounters,
+    * but we don't use it anyway, so it's probably fine
+    */
+   s->bus = eeze_disk_udev_get_property(s->disk, "ID_BUS");
    s->model = eina_stringshare_add(eeze_disk_model_get(s->disk));
    s->vendor = eina_stringshare_add(eeze_disk_vendor_get(s->disk));
    s->serial = eina_stringshare_add(eeze_disk_serial_get(s->disk));
@@ -821,11 +823,7 @@ _e_fm_main_eeze_storage_add(const char *syspath)
    if (eeze_disk_type_get(s->disk) == EEZE_DISK_TYPE_CDROM)
      s->requires_eject = EINA_TRUE; /* only true on cdroms */
    s->media_check_enabled = s->removable;
-#if 0
-FIXME
-   s->icon.drive =
-   s->icon.volume =
-#endif
+
    INF("++STO:\n  syspath: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s",
        s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
    s->validated = EINA_TRUE;
