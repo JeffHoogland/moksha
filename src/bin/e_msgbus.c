@@ -51,7 +51,7 @@ e_msgbus_init(void)
    _e_msgbus_data->conn = e_dbus_bus_get(DBUS_BUS_SESSION);
    if (!_e_msgbus_data->conn)
      {
-        printf("WARNING: Cannot get DBUS_BUS_SESSION\n");
+        WRN("Cannot get DBUS_BUS_SESSION");
         return 0;
      }
    e_dbus_request_name(_e_msgbus_data->conn, "org.enlightenment.wm.service", 0, _e_msgbus_request_name_cb, NULL);
@@ -60,7 +60,7 @@ e_msgbus_init(void)
    iface = e_dbus_interface_new("org.enlightenment.wm.Core");
    if (!iface)
      {
-        printf("WARNING: Cannot add org.enlightenment.wm.Core interface\n");
+        WRN("Cannot add org.enlightenment.wm.Core interface");
         return 0;
      }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
@@ -73,7 +73,7 @@ e_msgbus_init(void)
    iface = e_dbus_interface_new("org.enlightenment.wm.Module");
    if (!iface)
      {
-        printf("WARNING: Cannot add org.enlightenment.wm.Module interface\n");
+        WRN("Cannot add org.enlightenment.wm.Module interface");
         return 0;
      }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
@@ -89,7 +89,7 @@ e_msgbus_init(void)
    iface = e_dbus_interface_new("org.enlightenment.wm.Profile");
    if (!iface)
      {
-        printf("WARNING: Cannot add org.enlightenment.wm.Profile interface\n");
+        WRN("Cannot add org.enlightenment.wm.Profile interface");
         return 0;
      }
    e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);

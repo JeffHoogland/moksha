@@ -119,7 +119,7 @@ _e_xinerama_update(void)
                     {
                        E_Screen *screen;
 
-                       printf("E17 INIT: XINERAMA SCREEN: [%i][%i], %ix%i+%i+%i\n",
+                       INF("E17 INIT: XINERAMA SCREEN: [%i][%i], %ix%i+%i+%i",
                               i, i, w, h, x, y);
                        /* add it to our list */
                        screen = E_NEW(E_Screen, 1);
@@ -175,12 +175,12 @@ _e_xinerama_update(void)
    chosen_screens = eina_list_sort(chosen_screens,
                                    eina_list_count(chosen_screens),
                                    _e_xinerama_cb_screen_sort);
-   printf("======================= screens:\n");
+   INF("======================= screens:");
    n = 0;
    EINA_LIST_FOREACH(chosen_screens, l, scr)
      {
         scr->escreen = n;
-        printf("E17 INIT: XINERAMA CHOSEN: [%i][%i], %ix%i+%i+%i\n",
+        INF("E17 INIT: XINERAMA CHOSEN: [%i][%i], %ix%i+%i+%i",
                scr->screen, scr->escreen, scr->w, scr->h, scr->x, scr->y);
         n++;
      }

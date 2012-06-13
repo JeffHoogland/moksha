@@ -75,7 +75,7 @@ _e_xsettings_selection_owner_set(Settings_Manager *sm)
 
    ret = (cur_selection == sm->selection);
    if (!ret)
-     fprintf(stderr, "XSETTINGS: tried to set selection to %#x, but got %#x\n",
+     ERR("XSETTINGS: tried to set selection to %#x, but got %#x",
              sm->selection, cur_selection);
 
    return ret;
@@ -134,13 +134,12 @@ _e_xsettings_activate_retry(void *data)
    Settings_Manager *sm = data;
    Eina_Bool ret;
 
-   fputs("XSETTINGS: reactivate...\n", stderr);
+   INF("XSETTINGS: reactivate...");
    ret = _e_xsettings_activate(sm);
    if (ret)
-     fputs("XSETTINGS: activate success!\n", stderr);
+     INF("XSETTINGS: activate success!");
    else
-     fprintf(stderr, "XSETTINGS: activate failure! retrying in %0.1f seconds\n",
-             RETRY_TIMEOUT);
+     ERR("XSETTINGS: activate failure! retrying in %0.1f seconds", RETRY_TIMEOUT);
 
    if (!ret)
      return ECORE_CALLBACK_RENEW;
@@ -174,7 +173,7 @@ _e_xsettings_string_set(const char *name, const char *value)
    if (!value)
      {
         if (!s) return;
-        printf("remove %s\n", name);
+        DBG("remove %s\n", name);
         eina_stringshare_del(name);
         eina_stringshare_del(s->name);
         eina_stringshare_del(s->s.value);
@@ -184,13 +183,13 @@ _e_xsettings_string_set(const char *name, const char *value)
      }
    if (s)
      {
-        printf("update %s %s\n", name, value);
+        DBG("update %s %s\n", name, value);
         eina_stringshare_del(name);
         eina_stringshare_replace(&s->s.value, value);
      }
    else
      {
-        printf("add %s %s\n", name, value);
+        DBG("add %s %s\n", name, value);
         s = E_NEW(Setting, 1);
         s->type = SETTING_TYPE_STRING;
         s->name = name;
@@ -223,7 +222,7 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
    if (!set)
      {
         if (!s) return;
-        printf("remove %s\n", name);
+        DBG("remove %s\n", name);
         eina_stringshare_del(name);
         eina_stringshare_del(s->name);
         settings = eina_list_remove(settings, s);
@@ -232,13 +231,13 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
      }
    if (s)
      {
-        printf("update %s %d\n", name, value);
+        DBG("update %s %d\n", name, value);
         eina_stringshare_del(name);
         s->i.value = value;
      }
    else
      {
-        printf("add %s %d\n", name, value);
+        DBG("add %s %d\n", name, value);
         s = E_NEW(Setting, 1);
         s->type = SETTING_TYPE_INT;
         s->name = name;

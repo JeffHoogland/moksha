@@ -657,10 +657,10 @@ _e_fm2_op_registry_entry_print(const E_Fm2_Op_Registry_Entry *ere)
    else
      status = status_strings[0];
 
-   printf("id: %8d, op: %2d [%s] finished: %hhu, needs_attention: %hhu\n"
+   DBG("id: %8d, op: %2d [%s] finished: %hhu, needs_attention: %hhu\n"
           "    %3d%% (%" PRIi64 "/%" PRIi64 "), start_time: %10.0f, eta: %5ds, xwin: %#x\n"
                                             "    src=[%s]\n"
-                                            "    dst=[%s]\n",
+                                            "    dst=[%s]",
           ere->id, ere->op, status, ere->finished, ere->needs_attention,
           ere->percent, ere->done, ere->total, ere->start_time, ere->eta,
           e_fm2_op_registry_entry_xwin_get(ere),
@@ -671,7 +671,7 @@ static Eina_Bool
 _e_fm2_op_registry_entry_add_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    const E_Fm2_Op_Registry_Entry *ere = event;
-   printf("E FM OPERATION STARTED: id=%d, op=%d\n", ere->id, ere->op);
+   DBG("E FM OPERATION STARTED: id=%d, op=%d", ere->id, ere->op);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -1907,7 +1907,7 @@ _e_fm2_icon_explicit_get(Evas *evas, const E_Fm2_Icon *ic, const char *icon, con
    iconpath = _e_fm2_path_join(buf, sizeof(buf), ic->sd->realpath, icon);
    if (!iconpath)
      {
-        fprintf(stderr, "ERROR: could not create icon \"%s\".\n", icon);
+        ERR("could not create icon \"%s\".", icon);
         return NULL;
      }
 
@@ -2573,7 +2573,7 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, 
    args = _e_fm_string_append_char(args, &size, &length, ' ');
    args = _e_fm_string_append_quoted(args, &size, &length, dest);
 
-   fputs("WARNING: using new E_FM_OP_SYMLINK, remove deprecated ASAP\n", stderr);
+   WRN("using new E_FM_OP_SYMLINK, remove deprecated ASAP", stderr);
    r = _e_fm_client_file_symlink(args, e_fm);
    free(args);
    return r;
@@ -3113,7 +3113,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
       case E_FM_OP_ERROR:  /*error*/
       {
          E_Dialog *dlg;
-         printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
+         ERR("Error from slave #%d: %s", e->ref, (char *)e->data);
          dlg = _e_fm_error_dialog(e->ref, e->data);
          _e_fm2_op_registry_error(e->ref, dlg);
       }
@@ -3122,7 +3122,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
       case E_FM_OP_ERROR_RETRY_ABORT:  /*error*/
       {
          E_Dialog *dlg;
-         printf("%s:%s(%d) Error from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
+         ERR("Error from slave #%d: %s", e->ref, (char *)e->data);
          dlg = _e_fm_retry_abort_dialog(e->ref, (char *)e->data);
          _e_fm2_op_registry_error(e->ref, dlg);
       }
@@ -3131,7 +3131,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
       case E_FM_OP_OVERWRITE:  /*overwrite*/
       {
          E_Dialog *dlg;
-         printf("%s:%s(%d) Overwrite from slave #%d: %s\n", __FILE__, __FUNCTION__, __LINE__, e->ref, (char *)e->data);
+         ERR("Overwrite from slave #%d: %s", e->ref, (char *)e->data);
          dlg = _e_fm_overwrite_dialog(e->ref, (char *)e->data);
          _e_fm2_op_registry_needs_attention(e->ref, dlg);
       }
@@ -4478,7 +4478,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
      }
    else
      {
-        printf("FIXME: remove old non finf icon fill code\n");
+        ERR("FIXME: remove old non finf icon fill code");
         /* FIXME: this should go away... get this from the fm slave proc above */
         lnk = ecore_file_readlink(buf);
         if (stat(buf, &(ic->info.statinfo)) == -1)

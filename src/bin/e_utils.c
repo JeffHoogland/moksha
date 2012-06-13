@@ -1257,7 +1257,7 @@ e_util_image_import(const char *image_path, const char *edje_path, const char *e
    if (evas_object_image_load_error_get(img) != EVAS_LOAD_ERROR_NONE)
      {
         ecore_evas_free(ee);
-	printf("Error loading image '%s'\n", image_path);
+	ERR("Error loading image '%s'", image_path);
 	return NULL;
      }
    evas_object_image_size_get(img, &w, &h);
@@ -1272,14 +1272,14 @@ e_util_image_import(const char *image_path, const char *edje_path, const char *e
    fd = mkstemp(tmpn);
    if (fd < 0)
      {
-	printf("Error Creating tmp file: %s\n", strerror(errno));
+	ERR("Error Creating tmp file: %s", strerror(errno));
 	return NULL;
      }
 
    f = fdopen(fd, "wb");
    if (!f)
      {
-	printf("Cannot open %s for writing\n", tmpn);
+	ERR("Cannot open %s for writing", tmpn);
 	close(fd);
 	return NULL;
      }

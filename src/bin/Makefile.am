@@ -109,6 +109,7 @@ e_ipc_codec.h \
 e_ipc.h \
 e_layout.h \
 e_livethumb.h \
+e_log.h \
 e_manager.h \
 e_maximize.h \
 e_menu.h \
@@ -258,6 +259,7 @@ e_ipc.c \
 e_ipc_codec.c \
 e_layout.c \
 e_livethumb.c \
+e_log.c \
 e_manager.c \
 e_maximize.c \
 e_menu.c \
@@ -344,6 +346,7 @@ e_xsettings.c \
 e_zone.c \
 $(ENLIGHTENMENTHEADERS)
 
+enlightenment_CPPFLAGS = -DE_LOGGING=1
 enlightenment_SOURCES = \
 e_main.c \
 $(enlightenment_src)

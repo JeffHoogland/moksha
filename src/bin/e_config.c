@@ -1031,8 +1031,7 @@ e_config_load(void)
      }
    if (!e_config)
      {
-        printf("EEEK! no config of any sort! abort abort abort!\n");
-        fprintf(stderr, "EEEK! no config of any sort! abort abort abort!\n");
+        ERR("EEEK! no config of any sort! abort abort abort!");
         e_error_message_show("Enlightenment was started without any configuration\n"
                              "files available for the given profile (normally\n"
                              "default or the last profile used or provided on the\n"
@@ -1747,9 +1746,7 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
                }
 	     ret = ecore_file_mv(buf2, buf);
 	     if (!ret)
-	       {
-		  printf("*** Error saving config. ***\n");
-	       }
+		      ERR("*** Error saving config. ***");
 	  }
 	ecore_file_unlink(buf2);
      }

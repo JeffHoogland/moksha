@@ -568,12 +568,12 @@ e_border_new(E_Container   *con,
                    }
                  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT)
                    {
-                      printf("ECORE_X_ATOM_NET_WM_STRUT\n");
+                      DBG("ECORE_X_ATOM_NET_WM_STRUT");
                       bd->client.netwm.fetch.strut = 1;
                    }
                  else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
                    {
-                      printf("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL\n");
+                      DBG("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL");
                       bd->client.netwm.fetch.strut = 1;
                    }
                  else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
@@ -681,12 +681,21 @@ e_border_new(E_Container   *con,
    bd2 = eina_hash_find(borders_hash, e_util_winid_str_get(bd->client.win));
    if (bd2)
      {
+#ifdef E_LOGGING
+        WRN("EEEEK! 2 borders with same client window id in them! very bad!\n"
+            "optimisations failing due to bizarre client behavior. will\n"
+            "work around.\n"
+            "bd=%p, bd->references=%i, bd->deleted=%i, bd->client.win=%x",
+               bd2, bd2->e_obj_inherit.references, bd2->e_obj_inherit.deleted,
+               bd2->client.win);
+#else
         printf("EEEEK! 2 borders with same client window id in them! very bad!\n");
         printf("optimisations failing due to bizarre client behavior. will\n");
         printf("work around.\n");
         printf("bd=%p, bd->references=%i, bd->deleted=%i, bd->client.win=%x\n",
                bd2, bd2->e_obj_inherit.references, bd2->e_obj_inherit.deleted,
                bd2->client.win);
+#endif
         eina_hash_del(borders_hash, e_util_winid_str_get(bd->client.win), bd2);
         eina_hash_del(borders_hash, e_util_winid_str_get(bd2->bg_win), bd2);
         eina_hash_del(borders_hash, e_util_winid_str_get(bd2->win), bd2);
@@ -2624,7 +2633,7 @@ e_border_unmaximize(E_Border  *bd,
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
    if (!(max & E_MAXIMIZE_DIRECTION))
      {
-        printf("BUG: Unmaximize call without direction!\n");
+        CRI("BUG: Unmaximize call without direction!");
         return;
      }
 
@@ -4707,7 +4716,7 @@ _e_border_print(E_Border   *bd,
 {
    if (!bd) return;
 
-   printf("*Window Info*"
+   DBG("*Window Info*"
           "\tPointer: %p\n"
           "\tName: %s\n"
           "\tTitle: %s\n"
@@ -5498,14 +5507,14 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
       t = time(NULL);
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
-      printf("FF ->IN %i 0x%x %s md=%s dt=%s\n",
+      DBG("FF ->IN %i 0x%x %s md=%s dt=%s",
              e->time,
              e->win,
              ct,
              modes[e->mode],
              details[e->detail]);
 
-      printf("%s cb focus in %d %d\n",
+      DBG("%s cb focus in %d %d",
              e_border_name_get(bd),
              bd->client.icccm.accepts_focus,
              bd->client.icccm.take_focus);
@@ -5566,14 +5575,14 @@ _e_border_cb_window_focus_out(void *data  __UNUSED__,
       t = time(NULL);
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
-      printf("FF <-OUT %i 0x%x %s md=%s dt=%s\n",
+      DBG("FF <-OUT %i 0x%x %s md=%s dt=%s",
              e->time,
              e->win,
              ct,
              modes[e->mode],
              details[e->detail]);
 
-      printf("%s cb focus out %d %d\n",
+      DBG("%s cb focus out %d %d",
              e_border_name_get(bd),
              bd->client.icccm.accepts_focus,
              bd->client.icccm.take_focus);
@@ -5969,7 +5978,7 @@ _e_border_cb_mouse_in(void    *data,
       t = time(NULL);
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
-      printf("@@ ->IN 0x%x 0x%x %s md=%s dt=%s\n",
+      DBG("@@ ->IN 0x%x 0x%x %s md=%s dt=%s",
              ev->win, ev->event_win,
              ct,
              modes[ev->mode],
@@ -6034,7 +6043,7 @@ _e_border_cb_mouse_out(void    *data,
       t = time(NULL);
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
-      printf("@@ <-OUT 0x%x 0x%x %s md=%s dt=%s\n",
+      DBG("@@ <-OUT 0x%x 0x%x %s md=%s dt=%s",
              ev->win, ev->event_win,
              ct,
              modes[ev->mode],

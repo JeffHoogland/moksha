@@ -21,7 +21,17 @@ e_prefix_determine(char *argv0)
    
    _prefix_path_data = eina_prefix_data_get(pfx);
    _prefix_path_data_len= strlen(_prefix_path_data);
-
+#ifdef E_LOGGING
+   INF("=================================");
+   INF("Enlightenment relocation handling");
+   INF("=================================");
+   INF("PREFIX:  %s", eina_prefix_get(pfx));
+   INF("BINDIR:  %s", eina_prefix_bin_get(pfx));
+   INF("LIBDIR:  %s", eina_prefix_lib_get(pfx));
+   INF("DATADIR: %s", eina_prefix_data_get(pfx));
+   INF("LOCALE:  %s", eina_prefix_locale_get(pfx));
+   INF("=================================");
+#else
    printf("=================================\n");
    printf("Enlightenment relocation handling\n");
    printf("=================================\n");
@@ -31,6 +41,7 @@ e_prefix_determine(char *argv0)
    printf("DATADIR: %s\n", eina_prefix_data_get(pfx));
    printf("LOCALE:  %s\n", eina_prefix_locale_get(pfx));
    printf("=================================\n");
+#endif
    e_util_env_set("E_PREFIX", eina_prefix_get(pfx));
    e_util_env_set("E_BIN_DIR", eina_prefix_bin_get(pfx));
    e_util_env_set("E_LIB_DIR", eina_prefix_lib_get(pfx));

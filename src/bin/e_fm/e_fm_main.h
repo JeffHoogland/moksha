@@ -2,7 +2,11 @@
 #define E_FM_MAIN_H
 
 #include <Ecore_Ipc.h>
-
+#undef DBG
+#undef INF
+#undef WRN
+#undef ERR
+#undef CRI
 #define DBG(...)            EINA_LOG_DOM_DBG(efm_log_dom, __VA_ARGS__)
 #define INF(...)            EINA_LOG_DOM_INFO(efm_log_dom, __VA_ARGS__)
 #define WRN(...)            EINA_LOG_DOM_WARN(efm_log_dom, __VA_ARGS__)

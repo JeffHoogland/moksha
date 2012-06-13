@@ -80,7 +80,7 @@ e_xkb_update(void)
              eina_strbuf_append(buf, "'");
           }
      }
-   printf("SET XKB RUN:\n %s\n", eina_strbuf_string_get(buf));
+   INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
    ecore_exe_run(eina_strbuf_string_get(buf), NULL);
    eina_strbuf_free(buf);
 }

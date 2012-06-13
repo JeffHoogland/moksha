@@ -143,3 +143,4 @@
 #include "e_xsettings.h"
 #include "e_update.h"
 #include "e_xkb.h"
+#include "e_log.h"

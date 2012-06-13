@@ -7,7 +7,7 @@
 
 #define TS_DO
 #ifdef TS_DO
-#define TS(x) \
+# define TS(x) \
    { \
       t1 = ecore_time_unix_get(); \
       printf("ESTART: %1.5f [%1.5f] - %s\n", t1 - t0, t1 - t2, x); \
@@ -106,6 +106,8 @@ static Ecore_Idle_Enterer *_idle_before = NULL;
 static Ecore_Idle_Enterer *_idle_after = NULL;
 static Ecore_Idle_Enterer *_idle_flush = NULL;
 
+
+
 /* external variables */
 EAPI Eina_Bool e_precache_end = EINA_FALSE;
 EAPI Eina_Bool x_fatal = EINA_FALSE;
@@ -191,8 +193,23 @@ main(int argc, char **argv)
         e_error_message_show(_("Enlightenment cannot initialize Eina!\n"));
         _e_main_shutdown(-1);
      }
-   TS("Eina Init Done");
    _e_main_shutdown_push(eina_shutdown);
+   if (!e_log_init())
+     {
+        e_error_message_show(_("Enlightenment could not create a logging domain!"));
+        _e_main_shutdown(-1);
+     }
+#ifdef TS_DO
+#undef TS
+# define TS(x) \
+   { \
+      t1 = ecore_time_unix_get(); \
+      INF("ESTART: %1.5f [%1.5f] - %s", t1 - t0, t1 - t2, x); \
+      t2 = t1; \
+   }
+#endif
+   TS("Eina Init Done");
+   _e_main_shutdown_push(e_log_shutdown);
 
    TS("Determine Prefix");
    if (!e_prefix_determine(argv[0])) 
@@ -976,7 +993,7 @@ main(int argc, char **argv)
    if (!setjmp(x_fatal_buff))
      ecore_main_loop_begin();
    else
-     printf("FATAL: X Died. Connection gone. Abbreviated Shutdown\n");
+     CRI("FATAL: X Died. Connection gone. Abbreviated Shutdown\n");
 
    inloop = EINA_FALSE;
    stopping = EINA_TRUE;
@@ -1028,7 +1045,7 @@ _e_main_shutdown(int errcode)
 {
    int i = 0;
 
-   printf("E17: Begin Shutdown Procedure!\n");
+   INF("E17: Begin Shutdown Procedure!\n");
 
    if (_idle_before) ecore_idle_enterer_del(_idle_before);
    _idle_before = NULL;
