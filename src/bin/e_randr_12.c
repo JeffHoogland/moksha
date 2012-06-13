@@ -110,6 +110,7 @@ _structs_init(void)
         e_randr_screen_info.rrvd_info.randr_info_12->modes = eina_list_append(e_randr_screen_info.rrvd_info.randr_info_12->modes, modes[nmodes]);
      }
 
+   free(modes);
    _outputs_init();
    _crtcs_init();
 
