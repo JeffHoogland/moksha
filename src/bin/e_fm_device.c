@@ -238,7 +238,7 @@ e_fm2_device_volume_add(E_Volume *v)
    if ((v->efm_mode == EFM_MODE_USING_HAL_MOUNT) &&
        ((!v->mount_point) || (!v->mount_point[0])))
      {
-        if (v->mount_point) eina_stringshare_del(v->mount_point);
+        eina_stringshare_del(v->mount_point);
         v->mount_point = NULL;
         v->mount_point = e_fm2_device_volume_mountpoint_get(v);
         if ((!v->mount_point) || (!v->mount_point[0]))
@@ -504,10 +504,10 @@ e_fm2_device_mount(E_Volume *v,
 
    v->mounts = eina_list_prepend(v->mounts, m);
 
-//   printf("BEGIN MOUNT %p '%s'\n", m, v->mount_point);
 
    if (!v->mounted)
      {
+        //printf("BEGIN MOUNT %p '%s'\n", m, v->mount_point);
         v->auto_unmount = EINA_TRUE;
         _e_fm2_client_mount(v->udi, v->mount_point);
      }
@@ -549,7 +549,10 @@ e_fm2_device_unmount(E_Fm2_Mount *m)
    _e_fm2_device_mount_free(m);
 
    if (v->auto_unmount && v->mounted && !eina_list_count(v->mounts))
-     _e_fm2_client_unmount(v->udi);
+     {
+        //printf("BEGIN UNMOUNT %p '%s'\n", m, v->udi);
+        _e_fm2_client_unmount(v->udi);
+     }
 }
 
 EAPI void
@@ -573,12 +576,13 @@ _e_fm2_device_mount_ok(E_Fm2_Mount *m)
      m->mount_point = eina_stringshare_add(m->volume->mount_point);
    if (m->mount_ok)
      m->mount_ok(m->data);
-//   printf("MOUNT OK '%s'\n", m->mount_point);
+   //printf("MOUNT OK '%s'\n", m->mount_point);
 }
 
 static void
 _e_fm2_device_mount_fail(E_Fm2_Mount *m)
 {
+   //printf("MOUNT FAIL '%s'\n", m->mount_point);
    m->mounted = EINA_FALSE;
    if (m->mount_point)
      {
