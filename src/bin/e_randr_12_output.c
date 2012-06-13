@@ -93,6 +93,7 @@ E_Randr_Output_Info *
 _output_info_new(Ecore_X_Randr_Output output)
 {
    E_Randr_Output_Info *output_info = NULL;
+   char *str;
 
    EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, NULL);
 
@@ -113,7 +114,9 @@ _output_info_new(Ecore_X_Randr_Output output)
    output_info->compatibility_list = NULL;
    output_info->subpixel_order = Ecore_X_Randr_Unset;
 
-   output_info->name = eina_stringshare_add(ecore_x_randr_output_name_get(e_randr_screen_info.root, output_info->xid, &output_info->name_length));
+   str = ecore_x_randr_output_name_get(e_randr_screen_info.root, output_info->xid, &output_info->name_length);
+   output_info->name = eina_stringshare_add(str);
+   free(str);
    output_info->connection_status = ecore_x_randr_output_connection_status_get(e_randr_screen_info.root, output_info->xid);
 
    return output_info;
