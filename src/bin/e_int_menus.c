@@ -1276,7 +1276,6 @@ static void
 _e_int_menus_clients_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Border *bd;
-   Evas_Object *o;
 
    bd = data;
    E_OBJECT_CHECK(bd);
