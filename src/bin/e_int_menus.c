@@ -1280,9 +1280,7 @@ _e_int_menus_clients_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 
    bd = data;
    E_OBJECT_CHECK(bd);
-   o = e_icon_add(m->evas);
-   e_icon_object_set(o, e_border_icon_add(bd, m->evas));
-   mi->icon_object = o;
+   mi->icon_object = e_border_icon_add(bd, m->evas);
 }
 
 static void 
