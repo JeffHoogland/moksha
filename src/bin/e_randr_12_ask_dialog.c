@@ -68,7 +68,7 @@ static void e_randr_12_memorize_monitor_dialog_new(void)
 static void
 _e_randr_ask_memorize_monitor_cb(void *data, E_Dialog *dia)
 {
-   Eina_Bool memorize = (Eina_Bool)(int)data;
+   Eina_Bool memorize = (Eina_Bool)(intptr_t)data;
    const E_Randr_Configuration_Store_Modifier modifier = (
          E_RANDR_CONFIGURATION_STORE_RESOLUTIONS
          | E_RANDR_CONFIGURATION_STORE_ARRANGEMENT
