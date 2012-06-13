@@ -425,9 +425,13 @@ EAPI void
 e_icon_object_set(Evas_Object *obj, Evas_Object *o)
 {
    E_Smart_Data *sd;
+   const char *str;
 
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
+   str = evas_object_type_get(o);
+   if ((!str) || (strcmp(str, "edje") && strcmp(str, "image")))
+     printf(EINA_COLOR_RED"******************\ntrying to set an image object of type '%s'! this is not what you want!\n******************\n"EINA_COLOR_RESET, str);
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
