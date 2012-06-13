@@ -143,7 +143,10 @@ _outputs_init(void)
      {
         _output_refs_set(output);
         if (output->connection_status == ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
-          output->monitor = _monitor_info_new(output);
+          {
+             _monitor_info_free(output->monitor);
+             output->monitor = _monitor_info_new(output);
+          }
      }
 }
 
