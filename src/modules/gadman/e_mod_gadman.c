@@ -42,9 +42,15 @@ static void on_menu_add(void *data, E_Menu *m, E_Menu_Item *mi);
 static int _e_gadman_client_add (void *data __UNUSED__, const E_Gadcon_Client_Class *cc);
 static void _e_gadman_client_remove (void *data __UNUSED__, E_Gadcon_Client *gcc);
 
+static void _e_gadman_handlers_add(void);
+static void _e_gadman_handler_del(void);
+static Eina_Bool _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event);
+
 E_Gadcon_Client *current = NULL;
 Manager *Man = NULL;
 static E_Gadcon_Location *location = NULL;
+static Eina_List *_gadman_hdls = NULL;
 
 /* Implementation */
 void
@@ -90,6 +96,8 @@ gadman_init(E_Module *m)
 	     Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
 	  }
      }
+
+   _e_gadman_handlers_add();
 }
 
 void
@@ -98,6 +106,8 @@ gadman_shutdown(void)
    E_Gadcon *gc;
    unsigned int layer;
 
+   _e_gadman_handler_del();
+	
    e_gadcon_location_unregister(location);
    e_container_shape_change_callback_del(Man->container, on_shape_change, NULL);
 
@@ -878,10 +888,11 @@ _get_bind_text(const char* action)
 static void
 on_shape_change(void *data __UNUSED__, E_Container_Shape *es, E_Container_Shape_Change ch __UNUSED__)
 {
-   const Eina_List *l, *g;
+   const Eina_List *l, *g, *ll;
    E_Gadcon *gc;
    E_Config_Gadcon_Client *cf_gcc;
    E_Container  *con;
+   E_Gadcon_Client *gcc;
    unsigned int layer;
 
    con = e_container_shape_container_get(es);
@@ -895,12 +906,18 @@ on_shape_change(void *data __UNUSED__, E_Container_Shape *es, E_Container_Shape_
 
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
-	EINA_LIST_FOREACH(Man->gadcons[layer], g, gc)
-	  {
-	     e_gadcon_unpopulate(gc);
-	     EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
-	       gadman_gadget_place(cf_gcc, layer, gc->zone);
-	  }
+        EINA_LIST_FOREACH(Man->gadcons[layer], g, gc)
+          {
+             EINA_LIST_FOREACH(gc->clients, ll, gcc)
+               {
+                  Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc);
+                  if (gcc->gadcon->editing) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
+               }
+	  
+             e_gadcon_unpopulate(gc);
+             EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
+               gadman_gadget_place(cf_gcc, layer, gc->zone);
+          }
      }
 }
 
@@ -1370,3 +1387,102 @@ _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc)
 {
    gadman_gadget_del(gcc);
 }
+
+static void 
+_e_gadman_handlers_add(void) 
+{
+   _gadman_hdls = 
+     eina_list_append(_gadman_hdls, 
+                      ecore_event_handler_add(E_EVENT_ZONE_ADD, 
+                                              _e_gadman_cb_zone_add, 
+                                              NULL));
+   _gadman_hdls = 
+     eina_list_append(_gadman_hdls, 
+                      ecore_event_handler_add(E_EVENT_ZONE_DEL, 
+                                              _e_gadman_cb_zone_del, 
+                                              NULL));
+}
+
+static void
+_e_gadman_handler_del(void)
+{
+   Ecore_Event_Handler *hdl;
+
+   /* remove the ecore event handlers */
+   EINA_LIST_FREE(_gadman_hdls, hdl)
+     ecore_event_handler_del(hdl);
+}
+
+static Eina_Bool
+_e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event) 
+{
+   E_Event_Zone_Add *ev;
+   E_Zone* zone;
+   E_Gadcon *gc;
+   Eina_List *l;
+   unsigned int layer;
+
+   ev = event;
+   zone = ev->zone;
+
+   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+     {
+        EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
+          if (gc->zone == zone) return ECORE_CALLBACK_PASS_ON;
+     }
+
+   // Not exist, then add 
+   /* iterating through zones - and making gadmans on each */
+   const char *layer_name[] = {"gadman", "gadman_top"};
+
+   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+     {
+        E_Gadcon *gc;
+
+        gc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
+        Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
+     }
+
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event) 
+{
+   E_Event_Zone_Del *ev;
+   E_Zone* zone;
+   Eina_List *l, *ll;
+   E_Gadcon *gc;
+   E_Gadcon_Client *gcc;
+   unsigned int layer;
+
+   ev = event;
+   zone = ev->zone;
+
+   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+     {
+        EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
+          {
+             if (gc->zone != zone) continue;
+
+             Man->gadcons[layer] = eina_list_remove(Man->gadcons[layer], gc);
+
+             EINA_LIST_FOREACH(gc->clients, ll, gcc)
+               {
+                  Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc);
+                  if (gcc->gadcon->editing) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
+               }
+
+             e_gadcon_unpopulate(gc);
+             e_gadcon_custom_del(gc);
+
+             eina_stringshare_del(gc->name);
+             if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
+
+             E_FREE(gc);
+          }
+     }
+
+   return ECORE_CALLBACK_PASS_ON;
+}
+
