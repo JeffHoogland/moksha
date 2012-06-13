@@ -14,8 +14,6 @@
 
 #define OFFSET_ADD(n) ((n + 4 - 1) & (~(4 - 1)))
 
-#define DBG printf
-
 typedef struct _Settings_Manger Settings_Manager;
 typedef struct _Setting Setting;
 
@@ -176,7 +174,7 @@ _e_xsettings_string_set(const char *name, const char *value)
    if (!value)
      {
         if (!s) return;
-        DBG("remove %s\n", name);
+        printf("remove %s\n", name);
         eina_stringshare_del(name);
         eina_stringshare_del(s->name);
         eina_stringshare_del(s->s.value);
@@ -186,13 +184,13 @@ _e_xsettings_string_set(const char *name, const char *value)
      }
    if (s)
      {
-        DBG("update %s %s\n", name, value);
+        printf("update %s %s\n", name, value);
         eina_stringshare_del(name);
         eina_stringshare_replace(&s->s.value, value);
      }
    else
      {
-        DBG("add %s %s\n", name, value);
+        printf("add %s %s\n", name, value);
         s = E_NEW(Setting, 1);
         s->type = SETTING_TYPE_STRING;
         s->name = name;
@@ -225,7 +223,7 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
    if (!set)
      {
         if (!s) return;
-        DBG("remove %s\n", name);
+        printf("remove %s\n", name);
         eina_stringshare_del(name);
         eina_stringshare_del(s->name);
         settings = eina_list_remove(settings, s);
@@ -234,13 +232,13 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
      }
    if (s)
      {
-        DBG("update %s %d\n", name, value);
+        printf("update %s %d\n", name, value);
         eina_stringshare_del(name);
         s->i.value = value;
      }
    else
      {
-        DBG("add %s %d\n", name, value);
+        printf("add %s %d\n", name, value);
         s = E_NEW(Setting, 1);
         s->type = SETTING_TYPE_INT;
         s->name = name;
