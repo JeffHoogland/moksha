@@ -183,69 +183,68 @@ e_intl_language_set(const char *lang)
         fprintf(stderr, "The locale '%s' cannot be found on your "
                         "system. Please install this locale or try "
                         "something else.", _e_intl_language_alias);
+        return;
      }
-   else
+   /* Only set env vars is a non NULL locale was passed */
+   if (set_envars)
      {
-        /* Only set env vars is a non NULL locale was passed */
-        if (set_envars)
+        e_util_env_set("LANG", lang);
+        /* Unset LANGUAGE, apparently causes issues if set */
+        e_util_env_set("LANGUAGE", NULL);
+        efreet_dirs_reset();
+     }
+
+   setlocale(LC_ALL, lang);
+   if (_e_intl_language)
+     {
+        char *locale_path;
+
+        locale_path = _e_intl_language_path_find(_e_intl_language_alias);
+        if (!locale_path)
           {
-             e_util_env_set("LANG", lang);
-             /* Unset LANGUAGE, apparently causes issues if set */
-             e_util_env_set("LANGUAGE", NULL);
+             E_Locale_Parts *locale_parts;
+
+             locale_parts = e_intl_locale_parts_get(_e_intl_language_alias);
+
+             /* If locale is C or some form of en don't report an error */
+             if ((!locale_parts) &&
+                 (strcmp(_e_intl_language_alias, "C")))
+               {
+                  fprintf(stderr,
+                          "An error occurred setting your locale. \n\n"
+
+                          "The locale you have chosen '%s' appears to \n"
+                          "be an alias, however, it can not be resloved.\n"
+                          "Please make sure you have a 'locale.alias' \n"
+                          "file in your 'messages' path which can resolve\n"
+                          "this alias.\n\n"
+
+                          "Enlightenment will not be translated.\n",
+                          _e_intl_language_alias);
+               }
+             else if ((locale_parts) && (locale_parts->lang) &&
+                      (strcmp(locale_parts->lang, "en")))
+               {
+                  fprintf(stderr,
+                          "An error occurred setting your locale. \n\n"
+
+                          "The translation files for the locale you \n"
+                          "have chosen (%s) cannot be found in your \n"
+                          "'messages' path. \n\n"
+
+                          "Enlightenment will not be translated.\n",
+                          _e_intl_language_alias);
+               }
+             e_intl_locale_parts_free(locale_parts);
           }
-
-        setlocale(LC_ALL, lang);
-        if (_e_intl_language)
+        else
           {
-             char *locale_path;
-
-             locale_path = _e_intl_language_path_find(_e_intl_language_alias);
-             if (!locale_path)
-               {
-                  E_Locale_Parts *locale_parts;
-
-                  locale_parts = e_intl_locale_parts_get(_e_intl_language_alias);
-
-                  /* If locale is C or some form of en don't report an error */
-                  if ((!locale_parts) &&
-                      (strcmp(_e_intl_language_alias, "C")))
-                    {
-                       fprintf(stderr,
-                               "An error occurred setting your locale. \n\n"
-
-                               "The locale you have chosen '%s' appears to \n"
-                               "be an alias, however, it can not be resloved.\n"
-                               "Please make sure you have a 'locale.alias' \n"
-                               "file in your 'messages' path which can resolve\n"
-                               "this alias.\n\n"
-
-                               "Enlightenment will not be translated.\n",
-                               _e_intl_language_alias);
-                    }
-                  else if ((locale_parts) && (locale_parts->lang) &&
-                           (strcmp(locale_parts->lang, "en")))
-                    {
-                       fprintf(stderr,
-                               "An error occurred setting your locale. \n\n"
-
-                               "The translation files for the locale you \n"
-                               "have chosen (%s) cannot be found in your \n"
-                               "'messages' path. \n\n"
-
-                               "Enlightenment will not be translated.\n",
-                               _e_intl_language_alias);
-                    }
-                  e_intl_locale_parts_free(locale_parts);
-               }
-             else
-               {
 #ifdef HAVE_GETTEXT
-                  bindtextdomain(PACKAGE, locale_path);
-                  textdomain(PACKAGE);
-                  bind_textdomain_codeset(PACKAGE, "UTF-8");
+             bindtextdomain(PACKAGE, locale_path);
+             textdomain(PACKAGE);
+             bind_textdomain_codeset(PACKAGE, "UTF-8");
 #endif
-                  free(locale_path);
-               }
+             free(locale_path);
           }
      }
 }
