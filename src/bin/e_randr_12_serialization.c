@@ -429,7 +429,7 @@ _12_try_restore_configuration(void)
              INF("E_RANDR: \tSerialized mode is now known under the name %s.", mi->name);
              mode = mi->xid;
           }
-        else
+        else if (mi) /* FIXME: this is impossible, so whoever wrote it probably meant something else */
           {
              // The serialized mode is no longer available
              mi->name = malloc(MODE_STR_LENGTH_MAX);
