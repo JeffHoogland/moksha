@@ -1436,7 +1436,7 @@ msgstr "응용프로그램 속성"
 
 #: src/bin/e_fm.c:8298 src/bin/e_fm_prop.c:105
 msgid "File Properties"
-msgstr "화일 속성"
+msgstr "파일 속성"
 
 #: src/bin/e_fm.c:8535 src/bin/e_fm.c:8590
 #, fuzzy
@@ -1601,7 +1601,7 @@ msgstr "최근 수정:"
 
 #: src/bin/e_fm_prop.c:353
 msgid "File Type:"
-msgstr "화일 형태:"
+msgstr "파일 형태:"
 
 #: src/bin/e_fm_prop.c:360
 msgid "Permissions"
