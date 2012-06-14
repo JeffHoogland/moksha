@@ -2441,9 +2441,20 @@ _e_fwin_op_registry_listener_cb(void                          *data,
      edje_object_signal_emit(o, "e,action,set,normal", "e");
 }
 
+static void
+_e_fwin_op_registry_free_check(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   Ecore_Timer *t;
+
+   t = evas_object_data_get(obj, "_e_fwin_op_registry_thingy");
+   if (!t) return;
+   ecore_timer_del(t);
+}
+
 static Eina_Bool
 _e_fwin_op_registry_free_data_delayed(void *data)
 {
+   evas_object_event_callback_del_full(data, EVAS_CALLBACK_FREE, _e_fwin_op_registry_free_check, data);
    evas_object_del((Evas_Object *)data);
    return ECORE_CALLBACK_CANCEL;
 }
@@ -2451,7 +2462,10 @@ _e_fwin_op_registry_free_data_delayed(void *data)
 static void
 _e_fwin_op_registry_free_data(void *data)
 {
-   ecore_timer_add(5.0, _e_fwin_op_registry_free_data_delayed, data);
+   Ecore_Timer *t;
+   t = ecore_timer_add(5.0, _e_fwin_op_registry_free_data_delayed, data);
+   evas_object_data_set(data, "_e_fwin_op_registry_thingy", t);
+   evas_object_event_callback_add(data, EVAS_CALLBACK_FREE, _e_fwin_op_registry_free_check, data);
 }
 
 static Eina_Bool
