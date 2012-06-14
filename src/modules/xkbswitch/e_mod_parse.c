@@ -209,7 +209,7 @@ parse_rules(void)
              while (p[0] == ' ') ++p;
 
              /* skip "grp" options for switching kbd layouts */
-             if (!(!strncmp(name, "grp", 3)))
+             if (strncmp(name, "grp", 3))
                {
                   if (!strchr(name, ':'))
                     {
@@ -228,7 +228,7 @@ parse_rules(void)
 
                        optgroups = eina_list_append(optgroups, group);
                     }
-                  else
+                  else if (group)
                     {
                        option = E_NEW(E_XKB_Option, 1);
                        option->name = eina_stringshare_add(name);
