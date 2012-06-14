@@ -384,14 +384,14 @@ _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
 
    EINA_SAFETY_ON_FALSE_RETURN_VAL((output_info = _12_screen_info_output_info_get(oce->output)), ECORE_CALLBACK_RENEW);
 
-   fprintf(stderr, "E_RANDR: Output event: \n"
+   DBG("E_RANDR: Output event: \n"
          "\t\t: relative to win: %d\n"
          "\t\t: output (xid): %d\n"
          "\t\t: used by crtc (xid): %d\n"
          "\t\t: mode: %d\n"
          "\t\t: orientation: %d\n"
          "\t\t: connection state: %s\n"
-         "\t\t: subpixel_order: %d\n",
+         "\t\t: subpixel_order: %d",
          oce->win,
          oce->output,
          oce->crtc,
@@ -441,13 +441,13 @@ _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
           {
              //New device connected!
              output_info->monitor = _monitor_info_new(output_info);
-             fprintf(stderr, "E_RANDR: Output %d was newly connected.\n", output_info->xid);
+             INF("E_RANDR: Output %d was newly connected.", output_info->xid);
 
              //only try to enable the monitor if there is no serialized setup
              if(!_12_try_restore_configuration())
                {
                   policy_success = e_randr_12_try_enable_output(output_info, output_info->policy, EINA_FALSE);    //maybe give a success message?
-                  fprintf(stderr, "E_RANDR: Policy \"%s\" was enforced %ssuccesfully.\n", _POLICIES_STRINGS[output_info->policy - 1], (policy_success ? "" : "un"));
+                  INF("E_RANDR: Policy \"%s\" was enforced %ssuccesfully.", _POLICIES_STRINGS[output_info->policy - 1], (policy_success ? "" : "un"));
                }
           }
         else
@@ -493,7 +493,7 @@ _crtc_change_event_cb(void *data __UNUSED__, int type, void *ev)
    int                           width;
    int                           height;
    */
-   fprintf(stderr, "E_RANDR: CRTC event: \n"
+   DBG("E_RANDR: CRTC event: \n"
          "\t\t: relative to win: %d\n"
          "\t\t: crtc (xid): %d\n"
          "\t\t: mode (xid): %d\n"
@@ -501,7 +501,7 @@ _crtc_change_event_cb(void *data __UNUSED__, int type, void *ev)
          "\t\t: x: %d\n"
          "\t\t: y: %d\n"
          "\t\t: width: %d\n"
-         "\t\t: height: %d\n",
+         "\t\t: height: %d",
          cce->win,
          cce->crtc,
          cce->mode,
@@ -699,7 +699,7 @@ e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Out
                           if ((mode_info = eina_list_nth(common_modes, 0)))
                             {
                                eina_list_free(common_modes);
-                               fprintf(stderr, "Will try to set mode: %dx%d for primary and clone.\n", mode_info->width, mode_info->height);
+                               INF("Will try to set mode: %dx%d for primary and clone.", mode_info->width, mode_info->height);
                                ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, primary_output->crtc->xid, ((Ecore_X_Randr_Output *)Ecore_X_Randr_Unset), Ecore_X_Randr_Unset, mode_info->xid);
                                ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid);
                                ret &= ecore_x_randr_crtc_pos_relative_set(e_randr_screen_info.root, usable_crtc->xid, primary_output->crtc->xid, ECORE_X_RANDR_OUTPUT_POLICY_CLONE, e_randr_screen_info.rrvd_info.randr_info_12->alignment);
@@ -710,7 +710,7 @@ e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Out
              }
         }
          else
-           fprintf(stderr, "E_RANDR: Failed to clone, because of missing or disabled primary output!\n");
+           ERR("E_RANDR: Failed to clone, because of missing or disabled primary output!");
          /*
           * 4. FAIL
           */
@@ -720,7 +720,7 @@ e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Out
          //enable and position according to used policies
          if (!(mode_info = ((Ecore_X_Randr_Mode_Info *)eina_list_data_get(output_info->monitor->preferred_modes))))
            {
-              fprintf(stderr, "E_RANDR: Could not enable output(%d), as it has no preferred modes (and there for none at all)!\n", output_info->xid);
+              ERR("E_RANDR: Could not enable output(%d), as it has no preferred modes (and there for none at all)!", output_info->xid);
               ret = EINA_FALSE;
               break;
            }
@@ -729,7 +729,7 @@ e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Out
          //only output attached, work done.
          if (!(crtc_rel = _crtc_according_to_policy_get(usable_crtc, policy)))
            {
-              fprintf(stderr, "E_RANDR: CRTC %d enabled. No other CRTC had to be moved.\n", usable_crtc->xid);
+              INF("E_RANDR: CRTC %d enabled. No other CRTC had to be moved.", usable_crtc->xid);
               ret &= ecore_x_randr_crtc_mode_set(e_randr_screen_info.root, usable_crtc->xid, &output_info->xid, 1, mode_info->xid);
               return ret;
            }
@@ -768,7 +768,7 @@ e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Out
               usable_crtc->geometry.h = mode_info->height;
               //WORKAROUND END
 
-              fprintf(stderr, "E_RANDR: Moved CRTC %d has geometry (x,y,wxh): %d, %d, %dx%d.\n", usable_crtc->xid, usable_crtc->geometry.x, usable_crtc->geometry.y, usable_crtc->geometry.w, usable_crtc->geometry.h);
+              INF("E_RANDR: Moved CRTC %d has geometry (x,y,wxh): %d, %d, %dx%d.", usable_crtc->xid, usable_crtc->geometry.x, usable_crtc->geometry.y, usable_crtc->geometry.w, usable_crtc->geometry.h);
               //following is policy dependend.
               switch (policy)
                 {
@@ -783,7 +783,7 @@ e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Out
                                1,
                                dx,
                                dy);
-                         fprintf(stderr, "E_RANDR: Moving all CRTCs but %d, by %dx%d delta.\n", usable_crtc->xid, dx, dy);
+                         INF("E_RANDR: Moving all CRTCs but %d, by %dx%d delta.", usable_crtc->xid, dx, dy);
                       }
                     break;
 
@@ -798,7 +798,7 @@ e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Out
                                1,
                                dx,
                                dy);
-                         fprintf(stderr, "E_RANDR: Moving all CRTCs but %d, by %dx%d delta.\n", usable_crtc->xid, dx, dy);
+                         INF("E_RANDR: Moving all CRTCs but %d, by %dx%d delta.", usable_crtc->xid, dx, dy);
                       }
                     break;
 

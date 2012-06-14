@@ -21,7 +21,7 @@ _crtc_outputs_refs_set(E_Randr_Crtc_Info *crtc_info)
         output_info = _12_screen_info_output_info_get(outputs[noutputs]);
         if (!output_info)
           {
-             fprintf(stderr, "E_RANDR: Could not find output struct for output %d.\n", outputs[noutputs]);
+             ERR("E_RANDR: Could not find output struct for output %d.", outputs[noutputs]);
              continue;
           }
         crtc_info->outputs = eina_list_append(crtc_info->outputs, output_info);
@@ -57,7 +57,7 @@ _crtc_refs_set(E_Randr_Crtc_Info *crtc_info)
         output_info = _12_screen_info_output_info_get(poutputs[npoutputs]);
         if (!output_info)
           {
-             fprintf(stderr, "E_RANDR: Could not find output struct for output %d.\n", poutputs[npoutputs]);
+             ERR("E_RANDR: Could not find output struct for output %d.", poutputs[npoutputs]);
              continue;
           }
         crtc_info->possible_outputs = eina_list_append(crtc_info->possible_outputs, output_info);

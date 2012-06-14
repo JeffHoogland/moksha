@@ -230,7 +230,7 @@ _serialized_crtc_new(E_Randr_Crtc_Info *crtc_info)
         if (!(so = _serialized_output_new(output_info)))
           continue;
         sc->outputs = eina_list_append(sc->outputs, so);
-        fprintf(stderr, "E_RANDR:\t Serialized output %s.\n", so->name);
+        INF("E_RANDR:\t Serialized output %s.", so->name);
      }
    sc->pos.x = crtc_info->geometry.x;
    sc->pos.y = crtc_info->geometry.y;
@@ -266,7 +266,7 @@ _12_serialized_setup_new(void)
         if (!sc)
           continue;
         ss->crtcs = eina_list_append(ss->crtcs, sc);
-        fprintf(stderr, "E_RANDR: Serialized CRTC %d (index %d) in mode %s.\n", ci->xid, sc->index, (sc->mode_info ? sc->mode_info->name : "(disabled)"));
+        INF("E_RANDR: Serialized CRTC %d (index %d) in mode %s.", ci->xid, sc->index, (sc->mode_info ? sc->mode_info->name : "(disabled)"));
      }
 
    /*
@@ -352,7 +352,7 @@ _12_serialized_setup_update(Eina_List *setups_12)
          */
         if ((ss_12 = _matching_serialized_setup_get(setups_12)))
           {
-             fprintf(stderr, "E_RANDR: Found stored configuration that matches current setup. It was created at %f. Freeing it...\n", ss_12->timestamp);
+             INF("E_RANDR: Found stored configuration that matches current setup. It was created at %f. Freeing it...", ss_12->timestamp);
              _12_serialized_setup_free(ss_12);
              setups_12 = eina_list_remove(setups_12, ss_12);
           }
@@ -382,7 +382,7 @@ _12_policies_restore(void)
              if (!strncmp(sop->name, output->name, output->name_length))
                {
                   output->policy = sop->policy;
-                  fprintf(stderr, "E_RANDR: Policy \"%s\" for output \"%s\" restored.\n", _POLICIES_STRINGS[sop->policy - 1], output->name);
+                  INF("E_RANDR: Policy \"%s\" for output \"%s\" restored.", _POLICIES_STRINGS[sop->policy - 1], output->name);
                }
           }
      }
@@ -407,26 +407,26 @@ _12_try_restore_configuration(void)
    if (!(ss_12 = _matching_serialized_setup_get(e_config->randr_serialized_setup->serialized_setups_12)))
      return EINA_FALSE;
 
-   fprintf(stderr, "E_RANDR: Found matching serialized setup.\n");
+   INF("E_RANDR: Found matching serialized setup.");
    EINA_LIST_FOREACH(ss_12->crtcs, iter, sc)
      {
         ci = _find_matching_crtc(sc);
         if (!ci)
           {
-             fprintf(stderr, "E_RANDR: Cannot find a matching CRTC for serialized CRTC index %d.\n", sc->index);
+             ERR("E_RANDR: Cannot find a matching CRTC for serialized CRTC index %d.", sc->index);
              return EINA_FALSE;
           }
         outputs_list = _find_matching_outputs(sc->outputs);
         outputs_array = _outputs_to_array(outputs_list);
-        fprintf(stderr, "E_RANDR: \tSerialized mode ");
+        
         if (!sc->mode_info)
           {
-             fprintf(stderr, "was disabled.\n");
+             INF("E_RANDR: \tSerialized mode was disabled.");
              mode = Ecore_X_Randr_None;
           }
         else if ((mi = _find_matching_mode_info(sc->mode_info)))
           {
-             fprintf(stderr, "is now known under the name %s.\n", mi->name);
+             INF("E_RANDR: \tSerialized mode is now known under the name %s.", mi->name);
              mode = mi->xid;
           }
         else
@@ -445,15 +445,14 @@ _12_try_restore_configuration(void)
                }
              EINA_LIST_FOREACH(outputs_list, outputs_iter, output_info)
                 ecore_x_randr_output_mode_add(output_info->xid, mode);
-             fprintf(stderr, "was now added to the server manually using the name %s.\n", mi->name);
+             INF("E_RANDR: \tSerialized mode was added to the server manually using the name %s.", mi->name);
           }
 
         // DEBUG
-        fprintf(stderr, "E_RANDR: \tRestoring CRTC %d (index %d) in mode %s.\n", ci->xid, sc->index, (mode == Ecore_X_Randr_None) ? "(disabled)" : mi->name);
-        fprintf(stderr, "E_RANDR: \t\tUsed outputs:");
+        DBG("E_RANDR: \tRestoring CRTC %d (index %d) in mode %s.", ci->xid, sc->index, (mode == Ecore_X_Randr_None) ? "(disabled)" : mi->name);
+        DBG("E_RANDR: \t\tUsed outputs:");
         EINA_LIST_FOREACH(outputs_list, outputs_iter, output_info)
-            fprintf(stderr, " %s", output_info->name);
-        fprintf(stderr, ".\n");
+            DBG("\t\t%s", output_info->name);
         // DEBUG END
 
         ret &= ecore_x_randr_crtc_settings_set(e_randr_screen_info.root, ci->xid, outputs_array, eina_list_count(outputs_list), sc->pos.x, sc->pos.y, mode, sc->orientation);
@@ -511,7 +510,7 @@ _find_matching_crtc(E_Randr_Serialized_Crtc *sc)
    EINA_SAFETY_ON_NULL_RETURN_VAL(sc, NULL);
    EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, NULL);
 
-   fprintf(stderr, "E_RANDR: Setup restore.. Runtime system knows about %d CRTCs. Requested CRTC has index %d\n", eina_list_count(e_randr_screen_info.rrvd_info.randr_info_12->crtcs), sc->index);
+   INF("E_RANDR: Setup restore.. Runtime system knows about %d CRTCs. Requested CRTC has index %d", eina_list_count(e_randr_screen_info.rrvd_info.randr_info_12->crtcs), sc->index);
    return eina_list_nth(e_randr_screen_info.rrvd_info.randr_info_12->crtcs, sc->index);
 }
 
@@ -531,10 +530,10 @@ _find_matching_outputs(Eina_List *sois)
 
    EINA_LIST_FOREACH(sois, s_output_iter, so)
      {
-        fprintf(stderr, "E_RANDR: \tLooking for serialized output \"%s\"\n", so->name);
+        INF("E_RANDR: \tLooking for serialized output \"%s\"", so->name);
         EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_12->outputs, r_output_iter, oi)
           {
-             fprintf(stderr, "E_RANDR: \t\tComparing to output \"%s\"\n", oi->name);
+             INF("E_RANDR: \t\tComparing to output \"%s\"", oi->name);
              if (!strncmp(so->name, oi->name, oi->name_length))
                {
 
