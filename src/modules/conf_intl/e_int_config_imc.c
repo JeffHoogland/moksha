@@ -363,9 +363,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         imc_basic_list = eina_list_remove_list(imc_basic_list, imc_basic_list);
      }
 
-   _e_imc_setup_button_toggle(cfdata->gui.imc_basic_setup,
-                              eina_hash_find(cfdata->imc_basic_map,
-                                             cfdata->imc_current));
+   if (cfdata->imc_current)
+     _e_imc_setup_button_toggle(cfdata->gui.imc_basic_setup,
+                                eina_hash_find(cfdata->imc_basic_map,
+                                               cfdata->imc_current));
 
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);
