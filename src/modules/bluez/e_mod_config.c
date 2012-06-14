@@ -74,7 +74,8 @@ _create_data(E_Config_Dialog *dialog)
 
    if (!e_bluez_adapter_name_get(inst->adapter, &cfdata->name))
      cfdata->name = NULL;
-   cfdata->name = strdup(cfdata->name);
+   else
+     cfdata->name = strdup(cfdata->name);
 
    return cfdata;
 }
