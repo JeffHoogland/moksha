@@ -429,6 +429,7 @@ e_desklock_hide(void)
         return;
      }
 
+   if (!edd) return;
    if (edd->elock_grab_break_wnd)
      ecore_x_window_show(edd->elock_grab_break_wnd);
 
