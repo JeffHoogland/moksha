@@ -21,6 +21,8 @@ struct tiling_g
 };
 extern struct tiling_g tiling_g;
 
+#undef ERR
+#undef DBG
 #define ERR(...) EINA_LOG_DOM_ERR(tiling_g.log_domain, __VA_ARGS__)
 #define DBG(...) EINA_LOG_DOM_DBG(tiling_g.log_domain, __VA_ARGS__)
 

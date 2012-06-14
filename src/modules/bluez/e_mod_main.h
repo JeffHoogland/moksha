@@ -9,6 +9,9 @@
 #define MOD_CONF_VERSION 2
 
 extern int _e_bluez_log_dom;
+#undef DBG
+#undef WRN
+#undef ERR
 #define DBG(...) EINA_LOG_DOM_DBG(_e_bluez_log_dom, __VA_ARGS__)
 #define WRN(...) EINA_LOG_DOM_WARN(_e_bluez_log_dom, __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(_e_bluez_log_dom, __VA_ARGS__)
