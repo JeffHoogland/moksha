@@ -1,6 +1,10 @@
 #include "e_mod_main.h"
 
 static int _log_dom = -1;
+#undef DBG
+#undef WARN
+#undef INF
+#undef ERR
 #define DBG(...) EINA_LOG_DOM_DBG(_log_dom, __VA_ARGS__)
 #define WARN(...) EINA_LOG_DOM_WARN(_log_dom, __VA_ARGS__)
 #define INF(...) EINA_LOG_DOM_INFO(_log_dom, __VA_ARGS__)
