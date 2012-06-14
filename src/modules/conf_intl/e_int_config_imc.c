@@ -238,6 +238,16 @@ _e_imc_list_change_cb(void *data, Evas_Object *obj __UNUSED__)
 }
 
 static void
+_e_imc_imc_toggle(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   if (cfdata->imc_disable)
+     e_widget_ilist_unselect(cfdata->gui.imc_basic_list);
+}
+
+static void
 _e_imc_setup_cb(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -285,6 +295,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    /* Disable imc checkbox */
    ob = e_widget_check_add(evas, _("Use No Input Method"),
                            &(cfdata->imc_disable));
+   e_widget_on_change_hook_set(ob, _e_imc_imc_toggle, cfdata);
    cfdata->gui.imc_basic_disable = ob;
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
 
