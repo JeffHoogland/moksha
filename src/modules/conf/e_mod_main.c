@@ -5,29 +5,29 @@ typedef struct _Instance Instance;
 struct _Instance
 {
    E_Gadcon_Client *gcc;
-   Evas_Object *o_toggle;
+   Evas_Object     *o_toggle;
 };
 
 /* actual module specifics */
 
-static void _e_mod_action_conf_cb(E_Object *obj, const char *params);
-static void _e_mod_conf_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _e_mod_menu_add(void *data, E_Menu *m);
-static void _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _config_pre_activate_cb(void *data, E_Menu *m);
+static void             _e_mod_action_conf_cb(E_Object *obj, const char *params);
+static void             _e_mod_conf_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void             _e_mod_menu_add(void *data, E_Menu *m);
+static void             _e_mod_run_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void             _config_pre_activate_cb(void *data, E_Menu *m);
 
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
-static void _gc_shutdown(E_Gadcon_Client *gcc);
-static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-static const char *_gc_label(E_Gadcon_Client_Class *client_class);
-static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
-static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
-static void _cb_action_conf(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void             _gc_shutdown(E_Gadcon_Client *gcc);
+static void             _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+static const char      *_gc_label(E_Gadcon_Client_Class *client_class);
+static Evas_Object     *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
+static const char      *_gc_id_new(E_Gadcon_Client_Class *client_class);
+static void             _cb_action_conf(void *data, Evas_Object *obj, const char *emission, const char *source);
 
-static void _conf_new(void);
-static void _conf_free(void);
-static Eina_Bool _conf_timer(void *data);
+static void             _conf_new(void);
+static void             _conf_free(void);
+static Eina_Bool        _conf_timer(void *data);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
@@ -39,14 +39,14 @@ static Eina_List *instances = NULL;
 
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
-  {
-    GADCON_CLIENT_CLASS_VERSION, "configuration",
-    {
+{
+   GADCON_CLIENT_CLASS_VERSION, "configuration",
+   {
       _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
       e_gadcon_site_is_not_toolbar
-    },
-    E_GADCON_CLIENT_STYLE_PLAIN
-  };
+   },
+   E_GADCON_CLIENT_STYLE_PLAIN
+};
 
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
@@ -56,14 +56,14 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    inst->o_toggle = edje_object_add(gc->evas);
    e_theme_edje_object_set(inst->o_toggle,
-			   "base/theme/modules/conf",
-			   "e/modules/conf/main");
+                           "base/theme/modules/conf",
+                           "e/modules/conf/main");
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_toggle);
    inst->gcc->data = inst;
 
    edje_object_signal_callback_add(inst->o_toggle, "e,action,conf", "",
-				   _cb_action_conf, inst);
+                                   _cb_action_conf, inst);
 
    instances = eina_list_append(instances, inst);
    e_gadcon_client_util_menu_attach(inst->gcc);
@@ -122,15 +122,15 @@ _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 }
 
 /*
-static void
-_cb_button_click(void *data __UNUSED__, void *data2 __UNUSED__)
-{
+   static void
+   _cb_button_click(void *data __UNUSED__, void *data2 __UNUSED__)
+   {
    E_Action *a;
 
    a = e_action_find("configuration");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
-}
-*/
+   }
+ */
 
 static void
 _cb_action_conf(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
@@ -208,24 +208,24 @@ _config_all_pre_activate_cb(void *data __UNUSED__, E_Menu *m)
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
-	E_Menu_Item *mi;
-	E_Menu *sub;
+        E_Menu_Item *mi;
+        E_Menu *sub;
 
         if ((ecat->pri < 0) || (!ecat->items)) continue;
 
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, ecat->label);
-	if (ecat->icon)
-	  {
-	     if (ecat->icon_file)
-	       e_menu_item_icon_edje_set(mi, ecat->icon_file, ecat->icon);
-	     else
-	       e_util_menu_item_theme_icon_set(mi, ecat->icon);
-	  }
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, ecat->label);
+        if (ecat->icon)
+          {
+             if (ecat->icon_file)
+               e_menu_item_icon_edje_set(mi, ecat->icon_file, ecat->icon);
+             else
+               e_util_menu_item_theme_icon_set(mi, ecat->icon);
+          }
 
-	sub = e_menu_new();
-	e_menu_item_submenu_set(mi, sub);
-	e_menu_pre_activate_callback_set(sub, _config_pre_activate_cb, ecat);
+        sub = e_menu_new();
+        e_menu_item_submenu_set(mi, sub);
+        e_menu_pre_activate_callback_set(sub, _config_pre_activate_cb, ecat);
      }
 }
 
@@ -260,8 +260,8 @@ e_modapi_init(E_Module *m)
    act = e_action_add("configuration");
    if (act)
      {
-	act->func.go = _e_mod_action_conf_cb;
-	e_action_predef_name_set(_("Launch"), _("Settings Panel"),
+        act->func.go = _e_mod_action_conf_cb;
+        e_action_predef_name_set(_("Launch"), _("Settings Panel"),
                                  "configuration", NULL, NULL, 0);
      }
    maug =
@@ -292,33 +292,33 @@ e_modapi_init(E_Module *m)
           {
              _conf_free();
              ecore_timer_add(1.0, _conf_timer,
-			     _("Configuration Panel Module Configuration data needed "
-			       "upgrading. Your old configuration<br> has been"
-			       " wiped and a new set of defaults initialized. "
-			       "This<br>will happen regularly during "
-			       "development, so don't report a<br>bug. "
-			       "This simply means the module needs "
-			       "new configuration<br>data by default for "
-			       "usable functionality that your old<br>"
-			       "configuration simply lacks. This new set of "
-			       "defaults will fix<br>that by adding it in. "
-			       "You can re-configure things now to your<br>"
-			       "liking. Sorry for the inconvenience.<br>"));
+                             _("Configuration Panel Module Configuration data needed "
+                               "upgrading. Your old configuration<br> has been"
+                               " wiped and a new set of defaults initialized. "
+                               "This<br>will happen regularly during "
+                               "development, so don't report a<br>bug. "
+                               "This simply means the module needs "
+                               "new configuration<br>data by default for "
+                               "usable functionality that your old<br>"
+                               "configuration simply lacks. This new set of "
+                               "defaults will fix<br>that by adding it in. "
+                               "You can re-configure things now to your<br>"
+                               "liking. Sorry for the inconvenience.<br>"));
           }
         else if (conf->version > MOD_CONFIG_FILE_VERSION)
           {
              _conf_free();
              ecore_timer_add(1.0, _conf_timer,
-			     _("Your Configuration Panel Module configuration is NEWER "
-			       "than the module version. This is "
-			       "very<br>strange. This should not happen unless"
-			       " you downgraded<br>the module or "
-			       "copied the configuration from a place where"
-			       "<br>a newer version of the module "
-			       "was running. This is bad and<br>as a "
-			       "precaution your configuration has been now "
-			       "restored to<br>defaults. Sorry for the "
-			       "inconvenience.<br>"));
+                             _("Your Configuration Panel Module configuration is NEWER "
+                               "than the module version. This is "
+                               "very<br>strange. This should not happen unless"
+                               " you downgraded<br>the module or "
+                               "copied the configuration from a place where"
+                               "<br>a newer version of the module "
+                               "was running. This is bad and<br>as a "
+                               "precaution your configuration has been now "
+                               "restored to<br>defaults. Sorry for the "
+                               "inconvenience.<br>"));
           }
      }
 
@@ -329,7 +329,7 @@ e_modapi_init(E_Module *m)
      {
         conf->aug =
           e_int_menus_menu_augmentation_add
-	  ("config/2", e_mod_config_menu_add, NULL, NULL, NULL);
+            ("config/2", e_mod_config_menu_add, NULL, NULL, NULL);
      }
 
    e_gadcon_provider_register(&_gadcon_class);
@@ -352,8 +352,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied menu additions */
    if (maug)
      {
-	e_int_menus_menu_augmentation_del("config/0", maug);
-	maug = NULL;
+        e_int_menus_menu_augmentation_del("config/0", maug);
+        maug = NULL;
      }
    if (conf->aug)
      {
@@ -364,9 +364,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied action */
    if (act)
      {
-	e_action_predef_name_del(_("Launch"), _("Settings Panel"));
-	e_action_del("configuration");
-	act = NULL;
+        e_action_predef_name_del(_("Launch"), _("Settings Panel"));
+        e_action_del("configuration");
+        act = NULL;
      }
    conf_module = NULL;
 
@@ -391,14 +391,14 @@ _e_mod_action_conf_cb(E_Object *obj, const char *params)
 
    if (obj)
      {
-	if (obj->type == E_MANAGER_TYPE)
-	  zone = e_util_zone_current_get((E_Manager *)obj);
-	else if (obj->type == E_CONTAINER_TYPE)
-	  zone = e_util_zone_current_get(((E_Container *)obj)->manager);
-	else if (obj->type == E_ZONE_TYPE)
+        if (obj->type == E_MANAGER_TYPE)
+          zone = e_util_zone_current_get((E_Manager *)obj);
+        else if (obj->type == E_CONTAINER_TYPE)
+          zone = e_util_zone_current_get(((E_Container *)obj)->manager);
+        else if (obj->type == E_ZONE_TYPE)
           zone = ((E_Zone *)obj);
-	else
-	  zone = e_util_zone_current_get(e_manager_current_get());
+        else
+          zone = e_util_zone_current_get(e_manager_current_get());
      }
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if ((zone) && (params))
@@ -490,12 +490,12 @@ _conf_new(void)
 #define IFMODCFG(v) if ((conf->version & 0xffff) < v) {
 #define IFMODCFGEND }
 
-   IFMODCFG(0x008d);
-   conf->menu_augmentation = 1;
-   IFMODCFGEND;
+    IFMODCFG(0x008d);
+    conf->menu_augmentation = 1;
+    IFMODCFGEND;
 
-   conf->version = MOD_CONFIG_FILE_VERSION;
-   e_config_save_queue();
+    conf->version = MOD_CONFIG_FILE_VERSION;
+    e_config_save_queue();
 }
 
 static void
@@ -508,6 +508,7 @@ static Eina_Bool
 _conf_timer(__UNUSED__ void *data)
 {
    e_util_dialog_show(_("Configuration Panel Configuration Updated"),
-		      "%s", (char *)data);
+                      "%s", (char *)data);
    return ECORE_CALLBACK_CANCEL;
 }
+

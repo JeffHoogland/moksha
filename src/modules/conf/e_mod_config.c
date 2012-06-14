@@ -6,11 +6,11 @@ struct _E_Config_Dialog_Data
    int menu_augmentation;
 };
 
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 E_Config_Dialog *
 e_int_config_conf_module(E_Container *con, const char *params __UNUSED__)
@@ -81,9 +81,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    if (conf->menu_augmentation)
      {
-	conf->aug =
+        conf->aug =
           e_int_menus_menu_augmentation_add
-	  ("config/2", e_mod_config_menu_add, NULL, NULL, NULL);
+            ("config/2", e_mod_config_menu_add, NULL, NULL, NULL);
      }
 
    e_config_save_queue();
@@ -93,5 +93,6 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   return (conf->menu_augmentation != cfdata->menu_augmentation);
+   return conf->menu_augmentation != cfdata->menu_augmentation;
 }
+
