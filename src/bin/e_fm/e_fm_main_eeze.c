@@ -493,13 +493,6 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
    if (v->fstype)
      {
         if ((!strcmp(v->fstype, "vfat")) ||
-            (!strcmp(v->fstype, "ntfs"))
-            )
-          {
-             opts = EEZE_DISK_MOUNTOPT_UID;
-          }
-
-        if ((!strcmp(v->fstype, "vfat")) ||
             (!strcmp(v->fstype, "ntfs")) ||
             (!strcmp(v->fstype, "iso9660")) ||
             (!strcmp(v->fstype, "jfs")))
@@ -507,6 +500,7 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
              opts |= EEZE_DISK_MOUNTOPT_UTF8;
           }
      }
+   opts |= EEZE_DISK_MOUNTOPT_UID | EEZE_DISK_MOUNTOPT_NOSUID;
 
    /* here we arbitrarily mount everything to $E_HOME/fileman/$something regardless of fstab */
    eina_stringshare_del(v->mount_point);
