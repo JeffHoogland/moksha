@@ -223,8 +223,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style __UNU
    Tasks *tasks;
    Evas_Object *o;
    E_Gadcon_Client *gcc;
-   Evas_Coord x, y, w, h;
-   int cx, cy, cw, ch;
+   /* Evas_Coord x, y, w, h; */
+   /* int cx, cy, cw, ch; */
 
    tasks = _tasks_new(gc->evas, gc->zone, id);
    
@@ -233,8 +233,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style __UNU
    gcc->data = tasks;
    tasks->gcc = gcc;
    
-   e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
-   evas_object_geometry_get(o, &x, &y, &w, &h);
+   /* e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch); */
+   /* evas_object_geometry_get(o, &x, &y, &w, &h); */
    
    tasks_config->tasks = eina_list_append(tasks_config->tasks, tasks);
 
