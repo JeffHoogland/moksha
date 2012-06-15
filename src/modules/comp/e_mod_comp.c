@@ -138,7 +138,7 @@ static Eina_Hash *borders = NULL;
 static Eina_Hash *damages = NULL;
 
 //////////////////////////////////////////////////////////////////////////
-
+#undef DBG
 #if 0
 #define DBG(f, x ...) printf(f, ##x)
 #else
