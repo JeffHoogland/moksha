@@ -192,9 +192,13 @@ e_intl_language_set(const char *lang)
         /* Unset LANGUAGE, apparently causes issues if set */
         e_util_env_set("LANGUAGE", NULL);
         efreet_dirs_reset();
+        setlocale(LC_ALL, lang);
+     }
+   else
+     {
+        setlocale(LC_ALL, "");
      }
 
-   setlocale(LC_ALL, lang);
    if (_e_intl_language)
      {
         char *locale_path;
