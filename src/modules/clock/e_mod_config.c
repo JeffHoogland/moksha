@@ -76,7 +76,6 @@ _basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
      {
         tm.tm_wday = i;
         strftime(daynames[i], sizeof(daynames[i]), "%A", &tm);
-	fprintf(stderr, "%d:%s\n", i, daynames[i]);
      }
 
    tab = e_widget_table_add(evas, 0);
