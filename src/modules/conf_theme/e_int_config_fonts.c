@@ -68,7 +68,7 @@ const E_Text_Class_Pair text_class_predefined_names[ ] = {
      { "configure",       N_("Settings Heading")},
      { "about_title",     N_("About Title")},
      { "about_version",   N_("About Version")},
-     { "button_text",     N_("About Text")},
+     { "button_text",     N_("Button Text")},
      { "desklock_title",  N_("Desklock Title")},
      { "desklock_passwd", N_("Desklock Password")},
      { "dialog_error",    N_("Dialog Error")},
