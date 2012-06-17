@@ -114,7 +114,17 @@ _time_eval(Instance *inst)
              memcpy(&tmm, tm, sizeof(struct tm));
              if (!started)
                {
-                  if (tm->tm_wday == inst->cfg->week.start) started = 1;
+                  if (tm->tm_wday == inst->cfg->week.start)
+                    {
+                       char buf[32];
+
+                       for (i = 0; i < 7; i++, tm->tm_wday = (tm->tm_wday + 1) % 7)
+                         {
+                            strftime(buf, sizeof(buf), "%a", tm);
+                            inst->daynames[i] = eina_stringshare_add(buf);
+                         }
+                       started = 1;
+                    }
                }
              if (started)
                {
@@ -144,14 +154,6 @@ _time_eval(Instance *inst)
                                  inst->dayweekends[x][y] = 1;
                                  break;
                               }
-                         }
-                       if (!inst->daynames[x])
-                         {
-                            char buf[32];
-
-                            buf[sizeof(buf) - 1] = 0;
-                            strftime(buf, sizeof(buf) - 1, "%a", (const struct tm *)&tmm); // %A full weekeday
-                            inst->daynames[x] = eina_stringshare_add(buf);
                          }
                     }
                   num++;
