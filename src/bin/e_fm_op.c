@@ -867,7 +867,7 @@ _e_fm_op_scan_idler(void *data __UNUSED__)
  * are for this format string,
  */
 static void
-_e_fm_op_send_error(E_Fm_Op_Task *task __UNUSED__, E_Fm_Op_Type type, const char *fmt, ...)
+_e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...)
 {
    va_list ap;
    char buffer[READBUFSIZE];
@@ -899,6 +899,7 @@ _e_fm_op_send_error(E_Fm_Op_Task *task __UNUSED__, E_Fm_Op_Type type, const char
      }
 
    va_end(ap);
+   _e_fm_op_remove_link_task(task);
 }
 
 /* Unrolls task: makes a clean up and updates progress info. */
