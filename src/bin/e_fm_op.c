@@ -899,7 +899,8 @@ _e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...)
      }
 
    va_end(ap);
-   _e_fm_op_remove_link_task(task);
+   if (!_e_fm_op_overwrite)
+     _e_fm_op_remove_link_task(task);
 }
 
 /* Unrolls task: makes a clean up and updates progress info. */
