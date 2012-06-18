@@ -786,6 +786,7 @@ _e_fm_ipc_slave_run(E_Fm_Op_Type type, const char *args, int id)
    if (!slave) return 0;
 
    command = eina_stringshare_add(_e_fm_ipc_prepare_command(type, args));
+   if (!command) return 0;
 
    slave->id = id;
    slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave);
@@ -1427,7 +1428,7 @@ _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
    else if (type == E_FM_OP_SYMLINK)
      strcpy(command, "lns");
    else
-     strcpy(command, "???");
+     return NULL;
 
    libdir = getenv("E_LIB_DIR") ?: PACKAGE_LIB_DIR;
    length = 256 + strlen(libdir) + strlen(args);
