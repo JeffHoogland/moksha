@@ -449,7 +449,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    wd->o_favorites_frame = o;
    e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 128, 128);
-   e_widget_table_object_append(wd->o_table2, o, 0, 1, 1, 1, 1, 1, 0, 1);
+   e_widget_table_object_append(wd->o_table2, o, 0, 1, 1, 1, 1, 1, 1, 1);
 
    o = e_fm2_add(evas);
    wd->o_files_fm = o;
