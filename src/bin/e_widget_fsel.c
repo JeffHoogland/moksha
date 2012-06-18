@@ -29,40 +29,40 @@ struct _E_Widget_Data
    Evas_Object *o_files_fm;
    Evas_Object *o_entry;
    Evas_Coord   preview_w, preview_h;
-   char *entry_text;
-   char *preview_extra_text;
-   char *preview_size_text;
-   char *preview_owner_text;
-   char *preview_perms_text;
-   char *preview_time_text;
-   char *path;
-   void (*sel_func) (void *data, Evas_Object *obj);
-   void *sel_data;
-   void (*chg_func) (void *data, Evas_Object *obj);
-   void *chg_data;
-   int preview;
+   char        *entry_text;
+   char        *preview_extra_text;
+   char        *preview_size_text;
+   char        *preview_owner_text;
+   char        *preview_perms_text;
+   char        *preview_time_text;
+   char        *path;
+   void         (*sel_func)(void *data, Evas_Object *obj);
+   void        *sel_data;
+   void         (*chg_func)(void *data, Evas_Object *obj);
+   void        *chg_data;
+   int          preview;
 };
 
-static void _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info);
-static void _e_wid_fsel_preview_file(E_Widget_Data *wd);
+static void  _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info);
+static void  _e_wid_fsel_preview_file(E_Widget_Data *wd);
 static char *_e_wid_file_size_get(off_t st_size);
 static char *_e_wid_file_user_get(uid_t st_uid);
 static char *_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t gid);
 static char *_e_wid_file_time_get(time_t st_modtime);
-static void _e_wid_del_hook(Evas_Object *obj);
+static void  _e_wid_del_hook(Evas_Object *obj);
 
 /* local subsystem functions */
 static void
 _e_wid_fsel_button_up(void *data1, void *data2 __UNUSED__)
 {
    E_Widget_Data *wd;
-   
+
    wd = data1;
    if (wd->o_files_fm)
      e_fm2_parent_go(wd->o_files_fm);
    if (wd->o_files_frame)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
-//   e_widget_entry_text_set(wd->o_entry, 
+//   e_widget_entry_text_set(wd->o_entry,
 //			   e_fm2_real_path_get(wd->o_files_fm));
 }
 
@@ -82,26 +82,26 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
    if (!ecore_file_is_dir(current_path)) return;
 
    len = e_user_dir_snprintf(buf, sizeof(buf), "fileman/favorites/%s",
-			     ecore_file_file_get(current_path));
+                             ecore_file_file_get(current_path));
    if (len >= sizeof(buf)) return;
-   if (stat(buf, &st) < 0) 
+   if (stat(buf, &st) < 0)
      ret = symlink(current_path, buf);
    else
      {
-	int i = 1, maxlen;
+        int i = 1, maxlen;
 
-	buf[len] = '-';
-	len++;
-	if (len == sizeof(buf)) return;
-	maxlen = sizeof(buf) - len;
-	do
-	  {
-	     if (snprintf(buf + len, maxlen, "%d", i) >= maxlen)
-	       return;
-	     i++;
-	  }
+        buf[len] = '-';
+        len++;
+        if (len == sizeof(buf)) return;
+        maxlen = sizeof(buf) - len;
+        do
+          {
+             if (snprintf(buf + len, maxlen, "%d", i) >= maxlen)
+               return;
+             i++;
+          }
         while (stat(buf, &st) == 0);
-	ret = symlink(current_path, buf);
+        ret = symlink(current_path, buf);
      }
    fn = ecore_file_file_get(buf);
    len = strlen(fn) + 1;
@@ -110,12 +110,12 @@ _e_wid_fsel_favorites_add(void *data1, void *data2 __UNUSED__)
    e_user_dir_concat_static(buf, "fileman/favorites/.order");
    if (ecore_file_exists(buf))
      {
-	f = fopen(buf, "a");
-	if (f)
-	  {
-	     fprintf(f, "%s\n", fname);
-	     fclose(f);
-	  }
+        f = fopen(buf, "a");
+        if (f)
+          {
+             fprintf(f, "%s\n", fname);
+             fclose(f);
+          }
      }
    e_fm2_refresh(wd->o_favorites_fm);
 }
@@ -128,7 +128,7 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj __UNUSED__, voi
    E_Fm2_Icon_Info *ici;
    const char *rp;
    char *p1, *p2;
-   
+
    wd = data;
    if (!wd->o_favorites_fm) return;
    if (!wd->o_files_fm) return;
@@ -139,22 +139,22 @@ _e_wid_fsel_favorites_files_changed(void *data, Evas_Object *obj __UNUSED__, voi
    if (!p1) goto done;
    EINA_LIST_FOREACH(icons, l, ici)
      {
-	if (ici->link)
-	  {
-	     p2 = ecore_file_realpath(ici->link);
-	     if (p2)
-	       {
-		  if (!strcmp(p1, p2))
-		    {
-		       e_fm2_select_set(wd->o_favorites_fm, ici->file, 1);
-		       E_FREE(p2);
-		       goto done;
-		    }
-		  E_FREE(p2);
-	       }
-	  }
+        if (ici->link)
+          {
+             p2 = ecore_file_realpath(ici->link);
+             if (p2)
+               {
+                  if (!strcmp(p1, p2))
+                    {
+                       e_fm2_select_set(wd->o_favorites_fm, ici->file, 1);
+                       E_FREE(p2);
+                       goto done;
+                    }
+                  E_FREE(p2);
+               }
+          }
      }
-   done:
+done:
 //   e_widget_entry_text_set(wd->o_entry, rp);
    E_FREE(p1);
    eina_list_free(icons);
@@ -166,7 +166,7 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj __UNUSED__, void *ev
    E_Widget_Data *wd;
    Eina_List *selected;
    E_Fm2_Icon_Info *ici;
-   
+
    wd = data;
    if (!wd->o_favorites_fm) return;
    if (!wd->o_files_frame) return;
@@ -179,7 +179,7 @@ _e_wid_fsel_favorites_selected(void *data, Evas_Object *obj __UNUSED__, void *ev
      e_fm2_path_set(wd->o_files_fm, NULL, ici->real_link);
    eina_list_free(selected);
    e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
-//   e_widget_entry_text_set(wd->o_entry, 
+//   e_widget_entry_text_set(wd->o_entry,
 //			   e_fm2_real_path_get(wd->o_files_fm));
 }
 
@@ -192,13 +192,13 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_i
    if (!wd->o_files_fm) return;
    if (!e_fm2_has_parent_get(wd->o_files_fm))
      {
-	if (wd->o_up_button)
-	  e_widget_disabled_set(wd->o_up_button, 1);
+        if (wd->o_up_button)
+          e_widget_disabled_set(wd->o_up_button, 1);
      }
    else
      {
-	if (wd->o_up_button)
-	  e_widget_disabled_set(wd->o_up_button, 0);
+        if (wd->o_up_button)
+          e_widget_disabled_set(wd->o_up_button, 0);
      }
    if (wd->o_files_frame)
      e_widget_scrollframe_child_pos_set(wd->o_files_frame, 0, 0);
@@ -217,7 +217,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
    const char *rp;
    char buf[PATH_MAX];
    struct stat st;
-   
+
    wd = data;
    if (!wd->o_files_fm) return;
    selected = e_fm2_selected_list_get(wd->o_files_fm);
@@ -227,19 +227,19 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
    rp = e_fm2_real_path_get(wd->o_files_fm);
    if (!strcmp(rp, "/"))
      {
-	snprintf(buf, sizeof(buf), "/%s", ici->file);
+        snprintf(buf, sizeof(buf), "/%s", ici->file);
      }
    else
      {
-	snprintf(buf, sizeof(buf), "%s/%s",
-		 rp, ici->file);
+        snprintf(buf, sizeof(buf), "%s/%s",
+                 rp, ici->file);
      }
    wd->path = strdup(buf);
    if (stat(wd->path, &st) == 0)
      {
-	if (wd->preview) _e_wid_fsel_preview_file(wd);
-	if (!S_ISDIR(st.st_mode))
-	  e_widget_entry_text_set(wd->o_entry, ici->file);
+        if (wd->preview) _e_wid_fsel_preview_file(wd);
+        if (!S_ISDIR(st.st_mode))
+          e_widget_entry_text_set(wd->o_entry, ici->file);
 //	else
 //	  e_widget_entry_text_set(wd->o_entry, wd->path);
      }
@@ -251,28 +251,28 @@ static void
 _e_wid_fsel_files_selected(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
-   
+
    wd = data;
    if (wd->path)
      {
-	if (wd->sel_func) wd->sel_func(wd->sel_data, wd->obj);
+        if (wd->sel_func) wd->sel_func(wd->sel_data, wd->obj);
      }
 }
 
 /* externally accessible functions */
 EAPI Evas_Object *
-e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected, char *filter __UNUSED__, 
-		  void (*sel_func) (void *data, Evas_Object *obj), void *sel_data,
-		  void (*chg_func) (void *data, Evas_Object *obj), void *chg_data,
-		  int preview)
+e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected, char *filter __UNUSED__,
+                  void (*sel_func)(void *data, Evas_Object *obj), void *sel_data,
+                  void (*chg_func)(void *data, Evas_Object *obj), void *chg_data,
+                  int preview)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
    Evas_Coord mw = 0, mh = 0;
    E_Fm2_Config fmc;
-   
+
    obj = e_widget_add(evas);
-   
+
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
@@ -283,24 +283,24 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    wd->chg_func = chg_func;
    wd->chg_data = chg_data;
    wd->preview = preview;
-   
+
    o = e_widget_table_add(evas, 0);
    wd->o_table = o;
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-   
+
    o = e_widget_table_add(evas, 0);
    wd->o_table2 = o;
    e_widget_sub_object_add(obj, o);
-   
+
    o = e_widget_button_add(evas, _("Add to Favorites"), "bookmark-new",
-			   _e_wid_fsel_favorites_add, wd, NULL);
+                           _e_wid_fsel_favorites_add, wd, NULL);
    wd->o_favorites_add = o;
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_table2, o, 0, 0, 1, 1, 0, 0, 0, 0);
-   
+
    o = e_widget_button_add(evas, _("Go up a Directory"), "go-up",
-			   _e_wid_fsel_button_up, wd, NULL);
+                           _e_wid_fsel_button_up, wd, NULL);
    wd->o_up_button = o;
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_table2, o, 1, 0, 1, 1, 0, 0, 1, 0);
@@ -322,91 +322,91 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
         o = e_widget_preview_add(evas, 128, 128);
         wd->o_preview_preview = o;
         e_widget_sub_object_add(obj, o);
-	evas_object_smart_callback_add(o, "preview_update",
-				       _e_wid_fsel_preview_update, wd);
+        evas_object_smart_callback_add(o, "preview_update",
+                                       _e_wid_fsel_preview_update, wd);
         e_widget_table_object_append(wd->o_preview_preview_table,
                                      wd->o_preview_preview,
                                      0, 0, 1, 1, 0, 0, 1, 1);
-	
+
         o = e_widget_label_add(evas, _("Resolution:"));
         wd->o_preview_extra = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_extra,
+                                     wd->o_preview_extra,
                                      0, 0, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL);
-	e_widget_entry_readonly_set(o, 1);
+        e_widget_entry_readonly_set(o, 1);
         wd->o_preview_extra_entry = o;
         e_widget_sub_object_add(obj, o);
         e_widget_size_min_set(o, 100, -1);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_extra_entry,
-				     1, 0, 1, 1, 1, 1, 1, 1);
+                                     wd->o_preview_extra_entry,
+                                     1, 0, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_label_add(evas, _("Size:"));
         wd->o_preview_size = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_size,
+                                     wd->o_preview_size,
                                      0, 1, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_entry_add(evas, &(wd->preview_size_text), NULL, NULL, NULL);
-	e_widget_entry_readonly_set(o, 1);
+        e_widget_entry_readonly_set(o, 1);
         wd->o_preview_size_entry = o;
         e_widget_sub_object_add(obj, o);
         e_widget_size_min_set(o, 100, -1);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_size_entry,
-				     1, 1, 1, 1, 1, 1, 1, 1);
+                                     wd->o_preview_size_entry,
+                                     1, 1, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_label_add(evas, _("Owner:"));
         wd->o_preview_owner = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_owner,
+                                     wd->o_preview_owner,
                                      0, 2, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_entry_add(evas, &(wd->preview_owner_text), NULL, NULL, NULL);
-	e_widget_entry_readonly_set(o, 1);
+        e_widget_entry_readonly_set(o, 1);
         wd->o_preview_owner_entry = o;
         e_widget_sub_object_add(obj, o);
         e_widget_size_min_set(o, 100, -1);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_owner_entry, 
-				     1, 2, 1, 1, 1, 1, 1, 1);
+                                     wd->o_preview_owner_entry,
+                                     1, 2, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_label_add(evas, _("Permissions:"));
         wd->o_preview_perms = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_perms,
+                                     wd->o_preview_perms,
                                      0, 3, 1, 1, 1, 1, 1, 1);
-	
+
         o = e_widget_entry_add(evas, &(wd->preview_perms_text), NULL, NULL, NULL);
-	e_widget_entry_readonly_set(o, 1);
+        e_widget_entry_readonly_set(o, 1);
         wd->o_preview_perms_entry = o;
         e_widget_sub_object_add(obj, o);
         e_widget_size_min_set(o, 100, -1);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_perms_entry,
-				     1, 3, 1, 1, 1, 1, 1, 1);
+                                     wd->o_preview_perms_entry,
+                                     1, 3, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_label_add(evas, _("Modified:"));
         wd->o_preview_time = o;
         e_widget_sub_object_add(obj, o);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_time,
+                                     wd->o_preview_time,
                                      0, 4, 1, 1, 1, 1, 1, 1);
 
         o = e_widget_entry_add(evas, &(wd->preview_time_text), NULL, NULL, NULL);
-	e_widget_entry_readonly_set(o, 1);
+        e_widget_entry_readonly_set(o, 1);
         wd->o_preview_time_entry = o;
-        e_widget_sub_object_add(obj, o); 
+        e_widget_sub_object_add(obj, o);
         e_widget_size_min_set(o, 100, -1);
         e_widget_table_object_append(wd->o_preview_table,
-				     wd->o_preview_time_entry,
-				     1, 4, 1, 1, 1, 1, 1, 1);
+                                     wd->o_preview_time_entry,
+                                     1, 4, 1, 1, 1, 1, 1, 1);
      }
 
    o = e_fm2_add(evas);
@@ -432,20 +432,20 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(o, &fmc);
-   evas_object_smart_callback_add(o, "changed", 
-				  _e_wid_fsel_favorites_files_changed, wd);
-   evas_object_smart_callback_add(o, "selected", 
-				  _e_wid_fsel_favorites_selected, wd);
+   evas_object_smart_callback_add(o, "changed",
+                                  _e_wid_fsel_favorites_files_changed, wd);
+   evas_object_smart_callback_add(o, "selected",
+                                  _e_wid_fsel_favorites_selected, wd);
    e_fm2_path_set(o, "favorites", "/");
-   
+
    o = e_widget_scrollframe_pan_add(evas, wd->o_favorites_fm,
-				    e_fm2_pan_set, 
-				    e_fm2_pan_get,
-				    e_fm2_pan_max_get, 
-				    e_fm2_pan_child_size_get);
+                                    e_fm2_pan_set,
+                                    e_fm2_pan_get,
+                                    e_fm2_pan_max_get,
+                                    e_fm2_pan_child_size_get);
    evas_object_propagate_events_set(wd->o_favorites_fm, 0);
    e_widget_scrollframe_focus_object_set(o, wd->o_favorites_fm);
-   
+
    wd->o_favorites_frame = o;
    e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 128, 128);
@@ -472,22 +472,22 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(o, &fmc);
-   evas_object_smart_callback_add(o, "dir_changed", 
-				  _e_wid_fsel_files_changed, wd);
-   evas_object_smart_callback_add(o, "selection_change", 
-				  _e_wid_fsel_files_selection_change, wd);
-   evas_object_smart_callback_add(o, "selected", 
-				  _e_wid_fsel_files_selected, wd);
+   evas_object_smart_callback_add(o, "dir_changed",
+                                  _e_wid_fsel_files_changed, wd);
+   evas_object_smart_callback_add(o, "selection_change",
+                                  _e_wid_fsel_files_selection_change, wd);
+   evas_object_smart_callback_add(o, "selected",
+                                  _e_wid_fsel_files_selected, wd);
    e_fm2_path_set(o, dev, path);
-   
+
    o = e_widget_scrollframe_pan_add(evas, wd->o_files_fm,
-				    e_fm2_pan_set,
-				    e_fm2_pan_get,
-				    e_fm2_pan_max_get,
-				    e_fm2_pan_child_size_get);
+                                    e_fm2_pan_set,
+                                    e_fm2_pan_get,
+                                    e_fm2_pan_max_get,
+                                    e_fm2_pan_child_size_get);
    evas_object_propagate_events_set(wd->o_files_fm, 0);
    e_widget_scrollframe_focus_object_set(o, wd->o_files_fm);
-   
+
    wd->o_files_frame = o;
    e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 128, 128);
@@ -497,20 +497,20 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    wd->o_entry = o;
    e_widget_sub_object_add(obj, o);
    if (selected) e_widget_entry_text_set(o, selected);
-   
+
    if (preview)
      {
-	e_widget_frametable_object_append(wd->o_preview_frame, 
-					  wd->o_preview_preview_table,
-					  0, 0, 1, 1, 0, 0, 1, 1);
-        e_widget_frametable_object_append(wd->o_preview_frame, 
-					  wd->o_preview_table,
-					  0, 1, 1, 1, 0, 0, 0, 0);
-        e_widget_table_object_append(wd->o_table2, 
-				     wd->o_preview_frame,
+        e_widget_frametable_object_append(wd->o_preview_frame,
+                                          wd->o_preview_preview_table,
+                                          0, 0, 1, 1, 0, 0, 1, 1);
+        e_widget_frametable_object_append(wd->o_preview_frame,
+                                          wd->o_preview_table,
+                                          0, 1, 1, 1, 0, 0, 0, 0);
+        e_widget_table_object_append(wd->o_table2,
+                                     wd->o_preview_frame,
                                      2, 1, 1, 1, 0, 1, 0, 1);
      }
-   
+
    e_widget_table_object_append(wd->o_table, wd->o_table2,
                                 0, 0, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(wd->o_table, wd->o_entry,
@@ -518,8 +518,8 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 
    e_widget_size_min_get(wd->o_table, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
-  
-   evas_object_show(wd->o_favorites_add); 
+
+   evas_object_show(wd->o_favorites_add);
    evas_object_show(wd->o_up_button);
    evas_object_show(wd->o_favorites_frame);
    evas_object_show(wd->o_favorites_fm);
@@ -542,7 +542,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
         evas_object_show(wd->o_preview_time_entry);
         evas_object_show(wd->o_preview_table);
         evas_object_show(wd->o_preview_frame);
-      }
+     }
    evas_object_show(wd->o_table2);
    evas_object_show(wd->o_table);
    return obj;
@@ -564,7 +564,7 @@ e_widget_fsel_selection_path_get(Evas_Object *obj)
    E_Widget_Data *wd;
    const char *s, *dir;
    char buf[PATH_MAX];
-   
+
    if (!obj) return NULL;
    wd = e_widget_data_get(obj);
    E_FREE(wd->path);
@@ -600,7 +600,7 @@ _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info __UNUS
    Evas_Object *o;
    char buf[256];
    int iw = 0, ih = 0;
-   
+
    wd = data;
    o = evas_object_image_add(evas_object_evas_get(obj));
    evas_object_image_file_set(o, wd->path, NULL);
@@ -612,8 +612,8 @@ _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info __UNUS
         e_widget_entry_text_set(wd->o_preview_extra_entry, buf);
      }
    e_widget_table_object_repack(wd->o_preview_preview_table,
-				wd->o_preview_preview,
-				0, 0, 1, 1, 0, 0, 1, 1);
+                                wd->o_preview_preview,
+                                0, 0, 1, 1, 0, 0, 1, 1);
 }
 
 static void
@@ -621,21 +621,21 @@ _e_wid_fsel_preview_file(E_Widget_Data *wd)
 {
    char *size, *owner, *perms, *mtime;
    struct stat st;
- 
+
    if (stat(wd->path, &st) < 0) return;
 
-   size =  _e_wid_file_size_get(st.st_size);
+   size = _e_wid_file_size_get(st.st_size);
    owner = _e_wid_file_user_get(st.st_uid);
    perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
-   mtime = _e_wid_file_time_get(st.st_mtime); 
+   mtime = _e_wid_file_time_get(st.st_mtime);
 
    e_widget_preview_thumb_set(wd->o_preview_preview, wd->path,
-			      "e/desktop/background", 128, 128);
-   
+                              "e/desktop/background", 128, 128);
+
    e_widget_table_object_repack(wd->o_preview_preview_table,
-				wd->o_preview_preview,
-				0, 0, 1, 1, 0, 0, 1, 1);
-   
+                                wd->o_preview_preview,
+                                0, 0, 1, 1, 0, 0, 1, 1);
+
    e_widget_entry_text_set(wd->o_preview_extra_entry, "");
    e_widget_entry_text_set(wd->o_preview_size_entry, size);
    e_widget_entry_text_set(wd->o_preview_owner_entry, owner);
@@ -654,20 +654,20 @@ _e_wid_file_size_get(off_t st_size)
    return e_util_size_string_get(st_size);
 }
 
-static char * 
+static char *
 _e_wid_file_user_get(uid_t st_uid)
 {
    char name[4096];
    struct passwd *pwd;
 
-   if (getuid() == st_uid) 
-      snprintf(name, sizeof(name), _("You"));
+   if (getuid() == st_uid)
+     snprintf(name, sizeof(name), _("You"));
    else
      {
-       pwd = getpwuid(st_uid);
-       if (pwd) 
+        pwd = getpwuid(st_uid);
+        if (pwd)
           snprintf(name, sizeof(name), "%s", pwd->pw_name);
-       else 
+        else
           snprintf(name, sizeof(name), "%-8d", (int)st_uid);
      }
    return strdup(name);
@@ -687,21 +687,21 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
    int other_read = 0;
    int other_write = 0;
 
-   if (getuid() == st_uid) 
-      owner = 1;
-   if (getgid() == st_gid) 
-      group = 1;   
+   if (getuid() == st_uid)
+     owner = 1;
+   if (getgid() == st_gid)
+     group = 1;
 
-   if ((S_IRUSR & st_mode) == S_IRUSR) 
+   if ((S_IRUSR & st_mode) == S_IRUSR)
      user_read = 1;
-   if ((S_IWUSR & st_mode) == S_IWUSR) 
+   if ((S_IWUSR & st_mode) == S_IWUSR)
      user_write = 1;
 
-   if ((S_IRGRP & st_mode) == S_IRGRP) 
+   if ((S_IRGRP & st_mode) == S_IRGRP)
      group_read = 1;
-   if ((S_IWGRP & st_mode) == S_IWGRP) 
+   if ((S_IWGRP & st_mode) == S_IWGRP)
      group_write = 1;
-   
+
    if ((S_IROTH & st_mode) == S_IROTH)
      other_read = 1;
    if ((S_IWOTH & st_mode) == S_IWOTH)
@@ -709,38 +709,38 @@ _e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t st_gid)
 
    if (owner)
      {
-        if ((!user_read) && (!user_write)) 
-	  snprintf(perms, sizeof(perms), _("Protected"));
-        else if ((user_read) && (!user_write)) 
-	  snprintf(perms, sizeof(perms), _("Read Only"));
-        else if ((user_read) && (user_write)) 
-	  acc = 1;
+        if ((!user_read) && (!user_write))
+          snprintf(perms, sizeof(perms), _("Protected"));
+        else if ((user_read) && (!user_write))
+          snprintf(perms, sizeof(perms), _("Read Only"));
+        else if ((user_read) && (user_write))
+          acc = 1;
      }
    else if (group)
      {
-        if ((!group_read) && (!group_write)) 
-	  snprintf(perms, sizeof(perms), _("Forbidden"));
-        else if ((group_read) && (!group_write)) 
-	  snprintf(perms, sizeof(perms), _("Read Only"));
-        else if ((group_read) && (group_write)) 
-	  acc = 1;
+        if ((!group_read) && (!group_write))
+          snprintf(perms, sizeof(perms), _("Forbidden"));
+        else if ((group_read) && (!group_write))
+          snprintf(perms, sizeof(perms), _("Read Only"));
+        else if ((group_read) && (group_write))
+          acc = 1;
      }
    else
      {
-        if ((!other_read) && (!other_write)) 
-	  snprintf(perms, sizeof(perms), _("Forbidden"));
-        else if ((other_read) && (!other_write)) 
-	  snprintf(perms, sizeof(perms), _("Read Only"));
-        else if ((other_read) && (other_write)) 
-	  acc = 1;
+        if ((!other_read) && (!other_write))
+          snprintf(perms, sizeof(perms), _("Forbidden"));
+        else if ((other_read) && (!other_write))
+          snprintf(perms, sizeof(perms), _("Read Only"));
+        else if ((other_read) && (other_write))
+          acc = 1;
      }
    if (!acc)
      return strdup(perms);
-   else 
+   else
      return strdup(_("Read-Write"));
 }
 
-static char * 
+static char *
 _e_wid_file_time_get(time_t st_modtime)
 {
    return e_util_file_time_get(st_modtime);
@@ -750,7 +750,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    E_FREE(wd->entry_text);
    E_FREE(wd->preview_extra_text);
@@ -762,3 +762,4 @@ _e_wid_del_hook(Evas_Object *obj)
 
    free(wd);
 }
+
