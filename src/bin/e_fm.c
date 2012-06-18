@@ -72,6 +72,7 @@ struct _E_Fm2_Smart_Data
    } icon_menu;
 
    Eina_List       *icons;
+   Eina_List       *selected_icons;
    Eina_List       *icons_place;
    Eina_List       *queue;
    Ecore_Timer     *scan_timer;
@@ -3539,7 +3540,24 @@ _e_fm2_file_paste(Evas_Object *obj)
      }
 
    /* Add destination to the arguments. */
-   args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+   {
+      E_Fm2_Icon *ic;
+
+      if (eina_list_count(sd->selected_icons) == 1)
+        {
+           ic = eina_list_data_get(sd->selected_icons);
+           if (!S_ISDIR(ic->info.statinfo.st_mode))
+             ic = NULL;
+        }
+      if (ic)
+        {
+           args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+           args = _e_fm_string_append_char(args, &size, &length, '/');
+           args = _e_fm_string_append_quoted(args, &size, &length, ic->info.file);
+        }
+      else
+        args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+   }
 
    /* Roll the operation! */
    if (_e_fm_file_buffer_copying)
@@ -4694,6 +4712,8 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
         e_object_del(E_OBJECT(ic->prop_dialog));
         ic->prop_dialog = NULL;
      }
+   if (ic->selected)
+     ic->sd->selected_icons = eina_list_append(ic->sd->selected_icons, ic);
    eina_stringshare_del(ic->info.file);
    eina_stringshare_del(ic->info.mime);
    eina_stringshare_del(ic->info.label);
@@ -4899,6 +4919,7 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
 {
    if (ic->selected) return;
    ic->selected = EINA_TRUE;
+   ic->sd->selected_icons = eina_list_append(ic->sd->selected_icons, ic);
    ic->last_selected = EINA_TRUE;
    if (ic->realized)
      {
@@ -4922,6 +4943,7 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
    if (!ic->selected) return;
    ic->selected = EINA_FALSE;
    ic->last_selected = EINA_FALSE;
+   ic->sd->selected_icons = eina_list_remove(ic->sd->selected_icons, ic);
    if (ic->realized)
      {
         const char *stacking, *selectraise;
@@ -7674,6 +7696,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
    _e_fm2_icons_free(obj);
+   if (sd->selected_icons) eina_list_free(sd->selected_icons);
    if (sd->menu)
      {
         e_menu_post_deactivate_callback_set(sd->menu, NULL, NULL);
