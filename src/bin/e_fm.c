@@ -2573,7 +2573,7 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, 
    args = _e_fm_string_append_char(args, &size, &length, ' ');
    args = _e_fm_string_append_quoted(args, &size, &length, dest);
 
-   WRN("using new E_FM_OP_SYMLINK, remove deprecated ASAP", stderr);
+   WRN("using new E_FM_OP_SYMLINK, remove deprecated ASAP");
    r = _e_fm_client_file_symlink(args, e_fm);
    free(args);
    return r;
