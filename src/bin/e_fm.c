@@ -6309,7 +6309,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
 
    if (range_sel)
      {
-        const Eina_List *l;
+        const Eina_List *l, *l2;
         E_Fm2_Icon *ic2;
         Eina_Bool seen = 0;
         /* find last selected - if any, and select all icons between */
@@ -6321,7 +6321,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
                   ic2->last_selected = 0;
                   if (seen)
                     {
-                       EINA_LIST_REVERSE_FOREACH(l, l, ic2)
+                       for (l2 = l, ic2 = l2->data; l2; l2 = l2->prev, ic2 = l2->data)
                          {
                             if (ic == ic2) break;
                             if (!ic2->selected) sel_change = 1;
@@ -6331,7 +6331,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
                     }
                   else
                     {
-                       EINA_LIST_FOREACH(l, l, ic2)
+                       EINA_LIST_FOREACH(l, l2, ic2)
                          {
                             if (ic == ic2) break;
                             if (!ic2->selected) sel_change = 1;
