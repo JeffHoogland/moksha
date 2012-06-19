@@ -85,6 +85,17 @@ e_util_env_set(const char *var, const char *val)
      }
 }
 
+static void
+_e_fm_main_eeze_mount_point_set(E_Volume *v)
+{
+   const char *str = v->uuid ?: v->label;
+   /* here we arbitrarily mount everything to $E_HOME/fileman/$something regardless of fstab */
+   eina_stringshare_del(v->mount_point);
+   if (!str) str = eeze_disk_devpath_get(v->disk);
+   v->mount_point = eina_stringshare_printf("%s/fileman/%s", e_user_dir_get(), str);
+   eeze_disk_mount_point_set(v->disk, v->mount_point);
+}
+
 static int
 _e_fm_main_eeze_format_error_msg(char     **buf,
                                  E_Volume  *v,
@@ -269,10 +280,15 @@ _e_fm_main_eeze_cb_vol_ejected(void *user_data __UNUSED__,
         v->guard = NULL;
      }
 
-   v->mounted = EINA_TRUE;
+   v->mounted = EINA_FALSE;
+   if (!v->mount_point) _e_fm_main_eeze_mount_point_set(v);
    INF("EJECT: %s from %s", v->udi, v->mount_point);
-   if (!memcmp(v->mount_point, "/media/", 7))
-     unlink(v->mount_point);
+   {
+      char rmbuf[PATH_MAX];
+      snprintf(rmbuf, sizeof(rmbuf), "%s/fileman", e_user_dir_get());
+      if (v->mount_point && (!strncmp(v->mount_point, rmbuf, strlen(rmbuf))))
+        ecore_file_rmdir(v->mount_point);
+   }
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
    strcpy(buf, v->udi);
@@ -288,6 +304,13 @@ void
 _e_fm_main_eeze_volume_eject(E_Volume *v)
 {
    if (!v || v->guard) return;
+   if (!eeze_disk_mount_wrapper_get(v->disk))
+     {
+        char buf[PATH_MAX];
+
+        snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_sys", eina_prefix_lib_get(pfx));
+        eeze_disk_mount_wrapper_set(v->disk, buf);
+     }
    v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_eeze_vol_eject_timeout, v);
    eeze_disk_eject(v->disk);
 }
@@ -502,15 +525,9 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
      }
    opts |= EEZE_DISK_MOUNTOPT_UID | EEZE_DISK_MOUNTOPT_NOSUID;
 
-   /* here we arbitrarily mount everything to $E_HOME/fileman/$something regardless of fstab */
-   eina_stringshare_del(v->mount_point);
-   {
-      const char *str = v->uuid ?: v->label;
-      if (!str) str = eeze_disk_devpath_get(v->disk);
-      v->mount_point = eina_stringshare_printf("%s/fileman/%s", e_user_dir_get(), str);
-   }
-   eeze_disk_mount_point_set(v->disk, v->mount_point);
+   _e_fm_main_eeze_mount_point_set(v);
    eeze_disk_mountopts_set(v->disk, opts);
+   ecore_file_mkpath(v->mount_point);
    if (!eeze_disk_mount_wrapper_get(v->disk))
      {
         char buf[PATH_MAX];
