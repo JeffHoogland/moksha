@@ -3939,13 +3939,10 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
           ic->w = ic->min_w;
         y += ic->h;
         ic->odd = (i & 0x01);
-        if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
+        if ((ic->w != sd->w) && ((ic->x + ic->w) > sd->max.w)) sd->max.w = ic->x + ic->w;
+        else if (ic->min_w > sd->max.w) sd->max.w = ic->min_w;
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
         i++;
-     }
-   EINA_LIST_FOREACH(sd->icons, l, ic)
-     {
-        ic->w = sd->max.w;
      }
 }
 
@@ -4462,35 +4459,32 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
         break;
 
       case E_FM2_VIEW_MODE_LIST:
-      {
-         obj = ic->sd->tmp.obj;
-         if (!obj)
-           {
-              obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
+        obj = ic->sd->tmp.obj;
+        if (!obj)
+          {
+             obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
 // vairable sized list items are pretty usless - ignore.
 //		  if (ic->sd->config->icon.fixed.w)
-              _e_fm2_theme_edje_object_set(ic->sd, obj,
-                                           "base/theme/fileman",
-                                           "list/fixed");
+             _e_fm2_theme_edje_object_set(ic->sd, obj,
+                                          "base/theme/fileman",
+                                          "list/fixed");
 //		  else
 //		    _e_fm2_theme_edje_object_set(ic->sd, obj, "base/theme/fileman",
 //					    "list/variable");
-              ic->sd->tmp.obj = obj;
-           }
-         _e_fm2_icon_label_set(ic, obj);
-         obj2 = ic->sd->tmp.obj2;
-         if (!obj2)
-           {
-              obj2 = evas_object_rectangle_add(evas_object_evas_get(ic->sd->obj));
-              ic->sd->tmp.obj2 = obj2;
-           }
-         edje_extern_object_min_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
-         edje_extern_object_max_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
-         edje_object_part_swallow(obj, "e.swallow.icon", obj2);
-         edje_object_size_min_calc(obj, &mw, &mh);
-      }
-        if (mw < ic->sd->w) ic->w = ic->sd->w;
-        else ic->w = mw;
+             ic->sd->tmp.obj = obj;
+          }
+        _e_fm2_icon_label_set(ic, obj);
+        obj2 = ic->sd->tmp.obj2;
+        if (!obj2)
+          {
+             obj2 = evas_object_rectangle_add(evas_object_evas_get(ic->sd->obj));
+             ic->sd->tmp.obj2 = obj2;
+          }
+        edje_extern_object_min_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
+        edje_extern_object_max_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
+        edje_object_part_swallow(obj, "e.swallow.icon", obj2);
+        edje_object_size_min_calc(obj, &mw, &mh);
+        ic->w = mw;
         ic->h = mh;
         ic->min_w = mw;
         ic->min_h = mh;
