@@ -7271,7 +7271,7 @@ _e_fm2_cb_resize_job(void *data)
    sd->pw = sd->w;
    sd->ph = sd->h;
 
-   if ((sd->max.w > 0) && (sd->max.h > 0) && (sd->w > 0) && (sd->h > 0))
+   if ((sd->max.w > 0) && (sd->max.h > 0) && (sd->w > 0) && (sd->h > 0) && (sd->view_flags & E_FM2_VIEW_SAVE_DIR_CUSTOM))
      {
         E_Fm2_Custom_File *cf = e_fm2_custom_file_get(sd->realpath);
         if ((cf) && (cf->dir))
