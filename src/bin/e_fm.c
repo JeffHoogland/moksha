@@ -6275,7 +6275,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
    if (ed && ic->sd->config->view.single_click_delay)
      down_timestamp = ed->timestamp;
 
-   if (ic->sd->config->selection.windows_modifiers)
+   if (!ic->sd->config->selection.windows_modifiers)
      {
         if (evas_key_modifier_is_set(modifiers, "Shift"))
           range_sel = 1;
@@ -7000,7 +7000,7 @@ _e_fm2_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__
         Eina_List *l;
         int multi_sel = 0, range_sel = 0, sel_change = 0;
 
-        if (sd->config->selection.windows_modifiers)
+        if (!sd->config->selection.windows_modifiers)
           {
              if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
                range_sel = 1;
