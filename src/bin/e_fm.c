@@ -18,6 +18,13 @@
  * custom frames or icons yet
  */
 
+#define EFM_SMART_CHECK(args...) \
+   E_Fm2_Smart_Data *sd; \
+\
+   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR() args; \
+   sd = evas_object_smart_data_get(obj); \
+   if ((!sd) || (!evas_object_type_get(obj)) || strcmp(evas_object_type_get(obj), "e_fm")) return args
+
 typedef enum _E_Fm2_Action_Type
 {
    FILE_ADD,
@@ -916,14 +923,8 @@ _e_fm2_path_parent_set(Evas_Object *obj, const char *path)
 EAPI void
 e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
-   E_Fm2_Smart_Data *sd;
    const char *real_path;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd || !path) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
 
    /* internal config for now - don't see a pont making this configurable */
    sd->regions.member_max = 64;
@@ -1049,65 +1050,35 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 EAPI void
 e_fm2_underlay_show(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    evas_object_show(sd->underlay);
 }
 
 EAPI void
 e_fm2_underlay_hide(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    evas_object_hide(sd->underlay);
 }
 
 EAPI void
 e_fm2_all_unsel(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    _e_fm2_icon_desel_any(obj);
 }
 
 EAPI void
 e_fm2_all_sel(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    _e_fm2_icon_sel_any(obj);
 }
 
 EAPI void
 e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    eina_stringshare_replace(&sd->custom_theme, path);
    _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
                                 "list/drop_between");
@@ -1122,13 +1093,7 @@ e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
 EAPI void
 e_fm2_custom_theme_content_set(Evas_Object *obj, const char *content)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    eina_stringshare_replace(&sd->custom_theme_content, content);
    _e_fm2_theme_edje_object_set(sd, sd->drop, "base/theme/fileman",
                                 "list/drop_between");
@@ -1141,15 +1106,9 @@ e_fm2_custom_theme_content_set(Evas_Object *obj, const char *content)
 EAPI void
 e_fm2_path_get(Evas_Object *obj, const char **dev, const char **path)
 {
-   E_Fm2_Smart_Data *sd;
-
    if (dev) *dev = NULL;
    if (path) *path = NULL;
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    if (dev) *dev = sd->dev;
    if (path) *path = sd->path;
 }
@@ -1292,13 +1251,7 @@ _e_fm2_dir_save_props(E_Fm2_Smart_Data *sd)
 EAPI void
 e_fm2_refresh(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
 
    _e_fm2_dir_save_props(sd);
 
@@ -1322,13 +1275,7 @@ e_fm2_refresh(Evas_Object *obj)
 EAPI int
 e_fm2_has_parent_get(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERR(0);
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return 0;  // safety
-   if (!evas_object_type_get(obj)) return 0;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return 0;  // safety
+   EFM_SMART_CHECK(0);
    if (!sd->path) return 0;
    if ((sd->path[0] == 0) || (!strcmp(sd->path, "/"))) return 0;
    return 1;
@@ -1337,27 +1284,15 @@ e_fm2_has_parent_get(Evas_Object *obj)
 EAPI const char *
 e_fm2_real_path_get(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERR(NULL);
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return NULL;  // safety
-   if (!evas_object_type_get(obj)) return NULL;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return NULL;  // safety
+   EFM_SMART_CHECK(NULL);
    return sd->realpath;
 }
 
 EAPI void
 e_fm2_parent_go(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
    char *p, *path;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    if (!sd->path) return;
    path = strdup(sd->path);
    if (!path) return;
@@ -1373,13 +1308,7 @@ e_fm2_parent_go(Evas_Object *obj)
 EAPI void
 e_fm2_config_set(Evas_Object *obj, E_Fm2_Config *cfg)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    if (sd->config) _e_fm2_config_free(sd->config);
    sd->config = NULL;
    if (!cfg) return;
@@ -1395,28 +1324,17 @@ e_fm2_config_set(Evas_Object *obj, E_Fm2_Config *cfg)
 EAPI E_Fm2_Config *
 e_fm2_config_get(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERR(NULL);
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return NULL;  // safety
-   if (!evas_object_type_get(obj)) return NULL;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return NULL;  // safety
+   EFM_SMART_CHECK(NULL);
    return sd->config;
 }
 
 EAPI Eina_List *
 e_fm2_selected_list_get(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
    Eina_List *list = NULL, *l;
    E_Fm2_Icon *ic;
 
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERR(NULL);
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return NULL;  // safety
-   if (!evas_object_type_get(obj)) return NULL;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return NULL;  // safety
+   EFM_SMART_CHECK(NULL);
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
         if (ic->selected)
@@ -1428,15 +1346,10 @@ e_fm2_selected_list_get(Evas_Object *obj)
 EAPI Eina_List *
 e_fm2_all_list_get(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
    Eina_List *list = NULL, *l;
    E_Fm2_Icon *ic;
 
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERR(NULL);
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return NULL;  // safety
-   if (!evas_object_type_get(obj)) return NULL;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return NULL;  // safety
+   EFM_SMART_CHECK(NULL);
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
         list = eina_list_append(list, &(ic->info));
@@ -1447,15 +1360,10 @@ e_fm2_all_list_get(Evas_Object *obj)
 EAPI void
 e_fm2_select_set(Evas_Object *obj, const char *file, int select_)
 {
-   E_Fm2_Smart_Data *sd;
    Eina_List *l;
    E_Fm2_Icon *ic;
 
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
         if ((file) && (!strcmp(ic->info.file, file)))
@@ -1475,15 +1383,10 @@ e_fm2_select_set(Evas_Object *obj, const char *file, int select_)
 EAPI void
 e_fm2_file_show(Evas_Object *obj, const char *file)
 {
-   E_Fm2_Smart_Data *sd;
    Eina_List *l;
    E_Fm2_Icon *ic;
 
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
         if (!strcmp(ic->info.file, file))
@@ -1497,13 +1400,7 @@ e_fm2_file_show(Evas_Object *obj, const char *file)
 EAPI void
 e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    sd->icon_menu.replace.func = func;
    sd->icon_menu.replace.data = data;
 }
@@ -1511,13 +1408,7 @@ e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data)
 EAPI void
 e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    sd->icon_menu.start.func = func;
    sd->icon_menu.start.data = data;
 }
@@ -1525,13 +1416,7 @@ e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *
 EAPI void
 e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    sd->icon_menu.end.func = func;
    sd->icon_menu.end.data = data;
 }
@@ -1539,64 +1424,37 @@ e_fm2_icon_menu_end_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *da
 EAPI void
 e_fm2_icon_menu_flags_set(Evas_Object *obj, E_Fm2_Menu_Flags flags)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    sd->icon_menu.flags = flags;
 }
 
 EAPI E_Fm2_Menu_Flags
 e_fm2_icon_menu_flags_get(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERR(0);
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return 0;  // safety
-   if (!evas_object_type_get(obj)) return 0;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return 0;  // safety
+   EFM_SMART_CHECK(0);
    return sd->icon_menu.flags;
 }
 
 EAPI void
 e_fm2_view_flags_set(Evas_Object *obj, E_Fm2_View_Flags flags)
 {
-   E_Fm2_Smart_Data *sd = evas_object_smart_data_get(obj);
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    sd->view_flags = flags;
 }
 
 EAPI E_Fm2_View_Flags
 e_fm2_view_flags_get(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd = evas_object_smart_data_get(obj);
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERR(0);
-   if (!sd) return 0;  // safety
-   if (!evas_object_type_get(obj)) return 0;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return 0;  // safety
+   EFM_SMART_CHECK(0);
    return sd->view_flags;
 }
 
 EAPI void
 e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 {
-   E_Fm2_Smart_Data *sd;
    const char *drop[] = { "enlightenment/desktop", "enlightenment/border", "text/uri-list" };
 
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    sd->eobj = eobj;
    if (sd->drop_handler) e_drop_handler_del(sd->drop_handler);
    sd->drop_handler = e_drop_handler_add(sd->eobj,
@@ -1613,17 +1471,12 @@ e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 EAPI void
 e_fm2_icons_update(Evas_Object *obj)
 {
-   E_Fm2_Smart_Data *sd;
    Eina_List *l;
    E_Fm2_Icon *ic;
    char buf[PATH_MAX], *pfile;
    int bufused, buffree;
 
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
 
    bufused = eina_strlcpy(buf, sd->realpath, sizeof(buf));
    if (bufused >= (int)(sizeof(buf) - 2))
@@ -1674,13 +1527,7 @@ e_fm2_icons_update(Evas_Object *obj)
 EAPI void
 e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    if (x > (sd->max.w - sd->w)) x = sd->max.w - sd->w;
    if (x < 0) x = 0;
    if (y > (sd->max.h - sd->h)) y = sd->max.h - sd->h;
@@ -1695,13 +1542,7 @@ e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 EAPI void
 e_fm2_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    if (x) *x = sd->pos.x;
    if (y) *y = sd->pos.y;
 }
@@ -1709,14 +1550,8 @@ e_fm2_pan_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 EAPI void
 e_fm2_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 {
-   E_Fm2_Smart_Data *sd;
    Evas_Coord mx, my;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    mx = sd->max.w - sd->w;
    if (mx < 0) mx = 0;
    my = sd->max.h - sd->h;
@@ -1728,13 +1563,7 @@ e_fm2_pan_max_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
 EAPI void
 e_fm2_pan_child_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
-   E_Fm2_Smart_Data *sd;
-
-   if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR();
-   sd = evas_object_smart_data_get(obj);
-   if (!sd) return;  // safety
-   if (!evas_object_type_get(obj)) return;  // safety
-   if (strcmp(evas_object_type_get(obj), "e_fm")) return;  // safety
+   EFM_SMART_CHECK();
    if (w) *w = sd->max.w;
    if (h) *h = sd->max.h;
 }
