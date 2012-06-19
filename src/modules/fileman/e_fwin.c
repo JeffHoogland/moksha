@@ -1834,6 +1834,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
                          {
                             e_fm2_path_set(page->fm_obj, NULL, buf);
                             _e_fwin_window_title_set(page);
+                            l = NULL;
                          }
                     }
                   else
