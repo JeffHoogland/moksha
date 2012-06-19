@@ -3370,7 +3370,7 @@ _e_fm2_file_paste(Evas_Object *obj)
 
    /* Add destination to the arguments. */
    {
-      E_Fm2_Icon *ic;
+      E_Fm2_Icon *ic = NULL;
 
       if (eina_list_count(sd->selected_icons) == 1)
         {
