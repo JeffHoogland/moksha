@@ -4195,8 +4195,6 @@ _e_fm2_regions_eval(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   evas_event_freeze(evas_object_evas_get(obj));
-   edje_freeze();
    EINA_LIST_FOREACH(sd->regions.list, l, rg)
      {
         if (_e_fm2_region_visible(rg))
@@ -4204,8 +4202,6 @@ _e_fm2_regions_eval(Evas_Object *obj)
         else
           _e_fm2_region_unrealize(rg);
      }
-   edje_thaw();
-   evas_event_thaw(evas_object_evas_get(obj));
 }
 
 static void
