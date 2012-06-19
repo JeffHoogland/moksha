@@ -3944,6 +3944,8 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
         i++;
      }
+   EINA_LIST_FOREACH(sd->icons, l, ic)
+     ic->w = sd->w;
 }
 
 static void
@@ -4484,7 +4486,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
         edje_extern_object_max_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
         edje_object_part_swallow(obj, "e.swallow.icon", obj2);
         edje_object_size_min_calc(obj, &mw, &mh);
-        ic->w = mw;
+        ic->w = MAX(mw, ic->sd->w);
         ic->h = mh;
         ic->min_w = mw;
         ic->min_h = mh;
