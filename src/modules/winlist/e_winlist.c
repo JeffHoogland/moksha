@@ -6,22 +6,22 @@ typedef struct _E_Winlist_Win E_Winlist_Win;
 
 struct _E_Winlist_Win
 {
-   Evas_Object *bg_object;
-   Evas_Object *icon_object;
-   E_Border *border;
+   Evas_Object  *bg_object;
+   Evas_Object  *icon_object;
+   E_Border     *border;
    unsigned char was_iconified : 1;
    unsigned char was_shaded : 1;
 };
 
-static void _e_winlist_size_adjust(void);
-static void _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk);
-static void _e_winlist_border_del(E_Border *bd);
-static void _e_winlist_activate_nth(int n);
-static void _e_winlist_activate(void);
-static void _e_winlist_deactivate(void);
-static void _e_winlist_show_active(void);
-static Eina_Bool _e_winlist_cb_event_border_add(void *data, int type,  void *event);
-static Eina_Bool _e_winlist_cb_event_border_remove(void *data, int type,  void *event);
+static void      _e_winlist_size_adjust(void);
+static void      _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk);
+static void      _e_winlist_border_del(E_Border *bd);
+static void      _e_winlist_activate_nth(int n);
+static void      _e_winlist_activate(void);
+static void      _e_winlist_deactivate(void);
+static void      _e_winlist_show_active(void);
+static Eina_Bool _e_winlist_cb_event_border_add(void *data, int type, void *event);
+static Eina_Bool _e_winlist_cb_event_border_remove(void *data, int type, void *event);
 static Eina_Bool _e_winlist_cb_key_down(void *data, int type, void *event);
 static Eina_Bool _e_winlist_cb_key_up(void *data, int type, void *event);
 static Eina_Bool _e_winlist_cb_mouse_down(void *data, int type, void *event);
@@ -32,8 +32,8 @@ static Eina_Bool _e_winlist_scroll_timer(void *data);
 static Eina_Bool _e_winlist_warp_timer(void *data);
 static Eina_Bool _e_winlist_animator(void *data);
 #if 0
-static void _e_winlist_cb_item_mouse_in(void *data, Evas *evas,
-      Evas_Object *obj, void *event_info);
+static void      _e_winlist_cb_item_mouse_in(void *data, Evas *evas,
+                                             Evas_Object *obj, void *event_info);
 #endif
 
 /* local subsystem globals */
@@ -115,20 +115,22 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
    ecore_x_window_show(_input_window);
    if (!e_grabinput_get(_input_window, 0, _input_window))
      {
-	ecore_x_window_free(_input_window);
-	_input_window = 0;
-	return 0;
+        ecore_x_window_free(_input_window);
+        _input_window = 0;
+        return 0;
      }
 
    w = (double)zone->w * e_config->winlist_pos_size_w;
    if (w > e_config->winlist_pos_max_w) w = e_config->winlist_pos_max_w;
-   else if (w < e_config->winlist_pos_min_w) w = e_config->winlist_pos_min_w;
+   else if (w < e_config->winlist_pos_min_w)
+     w = e_config->winlist_pos_min_w;
    if (w > zone->w) w = zone->w;
    x = (double)(zone->w - w) * e_config->winlist_pos_align_x;
 
    h = (double)zone->h * e_config->winlist_pos_size_h;
    if (h > e_config->winlist_pos_max_h) h = e_config->winlist_pos_max_h;
-   else if (h < e_config->winlist_pos_min_h) h = e_config->winlist_pos_min_h;
+   else if (h < e_config->winlist_pos_min_h)
+     h = e_config->winlist_pos_min_h;
    if (h > zone->h) h = zone->h;
    y = (double)(zone->h - h) * e_config->winlist_pos_align_y;
 
@@ -153,7 +155,7 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
    o = edje_object_add(_winlist->evas);
    _bg_object = o;
    e_theme_edje_object_set(o, "base/theme/winlist",
-			   "e/widgets/winlist/main");
+                           "e/widgets/winlist/main");
    evas_object_move(o, 0, 0);
    evas_object_resize(o, w, h);
    evas_object_show(o);
@@ -178,16 +180,18 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
         switch (filter)
           {
            case E_WINLIST_FILTER_CLASS_WINDOWS:
-              pick = !strcmp(_last_border->client.icccm.class,
-                             bd->client.icccm.class);
-              break;
+             pick = !strcmp(_last_border->client.icccm.class,
+                            bd->client.icccm.class);
+             break;
+
            case E_WINLIST_FILTER_CLASSES:
-              pick = (!_wmclass_picked(wmclasses, bd->client.icccm.class));
-              if (pick)
-                wmclasses = eina_list_append(wmclasses, bd->client.icccm.class);
-              break;
+             pick = (!_wmclass_picked(wmclasses, bd->client.icccm.class));
+             if (pick)
+               wmclasses = eina_list_append(wmclasses, bd->client.icccm.class);
+             break;
+
            default:
-              pick = EINA_TRUE;
+             pick = EINA_TRUE;
           }
         if (pick) _e_winlist_border_add(bd, _winlist->zone, desk);
      }
@@ -196,8 +200,8 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
 
    if (!_wins)
      {
-	e_winlist_hide();
-	return 1;
+        e_winlist_hide();
+        return 1;
      }
 
    if (e_config->winlist_list_show_other_desk_windows ||
@@ -218,29 +222,29 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
    _e_winlist_size_adjust();
 
    _handlers = eina_list_append
-     (_handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_ADD, _e_winlist_cb_event_border_add, NULL));
+       (_handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_ADD, _e_winlist_cb_event_border_add, NULL));
    _handlers = eina_list_append
-     (_handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_REMOVE, _e_winlist_cb_event_border_remove, NULL));
+       (_handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_REMOVE, _e_winlist_cb_event_border_remove, NULL));
    _handlers = eina_list_append
-     (_handlers, ecore_event_handler_add
-      (ECORE_EVENT_KEY_DOWN, _e_winlist_cb_key_down, NULL));
+       (_handlers, ecore_event_handler_add
+         (ECORE_EVENT_KEY_DOWN, _e_winlist_cb_key_down, NULL));
    _handlers = eina_list_append
-     (_handlers, ecore_event_handler_add
-      (ECORE_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
+       (_handlers, ecore_event_handler_add
+         (ECORE_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
    _handlers = eina_list_append
-     (_handlers, ecore_event_handler_add
-      (ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_winlist_cb_mouse_down, NULL));
+       (_handlers, ecore_event_handler_add
+         (ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_winlist_cb_mouse_down, NULL));
    _handlers = eina_list_append
-     (_handlers, ecore_event_handler_add
-      (ECORE_EVENT_MOUSE_BUTTON_UP, _e_winlist_cb_mouse_up, NULL));
+       (_handlers, ecore_event_handler_add
+         (ECORE_EVENT_MOUSE_BUTTON_UP, _e_winlist_cb_mouse_up, NULL));
    _handlers = eina_list_append
-     (_handlers, ecore_event_handler_add
-      (ECORE_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));
+       (_handlers, ecore_event_handler_add
+         (ECORE_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));
    _handlers = eina_list_append
-     (_handlers, ecore_event_handler_add
-      (ECORE_EVENT_MOUSE_MOVE, _e_winlist_cb_mouse_move, NULL));
+       (_handlers, ecore_event_handler_add
+         (ECORE_EVENT_MOUSE_MOVE, _e_winlist_cb_mouse_move, NULL));
 
    e_popup_show(_winlist);
    return 1;
@@ -256,28 +260,28 @@ e_winlist_hide(void)
    if (!_winlist) return;
    if (_win_selected)
      {
-	ww = _win_selected->data;
-	bd = ww->border;
+        ww = _win_selected->data;
+        bd = ww->border;
      }
    evas_event_freeze(_winlist->evas);
    e_popup_hide(_winlist);
    e_box_freeze(_list_object);
    while (_wins)
      {
-	ww = _wins->data;
-	evas_object_del(ww->bg_object);
-	if (ww->icon_object) evas_object_del(ww->icon_object);
-	_wins = eina_list_remove_list(_wins, _wins);
-	if ((!bd) || (ww->border != bd))
-	  e_object_unref(E_OBJECT(ww->border));
-	free(ww);
+        ww = _wins->data;
+        evas_object_del(ww->bg_object);
+        if (ww->icon_object) evas_object_del(ww->icon_object);
+        _wins = eina_list_remove_list(_wins, _wins);
+        if ((!bd) || (ww->border != bd))
+          e_object_unref(E_OBJECT(ww->border));
+        free(ww);
      }
    e_box_thaw(_list_object);
    _win_selected = NULL;
    if (_icon_object)
      {
-	evas_object_del(_icon_object);
-	_icon_object = NULL;
+        evas_object_del(_icon_object);
+        _icon_object = NULL;
      }
    evas_object_del(_list_object);
    _list_object = NULL;
@@ -295,49 +299,49 @@ e_winlist_hide(void)
 
    if (_warp_timer)
      {
-	ecore_timer_del(_warp_timer);
-	_warp_timer = NULL;
+        ecore_timer_del(_warp_timer);
+        _warp_timer = NULL;
      }
    if (_scroll_timer)
      {
-	ecore_timer_del(_scroll_timer);
-	_scroll_timer = NULL;
+        ecore_timer_del(_scroll_timer);
+        _scroll_timer = NULL;
      }
    if (_animator)
      {
-	ecore_animator_del(_animator);
-	_animator = NULL;
+        ecore_animator_del(_animator);
+        _animator = NULL;
      }
    if (bd)
      {
-	if (bd->iconic)
-	  {
-	     if (!bd->lock_user_iconify)
-	       e_border_uniconify(bd);
-	  }
-	if (bd->shaded)
-	  {
-	     if (!bd->lock_user_shade)
-	       e_border_unshade(bd, bd->shade.dir);
-	  }
-	else if (bd->desk)
-	  {
-	     if (!bd->sticky) e_desk_show(bd->desk);
-	  }
-	if (!bd->lock_user_stacking)
-	  e_border_raise(bd);
+        if (bd->iconic)
+          {
+             if (!bd->lock_user_iconify)
+               e_border_uniconify(bd);
+          }
+        if (bd->shaded)
+          {
+             if (!bd->lock_user_shade)
+               e_border_unshade(bd, bd->shade.dir);
+          }
+        else if (bd->desk)
+          {
+             if (!bd->sticky) e_desk_show(bd->desk);
+          }
+        if (!bd->lock_user_stacking)
+          e_border_raise(bd);
 
-	if (!bd->lock_focus_out)
-	  {
-	     e_border_focus_set(bd, 1, 1);
-	     e_border_focus_latest_set(bd);
-	  }
-	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
-	    (e_config->winlist_warp_at_end) ||
-	    (e_config->winlist_warp_while_selecting))
-	  ecore_x_pointer_warp(bd->zone->container->win, _warp_to_x, _warp_to_y);
+        if (!bd->lock_focus_out)
+          {
+             e_border_focus_set(bd, 1, 1);
+             e_border_focus_latest_set(bd);
+          }
+        if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+            (e_config->winlist_warp_at_end) ||
+            (e_config->winlist_warp_while_selecting))
+          ecore_x_pointer_warp(bd->zone->container->win, _warp_to_x, _warp_to_y);
 
-	e_object_unref(E_OBJECT(bd));
+        e_object_unref(E_OBJECT(bd));
      }
 
    ecore_x_window_free(_input_window);
@@ -351,13 +355,13 @@ e_winlist_next(void)
    if (!_winlist) return;
    if (eina_list_count(_wins) == 1)
      {
-	if (!_win_selected)
-	  {
-	     _win_selected = _wins;
-	     _e_winlist_show_active();
-	     _e_winlist_activate();
-	  }
-	return;
+        if (!_win_selected)
+          {
+             _win_selected = _wins;
+             _e_winlist_show_active();
+             _e_winlist_activate();
+          }
+        return;
      }
    _e_winlist_deactivate();
    if (!_win_selected)
@@ -375,13 +379,13 @@ e_winlist_prev(void)
    if (!_winlist) return;
    if (eina_list_count(_wins) == 1)
      {
-	if (!_win_selected)
-	  {
-	     _win_selected = _wins;
-	     _e_winlist_show_active();
-	     _e_winlist_activate();
-	  }
-	return;
+        if (!_win_selected)
+          {
+             _win_selected = _wins;
+             _e_winlist_show_active();
+             _e_winlist_activate();
+          }
+        return;
      }
    _e_winlist_deactivate();
    if (!_win_selected)
@@ -411,61 +415,61 @@ e_winlist_left(E_Zone *zone)
    bd_orig = e_border_focused_get();
    if (!bd_orig) return;
 
-   center = bd_orig->x + bd_orig->w/2;
+   center = bd_orig->x + bd_orig->w / 2;
 
    desk = e_desk_current_get(zone);
    e_border_focus_track_freeze();
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	int center_next;
-	int delta_next;
+        int center_next;
+        int delta_next;
 
-	if (bd == bd_orig) continue;
-	if ((!bd->client.icccm.accepts_focus) &&
-	      (!bd->client.icccm.take_focus)) continue;
-	if (bd->client.netwm.state.skip_taskbar) continue;
-	if (bd->user_skip_winlist) continue;
-	if (bd->iconic)
-	  {
-	     if (!e_config->winlist_list_show_iconified) continue;
-	     if ((bd->zone != zone) &&
+        if (bd == bd_orig) continue;
+        if ((!bd->client.icccm.accepts_focus) &&
+            (!bd->client.icccm.take_focus)) continue;
+        if (bd->client.netwm.state.skip_taskbar) continue;
+        if (bd->user_skip_winlist) continue;
+        if (bd->iconic)
+          {
+             if (!e_config->winlist_list_show_iconified) continue;
+             if ((bd->zone != zone) &&
                  (!e_config->winlist_list_show_other_screen_iconified))
                continue;
-	     if ((bd->desk != desk) &&
+             if ((bd->desk != desk) &&
                  (!e_config->winlist_list_show_other_desk_iconified)) continue;
-	  }
-	else
-	  {
-	     if (bd->sticky)
-	       {
-		  if ((bd->zone != zone) &&
+          }
+        else
+          {
+             if (bd->sticky)
+               {
+                  if ((bd->zone != zone) &&
                       (!e_config->winlist_list_show_other_screen_windows))
                     continue;
-	       }
-	     else
-	       {
-		  if (bd->desk != desk)
-		    {
-		       if ((bd->zone) && (bd->zone != zone))
-			 {
-			    if (!e_config->winlist_list_show_other_screen_windows)
-			      continue;
-			 }
-		       else if (!e_config->winlist_list_show_other_desk_windows)
-			 continue;
-		    }
-	       }
-	  }
-	/* bd is suitable */
-	center_next = bd->x + bd->w / 2;
-	if (center_next >= center) continue;
-	delta_next = bd_orig->x - (bd->x + bd->w);
-	if (delta_next < 0) delta_next = center - center_next;
-	if (delta_next >= 0 && delta_next < delta)
-	  {
-	     _bd_next = bd;
-	     delta = delta_next;
-	  }
+               }
+             else
+               {
+                  if (bd->desk != desk)
+                    {
+                       if ((bd->zone) && (bd->zone != zone))
+                         {
+                            if (!e_config->winlist_list_show_other_screen_windows)
+                              continue;
+                         }
+                       else if (!e_config->winlist_list_show_other_desk_windows)
+                         continue;
+                    }
+               }
+          }
+        /* bd is suitable */
+        center_next = bd->x + bd->w / 2;
+        if (center_next >= center) continue;
+        delta_next = bd_orig->x - (bd->x + bd->w);
+        if (delta_next < 0) delta_next = center - center_next;
+        if (delta_next >= 0 && delta_next < delta)
+          {
+             _bd_next = bd;
+             delta = delta_next;
+          }
      }
    e_border_focus_track_thaw();
 
@@ -474,41 +478,41 @@ e_winlist_left(E_Zone *zone)
         if (!bd_orig->lock_focus_out)
           e_border_focus_set(bd_orig, 0, 0);
 
-	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
-	    (e_config->winlist_warp_at_end) ||
-	    (e_config->winlist_warp_while_selecting))
-	  {
-	     _warp_to_x = _bd_next->x + (_bd_next->w / 2);
-	     if (_warp_to_x < (_bd_next->zone->x + 1))
-	       _warp_to_x = _bd_next->zone->x +
-                   ((_bd_next->x + _bd_next->w - _bd_next->zone->x) / 2);
-	     else if (_warp_to_x >= (_bd_next->zone->x + _bd_next->zone->w - 1))
-	       _warp_to_x = (_bd_next->zone->x + _bd_next->zone->w + _bd_next->x) / 2;
+        if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+            (e_config->winlist_warp_at_end) ||
+            (e_config->winlist_warp_while_selecting))
+          {
+             _warp_to_x = _bd_next->x + (_bd_next->w / 2);
+             if (_warp_to_x < (_bd_next->zone->x + 1))
+               _warp_to_x = _bd_next->zone->x +
+                 ((_bd_next->x + _bd_next->w - _bd_next->zone->x) / 2);
+             else if (_warp_to_x >= (_bd_next->zone->x + _bd_next->zone->w - 1))
+               _warp_to_x = (_bd_next->zone->x + _bd_next->zone->w + _bd_next->x) / 2;
 
-	     _warp_to_y = _bd_next->y + (_bd_next->h / 2);
-	     if (_warp_to_y < (_bd_next->zone->y + 1))
-	       _warp_to_y = _bd_next->zone->y +
-                   ((_bd_next->y + _bd_next->h - _bd_next->zone->y) / 2);
-	     else if (_warp_to_y >= (_bd_next->zone->y + _bd_next->zone->h - 1))
-	       _warp_to_y = (_bd_next->zone->y + _bd_next->zone->h + _bd_next->y) / 2;
+             _warp_to_y = _bd_next->y + (_bd_next->h / 2);
+             if (_warp_to_y < (_bd_next->zone->y + 1))
+               _warp_to_y = _bd_next->zone->y +
+                 ((_bd_next->y + _bd_next->h - _bd_next->zone->y) / 2);
+             else if (_warp_to_y >= (_bd_next->zone->y + _bd_next->zone->h - 1))
+               _warp_to_y = (_bd_next->zone->y + _bd_next->zone->h + _bd_next->y) / 2;
 
              _old_warp_x = _old_warp_y = INT_MAX;
-	  }
+          }
 
-	ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
-	_win = &zone->container->win;
-	_warp_to = 1;
-	if (!_warp_timer)
-	  _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
-	if (!_animator)
-	  _animator = ecore_animator_add(_e_winlist_animator, NULL);
-	
-	if ((!_bd_next->lock_user_stacking) &&
+        ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
+        _win = &zone->container->win;
+        _warp_to = 1;
+        if (!_warp_timer)
+          _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
+        if (!_animator)
+          _animator = ecore_animator_add(_e_winlist_animator, NULL);
+
+        if ((!_bd_next->lock_user_stacking) &&
             (e_config->winlist_list_raise_while_selecting))
-	  e_border_raise(_bd_next);
-	if ((!_bd_next->lock_focus_out) &&
+          e_border_raise(_bd_next);
+        if ((!_bd_next->lock_focus_out) &&
             (e_config->winlist_list_focus_while_selecting))
-	  e_border_focus_set(_bd_next, 1, 1);
+          e_border_focus_set(_bd_next, 1, 1);
      }
 }
 
@@ -530,61 +534,61 @@ e_winlist_down(E_Zone *zone)
    bd_orig = e_border_focused_get();
    if (!bd_orig) return;
 
-   center = bd_orig->y + bd_orig->h/2;
+   center = bd_orig->y + bd_orig->h / 2;
 
    desk = e_desk_current_get(zone);
    e_border_focus_track_freeze();
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	int center_next;
-	int delta_next;
+        int center_next;
+        int delta_next;
 
-	if (bd == bd_orig) continue;
-	if ((!bd->client.icccm.accepts_focus) &&
-	      (!bd->client.icccm.take_focus)) continue;
-	if (bd->client.netwm.state.skip_taskbar) continue;
-	if (bd->user_skip_winlist) continue;
-	if (bd->iconic)
-	  {
-	     if (!e_config->winlist_list_show_iconified) continue;
-	     if ((bd->zone != zone) &&
+        if (bd == bd_orig) continue;
+        if ((!bd->client.icccm.accepts_focus) &&
+            (!bd->client.icccm.take_focus)) continue;
+        if (bd->client.netwm.state.skip_taskbar) continue;
+        if (bd->user_skip_winlist) continue;
+        if (bd->iconic)
+          {
+             if (!e_config->winlist_list_show_iconified) continue;
+             if ((bd->zone != zone) &&
                  (!e_config->winlist_list_show_other_screen_iconified))
                continue;
-	     if ((bd->desk != desk) &&
+             if ((bd->desk != desk) &&
                  (!e_config->winlist_list_show_other_desk_iconified)) continue;
-	  }
-	else
-	  {
-	     if (bd->sticky)
-	       {
-		  if ((bd->zone != zone) &&
+          }
+        else
+          {
+             if (bd->sticky)
+               {
+                  if ((bd->zone != zone) &&
                       (!e_config->winlist_list_show_other_screen_windows))
                     continue;
-	       }
-	     else
-	       {
-		  if (bd->desk != desk)
-		    {
-		       if ((bd->zone) && (bd->zone != zone))
-			 {
-			    if (!e_config->winlist_list_show_other_screen_windows)
-			      continue;
-			 }
-		       else if (!e_config->winlist_list_show_other_desk_windows)
-			 continue;
-		    }
-	       }
-	  }
-	/* bd is suitable */
-	center_next = bd->y + bd->h/2;
-	if (center_next <= center) continue;
-	delta_next = bd->y - (bd_orig->y + bd_orig->h);
-	if (delta_next < 0) delta_next = center - center_next;
-	if (delta_next >= 0 && delta_next < delta)
-	  {
-	     _bd_next = bd;
-	     delta = delta_next;
-	  }
+               }
+             else
+               {
+                  if (bd->desk != desk)
+                    {
+                       if ((bd->zone) && (bd->zone != zone))
+                         {
+                            if (!e_config->winlist_list_show_other_screen_windows)
+                              continue;
+                         }
+                       else if (!e_config->winlist_list_show_other_desk_windows)
+                         continue;
+                    }
+               }
+          }
+        /* bd is suitable */
+        center_next = bd->y + bd->h / 2;
+        if (center_next <= center) continue;
+        delta_next = bd->y - (bd_orig->y + bd_orig->h);
+        if (delta_next < 0) delta_next = center - center_next;
+        if (delta_next >= 0 && delta_next < delta)
+          {
+             _bd_next = bd;
+             delta = delta_next;
+          }
      }
    e_border_focus_track_thaw();
 
@@ -593,41 +597,41 @@ e_winlist_down(E_Zone *zone)
         if (!bd_orig->lock_focus_out)
           e_border_focus_set(bd_orig, 0, 0);
 
-	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
-	    (e_config->winlist_warp_at_end) ||
-	    (e_config->winlist_warp_while_selecting))
-	  {
-	     _warp_to_x = _bd_next->x + (_bd_next->w / 2);
-	     if (_warp_to_x < (_bd_next->zone->x + 1))
-	       _warp_to_x = _bd_next->zone->x +
-                   ((_bd_next->x + _bd_next->w - _bd_next->zone->x) / 2);
-	     else if (_warp_to_x >= (_bd_next->zone->x + _bd_next->zone->w - 1))
-	       _warp_to_x = (_bd_next->zone->x + _bd_next->zone->w + _bd_next->x) / 2;
+        if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+            (e_config->winlist_warp_at_end) ||
+            (e_config->winlist_warp_while_selecting))
+          {
+             _warp_to_x = _bd_next->x + (_bd_next->w / 2);
+             if (_warp_to_x < (_bd_next->zone->x + 1))
+               _warp_to_x = _bd_next->zone->x +
+                 ((_bd_next->x + _bd_next->w - _bd_next->zone->x) / 2);
+             else if (_warp_to_x >= (_bd_next->zone->x + _bd_next->zone->w - 1))
+               _warp_to_x = (_bd_next->zone->x + _bd_next->zone->w + _bd_next->x) / 2;
 
-	     _warp_to_y = _bd_next->y + (_bd_next->h / 2);
-	     if (_warp_to_y < (_bd_next->zone->y + 1))
-	       _warp_to_y = _bd_next->zone->y +
-                   ((_bd_next->y + _bd_next->h - _bd_next->zone->y) / 2);
-	     else if (_warp_to_y >= (_bd_next->zone->y + _bd_next->zone->h - 1))
-	       _warp_to_y = (_bd_next->zone->y + _bd_next->zone->h + _bd_next->y) / 2;
+             _warp_to_y = _bd_next->y + (_bd_next->h / 2);
+             if (_warp_to_y < (_bd_next->zone->y + 1))
+               _warp_to_y = _bd_next->zone->y +
+                 ((_bd_next->y + _bd_next->h - _bd_next->zone->y) / 2);
+             else if (_warp_to_y >= (_bd_next->zone->y + _bd_next->zone->h - 1))
+               _warp_to_y = (_bd_next->zone->y + _bd_next->zone->h + _bd_next->y) / 2;
 
              _old_warp_x = _old_warp_y = INT_MAX;
-	  }
+          }
 
-	ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
-	_win = &zone->container->win;
-	_warp_to = 1;
-	if (!_warp_timer)
-	  _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
-	if (!_animator)
-	  _animator = ecore_animator_add(_e_winlist_animator, NULL);
-	
-	if ((!_bd_next->lock_user_stacking) &&
+        ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
+        _win = &zone->container->win;
+        _warp_to = 1;
+        if (!_warp_timer)
+          _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
+        if (!_animator)
+          _animator = ecore_animator_add(_e_winlist_animator, NULL);
+
+        if ((!_bd_next->lock_user_stacking) &&
             (e_config->winlist_list_raise_while_selecting))
-	  e_border_raise(_bd_next);
-	if ((!_bd_next->lock_focus_out) &&
+          e_border_raise(_bd_next);
+        if ((!_bd_next->lock_focus_out) &&
             (e_config->winlist_list_focus_while_selecting))
-	  e_border_focus_set(_bd_next, 1, 1);
+          e_border_focus_set(_bd_next, 1, 1);
      }
 }
 
@@ -649,61 +653,61 @@ e_winlist_up(E_Zone *zone)
    bd_orig = e_border_focused_get();
    if (!bd_orig) return;
 
-   center = bd_orig->y + bd_orig->h/2;
+   center = bd_orig->y + bd_orig->h / 2;
 
    desk = e_desk_current_get(zone);
    e_border_focus_track_freeze();
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	int center_next;
-	int delta_next;
+        int center_next;
+        int delta_next;
 
-	if (bd == bd_orig) continue;
-	if ((!bd->client.icccm.accepts_focus) &&
-	      (!bd->client.icccm.take_focus)) continue;
-	if (bd->client.netwm.state.skip_taskbar) continue;
-	if (bd->user_skip_winlist) continue;
-	if (bd->iconic)
-	  {
-	     if (!e_config->winlist_list_show_iconified) continue;
-	     if ((bd->zone != zone) &&
+        if (bd == bd_orig) continue;
+        if ((!bd->client.icccm.accepts_focus) &&
+            (!bd->client.icccm.take_focus)) continue;
+        if (bd->client.netwm.state.skip_taskbar) continue;
+        if (bd->user_skip_winlist) continue;
+        if (bd->iconic)
+          {
+             if (!e_config->winlist_list_show_iconified) continue;
+             if ((bd->zone != zone) &&
                  (!e_config->winlist_list_show_other_screen_iconified))
                continue;
-	     if ((bd->desk != desk) &&
+             if ((bd->desk != desk) &&
                  (!e_config->winlist_list_show_other_desk_iconified)) continue;
-	  }
-	else
-	  {
-	     if (bd->sticky)
-	       {
-		  if ((bd->zone != zone) &&
+          }
+        else
+          {
+             if (bd->sticky)
+               {
+                  if ((bd->zone != zone) &&
                       (!e_config->winlist_list_show_other_screen_windows))
                     continue;
-	       }
-	     else
-	       {
-		  if (bd->desk != desk)
-		    {
-		       if ((bd->zone) && (bd->zone != zone))
-			 {
-			    if (!e_config->winlist_list_show_other_screen_windows)
-			      continue;
-			 }
-		       else if (!e_config->winlist_list_show_other_desk_windows)
-			 continue;
-		    }
-	       }
-	  }
-	/* bd is suitable */
-	center_next = bd->y + bd->h/2;
-	if (center_next >= center) continue;
-	delta_next = bd_orig->y - (bd->y + bd->h);
-	if (delta_next < 0) delta_next = center - center_next;
-	if (delta_next >= 0 && delta_next < delta)
-	  {
-	     _bd_next = bd;
-	     delta = delta_next;
-	  }
+               }
+             else
+               {
+                  if (bd->desk != desk)
+                    {
+                       if ((bd->zone) && (bd->zone != zone))
+                         {
+                            if (!e_config->winlist_list_show_other_screen_windows)
+                              continue;
+                         }
+                       else if (!e_config->winlist_list_show_other_desk_windows)
+                         continue;
+                    }
+               }
+          }
+        /* bd is suitable */
+        center_next = bd->y + bd->h / 2;
+        if (center_next >= center) continue;
+        delta_next = bd_orig->y - (bd->y + bd->h);
+        if (delta_next < 0) delta_next = center - center_next;
+        if (delta_next >= 0 && delta_next < delta)
+          {
+             _bd_next = bd;
+             delta = delta_next;
+          }
      }
    e_border_focus_track_thaw();
 
@@ -712,41 +716,41 @@ e_winlist_up(E_Zone *zone)
         if (!bd_orig->lock_focus_out)
           e_border_focus_set(bd_orig, 0, 0);
 
-	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
-	    (e_config->winlist_warp_at_end) ||
-	    (e_config->winlist_warp_while_selecting))
-	  {
-	     _warp_to_x = _bd_next->x + (_bd_next->w / 2);
-	     if (_warp_to_x < (_bd_next->zone->x + 1))
-	       _warp_to_x = _bd_next->zone->x +
-                   ((_bd_next->x + _bd_next->w - _bd_next->zone->x) / 2);
-	     else if (_warp_to_x >= (_bd_next->zone->x + _bd_next->zone->w - 1))
-	       _warp_to_x = (_bd_next->zone->x + _bd_next->zone->w + _bd_next->x) / 2;
+        if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+            (e_config->winlist_warp_at_end) ||
+            (e_config->winlist_warp_while_selecting))
+          {
+             _warp_to_x = _bd_next->x + (_bd_next->w / 2);
+             if (_warp_to_x < (_bd_next->zone->x + 1))
+               _warp_to_x = _bd_next->zone->x +
+                 ((_bd_next->x + _bd_next->w - _bd_next->zone->x) / 2);
+             else if (_warp_to_x >= (_bd_next->zone->x + _bd_next->zone->w - 1))
+               _warp_to_x = (_bd_next->zone->x + _bd_next->zone->w + _bd_next->x) / 2;
 
-	     _warp_to_y = _bd_next->y + (_bd_next->h / 2);
-	     if (_warp_to_y < (_bd_next->zone->y + 1))
-	       _warp_to_y = _bd_next->zone->y +
-                   ((_bd_next->y + _bd_next->h - _bd_next->zone->y) / 2);
-	     else if (_warp_to_y >= (_bd_next->zone->y + _bd_next->zone->h - 1))
-	       _warp_to_y = (_bd_next->zone->y + _bd_next->zone->h + _bd_next->y) / 2;
+             _warp_to_y = _bd_next->y + (_bd_next->h / 2);
+             if (_warp_to_y < (_bd_next->zone->y + 1))
+               _warp_to_y = _bd_next->zone->y +
+                 ((_bd_next->y + _bd_next->h - _bd_next->zone->y) / 2);
+             else if (_warp_to_y >= (_bd_next->zone->y + _bd_next->zone->h - 1))
+               _warp_to_y = (_bd_next->zone->y + _bd_next->zone->h + _bd_next->y) / 2;
 
              _old_warp_x = _old_warp_y = INT_MAX;
-	  }
+          }
 
-	ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
-	_win = &zone->container->win;
-	_warp_to = 1;
-	if (!_warp_timer)
-	  _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
-	if (!_animator)
-	  _animator = ecore_animator_add(_e_winlist_animator, NULL);
-	
-	if ((!_bd_next->lock_user_stacking) &&
+        ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
+        _win = &zone->container->win;
+        _warp_to = 1;
+        if (!_warp_timer)
+          _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
+        if (!_animator)
+          _animator = ecore_animator_add(_e_winlist_animator, NULL);
+
+        if ((!_bd_next->lock_user_stacking) &&
             (e_config->winlist_list_raise_while_selecting))
-	  e_border_raise(_bd_next);
-	if ((!_bd_next->lock_focus_out) &&
+          e_border_raise(_bd_next);
+        if ((!_bd_next->lock_focus_out) &&
             (e_config->winlist_list_focus_while_selecting))
-	  e_border_focus_set(_bd_next, 1, 1);
+          e_border_focus_set(_bd_next, 1, 1);
      }
 }
 
@@ -768,61 +772,61 @@ e_winlist_right(E_Zone *zone)
    bd_orig = e_border_focused_get();
    if (!bd_orig) return;
 
-   center = bd_orig->x + bd_orig->w/2;
+   center = bd_orig->x + bd_orig->w / 2;
 
    desk = e_desk_current_get(zone);
    e_border_focus_track_freeze();
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
-	int center_next;
-	int delta_next;
+        int center_next;
+        int delta_next;
 
-	if (bd == bd_orig) continue;
-	if ((!bd->client.icccm.accepts_focus) &&
-	      (!bd->client.icccm.take_focus)) continue;
-	if (bd->client.netwm.state.skip_taskbar) continue;
-	if (bd->user_skip_winlist) continue;
-	if (bd->iconic)
-	  {
-	     if (!e_config->winlist_list_show_iconified) continue;
-	     if ((bd->zone != zone) &&
+        if (bd == bd_orig) continue;
+        if ((!bd->client.icccm.accepts_focus) &&
+            (!bd->client.icccm.take_focus)) continue;
+        if (bd->client.netwm.state.skip_taskbar) continue;
+        if (bd->user_skip_winlist) continue;
+        if (bd->iconic)
+          {
+             if (!e_config->winlist_list_show_iconified) continue;
+             if ((bd->zone != zone) &&
                  (!e_config->winlist_list_show_other_screen_iconified))
                continue;
-	     if ((bd->desk != desk) &&
+             if ((bd->desk != desk) &&
                  (!e_config->winlist_list_show_other_desk_iconified)) continue;
-	  }
-	else
-	  {
-	     if (bd->sticky)
-	       {
-		  if ((bd->zone != zone) &&
+          }
+        else
+          {
+             if (bd->sticky)
+               {
+                  if ((bd->zone != zone) &&
                       (!e_config->winlist_list_show_other_screen_windows))
                     continue;
-	       }
-	     else
-	       {
-		  if (bd->desk != desk)
-		    {
-		       if ((bd->zone) && (bd->zone != zone))
-			 {
-			    if (!e_config->winlist_list_show_other_screen_windows)
-			      continue;
-			 }
-		       else if (!e_config->winlist_list_show_other_desk_windows)
-			 continue;
-		    }
-	       }
-	  }
-	/* bd is suitable */
-	center_next = bd->x + bd->w / 2;
-	if (center_next <= center) continue;
-	delta_next = bd->x - (bd_orig->x + bd_orig->w);
-	if (delta_next < 0) delta = center_next - center;
-	if (delta_next >= 0 && delta_next < delta)
-	  {
-	     _bd_next = bd;
-	     delta = delta_next;
-	  }
+               }
+             else
+               {
+                  if (bd->desk != desk)
+                    {
+                       if ((bd->zone) && (bd->zone != zone))
+                         {
+                            if (!e_config->winlist_list_show_other_screen_windows)
+                              continue;
+                         }
+                       else if (!e_config->winlist_list_show_other_desk_windows)
+                         continue;
+                    }
+               }
+          }
+        /* bd is suitable */
+        center_next = bd->x + bd->w / 2;
+        if (center_next <= center) continue;
+        delta_next = bd->x - (bd_orig->x + bd_orig->w);
+        if (delta_next < 0) delta = center_next - center;
+        if (delta_next >= 0 && delta_next < delta)
+          {
+             _bd_next = bd;
+             delta = delta_next;
+          }
      }
    e_border_focus_track_thaw();
 
@@ -831,41 +835,41 @@ e_winlist_right(E_Zone *zone)
         if (!bd_orig->lock_focus_out)
           e_border_focus_set(bd_orig, 0, 0);
 
-	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
-	    (e_config->winlist_warp_at_end) ||
-	    (e_config->winlist_warp_while_selecting))
-	  {
-	     _warp_to_x = _bd_next->x + (_bd_next->w / 2);
-	     if (_warp_to_x < (_bd_next->zone->x + 1))
-	       _warp_to_x = _bd_next->zone->x +
-                   ((_bd_next->x + _bd_next->w - _bd_next->zone->x) / 2);
-	     else if (_warp_to_x >= (_bd_next->zone->x + _bd_next->zone->w - 1))
-	       _warp_to_x = (_bd_next->zone->x + _bd_next->zone->w + _bd_next->x) / 2;
+        if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+            (e_config->winlist_warp_at_end) ||
+            (e_config->winlist_warp_while_selecting))
+          {
+             _warp_to_x = _bd_next->x + (_bd_next->w / 2);
+             if (_warp_to_x < (_bd_next->zone->x + 1))
+               _warp_to_x = _bd_next->zone->x +
+                 ((_bd_next->x + _bd_next->w - _bd_next->zone->x) / 2);
+             else if (_warp_to_x >= (_bd_next->zone->x + _bd_next->zone->w - 1))
+               _warp_to_x = (_bd_next->zone->x + _bd_next->zone->w + _bd_next->x) / 2;
 
-	     _warp_to_y = _bd_next->y + (_bd_next->h / 2);
-	     if (_warp_to_y < (_bd_next->zone->y + 1))
-	       _warp_to_y = _bd_next->zone->y +
-                   ((_bd_next->y + _bd_next->h - _bd_next->zone->y) / 2);
-	     else if (_warp_to_y >= (_bd_next->zone->y + _bd_next->zone->h - 1))
-	       _warp_to_y = (_bd_next->zone->y + _bd_next->zone->h + _bd_next->y) / 2;
+             _warp_to_y = _bd_next->y + (_bd_next->h / 2);
+             if (_warp_to_y < (_bd_next->zone->y + 1))
+               _warp_to_y = _bd_next->zone->y +
+                 ((_bd_next->y + _bd_next->h - _bd_next->zone->y) / 2);
+             else if (_warp_to_y >= (_bd_next->zone->y + _bd_next->zone->h - 1))
+               _warp_to_y = (_bd_next->zone->y + _bd_next->zone->h + _bd_next->y) / 2;
 
              _old_warp_x = _old_warp_y = INT_MAX;
-	  }
+          }
 
-	ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
-	_win = &zone->container->win;
-	_warp_to = 1;
-	if (!_warp_timer)
-	  _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
-	if (!_animator)
-	  _animator = ecore_animator_add(_e_winlist_animator, NULL);
-	
-	if ((!_bd_next->lock_user_stacking) &&
+        ecore_x_pointer_xy_get(zone->container->win, &_warp_x, &_warp_y);
+        _win = &zone->container->win;
+        _warp_to = 1;
+        if (!_warp_timer)
+          _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
+        if (!_animator)
+          _animator = ecore_animator_add(_e_winlist_animator, NULL);
+
+        if ((!_bd_next->lock_user_stacking) &&
             (e_config->winlist_list_raise_while_selecting))
-	  e_border_raise(_bd_next);
-	if ((!_bd_next->lock_focus_out) &&
+          e_border_raise(_bd_next);
+        if ((!_bd_next->lock_focus_out) &&
             (e_config->winlist_list_focus_while_selecting))
-	  e_border_focus_set(_bd_next, 1, 1);
+          e_border_focus_set(_bd_next, 1, 1);
      }
 }
 
@@ -876,9 +880,9 @@ e_winlist_modifiers_set(int mod)
    _hold_mod = mod;
    _hold_count = 0;
    if (_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) _hold_count++;
-   if (_hold_mod & ECORE_EVENT_MODIFIER_CTRL)  _hold_count++;
-   if (_hold_mod & ECORE_EVENT_MODIFIER_ALT)   _hold_count++;
-   if (_hold_mod & ECORE_EVENT_MODIFIER_WIN)   _hold_count++;
+   if (_hold_mod & ECORE_EVENT_MODIFIER_CTRL) _hold_count++;
+   if (_hold_mod & ECORE_EVENT_MODIFIER_ALT) _hold_count++;
+   if (_hold_mod & ECORE_EVENT_MODIFIER_WIN) _hold_count++;
 }
 
 /* local subsystem functions */
@@ -902,13 +906,15 @@ _e_winlist_size_adjust(void)
    w = (double)zone->w * e_config->winlist_pos_size_w;
    if (w < mw) w = mw;
    if (w > e_config->winlist_pos_max_w) w = e_config->winlist_pos_max_w;
-   else if (w < e_config->winlist_pos_min_w) w = e_config->winlist_pos_min_w;
+   else if (w < e_config->winlist_pos_min_w)
+     w = e_config->winlist_pos_min_w;
    if (w > zone->w) w = zone->w;
    x = (double)(zone->w - w) * e_config->winlist_pos_align_x;
 
    h = mh;
    if (h > e_config->winlist_pos_max_h) h = e_config->winlist_pos_max_h;
-   else if (h < e_config->winlist_pos_min_h) h = e_config->winlist_pos_min_h;
+   else if (h < e_config->winlist_pos_min_h)
+     h = e_config->winlist_pos_min_h;
    if (h > zone->h) h = zone->h;
    y = (double)(zone->h - h) * e_config->winlist_pos_align_y;
 
@@ -929,32 +935,32 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
    if (bd->user_skip_winlist) return;
    if (bd->iconic)
      {
-	if (!e_config->winlist_list_show_iconified) return;
-	if ((bd->zone != zone) &&
-	    (!e_config->winlist_list_show_other_screen_iconified)) return;
-	if ((bd->desk != desk) &&
-	    (!e_config->winlist_list_show_other_desk_iconified)) return;
+        if (!e_config->winlist_list_show_iconified) return;
+        if ((bd->zone != zone) &&
+            (!e_config->winlist_list_show_other_screen_iconified)) return;
+        if ((bd->desk != desk) &&
+            (!e_config->winlist_list_show_other_desk_iconified)) return;
      }
    else
      {
-	if (bd->sticky)
-	  {
-	     if ((bd->zone != zone) &&
-		 (!e_config->winlist_list_show_other_screen_windows)) return;
-	  }
-	else
-	  {
-	     if (bd->desk != desk)
-	       {
-		  if ((bd->zone) && (bd->zone != zone))
-		    {
-		       if (!e_config->winlist_list_show_other_screen_windows)
+        if (bd->sticky)
+          {
+             if ((bd->zone != zone) &&
+                 (!e_config->winlist_list_show_other_screen_windows)) return;
+          }
+        else
+          {
+             if (bd->desk != desk)
+               {
+                  if ((bd->zone) && (bd->zone != zone))
+                    {
+                       if (!e_config->winlist_list_show_other_screen_windows)
                          return;
-		    }
-		  else if (!e_config->winlist_list_show_other_desk_windows)
+                    }
+                  else if (!e_config->winlist_list_show_other_desk_windows)
                     return;
-	       }
-	  }
+               }
+          }
      }
 
    ww = E_NEW(E_Winlist_Win, 1);
@@ -964,15 +970,15 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
    o = edje_object_add(_winlist->evas);
    ww->bg_object = o;
    e_theme_edje_object_set(o, "base/theme/winlist",
-			   "e/widgets/winlist/item");
+                           "e/widgets/winlist/item");
    edje_object_part_text_set(o, "e.text.label", e_border_name_get(ww->border));
    evas_object_show(o);
    if (edje_object_part_exists(ww->bg_object, "e.swallow.icon"))
      {
-	o = e_border_icon_add(bd, _winlist->evas);
-	ww->icon_object = o;
-	edje_object_part_swallow(ww->bg_object, "e.swallow.icon", o);
-	evas_object_show(o);
+        o = e_border_icon_add(bd, _winlist->evas);
+        ww->icon_object = o;
+        edje_object_part_swallow(ww->bg_object, "e.swallow.icon", o);
+        evas_object_show(o);
      }
    if (bd->shaded)
      edje_object_signal_emit(ww->bg_object, "e,state,shaded", "e");
@@ -980,19 +986,19 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
      edje_object_signal_emit(ww->bg_object, "e,state,iconified", "e");
    else if (bd->desk != desk)
      {
-	if (!((bd->sticky) && (bd->zone == zone)))
-	  edje_object_signal_emit(ww->bg_object, "e,state,invisible", "e");
+        if (!((bd->sticky) && (bd->zone == zone)))
+          edje_object_signal_emit(ww->bg_object, "e,state,invisible", "e");
      }
 
    edje_object_size_min_calc(ww->bg_object, &mw, &mh);
    e_box_pack_end(_list_object, ww->bg_object);
    e_box_pack_options_set(ww->bg_object,
-			  1, 1, /* fill */
-			  1, 0, /* expand */
-			  0.5, 0.5, /* align */
-			  mw, mh, /* min */
-			  9999, mh /* max */
-			 );
+                          1, 1, /* fill */
+                          1, 0, /* expand */
+                          0.5, 0.5, /* align */
+                          mw, mh, /* min */
+                          9999, mh /* max */
+                          );
    e_object_ref(E_OBJECT(ww->border));
 }
 
@@ -1005,22 +1011,22 @@ _e_winlist_border_del(E_Border *bd)
    if (bd == _last_border) _last_border = NULL;
    EINA_LIST_FOREACH(_wins, l, ww)
      {
-	if (ww->border == bd)
-	  {
+        if (ww->border == bd)
+          {
              e_object_unref(E_OBJECT(ww->border));
-	     if (l == _win_selected)
-	       {
-		  _win_selected = l->next;
-		  if (!_win_selected) _win_selected = l->prev;
-		  _e_winlist_show_active();
-		  _e_winlist_activate();
-	       }
-	     evas_object_del(ww->bg_object);
-	     if (ww->icon_object) evas_object_del(ww->icon_object);
-	     E_FREE(ww);
-	     _wins = eina_list_remove_list(_wins, l);
-	     return;
-	  }
+             if (l == _win_selected)
+               {
+                  _win_selected = l->next;
+                  if (!_win_selected) _win_selected = l->prev;
+                  _e_winlist_show_active();
+                  _e_winlist_activate();
+               }
+             evas_object_del(ww->bg_object);
+             if (ww->icon_object) evas_object_del(ww->icon_object);
+             E_FREE(ww);
+             _wins = eina_list_remove_list(_wins, l);
+             return;
+          }
      }
 }
 
@@ -1036,9 +1042,9 @@ _e_winlist_activate_nth(int n)
    l = eina_list_nth_list(_wins, n);
    if (l)
      {
-	_win_selected = l;
-	_e_winlist_show_active();
-	_e_winlist_activate();
+        _win_selected = l;
+        _e_winlist_show_active();
+        _e_winlist_activate();
      }
 }
 
@@ -1052,109 +1058,110 @@ _e_winlist_activate(void)
    if (!_win_selected) return;
    ww = _win_selected->data;
    edje_object_signal_emit(ww->bg_object, "e,state,selected", "e");
-   if (ww->icon_object) edje_object_signal_emit(ww->icon_object,
-                                                "e,state,selected", "e");
+   if (ww->icon_object)
+     edje_object_signal_emit(ww->icon_object,
+                             "e,state,selected", "e");
 
    if ((ww->border->iconic) &&
        (e_config->winlist_list_uncover_while_selecting))
      {
-	if (!ww->border->lock_user_iconify)
-	  e_border_uniconify(ww->border);
-	ww->was_iconified = 1;
-	ok = 1;
+        if (!ww->border->lock_user_iconify)
+          e_border_uniconify(ww->border);
+        ww->was_iconified = 1;
+        ok = 1;
      }
    if ((!ww->border->sticky) &&
        (ww->border->desk != e_desk_current_get(_winlist->zone)) &&
        (e_config->winlist_list_jump_desk_while_selecting))
      {
-	if (ww->border->desk) e_desk_show(ww->border->desk);
-	ok = 1;
+        if (ww->border->desk) e_desk_show(ww->border->desk);
+        ok = 1;
      }
    if (((ww->border->shaded) ||
-	((ww->border->changes.shaded) &&
-	 (ww->border->shade.val != ww->border->shaded) &&
-	 (ww->border->shade.val))) &&
+        ((ww->border->changes.shaded) &&
+         (ww->border->shade.val != ww->border->shaded) &&
+         (ww->border->shade.val))) &&
        (ww->border->desk == e_desk_current_get(_winlist->zone)) &&
        (e_config->winlist_list_uncover_while_selecting))
      {
-	if (!ww->border->lock_user_shade)
-	  e_border_unshade(ww->border, ww->border->shade.dir);
-	ww->was_shaded = 1;
-	ok = 1;
+        if (!ww->border->lock_user_shade)
+          e_border_unshade(ww->border, ww->border->shade.dir);
+        ww->was_shaded = 1;
+        ok = 1;
      }
    if ((!ww->border->iconic) &&
        ((ww->border->desk == e_desk_current_get(_winlist->zone)) ||
-	(ww->border->sticky)))
+        (ww->border->sticky)))
      ok = 1;
    if (ok)
      {
-	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
-	    (e_config->winlist_warp_at_end) ||
-	    (e_config->winlist_warp_while_selecting))
-	  {
-	     _warp_to_x = ww->border->x + (ww->border->w / 2);
-	     if (_warp_to_x < (ww->border->zone->x + 1))
-	       _warp_to_x = ww->border->zone->x +
-                   ((ww->border->x + ww->border->w - ww->border->zone->x) / 2);
-	     else if (_warp_to_x >= (ww->border->zone->x + ww->border->zone->w - 1))
-	       _warp_to_x = (ww->border->zone->x +
+        if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+            (e_config->winlist_warp_at_end) ||
+            (e_config->winlist_warp_while_selecting))
+          {
+             _warp_to_x = ww->border->x + (ww->border->w / 2);
+             if (_warp_to_x < (ww->border->zone->x + 1))
+               _warp_to_x = ww->border->zone->x +
+                 ((ww->border->x + ww->border->w - ww->border->zone->x) / 2);
+             else if (_warp_to_x >= (ww->border->zone->x + ww->border->zone->w - 1))
+               _warp_to_x = (ww->border->zone->x +
                              ww->border->zone->w + ww->border->x) / 2;
 
-	     _warp_to_y = ww->border->y + (ww->border->h / 2);
-	     if (_warp_to_y < (ww->border->zone->y + 1))
-	       _warp_to_y = ww->border->zone->y +
-                   ((ww->border->y + ww->border->h - ww->border->zone->y) / 2);
-	     else if (_warp_to_y >= (ww->border->zone->y + ww->border->zone->h - 1))
-	       _warp_to_y = (ww->border->zone->y +
+             _warp_to_y = ww->border->y + (ww->border->h / 2);
+             if (_warp_to_y < (ww->border->zone->y + 1))
+               _warp_to_y = ww->border->zone->y +
+                 ((ww->border->y + ww->border->h - ww->border->zone->y) / 2);
+             else if (_warp_to_y >= (ww->border->zone->y + ww->border->zone->h - 1))
+               _warp_to_y = (ww->border->zone->y +
                              ww->border->zone->h + ww->border->y) / 2;
-	  }
-	if (e_config->winlist_warp_while_selecting)
-	  {
-	     ecore_x_pointer_xy_get(_winlist->zone->container->win,
+          }
+        if (e_config->winlist_warp_while_selecting)
+          {
+             ecore_x_pointer_xy_get(_winlist->zone->container->win,
                                     &_warp_x, &_warp_y);
-	     _win = &_winlist->zone->container->win;
-	     e_border_focus_latest_set(ww->border);
-	     _warp_to = 1;
-	     if (!_warp_timer)
-	       _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
-	     if (!_animator)
-	       _animator = ecore_animator_add(_e_winlist_animator, NULL);
-	  }
-	else
-	  {
-	     _warp_to = 0;
-	     if (_warp_timer)
-	       {
-		  ecore_timer_del(_warp_timer);
-		  _warp_timer = NULL;
-	       }
-	     if (_animator)
-	       {
-		  ecore_animator_del(_animator);
-		  _animator = NULL;
-	       }
-	  }
-	
-	if ((!ww->border->lock_user_stacking) &&
+             _win = &_winlist->zone->container->win;
+             e_border_focus_latest_set(ww->border);
+             _warp_to = 1;
+             if (!_warp_timer)
+               _warp_timer = ecore_timer_add(0.01, _e_winlist_warp_timer, NULL);
+             if (!_animator)
+               _animator = ecore_animator_add(_e_winlist_animator, NULL);
+          }
+        else
+          {
+             _warp_to = 0;
+             if (_warp_timer)
+               {
+                  ecore_timer_del(_warp_timer);
+                  _warp_timer = NULL;
+               }
+             if (_animator)
+               {
+                  ecore_animator_del(_animator);
+                  _animator = NULL;
+               }
+          }
+
+        if ((!ww->border->lock_user_stacking) &&
             (e_config->winlist_list_raise_while_selecting))
-	  e_border_raise(ww->border);
-	if ((!ww->border->lock_focus_out) &&
+          e_border_raise(ww->border);
+        if ((!ww->border->lock_focus_out) &&
             (e_config->winlist_list_focus_while_selecting))
-	  e_border_focus_set(ww->border, 1, 1);
+          e_border_focus_set(ww->border, 1, 1);
      }
    edje_object_part_text_set(_bg_object, "e.text.label",
                              e_border_name_get(ww->border));
    if (_icon_object)
      {
-	evas_object_del(_icon_object);
-	_icon_object = NULL;
+        evas_object_del(_icon_object);
+        _icon_object = NULL;
      }
    if (edje_object_part_exists(_bg_object, "e.swallow.icon"))
      {
-	o = e_border_icon_add(ww->border, _winlist->evas);
-	_icon_object = o;
-	edje_object_part_swallow(_bg_object, "e.swallow.icon", o);
-	evas_object_show(o);
+        o = e_border_icon_add(ww->border, _winlist->evas);
+        _icon_object = o;
+        edje_object_part_swallow(_bg_object, "e.swallow.icon", o);
+        evas_object_show(o);
      }
 
    edje_object_signal_emit(_bg_object, "e,state,selected", "e");
@@ -1169,25 +1176,26 @@ _e_winlist_deactivate(void)
    ww = _win_selected->data;
    if (ww->was_shaded)
      {
-	if (!ww->border->lock_user_shade)
-	  e_border_shade(ww->border, ww->border->shade.dir);
+        if (!ww->border->lock_user_shade)
+          e_border_shade(ww->border, ww->border->shade.dir);
      }
    if (ww->was_iconified)
      {
-	if (!ww->border->lock_user_iconify)
-	  e_border_iconify(ww->border);
+        if (!ww->border->lock_user_iconify)
+          e_border_iconify(ww->border);
      }
    ww->was_shaded = 0;
    ww->was_iconified = 0;
    if (_icon_object)
      {
-	evas_object_del(_icon_object);
-	_icon_object = NULL;
+        evas_object_del(_icon_object);
+        _icon_object = NULL;
      }
    edje_object_part_text_set(_bg_object, "e.text.label", "");
    edje_object_signal_emit(ww->bg_object, "e,state,unselected", "e");
-   if (ww->icon_object) edje_object_signal_emit(ww->icon_object,
-                                                "e,state,unselected", "e");
+   if (ww->icon_object)
+     edje_object_signal_emit(ww->icon_object,
+                             "e,state,unselected", "e");
    if (!ww->border->lock_focus_in)
      e_border_focus_set(ww->border, 0, 0);
 }
@@ -1208,16 +1216,16 @@ _e_winlist_show_active(void)
    _scroll_align_to = (double)i / (double)(n - 1);
    if (e_config->winlist_scroll_animate)
      {
-	_scroll_to = 1;
-	if (!_scroll_timer)
-	  _scroll_timer = ecore_timer_add(0.01, _e_winlist_scroll_timer, NULL);
-	if (!_animator)
-	  _animator = ecore_animator_add(_e_winlist_animator, NULL);
+        _scroll_to = 1;
+        if (!_scroll_timer)
+          _scroll_timer = ecore_timer_add(0.01, _e_winlist_scroll_timer, NULL);
+        if (!_animator)
+          _animator = ecore_animator_add(_e_winlist_animator, NULL);
      }
    else
      {
-	_scroll_align = _scroll_align_to;
-	e_box_align_set(_list_object, 0.5, _scroll_align);
+        _scroll_align = _scroll_align_to;
+        e_box_align_set(_list_object, 0.5, _scroll_align);
      }
 }
 
@@ -1249,7 +1257,7 @@ _e_winlist_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__,
 
    ev = event;
    _e_winlist_border_add(ev->border, _winlist->zone,
-			 e_desk_current_get(_winlist->zone));
+                         e_desk_current_get(_winlist->zone));
    _e_winlist_size_adjust();
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1309,36 +1317,36 @@ _e_winlist_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      _e_winlist_activate_nth(9);
    else
      {
-	E_Action *act;
-	Eina_List *l;
-	E_Config_Binding_Key *binding;
-	E_Binding_Modifier mod;
+        E_Action *act;
+        Eina_List *l;
+        E_Config_Binding_Key *binding;
+        E_Binding_Modifier mod;
 
-	EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
-	  {
-	     if (binding->action && strcmp(binding->action, "winlist")) continue;
+        EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
+          {
+             if (binding->action && strcmp(binding->action, "winlist")) continue;
 
-	     mod = 0;
+             mod = 0;
 
-	     if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+             if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
                mod |= E_BINDING_MODIFIER_SHIFT;
-	     if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+             if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
                mod |= E_BINDING_MODIFIER_CTRL;
-	     if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+             if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
                mod |= E_BINDING_MODIFIER_ALT;
-	     if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
+             if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                mod |= E_BINDING_MODIFIER_WIN;
 
-	     if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
-		 ((binding->modifiers == mod) || (binding->any_mod)))
-	       {
-		  if (!(act = e_action_find(binding->action))) continue;
-		  if (act->func.go_key)
-		    act->func.go_key(E_OBJECT(_winlist->zone), binding->params, ev);
-		  else if (act->func.go)
-		    act->func.go(E_OBJECT(_winlist->zone), binding->params);
-	       }
-	  }
+             if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+                 ((binding->modifiers == mod) || (binding->any_mod)))
+               {
+                  if (!(act = e_action_find(binding->action))) continue;
+                  if (act->func.go_key)
+                    act->func.go_key(E_OBJECT(_winlist->zone), binding->params, ev);
+                  else if (act->func.go)
+                    act->func.go(E_OBJECT(_winlist->zone), binding->params);
+               }
+          }
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1356,66 +1364,66 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (!_winlist) return ECORE_CALLBACK_PASS_ON;
    if (_hold_mod)
      {
-	if ((_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) && (!strcmp(ev->key, "Shift_L")))
+        if ((_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) && (!strcmp(ev->key, "Shift_L")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) && (!strcmp(ev->key, "Shift_R")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) && (!strcmp(ev->key, "Shift_R")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_CTRL) && (!strcmp(ev->key, "Control_L")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_CTRL) && (!strcmp(ev->key, "Control_L")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_CTRL) && (!strcmp(ev->key, "Control_R")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_CTRL) && (!strcmp(ev->key, "Control_R")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Alt_L")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Alt_L")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Alt_R")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Alt_R")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Meta_L")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Meta_L")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Meta_R")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Meta_R")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Super_L")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Super_L")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Super_R")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Super_R")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Super_L")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Super_L")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Super_R")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Super_R")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Mode_switch")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Mode_switch")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Meta_L")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Meta_L")))
           _hold_count--;
-	else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Meta_R")))
+        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Meta_R")))
           _hold_count--;
-	if (_hold_count <= 0)
-	  {
-	     e_winlist_hide();
-	     return 1;
-	  }
+        if (_hold_count <= 0)
+          {
+             e_winlist_hide();
+             return 1;
+          }
      }
 
    EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
      {
-	if (binding->action && strcmp(binding->action,"winlist")) continue;
-	mod = 0;
+        if (binding->action && strcmp(binding->action, "winlist")) continue;
+        mod = 0;
 
-	if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
           mod |= E_BINDING_MODIFIER_SHIFT;
-	if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
           mod |= E_BINDING_MODIFIER_CTRL;
-	if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
           mod |= E_BINDING_MODIFIER_ALT;
-	if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
           mod |= E_BINDING_MODIFIER_WIN;
 
-	if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
-	    ((binding->modifiers == mod) || (binding->any_mod)))
-	  {
-	     if (!(act = e_action_find(binding->action))) continue;
-	     if (act->func.end_key)
-	       act->func.end_key(E_OBJECT(_winlist->zone), binding->params, ev);
-	     else if (act->func.end)
-	       act->func.end(E_OBJECT(_winlist->zone), binding->params);
-	  }
+        if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+            ((binding->modifiers == mod) || (binding->any_mod)))
+          {
+             if (!(act = e_action_find(binding->action))) continue;
+             if (act->func.end_key)
+               act->func.end_key(E_OBJECT(_winlist->zone), binding->params, ev);
+             else if (act->func.end)
+               act->func.end(E_OBJECT(_winlist->zone), binding->params);
+          }
      }
 
    return ECORE_CALLBACK_PASS_ON;
@@ -1429,7 +1437,7 @@ _e_winlist_cb_mouse_down(void *data __UNUSED__, int type __UNUSED__, void *event
    ev = event;
    if (ev->window != _input_window) return ECORE_CALLBACK_PASS_ON;
    e_bindings_mouse_down_event_handle(E_BINDING_CONTEXT_WINLIST,
-				      E_OBJECT(_winlist->zone), ev);
+                                      E_OBJECT(_winlist->zone), ev);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1441,7 +1449,7 @@ _e_winlist_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
    ev = event;
    if (ev->window != _input_window) return ECORE_CALLBACK_PASS_ON;
    e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_WINLIST,
-				    E_OBJECT(_winlist->zone), ev);
+                                    E_OBJECT(_winlist->zone), ev);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1454,15 +1462,15 @@ _e_winlist_cb_mouse_wheel(void *data __UNUSED__, int type __UNUSED__, void *even
    ev = event;
    if (ev->window != _input_window) return ECORE_CALLBACK_PASS_ON;
    e_bindings_wheel_event_handle(E_BINDING_CONTEXT_WINLIST,
-				 E_OBJECT(_winlist->zone), ev);
+                                 E_OBJECT(_winlist->zone), ev);
    if (ev->z < 0) /* up */
      {
-	for (i = ev->z; i < 0; i++)
+        for (i = ev->z; i < 0; i++)
           e_winlist_prev();
      }
    else if (ev->z > 0) /* down */
      {
-	for (i = ev->z; i > 0; i--)
+        for (i = ev->z; i > 0; i--)
           e_winlist_next();
      }
    return ECORE_CALLBACK_PASS_ON;
@@ -1488,12 +1496,12 @@ _e_winlist_scroll_timer(void *data __UNUSED__)
 {
    if (_scroll_to)
      {
-	double spd;
+        double spd;
 
-	spd = e_config->winlist_scroll_speed;
-	_scroll_align = (_scroll_align * (1.0 - spd)) +
+        spd = e_config->winlist_scroll_speed;
+        _scroll_align = (_scroll_align * (1.0 - spd)) +
           (_scroll_align_to * spd);
-	return 1;
+        return 1;
      }
    _scroll_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -1504,13 +1512,13 @@ _e_winlist_warp_timer(void *data __UNUSED__)
 {
    if (_warp_to && _warp_timer)
      {
-	double spd = e_config->winlist_warp_speed;
+        double spd = e_config->winlist_warp_speed;
 
-	_old_warp_x = _warp_x;
-	_old_warp_y = _warp_y;
-	_warp_x = (_warp_x * (1.0 - spd)) + (_warp_to_x * spd);
-	_warp_y = (_warp_y * (1.0 - spd)) + (_warp_to_y * spd);
-	return ECORE_CALLBACK_RENEW;
+        _old_warp_x = _warp_x;
+        _old_warp_y = _warp_y;
+        _warp_x = (_warp_x * (1.0 - spd)) + (_warp_to_x * spd);
+        _warp_y = (_warp_y * (1.0 - spd)) + (_warp_to_y * spd);
+        return ECORE_CALLBACK_RENEW;
      }
    _warp_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -1521,58 +1529,58 @@ _e_winlist_animator(void *data __UNUSED__)
 {
    if (_warp_to)
      {
-	if (_warp_x == _old_warp_x && _warp_y == _old_warp_y)
-	  {
-	     _warp_x = _warp_to_x;
-	     _warp_y = _warp_to_y;
-	     _warp_to = 0;
-	  }
-	if (_win) ecore_x_pointer_warp(*_win, _warp_x, _warp_y);
+        if (_warp_x == _old_warp_x && _warp_y == _old_warp_y)
+          {
+             _warp_x = _warp_to_x;
+             _warp_y = _warp_to_y;
+             _warp_to = 0;
+          }
+        if (_win) ecore_x_pointer_warp(*_win, _warp_x, _warp_y);
      }
    if (_scroll_to)
      {
-	double da;
+        double da;
 
-	da = _scroll_align - _scroll_align_to;
-	if (da < 0.0) da = -da;
-	if (da < 0.01)
-	  {
-	     _scroll_align = _scroll_align_to;
-	     _scroll_to = 0;
-	  }
+        da = _scroll_align - _scroll_align_to;
+        if (da < 0.0) da = -da;
+        if (da < 0.01)
+          {
+             _scroll_align = _scroll_align_to;
+             _scroll_to = 0;
+          }
         e_box_align_set(_list_object, 0.5, 1.0 - _scroll_align);
      }
    if ((_warp_to) || (_scroll_to)) return ECORE_CALLBACK_RENEW;
    if (_bd_next)
      {
-	if (_bd_next->iconic)
-	  {
-	     if (!_bd_next->lock_user_iconify)
-	       e_border_uniconify(_bd_next);
-	  }
-	if (_bd_next->shaded)
-	  {
-	     if (!_bd_next->lock_user_shade)
-	       e_border_unshade(_bd_next, _bd_next->shade.dir);
-	  }
-	else if (_bd_next->desk)
-	  {
-	     if (!_bd_next->sticky) e_desk_show(_bd_next->desk);
-	  }
-	if (!_bd_next->lock_user_stacking)
-	  e_border_raise(_bd_next);
+        if (_bd_next->iconic)
+          {
+             if (!_bd_next->lock_user_iconify)
+               e_border_uniconify(_bd_next);
+          }
+        if (_bd_next->shaded)
+          {
+             if (!_bd_next->lock_user_shade)
+               e_border_unshade(_bd_next, _bd_next->shade.dir);
+          }
+        else if (_bd_next->desk)
+          {
+             if (!_bd_next->sticky) e_desk_show(_bd_next->desk);
+          }
+        if (!_bd_next->lock_user_stacking)
+          e_border_raise(_bd_next);
 
-	if (!_bd_next->lock_focus_out)
-	  {
-	     e_border_focus_set(_bd_next, 1, 1);
-	     e_border_focus_latest_set(_bd_next);
-	  }
-	if ((e_config->focus_policy != E_FOCUS_CLICK) ||
-	    (e_config->winlist_warp_at_end) ||
-	    (e_config->winlist_warp_while_selecting))
-	  ecore_x_pointer_warp(_bd_next->zone->container->win,
+        if (!_bd_next->lock_focus_out)
+          {
+             e_border_focus_set(_bd_next, 1, 1);
+             e_border_focus_latest_set(_bd_next);
+          }
+        if ((e_config->focus_policy != E_FOCUS_CLICK) ||
+            (e_config->winlist_warp_at_end) ||
+            (e_config->winlist_warp_while_selecting))
+          ecore_x_pointer_warp(_bd_next->zone->container->win,
                                _warp_to_x, _warp_to_y);
-	_bd_next = NULL;
+        _bd_next = NULL;
      }
    _animator = NULL;
    _win = NULL;
@@ -1596,4 +1604,5 @@ _e_winlist_cb_item_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *even
    _e_winlist_show_active();
    _e_winlist_activate();
 }
+
 #endif

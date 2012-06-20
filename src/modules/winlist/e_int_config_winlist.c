@@ -1,43 +1,43 @@
 #include "e.h"
 
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _iconified_changed(void *data, Evas_Object *obj);
-static void _warp_changed(void *data, Evas_Object *obj __UNUSED__);
-static void _scroll_animate_changed(void *data, Evas_Object *obj);
-static void _width_limits_changed(void *data, Evas_Object *obj __UNUSED__);
-static void _height_limits_changed(void *data, Evas_Object *obj __UNUSED__);
+static void         _iconified_changed(void *data, Evas_Object *obj);
+static void         _warp_changed(void *data, Evas_Object *obj __UNUSED__);
+static void         _scroll_animate_changed(void *data, Evas_Object *obj);
+static void         _width_limits_changed(void *data, Evas_Object *obj __UNUSED__);
+static void         _height_limits_changed(void *data, Evas_Object *obj __UNUSED__);
 
 struct _E_Config_Dialog_Data
 {
-   int windows_other_desks;
-   int windows_other_screens;
-   int iconified;
-   int iconified_other_desks;
-   int iconified_other_screens;
+   int    windows_other_desks;
+   int    windows_other_screens;
+   int    iconified;
+   int    iconified_other_desks;
+   int    iconified_other_screens;
 
-   int focus, raise, uncover;
-   int warp_while_selecting;
-   int warp_at_end;
+   int    focus, raise, uncover;
+   int    warp_while_selecting;
+   int    warp_at_end;
    double warp_speed;
-   int jump_desk;
+   int    jump_desk;
 
-   int scroll_animate;
+   int    scroll_animate;
    double scroll_speed;
 
    double align_x, align_y;
-   int min_w, min_h, max_w, max_h;
+   int    min_w, min_h, max_w, max_h;
 
-   struct 
-     {
-        Eina_List *disable_iconified;
-        Eina_List *disable_scroll_animate;
-        Eina_List *disable_warp;
-        Evas_Object *min_w, *min_h;
-     } gui;
+   struct
+   {
+      Eina_List   *disable_iconified;
+      Eina_List   *disable_scroll_animate;
+      Eina_List   *disable_warp;
+      Evas_Object *min_w, *min_h;
+   } gui;
 };
 
 E_Config_Dialog *
@@ -56,8 +56,8 @@ e_int_config_winlist(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Window List Settings"),
-			     "E", "windows/window_list",
-			     "preferences-winlist", 0, v, NULL);
+                             "E", "windows/window_list",
+                             "preferences-winlist", 0, v, NULL);
    return cfd;
 }
 
@@ -119,7 +119,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
 #define DO(_e_config, _cfdata) \
-   e_config->winlist_##_e_config = cfdata->_cfdata
+  e_config->winlist_##_e_config = cfdata->_cfdata
 
    DO(list_show_iconified, iconified);
    DO(list_show_other_desk_iconified, iconified_other_desks);
@@ -152,7 +152,7 @@ static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
 #define DO(_e_config, _cfdata) \
-   if (e_config->winlist_##_e_config != cfdata->_cfdata) return 1;
+  if (e_config->winlist_##_e_config != cfdata->_cfdata) return 1;
 
    DO(list_show_iconified, iconified);
    DO(list_show_other_desk_iconified, iconified_other_desks);
@@ -187,27 +187,27 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
    ol = e_widget_list_add(evas, 0, 0);
-   ob = e_widget_check_add(evas, _("Windows from other desks"), 
+   ob = e_widget_check_add(evas, _("Windows from other desks"),
                            &(cfdata->windows_other_desks));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_check_add(evas, _("Windows from other screens"), 
+   ob = e_widget_check_add(evas, _("Windows from other screens"),
                            &(cfdata->windows_other_screens));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_check_add(evas, _("Iconified"), &(cfdata->iconified));
    iconified = ob;
    e_widget_on_change_hook_set(ob, _iconified_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_check_add(evas, _("Iconified from other desks"), 
+   ob = e_widget_check_add(evas, _("Iconified from other desks"),
                            &(cfdata->iconified_other_desks));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   cfdata->gui.disable_iconified = 
+   cfdata->gui.disable_iconified =
      eina_list_append(cfdata->gui.disable_iconified, ob);
    ob = e_widget_check_add(evas, _("Iconified from other screens"),
                            &(cfdata->iconified_other_screens));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   cfdata->gui.disable_iconified = 
+   cfdata->gui.disable_iconified =
      eina_list_append(cfdata->gui.disable_iconified, ob);
-   e_widget_toolbook_page_append(otb, NULL, _("Display"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Display"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -217,87 +217,87 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_check_add(evas, _("Uncover"), &(cfdata->uncover));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_check_add(evas, _("Warp mouse while selecting"), 
+   ob = e_widget_check_add(evas, _("Warp mouse while selecting"),
                            &(cfdata->warp_while_selecting));
    e_widget_on_change_hook_set(ob, _warp_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_check_add(evas, _("Warp mouse at end"), 
+   ob = e_widget_check_add(evas, _("Warp mouse at end"),
                            &(cfdata->warp_at_end));
    e_widget_on_change_hook_set(ob, _warp_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_check_add(evas, _("Jump to desk"), &(cfdata->jump_desk));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   e_widget_toolbook_page_append(otb, NULL, _("Selecting"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Selecting"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Warp speed"));
-   cfdata->gui.disable_warp = 
+   cfdata->gui.disable_warp =
      eina_list_append(cfdata->gui.disable_warp, ob);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0,
                             &(cfdata->warp_speed), NULL, 100);
    cfdata->gui.disable_warp = eina_list_append(cfdata->gui.disable_warp, ob);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_check_add(evas, _("Scroll Animation"), 
+   ob = e_widget_check_add(evas, _("Scroll Animation"),
                            &(cfdata->scroll_animate));
    e_widget_on_change_hook_set(ob, _scroll_animate_changed, cfdata);
    scroll_animate = ob;
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_label_add(evas, _("Scroll speed"));
-   cfdata->gui.disable_scroll_animate = 
+   cfdata->gui.disable_scroll_animate =
      eina_list_append(cfdata->gui.disable_scroll_animate, ob);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0,
                             &(cfdata->scroll_speed), NULL, 100);
-   cfdata->gui.disable_scroll_animate = 
+   cfdata->gui.disable_scroll_animate =
      eina_list_append(cfdata->gui.disable_scroll_animate, ob);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   e_widget_toolbook_page_append(otb, NULL, _("Animations"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Animations"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Minimum width"));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL,
                             &(cfdata->min_w), 100);
    cfdata->gui.min_w = ob;
    e_widget_on_change_hook_set(ob, _width_limits_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_label_add(evas, _("Maximum width"));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL,
                             &(cfdata->max_w), 100);
    e_widget_on_change_hook_set(ob, _width_limits_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_label_add(evas, _("Minimum height"));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL,
                             &(cfdata->min_h), 100);
    cfdata->gui.min_h = ob;
    e_widget_on_change_hook_set(ob, _height_limits_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_label_add(evas, _("Maximum height"));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL,
                             &(cfdata->max_h), 100);
    e_widget_on_change_hook_set(ob, _height_limits_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   e_widget_toolbook_page_append(otb, NULL, _("Geometry"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Geometry"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Horizontal alignment"));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0,
                             &(cfdata->align_x), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_label_add(evas, _("Vertical alignment"));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f"), 0.0, 1.0, 0.01, 0,
                             &(cfdata->align_y), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   e_widget_toolbook_page_append(otb, NULL, _("Alignment"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Alignment"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
 
    _iconified_changed(cfdata, iconified);
@@ -315,7 +315,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    of = e_widget_framelist_add(evas, _("Display"), 0);
    ob = e_widget_check_add(evas, _("From other desks"), &(cfdata->other_desks));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("From other screens"), 
+   ob = e_widget_check_add(evas, _("From other screens"),
                            &(cfdata->other_screens));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Iconified"), &(cfdata->iconified));
@@ -395,3 +395,4 @@ _height_limits_changed(void *data, Evas_Object *obj __UNUSED__)
    if (cfdata->min_h > cfdata->max_h)
      e_widget_slider_value_int_set(cfdata->gui.min_h, cfdata->max_h);
 }
+
