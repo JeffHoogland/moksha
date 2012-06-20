@@ -18,15 +18,15 @@ e_modapi_init(E_Module *m)
                                      NULL, "preferences-behavior");
 
    e_configure_registry_item_add("keyboard_and_mouse/key_bindings", 10,
-                                 _("Keys"), NULL,
+                                 _("Key Bindings"), NULL,
                                  "preferences-desktop-keyboard-shortcuts",
                                  e_int_config_keybindings);
    e_configure_registry_item_add("keyboard_and_mouse/mouse_bindings", 20,
-                                 _("Mouse Buttons"), NULL,
+                                 _("Mouse Bindings"), NULL,
                                  "preferences-desktop-mouse",
                                  e_int_config_mousebindings);
    e_configure_registry_item_add("keyboard_and_mouse/acpi_bindings", 30,
-                                 _("Hardware Switches"), NULL,
+                                 _("ACPI Bindings"), NULL,
                                  "preferences-system-power-management",
                                  e_int_config_acpibindings);
    conf_module = m;
