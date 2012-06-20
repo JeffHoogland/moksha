@@ -50,8 +50,8 @@
      act = e_action_add(#name);                                   \
      if (act) act->func.go_key = _e_actions_act_##name##_go_key;  \
   }
-#define ACT_FN_GO_KEY(act, use) \
-  static void _e_actions_act_##act##_go_key(E_Object * obj __UNUSED__, const char *params use, Ecore_Event_Key * ev __UNUSED__)
+#define ACT_FN_GO_KEY(act, use1, use2) \
+  static void _e_actions_act_##act##_go_key(E_Object * obj __UNUSED__, const char *params use1, Ecore_Event_Key * ev use2)
 
 #define ACT_END(name)                                       \
   {                                                         \
@@ -144,7 +144,7 @@ ACT_FN_END_MOUSE(window_move, __UNUSED__)
    e_border_act_move_end((E_Border *)obj, ev);
 }
 
-ACT_FN_GO_KEY(window_move, __UNUSED__)
+ACT_FN_GO_KEY(window_move, __UNUSED__, __UNUSED__)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
@@ -212,7 +212,7 @@ ACT_FN_END_MOUSE(window_resize, __UNUSED__)
    e_border_act_resize_end((E_Border *)obj, ev);
 }
 
-ACT_FN_GO_KEY(window_resize, __UNUSED__)
+ACT_FN_GO_KEY(window_resize, __UNUSED__, __UNUSED__)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
@@ -250,7 +250,7 @@ ACT_FN_GO_MOUSE(window_menu, __UNUSED__)
    e_border_act_menu_begin((E_Border *)obj, ev, 0);
 }
 
-ACT_FN_GO_KEY(window_menu, __UNUSED__)
+ACT_FN_GO_KEY(window_menu, __UNUSED__, __UNUSED__)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
@@ -1776,7 +1776,7 @@ ACT_FN_GO_MOUSE(menu_show, )
      }
 }
 
-ACT_FN_GO_KEY(menu_show, )
+ACT_FN_GO_KEY(menu_show, , __UNUSED__)
 {
    E_Zone *zone;
 
@@ -1806,7 +1806,7 @@ ACT_FN_GO_KEY(menu_show, )
 }
 
 /***************************************************************************/
-ACT_FN_GO(exec, )
+ACT_FN_GO(exec,)
 {
    E_Zone *zone;
 
@@ -2632,7 +2632,7 @@ _delayed_action_mouse_del(E_Object *obj, const char *params __UNUSED__, Ecore_Ev
 }
 
 // obj , params  , ev
-ACT_FN_GO_KEY(delayed_action, )
+ACT_FN_GO_KEY(delayed_action, ,)
 {
    _delayed_action_key_add(obj, params, ev);
 }
