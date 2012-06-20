@@ -14,45 +14,45 @@ typedef struct _E_Exec_Search E_Exec_Search;
 
 struct _E_Exec_Launch
 {
-   E_Zone *zone;
+   E_Zone     *zone;
    const char *launch_method;
 };
 
 struct _E_Exec_Search
 {
    E_Exec_Instance *inst;
-   int startup_id;
-   pid_t pid;
+   int              startup_id;
+   pid_t            pid;
 };
 
 struct _E_Config_Dialog_Data
 {
-   Efreet_Desktop *desktop;
-   char *exec;
+   Efreet_Desktop       *desktop;
+   char                 *exec;
 
-   Ecore_Exe_Event_Del event;
+   Ecore_Exe_Event_Del   event;
    Ecore_Exe_Event_Data *error;
    Ecore_Exe_Event_Data *read;
 
-   char *label, *exit, *signal;
+   char                 *label, *exit, *signal;
 };
 
 /* local subsystem functions */
 static E_Exec_Instance *_e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining);
-static Eina_Bool _e_exec_cb_expire_timer(void *data);
-static Eina_Bool _e_exec_cb_exit(void *data, int type, void *event);
+static Eina_Bool        _e_exec_cb_expire_timer(void *data);
+static Eina_Bool        _e_exec_cb_exit(void *data, int type, void *event);
 
-static Eina_Bool _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data);
+static Eina_Bool        _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *value, void *data);
 
-static void _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *event, Ecore_Exe_Event_Data *error, Ecore_Exe_Event_Data *read);
-static void _fill_data(E_Config_Dialog_Data *cfdata);
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
-static void _dialog_save_cb(void *data, void *data2);
-static void _e_exec_instance_free(E_Exec_Instance *inst);
+static void             _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *event, Ecore_Exe_Event_Data *error, Ecore_Exe_Event_Data *read);
+static void             _fill_data(E_Config_Dialog_Data *cfdata);
+static void            *_create_data(E_Config_Dialog *cfd);
+static void             _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object     *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object     *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object     *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
+static void             _dialog_save_cb(void *data, void *data2);
+static void             _e_exec_instance_free(E_Exec_Instance *inst);
 
 /* local subsystem globals */
 static Eina_List *e_exec_start_pending = NULL;
@@ -69,10 +69,10 @@ e_exec_init(void)
    e_exec_instances = eina_hash_string_superfast_new(NULL);
 
    _e_exec_exit_handler =
-      ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_exec_cb_exit, NULL);
+     ecore_event_handler_add(ECORE_EXE_EVENT_DEL, _e_exec_cb_exit, NULL);
 #if 0
    _e_exec_border_add_handler =
-      ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_exec_cb_event_border_add, NULL);
+     ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_exec_cb_event_border_add, NULL);
 #endif
    return 1;
 }
@@ -86,7 +86,7 @@ e_exec_shutdown(void)
    e_util_env_set("E_STARTUP_ID", buf);
 
    if (_e_exec_exit_handler) ecore_event_handler_del(_e_exec_exit_handler);
-   if (_e_exec_border_add_handler) 
+   if (_e_exec_border_add_handler)
      ecore_event_handler_del(_e_exec_border_add_handler);
    eina_hash_free(e_exec_instances);
    eina_list_free(e_exec_start_pending);
@@ -105,19 +105,19 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
    if (!launch) return NULL;
    if (zone)
      {
-	launch->zone = zone;
-	e_object_ref(E_OBJECT(launch->zone));
+        launch->zone = zone;
+        e_object_ref(E_OBJECT(launch->zone));
      }
-   if (launch_method) 
+   if (launch_method)
      launch->launch_method = eina_stringshare_add(launch_method);
-   
+
    if (desktop)
      {
-	if (exec)
-	  inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
-	else 
-          inst = efreet_desktop_command_get(desktop, files, 
-                                            (Efreet_Desktop_Command_Cb) _e_exec_cb_exec, launch);
+        if (exec)
+          inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
+        else
+          inst = efreet_desktop_command_get(desktop, files,
+                                            (Efreet_Desktop_Command_Cb)_e_exec_cb_exec, launch);
      }
    else
      inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
@@ -146,7 +146,7 @@ EAPI Efreet_Desktop *
 e_exec_startup_id_pid_find(int id, pid_t pid)
 {
    E_Exec_Instance *inst;
-   
+
    inst = e_exec_startup_id_pid_instance_find(id, pid);
    if (!inst) return NULL;
    return inst->desktop;
@@ -165,17 +165,17 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    launch = data;
    if (desktop)
      {
-	inst = E_NEW(E_Exec_Instance, 1);
-	if (!inst) return NULL;
+        inst = E_NEW(E_Exec_Instance, 1);
+        if (!inst) return NULL;
      }
 
    if (startup_id == 0)
      {
-	const char *p;
+        const char *p;
 
-	p = getenv("E_STARTUP_ID");
-	if (p) startup_id = atoi(p);
-	e_util_env_set("E_STARTUP_ID", NULL);
+        p = getenv("E_STARTUP_ID");
+        if (p) startup_id = atoi(p);
+        e_util_env_set("E_STARTUP_ID", NULL);
      }
    if (++startup_id < 1) startup_id = 1;
    /* save previous env vars we need to save */
@@ -183,34 +183,34 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    if (penv_display) penv_display = strdup(penv_display);
    if ((penv_display) && (launch->zone))
      {
-	const char *p1, *p2;
-	char buf2[32];
-	int head;
+        const char *p1, *p2;
+        char buf2[32];
+        int head;
 
-	head = launch->zone->container->manager->num;
+        head = launch->zone->container->manager->num;
 
-	/* set env vars */
-	p1 = strrchr(penv_display, ':');
-	p2 = strrchr(penv_display, '.');
-	if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
-	  {
-	     /* yes it could overflow... but who will overflow DISPLAY eh? why? to
-	      * "exploit" your own applications running as you?
-	      */
-	     strcpy(buf, penv_display);
-	     buf[p2 - penv_display + 1] = 0;
-	     snprintf(buf2, sizeof(buf2), "%i", head);
-	     strcat(buf, buf2);
-	  }
-	else if (p1) /* "blah:x */
-	  {
-	     strcpy(buf, penv_display);
-	     snprintf(buf2, sizeof(buf2), ".%i", head);
-	     strcat(buf, buf2);
-	  }
-	else
-	  strcpy(buf, penv_display);
-	e_util_env_set("DISPLAY", buf);
+        /* set env vars */
+        p1 = strrchr(penv_display, ':');
+        p2 = strrchr(penv_display, '.');
+        if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
+          {
+             /* yes it could overflow... but who will overflow DISPLAY eh? why? to
+              * "exploit" your own applications running as you?
+              */
+             strcpy(buf, penv_display);
+             buf[p2 - penv_display + 1] = 0;
+             snprintf(buf2, sizeof(buf2), "%i", head);
+             strcat(buf, buf2);
+          }
+        else if (p1) /* "blah:x */
+          {
+             strcpy(buf, penv_display);
+             snprintf(buf2, sizeof(buf2), ".%i", head);
+             strcat(buf, buf2);
+          }
+        else
+          strcpy(buf, penv_display);
+        e_util_env_set("DISPLAY", buf);
      }
    snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
@@ -218,9 +218,9 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    // dont set vsync for clients - maybe inherited from compositore. fixme:
    // need a way to still inherit from parent env of wm.
    e_util_env_set("__GL_SYNC_TO_VBLANK", NULL);
-   
+
 //// FIXME: seem to be some issues with the pipe and filling up ram - need to
-//// check. for now disable.   
+//// check. for now disable.
 //   exe = ecore_exe_pipe_run(exec,
 //			    ECORE_EXE_PIPE_AUTO | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR |
 //			    ECORE_EXE_PIPE_READ_LINE_BUFFERED | ECORE_EXE_PIPE_ERROR_LINE_BUFFERED,
@@ -241,7 +241,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
                                 _("Enlightenment was unable to change to directory:<br>"
                                   "<br>"
                                   "%s"),
-			   desktop->path);
+                                desktop->path);
              return NULL;
           }
         e_util_library_path_strip();
@@ -253,7 +253,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
                                 _("Enlightenment was unable to restore to directory:<br>"
                                   "<br>"
                                   "%s"),
-			   buf);
+                                buf);
              E_FREE(inst);
              return NULL;
           }
@@ -267,62 +267,62 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 
    if (penv_display)
      {
-       	e_util_env_set("DISPLAY", penv_display);
-	free(penv_display);
+        e_util_env_set("DISPLAY", penv_display);
+        free(penv_display);
      }
    if (!exe)
      {
-	E_FREE(inst);
-	e_util_dialog_show(_("Run Error"),
-			   _("Enlightenment was unable to fork a child process:<br>"
-			     "<br>"
-			     "%s"),
-			   exec);
-	return NULL;
+        E_FREE(inst);
+        e_util_dialog_show(_("Run Error"),
+                           _("Enlightenment was unable to fork a child process:<br>"
+                             "<br>"
+                             "%s"),
+                           exec);
+        return NULL;
      }
    /* reset env vars */
-   if (launch->launch_method && !desktop) 
+   if (launch->launch_method && !desktop)
      e_exehist_add(launch->launch_method, exec);
    free(exec);
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
 //// FIXME: seem to be some issues with the pipe and filling up ram - need to
-//// check. for now disable.   
+//// check. for now disable.
 //   ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
    ecore_exe_tag_set(exe, "E/exec");
 
    if (desktop)
      {
-	Eina_List *l, *lnew;
+        Eina_List *l, *lnew;
 
-	efreet_desktop_ref(desktop);
-	inst->desktop = desktop;
+        efreet_desktop_ref(desktop);
+        inst->desktop = desktop;
         inst->key = eina_stringshare_add(desktop->orig_path);
-	inst->exe = exe;
-	inst->startup_id = startup_id;
-	inst->launch_time = ecore_time_get();
-	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, 
+        inst->exe = exe;
+        inst->startup_id = startup_id;
+        inst->launch_time = ecore_time_get();
+        inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout,
                                              _e_exec_cb_expire_timer, inst);
-	l = eina_hash_find(e_exec_instances, desktop->orig_path);
+        l = eina_hash_find(e_exec_instances, desktop->orig_path);
         lnew = eina_list_append(l, inst);
-	if (l)
+        if (l)
           eina_hash_modify(e_exec_instances, desktop->orig_path, lnew);
-	else
+        else
           eina_hash_add(e_exec_instances, desktop->orig_path, lnew);
-	e_exec_start_pending = eina_list_append(e_exec_start_pending, desktop);
+        e_exec_start_pending = eina_list_append(e_exec_start_pending, desktop);
 
-	e_exehist_add(launch->launch_method, desktop->exec);
+        e_exehist_add(launch->launch_method, desktop->exec);
      }
    else
      {
-	E_FREE(inst);
-	inst = NULL;
-	ecore_exe_free(exe);
+        E_FREE(inst);
+        inst = NULL;
+        ecore_exe_free(exe);
      }
 
    if (!remaining)
      {
-	if (launch->launch_method) eina_stringshare_del(launch->launch_method);
-	if (launch->zone) e_object_unref(E_OBJECT(launch->zone));
+        if (launch->launch_method) eina_stringshare_del(launch->launch_method);
+        if (launch->zone) e_object_unref(E_OBJECT(launch->zone));
         free(launch);
      }
    return inst;
@@ -343,27 +343,25 @@ static void
 _e_exec_instance_free(E_Exec_Instance *inst)
 {
    Eina_List *instances;
-   
+
    if (inst->key)
      {
-	instances = eina_hash_find(e_exec_instances, inst->key);
-	if (instances)
-	  {
-	     instances = eina_list_remove(instances, inst);
-	     if (instances)
-	       eina_hash_modify(e_exec_instances, inst->key, instances);
-	     else
-	       eina_hash_del(e_exec_instances, inst->key, NULL);
-	  }
+        instances = eina_hash_find(e_exec_instances, inst->key);
+        if (instances)
+          {
+             instances = eina_list_remove(instances, inst);
+             if (instances)
+               eina_hash_modify(e_exec_instances, inst->key, instances);
+             else
+               eina_hash_del(e_exec_instances, inst->key, NULL);
+          }
         eina_stringshare_del(inst->key);
      }
    e_exec_start_pending = eina_list_remove(e_exec_start_pending, inst->desktop);
    if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
    if (inst->desktop) efreet_desktop_free(inst->desktop);
-   free(inst); 
+   free(inst);
 }
-
-
 
 static Eina_Bool
 _e_exec_cb_instance_finish(void *data)
@@ -371,7 +369,6 @@ _e_exec_cb_instance_finish(void *data)
    _e_exec_instance_free(data);
    return ECORE_CALLBACK_CANCEL;
 }
-
 
 static Eina_Bool
 _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
@@ -383,7 +380,7 @@ _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (!ev->exe) return ECORE_CALLBACK_PASS_ON;
 //   if (ecore_exe_tag_get(ev->exe)) printf("  tag %s\n", ecore_exe_tag_get(ev->exe));
    if (!(ecore_exe_tag_get(ev->exe) &&
-	 (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec"))))
+         (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec"))))
      return ECORE_CALLBACK_PASS_ON;
    inst = ecore_exe_data_get(ev->exe);
    if (!inst) return ECORE_CALLBACK_PASS_ON;
@@ -395,7 +392,7 @@ _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
         if (e_config->exec.show_run_dialog)
           {
              E_Dialog *dia;
-             
+
              dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
                                 "E", "_e_exec_run_error_dialog");
              if (dia)
@@ -419,7 +416,7 @@ _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
           }
      }
    /* Let's hope that everything returns this properly. */
-   else if (!((ev->exited) && (ev->exit_code == EXIT_SUCCESS))) 
+   else if (!((ev->exited) && (ev->exit_code == EXIT_SUCCESS)))
      {
         if (e_config->exec.show_exit_dialog)
           {
@@ -443,8 +440,8 @@ _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (ecore_time_get() - inst->launch_time < 2.0)
      {
         inst->exe = NULL;
-	if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
-	inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, _e_exec_cb_instance_finish, inst);
+        if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
+        inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, _e_exec_cb_instance_finish, inst);
      }
    else
      _e_exec_instance_free(inst);
@@ -462,9 +459,9 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
    search = data;
    EINA_LIST_FOREACH(value, l, inst)
      {
-        if (((search->startup_id > 0) && 
+        if (((search->startup_id > 0) &&
              (search->startup_id == inst->startup_id)) ||
-            ((inst->exe) && (search->pid > 1) && 
+            ((inst->exe) && (search->pid > 1) &&
              (search->pid == ecore_exe_pid_get(inst->exe))))
           {
              search->inst = inst;
@@ -474,9 +471,9 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
    return EINA_TRUE;
 }
 
-static void    
+static void
 _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_Del *exe_event,
-		     Ecore_Exe_Event_Data *exe_error, Ecore_Exe_Event_Data *exe_read)
+                     Ecore_Exe_Event_Data *exe_error, Ecore_Exe_Event_Data *exe_read)
 {
    E_Config_Dialog_View *v;
    E_Config_Dialog_Data *cfdata;
@@ -487,8 +484,8 @@ _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata)
      {
-	E_FREE(v);
-	return;
+        E_FREE(v);
+        return;
      }
    cfdata->desktop = desktop;
    if (cfdata->desktop) efreet_desktop_ref(cfdata->desktop);
@@ -504,9 +501,9 @@ _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_
 
    con = e_container_current_get(e_manager_current_get());
    /* Create The Dialog */
-   e_config_dialog_new(con, _("Application Execution Error"), 
-		       "E", "_e_exec_error_exit_dialog",
-		       NULL, 0, v, cfdata);
+   e_config_dialog_new(con, _("Application Execution Error"),
+                       "E", "_e_exec_error_exit_dialog",
+                       NULL, 0, v, cfdata);
 }
 
 static void
@@ -516,75 +513,75 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata->label)
      {
-	snprintf(buf, sizeof(buf), _("%s stopped running unexpectedly."), cfdata->desktop->name);
-	cfdata->label = strdup(buf);
+        snprintf(buf, sizeof(buf), _("%s stopped running unexpectedly."), cfdata->desktop->name);
+        cfdata->label = strdup(buf);
      }
    if ((cfdata->event.exited) && (!cfdata->exit))
      {
-	snprintf(buf, sizeof(buf), 
-		 _("An exit code of %i was returned from %s."), 
+        snprintf(buf, sizeof(buf),
+                 _("An exit code of %i was returned from %s."),
                  cfdata->event.exit_code, cfdata->exec);
-	cfdata->exit = strdup(buf);
+        cfdata->exit = strdup(buf);
      }
    if ((cfdata->event.signalled) && (!cfdata->signal))
      {
-	if (cfdata->event.exit_signal == SIGINT)
-	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by an Interrupt Signal."), 
+        if (cfdata->event.exit_signal == SIGINT)
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by an Interrupt Signal."),
                    cfdata->desktop->exec);
-	else if (cfdata->event.exit_signal == SIGQUIT)
-	  snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Signal."),
-		   cfdata->exec);
-	else if (cfdata->event.exit_signal == SIGABRT)
-	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by an Abort Signal."), cfdata->exec);
-	else if (cfdata->event.exit_signal == SIGFPE)
-	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by a Floating Point Error."), 
+        else if (cfdata->event.exit_signal == SIGQUIT)
+          snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Signal."),
                    cfdata->exec);
-	else if (cfdata->event.exit_signal == SIGKILL)
-	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by an Uninterruptable Kill Signal."), 
+        else if (cfdata->event.exit_signal == SIGABRT)
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by an Abort Signal."), cfdata->exec);
+        else if (cfdata->event.exit_signal == SIGFPE)
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by a Floating Point Error."),
                    cfdata->exec);
-	else if (cfdata->event.exit_signal == SIGSEGV)
-	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by a Segmentation Fault."), 
+        else if (cfdata->event.exit_signal == SIGKILL)
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by an Uninterruptable Kill Signal."),
                    cfdata->exec);
-	else if (cfdata->event.exit_signal == SIGPIPE)
-	  snprintf(buf, sizeof(buf), 
-		   _("%s was interrupted by a Broken Pipe."), cfdata->exec);
-	else if (cfdata->event.exit_signal == SIGTERM)
-	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by a Termination Signal."), 
+        else if (cfdata->event.exit_signal == SIGSEGV)
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by a Segmentation Fault."),
                    cfdata->exec);
-	else if (cfdata->event.exit_signal == SIGBUS)
-	  snprintf(buf, sizeof(buf), 
-		   _("%s was interrupted by a Bus Error."), cfdata->exec);
-	else
-	  snprintf(buf, sizeof(buf),
-		   _("%s was interrupted by the signal number %i."),
-		   cfdata->exec, cfdata->event.exit_signal);
-	cfdata->signal = strdup(buf);
-	/* FIXME: Add  sigchld_info stuff
-	 * cfdata->event.data
-	 *    siginfo_t
-	 *    {
-	 *       int      si_signo;     Signal number
-	 *       int      si_errno;     An errno value
-	 *       int      si_code;      Signal code
-	 *       pid_t    si_pid;       Sending process ID
-	 *       uid_t    si_uid;       Real user ID of sending process
-	 *       int      si_status;    Exit value or signal
-	 *       clock_t  si_utime;     User time consumed
-	 *       clock_t  si_stime;     System time consumed
-	 *       sigval_t si_value;     Signal value
-	 *       int      si_int;       POSIX.1b signal
-	 *       void *   si_ptr;       POSIX.1b signal
-	 *       void *   si_addr;      Memory location which caused fault
-	 *       int      si_band;      Band event
-	 *       int      si_fd;        File descriptor
-	 *    }
-	 */
+        else if (cfdata->event.exit_signal == SIGPIPE)
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by a Broken Pipe."), cfdata->exec);
+        else if (cfdata->event.exit_signal == SIGTERM)
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by a Termination Signal."),
+                   cfdata->exec);
+        else if (cfdata->event.exit_signal == SIGBUS)
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by a Bus Error."), cfdata->exec);
+        else
+          snprintf(buf, sizeof(buf),
+                   _("%s was interrupted by the signal number %i."),
+                   cfdata->exec, cfdata->event.exit_signal);
+        cfdata->signal = strdup(buf);
+        /* FIXME: Add  sigchld_info stuff
+         * cfdata->event.data
+         *    siginfo_t
+         *    {
+         *       int      si_signo;     Signal number
+         *       int      si_errno;     An errno value
+         *       int      si_code;      Signal code
+         *       pid_t    si_pid;       Sending process ID
+         *       uid_t    si_uid;       Real user ID of sending process
+         *       int      si_status;    Exit value or signal
+         *       clock_t  si_utime;     User time consumed
+         *       clock_t  si_stime;     System time consumed
+         *       sigval_t si_value;     Signal value
+         *       int      si_int;       POSIX.1b signal
+         *       void *   si_ptr;       POSIX.1b signal
+         *       void *   si_addr;      Memory location which caused fault
+         *       int      si_band;      Band event
+         *       int      si_fd;        File descriptor
+         *    }
+         */
      }
 }
 
@@ -628,33 +625,33 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
    tlen = 0;
    for (i = 0; lines[i].line; i++)
      {
-	tlen += lines[i].size + 1;
-	/* When the program output is extraordinarily long, it can cause
-	 * significant delays during text rendering. Limit to a fixed
-	 * number of characters. */
-	if (tlen > MAX_OUTPUT_CHARACTERS)
-	  {
-	     tlen -= lines[i].size + 1;
-	     tlen += strlen(trunc_note);
-	     break;
-	  }
+        tlen += lines[i].size + 1;
+        /* When the program output is extraordinarily long, it can cause
+         * significant delays during text rendering. Limit to a fixed
+         * number of characters. */
+        if (tlen > MAX_OUTPUT_CHARACTERS)
+          {
+             tlen -= lines[i].size + 1;
+             tlen += strlen(trunc_note);
+             break;
+          }
      }
    max_lines = i;
    text = alloca(tlen + 1);
 
    if (text)
      {
-	text[0] = 0;
-	for (i = 0; i < max_lines; i++)
-	  {
-	     strcat(text, lines[i].line);
-	     strcat(text, "\n");
-	  }
+        text[0] = 0;
+        for (i = 0; i < max_lines; i++)
+          {
+             strcat(text, lines[i].line);
+             strcat(text, "\n");
+          }
 
-	/* Append the warning about truncated output. */
-	if (lines[max_lines].line) strcat(text, trunc_note);
+        /* Append the warning about truncated output. */
+        if (lines[max_lines].line) strcat(text, trunc_note);
 
-	e_widget_textblock_plain_set(obj, text);
+        e_widget_textblock_plain_set(obj, text);
      }
    e_widget_size_min_set(obj, 240, 120);
 
@@ -680,22 +677,22 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    if (cfdata->error) error_length = cfdata->error->size;
    if (error_length)
      {
-	os = _dialog_scrolltext_create(evas, _("Error Logs"), 
+        os = _dialog_scrolltext_create(evas, _("Error Logs"),
                                        cfdata->error->lines);
-	e_widget_list_object_append(o, os, 1, 1, 0.5);
+        e_widget_list_object_append(o, os, 1, 1, 0.5);
      }
    else
      {
-	ob = e_widget_label_add(evas, _("There was no error message."));
-	e_widget_list_object_append(o, ob, 1, 1, 0.5);
+        ob = e_widget_label_add(evas, _("There was no error message."));
+        e_widget_list_object_append(o, ob, 1, 1, 0.5);
      }
 
-   ob = e_widget_button_add(evas, _("Save This Message"), "system-run", 
-			    _dialog_save_cb, NULL, cfdata);
+   ob = e_widget_button_add(evas, _("Save This Message"), "system-run",
+                            _dialog_save_cb, NULL, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
 
-   snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"), 
-	    e_user_homedir_get(), cfdata->desktop->name);
+   snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
+            e_user_homedir_get(), cfdata->desktop->name);
    ob = e_widget_label_add(evas, buf);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
@@ -720,61 +717,61 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 
    if (cfdata->exit)
      {
-	of = e_widget_framelist_add(evas, _("Error Information"), 0);
-	ob = e_widget_label_add(evas, _(cfdata->exit));
-	e_widget_framelist_object_append(of, ob);
-	e_widget_list_object_append(o, of, 1, 1, 0.5);
+        of = e_widget_framelist_add(evas, _("Error Information"), 0);
+        ob = e_widget_label_add(evas, _(cfdata->exit));
+        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(o, of, 1, 1, 0.5);
      }
 
    if (cfdata->signal)
      {
-	of = e_widget_framelist_add(evas, _("Error Signal Information"), 0);
-	ob = e_widget_label_add(evas, _(cfdata->signal));
-	e_widget_framelist_object_append(of, ob);
-	e_widget_list_object_append(o, of, 1, 1, 0.5);
+        of = e_widget_framelist_add(evas, _("Error Signal Information"), 0);
+        ob = e_widget_label_add(evas, _(cfdata->signal));
+        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(o, of, 1, 1, 0.5);
      }
 
    if (cfdata->read) read_length = cfdata->read->size;
 
    if (read_length)
      {
-	of = _dialog_scrolltext_create(evas, _("Output Data"), 
+        of = _dialog_scrolltext_create(evas, _("Output Data"),
                                        cfdata->read->lines);
-	/* FIXME: Add stdout "start". */
-	/* FIXME: Add stdout "end". */
+        /* FIXME: Add stdout "start". */
+        /* FIXME: Add stdout "end". */
      }
    else
      {
-	of = e_widget_framelist_add(evas, _("Output Data"), 0);
-	ob = e_widget_label_add(evas, _("There was no output."));
-	e_widget_framelist_object_append(of, ob);
+        of = e_widget_framelist_add(evas, _("Output Data"), 0);
+        ob = e_widget_label_add(evas, _("There was no output."));
+        e_widget_framelist_object_append(of, ob);
      }
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
    if (cfdata->error) error_length = cfdata->error->size;
    if (error_length)
      {
-	of = _dialog_scrolltext_create(evas, _("Error Logs"), 
+        of = _dialog_scrolltext_create(evas, _("Error Logs"),
                                        cfdata->error->lines);
-	/* FIXME: Add stderr "start". */
-	/* FIXME: Add stderr "end". */
+        /* FIXME: Add stderr "start". */
+        /* FIXME: Add stderr "end". */
      }
    else
      {
-	of = e_widget_framelist_add(evas, _("Error Logs"), 0);
-	ob = e_widget_label_add(evas, _("There was no error message."));
-	e_widget_framelist_object_append(of, ob);
+        of = e_widget_framelist_add(evas, _("Error Logs"), 0);
+        ob = e_widget_label_add(evas, _("There was no error message."));
+        e_widget_framelist_object_append(of, ob);
      }
    e_widget_table_object_append(ot, of, 1, 0, 1, 1, 1, 1, 1, 1);
 
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
 
-   ob = e_widget_button_add(evas, _("Save This Message"), "system-run", 
+   ob = e_widget_button_add(evas, _("Save This Message"), "system-run",
                             _dialog_save_cb, NULL, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
 
-   snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"), 
-	    e_user_homedir_get(), cfdata->desktop->name);
+   snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
+            e_user_homedir_get(), cfdata->desktop->name);
    ob = e_widget_label_add(evas, buf);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
@@ -795,48 +792,48 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
    cfdata = data2;
 
    snprintf(buf, sizeof(buf), "%s/%s.log", e_user_homedir_get(),
-	    e_util_filename_escape(cfdata->desktop->name));
+            e_util_filename_escape(cfdata->desktop->name));
    f = fopen(buf, "w");
    if (!f) return;
 
    if (cfdata->exit)
      {
-	snprintf(buffer, sizeof(buffer), "Error Information:\n\t%s\n\n", 
+        snprintf(buffer, sizeof(buffer), "Error Information:\n\t%s\n\n",
                  cfdata->exit);
-	fwrite(buffer, sizeof(char), strlen(buffer), f);
+        fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
    if (cfdata->signal)
      {
-	snprintf(buffer, sizeof(buffer), "Error Signal Information:\n\t%s\n\n", 
+        snprintf(buffer, sizeof(buffer), "Error Signal Information:\n\t%s\n\n",
                  cfdata->signal);
-	fwrite(buffer, sizeof(char), strlen(buffer), f);
+        fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
 
    if (cfdata->read) read_length = cfdata->read->size;
 
    if (read_length)
      {
-	tlen = 0;
-	for (i = 0; cfdata->read->lines[i].line; i++)
-	  tlen += cfdata->read->lines[i].size + 2;
-	text = alloca(tlen + 1);
-	if (text)
-	  {
-	     text[0] = 0;
-	     for (i = 0; cfdata->read->lines[i].line; i++)
-	       {
-		  strcat(text, "\t");
-		  strcat(text, cfdata->read->lines[i].line);
-		  strcat(text, "\n");
-	       }
-	     snprintf(buffer, sizeof(buffer), "Output Data:\n%s\n\n", text);
-	     fwrite(buffer, sizeof(char), strlen(buffer), f);
-	  }
+        tlen = 0;
+        for (i = 0; cfdata->read->lines[i].line; i++)
+          tlen += cfdata->read->lines[i].size + 2;
+        text = alloca(tlen + 1);
+        if (text)
+          {
+             text[0] = 0;
+             for (i = 0; cfdata->read->lines[i].line; i++)
+               {
+                  strcat(text, "\t");
+                  strcat(text, cfdata->read->lines[i].line);
+                  strcat(text, "\n");
+               }
+             snprintf(buffer, sizeof(buffer), "Output Data:\n%s\n\n", text);
+             fwrite(buffer, sizeof(char), strlen(buffer), f);
+          }
      }
    else
      {
-	snprintf(buffer, sizeof(buffer), "Output Data:\n\tThere was no output\n\n");
-	fwrite(buffer, sizeof(char), strlen(buffer), f);
+        snprintf(buffer, sizeof(buffer), "Output Data:\n\tThere was no output\n\n");
+        fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
 
    /* Reusing this var */
@@ -845,28 +842,29 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
 
    if (read_length)
      {
-	tlen = 0;
-	for (i = 0; cfdata->error->lines[i].line; i++)
-	  tlen += cfdata->error->lines[i].size + 1;
-	text = alloca(tlen + 1);
-	if (text)
-	  {
-	     text[0] = 0;
-	     for (i = 0; cfdata->error->lines[i].line; i++)
-	       {
-		  strcat(text, "\t");
-		  strcat(text, cfdata->error->lines[i].line);
-		  strcat(text, "\n");
-	       }
-	     snprintf(buffer, sizeof(buffer), "Error Logs:\n%s\n", text);
-	     fwrite(buffer, sizeof(char), strlen(buffer), f);
-	  }
+        tlen = 0;
+        for (i = 0; cfdata->error->lines[i].line; i++)
+          tlen += cfdata->error->lines[i].size + 1;
+        text = alloca(tlen + 1);
+        if (text)
+          {
+             text[0] = 0;
+             for (i = 0; cfdata->error->lines[i].line; i++)
+               {
+                  strcat(text, "\t");
+                  strcat(text, cfdata->error->lines[i].line);
+                  strcat(text, "\n");
+               }
+             snprintf(buffer, sizeof(buffer), "Error Logs:\n%s\n", text);
+             fwrite(buffer, sizeof(char), strlen(buffer), f);
+          }
      }
    else
      {
-	snprintf(buffer, sizeof(buffer), "Error Logs:\n\tThere was no error message\n");
-	fwrite(buffer, sizeof(char), strlen(buffer), f);
+        snprintf(buffer, sizeof(buffer), "Error Logs:\n\tThere was no error message\n");
+        fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
 
    fclose(f);
 }
+
