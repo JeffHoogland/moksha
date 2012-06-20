@@ -397,7 +397,7 @@ _12_try_restore_configuration(void)
    Ecore_X_Randr_Output *outputs_array;
    E_Randr_Output_Info *output_info;
    Ecore_X_Randr_Mode_Info *mi = NULL;
-   Ecore_X_Randr_Mode mode;
+   Ecore_X_Randr_Mode mode = 0;
    Eina_List *iter, *outputs_list, *outputs_iter;
    Eina_Bool ret = EINA_TRUE;
 
