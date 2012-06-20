@@ -1809,7 +1809,21 @@ ACT_FN_GO_KEY(menu_show, , __UNUSED__)
 ACT_FN_GO(exec,)
 {
    E_Zone *zone;
+   static double lock;
 
+   /* prevent exec actions from occurring too frequently */
+   if (lock)
+     {
+        double test;
+
+        test = ecore_loop_time_get();
+        if (test - lock < 0.05)
+          {
+             lock = test;
+             return;
+          }
+     }
+   lock = ecore_loop_time_get();
    zone = _e_actions_zone_get(obj);
    if (zone)
      {
