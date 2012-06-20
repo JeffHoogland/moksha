@@ -1226,12 +1226,12 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
 {
    const Eina_List *l;
    const E_Shelf *shelf;
-   int x0, x1, y0, y1;
+   int x0, x1, yy0, yy1;
 
    x0 = 0;
-   y0 = 0;
+   yy0 = 0;
    x1 = zone->w;
-   y1 = zone->h;
+   yy1 = zone->h;
    EINA_LIST_FOREACH(e_shelf_list(), l, shelf)
      {
         E_Config_Shelf_Desk *sd;
@@ -1281,15 +1281,15 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
             case E_GADCON_ORIENT_TOP:
             case E_GADCON_ORIENT_CORNER_TL:
             case E_GADCON_ORIENT_CORNER_TR:
-              if (y0 < shelf->h)
-                y0 = shelf->h;
+              if (yy0 < shelf->h)
+                yy0 = shelf->h;
               break;
 
             case E_GADCON_ORIENT_BOTTOM:
             case E_GADCON_ORIENT_CORNER_BL:
             case E_GADCON_ORIENT_CORNER_BR:
-              if (y1 > zone->h - shelf->h)
-                y1 = zone->h - shelf->h;
+              if (yy1 > zone->h - shelf->h)
+                yy1 = zone->h - shelf->h;
               break;
               break;
 
@@ -1310,9 +1310,9 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
      }
 
    zone->useful_geometry.x = zone->x + x0;
-   zone->useful_geometry.y = zone->y + y0;
+   zone->useful_geometry.y = zone->y + yy0;
    zone->useful_geometry.w = x1 - x0;
-   zone->useful_geometry.h = y1 - y0;
+   zone->useful_geometry.h = yy1 - yy0;
    zone->useful_geometry.dirty = 0;
 }
 
