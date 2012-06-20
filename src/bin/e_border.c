@@ -2466,7 +2466,7 @@ _e_border_client_inset_calc(E_Border *bd)
 static void
 _e_border_maximize(E_Border *bd, E_Maximize max)
 {
-   int x1, y1, x2, y2;
+   int x1, yy1, x2, y2;
    int w, h, pw, ph;
    int zx, zy, zw, zh;
 
@@ -2491,12 +2491,12 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
          /* center x-direction */
          x1 = bd->zone->x + (bd->zone->w - w) / 2;
          /* center y-direction */
-         y1 = bd->zone->y + (bd->zone->h - h) / 2;
+         yy1 = bd->zone->y + (bd->zone->h - h) / 2;
 
          if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-           e_border_move_resize(bd, x1, y1, w, h);
+           e_border_move_resize(bd, x1, yy1, w, h);
          else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-           e_border_move_resize(bd, bd->x, y1, bd->w, h);
+           e_border_move_resize(bd, bd->x, yy1, bd->w, h);
          else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
            e_border_move_resize(bd, x1, bd->y, w, bd->h);
          break;
@@ -2524,46 +2524,46 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
            x1 = bd->x;
 
          if (bd->y < zy) // window top not useful coordinates
-           y1 = zy;
+           yy1 = zy;
          else if (bd->y + bd->h > zy + zh) // window bottom not useful coordinates
-           y1 = zy + zh - bd->h;
+           yy1 = zy + zh - bd->h;
          else // window normal position
-           y1 = bd->y;
+           yy1 = bd->y;
 
          if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
            e_border_move_resize(bd, zx, zy, zw, zh);
          else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
            e_border_move_resize(bd, x1, zy, w, zh);
          else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-           e_border_move_resize(bd, zx, y1, zw, h);
+           e_border_move_resize(bd, zx, yy1, zw, h);
          edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
          break;
 
       case E_MAXIMIZE_FILL:
          x1 = bd->zone->x;
-         y1 = bd->zone->y;
+         yy1 = bd->zone->y;
          x2 = bd->zone->x + bd->zone->w;
          y2 = bd->zone->y + bd->zone->h;
 
          /* walk through all shelves */
-         e_maximize_border_shelf_fill(bd, &x1, &y1, &x2, &y2, max);
+         e_maximize_border_shelf_fill(bd, &x1, &yy1, &x2, &y2, max);
 
          /* walk through all windows */
-         e_maximize_border_border_fill(bd, &x1, &y1, &x2, &y2, max);
+         e_maximize_border_border_fill(bd, &x1, &yy1, &x2, &y2, max);
 
          w = x2 - x1;
-         h = y2 - y1;
+         h = y2 - yy1;
          pw = w;
          ph = h;
          e_border_resize_limit(bd, &w, &h);
          /* center x-direction */
          x1 = x1 + (pw - w) / 2;
          /* center y-direction */
-         y1 = y1 + (ph - h) / 2;
+         yy1 = yy1 + (ph - h) / 2;
          if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-           e_border_move_resize(bd, x1, y1, w, h);
+           e_border_move_resize(bd, x1, yy1, w, h);
          else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-           e_border_move_resize(bd, bd->x, y1, bd->w, h);
+           e_border_move_resize(bd, bd->x, yy1, bd->w, h);
          else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
            e_border_move_resize(bd, x1, bd->y, w, bd->h);
          break;
