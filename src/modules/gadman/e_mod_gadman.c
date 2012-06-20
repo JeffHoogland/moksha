@@ -1437,10 +1437,10 @@ _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
-        E_Gadcon *gc;
+        E_Gadcon *gdc;
 
-        gc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
-        Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
+        gdc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
+        Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gdc);
      }
 
    return ECORE_CALLBACK_PASS_ON;
