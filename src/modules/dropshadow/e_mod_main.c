@@ -33,7 +33,7 @@ static void        _ds_shadow_move(Shadow *sh, int x, int y);
 static void        _ds_shadow_resize(Shadow *sh, int w, int h);
 static void        _ds_shadow_shaperects(Shadow *sh);
 static int         _ds_shadow_reshape(void *data);
-static void        _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int y1, int x2, int y2);
+static void        _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int yy1, int x2, int y2);
 static void        _ds_shadow_recalc(Shadow *sh);
 static void        _ds_config_darkness_set(Dropshadow *ds, double v);
 static void        _ds_config_shadow_xy_set(Dropshadow *ds, int x, int y);
@@ -57,7 +57,7 @@ static void        _ds_shstore_free(Shstore *st);
 static void        _ds_shstore_object_set(Shstore *st, Evas_Object *o);
 static void        _ds_object_unset(Evas_Object *o);
 static int         _tilebuf_x_intersect(Tilebuf *tb, int x, int w, int *x1, int *x2, int *x1_fill, int *x2_fill);
-static int         _tilebuf_y_intersect(Tilebuf *tb, int y, int h, int *y1, int *y2, int *y1_fill, int *y2_fill);
+static int         _tilebuf_y_intersect(Tilebuf *tb, int y, int h, int *yy1, int *y2, int *y1_fill, int *y2_fill);
 static int         _tilebuf_intersect(int tsize, int tlen, int tnum, int x, int w, int *x1, int *x2, int *x1_fill, int *x2_fill);
 static void        _tilebuf_setup(Tilebuf *tb);
 static Tilebuf    *_tilebuf_new(int w, int h);
@@ -645,7 +645,7 @@ _ds_shadow_reshape(void *data)
 }
 
 static void
-_ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int y1, int x2, int y2)
+_ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int yy1, int x2, int y2)
 {
    int x, y;
    unsigned char *ptr, *pptr;
@@ -653,9 +653,9 @@ _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int y1, int x2, int y2)
 
    if (x1 == x2) /* scan vert */
      {
-	pptr = sp->pix + ((y1 - 1) * sp->w) + x1;
-	ptr = sp->pix + (y1 * sp->w) + x1;
-	for (y = y1; y <= y2; y++)
+	pptr = sp->pix + ((yy1 - 1) * sp->w) + x1;
+	ptr = sp->pix + (yy1 * sp->w) + x1;
+	for (y = yy1; y <= y2; y++)
 	  {
 	     val = ptr[0] + ptr[-1] + pptr[0] + pptr[-1];
 	     if ((val != 0) && (val != (255 * 4)))
@@ -668,17 +668,17 @@ _ds_edge_scan(Shpix *sp, Tilebuf *tb, int bsz, int x1, int y1, int x2, int y2)
 	     pptr += sp->w;
 	  }
      }
-   else if (y1 == y2) /* scan horiz */
+   else if (yy1 == y2) /* scan horiz */
      {
-	pptr = sp->pix + ((y1 - 1) * sp->w) + x1;
-	ptr = sp->pix + (y1 * sp->w) + x1;
+	pptr = sp->pix + ((yy1 - 1) * sp->w) + x1;
+	ptr = sp->pix + (yy1 * sp->w) + x1;
 	for (x = x1; x <= x2; x++)
 	  {
 	     val = ptr[0] + ptr[-1] + pptr[0] + pptr[-1];
 	     if ((val != 0) && (val != (255 * 4)))
 	       _tilebuf_add_redraw(tb, 
 				   x - (bsz + 1),
-				   y1 - (bsz + 1),
+				   yy1 - (bsz + 1),
 				   (bsz + 1) * 2,
 				   (bsz + 1) * 2);
 	     ptr++;
@@ -703,7 +703,7 @@ _ds_shadow_recalc(Shadow *sh)
 	Eina_List *l, *ll;
 	Shpix *sp;
 	int shw, shh, bsz;
-	int x1, y1, x2, y2;
+	int x1, yy1, x2, y2;
 	
 	if ((!rects) && (sh->toosmall))
 	  sh->square = 1;
@@ -743,10 +743,10 @@ _ds_shadow_recalc(Shadow *sh)
 		       
 		       r = l->data;
 		       x1 = bsz + r->x;
-		       y1 = bsz + r->y; 
+		       yy1 = bsz + r->y; 
 		       x2 = bsz + r->x + r->w - 1;
 		       y2 = bsz + r->y + r->h - 1;
-		       _ds_shpix_fill(sp, x1, y1, (x2 - x1) + 1, (y2 - y1) + 1, 255);
+		       _ds_shpix_fill(sp, x1, yy1, (x2 - x1) + 1, (y2 - yy1) + 1, 255);
 		    }
 	       }
 	     
@@ -765,21 +765,21 @@ _ds_shadow_recalc(Shadow *sh)
 			    
 			    r = l->data;
 			    x1 = bsz + r->x;
-			    y1 = bsz + r->y;
+			    yy1 = bsz + r->y;
 			    x2 = bsz + r->x + r->w - 1;
 			    y2 = bsz + r->y + r->h - 1;
 			    if (x1 < 1) x1 = 1;
 			    if (x1 >= (sp->w - 1)) x1 = (sp->w - 1) - 1;
 			    if (x2 < 1) x1 = 1;
 			    if (x2 >= (sp->w - 1)) x2 = (sp->w - 1) - 1;
-			    if (y1 < 1) y1 = 1;
-			    if (y1 >= (sp->h - 1)) y1 = (sp->h - 1) - 1;
-			    if (y2 < 1) y1 = 1;
+			    if (yy1 < 1) yy1 = 1;
+			    if (yy1 >= (sp->h - 1)) yy1 = (sp->h - 1) - 1;
+			    if (y2 < 1) yy1 = 1;
 			    if (y2 >= (sp->h - 1)) y2 = (sp->h - 1) - 1;
-			    _ds_edge_scan(sp, tb, bsz, x1, y1, x2 + 1, y1);
+			    _ds_edge_scan(sp, tb, bsz, x1, yy1, x2 + 1, yy1);
 			    _ds_edge_scan(sp, tb, bsz, x1, y2 + 1, x2 + 1, y2 + 1);
-			    _ds_edge_scan(sp, tb, bsz, x1, y1, x1, y2 + 1);
-			    _ds_edge_scan(sp, tb, bsz, x2 + 1, y1, x2 + 1, y2 + 1);
+			    _ds_edge_scan(sp, tb, bsz, x1, yy1, x1, y2 + 1);
+			    _ds_edge_scan(sp, tb, bsz, x2 + 1, yy1, x2 + 1, y2 + 1);
 			 }
 		    }
 		  /* its a rect - just add the rect outline */
@@ -1300,7 +1300,7 @@ static void
 _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_h, unsigned char *lut, int blur, int q, int rx, int ry, int rxx, int ryy)
 {
    int x, y;
-   int i, sum, weight, l, l1, l2, wt, y1, y2;
+   int i, sum, weight, l, l1, l2, wt, yy1, y2;
    unsigned char *p1, *p2, *pp;
    int full, useful;
    
@@ -1311,15 +1311,15 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
      {
 	useful = 1;
 	
-	y1 = y - (blur - 1);
+	yy1 = y - (blur - 1);
 	l1 = 0;
 	y2 = y + (blur - 1);
 	l2 = (blur * 2) - 2;
-	if (y1 < 0)
+	if (yy1 < 0)
 	  {
 	     useful = 0;
-	     l1 -= y1;
-	     y1 = 0;
+	     l1 -= yy1;
+	     yy1 = 0;
 	  }
 	if (y2 >= pix_h)
 	  {
@@ -1327,7 +1327,7 @@ _ds_gauss_blur_v(unsigned char *pix, unsigned char *pix_dst, int pix_w, int pix_
 	     l2 -= y2 - pix_h + 1;
 	  }
 	
-	pp = pix + (y1 * pix_w) + rx;
+	pp = pix + (yy1 * pix_w) + rx;
 	p2 = pix_dst + (y * pix_w) + rx;
 	if (useful)
 	  {
@@ -1924,10 +1924,10 @@ _tilebuf_x_intersect(Tilebuf *tb, int x, int w, int *x1, int *x2, int *x1_fill, 
 }
 
 static int
-_tilebuf_y_intersect(Tilebuf *tb, int y, int h, int *y1, int *y2, int *y1_fill, int *y2_fill)
+_tilebuf_y_intersect(Tilebuf *tb, int y, int h, int *yy1, int *y2, int *y1_fill, int *y2_fill)
 {
    return _tilebuf_intersect(tb->tile_size.h, tb->outbuf_h, tb->tiles.h,
-			    y, h, y1, y2, y1_fill, y2_fill);
+			    y, h, yy1, y2, y1_fill, y2_fill);
 }
 
 static int
