@@ -6732,7 +6732,7 @@ _e_border_eval0(E_Border *bd)
                                     &is_urgent))
           {
              bd->client.icccm.accepts_focus = accepts_focus;
-             if ((bd->client.icccm.urgent != is_urgent) && (!bd->focused))
+             if ((bd->client.icccm.urgent != is_urgent) && ((!bd->focused) || (!is_urgent)))
                change_urgent = 1;
              bd->client.icccm.urgent = is_urgent;
 
