@@ -677,12 +677,13 @@ _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
+_gc_id_new(E_Gadcon_Client_Class *client_class)
 {
-   Config_Item *ci = NULL;
+   char buf[PATH_MAX];
 
-   ci = _conf_item_get(NULL);
-   return ci->id;
+   snprintf(buf, sizeof(buf), "%s.%d", client_class->name, 
+            eina_list_count(clock_instances));
+   return strdup(buf);
 }
 
 static Config_Item *

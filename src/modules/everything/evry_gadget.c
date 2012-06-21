@@ -201,10 +201,13 @@ _conf_item_get(const char *id)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
+_gc_id_new(E_Gadcon_Client_Class *client_class)
 {
-   Gadget_Config *gc = _conf_item_get(NULL);
-   return gc->id;
+   char buf[PATH_MAX];
+
+   snprintf(buf, sizeof(buf), "%s.%d", client_class->name, 
+            eina_inlist_count(instances));
+   return strdup(buf);
 }
 
 /***************************************************************************/
