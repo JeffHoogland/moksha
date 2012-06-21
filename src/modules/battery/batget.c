@@ -294,6 +294,7 @@ bsd_apm_check(void)
         return;
      }
 
+   close(apm_fd);
    if (info.ai_batteries == 1) /* ai_batteries == 1 means NO battery,
                                * ai_batteries == 2 means 1 battery */
      {
