@@ -2252,9 +2252,14 @@ _e_menu_activate_next(void)
           {
              if (mi->submenu->items)
                {
-                  mi = eina_list_data_get(mi->submenu->items);
-                  e_menu_item_active_set(mi, 1);
-                  _e_menu_item_ensure_onscreen(mi);
+                  Eina_List *l;
+                  EINA_LIST_FOREACH(mi->submenu->items, l, mi)
+                    if (!mi->disable)
+                      {
+                         e_menu_item_active_set(mi, 1);
+                         _e_menu_item_ensure_onscreen(mi);
+                         break;
+                      }
                }
           }
         return;
