@@ -125,6 +125,20 @@ e_int_border_menu_create(E_Border *bd)
                                   "e/widgets/border/default/stick");
      }
 
+   if ((!bd->lock_user_shade) && (!bd->fullscreen) && (!bd->maximized) &&
+       ((!bd->client.border.name) || (strcmp("borderless", bd->client.border.name))))
+     {
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Shade"));
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, (bd->shaded ? 1 : 0));
+        e_menu_item_callback_set(mi, _e_border_menu_cb_shade, bd);
+        e_menu_item_icon_edje_set(mi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/shade"),
+                                  "e/widgets/border/default/shade");
+     }
+
    if (!bd->lock_close)
      {
         mi = e_menu_item_new(m);
@@ -549,20 +563,6 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
                                   "e/widgets/border/default/resize_icon");
      }
 
-   if ((!bd->lock_user_shade) && (!bd->fullscreen) && (!bd->maximized) &&
-       ((!bd->client.border.name) || (strcmp("borderless", bd->client.border.name))))
-     {
-        submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Shade"));
-        e_menu_item_check_set(submi, 1);
-        e_menu_item_toggle_set(submi, (bd->shaded ? 1 : 0));
-        e_menu_item_callback_set(submi, _e_border_menu_cb_shade, bd);
-        e_menu_item_icon_edje_set(submi,
-                                  e_theme_edje_file_get("base/theme/borders",
-                                                        "e/widgets/border/default/shade"),
-                                  "e/widgets/border/default/shade");
-     }
-
    submi = e_menu_item_new(subm);
    e_menu_item_separator_set(submi, 1);
 
@@ -576,9 +576,6 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
                                                         "e/widgets/border/default/stacking"),
                                   "e/widgets/border/default/stacking");
      }
-
-   submi = e_menu_item_new(subm);
-   e_menu_item_separator_set(submi, 1);
 
    submi = e_menu_item_new(subm);
    e_menu_item_label_set(submi, _("Skip"));
