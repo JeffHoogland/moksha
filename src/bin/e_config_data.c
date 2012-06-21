@@ -14,4 +14,3 @@ e_config_descriptor_new(const char *name, int size)
 
    return (E_Config_DD *) eet_data_descriptor_stream_new(&eddc);
 }
-

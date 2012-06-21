@@ -15,7 +15,7 @@ struct _E_Maximize_Rect
    }
 
 static void _e_maximize_border_rects_fill(E_Border *bd, Eina_List *list, int *x1, int *yy1, int *x2, int *y2, E_Maximize dir);
-static void _e_maximize_border_rects_fill_both(E_Border *bd, Eina_List *rects, int *x1, int *yy1, int *x2, int *y2); 
+static void _e_maximize_border_rects_fill_both(E_Border *bd, Eina_List *rects, int *x1, int *yy1, int *x2, int *y2);
 static void _e_maximize_border_rects_fill_horiz(E_Border *bd, Eina_List *rects, int *x1, int *x2, int *bx, int *by, int *bw, int *bh);
 static void _e_maximize_border_rects_fill_vert(E_Border *bd, Eina_List *rects, int *yy1, int *y2, int *bx, int *by, int *bw, int *bh);
 
@@ -34,10 +34,10 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *yy1, int *x2, int *y2)
 
    cx1 = bd->zone->x;
    if (x1) cx1 = *x1;
-   
+
    cy1 = bd->zone->y;
    if (yy1) cy1 = *yy1;
-   
+
    cx2 = bd->zone->x + bd->zone->w;
    if (x2) cx2 = *x2;
 
@@ -54,7 +54,7 @@ e_maximize_border_dock_fit(E_Border *bd, int *x1, int *yy1, int *x2, int *y2)
 	     BOTTOM,
 	     LEFT
 	} edge = NONE;
-	
+
 	if ((bd2->zone != bd->zone) || (bd2 == bd) ||
 	    (bd2->client.netwm.type != ECORE_X_WINDOW_TYPE_DOCK))
 	  continue;
@@ -142,7 +142,7 @@ e_maximize_border_shelf_fill(E_Border *bd, int *x1, int *yy1, int *x2, int *y2, 
 		  if (!sd) continue;
 		  if ((sd->x == bd->desk->x) && (sd->y == bd->desk->y))
 		    {
-		       OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, 
+		       OBSTACLE(es->x + es->zone->x, es->y + es->zone->y,
 				es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
 		       break;
 		    }
@@ -150,7 +150,7 @@ e_maximize_border_shelf_fill(E_Border *bd, int *x1, int *yy1, int *x2, int *y2, 
 	  }
 	else
 	  {
-	     OBSTACLE(es->x + es->zone->x, es->y + es->zone->y, 
+	     OBSTACLE(es->x + es->zone->x, es->y + es->zone->y,
 		      es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
 	  }
      }
@@ -203,7 +203,7 @@ _e_maximize_border_rects_fill(E_Border *bd, Eina_List *rects, int *x1, int *yy1,
 	if ((dir & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
 	  _e_maximize_border_rects_fill_horiz(bd, rects, x1, x2, &bx, &by, &bw, &bh);
 	else if ((dir & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-	  _e_maximize_border_rects_fill_vert(bd, rects, yy1, y2, &bx, &by, &bw, &bh);  
+	  _e_maximize_border_rects_fill_vert(bd, rects, yy1, y2, &bx, &by, &bw, &bh);
      }
 }
 
@@ -216,10 +216,10 @@ _e_maximize_border_rects_fill_both(E_Border *bd, Eina_List *rects, int *x1, int 
 
    hx1 = vx1 = bd->zone->x;
    if (x1) hx1 = vx1 = *x1;
-   
+
    hy1 = vy1 = bd->zone->y;
    if (yy1) hy1 = vy1 = *yy1;
-   
+
    hx2 = vx2 = bd->zone->x + bd->zone->w;
    if (x2) hx2 = vx2 = *x2;
 
@@ -268,7 +268,7 @@ _e_maximize_border_rects_fill_horiz(E_Border *bd, Eina_List *rects, int *x1, int
 
    cx1 = bd->zone->x;
    if (x1) cx1 = *x1;
-   
+
    cx2 = bd->zone->x + bd->zone->w;
    if (x2) cx2 = *x2;
 
@@ -294,7 +294,7 @@ _e_maximize_border_rects_fill_horiz(E_Border *bd, Eina_List *rects, int *x1, int
 	  }
      }
    *bw = (cx2 - cx1);
- 
+
    if (x1) *x1 = cx1;
    if (x2) *x2 = cx2;
 }
@@ -308,7 +308,7 @@ _e_maximize_border_rects_fill_vert(E_Border *bd, Eina_List *rects, int *yy1, int
 
    cy1 = bd->zone->y;
    if (yy1) cy1 = *yy1;
-   
+
    cy2 = bd->zone->y + bd->zone->h;
    if (y2) cy2 = *y2;
 
@@ -338,4 +338,3 @@ _e_maximize_border_rects_fill_vert(E_Border *bd, Eina_List *rects, int *yy1, int
    if (yy1) *yy1 = cy1;
    if (y2) *y2 = cy2;
 }
-

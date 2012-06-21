@@ -82,7 +82,7 @@ _e_place_coverage_border_add(E_Desk *desk, Eina_List *skiplist, int ar, int x, i
 		  break;
 	       }
 	  }
-	if ((ok) && 
+	if ((ok) &&
             E_INTERSECTS(x, y, w, h, x2, y2, w2, h2) &&
             ((bd->sticky) || (bd->desk == desk)))
 	  {
@@ -118,7 +118,7 @@ _e_place_coverage_shelf_add(E_Zone *zone, int ar, int x, int y, int w, int h)
           {
              int x0, x00, yy0, y00;
              int iw, ih;
-             
+
              if (!es->cfg->overlap) return 0x7fffffff;
 	     x0 = x;
 	     if (x < x2) x0 = x2;
@@ -280,7 +280,7 @@ e_place_desk_region_smart(E_Desk *desk, Eina_List *skiplist, int x, int y, int w
 	if (!ok) continue;
 
         if (!((bd->sticky) || (bd->desk == desk))) continue;
-        
+
 	bx = bd->x - desk->zone->x;
 	by = bd->y - desk->zone->y;
 	bw = bd->w;

@@ -1,7 +1,7 @@
 #include "e.h"
 
 typedef struct _E_Widget_Data E_Widget_Data;
-struct _E_Widget_Data 
+struct _E_Widget_Data
 {
    Evas_Object *o_scroll, *o_fm;
    E_Fm2_Config fmc;
@@ -17,7 +17,7 @@ static void _e_wid_cb_changed(void *data, Evas_Object *obj, void *event);
 static void _e_wid_cb_file_deleted(void *data, Evas_Object *obj, void *event);
 
 EAPI Evas_Object *
-e_widget_flist_add(Evas *evas) 
+e_widget_flist_add(Evas *evas)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -35,7 +35,7 @@ e_widget_flist_add(Evas *evas)
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_wid_focus_steal, obj);
 
    o = e_fm2_add(evas);
@@ -60,23 +60,23 @@ e_widget_flist_add(Evas *evas)
    e_fm2_config_set(wd->o_fm, &wd->fmc);
    e_fm2_icon_menu_flags_set(wd->o_fm, E_FM2_MENU_NO_SHOW_HIDDEN);
 
-   evas_object_smart_callback_add(wd->o_fm, "dir_changed", 
+   evas_object_smart_callback_add(wd->o_fm, "dir_changed",
                                   _e_wid_cb_dir_changed, obj);
-   evas_object_smart_callback_add(wd->o_fm, "selection_change", 
+   evas_object_smart_callback_add(wd->o_fm, "selection_change",
                                   _e_wid_cb_selected, obj);
-   evas_object_smart_callback_add(wd->o_fm, "changed", 
+   evas_object_smart_callback_add(wd->o_fm, "changed",
                                   _e_wid_cb_changed, obj);
-   evas_object_smart_callback_add(wd->o_fm, "files_deleted", 
+   evas_object_smart_callback_add(wd->o_fm, "files_deleted",
                                   _e_wid_cb_file_deleted, obj);
 
    e_scrollframe_child_set(wd->o_scroll, o);
-   e_scrollframe_extern_pan_set(wd->o_scroll, o, e_fm2_pan_set, 
-                                e_fm2_pan_get, e_fm2_pan_max_get, 
+   e_scrollframe_extern_pan_set(wd->o_scroll, o, e_fm2_pan_set,
+                                e_fm2_pan_get, e_fm2_pan_max_get,
                                 e_fm2_pan_child_size_get);
 
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
-   evas_object_smart_callback_add(o, "selected", 
+   evas_object_smart_callback_add(o, "selected",
                                   _e_wid_cb_selected, obj);
 
    evas_object_resize(obj, 32, 32);
@@ -84,8 +84,8 @@ e_widget_flist_add(Evas *evas)
    return obj;
 }
 
-EAPI void 
-e_widget_flist_path_set(Evas_Object *obj, const char *dev, const char *path) 
+EAPI void
+e_widget_flist_path_set(Evas_Object *obj, const char *dev, const char *path)
 {
    E_Widget_Data *wd = NULL;
 
@@ -95,7 +95,7 @@ e_widget_flist_path_set(Evas_Object *obj, const char *dev, const char *path)
 }
 
 EAPI Eina_List *
-e_widget_flist_all_list_get(Evas_Object *obj) 
+e_widget_flist_all_list_get(Evas_Object *obj)
 {
    E_Widget_Data *wd = NULL;
 
@@ -104,7 +104,7 @@ e_widget_flist_all_list_get(Evas_Object *obj)
 }
 
 EAPI Eina_List *
-e_widget_flist_selected_list_get(Evas_Object *obj) 
+e_widget_flist_selected_list_get(Evas_Object *obj)
 {
    E_Widget_Data *wd = NULL;
 
@@ -113,7 +113,7 @@ e_widget_flist_selected_list_get(Evas_Object *obj)
 }
 
 EAPI const char *
-e_widget_flist_real_path_get(Evas_Object *obj) 
+e_widget_flist_real_path_get(Evas_Object *obj)
 {
    E_Widget_Data *wd = NULL;
 
@@ -121,8 +121,8 @@ e_widget_flist_real_path_get(Evas_Object *obj)
    return e_fm2_real_path_get(wd->o_fm);
 }
 
-EAPI int 
-e_widget_flist_has_parent_get(Evas_Object *obj) 
+EAPI int
+e_widget_flist_has_parent_get(Evas_Object *obj)
 {
    E_Widget_Data *wd = NULL;
 
@@ -130,8 +130,8 @@ e_widget_flist_has_parent_get(Evas_Object *obj)
    return e_fm2_has_parent_get(wd->o_fm);
 }
 
-EAPI void 
-e_widget_flist_select_set(Evas_Object *obj, const char *file, int s) 
+EAPI void
+e_widget_flist_select_set(Evas_Object *obj, const char *file, int s)
 {
    E_Widget_Data *wd = NULL;
 
@@ -139,8 +139,8 @@ e_widget_flist_select_set(Evas_Object *obj, const char *file, int s)
    e_fm2_select_set(wd->o_fm, file, s);
 }
 
-EAPI void 
-e_widget_flist_file_show(Evas_Object *obj, const char *file) 
+EAPI void
+e_widget_flist_file_show(Evas_Object *obj, const char *file)
 {
    E_Widget_Data *wd = NULL;
 
@@ -148,8 +148,8 @@ e_widget_flist_file_show(Evas_Object *obj, const char *file)
    e_fm2_file_show(wd->o_fm, file);
 }
 
-EAPI void 
-e_widget_flist_parent_go(Evas_Object *obj) 
+EAPI void
+e_widget_flist_parent_go(Evas_Object *obj)
 {
    E_Widget_Data *wd = NULL;
 
@@ -158,8 +158,8 @@ e_widget_flist_parent_go(Evas_Object *obj)
    e_scrollframe_child_pos_set(wd->o_scroll, 0, 0);
 }
 
-EAPI void 
-e_widget_flist_refresh(Evas_Object *obj) 
+EAPI void
+e_widget_flist_refresh(Evas_Object *obj)
 {
    E_Widget_Data *wd = NULL;
 
@@ -168,8 +168,8 @@ e_widget_flist_refresh(Evas_Object *obj)
 }
 
 /* private functions */
-static void 
-_e_wid_del_hook(Evas_Object *obj) 
+static void
+_e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd = NULL;
 
@@ -177,52 +177,52 @@ _e_wid_del_hook(Evas_Object *obj)
    E_FREE(wd);
 }
 
-static void 
-_e_wid_focus_hook(Evas_Object *obj) 
+static void
+_e_wid_focus_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd = NULL;
 
    wd = e_widget_data_get(obj);
-   if (e_widget_focus_get(obj)) 
+   if (e_widget_focus_get(obj))
      {
-        edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scroll), 
+        edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scroll),
                                 "e,state,focused", "e");
         evas_object_focus_set(wd->o_fm, 1);
      }
-   else 
+   else
      {
-        edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scroll), 
+        edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scroll),
                                 "e,state,unfocused", "e");
         evas_object_focus_set(wd->o_fm, 0);
      }
 }
 
-static void 
-_e_wid_focus_steal(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
+static void
+_e_wid_focus_steal(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    e_widget_focus_steal(data);
 }
 
-static void 
-_e_wid_cb_selected(void *data, Evas_Object *obj __UNUSED__, void *event) 
+static void
+_e_wid_cb_selected(void *data, Evas_Object *obj __UNUSED__, void *event)
 {
    evas_object_smart_callback_call(data, "selection_change", event);
 }
 
-static void 
-_e_wid_cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event) 
+static void
+_e_wid_cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event)
 {
    evas_object_smart_callback_call(data, "dir_changed", event);
 }
 
-static void 
-_e_wid_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event) 
+static void
+_e_wid_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event)
 {
    evas_object_smart_callback_call(data, "changed", event);
 }
 
-static void 
-_e_wid_cb_file_deleted(void *data, Evas_Object *obj __UNUSED__, void *event) 
+static void
+_e_wid_cb_file_deleted(void *data, Evas_Object *obj __UNUSED__, void *event)
 {
    evas_object_smart_callback_call(data, "files_deleted", event);
 }

@@ -21,29 +21,29 @@ e_xkb_shutdown(void)
 
 EAPI void
 e_xkb_update(void)
-{  
+{
    E_Config_XKB_Layout *cl;
    E_Config_XKB_Option *op;
    Eina_List *l;
    Eina_Strbuf *buf;
-   
+
    if (!e_config->xkb.used_layouts) return;
-   
+
    /* We put an empty -option here in order to override all previously
     * set options.
     */
-   
+
    buf = eina_strbuf_new();
    eina_strbuf_append(buf, "setxkbmap '");
 
    /* use first entry in used layouts */
    cl = e_config->xkb.used_layouts->data;
-   
+
    eina_strbuf_append(buf, cl->name);
    eina_strbuf_append(buf, "'");
-   
-   if ((cl->variant) 
-/* workaround xkb bug */       
+
+   if ((cl->variant)
+/* workaround xkb bug */
        && (!(!strcmp(cl->variant, "basic"))))
      {
         eina_strbuf_append(buf, " -variant '");
@@ -53,7 +53,7 @@ e_xkb_update(void)
 //        if (!strcmp(cl->variant, "basic")) eina_strbuf_append(buf, ",");
         eina_strbuf_append(buf, "'");
      }
-   
+
    if (cl->model)
      {
         eina_strbuf_append(buf, " -model '");
@@ -66,10 +66,10 @@ e_xkb_update(void)
           eina_strbuf_append(buf, "default");
         eina_strbuf_append(buf, "'");
      }
-   
+
    /* clear options */
    eina_strbuf_append(buf, " -option ");
-   
+
    /* add in selected options */
    EINA_LIST_FOREACH(e_config->xkb.used_options, l, op)
      {
@@ -87,17 +87,17 @@ e_xkb_update(void)
 
 EAPI void
 e_xkb_layout_next(void)
-{  
+{
    void *odata, *ndata;
    Eina_List *l;
 
    odata = eina_list_data_get(e_config->xkb.used_layouts);
-   
+
    EINA_LIST_FOREACH(eina_list_next(e_config->xkb.used_layouts), l, ndata)
      {
         eina_list_data_set(eina_list_prev(l), ndata);
      }
-   
+
    eina_list_data_set(eina_list_last(e_config->xkb.used_layouts), odata);
    e_xkb_update();
    _e_xkb_update_event();
@@ -106,19 +106,19 @@ e_xkb_layout_next(void)
 
 EAPI void
 e_xkb_layout_prev(void)
-{  
+{
    void *odata, *ndata;
    Eina_List *l;
-   
+
    odata = eina_list_data_get(eina_list_last(e_config->xkb.used_layouts));
-   
+
    for (l = e_config->xkb.used_layouts, ndata = eina_list_data_get(l);
         l; l = eina_list_next(l))
      {
         if (eina_list_next(l))
           ndata = eina_list_data_set(eina_list_next(l), ndata);
      }
-   
+
    eina_list_data_set(e_config->xkb.used_layouts, odata);
    e_xkb_update();
    _e_xkb_update_event();
@@ -127,10 +127,10 @@ e_xkb_layout_prev(void)
 
 EAPI void
 e_xkb_layout_set(const char *name)
-{  
+{
    Eina_List *l;
    E_Config_XKB_Layout *cl;
-   
+
    if (!name) return;
    EINA_LIST_FOREACH(eina_list_next(e_config->xkb.used_layouts), l, cl)
      {
@@ -161,7 +161,7 @@ e_xkb_e_icon_flag_setup(Evas_Object *eicon, const char *name)
 {
    int w, h;
    char buf[PATH_MAX];
-   
+
    e_xkb_flag_file_get(buf, sizeof(buf), name);
    e_icon_file_set(eicon, buf);
    e_icon_size_get(eicon, &w, &h);

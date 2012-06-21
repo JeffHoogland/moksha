@@ -131,7 +131,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      {
 	const char *title = e_border_name_get(bd);
 	if (title && title[0])
-	  cfdata->title = strdup(title);	  
+	  cfdata->title = strdup(title);
      }
    if (!cfdata->desktop && bd->desktop)
      cfdata->desktop = strdup(bd->desktop->name);
@@ -183,7 +183,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      {
 	if (rem->apply_first_only) cfdata->remember.apply_first_only = 1;
 	if (rem->keep_settings)    cfdata->remember.keep_settings = 1;
-	
+
 	if (rem->match & E_REMEMBER_MATCH_NAME)
 	  cfdata->remember.match_name = 1;
 	if (rem->match & E_REMEMBER_MATCH_CLASS)
@@ -383,7 +383,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    /* Actually take our cfdata settings and apply them in real life */
    E_Border *bd = cfdata->border;
    E_Remember *rem = bd->remember;;
-   
+
    if (cfdata->mode == MODE_NOTHING)
      {
 	if (rem)
@@ -406,7 +406,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	else
 	  return 0;
      }
-   
+
    e_remember_default_match_set(rem, cfdata->border);
 
    if ((!cfdata->warned) && (_check_matches(rem, 0) > 1))
@@ -415,7 +415,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	cfdata->warned = 1;
 	return 0;
      }
-   
+
    if (cfdata->mode == MODE_GEOMETRY)
      rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE;
    else if (cfdata->mode == MODE_LOCKS)
@@ -469,7 +469,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	rem->prop.command = NULL;
 	rem->prop.desktop_file = NULL;
      }
-   
+
    rem->match = 0;
    rem->apply_first_only = cfdata->remember.apply_first_only;
 
@@ -498,7 +498,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	rem->match |= E_REMEMBER_MATCH_TYPE;
 	rem->type = bd->client.netwm.type;
      }
-   
+
    if (cfdata->remember.match_transient)
      {
 	rem->match |= E_REMEMBER_MATCH_TRANSIENT;
@@ -542,7 +542,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 	     return 0;
 	  }
      }
-   
+
    if (cfdata->command && cfdata->command[0])
      rem->prop.command = eina_stringshare_add(cfdata->command);
    if (cfdata->remember.apply_desktop_file && cfdata->desktop)
@@ -583,14 +583,14 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      rem->apply |= E_REMEMBER_SET_FOCUS_ON_START;
    if (cfdata->remember.offer_resistance)
      rem->apply |= E_REMEMBER_APPLY_OFFER_RESISTANCE;
-  
+
    if (!rem->apply && !rem->prop.desktop_file)
      {
 	e_remember_unuse(rem);
 	e_remember_del(rem);
 	if (cfdata->border->remember)
 	  e_config_save_queue();
-    	return 1;
+	return 1;
      }
 
    _check_matches(rem, 1);

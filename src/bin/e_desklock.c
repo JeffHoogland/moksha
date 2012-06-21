@@ -1144,4 +1144,3 @@ _e_desklock_ask_presentation_mode(void)
 
    _e_desklock_ask_presentation_dia = dia;
 }
-

@@ -95,7 +95,7 @@ main(int argc, char **argv)
 
    for (i = 1; i < argc; i++)
      {
-	if ((i == 1) && 
+	if ((i == 1) &&
 	    ((!strcmp(argv[i], "-h")) ||
 	     (!strcmp(argv[i], "-help")) ||
 	     (!strcmp(argv[i], "--help"))))
@@ -252,8 +252,8 @@ e_init_init(void)
 
    e_xinerama_init();
 
-   _e_init_configure_handler = 
-     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, 
+   _e_init_configure_handler =
+     ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE,
 			     _e_init_cb_window_configure, NULL);
 
    num = 0;
@@ -320,7 +320,7 @@ e_init_init(void)
 	evas_object_show(o);
      }
 
-   edje_object_part_text_set(_e_init_object, "e.text.disable_text", 
+   edje_object_part_text_set(_e_init_object, "e.text.disable_text",
 			     "Disable splash screen");
    edje_object_signal_callback_add(_e_init_object, "e,action,init,disable", "e",
 				   _e_init_cb_signal_disable, NULL);
@@ -337,7 +337,7 @@ e_init_init(void)
 EINTERN int
 e_init_shutdown(void)
 {
-   if (_e_init_configure_handler) 
+   if (_e_init_configure_handler)
      ecore_event_handler_del(_e_init_configure_handler);
    _e_init_configure_handler = NULL;
    e_init_hide();
@@ -473,7 +473,7 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
    evas_image_cache_set(e, 4096 * 1024);
    evas_font_cache_set(e, 512 * 1024);
 
-   EINA_LIST_FOREACH(fpath, l, path) 
+   EINA_LIST_FOREACH(fpath, l, path)
      evas_font_path_append(e, path);
 
    if (font_hinting == 0)

@@ -8,7 +8,7 @@ e_env_init(void)
 {
    Eina_List *l;
    E_Config_Env_Var *evr;
-   
+
    EINA_LIST_FOREACH(e_config->env_vars, l, evr)
      {
         if (evr->unset)
@@ -24,7 +24,7 @@ e_env_shutdown(void)
 {
    Eina_List *l;
    E_Config_Env_Var *evr;
-   
+
    EINA_LIST_FOREACH(e_config->env_vars, l, evr)
      {
         e_env_unset(evr->var);

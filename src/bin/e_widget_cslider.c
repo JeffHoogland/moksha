@@ -43,9 +43,9 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
    Evas_Coord mw, mh;
-   
+
    obj = e_widget_add(evas);
-   
+
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
@@ -58,7 +58,7 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    wd->color = color;
    wd->prev = calloc(1, sizeof (E_Color));
    wd->o_hgrad = NULL;
-   
+
    o = edje_object_add(evas);
    wd->o_cslider = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
@@ -168,7 +168,7 @@ void
 e_widget_cslider_color_value_set(Evas_Object *obj, E_Color *val)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    wd->color = val;
    _e_wid_update(wd);
@@ -486,7 +486,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    free(wd);
 }
@@ -495,7 +495,7 @@ static void
 _e_wid_focus_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
@@ -513,7 +513,7 @@ static void
 _e_wid_disable_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
      edje_object_signal_emit(wd->o_cslider, "e,state,disabled", "e");
@@ -544,7 +544,7 @@ _e_wid_cb_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
 
    evas_object_geometry_get(wd->o_grad, &ox, &oy, &ow, &oh);
 
-   if (wd->vertical) 
+   if (wd->vertical)
      val = 1 - ((ev->canvas.y - oy) / (double)oh);
    else
      val = (ev->canvas.x - ox) / (double)ow;
@@ -558,7 +558,7 @@ _e_wid_cb_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *
 {
    Evas_Object *o_wid;
    E_Widget_Data *wd;
-   
+
    o_wid = data;
    wd = e_widget_data_get(o_wid);
    wd->dragging = 0;
@@ -570,18 +570,18 @@ _e_wid_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
    Evas_Event_Mouse_Move *ev;
    Evas_Object *o_wid;
    E_Widget_Data *wd;
-   
+
    o_wid = data;
    wd = e_widget_data_get(o_wid);
    ev = event_info;
-  
+
    if (wd->dragging == 1)
      {
 	Evas_Coord ox, oy, ow, oh;
 	double val;
 	evas_object_geometry_get(wd->o_grad, &ox, &oy, &ow, &oh);
 
-	if (wd->vertical) 
+	if (wd->vertical)
 	  val = 1 - ((ev->cur.canvas.y - oy) / (double)oh);
 	else
 	  val = (ev->cur.canvas.x - ox) / (double)ow;

@@ -1,5 +1,5 @@
 #include "e.h"
- 
+
 EAPI int
 e_mouse_update(void)
 {

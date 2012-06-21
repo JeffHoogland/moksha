@@ -3457,4 +3457,3 @@ _action_groups_sort_cb(const void *d1, const void *d2)
    if (!(g2 = d2)) return -1;
    return strcmp(g1->act_grp, g2->act_grp);
 }
-

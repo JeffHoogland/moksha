@@ -442,7 +442,7 @@ _e_util_icon_fdo_set(Evas_Object *obj, const char *icon)
 {
    const char *path = NULL;
    unsigned int size;
-   
+
    if ((!icon) || (!icon[0])) return 0;
    size = e_icon_scale_size_get(obj);
    if (size < 16) size = 16;
@@ -973,7 +973,7 @@ e_util_library_path_restore(void)
 EAPI Evas_Object *
 e_util_icon_add(const char *path, Evas *evas)
 {
-   return _e_util_icon_add(path, evas, 64); 
+   return _e_util_icon_add(path, evas, 64);
 }
 
 EAPI Evas_Object *
@@ -1444,7 +1444,7 @@ _e_util_icon_add(const char *path, Evas *evas, int size)
    if (!ecore_file_exists(path)) return NULL;
 
    o = e_icon_add(evas);
-   e_icon_scale_size_set(o, size); 
+   e_icon_scale_size_set(o, size);
    e_icon_preload_set(o, 1);
    ext = strrchr(path, '.');
    if (ext)

@@ -89,7 +89,7 @@ e_int_border_menu_create(E_Border *bd)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   if ((!bd->sticky) && ((bd->zone->desk_x_count > 1) || (bd->zone->desk_y_count > 1))) 
+   if ((!bd->sticky) && ((bd->zone->desk_x_count > 1) || (bd->zone->desk_y_count > 1)))
      {
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, _("Move to"));
@@ -146,7 +146,7 @@ e_int_border_menu_show(E_Border *bd, Evas_Coord x, Evas_Coord y, int key, Ecore_
 {
    e_int_border_menu_create(bd);
    if (key)
-     e_menu_activate_key(bd->border_menu, bd->zone, x, y, 1, 1, 
+     e_menu_activate_key(bd->border_menu, bd->zone, x, y, 1, 1,
                          E_MENU_POP_DIRECTION_DOWN);
    else
      e_menu_activate_mouse(bd->border_menu, bd->zone, x, y, 1, 1,
@@ -449,7 +449,7 @@ _e_border_menu_cb_application_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item 
         e_menu_item_callback_set(submi, _e_border_menu_cb_icon_edit, bd);
         e_util_desktop_menu_item_icon_add(bd->desktop, 16, submi);
      }
-   else if (bd->client.icccm.class) 
+   else if (bd->client.icccm.class)
      {
         /* icons with no class useless to borders */
         submi = e_menu_item_new(subm);
@@ -467,7 +467,7 @@ _e_border_menu_cb_application_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item 
 
    submi = e_menu_item_new(subm);
    e_menu_item_label_set(submi, _("Add to IBar"));
-   e_menu_item_submenu_pre_callback_set(submi, 
+   e_menu_item_submenu_pre_callback_set(submi,
                                         _e_border_menu_cb_ibar_add_pre, bd);
    e_util_menu_item_theme_icon_set(submi, "preferences-applications-ibar");
 
@@ -589,7 +589,7 @@ _e_border_menu_cb_placement_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *m
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
 
-   if ((!bd->sticky) && ((bd->zone->desk_x_count > 1) || (bd->zone->desk_y_count > 1))) 
+   if ((!bd->sticky) && ((bd->zone->desk_x_count > 1) || (bd->zone->desk_y_count > 1)))
      {
         submi = e_menu_item_new(subm);
         e_menu_item_label_set(submi, _("Move to"));
@@ -815,8 +815,8 @@ _e_border_menu_cb_skip_taskbar(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
    e_remember_update(bd);
 }
 
-static void 
-_e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi) 
+static void
+_e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 {
    E_Desk *desk = NULL;
    Evas_Object *o = NULL;
@@ -828,7 +828,7 @@ _e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi)
 
    tw = 50;
    th = (tw * desk->zone->h) / desk->zone->w;
-   bgfile = e_bg_file_get(desk->zone->container->num, desk->zone->num, 
+   bgfile = e_bg_file_get(desk->zone->container->num, desk->zone->num,
                           desk->x, desk->y);
    o = e_thumb_icon_add(m->evas);
    e_thumb_icon_file_set(o, bgfile, "e/desktop/background");
@@ -866,7 +866,7 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
              e_menu_item_label_set(submi, buf);
              e_menu_item_disabled_set(submi, EINA_TRUE);
           }
-		  
+
 // FIXME: Remove labels and add deskpreview to menu.
 // Evas_Object *o = e_widget_deskpreview_add(m->evas, 4, 2);
 
@@ -883,7 +883,7 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
                e_menu_item_toggle_set(submi, 1);
              else
                e_menu_item_callback_set(submi, _e_border_menu_cb_sendto, desk);
-             e_menu_item_realize_callback_set(submi, _e_border_menu_cb_sendto_icon_pre, 
+             e_menu_item_realize_callback_set(submi, _e_border_menu_cb_sendto_icon_pre,
                                               desk);
           }
      }
@@ -975,7 +975,7 @@ _e_border_menu_cb_stacking_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
    submi = e_menu_item_new(subm);
    e_menu_item_separator_set(submi, 1);
 
-   // Only allow to change layer for windows in "normal" layers 
+   // Only allow to change layer for windows in "normal" layers
    if ((!bd->lock_user_stacking) &&
        ((bd->layer == 50) || (bd->layer == 100) || (bd->layer == 150)))
      {

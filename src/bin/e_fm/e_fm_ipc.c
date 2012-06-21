@@ -1439,4 +1439,3 @@ _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
 
    return buffer;
 }
-

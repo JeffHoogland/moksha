@@ -12,10 +12,10 @@ typedef struct _E_Desktop_Edit E_Desktop_Edit;
 struct _E_Desktop_Edit
 {
    E_Object                     e_obj_inherit;
-   
+
    Efreet_Desktop       *desktop;
    Evas        *evas;
-   
+
    Evas_Object *img;
    Evas_Object *img_widget;
    Evas_Object *icon_fsel;
@@ -28,7 +28,7 @@ struct _E_Desktop_Edit
 
    char *tmp_image_path;
    int saved; /* whether desktop has been saved or not */
-   
+
    E_Config_Dialog *cfd;
 };
 

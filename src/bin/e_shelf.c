@@ -1963,4 +1963,3 @@ _e_shelf_on_current_desk(E_Shelf *es, E_Event_Zone_Edge *ev)
 
    return EINA_TRUE;
 }
-

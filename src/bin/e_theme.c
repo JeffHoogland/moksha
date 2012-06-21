@@ -255,10 +255,10 @@ e_theme_edje_icon_fallback_file_get(const char *group)
  * this is used to set the theme for a CATEGORY of E17. "base" is always set
  * to the default theme - because if a selected theme wants "base/theme", but
  * does not provide theme elements, it can fall back to the default theme.
- * 
+ *
  * the idea is you can actually set a different theme for different parts of
  * the desktop... :)
- * 
+ *
  * other possible categories...
  *  e_theme_file_set("base/theme/about", "default.edj");
  *  e_theme_file_set("base/theme/borders", "default.edj");
@@ -342,7 +342,7 @@ e_theme_config_set(const char *category, const char *file)
    ect = E_NEW(E_Config_Theme, 1);
    ect->category = eina_stringshare_add(category);
    ect->file = eina_stringshare_add(file);
-   
+
    e_config->themes = eina_list_append(e_config->themes, ect);
    return 1;
 }
@@ -413,7 +413,7 @@ e_theme_transition_find(const char *transition)
    int found = 0;
    const char *str;
 
-   trans = 
+   trans =
      _e_theme_collection_items_find("base/theme/transitions", "e/transitions");
 
    if (eina_list_search_sorted(trans, EINA_COMPARE_CB(strcmp), transition))
@@ -428,7 +428,7 @@ e_theme_transition_find(const char *transition)
 EAPI Eina_List *
 e_theme_transition_list(void)
 {
-   return _e_theme_collection_items_find("base/theme/transitions", 
+   return _e_theme_collection_items_find("base/theme/transitions",
                                          "e/transitions");
 }
 
@@ -439,7 +439,7 @@ e_theme_border_find(const char *border)
    int found = 0;
    const char *str;
 
-   bds = 
+   bds =
      _e_theme_collection_items_find("base/theme/borders", "e/widgets/border");
 
    if (eina_list_search_sorted(bds, EINA_COMPARE_CB(strcmp), border))
@@ -454,7 +454,7 @@ e_theme_border_find(const char *border)
 EAPI Eina_List *
 e_theme_border_list(void)
 {
-   return _e_theme_collection_items_find("base/theme/borders", 
+   return _e_theme_collection_items_find("base/theme/borders",
                                          "e/widgets/border");
 }
 
@@ -465,7 +465,7 @@ e_theme_shelf_find(const char *shelf)
    int found = 0;
    const char *str;
 
-   shelfs = 
+   shelfs =
      _e_theme_collection_items_find("base/theme/shelf", "e/shelf");
 
    if (eina_list_search_sorted(shelfs, EINA_COMPARE_CB(strcmp), shelf))
@@ -651,7 +651,7 @@ _e_theme_collection_items_find(const char *base, const char *collname)
 	     if (str)
 	       {
 		  Eina_List *coll, *l;
-		  
+
 		  coll = edje_file_collection_list(str);
 		  if (coll)
 		    {

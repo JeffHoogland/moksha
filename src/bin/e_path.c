@@ -27,7 +27,7 @@ e_path_default_path_append(E_Path *ep, const char *path)
 	char *new_path;
 	const char *home_dir;
 	int len1, len2;
-	
+
 	home_dir = e_user_homedir_get();
 	len1 = strlen(home_dir);
 	len2 = strlen(path);
@@ -44,7 +44,7 @@ e_path_default_path_append(E_Path *ep, const char *path)
 	strcat(new_path, path + 1);
         epd->dir = eina_stringshare_add(new_path);
 	free(new_path);
-	ep->default_dir_list = eina_list_append(ep->default_dir_list, epd);	
+	ep->default_dir_list = eina_list_append(ep->default_dir_list, epd);
      }
    else
      {
@@ -63,7 +63,7 @@ e_path_user_path_set(E_Path *ep, Eina_List **user_dir_list)
 {
    E_OBJECT_CHECK(ep);
    E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
-   
+
    ep->user_dir_list = user_dir_list;
    _e_path_cache_free(ep);
 }
@@ -80,7 +80,7 @@ e_path_user_path_append(E_Path *ep, const char *path)
 	char *new_path;
 	const char *home_dir;
 	int len1, len2;
-	
+
 	home_dir = e_user_homedir_get();
 	len1 = strlen(home_dir);
 	len2 = strlen(path);
@@ -97,7 +97,7 @@ e_path_user_path_append(E_Path *ep, const char *path)
 	strcat(new_path, path + 1);
         epd->dir = eina_stringshare_add(new_path);
 	free(new_path);
-	*(ep->user_dir_list) = eina_list_append(*(ep->user_dir_list), epd);	
+	*(ep->user_dir_list) = eina_list_append(*(ep->user_dir_list), epd);
      }
    else
      {
@@ -123,7 +123,7 @@ e_path_user_path_prepend(E_Path *ep, const char *path)
 	char *new_path;
 	const char *home_dir;
 	int len1, len2;
-	
+
 	home_dir = e_user_homedir_get();
 	len1 = strlen(home_dir);
 	len2 = strlen(path);
@@ -140,7 +140,7 @@ e_path_user_path_prepend(E_Path *ep, const char *path)
 	strcat(new_path, path + 1);
         epd->dir = eina_stringshare_add(new_path);
 	free(new_path);
-	*(ep->user_dir_list) = eina_list_prepend(*(ep->user_dir_list), epd);	
+	*(ep->user_dir_list) = eina_list_prepend(*(ep->user_dir_list), epd);
      }
    else
      {
@@ -168,7 +168,7 @@ e_path_user_path_remove(E_Path *ep, const char *path)
 	char *new_path;
 	const char *home_dir;
 	int len1, len2;
-	
+
 	home_dir = e_user_homedir_get();
 	len1 = strlen(home_dir);
 	len2 = strlen(path);
@@ -221,7 +221,7 @@ e_path_user_path_clear(E_Path *ep)
    EINA_LIST_FREE(*(ep->user_dir_list), epd)
      {
 	eina_stringshare_del(epd->dir);
-	free(epd);     
+	free(epd);
      }
    _e_path_cache_free(ep);
 }
@@ -284,7 +284,7 @@ e_path_evas_append(E_Path *ep, Evas *evas)
 {
    Eina_List *dir_list;
    E_Path_Dir *epd;
-   
+
    E_OBJECT_CHECK(ep);
    E_OBJECT_TYPE_CHECK(ep, E_PATH_TYPE);
    if (!evas) return;
@@ -343,7 +343,7 @@ e_path_dir_list_free(Eina_List *dir_list)
 }
 
 /* local subsystem functions */
-static void 
+static void
 _e_path_free(E_Path *ep)
 {
    E_Path_Dir *epd;

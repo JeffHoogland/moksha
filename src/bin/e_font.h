@@ -26,7 +26,7 @@ struct _E_Font_Available
    const char *name;
 };
 
-struct _E_Font_Properties 
+struct _E_Font_Properties
 {
    const char *name;
    Eina_List *styles;
@@ -56,6 +56,6 @@ EAPI E_Font_Default    *e_font_default_get(const char *text_class);
 EAPI void		e_font_default_remove(const char *text_class);
 EAPI Eina_List         *e_font_default_list(void);
 EAPI const char        *e_font_default_string_get(const char *text_class, Evas_Font_Size *size_ret);
-    
+
 #endif
 #endif

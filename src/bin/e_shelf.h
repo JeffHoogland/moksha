@@ -15,7 +15,7 @@ struct _E_Shelf
    int                  x, y, w, h;
    int                  layer;
    E_Popup             *popup; /* NULL if its within an existing canvas */
-   E_Zone              *zone; 
+   E_Zone              *zone;
    Evas_Object         *o_base;
    Evas_Object         *o_event;
    Ecore_Evas          *ee;
@@ -42,7 +42,7 @@ struct _E_Shelf
    unsigned char        toggle      : 1;
    unsigned char        edge        : 1;
    unsigned char        urgent_show : 1;
-   unsigned int         locked; 
+   unsigned int         locked;
 };
 
 EINTERN int              e_shelf_init(void);

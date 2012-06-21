@@ -1,6 +1,6 @@
 #include "e.h"
 
-/* FIXME: broken when drop areas intersect 
+/* FIXME: broken when drop areas intersect
  * (sub window has drop area on top of lower window or desktop)
  */
 /*
@@ -181,7 +181,7 @@ e_drag_new(E_Container *container, int x, int y,
 	ecore_evas_shaped_set(drag->ecore_evas, 1);
 	ecore_x_window_shape_events_select(drag->evas_win, 1);
      }
-   
+
    e_canvas_add(drag->ecore_evas);
    drag->shape = e_container_shape_add(drag->container);
    e_container_shape_move(drag->shape, drag->x, drag->y);
@@ -215,12 +215,12 @@ e_drag_new(E_Container *container, int x, int y,
    _drag_list = eina_list_append(_drag_list, drag);
 
    ecore_x_window_shadow_tree_flush();
-   
+
    _drag_win_root = drag->container->manager->root;
 
    drag->cb.key_down = NULL;
    drag->cb.key_up = NULL;
-   
+
    return drag;
 }
 
@@ -271,7 +271,7 @@ e_drag_start(E_Drag *drag, int x, int y)
    E_Drop_Handler *h;
 
    if (_drag_win) return 0;
-   _drag_win = ecore_x_window_input_new(drag->container->win, 
+   _drag_win = ecore_x_window_input_new(drag->container->win,
 					drag->container->x, drag->container->y,
 					drag->container->w, drag->container->h);
    _drag_win_root = drag->container->manager->root;
@@ -317,11 +317,11 @@ e_drag_start(E_Drag *drag, int x, int y)
 EAPI int
 e_drag_xdnd_start(E_Drag *drag, int x, int y)
 {
-   Ecore_X_Atom actions[] = {ECORE_X_DND_ACTION_MOVE, ECORE_X_DND_ACTION_PRIVATE, 
+   Ecore_X_Atom actions[] = {ECORE_X_DND_ACTION_MOVE, ECORE_X_DND_ACTION_PRIVATE,
 			     ECORE_X_DND_ACTION_COPY, ECORE_X_DND_ACTION_ASK,
 			     ECORE_X_DND_ACTION_LINK};
    if (_drag_win) return 0;
-   _drag_win = ecore_x_window_input_new(drag->container->win, 
+   _drag_win = ecore_x_window_input_new(drag->container->win,
 					drag->container->x, drag->container->y,
 					drag->container->w, drag->container->h);
 
@@ -337,7 +337,7 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
 
    drag->dx = x - drag->x;
    drag->dy = y - drag->y;
-   
+
    ecore_x_dnd_aware_set(_drag_win, 1);
    ecore_x_dnd_types_set(_drag_win, drag->types, drag->num_types);
    ecore_x_dnd_actions_set(_drag_win, actions, 5);
@@ -377,7 +377,7 @@ e_drop_handler_add(E_Object *obj,
 
    handler->obj = obj;
    handler->entered = 0;
-   
+
    _drop_handlers = eina_list_append(_drop_handlers, handler);
 
    return handler;
@@ -449,17 +449,17 @@ e_drag_idler_before(void)
 	  {
 	     Ecore_X_Rectangle *rects, *orects;
 	     int num;
-	     
+
 	     rects = ecore_x_window_shape_rectangles_get(drag->evas_win, &num);
 	     if (rects)
 	       {
 		  int changed;
-		  
+
 		  changed = 1;
 		  if ((num == drag->shape_rects_num) && (drag->shape_rects))
 		    {
 		       int i;
-		       
+
 		       orects = drag->shape_rects;
 		       for (i = 0; i < num; i++)
 			 {
@@ -573,12 +573,12 @@ static void
 _e_drag_move(E_Drag *drag, int x, int y)
 {
    E_Zone *zone;
-   
+
    if (((drag->x + drag->dx) == x) && ((drag->y + drag->dy) == y)) return;
 
    zone = e_container_zone_at_point_get(drag->container, x, y);
    if (zone) e_zone_flip_coords_handle(zone, x, y);
-   
+
    drag->x = x - drag->dx;
    drag->y = y - drag->dy;
    drag->xy_update = 1;
@@ -588,7 +588,7 @@ static void
 _e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy)
 {
    int px = 0, py = 0;
-   
+
    *dx = 0;
    *dy = 0;
    if (h->obj)
@@ -632,7 +632,7 @@ static Ecore_X_Window
 _e_drag_win_get(const E_Drop_Handler *h, int xdnd)
 {
    Ecore_X_Window hwin = 0;
-   
+
    if (h->obj)
      {
 	switch (h->obj->type)
@@ -649,7 +649,7 @@ _e_drag_win_get(const E_Drop_Handler *h, int xdnd)
 	     hwin = ((E_Win *)(h->obj))->evas_win;
 	     break;
 	   case E_ZONE_TYPE:
-	     /* Not quite sure about this, probably need to set up 
+	     /* Not quite sure about this, probably need to set up
 	      * E_Container to pass DND events from event_win to bg_win. */
 	     // hwin = ((E_Zone *)(h->obj))->container->event_win;
 	     hwin = ((E_Zone *)(h->obj))->container->event_win;
@@ -774,8 +774,8 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
 	     move_ev.action = action;
 	     leave_ev.x = x - dx;
 	     leave_ev.y = y - dy;
-	     
-	     if (E_INSIDE(enter_ev.x, enter_ev.y, h->x, h->y, h->w, h->h) && 
+
+	     if (E_INSIDE(enter_ev.x, enter_ev.y, h->x, h->y, h->w, h->h) &&
 		 _e_drag_win_matches(h, win, 0))
 	       {
 		  if (e_drop_handler_responsive_get(h)) responsive = 1;
@@ -984,7 +984,7 @@ _e_drag_xdnd_end(Ecore_X_Window win, int x, int y)
 	     _e_drag_coords_update(h, &dx, &dy);
 	     ev.x = x - dx;
 	     ev.y = y - dy;
-	     if (_e_drag_win_matches(h, win, 1) && h->cb.drop 
+	     if (_e_drag_win_matches(h, win, 1) && h->cb.drop
 		 && E_INSIDE(ev.x, ev.y, h->x, h->y, h->w, h->h))
 	       {
 		  h->cb.drop(h->cb.data, h->active_type, &ev);
@@ -1133,8 +1133,8 @@ _e_dnd_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event)
    ev = event;
    if (ev->window != _drag_win) return ECORE_CALLBACK_PASS_ON;
 
-   if (!_xdnd) 
-     _e_drag_update(_drag_win_root, ev->x, ev->y, 
+   if (!_xdnd)
+     _e_drag_update(_drag_win_root, ev->x, ev->y,
                     ECORE_X_ATOM_XDND_ACTION_PRIVATE);
 
    return ECORE_CALLBACK_PASS_ON;

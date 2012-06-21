@@ -1062,7 +1062,7 @@ _e_editable_selection_update(Evas_Object *editable)
      }
 }
 
-/* Updates the text of the text object of the editable object 
+/* Updates the text of the text object of the editable object
  * (it fills it with '*' if the editable is in password mode)
  * It does not update the position of the text */
 static void

@@ -29,6 +29,6 @@
 #endif
 
 EAPI int e_sha1_sum(unsigned char *data, int size, unsigned char *dst);
-    
+
 #endif
 #endif

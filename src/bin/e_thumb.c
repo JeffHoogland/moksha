@@ -1,4 +1,3 @@
-
 #include "e.h"
 
 typedef struct _E_Thumb E_Thumb;

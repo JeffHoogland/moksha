@@ -16,13 +16,13 @@ e_widget_list_add(Evas *evas, int homogenous, int horiz)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   
+
    obj = e_widget_add(evas);
-   
+
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
-   
+
    o = e_box_add(evas);
    wd->o_box = o;
    e_box_orientation_set(o, horiz);
@@ -30,7 +30,7 @@ e_widget_list_add(Evas *evas, int homogenous, int horiz)
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-   
+
    return obj;
 }
 
@@ -39,9 +39,9 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
 {
    E_Widget_Data *wd;
    Evas_Coord mw, mh;
-   
+
    wd = e_widget_data_get(obj);
-   
+
    e_box_pack_end(wd->o_box, sobj);
    mw = mh = 0;
    e_widget_size_min_get(sobj, &mw, &mh);
@@ -78,7 +78,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    free(wd);
 }

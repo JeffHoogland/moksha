@@ -31,7 +31,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *b_load, *b_unload;
    Evas_Object *o_desc;
    Eina_List *types;
-   struct 
+   struct
      {
         Eina_List *loaded, *unloaded;
         Ecore_Idler *idler;
@@ -95,8 +95,8 @@ e_int_config_modules(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
 
-   cfd = e_config_dialog_new(con, _("Module Settings"), 
-			     "E", "_config_modules_dialog", 
+   cfd = e_config_dialog_new(con, _("Module Settings"),
+			     "E", "_config_modules_dialog",
 			     "preferences-plugin", 0, v, NULL);
    return cfd;
 }
@@ -169,7 +169,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    if (mw < (200 * e_scale)) mw = 200 * e_scale;
    if (mh < (100 * e_scale)) mh = 100 * e_scale;
    e_widget_size_min_set(cfdata->l_modules, mw, mh);
-   e_widget_on_change_hook_set(cfdata->l_modules, 
+   e_widget_on_change_hook_set(cfdata->l_modules,
                                _widget_list_selection_changed, cfdata);
    e_widget_table_object_append(of, cfdata->l_modules, 0, 1, 2, 1, 1, 1, 1, 1);
 
@@ -283,7 +283,7 @@ _list_item_append(E_Config_Dialog_Data *cfdata, CFModule *cfm)
 	  }
      }
 
-   e_widget_ilist_append_full(cfdata->l_modules, icon, end, 
+   e_widget_ilist_append_full(cfdata->l_modules, icon, end,
                               cfm->name, NULL, cfm, NULL);
 }
 
@@ -568,13 +568,13 @@ _widget_list_item_selected_postponed(void *data)
 
 	if (cfm->enabled)
 	  {
-	     cfdata->selected.loaded = 
+	     cfdata->selected.loaded =
                eina_list_append(cfdata->selected.loaded, cfm);
 	     loaded++;
 	  }
 	else
 	  {
-	     cfdata->selected.unloaded = 
+	     cfdata->selected.unloaded =
                eina_list_append(cfdata->selected.unloaded, cfm);
 	     unloaded++;
 	  }
@@ -603,7 +603,7 @@ _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__)
 
    if (cfdata->selected.idler)
      ecore_idler_del(cfdata->selected.idler);
-   cfdata->selected.idler = 
+   cfdata->selected.idler =
      ecore_idler_add(_widget_list_item_selected_postponed, cfdata);
 }
 

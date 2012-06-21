@@ -1,21 +1,21 @@
 #include "e.h"
 
 /* TODO:
- * 
+ *
  * Sanatize data received from acpi for message status into something
  * meaningful (ie: 00000002 == LID_CLOSED, etc, etc).
- * 
- * Find someone with a WIFI that actually emits ACPI events and add/debug the 
+ *
+ * Find someone with a WIFI that actually emits ACPI events and add/debug the
  * E_EVENT_ACPI for wifi.
- * 
+ *
  */
 
 /* local structures */
 /* for simple acpi device mapping */
-typedef struct _E_ACPI_Device_Simple      E_ACPI_Device_Simple; 
+typedef struct _E_ACPI_Device_Simple      E_ACPI_Device_Simple;
 typedef struct _E_ACPI_Device_Multiplexed E_ACPI_Device_Multiplexed;
- 
-struct _E_ACPI_Device_Simple 
+
+struct _E_ACPI_Device_Simple
 {
    const char *name;
    // ->
@@ -56,7 +56,7 @@ static E_ACPI_Device_Simple _devices_simple[] =
    {"processor",    E_ACPI_TYPE_PROCESSOR},
    {"thermal_zone", E_ACPI_TYPE_THERMAL},
    {"video",        E_ACPI_TYPE_VIDEO},
-   
+
    {NULL,           E_ACPI_TYPE_UNKNOWN}
 };
 
@@ -79,7 +79,7 @@ static E_ACPI_Device_Multiplexed _devices_multiplexed[] =
    {"sony/hotkey", NULL,   0x0f, E_ACPI_TYPE_VOLUME},
    {"sony/hotkey", NULL,   0x10, E_ACPI_TYPE_BRIGHTNESS},
    {"sony/hotkey", NULL,   0x12, E_ACPI_TYPE_VIDEO},
-   
+
 /* HP Compaq Presario - CQ61 - intel gfx */
 /** interesting these get auto-mapped to keys in x11. here for documentation
  ** but not enabled as we can use regular keybinds for these
@@ -87,7 +87,7 @@ static E_ACPI_Device_Multiplexed _devices_multiplexed[] =
    {"video",       "DD03", 0x86, E_ACPI_TYPE_BRIGHTNESS_UP},
    {"video",       "OVGA", 0x80, E_ACPI_TYPE_VIDEO},
  */
-/* END */   
+/* END */
    {NULL,          NULL, 0x00, E_ACPI_TYPE_UNKNOWN}
 };
 
@@ -96,7 +96,7 @@ EAPI int E_EVENT_ACPI = 0;
 
 /* public functions */
 EINTERN int
-e_acpi_init(void) 
+e_acpi_init(void)
 {
    E_EVENT_ACPI = ecore_event_type_new();
 
@@ -104,30 +104,30 @@ e_acpi_init(void)
    if (!ecore_file_exists("/var/run/acpid.socket")) return 1;
 
    /* try to connect to acpid socket */
-   _e_acpid = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, 
+   _e_acpid = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM,
 				       "/var/run/acpid.socket", -1, NULL);
    if (!_e_acpid) return 1;
 
    /* setup handlers */
-   _e_acpid_hdls = 
-      eina_list_append(_e_acpid_hdls, 
-                       ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DEL, 
+   _e_acpid_hdls =
+      eina_list_append(_e_acpid_hdls,
+                       ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DEL,
                                                _e_acpi_cb_server_del, NULL));
-   _e_acpid_hdls = 
-      eina_list_append(_e_acpid_hdls, 
-                       ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DATA, 
+   _e_acpid_hdls =
+      eina_list_append(_e_acpid_hdls,
+                       ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DATA,
                                                _e_acpi_cb_server_data, NULL));
-   
+
    /* Add handlers for standard acpi events */
-   _e_acpid_hdls = 
-      eina_list_append(_e_acpid_hdls, 
+   _e_acpid_hdls =
+      eina_list_append(_e_acpid_hdls,
                        ecore_event_handler_add(E_EVENT_ACPI,
                                                _e_acpi_cb_event, NULL));
    return 1;
 }
 
 EINTERN int
-e_acpi_shutdown(void) 
+e_acpi_shutdown(void)
 {
    Ecore_Event_Handler *hdl;
 
@@ -143,14 +143,14 @@ e_acpi_shutdown(void)
    return 1;
 }
 
-EAPI void 
-e_acpi_events_freeze(void) 
+EAPI void
+e_acpi_events_freeze(void)
 {
    _e_acpi_events_frozen++;
 }
 
-EAPI void 
-e_acpi_events_thaw(void) 
+EAPI void
+e_acpi_events_thaw(void)
 {
    _e_acpi_events_frozen--;
    if (_e_acpi_events_frozen < 0) _e_acpi_events_frozen = 0;
@@ -186,7 +186,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    int sig, status, i, done = 0;
    char device[1024], bus[1024], *sdata;
    const char *str, *p;
-   
+
    ev = event;
 
    if ((!ev->data) || (ev->size < 1)) return ECORE_CALLBACK_PASS_ON;
@@ -208,7 +208,7 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
         strncpy(sdata, str, (int)(p - str));
         sdata[p - str] = 0;
         /* parse out this acpi string into separate pieces */
-        if (sscanf(sdata, "%1023s %1023s %x %x", 
+        if (sscanf(sdata, "%1023s %1023s %x %x",
                    device, bus, &sig, &status) != 4)
           {
              sig = -1;
@@ -216,13 +216,13 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
              if (sscanf(sdata, "%1023s %1023s", device, bus) != 2)
                goto done_event;
           }
-        
+
         /* create new event structure to raise */
         acpi_event = E_NEW(E_Event_Acpi, 1);
         acpi_event->bus_id = eina_stringshare_add(bus);
         acpi_event->signal = sig;
         acpi_event->status = status;
-        
+
         /* FIXME: add in a key faking layer */
         if ((!done) && (sig >= 0) && (status >= 0))
           {
@@ -266,14 +266,14 @@ _e_acpi_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
              switch (acpi_event->type)
                {
                 case E_ACPI_TYPE_LID:
-                  acpi_event->status = 
+                  acpi_event->status =
                     _e_acpi_lid_status_get(device, bus);
                   break;
                 default:
                   break;
                }
              /* actually raise the event */
-             ecore_event_add(E_EVENT_ACPI, acpi_event, 
+             ecore_event_add(E_EVENT_ACPI, acpi_event,
                              _e_acpi_cb_event_free, NULL);
           }
 done_event:
@@ -288,7 +288,7 @@ done_event:
    else
      {
         Eina_Strbuf *newbuf;
-        
+
         newbuf = eina_strbuf_new();
         eina_strbuf_append(newbuf, str);
         eina_strbuf_free(acpibuf);
@@ -297,8 +297,8 @@ done_event:
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static void 
-_e_acpi_cb_event_free(void *data __UNUSED__, void *event) 
+static void
+_e_acpi_cb_event_free(void *data __UNUSED__, void *event)
 {
    E_Event_Acpi *ev;
 
@@ -308,8 +308,8 @@ _e_acpi_cb_event_free(void *data __UNUSED__, void *event)
    E_FREE(ev);
 }
 
-static int 
-_e_acpi_lid_status_get(const char *device, const char *bus) 
+static int
+_e_acpi_lid_status_get(const char *device, const char *bus)
 {
    FILE *f;
    int i = 0;
@@ -329,7 +329,7 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
         /* hack around ppurka's Thinkpad (G460 + Linux) that reports lid
          * state as "/proc/acpi/button/lid/LID0/state" but where the lid
          * event says "button/lid LID close".
-         * 
+         *
          * so let's take the base device name "LID" and add a numeric like
          * 0, 1, 2, 3 so we have LID0, LID1, LID2 etc. - try up to LID9
          * and then give up.

@@ -73,4 +73,3 @@ e_intl_input_method_config_free(E_Input_Method_Config *imc)
 	E_FREE(imc);
      }
 }
-

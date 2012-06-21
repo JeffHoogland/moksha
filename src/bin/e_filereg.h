@@ -13,5 +13,3 @@ EAPI Eina_Bool e_filereg_file_protected(const char * path);
 
 #endif
 #endif
-
-

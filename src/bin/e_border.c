@@ -269,7 +269,7 @@ _e_border_sub_borders_new(E_Border *bd)
    Eina_List *list = NULL, *l;
    E_Border *child;
    E_Border_List *bl;
-   
+
    EINA_LIST_FOREACH(bd->transients, l, child)
      {
         if (!eina_list_data_find(list, child))
@@ -280,7 +280,7 @@ _e_border_sub_borders_new(E_Border *bd)
      {
         if (e_object_is_del(E_OBJECT(child))) continue;
         if (child == bd) continue;
-/*        
+/*
         if ((bd->client.icccm.client_leader) &&
             (child->client.icccm.client_leader ==
                 bd->client.icccm.client_leader))
@@ -912,7 +912,7 @@ e_border_desk_set(E_Border *bd,
         Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
-          
+
         EINA_LIST_FOREACH(list, l, child)
           {
              e_border_desk_set(child, bd->desk);
@@ -1022,7 +1022,7 @@ e_border_hide(E_Border *bd,
                ecore_x_window_hide(bd->client.win);
           }
      }
-   
+
    visible = 0;
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_MAPPED, &visible, 1);
    if (!manage)
@@ -1708,7 +1708,7 @@ e_border_raise(E_Border *bd)
    if (e_config->transient.raise)
      {
         Eina_List *list = _e_border_sub_borders_new(bd);
-        
+
         EINA_LIST_REVERSE_FOREACH(list, l, child)
           {
              /* Don't stack iconic transients. If the user wants these shown,
@@ -1721,10 +1721,10 @@ e_border_raise(E_Border *bd)
                   else
                     {
                        E_Border *above;
-                       
+
                        /* First raise the border to find out which border we will end up above */
                        above = e_container_border_raise(child);
-                       
+
                        if (above)
                          {
                             /* We ended up above a border, now we must stack this border to
@@ -1797,7 +1797,7 @@ e_border_lower(E_Border *bd)
    if (e_config->transient.lower)
      {
         Eina_List *list = _e_border_sub_borders_new(bd);
-        
+
         EINA_LIST_REVERSE_FOREACH(list, l, child)
           {
              /* Don't stack iconic transients. If the user wants these shown,
@@ -1810,10 +1810,10 @@ e_border_lower(E_Border *bd)
                   else
                     {
                        E_Border *below;
-                       
+
                        /* First lower the border to find out which border we will end up below */
                        below = e_container_border_lower(child);
-                       
+
                        if (below)
                          {
                             /* We ended up below a border, now we must stack this border to
@@ -1887,7 +1887,7 @@ e_border_stack_above(E_Border *bd,
     if (e_config->transient.raise)
       {
          Eina_List *list = _e_border_sub_borders_new(bd);
-         
+
          EINA_LIST_REVERSE_FOREACH(list, l, child)
            {
               /* Don't stack iconic transients. If the user wants these shown,
@@ -1945,7 +1945,7 @@ e_border_stack_below(E_Border *bd,
     if (e_config->transient.lower)
       {
          Eina_List *list = _e_border_sub_borders_new(bd);
-         
+
          EINA_LIST_REVERSE_FOREACH(bd->transients, l, child)
            {
               /* Don't stack iconic transients. If the user wants these shown,
@@ -2108,7 +2108,7 @@ e_border_focus_set(E_Border *bd,
                   bd->want_focus = 1;
                   bd->changed = 1;
                }
-             else if ((!bd->focused) || 
+             else if ((!bd->focused) ||
                       (focus_next && (bd != eina_list_data_get(focus_next))))
                {
                   Eina_List *l;
@@ -2183,7 +2183,7 @@ e_border_focus_set(E_Border *bd,
           {
              Eina_Bool unfocus_is_parent = EINA_FALSE;
              E_Border *bd_parent;
-             
+
              bd_parent = bd->parent;
              while (bd_parent)
                {
@@ -2905,7 +2905,7 @@ e_border_iconify(E_Border *bd)
         Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
-        
+
         EINA_LIST_FOREACH(list, l, child)
           {
              e_border_iconify(child);
@@ -2977,7 +2977,7 @@ e_border_stick(E_Border *bd)
         Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
-        
+
         EINA_LIST_FOREACH(list, l, child)
           {
              child->sticky = 1;
@@ -3013,7 +3013,7 @@ e_border_unstick(E_Border *bd)
         Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
-        
+
         EINA_LIST_FOREACH(list, l, child)
           {
              child->sticky = 0;
@@ -4421,7 +4421,7 @@ _e_border_free(E_Border *bd)
      }
    if (bd->client.e.state.video_parent)
      {
-        bd->client.e.state.video_parent_border->client.e.state.video_child = 
+        bd->client.e.state.video_parent_border->client.e.state.video_child =
           eina_list_remove
           (bd->client.e.state.video_parent_border->client.e.state.video_child,
               bd);
@@ -6601,7 +6601,7 @@ _e_border_eval0(E_Border *bd)
         char *title = ecore_x_icccm_title_get(bd->client.win);
         eina_stringshare_replace(&bd->client.icccm.title, title);
         if (title) free(title);
-                                 
+
         if (bd->bg_object)
           edje_object_part_text_set(bd->bg_object, "e.text.title",
                                     bd->client.icccm.title);
@@ -6637,7 +6637,7 @@ _e_border_eval0(E_Border *bd)
         if (!((bd->client.icccm.name == pname) &&
               (bd->client.icccm.class == pclass)))
           bd->changes.icon = 1;
-        
+
         if (pname) eina_stringshare_del(pname);
         if (pclass) eina_stringshare_del(pclass);
         bd->client.icccm.fetch.name_class = 0;
@@ -6683,10 +6683,10 @@ _e_border_eval0(E_Border *bd)
 
         if ((!machine) && (bd->client.icccm.client_leader))
           machine = ecore_x_icccm_client_machine_get(bd->client.icccm.client_leader);
-        
+
         eina_stringshare_replace(&bd->client.icccm.machine, machine);
         if (machine) free(machine);
-        
+
         bd->client.icccm.fetch.machine = 0;
         rem_change = 1;
      }
@@ -6885,9 +6885,9 @@ _e_border_eval0(E_Border *bd)
    if (bd->client.icccm.fetch.icon_name)
      {
         char *icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
-        eina_stringshare_replace(&bd->client.icccm.icon_name, icon_name); 
+        eina_stringshare_replace(&bd->client.icccm.icon_name, icon_name);
         if (icon_name) free(icon_name);
-        
+
         bd->client.icccm.fetch.icon_name = 0;
         rem_change = 1;
      }
@@ -6895,9 +6895,9 @@ _e_border_eval0(E_Border *bd)
      {
         char *icon_name;
         ecore_x_netwm_icon_name_get(bd->client.win, &icon_name);
-        eina_stringshare_replace(&bd->client.netwm.icon_name, icon_name); 
+        eina_stringshare_replace(&bd->client.netwm.icon_name, icon_name);
         if (icon_name) free(icon_name);
-        
+
         bd->client.netwm.fetch.icon_name = 0;
         rem_change = 1;
      }
@@ -7171,7 +7171,7 @@ _e_border_eval0(E_Border *bd)
         /* unlinking child/parent */
         if (bd->client.e.state.video_parent_border != NULL)
           {
-             bd->client.e.state.video_parent_border->client.e.state.video_child = 
+             bd->client.e.state.video_parent_border->client.e.state.video_child =
                eina_list_remove
                (bd->client.e.state.video_parent_border->client.e.state.video_child,
                    bd);
@@ -7278,9 +7278,9 @@ _e_border_eval0(E_Border *bd)
         if ((!bd->lock_border) || (!bd->client.border.name))
           bd->client.border.changed = 1;
 
-          {        
+          {
              char *str = NULL;
-             
+
              if ((ecore_x_netwm_startup_id_get(bd->client.win, &str) && (str)) ||
                  ((bd->client.icccm.client_leader > 0) &&
                      ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str))
@@ -7289,7 +7289,7 @@ _e_border_eval0(E_Border *bd)
                   if (!strncmp(str, "E_START|", 8))
                     {
                        int id;
-                       
+
                        id = atoi(str + 8);
                        if (id > 0) bd->client.netwm.startup_id = id;
                     }
@@ -7308,14 +7308,14 @@ _e_border_eval0(E_Border *bd)
              else
                bd->client.netwm.pid = -1;
           }
-        
+
         inst = e_exec_startup_id_pid_instance_find(bd->client.netwm.startup_id,
                                                    bd->client.netwm.pid);
         if ((inst) && (inst->used == 0))
           {
              E_Zone *zone;
              E_Desk *desk;
-             
+
              inst->used++;
              zone = e_container_zone_number_get(bd->zone->container,
                                                 inst->screen);
@@ -7323,11 +7323,11 @@ _e_border_eval0(E_Border *bd)
              desk = e_desk_at_xy_get(bd->zone, inst->desk_x, inst->desk_y);
              if (desk) e_border_desk_set(bd, desk);
           }
-        
+
         if (0) // keep all windows of one app/group on the same screen/desk
           {
              E_Border *bdl = NULL;
-             
+
              bdl = bd->parent;
              if (!bdl)
                {
@@ -7337,7 +7337,7 @@ _e_border_eval0(E_Border *bd)
                {
                   E_Border *child;
                   E_Border_List *bl;
-                  
+
                   bl = e_container_border_list_first(bd->zone->container);
                   while ((child = e_container_border_list_next(bl)))
                     {
@@ -8243,7 +8243,7 @@ _e_border_eval(E_Border *bd)
                   char buf[128];
                   snprintf(buf, sizeof(buf), "%s.desktop", bd->client.icccm.class);
                   bd->desktop = efreet_util_desktop_file_id_find(buf);
-               }             
+               }
           }
         if (!bd->desktop)
           {
@@ -8295,7 +8295,7 @@ _e_border_eval(E_Border *bd)
         }
         bd->changes.icon = 0;
      }
-   
+
    bd->new_client = 0;
    bd->changed = 0;
    bd->changes.stack = 0;
@@ -9044,8 +9044,8 @@ _e_border_cb_ping_poller(void *data)
      {
         /* if time between last ping and now is greater
          * than half the ping interval... */
-        if ((ecore_loop_time_get() - bd->ping) > 
-            ((e_config->ping_clients_interval * 
+        if ((ecore_loop_time_get() - bd->ping) >
+            ((e_config->ping_clients_interval *
               ecore_poller_poll_interval_get(ECORE_POLLER_CORE)) / 2.0))
           {
              if (!bd->hung)

@@ -51,7 +51,7 @@ struct _E_Storage
    Eina_Bool hotpluggable;
    Eina_Bool media_check_enabled;
 
-   struct 
+   struct
      {
         const char *drive, *volume;
      } icon;
@@ -93,7 +93,7 @@ struct _E_Volume
 
    Eina_Bool encrypted;
    Eina_Bool unlocked;
-   
+
 #if @DBUS_MOUNT_CONFIG@
    DBusPendingCall *op;                // d-bus call handle
    void *prop_handler;

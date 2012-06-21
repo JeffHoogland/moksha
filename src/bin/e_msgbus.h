@@ -8,7 +8,7 @@ typedef struct _E_Msgbus_Data E_Msgbus_Data;
 
 /* This is the dbus subsystem, but e_dbus namespace is taken by e_dbus */
 
-struct _E_Msgbus_Data 
+struct _E_Msgbus_Data
 {
    E_DBus_Connection *conn;
    E_DBus_Object     *obj;

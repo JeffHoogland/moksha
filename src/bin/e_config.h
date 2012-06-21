@@ -196,7 +196,7 @@ struct _E_Config
    int         screensaver_expose; // GUI
    unsigned char screensaver_ask_presentation; // GUI
    double        screensaver_ask_presentation_timeout; // GUI
-   
+
    unsigned char screensaver_suspend; // GUI
    unsigned char screensaver_suspend_on_ac; // GUI
    double        screensaver_suspend_delay; // GUI
@@ -306,11 +306,11 @@ struct _E_Config
       unsigned char show_run_dialog;
       unsigned char show_exit_dialog;
    } exec;
-   
+
    unsigned char null_container_win; // HYPER-ADVANCED-ONLY - TURNING ON KILLS DESKTOP BG
-   
+
    Eina_List *env_vars; // GUI
-   
+
    struct {
       double normal; // GUI
       double dim; // GUI
@@ -348,12 +348,12 @@ struct _E_Config
       const char    *net_icon_theme_name; // GUI
       const char    *gtk_font_name;
    } xsettings;
-   
+
    struct {
       unsigned char check; // INTERNAL
       unsigned char later; // INTERNAL
    } update;
-   
+
    struct {
       Eina_List  *used_layouts;
       Eina_List  *used_options;

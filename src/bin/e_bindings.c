@@ -89,7 +89,7 @@ e_bindings_init(void)
                           ebw->any_mod, ebw->action, ebw->params);
 
    EINA_LIST_FOREACH(e_config->acpi_bindings, l, eba)
-     e_bindings_acpi_add(eba->context, eba->type, eba->status, 
+     e_bindings_acpi_add(eba->context, eba->type, eba->status,
                          eba->action, eba->params);
 
    return 1;
@@ -104,13 +104,13 @@ e_bindings_shutdown(void)
    E_FREE_LIST(signal_bindings, _e_bindings_signal_free);
    E_FREE_LIST(wheel_bindings, _e_bindings_wheel_free);
    E_FREE_LIST(acpi_bindings, _e_bindings_acpi_free);
- 
+
    if (mapping_handler)
       {
          ecore_event_handler_del(mapping_handler);
          mapping_handler = NULL;
       }
-  
+
    return 1;
 }
 
@@ -429,7 +429,7 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Even
              if (_e_bindings_context_match(binding->ctxt, ctxt))
                {
                   E_Action *act;
-                  
+
                   act = e_action_find(binding->action);
                   if (act)
                     {
@@ -994,8 +994,8 @@ e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event
    return act;
 }
 
-EAPI void 
-e_bindings_acpi_add(E_Binding_Context ctxt, int type, int status, const char *action, const char *params) 
+EAPI void
+e_bindings_acpi_add(E_Binding_Context ctxt, int type, int status, const char *action, const char *params)
 {
    E_Binding_Acpi *binding;
 
@@ -1008,8 +1008,8 @@ e_bindings_acpi_add(E_Binding_Context ctxt, int type, int status, const char *ac
    acpi_bindings = eina_list_append(acpi_bindings, binding);
 }
 
-EAPI void 
-e_bindings_acpi_del(E_Binding_Context ctxt, int type, int status, const char *action, const char *params) 
+EAPI void
+e_bindings_acpi_del(E_Binding_Context ctxt, int type, int status, const char *action, const char *params)
 {
    E_Binding_Acpi *binding;
    Eina_List *l;
@@ -1017,7 +1017,7 @@ e_bindings_acpi_del(E_Binding_Context ctxt, int type, int status, const char *ac
    EINA_LIST_FOREACH(acpi_bindings, l, binding)
      {
         if ((binding->ctxt == ctxt) &&
-            (binding->type == type) && (binding->status == status) && 
+            (binding->type == type) && (binding->status == status) &&
             (((binding->action) && (action) && (!strcmp(binding->action, action))) ||
              ((!binding->action) && (!action))) &&
             (((binding->params) && (params) && (!strcmp(binding->params, params))) ||
@@ -1031,7 +1031,7 @@ e_bindings_acpi_del(E_Binding_Context ctxt, int type, int status, const char *ac
 }
 
 EAPI E_Action *
-e_bindings_acpi_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, E_Event_Acpi *ev, E_Binding_Acpi **bind_ret) 
+e_bindings_acpi_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, E_Event_Acpi *ev, E_Binding_Acpi **bind_ret)
 {
    E_Binding_Acpi *binding;
    Eina_List *l;
@@ -1041,7 +1041,7 @@ e_bindings_acpi_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, E_Event_A
         if (binding->type == ev->type)
           {
              /* if binding status is -1, then we don't compare event status */
-             if (binding->status != -1) 
+             if (binding->status != -1)
                {
                   /* binding status is set to something, compare event status */
                   if (binding->status != ev->status) continue;
@@ -1060,7 +1060,7 @@ e_bindings_acpi_find(E_Binding_Context ctxt, E_Object *obj __UNUSED__, E_Event_A
 }
 
 EAPI E_Action *
-e_bindings_acpi_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Acpi *ev) 
+e_bindings_acpi_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Acpi *ev)
 {
    E_Action *act;
    E_Binding_Acpi *binding;
@@ -1139,8 +1139,8 @@ _e_bindings_wheel_free(E_Binding_Wheel *binding)
    free(binding);
 }
 
-static void 
-_e_bindings_acpi_free(E_Binding_Acpi *binding) 
+static void
+_e_bindings_acpi_free(E_Binding_Acpi *binding)
 {
    if (binding->action) eina_stringshare_del(binding->action);
    if (binding->params) eina_stringshare_del(binding->params);
@@ -1170,16 +1170,16 @@ _e_bindings_modifiers(unsigned int modifiers)
     * have it on, sometimes they don't, and often they have no idea. waaaay
     * back in E 0.1->0.13 or so days this caused issues thus numlock,
     * scrollock and capslock are not usable modifiers.
-    * 
+    *
     * if we REALLY want to be able to use numlock we need to add more binding
     * flags and config that says "REALLY pay attention to numlock for this
     * binding" field in the binding (like there is a "any_mod" flag - we need a
     * "num_lock_respect" field)
-    * 
+    *
     * also it should be an E_BINDING_MODIFIER_LOCK_NUM as the ecore lock flag
     * may vary from system to system as different xservers may have differing
     * modifier masks for numlock (it is queried at startup).
-    * 
+    *
    if (ev->modifiers & ECORE_X_LOCK_NUM) mod |= ECORE_X_LOCK_NUM;
     */
 
@@ -1231,4 +1231,3 @@ _e_bindings_edge_cb_timer(void *data)
 
    return ECORE_CALLBACK_CANCEL;
 }
-

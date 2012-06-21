@@ -734,7 +734,7 @@ _e_entry_key_down_windows(Evas_Object *entry, Evas_Event_Key_Down *event)
    if ((!strcmp(event->key, "Escape")) ||
        (!strcmp(event->key, "Return")) || (!strcmp(event->key, "KP_Enter")))
      _e_entry_imf_context_reset(entry);
-   
+
    /* Move the cursor/selection to the left */
    if (strcmp(event->key, "Left") == 0 ||
        ((strcmp(event->key, "KP_Left") == 0) && (!event->string)))
@@ -1107,7 +1107,7 @@ _e_entry_smart_add(Evas_Object *object)
                                   _e_entry_mouse_up_cb, NULL);
    evas_object_event_callback_add(object, EVAS_CALLBACK_MOUSE_MOVE,
                                   _e_entry_mouse_move_cb, NULL);
-   sd->selection_handler = 
+   sd->selection_handler =
      ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
                              _e_entry_x_selection_notify_handler, object);
 }

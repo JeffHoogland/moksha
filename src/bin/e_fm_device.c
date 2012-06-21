@@ -109,13 +109,13 @@ _e_fm2_device_volume_setup(E_Volume *v)
         strcmp(v->mount_point, "/tmp")))
      _e_fm2_volume_write(v);
 }
-     
+
 EAPI void
 e_fm2_device_storage_add(E_Storage *s)
 {
    Eina_List *l;
    E_Volume *v;
-   
+
    if (e_fm2_device_storage_find(s->udi)) return;
 
    s->validated = EINA_TRUE;
@@ -165,7 +165,7 @@ e_fm2_device_storage_add(E_Storage *s)
      {
         s->trackable = EINA_TRUE;
      }
-     
+
    EINA_LIST_FOREACH(_e_vols, l, v) /* catch volumes which were added before their storage */
      {
         if ((!v->storage) && (s->udi == v->parent))
@@ -270,7 +270,7 @@ e_fm2_device_volume_add(E_Volume *v)
      }
 
    if (v->storage) _e_fm2_device_volume_setup(v);
-     
+
 }
 
 EAPI void
@@ -680,4 +680,3 @@ e_fm2_device_volume_list_get(void)
 {
    return _e_vols;
 }
-

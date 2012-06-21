@@ -1,6 +1,6 @@
 #include "e.h"
 
-struct _E_Config_Dialog_Data 
+struct _E_Config_Dialog_Data
 {
    E_Shelf *es;
    E_Config_Shelf *escfg;
@@ -27,8 +27,8 @@ static void _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj);
 static void _cb_autohide_change(void *data, Evas_Object *obj __UNUSED__);
 static void _fill_desks(E_Config_Dialog_Data *cfdata);
 
-EAPI void 
-e_int_shelf_config(E_Shelf *es) 
+EAPI void
+e_int_shelf_config(E_Shelf *es)
 {
    E_Config_Dialog_View *v;
 
@@ -39,16 +39,16 @@ e_int_shelf_config(E_Shelf *es)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
 
-   es->config_dialog = 
-     e_config_dialog_new(es->zone->container, _("Shelf Settings"), 
-                         "E", "_shelf_config_dialog", 
+   es->config_dialog =
+     e_config_dialog_new(es->zone->container, _("Shelf Settings"),
+                         "E", "_shelf_config_dialog",
                          "preferences-desktop-shelf", 0, v, es);
    e_win_centered_set(es->config_dialog->dia->win, EINA_TRUE);
 }
 
 /* local functions */
 static void *
-_create_data(E_Config_Dialog *cfd) 
+_create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -59,8 +59,8 @@ _create_data(E_Config_Dialog *cfd)
    return cfdata;
 }
 
-static void 
-_fill_data(E_Config_Dialog_Data *cfdata) 
+static void
+_fill_data(E_Config_Dialog_Data *cfdata)
 {
    /* stacking */
    if ((!cfdata->escfg->popup) && (cfdata->escfg->layer == 1))
@@ -81,7 +81,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->size = cfdata->escfg->size;
 
    /* style */
-   if (cfdata->escfg->style) 
+   if (cfdata->escfg->style)
      cfdata->style = eina_stringshare_ref(cfdata->escfg->style);
    else
      cfdata->style = eina_stringshare_add("");
@@ -97,8 +97,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->desk_list = cfdata->escfg->desk_list;
 }
 
-static void 
-_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
+static void
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    eina_list_free(cfdata->autohide_list);
 
@@ -110,7 +110,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ol, *ow;
    E_Radio_Group *rg;
@@ -126,63 +126,63 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_radio_add(evas, _("Below Everything"), 0, rg);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_check_add(evas, _("Allow windows to overlap the shelf"), 
+   ow = e_widget_check_add(evas, _("Allow windows to overlap the shelf"),
                            &(cfdata->overlap));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Stacking"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Stacking"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    /* position */
    ol = e_widget_table_add(evas, 1);
    rg = e_widget_radio_group_new(&(cfdata->orient));
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left",
                                 24, 24, E_GADCON_ORIENT_LEFT, rg);
    e_widget_table_object_append(ol, ow, 0, 2, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right",
                                 24, 24, E_GADCON_ORIENT_RIGHT, rg);
    e_widget_table_object_append(ol, ow, 2, 2, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top",
                                 24, 24, E_GADCON_ORIENT_TOP, rg);
    e_widget_table_object_append(ol, ow, 1, 0, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom",
                                 24, 24, E_GADCON_ORIENT_BOTTOM, rg);
    e_widget_table_object_append(ol, ow, 1, 4, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-left", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-left",
                                 24, 24, E_GADCON_ORIENT_CORNER_TL, rg);
    e_widget_table_object_append(ol, ow, 0, 0, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-right", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-right",
                                 24, 24, E_GADCON_ORIENT_CORNER_TR, rg);
    e_widget_table_object_append(ol, ow, 2, 0, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-left", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-left",
                                 24, 24, E_GADCON_ORIENT_CORNER_BL, rg);
    e_widget_table_object_append(ol, ow, 0, 4, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-right", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-right",
                                 24, 24, E_GADCON_ORIENT_CORNER_BR, rg);
    e_widget_table_object_append(ol, ow, 2, 4, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left-top", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left-top",
                                 24, 24, E_GADCON_ORIENT_CORNER_LT, rg);
    e_widget_table_object_append(ol, ow, 0, 1, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-top", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-top",
                                 24, 24, E_GADCON_ORIENT_CORNER_RT, rg);
    e_widget_table_object_append(ol, ow, 2, 1, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left-bottom", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left-bottom",
                                 24, 24, E_GADCON_ORIENT_CORNER_LB, rg);
    e_widget_table_object_append(ol, ow, 0, 3, 1, 1, 1, 1, 1, 1);
-   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-bottom", 
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-bottom",
                                 24, 24, E_GADCON_ORIENT_CORNER_RB, rg);
    e_widget_table_object_append(ol, ow, 2, 3, 1, 1, 1, 1, 1, 1);
-   e_widget_toolbook_page_append(otb, NULL, _("Position"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Position"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    /* size */
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_slider_add(evas, 1, 0, _("Height (%3.0f pixels)"), 4, 256, 4, 0, 
+   ow = e_widget_slider_add(evas, 1, 0, _("Height (%3.0f pixels)"), 4, 256, 4, 0,
                             NULL, &(cfdata->size), 100);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_check_add(evas, _("Shrink to Content Width"), 
+   ow = e_widget_check_add(evas, _("Shrink to Content Width"),
                            &(cfdata->fit_along));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Size"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Size"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    /* style */
@@ -190,12 +190,12 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_ilist_add(evas, 60, 20, &(cfdata->style));
    _fill_styles(cfdata, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Style"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Style"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    /* autohide */
    ol = e_widget_list_add(evas, 0, 0);
-   cfdata->o_autohide = 
+   cfdata->o_autohide =
      e_widget_check_add(evas, _("Auto-hide the shelf"), &(cfdata->autohide));
    e_widget_on_change_hook_set(cfdata->o_autohide, _cb_autohide_change, cfdata);
    e_widget_list_object_append(ol, cfdata->o_autohide, 1, 1, 0.5);
@@ -214,7 +214,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->autohide_list = eina_list_append(cfdata->autohide_list, ow);
    e_widget_disabled_set(ow, !cfdata->autohide);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.2, 6.0, 0.2, 0, 
+   ow = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.2, 6.0, 0.2, 0,
                             &(cfdata->hide_timeout), NULL, 100);
    cfdata->autohide_list = eina_list_append(cfdata->autohide_list, ow);
    e_widget_disabled_set(ow, !cfdata->autohide);
@@ -224,12 +224,12 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->autohide_list = eina_list_append(cfdata->autohide_list, ow);
    e_widget_disabled_set(ow, !cfdata->autohide);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%.2f seconds"), 0.05, 6.0, 0.05, 0, 
+   ow = e_widget_slider_add(evas, 1, 0, _("%.2f seconds"), 0.05, 6.0, 0.05, 0,
                             &(cfdata->hide_duration), NULL, 100);
    cfdata->autohide_list = eina_list_append(cfdata->autohide_list, ow);
    e_widget_disabled_set(ow, !cfdata->autohide);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Auto Hide"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Auto Hide"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    /* Desktop */
@@ -244,25 +244,25 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_multi_select_set(cfdata->o_desk_list, EINA_TRUE);
    _fill_desks(cfdata);
    e_widget_list_object_append(ol, cfdata->o_desk_list, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Desktop"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Desktop"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
    return otb;
 }
 
-static int 
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+static int
+_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Shelf_Desk *sd;
    int recreate = 0;
 
-   if (!cfdata->escfg->style) 
+   if (!cfdata->escfg->style)
      {
         cfdata->escfg->style = eina_stringshare_ref(cfdata->style);
         e_shelf_style_set(cfdata->es, cfdata->style);
      }
-   else if ((cfdata->escfg->style) && 
+   else if ((cfdata->escfg->style) &&
             (strcmp(cfdata->escfg->style, cfdata->style)))
      {
         if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
@@ -270,7 +270,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         e_shelf_style_set(cfdata->es, cfdata->style);
      }
 
-   if (cfdata->escfg->orient != cfdata->orient) 
+   if (cfdata->escfg->orient != cfdata->orient)
      {
         cfdata->escfg->orient = cfdata->orient;
         e_shelf_orient(cfdata->es, cfdata->orient);
@@ -278,41 +278,41 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         recreate = 1;
      }
 
-   if (cfdata->escfg->fit_along != cfdata->fit_along) 
+   if (cfdata->escfg->fit_along != cfdata->fit_along)
      {
         cfdata->escfg->fit_along = cfdata->fit_along;
         cfdata->es->fit_along = cfdata->fit_along;
         recreate = 1;
      }
 
-   if (cfdata->escfg->size != cfdata->size) 
+   if (cfdata->escfg->size != cfdata->size)
      {
         cfdata->escfg->size = cfdata->size;
         cfdata->es->size = cfdata->size;
         recreate = 1;
      }
 
-   if (cfdata->layer == 0) 
+   if (cfdata->layer == 0)
      {
-        if ((cfdata->escfg->popup != 0) || (cfdata->escfg->layer != 1)) 
+        if ((cfdata->escfg->popup != 0) || (cfdata->escfg->layer != 1))
           {
              cfdata->escfg->popup = 0;
              cfdata->escfg->layer = 1;
              recreate = 1;
           }
      }
-   else if (cfdata->layer == 1) 
+   else if (cfdata->layer == 1)
      {
-        if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != 0)) 
+        if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != 0))
           {
              cfdata->escfg->popup = 1;
              cfdata->escfg->layer = 0;
              recreate = 1;
           }
      }
-   else if (cfdata->layer == 2) 
+   else if (cfdata->layer == 2)
      {
-        if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != 200)) 
+        if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != 200))
           {
              cfdata->escfg->popup = 1;
              cfdata->escfg->layer = 200;
@@ -331,13 +331,13 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      E_FREE(sd);
    cfdata->escfg->desk_list = NULL;
 
-   if (cfdata->desk_show_mode) 
+   if (cfdata->desk_show_mode)
      {
         Eina_List *l;
         const E_Ilist_Item *it;
         int idx = -1;
 
-        EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_desk_list), l, it) 
+        EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_desk_list), l, it)
           {
              E_Desk *desk;
 
@@ -347,12 +347,12 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
              sd = E_NEW(E_Config_Shelf_Desk, 1);
              sd->x = desk->x;
              sd->y = desk->y;
-             cfdata->escfg->desk_list = 
+             cfdata->escfg->desk_list =
                eina_list_append(cfdata->escfg->desk_list, sd);
           }
      }
 
-   if (recreate) 
+   if (recreate)
      {
         E_Zone *zone;
 
@@ -360,9 +360,9 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         cfdata->es->config_dialog = NULL;
         e_object_del(E_OBJECT(cfdata->es));
 
-        cfdata->es = 
-          e_shelf_zone_new(zone, cfdata->escfg->name, 
-                           cfdata->escfg->style, cfdata->escfg->popup, 
+        cfdata->es =
+          e_shelf_zone_new(zone, cfdata->escfg->name,
+                           cfdata->escfg->style, cfdata->escfg->popup,
                            cfdata->escfg->layer, cfdata->escfg->id);
         cfdata->es->cfg = cfdata->escfg;
         cfdata->es->fit_along = cfdata->escfg->fit_along;
@@ -371,16 +371,16 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         e_shelf_populate(cfdata->es);
      }
 
-   if (cfdata->escfg->desk_show_mode) 
+   if (cfdata->escfg->desk_show_mode)
      {
         E_Desk *desk;
         Eina_List *l;
         int show = 0;
 
         desk = e_desk_current_get(cfdata->es->zone);
-        EINA_LIST_FOREACH(cfdata->escfg->desk_list, l, sd) 
+        EINA_LIST_FOREACH(cfdata->escfg->desk_list, l, sd)
           {
-             if ((desk->x == sd->x) && (desk->y == sd->y)) 
+             if ((desk->x == sd->x) && (desk->y == sd->y))
                {
                   show = 1;
                   break;
@@ -403,8 +403,8 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    return 1;
 }
 
-static void 
-_fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj) 
+static void
+_fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
 {
    Evas *evas;
    Eina_List *l, *styles;
@@ -419,7 +419,7 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
    e_widget_ilist_clear(obj);
 
    styles = e_theme_shelf_list();
-   EINA_LIST_FOREACH(styles, l, style) 
+   EINA_LIST_FOREACH(styles, l, style)
      {
         Evas_Object *thumb, *ow;
         char buff[PATH_MAX];
@@ -448,8 +448,8 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
      eina_stringshare_del(str);
 }
 
-static void 
-_cb_autohide_change(void *data, Evas_Object *obj __UNUSED__) 
+static void
+_cb_autohide_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *l;
@@ -460,8 +460,8 @@ _cb_autohide_change(void *data, Evas_Object *obj __UNUSED__)
      e_widget_disabled_set(ow, !cfdata->autohide);
 }
 
-static void 
-_fill_desks(E_Config_Dialog_Data *cfdata) 
+static void
+_fill_desks(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    int mw, x, y;
@@ -474,18 +474,18 @@ _fill_desks(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(cfdata->o_desk_list);
 
    for (y = 0; y < e_config->zone_desks_y_count; y++)
-     for (x = 0; x < e_config->zone_desks_x_count; x++) 
+     for (x = 0; x < e_config->zone_desks_x_count; x++)
        {
           E_Desk *desk;
           Eina_List *l;
           E_Config_Shelf_Desk *sd;
 
           desk = e_desk_at_xy_get(cfdata->es->zone, x, y);
-          e_widget_ilist_append(cfdata->o_desk_list, NULL, desk->name, 
+          e_widget_ilist_append(cfdata->o_desk_list, NULL, desk->name,
                                 NULL, NULL, NULL);
           i++;
 
-          EINA_LIST_FOREACH(cfdata->desk_list, l, sd) 
+          EINA_LIST_FOREACH(cfdata->desk_list, l, sd)
             {
                if ((sd->x != x) || (sd->y != y)) continue;
                e_widget_ilist_multi_select(cfdata->o_desk_list, i);

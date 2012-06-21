@@ -22,7 +22,7 @@ e_win_init(void)
 EINTERN int
 e_win_shutdown(void)
 {
-/*   
+/*
    while (wins)
      {
 	e_object_del(E_OBJECT(wins->data));
@@ -36,7 +36,7 @@ e_win_new(E_Container *con)
 {
    E_Win *win;
    Evas_Object *obj;
-   
+
    win = E_OBJECT_ALLOC(E_Win, E_WIN_TYPE, _e_win_free);
    if (!win) return NULL;
    e_object_del_func_set(E_OBJECT(win), _e_win_del);
@@ -71,7 +71,7 @@ e_win_new(E_Container *con)
    win->min_aspect = 0.0;
    win->max_aspect = 0.0;
    wins = eina_list_append(wins, win);
-   
+
    win->pointer = e_pointer_window_new(win->evas_win, 0);
    return win;
 }
@@ -86,7 +86,7 @@ e_win_show(E_Win *win)
 	_e_win_prop_update(win);
 	ecore_evas_lower(win->ecore_evas);
 	win->border = e_border_new(win->container, win->evas_win, 1, 1);
-// dont need this - special stuff        
+// dont need this - special stuff
 //        win->border->ignore_first_unmap = 1;
 	if (!win->placed)
 	  win->border->re_manage = 0;
@@ -96,7 +96,7 @@ e_win_show(E_Win *win)
      }
    _e_win_prop_update(win);
    e_border_show(win->border);
-// done now by e_border specially   
+// done now by e_border specially
 //   ecore_evas_show(win->ecore_evas);
 }
 
@@ -280,7 +280,7 @@ e_win_size_min_set(E_Win *win, int w, int h)
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->min_w = w;
-   win->min_h = h;   
+   win->min_h = h;
    if (win->border)
      _e_win_prop_update(win);
 }
@@ -291,7 +291,7 @@ e_win_size_max_set(E_Win *win, int w, int h)
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->max_w = w;
-   win->max_h = h;   
+   win->max_h = h;
    if (win->border)
      _e_win_prop_update(win);
 }
@@ -302,7 +302,7 @@ e_win_size_base_set(E_Win *win, int w, int h)
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    win->base_w = w;
-   win->base_h = h;   
+   win->base_h = h;
    if (win->border)
      _e_win_prop_update(win);
 }
@@ -384,7 +384,7 @@ e_win_evas_object_win_get(Evas_Object *obj)
    Evas *evas;
    Evas_Object *wobj;
    E_Win *win;
-   
+
    if (!obj) return NULL;
    evas = evas_object_evas_get(obj);
    wobj = evas_object_name_find(evas, "E_Win");
@@ -393,11 +393,11 @@ e_win_evas_object_win_get(Evas_Object *obj)
    return win;
 }
 
-EAPI void 
-e_win_border_icon_set(E_Win *win, const char *icon) 
+EAPI void
+e_win_border_icon_set(E_Win *win, const char *icon)
 {
    E_Border *border;
-   
+
    border = win->border;
    if (!border) return;
    if (border->internal_icon)
@@ -409,14 +409,14 @@ e_win_border_icon_set(E_Win *win, const char *icon)
      border->internal_icon = eina_stringshare_add(icon);
 }
 
-EAPI void 
-e_win_border_icon_key_set(E_Win *win, const char *key) 
+EAPI void
+e_win_border_icon_key_set(E_Win *win, const char *key)
 {
    E_Border *border;
-   
+
    border = win->border;
    if (!border) return;
-   if (border->internal_icon_key) 
+   if (border->internal_icon_key)
      {
 	eina_stringshare_del(border->internal_icon_key);
 	border->internal_icon_key = NULL;
@@ -447,7 +447,7 @@ static void
 _e_win_del(void *obj)
 {
    E_Win *win;
-   
+
    win = obj;
    if (win->border) e_border_hide(win->border, 1);
 }
@@ -493,10 +493,10 @@ static void
 _e_win_cb_move(Ecore_Evas *ee)
 {
    E_Win *win;
-   
+
    win = ecore_evas_data_get(ee, "E_Win");
    if (!win) return;
-   ecore_evas_geometry_get(win->ecore_evas, &win->x, &win->y, &win->w, &win->h);   
+   ecore_evas_geometry_get(win->ecore_evas, &win->x, &win->y, &win->w, &win->h);
    if (win->cb_move) win->cb_move(win);
 }
 
@@ -504,7 +504,7 @@ static void
 _e_win_cb_resize(Ecore_Evas *ee)
 {
    E_Win *win;
-   
+
    win = ecore_evas_data_get(ee, "E_Win");
    if (!win) return;
    ecore_evas_geometry_get(win->ecore_evas, &win->x, &win->y, &win->w, &win->h);
@@ -515,7 +515,7 @@ static void
 _e_win_cb_delete(Ecore_Evas *ee)
 {
    E_Win *win;
-   
+
    win = ecore_evas_data_get(ee, "E_Win");
    if (!win) return;
    if (win->cb_delete) win->cb_delete(win);

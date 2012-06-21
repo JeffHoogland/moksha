@@ -44,7 +44,7 @@ main(int argc, char **argv)
    int maxlevel = 0, curlevel = -1;
    Eina_List *devs;
    char buf[4096] = "";
-   
+
    for (i = 1; i < argc; i++)
      {
         if ((!strcmp(argv[i], "-h")) ||

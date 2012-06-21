@@ -60,9 +60,9 @@ e_remember_init(E_Startup_Mode mode)
      {
 	handlers = eina_list_append
 	  (handlers, ecore_event_handler_add
-	   (E_EVENT_MODULE_INIT_END, _e_remember_restore_cb, NULL)); 
+	   (E_EVENT_MODULE_INIT_END, _e_remember_restore_cb, NULL));
      }
-   
+
    return 1;
 }
 
@@ -71,7 +71,7 @@ e_remember_shutdown(void)
 {
    E_Border_Hook *h;
    Ecore_Event_Handler *hh;
-   
+
    EINA_LIST_FREE(hooks, h)
      e_border_hook_del(h);
 
@@ -80,7 +80,7 @@ e_remember_shutdown(void)
 
    EINA_LIST_FREE(handlers, hh)
      ecore_event_handler_del(hh);
-   
+
    return 1;
 }
 
@@ -99,7 +99,7 @@ e_remember_internal_save(void)
 	EINA_LIST_FREE(remembers->list, rem)
 	  _e_remember_free(rem);
      }
-   
+
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
 	if (!bd->internal) continue;
@@ -112,7 +112,7 @@ e_remember_internal_save(void)
 		      E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_LAYER |
 		      E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE |
 		      E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_LOCKS |
-		      E_REMEMBER_APPLY_SKIP_WINLIST |	  
+		      E_REMEMBER_APPLY_SKIP_WINLIST |
 		      E_REMEMBER_APPLY_SKIP_PAGER |
 		      E_REMEMBER_APPLY_SKIP_TASKBAR |
 		      E_REMEMBER_APPLY_OFFER_RESISTANCE);
@@ -132,10 +132,10 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
    E_Action *act_fm, *act;
    E_Container *con;
 
-   act_fm = e_action_find("fileman"); 
+   act_fm = e_action_find("fileman");
 
    con = e_container_current_get(e_manager_current_get());
-   
+
    EINA_LIST_FOREACH(remembers->list, l, rem)
      {
 	if (!rem->class) continue;
@@ -155,7 +155,7 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
 	     char *param = NULL;
 	     char path[1024];
 	     const char *p;
-	     
+
 	     p = rem->class + 9;
 
 	     if ((param = strstr(p, "::")))
@@ -165,7 +165,7 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
 	       }
 	     else
 	       snprintf(path, sizeof(path), "%s", p);
-	     
+
 	     if (e_configure_registry_exists(path))
 	       {
 		  e_configure_registry_call(path, con, param);
@@ -186,7 +186,7 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
 
    if (handlers) eina_list_free(handlers);
    handlers = NULL;
-   
+
    return ECORE_CALLBACK_DONE;
 }
 
@@ -234,7 +234,7 @@ e_remember_del(E_Remember *rem)
 	e_remember_unuse(rem);
      }
 
-   _e_remember_free(rem); 
+   _e_remember_free(rem);
 }
 
 EAPI E_Remember *
@@ -296,7 +296,7 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
 {
    const char *title, *clasz, *name, *role;
    int match;
-   
+
    if (rem->name) eina_stringshare_del(rem->name);
    if (rem->class) eina_stringshare_del(rem->class);
    if (rem->title) eina_stringshare_del(rem->title);
@@ -312,7 +312,7 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
    if (!clasz || clasz[0] == 0) clasz = NULL;
    role = bd->client.icccm.window_role;
    if (!role || role[0] == 0) role = NULL;
-   
+
    match = E_REMEMBER_MATCH_TRANSIENT;
    if (bd->client.icccm.transient_for != 0)
      rem->transient = 1;
@@ -329,7 +329,7 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
      {
 	match |= E_REMEMBER_MATCH_TITLE;
 	rem->title = eina_stringshare_add(title);
-     }   
+     }
    if (role)
      {
 	match |= E_REMEMBER_MATCH_ROLE;
@@ -342,7 +342,7 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
      }
 
    rem->match = match;
-   
+
    return match;
 }
 
@@ -353,7 +353,7 @@ e_remember_update(E_Border *bd)
    if (!bd->remember) return;
    if (bd->remember->keep_settings) return;
    _e_remember_update(bd, bd->remember);
-   e_config_save_queue();   
+   e_config_save_queue();
 }
 
 static void
@@ -387,7 +387,7 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
 	  rem->prop.layer = bd->saved.layer;
 	else
 	  rem->prop.layer = bd->layer;
-     }   
+     }
    if (rem->apply & E_REMEMBER_APPLY_LOCKS)
      {
 	rem->prop.lock_user_location   = bd->lock_user_location;
@@ -425,7 +425,7 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
      {
 	rem->prop.zone = bd->zone->num;
 	rem->prop.head = bd->zone->container->manager->num;
-     }   
+     }
    if (rem->apply & E_REMEMBER_APPLY_SKIP_WINLIST)
      rem->prop.skip_winlist = bd->user_skip_winlist;
    if (rem->apply & E_REMEMBER_APPLY_STICKY)
@@ -439,7 +439,7 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
    if (rem->apply & E_REMEMBER_APPLY_DESKTOP)
      e_desk_xy_get(bd->desk, &rem->prop.desk_x, &rem->prop.desk_y);
    if (rem->apply & E_REMEMBER_APPLY_FULLSCREEN)
-     rem->prop.fullscreen = bd->fullscreen;   
+     rem->prop.fullscreen = bd->fullscreen;
    if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
      rem->prop.offer_resistance = bd->offer_resistance;
 }
@@ -575,13 +575,13 @@ _e_remember_cb_hook_eval_post_new_border(void *data __UNUSED__, void *border)
        (bd->client.icccm.class && bd->client.icccm.class[0]))
      {
 	E_Remember *rem;
-	
+
 	if (!strncmp(bd->client.icccm.class, "e_fwin", 6))
 	  {
 	     if (!(e_config->remember_internal_windows & E_REMEMBER_INTERNAL_FM_WINS))
 	       return;
 	  }
-	else 
+	else
 	  {
 	     if (!(e_config->remember_internal_windows & E_REMEMBER_INTERNAL_DIALOGS))
 	       return;
@@ -606,7 +606,7 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
    E_Border *bd = border;
    E_Remember *rem = NULL;
    int temporary = 0;
-   
+
    if ((!bd->new_client) || (bd->internal_no_remember)) return;
 
    if (!bd->remember)
@@ -618,7 +618,7 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
 	     e_remember_use(rem);
 	  }
      }
-   
+
    if (bd->internal && remembers && bd->client.icccm.class && bd->client.icccm.class[0])
      {
 	Eina_List *l;
@@ -637,7 +637,7 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
 	  }
 	else rem = bd->remember;
      }
-   
+
    if (!rem)
      return;
 

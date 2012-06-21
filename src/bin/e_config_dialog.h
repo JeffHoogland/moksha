@@ -23,7 +23,7 @@ struct _E_Config_Dialog_View
    unsigned char basic_only : 1;
    unsigned char normal_win : 1;
    unsigned char scroll : 1;
-   
+
    void           *(*create_cfdata)     (E_Config_Dialog *cfd);
    void            (*free_cfdata)       (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
    int             (*close_cfdata)      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -31,13 +31,13 @@ struct _E_Config_Dialog_View
       int          (*apply_cfdata)      (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
       Evas_Object *(*create_widgets)    (E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
       int          (*check_changed)     (E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-   } basic, advanced;   
+   } basic, advanced;
 };
 
 struct _E_Config_Dialog
 {
    E_Object                     e_obj_inherit;
-   
+
    E_Config_Dialog_CFData_Type  view_type;
    E_Config_Dialog_View        *view;
    E_Config_Dialog_Data        *cfdata;

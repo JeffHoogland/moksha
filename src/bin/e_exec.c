@@ -867,4 +867,3 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
 
    fclose(f);
 }
-

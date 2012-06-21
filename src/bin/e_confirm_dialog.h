@@ -11,10 +11,10 @@ typedef struct _E_Confirm_Dialog E_Confirm_Dialog;
 struct _E_Confirm_Dialog
 {
    E_Object  e_obj_inherit;
-   
+
    E_Dialog *dia;
 
-   struct 
+   struct
      {
 	void *data;
 	void (*func)(void *data);

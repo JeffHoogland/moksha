@@ -15,11 +15,11 @@ EINTERN int
 e_order_init(void)
 {
    char *menu_file = NULL;
-   
-   handlers = 
-     eina_list_append(handlers, 
-                      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, 
-                                              _e_order_cb_efreet_cache_update, 
+
+   handlers =
+     eina_list_append(handlers,
+                      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE,
+                                              _e_order_cb_efreet_cache_update,
                                               NULL));
    if (e_config->default_system_menu)
       menu_file = strdup(e_config->default_system_menu);
@@ -30,14 +30,14 @@ e_order_init(void)
         if (!ecore_file_exists(menu_file))
           {
              char buf[PATH_MAX];
-             
+
              free(menu_file);
              menu_file = NULL;
              snprintf(buf, sizeof(buf), "/etc/xdg/menus/enlightenment.menu");
              if (ecore_file_exists(buf)) menu_file = strdup(buf);
              else
                {
-                  snprintf(buf, sizeof(buf), 
+                  snprintf(buf, sizeof(buf),
                            "%s/etc/xdg/menus/enlightenment.menu",
                            e_prefix_get());
                   if (ecore_file_exists(buf)) menu_file = strdup(buf);
@@ -62,7 +62,7 @@ EAPI E_Order *
 e_order_new(const char *path)
 {
    E_Order *eo;
- 
+
    eo = E_OBJECT_ALLOC(E_Order, E_ORDER_TYPE, _e_order_free);
    if (!eo) return NULL;
 
@@ -188,7 +188,7 @@ static Eina_Bool
 _e_order_cb_monitor_delay(void *data)
 {
    E_Order *eo = data;
-   
+
    /* It doesn't really matter what the change is, just re-read the file */
    _e_order_read(eo);
    if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
@@ -235,14 +235,14 @@ _e_order_read(E_Order *eo)
 		  if (len > 0)
 		    {
 		       Efreet_Desktop *desktop = NULL;
-		       
+
 		       if (buf[0] == '/')
 		         desktop = efreet_desktop_get(buf);
 		       if (!desktop)
 		         desktop = efreet_desktop_get(ecore_file_file_get(buf));
 		       if (!desktop)
 			 desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
-		       if (desktop) 
+		       if (desktop)
                          eo->desktops = eina_list_append(eo->desktops, desktop);
 		    }
 	       }

@@ -189,7 +189,7 @@ e_widget_csel_add(Evas *evas, E_Color *color, Eina_Bool alpha_enabled)
 
    obj = e_widget_add(evas);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
-   
+
    wd = calloc(1, sizeof(E_Widget_Data));
    wd->mode = 1;
    wd->cv = color;
@@ -255,7 +255,7 @@ e_widget_csel_add(Evas *evas, E_Color *color, Eina_Bool alpha_enabled)
      {
 	o = e_widget_label_add(evas, "Alpha");
 	e_widget_table_object_append(frame, o, 1, i, 1, 1, 1, 1, 0, 0);
-	o = e_widget_slider_add(evas, 1, 0, "%0.0f", 0, 255, 1, 0, NULL, 
+	o = e_widget_slider_add(evas, 1, 0, "%0.0f", 0, 255, 1, 0, NULL,
                                 &(wd->cv->a), 100);
 	e_widget_on_change_hook_set(o, _e_wid_cb_alpha_changed, wd);
 	e_widget_table_object_append(frame, o, 2, i, 1, 1, 1, 1, 0, 0);

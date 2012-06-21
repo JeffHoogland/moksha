@@ -125,12 +125,12 @@ static int
 find_valgrind(char *path, size_t path_len)
 {
    const char *env = getenv("PATH");
-   
+
    while (env)
      {
 	const char *p = strchr(env, ':');
 	ssize_t p_len;
-        
+
 	if (p) p_len = p - env;
 	else p_len = strlen(env);
 	if (p_len <= 0) goto next;
@@ -174,7 +174,7 @@ valgrind_append(char **dst, int valgrind_mode, int valgrind_tool, char *valgrind
    if (valgrind_log)
      {
 	static char logparam[PATH_MAX + sizeof("--log-file=")];
-        
+
 	snprintf(logparam, sizeof(logparam), "--log-file=%s", valgrind_log);
 	dst[i++] = logparam;
      }
@@ -286,7 +286,7 @@ main(int argc, char **argv)
 	     valgrind_mode = 0;
 	  }
      }
-   
+
    printf("E - PID=%i, do_precache=%i, valgrind=%d", getpid(), do_precache, valgrind_mode);
    if (valgrind_mode)
      {
@@ -294,11 +294,11 @@ main(int argc, char **argv)
 	if (valgrind_log) printf(" valgrind-log-file='%s'", valgrind_log);
      }
    putchar('\n');
-   
+
    if (do_precache)
      {
 	void *lib, *func;
-        
+
 	/* sanity checks - if precache might fail - check here first */
 	lib = dlopen("libeina.so", RTLD_GLOBAL | RTLD_LAZY);
 	if (!lib) dlopen("libeina.so.1", RTLD_GLOBAL | RTLD_LAZY);
@@ -351,7 +351,7 @@ main(int argc, char **argv)
 	precache();
      }
 done:
-   
+
    /* mtrack memory tracker support */
    p = getenv("HOME");
    if (p)
@@ -382,7 +382,7 @@ done:
              fclose(f);
           }
      }
-   
+
    /* try dbus-launch */
    snprintf(buf, sizeof(buf), "%s/enlightenment", eina_prefix_bin_get(pfx));
 
@@ -392,14 +392,14 @@ done:
      {
 	args[0] = "dbus-launch";
 	args[1] = "--exit-with-session";
-        
+
 	i = 2 + valgrind_append(args + 2, valgrind_mode, valgrind_tool, valgrind_path, valgrind_log);
 	args[i++] = buf;
 	copy_args(args + i, argv + 1, argc - 1);
 	args[i + argc - 1] = NULL;
 	execvp("dbus-launch", args);
      }
-   
+
    /* dbus-launch failed - run e direct */
    i = valgrind_append(args, valgrind_mode, valgrind_tool, valgrind_path, valgrind_log);
    args[i++] = buf;

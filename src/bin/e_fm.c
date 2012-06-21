@@ -9878,4 +9878,3 @@ e_fm2_operation_abort(int id)
    e_fm2_op_registry_entry_abort(ere);
    e_fm2_op_registry_entry_unref(ere);
 }
-

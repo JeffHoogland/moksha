@@ -16,8 +16,8 @@ e_alert_shutdown(void)
    return 1;
 }
 
-EAPI void 
-e_alert_show(int sig) 
+EAPI void
+e_alert_show(int sig)
 {
    char *args[4];
    pid_t pid;
@@ -77,4 +77,3 @@ e_alert_show(int sig)
      e_util_env_set("MTRACK", "track");
    ecore_app_restart();
 }
-

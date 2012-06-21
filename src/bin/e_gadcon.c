@@ -5160,4 +5160,3 @@ _e_gadcon_location_change(E_Gadcon_Client *gcc, E_Gadcon_Location *src, E_Gadcon
    src->gadget_remove.func(src->gadget_remove.data, gcc);
    return 1;
 }
-

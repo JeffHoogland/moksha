@@ -100,7 +100,7 @@ e_widget_aspect_aspect_set(Evas_Object *obj, int w, int h)
 
    wd = e_widget_data_get(obj);
    if (!wd) return;
-   
+
    wd->aspect_w = w;
    wd->aspect_h = h;
    _e_wid_reconfigure(wd);
@@ -113,7 +113,7 @@ e_widget_aspect_align_set(Evas_Object *obj, double align_x, double align_y)
 
    wd = e_widget_data_get(obj);
    if (!wd) return;
-   
+
    wd->align_x = align_x;
    wd->align_y = align_y;
    _e_wid_reconfigure(wd);

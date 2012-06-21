@@ -10,15 +10,15 @@ EAPI int
 e_prefix_determine(char *argv0)
 {
    if (pfx) return 1;
-   
-   pfx = eina_prefix_new(argv0, e_prefix_determine, 
+
+   pfx = eina_prefix_new(argv0, e_prefix_determine,
                          "E", "enlightenment", "AUTHORS",
                          PACKAGE_BIN_DIR,
                          PACKAGE_LIB_DIR,
                          PACKAGE_DATA_DIR,
                          LOCALE_DIR);
    if (!pfx) return 0;
-   
+
    _prefix_path_data = eina_prefix_data_get(pfx);
    _prefix_path_data_len= strlen(_prefix_path_data);
 #ifdef E_LOGGING
@@ -59,7 +59,7 @@ e_prefix_shutdown(void)
    eina_prefix_free(pfx);
    pfx = NULL;
 }
-   
+
 EAPI void
 e_prefix_fallback(void)
 {
@@ -112,9 +112,9 @@ e_prefix_data_snprintf(char *dst, size_t size, const char *fmt, ...)
 {
    size_t off, ret;
    va_list ap;
-   
+
    va_start(ap, fmt);
-   
+
    off = _prefix_path_data_len + 1;
    if (size < _prefix_path_data_len + 2)
      {
@@ -127,10 +127,10 @@ e_prefix_data_snprintf(char *dst, size_t size, const char *fmt, ...)
         va_end(ap);
         return ret;
      }
-   
+
    memcpy(dst, _prefix_path_data, _prefix_path_data_len);
    dst[_prefix_path_data_len] = '/';
-   
+
    ret = off + vsnprintf(dst + off, size - off, fmt, ap);
    va_end(ap);
    return ret;

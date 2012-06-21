@@ -492,6 +492,6 @@ e_fm2_op_registry_entry_abort(E_Fm2_Op_Registry_Entry *entry)
 {
    if (!entry) return;
 
-   if (entry->func.abort) 
+   if (entry->func.abort)
       entry->func.abort(entry);
 }

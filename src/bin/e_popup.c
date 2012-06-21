@@ -15,7 +15,7 @@ static Eina_Hash *_e_popup_hash = NULL;
 EINTERN int
 e_popup_init(void)
 {
-   _e_popup_window_shape_handler = 
+   _e_popup_window_shape_handler =
      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
 			     _e_popup_cb_window_shape, NULL);
    if (!_e_popup_hash) _e_popup_hash = eina_hash_string_superfast_new(NULL);
@@ -125,17 +125,17 @@ e_popup_move(E_Popup *pop, int x, int y)
 {
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
-   if ((pop->x == x) && (pop->y == y) && 
+   if ((pop->x == x) && (pop->y == y) &&
        (pop->zone->x == pop->zx) && (pop->zone->y == pop->zy)) return;
    pop->zx = pop->zone->x;
    pop->zy = pop->zone->y;
    pop->x = x;
    pop->y = y;
    ecore_evas_move(pop->ecore_evas,
-		   pop->zone->x + pop->x, 
+		   pop->zone->x + pop->x,
 		   pop->zone->y + pop->y);
    e_container_shape_move(pop->shape,
-			  pop->zone->x + pop->x, 
+			  pop->zone->x + pop->x,
 			  pop->zone->y + pop->y);
 }
 
@@ -150,7 +150,7 @@ e_popup_resize(E_Popup *pop, int w, int h)
    ecore_evas_resize(pop->ecore_evas, pop->w, pop->h);
    e_container_shape_resize(pop->shape, pop->w, pop->h);
 }
-  
+
 EAPI void
 e_popup_move_resize(E_Popup *pop, int x, int y, int w, int h)
 {
@@ -166,11 +166,11 @@ e_popup_move_resize(E_Popup *pop, int x, int y, int w, int h)
    pop->w = w;
    pop->h = h;
    ecore_evas_move_resize(pop->ecore_evas,
-			  pop->zone->x + pop->x, 
+			  pop->zone->x + pop->x,
 			  pop->zone->y + pop->y,
 			  pop->w, pop->h);
    e_container_shape_move(pop->shape,
-			  pop->zone->x + pop->x, 
+			  pop->zone->x + pop->x,
 			  pop->zone->y + pop->y);
    e_container_shape_resize(pop->shape, pop->w, pop->h);
 }
@@ -258,7 +258,7 @@ e_popup_idler_before(void)
 			      }
 			    if ((rects[i].y + (int) rects[i].height) > pop->h)
 			      rects[i].height = rects[i].height - rects[i].y;
-			    
+
 			    if ((orects[i].x != rects[i].x) ||
 				(orects[i].y != rects[i].y) ||
 				(orects[i].width != rects[i].width) ||

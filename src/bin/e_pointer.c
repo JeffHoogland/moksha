@@ -645,4 +645,3 @@ _e_pointer_cb_idle_poller(void *data)
      }
    return ECORE_CALLBACK_RENEW;
 }
-

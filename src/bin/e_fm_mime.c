@@ -58,7 +58,7 @@ e_fm_mime_icon_get(const char *mime)
 	     goto ok;
 	  }
      }
-   
+
    /* 2. look up in ~/.e/e/icons */
    len = e_user_dir_snprintf(buf, sizeof(buf), "icons/%s.edj", mime);
    if (len >= sizeof(buf))
@@ -339,7 +339,7 @@ e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, co
    EINA_LIST_FOREACH(handlers, l, handler)
      {
 	if (!handler) continue;
-	
+
 	e_fm2_mime_handler_call(handler, obj, path);
      }
 }
@@ -360,7 +360,7 @@ e_fm2_mime_handler_glob_handlers_call_all(Evas_Object *obj, const char *path, co
    EINA_LIST_FOREACH(handlers, l, handler)
      {
 	if (!handler) continue;
-	
+
 	e_fm2_mime_handler_call(handler, obj, path);
      }
 }

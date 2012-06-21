@@ -48,36 +48,36 @@ struct _E_Remember
    unsigned char  transient;
    int            apply;
    int		  max_score;
-   struct 
+   struct
      {
 	int           pos_x, pos_y;
 	int           res_x, res_y;
 	int           pos_w, pos_h;
-	int           w, h;      
+	int           w, h;
 	int           layer;
 
-	unsigned char lock_user_location; 
-	unsigned char lock_client_location; 
-	unsigned char lock_user_size; 
-	unsigned char lock_client_size; 
-	unsigned char lock_user_stacking; 
-	unsigned char lock_client_stacking; 
-	unsigned char lock_user_iconify; 
-	unsigned char lock_client_iconify; 
+	unsigned char lock_user_location;
+	unsigned char lock_client_location;
+	unsigned char lock_user_size;
+	unsigned char lock_client_size;
+	unsigned char lock_user_stacking;
+	unsigned char lock_client_stacking;
+	unsigned char lock_user_iconify;
+	unsigned char lock_client_iconify;
 	unsigned char lock_user_desk;
 	unsigned char lock_client_desk;
-	unsigned char lock_user_sticky; 
-	unsigned char lock_client_sticky; 
-	unsigned char lock_user_shade; 
-	unsigned char lock_client_shade; 
-	unsigned char lock_user_maximize; 
-	unsigned char lock_client_maximize; 
-	unsigned char lock_user_fullscreen; 
-	unsigned char lock_client_fullscreen; 
-	unsigned char lock_border; 
-	unsigned char lock_close; 
-	unsigned char lock_focus_in; 
-	unsigned char lock_focus_out; 
+	unsigned char lock_user_sticky;
+	unsigned char lock_client_sticky;
+	unsigned char lock_user_shade;
+	unsigned char lock_client_shade;
+	unsigned char lock_user_maximize;
+	unsigned char lock_client_maximize;
+	unsigned char lock_user_fullscreen;
+	unsigned char lock_client_fullscreen;
+	unsigned char lock_border;
+	unsigned char lock_close;
+	unsigned char lock_focus_in;
+	unsigned char lock_focus_out;
 	unsigned char lock_life;
 
 	const char   *border;
@@ -90,7 +90,7 @@ struct _E_Remember
 	unsigned char skip_taskbar;
 	unsigned char icon_preference;
 	unsigned char offer_resistance;
-      
+
 	int           desk_x, desk_y;
 	int           zone;
 	int           head;

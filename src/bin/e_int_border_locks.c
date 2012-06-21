@@ -36,7 +36,7 @@ struct _E_Config_Dialog_Data
       int focus_in; /* unused atm */
       int focus_out; /* unused atm */
       int life;
-      
+
       int remember;
    } lock;
 };
@@ -47,7 +47,7 @@ e_int_border_locks(E_Border *bd)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    v = E_NEW(E_Config_Dialog_View, 1);
    if (v)
       {
@@ -98,7 +98,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if ((cfdata->border->remember) &&
        (cfdata->border->remember->apply & E_REMEMBER_APPLY_LOCKS))
      cfdata->lock.remember = 1;
-     
+
    /* figure out basic config from the current locks */
    if (cfdata->lock.user.location || cfdata->lock.user.size ||
        cfdata->lock.user.stacking || cfdata->lock.user.iconify ||
@@ -127,7 +127,7 @@ _create_data(E_Config_Dialog *cfd)
     * the running systems/config in the apply methods
     */
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->border = cfd->data;
    _fill_data(cfdata);
@@ -148,7 +148,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    int flag;
    /* Actually take our cfdata settings and apply them in real life */
-   
+
    flag = cfdata->do_what_i_say;
    cfdata->border->lock_client_location = flag;
    cfdata->border->lock_client_size = flag;
@@ -174,10 +174,10 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    flag = cfdata->important_window;
    cfdata->border->lock_close = flag;
    cfdata->border->lock_life = flag;
-   
+
    flag = cfdata->keep_my_border;
    cfdata->border->lock_border = flag;
-   
+
    if (cfdata->remember_locks)
      {
 	if (!cfdata->border->remember)
@@ -276,9 +276,9 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 {
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ob, *of;
-   
+
    o = e_widget_list_add(evas, 0, 0);
-   
+
    of = e_widget_framelist_add(evas, _("Generic Locks"), 0);
    ob = e_widget_check_add(evas, _("Lock the Window so it does only what I tell it to"), &(cfdata->do_what_i_say));
    e_widget_framelist_object_append(of, ob);
@@ -299,9 +299,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
-   
+
    o = e_widget_list_add(evas, 0, 0);
-   
+
    of = e_widget_frametable_add(evas, _("Lock program changing:"), 0);
    ob = e_widget_check_add(evas, _("Position"), &(cfdata->lock.client.location));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
@@ -341,16 +341,16 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_check_add(evas, _("Border style"), &(cfdata->lock.border));
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    of = e_widget_framelist_add(evas, _("Stop me from:"), 0);
    ob = e_widget_check_add(evas, _("Closing the window"), &(cfdata->lock.close));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Exiting my login with this window open"), &(cfdata->lock.life));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   
+
    ob = e_widget_check_add(evas, _("Remember these Locks"), &(cfdata->lock.remember));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   
+
    return o;
 }

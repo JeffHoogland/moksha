@@ -212,4 +212,3 @@ _e_wid_button_state_send(E_Widget_Data *wd)
      edje_object_signal_emit(wd->o_button, "e,state,icon", "e");
    edje_object_message_signal_process(wd->o_button);
 }
-

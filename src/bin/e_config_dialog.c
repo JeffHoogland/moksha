@@ -23,7 +23,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 {
    E_Config_Dialog *cfd;
 
-   cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE, 
+   cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE,
                         _e_config_dialog_free);
    cfd->view = view;
    cfd->con = con;
@@ -43,7 +43,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
    if (cfd->view->override_auto_apply)
      {
 	/* Dialog Requested To Not Auto-Apply */
-	if ((cfd->view->basic.apply_cfdata) || 
+	if ((cfd->view->basic.apply_cfdata) ||
             (cfd->view->advanced.apply_cfdata))
 	  cfd->hide_buttons = 0;
      }
@@ -54,7 +54,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 	  cfd->hide_buttons = 1;
 	else
 	  {
-	     if ((cfd->view->basic.apply_cfdata) || 
+	     if ((cfd->view->basic.apply_cfdata) ||
                  (cfd->view->advanced.apply_cfdata))
 	       cfd->hide_buttons = 0;
 	  }
@@ -70,7 +70,7 @@ e_config_dialog_new(E_Container *con, const char *title, const char *name, const
 	if (cfd->view->advanced.create_widgets)
 	  _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_ADVANCED);
 	else if (cfd->view->basic.create_widgets)
-	  _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);	
+	  _e_config_dialog_go(cfd, E_CONFIG_DIALOG_CFDATA_TYPE_BASIC);
 	break;
      }
    _e_config_dialog_list = eina_list_append(_e_config_dialog_list, cfd);
@@ -93,7 +93,7 @@ e_config_dialog_find(const char *name, const char *class)
 
 	     z = e_util_zone_current_get(e_manager_current_get());
 	     e_border_uniconify(cfd->dia->win->border);
-	     e_win_raise(cfd->dia->win);	     
+	     e_win_raise(cfd->dia->win);
 	     if (z->container == cfd->dia->win->border->zone->container)
 	       e_border_desk_set(cfd->dia->win->border, e_desk_current_get(z));
 	     else
@@ -115,7 +115,7 @@ e_config_dialog_find(const char *name, const char *class)
 }
 
 EAPI E_Config_Dialog *
-e_config_dialog_get(const char *name, const char *class) 
+e_config_dialog_get(const char *name, const char *class)
 {
    Eina_List *l;
    E_Config_Dialog *cfd;
@@ -173,14 +173,14 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
     * else
     *   snprintf(buf, sizeof(buf), "%s...%s", cfd->class, "ADVANCED"); */
    snprintf(buf, sizeof(buf), "_config::%s", cfd->class);
-   
+
    if (!pdia)  /* creating window for the first time */
      {
        if ((cfd->view->normal_win) || (e_config->cfgdlg_normal_wins))
          cfd->dia = e_dialog_normal_win_new(cfd->con, cfd->name, buf);
        else
          cfd->dia = e_dialog_new(cfd->con, cfd->name, buf);
-       e_object_del_attach_func_set(E_OBJECT(cfd->dia), 
+       e_object_del_attach_func_set(E_OBJECT(cfd->dia),
                                     _e_config_dialog_cb_dialog_del);
      }         /* window was created before - deleting content only */
    else if (cfd->dia->content_object)
@@ -235,7 +235,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
 	       }
 	     else
 	       e_widget_list_object_append(o, ob, 1, 1, 0.0);
-	     ob = e_widget_button_add(evas, 
+	     ob = e_widget_button_add(evas,
 				      _("Basic"), "go-next",
 				      _e_config_dialog_cb_basic, cfd, NULL);
 	     e_widget_list_object_append(o, ob, 0, 0, 1.0);
@@ -338,7 +338,7 @@ _e_config_dialog_cb_ok(void *data __UNUSED__, E_Dialog *dia)
         if (cfd->view->advanced.apply_cfdata)
           ok = cfd->view->advanced.apply_cfdata(cfd, cfd->cfdata);
      }
-   if (ok) 
+   if (ok)
      e_util_defer_object_del(E_OBJECT(cfd));
 }
 
@@ -400,7 +400,7 @@ _e_config_dialog_changed(E_Config_Dialog *cfd)
      {
 	if (cfd->auto_apply_timer) ecore_timer_del(cfd->auto_apply_timer);
         cfd->auto_apply_timer = NULL;
-	cfd->auto_apply_timer = 
+	cfd->auto_apply_timer =
           ecore_timer_add(0.5, _e_config_dialog_cb_auto_apply_timer, cfd);
      }
 }

@@ -17,7 +17,7 @@ typedef struct _E_Bg_Image_Import_Handle E_Bg_Image_Import_Handle;
 
 extern EAPI int E_EVENT_BG_UPDATE;
 
-struct _E_Event_Bg_Update 
+struct _E_Event_Bg_Update
 {
    int container;
    int zone;

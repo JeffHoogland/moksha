@@ -563,4 +563,3 @@ _e_thumb_file_id(char *file,
    s[(i * 2)] = 0;
    return strdup(s);
 }
-

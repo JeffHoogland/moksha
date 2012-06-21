@@ -11,13 +11,13 @@ typedef struct _E_Popup E_Popup;
 struct _E_Popup
 {
    E_Object             e_obj_inherit;
-   
+
    int                  x, y, w, h, zx, zy;
    int                  layer;
    unsigned char        visible : 1;
    unsigned char        shaped : 1;
-   unsigned char        need_shape_export : 1; 
-  
+   unsigned char        need_shape_export : 1;
+
    Ecore_Evas          *ecore_evas;
    Evas                *evas;
    Ecore_X_Window       evas_win;
@@ -44,6 +44,6 @@ EAPI void        e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o);
 EAPI void        e_popup_layer_set(E_Popup *pop, int layer);
 EAPI void        e_popup_idler_before(void);
 EAPI E_Popup    *e_popup_find_by_window(Ecore_X_Window win);
-    
+
 #endif
 #endif

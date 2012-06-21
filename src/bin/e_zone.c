@@ -677,7 +677,7 @@ e_zone_desk_count_set(E_Zone *zone,
      }
 
    e_zone_edge_flip_eval(zone);
-   
+
    ev = E_NEW(E_Event_Zone_Desk_Count_Set, 1);
    if (!ev) return;
    ev->zone = zone;
@@ -894,11 +894,11 @@ e_zone_exists_direction(E_Zone *zone, E_Zone_Edge edge)
 {
    Eina_List *l;
    E_Zone *z2;
-   
+
    EINA_LIST_FOREACH(zone->container->zones, l, z2)
      {
         if (zone == z2) continue;
-        
+
         switch (edge)
           {
            case E_ZONE_EDGE_TOP_LEFT:
@@ -920,19 +920,19 @@ e_zone_exists_direction(E_Zone *zone, E_Zone_Edge edge)
                   (z2->x >= (zone->x + zone->w))))
                 return EINA_TRUE;
              break;
-             
+
            case E_ZONE_EDGE_LEFT:
              if ((E_SPANS_COMMON(zone->y, zone->h, z2->y, z2->h)) &&
                  (z2->x < zone->x))
                 return EINA_TRUE;
              break;
-             
+
            case E_ZONE_EDGE_RIGHT:
              if ((E_SPANS_COMMON(zone->y, zone->h, z2->y, z2->h)) &&
                  (z2->x >= (zone->x + zone->w)))
                 return EINA_TRUE;
              break;
-             
+
            case E_ZONE_EDGE_BOTTOM_LEFT:
              if (((E_SPANS_COMMON(0, zone->x + zone->w, z2->x, z2->w)) &&
                   (z2->y >= (zone->y + zone->h))) ||
@@ -952,12 +952,12 @@ e_zone_exists_direction(E_Zone *zone, E_Zone_Edge edge)
                   (z2->x < zone->x)))
                 return EINA_TRUE;
              break;
-             
+
            default:
              break;
           }
      }
-      
+
    return EINA_FALSE;
 }
 
@@ -966,7 +966,7 @@ EAPI void
 e_zone_edge_flip_eval(E_Zone *zone)
 {
    Eina_Bool lf, rf, tf, bf;
-   
+
    lf = rf = tf = bf = EINA_TRUE;
    if (zone->desk_x_count <= 1) lf = rf = EINA_FALSE;
    else if (!e_config->desk_flip_wrap)
@@ -1826,4 +1826,3 @@ _e_zone_edge_move_resize(E_Zone *zone)
      ecore_x_window_move_resize(zone->corner.bottom_left,
                                 zone->x + zone->w - cw - 2, zone->y + zone->h - 1, cw, 1);
 }
-

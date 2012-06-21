@@ -7,15 +7,15 @@ typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Smart_Item E_Smart_Item;
 
 struct _E_Smart_Data
-{ 
+{
    Evas_Coord   x, y, w, h;
-   
+
    Evas_Object   *smart_obj;
    Evas_Object   *evas_obj;
    Evas_Object   *thumb_obj;
    Evas          *evas;
    Evas_Coord     vw, vh;
-}; 
+};
 
 /* local subsystem functions */
 static void _e_smart_reconfigure(E_Smart_Data *sd);
@@ -88,7 +88,7 @@ e_livethumb_thumb_get(Evas_Object *obj)
    API_ENTRY return NULL;
    return sd->thumb_obj;
 }
-   
+
 /* local subsystem functions */
 
 static void
@@ -103,11 +103,11 @@ static void
 _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   
+
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    evas_object_smart_data_set(obj, sd);
-   
+
    sd->smart_obj = obj;
    sd->x = 0;
    sd->y = 0;
@@ -186,7 +186,7 @@ _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    evas_object_clip_unset(sd->evas_obj);
-}  
+}
 
 /* never need to touch this */
 
@@ -200,7 +200,7 @@ _e_smart_init(void)
 	     SMART_NAME,
 	       EVAS_SMART_CLASS_VERSION,
 	       _e_smart_add,
-	       _e_smart_del, 
+	       _e_smart_del,
 	       _e_smart_move,
 	       _e_smart_resize,
 	       _e_smart_show,
@@ -219,4 +219,3 @@ _e_smart_init(void)
 	_e_smart = evas_smart_class_new(&sc);
      }
 }
-

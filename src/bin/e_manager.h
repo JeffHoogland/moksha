@@ -9,11 +9,11 @@ typedef struct _E_Manager_Comp_Source E_Manager_Comp_Source;
 #define E_MANAGER_H
 
 #define E_MANAGER_TYPE (int) 0xE0b01008
-  
+
 struct _E_Manager
 {
    E_Object             e_obj_inherit;
-   
+
    Ecore_X_Window       win;
    int                  num;
    int                  x, y, w, h;
@@ -24,7 +24,7 @@ struct _E_Manager
 
    E_Pointer           *pointer;
    Ecore_X_Window       initwin;
-   
+
    E_Manager_Comp      *comp;
    Ecore_Timer         *clear_timer;
 };
@@ -52,7 +52,7 @@ struct _E_Manager_Comp
 EINTERN int        e_manager_init(void);
 EINTERN int        e_manager_shutdown(void);
 EAPI Eina_List *e_manager_list(void);
-    
+
 EAPI E_Manager      *e_manager_new(Ecore_X_Window root, int num);
 EAPI void            e_manager_manage_windows(E_Manager *man);
 EAPI void            e_manager_show(E_Manager *man);
@@ -101,13 +101,13 @@ EAPI void            e_managers_keys_ungrab(void);
 //       }
 //   }
 //   e_msg_handler_add(handler, mydata);
-// 
+//
 // remember to listen to zone confiugre events like:
 // E_EVENT_ZONE_MOVE_RESIZE
 // E_EVENT_ZONE_ADD
 // E_EVENT_ZONE_DEL
-// 
-// only 1 compositor can own a manager at a time, so before you "set" the 
+//
+// only 1 compositor can own a manager at a time, so before you "set" the
 // comp evas, you need to get it and make sure it's NULL, if so, then
 // you can set the update func and the comp evas
 EAPI void             e_manager_comp_set(E_Manager *man, E_Manager_Comp *comp);

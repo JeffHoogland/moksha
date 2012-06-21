@@ -1,7 +1,7 @@
 #include "e.h"
 
 /* TODO List:
- * 
+ *
  * * fix shape callbacks to be able to be safely deleted
  * * remove duplicate bd->layer -> layers code
  *
@@ -88,7 +88,7 @@ e_container_new(E_Manager *man)
         int have_comp = 0;
         Eina_List *ll;
         E_Config_Module *em;
-        
+
         // FIXME: major hack. checking in advance for comp. eventully comp
         // will be rolled into e17 core and this won't be needed
         EINA_LIST_FOREACH(e_config->modules, ll, em)
@@ -126,7 +126,7 @@ e_container_new(E_Manager *man)
 
    /* create a scratch window for putting stuff into */
    con->scratch_win = ecore_x_window_override_new(con->win, 0, 0, 7, 7);
-   
+
    /* init layers */
    for (i = 0; i < 10; i++)
      {
@@ -816,7 +816,7 @@ _e_container_border_list_new(E_Container *con)
    E_Border *bd;
    int i;
    Eina_List *l;
-   
+
    if (!(list = E_NEW(E_Border_List, 1))) return NULL;
    list->container = con;
    e_object_ref(E_OBJECT(list->container));
@@ -833,8 +833,8 @@ static E_Border *
 _e_container_border_list_jump(E_Border_List *list, int dir)
 {
    E_Border *bd;
-   
-   if ((list->pos < 0) || 
+
+   if ((list->pos < 0) ||
        (list->pos >= (int)eina_array_count(&(list->client_array))))
       return NULL;
    bd = eina_array_data_get(&(list->client_array), list->pos);
@@ -846,7 +846,7 @@ EAPI E_Border_List *
 e_container_border_list_first(E_Container *con)
 {
    E_Border_List *list = NULL;
-   
+
    list = _e_container_border_list_new(con);
    list->pos = 0;
    return list;
@@ -936,7 +936,7 @@ _e_container_free(E_Container *con)
 	  {
 	     e_object_free(E_OBJECT(tmp));
 	  }
- */   
+ */
      }
    l = con->zones;
    con->zones = NULL;
@@ -1145,8 +1145,8 @@ _e_container_resize_handle(E_Container *con)
 	EINA_LIST_FOREACH(screens, l, scr)
 	  {
              zone = NULL;
-             
-             printf("@@@ SCREENS: %i %i | %i %i %ix%i\n", 
+
+             printf("@@@ SCREENS: %i %i | %i %i %ix%i\n",
                     scr->screen, scr->escreen, scr->x, scr->y, scr->w, scr->h);
              EINA_LIST_FOREACH(zones, ll, zone)
                {
@@ -1160,19 +1160,19 @@ _e_container_resize_handle(E_Container *con)
 		  zones = eina_list_remove(zones, zone);
                   con->zones = eina_list_append(con->zones, zone);
                   zone->num = scr->screen;
-		  e_shelf_zone_move_resize_handle(zone);	
+		  e_shelf_zone_move_resize_handle(zone);
 	       }
 	     else
 	       {
-  		  E_Config_Shelf *cf_es;
+		  E_Config_Shelf *cf_es;
 
-		  zone = e_zone_new(con, scr->screen, scr->escreen, 
+		  zone = e_zone_new(con, scr->screen, scr->escreen,
                                     scr->x, scr->y, scr->w, scr->h);
                   printf("@@@ NEW ZONE = %p\n", zone);
 		  /* find any shelves configured for this zone and add them in */
 		  EINA_LIST_FOREACH(e_config->shelves, ll, cf_es)
 		    {
-		       if (e_util_container_zone_id_get(cf_es->container, 
+		       if (e_util_container_zone_id_get(cf_es->container,
                                                         cf_es->zone) == zone)
                          e_shelf_config_new(zone, cf_es);
 		    }
@@ -1185,7 +1185,7 @@ _e_container_resize_handle(E_Container *con)
 	     E_Zone *spare_zone = NULL;
 
              if (con->zones) spare_zone = con->zones->data;
-             
+
 	     EINA_LIST_FREE(zones, zone)
 	       {
 		  Eina_List *shelves, *ll2, *del_shelves;

@@ -905,4 +905,3 @@ _e_desk_hide_animator(void *data)
 
    return ECORE_CALLBACK_RENEW;
 }
-

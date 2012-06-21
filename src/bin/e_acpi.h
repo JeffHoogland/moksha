@@ -1,10 +1,10 @@
 #ifdef E_TYPEDEFS
 
 /* enum for various event types */
-typedef enum _E_Acpi_Type 
+typedef enum _E_Acpi_Type
 {
    E_ACPI_TYPE_UNKNOWN = 0,
-      
+
    E_ACPI_TYPE_AC_ADAPTER, // 1
    E_ACPI_TYPE_BATTERY, // 2
    E_ACPI_TYPE_BUTTON, // 3
@@ -30,7 +30,7 @@ typedef enum _E_Acpi_Type
 } E_Acpi_Type;
 
 /* enum for acpi signals */
-typedef enum _E_Acpi_Device_Signal 
+typedef enum _E_Acpi_Device_Signal
 {
    E_ACPI_DEVICE_SIGNAL_UNKNOWN, // 0
    E_ACPI_DEVICE_SIGNAL_NOTIFY = 80,
@@ -40,7 +40,7 @@ typedef enum _E_Acpi_Device_Signal
 } E_Acpi_Device_Signal;
 
 /* enum for lid status */
-typedef enum _E_Acpi_Lid_Status 
+typedef enum _E_Acpi_Lid_Status
 {
    E_ACPI_LID_UNKNOWN, // 0
    E_ACPI_LID_CLOSED, // 1
@@ -54,7 +54,7 @@ typedef struct _E_Event_Acpi E_Event_Acpi;
 # ifndef E_ACPI_H
 #  define E_ACPI_H
 
-struct _E_Event_Acpi 
+struct _E_Event_Acpi
 {
    const char *device, *bus_id;
    int         type, signal, status;

@@ -27,7 +27,7 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
    wd->obj = obj;
 
    wd->o_frame = edje_object_add(evas);
-   e_theme_edje_object_set(wd->o_frame, "base/theme/widgets", 
+   e_theme_edje_object_set(wd->o_frame, "base/theme/widgets",
 			   "e/widgets/preview");
    evas_object_show(wd->o_frame);
    e_widget_sub_object_add(obj, wd->o_frame);
@@ -42,7 +42,7 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
    edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->img);
    e_widget_sub_object_add(obj, wd->img);
 
-   e_widget_data_set(obj, wd);   
+   e_widget_data_set(obj, wd);
    e_widget_can_focus_set(obj, 0);
    edje_object_size_min_calc(wd->o_frame, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);

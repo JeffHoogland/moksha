@@ -27,30 +27,30 @@ typedef void (*E_Menu_Cb) (void *data, E_Menu *m, E_Menu_Item *mi);
 struct _E_Menu
 {
    E_Object             e_obj_inherit;
-   
+
    const char	       *category;
 
    struct {
       char              visible : 1;
       int               x, y, w, h;
    } cur, prev;
-   
+
    int                  frozen;
-   
+
    struct {
       const char       *title;
       const char       *icon_file;
       Evas_Object      *icon;
    } header;
-   
+
    Eina_List           *items;
 
    /* the zone it belongs to */
    E_Zone              *zone;
-   
+
    /* if a menu item spawned this menu, what item is it? */
    E_Menu_Item         *parent_item;
-   
+
    /* only useful if realized != 0 (ie menu is ACTUALLY realized) */
    Ecore_Evas          *ecore_evas;
    Evas                *evas;
@@ -61,12 +61,12 @@ struct _E_Menu
    E_Container_Shape   *shape;
    int                  shape_rects_num;
    Ecore_X_Rectangle   *shape_rects;
-   
+
    struct {
       void *data;
       void (*func) (void *data, E_Menu *m);
    } pre_activate_cb, post_deactivate_cb;
-   
+
    unsigned char        realized : 1; /* 1 if it is realized */
    unsigned char        active : 1; /* 1 if it is in active list */
    unsigned char        changed : 1;
@@ -86,13 +86,13 @@ struct _E_Menu_Item
    const char    *icon_key;
    const char    *label;
    E_Menu        *submenu;
-   
+
    Evas_Object   *separator_object;
-   
+
    Evas_Object   *bg_object;
 
    Evas_Object   *container_object;
-   
+
    Evas_Object   *toggle_object;
    Evas_Object   *icon_bg_object;
    Evas_Object   *icon_object;
@@ -102,7 +102,7 @@ struct _E_Menu_Item
    Evas_Object   *event_object;
 
    Eina_List	 *list_position;
-   
+
    int            label_w, label_h;
    int            icon_w, icon_h;
    int            separator_w, separator_h;
@@ -110,7 +110,7 @@ struct _E_Menu_Item
    int            toggle_w, toggle_h;
    int            radio_group;
    int            x, y, w, h;
-   
+
    struct {
       void *data;
       E_Menu_Cb func;
@@ -153,8 +153,8 @@ struct _E_Menu_Category_Callback
 {
    const char *category;
    void *data;
-   void (*create) (E_Menu *m, void *category_data, void *data);	
-   void (*free) (void *data);	
+   void (*create) (E_Menu *m, void *category_data, void *data);
+   void (*free) (void *data);
 };
 
 
@@ -177,7 +177,7 @@ EAPI void         e_menu_category_data_set(char *category, void *data);
 EAPI E_Menu_Category_Callback  *e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (free) (void *data), void *data);
 EAPI void         e_menu_category_callback_del(E_Menu_Category_Callback *cb);
 
-	
+
 EAPI void         e_menu_pre_activate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
 EAPI void         e_menu_post_deactivate_callback_set(E_Menu *m,  void (*func) (void *data, E_Menu *m), void *data);
 

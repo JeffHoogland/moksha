@@ -119,7 +119,7 @@ _e_smart_cb_slide_animator(void *data)
    if (t > 1.0) t = 1.0;
    sd->pos = sd->slide_start_pos + (t * (sd->slide_pos - sd->slide_start_pos));
    _e_smart_reconfigure(sd);
-   
+
    if (t >= 1.0)
      {
 	sd->slide_animator = NULL;
@@ -155,7 +155,7 @@ _e_smart_event_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    if (ev->button == 1)
      {
 	int gop = 0;
-	
+
 	sd->down = 0;
 
 	gop = sd->pos - (sd->p1 * sd->dist);
@@ -414,4 +414,3 @@ _e_smart_init(void)
 	_e_smart = evas_smart_class_new(&sc);
      }
 }
-

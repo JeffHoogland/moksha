@@ -1537,4 +1537,3 @@ _e_fm_op_remove_atom(E_Fm_Op_Task *task)
 
    return 1;
 }
-

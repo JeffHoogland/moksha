@@ -44,10 +44,10 @@ e_widget_toolbook_page_append(Evas_Object *toolbook, Evas_Object *icon, const ch
    Evas_Coord minw, minh;
 
    wd = e_widget_data_get(toolbook);
-   e_widget_toolbar_item_append(wd->o_bar, icon, label, _item_sel, 
+   e_widget_toolbar_item_append(wd->o_bar, icon, label, _item_sel,
                                 toolbook, content);
-   e_widget_table_object_align_append(wd->o_tb, content, 0, 1, 1, 1, 
-                                      fill_w, fill_h, expand_w, expand_h, 
+   e_widget_table_object_align_append(wd->o_tb, content, 0, 1, 1, 1,
+                                      fill_w, fill_h, expand_w, expand_h,
                                       ax, ay);
    evas_object_hide(content);
    wd->content = eina_list_append(wd->content, content);
@@ -86,7 +86,7 @@ _item_sel(void *data1, void *data2)
    sobj = data2;
    wd = e_widget_data_get(obj);
 
-   EINA_LIST_FOREACH(wd->content, l, o) 
+   EINA_LIST_FOREACH(wd->content, l, o)
      {
         if (o == sobj) evas_object_show(o);
         else evas_object_hide(o);

@@ -11,7 +11,7 @@ typedef struct _E_Win E_Win;
 struct _E_Win
 {
    E_Object             e_obj_inherit;
-   
+
    int                  x, y, w, h;
    E_Container         *container;
    E_Border            *border;
@@ -32,7 +32,7 @@ struct _E_Win
       unsigned char     dialog : 1;
       unsigned char     no_remember : 1;
    } state;
-   
+
    E_Pointer           *pointer;
 };
 
@@ -69,6 +69,6 @@ EAPI void   e_win_dialog_set         (E_Win *win, int dialog);
 EAPI void   e_win_no_remember_set    (E_Win *win, int no_remember);
 
 EAPI E_Win *e_win_evas_object_win_get(Evas_Object *obj);
-    
+
 #endif
 #endif

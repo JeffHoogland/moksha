@@ -208,7 +208,7 @@ _e_fm_main_udisks_cb_dev_verify(const char *udi,
      _e_fm_main_udisks_storage_add(udi);
    else if (!strcmp(ret->val.s, "filesystem"))
      {
-         	INF("DB VOL+: %s", udi);
+	INF("DB VOL+: %s", udi);
           _e_fm_main_udisks_volume_add(udi, EINA_TRUE);
      }
    else

@@ -6,7 +6,7 @@ typedef struct _E_Ilist_Item E_Ilist_Item;
 #ifndef E_ILIST_H
 #define E_ILIST_H
 
-struct _E_Ilist_Item 
+struct _E_Ilist_Item
 {
    void *sd;
    const char *label;

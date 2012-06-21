@@ -15,6 +15,6 @@ EAPI void e_focus_event_focus_in(E_Border *bd);
 EAPI void e_focus_event_focus_out(E_Border *bd);
 EAPI void e_focus_setup(E_Border *bd);
 EAPI void e_focus_setdown(E_Border *bd);
-    
+
 #endif
 #endif

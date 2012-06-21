@@ -171,4 +171,3 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, v
         if (w != vw) evas_object_resize(data, vw, h);
      }
 }
-

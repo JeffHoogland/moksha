@@ -24,7 +24,7 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
    E_Desk *desk;
    E_Shelf *es;
    E_Zone *zone;
-   
+
    if (!e_config->use_resist)
      {
 	*rx = x;
@@ -33,7 +33,7 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
 	*rh = h;
 	return 0;
      }
-   
+
    /* edges of screen */
 #define OBSTACLE(_x, _y, _w, _h, _resist) \
    { \
@@ -114,8 +114,8 @@ e_resist_container_border_position(E_Container *con, Eina_List *skiplist,
      {
 	_e_resist_rects(rects,
 			px, py, pw, ph,
-		       	x, y, w, h,
-		       	rx, ry, rw, rh);
+			x, y, w, h,
+			rx, ry, rw, rh);
 
 	E_FREE_LIST(rects, E_FREE);
      }
@@ -147,13 +147,13 @@ e_resist_container_gadman_position(E_Container *con, Eina_List *skiplist __UNUSE
 		      e_config->gadget_resist);
 	  }
      }
-   
+
    if (rects)
      {
 	_e_resist_rects(rects,
 			px, py, pw, ph,
-		       	x, y, w, h,
-		       	rx, ry, NULL, NULL);
+			x, y, w, h,
+			rx, ry, NULL, NULL);
 
 	E_FREE_LIST(rects, E_FREE);
      }
@@ -163,8 +163,8 @@ e_resist_container_gadman_position(E_Container *con, Eina_List *skiplist __UNUSE
 static void
 _e_resist_rects(Eina_List *rects,
 		int px, int py, int pw, int ph,
-	       	int x, int y, int w, int h,
-	       	int *rx, int *ry, int *rw, int *rh)
+		int x, int y, int w, int h,
+		int *rx, int *ry, int *rw, int *rh)
 {
    int dx, dy, dw, dh, d, pd;
    int resist_x = 0, resist_y = 0;

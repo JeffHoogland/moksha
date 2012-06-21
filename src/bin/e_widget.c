@@ -6,7 +6,7 @@
 typedef struct _E_Smart_Data E_Smart_Data;
 
 struct _E_Smart_Data
-{ 
+{
    Evas_Object *parent_obj;
    Evas_Coord x, y, w, h, minw, minh;
    Eina_List *subobjs;
@@ -131,7 +131,7 @@ _sub_obj_del(void        *data,
              void        *event_info __UNUSED__)
 {
    E_Smart_Data *sd = data;
-   
+
    sd->subobjs = eina_list_remove(sd->subobjs, obj);
    evas_object_event_callback_del(obj, EVAS_CALLBACK_DEL, _sub_obj_del);
 }
@@ -140,11 +140,11 @@ EAPI void
 e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 {
    API_ENTRY return;
-   
+
    if (eina_list_data_find(sd->subobjs, sobj)) return;
-   
+
    evas_object_event_callback_del(sobj, EVAS_CALLBACK_DEL, _sub_obj_del);
-   
+
    sd->subobjs = eina_list_append(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
@@ -265,7 +265,7 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 			      {
 				 /* the previous focused item was unfocused - so focus
 				  * the next one (that can be focused) */
-				 if (e_widget_focus_jump(sobj, forward)) 
+				 if (e_widget_focus_jump(sobj, forward))
                                    return 1;
 				 else break;
 			      }
@@ -274,7 +274,7 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 				 if (e_widget_focus_get(sobj))
 				   {
 				      /* jump to the next focused item or focus this item */
-				      if (e_widget_focus_jump(sobj, forward)) 
+				      if (e_widget_focus_jump(sobj, forward))
                                         return 1;
 				      /* it returned 0 - it got to the last item and is past it */
 				      focus_next = 1;
@@ -294,7 +294,7 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 			      {
 				 /* the previous focused item was unfocused - so focus
 				  * the next one (that can be focused) */
-				 if (e_widget_focus_jump(sobj, forward)) 
+				 if (e_widget_focus_jump(sobj, forward))
                                    return 1;
 				 else break;
 			      }
@@ -303,7 +303,7 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
 				 if (e_widget_focus_get(sobj))
 				   {
 				      /* jump to the next focused item or focus this item */
-				      if (e_widget_focus_jump(sobj, forward)) 
+				      if (e_widget_focus_jump(sobj, forward))
                                         return 1;
 				      /* it returned 0 - it got to the last item and is past it */
 				      focus_next = 1;
@@ -514,7 +514,7 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   
+
    if (sd->del_func) sd->del_func(obj);
    while (sd->subobjs)
      {
@@ -581,7 +581,7 @@ _e_smart_clip_unset(Evas_Object *obj)
    INTERNAL_ENTRY;
    if (sd->resize_obj)
      evas_object_clip_unset(sd->resize_obj);
-}  
+}
 
 /* never need to touch this */
 
@@ -595,7 +595,7 @@ _e_smart_init(void)
 	     SMART_NAME,
 	       EVAS_SMART_CLASS_VERSION,
 	       _e_smart_add,
-	       _e_smart_del, 
+	       _e_smart_del,
 	       _e_smart_move,
 	       _e_smart_resize,
 	       _e_smart_show,
@@ -606,9 +606,9 @@ _e_smart_init(void)
 	       NULL,
 	       NULL,
 	       NULL,
-	       NULL, 
-               NULL, 
-               NULL, 
+	       NULL,
+               NULL,
+               NULL,
                NULL
 	  };
         _e_smart = evas_smart_class_new(&sc);

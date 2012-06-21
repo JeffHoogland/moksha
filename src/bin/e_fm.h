@@ -7,7 +7,7 @@ typedef enum _E_Fm2_View_Mode
    E_FM2_VIEW_MODE_ICONS, /* regular layout row by row like text */
    E_FM2_VIEW_MODE_GRID_ICONS, /* regular grid layout */
    E_FM2_VIEW_MODE_CUSTOM_ICONS, /* icons go anywhere u drop them (desktop) */
-     
+
      /* FIXME: not going to implement this at this stage */
    E_FM2_VIEW_MODE_CUSTOM_GRID_ICONS, /* icons go anywhere u drop them but align to a grid */
      /* FIXME: not going to implement this at this stage */
@@ -180,6 +180,6 @@ EAPI void        e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);
 EAPI int        _e_fm2_client_mount(const char *udi, const char *mountpoint);
 EAPI int        _e_fm2_client_unmount(const char *udi);
 EAPI void        _e_fm2_file_force_update(const char *path);
-    
+
 #endif
 #endif

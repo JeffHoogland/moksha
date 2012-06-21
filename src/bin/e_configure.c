@@ -61,7 +61,7 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
 	    if (!strcmp(item, eci->item))
 	      {
 		 if (!params) params = eci->params;
-		 
+
 		 if (eci->func) eci->func(con, params);
 		 else if (eci->generic_func) eci->generic_func(con, params);
 		 else if (eci->desktop)
@@ -152,7 +152,7 @@ e_configure_registry_category_add(const char *path, int pri, const char *label, 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat2)
      if (ecat2->pri > ecat->pri)
        {
-	  e_configure_registry = 
+	  e_configure_registry =
             eina_list_prepend_relative_list(e_configure_registry, ecat, l);
 	  return;
        }
@@ -316,7 +316,7 @@ _e_configure_efreet_desktop_update(void)
 	char *label;
 	int cfg_pri;
         int dopref;
-        
+
         dopref = 0;
 	cfg_cat = NULL;
 	cfg_icon = NULL;
@@ -355,7 +355,7 @@ _e_configure_efreet_desktop_update(void)
         if (!cfg_cat_cfg)
           {
              const char *ic = cfg_cat_icon;
-             
+
              if (dopref)
                {
                   snprintf(buf, sizeof(buf), "preferences/%s", label);
@@ -368,7 +368,7 @@ _e_configure_efreet_desktop_update(void)
                {
                   snprintf(buf, sizeof(buf), "system/%s", label);
                   if (!ic) ic = "preferences-system";
-                  e_configure_registry_category_add("system", 1000, 
+                  e_configure_registry_category_add("system", 1000,
                                                     _("System"),
                                                     NULL, ic);
                }

@@ -55,7 +55,7 @@ e_msg_send(const char *name, const char *info, int val, E_Object *obj, void *msg
 {
    unsigned int size, pos, name_len, info_len;
    E_Msg_Event *ev;
-   
+
    name_len = info_len = 0;
    size = sizeof(E_Msg_Event);
    if (name) name_len = strlen(name) + 1;
@@ -65,13 +65,13 @@ e_msg_send(const char *name, const char *info, int val, E_Object *obj, void *msg
    pos = size;
    if (name)
      {
-       	ev->name = ((char *)ev) + pos;
+	ev->name = ((char *)ev) + pos;
 	pos += name_len;
 	strcpy(ev->name, name);
      }
    if (info)
      {
-       	ev->info = ((char *)ev) + pos;
+	ev->info = ((char *)ev) + pos;
 	strcpy(ev->info, info);
      }
    ev->val = val;
@@ -87,7 +87,7 @@ EAPI E_Msg_Handler *
 e_msg_handler_add(void (*func) (void *data, const char *name, const char *info, int val, E_Object *obj, void *msgdata), void *data)
 {
    E_Msg_Handler *emsgh;
-   
+
    emsgh = calloc(1, sizeof(E_Msg_Handler));
    if (!emsgh) return NULL;
    emsgh->func = func;

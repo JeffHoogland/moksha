@@ -141,7 +141,7 @@ struct _E_Border
          int mx, my;
       } current, last_down[3], last_up[3];
    } mouse;
-   
+
    struct {
       struct {
          int x, y, w, h;
@@ -164,7 +164,7 @@ struct _E_Border
          double    t;
       } start;
    } fx;
-   
+
    struct {
       int          l, r, t, b;
    } client_inset;
@@ -182,18 +182,18 @@ struct _E_Border
    struct {
       Ecore_X_Window shell_win;
       Ecore_X_Window win;
-      
+
       int x, y, w, h;
-      
+
       struct {
          unsigned char changed : 1;
          unsigned char user_selected : 1;
          const char *name;
       } border;
-      
+
       unsigned char shaped : 1;
       unsigned char argb : 1;
-      
+
       /* ICCCM */
       struct {
 	 const char *title;
@@ -314,7 +314,7 @@ struct _E_Border
             unsigned char change_desktop : 1;
             unsigned char close : 1;
          } action;
-         
+
          Ecore_X_Window_Type type;
          Ecore_X_Window_Type *extra_types;
          int extra_types_num;
@@ -363,17 +363,17 @@ struct _E_Border
             unsigned char video_position : 1;
          } fetch;
       } e;
-      
+
       struct {
          struct {
             unsigned char soft_menu : 1;
             unsigned char soft_menus : 1;
          } fetch;
-         
+
          unsigned char soft_menu : 1;
          unsigned char soft_menus : 1;
       } qtopia;
-      
+
       struct {
          struct {
             unsigned char state : 1;
@@ -383,22 +383,22 @@ struct _E_Border
          unsigned char vkbd : 1;
       } vkbd;
 
-      struct 
+      struct
         {
-           struct 
+           struct
              {
-                struct 
+                struct
                   {
                      unsigned char conformant : 1;
                   } fetch;
                 unsigned char conformant : 1;
              } conformant;
-           struct 
+           struct
              {
-                struct 
+                struct
                   {
                      unsigned char state : 1;
-                     struct 
+                     struct
                        {
                           unsigned int major : 1;
                           unsigned int minor : 1;
@@ -407,7 +407,7 @@ struct _E_Border
                      unsigned char zone : 1;
                   } fetch;
                 Ecore_X_Illume_Quickpanel_State state;
-                struct 
+                struct
                   {
                      unsigned int major : 1;
                      unsigned int minor : 1;
@@ -415,9 +415,9 @@ struct _E_Border
                 unsigned char quickpanel : 1;
                 int zone;
              } quickpanel;
-           struct 
+           struct
              {
-                struct 
+                struct
                   {
                      unsigned char drag : 1;
                      unsigned char locked : 1;
@@ -429,9 +429,9 @@ struct _E_Border
 
       Ecore_X_Window_Attributes initial_attributes;
    } client;
-   
+
    E_Container_Shape *shape;
-   
+
    unsigned int    visible : 1;
    unsigned int    await_hide_event;
    unsigned int    moving : 1;
@@ -492,17 +492,17 @@ struct _E_Border
    unsigned int    internal : 1;
    unsigned int    internal_no_remember : 1;
    unsigned int    stolen : 1;
-   
+
    Ecore_Evas     *internal_ecore_evas;
-   
+
    double          ping;
- 
+
    unsigned char   changed : 1;
-  
-   unsigned char   icon_preference; 
+
+   unsigned char   icon_preference;
    unsigned char   ignore_first_unmap;
    unsigned char   resize_mode;
-   
+
    struct {
       int x, y, w, h;
       unsigned int layer;
@@ -517,7 +517,7 @@ struct _E_Border
 	        int x, y, w, h;
       } saved;
    } pre_res_change;
-   
+
    struct {
       double start;
       double val;
@@ -525,7 +525,7 @@ struct _E_Border
       E_Direction dir;
       Ecore_Animator *anim;
    } shade;
-   
+
    struct {
       int x, y;
       int modified;
@@ -538,7 +538,7 @@ struct _E_Border
    E_Config_Dialog *border_border_dialog;
    E_Dialog *border_prop_dialog;
    Eina_List *pending_move_resize;
-   
+
    struct {
       unsigned char visible : 1;
       unsigned char pos : 1;
@@ -580,19 +580,19 @@ struct _E_Border
    E_Pointer *pointer;
 
    unsigned char comp_hidden   : 1;
-   
+
    unsigned char post_move   : 1;
    unsigned char post_resize : 1;
    unsigned char post_show : 1;
-   
+
    Ecore_Idle_Enterer *post_job;
 
    Eina_Bool argb;
-   
+
    int tmp_input_hidden;
 };
 
-struct _E_Border_Pending_Move_Resize 
+struct _E_Border_Pending_Move_Resize
 {
    int x, y, w, h;
    unsigned char move : 1;
@@ -641,7 +641,7 @@ EAPI void      e_border_ref(E_Border *bd);
 EAPI void      e_border_unref(E_Border *bd);
 EAPI void      e_border_res_change_geometry_save(E_Border *bd);
 EAPI void      e_border_res_change_geometry_restore(E_Border *bd);
-    
+
 EAPI void      e_border_zone_set(E_Border *bd, E_Zone *zone);
 EAPI void      e_border_desk_set(E_Border *bd, E_Desk *desk);
 EAPI void      e_border_show(E_Border *bd);

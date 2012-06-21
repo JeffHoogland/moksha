@@ -205,4 +205,3 @@ _e_xinerama_cb_screen_sort(const void *data1, const void *data2)
      }
    return dif;
 }
-

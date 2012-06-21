@@ -11,7 +11,7 @@ typedef struct _E_Order        E_Order;
 struct _E_Order
 {
    E_Object            e_obj_inherit;
-   
+
    const char         *path;
    Eina_List          *desktops; /* A list of Efreet_Desktop files this .order contains */
    Ecore_File_Monitor *monitor; /* Check for changes int the .order file */

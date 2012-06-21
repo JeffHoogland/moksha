@@ -79,4 +79,3 @@ _e_randr_ask_memorize_monitor_cb(void *data, E_Dialog *dia)
 
    e_object_del(E_OBJECT(dia));
 }
-

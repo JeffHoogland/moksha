@@ -624,7 +624,7 @@ e_config_init(void)
 #define T E_Config_XKB_Option
 #define D _e_config_xkb_option_edd
    E_CONFIG_VAL(D, T, name, STR);
-   
+
    _e_config_edd = E_CONFIG_DD_NEW("E_Config", E_Config);
 #undef T
 #undef D
@@ -787,7 +787,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, screensaver_suspend, UCHAR);
    E_CONFIG_VAL(D, T, screensaver_suspend_on_ac, UCHAR);
    E_CONFIG_VAL(D, T, screensaver_suspend_delay, DOUBLE);
-   
+
    E_CONFIG_VAL(D, T, dpms_enable, INT);
    E_CONFIG_VAL(D, T, dpms_standby_enable, INT);
    E_CONFIG_VAL(D, T, dpms_suspend_enable, INT);
@@ -836,7 +836,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, menu_favorites_show, INT);
    E_CONFIG_VAL(D, T, menu_apps_show, INT);
    E_CONFIG_VAL(D, T, menu_gadcon_client_toplevel, INT);
-   
+
    E_CONFIG_VAL(D, T, ping_clients_interval, INT);
    E_CONFIG_VAL(D, T, cache_flush_poll_interval, INT);
 
@@ -923,8 +923,8 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, xkb.used_layouts, _e_config_xkb_layout_edd);
    E_CONFIG_LIST(D, T, xkb.used_options, _e_config_xkb_option_edd);
    E_CONFIG_VAL(D, T, xkb.only_label, INT);
-   E_CONFIG_VAL(D, T, xkb.default_model, STR); 
-  
+   E_CONFIG_VAL(D, T, xkb.default_model, STR);
+
    e_config_load();
 
    e_config_save_queue();
@@ -1601,16 +1601,16 @@ _e_config_mv_error(const char *from, const char *to)
    if (!_e_config_error_dialog)
      {
         E_Dialog *dia;
-        
-        dia = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+
+        dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
                            "E", "_sys_error_logout_slow");
         if (dia)
           {
              char buf[8192];
-             
+
              e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
              e_dialog_icon_set(dia, "dialog-error", 64);
-             snprintf(buf, sizeof(buf), 
+             snprintf(buf, sizeof(buf),
                       _("Enlightenment has had an error while moving config files<br>"
                         "from:<br>"
                         "%s<br>"
@@ -1927,7 +1927,7 @@ _e_config_free(E_Config *ecf)
 
    if (e_config->xkb.default_model)
      eina_stringshare_del(e_config->xkb.default_model);
-   
+
    EINA_LIST_FREE(e_config->xkb.used_layouts, cl)
      {
         eina_stringshare_del(cl->name);
@@ -1935,13 +1935,13 @@ _e_config_free(E_Config *ecf)
         eina_stringshare_del(cl->variant);
         E_FREE(cl);
      }
-   
+
    EINA_LIST_FREE(e_config->xkb.used_options, op)
      {
         eina_stringshare_del(op->name);
         E_FREE(op);
      }
-   
+
    EINA_LIST_FREE(ecf->modules, em)
      {
         if (em->name) eina_stringshare_del(em->name);
@@ -2194,7 +2194,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 	  {
              E_Dialog *dia;
 
-	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+	     dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
                                 "E", "_sys_error_logout_slow");
 	     if (dia)
 	       {
@@ -2202,7 +2202,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
 
 		  e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
 		  e_dialog_icon_set(dia, "dialog-error", 64);
-		  snprintf(buf, sizeof(buf), 
+		  snprintf(buf, sizeof(buf),
                            _("Enlightenment has had an error while writing<br>"
                              "its config file.<br>"
                              "%s<br>"

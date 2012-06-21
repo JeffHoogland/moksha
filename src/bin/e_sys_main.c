@@ -387,4 +387,3 @@ get_word(char *s,
    *p2 = 0;
    return p1;
 }
-

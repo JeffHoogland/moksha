@@ -722,4 +722,3 @@ _e_sys_dialog_cb_delete(E_Obj_Dialog *od __UNUSED__)
     * is deleted in some other way. */
    _e_sys_dialog = NULL;
 }
-

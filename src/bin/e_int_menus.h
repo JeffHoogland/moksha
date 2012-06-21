@@ -28,14 +28,14 @@ typedef struct _E_Int_Menu_Augmentation E_Int_Menu_Augmentation;
 struct _E_Int_Menu_Augmentation
 {
    const char *sort_key;
-   struct 
+   struct
      {
         void (*func) (void *data, E_Menu *m);
         void *data;
      } add, del;
 };
 
-EAPI E_Menu *e_int_menus_main_new(void);    
+EAPI E_Menu *e_int_menus_main_new(void);
 EAPI E_Menu *e_int_menus_desktops_new(void);
 EAPI E_Menu *e_int_menus_clients_new(void);
 EAPI E_Menu *e_int_menus_apps_new(const char *dir);
@@ -61,6 +61,6 @@ EAPI void                     e_int_menus_menu_augmentation_del(const char *menu
 
 EAPI void                     e_int_menus_menu_augmentation_point_disabled_set(const char *menu,
                                        Eina_Bool disabled);
-    
+
 #endif
 #endif

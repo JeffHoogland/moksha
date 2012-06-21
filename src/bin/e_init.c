@@ -20,7 +20,7 @@ EINTERN int
 e_init_init(void)
 {
    E_EVENT_INIT_DONE = ecore_event_type_new();
-   exe_del_handler = 
+   exe_del_handler =
      ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
                              _e_init_cb_exe_event_del, NULL);
    client = NULL;
@@ -67,7 +67,7 @@ e_init_show(void)
    if (version) ver = strdup(e_util_filename_escape(version));
    else ver = strdup("XvX");
 
-   snprintf(buf, sizeof(buf), 
+   snprintf(buf, sizeof(buf),
             "%s/enlightenment/utils/enlightenment_init \'%s\' \'%i\' \'%s\' \'%s\'",
 	    e_prefix_lib_get(), theme,
 	    e_config->font_hinting, tit, ver);

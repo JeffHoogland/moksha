@@ -1,12 +1,12 @@
-/* 
- * NOTE TO FreeBSD users. Install libexecinfo from  
+/*
+ * NOTE TO FreeBSD users. Install libexecinfo from
  * ports/devel/libexecinfo and add -lexecinfo to LDFLAGS
  * to add backtrace support.
  */
 #include "e.h"
 
 #ifdef HAVE_EXECINFO_H
-# include <execinfo.h> 
+# include <execinfo.h>
 #endif
 
 static volatile Eina_Bool _e_x_composite_shutdown_try = 0;
@@ -111,7 +111,7 @@ _e_backtrace_int(int fd, const char *msg, size_t msg_len)
 }
 
 /* a tricky little devil, requires e and it's libs to be built
- * with the -rdynamic flag to GCC for any sort of decent output. 
+ * with the -rdynamic flag to GCC for any sort of decent output.
  */
 EAPI void
 e_sigseg_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)

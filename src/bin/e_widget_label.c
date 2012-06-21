@@ -5,9 +5,9 @@ struct _E_Widget_Data
 {
    Evas_Object *text;
 };
-   
+
 /* local subsystem functions */
-static void _e_wid_del_hook(Evas_Object *obj); 
+static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 
 /* externally accessible functions */
@@ -17,7 +17,7 @@ e_widget_label_add(Evas *evas, const char *label)
    Evas_Object *obj, *o;
    Evas_Coord mw, mh;
    E_Widget_Data *wd;
-   
+
    obj = e_widget_add(evas);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
@@ -35,7 +35,7 @@ e_widget_label_add(Evas *evas, const char *label)
    e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-      
+
    return obj;
 }
 
@@ -64,11 +64,10 @@ static void
 _e_wid_disable_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
      edje_object_signal_emit(wd->text, "e,state,disabled", "e");
    else
      edje_object_signal_emit(wd->text, "e,state,enabled", "e");
 }
-

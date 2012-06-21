@@ -11,7 +11,7 @@ struct _E_Spectrum
   Evas_Object *o_cursor;
 
   int iw, ih; /* square image width/height */
-  E_Color_Component mode; 
+  E_Color_Component mode;
 
   E_Color *cv;
   Ecore_Timer *draw_timer;
@@ -222,35 +222,35 @@ _e_spectrum_2d_color_at(E_Spectrum *sp, int x, int y, int *r, int *g, int *b)
     {
      case E_COLOR_COMPONENT_R:
 	rr = sp->cv->r;
-	gg = (1 - (y / (double)(sp->ih))) * 255; 
-	bb = (x / (double)(sp->iw)) * 255; 
+	gg = (1 - (y / (double)(sp->ih))) * 255;
+	bb = (x / (double)(sp->iw)) * 255;
 	break;
      case E_COLOR_COMPONENT_G:
-	rr = (x / (double)(sp->iw)) * 255; 
+	rr = (x / (double)(sp->iw)) * 255;
 	gg = sp->cv->g;
-	bb = (1 - (y / (double)(sp->ih))) * 255; 
+	bb = (1 - (y / (double)(sp->ih))) * 255;
 	break;
      case E_COLOR_COMPONENT_B:
-	rr = (1 - (y / (double)(sp->ih))) * 255; 
-	gg = (x / (double)(sp->iw)) * 255; 
+	rr = (1 - (y / (double)(sp->ih))) * 255;
+	gg = (x / (double)(sp->iw)) * 255;
 	bb = sp->cv->b;
 	break;
      case E_COLOR_COMPONENT_H:
 	h = sp->cv->h;
-	s = 1 - (y / (double)(sp->ih)); 
-	v = x / (double)(sp->iw); 
+	s = 1 - (y / (double)(sp->ih));
+	v = x / (double)(sp->iw);
 	evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
 	break;
      case E_COLOR_COMPONENT_S:
 	s = sp->cv->s;
-	v = 1 - (y / (double)(sp->ih)); 
-	h = x / (double)(sp->iw) * 360; 
+	v = 1 - (y / (double)(sp->ih));
+	h = x / (double)(sp->iw) * 360;
 	evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
 	break;
      case E_COLOR_COMPONENT_V:
 	v = sp->cv->v;
-	h = (1 - (y / (double)(sp->ih))) * 360; 
-	s = x / (double)(sp->iw); 
+	h = (1 - (y / (double)(sp->ih))) * 360;
+	s = x / (double)(sp->iw);
 	evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
 	break;
      case E_COLOR_COMPONENT_MAX:
@@ -273,7 +273,7 @@ _e_spectrum_redraw(void *d)
   float vx, vy, vz = 0;
 
   data = evas_object_image_data_get(sp->o_spectrum, 1);
-  if (!data) 
+  if (!data)
     {
        sp->draw_timer = NULL;
        return ECORE_CALLBACK_CANCEL;

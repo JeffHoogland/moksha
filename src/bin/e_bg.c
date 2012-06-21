@@ -102,7 +102,7 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
 	EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cfbg)
 	  {
 	     int spec;
-             
+
 	     if (!cfbg) continue;
 	     spec = 0;
 	     if (cfbg->container == container_num) spec++;

@@ -172,4 +172,3 @@ _e_powersave_event_update_free(void *data __UNUSED__, void *event)
 {
    free(event);
 }
-

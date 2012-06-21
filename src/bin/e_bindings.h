@@ -93,7 +93,7 @@ struct _E_Binding_Wheel
    const char *params;
 };
 
-struct _E_Binding_Acpi 
+struct _E_Binding_Acpi
 {
    E_Binding_Context ctxt;
    int type, status;
@@ -137,7 +137,7 @@ EAPI void        e_bindings_signal_add(E_Binding_Context ctxt, const char *sig, 
 EAPI void        e_bindings_signal_del(E_Binding_Context ctxt, const char *sig, const char *src, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI E_Action   *e_bindings_signal_find(E_Binding_Context ctxt, E_Object *obj, const char *sig, const char *src, E_Binding_Signal **bind_ret);
 EAPI E_Action   *e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, const char *sig, const char *src);
-					 
+
 EAPI void        e_bindings_wheel_add(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI void        e_bindings_wheel_del(E_Binding_Context ctxt, int direction, int z, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
 EAPI void        e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win);

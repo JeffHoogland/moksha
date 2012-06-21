@@ -8,6 +8,6 @@ typedef struct _E_Obj_Dialog E_Theme_About;
 
 EAPI E_Theme_About  *e_theme_about_new  (E_Container *con);
 EAPI void            e_theme_about_show (E_Theme_About *about);
-    
+
 #endif
 #endif

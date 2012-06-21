@@ -16,7 +16,7 @@ e_obj_dialog_new(E_Container *con, char *title, char *class_name, char *class_cl
    E_Obj_Dialog *od;
    E_Manager *man;
    Evas_Object *o;
-   
+
    if (!con)
      {
 	man = e_manager_current_get();
@@ -39,13 +39,13 @@ e_obj_dialog_new(E_Container *con, char *title, char *class_name, char *class_cl
    e_win_dialog_set(od->win, 1);
    e_win_name_class_set(od->win, class_name, class_class);
    e_win_title_set(od->win, title);
-   
+
    o = edje_object_add(e_win_evas_get(od->win));
    od->bg_object = o;
-   
+
    e_win_centered_set(od->win, 1);
    od->cb_delete = NULL;
-   
+
    return od;
 }
 
@@ -74,7 +74,7 @@ e_obj_dialog_show(E_Obj_Dialog *od)
 {
    Evas_Coord w, h, mw, mh;
    const char *s;
-   
+
    E_OBJECT_CHECK(od);
    E_OBJECT_TYPE_CHECK(od, E_OBJ_DIALOG_TYPE);
 
@@ -112,7 +112,7 @@ e_obj_dialog_obj_theme_set(E_Obj_Dialog *od, char *theme_cat, char *theme_obj)
 {
    E_OBJECT_CHECK(od);
    E_OBJECT_TYPE_CHECK(od, E_OBJ_DIALOG_TYPE);
-   
+
    e_theme_edje_object_set(od->bg_object, theme_cat, theme_obj);
    evas_object_move(od->bg_object, 0, 0);
    evas_object_show(od->bg_object);
@@ -133,7 +133,7 @@ static void
 _e_obj_dialog_cb_delete(E_Win *win)
 {
    E_Obj_Dialog *od;
-   
+
    od = win->data;
    if (od->cb_delete)
      od->cb_delete(od);
@@ -155,7 +155,7 @@ static void
 _e_obj_dialog_cb_resize(E_Win *win)
 {
    E_Obj_Dialog *od;
-   
+
    od = win->data;
    evas_object_resize(od->bg_object, od->win->w, od->win->h);
 }

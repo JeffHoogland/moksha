@@ -6,7 +6,7 @@
 
 typedef struct _E_Fm2_Mime_Handler E_Fm2_Mime_Handler;
 
-struct _E_Fm2_Mime_Handler 
+struct _E_Fm2_Mime_Handler
 {
    const char *label, *icon_group;
    void (*action_func) (Evas_Object *obj, const char *path, void *data);

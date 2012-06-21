@@ -418,7 +418,7 @@ _12_try_restore_configuration(void)
           }
         outputs_list = _find_matching_outputs(sc->outputs);
         outputs_array = _outputs_to_array(outputs_list);
-        
+
         if (!sc->mode_info)
           {
              INF("E_RANDR: \tSerialized mode was disabled.");

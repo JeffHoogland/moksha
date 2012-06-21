@@ -1405,7 +1405,7 @@ e_hints_window_e_state_get(E_Border *bd)
    /* ugly, but avoids possible future overflow if more states are added */
    size = (sizeof(state) / sizeof(state[0]));
 
-   num = 
+   num =
      ecore_x_window_prop_card32_get(bd->client.win, E_ATOM_WINDOW_STATE,
                                     state, size);
    if (!num) return;
@@ -1491,4 +1491,3 @@ e_hints_scale_update(void)
         free(roots);
      }
 }
-

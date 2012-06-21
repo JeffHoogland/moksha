@@ -1,7 +1,7 @@
 #ifdef E_TYPEDEFS
 
 typedef struct _E_Path E_Path;
-typedef struct _E_Path_Dir E_Path_Dir;   
+typedef struct _E_Path_Dir E_Path_Dir;
 
 #else
 #ifndef E_PATH_H

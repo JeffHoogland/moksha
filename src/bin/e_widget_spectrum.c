@@ -33,16 +33,16 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
    Evas_Coord mw, mh;
-   
+
    obj = e_widget_add(evas);
-   
+
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
 
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
-   
+
    wd->cv = cv;
    wd->mode = mode;
 
@@ -89,7 +89,7 @@ e_widget_spectrum_update(Evas_Object *obj, int redraw)
 {
    E_Widget_Data *wd;
    double vx = 0, vy = 0;
-   
+
    wd = e_widget_data_get(obj);
    /* redraw spectrum */
    if (redraw)
@@ -131,7 +131,7 @@ void
 e_widget_spectrum_mode_set(Evas_Object *obj, E_Color_Component mode)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    if (wd->mode == mode) return;
    wd->mode = mode;
@@ -164,7 +164,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    free(wd);
 }
@@ -173,7 +173,7 @@ static void
 _e_wid_focus_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
@@ -191,7 +191,7 @@ static void
 _e_wid_disable_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    if (e_widget_disabled_get(obj))
      edje_object_signal_emit(wd->o_spectrum, "e,state,disabled", "e");
@@ -283,7 +283,7 @@ _e_wid_cb_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *
 {
    Evas_Object *o_wid;
    E_Widget_Data *wd;
-   
+
    o_wid = data;
    wd = e_widget_data_get(o_wid);
    wd->dragging = 0;
@@ -295,11 +295,11 @@ _e_wid_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
    Evas_Event_Mouse_Move *ev;
    Evas_Object *o_wid;
    E_Widget_Data *wd;
-   
+
    o_wid = data;
    wd = e_widget_data_get(o_wid);
    ev = event_info;
-  
+
    if (wd->dragging == 1)
      {
 	_e_wid_mouse_handle(o_wid, ev->cur.canvas.x, ev->cur.canvas.y);

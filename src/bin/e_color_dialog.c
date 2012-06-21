@@ -24,7 +24,7 @@ e_color_dialog_new(E_Container *con, const E_Color *color, Eina_Bool alpha_enabl
    if (!dia) return NULL;
    dia->dia = e_dialog_new(con, "E", "_color_dialog");
    e_dialog_title_set(dia->dia, _("Color Selector"));
-   
+
    dia->color = calloc(1, sizeof(E_Color));
    dia->initial = calloc(1, sizeof(E_Color));
 
@@ -102,7 +102,7 @@ static void
 _e_color_dialog_button1_click(void *data, E_Dialog *edia __UNUSED__)
 {
    E_Color_Dialog *dia;
-   
+
    dia = data;
    if (dia->select_func && dia->color)
      dia->select_func(dia, dia->color, dia->select_data);
@@ -117,7 +117,7 @@ _e_color_dialog_button2_click(void *data, E_Dialog *edia __UNUSED__)
    dia = data;
    if (dia->cancel_func && dia->initial)
      dia->cancel_func(dia, dia->initial, dia->cancel_data);
-   _e_color_dialog_free(data);     	
+   _e_color_dialog_free(data);
 }
 
 static void

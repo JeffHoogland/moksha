@@ -66,11 +66,11 @@ e_fm2_custom_file_init(void)
    DAT("g.rh", geom.res_h, EET_T_INT);
    DAT("g.s", geom.scale, EET_T_DOUBLE);
    DAT("g.v", geom.valid, EET_T_UCHAR);
-   
+
    DAT("i.t", icon.type, EET_T_INT);
    DAT("i.i", icon.icon, EET_T_STRING);
    DAT("i.v", icon.valid, EET_T_UCHAR);
-   
+
    DAT("l", label, EET_T_STRING);
 
 #undef DAT
@@ -258,10 +258,10 @@ EAPI void
 e_fm2_custom_file_flush(void)
 {
    if (!_e_fm2_custom_file) return;
-   
+
    if (_e_fm2_flush_defer)
      e_powersave_deferred_action_del(_e_fm2_flush_defer);
-   _e_fm2_flush_defer = 
+   _e_fm2_flush_defer =
      e_powersave_deferred_action_add(_e_fm2_custom_file_cb_defer_save, NULL);
 }
 
@@ -347,7 +347,7 @@ static void
 _e_fm2_custom_file_info_load(void)
 {
    char buf[PATH_MAX];
-   
+
    if (_e_fm2_custom_file) return;
    _e_fm2_custom_writes = 0;
    e_user_dir_concat_static(buf, "fileman/custom.cfg");
@@ -359,7 +359,7 @@ _e_fm2_custom_file_info_load(void)
 	E_Fm2_Custom_File *cf;
 	char **list;
 	int i, num;
-	
+
 	list = eet_list(_e_fm2_custom_file, "*", &num);
 	if (list)
 	  {

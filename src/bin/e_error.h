@@ -13,6 +13,6 @@
 #define E_ERROR_H
 
 EAPI void e_error_message_show_internal(char *txt);
-  
+
 #endif
 #endif

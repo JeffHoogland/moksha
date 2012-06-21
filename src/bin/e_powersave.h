@@ -19,7 +19,7 @@ typedef struct _E_Event_Powersave_Update E_Event_Powersave_Update;
 extern EAPI int E_EVENT_POWERSAVE_UPDATE;
 extern EAPI int E_EVENT_POWERSAVE_CONFIG_UPDATE;
 
-struct _E_Event_Powersave_Update 
+struct _E_Event_Powersave_Update
 {
    E_Powersave_Mode	mode;
 };

@@ -1,9 +1,9 @@
 #include "e.h"
 
 /* FIXME:
- * 
+ *
  * basic -
- * + show file 
+ * + show file
  * + show size
  * + show modified date
  * + show mimetype
@@ -16,7 +16,7 @@
  * + change icon for mime type
  * * change icon for just this file
  * + change permissions (others read, others write)
- * 
+ *
  * advanced (extra) -
  * * show access date
  * * show change date
@@ -28,7 +28,7 @@
  * * show group
  * * change link destination
  * * change app to open THIS file with (or dir)
- * 
+ *
  */
 
 /* PROTOTYPES - same all the time */
@@ -88,18 +88,18 @@ e_fm_prop_file(E_Container *con, E_Fm2_Icon *ic)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    v = E_NEW(E_Config_Dialog_View, 1);
-   
+
    /* methods */
    v->create_cfdata           = _create_data;
    v->free_cfdata             = _free_data;
    v->basic.apply_cfdata      = _basic_apply_data;
    v->basic.create_widgets    = _basic_create_widgets;
-#if 0   
+#if 0
    v->advanced.apply_cfdata   = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
-#endif   
+#endif
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con,
 			     _("File Properties"),
@@ -113,7 +113,7 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata, E_Fm2_Icon *ic)
 {
    struct passwd *pw;
-   
+
    cfdata->ic = ic;
    cfdata->fi = e_fm2_icon_file_info_get(ic);
    if (cfdata->fi->file) cfdata->file = strdup(cfdata->fi->file);
@@ -138,7 +138,7 @@ _create_data(E_Config_Dialog *cfd)
     * the running systems/config in the apply methods
     */
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    _fill_data(cfdata, cfd->data);
    return cfdata;
@@ -166,8 +166,8 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    char buf[PATH_MAX];
    int fperm = 0;
-   
-   snprintf(buf, sizeof(buf), "%s/%s", 
+
+   snprintf(buf, sizeof(buf), "%s/%s",
 	    e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
    if (((cfdata->fi->statinfo.st_mode & S_IRUSR) && (cfdata->owner_read)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IRUSR)) && (!cfdata->owner_read)))
@@ -184,7 +184,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (fperm)
      {
 	mode_t pmode;
-	
+
 	pmode = cfdata->fi->statinfo.st_mode;
 	if (cfdata->owner_read) cfdata->fi->statinfo.st_mode |= S_IRUSR;
 	else cfdata->fi->statinfo.st_mode &= ~S_IRUSR;
@@ -210,7 +210,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 	     cfdata->plink = strdup(cfdata->link);
 	  }
      }
-   
+
    if ((cfdata->picon_type != cfdata->icon_type) ||
        (cfdata->picon_mime != cfdata->icon_mime) ||
        (cfdata->picon_changed))
@@ -220,7 +220,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 	     Eina_List *l;
 	     E_Config_Mime_Icon *mi = NULL;
 	     int found = 0;
-	     
+
 	     if (!cfdata->picon_mime) /* remove previous custom icon info */
 	       e_fm2_custom_file_del(buf);
 	     EINA_LIST_FOREACH(e_config->mime_icons, l, mi)
@@ -266,7 +266,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 	else /* custom for this file */
 	  {
 	     E_Fm2_Custom_File *cf, cf0;
-	     
+
 	     cf = e_fm2_custom_file_get(buf);
 	     if (cf)
 	       {
@@ -298,10 +298,10 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 	  }
 	cfdata->picon_type = cfdata->icon_type;
 	cfdata->picon_mime = cfdata->icon_mime;
-	
+
 	e_fm2_all_icons_update();
      }
-	  
+
    return 1; /* Apply was OK */
 }
 
@@ -322,20 +322,20 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    E_Radio_Group *rg;
    char buf[4096];
    const char *itype = NULL;
-   
-   snprintf(buf, sizeof(buf), "%s/%s", 
+
+   snprintf(buf, sizeof(buf), "%s/%s",
 	    e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
    o = e_widget_table_add(evas, 0);
 
    ot = e_widget_table_add(evas, 0);
-   
+
    ob = e_widget_label_add(evas, _("File:"));
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    ob = e_widget_entry_add(evas, &(cfdata->file), NULL, NULL, NULL);
    e_widget_size_min_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
-   
+
    ob = e_widget_label_add(evas, _("Size:"));
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_entry_add(evas, &(cfdata->size), NULL, NULL, NULL);
@@ -373,11 +373,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_check_add(evas, _("Owner can write"), &(cfdata->owner_write));
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ot, of, 0, 4, 2, 1, 1, 0, 1, 0);
-   
+
    e_widget_table_object_append(o, ot, 0, 0, 1, 1, 1, 1, 1, 1);
-   
+
    of = e_widget_frametable_add(evas, _("Preview"), 0);
-   
+
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_preview_add(evas, 128, 128);
    cfdata->gui.preview = ob;
@@ -388,12 +388,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_preview_thumb_set(ob, buf,
 			      "e/desktop/background", 128, 128);
    e_widget_frametable_object_append(of, ot, 0, 0, 1, 1, 1, 1, 1, 1);
-   
+
    e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 1);
-   
+
    ot = e_widget_frametable_add(evas, _("Icon"), 0);
-   
-   ob = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);   
+
+   ob = e_widget_button_add(evas, "", NULL, _cb_icon_sel, cfdata, cfd);
    cfdata->gui.icon_wid = ob;
    oi = e_fm2_icon_get(evas,
 		       cfdata->ic,
@@ -421,7 +421,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    else
      cfdata->icon_type = 0;
    cfdata->picon_type = cfdata->icon_type;
-   
+
    rg = e_widget_radio_group_new(&cfdata->icon_type);
    ob = e_widget_radio_add(evas, _("Default"), 0, rg);
    evas_object_smart_callback_add(ob, "changed", _cb_type, cfdata);
@@ -442,16 +442,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 	ob = e_widget_check_add(evas, _("Use this icon for all files of this type"), &(cfdata->icon_mime));
 	e_widget_frametable_object_append(ot, ob, 0, 3, 2, 1, 1, 1, 1, 1);
      }
-   
+
    e_widget_table_object_append(o, ot, 0, 1, 1, 1, 1, 1, 1, 1);
 
    if ((cfdata->link) && ((cfdata->fi->real_link) || (cfdata->fi->broken_link)))
      {
 	ot = e_widget_frametable_add(evas, _("Link Information"), 0);
-	
+
 	ob = e_widget_entry_add(evas, &(cfdata->link), NULL, NULL, NULL);
 	e_widget_frametable_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
-	
+
 	e_widget_table_object_append(o, ot, 1, 1, 1, 1, 1, 1, 1, 1);
      }
    return o;
@@ -463,7 +463,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o;
-      
+
    o = e_widget_table_add(evas, 0);
    return o;
 }
@@ -494,16 +494,16 @@ _cb_icon_sel(void *data, void *data2)
 //     e_dialog_title_set(dia, _("Select an Edj File"));
 //   else if (cfdata->type == IMG)
      e_dialog_title_set(dia, _("Select an Image"));
-             
+
    dia->data = cfdata;
    o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
 			 _cb_fsel_sel, cfdata, NULL, cfdata, 1);
-   
+
    cfdata->gui.fsel_wid = o;
    evas_object_show(o);
    e_widget_size_min_get(o, &w, &h);
    e_dialog_content_set(dia, o, w, h);
-   
+
    e_dialog_button_add(dia, _("OK"), NULL, _cb_fsel_ok, cfdata);
    e_dialog_button_add(dia, _("Cancel"), NULL, _cb_fsel_cancel, cfdata);
    e_dialog_resizable_set(dia, 1);
@@ -518,7 +518,7 @@ static void
 _cb_type(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = data;
    if (cfdata->icon_type == 2)
      e_widget_disabled_set(cfdata->gui.icon_wid, 0);
@@ -530,7 +530,7 @@ static void
 _cb_preview_update(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = data;
    e_widget_table_object_repack(cfdata->gui.preview_table,
 				cfdata->gui.preview,
@@ -552,10 +552,10 @@ _cb_fsel_ok(void *data, E_Dialog *dia)
    E_Config_Dialog_Data *cfdata;
    const char *file, *ext;
    Evas_Object *icon = NULL;
-   
+
    cfdata = data;
    if (!cfdata) return;
-   
+
    file = e_widget_fsel_selection_path_get(cfdata->gui.fsel_wid);
    E_FREE(cfdata->icon);
    if (file) cfdata->icon = strdup(file);
@@ -584,7 +584,7 @@ static void
 _cb_fsel_cancel(void *data, E_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
-   
+
    cfdata = data;
    e_object_del(E_OBJECT(dia));
    cfdata->gui.fsel = NULL;

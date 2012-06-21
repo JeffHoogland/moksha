@@ -11,12 +11,12 @@ typedef struct _E_Color_Dialog E_Color_Dialog;
 struct _E_Color_Dialog
 {
    E_Object             e_obj_inherit;
-   
+
    E_Container         *con;
    E_Dialog            *dia;
-   
+
    E_Color             *color, *initial;
-  
+
    void (*select_func)(E_Color_Dialog *dia, E_Color *color, void *data);
    void  *select_data;
    void (*cancel_func)(E_Color_Dialog *dia, E_Color *color, void *data);

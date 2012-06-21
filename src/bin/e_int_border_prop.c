@@ -25,7 +25,7 @@ struct _E_Config_Dialog_Data
       char *icon_name;
       char *machine;
       char *role;
-      
+
       char *min;
       char *max;
       char *base;
@@ -40,15 +40,15 @@ struct _E_Config_Dialog_Data
       char *client_leader;
       char *gravity;
       char *command;
-      
+
       int take_focus;
       int accepts_focus;
       int urgent;
       int delete_request;
       int request_pos;
    } icccm;
-   
-   struct 
+
+   struct
      {
 	char *name;
 	char *icon_name;
@@ -64,12 +64,12 @@ struct _E_Config_Dialog_Data
 };
 
 EAPI void
-e_int_border_prop(E_Border *bd) 
+e_int_border_prop(E_Border *bd)
 {
    E_Dialog *dia;
 
    if (bd->border_prop_dialog) return;
-   
+
    dia = e_dialog_new(bd->zone->container, "E", "_window_props");
    e_object_del_attach_func_set(E_OBJECT(dia), _bd_cb_dialog_del);
    e_dialog_title_set(dia, _("Window Properties"));
@@ -77,7 +77,7 @@ e_int_border_prop(E_Border *bd)
    _create_data(dia, bd);
 
    _bd_go(dia, (void *)0);
-   
+
    e_dialog_button_add(dia, _("Close"), NULL, _bd_cb_dialog_close, dia);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
@@ -90,11 +90,11 @@ _create_data(E_Dialog *cfd, E_Border *bd)
 {
    E_Config_Dialog_Data *cfdata;
    char buf[4096];
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->border = bd;
    bd->border_prop_dialog = cfd;
-   
+
 #define IFDUP(prop, dest) \
    if (cfdata->border->prop) cfdata->dest = strdup(cfdata->border->prop)
 
@@ -243,11 +243,11 @@ _create_data(E_Dialog *cfd, E_Border *bd)
    if (cfdata->border->client.icccm.command.argv)
      {
 	int i;
-	
+
 	buf[0] = 0;
 	for (i = 0; i < cfdata->border->client.icccm.command.argc; i++)
 	  {
-	     if ((sizeof(buf) - strlen(buf)) < 
+	     if ((sizeof(buf) - strlen(buf)) <
 		 (strlen(cfdata->border->client.icccm.command.argv[i]) - 2))
 	       break;
 	     strcat(buf, cfdata->border->client.icccm.command.argv[i]);
@@ -255,7 +255,7 @@ _create_data(E_Dialog *cfd, E_Border *bd)
 	  }
 	cfdata->icccm.command = strdup(buf);
      }
-   
+
    cfdata->icccm.take_focus = cfdata->border->client.icccm.take_focus;
    cfdata->icccm.accepts_focus = cfdata->border->client.icccm.accepts_focus;
    cfdata->icccm.urgent = cfdata->border->client.icccm.urgent;
@@ -271,19 +271,19 @@ _create_data(E_Dialog *cfd, E_Border *bd)
    cfdata->netwm.skip_pager = cfdata->border->client.netwm.state.skip_pager;
    cfdata->netwm.hidden = cfdata->border->client.netwm.state.hidden;
    cfdata->netwm.fullscreen = cfdata->border->client.netwm.state.fullscreen;
-   switch (cfdata->border->client.netwm.state.stacking) 
+   switch (cfdata->border->client.netwm.state.stacking)
      {
       case 0:
 	cfdata->netwm.stacking = strdup("None");
 	break;
       case 1:
-	cfdata->netwm.stacking = strdup("Above");	
+	cfdata->netwm.stacking = strdup("Above");
 	break;
       case 2:
 	cfdata->netwm.stacking = strdup("Below");
 	break;
      }
-      
+
    cfd->data = cfdata;
 }
 
@@ -292,7 +292,7 @@ _free_data(E_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->border)
      cfdata->border->border_prop_dialog = NULL;
-   
+
    /* Free the cfdata */
 #define IFREE(x) E_FREE(cfdata->x)
    IFREE(icccm.title);
@@ -314,65 +314,65 @@ _free_data(E_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    IFREE(icccm.client_leader);
    IFREE(icccm.gravity);
    IFREE(icccm.command);
-   
+
    IFREE(netwm.name);
    IFREE(netwm.icon_name);
    IFREE(netwm.stacking);
-   
+
    free(cfdata);
    cfd->data = NULL;
 }
 
-static void 
-_bd_cb_dialog_del(void *obj) 
+static void
+_bd_cb_dialog_del(void *obj)
 {
    E_Dialog *dia;
-   
+
    dia = obj;
    if (dia->data)
      _free_data(dia, dia->data);
 }
 
-static void 
-_bd_cb_dialog_close(void *data __UNUSED__, E_Dialog *dia) 
+static void
+_bd_cb_dialog_close(void *data __UNUSED__, E_Dialog *dia)
 {
    if (dia->data)
      _free_data(dia, dia->data);
    e_object_del(E_OBJECT(dia));
 }
 
-static void 
-_bd_go(void *data, void *data2) 
+static void
+_bd_go(void *data, void *data2)
 {
    E_Dialog *dia;
    Evas_Object *c, *o, *ob;
    Evas_Coord w, h;
-   
+
    dia = data;
    if (!dia) return;
 
    if (dia->content_object)
      evas_object_del(dia->content_object);
-   
+
    c = e_widget_list_add(e_win_evas_get(dia->win), 0, 0);
-   
-   if (!data2) 
+
+   if (!data2)
      {
 	o = _bd_icccm_create(dia, NULL);
 	e_widget_list_object_append(c, o, 1, 1, 0.0);
 	ob = e_widget_button_add(e_win_evas_get(dia->win), _("NetWM"), "go-next",
 				 _bd_go, dia, (void *)1);
      }
-   else 
+   else
      {
 	o = _bd_netwm_create(dia, NULL);
 	e_widget_list_object_append(c, o, 1, 1, 0.0);
 	ob = e_widget_button_add(e_win_evas_get(dia->win), _("ICCCM"), "go-next",
 				 _bd_go, dia, (void *)0);
      }
-   
+
    e_widget_list_object_append(c, ob, 0, 0, 1.0);
-   
+
    e_widget_size_min_get(c, &w, &h);
    e_dialog_content_set(dia, c, w, h);
    e_dialog_show(dia);
@@ -401,7 +401,7 @@ _bd_go(void *data, void *data2)
    }
 
 static Evas_Object *
-_bd_icccm_create(E_Dialog *dia, void *data __UNUSED__) 
+_bd_icccm_create(E_Dialog *dia, void *data __UNUSED__)
 {
    Evas *evas;
    Evas_Object *o, *ob, *of;
@@ -409,10 +409,10 @@ _bd_icccm_create(E_Dialog *dia, void *data __UNUSED__)
 
    if (!dia) return NULL;
    cfdata = dia->data;
-   
+
    if (dia->content_object)
      evas_object_del(dia->content_object);
-   
+
    evas = e_win_evas_get(dia->win);
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_frametable_add(evas, _("ICCCM Properties"), 0);
@@ -422,7 +422,7 @@ _bd_icccm_create(E_Dialog *dia, void *data __UNUSED__)
    STR_ENTRY(_("Icon Name"),      0, 3,    icccm.icon_name);
    STR_ENTRY(_("Machine"),        0, 4,    icccm.machine);
    STR_ENTRY(_("Role"),           0, 5,    icccm.role);
-   
+
    STR_ENTRY(_("Minimum Size"),   0, 6,    icccm.min);
    STR_ENTRY(_("Maximum Size"),   0, 7,    icccm.max);
    STR_ENTRY(_("Base Size"),      0, 8,    icccm.base);
@@ -443,24 +443,24 @@ _bd_icccm_create(E_Dialog *dia, void *data __UNUSED__)
    CHK_ENTRY(_("Urgent"),           0, 13, icccm.urgent);
    CHK_ENTRY(_("Request Delete"),   2, 11, icccm.delete_request);
    CHK_ENTRY(_("Request Position"), 2, 12, icccm.request_pos);
-   
+
    e_widget_list_object_append(o, of, 1, 1, 0.0);
    return o;
 }
 
 static Evas_Object *
-_bd_netwm_create(E_Dialog *dia, void *data __UNUSED__) 
+_bd_netwm_create(E_Dialog *dia, void *data __UNUSED__)
 {
    Evas *evas;
    Evas_Object *o, *of, *ob;
    E_Config_Dialog_Data *cfdata;
-   
+
    if (!dia) return NULL;
    cfdata = dia->data;
 
    if (dia->content_object)
      evas_object_del(dia->content_object);
-   
+
    evas = e_win_evas_get(dia->win);
    o = e_widget_list_add(evas, 0, 0);
    of = e_widget_frametable_add(evas, _("NetWM Properties"), 0);
@@ -475,7 +475,7 @@ _bd_netwm_create(E_Dialog *dia, void *data __UNUSED__)
    CHK_ENTRY(_("Skip Pager"),   0, 8, netwm.skip_pager);
    CHK_ENTRY(_("Hidden"),       0, 9, netwm.hidden);
    CHK_ENTRY(_("Fullscreen"),   0, 10, netwm.fullscreen);
-   
+
    e_widget_list_object_append(o, of, 1, 1, 0.0);
    return o;
 }

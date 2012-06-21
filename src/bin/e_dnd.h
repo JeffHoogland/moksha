@@ -29,7 +29,7 @@ struct _E_Drag
 
    E_Drag_Type type;
 
-   struct 
+   struct
      {
 	void *(*convert)(E_Drag *drag, const char *type);
 	void  (*finished)(E_Drag *drag, int dropped);
@@ -49,7 +49,7 @@ struct _E_Drag
 
    int shape_rects_num;
    Ecore_X_Rectangle *shape_rects;
-   
+
    unsigned int layer;
    unsigned char visible : 1;
    unsigned char need_shape_export : 1;
@@ -61,7 +61,7 @@ struct _E_Drag
 
 struct _E_Drop_Handler
 {
-   struct 
+   struct
      {
 	void (*enter)(void *data, const char *type, void *event);
 	void (*move)(void *data, const char *type, void *event);
@@ -133,7 +133,7 @@ EAPI E_Drop_Handler *e_drop_handler_add(E_Object *obj,
 					void (*move_cb)(void *data, const char *type, void *event),
 					void (*leave_cb)(void *data, const char *type, void *event),
 					void (*drop_cb)(void *data, const char *type, void *event),
-				       	const char **types, unsigned int num_types,
+					const char **types, unsigned int num_types,
 					int x, int y, int w, int h);
 EAPI void e_drop_handler_geometry_set(E_Drop_Handler *handler, int x, int y, int w, int h);
 EAPI int  e_drop_inside(const E_Drop_Handler *handler, int x, int y);
@@ -150,4 +150,3 @@ EAPI Ecore_X_Atom e_drop_handler_action_get(void);
 #ifndef MIN
 # define MIN(x, y) (((x) > (y)) ? (y) : (x))
 #endif
-

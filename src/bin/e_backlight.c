@@ -54,7 +54,7 @@ e_backlight_init(void)
    eeze_init();
 #endif
 // why did someone do this? this makes it ONLY work if xrandr has bl support.
-// WRONG!   
+// WRONG!
 //   bl_avail = ecore_x_randr_output_backlight_available();
    bl_avail = EINA_TRUE;
 
@@ -330,7 +330,7 @@ _e_backlight_set(E_Zone *zone, double val)
         Ecore_X_Window root;
         Ecore_X_Randr_Output *out;
         int num = 0;
-        
+
         root = zone->container->manager->root;
         out = ecore_x_randr_window_outputs_get(root, &num);
         if ((out) && (num > 0))
@@ -355,7 +355,7 @@ _bl_anim(void *data, double pos)
 {
    E_Zone *zone = data;
    double v;
-   
+
    // FIXME: if zone is deleted while anim going... bad things.
    pos = ecore_animator_pos_map(pos, ECORE_POS_MAP_DECELERATE, 0.0, 0.0);
    v = (bl_animval * (1.0 - pos)) + (bl_val *pos);
@@ -448,7 +448,7 @@ static Eina_Bool
 _e_bl_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev;
-   
+
    ev = event;
    if (ev->exe == bl_sys_set_exe)
      {
@@ -463,7 +463,7 @@ static void
 _bl_sys_level_set(double val)
 {
    char buf[PATH_MAX];
-   
+
    if (!bl_sys_exit_handler)
       bl_sys_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
                                                     _e_bl_cb_exit, NULL);
@@ -473,8 +473,8 @@ _bl_sys_level_set(double val)
         return;
      }
 //   printf("SET: %1.3f\n", val);
-   snprintf(buf, sizeof(buf), 
-            "%s/enlightenment/utils/enlightenment_backlight %i", 
+   snprintf(buf, sizeof(buf),
+            "%s/enlightenment/utils/enlightenment_backlight %i",
             e_prefix_lib_get(), (int)(val * 1000.0));
    bl_sys_set_exe = ecore_exe_run(buf, NULL);
 }

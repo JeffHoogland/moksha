@@ -1816,4 +1816,3 @@ _e_main_cb_startup_fake_end(void *data __UNUSED__)
    e_init_hide();
    return ECORE_CALLBACK_CANCEL;
 }
-

@@ -9,7 +9,7 @@ struct _E_Widget_Data
    Evas_Object *o_widget, *o_scrollframe, *o_ilist;
    Eina_List *callbacks;
    char **value;
-   struct 
+   struct
      {
         Eina_List *queue;
         Ecore_Timer *timer;
@@ -153,7 +153,7 @@ _queue_timer(void *data)
           {
              Evas_Coord x, y, w, h;
 	     if (num > 0) break;
-	     
+
              e_ilist_nth_geometry_get(wd->o_ilist, qi->item, &x, &y, &w, &h);
              if (qi->use_relative)
                e_scrollframe_child_pos_set(wd->o_scrollframe, x, y);
@@ -187,7 +187,7 @@ _queue_timer(void *data)
                   wd->callbacks = eina_list_remove_list(wd->callbacks, item);
                }
           }
-#endif	
+#endif
         else if (qi->command == CMD_MULTI_SELECT)
           e_ilist_multi_select(wd->o_ilist, qi->item);
         else if (qi->command == CMD_RANGE_SELECT)
@@ -294,13 +294,13 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value)
    evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_wid_focus_steal, obj);
 
    o = e_ilist_add(evas);
    wd->o_ilist = o;
    e_ilist_icon_size_set(o, icon_w, icon_h);
-   evas_object_event_callback_add(wd->o_scrollframe, EVAS_CALLBACK_RESIZE, 
+   evas_object_event_callback_add(wd->o_scrollframe, EVAS_CALLBACK_RESIZE,
                                   _e_wid_cb_scrollframe_resize, o);
    e_scrollframe_child_set(wd->o_scrollframe, o);
    e_widget_sub_object_add(obj, o);
@@ -732,7 +732,7 @@ e_widget_ilist_item_data_get(const E_Ilist_Item *it)
 }
 
 EAPI const char *
-e_widget_ilist_item_value_get(const E_Ilist_Item *it) 
+e_widget_ilist_item_value_get(const E_Ilist_Item *it)
 {
    E_Widget_Callback *wcb = it->data2;
 
@@ -836,7 +836,7 @@ e_widget_ilist_selected_count_get(Evas_Object *obj)
 }
 
 EAPI const char *
-e_widget_ilist_selected_value_get(Evas_Object *obj) 
+e_widget_ilist_selected_value_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
    E_Widget_Callback *wcb;
@@ -896,7 +896,7 @@ e_widget_ilist_multi_select_set(Evas_Object *obj, Eina_Bool multi)
    e_ilist_multi_select_set(wd->o_ilist, multi);
 }
 
-EAPI Eina_Bool 
+EAPI Eina_Bool
 e_widget_ilist_multi_select_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;

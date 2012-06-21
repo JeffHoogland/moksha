@@ -8,7 +8,7 @@
 
 /* this is ALMOST canonical sha1 - i took some shortcuts to make it smaller
  * when handling the last 64 bytes in a buffer to just keep it short. it
- * still generates decent hashes either way... 
+ * still generates decent hashes either way...
  */
 EAPI int
 e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
@@ -16,14 +16,14 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
    unsigned int digest[5], word[80], wa, wb, wc, wd, we, t;
    unsigned char buf[64], *d;
    int idx, left, i;
-   const unsigned int magic[4] = 
+   const unsigned int magic[4] =
      {
         0x5a827999,
 	  0x6ed9eba1,
 	  0x8f1bbcdc,
 	  0xca62c1d6
      };
-   
+
    idx = 0;
    digest[0] = 0x67452301;
    digest[1] = 0xefcdab89;
@@ -55,7 +55,7 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
 		  word[i] |= (unsigned int)buf[(i * 4) + 3];
 	       }
 	     for (i = 16; i < 80; i++)
-	       word[i] = SHSH(1, 
+	       word[i] = SHSH(1,
 			       word[i - 3 ] ^ word[i - 8 ] ^
 			       word[i - 14] ^ word[i - 16]);
 	     wa = digest[0];
@@ -66,16 +66,16 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
              for (i = 0; i < 80; i++)
 	       {
 		  if (i < 20)
-		    t = SHSH(5, wa) + ((wb & wc) | ((~wb) & wd)) + 
+		    t = SHSH(5, wa) + ((wb & wc) | ((~wb) & wd)) +
 		    we + word[i] + magic[0];
 		  else if (i < 40)
-		    t = SHSH(5, wa) + (wb ^ wc ^ wd) + 
+		    t = SHSH(5, wa) + (wb ^ wc ^ wd) +
 		    we + word[i] + magic[1];
 		  else if (i < 60)
-		    t = SHSH(5, wa) + ((wb & wc) | (wb & wd) | (wc & wd)) + 
+		    t = SHSH(5, wa) + ((wb & wc) | (wb & wd) | (wc & wd)) +
 		    we + word[i] + magic[2];
 		  else if (i < 80)
-		    t = SHSH(5, wa) + (wb ^ wc ^ wd) + 
+		    t = SHSH(5, wa) + (wb ^ wc ^ wd) +
 		    we + word[i] + magic[3];
 		  we = wd;
 		  wd = wc;
@@ -91,13 +91,13 @@ e_sha1_sum(unsigned char *data, int size, unsigned char *dst)
 	     idx = 0;
 	  }
      }
-   
+
    t = htonl(digest[0]); digest[0] = t;
    t = htonl(digest[1]); digest[1] = t;
    t = htonl(digest[2]); digest[2] = t;
    t = htonl(digest[3]); digest[3] = t;
    t = htonl(digest[4]); digest[4] = t;
-   
+
    memcpy(dst, digest, 5 * 4);
    return 1;
 }

@@ -61,18 +61,18 @@ e_ipc_init(void)
              return 0;
           }
      }
-   snprintf(buf, sizeof(buf), "%s/enlightenment-%s/disp-%s-%i", 
+   snprintf(buf, sizeof(buf), "%s/enlightenment-%s/disp-%s-%i",
             tmp, user, disp, pid);
    _e_ipc_server = ecore_ipc_server_add(ECORE_IPC_LOCAL_SYSTEM, buf, 0, NULL);
    e_util_env_set("E_IPC_SOCKET", "");
    if (!_e_ipc_server) return 0;
    e_util_env_set("E_IPC_SOCKET", buf);
    printf("INFO: E_IPC_SOCKET=%s\n", buf);
-   ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_ADD, 
+   ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_ADD,
                            _e_ipc_cb_client_add, NULL);
-   ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DEL, 
+   ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DEL,
                            _e_ipc_cb_client_del, NULL);
-   ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DATA, 
+   ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DATA,
                            _e_ipc_cb_client_data, NULL);
 
    e_ipc_codec_init();
@@ -102,7 +102,7 @@ _e_ipc_cb_client_add(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Ipc_Event_Client_Add *e;
 
    e = event;
-   if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) 
+   if (ecore_ipc_client_server_get(e->client) != _e_ipc_server)
      return ECORE_CALLBACK_PASS_ON;
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -113,7 +113,7 @@ _e_ipc_cb_client_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Ipc_Event_Client_Del *e;
 
    e = event;
-   if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) 
+   if (ecore_ipc_client_server_get(e->client) != _e_ipc_server)
      return ECORE_CALLBACK_PASS_ON;
    /* delete client sruct */
    e_thumb_client_del(e);
@@ -129,7 +129,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Ipc_Event_Client_Data *e;
 
    e = event;
-   if (ecore_ipc_client_server_get(e->client) != _e_ipc_server) 
+   if (ecore_ipc_client_server_get(e->client) != _e_ipc_server)
      return ECORE_CALLBACK_PASS_ON;
    switch (e->major)
      {

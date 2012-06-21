@@ -7,9 +7,9 @@ typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Smart_Item E_Smart_Item;
 
 struct _E_Smart_Data
-{ 
+{
    Evas_Coord   x, y, w, h;
-   
+
    Evas_Object *smart_obj;
    Evas_Object *edje_obj;
    Evas_Object *event_obj;
@@ -20,7 +20,7 @@ struct _E_Smart_Data
    double down_time;
    unsigned char down : 1;
    unsigned char down_cancel : 1;
-}; 
+};
 
 struct _E_Smart_Item
 {
@@ -55,7 +55,7 @@ static void
 _e_smart_label_change(void *data)
 {
    E_Smart_Item *it;
-   
+
    it = data;
    edje_object_part_text_set(it->sd->edje_obj, "e.text.label", it->label);
    it->sd->cur = it;
@@ -80,7 +80,7 @@ EAPI void
 e_slidesel_item_add(Evas_Object *obj, const char *label, const char *icon, void (*func) (void *data), void *data)
 {
    E_Smart_Item *it;
-   
+
    API_ENTRY return;
    it = calloc(1, sizeof(E_Smart_Item));
    if (!it) return;
@@ -161,7 +161,7 @@ _e_smart_event_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    if ((sd->down) && (!sd->down_cancel))
      {
 	Evas_Coord d1, d2, d;
-	
+
 	d1 = ev->cur.canvas.x - sd->down_x;
 	d2 = ev->cur.canvas.y - sd->down_y;
 	d = (d1 * d1) + (d2 * d2);
@@ -176,10 +176,10 @@ _e_smart_event_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 static void
 _e_smart_event_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
-/*   
+/*
    Evas_Event_Key_Down *ev;
    E_Smart_Data *sd;
-   
+
    sd = data;
    ev = event_info;
    if (!strcmp(ev->keyname, "Left"))
@@ -210,7 +210,7 @@ _e_smart_event_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *
      }
  */
 }
-                    
+
 static void
 _e_smart_reconfigure(E_Smart_Data *sd)
 {
@@ -225,31 +225,31 @@ _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Evas_Object *o;
-   
+
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    evas_object_smart_data_set(obj, sd);
-   
+
    sd->smart_obj = obj;
    sd->x = 0;
    sd->y = 0;
    sd->w = 0;
    sd->h = 0;
-   
+
    evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN, _e_smart_event_key_down, sd);
    evas_object_propagate_events_set(obj, 0);
-   
+
    o = edje_object_add(evas_object_evas_get(obj));
    sd->edje_obj = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "e/widgets/slidesel");
    evas_object_smart_member_add(o, obj);
-   
+
    o = e_slidecore_add(evas_object_evas_get(obj));
    sd->slide_obj = o;
    edje_object_part_swallow(sd->edje_obj, "e.swallow.content", o);
    evas_object_show(o);
-   
+
    o = evas_object_rectangle_add(evas_object_evas_get(obj));
    sd->event_obj = o;
    evas_object_color_set(o, 0, 0, 0, 0);
@@ -325,7 +325,7 @@ _e_smart_clip_unset(Evas_Object *obj)
    INTERNAL_ENTRY;
    evas_object_clip_unset(sd->edje_obj);
    evas_object_clip_unset(sd->event_obj);
-}  
+}
 
 /* never need to touch this */
 
@@ -339,7 +339,7 @@ _e_smart_init(void)
 	     SMART_NAME,
 	       EVAS_SMART_CLASS_VERSION,
 	       _e_smart_add,
-	       _e_smart_del, 
+	       _e_smart_del,
 	       _e_smart_move,
 	       _e_smart_resize,
 	       _e_smart_show,
@@ -350,12 +350,11 @@ _e_smart_init(void)
 	       NULL,
 	       NULL,
 	       NULL,
-	       NULL, 
-               NULL, 
-               NULL, 
+	       NULL,
+               NULL,
+               NULL,
                NULL
 	  };
 	_e_smart = evas_smart_class_new(&sc);
      }
 }
-

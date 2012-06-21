@@ -25,7 +25,7 @@ struct _E_Desk
    int                  fullscreen_borders;
 
    Evas_Object         *bg_object;
-   
+
    Ecore_Animator      *animator;
    Eina_Bool            animating;
 };

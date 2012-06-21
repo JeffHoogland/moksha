@@ -121,8 +121,8 @@ _e_alert_connect(void)
    return 1;
 }
 
-static void 
-_e_alert_create(void) 
+static void
+_e_alert_create(void)
 {
    uint32_t mask, mask_list[4];
    int wx = 0, wy = 0;
@@ -134,36 +134,36 @@ _e_alert_create(void)
    xcb_open_font(conn, font, strlen("fixed"), "fixed");
 
    /* create main window */
-   mask = (XCB_CW_BACK_PIXEL | XCB_CW_BORDER_PIXEL | 
+   mask = (XCB_CW_BACK_PIXEL | XCB_CW_BORDER_PIXEL |
            XCB_CW_OVERRIDE_REDIRECT | XCB_CW_EVENT_MASK);
    mask_list[0] = screen->white_pixel;
    mask_list[1] = screen->black_pixel;
    mask_list[2] = 1;
-   mask_list[3] = (XCB_EVENT_MASK_KEY_PRESS | XCB_EVENT_MASK_KEY_RELEASE | 
+   mask_list[3] = (XCB_EVENT_MASK_KEY_PRESS | XCB_EVENT_MASK_KEY_RELEASE |
                    XCB_EVENT_MASK_EXPOSURE);
 
    win = xcb_generate_id(conn);
-   xcb_create_window(conn, XCB_COPY_FROM_PARENT, win, screen->root, 
-                     wx, wy, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 
-                     XCB_WINDOW_CLASS_INPUT_OUTPUT, 
+   xcb_create_window(conn, XCB_COPY_FROM_PARENT, win, screen->root,
+                     wx, wy, WINDOW_WIDTH, WINDOW_HEIGHT, 0,
+                     XCB_WINDOW_CLASS_INPUT_OUTPUT,
                      XCB_COPY_FROM_PARENT, mask, mask_list);
 
    /* create button 1 */
-   mask_list[3] = (XCB_EVENT_MASK_BUTTON_PRESS | 
+   mask_list[3] = (XCB_EVENT_MASK_BUTTON_PRESS |
                    XCB_EVENT_MASK_BUTTON_RELEASE | XCB_EVENT_MASK_EXPOSURE);
 
    btn1 = xcb_generate_id(conn);
-   xcb_create_window(conn, XCB_COPY_FROM_PARENT, btn1, win, 
-                     -100, -100, 1, 1, 0, 
-                     XCB_WINDOW_CLASS_INPUT_OUTPUT, 
+   xcb_create_window(conn, XCB_COPY_FROM_PARENT, btn1, win,
+                     -100, -100, 1, 1, 0,
+                     XCB_WINDOW_CLASS_INPUT_OUTPUT,
                      XCB_COPY_FROM_PARENT, mask, mask_list);
    xcb_map_window(conn, btn1);
 
    /* create button 2 */
    btn2 = xcb_generate_id(conn);
-   xcb_create_window(conn, XCB_COPY_FROM_PARENT, btn2, win, 
-                     -100, -100, 1, 1, 0, 
-                     XCB_WINDOW_CLASS_INPUT_OUTPUT, 
+   xcb_create_window(conn, XCB_COPY_FROM_PARENT, btn2, win,
+                     -100, -100, 1, 1, 0,
+                     XCB_WINDOW_CLASS_INPUT_OUTPUT,
                      XCB_COPY_FROM_PARENT, mask, mask_list);
    xcb_map_window(conn, btn2);
 
@@ -177,8 +177,8 @@ _e_alert_create(void)
    xcb_create_gc(conn, gc, win, mask, mask_list);
 }
 
-static void 
-_e_alert_display(void) 
+static void
+_e_alert_display(void)
 {
    xcb_char2b_t *str = NULL;
    xcb_query_text_extents_cookie_t cookie;
@@ -187,10 +187,10 @@ _e_alert_display(void)
 
    str = _e_alert_build_string(title);
 
-   cookie = 
+   cookie =
      xcb_query_text_extents_unchecked(conn, font, strlen(title), str);
    reply = xcb_query_text_extents_reply(conn, cookie, NULL);
-   if (reply) 
+   if (reply)
      {
         fa = reply->font_ascent;
         fh = (fa + reply->font_descent);
@@ -202,11 +202,11 @@ _e_alert_display(void)
    /* move buttons */
    x = 20;
    w = (WINDOW_WIDTH / 2) - 40;
-   _e_alert_button_move_resize(btn1, x, WINDOW_HEIGHT - 20 - (fh + 20), 
+   _e_alert_button_move_resize(btn1, x, WINDOW_HEIGHT - 20 - (fh + 20),
                                w, (fh + 20));
 
    x = ((WINDOW_WIDTH / 2) + 20);
-   _e_alert_button_move_resize(btn2, x, WINDOW_HEIGHT - 20 - (fh + 20), 
+   _e_alert_button_move_resize(btn2, x, WINDOW_HEIGHT - 20 - (fh + 20),
                                w, (fh + 20));
 
    if (comp_win)
@@ -222,8 +222,8 @@ _e_alert_display(void)
         rect.width = WINDOW_WIDTH;
         rect.height = WINDOW_HEIGHT;
 
-        xcb_shape_rectangles(conn, XCB_SHAPE_SO_SET, 
-                             XCB_SHAPE_SK_INPUT, XCB_CLIP_ORDERING_UNSORTED, 
+        xcb_shape_rectangles(conn, XCB_SHAPE_SO_SET,
+                             XCB_SHAPE_SK_INPUT, XCB_CLIP_ORDERING_UNSORTED,
                              comp_win, 0, 0, 1, &rect);
 
         xcb_reparent_window(conn, win, comp_win, wx, wy);
@@ -234,14 +234,14 @@ _e_alert_display(void)
    _e_alert_window_raise(win);
 
    /* grab pointer & keyboard */
-   xcb_grab_pointer_unchecked(conn, 0, win, 
-                              (XCB_EVENT_MASK_BUTTON_PRESS | 
-                                  XCB_EVENT_MASK_BUTTON_RELEASE), 
-                              XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC, 
+   xcb_grab_pointer_unchecked(conn, 0, win,
+                              (XCB_EVENT_MASK_BUTTON_PRESS |
+                                  XCB_EVENT_MASK_BUTTON_RELEASE),
+                              XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC,
                               XCB_NONE, XCB_NONE, XCB_CURRENT_TIME);
-   xcb_grab_keyboard_unchecked(conn, 0, win, XCB_CURRENT_TIME, 
+   xcb_grab_keyboard_unchecked(conn, 0, win, XCB_CURRENT_TIME,
                                XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);
-   xcb_set_input_focus(conn, XCB_INPUT_FOCUS_POINTER_ROOT, 
+   xcb_set_input_focus(conn, XCB_INPUT_FOCUS_POINTER_ROOT,
                        win, XCB_CURRENT_TIME);
 
    /* flush screen */
@@ -251,14 +251,14 @@ _e_alert_display(void)
    _e_alert_sync();
 }
 
-static void 
-_e_alert_button_move_resize(xcb_window_t btn, int x, int y, int w, int h) 
+static void
+_e_alert_button_move_resize(xcb_window_t btn, int x, int y, int w, int h)
 {
    uint32_t list[4], mask;
 
    if (!btn) return;
 
-   mask = (XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y | 
+   mask = (XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y |
            XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT);
    list[0] = x;
    list[1] = y;
@@ -277,17 +277,17 @@ _e_alert_window_raise(xcb_window_t window)
    xcb_configure_window(conn, window, XCB_CONFIG_WINDOW_STACK_MODE, list);
 }
 
-static void 
-_e_alert_sync(void) 
+static void
+_e_alert_sync(void)
 {
-   free(xcb_get_input_focus_reply(conn, 
+   free(xcb_get_input_focus_reply(conn,
                                   xcb_get_input_focus(conn), NULL));
 }
 
-static void 
-_e_alert_shutdown(void) 
+static void
+_e_alert_shutdown(void)
 {
-   if (!xcb_connection_has_error(conn)) 
+   if (!xcb_connection_has_error(conn))
      {
         xcb_close_font(conn, font);
         xcb_destroy_window(conn, btn1);
@@ -299,23 +299,23 @@ _e_alert_shutdown(void)
      }
 }
 
-static void 
-_e_alert_run(void) 
+static void
+_e_alert_run(void)
 {
    xcb_generic_event_t *event = NULL;
 
    xcb_flush(conn);
-   while ((event = xcb_wait_for_event(conn))) 
+   while ((event = xcb_wait_for_event(conn)))
      {
-        switch (event->response_type & ~0x80) 
+        switch (event->response_type & ~0x80)
           {
            case XCB_BUTTON_PRESS:
              ret = _e_alert_handle_button_press(event);
              break;
-           case XCB_KEY_PRESS: 
+           case XCB_KEY_PRESS:
              ret = _e_alert_handle_key_press(event);
              break;
-           case XCB_EXPOSE: 
+           case XCB_EXPOSE:
                {
                   xcb_expose_event_t *ev;
 
@@ -335,8 +335,8 @@ _e_alert_run(void)
      }
 }
 
-static void 
-_e_alert_draw(void) 
+static void
+_e_alert_draw(void)
 {
    _e_alert_draw_outline();
    _e_alert_draw_title_outline();
@@ -348,8 +348,8 @@ _e_alert_draw(void)
    xcb_flush(conn);
 }
 
-static int 
-_e_alert_handle_key_press(xcb_generic_event_t *event) 
+static int
+_e_alert_handle_key_press(xcb_generic_event_t *event)
 {
    xcb_key_press_event_t *ev;
 
@@ -362,13 +362,13 @@ _e_alert_handle_key_press(xcb_generic_event_t *event)
      return 0;
 }
 
-static int 
-_e_alert_handle_button_press(xcb_generic_event_t *event) 
+static int
+_e_alert_handle_button_press(xcb_generic_event_t *event)
 {
    xcb_button_press_event_t *ev;
 
    ev = (xcb_button_press_event_t *)event;
-   if (ev->child == btn1) 
+   if (ev->child == btn1)
      return 1;
    else if (ev->child == btn2)
      return 2;
@@ -394,8 +394,8 @@ _e_alert_build_string(const char *str)
    return r;
 }
 
-static void 
-_e_alert_draw_outline(void) 
+static void
+_e_alert_draw_outline(void)
 {
    xcb_rectangle_t rect;
 
@@ -407,8 +407,8 @@ _e_alert_draw_outline(void)
    xcb_poly_rectangle(conn, win, gc, 1, &rect);
 }
 
-static void 
-_e_alert_draw_title_outline(void) 
+static void
+_e_alert_draw_title_outline(void)
 {
    xcb_rectangle_t rect;
 
@@ -420,8 +420,8 @@ _e_alert_draw_title_outline(void)
    xcb_poly_rectangle(conn, win, gc, 1, &rect);
 }
 
-static void 
-_e_alert_draw_title(void) 
+static void
+_e_alert_draw_title(void)
 {
    xcb_void_cookie_t cookie;
    int x = 0, y = 0;
@@ -430,7 +430,7 @@ _e_alert_draw_title(void)
    x = (2 + 2 + ((WINDOW_WIDTH - 4 - 4 - fw) / 2));
    y = (2 + 2 + fh);
 
-   cookie = 
+   cookie =
      xcb_image_text_8(conn, strlen(title), win, gc, x, y, title);
 }
 

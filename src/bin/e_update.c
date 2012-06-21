@@ -63,15 +63,15 @@ _new_version(const char *ver)
    E_Manager *man;
    E_Container *con;
    char text[2048];
-   
+
    if (dialog) return;
    man = e_manager_current_get();
    if (!man) return;
    con = e_container_current_get(man);
    if (!con) return;
-   
+
    dialog = e_dialog_new(con, "E", "_update_available");
-   
+
    e_object_del_attach_func_set(E_OBJECT(dialog), _delete_cb);
    e_dialog_button_add(dialog, _("OK"), NULL,
                        _ok_cb, NULL);
@@ -82,7 +82,7 @@ _new_version(const char *ver)
    e_dialog_button_focus_num(dialog, 1);
    e_dialog_title_set(dialog, _("Update Notice"));
    e_dialog_icon_set(dialog, "dialog-warning", 64);
-   
+
    snprintf(text, sizeof(text),
             _("Your enlightenment version is<br>"
               "not the current latest release.<br>"
@@ -154,7 +154,7 @@ _update_machid_get(void)
    FILE *f;
    char buf[PATH_MAX], *c;
    size_t len;
-   
+
    f = fopen("/etc/machine-id", "r");
    if (!f) f = fopen("/var/lib/dbus/machine-id", "r");
    if (!f)
@@ -182,7 +182,7 @@ _update_machid_get(void)
           }
         fclose(f);
      }
-   
+
    // generate ID
    e_user_dir_concat_static(buf, ".machid");
    f = fopen(buf, "w");
@@ -205,7 +205,7 @@ _update_post_generate(char *buf, int size)
 {
    if (!machid) _update_machid_get();
    if (!machid) return;
-   snprintf(buf, size, 
+   snprintf(buf, size,
             "CLIENT %s\n"
             "UPDATE enlightenment %s",
             machid, VERSION);
@@ -233,7 +233,7 @@ _update_timeout_cb(void *data)
 {
    double t = 3600.0; // base minimum betwene checks -> 1hr min
    int later = e_config->update.later;
-   
+
    if (e_config->update.check) _update_check();
    if (update_timer) ecore_timer_del(update_timer);
    if (later > 0)
@@ -292,4 +292,3 @@ e_update_shutdown(void)
      }
    return 1;
 }
-

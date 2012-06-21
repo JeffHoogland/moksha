@@ -762,4 +762,3 @@ _e_wid_del_hook(Evas_Object *obj)
 
    free(wd);
 }
-

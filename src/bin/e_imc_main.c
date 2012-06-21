@@ -13,7 +13,7 @@ main(int argc, char **argv)
    Eet_File *ef = NULL;
    E_Input_Method_Config *write_imc = NULL;
    E_Input_Method_Config *read_imc = NULL;
-   
+
    char *file = NULL;
    char *set_name = NULL;
    char *set_exe = NULL;
@@ -107,7 +107,7 @@ main(int argc, char **argv)
 
    eet_init();
    e_intl_data_init();
-   
+
    if (write_ops != 0 && ecore_file_exists(file))
      {
 	ef = eet_open(file, EET_FILE_MODE_READ_WRITE);
@@ -120,17 +120,17 @@ main(int argc, char **argv)
      {
         ef = eet_open(file, EET_FILE_MODE_READ);
      }
-   
+
    if (!ef)
      {
-	printf("ERROR: cannot open file %s for READ/WRITE (%i:%s)\n", 
+	printf("ERROR: cannot open file %s for READ/WRITE (%i:%s)\n",
                file, errno, strerror(errno));
 	return -1;
      }
 
    /* If File Exists, Try to read imc */
    read_imc = e_intl_input_method_config_read(ef);
-   
+
    /* else create new imc */
    if (write_ops != 0)
      {
@@ -146,23 +146,23 @@ main(int argc, char **argv)
 	     write_imc->e_im_exec = read_imc->e_im_exec;
 	     write_imc->e_im_setup_exec = read_imc->e_im_setup_exec;
 	  }
-	     
-	if (set_name)	
-	  write_imc->e_im_name = set_name;     
-	if (set_gtk_im_module)     
-	  write_imc->gtk_im_module = set_gtk_im_module;     
-	if (set_qt_im_module)     
+
+	if (set_name)
+	  write_imc->e_im_name = set_name;
+	if (set_gtk_im_module)
+	  write_imc->gtk_im_module = set_gtk_im_module;
+	if (set_qt_im_module)
 	  write_imc->qt_im_module = set_qt_im_module;
-	if (set_xmodifiers)     
+	if (set_xmodifiers)
 	  write_imc->xmodifiers = set_xmodifiers;
-	if (set_ecore_imf_module)     
+	if (set_ecore_imf_module)
 	  write_imc->ecore_imf_module = set_ecore_imf_module;
 	if (set_exe)
 	  write_imc->e_im_exec = set_exe;
 	if (set_setup)
 	  write_imc->e_im_setup_exec = set_setup;
 
-	
+
 	/* write imc to file */
 	e_intl_input_method_config_write(ef, write_imc);
      }
@@ -180,9 +180,9 @@ main(int argc, char **argv)
 	printf("xmodifiers:        %s\n", read_imc->xmodifiers);
 	printf("ecore_imf_module:  %s\n", read_imc->ecore_imf_module);
      }
-   
+
    e_intl_input_method_config_free(read_imc);
-   E_FREE(write_imc); 
+   E_FREE(write_imc);
    eet_close(ef);
    e_intl_data_shutdown();
    eet_shutdown();

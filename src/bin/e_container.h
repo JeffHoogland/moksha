@@ -27,21 +27,21 @@ typedef struct _E_Event_Container_Resize   E_Event_Container_Resize;
 struct _E_Container
 {
    E_Object             e_obj_inherit;
-   
+
    Ecore_X_Window       win;
    int                  x, y, w, h;
    char                 visible : 1;
    E_Manager           *manager;
-   
+
    unsigned int         num;
    const char	       *name;
-   
+
    Ecore_Evas          *bg_ecore_evas;
    Evas                *bg_evas;
    Evas_Object         *bg_blank_object;
    Ecore_X_Window       bg_win;
    Ecore_X_Window       event_win;
-   
+
    Eina_List           *shapes;
    Eina_List           *shape_change_cb;
    Eina_List           *zones;
@@ -51,7 +51,7 @@ struct _E_Container
       Ecore_X_Window win;
       Eina_List *clients;
    } layers[10];
-   
+
    Ecore_X_Window       scratch_win;
 };
 
@@ -65,7 +65,7 @@ struct _E_Border_List
 struct _E_Container_Shape
 {
    E_Object       e_obj_inherit;
-   
+
    E_Container   *con;
    int            x, y, w, h;
    unsigned char  visible : 1;

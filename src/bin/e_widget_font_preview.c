@@ -18,7 +18,7 @@ e_widget_font_preview_add(Evas *evas, const char *text)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
-   
+
    obj = e_widget_add(evas);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
@@ -43,12 +43,12 @@ e_widget_font_preview_add(Evas *evas, const char *text)
    e_scrollframe_child_set(wd->o_scrollframe, o);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);
-   
+
    edje_object_part_text_set(wd->o_text, "e.fontpreview.text", text);
 
-   evas_object_resize(obj, 40, 40);  
+   evas_object_resize(obj, 40, 40);
    e_widget_size_min_set(obj, 40, 40);
-   
+
    return obj;
 }
 
@@ -56,15 +56,15 @@ EAPI void
 e_widget_font_preview_font_set(Evas_Object *obj, const char *font, Evas_Font_Size size)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
 
    if (size < 0)
      size = (-size * 10) / 100;
    if (size == 0)
      size = 10;
-  
-   edje_object_text_class_set(wd->o_text, "_e_font_preview", font, size); 
+
+   edje_object_text_class_set(wd->o_text, "_e_font_preview", font, size);
 }
 
 
@@ -72,7 +72,7 @@ static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
    free(wd);
 }
@@ -82,7 +82,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, v
 {
    E_Widget_Data *wd;
    Evas_Coord mw, mh, vw, vh;
-   
+
    wd = data;
    e_scrollframe_child_viewport_size_get(obj, &vw, &vh);
    edje_object_size_min_calc(wd->o_text, &mw, &mh);
@@ -91,7 +91,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, v
    if (vh > mh) mh = vh;
    evas_object_resize(wd->o_text, mw, mh);
 }
-   
+
 static void
 _e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {

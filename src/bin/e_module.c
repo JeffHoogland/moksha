@@ -1,10 +1,10 @@
 #include "e.h"
 
 /* TODO List:
- * 
+ *
  * * add module types/classes
  * * add list of exclusions that a module can't work withApi
- * 
+ *
  */
 
 /* local subsystem functions */
@@ -36,7 +36,7 @@ EINTERN int
 e_module_shutdown(void)
 {
    E_Module *m;
-   
+
 #ifdef HAVE_VALGRIND
    /* do a leak check now before we dlclose() all those plugins, cause
     * that means we won't get a decent backtrace to leaks in there
@@ -72,7 +72,7 @@ e_module_all_load(void)
    E_Config_Module *em;
    char buf[128];
 
-   e_config->modules = 
+   e_config->modules =
      eina_list_sort(e_config->modules, 0, _e_module_sort_priority);
 
    EINA_LIST_FOREACH(e_config->modules, l, em)
@@ -82,7 +82,7 @@ e_module_all_load(void)
 	  {
 	     if (!_e_module_idler)
 	       _e_module_idler = ecore_idler_add(_e_module_cb_idler, NULL);
-	     _e_modules_delayed = 
+	     _e_modules_delayed =
 	       eina_list_append(_e_modules_delayed,
 				eina_stringshare_add(em->name));
 	  }
@@ -130,7 +130,7 @@ e_module_new(const char *name)
      modpath = eina_stringshare_add(name);
    if (!modpath)
      {
-	snprintf(body, sizeof(body), 
+	snprintf(body, sizeof(body),
 		 _("There was an error loading module named: %s<br>"
 		   "No module named %s could be found in the<br>"
 		   "module search directories.<br>"), name, buf);
@@ -141,7 +141,7 @@ e_module_new(const char *name)
    m->handle = dlopen(modpath, (RTLD_NOW | RTLD_GLOBAL));
    if (!m->handle)
      {
-	snprintf(body, sizeof(body), 
+	snprintf(body, sizeof(body),
 		 _("There was an error loading module named: %s<br>"
 		   "The full path to this module is:<br>"
 		   "%s<br>"
@@ -158,7 +158,7 @@ e_module_new(const char *name)
 
    if ((!m->func.init) || (!m->func.shutdown) || (!m->func.save) || (!m->api))
      {
-	snprintf(body, sizeof(body), 
+	snprintf(body, sizeof(body),
 		 _("There was an error loading module named: %s<br>"
 		   "The full path to this module is:<br>"
 		   "%s<br>"
@@ -178,13 +178,13 @@ e_module_new(const char *name)
      }
    if (m->api->version < E_MODULE_API_VERSION)
      {
-	snprintf(body, sizeof(body), 
+	snprintf(body, sizeof(body),
 		 _("Module API Error<br>Error initializing Module: %s<br>"
 		   "It requires a minimum module API version of: %i.<br>"
-		   "The module API advertized by Enlightenment is: %i.<br>"), 
+		   "The module API advertized by Enlightenment is: %i.<br>"),
 		 _(m->api->name), m->api->version, E_MODULE_API_VERSION);
 
-	snprintf(title, sizeof(title), _("Enlightenment %s Module"), 
+	snprintf(title, sizeof(title), _("Enlightenment %s Module"),
 		 _(m->api->name));
 
 	_e_module_dialog_disable_show(title, body, m);
@@ -379,7 +379,7 @@ e_module_dialog_show(E_Module *m, const char *title, const char *body)
    char buf[PATH_MAX];
    const char *icon = NULL;
 
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
 		      "E", "_module_dialog");
    if (!dia) return;
 
@@ -505,7 +505,7 @@ _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
    char buf[PATH_MAX];
 
    printf("MODULE ERR:\n%s\n", body);
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()), 
+   dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
 		      "E", "_module_unload_dialog");
    if (!dia) return;
 
@@ -542,7 +542,7 @@ _e_module_cb_idler(void *data __UNUSED__)
 	E_Module *m;
 
 	name = eina_list_data_get(_e_modules_delayed);
-	_e_modules_delayed = 
+	_e_modules_delayed =
 	  eina_list_remove_list(_e_modules_delayed, _e_modules_delayed);
 	m = NULL;
 	if (name) m = e_module_new(name);
@@ -571,8 +571,8 @@ _e_module_sort_priority(const void *d1, const void *d2)
    return (m2->priority - m1->priority);
 }
 
-static void 
-_e_module_event_update_free(void *data __UNUSED__, void *event) 
+static void
+_e_module_event_update_free(void *data __UNUSED__, void *event)
 {
    E_Event_Module_Update *ev;
 

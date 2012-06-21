@@ -37,10 +37,10 @@
 #  define E_OBJECT_TYPE_CHECK_RETURN(x, tp, ret)  do {if ((E_OBJECT(x)->type) != (tp)) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return ret;} } while (0)
 # define E_OBJECT_IF_NOT_TYPE(x, type)            if (E_OBJECT(x)->type != (type))
 # else
-#  define E_OBJECT_CHECK(x)               
-#  define E_OBJECT_CHECK_RETURN(x, ret)   
-#  define E_OBJECT_TYPE_CHECK(x, type)               
-#  define E_OBJECT_TYPE_CHECK_RETURN(x, type, ret)   
+#  define E_OBJECT_CHECK(x)
+#  define E_OBJECT_CHECK_RETURN(x, ret)
+#  define E_OBJECT_TYPE_CHECK(x, type)
+#  define E_OBJECT_TYPE_CHECK_RETURN(x, type, ret)
 # define E_OBJECT_IF_NOT_TYPE(x, type)
 # endif
 #endif
@@ -72,7 +72,7 @@ struct _E_Object
 struct _E_Object_Delfn
 {
    EINA_INLIST;
-   
+
    void (*func) (void *data, void *obj);
    void  *data;
    Eina_Bool delete_me : 1;

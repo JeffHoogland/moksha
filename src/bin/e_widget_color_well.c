@@ -26,7 +26,7 @@ _e_wid_update(E_Widget_Data *wd)
 {
    if (!wd) return;
 
-   evas_object_color_set(wd->o_rect, 
+   evas_object_color_set(wd->o_rect,
 			 (wd->color->r * wd->color->a) / 255,
 			 (wd->color->g * wd->color->a) / 255,
 			 (wd->color->b * wd->color->a) / 255,
@@ -99,27 +99,27 @@ _e_wid_del_hook(Evas_Object *obj)
    E_FREE(wd);
 }
 
-static void 
-_e_wid_disable_hook(Evas_Object *obj) 
+static void
+_e_wid_disable_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   
+
    wd = e_widget_data_get(obj);
-   if (e_widget_disabled_get(obj)) 
+   if (e_widget_disabled_get(obj))
      {
 	wd->show_color_dialog = 0;
 	edje_object_signal_emit(wd->o_edje, "e,state,disabled", "e");
      }
-   else 
+   else
      {
-	wd->show_color_dialog = 1;	
+	wd->show_color_dialog = 1;
 	edje_object_signal_emit(wd->o_edje, "e,state,enabled", "e");
      }
 }
 
 /**
  * Add a color well widget to an evas.
- * An optional E_Container may be passed in. 
+ * An optional E_Container may be passed in.
  * If not NULL, when clicked a color dialog will pop up.
  */
 Evas_Object *
@@ -132,7 +132,7 @@ e_widget_color_well_add_full(Evas *evas, E_Color *color, Eina_Bool show_color_di
    obj = e_widget_add(evas);
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
-   
+
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
    wd->obj = obj;
@@ -149,9 +149,9 @@ e_widget_color_well_add_full(Evas *evas, E_Color *color, Eina_Bool show_color_di
    e_widget_resize_object_set(obj, o);
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "e/widgets/color_well");
-   edje_object_signal_callback_add(o, "e,action,click", "", 
+   edje_object_signal_callback_add(o, "e,action,click", "",
 				   _e_wid_signal_cb1, obj);
-   evas_object_show(o); 
+   evas_object_show(o);
    wd->o_edje = o;
 
    e_widget_size_min_set(obj, 50, 50);

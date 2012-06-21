@@ -58,7 +58,7 @@ e_widget_radio_add(Evas *evas, const char *label, int valnum, E_Radio_Group *gro
    wd->o_radio = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "e/widgets/radio");
-   edje_object_signal_callback_add(o, "e,action,toggle", "*", 
+   edje_object_signal_callback_add(o, "e,action,toggle", "*",
                                    _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);
@@ -66,7 +66,7 @@ e_widget_radio_add(Evas *evas, const char *label, int valnum, E_Radio_Group *gro
    e_widget_size_min_set(obj, mw, mh);
    if ((wd->group) && (wd->group->valptr))
      {
-	if (*(wd->group->valptr) == valnum) 
+	if (*(wd->group->valptr) == valnum)
           edje_object_signal_emit(o, "e,state,on", "e");
      }
    if (wd->group)
@@ -75,7 +75,7 @@ e_widget_radio_add(Evas *evas, const char *label, int valnum, E_Radio_Group *gro
      }
 
    e_widget_sub_object_add(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_wid_focus_steal, obj);
    e_widget_resize_object_set(obj, o);
 
@@ -105,7 +105,7 @@ e_widget_radio_icon_add(Evas *evas, const char *label, const char *icon, int ico
    wd->o_radio = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
 			   "e/widgets/radio_icon");
-   edje_object_signal_callback_add(o, "e,action,toggle", "*", 
+   edje_object_signal_callback_add(o, "e,action,toggle", "*",
                                    _e_wid_signal_cb1, obj);
    edje_object_part_text_set(o, "e.text.label", label);
    evas_object_show(o);
@@ -131,14 +131,14 @@ e_widget_radio_icon_add(Evas *evas, const char *label, const char *icon, int ico
    e_widget_size_min_set(obj, mw, mh);
    if ((wd->group) && (wd->group->valptr))
      {
-	if (*(wd->group->valptr) == valnum) 
+	if (*(wd->group->valptr) == valnum)
           edje_object_signal_emit(o, "e,state,on", "e");
      }
    if (wd->group)
      wd->group->radios = eina_list_append(wd->group->radios, obj);
 
    e_widget_sub_object_add(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_wid_focus_steal, obj);
    e_widget_resize_object_set(obj, o);
 
@@ -244,7 +244,7 @@ _e_wid_do(Evas_Object *obj)
    evas_object_smart_callback_call(obj, "changed", NULL);
 }
 
-static void 
+static void
 _e_wid_activate_hook(Evas_Object *obj)
 {
    _e_wid_do(obj);
