@@ -6730,7 +6730,7 @@ _e_border_eval0(E_Border *bd)
                                     &is_urgent))
           {
              bd->client.icccm.accepts_focus = accepts_focus;
-             if (bd->client.icccm.urgent != is_urgent)
+             if ((bd->client.icccm.urgent != is_urgent) && (!bd->focused))
                change_urgent = 1;
              bd->client.icccm.urgent = is_urgent;
 
@@ -7539,8 +7539,6 @@ _e_border_eval0(E_Border *bd)
                     edje_object_signal_emit(bd->bg_object, "e,state,sticky", "e");
                   if (bd->hung)
                     edje_object_signal_emit(bd->bg_object, "e,state,hung", "e");
-                  if (bd->client.icccm.urgent)
-                    edje_object_signal_emit(bd->bg_object, "e,state,urgent", "e");
                   // FIXME: in eval -do differently
                   //	     edje_object_message_signal_process(bd->bg_object);
                   //	     e_border_frame_recalc(bd);
