@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Marc Furtià  i Puig<br>\\\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-06-20 23:39+0900\n"
+"POT-Creation-Date: 2012-06-21 19:28+0900\n"
 "PO-Revision-Date: 2010-01-29 18:45+0100\n"
 "Last-Translator: marc furtià puig <marc.furtia@gmail.com>\n"
 "Language-Team: \n"
@@ -16,7 +16,7 @@ msgid "About Enlightenment"
 msgstr "Sobre Enlightenment"
 
 #: src/bin/e_about.c:17 src/bin/e_actions.c:2778 src/bin/e_config_dialog.c:272
-#: src/bin/e_fm.c:977 src/bin/e_int_border_menu.c:135
+#: src/bin/e_fm.c:977 src/bin/e_int_border_menu.c:148
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
 #: src/modules/conf/e_conf.c:163
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:844
@@ -159,12 +159,12 @@ msgstr ""
 msgid "Window : Actions"
 msgstr "Finestra : Accions"
 
-#: src/bin/e_actions.c:2738 src/bin/e_fm.c:6008 src/bin/e_gadcon.c:1417
-#: src/bin/e_int_border_menu.c:654
+#: src/bin/e_actions.c:2738 src/bin/e_fm.c:6008 src/bin/e_gadcon.c:1420
+#: src/bin/e_int_border_menu.c:544
 msgid "Move"
 msgstr "Mou "
 
-#: src/bin/e_actions.c:2749 src/bin/e_int_border_menu.c:668
+#: src/bin/e_actions.c:2749 src/bin/e_int_border_menu.c:558
 msgid "Resize"
 msgstr "Re-dimensiona"
 
@@ -178,16 +178,16 @@ msgstr "Menú"
 msgid "Window Menu"
 msgstr "Menú de Finestra"
 
-#: src/bin/e_actions.c:2768 src/bin/e_int_border_menu.c:983
+#: src/bin/e_actions.c:2768 src/bin/e_int_border_menu.c:933
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Augment"
 
-#: src/bin/e_actions.c:2773 src/bin/e_int_border_menu.c:991
+#: src/bin/e_actions.c:2773 src/bin/e_int_border_menu.c:941
 msgid "Lower"
 msgstr "Més petit"
 
-#: src/bin/e_actions.c:2783 src/bin/e_int_border_menu.c:562
+#: src/bin/e_actions.c:2783 src/bin/e_int_border_menu.c:624
 msgid "Kill"
 msgstr "Mata"
 
@@ -213,8 +213,8 @@ msgstr "Mode icònic "
 msgid "Fullscreen Mode Toggle"
 msgstr "Mostra a Pantalla Completa"
 
-#: src/bin/e_actions.c:2809 src/bin/e_int_border_menu.c:304
-#: src/bin/e_int_border_menu.c:629
+#: src/bin/e_actions.c:2809 src/bin/e_int_border_menu.c:317
+#: src/bin/e_int_border_menu.c:519
 msgid "Maximize"
 msgstr "Maximitza"
 
@@ -637,7 +637,7 @@ msgid "Command"
 msgstr "Comanda"
 
 #: src/bin/e_actions.c:3106 src/bin/e_eap_editor.c:692
-#: src/bin/e_int_border_menu.c:73
+#: src/bin/e_int_border_menu.c:72
 #, c-format
 msgid "Application"
 msgstr "Aplicació"
@@ -1685,32 +1685,31 @@ msgstr "Informació d'Enllaç "
 msgid "Select an Image"
 msgstr "Seleccioneu una Imatge"
 
-#: src/bin/e_gadcon.c:1385 src/bin/e_int_border_menu.c:95
-#: src/bin/e_int_border_menu.c:595
+#: src/bin/e_gadcon.c:1388 src/bin/e_int_border_menu.c:94
 #, fuzzy
 msgid "Move to"
 msgstr "Mou Text"
 
-#: src/bin/e_gadcon.c:1430
+#: src/bin/e_gadcon.c:1433
 msgid "Automatically scroll contents"
 msgstr "Mostra automàticament els continguts"
 
-#: src/bin/e_gadcon.c:1441 src/modules/gadman/e_mod_gadman.c:744
+#: src/bin/e_gadcon.c:1444 src/modules/gadman/e_mod_gadman.c:744
 msgid "Plain"
 msgstr "Text Pla"
 
-#: src/bin/e_gadcon.c:1450 src/modules/gadman/e_mod_gadman.c:752
+#: src/bin/e_gadcon.c:1453 src/modules/gadman/e_mod_gadman.c:752
 msgid "Inset"
 msgstr "Sagnat"
 
-#: src/bin/e_gadcon.c:1459 src/bin/e_int_config_modules.c:54
+#: src/bin/e_gadcon.c:1462 src/bin/e_int_config_modules.c:54
 #: src/modules/conf_theme/e_mod_main.c:30
 #: src/modules/dropshadow/e_mod_main.c:89
 #, fuzzy
 msgid "Look"
 msgstr "Bloquejos "
 
-#: src/bin/e_gadcon.c:1470 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1473 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:239
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
@@ -1719,7 +1718,7 @@ msgstr "Bloquejos "
 msgid "Remove"
 msgstr "Borra"
 
-#: src/bin/e_gadcon.c:2017
+#: src/bin/e_gadcon.c:2020
 #, fuzzy
 msgid "Stop moving"
 msgstr "deixi de moure"
@@ -1782,7 +1781,7 @@ msgid "Size"
 msgstr "Mida"
 
 #: src/bin/e_int_border_locks.c:310 src/bin/e_int_border_locks.c:329
-#: src/bin/e_int_border_menu.c:507 src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_menu.c:572 src/bin/e_int_border_prop.c:469
 #: src/bin/e_int_border_remember.c:711 src/bin/e_int_shelf_config.c:132
 msgid "Stacking"
 msgstr "Apilant"
@@ -1834,151 +1833,144 @@ msgstr "Sortir del meu login amb aquesta finestra oberta"
 msgid "Remember these Locks"
 msgstr "Recorda aquesta aparença"
 
-#: src/bin/e_int_border_menu.c:82
+#: src/bin/e_int_border_menu.c:81
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 #, fuzzy
 msgid "Window"
 msgstr "Finestres"
 
-#: src/bin/e_int_border_menu.c:104 src/bin/e_int_border_menu.c:943
+#: src/bin/e_int_border_menu.c:103 src/bin/e_int_border_menu.c:893
 #, fuzzy
 msgid "Always on Top"
 msgstr "Sempre en primer pla"
 
-#: src/bin/e_int_border_menu.c:119 src/bin/e_int_border_menu.c:606
-#: src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:118 src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "﻿Enganxós"
 
-#: src/bin/e_int_border_menu.c:291 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:132
+#, fuzzy
+msgid "Shade"
+msgstr "Ombrejat"
+
+#: src/bin/e_int_border_menu.c:304 src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 msgid "Fullscreen"
 msgstr "Pantalla Completa"
 
-#: src/bin/e_int_border_menu.c:315
+#: src/bin/e_int_border_menu.c:328
 msgid "Maximize vertically"
 msgstr "Maximitza verticalment"
 
-#: src/bin/e_int_border_menu.c:326
+#: src/bin/e_int_border_menu.c:339
 msgid "Maximize horizontally"
 msgstr "Maximitza horitzontalment"
 
-#: src/bin/e_int_border_menu.c:337
+#: src/bin/e_int_border_menu.c:350
 msgid "Unmaximize"
 msgstr "Des-maximitza "
 
-#: src/bin/e_int_border_menu.c:448
+#: src/bin/e_int_border_menu.c:461
 msgid "Edit Icon"
 msgstr "Edita Icona"
 
-#: src/bin/e_int_border_menu.c:456
+#: src/bin/e_int_border_menu.c:469
 msgid "Create Icon"
 msgstr "Crea Icona"
 
-#: src/bin/e_int_border_menu.c:464
+#: src/bin/e_int_border_menu.c:477
 #, fuzzy
 msgid "Add to Favorites Menu"
 msgstr "Afegir a Favorits Menú"
 
-#: src/bin/e_int_border_menu.c:469
+#: src/bin/e_int_border_menu.c:482
 #, fuzzy
 msgid "Add to IBar"
 msgstr "Afegir a Ibar"
 
-#: src/bin/e_int_border_menu.c:477
+#: src/bin/e_int_border_menu.c:490
 #, fuzzy
 msgid "Create Keyboard Shortcut"
 msgstr "Crear un accés directe del teclat"
 
-#: src/bin/e_int_border_menu.c:497
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
-#, fuzzy
-msgid "Placement"
-msgstr "Col·locació"
+#: src/bin/e_int_border_menu.c:531
+msgid "Iconify"
+msgstr "Iconifica"
 
-#: src/bin/e_int_border_menu.c:519
+#: src/bin/e_int_border_menu.c:581
 msgid "Skip"
 msgstr "Salta"
 
-#: src/bin/e_int_border_menu.c:529 src/modules/conf_theme/e_mod_main.c:27
+#: src/bin/e_int_border_menu.c:591 src/modules/conf_theme/e_mod_main.c:27
 msgid "Border"
 msgstr "Vora"
 
-#: src/bin/e_int_border_menu.c:541 src/bin/e_int_border_remember.c:621
+#: src/bin/e_int_border_menu.c:603 src/bin/e_int_border_remember.c:621
 #: src/bin/e_int_border_remember.c:714
 msgid "Locks"
 msgstr "Bloquejos "
 
-#: src/bin/e_int_border_menu.c:549
+#: src/bin/e_int_border_menu.c:611
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Recorda"
 
-#: src/bin/e_int_border_menu.c:571
+#: src/bin/e_int_border_menu.c:633
 #, fuzzy
 msgid "ICCCM/NetWM"
 msgstr "NetWM"
 
-#: src/bin/e_int_border_menu.c:641
-msgid "Iconify"
-msgstr "Iconifica"
-
-#: src/bin/e_int_border_menu.c:680
-#, fuzzy
-msgid "Shade"
-msgstr "Ombrejat"
-
-#: src/bin/e_int_border_menu.c:864
+#: src/bin/e_int_border_menu.c:814
 #, fuzzy, c-format
 msgid "Screen %d"
 msgstr "Pantalla"
 
-#: src/bin/e_int_border_menu.c:954
+#: src/bin/e_int_border_menu.c:904
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
 msgid "Normal"
 msgstr "Normal"
 
-#: src/bin/e_int_border_menu.c:965
+#: src/bin/e_int_border_menu.c:915
 msgid "Always Below"
 msgstr "Sempre Darrera"
 
-#: src/bin/e_int_border_menu.c:1009
+#: src/bin/e_int_border_menu.c:959
 #, fuzzy
 msgid "Pin to Desktop"
 msgstr "Pin en l'Escriptori"
 
-#: src/bin/e_int_border_menu.c:1020
+#: src/bin/e_int_border_menu.c:970
 msgid "Unpin from Desktop"
 msgstr "Desbloqueja de l'Àrea de Treball "
 
-#: src/bin/e_int_border_menu.c:1110
+#: src/bin/e_int_border_menu.c:1059
 msgid "Select Border Style"
 msgstr "Selecciona Estil de Vora"
 
-#: src/bin/e_int_border_menu.c:1122
+#: src/bin/e_int_border_menu.c:1071
 msgid "Use E17 Default Icon Preference"
 msgstr "Usa l'Icona per Defecte de l'E17"
 
-#: src/bin/e_int_border_menu.c:1130
+#: src/bin/e_int_border_menu.c:1079
 msgid "Use Application Provided Icon "
 msgstr "Usa l'Icona de l'Aplicació "
 
-#: src/bin/e_int_border_menu.c:1138
+#: src/bin/e_int_border_menu.c:1087
 msgid "Use User Defined Icon"
 msgstr "Utilitza Icones Definits per L'usuari"
 
-#: src/bin/e_int_border_menu.c:1147 src/bin/e_int_border_remember.c:747
+#: src/bin/e_int_border_menu.c:1096 src/bin/e_int_border_remember.c:747
 #, fuzzy
 msgid "Offer Resistance"
 msgstr "Resistència"
 
-#: src/bin/e_int_border_menu.c:1207 src/modules/winlist/e_mod_main.c:26
+#: src/bin/e_int_border_menu.c:1156 src/modules/winlist/e_mod_main.c:26
 msgid "Window List"
 msgstr "Llista de Finestres"
 
-#: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
+#: src/bin/e_int_border_menu.c:1166 src/modules/pager/e_mod_main.c:257
 #: src/modules/pager/e_mod_main.c:2795 src/modules/pager/e_mod_main.c:2802
 #: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2811
 #: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2815
@@ -1989,7 +1981,7 @@ msgstr "Llista de Finestres"
 msgid "Pager"
 msgstr "Paginador"
 
-#: src/bin/e_int_border_menu.c:1227
+#: src/bin/e_int_border_menu.c:1176
 #, fuzzy
 msgid "Taskbar"
 msgstr "Salta Taskbar"
@@ -2398,7 +2390,7 @@ msgstr "Aplicacions"
 #: src/bin/e_int_menus.c:151 src/bin/e_int_menus.c:1126
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
-#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3812
+#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3822
 msgid "Windows"
 msgstr "Finestres"
 
@@ -6398,6 +6390,11 @@ msgstr "Usa l'Icona de l'Aplicació "
 msgid "Border Icon"
 msgstr "Vora"
 
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
+#, fuzzy
+msgid "Placement"
+msgstr "Col·locació"
+
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
 #, fuzzy
 msgid "Smart Placement"
@@ -8139,8 +8136,8 @@ msgstr "Popup alçada de localitzador"
 
 #: src/modules/pager/e_mod_config.c:232
 #, fuzzy
-msgid "Popup speed"
-msgstr "Velocitat Desplegable"
+msgid "Popup duration"
+msgstr "Durada de l'ocultació "
 
 #: src/modules/pager/e_mod_config.c:236 src/modules/pager/e_mod_config.c:273
 #, c-format
@@ -8169,7 +8166,7 @@ msgstr "Mostra finestra emergent centrada en les finestres"
 
 #: src/modules/pager/e_mod_config.c:269
 #, fuzzy
-msgid "Urgent popup speed"
+msgid "Urgent popup duration"
 msgstr "Velocitat emergent urgent"
 
 #: src/modules/pager/e_mod_config.c:280
@@ -8820,9 +8817,9 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "Configuració de l'iBar"
 
-#: src/modules/tiling/e_mod_tiling.c:3785
-#: src/modules/tiling/e_mod_tiling.c:3814
-#: src/modules/tiling/e_mod_tiling.c:3903
+#: src/modules/tiling/e_mod_tiling.c:3795
+#: src/modules/tiling/e_mod_tiling.c:3824
+#: src/modules/tiling/e_mod_tiling.c:3913
 #, fuzzy
 msgid "Tiling"
 msgstr "Text Pla"
@@ -8871,6 +8868,10 @@ msgstr "Mòduls"
 #, fuzzy
 msgid "Variant"
 msgstr "Bulgar"
+
+#, fuzzy
+#~ msgid "Popup speed"
+#~ msgstr "Velocitat Desplegable"
 
 #, fuzzy
 #~ msgid "Keys"

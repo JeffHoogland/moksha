@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-06-20 23:39+0900\n"
+"POT-Creation-Date: 2012-06-21 19:28+0900\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -23,7 +23,7 @@ msgid "About Enlightenment"
 msgstr "Despre Enlightenment"
 
 #: src/bin/e_about.c:17 src/bin/e_actions.c:2778 src/bin/e_config_dialog.c:272
-#: src/bin/e_fm.c:977 src/bin/e_int_border_menu.c:135
+#: src/bin/e_fm.c:977 src/bin/e_int_border_menu.c:148
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
 #: src/modules/conf/e_conf.c:163
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:844
@@ -150,12 +150,12 @@ msgstr ""
 msgid "Window : Actions"
 msgstr "Fereastră: Acțiuni"
 
-#: src/bin/e_actions.c:2738 src/bin/e_fm.c:6008 src/bin/e_gadcon.c:1417
-#: src/bin/e_int_border_menu.c:654
+#: src/bin/e_actions.c:2738 src/bin/e_fm.c:6008 src/bin/e_gadcon.c:1420
+#: src/bin/e_int_border_menu.c:544
 msgid "Move"
 msgstr "Mută"
 
-#: src/bin/e_actions.c:2749 src/bin/e_int_border_menu.c:668
+#: src/bin/e_actions.c:2749 src/bin/e_int_border_menu.c:558
 msgid "Resize"
 msgstr "Redimensionează"
 
@@ -169,16 +169,16 @@ msgstr "Meniu"
 msgid "Window Menu"
 msgstr "Meniu fereastră"
 
-#: src/bin/e_actions.c:2768 src/bin/e_int_border_menu.c:983
+#: src/bin/e_actions.c:2768 src/bin/e_int_border_menu.c:933
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Ridică"
 
-#: src/bin/e_actions.c:2773 src/bin/e_int_border_menu.c:991
+#: src/bin/e_actions.c:2773 src/bin/e_int_border_menu.c:941
 msgid "Lower"
 msgstr "Coboară"
 
-#: src/bin/e_actions.c:2783 src/bin/e_int_border_menu.c:562
+#: src/bin/e_actions.c:2783 src/bin/e_int_border_menu.c:624
 msgid "Kill"
 msgstr "Termină"
 
@@ -204,8 +204,8 @@ msgstr "Comutare mod iconic"
 msgid "Fullscreen Mode Toggle"
 msgstr "Comutare mod pe tot ecranul"
 
-#: src/bin/e_actions.c:2809 src/bin/e_int_border_menu.c:304
-#: src/bin/e_int_border_menu.c:629
+#: src/bin/e_actions.c:2809 src/bin/e_int_border_menu.c:317
+#: src/bin/e_int_border_menu.c:519
 msgid "Maximize"
 msgstr "Maximizează"
 
@@ -651,7 +651,7 @@ msgid "Command"
 msgstr "Comandă"
 
 #: src/bin/e_actions.c:3106 src/bin/e_eap_editor.c:692
-#: src/bin/e_int_border_menu.c:73
+#: src/bin/e_int_border_menu.c:72
 #, c-format
 msgid "Application"
 msgstr "Aplicație"
@@ -1695,34 +1695,33 @@ msgstr "link-ul de informaţii"
 msgid "Select an Image"
 msgstr "Selectați o imagine"
 
-#: src/bin/e_gadcon.c:1385 src/bin/e_int_border_menu.c:95
-#: src/bin/e_int_border_menu.c:595
+#: src/bin/e_gadcon.c:1388 src/bin/e_int_border_menu.c:94
 #, fuzzy
 msgid "Move to"
 msgstr "Mută"
 
-#: src/bin/e_gadcon.c:1430
+#: src/bin/e_gadcon.c:1433
 #, fuzzy
 msgid "Automatically scroll contents"
 msgstr "Conţinutul în mod automat de defilare"
 
-#: src/bin/e_gadcon.c:1441 src/modules/gadman/e_mod_gadman.c:744
+#: src/bin/e_gadcon.c:1444 src/modules/gadman/e_mod_gadman.c:744
 msgid "Plain"
 msgstr "Simplu"
 
-#: src/bin/e_gadcon.c:1450 src/modules/gadman/e_mod_gadman.c:752
+#: src/bin/e_gadcon.c:1453 src/modules/gadman/e_mod_gadman.c:752
 #, fuzzy
 msgid "Inset"
 msgstr "medalion"
 
-#: src/bin/e_gadcon.c:1459 src/bin/e_int_config_modules.c:54
+#: src/bin/e_gadcon.c:1462 src/bin/e_int_config_modules.c:54
 #: src/modules/conf_theme/e_mod_main.c:30
 #: src/modules/dropshadow/e_mod_main.c:89
 #, fuzzy
 msgid "Look"
 msgstr "uite"
 
-#: src/bin/e_gadcon.c:1470 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1473 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:239
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
@@ -1732,7 +1731,7 @@ msgstr "uite"
 msgid "Remove"
 msgstr "scoate"
 
-#: src/bin/e_gadcon.c:2017
+#: src/bin/e_gadcon.c:2020
 #, fuzzy
 msgid "Stop moving"
 msgstr "se opresc"
@@ -1801,7 +1800,7 @@ msgid "Size"
 msgstr "Dimensiune"
 
 #: src/bin/e_int_border_locks.c:310 src/bin/e_int_border_locks.c:329
-#: src/bin/e_int_border_menu.c:507 src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_menu.c:572 src/bin/e_int_border_prop.c:469
 #: src/bin/e_int_border_remember.c:711 src/bin/e_int_shelf_config.c:132
 msgid "Stacking"
 msgstr "Stivuire"
@@ -1864,170 +1863,163 @@ msgstr "Ieşirea login-ul meu cu această fereastră deschide"
 msgid "Remember these Locks"
 msgstr "Amintiţi-vă aceste Broaste"
 
-#: src/bin/e_int_border_menu.c:82
+#: src/bin/e_int_border_menu.c:81
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 #, fuzzy
 msgid "Window"
 msgstr "Meniu fereastră"
 
-#: src/bin/e_int_border_menu.c:104 src/bin/e_int_border_menu.c:943
+#: src/bin/e_int_border_menu.c:103 src/bin/e_int_border_menu.c:893
 #, fuzzy
 msgid "Always on Top"
 msgstr "Întotdeauna pe Top"
 
-#: src/bin/e_int_border_menu.c:119 src/bin/e_int_border_menu.c:606
-#: src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:118 src/bin/e_int_border_prop.c:472
 #, fuzzy
 msgid "Sticky"
 msgstr "lipicios"
 
-#: src/bin/e_int_border_menu.c:291 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:132
+#, fuzzy
+msgid "Shade"
+msgstr "Stivuire"
+
+#: src/bin/e_int_border_menu.c:304 src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 #, fuzzy
 msgid "Fullscreen"
 msgstr "pe tot ecranul"
 
-#: src/bin/e_int_border_menu.c:315
+#: src/bin/e_int_border_menu.c:328
 #, fuzzy
 msgid "Maximize vertically"
 msgstr "Maximizaţi vertical"
 
-#: src/bin/e_int_border_menu.c:326
+#: src/bin/e_int_border_menu.c:339
 #, fuzzy
 msgid "Maximize horizontally"
 msgstr "Maximizaţi orizontal"
 
-#: src/bin/e_int_border_menu.c:337
+#: src/bin/e_int_border_menu.c:350
 #, fuzzy
 msgid "Unmaximize"
 msgstr "Unmaximize"
 
-#: src/bin/e_int_border_menu.c:448
+#: src/bin/e_int_border_menu.c:461
 #, fuzzy
 msgid "Edit Icon"
 msgstr "Editare Icon"
 
-#: src/bin/e_int_border_menu.c:456
+#: src/bin/e_int_border_menu.c:469
 #, fuzzy
 msgid "Create Icon"
 msgstr "Crearea Icon"
 
-#: src/bin/e_int_border_menu.c:464
+#: src/bin/e_int_border_menu.c:477
 #, fuzzy
 msgid "Add to Favorites Menu"
 msgstr "Adauga la Favorite Meniu"
 
-#: src/bin/e_int_border_menu.c:469
+#: src/bin/e_int_border_menu.c:482
 #, fuzzy
 msgid "Add to IBar"
 msgstr "Adauga la Ibar"
 
-#: src/bin/e_int_border_menu.c:477
+#: src/bin/e_int_border_menu.c:490
 #, fuzzy
 msgid "Create Keyboard Shortcut"
 msgstr "Crearea rapidă de la tastatură"
 
-#: src/bin/e_int_border_menu.c:497
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
+#: src/bin/e_int_border_menu.c:531
 #, fuzzy
-msgid "Placement"
-msgstr "de Plasament"
+msgid "Iconify"
+msgstr "Iconify"
 
-#: src/bin/e_int_border_menu.c:519
+#: src/bin/e_int_border_menu.c:581
 #, fuzzy
 msgid "Skip"
 msgstr "sări"
 
-#: src/bin/e_int_border_menu.c:529 src/modules/conf_theme/e_mod_main.c:27
+#: src/bin/e_int_border_menu.c:591 src/modules/conf_theme/e_mod_main.c:27
 #, fuzzy
 msgid "Border"
 msgstr "frontieră"
 
-#: src/bin/e_int_border_menu.c:541 src/bin/e_int_border_remember.c:621
+#: src/bin/e_int_border_menu.c:603 src/bin/e_int_border_remember.c:621
 #: src/bin/e_int_border_remember.c:714
 #, fuzzy
 msgid "Locks"
 msgstr "Broaste"
 
-#: src/bin/e_int_border_menu.c:549
+#: src/bin/e_int_border_menu.c:611
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 #, fuzzy
 msgid "Remember"
 msgstr "amintiţi-vă"
 
-#: src/bin/e_int_border_menu.c:571
+#: src/bin/e_int_border_menu.c:633
 msgid "ICCCM/NetWM"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:641
-#, fuzzy
-msgid "Iconify"
-msgstr "Iconify"
-
-#: src/bin/e_int_border_menu.c:680
-#, fuzzy
-msgid "Shade"
-msgstr "Stivuire"
-
-#: src/bin/e_int_border_menu.c:864
+#: src/bin/e_int_border_menu.c:814
 #, fuzzy, c-format
 msgid "Screen %d"
 msgstr "Ecran"
 
-#: src/bin/e_int_border_menu.c:954
+#: src/bin/e_int_border_menu.c:904
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
 #, fuzzy
 msgid "Normal"
 msgstr "normal"
 
-#: src/bin/e_int_border_menu.c:965
+#: src/bin/e_int_border_menu.c:915
 #, fuzzy
 msgid "Always Below"
 msgstr "întotdeauna sub"
 
-#: src/bin/e_int_border_menu.c:1009
+#: src/bin/e_int_border_menu.c:959
 #, fuzzy
 msgid "Pin to Desktop"
 msgstr "Pin pentru Desktop"
 
-#: src/bin/e_int_border_menu.c:1020
+#: src/bin/e_int_border_menu.c:970
 #, fuzzy
 msgid "Unpin from Desktop"
 msgstr "Anulare marcator de la Desktop"
 
-#: src/bin/e_int_border_menu.c:1110
+#: src/bin/e_int_border_menu.c:1059
 #, fuzzy
 msgid "Select Border Style"
 msgstr "Selectaţi stilul de frontieră"
 
-#: src/bin/e_int_border_menu.c:1122
+#: src/bin/e_int_border_menu.c:1071
 #, fuzzy
 msgid "Use E17 Default Icon Preference"
 msgstr "Utilizaţi Preferinţe E17 pictograma implicită"
 
-#: src/bin/e_int_border_menu.c:1130
+#: src/bin/e_int_border_menu.c:1079
 #, fuzzy
 msgid "Use Application Provided Icon "
 msgstr "Cererea de utilizare condiţia Icon "
 
-#: src/bin/e_int_border_menu.c:1138
+#: src/bin/e_int_border_menu.c:1087
 #, fuzzy
 msgid "Use User Defined Icon"
 msgstr "Utilizaţi definite de utilizator Icon"
 
-#: src/bin/e_int_border_menu.c:1147 src/bin/e_int_border_remember.c:747
+#: src/bin/e_int_border_menu.c:1096 src/bin/e_int_border_remember.c:747
 #, fuzzy
 msgid "Offer Resistance"
 msgstr "oferă o rezistenţă"
 
-#: src/bin/e_int_border_menu.c:1207 src/modules/winlist/e_mod_main.c:26
+#: src/bin/e_int_border_menu.c:1156 src/modules/winlist/e_mod_main.c:26
 #, fuzzy
 msgid "Window List"
 msgstr "Lista de fereastră"
 
-#: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
+#: src/bin/e_int_border_menu.c:1166 src/modules/pager/e_mod_main.c:257
 #: src/modules/pager/e_mod_main.c:2795 src/modules/pager/e_mod_main.c:2802
 #: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2811
 #: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2815
@@ -2039,7 +2031,7 @@ msgstr "Lista de fereastră"
 msgid "Pager"
 msgstr "pager"
 
-#: src/bin/e_int_border_menu.c:1227
+#: src/bin/e_int_border_menu.c:1176
 #, fuzzy
 msgid "Taskbar"
 msgstr "Bara de activităţi"
@@ -2492,7 +2484,7 @@ msgstr "aplicaţii"
 #: src/bin/e_int_menus.c:151 src/bin/e_int_menus.c:1126
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
-#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3812
+#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3822
 #, fuzzy
 msgid "Windows"
 msgstr "ferestre"
@@ -6622,6 +6614,11 @@ msgstr "Aplicație"
 msgid "Border Icon"
 msgstr "de frontieră Icon"
 
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
+#, fuzzy
+msgid "Placement"
+msgstr "de Plasament"
+
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
 #, fuzzy
 msgid "Smart Placement"
@@ -8426,8 +8423,8 @@ msgstr "Popup pager înălţime"
 
 #: src/modules/pager/e_mod_config.c:232
 #, fuzzy
-msgid "Popup speed"
-msgstr "pop-up de viteză"
+msgid "Popup duration"
+msgstr "Ascunde durata"
 
 #: src/modules/pager/e_mod_config.c:236 src/modules/pager/e_mod_config.c:273
 #, c-format
@@ -8456,7 +8453,7 @@ msgstr "Arată popup concentrat pentru ferestre"
 
 #: src/modules/pager/e_mod_config.c:269
 #, fuzzy
-msgid "Urgent popup speed"
+msgid "Urgent popup duration"
 msgstr "Urgent pop-up de viteză"
 
 #: src/modules/pager/e_mod_config.c:280
@@ -9111,9 +9108,9 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "totul de configurare"
 
-#: src/modules/tiling/e_mod_tiling.c:3785
-#: src/modules/tiling/e_mod_tiling.c:3814
-#: src/modules/tiling/e_mod_tiling.c:3903
+#: src/modules/tiling/e_mod_tiling.c:3795
+#: src/modules/tiling/e_mod_tiling.c:3824
+#: src/modules/tiling/e_mod_tiling.c:3913
 #, fuzzy
 msgid "Tiling"
 msgstr "Interogare"
@@ -9161,6 +9158,10 @@ msgstr "Mută"
 #: src/modules/xkbswitch/e_mod_config.c:508
 msgid "Variant"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Popup speed"
+#~ msgstr "pop-up de viteză"
 
 #, fuzzy
 #~ msgid "Keys"

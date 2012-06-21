@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-06-20 23:39+0900\n"
+"POT-Creation-Date: 2012-06-21 19:28+0900\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: milboy <Unknown>\n"
 "Language-Team: Slovakian\n"
@@ -21,7 +21,7 @@ msgid "About Enlightenment"
 msgstr "O Enlightenment"
 
 #: src/bin/e_about.c:17 src/bin/e_actions.c:2778 src/bin/e_config_dialog.c:272
-#: src/bin/e_fm.c:977 src/bin/e_int_border_menu.c:135
+#: src/bin/e_fm.c:977 src/bin/e_int_border_menu.c:148
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
 #: src/modules/conf/e_conf.c:163
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:844
@@ -155,12 +155,12 @@ msgstr ""
 msgid "Window : Actions"
 msgstr "Okno : Operácie"
 
-#: src/bin/e_actions.c:2738 src/bin/e_fm.c:6008 src/bin/e_gadcon.c:1417
-#: src/bin/e_int_border_menu.c:654
+#: src/bin/e_actions.c:2738 src/bin/e_fm.c:6008 src/bin/e_gadcon.c:1420
+#: src/bin/e_int_border_menu.c:544
 msgid "Move"
 msgstr "Presunúť"
 
-#: src/bin/e_actions.c:2749 src/bin/e_int_border_menu.c:668
+#: src/bin/e_actions.c:2749 src/bin/e_int_border_menu.c:558
 msgid "Resize"
 msgstr "Zmeniť veľkosť"
 
@@ -174,16 +174,16 @@ msgstr "Menu"
 msgid "Window Menu"
 msgstr "Menu Okna"
 
-#: src/bin/e_actions.c:2768 src/bin/e_int_border_menu.c:983
+#: src/bin/e_actions.c:2768 src/bin/e_int_border_menu.c:933
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Vyššie"
 
-#: src/bin/e_actions.c:2773 src/bin/e_int_border_menu.c:991
+#: src/bin/e_actions.c:2773 src/bin/e_int_border_menu.c:941
 msgid "Lower"
 msgstr "Nižšie"
 
-#: src/bin/e_actions.c:2783 src/bin/e_int_border_menu.c:562
+#: src/bin/e_actions.c:2783 src/bin/e_int_border_menu.c:624
 msgid "Kill"
 msgstr "Násilne ukončiť"
 
@@ -209,8 +209,8 @@ msgstr "Zmeniť Ikonifikáciu"
 msgid "Fullscreen Mode Toggle"
 msgstr "Zmeniť Na celú obrazovku"
 
-#: src/bin/e_actions.c:2809 src/bin/e_int_border_menu.c:304
-#: src/bin/e_int_border_menu.c:629
+#: src/bin/e_actions.c:2809 src/bin/e_int_border_menu.c:317
+#: src/bin/e_int_border_menu.c:519
 msgid "Maximize"
 msgstr "Maximalizovať"
 
@@ -633,7 +633,7 @@ msgid "Command"
 msgstr "Príkaz"
 
 #: src/bin/e_actions.c:3106 src/bin/e_eap_editor.c:692
-#: src/bin/e_int_border_menu.c:73
+#: src/bin/e_int_border_menu.c:72
 #, c-format
 msgid "Application"
 msgstr "Aplikácia"
@@ -1653,31 +1653,30 @@ msgstr "Linka informácie"
 msgid "Select an Image"
 msgstr "Vybrať obrázok"
 
-#: src/bin/e_gadcon.c:1385 src/bin/e_int_border_menu.c:95
-#: src/bin/e_int_border_menu.c:595
+#: src/bin/e_gadcon.c:1388 src/bin/e_int_border_menu.c:94
 #, fuzzy
 msgid "Move to"
 msgstr "Pohnúť Text"
 
-#: src/bin/e_gadcon.c:1430
+#: src/bin/e_gadcon.c:1433
 msgid "Automatically scroll contents"
 msgstr "Automaticky rolovať obsah"
 
-#: src/bin/e_gadcon.c:1441 src/modules/gadman/e_mod_gadman.c:744
+#: src/bin/e_gadcon.c:1444 src/modules/gadman/e_mod_gadman.c:744
 msgid "Plain"
 msgstr "Priame"
 
-#: src/bin/e_gadcon.c:1450 src/modules/gadman/e_mod_gadman.c:752
+#: src/bin/e_gadcon.c:1453 src/modules/gadman/e_mod_gadman.c:752
 msgid "Inset"
 msgstr "Zabudovaný"
 
-#: src/bin/e_gadcon.c:1459 src/bin/e_int_config_modules.c:54
+#: src/bin/e_gadcon.c:1462 src/bin/e_int_config_modules.c:54
 #: src/modules/conf_theme/e_mod_main.c:30
 #: src/modules/dropshadow/e_mod_main.c:89
 msgid "Look"
 msgstr "Pohľad"
 
-#: src/bin/e_gadcon.c:1470 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1473 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:239
 #: src/modules/conf_applications/e_int_config_apps.c:260
 #: src/modules/conf_applications/e_int_config_apps.c:280
@@ -1686,7 +1685,7 @@ msgstr "Pohľad"
 msgid "Remove"
 msgstr "Odstrániť"
 
-#: src/bin/e_gadcon.c:2017
+#: src/bin/e_gadcon.c:2020
 #, fuzzy
 msgid "Stop moving"
 msgstr "Ukončiť editovanie"
@@ -1746,7 +1745,7 @@ msgid "Size"
 msgstr "Veľkosť"
 
 #: src/bin/e_int_border_locks.c:310 src/bin/e_int_border_locks.c:329
-#: src/bin/e_int_border_menu.c:507 src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_menu.c:572 src/bin/e_int_border_prop.c:469
 #: src/bin/e_int_border_remember.c:711 src/bin/e_int_shelf_config.c:132
 msgid "Stacking"
 msgstr "Usporiadanie"
@@ -1798,149 +1797,142 @@ msgstr "Odhláseniu s týmto oknom otvoreným"
 msgid "Remember these Locks"
 msgstr "Zapamätať si Zámky"
 
-#: src/bin/e_int_border_menu.c:82
+#: src/bin/e_int_border_menu.c:81
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 msgid "Window"
 msgstr "Okno"
 
-#: src/bin/e_int_border_menu.c:104 src/bin/e_int_border_menu.c:943
+#: src/bin/e_int_border_menu.c:103 src/bin/e_int_border_menu.c:893
 #, fuzzy
 msgid "Always on Top"
 msgstr "Vždy na začiatok"
 
-#: src/bin/e_int_border_menu.c:119 src/bin/e_int_border_menu.c:606
-#: src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_menu.c:118 src/bin/e_int_border_prop.c:472
 msgid "Sticky"
 msgstr "Lepkavé"
 
-#: src/bin/e_int_border_menu.c:291 src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_menu.c:132
+#, fuzzy
+msgid "Shade"
+msgstr "Schované"
+
+#: src/bin/e_int_border_menu.c:304 src/bin/e_int_border_prop.c:477
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:121
 #: src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c:145
 msgid "Fullscreen"
 msgstr "Celá Obrazovka"
 
-#: src/bin/e_int_border_menu.c:315
+#: src/bin/e_int_border_menu.c:328
 msgid "Maximize vertically"
 msgstr "Maximalizovať vertikálne"
 
-#: src/bin/e_int_border_menu.c:326
+#: src/bin/e_int_border_menu.c:339
 msgid "Maximize horizontally"
 msgstr "Maximalizovať horizontálne"
 
-#: src/bin/e_int_border_menu.c:337
+#: src/bin/e_int_border_menu.c:350
 msgid "Unmaximize"
 msgstr "Nemaximalizovať"
 
-#: src/bin/e_int_border_menu.c:448
+#: src/bin/e_int_border_menu.c:461
 msgid "Edit Icon"
 msgstr "Upraviť Ikonu"
 
-#: src/bin/e_int_border_menu.c:456
+#: src/bin/e_int_border_menu.c:469
 msgid "Create Icon"
 msgstr "Vytvoriť Ikonu"
 
-#: src/bin/e_int_border_menu.c:464
+#: src/bin/e_int_border_menu.c:477
 #, fuzzy
 msgid "Add to Favorites Menu"
 msgstr "Pridať k obľúbeným Menu"
 
-#: src/bin/e_int_border_menu.c:469
+#: src/bin/e_int_border_menu.c:482
 #, fuzzy
 msgid "Add to IBar"
 msgstr "Pridať k Ibar"
 
-#: src/bin/e_int_border_menu.c:477
+#: src/bin/e_int_border_menu.c:490
 #, fuzzy
 msgid "Create Keyboard Shortcut"
 msgstr "Vytvoriť Klávesová skratka"
 
-#: src/bin/e_int_border_menu.c:497
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
-#, fuzzy
-msgid "Placement"
-msgstr "Inteligentné Umiestnenie"
+#: src/bin/e_int_border_menu.c:531
+msgid "Iconify"
+msgstr "Minimalizovať"
 
-#: src/bin/e_int_border_menu.c:519
+#: src/bin/e_int_border_menu.c:581
 msgid "Skip"
 msgstr "Preskočiť"
 
-#: src/bin/e_int_border_menu.c:529 src/modules/conf_theme/e_mod_main.c:27
+#: src/bin/e_int_border_menu.c:591 src/modules/conf_theme/e_mod_main.c:27
 msgid "Border"
 msgstr "Okraj"
 
-#: src/bin/e_int_border_menu.c:541 src/bin/e_int_border_remember.c:621
+#: src/bin/e_int_border_menu.c:603 src/bin/e_int_border_remember.c:621
 #: src/bin/e_int_border_remember.c:714
 msgid "Locks"
 msgstr "Zámky"
 
-#: src/bin/e_int_border_menu.c:549
+#: src/bin/e_int_border_menu.c:611
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Zapamätať"
 
-#: src/bin/e_int_border_menu.c:571
+#: src/bin/e_int_border_menu.c:633
 #, fuzzy
 msgid "ICCCM/NetWM"
 msgstr "NetWM"
 
-#: src/bin/e_int_border_menu.c:641
-msgid "Iconify"
-msgstr "Minimalizovať"
-
-#: src/bin/e_int_border_menu.c:680
-#, fuzzy
-msgid "Shade"
-msgstr "Schované"
-
-#: src/bin/e_int_border_menu.c:864
+#: src/bin/e_int_border_menu.c:814
 #, fuzzy, c-format
 msgid "Screen %d"
 msgstr "Obrazovka"
 
-#: src/bin/e_int_border_menu.c:954
+#: src/bin/e_int_border_menu.c:904
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
 msgid "Normal"
 msgstr "Normálne"
 
-#: src/bin/e_int_border_menu.c:965
+#: src/bin/e_int_border_menu.c:915
 msgid "Always Below"
 msgstr "Vždy Pod"
 
-#: src/bin/e_int_border_menu.c:1009
+#: src/bin/e_int_border_menu.c:959
 msgid "Pin to Desktop"
 msgstr "Pripnúť na plochu"
 
-#: src/bin/e_int_border_menu.c:1020
+#: src/bin/e_int_border_menu.c:970
 msgid "Unpin from Desktop"
 msgstr "Odopnúť z plochy"
 
-#: src/bin/e_int_border_menu.c:1110
+#: src/bin/e_int_border_menu.c:1059
 msgid "Select Border Style"
 msgstr "Vybrať ohraničený štýl"
 
-#: src/bin/e_int_border_menu.c:1122
+#: src/bin/e_int_border_menu.c:1071
 msgid "Use E17 Default Icon Preference"
 msgstr "Použiť E17 predvolené nastavenie ikôn"
 
-#: src/bin/e_int_border_menu.c:1130
+#: src/bin/e_int_border_menu.c:1079
 msgid "Use Application Provided Icon "
 msgstr "Za predpokladu použitia ikôn "
 
-#: src/bin/e_int_border_menu.c:1138
+#: src/bin/e_int_border_menu.c:1087
 msgid "Use User Defined Icon"
 msgstr "Použi užívateľom definovanú ikonu"
 
-#: src/bin/e_int_border_menu.c:1147 src/bin/e_int_border_remember.c:747
+#: src/bin/e_int_border_menu.c:1096 src/bin/e_int_border_remember.c:747
 #, fuzzy
 msgid "Offer Resistance"
 msgstr "Odolnosť"
 
-#: src/bin/e_int_border_menu.c:1207 src/modules/winlist/e_mod_main.c:26
+#: src/bin/e_int_border_menu.c:1156 src/modules/winlist/e_mod_main.c:26
 msgid "Window List"
 msgstr "Zoznam Okien"
 
-#: src/bin/e_int_border_menu.c:1217 src/modules/pager/e_mod_main.c:257
+#: src/bin/e_int_border_menu.c:1166 src/modules/pager/e_mod_main.c:257
 #: src/modules/pager/e_mod_main.c:2795 src/modules/pager/e_mod_main.c:2802
 #: src/modules/pager/e_mod_main.c:2809 src/modules/pager/e_mod_main.c:2811
 #: src/modules/pager/e_mod_main.c:2813 src/modules/pager/e_mod_main.c:2815
@@ -1951,7 +1943,7 @@ msgstr "Zoznam Okien"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_border_menu.c:1227
+#: src/bin/e_int_border_menu.c:1176
 msgid "Taskbar"
 msgstr "Panel"
 
@@ -2356,7 +2348,7 @@ msgstr "Aplikácie"
 #: src/bin/e_int_menus.c:151 src/bin/e_int_menus.c:1126
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
-#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3812
+#: src/modules/winlist/e_mod_main.c:25 src/modules/tiling/e_mod_tiling.c:3822
 msgid "Windows"
 msgstr "Okná"
 
@@ -6238,6 +6230,11 @@ msgstr "Za predpokladu použitia ikôn "
 msgid "Border Icon"
 msgstr "Okraj"
 
+#: src/modules/conf_window_manipulation/e_int_config_window_display.c:161
+#, fuzzy
+msgid "Placement"
+msgstr "Inteligentné Umiestnenie"
+
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
 msgid "Smart Placement"
 msgstr "Inteligentné Umiestnenie"
@@ -7896,8 +7893,9 @@ msgid "Popup pager height"
 msgstr "Popup pager výška"
 
 #: src/modules/pager/e_mod_config.c:232
-msgid "Popup speed"
-msgstr "Rýchlosť popup"
+#, fuzzy
+msgid "Popup duration"
+msgstr "Zobraziť trvanie"
 
 #: src/modules/pager/e_mod_config.c:236 src/modules/pager/e_mod_config.c:273
 #, c-format
@@ -7925,7 +7923,7 @@ msgstr "Zobraziť popup okien na sústredenej"
 
 #: src/modules/pager/e_mod_config.c:269
 #, fuzzy
-msgid "Urgent popup speed"
+msgid "Urgent popup duration"
 msgstr "Urgentná popup rýchlosť"
 
 #: src/modules/pager/e_mod_config.c:280
@@ -8542,9 +8540,9 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "Konfigurácia Pageru"
 
-#: src/modules/tiling/e_mod_tiling.c:3785
-#: src/modules/tiling/e_mod_tiling.c:3814
-#: src/modules/tiling/e_mod_tiling.c:3903
+#: src/modules/tiling/e_mod_tiling.c:3795
+#: src/modules/tiling/e_mod_tiling.c:3824
+#: src/modules/tiling/e_mod_tiling.c:3913
 #, fuzzy
 msgid "Tiling"
 msgstr "dotazovanie"
@@ -8592,6 +8590,9 @@ msgstr "Mód"
 #: src/modules/xkbswitch/e_mod_config.c:508
 msgid "Variant"
 msgstr ""
+
+#~ msgid "Popup speed"
+#~ msgstr "Rýchlosť popup"
 
 #, fuzzy
 #~ msgid "Keys"
