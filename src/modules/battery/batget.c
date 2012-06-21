@@ -288,7 +288,11 @@ bsd_apm_check(void)
          bat_val = info.ai_batt_life;
          time_val = info.ai_batt_time;
      }
-   else return;
+   else
+     {
+        if (apm_fd != -1) close(apm_fd);
+        return;
+     }
 
    if (info.ai_batteries == 1) /* ai_batteries == 1 means NO battery,
                                * ai_batteries == 2 means 1 battery */
