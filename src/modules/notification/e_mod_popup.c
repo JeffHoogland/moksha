@@ -516,6 +516,8 @@ _notification_popup_refresh(Popup_Data *popup)
    /* Compute the new size of the popup */
    edje_object_calc_force(popup->theme);
    edje_object_size_min_calc(popup->theme, &w, &h);
+   w = MIN(w, popup->zone->w / 2);
+   h = MIN(h, popup->zone->h / 2);
    e_popup_resize(popup->win, w, h);
    evas_object_resize(popup->theme, w, h);
 
