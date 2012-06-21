@@ -19,7 +19,6 @@ static void _e_border_menu_cb_resistance(void *data, E_Menu *m, E_Menu_Item *mi)
 static void _e_border_menu_cb_icon_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_application_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi);
-static void _e_border_menu_cb_placement_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi);
 static void _e_border_menu_cb_prop(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stick(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_stacking_pre(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -493,13 +492,79 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
 
+   if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
+     {
+        if (!(((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
+               (bd->client.icccm.min_h == bd->client.icccm.max_h)) ||
+              (bd->lock_user_maximize)))
+          {
+             if ((!bd->lock_user_maximize) && (!bd->shaded))
+               {
+                  submi = e_menu_item_new(subm);
+                  e_menu_item_label_set(submi, _("Maximize"));
+                  e_menu_item_submenu_pre_callback_set(submi, _e_border_menu_cb_maximize_pre, bd);
+                  e_menu_item_icon_edje_set(submi,
+                                            e_theme_edje_file_get("base/theme/borders",
+                                                                  "e/widgets/border/default/maximize"),
+                                            "e/widgets/border/default/maximize");
+               }
+          }
+
+        if ((!bd->lock_user_iconify) && (!bd->fullscreen))
+          {
+             submi = e_menu_item_new(subm);
+             e_menu_item_label_set(submi, _("Iconify"));
+             e_menu_item_callback_set(submi, _e_border_menu_cb_iconify, bd);
+             e_menu_item_icon_edje_set(submi,
+                                       e_theme_edje_file_get("base/theme/borders",
+                                                             "e/widgets/border/default/minimize"),
+                                       "e/widgets/border/default/minimize");
+          }
+     }
+
+   if ((!bd->lock_user_location) && (!bd->fullscreen) &&
+       (((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH) || e_config->allow_manip))
+     {
+        submi = e_menu_item_new(subm);
+        e_menu_item_label_set(submi, _("Move"));
+        e_menu_item_callback_set(submi, _e_border_menu_cb_move, bd);
+        e_menu_item_icon_edje_set(submi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/move_icon"),
+                                  "e/widgets/border/default/move_icon");
+     }
+
+   if (((!bd->lock_user_size) && (!bd->fullscreen) &&
+        (((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH) || e_config->allow_manip)) &&
+       ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+        (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN)))
+     {
+        submi = e_menu_item_new(subm);
+        e_menu_item_label_set(submi, _("Resize"));
+        e_menu_item_callback_set(submi, _e_border_menu_cb_resize, bd);
+        e_menu_item_icon_edje_set(submi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/resize_icon"),
+                                  "e/widgets/border/default/resize_icon");
+     }
+
+   if ((!bd->lock_user_shade) && (!bd->fullscreen) && (!bd->maximized) &&
+       ((!bd->client.border.name) || (strcmp("borderless", bd->client.border.name))))
+     {
+        submi = e_menu_item_new(subm);
+        e_menu_item_label_set(submi, _("Shade"));
+        e_menu_item_check_set(submi, 1);
+        e_menu_item_toggle_set(submi, (bd->shaded ? 1 : 0));
+        e_menu_item_callback_set(submi, _e_border_menu_cb_shade, bd);
+        e_menu_item_icon_edje_set(submi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/shade"),
+                                  "e/widgets/border/default/shade");
+     }
+
    submi = e_menu_item_new(subm);
-   e_menu_item_label_set(submi, _("Placement"));
-   e_menu_item_submenu_pre_callback_set(submi, _e_border_menu_cb_placement_pre, bd);
-   e_menu_item_icon_edje_set(submi,
-                             e_theme_edje_file_get("base/theme/borders",
-                                                   "e/widgets/border/default/placement"),
-                             "e/widgets/border/default/placement");
+   e_menu_item_separator_set(submi, 1);
 
    if ((!bd->lock_user_stacking) && (!bd->fullscreen))
      {
@@ -574,118 +639,6 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
                              e_theme_edje_file_get("base/theme/borders",
                                                    "e/widgets/border/default/properties"),
                              "e/widgets/border/default/properties");
-}
-
-static void
-_e_border_menu_cb_placement_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
-{
-   E_Menu *subm;
-   E_Menu_Item *submi;
-   E_Border *bd;
-
-   if (!(bd = data)) return;
-
-   subm = e_menu_new();
-   e_object_data_set(E_OBJECT(subm), bd);
-   e_menu_item_submenu_set(mi, subm);
-
-   if ((!bd->sticky) && ((bd->zone->desk_x_count > 1) || (bd->zone->desk_y_count > 1)))
-     {
-        submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Move to"));
-        e_menu_item_submenu_pre_callback_set(submi, _e_border_menu_cb_sendto_pre, bd);
-        e_menu_item_icon_edje_set(submi,
-                                  e_theme_edje_file_get("base/theme/borders",
-                                                        "e/widgets/border/default/sendto"),
-                                  "e/widgets/border/default/sendto");
-     }
-
-   if (!bd->lock_user_sticky)
-     {
-        submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Sticky"));
-        e_menu_item_check_set(submi, 1);
-        e_menu_item_toggle_set(submi, (bd->sticky ? 1 : 0));
-        e_menu_item_callback_set(submi, _e_border_menu_cb_stick, bd);
-        e_menu_item_icon_edje_set(submi,
-                                  e_theme_edje_file_get("base/theme/borders",
-                                                        "e/widgets/border/default/stick"),
-                                  "e/widgets/border/default/stick");
-     }
-
-   submi = e_menu_item_new(subm);
-   e_menu_item_separator_set(submi, 1);
-
-   if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
-       (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
-     {
-        if (!(((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
-               (bd->client.icccm.min_h == bd->client.icccm.max_h)) ||
-              (bd->lock_user_maximize)))
-          {
-             if ((!bd->lock_user_maximize) && (!bd->shaded))
-               {
-                  submi = e_menu_item_new(subm);
-                  e_menu_item_label_set(submi, _("Maximize"));
-                  e_menu_item_submenu_pre_callback_set(submi, _e_border_menu_cb_maximize_pre, bd);
-                  e_menu_item_icon_edje_set(submi,
-                                            e_theme_edje_file_get("base/theme/borders",
-                                                                  "e/widgets/border/default/maximize"),
-                                            "e/widgets/border/default/maximize");
-               }
-          }
-
-        if ((!bd->lock_user_iconify) && (!bd->fullscreen))
-          {
-             submi = e_menu_item_new(subm);
-             e_menu_item_label_set(submi, _("Iconify"));
-             e_menu_item_callback_set(submi, _e_border_menu_cb_iconify, bd);
-             e_menu_item_icon_edje_set(submi,
-                                       e_theme_edje_file_get("base/theme/borders",
-                                                             "e/widgets/border/default/minimize"),
-                                       "e/widgets/border/default/minimize");
-          }
-     }
-
-   if ((!bd->lock_user_location) && (!bd->fullscreen) &&
-       (((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH) || e_config->allow_manip))
-     {
-        submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Move"));
-        e_menu_item_callback_set(submi, _e_border_menu_cb_move, bd);
-        e_menu_item_icon_edje_set(submi,
-                                  e_theme_edje_file_get("base/theme/borders",
-                                                        "e/widgets/border/default/move_icon"),
-                                  "e/widgets/border/default/move_icon");
-     }
-
-   if (((!bd->lock_user_size) && (!bd->fullscreen) &&
-        (((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH) || e_config->allow_manip)) &&
-       ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
-        (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN)))
-     {
-        submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Resize"));
-        e_menu_item_callback_set(submi, _e_border_menu_cb_resize, bd);
-        e_menu_item_icon_edje_set(submi,
-                                  e_theme_edje_file_get("base/theme/borders",
-                                                        "e/widgets/border/default/resize_icon"),
-                                  "e/widgets/border/default/resize_icon");
-     }
-
-   if ((!bd->lock_user_shade) && (!bd->fullscreen) && (!bd->maximized) &&
-       ((!bd->client.border.name) || (strcmp("borderless", bd->client.border.name))))
-     {
-        submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Shade"));
-        e_menu_item_check_set(submi, 1);
-        e_menu_item_toggle_set(submi, (bd->shaded ? 1 : 0));
-        e_menu_item_callback_set(submi, _e_border_menu_cb_shade, bd);
-        e_menu_item_icon_edje_set(submi,
-                                  e_theme_edje_file_get("base/theme/borders",
-                                                        "e/widgets/border/default/shade"),
-                                  "e/widgets/border/default/shade");
-     }
 }
 
 static void
@@ -1063,10 +1016,9 @@ _e_border_menu_cb_default_icon(void *data, E_Menu *m, E_Menu_Item *mi)
    bd = data;
    E_OBJECT_CHECK(bd);
 
-   o = e_icon_add(m->evas);
    prev_icon_pref = bd->icon_preference;
    bd->icon_preference = E_ICON_PREF_E_DEFAULT;
-   e_icon_object_set(o, e_border_icon_add(bd, m->evas));
+   o = e_border_icon_add(bd, m->evas);
    bd->icon_preference = prev_icon_pref;
    mi->icon_object = o;
 }
