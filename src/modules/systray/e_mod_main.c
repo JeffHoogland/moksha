@@ -1152,10 +1152,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 static const char *
 _gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   if (!instance)
-     return _name;
-   else
-     return NULL;
+   return _name;
 }
 
 static const E_Gadcon_Client_Class _gc_class =
