@@ -206,6 +206,8 @@ change_window_border(E_Border   *bd,
     bd->client.border.changed = true;
     bd->changes.border = true;
     bd->changed = true;
+
+    DBG("%p -> border %s", bd, bordername);
 }
 
 static int
@@ -374,7 +376,10 @@ _restore_border(E_Border *bd)
         bd->maximized = extra->orig.maximized;
     }
 
-    change_window_border(bd, extra->orig.bordername);
+    DBG("Change window border back to %s for %p",
+        extra->orig.bordername, bd);
+    change_window_border(bd, (extra->orig.bordername)
+                         ? extra->orig.bordername : "default");
 }
 
 static Border_Extra *
@@ -1649,6 +1654,7 @@ toggle_floating(E_Border *bd)
     } else {
         _remove_border(bd);
         _restore_border(bd);
+        EINA_LIST_APPEND(_G.tinfo->floating_windows, bd);
     }
 }
 
