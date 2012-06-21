@@ -229,7 +229,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    e_widget_disabled_set(ow, !cfdata->popup.show);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
 
-   ow = e_widget_label_add(evas, _("Popup speed"));
+   ow = e_widget_label_add(evas, _("Popup duration"));
    cfdata->gui.popup_list = eina_list_append(cfdata->gui.popup_list, ow);
    e_widget_disabled_set(ow, !cfdata->popup.show);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
@@ -266,7 +266,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    e_widget_disabled_set(ow, !cfdata->popup.urgent_show);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
 
-   ow = e_widget_label_add(evas, _("Urgent popup speed"));
+   ow = e_widget_label_add(evas, _("Urgent popup duration"));
    cfdata->gui.urgent_list = eina_list_append(cfdata->gui.urgent_list, ow);
    e_widget_disabled_set(ow, !cfdata->popup.urgent_show);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
