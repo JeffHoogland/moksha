@@ -2507,7 +2507,7 @@ msgstr ""
 #: src/bin/e_int_shelf_config.c:223
 #, fuzzy
 msgid "Hide duration"
-msgstr "기간 숨기기"
+msgstr "숨기기 지속시간"
 
 #: src/bin/e_int_shelf_config.c:227
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:853
@@ -8028,7 +8028,7 @@ msgstr "팝업 호출기 높이"
 #: src/modules/pager/e_mod_config.c:232
 #, fuzzy
 msgid "Popup duration"
-msgstr "기간 숨기기"
+msgstr "팝업 지속시간"
 
 #: src/modules/pager/e_mod_config.c:236 src/modules/pager/e_mod_config.c:273
 #, c-format
@@ -8058,7 +8058,7 @@ msgstr "초점을 맞춘 Windows 용 팝업 보기"
 #: src/modules/pager/e_mod_config.c:269
 #, fuzzy
 msgid "Urgent popup duration"
-msgstr "긴급 팝업 속도"
+msgstr "긴급 팝업 지속시간"
 
 #: src/modules/pager/e_mod_config.c:280
 #, fuzzy
