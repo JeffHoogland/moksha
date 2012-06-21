@@ -403,7 +403,7 @@ e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_Policy layout_policy)
    /* FIXME: delete container obj, re-pack all clients */
 }
 
-EAPI void
+EAPI Eina_Bool
 e_gadcon_populate(E_Gadcon *gc)
 {
    Eina_List *l;
@@ -436,34 +436,37 @@ e_gadcon_populate(E_Gadcon *gc)
                gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
                                    cf_gcc->style);
 
-             if (gcc)
+             if (!gcc)
                {
-                  gcc->cf = cf_gcc;
-                  gcc->client_class = cc;
-                  gcc->config.pos = cf_gcc->geom.pos;
-                  gcc->config.size = cf_gcc->geom.size;
-                  gcc->config.res = cf_gcc->geom.res;
-                  gcc->state_info.seq = cf_gcc->state_info.seq;
-                  gcc->state_info.flags = cf_gcc->state_info.flags;
-                  if (gcc->o_frame)
-                    e_gadcon_layout_pack_options_set(gcc->o_frame, gcc);
-                  else if (gcc->o_base)
-                    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
-
-                  if (!gcc->autoscroll_set)
-                    e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
-//		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
-                  if (gcc->client_class->func.orient)
-                    gcc->client_class->func.orient(gcc, gc->orient);
-
-                  _e_gadcon_client_save(gcc);
-                  if (gc->editing) e_gadcon_client_edit_begin(gcc);
-                  if (gc->instant_edit)
-                    e_gadcon_client_util_menu_attach(gcc);
+                  e_gadcon_layout_thaw(gc->o_container);
+                  return EINA_FALSE;
                }
+             gcc->cf = cf_gcc;
+             gcc->client_class = cc;
+             gcc->config.pos = cf_gcc->geom.pos;
+             gcc->config.size = cf_gcc->geom.size;
+             gcc->config.res = cf_gcc->geom.res;
+             gcc->state_info.seq = cf_gcc->state_info.seq;
+             gcc->state_info.flags = cf_gcc->state_info.flags;
+             if (gcc->o_frame)
+               e_gadcon_layout_pack_options_set(gcc->o_frame, gcc);
+             else if (gcc->o_base)
+               e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
+
+             if (!gcc->autoscroll_set)
+               e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
+//		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
+             if (gcc->client_class->func.orient)
+               gcc->client_class->func.orient(gcc, gc->orient);
+
+             _e_gadcon_client_save(gcc);
+             if (gc->editing) e_gadcon_client_edit_begin(gcc);
+             if (gc->instant_edit)
+               e_gadcon_client_util_menu_attach(gcc);
           }
      }
    e_gadcon_layout_thaw(gc->o_container);
+   return EINA_TRUE;
 }
 
 EAPI void

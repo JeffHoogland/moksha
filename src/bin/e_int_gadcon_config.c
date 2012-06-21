@@ -293,7 +293,8 @@ _cb_add(void *data, void *data2 __UNUSED__)
    if (update)
      {
         e_gadcon_unpopulate(cfdata->gc);
-        e_gadcon_populate(cfdata->gc);
+        if (!e_gadcon_populate(cfdata->gc))
+          _cb_del(cfdata, NULL);
         e_config_save_queue();
      }
    e_widget_ilist_unselect(cfdata->o_list);
