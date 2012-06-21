@@ -3650,9 +3650,13 @@ _desk_set_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Desk_S
         return true;
     }
 
-    if (get_stack(ev->border) >= 0) {
-        _remove_border(ev->border);
-        _restore_border(ev->border);
+    if (is_floating_window(ev->border)) {
+        EINA_LIST_REMOVE(_G.tinfo->floating_windows, ev->border);
+    } else {
+        if (get_stack(ev->border) >= 0) {
+            _remove_border(ev->border);
+            _restore_border(ev->border);
+        }
     }
 
     check_tinfo(ev->border->desk);
