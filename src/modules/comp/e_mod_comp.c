@@ -2529,6 +2529,27 @@ _e_mod_comp_show(void *data __UNUSED__,
    Ecore_X_Event_Window_Show *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return ECORE_CALLBACK_PASS_ON;
+/*
+Vincent Torri via lists.sourceforge.net 
+	
+2:31 PM (8 minutes ago)
+		
+to enlightenment-devel.
+would it be possible to add a note in the code, about the reason of
+that change ?
+
+Vincent
+
+On Thu, Jun 21, 2012 at 3:29 PM, Enlightenment SVN
+<no-reply@enlightenment.org> wrote:
+> Log:
+> gtk developers with IQs over 180 enjoy hiding and showing their windows constantly,
+> especially when resizing. this broke e's comp since we are not nearly that clever
+> and try to defer hide animations in most cases. undoing the defer whenever
+> this happens allows us to keep up with their towering genius.
+>  fixes ticket #765 and probably some others.
+>  affected apps: claws-mail, firefox
+*/
    cw->defer_hide = 0;
    if (cw->visible) return ECORE_CALLBACK_PASS_ON;
    _e_mod_comp_win_show(cw);
