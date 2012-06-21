@@ -2529,6 +2529,7 @@ _e_mod_comp_show(void *data __UNUSED__,
    Ecore_X_Event_Window_Show *ev = event;
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return ECORE_CALLBACK_PASS_ON;
+   cw->defer_hide = 0;
    if (cw->visible) return ECORE_CALLBACK_PASS_ON;
    _e_mod_comp_win_show(cw);
    return ECORE_CALLBACK_PASS_ON;
