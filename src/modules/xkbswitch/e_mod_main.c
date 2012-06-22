@@ -257,11 +257,11 @@ _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 static const char *
 _gc_id_new(E_Gadcon_Client_Class *client_class) 
 {
-   char buf[PATH_MAX];
+   static char buf[PATH_MAX];
 
    snprintf(buf, sizeof(buf), "%s.%d", client_class->name, 
-            eina_list_count(instances));
-   return strdup(buf);
+            eina_list_count(instances) + 1);
+   return buf;
 }
 
 static Evas_Object *
