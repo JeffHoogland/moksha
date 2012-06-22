@@ -3,31 +3,31 @@
 
 struct _E_Config_Dialog_Data
 {
-   const char *dir;
-   int show_label, eap_label;
+   const char       *dir;
+   int               show_label, eap_label;
 
-   Evas_Object *tlist;
-   Evas_Object *radio_name;
-   Evas_Object *radio_comment;
-   Evas_Object *radio_generic;
+   Evas_Object      *tlist;
+   Evas_Object      *radio_name;
+   Evas_Object      *radio_comment;
+   Evas_Object      *radio_generic;
    E_Confirm_Dialog *dialog_delete;
 };
 
 /* Protos */
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void _cb_add(void *data, void *data2);
-static void _cb_del(void *data, void *data2);
-static void _cb_config(void *data, void *data2);
-static void _cb_entry_ok(char *text, void *data);
-static void _cb_confirm_dialog_yes(void *data);
-static void _cb_confirm_dialog_destroy(void *data);
-static void _load_tlist(E_Config_Dialog_Data *cfdata);
-static void _show_label_cb_change(void *data, Evas_Object *obj);
+static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _cb_add(void *data, void *data2);
+static void         _cb_del(void *data, void *data2);
+static void         _cb_config(void *data, void *data2);
+static void         _cb_entry_ok(char *text, void *data);
+static void         _cb_confirm_dialog_yes(void *data);
+static void         _cb_confirm_dialog_destroy(void *data);
+static void         _load_tlist(E_Config_Dialog_Data *cfdata);
+static void         _show_label_cb_change(void *data, Evas_Object *obj);
 
-void 
+void
 _config_ibar_module(Config_Item *ci)
 {
    E_Config_Dialog *cfd;
@@ -44,18 +44,18 @@ _config_ibar_module(Config_Item *ci)
    v->advanced.apply_cfdata = NULL;
    v->advanced.create_widgets = NULL;
 
-   snprintf(buf, sizeof(buf), "%s/e-module-ibar.edj", 
+   snprintf(buf, sizeof(buf), "%s/e-module-ibar.edj",
             e_module_dir_get(ibar_config->module));
 
    /* Create The Dialog */
    cfd = e_config_dialog_new(e_container_current_get(e_manager_current_get()),
-			     _("IBar Settings"),
-			     "E", "_e_mod_ibar_config_dialog",
-			     buf, 0, v, ci);
+                             _("IBar Settings"),
+                             "E", "_e_mod_ibar_config_dialog",
+                             buf, 0, v, ci);
    ibar_config->config_dialog = cfd;
 }
 
-static void 
+static void
 _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
 {
    if (ci->dir)
@@ -78,7 +78,7 @@ _create_data(E_Config_Dialog *cfd)
    return cfdata;
 }
 
-static void 
+static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->dir) eina_stringshare_del(cfdata->dir);
@@ -108,9 +108,9 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_button_add(evas, _("Delete"), "list-remove", _cb_del, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 1, 1, 0);
    ob = e_widget_button_add(evas, _("Setup"), "configure", _cb_config, cfdata, NULL);
-   e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 1, 1, 0);   
+   e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 1, 1, 0);
 
-   if (!e_configure_registry_exists("applications/ibar_applications")) 
+   if (!e_configure_registry_exists("applications/ibar_applications"))
      e_widget_disabled_set(ob, 1);
 
    e_widget_frametable_object_append(of, ot, 1, 0, 1, 1, 1, 1, 1, 0);
@@ -119,7 +119,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    of = e_widget_framelist_add(evas, _("Icon Labels"), 0);
    ob = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
    e_widget_on_change_hook_set(ob, _show_label_cb_change, cfdata);
-   e_widget_framelist_object_append(of, ob);  
+   e_widget_framelist_object_append(of, ob);
 
    rg = e_widget_radio_group_new(&(cfdata->eap_label));
 
@@ -139,7 +139,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    return o;
 }
 
-static int 
+static int
 _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    Config_Item *ci;
@@ -155,54 +155,54 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    return 1;
 }
 
-static void 
-_cb_add(void *data, void *data2 __UNUSED__) 
+static void
+_cb_add(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
    e_entry_dialog_show(_("Create new IBar source"), "enlightenment",
-		       _("Enter a name for this new source:"), "", NULL, NULL,
-		       _cb_entry_ok, NULL, cfdata);
+                       _("Enter a name for this new source:"), "", NULL, NULL,
+                       _cb_entry_ok, NULL, cfdata);
 }
 
-static void 
-_cb_del(void *data, void *data2 __UNUSED__) 
+static void
+_cb_del(void *data, void *data2 __UNUSED__)
 {
    char buf[4096];
    E_Config_Dialog_Data *cfdata;
    E_Confirm_Dialog *dialog;
 
-   cfdata = data;   
+   cfdata = data;
    if (cfdata->dialog_delete) return;
 
    snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
-				"Are you sure you want to delete this bar source?"),
-	    cfdata->dir);
+                                "Are you sure you want to delete this bar source?"),
+            cfdata->dir);
 
    dialog = e_confirm_dialog_show(_("Are you sure you want to delete this bar source?"),
-                                  "application-exit", buf, NULL, NULL, 
-                                  _cb_confirm_dialog_yes, NULL, cfdata, NULL, 
+                                  "application-exit", buf, NULL, NULL,
+                                  _cb_confirm_dialog_yes, NULL, cfdata, NULL,
                                   _cb_confirm_dialog_destroy, cfdata);
    cfdata->dialog_delete = dialog;
 }
 
-static void 
-_cb_config(void *data, void *data2 __UNUSED__) 
+static void
+_cb_config(void *data, void *data2 __UNUSED__)
 {
    char path[PATH_MAX];
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
-   e_user_dir_snprintf(path, sizeof(path), "applications/bar/%s/.order", 
+   e_user_dir_snprintf(path, sizeof(path), "applications/bar/%s/.order",
                        cfdata->dir);
    e_configure_registry_call("internal/ibar_other",
-			     e_container_current_get(e_manager_current_get()),
-			     path);
+                             e_container_current_get(e_manager_current_get()),
+                             path);
 }
 
 static void
-_cb_entry_ok(char *text, void *data) 
+_cb_entry_ok(char *text, void *data)
 {
    char buf[4096];
    char tmp[4096];
@@ -213,27 +213,27 @@ _cb_entry_ok(char *text, void *data)
    if (len + sizeof("/.order") >= sizeof(buf)) return;
    if (!ecore_file_exists(buf))
      {
-	ecore_file_mkdir(buf);
-	memcpy(buf + len, "/.order", sizeof("/.order"));
-	f = fopen(buf, "w");
-	if (f)
-	  {
+        ecore_file_mkdir(buf);
+        memcpy(buf + len, "/.order", sizeof("/.order"));
+        f = fopen(buf, "w");
+        if (f)
+          {
              int ret = 0;
 
-	     /* Populate this .order file with some defaults */
-	     snprintf(tmp, sizeof(tmp), "xterm.desktop\n" "sylpheed.desktop\n" 
-		      "firefox.desktop\n" "openoffice.desktop\n" "xchat.desktop\n"
-		      "gimp.desktop\n" "xmms.desktop\n");
-	     ret = fwrite(tmp, sizeof(char), strlen(tmp), f);
-	     fclose(f);
-	  }
+             /* Populate this .order file with some defaults */
+             snprintf(tmp, sizeof(tmp), "xterm.desktop\n" "sylpheed.desktop\n"
+                                                          "firefox.desktop\n" "openoffice.desktop\n" "xchat.desktop\n"
+                                                                                                     "gimp.desktop\n" "xmms.desktop\n");
+             ret = fwrite(tmp, sizeof(char), strlen(tmp), f);
+             fclose(f);
+          }
      }
 
    _load_tlist(data);
 }
 
 static void
-_cb_confirm_dialog_yes(void *data) 
+_cb_confirm_dialog_yes(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    char buf[4096];
@@ -248,7 +248,7 @@ _cb_confirm_dialog_yes(void *data)
 }
 
 static void
-_cb_confirm_dialog_destroy(void *data) 
+_cb_confirm_dialog_destroy(void *data)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -256,8 +256,8 @@ _cb_confirm_dialog_destroy(void *data)
    cfdata->dialog_delete = NULL;
 }
 
-static void 
-_load_tlist(E_Config_Dialog_Data *cfdata) 
+static void
+_load_tlist(E_Config_Dialog_Data *cfdata)
 {
    Eina_List *dirs;
    char buf[4096], *file;
@@ -276,26 +276,26 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FREE(dirs, file)
      {
-	if (file[0] == '.') continue;
-	if (eina_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
-	  continue;
-	if (ecore_file_is_dir(buf))
-	  {
-	     e_widget_ilist_append(cfdata->tlist, NULL, file, NULL, NULL, file);
-	     if ((cfdata->dir) && (!strcmp(cfdata->dir, file)))
-	       selnum = i;
-	     i++;
-	  }
+        if (file[0] == '.') continue;
+        if (eina_strlcpy(buf + len, file, sizeof(buf) - len) >= sizeof(buf) - len)
+          continue;
+        if (ecore_file_is_dir(buf))
+          {
+             e_widget_ilist_append(cfdata->tlist, NULL, file, NULL, NULL, file);
+             if ((cfdata->dir) && (!strcmp(cfdata->dir, file)))
+               selnum = i;
+             i++;
+          }
 
-	free(file);
+        free(file);
      }
 
    e_widget_ilist_go(cfdata->tlist);
-   if (selnum >= 0) e_widget_ilist_selected_set(cfdata->tlist, selnum);   
+   if (selnum >= 0) e_widget_ilist_selected_set(cfdata->tlist, selnum);
 }
 
-static void 
-_show_label_cb_change(void *data, Evas_Object *obj __UNUSED__) 
+static void
+_show_label_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -303,5 +303,6 @@ _show_label_cb_change(void *data, Evas_Object *obj __UNUSED__)
    if (!cfdata) return;
    e_widget_disabled_set(cfdata->radio_name, !cfdata->show_label);
    e_widget_disabled_set(cfdata->radio_comment, !cfdata->show_label);
-   e_widget_disabled_set(cfdata->radio_generic, !cfdata->show_label);   
+   e_widget_disabled_set(cfdata->radio_generic, !cfdata->show_label);
 }
+
