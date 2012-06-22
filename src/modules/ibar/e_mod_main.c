@@ -225,13 +225,12 @@ _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class)
+_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   static char buf[PATH_MAX];
+   Config_Item *ci;
 
-   snprintf(buf, sizeof(buf), "%s.%d", client_class->name, 
-            eina_list_count(ibar_config->instances) + 1);
-   return buf;
+   ci = _ibar_config_item_get(NULL);
+   return ci->id;
 }
 
 static void
