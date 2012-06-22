@@ -11,57 +11,58 @@ struct _Config_Glob
 struct _Config_Mime
 {
    const char *mime;
-   Eina_List *globs;
+   Eina_List  *globs;
 };
 
 struct _E_Config_Dialog_Data
 {
-   struct {
+   struct
+   {
       Evas_Object *deflist, *mimelist, *entry;
    } obj;
-   Efreet_Ini *ini;
-   Eina_List *mimes;
-   Eina_List *desks;
+   Efreet_Ini          *ini;
+   Eina_List           *mimes;
+   Eina_List           *desks;
 
-   const char *selmime;
-   const char *selapp;
-   
-   const char **seldest;
-   
-   char *browser_custom;
-   
-   const char *browser_desktop;
-   const char *mailto_desktop;
-   const char *file_desktop;
-   const char *trash_desktop;
-   
+   const char          *selmime;
+   const char          *selapp;
+
+   const char         **seldest;
+
+   char                *browser_custom;
+
+   const char          *browser_desktop;
+   const char          *mailto_desktop;
+   const char          *file_desktop;
+   const char          *trash_desktop;
+
    Ecore_Event_Handler *desk_change_handler;
-   int gen;
+   int                  gen;
 };
 
 /* local function prototypes */
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 
-static Eina_Bool _desks_update(void *data, int ev_type __UNUSED__, void *ev __UNUSED__);
-static void _load_mimes(E_Config_Dialog_Data *cfdata, char *file);
-static void _load_globs(E_Config_Dialog_Data *cfdata, char *file);
-static int _sort_mimes(const void *data1, const void *data2);
+static Eina_Bool    _desks_update(void *data, int ev_type __UNUSED__, void *ev __UNUSED__);
+static void         _load_mimes(E_Config_Dialog_Data *cfdata, char *file);
+static void         _load_globs(E_Config_Dialog_Data *cfdata, char *file);
+static int          _sort_mimes(const void *data1, const void *data2);
 static Config_Mime *_find_mime(E_Config_Dialog_Data *cfdata, char *mime);
 static Config_Glob *_find_glob(Config_Mime *mime, char *glob);
-static int _cb_desks_sort(const void *data1, const void *data2);
-static void _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il, const char **desktop, int general);
+static int          _cb_desks_sort(const void *data1, const void *data2);
+static void         _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il, const char **desktop, int general);
 
 E_Config_Dialog *
 e_int_config_defapps(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   
+
    if (e_config_dialog_find("E", "applications/default_applications"))
-      return NULL;
+     return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
@@ -71,7 +72,7 @@ e_int_config_defapps(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Default Applications"),
                              "E", "applications/default_applications",
-			     "preferences-applications-default", 0, v, NULL);
+                             "preferences-applications-default", 0, v, NULL);
    return cfd;
 }
 
@@ -85,13 +86,13 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    const char *key, *s, *homedir;
    Eina_List *l;
    E_Config_Env_Var *evr;
-   
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata) return NULL;
-   
+
    cfdata->desk_change_handler = ecore_event_handler_add
-      (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _desks_update, cfdata);
-   
+       (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _desks_update, cfdata);
+
    snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
             efreet_data_home_get());
    myini = efreet_ini_new(buf);
@@ -140,30 +141,30 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
         if (!strcmp(evr->var, "BROWSER"))
           {
              if ((evr->val) && (!evr->unset))
-                cfdata->browser_custom = strdup(evr->val);
+               cfdata->browser_custom = strdup(evr->val);
              break;
           }
      }
-   
+
    homedir = e_user_homedir_get();
-   
+
    snprintf(buf, sizeof(buf), "/usr/local/etc/mime.types");
    if (ecore_file_exists(buf)) _load_mimes(cfdata, buf);
    snprintf(buf, sizeof(buf), "/etc/mime.types");
    if (ecore_file_exists(buf)) _load_mimes(cfdata, buf);
-   
+
    EINA_LIST_FOREACH(efreet_config_dirs_get(), l, s)
      {
         snprintf(buf, sizeof(buf), "%s/mime/globs", s);
         if (ecore_file_exists(buf)) _load_globs(cfdata, buf);
      }
-   
+
    snprintf(buf, sizeof(buf), "%s/.mime.types", homedir);
    if (ecore_file_exists(buf)) _load_mimes(cfdata, buf);
-   
+
    snprintf(buf, sizeof(buf), "%s/mime/globs", efreet_data_home_get());
    if (ecore_file_exists(buf)) _load_globs(cfdata, buf);
-   
+
    cfdata->mimes = eina_list_sort(cfdata->mimes, 0, _sort_mimes);
    return cfdata;
 }
@@ -184,7 +185,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    EINA_LIST_FREE(cfdata->mimes, m)
      {
         Config_Glob *g;
-        
+
         if (!m) continue;
         EINA_LIST_FREE(m->globs, g)
           {
@@ -197,9 +198,9 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
    if (cfdata->ini) efreet_ini_free(cfdata->ini);
    EINA_LIST_FREE(cfdata->desks, desk)
-      efreet_desktop_free(desk);
+     efreet_desktop_free(desk);
    if (cfdata->desk_change_handler)
-      ecore_event_handler_del(cfdata->desk_change_handler);
+     ecore_event_handler_del(cfdata->desk_change_handler);
    E_FREE(cfdata);
 }
 
@@ -209,11 +210,11 @@ _desks_update(void *data, int ev_type __UNUSED__, void *ev __UNUSED__)
    E_Config_Dialog_Data *cfdata = data;
    Efreet_Desktop *desk;
    EINA_LIST_FREE(cfdata->desks, desk)
-      efreet_desktop_free(desk);
+     efreet_desktop_free(desk);
    if (cfdata->gen)
-      _fill_apps_list(cfdata, cfdata->obj.deflist, &(cfdata->selapp), 1);
+     _fill_apps_list(cfdata, cfdata->obj.deflist, &(cfdata->selapp), 1);
    else
-      _fill_apps_list(cfdata, cfdata->obj.deflist, cfdata->seldest, 0);
+     _fill_apps_list(cfdata, cfdata->obj.deflist, cfdata->seldest, 0);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -274,18 +275,18 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    Evas_Object *otb, *ot, *ob, *of, *il;
    Eina_List *l;
    Config_Mime *m;
-   
+
    otb = e_widget_toolbook_add(evas, 24, 24);
-   
+
    ot = e_widget_table_add(evas, EINA_FALSE);
-   
+
    ob = e_widget_label_add(evas, _("Custom Browser Command"));
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-   
+
    ob = e_widget_entry_add(evas, &(cfdata->browser_custom), NULL, NULL, NULL);
    cfdata->obj.entry = ob;
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 1, 1, 0);
-   
+
    of = e_widget_framelist_add(evas, _("Default Applications"), 0);
    il = e_widget_ilist_add(evas, 24, 24, NULL);
    evas_event_freeze(evas);
@@ -302,7 +303,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    evas_event_thaw(evas);
    e_widget_framelist_object_append_full(of, il, 1, 1, 1, 1, 0.5, 0.5, 120, 200, 9999, 9999);
    e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 0, 1);
-   
+
    of = e_widget_framelist_add(evas, _("Selected Application"), 0);
    il = e_widget_ilist_add(evas, 24, 24, &(cfdata->selapp));
    cfdata->obj.deflist = il;
@@ -313,9 +314,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_toolbook_page_append(otb, NULL, _("Core"), ot,
                                  1, 1, 1, 1, 0.5, 0.0);
-   
+
    ot = e_widget_table_add(evas, EINA_FALSE);
-   
+
    of = e_widget_framelist_add(evas, _("Types"), 0);
    il = e_widget_ilist_add(evas, 24, 24, &(cfdata->selmime));
    evas_event_freeze(evas);
@@ -323,14 +324,14 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_freeze(il);
    e_widget_ilist_selector_set(il, 1);
    EINA_LIST_FOREACH(cfdata->mimes, l, m)
-      e_widget_ilist_append(il, NULL, m->mime, _sel_mime_cb, cfdata, m->mime);
+     e_widget_ilist_append(il, NULL, m->mime, _sel_mime_cb, cfdata, m->mime);
    e_widget_ilist_go(il);
    e_widget_ilist_thaw(il);
    edje_thaw();
    evas_event_thaw(evas);
    e_widget_framelist_object_append_full(of, il, 1, 1, 1, 1, 0.5, 0.5, 120, 200, 9999, 9999);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
-   
+
    of = e_widget_framelist_add(evas, _("Selected Application"), 0);
    il = e_widget_ilist_add(evas, 24, 24, &(cfdata->selapp));
    cfdata->obj.mimelist = il;
@@ -341,7 +342,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_toolbook_page_append(otb, NULL, _("General"), ot,
                                  1, 1, 1, 1, 0.5, 0.0);
-   
+
    e_widget_toolbook_page_show(otb, 0);
 
    e_dialog_resizable_set(cfd->dia, 1);
@@ -358,23 +359,23 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->ini)
      {
         char buf[PATH_MAX];
-        
+
         if ((cfdata->browser_desktop) && (cfdata->browser_desktop[0]))
           {
-             efreet_ini_string_set(cfdata->ini, "x-scheme-handler/http", 
+             efreet_ini_string_set(cfdata->ini, "x-scheme-handler/http",
                                    cfdata->browser_desktop);
-             efreet_ini_string_set(cfdata->ini, "x-scheme-handler/https", 
+             efreet_ini_string_set(cfdata->ini, "x-scheme-handler/https",
                                    cfdata->browser_desktop);
           }
         if ((cfdata->mailto_desktop) && (cfdata->mailto_desktop[0]))
-           efreet_ini_string_set(cfdata->ini, "x-scheme-handler/mailto", 
-                                 cfdata->mailto_desktop);
+          efreet_ini_string_set(cfdata->ini, "x-scheme-handler/mailto",
+                                cfdata->mailto_desktop);
         if ((cfdata->file_desktop) && (cfdata->file_desktop[0]))
-           efreet_ini_string_set(cfdata->ini, "x-scheme-handler/file",
-                                 cfdata->file_desktop);
+          efreet_ini_string_set(cfdata->ini, "x-scheme-handler/file",
+                                cfdata->file_desktop);
         if ((cfdata->trash_desktop) && (cfdata->trash_desktop[0]))
-           efreet_ini_string_set(cfdata->ini, "x-scheme-handler/trash",
-                                 cfdata->trash_desktop);
+          efreet_ini_string_set(cfdata->ini, "x-scheme-handler/trash",
+                                cfdata->trash_desktop);
         snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
                  efreet_data_home_get());
         efreet_ini_save(cfdata->ini, buf);
@@ -388,7 +389,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
           }
         if (evr)
           {
-             evr->unset =0;
+             evr->unset = 0;
              if (evr->val) eina_stringshare_del(evr->val);
           }
         else
@@ -434,28 +435,32 @@ _load_mimes(E_Config_Dialog_Data *cfdata, char *file)
    char *p, *pp;
    Config_Mime *config_mime;
    Config_Glob *config_glob;
-   
+
    if (!cfdata) return;
-   
+
    f = fopen(file, "rb");
    if (!f) return;
    while (fgets(buf, sizeof(buf), f))
      {
         p = buf;
-        while (isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+        while (isblank(*p) && (*p != 0) && (*p != '\n'))
+          p++;
         if (*p == '#') continue;
         if ((*p == '\n') || (*p == 0)) continue;
         pp = p;
-        while (!isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+        while (!isblank(*p) && (*p != 0) && (*p != '\n'))
+          p++;
         if ((*p == '\n') || (*p == 0)) continue;
         strncpy(mimetype, pp, (p - pp));
         mimetype[p - pp] = 0;
         do
           {
-             while (isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+             while (isblank(*p) && (*p != 0) && (*p != '\n'))
+               p++;
              if ((*p == '\n') || (*p == 0)) continue;
              pp = p;
-             while (!isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+             while (!isblank(*p) && (*p != 0) && (*p != '\n'))
+               p++;
              strncpy(ext, pp, (p - pp));
              ext[p - pp] = 0;
              config_mime = _find_mime(cfdata, mimetype);
@@ -466,7 +471,7 @@ _load_mimes(E_Config_Dialog_Data *cfdata, char *file)
                     {
                        config_mime->mime = eina_stringshare_add(mimetype);
                        if (!config_mime->mime)
-                          free(config_mime);
+                         free(config_mime);
                        else
                          {
                             config_glob = E_NEW(Config_Glob, 1);
@@ -500,19 +505,21 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
    char *p, *pp;
    Config_Mime *config_mime;
    Config_Glob *config_glob;
-   
+
    if (!cfdata) return;
-   
+
    f = fopen(file, "rb");
    if (!f) return;
    while (fgets(buf, sizeof(buf), f))
      {
         p = buf;
-        while (isblank(*p) && (*p != 0) && (*p != '\n')) p++;
+        while (isblank(*p) && (*p != 0) && (*p != '\n'))
+          p++;
         if (*p == '#') continue;
         if ((*p == '\n') || (*p == 0)) continue;
         pp = p;
-        while ((*p != ':') && (*p != 0) && (*p != '\n')) p++;
+        while ((*p != ':') && (*p != 0) && (*p != '\n'))
+          p++;
         if ((*p == '\n') || (*p == 0)) continue;
         strncpy(mimetype, pp, (p - pp));
         mimetype[p - pp] = 0;
@@ -533,7 +540,7 @@ _load_globs(E_Config_Dialog_Data *cfdata, char *file)
                {
                   config_mime->mime = eina_stringshare_add(mimetype);
                   if (!config_mime->mime)
-                     free(config_mime);
+                    free(config_mime);
                   else
                     {
                        config_glob = E_NEW(Config_Glob, 1);
@@ -563,7 +570,7 @@ _sort_mimes(const void *data1, const void *data2)
    const Config_Mime *m1 = data1, *m2 = data2;
    if (!m1) return 1;
    if (!m2) return -1;
-   return (strcmp(m1->mime, m2->mime));
+   return strcmp(m1->mime, m2->mime);
 }
 
 static Config_Mime *
@@ -571,7 +578,7 @@ _find_mime(E_Config_Dialog_Data *cfdata, char *mime)
 {
    Config_Mime *cm;
    Eina_List *l;
-   
+
    if (!cfdata) return NULL;
    EINA_LIST_FOREACH(cfdata->mimes, l, cm)
      {
@@ -586,7 +593,7 @@ _find_glob(Config_Mime *mime, char *globbing)
 {
    Config_Glob *g;
    Eina_List *l;
-   
+
    if (!mime) return NULL;
    EINA_LIST_FOREACH(mime->globs, l, g)
      {
@@ -601,7 +608,7 @@ static int
 _cb_desks_sort(const void *data1, const void *data2)
 {
    const Efreet_Desktop *d1, *d2;
-   
+
    if (!(d1 = data1)) return 1;
    if (!d1->name) return 1;
    if (!(d2 = data2)) return -1;
@@ -617,7 +624,7 @@ _sel_desk_gen_cb(void *data)
    if ((s) && (cfdata->selmime))
      {
         if (cfdata->ini)
-           efreet_ini_string_set(cfdata->ini, cfdata->selmime, s);
+          efreet_ini_string_set(cfdata->ini, cfdata->selmime, s);
      }
 }
 
@@ -636,7 +643,7 @@ _sel_desk_cb(void *data)
           {
              Eina_List *l;
              Efreet_Desktop *desk;
-             
+
              EINA_LIST_FOREACH(cfdata->desks, l, desk)
                {
                   if ((!strcmp(desk->orig_path, *(cfdata->seldest))) ||
@@ -645,7 +652,7 @@ _sel_desk_cb(void *data)
                        if (desk->exec)
                          {
                             char *p;
-                            
+
                             free(cfdata->browser_custom);
                             cfdata->browser_custom = strdup(desk->exec);
                             for (p = cfdata->browser_custom; *p; p++)
@@ -681,14 +688,14 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il, const char **desk
    Efreet_Desktop *desk = NULL;
    Evas *evas;
    int sel, i;
-   
+
    if (!cfdata->desks)
      {
         desks = efreet_util_desktop_name_glob_list("*");
         EINA_LIST_FREE(desks, desk)
           {
              Eina_List *ll;
-             
+
              if (desk->no_display)
                {
                   efreet_desktop_free(desk);
@@ -698,7 +705,7 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il, const char **desk
              if (ll)
                {
                   Efreet_Desktop *old;
-                  
+
                   old = eina_list_data_get(ll);
                   /*
                    * This fixes when we have several .desktop with the same name,
@@ -711,14 +718,14 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il, const char **desk
                        eina_list_data_set(ll, desk);
                     }
                   else
-                     efreet_desktop_free(desk);
+                    efreet_desktop_free(desk);
                }
              else
-                cfdata->desks = eina_list_append(cfdata->desks, desk);
+               cfdata->desks = eina_list_append(cfdata->desks, desk);
           }
         cfdata->desks = eina_list_sort(cfdata->desks, -1, _cb_desks_sort);
      }
-   
+
    evas = evas_object_evas_get(il);
    evas_event_freeze(evas);
    edje_freeze();
@@ -730,26 +737,26 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il, const char **desk
    EINA_LIST_FOREACH(cfdata->desks, l, desk)
      {
         Evas_Object *icon = NULL;
-        
+
         if ((desktop) && (*desktop))
           {
              if ((!strcmp(desk->orig_path, *desktop)) ||
                  (!strcmp(ecore_file_file_get(desk->orig_path), *desktop)))
-                sel = i;
+               sel = i;
           }
-        
+
         icon = e_util_desktop_icon_add(desk, 24, evas);
         if (general)
-           e_widget_ilist_append(il, icon, desk->name,
-                                 _sel_desk_gen_cb, cfdata,
-                                 ecore_file_file_get(desk->orig_path));
+          e_widget_ilist_append(il, icon, desk->name,
+                                _sel_desk_gen_cb, cfdata,
+                                ecore_file_file_get(desk->orig_path));
         else
-           e_widget_ilist_append(il, icon, desk->name,
-                                 _sel_desk_cb, cfdata,
-                                 ecore_file_file_get(desk->orig_path));
+          e_widget_ilist_append(il, icon, desk->name,
+                                _sel_desk_cb, cfdata,
+                                ecore_file_file_get(desk->orig_path));
         i++;
      }
-   
+
    e_widget_ilist_go(il);
    e_widget_ilist_thaw(il);
    edje_thaw();
@@ -760,3 +767,4 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il, const char **desk
         e_widget_ilist_nth_show(il, sel, 0);
      }
 }
+
