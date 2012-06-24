@@ -230,7 +230,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                  &(cfdata->match_e17_icon_theme));
    e_widget_list_object_append(o, ow, 0, 0, 0.0);
 
-   ow = e_widget_check_add(evas, _("Match E17 theme if possible"),
+   ow = e_widget_check_add(evas, _("Match Enlightenment theme if possible"),
                            &(cfdata->match_e17_theme));
    e_widget_list_object_append(o, ow, 0, 0, 0.0);
 

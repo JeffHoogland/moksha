@@ -1068,7 +1068,7 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
      }
 
    submi = e_menu_item_new(subm);
-   e_menu_item_label_set(submi, _("Use E17 Default Icon Preference"));
+   e_menu_item_label_set(submi, _("Use Enlightenment Default Icon Preference"));
    e_menu_item_radio_set(submi, 1);
    e_menu_item_radio_group_set(submi, 2);
    e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_E_DEFAULT ? 1 : 0));
@@ -1076,7 +1076,7 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_item_callback_set(submi, _e_border_menu_cb_iconpref_e, bd);
 
    submi = e_menu_item_new(subm);
-   e_menu_item_label_set(submi, _("Use Application Provided Icon "));
+   e_menu_item_label_set(submi, _("Use Application Provided Icon"));
    e_menu_item_radio_set(submi, 1);
    e_menu_item_radio_group_set(submi, 2);
    e_menu_item_toggle_set(submi, (bd->icon_preference == E_ICON_PREF_NETWM ? 1 : 0));

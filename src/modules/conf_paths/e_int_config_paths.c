@@ -162,7 +162,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_table_add(evas, 0);
 
-   of = e_widget_framelist_add(evas, _("E Paths"), 0);
+   of = e_widget_framelist_add(evas, _("Enlightenment Paths"), 0);
    ob = e_widget_ilist_add(evas, 0, 0, NULL);
    cfdata->gui.path_list = ob;
    e_widget_size_min_set(ob, 170, 100);
