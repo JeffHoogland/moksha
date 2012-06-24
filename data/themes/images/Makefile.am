@@ -445,9 +445,8 @@ batt_level.png \
 batt_over.png \
 batt_power.png \
 bg_shadow.png \
-bg_over.png \
-bg_base.png \
 xkbshad.png \
 wizard_pattern.png \
 wizard_bt1.png \
-wizard_bt2.png
+wizard_bt2.png \
+Motleyrock.jpg

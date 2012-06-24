@@ -289,23 +289,18 @@ collections {
       /* this section defines that images are to be included and how to
        * encode them */
       images {
-         image: "bg_shadow.png" COMP;
-         /* the encoding method is "COMP". this
-          * is lossless, but compressed */
-         image: "bg_over.png" LOSSY 80;
-         /* the encoding is "LOSSY". this loses quality (80% quality level)
+         image: "Motleyrock.jpg" LOSSY 92;
+         /* the encoding is "LOSSY". this loses quality (92% quality level)
           * but uses less space in return. uses JPEG and can do alpha channels
           * too */
-         image: "bg_base.png" COMP;
       }
       /* this section actually contains the list of parts from bottom to top
        * (defining the layering/stacking order) */
       parts {
-         part {
-            name: "background_image";
+         part { name: "background_image";
+            mouse_events: 0;
             /* this is the base background */
-            description {
-               state: "default" 0.0;
+            description { state: "default" 0.0;
                /* its default state */
                /* note a part has 1 or more states described here. Each state
                 * has a name AND a value. If the value is not useful then set
@@ -325,43 +320,12 @@ collections {
                 * parent.child: blah; in a key to avoid doing
                 * parent { child: blah; }
                 */
-               image.normal: "bg_base.png";
-               /* use the vgrad_dark.png im */
-               fill {
-                  /* now specify how the image is to fill the part */
-                  smooth: 0;
-                  /* set smooth swcaling off */
-                  size {
-                     relative: 0 1.0;
-                     /* X and Y point relative to the part
-                      * as a whole for the size (dont scale
-                      * in X but scale 100% in Y */
-                     offset: 761 0;
-                     /* offsets from the relative scale point
-                      * so here offset is 36 to the right in
-                      * X and at the Y relative point. this
-                      * means tile horizontally, but scale
-                      * vertically */
-                  }
+               image {
+                  normal: "Motleyrock.jpg";
+                  scale_hint: STATIC;
                }
-            }
-         }
-         part {
-            name: "over";
-            description {
-               state: "default" 0.0;
-               image.normal: "bg_over.png";
-               /* tiled at 800x600 */
-               fill.size.relative: 0 0;
-               fill.size.offset: 800 600;
-               fill.smooth: 0;
-            }
-         }
-         /* a circular shadow on top */
-         part { name: "shadow";
-            description { state: "default" 0.0;
-               image.normal: "bg_shadow.png";
-               fill.smooth: 0;
+               aspect: (1920/1200) (1920/1200);
+               aspect_preference: NONE;
             }
          }
       }
