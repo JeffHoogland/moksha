@@ -94,7 +94,6 @@ gadman_frame.png \
 gadman_left.png \
 gadman_right.png \
 gadman_top.png \
-grill_dark_tiny_pattern.png \
 gsm_0.png \
 gsm_1.png \
 gsm_2.png \
