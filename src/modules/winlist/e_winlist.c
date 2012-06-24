@@ -180,10 +180,12 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
         switch (filter)
           {
            case E_WINLIST_FILTER_CLASS_WINDOWS:
-             pick = !strcmp(_last_border->client.icccm.class,
-                            bd->client.icccm.class);
+             if (!_last_border)
+               pick = EINA_FALSE;
+             else
+               pick = !strcmp(_last_border->client.icccm.class,
+                              bd->client.icccm.class);
              break;
-
            case E_WINLIST_FILTER_CLASSES:
              pick = (!_wmclass_picked(wmclasses, bd->client.icccm.class));
              if (pick)
