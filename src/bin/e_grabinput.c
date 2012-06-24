@@ -130,7 +130,8 @@ _e_grabinput_focus_check(void *data __UNUSED__)
 {
    if (ecore_x_window_focus_get() != focus_fix_win)
      {
-        _e_grabinput_focus_do(focus_fix_win, focus_fix_method);
+// woot breaks java. pants on!        
+//        _e_grabinput_focus_do(focus_fix_win, focus_fix_method);
      }
    focus_fix_timer = NULL;
    return EINA_FALSE;
