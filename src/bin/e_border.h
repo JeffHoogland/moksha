@@ -119,7 +119,7 @@ typedef struct _E_Event_Border_Desk_Set      E_Event_Border_Desk_Set;
 typedef struct _E_Event_Border_Stack         E_Event_Border_Stack;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Icon_Change;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Urgent_Change;
-typedef struct _E_Event_Border_Simple	       E_Event_Border_Focus_In;
+typedef struct _E_Event_Border_Simple        E_Event_Border_Focus_In;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Focus_Out;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Property;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Fullscreen;

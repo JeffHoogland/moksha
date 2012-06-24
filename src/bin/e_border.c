@@ -2148,7 +2148,7 @@ e_border_focus_set(E_Border *bd,
 
              if ((set) && (!focus_next) && (!focusing))
                {
-                  e_grabinput_focus(bd->zone->container->bg_win,
+                  e_grabinput_focus(bd->zone->container->manager->root,
                                     E_FOCUS_METHOD_PASSIVE);
                }
           }
@@ -4505,11 +4505,15 @@ _e_border_free(E_Border *bd)
    if (focusing == bd)
      focusing = NULL;
 
-   if (focused == bd)
+   focus_next = eina_list_remove(focus_next, bd);
+   
+   if ((focused == bd) ||
+       (e_grabinput_last_focus_win_get() == bd->client.win))
      {
         if ((!focus_next) && (!focusing))
           {
-             e_grabinput_focus(bd->zone->container->bg_win, E_FOCUS_METHOD_PASSIVE);
+             e_grabinput_focus(bd->zone->container->manager->root,
+                               E_FOCUS_METHOD_PASSIVE);
              e_hints_active_window_set(bd->zone->container->manager, NULL);
           }
 
