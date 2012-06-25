@@ -1176,11 +1176,25 @@ e_gadcon_client_aspect_set(E_Gadcon_Client *gcc, int w, int h)
 }
 
 EAPI void
+e_gadcon_client_autoscroll_toggle_disabled_set(E_Gadcon_Client *gcc, Eina_Bool disable)
+{
+   disable = !!disable;
+   if (gcc->autoscroll_disabled == disable) return;
+   gcc->autoscroll_disabled = disable;
+   if (disable) e_gadcon_client_autoscroll_set(gcc, 1);
+}
+
+EAPI void
 e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
 
+   if (gcc->autoscroll_disabled && (!autoscroll))
+     {
+        e_util_dialog_show("Gadget error", "%s does not support disabling autoscrolling", gcc->name);
+        return;
+     }
    gcc->autoscroll = autoscroll;
    gcc->autoscroll_set = 1;
 /*
@@ -1429,12 +1443,15 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
         if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
         e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
  */
-        mi = e_menu_item_new(menu_gadget);
-        e_menu_item_label_set(mi, _("Automatically scroll contents"));
-        e_util_menu_item_theme_icon_set(mi, "transform-move");
-        e_menu_item_check_set(mi, 1);
-        if (gcc->autoscroll) e_menu_item_toggle_set(mi, 1);
-        e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_autoscroll, gcc);
+        if (!gcc->autoscroll_disabled)
+          {
+             mi = e_menu_item_new(menu_gadget);
+             e_menu_item_label_set(mi, _("Automatically scroll contents"));
+             e_util_menu_item_theme_icon_set(mi, "transform-move");
+             e_menu_item_check_set(mi, 1);
+             if (gcc->autoscroll) e_menu_item_toggle_set(mi, 1);
+             e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_autoscroll, gcc);
+          }
 
         if (gcc->gadcon->shelf)
           {
