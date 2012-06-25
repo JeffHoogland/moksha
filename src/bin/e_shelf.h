@@ -42,6 +42,7 @@ struct _E_Shelf
    unsigned char        toggle      : 1;
    unsigned char        edge        : 1;
    unsigned char        urgent_show : 1;
+   unsigned char        systrayed : 1;
    unsigned int         locked;
 };
 

@@ -1488,6 +1488,16 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
              edje_object_signal_emit(es->o_base, "e,state,focused", "e");
              e_shelf_toggle(es, 1);
           }
+        else if (es->systrayed)
+          {
+             int x, y, w, h;
+             evas_object_geometry_get(es->o_event, &x, &y, &w, &h);
+             if (!E_INSIDE(ev->x, ev->y, x, y, w, h))
+               {
+                  es->systrayed = EINA_FALSE;
+                  e_shelf_toggle(es, 0);
+               }
+          }
      }
    else if (type == ECORE_EVENT_MOUSE_MOVE)
      {
@@ -1515,6 +1525,7 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
    if (type == ECORE_X_EVENT_MOUSE_OUT)
      {
         Ecore_X_Event_Mouse_Out *ev;
+        int x, y, w, h;
 
         ev = event;
 
@@ -1531,9 +1542,19 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
          * not get mouse out itself, so it will stay visible and
          * autohide will fail.
          */
-        if (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return ECORE_CALLBACK_PASS_ON;
+        if (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR)
+          {
+             //fprintf(stderr, "SYSTRAYED\n");
+             es->systrayed = EINA_TRUE;
+             return ECORE_CALLBACK_PASS_ON;
+          }
 
-        e_shelf_toggle(es, 0);
+        evas_object_geometry_get(es->o_event, &x, &y, &w, &h);
+        if (!E_INSIDE(ev->x, ev->y, x, y, w, h))
+          {
+             //fprintf(stderr, "EVENT: %d,%d %dx%d || MOUSE: %d,%d\n", x, y, w, h, ev->x, ev->y);
+             e_shelf_toggle(es, 0);
+          }
      }
    return ECORE_CALLBACK_PASS_ON;
 }
