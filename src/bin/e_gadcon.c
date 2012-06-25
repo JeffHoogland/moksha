@@ -1697,9 +1697,13 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
 static void
 _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
 {
-   Evas_Coord w, h;
+   int w, h, mw, mh;
 
    evas_object_geometry_get(gcc->o_box, NULL, NULL, &w, &h);
+   if (gcc->gadcon->edje.o_parent)
+     evas_object_geometry_get(gcc->gadcon->edje.o_parent, NULL, NULL, &mw, &mh);
+   else
+     mw = w, mh = h;
 /*
    if (gcc->resizable)
      {
@@ -1748,7 +1752,7 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
                             1, 1, /* expand */
                             0.5, 0.5, /* align */
                             w, h, /* min */
-                            w, h /* max */
+                            mw, mh /* max */
                             );
 }
 
