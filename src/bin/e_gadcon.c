@@ -2053,6 +2053,7 @@ _e_gadcon_cb_client_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *o
 
              gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data,
                                            gcc, mn);
+             if (gcc->gadcon->shelf) e_shelf_locked_set(gcc->gadcon->shelf, 0);
           }
 
         if (gcc->gadcon->toolbar)
