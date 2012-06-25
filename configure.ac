@@ -459,7 +459,14 @@ PKG_CHECK_MODULES(E_THUMB, [
   ecore-file >= 1.2.0
   ecore-ipc >= 1.2.0
   eet >= 1.6.0
+  efreet >= 1.2.0
+])
+
+PKG_CHECK_MODULES(EFREET_1_3, [
   efreet >= 1.2.99
+], [
+  AC_DEFINE(HAVE_EFREET_1_3, 1, [ Have efreet 1.3 ])
+], [
 ])
 
 efm_requires="\
