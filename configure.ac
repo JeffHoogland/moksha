@@ -515,7 +515,7 @@ PKG_CHECK_MODULES(E_ALERT, [
 PKG_CHECK_MODULES(E, [
   evas >= 1.2.0
   ecore >= 1.2.0
-  ecore-x >= 1.2.0
+  ecore-x >= 1.2.99
   ecore-evas >= 1.2.0
   ecore-input >= 1.2.0
   ecore-input-evas >= 1.2.0
@@ -538,7 +538,7 @@ PKG_CHECK_MODULES(E, [
 requirements_e="\
 evas >= 1.2.0 \
 ecore >= 1.2.0 \
-ecore-x >= 1.2.0 \
+ecore-x >= 1.2.99 \
 ecore-evas >= 1.2.0 \
 ecore-con >= 1.2.0 \
 ecore-ipc >= 1.2.0 \
