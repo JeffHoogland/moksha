@@ -211,7 +211,7 @@ _fill_cat_list(E_Config_Dialog_Data *cfdata)
 
    for (itr = _types; itr->key_len > 0; itr++)
      {
-        cft = _cftype_new(itr->key, itr->name, itr->icon);
+        cft = _cftype_new(itr->key, _(itr->name), itr->icon);
         icon = e_icon_add(cfdata->evas);
         if (icon)
           {
