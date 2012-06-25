@@ -1488,15 +1488,12 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
              edje_object_signal_emit(es->o_base, "e,state,focused", "e");
              e_shelf_toggle(es, 1);
           }
-        else if (es->systrayed)
+        else if (!es->hidden)
           {
              int x, y, w, h;
              evas_object_geometry_get(es->o_event, &x, &y, &w, &h);
              if (!E_INSIDE(ev->x, ev->y, x, y, w, h))
-               {
-                  es->systrayed = EINA_FALSE;
-                  e_shelf_toggle(es, 0);
-               }
+               e_shelf_toggle(es, 0);
           }
      }
    else if (type == ECORE_EVENT_MOUSE_MOVE)
@@ -1545,7 +1542,6 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
         if (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR)
           {
              //fprintf(stderr, "SYSTRAYED\n");
-             es->systrayed = EINA_TRUE;
              return ECORE_CALLBACK_PASS_ON;
           }
 
