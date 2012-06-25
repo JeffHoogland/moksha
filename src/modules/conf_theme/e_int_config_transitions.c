@@ -6,6 +6,7 @@ static void _trans_preview_trans_set(E_Config_Dialog_Data *cfdata, const char *t
 
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
@@ -40,6 +41,7 @@ e_int_config_transitions(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
    
    cfd = e_config_dialog_new(con, _("Transition Settings"),
 			     "E", "appearance/transitions",
@@ -75,6 +77,23 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata->transition_desk);
    E_FREE(cfdata->transition_change);
    E_FREE(cfdata);
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+{
+   return ((!cfdata->transition_start && e_config->transition_start) ||
+	   (cfdata->transition_start && !e_config->transition_start) ||
+	   (!cfdata->transition_desk && e_config->transition_desk) ||
+	   (cfdata->transition_desk && !e_config->transition_desk) ||
+	   (!cfdata->transition_change && e_config->transition_change) ||
+	   (cfdata->transition_change && !e_config->transition_change) ||
+	   (cfdata->transition_start && e_config->transition_start &&
+	    strcmp(cfdata->transition_start, e_config->transition_start)) ||
+	   (cfdata->transition_desk && e_config->transition_desk &&
+	    strcmp(cfdata->transition_desk, e_config->transition_desk)) ||
+	   (cfdata->transition_change && e_config->transition_change &&
+	    strcmp(cfdata->transition_change, e_config->transition_change)));
 }
 
 static int 
@@ -120,7 +139,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      eina_stringshare_del(e_config->transition_change);
    e_config->transition_change = NULL;
    if (cfdata->transition_change) 
-     {   
+     {
         if (eina_list_search_sorted(trans, EINA_COMPARE_CB(strcmp), 
                                     cfdata->transition_change)) 
           {
@@ -149,12 +168,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    zone = e_zone_current_get(cfd->con);
    
-   o = e_widget_list_add(evas, 0, 1);
+   o = e_widget_table_add(evas, 0);
 
    of = e_widget_framelist_add(evas, _("Events"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->event_list = il;
-   e_widget_size_min_set(il, 140, 200);
+   e_widget_size_min_set(il, 140, 128);
    
    evas_event_freeze(evas_object_evas_get(il));
    edje_freeze();
@@ -167,12 +186,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(il));
    e_widget_framelist_object_append(of, il);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(evas, _("Transitions"), 0);
    il = e_widget_ilist_add(evas, 48, 48, NULL);
    cfdata->trans_list = il;
-   e_widget_size_min_set(il, 100, 200);
+   e_widget_size_min_set(il, 100, 128);
    
    evas_event_freeze(evas_object_evas_get(il));
    edje_freeze();
@@ -194,12 +213,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(il));
    e_widget_framelist_object_append(of, il);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(o, of, 1, 0, 1, 1, 1, 1, 1, 0);
 
    of = e_widget_framelist_add(evas, _("Preview"), 0);
    il = _trans_preview_add(cfdata, evas, 200, ((200 * zone->h) / zone->w));
    e_widget_framelist_object_append(of, il);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_table_object_append(o, of, 0, 1, 2, 1, 1, 1, 1, 1);
 
    e_dialog_resizable_set(cfd->dia, 1);
 
