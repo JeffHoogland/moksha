@@ -1704,6 +1704,8 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
      evas_object_geometry_get(gcc->gadcon->edje.o_parent, NULL, NULL, &mw, &mh);
    else
      mw = w, mh = h;
+   w = MIN(w, mw);
+   h = MIN(h, mh);
 /*
    if (gcc->resizable)
      {
