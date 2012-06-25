@@ -129,7 +129,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    evas_object_resize(es->o_event, es->w, es->h);
    evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_DOWN, _e_shelf_cb_mouse_down, es);
 
-   /* TODO: We should have a mouse out on the evas object if we are on the desktop */
    es->handlers = eina_list_append(es->handlers,
                                    ecore_event_handler_add(E_EVENT_ZONE_EDGE_MOVE, _e_shelf_cb_mouse_in, es));
    es->handlers = eina_list_append(es->handlers,
