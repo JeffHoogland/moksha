@@ -17,6 +17,7 @@ static void         _e_shelf_cb_urgent_show(void *data);
 static void         _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static Eina_Bool    _e_shelf_cb_mouse_in(void *data, int type, void *event);
 static Eina_Bool    _e_shelf_cb_mouse_out(void *data, int type, void *event);
+static void          _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e, Evas_Object *obj, Evas_Event_Mouse_Out *ev);
 static int          _e_shelf_cb_id_sort(const void *data1, const void *data2);
 static Eina_Bool    _e_shelf_cb_hide_animator(void *data);
 static Eina_Bool    _e_shelf_cb_hide_animator_timer(void *data);
@@ -137,6 +138,8 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
                                    ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _e_shelf_cb_mouse_in, es));
    es->handlers = eina_list_append(es->handlers,
                                    ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_shelf_cb_mouse_out, es));
+   if (!popup)
+     evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_OUT, (Evas_Object_Event_Cb)_e_shelf_cb_mouse_out2, es);
 
    es->o_base = edje_object_add(es->evas);
    es->name = eina_stringshare_add(name);
@@ -1482,18 +1485,18 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
         Ecore_X_Event_Mouse_In *ev;
 
         ev = event;
-        if (!es->popup) return ECORE_CALLBACK_PASS_ON;
-        if (ev->win == es->popup->evas_win)
-          {
-             edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-             e_shelf_toggle(es, 1);
-          }
-        else if (!es->hidden)
+        if ((!es->hidden) && (!es->menu))
           {
              int x, y, w, h;
              evas_object_geometry_get(es->o_event, &x, &y, &w, &h);
              if (!E_INSIDE(ev->x, ev->y, x, y, w, h))
                e_shelf_toggle(es, 0);
+          }
+        if (!es->popup) return ECORE_CALLBACK_PASS_ON;
+        if (ev->win == es->popup->evas_win)
+          {
+             edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+             e_shelf_toggle(es, 1);
           }
      }
    else if (type == ECORE_EVENT_MOUSE_MOVE)
@@ -1509,6 +1512,15 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
           }
      }
    return ECORE_CALLBACK_PASS_ON;
+}
+
+static void
+_e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, Evas_Event_Mouse_Out *ev)
+{
+   int x, y, w, h;
+   evas_object_geometry_get(es->o_event, &x, &y, &w, &h);
+   if (!E_INSIDE(ev->output.x, ev->output.y, x, y, w, h))
+     e_shelf_toggle(es, 0);
 }
 
 static Eina_Bool

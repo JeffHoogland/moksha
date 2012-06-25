@@ -482,6 +482,7 @@ e_gadcon_unpopulate(E_Gadcon *gc)
         gcc = eina_list_data_get(gc->clients);
         if (gcc->menu)
           {
+             if (gcc->gadcon->shelf && (gcc->menu == gcc->gadcon->shelf->menu)) gcc->gadcon->shelf->menu = NULL;
              e_menu_post_deactivate_callback_set(gcc->menu, NULL, NULL);
              e_object_del(E_OBJECT(gcc->menu));
              gcc->menu = NULL;
@@ -1692,6 +1693,7 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
                                     _e_gadcon_client_del_hook);
    if (gcc->menu)
      {
+        if (gcc->gadcon->shelf && (gcc->menu == gcc->gadcon->shelf->menu)) gcc->gadcon->shelf->menu = NULL;
         e_menu_post_deactivate_callback_set(gcc->menu, NULL, NULL);
         e_object_del(E_OBJECT(gcc->menu));
         gcc->menu = NULL;
@@ -2662,6 +2664,7 @@ _e_gadcon_client_cb_menu_post(void *data, E_Menu *m __UNUSED__)
    if (!(gcc = data)) return;
    if (gcc->gadcon) e_gadcon_locked_set(gcc->gadcon, 0);
    if (!gcc->menu) return;
+   if (gcc->gadcon->shelf && (gcc->menu == gcc->gadcon->shelf->menu)) gcc->gadcon->shelf->menu = NULL;
    e_object_del(E_OBJECT(gcc->menu));
    gcc->menu = NULL;
 }
@@ -2700,6 +2703,7 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj 
         e_menu_post_deactivate_callback_set(m, _e_gadcon_client_cb_menu_post,
                                             gcc);
         gcc->menu = m;
+        if (gcc->gadcon->shelf) gcc->gadcon->shelf->menu = m;
 
         e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
         zone = gcc->gadcon->zone;
