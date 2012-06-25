@@ -7,7 +7,7 @@ struct _E_Config_Dialog_Data
 
    struct
    {
-      Evas_Object *list, *del;
+      Evas_Object *list, *add, *del;
    } obj;
 };
 
@@ -18,16 +18,17 @@ static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E
 static Eina_Bool    _desks_update(void *data, int ev_type __UNUSED__, void *ev __UNUSED__);
 static int          _cb_desks_sort(const void *data1, const void *data2);
 static void         _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il);
+static void         _btn_cb_add(void *data, void *data2);
 static void         _btn_cb_del(void *data, void *data2);
 static void         _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__);
 
 E_Config_Dialog *
-e_int_config_delapps(E_Container *con, const char *params __UNUSED__)
+e_int_config_apps_personal(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "applications/del_applications"))
+   if (e_config_dialog_find("E", "applications/personal_applications"))
      return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
@@ -35,9 +36,9 @@ e_int_config_delapps(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
 
-   cfd = e_config_dialog_new(con, _("Delete Launchers"),
-                             "E", "applications/del_applications",
-                             "preferences-applications-del", 0, v, NULL);
+   cfd = e_config_dialog_new(con, _("Personal Application Launchers"),
+                             "E", "applications/personal_applications",
+                             "preferences-applications-personal", 0, v, NULL);
    return cfd;
 }
 
@@ -82,15 +83,19 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    if (mh < (160 * e_scale)) mh = 160 * e_scale;
    e_widget_size_min_set(li, mw, mh);
    e_widget_on_change_hook_set(li, _widget_list_selection_changed, cfdata);
-   e_widget_table_object_append(of, li, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, li, 0, 1, 2, 1, 1, 1, 1, 1);
 
    _fill_apps_list(cfdata, cfdata->obj.list);
    e_widget_ilist_go(li);
 
-   ob = e_widget_button_add(evas, _("Delete"), NULL, _btn_cb_del, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Add"), "list-add", _btn_cb_add, cfdata, NULL);
+   cfdata->obj.add = ob;
+   e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 0);
+
+   ob = e_widget_button_add(evas, _("Remove"), "list-remove", _btn_cb_del, cfdata, NULL);
    cfdata->obj.del = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 0);
 
    e_dialog_resizable_set(cfd->dia, 1);
    e_win_centered_set(cfd->dia->win, 1);
@@ -171,6 +176,21 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il)
    e_widget_ilist_thaw(il);
    edje_thaw();
    evas_event_thaw(evas);
+}
+
+static void
+_btn_cb_add(void *data, void *data2 __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   E_Manager *man;
+   E_Container *con;
+
+   man = e_manager_current_get();
+   if (!man) return;
+   con = e_container_current_get(man);
+   if (!con) return;
+
+   e_desktop_edit(con, NULL);   
 }
 
 static void

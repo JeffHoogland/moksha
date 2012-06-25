@@ -17,14 +17,14 @@ e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("applications", 20, _("Apps"), NULL,
                                      "preferences-applications");
-   e_configure_registry_item_add("applications/new_application", 10,
-                                 _("Create Launcher"), NULL,
+   e_configure_registry_item_add("applications/new_application", -1,
+                                 _("Create Application Launcher"), NULL,
                                  "preferences-applications-add",
                                  e_int_config_apps_add);
-   e_configure_registry_item_add("applications/del_application", 20,
-                                 _("Delete Personal Launchers"), NULL,
-                                 "preferences-applications-del",
-                                 e_int_config_delapps);
+   e_configure_registry_item_add("applications/personal_applications", 20,
+                                 _("Personal Application Launchers"), NULL,
+                                 "preferences-applications-personal",
+                                 e_int_config_apps_personal);
    e_configure_registry_item_add("applications/favorite_applications", 30,
                                  _("Favorite Applications"), NULL,
                                  "user-bookmarks",
@@ -71,7 +71,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_category_del("internal");
    e_configure_registry_item_del("applications/favorite_applications");
    e_configure_registry_item_del("applications/new_application");
-   e_configure_registry_item_del("applications/del_application");
+   e_configure_registry_item_del("applications/personal_applications");
    e_configure_registry_item_del("applications/ibar_applications");
    e_configure_registry_item_del("applications/restart_applications");
    e_configure_registry_item_del("applications/startup_applications");
