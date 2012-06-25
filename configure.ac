@@ -459,7 +459,7 @@ PKG_CHECK_MODULES(E_THUMB, [
   ecore-file >= 1.2.0
   ecore-ipc >= 1.2.0
   eet >= 1.6.0
-  efreet >= 1.2.0
+  efreet >= 1.2.99
 ])
 
 efm_requires="\
