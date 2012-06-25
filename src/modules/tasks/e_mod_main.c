@@ -238,7 +238,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style __UNU
    
    tasks_config->tasks = eina_list_append(tasks_config->tasks, tasks);
 
-   e_gadcon_client_autoscroll_set(gcc, 1);
+   e_gadcon_client_autoscroll_toggle_disabled_set(gcc, 1);
    // Fill on initial config
    _tasks_config_updated(tasks->config);
    return gcc;
