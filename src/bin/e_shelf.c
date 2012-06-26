@@ -1,5 +1,6 @@
 #include "e.h"
 
+static void         _e_shelf_del_cb(void *d);
 static void         _e_shelf_free(E_Shelf *es);
 static void         _e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static void         _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
@@ -106,6 +107,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->w = 32;
    es->h = 32;
    es->zone = zone;
+   e_object_del_attach_func_set(E_OBJECT(es), _e_shelf_del_cb);
    e_zone_useful_geometry_dirty(zone);
    if (popup)
      {
@@ -851,6 +853,15 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
 
 /* local subsystem functions */
 static void
+_e_shelf_del_cb(void *d)
+{
+   E_Shelf *es;
+
+   es = d;
+   shelves = eina_list_remove(shelves, es);
+}
+
+static void
 _e_shelf_free(E_Shelf *es)
 {
    _e_shelf_bindings_del(es);
@@ -884,7 +895,6 @@ _e_shelf_free(E_Shelf *es)
         es->menu = NULL;
      }
    if (es->config_dialog) e_object_del(E_OBJECT(es->config_dialog));
-   shelves = eina_list_remove(shelves, es);
    eina_stringshare_del(es->name);
    eina_stringshare_del(es->style);
    evas_object_del(es->o_event);

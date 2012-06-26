@@ -4,6 +4,7 @@ static void        *_create_data(E_Config_Dialog *cfd);
 static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void         _ilist_fill(E_Config_Dialog_Data *cfdata);
+static void         _ilist_empty(E_Config_Dialog_Data *cfdata);
 static void         _ilist_cb_selected(void *data);
 static void         _cb_add(void *data, void *data2);
 static void         _cb_delete(void *data, void *data2);
@@ -108,12 +109,25 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
 /* private functions */
 static void
+_ilist_refresh(E_Shelf *es)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = evas_object_data_get(es->o_base, "cfdata");
+   if (!cfdata) return;
+   _ilist_empty(cfdata);
+   _ilist_fill(cfdata);
+}
+
+static void
 _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es)
 {
    char buf[256];
    Evas_Object *ob;
 
    snprintf(buf, sizeof(buf), "Shelf %s", e_shelf_orient_string_get(es));
+   e_object_del_func_set(E_OBJECT(es), (E_Object_Cleanup_Func)_ilist_refresh);
+   evas_object_data_set(es->o_base, "cfdata", cfdata);
 
    ob = e_icon_add(evas_object_evas_get(cfdata->o_list));
    switch (es->cfg->orient)
@@ -176,6 +190,39 @@ _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es)
    else
      e_widget_ilist_prepend(cfdata->o_list, ob, buf,
                            _ilist_cb_selected, cfdata, buf);
+}
+
+static void
+_ilist_empty(E_Config_Dialog_Data *cfdata)
+{
+   Eina_List *l;
+   E_Shelf *es;
+   E_Desk *desk;
+   E_Zone *zone;
+
+   zone = e_util_zone_current_get(cfdata->cfd->con->manager);
+   desk = e_desk_current_get(zone);
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
+     {
+        if (es->zone != zone) continue;
+        if (es->cfg->desk_show_mode)
+          {
+             Eina_List *ll;
+             E_Config_Shelf_Desk *sd;
+             
+             EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
+               {
+                  if ((desk->x == sd->x) && (desk->y == sd->y))
+                    {
+                       e_object_del_func_set(E_OBJECT(es), NULL);
+                       break;
+                    }
+               }
+          }
+        else
+          e_object_del_func_set(E_OBJECT(es), NULL);
+     }
+   e_widget_ilist_clear(cfdata->o_list);
 }
 
 static void
@@ -366,7 +413,7 @@ _cb_dialog_destroy(void *data)
 
    d = data;
    e_object_unref(E_OBJECT(d->es));
-   _ilist_fill(d->cfdata);
+   _ilist_empty(d->cfdata);
    E_FREE(d);
 }
 
