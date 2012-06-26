@@ -17,8 +17,10 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_list;
    Evas_Object *o_delete;
    Evas_Object *o_config;
+   Evas_Object *o_contents;
 
    const char  *cur_shelf;
+   E_Config_Dialog *cfd;
 };
 
 typedef struct _Shelf_Del_Confirm_Data Shelf_Del_Confirm_Data;
@@ -34,7 +36,6 @@ e_int_config_shelf(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (e_config_dialog_find("E", "extensions/shelves")) return NULL;
    v = E_NEW(E_Config_Dialog_View, 1);
    if (!v) return NULL;
    v->create_cfdata = _create_data;
@@ -48,11 +49,12 @@ e_int_config_shelf(E_Container *con, const char *params __UNUSED__)
 }
 
 static void *
-_create_data(E_Config_Dialog *cfd __UNUSED__)
+_create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->cfd = cfd;
    return cfdata;
 }
 
@@ -83,9 +85,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove",
                                           _cb_delete, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_delete, 1, 0, 1, 1, 1, 1, 0, 0);
-   cfdata->o_config = e_widget_button_add(evas, _("Contents"), "preferences-desktop-shelf",
+   cfdata->o_contents = e_widget_button_add(evas, _("Contents"), "preferences-desktop-shelf",
                                           _cb_contents, cfdata, NULL);
-   e_widget_table_object_align_append(ot, cfdata->o_config,
+   e_widget_table_object_align_append(ot, cfdata->o_contents,
                                       2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
    cfdata->o_config = e_widget_button_add(evas, _("Setup"), "configure",
                                           _cb_config, cfdata, NULL);
@@ -94,6 +96,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(ol, ot, 1, 0, 0.0);
 
    e_widget_disabled_set(cfdata->o_delete, 1);
+   e_widget_disabled_set(cfdata->o_contents, 1);
    e_widget_disabled_set(cfdata->o_config, 1);
 
    _ilist_fill(cfdata);
@@ -105,13 +108,86 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
 /* private functions */
 static void
+_ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es)
+{
+   char buf[256];
+   Evas_Object *ob;
+
+   snprintf(buf, sizeof(buf), "Shelf %s", e_shelf_orient_string_get(es));
+
+   ob = e_icon_add(evas_object_evas_get(cfdata->o_list));
+   switch (es->cfg->orient)
+     {
+      case E_GADCON_ORIENT_LEFT:
+        e_util_icon_theme_set(ob, "preferences-position-left");
+        break;
+
+      case E_GADCON_ORIENT_RIGHT:
+        e_util_icon_theme_set(ob, "preferences-position-right");
+        break;
+
+      case E_GADCON_ORIENT_TOP:
+        e_util_icon_theme_set(ob, "preferences-position-top");
+        break;
+
+      case E_GADCON_ORIENT_BOTTOM:
+        e_util_icon_theme_set(ob, "preferences-position-bottom");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_TL:
+        e_util_icon_theme_set(ob, "preferences-position-top-left");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_TR:
+        e_util_icon_theme_set(ob, "preferences-position-top-right");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_BL:
+        e_util_icon_theme_set(ob, "preferences-position-bottom-left");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_BR:
+        e_util_icon_theme_set(ob, "preferences-position-bottom-right");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_LT:
+        e_util_icon_theme_set(ob, "preferences-position-left-top");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_RT:
+        e_util_icon_theme_set(ob, "preferences-position-right-top");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_LB:
+        e_util_icon_theme_set(ob, "preferences-position-left-bottom");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_RB:
+        e_util_icon_theme_set(ob, "preferences-position-right-bottom");
+        break;
+
+      default:
+        e_util_icon_theme_set(ob, "enlightenment");
+        break;
+     }
+   if (append)
+     e_widget_ilist_append(cfdata->o_list, ob, buf,
+                           _ilist_cb_selected, cfdata, buf);
+   else
+     e_widget_ilist_prepend(cfdata->o_list, ob, buf,
+                           _ilist_cb_selected, cfdata, buf);
+}
+
+static void
 _ilist_fill(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Eina_List *l;
    E_Shelf *es;
+   E_Desk *desk;
+   E_Zone *zone;
    int n = -1;
-   char buf[256];
+   Eina_Bool header = EINA_FALSE;
 
    if (!cfdata) return;
    if (!cfdata->o_list) return;
@@ -126,70 +202,35 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->o_list);
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
+   zone = e_util_zone_current_get(cfdata->cfd->con->manager);
+   desk = e_desk_current_get(zone);
 
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
-        Evas_Object *ob;
-
-        snprintf(buf, sizeof(buf), "Shelf %s", e_shelf_orient_string_get(es));
-
-        ob = e_icon_add(evas);
-        switch (es->cfg->orient)
+        if (es->zone != zone) continue;
+        if (es->cfg->desk_show_mode)
           {
-           case E_GADCON_ORIENT_LEFT:
-             e_util_icon_theme_set(ob, "preferences-position-left");
-             break;
-
-           case E_GADCON_ORIENT_RIGHT:
-             e_util_icon_theme_set(ob, "preferences-position-right");
-             break;
-
-           case E_GADCON_ORIENT_TOP:
-             e_util_icon_theme_set(ob, "preferences-position-top");
-             break;
-
-           case E_GADCON_ORIENT_BOTTOM:
-             e_util_icon_theme_set(ob, "preferences-position-bottom");
-             break;
-
-           case E_GADCON_ORIENT_CORNER_TL:
-             e_util_icon_theme_set(ob, "preferences-position-top-left");
-             break;
-
-           case E_GADCON_ORIENT_CORNER_TR:
-             e_util_icon_theme_set(ob, "preferences-position-top-right");
-             break;
-
-           case E_GADCON_ORIENT_CORNER_BL:
-             e_util_icon_theme_set(ob, "preferences-position-bottom-left");
-             break;
-
-           case E_GADCON_ORIENT_CORNER_BR:
-             e_util_icon_theme_set(ob, "preferences-position-bottom-right");
-             break;
-
-           case E_GADCON_ORIENT_CORNER_LT:
-             e_util_icon_theme_set(ob, "preferences-position-left-top");
-             break;
-
-           case E_GADCON_ORIENT_CORNER_RT:
-             e_util_icon_theme_set(ob, "preferences-position-right-top");
-             break;
-
-           case E_GADCON_ORIENT_CORNER_LB:
-             e_util_icon_theme_set(ob, "preferences-position-left-bottom");
-             break;
-
-           case E_GADCON_ORIENT_CORNER_RB:
-             e_util_icon_theme_set(ob, "preferences-position-right-bottom");
-             break;
-
-           default:
-             e_util_icon_theme_set(ob, "enlightenment");
-             break;
+             Eina_List *ll;
+             E_Config_Shelf_Desk *sd;
+             
+             EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
+               {
+                  if ((desk->x == sd->x) && (desk->y == sd->y))
+                    {
+                       if (!header)
+                         {
+                            char buf[32];
+                            header = EINA_TRUE;
+                            snprintf(buf, sizeof(buf), "Desk %d,%d", desk->x, desk->y);
+                            e_widget_ilist_header_append(cfdata->o_list, NULL, buf);
+                         }
+                       _ilist_item_new(cfdata, EINA_TRUE, es);
+                       break;
+                    }
+               }
           }
-        e_widget_ilist_append(cfdata->o_list, ob, buf,
-                              _ilist_cb_selected, cfdata, buf);
+        else
+          _ilist_item_new(cfdata, !header, es);
      }
 
    e_widget_size_min_set(cfdata->o_list, 155, 250);
@@ -218,6 +259,7 @@ _ilist_cb_selected(void *data)
 
    if (!(cfdata = data)) return;
    e_widget_disabled_set(cfdata->o_delete, 0);
+   e_widget_disabled_set(cfdata->o_contents, 0);
    e_widget_disabled_set(cfdata->o_config, 0);
 }
 
