@@ -21,6 +21,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_contents;
 
    const char  *cur_shelf;
+   Eina_List *shelves;
    E_Config_Dialog *cfd;
 };
 
@@ -62,6 +63,12 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   E_Shelf *es;
+   EINA_LIST_FREE(cfdata->shelves, es)
+     {
+        evas_object_data_del(es->o_base, "cfdata");
+        e_object_del_func_set(E_OBJECT(es), NULL);
+     }
    E_FREE(cfdata);
 }
 
@@ -190,6 +197,7 @@ _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es)
    else
      e_widget_ilist_prepend(cfdata->o_list, ob, buf,
                            _ilist_cb_selected, cfdata, buf);
+   cfdata->shelves = eina_list_append(cfdata->shelves, es);
 }
 
 static void
@@ -200,7 +208,9 @@ _ilist_empty(E_Config_Dialog_Data *cfdata)
    E_Desk *desk;
    E_Zone *zone;
 
+   if ((!cfdata) || (!cfdata->cfd) || (!cfdata->cfd->con) || (!cfdata->cfd->con->manager)) return;
    zone = e_util_zone_current_get(cfdata->cfd->con->manager);
+   if (!zone) return;
    desk = e_desk_current_get(zone);
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
@@ -215,14 +225,19 @@ _ilist_empty(E_Config_Dialog_Data *cfdata)
                   if ((desk->x == sd->x) && (desk->y == sd->y))
                     {
                        e_object_del_func_set(E_OBJECT(es), NULL);
+                       evas_object_data_del(es->o_base, "cfdata");
                        break;
                     }
                }
           }
         else
-          e_object_del_func_set(E_OBJECT(es), NULL);
+          {
+             e_object_del_func_set(E_OBJECT(es), NULL);
+             evas_object_data_del(es->o_base, "cfdata");
+          }
      }
    e_widget_ilist_clear(cfdata->o_list);
+   cfdata->shelves = eina_list_free(cfdata->shelves);
 }
 
 static void
@@ -414,6 +429,7 @@ _cb_dialog_destroy(void *data)
    d = data;
    e_object_unref(E_OBJECT(d->es));
    _ilist_empty(d->cfdata);
+   _ilist_fill(d->cfdata);
    E_FREE(d);
 }
 
