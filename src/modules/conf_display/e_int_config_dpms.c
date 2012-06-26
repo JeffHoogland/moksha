@@ -297,6 +297,23 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 
    o = e_widget_list_add(evas, 0, 0);
 
+   {
+      char buf[32];
+      switch (e_config->backlight.mode)
+        {
+         case 0:
+           snprintf(buf, sizeof(buf), "%s: RANDR", _("Mode"));
+           break;
+         case 1:
+           snprintf(buf, sizeof(buf), "%s: EEZE", _("Mode"));
+           break;
+         default:
+           snprintf(buf, sizeof(buf), "%s: NONE", _("Mode"));
+        }
+      ob = e_widget_label_add(evas, buf);
+      e_widget_list_object_append(o, ob, 0, 1, 0.5);
+   }
+
    ob = e_widget_label_add(evas, _("Normal Backlight"));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%3.0f"), 0.0, 100.0, 1.0, 0,

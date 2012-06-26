@@ -13,7 +13,6 @@
 
 static double bl_val = 1.0;
 static double bl_animval = 1.0;
-static E_Backlight_Mode bl_mode = E_BACKLIGHT_MODE_NORMAL;
 static int sysmode = MODE_NONE;
 static Ecore_Animator *bl_anim = NULL;
 
@@ -207,7 +206,7 @@ e_backlight_update(void)
    /* timer is 0 seconds: return */
    if (!e_config->backlight.timer) return;
    /* current mode is dimmed: undim */
-   if (bl_mode == E_BACKLIGHT_MODE_DIM)
+   if (e_config->backlight.mode == E_BACKLIGHT_MODE_DIM)
      e_backlight_mode_set(NULL, E_BACKLIGHT_MODE_NORMAL);
    _e_backlight_timer = ecore_timer_add(e_config->backlight.timer, _e_backlight_timer_cb, NULL);
 }
@@ -226,7 +225,7 @@ e_backlight_level_set(E_Zone *zone, double val, double tim)
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    bl_now = bl_val;
    bl_val = val;
-   if (bl_mode != E_BACKLIGHT_MODE_NORMAL) return;
+   if (e_config->backlight.mode != E_BACKLIGHT_MODE_NORMAL) return;
    if (tim < 0.0) tim = e_config->backlight.transition;
    if (tim == 0.0)
      {
@@ -254,15 +253,15 @@ EAPI void
 e_backlight_mode_set(E_Zone *zone, E_Backlight_Mode mode)
 {
    // zone == NULL == everything
-   if (bl_mode == mode) return;
-   bl_mode = mode;
-   if      (bl_mode == E_BACKLIGHT_MODE_NORMAL)
+   if (e_config->backlight.mode == mode) return;
+   e_config->backlight.mode = mode;
+   if      (e_config->backlight.mode == E_BACKLIGHT_MODE_NORMAL)
       e_backlight_level_set(zone, bl_val, -1.0);
-   else if (bl_mode == E_BACKLIGHT_MODE_OFF)
+   else if (e_config->backlight.mode == E_BACKLIGHT_MODE_OFF)
       e_backlight_level_set(zone, 0.0, -1.0);
-   else if (bl_mode == E_BACKLIGHT_MODE_DIM)
+   else if (e_config->backlight.mode == E_BACKLIGHT_MODE_DIM)
       e_backlight_level_set(zone, e_config->backlight.dim, -1.0);
-   else if (bl_mode == E_BACKLIGHT_MODE_MAX)
+   else if (e_config->backlight.mode == E_BACKLIGHT_MODE_MAX)
       e_backlight_level_set(zone, 1.0, -1.0);
 }
 
@@ -270,7 +269,7 @@ EAPI E_Backlight_Mode
 e_backlight_mode_get(E_Zone *zone __UNUSED__)
 {
    // zone == NULL == everything
-   return bl_mode;
+   return e_config->backlight.mode;
 }
 
 /* local subsystem functions */
