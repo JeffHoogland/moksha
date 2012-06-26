@@ -106,7 +106,7 @@ _queue_timer(void *data)
                }
              else if (qi->use_relative == CMD_PREPEND)
                {
-                  wd->callbacks = eina_list_append(wd->callbacks, wcb);
+                  wd->callbacks = eina_list_prepend(wd->callbacks, wcb);
                   e_ilist_prepend(wd->o_ilist, qi->icon, qi->end, qi->label, qi->header,
                                   _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
                }
