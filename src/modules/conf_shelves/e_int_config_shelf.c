@@ -83,6 +83,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    snprintf(buf, sizeof(buf), "%s %d", _("Configured Shelves: Display"), e_util_zone_current_get(cfd->con->manager)->num);
    of = e_widget_framelist_add(evas, buf, 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->cur_shelf));
+   evas_object_data_set(cfdata->o_list, "cfdata", cfdata);
    e_widget_size_min_set(cfdata->o_list, (140 * e_scale), (80 * e_scale));
    e_widget_framelist_object_append(of, cfdata->o_list);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
@@ -193,10 +194,10 @@ _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es)
      }
    if (append)
      e_widget_ilist_append(cfdata->o_list, ob, buf,
-                           _ilist_cb_selected, cfdata, buf);
+                           _ilist_cb_selected, es, buf);
    else
      e_widget_ilist_prepend(cfdata->o_list, ob, buf,
-                           _ilist_cb_selected, cfdata, buf);
+                           _ilist_cb_selected, es, buf);
    cfdata->shelves = eina_list_append(cfdata->shelves, es);
 }
 
@@ -318,8 +319,9 @@ static void
 _ilist_cb_selected(void *data)
 {
    E_Config_Dialog_Data *cfdata;
+   E_Shelf *es = data;
 
-   if (!(cfdata = data)) return;
+   if (!(cfdata = evas_object_data_get(es->o_base, "cfdata"))) return;
    e_widget_disabled_set(cfdata->o_delete, 0);
    e_widget_disabled_set(cfdata->o_contents, 0);
    e_widget_disabled_set(cfdata->o_config, 0);
@@ -440,8 +442,7 @@ _cb_config(void *data, void *data2 __UNUSED__)
    E_Shelf *es;
 
    if (!(cfdata = data)) return;
-   es = eina_list_nth(e_shelf_list(),
-                      e_widget_ilist_selected_get(cfdata->o_list));
+   es = e_widget_ilist_selected_data_get(cfdata->o_list);
    if (!es) return;
    if (!es->config_dialog) e_int_shelf_config(es);
 }
@@ -453,8 +454,7 @@ _cb_contents(void *data, void *data2 __UNUSED__)
    E_Shelf *es;
 
    if (!(cfdata = data)) return;
-   es = eina_list_nth(e_shelf_list(),
-                      e_widget_ilist_selected_get(cfdata->o_list));
+   es = e_widget_ilist_selected_data_get(cfdata->o_list);
    if (!es) return;
    if (!es->config_dialog) e_int_gadcon_config_shelf(es->gadcon);
 }
