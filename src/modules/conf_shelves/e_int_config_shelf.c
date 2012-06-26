@@ -109,6 +109,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 {
    Evas *evas;
    Eina_List *l;
+   E_Shelf *es;
    int n = -1;
    char buf[256];
 
@@ -126,12 +127,9 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
 
-   for (l = e_shelf_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
-        E_Shelf *es;
         Evas_Object *ob;
-
-        if (!(es = l->data)) continue;
 
         snprintf(buf, sizeof(buf), "Shelf %s", e_shelf_orient_string_get(es));
 
