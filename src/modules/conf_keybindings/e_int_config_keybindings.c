@@ -749,7 +749,7 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
    E_Action_Group *actg;
    E_Action_Description *actd;
    E_Config_Binding_Key *bi;
-   const char *action, *params;
+   const char *action;
 
 #define KB_EXAMPLE_PARAMS                                           \
   if ((!actd->param_example) || (!actd->param_example[0]))          \
@@ -800,7 +800,6 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
              return;
           }
         action = bi->action;
-        params = bi->params;
      }
    else
      {
@@ -813,10 +812,10 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
      {
         if (!strcmp(action, actd->act_cmd))
           {
-             if ((!params) || (!params[0]))
+             if ((!actd->act_params) || (!actd->act_params[0]))
                KB_EXAMPLE_PARAMS;
              else
-               e_widget_entry_text_set(cfdata->gui.o_params, params);
+               e_widget_entry_text_set(cfdata->gui.o_params, actd->act_params);
           }
         else
           KB_EXAMPLE_PARAMS;
