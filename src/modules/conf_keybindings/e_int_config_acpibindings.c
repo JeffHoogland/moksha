@@ -194,11 +194,11 @@ _basic_create(E_Config_Dialog *cfd,
    _fill_bindings(cfdata);
    e_widget_frametable_object_append(of, ow, 0, 0, 2, 1, 1, 1, 1, 1);
 
-   ow = e_widget_button_add(evas, _("Add Binding"), "list-add",
+   ow = e_widget_button_add(evas, _("Add"), "list-add",
                             _cb_add_binding, cfdata, NULL);
    cfdata->o_add = ow;
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
-   ow = e_widget_button_add(evas, _("Delete Binding"), "list-remove",
+   ow = e_widget_button_add(evas, _("Delete"), "list-remove",
                             _cb_del_binding, cfdata, NULL);
    cfdata->o_del = ow;
    e_widget_disabled_set(ow, EINA_TRUE);
