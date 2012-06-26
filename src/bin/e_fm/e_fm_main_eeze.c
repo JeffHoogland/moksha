@@ -345,6 +345,7 @@ _e_fm_main_eeze_volume_add(const char *syspath,
    v->udi = eina_stringshare_add(syspath);
    v->icon = NULL;
    v->first_time = first_time;
+   v->efm_mode = EFM_MODE_USING_EEZE_MOUNT;
    _e_vols = eina_list_append(_e_vols, v);
    v->uuid = eeze_disk_uuid_get(v->disk);
    v->label = eeze_disk_label_get(v->disk);
