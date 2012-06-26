@@ -122,6 +122,14 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    /* Display */
    ol = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Border Icon"), 0);
+   rg = e_widget_radio_group_new(&(cfdata->use_app_icon));
+   ow = e_widget_radio_add(evas, _("User defined"), 0, rg);
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_radio_add(evas, _("Application provided"), 1, rg);
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+
    of = e_widget_framelist_add(evas, _("Move Geometry"), 0);
    oc = e_widget_check_add(evas, _("Display information"), 
                            &(cfdata->move_info_visible));
@@ -144,16 +152,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Display"), ol, 
-                                 0, 0, 1, 0, 0.5, 0.0);
-
-   /* Border Icon */
-   ol = e_widget_list_add(evas, 0, 0);
-   rg = e_widget_radio_group_new(&(cfdata->use_app_icon));
-   ow = e_widget_radio_add(evas, _("User defined"), 0, rg);
-   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_radio_add(evas, _("Application provided"), 1, rg);
-   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Border Icon"), ol, 
                                  0, 0, 1, 0, 0.5, 0.0);
 
    /* New Windows */
