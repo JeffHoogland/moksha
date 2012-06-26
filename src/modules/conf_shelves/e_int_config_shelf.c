@@ -66,10 +66,12 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata) 
 {
    Evas_Object *ol, *ow, *ot, *of;
+   char buf[64];
 
    ol = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_framelist_add(evas, _("Configured Shelves"), 0);
+   snprintf(buf, sizeof(buf), "%s %d", _("Configured Shelves: Display"), e_util_zone_current_get(cfd->con->manager)->);
+   of = e_widget_framelist_add(evas, buf, 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->cur_shelf));
    e_widget_size_min_set(cfdata->o_list, (140 * e_scale), (80 * e_scale));
    e_widget_framelist_object_append(of, cfdata->o_list);
@@ -226,7 +228,6 @@ _cb_add(void *data, void *data2 __UNUSED__)
    cfg->name = eina_stringshare_add("shelf");
    cfg->container = con->num;
    cfg->zone = zone->num;
-   printf("zone = %i\n", cfg->zone);
    cfg->popup = 1;
    cfg->layer = 200;
    cfg->orient = E_GADCON_ORIENT_CORNER_BR;
