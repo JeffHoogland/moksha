@@ -181,7 +181,7 @@ _cb_del(void *data, void *data2 __UNUSED__)
             cfdata->dir);
 
    dialog = e_confirm_dialog_show(_("Are you sure you want to delete this bar source?"),
-                                  "application-exit", buf, NULL, NULL,
+                                  "application-exit", buf, _("Delete"), _("Keep"),
                                   _cb_confirm_dialog_yes, NULL, cfdata, NULL,
                                   _cb_confirm_dialog_destroy, cfdata);
    cfdata->dialog_delete = dialog;

@@ -111,8 +111,8 @@ _cb_composite_change(void *data, Evas_Object *obj __UNUSED__)
 				   _("You have chosen to enable ARGB composite "
 				     "support,<br>but your current screen does "
 				     "not support composite.<br><br>"
-				     "Are you sure you wish to enable ARGB support ?"),
-				   NULL, NULL, _cb_confirm_yes, _cb_confirm_no,
+				     "Are you sure you wish to enable ARGB support?"),
+				   _("Enable"), NULL, _cb_confirm_yes, _cb_confirm_no,
 				   cfdata, cfdata, NULL, NULL);
 	  }
      }

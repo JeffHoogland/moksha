@@ -303,8 +303,8 @@ _cb_delete(void *data, void *data2 __UNUSED__)
    snprintf(buf, sizeof(buf), 
             _("You want to delete the \"%s\" profile.<br><br>"
               "Are you sure?"), d->cfdata->sel_profile);
-   e_confirm_dialog_show(_("Delete OK?"),
-                         "dialog-warning", buf, NULL, NULL, 
+   e_confirm_dialog_show(_("Are you sure you want to delete this profile?"),
+                         "dialog-warning", buf, _("Delete"), _("Keep"), 
                          _cb_dialog_yes, NULL, d, NULL,
                          _cb_dialog_destroy, d);
 }
@@ -384,7 +384,7 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
    e_widget_size_min_get(ot, &mw, &mh);
    e_dialog_content_set(dia, ot, mw, mh);
 
-   e_dialog_button_add(dia, _("OK"), NULL, _new_profile_cb_ok, cfdata);
+   e_dialog_button_add(dia, _("Add"), NULL, _new_profile_cb_ok, cfdata);
    e_dialog_button_add(dia, _("Cancel"), NULL, _new_profile_cb_close, cfdata);
 
    e_dialog_resizable_set(dia, 0);
