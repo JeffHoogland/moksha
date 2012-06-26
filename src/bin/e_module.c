@@ -515,7 +515,7 @@ _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
    e_dialog_title_set(dia, title);
    e_dialog_icon_set(dia, "enlightenment", 64);
    e_dialog_text_set(dia, buf);
-   e_dialog_button_add(dia, _("Yes"), NULL, _e_module_cb_dialog_disable, m);
+   e_dialog_button_add(dia, _("Unload"), NULL, _e_module_cb_dialog_disable, m);
    e_dialog_button_add(dia, _("No"), NULL, NULL, NULL);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);

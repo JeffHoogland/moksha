@@ -377,7 +377,7 @@ ACT_FN_GO(window_kill, __UNUSED__)
                       _("Are you sure you want to kill this window?"));
    e_dialog_text_set(kill_dialog, _(dialog_text));
    e_dialog_icon_set(kill_dialog, "application-exit", 64);
-   e_dialog_button_add(kill_dialog, _("Yes"), NULL,
+   e_dialog_button_add(kill_dialog, _("Kill"), NULL,
                        _e_actions_cb_kill_dialog_ok, obj);
    e_dialog_button_add(kill_dialog, _("No"), NULL,
                        _e_actions_cb_kill_dialog_cancel, NULL);
@@ -1942,7 +1942,7 @@ ACT_FN_GO(exit, )
                        "<br>"
                        "Are you sure you want to exit?"));
    e_dialog_icon_set(exit_dialog, "application-exit", 64);
-   e_dialog_button_add(exit_dialog, _("Yes"), NULL,
+   e_dialog_button_add(exit_dialog, _("Exit"), NULL,
                        _e_actions_cb_exit_dialog_ok, NULL);
    e_dialog_button_add(exit_dialog, _("No"), NULL,
                        _e_actions_cb_exit_dialog_cancel, NULL);
@@ -2039,7 +2039,7 @@ ACT_FN_GO(logout, )
                        "<br>"
                        "Are you sure you want to do this?"));
    e_dialog_icon_set(logout_dialog, "system-log-out", 64);
-   e_dialog_button_add(logout_dialog, _("Yes"), NULL,
+   e_dialog_button_add(logout_dialog, _("Log out"), NULL,
                        _e_actions_cb_logout_dialog_ok, NULL);
    e_dialog_button_add(logout_dialog, _("No"), NULL,
                        _e_actions_cb_logout_dialog_cancel, NULL);
@@ -2102,7 +2102,7 @@ ACT_FN_GO(halt, )
                        "<br>"
                        "Are you sure you want to shut down?"));
    e_dialog_icon_set(halt_dialog, "system-shutdown", 64);
-   e_dialog_button_add(halt_dialog, _("Yes"), NULL,
+   e_dialog_button_add(halt_dialog, _("Power off"), NULL,
                        _e_actions_cb_halt_dialog_ok, NULL);
    e_dialog_button_add(halt_dialog, _("No"), NULL,
                        _e_actions_cb_halt_dialog_cancel, NULL);
@@ -2165,7 +2165,7 @@ ACT_FN_GO(reboot, )
                        "<br>"
                        "Are you sure you want to restart it?"));
    e_dialog_icon_set(reboot_dialog, "system-restart", 64);
-   e_dialog_button_add(reboot_dialog, _("Yes"), NULL,
+   e_dialog_button_add(reboot_dialog, _("Reboot"), NULL,
                        _e_actions_cb_reboot_dialog_ok, NULL);
    e_dialog_button_add(reboot_dialog, _("No"), NULL,
                        _e_actions_cb_reboot_dialog_cancel, NULL);
@@ -2233,7 +2233,7 @@ ACT_FN_GO(suspend, )
                        "<br>"
                        "Are you sure you want to suspend?"));
    e_dialog_icon_set(suspend_dialog, "system-suspend", 64);
-   e_dialog_button_add(suspend_dialog, _("Yes"), NULL,
+   e_dialog_button_add(suspend_dialog, _("Suspend"), NULL,
                        _e_actions_cb_suspend_dialog_ok, NULL);
    e_dialog_button_add(suspend_dialog, _("No"), NULL,
                        _e_actions_cb_suspend_dialog_cancel, NULL);
@@ -2301,7 +2301,7 @@ ACT_FN_GO(hibernate, )
                        "<br>"
                        "Are you sure you want to suspend to disk?"));
    e_dialog_icon_set(hibernate_dialog, "system-suspend-hibernate", 64);
-   e_dialog_button_add(hibernate_dialog, _("Yes"), NULL,
+   e_dialog_button_add(hibernate_dialog, _("Hibernate"), NULL,
                        _e_actions_cb_hibernate_dialog_ok, NULL);
    e_dialog_button_add(hibernate_dialog, _("No"), NULL,
                        _e_actions_cb_hibernate_dialog_cancel, NULL);

@@ -1366,7 +1366,7 @@ _e_shelf_cb_menu_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
    e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"), "enlightenment",
                          _("You requested to delete this shelf.<br>"
                            "<br>"
-                           "Are you sure you want to delete it?"), NULL, NULL,
+                           "Are you sure you want to delete it?"), _("Delete"), _("Keep"),
                          _e_shelf_cb_confirm_dialog_yes, NULL, data, NULL,
                          _e_shelf_cb_confirm_dialog_destroy, data);
 }
