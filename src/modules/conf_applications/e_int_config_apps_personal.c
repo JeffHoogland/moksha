@@ -179,9 +179,8 @@ _fill_apps_list(E_Config_Dialog_Data *cfdata, Evas_Object *il)
 }
 
 static void
-_btn_cb_add(void *data, void *data2 __UNUSED__)
+_btn_cb_add(void *data __UNUSED__, void *data2 __UNUSED__)
 {
-   E_Config_Dialog_Data *cfdata = data;
    E_Manager *man;
    E_Container *con;
 
