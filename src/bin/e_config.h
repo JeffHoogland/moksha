@@ -259,6 +259,7 @@ struct _E_Config
    int                       device_desktop; // GUI
    int                       device_auto_mount; // GUI
    int                       device_auto_open; // GUI
+   Efm_Mode                 device_detect_mode; /* not saved, display-only */
 
    struct
    {

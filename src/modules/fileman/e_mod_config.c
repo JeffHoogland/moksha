@@ -278,11 +278,27 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
 
    o = e_widget_list_add(evas, 2, 0);
-#ifdef HAVE_EUKIT
-   ob = e_widget_check_add(evas, _("Show UDisks icons on desktop"),
-#else
+   {
+      char buf[32];
+      switch (e_config->device_detect_mode)
+        {
+         case EFM_MODE_USING_HAL_MOUNT:
+           snprintf(buf, sizeof(buf), "%s: HAL", _("Mode"));
+           break;
+         case EFM_MODE_USING_UDISKS_MOUNT:
+           snprintf(buf, sizeof(buf), "%s: UDISKS", _("Mode"));
+           break;
+         case EFM_MODE_USING_EEZE_MOUNT:
+           snprintf(buf, sizeof(buf), "%s: EEZE", _("Mode"));
+           break;
+         default:
+           snprintf(buf, sizeof(buf), "%s: RASTER", _("Mode"));
+           break;
+        }
+      ob = e_widget_label_add(evas, buf);
+      e_widget_list_object_append(o, ob, 0, 1, 0.5);
+   }
    ob = e_widget_check_add(evas, _("Show device icons on desktop"),
-#endif
                            &(cfdata->dbus.desktop));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Mount volumes on insert"),

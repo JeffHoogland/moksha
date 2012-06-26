@@ -2828,6 +2828,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
              v = _e_fm_shared_codec_volume_decode(e->data, e->size);
              if (v)
                {
+                  e_config->device_detect_mode = v->efm_mode;
                   e_fm2_device_volume_add(v);
                   if (e_config->device_auto_mount && !v->mounted && !v->first_time)
                     _e_fm2_client_mount(v->udi, v->mount_point);
