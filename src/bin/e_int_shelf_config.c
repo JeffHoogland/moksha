@@ -263,10 +263,9 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         e_shelf_style_set(cfdata->es, cfdata->style);
      }
    else if ((cfdata->escfg->style) &&
-            (strcmp(cfdata->escfg->style, cfdata->style)))
+            (cfdata->escfg->style != cfdata->style))
      {
-        if (cfdata->escfg->style) eina_stringshare_del(cfdata->escfg->style);
-        cfdata->escfg->style = eina_stringshare_ref(cfdata->style);
+        eina_stringshare_replace(&cfdata->escfg->style, cfdata->style);
         e_shelf_style_set(cfdata->es, cfdata->style);
      }
 
