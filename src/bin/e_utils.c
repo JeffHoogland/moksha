@@ -1,65 +1,65 @@
 #include "e.h"
 
-EAPI E_Path *path_data = NULL;
-EAPI E_Path *path_images = NULL;
-EAPI E_Path *path_fonts = NULL;
-EAPI E_Path *path_themes = NULL;
-EAPI E_Path *path_icons = NULL;
-EAPI E_Path *path_modules = NULL;
-EAPI E_Path *path_backgrounds = NULL;
-EAPI E_Path *path_messages = NULL;
+EAPI E_Path * path_data = NULL;
+EAPI E_Path * path_images = NULL;
+EAPI E_Path * path_fonts = NULL;
+EAPI E_Path * path_themes = NULL;
+EAPI E_Path * path_icons = NULL;
+EAPI E_Path * path_modules = NULL;
+EAPI E_Path * path_backgrounds = NULL;
+EAPI E_Path * path_messages = NULL;
 
-typedef struct _E_Util_Fake_Mouse_Up_Info E_Util_Fake_Mouse_Up_Info;
+typedef struct _E_Util_Fake_Mouse_Up_Info    E_Util_Fake_Mouse_Up_Info;
 typedef struct _E_Util_Image_Import_Settings E_Util_Image_Import_Settings;
 
 struct _E_Util_Fake_Mouse_Up_Info
 {
    Evas *evas;
-   int button;
+   int   button;
 };
 
 struct _E_Util_Image_Import_Settings
 {
-   E_Dialog *dia;
+   E_Dialog   *dia;
    struct
-     {
-        void (*func)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
-        void *data;
-     } cb;
+   {
+      void  (*func)(void *data, const char *path, Eina_Bool ok, Eina_Bool external, int quality, E_Image_Import_Mode mode);
+      void *data;
+   } cb;
    const char *path;
-   int quality;
-   int external;
-   int mode;
-   Eina_Bool ok;
+   int         quality;
+   int         external;
+   int         mode;
+   Eina_Bool   ok;
 };
 
 struct _E_Util_Image_Import_Handle
 {
-   Ecore_Exe *exe;
+   Ecore_Exe           *exe;
    Ecore_Event_Handler *handler;
    struct
-     {
-        void (*func)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
-        void *data;
-     } cb;
+   {
+      void  (*func)(void *data, Eina_Bool ok, const char *image_path, const char *edje_path);
+      void *data;
+   } cb;
    struct
-     {
-        const char *image, *edje, *temp;
-     } path;
+   {
+      const char *image, *edje, *temp;
+   } path;
 };
 
 /* local subsystem functions */
-static Eina_Bool _e_util_cb_delayed_del(void *data);
-static Eina_Bool _e_util_wakeup_cb(void *data);
+static Eina_Bool    _e_util_cb_delayed_del(void *data);
+static Eina_Bool    _e_util_wakeup_cb(void *data);
 
-static void _e_util_image_import_settings_do(void *data, E_Dialog *dia);
-static void _e_util_image_import_settings_del(void *obj);
+static void         _e_util_image_import_settings_do(void *data, E_Dialog *dia);
+static void         _e_util_image_import_settings_del(void *obj);
 
-static Eina_Bool _e_util_image_import_exit(void *data, int type __UNUSED__, void *event);
-static void _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle);
+static Eina_Bool    _e_util_image_import_exit(void *data, int type __UNUSED__, void *event);
+static void         _e_util_image_import_handle_free(E_Util_Image_Import_Handle *handle);
 static Evas_Object *_e_util_icon_add(const char *path, Evas *evas, int size);
 
-static void _e_util_cb_delayed_cancel(void *data, void *obj);
+static void         _e_util_cb_delayed_cancel(void *data, void *obj);
 
 /* local subsystem globals */
 static Ecore_Timer *_e_util_dummy_timer = NULL;
@@ -78,23 +78,23 @@ e_util_env_set(const char *var, const char *val)
    if (val)
      {
 #ifdef HAVE_SETENV
-	setenv(var, val, 1);
+        setenv(var, val, 1);
 #else
-	char buf[8192];
+        char buf[8192];
 
-	snprintf(buf, sizeof(buf), "%s=%s", var, val);
-	if (getenv(var))
-	  putenv(buf);
-	else
-	  putenv(strdup(buf));
+        snprintf(buf, sizeof(buf), "%s=%s", var, val);
+        if (getenv(var))
+          putenv(buf);
+        else
+          putenv(strdup(buf));
 #endif
      }
    else
      {
 #ifdef HAVE_UNSETENV
-	unsetenv(var);
+        unsetenv(var);
 #else
-	if (getenv(var)) putenv(var);
+        if (getenv(var)) putenv(var);
 #endif
      }
 }
@@ -109,10 +109,10 @@ e_util_zone_current_get(E_Manager *man)
    con = e_container_current_get(man);
    if (con)
      {
-	E_Zone *zone;
+        E_Zone *zone;
 
-	zone = e_zone_current_get(con);
-	return zone;
+        zone = e_zone_current_get(con);
+        return zone;
      }
    return NULL;
 }
@@ -123,8 +123,8 @@ e_util_glob_match(const char *str, const char *pattern)
    if ((!str) || (!pattern)) return 0;
    if (pattern[0] == 0)
      {
-	if (str[0] == 0) return 1;
-	return 0;
+        if (str[0] == 0) return 1;
+        return 0;
      }
    if (!strcmp(pattern, "*")) return 1;
    if (!fnmatch(pattern, str, 0)) return 1;
@@ -139,15 +139,17 @@ e_util_glob_case_match(const char *str, const char *pattern)
 
    if (pattern[0] == 0)
      {
-	if (str[0] == 0) return 1;
-	return 0;
+        if (str[0] == 0) return 1;
+        return 0;
      }
    if (!strcmp(pattern, "*")) return 1;
    tstr = alloca(strlen(str) + 1);
-   for (tp = tstr, p = str; *p != 0; p++, tp++) *tp = tolower(*p);
+   for (tp = tstr, p = str; *p != 0; p++, tp++)
+     *tp = tolower(*p);
    *tp = 0;
    tglob = alloca(strlen(pattern) + 1);
-   for (tp = tglob, p = pattern; *p != 0; p++, tp++) *tp = tolower(*p);
+   for (tp = tglob, p = pattern; *p != 0; p++, tp++)
+     *tp = tolower(*p);
    *tp = 0;
    if (!fnmatch(tglob, tstr, 0)) return 1;
    return 0;
@@ -161,10 +163,10 @@ e_util_container_number_get(int num)
 
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	E_Container *con;
+        E_Container *con;
 
-	con = e_container_number_get(man, num);
-	if (con) return con;
+        con = e_container_number_get(man, num);
+        if (con) return con;
      }
    return NULL;
 }
@@ -206,19 +208,19 @@ e_util_head_exec(int head, const char *cmd)
    p2 = strrchr(penv_display, '.');
    if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
      {
-	/* yes it could overflow... but who will overflow DISPLAY eh? why? to
-	 * "exploit" your own applications running as you?
-	 */
-	strcpy(buf, penv_display);
-	buf[p2 - penv_display + 1] = 0;
-	snprintf(buf2, sizeof(buf2), "%i", head);
-	strcat(buf, buf2);
+        /* yes it could overflow... but who will overflow DISPLAY eh? why? to
+         * "exploit" your own applications running as you?
+         */
+        strcpy(buf, penv_display);
+        buf[p2 - penv_display + 1] = 0;
+        snprintf(buf2, sizeof(buf2), "%i", head);
+        strcat(buf, buf2);
      }
    else if (p1) /* "blah:x */
      {
-	strcpy(buf, penv_display);
-	snprintf(buf2, sizeof(buf2), ".%i", head);
-	strcat(buf, buf2);
+        strcpy(buf, penv_display);
+        snprintf(buf2, sizeof(buf2), ".%i", head);
+        strcat(buf, buf2);
      }
    else
      strcpy(buf, penv_display);
@@ -229,19 +231,19 @@ e_util_head_exec(int head, const char *cmd)
    e_util_library_path_restore();
    if (!exe)
      {
-	e_util_dialog_show(_("Run Error"),
-			   _("Enlightenment was unable to fork a child process:<br>"
-			     "<br>"
-			     "%s<br>"),
-			   cmd);
-	ok = 0;
+        e_util_dialog_show(_("Run Error"),
+                           _("Enlightenment was unable to fork a child process:<br>"
+                             "<br>"
+                             "%s<br>"),
+                           cmd);
+        ok = 0;
      }
 
    /* reset env vars */
    if (penv_display)
      {
-	e_util_env_set("DISPLAY", penv_display);
-	free(penv_display);
+        e_util_env_set("DISPLAY", penv_display);
+        free(penv_display);
      }
    return ok;
 }
@@ -274,15 +276,15 @@ e_util_immortal_check(void)
    wins = e_border_immortal_windows_get();
    if (wins)
      {
-	e_util_dialog_show(_("Cannot exit - immortal windows."),
-			   _("Some windows are left still around with the Lifespan lock enabled. This means<br>"
-			     "that Enlightenment will not allow itself to exit until these windows have<br>"
-			     "been closed or have the lifespan lock removed.<br>"));
-	/* FIXME: should really display a list of these lifespan locked */
-	/* windows in a dialog and let the user disable their locks in */
-	/* this dialog */
-	eina_list_free(wins);
-	return 1;
+        e_util_dialog_show(_("Cannot exit - immortal windows."),
+                           _("Some windows are left still around with the Lifespan lock enabled. This means<br>"
+                             "that Enlightenment will not allow itself to exit until these windows have<br>"
+                             "been closed or have the lifespan lock removed.<br>"));
+        /* FIXME: should really display a list of these lifespan locked */
+        /* windows in a dialog and let the user disable their locks in */
+        /* this dialog */
+        eina_list_free(wins);
+        return 1;
      }
    return 0;
 }
@@ -299,21 +301,21 @@ e_util_edje_icon_list_check(const char *list)
    p = list;
    while (p)
      {
-	c = strchr(p, ',');
-	if (c)
-	  {
-	     strncpy(buf, p, c - p);
-	     buf[c - p] = 0;
-	     if (e_util_edje_icon_check(buf)) return 1;
-	     p = c + 1;
-	     if (!*p) return 0;
-	  }
-	else
-	  {
-	     strcpy(buf, p);
-	     if (e_util_edje_icon_check(buf)) return 1;
-	     return 0;
-	  }
+        c = strchr(p, ',');
+        if (c)
+          {
+             strncpy(buf, p, c - p);
+             buf[c - p] = 0;
+             if (e_util_edje_icon_check(buf)) return 1;
+             p = c + 1;
+             if (!*p) return 0;
+          }
+        else
+          {
+             strcpy(buf, p);
+             if (e_util_edje_icon_check(buf)) return 1;
+             return 0;
+          }
      }
    return 0;
 }
@@ -330,21 +332,21 @@ e_util_edje_icon_list_set(Evas_Object *obj, const char *list)
    p = list;
    while (p)
      {
-	c = strchr(p, ',');
-	if (c)
-	  {
-	     strncpy(buf, p, c - p);
-	     buf[c - p] = 0;
-	     if (e_util_edje_icon_set(obj, buf)) return 1;
-	     p = c + 1;
-	     if (!*p) return 0;
-	  }
-	else
-	  {
-	     strcpy(buf, p);
-	     if (e_util_edje_icon_set(obj, buf)) return 1;
-	     return 0;
-	  }
+        c = strchr(p, ',');
+        if (c)
+          {
+             strncpy(buf, p, c - p);
+             buf[c - p] = 0;
+             if (e_util_edje_icon_set(obj, buf)) return 1;
+             p = c + 1;
+             if (!*p) return 0;
+          }
+        else
+          {
+             strcpy(buf, p);
+             if (e_util_edje_icon_set(obj, buf)) return 1;
+             return 0;
+          }
      }
    return 0;
 }
@@ -361,21 +363,21 @@ e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list)
    p = list;
    while (p)
      {
-	c = strchr(p, ',');
-	if (c)
-	  {
-	     strncpy(buf, p, c - p);
-	     buf[c - p] = 0;
-	     if (e_util_menu_item_theme_icon_set(mi, buf)) return 1;
-	     p = c + 1;
-	     if (!*p) return 0;
-	  }
-	else
-	  {
-	     strcpy(buf, p);
-	     if (e_util_menu_item_theme_icon_set(mi, buf)) return 1;
-	     return 0;
-	  }
+        c = strchr(p, ',');
+        if (c)
+          {
+             strncpy(buf, p, c - p);
+             buf[c - p] = 0;
+             if (e_util_menu_item_theme_icon_set(mi, buf)) return 1;
+             p = c + 1;
+             if (!*p) return 0;
+          }
+        else
+          {
+             strcpy(buf, p);
+             if (e_util_menu_item_theme_icon_set(mi, buf)) return 1;
+             return 0;
+          }
      }
    return 0;
 }
@@ -393,7 +395,6 @@ e_util_edje_icon_check(const char *name)
    return 0;
 }
 
-
 /* WARNING This function is deprecated,. must be made static.
  * You should use e_util_icon_theme_set instead
  */
@@ -408,8 +409,8 @@ e_util_edje_icon_set(Evas_Object *obj, const char *name)
    file = e_theme_edje_file_get("base/theme/icons", buf);
    if (file[0])
      {
-	edje_object_file_set(obj, file, buf);
-	return 1;
+        edje_object_file_set(obj, file, buf);
+        return 1;
      }
    return 0;
 }
@@ -430,8 +431,8 @@ _e_util_icon_theme_set(Evas_Object *obj, const char *icon, Eina_Bool fallback)
 
    if (file[0])
      {
-	e_icon_file_edje_set(obj, file, buf);
-	return 1;
+        e_icon_file_edje_set(obj, file, buf);
+        return 1;
      }
 
    return 0;
@@ -461,19 +462,19 @@ e_util_icon_theme_set(Evas_Object *obj, const char *icon)
 {
    if (e_config->icon_theme_overrides)
      {
-	if (_e_util_icon_fdo_set(obj, icon))
-	  return 1;
-	if (_e_util_icon_theme_set(obj, icon, EINA_FALSE))
-	  return 1;
-	return _e_util_icon_theme_set(obj, icon, EINA_TRUE);
+        if (_e_util_icon_fdo_set(obj, icon))
+          return 1;
+        if (_e_util_icon_theme_set(obj, icon, EINA_FALSE))
+          return 1;
+        return _e_util_icon_theme_set(obj, icon, EINA_TRUE);
      }
    else
      {
-	if (_e_util_icon_theme_set(obj, icon, EINA_FALSE))
-	  return 1;
-	if (_e_util_icon_fdo_set(obj, icon))
-	  return 1;
-	return _e_util_icon_theme_set(obj, icon, EINA_TRUE);
+        if (_e_util_icon_theme_set(obj, icon, EINA_FALSE))
+          return 1;
+        if (_e_util_icon_fdo_set(obj, icon))
+          return 1;
+        return _e_util_icon_theme_set(obj, icon, EINA_TRUE);
      }
 }
 
@@ -485,10 +486,10 @@ _e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name, Eina_Bool fal
 
    if ((!name) || (!name[0])) return 0;
 
-   if ((!fallback) && (name[0]=='/') && ecore_file_exists(name))
+   if ((!fallback) && (name[0] == '/') && ecore_file_exists(name))
      {
-	e_menu_item_icon_edje_set(mi, name, "icon");
-	return 1;
+        e_menu_item_icon_edje_set(mi, name, "icon");
+        return 1;
      }
    snprintf(buf, sizeof(buf), "e/icons/%s", name);
 
@@ -499,8 +500,8 @@ _e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name, Eina_Bool fal
 
    if (file[0])
      {
-	e_menu_item_icon_edje_set(mi, file, buf);
-	return 1;
+        e_menu_item_icon_edje_set(mi, file, buf);
+        return 1;
      }
    return 0;
 }
@@ -509,9 +510,9 @@ EAPI unsigned int
 e_util_icon_size_normalize(unsigned int desired)
 {
    const unsigned int *itr, known_sizes[] =
-     {
-        16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, 256, -1
-     };
+   {
+      16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, 256, -1
+   };
 
    for (itr = known_sizes; *itr > 0; itr++)
      if (*itr >= desired)
@@ -539,19 +540,19 @@ e_util_menu_item_theme_icon_set(E_Menu_Item *mi, const char *icon)
 {
    if (e_config->icon_theme_overrides)
      {
-	if (_e_util_menu_item_fdo_icon_set(mi, icon))
-	  return 1;
-	if (_e_util_menu_item_edje_icon_set(mi, icon, EINA_FALSE))
-	  return 1;
-	return _e_util_menu_item_edje_icon_set(mi, icon, EINA_TRUE);
+        if (_e_util_menu_item_fdo_icon_set(mi, icon))
+          return 1;
+        if (_e_util_menu_item_edje_icon_set(mi, icon, EINA_FALSE))
+          return 1;
+        return _e_util_menu_item_edje_icon_set(mi, icon, EINA_TRUE);
      }
    else
      {
-	if (_e_util_menu_item_edje_icon_set(mi, icon, EINA_FALSE))
-	  return 1;
-	if (_e_util_menu_item_fdo_icon_set(mi, icon))
-	  return 1;
-	return _e_util_menu_item_edje_icon_set(mi, icon, EINA_TRUE);
+        if (_e_util_menu_item_edje_icon_set(mi, icon, EINA_FALSE))
+          return 1;
+        if (_e_util_menu_item_fdo_icon_set(mi, icon))
+          return 1;
+        return _e_util_menu_item_edje_icon_set(mi, icon, EINA_TRUE);
      }
 }
 
@@ -564,12 +565,12 @@ e_util_container_window_find(Ecore_X_Window win)
 
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	EINA_LIST_FOREACH(man->containers, ll, con)
+        EINA_LIST_FOREACH(man->containers, ll, con)
           {
-	     if ((con->win == win) || (con->bg_win == win) ||
-		 (con->event_win == win))
-	       return con;
-	  }
+             if ((con->win == win) || (con->bg_win == win) ||
+                 (con->event_win == win))
+               return con;
+          }
      }
    return NULL;
 }
@@ -601,32 +602,36 @@ e_util_desk_border_above(E_Border *bd)
    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
 
    if (bd->layer == 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else if ((bd->layer > 0) && (bd->layer <= 50))
+     pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100))
+     pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150))
+     pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200))
+     pos = 4;
    else pos = 5;
 
    EINA_LIST_FOREACH(eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd), l, bd2)
      {
-	if(!eina_list_next(l) || above) break;
-	above = eina_list_data_get(eina_list_next(l));
-	if ((above->desk != bd->desk) && (!above->sticky))
-	  above = NULL;
+        if (!eina_list_next(l) || above) break;
+        above = eina_list_data_get(eina_list_next(l));
+        if ((above->desk != bd->desk) && (!above->sticky))
+          above = NULL;
      }
    if (!above)
      {
-	/* Need to check the layers above */
-	for (i = pos + 1; (i < 7) && (!above); i++)
-	  {
-	     EINA_LIST_FOREACH(bd->zone->container->layers[i].clients, l, bd2)
-	       {
-		  if (above) break;
-		  above = bd2;
-		  if ((above->desk != bd->desk) && (!above->sticky))
-		    above = NULL;
-	       }
-	  }
+        /* Need to check the layers above */
+        for (i = pos + 1; (i < 7) && (!above); i++)
+          {
+             EINA_LIST_FOREACH(bd->zone->container->layers[i].clients, l, bd2)
+               {
+                  if (above) break;
+                  above = bd2;
+                  if ((above->desk != bd->desk) && (!above->sticky))
+                    above = NULL;
+               }
+          }
      }
    return above;
 }
@@ -642,36 +647,40 @@ e_util_desk_border_below(E_Border *bd)
    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
 
    if (bd->layer == 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else if ((bd->layer > 0) && (bd->layer <= 50))
+     pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100))
+     pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150))
+     pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200))
+     pos = 4;
    else pos = 5;
 
    for (l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd); l; l = l->prev)
      {
         if (!eina_list_prev(l) || below) break;
-	below = eina_list_data_get(eina_list_prev(l));
-	if ((below->desk != bd->desk) && (!below->sticky))
-	  below = NULL;
+        below = eina_list_data_get(eina_list_prev(l));
+        if ((below->desk != bd->desk) && (!below->sticky))
+          below = NULL;
      }
    if (!below)
      {
-	/* Need to check the layers below */
-	for (i = pos - 1; (i >= 0) && (!below); i--)
-	  {
-	     if (bd->zone->container->layers[i].clients)
-	       {
-		  l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
-		  for (; l && !below; l = l->prev)
-		    {
-		       bd2 = l->data;
-		       below = bd2;
-		       if ((below->desk != bd->desk) && (!below->sticky))
-			 below = NULL;
-		    }
-	       }
-	  }
+        /* Need to check the layers below */
+        for (i = pos - 1; (i >= 0) && (!below); i--)
+          {
+             if (bd->zone->container->layers[i].clients)
+               {
+                  l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd);
+                  for (; l && !below; l = l->prev)
+                    {
+                       bd2 = l->data;
+                       below = bd2;
+                       if ((below->desk != bd->desk) && (!below->sticky))
+                         below = NULL;
+                    }
+               }
+          }
      }
 
    return below;
@@ -686,11 +695,11 @@ e_util_edje_collection_exists(const char *file, const char *coll)
    clist = edje_file_collection_list(file);
    EINA_LIST_FOREACH(clist, l, str)
      {
-	if (!strcmp(coll, str))
-	  {
-	     edje_file_collection_list_free(clist);
-	     return 1;
-	  }
+        if (!strcmp(coll, str))
+          {
+             edje_file_collection_list_free(clist);
+             return 1;
+          }
      }
    edje_file_collection_list_free(clist);
    return 0;
@@ -724,24 +733,24 @@ e_util_filename_escape(const char *filename)
    q = buf;
    while (*p)
      {
-	if ((q - buf) > 4090) return NULL;
-	if (
-	    (*p == ' ') || (*p == '\t') || (*p == '\n') ||
-	    (*p == '\\') || (*p == '\'') || (*p == '\"') ||
-	    (*p == ';') || (*p == '!') || (*p == '#') ||
-	    (*p == '$') || (*p == '%') || (*p == '&') ||
-	    (*p == '*') || (*p == '(') || (*p == ')') ||
-	    (*p == '[') || (*p == ']') || (*p == '{') ||
-	    (*p == '}') || (*p == '|') || (*p == '<') ||
-	    (*p == '>') || (*p == '?')
-	    )
-	  {
-	     *q = '\\';
-	     q++;
-	  }
-	*q = *p;
-	q++;
-	p++;
+        if ((q - buf) > 4090) return NULL;
+        if (
+          (*p == ' ') || (*p == '\t') || (*p == '\n') ||
+          (*p == '\\') || (*p == '\'') || (*p == '\"') ||
+          (*p == ';') || (*p == '!') || (*p == '#') ||
+          (*p == '$') || (*p == '%') || (*p == '&') ||
+          (*p == '*') || (*p == '(') || (*p == ')') ||
+          (*p == '[') || (*p == ']') || (*p == '{') ||
+          (*p == '}') || (*p == '|') || (*p == '<') ||
+          (*p == '>') || (*p == '?')
+          )
+          {
+             *q = '\\';
+             q++;
+          }
+        *q = *p;
+        q++;
+        p++;
      }
    *q = 0;
    return buf;
@@ -764,8 +773,8 @@ e_util_icon_save(Ecore_X_Icon *icon, const char *filename)
    im = evas_object_image_add(evas);
    if (!im)
      {
-	ecore_evas_free(ee);
-	return 0;
+        ecore_evas_free(ee);
+        return 0;
      }
    evas_object_move(im, 0, 0);
    evas_object_resize(im, icon->width, icon->height);
@@ -794,70 +803,70 @@ e_util_shell_env_path_eval(const char *path)
 
    for (p = path, pd = buf; (pd < (buf + sizeof(buf) - 1)); p++)
      {
-	if (invar)
-	  {
-	     if (!((isalnum(*p)) || (*p == '_')))
-	       {
-		  v2 = p;
-		  invar = 0;
-		  if ((v2 - v1) > 1)
-		    {
-		       s = alloca(v2 - v1);
-		       strncpy(s, v1 + 1, v2 - v1 - 1);
-		       s[v2 - v1 - 1] = 0;
-		       if (strncmp(s, "XDG", 3))
-			 v = getenv(s);
-		       else
-			 {
-			    if (!strcmp(s, "XDG_CONFIG_HOME"))
-			      v = (char *)efreet_config_home_get();
-			    else if (!strcmp(s, "XDG_CACHE_HOME"))
-			      v = (char *)efreet_cache_home_get();
-			    else if (!strcmp(s, "XDG_DATA_HOME"))
-			      v = (char *)efreet_data_home_get();
-			 }
+        if (invar)
+          {
+             if (!((isalnum(*p)) || (*p == '_')))
+               {
+                  v2 = p;
+                  invar = 0;
+                  if ((v2 - v1) > 1)
+                    {
+                       s = alloca(v2 - v1);
+                       strncpy(s, v1 + 1, v2 - v1 - 1);
+                       s[v2 - v1 - 1] = 0;
+                       if (strncmp(s, "XDG", 3))
+                         v = getenv(s);
+                       else
+                         {
+                            if (!strcmp(s, "XDG_CONFIG_HOME"))
+                              v = (char *)efreet_config_home_get();
+                            else if (!strcmp(s, "XDG_CACHE_HOME"))
+                              v = (char *)efreet_cache_home_get();
+                            else if (!strcmp(s, "XDG_DATA_HOME"))
+                              v = (char *)efreet_data_home_get();
+                         }
 
-		       if (v)
-			 {
-			    vp = v;
-			    while ((*vp) && (pd < (buf + sizeof(buf) - 1)))
-			      {
-				 *pd = *vp;
-				 vp++;
-				 pd++;
-			      }
-			 }
-		    }
-		  if (pd < (buf + sizeof(buf) - 1))
-		    {
-		       *pd = *p;
-		       pd++;
-		    }
-	       }
-	  }
-	else
-	  {
-	     if (esc)
-	       {
-		  *pd = *p;
-		  pd++;
-	       }
-	     else
-	       {
-		  if (*p == '\\') esc = 1;
-		  else if (*p == '$')
-		    {
-		       invar = 1;
-		       v1 = p;
-		    }
-		  else
-		    {
-		       *pd = *p;
-		       pd++;
-		    }
-	       }
-	  }
-	if (*p == 0) break;
+                       if (v)
+                         {
+                            vp = v;
+                            while ((*vp) && (pd < (buf + sizeof(buf) - 1)))
+                              {
+                                 *pd = *vp;
+                                 vp++;
+                                 pd++;
+                              }
+                         }
+                    }
+                  if (pd < (buf + sizeof(buf) - 1))
+                    {
+                       *pd = *p;
+                       pd++;
+                    }
+               }
+          }
+        else
+          {
+             if (esc)
+               {
+                  *pd = *p;
+                  pd++;
+               }
+             else
+               {
+                  if (*p == '\\') esc = 1;
+                  else if (*p == '$')
+                    {
+                       invar = 1;
+                       v1 = p;
+                    }
+                  else
+                    {
+                       *pd = *p;
+                       pd++;
+                    }
+               }
+          }
+        if (*p == 0) break;
      }
    *pd = 0;
    return strdup(buf);
@@ -873,18 +882,18 @@ e_util_size_string_get(off_t size)
    if (dsize < 1024.0) snprintf(buf, sizeof(buf), _("%'.0f Bytes"), dsize);
    else
      {
-	dsize /= 1024.0;
-	if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f KB"), dsize);
-	else
-	  {
-	     dsize /= 1024.0;
-	     if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f MB"), dsize);
-	     else
-	       {
-		  dsize /= 1024.0;
-		  snprintf(buf, sizeof(buf), _("%'.1f GB"), dsize);
-	       }
-	  }
+        dsize /= 1024.0;
+        if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f KB"), dsize);
+        else
+          {
+             dsize /= 1024.0;
+             if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f MB"), dsize);
+             else
+               {
+                  dsize /= 1024.0;
+                  snprintf(buf, sizeof(buf), _("%'.1f GB"), dsize);
+               }
+          }
      }
    return strdup(buf);
 }
@@ -904,20 +913,20 @@ e_util_file_time_get(time_t ftime)
      snprintf(buf, sizeof(buf), _("In the Future"));
    else
      {
-	if (diff <= 60)
-	  snprintf(buf, sizeof(buf), _("In the last Minute"));
-	else if (diff >= 31526000)
-	  snprintf(buf, sizeof(buf), _("%li Years ago"), (diff / 31526000));
-	else if (diff >= 2592000)
-	  snprintf(buf, sizeof(buf), _("%li Months ago"), (diff / 2592000));
-	else if (diff >= 604800)
-	  snprintf(buf, sizeof(buf), _("%li Weeks ago"), (diff / 604800));
-	else if (diff >= 86400)
-	  snprintf(buf, sizeof(buf), _("%li Days ago"), (diff / 86400));
-	else if (diff >= 3600)
-	  snprintf(buf, sizeof(buf), _("%li Hours ago"), (diff / 3600));
-	else if (diff > 60)
-	  snprintf(buf, sizeof(buf), _("%li Minutes ago"), (diff / 60));
+        if (diff <= 60)
+          snprintf(buf, sizeof(buf), _("In the last Minute"));
+        else if (diff >= 31526000)
+          snprintf(buf, sizeof(buf), _("%li Years ago"), (diff / 31526000));
+        else if (diff >= 2592000)
+          snprintf(buf, sizeof(buf), _("%li Months ago"), (diff / 2592000));
+        else if (diff >= 604800)
+          snprintf(buf, sizeof(buf), _("%li Weeks ago"), (diff / 604800));
+        else if (diff >= 86400)
+          snprintf(buf, sizeof(buf), _("%li Days ago"), (diff / 86400));
+        else if (diff >= 3600)
+          snprintf(buf, sizeof(buf), _("%li Hours ago"), (diff / 3600));
+        else if (diff > 60)
+          snprintf(buf, sizeof(buf), _("%li Minutes ago"), (diff / 60));
      }
 
    if (buf[0])
@@ -939,19 +948,19 @@ e_util_library_path_strip(void)
    E_FREE(prev_ld_library_path);
    if (p)
      {
-	prev_ld_library_path = strdup(p);
-	p2 = strchr(p, ':');
-	if (p2) p2++;
-	e_util_env_set("LD_LIBRARY_PATH", p2);
+        prev_ld_library_path = strdup(p);
+        p2 = strchr(p, ':');
+        if (p2) p2++;
+        e_util_env_set("LD_LIBRARY_PATH", p2);
      }
    p = getenv("PATH");
    E_FREE(prev_path);
    if (p)
      {
-	prev_path = strdup(p);
-	p2 = strchr(p, ':');
-	if (p2) p2++;
-	e_util_env_set("PATH", p2);
+        prev_path = strdup(p);
+        p2 = strchr(p, ':');
+        if (p2) p2++;
+        e_util_env_set("PATH", p2);
      }
 }
 
@@ -990,15 +999,15 @@ e_util_icon_theme_icon_add(const char *icon_name, unsigned int size, Evas *evas)
    if (icon_name[0] == '/') return _e_util_icon_add(icon_name, evas, size);
    else
      {
-	Evas_Object *obj;
-	const char *path;
+        Evas_Object *obj;
+        const char *path;
 
-	path = efreet_icon_path_find(e_config->icon_theme, icon_name, size);
-	if (path)
-	  {
-	     obj = _e_util_icon_add(path, evas, size);
-	     return obj;
-	  }
+        path = efreet_icon_path_find(e_config->icon_theme, icon_name, size);
+        if (path)
+          {
+             obj = _e_util_icon_add(path, evas, size);
+             return obj;
+          }
      }
    return NULL;
 }
@@ -1015,18 +1024,18 @@ e_util_desktop_menu_item_icon_add(Efreet_Desktop *desktop, unsigned int size, E_
 
    if (path)
      {
-	const char *ext;
+        const char *ext;
 
-	ext = strrchr(path, '.');
-	if (ext)
-	  {
-	     if (strcmp(ext, ".edj") == 0)
-	       e_menu_item_icon_edje_set(mi, path, "icon");
-	     else
-	       e_menu_item_icon_file_set(mi, path);
-	  }
-	else
-	  e_menu_item_icon_file_set(mi, path);
+        ext = strrchr(path, '.');
+        if (ext)
+          {
+             if (strcmp(ext, ".edj") == 0)
+               e_menu_item_icon_edje_set(mi, path, "icon");
+             else
+               e_menu_item_icon_file_set(mi, path);
+          }
+        else
+          e_menu_item_icon_file_set(mi, path);
      }
 }
 
@@ -1035,19 +1044,19 @@ e_util_dir_check(const char *dir)
 {
    if (!ecore_file_exists(dir))
      {
-	if (!ecore_file_mkpath(dir))
-	  {
-	     e_util_dialog_show("Error creating directory", "Failed to create directory: %s .<br>Check that you have correct permissions set.", dir);
-	     return 0;
-	  }
+        if (!ecore_file_mkpath(dir))
+          {
+             e_util_dialog_show("Error creating directory", "Failed to create directory: %s .<br>Check that you have correct permissions set.", dir);
+             return 0;
+          }
      }
    else
      {
-	if (!ecore_file_is_dir(dir))
-	  {
-	     e_util_dialog_show("Error creating directory", "Failed to create directory: %s .<br>A file of that name already exists.", dir);
-	     return 0;
-	  }
+        if (!ecore_file_is_dir(dir))
+          {
+             e_util_dialog_show("Error creating directory", "Failed to create directory: %s .<br>A file of that name already exists.", dir);
+             return 0;
+          }
      }
    return 1;
 }
@@ -1079,9 +1088,9 @@ e_util_winid_str_get(Ecore_X_Window win)
    id[2] = vals[(val >> 20) & 0xf];
    id[3] = vals[(val >> 16) & 0xf];
    id[4] = vals[(val >> 12) & 0xf];
-   id[5] = vals[(val >>  8) & 0xf];
-   id[6] = vals[(val >>  4) & 0xf];
-   id[7] = vals[(val      ) & 0xf];
+   id[5] = vals[(val >> 8) & 0xf];
+   id[6] = vals[(val >> 4) & 0xf];
+   id[7] = vals[(val) & 0xf];
    id[8] = 0;
    return id;
 }
@@ -1093,9 +1102,9 @@ _win_auto_size_calc(int max, int min)
 
    for (itr = scales; *itr > 0; itr++)
      {
-	int value = *itr * max;
-	if (value > min) /* not >=, try a bit larger */
-	  return value;
+        int value = *itr * max;
+        if (value > min) /* not >=, try a bit larger */
+          return value;
      }
 
    return min;
@@ -1113,9 +1122,9 @@ e_util_win_auto_resize_fill(E_Win *win)
 
    if (zone)
      {
-	int w, h;
+        int w, h;
 
-	e_zone_useful_geometry_get(zone, NULL, NULL, &w, &h);
+        e_zone_useful_geometry_get(zone, NULL, NULL, &w, &h);
 
         w = _win_auto_size_calc(w, win->min_w);
         h = _win_auto_size_calc(h, win->min_h);
@@ -1152,8 +1161,8 @@ e_util_image_import_settings_new(const char *path, void (*cb)(void *data, const 
    ctxt->dia = e_dialog_new(NULL, "E", "_image_import_settings");
    if (!ctxt->dia)
      {
-	E_FREE(ctxt);
-	return NULL;
+        E_FREE(ctxt);
+        return NULL;
      }
 
    ctxt->dia->data = ctxt;
@@ -1184,10 +1193,10 @@ e_util_image_import_settings_new(const char *path, void (*cb)(void *data, const 
    frame = e_widget_frametable_add(evas, _("Fill and Stretch Options"), 1);
    rg = e_widget_radio_group_new(&ctxt->mode);
 
-#define RD(lbl, icon, val, col, row)					\
-   radio = e_widget_radio_icon_add					\
-     (evas, lbl, "enlightenment/wallpaper_"icon, 24, 24, val, rg);	\
-   e_widget_frametable_object_append(frame, radio, col, row, 1, 1, 1, 1, 0, 0)
+#define RD(lbl, icon, val, col, row)                                \
+  radio = e_widget_radio_icon_add                                   \
+      (evas, lbl, "enlightenment/wallpaper_"icon, 24, 24, val, rg); \
+  e_widget_frametable_object_append(frame, radio, col, row, 1, 1, 1, 1, 0, 0)
 
    RD(_("Stretch"), "stretch", E_IMAGE_IMPORT_STRETCH, 0, 0);
    RD(_("Center"), "center", E_IMAGE_IMPORT_CENTER, 1, 0);
@@ -1204,7 +1213,7 @@ e_util_image_import_settings_new(const char *path, void (*cb)(void *data, const 
    e_widget_frametable_object_append(frame, check, 0, 0, 1, 1, 1, 0, 1, 0);
 
    slider = e_widget_slider_add
-     (evas, 1, 0, _("%3.0f%%"), 0.0, 100.0, 1.0, 0, NULL, &ctxt->quality, 150);
+       (evas, 1, 0, _("%3.0f%%"), 0.0, 100.0, 1.0, 0, NULL, &ctxt->quality, 150);
    e_widget_frametable_object_append(frame, slider, 0, 1, 1, 1, 1, 0, 1, 0);
 
    e_widget_list_object_append(vlist, frame, 1, 1, 0.5);
@@ -1257,31 +1266,31 @@ e_util_image_import(const char *image_path, const char *edje_path, const char *e
    if (evas_object_image_load_error_get(img) != EVAS_LOAD_ERROR_NONE)
      {
         ecore_evas_free(ee);
-	ERR("Error loading image '%s'", image_path);
-	return NULL;
+        ERR("Error loading image '%s'", image_path);
+        return NULL;
      }
    evas_object_image_size_get(img, &w, &h);
    ecore_evas_free(ee);
 
    if (!tmpdir)
      {
-	tmpdir = getenv("TMPDIR");
-	if (!tmpdir) tmpdir = "/tmp";
+        tmpdir = getenv("TMPDIR");
+        if (!tmpdir) tmpdir = "/tmp";
      }
    snprintf(tmpn, sizeof(tmpn), "%s/e_util_image_import-XXXXXX", tmpdir);
    fd = mkstemp(tmpn);
    if (fd < 0)
      {
-	ERR("Error Creating tmp file: %s", strerror(errno));
-	return NULL;
+        ERR("Error Creating tmp file: %s", strerror(errno));
+        return NULL;
      }
 
    f = fdopen(fd, "wb");
    if (!f)
      {
-	ERR("Cannot open %s for writing", tmpn);
-	close(fd);
-	return NULL;
+        ERR("Cannot open %s for writing", tmpn);
+        close(fd);
+        return NULL;
      }
 
    escaped_file = e_util_filename_escape(image_path); // watch out ret buffer!
@@ -1295,93 +1304,92 @@ e_util_image_import(const char *image_path, const char *edje_path, const char *e
      fprintf(f, "LOSSY %d", (quality > 1) ? quality : 90);
 
    fprintf(f,
-	   ";\n"
-	   "collections {\n"
-	   "   group {\n"
-	   "      name: \"%s\";\n"
-	   "      data.item: \"style\" \"%d\";\n"
-	   "      max: %d %d;\n"
-	   "      parts {\n",
-	   edje_group, mode, w, h);
+           ";\n"
+           "collections {\n"
+           "   group {\n"
+           "      name: \"%s\";\n"
+           "      data.item: \"style\" \"%d\";\n"
+           "      max: %d %d;\n"
+           "      parts {\n",
+           edje_group, mode, w, h);
 
    if ((mode == E_IMAGE_IMPORT_CENTER) ||
        (mode == E_IMAGE_IMPORT_SCALE_ASPECT_IN))
      {
-	fputs("         part {\n"
-	      "            type: RECT;\n"
-	      "            name: \"col\";\n"
-	      "            mouse_events: 0;\n"
-	      "            description {\n"
-	      "               state: \"default\" 0.0;\n"
-	      "               color: 255 255 255 255;\n"
-	      "            }\n"
-	      "         }\n",
-	      f);
+        fputs("         part {\n"
+              "            type: RECT;\n"
+              "            name: \"col\";\n"
+              "            mouse_events: 0;\n"
+              "            description {\n"
+              "               state: \"default\" 0.0;\n"
+              "               color: 255 255 255 255;\n"
+              "            }\n"
+              "         }\n",
+              f);
      }
 
    fprintf(f,
-	   "         part {\n"
-	   "            type: IMAGE;\n"
-	   "            name: \"image\";\n"
-	   "            mouse_events: 0;\n"
-	   "            description {\n"
-	   "               state: \"default\" 0.0;\n"
-	   "               image {\n"
-	   "                  normal: \"%s\";\n"
-	   "                  scale_hint: STATIC;\n"
-	   "               }\n",
-	   escaped_file);
+           "         part {\n"
+           "            type: IMAGE;\n"
+           "            name: \"image\";\n"
+           "            mouse_events: 0;\n"
+           "            description {\n"
+           "               state: \"default\" 0.0;\n"
+           "               image {\n"
+           "                  normal: \"%s\";\n"
+           "                  scale_hint: STATIC;\n"
+           "               }\n",
+           escaped_file);
 
    if (mode == E_IMAGE_IMPORT_TILE)
      {
-	fprintf(f,
-		"               fill {\n"
-		"                  size {\n"
-		"                     relative: 0.0 0.0;\n"
-		"                     offset: %d %d;\n"
-		"                  }\n"
-		"               }\n",
-		w, h);
+        fprintf(f,
+                "               fill {\n"
+                "                  size {\n"
+                "                     relative: 0.0 0.0;\n"
+                "                     offset: %d %d;\n"
+                "                  }\n"
+                "               }\n",
+                w, h);
      }
    else if (mode == E_IMAGE_IMPORT_CENTER)
      {
-	fprintf(f,
-		"               min: %d %d;\n"
-		"               max: %d %d;\n",
-		w, h, w, h);
-
+        fprintf(f,
+                "               min: %d %d;\n"
+                "               max: %d %d;\n",
+                w, h, w, h);
      }
    else if ((mode == E_IMAGE_IMPORT_SCALE_ASPECT_IN) ||
-	    (mode == E_IMAGE_IMPORT_SCALE_ASPECT_OUT))
+            (mode == E_IMAGE_IMPORT_SCALE_ASPECT_OUT))
      {
-	const char *locale = e_intl_language_get();
-	double aspect = (double)w / (double)h;
-	setlocale(LC_NUMERIC, "C");
-	fprintf(f,
-		"               aspect: %1.9f %1.9f;\n"
-		"               aspect_preference: %s;\n",
-		aspect, aspect,
-		(mode == E_IMAGE_IMPORT_SCALE_ASPECT_IN) ? "BOTH" : "NONE");
-	setlocale(LC_NUMERIC, locale);
+        const char *locale = e_intl_language_get();
+        double aspect = (double)w / (double)h;
+        setlocale(LC_NUMERIC, "C");
+        fprintf(f,
+                "               aspect: %1.9f %1.9f;\n"
+                "               aspect_preference: %s;\n",
+                aspect, aspect,
+                (mode == E_IMAGE_IMPORT_SCALE_ASPECT_IN) ? "BOTH" : "NONE");
+        setlocale(LC_NUMERIC, locale);
      }
 
    fputs("            }\n" // description
-	 "         }\n"    // part
-	 "      }\n"       // parts
-	 "   }\n"          // group
-	 "}\n",            // collections
-	 f);
+         "         }\n"    // part
+         "      }\n" // parts
+         "   }\n" // group
+         "}\n", // collections
+         f);
 
    fclose(f); // fd gets closed here
 
    snprintf(cmd, sizeof(cmd), "edje_cc %s %s",
-	    tmpn, e_util_filename_escape(edje_path));
+            tmpn, e_util_filename_escape(edje_path));
 
    handle = E_NEW(E_Util_Image_Import_Handle, 1);
    if (!handle)
      {
-	unlink(tmpn);
-	return NULL;
+        unlink(tmpn);
+        return NULL;
      }
 
    handle->cb.func = cb;
@@ -1390,12 +1398,12 @@ e_util_image_import(const char *image_path, const char *edje_path, const char *e
    handle->path.edje = eina_stringshare_add(edje_path);
    handle->path.temp = eina_stringshare_add(tmpn);
    handle->handler = ecore_event_handler_add
-     (ECORE_EXE_EVENT_DEL, _e_util_image_import_exit, handle);
+       (ECORE_EXE_EVENT_DEL, _e_util_image_import_exit, handle);
    handle->exe = ecore_exe_run(cmd, NULL);
    if (!handle->exe)
      {
-	_e_util_image_import_handle_free(handle);
-	return NULL;
+        _e_util_image_import_handle_free(handle);
+        return NULL;
      }
 
    return handle;
@@ -1449,10 +1457,10 @@ _e_util_icon_add(const char *path, Evas *evas, int size)
    ext = strrchr(path, '.');
    if (ext)
      {
-	if (!strcmp(ext, ".edj"))
-	  e_icon_file_edje_set(o, path, "icon");
-	else
-	  e_icon_file_set(o, path);
+        if (!strcmp(ext, ".edj"))
+          e_icon_file_edje_set(o, path, "icon");
+        else
+          e_icon_file_set(o, path);
      }
    else
      e_icon_file_set(o, path);
@@ -1554,7 +1562,7 @@ _e_util_conf_timer_old(void *data)
        "You can re-configure things now to your<br>"
        "liking. Sorry for the inconvenience.<br>");
 
-   snprintf(buf, sizeof(buf),N_("%s Configuration Updated"), module_name);
+   snprintf(buf, sizeof(buf), N_("%s Configuration Updated"), module_name);
    e_util_dialog_internal(buf, msg);
    E_FREE(module_name);
 
@@ -1578,7 +1586,7 @@ _e_util_conf_timer_new(void *data)
        "restored to<br>defaults. Sorry for the "
        "inconvenience.<br>");
 
-   snprintf(buf, sizeof(buf),N_("%s Configuration Updated"), module_name);
+   snprintf(buf, sizeof(buf), N_("%s Configuration Updated"), module_name);
    e_util_dialog_internal(buf, msg);
    E_FREE(module_name);
 
@@ -1590,13 +1598,13 @@ e_util_module_config_check(const char *module_name, int loaded, int current)
 {
    if ((loaded >> 16) < (current >> 16))
      {
-	ecore_timer_add(1.0, _e_util_conf_timer_old, strdup(module_name));
-	return EINA_FALSE;
+        ecore_timer_add(1.0, _e_util_conf_timer_old, strdup(module_name));
+        return EINA_FALSE;
      }
    else if (loaded > current)
      {
-	ecore_timer_add(1.0, _e_util_conf_timer_new, strdup(module_name));
-	return EINA_FALSE;
+        ecore_timer_add(1.0, _e_util_conf_timer_new, strdup(module_name));
+        return EINA_FALSE;
      }
 
    return EINA_TRUE;
@@ -1652,3 +1660,4 @@ e_util_fullscreen_any(void)
      }
    return EINA_FALSE;
 }
+
