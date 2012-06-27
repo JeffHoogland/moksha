@@ -6920,6 +6920,8 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
         /* typebuf mode: end typebuf mode */
         if (sd->typebuf_visible)
           _e_fm2_typebuf_hide(obj);
+        else if (sd->dev && (!strcmp(sd->dev, "desktop")))
+          return;
         else
           {
              ic = _e_fm2_icon_first_selected_find(obj);
