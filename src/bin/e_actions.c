@@ -1208,6 +1208,41 @@ ACT_FN_GO(window_desk_move_by, )
 }
 
 /***************************************************************************/
+ACT_FN_GO(window_zone_move_by, )
+{
+   E_Border *bd;
+   E_Zone *zone;
+   int move;
+   char *end;
+
+   if (!params) return;
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+        obj = E_OBJECT(e_border_focused_get());
+        if (!obj) return;
+     }
+
+   bd = (E_Border *)obj;
+   /* bad */
+   if (!bd->zone) return;
+   /* only one screen */
+   if (eina_list_count(bd->zone->container->zones) < 2) return;
+   errno = 0;
+   move = strtol(params, &end, 10);
+   if ((!end) || end[0] || errno) return;
+   move += bd->zone->num;
+   if (move < 0)
+     move = eina_list_count(bd->zone->container->zones) - 1;
+   else if ((unsigned int)move >= eina_list_count(bd->zone->container->zones))
+     move = 0;
+   zone = eina_list_nth(bd->zone->container->zones, move);
+   if ((!zone) || (zone->num != (unsigned int)move)) return;
+   e_border_zone_set(bd, zone);
+}
+
+/***************************************************************************/
 ACT_FN_GO(window_desk_move_to, )
 {
    E_Border *bd;
@@ -3080,6 +3115,13 @@ e_actions_init(void)
    e_action_predef_name_set(N_("Window : Moving"), N_("To Desktop..."),
                             "window_desk_move_to", NULL,
                             "syntax: X Y, example: 0 1", 1);
+
+   /* window_zone_move_by */
+   ACT_GO(window_zone_move_by);
+   e_action_predef_name_set(N_("Window : Moving"), N_("To Next Screen"),
+                            "window_zone_move_by", "1", NULL, 0);
+   e_action_predef_name_set(N_("Window : Moving"), N_("To Previous Screen"),
+                            "window_zone_move_by", "-1", NULL, 0);
 
    /* menu_show */
    ACT_GO(menu_show);
