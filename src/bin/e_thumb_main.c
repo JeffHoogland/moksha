@@ -44,13 +44,13 @@ struct _E_Thumb
 /* local subsystem functions */
 static int       _e_ipc_init(void);
 static Eina_Bool _e_ipc_cb_server_add(void *data,
-                                      int   type,
+                                      int type,
                                       void *event);
 static Eina_Bool _e_ipc_cb_server_del(void *data,
-                                      int   type,
+                                      int type,
                                       void *event);
 static Eina_Bool _e_ipc_cb_server_data(void *data,
-                                       int   type,
+                                       int type,
                                        void *event);
 static Eina_Bool _e_cb_timer(void *data);
 static void      _e_thumb_generate(E_Thumb *eth);
@@ -65,7 +65,7 @@ static char _thumbdir[4096] = "";
 
 /* externally accessible functions */
 int
-main(int    argc,
+main(int argc,
      char **argv)
 {
    int i;
@@ -152,7 +152,7 @@ _e_ipc_init(void)
 static Eina_Bool
 _e_ipc_cb_server_add(void *data __UNUSED__,
                      int type   __UNUSED__,
-                     void      *event)
+                     void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
 
@@ -170,14 +170,14 @@ _e_ipc_cb_server_del(void *data  __UNUSED__,
                      void *event __UNUSED__)
 {
    /* quit now */
-    ecore_main_loop_quit();
-    return ECORE_CALLBACK_PASS_ON;
+   ecore_main_loop_quit();
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _e_ipc_cb_server_data(void *data __UNUSED__,
                       int type   __UNUSED__,
-                      void      *event)
+                      void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
    E_Thumb *eth;
@@ -197,20 +197,20 @@ _e_ipc_cb_server_data(void *data __UNUSED__,
              /* TO a trusted process that WILL send this message properly */
              /* formatted. if the thumbnailer dies anyway - it's not a big loss */
              /* but it is a sign of a bug in e formattign messages maybe */
-                  file = e->data;
-                  key = file + strlen(file) + 1;
-                  if (!key[0]) key = NULL;
-                  eth = calloc(1, sizeof(E_Thumb));
-                  if (eth)
-                    {
-                       eth->objid = e->ref;
-                       eth->w = e->ref_to;
-                       eth->h = e->response;
-                       eth->file = strdup(file);
-                       if (key) eth->key = strdup(key);
-                       _thumblist = eina_list_append(_thumblist, eth);
-                       if (!_timer) _timer = ecore_timer_add(0.001, _e_cb_timer, NULL);
-                    }
+             file = e->data;
+             key = file + strlen(file) + 1;
+             if (!key[0]) key = NULL;
+             eth = calloc(1, sizeof(E_Thumb));
+             if (eth)
+               {
+                  eth->objid = e->ref;
+                  eth->w = e->ref_to;
+                  eth->h = e->response;
+                  eth->file = strdup(file);
+                  if (key) eth->key = strdup(key);
+                  _thumblist = eina_list_append(_thumblist, eth);
+                  if (!_timer) _timer = ecore_timer_add(0.001, _e_cb_timer, NULL);
+               }
           }
         break;
 
@@ -367,7 +367,7 @@ _e_thumb_generate(E_Thumb *eth)
                   evas_object_image_fill_set(im, 0, 0, ww, hh);
                }
           }
-	ecore_evas_alpha_set(ee, alpha);
+        ecore_evas_alpha_set(ee, alpha);
         evas_object_move(im, 0, 0);
         evas_object_resize(im, ww, hh);
         ecore_evas_resize(ee, ww, hh);
@@ -436,7 +436,7 @@ _e_thumb_generate(E_Thumb *eth)
 
                                       data3 = malloc(ww * hh * sizeof(unsigned int));
                                       memcpy(data3, data, ww * hh * sizeof(unsigned int));
-     // sort_id
+                                      // sort_id
                                       n = 0;
 #define A(v) (((v) >> 24) & 0xff)
 #define R(v) (((v) >> 16) & 0xff)
@@ -449,8 +449,8 @@ _e_thumb_generate(E_Thumb *eth)
   vi = 20 * v;                                         \
   if (si < 2) hi = 25;
 #define SAVEHSV(h, s, v) \
-  id2[n++] = 'a' + h;     \
-  id2[n++] = 'a' + v;     \
+  id2[n++] = 'a' + h;    \
+  id2[n++] = 'a' + v;    \
   id2[n++] = 'a' + s;
 #define SAVEX(x) \
   id2[n++] = 'a' + x;
@@ -563,3 +563,4 @@ _e_thumb_file_id(char *file,
    s[(i * 2)] = 0;
    return strdup(s);
 }
+

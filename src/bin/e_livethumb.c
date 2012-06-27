@@ -1,8 +1,8 @@
 #include "e.h"
 
-#define SMART_NAME "e_livethumb"
-#define API_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if ((!obj) || (!sd) || (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), SMART_NAME)))
-#define INTERNAL_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if (!sd) return;
+#define SMART_NAME     "e_livethumb"
+#define API_ENTRY      E_Smart_Data * sd; sd = evas_object_smart_data_get(obj); if ((!obj) || (!sd) || (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), SMART_NAME)))
+#define INTERNAL_ENTRY E_Smart_Data * sd; sd = evas_object_smart_data_get(obj); if (!sd) return;
 typedef struct _E_Smart_Data E_Smart_Data;
 typedef struct _E_Smart_Item E_Smart_Item;
 
@@ -10,11 +10,11 @@ struct _E_Smart_Data
 {
    Evas_Coord   x, y, w, h;
 
-   Evas_Object   *smart_obj;
-   Evas_Object   *evas_obj;
-   Evas_Object   *thumb_obj;
-   Evas          *evas;
-   Evas_Coord     vw, vh;
+   Evas_Object *smart_obj;
+   Evas_Object *evas_obj;
+   Evas_Object *thumb_obj;
+   Evas        *evas;
+   Evas_Coord   vw, vh;
 };
 
 /* local subsystem functions */
@@ -26,7 +26,7 @@ static void _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 static void _e_smart_show(Evas_Object *obj);
 static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
-static void _e_smart_clip_set(Evas_Object *obj, Evas_Object * clip);
+static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_init(void);
 
@@ -73,8 +73,8 @@ e_livethumb_thumb_set(Evas_Object *obj, Evas_Object *thumb)
    API_ENTRY return;
    if (!thumb)
      {
-	sd->thumb_obj = NULL;
-	return;
+        sd->thumb_obj = NULL;
+        return;
      }
    sd->thumb_obj = thumb;
    evas_object_show(sd->thumb_obj);
@@ -175,7 +175,7 @@ _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 }
 
 static void
-_e_smart_clip_set(Evas_Object *obj, Evas_Object * clip)
+_e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    INTERNAL_ENTRY;
    evas_object_clip_set(sd->evas_obj, clip);
@@ -194,28 +194,29 @@ static void
 _e_smart_init(void)
 {
    if (_e_smart) return;
-     {
-	static const Evas_Smart_Class sc =
-	  {
-	     SMART_NAME,
-	       EVAS_SMART_CLASS_VERSION,
-	       _e_smart_add,
-	       _e_smart_del,
-	       _e_smart_move,
-	       _e_smart_resize,
-	       _e_smart_show,
-	       _e_smart_hide,
-	       _e_smart_color_set,
-	       _e_smart_clip_set,
-	       _e_smart_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL
-	  };
-	_e_smart = evas_smart_class_new(&sc);
-     }
+   {
+      static const Evas_Smart_Class sc =
+      {
+         SMART_NAME,
+         EVAS_SMART_CLASS_VERSION,
+         _e_smart_add,
+         _e_smart_del,
+         _e_smart_move,
+         _e_smart_resize,
+         _e_smart_show,
+         _e_smart_hide,
+         _e_smart_color_set,
+         _e_smart_clip_set,
+         _e_smart_clip_unset,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL
+      };
+      _e_smart = evas_smart_class_new(&sc);
+   }
 }
+
