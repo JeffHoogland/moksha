@@ -16915,10 +16915,24 @@ collections {
       }
       programs {
          program {
+            name: "focus_in";
+            signal: "e,focus,in";
+            source: "e";
+            action: STATE_SET "clicked" 0.0;
+            target: "button_image";
+            target: "over3";
+         }
+         program {
             name: "button_click";
             signal: "mouse,down,1";
             source: "button_image";
-            action: STATE_SET "clicked" 0.0;
+            after: "focus_in";
+         }
+         program {
+            name: "focus_out";
+            signal: "e,focus,out";
+            source: "e";
+            action: STATE_SET "default" 0.0;
             target: "button_image";
             target: "over3";
          }
@@ -16926,9 +16940,7 @@ collections {
             name: "button_unclick";
             signal: "mouse,up,1";
             source: "button_image";
-            action: STATE_SET "default" 0.0;
-            target: "button_image";
-            target: "over3";
+            after: "focus_out";
          }
          program {
             name: "button_unclick2";

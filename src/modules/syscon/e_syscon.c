@@ -22,6 +22,8 @@ static Evas_Object *o_bg = NULL;
 static Evas_Object *o_flow_main = NULL;
 static Evas_Object *o_flow_secondary = NULL;
 static Evas_Object *o_flow_extra = NULL;
+static Evas_Object *o_selected_flow = NULL;
+static Evas_Object *o_selected = NULL;
 static int inevas = 0;
 static Ecore_Timer *deftimer = NULL;
 static double show_time = 0.0;
@@ -328,6 +330,7 @@ e_syscon_hide(void)
    e_grabinput_release(input_window, input_window);
    ecore_x_window_free(input_window);
    input_window = 0;
+   o_selected_flow = o_selected = o_flow_extra = o_flow_main = o_flow_secondary = NULL;
 }
 
 /* local subsystem functions */
@@ -340,29 +343,83 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
    if (ev->event_window != input_window) return ECORE_CALLBACK_PASS_ON;
    if (!strcmp(ev->key, "Escape"))
      e_syscon_hide();
-   else if (!strcmp(ev->key, "Up"))
+   else if ((!strcmp(ev->key, "Left")) || (!strcmp(ev->key, "Up")))
      {
-        // FIXME: implement focus and key control... eventually
+        if (!o_selected)
+          {
+             if (e_flowlayout_pack_count_get(o_flow_extra))
+               o_selected_flow = o_flow_extra, o_selected = e_flowlayout_pack_object_last(o_flow_extra);
+             else if (e_flowlayout_pack_count_get(o_flow_secondary))
+               o_selected_flow = o_flow_secondary, o_selected = e_flowlayout_pack_object_last(o_flow_secondary);
+             else
+               o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_last(o_flow_main);
+          }
+        else
+          {
+             edje_object_signal_emit(o_selected, "e,focus,out", "e");
+             o_selected = e_flowlayout_pack_object_prev(o_selected_flow, o_selected);
+             if (!o_selected)
+               {
+                  if (o_selected_flow == o_flow_extra)
+                    {
+                       if (e_flowlayout_pack_count_get(o_flow_secondary))
+                         o_selected_flow = o_flow_secondary, o_selected = e_flowlayout_pack_object_last(o_flow_secondary);
+                       else
+                         o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_last(o_flow_main);
+                    }
+                  else if (o_selected_flow == o_flow_secondary)
+                    o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_last(o_flow_main);
+                  else
+                    {
+                       if (e_flowlayout_pack_count_get(o_flow_extra))
+                         o_selected_flow = o_flow_extra, o_selected = e_flowlayout_pack_object_last(o_flow_extra);
+                       else if (e_flowlayout_pack_count_get(o_flow_secondary))
+                         o_selected_flow = o_flow_secondary, o_selected = e_flowlayout_pack_object_last(o_flow_secondary);
+                       else
+                         o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_last(o_flow_main);
+                    }
+               }
+          }
+        edje_object_signal_emit(o_selected, "e,focus,in", "e");
      }
-   else if (!strcmp(ev->key, "Down"))
+   else if ((!strcmp(ev->key, "Right")) || (!strcmp(ev->key, "Down")) || (!strcmp(ev->key, "Tab")))
      {
-        // FIXME: implement focus and key control... eventually
+        if (!o_selected)
+          o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_first(o_flow_main);
+        else
+          {
+             edje_object_signal_emit(o_selected, "e,focus,out", "e");
+             o_selected = e_flowlayout_pack_object_next(o_selected_flow, o_selected);
+             if (!o_selected)
+               {
+                  if (o_selected_flow == o_flow_extra)
+                    o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_first(o_flow_main);
+                  else if (o_selected_flow == o_flow_secondary)
+                    {
+                       if (e_flowlayout_pack_count_get(o_flow_extra))
+                         o_selected_flow = o_flow_extra, o_selected = e_flowlayout_pack_object_first(o_flow_extra);
+                       else
+                         o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_first(o_flow_main);
+                    }
+                  else
+                    {
+                       if (e_flowlayout_pack_count_get(o_flow_secondary))
+                         o_selected_flow = o_flow_secondary, o_selected = e_flowlayout_pack_object_first(o_flow_secondary);
+                       else if (e_flowlayout_pack_count_get(o_flow_extra))
+                         o_selected_flow = o_flow_extra, o_selected = e_flowlayout_pack_object_first(o_flow_extra);
+                       else
+                         o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_first(o_flow_main);
+                    }
+               }
+          }
+        edje_object_signal_emit(o_selected, "e,focus,in", "e");
      }
-   else if (!strcmp(ev->key, "Left"))
+   else if ((!strcmp(ev->keyname, "KP_Enter")) || (!strcmp(ev->keyname, "Return")))
      {
-        // FIXME: implement focus and key control... eventually
-     }
-   else if (!strcmp(ev->key, "Right"))
-     {
-        // FIXME: implement focus and key control... eventually
-     }
-   else if (!strcmp(ev->key, "Tab"))
-     {
-        // FIXME: implement focus and key control... eventually
-     }
-   else if (!strcmp(ev->key, "Enter"))
-     {
-        // FIXME: implement focus and key control... eventually
+        if (!o_selected) return ECORE_CALLBACK_RENEW;
+        edje_object_signal_emit(o_selected, "e,focus,out", "e");
+        edje_object_signal_emit(o_selected, "e,action,click", "");
+        o_selected = o_selected_flow = NULL;
      }
    else
      {
