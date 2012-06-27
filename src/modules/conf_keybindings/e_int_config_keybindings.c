@@ -157,6 +157,7 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
+   cfdata->locals.cur_act = -1;
    _fill_data(cfdata);
 
    return cfdata;
@@ -365,6 +366,7 @@ _binding_change_cb(void *data)
    _auto_apply_changes(cfdata);
    eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
+   cfdata->locals.cur_act = -1;
 
    if ((!cfdata->locals.binding) || (!cfdata->locals.binding[0])) return;
 
@@ -381,6 +383,7 @@ _action_change_cb(void *data)
 
    cfdata = data;
    _update_action_params(cfdata);
+   cfdata->locals.cur_act = e_widget_ilist_selected_get(cfdata->gui.o_action_list);
 }
 
 static void
@@ -749,7 +752,7 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
    E_Action_Group *actg;
    E_Action_Description *actd;
    E_Config_Binding_Key *bi;
-   const char *action;
+   const char *action, *params;
 
 #define KB_EXAMPLE_PARAMS                                           \
   if ((!actd->param_example) || (!actd->param_example[0]))          \
@@ -800,6 +803,7 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
              return;
           }
         action = bi->action;
+        params = bi->params;
      }
    else
      {
@@ -812,10 +816,10 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
      {
         if (!strcmp(action, actd->act_cmd))
           {
-             if ((!actd->act_params) || (!actd->act_params[0]))
+             if ((cfdata->locals.cur_act >= 0) && (cfdata->locals.cur_act != e_widget_ilist_selected_get(cfdata->gui.o_action_list)))
                KB_EXAMPLE_PARAMS;
              else
-               e_widget_entry_text_set(cfdata->gui.o_params, actd->act_params);
+               e_widget_entry_text_set(cfdata->gui.o_params, params);
           }
         else
           KB_EXAMPLE_PARAMS;

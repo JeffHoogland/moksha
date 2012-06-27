@@ -455,7 +455,8 @@ _e_configure_fill_cat_list(void *data)
    E_Configure *eco;
    Evas_Coord mw, mh;
    E_Configure_Category *cat;
-   Eina_List *l;
+   Eina_List *l, *ll;
+   E_Configure_Cat *ecat;
 
    if (!(eco = data)) return;
 
@@ -468,19 +469,15 @@ _e_configure_fill_cat_list(void *data)
    eco->cat_list = e_widget_toolbar_add(eco->evas, 32 * e_scale, 32 * e_scale);
    e_widget_toolbar_scrollable_set(eco->cat_list, 1);
    /***--- fill ---***/
-   for (l = e_configure_registry; l; l = l->next)
+   EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      {
-        Eina_List *ll;
-        E_Configure_Cat *ecat;
-
-        ecat = l->data;
         if ((ecat->pri >= 0) && (ecat->items))
           {
+             E_Configure_It *eci;
              cat = _e_configure_category_add(eco, _(ecat->label),
                                              ecat->icon_file, ecat->icon);
-             for (ll = ecat->items; ll; ll = ll->next)
+             EINA_LIST_FOREACH(ecat->items, ll, eci)
                {
-                  E_Configure_It *eci;
                   char buf[1024];
 
                   eci = ll->data;
