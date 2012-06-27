@@ -1113,6 +1113,7 @@ _grab_key_down_cb(void *data,
                        n = _update_key_binding_list(cfdata, bi);
 
                        e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
+                       e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n, 0);
                        e_widget_ilist_unselect(cfdata->gui.o_action_list);
                        eina_stringshare_del(cfdata->locals.action);
                        cfdata->locals.action = eina_stringshare_add("");
