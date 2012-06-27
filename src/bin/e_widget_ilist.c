@@ -158,7 +158,7 @@ _queue_timer(void *data)
              if (qi->use_relative)
                e_scrollframe_child_pos_set(wd->o_scrollframe, x, y);
              else
-               e_scrollframe_child_region_show(wd->o_scrollframe, x, y, w, h);
+               e_scrollframe_child_region_show(wd->o_scrollframe, x, y + h, w, h);
           }
         else if (qi->command == CMD_SELECT)
           e_ilist_selected_set(wd->o_ilist, qi->item);
