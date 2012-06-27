@@ -18,7 +18,7 @@ e_modapi_init(E_Module *m)
                                      NULL, "preferences-behavior");
    e_configure_registry_item_add("keyboard_and_mouse/edge_bindings", 10, 
                                  _("Edge Bindings"), NULL, 
-                                 "enlightenment/edges", 
+                                 "preferences-desktop-edge-bindings", 
                                  e_int_config_edgebindings);
    conf_module = m;
    e_module_delayed_set(m, 1);

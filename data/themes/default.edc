@@ -31195,6 +31195,7 @@ collections {
    ICON("preferences-system-lock-screen","icon_desklock.png",64) // *** // "enlightenment/desklock"
    ICON("preferences-icon-theme","icon_icon_theme.png",64)       // *** // "enlightenment/icon_theme"
    ICON("preferences-transitions","icon_transitions.png",64)     // *** // "enlightenment/transitions"
+   ICON("preferences-desktop-edge-bindings","icon_shelf_right.png",64)  // *** // "enlightenment/edges"
    ICON("preferences-toolbar","icon_toolbar.png",64)             // *** // "enlightenment/toolbar"
    ICON("preferences-profiles","icon_profiles.png",64)           // *** // "enlightenment/profiles"
    ICON("preferences-startup","icon_startup.png",64)             // *** // "enlightenment/startup"
