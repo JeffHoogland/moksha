@@ -16916,7 +16916,7 @@ collections {
       programs {
          program {
             name: "focus_in";
-            signal: "e,focus,in";
+            signal: "e,state,focused";
             source: "e";
             action: STATE_SET "clicked" 0.0;
             target: "button_image";
@@ -16930,7 +16930,7 @@ collections {
          }
          program {
             name: "focus_out";
-            signal: "e,focus,out";
+            signal: "e,state,unfocused";
             source: "e";
             action: STATE_SET "default" 0.0;
             target: "button_image";

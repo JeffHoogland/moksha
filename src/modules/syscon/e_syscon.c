@@ -356,7 +356,7 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
           }
         else
           {
-             edje_object_signal_emit(o_selected, "e,focus,out", "e");
+             edje_object_signal_emit(o_selected, "e,state,focused", "e");
              o_selected = e_flowlayout_pack_object_prev(o_selected_flow, o_selected);
              if (!o_selected)
                {
@@ -380,7 +380,7 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
                     }
                }
           }
-        edje_object_signal_emit(o_selected, "e,focus,in", "e");
+        edje_object_signal_emit(o_selected, "e,state,unfocused", "e");
      }
    else if ((!strcmp(ev->key, "Right")) || (!strcmp(ev->key, "Down")) || (!strcmp(ev->key, "Tab")))
      {
@@ -388,7 +388,7 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
           o_selected_flow = o_flow_main, o_selected = e_flowlayout_pack_object_first(o_flow_main);
         else
           {
-             edje_object_signal_emit(o_selected, "e,focus,out", "e");
+             edje_object_signal_emit(o_selected, "e,state,focused", "e");
              o_selected = e_flowlayout_pack_object_next(o_selected_flow, o_selected);
              if (!o_selected)
                {
@@ -412,12 +412,12 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
                     }
                }
           }
-        edje_object_signal_emit(o_selected, "e,focus,in", "e");
+        edje_object_signal_emit(o_selected, "e,state,unfocused", "e");
      }
    else if ((!strcmp(ev->keyname, "KP_Enter")) || (!strcmp(ev->keyname, "Return")))
      {
         if (!o_selected) return ECORE_CALLBACK_RENEW;
-        edje_object_signal_emit(o_selected, "e,focus,out", "e");
+        edje_object_signal_emit(o_selected, "e,state,focused", "e");
         edje_object_signal_emit(o_selected, "e,action,click", "");
         o_selected = o_selected_flow = NULL;
      }
