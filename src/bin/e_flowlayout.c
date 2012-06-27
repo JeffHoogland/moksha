@@ -326,6 +326,36 @@ e_flowlayout_pack_object_last(Evas_Object *obj)
    return eina_list_data_get(eina_list_last(sd->items));
 }
 
+EAPI Evas_Object *
+e_flowlayout_pack_object_prev(Evas_Object *obj, Evas_Object *child)
+{
+   E_Smart_Data *sd;
+   Evas_Object *o;
+   Eina_List *l;
+
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
+   EINA_LIST_FOREACH(sd->items, l, o)
+     if (o == child) return eina_list_data_get(l->prev);
+   return NULL;
+}
+
+EAPI Evas_Object *
+e_flowlayout_pack_object_next(Evas_Object *obj, Evas_Object *child)
+{
+   E_Smart_Data *sd;
+   Evas_Object *o;
+   Eina_List *l;
+
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
+   EINA_LIST_FOREACH(sd->items, l, o)
+     if (o == child) return eina_list_data_get(l->next);
+   return NULL;
+}
+
 EAPI void
 e_flowlayout_pack_options_set(Evas_Object *obj, int fill_w, int fill_h, int expand_w, int expand_h, double align_x, double align_y, Evas_Coord min_w, Evas_Coord min_h, Evas_Coord max_w, Evas_Coord max_h)
 {
