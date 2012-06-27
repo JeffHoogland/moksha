@@ -3039,12 +3039,12 @@ e_actions_init(void)
                             "window_move_to_center", NULL, NULL, 0);
    /* window_move_to */
    ACT_GO(window_move_to);
-   e_action_predef_name_set(N_("Window : Actions"), N_("Move To..."),
+   e_action_predef_name_set(N_("Window : Actions"), N_("Move To Coordinates..."),
                             "window_move_to", NULL,
                             "syntax: [+,-]X [+,-]Y or * [+,-]Y or [+,-]X *, example: -1 +1", 1);
    /* window_move_by */
    ACT_GO(window_move_by);
-   e_action_predef_name_set(N_("Window : Actions"), N_("Move By..."),
+   e_action_predef_name_set(N_("Window : Actions"), N_("Move By Coordinate Offset..."),
                             "window_move_by", NULL,
                             "syntax: X-offset Y-offset, example: -1 0", 1);
 
