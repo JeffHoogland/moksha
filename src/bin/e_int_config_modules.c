@@ -2,85 +2,85 @@
 #include <assert.h>
 
 typedef struct _CFModule CFModule;
-typedef struct _CFType CFType;
-typedef struct _CFTypes CFTypes;
+typedef struct _CFType   CFType;
+typedef struct _CFTypes  CFTypes;
 
 struct _CFModule
 {
-   const char *short_name, *name, *comment;
-   const char *icon, *orig_path;
-   E_Module *module;
+   const char  *short_name, *name, *comment;
+   const char  *icon, *orig_path;
+   E_Module    *module;
    Evas_Object *end;
-   int idx;
-   Eina_Bool enabled : 1;
-   Eina_Bool selected : 1;
+   int          idx;
+   Eina_Bool    enabled : 1;
+   Eina_Bool    selected : 1;
 };
 
 struct _CFType
 {
    const char *key, *name, *icon;
-   Eina_Hash *modules_hash; /* just used before constructing list */
-   Eina_List *modules; /* sorted and ready to be used */
+   Eina_Hash  *modules_hash; /* just used before constructing list */
+   Eina_List  *modules; /* sorted and ready to be used */
 };
 
 struct _E_Config_Dialog_Data
 {
-   Evas *evas;
+   Evas        *evas;
    Evas_Object *l_modules;
    Evas_Object *o_toolbar;
    Evas_Object *b_load, *b_unload;
    Evas_Object *o_desc;
-   Eina_List *types;
+   Eina_List   *types;
    struct
-     {
-        Eina_List *loaded, *unloaded;
-        Ecore_Idler *idler;
-     } selected;
+   {
+      Eina_List   *loaded, *unloaded;
+      Ecore_Idler *idler;
+   } selected;
 };
 
 struct _CFTypes
 {
-   size_t key_len;
+   size_t      key_len;
    const char *key, *name, *icon;
 };
 
 /* pre defined types (used to specify icon and i18n name) */
 static const CFTypes _types[] =
 {
-#define _CFT(k, n, i)				\
+#define _CFT(k, n, i) \
   {sizeof(k) - 1, k, n, i}
-  _CFT("utils", N_("Utilities"), "modules-utils"),
-  _CFT("system", N_("System"), "modules-system"),
-  _CFT("look", N_("Look"), "modules-look"),
-  _CFT("files", N_("Files"), "modules-files"),
-  _CFT("launcher", N_("Launcher"), "modules-launcher"),
-  _CFT("core", N_("Core"), "modules-core"),
-  _CFT("mobile", N_("Mobile"), "modules-mobile"),
-  _CFT("settings", N_("Settings"), "modules-settings"),
+   _CFT("utils", N_("Utilities"), "modules-utils"),
+   _CFT("system", N_("System"), "modules-system"),
+   _CFT("look", N_("Look"), "modules-look"),
+   _CFT("files", N_("Files"), "modules-files"),
+   _CFT("launcher", N_("Launcher"), "modules-launcher"),
+   _CFT("core", N_("Core"), "modules-core"),
+   _CFT("mobile", N_("Mobile"), "modules-mobile"),
+   _CFT("settings", N_("Settings"), "modules-settings"),
 #undef _CFT
-  {0, NULL, NULL, NULL}
+   {0, NULL, NULL, NULL}
 };
 
 /* local function protos */
-static void _cftype_free(CFType *cft);
+static void         _cftype_free(CFType *cft);
 
-static void _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__);
+static void         _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__);
 
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _fill_cat_list(E_Config_Dialog_Data *cfdata);
-static void _module_end_state_apply(CFModule *cfm);
+static void         _fill_cat_list(E_Config_Dialog_Data *cfdata);
+static void         _module_end_state_apply(CFModule *cfm);
 
-static void _toolbar_select_cb(void *data, void *data2);
+static void         _toolbar_select_cb(void *data, void *data2);
 
-static CFType *_cftype_new(const char *key, const char *name, const char *icon);
-static void _load_modules(const char *dir, Eina_Hash *types_hash);
-static Eina_Bool _types_list_create_foreach_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
-static int _types_list_sort(const void *data1, const void *data2);
+static CFType      *_cftype_new(const char *key, const char *name, const char *icon);
+static void         _load_modules(const char *dir, Eina_Hash *types_hash);
+static Eina_Bool    _types_list_create_foreach_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
+static int          _types_list_sort(const void *data1, const void *data2);
 
-static void _btn_cb_unload(void *data, void *data2);
-static void _btn_cb_load(void *data, void *data2);
+static void         _btn_cb_unload(void *data, void *data2);
+static void         _btn_cb_load(void *data, void *data2);
 
 EAPI E_Config_Dialog *
 e_int_config_modules(E_Container *con, const char *params __UNUSED__)
@@ -96,8 +96,8 @@ e_int_config_modules(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
 
    cfd = e_config_dialog_new(con, _("Module Settings"),
-			     "E", "_config_modules_dialog",
-			     "preferences-plugin", 0, v, NULL);
+                             "E", "_config_modules_dialog",
+                             "preferences-plugin", 0, v, NULL);
    return cfd;
 }
 
@@ -115,8 +115,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    modules_paths = e_path_dir_list_get(path_modules);
    if (!modules_paths)
      {
-	eina_hash_free(types_hash);
-	return cfdata;
+        eina_hash_free(types_hash);
+        return cfdata;
      }
 
    EINA_LIST_FOREACH(modules_paths, l, epd)
@@ -139,7 +139,8 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    CFType *cft;
 
-   EINA_LIST_FREE(cfdata->types, cft) _cftype_free(cft);
+   EINA_LIST_FREE(cfdata->types, cft)
+     _cftype_free(cft);
 
    eina_list_free(cfdata->selected.loaded);
    eina_list_free(cfdata->selected.unloaded);
@@ -242,45 +243,45 @@ _list_item_append(E_Config_Dialog_Data *cfdata, CFModule *cfm)
      icon = NULL;
    else
      {
-	icon = e_icon_add(cfdata->evas);
-	if (icon)
-	  {
-	     if (!e_util_icon_theme_set(icon, cfm->icon))
-	       {
-		  if (cfm->orig_path)
-		    {
-		       char *dir = ecore_file_dir_get(cfm->orig_path);
-		       char buf[PATH_MAX];
+        icon = e_icon_add(cfdata->evas);
+        if (icon)
+          {
+             if (!e_util_icon_theme_set(icon, cfm->icon))
+               {
+                  if (cfm->orig_path)
+                    {
+                       char *dir = ecore_file_dir_get(cfm->orig_path);
+                       char buf[PATH_MAX];
 
-		       snprintf(buf, sizeof(buf), "%s/%s.edj", dir, cfm->icon);
-		       free(dir);
+                       snprintf(buf, sizeof(buf), "%s/%s.edj", dir, cfm->icon);
+                       free(dir);
 
-		       e_icon_file_edje_set(icon, buf, "icon");
-		    }
-		  else
-		    {
-		       evas_object_del(icon);
-		       icon = NULL;
-		    }
-	       }
-	  }
+                       e_icon_file_edje_set(icon, buf, "icon");
+                    }
+                  else
+                    {
+                       evas_object_del(icon);
+                       icon = NULL;
+                    }
+               }
+          }
      }
 
    end = edje_object_add(cfdata->evas);
    if (end)
      {
-	if (e_theme_edje_object_set(end, "base/theme/widgets",
-				     "e/widgets/ilist/toggle_end"))
-	  {
-	     cfm->end = end;
-	     _module_end_state_apply(cfm);
-	  }
-	else
-	  {
-	     EINA_LOG_ERR("your theme is missing 'e/widgets/ilist/toggle_end'!");
-	     evas_object_del(end);
-	     end = NULL;
-	  }
+        if (e_theme_edje_object_set(end, "base/theme/widgets",
+                                    "e/widgets/ilist/toggle_end"))
+          {
+             cfm->end = end;
+             _module_end_state_apply(cfm);
+          }
+        else
+          {
+             EINA_LOG_ERR("your theme is missing 'e/widgets/ilist/toggle_end'!");
+             evas_object_del(end);
+             end = NULL;
+          }
      }
 
    e_widget_ilist_append_full(cfdata->l_modules, icon, end,
@@ -411,9 +412,9 @@ _cftype_new_from_key(const char *key)
    key_len = strlen(key);
    for (itr = _types; itr->key_len > 0; itr++)
      {
-	if (key_len != itr->key_len) continue;
-	if (strcmp(itr->key, key) != 0) continue;
-	return _cftype_new(itr->key, itr->name, itr->icon);
+        if (key_len != itr->key_len) continue;
+        if (strcmp(itr->key, key) != 0) continue;
+        return _cftype_new(itr->key, itr->name, itr->icon);
      }
 
    if ((key_len + 1) >= sizeof(name)) return NULL;
@@ -442,71 +443,71 @@ _load_modules(const char *dir, Eina_Hash *types_hash)
    files = ecore_file_ls(dir);
    EINA_LIST_FREE(files, mod)
      {
-	Efreet_Desktop *desk;
-	CFType *cft;
-	CFModule *cfm;
-	const char *type;
-	Eina_Bool new_type;
+        Efreet_Desktop *desk;
+        CFType *cft;
+        CFModule *cfm;
+        const char *type;
+        Eina_Bool new_type;
 
-	snprintf(modpath + modpathlen, sizeof(modpath) - modpathlen,
-		 "%s/module.desktop", mod);
-	if (!ecore_file_exists(modpath)) goto end_mod;
-	if (!(desk = efreet_desktop_new(modpath))) goto end_mod;
+        snprintf(modpath + modpathlen, sizeof(modpath) - modpathlen,
+                 "%s/module.desktop", mod);
+        if (!ecore_file_exists(modpath)) goto end_mod;
+        if (!(desk = efreet_desktop_new(modpath))) goto end_mod;
 
-	if (desk->x)
-	  type = eina_hash_find(desk->x, "X-Enlightenment-ModuleType");
-	else
-	  type = NULL;
-	if (!type) type = "utils"; // todo: warn?
+        if (desk->x)
+          type = eina_hash_find(desk->x, "X-Enlightenment-ModuleType");
+        else
+          type = NULL;
+        if (!type) type = "utils";  // todo: warn?
 
-	cft = eina_hash_find(types_hash, type);
-	if (cft)
-	  {
-	     new_type = EINA_FALSE;
-	     if ((cft->modules_hash) &&
-		 (eina_hash_find(cft->modules_hash, mod)))
-	       goto end_desktop;
-	  }
-	else
-	  {
-	     cft = _cftype_new_from_key(type);
-	     if (cft) new_type = EINA_TRUE;
-	     else goto end_desktop;
-	  }
+        cft = eina_hash_find(types_hash, type);
+        if (cft)
+          {
+             new_type = EINA_FALSE;
+             if ((cft->modules_hash) &&
+                 (eina_hash_find(cft->modules_hash, mod)))
+               goto end_desktop;
+          }
+        else
+          {
+             cft = _cftype_new_from_key(type);
+             if (cft) new_type = EINA_TRUE;
+             else goto end_desktop;
+          }
 
-	cfm = _module_new(mod, desk);
-	if (!cfm)
-	  {
-	     if (new_type) _cftype_free(cft);
-	     goto end_desktop;
-	  }
+        cfm = _module_new(mod, desk);
+        if (!cfm)
+          {
+             if (new_type) _cftype_free(cft);
+             goto end_desktop;
+          }
 
-	if (!cft->modules_hash)
-	  cft->modules_hash = eina_hash_string_superfast_new(NULL);
-	if (!cft->modules_hash)
-	  {
-	     if (new_type) _cftype_free(cft);
-	     goto end_desktop;
-	  }
-	eina_hash_direct_add(cft->modules_hash, cfm->short_name, cfm);
-	// TODO be paranoid about hash add failure, otherwise it will leak
+        if (!cft->modules_hash)
+          cft->modules_hash = eina_hash_string_superfast_new(NULL);
+        if (!cft->modules_hash)
+          {
+             if (new_type) _cftype_free(cft);
+             goto end_desktop;
+          }
+        eina_hash_direct_add(cft->modules_hash, cfm->short_name, cfm);
+        // TODO be paranoid about hash add failure, otherwise it will leak
 
-	cft->modules = eina_list_append(cft->modules, cfm);
-	// TODO be paranoid about list append failure, otherwise it will leak
-	cfm->module = e_module_find(mod);
-	if (cfm->module)
-	  cfm->enabled = e_module_enabled_get(cfm->module);
-	else
-	  cfm->enabled = 0;
+        cft->modules = eina_list_append(cft->modules, cfm);
+        // TODO be paranoid about list append failure, otherwise it will leak
+        cfm->module = e_module_find(mod);
+        if (cfm->module)
+          cfm->enabled = e_module_enabled_get(cfm->module);
+        else
+          cfm->enabled = 0;
 
-	if (new_type)
-	  eina_hash_direct_add(types_hash, cft->key, cft);
-	// TODO be paranoid about hash add failure, otherwise it will leak
+        if (new_type)
+          eina_hash_direct_add(types_hash, cft->key, cft);
+        // TODO be paranoid about hash add failure, otherwise it will leak
 
-     end_desktop:
-	efreet_desktop_free(desk);
-     end_mod:
-	free(mod);
+end_desktop:
+        efreet_desktop_free(desk);
+end_mod:
+        free(mod);
      }
 }
 
@@ -561,23 +562,23 @@ _widget_list_item_selected_postponed(void *data)
 
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->l_modules), l, it)
      {
-	idx++;
-	if (!it->selected) continue;
-	cfm = e_widget_ilist_item_data_get(it);
-	cfm->idx = (idx-1);
+        idx++;
+        if (!it->selected) continue;
+        cfm = e_widget_ilist_item_data_get(it);
+        cfm->idx = (idx - 1);
 
-	if (cfm->enabled)
-	  {
-	     cfdata->selected.loaded =
+        if (cfm->enabled)
+          {
+             cfdata->selected.loaded =
                eina_list_append(cfdata->selected.loaded, cfm);
-	     loaded++;
-	  }
-	else
-	  {
-	     cfdata->selected.unloaded =
+             loaded++;
+          }
+        else
+          {
+             cfdata->selected.unloaded =
                eina_list_append(cfdata->selected.unloaded, cfm);
-	     unloaded++;
-	  }
+             unloaded++;
+          }
      }
 
    e_widget_disabled_set(cfdata->b_load, !unloaded);
@@ -615,18 +616,18 @@ _btn_cb_unload(void *data, void *data2 __UNUSED__)
 
    EINA_LIST_FREE(cfdata->selected.loaded, cfm)
      {
-	if (!cfm->module)
-	  cfm->module = e_module_find(cfm->short_name);
+        if (!cfm->module)
+          cfm->module = e_module_find(cfm->short_name);
 
-	if (cfm->module)
-	  {
-	     e_module_disable(cfm->module);
-	     cfm->enabled = e_module_enabled_get(cfm->module);
-	  }
+        if (cfm->module)
+          {
+             e_module_disable(cfm->module);
+             cfm->enabled = e_module_enabled_get(cfm->module);
+          }
 
         // weird, but unselects it as it was already selected
         e_widget_ilist_multi_select(cfdata->l_modules, cfm->idx);
-	_module_end_state_apply(cfm);
+        _module_end_state_apply(cfm);
      }
 
    e_widget_disabled_set(cfdata->b_unload, 1);
@@ -640,21 +641,22 @@ _btn_cb_load(void *data, void *data2 __UNUSED__)
 
    EINA_LIST_FREE(cfdata->selected.unloaded, cfm)
      {
-	if (!cfm->module)
-	  cfm->module = e_module_find(cfm->short_name);
-	if (!cfm->module)
-	  cfm->module = e_module_new(cfm->short_name);
+        if (!cfm->module)
+          cfm->module = e_module_find(cfm->short_name);
+        if (!cfm->module)
+          cfm->module = e_module_new(cfm->short_name);
 
-	if (cfm->module)
-	  {
-	     e_module_enable(cfm->module);
-	     cfm->enabled = e_module_enabled_get(cfm->module);
-	  }
+        if (cfm->module)
+          {
+             e_module_enable(cfm->module);
+             cfm->enabled = e_module_enabled_get(cfm->module);
+          }
 
         // weird, but unselects it as it was already selected
         e_widget_ilist_multi_select(cfdata->l_modules, cfm->idx);
-	_module_end_state_apply(cfm);
+        _module_end_state_apply(cfm);
      }
 
    e_widget_disabled_set(cfdata->b_load, 1);
 }
+
