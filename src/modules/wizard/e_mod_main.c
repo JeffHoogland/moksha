@@ -6,13 +6,13 @@ E_Module *wiz_module = NULL;
 
 /*
  * These are the currently planned wizard pages:
- * 
+ *
  * o == interactive
  * . == automatic (no gui - none implemented currently)
- * 
+ *
  * * = done
  * - = code here, but disabled in build
- * 
+ *
  * --- THE LIST
  * o *ask for language (default selection is current locale).
  * o *ask for initial profile
@@ -24,7 +24,7 @@ E_Module *wiz_module = NULL;
  * o -ask click to focus or sloppy
  * . *take some of current config (language, fileman, profile) and load
  *    load profile, apply language to it and save, restart e.
- * 
+ *
  * why are some disabled? profiels take care of this and do a better job
  * at collecting all the things together. for example illume makes no sense
  * with pointer focus and ibar icons/desktop makes no sense.
@@ -34,10 +34,10 @@ E_Module *wiz_module = NULL;
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-     "Wizard"
+   "Wizard"
 };
 
-static int 
+static int
 _cb_sort_files(char *f1, char *f2)
 {
    return strcmp(f1, f2);
@@ -49,10 +49,10 @@ e_modapi_init(E_Module *m)
    Eina_List *files;
    char buf[PATH_MAX];
    char *file;
-   
+
    wiz_module = m;
    e_wizard_init();
-   
+
    snprintf(buf, sizeof(buf), "%s/%s", e_module_dir_get(m), MODULE_ARCH);
    files = ecore_file_ls(buf);
    files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
@@ -61,17 +61,17 @@ e_modapi_init(E_Module *m)
         if (!strncmp(file, "page_", 5))
           {
              void *handle;
-             
+
              snprintf(buf, sizeof(buf), "%s/%s/%s",
                       e_module_dir_get(m), MODULE_ARCH, file);
              handle = dlopen(buf, RTLD_NOW | RTLD_GLOBAL);
              if (handle)
-                e_wizard_page_add(handle,
-                                  dlsym(handle, "wizard_page_init"),
-                                  dlsym(handle, "wizard_page_shutdown"),
-                                  dlsym(handle, "wizard_page_show"),
-                                  dlsym(handle, "wizard_page_hide"),
-                                  dlsym(handle, "wizard_page_apply"));
+               e_wizard_page_add(handle,
+                                 dlsym(handle, "wizard_page_init"),
+                                 dlsym(handle, "wizard_page_shutdown"),
+                                 dlsym(handle, "wizard_page_show"),
+                                 dlsym(handle, "wizard_page_hide"),
+                                 dlsym(handle, "wizard_page_apply"));
              else
                {
                   // if its an executable...
@@ -80,10 +80,10 @@ e_modapi_init(E_Module *m)
                   printf("%s\n", dlerror());
                }
           }
-	free(file);
+        free(file);
      }
    e_wizard_go();
-   
+
    return m;
 }
 
@@ -92,7 +92,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_wizard_shutdown();
    wiz_module = NULL;
-// FIXME: wrong place   
+// FIXME: wrong place
 //   e_module_disable(m); /* disable - on restart this won't be loaded now */
 //   e_sys_action_do(E_SYS_RESTART, NULL); /* restart e - cleanly try settings */
    return 1;
@@ -103,3 +103,4 @@ e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }
+

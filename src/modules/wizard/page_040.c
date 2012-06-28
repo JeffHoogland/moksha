@@ -27,7 +27,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    if (!extra_desks) return 0;
    EINA_LIST_FREE(extra_desks, file)
      {
-        snprintf(buf, sizeof(buf), "%s/extra_desktops/%s", 
+        snprintf(buf, sizeof(buf), "%s/extra_desktops/%s",
                  e_wizard_dir_get(), file);
         extra_desk = efreet_desktop_uncached_new(buf);
         if (extra_desk)
@@ -35,7 +35,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
              if (extra_desk->exec)
                {
                   char abuf[4096], dbuf[4096];
-               
+
                   found = 0;
                   if (sscanf(extra_desk->exec, "%4000s", abuf) == 1)
                     {
@@ -49,7 +49,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
                                       if (sscanf(desk->exec, "%4000s", dbuf) == 1)
                                         {
                                            char *p1, *p2;
-                                           
+
                                            p1 = strrchr(dbuf, '/');
                                            if (p1) p1++;
                                            else p1 = dbuf;
@@ -66,11 +66,11 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
                   if (!found)
                     {
                        // copy file
-                       snprintf(abuf, sizeof(abuf), 
+                       snprintf(abuf, sizeof(abuf),
                                 "%s/applications",
                                 efreet_data_home_get());
                        ecore_file_mkpath(abuf);
-                       snprintf(abuf, sizeof(abuf), 
+                       snprintf(abuf, sizeof(abuf),
                                 "%s/applications/%s",
                                 efreet_data_home_get(), file);
                        ecore_file_cp(buf, abuf);
@@ -94,3 +94,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+

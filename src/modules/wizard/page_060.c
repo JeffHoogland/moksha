@@ -23,21 +23,21 @@ wizard_page_show(E_Wizard_Page *pg)
    E_Radio_Group *rg;
 
    if (e_config->focus_policy == E_FOCUS_CLICK) focus_mode = 0;
-   
+
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Window Focus"));
-   
+
    of = e_widget_framelist_add(pg->evas, _("Focus by ..."), 0);
 
    rg = e_widget_radio_group_new(&focus_mode);
-   
+
    ob = e_widget_radio_add(pg->evas, _("Click"), 0, rg);
    e_widget_framelist_object_append(of, ob);
    evas_object_show(ob);
    ob = e_widget_radio_add(pg->evas, _("Mouse Over"), 1, rg);
    e_widget_framelist_object_append(of, ob);
    evas_object_show(ob);
-   
+
    e_widget_list_object_append(o, of, 0, 0, 0.5);
    evas_object_show(of);
 
@@ -78,3 +78,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+

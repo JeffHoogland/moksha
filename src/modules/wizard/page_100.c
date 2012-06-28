@@ -48,10 +48,10 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 #ifdef __FreeBSD__
    char buf[PATH_MAX];
    size_t len = 0;
-   
+
    len = sizeof(buf);
    if (sysctlbyname("dev.cpu.0.freq_levels", buf, &len, NULL, 0) == 0)
-      hav_cpufreq = 1;
+     hav_cpufreq = 1;
 #else
    char *str, *p;
 
@@ -73,14 +73,14 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
      {
         E_Config_Module *em;
         Eina_List *l;
-        
+
         EINA_LIST_FOREACH(e_config->modules, l, em)
           {
              if (!em->name) continue;
              if (!strcmp(em->name, "cpufreq"))
                {
                   e_config->modules = eina_list_remove_list
-                     (e_config->modules, l);
+                      (e_config->modules, l);
                   if (em->name) eina_stringshare_del(em->name);
                   free(em);
                   break;
@@ -102,3 +102,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+

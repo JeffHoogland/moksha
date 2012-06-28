@@ -83,30 +83,30 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
      }
 #ifdef __FreeBSD__
    do {
-      int mib_state[4];
-      int state = 0;
-      size_t len;
-      
-      /* Read some information on first run. */
-      len = 4;
-      sysctlnametomib("hw.acpi.battery.state", mib_state, &len);
-      len = sizeof(state);
-      if (sysctl(mib_state, 4, &state, &len, NULL, 0) != -1)
-         hav_bat = 1;
-   } while (0);
+        int mib_state[4];
+        int state = 0;
+        size_t len;
+
+        /* Read some information on first run. */
+        len = 4;
+        sysctlnametomib("hw.acpi.battery.state", mib_state, &len);
+        len = sizeof(state);
+        if (sysctl(mib_state, 4, &state, &len, NULL, 0) != -1)
+          hav_bat = 1;
+     } while (0);
 #endif
    if (!hav_bat)
      {
         E_Config_Module *em;
         Eina_List *l;
-        
+
         EINA_LIST_FOREACH(e_config->modules, l, em)
           {
              if (!em->name) continue;
              if (!strcmp(em->name, "battery"))
                {
                   e_config->modules = eina_list_remove_list
-                     (e_config->modules, l);
+                      (e_config->modules, l);
                   if (em->name) eina_stringshare_del(em->name);
                   free(em);
                   break;
@@ -128,3 +128,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+

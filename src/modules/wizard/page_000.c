@@ -27,13 +27,13 @@ EAPI int
 wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
    Evas_Object *o;
-   
+
    e_wizard_title_set(_("Enlightenment"));
    e_wizard_button_next_enable_set(0);
    o = edje_object_add(pg->evas);
    e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/firstpage");
    e_wizard_page_show(o);
-   
+
    ecore_timer_add(2.0, _next_page, NULL);
    return 1;
 }
@@ -49,3 +49,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+

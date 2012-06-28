@@ -22,17 +22,17 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    int i;
    const char *selected = NULL;
    const char *search[] =
-     {
-        "gnome",
-        "Humanity",
-        "Humanity-Dark",
-        "ubuntu-mono-light",
-        "ubuntu-mono-dark",
-        "ubuntu-mono-light",
-        "unity-icon-theme",
-        NULL
-     };
-   
+   {
+      "gnome",
+      "Humanity",
+      "Humanity-Dark",
+      "ubuntu-mono-light",
+      "ubuntu-mono-dark",
+      "ubuntu-mono-light",
+      "unity-icon-theme",
+      NULL
+   };
+
    if (!themes) return 0;
    for (i = 0; search[i]; i++)
      {
@@ -66,3 +66,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+

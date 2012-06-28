@@ -29,7 +29,7 @@ find_rules(void)
       "/usr/local/X11R6/lib/X11/xkb/rules/xfree86.lst",
       NULL
    };
-   
+
    for (; lstfiles[i]; i++)
      {
         FILE *f = fopen(lstfiles[i], "r");
@@ -56,17 +56,17 @@ parse_rules(void)
    char buf[4096];
    FILE *f = fopen(rules_file, "r");
    if (!f) return 0;
-   
-   for (;;)
+
+   for (;; )
      {
         if (!fgets(buf, sizeof(buf), f)) goto err;
         if (!strncmp(buf, "! layout", 8))
           {
-             for (;;)
+             for (;; )
                {
                   Layout *lay;
                   char name[4096], label[4096];
-                  
+
                   if (!fgets(buf, sizeof(buf), f)) goto err;
                   if (sscanf(buf, "%s %[^\n]", name, label) != 2) break;
                   lay = calloc(1, sizeof(Layout));
@@ -92,7 +92,7 @@ implement_layout(void)
         Eina_List *l;
         E_Config_XKB_Layout *nl;
         Eina_Bool found = EINA_FALSE;
-        
+
         EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, nl)
           {
              if ((nl->name) && (!strcmp(layout, nl->name)))
@@ -148,12 +148,12 @@ wizard_page_show(E_Wizard_Page *pg)
         Layout *lay;
         const char *label;
 
-	lay = l->data;
+        lay = l->data;
         ic = e_icon_add(pg->evas);
         e_xkb_e_icon_flag_setup(ic, lay->name);
         label = lay->label;
         if (!label) label = "Unknown";
-	e_widget_ilist_append(ob, ic, _(label), NULL, NULL, lay->name);
+        e_widget_ilist_append(ob, ic, _(label), NULL, NULL, lay->name);
         if (lay->name)
           {
              if (!strcmp(lay->name, "us")) sel = i;
@@ -167,7 +167,7 @@ wizard_page_show(E_Wizard_Page *pg)
         e_widget_ilist_selected_set(ob, sel);
         e_widget_ilist_nth_show(ob, sel, 0);
      }
-   
+
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    evas_object_show(ob);
@@ -191,3 +191,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
    implement_layout();
    return 1;
 }
+

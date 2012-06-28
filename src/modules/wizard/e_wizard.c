@@ -1,11 +1,11 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static void _e_wizard_next_eval(void);
+static void     _e_wizard_next_eval(void);
 static E_Popup *_e_wizard_main_new(E_Zone *zone);
 static E_Popup *_e_wizard_extra_new(E_Zone *zone);
-static void _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
-static void _e_wizard_cb_next(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void     _e_wizard_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
+static void     _e_wizard_cb_next(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 static E_Popup *pop = NULL;
 static Eina_List *pops = NULL;
@@ -26,21 +26,21 @@ e_wizard_init(void)
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
         E_Container *con;
-	Eina_List *l2;
+        Eina_List *l2;
 
         EINA_LIST_FOREACH(man->containers, l2, con)
-	  {
-	     Eina_List *l3;
+          {
+             Eina_List *l3;
              E_Zone *zone;
 
              EINA_LIST_FOREACH(con->zones, l3, zone)
-	       {
-		  if (!pop)
-		    pop = _e_wizard_main_new(zone);
-		  else
-		    pops = eina_list_append(pops, _e_wizard_extra_new(zone));
-	       }
-	  }
+               {
+                  if (!pop)
+                    pop = _e_wizard_main_new(zone);
+                  else
+                    pops = eina_list_append(pops, _e_wizard_extra_new(zone));
+               }
+          }
      }
    return 1;
 }
@@ -53,8 +53,8 @@ e_wizard_shutdown(void)
 
    if (pop)
      {
-	e_object_del(E_OBJECT(pop));
-	pop = NULL;
+        e_object_del(E_OBJECT(pop));
+        pop = NULL;
      }
 
    EINA_LIST_FREE(pops, eo)
@@ -69,20 +69,20 @@ e_wizard_go(void)
 {
    if (!curpage)
      {
-	if (pages)
-	  {
-	     curpage = pages->data;
-	     if (pages->next) next_can = 1;
-	  }
+        if (pages)
+          {
+             curpage = pages->data;
+             if (pages->next) next_can = 1;
+          }
      }
    if (curpage)
      {
-	if ((!curpage->data) && (curpage->init)) curpage->init(curpage);
-	_e_wizard_next_eval();
-	if ((curpage->show) && (!curpage->show(curpage)))
-	  {
-	     e_wizard_next();
-	  }
+        if ((!curpage->data) && (curpage->init)) curpage->init(curpage);
+        _e_wizard_next_eval();
+        if ((curpage->show) && (!curpage->show(curpage)))
+          {
+             e_wizard_next();
+          }
      }
 }
 
@@ -92,11 +92,11 @@ e_wizard_apply(void)
    Eina_List *l;
 
    for (l = pages; l; l = l->next)
-     {  
-	E_Wizard_Page *pg;
+     {
+        E_Wizard_Page *pg;
 
-	pg = l->data;
-	if (pg->apply) pg->apply(pg);
+        pg = l->data;
+        if (pg->apply) pg->apply(pg);
      }
 }
 
@@ -108,36 +108,36 @@ e_wizard_next(void)
 
    EINA_LIST_FOREACH(pages, l, page)
      {
-	if (page == curpage)
-	  {
-	     if (eina_list_next(l))
-	       {
-		  if (curpage)
-		    {
-		       if (curpage->hide)
-			 curpage->hide(curpage);
-		    }
-		  curpage = eina_list_data_get(eina_list_next(l));
-		  if (!curpage->data)
-		    {
+        if (page == curpage)
+          {
+             if (eina_list_next(l))
+               {
+                  if (curpage)
+                    {
+                       if (curpage->hide)
+                         curpage->hide(curpage);
+                    }
+                  curpage = eina_list_data_get(eina_list_next(l));
+                  if (!curpage->data)
+                    {
                        if (curpage->init)
-			 curpage->init(curpage);
-		    }
-		  next_can = 1;
-		  _e_wizard_next_eval();
-		  if ((curpage->show) && (curpage->show(curpage)))
-		    {
-		       break;
-		    }
-	       }
-	     else
-	       {
-		  /* FINISH */
-		  e_wizard_apply();
-		  e_wizard_shutdown();
-		  return;
-	       }
-	  }
+                         curpage->init(curpage);
+                    }
+                  next_can = 1;
+                  _e_wizard_next_eval();
+                  if ((curpage->show) && (curpage->show(curpage)))
+                    {
+                       break;
+                    }
+               }
+             else
+               {
+                  /* FINISH */
+                  e_wizard_apply();
+                  e_wizard_shutdown();
+                  return;
+               }
+          }
      }
 }
 
@@ -150,23 +150,23 @@ e_wizard_page_show(Evas_Object *obj)
      {
         Evas_Coord minw, minh;
 
-	e_widget_size_min_get(obj, &minw, &minh);
-	edje_extern_object_min_size_set(obj, minw, minh);
-	edje_object_part_swallow(o_bg, "e.swallow.content", obj);
-	evas_object_show(obj);
-	e_widget_focus_set(obj, 1);
-	edje_object_signal_emit(o_bg, "e,action,page,new", "e");
+        e_widget_size_min_get(obj, &minw, &minh);
+        edje_extern_object_min_size_set(obj, minw, minh);
+        edje_object_part_swallow(o_bg, "e.swallow.content", obj);
+        evas_object_show(obj);
+        e_widget_focus_set(obj, 1);
+        edje_object_signal_emit(o_bg, "e,action,page,new", "e");
      }
 }
 
 EAPI E_Wizard_Page *
 e_wizard_page_add(void *handle,
-		  int (*init_cb)     (E_Wizard_Page *pg),
-		  int (*shutdown_cb) (E_Wizard_Page *pg),
-		  int (*show_cb)     (E_Wizard_Page *pg),
-		  int (*hide_cb)     (E_Wizard_Page *pg),
-		  int (*apply_cb)    (E_Wizard_Page *pg)
-		  )
+                  int (*init_cb)(E_Wizard_Page *pg),
+                  int (*shutdown_cb)(E_Wizard_Page *pg),
+                  int (*show_cb)(E_Wizard_Page *pg),
+                  int (*hide_cb)(E_Wizard_Page *pg),
+                  int (*apply_cb)(E_Wizard_Page *pg)
+                  )
 {
    E_Wizard_Page *pg;
 
@@ -232,9 +232,9 @@ _e_wizard_next_eval(void)
    if (!next_ok) ok = 0;
    if (next_prev != ok)
      {
-	if (ok) edje_object_signal_emit(o_bg, "e,state,next,enable", "e");
-	else edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
-	next_prev = ok;
+        if (ok) edje_object_signal_emit(o_bg, "e,state,next,enable", "e");
+        else edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
+        next_prev = ok;
      }
 }
 
@@ -255,28 +255,28 @@ _e_wizard_main_new(E_Zone *zone)
    evas_object_resize(o, zone->w, zone->h);
    evas_object_show(o);
    edje_object_signal_callback_add(o, "e,action,next", "",
-				   _e_wizard_cb_next, popup);
+                                   _e_wizard_cb_next, popup);
    o_bg = o;
 
    o = evas_object_rectangle_add(popup->evas);
    mask = 0;
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    if (!kg)
-     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
+     fprintf(stderr, "ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = evas_key_modifier_mask_get(popup->evas, "Shift");
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
    if (!kg)
-     fprintf(stderr,"ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
+     fprintf(stderr, "ERROR: unable to redirect \"Tab\" key events to object %p.\n", o);
    mask = 0;
    kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
    if (!kg)
-     fprintf(stderr,"ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
+     fprintf(stderr, "ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
    mask = 0;
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    if (!kg)
-     fprintf(stderr,"ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
+     fprintf(stderr, "ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
-				  _e_wizard_cb_key_down, popup);
+                                  _e_wizard_cb_key_down, popup);
 
    /* set up next/prev buttons */
    edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment"));
@@ -286,10 +286,10 @@ _e_wizard_main_new(E_Zone *zone)
    e_popup_edje_bg_object_set(popup, o_bg);
    e_popup_show(popup);
    if (!e_grabinput_get(ecore_evas_software_x11_window_get(popup->ecore_evas),
-			1, ecore_evas_software_x11_window_get(popup->ecore_evas)))
+                        1, ecore_evas_software_x11_window_get(popup->ecore_evas)))
      {
-	e_object_del(E_OBJECT(popup));
-	popup = NULL;
+        e_object_del(E_OBJECT(popup));
+        popup = NULL;
      }
    return popup;
 }
@@ -321,19 +321,19 @@ _e_wizard_cb_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *ob
    if (!o_content) return;
    if (!strcmp(ev->keyname, "Tab"))
      {
-	if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
-	  e_widget_focus_jump(o_content, 0);
-	else
-	  e_widget_focus_jump(o_content, 1);
+        if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
+          e_widget_focus_jump(o_content, 0);
+        else
+          e_widget_focus_jump(o_content, 1);
      }
    else if (((!strcmp(ev->keyname, "Return")) ||
-	     (!strcmp(ev->keyname, "KP_Enter")) ||
-	     (!strcmp(ev->keyname, "space"))))
+             (!strcmp(ev->keyname, "KP_Enter")) ||
+             (!strcmp(ev->keyname, "space"))))
      {
-	Evas_Object *o;
+        Evas_Object *o;
 
-	o = e_widget_focused_object_get(o_content);
-	if (o) e_widget_activate(o);
+        o = e_widget_focused_object_get(o_content);
+        if (o) e_widget_activate(o);
      }
 }
 
@@ -342,3 +342,4 @@ _e_wizard_cb_next(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char
 {
    e_wizard_next();
 }
+

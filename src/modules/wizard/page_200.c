@@ -37,3 +37,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
    e_sys_action_do(E_SYS_RESTART, NULL);
    return 1;
 }
+

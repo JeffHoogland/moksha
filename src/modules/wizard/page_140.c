@@ -25,14 +25,14 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
      {
         E_Config_Module *em;
         Eina_List *l;
-        
+
         EINA_LIST_FOREACH(e_config->modules, l, em)
           {
              if (!em->name) continue;
              if (!strcmp(em->name, "mixer"))
                {
                   e_config->modules = eina_list_remove_list
-                     (e_config->modules, l);
+                      (e_config->modules, l);
                   if (em->name) eina_stringshare_del(em->name);
                   free(em);
                   break;
@@ -54,3 +54,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+

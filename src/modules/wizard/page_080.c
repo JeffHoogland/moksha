@@ -34,16 +34,18 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
              Efreet_Desktop *desk;
              char name[PATH_MAX], buf2[PATH_MAX], *p;
              int n;
-             
+
              if (buf[0] == '#') continue;
              p = buf;
-             while (isspace(*p)) p++;
-             for (;;)
+             while (isspace(*p))
+               p++;
+             for (;; )
                {
                   n = sscanf(p, "%s", name);
                   if (n != 1) break;
                   p += strlen(name);
-                  while (isspace(*p)) p++;
+                  while (isspace(*p))
+                    p++;
                   snprintf(buf2, sizeof(buf2), "%s.desktop", name);
                   desk = efreet_util_desktop_file_id_find(buf2);
                   if (desk)
@@ -70,3 +72,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+

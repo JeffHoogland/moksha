@@ -8,9 +8,9 @@
 #endif
 
 /*
-static char *
-read_file(const char *file)
-{
+   static char *
+   read_file(const char *file)
+   {
    FILE *f = fopen(file, "r");
    size_t len;
    char buf[4096], *p;
@@ -28,8 +28,8 @@ read_file(const char *file)
      }
    fclose(f);
    return strdup(buf);
-}
-*/
+   }
+ */
 
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__)
@@ -56,14 +56,14 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
      {
         E_Config_Module *em;
         Eina_List *l;
-        
+
         EINA_LIST_FOREACH(e_config->modules, l, em)
           {
              if (!em->name) continue;
              if (!strcmp(em->name, "temperature"))
                {
                   e_config->modules = eina_list_remove_list
-                     (e_config->modules, l);
+                      (e_config->modules, l);
                   if (em->name) eina_stringshare_del(em->name);
                   free(em);
                   break;
@@ -85,3 +85,4 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
+
