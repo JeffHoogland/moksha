@@ -13,7 +13,7 @@ static void _e_mod_comp_wl_output_bind(struct wl_client *client, void *data, uin
 /* private variables */
 static Wayland_Output *_wl_output;
 
-Eina_Bool 
+Eina_Bool
 e_mod_comp_wl_output_init(void)
 {
    Ecore_X_Window *roots;
@@ -38,7 +38,7 @@ e_mod_comp_wl_output_init(void)
 
    memset(_wl_output, 0, sizeof(*_wl_output));
 
-   _wl_output->mode.flags = 
+   _wl_output->mode.flags =
      (WL_OUTPUT_MODE_CURRENT | WL_OUTPUT_MODE_PREFERRED);
    _wl_output->mode.w = rw;
    _wl_output->mode.h = rh;
@@ -53,7 +53,7 @@ e_mod_comp_wl_output_init(void)
    wl_list_init(&_wl_output->link);
    wl_list_init(&_wl_output->frame_callbacks);
 
-   if (!wl_display_add_global(_wl_disp, &wl_output_interface, _wl_output, 
+   if (!wl_display_add_global(_wl_disp, &wl_output_interface, _wl_output,
                               _e_mod_comp_wl_output_bind))
      {
         EINA_LOG_ERR("Failed to add output to wayland\n");
@@ -64,7 +64,7 @@ e_mod_comp_wl_output_init(void)
    return EINA_TRUE;
 }
 
-void 
+void
 e_mod_comp_wl_output_shutdown(void)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -82,7 +82,7 @@ e_mod_comp_wl_output_get(void)
 }
 
 /* local functions */
-static void 
+static void
 _e_mod_comp_wl_output_bind(struct wl_client *client, void *data, uint32_t version __UNUSED__, uint32_t id)
 {
    Wayland_Output *output;
@@ -91,11 +91,12 @@ _e_mod_comp_wl_output_bind(struct wl_client *client, void *data, uint32_t versio
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    if (!(output = data)) return;
-   resource = 
+   resource =
      wl_client_add_object(client, &wl_output_interface, NULL, id, data);
-   wl_resource_post_event(resource, WL_OUTPUT_GEOMETRY, output->x, output->y, 
-                          output->w, output->h, output->subpixel, 
+   wl_resource_post_event(resource, WL_OUTPUT_GEOMETRY, output->x, output->y,
+                          output->w, output->h, output->subpixel,
                           output->make, output->model);
-   wl_resource_post_event(resource, WL_OUTPUT_MODE, output->mode.flags, 
+   wl_resource_post_event(resource, WL_OUTPUT_MODE, output->mode.flags,
                           output->mode.w, output->mode.h, output->mode.refresh);
 }
+

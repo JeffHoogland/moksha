@@ -33,7 +33,7 @@ e_mod_comp_update_free(E_Update *up)
 }
 
 void
-e_mod_comp_update_policy_set(E_Update       *up,
+e_mod_comp_update_policy_set(E_Update *up,
                              E_Update_Policy pol)
 {
    up->pol = pol;
@@ -41,8 +41,8 @@ e_mod_comp_update_policy_set(E_Update       *up,
 
 void
 e_mod_comp_update_tile_size_set(E_Update *up,
-                                int       tsw,
-                                int       tsh)
+                                int tsw,
+                                int tsh)
 {
    if ((up->tsw == tsw) && (up->tsh == tsh)) return;
    up->tsw = tsw;
@@ -52,8 +52,8 @@ e_mod_comp_update_tile_size_set(E_Update *up,
 
 void
 e_mod_comp_update_resize(E_Update *up,
-                         int       w,
-                         int       h)
+                         int w,
+                         int h)
 {
    unsigned char *ptiles, *p, *pp;
    int ptw, pth, x, y;
@@ -78,8 +78,12 @@ e_mod_comp_update_resize(E_Update *up,
                {
                   p = up->tiles + (y * up->tw);
                   pp = ptiles + (y * ptw);
-                  if (ptw <= up->tw) for (x = 0; x < ptw; x++) *p++ = *pp++;
-                  else for (x = 0; x < up->tw; x++) *p++ = *pp++;
+                  if (ptw <= up->tw)
+                    for (x = 0; x < ptw; x++)
+                      *p++ = *pp++;
+                  else
+                    for (x = 0; x < up->tw; x++)
+                      *p++ = *pp++;
                }
           }
         else
@@ -88,8 +92,12 @@ e_mod_comp_update_resize(E_Update *up,
                {
                   p = up->tiles + (y * up->tw);
                   pp = ptiles + (y * ptw);
-                  if (ptw <= up->tw) for (x = 0; x < ptw; x++) *p++ = *pp++;
-                  else for (x = 0; x < up->tw; x++) *p++ = *pp++;
+                  if (ptw <= up->tw)
+                    for (x = 0; x < ptw; x++)
+                      *p++ = *pp++;
+                  else
+                    for (x = 0; x < up->tw; x++)
+                      *p++ = *pp++;
                }
           }
      }
@@ -98,10 +106,10 @@ e_mod_comp_update_resize(E_Update *up,
 
 void
 e_mod_comp_update_add(E_Update *up,
-                      int       x,
-                      int       y,
-                      int       w,
-                      int       h)
+                      int x,
+                      int y,
+                      int w,
+                      int h)
 {
    int tx, ty, txx, tyy, xx, yy;
    unsigned char *t, *t2;

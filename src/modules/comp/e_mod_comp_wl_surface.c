@@ -51,7 +51,7 @@ e_mod_comp_wl_surface_create(int32_t x, int32_t y, int32_t w, int32_t h)
 
    wl_list_init(&ws->frame_callbacks);
 
-   ws->buffer_destroy_listener.notify = 
+   ws->buffer_destroy_listener.notify =
      _e_mod_comp_wl_surface_buffer_destroy_handle;
 
    /* ws->transform = NULL; */
@@ -59,7 +59,7 @@ e_mod_comp_wl_surface_create(int32_t x, int32_t y, int32_t w, int32_t h)
    return ws;
 }
 
-void 
+void
 e_mod_comp_wl_surface_destroy(struct wl_client *client __UNUSED__, struct wl_resource *resource)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -67,7 +67,7 @@ e_mod_comp_wl_surface_destroy(struct wl_client *client __UNUSED__, struct wl_res
    wl_resource_destroy(resource);
 }
 
-void 
+void
 e_mod_comp_wl_surface_attach(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *buffer_resource, int32_t x, int32_t y)
 {
    Wayland_Surface *ws;
@@ -91,19 +91,19 @@ e_mod_comp_wl_surface_attach(struct wl_client *client __UNUSED__, struct wl_reso
    buffer->busy_count++;
    ws->buffer = buffer;
    wl_signal_add(&ws->buffer->resource.destroy_signal,
-                  &ws->buffer_destroy_listener);
+                 &ws->buffer_destroy_listener);
 
    if (!ws->visual)
      shell->shell.map(&shell->shell, ws, buffer->width, buffer->height);
-   else if ((x != 0) || (y != 0) || 
+   else if ((x != 0) || (y != 0) ||
             (ws->w != buffer->width) || (ws->h != buffer->height))
-     shell->shell.configure(&shell->shell, ws, ws->x + x, ws->y + y, 
+     shell->shell.configure(&shell->shell, ws, ws->x + x, ws->y + y,
                             buffer->width, buffer->height);
 
    e_mod_comp_wl_buffer_attach(buffer, &ws->surface);
 }
 
-void 
+void
 e_mod_comp_wl_surface_damage(struct wl_client *client __UNUSED__, struct wl_resource *resource, int32_t x, int32_t y, int32_t width, int32_t height)
 {
    Wayland_Surface *ws;
@@ -114,7 +114,7 @@ e_mod_comp_wl_surface_damage(struct wl_client *client __UNUSED__, struct wl_reso
    _e_mod_comp_wl_surface_damage_rectangle(ws, x, y, width, height);
 }
 
-void 
+void
 e_mod_comp_wl_surface_frame(struct wl_client *client, struct wl_resource *resource, uint32_t callback)
 {
    Wayland_Surface *ws;
@@ -139,7 +139,7 @@ e_mod_comp_wl_surface_frame(struct wl_client *client, struct wl_resource *resour
    wl_list_insert(ws->frame_callbacks.prev, &cb->link);
 }
 
-void 
+void
 e_mod_comp_wl_surface_set_opaque_region(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *region_resource)
 {
    Wayland_Surface *ws;
@@ -160,7 +160,7 @@ e_mod_comp_wl_surface_set_opaque_region(struct wl_client *client __UNUSED__, str
      pixman_region32_init(&ws->opaque);
 }
 
-void 
+void
 e_mod_comp_wl_surface_set_input_region(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *region_resource)
 {
    Wayland_Surface *ws;
@@ -184,7 +184,7 @@ e_mod_comp_wl_surface_set_input_region(struct wl_client *client __UNUSED__, stru
    e_mod_comp_wl_comp_repick(&input->input_device, e_mod_comp_wl_time_get());
 }
 
-void 
+void
 e_mod_comp_wl_surface_destroy_surface(struct wl_resource *resource)
 {
    Wayland_Surface *ws;
@@ -210,7 +210,7 @@ e_mod_comp_wl_surface_destroy_surface(struct wl_resource *resource)
    if (ws->buffer)
      wl_list_remove(&ws->buffer_destroy_listener.link);
 
-   if (ws->image != EGL_NO_IMAGE_KHR) 
+   if (ws->image != EGL_NO_IMAGE_KHR)
      {
         Wayland_Compositor *comp;
 
@@ -226,7 +226,7 @@ e_mod_comp_wl_surface_destroy_surface(struct wl_resource *resource)
    free(ws);
 }
 
-void 
+void
 e_mod_comp_wl_surface_configure(Wayland_Surface *ws, int32_t x, int32_t y, int32_t width, int32_t height)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -248,7 +248,7 @@ e_mod_comp_wl_surface_configure(Wayland_Surface *ws, int32_t x, int32_t y, int32
         Wayland_Output *output;
 
         output = e_mod_comp_wl_output_get();
-        wl_list_insert_list(output->frame_callbacks.prev, 
+        wl_list_insert_list(output->frame_callbacks.prev,
                             &ws->frame_callbacks);
         wl_list_init(&ws->frame_callbacks);
      }
@@ -262,12 +262,12 @@ e_mod_comp_wl_surface_configure(Wayland_Surface *ws, int32_t x, int32_t y, int32
      pixman_region32_init(&ws->opaque);
 }
 
-void 
+void
 e_mod_comp_wl_surface_activate(Wayland_Surface *ws, Wayland_Input *wi, uint32_t timestamp __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   if (ws->win) 
+   if (ws->win)
      {
         e_win_show(ws->win);
         ws->win->border->borderless = EINA_TRUE;
@@ -278,7 +278,7 @@ e_mod_comp_wl_surface_activate(Wayland_Surface *ws, Wayland_Input *wi, uint32_t 
    wl_data_device_set_keyboard_focus(&wi->input_device);
 }
 
-void 
+void
 e_mod_comp_wl_surface_damage_surface(Wayland_Surface *ws)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -287,7 +287,7 @@ e_mod_comp_wl_surface_damage_surface(Wayland_Surface *ws)
 }
 
 /* local functions */
-static void 
+static void
 _e_mod_comp_wl_surface_buffer_destroy_handle(struct wl_listener *listener, void *data __UNUSED__)
 {
    Wayland_Surface *ws;
@@ -298,7 +298,7 @@ _e_mod_comp_wl_surface_buffer_destroy_handle(struct wl_listener *listener, void 
    ws->buffer = NULL;
 }
 
-static void 
+static void
 _e_mod_comp_wl_surface_raise(Wayland_Surface *ws)
 {
    Wayland_Compositor *comp;
@@ -315,16 +315,16 @@ _e_mod_comp_wl_surface_raise(Wayland_Surface *ws)
    e_mod_comp_wl_surface_damage_surface(ws);
 }
 
-static void 
+static void
 _e_mod_comp_wl_surface_damage_rectangle(Wayland_Surface *ws, int32_t x, int32_t y, int32_t width, int32_t height)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   pixman_region32_union_rect(&ws->damage, &ws->damage, 
+   pixman_region32_union_rect(&ws->damage, &ws->damage,
                               ws->x + x, ws->y + y, width, height);
 }
 
-static void 
+static void
 _e_mod_comp_wl_surface_frame_destroy_callback(struct wl_resource *resource)
 {
    Wayland_Frame_Callback *cb;
@@ -335,3 +335,4 @@ _e_mod_comp_wl_surface_frame_destroy_callback(struct wl_resource *resource)
    wl_list_remove(&cb->link);
    free(cb);
 }
+

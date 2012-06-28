@@ -6,13 +6,13 @@
 # include "e_mod_comp_wl_region.h"
 #endif
 
-void 
+void
 e_mod_comp_wl_region_destroy(struct wl_client *client __UNUSED__, struct wl_resource *resource)
 {
    wl_resource_destroy(resource);
 }
 
-void 
+void
 e_mod_comp_wl_region_add(struct wl_client *client __UNUSED__, struct wl_resource *resource, int x, int y, int w, int h)
 {
    Wayland_Region *region;
@@ -21,7 +21,7 @@ e_mod_comp_wl_region_add(struct wl_client *client __UNUSED__, struct wl_resource
    pixman_region32_union_rect(&region->region, &region->region, x, y, w, h);
 }
 
-void 
+void
 e_mod_comp_wl_region_subtract(struct wl_client *client __UNUSED__, struct wl_resource *resource, int x, int y, int w, int h)
 {
    Wayland_Region *region;

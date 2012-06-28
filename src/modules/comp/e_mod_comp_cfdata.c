@@ -136,7 +136,7 @@ e_mod_comp_cfdata_config_new(void)
    mat = E_NEW(Match, 1);
    cfg->match.menus = eina_list_append(cfg->match.menus, mat);
    mat->shadow_style = eina_stringshare_add("menu");
-   
+
    return cfg;
 }
 

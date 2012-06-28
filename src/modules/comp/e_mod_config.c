@@ -69,16 +69,16 @@ struct _E_Config_Dialog_Data
 
 /* Protos */
 static void        *_create_data(E_Config_Dialog *cfd);
-static void         _free_data(E_Config_Dialog      *cfd,
+static void         _free_data(E_Config_Dialog *cfd,
                                E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog      *cfd,
-                                          Evas                 *evas,
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
+                                          Evas *evas,
                                           E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog      *cfd,
-                             E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data(E_Config_Dialog *cfd,
+                                      E_Config_Dialog_Data *cfdata);
 
 E_Config_Dialog *
-e_int_config_comp_module(E_Container       *con,
+e_int_config_comp_module(E_Container *con,
                          const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
@@ -103,7 +103,7 @@ e_int_config_comp_module(E_Container       *con,
 }
 
 static void
-_match_dup(Match        *m,
+_match_dup(Match *m,
            Match_Config *m2)
 {
    m2->match = *m;
@@ -234,8 +234,8 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static void
-_shadow_changed(void            *data,
-                Evas_Object     *obj,
+_shadow_changed(void *data,
+                Evas_Object *obj,
                 void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -304,8 +304,8 @@ _style_demo(void *data)
 
 static void
 _style_selector_del(void *data       __UNUSED__,
-                    Evas            *e,
-                    Evas_Object     *o,
+                    Evas *e,
+                    Evas_Object *o,
                     void *event_info __UNUSED__)
 {
    Eina_List *style_shadows, *style_list;
@@ -346,8 +346,8 @@ _style_selector_del(void *data       __UNUSED__,
 }
 
 static Evas_Object *
-_style_selector(Evas        *evas,
-                int          use_shadow,
+_style_selector(Evas *evas,
+                int use_shadow,
                 const char **source)
 {
    Evas_Object *oi, *ob, *oo, *obd, *orec, *oly, *orec0;
@@ -538,10 +538,10 @@ _match_label_get(Match_Config *m)
 }
 
 static void
-_match_ilist_append(Evas_Object  *il,
+_match_ilist_append(Evas_Object *il,
                     Match_Config *m,
-                    int           pos,
-                    int           pre)
+                    int pos,
+                    int pre)
 {
    char *name = _match_label_get(m);
 
@@ -558,7 +558,7 @@ _match_ilist_append(Evas_Object  *il,
 }
 
 static void
-_match_list_up(Eina_List   **list,
+_match_list_up(Eina_List **list,
                Match_Config *m)
 {
    Eina_List *l, *lp;
@@ -572,7 +572,7 @@ _match_list_up(Eina_List   **list,
 }
 
 static void
-_match_list_down(Eina_List   **list,
+_match_list_down(Eina_List **list,
                  Match_Config *m)
 {
    Eina_List *l, *lp;
@@ -586,7 +586,7 @@ _match_list_down(Eina_List   **list,
 }
 
 static void
-_match_list_del(Eina_List   **list,
+_match_list_del(Eina_List **list,
                 Match_Config *m)
 {
    Eina_List *l, *lp;
@@ -599,9 +599,9 @@ _match_list_del(Eina_List   **list,
 }
 
 static void
-_cb_dialog_resize(void            *data,
+_cb_dialog_resize(void *data,
                   Evas *e          __UNUSED__,
-                  Evas_Object     *obj,
+                  Evas_Object *obj,
                   void *event_info __UNUSED__)
 {
    Evas_Object *bg, *of;
@@ -682,10 +682,10 @@ _edit_ok(void *d1,
 }
 
 static void
-_create_edit_frame(E_Config_Dialog      *cfd,
-                   Evas                 *evas,
+_create_edit_frame(E_Config_Dialog *cfd,
+                   Evas *evas,
                    E_Config_Dialog_Data *cfdata,
-                   Match_Config         *m)
+                   Match_Config *m)
 {
    Evas_Object *of, *oi, *lb, *en, *bt, *tb, *tab2, *o, *sf, *li;
    E_Radio_Group *rg;
@@ -1083,11 +1083,11 @@ _but_edit(void *d1,
 }
 
 static Evas_Object *
-_create_match_editor(E_Config_Dialog             *cfd,
-                     Evas                        *evas,
+_create_match_editor(E_Config_Dialog *cfd,
+                     Evas *evas,
                      E_Config_Dialog_Data *cfdata __UNUSED__,
-                     Eina_List                  **matches,
-                     Evas_Object                **il_ret)
+                     Eina_List **matches,
+                     Evas_Object **il_ret)
 {
    Evas_Object *tab, *il, *bt;
    Match_Config *m;
@@ -1123,8 +1123,8 @@ _create_match_editor(E_Config_Dialog             *cfd,
 }
 
 static Evas_Object *
-_create_styles_toolbook(E_Config_Dialog      *cfd,
-                        Evas                 *evas,
+_create_styles_toolbook(E_Config_Dialog *cfd,
+                        Evas *evas,
                         E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *tb, *oi, *il;
@@ -1156,8 +1156,8 @@ _create_styles_toolbook(E_Config_Dialog      *cfd,
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog      *cfd,
-                      Evas                 *evas,
+_basic_create_widgets(E_Config_Dialog *cfd,
+                      Evas *evas,
                       E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ob, *ol, *ol2, *of, *otb, *oi, *orec0, *tab;
@@ -1209,7 +1209,7 @@ _basic_create_widgets(E_Config_Dialog      *cfd,
    rg = e_widget_radio_group_new(&(cfdata->engine));
    ob = e_widget_radio_add(evas, _("Software"), ENGINE_SW, rg);
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   if (!getenv("ECORE_X_NO_XLIB")) 
+   if (!getenv("ECORE_X_NO_XLIB"))
      {
         if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
           {
@@ -1220,8 +1220,8 @@ _basic_create_widgets(E_Config_Dialog      *cfd,
              e_widget_framelist_content_align_set(of, 0.5, 0.0);
              ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
              e_widget_framelist_object_append(of, ob);
-	     ob = e_widget_label_add(evas, _("Ctrl+Alt+Shift+Home resets compositor"));
-	     e_widget_framelist_object_append(of, ob);
+             ob = e_widget_label_add(evas, _("Ctrl+Alt+Shift+Home resets compositor"));
+             e_widget_framelist_object_append(of, ob);
              ob = e_widget_check_add(evas, _("Indirect OpenGL (EXPERIMENTAL)"), &(cfdata->indirect));
              e_widget_framelist_object_append(of, ob);
              e_widget_list_object_append(ol, of, 1, 1, 0.5);
@@ -1361,7 +1361,7 @@ _match_list_free(Eina_List *list)
 
 static void
 _match_dup2(Match_Config *m2,
-            Match        *m)
+            Match *m)
 {
    *m = m2->match;
    if (m->title) m->title = eina_stringshare_add(m->title);

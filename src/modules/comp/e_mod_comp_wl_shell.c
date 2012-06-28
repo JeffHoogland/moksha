@@ -10,36 +10,36 @@
 #endif
 
 /* local function prototypes */
-static void _e_mod_comp_wl_shell_bind(struct wl_client *client, void *data, uint32_t version __UNUSED__, uint32_t id);
-static void _e_mod_comp_wl_shell_lock(Wayland_Shell *base);
-static void _e_mod_comp_wl_shell_unlock(Wayland_Shell *base);
-static void _e_mod_comp_wl_shell_map(Wayland_Shell *base, Wayland_Surface *surface, int32_t width, int32_t height);
-static void _e_mod_comp_wl_shell_configure(Wayland_Shell *base, Wayland_Surface *surface, int32_t x, int32_t y, int32_t width, int32_t height);
-static void _e_mod_comp_wl_shell_destroy(Wayland_Shell *base);
-static void _e_mod_comp_wl_shell_activate(Wayland_Shell *base, Wayland_Surface *surface, uint32_t timestamp);
+static void                   _e_mod_comp_wl_shell_bind(struct wl_client *client, void *data, uint32_t version __UNUSED__, uint32_t id);
+static void                   _e_mod_comp_wl_shell_lock(Wayland_Shell *base);
+static void                   _e_mod_comp_wl_shell_unlock(Wayland_Shell *base);
+static void                   _e_mod_comp_wl_shell_map(Wayland_Shell *base, Wayland_Surface *surface, int32_t width, int32_t height);
+static void                   _e_mod_comp_wl_shell_configure(Wayland_Shell *base, Wayland_Surface *surface, int32_t x, int32_t y, int32_t width, int32_t height);
+static void                   _e_mod_comp_wl_shell_destroy(Wayland_Shell *base);
+static void                   _e_mod_comp_wl_shell_activate(Wayland_Shell *base, Wayland_Surface *surface, uint32_t timestamp);
 
-static void _e_mod_comp_wl_shell_shell_surface_get(struct wl_client *client, struct wl_resource *resource, uint32_t id, struct wl_resource *surface_resource);
-static void _e_mod_comp_wl_shell_surface_pong(struct wl_client *client __UNUSED__, struct wl_resource *resource, unsigned int serial);
-static void _e_mod_comp_wl_shell_surface_move(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp);
-static void _e_mod_comp_wl_shell_surface_resize(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp, uint32_t edges);
-static void _e_mod_comp_wl_shell_surface_set_toplevel(struct wl_client *client __UNUSED__, struct wl_resource *resource);
-static void _e_mod_comp_wl_shell_surface_set_transient(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags __UNUSED__);
-static void _e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, struct wl_resource *resource, uint32_t method __UNUSED__, uint32_t framerate __UNUSED__, struct wl_resource *output_resource __UNUSED__);
-static void _e_mod_comp_wl_shell_surface_set_popup(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource  __UNUSED__, uint32_t timestamp  __UNUSED__, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags  __UNUSED__);
-static void _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client, struct wl_resource *resource, struct wl_resource *output_resource __UNUSED__);
-static void _e_mod_comp_wl_shell_surface_set_title(struct wl_client *client, struct wl_resource *resource, const char *title);
-static void _e_mod_comp_wl_shell_surface_set_class(struct wl_client *client, struct wl_resource *resource, const char *clas);
+static void                   _e_mod_comp_wl_shell_shell_surface_get(struct wl_client *client, struct wl_resource *resource, uint32_t id, struct wl_resource *surface_resource);
+static void                   _e_mod_comp_wl_shell_surface_pong(struct wl_client *client __UNUSED__, struct wl_resource *resource, unsigned int serial);
+static void                   _e_mod_comp_wl_shell_surface_move(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp);
+static void                   _e_mod_comp_wl_shell_surface_resize(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp, uint32_t edges);
+static void                   _e_mod_comp_wl_shell_surface_set_toplevel(struct wl_client *client __UNUSED__, struct wl_resource *resource);
+static void                   _e_mod_comp_wl_shell_surface_set_transient(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags __UNUSED__);
+static void                   _e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, struct wl_resource *resource, uint32_t method __UNUSED__, uint32_t framerate __UNUSED__, struct wl_resource *output_resource __UNUSED__);
+static void                   _e_mod_comp_wl_shell_surface_set_popup(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource  __UNUSED__, uint32_t timestamp  __UNUSED__, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags  __UNUSED__);
+static void                   _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client, struct wl_resource *resource, struct wl_resource *output_resource __UNUSED__);
+static void                   _e_mod_comp_wl_shell_surface_set_title(struct wl_client *client, struct wl_resource *resource, const char *title);
+static void                   _e_mod_comp_wl_shell_surface_set_class(struct wl_client *client, struct wl_resource *resource, const char *clas);
 
-static void _e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, void *data __UNUSED__);
+static void                   _e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, void *data __UNUSED__);
 static Wayland_Shell_Surface *_e_mod_comp_wl_shell_get_shell_surface(Wayland_Surface *ws);
-static void _e_mod_comp_wl_shell_surface_destroy(struct wl_resource *resource);
+static void                   _e_mod_comp_wl_shell_surface_destroy(struct wl_resource *resource);
 
 /* wayland interfaces */
-static const struct wl_shell_interface _wl_shell_interface = 
+static const struct wl_shell_interface _wl_shell_interface =
 {
    _e_mod_comp_wl_shell_shell_surface_get
 };
-static const struct wl_shell_surface_interface _wl_shell_surface_interface = 
+static const struct wl_shell_surface_interface _wl_shell_surface_interface =
 {
    _e_mod_comp_wl_shell_surface_pong,
    _e_mod_comp_wl_shell_surface_move,
@@ -56,7 +56,7 @@ static const struct wl_shell_surface_interface _wl_shell_surface_interface =
 /* private variables */
 struct wl_shell *_wl_shell;
 
-Eina_Bool 
+Eina_Bool
 e_mod_comp_wl_shell_init(void)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -75,8 +75,8 @@ e_mod_comp_wl_shell_init(void)
    _wl_shell->shell.configure = _e_mod_comp_wl_shell_configure;
    _wl_shell->shell.destroy = _e_mod_comp_wl_shell_destroy;
 
-   if (!wl_display_add_global(_wl_disp, &wl_shell_interface, _wl_shell, 
-                             _e_mod_comp_wl_shell_bind))
+   if (!wl_display_add_global(_wl_disp, &wl_shell_interface, _wl_shell,
+                              _e_mod_comp_wl_shell_bind))
      {
         EINA_LOG_ERR("Could not create shell\n");
         free(_wl_shell);
@@ -86,7 +86,7 @@ e_mod_comp_wl_shell_init(void)
    return EINA_TRUE;
 }
 
-void 
+void
 e_mod_comp_wl_shell_shutdown(void)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -102,7 +102,7 @@ e_mod_comp_wl_shell_get(void)
 }
 
 /* local functions */
-static void 
+static void
 _e_mod_comp_wl_shell_bind(struct wl_client *client, void *data, uint32_t version __UNUSED__, uint32_t id)
 {
    struct wl_shell *shell;
@@ -110,11 +110,11 @@ _e_mod_comp_wl_shell_bind(struct wl_client *client, void *data, uint32_t version
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    shell = data;
-   wl_client_add_object(client, &wl_shell_interface, &_wl_shell_interface, 
+   wl_client_add_object(client, &wl_shell_interface, &_wl_shell_interface,
                         id, shell);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_lock(Wayland_Shell *base)
 {
    struct wl_shell *shell;
@@ -124,7 +124,7 @@ _e_mod_comp_wl_shell_lock(Wayland_Shell *base)
    shell = container_of(base, struct wl_shell, shell);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_unlock(Wayland_Shell *base)
 {
    struct wl_shell *shell;
@@ -134,7 +134,7 @@ _e_mod_comp_wl_shell_unlock(Wayland_Shell *base)
    shell = container_of(base, struct wl_shell, shell);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_map(Wayland_Shell *base, Wayland_Surface *surface, int32_t width, int32_t height)
 {
    Wayland_Compositor *comp;
@@ -173,13 +173,14 @@ _e_mod_comp_wl_shell_map(Wayland_Shell *base, Wayland_Surface *surface, int32_t 
         surface->x = 10 + random() % 400;
         surface->y = 10 + random() % 400;
         break;
+
       default:
         wl_list_insert(list, &surface->link);
         break;
      }
 
    if (do_configure)
-     e_mod_comp_wl_surface_configure(surface, surface->x, surface->y, 
+     e_mod_comp_wl_surface_configure(surface, surface->x, surface->y,
                                      surface->w, surface->h);
 
    switch (type)
@@ -193,7 +194,7 @@ _e_mod_comp_wl_shell_map(Wayland_Shell *base, Wayland_Surface *surface, int32_t 
      }
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_configure(Wayland_Shell *base, Wayland_Surface *surface, int32_t x, int32_t y, int32_t width, int32_t height)
 {
    struct wl_shell *shell;
@@ -216,8 +217,10 @@ _e_mod_comp_wl_shell_configure(Wayland_Shell *base, Wayland_Surface *surface, in
      {
       case SHELL_SURFACE_SCREENSAVER:
         do_configure = !do_configure;
+
       case SHELL_SURFACE_FULLSCREEN:
         break;
+
       default:
         break;
      }
@@ -226,7 +229,7 @@ _e_mod_comp_wl_shell_configure(Wayland_Shell *base, Wayland_Surface *surface, in
      e_mod_comp_wl_surface_configure(surface, x, y, width, height);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_destroy(Wayland_Shell *base)
 {
    struct wl_shell *shell;
@@ -238,7 +241,7 @@ _e_mod_comp_wl_shell_destroy(Wayland_Shell *base)
    free(shell);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_activate(Wayland_Shell *base, Wayland_Surface *surface, uint32_t timestamp)
 {
    struct wl_shell *shell;
@@ -249,7 +252,7 @@ _e_mod_comp_wl_shell_activate(Wayland_Shell *base, Wayland_Surface *surface, uin
    e_mod_comp_wl_surface_activate(surface, e_mod_comp_wl_input_get(), timestamp);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_shell_surface_get(struct wl_client *client, struct wl_resource *resource, uint32_t id, struct wl_resource *surface_resource)
 {
    Wayland_Surface *ws;
@@ -260,8 +263,8 @@ _e_mod_comp_wl_shell_shell_surface_get(struct wl_client *client, struct wl_resou
    ws = surface_resource->data;
    if (_e_mod_comp_wl_shell_get_shell_surface(ws))
      {
-        wl_resource_post_error(surface_resource, 
-                               WL_DISPLAY_ERROR_INVALID_OBJECT, 
+        wl_resource_post_error(surface_resource,
+                               WL_DISPLAY_ERROR_INVALID_OBJECT,
                                "get_shell_surface already requested");
         return;
      }
@@ -275,15 +278,15 @@ _e_mod_comp_wl_shell_shell_surface_get(struct wl_client *client, struct wl_resou
    wss->resource.destroy = _e_mod_comp_wl_shell_surface_destroy;
    wss->resource.object.id = id;
    wss->resource.object.interface = &wl_shell_surface_interface;
-   wss->resource.object.implementation = 
-     (void (**)(void)) &_wl_shell_surface_interface;
+   wss->resource.object.implementation =
+     (void (* *)(void)) & _wl_shell_surface_interface;
    wss->resource.data = wss;
 
    wss->surface = ws;
-   wss->surface_destroy_listener.notify = 
+   wss->surface_destroy_listener.notify =
      _e_mod_comp_wl_shell_surface_destroy_handle;
-   wl_signal_add(&ws->surface.resource.destroy_signal, 
-                  &wss->surface_destroy_listener);
+   wl_signal_add(&ws->surface.resource.destroy_signal,
+                 &wss->surface_destroy_listener);
 
    wl_list_init(&wss->link);
 
@@ -291,7 +294,7 @@ _e_mod_comp_wl_shell_shell_surface_get(struct wl_client *client, struct wl_resou
    wl_client_add_resource(client, &wss->resource);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_pong(struct wl_client *client __UNUSED__, struct wl_resource *resource, unsigned int serial)
 {
    Wayland_Shell_Surface *wss;
@@ -302,21 +305,19 @@ _e_mod_comp_wl_shell_surface_pong(struct wl_client *client __UNUSED__, struct wl
    /* TODO: handle ping timer */
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_move(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_resize(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource, uint32_t timestamp, uint32_t edges)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
-
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_set_toplevel(struct wl_client *client __UNUSED__, struct wl_resource *resource)
 {
    Wayland_Shell_Surface *wss;
@@ -331,7 +332,7 @@ _e_mod_comp_wl_shell_surface_set_toplevel(struct wl_client *client __UNUSED__, s
    wss->type = SHELL_SURFACE_TOPLEVEL;
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_set_transient(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags __UNUSED__)
 {
    Wayland_Shell_Surface *wss, *pss;
@@ -354,7 +355,7 @@ _e_mod_comp_wl_shell_surface_set_transient(struct wl_client *client __UNUSED__, 
    wss->type = SHELL_SURFACE_TRANSIENT;
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__, struct wl_resource *resource, uint32_t method __UNUSED__, uint32_t framerate __UNUSED__, struct wl_resource *output_resource __UNUSED__)
 {
    Wayland_Shell_Surface *wss;
@@ -375,7 +376,7 @@ _e_mod_comp_wl_shell_surface_set_fullscreen(struct wl_client *client __UNUSED__,
    wss->type = SHELL_SURFACE_FULLSCREEN;
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_set_popup(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *input_resource  __UNUSED__, uint32_t timestamp  __UNUSED__, struct wl_resource *parent_resource, int32_t x, int32_t y, uint32_t flags  __UNUSED__)
 {
    Wayland_Shell_Surface *wss;
@@ -392,7 +393,7 @@ _e_mod_comp_wl_shell_surface_set_popup(struct wl_client *client __UNUSED__, stru
    wss->popup.y = y;
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client __UNUSED__, struct wl_resource *resource, struct wl_resource *output_resource __UNUSED__)
 {
    Wayland_Shell_Surface *wss;
@@ -405,7 +406,7 @@ _e_mod_comp_wl_shell_surface_set_maximized(struct wl_client *client __UNUSED__, 
    /* FIXME: Implement */
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_set_title(struct wl_client *client, struct wl_resource *resource, const char *title)
 {
    Wayland_Shell_Surface *wss;
@@ -417,7 +418,7 @@ _e_mod_comp_wl_shell_surface_set_title(struct wl_client *client, struct wl_resou
    wss->title = strdup(title);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_set_class(struct wl_client *client, struct wl_resource *resource, const char *clas)
 {
    Wayland_Shell_Surface *wss;
@@ -429,7 +430,7 @@ _e_mod_comp_wl_shell_surface_set_class(struct wl_client *client, struct wl_resou
    wss->clas = strdup(clas);
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_destroy_handle(struct wl_listener *listener, void *data __UNUSED__)
 {
    Wayland_Shell_Surface *wss;
@@ -448,16 +449,16 @@ _e_mod_comp_wl_shell_get_shell_surface(Wayland_Surface *ws)
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
-   listener = 
-     wl_signal_get(&ws->surface.resource.destroy_signal, 
+   listener =
+     wl_signal_get(&ws->surface.resource.destroy_signal,
                    _e_mod_comp_wl_shell_surface_destroy_handle);
    if (listener)
-     return container_of(listener, Wayland_Shell_Surface, 
+     return container_of(listener, Wayland_Shell_Surface,
                          surface_destroy_listener);
    return NULL;
 }
 
-static void 
+static void
 _e_mod_comp_wl_shell_surface_destroy(struct wl_resource *resource)
 {
    Wayland_Shell_Surface *wss;
@@ -472,3 +473,4 @@ _e_mod_comp_wl_shell_surface_destroy(struct wl_resource *resource)
    wl_list_remove(&wss->link);
    free(wss);
 }
+
