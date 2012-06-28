@@ -48,8 +48,8 @@ void *alloca(size_t);
 #include <E_DBus.h>
 #include <E_Ukit.h>
 
-#include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
+#include "e_fm_shared_codec.h"
 #include "e_fm_ipc.h"
 #include "e_fm_device.h"
 

@@ -53,8 +53,8 @@ void *alloca(size_t);
 # include "e_fm_main_udisks.h"
 #endif
 
-#include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
+#include "e_fm_shared_codec.h"
 #include "e_fm_ipc.h"
 #include "e_fm_device.h"
 
