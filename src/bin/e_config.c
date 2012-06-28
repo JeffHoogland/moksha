@@ -24,7 +24,7 @@ static void      _e_config_acpi_bindings_add(void);
 /* local subsystem globals */
 static int _e_config_save_block = 0;
 static E_Powersave_Deferred_Action *_e_config_save_defer = NULL;
-static char *_e_config_profile = NULL;
+static const char *_e_config_profile = NULL;
 
 static E_Config_DD *_e_config_edd = NULL;
 static E_Config_DD *_e_config_module_edd = NULL;
@@ -99,14 +99,7 @@ _e_config_profile_name_get(Eet_File *ef)
           }
         s = NULL;
         if (ok)
-          {
-             s = malloc(data_len + 1);
-             if (s)
-               {
-                  memcpy(s, data, data_len);
-                  s[data_len] = 0;
-               }
-          }
+          eina_stringshare_add_length(data, data_len);
         free(data);
      }
    return s;
@@ -120,14 +113,10 @@ e_config_init(void)
    E_EVENT_CONFIG_MODE_CHANGED = ecore_event_type_new();
    E_EVENT_CONFIG_LOADED = ecore_event_type_new();
 
-   _e_config_profile = getenv("E_CONF_PROFILE");
+   /* if environment var set - use this profile name */
+   _e_config_profile = eina_stringshare_add(getenv("E_CONF_PROFILE"));
 
-   if (_e_config_profile)
-     {
-        /* if environment var set - use this profile name */
-        _e_config_profile = strdup(_e_config_profile);
-     }
-   else
+   if (!_e_config_profile)
      {
         Eet_File *ef;
         char buf[PATH_MAX];
@@ -181,11 +170,11 @@ e_config_init(void)
              /* if so use just the filename as the profile - must be a local link */
              if (lnk)
                {
-                  _e_config_profile = strdup(ecore_file_file_get(lnk));
+                  _e_config_profile = eina_stringshare_add(ecore_file_file_get(lnk));
                   free(lnk);
                }
              else
-               _e_config_profile = strdup("default");
+               _e_config_profile = eina_stringshare_add("default");
           }
         if (!getenv("E_CONF_PROFILE"))
           e_util_env_set("E_CONF_PROFILE", _e_config_profile);
@@ -933,7 +922,7 @@ e_config_init(void)
 EINTERN int
 e_config_shutdown(void)
 {
-   E_FREE(_e_config_profile);
+   eina_stringshare_del(_e_config_profile);
    E_CONFIG_DD_FREE(_e_config_edd);
    E_CONFIG_DD_FREE(_e_config_module_edd);
    E_CONFIG_DD_FREE(_e_config_font_default_edd);
@@ -1413,8 +1402,7 @@ e_config_profile_get(void)
 EAPI void
 e_config_profile_set(const char *prof)
 {
-   E_FREE(_e_config_profile);
-   _e_config_profile = strdup(prof);
+   eina_stringshare_replace(&_e_config_profile, prof);
    e_util_env_set("E_CONF_PROFILE", _e_config_profile);
 }
 
