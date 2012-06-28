@@ -74,11 +74,12 @@ _e_config_error_dialog_cb_delete(void *dia)
      _e_config_error_dialog = NULL;
 }
 
-static char *
+static const char *
 _e_config_profile_name_get(Eet_File *ef)
 {
    /* profile config exists */
-   char *data, *s = NULL;
+   char *data;
+   const char *s = NULL;
    int data_len = 0;
 
    data = eet_read(ef, "config", &data_len);
@@ -99,7 +100,7 @@ _e_config_profile_name_get(Eet_File *ef)
           }
         s = NULL;
         if (ok)
-          eina_stringshare_add_length(data, data_len);
+          s = eina_stringshare_add_length(data, data_len);
         free(data);
      }
    return s;
