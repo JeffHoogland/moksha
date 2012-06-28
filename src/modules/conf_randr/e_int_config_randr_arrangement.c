@@ -88,7 +88,7 @@ static void              _arrangement_widget_rep_del(E_Config_Randr_Dialog_Outpu
 static void              _arrangement_widget_rep_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void              _arrangement_widget_rep_mouse_move_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void              _arrangement_widget_rep_mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void              _arrangement_widget_check_changed_cb(void *data, Evas_Object *obj, void *event_info);
+static void              _arrangement_widget_check_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void              _arrangement_widget_update(void);
 static Position_Suggestion *e_layout_pos_sug_from_children_get(Evas_Object *child, Eina_List *children, int max_distance, Evas_Object_Rel_Pos allowed_pos);
 Eina_Bool                _arrangemnet_rep_illegal_overlapping(E_Config_Randr_Dialog_Output_Dialog_Data *odd);
@@ -190,6 +190,7 @@ _arrangement_widget_update(void)
    Eina_List *iter;
 
    area = e_config_runtime_info->gui.widgets.arrangement.area;
+
    if (!e_config_runtime_info || !e_config_runtime_info->gui.canvas || !e_config_runtime_info->output_dialog_data_list || !area) return;
 
    fprintf(stderr, "CONF_RANDR: Display disconnected outputs: %s\n", (randr_dialog_config->display_disconnected_outputs ? "YES" : "NO"));
@@ -274,7 +275,7 @@ arrangement_widget_basic_create_widgets(Evas *canvas)
    check = e_widget_check_add(canvas, _("Display disconnected outputs"), &e_config_runtime_info->gui.widgets.arrangement.check_val_display_disconnected_outputs);
    if (randr_dialog_config)
      e_widget_check_checked_set(check, randr_dialog_config->display_disconnected_outputs);
-   evas_object_smart_callback_add(check, "changed", _arrangement_widget_check_changed_cb, NULL);
+   evas_object_event_callback_add(check, EVAS_CALLBACK_MOUSE_DOWN, _arrangement_widget_check_mouse_down_cb, NULL);
    e_config_runtime_info->gui.widgets.arrangement.check_display_disconnected_outputs = check;
 
    area = e_layout_add(canvas);
@@ -378,11 +379,16 @@ _arrangement_widget_rep_del(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
 }
 
 static void
-_arrangement_widget_check_changed_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+_arrangement_widget_check_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   randr_dialog_config->display_disconnected_outputs = e_config_runtime_info->gui.widgets.arrangement.check_val_display_disconnected_outputs;
+   if (!obj || !e_config_runtime_info || !randr_dialog_config) return;
 
-   _arrangement_widget_update();
+   if (obj == e_config_runtime_info->gui.widgets.arrangement.check_display_disconnected_outputs)
+     {
+        //this is bad. The events are called _before_ the value is updated.
+        randr_dialog_config->display_disconnected_outputs ^= EINA_TRUE;
+        _arrangement_widget_update();
+     }
 }
 
 static void
