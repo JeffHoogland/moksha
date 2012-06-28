@@ -98,12 +98,12 @@ _pulse_update(Pulse *d __UNUSED__, int type __UNUSED__, Pulse_Sink *ev __UNUSED_
 }
 
 static void
-_pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev __UNUSED__)
+_pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
 {
 /*
    Eina_List *l;
    Pulse_Sink *sink;
-   sinks = ev;
+
    EINA_LIST_FOREACH(ev, l, sink)
      {
         printf("Sink:\n");
@@ -116,6 +116,7 @@ _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev 
         printf("\tbalance: %f\n", pulse_sink_balance_get(sink));
      }
 */
+   sinks = ev;
    pulse_sinks_watch(conn);
    e_mod_mixer_pulse_ready(EINA_TRUE);
 }
@@ -127,6 +128,7 @@ _pulse_sources_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *e
    Eina_List *l;
    Pulse_Sink *sink;
    sources = ev;
+
    EINA_LIST_FOREACH(ev, l, sink)
      {
         printf("Sources:\n");
