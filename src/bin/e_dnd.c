@@ -408,6 +408,9 @@ e_drop_handler_del(E_Drop_Handler *handler)
 {
    unsigned int i;
 
+   if (!handler)
+     return;
+
    _drop_handlers = eina_list_remove(_drop_handlers, handler);
    for (i = 0; i < handler->num_types; i++)
      eina_stringshare_del(handler->types[i]);
