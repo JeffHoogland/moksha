@@ -147,7 +147,7 @@ main(int argc, char **argv)
    _e_storage_volume_edd_init();
    if (!_e_fm_ipc_init()) return -1;
    efm_log_dom = eina_log_domain_register("efm", EINA_COLOR_GREEN);
-   eina_log_domain_level_set("efm", EINA_LOG_LEVEL_DBG);
+   eina_log_domain_level_set("efm", EINA_LOG_LEVEL_ERR);
    _e_fm_init();
 
    ecore_event_handler_add(ECORE_EXE_EVENT_DATA, _e_fm_ipc_slave_data_cb, NULL);
