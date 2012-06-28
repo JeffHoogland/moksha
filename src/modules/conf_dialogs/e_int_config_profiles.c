@@ -1,34 +1,34 @@
 #include "e.h"
 
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _apply_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _apply_cfdata(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _ilist_fill(E_Config_Dialog_Data *cfdata);
-static void _ilist_cb_selected(void *data);
-static void _cb_add(void *data, void *data2);
-static void _cb_delete(void *data, void *data2);
-static void _cb_reset(void *data, void *data2);
-static void _cb_dialog_yes(void *data);
-static void _cb_dialog_destroy(void *data);
+static void         _ilist_fill(E_Config_Dialog_Data *cfdata);
+static void         _ilist_cb_selected(void *data);
+static void         _cb_add(void *data, void *data2);
+static void         _cb_delete(void *data, void *data2);
+static void         _cb_reset(void *data, void *data2);
+static void         _cb_dialog_yes(void *data);
+static void         _cb_dialog_destroy(void *data);
 
-E_Dialog *_dia_new_profile(E_Config_Dialog_Data *cfdata);
-static void _new_profile_cb_close(void *data, E_Dialog *dia);
-static void _new_profile_cb_ok(void *data, E_Dialog *dia);
-static void _new_profile_cb_dia_del(void *obj);
+E_Dialog           *_dia_new_profile(E_Config_Dialog_Data *cfdata);
+static void         _new_profile_cb_close(void *data, E_Dialog *dia);
+static void         _new_profile_cb_ok(void *data, E_Dialog *dia);
+static void         _new_profile_cb_dia_del(void *obj);
 
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
-   Evas_Object *o_list;
-   Evas_Object *o_delete;
-   Evas_Object *o_reset;
-   Evas_Object *o_text;
-   Evas_Object *o_textlabel;
-   const char *sel_profile;
+   Evas_Object     *o_list;
+   Evas_Object     *o_delete;
+   Evas_Object     *o_reset;
+   Evas_Object     *o_text;
+   Evas_Object     *o_textlabel;
+   const char      *sel_profile;
 
-   E_Dialog *dia_new_profile;
-   char *new_profile;
+   E_Dialog        *dia_new_profile;
+   char            *new_profile;
 };
 
 typedef struct _Del_Profile_Confirm_Data Del_Profile_Confirm_Data;
@@ -53,7 +53,7 @@ e_int_config_profiles(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Profile Selector"),
                              "E", "settings/profiles",
-			     "preferences-profiles", 0, v, NULL);
+                             "preferences-profiles", 0, v, NULL);
    e_config_dialog_changed_auto_set(cfd, 0);
    return cfd;
 }
@@ -81,7 +81,7 @@ _apply_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_Action *a;
 
    cur_profile = e_config_profile_get();
-   if (strcmp (cur_profile, cfdata->sel_profile) == 0)
+   if (strcmp(cur_profile, cfdata->sel_profile) == 0)
      return 1;
 
    e_config_save_flush();
@@ -111,31 +111,31 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_textlabel = e_widget_label_add(evas, "");
    e_widget_size_min_get(cfdata->o_textlabel, &mw, &mh);
    e_widget_framelist_object_append_full(of, cfdata->o_textlabel,
-					 1, 1, /* fill */
-					 1, 0, /* expand */
-					 0.5, 0.5, /* align */
-					 mw, mh, /* min */
-					 99999, 99999 /* max */
-					 );
+                                         1, 1, /* fill */
+                                         1, 0, /* expand */
+                                         0.5, 0.5, /* align */
+                                         mw, mh, /* min */
+                                         99999, 99999 /* max */
+                                         );
 
    ob = e_widget_textblock_add(evas);
    e_widget_textblock_markup_set(ob, _("Select a profile"));
    cfdata->o_text = ob;
    e_widget_framelist_object_append_full(of, cfdata->o_text,
-					 1, 1, /* fill */
-					 1, 0, /* expand */
-					 0.5, 0.5, /* align */
-					 140 * e_scale, 60 * e_scale, /* min */
-					 99999, 99999 /* max */
-					 );
+                                         1, 1, /* fill */
+                                         1, 0, /* expand */
+                                         0.5, 0.5, /* align */
+                                         140 * e_scale, 60 * e_scale, /* min */
+                                         99999, 99999 /* max */
+                                         );
 
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-   cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove", 
+   cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove",
                                           _cb_delete, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_delete, 1, 0, 1, 1, 1, 1, 0, 0);
-   cfdata->o_reset = e_widget_button_add(evas, _("Reset"), "system-restart", 
+   cfdata->o_reset = e_widget_button_add(evas, _("Reset"), "system-restart",
                                          _cb_reset, cfdata, NULL);
    e_widget_table_object_align_append(ot, cfdata->o_reset, 2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
 
@@ -147,7 +147,7 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      e_widget_disabled_set(cfdata->o_reset, 0);
    else
      e_widget_disabled_set(cfdata->o_reset, 1);
-   
+
    e_widget_disabled_set(cfdata->o_delete, 1);
 
    e_widget_list_object_append(o, ot, 1, 0, 0.0);
@@ -164,7 +164,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    Evas *evas;
    Eina_List *l, *profiles;
    int selected = -1, i;
-   
+
    if (!cfdata) return;
    if (!cfdata->o_list) return;
 
@@ -180,10 +180,10 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    for (i = 0, l = profiles; l; l = l->next, i++)
      {
         Efreet_Desktop *desk = NULL;
-	Evas_Object *ic;
+        Evas_Object *ic;
         char buf[PATH_MAX], *prof, *pdir;
         const char *label;
-        
+
         prof = l->data;
         if (e_config_profile_get())
           {
@@ -219,7 +219,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
      }
    if (profiles) eina_list_free(profiles);
    if (selected >= 0)
-     e_widget_ilist_selected_set(cfdata->o_list, selected);   
+     e_widget_ilist_selected_set(cfdata->o_list, selected);
    e_widget_size_min_set(cfdata->o_list, 155, 250);
    e_widget_ilist_go(cfdata->o_list);
 
@@ -300,11 +300,11 @@ _cb_delete(void *data, void *data2 __UNUSED__)
    d->cfdata = data;
    if (!d->cfdata) return;
 
-   snprintf(buf, sizeof(buf), 
+   snprintf(buf, sizeof(buf),
             _("You want to delete the \"%s\" profile.<br><br>"
               "Are you sure?"), d->cfdata->sel_profile);
    e_confirm_dialog_show(_("Are you sure you want to delete this profile?"),
-                         "dialog-warning", buf, _("Delete"), _("Keep"), 
+                         "dialog-warning", buf, _("Delete"), _("Keep"),
                          _cb_dialog_yes, NULL, d, NULL,
                          _cb_dialog_destroy, d);
 }
@@ -314,7 +314,7 @@ _cb_reset(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    E_Action *a;
    char *pdir;
-   
+
    e_config_save_flush();
    e_config_save_block_set(1);
 
@@ -374,13 +374,13 @@ _dia_new_profile(E_Config_Dialog_Data *cfdata)
    ot = e_widget_table_add(evas, 0);
    ob = e_widget_label_add(evas, _("Name:"));
    e_widget_table_object_append(ot, ob,
-				     0, 0, 1, 1,
-				     0, 1, 0, 0);
+                                0, 0, 1, 1,
+                                0, 1, 0, 0);
    ob = e_widget_entry_add(evas, &(cfdata->new_profile), NULL, NULL, NULL);
    e_widget_size_min_set(ob, 100, 1);
    e_widget_table_object_append(ot, ob,
-				     1, 0, 1, 1,
-				     1, 1, 1, 0);
+                                1, 0, 1, 1,
+                                1, 1, 1, 0);
    e_widget_size_min_get(ot, &mw, &mh);
    e_dialog_content_set(dia, ot, mw, mh);
 
@@ -418,7 +418,7 @@ _new_profile_cb_ok(void *data, E_Dialog *dia)
 
    if (cfdata->new_profile)
      {
-	e_config_profile_add(cfdata->new_profile);
+        e_config_profile_add(cfdata->new_profile);
         e_config_profile_set(cfdata->new_profile);
         e_config_save();
         e_config_profile_set(cur_profile);
@@ -440,3 +440,4 @@ _new_profile_cb_dia_del(void *obj)
    cfdata->new_profile = NULL;
    e_object_unref(E_OBJECT(dia));
 }
+
