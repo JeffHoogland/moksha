@@ -19,6 +19,7 @@
 
 /* module private routines */
 Mod *_comp_mod = NULL;
+static E_Action *act = NULL;
 
 /* public module routines. all modules must have these */
 EAPI E_Module_Api e_modapi =
@@ -26,6 +27,18 @@ EAPI E_Module_Api e_modapi =
    E_MODULE_API_VERSION,
    "Composite"
 };
+
+static void
+_e_mod_action_key_cb(E_Object *obj __UNUSED__, const char *p __UNUSED__, Ecore_Event_Key *ev __UNUSED__)
+{
+   e_mod_comp_fps_toggle();
+}
+
+static void
+_e_mod_action_cb(E_Object *obj __UNUSED__, const char *p __UNUSED__)
+{
+   e_mod_comp_fps_toggle();
+}
 
 EAPI void *
 e_modapi_init(E_Module *m)
@@ -48,6 +61,15 @@ e_modapi_init(E_Module *m)
                               
 
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
+   /* add module supplied action */
+   act = e_action_add("composite");
+   if (act)
+     {
+        act->func.go = _e_mod_action_cb;
+        act->func.go_key = _e_mod_action_key_cb;
+        e_action_predef_name_set(_("Composite"), _("Toggle FPS Display"),
+          "composite", "", NULL, 0);
+     }
    if (!mod->conf) _e_mod_config_new(m);
 
    if (!e_config->use_composite)
@@ -116,6 +138,13 @@ e_modapi_shutdown(E_Module *m)
         mod->config_dialog = NULL;
      }
    _e_mod_config_free(m);
+
+   if (act)
+     {
+        e_action_predef_name_del(_("Composite"),
+                                 _("Toggle FPS Display"));
+        e_action_del("composite");
+     }
 
    E_CONFIG_DD_FREE(mod->conf_match_edd);
    E_CONFIG_DD_FREE(mod->conf_edd);

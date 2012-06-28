@@ -2988,27 +2988,6 @@ _e_mod_comp_bd_property(void *data __UNUSED__,
 }
 
 //////////////////////////////////////////////////////////////////////////
-static void
-_e_mod_comp_fps_toggle(void)
-{
-   if (_comp_mod)
-     {
-        Eina_List *l;
-        E_Comp *c;
-
-        if (_comp_mod->conf->fps_show)
-          {
-             _comp_mod->conf->fps_show = 0;
-             e_config_save_queue();
-          }
-        else
-          {
-             _comp_mod->conf->fps_show = 1;
-             e_config_save_queue();
-          }
-        EINA_LIST_FOREACH(compositors, l, c) _e_mod_comp_cb_update(c);
-     }
-}
 
 static Eina_Bool
 _e_mod_comp_key_down(void *data __UNUSED__,
@@ -3032,13 +3011,6 @@ _e_mod_comp_key_down(void *data __UNUSED__,
              e_sys_action_do(E_SYS_RESTART, NULL);
           }
      }
-   else if ((!strcasecmp(ev->keyname, "f")) &&
-            (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
-            (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-            (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))
-     {
-        _e_mod_comp_fps_toggle();
-     }
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -3055,7 +3027,7 @@ _e_mod_comp_signal_user(void *data __UNUSED__,
      }
    else if (ev->number == 2)
      {
-        _e_mod_comp_fps_toggle();
+        e_mod_comp_fps_toggle();
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -3565,6 +3537,28 @@ e_mod_comp_shutdown(void)
    damages = NULL;
    windows = NULL;
    borders = NULL;
+}
+
+void
+e_mod_comp_fps_toggle(void)
+{
+   if (_comp_mod)
+     {
+        Eina_List *l;
+        E_Comp *c;
+
+        if (_comp_mod->conf->fps_show)
+          {
+             _comp_mod->conf->fps_show = 0;
+             e_config_save_queue();
+          }
+        else
+          {
+             _comp_mod->conf->fps_show = 1;
+             e_config_save_queue();
+          }
+        EINA_LIST_FOREACH(compositors, l, c) _e_mod_comp_cb_update(c);
+     }
 }
 
 void
