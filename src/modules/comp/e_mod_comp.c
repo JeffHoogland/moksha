@@ -2991,31 +2991,6 @@ _e_mod_comp_bd_property(void *data __UNUSED__,
 //////////////////////////////////////////////////////////////////////////
 
 static Eina_Bool
-_e_mod_comp_key_down(void *data __UNUSED__,
-                     int type   __UNUSED__,
-                     void *event)
-{
-   Ecore_Event_Key *ev = event;
-
-   if ((!strcmp(ev->keyname, "Home")) &&
-       (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
-       (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-       (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))
-     {
-        if (_comp_mod)
-          {
-             _e_mod_config_free(_comp_mod->module);
-             _e_mod_config_new(_comp_mod->module);
-             e_config_save();
-             e_module_disable(_comp_mod->module);
-             e_config_save();
-             e_sys_action_do(E_SYS_RESTART, NULL);
-          }
-     }
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
 _e_mod_comp_signal_user(void *data __UNUSED__,
                         int type   __UNUSED__,
                         void *event)
@@ -3464,7 +3439,6 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DAMAGE_NOTIFY, _e_mod_comp_damage, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DAMAGE, _e_mod_comp_damage_win, NULL));
 
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_mod_comp_key_down, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER, _e_mod_comp_signal_user, NULL));
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE, _e_mod_comp_randr, NULL));

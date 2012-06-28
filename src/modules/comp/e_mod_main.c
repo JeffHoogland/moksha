@@ -29,15 +29,35 @@ EAPI E_Module_Api e_modapi =
 };
 
 static void
-_e_mod_action_key_cb(E_Object *obj __UNUSED__, const char *p __UNUSED__, Ecore_Event_Key *ev __UNUSED__)
+_comp_disable(void)
 {
-   e_mod_comp_fps_toggle();
+   if (!_comp_mod) return;
+   _e_mod_config_free(_comp_mod->module);
+   _e_mod_config_new(_comp_mod->module);
+   e_config_save();
+   e_module_disable(_comp_mod->module);
+   e_config_save();
+   e_sys_action_do(E_SYS_RESTART, NULL);
 }
 
 static void
-_e_mod_action_cb(E_Object *obj __UNUSED__, const char *p __UNUSED__)
+_e_mod_action_key_cb(E_Object *obj __UNUSED__, const char *p, Ecore_Event_Key *ev __UNUSED__)
 {
-   e_mod_comp_fps_toggle();
+   if (!p) return;
+   if (!strcmp(p, "toggle_fps"))
+     e_mod_comp_fps_toggle();
+   else
+     _comp_disable();
+}
+
+static void
+_e_mod_action_cb(E_Object *obj __UNUSED__, const char *p)
+{
+   if (!p) return;
+   if (!strcmp(p, "toggle_fps"))
+     e_mod_comp_fps_toggle();
+   else
+     _comp_disable();
 }
 
 EAPI void *
@@ -67,7 +87,9 @@ e_modapi_init(E_Module *m)
         act->func.go = _e_mod_action_cb;
         act->func.go_key = _e_mod_action_key_cb;
         e_action_predef_name_set(_("Composite"), _("Toggle FPS Display"),
-                                 "composite", "", NULL, 0);
+                                 "composite", "toggle_fps", NULL, 0);
+        e_action_predef_name_set(_("Composite"), _("Disable Composite Module"),
+                                 "composite", "disable", NULL, 0);
      }
    if (!mod->conf) _e_mod_config_new(m);
 
@@ -142,6 +164,8 @@ e_modapi_shutdown(E_Module *m)
      {
         e_action_predef_name_del(_("Composite"),
                                  _("Toggle FPS Display"));
+        e_action_predef_name_del(_("Composite"),
+                                 _("Disable Composite Module"));
         e_action_del("composite");
      }
 

@@ -618,7 +618,10 @@ _restore_key_binding_defaults_cb(void *data,
                     "everything", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "f",
                     E_BINDING_MODIFIER_ALT | E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_CTRL, 0,
-                    "composite", NULL);
+                    "composite", "toggle_fps");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Home",
+                    E_BINDING_MODIFIER_ALT | E_BINDING_MODIFIER_SHIFT | E_BINDING_MODIFIER_CTRL, 0,
+                    "composite", "disable");
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "l",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "desk_lock", NULL);
