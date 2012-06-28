@@ -1,11 +1,6 @@
 #ifndef E_FM_MAIN_EEZE_H
 #define E_FM_MAIN_EEZE_H
 
-#include <Eeze.h>
-#include <Eeze_Disk.h>
-
-#include "e_fm_shared_types.h"
-
 E_Volume *_e_fm_main_eeze_volume_add(const char *syspath, Eina_Bool first_time);
 void _e_fm_main_eeze_volume_del(const char *syspath);
 E_Volume *_e_fm_main_eeze_volume_find(const char *syspath);

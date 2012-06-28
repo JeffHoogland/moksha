@@ -48,13 +48,13 @@ void *alloca(size_t);
 #include <E_DBus.h>
 #include <E_Ukit.h>
 
-#include "e_fm_main.h"
-#include "e_fm_main_udisks.h"
-
 #include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
 #include "e_fm_ipc.h"
 #include "e_fm_device.h"
+
+#include "e_fm_main_udisks.h"
+#include "e_fm_main.h"
 
 static E_DBus_Signal_Handler *_udisks_poll = NULL;
 static E_DBus_Signal_Handler *_udisks_add = NULL;

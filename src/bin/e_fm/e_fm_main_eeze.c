@@ -32,15 +32,14 @@ void *alloca(size_t);
 #include <Eeze.h>
 #include <Eeze_Disk.h>
 
-#include "e_fm_main.h"
-#include "e_fm_main_eeze.h"
-
-#include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
+#include "e_fm_shared_codec.h"
 #include "e_fm_ipc.h"
 #include "e_fm_device.h"
+#include <eeze_scanner.h>
 
-#include "eeze_scanner.h"
+#include "e_fm_main.h"
+#include "e_fm_main_eeze.h"
 
 static void _e_fm_main_eeze_storage_rescan(const char *syspath);
 static void _e_fm_main_eeze_volume_rescan(const char *syspath);

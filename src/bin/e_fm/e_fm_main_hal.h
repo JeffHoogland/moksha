@@ -1,11 +1,6 @@
 #ifndef E_FM_MAIN_HAL_H
 #define E_FM_MAIN_HAL_H
 
-#include <E_DBus.h>
-#include <E_Hal.h>
-
-#include "e_fm_shared_types.h"
-
 E_Volume *_e_fm_main_hal_volume_add(const char *udi, Eina_Bool first_time);
 void _e_fm_main_hal_volume_del(const char *udi);
 E_Volume *_e_fm_main_hal_volume_find(const char *udi);
