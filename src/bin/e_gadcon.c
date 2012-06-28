@@ -181,6 +181,7 @@ struct _E_Layout_Item_Container
 static Eina_Hash *providers = NULL;
 static Eina_List *providers_list = NULL;
 static Eina_List *gadcons = NULL;
+static Eina_List *dummies = NULL;
 static Eina_List *populate_requests = NULL;
 static Ecore_Idler *populate_idler = NULL;
 static Eina_List *custom_populate_requests = NULL;
@@ -280,6 +281,24 @@ e_gadcon_custom_del(E_Gadcon *gc)
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    gadcons = eina_list_remove(gadcons, gc);
+}
+
+EAPI E_Gadcon *
+e_gadcon_dummy_new(int id)
+{
+   E_Gadcon *gc;
+
+   gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_DUMMY_TYPE, _e_gadcon_free);
+   if (!gc) return NULL;
+
+   gc->id = id;
+   gc->layout_policy = E_GADCON_LAYOUT_POLICY_PANEL;
+   gc->location = NULL;
+   gc->dummy = 1;
+
+   gc->orient = E_GADCON_ORIENT_HORIZ;
+   dummies = eina_list_append(dummies, gc);
+   return gc;
 }
 
 EAPI E_Gadcon *
@@ -552,9 +571,11 @@ e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient)
    int horiz = 0;
 
    E_OBJECT_CHECK(gc);
-   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   E_OBJECT_IF_NOT_TYPE(gc, E_GADCON_DUMMY_TYPE)
+     E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    if (gc->orient == orient) return;
    gc->orient = orient;
+   if (gc->dummy) return;
    e_gadcon_layout_freeze(gc->o_container);
    switch (gc->orient)
      {
@@ -1670,8 +1691,13 @@ e_gadcon_site_is_not_toolbar(E_Gadcon_Site site)
 static void
 _e_gadcon_free(E_Gadcon *gc)
 {
-   e_gadcon_unpopulate(gc);
-   gadcons = eina_list_remove(gadcons, gc);
+   if (gc->dummy)
+     dummies = eina_list_remove(dummies, gc);
+   else
+     {
+        e_gadcon_unpopulate(gc);
+        gadcons = eina_list_remove(gadcons, gc);
+     }
    if (gc->o_container) evas_object_del(gc->o_container);
    eina_stringshare_del(gc->name);
    eina_stringshare_del(gc->edje.swallow_name);

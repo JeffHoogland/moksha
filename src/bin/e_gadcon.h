@@ -51,6 +51,7 @@ typedef struct _E_Gadcon_Location     E_Gadcon_Location;
 #define E_GADCON_H
 
 #define E_GADCON_TYPE        0xE0b01006
+#define E_GADCON_DUMMY_TYPE  0xE0b01016
 #define E_GADCON_CLIENT_TYPE 0xE0b01007
 
 struct _E_Gadcon
@@ -119,6 +120,7 @@ struct _E_Gadcon
    E_Config_Gadcon   *cf;
 
    unsigned char      instant_edit : 1;
+   unsigned char      dummy : 1;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 3
@@ -239,6 +241,7 @@ EINTERN int                  e_gadcon_shutdown(void);
 EAPI void                    e_gadcon_provider_register(const E_Gadcon_Client_Class *cc);
 EAPI void                    e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc);
 EAPI Eina_List              *e_gadcon_provider_list(void);
+EAPI E_Gadcon               *e_gadcon_dummy_new(int id);
 EAPI E_Gadcon               *e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *swallow_name);
 EAPI void                    e_gadcon_custom_new(E_Gadcon *gc);
 EAPI void                    e_gadcon_custom_del(E_Gadcon *gc);

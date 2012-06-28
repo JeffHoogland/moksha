@@ -1224,15 +1224,16 @@ e_zone_edge_win_layer_set(E_Zone *zone,
 static void
 _e_zone_useful_geometry_calc(E_Zone *zone)
 {
-   const Eina_List *l;
    const E_Shelf *shelf;
+   Eina_List *shelves;
    int x0, x1, yy0, yy1;
 
    x0 = 0;
    yy0 = 0;
    x1 = zone->w;
    yy1 = zone->h;
-   EINA_LIST_FOREACH(e_shelf_list(), l, shelf)
+   shelves = e_shelf_list_all();
+   EINA_LIST_FREE(shelves, shelf)
      {
         E_Config_Shelf_Desk *sd;
         E_Gadcon_Orient orient;

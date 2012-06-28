@@ -31,8 +31,11 @@ static const char  *_e_shelf_orient_icon_name_get(E_Shelf *s);
 static void         _e_shelf_bindings_add(E_Shelf *es);
 static void         _e_shelf_bindings_del(E_Shelf *es);
 static Eina_Bool    _e_shelf_on_current_desk(E_Shelf *es, E_Event_Zone_Edge *ev);
+static void          _e_shelf_cb_dummy_del(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
+static void          _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
 
 static Eina_List *shelves = NULL;
+static Eina_List *dummies = NULL;
 static Eina_Hash *winid_shelves = NULL;
 
 /* externally accessible functions */
@@ -85,10 +88,48 @@ e_shelf_config_update(void)
 }
 
 EAPI Eina_List *
+e_shelf_list_all(void)
+{
+   Eina_List *d = NULL, *s = NULL, *ret = NULL;
+
+   if (shelves)
+     s = eina_list_clone(shelves);
+   if (dummies)
+     d = eina_list_clone(dummies);
+   if (s && d)
+     ret = eina_list_merge(s, d);
+   else
+     ret = d ?: s;
+   return ret;
+}
+
+EAPI Eina_List *
 e_shelf_list(void)
 {
    shelves = eina_list_sort(shelves, -1, _e_shelf_cb_id_sort);
    return shelves;
+}
+
+EAPI E_Shelf *
+e_shelf_zone_dummy_new(E_Zone *zone, Evas_Object *obj, int id)
+{
+   E_Shelf *es;
+   es = E_OBJECT_ALLOC(E_Shelf, E_SHELF_DUMMY_TYPE, _e_shelf_free);
+   if (!es) return NULL;
+   es->id = id;
+   evas_object_geometry_get(obj, &es->x, &es->y, &es->w, &es->h);
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_DEL, (Evas_Object_Event_Cb)_e_shelf_cb_dummy_del, es);
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_MOVE, (Evas_Object_Event_Cb)_e_shelf_cb_dummy_moveresize, es);
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE, (Evas_Object_Event_Cb)_e_shelf_cb_dummy_moveresize, es);
+   es->zone = zone;
+   es->dummy = 1;
+   es->o_base = obj;
+   e_object_del_attach_func_set(E_OBJECT(es), _e_shelf_del_cb);
+   es->gadcon = e_gadcon_dummy_new(id);
+   es->gadcon->location = e_gadcon_location_new(NULL, E_GADCON_SITE_SHELF, NULL, NULL, NULL, NULL);
+   e_gadcon_location_register(es->gadcon->location);
+   dummies = eina_list_append(dummies, es);
+   return es;
 }
 
 EAPI E_Shelf *
@@ -509,14 +550,18 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
    char buf[PATH_MAX];
 
    E_OBJECT_CHECK(es);
-   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
+   E_OBJECT_IF_NOT_TYPE(es, E_SHELF_DUMMY_TYPE)
+     E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
    e_gadcon_orient(es->gadcon, orient);
-   snprintf(buf, sizeof(buf), "e,state,orientation,%s",
-            e_shelf_orient_string_get(es));
-   edje_object_signal_emit(es->o_base, buf, "e");
-   edje_object_message_signal_process(es->o_base);
-   e_gadcon_location_set_icon_name(es->gadcon->location, _e_shelf_orient_icon_name_get(es));
+   if (!es->dummy)
+     {
+        snprintf(buf, sizeof(buf), "e,state,orientation,%s",
+                 e_shelf_orient_string_get(es));
+        edje_object_signal_emit(es->o_base, buf, "e");
+        edje_object_message_signal_process(es->o_base);
+        e_gadcon_location_set_icon_name(es->gadcon->location, _e_shelf_orient_icon_name_get(es));
+     }
    e_zone_useful_geometry_dirty(es->zone);
 }
 
@@ -858,13 +903,17 @@ _e_shelf_del_cb(void *d)
    E_Shelf *es;
 
    es = d;
-   shelves = eina_list_remove(shelves, es);
+   if (es->dummy)
+     dummies = eina_list_remove(dummies, es);
+   else
+     shelves = eina_list_remove(shelves, es);
 }
 
 static void
 _e_shelf_free(E_Shelf *es)
 {
-   _e_shelf_bindings_del(es);
+   if (!es->dummy)
+     _e_shelf_bindings_del(es);
 
    e_gadcon_location_unregister(es->gadcon->location);
    e_gadcon_location_free(es->gadcon->location);
@@ -893,6 +942,12 @@ _e_shelf_free(E_Shelf *es)
         e_menu_post_deactivate_callback_set(es->menu, NULL, NULL);
         e_object_del(E_OBJECT(es->menu));
         es->menu = NULL;
+     }
+   if (es->dummy)
+     {
+        evas_object_event_callback_del_full(es->o_base, EVAS_CALLBACK_DEL, (Evas_Object_Event_Cb)_e_shelf_cb_dummy_del, es);
+        evas_object_event_callback_del_full(es->o_base, EVAS_CALLBACK_MOVE, (Evas_Object_Event_Cb)_e_shelf_cb_dummy_moveresize, es);
+        evas_object_event_callback_del_full(es->o_base, EVAS_CALLBACK_RESIZE, (Evas_Object_Event_Cb)_e_shelf_cb_dummy_moveresize, es);
      }
    if (es->config_dialog) e_object_del(E_OBJECT(es->config_dialog));
    eina_stringshare_del(es->name);
@@ -1574,6 +1629,24 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
           }
      }
    return ECORE_CALLBACK_PASS_ON;
+}
+
+static void
+_e_shelf_cb_dummy_moveresize(E_Shelf *es, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   int x, y, w, h;
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   if ((x != es->x) || (y != es->y) || (w != es->w) || (h != es->h))
+     {
+        es->x = x, es->y = y, es->w = w, es->h = h;
+        e_zone_useful_geometry_dirty(es->zone);
+     }
+}
+
+static void
+_e_shelf_cb_dummy_del(E_Shelf *es, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   e_object_free(E_OBJECT(es));
 }
 
 static int
