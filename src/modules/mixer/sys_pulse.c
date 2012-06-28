@@ -103,6 +103,7 @@ _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
    Eina_List *l;
    Pulse_Sink *sink;
    sinks = ev;
+/*
    EINA_LIST_FOREACH(ev, l, sink)
      {
         printf("Sink:\n");
@@ -114,6 +115,7 @@ _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
         printf("\tavg: %g\n", pulse_sink_avg_get_pct(sink));
         printf("\tbalance: %f\n", pulse_sink_balance_get(sink));
      }
+*/
    pulse_sinks_watch(conn);
    e_mod_mixer_pulse_ready(EINA_TRUE);
 }
@@ -124,6 +126,7 @@ _pulse_sources_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *e
    Eina_List *l;
    Pulse_Sink *sink;
    sources = ev;
+/*
    EINA_LIST_FOREACH(ev, l, sink)
      {
         printf("Sources:\n");
@@ -135,6 +138,7 @@ _pulse_sources_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *e
         printf("\tavg: %g\n", pulse_sink_avg_get_pct(sink));
         printf("\tbalance: %f\n", pulse_sink_balance_get(sink));
      }
+*/
 }
 
 static Eina_Bool
@@ -168,11 +172,11 @@ _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
    EINA_LIST_FREE(sources, sink)
      pulse_sink_free(sink);
 
-   printf("PULSEAUDIO: disconnected at %g\n", ecore_time_unix_get());
+//   printf("PULSEAUDIO: disconnected at %g\n", ecore_time_unix_get());
 
    if (last_disc && (ecore_time_unix_get() - last_disc < 1))
      {
-        fprintf(stderr, "PULSEAUDIO: disconnecting too quickly, THROTTLED\n");
+//        fprintf(stderr, "PULSEAUDIO: disconnecting too quickly, THROTTLED\n");
         e_mixer_pulse_shutdown();
         last_disc = 0;
         e_mod_mixer_pulse_ready(EINA_FALSE);
