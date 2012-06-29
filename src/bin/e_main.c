@@ -116,6 +116,28 @@ EAPI Eina_Bool stopping = EINA_FALSE;
 EAPI Eina_Bool restart = EINA_FALSE;
 
 static void
+_xdg_data_dirs_augment(void)
+{
+   const char *s = getenv("XDG_DATA_DIRS");
+   const char *p = e_prefix_get();
+   char newpath[PATH_MAX], buf[PATH_MAX];
+
+   if (!p) return;
+   
+   snprintf(newpath, sizeof(newpath), "%s:%s/share", e_prefix_data_get(), p);
+   if (s)
+     {
+        if (strncmp(s, newpath, strlen(newpath)))
+          {
+             snprintf(buf, sizeof(buf), "%s:%s", newpath, s);
+             e_util_env_set("XDG_DATA_DIRS", buf);
+          }
+     }
+   else
+     e_util_env_set("XDG_DATA_DIRS", newpath);
+}
+
+static void
 _fix_user_default_edj(void)
 {
    char buff[PATH_MAX];
@@ -444,6 +466,8 @@ main(int argc, char **argv)
    TS("E_Config Init Done");
    _e_main_shutdown_push(e_config_shutdown);
 
+   _xdg_data_dirs_augment();
+   
    _fix_user_default_edj();
 
    TS("E_Randr Init");
