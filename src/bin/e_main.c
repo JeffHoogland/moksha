@@ -134,7 +134,10 @@ _xdg_data_dirs_augment(void)
           }
      }
    else
-     e_util_env_set("XDG_DATA_DIRS", newpath);
+     {
+        snprintf(buf, sizeof(buf), "%s:/usr/local/share:/usr/share", newpath);
+        e_util_env_set("XDG_DATA_DIRS", buf);
+     }
 }
 
 static void
