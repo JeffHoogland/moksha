@@ -8,4 +8,5 @@ input_methods \
 etc \
 icons \
 backgrounds \
-flags
+flags \
+desktop

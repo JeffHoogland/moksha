@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Enlightenment File Manager
+Generic=File Manager
+Comment=File Manager provided by Enlightenment
+Exec=enlightenment_filemanager %U
+Icon=system-file-manager
+Categories=FileManager;Utility;Core;Enlightenment;
+Terminal=false
+StartupNotify=false
+StartupWMClass=e_fm
+OnlyShowIn=Enlightenment;
+MimeType=x-directory/normal;inode/directory;

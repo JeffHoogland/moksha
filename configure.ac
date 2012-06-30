@@ -476,6 +476,13 @@ AC_MSG_WARN([EFM requirements : $efm_requires])
 
 PKG_CHECK_MODULES(E_FM, [$efm_requires])
 
+PKG_CHECK_MODULES(E_FM_CMDLINE, [
+  ecore >= 1.2.0
+  ecore-file >= 1.2.0
+  edbus >= 1.2.0
+  dbus-1
+])
+
 PKG_CHECK_MODULES(E_FM_OP, [
   ecore >= 1.2.0
   ecore-file >= 1.2.0
@@ -964,6 +971,7 @@ src/preload/Makefile
 data/Makefile
 data/images/Makefile
 data/flags/Makefile
+data/desktop/Makefile
 data/input_methods/Makefile
 data/themes/Makefile
 data/themes/images/Makefile
