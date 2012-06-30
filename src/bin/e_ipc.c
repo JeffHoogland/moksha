@@ -15,59 +15,66 @@ EINTERN int
 e_ipc_init(void)
 {
 #ifdef USE_IPC
-   char buf[1024];
-   char *tmp, *user, *disp;
-   int pid;
+   char buf[1024], buf2[128], buf3[4096];
+   char *tmp, *user, *disp, *base;
+   int pid, trynum = 0;
 
    tmp = getenv("TMPDIR");
    if (!tmp) tmp = "/tmp";
+   base = tmp;
+
+   tmp = getenv("XDG_RUNTIME_DIR");
+   if (tmp) base = tmp;
+   tmp = getenv("SD_USER_SOCKETS_DIR");
+   if (tmp) base = tmp;
+     
    user = getenv("USER");
-   if (!user) user = "__unknown__";
+   if (!user)
+     {
+        int uidint;
+        
+        user = "__unknown__";
+        uidint = getuid();
+        if (uidint >= 0)
+          {
+             snprintf(buf2, sizeof(buf2), "%i", uidint);
+             user = buf2;
+          }
+     }
+   
    disp = getenv("DISPLAY");
    if (!disp) disp = ":0";
+   
+   e_util_env_set("E_IPC_SOCKET", "");
+   
    pid = (int)getpid();
-   snprintf(buf, sizeof(buf), "%s/enlightenment-%s", tmp, user);
-   if (mkdir(buf, S_IRWXU) == 0)
-     {
-     }
-   else
+   for (trynum = 0; trynum <= 4096; trynum++)
      {
         struct stat st;
-
+        int id1 = 0, id2 = 0;
+        
+        snprintf(buf, sizeof(buf), "%s/enlightenment-%s@%08x%08x",
+                 base, user, id1, id2);
+        mkdir(buf, S_IRWXU);
         if (stat(buf, &st) == 0)
           {
              if ((st.st_uid == getuid()) &&
-                 ((st.st_mode & (S_IFDIR | S_IRWXU | S_IRWXG | S_IRWXO)) ==
-                  (S_IRWXU | S_IFDIR)))
+                  ((st.st_mode & (S_IFDIR | S_IRWXU | S_IRWXG | S_IRWXO)) ==
+                      (S_IRWXU | S_IFDIR)))
                {
-               }
-             else
-               {
-                  e_error_message_show(_("Possible IPC Hack Attempt. The IPC socket\n"
-                                         "directory already exists BUT has permissions\n"
-                                         "that are too leanient (must only be readable\n" "and writable by the owner, and nobody else)\n"
-                                                                                          "or is not owned by you. Please check:\n"
-                                                                                          "%s/enlightenment-%s\n"), tmp, user);
-                  return 0;
+                  snprintf(buf3, sizeof(buf3), "%s/disp-%s-%i",
+                           buf, disp, pid);
+                  _e_ipc_server = ecore_ipc_server_add
+                    (ECORE_IPC_LOCAL_SYSTEM, buf3, 0, NULL);
+                  if (_e_ipc_server) break;
                }
           }
-        else
-          {
-             e_error_message_show(_("The IPC socket directory cannot be created or\n"
-                                    "examined.\n"
-                                    "Please check:\n"
-                                    "%s/enlightenment-%s\n"),
-                                  tmp, user);
-             return 0;
-          }
+        id1 = rand();
+        id2 = rand();
      }
-   snprintf(buf, sizeof(buf), "%s/enlightenment-%s/disp-%s-%i",
-            tmp, user, disp, pid);
-   _e_ipc_server = ecore_ipc_server_add(ECORE_IPC_LOCAL_SYSTEM, buf, 0, NULL);
-   e_util_env_set("E_IPC_SOCKET", "");
    if (!_e_ipc_server) return 0;
-   e_util_env_set("E_IPC_SOCKET", buf);
-   printf("INFO: E_IPC_SOCKET=%s\n", buf);
+
+   e_util_env_set("E_IPC_SOCKET", buf3);
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_ADD,
                            _e_ipc_cb_client_add, NULL);
    ecore_event_handler_add(ECORE_IPC_EVENT_CLIENT_DEL,
@@ -220,7 +227,7 @@ _e_ipc_cb_client_data(void *data __UNUSED__, int type __UNUSED__, void *event)
       default:
         break;
      }
-   return 1;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 #endif

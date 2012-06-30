@@ -180,7 +180,7 @@ _e_fm_ipc_init(void)
    _e_fm_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);
    if (!_e_fm_ipc_server)
      {
-        printf("Cannot connect to enlightenment - abort\n");
+        printf("Cannot connect to enlightenment (socket '%s') - abort\n", sdir);
         return 0;
      }
 
