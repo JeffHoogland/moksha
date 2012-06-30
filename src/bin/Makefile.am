@@ -384,6 +384,7 @@ enlightenment_sys_SOURCES = \
 e_sys_main.c
 
 enlightenment_sys_LDADD = @E_SYS_LIBS@
+enlightenment_sys_CFLAGS = @E_SYS_CFLAGS@
 
 if HAVE_EEZE
 enlightenment_backlight_SOURCES = \
