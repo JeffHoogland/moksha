@@ -2041,8 +2041,8 @@ e_border_focus_set_with_pointer(E_Border *bd)
 
    e_border_focus_set(bd, 1, 1);
 
-   if (e_config->focus_policy == E_FOCUS_CLICK)
-     return;
+   if (e_config->focus_policy == E_FOCUS_CLICK) return;
+   if (!bd->visible) return;
 
    if (e_config->focus_policy == E_FOCUS_SLOPPY)
      {
