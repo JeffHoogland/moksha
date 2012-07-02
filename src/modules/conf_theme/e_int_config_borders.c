@@ -129,8 +129,14 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      _basic_apply_border(cfdata);
    else if (cfdata->container)
      {
+        Eina_List *l;
+        E_Border *bd;
         eina_stringshare_replace(&e_config->theme_default_border_style, cfdata->bordername);
-        /* FIXME: Should this trigger an E Restart to reset all borders ? */
+        EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+          {
+             bd->changed = 1;
+             bd->client.border.changed = 1;
+          }
      }
    e_config_save_queue();
    return 1;
