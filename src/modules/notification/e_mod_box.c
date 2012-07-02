@@ -86,24 +86,6 @@ notification_box_shutdown(void)
 }
 
 void
-notification_box_del(const char *id)
-{
-   Eina_List *l;
-   Notification_Box *b;
-
-   /* Find old config */
-   EINA_LIST_FOREACH(notification_cfg->n_box, l, b)
-     {
-        if (b->id == id)
-          {
-             notification_cfg->n_box = eina_list_remove(notification_cfg->n_box, b);
-             _notification_box_free(b);
-             return;
-          }
-     }
-}
-
-void
 notification_box_visible_set(Notification_Box *b, Eina_Bool visible)
 {
    Eina_List *l;
@@ -233,9 +215,6 @@ _notification_box_free(Notification_Box *b)
 {
    _notification_box_empty(b);
    eina_stringshare_del(b->id);
-   evas_object_del(b->o_box);
-   if (b->o_empty) evas_object_del(b->o_empty);
-   b->o_empty = NULL;
    free(b);
 }
 
@@ -275,7 +254,7 @@ _notification_box_empty(Notification_Box *b)
 {
    Notification_Box_Icon *ic;
    EINA_LIST_FREE(b->icons, ic)
-     _notification_box_icon_free(b->icons->data);
+     _notification_box_icon_free(ic);
    _notification_box_empty_handle(b);
 }
 
