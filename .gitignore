@@ -93,6 +93,7 @@ Makefile.in
 /src/bin/enlightenment_alert
 /src/bin/enlightenment_backlight
 /src/bin/enlightenment_fm_op
+/src/bin/enlightenment_filemanager
 /src/bin/enlightenment_imc
 /src/bin/enlightenment_init
 /src/bin/enlightenment_start
