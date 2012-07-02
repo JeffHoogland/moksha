@@ -13,7 +13,6 @@ struct _CFModule
    Evas_Object *end;
    int          idx;
    Eina_Bool    enabled : 1;
-   Eina_Bool    selected : 1;
 };
 
 struct _CFType
@@ -34,7 +33,6 @@ struct _E_Config_Dialog_Data
    struct
    {
       Eina_List   *loaded, *unloaded;
-      Ecore_Idler *idler;
    } selected;
 };
 
@@ -144,7 +142,6 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    eina_list_free(cfdata->selected.loaded);
    eina_list_free(cfdata->selected.unloaded);
-   if (cfdata->selected.idler) ecore_idler_del(cfdata->selected.idler);
    E_FREE(cfdata);
 }
 
@@ -544,68 +541,47 @@ _types_list_sort(const void *data1, const void *data2)
    return strcmp(t1->name, t2->name);
 }
 
-static Eina_Bool
-_widget_list_item_selected_postponed(void *data)
+static void
+_widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    const Eina_List *l;
    const E_Ilist_Item *it;
-   unsigned int loaded = 0, unloaded = 0;
    CFModule *cfm = NULL;
    const char *description;
-   int idx = 0;
 
-   eina_list_free(cfdata->selected.loaded);
-   eina_list_free(cfdata->selected.unloaded);
-   cfdata->selected.loaded = NULL;
-   cfdata->selected.unloaded = NULL;
+   cfdata->selected.loaded = eina_list_free(cfdata->selected.loaded);
+   cfdata->selected.unloaded = eina_list_free(cfdata->selected.unloaded);
 
-   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->l_modules), l, it)
+   EINA_LIST_FOREACH(e_widget_ilist_selected_items_get(cfdata->l_modules), l, it)
      {
-        idx++;
-        if (!it->selected) continue;
         cfm = e_widget_ilist_item_data_get(it);
-        cfm->idx = (idx - 1);
 
         if (cfm->enabled)
           {
              cfdata->selected.loaded =
                eina_list_append(cfdata->selected.loaded, cfm);
-             loaded++;
+             e_widget_disabled_set(cfdata->b_unload, 0);
+             e_widget_disabled_set(cfdata->b_load, 1);
           }
         else
           {
              cfdata->selected.unloaded =
                eina_list_append(cfdata->selected.unloaded, cfm);
-             unloaded++;
+             e_widget_disabled_set(cfdata->b_load, 0);
+             e_widget_disabled_set(cfdata->b_unload, 1);
           }
      }
+   
 
-   e_widget_disabled_set(cfdata->b_load, !unloaded);
-   e_widget_disabled_set(cfdata->b_unload, !loaded);
-
-   if ((cfm) && (loaded + unloaded == 1))
+   if ((cfm) && (eina_list_count(cfdata->selected.loaded) + eina_list_count(cfdata->selected.unloaded) == 1))
      description = cfm->comment;
-   else if (loaded + unloaded > 1)
+   else if (eina_list_count(cfdata->selected.loaded) + eina_list_count(cfdata->selected.unloaded) > 1)
      description = _("More than one module selected.");
    else
      description = _("No modules selected.");
 
    e_widget_textblock_markup_set(cfdata->o_desc, description);
-
-   cfdata->selected.idler = NULL;
-   return ECORE_CALLBACK_CANCEL;
-}
-
-static void
-_widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__)
-{
-   E_Config_Dialog_Data *cfdata = data;
-
-   if (cfdata->selected.idler)
-     ecore_idler_del(cfdata->selected.idler);
-   cfdata->selected.idler =
-     ecore_idler_add(_widget_list_item_selected_postponed, cfdata);
 }
 
 static void
@@ -625,12 +601,12 @@ _btn_cb_unload(void *data, void *data2 __UNUSED__)
              cfm->enabled = e_module_enabled_get(cfm->module);
           }
 
-        // weird, but unselects it as it was already selected
-        e_widget_ilist_multi_select(cfdata->l_modules, cfm->idx);
         _module_end_state_apply(cfm);
+        cfdata->selected.unloaded = eina_list_append(cfdata->selected.unloaded, cfm);
      }
 
    e_widget_disabled_set(cfdata->b_unload, 1);
+   e_widget_disabled_set(cfdata->b_load, 0);
 }
 
 static void
@@ -652,11 +628,11 @@ _btn_cb_load(void *data, void *data2 __UNUSED__)
              cfm->enabled = e_module_enabled_get(cfm->module);
           }
 
-        // weird, but unselects it as it was already selected
-        e_widget_ilist_multi_select(cfdata->l_modules, cfm->idx);
         _module_end_state_apply(cfm);
+        cfdata->selected.loaded = eina_list_append(cfdata->selected.loaded, cfm);
      }
 
    e_widget_disabled_set(cfdata->b_load, 1);
+   e_widget_disabled_set(cfdata->b_unload, 0);
 }
 
