@@ -96,8 +96,8 @@ notification_box_del(const char *id)
      {
         if (b->id == id)
           {
-             _notification_box_free(b);
              notification_cfg->n_box = eina_list_remove(notification_cfg->n_box, b);
+             _notification_box_free(b);
              return;
           }
      }
