@@ -9,12 +9,12 @@ typedef struct _Web Web;
 struct _Web
 {
    E_Config_Dialog *parent;
-   E_Dialog *dia;
-   Evas_Object *list;
-   Evas_Object *textblock;
-   Evas_Object *image;
-   Eina_List *jobs;
-   Eina_List *objs;
+   E_Dialog        *dia;
+   Evas_Object     *list;
+   Evas_Object     *textblock;
+   Evas_Object     *image;
+   Eina_List       *jobs;
+   Eina_List       *objs;
 };
 
 enum {
@@ -35,10 +35,10 @@ e_int_config_wallpaper_web_del(E_Dialog *dia)
    e_int_config_wallpaper_web_done(web->parent);
 
    EINA_LIST_FOREACH(web->jobs, l, job)
-      ecore_file_download_abort(job);
+     ecore_file_download_abort(job);
 
    EINA_LIST_FREE(web->objs, wp)
-      exchange_object_free(wp);
+     exchange_object_free(wp);
 
    evas_object_del(web->list);
    evas_object_del(web->textblock);
@@ -66,8 +66,8 @@ _web_download_complete_cb(Exchange_Object *obj __UNUSED__, const char *file __UN
 
    if (wp == e_widget_ilist_selected_data_get(web->list))
      {
-	e_dialog_button_disable_num_set(web->dia, BTN_APPLY, 0);
-	e_dialog_button_disable_num_set(web->dia, BTN_DOWNLOAD, 1);
+        e_dialog_button_disable_num_set(web->dia, BTN_APPLY, 0);
+        e_dialog_button_disable_num_set(web->dia, BTN_DOWNLOAD, 1);
      }
 }
 
@@ -98,7 +98,7 @@ _web_apply_btn_cb(void *data, E_Dialog *dia __UNUSED__)
    if (!wp) return;
 
    e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s",
-			    exchange_obj_file_name_get(wp));
+                       exchange_obj_file_name_get(wp));
 
    if (!ecore_file_exists(buf)) return;
 
@@ -119,7 +119,7 @@ _screenshot_get_cb(Exchange_Object *obj, const char *file, void *data)
    Web *web = data;
 
    if (obj == e_widget_ilist_selected_data_get(web->list))
-      e_widget_image_file_set(web->image, file);
+     e_widget_image_file_set(web->image, file);
 }
 
 static void
@@ -137,34 +137,34 @@ _list_selection_changed(void *data, Evas_Object *obj)
    // enable download button ?
    e_user_dir_concat(buf, sizeof(buf), "backgrounds");
    if (exchange_obj_update_available(wp, buf))
-      e_dialog_button_disable_num_set(web->dia, BTN_DOWNLOAD, 0);
+     e_dialog_button_disable_num_set(web->dia, BTN_DOWNLOAD, 0);
    else
-      e_dialog_button_disable_num_set(web->dia, BTN_DOWNLOAD, 1);
+     e_dialog_button_disable_num_set(web->dia, BTN_DOWNLOAD, 1);
 
    // enable apply button ?
    e_user_dir_snprintf(buf, sizeof(buf), "backgrounds/%s",
                        exchange_obj_file_name_get(wp));
    if (ecore_file_exists(buf))
-      e_dialog_button_disable_num_set(web->dia, BTN_APPLY, 0);
+     e_dialog_button_disable_num_set(web->dia, BTN_APPLY, 0);
    else
-      e_dialog_button_disable_num_set(web->dia, BTN_APPLY, 1);
+     e_dialog_button_disable_num_set(web->dia, BTN_APPLY, 1);
 
    // update textblock
    sbuf = eina_strbuf_new();
    e_widget_textblock_plain_set(web->textblock, "");
-   
+
    if (exchange_obj_name_get(wp))
-      eina_strbuf_append_printf(sbuf,"<b>%s</b>", exchange_obj_name_get(wp));
+     eina_strbuf_append_printf(sbuf, "<b>%s</b>", exchange_obj_name_get(wp));
    if (exchange_obj_version_get(wp))
-      eina_strbuf_append_printf(sbuf, " v %s", exchange_obj_version_get(wp));
+     eina_strbuf_append_printf(sbuf, " v %s", exchange_obj_version_get(wp));
    eina_strbuf_append(sbuf, "<br>");
    if (exchange_obj_author_get(wp))
-      eina_strbuf_append_printf(sbuf, "%s %s<br>", _("By"),
-                                exchange_obj_author_get(wp));
+     eina_strbuf_append_printf(sbuf, "%s %s<br>", _("By"),
+                               exchange_obj_author_get(wp));
    if (exchange_obj_description_get(wp))
      {
-	printf("\n%s\n",exchange_obj_description_get(wp)); // TODO Fix '&' markup error
-	eina_strbuf_append_printf(sbuf, "<br>%s<br>", exchange_obj_description_get(wp));
+        printf("\n%s\n", exchange_obj_description_get(wp)); // TODO Fix '&' markup error
+        eina_strbuf_append_printf(sbuf, "<br>%s<br>", exchange_obj_description_get(wp));
      }
    e_widget_textblock_markup_set(web->textblock, eina_strbuf_string_get(sbuf));
    eina_strbuf_free(sbuf);
@@ -195,14 +195,14 @@ _exchange_query_cb(Eina_List *results, void *data)
    e_widget_ilist_clear(web->list);
    if (!results)
      {
-	e_widget_ilist_append(web->list, NULL, _("Error getting data !"),
-					 NULL, NULL, NULL);
-	return;
+        e_widget_ilist_append(web->list, NULL, _("Error getting data !"),
+                              NULL, NULL, NULL);
+        return;
      }
    EINA_LIST_FOREACH(results, l, wp)
      {
-	exchange_obj_thumbnail_get(wp, _thumbnail_download_cb, web);
-	exchange_obj_data_set(wp, web);
+        exchange_obj_thumbnail_get(wp, _thumbnail_download_cb, web);
+        exchange_obj_data_set(wp, web);
      }
 
    web->objs = results;
@@ -218,7 +218,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    Ecore_File_Download_Job *job;
 
    if (!exchange_init())
-      return NULL;
+     return NULL;
 
    // e_dialog
    dia = e_dialog_new(parent->con, "E", "_wallpaper_web_dialog");
@@ -252,7 +252,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    e_widget_ilist_multi_select_set(o, 0);
    e_widget_on_change_hook_set(o, _list_selection_changed, web);
    e_widget_ilist_append(o, NULL, _("Getting data, please wait..."),
-                                    NULL, NULL, NULL);
+                         NULL, NULL, NULL);
    e_widget_table_object_append(ot, o, 0, 0, 1, 1, 0, 1, 0, 1);
    web->list = o;
 
@@ -266,7 +266,7 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
    e_widget_textblock_plain_set(o, _("Select a background from the list."));
    e_widget_table_object_append(ot2, o, 0, 0, 1, 1, 1, 1, 1, 0);
    web->textblock = o;
-   
+
    // preview image
    o = e_widget_image_add_from_file(evas, NULL, 100, 100);
    e_widget_table_object_append(ot2, o, 0, 1, 1, 1, 1, 1, 1, 1);
@@ -274,13 +274,13 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
 
    // request list from exchange
    job = exchange_query(NULL, "e/desktop/background", 0, 0, 0, NULL, 0, 0,
-			_exchange_query_cb, web);
+                        _exchange_query_cb, web);
    if (!job)
      {
-	e_widget_ilist_clear(web->list);
-	e_widget_ilist_append(web->list, NULL, _("Error: can't start the request."),
-			      NULL, NULL, NULL);
-	e_widget_textblock_plain_set(web->textblock, "");
+        e_widget_ilist_clear(web->list);
+        e_widget_ilist_append(web->list, NULL, _("Error: can't start the request."),
+                              NULL, NULL, NULL);
+        e_widget_textblock_plain_set(web->textblock, "");
      }
    else web->jobs = eina_list_append(web->jobs, job);
 
@@ -291,4 +291,5 @@ e_int_config_wallpaper_web(E_Config_Dialog *parent)
 
    return dia;
 }
+
 #endif

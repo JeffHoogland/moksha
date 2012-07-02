@@ -1,25 +1,25 @@
 #include "e.h"
 
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 //static int _sort_widget_themes(const void *data1, const void *data2);
 //static Evas_Object *_icon_new(Evas *evas, const char *theme, const char *icon, unsigned int size);
 
 struct _E_Config_Dialog_Data
 {
-  E_Config_Dialog *cfd;
-  Eina_List *widget_themes;
-  const char *widget_theme;
-  int enable_xsettings;
-  int match_e17_theme;
-  int match_e17_icon_theme;
-  struct
-  {
-    Evas_Object *list;
-  } gui;
+   E_Config_Dialog *cfd;
+   Eina_List       *widget_themes;
+   const char      *widget_theme;
+   int              enable_xsettings;
+   int              match_e17_theme;
+   int              match_e17_icon_theme;
+   struct
+   {
+      Evas_Object *list;
+   } gui;
 };
 
 E_Config_Dialog *
@@ -134,7 +134,6 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *dir)
           {
              if (!eina_list_data_find(cfdata->widget_themes, file))
                {
-
                   cfdata->widget_themes = eina_list_append(cfdata->widget_themes, file);
                   continue;
                }
@@ -227,7 +226,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(o, ilist, 1, 1, 0.5);
 
    ow = e_widget_check_add(evas, _("Use icon theme for applications"),
-                                 &(cfdata->match_e17_icon_theme));
+                           &(cfdata->match_e17_icon_theme));
    e_widget_list_object_append(o, ow, 0, 0, 0.0);
 
    ow = e_widget_check_add(evas, _("Match Enlightenment theme if possible"),
@@ -244,10 +243,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    /* e_widget_on_change_hook_set(ow, _settings_changed, cfdata); */
    e_widget_list_object_append(o, ow, 0, 0, 0.0);
 
-
    e_dialog_resizable_set(cfd->dia, 1);
 
    _fill_files_ilist(cfdata);
 
    return o;
 }
+

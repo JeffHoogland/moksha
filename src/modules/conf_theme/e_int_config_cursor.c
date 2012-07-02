@@ -1,20 +1,21 @@
 #include "e.h"
 
 static void        *_create_data(E_Config_Dialog *cfd);
-static void        _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int         _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int         _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 struct _E_Config_Dialog_Data
 {
-   int show_cursor;
-   int idle_cursor;
-   int use_e_cursor;
-   int cursor_size;
+   int        show_cursor;
+   int        idle_cursor;
+   int        use_e_cursor;
+   int        cursor_size;
 
    Eina_List *disable_list;
-   struct {
+   struct
+   {
       Evas_Object *idle_cursor;
    } gui;
 };
@@ -35,9 +36,9 @@ e_int_config_cursor(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con,
-			     _("Cursor Settings"),
-			     "E", "appearance/mouse_cursor",
-			     "preferences-desktop-pointer", 0, v, NULL);
+                             _("Cursor Settings"),
+                             "E", "appearance/mouse_cursor",
+                             "preferences-desktop-pointer", 0, v, NULL);
    return cfd;
 }
 
@@ -60,7 +61,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+_basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    int changed = _basic_check_changed(cfd, cfdata);
    Eina_List *l;
@@ -76,13 +77,13 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
-	if (man->pointer && !e_config->show_cursor)
-	  {
-	     e_pointer_hide(man->pointer);
-	     continue;
-	  }
-	if (man->pointer) e_object_del(E_OBJECT(man->pointer));
-	man->pointer = e_pointer_window_new(man->root, 1);
+        if (man->pointer && !e_config->show_cursor)
+          {
+             e_pointer_hide(man->pointer);
+             continue;
+          }
+        if (man->pointer) e_object_del(E_OBJECT(man->pointer));
+        man->pointer = e_pointer_window_new(man->root, 1);
      }
 
    return 1;
@@ -91,10 +92,10 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   return ((e_config->show_cursor != cfdata->show_cursor) ||
-	   (e_config->idle_cursor != cfdata->idle_cursor) ||
-	   (e_config->use_e_cursor != cfdata->use_e_cursor) ||
-	   (e_config->cursor_size != cfdata->cursor_size));
+   return (e_config->show_cursor != cfdata->show_cursor) ||
+          (e_config->idle_cursor != cfdata->idle_cursor) ||
+          (e_config->use_e_cursor != cfdata->use_e_cursor) ||
+          (e_config->cursor_size != cfdata->cursor_size);
 }
 
 static void
@@ -113,7 +114,7 @@ _show_cursor_cb_change(void *data, Evas_Object *obj __UNUSED__)
    Evas_Object *o;
 
    EINA_LIST_FOREACH(cfdata->disable_list, l, o)
-      e_widget_disabled_set(o, !cfdata->show_cursor);
+     e_widget_disabled_set(o, !cfdata->show_cursor);
 
    _use_e_cursor_cb_change(cfdata, NULL);
 }
@@ -139,7 +140,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f pixels"),
-			    8, 128, 4, 0, NULL, &(cfdata->cursor_size), 100);
+                            8, 128, 4, 0, NULL, &(cfdata->cursor_size), 100);
    e_widget_framelist_object_append(of, ob);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
 
@@ -158,7 +159,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
 
    ob = e_widget_check_add(evas, _("Idle effects"),
-			   &(cfdata->idle_cursor));
+                           &(cfdata->idle_cursor));
    e_widget_framelist_object_append(of, ob);
    cfdata->gui.idle_cursor = ob;
 
@@ -168,3 +169,4 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    return o;
 }
+

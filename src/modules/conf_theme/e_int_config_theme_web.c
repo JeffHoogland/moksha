@@ -9,7 +9,7 @@ typedef struct _Web Web;
 struct _Web
 {
    E_Config_Dialog *parent;
-   E_Dialog *dia;
+   E_Dialog        *dia;
 };
 
 #if 0
@@ -85,7 +85,7 @@ _web_close_cb(void *data, E_Dialog *dia)
    e_int_config_theme_web_del(dia);
 }
 
-static void 
+static void
 _web_apply(const char *path, void *data)
 {
    E_Action *a;
@@ -100,6 +100,7 @@ _web_apply(const char *path, void *data)
    a = e_action_find("restart");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
+
 #endif
 
 E_Dialog *
@@ -112,8 +113,7 @@ e_int_config_theme_web(E_Config_Dialog *parent)
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
    char usr_dir[PATH_MAX];
-   
-   
+
    dia = e_dialog_new(parent->con, "E", "_theme_web_dialog");
    if (!dia) return NULL;
 
@@ -132,7 +132,6 @@ e_int_config_theme_web(E_Config_Dialog *parent)
    e_object_del_attach_func_set(E_OBJECT(dia), _web_del_cb);
    e_win_centered_set(dia->win, 1);
 
-
    ol = e_widget_list_add(e_win_evas_get(dia->win), 0, 1);
 
    // The Exchange Smart Object
@@ -142,12 +141,12 @@ e_int_config_theme_web(E_Config_Dialog *parent)
    exchange_smart_object_local_path_set(exsm, usr_dir);
    exchange_smart_object_apply_cb_set(exsm, _web_apply, NULL);
 
-   // The Scroll Frame 
+   // The Scroll Frame
    sf = e_scrollframe_add(e_win_evas_get(dia->win));
    e_scrollframe_extern_pan_set(sf, exsm, _web_pan_set, _web_pan_get,
                                 _web_pan_max_get, _web_pan_child_size_get);
    e_scrollframe_policy_set(sf, E_SCROLLFRAME_POLICY_OFF,
-                                  E_SCROLLFRAME_POLICY_ON);
+                            E_SCROLLFRAME_POLICY_ON);
    e_scrollframe_thumbscroll_force(sf, 1);
 
    e_widget_list_object_append(ol, sf, 1, 1, 0.5);

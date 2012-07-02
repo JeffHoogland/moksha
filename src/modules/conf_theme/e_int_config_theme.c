@@ -2,69 +2,69 @@
 #include "e_int_config_theme_import.h"
 #include "e_int_config_theme_web.h"
 
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void _fill_data(E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _fill_data(E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Eina_List *_get_theme_categories_list(void);
+static Eina_List   *_get_theme_categories_list(void);
 
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd;
 
    /* Basic */
-   Evas_Object *o_fm;
-   Evas_Object *o_up_button;
-   Evas_Object *o_preview;
-   Evas_Object *o_personal;
-   Evas_Object *o_system;
-   int fmdir;
-   const char *theme;
+   Evas_Object     *o_fm;
+   Evas_Object     *o_up_button;
+   Evas_Object     *o_preview;
+   Evas_Object     *o_personal;
+   Evas_Object     *o_system;
+   int              fmdir;
+   const char      *theme;
 
    /* Advanced */
-   Evas_Object *o_categories_ilist;
-   Evas_Object *o_files_ilist;
-   int personal_file_count;
-   Eina_List *theme_list;
-   Eina_List *parts_list;
+   Evas_Object     *o_categories_ilist;
+   Evas_Object     *o_files_ilist;
+   int              personal_file_count;
+   Eina_List       *theme_list;
+   Eina_List       *parts_list;
 
    /* Dialog */
-   E_Win *win_import;
-   E_Dialog *dia_web;
+   E_Win           *win_import;
+   E_Dialog        *dia_web;
 };
 
 static const char *parts_list[] =
 {
    "about:e/widgets/about/main",
-     "borders:e/widgets/border/default/border",
-     "background:e/desktop/background",
-     "configure:e/widgets/configure/main",
-     "dialog:e/widgets/dialog/main",
-     "dnd:ZZZ",
-     "error:e/error/main",
-     "exebuf:e/widgets/exebuf/main",
-     "fileman:ZZZ",
-     "gadman:e/gadman/control",
-     "icons:ZZZ",
-     "menus:ZZZ",
-     "modules:ZZZ",
-     "modules/pager:e/widgets/pager/popup",
-     "modules/ibar:ZZZ",
-     "modules/ibox:ZZZ",
-     "modules/clock:e/modules/clock/main",
-     "modules/battery:e/modules/battery/main",
-     "modules/cpufreq:e/modules/cpufreq/main",
-     "modules/start:e/modules/start/main",
-     "modules/temperature:e/modules/temperature/main",
-     "pointer:e/pointer",
-     "shelf:e/shelf/default/base",
-     "transitions:ZZZ",
-     "widgets:ZZZ",
-     "winlist:e/widgets/winlist/main",
-     NULL
+   "borders:e/widgets/border/default/border",
+   "background:e/desktop/background",
+   "configure:e/widgets/configure/main",
+   "dialog:e/widgets/dialog/main",
+   "dnd:ZZZ",
+   "error:e/error/main",
+   "exebuf:e/widgets/exebuf/main",
+   "fileman:ZZZ",
+   "gadman:e/gadman/control",
+   "icons:ZZZ",
+   "menus:ZZZ",
+   "modules:ZZZ",
+   "modules/pager:e/widgets/pager/popup",
+   "modules/ibar:ZZZ",
+   "modules/ibox:ZZZ",
+   "modules/clock:e/modules/clock/main",
+   "modules/battery:e/modules/battery/main",
+   "modules/cpufreq:e/modules/cpufreq/main",
+   "modules/start:e/modules/start/main",
+   "modules/temperature:e/modules/temperature/main",
+   "pointer:e/pointer",
+   "shelf:e/shelf/default/base",
+   "transitions:ZZZ",
+   "widgets:ZZZ",
+   "winlist:e/widgets/winlist/main",
+   NULL
 };
 
 E_Config_Dialog *
@@ -194,6 +194,7 @@ _cb_files_selected(void *data, Evas_Object *obj, void *event_info)
 
    cfdata = data;
 }
+
 #endif
 
 static void
@@ -300,12 +301,13 @@ _cb_web(void *data1, void *data2 __UNUSED__)
    else
      cfdata->dia_web = e_int_config_theme_web(cfdata->cfd);
 }
+
 #endif
 
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   E_Config_Theme * c;
+   E_Config_Theme *c;
    char path[4096];
    size_t len;
 
@@ -596,10 +598,10 @@ _files_ilist_nth_label_to_file(void *data, int n)
 
    if (n > cfdata->personal_file_count)
      e_prefix_data_snprintf(file, sizeof(file), "data/themes/%s.edj",
-              e_widget_ilist_nth_label_get(cfdata->o_files_ilist, n));
+                            e_widget_ilist_nth_label_get(cfdata->o_files_ilist, n));
    else
      e_user_dir_snprintf(file, sizeof(file), "themes/%s.edj",
-              e_widget_ilist_nth_label_get(cfdata->o_files_ilist, n));
+                         e_widget_ilist_nth_label_get(cfdata->o_files_ilist, n));
 
    return eina_stringshare_add(file);
 }
@@ -1098,3 +1100,4 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 
    return 1;
 }
+
