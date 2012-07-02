@@ -3,6 +3,7 @@
 # endif
 
 #include <Ecore.h>
+#include <Ecore_File.h>
 #include <Ecore_Getopt.h>
 #include <E_DBus.h>
 
