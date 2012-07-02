@@ -117,9 +117,9 @@ static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->border)
-     return cfdata->bordername == cfdata->border->client.border.name;
+     return cfdata->bordername != cfdata->border->client.border.name;
    else
-     return cfdata->bordername == e_config->theme_default_border_style;
+     return cfdata->bordername != e_config->theme_default_border_style;
 }
 
 static int
