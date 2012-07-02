@@ -3927,9 +3927,9 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
    Eina_List *l;
    E_Fm2_Icon *ic;
    Evas_Coord x, y;
-   int i;
+   int w, i;
 
-   i = x = y = 0;
+   w = i = x = y = 0;
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
         ic->x = x;
@@ -3943,10 +3943,13 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
         if ((ic->w != sd->w) && ((ic->x + ic->w) > sd->max.w)) sd->max.w = ic->x + ic->w;
         else if (ic->min_w > sd->max.w) sd->max.w = ic->min_w;
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+        w = MAX(w, ic->min_w);
         i++;
      }
    EINA_LIST_FOREACH(sd->icons, l, ic)
-     ic->w = sd->w;
+     ic->w = w;
+   if (w > sd->w)
+     evas_object_resize(sd->obj, w, sd->h);
 }
 
 static void
