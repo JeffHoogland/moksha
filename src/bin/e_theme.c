@@ -10,12 +10,11 @@ struct _E_Theme_Result
    Eina_Hash  *quickfind;
 };
 
-static Eina_Bool _e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
-static Eina_Bool _e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
-static void _e_theme_category_register(const char *category);
+static Eina_Bool  _e_theme_mappings_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool  _e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static void       _e_theme_category_register(const char *category);
 static Eina_List *_e_theme_collection_item_register(Eina_List *list, const char *name);
 static Eina_List *_e_theme_collection_items_find(const char *base, const char *collname);
-
 
 /* local subsystem globals */
 static Eina_Hash *mappings = NULL;
@@ -34,8 +33,8 @@ e_theme_init(void)
 
    /* Register mime handler */
    theme_hdl = e_fm2_mime_handler_new(_("Set As Theme"), "preferences-desktop-theme",
-				      e_theme_handler_set, NULL,
-				      e_theme_handler_test, NULL);
+                                      e_theme_handler_set, NULL,
+                                      e_theme_handler_test, NULL);
    if (theme_hdl) e_fm2_mime_handler_glob_add(theme_hdl, "*.edj");
 
    /* this is a fallback that is ALWAYS there - if all fails things will */
@@ -45,10 +44,10 @@ e_theme_init(void)
 
    EINA_LIST_FOREACH(e_config->themes, l, et)
      {
-	char buf[256];
+        char buf[256];
 
-	snprintf(buf, sizeof(buf), "base/%s", et->category);
-	e_theme_file_set(buf, et->file);
+        snprintf(buf, sizeof(buf), "base/%s", et->category);
+        e_theme_file_set(buf, et->file);
      }
 
    if (!mappings) mappings = eina_hash_string_superfast_new(NULL);
@@ -64,19 +63,19 @@ e_theme_shutdown(void)
 
    if (theme_hdl)
      {
-	e_fm2_mime_handler_glob_del(theme_hdl, "*.edj");
-	e_fm2_mime_handler_free(theme_hdl);
+        e_fm2_mime_handler_glob_del(theme_hdl, "*.edj");
+        e_fm2_mime_handler_free(theme_hdl);
      }
    if (mappings)
      {
-	eina_hash_foreach(mappings, _e_theme_mappings_free_cb, NULL);
-	eina_hash_free(mappings);
-	mappings = NULL;
+        eina_hash_foreach(mappings, _e_theme_mappings_free_cb, NULL);
+        eina_hash_free(mappings);
+        mappings = NULL;
      }
    if (group_cache)
      {
-	eina_hash_free(group_cache);
-	group_cache = NULL;
+        eina_hash_free(group_cache);
+        group_cache = NULL;
      }
    EINA_LIST_FREE(categories, str)
      eina_stringshare_del(str);
@@ -96,47 +95,47 @@ e_theme_edje_object_set(Evas_Object *o, const char *category, const char *group)
    res = eina_hash_find(mappings, category);
    if (res)
      {
-	const char *str;
+        const char *str;
 
-	/* if found check cached path */
-	str = res->cache;
-	if (!str)
-	  {
-	     /* no cached path */
-	     str = res->file;
-	     /* if its not an absolute path find it */
-	     if (str[0] != '/')
-	       str = e_path_find(path_themes, str);
-	     /* save cached value */
-	     if (str) res->cache = str;
-	  }
-	if (str)
-	  {
-	     void *tres;
-	     int ok;
+        /* if found check cached path */
+        str = res->cache;
+        if (!str)
+          {
+             /* no cached path */
+             str = res->file;
+             /* if its not an absolute path find it */
+             if (str[0] != '/')
+               str = e_path_find(path_themes, str);
+             /* save cached value */
+             if (str) res->cache = str;
+          }
+        if (str)
+          {
+             void *tres;
+             int ok;
 
-	     snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
-	     tres = eina_hash_find(group_cache, buf);
-	     if (!tres)
-	       {
-		  ok = edje_object_file_set(o, str, group);
+             snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
+             tres = eina_hash_find(group_cache, buf);
+             if (!tres)
+               {
+                  ok = edje_object_file_set(o, str, group);
                   /* save in the group cache hash */
-		  if (ok)
-		    eina_hash_add(group_cache, buf, res);
-		  else
-		    eina_hash_add(group_cache, buf, (void *)1);
-	       }
-	     else if (tres == (void *)1)
-	       ok = 0;
-	     else
-	       ok = 1;
-	     if (ok)
-	       {
-		  if (tres)
-		    edje_object_file_set(o, str, group);
-		  return 1;
-	       }
-	  }
+                  if (ok)
+                    eina_hash_add(group_cache, buf, res);
+                  else
+                    eina_hash_add(group_cache, buf, (void *)1);
+               }
+             else if (tres == (void *)1)
+               ok = 0;
+             else
+               ok = 1;
+             if (ok)
+               {
+                  if (tres)
+                    edje_object_file_set(o, str, group);
+                  return 1;
+               }
+          }
      }
    /* no mapping or set failed - fall back */
    eina_strlcpy(buf, category, sizeof(buf));
@@ -169,64 +168,64 @@ _e_theme_edje_file_get(const char *category, const char *group, Eina_Bool fallba
 
    if (res)
      {
-	const char *str;
+        const char *str;
 
-	/* if found check cached path */
-	str = res->cache;
-	if (!str)
-	  {
-	     /* no cached path */
-	     str = res->file;
-	     /* if its not an absolute path find it */
-	     if (str[0] != '/')
-	       str = e_path_find(path_themes, str);
-	     /* save cached value */
-	     if (str) res->cache = str;
-	  }
-	if (str)
-	  {
-	     void *tres;
-	     Eina_List *coll, *l;
-	     int ok;
+        /* if found check cached path */
+        str = res->cache;
+        if (!str)
+          {
+             /* no cached path */
+             str = res->file;
+             /* if its not an absolute path find it */
+             if (str[0] != '/')
+               str = e_path_find(path_themes, str);
+             /* save cached value */
+             if (str) res->cache = str;
+          }
+        if (str)
+          {
+             void *tres;
+             Eina_List *coll, *l;
+             int ok;
 
-	     snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
-	     tres = eina_hash_find(group_cache, buf);
-	     if (!tres)
-	       {
-		  /* if the group exists - return */
-		  if (!res->quickfind)
-		    {
-		       const char *col;
+             snprintf(buf, sizeof(buf), "%s/::/%s", str, group);
+             tres = eina_hash_find(group_cache, buf);
+             if (!tres)
+               {
+                  /* if the group exists - return */
+                  if (!res->quickfind)
+                    {
+                       const char *col;
 
-		       res->quickfind = eina_hash_string_superfast_new(NULL);
-		       /* create a quick find hash of all group entries */
-		       coll = edje_file_collection_list(str);
+                       res->quickfind = eina_hash_string_superfast_new(NULL);
+                       /* create a quick find hash of all group entries */
+                       coll = edje_file_collection_list(str);
 
-		       EINA_LIST_FOREACH(coll, l, col)
-			 {
-			    q = eina_stringshare_add(col);
-			    eina_hash_direct_add(res->quickfind, q, q);
-			 }
-		       if (coll) edje_file_collection_list_free(coll);
-		    }
-		  /* save in the group cache hash */
-		  if (eina_hash_find(res->quickfind, group))
-		    {
-		       eina_hash_add(group_cache, buf, res);
-		       ok = 1;
-		    }
-		  else
-		    {
-		       eina_hash_add(group_cache, buf, (void *)1);
-		       ok = 0;
-		    }
-	       }
-	     else if (tres == (void *)1) /* special pointer "1" == not there */
-	       ok = 0;
-	     else
-	       ok = 1;
-	     if (ok) return str;
-	  }
+                       EINA_LIST_FOREACH(coll, l, col)
+                         {
+                            q = eina_stringshare_add(col);
+                            eina_hash_direct_add(res->quickfind, q, q);
+                         }
+                       if (coll) edje_file_collection_list_free(coll);
+                    }
+                  /* save in the group cache hash */
+                  if (eina_hash_find(res->quickfind, group))
+                    {
+                       eina_hash_add(group_cache, buf, res);
+                       ok = 1;
+                    }
+                  else
+                    {
+                       eina_hash_add(group_cache, buf, (void *)1);
+                       ok = 0;
+                    }
+               }
+             else if (tres == (void *)1) /* special pointer "1" == not there */
+               ok = 0;
+             else
+               ok = 1;
+             if (ok) return str;
+          }
      }
    /* no mapping or set failed - fall back */
    eina_strlcpy(buf, category, sizeof(buf));
@@ -292,27 +291,27 @@ e_theme_file_set(const char *category, const char *file)
 
    if (group_cache)
      {
-	eina_hash_free(group_cache);
-	group_cache = NULL;
+        eina_hash_free(group_cache);
+        group_cache = NULL;
      }
    _e_theme_category_register(category);
    res = eina_hash_find(mappings, category);
    if (res)
      {
         eina_hash_del(mappings, category, res);
-	if (res->file)
-	  {
-	     e_filereg_deregister(res->file);
-	     eina_stringshare_del(res->file);
-	  }
-	if (res->cache) eina_stringshare_del(res->cache);
-	E_FREE(res);
+        if (res->file)
+          {
+             e_filereg_deregister(res->file);
+             eina_stringshare_del(res->file);
+          }
+        if (res->cache) eina_stringshare_del(res->cache);
+        E_FREE(res);
      }
    res = E_NEW(E_Theme_Result, 1);
    res->file = eina_stringshare_add(file);
    e_filereg_register(res->file);
    if (!mappings)
-      mappings = eina_hash_string_superfast_new(NULL);
+     mappings = eina_hash_string_superfast_new(NULL);
    eina_hash_add(mappings, category, res);
 }
 
@@ -330,12 +329,12 @@ e_theme_config_set(const char *category, const char *file)
    /* search for the category */
    EINA_LIST_FOREACH(e_config->themes, next, ect)
      {
-	if (!strcmp(ect->category, category))
-	  {
-	     if (ect->file) eina_stringshare_del(ect->file);
-	     ect->file = eina_stringshare_add(file);
-	     return 1;
-	  }
+        if (!strcmp(ect->category, category))
+          {
+             if (ect->file) eina_stringshare_del(ect->file);
+             ect->file = eina_stringshare_add(file);
+             return 1;
+          }
      }
 
    /* the text class doesnt exist */
@@ -359,8 +358,8 @@ e_theme_config_get(const char *category)
    /* search for the category */
    EINA_LIST_FOREACH(e_config->themes, next, ect)
      {
-	if (!strcmp(ect->category, category))
-	  return ect;
+        if (!strcmp(ect->category, category))
+          return ect;
      }
    return NULL;
 }
@@ -374,15 +373,15 @@ e_theme_config_remove(const char *category)
    /* search for the category */
    EINA_LIST_FOREACH(e_config->themes, next, ect)
      {
-	if (!strcmp(ect->category, category))
-	  {
-	     e_config->themes = eina_list_remove_list(e_config->themes, next);
-	     if (ect->category) eina_stringshare_del(ect->category);
-	     if (ect->file) eina_stringshare_del(ect->file);
-	     free(ect);
-	     return 1;
-	  }
-    }
+        if (!strcmp(ect->category, category))
+          {
+             e_config->themes = eina_list_remove_list(e_config->themes, next);
+             if (ect->category) eina_stringshare_del(ect->category);
+             if (ect->file) eina_stringshare_del(ect->file);
+             free(ect);
+             return 1;
+          }
+     }
    return 1;
 }
 
@@ -519,12 +518,12 @@ e_theme_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __
    /* if not in system dir or user dir, copy to user dir */
    e_prefix_data_concat_static(buf, "data/themes");
    if (!strncmp(buf, path, strlen(buf)))
-      copy = 0;
+     copy = 0;
    if (copy)
      {
         e_user_dir_concat_static(buf, "themes");
         if (!strncmp(buf, path, strlen(buf)))
-           copy = 0;
+          copy = 0;
      }
    if (copy)
      {
@@ -543,10 +542,10 @@ e_theme_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __
              e_theme_config_set("theme", buf);
           }
         else
-           e_theme_config_set("theme", path);
+          e_theme_config_set("theme", path);
      }
    else
-      e_theme_config_set("theme", path);
+     e_theme_config_set("theme", path);
 
    e_config_save_queue();
    a = e_action_find("restart");
@@ -573,8 +572,8 @@ _e_theme_mappings_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UN
    if (res->cache) eina_stringshare_del(res->cache);
    if (res->quickfind)
      {
-	eina_hash_foreach(res->quickfind, _e_theme_mappings_quickfind_free_cb, NULL);
-	eina_hash_free(res->quickfind);
+        eina_hash_foreach(res->quickfind, _e_theme_mappings_quickfind_free_cb, NULL);
+        eina_hash_free(res->quickfind);
      }
    free(res);
    return EINA_TRUE;
@@ -597,7 +596,7 @@ _e_theme_category_register(const char *category)
      categories = eina_list_append(categories, eina_stringshare_add(category));
 
    l = eina_list_search_sorted_near_list(categories, EINA_COMPARE_CB(strcmp),
-         category, &ret);
+                                         category, &ret);
 
    if (!ret) return;
 
@@ -615,7 +614,7 @@ _e_theme_collection_item_register(Eina_List *list, const char *name)
 
    EINA_LIST_FOREACH(list, l, item)
      {
-	if (!strcmp(name, item)) return list;
+        if (!strcmp(name, item)) return list;
      }
    list = eina_list_append(list, eina_stringshare_add(name));
    return list;
@@ -632,59 +631,60 @@ _e_theme_collection_items_find(const char *base, const char *collname)
    strcpy(category, base);
    do
      {
-	res = eina_hash_find(mappings, category);
-	if (res)
-	  {
-	     const char *str;
+        res = eina_hash_find(mappings, category);
+        if (res)
+          {
+             const char *str;
 
-	     /* if found check cached path */
-	     str = res->cache;
-	     if (!str)
-	       {
-		  /* no cached path */
-		  str = res->file;
-		  /* if its not an absolute path find it */
-		  if (str[0] != '/') str = e_path_find(path_themes, str);
-		  /* save cached value */
-		  if (str) res->cache = str;
-	       }
-	     if (str)
-	       {
-		  Eina_List *coll, *l;
+             /* if found check cached path */
+             str = res->cache;
+             if (!str)
+               {
+                  /* no cached path */
+                  str = res->file;
+                  /* if its not an absolute path find it */
+                  if (str[0] != '/') str = e_path_find(path_themes, str);
+                  /* save cached value */
+                  if (str) res->cache = str;
+               }
+             if (str)
+               {
+                  Eina_List *coll, *l;
 
-		  coll = edje_file_collection_list(str);
-		  if (coll)
-		    {
-		       const char *c;
+                  coll = edje_file_collection_list(str);
+                  if (coll)
+                    {
+                       const char *c;
                        int collname_len;
 
                        collname_len = strlen(collname);
-		       EINA_LIST_FOREACH(coll, l, c)
-			 {
-			    if (!strncmp(c, collname, collname_len))
-			      {
-				 char *trans, *p2;
+                       EINA_LIST_FOREACH(coll, l, c)
+                         {
+                            if (!strncmp(c, collname, collname_len))
+                              {
+                                 char *trans, *p2;
 
-				 trans = strdup(c);
-				 p = trans + collname_len + 1;
-				 if (*p)
-				   {
-				      p2 = strchr(p, '/');
-				      if (p2) *p2 = 0;
-				      list = _e_theme_collection_item_register(list, p);
-				   }
-				 free(trans);
-			      }
-			 }
-		       edje_file_collection_list_free(coll);
-		    }
-	       }
-	  }
-	p = strrchr(category, '/');
-	if (p) *p = 0;
+                                 trans = strdup(c);
+                                 p = trans + collname_len + 1;
+                                 if (*p)
+                                   {
+                                      p2 = strchr(p, '/');
+                                      if (p2) *p2 = 0;
+                                      list = _e_theme_collection_item_register(list, p);
+                                   }
+                                 free(trans);
+                              }
+                         }
+                       edje_file_collection_list_free(coll);
+                    }
+               }
+          }
+        p = strrchr(category, '/');
+        if (p) *p = 0;
      }
    while (p);
 
    list = eina_list_sort(list, 0, EINA_COMPARE_CB(strcmp));
    return list;
 }
+
