@@ -31,6 +31,15 @@ static void         _cb_fm_change(void *data, Evas_Object *obj, void *event_info
 static void         _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info);
 static void         _cb_button_up(void *data1, void *data2);
 
+static E_Config_Dialog *_cfd = NULL;
+
+static int
+_close_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
+{
+   _cfd = NULL;
+   return 1;
+}
+
 E_Config_Dialog *
 _config_gadman_module(E_Container *con, const char *params __UNUSED__)
 {
@@ -48,6 +57,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.apply_cfdata = _basic_apply_data;
+   v->close_cfdata = _close_cfdata;
 
    snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", Man->module->dir);
    cfd = e_config_dialog_new(con, _("Gadgets Manager"),
@@ -55,6 +65,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
                              buf, 0, v, Man);
 
    Man->config_dialog = cfd;
+   _cfd = cfd;
    return Man->config_dialog;
 }
 
@@ -425,3 +436,9 @@ _cb_button_up(void *data1, void *data2 __UNUSED__)
    e_widget_scrollframe_child_pos_set(cfdata->o_sf, 0, 0);
 }
 
+EAPI void
+e_config_gadman_list_refresh(void)
+{
+   if (!_cfd) return;
+   _fill_gadgets_list(_cfd->cfdata->o_avail);
+}

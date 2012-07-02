@@ -39,6 +39,7 @@ static void             on_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void             on_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void             on_menu_add(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static Eina_Bool       _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update *ev);
 static int              _e_gadman_client_add(void *data __UNUSED__, const E_Gadcon_Client_Class *cc);
 static void             _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc);
 
@@ -51,6 +52,7 @@ E_Gadcon_Client *current = NULL;
 Manager *Man = NULL;
 static E_Gadcon_Location *location = NULL;
 static Eina_List *_gadman_hdls = NULL;
+static Eina_Hash *_gadman_gadgets = NULL;
 
 /* Implementation */
 void
@@ -97,6 +99,7 @@ gadman_init(E_Module *m)
           }
      }
 
+   _gadman_gadgets = eina_hash_string_superfast_new(NULL);
    _e_gadman_handlers_add();
 }
 
@@ -136,6 +139,12 @@ gadman_shutdown(void)
         e_canvas_del(Man->top_ee);
         //ecore_evas_free(Man->top_ee);
      }
+   if (_gadman_gadgets)
+     {
+        eina_hash_free_cb_set(_gadman_gadgets, EINA_FREE_CB(eina_list_free));
+        eina_hash_free(_gadman_gadgets);
+     }
+   _gadman_gadgets = NULL;
    free(Man);
    Man = NULL;
 }
@@ -227,7 +236,12 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone 
 
    if (gcc->gadcon->id == ID_GADMAN_LAYER_TOP)
      edje_object_signal_emit(gcc->o_frame, "e,state,visibility,hide", "e");
-
+   if (cc->name)
+     {
+        Eina_List *l;
+        l = eina_hash_find(_gadman_gadgets, cc->name);
+        eina_hash_set(_gadman_gadgets, cc->name, eina_list_append(l, gcc));
+     }
    evas_object_show(gcc->o_frame);
 
    return gcc;
@@ -297,10 +311,13 @@ void
 gadman_gadget_del(E_Gadcon_Client *gcc)
 {
    Gadman_Layer_Type layer = gcc->gadcon->id - ID_GADMAN_LAYER_BASE;
+   Eina_List *l;
+
    Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc);
 
 //   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
-
+   l = eina_hash_find(_gadman_gadgets, gcc->name);
+   eina_hash_set(_gadman_gadgets, gcc->name, eina_list_remove(l, gcc));
    if (gcc->cf) e_gadcon_client_config_del(gcc->gadcon->cf, gcc->cf);
    gcc->cf = NULL;
    e_object_del(E_OBJECT(gcc));
@@ -1393,16 +1410,13 @@ _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc)
 static void
 _e_gadman_handlers_add(void)
 {
-   _gadman_hdls =
-     eina_list_append(_gadman_hdls,
-                      ecore_event_handler_add(E_EVENT_ZONE_ADD,
-                                              _e_gadman_cb_zone_add,
-                                              NULL));
-   _gadman_hdls =
-     eina_list_append(_gadman_hdls,
-                      ecore_event_handler_add(E_EVENT_ZONE_DEL,
-                                              _e_gadman_cb_zone_del,
-                                              NULL));
+   _gadman_hdls = eina_list_append(_gadman_hdls,
+                      ecore_event_handler_add(E_EVENT_ZONE_ADD, _e_gadman_cb_zone_add, NULL));
+   _gadman_hdls = eina_list_append(_gadman_hdls,
+                      ecore_event_handler_add(E_EVENT_ZONE_DEL, _e_gadman_cb_zone_del, NULL));
+   _gadman_hdls = eina_list_append(_gadman_hdls,
+                      ecore_event_handler_add(E_EVENT_MODULE_UPDATE, (Ecore_Event_Handler_Cb)_gadman_module_cb, NULL));
+                                              
 }
 
 static void
@@ -1413,6 +1427,26 @@ _e_gadman_handler_del(void)
    /* remove the ecore event handlers */
    EINA_LIST_FREE(_gadman_hdls, hdl)
      ecore_event_handler_del(hdl);
+}
+
+static Eina_Bool
+_gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update *ev)
+{
+   if (ev->enabled)
+     e_config_gadman_list_refresh();
+   else
+     {
+        Eina_List *l;
+        E_Gadcon_Client *gcc;
+        l = eina_hash_set(_gadman_gadgets, ev->name, NULL);
+        if (!l) return ECORE_CALLBACK_RENEW;
+        EINA_LIST_FREE(l, gcc)
+          {
+             gcc->cf = NULL;
+             gadman_gadget_del(gcc);
+          }
+     }
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
