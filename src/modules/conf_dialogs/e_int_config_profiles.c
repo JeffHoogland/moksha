@@ -250,9 +250,23 @@ _ilist_cb_selected(void *data)
    pdir = e_config_profile_dir_get(cfdata->sel_profile);
    snprintf(buf, sizeof(buf), "%s/profile.desktop", pdir);
    desk = efreet_desktop_new(buf);
-   if (!desk)
+   if (desk)
+     {
+        // if there is a system version of the profile - allow reset
+        e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", e_config_profile_get());
+        if (ecore_file_is_dir(buf))
+          e_widget_disabled_set(cfdata->o_reset, 0);
+        else
+          e_widget_disabled_set(cfdata->o_reset, 1);
+     }
+   else
      {
         e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", cfdata->sel_profile);
+        if (ecore_file_is_dir(buf))
+          e_widget_disabled_set(cfdata->o_reset, 0);
+        else
+          e_widget_disabled_set(cfdata->o_reset, 1);
+
         pdir = strdup(buf);
         if (pdir)
           {
