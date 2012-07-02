@@ -10,6 +10,7 @@ struct _E_Smart_Data
    Evas_Coord    x, y, w, h, iw, ih;
    Evas_Object  *o_smart, *o_box;
    Eina_List    *items;
+   Eina_List    *selected_items;
    int           selected;
    unsigned char selector : 1;
    unsigned char multi_select : 1;
@@ -416,6 +417,7 @@ e_ilist_clear(Evas_Object *obj)
         evas_object_del(si->o_base);
         E_FREE(si);
      }
+   if (sd->selected_items) sd->selected_items = eina_list_free(sd->selected_items);
    e_ilist_thaw(obj);
    sd->selected = -1;
 }
@@ -479,17 +481,15 @@ e_ilist_size_min_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 EAPI void
 e_ilist_unselect(Evas_Object *obj)
 {
-   Eina_List *l = NULL;
    E_Ilist_Item *si = NULL;
 
    API_ENTRY return;
 
    if (!sd->items) return;
    if (sd->selected < 0) return;
-   EINA_LIST_FOREACH(sd->items, l, si)
+   EINA_LIST_FREE(sd->selected_items, si)
      {
         if (!si) continue;
-        if (!si->selected) continue;
         _item_unselect(si);
      }
    sd->selected = -1;
@@ -499,7 +499,6 @@ EAPI void
 e_ilist_selected_set(Evas_Object *obj, int n)
 {
    E_Ilist_Item *si = NULL;
-   Eina_List *l = NULL;
    int i;
 
    API_ENTRY return;
@@ -510,13 +509,7 @@ e_ilist_selected_set(Evas_Object *obj, int n)
    else if (n < 0)
      n = 0;
 
-   EINA_LIST_FOREACH(sd->items, l, si)
-     {
-        if (!si) continue;
-        if ((!si->selected) || (si->header)) continue;
-        _item_unselect(si);
-     }
-   sd->selected = -1;
+   e_ilist_unselect(obj);
    if (!(si = eina_list_nth(sd->items, n))) return;
 
    /* NB: Remove this if headers ever become selectable */
@@ -536,6 +529,13 @@ e_ilist_selected_set(Evas_Object *obj, int n)
      }
 }
 
+EAPI const Eina_List *
+e_ilist_selected_items_get(Evas_Object *obj)
+{
+   API_ENTRY return NULL;
+   return sd->selected_items;
+}
+
 EAPI int
 e_ilist_selected_get(Evas_Object *obj)
 {
@@ -547,17 +547,14 @@ e_ilist_selected_get(Evas_Object *obj)
    if (!sd->items) return -1;
    if (!sd->multi_select)
      return sd->selected;
-   else
+   j = -1;
+   i = 0;
+   EINA_LIST_FOREACH(sd->selected_items, l, li)
      {
-        j = -1;
-        i = 0;
-        EINA_LIST_FOREACH(sd->items, l, li)
-          {
-             if (li && li->selected) j = i;
-             i++;
-          }
-        return j;
+        if (li && li->selected) j = i;
+        i++;
      }
+   return j;
 }
 
 EAPI const char *
@@ -656,18 +653,9 @@ e_ilist_selected_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Ev
 EAPI int
 e_ilist_selected_count_get(Evas_Object *obj)
 {
-   Eina_List *l = NULL;
-   E_Ilist_Item *si = NULL;
-   int count = 0;
-
    API_ENTRY return 0;
    if (!sd->items) return 0;
-   EINA_LIST_FOREACH(sd->items, l, si)
-     {
-        if (!si) continue;
-        if (si->selected) count++;
-     }
-   return count;
+   return eina_list_count(sd->selected_items);
 }
 
 EAPI void
@@ -683,6 +671,7 @@ e_ilist_remove_num(Evas_Object *obj, int n)
    si = eina_list_data_get(item);
    if (!si) return;
    sd->items = eina_list_remove_list(sd->items, item);
+   if (si->selected) sd->selected_items = eina_list_remove(sd->selected_items, si);
 
    if (sd->selected == n) sd->selected = -1;
    if (si->o_icon) evas_object_del(si->o_icon);
@@ -1402,6 +1391,7 @@ static void
 _item_select(E_Ilist_Item *si)
 {
    const char *selectraise;
+   E_Smart_Data *sd = si->sd;
    si->selected = EINA_TRUE;
    selectraise = edje_object_data_get(si->o_base, "selectraise");
    if ((selectraise) && (!strcmp(selectraise, "on")))
@@ -1414,12 +1404,14 @@ _item_select(E_Ilist_Item *si)
         else
           e_icon_selected_set(si->o_icon, EINA_TRUE);
      }
+   sd->selected_items = eina_list_append(sd->selected_items, si);
 }
 
 static void
 _item_unselect(E_Ilist_Item *si)
 {
    const char *stacking, *selectraise;
+   E_Smart_Data *sd = si->sd;
    si->selected = EINA_FALSE;
    edje_object_signal_emit(si->o_base, "e,state,unselected", "e");
    if (si->o_icon)
@@ -1436,5 +1428,6 @@ _item_unselect(E_Ilist_Item *si)
         if ((stacking) && (!strcmp(stacking, "below")))
           evas_object_lower(si->o_base);
      }
+   sd->selected_items = eina_list_remove(sd->selected_items, si);
 }
 

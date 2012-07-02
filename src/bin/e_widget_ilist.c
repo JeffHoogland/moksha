@@ -778,6 +778,15 @@ e_widget_ilist_selected_set(Evas_Object *obj, int n)
  */
 }
 
+EAPI const Eina_List *
+e_widget_ilist_selected_items_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   return e_ilist_selected_items_get(wd->o_ilist);
+}
+
 EAPI int
 e_widget_ilist_selected_get(Evas_Object *obj)
 {
