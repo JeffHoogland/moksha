@@ -5,31 +5,31 @@
 
 struct _E_Config_Dialog_Data
 {
-   Evas_Object *o_avail;        //List of available gadgets
-   Evas_Object *o_add;          //Add button
-   Evas_Object *o_fm;           //Filemanager Object
-   Evas_Object *o_sf;           //Filemanager Scrollframe
-   Evas_Object *o_btn;          //Filemanager updir button
-   E_Color *color;              //Custom Color
-   int bg_method;               //Type of background
-   int anim_bg;                 //Anim the background
-   int anim_gad;                //Anim the gadgets
-   int fmdir;                   //Filemanager dir (personal or system)
+   Evas_Object *o_avail; //List of available gadgets
+   Evas_Object *o_add; //Add button
+   Evas_Object *o_fm; //Filemanager Object
+   Evas_Object *o_sf; //Filemanager Scrollframe
+   Evas_Object *o_btn; //Filemanager updir button
+   E_Color     *color; //Custom Color
+   int          bg_method; //Type of background
+   int          anim_bg; //Anim the background
+   int          anim_gad; //Anim the gadgets
+   int          fmdir; //Filemanager dir (personal or system)
 };
 
 /* Local protos */
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void _fill_gadgets_list(Evas_Object *ilist);
-static void _cb_add(void *data, void *data2);
-static void _avail_list_cb_change(void *data, Evas_Object *obj);
-static void _cb_fm_radio_change(void *data, Evas_Object *obj);
-static void _cb_color_changed(void *data, Evas_Object *o);
-static void _cb_fm_change(void *data, Evas_Object *obj, void *event_info);
-static void _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info);
-static void _cb_button_up(void *data1, void *data2);
+static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void         _fill_gadgets_list(Evas_Object *ilist);
+static void         _cb_add(void *data, void *data2);
+static void         _avail_list_cb_change(void *data, Evas_Object *obj);
+static void         _cb_fm_radio_change(void *data, Evas_Object *obj);
+static void         _cb_color_changed(void *data, Evas_Object *o);
+static void         _cb_fm_change(void *data, Evas_Object *obj, void *event_info);
+static void         _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info);
+static void         _cb_button_up(void *data1, void *data2);
 
 E_Config_Dialog *
 _config_gadman_module(E_Container *con, const char *params __UNUSED__)
@@ -48,7 +48,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.apply_cfdata = _basic_apply_data;
-   
+
    snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", Man->module->dir);
    cfd = e_config_dialog_new(con, _("Gadgets Manager"),
                              "E", "extensions/gadman",
@@ -65,12 +65,12 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->bg_method = Man->conf->bg_type;
-   if (Man->conf->custom_bg) 
+   if (Man->conf->custom_bg)
      {
-	if (!strstr(Man->conf->custom_bg, e_user_homedir_get()))
-	  cfdata->fmdir = 1;
+        if (!strstr(Man->conf->custom_bg, e_user_homedir_get()))
+          cfdata->fmdir = 1;
      }
-   
+
    cfdata->color = E_NEW(E_Color, 1);
    cfdata->color->r = Man->conf->color_r;
    cfdata->color->g = Man->conf->color_g;
@@ -78,9 +78,9 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->color->a = Man->conf->color_a;
    cfdata->anim_bg = Man->conf->anim_bg;
    cfdata->anim_gad = Man->conf->anim_gad;
-   
+
    e_color_update_rgb(cfdata->color);
-   
+
    return cfdata;
 }
 
@@ -103,7 +103,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
    o = e_widget_list_add(evas, 0, 0);
-   
+
    of = e_widget_framelist_add(evas, _("Available Gadgets"), 0);
 
    //o_avail  List of available gadgets
@@ -120,17 +120,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    cfdata->o_add = ob;
    e_widget_size_min_get(ob, &mw, &mh);
    e_widget_framelist_object_append_full(of, ob,
-					 1, 1, /* fill */
-					 1, 0, /* expand */
-					 0.5, 0.5, /* align */
-					 mw, mh, /* min */
-					 99999, 99999 /* max */
-					 );
+                                         1, 1, /* fill */
+                                         1, 0, /* expand */
+                                         0.5, 0.5, /* align */
+                                         mw, mh, /* min */
+                                         99999, 99999 /* max */
+                                         );
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
-   
-   
+
    e_widget_toolbook_page_append(otb, NULL, _("Add Gadget"), o, 1, 1, 1, 1, 0.5, 0.0);
    ft = e_widget_table_add(evas, 0);
 
@@ -141,16 +140,16 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    //~ evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
    e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 0, 1, 0);
    ow = e_widget_radio_add(evas, _("Custom Image"), BG_CUSTOM, rg);
-   //~ evas_object_smart_callback_add(cfdata->o_custom, "changed", 
-				  //~ _cb_method_change, cfdata);
+   //~ evas_object_smart_callback_add(cfdata->o_custom, "changed",
+   //~ _cb_method_change, cfdata);
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
    ow = e_widget_radio_add(evas, _("Custom Color"), BG_COLOR, rg);
-   //~ evas_object_smart_callback_add(cfdata->o_custom, "changed", 
-				  //~ _cb_method_change, cfdata);
+   //~ evas_object_smart_callback_add(cfdata->o_custom, "changed",
+   //~ _cb_method_change, cfdata);
    e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
    ow = e_widget_radio_add(evas, _("Transparent"), BG_TRANS, rg);
-   //~ evas_object_smart_callback_add(cfdata->o_custom, "changed", 
-				  //~ _cb_method_change, cfdata);
+   //~ evas_object_smart_callback_add(cfdata->o_custom, "changed",
+   //~ _cb_method_change, cfdata);
    e_widget_frametable_object_append(of, ow, 0, 3, 1, 1, 1, 0, 1, 0);
    e_widget_table_object_append(ft, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
@@ -158,12 +157,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    of = e_widget_frametable_add(evas, _("Animations"), 0);
    ow = e_widget_check_add(evas, _("Background"), &(cfdata->anim_bg));
    e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 0, 1, 0);
-   
+
    ow = e_widget_check_add(evas, _("Gadgets"), &(cfdata->anim_gad));
    e_widget_frametable_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
-   
+
    e_widget_table_object_append(ft, of, 0, 1, 1, 1, 1, 1, 1, 1);
-   
+
    //Custom Color
    of = e_widget_framelist_add(evas, _("Custom Color"), 0);
    ow = e_widget_color_well_add(evas, cfdata->color, 1);
@@ -174,20 +173,19 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    //Background filemanager chooser
    of = e_widget_frametable_add(evas, _("Custom Image"), 0);
    rg = e_widget_radio_group_new(&(cfdata->fmdir));
-   
+
    ow = e_widget_radio_add(evas, _("Personal"), 0, rg);
    e_widget_on_change_hook_set(ow, _cb_fm_radio_change, cfdata);
    e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 0, 0);
-   
+
    ow = e_widget_radio_add(evas, _("System"), 1, rg);
    e_widget_on_change_hook_set(ow, _cb_fm_radio_change, cfdata);
    e_widget_frametable_object_append(of, ow, 1, 0, 1, 1, 1, 1, 0, 0);
 
-   cfdata->o_btn = e_widget_button_add(evas, _("Go up a Directory"), 
-				       "widgets/up_dir", _cb_button_up, 
-				       cfdata, NULL);
+   cfdata->o_btn = e_widget_button_add(evas, _("Go up a Directory"),
+                                       "widgets/up_dir", _cb_button_up,
+                                       cfdata, NULL);
    e_widget_frametable_object_append(of, cfdata->o_btn, 0, 1, 2, 1, 1, 1, 1, 0);
-
 
    if (cfdata->fmdir == 1)
      e_prefix_data_concat_static(path, "data/backgrounds");
@@ -217,23 +215,23 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_fm2_icon_menu_flags_set(ow, E_FM2_MENU_NO_SHOW_HIDDEN);
    e_fm2_path_set(ow, path, "/");
 
-   evas_object_smart_callback_add(ow, "selection_change", 
-				  _cb_fm_sel_change, cfdata);
+   evas_object_smart_callback_add(ow, "selection_change",
+                                  _cb_fm_sel_change, cfdata);
    evas_object_smart_callback_add(ow, "changed", _cb_fm_change, cfdata);
-   
-   cfdata->o_sf = e_widget_scrollframe_pan_add(evas, ow, e_fm2_pan_set, 
-					       e_fm2_pan_get,
-					       e_fm2_pan_max_get, 
-					       e_fm2_pan_child_size_get);
+
+   cfdata->o_sf = e_widget_scrollframe_pan_add(evas, ow, e_fm2_pan_set,
+                                               e_fm2_pan_get,
+                                               e_fm2_pan_max_get,
+                                               e_fm2_pan_child_size_get);
    e_widget_size_min_set(cfdata->o_sf, 150, 250);
    e_widget_frametable_object_append(of, cfdata->o_sf, 0, 2, 2, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ft, of, 2, 0, 1, 3, 1, 1, 1, 1);
 
    e_dialog_resizable_set(cfd->dia, 0);
-   
+
    e_widget_toolbook_page_append(otb, NULL, _("Background Options"), ft, 0, 0, 0, 0, 0.5, 0.0);
    e_widget_toolbook_page_show(otb, 0);
-   
+
    e_dialog_resizable_set(cfd->dia, 1);
    return otb;
 }
@@ -258,25 +256,26 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    sel = e_fm2_selected_list_get(cfdata->o_fm);
    if (sel && p)
      {
-	ic = sel->data;
-	if (ic->file)
-	  {
-		snprintf(path, sizeof(path), "%s/%s", p, ic->file);
-		if (Man->conf->custom_bg)
-		  eina_stringshare_del(Man->conf->custom_bg);
-		Man->conf->custom_bg = eina_stringshare_add(path);
-	  }
-	eina_list_free(sel);
+        ic = sel->data;
+        if (ic->file)
+          {
+             snprintf(path, sizeof(path), "%s/%s", p, ic->file);
+             if (Man->conf->custom_bg)
+               eina_stringshare_del(Man->conf->custom_bg);
+             Man->conf->custom_bg = eina_stringshare_add(path);
+          }
+        eina_list_free(sel);
      }
-     
+
    gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
    e_config_save_queue();
    gadman_update_bg();
-   
+
    return 1;
 }
+
 //Basic Callbacks
-static void 
+static void
 _fill_gadgets_list(Evas_Object *ilist)
 {
    Eina_List *l = NULL;
@@ -288,7 +287,7 @@ _fill_gadgets_list(Evas_Object *ilist)
 
    evas = evas_object_evas_get(ilist);
 
-   for (l = e_gadcon_provider_list(); l; l = l->next) 
+   for (l = e_gadcon_provider_list(); l; l = l->next)
      {
         E_Gadcon_Client_Class *cc;
         Evas_Object *icon = NULL;
@@ -296,7 +295,7 @@ _fill_gadgets_list(Evas_Object *ilist)
 
         if (!(cc = l->data)) continue;
         if (cc->func.is_site && !cc->func.is_site(E_GADCON_SITE_DESKTOP))
-           continue;
+          continue;
         if (cc->func.label) lbl = cc->func.label(cc);
         if (!lbl) lbl = cc->name;
         if (cc->func.icon) icon = cc->func.icon(cc, evas);
@@ -310,8 +309,8 @@ _fill_gadgets_list(Evas_Object *ilist)
    e_widget_ilist_thaw(ilist);
 }
 
-static void 
-_cb_add(void *data, void *data2 __UNUSED__) 
+static void
+_cb_add(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *l = NULL;
@@ -319,7 +318,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
 
    if (!(cfdata = data)) return;
 
-   for (i = 0, l = e_widget_ilist_items_get(cfdata->o_avail); l; l = l->next, i++) 
+   for (i = 0, l = e_widget_ilist_items_get(cfdata->o_avail); l; l = l->next, i++)
      {
         E_Ilist_Item *item = NULL;
         E_Gadcon_Client_Class *cc;
@@ -338,8 +337,8 @@ _cb_add(void *data, void *data2 __UNUSED__)
    if (l) eina_list_free(l);
 }
 
-static void 
-_avail_list_cb_change(void *data, Evas_Object *obj __UNUSED__) 
+static void
+_avail_list_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -372,7 +371,7 @@ _cb_fm_radio_change(void *data, Evas_Object *obj __UNUSED__)
    e_fm2_path_set(cfdata->o_fm, path, "/");
 }
 
-static void 
+static void
 _cb_fm_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -385,27 +384,27 @@ _cb_fm_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED
    if (!cfdata->o_fm) return;
 
    p = e_fm2_real_path_get(cfdata->o_fm);
-   if (!p) return; 
+   if (!p) return;
 
    if (strncmp(p, Man->conf->custom_bg, strlen(p))) return;
 
    len = e_user_dir_concat_static(path, "backgrounds");
-   if (!strncmp(Man->conf->custom_bg, path, len)) 
+   if (!strncmp(Man->conf->custom_bg, path, len))
      p = Man->conf->custom_bg + len + 1;
-   else 
+   else
      {
-	len = e_prefix_data_concat_static(path, "data/backgrounds");
-	if (!strncmp(Man->conf->custom_bg, path, len))
-	  p = Man->conf->custom_bg + len + 1;
-	else
-	  p = Man->conf->custom_bg;
+        len = e_prefix_data_concat_static(path, "data/backgrounds");
+        if (!strncmp(Man->conf->custom_bg, path, len))
+          p = Man->conf->custom_bg + len + 1;
+        else
+          p = Man->conf->custom_bg;
      }
 
    e_fm2_select_set(cfdata->o_fm, p, 1);
    e_fm2_file_show(cfdata->o_fm, p);
 }
 
-static void 
+static void
 _cb_fm_sel_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
@@ -413,6 +412,7 @@ _cb_fm_sel_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
    cfdata = data;
    e_widget_change(cfdata->o_sf);
 }
+
 static void
 _cb_button_up(void *data1, void *data2 __UNUSED__)
 {
@@ -424,3 +424,4 @@ _cb_button_up(void *data1, void *data2 __UNUSED__)
    e_fm2_parent_go(cfdata->o_fm);
    e_widget_scrollframe_child_pos_set(cfdata->o_sf, 0, 0);
 }
+
