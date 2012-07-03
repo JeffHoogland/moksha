@@ -39,6 +39,7 @@ struct _E_Fwin
    Evas_Object         *over_obj;
 
    const char          *wallpaper_file;
+   Eina_Bool            wallpaper_is_edj : 1;
    const char          *overlay_file;
    const char          *scrollframe_file;
    const char          *theme_file;
@@ -470,6 +471,7 @@ _e_fwin_new(E_Container *con,
    fwin->pages = eina_list_append(fwin->pages, page);
    fwin->cur_page = page;
 
+/*
    o = edje_object_add(fwin->win->evas);
 //   o = e_icon_add(e_win_evas_get(fwin->win));
 //   e_icon_scale_size_set(o, 0);
@@ -477,6 +479,7 @@ _e_fwin_new(E_Container *con,
    edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", o);
    evas_object_pass_events_set(o, 1);
    fwin->under_obj = o;
+*/
 
    o = edje_object_add(fwin->win->evas);
 //   o = e_icon_add(e_win_evas_get(fwin->win));
@@ -1273,21 +1276,34 @@ _e_fwin_changed(void            *data,
         RELEASE_STR(fwin->theme_file);
 #undef RELEASE_STR
      }
-   if (fwin->under_obj)
+   if (fwin->under_obj) evas_object_hide(fwin->under_obj);
+   if (fwin->wallpaper_file)
      {
-        evas_object_hide(fwin->under_obj);
-        if (fwin->wallpaper_file)
+        if (eina_str_has_extension(fwin->wallpaper_file, "edj"))
           {
+             if (!fwin->wallpaper_is_edj)
+               {
+                  if (fwin->under_obj) evas_object_del(fwin->under_obj);
+                  fwin->under_obj = edje_object_add(fwin->win->evas);
+                  fwin->wallpaper_is_edj = EINA_TRUE;
+               }
              edje_object_file_set(fwin->under_obj, fwin->wallpaper_file, "e/desktop/background");
-//             ext = strrchr(fwin->wallpaper_file, '.');
-//             if (ext && !strcasecmp(ext, ".edj"))
-//               e_icon_file_edje_set(fwin->under_obj, fwin->wallpaper_file, "e/desktop/background");
-//             else
-//               e_icon_file_set(fwin->under_obj, fwin->wallpaper_file);
           }
-//        else
-//          e_icon_file_edje_set(fwin->under_obj, NULL, NULL);
-        evas_object_show(fwin->under_obj);
+        else
+          {
+             if (fwin->wallpaper_is_edj) evas_object_del(fwin->under_obj);
+             fwin->wallpaper_is_edj = EINA_FALSE;
+             fwin->under_obj = e_icon_add(e_win_evas_get(fwin->win));
+             e_icon_scale_size_set(fwin->under_obj, 0);
+             e_icon_fill_inside_set(fwin->under_obj, 0);
+             e_icon_file_set(fwin->under_obj, fwin->wallpaper_file);
+          }
+        if (fwin->under_obj)
+          {
+             edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", fwin->under_obj);
+             evas_object_pass_events_set(fwin->under_obj, 1);
+             evas_object_show(fwin->under_obj);
+          }
      }
    if (fwin->over_obj)
      {
@@ -2329,7 +2345,7 @@ _e_fwin_pan_scroll_update(E_Fwin_Page *page)
 //	  page->fm_pan.x, page->fm_pan.y,
 //	  page->fm_pan.max_x, page->fm_pan.max_y,
 //	  page->fm_pan.w, page->fm_pan.h);
-   if (page->fwin->under_obj)
+   if (page->fwin->under_obj && page->fwin->wallpaper_is_edj)
      edje_object_message_send(page->fwin->under_obj, EDJE_MESSAGE_INT_SET, 1, msg);
    if (page->fwin->over_obj)
      edje_object_message_send(page->fwin->over_obj, EDJE_MESSAGE_INT_SET, 1, msg);
