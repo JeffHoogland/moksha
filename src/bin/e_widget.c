@@ -1,25 +1,25 @@
 #include "e.h"
 
-#define SMART_NAME "e_widget"
-#define API_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if ((!obj) || (!sd) || (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), SMART_NAME)))
-#define INTERNAL_ENTRY E_Smart_Data *sd; sd = evas_object_smart_data_get(obj); if (!sd) return;
+#define SMART_NAME     "e_widget"
+#define API_ENTRY      E_Smart_Data * sd; sd = evas_object_smart_data_get(obj); if ((!obj) || (!sd) || (evas_object_type_get(obj) && strcmp(evas_object_type_get(obj), SMART_NAME)))
+#define INTERNAL_ENTRY E_Smart_Data * sd; sd = evas_object_smart_data_get(obj); if (!sd) return;
 typedef struct _E_Smart_Data E_Smart_Data;
 
 struct _E_Smart_Data
 {
-   Evas_Object *parent_obj;
-   Evas_Coord x, y, w, h, minw, minh;
-   Eina_List *subobjs;
-   Evas_Object *resize_obj;
-   void (*del_func) (Evas_Object *obj);
-   void (*focus_func) (Evas_Object *obj);
-   void (*activate_func) (Evas_Object *obj);
-   void (*disable_func) (Evas_Object *obj);
-   void (*on_focus_func) (void *data, Evas_Object *obj);
-   void *on_focus_data;
-   void (*on_change_func) (void *data, Evas_Object *obj);
-   void *on_change_data;
-   void *data;
+   Evas_Object  *parent_obj;
+   Evas_Coord    x, y, w, h, minw, minh;
+   Eina_List    *subobjs;
+   Evas_Object  *resize_obj;
+   void          (*del_func)(Evas_Object *obj);
+   void          (*focus_func)(Evas_Object *obj);
+   void          (*activate_func)(Evas_Object *obj);
+   void          (*disable_func)(Evas_Object *obj);
+   void          (*on_focus_func)(void *data, Evas_Object *obj);
+   void         *on_focus_data;
+   void          (*on_change_func)(void *data, Evas_Object *obj);
+   void         *on_change_data;
+   void         *data;
    unsigned char can_focus : 1;
    unsigned char child_can_focus : 1;
    unsigned char focused : 1;
@@ -35,7 +35,7 @@ static void _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
 static void _e_smart_show(Evas_Object *obj);
 static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
-static void _e_smart_clip_set(Evas_Object *obj, Evas_Object * clip);
+static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_init(void);
 
@@ -51,35 +51,35 @@ e_widget_add(Evas *evas)
 }
 
 EAPI void
-e_widget_del_hook_set(Evas_Object *obj, void (*func) (Evas_Object *obj))
+e_widget_del_hook_set(Evas_Object *obj, void (*func)(Evas_Object *obj))
 {
    API_ENTRY return;
    sd->del_func = func;
 }
 
 EAPI void
-e_widget_focus_hook_set(Evas_Object *obj, void (*func) (Evas_Object *obj))
+e_widget_focus_hook_set(Evas_Object *obj, void (*func)(Evas_Object *obj))
 {
    API_ENTRY return;
    sd->focus_func = func;
 }
 
 EAPI void
-e_widget_activate_hook_set(Evas_Object *obj, void (*func) (Evas_Object *obj))
+e_widget_activate_hook_set(Evas_Object *obj, void (*func)(Evas_Object *obj))
 {
    API_ENTRY return;
    sd->activate_func = func;
 }
 
 EAPI void
-e_widget_disable_hook_set(Evas_Object *obj, void (*func) (Evas_Object *obj))
+e_widget_disable_hook_set(Evas_Object *obj, void (*func)(Evas_Object *obj))
 {
    API_ENTRY return;
    sd->disable_func = func;
 }
 
 EAPI void
-e_widget_on_focus_hook_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data)
+e_widget_on_focus_hook_set(Evas_Object *obj, void (*func)(void *data, Evas_Object *obj), void *data)
 {
    API_ENTRY return;
    sd->on_focus_func = func;
@@ -87,7 +87,7 @@ e_widget_on_focus_hook_set(Evas_Object *obj, void (*func) (void *data, Evas_Obje
 }
 
 EAPI void
-e_widget_on_change_hook_set(Evas_Object *obj, void (*func) (void *data, Evas_Object *obj), void *data)
+e_widget_on_change_hook_set(Evas_Object *obj, void (*func)(void *data, Evas_Object *obj), void *data)
 {
    API_ENTRY return;
    sd->on_change_func = func;
@@ -125,10 +125,10 @@ e_widget_size_min_get(Evas_Object *obj, Evas_Coord *minw, Evas_Coord *minh)
 }
 
 static void
-_sub_obj_del(void        *data,
-             Evas        *e __UNUSED__,
+_sub_obj_del(void *data,
+             Evas *e __UNUSED__,
              Evas_Object *obj,
-             void        *event_info __UNUSED__)
+             void *event_info __UNUSED__)
 {
    E_Smart_Data *sd = data;
 
@@ -148,16 +148,16 @@ e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
    sd->subobjs = eina_list_append(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
-	if (e_widget_can_focus_get(sobj)) sd->child_can_focus = 1;
+        if (e_widget_can_focus_get(sobj)) sd->child_can_focus = 1;
      }
    if (!strcmp(evas_object_type_get(sobj), SMART_NAME))
      {
-	sd = evas_object_smart_data_get(sobj);
-	if (sd)
-	  {
-	     if (sd->parent_obj) e_widget_sub_object_del(sd->parent_obj, sobj);
-	     sd->parent_obj = obj;
-	  }
+        sd = evas_object_smart_data_get(sobj);
+        if (sd)
+          {
+             if (sd->parent_obj) e_widget_sub_object_del(sd->parent_obj, sobj);
+             sd->parent_obj = obj;
+          }
      }
    evas_object_event_callback_add(sobj, EVAS_CALLBACK_DEL, _sub_obj_del, sd);
 }
@@ -170,7 +170,7 @@ e_widget_sub_object_del(Evas_Object *obj, Evas_Object *sobj)
    sd->subobjs = eina_list_remove(sd->subobjs, sobj);
    if (!sd->child_can_focus)
      {
-	if (e_widget_can_focus_get(sobj)) sd->child_can_focus = 0;
+        if (e_widget_can_focus_get(sobj)) sd->child_can_focus = 0;
      }
 }
 
@@ -217,8 +217,8 @@ e_widget_focused_object_get(Evas_Object *obj)
    if (!sd->focused) return NULL;
    EINA_LIST_FOREACH(sd->subobjs, l, sobj)
      {
-	sobj = e_widget_focused_object_get(sobj);
-	if (sobj) return sobj;
+        sobj = e_widget_focused_object_get(sobj);
+        if (sobj) return sobj;
      }
    return obj;
 }
@@ -232,87 +232,87 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
    /* if it has a focus func its an end-point widget like a button */
    if (sd->focus_func)
      {
-	if (!sd->focused) sd->focused = 1;
-	else sd->focused = 0;
-	sd->focus_func(obj);
-	if (sd->on_focus_func) sd->on_focus_func(sd->on_focus_data, obj);
-	return sd->focused;
+        if (!sd->focused) sd->focused = 1;
+        else sd->focused = 0;
+        sd->focus_func(obj);
+        if (sd->on_focus_func) sd->on_focus_func(sd->on_focus_data, obj);
+        return sd->focused;
      }
    /* its some container */
    else
      {
-	Eina_List *l = NULL;
-	Evas_Object *sobj = NULL;
-	int focus_next = 0;
+        Eina_List *l = NULL;
+        Evas_Object *sobj = NULL;
+        int focus_next = 0;
 
-	if (!sd->focused)
-	  {
-	     e_widget_focus_set(obj, forward);
-	     sd->focused = 1;
-	     if (sd->on_focus_func) sd->on_focus_func(sd->on_focus_data, obj);
-	     return 1;
-	  }
-	else
-	  {
-	     if (forward)
-	       {
-		  EINA_LIST_FOREACH(sd->subobjs, l, sobj)
-		    {
-		       if (e_widget_can_focus_get(sobj))
-			 {
-			    if ((focus_next) &&
-				(!e_widget_disabled_get(sobj)))
-			      {
-				 /* the previous focused item was unfocused - so focus
-				  * the next one (that can be focused) */
-				 if (e_widget_focus_jump(sobj, forward))
+        if (!sd->focused)
+          {
+             e_widget_focus_set(obj, forward);
+             sd->focused = 1;
+             if (sd->on_focus_func) sd->on_focus_func(sd->on_focus_data, obj);
+             return 1;
+          }
+        else
+          {
+             if (forward)
+               {
+                  EINA_LIST_FOREACH(sd->subobjs, l, sobj)
+                    {
+                       if (e_widget_can_focus_get(sobj))
+                         {
+                            if ((focus_next) &&
+                                (!e_widget_disabled_get(sobj)))
+                              {
+                                 /* the previous focused item was unfocused - so focus
+                                  * the next one (that can be focused) */
+                                 if (e_widget_focus_jump(sobj, forward))
                                    return 1;
-				 else break;
-			      }
-			    else
-			      {
-				 if (e_widget_focus_get(sobj))
-				   {
-				      /* jump to the next focused item or focus this item */
-				      if (e_widget_focus_jump(sobj, forward))
+                                 else break;
+                              }
+                            else
+                              {
+                                 if (e_widget_focus_get(sobj))
+                                   {
+                                      /* jump to the next focused item or focus this item */
+                                      if (e_widget_focus_jump(sobj, forward))
                                         return 1;
-				      /* it returned 0 - it got to the last item and is past it */
-				      focus_next = 1;
-				   }
-			      }
-			 }
-		    }
-	       }
-	     else
-	       {
-		  EINA_LIST_REVERSE_FOREACH(sd->subobjs, l, sobj)
-		    {
-		       if (e_widget_can_focus_get(sobj))
-			 {
-			    if ((focus_next) &&
-				(!e_widget_disabled_get(sobj)))
-			      {
-				 /* the previous focused item was unfocused - so focus
-				  * the next one (that can be focused) */
-				 if (e_widget_focus_jump(sobj, forward))
+                                      /* it returned 0 - it got to the last item and is past it */
+                                      focus_next = 1;
+                                   }
+                              }
+                         }
+                    }
+               }
+             else
+               {
+                  EINA_LIST_REVERSE_FOREACH(sd->subobjs, l, sobj)
+                    {
+                       if (e_widget_can_focus_get(sobj))
+                         {
+                            if ((focus_next) &&
+                                (!e_widget_disabled_get(sobj)))
+                              {
+                                 /* the previous focused item was unfocused - so focus
+                                  * the next one (that can be focused) */
+                                 if (e_widget_focus_jump(sobj, forward))
                                    return 1;
-				 else break;
-			      }
-			    else
-			      {
-				 if (e_widget_focus_get(sobj))
-				   {
-				      /* jump to the next focused item or focus this item */
-				      if (e_widget_focus_jump(sobj, forward))
+                                 else break;
+                              }
+                            else
+                              {
+                                 if (e_widget_focus_get(sobj))
+                                   {
+                                      /* jump to the next focused item or focus this item */
+                                      if (e_widget_focus_jump(sobj, forward))
                                         return 1;
-				      /* it returned 0 - it got to the last item and is past it */
-				      focus_next = 1;
-				   }
-			      }
-			 }
-		    }
-	       }
-	  }
+                                      /* it returned 0 - it got to the last item and is past it */
+                                      focus_next = 1;
+                                   }
+                              }
+                         }
+                    }
+               }
+          }
      }
    /* no next item can be focused */
    sd->focused = 0;
@@ -325,43 +325,43 @@ e_widget_focus_set(Evas_Object *obj, int first)
    API_ENTRY return;
    if (!sd->focused)
      {
-	sd->focused = 1;
-	if (sd->on_focus_func) sd->on_focus_func(sd->on_focus_data, obj);
+        sd->focused = 1;
+        if (sd->on_focus_func) sd->on_focus_func(sd->on_focus_data, obj);
      }
    if (sd->focus_func)
      {
-	sd->focus_func(obj);
-	return;
+        sd->focus_func(obj);
+        return;
      }
    else
      {
-	Eina_List *l = NULL;
-	Evas_Object *sobj;
+        Eina_List *l = NULL;
+        Evas_Object *sobj;
 
-	if (first)
-	  {
-	     EINA_LIST_FOREACH(sd->subobjs, l, sobj)
-	       {
-		  if ((e_widget_can_focus_get(sobj)) &&
-		      (!e_widget_disabled_get(sobj)))
-		    {
-		       e_widget_focus_set(sobj, first);
-		       break;
-		    }
-	       }
-	  }
-	else
-	  {
-	     EINA_LIST_REVERSE_FOREACH(sd->subobjs, l, sobj)
-	       {
-		  if ((e_widget_can_focus_get(sobj)) &&
-		      (!e_widget_disabled_get(sobj)))
-		    {
-		       e_widget_focus_set(sobj, first);
-		       break;
-		    }
-	       }
-	  }
+        if (first)
+          {
+             EINA_LIST_FOREACH(sd->subobjs, l, sobj)
+               {
+                  if ((e_widget_can_focus_get(sobj)) &&
+                      (!e_widget_disabled_get(sobj)))
+                    {
+                       e_widget_focus_set(sobj, first);
+                       break;
+                    }
+               }
+          }
+        else
+          {
+             EINA_LIST_REVERSE_FOREACH(sd->subobjs, l, sobj)
+               {
+                  if ((e_widget_can_focus_get(sobj)) &&
+                      (!e_widget_disabled_get(sobj)))
+                    {
+                       e_widget_focus_set(sobj, first);
+                       break;
+                    }
+               }
+          }
      }
 }
 
@@ -383,11 +383,11 @@ e_widget_focused_object_clear(Evas_Object *obj)
    sd->focused = 0;
    EINA_LIST_FOREACH(sd->subobjs, l, sobj)
      {
-	if (e_widget_focus_get(sobj))
-	  {
-	     e_widget_focused_object_clear(sobj);
-	     break;
-	  }
+        if (e_widget_focus_get(sobj))
+          {
+             e_widget_focused_object_clear(sobj);
+             break;
+          }
      }
    if (sd->focus_func) sd->focus_func(obj);
 }
@@ -400,22 +400,22 @@ e_widget_focus_steal(Evas_Object *obj)
    API_ENTRY return;
    if ((sd->focused) || (sd->disabled)) return;
    parent = obj;
-   for (;;)
+   for (;; )
      {
-	o = e_widget_parent_get(parent);
-	if (!o) break;
-	parent = o;
+        o = e_widget_parent_get(parent);
+        if (!o) break;
+        parent = o;
      }
    e_widget_focused_object_clear(parent);
    parent = obj;
-   for (;;)
+   for (;; )
      {
-	sd = evas_object_smart_data_get(parent);
-	sd->focused = 1;
-	if (sd->on_focus_func) sd->on_focus_func(sd->on_focus_data, parent);
-	o = e_widget_parent_get(parent);
-	if (!o) break;
-	parent = o;
+        sd = evas_object_smart_data_get(parent);
+        sd->focused = 1;
+        if (sd->on_focus_func) sd->on_focus_func(sd->on_focus_data, parent);
+        o = e_widget_parent_get(parent);
+        if (!o) break;
+        parent = o;
      }
    sd = evas_object_smart_data_get(obj);
    if (sd->focus_func) sd->focus_func(obj);
@@ -445,16 +445,16 @@ e_widget_disabled_set(Evas_Object *obj, int disabled)
    sd->disabled = disabled;
    if (sd->focused)
      {
-	Evas_Object *o = NULL, *parent = NULL;
+        Evas_Object *o = NULL, *parent = NULL;
 
-	parent = obj;
-        for (;;)
+        parent = obj;
+        for (;; )
           {
-	     o = e_widget_parent_get(parent);
-	     if (!o) break;
-	     parent = o;
-	  }
-	e_widget_focus_jump(parent, 1);
+             o = e_widget_parent_get(parent);
+             if (!o) break;
+             parent = o;
+          }
+        e_widget_focus_jump(parent, 1);
      }
    if (sd->disable_func) sd->disable_func(obj);
 }
@@ -490,9 +490,9 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 {
    if (sd->resize_obj)
      {
-	evas_object_move(sd->resize_obj, sd->x, sd->y);
-	evas_object_resize(sd->resize_obj, sd->w, sd->h);
-    }
+        evas_object_move(sd->resize_obj, sd->x, sd->y);
+        evas_object_resize(sd->resize_obj, sd->w, sd->h);
+     }
 }
 
 static void
@@ -586,28 +586,29 @@ static void
 _e_smart_init(void)
 {
    if (_e_smart) return;
-     {
-	static const Evas_Smart_Class sc =
-	  {
-	     SMART_NAME,
-	       EVAS_SMART_CLASS_VERSION,
-	       _e_smart_add,
-	       _e_smart_del,
-	       _e_smart_move,
-	       _e_smart_resize,
-	       _e_smart_show,
-	       _e_smart_hide,
-	       _e_smart_color_set,
-	       _e_smart_clip_set,
-	       _e_smart_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-               NULL,
-               NULL,
-               NULL
-	  };
-        _e_smart = evas_smart_class_new(&sc);
-     }
+   {
+      static const Evas_Smart_Class sc =
+      {
+         SMART_NAME,
+         EVAS_SMART_CLASS_VERSION,
+         _e_smart_add,
+         _e_smart_del,
+         _e_smart_move,
+         _e_smart_resize,
+         _e_smart_show,
+         _e_smart_hide,
+         _e_smart_color_set,
+         _e_smart_clip_set,
+         _e_smart_clip_unset,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL
+      };
+      _e_smart = evas_smart_class_new(&sc);
+   }
 }
+
