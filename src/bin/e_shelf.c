@@ -38,10 +38,13 @@ static Eina_List *shelves = NULL;
 static Eina_List *dummies = NULL;
 static Eina_Hash *winid_shelves = NULL;
 
+EAPI int E_EVENT_SHELF_ADD = -1;
+
 /* externally accessible functions */
 EINTERN int
 e_shelf_init(void)
 {
+   E_EVENT_SHELF_ADD = ecore_event_type_new();
    return 1;
 }
 
@@ -270,6 +273,13 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      es->instant_delay = -1.0;
 
    es->hide_origin = -1;
+
+   {
+      E_Event_Shelf *ev;
+      ev = E_NEW(E_Event_Shelf, 1);
+      ev->shelf = es;
+      ecore_event_add(E_EVENT_SHELF_ADD, ev, NULL, NULL);
+   }
 
    return es;
 }

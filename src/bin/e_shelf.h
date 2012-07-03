@@ -47,6 +47,15 @@ struct _E_Shelf
    unsigned int         locked;
 };
 
+typedef struct E_Event_Shelf
+{
+   E_Shelf *shelf;
+} E_Event_Shelf;
+
+typedef struct E_Event_Shelf E_Event_Shelf_Add;
+
+EAPI extern int E_EVENT_SHELF_ADD;
+
 EINTERN int              e_shelf_init(void);
 EINTERN int              e_shelf_shutdown(void);
 EAPI void             e_shelf_config_update(void);
