@@ -5,58 +5,63 @@ typedef struct _E_Table_Item E_Table_Item;
 
 struct _E_Smart_Data
 {
-   Evas_Coord       x, y, w, h;
-   Evas_Object     *obj;
-   Evas_Object     *clip;
-   int              frozen;
-   unsigned char    changed : 1;
-   unsigned char    homogenous : 1;
-   Eina_List       *items;
-   struct {
-      Evas_Coord    w, h;
+   Evas_Coord    x, y, w, h;
+   Evas_Object  *obj;
+   Evas_Object  *clip;
+   int           frozen;
+   unsigned char changed : 1;
+   unsigned char homogenous : 1;
+   Eina_List    *items;
+   struct
+   {
+      Evas_Coord w, h;
    } min, max;
-   struct {
-      double        x, y;
+   struct
+   {
+      double x, y;
    } align;
-   struct {
-      int           cols, rows;
+   struct
+   {
+      int cols, rows;
    } size;
 };
 
 struct _E_Table_Item
 {
-   E_Smart_Data    *sd;
-   int              col, row, colspan, rowspan;
-   unsigned char    fill_w : 1;
-   unsigned char    fill_h : 1;
-   unsigned char    expand_w : 1;
-   unsigned char    expand_h : 1;
-   struct {
-      Evas_Coord    w, h;
+   E_Smart_Data *sd;
+   int           col, row, colspan, rowspan;
+   unsigned char fill_w : 1;
+   unsigned char fill_h : 1;
+   unsigned char expand_w : 1;
+   unsigned char expand_h : 1;
+   struct
+   {
+      Evas_Coord w, h;
    } min, max;
-   struct {
-      double        x, y;
+   struct
+   {
+      double x, y;
    } align;
-   Evas_Object     *obj;
+   Evas_Object  *obj;
 };
 
 /* local subsystem functions */
 static E_Table_Item *_e_table_smart_adopt(E_Smart_Data *sd, Evas_Object *obj);
-static void        _e_table_smart_disown(Evas_Object *obj);
-static void        _e_table_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void        _e_table_smart_reconfigure(E_Smart_Data *sd);
-static void        _e_table_smart_extents_calcuate(E_Smart_Data *sd);
+static void          _e_table_smart_disown(Evas_Object *obj);
+static void          _e_table_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void          _e_table_smart_reconfigure(E_Smart_Data *sd);
+static void          _e_table_smart_extents_calcuate(E_Smart_Data *sd);
 
-static void _e_table_smart_init(void);
-static void _e_table_smart_add(Evas_Object *obj);
-static void _e_table_smart_del(Evas_Object *obj);
-static void _e_table_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
-static void _e_table_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
-static void _e_table_smart_show(Evas_Object *obj);
-static void _e_table_smart_hide(Evas_Object *obj);
-static void _e_table_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
-static void _e_table_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
-static void _e_table_smart_clip_unset(Evas_Object *obj);
+static void          _e_table_smart_init(void);
+static void          _e_table_smart_add(Evas_Object *obj);
+static void          _e_table_smart_del(Evas_Object *obj);
+static void          _e_table_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
+static void          _e_table_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
+static void          _e_table_smart_show(Evas_Object *obj);
+static void          _e_table_smart_hide(Evas_Object *obj);
+static void          _e_table_smart_color_set(Evas_Object *obj, int r, int g, int b, int a);
+static void          _e_table_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
+static void          _e_table_smart_clip_unset(Evas_Object *obj);
 
 /* local subsystem globals */
 static Evas_Smart *_e_smart = NULL;
@@ -118,12 +123,12 @@ e_table_pack(Evas_Object *obj, Evas_Object *child, int col, int row, int colspan
    ti = evas_object_data_get(child, "e_table_data");
    if (ti)
      {
-	ti->col = col;
-	ti->row = row;
-	ti->colspan = colspan;
-	ti->rowspan = rowspan;
-	if (sd->size.cols < (col + colspan)) sd->size.cols = col + colspan;
-	if (sd->size.rows < (row + rowspan)) sd->size.rows = row + rowspan;
+        ti->col = col;
+        ti->row = row;
+        ti->colspan = colspan;
+        ti->rowspan = rowspan;
+        if (sd->size.cols < (col + colspan)) sd->size.cols = col + colspan;
+        if (sd->size.rows < (row + rowspan)) sd->size.rows = row + rowspan;
      }
    sd->changed = 1;
    if (sd->frozen <= 0) _e_table_smart_reconfigure(sd);
@@ -256,7 +261,7 @@ _e_table_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
    evas_object_smart_member_add(obj, ti->sd->obj);
    evas_object_data_set(obj, "e_table_data", ti);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
-				  _e_table_smart_item_del_hook, NULL);
+                                  _e_table_smart_item_del_hook, NULL);
 //   evas_object_stack_below(obj, sd->obj);
    if ((!evas_object_visible_get(sd->clip)) &&
        (evas_object_visible_get(sd->obj)))
@@ -273,12 +278,12 @@ _e_table_smart_disown(Evas_Object *obj)
    if (!ti) return;
    if (!ti->sd->items)
      {
-	if (evas_object_visible_get(ti->sd->clip))
-	  evas_object_hide(ti->sd->clip);
+        if (evas_object_visible_get(ti->sd->clip))
+          evas_object_hide(ti->sd->clip);
      }
    evas_object_event_callback_del(obj,
-				  EVAS_CALLBACK_FREE,
-				  _e_table_smart_item_del_hook);
+                                  EVAS_CALLBACK_FREE,
+                                  _e_table_smart_item_del_hook);
    evas_object_smart_member_del(obj);
    evas_object_data_del(obj, "e_table_data");
    free(ti);
@@ -313,291 +318,303 @@ _e_table_smart_reconfigure(E_Smart_Data *sd)
    if (h < minh) h = minh;
    EINA_LIST_FOREACH(sd->items, l, obj)
      {
-	E_Table_Item *ti;
+        E_Table_Item *ti;
 
-	ti = evas_object_data_get(obj, "e_table_data");
-	if (ti->expand_w) expandw++;
-	if (ti->expand_h) expandh++;
+        ti = evas_object_data_get(obj, "e_table_data");
+        if (ti->expand_w) expandw++;
+        if (ti->expand_h) expandh++;
      }
    if (expandw == 0)
      {
-	w = minw;
+        w = minw;
      }
    if (expandh == 0)
      {
-	h = minh;
+        h = minh;
      }
    x = sd->x;
    y = sd->y;
    if (sd->homogenous)
      {
-	EINA_LIST_FOREACH(sd->items, l, obj)
-	  {
-	     E_Table_Item *ti;
-	     Evas_Coord ww, hh, ow, oh;
+        EINA_LIST_FOREACH(sd->items, l, obj)
+          {
+             E_Table_Item *ti;
+             Evas_Coord ww, hh, ow, oh;
 
-	     ti = evas_object_data_get(obj, "e_table_data");
+             ti = evas_object_data_get(obj, "e_table_data");
 
-	     xx = x + ((ti->col) * (w / (Evas_Coord)sd->size.cols));
-	     yy = y + ((ti->row) * (h / (Evas_Coord)sd->size.rows));
-	     ww = ((w / (Evas_Coord)sd->size.cols) * (ti->colspan));
-	     hh = ((h / (Evas_Coord)sd->size.rows) * (ti->rowspan));
-	     ow = ti->min.w;
-	     if (ti->expand_w) ow = ww;
-	     if ((ti->max.w >= 0) && (ti->max.w < ow)) ow = ti->max.w;
-	     oh = ti->min.h;
-	     if (ti->expand_h) oh = hh;
-	     if ((ti->max.h >= 0) && (ti->max.h < oh)) oh = ti->max.h;
-	     evas_object_move(obj,
-			      xx + (Evas_Coord)(((double)(ww - ow)) * ti->align.x),
-			      yy + (Evas_Coord)(((double)(hh - oh)) * ti->align.y));
-	     evas_object_resize(obj, ow, oh);
-	  }
+             xx = x + ((ti->col) * (w / (Evas_Coord)sd->size.cols));
+             yy = y + ((ti->row) * (h / (Evas_Coord)sd->size.rows));
+             ww = ((w / (Evas_Coord)sd->size.cols) * (ti->colspan));
+             hh = ((h / (Evas_Coord)sd->size.rows) * (ti->rowspan));
+             ow = ti->min.w;
+             if (ti->expand_w) ow = ww;
+             if ((ti->max.w >= 0) && (ti->max.w < ow)) ow = ti->max.w;
+             oh = ti->min.h;
+             if (ti->expand_h) oh = hh;
+             if ((ti->max.h >= 0) && (ti->max.h < oh)) oh = ti->max.h;
+             evas_object_move(obj,
+                              xx + (Evas_Coord)(((double)(ww - ow)) * ti->align.x),
+                              yy + (Evas_Coord)(((double)(hh - oh)) * ti->align.y));
+             evas_object_resize(obj, ow, oh);
+          }
      }
    else
      {
-	int i, ex, tot, need, num, dif, left, nx;
-	EINA_LIST_FOREACH(sd->items, l, obj)
-	  {
-	     E_Table_Item *ti;
+        int i, ex, tot, need, num, dif, left, nx;
+        EINA_LIST_FOREACH(sd->items, l, obj)
+          {
+             E_Table_Item *ti;
 
-	     ti = evas_object_data_get(obj, "e_table_data");
-	     if (sd->size.cols < (ti->col + ti->colspan))
-	       sd->size.cols = ti->col + ti->colspan;
-	     if (sd->size.rows < (ti->row + ti->rowspan))
-	       sd->size.rows = ti->row + ti->rowspan;
-	  }
-	if ((sd->size.cols > 0) && (sd->size.rows > 0))
-	  {
-	     int *cols, *rows, *colsx, *rowsx;
+             ti = evas_object_data_get(obj, "e_table_data");
+             if (sd->size.cols < (ti->col + ti->colspan))
+               sd->size.cols = ti->col + ti->colspan;
+             if (sd->size.rows < (ti->row + ti->rowspan))
+               sd->size.rows = ti->row + ti->rowspan;
+          }
+        if ((sd->size.cols > 0) && (sd->size.rows > 0))
+          {
+             int *cols, *rows, *colsx, *rowsx;
 
-	     cols = calloc(sd->size.cols, sizeof(int));
-	     rows = calloc(sd->size.rows, sizeof(int));
-	     colsx = calloc(sd->size.cols, sizeof(int));
-	     rowsx = calloc(sd->size.rows, sizeof(int));
+             cols = calloc(sd->size.cols, sizeof(int));
+             rows = calloc(sd->size.rows, sizeof(int));
+             colsx = calloc(sd->size.cols, sizeof(int));
+             rowsx = calloc(sd->size.rows, sizeof(int));
 
-	     EINA_LIST_FOREACH(sd->items, l, obj)
-	       {
-		  E_Table_Item *ti;
+             EINA_LIST_FOREACH(sd->items, l, obj)
+               {
+                  E_Table_Item *ti;
 
-		  ti = evas_object_data_get(obj, "e_table_data");
-		  for (i = ti->col; i < (ti->col + ti->colspan); i++)
-		    colsx[i] |= ti->expand_w;
-		  for (i = ti->row; i < (ti->row + ti->rowspan); i++)
-		    rowsx[i] |= ti->expand_h;
-	       }
+                  ti = evas_object_data_get(obj, "e_table_data");
+                  for (i = ti->col; i < (ti->col + ti->colspan); i++)
+                    colsx[i] |= ti->expand_w;
+                  for (i = ti->row; i < (ti->row + ti->rowspan); i++)
+                    rowsx[i] |= ti->expand_h;
+               }
 
-	     EINA_LIST_FOREACH(sd->items, l, obj)
-	       {
-		  E_Table_Item *ti;
+             EINA_LIST_FOREACH(sd->items, l, obj)
+               {
+                  E_Table_Item *ti;
 
-		  ti = evas_object_data_get(obj, "e_table_data");
+                  ti = evas_object_data_get(obj, "e_table_data");
 
-		  /* handle horizontal */
-		  ex = 0;
-		  tot = 0;
-		  num = ti->colspan;
-		  for (i = ti->col; i < (ti->col + num); i++)
-		    {
-		       if (colsx[i]) ex++;
-		       tot += cols[i];
-		    }
-		  need = ti->min.w;
-		  if (tot < need)
-		    {
-		       dif = need - tot;
-		       left = dif;
-		       if (ex == 0)
-			 {
-			    nx = num;
-			    for (i = ti->col; i < (ti->col + num); i++)
-			      {
-				 if (nx > 1)
-				   {
-				      cols[i] += dif / num;
-				      left -= dif / num;
-				   }
-				 else
-				   {
-				      cols[i] += left;
-				      left = 0;
-				   }
-				 nx--;
-			      }
-			 }
-		       else
-			 {
-			    nx = ex;
-			    for (i = ti->col; i < (ti->col + num); i++)
-			      {
-				 if (colsx[i])
-				   {
-				      if (nx > 1)
-					{
-					   cols[i] += dif / ex;
-					   left -= dif / ex;
-					}
-				      else
-					{
-					   cols[i] += left;
-					   left = 0;
-					}
-				      nx--;
-				   }
-			      }
-			 }
-		    }
+                  /* handle horizontal */
+                  ex = 0;
+                  tot = 0;
+                  num = ti->colspan;
+                  for (i = ti->col; i < (ti->col + num); i++)
+                    {
+                       if (colsx[i]) ex++;
+                       tot += cols[i];
+                    }
+                  need = ti->min.w;
+                  if (tot < need)
+                    {
+                       dif = need - tot;
+                       left = dif;
+                       if (ex == 0)
+                         {
+                            nx = num;
+                            for (i = ti->col; i < (ti->col + num); i++)
+                              {
+                                 if (nx > 1)
+                                   {
+                                      cols[i] += dif / num;
+                                      left -= dif / num;
+                                   }
+                                 else
+                                   {
+                                      cols[i] += left;
+                                      left = 0;
+                                   }
+                                 nx--;
+                              }
+                         }
+                       else
+                         {
+                            nx = ex;
+                            for (i = ti->col; i < (ti->col + num); i++)
+                              {
+                                 if (colsx[i])
+                                   {
+                                      if (nx > 1)
+                                        {
+                                           cols[i] += dif / ex;
+                                           left -= dif / ex;
+                                        }
+                                      else
+                                        {
+                                           cols[i] += left;
+                                           left = 0;
+                                        }
+                                      nx--;
+                                   }
+                              }
+                         }
+                    }
 
-		  /* handle vertical */
-		  ex = 0;
-		  tot = 0;
-		  num = ti->rowspan;
-		  for (i = ti->row; i < (ti->row + num); i++)
-		    {
-		       if (rowsx[i]) ex++;
-		       tot += rows[i];
-		    }
-		  need = ti->min.h;
-		  if (tot < need)
-		    {
-		       dif = need - tot;
-		       left = dif;
-		       if (ex == 0)
-			 {
-			    nx = num;
-			    for (i = ti->row; i < (ti->row + num); i++)
-			      {
-				 if (nx > 1)
-				   {
-				      rows[i] += dif / num;
-				      left -= dif / num;
-				   }
-				 else
-				   {
-				      rows[i] += left;
-				      left = 0;
-				   }
-				 nx--;
-			      }
-			 }
-		       else
-			 {
-			    nx = ex;
-			    for (i = ti->row; i < (ti->row + num); i++)
-			      {
-				 if (rowsx[i])
-				   {
-				      if (nx > 1)
-					{
-					   rows[i] += dif / ex;
-					   left -= dif / ex;
-					}
-				      else
-					{
-					   rows[i] += left;
-					   left = 0;
-					}
-				      nx--;
-				   }
-			      }
-			 }
-		    }
-	       }
+                  /* handle vertical */
+                  ex = 0;
+                  tot = 0;
+                  num = ti->rowspan;
+                  for (i = ti->row; i < (ti->row + num); i++)
+                    {
+                       if (rowsx[i]) ex++;
+                       tot += rows[i];
+                    }
+                  need = ti->min.h;
+                  if (tot < need)
+                    {
+                       dif = need - tot;
+                       left = dif;
+                       if (ex == 0)
+                         {
+                            nx = num;
+                            for (i = ti->row; i < (ti->row + num); i++)
+                              {
+                                 if (nx > 1)
+                                   {
+                                      rows[i] += dif / num;
+                                      left -= dif / num;
+                                   }
+                                 else
+                                   {
+                                      rows[i] += left;
+                                      left = 0;
+                                   }
+                                 nx--;
+                              }
+                         }
+                       else
+                         {
+                            nx = ex;
+                            for (i = ti->row; i < (ti->row + num); i++)
+                              {
+                                 if (rowsx[i])
+                                   {
+                                      if (nx > 1)
+                                        {
+                                           rows[i] += dif / ex;
+                                           left -= dif / ex;
+                                        }
+                                      else
+                                        {
+                                           rows[i] += left;
+                                           left = 0;
+                                        }
+                                      nx--;
+                                   }
+                              }
+                         }
+                    }
+               }
 
-	     ex = 0;
-	     for (i = 0; i < sd->size.cols; i++) { if (colsx[i]) ex++; }
-	     tot = 0;
-	     for (i = 0; i < sd->size.cols; i++) tot += cols[i];
-	     dif = w - tot;
-	     if ((ex > 0) && (dif > 0))
-	       {
-		  int exl;
+             ex = 0;
+             for (i = 0; i < sd->size.cols; i++) {
+                  if (colsx[i])
+                    ex++;
+               }
+             tot = 0;
+             for (i = 0; i < sd->size.cols; i++)
+               tot += cols[i];
+             dif = w - tot;
+             if ((ex > 0) && (dif > 0))
+               {
+                  int exl;
 
-		  left = dif;
-		  exl = ex;
-		  for (i = 0; i < sd->size.cols; i++)
-		    {
-		       if (colsx[i])
-			 {
-			    if (exl == 1)
-			      {
-				 cols[i] += left;
-				 exl--;
-				 left = 0;
-			      }
-			    else
-			      {
-				 cols[i] += dif / ex;
-				 exl--;
-				 left -= dif / ex;
-			      }
-			 }
-		    }
-	       }
+                  left = dif;
+                  exl = ex;
+                  for (i = 0; i < sd->size.cols; i++)
+                    {
+                       if (colsx[i])
+                         {
+                            if (exl == 1)
+                              {
+                                 cols[i] += left;
+                                 exl--;
+                                 left = 0;
+                              }
+                            else
+                              {
+                                 cols[i] += dif / ex;
+                                 exl--;
+                                 left -= dif / ex;
+                              }
+                         }
+                    }
+               }
 
-	     ex = 0;
-	     for (i = 0; i < sd->size.rows; i++) { if (rowsx[i]) ex++; }
-	     tot = 0;
-	     for (i = 0; i < sd->size.rows; i++) tot += rows[i];
-	     dif = h - tot;
-	     if ((ex > 0) && (dif > 0))
-	       {
-		  int exl;
+             ex = 0;
+             for (i = 0; i < sd->size.rows; i++) {
+                  if (rowsx[i])
+                    ex++;
+               }
+             tot = 0;
+             for (i = 0; i < sd->size.rows; i++)
+               tot += rows[i];
+             dif = h - tot;
+             if ((ex > 0) && (dif > 0))
+               {
+                  int exl;
 
-		  left = dif;
-		  exl = ex;
-		  for (i = 0; i < sd->size.rows; i++)
-		    {
-		       if (rowsx[i])
-			 {
-			    if (exl == 1)
-			      {
-				 rows[i] += left;
-				 exl--;
-				 left = 0;
-			      }
-			    else
-			      {
-				 rows[i] += dif / ex;
-				 exl--;
-				 left -= dif / ex;
-			      }
-			 }
-		    }
-	       }
+                  left = dif;
+                  exl = ex;
+                  for (i = 0; i < sd->size.rows; i++)
+                    {
+                       if (rowsx[i])
+                         {
+                            if (exl == 1)
+                              {
+                                 rows[i] += left;
+                                 exl--;
+                                 left = 0;
+                              }
+                            else
+                              {
+                                 rows[i] += dif / ex;
+                                 exl--;
+                                 left -= dif / ex;
+                              }
+                         }
+                    }
+               }
 
-	     EINA_LIST_FOREACH(sd->items, l, obj)
-	       {
-		  E_Table_Item *ti;
-		  Evas_Coord ww, hh, ow, oh, idx;
+             EINA_LIST_FOREACH(sd->items, l, obj)
+               {
+                  E_Table_Item *ti;
+                  Evas_Coord ww, hh, ow, oh, idx;
 
-		  ti = evas_object_data_get(obj, "e_table_data");
+                  ti = evas_object_data_get(obj, "e_table_data");
 
-		  xx = x;
-		  for (idx = 0; idx < ti->col; idx++) xx += cols[idx];
-		  ww = 0;
-		  for (idx = ti->col; idx < (ti->col + ti->colspan); idx++) ww += cols[idx];
-		  yy = y;
-		  for (idx = 0; idx < ti->row; idx++) yy += rows[idx];
-		  hh = 0;
-		  for (idx = ti->row; idx < (ti->row + ti->rowspan); idx++) hh += rows[idx];
+                  xx = x;
+                  for (idx = 0; idx < ti->col; idx++)
+                    xx += cols[idx];
+                  ww = 0;
+                  for (idx = ti->col; idx < (ti->col + ti->colspan); idx++)
+                    ww += cols[idx];
+                  yy = y;
+                  for (idx = 0; idx < ti->row; idx++)
+                    yy += rows[idx];
+                  hh = 0;
+                  for (idx = ti->row; idx < (ti->row + ti->rowspan); idx++)
+                    hh += rows[idx];
 
-		  ow = ti->min.w;
-		  if (ti->fill_w) ow = ww;
-		  if ((ti->max.w >= 0) && (ti->max.w < ow)) ow = ti->max.w;
-		  oh = ti->min.h;
-		  if (ti->fill_h) oh = hh;
-		  if ((ti->max.h >= 0) && (ti->max.h < oh)) oh = ti->max.h;
-		  evas_object_move(obj,
-				   xx + (Evas_Coord)(((double)(ww - ow)) * ti->align.x),
-				   yy + (Evas_Coord)(((double)(hh - oh)) * ti->align.y));
-		  evas_object_resize(obj, ow, oh);
-	       }
-	     free(rows);
-	     free(cols);
-	     free(rowsx);
-	     free(colsx);
-	  }
+                  ow = ti->min.w;
+                  if (ti->fill_w) ow = ww;
+                  if ((ti->max.w >= 0) && (ti->max.w < ow)) ow = ti->max.w;
+                  oh = ti->min.h;
+                  if (ti->fill_h) oh = hh;
+                  if ((ti->max.h >= 0) && (ti->max.h < oh)) oh = ti->max.h;
+                  evas_object_move(obj,
+                                   xx + (Evas_Coord)(((double)(ww - ow)) * ti->align.x),
+                                   yy + (Evas_Coord)(((double)(hh - oh)) * ti->align.y));
+                  evas_object_resize(obj, ow, oh);
+               }
+             free(rows);
+             free(cols);
+             free(rowsx);
+             free(colsx);
+          }
      }
    sd->changed = 0;
 }
@@ -618,180 +635,182 @@ _e_table_smart_extents_calcuate(E_Smart_Data *sd)
    minh = 0;
    if (sd->homogenous)
      {
-	EINA_LIST_FOREACH(sd->items, l, obj)
-	  {
-	     E_Table_Item *ti;
-	     int mw, mh;
+        EINA_LIST_FOREACH(sd->items, l, obj)
+          {
+             E_Table_Item *ti;
+             int mw, mh;
 
-	     ti = evas_object_data_get(obj, "e_table_data");
-	     if (sd->size.cols < (ti->col + ti->colspan))
-	       sd->size.cols = ti->col + ti->colspan;
-	     if (sd->size.rows < (ti->row + ti->rowspan))
-	       sd->size.rows = ti->row + ti->rowspan;
-	     mw = (ti->min.w + (ti->colspan - 1)) / ti->colspan;
-	     mh = (ti->min.h + (ti->rowspan - 1)) / ti->rowspan;
-	     if (minw < mw) minw = mw;
-	     if (minh < mh) minh = mh;
-	  }
-	minw *= sd->size.cols;
-	minh *= sd->size.rows;
+             ti = evas_object_data_get(obj, "e_table_data");
+             if (sd->size.cols < (ti->col + ti->colspan))
+               sd->size.cols = ti->col + ti->colspan;
+             if (sd->size.rows < (ti->row + ti->rowspan))
+               sd->size.rows = ti->row + ti->rowspan;
+             mw = (ti->min.w + (ti->colspan - 1)) / ti->colspan;
+             mh = (ti->min.h + (ti->rowspan - 1)) / ti->rowspan;
+             if (minw < mw) minw = mw;
+             if (minh < mh) minh = mh;
+          }
+        minw *= sd->size.cols;
+        minh *= sd->size.rows;
      }
    else
      {
-	int i, ex, tot, need, num, dif, left, nx;
-	EINA_LIST_FOREACH(sd->items, l, obj)
-	  {
-	     E_Table_Item *ti;
+        int i, ex, tot, need, num, dif, left, nx;
+        EINA_LIST_FOREACH(sd->items, l, obj)
+          {
+             E_Table_Item *ti;
 
-	     ti = evas_object_data_get(obj, "e_table_data");
-	     if (sd->size.cols < (ti->col + ti->colspan))
-	       sd->size.cols = ti->col + ti->colspan;
-	     if (sd->size.rows < (ti->row + ti->rowspan))
-	       sd->size.rows = ti->row + ti->rowspan;
-	  }
-	if ((sd->size.cols > 0) && (sd->size.rows > 0))
-	  {
-	     int *cols, *rows, *colsx, *rowsx;
+             ti = evas_object_data_get(obj, "e_table_data");
+             if (sd->size.cols < (ti->col + ti->colspan))
+               sd->size.cols = ti->col + ti->colspan;
+             if (sd->size.rows < (ti->row + ti->rowspan))
+               sd->size.rows = ti->row + ti->rowspan;
+          }
+        if ((sd->size.cols > 0) && (sd->size.rows > 0))
+          {
+             int *cols, *rows, *colsx, *rowsx;
 
-	     cols = calloc(sd->size.cols, sizeof(int));
-	     rows = calloc(sd->size.rows, sizeof(int));
-	     colsx = calloc(sd->size.cols, sizeof(int));
-	     rowsx = calloc(sd->size.rows, sizeof(int));
+             cols = calloc(sd->size.cols, sizeof(int));
+             rows = calloc(sd->size.rows, sizeof(int));
+             colsx = calloc(sd->size.cols, sizeof(int));
+             rowsx = calloc(sd->size.rows, sizeof(int));
 
-	     EINA_LIST_FOREACH(sd->items, l, obj)
-	       {
-		  E_Table_Item *ti;
+             EINA_LIST_FOREACH(sd->items, l, obj)
+               {
+                  E_Table_Item *ti;
 
-		  ti = evas_object_data_get(obj, "e_table_data");
-		  for (i = ti->col; i < (ti->col + ti->colspan); i++)
-		    colsx[i] |= ti->expand_w;
-		  for (i = ti->row; i < (ti->row + ti->rowspan); i++)
-		    rowsx[i] |= ti->expand_h;
-	       }
+                  ti = evas_object_data_get(obj, "e_table_data");
+                  for (i = ti->col; i < (ti->col + ti->colspan); i++)
+                    colsx[i] |= ti->expand_w;
+                  for (i = ti->row; i < (ti->row + ti->rowspan); i++)
+                    rowsx[i] |= ti->expand_h;
+               }
 
-	     EINA_LIST_FOREACH(sd->items, l, obj)
-	       {
-		  E_Table_Item *ti;
+             EINA_LIST_FOREACH(sd->items, l, obj)
+               {
+                  E_Table_Item *ti;
 
-		  ti = evas_object_data_get(obj, "e_table_data");
+                  ti = evas_object_data_get(obj, "e_table_data");
 
-		  /* handle horizontal */
-		  ex = 0;
-		  tot = 0;
-		  num = ti->colspan;
-		  for (i = ti->col; i < (ti->col + num); i++)
-		    {
-		       if (colsx[i]) ex++;
-		       tot += cols[i];
-		    }
-		  need = ti->min.w;
-		  if (tot < need)
-		    {
-		       dif = need - tot;
-		       left = dif;
-		       if (ex == 0)
-			 {
-			    nx = num;
-			    for (i = ti->col; i < (ti->col + num); i++)
-			      {
-				 if (nx > 1)
-				   {
-				      cols[i] += dif / num;
-				      left -= dif / num;
-				   }
-				 else
-				   {
-				      cols[i] += left;
-				      left = 0;
-				   }
-				 nx--;
-			      }
-			 }
-		       else
-			 {
-			    nx = ex;
-			    for (i = ti->col; i < (ti->col + num); i++)
-			      {
-				 if (colsx[i])
-				   {
-				      if (nx > 1)
-					{
-					   cols[i] += dif / ex;
-					   left -= dif / ex;
-					}
-				      else
-					{
-					   cols[i] += left;
-					   left = 0;
-					}
-				      nx--;
-				   }
-			      }
-			 }
-		    }
+                  /* handle horizontal */
+                  ex = 0;
+                  tot = 0;
+                  num = ti->colspan;
+                  for (i = ti->col; i < (ti->col + num); i++)
+                    {
+                       if (colsx[i]) ex++;
+                       tot += cols[i];
+                    }
+                  need = ti->min.w;
+                  if (tot < need)
+                    {
+                       dif = need - tot;
+                       left = dif;
+                       if (ex == 0)
+                         {
+                            nx = num;
+                            for (i = ti->col; i < (ti->col + num); i++)
+                              {
+                                 if (nx > 1)
+                                   {
+                                      cols[i] += dif / num;
+                                      left -= dif / num;
+                                   }
+                                 else
+                                   {
+                                      cols[i] += left;
+                                      left = 0;
+                                   }
+                                 nx--;
+                              }
+                         }
+                       else
+                         {
+                            nx = ex;
+                            for (i = ti->col; i < (ti->col + num); i++)
+                              {
+                                 if (colsx[i])
+                                   {
+                                      if (nx > 1)
+                                        {
+                                           cols[i] += dif / ex;
+                                           left -= dif / ex;
+                                        }
+                                      else
+                                        {
+                                           cols[i] += left;
+                                           left = 0;
+                                        }
+                                      nx--;
+                                   }
+                              }
+                         }
+                    }
 
-		  /* handle vertical */
-		  ex = 0;
-		  tot = 0;
-		  num = ti->rowspan;
-		  for (i = ti->row; i < (ti->row + num); i++)
-		    {
-		       if (rowsx[i]) ex++;
-		       tot += rows[i];
-		    }
-		  need = ti->min.h;
-		  if (tot < need)
-		    {
-		       dif = need - tot;
-		       left = dif;
-		       if (ex == 0)
-			 {
-			    nx = num;
-			    for (i = ti->row; i < (ti->row + num); i++)
-			      {
-				 if (nx > 1)
-				   {
-				      rows[i] += dif / num;
-				      left -= dif / num;
-				   }
-				 else
-				   {
-				      rows[i] += left;
-				      left = 0;
-				   }
-				 nx--;
-			      }
-			 }
-		       else
-			 {
-			    nx = ex;
-			    for (i = ti->row; i < (ti->row + num); i++)
-			      {
-				 if (rowsx[i])
-				   {
-				      if (nx > 1)
-					{
-					   rows[i] += dif / ex;
-					   left -= dif / ex;
-					}
-				      else
-					{
-					   rows[i] += left;
-					   left = 0;
-					}
-				      nx--;
-				   }
-			      }
-			 }
-		    }
-	       }
-	     for (i = 0; i < sd->size.cols; i++) minw += cols[i];
-	     for (i = 0; i < sd->size.rows; i++) minh += rows[i];
-	     free(rows);
-	     free(cols);
-	     free(rowsx);
-	     free(colsx);
-	  }
+                  /* handle vertical */
+                  ex = 0;
+                  tot = 0;
+                  num = ti->rowspan;
+                  for (i = ti->row; i < (ti->row + num); i++)
+                    {
+                       if (rowsx[i]) ex++;
+                       tot += rows[i];
+                    }
+                  need = ti->min.h;
+                  if (tot < need)
+                    {
+                       dif = need - tot;
+                       left = dif;
+                       if (ex == 0)
+                         {
+                            nx = num;
+                            for (i = ti->row; i < (ti->row + num); i++)
+                              {
+                                 if (nx > 1)
+                                   {
+                                      rows[i] += dif / num;
+                                      left -= dif / num;
+                                   }
+                                 else
+                                   {
+                                      rows[i] += left;
+                                      left = 0;
+                                   }
+                                 nx--;
+                              }
+                         }
+                       else
+                         {
+                            nx = ex;
+                            for (i = ti->row; i < (ti->row + num); i++)
+                              {
+                                 if (rowsx[i])
+                                   {
+                                      if (nx > 1)
+                                        {
+                                           rows[i] += dif / ex;
+                                           left -= dif / ex;
+                                        }
+                                      else
+                                        {
+                                           rows[i] += left;
+                                           left = 0;
+                                        }
+                                      nx--;
+                                   }
+                              }
+                         }
+                    }
+               }
+             for (i = 0; i < sd->size.cols; i++)
+               minw += cols[i];
+             for (i = 0; i < sd->size.rows; i++)
+               minh += rows[i];
+             free(rows);
+             free(cols);
+             free(rowsx);
+             free(colsx);
+          }
      }
    sd->min.w = minw;
    sd->min.h = minh;
@@ -801,30 +820,30 @@ static void
 _e_table_smart_init(void)
 {
    if (_e_smart) return;
-     {
-	static const Evas_Smart_Class sc =
-	  {
-	     "e_table",
-	       EVAS_SMART_CLASS_VERSION,
-	       _e_table_smart_add,
-	       _e_table_smart_del,
-	       _e_table_smart_move,
-	       _e_table_smart_resize,
-	       _e_table_smart_show,
-	       _e_table_smart_hide,
-	       _e_table_smart_color_set,
-	       _e_table_smart_clip_set,
-	       _e_table_smart_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL
-	  };
-	_e_smart = evas_smart_class_new(&sc);
-     }
+   {
+      static const Evas_Smart_Class sc =
+      {
+         "e_table",
+         EVAS_SMART_CLASS_VERSION,
+         _e_table_smart_add,
+         _e_table_smart_del,
+         _e_table_smart_move,
+         _e_table_smart_resize,
+         _e_table_smart_show,
+         _e_table_smart_hide,
+         _e_table_smart_color_set,
+         _e_table_smart_clip_set,
+         _e_table_smart_clip_unset,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL,
+         NULL
+      };
+      _e_smart = evas_smart_class_new(&sc);
+   }
 }
 
 static void
@@ -857,10 +876,10 @@ _e_table_smart_del(Evas_Object *obj)
    e_table_freeze(obj);
    while (sd->items)
      {
-	Evas_Object *child;
+        Evas_Object *child;
 
-	child = eina_list_data_get(sd->items);
-	e_table_unpack(child);
+        child = eina_list_data_get(sd->items);
+        e_table_unpack(child);
      }
    e_table_thaw(obj);
    evas_object_del(sd->clip);
@@ -876,21 +895,21 @@ _e_table_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if (!sd) return;
    if ((x == sd->x) && (y == sd->y)) return;
    if ((x == sd->x) && (y == sd->y)) return;
-     {
-	Eina_List *l;
-	Evas_Object *item;
-	Evas_Coord dx, dy;
+   {
+      Eina_List *l;
+      Evas_Object *item;
+      Evas_Coord dx, dy;
 
-	dx = x - sd->x;
-	dy = y - sd->y;
-	EINA_LIST_FOREACH(sd->items, l, item)
-	  {
-	     Evas_Coord ox, oy;
+      dx = x - sd->x;
+      dy = y - sd->y;
+      EINA_LIST_FOREACH(sd->items, l, item)
+        {
+           Evas_Coord ox, oy;
 
-	     evas_object_geometry_get(item, &ox, &oy, NULL, NULL);
-	     evas_object_move(item, ox + dx, oy + dy);
-	  }
-     }
+           evas_object_geometry_get(item, &ox, &oy, NULL, NULL);
+           evas_object_move(item, ox + dx, oy + dy);
+        }
+   }
    sd->x = x;
    sd->y = y;
 }
@@ -958,3 +977,4 @@ _e_table_smart_clip_unset(Evas_Object *obj)
    if (!sd) return;
    evas_object_clip_unset(sd->clip);
 }
+

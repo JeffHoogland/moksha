@@ -53,12 +53,12 @@ e_widget_table_object_align_append(Evas_Object *obj, Evas_Object *sobj, int col,
    e_table_pack(wd->o_table, sobj, col, row, colspan, rowspan);
    e_widget_size_min_get(sobj, &mw, &mh);
    e_table_pack_options_set(sobj,
-			  fill_w, fill_h, /* fill */
-			  expand_w, expand_h, /* expand */
-			  ax, ay, /* align */
-			  mw, mh, /* min */
-			  99999, 99999 /* max */
-			  );
+                            fill_w, fill_h, /* fill */
+                            expand_w, expand_h, /* expand */
+                            ax, ay, /* align */
+                            mw, mh, /* min */
+                            99999, 99999 /* max */
+                            );
    e_table_size_min_get(wd->o_table, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, sobj);
@@ -77,12 +77,12 @@ e_widget_table_object_repack(Evas_Object *obj, Evas_Object *sobj, int col, int r
    e_table_pack(wd->o_table, sobj, col, row, colspan, rowspan);
    e_widget_size_min_get(sobj, &mw, &mh);
    e_table_pack_options_set(sobj,
-			    fill_w, fill_h, /* fill */
-			    expand_w, expand_h, /* expand */
-			    0.5, 0.5, /* align */
-			    mw, mh, /* min */
-			    99999, 99999 /* max */
-			    );
+                            fill_w, fill_h, /* fill */
+                            expand_w, expand_h, /* expand */
+                            0.5, 0.5, /* align */
+                            mw, mh, /* min */
+                            99999, 99999 /* max */
+                            );
    e_table_size_min_get(wd->o_table, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
 }
@@ -102,3 +102,4 @@ _e_wid_del_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    free(wd);
 }
+

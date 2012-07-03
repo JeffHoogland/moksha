@@ -2,9 +2,9 @@
 
 #define E_EDITABLE_CURSOR_MARGIN 5
 
-#define E_EDITABLE_BLOCK_SIZE 128
+#define E_EDITABLE_BLOCK_SIZE    128
 #define E_EDITABLE_SIZE_TO_ALLOC(length) \
-   (((length) + (E_EDITABLE_BLOCK_SIZE - 1)) / E_EDITABLE_BLOCK_SIZE) * E_EDITABLE_BLOCK_SIZE
+  (((length) + (E_EDITABLE_BLOCK_SIZE - 1)) / E_EDITABLE_BLOCK_SIZE) * E_EDITABLE_BLOCK_SIZE
 
 typedef struct _E_Editable_Smart_Data E_Editable_Smart_Data;
 
@@ -16,31 +16,31 @@ struct _E_Editable_Smart_Data
    Evas_Object *cursor_object;
    Evas_Object *selection_object;
 
-   int cursor_pos;
-   int cursor_visible;
-   int selection_pos;
-   int selection_visible;
-   int password_mode;
+   int          cursor_pos;
+   int          cursor_visible;
+   int          selection_pos;
+   int          selection_visible;
+   int          password_mode;
 
-   char *text;
-   int char_length;
-   int unicode_length;
-   int allocated_length;
+   char        *text;
+   int          char_length;
+   int          unicode_length;
+   int          allocated_length;
 
-   int cursor_width;
-   int selection_on_fg;
-   int average_char_w;
-   int average_char_h;
+   int          cursor_width;
+   int          selection_on_fg;
+   int          average_char_w;
+   int          average_char_h;
 };
 
 /* local subsystem functions */
-static int _e_editable_text_insert(Evas_Object *editable, int pos, const char *text);
-static int _e_editable_text_delete(Evas_Object *editable, int start, int end);
+static int  _e_editable_text_insert(Evas_Object *editable, int pos, const char *text);
+static int  _e_editable_text_delete(Evas_Object *editable, int start, int end);
 static void _e_editable_cursor_update(Evas_Object *editable);
 static void _e_editable_selection_update(Evas_Object *editable);
 static void _e_editable_text_update(Evas_Object *editable);
 static void _e_editable_text_position_update(Evas_Object *editable, Evas_Coord real_w);
-static int _e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_Coord *cx, Evas_Coord *cy, Evas_Coord *cw, Evas_Coord *ch);
+static int  _e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_Coord *cx, Evas_Coord *cy, Evas_Coord *cw, Evas_Coord *ch);
 
 static void _e_editable_smart_add(Evas_Object *object);
 static void _e_editable_smart_del(Evas_Object *object);
@@ -70,28 +70,28 @@ e_editable_add(Evas *evas)
 {
    if (!_e_editable_smart)
      {
-	static const Evas_Smart_Class sc =
-	  {
-	     "e_editable",
-	       EVAS_SMART_CLASS_VERSION,
-	       _e_editable_smart_add,
-	       _e_editable_smart_del,
-	       _e_editable_smart_move,
-	       _e_editable_smart_resize,
-	       _e_editable_smart_show,
-	       _e_editable_smart_hide,
-	       _e_editable_color_set,
-	       _e_editable_clip_set,
-	       _e_editable_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL
-	  };
-	_e_editable_smart = evas_smart_class_new(&sc);
+        static const Evas_Smart_Class sc =
+        {
+           "e_editable",
+           EVAS_SMART_CLASS_VERSION,
+           _e_editable_smart_add,
+           _e_editable_smart_del,
+           _e_editable_smart_move,
+           _e_editable_smart_resize,
+           _e_editable_smart_show,
+           _e_editable_smart_hide,
+           _e_editable_color_set,
+           _e_editable_clip_set,
+           _e_editable_clip_unset,
+           NULL,
+           NULL,
+           NULL,
+           NULL,
+           NULL,
+           NULL,
+           NULL
+        };
+        _e_editable_smart = evas_smart_class_new(&sc);
         _e_editable_smart_use = 0;
      }
 
@@ -684,17 +684,17 @@ e_editable_select_word(Evas_Object *editable, int idx)
 
    while (i < sd->char_length)
      {
-	if (sd->text[i] == ' ')
-	  {
-	     if (pos < idx) spos = pos + 1;
-	     else if (pos > idx)
-	       {
-		  epos = pos;
-		  break;
-	       }
-	  }
-	i = evas_string_char_next_get(sd->text, i, NULL);
-	pos++;
+        if (sd->text[i] == ' ')
+          {
+             if (pos < idx) spos = pos + 1;
+             else if (pos > idx)
+               {
+                  epos = pos;
+                  break;
+               }
+          }
+        i = evas_string_char_next_get(sd->text, i, NULL);
+        pos++;
      }
    if (epos == -1) epos = pos;
    e_editable_selection_pos_set(editable, spos);
@@ -779,8 +779,8 @@ e_editable_pos_get_from_coords(Evas_Object *editable, Evas_Coord x, Evas_Coord y
    else
      {
         idx = evas_object_text_char_coords_get(text_obj,
-                                                 canvas_x - tx, canvas_y - ty,
-                                                 &cx, NULL, &cw, NULL);
+                                               canvas_x - tx, canvas_y - ty,
+                                               &cx, NULL, &cw, NULL);
         text = evas_object_text_text_get(text_obj);
         if ((idx >= 0) && (text))
           {
@@ -877,6 +877,7 @@ e_editable_disable(Evas_Object *editable)
 
    edje_object_signal_emit(sd->text_object, "e,state,disabled", "e");
 }
+
 /* Private functions */
 
 /* A utility function to insert some text inside the editable object.
@@ -914,34 +915,34 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
 
    if (new_char_length > sd->allocated_length)
      {
-	int new_allocated_length = E_EDITABLE_SIZE_TO_ALLOC(new_char_length);
-	char *old = sd->text;
+        int new_allocated_length = E_EDITABLE_SIZE_TO_ALLOC(new_char_length);
+        char *old = sd->text;
 
-	if (sd->password_mode)
-	  {
-	     /* security -- copy contents into new buffer, and overwrite old contents */
-	     sd->text = malloc(new_allocated_length + 1);
-	     if (!sd->text)
-	       {
-		  sd->text = old;
-		  return 0;
-	       }
-	     if (old)
-	       {
-		  memcpy(sd->text, old, prev_char_length + 1);
-		  memset(old, 0, prev_char_length);
-		  free(old);
-	       }
-	  }
-	else
-	  {
-	     sd->text = realloc(sd->text, new_allocated_length + 1);
-	     if (!sd->text)
-	       {
-		  sd->text = old;
-		  return 0;
-	       }
-	  }
+        if (sd->password_mode)
+          {
+             /* security -- copy contents into new buffer, and overwrite old contents */
+             sd->text = malloc(new_allocated_length + 1);
+             if (!sd->text)
+               {
+                  sd->text = old;
+                  return 0;
+               }
+             if (old)
+               {
+                  memcpy(sd->text, old, prev_char_length + 1);
+                  memset(old, 0, prev_char_length);
+                  free(old);
+               }
+          }
+        else
+          {
+             sd->text = realloc(sd->text, new_allocated_length + 1);
+             if (!sd->text)
+               {
+                  sd->text = old;
+                  return 0;
+               }
+          }
         sd->allocated_length = new_allocated_length;
      }
    sd->unicode_length = new_unicode_length;
@@ -986,7 +987,7 @@ _e_editable_text_delete(Evas_Object *editable, int start, int end)
 
    _e_editable_text_update(editable);
 
-   return (end - start);
+   return end - start;
 }
 
 /* Updates the position of the cursor
@@ -1165,8 +1166,8 @@ _e_editable_char_geometry_get_from_pos(Evas_Object *editable, int utf_pos, Evas_
      {
         if (utf_pos >= sd->unicode_length)
           {
-            utf_pos = sd->unicode_length - 1;
-            last_pos = 1;
+             utf_pos = sd->unicode_length - 1;
+             last_pos = 1;
           }
         else
           last_pos = 0;
@@ -1382,3 +1383,4 @@ _e_editable_clip_unset(Evas_Object *object)
      return;
    evas_object_clip_unset(sd->clip_object);
 }
+
