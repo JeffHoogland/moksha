@@ -12,6 +12,7 @@ static void         _cb_dialog_yes(void *data);
 static void         _cb_dialog_destroy(void *data);
 static void         _cb_config(void *data, void *data2);
 static void         _cb_contents(void *data, void *data2);
+static void         _ilist_refresh(E_Shelf *es);
 
 struct _E_Config_Dialog_Data
 {
@@ -21,6 +22,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_contents;
 
    const char  *cur_shelf;
+   Ecore_Event_Handler *shelf_handler;
    Eina_List *shelves;
    E_Config_Dialog *cfd;
 };
@@ -50,12 +52,21 @@ e_int_config_shelf(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
+static Eina_Bool
+_shelf_handler_cb(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Shelf_Add *ev __UNUSED__)
+{
+   _ilist_empty(cfdata);
+   _ilist_fill(cfdata);
+   return ECORE_CALLBACK_RENEW;
+}
+
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->shelf_handler = ecore_event_handler_add(E_EVENT_SHELF_ADD, (Ecore_Event_Handler_Cb)_shelf_handler_cb, cfdata);
    cfdata->cfd = cfd;
    return cfdata;
 }
@@ -69,6 +80,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         evas_object_data_del(es->o_base, "cfdata");
         e_object_del_func_set(E_OBJECT(es), NULL);
      }
+   ecore_event_handler_del(cfdata->shelf_handler);
    E_FREE(cfdata);
 }
 
