@@ -21,6 +21,7 @@ static void                     _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_C
 static void                     _e_gadcon_cb_min_size_request(void *data, Evas_Object *obj, void *event_info);
 static void                     _e_gadcon_cb_size_request(void *data, Evas_Object *obj, void *event_info);
 static void                     _e_gadcon_cb_moveresize(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void                     _e_gadcon_parent_resize_cb(E_Gadcon *gc, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__);
 static void                     _e_gadcon_cb_client_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void                     _e_gadcon_cb_client_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static void                     _e_gadcon_cb_client_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event_info);
@@ -332,6 +333,8 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *s
                         drop_types, 1, x, y, w, h);
    evas_object_event_callback_add(gc->o_container, EVAS_CALLBACK_MOVE,
                                   _e_gadcon_cb_moveresize, gc);
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE,
+                                  (Evas_Object_Event_Cb)_e_gadcon_parent_resize_cb, gc);
    evas_object_event_callback_add(gc->o_container, EVAS_CALLBACK_RESIZE,
                                   _e_gadcon_cb_moveresize, gc);
    evas_object_smart_callback_add(gc->o_container, "size_request",
@@ -1744,6 +1747,7 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
 {
    int w, h, mw, mh;
 
+   if (!gcc->o_base) return;
    evas_object_geometry_get(gcc->o_box, NULL, NULL, &w, &h);
    if (gcc->gadcon->edje.o_parent)
      evas_object_geometry_get(gcc->gadcon->edje.o_parent, NULL, NULL, &mw, &mh);
@@ -1793,14 +1797,23 @@ _e_gadcon_moveresize_handle(E_Gadcon_Client *gcc)
                }
           }
      }
-   if (gcc->o_base)
-     e_box_pack_options_set(gcc->o_base,
-                            1, 1, /* fill */
-                            1, 1, /* expand */
-                            0.5, 0.5, /* align */
-                            w, h, /* min */
-                            mw, mh /* max */
-                            );
+   e_box_pack_options_set(gcc->o_base,
+                          1, 1, /* fill */
+                          1, 1, /* expand */
+                          0.5, 0.5, /* align */
+                          w, h, /* min */
+                          mw, mh /* max */
+                          );
+}
+
+static void
+_e_gadcon_parent_resize_cb(E_Gadcon *gc, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   Eina_List *l;
+   E_Gadcon_Client *gcc;
+
+   EINA_LIST_FOREACH(gc->clients, l, gcc)
+     _e_gadcon_moveresize_handle(gcc);
 }
 
 static Eina_Bool
