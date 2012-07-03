@@ -311,6 +311,7 @@ _pager_fill(Pager *p)
    int x, y;
 
    e_zone_desk_count_get(p->zone, &(p->xnum), &(p->ynum));
+   e_table_freeze(p->o_table);
    for (x = 0; x < p->xnum; x++)
      {
         for (y = 0; y < p->ynum; y++)
@@ -328,6 +329,7 @@ _pager_fill(Pager *p)
                }
           }
      }
+   e_table_thaw(p->o_table);
 }
 
 static void
@@ -347,6 +349,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    Evas_Object *o, *evo;
    E_Border_List *bl;
    E_Border *bd;
+   int w, h;
 
    pd = E_NEW(Pager_Desk, 1);
    if (!pd) return NULL;
@@ -367,8 +370,9 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    else
      edje_object_part_text_set(o, "e.text.label", "");
 
+   edje_object_size_min_calc(o, &w, &h);
    e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
-   e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, 0, 0, -1, -1);
+   e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, w, h, -1, -1);
 
    evo = (Evas_Object *)edje_object_part_object_get(o, "e.eventarea");
    if (!evo) evo = o;
