@@ -9,7 +9,6 @@ Makefile.in
 *.gmo
 *~
 *.cfg
-*.desktop
 default.edj
 /ABOUT-NLS
 /aclocal.m4
