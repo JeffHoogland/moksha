@@ -1416,7 +1416,6 @@ _e_gadman_handlers_add(void)
                       ecore_event_handler_add(E_EVENT_ZONE_DEL, _e_gadman_cb_zone_del, NULL));
    _gadman_hdls = eina_list_append(_gadman_hdls,
                       ecore_event_handler_add(E_EVENT_MODULE_UPDATE, (Ecore_Event_Handler_Cb)_gadman_module_cb, NULL));
-                                              
 }
 
 static void
@@ -1432,9 +1431,7 @@ _e_gadman_handler_del(void)
 static Eina_Bool
 _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update *ev)
 {
-   if (ev->enabled)
-     e_config_gadman_list_refresh();
-   else
+   if (!ev->enabled)
      {
         Eina_List *l;
         E_Gadcon_Client *gcc;
@@ -1446,6 +1443,7 @@ _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update
              gadman_gadget_del(gcc);
           }
      }
+   e_config_gadman_list_refresh();
    return ECORE_CALLBACK_RENEW;
 }
 
