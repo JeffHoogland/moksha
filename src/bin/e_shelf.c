@@ -1298,11 +1298,12 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
 {
    E_Menu_Item *mi;
    E_Menu *subm;
-   const char *name;
    char buf[256];
 
-   name = e_shelf_orient_string_get(es);
-   snprintf(buf, sizeof(buf), "Shelf %s", name);
+   if (es->name)
+     snprintf(buf, sizeof(buf), "%s", es->name);
+   else
+     snprintf(buf, sizeof(buf), "%s %s", _("Shelf"), e_shelf_orient_string_get(es));
 
    e_shelf_locked_set(es, 1);
 
