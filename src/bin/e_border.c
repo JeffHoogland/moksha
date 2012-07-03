@@ -7705,20 +7705,28 @@ _e_border_eval(E_Border *bd)
               * are moved to useful positions.
               */
              // ->
-             if (bd->x < zx)
-               bd->x = zx;
+             if (e_config->geometry_auto_move)
+               {
+                  if (bd->x < zx)
+                    bd->x = zx;
 
-             if (bd->y < zy)
-               bd->y = zy;
+                  if (bd->y < zy)
+                    bd->y = zy;
 
-             if (bd->x + bd->w > zx + zw)
-               bd->x = zx + zw - bd->w;
+                  if (bd->x + bd->w > zx + zw)
+                    bd->x = zx + zw - bd->w;
 
-             if (bd->y + bd->h > zy + zh)
-               bd->y = zy + zh - bd->h;
-             // <--
+                  if (bd->y + bd->h > zy + zh)
+                    bd->y = zy + zh - bd->h;
+                  // <--
 
-             if (bd->zone && e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y))
+                  if (bd->zone && e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y))
+                    {
+                       bd->changes.pos = 1;
+                       bd->placed = 1;
+                    }
+               }
+             else
                {
                   bd->changes.pos = 1;
                   bd->placed = 1;
