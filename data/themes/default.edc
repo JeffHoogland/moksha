@@ -12865,7 +12865,6 @@ collections {
             description {
                state: "default" 0.0;
                aspect: 1.0 1.0;
-               aspect_preference: BOTH;
                image.normal: "clock_base.png";
             }
          }
