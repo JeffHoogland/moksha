@@ -25,9 +25,9 @@ e_win_shutdown(void)
 /*
    while (wins)
      {
-	e_object_del(E_OBJECT(wins->data));
+        e_object_del(E_OBJECT(wins->data));
      }
-*/
+ */
    return 1;
 }
 
@@ -42,8 +42,8 @@ e_win_new(E_Container *con)
    e_object_del_func_set(E_OBJECT(win), _e_win_del);
    win->container = con;
    win->ecore_evas = e_canvas_new(con->manager->root,
-				  0, 0, 1, 1, 1, 0,
-				  &(win->evas_win));
+                                  0, 0, 1, 1, 1, 0,
+                                  &(win->evas_win));
    e_canvas_add(win->ecore_evas);
    ecore_evas_data_set(win->ecore_evas, "E_Win", win);
    ecore_evas_callback_move_set(win->ecore_evas, _e_win_cb_move);
@@ -83,16 +83,16 @@ e_win_show(E_Win *win)
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if (!win->border)
      {
-	_e_win_prop_update(win);
-	ecore_evas_lower(win->ecore_evas);
-	win->border = e_border_new(win->container, win->evas_win, 1, 1);
+        _e_win_prop_update(win);
+        ecore_evas_lower(win->ecore_evas);
+        win->border = e_border_new(win->container, win->evas_win, 1, 1);
 // dont need this - special stuff
 //        win->border->ignore_first_unmap = 1;
-	if (!win->placed)
-	  win->border->re_manage = 0;
-	win->border->internal = 1;
-	win->border->internal_ecore_evas = win->ecore_evas;
-	if (win->state.no_remember) win->border->internal_no_remember = 1;
+        if (!win->placed)
+          win->border->re_manage = 0;
+        win->border->internal = 1;
+        win->border->internal_ecore_evas = win->ecore_evas;
+        if (win->state.no_remember) win->border->internal_no_remember = 1;
      }
    _e_win_prop_update(win);
    e_border_show(win->border);
@@ -211,7 +211,7 @@ e_win_evas_get(E_Win *win)
 }
 
 EAPI void
-e_win_move_callback_set(E_Win *win, void (*func) (E_Win *win))
+e_win_move_callback_set(E_Win *win, void (*func)(E_Win *win))
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
@@ -219,7 +219,7 @@ e_win_move_callback_set(E_Win *win, void (*func) (E_Win *win))
 }
 
 EAPI void
-e_win_resize_callback_set(E_Win *win, void (*func) (E_Win *win))
+e_win_resize_callback_set(E_Win *win, void (*func)(E_Win *win))
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
@@ -227,7 +227,7 @@ e_win_resize_callback_set(E_Win *win, void (*func) (E_Win *win))
 }
 
 EAPI void
-e_win_delete_callback_set(E_Win *win, void (*func) (E_Win *win))
+e_win_delete_callback_set(E_Win *win, void (*func)(E_Win *win))
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
@@ -341,13 +341,13 @@ e_win_centered_set(E_Win *win, int centered)
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if ((win->state.centered) && (!centered))
      {
-	win->state.centered = 0;
-	_e_win_state_update(win);
+        win->state.centered = 0;
+        _e_win_state_update(win);
      }
    else if ((!win->state.centered) && (centered))
      {
-	win->state.centered = 1;
-	_e_win_state_update(win);
+        win->state.centered = 1;
+        _e_win_state_update(win);
      }
    if ((win->border) && (centered))
      e_border_center(win->border);
@@ -360,13 +360,13 @@ e_win_dialog_set(E_Win *win, int dialog)
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);
    if ((win->state.dialog) && (!dialog))
      {
-	win->state.dialog = 0;
-	_e_win_prop_update(win);
+        win->state.dialog = 0;
+        _e_win_prop_update(win);
      }
    else if ((!win->state.dialog) && (dialog))
      {
-	win->state.dialog = 1;
-	_e_win_prop_update(win);
+        win->state.dialog = 1;
+        _e_win_prop_update(win);
      }
 }
 
@@ -402,8 +402,8 @@ e_win_border_icon_set(E_Win *win, const char *icon)
    if (!border) return;
    if (border->internal_icon)
      {
-	eina_stringshare_del(border->internal_icon);
-	border->internal_icon = NULL;
+        eina_stringshare_del(border->internal_icon);
+        border->internal_icon = NULL;
      }
    if (icon)
      border->internal_icon = eina_stringshare_add(icon);
@@ -418,8 +418,8 @@ e_win_border_icon_key_set(E_Win *win, const char *key)
    if (!border) return;
    if (border->internal_icon_key)
      {
-	eina_stringshare_del(border->internal_icon_key);
-	border->internal_icon_key = NULL;
+        eina_stringshare_del(border->internal_icon_key);
+        border->internal_icon_key = NULL;
      }
    if (key)
      border->internal_icon_key = eina_stringshare_add(key);
@@ -436,8 +436,8 @@ _e_win_free(E_Win *win)
    ecore_evas_free(win->ecore_evas);
    if (win->border)
      {
-	e_border_hide(win->border, 1);
-	e_object_del(E_OBJECT(win->border));
+        e_border_hide(win->border, 1);
+        e_object_del(E_OBJECT(win->border));
      }
    wins = eina_list_remove(wins, win);
    free(win);
@@ -456,21 +456,21 @@ static void
 _e_win_prop_update(E_Win *win)
 {
    ecore_x_icccm_size_pos_hints_set(win->evas_win,
-				    win->placed, ECORE_X_GRAVITY_NW,
-				    win->min_w, win->min_h,
-				    win->max_w, win->max_h,
-				    win->base_w, win->base_h,
-				    win->step_x, win->step_y,
-				    win->min_aspect, win->max_aspect);
+                                    win->placed, ECORE_X_GRAVITY_NW,
+                                    win->min_w, win->min_h,
+                                    win->max_w, win->max_h,
+                                    win->base_w, win->base_h,
+                                    win->step_x, win->step_y,
+                                    win->min_aspect, win->max_aspect);
    if (win->state.dialog)
      {
-	ecore_x_icccm_transient_for_set(win->evas_win, win->container->manager->root);
-	ecore_x_netwm_window_type_set(win->evas_win, ECORE_X_WINDOW_TYPE_DIALOG);
+        ecore_x_icccm_transient_for_set(win->evas_win, win->container->manager->root);
+        ecore_x_netwm_window_type_set(win->evas_win, ECORE_X_WINDOW_TYPE_DIALOG);
      }
    else
      {
-	ecore_x_icccm_transient_for_unset(win->evas_win);
-	ecore_x_netwm_window_type_set(win->evas_win, ECORE_X_WINDOW_TYPE_NORMAL);
+        ecore_x_icccm_transient_for_unset(win->evas_win);
+        ecore_x_netwm_window_type_set(win->evas_win, ECORE_X_WINDOW_TYPE_NORMAL);
      }
 }
 
@@ -520,3 +520,4 @@ _e_win_cb_delete(Ecore_Evas *ee)
    if (!win) return;
    if (win->cb_delete) win->cb_delete(win);
 }
+
