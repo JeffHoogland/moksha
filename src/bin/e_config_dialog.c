@@ -197,7 +197,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
      {
         if (cfd->view->advanced.create_widgets)
           {
-             o = e_widget_list_add(e_win_evas_get(cfd->dia->win), 0, 0);
+             o = e_widget_list_add(evas, 0, 0);
              ob = cfd->view->basic.create_widgets(cfd, evas, cfd->cfdata);
              if (cfd->view->scroll)
                {
