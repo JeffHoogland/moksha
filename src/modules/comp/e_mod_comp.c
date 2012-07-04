@@ -858,6 +858,7 @@ _e_mod_comp_cb_update(E_Comp *c)
    Eina_List *update_done = NULL;
 //   static int doframeinfo = -1;
 
+   if (!c) return EINA_FALSE;
    c->update_job = NULL;
    DBG("UPDATE ALL\n");
    if (c->nocomp) goto nocomp;
