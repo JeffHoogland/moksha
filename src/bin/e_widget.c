@@ -514,11 +514,14 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   Evas_Object *o;
 
    if (sd->del_func) sd->del_func(obj);
-   EINA_LIST_FREE(sd->subobjs, o)
-     evas_object_del(o);
+   while (sd->subobjs)
+     {
+        Evas_Object *sobj = sd->subobjs->data;
+        evas_object_del(sobj);
+        sd->subobjs = eina_list_remove(sd->subobjs, sobj);
+     }
    free(sd);
 }
 
