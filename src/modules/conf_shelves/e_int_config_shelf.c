@@ -19,6 +19,7 @@ static void         _new_shelf_cb_close(void *data, E_Dialog *dia);
 static void         _new_shelf_cb_ok(void *data, E_Dialog *dia);
 static void         _new_shelf_cb_dia_del(void *obj);
 static void         _rename_shelf_cb_ok(void *data, E_Dialog *dia);
+static void         _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es);
 
 struct _E_Config_Dialog_Data
 {
@@ -35,6 +36,7 @@ struct _E_Config_Dialog_Data
    E_Config_Dialog     *cfd;
    E_Dialog            *dia_new_shelf;
    char                *new_shelf;
+   Eina_Bool           header;
 };
 
 static int orientations[] =
@@ -265,7 +267,7 @@ _ilist_empty(E_Config_Dialog_Data *cfdata)
    if ((!cfdata) || (!cfdata->cfd) || (!cfdata->cfd->con) || (!cfdata->cfd->con->manager)) return;
    zone = cfdata->cfd->dia->win->border ? cfdata->cfd->dia->win->border->zone : e_zone_current_get(cfdata->cfd->con);
    if (!zone) return;
-   desk = e_desk_current_get(zone);
+   desk = cfdata->cfd->dia->win->border ? cfdata->cfd->dia->win->border->desk : e_desk_current_get(zone);
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
         if (es->zone != zone) continue;
@@ -303,7 +305,6 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    E_Desk *desk;
    E_Zone *zone;
    int n = -1;
-   Eina_Bool header = EINA_FALSE;
 
    if (!cfdata) return;
    if (!cfdata->o_list) return;
@@ -333,10 +334,10 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
                {
                   if ((desk->x == sd->x) && (desk->y == sd->y))
                     {
-                       if (!header)
+                       if (!cfdata->header)
                          {
                             char buf[32];
-                            header = EINA_TRUE;
+                            cfdata->header = EINA_TRUE;
                             snprintf(buf, sizeof(buf), "Desk %d,%d", desk->x, desk->y);
                             e_widget_ilist_header_append(cfdata->o_list, NULL, buf);
                          }
@@ -346,7 +347,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
                }
           }
         else
-          _ilist_item_new(cfdata, !header, es);
+          _ilist_item_new(cfdata, !cfdata->header, es);
      }
 
    e_widget_size_min_set(cfdata->o_list, 155, 250);
