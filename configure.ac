@@ -562,6 +562,12 @@ $udisks_mount \
 $eeze_mount \
 $device_backend"
 
+PKG_CHECK_MODULES(E_OPEN, [
+  ecore >= 1.2.0
+  efreet >= 1.2.0
+  efreet-mime >= 1.2.0
+])
+
 AC_E_CHECK_PKG(ECORE_IMF, [ ecore-imf >= 1.2.0 ecore-imf-evas >= 1.2.0 ], [], [:])
 
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "$execinfo_libs

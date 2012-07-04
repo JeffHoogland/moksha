@@ -22,7 +22,8 @@ bin_PROGRAMS = \
 enlightenment \
 enlightenment_imc \
 enlightenment_start \
-enlightenment_filemanager
+enlightenment_filemanager \
+enlightenment_open
 
 internal_bindir = $(libdir)/enlightenment/utils
 internal_bin_PROGRAMS = \
@@ -410,6 +411,10 @@ enlightenment_alert_CFLAGS = @E_ALERT_CFLAGS@
 enlightenment_filemanager_SOURCES = e_fm_cmdline.c
 enlightenment_filemanager_LDADD = @E_FM_CMDLINE_LIBS@
 enlightenment_filemanager_CFLAGS = @E_FM_CMDLINE_CFLAGS@
+
+enlightenment_open_SOURCES = e_open.c
+enlightenment_open_LDADD = @E_OPEN_LIBS@
+enlightenment_open_CFLAGS = @E_OPEN_CFLAGS@
 
 # HACK! why install-data-hook? install-exec-hook is run after bin_PROGRAMS
 # and before internal_bin_PROGRAMS are installed. install-data-hook is
