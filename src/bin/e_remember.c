@@ -144,8 +144,7 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
              if (!act_fm)
                continue;
              /* at least '/' */
-             if (!(rem->class + 9))
-               continue;
+             if (!rem->class[9]) continue;
 
              act_fm->func.go(NULL, rem->class + 8);
           }
