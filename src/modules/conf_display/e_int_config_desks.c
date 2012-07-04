@@ -150,19 +150,22 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    of = e_widget_frametable_add(evas, _("Number of Desktops"), 0);
    e_widget_frametable_content_align_set(of, 0.5, 0.0);
 
-   ob = e_widget_deskpreview_add(evas, cfdata->x, cfdata->y);
+   ob = e_widget_label_add(evas, _("Click to change wallpaper"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+
+   ob = e_widget_deskpreview_add(evas, cfdata->x, cfdata->y);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
    cfdata->preview = ob;
 
    ob = e_widget_slider_add(evas, 0, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, 
                             &(cfdata->y), 150);
    e_widget_on_change_hook_set(ob, _cb_slider_change, cfdata);
-   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 0, 1);
+   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 0, 1);
 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 12.0, 1.0, 0, NULL, 
                             &(cfdata->x), 200);
    e_widget_on_change_hook_set(ob, _cb_slider_change, cfdata);
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 0);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
