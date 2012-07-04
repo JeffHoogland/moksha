@@ -155,7 +155,9 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
              const char *p;
 
              p = rem->class + 9;
-
+             /* if shelf config dialog is opened from a remember, it will break the world */
+             if (!strncmp(p, "extensions/shelves", sizeof("extensions/shelves") - 1))
+               continue;
              if ((param = strstr(p, "::")))
                {
                   snprintf(path, (param - p) + sizeof(char), "%s", p);
