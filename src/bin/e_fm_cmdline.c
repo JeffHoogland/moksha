@@ -37,6 +37,7 @@ fm_open(const char *path)
 {
    DBusMessage *msg;
    Eina_Bool sent;
+   const char *method;
    char *p;
 
    if (path[0] == '/')
@@ -71,10 +72,15 @@ fm_open(const char *path)
         return;
      }
 
+   if (ecore_file_is_dir(p))
+     method = "OpenDirectory";
+   else
+     method = "OpenFile";
+
    msg = dbus_message_new_method_call
      ("org.enlightenment.FileManager",
       "/org/enlightenment/FileManager",
-      "org.enlightenment.FileManager", "OpenDirectory");
+      "org.enlightenment.FileManager", method);
    if (!msg)
      {
         fputs("ERROR: Could not create DBus Message\n", stderr);
@@ -101,7 +107,7 @@ fm_open(const char *path)
 
 static const Ecore_Getopt options = {
    "enlightenment_filemanager",
-   "%prog [options] [folder1] ... [folderN]",
+   "%prog [options] [file-or-folder1] ... [file-or-folderN]",
    PACKAGE_VERSION,
    "(C) 2012 Gustavo Sverzut Barbieri and others",
    "BSD 2-Clause",
