@@ -4412,6 +4412,13 @@ e_border_resize_limit(E_Border *bd,
 static void
 _e_border_free(E_Border *bd)
 {
+   if (bd->client.e.state.video_parent)
+     {
+        bd->client.e.state.video_parent_border->client.e.state.video_child =
+          eina_list_remove
+          (bd->client.e.state.video_parent_border->client.e.state.video_child,
+              bd);
+     }
    if (bd->client.e.state.video_child)
      {
         E_Border *tmp;
@@ -4420,13 +4427,6 @@ _e_border_free(E_Border *bd)
           {
              tmp->client.e.state.video_parent_border = NULL;
           }
-     }
-   if (bd->client.e.state.video_parent)
-     {
-        bd->client.e.state.video_parent_border->client.e.state.video_child =
-          eina_list_remove
-          (bd->client.e.state.video_parent_border->client.e.state.video_child,
-              bd);
      }
    if (bd->desktop)
      {
