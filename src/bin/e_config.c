@@ -1198,6 +1198,10 @@ e_config_load(void)
           COPYVAL(powersave.max);
           IFCFGEND;
 
+          IFCFG(0x0150);
+          COPYVAL(multiscreen_flip);
+          IFCFGEND;
+
           e_config->config_version = E_CONFIG_FILE_VERSION;
           _e_config_free(tcfg);
        }
@@ -1351,6 +1355,8 @@ e_config_load(void)
      E_CONFIG_LIMIT(e_config->powersave.extreme, 0.01, 5400.00);
      E_CONFIG_LIMIT(e_config->powersave.min, E_POWERSAVE_MODE_NONE, E_POWERSAVE_MODE_EXTREME);
      E_CONFIG_LIMIT(e_config->powersave.max, E_POWERSAVE_MODE_NONE, E_POWERSAVE_MODE_EXTREME);
+
+     E_CONFIG_LIMIT(e_config->multiscreen_flip, 0, 1);
 
      /* FIXME: disabled auto apply because it causes problems */
      e_config->cfgdlg_auto_apply = 0;
