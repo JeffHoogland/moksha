@@ -376,7 +376,7 @@ _dia_new_shelf(E_Config_Dialog_Data *cfdata)
                                 0, 1, 0, 0);
 
    id = e_widget_ilist_count(cfdata->o_list);
-   snprintf(buf, sizeof(buf), "% #%d", _("Shelf"), id);
+   snprintf(buf, sizeof(buf), "%s #%d", _("Shelf"), id);
    cfdata->new_shelf = strdup(buf);
    ob = e_widget_entry_add(evas, &(cfdata->new_shelf), NULL, NULL, NULL);
    e_widget_size_min_set(ob, 100, 1);
