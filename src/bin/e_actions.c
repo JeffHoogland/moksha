@@ -1584,9 +1584,12 @@ ACT_FN_GO(screen_send_to, )
                        zone2 = e_util_container_zone_number_get(0, scr);
                     }
                   if ((zone2) && (zone != zone2))
-                    ecore_x_pointer_warp(zone2->container->win,
-                                         zone2->x + (zone2->w / 2),
-                                         zone2->y + (zone2->h / 2));
+                    {
+                       ecore_x_pointer_warp(zone2->container->win,
+                                            zone2->x + (zone2->w / 2),
+                                            zone2->y + (zone2->h / 2));
+                       e_zone_desk_flip_to(zone2, zone2->x + (zone2->w / 2), zone2->y + (zone2->h / 2));
+                    }
                }
           }
      }
@@ -1623,9 +1626,12 @@ ACT_FN_GO(screen_send_by, )
                        zone2 = e_util_container_zone_number_get(0, scr);
                     }
                   if ((zone2) && (zone != zone2))
-                    ecore_x_pointer_warp(zone2->container->win,
-                                         zone2->x + (zone2->w / 2),
-                                         zone2->y + (zone2->h / 2));
+                    {
+                       ecore_x_pointer_warp(zone2->container->win,
+                                            zone2->x + (zone2->w / 2),
+                                            zone2->y + (zone2->h / 2));
+                       e_zone_desk_flip_to(zone2, zone2->x + (zone2->w / 2), zone2->y + (zone2->h / 2));
+                    }
                }
           }
      }
