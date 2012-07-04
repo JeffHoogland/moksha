@@ -99,6 +99,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_Shelf *es;
    EINA_LIST_FREE(cfdata->shelves, es)
      {
+        if (e_object_is_del(E_OBJECT(es))) continue;
         evas_object_data_del(es->o_base, "cfdata");
         e_object_del_func_set(E_OBJECT(es), NULL);
      }
@@ -601,9 +602,11 @@ _cb_dialog_yes(void *data)
    if (!cfdata) return;
    evas_object_data_del(es->o_base, "cfdata");
    e_shelf_unsave(es);
+   e_object_unref(E_OBJECT(es));
    e_object_del(E_OBJECT(es));
    e_config_save_queue();
-   _widgets_disable(cfdata, 0, EINA_TRUE);
+   _ilist_empty(cfdata);
+   _ilist_fill(cfdata);
 }
 
 static void
@@ -613,12 +616,12 @@ _cb_dialog_destroy(void *data)
    E_Config_Dialog_Data *cfdata;
 
    es = data;;
+   if (e_object_is_del(E_OBJECT(es))) return;
    cfdata = evas_object_data_get(es->o_base, "cfdata");
    if (!cfdata) return;
    evas_object_data_del(es->o_base, "cfdata");
    e_object_unref(E_OBJECT(es));
-   _ilist_empty(cfdata);
-   _ilist_fill(cfdata);
+   _widgets_disable(cfdata, 0, EINA_TRUE);
 }
 
 static void
