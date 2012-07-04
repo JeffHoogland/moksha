@@ -131,6 +131,156 @@ _e_fileman_dbus_daemon_open_directory_cb(E_DBus_Object *obj __UNUSED__,
    return dbus_message_new_method_return(message);
 }
 
+static Eina_Bool
+_mime_shell_script_check(const char *mime)
+{
+   static const struct sh_script_map {
+      const char *str;
+      size_t len;
+   } options[] = {
+#define O(x) {x, sizeof(x) - 1}
+     O("application/x-sh"),
+     O("application/x-shellscript"),
+     O("text/x-sh"),
+#undef O
+     {NULL, 0}
+   };
+   const struct sh_script_map *itr;
+   size_t mimelen = strlen(mime);
+
+   for (itr = options; itr->str != NULL; itr++)
+     if ((mimelen == itr->len) && (memcmp(mime, itr->str, mimelen) == 0))
+       return EINA_TRUE;
+
+   return EINA_FALSE;
+}
+
+static DBusMessage *
+_e_fileman_dbus_daemon_open_file_cb(E_DBus_Object *obj __UNUSED__,
+                                    DBusMessage       *message)
+{
+   DBusMessageIter itr;
+   Eina_List *handlers;
+   const char *param_file = NULL, *mime, *errmsg = "unknow error";
+   char *real_file, *to_free = NULL;
+   E_Zone *zone;
+
+   dbus_message_iter_init(message, &itr);
+   dbus_message_iter_get_basic(&itr, &param_file);
+
+   if ((!param_file) || (param_file[0] == '\0'))
+     return _e_fileman_dbus_daemon_error(message, "no file provided.");
+
+   zone = e_util_zone_current_get(e_manager_current_get());
+   if (!zone)
+     return _e_fileman_dbus_daemon_error(message, "could not find a zone.");
+
+   if (!strstr(param_file, "://"))
+     {
+        real_file = ecore_file_realpath(param_file);
+        if (!real_file)
+          {
+             errmsg = "couldn't get realpath for file.";
+             goto error;
+          }
+     }
+   else
+     {
+        Efreet_Uri *uri = efreet_uri_decode(param_file);
+
+        real_file = NULL;
+        if (uri)
+          {
+             if ((uri->protocol) && (strcmp(uri->protocol, "file") == 0))
+               {
+                  real_file = ecore_file_realpath(uri->path);
+                  param_file = to_free = strdup(uri->path);
+               }
+             efreet_uri_free(uri);
+          }
+
+        if (!real_file)
+          {
+             errmsg = "unsupported protocol";
+             goto error;
+          }
+     }
+
+   mime = efreet_mime_type_get(real_file);
+   if (!mime)
+     {
+        errmsg = "couldn't find mime-type";
+        goto error;
+     }
+
+   if (strcmp(mime, "application/x-desktop") == 0)
+     {
+        Efreet_Desktop *desktop = efreet_desktop_new(real_file);
+        if (!desktop)
+          {
+             errmsg = "couldn't open desktop file";
+             goto error;
+          }
+
+        e_exec(zone, desktop, NULL, NULL, NULL);
+        efreet_desktop_free(desktop);
+        goto end;
+     }
+   else if ((strcmp(mime, "application/x-executable") == 0) ||
+            ecore_file_can_exec(param_file))
+     {
+        e_exec(zone, NULL, param_file, NULL, NULL);
+        goto end;
+     }
+   else if (_mime_shell_script_check(mime))
+     {
+        Eina_Strbuf *b = eina_strbuf_new();
+        const char *shell = getenv("SHELL");
+        if (!shell)
+          {
+             uid_t uid = getuid();
+             struct passwd *pw = getpwuid(uid);
+             if (pw) shell = pw->pw_shell;
+          }
+        if (!shell) shell = "/bin/sh";
+        eina_strbuf_append_printf(b, "%s %s %s",
+                                  e_config->exebuf_term_cmd,
+                                  shell,
+                                  param_file);
+        e_exec(zone, NULL, eina_strbuf_string_get(b), NULL, NULL);
+        eina_strbuf_free(b);
+        goto end;
+     }
+
+   handlers = efreet_util_desktop_mime_list(mime);
+   if (!handlers)
+     {
+        errmsg = "no handlers for given file";
+        goto end;
+     }
+   else
+     {
+        Efreet_Desktop *desktop = handlers->data;
+        Eina_List *files = eina_list_append(NULL, param_file);
+
+        e_exec(zone, desktop, NULL, files, NULL);
+        eina_list_free(files);
+
+        EINA_LIST_FREE(handlers, desktop)
+          efreet_desktop_free(desktop);
+     }
+
+ end:
+   free(real_file);
+   free(to_free);
+   return dbus_message_new_method_return(message);
+
+ error:
+   free(real_file);
+   free(to_free);
+   return _e_fileman_dbus_daemon_error(message, errmsg);
+}
+
 static void
 _e_fileman_dbus_daemon_request_name_cb(void        *data,
                                        DBusMessage *msg,
@@ -191,6 +341,7 @@ _e_fileman_dbus_daemon_new(void)
       E_DBus_Method_Cb func;
    } *itr, desc[] = {
       {"OpenDirectory", "s", "", _e_fileman_dbus_daemon_open_directory_cb},
+      {"OpenFile", "s", "", _e_fileman_dbus_daemon_open_file_cb},
       {NULL, NULL, NULL, NULL}
    };
    E_Fileman_DBus_Daemon *d;
