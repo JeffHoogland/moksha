@@ -112,10 +112,11 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ol, *ow, *ot, *of;
    char buf[64];
+   E_Zone *zone;
 
    ol = e_widget_list_add(evas, 0, 0);
-
-   snprintf(buf, sizeof(buf), "%s %d", _("Configured Shelves: Display"), e_util_zone_current_get(cfd->con->manager)->num);
+   zone = cfdata->cfd->dia->win->border ? cfdata->cfd->dia->win->border->zone : e_zone_current_get(cfdata->cfd->con);
+   snprintf(buf, sizeof(buf), "%s %d", _("Configured Shelves: Display"), zone->num);
    of = e_widget_framelist_add(evas, buf, 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->cur_shelf));
    evas_object_data_set(cfdata->o_list, "cfdata", cfdata);
@@ -262,7 +263,7 @@ _ilist_empty(E_Config_Dialog_Data *cfdata)
    E_Zone *zone;
 
    if ((!cfdata) || (!cfdata->cfd) || (!cfdata->cfd->con) || (!cfdata->cfd->con->manager)) return;
-   zone = e_util_zone_current_get(cfdata->cfd->con->manager);
+   zone = cfdata->cfd->dia->win->border ? cfdata->cfd->dia->win->border->zone : e_zone_current_get(cfdata->cfd->con);
    if (!zone) return;
    desk = e_desk_current_get(zone);
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
@@ -317,7 +318,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(cfdata->o_list);
    e_widget_ilist_clear(cfdata->o_list);
    e_widget_ilist_go(cfdata->o_list);
-   zone = e_util_zone_current_get(cfdata->cfd->con->manager);
+   zone = cfdata->cfd->dia->win->border ? cfdata->cfd->dia->win->border->zone : e_zone_current_get(cfdata->cfd->con);
    desk = e_desk_current_get(zone);
 
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
