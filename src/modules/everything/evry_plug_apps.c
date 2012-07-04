@@ -840,7 +840,7 @@ _exec_term_action(Evry_Action *act)
    char *escaped = ecore_file_escape_name(app->file);
 
    tmp = E_NEW(Evry_Item_App, 1);
-   snprintf(buf, sizeof(buf), "%s -hold -e %s",
+   snprintf(buf, sizeof(buf), "%s %s",
             _conf->cmd_terminal,
             (escaped ? escaped : app->file));
 
@@ -1298,9 +1298,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
 #define CP(_name)                        \
-  if (_conf->_name)                      \
-    eina_stringshare_del(_conf->_name);  \
-  _conf->_name = eina_stringshare_add(cfdata->_name);
+   eina_stringshare_replace(&(_conf->_name), cfdata->_name)
 #define C(_name) _conf->_name = cfdata->_name;
    CP(cmd_terminal);
    CP(cmd_sudo);
@@ -1309,7 +1307,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    e_config_domain_save("module.everything-apps", conf_edd, _conf);
 
-   /* e_config_save_queue(); */
+   /* backwards compatible with exebuf */
+   eina_stringshare_replace(&(e_config->exebuf_term_cmd), _conf->cmd_terminal);
+   e_config_save_queue();
    return 1;
 }
 
@@ -1327,7 +1327,7 @@ _conf_new(void)
 
     /* setup defaults */
     IFMODCFG(0x009d);
-    _conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm");
+    _conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm -hold -e");
     _conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
     IFMODCFGEND;
 
