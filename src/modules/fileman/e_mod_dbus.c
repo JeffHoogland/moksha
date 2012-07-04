@@ -63,13 +63,13 @@ _e_fileman_dbus_daemon_free(E_Fileman_DBus_Daemon *d)
    free(d);
 }
 
-DBusMessage *
+static DBusMessage *
 _e_fileman_dbus_daemon_open_directory_cb(E_DBus_Object *obj __UNUSED__,
                                          DBusMessage       *message)
 {
    DBusMessageIter itr;
    const char *directory = NULL, *p;
-   char *dev;
+   char *dev, *to_free = NULL;
    E_Zone *zone;
 
    dbus_message_iter_init(message, &itr);
@@ -78,12 +78,25 @@ _e_fileman_dbus_daemon_open_directory_cb(E_DBus_Object *obj __UNUSED__,
    if ((!directory) || (directory[0] == '\0'))
      return _e_fileman_dbus_daemon_error(message, "no directory provided.");
 
-   if (strncmp(directory, "file://", sizeof("file://") - 1) == 0)
-     directory += sizeof("file://") - 1;
-
    zone = e_util_zone_current_get(e_manager_current_get());
    if (!zone)
      return _e_fileman_dbus_daemon_error(message, "could not find a zone.");
+
+   if (strstr(directory, "://"))
+     {
+        Efreet_Uri *uri = efreet_uri_decode(directory);
+
+        directory = NULL;
+        if (uri)
+          {
+             if ((uri->protocol) && (strcmp(uri->protocol, "file") == 0))
+               directory = to_free = strdup(uri->path);
+             efreet_uri_free(uri);
+          }
+
+        if (!directory)
+          return _e_fileman_dbus_daemon_error(message, "unsupported protocol");
+     }
 
    p = strchr(directory, '/');
    if (p)
@@ -92,8 +105,11 @@ _e_fileman_dbus_daemon_open_directory_cb(E_DBus_Object *obj __UNUSED__,
 
         dev = malloc(len + 1);
         if (!dev)
-          return _e_fileman_dbus_daemon_error
-                   (message, "could not allocate memory.");
+          {
+             free(to_free);
+             return _e_fileman_dbus_daemon_error(message,
+                                                 "could not allocate memory.");
+          }
 
         memcpy(dev, directory, len);
         dev[len] = '\0';
@@ -111,6 +127,7 @@ _e_fileman_dbus_daemon_open_directory_cb(E_DBus_Object *obj __UNUSED__,
 
    e_fwin_new(zone->container, dev, directory);
    free(dev);
+   free(to_free);
    return dbus_message_new_method_return(message);
 }
 
