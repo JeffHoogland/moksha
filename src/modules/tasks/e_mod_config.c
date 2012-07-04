@@ -8,10 +8,10 @@ struct _E_Config_Dialog_Data
 };
 
 /* Protos */
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 void
 _config_tasks_module(Config_Item *ci)
@@ -28,7 +28,7 @@ _config_tasks_module(Config_Item *ci)
    v->basic.create_widgets = _basic_create_widgets;
 
    con = e_container_current_get(e_manager_current_get());
-   cfd = e_config_dialog_new(con, _("Tasks Configuration"), "Tasks", 
+   cfd = e_config_dialog_new(con, _("Tasks Configuration"), "Tasks",
                              "_e_modules_tasks_config_dialog", NULL, 0, v, ci);
    if (tasks_config->config_dialog)
      e_object_del(E_OBJECT(tasks_config->config_dialog));
@@ -84,7 +84,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ow = e_widget_slider_add(evas, 1, 0, _("%1.0f px"), 20, 420, 1, 0,
                             NULL, &(cfdata->minh), 100);
    e_widget_framelist_object_append(of, ow);
-   
+
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    return o;
 }
@@ -102,3 +102,4 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    _tasks_config_updated(ci);
    return 1;
 }
+
