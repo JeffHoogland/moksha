@@ -6,6 +6,7 @@
 #include <Ecore_File.h>
 #include <Ecore_Getopt.h>
 #include <E_DBus.h>
+#include <unistd.h>
 
 static E_DBus_Connection *conn = NULL;
 static int retval = EXIT_SUCCESS;
@@ -36,12 +37,35 @@ fm_open(const char *path)
 {
    DBusMessage *msg;
    Eina_Bool sent;
-   char *p = ecore_file_realpath(path);
+   char *p;
+
+   if (path[0] == '/')
+     p = strdup(path);
+   else
+     {
+        char buf[PATH_MAX];
+        if (!getcwd(buf, sizeof(buf)))
+          {
+             fprintf(stderr,
+                     "ERROR: Could not get current working directory: %s\n",
+                     strerror(errno));
+             ecore_idler_add(fm_error_quit_last, NULL);
+             return;
+          }
+        if (strcmp(path, ".") == 0)
+          p = strdup(buf);
+        else
+          {
+             char tmp[PATH_MAX];
+             snprintf(tmp, sizeof(tmp), "%s/%s", buf, path);
+             p = strdup(tmp);
+          }
+     }
 
    EINA_LOG_DBG("'%s' -> '%s'", path, p);
    if ((!p) || (p[0] == '\0'))
      {
-        fprintf(stderr, "ERROR: Could not get real path '%s'\n", path);
+        fprintf(stderr, "ERROR: Could not get path '%s'\n", path);
         ecore_idler_add(fm_error_quit_last, NULL);
         free(p);
         return;
