@@ -81,6 +81,7 @@ struct _E_Config_Dialog_Data
    const char      *params;
 
    int              fullscreen_flip;
+   int              multiscreen_flip;
 
    E_Config_Dialog *cfd;
 };
@@ -144,6 +145,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      }
 
    cfdata->fullscreen_flip = e_config->fullscreen_flip;
+   cfdata->multiscreen_flip = e_config->multiscreen_flip;
 }
 
 static void *
@@ -200,6 +202,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         E_FREE(bi);
      }
 
+   e_config->multiscreen_flip = cfdata->multiscreen_flip;
    EINA_LIST_FOREACH(cfdata->binding.edge, l, bi2)
      {
         bi = E_NEW(E_Config_Binding_Edge, 1);
@@ -295,6 +298,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    of = e_widget_framelist_add(evas, _("General Options"), 0);
    ob = e_widget_check_add(evas, _("Allow binding activation with fullscreen windows"), &(cfdata->fullscreen_flip));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Allow binding activation with multiple screens (DANGEROUS!)"), &(cfdata->multiscreen_flip));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 

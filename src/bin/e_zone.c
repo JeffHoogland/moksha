@@ -992,10 +992,10 @@ e_zone_edge_new(E_Zone_Edge edge)
    E_Zone *zone;
    int cw, ch;
 
-   // explicitly disallow edge bindings when we have more than 1 root
+   // configurably disallow edge bindings when we have more than 1 root
    // window (ie pure old multihead) since we don't know which direction
    // other root windows are in
-   if (eina_list_count(e_manager_list()) > 1) return;
+   if ((!e_config->multiscreen_flip) && (eina_list_count(e_manager_list()) > 1)) return;
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
         EINA_LIST_FOREACH(man->containers, ll, con)
