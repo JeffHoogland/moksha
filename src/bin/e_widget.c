@@ -519,8 +519,14 @@ _e_smart_del(Evas_Object *obj)
    while (sd->subobjs)
      {
         Evas_Object *sobj = sd->subobjs->data;
+        /* DO NOT MACRO THIS!
+         * list gets reshuffled during object delete callback chain
+         * and breaks the world.
+         * BORKER CERTIFICATION: GOLD
+         * -discomfitor, 7/4/2012
+         */
+        sd->subobjs = eina_list_remove_list(sd->subobjs, sd->subobjs);
         evas_object_del(sobj);
-        sd->subobjs = eina_list_remove(sd->subobjs, sobj);
      }
    free(sd);
 }
