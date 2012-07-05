@@ -1688,7 +1688,7 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_BOTTOM:
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
-        hide_max = es->h - es->hidden_state_size;
+        hide_max = es->h - es->hidden_state_size - 1;
         if (es->hide_origin == -1) es->hide_origin = es->y;
         break;
 
