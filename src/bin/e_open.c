@@ -483,14 +483,21 @@ main(int argc, char *argv[])
    else
      {
         char **itr;
+        int ret = EXIT_SUCCESS;
 
         for (itr = cmds; *itr != NULL; itr++)
           {
-             system(*itr);
+             /* Question: should we execute them in parallel? */
+             int r = system(*itr);
+             if (r < 0)
+               fprintf(stderr, "ERROR: %s executing %s\n", strerror(errno),
+                       *itr);
              free(*itr);
+             if (r > 0) /* Question: should we stop the loop on first faiure? */
+               ret = r;
           }
         free(cmds);
-     }
 
-   return EXIT_SUCCESS;
+        return ret;
+     }
 }
