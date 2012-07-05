@@ -175,6 +175,10 @@ if USE_MODULE_COMP
 SUBDIRS += comp
 endif
 
+if USE_MODULE_PHYSICS
+SUBDIRS += physics
+endif
+
 if USE_MODULE_OFONO
 SUBDIRS += ofono
 endif
