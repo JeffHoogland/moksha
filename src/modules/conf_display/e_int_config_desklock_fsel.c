@@ -4,29 +4,29 @@
 struct _E_Config_Dialog_Data
 {
    Evas_Object *o_list, *o_up;
-   int fmdir;
-   char *bg;
+   int          fmdir;
+   char        *bg;
 };
 
 /* local function prototypes */
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _cb_dir_changed(void *data, Evas_Object *obj, void *event);
-static void _cb_sel_changed(void *data, Evas_Object *obj, void *event);
-static void _cb_files_changed(void *data, Evas_Object *obj, void *event);
-static void _cb_files_deleted(void *data, Evas_Object *obj, void *event);
-static void _cb_radio_changed(void *data, Evas_Object *obj, void *event);
-static void _cb_dir_up(void *data1, void *data2);
+static void         _cb_dir_changed(void *data, Evas_Object *obj, void *event);
+static void         _cb_sel_changed(void *data, Evas_Object *obj, void *event);
+static void         _cb_files_changed(void *data, Evas_Object *obj, void *event);
+static void         _cb_files_deleted(void *data, Evas_Object *obj, void *event);
+static void         _cb_radio_changed(void *data, Evas_Object *obj, void *event);
+static void         _cb_dir_up(void *data1, void *data2);
 
 E_Config_Dialog *
-e_int_config_desklock_fsel(E_Config_Dialog *parent) 
+e_int_config_desklock_fsel(E_Config_Dialog *parent)
 {
    E_Container *con;
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
 
-   if (parent) 
+   if (parent)
      con = parent->con;
    else
      con = e_container_current_get(e_manager_current_get());
@@ -38,8 +38,8 @@ e_int_config_desklock_fsel(E_Config_Dialog *parent)
    v->basic_only = 1;
    v->normal_win = 1;
 
-   cfd = e_config_dialog_new(con, _("Select a Background..."), 
-                             "E", "_desklock_fsel_dialog", 
+   cfd = e_config_dialog_new(con, _("Select a Background..."),
+                             "E", "_desklock_fsel_dialog",
                              "enlightenment/background", 0, v, parent);
 
    return cfd;
@@ -47,7 +47,7 @@ e_int_config_desklock_fsel(E_Config_Dialog *parent)
 
 /* local functions */
 static void *
-_create_data(E_Config_Dialog *cfd __UNUSED__) 
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -56,8 +56,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    return cfdata;
 }
 
-static void 
-_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata) 
+static void
+_free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    const char *bg_file = NULL;
 
@@ -68,7 +68,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata) 
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ow, *ot, *rt;
    E_Radio_Group *rg;
@@ -88,7 +88,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    evas_object_smart_callback_add(ow, "changed", _cb_radio_changed, cfdata);
    e_widget_table_object_append(rt, ow, 1, 0, 1, 1, 1, 1, 0, 0);
    e_widget_table_object_append(ot, rt, 0, 0, 1, 1, 0, 0, 0, 0);
-   ow = e_widget_button_add(evas, _("Go up a Directory"), "go-up", 
+   ow = e_widget_button_add(evas, _("Go up a Directory"), "go-up",
                             _cb_dir_up, cfdata, NULL);
    cfdata->o_up = ow;
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 0, 0, 0, 0);
@@ -99,13 +99,13 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
      e_user_dir_concat_static(path, "backgrounds");
 
    cfdata->o_list = e_widget_flist_add(evas);
-   evas_object_smart_callback_add(cfdata->o_list, "dir_changed", 
+   evas_object_smart_callback_add(cfdata->o_list, "dir_changed",
                                   _cb_dir_changed, cfdata);
-   evas_object_smart_callback_add(cfdata->o_list, "selection_change", 
+   evas_object_smart_callback_add(cfdata->o_list, "selection_change",
                                   _cb_sel_changed, cfdata);
-   evas_object_smart_callback_add(cfdata->o_list, "changed", 
+   evas_object_smart_callback_add(cfdata->o_list, "changed",
                                   _cb_files_changed, cfdata);
-   evas_object_smart_callback_add(cfdata->o_list, "files_deleted", 
+   evas_object_smart_callback_add(cfdata->o_list, "files_deleted",
                                   _cb_files_deleted, cfdata);
    e_widget_flist_path_set(cfdata->o_list, path, "/");
    e_widget_size_min_set(cfdata->o_list, 200, 160);
@@ -115,18 +115,18 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    return o;
 }
 
-static void 
-_cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
+static void
+_cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
    if (!(cfdata = data)) return;
-   e_widget_disabled_set(cfdata->o_up, 
+   e_widget_disabled_set(cfdata->o_up,
                          !e_widget_flist_has_parent_get(cfdata->o_list));
 }
 
-static void 
-_cb_sel_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
+static void
+_cb_sel_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *sel;
@@ -148,8 +148,8 @@ _cb_sel_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
    cfdata->bg = strdup(buff);
 }
 
-static void 
-_cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
+static void
+_cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const char *p = NULL;
@@ -159,7 +159,7 @@ _cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED_
    if (!(cfdata = data)) return;
    if (!cfdata->bg) return;
    p = e_widget_flist_real_path_get(cfdata->o_list);
-   if (p) 
+   if (p)
      {
         if (strncmp(p, cfdata->bg, strlen(p))) return;
      }
@@ -168,7 +168,7 @@ _cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED_
    len = e_user_dir_concat_static(buff, "backgrounds");
    if (!strncmp(cfdata->bg, buff, len))
      p = cfdata->bg + len + 1;
-   else 
+   else
      {
         len = e_prefix_data_concat_static(buff, "data/backgrounds");
         if (!strncmp(cfdata->bg, buff, len))
@@ -180,8 +180,8 @@ _cb_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED_
    e_widget_flist_file_show(cfdata->o_list, p);
 }
 
-static void 
-_cb_files_deleted(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
+static void
+_cb_files_deleted(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *sel, *all, *n;
@@ -194,7 +194,7 @@ _cb_files_deleted(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED_
    if (!(ici = sel->data)) return;
    all = eina_list_data_find_list(all, ici);
    n = eina_list_next(all);
-   if (!n) 
+   if (!n)
      {
         if (!(n = eina_list_prev(all))) return;
      }
@@ -205,8 +205,8 @@ _cb_files_deleted(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED_
    evas_object_smart_callback_call(cfdata->o_list, "selection_change", cfdata);
 }
 
-static void 
-_cb_radio_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__) 
+static void
+_cb_radio_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    char path[PATH_MAX];
@@ -219,11 +219,12 @@ _cb_radio_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED_
    e_widget_flist_path_set(cfdata->o_list, path, "/");
 }
 
-static void 
-_cb_dir_up(void *data1, void *data2 __UNUSED__) 
+static void
+_cb_dir_up(void *data1, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
    if (!(cfdata = data1)) return;
    e_widget_flist_parent_go(cfdata->o_list);
 }
+
