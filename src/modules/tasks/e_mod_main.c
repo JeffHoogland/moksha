@@ -70,6 +70,7 @@ static Config_Item *_tasks_config_item_get(const char *id);
 static void         _tasks_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _tasks_cb_item_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void         _tasks_cb_item_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _tasks_cb_item_mouse_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 
 static Eina_Bool    _tasks_cb_event_border_add(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_remove(void *data, int type, void *event);
@@ -491,6 +492,8 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
                                   _tasks_cb_item_mouse_down, item);
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_UP,
                                   _tasks_cb_item_mouse_up, item);
+   evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_WHEEL,
+                                  _tasks_cb_item_mouse_wheel, item);
    evas_object_show(item->o_item);
 
    _tasks_item_fill(item);
@@ -697,6 +700,27 @@ _tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
         evas_event_feed_mouse_up(item->tasks->gcc->gadcon->evas, ev->button,
                                  EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
+}
+
+static void
+_tasks_cb_item_mouse_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   Evas_Event_Mouse_Wheel *ev;
+   Tasks_Item *item;
+
+   ev = event_info;
+   item = data;
+
+   if (ev->z < 0)
+     {
+        if (item->border->iconic)
+          e_border_uniconify(item->border);
+        else
+          e_border_raise(item->border);
+        e_border_focus_set(item->border, 1, 1);
+     }
+   else if (ev->z > 0)
+     e_border_iconify(item->border);
 }
 
 static void
