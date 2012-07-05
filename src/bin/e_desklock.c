@@ -270,7 +270,7 @@ works:
                   E_Config_Desklock_Background *cbg;
                   const char *bg;
 
-                  cbg = l4 ? l4->data : NULL;
+                  cbg = eina_list_data_get(l4);
                   bg = cbg ? cbg->file : NULL;
                   edp = E_NEW(E_Desklock_Popup_Data, 1);
                   if (edp)
@@ -367,7 +367,7 @@ works:
 
                        edd->elock_wnd_list = eina_list_append(edd->elock_wnd_list, edp);
                     }
-                  l4 = l4->next;
+                  l4 = eina_list_next(l4);
                   zone_counter++;
                }
           }
