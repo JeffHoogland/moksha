@@ -3027,6 +3027,14 @@ _e_mod_comp_update_func(void *data,
 }
 
 static E_Manager_Comp_Source *
+_e_mod_comp_border_src_get_func(void *data __UNUSED__,
+                         E_Manager *man __UNUSED__,
+                         Ecore_X_Window win)
+{
+   return (E_Manager_Comp_Source *)_e_mod_comp_border_client_find(win);
+}
+
+static E_Manager_Comp_Source *
 _e_mod_comp_src_get_func(void *data __UNUSED__,
                          E_Manager *man __UNUSED__,
                          Ecore_X_Window win)
@@ -3338,6 +3346,7 @@ _e_mod_comp_add(E_Manager *man)
    c->comp.func.evas_get = _e_mod_comp_evas_get_func;
    c->comp.func.update = _e_mod_comp_update_func;
    c->comp.func.src_get = _e_mod_comp_src_get_func;
+   c->comp.func.border_src_get = _e_mod_comp_border_src_get_func;
    c->comp.func.src_list_get = _e_mod_comp_src_list_get_func;
    c->comp.func.src_image_get = _e_mod_comp_src_image_get_func;
    c->comp.func.src_shadow_get = _e_mod_comp_src_shadow_get_func;

@@ -558,6 +558,12 @@ e_manager_comp_src_list(E_Manager *man)
 }
 
 EAPI E_Manager_Comp_Source*
+e_manager_comp_border_src_get(E_Manager *man, Ecore_X_Window win)
+{
+   return man->comp->func.border_src_get(man->comp->data, man, win);
+}
+
+EAPI E_Manager_Comp_Source*
 e_manager_comp_src_get(E_Manager *man, Ecore_X_Window win)
 {
    return man->comp->func.src_get(man->comp->data, man, win);
