@@ -1303,8 +1303,14 @@ _e_border_move_internal(E_Border *bd,
         x -= bd->client_inset.l;
         y -= bd->client_inset.t;
      }
-
-   if ((x == bd->x) && (y == bd->y)) return;
+   if (bd->move_intercept_cb)
+     {
+        int px, py;
+        px = bd->x, py = bd->y;
+        bd->move_intercept_cb(bd, x, y);
+        if ((bd->x == px) && (bd->y == py)) return;
+     }
+   else if ((x == bd->x) && (y == bd->y)) return;
    bd->pre_res_change.valid = 0;
    bd->x = x;
    bd->y = y;
@@ -1349,6 +1355,17 @@ e_border_move(E_Border *bd,
      return;
 
    _e_border_move_internal(bd, x, y, 0);
+}
+
+
+/**
+ * Set a callback which will be called just prior to updating the
+ * move coordinates for a border
+ */
+EAPI void
+e_border_move_intercept_cb_set(E_Border *bd, E_Border_Move_Intercept_Cb cb)
+{
+   bd->move_intercept_cb = cb;
 }
 
 /**

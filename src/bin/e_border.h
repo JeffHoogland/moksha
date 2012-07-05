@@ -124,7 +124,7 @@ typedef struct _E_Event_Border_Simple        E_Event_Border_Focus_Out;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Property;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Fullscreen;
 typedef struct _E_Event_Border_Simple        E_Event_Border_Unfullscreen;
-
+typedef void (*E_Border_Move_Intercept_Cb)(E_Border *, int x, int y);
 #else
 #ifndef E_BORDER_H
 #define E_BORDER_H
@@ -564,6 +564,7 @@ struct _E_Border
    Ecore_Timer *raise_timer;
    Ecore_Poller *ping_poller;
    Ecore_Timer *kill_timer;
+   E_Border_Move_Intercept_Cb move_intercept_cb;
    int shape_rects_num;
    Ecore_X_Rectangle *shape_rects;
    E_Remember *remember;
@@ -647,6 +648,7 @@ EAPI void      e_border_desk_set(E_Border *bd, E_Desk *desk);
 EAPI void      e_border_show(E_Border *bd);
 EAPI void      e_border_hide(E_Border *bd, int manage);
 EAPI void      e_border_move(E_Border *bd, int x, int y);
+EAPI void      e_border_move_intercept_cb_set(E_Border *bd, E_Border_Move_Intercept_Cb cb);
 EAPI void      e_border_move_without_border(E_Border *bd, int x, int y);
 EAPI void      e_border_center(E_Border *bd);
 EAPI void      e_border_center_pos_get(E_Border *bd, int *x, int *y);
