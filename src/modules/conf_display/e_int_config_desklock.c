@@ -21,7 +21,6 @@ struct _E_Config_Dialog_Data
 
    /* Common vars */
    int              use_xscreensaver;
-   int              fmdir;
    int              zone_count;
 
    /* Locking */
@@ -40,7 +39,7 @@ struct _E_Config_Dialog_Data
 
    /* Adv props */
    int              bg_method;
-   const char      *bg;
+   Eina_List      *bgs;
    int              custom_lock;
    int              ask_presentation;
    double           ask_presentation_timeout;
@@ -51,7 +50,8 @@ struct _E_Config_Dialog_Data
       Evas_Object *post_screensaver_slider;
       Evas_Object *auto_lock_slider;
       Evas_Object *ask_presentation_slider;
-      Evas_Object *o_bg;
+      Evas_Object *o_table;
+      Eina_List *bgs;
    } gui;
 };
 
@@ -79,44 +79,48 @@ e_int_config_desklock(E_Container *con, const char *params __UNUSED__)
 }
 
 void
-e_int_config_desklock_fsel_done(E_Config_Dialog *cfd, const char *bg_file)
+e_int_config_desklock_fsel_done(E_Config_Dialog *cfd, Evas_Object *bg, const char *bg_file)
 {
    E_Config_Dialog_Data *cfdata;
+   Eina_List *l;
+   const char *cbg;
 
    if (!(cfdata = cfd->cfdata)) return;
    cfdata->bg_fsel = NULL;
-   if (bg_file)
-     {
-        eina_stringshare_replace(&cfdata->bg, bg_file);
-        e_widget_preview_edje_set(cfdata->gui.o_bg, cfdata->bg,
-                                  "e/desktop/background");
-     }
+   if (!bg_file) return;
+   e_widget_preview_file_get(bg, &cbg, NULL);
+   l = eina_list_data_find_list(cfdata->bgs, cbg);
+   if (l->data)
+     eina_stringshare_replace((const char**)&l->data, bg_file);
+   else
+     eina_list_data_set(l, eina_stringshare_add(bg_file));
+   e_widget_preview_edje_set(bg, bg_file, "e/desktop/background");
 }
 
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   cfdata->fmdir = 0;
-   if (e_config->desklock_background)
-     {
-        cfdata->bg = eina_stringshare_ref(e_config->desklock_background);
-        if (!strstr(cfdata->bg, e_user_homedir_get()))
-          cfdata->fmdir = 1;
-     }
-   else
-     cfdata->bg = eina_stringshare_add("theme_desklock_background");
+   Eina_List *l;
+   E_Config_Desklock_Background *bg;
+   int x;
 
-   if (!strcmp(cfdata->bg, "theme_desklock_background"))
+   cfdata->zone_count = _zone_count_get();
+   EINA_LIST_FOREACH(e_config->desklock_backgrounds, l, bg)
+     cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_ref(bg->file));
+   if (!cfdata->bgs)
+     for (x = 0; x < cfdata->zone_count; x++)
+     cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("theme_desklock_background"));
+
+   if (!e_util_strcmp(cfdata->bgs->data, "theme_desklock_background"))
      cfdata->bg_method = 0;
-   else if (!strcmp(cfdata->bg, "theme_background"))
+   else if (!e_util_strcmp(cfdata->bgs->data, "theme_background"))
      cfdata->bg_method = 1;
-   else if (!strcmp(cfdata->bg, "user_background"))
+   else if (!e_util_strcmp(cfdata->bgs->data, "user_background"))
      cfdata->bg_method = 2;
    else
      cfdata->bg_method = 3;
 
    cfdata->use_xscreensaver = ecore_x_screensaver_event_available_get();
-   cfdata->zone_count = _zone_count_get();
 
    cfdata->custom_lock = e_config->desklock_use_custom_desklock;
    if (e_config->desklock_custom_desklock_cmd)
@@ -158,10 +162,12 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   const char *bg;
    if (cfdata->bg_fsel)
      e_object_del(E_OBJECT(cfdata->bg_fsel));
    E_FREE(cfdata->custom_lock_cmd);
-   if (cfdata->bg) eina_stringshare_del(cfdata->bg);
+   EINA_LIST_FREE(cfdata->bgs, bg)
+     eina_stringshare_del(bg);
    E_FREE(cfdata);
 }
 
@@ -190,9 +196,13 @@ _basic_screensaver_lock_cb_changed(void *data, Evas_Object *o __UNUSED__)
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *otb, *ol, *ow, *of;
+   Evas_Object *otb, *ol, *ow, *of, *ot;
+   Eina_List *l, *ll, *lll;
+   E_Zone *zone;
    E_Radio_Group *rg;
-   int screen_count;
+   E_Manager *man;
+   E_Container *con;
+   int screen_count, x = 0;
 
    screen_count = ecore_x_xinerama_screen_count_get();
 
@@ -302,12 +312,21 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_table_object_append(of, ow, 1, 1, 1, 1, 1, 0, 1, 0);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   ow = e_widget_preview_add(evas, 100, 140);
-   cfdata->gui.o_bg = ow;
-   e_widget_disabled_set(cfdata->gui.o_bg, (cfdata->bg_method < 3));
-   evas_object_event_callback_add(ow, EVAS_CALLBACK_MOUSE_DOWN,
-                                  _cb_bg_mouse_down, cfdata);
-   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   cfdata->gui.o_table = ot = e_widget_table_add(evas, 1);
+
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     EINA_LIST_FOREACH(man->containers, ll, con)
+       EINA_LIST_FOREACH(con->zones, lll, zone)
+         {
+            ow = e_widget_preview_add(evas, 100, 140);
+            cfdata->gui.bgs = eina_list_append(cfdata->gui.bgs, ow);
+            evas_object_data_set(ow, "zone", zone);
+            e_widget_disabled_set(ow, (cfdata->bg_method < 3));
+            evas_object_event_callback_add(ow, EVAS_CALLBACK_MOUSE_DOWN, _cb_bg_mouse_down, cfdata);
+            e_widget_table_object_append(cfdata->gui.o_table, ow, x++, 0, 1, 1, 1, 1, 1, 1);
+         }
+   _cb_method_change(cfdata, NULL, NULL);
+   e_widget_list_object_append(ol, cfdata->gui.o_table, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Wallpaper"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
@@ -322,6 +341,10 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   Eina_List *l;
+   const char *bg;
+   E_Config_Desklock_Background *cbg;
+
    e_config->desklock_start_locked = cfdata->start_locked;
    e_config->desklock_on_suspend = cfdata->lock_on_suspend;
    e_config->desklock_autolock_idle = cfdata->auto_lock;
@@ -332,12 +355,21 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->desklock_ask_presentation_timeout =
      cfdata->ask_presentation_timeout;
 
-   if (cfdata->bg)
+   if (cfdata->bgs)
      {
-        if (e_config->desklock_background)
-          e_filereg_deregister(e_config->desklock_background);
-        eina_stringshare_replace(&e_config->desklock_background, cfdata->bg);
-        e_filereg_register(e_config->desklock_background);
+        EINA_LIST_FREE(e_config->desklock_backgrounds, cbg)
+          {
+             e_filereg_deregister(cbg->file);
+             eina_stringshare_del(cbg->file);
+             free(cbg);
+          }
+        EINA_LIST_FOREACH(cfdata->bgs, l, bg)
+          {
+             cbg = E_NEW(E_Config_Desklock_Background, 1);
+             cbg->file = eina_stringshare_ref(bg);
+             e_config->desklock_backgrounds = eina_list_append(e_config->desklock_backgrounds, cbg);
+             e_filereg_register(bg);
+          }
      }
 
    if (cfdata->login_zone < 0)
@@ -357,6 +389,8 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   Eina_List *l, *ll;
+   E_Config_Desklock_Background *cbg;
    if (e_config->desklock_start_locked != cfdata->start_locked)
      return 1;
 
@@ -376,8 +410,13 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    if (e_config->desklock_autolock_idle_timeout != cfdata->idle_time * 60)
      return 1;
 
-   if (e_config->desklock_background != cfdata->bg)
-     return 1;
+   ll = cfdata->bgs;
+   EINA_LIST_FOREACH(e_config->desklock_backgrounds, l, cbg)
+     {
+        if (!ll) return 1;
+        if (cbg->file != ll->data) return 1;
+        ll = ll->next;
+     }
 
    if (cfdata->login_zone < 0)
      {
@@ -409,56 +448,72 @@ static void
 _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
+   Eina_List *l;
+   Evas_Object *bg;
    const char *theme = NULL;
+   int x;
 
    if (!(cfdata = data)) return;
-   e_widget_disabled_set(cfdata->gui.o_bg, (cfdata->bg_method < 3));
+   EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
+     e_widget_disabled_set(bg, (cfdata->bg_method < 3));
    switch (cfdata->bg_method)
      {
       case 0:
-        eina_stringshare_replace(&cfdata->bg, "theme_desklock_background");
+        EINA_LIST_FREE(cfdata->bgs, theme)
+          eina_stringshare_del(theme);
+        for (x = 0; x < cfdata->zone_count; x++)
+          cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("theme_desklock_background"));
         theme = e_theme_edje_file_get("base/theme/desklock",
                                       "e/desklock/background");
         if (theme)
-          e_widget_preview_edje_set(cfdata->gui.o_bg, theme,
-                                    "e/desklock/background");
+          EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
+            e_widget_preview_edje_set(bg, theme, "e/desklock/background");
         break;
 
       case 1:
-        eina_stringshare_replace(&cfdata->bg, "theme_background");
         theme = e_theme_edje_file_get("base/theme/backgrounds",
                                       "e/desktop/background");
         if (theme)
-          e_widget_preview_edje_set(cfdata->gui.o_bg, theme,
-                                    "e/desktop/background");
+          EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
+            e_widget_preview_edje_set(bg, theme, "e/desklock/background");
         break;
 
       case 2:
-        eina_stringshare_replace(&cfdata->bg, "user_background");
         if (e_config->desktop_default_background)
-          theme = e_config->desktop_default_background;
+          {
+             theme = e_config->desktop_default_background;
+             if (theme)
+               EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
+                 e_widget_preview_edje_set(bg, theme, "e/desklock/background");
+          }
         else
           {
              const E_Config_Desktop_Background *cbg;
-             const Eina_List *l;
+             Eina_List *ll;
 
+             ll = cfdata->gui.bgs;
              EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cbg)
                {
+                  if (!ll) break;
                   if (cbg->file)
-                    {
-                       theme = cbg->file;
-                       break;
-                    }
+                    e_widget_preview_edje_set(ll->data, cbg->file, "e/desktop/background");
+                  ll = ll->next;
                }
           }
-        if (theme)
-          e_widget_preview_edje_set(cfdata->gui.o_bg, theme,
-                                    "e/desktop/background");
         break;
 
       default:
-        e_widget_preview_edje_set(cfdata->gui.o_bg, cfdata->bg,
-                                  "e/desktop/background");
+        {
+             Eina_List *ll;
+
+             ll = cfdata->gui.bgs;
+             EINA_LIST_FOREACH(cfdata->bgs, l, theme)
+               {
+                  if (!ll) break;
+                  e_widget_preview_edje_set(ll->data, theme, "e/desktop/background");
+                  ll = ll->next;
+               }
+        }
         break;
      }
 }
@@ -500,7 +555,7 @@ _cb_bg_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *eve
    if (cfdata->bg_fsel)
      e_win_raise(cfdata->bg_fsel->dia->win);
    else
-     cfdata->bg_fsel = e_int_config_desklock_fsel(cfdata->cfd);
+     cfdata->bg_fsel = e_int_config_desklock_fsel(cfdata->cfd, obj);
 }
 
 static void

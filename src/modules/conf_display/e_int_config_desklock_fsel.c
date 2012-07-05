@@ -20,7 +20,7 @@ static void         _cb_radio_changed(void *data, Evas_Object *obj, void *event)
 static void         _cb_dir_up(void *data1, void *data2);
 
 E_Config_Dialog *
-e_int_config_desklock_fsel(E_Config_Dialog *parent)
+e_int_config_desklock_fsel(E_Config_Dialog *parent, Evas_Object *bg)
 {
    E_Container *con;
    E_Config_Dialog *cfd;
@@ -41,7 +41,7 @@ e_int_config_desklock_fsel(E_Config_Dialog *parent)
    cfd = e_config_dialog_new(con, _("Select a Background..."),
                              "E", "_desklock_fsel_dialog",
                              "enlightenment/background", 0, v, parent);
-
+   e_object_data_set(E_OBJECT(cfd), bg);
    return cfd;
 }
 
@@ -64,7 +64,7 @@ _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->bg) bg_file = strdup(cfdata->bg);
    E_FREE(cfdata->bg);
    E_FREE(cfdata);
-   e_int_config_desklock_fsel_done(cfd->data, bg_file);
+   e_int_config_desklock_fsel_done(cfd->data, e_object_data_get(E_OBJECT(cfd)), bg_file);
 }
 
 static Evas_Object *

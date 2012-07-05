@@ -149,6 +149,15 @@ _e_wid_preview_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_in
    evas_object_smart_callback_call(wd->obj, "preview_update", NULL);
 }
 
+EAPI void
+e_widget_preview_file_get(Evas_Object *obj, const char **file, const char **group)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   edje_object_file_get(wd->o_thumb, file, group);
+}
+
 EAPI int
 e_widget_preview_edje_set(Evas_Object *obj, const char *file, const char *group)
 {

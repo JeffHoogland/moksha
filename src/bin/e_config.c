@@ -39,6 +39,7 @@ static E_Config_DD *_e_config_bindings_wheel_edd = NULL;
 static E_Config_DD *_e_config_bindings_acpi_edd = NULL;
 static E_Config_DD *_e_config_path_append_edd = NULL;
 static E_Config_DD *_e_config_desktop_bg_edd = NULL;
+static E_Config_DD *_e_config_desklock_bg_edd = NULL;
 static E_Config_DD *_e_config_desktop_name_edd = NULL;
 static E_Config_DD *_e_config_remember_edd = NULL;
 static E_Config_DD *_e_config_color_class_edd = NULL;
@@ -243,6 +244,13 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, hide_duration, FLOAT);
    E_CONFIG_VAL(D, T, desk_show_mode, INT);
    E_CONFIG_LIST(D, T, desk_list, _e_config_shelf_desk_edd);
+
+   _e_config_desklock_bg_edd = E_CONFIG_DD_NEW("E_Config_Desklock_Background", E_Config_Desklock_Background);
+#undef T
+#undef D
+#define T E_Config_Desklock_Background
+#define D _e_config_desklock_bg_edd
+   E_CONFIG_VAL(D, T, file, STR);
 
    _e_config_desktop_bg_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Background", E_Config_Desktop_Background);
 #undef T
@@ -749,6 +757,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, font_hinting, INT); /**/
    E_CONFIG_VAL(D, T, desklock_personal_passwd, STR);
    E_CONFIG_VAL(D, T, desklock_background, STR);
+   E_CONFIG_LIST(D, T, desklock_backgrounds, _e_config_desklock_bg_edd); /**/
    E_CONFIG_VAL(D, T, desklock_auth_method, INT);
    E_CONFIG_VAL(D, T, desklock_login_box_zone, INT);
    E_CONFIG_VAL(D, T, desklock_start_locked, INT);
@@ -938,6 +947,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_bindings_acpi_edd);
    E_CONFIG_DD_FREE(_e_config_path_append_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
+   E_CONFIG_DD_FREE(_e_config_desklock_bg_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
    E_CONFIG_DD_FREE(_e_config_remember_edd);
    E_CONFIG_DD_FREE(_e_config_gadcon_edd);
@@ -1200,6 +1210,14 @@ e_config_load(void)
 
           IFCFG(0x0150);
           COPYVAL(multiscreen_flip);
+          IFCFGEND;
+
+          IFCFG(0x0151);
+          COPYPTR(desklock_backgrounds);
+          e_config->desklock_backgrounds = eina_list_append(e_config->desklock_backgrounds, tcfg->desklock_background);
+          if (e_config->desklock_backgrounds && (!e_config->desklock_backgrounds->data))
+            e_config->desklock_backgrounds = eina_list_free(e_config->desklock_backgrounds);
+          tcfg->desklock_background = NULL;
           IFCFGEND;
 
           e_config->config_version = E_CONFIG_FILE_VERSION;

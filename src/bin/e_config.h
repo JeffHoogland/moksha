@@ -12,6 +12,7 @@ typedef struct _E_Config_Binding_Signal     E_Config_Binding_Signal;
 typedef struct _E_Config_Binding_Wheel      E_Config_Binding_Wheel;
 typedef struct _E_Config_Binding_Acpi       E_Config_Binding_Acpi;
 typedef struct _E_Config_Desktop_Background E_Config_Desktop_Background;
+typedef struct _E_Config_Desklock_Background E_Config_Desklock_Background;
 typedef struct _E_Config_Desktop_Name       E_Config_Desktop_Name;
 typedef struct _E_Config_Gadcon             E_Config_Gadcon;
 typedef struct _E_Config_Gadcon_Client      E_Config_Gadcon_Client;
@@ -36,7 +37,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0150
+#define E_CONFIG_FILE_GENERATION 0x0151
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -176,7 +177,8 @@ struct _E_Config
    int                       font_hinting; // GUI
 
    const char               *desklock_personal_passwd; // GUI
-   const char               *desklock_background; // GUI
+   const char               *desklock_background; // OLD DON'T USE
+   Eina_List                *desklock_backgrounds; // GUI
    int                       desklock_auth_method; // GUI
    int                       desklock_login_box_zone; // GUI
    int                       desklock_start_locked; // GUI
@@ -378,6 +380,11 @@ struct _E_Config
       int         only_label;
       const char *default_model;
    } xkb;
+};
+
+struct _E_Config_Desklock_Background
+{
+   const char *file;
 };
 
 struct _E_Config_Env_Var

@@ -152,7 +152,7 @@ e_desklock_show_autolocked(void)
 EAPI int
 e_desklock_show(void)
 {
-   Eina_List *managers, *l, *l2, *l3;
+   Eina_List *managers, *l, *l2, *l3, *l4;
    E_Manager *man;
    E_Desklock_Popup_Data *edp;
    Evas_Coord mw, mh;
@@ -264,8 +264,14 @@ works:
           {
              E_Zone *zone;
 
+             l4 = e_config->desklock_backgrounds;
              EINA_LIST_FOREACH(con->zones, l3, zone)
                {
+                  E_Config_Desklock_Background *cbg;
+                  const char *bg;
+
+                  cbg = l4 ? l4->data : NULL;
+                  bg = cbg ? cbg->file : NULL;
                   edp = E_NEW(E_Desklock_Popup_Data, 1);
                   if (edp)
                     {
@@ -279,14 +285,14 @@ works:
                        evas_event_freeze(edp->popup_wnd->evas);
                        edp->bg_object = edje_object_add(edp->popup_wnd->evas);
 
-                       if ((!e_config->desklock_background) ||
-                           (!strcmp(e_config->desklock_background, "theme_desklock_background")))
+                       if ((!bg) ||
+                           (!strcmp(bg, "theme_desklock_background")))
                          {
                             e_theme_edje_object_set(edp->bg_object,
                                                     "base/theme/desklock",
                                                     "e/desklock/background");
                          }
-                       else if (!strcmp(e_config->desklock_background, "theme_background"))
+                       else if (!strcmp(bg, "theme_background"))
                          {
                             e_theme_edje_object_set(edp->bg_object,
                                                     "base/theme/backgrounds",
@@ -296,10 +302,10 @@ works:
                          {
                             const char *f;
 
-                            if (!strcmp(e_config->desklock_background, "user_background"))
+                            if (!strcmp(bg, "user_background"))
                               f = _user_wallpaper_get();
                             else
-                              f = e_config->desklock_background;
+                              f = bg;
 
                             if (e_util_edje_collection_exists(f, "e/desklock/background"))
                               {
@@ -361,6 +367,7 @@ works:
 
                        edd->elock_wnd_list = eina_list_append(edd->elock_wnd_list, edp);
                     }
+                  l4 = l4->next;
                   zone_counter++;
                }
           }
