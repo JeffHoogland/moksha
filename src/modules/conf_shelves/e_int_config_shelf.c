@@ -104,6 +104,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         if (e_object_is_del(E_OBJECT(es))) continue;
         evas_object_data_del(es->o_base, "cfdata");
         e_object_del_func_set(E_OBJECT(es), NULL);
+        if (es->config_dialog) e_object_del_attach_func_set(E_OBJECT(es->config_dialog), NULL);
      }
    ecore_event_handler_del(cfdata->shelf_handler);
    E_FREE(cfdata);
