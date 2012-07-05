@@ -1588,7 +1588,7 @@ ACT_FN_GO(screen_send_to, )
                        ecore_x_pointer_warp(zone2->container->win,
                                             zone2->x + (zone2->w / 2),
                                             zone2->y + (zone2->h / 2));
-                       e_zone_desk_flip_to(zone2, zone2->x + (zone2->w / 2), zone2->y + (zone2->h / 2));
+                       e_desk_last_focused_focus(e_desk_current_get(zone2));
                     }
                }
           }
@@ -1630,7 +1630,7 @@ ACT_FN_GO(screen_send_by, )
                        ecore_x_pointer_warp(zone2->container->win,
                                             zone2->x + (zone2->w / 2),
                                             zone2->y + (zone2->h / 2));
-                       e_zone_desk_flip_to(zone2, zone2->x + (zone2->w / 2), zone2->y + (zone2->h / 2));
+                       e_desk_last_focused_focus(e_desk_current_get(zone2));
                     }
                }
           }
