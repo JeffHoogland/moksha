@@ -79,6 +79,7 @@ struct _E_Fm2_Smart_Data
    } icon_menu;
 
    Eina_List       *icons;
+   E_Fm2_Icon      *last_selected;
    Eina_List       *selected_icons;
    Eina_List       *icons_place;
    Eina_List       *queue;
@@ -273,13 +274,13 @@ static void          _e_fm2_icon_desel_any(Evas_Object *obj);
 static E_Fm2_Icon   *_e_fm2_icon_first_selected_find(Evas_Object *obj);
 static E_Fm2_Icon   *_e_fm2_icon_next_find(Evas_Object *obj, int next, int (*match_func)(E_Fm2_Icon *ic, void *data), void *data);
 
-static void          _e_fm2_icon_sel_first(Evas_Object *obj);
-static void          _e_fm2_icon_sel_last(Evas_Object *obj);
 static void          _e_fm2_icon_sel_any(Evas_Object *obj);
-static void          _e_fm2_icon_sel_prev(Evas_Object *obj);
-static void          _e_fm2_icon_sel_next(Evas_Object *obj);
-static void          _e_fm2_icon_sel_down(Evas_Object *obj);
-static void          _e_fm2_icon_sel_up(Evas_Object *obj);
+static void          _e_fm2_icon_sel_first(Evas_Object *obj, Eina_Bool add);
+static void          _e_fm2_icon_sel_last(Evas_Object *obj, Eina_Bool add);
+static void          _e_fm2_icon_sel_prev(Evas_Object *obj, Eina_Bool add);
+static void          _e_fm2_icon_sel_next(Evas_Object *obj, Eina_Bool add);
+static void          _e_fm2_icon_sel_down(Evas_Object *obj, Eina_Bool add);
+static void          _e_fm2_icon_sel_up(Evas_Object *obj, Eina_Bool add);
 
 static void          _e_fm2_typebuf_show(Evas_Object *obj);
 static void          _e_fm2_typebuf_hide(Evas_Object *obj);
@@ -4743,8 +4744,12 @@ _e_fm2_icon_thumb(const E_Fm2_Icon *ic, Evas_Object *oic, int force)
 static void
 _e_fm2_icon_select(E_Fm2_Icon *ic)
 {
+   E_Fm2_Icon *prev;
    if (ic->selected) return;
+   prev = eina_list_data_get(eina_list_last(ic->sd->selected_icons));
+   if (prev) prev->last_selected = EINA_FALSE;
    ic->selected = EINA_TRUE;
+   ic->sd->last_selected = ic;
    ic->sd->selected_icons = eina_list_append(ic->sd->selected_icons, ic);
    ic->last_selected = EINA_TRUE;
    if (ic->realized)
@@ -4769,6 +4774,7 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
    if (!ic->selected) return;
    ic->selected = EINA_FALSE;
    ic->last_selected = EINA_FALSE;
+   if (ic->sd->last_selected == ic) ic->sd->last_selected = NULL;
    ic->sd->selected_icons = eina_list_remove(ic->sd->selected_icons, ic);
    if (ic->realized)
      {
@@ -5029,7 +5035,7 @@ _e_fm2_icon_first_selected_find(Evas_Object *obj)
 }
 
 static void
-_e_fm2_icon_sel_first(Evas_Object *obj)
+_e_fm2_icon_sel_first(Evas_Object *obj, Eina_Bool add)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic;
@@ -5037,7 +5043,8 @@ _e_fm2_icon_sel_first(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (!sd->icons) return;
-   _e_fm2_icon_desel_any(obj);
+   if ((!add) || sd->config->selection.single)
+     _e_fm2_icon_desel_any(obj);
    ic = eina_list_data_get(sd->icons);
    _e_fm2_icon_select(ic);
    evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
@@ -5045,7 +5052,7 @@ _e_fm2_icon_sel_first(Evas_Object *obj)
 }
 
 static void
-_e_fm2_icon_sel_last(Evas_Object *obj)
+_e_fm2_icon_sel_last(Evas_Object *obj, Eina_Bool add)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic;
@@ -5053,7 +5060,8 @@ _e_fm2_icon_sel_last(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (!sd->icons) return;
-   _e_fm2_icon_desel_any(obj);
+   if ((!add) || sd->config->selection.single)
+     _e_fm2_icon_desel_any(obj);
    ic = eina_list_data_get(eina_list_last(sd->icons));
    _e_fm2_icon_select(ic);
    evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
@@ -5203,7 +5211,7 @@ _e_fm2_icon_next_find(Evas_Object *obj, int next, int (*match_func)(E_Fm2_Icon *
 }
 
 static void
-_e_fm2_icon_sel_prev(Evas_Object *obj)
+_e_fm2_icon_sel_prev(Evas_Object *obj, Eina_Bool add)
 {
    E_Fm2_Icon *ic_prev;
 
@@ -5212,17 +5220,18 @@ _e_fm2_icon_sel_prev(Evas_Object *obj)
    if (!ic_prev)
      {
         /* FIXME this is not the bottomright item for custom grid */
-        _e_fm2_icon_sel_last(obj);
+        _e_fm2_icon_sel_last(obj, add);
         return;
      }
-   _e_fm2_icon_desel_any(obj);
+   if ((!add) || ic_prev->sd->config->selection.single)
+     _e_fm2_icon_desel_any(obj);
    _e_fm2_icon_select(ic_prev);
    evas_object_smart_callback_call(obj, "selection_change", NULL); /*XXX sd->obj*/
    _e_fm2_icon_make_visible(ic_prev);
 }
 
 static void
-_e_fm2_icon_sel_next(Evas_Object *obj)
+_e_fm2_icon_sel_next(Evas_Object *obj, Eina_Bool add)
 {
    E_Fm2_Icon *ic_next;
 
@@ -5230,17 +5239,18 @@ _e_fm2_icon_sel_next(Evas_Object *obj)
    if (!ic_next)
      {
         /* FIXME this is not the topleft item for custom grid */
-        _e_fm2_icon_sel_first(obj);
+        _e_fm2_icon_sel_first(obj, add);
         return;
      }
-   _e_fm2_icon_desel_any(obj);
+   if ((!add) || ic_next->sd->config->selection.single)
+     _e_fm2_icon_desel_any(obj);
    _e_fm2_icon_select(ic_next);
    evas_object_smart_callback_call(obj, "selection_change", NULL);
    _e_fm2_icon_make_visible(ic_next);
 }
 
 static void
-_e_fm2_icon_sel_down(Evas_Object *obj)
+_e_fm2_icon_sel_down(Evas_Object *obj, Eina_Bool add)
 {
    E_Fm2_Smart_Data *sd;
    Eina_List *l;
@@ -5304,17 +5314,18 @@ _e_fm2_icon_sel_down(Evas_Object *obj)
 
    if (!ic_down)
      {
-        if (!custom) _e_fm2_icon_sel_next(obj);
+        if (!custom) _e_fm2_icon_sel_next(obj, add);
         return;
      }
-   _e_fm2_icon_desel_any(obj);
+   if ((!add) || ic_down->sd->config->selection.single)
+     _e_fm2_icon_desel_any(obj);
    _e_fm2_icon_select(ic_down);
    evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
    _e_fm2_icon_make_visible(ic_down);
 }
 
 static void
-_e_fm2_icon_sel_up(Evas_Object *obj)
+_e_fm2_icon_sel_up(Evas_Object *obj, Eina_Bool add)
 {
    E_Fm2_Smart_Data *sd;
    Eina_List *l;
@@ -5378,10 +5389,11 @@ _e_fm2_icon_sel_up(Evas_Object *obj)
 
    if (!ic_up)
      {
-        if (!custom) _e_fm2_icon_sel_prev(obj);
+        if (!custom) _e_fm2_icon_sel_prev(obj, add);
         return;
      }
-   _e_fm2_icon_desel_any(obj);
+   if ((!add) || ic_up->sd->config->selection.single)
+     _e_fm2_icon_desel_any(obj);
    _e_fm2_icon_select(ic_up);
    evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
    _e_fm2_icon_make_visible(ic_up);
@@ -6892,7 +6904,7 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
          * icon mode: prev icon
          * typebuf mode: cursor left
          */
-        _e_fm2_icon_sel_prev(obj);
+        _e_fm2_icon_sel_prev(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
      }
    else if (!strcmp(ev->key, "Right"))
      {
@@ -6901,7 +6913,7 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
          * icon mode: next icon
          * typebuf mode: cursor right
          */
-        _e_fm2_icon_sel_next(obj);
+        _e_fm2_icon_sel_next(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
      }
    else if (!strcmp(ev->key, "Up"))
      {
@@ -6911,9 +6923,9 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
           // _e_fm2_typebuf_history_prev(obj);
           _e_fm2_typebuf_match(obj, -1);
         else if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
-          _e_fm2_icon_sel_prev(obj);
+          _e_fm2_icon_sel_prev(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
         else
-          _e_fm2_icon_sel_up(obj);
+          _e_fm2_icon_sel_up(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
      }
    else if (!strcmp(ev->key, "Down"))
      {
@@ -6923,9 +6935,9 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
           //_e_fm2_typebuf_history_next(obj);
           _e_fm2_typebuf_match(obj, 1);
         else if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
-          _e_fm2_icon_sel_next(obj);
+          _e_fm2_icon_sel_next(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
         else
-          _e_fm2_icon_sel_down(obj);
+          _e_fm2_icon_sel_down(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
      }
    else if (!strcmp(ev->key, "Home"))
      {
@@ -6933,7 +6945,7 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
         /* go to first icon
          * typebuf mode: cursor to start
          */
-        _e_fm2_icon_sel_first(obj);
+        _e_fm2_icon_sel_first(obj, EINA_FALSE);
      }
    else if (!strcmp(ev->key, "End"))
      {
@@ -6941,7 +6953,7 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
         /* go to last icon
          * typebuf mode: cursor to end
          */
-        _e_fm2_icon_sel_last(obj);
+        _e_fm2_icon_sel_last(obj, EINA_FALSE);
      }
    else if (!strcmp(ev->key, "Prior"))
      {
