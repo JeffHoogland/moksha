@@ -51,7 +51,7 @@ static Eina_Hash *borders = NULL;
 
 //////////////////////////////////////////////////////////////////////////
 #undef DBG
-#if 1
+#if 0
 #define DBG(f, x ...) printf(f, ##x)
 #else
 #define DBG(f, x ...)
