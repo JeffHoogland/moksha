@@ -125,6 +125,7 @@ struct _E_Event_Zone_Edge
    E_Zone_Edge edge;
    int         x, y;
    int         modifiers;
+   int         button;
 };
 
 EINTERN int    e_zone_init(void);

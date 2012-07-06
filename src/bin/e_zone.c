@@ -1603,6 +1603,7 @@ _e_zone_cb_mouse_down(void    *data,
    zev->edge = edge;
    zev->x = ev->root.x;
    zev->y = ev->root.y;
+   zev->button = ev->buttons;
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_down_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
@@ -1630,6 +1631,7 @@ _e_zone_cb_mouse_up(void    *data,
    zev->edge = edge;
    zev->x = ev->root.x;
    zev->y = ev->root.y;
+   zev->button = ev->buttons;
    zev->modifiers = ev->modifiers;
    ecore_event_add(E_EVENT_ZONE_EDGE_OUT, zev, NULL, NULL);
    e_bindings_edge_up_event_handle(E_BINDING_CONTEXT_ZONE, E_OBJECT(zone), zev);
