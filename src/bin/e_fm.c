@@ -411,6 +411,7 @@ static int           _e_fm2_theme_edje_object_set(E_Fm2_Smart_Data *sd, Evas_Obj
 static int           _e_fm2_theme_edje_icon_object_set(E_Fm2_Smart_Data *sd, Evas_Object *o, const char *category, const char *group);
 
 static void          _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event);
+static void          _e_fm2_mouse_2_handler(E_Fm2_Icon *ic, void *evas_event);
 
 static void          _e_fm2_client_spawn(void);
 static E_Fm2_Client *_e_fm2_client_get(void);
@@ -6254,6 +6255,36 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    eina_list_free(isel);
 }
 
+static void
+_e_fm2_mouse_2_handler(E_Fm2_Icon *ic, void *evas_event)
+{
+   int multi_sel = 1;
+   Eina_List *l;
+   E_Fm2_Icon *ic2;
+
+   if (!evas_event) return;
+
+   if (ic->sd->config->selection.single)
+     multi_sel = 0;
+
+   EINA_LIST_FOREACH(ic->sd->icons, l, ic2)
+     ic2->last_selected = 0;
+   if (ic->selected)
+     _e_fm2_icon_deselect(ic);
+   else
+     {
+        if (!multi_sel)
+          {
+             ic2 = eina_list_data_get(ic->sd->selected_icons);
+             if (ic2) _e_fm2_icon_deselect(ic2);
+          }
+        _e_fm2_icon_select(ic);
+        _e_fm2_icon_make_visible(ic);
+        ic->last_selected = EINA_TRUE;
+     }
+   evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
+}
+
 /* FIXME: prototype */
 static void
 _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
@@ -6436,17 +6467,23 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
         /* if its a normal file - do what the mime type says to do with
          * that file type */
      }
-   else if (ev->button == 1)
+   else if (ev->button < 3)
      {
-        if ((ic->sd->eobj))
+        if (ev->button == 1)
           {
-             ic->drag.x = ev->output.x - ic->x - ic->sd->x + ic->sd->pos.x;
-             ic->drag.y = ev->output.y - ic->y - ic->sd->y + ic->sd->pos.y;
-             ic->drag.start = EINA_TRUE;
-             ic->drag.dnd = EINA_FALSE;
-             ic->drag.src = EINA_TRUE;
+             if ((ic->sd->eobj))
+               {
+                  ic->drag.x = ev->output.x - ic->x - ic->sd->x + ic->sd->pos.x;
+                  ic->drag.y = ev->output.y - ic->y - ic->sd->y + ic->sd->pos.y;
+                  ic->drag.start = EINA_TRUE;
+                  ic->drag.dnd = EINA_FALSE;
+                  ic->drag.src = EINA_TRUE;
+               }
+
+             _e_fm2_mouse_1_handler(ic, 0, ev);
           }
-        _e_fm2_mouse_1_handler(ic, 0, ev);
+        else
+          _e_fm2_mouse_2_handler(ic, ev);
      }
    else if (ev->button == 3)
      {
