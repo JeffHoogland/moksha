@@ -65,6 +65,7 @@ struct _E_Config_Dialog_Data
       const char *cur;
       double      delay;
       int         click;
+      int         button;
       int         cur_act, add;
       E_Zone_Edge edge;
       int         modifiers;
@@ -75,7 +76,7 @@ struct _E_Config_Dialog_Data
    {
       Evas_Object *o_add, *o_mod, *o_del, *o_del_all;
       Evas_Object *o_binding_list, *o_action_list;
-      Evas_Object *o_params, *o_selector, *o_slider, *o_check;
+      Evas_Object *o_params, *o_selector, *o_slider, *o_check, *o_button;
    } gui;
 
    const char      *params;
@@ -286,12 +287,18 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
+   of = e_widget_framelist_add(evas, _("Mouse Button"), 0);
+   ob = e_widget_label_add(evas, NULL);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(ot, of, 0, 2, 1, 1, 1, 1, 1, 0);
+   cfdata->gui.o_button = ob;
+
    of = e_widget_framelist_add(evas, _("Action Params"), 0);
    ob = e_widget_entry_add(evas, &(cfdata->locals.params), NULL, NULL, NULL);
    cfdata->gui.o_params = ob;
    e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 3, 1, 1, 1, 1, 1, 0);
    e_widget_list_object_append(ol, ot, 1, 1, 0.5);
 
    e_widget_list_object_append(o, ol, 1, 1, 0.5);
@@ -383,8 +390,8 @@ _modify_edge_binding_cb(void *data, void *data2 __UNUSED__)
         bi = eina_list_nth(cfdata->binding.edge, n);
         cfdata->locals.edge = bi->edge;
         cfdata->locals.delay = ((double)bi->delay);
-        if (bi->delay == -1.0) cfdata->locals.click = 1;
-        else cfdata->locals.click = 0;
+        if (bi->delay <= -1.0) cfdata->locals.click = 1, cfdata->locals.button = -bi->delay;
+        else cfdata->locals.click = 0, cfdata->locals.button = 0;
         cfdata->locals.modifiers = bi->modifiers;
      }
    else return;
@@ -442,6 +449,7 @@ _delete_all_edge_binding_cb(void *data, void *data2 __UNUSED__)
    e_widget_ilist_unselect(cfdata->gui.o_action_list);
    e_widget_entry_clear(cfdata->gui.o_params);
    e_widget_disabled_set(cfdata->gui.o_params, 1);
+   e_widget_label_text_set(cfdata->gui.o_button, NULL);
 
    _update_buttons(cfdata);
 }
@@ -489,6 +497,7 @@ _delete_edge_binding_cb(void *data, void *data2 __UNUSED__)
         e_widget_ilist_unselect(cfdata->gui.o_action_list);
         e_widget_entry_clear(cfdata->gui.o_params);
         e_widget_disabled_set(cfdata->gui.o_params, 1);
+        e_widget_label_text_set(cfdata->gui.o_button, NULL);
         _update_buttons(cfdata);
      }
 }
@@ -546,6 +555,7 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
    E_Config_Binding_Edge *bi;
    int j = -1, i, n;
    const char *action, *params;
+   char buf[256];
 
    if (!cfdata->locals.cur) return;
 
@@ -592,7 +602,15 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
         eina_stringshare_del(cfdata->locals.action);
         cfdata->locals.action = eina_stringshare_add("");
         e_widget_entry_clear(cfdata->gui.o_params);
+        e_widget_label_text_set(cfdata->gui.o_button, NULL);
      }
+   if (bi->delay < 0)
+     {
+        snprintf(buf, sizeof(buf), "%d", (int)-bi->delay);
+        e_widget_label_text_set(cfdata->gui.o_button, buf);
+     }
+   else
+     e_widget_label_text_set(cfdata->gui.o_button, NULL);
 
    /*if (cfdata->locals.cur[0] == 'e')
       {
@@ -954,8 +972,8 @@ _edge_grab_wnd_check_changed_cb(void *data, Evas_Object *obj __UNUSED__)
 
    if (cfdata->locals.click)
      {
-        if (cfdata->locals.edge)
-          label = _edge_binding_text_get(cfdata->locals.edge, -1.0, cfdata->locals.modifiers);
+        if (cfdata->locals.edge && cfdata->locals.button)
+          label = _edge_binding_text_get(cfdata->locals.edge, -1.0 * cfdata->locals.button, cfdata->locals.modifiers);
         e_widget_disabled_set(cfdata->gui.o_slider, 1);
      }
    else
@@ -980,7 +998,7 @@ _edge_grab_wnd_selected_edge_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj
 
    if (!(cfdata = data)) return;
    if (!(event = event_info)) return;
-   if (event->button != 1) return;
+   cfdata->locals.button = event->button;
 
    evas_object_geometry_get(cfdata->gui.o_selector, &xx, &yy, NULL, NULL);
    edje_object_part_geometry_get(cfdata->gui.o_selector, "e.edge.top_left", &x, &y, &w, &h);
@@ -1047,7 +1065,7 @@ stop:
      cfdata->locals.modifiers |= E_BINDING_MODIFIER_WIN;
 
    label = _edge_binding_text_get(cfdata->locals.edge,
-                                  cfdata->locals.click ? -1.0 : ((float)cfdata->locals.delay),
+                                  cfdata->locals.click ? (-1.0 * cfdata->locals.button) : ((float)cfdata->locals.delay),
                                   cfdata->locals.modifiers);
    edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
    if (label) E_FREE(label);
@@ -1060,7 +1078,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
    Eina_List *l;
    int found = 0, n = -1;
 
-   if (cfdata->locals.click) cfdata->locals.delay = -1.0;
+   if (cfdata->locals.click) cfdata->locals.delay = -1.0 * cfdata->locals.button;
    if (cfdata->locals.add)
      {
         EINA_LIST_FOREACH(cfdata->binding.edge, l, bi)
@@ -1122,6 +1140,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
         if (cfdata->locals.add)
           {
              E_Config_Binding_Edge *tmp;
+             char buf[256];
 
              n = 0;
              _update_edge_binding_list(cfdata);
@@ -1134,6 +1153,8 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
              e_widget_ilist_unselect(cfdata->gui.o_action_list);
              eina_stringshare_del(cfdata->locals.action);
              cfdata->locals.action = eina_stringshare_add("");
+             snprintf(buf, sizeof(buf), "%d", (int)-bi->delay);
+             e_widget_label_text_set(cfdata->gui.o_button, NULL);
              if ((cfdata->params) && (cfdata->params[0]))
                {
                   int j, g = -1;
@@ -1342,35 +1363,35 @@ _edge_binding_text_get(E_Zone_Edge edge, float delay, int mod)
         switch (edge)
           {
            case E_ZONE_EDGE_LEFT:
-             strcat(b, "Left Edge");
+             strcat(b, _("Left Edge"));
              break;
 
            case E_ZONE_EDGE_TOP:
-             strcat(b, "Top Edge");
+             strcat(b, _("Top Edge"));
              break;
 
            case E_ZONE_EDGE_RIGHT:
-             strcat(b, "Right Edge");
+             strcat(b, _("Right Edge"));
              break;
 
            case E_ZONE_EDGE_BOTTOM:
-             strcat(b, "Bottom Edge");
+             strcat(b, _("Bottom Edge"));
              break;
 
            case E_ZONE_EDGE_TOP_LEFT:
-             strcat(b, "Top Left Edge");
+             strcat(b, _("Top Left Edge"));
              break;
 
            case E_ZONE_EDGE_TOP_RIGHT:
-             strcat(b, "Top Right Edge");
+             strcat(b, _("Top Right Edge"));
              break;
 
            case E_ZONE_EDGE_BOTTOM_RIGHT:
-             strcat(b, "Bottom Right Edge");
+             strcat(b, _("Bottom Right Edge"));
              break;
 
            case E_ZONE_EDGE_BOTTOM_LEFT:
-             strcat(b, "Bottom Left Edge");
+             strcat(b, _("Bottom Left Edge"));
              break;
 
            default:
@@ -1384,7 +1405,9 @@ _edge_binding_text_get(E_Zone_Edge edge, float delay, int mod)
 
         if (b[0]) strcat(b, " ");
         if (delay == -1.0)
-          snprintf(buf, 20, "(clickable)");
+          snprintf(buf, 20, _("(left clickable)"));
+        else if (delay < -1.0)
+          snprintf(buf, 20, _("(clickable)"));
         else
           snprintf(buf, 20, "%.2fs", delay);
         strcat(b, buf);

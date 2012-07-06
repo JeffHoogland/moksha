@@ -552,7 +552,7 @@ e_bindings_edge_non_flippable_get(E_Zone_Edge edge)
 }
 
 EAPI E_Binding_Edge *
-e_bindings_edge_get(const char *action, E_Zone_Edge edge, Eina_Bool click)
+e_bindings_edge_get(const char *action, E_Zone_Edge edge, int click)
 {
    E_Binding_Edge *binding;
    Eina_List *l;
@@ -560,7 +560,7 @@ e_bindings_edge_get(const char *action, E_Zone_Edge edge, Eina_Bool click)
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
         if ((binding->edge == edge) &&
-            ((click && (binding->delay == -1.0))
+            ((click && (binding->delay == -1.0 * click))
              || (!click && (binding->delay >= 0.0))) &&
             (binding->action) && (action) &&
             (!strcmp(action, binding->action)))
@@ -618,7 +618,7 @@ e_bindings_edge_in_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Z
    if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
-        /* A value of -1.0 for the delay indicates it as a mouse-click binding on that edge */
+        /* A value of <= -1.0 for the delay indicates it as a mouse-click binding on that edge */
         if (((binding->edge == ev->edge)) && (binding->delay >= 0.0) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
@@ -663,7 +663,7 @@ e_bindings_edge_out_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_
    if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
-        /* A value of -1.0 for the delay indicates it as a mouse-click binding on that edge */
+        /* A value of <= -1.0 for the delay indicates it as a mouse-click binding on that edge */
         if ((binding->edge == ev->edge) && (binding->delay >= 0.0) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
@@ -709,7 +709,7 @@ e_bindings_edge_down_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event
    if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
-        if (((binding->edge == ev->edge)) && (binding->delay == -1.0) &&
+        if (((binding->edge == ev->edge)) && (binding->delay == -1.0 * ev->button) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
@@ -742,7 +742,7 @@ e_bindings_edge_up_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Z
    if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
-        if ((binding->edge == ev->edge) && (binding->delay == -1.0) &&
+        if (((binding->edge == ev->edge)) && (binding->delay == -1.0 * ev->button) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
