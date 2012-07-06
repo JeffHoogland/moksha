@@ -1213,8 +1213,13 @@ e_config_load(void)
           IFCFGEND;
 
           IFCFG(0x0151);
-          COPYPTR(desklock_backgrounds);
-          e_config->desklock_backgrounds = eina_list_append(e_config->desklock_backgrounds, tcfg->desklock_background);
+          if (tcfg->desklock_background)
+            {
+               E_Config_Desklock_Background *cbg;
+               cbg = E_NEW(E_Config_Desklock_Background, 1);
+               cbg->file = tcfg->desklock_background;
+               e_config->desklock_backgrounds = eina_list_append(e_config->desklock_backgrounds, cbg);
+            }
           if (e_config->desklock_backgrounds && (!e_config->desklock_backgrounds->data))
             e_config->desklock_backgrounds = eina_list_free(e_config->desklock_backgrounds);
           tcfg->desklock_background = NULL;
