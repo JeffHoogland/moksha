@@ -20,6 +20,22 @@ e_modapi_init(E_Module *m)
    Mod *mod;
    char buf[4096];
 
+   {
+      Eina_List *l;
+      E_Module *m2;
+      EINA_LIST_FOREACH(e_module_list(), l, m2)
+        {
+           if (m2->enabled && (!strcmp(m2->name, "tiling")))
+             {
+                e_util_dialog_internal(_("Physics"),
+                                       _("Cowardly refusing to battle<br>"
+                                         "with the Tiling module for control<br>"
+                                         "of your windows. There can be only one!"));
+                return NULL;
+             }
+        }
+   }
+
    if (!ephysics_init()) return NULL;
    mod = calloc(1, sizeof(Mod));
    m->data = mod;
