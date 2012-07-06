@@ -87,7 +87,7 @@ e_widget_slider_value_double_set(Evas_Object *slider, double dval)
  * if the slider was not created with an integer value.
  *
  * @param slider pointer to the slider to be modified
- * @param int the integer value to set the slider to
+ * @param ival the integer value to set the slider to
  * @return 1 if value set, return 0 if value not set
  */
 EAPI int

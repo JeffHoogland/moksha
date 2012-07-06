@@ -11,6 +11,13 @@ static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
 
 /* externally accessible functions */
+/**  
+ * Creates a new label widget 
+ *
+ * @param evas pointer
+ * @param text to assign to the widget
+ * @return the label widget
+ */
 EAPI Evas_Object *
 e_widget_label_add(Evas *evas, const char *label)
 {
@@ -39,6 +46,12 @@ e_widget_label_add(Evas *evas, const char *label)
    return obj;
 }
 
+/**  
+ * Changes the text for the label 
+ *
+ * @param the label widget
+ * @param text to assign to the widget
+ */
 EAPI void
 e_widget_label_text_set(Evas_Object *obj, const char *text)
 {

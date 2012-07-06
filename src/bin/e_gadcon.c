@@ -220,6 +220,12 @@ e_gadcon_shutdown(void)
    return 1;
 }
 
+/**  
+ * Registers a new gadget class in e
+ *
+ * @param cc version of gadcon, name and callbacks to use 
+ * for handling creation and destroying a gadget 
+ */
 EAPI void
 e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
 {
@@ -229,6 +235,11 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
    _e_gadcon_provider_populate_request(cc);
 }
 
+/**  
+ * unregisters a gadget class in e
+ *
+ * @param cc the gadget class that was used to register the gadget
+ */
 EAPI void
 e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
 {
@@ -848,6 +859,16 @@ e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, E_Config_Gadcon_Client *cf_gc
    free(cf_gcc);
 }
 
+/**  
+ * Creates a new gadget  
+ *
+ * @param gc gadcon pointer
+ * @param name to use for gadget
+ * @param id assigned to gadget 
+ * @param style to  for gadget
+ * @param base_obj the evas object that will show up in the shelf or gadget module
+ * @return returns pointer to created gadget, on failure returns null
+ */
 EAPI E_Gadcon_Client *
 e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id __UNUSED__, const char *style, Evas_Object *base_obj)
 {

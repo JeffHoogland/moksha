@@ -18,6 +18,19 @@ static Eina_List *_e_config_dialog_list = NULL;
 
 /* externally accessible functions */
 
+/**  
+ * Creates a new dialog  
+ *
+ * @param con the container the dialog will be added too
+ * @param title to display for the dialog
+ * @param name the name used to register the window in e
+ * @param class the call used to register the window in e
+ * @param icon the path to the icon file
+ * @param icon_size is of the width and height of the icon
+ * @param view the callbacks used to create the dialog and save the settings
+ * @param data additional data to attach to the dialog, will be passed to the callbacks
+ * @return returns the created dialog. Null on failure
+ */
 EAPI E_Config_Dialog *
 e_config_dialog_new(E_Container *con, const char *title, const char *name, const char *class, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
 {

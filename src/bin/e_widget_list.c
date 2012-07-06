@@ -11,6 +11,14 @@ static void _e_wid_del_hook(Evas_Object *obj);
 /* local subsystem functions */
 
 /* externally accessible functions */
+/**  
+ * Creates a new list widget 
+ *
+ * @param evas the evas pointer
+ * @param  homogenous should widgets append to the list be evenly spaced out
+ * @param horiz the direction the list should be displayed
+ * @return the new list wdiget
+ */
 EAPI Evas_Object *
 e_widget_list_add(Evas *evas, int homogenous, int horiz)
 {
@@ -34,6 +42,16 @@ e_widget_list_add(Evas *evas, int homogenous, int horiz)
    return obj;
 }
 
+/**  
+ * Append a widget to the list 
+ *
+ * @param obj the list widget to append the sub widget too
+ * @param sobj the sub widget
+ * @param fill DOCUMENT ME!
+ * @param expand DOCUMENT ME! 
+ * @param align who the sub widget to be aligned, to wards the center or sides
+ * @return the new list wdiget
+ */
 EAPI void
 e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int expand, double align)
 {

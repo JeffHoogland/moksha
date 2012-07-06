@@ -19,6 +19,15 @@ static void _e_wid_focus_steal(void *data, Evas *e, Evas_Object *obj, void *even
 /* local subsystem functions */
 
 /* externally accessible functions */
+
+/**  
+ * Creates a check box widget
+ *
+ * @param evas pointer
+ * @param label the text to asign to check widget
+ * @param val pointer to int where changes are stored
+ * @return the newly created evas object
+ */
 EAPI Evas_Object *
 e_widget_check_add(Evas *evas, const char *label, int *val)
 {
@@ -57,6 +66,12 @@ e_widget_check_add(Evas *evas, const char *label, int *val)
    return obj;
 }
 
+/**  
+ * Sets the value of the check box
+ *
+ * @param check the check box widget
+ * @param checked the value to set the widget too
+ */
 EAPI void
 e_widget_check_checked_set(Evas_Object *check, int checked)
 {
@@ -71,6 +86,12 @@ e_widget_check_checked_set(Evas_Object *check, int checked)
      edje_object_signal_emit(wd->o_check, "e,state,unchecked", "e");
 }
 
+/**  
+ *Get the value of the check box
+ *
+ * @param check the check box widget
+ * @return the value of the check box
+ */
 EAPI int
 e_widget_check_checked_get(Evas_Object *check)
 {
@@ -86,6 +107,17 @@ e_widget_check_checked_get(Evas_Object *check)
    return ret;
 }
 
+/**  
+ * Creates a check box widget with icon
+ *
+ * @param evas pointer
+ * @param label the text to asign to check widget
+ * @param icon the path to the icon file
+ * @param icon_w the minimum wdith of the icon
+ * @param icon_h the minumum height of the icon
+ * @param val pointer to int where changes are stored
+ * @return the newly created evas object
+ */
 EAPI Evas_Object *
 e_widget_check_icon_add(Evas *evas, const char *label, const char *icon, int icon_w, int icon_h, int *val)
 {

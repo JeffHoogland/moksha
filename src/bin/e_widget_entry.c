@@ -27,6 +27,9 @@ static void _e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_in
  *
  * @param evas the evas where to add the new entry widget
  * @param text_location the location where to store the text of the entry.
+ * @param func DOCUMENT ME!
+ * @param data  DOCUMENT ME!
+ * @param data2 DOCUMENT ME!
  * The current value will be used to initialize the entry
  * @return Returns the new entry widget
  */
@@ -140,7 +143,7 @@ e_widget_entry_password_set(Evas_Object *entry, int password_mode)
  * allows copying and selecting, just no inserting or deleting of text.
  *
  * @param entry an entry widget
- * @param readonly 1 to enable read-only mode, 0 to turn it off
+ * @param readonly_mode 1 to enable read-only mode, 0 to turn it off
  */
 EAPI void
 e_widget_entry_readonly_set(Evas_Object *entry, int readonly_mode)

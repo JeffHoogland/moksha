@@ -1556,6 +1556,15 @@ e_config_save_block_get(void)
    return _e_config_save_block;
 }
 
+/**  
+ * Loads configurations from file located in the working profile
+ * The configurations are stored in a struct declated by the 
+ * macros E_CONFIG_DD_NEW and E_CONFIG_<b>TYPE</b> 
+ *
+ * @param domain of the configuration file.
+ * @param edd to struct definition 
+ * @return returns allocated struct on success, if unable to find config returns null
+ */
 EAPI void *
 e_config_domain_load(const char *domain, E_Config_DD *edd)
 {
@@ -1703,6 +1712,16 @@ e_config_profile_save(void)
    return ok;
 }
 
+/**  
+  * Saves configurations to file located in the working profile
+ * The configurations are read from a struct declated by the 
+ * macros E_CONFIG_DD_NEW and E_CONFIG_<b>TYPE</b> 
+ *  
+ * @param domain  name of the configuration file.
+ * @param edd pointer to struct definition
+ * @param data struct to save as configuration file 
+ * @return 1 if save success, 0 on failure
+ */
 EAPI int
 e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 {

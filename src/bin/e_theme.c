@@ -83,6 +83,15 @@ e_theme_shutdown(void)
    return 1;
 }
 
+/**  
+ * Assigns a edje group from the current theme to 
+ * a recently created edje object 
+ *
+ * @param o edje object to assign group to
+ * @param category that hold the required edj file
+ * @param group the edje group to use
+ * @return returns true on success, false if unable to assign group
+ */
 EAPI int
 e_theme_edje_object_set(Evas_Object *o, const char *category, const char *group)
 {

@@ -100,6 +100,11 @@ e_configure_registry_item_params_add(const char *path, int pri, const char *labe
    _e_configure_registry_item_full_add(path, pri, label, icon_file, icon, func, NULL, NULL, params);
 }
 
+/**  
+ * Delete an item  in the configuration panel.
+ * 
+ * @param path location the item to delete 
+ */
 EAPI void
 e_configure_registry_item_del(const char *path)
 {
@@ -132,6 +137,16 @@ e_configure_registry_item_del(const char *path)
    free(cat);
 }
 
+/**  
+ * Add a category to the configuration panel.
+ *
+ * @param path location the new category 
+ * @param pri the priority for sorting the category in the category list
+ * @param label the name the user will see in configuration panel
+ * @param icon_file the edje file that holds the icon for the category.
+ * Can be null to use current theme.
+ * @param icon the name of the edje group to use as icon 
+ */
 EAPI void
 e_configure_registry_category_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon)
 {
@@ -161,6 +176,11 @@ e_configure_registry_category_add(const char *path, int pri, const char *label, 
    e_configure_registry = eina_list_append(e_configure_registry, ecat);
 }
 
+/**  
+ * Delete a category in the configuration panel.
+ * 
+ * @param path location the category to delete 
+ */
 EAPI void
 e_configure_registry_category_del(const char *path)
 {
@@ -184,6 +204,18 @@ e_configure_registry_category_del(const char *path)
        }
    free(cat);
 }
+
+/**  
+ * Add a item to the configuration panel.
+ *
+ * @param path location the location to place configuration item 
+ * @param pri the priority for sorting the item in the category list
+ * @param label the name the user will see in configuration panel
+ * @param icon_file the edje file that holds the icon for the category.
+ * Can be null to use current theme.
+ * @param icon the name of the edje group to use as icon
+ * @param func the callback to use when the configuration item is clicked
+ */
 
 EAPI void
 e_configure_registry_custom_desktop_exec_callback_set(void (*func)(const void *data, E_Container *con, const char *params, Efreet_Desktop *desktop), const void *data)
