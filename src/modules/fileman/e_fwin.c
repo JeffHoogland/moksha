@@ -26,13 +26,10 @@ struct _E_Fwin
 
    E_Win               *win;
    E_Zone              *zone;
-   Evas_Object         *tb_obj;
    Evas_Object         *bg_obj;
    E_Fwin_Apps_Dialog  *fad;
 
-   Eina_List           *pages;
    E_Fwin_Page         *cur_page;
-   int                  page_index;
 
    Evas_Object         *under_obj;
    Evas_Object         *over_obj;
@@ -91,9 +88,6 @@ static E_Fwin          *_e_fwin_new(E_Container *con,
 static void             _e_fwin_free(E_Fwin *fwin);
 static E_Fwin_Page     *_e_fwin_page_create(E_Fwin *fwin);
 static void             _e_fwin_page_free(E_Fwin_Page *page);
-static void             _e_fwin_page_new(E_Fwin *fwin);
-static void             _e_fwin_cb_page_change(void *data1,
-                                               void *data2);
 static void             _e_fwin_cb_delete(E_Win *win);
 static void             _e_fwin_cb_move(E_Win *win);
 static void             _e_fwin_cb_resize(E_Win *win);
@@ -196,7 +190,6 @@ static Eina_Bool        _e_fwin_zone_del(void *data,
                                          void *event);
 static void             _e_fwin_config_set(E_Fwin_Page *page);
 static void             _e_fwin_window_title_set(E_Fwin_Page *page);
-static void             _e_fwin_page_resize(E_Fwin_Page *page);
 static void             _e_fwin_toolbar_resize(E_Fwin_Page *page);
 static int              _e_fwin_dlg_cb_desk_sort(const void *p1,
                                                  const void *p2);
@@ -343,8 +336,7 @@ e_fwin_zone_new(E_Zone *zone,
 
    e_fm2_path_set(page->fm_obj, dev, path);
 
-   fwin->pages = eina_list_append(fwin->pages, page);
-   fwin->cur_page = fwin->pages->data;
+   fwin->cur_page = page;
 }
 
 void
@@ -387,18 +379,6 @@ e_fwin_reload_all(void)
         if (!fwin) continue;  //safety
         if (fwin->zone)
           e_fwin_zone_shutdown(fwin->zone);
-        else
-          {
-             Eina_List *l2;
-             E_Fwin_Page *page;
-
-             EINA_LIST_FOREACH(fwin->pages, l2, page)
-               {
-                  _e_fwin_config_set(page);
-                  e_fm2_refresh(page->fm_obj);
-                  _e_fwin_window_title_set(page);
-               }
-          }
      }
 
    /* Hook into zones */
@@ -467,7 +447,6 @@ _e_fwin_new(E_Container *con,
    fwin->bg_obj = o;
 
    page = _e_fwin_page_create(fwin);
-   fwin->pages = eina_list_append(fwin->pages, page);
    fwin->cur_page = page;
 
 /*
@@ -520,12 +499,9 @@ _e_fwin_new(E_Container *con,
 static void
 _e_fwin_free(E_Fwin *fwin)
 {
-   E_Fwin_Page *page;
-
    if (!fwin) return;  //safety
 
-   EINA_LIST_FREE(fwin->pages, page)
-     _e_fwin_page_free(page);
+   _e_fwin_page_free(fwin->cur_page);
 
    if (fwin->zone)
      {
@@ -621,8 +597,6 @@ _e_fwin_page_create(E_Fwin *fwin)
         e_toolbar_show(page->tbar);
      }
 
-   page->index = eina_list_count(fwin->pages);
-
    _e_fwin_config_set(page);
 
    page->fm_op_entry_add_handler =
@@ -643,68 +617,6 @@ _e_fwin_page_free(E_Fwin_Page *page)
      ecore_event_handler_del(page->fm_op_entry_add_handler);
 
    E_FREE(page);
-}
-
-static void
-_e_fwin_page_new(E_Fwin *fwin)
-{
-   E_Fwin_Page *page;
-   const char *real;
-   const char *dev, *path;
-
-   if (!fwin->tb_obj)
-     {
-        page = fwin->pages->data;
-
-        /* There is no toolbar yet */
-        fwin->tb_obj = e_widget_toolbar_add(evas_object_evas_get(page->fm_obj),
-                                            48 * e_scale, 48 * e_scale);
-
-        e_widget_toolbar_focus_steal_set(fwin->tb_obj, 0);
-        real = ecore_file_file_get(e_fm2_real_path_get(page->fm_obj));
-        e_widget_toolbar_item_append(fwin->tb_obj, NULL, real,
-                                     _e_fwin_cb_page_change, fwin, page);
-
-        evas_object_move(fwin->tb_obj, 0, 0);
-        evas_object_show(fwin->tb_obj);
-     }
-
-   page = _e_fwin_page_create(fwin);
-   fwin->pages = eina_list_append(fwin->pages, page);
-   real = ecore_file_file_get(e_fm2_real_path_get(fwin->cur_page->fm_obj));
-   e_widget_toolbar_item_append(fwin->tb_obj, NULL, real,
-                                _e_fwin_cb_page_change, fwin, page);
-   e_fm2_path_get(fwin->cur_page->fm_obj, &dev, &path);
-   e_fm2_path_set(page->fm_obj, dev, path);
-
-   e_widget_toolbar_item_select(fwin->tb_obj, page->index);
-   _e_fwin_cb_resize(fwin->win);
-}
-
-static void
-_e_fwin_cb_page_change(void *data1,
-                       void *data2)
-{
-   E_Fwin *fwin = data1;
-   E_Fwin_Page *page = data2, *prev;
-
-   if ((!fwin) || (!page)) return;
-   prev = eina_list_nth(fwin->pages, fwin->page_index);
-   fwin->page_index = page->index;
-
-   if (prev)
-     {
-        evas_object_hide(prev->scrollframe_obj);
-        if (prev->tbar)
-          e_toolbar_hide(prev->tbar);
-     }
-
-   evas_object_show(page->scrollframe_obj);
-   if (page->tbar)
-     e_toolbar_show(page->tbar);
-
-   fwin->cur_page = page;
-   evas_object_focus_set(page->fm_obj, 1);
 }
 
 static const char *
@@ -1068,29 +980,11 @@ _e_fwin_window_title_set(E_Fwin_Page *page)
 }
 
 static void
-_e_fwin_page_resize(E_Fwin_Page *page)
-{
-   if (page->tbar)
-     _e_fwin_toolbar_resize(page);
-   else
-     {
-        int offset = 0;
-
-        if (page->fwin->tb_obj)
-          evas_object_geometry_get(page->fwin->tb_obj, NULL, NULL, NULL, &offset);
-        evas_object_move(page->scrollframe_obj, 0, offset);
-        evas_object_resize(page->scrollframe_obj, page->fwin->win->w, page->fwin->win->h - offset);
-     }
-}
-
-static void
 _e_fwin_toolbar_resize(E_Fwin_Page *page)
 {
    int tx, ty, tw, th, offset = 0;
    int x, y, w, h;
 
-   if (page->fwin->tb_obj)
-     evas_object_geometry_get(page->fwin->tb_obj, NULL, NULL, NULL, &offset);
    w = page->fwin->win->w;
    h = page->fwin->win->h;
    switch (page->tbar->gadcon->orient)
@@ -1206,22 +1100,9 @@ _e_fwin_cb_resize(E_Win *win)
         else if (fwin->zone)
           evas_object_resize(fwin->bg_obj, fwin->zone->w, fwin->zone->h);
      }
-   if (fwin->win)
-     {
-        E_Fwin_Page *page;
-        Eina_List *l;
-
-        if (fwin->tb_obj)
-          {
-             int height;
-
-             e_widget_size_min_get(fwin->tb_obj, NULL, &height);
-             evas_object_resize(fwin->tb_obj, fwin->win->w, height);
-          }
-        EINA_LIST_FOREACH(fwin->pages, l, page)
-          _e_fwin_page_resize(page);
-     }
-   else if (fwin->zone)
+   if (fwin->cur_page->tbar)
+     _e_fwin_toolbar_resize(fwin->cur_page);
+   if (fwin->zone)
      evas_object_resize(fwin->cur_page->scrollframe_obj, fwin->zone->w, fwin->zone->h);
    /* _e_fwin_geom_save(fwin); */
 }
@@ -1341,13 +1222,6 @@ _e_fwin_changed(void *data,
           }
         e_scrollframe_child_pos_set(page->scrollframe_obj, 0, 0);
      }
-   if (fwin->tb_obj)
-     {
-        const char *file;
-
-        file = ecore_file_file_get(e_fm2_real_path_get(page->fm_obj));
-        e_widget_toolbar_item_label_set(fwin->tb_obj, fwin->page_index, file);
-     }
    if ((fwin->theme_file) && (ecore_file_exists(fwin->theme_file)))
      e_fm2_custom_theme_set(obj, fwin->theme_file);
    else
@@ -1431,95 +1305,12 @@ _e_fwin_cb_key_down(void *data,
           }
         if (!strcmp(ev->key, "w"))
           {
-             int count = eina_list_count(fwin->pages);
-             E_Fwin_Page *pagew;
-
-             if (count > 2)
-               {
-                  Eina_List *l;
-                  int i = 0;
-
-                  pagew = fwin->cur_page;
-                  if (fwin->page_index > 0)
-                    {
-                       if (fwin->tb_obj)
-                         e_widget_toolbar_item_select(fwin->tb_obj,
-                                                      fwin->page_index - 1);
-                    }
-                  else
-                    {
-                       if (fwin->tb_obj)
-                         e_widget_toolbar_item_select(fwin->tb_obj, 1);
-                    }
-                  if (fwin->tb_obj)
-                    e_widget_toolbar_item_remove(fwin->tb_obj, page->index);
-                  fwin->pages = eina_list_remove(fwin->pages, pagew);
-                  _e_fwin_page_free(pagew);
-                  EINA_LIST_FOREACH(fwin->pages, l, pagew)
-                    pagew->index = i++;
-               }
-             else if (count > 1)
-               {
-                  if (fwin->tb_obj)
-                    evas_object_del(fwin->tb_obj);
-                  fwin->tb_obj = NULL;
-                  fwin->page_index = 0;
-                  fwin->pages = eina_list_remove(fwin->pages, fwin->cur_page);
-                  _e_fwin_page_free(fwin->cur_page);
-                  pagew = fwin->pages->data;
-                  pagew->index = 0;
-                  _e_fwin_cb_page_change(fwin, pagew);
-                  _e_fwin_cb_resize(fwin->win);
-               }
-             else
-               e_object_del(E_OBJECT(fwin));
+             e_object_del(E_OBJECT(fwin));
              return;
           }
         if (!strcmp(ev->key, "a"))
           {
              e_fm2_all_sel(page->fm_obj);
-             return;
-          }
-        if (!strcmp(ev->key, "t"))
-          {
-             _e_fwin_page_new(fwin);
-             return;
-          }
-        if (!strcmp(ev->key, "Tab"))
-          {
-             Eina_List *l;
-
-             if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
-               {
-                  l = eina_list_nth_list(fwin->pages, fwin->page_index);
-                  if (l->prev)
-                    {
-                       if (fwin->tb_obj)
-                         e_widget_toolbar_item_select(fwin->tb_obj,
-                                                      fwin->page_index - 1);
-                    }
-                  else
-                    {
-                       if (fwin->tb_obj)
-                         e_widget_toolbar_item_select(fwin->tb_obj,
-                                                      eina_list_count(fwin->pages) - 1);
-                    }
-               }
-             else
-               {
-                  l = eina_list_nth_list(fwin->pages, fwin->page_index);
-                  if (l->next)
-                    {
-                       if (fwin->tb_obj)
-                         e_widget_toolbar_item_select(fwin->tb_obj,
-                                                      fwin->page_index + 1);
-                    }
-                  else
-                    {
-                       if (fwin->tb_obj)
-                         e_widget_toolbar_item_select(fwin->tb_obj, 0);
-                    }
-               }
              return;
           }
      }
