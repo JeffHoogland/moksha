@@ -9,6 +9,7 @@ Makefile.in
 *.gmo
 *~
 *.cfg
+*.desktop
 default.edj
 /ABOUT-NLS
 /aclocal.m4
@@ -95,6 +96,7 @@ default.edj
 /src/bin/enlightenment_filemanager
 /src/bin/enlightenment_imc
 /src/bin/enlightenment_init
+/src/bin/enlightenment_open
 /src/bin/enlightenment_start
 /src/bin/enlightenment_sys
 /src/bin/enlightenment_thumb
@@ -103,6 +105,11 @@ default.edj
 /src/modules/everything/everything.pc
 /src/modules/illume2/doc/illume.dox
 /src/modules/temperature/tempget
+/src/modules/conf_randr/e-module-conf_randr.edj
+/src/modules/illume-indicator/e-module-illume-indicator.edj
+/src/modules/illume-keyboard/e-module-illume-keyboard.edj
+/src/modules/illume-softkey/e-module-illume-softkey.edj
+/src/modules/illume2/e-module-illume2.edj
+/src/modules/tiling/e-module-tiling.edj
 /stamp-h1
 /doc/Doxyfile
-
