@@ -102,7 +102,8 @@ static void             _e_fwin_desktop_run(Efreet_Desktop *desktop,
                                             E_Fwin_Page *page,
                                             Eina_Bool skip_history);
 static Eina_List       *_e_fwin_suggested_apps_list_get(Eina_List *files,
-                                                        Eina_List **mime_list);
+                                                        Eina_List **mime_list,
+                                                        Eina_Bool *has_default);
 static void             _e_fwin_changed(void *data,
                                         Evas_Object *obj,
                                         void *event_info);
@@ -645,8 +646,99 @@ _e_fwin_custom_file_path_eval(E_Fwin *fwin,
 }
 
 static Eina_List *
+_e_fwin_defaults_apps_get(const char *mime, const char *path)
+{
+   Efreet_Ini *ini;
+   const char *str;
+   Eina_List *apps = NULL;
+   char **array, **itr;
+
+   if (!ecore_file_exists(path)) return NULL;
+
+   ini = efreet_ini_new(path);
+   if (!ini) return NULL;
+
+   efreet_ini_section_set(ini, "Default Applications");
+   str = efreet_ini_string_get(ini, mime);
+   if (!str) goto end;
+
+   array = eina_str_split(str, ";", 0);
+   if (!array) goto end;
+
+   for (itr = array; *itr != NULL; itr++)
+     {
+        const char *name = *itr;
+        Efreet_Desktop *desktop;
+
+        if (name[0] == '/')
+          desktop = efreet_desktop_new(name);
+        else
+          desktop = efreet_util_desktop_file_id_find(name);
+
+        if (!desktop) continue;
+        if (!desktop->exec)
+          {
+             efreet_desktop_free(desktop);
+             continue;
+          }
+
+        apps = eina_list_append(apps, desktop);
+     }
+
+   free(array[0]);
+   free(array);
+ end:
+   efreet_ini_free(ini);
+   return apps;
+}
+
+static Eina_List *
+_e_fwin_suggested_apps_list_sort(const char *mime, Eina_List *desktops, Eina_Bool *has_default)
+{
+   char path[PATH_MAX];
+   Eina_List *order, *l;
+   Efreet_Desktop *desktop;
+
+   snprintf(path, sizeof(path), "%s/applications/defaults.list",
+            efreet_data_home_get());
+   order = _e_fwin_defaults_apps_get(mime, path);
+
+   if (!order)
+     {
+        const Eina_List *n, *dirs = efreet_data_dirs_get();
+        const char *d;
+        EINA_LIST_FOREACH(dirs, n, d)
+          {
+             snprintf(path, sizeof(path), "%s/applications/defaults.list", d);
+             order = _e_fwin_defaults_apps_get(mime, path);
+             if (order)
+               break;
+          }
+     }
+
+   if (!order)
+     {
+        if (has_default) *has_default = EINA_FALSE;
+        return desktops;
+     }
+
+   EINA_LIST_FOREACH(order, l, desktop)
+     {
+        Eina_List *node = eina_list_data_find_list(desktops, desktop);
+        if (!node) continue;
+        desktops = eina_list_remove_list(desktops, node);
+        efreet_desktop_free(desktop);
+     }
+
+   if (has_default) *has_default = EINA_TRUE;
+
+   return eina_list_merge(order, desktops);
+}
+
+static Eina_List *
 _e_fwin_suggested_apps_list_get(Eina_List *files,
-                                Eina_List **mime_list)
+                                Eina_List **mime_list,
+                                Eina_Bool *has_default)
 {
    E_Fm2_Icon_Info *ici;
    Eina_Hash *set_mimes;
@@ -668,6 +760,7 @@ _e_fwin_suggested_apps_list_get(Eina_List *files,
        }
 
    if (mime_list) *mime_list = NULL;
+   if (has_default) *has_default = EINA_FALSE;
 
    if (eina_hash_population(set_mimes) > 0)
      {
@@ -679,8 +772,13 @@ _e_fwin_suggested_apps_list_get(Eina_List *files,
           {
              Eina_List *desktops = efreet_util_desktop_mime_list(mime);
              Efreet_Desktop *d;
+             Eina_Bool hd = EINA_FALSE;
 
              if (mime_list) *mime_list = eina_list_append(*mime_list, mime);
+
+             desktops = _e_fwin_suggested_apps_list_sort(mime, desktops, &hd);
+             if ((hd) && (has_default))
+               *has_default = EINA_TRUE;
 
              EINA_LIST_FREE(desktops, d)
                {
@@ -1447,7 +1545,7 @@ _e_fwin_cb_menu_extend_open_with(void *data,
    selected = e_fm2_selected_list_get(page->fm_obj);
    if (!selected) return;
 
-   apps = _e_fwin_suggested_apps_list_get(selected, NULL);
+   apps = _e_fwin_suggested_apps_list_get(selected, NULL, NULL);
    EINA_LIST_FOREACH(apps, l, desk)
      {
         if (!desk) continue;
@@ -1547,6 +1645,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Icon_Info *ici;
    char buf[PATH_MAX];
+   Eina_Bool has_default = EINA_FALSE;
    int need_dia = 0;
 
    if (fwin->fad)
@@ -1737,7 +1836,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
         if (!need_dia) return;
      }
 
-   apps = _e_fwin_suggested_apps_list_get(files, &mlist);
+   apps = _e_fwin_suggested_apps_list_get(files, &mlist, &has_default);
 
    if (!always)
      {
@@ -1755,14 +1854,15 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
          * use it, if not fall back again - and so on - if all apps listed do
          * not contain 1 that handles all the mime types - fall back to dialog
          */
-        if (eina_list_count(mlist) <= 1)
+        if ((has_default) || (eina_list_count(mlist) <= 1))
           {
              char *file;
              char pcwd[4096];
              Eina_List *files_list = NULL;
 
              need_dia = 1;
-             if (mlist) desk = e_exehist_mime_desktop_get(mlist->data);
+             if ((has_default) && (apps)) desk = apps->data;
+             else if (mlist) desk = e_exehist_mime_desktop_get(mlist->data);
              getcwd(pcwd, sizeof(pcwd));
              chdir(e_fm2_real_path_get(page->fm_obj));
 
