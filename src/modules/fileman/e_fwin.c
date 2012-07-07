@@ -1800,7 +1800,8 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
              chdir(pcwd);
              if (!need_dia)
                {
-                  apps = eina_list_free(apps);
+                  EINA_LIST_FREE(apps, desk)
+                    efreet_desktop_free(desk);
                   mlist = eina_list_free(mlist);
                   return;
                }
