@@ -150,6 +150,14 @@ _env_path_prepend(const char *env, const char *path)
    if (p) len = strlen(p);
    p2 = (char *)path;
    if (p2) len2 = strlen(p2);
+   if (p && p2)
+     {
+        // path already there at the start. dont prepend. :)
+        if ((!strncmp(p, p2, strlen(p2))) &&
+            (len > len2) &&
+            (p[len2] == ':'))
+          return;
+     }
    s = malloc(len + 1 + len2 + 1);
    if (s)
      {
