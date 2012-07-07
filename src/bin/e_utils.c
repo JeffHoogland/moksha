@@ -936,12 +936,13 @@ e_util_file_time_get(time_t ftime)
    return s;
 }
 
-static char *prev_ld_library_path = NULL;
-static char *prev_path = NULL;
+//static char *prev_ld_library_path = NULL;
+//static char *prev_path = NULL;
 
 EAPI void
 e_util_library_path_strip(void)
 {
+/* disabled as i think we dont need/want this anymore - leftover from a bygone era
    char *p, *p2;
 
    p = getenv("LD_LIBRARY_PATH");
@@ -962,11 +963,13 @@ e_util_library_path_strip(void)
         if (p2) p2++;
         e_util_env_set("PATH", p2);
      }
+ */
 }
 
 EAPI void
 e_util_library_path_restore(void)
 {
+/* disabled as i think we dont need/want this anymore - leftover from a bygone era
    if (prev_ld_library_path)
      {
         e_util_env_set("LD_LIBRARY_PATH", prev_ld_library_path);
@@ -977,6 +980,7 @@ e_util_library_path_restore(void)
         e_util_env_set("PATH", prev_path);
         E_FREE(prev_path);
      }
+ */
 }
 
 EAPI Evas_Object *

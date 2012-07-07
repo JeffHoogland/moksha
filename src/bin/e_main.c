@@ -141,6 +141,31 @@ _xdg_data_dirs_augment(void)
 }
 
 static void
+_env_path_prepend(const char *env, const char *path)
+{
+   char *p, *p2, *s;
+   int len = 0, len2 = 0;
+   
+   p = getenv(env);
+   if (p) len = strlen(p);
+   p2 = (char *)path;
+   if (p2) len2 = strlen(p2);
+   s = malloc(len + 1 + len2 + 1);
+   if (s)
+     {
+        s[0] = 0;
+        if (p) strcat(s, p);
+        if (p2)
+          {
+             strcat(s, ":");
+             strcat(s, p2);
+          }
+        e_util_env_set(env, s);
+        free(s);
+     }
+}
+
+static void
 _fix_user_default_edj(void)
 {
    char buff[PATH_MAX];
@@ -244,6 +269,9 @@ main(int argc, char **argv)
                 "       executed strangely. This is unusual.\n");
      }
    TS("Determine Prefix Done");
+
+   _env_path_prepend("PATH", e_prefix_bin_get());
+   _env_path_prepend("LD_LIBRARY_PATH", e_prefix_lib_get());
 
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);
