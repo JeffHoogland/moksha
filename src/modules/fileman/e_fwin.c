@@ -147,10 +147,6 @@ static void             _e_fwin_cb_open(void *data,
 static void             _e_fwin_cb_close(void *data,
                                          E_Dialog *dia);
 static void             _e_fwin_cb_dialog_free(void *obj);
-static Eina_Bool        _e_fwin_cb_hash_foreach(const Eina_Hash *hash __UNUSED__,
-                                                const void *key,
-                                                void *data            __UNUSED__,
-                                                void *fdata);
 static E_Fwin_Exec_Type _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici);
 static void             _e_fwin_file_exec(E_Fwin_Page *page,
                                           E_Fm2_Icon_Info *ici,
@@ -653,52 +649,55 @@ _e_fwin_suggested_apps_list_get(Eina_List *files,
                                 Eina_List **mime_list)
 {
    E_Fm2_Icon_Info *ici;
-   const char *f = NULL;
-   char *mime;
-   Eina_Hash *mimes = NULL;
-   Eina_List *mlist = NULL, *apps = NULL, *ret = NULL, *l;
-   Efreet_Desktop *desk = NULL;
+   Eina_Hash *set_mimes;
+   Eina_List *apps = NULL, *l;
 
-   /* 1. build hash of mimetypes */
+   set_mimes = eina_hash_string_small_new(NULL);
    EINA_LIST_FOREACH(files, l, ici)
      if (!((ici->link) && (ici->mount)))
        {
           if (_e_fwin_file_is_exec(ici) == E_FWIN_EXEC_NONE)
             {
+               const char *key = ici->mime;
                if (ici->link)
-                 f = efreet_mime_globs_type_get(ici->link);
-               if (!mimes)
-                 mimes = eina_hash_string_superfast_new(NULL);
-               eina_hash_del(mimes, ici->link ? f : ici->mime, (void *)1);
-               eina_hash_direct_add(mimes, ici->link ? f : ici->mime, (void *)1);
+                 key = efreet_mime_globs_type_get(ici->link);
+
+               if (!eina_hash_find(set_mimes, key))
+                 eina_hash_direct_add(set_mimes, key, (void *)1);
             }
        }
-   if (!mimes) return NULL;
 
-   /* 2. add apps to a list so its a unique app list */
-   eina_hash_foreach(mimes, _e_fwin_cb_hash_foreach, &mlist);
-   eina_hash_free(mimes);
+   if (mime_list) *mime_list = NULL;
 
-   /* 3. for each mimetype list apps that handle it */
-   EINA_LIST_FOREACH(mlist, l, mime)
-     apps = eina_list_merge(apps, efreet_util_desktop_mime_list(mime));
-
-   /* 4. create a new list without duplicates */
-   EINA_LIST_FREE(apps, desk)
+   if (eina_hash_population(set_mimes) > 0)
      {
-        if (!eina_list_data_find(ret, desk))
-          ret = eina_list_append(ret, desk);
-        else
-          efreet_desktop_free(desk);
+        Eina_Hash *set_apps = eina_hash_pointer_new(NULL);
+        Eina_Iterator *itr = eina_hash_iterator_key_new(set_mimes);
+        const char *mime;
+
+        EINA_ITERATOR_FOREACH(itr, mime)
+          {
+             Eina_List *desktops = efreet_util_desktop_mime_list(mime);
+             Efreet_Desktop *d;
+
+             if (mime_list) *mime_list = eina_list_append(*mime_list, mime);
+
+             EINA_LIST_FREE(desktops, d)
+               {
+                  if (eina_hash_find(set_apps, &d)) efreet_desktop_free(d);
+                  else
+                    {
+                       eina_hash_add(set_apps, &d, (void *)1);
+                       apps = eina_list_append(apps, d);
+                    }
+               }
+          }
+        eina_iterator_free(itr);
+        eina_hash_free(set_apps);
      }
+   eina_hash_free(set_mimes);
 
-   if (mime_list)
-     *mime_list = mlist;
-   else
-   if (mlist)
-     mlist = eina_list_free(mlist);
-
-   return ret;
+   return apps;
 }
 
 static void
@@ -753,19 +752,6 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop,
      free(file);
 
    chdir(pcwd);
-}
-
-static Eina_Bool
-_e_fwin_cb_hash_foreach(const Eina_Hash *hash __UNUSED__,
-                        const void *key,
-                        void *data            __UNUSED__,
-                        void *fdata)
-{
-   Eina_List **mlist;
-
-   mlist = fdata;
-   *mlist = eina_list_append(*mlist, key);
-   return 1;
 }
 
 static E_Fwin_Exec_Type
