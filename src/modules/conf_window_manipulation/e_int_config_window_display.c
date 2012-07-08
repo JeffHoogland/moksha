@@ -221,7 +221,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    
-   ow = e_widget_radio_add(evas, _("Pronounced Acceleratem then decelerate"), E_TRANSITION_SINUSOIDAL_LOTS, rg);
+   ow = e_widget_radio_add(evas, _("Pronounced Accelerate, then decelerate"), E_TRANSITION_SINUSOIDAL_LOTS, rg);
    e_widget_disabled_set(ow, !cfdata->border_shade_animate);
    cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
