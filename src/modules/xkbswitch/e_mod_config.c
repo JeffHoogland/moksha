@@ -70,9 +70,9 @@ _xkb_cfg_dialog(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata   = _basic_apply;
 
-   cfd = e_config_dialog_new(con, _("XKB Switcher Module"), "E",
+   cfd = e_config_dialog_new(con, _("Keyboard Settings"), "E",
                              "keyboard_and_mouse/xkbswitch",
-                             "preferences-desktop-locale",
+                             "preferences-desktop-keyboard",
                              0, v, NULL);
    e_dialog_resizable_set(cfd->dia, 1);
    _xkb.cfd = cfd;

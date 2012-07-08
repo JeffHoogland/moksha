@@ -72,8 +72,8 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("keyboard_and_mouse", 80, _("Input"), 
                                      NULL, "preferences-behavior");
    e_configure_registry_item_add("keyboard_and_mouse/xkbswitch", 110,
-                                 _("XKB Switcher"),  NULL,
-                                 "preferences-desktop-locale", 
+                                 _("Keyboard"),  NULL,
+                                 "preferences-desktop-keyboard", 
                                  _xkb_cfg_dialog);
    _xkb.module = m;
    _xkb.evh = ecore_event_handler_add(E_EVENT_XKB_CHANGED, _xkb_changed, NULL);
@@ -251,7 +251,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 static const char *
 _gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return _("XKB Switcher");
+   return _("Keyboard");
 }
 
 static const char *
