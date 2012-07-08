@@ -330,7 +330,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //expand
                                       0.0, 0.5 //align
                                       );
-   e_widget_toolbook_page_append(otb, NULL, _("Power managment"), ol,
+   e_widget_toolbook_page_append(otb, NULL, _("Power management"), ol,
                                  0, 0, 1, 1, 0.5, 0.5);
    e_widget_toolbook_page_show(otb, 0);
    e_dialog_resizable_set(cfd->dia, 1);

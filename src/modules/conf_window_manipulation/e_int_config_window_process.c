@@ -36,7 +36,7 @@ e_int_config_window_process(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
 
    /* create config diaolg for NULL object/data */
-   cfd = e_config_dialog_new(con, _("Window Stacking"),
+   cfd = e_config_dialog_new(con, _("Window Process Management"),
 			     "E", "windows/window_process",
 			     "preferences-window-process", 0, v, NULL);
    return cfd;

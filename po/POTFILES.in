@@ -132,8 +132,12 @@ src/modules/battery/e_mod_main.c
 src/modules/clock/e_mod_config.c
 src/modules/clock/e_mod_main.c
 src/modules/conf/e_conf.c
+src/modules/conf/e_mod_config.c
 src/modules/conf/e_mod_main.c
 src/modules/conf_applications/e_int_config_apps.c
+src/modules/conf_applications/e_int_config_apps_personal.c
+src/modules/conf_applications/e_int_config_defapps.c
+src/modules/conf_applications/e_int_config_deskenv.c
 src/modules/conf_applications/e_mod_main.c
 src/modules/conf_dialogs/e_int_config_profiles.c
 src/modules/conf_dialogs/e_int_config_dialogs.c
@@ -161,9 +165,11 @@ src/modules/conf_keybindings/e_mod_main.c
 src/modules/conf_menus/e_int_config_menus.c
 src/modules/conf_menus/e_mod_main.c
 src/modules/conf_paths/e_int_config_paths.c
+src/modules/conf_paths/e_int_config_env.c
 src/modules/conf_paths/e_mod_main.c
 src/modules/conf_performance/e_int_config_engine.c
 src/modules/conf_performance/e_int_config_performance.c
+src/modules/conf_performance/e_int_config_powermanagement.c
 src/modules/conf_performance/e_mod_main.c
 src/modules/conf_shelves/e_int_config_shelf.c
 src/modules/conf_shelves/e_mod_main.c
@@ -188,6 +194,7 @@ src/modules/conf_window_manipulation/e_int_config_focus.c
 src/modules/conf_window_manipulation/e_int_config_window_geometry.c
 src/modules/conf_window_manipulation/e_int_config_window_maxpolicy.c
 src/modules/conf_window_manipulation/e_int_config_window_stacking.c
+src/modules/conf_window_manipulation/e_int_config_window_process.c
 src/modules/conf_window_manipulation/e_mod_main.c
 src/modules/conf_window_remembers/e_int_config_remembers.c
 src/modules/conf_window_remembers/e_mod_main.c
@@ -227,6 +234,7 @@ src/modules/ibox/e_mod_main.c
 src/modules/pager/e_mod_config.c
 src/modules/pager/e_mod_main.c
 src/modules/start/e_mod_main.c
+src/modules/syscon/e_int_config_syscon.c
 src/modules/syscon/e_mod_main.c
 src/modules/syscon/e_syscon.c
 src/modules/temperature/e_mod_config.c

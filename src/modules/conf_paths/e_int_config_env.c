@@ -33,7 +33,7 @@ e_int_config_env(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets    = _basic_create_widgets;
    v->basic.apply_cfdata      = _basic_apply_data;
    
-   cfd = e_config_dialog_new(con, _("Environment-variables"),
+   cfd = e_config_dialog_new(con, _("Environment Variables"),
 			     "E", "advanced/environment_variables",
 			     "preferences-system", 0, v, NULL);
    return cfd;
@@ -312,7 +312,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_button_add(evas, _("Modify"), NULL, _mod_cb, cfdata, NULL);
    e_widget_table_object_append(o, ob, 1, 2, 1, 1, 1, 1, 0, 0);
 
-   ob = e_widget_button_add(evas, _("Del"), "list-remove", _del_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Delete"), "list-remove", _del_cb, cfdata, NULL);
    e_widget_table_object_append(o, ob, 2, 2, 1, 1, 1, 1, 0, 0);
    
    e_dialog_resizable_set(cfd->dia, 1);

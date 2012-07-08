@@ -37,7 +37,7 @@ e_int_config_dialogs(E_Container *con, const char *params __UNUSED__)
    
    cfd = e_config_dialog_new(con, _("Dialog Settings"),
 			     "E", "settings/dialogs",
-			     "preferences-dialogs", 0, v, NULL);
+			     "preferences-system", 0, v, NULL);
    return cfd;
 }
 

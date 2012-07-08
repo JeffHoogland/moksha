@@ -72,7 +72,7 @@ e_int_config_defapps(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Default Applications"),
                              "E", "applications/default_applications",
-                             "preferences-applications-default", 0, v, NULL);
+                             "preferences-desktop-default-applications", 0, v, NULL);
    return cfd;
 }
 
