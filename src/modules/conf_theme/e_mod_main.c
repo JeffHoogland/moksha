@@ -35,7 +35,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("appearance/theme", 20, _("Theme"), NULL,
                                  "preferences-desktop-theme",
                                  e_int_config_theme);
-   e_configure_registry_item_add("appearance/xsettings", 20, _("Applications"), NULL,
+   e_configure_registry_item_add("appearance/xsettings", 20, _("Application Theme"), NULL,
                                  "preferences-desktop-theme",
                                  e_int_config_xsettings);
    e_configure_registry_item_add("appearance/colors", 30, _("Colors"), NULL,
@@ -47,16 +47,13 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("appearance/borders", 50, _("Borders"), NULL,
                                  "preferences-system-windows",
                                  e_int_config_borders);
-   e_configure_registry_item_add("appearance/icon_theme", 60, _("Icon Theme"), NULL,
-                                 "preferences-icon-theme",
-                                 e_int_config_icon_themes);
-   e_configure_registry_item_add("appearance/transitions", 70, _("Transitions"), NULL,
+   e_configure_registry_item_add("appearance/transitions", 60, _("Transitions"), NULL,
                                  "preferences-transitions",
                                  e_int_config_transitions);
-   e_configure_registry_item_add("appearance/scale", 80, _("Scaling"), NULL,
+   e_configure_registry_item_add("appearance/scale", 70, _("Scaling"), NULL,
                                  "preferences-scale",
                                  e_int_config_scale);
-   e_configure_registry_item_add("appearance/startup", 90, _("Startup"), NULL,
+   e_configure_registry_item_add("appearance/startup", 80, _("Startup"), NULL,
                                  "preferences-startup",
                                  e_int_config_startup);
 
@@ -95,8 +92,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "appearance/transitions")))
      e_object_del(E_OBJECT(cfd));
-   while ((cfd = e_config_dialog_get("E", "appearance/icon_theme")))
-     e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "appearance/borders")))
      e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "appearance/fonts")))
@@ -113,7 +108,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("appearance/startup");
    e_configure_registry_item_del("appearance/scale");
    e_configure_registry_item_del("appearance/transitions");
-   e_configure_registry_item_del("appearance/icon_theme");
    e_configure_registry_item_del("appearance/borders");
    e_configure_registry_item_del("appearance/fonts");
    e_configure_registry_item_del("appearance/colors");

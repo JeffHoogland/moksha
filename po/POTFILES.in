@@ -179,7 +179,6 @@ src/modules/conf_theme/e_int_config_wallpaper_web.c
 src/modules/conf_theme/e_int_config_borders.c
 src/modules/conf_theme/e_int_config_color_classes.c
 src/modules/conf_theme/e_int_config_fonts.c
-src/modules/conf_theme/e_int_config_icon_themes.c
 src/modules/conf_theme/e_int_config_scale.c
 src/modules/conf_theme/e_int_config_startup.c
 src/modules/conf_theme/e_int_config_transitions.c

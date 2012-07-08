@@ -28,8 +28,6 @@ module_la_SOURCES      = e_mod_main.c \
                          e_int_config_color_classes.h \
                          e_int_config_fonts.c \
                          e_int_config_fonts.h \
-                         e_int_config_icon_themes.c \
-                         e_int_config_icon_themes.h \
                          e_int_config_scale.c \
                          e_int_config_scale.h \
                          e_int_config_startup.c \
