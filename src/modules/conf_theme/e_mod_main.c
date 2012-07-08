@@ -50,13 +50,10 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("appearance/icon_theme", 60, _("Icon Theme"), NULL,
                                  "preferences-icon-theme",
                                  e_int_config_icon_themes);
-   e_configure_registry_item_add("appearance/mouse_cursor", 70, _("Mouse Cursor"), NULL,
-                                 "preferences-desktop-pointer",
-                                 e_int_config_cursor);
-   e_configure_registry_item_add("appearance/transitions", 80, _("Transitions"), NULL,
+   e_configure_registry_item_add("appearance/transitions", 70, _("Transitions"), NULL,
                                  "preferences-transitions",
                                  e_int_config_transitions);
-   e_configure_registry_item_add("appearance/scale", 90, _("Scaling"), NULL,
+   e_configure_registry_item_add("appearance/scale", 80, _("Scaling"), NULL,
                                  "preferences-scale",
                                  e_int_config_scale);
    e_configure_registry_item_add("appearance/startup", 90, _("Startup"), NULL,
@@ -98,8 +95,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "appearance/transitions")))
      e_object_del(E_OBJECT(cfd));
-   while ((cfd = e_config_dialog_get("E", "appearance/mouse_cursor")))
-     e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "appearance/icon_theme")))
      e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "appearance/borders")))
@@ -118,7 +113,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("appearance/startup");
    e_configure_registry_item_del("appearance/scale");
    e_configure_registry_item_del("appearance/transitions");
-   e_configure_registry_item_del("appearance/mouse_cursor");
    e_configure_registry_item_del("appearance/icon_theme");
    e_configure_registry_item_del("appearance/borders");
    e_configure_registry_item_del("appearance/fonts");

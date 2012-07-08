@@ -26,8 +26,6 @@ module_la_SOURCES      = e_mod_main.c \
                          e_int_config_borders.h \
                          e_int_config_color_classes.c \
                          e_int_config_color_classes.h \
-                         e_int_config_cursor.c \
-                         e_int_config_cursor.h \
                          e_int_config_fonts.c \
                          e_int_config_fonts.h \
                          e_int_config_icon_themes.c \

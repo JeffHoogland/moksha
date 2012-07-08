@@ -174,13 +174,13 @@ src/modules/conf_theme/e_int_config_borders.c
 src/modules/conf_theme/e_int_config_color_classes.c
 src/modules/conf_theme/e_int_config_fonts.c
 src/modules/conf_theme/e_int_config_icon_themes.c
-src/modules/conf_theme/e_int_config_cursor.c
 src/modules/conf_theme/e_int_config_scale.c
 src/modules/conf_theme/e_int_config_startup.c
 src/modules/conf_theme/e_int_config_transitions.c
 src/modules/conf_theme/e_int_config_theme.c
 src/modules/conf_theme/e_int_config_theme_import.c
 src/modules/conf_theme/e_int_config_theme_web.c
+src/modules/conf_theme/e_int_config_xsettings.c
 src/modules/conf_theme/e_mod_main.c
 src/modules/conf_window_manipulation/e_int_config_clientlist.c
 src/modules/conf_window_manipulation/e_int_config_window_display.c

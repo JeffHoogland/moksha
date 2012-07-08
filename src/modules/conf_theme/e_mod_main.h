@@ -4,7 +4,6 @@
 #define E_TYPEDEFS 1
 #include "e_int_config_borders.h"
 #include "e_int_config_color_classes.h"
-#include "e_int_config_cursor.h"
 #include "e_int_config_fonts.h"
 #include "e_int_config_icon_themes.h"
 #include "e_int_config_scale.h"
@@ -20,7 +19,6 @@
 #undef E_TYPEDEFS
 #include "e_int_config_borders.h"
 #include "e_int_config_color_classes.h"
-#include "e_int_config_cursor.h"
 #include "e_int_config_fonts.h"
 #include "e_int_config_icon_themes.h"
 #include "e_int_config_scale.h"
