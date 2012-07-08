@@ -638,7 +638,7 @@ _config_color_class_new(const char *key_stringshared, const char *name, E_Color_
    CFColor_Class *ccc = E_NEW(CFColor_Class, 1);
    if (!ccc) return NULL;
 
-   ccc->name = eina_stringshare_add(name);
+   ccc->name = eina_stringshare_add(_(name));
    ccc->cc = cc;
    ccc->key = eina_stringshare_ref(key_stringshared);
 
@@ -855,7 +855,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    Eina_List *todo = eina_list_clone(e_color_class_list());
    E_Color_Class *cc;
 
-   _fill_data_add_header(cfdata, _("Window Manager"), NULL);
+   _fill_data_add_header(cfdata, _("Window Manager"), "enlightenment");
    _fill_data_add_batch(cfdata, &todo, _color_classes_wm);
    _fill_data_add_header(cfdata, _("Widgets"), NULL);
    _fill_data_add_batch(cfdata, &todo, _color_classes_widgets);
