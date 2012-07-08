@@ -10,12 +10,14 @@ static int _advanced_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
 {
    /*- BASIC -*/
    int mode;
+   int use_auto_raise;
    /*- ADVANCED -*/
    int focus_policy;
    int focus_setting;
@@ -25,6 +27,11 @@ struct _E_Config_Dialog_Data
    int focus_last_focused_per_desktop;
    int focus_revert_on_hide_or_close;
    int pointer_slide;
+   double auto_raise_delay;
+   int border_raise_on_mouse_action;
+   int border_raise_on_focus;
+   int allow_above_fullscreen;
+   Eina_List *autoraise_list;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -70,6 +77,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->pointer_slide = e_config->pointer_slide;
 
    cfdata->mode = cfdata->focus_policy;
+
+   cfdata->use_auto_raise = e_config->use_auto_raise;
+   cfdata->auto_raise_delay = e_config->auto_raise_delay;
+   cfdata->border_raise_on_mouse_action = 
+     e_config->border_raise_on_mouse_action;
+   cfdata->border_raise_on_focus = e_config->border_raise_on_focus;
+   cfdata->allow_above_fullscreen = e_config->allow_above_fullscreen;
 }
 
 static void *
@@ -89,6 +103,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   eina_list_free(cfdata->autoraise_list);
    /* Free the cfdata */
    E_FREE(cfdata);
 }
@@ -132,6 +147,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 	e_config->focus_revert_on_hide_or_close = 1;
 	e_config->pointer_slide = 1;
      }
+   e_config->use_auto_raise = cfdata->use_auto_raise;
    e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -140,7 +156,8 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   return e_config->focus_policy != cfdata->mode;
+   return ((e_config->focus_policy != cfdata->mode) ||
+	   (e_config->use_auto_raise != cfdata->use_auto_raise));
 }
 
 static int
@@ -158,6 +175,12 @@ _advanced_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->focus_revert_on_hide_or_close = 
      cfdata->focus_revert_on_hide_or_close;
    e_config->pointer_slide = cfdata->pointer_slide;
+
+   e_config->use_auto_raise = cfdata->use_auto_raise;
+   e_config->auto_raise_delay = cfdata->auto_raise_delay;
+   e_config->border_raise_on_mouse_action = cfdata->border_raise_on_mouse_action;
+   e_config->border_raise_on_focus = cfdata->border_raise_on_focus;
+   e_config->allow_above_fullscreen = cfdata->allow_above_fullscreen;
    e_border_button_bindings_grab_all();
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -173,7 +196,12 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
 	   (e_config->always_click_to_focus != cfdata->always_click_to_focus) ||
 	   (e_config->focus_last_focused_per_desktop != cfdata->focus_last_focused_per_desktop) ||
 	   (e_config->focus_revert_on_hide_or_close != cfdata->focus_revert_on_hide_or_close) ||
-	   (e_config->pointer_slide != cfdata->pointer_slide));
+	   (e_config->pointer_slide != cfdata->pointer_slide) ||
+	   (e_config->use_auto_raise != cfdata->use_auto_raise) ||
+	   (e_config->auto_raise_delay != cfdata->auto_raise_delay) ||
+	   (e_config->border_raise_on_mouse_action != cfdata->border_raise_on_mouse_action) ||
+	   (e_config->border_raise_on_focus != cfdata->border_raise_on_focus) ||
+	   (e_config->allow_above_fullscreen != cfdata->allow_above_fullscreen));
 }
 
 /**--GUI--**/
@@ -193,6 +221,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_radio_add(evas, _("Most recent Window under the Mouse"), 
                            E_FOCUS_SLOPPY, rg);
    e_widget_list_object_append(o, ob, 1, 0, 0.0);
+   ob = e_widget_check_add(evas, _("Raise windows on mouse over"), 
+                           &(cfdata->use_auto_raise));
+   e_widget_list_object_append(o, ob, 1, 0, 0.5);
    return o;
 }
 
@@ -201,6 +232,7 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
 {
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *otb, *ol, *ob, *of;
+   Evas_Object *autoraise_check;
    E_Radio_Group *rg;
 
    otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
@@ -228,6 +260,42 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Focus"), ol, 
+                                 1, 0, 1, 0, 0.5, 0.0);
+
+   /* Stacking */
+   ol = e_widget_list_add(evas, 0, 0);
+
+   of = e_widget_framelist_add(evas, _("Autoraise"), 0);
+   autoraise_check = e_widget_check_add(evas, _("Raise windows on mouse over"), 
+                                        &(cfdata->use_auto_raise));
+   e_widget_framelist_object_append(of, autoraise_check);
+   ob = e_widget_label_add(evas, _("Delay before raising:"));
+   cfdata->autoraise_list = eina_list_append(cfdata->autoraise_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_auto_raise);
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 9.9, 0.1, 0, 
+                            &(cfdata->auto_raise_delay), NULL, 100);
+   cfdata->autoraise_list = eina_list_append(cfdata->autoraise_list, ob);
+   e_widget_disabled_set(ob, !cfdata->use_auto_raise);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+   // handler for enable/disable widget array
+   e_widget_on_change_hook_set(autoraise_check, 
+                               _cb_disable_check_list, cfdata->autoraise_list);
+
+   of = e_widget_framelist_add(evas, _("Raise Window"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+   ob = e_widget_check_add(evas, _("Raise when starting to move or resize"), 
+                           &(cfdata->border_raise_on_mouse_action));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Raise when focusing"), 
+                           &(cfdata->border_raise_on_focus));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Allow windows above fullscreen window"), 
+                           &(cfdata->allow_above_fullscreen));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Stacking"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
 
    /* Misc */
@@ -264,4 +332,16 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
 
    e_widget_toolbook_page_show(otb, 0);
    return otb;
+}
+
+static void
+_cb_disable_check_list(void *data, Evas_Object *obj)
+{
+   const Eina_List *list = data;
+   const Eina_List *l;
+   Evas_Object *o;
+   Eina_Bool disable = !e_widget_check_checked_get(obj);
+
+   EINA_LIST_FOREACH(list, l, o)
+     e_widget_disabled_set(o, disable);
 }
