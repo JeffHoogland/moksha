@@ -494,12 +494,16 @@ _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
           {
              E_Config_Desktop_Background *cdb;
              int x = 0;
-             EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
-               e_widget_preview_edje_set(bg, e_config->desktop_default_background, "e/desktop/background");
-             EINA_LIST_FREE(cfdata->bgs, theme)
-               eina_stringshare_del(theme);
-             for (x = 0; x < cfdata->zone_count; x++)
-               cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("user_background"));
+             if (eina_str_has_extension(e_config->desktop_default_background, "edj"))
+               {
+                  EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
+                    e_widget_preview_edje_set(bg, e_config->desktop_default_background, "e/desktop/background");
+                  EINA_LIST_FREE(cfdata->bgs, theme)
+                    eina_stringshare_del(theme);
+                  for (x = 0; x < cfdata->zone_count; x++)
+                    cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("user_background"));
+               }
+             /* attempt to set wallpaper from desktop 0,0 on each zone as a desklock bg */
              EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cdb)
                if ((!cdb->desk_x) && (!cdb->desk_y))
                  {
@@ -518,18 +522,14 @@ _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
                       e_widget_preview_edje_set(bg, cdb->file, "e/desktop/background");
                  }
           }
-        else if (e_config->desktop_default_background)
+        else if (e_config->desktop_default_background && eina_str_has_extension(e_config->desktop_default_background, "edj"))
           {
-             theme = e_config->desktop_default_background;
-             if (theme)
-               {
-                  EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
-                    e_widget_preview_edje_set(bg, theme, "e/desktop/background");
-                  EINA_LIST_FREE(cfdata->bgs, theme)
-                    eina_stringshare_del(theme);
-                  for (x = 0; x < cfdata->zone_count; x++)
-                    cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("user_background"));
-               }
+             EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
+               e_widget_preview_edje_set(bg, e_config->desktop_default_background, "e/desktop/background");
+             EINA_LIST_FREE(cfdata->bgs, theme)
+               eina_stringshare_del(theme);
+             for (x = 0; x < cfdata->zone_count; x++)
+               cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("user_background"));
           }
         break;
 
