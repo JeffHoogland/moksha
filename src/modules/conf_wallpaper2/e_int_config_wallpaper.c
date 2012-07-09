@@ -67,7 +67,7 @@ struct _Item
 static Info *global_info = NULL;
 
 static void _e_smart_reconfigure(Evas_Object *obj);
-static void _e_smart_reconfigure(Evas_Object *obj);
+static Eina_Bool _e_smart_reconfigure_do(void *data);
 static void _thumb_gen(void *data, Evas_Object *obj, void *event_info);
 static void _item_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _item_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
