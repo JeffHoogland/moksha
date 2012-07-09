@@ -413,6 +413,20 @@ e_fwin_zone_find(E_Zone *zone)
 }
 
 /* local subsystem functions */
+static void
+_e_fwin_bg_mouse_down(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+{
+   int x, y, w, h, zx, zy, zw, zh;
+   e_zone_useful_geometry_get(fwin->win->border->zone, &zx, &zy, &zw, &zh);
+   x = fwin->win->border->x, y = fwin->win->border->y;
+   e_fm2_optimal_size_calc(fwin->cur_page->fm_obj, zw - x, zh - y, &w, &h);
+   if (x + w > zx + zw)
+     w = zx + zw - x;
+   if (y + x > zy + zh)
+     h = zy + zh - y;
+   e_win_resize(fwin->win, w, h);
+}
+
 static E_Fwin *
 _e_fwin_new(E_Container *con,
             const char *dev,
@@ -550,6 +564,7 @@ _e_fwin_page_create(E_Fwin *fwin)
                                   _e_fwin_selection_change, page);
    evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
                                   _e_fwin_cb_page_obj_del, page);
+   evas_object_smart_callback_add(o, "double_clicked", (Evas_Smart_Cb)_e_fwin_bg_mouse_down, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_window_object_set(o, E_OBJECT(fwin->win));
