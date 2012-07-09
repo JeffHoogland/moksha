@@ -17,6 +17,7 @@ EINTERN int e_desklock_shutdown(void);
 EAPI int e_desklock_show(void);
 EAPI int e_desklock_show_autolocked(void);
 EAPI void e_desklock_hide(void);
+EAPI Eina_Bool e_desklock_state_get(void);
 
 extern EAPI int E_EVENT_DESKLOCK;
 

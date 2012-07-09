@@ -82,6 +82,7 @@ static int       _e_desklock_zone_num_get(void);
 static int       _e_desklock_check_auth(void);
 static void      _e_desklock_state_set(int state);
 
+static Eina_Bool _e_desklock_state = EINA_FALSE;
 #ifdef HAVE_PAM
 static Eina_Bool _e_desklock_cb_exit(void *data, int type, void *event);
 static int       _desklock_auth(char *passwd);
@@ -171,6 +172,7 @@ e_desklock_show(void)
         _e_custom_desklock_exe =
           ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
         e_util_library_path_restore();
+        _e_desklock_state = EINA_TRUE;
         return 1;
      }
 
@@ -419,6 +421,7 @@ works:
    ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
 
    e_util_env_set("E_DESKLOCK_LOCKED", "locked");
+   _e_desklock_state = EINA_TRUE;
    return 1;
 }
 
@@ -430,6 +433,7 @@ e_desklock_hide(void)
 
    if ((!edd) && (!_e_custom_desklock_exe)) return;
 
+   _e_desklock_state = EINA_FALSE;
    ev = E_NEW(E_Event_Desklock, 1);
    ev->on = 0;
    ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
@@ -530,6 +534,13 @@ _e_desklock_cb_window_stack(void *data __UNUSED__,
 
    return ECORE_CALLBACK_PASS_ON;
 }
+
+EAPI Eina_Bool
+e_desklock_state_get(void)
+{
+   return _e_desklock_state;
+}
+
 
 static Ecore_Job *_e_desklock_relock_job = NULL;
 
