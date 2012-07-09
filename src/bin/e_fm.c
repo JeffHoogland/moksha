@@ -9934,3 +9934,10 @@ e_fm2_operation_abort(int id)
    e_fm2_op_registry_entry_abort(ere);
    e_fm2_op_registry_entry_unref(ere);
 }
+
+EAPI E_Fm2_View_Mode
+e_fm2_view_mode_get(Evas_Object *obj)
+{
+   EFM_SMART_CHECK(0);
+   return _e_fm2_view_mode_get(sd);
+}
