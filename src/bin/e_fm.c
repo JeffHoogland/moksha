@@ -58,7 +58,7 @@ struct _E_Fm2_Smart_Data
    struct
    {
       Evas_Coord w, h;
-   } max, pmax;
+   } max, pmax, min; /* min is actually teh size of the largest icon, updated each placement */
    struct
    {
       Evas_Coord x, y;
@@ -3708,6 +3708,8 @@ _e_fm2_icons_place_icons(E_Fm2_Smart_Data *sd)
         ic->x = x;
         ic->y = y;
         x += ic->w;
+        sd->min.w = MAX(ic->min_w, sd->min.w);
+        sd->min.h = MAX(ic->min_h, sd->min.h);
         if (ic->h > rh) rh = ic->h;
         if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
@@ -3745,6 +3747,8 @@ _e_fm2_icons_place_grid_icons(E_Fm2_Smart_Data *sd)
           }
         if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+        sd->min.w = MAX(ic->min_w, sd->min.w);
+        sd->min.h = MAX(ic->min_h, sd->min.h);
      }
 }
 
@@ -3882,6 +3886,8 @@ _e_fm2_icons_place_custom_icons(E_Fm2_Smart_Data *sd)
 
         if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+        sd->min.w = MAX(ic->min_w, sd->min.w);
+        sd->min.h = MAX(ic->min_h, sd->min.h);
      }
 }
 
@@ -3901,6 +3907,8 @@ _e_fm2_icons_place_custom_grid_icons(E_Fm2_Smart_Data *sd)
 
         if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+        sd->min.w = MAX(ic->min_w, sd->min.w);
+        sd->min.h = MAX(ic->min_h, sd->min.h);
      }
 }
 
@@ -3920,6 +3928,8 @@ _e_fm2_icons_place_custom_smart_grid_icons(E_Fm2_Smart_Data *sd)
 
         if ((ic->x + ic->w) > sd->max.w) sd->max.w = ic->x + ic->w;
         if ((ic->y + ic->h) > sd->max.h) sd->max.h = ic->y + ic->h;
+        sd->min.w = MAX(ic->min_w, sd->min.w);
+        sd->min.h = MAX(ic->min_h, sd->min.h);
      }
 }
 
@@ -3936,6 +3946,8 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
      {
         ic->x = x;
         ic->y = y;
+        sd->min.w = MAX(ic->min_w, sd->min.w);
+        sd->min.h = MAX(ic->min_h, sd->min.h);
         if (sd->w > ic->min_w)
           ic->w = sd->w;
         else
@@ -7099,6 +7111,8 @@ _e_fm2_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__
                   sd->selecting = EINA_TRUE;
                }
           }
+        if (ev->flags & EVAS_BUTTON_DOUBLE_CLICK)
+          evas_object_smart_callback_call(sd->obj, "double_clicked", NULL);
      }
    else if (ev->button == 3)
      {
@@ -9933,6 +9947,36 @@ e_fm2_operation_abort(int id)
    e_fm2_op_registry_entry_ref(ere);
    e_fm2_op_registry_entry_abort(ere);
    e_fm2_op_registry_entry_unref(ere);
+}
+
+EAPI void
+e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h)
+{
+   int x, y, minw, minh;
+   EFM_SMART_CHECK();
+   if ((!w) || (!h)) return;
+   if (maxw < 0) maxw = 0;
+   if (maxh < 0) maxh = 0;
+   minw = sd->min.w + 5, minh = sd->min.h + 5;
+   switch (_e_fm2_view_mode_get(sd))
+     {
+      case E_FM2_VIEW_MODE_LIST:
+        *w = MIN(minw, maxw);
+        *h = MIN(minh * eina_list_count(sd->icons), (unsigned int)maxh);
+        return;
+      default:
+        break;
+     }
+   y = x = (int)sqrt(eina_list_count(sd->icons));
+   if (maxw && (x * minw > maxw))
+     {
+        x = maxw / minw;
+        y = (eina_list_count(sd->icons) / x) + ((maxw % minw) ? 1 : 0);
+     }
+   *w = minw * x;
+   *w = MIN(*w, maxw);
+   *h = minh * y;
+   *h = MIN(*h, maxh);
 }
 
 EAPI E_Fm2_View_Mode
