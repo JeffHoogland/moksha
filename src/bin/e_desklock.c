@@ -436,6 +436,10 @@ e_desklock_hide(void)
         return;
      }
 
+   ev = E_NEW(E_Event_Desklock, 1);
+   ev->on = 0;
+   ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
+
    if (!edd) return;
    if (edd->elock_grab_break_wnd)
      ecore_x_window_show(edd->elock_grab_break_wnd);
@@ -463,10 +467,6 @@ e_desklock_hide(void)
 
    E_FREE(edd);
    edd = NULL;
-
-   ev = E_NEW(E_Event_Desklock, 1);
-   ev->on = 0;
-   ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
 
    if (_e_desklock_autolock_time > 0.0)
      {
