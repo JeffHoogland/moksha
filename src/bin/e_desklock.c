@@ -430,15 +430,15 @@ e_desklock_hide(void)
 
    if ((!edd) && (!_e_custom_desklock_exe)) return;
 
+   ev = E_NEW(E_Event_Desklock, 1);
+   ev->on = 0;
+   ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
+
    if (e_config->desklock_use_custom_desklock)
      {
         _e_custom_desklock_exe = NULL;
         return;
      }
-
-   ev = E_NEW(E_Event_Desklock, 1);
-   ev->on = 0;
-   ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
 
    if (!edd) return;
    if (edd->elock_grab_break_wnd)
