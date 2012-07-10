@@ -320,6 +320,7 @@ _e_fm_main_eeze_volume_add(const char *syspath,
 {
    E_Volume *v;
    const char *str;
+   Eeze_Disk_Type type;
 
    if (!syspath) return NULL;
    if (e_volume_find(syspath)) return NULL;
@@ -333,9 +334,10 @@ _e_fm_main_eeze_volume_add(const char *syspath,
      }
    INF("VOL+ %s", syspath);
    eeze_disk_scan(v->disk);
-   if (eeze_disk_type_get(v->disk) == EEZE_DISK_TYPE_INTERNAL)
+   type = eeze_disk_type_get(v->disk);
+   if ((type == EEZE_DISK_TYPE_INTERNAL) || (type == EEZE_DISK_TYPE_UNKNOWN))
      {
-        INF("VOL is internal, ignoring");
+        INF("VOL is %s, ignoring", (type == EEZE_DISK_TYPE_INTERNAL) ? "internal" : "unknown");
         eeze_disk_free(v->disk);
         free(v);
         return NULL;
@@ -759,8 +761,8 @@ _e_fm_main_eeze_storage_rescan(const char *syspath)
    E_Storage *s;
 
    s = _e_fm_main_eeze_storage_find_fast(syspath);
-   if (!s) return;
-   DBG("%s changed, nothing to see here", s->udi);
+   if (s) _e_fm_main_eeze_storage_del(syspath);
+   _e_fm_main_eeze_storage_add(syspath);
 }
 
 static void
@@ -769,8 +771,8 @@ _e_fm_main_eeze_volume_rescan(const char *syspath)
    E_Volume *v;
 
    v = _e_fm_main_eeze_volume_find_fast(syspath);
-   if (!v) return;
-   DBG("%s changed, nothing to see here", v->udi);
+   if (v) _e_fm_main_eeze_volume_del(syspath);
+   _e_fm_main_eeze_volume_add(syspath, EINA_FALSE);
 }
 
 E_Storage *
