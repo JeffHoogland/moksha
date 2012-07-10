@@ -85,6 +85,9 @@
 #define ACT_FN_GO_ACPI(act, use) \
   static void _e_actions_act_##act##_go_acpi(E_Object * obj __UNUSED__, const char *params use, E_Event_Acpi * ev __UNUSED__)
 
+/* local functions forward declarations (window_jump_to needs the definition of exec) */
+ACT_FN_GO(exec,);
+
 /* local subsystem functions */
 static void       _e_action_free(E_Action *act);
 static E_Maximize _e_actions_maximize_parse(const char *maximize);
@@ -1125,6 +1128,87 @@ ACT_FN_GO(window_push, )
                                     bd->x + (bd->w / 2), bd->y + (bd->h / 2));
           }
      }
+}
+
+/*
+ * These actions jump to a window with the given name. It uses the last focused
+ * window it finds (going through e_border_focus_stack_get), so the name should
+ * be unique, if you want to jump to a specific window.
+ *
+ */
+static int
+window_jump_to(const char *params)
+{
+   Eina_List *l, *ll;
+   E_Zone *current_zone;
+   E_Border *bd;
+
+   if (!params) return 0;
+
+   /* Go through the list of all windows (that's what the focus stack is used for) */
+   l = e_border_focus_stack_get();
+   /* If we can start at the second window, we start there in order to cycle.
+    * If not, there is only one window, so let's use it */
+   if (eina_list_next(l))
+     l = l->next;
+   EINA_LIST_FOREACH(l, ll, bd)
+     {
+        if (strcmp(bd->client.icccm.name, params)) continue;
+        /* Jump to the screen the window is on if it isn't on the current screen but
+         * only if we don't have to warp the pointer anyway */
+        current_zone = e_util_zone_current_get(e_manager_current_get());
+        if (current_zone != bd->zone && e_config->focus_policy == E_FOCUS_CLICK)
+            ecore_x_pointer_warp(bd->zone->container->win,
+                                 bd->zone->x + (bd->zone->w / 2),
+                                 bd->zone->y + (bd->zone->h / 2));
+
+        /* Change the virtual desktop if the window isn't on the current virtual desktop */
+        e_desk_show(bd->desk);
+
+        /* Warp the pointer */
+        if (e_config->focus_policy != E_FOCUS_CLICK)
+          e_border_pointer_warp_to_center(bd);
+
+        e_border_raise(bd);
+        e_border_focus_set(bd, 1, 1);
+        return 1;
+     }
+   return 0;
+}
+
+ACT_FN_GO(window_jump_to,)
+{
+   window_jump_to(params);
+}
+
+ACT_FN_GO(window_jump_to_or_start,)
+{
+   char *window_name, *start_name;
+   if (!params) return;
+
+   window_name = strdup(params);
+   start_name = window_name;
+   start_name = strchr(window_name, ' ');
+   if (start_name)
+     {
+        start_name[0] = 0;
+        start_name++;
+     }
+   else
+     {
+        /* The user just specified one parameter, just call window_jump_to */
+        window_jump_to(window_name);
+        free(window_name);
+        return;
+     }
+
+   /* If we cannot jump to the specified window... */
+   if (!window_jump_to(window_name))
+     {
+        /* ...start application by calling "exec" action */
+        _e_actions_act_exec_go(obj, start_name);
+     }
+   free(window_name);
 }
 
 /***************************************************************************/
@@ -3030,6 +3114,17 @@ e_actions_init(void)
    e_action_predef_name_set(N_("Desktop"), N_("Switch To Desktop... (All Screens)"),
                             "desk_linear_flip_to_all", NULL,
                             "syntax: N, example: 1", 1);
+
+   /* window_jump_to */
+   ACT_GO(window_jump_to);
+   e_action_predef_name_set(_("Window : List"), _("Jump to window..."),
+                            "window_jump_to", NULL, "syntax: icccm window name, example: urxvt-mutt", 1);
+
+   ACT_GO(window_jump_to_or_start);
+   e_action_predef_name_set(_("Window : List"), _("Jump to window... or start..."),
+                            "window_jump_to_or_start", NULL, "syntax: icccm_window_name application", 1);
+
+
 
    /* screen_send_to */
    ACT_GO(screen_send_to);
