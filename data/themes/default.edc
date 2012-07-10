@@ -31180,6 +31180,7 @@ collections {
    ICON("preferences-position-right","icon_shelf_right.png",64)                 // *** // "enlightenment/shelf_position_right"
    ICON("preferences-position-right-top","icon_shelf_right_top.png",64)         // *** // "enlightenment/shelf_position_right_top"
    ICON("preferences-position-right-bottom","icon_shelf_right_bottom.png",64)   // *** // "enlightenment/shelf_position_right_bottom"
+   ICON("preferences-window-process","icon_window_process_management.png",64)    // *** // "enlightenment/window_process"
    ICON("preferences-window-manipulation","icon_window_manipulation.png",64)    // *** // "enlightenment/window_manipulation"
    ICON("preferences-window-maximize","icon_window_manipulation.png",64)        // *** // "enlightenment/window_maximize"
    ICON("preferences-window-stacking","icon_winlist.png",64)                    // *** // "enlightenment/window_stacking"
