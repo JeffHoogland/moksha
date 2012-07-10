@@ -55,7 +55,7 @@ e_int_config_winlist(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
    v->basic.check_changed = _basic_check_changed;
 
-   cfd = e_config_dialog_new(con, _("Window List Settings"),
+   cfd = e_config_dialog_new(con, _("Window Switcher Settings"),
                              "E", "windows/window_list",
                              "preferences-winlist", 0, v, NULL);
    return cfd;

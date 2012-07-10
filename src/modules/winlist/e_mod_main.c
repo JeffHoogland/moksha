@@ -23,7 +23,7 @@ e_modapi_init(E_Module *m)
 {
    conf_module = m;
    e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "preferences-system-windows");
-   e_configure_registry_item_add("windows/window_list", 70, _("Window List"), NULL, "preferences-winlist", e_int_config_winlist);
+   e_configure_registry_item_add("windows/window_list", 70, _("Window Switcher"), NULL, "preferences-winlist", e_int_config_winlist);
    e_winlist_init();
    /* add module supplied action */
    act = e_action_add("winlist");
