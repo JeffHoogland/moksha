@@ -38,6 +38,10 @@ struct _E_Config_Dialog_Data
       int    desktop;
       int    iconify;
    } transient;
+   int maximize_policy;
+   int maximize_direction;
+   int maximized_allow_manip;
+   int border_fix_on_shelf_toggle;
    
    Eina_List *resistance_list;
 };
@@ -86,6 +90,15 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->transient.layer = e_config->transient.layer;
    cfdata->transient.desktop = e_config->transient.desktop;
    cfdata->transient.iconify = e_config->transient.iconify;
+   cfdata->maximize_policy = (e_config->maximize_policy & E_MAXIMIZE_TYPE);
+   if (cfdata->maximize_policy == E_MAXIMIZE_NONE)
+     cfdata->maximize_policy = E_MAXIMIZE_FULLSCREEN;
+   cfdata->maximize_direction = 
+     (e_config->maximize_policy & E_MAXIMIZE_DIRECTION);
+   if (!cfdata->maximize_direction)
+     cfdata->maximize_direction = E_MAXIMIZE_BOTH;
+   cfdata->maximized_allow_manip = e_config->allow_manip;
+   cfdata->border_fix_on_shelf_toggle = e_config->border_fix_on_shelf_toggle;
    return cfdata;
 }
 
@@ -117,6 +130,10 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->transient.layer = cfdata->transient.layer;
    e_config->transient.desktop = cfdata->transient.desktop;
    e_config->transient.iconify = cfdata->transient.iconify;
+   e_config->maximize_policy =
+     (cfdata->maximize_policy | cfdata->maximize_direction);
+   e_config->allow_manip = cfdata->maximized_allow_manip;
+   e_config->border_fix_on_shelf_toggle = cfdata->border_fix_on_shelf_toggle;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -141,13 +158,17 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
            (e_config->transient.lower != cfdata->transient.lower) ||
            (e_config->transient.layer != cfdata->transient.layer) ||
            (e_config->transient.desktop != cfdata->transient.desktop) ||
-           (e_config->transient.iconify != cfdata->transient.iconify));
+           (e_config->transient.iconify != cfdata->transient.iconify) ||
+           (e_config->maximize_policy != (cfdata->maximize_policy | cfdata->maximize_direction)) ||
+           (e_config->allow_manip != cfdata->maximized_allow_manip) ||
+           (e_config->border_fix_on_shelf_toggle != cfdata->border_fix_on_shelf_toggle));
 }
 
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *otb, *ol, *ow, *oc;
+   Evas_Object *otb, *ol, *of, *ow, *oc;
+   E_Radio_Group *rg;
 
    otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
 
@@ -187,6 +208,35 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_toolbook_page_append(otb, NULL, _("Resistance"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
 
+   /* Maximization */
+   ol = e_widget_list_add(evas, 0, 0);
+   of = e_widget_framelist_add(evas, _("Policy"), 0);
+   rg = e_widget_radio_group_new(&(cfdata->maximize_policy));
+   ow = e_widget_radio_add(evas, _("Fullscreen"), E_MAXIMIZE_FULLSCREEN, rg);
+   e_widget_framelist_object_append(of, ow);
+   /* FIXME smart is nothing else than expand - dont confuse users */
+   ow = e_widget_radio_add(evas, _("Smart expansion"), E_MAXIMIZE_SMART, rg);
+   e_widget_framelist_object_append(of, ow);
+   /* ob = e_widget_radio_add(evas, _("Expand the window"), E_MAXIMIZE_EXPAND, rg);
+    * e_widget_list_object_append(o, ob, 1, 1, 0.5); */
+   ow = e_widget_radio_add(evas, _("Fill available space"), E_MAXIMIZE_FILL, rg);
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+   of = e_widget_framelist_add(evas, _("Direction"), 0);
+   rg = e_widget_radio_group_new(&(cfdata->maximize_direction));
+   ow = e_widget_radio_add(evas, _("Horizontal"), E_MAXIMIZE_HORIZONTAL, rg);
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_radio_add(evas, _("Vertical"), E_MAXIMIZE_VERTICAL, rg);
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_radio_add(evas, _("Both"), E_MAXIMIZE_BOTH, rg);
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+   ow = e_widget_check_add(evas, _("Allow manipulation of maximized windows"), 
+                           &(cfdata->maximized_allow_manip));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Maximization"), ol, 
+                                 1, 0, 1, 0, 0.5, 0.0);
+
    /* Keyboard Move and resize */
    ol = e_widget_list_add(evas, 0, 0);
    ow = e_widget_label_add(evas, _("Automatically accept changes after:"));
@@ -215,6 +265,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_check_add(evas, _("Move after resize"), 
                            &(cfdata->geometry_auto_move));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
+   ow = e_widget_check_add(evas, _("Adjust windows on shelf hide"), 
+                           &(cfdata->border_fix_on_shelf_toggle));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Automatic"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);

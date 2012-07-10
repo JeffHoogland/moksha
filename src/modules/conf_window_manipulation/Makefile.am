@@ -22,7 +22,6 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
                          e_int_config_window_manip.h \
 			 e_int_config_window_geometry.c \
-			 e_int_config_window_maxpolicy.c \
                          e_int_config_window_process.c \
                          e_int_config_window_display.c \
                          e_int_config_window_display.h \
