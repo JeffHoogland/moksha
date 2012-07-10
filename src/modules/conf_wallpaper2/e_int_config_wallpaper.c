@@ -134,6 +134,7 @@ _e_smart_reconfigure_do(void *data)
    int iw, redo = 0, changed = 0;
    static int recursion = 0;
    Evas_Coord x, y, xx, yy, ww, hh, mw, mh, ox, oy, dd;
+   Evas_Coord vw, vh;
    Evas *evas;
 
    if (!sd) return ECORE_CALLBACK_CANCEL;
@@ -157,6 +158,8 @@ _e_smart_reconfigure_do(void *data)
    mw = mh = 0;
 
    evas = evas_object_evas_get(obj);
+   evas_output_viewport_get(evas, NULL, NULL, &vw, &vh);
+
    EINA_LIST_FOREACH(sd->items, l, it)
      {
         if (x > (sd->w - ww))
@@ -217,7 +220,7 @@ _e_smart_reconfigure_do(void *data)
 
    EINA_LIST_FOREACH(sd->items, l, it)
      { 
-        Evas_Coord dx, dy, vw, vh;
+        Evas_Coord dx, dy;
 
         dx = dy = 0;
         if ((sd->sx >= 0) && (sd->selmove > 0.0)
@@ -291,7 +294,6 @@ _e_smart_reconfigure_do(void *data)
           }
         xx = sd->x - sd->cx + it->x + ox;
         yy = sd->y - sd->cy + it->y + oy;
-        evas_output_viewport_get(evas, NULL, NULL, &vw, &vh);
         if (E_INTERSECTS(xx, yy, it->w, it->h, 0, 0, vw, vh))
           {
              if (!it->have_thumb)
