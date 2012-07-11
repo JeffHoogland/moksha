@@ -48,6 +48,7 @@ struct _Pager
    unsigned char   just_dragged : 1;
    Evas_Coord      dnd_x, dnd_y;
    Pager_Desk     *active_drop_pd;
+   Eina_Bool       disable_live_preview : 1;
 };
 
 struct _Pager_Desk
@@ -75,6 +76,8 @@ struct _Pager_Win
    Pager_Desk   *desk;
    Evas_Object  *o_window;
    Evas_Object  *o_icon;
+   Evas_Object  *o_mirror;
+   E_Msg_Handler *msg_handler;
    unsigned char skip_winlist : 1;
    struct
    {
@@ -289,6 +292,7 @@ _pager_new(Evas *evas, E_Zone *zone)
    p = E_NEW(Pager, 1);
    p->inst = NULL;
    p->popup = NULL;
+   p->disable_live_preview = pager_config->disable_live_preview;
    p->o_table = e_table_add(evas);
    e_table_homogenous_set(p->o_table, 1);
    p->zone = zone;
@@ -584,6 +588,89 @@ _pager_desk_switch(Pager_Desk *pd1, Pager_Desk *pd2)
      }
 }
 
+static Evas_Object *
+_pager_window_mirror_add(E_Manager *man, Evas *e, Evas_Object *edje, E_Manager_Comp_Source *src)
+{
+   Evas_Object *img, *o;
+   void *data;
+   int w, h;
+   if (!src) return NULL;
+   img = e_manager_comp_src_image_get(man, src);
+   o = evas_object_image_filled_add(e);
+   data = evas_object_image_data_get(img, EINA_FALSE);
+   evas_object_image_size_get(img, &w, &h);
+   evas_object_image_size_set(o, w, h);
+   evas_object_image_data_set(o, data);
+   edje_object_part_swallow(edje, "e.swallow.content", o);
+   edje_object_signal_emit(edje, "e,preview,on", "e");
+   return o;
+}
+
+static void
+_pager_window_mirror_refresh(Pager_Win *pw, E_Manager_Comp_Source *src)
+{
+   if (pw->o_mirror)
+     {
+        edje_object_part_unswallow(pw->o_window, pw->o_mirror);
+        evas_object_del(pw->o_mirror);
+        pw->o_mirror = NULL;
+     }
+   pw->o_mirror = _pager_window_mirror_add(pw->border->zone->container->manager, evas_object_evas_get(pw->o_window), pw->o_window, src);
+}
+
+static void
+_pager_window_msg_handler(void *data, const char *name, const char *info, int val __UNUSED__, E_Object *obj, void *msgdata)
+{
+   E_Manager *man = (E_Manager*)obj;
+   E_Manager_Comp_Source *src = NULL;
+   Pager_Win *pw = data;
+   Evas *e;
+
+   if (strcmp(name, "comp.manager")) return;
+
+   e = e_manager_comp_evas_get(man);
+   if (!e)
+     {
+        _pager_window_mirror_refresh(pw, NULL);
+        return;
+     }
+   if (!strcmp(info, "change.comp"))
+     {
+        src = e_manager_comp_border_src_get(man, pw->border->client.win);
+        _pager_window_mirror_refresh(pw, src);
+     }
+   else if (!strcmp(info, "resize.comp"))
+     {
+        src = msgdata;
+        if (pw->border == e_manager_comp_src_border_get(man, src))
+          _pager_window_mirror_refresh(pw, src);
+     }
+   else if (!strcmp(info, "add.src"))
+     {
+        src = msgdata;
+        if (pw->border == e_manager_comp_src_border_get(man, src))
+          _pager_window_mirror_refresh(pw, src);
+     }
+   else if (!strcmp(info, "del.src"))
+     {
+        src = msgdata;
+        if (pw->border == e_manager_comp_src_border_get(man, src))
+          _pager_window_mirror_refresh(pw, NULL);
+     }
+   else if (!strcmp(info, "config.src"))
+     {
+        src = msgdata;
+        if (pw->border == e_manager_comp_src_border_get(man, src))
+          _pager_window_mirror_refresh(pw, src);
+     }
+   else if (!strcmp(info, "visibility.src"))
+     {
+        src = msgdata;
+        if (pw->border == e_manager_comp_src_border_get(man, src))
+          _pager_window_mirror_refresh(pw, e_manager_comp_src_visible_get(man, src) ? src : NULL);
+     }
+}
+
 static Pager_Win *
 _pager_window_new(Pager_Desk *pd, E_Border *border)
 {
@@ -606,7 +693,29 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
    pw->o_window = o;
    e_theme_edje_object_set(o, "base/theme/modules/pager",
                            "e/modules/pager/window");
-   if (visible) evas_object_show(o);
+   if (pager_config->disable_live_preview)
+     {
+        edje_object_signal_emit(o, "e,preview,off", "e");
+        o = e_border_icon_add(border, evas_object_evas_get(pd->pager->o_table));
+        if (o)
+          {
+             pw->o_icon = o;
+             evas_object_show(o);
+             edje_object_part_swallow(pw->o_window, "e.swallow.icon", o);
+          }
+     }
+   else
+     {
+        if (e_manager_comp_evas_get(border->zone->container->manager))
+          {
+             E_Manager_Comp_Source *src;
+
+             src = e_manager_comp_border_src_get(border->zone->container->manager, border->client.win);
+             _pager_window_mirror_refresh(pw, src);
+          }
+        pw->msg_handler = e_msg_handler_add(_pager_window_msg_handler, pw);
+     }
+   if (visible) evas_object_show(pw->o_window);
 
    e_layout_pack(pd->o_layout, pw->o_window);
    e_layout_child_raise(pw->o_window);
@@ -617,15 +726,6 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
                                   _pager_window_cb_mouse_up, pw);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE,
                                   _pager_window_cb_mouse_move, pw);
-
-   o = e_border_icon_add(border, evas_object_evas_get(pd->pager->o_table));
-   if (o)
-     {
-        pw->o_icon = o;
-        evas_object_show(o);
-        edje_object_part_swallow(pw->o_window, "e.swallow.icon", o);
-     }
-
    if (border->client.icccm.urgent && !border->focused)
      {
         if (!(border->iconic))
@@ -646,6 +746,8 @@ _pager_window_free(Pager_Win *pw)
      pw->desk->pager->dragging = 0;
    if (pw->o_window) evas_object_del(pw->o_window);
    if (pw->o_icon) evas_object_del(pw->o_icon);
+   if (pw->o_mirror) evas_object_del(pw->o_mirror);
+   if (pw->msg_handler) e_msg_handler_del(pw->msg_handler);
    e_object_unref(E_OBJECT(pw->border));
    E_FREE(pw);
 }
@@ -883,21 +985,23 @@ _pager_cb_config_updated(void)
    Eina_List *l, *ll;
    if (!pager_config) return;
    EINA_LIST_FOREACH(pagers, l, p)
-     EINA_LIST_FOREACH(p->desks, ll, pd)
-       {
-          if (pager_config->disable_live_preview)
-            edje_object_signal_emit(pd->o_desk, "e,preview,off", "e");
-          else
-            edje_object_signal_emit(pd->o_desk, "e,preview,on", "e");
-          if (pd->current)
-            edje_object_signal_emit(pd->o_desk, "e,state,selected", "e");
-          else
-            edje_object_signal_emit(pd->o_desk, "e,state,unselected", "e");
-          if (pager_config->show_desk_names)
-            edje_object_signal_emit(pd->o_desk, "e,name,show", "e");
-          else
-            edje_object_signal_emit(pd->o_desk, "e,name,hide", "e");
-       }
+     {
+        if (p->disable_live_preview != pager_config->disable_live_preview)
+          {
+             _pager_empty(p);
+             _pager_fill(p);
+          }
+        else
+          {
+             EINA_LIST_FOREACH(p->desks, ll, pd)
+               {
+                  if (pager_config->show_desk_names)
+                    edje_object_signal_emit(pd->o_desk, "e,name,show", "e");
+                  else
+                    edje_object_signal_emit(pd->o_desk, "e,name,hide", "e");
+               }
+          }
+     }
 }
 
 static Eina_Bool
@@ -1336,14 +1440,17 @@ _pager_cb_event_border_icon_change(void *data __UNUSED__, int type __UNUSED__, v
                        evas_object_del(pw->o_icon);
                        pw->o_icon = NULL;
                     }
-                  o = e_border_icon_add(ev->border,
-                                        evas_object_evas_get(p->o_table));
-                  if (o)
+                  if (pager_config->disable_live_preview)
                     {
-                       pw->o_icon = o;
-                       evas_object_show(o);
-                       edje_object_part_swallow(pw->o_window,
-                                                "e.swallow.icon", o);
+                       o = e_border_icon_add(ev->border,
+                                             evas_object_evas_get(p->o_table));
+                       if (o)
+                         {
+                            pw->o_icon = o;
+                            evas_object_show(o);
+                            edje_object_part_swallow(pw->o_window,
+                                                     "e.swallow.icon", o);
+                         }
                     }
                }
           }
@@ -1858,13 +1965,26 @@ _pager_window_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __U
                                      "e/modules/pager/window");
              evas_object_show(o);
 
-             oo = e_border_icon_add(pw->border, drag->evas);
-             if (oo)
+             if (pager_config->disable_live_preview)
                {
-                  evas_object_show(oo);
-                  edje_object_part_swallow(o, "e.swallow.icon", oo);
+                  oo = e_border_icon_add(pw->border, drag->evas);
+                  if (oo)
+                    {
+                       evas_object_show(oo);
+                       edje_object_part_swallow(o, "e.swallow.icon", oo);
+                    }
+                  edje_object_signal_emit(o, "e,preview,off", "e");
                }
+             else
+               {
+                  if (e_manager_comp_evas_get(pw->border->zone->container->manager))
+                    {
+                       E_Manager_Comp_Source *src;
 
+                       src = e_manager_comp_border_src_get(pw->border->zone->container->manager, pw->border->client.win);
+                       _pager_window_mirror_add(pw->border->zone->container->manager, drag->evas, o, src);
+                    }
+               }
              e_drag_object_set(drag, o);
              e_drag_resize(drag, w, h);
              e_drag_start(drag, x - pw->drag.dx, y - pw->drag.dy);
@@ -2257,6 +2377,16 @@ _pager_desk_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
              o = edje_object_add(drag->evas);
              e_theme_edje_object_set(o, "base/theme/modules/pager",
                                      "e/modules/pager/window");
+             if (!pager_config->disable_live_preview)
+               {
+                  if (e_manager_comp_evas_get(pw->border->zone->container->manager))
+                    {
+                       E_Manager_Comp_Source *src;
+
+                       src = e_manager_comp_border_src_get(pw->border->zone->container->manager, pw->border->client.win);
+                       _pager_window_mirror_add(pw->border->zone->container->manager, drag->evas, o, src);
+                    }
+               }
              e_layout_pack(oo, o);
              e_layout_child_raise(o);
              e_zone_useful_geometry_get(pw->desk->desk->zone,
