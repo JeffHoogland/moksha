@@ -988,8 +988,10 @@ _pager_cb_config_updated(void)
      {
         if (p->live_windows != pager_config->live_windows)
           {
+             p->live_windows = pager_config->live_windows;
              _pager_empty(p);
              _pager_fill(p);
+             if (p->inst) _gc_orient(p->inst->gcc, p->inst->gcc->gadcon->orient);
           }
         else
           {
