@@ -366,10 +366,9 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    pd->o_desk = o;
    e_theme_edje_object_set(o, "base/theme/modules/pager",
                            "e/modules/pager/desk");
+   edje_object_part_text_set(o, "e.text.label", desk->name);
    if (pager_config->show_desk_names)
-     edje_object_part_text_set(o, "e.text.label", desk->name);
-   else
-     edje_object_part_text_set(o, "e.text.label", "");
+     edje_object_signal_emit(o, "e,name,show", "e");
 
    if (pager_config->disable_live_preview)
      edje_object_signal_emit(o, "e,preview,off", "e");
@@ -894,6 +893,10 @@ _pager_cb_config_updated(void)
             edje_object_signal_emit(pd->o_desk, "e,state,selected", "e");
           else
             edje_object_signal_emit(pd->o_desk, "e,state,unselected", "e");
+          if (pager_config->show_desk_names)
+            edje_object_signal_emit(pd->o_desk, "e,name,show", "e");
+          else
+            edje_object_signal_emit(pd->o_desk, "e,name,hide", "e");
        }
 }
 

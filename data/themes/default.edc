@@ -10585,6 +10585,8 @@ collections {
       }
       script {
          public disable_live_preview = 0;
+         public show_desk_names = 0;
+         public mouse_in = 0;
       }
       parts {
          part {
@@ -10943,20 +10945,46 @@ collections {
             target: "zoom";
          }
          program {
+            name: "name_enable";
+            signal: "e,name,show";
+            source: "e";
+            script {
+               set_int(show_desk_names, 1);
+               set_state(PART:"e.text.label", "active", 0.0);
+            }
+         }
+         program {
+            name: "name_disable";
+            signal: "e,name,hide";
+            source: "e";
+            script {
+               set_int(show_desk_names, 0);
+               if (!get_int(mouse_in))
+                 set_state(PART:"e.text.label", "default", 0.0);
+            }
+         }
+         program {
             name: "name_show";
             signal: "mouse,in";
             source: "e.eventarea";
-            action: STATE_SET "active" 0.0;
+            script {
+               if (get_int(show_desk_names) != 1)
+                 set_state(PART:"e.text.label", "active", 0.0);
+               set_int(mouse_in, 1);
+            }
             transition: SINUSOIDAL 0.1;
-            target: "e.text.label";
          }
          program {
             name: "name_hide";
             signal: "mouse,out";
             source: "e.eventarea";
-            action: STATE_SET "default" 0.0;
+            script {
+               if (get_int(show_desk_names) != 1)
+                 set_state(PART:"e.text.label", "default", 0.0);
+               set_int(mouse_in, 0);
+            }
+
             transition: SINUSOIDAL 0.2;
-            target: "e.text.label";
          }
          // don't have any states/anim for urgent windows on a desktop
          //    program { name: "xx";
