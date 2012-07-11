@@ -3,23 +3,23 @@
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
-   Evas_Object *obj, *table;
-   Eina_List *desks;
-   int w, h, dx, dy, cx, cy;
+   Evas_Object         *obj, *table;
+   Eina_List           *desks;
+   int                  w, h, dx, dy, cx, cy;
    Ecore_Event_Handler *bg_upd_hdl;
 };
 typedef struct _E_Widget_Desk_Data E_Widget_Desk_Data;
 struct _E_Widget_Desk_Data
 {
    Evas_Object *icon, *thumb;
-   int zone, con, x, y;
+   int          zone, con, x, y;
 };
 
 /* local function prototypes */
-static void _e_wid_del_hook(Evas_Object *obj);
-static void _e_wid_reconfigure(E_Widget_Data *wd);
-static void _e_wid_desk_cb_config(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void _e_wid_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event);
+static void      _e_wid_del_hook(Evas_Object *obj);
+static void      _e_wid_reconfigure(E_Widget_Data *wd);
+static void      _e_wid_desk_cb_config(void *data, Evas *evas, Evas_Object *obj, void *event);
+static void      _e_wid_cb_resize(void *data, Evas *evas, Evas_Object *obj, void *event);
 static Eina_Bool _e_wid_cb_bg_update(void *data, int type, void *event);
 
 EAPI Evas_Object *
@@ -80,7 +80,7 @@ e_widget_deskpreview_desk_add(Evas_Object *obj, E_Zone *zone, int x, int y, int 
 
    dd->icon = edje_object_add(evas_object_evas_get(obj));
    e_theme_edje_object_set(dd->icon, "base/theme/widgets",
-			   "e/widgets/deskpreview/desk");
+                           "e/widgets/deskpreview/desk");
 
    dd->thumb = e_icon_add(evas_object_evas_get(obj));
    e_icon_fill_inside_set(dd->thumb, EINA_FALSE);
@@ -113,7 +113,7 @@ _e_wid_del_hook(Evas_Object *obj)
         E_Widget_Desk_Data *dd;
 
         if (!(dd = evas_object_data_get(o, "desk_data"))) continue;
-	evas_object_del(dd->thumb);
+        evas_object_del(dd->thumb);
         evas_object_del(o);
         E_FREE(dd);
      }
@@ -146,16 +146,16 @@ _e_wid_reconfigure(E_Widget_Data *wd)
      }
    else
      {
-	mw = tw / wd->dx;
-	mh = th / wd->dy;
+        mw = tw / wd->dx;
+        mh = th / wd->dy;
      }
 
-   if (mw > tw/wd->dx)
+   if (mw > tw / wd->dx)
      mw = (tw * zone->h) / zone->w;
-   if (mh > th/wd->dy)
+   if (mh > th / wd->dy)
      mh = (th * zone->w) / zone->h;
 
-   EINA_LIST_FOREACH_SAFE(wd->desks, l, ll, dw)
+   EINA_LIST_FOREACH_SAFE (wd->desks, l, ll, dw)
      {
         if (!(dd = evas_object_data_get(dw, "desk_data"))) continue;
         if ((dd->x < wd->dx) && (dd->y < wd->dy))
@@ -164,12 +164,12 @@ _e_wid_reconfigure(E_Widget_Data *wd)
              evas_object_size_hint_max_set(dw, mw, mh);
           }
         else
-	  {
-	     evas_object_del(dd->thumb);
-	     evas_object_del(dw);
-	     wd->desks = eina_list_remove(wd->desks, dw);
-	     E_FREE(dd);
-	  }
+          {
+             evas_object_del(dd->thumb);
+             evas_object_del(dw);
+             wd->desks = eina_list_remove(wd->desks, dw);
+             E_FREE(dd);
+          }
      }
 
    for (y = 0; y < wd->dy; y++)
@@ -183,7 +183,7 @@ _e_wid_reconfigure(E_Widget_Data *wd)
              Evas_Object *dp;
 
              dp = e_widget_deskpreview_desk_add(wd->obj, zone, x, y, mw, mh);
-	     evas_object_size_hint_aspect_set(dp, EVAS_ASPECT_CONTROL_BOTH, zone->w, zone->h);
+             evas_object_size_hint_aspect_set(dp, EVAS_ASPECT_CONTROL_BOTH, zone->w, zone->h);
              evas_object_table_pack(wd->table, dp, x, y, 1, 1);
              wd->desks = eina_list_append(wd->desks, dp);
           }
@@ -253,3 +253,4 @@ _e_wid_cb_bg_update(void *data, int type, void *event)
 
    return ECORE_CALLBACK_PASS_ON;
 }
+
