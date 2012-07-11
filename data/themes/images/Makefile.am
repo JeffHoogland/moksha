@@ -186,6 +186,7 @@ icon_halt.png \
 icon_hibernate.png \
 icon_icon_theme.png \
 icon_imc.png \
+icon_intl.png \
 icon_interaction.png \
 icon_intl.png \
 icon_keys.png \
@@ -282,6 +283,7 @@ icon_warning.png \
 icon_window_focus.png \
 icon_window_geometry.png \
 icon_window_manipulation.png \
+icon_window_process_management.png \
 icon_window_remembers.png \
 icon_windows.png \
 icon_winlist.png \
