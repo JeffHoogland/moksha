@@ -2877,6 +2877,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, btn_noplace, UCHAR);
    E_CONFIG_VAL(D, T, btn_desk, UCHAR);
    E_CONFIG_VAL(D, T, flip_desk, UCHAR);
+   E_CONFIG_VAL(D, T, disable_live_preview, UCHAR);
 
    pager_config = e_config_domain_load("module.pager", conf_edd);
 
@@ -2910,6 +2911,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(pager_config->btn_drag, 0, 32);
    E_CONFIG_LIMIT(pager_config->btn_noplace, 0, 32);
    E_CONFIG_LIMIT(pager_config->btn_desk, 0, 32);
+   E_CONFIG_LIMIT(pager_config->disable_live_preview, 0, 1);
 
    pager_config->handlers = eina_list_append
        (pager_config->handlers, ecore_event_handler_add
