@@ -895,9 +895,12 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
 
    INF("mount %s %s [fs type = %s]", v->udi, v->mount_point, v->fstype);
 
-   // for vfat and ntfs we want the uid mapped to the user mounting, if we can
+   // Map uid to current user if possible
+   // Possible filesystems found in udisks source (src/udiskslinuxfilesystem.c) as of 2012-07-11
    if ((!strcmp(v->fstype, "vfat")) ||
-       (!strcmp(v->fstype, "ntfs"))
+       (!strcmp(v->fstype, "ntfs")) ||
+       (!strcmp(v->fstype, "iso9660")) ||
+       (!strcmp(v->fstype, "udf"))
        )
      {
         snprintf(buf, sizeof(buf), "uid=%i", (int)getuid());
@@ -906,17 +909,17 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
 
    // force utf8 as the encoding - e only likes/handles utf8. its the
    // pseudo-standard these days anyway for "linux" for intl text to work
-   // everywhere. problem is some fs's use differing options
-   if ((!strcmp(v->fstype, "vfat")) ||
-       (!strcmp(v->fstype, "ntfs")) ||
-       (!strcmp(v->fstype, "iso9660"))
-       )
+   // everywhere. problem is some fs's use differing options and udisks
+   // doesn't allow some options with certain filesystems.
+   // Valid options found in udisks (src/udiskslinuxfilesystem.c) as of 2012-07-11
+   // Note that these options are default with the latest udisks, kept here to
+   // avoid breakage in the future (hopefully).
+   if (!strcmp(v->fstype, "vfat"))
      {
-        snprintf(buf2, sizeof(buf2), "utf8");
+        snprintf(buf2, sizeof(buf2), "utf8=1");
         opt = eina_list_append(opt, buf2);
      }
-   else if ((!strcmp(v->fstype, "fat")) ||
-            (!strcmp(v->fstype, "jfs")) ||
+   else if ((!strcmp(v->fstype, "iso9660")) ||
             (!strcmp(v->fstype, "udf"))
             )
      {
@@ -925,13 +928,14 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
      }
 
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_mount_timeout, v);
-// on ubuntu 10.04 if we request mount with opt - it fails. unknown why right
-// now, but lets try without and maybe we need to try 2 mounts - one with
-// opts and one without?
-//   v->op = e_udisks_volume_mount(_e_fm_main_udisks_conn, v->udi,
-//                                        v->fstype, opt);
+
+   // It was previously noted here that ubuntu 10.04 failed to mount if opt was passed to
+   // e_udisks_volume_mount.  The reason at the time was unknown and apparently never found.
+   // I theorize that this was due to improper mount options being passed (namely the utf8 options).
+   // If this still fails on Ubuntu 10.04 then an actual fix should be found.
    v->op = e_udisks_volume_mount(_e_fm_main_udisks_conn, v->udi,
-                                        v->fstype, NULL);
+                                        v->fstype, opt);
+
    eina_list_free(opt);
    v->optype = E_VOLUME_OP_TYPE_MOUNT;
 }
