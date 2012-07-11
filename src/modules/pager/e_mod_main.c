@@ -57,6 +57,7 @@ struct _Pager_Desk
    Eina_List   *wins;
    Evas_Object *o_desk;
    Evas_Object *o_layout;
+   Evas_Object *o_bg;
    int          xpos, ypos, urgent;
    int          current : 1;
    struct
@@ -369,6 +370,14 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
      edje_object_part_text_set(o, "e.text.label", desk->name);
    else
      edje_object_part_text_set(o, "e.text.label", "");
+
+   if (pager_config->disable_live_preview)
+     edje_object_signal_emit(o, "e,preview,off", "e");
+   else
+     edje_object_signal_emit(o, "e,preview,on", "e");
+   pd->o_bg = e_widget_deskpreview_desk_add(o, desk->zone, xpos, ypos, -1, -1);
+   e_widget_deskpreview_desk_configurable_set(pd->o_bg, EINA_FALSE);
+   edje_object_part_swallow(o, "e.background", pd->o_bg);
 
    edje_object_size_min_calc(o, &w, &h);
    e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
@@ -870,7 +879,22 @@ _pager_instance_drop_zone_recalc(Instance *inst)
 void
 _pager_cb_config_updated(void)
 {
+   Pager *p;
+   Pager_Desk *pd;
+   Eina_List *l, *ll;
    if (!pager_config) return;
+   EINA_LIST_FOREACH(pagers, l, p)
+     EINA_LIST_FOREACH(p->desks, ll, pd)
+       {
+          if (pager_config->disable_live_preview)
+            edje_object_signal_emit(pd->o_desk, "e,preview,off", "e");
+          else
+            edje_object_signal_emit(pd->o_desk, "e,preview,on", "e");
+          if (pd->current)
+            edje_object_signal_emit(pd->o_desk, "e,state,selected", "e");
+          else
+            edje_object_signal_emit(pd->o_desk, "e,state,unselected", "e");
+       }
 }
 
 static Eina_Bool

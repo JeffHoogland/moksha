@@ -31,6 +31,7 @@ struct _Config
    unsigned int btn_noplace;
    unsigned int btn_desk;
    unsigned int flip_desk;
+   unsigned int disable_live_preview;
 
    /* just config state */
    E_Module *module;
