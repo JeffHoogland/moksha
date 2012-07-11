@@ -13,6 +13,7 @@ struct _E_Widget_Desk_Data
 {
    Evas_Object *icon, *thumb;
    int          zone, con, x, y;
+   Eina_Bool configurable : 1;
 };
 
 /* local function prototypes */
@@ -92,10 +93,30 @@ e_widget_deskpreview_desk_add(Evas_Object *obj, E_Zone *zone, int x, int y, int 
    evas_object_size_hint_max_set(dd->icon, w, h);
    evas_object_show(dd->icon);
    evas_object_data_set(dd->icon, "desk_data", dd);
+   dd->configurable = EINA_TRUE;
    evas_object_event_callback_add(dd->icon, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_wid_desk_cb_config, dd);
 
    return dd->icon;
+}
+
+EAPI void
+e_widget_deskpreview_desk_configurable_set(Evas_Object *obj, Eina_Bool enable)
+{
+   E_Widget_Desk_Data *dd;
+
+   EINA_SAFETY_ON_NULL_RETURN(obj);
+   dd = evas_object_data_get(obj, "desk_data");
+   EINA_SAFETY_ON_NULL_RETURN(dd);
+   enable = !!enable;
+   if (dd->configurable == enable) return;
+   if (enable)
+     evas_object_event_callback_add(dd->icon, EVAS_CALLBACK_MOUSE_DOWN,
+                                    _e_wid_desk_cb_config, dd);
+   else
+     evas_object_event_callback_del_full(dd->icon, EVAS_CALLBACK_MOUSE_DOWN,
+                                         _e_wid_desk_cb_config, dd);
+   dd->configurable = enable;
 }
 
 /* local function prototypes */
