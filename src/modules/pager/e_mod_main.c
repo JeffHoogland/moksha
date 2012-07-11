@@ -58,6 +58,7 @@ struct _Pager_Desk
    Evas_Object *o_desk;
    Evas_Object *o_layout;
    Evas_Object *o_bg;
+   Ecore_Event_Handler *ev;
    int          xpos, ypos, urgent;
    int          current : 1;
    struct
@@ -343,6 +344,30 @@ _pager_empty(Pager *p)
      }
 }
 
+static Eina_Bool
+_pager_desk_bg_update(Pager_Desk *pd, int type __UNUSED__, E_Event_Bg_Update *ev)
+{
+   int x, y;
+   Pager *p = pd->pager;
+   E_Desk *desk = pd->desk;
+   if (((ev->container < 0) || ((int)pd->desk->zone->container->num == ev->container)) &&
+       ((ev->zone < 0) || ((int)pd->desk->zone->num == ev->zone)) &&
+       ((ev->desk_x < 0) || (pd->desk->x == ev->desk_x)) &&
+       ((ev->desk_y < 0) || (pd->desk->y == ev->desk_y)))
+     {
+        x = pd->xpos, y = pd->ypos;
+        _pager_desk_free(pd);
+        pd = _pager_desk_new(p, desk, x, y);
+        if (pd)
+          {
+             p->desks = eina_list_append(p->desks, pd);
+             if (desk == e_desk_current_get(desk->zone))
+               _pager_desk_select(pd);
+          }
+     }
+   return ECORE_CALLBACK_RENEW;
+}
+
 static Pager_Desk *
 _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
 {
@@ -361,6 +386,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    pd->desk = desk;
    e_object_ref(E_OBJECT(desk));
    pd->pager = p;
+   pd->ev = ecore_event_handler_add(E_EVENT_BG_UPDATE, (Ecore_Event_Handler_Cb)_pager_desk_bg_update, pd);
 
    o = edje_object_add(evas_object_evas_get(p->o_table));
    pd->o_desk = o;
@@ -426,6 +452,7 @@ _pager_desk_free(Pager_Desk *pd)
    evas_object_del(pd->o_layout);
    EINA_LIST_FREE(pd->wins, w)
      _pager_window_free(w);
+   ecore_event_handler_del(pd->ev);
    e_object_unref(E_OBJECT(pd->desk));
    E_FREE(pd);
 }
