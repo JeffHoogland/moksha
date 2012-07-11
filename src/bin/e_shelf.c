@@ -1865,9 +1865,9 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    if (es->gadcon->editing)
-     e_menu_item_label_set(mi, _("Stop Moving/Resizing Gadgets"));
+     e_menu_item_label_set(mi, _("Stop Moving Gadgets"));
    else
-     e_menu_item_label_set(mi, _("Begin Moving/Resizing Gadgets"));
+     e_menu_item_label_set(mi, _("Begin Moving Gadgets"));
    e_util_menu_item_theme_icon_set(mi, "transform-scale");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
 
