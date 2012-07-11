@@ -749,6 +749,7 @@ _e_fm_main_eeze_init(void)
 void
 _e_fm_main_eeze_shutdown(void)
 {
+   if (scanner) ecore_exe_free(scanner);
    eeze_mount_tabs_unwatch();
    eeze_shutdown();
    ecore_con_shutdown();
