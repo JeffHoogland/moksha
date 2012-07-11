@@ -48,7 +48,7 @@ struct _Pager
    unsigned char   just_dragged : 1;
    Evas_Coord      dnd_x, dnd_y;
    Pager_Desk     *active_drop_pd;
-   Eina_Bool       disable_live_preview : 1;
+   Eina_Bool       live_windows : 1;
 };
 
 struct _Pager_Desk
@@ -292,7 +292,7 @@ _pager_new(Evas *evas, E_Zone *zone)
    p = E_NEW(Pager, 1);
    p->inst = NULL;
    p->popup = NULL;
-   p->disable_live_preview = pager_config->disable_live_preview;
+   p->live_windows = pager_config->live_windows;
    p->o_table = e_table_add(evas);
    e_table_homogenous_set(p->o_table, 1);
    p->zone = zone;
@@ -693,7 +693,7 @@ _pager_window_new(Pager_Desk *pd, E_Border *border)
    pw->o_window = o;
    e_theme_edje_object_set(o, "base/theme/modules/pager",
                            "e/modules/pager/window");
-   if (pager_config->disable_live_preview)
+   if (!pager_config->live_windows)
      {
         edje_object_signal_emit(o, "e,preview,off", "e");
         o = e_border_icon_add(border, evas_object_evas_get(pd->pager->o_table));
@@ -986,7 +986,7 @@ _pager_cb_config_updated(void)
    if (!pager_config) return;
    EINA_LIST_FOREACH(pagers, l, p)
      {
-        if (p->disable_live_preview != pager_config->disable_live_preview)
+        if (p->live_windows != pager_config->live_windows)
           {
              _pager_empty(p);
              _pager_fill(p);
@@ -995,6 +995,14 @@ _pager_cb_config_updated(void)
           {
              EINA_LIST_FOREACH(p->desks, ll, pd)
                {
+                  if (pager_config->disable_live_preview)
+                    edje_object_signal_emit(pd->o_desk, "e,preview,off", "e");
+                  else
+                    edje_object_signal_emit(pd->o_desk, "e,preview,on", "e");
+                  if (pd->current)
+                    edje_object_signal_emit(pd->o_desk, "e,state,selected", "e");
+                  else
+                    edje_object_signal_emit(pd->o_desk, "e,state,unselected", "e");
                   if (pager_config->show_desk_names)
                     edje_object_signal_emit(pd->o_desk, "e,name,show", "e");
                   else
@@ -1440,7 +1448,7 @@ _pager_cb_event_border_icon_change(void *data __UNUSED__, int type __UNUSED__, v
                        evas_object_del(pw->o_icon);
                        pw->o_icon = NULL;
                     }
-                  if (pager_config->disable_live_preview)
+                  if (!pager_config->live_windows)
                     {
                        o = e_border_icon_add(ev->border,
                                              evas_object_evas_get(p->o_table));
@@ -1965,7 +1973,7 @@ _pager_window_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __U
                                      "e/modules/pager/window");
              evas_object_show(o);
 
-             if (pager_config->disable_live_preview)
+             if (!pager_config->live_windows)
                {
                   oo = e_border_icon_add(pw->border, drag->evas);
                   if (oo)
@@ -2377,7 +2385,7 @@ _pager_desk_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
              o = edje_object_add(drag->evas);
              e_theme_edje_object_set(o, "base/theme/modules/pager",
                                      "e/modules/pager/window");
-             if (!pager_config->disable_live_preview)
+             if (pager_config->live_windows)
                {
                   if (e_manager_comp_evas_get(pw->border->zone->container->manager))
                     {
@@ -2878,6 +2886,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, btn_desk, UCHAR);
    E_CONFIG_VAL(D, T, flip_desk, UCHAR);
    E_CONFIG_VAL(D, T, disable_live_preview, UCHAR);
+   E_CONFIG_VAL(D, T, live_windows, UCHAR);
 
    pager_config = e_config_domain_load("module.pager", conf_edd);
 
@@ -2912,6 +2921,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(pager_config->btn_noplace, 0, 32);
    E_CONFIG_LIMIT(pager_config->btn_desk, 0, 32);
    E_CONFIG_LIMIT(pager_config->disable_live_preview, 0, 1);
+   E_CONFIG_LIMIT(pager_config->live_windows, 0, 1);
 
    pager_config->handlers = eina_list_append
        (pager_config->handlers, ecore_event_handler_add
