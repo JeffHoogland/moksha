@@ -223,8 +223,26 @@ e_desk_show(E_Desk *desk)
              if (desk2->visible)
                {
                   desk2->visible = 0;
-                  dx = desk->x - desk2->x;
-                  dy = desk->y - desk2->y;
+                  if (e_config->desk_flip_wrap)
+                    {
+                       /* current desk (desk2) is last desk, switching to first desk (desk) */
+                       if ((!desk->x) && (!desk->y) && (desk2->x + 1 == desk->zone->desk_x_count) && (desk2->y + 1 == desk->zone->desk_y_count))
+                         {
+                            dx = (desk->x != desk2->x) ? 1 : 0;
+                            dy = (desk->y != desk2->y) ? 1 : 0;
+                         }
+                       /* current desk (desk2) is first desk, switching to last desk (desk) */
+                       else if ((!desk2->x) && (!desk2->y) && (desk->x + 1 == desk->zone->desk_x_count) && (desk->y + 1 == desk->zone->desk_y_count))
+                         {
+                            dx = (desk->x != desk2->x) ? -1 : 0;
+                            dy = (desk->y != desk2->y) ? -1 : 0;
+                         }
+                    }
+                  if ((!dx) && (!dy))
+                    {
+                       dx = desk->x - desk2->x;
+                       dy = desk->y - desk2->y;
+                    }
                   if (e_config->desk_flip_animate_mode > 0)
                     _e_desk_hide_begin(desk2, e_config->desk_flip_animate_mode,
                                        dx, dy);
