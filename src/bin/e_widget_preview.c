@@ -28,7 +28,7 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
 
    wd->o_frame = edje_object_add(evas);
    e_theme_edje_object_set(wd->o_frame, "base/theme/widgets",
-			   "e/widgets/preview");
+                           "e/widgets/preview");
    evas_object_show(wd->o_frame);
    e_widget_sub_object_add(obj, wd->o_frame);
    e_widget_resize_object_set(obj, wd->o_frame);
@@ -94,21 +94,21 @@ e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key _
    wd = e_widget_data_get(obj);
    if (wd->img)
      {
-	e_widget_sub_object_del(obj, wd->img);
-	evas_object_del(wd->img);
+        e_widget_sub_object_del(obj, wd->img);
+        evas_object_del(wd->img);
      }
 
    wd->img = e_thumb_icon_add(evas_object_evas_get(obj));
    e_widget_sub_object_add(obj, wd->img);
    if (e_util_glob_case_match(file, "*.edj"))
      {
-	/* FIXME: There is probably a quicker way of doing this. */
-	if (edje_file_group_exists(file, "icon"))
-	  e_thumb_icon_file_set(wd->img, file, "icon");
-	else if (edje_file_group_exists(file, "e/desktop/background"))
-	  e_thumb_icon_file_set(wd->img, file, "e/desktop/background");
-	else if (edje_file_group_exists(file, "e/init/splash"))
-	  e_thumb_icon_file_set(wd->img, file, "e/init/splash");
+        /* FIXME: There is probably a quicker way of doing this. */
+        if (edje_file_group_exists(file, "icon"))
+          e_thumb_icon_file_set(wd->img, file, "icon");
+        else if (edje_file_group_exists(file, "e/desktop/background"))
+          e_thumb_icon_file_set(wd->img, file, "e/desktop/background");
+        else if (edje_file_group_exists(file, "e/init/splash"))
+          e_thumb_icon_file_set(wd->img, file, "e/init/splash");
      }
    else
      e_thumb_icon_file_set(wd->img, file, NULL);
@@ -181,3 +181,4 @@ _e_wid_del_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    E_FREE(wd);
 }
+
