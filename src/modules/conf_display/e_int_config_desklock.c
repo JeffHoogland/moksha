@@ -91,7 +91,7 @@ e_int_config_desklock_fsel_done(E_Config_Dialog *cfd, Evas_Object *bg, const cha
    if (!bg_file) return;
    e_widget_preview_file_get(bg, &cbg, NULL);
    l = eina_list_data_find_list(cfdata->bgs, cbg);
-   if (l->data)
+   if (l && l->data)
      eina_stringshare_replace((const char**)&l->data, bg_file);
    else
      eina_list_data_set(l, eina_stringshare_add(bg_file));
