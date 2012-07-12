@@ -165,6 +165,7 @@ e_widget_csel.h \
 e_widget_cslider.h \
 e_widget_deskpreview.h \
 e_widget_entry.h \
+e_widget_filepreview.h \
 e_widget_flist.h \
 e_widget_font_preview.h \
 e_widget_framelist.h \
@@ -323,6 +324,7 @@ e_widget_csel.c \
 e_widget_cslider.c \
 e_widget_deskpreview.c \
 e_widget_entry.c \
+e_widget_filepreview.c \
 e_widget_flist.c \
 e_widget_font_preview.c \
 e_widget_framelist.c \
