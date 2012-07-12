@@ -94,6 +94,24 @@ e_widget_table_unpack(Evas_Object *obj, Evas_Object *sobj)
    e_table_unpack(sobj);
 }
 
+EAPI void
+e_widget_table_freeze(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   e_table_freeze(wd->o_table);
+}
+
+EAPI void
+e_widget_table_thaw(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   e_table_thaw(wd->o_table);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {
