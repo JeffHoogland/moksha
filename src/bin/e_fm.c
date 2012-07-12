@@ -299,6 +299,8 @@ static void          _e_fm2_cb_dnd_drop(void *data, const char *type, void *even
 static void          _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void          _e_fm2_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void          _e_fm2_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_fm2_cb_icon_thumb_dnd_gen(void *data, Evas_Object *obj, void *event_info);
 static void          _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info);
 static void          _e_fm2_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -4632,6 +4634,8 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_DOWN, _e_fm2_cb_icon_mouse_down, ic);
    evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_UP, _e_fm2_cb_icon_mouse_up, ic);
    evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_MOVE, _e_fm2_cb_icon_mouse_move, ic);
+   evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_IN, _e_fm2_cb_icon_mouse_in, ic);
+   evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_OUT, _e_fm2_cb_icon_mouse_out, ic);
 
    _e_fm2_icon_icon_set(ic);
 
@@ -6615,6 +6619,36 @@ _e_fm_drag_key_up_cb(E_Drag *drag, Ecore_Event_Key *e)
      ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_MOVE);
 
    edje_object_signal_emit(drag->object, "e,state,move", "e");
+}
+
+static void
+_e_fm2_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   Evas_Event_Mouse_In *ev;
+   E_Fm2_Icon *ic;
+
+   ic = data;
+   ev = event_info;
+
+   if (ic->entry_widget) return;
+
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
+   evas_object_smart_callback_call(ic->sd->obj, "icon,mouse,in", &ic->info);
+}
+
+static void
+_e_fm2_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   Evas_Event_Mouse_Out *ev;
+   E_Fm2_Icon *ic;
+
+   ic = data;
+   ev = event_info;
+
+   if (ic->entry_widget) return;
+
+   if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
+   evas_object_smart_callback_call(ic->sd->obj, "icon,mouse,out", &ic->info);
 }
 
 static void
