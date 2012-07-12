@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include "e_widget_filepreview.h"
 
 /* FIXME: fwin - the fm2 filemanager wrapped with a window and scrollframe.
  * primitive BUT enough to test generic dnd and fm stuff more easily. don't
@@ -40,6 +41,10 @@ struct _E_Fwin
    const char          *scrollframe_file;
    const char          *theme_file;
 
+   Ecore_Timer *popup_timer;
+   E_Fm2_Icon_Info *popup_icon;
+   E_Popup *popup;
+   
    Ecore_Event_Handler *zone_handler;
    Ecore_Event_Handler *zone_del_handler;
 };
@@ -82,6 +87,8 @@ typedef enum
 } E_Fwin_Exec_Type;
 
 /* local subsystem prototypes */
+static void _e_fwin_icon_mouse_out(void *data, Evas_Object *obj __UNUSED__, void *event_info);
+static void _e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info);
 static E_Fwin          *_e_fwin_new(E_Container *con,
                                     const char *dev,
                                     const char *path);
@@ -288,6 +295,8 @@ e_fwin_zone_new(E_Zone *zone,
                                   _e_fwin_selection_change, page);
    evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
                                   _e_fwin_cb_page_obj_del, page);
+   evas_object_smart_callback_add(o, "icon,mouse,in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
+   evas_object_smart_callback_add(o, "icon,mouse,out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_underlay_hide(o);
@@ -540,6 +549,80 @@ _e_fwin_free(E_Fwin *fwin)
    free(fwin);
 }
 
+static Eina_Bool
+_e_fwin_icon_popup(void *data)
+{
+   E_Fwin *fwin = data;
+   Evas_Object *o;
+   E_Zone *zone;
+   char buf[PATH_MAX];
+   int x, y, w, h, mw, mh, fx, fy, px, py;
+
+   fwin->popup_timer = NULL;
+   if (!fwin->popup_icon) return EINA_FALSE;
+   if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
+   zone = fwin->zone ?: fwin->win->border->zone;
+   e_fm2_icon_geometry_get(fwin->popup_icon->ic, &x, &y, &w, &h);
+   if (fwin->zone)
+     {
+        evas_object_geometry_get(fwin->popup_icon->fm, &fx, &fy, NULL, NULL);
+        fx -= fwin->zone->x;
+        x -= fwin->zone->x;
+        fy -= fwin->zone->y;
+        y -= fwin->zone->y;
+     }
+   else
+     fx = fwin->win->x, fy = fwin->win->y;
+   fwin->popup = e_popup_new(zone, 0, 0, 1, 1);
+   e_popup_ignore_events_set(fwin->popup, 1);
+   o = e_widget_filepreview_add(fwin->popup->evas);
+   snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), fwin->popup_icon->file);
+   e_widget_filepreview_path_set(o, buf);
+   e_widget_size_min_get(o, &mw, &mh);
+   evas_object_show(o);
+
+   /* prefer tooltip left of icon */
+   px = (fx + x) - mw - 3;
+   /* if it's offscreen, try right of icon */
+   if (px < 0) px = (fx + x + w) + 3;
+   /* fuck this, stick it right on the icon */
+   if (px + mw + 3 > zone->w)
+     px = (x + w / 2) - (mw / 2);
+   /* prefer tooltip above icon */
+   py = (fy + y) - mh - 3;
+   /* if it's offscreen, try below icon */
+   if (py < 0) py = (fy + y + h) + 3;
+   /* fuck this, stick it right on the icon */
+   if (py + mh + 3 > zone->h)
+     py = (y + h / 2) - (mh / 2);
+   e_popup_move_resize(fwin->popup, px, py, mw, mh);
+   e_popup_show(fwin->popup);
+   return EINA_FALSE;
+}
+
+static void
+_e_fwin_icon_mouse_out(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   E_Fwin *fwin = data;
+
+   if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
+   if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
+   fwin->popup = NULL;
+   fwin->popup_timer = NULL;
+   fwin->popup_icon = NULL;
+}
+
+static void
+_e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   E_Fwin *fwin = data;
+   E_Fm2_Icon_Info *ici = event_info;
+
+   if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
+   fwin->popup_timer = ecore_timer_add(1.0, _e_fwin_icon_popup, fwin);
+   fwin->popup_icon = ici;
+}
+
 static E_Fwin_Page *
 _e_fwin_page_create(E_Fwin *fwin)
 {
@@ -565,6 +648,8 @@ _e_fwin_page_create(E_Fwin *fwin)
    evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
                                   _e_fwin_cb_page_obj_del, page);
    evas_object_smart_callback_add(o, "double_clicked", (Evas_Smart_Cb)_e_fwin_bg_mouse_down, fwin);
+   evas_object_smart_callback_add(o, "icon,mouse,in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
+   evas_object_smart_callback_add(o, "icon,mouse,out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_window_object_set(o, E_OBJECT(fwin->win));
