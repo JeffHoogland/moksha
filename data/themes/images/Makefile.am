@@ -190,6 +190,7 @@ icon_intl.png \
 icon_interaction.png \
 icon_intl.png \
 icon_keys.png \
+icon_keyboard.png \
 icon_left_arrow.png \
 icon_logout.png \
 icon_lost_windows.png \
