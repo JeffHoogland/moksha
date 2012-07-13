@@ -611,6 +611,9 @@ _e_fwin_icon_popup(void *data)
    /* fuck this, stick it right on the icon */
    if (px + mw + 3 > zone->w)
      px = (x + w / 2) - (mw / 2);
+   /* give up */
+   if (px < 0) px = 0;
+
    /* prefer tooltip above icon */
    py = (fy + y) - mh - 3;
    /* if it's offscreen, try below icon */
@@ -618,6 +621,8 @@ _e_fwin_icon_popup(void *data)
    /* fuck this, stick it right on the icon */
    if (py + mh + 3 > zone->h)
      py = (y + h / 2) - (mh / 2);
+   /* give up */
+   if (py < 0) py = 0;
    e_popup_move_resize(fwin->popup, px, py, mw, mh);
    evas_object_resize(bg, mw, mh);
    e_popup_show(fwin->popup);
@@ -1435,6 +1440,7 @@ _e_fwin_changed(void *data,
    else
      e_fm2_custom_theme_set(obj, NULL);
 
+   _e_fwin_icon_mouse_out(fwin, NULL, NULL);
    if (fwin->zone) return;
    _e_fwin_window_title_set(page);
 }
