@@ -51,10 +51,13 @@ struct _Import
    Evas_Object          *quality_obj;
    Evas_Object          *frame_fill_obj;
    Evas_Object          *frame_quality_obj;
+   Evas_Object          *frame_color_obj;
+   Evas_Object          *color_well;
 
    E_Win                *win;
 
    FSel                 *fsel;
+   E_Color              color;
 
    Ecore_Exe            *exe;
    Ecore_Event_Handler  *exe_handler;
@@ -91,7 +94,7 @@ e_int_config_wallpaper_import(void *data, const char *path)
    Evas *evas;
    E_Win *win;
    Import *import;
-   Evas_Object *o, *of, *ord, *ot;
+   Evas_Object *o, *of, *ord, *ot, *ol;
    E_Radio_Group *rg;
    Evas_Coord w, h;
    E_Config_Dialog_Data *cfdata;
@@ -164,7 +167,7 @@ e_int_config_wallpaper_import(void *data, const char *path)
    o = e_widget_list_add(evas, 0, 0);
    import->content_obj = o;
 
-   ot = e_widget_table_add(evas, 0);
+   ot = e_widget_list_add(evas, 1, 0);
 
    of = e_widget_frametable_add(evas, _("Fill and Stretch Options"), 1);
    import->frame_fill_obj = of;
@@ -199,7 +202,9 @@ e_int_config_wallpaper_import(void *data, const char *path)
                                  24, 24, IMPORT_PAN, rg);
    import->fill_fill_obj = ord;
    e_widget_frametable_object_append(of, ord, 5, 0, 1, 1, 1, 0, 1, 0);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(ot, of, 1, 1, 0);
+
+   ol = e_widget_list_add(evas, 0, 1);
 
    of = e_widget_frametable_add(evas, _("File Quality"), 0);
    import->frame_quality_obj = of;
@@ -210,7 +215,15 @@ e_int_config_wallpaper_import(void *data, const char *path)
                              NULL, &(cfdata->quality), 150);
    import->quality_obj = ord;
    e_widget_frametable_object_append(of, ord, 0, 1, 1, 1, 1, 0, 1, 0);
-   e_widget_table_object_append(ot, of, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(ol, of, 1, 1, 0);
+
+   of = e_widget_framelist_add(evas, _("Fill Color"), 0);
+   import->frame_color_obj = of;
+   ord = e_widget_color_well_add(evas, &import->color, 1);
+   import->color_well = ord;
+   e_widget_framelist_object_append(of, ord);
+   e_widget_list_object_append(ol, of, 1, 0, 1);
+   e_widget_list_object_append(ot, ol, 1, 1, 0);
 
    e_widget_list_object_append(o, ot, 0, 0, 0.5);
 
@@ -448,7 +461,7 @@ _import_edj_gen(Import *import)
    const char *file, *locale;
    char buf[PATH_MAX], cmd[PATH_MAX], tmpn[PATH_MAX], ipart[PATH_MAX], enc[128];
    char *imgdir = NULL, *fstrip;
-   int cr = 255, cg = 255, cb = 255, ca = 255;
+   int cr, cg, cb, ca;
    FILE *f;
    size_t len, off;
 
@@ -462,6 +475,10 @@ _import_edj_gen(Import *import)
    for (num = 1; ecore_file_exists(buf) && num < 100; num++)
      snprintf(buf + off, sizeof(buf) - off, "-%d.edj", num);
    free(fstrip);
+   cr = import->color.r;
+   cg = import->color.g;
+   cb = import->color.b;
+   ca = import->color.a;
 
    if (num == 100)
      {
