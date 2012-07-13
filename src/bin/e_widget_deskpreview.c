@@ -17,6 +17,7 @@ struct _E_Widget_Desk_Data
 };
 
 /* local function prototypes */
+static void      _e_wid_data_del(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__);
 static void      _e_wid_del_hook(Evas_Object *obj);
 static void      _e_wid_reconfigure(E_Widget_Data *wd);
 static void      _e_wid_desk_cb_config(void *data, Evas *evas, Evas_Object *obj, void *event);
@@ -91,6 +92,7 @@ e_widget_deskpreview_desk_add(Evas_Object *obj, E_Zone *zone, int x, int y, int 
    evas_object_show(dd->icon);
    evas_object_data_set(dd->icon, "desk_data", dd);
    dd->configurable = EINA_TRUE;
+   evas_object_event_callback_add(dd->icon, EVAS_CALLBACK_FREE, _e_wid_data_del, dd);
    evas_object_event_callback_add(dd->icon, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_wid_desk_cb_config, dd);
    dd->bg_upd_hdl = ecore_event_handler_add(E_EVENT_BG_UPDATE,
@@ -120,6 +122,17 @@ e_widget_deskpreview_desk_configurable_set(Evas_Object *obj, Eina_Bool enable)
 
 /* local function prototypes */
 static void
+_e_wid_data_del(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   E_Widget_Desk_Data *dd;
+   dd = data;
+   if (!dd) return;
+   if (dd->bg_upd_hdl) ecore_event_handler_del(dd->bg_upd_hdl);
+   if (dd->thumb) evas_object_del(dd->thumb);
+   E_FREE(dd);
+}
+
+static void
 _e_wid_del_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
@@ -128,15 +141,7 @@ _e_wid_del_hook(Evas_Object *obj)
    if (!(wd = e_widget_data_get(obj))) return;
 
    EINA_LIST_FREE(wd->desks, o)
-     {
-        E_Widget_Desk_Data *dd;
-
-        if (!(dd = evas_object_data_get(o, "desk_data"))) continue;
-        if (dd->bg_upd_hdl) ecore_event_handler_del(dd->bg_upd_hdl);
-        evas_object_del(dd->thumb);
-        evas_object_del(o);
-        E_FREE(dd);
-     }
+     evas_object_del(o);
 
    E_FREE(wd);
 }
