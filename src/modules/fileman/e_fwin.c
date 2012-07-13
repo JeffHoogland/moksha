@@ -578,6 +578,7 @@ _e_fwin_icon_popup(void *data)
      fx = fwin->win->x, fy = fwin->win->y;
    fwin->popup = e_popup_new(zone, 0, 0, 1, 1);
    e_popup_ignore_events_set(fwin->popup, 1);
+   ecore_x_window_shape_input_rectangle_set(fwin->popup->evas_win, 0, 0, 0, 0);
    bg = edje_object_add(fwin->popup->evas);
    e_theme_edje_object_set(bg, "base/theme/fileman", "e/fileman/default/window/main");
    e_popup_edje_bg_object_set(fwin->popup, bg);
