@@ -83,6 +83,10 @@ _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNU
                          mime = efreet_icon_path_find(e_config->icon_theme, ed->icon, size);
                     }
                }
+             if (!mime)
+               mime = efreet_icon_path_find(e_config->icon_theme, "unknown", size);
+             if (!mime)
+               mime = efreet_icon_path_find(e_config->icon_theme, "text/plain", size);
              _e_wid_fprev_img_update(wd, mime);
              if (ed) efreet_desktop_free(ed);
           }
