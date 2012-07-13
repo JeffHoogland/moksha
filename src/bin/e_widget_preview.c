@@ -87,7 +87,7 @@ e_widget_preview_file_set(Evas_Object *obj, const char *file, const char *key)
 }
 
 EAPI int
-e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key __UNUSED__, int w, int h)
+e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, int w, int h)
 {
    E_Widget_Data *wd;
 
@@ -100,8 +100,11 @@ e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key _
 
    wd->img = e_thumb_icon_add(evas_object_evas_get(obj));
    e_widget_sub_object_add(obj, wd->img);
-   if (e_util_glob_case_match(file, "*.edj"))
+   if (eina_str_has_extension(file, "edj"))
      {
+        if (key)
+          e_thumb_icon_file_set(wd->img, file, key);
+        else
         /* FIXME: There is probably a quicker way of doing this. */
         if (edje_file_group_exists(file, "icon"))
           e_thumb_icon_file_set(wd->img, file, "icon");
