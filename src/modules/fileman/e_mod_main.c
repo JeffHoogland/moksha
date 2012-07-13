@@ -532,7 +532,7 @@ _e_mod_fileman_config_load(void)
 
     IFMODCFG(0x0104);
     fileman_config->tooltip.delay = 1.0;
-    fileman_config->tooltip.size = 50.0;
+    fileman_config->tooltip.size = 30.0;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
