@@ -589,7 +589,7 @@ _e_fwin_icon_popup(void *data)
    list = e_widget_framelist_add(fwin->popup->evas, fwin->popup_icon->file, 0);
    o = e_widget_filepreview_add(fwin->popup->evas, mw, mh);
    snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), fwin->popup_icon->file);
-   e_widget_filepreview_path_set(o, buf);
+   e_widget_filepreview_path_set(o, buf, fwin->popup_icon->mime);
    e_widget_framelist_object_append(list, o);
    e_widget_size_min_get(list, &mw, &mh);
    edje_extern_object_min_size_set(list, mw, mh);

@@ -19,24 +19,28 @@ struct _E_Widget_Data
    Evas_Object *o_preview_time_entry;
    Evas_Object *o_preview_preview;
    Evas_Coord   preview_w, preview_h;
+   int w, h;
    char        *preview_extra_text;
    char        *preview_size_text;
    char        *preview_owner_text;
    char        *preview_perms_text;
    char        *preview_time_text;
    const char        *path;
+   const char        *mime;
+   Eina_Bool mime_icon : 1;
 };
 
-static void  _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info);
-static void  _e_wid_fsel_preview_file(E_Widget_Data *wd);
+static void  _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info);
+static void  _e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path);
 static char *_e_wid_file_size_get(off_t st_size);
 static char *_e_wid_file_user_get(uid_t st_uid);
 static char *_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t gid);
 static char *_e_wid_file_time_get(time_t st_modtime);
+static void _e_wid_fprev_img_update(E_Widget_Data *wd, const char *path);
 static void  _e_wid_del_hook(Evas_Object *obj);
 
 static void
-_e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info __UNUSED__)
+_e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
    Evas_Object *o;
@@ -53,27 +57,46 @@ _e_wid_fsel_preview_update(void *data, Evas_Object *obj, void *event_info __UNUS
         snprintf(buf, sizeof(buf), "%ix%i", iw, ih);
         e_widget_entry_text_set(wd->o_preview_extra_entry, buf);
      }
+   else if (wd->mime)
+     {
+        if (wd->mime_icon)
+          {
+             e_widget_label_text_set(wd->o_preview_extra, _("Mime-type:"));
+             e_widget_entry_text_set(wd->o_preview_extra_entry, wd->mime);
+          }
+        else
+          {
+             wd->mime_icon = EINA_TRUE;
+             _e_wid_fprev_img_update(wd, e_util_mime_icon_get(wd->mime, (wd->w > 48) ? 48 : wd->w));
+          }
+     }
    e_widget_table_object_repack(wd->o_preview_preview_table,
                                 wd->o_preview_preview,
                                 0, 0, 1, 1, 0, 0, 1, 1);
 }
 
 static void
-_e_wid_fsel_preview_file(E_Widget_Data *wd)
+_e_wid_fprev_img_update(E_Widget_Data *wd, const char *path)
+{
+   if (!path) return;
+   e_widget_preview_thumb_set(wd->o_preview_preview, path,
+                              "e/desktop/background", wd->w, wd->h);
+}
+
+static void
+_e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path)
 {
    char *size, *owner, *perms, *mtime;
    struct stat st;
 
    if (stat(wd->path, &st) < 0) return;
-
+   wd->mime_icon = EINA_FALSE;
    size = _e_wid_file_size_get(st.st_size);
    owner = _e_wid_file_user_get(st.st_uid);
    perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
    mtime = _e_wid_file_time_get(st.st_mtime);
 
-   e_widget_preview_thumb_set(wd->o_preview_preview, wd->path,
-                              "e/desktop/background", 128, 128);
-
+   _e_wid_fprev_img_update(wd, path);
    e_widget_table_object_repack(wd->o_preview_preview_table,
                                 wd->o_preview_preview,
                                 0, 0, 1, 1, 0, 0, 1, 1);
@@ -201,12 +224,13 @@ _e_wid_del_hook(Evas_Object *obj)
    E_FREE(wd->preview_perms_text);
    E_FREE(wd->preview_time_text);
    eina_stringshare_del(wd->path);
+   eina_stringshare_del(wd->mime);
 
    free(wd);
 }
 
 EAPI Evas_Object *
-e_widget_filepreview_add(Evas *evas)
+e_widget_filepreview_add(Evas *evas, int w, int h)
 {
    Evas_Object *obj, *o;
    int mw, mh;
@@ -219,6 +243,7 @@ e_widget_filepreview_add(Evas *evas)
    e_widget_data_set(obj, wd);
    wd->obj = obj;
 
+   wd->w = w, wd->h = h;
 
    o = e_widget_table_add(evas, 0);
    wd->o_preview_table = o;
@@ -230,11 +255,11 @@ e_widget_filepreview_add(Evas *evas)
    wd->o_preview_preview_table = o;
    e_widget_sub_object_add(obj, o);
 
-   o = e_widget_preview_add(evas, 128, 128);
+   o = e_widget_preview_add(evas, w, h);
    wd->o_preview_preview = o;
    e_widget_sub_object_add(obj, o);
    evas_object_smart_callback_add(o, "preview_update",
-                                  _e_wid_fsel_preview_update, wd);
+                                  _e_wid_fprev_preview_update, wd);
    e_widget_table_object_append(wd->o_preview_preview_table,
                                 wd->o_preview_preview,
                                 0, 0, 1, 1, 0, 0, 1, 1);
@@ -347,7 +372,7 @@ e_widget_filepreview_add(Evas *evas)
 }
 
 EAPI void
-e_widget_filepreview_path_set(Evas_Object *obj, const char *path)
+e_widget_filepreview_path_set(Evas_Object *obj, const char *path, const char *mime)
 {
    E_Widget_Data *wd;
 
@@ -355,5 +380,6 @@ e_widget_filepreview_path_set(Evas_Object *obj, const char *path)
    wd = e_widget_data_get(obj);
    if (!wd) return;
    eina_stringshare_replace(&wd->path, path);
-   _e_wid_fsel_preview_file(wd);
+   eina_stringshare_replace(&wd->mime, mime);
+   _e_wid_fprev_preview_file(wd, wd->path);
 }

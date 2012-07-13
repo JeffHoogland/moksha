@@ -556,6 +556,24 @@ e_util_menu_item_theme_icon_set(E_Menu_Item *mi, const char *icon)
      }
 }
 
+EAPI const char *
+e_util_mime_icon_get(const char *mime, unsigned int size)
+{
+   char buf[1024];
+   const char *file = NULL;
+
+   if (e_config->icon_theme_overrides)
+     file = efreet_mime_type_icon_get(mime, e_config->icon_theme, e_util_icon_size_normalize(size));
+   if (file) return file;
+
+   if (snprintf(buf, sizeof(buf), "e/icons/fileman/mime/%s", mime) >= (int)sizeof(buf))
+     return NULL;
+
+   file = e_theme_edje_file_get("base/theme/icons", buf);
+   if (file && file[0]) return file;
+   return efreet_mime_type_icon_get(mime, e_config->icon_theme, e_util_icon_size_normalize(size));
+}
+
 EAPI E_Container *
 e_util_container_window_find(Ecore_X_Window win)
 {

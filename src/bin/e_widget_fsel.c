@@ -212,7 +212,7 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
    eina_stringshare_replace(&wd->path, buf);
    if (stat(wd->path, &st) == 0)
      {
-        if (wd->preview) e_widget_filepreview_path_set(wd->o_preview, wd->path);
+        if (wd->preview) e_widget_filepreview_path_set(wd->o_preview, wd->path, ici->mime);
         if (!S_ISDIR(st.st_mode))
           e_widget_entry_text_set(wd->o_entry, ici->file);
 //	else
@@ -284,7 +284,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
      {
         wd->o_preview_frame = e_widget_framelist_add(evas, _("Preview"), 0);
         e_widget_sub_object_add(obj, o);
-        wd->o_preview = e_widget_filepreview_add(evas);
+        wd->o_preview = e_widget_filepreview_add(evas, 128, 128);
         e_widget_sub_object_add(obj, wd->o_preview);
         e_widget_framelist_object_append(wd->o_preview_frame, wd->o_preview);
      }
