@@ -872,6 +872,11 @@ case "$host_os" in
       ;;
 esac
 
+SUID_CFLAGS=-fPIE
+SUID_LDFLAGS=-pie
+AC_SUBST([SUID_CFLAGS])
+AC_SUBST([SUID_LDFLAGS])
+
 AC_OUTPUT([
 Makefile
 enlightenment.spec

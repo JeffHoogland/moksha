@@ -387,15 +387,15 @@ enlightenment_fm_op_CFLAGS = $(INCLUDES)
 enlightenment_sys_SOURCES = \
 e_sys_main.c
 
-enlightenment_sys_LDADD = @E_SYS_LIBS@
-enlightenment_sys_CFLAGS = @E_SYS_CFLAGS@
+enlightenment_sys_LDADD = @SUID_LDFLAGS@ @E_SYS_LIBS@
+enlightenment_sys_CFLAGS = @SUID_CFLAGS@ @E_SYS_CFLAGS@
 
 if HAVE_EEZE
 enlightenment_backlight_SOURCES = \
 e_backlight_main.c
 
-enlightenment_backlight_CFLAGS = @EEZE_CFLAGS@
-enlightenment_backlight_LDADD = @EEZE_LIBS@
+enlightenment_backlight_CFLAGS = @SUID_CFLAGS@ @EEZE_CFLAGS@
+enlightenment_backlight_LDADD = @SUID_LDFLAGS@ @EEZE_LIBS@
 endif
 
 enlightenment_init_SOURCES = \
