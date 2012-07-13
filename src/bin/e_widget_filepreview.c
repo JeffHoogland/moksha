@@ -293,7 +293,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h)
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_table,
                                 wd->o_preview_extra,
-                                0, 1, 1, 1, 1, 1, 1, 1);
+                                0, 1, 1, 1, 1, 1, 0, 1);
 
    o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL);
    e_widget_entry_readonly_set(o, 1);
@@ -310,7 +310,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h)
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_table,
                                 wd->o_preview_size,
-                                0, 2, 1, 1, 1, 1, 1, 1);
+                                0, 2, 1, 1, 1, 1, 0, 1);
 
    o = e_widget_entry_add(evas, &(wd->preview_size_text), NULL, NULL, NULL);
    e_widget_entry_readonly_set(o, 1);
@@ -327,7 +327,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h)
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_table,
                                 wd->o_preview_owner,
-                                0, 3, 1, 1, 1, 1, 1, 1);
+                                0, 3, 1, 1, 1, 1, 0, 1);
 
    o = e_widget_entry_add(evas, &(wd->preview_owner_text), NULL, NULL, NULL);
    e_widget_entry_readonly_set(o, 1);
@@ -344,7 +344,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h)
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_table,
                                 wd->o_preview_perms,
-                                0, 4, 1, 1, 1, 1, 1, 1);
+                                0, 4, 1, 1, 1, 1, 0, 1);
 
    o = e_widget_entry_add(evas, &(wd->preview_perms_text), NULL, NULL, NULL);
    e_widget_entry_readonly_set(o, 1);
@@ -361,7 +361,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h)
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_table,
                                 wd->o_preview_time,
-                                0, 5, 1, 1, 1, 1, 1, 1);
+                                0, 5, 1, 1, 1, 1, 0, 1);
 
    o = e_widget_entry_add(evas, &(wd->preview_time_text), NULL, NULL, NULL);
    e_widget_entry_readonly_set(o, 1);
