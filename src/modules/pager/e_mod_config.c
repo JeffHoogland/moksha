@@ -128,7 +128,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_check_add(evas, _("Flip desktop on mouse wheel"),
                            &(cfdata->flip_desk));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Show desktop names"),
+   ow = e_widget_check_add(evas, _("Always show desktop names"),
                            &(cfdata->show_desk_names));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Disable live preview"),
@@ -186,7 +186,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_check_add(evas, _("Flip desktop on mouse wheel"),
                            &(cfdata->flip_desk));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_check_add(evas, _("Show desktop names"),
+   ow = e_widget_check_add(evas, _("Always show desktop names"),
                            &(cfdata->show_desk_names));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_check_add(evas, _("Disable live preview"),
