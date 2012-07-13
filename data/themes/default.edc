@@ -33133,6 +33133,7 @@ collections {
             description {
                state: "default" 0.0;
                align: 0.5 1.0;
+               fixed: 0 1;
                rel1 {
                   to: "bot2";
                   relative: 0.0 1.0;
@@ -33159,7 +33160,7 @@ collections {
             description {
                state: "default" 0.0;
                align: 1.0 1.0;
-               fixed: 0 1;
+               fixed: 1 1;
                rel1 {
                   to_y: "bot2";
                   relative: 1.0 0.0;
@@ -33295,7 +33296,7 @@ collections {
             description {
                state: "default" 0.0;
                align: 0.0 0.0;
-               fixed: 0 1;
+               fixed: 1 1;
                rel1 {
                   relative: 0.0 1.0;
                   offset: 4 0;
@@ -33324,6 +33325,7 @@ collections {
             mouse_events: 0;
             description {
                state: "default" 0.0;
+               fixed: 1 1;
                align: 0.0 1.0;
                min: 22 22;
                max: 22 22;
@@ -33446,6 +33448,7 @@ collections {
             scale: 1;
             description {
                state: "default" 0.0;
+               fixed: 0 1;
                align: 0.5 0.0;
                rel1 {
                   to: "busy";
@@ -33473,6 +33476,7 @@ collections {
             clip_to: "busy_clip";
             description {
                state: "default" 0.0;
+               fixed: 1 1;
                min: 32 32;
                max: 32 32;
                aspect: 1.0 1.0;
