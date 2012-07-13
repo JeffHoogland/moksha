@@ -36,7 +36,7 @@ static char *_e_wid_file_size_get(off_t st_size);
 static char *_e_wid_file_user_get(uid_t st_uid);
 static char *_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t gid);
 static char *_e_wid_file_time_get(time_t st_modtime);
-static void _e_wid_fprev_img_update(E_Widget_Data *wd, const char *path);
+static void _e_wid_fprev_img_update(E_Widget_Data *wd, const char *path, const char *key);
 static void  _e_wid_del_hook(Evas_Object *obj);
 
 static void
@@ -69,25 +69,31 @@ _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNU
              const char *mime;
              Efreet_Desktop *ed = NULL;
              unsigned int size;
-
+             char group[1024];
+             Eina_Bool edj;
 
              wd->mime_icon = EINA_TRUE;
              size = (wd->w > 48) ? 48 : wd->w;
              mime = e_util_mime_icon_get(wd->mime, size);
-             if (!mime)
+             if (mime)
                {
-                  if (eina_str_has_extension(wd->path, "desktop"))
-                    {
-                       ed = efreet_desktop_new(wd->path);
-                       if (ed)
-                         mime = efreet_icon_path_find(e_config->icon_theme, ed->icon, size);
-                    }
+                  edj = eina_str_has_extension(mime, "edj");
+                  if (edj)
+                    snprintf(group, sizeof(group), "e/icons/fileman/mime/%s", wd->mime);
+                  _e_wid_fprev_img_update(wd, mime, edj ? group : NULL);
+                  return;
+               }
+             if (eina_str_has_extension(wd->path, "desktop"))
+               {
+                  ed = efreet_desktop_new(wd->path);
+                  if (ed)
+                    mime = efreet_icon_path_find(e_config->icon_theme, ed->icon, size);
                }
              if (!mime)
                mime = efreet_icon_path_find(e_config->icon_theme, "unknown", size);
              if (!mime)
                mime = efreet_icon_path_find(e_config->icon_theme, "text/plain", size);
-             _e_wid_fprev_img_update(wd, mime);
+             _e_wid_fprev_img_update(wd, mime, NULL);
              if (ed) efreet_desktop_free(ed);
           }
      }
@@ -97,11 +103,10 @@ _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNU
 }
 
 static void
-_e_wid_fprev_img_update(E_Widget_Data *wd, const char *path)
+_e_wid_fprev_img_update(E_Widget_Data *wd, const char *path, const char *key)
 {
    if (!path) return;
-   e_widget_preview_thumb_set(wd->o_preview_preview, path,
-                              "e/desktop/background", wd->w, wd->h);
+   e_widget_preview_thumb_set(wd->o_preview_preview, path, key, wd->w, wd->h);
 }
 
 static void
@@ -117,7 +122,7 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path)
    perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
    mtime = _e_wid_file_time_get(st.st_mtime);
 
-   _e_wid_fprev_img_update(wd, path);
+   _e_wid_fprev_img_update(wd, path, NULL);
    e_widget_table_object_repack(wd->o_preview_preview_table,
                                 wd->o_preview_preview,
                                 0, 0, 1, 1, 0, 0, 1, 1);
