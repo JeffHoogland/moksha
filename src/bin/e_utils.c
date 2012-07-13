@@ -919,8 +919,7 @@ e_util_size_string_get(off_t size)
 EAPI char *
 e_util_file_time_get(time_t ftime)
 {
-   time_t diff;
-   time_t ltime;
+   time_t diff, ltime, test;
    char buf[256];
    char *s = NULL;
 
@@ -928,23 +927,59 @@ e_util_file_time_get(time_t ftime)
    diff = ltime - ftime;
    buf[0] = 0;
    if (ftime > ltime)
-     snprintf(buf, sizeof(buf), _("In the Future"));
+     snprintf(buf, sizeof(buf), _("In the future"));
    else
      {
         if (diff <= 60)
-          snprintf(buf, sizeof(buf), _("In the last Minute"));
+          snprintf(buf, sizeof(buf), _("In the last minute"));
         else if (diff >= 31526000)
-          snprintf(buf, sizeof(buf), _("%li Years ago"), (diff / 31526000));
+          {
+             test = diff / 31526000;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("Last year"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Years ago"), test);
+          }
         else if (diff >= 2592000)
-          snprintf(buf, sizeof(buf), _("%li Months ago"), (diff / 2592000));
+          {
+             test = diff / 2592000;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("Last month"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Months ago"), test);
+          }
         else if (diff >= 604800)
-          snprintf(buf, sizeof(buf), _("%li Weeks ago"), (diff / 604800));
+          {
+             test = diff / 604800;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("Last week"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Weeks ago"), test);
+          }
         else if (diff >= 86400)
-          snprintf(buf, sizeof(buf), _("%li Days ago"), (diff / 86400));
+          {
+             test = diff / 86400;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("Yesterday"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Days ago"), test);
+          }
         else if (diff >= 3600)
-          snprintf(buf, sizeof(buf), _("%li Hours ago"), (diff / 3600));
+          {
+             test = diff / 3600;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("An hour ago"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Hours ago"), test);
+          }
         else if (diff > 60)
-          snprintf(buf, sizeof(buf), _("%li Minutes ago"), (diff / 60));
+          {
+             test = diff / 60;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("A minute ago"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Minutes ago"), test);
+          }
      }
 
    if (buf[0])
