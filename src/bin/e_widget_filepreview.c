@@ -66,8 +66,25 @@ _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNU
           }
         else
           {
+             const char *mime;
+             Efreet_Desktop *ed = NULL;
+             unsigned int size;
+
+
              wd->mime_icon = EINA_TRUE;
-             _e_wid_fprev_img_update(wd, e_util_mime_icon_get(wd->mime, (wd->w > 48) ? 48 : wd->w));
+             size = (wd->w > 48) ? 48 : wd->w;
+             mime = e_util_mime_icon_get(wd->mime, size);
+             if (!mime)
+               {
+                  if (eina_str_has_extension(wd->path, "desktop"))
+                    {
+                       ed = efreet_desktop_new(wd->path);
+                       if (ed)
+                         mime = efreet_icon_path_find(e_config->icon_theme, ed->icon, size);
+                    }
+               }
+             _e_wid_fprev_img_update(wd, mime);
+             if (ed) efreet_desktop_free(ed);
           }
      }
    e_widget_table_object_repack(wd->o_preview_preview_table,
