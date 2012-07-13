@@ -356,32 +356,6 @@ collections {
          }
       }
    }
-   group {
-      name: "e/desktop/background/scrollframe";
-      parts {
-         part {
-            name: "clipper";
-            type: RECT;
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-            }
-         }
-         part {
-            name: "e.swallow.content";
-            clip_to: "clipper";
-            type: SWALLOW;
-            description {
-               state: "default" 0.0;
-               rel1.offset: 0 0;
-               rel2 {
-                  relative: 0.0  0.0;
-                  offset: -1   -1;
-               }
-            }
-         }
-      }
-   }
 
 /////////////////////////////////////////////////////////////////////////////
 /*** DEFAULT WINDOW BORDER ***/
