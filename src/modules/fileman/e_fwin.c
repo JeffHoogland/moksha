@@ -545,6 +545,9 @@ _e_fwin_free(E_Fwin *fwin)
         e_object_del(E_OBJECT(fwin->fad->dia));
         fwin->fad = NULL;
      }
+   if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
+   if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
+   fwin->popup_timer = NULL;
    if (fwin->win) e_object_del(E_OBJECT(fwin->win));
    free(fwin);
 }
