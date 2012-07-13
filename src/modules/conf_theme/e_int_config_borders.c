@@ -189,8 +189,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ol, *ob, *oj, *orect, *of;
    Evas_Coord w, h;
-   Eina_List *borders, *l;
-   int n, sel = 0;
+   Eina_List *borders;
+   int n = 1, sel = 0;
    const char *str, *tmp;
 
    if (cfdata->border)
@@ -211,24 +211,24 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_ilist_freeze(ol);
    e_widget_ilist_append(ol, orect, "borderless", NULL, NULL, "borderless");
 
-   for (n = 1, l = borders; l; l = l->next, n++)
+   EINA_LIST_FREE(borders, str)
      {
         char buf[PATH_MAX];
 
         ob = e_livethumb_add(evas);
         e_livethumb_vsize_set(ob, 96, 96);
         oj = edje_object_add(e_livethumb_evas_get(ob));
-        snprintf(buf, sizeof(buf), "e/widgets/border/%s/border",
-                 (char *)l->data);
+        snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", str);
         e_theme_edje_object_set(oj, "base/theme/borders", buf);
         e_livethumb_thumb_set(ob, oj);
         orect = evas_object_rectangle_add(e_livethumb_evas_get(ob));
         evas_object_color_set(orect, 0, 0, 0, 128);
         evas_object_show(orect);
         edje_object_part_swallow(oj, "e.swallow.client", orect);
-        e_widget_ilist_append(ol, ob, (char *)l->data, NULL, NULL, l->data);
-        if ((void*)tmp == l->data)
-          sel = n;
+        e_widget_ilist_append(ol, ob, (char *)str, NULL, NULL, str);
+        if (tmp == str) sel = n;
+        n++;
+        eina_stringshare_del(str);
      }
 
    e_widget_size_min_get(ol, &w, &h);
@@ -249,9 +249,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                 &(cfdata->remember_border));
         e_widget_list_object_append(o, ob, 1, 0, 0.0);
      }
-
-   EINA_LIST_FREE(borders, str)
-     eina_stringshare_del(str);
 
    e_dialog_resizable_set(cfd->dia, 1);
    return o;
