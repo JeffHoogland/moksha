@@ -423,6 +423,7 @@ _pager_desk_free(Pager_Desk *pd)
    Pager_Win *w;
 
    evas_object_del(pd->o_desk);
+   evas_object_del(pd->o_bg);
    evas_object_del(pd->o_layout);
    EINA_LIST_FREE(pd->wins, w)
      _pager_window_free(w);
