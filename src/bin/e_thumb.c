@@ -98,14 +98,10 @@ e_thumb_icon_file_set(Evas_Object *obj, const char *file, const char *key)
 
    eth = evas_object_data_get(obj, "e_thumbdata");
    if (!eth) return;
-   if (eth->file) eina_stringshare_del(eth->file);
-   eth->file = NULL;
-   if (eth->key) eina_stringshare_del(eth->key);
-   eth->key = NULL;
+   eina_stringshare_replace(&eth->file, file);
+   eina_stringshare_replace(&eth->key, key);
    if (eth->sort_id) free(eth->sort_id);
    eth->sort_id = NULL;
-   if (file) eth->file = eina_stringshare_add(file);
-   if (key) eth->key = eina_stringshare_add(key);
 }
 
 EAPI void
