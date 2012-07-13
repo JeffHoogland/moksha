@@ -556,7 +556,7 @@ static Eina_Bool
 _e_fwin_icon_popup(void *data)
 {
    E_Fwin *fwin = data;
-   Evas_Object *bg, *edje, *o;
+   Evas_Object *bg, *edje, *list, *o;
    E_Zone *zone;
    char buf[PATH_MAX];
    int x, y, w, h, mw, mh, fx, fy, px, py;
@@ -586,17 +586,20 @@ _e_fwin_icon_popup(void *data)
    edje_object_signal_emit(edje, "e,state,focused", "e");
    mw = zone->w * fileman_config->tooltip.size / 100.0;
    mh = zone->h * fileman_config->tooltip.size / 100.0;
+   list = e_widget_framelist_add(fwin->popup->evas, fwin->popup_icon->file, 0);
    o = e_widget_filepreview_add(fwin->popup->evas, mw, mh);
    snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), fwin->popup_icon->file);
    e_widget_filepreview_path_set(o, buf);
-   e_widget_size_min_get(o, &mw, &mh);
-   edje_extern_object_min_size_set(o, mw, mh);
-   edje_object_part_swallow(edje, "e.swallow.client", o);
+   e_widget_framelist_object_append(list, o);
+   e_widget_size_min_get(list, &mw, &mh);
+   edje_extern_object_min_size_set(list, mw, mh);
+   edje_object_part_swallow(edje, "e.swallow.client", list);
    edje_object_size_min_calc(edje, &mw, &mh);
    edje_extern_object_min_size_set(edje, mw, mh);
    edje_object_part_swallow(bg, "e.swallow.bg", edje);
    edje_object_size_min_calc(bg, &mw, &mh);
    evas_object_show(o);
+   evas_object_show(list);
    evas_object_show(edje);
    evas_object_show(bg);
 
