@@ -464,6 +464,8 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, theme.frame, STR);
    E_CONFIG_VAL(D, T, theme.icons, STR);
    E_CONFIG_VAL(D, T, theme.fixed, UCHAR);
+   E_CONFIG_VAL(D, T, tooltip.delay, DOUBLE);
+   E_CONFIG_VAL(D, T, tooltip.size, DOUBLE);
 
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
    if (fileman_config)
@@ -523,9 +525,14 @@ _e_mod_fileman_config_load(void)
     fileman_config->selection.windows_modifiers = 0;
     IFMODCFGEND;
 
-    IFMODCFG(0x0103);
+    IFMODCFG(0x0101);
     fileman_config->view.show_toolbar = 1;
     fileman_config->view.open_dirs_in_place = 1;
+    IFMODCFGEND;
+
+    IFMODCFG(0x0104);
+    fileman_config->tooltip.delay = 1.0;
+    fileman_config->tooltip.size = 50.0;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
@@ -536,6 +543,9 @@ _e_mod_fileman_config_load(void)
     E_CONFIG_LIMIT(fileman_config->icon.icon.h, 16, 256);
     E_CONFIG_LIMIT(fileman_config->icon.list.w, 16, 256);
     E_CONFIG_LIMIT(fileman_config->icon.list.h, 16, 256);
+
+    E_CONFIG_LIMIT(fileman_config->tooltip.delay, 0.0, 5.0);
+    E_CONFIG_LIMIT(fileman_config->tooltip.size, 10.0, 75.0);
 
     e_config_save_queue();
 }

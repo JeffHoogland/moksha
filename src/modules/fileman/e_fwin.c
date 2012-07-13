@@ -581,7 +581,9 @@ _e_fwin_icon_popup(void *data)
    edje = edje_object_add(fwin->popup->evas);
    e_theme_edje_object_set(edje, "base/theme/borders", "e/widgets/border/pixel/border");
    edje_object_signal_emit(edje, "e,state,focused", "e");
-   o = e_widget_filepreview_add(fwin->popup->evas);
+   mw = zone->w * fileman_config->tooltip.size / 100.0;
+   mh = zone->h * fileman_config->tooltip.size / 100.0;
+   o = e_widget_filepreview_add(fwin->popup->evas, mw, mh);
    snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), fwin->popup_icon->file);
    e_widget_filepreview_path_set(o, buf);
    e_widget_size_min_get(o, &mw, &mh);
@@ -634,7 +636,7 @@ _e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info)
    E_Fm2_Icon_Info *ici = event_info;
 
    if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
-   fwin->popup_timer = ecore_timer_add(1.0, _e_fwin_icon_popup, fwin);
+   fwin->popup_timer = ecore_timer_add(fileman_config->tooltip.delay, _e_fwin_icon_popup, fwin);
    fwin->popup_icon = ici;
 }
 
