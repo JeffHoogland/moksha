@@ -34,26 +34,26 @@ _e_fm2_device_volume_setup(E_Volume *v)
             ((v->storage->model) && (v->storage->model[0])))
      {
         if (size[0] != '\0')
-          snprintf(label, sizeof(label) - 1, "%s %s - %s", v->storage->vendor, v->storage->model, size);
+          snprintf(label, sizeof(label) - 1, _("%s %s—%s"), v->storage->vendor, v->storage->model, size);
         else
           snprintf(label, sizeof(label) - 1, "%s %s", v->storage->vendor, v->storage->model);
      }
    else if ((v->storage->model) && (v->storage->model[0]))
      {
         if (size[0] != '\0')
-          snprintf(label, sizeof(label) - 1, "%s - %s", v->storage->model, size);
+          snprintf(label, sizeof(label) - 1, _("%s—%s"), v->storage->model, size);
         else
           snprintf(label, sizeof(label) - 1, "%s", v->storage->model);
      }
    else if ((v->storage->vendor) && (v->storage->vendor[0]))
      {
         if (size[0] != '\0')
-          snprintf(label, sizeof(label) - 1, "%s - %s", v->storage->vendor, size);
+          snprintf(label, sizeof(label) - 1, _("%s—%s"), v->storage->vendor, size);
         else
           snprintf(label, sizeof(label) - 1, "%s", v->storage->vendor);
      }
    else if (v->storage->drive_type && (!strcmp(v->storage->drive_type, "sd_mmc")))
-     snprintf(label, sizeof(label) - 1, "Flash Card - %s", size);
+     snprintf(label, sizeof(label) - 1, _("Flash Card—%s"), size);
    else
      snprintf(label, sizeof(label), _("Unknown Volume"));
 
