@@ -897,19 +897,24 @@ e_util_size_string_get(off_t size)
    char buf[256];
 
    dsize = (double)size;
-   if (dsize < 1024.0) snprintf(buf, sizeof(buf), _("%'.0f Bytes"), dsize);
+   if (dsize < 1024.0) snprintf(buf, sizeof(buf), _("%'.0f bytes"), dsize);
    else
      {
         dsize /= 1024.0;
-        if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f KB"), dsize);
+        if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f KiB"), dsize);
         else
           {
              dsize /= 1024.0;
-             if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.0f MB"), dsize);
+             if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.1f MiB"), dsize);
              else
                {
                   dsize /= 1024.0;
-                  snprintf(buf, sizeof(buf), _("%'.1f GB"), dsize);
+                  if (dsize < 1024) snprintf(buf, sizeof(buf), _("%'.1f GiB"), dsize);
+                  else
+                    {
+                       dsize /= 1024.0;
+                       snprintf(buf, sizeof(buf), _("%'.1f TiB"), dsize);
+                    }
                }
           }
      }

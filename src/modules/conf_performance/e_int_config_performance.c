@@ -124,13 +124,13 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    ob = e_widget_label_add(evas, _("Font cache size"));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f MB"), 0, 4, 0.1, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f MiB"), 0, 4, 0.1, 0,
                             &(cfdata->font_cache), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_label_add(evas, _("Image cache size"));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MB"), 0, 32, 1, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MiB"), 0, 32, 1, 0,
                             &(cfdata->image_cache), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 

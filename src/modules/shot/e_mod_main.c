@@ -337,11 +337,15 @@ _upload_progress_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
    if (o_label)
      {
         char buf[1024];
-        
+        char *buf_now, *buf_total;
+
+        buf_now = e_util_size_string_get(ev->up.now);
+        buf_total = e_util_size_string_get(ev->up.total);
         snprintf(buf, sizeof(buf),
-                 "Uploaded %1.1fKB / %1.1fKB", 
-                 ev->up.now / 1024, 
-                 ev->up.total / 1024);
+                 _("Uploaded %s / %s"), 
+                 buf_now, buf_total); 
+        E_FREE(buf_now);
+        E_FREE(buf_total);
         e_widget_label_text_set(o_label, buf);
      }
    return EINA_FALSE;

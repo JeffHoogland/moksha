@@ -2,11 +2,6 @@
 #include "e_fm_shared_codec.h"
 #include "e_fm_shared_device.h"
 
-#define TEBIBYTE_SIZE 1099511627776LL
-#define GIBIBYTE_SIZE 1073741824
-#define MEBIBYTE_SIZE 1048576
-#define KIBIBYTE_SIZE 1024
-
 static void _e_fm2_volume_write(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_volume_erase(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_device_mount_free(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
@@ -22,24 +17,13 @@ static void
 _e_fm2_device_volume_setup(E_Volume *v)
 {
    char label[1024] = {0};
-   char size[256] = {0};
+   char *size = NULL;
    const char *icon = NULL;
    unsigned long long sz;
 
    /* Compute the size in a readable form */
    if (v->size)
-     {
-        if ((sz = (v->size / TEBIBYTE_SIZE)) > 0)
-          snprintf(size, sizeof(size) - 1, _("%llu TiB"), sz);
-        else if ((sz = (v->size / GIBIBYTE_SIZE)) > 0)
-          snprintf(size, sizeof(size) - 1, _("%llu GiB"), sz);
-        else if ((sz = (v->size / MEBIBYTE_SIZE)) > 0)
-          snprintf(size, sizeof(size) - 1, _("%llu MiB"), sz);
-        else if ((sz = (v->size / KIBIBYTE_SIZE)) > 0)
-          snprintf(size, sizeof(size) - 1, _("%llu KiB"), sz);
-        else
-          snprintf(size, sizeof(size) - 1, _("%llu B"), v->size);
-     }
+     size = e_util_size_string_get(v->size);
 
    /* Choose the label */
    if ((v->label) && (v->label[0]))
@@ -108,6 +92,8 @@ _e_fm2_device_volume_setup(E_Volume *v)
         strcmp(v->mount_point, "/home") &&
         strcmp(v->mount_point, "/tmp")))
      _e_fm2_volume_write(v);
+
+   E_FREE(size);
 }
 
 EAPI void
@@ -340,11 +326,6 @@ _e_fm2_volume_write(E_Volume *v)
         //_e_fm2_file_force_update(buf2);
      }
 }
-
-#undef TEBIBYTE_SIZE
-#undef GIBIBYTE_SIZE
-#undef MEBIBYTE_SIZE
-#undef KIBIBYTE_SIZE
 
 static void
 _e_fm2_volume_erase(E_Volume *v)
