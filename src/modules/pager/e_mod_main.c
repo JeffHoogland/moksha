@@ -2760,14 +2760,15 @@ e_modapi_init(E_Module *m)
         pager_config->popup_urgent = 0;
         pager_config->popup_urgent_stick = 0;
         pager_config->popup_urgent_speed = 1.5;
-        pager_config->show_desk_names = 1;
+        pager_config->show_desk_names = 0;
         pager_config->popup_height = 60;
         pager_config->popup_act_height = 60;
         pager_config->drag_resist = 3;
         pager_config->btn_drag = 1;
         pager_config->btn_noplace = 2;
-        pager_config->btn_desk = 0;
+        pager_config->btn_desk = 2;
         pager_config->flip_desk = 0;
+        pager_config->disable_live_preview = 1;
      }
    E_CONFIG_LIMIT(pager_config->popup, 0, 1);
    E_CONFIG_LIMIT(pager_config->popup_speed, 0.1, 10.0);
