@@ -163,11 +163,8 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    char buf[PATH_MAX];
 
    launch = data;
-   if (desktop)
-     {
-        inst = E_NEW(E_Exec_Instance, 1);
-        if (!inst) return NULL;
-     }
+   inst = E_NEW(E_Exec_Instance, 1);
+   if (!inst) return NULL;
 
    if (startup_id == 0)
      {
@@ -281,7 +278,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
         return NULL;
      }
    /* reset env vars */
-   if (launch->launch_method && !desktop)
+   if ((launch->launch_method) && (!desktop))
      e_exehist_add(launch->launch_method, exec);
    free(exec);
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
@@ -290,34 +287,42 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 //   ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
    ecore_exe_tag_set(exe, "E/exec");
 
-   if (desktop)
+//   if (desktop)
      {
         Eina_List *l, *lnew;
 
-        efreet_desktop_ref(desktop);
-        inst->desktop = desktop;
-        inst->key = eina_stringshare_add(desktop->orig_path);
+        if (desktop)
+          {
+             efreet_desktop_ref(desktop);
+             inst->desktop = desktop;
+             inst->key = eina_stringshare_add(desktop->orig_path);
+          }
+        else
+          inst->key = eina_stringshare_add(exec);
         inst->exe = exe;
         inst->startup_id = startup_id;
         inst->launch_time = ecore_time_get();
         inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout,
                                              _e_exec_cb_expire_timer, inst);
-        l = eina_hash_find(e_exec_instances, desktop->orig_path);
+        l = eina_hash_find(e_exec_instances, inst->key);
         lnew = eina_list_append(l, inst);
-        if (l)
-          eina_hash_modify(e_exec_instances, desktop->orig_path, lnew);
-        else
-          eina_hash_add(e_exec_instances, desktop->orig_path, lnew);
-        e_exec_start_pending = eina_list_append(e_exec_start_pending, desktop);
-
-        e_exehist_add(launch->launch_method, desktop->exec);
+        if (l) eina_hash_modify(e_exec_instances, inst->key, lnew);
+        else eina_hash_add(e_exec_instances, inst->key, lnew);
+        if (inst->desktop)
+          {
+             e_exec_start_pending = eina_list_append(e_exec_start_pending,
+                                                     inst->desktop);
+             e_exehist_add(launch->launch_method, inst->desktop->exec);
+          }
      }
+/*   
    else
      {
         E_FREE(inst);
         inst = NULL;
         ecore_exe_free(exe);
      }
+ */
 
    if (!remaining)
      {
@@ -334,7 +339,9 @@ _e_exec_cb_expire_timer(void *data)
    E_Exec_Instance *inst;
 
    inst = data;
-   e_exec_start_pending = eina_list_remove(e_exec_start_pending, inst->desktop);
+   if (inst->desktop)
+     e_exec_start_pending = eina_list_remove(e_exec_start_pending,
+                                             inst->desktop);
    inst->expire_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
@@ -357,7 +364,9 @@ _e_exec_instance_free(E_Exec_Instance *inst)
           }
         eina_stringshare_del(inst->key);
      }
-   e_exec_start_pending = eina_list_remove(e_exec_start_pending, inst->desktop);
+   if (inst->desktop)
+     e_exec_start_pending = eina_list_remove(e_exec_start_pending,
+                                             inst->desktop);
    if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
    if (inst->desktop) efreet_desktop_free(inst->desktop);
    free(inst);
