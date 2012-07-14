@@ -22,6 +22,7 @@ group "E_Config" struct {
     value "use_composite" int: 0;
     value "language" string: "en_US.UTF-8";
     value "window_placement_policy" int: 0;
+    value "window_grouping" int: 0;
     value "focus_policy" int: 0;
     value "focus_setting" int: 1;
     value "pass_click_on" int: 1;

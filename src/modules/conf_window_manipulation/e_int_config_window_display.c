@@ -19,6 +19,7 @@ struct _E_Config_Dialog_Data
    double border_shade_speed;
    int use_app_icon;
    int window_placement_policy;
+   int window_grouping;
    int desk_auto_switch;
 
    Eina_List *shading_list;
@@ -63,6 +64,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 
    cfdata->window_placement_policy = 
      e_config->window_placement_policy;
+   cfdata->window_grouping = e_config->window_grouping;
    cfdata->desk_auto_switch = e_config->desk_auto_switch;
 
    cfdata->border_shade_animate = e_config->border_shade_animate;
@@ -83,6 +85,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->window_placement_policy = cfdata->window_placement_policy;
+   e_config->window_grouping = cfdata->window_grouping;
    e_config->move_info_visible = cfdata->move_info_visible;
    e_config->move_info_follows = cfdata->move_info_follows;
    e_config->resize_info_visible = cfdata->resize_info_visible;
@@ -101,6 +104,7 @@ static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    return ((e_config->window_placement_policy != cfdata->window_placement_policy) ||
+	   (e_config->window_grouping != cfdata->window_grouping) ||
 	   (e_config->move_info_visible != cfdata->move_info_visible) ||
 	   (e_config->move_info_follows != cfdata->move_info_follows) ||
 	   (e_config->resize_info_visible != cfdata->resize_info_visible) ||
@@ -169,6 +173,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_radio_add(evas, _("Place manually with the mouse"), 
                            E_WINDOW_PLACEMENT_MANUAL, rg);
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_check_add(evas, _("Group with windows of the same application"), 
+                           &(cfdata->window_grouping));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    ow = e_widget_check_add(evas, _("Switch to desktop of new window"), 

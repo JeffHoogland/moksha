@@ -672,6 +672,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, path_append_modules, _e_config_path_append_edd); /**/
    E_CONFIG_LIST(D, T, path_append_backgrounds, _e_config_path_append_edd); /**/
    E_CONFIG_VAL(D, T, window_placement_policy, INT); /**/
+   E_CONFIG_VAL(D, T, window_grouping, INT); /**/
    E_CONFIG_VAL(D, T, focus_policy, INT); /**/
    E_CONFIG_VAL(D, T, focus_setting, INT); /**/
    E_CONFIG_VAL(D, T, pass_click_on, INT); /**/
@@ -1225,6 +1226,10 @@ e_config_load(void)
           tcfg->desklock_background = NULL;
           IFCFGEND;
 
+          IFCFG(0x0152);
+          COPYVAL(window_grouping);
+          IFCFGEND;
+
           e_config->config_version = E_CONFIG_FILE_VERSION;
           _e_config_free(tcfg);
        }
@@ -1249,6 +1254,7 @@ e_config_load(void)
      E_CONFIG_LIMIT(e_config->show_desktop_icons, 0, 1);
      E_CONFIG_LIMIT(e_config->edge_flip_dragging, 0, 1);
      E_CONFIG_LIMIT(e_config->window_placement_policy, E_WINDOW_PLACEMENT_SMART, E_WINDOW_PLACEMENT_MANUAL);
+     E_CONFIG_LIMIT(e_config->window_grouping, 0, 1);
      E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
      E_CONFIG_LIMIT(e_config->focus_setting, 0, 3);
      E_CONFIG_LIMIT(e_config->pass_click_on, 0, 1);

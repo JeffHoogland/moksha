@@ -7345,7 +7345,7 @@ _e_border_eval0(E_Border *bd)
              if (desk) e_border_desk_set(bd, desk);
           }
 
-        if (0) // keep all windows of one app/group on the same screen/desk
+        if (e_config->window_grouping) // FIXME: We may want to make the border "urgent" so that the user knows it appeared.
           {
              E_Border *bdl = NULL;
 
