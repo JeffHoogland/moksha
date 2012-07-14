@@ -7330,58 +7330,62 @@ _e_border_eval0(E_Border *bd)
                bd->client.netwm.pid = -1;
           }
 
-        inst = e_exec_startup_id_pid_instance_find(bd->client.netwm.startup_id,
-                                                   bd->client.netwm.pid);
-        if ((inst) && (inst->used == 0))
+        if (!bd->re_manage)
           {
-             E_Zone *zone;
-             E_Desk *desk;
-
-             inst->used++;
-             zone = e_container_zone_number_get(bd->zone->container,
-                                                inst->screen);
-             if (zone) e_border_zone_set(bd, zone);
-             desk = e_desk_at_xy_get(bd->zone, inst->desk_x, inst->desk_y);
-             if (desk) e_border_desk_set(bd, desk);
-          }
-
-        if (e_config->window_grouping) // FIXME: We may want to make the border "urgent" so that the user knows it appeared.
-          {
-             E_Border *bdl = NULL;
-
-             bdl = bd->parent;
-             if (!bdl)
+             inst = e_exec_startup_id_pid_instance_find(bd->client.netwm.startup_id,
+                                                        bd->client.netwm.pid);
+             if ((inst) && (inst->used == 0))
                {
-                  if (bd->leader) bdl = bd->leader;
+                  E_Zone *zone;
+                  E_Desk *desk;
+
+                  inst->used++;
+                  zone = e_container_zone_number_get(bd->zone->container,
+                                                     inst->screen);
+                  if (zone) e_border_zone_set(bd, zone);
+                  desk = e_desk_at_xy_get(bd->zone, inst->desk_x,
+                                          inst->desk_y);
+                  if (desk) e_border_desk_set(bd, desk);
                }
-             if (!bdl)
-               {
-                  E_Border *child;
-                  E_Border_List *bl;
 
-                  bl = e_container_border_list_first(bd->zone->container);
-                  while ((child = e_container_border_list_next(bl)))
+             if (e_config->window_grouping) // FIXME: We may want to make the border "urgent" so that the user knows it appeared.
+               {
+                  E_Border *bdl = NULL;
+
+                  bdl = bd->parent;
+                  if (!bdl)
                     {
-                       if (child == bd) continue;
-                       if (e_object_is_del(E_OBJECT(child))) continue;
-                       if ((bd->client.icccm.client_leader) &&
-                           (child->client.icccm.client_leader ==
-                               bd->client.icccm.client_leader))
-                         {
-                            bdl = child;
-                            break;
-                         }
+                       if (bd->leader) bdl = bd->leader;
                     }
-                  e_container_border_list_free(bl);
-               }
-             if (bdl)
-               {
-                  if (bdl->zone)
-                    e_border_zone_set(bd, bdl->zone);
-                  if (bdl->desk)
-                    e_border_desk_set(bd, bdl->desk);
-                  else
-                    e_border_stick(bd);
+                  if (!bdl)
+                    {
+                       E_Border *child;
+                       E_Border_List *bl;
+
+                       bl = e_container_border_list_first(bd->zone->container);
+                       while ((child = e_container_border_list_next(bl)))
+                         {
+                            if (child == bd) continue;
+                            if (e_object_is_del(E_OBJECT(child))) continue;
+                            if ((bd->client.icccm.client_leader) &&
+                                (child->client.icccm.client_leader ==
+                                    bd->client.icccm.client_leader))
+                              {
+                                 bdl = child;
+                                 break;
+                              }
+                         }
+                       e_container_border_list_free(bl);
+                    }
+                  if (bdl)
+                    {
+                       if (bdl->zone)
+                         e_border_zone_set(bd, bdl->zone);
+                       if (bdl->desk)
+                         e_border_desk_set(bd, bdl->desk);
+                       else
+                         e_border_stick(bd);
+                    }
                }
           }
      }
