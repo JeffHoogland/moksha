@@ -241,7 +241,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ol = e_widget_list_add(evas, 0, 0);
    ow = e_widget_label_add(evas, _("Automatically accept changes after:"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 9.9, 0.1, 0, 
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.1f s"), 0.0, 9.9, 0.1, 0, 
                             &(cfdata->border_keyboard.timeout), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Move by"));

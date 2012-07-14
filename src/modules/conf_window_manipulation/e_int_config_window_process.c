@@ -98,7 +98,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
    ob = e_widget_label_add(evas, _("Kill timeout:"));
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f sec"), 1.0, 30.0, 1.0, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f s"), 1.0, 30.0, 1.0, 0, 
                             &(cfdata->kill_timer_wait), NULL, 100);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
    

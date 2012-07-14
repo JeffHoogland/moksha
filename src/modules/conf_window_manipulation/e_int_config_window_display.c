@@ -189,7 +189,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    oc = e_widget_check_add(evas, _("Animate"), 
                            &(cfdata->border_shade_animate));
    e_widget_list_object_append(ol, oc, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/sec"), 
+   ow = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/s"), 
                             100, 9900, 100, 0, 
                             &(cfdata->border_shade_speed), NULL, 100);
    e_widget_disabled_set(ow, !cfdata->border_shade_animate);

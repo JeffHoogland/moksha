@@ -197,7 +197,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_label_add(evas, _("Animation speed"));
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0, 5, 0.05, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f s"), 0, 5, 0.05, 0, 
                             &(cfdata->flip_speed), NULL, 150);
    e_widget_disabled_set(ob, !cfdata->flip_mode);
    cfdata->flip_anim_list = eina_list_append(cfdata->flip_anim_list, ob);

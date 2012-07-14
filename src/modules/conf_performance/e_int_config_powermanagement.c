@@ -169,7 +169,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //expand
                                       0.0, 0.5 //align
                                       );
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.1, 1.0, 0, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f s"), 0.1, 1.0, 0, 0,
                             &(cfdata->powersave_none), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
                                       3, 1,    //place
@@ -207,7 +207,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //expand
                                       0.0, 0.5 //align
                                       );
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f sec"), 1.0, 10.0, 1, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f s"), 1.0, 10.0, 1, 0,
                             &(cfdata->powersave_low), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
                                       3, 2,    //place
@@ -245,7 +245,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //expand
                                       0.0, 0.5 //align
                                      );
-   ob = e_widget_slider_add(evas, 1, 0, _("%.0f sec"), 10.0, 120.0, 1, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 10.0, 120.0, 1, 0,
                             &(cfdata->powersave_medium), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
                                       3, 3,    //place
@@ -283,7 +283,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //expand
                                       0.0, 0.5 //align
                                       );
-   ob = e_widget_slider_add(evas, 1, 0, _("%.0f sec"), 120.0, 1200.0, 1, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 120.0, 1200.0, 1, 0,
                             &(cfdata->powersave_high), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
                                       3, 4,    //place
@@ -321,7 +321,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //expand
                                       0.0, 0.5 //align
                                      );
-   ob = e_widget_slider_add(evas, 1, 0, _("%.0f sec"), 120.0, 2400.0, 1, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 120.0, 2400.0, 1, 0,
                             &(cfdata->powersave_extreme), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
                                       3, 5,    //place

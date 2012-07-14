@@ -273,7 +273,7 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
    cfdata->autoraise_list = eina_list_append(cfdata->autoraise_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_auto_raise);
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f sec"), 0.0, 9.9, 0.1, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f s"), 0.0, 9.9, 0.1, 0, 
                             &(cfdata->auto_raise_delay), NULL, 100);
    cfdata->autoraise_list = eina_list_append(cfdata->autoraise_list, ob);
    e_widget_disabled_set(ob, !cfdata->use_auto_raise);

@@ -300,17 +300,17 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ol = e_widget_list_add(evas, 0, 0);
    ow = e_widget_label_add(evas, _("Menu Scroll Speed"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%5.0f pixels/sec"), 0, 20000, 100, 
+   ow = e_widget_slider_add(evas, 1, 0, _("%5.0f pixels/s"), 0, 20000, 100, 
                             0, &(cfdata->scroll_speed), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Fast Mouse Move Threshhold"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/sec"), 0, 2000, 10, 
+   ow = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/s"), 0, 2000, 10, 
                             0, &(cfdata->fast_mouse_move_threshhold), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Click Drag Timeout"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%2.2f sec"), 0, 10, 0.25, 
+   ow = e_widget_slider_add(evas, 1, 0, _("%2.2f s"), 0, 10, 0.25, 
                             0, &(cfdata->click_drag_timeout), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Miscellaneous"), ol, 1, 0, 1, 0, 

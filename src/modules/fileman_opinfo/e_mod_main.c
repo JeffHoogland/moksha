@@ -107,13 +107,13 @@ _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
                if (ere->finished)
                   snprintf(buf, sizeof(buf), _("Copy of %s done"), total);
                else
-                  snprintf(buf, sizeof(buf), _("Copying %s (eta: %d sec)"), total, ere->eta);
+                  snprintf(buf, sizeof(buf), _("Copying %s (eta: %d s)"), total, ere->eta);
                break;
             case E_FM_OP_MOVE:
                if (ere->finished)
                   snprintf(buf, sizeof(buf), _("Move of %s done"), total);
                else
-                  snprintf(buf, sizeof(buf), _("Moving %s (eta: %d sec)"), total, ere->eta);
+                  snprintf(buf, sizeof(buf), _("Moving %s (eta: %d s)"), total, ere->eta);
                break;
             case E_FM_OP_REMOVE:
                if (ere->finished)

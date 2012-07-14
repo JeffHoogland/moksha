@@ -276,7 +276,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    cfdata->ui.dismiss_alert_label = ob;
    e_widget_on_change_hook_set(ob, _cb_dismiss_alert_changed, cfdata);
    e_widget_table_object_append(o, ob, 0, 4, 1, 1, 1, 1, 1, 0);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f sec"), 1, 300, 1, 0, NULL,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f s"), 1, 300, 1, 0, NULL,
                             &(cfdata->alert_timeout), 100);
    cfdata->ui.alert_timeout = ob;
    e_widget_table_object_append(o, ob, 0, 5, 1, 1, 1, 0, 1, 0);

@@ -110,7 +110,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Threshold for applying drag momentum"));
    e_widget_framelist_object_append(of, ob);
    cfdata->l2 = ob;
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f pixels/sec"), 0, 2000, 20, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f pixels/s"), 0, 2000, 20, 0, 
                             &(cfdata->thumbscroll_momentum_threshhold), 
                             NULL, 100);
    e_widget_framelist_object_append(of, ob);
@@ -119,7 +119,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_label_add(evas, _("Friction slowdown"));
    e_widget_framelist_object_append(of, ob);
    cfdata->l3 = ob;
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f sec"), 0.00, 5.0, 0.1, 0, 
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.2f s"), 0.00, 5.0, 0.1, 0, 
                             &(cfdata->thumbscroll_friction), NULL, 100);
    e_widget_framelist_object_append(of, ob);
    cfdata->sl3 = ob;
