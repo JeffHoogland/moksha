@@ -84,7 +84,8 @@ _e_place_coverage_border_add(E_Desk *desk, Eina_List *skiplist, int ar, int x, i
 	  }
 	if ((ok) &&
             E_INTERSECTS(x, y, w, h, x2, y2, w2, h2) &&
-            ((bd->sticky) || (bd->desk == desk)))
+            ((bd->sticky) || (bd->desk == desk)) &&
+            (!bd->iconic) && (bd->visible))
 	  {
 	     x0 = x;
 	     if (x < x2) x0 = x2;
