@@ -93,7 +93,7 @@ _e_resize_begin(void *data __UNUSED__, void *border)
         e_popup_show(_disp_pop);
         visible = 1;
      }
-   snprintf(buf, sizeof(buf), "%i×%i", w, h);
+   snprintf(buf, sizeof(buf), _("%i×%i"), w, h);
    edje_object_part_text_set(_obj, "e.text.label", buf);
 
    e_popup_move_resize(_disp_pop,
@@ -150,7 +150,7 @@ _e_resize_update(void *data __UNUSED__, void *border)
         e_popup_show(_disp_pop);
         visible = 1;
      }
-   snprintf(buf, sizeof(buf), "%i×%i", w, h);
+   snprintf(buf, sizeof(buf), _("%i×%i"), w, h);
    edje_object_part_text_set(_obj, "e.text.label", buf);
 }
 
