@@ -296,8 +296,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 		  if (frequency < 1000000)
 		    snprintf(buf, sizeof(buf), _("%i MHz"), frequency / 1000);
 		  else
-		    snprintf(buf, sizeof(buf), _("%i.%i GHz"),
-			     frequency / 1000000, (frequency % 1000000) / 100000);
+		    snprintf(buf, sizeof(buf), _("%'.1f GHz"),
+			     frequency / 1000000.);
 		  buf[sizeof(buf) - 1] = 0;
 		  e_menu_item_label_set(mi, buf);
 		  e_menu_item_radio_set(mi, 1);
