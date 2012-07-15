@@ -321,7 +321,7 @@ _opinfo_op_registry_update_status(Instance *inst)
    cnt = e_fm2_op_registry_count();
    if (cnt)
      {
-        snprintf(buf, sizeof(buf), _("Processing %d operation(s)"), cnt);
+        snprintf(buf, sizeof(buf), P_("Processing %d operation", "Processing %d operations", cnt), cnt);
         edje_object_part_text_set(inst->o_status, "e.text.info", buf);
      }
    else

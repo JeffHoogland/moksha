@@ -288,7 +288,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
         char str[16];
 
         str[0] = 0;
-        snprintf(str, sizeof(str), _("%d pixels"), i);
+        snprintf(str, sizeof(str), P_("%d pixel", "%d pixels", i), i);
 
         size_data = E_NEW(E_Font_Size_Data, 1);
         size_data->cfdata = cfdata;

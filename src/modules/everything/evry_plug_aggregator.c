@@ -77,7 +77,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
      {
         EINA_LIST_FOREACH (s->plugins, l, pp)
           {
-             int min_fuzz = 0;
+             int min_fuzz = 0, n;
              double max_usage = 0.0;
 
              if (pp->config->top_level)
@@ -118,7 +118,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
              itp->fuzzy_match = min_fuzz;
 
              IF_RELEASE(itp->detail);
-             snprintf(buf, sizeof(buf), "%d %s", eina_list_count(pp->items), _("Items"));
+             n = eina_list_count(pp->items);
+             snprintf(buf, sizeof(buf), P_("%d item", "%d items", n), n);
              itp->detail = eina_stringshare_add(buf);
 
              items = eina_list_append(items, itp);
