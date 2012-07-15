@@ -238,9 +238,9 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 static void
 _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
-   Instance *inst;
+   /* Instance *inst; */
 
-   inst = gcc->data;
+   /* inst = gcc->data; */
    switch (orient)
      {
       case E_GADCON_ORIENT_TOP:
