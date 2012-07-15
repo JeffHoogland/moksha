@@ -3591,7 +3591,8 @@ _e_fm2_queue_process(Evas_Object *obj)
 //   printf("FM: SORT %1.3f (%i files) (%i queued, %i added) [%i iter]\n",
 //	  ecore_time_get() - tt, eina_list_count(sd->icons), queued,
 //	  added, sd->tmp.iter);
-   snprintf(buf, sizeof(buf), _("%i Files"), eina_list_count(sd->icons));
+   n = eina_list_count(sd->icons);
+   snprintf(buf, sizeof(buf), P_("%i file", "%i files", n), n);
    edje_object_part_text_set(sd->overlay, "e.text.busy_label", buf);
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
@@ -9401,7 +9402,7 @@ _e_fm2_file_delete(Evas_Object *obj)
    ic->dialog = dialog;
    E_OBJECT(dialog)->data = ic;
    e_object_del_attach_func_set(E_OBJECT(dialog), _e_fm2_file_delete_delete_cb);
-   e_dialog_button_add(dialog, _("Yes"), NULL, _e_fm2_file_delete_yes_cb, ic);
+   e_dialog_button_add(dialog, _("Delete"), NULL, _e_fm2_file_delete_yes_cb, ic);
    e_dialog_button_add(dialog, _("No"), NULL, _e_fm2_file_delete_no_cb, ic);
    e_dialog_button_focus_num(dialog, 1);
    e_dialog_title_set(dialog, _("Confirm Delete"));
