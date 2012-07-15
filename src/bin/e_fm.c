@@ -9390,7 +9390,7 @@ _e_fm2_file_delete(Evas_Object *obj)
    E_Fm2_Icon *ic;
    char text[4096 + 256];
    Eina_List *sel;
-   int n, folder_count;
+   int n = 0, folder_count = 0;
 
    man = e_manager_current_get();
    if (!man) return;

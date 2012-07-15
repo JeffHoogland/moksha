@@ -19,7 +19,7 @@ _e_fm2_device_volume_setup(E_Volume *v)
    char label[1024] = {0};
    char *size = NULL;
    const char *icon = NULL;
-   unsigned long long sz;
+   /* unsigned long long sz; */
 
    /* Compute the size in a readable form */
    if (v->size)
