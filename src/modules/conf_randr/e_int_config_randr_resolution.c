@@ -206,9 +206,9 @@ resolution_widget_update_list(E_Config_Randr_Dialog_Output_Dialog_Data *odd)
           rate = 0.0;
 
         if (mode_info->name)
-          snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), "%s@%.1fHz", mode_info->name, rate);
+          snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), _("%s@%.1fHz"), mode_info->name, rate);
         else
-          snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), "%dx%d@%.1fHz", mode_info->width, mode_info->height, rate);
+          snprintf(resolution_text, (RESOLUTION_TXT_MAX_LENGTH - 1), _("%d×%d@%.1fHz"), mode_info->width, mode_info->height, rate);
 
         e_widget_ilist_append(e_config_runtime_info->gui.widgets.resolution.widget, NULL, resolution_text, _resolution_widget_selected_cb, mode_info, NULL);
 

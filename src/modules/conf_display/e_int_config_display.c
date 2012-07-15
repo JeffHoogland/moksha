@@ -121,16 +121,22 @@ _surebox_text_fill(SureBox *sb)
      {
 	if (sb->cfdata->has_rates)
 	  snprintf(buf, sizeof(buf),
-		   _("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
-		     "If you do not press a button, the old resolution of<br>"
-		     "%dx%d at %d Hz will be restored in %d seconds."),
+		   P_("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
+		      "If you do not press a button, the old resolution of<br>"
+		      "%d×%d at %d Hz will be restored in %d second.",
+		      "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
+		      "If you do not press a button, the old resolution of<br>"
+		      "%d×%d at %d Hz will be restored in %d seconds.", sb->iterations),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
 		   sb->cfdata->orig_rate, sb->iterations);
 	else
 	  snprintf(buf, sizeof(buf),
-		   _("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
-		     "If you do not press a button, the old resolution of<br>"
-		     "%dx%d will be restored in %d seconds."),
+		   P_("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
+		      "If you do not press a button, the old resolution of<br>"
+		      "%d×%d will be restored in %d second.",
+		      "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
+		      "If you do not press a button, the old resolution of<br>"
+		      "%d×%d will be restored in %d seconds.", sb->iterations),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
 		   sb->iterations);
      }
@@ -140,14 +146,14 @@ _surebox_text_fill(SureBox *sb)
 	  snprintf(buf, sizeof(buf),
 		   _("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
 		     "If you do not press a button, the old resolution of<br>"
-		     "%dx%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."),
+		     "%d×%d at %d Hz will be restored <hilight>IMMEDIATELY</hilight>."),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height,
 		   sb->cfdata->orig_rate);
 	else
 	  snprintf(buf, sizeof(buf),
 		   _("Does this look OK? <hilight>Save</hilight> if it does, or Restore if not.<br>"
 		     "If you do not press a button, the old resolution of<br>"
-		     "%dx%d will be restored <hilight>IMMEDIATELY</hilight>."),
+		     "%d×%d will be restored <hilight>IMMEDIATELY</hilight>."),
 		   sb->cfdata->orig_size.width, sb->cfdata->orig_size.height);
      }
    e_dialog_text_set(sb->dia, buf);
@@ -527,7 +533,7 @@ _load_resolutions(E_Config_Dialog_Data *cfdata)
 	     Evas_Object *ob = NULL;
 
 	     res->id = i;
-	     snprintf(buf, sizeof(buf), "%ix%i", res->size.width, res->size.height);
+	     snprintf(buf, sizeof(buf), _("%i×%i"), res->size.width, res->size.height);
 
 	     if ((res->size.width == cfdata->orig_size.width) &&
 		 (res->size.height == cfdata->orig_size.height))

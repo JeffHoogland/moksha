@@ -54,7 +54,7 @@ _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNU
    evas_object_del(o);
    if ((iw > 0) && (ih > 0))
      {
-        snprintf(buf, sizeof(buf), "%ix%i", iw, ih);
+        snprintf(buf, sizeof(buf), _("%i×%i"), iw, ih);
         e_widget_entry_text_set(wd->o_preview_extra_entry, buf);
      }
    else if (wd->mime)
