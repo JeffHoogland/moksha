@@ -588,7 +588,7 @@ _e_fwin_icon_popup(void *data)
    mw = zone->w * fileman_config->tooltip.size / 100.0;
    mh = zone->h * fileman_config->tooltip.size / 100.0;
    list = e_widget_framelist_add(fwin->popup->evas, fwin->popup_icon->file, 0);
-   o = e_widget_filepreview_add(fwin->popup->evas, mw, mh);
+   o = e_widget_filepreview_add(fwin->popup->evas, mw, mh, 0);
    snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), fwin->popup_icon->file);
    e_widget_filepreview_path_set(o, buf, fwin->popup_icon->mime);
    e_widget_framelist_object_append(list, o);
