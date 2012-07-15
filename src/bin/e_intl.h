@@ -5,9 +5,13 @@
 #ifdef HAVE_GETTEXT
 #define _(str) gettext(str)
 #define d_(str, dom) dgettext(PACKAGE dom, str)
+#define P_(str, str_p, n) ngettext(str, str_p, n)
+#define dP_(str, str_p, n, dom) dngettext(PACKAGE dom, str, str_p, n)
 #else
 #define _(str) (str)
 #define d_(str, dom) (str)
+#define P_(str, str_p, n) (str_p)
+#define dP_(str, str_p, n, dom) (str_p)
 #endif
 /* This macro is used to just mark string for translation, this is useful
  * for string lists which are not dynamically allocated
