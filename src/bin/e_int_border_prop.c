@@ -107,28 +107,28 @@ _create_data(E_Dialog *cfd, E_Border *bd)
 
    if (cfdata->border->client.icccm.min_w >= 0)
      {
-	snprintf(buf, sizeof(buf), "%ix%i",
+	snprintf(buf, sizeof(buf), _("%i×%i"),
 		 cfdata->border->client.icccm.min_w,
 		 cfdata->border->client.icccm.min_h);
 	cfdata->icccm.min = strdup(buf);
      }
    if (cfdata->border->client.icccm.max_w >= 0)
      {
-	snprintf(buf, sizeof(buf), "%ix%i",
+	snprintf(buf, sizeof(buf), _("%i×%i"),
 		 cfdata->border->client.icccm.max_w,
 		 cfdata->border->client.icccm.max_h);
 	cfdata->icccm.max = strdup(buf);
      }
    if (cfdata->border->client.icccm.base_w >= 0)
      {
-	snprintf(buf, sizeof(buf), "%ix%i",
+	snprintf(buf, sizeof(buf), _("%i×%i"),
 		 cfdata->border->client.icccm.base_w,
 		 cfdata->border->client.icccm.base_h);
 	cfdata->icccm.base = strdup(buf);
      }
    if (cfdata->border->client.icccm.step_w >= 0)
      {
-	snprintf(buf, sizeof(buf), "%i,%i",
+	snprintf(buf, sizeof(buf), _("%i,%i"),
 		 cfdata->border->client.icccm.step_w,
 		 cfdata->border->client.icccm.step_h);
 	cfdata->icccm.step = strdup(buf);
@@ -136,9 +136,13 @@ _create_data(E_Dialog *cfd, E_Border *bd)
    if ((cfdata->border->client.icccm.min_aspect > 0.0) &&
        (cfdata->border->client.icccm.max_aspect > 0.0))
      {
-	snprintf(buf, sizeof(buf), "%1.3f-%1.3f",
-		 cfdata->border->client.icccm.min_aspect,
-		 cfdata->border->client.icccm.max_aspect);
+	if (cfdata->border->client.icccm.min_aspect == cfdata->border->client.icccm.max_aspect)
+	  snprintf(buf, sizeof(buf), _("%1.3f"),
+		   cfdata->border->client.icccm.min_aspect);
+	else
+	  snprintf(buf, sizeof(buf), _("%1.3f–%1.3f"),
+		   cfdata->border->client.icccm.min_aspect,
+		   cfdata->border->client.icccm.max_aspect);
 	cfdata->icccm.aspect = strdup(buf);
      }
    if (cfdata->border->client.icccm.initial_state != ECORE_X_WINDOW_STATE_HINT_NONE)
@@ -146,13 +150,13 @@ _create_data(E_Dialog *cfd, E_Border *bd)
 	switch (cfdata->border->client.icccm.initial_state)
 	  {
 	   case ECORE_X_WINDOW_STATE_HINT_WITHDRAWN:
-	     snprintf(buf, sizeof(buf), "Withdrawn");
+	     snprintf(buf, sizeof(buf), _("Withdrawn"));
 	     break;
 	   case ECORE_X_WINDOW_STATE_HINT_NORMAL:
-	     snprintf(buf, sizeof(buf), "Normal");
+	     snprintf(buf, sizeof(buf), _("Normal"));
 	     break;
 	   case ECORE_X_WINDOW_STATE_HINT_ICONIC:
-	     snprintf(buf, sizeof(buf), "Iconic");
+	     snprintf(buf, sizeof(buf), _("Iconic"));
 	     break;
 	   default:
 	     buf[0] = 0;
@@ -165,13 +169,13 @@ _create_data(E_Dialog *cfd, E_Border *bd)
 	switch (cfdata->border->client.icccm.state)
 	  {
 	   case ECORE_X_WINDOW_STATE_HINT_WITHDRAWN:
-	     snprintf(buf, sizeof(buf), "Withdrawn");
+	     snprintf(buf, sizeof(buf), _("Withdrawn"));
 	     break;
 	   case ECORE_X_WINDOW_STATE_HINT_NORMAL:
-	     snprintf(buf, sizeof(buf), "Normal");
+	     snprintf(buf, sizeof(buf), _("Normal"));
 	     break;
 	   case ECORE_X_WINDOW_STATE_HINT_ICONIC:
-	     snprintf(buf, sizeof(buf), "Iconic");
+	     snprintf(buf, sizeof(buf), _("Iconic"));
 	     break;
 	   default:
 	     buf[0] = 0;
@@ -203,37 +207,37 @@ _create_data(E_Dialog *cfd, E_Border *bd)
    switch (cfdata->border->client.icccm.gravity)
      {
       case ECORE_X_GRAVITY_FORGET:
-	snprintf(buf, sizeof(buf), "Forget/Unmap");
+	snprintf(buf, sizeof(buf), _("Forget/Unmap"));
 	break;
       case ECORE_X_GRAVITY_NW:
-	snprintf(buf, sizeof(buf), "Northwest");
+	snprintf(buf, sizeof(buf), _("Northwest"));
 	break;
       case ECORE_X_GRAVITY_N:
-	snprintf(buf, sizeof(buf), "North");
+	snprintf(buf, sizeof(buf), _("North"));
 	break;
       case ECORE_X_GRAVITY_NE:
-	snprintf(buf, sizeof(buf), "Northeast");
+	snprintf(buf, sizeof(buf), _("Northeast"));
 	break;
       case ECORE_X_GRAVITY_W:
-	snprintf(buf, sizeof(buf), "West");
+	snprintf(buf, sizeof(buf), _("West"));
 	break;
       case ECORE_X_GRAVITY_CENTER:
-	snprintf(buf, sizeof(buf), "Center");
+	snprintf(buf, sizeof(buf), _("Center"));
 	break;
       case ECORE_X_GRAVITY_E:
-	snprintf(buf, sizeof(buf), "East");
+	snprintf(buf, sizeof(buf), _("East"));
 	break;
       case ECORE_X_GRAVITY_SW:
-	snprintf(buf, sizeof(buf), "Sowthwest");
+	snprintf(buf, sizeof(buf), _("Southwest"));
 	break;
       case ECORE_X_GRAVITY_S:
-	snprintf(buf, sizeof(buf), "South");
+	snprintf(buf, sizeof(buf), _("South"));
 	break;
       case ECORE_X_GRAVITY_SE:
-	snprintf(buf, sizeof(buf), "Southeast");
+	snprintf(buf, sizeof(buf), _("Southeast"));
 	break;
       case ECORE_X_GRAVITY_STATIC:
-	snprintf(buf, sizeof(buf), "Static");
+	snprintf(buf, sizeof(buf), _("Static"));
 	break;
       default:
 	buf[0] = 0;
@@ -274,13 +278,13 @@ _create_data(E_Dialog *cfd, E_Border *bd)
    switch (cfdata->border->client.netwm.state.stacking)
      {
       case 0:
-	cfdata->netwm.stacking = strdup("None");
+	cfdata->netwm.stacking = strdup(_("None"));
 	break;
       case 1:
-	cfdata->netwm.stacking = strdup("Above");
+	cfdata->netwm.stacking = strdup(_("Above"));
 	break;
       case 2:
-	cfdata->netwm.stacking = strdup("Below");
+	cfdata->netwm.stacking = strdup(_("Below"));
 	break;
      }
 
