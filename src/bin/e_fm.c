@@ -9390,6 +9390,7 @@ _e_fm2_file_delete(Evas_Object *obj)
    E_Fm2_Icon *ic;
    char text[4096 + 256];
    Eina_List *sel;
+   int n, folder_count;
 
    man = e_manager_current_get();
    if (!man) return;
@@ -9408,19 +9409,35 @@ _e_fm2_file_delete(Evas_Object *obj)
    e_dialog_title_set(dialog, _("Confirm Delete"));
    e_dialog_icon_set(dialog, "dialog-warning", 64);
    sel = e_fm2_selected_list_get(obj);
-   if ((!sel) || (eina_list_count(sel) == 1))
+   if (sel)
+     {
+        n = eina_list_count(sel);
+        folder_count = eina_list_count(ic->sd->icons);
+     }
+   if ((!sel) || (n == 1))
      snprintf(text, sizeof(text),
               _("Are you sure you want to delete<br>"
-                "<hilight>%s</hilight> ?"),
+                "<hilight>%s</hilight>?"),
               ic->info.file);
+   else if (n == folder_count)
+     snprintf(text, sizeof(text),
+              _("Are you sure you want to delete<br>"
+                "<hilight>all</hilight> the %d files in<br>"
+                "<hilight>%s</hilight>?"),
+              n, ic->sd->realpath);
    else
      {
+        /* Here the singular version is not used in english, but plural support
+         * is nonetheless needed for languages who have multiple plurals
+         * depending on the number of files. */
         snprintf(text, sizeof(text),
-                 _("Are you sure you want to delete<br>"
-                   "the %d selected files in:<br>"
-                   "<hilight>%s</hilight> ?"),
-                 eina_list_count(sel),
-                 ic->sd->realpath);
+                 P_("Are you sure you want to delete<br>"
+                    "the %d selected file in<br>"
+                    "<hilight>%s</hilight>?",
+                    "Are you sure you want to delete<br>"
+                    "the %d selected files in<br>"
+                    "<hilight>%s</hilight>?", n),
+                 n, ic->sd->realpath);
      }
    if (sel) eina_list_free(sel);
    e_dialog_text_set(dialog, text);
