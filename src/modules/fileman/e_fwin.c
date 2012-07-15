@@ -1712,8 +1712,13 @@ _e_fwin_cb_menu_extend_start(void *data,
    E_Menu_Item *mi;
    E_Fwin_Page *page;
    E_Menu *subm;
+   Eina_List *selected = NULL;
 
    page = data;
+
+   selected = e_fm2_selected_list_get(page->fm_obj);
+   if (!selected) return;
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Open"));
    e_util_menu_item_theme_icon_set(mi, "document-open");
@@ -1726,6 +1731,9 @@ _e_fwin_cb_menu_extend_start(void *data,
    subm = e_menu_new();
    e_menu_item_submenu_set(mi, subm);
    e_menu_pre_activate_callback_set(subm, _e_fwin_cb_menu_extend_open_with, page);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
 }
 
 static void

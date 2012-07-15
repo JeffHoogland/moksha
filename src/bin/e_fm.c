@@ -7814,11 +7814,7 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
    else
      {
         if (sd->icon_menu.start.func)
-          {
-             sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, NULL);
-             mi = e_menu_item_new(mn);
-             e_menu_item_separator_set(mi, 1);
-          }
+          sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, NULL);
         if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT)) &&
             (sd->view_flags & E_FM2_VIEW_INHERIT_DIR_CUSTOM))
           {
@@ -7973,12 +7969,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    else
      {
         if (sd->icon_menu.start.func)
-          {
-             sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, NULL);
-             mi = e_menu_item_new(mn);
-             e_menu_item_separator_set(mi, 1);
-          }
-
+          sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, NULL);
         if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT)) &&
             (sd->view_flags & E_FM2_VIEW_INHERIT_DIR_CUSTOM))
           {
