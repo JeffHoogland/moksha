@@ -1775,7 +1775,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    E_Fwin *fwin = page->fwin, *fwin2 = NULL;
    E_Dialog *dia;
    Evas_Coord mw, mh;
-   Evas_Object *o, *of, *ot;
+   Evas_Object *o, *of, *ol;
    Evas *evas;
    Eina_List *l = NULL, *apps = NULL, *mlist = NULL;
    Eina_List *cats = NULL;
@@ -2071,7 +2071,18 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
 
    evas = e_win_evas_get(dia->win);
 
-   ot = e_widget_table_add(evas, 0);
+   ol = e_widget_list_add(evas, 0, 0);
+
+   if (eina_list_count(files) == 1)
+     {
+        ici = eina_list_data_get(files);
+        of = e_widget_framelist_add(evas, ici->file, 0);
+        o = e_widget_filepreview_add(evas, 96, 96, 1);
+        snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), ici->file);
+        e_widget_filepreview_path_set(o, buf, ici->mime);
+        e_widget_framelist_object_append(of, o);
+        e_widget_list_object_append(ol, of, 1, 0, 0.5);
+   }
 
    l = eina_list_free(l);
 
@@ -2132,17 +2143,17 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    evas_event_thaw(evas);
    e_widget_size_min_set(o, 160, 240);
    e_widget_framelist_object_append(of, o);
-   e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
    o = e_widget_label_add(evas, _("Custom Command"));
-   e_widget_table_object_append(ot, o, 0, 1, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(ol, o, 1, 0, 0.5);
    fad->o_entry = e_widget_entry_add(evas, &(fad->exec_cmd),
                                      _e_fwin_cb_exec_cmd_changed, fad, NULL);
-   e_widget_table_object_append(ot, fad->o_entry, 0, 2, 1, 1, 1, 1, 1, 0);
+   e_widget_list_object_append(ol, fad->o_entry, 1, 0, 0.5);
 
-   e_widget_size_min_get(ot, &mw, &mh);
-   e_dialog_content_set(dia, ot, mw, mh);
-   evas_object_event_callback_add(ot, EVAS_CALLBACK_KEY_DOWN, _e_fwin_file_open_dialog_cb_key_down, page);
+   e_widget_size_min_get(ol, &mw, &mh);
+   e_dialog_content_set(dia, ol, mw, mh);
+   evas_object_event_callback_add(ol, EVAS_CALLBACK_KEY_DOWN, _e_fwin_file_open_dialog_cb_key_down, page);
    e_dialog_show(dia);
    e_dialog_border_icon_set(dia, "preferences-applications");
    e_widget_focus_steal(fad->o_entry);
