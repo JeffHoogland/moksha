@@ -2073,6 +2073,8 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
 
    ol = e_widget_list_add(evas, 0, 0);
 
+   l = eina_list_free(l);
+
    if (eina_list_count(files) == 1)
      {
         ici = eina_list_data_get(files);
@@ -2083,8 +2085,6 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
         e_widget_framelist_object_append(of, o);
         e_widget_list_object_append(ol, of, 1, 0, 0.5);
    }
-
-   l = eina_list_free(l);
 
    // Make frame with list of applications
    of = e_widget_framelist_add(evas, _("Known Applications"), 0);
@@ -2141,7 +2141,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    e_widget_ilist_thaw(o);
    edje_thaw();
    evas_event_thaw(evas);
-   e_widget_size_min_set(o, 160, 240);
+   e_widget_size_min_set(o, 160, (eina_list_count(files) == 1) ? 160 : 240);
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
