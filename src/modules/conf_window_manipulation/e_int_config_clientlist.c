@@ -107,7 +107,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Seperate Groups By"), 0);
+   of = e_widget_framelist_add(evas, _("Separate Groups By"), 0);
    rg = e_widget_radio_group_new(&(cfdata->separate_with));
    ow = e_widget_radio_add(evas, _("None"), E_CLIENTLIST_GROUP_SEP_NONE, rg);
    e_widget_framelist_object_append(of, ow);
