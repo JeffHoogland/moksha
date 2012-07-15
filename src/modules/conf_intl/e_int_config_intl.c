@@ -302,7 +302,7 @@ const E_Intl_Pair region_predefined_pairs[] = {
    { "BH", NULL, "Bahrain"},
    { "BD", "bd_flag.png", "বাংলাদেশ"},
    { "BB", NULL, "Barbados"},
-   { "BY", "bw_flag.png", "Беларусь"},
+   { "BY", "by_flag.png", "Беларусь"},
    { "BE", "be_flag.png", "Belgium"},
    { "BZ", NULL, "Belize"},
    { "BJ", NULL, "Bénin"},
