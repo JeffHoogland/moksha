@@ -455,6 +455,15 @@ _e_desklock_login_box_add(E_Desklock_Popup_Data *edp)
    int total_zone_num;
 
    last_active_zone = current_zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
+   total_zone_num = _e_desklock_zone_num_get();
+   if (total_zone_num > 1)
+     {
+        if ((e_config->desklock_login_box_zone == -2) && (zone != current_zone))
+          return;
+        if ((e_config->desklock_login_box_zone != -1) && (e_config->desklock_login_box_zone != (int)eina_list_count(edd->elock_wnd_list)))
+          return;
+     }
+
    edp->login_box = edje_object_add(edp->popup_wnd->evas);
    e_theme_edje_object_set(edp->login_box,
                            "base/theme/desklock",
@@ -474,19 +483,7 @@ _e_desklock_login_box_add(E_Desklock_Popup_Data *edp)
                          ((zone->w - mw) / 2),
                          ((zone->h - mh) / 2));
      }
-   total_zone_num = _e_desklock_zone_num_get();
-   if (total_zone_num > 1)
-     {
-        if (e_config->desklock_login_box_zone == -1)
-          evas_object_show(edp->login_box);
-        else if ((e_config->desklock_login_box_zone == -2) &&
-                 (zone == current_zone))
-          evas_object_show(edp->login_box);
-        else if (e_config->desklock_login_box_zone == (int)eina_list_count(edd->elock_wnd_list))
-          evas_object_show(edp->login_box);
-     }
-   else
-     evas_object_show(edp->login_box);
+   evas_object_show(edp->login_box);
 }
 
 static void
