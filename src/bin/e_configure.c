@@ -442,6 +442,12 @@ _e_configure_cb_efreet_desktop_cache_update(void *data __UNUSED__, int type __UN
    return 1;
 }
 
+static int
+_e_configure_compare_cb(E_Configure_It *eci, E_Configure_It *eci2)
+{
+   return e_util_strcasecmp(eci->label, eci2->label);
+}
+
 static void
 _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func)(E_Container * con, const char *params), void (*generic_func)(E_Container *con, const char *params), Efreet_Desktop *desktop, const char *params)
 {
@@ -450,6 +456,7 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    const char *item;
    E_Configure_It *eci;
    E_Configure_Cat *ecat;
+   Eina_Bool external;
 
    /* path is "category/item" */
    cat = ecore_file_dir_get(path);
@@ -468,6 +475,8 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    eci->generic_func = generic_func;
    eci->desktop = desktop;
    if (eci->desktop) efreet_desktop_ref(eci->desktop);
+   external = !strncmp(path, "preferences/", sizeof("preferences/") - 1);
+   if (!external) external = !strncmp(path, "system/", sizeof("system/") - 1);
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      if (!strcmp(cat, ecat->cat))
@@ -475,6 +484,11 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
           E_Configure_It *eci2;
           Eina_List *ll;
 
+          if (external)
+            {
+               ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_cb), eci);
+               break;
+            }
           EINA_LIST_FOREACH(ecat->items, ll, eci2)
             if (eci2->pri > eci->pri)
               {
@@ -482,7 +496,7 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
                  goto done;
               }
           ecat->items = eina_list_append(ecat->items, eci);
-          goto done;
+          break;
        }
 
 done:
