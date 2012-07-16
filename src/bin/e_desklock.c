@@ -663,9 +663,14 @@ _e_desklock_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *even
         if (!edp) continue;
 
         if (edp->popup_wnd->zone == last_active_zone)
-          evas_object_hide(edp->login_box);
+          if (edp->login_box) evas_object_hide(edp->login_box);
         else if (edp->popup_wnd->zone == current_zone)
-          evas_object_show(edp->login_box);
+          {
+             if (edp->login_box)
+               evas_object_show(edp->login_box);
+             else
+               _e_desklock_login_box_add(current_zone);
+          }
      }
    last_active_zone = current_zone;
    return ECORE_CALLBACK_PASS_ON;
