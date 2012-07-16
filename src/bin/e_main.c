@@ -158,7 +158,8 @@ _env_path_append(const char *env, const char *path)
    int len = 0, len2 = 0;
 
    p = getenv(env);
-   if (p) len = strlen(p);
+   if (!p) return;
+   len = strlen(p);
    p2 = (char *)path;
    if (p2) len2 = strlen(p2);
    if (p && p2)
