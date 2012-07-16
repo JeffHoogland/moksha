@@ -513,6 +513,7 @@ _ibar_config_item_get(const char *id)
    ci->dir = eina_stringshare_add("default");
    ci->show_label = 1;
    ci->eap_label = 0;
+   ci->lock_move= 0;
    ibar_config->items = eina_list_append(ibar_config->items, ci);
    return ci;
 }
@@ -902,28 +903,31 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *e
 
    ev = event_info;
    ic = data;
-   if ((ev->button == 1) && (!ic->drag.dnd) && (ic->mouse_down == 1))
+
+   if ((ev->button == 1) && (ic->mouse_down == 1))
      {
-        if (ic->app->type == EFREET_DESKTOP_TYPE_APPLICATION)
-          e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
-        else if (ic->app->type == EFREET_DESKTOP_TYPE_LINK)
+        if (!ic->drag.dnd)
           {
-             if (!strncasecmp(ic->app->url, "file:", 5))
+             if (ic->app->type == EFREET_DESKTOP_TYPE_APPLICATION)
+               e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
+             else if (ic->app->type == EFREET_DESKTOP_TYPE_LINK)
                {
-                  E_Action *act;
+                  if (!strncasecmp(ic->app->url, "file:", 5))
+                    {
+                       E_Action *act;
 
-                  act = e_action_find("fileman");
-                  if (act) act->func.go(E_OBJECT(obj), ic->app->url + 5);
+                       act = e_action_find("fileman");
+                       if (act) act->func.go(E_OBJECT(obj), ic->app->url + 5);
+                    }
                }
+             /* TODO: bring back "e,action,start|stop" for the startup_notify apps
+              *       when startup_notify is used again
+              */
+             _ibar_icon_signal_emit(ic, "e,action,exec", "e");
           }
-
         ic->drag.start = 0;
         ic->drag.dnd = 0;
         ic->mouse_down = 0;
-        /* TODO: bring back "e,action,start|stop" for the startup_notify apps
-         *       when startup_notify is used again
-         */
-        _ibar_icon_signal_emit(ic, "e,action,exec", "e");
      }
 }
 
@@ -953,6 +957,8 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 
              ic->drag.dnd = 1;
              ic->drag.start = 0;
+
+             if (ic->ibar->inst->ci->lock_move) return;
 
              evas_object_geometry_get(ic->o_icon, &x, &y, &w, &h);
              d = e_drag_new(ic->ibar->inst->gcc->gadcon->zone->container,
@@ -1237,6 +1243,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, dir, STR);
    E_CONFIG_VAL(D, T, show_label, INT);
    E_CONFIG_VAL(D, T, eap_label, INT);
+   E_CONFIG_VAL(D, T, lock_move, INT);
 
    conf_edd = E_CONFIG_DD_NEW("IBar_Config", Config);
 #undef T
@@ -1258,6 +1265,7 @@ e_modapi_init(E_Module *m)
         ci->dir = eina_stringshare_add("default");
         ci->show_label = 1;
         ci->eap_label = 0;
+        ci->lock_move= 0;
         ibar_config->items = eina_list_append(ibar_config->items, ci);
      }
 

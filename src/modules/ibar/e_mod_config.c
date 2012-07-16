@@ -5,6 +5,7 @@ struct _E_Config_Dialog_Data
 {
    const char       *dir;
    int               show_label, eap_label;
+   int               lock_move;
 
    Evas_Object      *tlist;
    Evas_Object      *radio_name;
@@ -64,6 +65,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
      cfdata->dir = eina_stringshare_add("");
    cfdata->show_label = ci->show_label;
    cfdata->eap_label = ci->eap_label;
+   cfdata->lock_move = ci->lock_move;
 }
 
 static void *
@@ -136,6 +138,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_generic, 1);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Icon Movement"), 0);
+   ob = e_widget_check_add(evas, _("Lock Icon Move"), &(cfdata->lock_move));
+   e_widget_framelist_object_append(of, ob);
+
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+
    return o;
 }
 
@@ -150,6 +159,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->dir) ci->dir = eina_stringshare_ref(cfdata->dir);
    ci->show_label = cfdata->show_label;
    ci->eap_label = cfdata->eap_label;
+   ci->lock_move = cfdata->lock_move;
    _ibar_config_update(ci);
    e_config_save_queue();
    return 1;

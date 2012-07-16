@@ -22,6 +22,7 @@ struct _Config_Item
    const char *dir;
    int show_label;
    int eap_label;
+   int lock_move;
 };
 
 EAPI extern E_Module_Api e_modapi;
