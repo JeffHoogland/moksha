@@ -193,7 +193,6 @@ _e_wid_reconfigure(E_Widget_Data *wd)
              evas_object_del(dd->thumb);
              evas_object_del(dw);
              wd->desks = eina_list_remove(wd->desks, dw);
-             E_FREE(dd);
           }
      }
 
