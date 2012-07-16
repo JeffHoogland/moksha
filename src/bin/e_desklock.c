@@ -30,6 +30,7 @@ struct _E_Desklock_Data
    Eina_List     *elock_wnd_list;
    Ecore_X_Window elock_wnd;
    Eina_List     *handlers;
+   Ecore_Event_Handler *move_handler;
    Ecore_X_Window elock_grab_break_wnd;
    char           passwd[PASSWD_LEN];
    int            state;
@@ -296,13 +297,7 @@ works:
                                               _e_desklock_cb_zone_move_resize, NULL));
 
    if ((total_zone_num > 1) && (e_config->desklock_login_box_zone == -2))
-     {
-        edd->handlers =
-          eina_list_append(edd->handlers,
-                           ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
-                                                   _e_desklock_cb_mouse_move,
-                                                   NULL));
-     }
+     edd->move_handler = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _e_desklock_cb_mouse_move, NULL);
 
    _e_desklock_passwd_update();
 
@@ -342,6 +337,7 @@ e_desklock_hide(void)
      _e_desklock_popup_free(edp);
 
    E_FREE_LIST(edd->handlers, ecore_event_handler_del);
+   if (edd->move_handler) ecore_event_handler_del(edd->move_handler);
 
    e_grabinput_release(edd->elock_wnd, edd->elock_wnd);
    ecore_x_window_free(edd->elock_wnd);
@@ -568,6 +564,8 @@ _e_desklock_cb_zone_add(void *data __UNUSED__,
 {
    E_Event_Zone_Add *ev = event;
    if (!edd) return ECORE_CALLBACK_PASS_ON;
+   if ((!edd->move_handler) && (e_config->desklock_login_box_zone == -2))
+     edd->move_handler = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _e_desklock_cb_mouse_move, NULL);
    if (!_e_desklock_popup_find(ev->zone)) _e_desklock_popup_add(ev->zone);
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -580,6 +578,9 @@ _e_desklock_cb_zone_del(void *data __UNUSED__,
    E_Event_Zone_Del *ev = event;
    Eina_List *l;
    if (!edd) return ECORE_CALLBACK_PASS_ON;
+   if ((eina_list_count(e_container_current_get(e_manager_current_get())->zones) == 1) && (e_config->desklock_login_box_zone == -2))
+     edd->move_handler = ecore_event_handler_del(edd->move_handler);
+        
    l = _e_desklock_popup_find(ev->zone);
    if (l)
      {
@@ -662,16 +663,17 @@ _e_desklock_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *even
      {
         if (!edp) continue;
 
-        if (edp->popup_wnd->zone == last_active_zone)
-          if (edp->login_box) evas_object_hide(edp->login_box);
-        else if (edp->popup_wnd->zone == current_zone)
+        if (edp->popup_wnd->zone != current_zone)
           {
-             if (edp->login_box)
-               evas_object_show(edp->login_box);
-             else
-               _e_desklock_login_box_add(current_zone);
+             if (edp->login_box) evas_object_hide(edp->login_box);
+             continue;
           }
+        if (edp->login_box)
+          evas_object_show(edp->login_box);
+        else
+          _e_desklock_login_box_add(edp);
      }
+   _e_desklock_passwd_update();
    last_active_zone = current_zone;
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -692,7 +694,7 @@ _e_desklock_passwd_update(void)
    *pp = 0;
 
    EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
-     edje_object_part_text_set(edp->login_box, "e.text.password",
+     if (edp->login_box) edje_object_part_text_set(edp->login_box, "e.text.password",
                                passwd_hidden);
 }
 
