@@ -506,12 +506,7 @@ _e_fwin_new(E_Container *con,
    if (fwin->win->evas_win)
      e_drop_xdnd_register_set(fwin->win->evas_win, 1);
    if (fwin->win->border)
-     {
-        if (fwin->win->border->internal_icon)
-          eina_stringshare_del(fwin->win->border->internal_icon);
-        fwin->win->border->internal_icon =
-          eina_stringshare_add("system-file-manager");
-     }
+     eina_stringshare_replace(&fwin->win->border->internal_icon, "system-file-manager");
 
    return fwin;
 }
