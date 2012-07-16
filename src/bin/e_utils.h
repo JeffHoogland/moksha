@@ -35,6 +35,7 @@ EAPI E_Container *e_util_container_number_get(int num);
 EAPI E_Zone      *e_util_container_zone_id_get(int con_num, int id);
 EAPI E_Zone      *e_util_container_zone_number_get(int con_num, int zone_num);
 EAPI int          e_util_head_exec(int head, const char *cmd);
+EAPI int          e_util_strcasecmp(const char *s1, const char *s2);
 EAPI int          e_util_strcmp(const char *s1, const char *s2);
 EAPI int          e_util_both_str_empty(const char *s1, const char *s2);
 EAPI int          e_util_immortal_check(void);
