@@ -588,6 +588,7 @@ _e_desklock_cb_zone_move_resize(void *data __UNUSED__,
      if (edp->popup_wnd->zone == ev->zone)
        {
           e_popup_move_resize(edp->popup_wnd, 0, 0, ev->zone->w, ev->zone->h);
+          evas_object_resize(edp->bg_object, ev->zone->w, ev->zone->h);
           break;
        }
    return ECORE_CALLBACK_PASS_ON;
