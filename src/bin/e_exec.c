@@ -522,7 +522,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    if (!cfdata->label)
      {
-        snprintf(buf, sizeof(buf), _("%s stopped running unexpectedly."), cfdata->desktop->name);
+        if (cfdata->desktop)
+          snprintf(buf, sizeof(buf), _("%s stopped running unexpectedly."), cfdata->desktop->name);
+        else
+          snprintf(buf, sizeof(buf), _("%s stopped running unexpectedly."), cfdata->exec);
         cfdata->label = strdup(buf);
      }
    if ((cfdata->event.exited) && (!cfdata->exit))
@@ -537,7 +540,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
         if (cfdata->event.exit_signal == SIGINT)
           snprintf(buf, sizeof(buf),
                    _("%s was interrupted by an Interrupt Signal."),
-                   cfdata->desktop->exec);
+                   cfdata->exec);
         else if (cfdata->event.exit_signal == SIGQUIT)
           snprintf(buf, sizeof(buf), _("%s was interrupted by a Quit Signal."),
                    cfdata->exec);
@@ -700,8 +703,12 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
                             _dialog_save_cb, NULL, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
 
-   snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
-            e_user_homedir_get(), cfdata->desktop->name);
+   if (cfdata->desktop)
+     snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
+              e_user_homedir_get(), cfdata->desktop->name);
+   else
+     snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
+              e_user_homedir_get(), "Error");
    ob = e_widget_label_add(evas, buf);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
@@ -779,8 +786,12 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
                             _dialog_save_cb, NULL, cfdata);
    e_widget_list_object_append(o, ob, 0, 0, 0.5);
 
-   snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
-            e_user_homedir_get(), cfdata->desktop->name);
+   if (cfdata->desktop)
+     snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
+              e_user_homedir_get(), cfdata->desktop->name);
+   else
+     snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
+              e_user_homedir_get(), "Error");
    ob = e_widget_label_add(evas, buf);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
@@ -800,8 +811,12 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
 
    cfdata = data2;
 
-   snprintf(buf, sizeof(buf), "%s/%s.log", e_user_homedir_get(),
-            e_util_filename_escape(cfdata->desktop->name));
+   if (cfdata->desktop)
+     snprintf(buf, sizeof(buf), "%s/%s.log", e_user_homedir_get(),
+              e_util_filename_escape(cfdata->desktop->name));
+   else
+     snprintf(buf, sizeof(buf), "%s/%s.log", e_user_homedir_get(),
+              "Error");
    f = fopen(buf, "w");
    if (!f) return;
 
