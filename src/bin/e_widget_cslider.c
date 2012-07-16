@@ -33,9 +33,13 @@ static void _e_wid_update_fixed(E_Widget_Data *wd);
 
 static void _e_wid_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _e_wid_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _e_wid_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _e_wid_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_wid_cb_drag_start(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_wid_cb_drag_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_wid_cb_drag(void *data, Evas_Object *obj, const char *emission, const char *source);
+
+/* static void _e_wid_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info); */
+/* static void _e_wid_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info); */
+/* static void _e_wid_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info); */
 
 Evas_Object *
 e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int vertical, int fixed)
@@ -51,6 +55,8 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    wd = calloc(1, sizeof(E_Widget_Data));
    e_widget_data_set(obj, wd);
+
+   evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE, _e_wid_resize, wd);
 
    wd->vertical = vertical;
    wd->fixed = fixed;
@@ -71,6 +77,10 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
 
+   edje_object_signal_callback_add(wd->o_cslider, "drag,start", "*", _e_wid_cb_drag_start, obj);
+   edje_object_signal_callback_add(wd->o_cslider, "drag", "*", _e_wid_cb_drag, obj);
+   edje_object_signal_callback_add(wd->o_cslider, "drag,stop", "*", _e_wid_cb_drag_stop, obj);
+
    e_widget_sub_object_add(obj, o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
    e_widget_resize_object_set(obj, o);
@@ -78,22 +88,20 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    /* add gradient obj */
    o = evas_object_rectangle_add(evas);
    e_widget_sub_object_add(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE, _e_wid_move, wd);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE, _e_wid_resize, wd);
-   evas_object_show(o);
-   evas_object_color_set(o, 0, 0, 0, 0);
-   wd->o_event = o;
+   /* evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_cb_down, obj); */
+   /* evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_wid_cb_move, obj); */
+   /* evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _e_wid_cb_up, obj); */
+   evas_object_color_set(o, 255, 255, 255, 255);
+   wd->o_grad = o;
 
    edje_object_part_swallow(wd->o_cslider, "e.swallow.content", o);
 
    o = evas_object_rectangle_add(evas);
    e_widget_sub_object_add(obj, o);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_cb_down, obj);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_MOVE, _e_wid_cb_move, obj);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_UP, _e_wid_cb_up, obj);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE, _e_wid_move, wd);
    evas_object_show(o);
-   evas_object_color_set(o, 255, 255, 255, 255);
-   wd->o_grad = o;
+   evas_object_color_set(o, 0, 0, 0, 0);
+   wd->o_event = o;
 
    _e_wid_update(wd);
 
@@ -104,11 +112,11 @@ static void
 _e_wid_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
-   Evas_Coord x, y;
+   /* Evas_Coord x, y; */
 
    wd = data;
-   evas_object_geometry_get(obj, &x, &y, NULL, NULL);
-   evas_object_move(wd->o_grad, x, y);
+   /* evas_object_geometry_get(obj, &x, &y, NULL, NULL); */
+   /* evas_object_move(wd->o_grad, x, y); */
    _e_wid_update(wd);
 }
 
@@ -116,11 +124,11 @@ static void
 _e_wid_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
-   Evas_Coord w, h;
-
+   /* Evas_Coord w, h; */
+   
    wd = data;
-   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
-   evas_object_resize(wd->o_grad, w, h);
+   /* evas_object_geometry_get(obj, NULL, NULL, &w, &h); */
+   /* evas_object_resize(wd->o_grad, w, h); */
    _e_wid_update(wd);
 }
 
@@ -238,9 +246,9 @@ _e_wid_gradient_set(Evas_Object *o, Eina_Bool orientation,
 		    int rf, int gf, int bf,
 		    int rt, int gt, int bt)
 {
-   Evas_Map *m;
+   static Evas_Map *m = NULL;
 
-   m = evas_map_new(4);
+   if (!m) m = evas_map_new(4);
    evas_map_util_points_populate_from_object(m, o);
 
    if (orientation)
@@ -261,7 +269,6 @@ _e_wid_gradient_set(Evas_Object *o, Eina_Bool orientation,
 
    evas_object_map_enable_set(o, 1);
    evas_object_map_set(o, m);
-   evas_map_free(m);
 }
 
 static void
@@ -368,6 +375,7 @@ _e_wid_update_standard(E_Widget_Data *wd)
      }
 
    edje_object_part_drag_value_set(wd->o_cslider, "e.dragable.cursor", vx, vx);
+   edje_object_message_signal_process(wd->o_cslider); /* really needed or go in infinite loop */
 }
 
 void
@@ -528,33 +536,27 @@ _e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
 }
 
 static void
-_e_wid_cb_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+_e_wid_cb_drag_start(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
-   Evas_Event_Mouse_Down *ev;
    Evas_Object *o_wid;
    E_Widget_Data *wd;
-   Evas_Coord ox, oy, ow, oh;
-   double val;
-
-   ev = event_info;
+   double val, valx, valy;
 
    o_wid = data;
    wd = e_widget_data_get(o_wid);
    wd->dragging = 1;
 
-   evas_object_geometry_get(wd->o_grad, &ox, &oy, &ow, &oh);
-
-   if (wd->vertical)
-     val = 1 - ((ev->canvas.y - oy) / (double)oh);
-   else
-     val = (ev->canvas.x - ox) / (double)ow;
+   edje_object_part_drag_value_get(wd->o_cslider, "e.dragable.cursor",
+                                   &valx, &valy);
+   if (wd->vertical) val = valy;
+   else valx;
    if (val > 1) val = 1;
    if (val < 0) val = 0;
    _e_wid_value_set(o_wid, val);
 }
 
 static void
-_e_wid_cb_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+_e_wid_cb_drag_stop(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
    Evas_Object *o_wid;
    E_Widget_Data *wd;
@@ -565,26 +567,22 @@ _e_wid_cb_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *
 }
 
 static void
-_e_wid_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+_e_wid_cb_drag(void *data, Evas_Object *obj, const char *emission, const char *source)
 {
-   Evas_Event_Mouse_Move *ev;
    Evas_Object *o_wid;
    E_Widget_Data *wd;
 
    o_wid = data;
    wd = e_widget_data_get(o_wid);
-   ev = event_info;
 
    if (wd->dragging == 1)
      {
-	Evas_Coord ox, oy, ow, oh;
-	double val;
-	evas_object_geometry_get(wd->o_grad, &ox, &oy, &ow, &oh);
+	double val, valx, valy;
 
-	if (wd->vertical)
-	  val = 1 - ((ev->cur.canvas.y - oy) / (double)oh);
-	else
-	  val = (ev->cur.canvas.x - ox) / (double)ow;
+        edje_object_part_drag_value_get(wd->o_cslider, "e.dragable.cursor",
+                                        &valx, &valy);
+	if (wd->vertical) val = valy;
+	else val = valx;
 	if (val > 1) val = 1;
 	if (val < 0) val = 0;
 	_e_wid_value_set(o_wid, val);

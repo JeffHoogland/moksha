@@ -27939,12 +27939,12 @@ collections {
                rel1 {
                   to: "e.swallow.content";
                   relative: 0.5 0.0;
-                  offset: 0 0;
+                  offset: 0 -2;
                }
                rel2 {
                   to: "e.swallow.content";
                   relative: 0.5 1.0;
-                  offset: 0 -1;
+                  offset: 0 +2;
                }
                color: 255 255 255 150;
             }
@@ -27956,12 +27956,12 @@ collections {
                rel1 {
                   to: "e.swallow.content";
                   relative: 0.0 0.5 ;
-                  offset: 0 0;
+                  offset: -2 0;
                }
                rel2 {
                   to: "e.swallow.content";
                   relative: 1.0 0.5;
-                  offset: -1 0;
+                  offset: +2 0;
                }
                color: 255 255 255 150;
             }
