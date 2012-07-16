@@ -74,6 +74,9 @@ static Eina_Bool _e_desklock_cb_zone_add(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_zone_del(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_zone_move_resize(void *data, int type, void *event);
 
+static void      _e_desklock_popup_free(E_Desklock_Popup_Data *edp);
+static void      _e_desklock_popup_add(E_Zone *zone);
+static void      _e_desklock_login_box_add(E_Desklock_Popup_Data *edp);
 static void      _e_desklock_null(void);
 static void      _e_desklock_passwd_update(void);
 static void      _e_desklock_backspace(void);
@@ -153,12 +156,9 @@ e_desklock_show_autolocked(void)
 EAPI int
 e_desklock_show(void)
 {
-   Eina_List *managers, *l, *l2, *l3, *l4;
+   Eina_List *managers, *l, *l2, *l3;
    E_Manager *man;
-   E_Desklock_Popup_Data *edp;
-   Evas_Coord mw, mh;
-   E_Zone *current_zone;
-   int zone_counter, total_zone_num;
+   int total_zone_num;
    E_Event_Desklock *ev;
 
    if (_e_custom_desklock_exe) return 0;
@@ -205,8 +205,7 @@ e_desklock_show(void)
 
    edd = E_NEW(E_Desklock_Data, 1);
    if (!edd) return 0;
-   edd->elock_wnd =
-     ecore_x_window_input_new(e_manager_current_get()->root, 0, 0, 1, 1);
+   edd->elock_wnd = ecore_x_window_input_new(e_manager_current_get()->root, 0, 0, 1, 1);
    ecore_x_window_show(edd->elock_wnd);
    managers = e_manager_list();
    if (!e_grabinput_get(edd->elock_wnd, 0, edd->elock_wnd))
@@ -253,10 +252,6 @@ e_desklock_show(void)
      }
 works:
 
-   last_active_zone = current_zone =
-       e_zone_current_get(e_container_current_get(e_manager_current_get()));
-
-   zone_counter = 0;
    total_zone_num = _e_desklock_zone_num_get();
    EINA_LIST_FOREACH(managers, l, man)
      {
@@ -265,113 +260,8 @@ works:
         EINA_LIST_FOREACH(man->containers, l2, con)
           {
              E_Zone *zone;
-
-             l4 = e_config->desklock_backgrounds;
              EINA_LIST_FOREACH(con->zones, l3, zone)
-               {
-                  E_Config_Desklock_Background *cbg;
-                  const char *bg;
-
-                  cbg = eina_list_data_get(l4);
-                  bg = cbg ? cbg->file : NULL;
-                  edp = E_NEW(E_Desklock_Popup_Data, 1);
-                  if (edp)
-                    {
-                       edp->popup_wnd = e_popup_new(zone, 0, 0, zone->w, zone->h);
-                       evas_event_feed_mouse_move(edp->popup_wnd->evas, -1000000, -1000000,
-                                                  ecore_x_current_time_get(), NULL);
-
-                       e_popup_layer_set(edp->popup_wnd, ELOCK_POPUP_LAYER);
-                       ecore_evas_raise(edp->popup_wnd->ecore_evas);
-
-                       evas_event_freeze(edp->popup_wnd->evas);
-                       edp->bg_object = edje_object_add(edp->popup_wnd->evas);
-
-                       if ((!bg) ||
-                           (!strcmp(bg, "theme_desklock_background")))
-                         {
-                            e_theme_edje_object_set(edp->bg_object,
-                                                    "base/theme/desklock",
-                                                    "e/desklock/background");
-                         }
-                       else if (!strcmp(bg, "theme_background"))
-                         {
-                            e_theme_edje_object_set(edp->bg_object,
-                                                    "base/theme/backgrounds",
-                                                    "e/desktop/background");
-                         }
-                       else
-                         {
-                            const char *f;
-
-                            if (!strcmp(bg, "user_background"))
-                              f = _user_wallpaper_get();
-                            else
-                              f = bg;
-
-                            if (e_util_edje_collection_exists(f, "e/desklock/background"))
-                              {
-                                 edje_object_file_set(edp->bg_object, f,
-                                                      "e/desklock/background");
-                              }
-                            else
-                              {
-                                 if (!edje_object_file_set(edp->bg_object,
-                                                           f, "e/desktop/background"))
-                                   {
-                                      edje_object_file_set(edp->bg_object,
-                                                           e_theme_edje_file_get("base/theme/desklock",
-                                                                                 "e/desklock/background"),
-                                                           "e/desklock/background");
-                                   }
-                              }
-                         }
-
-                       evas_object_move(edp->bg_object, 0, 0);
-                       evas_object_resize(edp->bg_object, zone->w, zone->h);
-                       evas_object_show(edp->bg_object);
-                       edp->login_box = edje_object_add(edp->popup_wnd->evas);
-                       e_theme_edje_object_set(edp->login_box,
-                                               "base/theme/desklock",
-                                               "e/desklock/login_box");
-                       edje_object_part_text_set(edp->login_box, "e.text.title",
-                                                 _("Please enter your unlock password"));
-                       edje_object_size_min_calc(edp->login_box, &mw, &mh);
-                       if (edje_object_part_exists(edp->bg_object, "e.swallow.login_box"))
-                         {
-                            edje_extern_object_min_size_set(edp->login_box, mw, mh);
-                            edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);
-                         }
-                       else
-                         {
-                            evas_object_resize(edp->login_box, mw, mh);
-                            evas_object_move(edp->login_box,
-                                             ((zone->w - mw) / 2),
-                                             ((zone->h - mh) / 2));
-                         }
-                       if (total_zone_num > 1)
-                         {
-                            if (e_config->desklock_login_box_zone == -1)
-                              evas_object_show(edp->login_box);
-                            else if ((e_config->desklock_login_box_zone == -2) &&
-                                     (zone == current_zone))
-                              evas_object_show(edp->login_box);
-                            else if (e_config->desklock_login_box_zone == zone_counter)
-                              evas_object_show(edp->login_box);
-                         }
-                       else
-                         evas_object_show(edp->login_box);
-
-                       e_popup_edje_bg_object_set(edp->popup_wnd, edp->bg_object);
-                       evas_event_thaw(edp->popup_wnd->evas);
-
-                       e_popup_show(edp->popup_wnd);
-
-                       edd->elock_wnd_list = eina_list_append(edd->elock_wnd_list, edp);
-                    }
-                  l4 = eina_list_next(l4);
-                  zone_counter++;
-               }
+               _e_desklock_popup_add(zone);
           }
      }
 
@@ -449,20 +339,7 @@ e_desklock_hide(void)
      ecore_x_window_show(edd->elock_grab_break_wnd);
 
    EINA_LIST_FREE(edd->elock_wnd_list, edp)
-     {
-        if (edp)
-          {
-             e_popup_hide(edp->popup_wnd);
-
-             evas_event_freeze(edp->popup_wnd->evas);
-             evas_object_del(edp->bg_object);
-             evas_object_del(edp->login_box);
-             evas_event_thaw(edp->popup_wnd->evas);
-
-             e_util_defer_object_del(E_OBJECT(edp->popup_wnd));
-             E_FREE(edp);
-          }
-     }
+     _e_desklock_popup_free(edp);
 
    E_FREE_LIST(edd->handlers, ecore_event_handler_del);
 
@@ -490,6 +367,141 @@ e_desklock_hide(void)
         _e_desklock_autolock_time = 0.0;
      }
    e_util_env_set("E_DESKLOCK_LOCKED", "freefreefree");
+}
+
+static void
+_e_desklock_popup_add(E_Zone *zone)
+{
+   E_Desklock_Popup_Data *edp;
+   E_Config_Desklock_Background *cbg;
+   const char *bg;
+
+   cbg = eina_list_nth(e_config->desklock_backgrounds, zone->num);
+   bg = cbg ? cbg->file : NULL;
+   edp = E_NEW(E_Desklock_Popup_Data, 1);
+   if (!edp)
+     {
+        CRI("DESKLOCK FAILED FOR ZONE %d!", zone->num);
+        return;
+     }
+
+   edp->popup_wnd = e_popup_new(zone, 0, 0, zone->w, zone->h);
+   evas_event_feed_mouse_move(edp->popup_wnd->evas, -1000000, -1000000,
+                              ecore_x_current_time_get(), NULL);
+
+   e_popup_layer_set(edp->popup_wnd, ELOCK_POPUP_LAYER);
+   ecore_evas_raise(edp->popup_wnd->ecore_evas);
+
+   evas_event_freeze(edp->popup_wnd->evas);
+   edp->bg_object = edje_object_add(edp->popup_wnd->evas);
+
+   if ((!bg) || (!strcmp(bg, "theme_desklock_background")))
+     {
+        e_theme_edje_object_set(edp->bg_object,
+                                "base/theme/desklock",
+                                "e/desklock/background");
+     }
+   else if (!strcmp(bg, "theme_background"))
+     {
+        e_theme_edje_object_set(edp->bg_object,
+                                "base/theme/backgrounds",
+                                "e/desktop/background");
+     }
+   else
+     {
+        const char *f;
+
+        if (!strcmp(bg, "user_background"))
+          f = _user_wallpaper_get();
+        else
+          f = bg;
+
+        if (e_util_edje_collection_exists(f, "e/desklock/background"))
+          {
+             edje_object_file_set(edp->bg_object, f, "e/desklock/background");
+          }
+        else
+          {
+             if (!edje_object_file_set(edp->bg_object,
+                                       f, "e/desktop/background"))
+               {
+                  edje_object_file_set(edp->bg_object,
+                                       e_theme_edje_file_get("base/theme/desklock",
+                                                             "e/desklock/background"),
+                                       "e/desklock/background");
+               }
+          }
+     }
+
+   evas_object_move(edp->bg_object, 0, 0);
+   evas_object_resize(edp->bg_object, zone->w, zone->h);
+   evas_object_show(edp->bg_object);
+
+   _e_desklock_login_box_add(edp);
+   e_popup_edje_bg_object_set(edp->popup_wnd, edp->bg_object);
+   evas_event_thaw(edp->popup_wnd->evas);
+
+   e_popup_show(edp->popup_wnd);
+
+   edd->elock_wnd_list = eina_list_append(edd->elock_wnd_list, edp);
+}
+
+static void
+_e_desklock_login_box_add(E_Desklock_Popup_Data *edp)
+{
+   int mw, mh;
+   E_Zone *zone = edp->popup_wnd->zone;
+   E_Zone *current_zone;
+   int total_zone_num;
+
+   last_active_zone = current_zone = e_zone_current_get(e_container_current_get(e_manager_current_get()));
+   edp->login_box = edje_object_add(edp->popup_wnd->evas);
+   e_theme_edje_object_set(edp->login_box,
+                           "base/theme/desklock",
+                           "e/desklock/login_box");
+   edje_object_part_text_set(edp->login_box, "e.text.title",
+                             _("Please enter your unlock password"));
+   edje_object_size_min_calc(edp->login_box, &mw, &mh);
+   if (edje_object_part_exists(edp->bg_object, "e.swallow.login_box"))
+     {
+        edje_extern_object_min_size_set(edp->login_box, mw, mh);
+        edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);
+     }
+   else
+     {
+        evas_object_resize(edp->login_box, mw, mh);
+        evas_object_move(edp->login_box,
+                         ((zone->w - mw) / 2),
+                         ((zone->h - mh) / 2));
+     }
+   total_zone_num = _e_desklock_zone_num_get();
+   if (total_zone_num > 1)
+     {
+        if (e_config->desklock_login_box_zone == -1)
+          evas_object_show(edp->login_box);
+        else if ((e_config->desklock_login_box_zone == -2) &&
+                 (zone == current_zone))
+          evas_object_show(edp->login_box);
+        else if (e_config->desklock_login_box_zone == (int)eina_list_count(edd->elock_wnd_list))
+          evas_object_show(edp->login_box);
+     }
+   else
+     evas_object_show(edp->login_box);
+}
+
+static void
+_e_desklock_popup_free(E_Desklock_Popup_Data *edp)
+{
+   if (!edp) return;
+   e_popup_hide(edp->popup_wnd);
+
+   evas_event_freeze(edp->popup_wnd->evas);
+   evas_object_del(edp->bg_object);
+   evas_object_del(edp->login_box);
+   evas_event_thaw(edp->popup_wnd->evas);
+
+   e_util_defer_object_del(E_OBJECT(edp->popup_wnd));
+   E_FREE(edp);
 }
 
 static Eina_Bool
@@ -541,36 +553,42 @@ e_desklock_state_get(void)
    return _e_desklock_state;
 }
 
-
-static Ecore_Job *_e_desklock_relock_job = NULL;
-
-static void
-_e_desklock_relock_cb(void *data __UNUSED__)
+static Eina_List *
+_e_desklock_popup_find(E_Zone *zone)
 {
-   e_desklock_hide();
-   e_desklock_show();
-   _e_desklock_relock_job = NULL;
+   Eina_List *l;
+   E_Desklock_Popup_Data *edp;
+
+   EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
+     if (edp->popup_wnd->zone == zone) return l;
+   return NULL;
 }
 
 static Eina_Bool
 _e_desklock_cb_zone_add(void *data __UNUSED__,
                         int type __UNUSED__,
-                        void *event __UNUSED__)
+                        void *event)
 {
+   E_Event_Zone_Add *ev = event;
    if (!edd) return ECORE_CALLBACK_PASS_ON;
-   if (_e_desklock_relock_job) ecore_job_del(_e_desklock_relock_job);
-   _e_desklock_relock_job = ecore_job_add(_e_desklock_relock_cb, NULL);
+   if (!_e_desklock_popup_find(ev->zone)) _e_desklock_popup_add(ev->zone);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
 _e_desklock_cb_zone_del(void *data __UNUSED__,
                         int type __UNUSED__,
-                        void *event __UNUSED__)
+                        void *event)
 {
+   E_Event_Zone_Del *ev = event;
+   Eina_List *l;
    if (!edd) return ECORE_CALLBACK_PASS_ON;
-   if (_e_desklock_relock_job) ecore_job_del(_e_desklock_relock_job);
-   _e_desklock_relock_job = ecore_job_add(_e_desklock_relock_cb, NULL);
+   l = _e_desklock_popup_find(ev->zone);
+   if (l)
+     {
+        _e_desklock_popup_free(l->data);
+        edd->elock_wnd_list = eina_list_remove_list(edd->elock_wnd_list, l);
+     }
    return ECORE_CALLBACK_PASS_ON;
 }
 
