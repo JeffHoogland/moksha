@@ -572,7 +572,11 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, vTotal, INT);
    E_CONFIG_VAL(D, T, name, STR);
    E_CONFIG_VAL(D, T, nameLength, INT);
-   E_CONFIG_VAL(D, T, modeFlags, LL);
+   /* Work around a possible ABI break due to poor type choice. */
+   if (sizeof (int) == sizeof (unsigned long))
+     E_CONFIG_VAL(D, T, modeFlags, INT);
+   else if (sizeof (unsigned long long) == sizeof (unsigned long))
+     E_CONFIG_VAL(D, T, modeFlags, LL);
 
    _e_config_randr_serialized_crtc_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Crtc", E_Randr_Serialized_Crtc);
 #undef T
