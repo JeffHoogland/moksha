@@ -26470,14 +26470,6 @@ collections {
       name: "e/ilist";
       parts {
         part {
-           name: "e.swallow.content";
-           type: SWALLOW;
-           scale: 1;
-           description {
-              state: "default" 0.0;
-           }
-        }
-        part {
            name: "typebuf_clip";
            type: RECT;
            mouse_events: 0;

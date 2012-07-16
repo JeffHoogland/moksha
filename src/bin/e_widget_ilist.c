@@ -999,6 +999,7 @@ _e_wid_cb_scrollframe_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, v
    if (vw >= mw)
      {
         if (w != vw) evas_object_resize(data, vw, h);
+        evas_object_smart_callback_call(data, "changed", obj);
      }
 }
 

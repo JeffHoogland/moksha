@@ -46,6 +46,8 @@ static void      _e_typebuf_timer_update(Evas_Object *obj);
 static void      _e_typebuf_timer_delete(Evas_Object *obj);
 static void      _e_typebuf_clean(Evas_Object *obj);
 
+static void      _e_ilist_widget_hack_cb(E_Smart_Data *sd, Evas_Object *obj __UNUSED__, Evas_Object *scr);
+
 static void      _item_select(E_Ilist_Item *si);
 static void      _item_unselect(E_Ilist_Item *si);
 
@@ -968,10 +970,6 @@ _e_smart_add(Evas_Object *obj)
    sd->typebuf.size = 0;
    sd->typebuf.timer = NULL;
 
-   sd->o_edje = edje_object_add(e);
-   e_theme_edje_object_set(sd->o_edje, "base/theme/widgets", "e/ilist");
-   evas_object_smart_member_add(sd->o_edje, obj);
-
    sd->o_box = e_box_add(e);
    e_box_align_set(sd->o_box, 0.0, 0.0);
    e_box_homogenous_set(sd->o_box, 0);
@@ -979,7 +977,12 @@ _e_smart_add(Evas_Object *obj)
    evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN,
                                   _e_smart_event_key_down, sd);
    evas_object_propagate_events_set(obj, 0);
-   edje_object_part_swallow(sd->o_edje, "e.swallow.content", sd->o_box);
+
+   sd->o_edje = edje_object_add(e);
+   e_theme_edje_object_set(sd->o_edje, "base/theme/widgets", "e/ilist");
+   evas_object_smart_member_add(sd->o_edje, obj);
+
+   evas_object_smart_callback_add(obj, "changed", (Evas_Smart_Cb)_e_ilist_widget_hack_cb, sd);
 }
 
 static void
@@ -1000,6 +1003,7 @@ _e_smart_show(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    evas_object_show(sd->o_edje);
+   evas_object_show(sd->o_box);
 }
 
 static void
@@ -1007,6 +1011,7 @@ _e_smart_hide(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    evas_object_hide(sd->o_edje);
+   evas_object_hide(sd->o_box);
 }
 
 static void
@@ -1042,6 +1047,7 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    INTERNAL_ENTRY;
    evas_object_clip_set(sd->o_edje, clip);
+   evas_object_clip_set(sd->o_box, clip);
 }
 
 static void
@@ -1049,6 +1055,7 @@ _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    evas_object_clip_unset(sd->o_edje);
+   evas_object_clip_unset(sd->o_box);
 }
 
 static void
@@ -1056,6 +1063,8 @@ _e_smart_reconfigure(E_Smart_Data *sd)
 {
    evas_object_move(sd->o_edje, sd->x, sd->y);
    evas_object_resize(sd->o_edje, sd->w, sd->h);
+   evas_object_move(sd->o_box, sd->x, sd->y);
+   evas_object_resize(sd->o_box, sd->w, sd->h);
 }
 
 static void
@@ -1270,6 +1279,14 @@ _e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, voi
      _e_typebuf_add(obj, ev->string);
 
    sd->on_hold = 0;
+}
+
+static void
+_e_ilist_widget_hack_cb(E_Smart_Data *sd, Evas_Object *obj __UNUSED__, Evas_Object *scr)
+{
+   int w, h;
+   e_scrollframe_child_viewport_size_get(scr, &w, &h);
+   evas_object_resize(sd->o_edje, w, h);
 }
 
 static void
