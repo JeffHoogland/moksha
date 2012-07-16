@@ -8,7 +8,7 @@ typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
 {
    Evas_Coord    x, y, w, h, iw, ih;
-   Evas_Object  *o_smart, *o_box;
+   Evas_Object  *o_smart, *o_edje, *o_box;
    Eina_List    *items;
    Eina_List    *selected_items;
    int           selected;
@@ -21,8 +21,7 @@ struct _E_Smart_Data
       char        *buf;
       unsigned int size;
       Ecore_Timer *timer;
-   }
-   typebuf;
+   } typebuf;
 };
 
 static void      _e_smart_init(void);
@@ -951,10 +950,13 @@ static void
 _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+   Evas *e;
 
    sd = calloc(1, sizeof(E_Smart_Data));
    if (!sd) return;
    evas_object_smart_data_set(obj, sd);
+
+   e = evas_object_evas_get(obj);
 
    sd->o_smart = obj;
    sd->x = sd->y = sd->w = sd->h = 0;
@@ -966,13 +968,18 @@ _e_smart_add(Evas_Object *obj)
    sd->typebuf.size = 0;
    sd->typebuf.timer = NULL;
 
-   sd->o_box = e_box_add(evas_object_evas_get(obj));
+   sd->o_edje = edje_object_add(e);
+   e_theme_edje_object_set(sd->o_edje, "base/theme/widgets", "e/ilist");
+   evas_object_smart_member_add(sd->o_edje, obj);
+
+   sd->o_box = e_box_add(e);
    e_box_align_set(sd->o_box, 0.0, 0.0);
    e_box_homogenous_set(sd->o_box, 0);
    evas_object_smart_member_add(sd->o_box, obj);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN,
                                   _e_smart_event_key_down, sd);
    evas_object_propagate_events_set(obj, 0);
+   edje_object_part_swallow(sd->o_edje, "e.swallow.content", sd->o_box);
 }
 
 static void
@@ -984,6 +991,7 @@ _e_smart_del(Evas_Object *obj)
 
    e_ilist_clear(obj);
    evas_object_del(sd->o_box);
+   evas_object_del(sd->o_edje);
    free(sd);
 }
 
@@ -991,14 +999,14 @@ static void
 _e_smart_show(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_show(sd->o_box);
+   evas_object_show(sd->o_edje);
 }
 
 static void
 _e_smart_hide(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_hide(sd->o_box);
+   evas_object_hide(sd->o_edje);
 }
 
 static void
@@ -1025,6 +1033,7 @@ static void
 _e_smart_color_set(Evas_Object *obj, int r, int g, int b, int a)
 {
    INTERNAL_ENTRY;
+   evas_object_color_set(sd->o_edje, r, g, b, a);
    evas_object_color_set(sd->o_box, r, g, b, a);
 }
 
@@ -1032,21 +1041,21 @@ static void
 _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    INTERNAL_ENTRY;
-   evas_object_clip_set(sd->o_box, clip);
+   evas_object_clip_set(sd->o_edje, clip);
 }
 
 static void
 _e_smart_clip_unset(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
-   evas_object_clip_unset(sd->o_box);
+   evas_object_clip_unset(sd->o_edje);
 }
 
 static void
 _e_smart_reconfigure(E_Smart_Data *sd)
 {
-   evas_object_move(sd->o_box, sd->x, sd->y);
-   evas_object_resize(sd->o_box, sd->w, sd->h);
+   evas_object_move(sd->o_edje, sd->x, sd->y);
+   evas_object_resize(sd->o_edje, sd->w, sd->h);
 }
 
 static void
@@ -1299,7 +1308,8 @@ _e_typebuf_add(Evas_Object *obj, const char *s)
      }
 
    strcat(sd->typebuf.buf, s);
-
+   edje_object_part_text_set(sd->o_edje, "e.text.typebuf_label", sd->typebuf.buf);
+   edje_object_signal_emit(sd->o_edje, "e,state,typebuf,start", "e");
    _e_typebuf_match(obj);
    _e_typebuf_timer_update(obj);
 }
@@ -1385,6 +1395,7 @@ _e_typebuf_clean(Evas_Object *obj)
    E_FREE(sd->typebuf.buf);
    sd->typebuf.size = 0;
    _e_typebuf_timer_delete(obj);
+   edje_object_signal_emit(sd->o_edje, "e,state,typebuf,stop", "e");
 }
 
 static void
