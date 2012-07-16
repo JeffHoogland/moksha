@@ -460,7 +460,7 @@ _e_desklock_login_box_add(E_Desklock_Popup_Data *edp)
      {
         if ((e_config->desklock_login_box_zone == -2) && (zone != current_zone))
           return;
-        if ((e_config->desklock_login_box_zone != -1) && (e_config->desklock_login_box_zone != (int)eina_list_count(edd->elock_wnd_list)))
+        if ((e_config->desklock_login_box_zone > -1) && (e_config->desklock_login_box_zone != (int)eina_list_count(edd->elock_wnd_list)))
           return;
      }
 
