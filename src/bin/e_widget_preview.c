@@ -67,6 +67,8 @@ e_widget_preview_extern_object_set(Evas_Object *obj, Evas_Object *eobj)
    wd = e_widget_data_get(obj);
    wd->o_extern = eobj;
    e_livethumb_thumb_set(wd->img, wd->o_extern);
+
+   e_widget_change(obj);
 }
 
 EAPI int
@@ -82,6 +84,8 @@ e_widget_preview_file_set(Evas_Object *obj, const char *file, const char *key)
    e_icon_file_key_set(wd->o_thumb, file, key);
    evas_object_show(wd->o_thumb);
    e_livethumb_thumb_set(wd->img, wd->o_thumb);
+
+   e_widget_change(obj);
 
    return 1;
 }
@@ -121,6 +125,8 @@ e_widget_preview_thumb_set(Evas_Object *obj, const char *file, const char *key, 
 
    edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->img);
    evas_object_show(wd->img);
+
+   e_widget_change(obj);
 
    return 1;
 }
@@ -173,6 +179,9 @@ e_widget_preview_edje_set(Evas_Object *obj, const char *file, const char *group)
    ret = edje_object_file_set(wd->o_thumb, file, group);
    evas_object_show(wd->o_thumb);
    e_livethumb_thumb_set(wd->img, wd->o_thumb);
+
+   e_widget_change(obj);
+
    return ret;
 }
 
