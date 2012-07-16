@@ -577,11 +577,19 @@ _e_desklock_cb_zone_del(void *data __UNUSED__,
 static Eina_Bool
 _e_desklock_cb_zone_move_resize(void *data __UNUSED__,
                                 int type __UNUSED__,
-                                void *event __UNUSED__)
+                                void *event)
 {
+   E_Desklock_Popup_Data *edp;
+   Eina_List *l;
+   E_Event_Zone_Move_Resize *ev = event;
+
    if (!edd) return ECORE_CALLBACK_PASS_ON;
-   if (_e_desklock_relock_job) ecore_job_del(_e_desklock_relock_job);
-   _e_desklock_relock_job = ecore_job_add(_e_desklock_relock_cb, NULL);
+   EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
+     if (edp->popup_wnd->zone == ev->zone)
+       {
+          e_popup_move_resize(edp->popup_wnd, 0, 0, ev->zone->w, ev->zone->h);
+          break;
+       }
    return ECORE_CALLBACK_PASS_ON;
 }
 
