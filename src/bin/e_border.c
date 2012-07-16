@@ -7472,13 +7472,21 @@ _e_border_eval0(E_Border *bd)
              ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
              if ((!ok) && (strcmp(bd->client.border.name, "borderless")))
                {
-                  ok = e_theme_edje_object_set(o, "base/theme/borders",
-                                               "e/widgets/border/default/border");
-                  if (ok)
+                  if (bd->client.border.name != e_config->theme_default_border_style)
                     {
-                       /* Reset default border style to default */
-                       eina_stringshare_replace(&e_config->theme_default_border_style, "default");
-                       e_config_save_queue();
+                       snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", e_config->theme_default_border_style);
+                       ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
+                    }
+                  if (!ok)
+                    {
+                       ok = e_theme_edje_object_set(o, "base/theme/borders",
+                                                    "e/widgets/border/default/border");
+                       if (ok)
+                         {
+                            /* Reset default border style to default */
+                            eina_stringshare_replace(&e_config->theme_default_border_style, "default");
+                            e_config_save_queue();
+                         }
                     }
                }
 
