@@ -15,6 +15,13 @@ static int          _zone_count_get(void);
 static void         _cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void         _cb_ask_presentation_changed(void *data, Evas_Object *obj);
 
+typedef enum _E_Desklock_Background_Method {
+    E_DESKLOCK_BACKGROUND_METHOD_THEME_DESKLOCK = 0,
+    E_DESKLOCK_BACKGROUND_METHOD_THEME,
+    E_DESKLOCK_BACKGROUND_METHOD_WALLPAPER,
+    E_DESKLOCK_BACKGROUND_METHOD_CUSTOM,
+} E_Desklock_Background_Method;
+
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd, *bg_fsel;
@@ -38,9 +45,9 @@ struct _E_Config_Dialog_Data
    double           post_screensaver_time;
 
    /* Adv props */
-   int              bg_method;
+   E_Desklock_Background_Method bg_method;
    int              bg_method_prev;
-   Eina_List      *bgs;
+   Eina_List       *bgs;
    int              custom_lock;
    int              ask_presentation;
    double           ask_presentation_timeout;
@@ -113,13 +120,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("theme_desklock_background"));
 
    if (!e_util_strcmp(cfdata->bgs->data, "theme_desklock_background"))
-     cfdata->bg_method = 0;
+     cfdata->bg_method = E_DESKLOCK_BACKGROUND_METHOD_THEME_DESKLOCK;
    else if (!e_util_strcmp(cfdata->bgs->data, "theme_background"))
-     cfdata->bg_method = 1;
+     cfdata->bg_method = E_DESKLOCK_BACKGROUND_METHOD_THEME;
    else if (!e_util_strcmp(cfdata->bgs->data, "user_background"))
-     cfdata->bg_method = 2;
+     cfdata->bg_method = E_DESKLOCK_BACKGROUND_METHOD_WALLPAPER;
    else
-     cfdata->bg_method = 3;
+     cfdata->bg_method = E_DESKLOCK_BACKGROUND_METHOD_CUSTOM;
 
    cfdata->bg_method_prev = cfdata->bg_method;
    cfdata->use_xscreensaver = ecore_x_screensaver_event_available_get();
@@ -299,17 +306,21 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    /* Wallpapers */
    ol = e_widget_list_add(evas, 0, 0);
    of = e_widget_table_add(evas, 1);
-   rg = e_widget_radio_group_new(&(cfdata->bg_method));
-   ow = e_widget_radio_add(evas, _("Theme Defined"), 0, rg);
+   rg = e_widget_radio_group_new((int *)&(cfdata->bg_method));
+   ow = e_widget_radio_add(evas, _("Theme Defined"),
+                           E_DESKLOCK_BACKGROUND_METHOD_THEME_DESKLOCK, rg);
    evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
    e_widget_table_object_append(of, ow, 0, 0, 1, 1, 1, 0, 1, 0);
-   ow = e_widget_radio_add(evas, _("Theme Wallpaper"), 1, rg);
+   ow = e_widget_radio_add(evas, _("Theme Wallpaper"),
+                           E_DESKLOCK_BACKGROUND_METHOD_THEME, rg);
    evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
    e_widget_table_object_append(of, ow, 0, 1, 1, 1, 1, 0, 1, 0);
-   ow = e_widget_radio_add(evas, _("Current Wallpaper"), 2, rg);
+   ow = e_widget_radio_add(evas, _("Current Wallpaper"),
+                           E_DESKLOCK_BACKGROUND_METHOD_WALLPAPER, rg);
    evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
    e_widget_table_object_append(of, ow, 1, 0, 1, 1, 1, 0, 1, 0);
-   ow = e_widget_radio_add(evas, _("Custom"), 3, rg);
+   ow = e_widget_radio_add(evas, _("Custom"),
+                           E_DESKLOCK_BACKGROUND_METHOD_CUSTOM, rg);
    evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
    e_widget_table_object_append(of, ow, 1, 1, 1, 1, 1, 0, 1, 0);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
@@ -323,7 +334,8 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
             ow = e_widget_preview_add(evas, 100, 140);
             cfdata->gui.bgs = eina_list_append(cfdata->gui.bgs, ow);
             evas_object_data_set(ow, "zone", zone);
-            e_widget_disabled_set(ow, (cfdata->bg_method < 3));
+            e_widget_disabled_set(ow,
+              (cfdata->bg_method < E_DESKLOCK_BACKGROUND_METHOD_CUSTOM));
             evas_object_event_callback_add(ow, EVAS_CALLBACK_MOUSE_DOWN, _cb_bg_mouse_down, cfdata);
             e_widget_table_object_append(cfdata->gui.o_table, ow, x++, 0, 1, 1, 1, 1, 1, 1);
          }
@@ -459,11 +471,12 @@ _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
 
    if (!(cfdata = data)) return;
    EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
-     e_widget_disabled_set(bg, (cfdata->bg_method < 3));
+     e_widget_disabled_set(bg,
+       (cfdata->bg_method < E_DESKLOCK_BACKGROUND_METHOD_CUSTOM));
 
    switch (cfdata->bg_method)
      {
-      case 0:
+      case E_DESKLOCK_BACKGROUND_METHOD_THEME_DESKLOCK:
         EINA_LIST_FREE(cfdata->bgs, theme)
           eina_stringshare_del(theme);
         for (x = 0; x < cfdata->zone_count; x++)
@@ -475,7 +488,7 @@ _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
             e_widget_preview_edje_set(bg, theme, "e/desklock/background");
         break;
 
-      case 1:
+      case E_DESKLOCK_BACKGROUND_METHOD_THEME:
         theme = e_theme_edje_file_get("base/theme/backgrounds",
                                       "e/desktop/background");
         if (theme)
@@ -489,7 +502,7 @@ _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
           }
         break;
 
-      case 2:
+      case E_DESKLOCK_BACKGROUND_METHOD_WALLPAPER:
         if (e_config->desktop_backgrounds)
           {
              E_Config_Desktop_Background *cdb;
@@ -533,7 +546,7 @@ _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
           }
         break;
 
-      default:
+      case E_DESKLOCK_BACKGROUND_METHOD_CUSTOM:
         {
              Eina_List *ll;
              E_Config_Desklock_Background *cbg;
@@ -549,6 +562,9 @@ _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
                   ll = ll->next;
                }
         }
+        break;
+
+      default:
         break;
      }
 }
