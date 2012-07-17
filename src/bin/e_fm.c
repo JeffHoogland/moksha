@@ -5619,7 +5619,6 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    free(sd->typebuf.buf);
    sd->typebuf.buf = ts;
    _e_fm2_typebuf_match(obj, 0);
-   fprintf(stderr, "APPEND: %s\n", ch);
    if ((ch[0] == '/') && (sd->typebuf.buf) && ((len > 1) || (sd->typebuf.buf[0] != '~')))
      {
         if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(sd->typebuf.buf))
