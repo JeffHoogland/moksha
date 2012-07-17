@@ -657,7 +657,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
           }
         else
           {
-             if (e_config->desklock_on_suspend) e_desklock_show();
+             if (e_config->desklock_on_suspend) e_desklock_show(EINA_TRUE);
 
              _e_sys_begin_time = ecore_time_get();
              _e_sys_exe = ecore_exe_run(buf, NULL);
@@ -689,7 +689,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__)
           }
         else
           {
-             if (e_config->desklock_on_suspend) e_desklock_show();
+             if (e_config->desklock_on_suspend) e_desklock_show(EINA_TRUE);
 
              _e_sys_begin_time = ecore_time_get();
              _e_sys_exe = ecore_exe_run(buf, NULL);

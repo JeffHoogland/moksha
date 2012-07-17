@@ -18,6 +18,8 @@ typedef struct _E_Desklock_Popup_Data E_Desklock_Popup_Data;
 typedef struct _E_Desklock_Auth       E_Desklock_Auth;
 #endif
 
+typedef struct _E_Desklock_Run  E_Desklock_Run;
+
 struct _E_Desklock_Popup_Data
 {
    E_Popup     *popup_wnd;
@@ -34,6 +36,12 @@ struct _E_Desklock_Data
    Ecore_X_Window elock_grab_break_wnd;
    char           passwd[PASSWD_LEN];
    int            state;
+};
+
+struct _E_Desklock_Run
+{
+   E_Order *desk_run;
+   int position;
 };
 
 #ifdef HAVE_PAM
@@ -64,6 +72,11 @@ static double _e_desklock_autolock_time = 0.0;
 static E_Dialog *_e_desklock_ask_presentation_dia = NULL;
 static int _e_desklock_ask_presentation_count = 0;
 
+static Ecore_Event_Handler *_e_desklock_run_handler = NULL;
+static Ecore_Job *job = NULL;
+static Eina_List *tasks = NULL;
+
+
 /***********************************************************************/
 
 static Eina_Bool _e_desklock_cb_key_down(void *data, int type, void *event);
@@ -74,6 +87,8 @@ static Eina_Bool _e_desklock_cb_window_stack(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_zone_add(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_zone_del(void *data, int type, void *event);
 static Eina_Bool _e_desklock_cb_zone_move_resize(void *data, int type, void *event);
+
+static Eina_Bool _e_desklock_cb_run(void *data, int type, void *event);
 
 static void      _e_desklock_popup_free(E_Desklock_Popup_Data *edp);
 static void      _e_desklock_popup_add(E_Zone *zone);
@@ -112,6 +127,9 @@ e_desklock_init(void)
 
    E_EVENT_DESKLOCK = ecore_event_type_new();
 
+   _e_desklock_run_handler = ecore_event_handler_add(E_EVENT_DESKLOCK,
+						     _e_desklock_cb_run, NULL);
+
    return 1;
 }
 
@@ -119,6 +137,7 @@ EINTERN int
 e_desklock_shutdown(void)
 {
    Eina_Bool waslocked = EINA_FALSE;
+   E_Desklock_Run *task;
 
    if (edd) waslocked = EINA_TRUE;
    if (!x_fatal)
@@ -127,6 +146,19 @@ e_desklock_shutdown(void)
      e_filereg_deregister(e_config->desklock_background);
 
    if (waslocked) e_util_env_set("E_DESKLOCK_LOCKED", "locked");
+
+   ecore_event_handler_del(_e_desklock_run_handler);
+   _e_desklock_run_handler = NULL;
+
+   if (job) ecore_job_del(job);
+   job = NULL;
+
+   EINA_LIST_FREE(tasks, task)
+     {
+        e_object_del(E_OBJECT(task->desk_run));
+        free(task);
+     }
+
    return 1;
 }
 
@@ -151,11 +183,11 @@ e_desklock_show_autolocked(void)
    if (e_util_fullscreen_curreny_any()) return 0;
    if (_e_desklock_autolock_time < 1.0)
      _e_desklock_autolock_time = ecore_loop_time_get();
-   return e_desklock_show();
+   return e_desklock_show(EINA_FALSE);
 }
 
 EAPI int
-e_desklock_show(void)
+e_desklock_show(Eina_Bool suspend)
 {
    Eina_List *managers, *l, *l2, *l3;
    E_Manager *man;
@@ -303,6 +335,7 @@ works:
 
    ev = E_NEW(E_Event_Desklock, 1);
    ev->on = 1;
+   ev->suspend = suspend;
    ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
 
    e_util_env_set("E_DESKLOCK_LOCKED", "locked");
@@ -321,6 +354,7 @@ e_desklock_hide(void)
    _e_desklock_state = EINA_FALSE;
    ev = E_NEW(E_Event_Desklock, 1);
    ev->on = 0;
+   ev->suspend = 1;
    ecore_event_add(E_EVENT_DESKLOCK, ev, NULL, NULL);
 
    if (e_config->desklock_use_custom_desklock)
@@ -1193,3 +1227,77 @@ _e_desklock_ask_presentation_mode(void)
 
    _e_desklock_ask_presentation_dia = dia;
 }
+
+static Eina_Bool
+_e_desklock_run(E_Desklock_Run *task)
+{
+   Efreet_Desktop *desktop;
+
+   desktop = eina_list_nth(task->desk_run->desktops, task->position++);
+   if (!desktop)
+     {
+        e_object_del(E_OBJECT(task->desk_run));
+        free(task);
+        return EINA_FALSE;
+     }
+
+   e_exec(NULL, desktop, NULL, NULL, NULL);
+   return EINA_TRUE;
+}
+
+static void
+_e_desklock_job(void *data __UNUSED__)
+{
+   E_Desklock_Run *task;
+
+   job = NULL;
+   if (!tasks) return ;
+
+   task = eina_list_data_get(tasks);
+   if (!_e_desklock_run(task))
+     tasks = eina_list_remove_list(tasks, tasks);
+
+   if (tasks) job = ecore_job_add(_e_desklock_job, NULL);
+}
+
+static Eina_Bool
+_e_desklock_cb_run(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   E_Desklock_Run *task;
+   E_Event_Desklock *ev = event;
+   E_Order *desk_run;
+   char buf[PATH_MAX];
+
+   if (!ev->suspend) return ECORE_CALLBACK_PASS_ON;
+
+   if (ev->on)
+     {
+        e_user_dir_concat_static(buf, "applications/desk-lock/.order");
+        if (!ecore_file_exists(buf))
+          e_prefix_data_concat_static(buf, "applications/desk-lock/.order");
+     }
+   else
+     {
+        e_user_dir_concat_static(buf, "applications/desk-unlock/.order");
+        if (!ecore_file_exists(buf))
+          e_prefix_data_concat_static(buf, "applications/desk-unlock/.order");
+     }
+
+   desk_run = e_order_new(buf);
+   if (!desk_run) return ECORE_CALLBACK_PASS_ON;
+
+   task = calloc(1, sizeof (E_Desklock_Run));
+   if (!task)
+     {
+        e_object_del(E_OBJECT(desk_run));
+        return ECORE_CALLBACK_PASS_ON;
+     }
+
+   task->desk_run = desk_run;
+   tasks = eina_list_append(tasks, task);
+
+   if (!job) ecore_job_add(_e_desklock_job, NULL);
+
+   return ECORE_CALLBACK_PASS_ON;
+}
+

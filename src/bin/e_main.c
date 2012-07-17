@@ -779,9 +779,9 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_popup_shutdown);
 
    if ((locked) && ((!e_config->show_splash) && (!after_restart)))
-     e_desklock_show();
+     e_desklock_show(EINA_TRUE);
    else if (waslocked)
-     e_desklock_show();
+     e_desklock_show(EINA_TRUE);
 
    if (e_config->show_splash)
      e_init_status_set(_("Setup Message Bus"));
@@ -1061,7 +1061,7 @@ main(int argc, char **argv)
    if (!((!e_config->show_splash) || (after_restart)))
      {
         ecore_timer_add(2.0, _e_main_cb_startup_fake_end, NULL);
-        if (locked) e_desklock_show();
+        if (locked) e_desklock_show(EINA_TRUE);
      }
 
    TS("E_Container Thaw");
@@ -1367,6 +1367,8 @@ _e_main_dirs_init(void)
       "applications/startup",
       "applications/restart",
       "applications/trash",
+      "applications/desk-lock",
+      "applications/desk-unlock",
       "modules",
       "config",
       "locale",

@@ -90,7 +90,7 @@ static DBusMessage *
 cb_desktop_lock(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBG("desklock requested");
-   e_desklock_show();
+   e_desklock_show(EINA_FALSE);
 
    return dbus_message_new_method_return(msg);
 }
