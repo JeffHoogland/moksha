@@ -5511,16 +5511,13 @@ _e_fm2_typebuf_match_func(E_Fm2_Icon *ic, void *data)
 static Eina_Bool
 _e_fm_typebuf_timer_cb(void *data)
 {
-   Evas_Object *obj = data;
-   E_Fm2_Smart_Data *sd;
+   E_Fm2_Smart_Data *sd = data;
 
-   if (!data) return ECORE_CALLBACK_CANCEL;
-   sd = evas_object_smart_data_get(obj);
    if (!sd) return ECORE_CALLBACK_CANCEL;
 
    if (!sd->typebuf_visible) return ECORE_CALLBACK_CANCEL;
 
-   _e_fm2_typebuf_hide(obj);
+   _e_fm2_typebuf_hide(sd->obj);
    sd->typebuf.timer = NULL;
 
    return ECORE_CALLBACK_CANCEL;
@@ -5578,7 +5575,7 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
         ecore_timer_del(sd->typebuf.timer);
      }
 
-   sd->typebuf.timer = ecore_timer_add(5.0, _e_fm_typebuf_timer_cb, obj);
+   sd->typebuf.timer = ecore_timer_add(5.0, _e_fm_typebuf_timer_cb, sd);
 }
 
 static void
