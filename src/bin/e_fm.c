@@ -5627,7 +5627,6 @@ static void
 _e_fm2_typebuf_char_backspace(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
-   char *ts;
    int len, p, dec;
 
    sd = evas_object_smart_data_get(obj);
@@ -5640,11 +5639,8 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
         return;
      }
    p = evas_string_char_prev_get(sd->typebuf.buf, len, &dec);
-   if (p >= 0) sd->typebuf.buf[p] = EINA_FALSE;
-   ts = strdup(sd->typebuf.buf);
-   if (!ts) return;
-   free(sd->typebuf.buf);
-   sd->typebuf.buf = ts;
+   if (p < 0) return;
+   sd->typebuf.buf[p] = 0;
    _e_fm2_typebuf_match(obj, 0);
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
    evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
