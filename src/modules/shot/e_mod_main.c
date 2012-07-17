@@ -128,28 +128,6 @@ _save_to(const char *file)
    char *extn = strrchr(file, '.');
    char opts[256];
    
-   if (!extn) 
-     {
-        e_util_dialog_show
-           (_("Error - Unknown format"),
-               _("File has an unspecified extension.<br>"
-                 "Please use '.jpg' or '.png' extensions<br>"
-                 "only as other formats are not<br>"
-                 "supported currently."));
-        return;
-     }
-   if (!((!strcasecmp(extn, ".png")) ||
-         (!strcasecmp(extn, ".jpg")) ||
-         (!strcasecmp(extn, ".jpeg"))))
-     {
-        e_util_dialog_show
-           (_("Error - Unknown format"),
-               _("File has an unrecognized extension.<br>"
-                 "Please use '.jpg' or '.png' extensions<br>"
-                 "only as other formats are not<br>"
-                 "supported currently."));
-        return;
-     }
    if (!strcasecmp(extn, ".png"))
       snprintf(opts, sizeof(opts), "compress=%i", 9);
    else
@@ -200,7 +178,17 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
    const char *file;
 
    file = e_widget_fsel_selection_path_get(o_fsel);
-   if (file) _save_to(file);
+   if ((!file) || (!file[0]) || ((!eina_str_has_extension(file, "jpg")) && (!eina_str_has_extension(file, "png"))))
+     {
+        e_util_dialog_show
+           (_("Error - Unknown format"),
+               _("File has an unspecified extension.<br>"
+                 "Please use '.jpg' or '.png' extensions<br>"
+                 "only as other formats are not<br>"
+                 "supported currently."));
+        return;
+     }
+   _save_to(file);
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
    if (win)
      {
