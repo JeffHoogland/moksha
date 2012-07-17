@@ -195,6 +195,7 @@ EAPI int
 e_widget_can_focus_get(Evas_Object *obj)
 {
    API_ENTRY return 0;
+   if (sd->disabled) return 0;
    if (sd->can_focus) return 1;
    if (sd->child_can_focus) return 1;
    return 0;
@@ -258,27 +259,24 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
                {
                   EINA_LIST_FOREACH(sd->subobjs, l, sobj)
                     {
-                       if (e_widget_can_focus_get(sobj))
+                       if (!e_widget_can_focus_get(sobj)) continue;
+                       if ((focus_next) && (!e_widget_disabled_get(sobj)))
                          {
-                            if ((focus_next) &&
-                                (!e_widget_disabled_get(sobj)))
+                            /* the previous focused item was unfocused - so focus
+                             * the next one (that can be focused) */
+                            if (e_widget_focus_jump(sobj, forward))
+                              return 1;
+                            break;
+                         }
+                       else
+                         {
+                            if (e_widget_focus_get(sobj))
                               {
-                                 /* the previous focused item was unfocused - so focus
-                                  * the next one (that can be focused) */
+                                 /* jump to the next focused item or focus this item */
                                  if (e_widget_focus_jump(sobj, forward))
                                    return 1;
-                                 else break;
-                              }
-                            else
-                              {
-                                 if (e_widget_focus_get(sobj))
-                                   {
-                                      /* jump to the next focused item or focus this item */
-                                      if (e_widget_focus_jump(sobj, forward))
-                                        return 1;
-                                      /* it returned 0 - it got to the last item and is past it */
-                                      focus_next = 1;
-                                   }
+                                 /* it returned 0 - it got to the last item and is past it */
+                                 focus_next = 1;
                               }
                          }
                     }
