@@ -125,6 +125,7 @@ struct _E_Fm2_Smart_Data
    {
       char        *buf;
       Ecore_Timer *timer;
+      Eina_Bool   setting : 1;
    } typebuf;
 
    int             busy_count;
@@ -5453,6 +5454,7 @@ _e_fm2_typebuf_hide(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (sd->typebuf.setting) return;
    E_FREE(sd->typebuf.buf);
    edje_object_signal_emit(sd->overlay, "e,state,typebuf,stop", "e");
    sd->typebuf_visible = EINA_FALSE;
@@ -5515,11 +5517,14 @@ _e_fm2_typebuf_run(Evas_Object *obj)
 static int
 _e_fm2_typebuf_match_func(E_Fm2_Icon *ic, void *data)
 {
-   char *tb = data;
+   char *s, *tb = data;
+   s = strrchr(tb, '/');
+   if (s) tb = s + 1;
    return ((ic->info.label) &&
            (e_util_glob_case_match(ic->info.label, tb))) ||
           ((ic->info.file) &&
            (e_util_glob_case_match(ic->info.file, tb)));
+
 }
 
 static Eina_Bool
@@ -5528,12 +5533,10 @@ _e_fm_typebuf_timer_cb(void *data)
    E_Fm2_Smart_Data *sd = data;
 
    if (!sd) return ECORE_CALLBACK_CANCEL;
-
+   sd->typebuf.timer = NULL;
    if (!sd->typebuf_visible) return ECORE_CALLBACK_CANCEL;
 
    _e_fm2_typebuf_hide(sd->obj);
-   sd->typebuf.timer = NULL;
-
    return ECORE_CALLBACK_CANCEL;
 }
 
@@ -5552,7 +5555,7 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
    if (!sd->icons) return;
 
    tblen = strlen(sd->typebuf.buf);
-   tb = malloc(tblen + 2);
+   tb = alloca(tblen + 2);
    if (!tb) return;
    memcpy(tb, sd->typebuf.buf, tblen);
    tb[tblen] = '*';
@@ -5582,14 +5585,8 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
         _e_fm2_icon_make_visible(ic_match);
      }
 
-   free(tb);
-
-   if (sd->typebuf.timer)
-     {
-        ecore_timer_del(sd->typebuf.timer);
-     }
-
-   sd->typebuf.timer = ecore_timer_add(5.0, _e_fm_typebuf_timer_cb, sd);
+   if (sd->typebuf.timer) ecore_timer_reset(sd->typebuf.timer);
+   else sd->typebuf.timer = ecore_timer_add(5.0, _e_fm_typebuf_timer_cb, sd);
 }
 
 static void
@@ -5608,17 +5605,30 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
 {
    E_Fm2_Smart_Data *sd;
    char *ts;
+   size_t len;
 
+   if ((!ch) || (!ch[0])) return;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if (!sd->typebuf.buf) return;
-   ts = malloc(strlen(sd->typebuf.buf) + strlen(ch) + 1);
+   len = strlen(sd->typebuf.buf) + strlen(ch);
+   ts = malloc(len + 1);
    if (!ts) return;
    strcpy(ts, sd->typebuf.buf);
    strcat(ts, ch);
    free(sd->typebuf.buf);
    sd->typebuf.buf = ts;
    _e_fm2_typebuf_match(obj, 0);
+   fprintf(stderr, "APPEND: %s\n", ch);
+   if ((ch[0] == '/') && (sd->typebuf.buf) && ((len > 1) || (sd->typebuf.buf[0] != '~')))
+     {
+        if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(sd->typebuf.buf))
+          {
+             sd->typebuf.setting = EINA_TRUE;
+             e_fm2_path_set(obj, "/", sd->typebuf.buf);
+             sd->typebuf.setting = EINA_FALSE;
+          }
+     }
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
    evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
 }
@@ -5642,6 +5652,16 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
    if (p < 0) return;
    sd->typebuf.buf[p] = 0;
    _e_fm2_typebuf_match(obj, 0);
+   len--;
+   if ((dec == '/') && (sd->typebuf.buf) && ((len > 1) || (sd->typebuf.buf[0] != '~')))
+     {
+        if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(sd->typebuf.buf))
+          {
+             sd->typebuf.setting = EINA_TRUE;
+             e_fm2_path_set(obj, "/", sd->typebuf.buf);
+             sd->typebuf.setting = EINA_FALSE;
+          }
+     }
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
    evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
 }
