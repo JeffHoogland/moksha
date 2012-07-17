@@ -84,7 +84,6 @@ static void      _fsel_cb_delete(E_Win *win);
 static void      _fsel_cb_resize(E_Win *win);
 static void      _fsel_cb_close(void *data, void *data2);
 static void      _fsel_cb_ok(void *data, void *data2);
-static void      _import_cb_wid_on_focus(void *data, Evas_Object *obj);
 static void      _import_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 static void      _fsel_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event);
 
@@ -139,7 +138,6 @@ e_int_config_wallpaper_import(void *data, const char *path)
    evas_object_show(o);
 
    o = e_widget_list_add(evas, 1, 1);
-   e_widget_on_focus_hook_set(o, _import_cb_wid_on_focus, import);
    import->box_obj = o;
    edje_object_part_swallow(import->bg_obj, "e.swallow.buttons", o);
 
@@ -309,7 +307,6 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    evas_object_show(o);
 
    o = e_widget_list_add(evas, 1, 1);
-   e_widget_on_focus_hook_set(o, _import_cb_wid_on_focus, fsel);
    fsel->box_obj = o;
    edje_object_part_swallow(fsel->bg_obj, "e.swallow.buttons", o);
 
@@ -335,6 +332,7 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
                                   _fsel_cb_key_down, fsel);
 
    o = e_widget_list_add(evas, 0, 0);
+   e_widget_can_focus_set(o, 0);
    fsel->content_obj = o;
 
    fdev = e_config->wallpaper_import_last_dev;
@@ -389,9 +387,6 @@ e_int_config_wallpaper_fsel(E_Config_Dialog *parent)
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
    e_win_border_icon_set(win, "enlightenment/background");
-
-   if (!e_widget_focus_get(fsel->bg_obj))
-     e_widget_focus_set(fsel->box_obj, 1);
 
    win->data = fsel;
 
@@ -924,18 +919,6 @@ _fsel_cb_ok(void *data, void *data2 __UNUSED__)
      }
    else
      e_int_config_wallpaper_import(fsel, path);
-}
-
-static void
-_import_cb_wid_on_focus(void *data, Evas_Object *obj)
-{
-   Import *import;
-
-   import = data;
-   if (obj == import->content_obj)
-     e_widget_focused_object_clear(import->box_obj);
-   else if (import->content_obj)
-     e_widget_focused_object_clear(import->content_obj);
 }
 
 static void
