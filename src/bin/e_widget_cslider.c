@@ -109,7 +109,7 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
 }
 
 static void
-_e_wid_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+_e_wid_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
    /* Evas_Coord x, y; */
@@ -121,7 +121,7 @@ _e_wid_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info _
 }
 
 static void
-_e_wid_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+_e_wid_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
    /* Evas_Coord w, h; */
@@ -536,7 +536,7 @@ _e_wid_focus_steal(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
 }
 
 static void
-_e_wid_cb_drag_start(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wid_cb_drag_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Object *o_wid;
    E_Widget_Data *wd;
@@ -549,14 +549,14 @@ _e_wid_cb_drag_start(void *data, Evas_Object *obj, const char *emission, const c
    edje_object_part_drag_value_get(wd->o_cslider, "e.dragable.cursor",
                                    &valx, &valy);
    if (wd->vertical) val = valy;
-   else valx;
+   else val = valx;
    if (val > 1) val = 1;
    if (val < 0) val = 0;
    _e_wid_value_set(o_wid, val);
 }
 
 static void
-_e_wid_cb_drag_stop(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wid_cb_drag_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Object *o_wid;
    E_Widget_Data *wd;
@@ -567,7 +567,7 @@ _e_wid_cb_drag_stop(void *data, Evas_Object *obj, const char *emission, const ch
 }
 
 static void
-_e_wid_cb_drag(void *data, Evas_Object *obj, const char *emission, const char *source)
+_e_wid_cb_drag(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Object *o_wid;
    E_Widget_Data *wd;
