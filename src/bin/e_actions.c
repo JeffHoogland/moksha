@@ -1641,41 +1641,36 @@ ACT_FN_GO(desk_linear_flip_to_all, )
 /***************************************************************************/
 ACT_FN_GO(screen_send_to, )
 {
-   E_Zone *zone;
+   E_Zone *zone, *zone2;
+   int scr;
 
    zone = _e_actions_zone_get(obj);
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-   if (zone)
+   if (!zone) return;
+   if (!params) return;
+
+   errno = 0;
+   scr = strtol(params, NULL, 10);
+   if (errno) return;
+
+   if (eina_list_count(e_manager_list()) > 1)
      {
-        if (params)
-          {
-             int scr = 0;
-
-             if (sscanf(params, "%i", &scr) == 1)
-               {
-                  E_Zone *zone2 = NULL;
-
-                  if (eina_list_count(e_manager_list()) > 1)
-                    {
-                       scr = scr % eina_list_count(e_manager_list());
-                       if (scr < 0) scr += eina_list_count(e_manager_list());
-                       zone2 = e_util_container_zone_number_get(scr, 0);
-                    }
-                  else
-                    {
-                       scr = scr % eina_list_count(zone->container->zones);
-                       if (scr < 0) scr += eina_list_count(zone->container->zones);
-                       zone2 = e_util_container_zone_number_get(0, scr);
-                    }
-                  if ((zone2) && (zone != zone2))
-                    {
-                       ecore_x_pointer_warp(zone2->container->win,
-                                            zone2->x + (zone2->w / 2),
-                                            zone2->y + (zone2->h / 2));
-                       e_desk_last_focused_focus(e_desk_current_get(zone2));
-                    }
-               }
-          }
+        scr = scr % eina_list_count(e_manager_list());
+        if (scr < 0) scr += eina_list_count(e_manager_list());
+        zone2 = e_util_container_zone_number_get(scr, 0);
+     }
+   else
+     {
+        scr = scr % eina_list_count(zone->container->zones);
+        if (scr < 0) scr += eina_list_count(zone->container->zones);
+        zone2 = e_util_container_zone_number_get(0, scr);
+     }
+   if ((zone2) && (zone != zone2))
+     {
+        ecore_x_pointer_warp(zone2->container->win,
+                             zone2->x + (zone2->w / 2),
+                             zone2->y + (zone2->h / 2));
+        e_desk_last_focused_focus(e_desk_current_get(zone2));
      }
 }
 
