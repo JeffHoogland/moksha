@@ -185,6 +185,7 @@ EAPI Evas_Object     *e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic, Evas_Smart_Cb g
                                      void *data, int force_gen, const char **type_ret);
 EAPI E_Fm2_Icon_Info *e_fm2_icon_file_info_get(E_Fm2_Icon *ic);
 EAPI void             e_fm2_icon_geometry_get(E_Fm2_Icon *ic, int *x, int *y, int *w, int *h);
+EAPI Eina_Bool       e_fm2_typebuf_visible_get(Evas_Object *obj);
 
 EAPI void             e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e);
 EAPI void             e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);

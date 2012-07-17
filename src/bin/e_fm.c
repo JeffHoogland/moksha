@@ -288,7 +288,7 @@ static void          _e_fm2_typebuf_hide(Evas_Object *obj);
 //static void _e_fm2_typebuf_history_prev(Evas_Object *obj);
 //static void _e_fm2_typebuf_history_next(Evas_Object *obj);
 static void          _e_fm2_typebuf_run(Evas_Object *obj);
-static void          _e_fm2_typebuf_match(Evas_Object *obj, int next);
+static E_Fm2_Icon  *_e_fm2_typebuf_match(Evas_Object *obj, int next);
 static void          _e_fm2_typebuf_complete(Evas_Object *obj);
 static void          _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch);
 static void          _e_fm2_typebuf_char_backspace(Evas_Object *obj);
@@ -5540,7 +5540,7 @@ _e_fm_typebuf_timer_cb(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static void
+static E_Fm2_Icon *
 _e_fm2_typebuf_match(Evas_Object *obj, int next)
 {
    E_Fm2_Smart_Data *sd;
@@ -5550,13 +5550,12 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
    int tblen;
 
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return;
-   if (!sd->typebuf.buf) return;
-   if (!sd->icons) return;
+   if (!sd) return NULL;
+   if (!sd->typebuf.buf) return NULL;
+   if (!sd->icons) return NULL;
 
    tblen = strlen(sd->typebuf.buf);
    tb = alloca(tblen + 2);
-   if (!tb) return;
    memcpy(tb, sd->typebuf.buf, tblen);
    tb[tblen] = '*';
    tb[tblen + 1] = '\0';
@@ -5586,18 +5585,44 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
      }
 
    if (sd->typebuf.timer) ecore_timer_reset(sd->typebuf.timer);
-   else sd->typebuf.timer = ecore_timer_add(5.0, _e_fm_typebuf_timer_cb, sd);
+   else sd->typebuf.timer = ecore_timer_add(3.5, _e_fm_typebuf_timer_cb, sd);
+   return ic_match;
 }
 
 static void
 _e_fm2_typebuf_complete(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
+   E_Fm2_Icon *ic;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   /* FIXME: do */
-   _e_fm2_typebuf_match(obj, 0);
+   if ((!sd->typebuf.buf) || (!sd->typebuf.buf[0])) return;
+   ic = _e_fm2_typebuf_match(obj, 0);
+   if (!ic) return;
+   if ((sd->typebuf.buf[0] == '/') || (!memcmp(sd->typebuf.buf, "~/", 2)))
+     {
+        char *buf, *s;
+        size_t size;
+
+        s = strrchr(sd->typebuf.buf, '/');
+        s++;
+        s[0] = 0;
+        size = s - sd->typebuf.buf + strlen(ic->info.file) + 1;
+        buf = malloc(size);
+        snprintf(buf, size, "%s%s", sd->typebuf.buf, ic->info.file);
+        free(sd->typebuf.buf);
+        sd->typebuf.buf = buf;
+        edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
+        evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
+     }
+   else
+     {
+        free(sd->typebuf.buf);
+        sd->typebuf.buf = strdup(ic->info.file);
+        edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
+        evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
+     }
 }
 
 static void
@@ -10085,4 +10110,11 @@ e_fm2_view_mode_get(Evas_Object *obj)
 {
    EFM_SMART_CHECK(0);
    return _e_fm2_view_mode_get(sd);
+}
+
+EAPI Eina_Bool
+e_fm2_typebuf_visible_get(Evas_Object *obj)
+{
+   EFM_SMART_CHECK(EINA_FALSE);
+   return sd->typebuf_visible;
 }
