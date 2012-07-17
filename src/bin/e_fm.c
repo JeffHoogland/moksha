@@ -1080,6 +1080,20 @@ e_fm2_all_sel(Evas_Object *obj)
 }
 
 EAPI void
+e_fm2_first_sel(Evas_Object *obj)
+{
+   EFM_SMART_CHECK();
+   _e_fm2_icon_sel_first(obj, EINA_FALSE);
+}
+
+EAPI void
+e_fm2_last_sel(Evas_Object *obj)
+{
+   EFM_SMART_CHECK();
+   _e_fm2_icon_sel_last(obj, EINA_FALSE);
+}
+
+EAPI void
 e_fm2_custom_theme_set(Evas_Object *obj, const char *path)
 {
    EFM_SMART_CHECK();
