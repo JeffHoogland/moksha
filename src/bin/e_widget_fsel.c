@@ -460,6 +460,17 @@ e_widget_fsel_window_object_set(Evas_Object *obj, E_Object *eobj)
    e_fm2_window_object_set(wd->o_files_fm, eobj);
 }
 
+EAPI Eina_Bool
+e_widget_fsel_typebuf_visible_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+
+   if (!obj) return EINA_FALSE;
+   wd = e_widget_data_get(obj);
+   if (!wd) return EINA_FALSE;
+   return e_fm2_typebuf_visible_get(wd->o_files_fm) || e_fm2_typebuf_visible_get(wd->o_favorites_fm);
+}
+
 static void
 _e_wid_del_hook(Evas_Object *obj)
 {
