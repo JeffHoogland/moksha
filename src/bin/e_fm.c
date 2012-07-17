@@ -5620,6 +5620,7 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    sd->typebuf.buf = ts;
    _e_fm2_typebuf_match(obj, 0);
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
+   evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
 }
 
 static void
@@ -5646,6 +5647,7 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
    sd->typebuf.buf = ts;
    _e_fm2_typebuf_match(obj, 0);
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
+   evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
 }
 
 /**************************/
