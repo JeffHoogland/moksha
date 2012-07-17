@@ -289,43 +289,32 @@ collections {
       /* this section defines that images are to be included and how to
        * encode them */
       images {
-         image: "Motleyrock.jpg" LOSSY 92;
-         /* the encoding is "LOSSY". this loses quality (92% quality level)
-          * but uses less space in return. uses JPEG and can do alpha channels
-          * too */
+         image: "bg_radgrad.png" COMP;
+         image: "bg_pattern.png" COMP;
       }
       /* this section actually contains the list of parts from bottom to top
        * (defining the layering/stacking order) */
       parts {
-         part { name: "background_image";
+         part { name: "bg";
             mouse_events: 0;
             /* this is the base background */
             description { state: "default" 0.0;
-               /* its default state */
-               /* note a part has 1 or more states described here. Each state
-                * has a name AND a value. If the value is not useful then set
-                * it to 0.0. The names do not need to be unique within a part
-                * but the name + value combination needs to be unique. At some
-                * points edje is able to select a state given a value other
-                * other than 0.0 - in that case Edje will find the state with
-                * the same name but closest value to the one being asked for.
-                * This allows you to create many states that act as a
-                * meticulously defined series of states from 0.0 to 1.0
-                * (example - a "fuel gauge") where the theme may provide as many
-                * or few as the designer wants, and edje will just chose the
-                * closest match to what it wants. In almost all cases you will
-                * not use this feature, but this explains the "0.0" you see
-                * everywhere */
-               /* nb - i am using a shortcut notation. you can use this
-                * parent.child: blah; in a key to avoid doing
-                * parent { child: blah; }
-                */
                image {
-                  normal: "Motleyrock.jpg";
+                  normal: "bg_radgrad.png";
                   scale_hint: STATIC;
                }
-               aspect: (1920/1200) (1920/1200);
+               fill.smooth: 0;
+               aspect: (1024/653) (1024/653);
                aspect_preference: NONE;
+            }
+         }
+         part { name: "pat";
+            mouse_events: 0;
+            /* this is the base background */
+            description { state: "default" 0.0;
+               image.normal: "bg_pattern.png";
+               fill.size.relative: 0.0 0.0;
+               fill.size.offset: 256 256;
             }
          }
       }

@@ -451,4 +451,5 @@ xkbshad.png \
 wizard_pattern.png \
 wizard_bt1.png \
 wizard_bt2.png \
-Motleyrock.jpg
+bg_pattern.png \
+bg_radgrad.png
