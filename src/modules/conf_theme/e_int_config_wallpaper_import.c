@@ -988,7 +988,7 @@ _fsel_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, v
 
    ev = event;
    fsel = data;
-   if (!strcmp(ev->keyname, "Tab"))
+   if ((!e_widget_fsel_typebuf_visible_get(fsel->fsel_obj)) && (!strcmp(ev->keyname, "Tab")))
      {
         if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(fsel->win)), "Shift"))
           {
