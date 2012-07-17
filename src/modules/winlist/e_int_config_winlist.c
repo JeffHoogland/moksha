@@ -215,7 +215,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_check_add(evas, _("Raise"), &(cfdata->raise));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   ob = e_widget_check_add(evas, _("Uncover"), &(cfdata->uncover));
+   ob = e_widget_check_add(evas, _("Uniconify/Unshade"), &(cfdata->uncover));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_check_add(evas, _("Warp mouse while selecting"),
                            &(cfdata->warp_while_selecting));
