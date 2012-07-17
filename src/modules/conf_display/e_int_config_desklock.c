@@ -425,7 +425,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    if (e_config->desklock_autolock_idle_timeout != cfdata->idle_time * 60)
      return 1;
 
-   if (cfdata->bg_method_prev != cfdata->bg_method) return 1;
+   if (cfdata->bg_method_prev != (int)cfdata->bg_method) return 1;
    ll = cfdata->bgs;
    EINA_LIST_FOREACH(e_config->desklock_backgrounds, l, cbg)
      {
