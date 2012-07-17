@@ -5619,13 +5619,28 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    free(sd->typebuf.buf);
    sd->typebuf.buf = ts;
    _e_fm2_typebuf_match(obj, 0);
-   if ((ch[0] == '/') && (sd->typebuf.buf) && ((len > 1) || (sd->typebuf.buf[0] != '~')))
+   if (ch[0] == '/')
      {
-        if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(sd->typebuf.buf))
+        if (sd->typebuf.buf[0] != '~')
           {
-             sd->typebuf.setting = EINA_TRUE;
-             e_fm2_path_set(obj, "/", sd->typebuf.buf);
-             sd->typebuf.setting = EINA_FALSE;
+             if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(sd->typebuf.buf))
+               {
+                  sd->typebuf.setting = EINA_TRUE;
+                  e_fm2_path_set(obj, "/", sd->typebuf.buf);
+                  sd->typebuf.setting = EINA_FALSE;
+               }
+          }
+        else if (!memcmp(sd->typebuf.buf, "~/", 2))
+          {
+             char buf[PATH_MAX];
+
+             snprintf(buf, sizeof(buf), "%s/%s", getenv("HOME"), sd->typebuf.buf + 2);
+             if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(buf))
+               {
+                  sd->typebuf.setting = EINA_TRUE;
+                  e_fm2_path_set(obj, "~/", sd->typebuf.buf + 1);
+                  sd->typebuf.setting = EINA_FALSE;
+               }
           }
      }
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
@@ -5652,13 +5667,28 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
    sd->typebuf.buf[p] = 0;
    _e_fm2_typebuf_match(obj, 0);
    len--;
-   if ((dec == '/') && (sd->typebuf.buf) && ((len > 1) || (sd->typebuf.buf[0] != '~')))
+   if (dec == '/')
      {
-        if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(sd->typebuf.buf))
+        if ((len > 1) || (sd->typebuf.buf[0] != '~'))
           {
-             sd->typebuf.setting = EINA_TRUE;
-             e_fm2_path_set(obj, "/", sd->typebuf.buf);
-             sd->typebuf.setting = EINA_FALSE;
+             if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(sd->typebuf.buf))
+               {
+                  sd->typebuf.setting = EINA_TRUE;
+                  e_fm2_path_set(obj, "/", sd->typebuf.buf);
+                  sd->typebuf.setting = EINA_FALSE;
+               }
+          }
+        else if (!memcmp(sd->typebuf.buf, "~/", 2))
+          {
+             char buf[PATH_MAX];
+
+             snprintf(buf, sizeof(buf), "%s/%s", getenv("HOME"), sd->typebuf.buf + 2);
+             if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(buf))
+               {
+                  sd->typebuf.setting = EINA_TRUE;
+                  e_fm2_path_set(obj, "~/", sd->typebuf.buf + 1);
+                  sd->typebuf.setting = EINA_FALSE;
+               }
           }
      }
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
