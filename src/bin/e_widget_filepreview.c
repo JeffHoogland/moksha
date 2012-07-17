@@ -274,15 +274,18 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    wd->w = w, wd->h = h;
 
    o = e_widget_list_add(evas, 0, horiz);
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_list = o;
    e_widget_resize_object_set(obj, o);
    e_widget_sub_object_add(obj, o);
 
    o = e_widget_table_add(evas, 0);
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_preview_table = o;
    e_widget_sub_object_add(obj, o);
 
    o = e_widget_preview_add(evas, w, h);
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_preview = o;
    e_widget_sub_object_add(obj, o);
    evas_object_smart_callback_add(o, "preview_update",
@@ -295,10 +298,12 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
                                0, 1, 0.5);
 
    o = e_widget_table_add(evas, 0);
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_properties_table = o;
    e_widget_sub_object_add(obj, o);
 
    o = e_widget_label_add(evas, _("Resolution:"));
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_extra = o;
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
@@ -316,6 +321,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
                                 1, 0, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_label_add(evas, _("Size:"));
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_size = o;
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
@@ -333,6 +339,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
                                 1, 1, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_label_add(evas, _("Owner:"));
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_owner = o;
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
@@ -350,6 +357,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
                                 1, 2, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_label_add(evas, _("Permissions:"));
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_perms = o;
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
@@ -367,6 +375,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
                                 1, 3, 1, 1, 1, 1, 1, 1);
 
    o = e_widget_label_add(evas, _("Modified:"));
+   e_widget_can_focus_set(o, 0);
    wd->o_preview_time = o;
    e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
@@ -403,6 +412,7 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    evas_object_show(wd->o_preview_time_entry);
    evas_object_show(wd->o_preview_properties_table);
    evas_object_show(wd->o_preview_list);
+   e_widget_can_focus_set(obj, 0);
    return obj;
 }
 
