@@ -1732,3 +1732,66 @@ e_util_fullscreen_any(void)
    return EINA_FALSE;
 }
 
+EAPI const char *
+e_util_time_str_get(long int seconds)
+{
+   static char buf[1024];
+   long int test;
+
+   if (seconds < 0)
+     snprintf(buf, sizeof(buf), _("Never"));
+   else
+     {
+        if (seconds <= 60)
+          snprintf(buf, sizeof(buf), _("%d Seconds"), seconds);
+        else if (seconds >= 31526000)
+          {
+             test = seconds / 31526000;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("One year"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Years"), test);
+          }
+        else if (seconds >= 2592000)
+          {
+             test = seconds / 2592000;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("One month"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Months"), test);
+          }
+        else if (seconds >= 604800)
+          {
+             test = seconds / 604800;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("One week"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Weeks"), test);
+          }
+        else if (seconds >= 86400)
+          {
+             test = seconds / 86400;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("One day"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Days"), test);
+          }
+        else if (seconds >= 3600)
+          {
+             test = seconds / 3600;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("An hour"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Hours"), test);
+          }
+        else if (seconds > 60)
+          {
+             test = seconds / 60;
+             if (test == 1)
+               snprintf(buf, sizeof(buf), _("A minute"));
+             else
+               snprintf(buf, sizeof(buf), _("%li Minutes"), test);
+          }
+     }
+   return buf;
+}
