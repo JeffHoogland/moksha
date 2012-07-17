@@ -185,6 +185,12 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_i
 }
 
 static void
+_e_wid_fsel_typebuf_change(E_Widget_Data *wd, Evas_Object *obj __UNUSED__, const char *str)
+{
+   e_widget_entry_text_set(wd->o_entry, str);
+}
+
+static void
 _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
@@ -358,6 +364,8 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
                                   _e_wid_fsel_files_selection_change, wd);
    evas_object_smart_callback_add(o, "selected",
                                   _e_wid_fsel_files_selected, wd);
+   evas_object_smart_callback_add(o, "typebuf_changed",
+                                  (Evas_Smart_Cb)_e_wid_fsel_typebuf_change, wd);
    e_fm2_path_set(o, dev, path);
 
    o = e_widget_scrollframe_pan_add(evas, wd->o_files_fm,
@@ -403,6 +411,8 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    evas_object_show(wd->o_entry);
    evas_object_show(wd->o_table2);
    evas_object_show(wd->o_table);
+   e_fm2_first_sel(wd->o_files_fm);
+   evas_object_focus_set(wd->o_files_fm, EINA_TRUE);
    return obj;
 }
 
