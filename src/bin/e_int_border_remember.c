@@ -634,16 +634,16 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
 
-   o = e_widget_table_add(evas, 0);
+   o = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
-   of = e_widget_framelist_add(evas, _("Remember using"), 0);
+   of = e_widget_list_add(evas, 0, 0);
    if (cfdata->name)
      {
         ob = e_widget_check_add(evas, _("Window name"),
                                 &(cfdata->remember.match_name));
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
         ob = e_widget_entry_add(evas, &cfdata->name, NULL, NULL, NULL);
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
      }
    else
      {
@@ -653,9 +653,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
      {
         ob = e_widget_check_add(evas, _("Window class"),
                                 &(cfdata->remember.match_class));
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
         ob = e_widget_entry_add(evas, &cfdata->class, NULL, NULL, NULL);
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
      }
    else
      {
@@ -665,9 +665,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
      {
         ob = e_widget_check_add(evas, _("Title"),
                                 &(cfdata->remember.match_title));
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
         ob = e_widget_entry_add(evas, &cfdata->title, NULL, NULL, NULL);
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
      }
    else
      {
@@ -677,9 +677,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
      {
         ob = e_widget_check_add(evas, _("Window Role"),
                                 &(cfdata->remember.match_role));
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
         ob = e_widget_entry_add(evas, &cfdata->role, NULL, NULL, NULL);
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
      }
    else
      {
@@ -689,92 +689,94 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
      {
         ob = e_widget_check_add(evas, _("Window type"),
                                 &(cfdata->remember.match_type));
-        e_widget_framelist_object_append(of, ob);
+        e_widget_list_object_append(of, ob, 1, 0, 0.5);
      }
    else
      {
         cfdata->remember.match_type = 0;
      }
    ob = e_widget_label_add(evas, _("wildcard matches are allowed"));
-   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(of, ob, 1, 0, 0.5);
    ob = e_widget_check_add(evas, _("Transience"),
                            &(cfdata->remember.match_transient));
-   e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(of, ob, 1, 0, 0.5);
+   e_widget_toolbook_page_append(o, NULL, _("Using"), of, 1, 1, 1, 1, 0.5, 0.0);
 
-   of = e_widget_frametable_add(evas, _("Properties to remember"), 0);
+
+   of = e_widget_table_add(evas, 0);
    ob = e_widget_check_add(evas, _("Position"),
                            &(cfdata->remember.apply_pos));
-   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Size"),
                            &(cfdata->remember.apply_size));
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Stacking"),
                            &(cfdata->remember.apply_layer));
-   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Locks"),
                            &(cfdata->remember.apply_locks));
-   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Border style"),
                            &(cfdata->remember.apply_border));
-   e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 4, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Icon Preference"),
                            &(cfdata->remember.apply_icon_pref));
-   e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 5, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Stickiness"),
                            &(cfdata->remember.apply_sticky));
-   e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 6, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Virtual Desktop"),
                            &(cfdata->remember.apply_desktop));
-   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Shaded state"),
                            &(cfdata->remember.apply_shade));
-   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Fullscreen state"),
                            &(cfdata->remember.apply_fullscreen));
-   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Current Screen"),
                            &(cfdata->remember.apply_zone));
-   e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Skip Window List"),
                            &(cfdata->remember.apply_skip_winlist));
-   e_widget_frametable_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Skip Pager"),
                            &(cfdata->remember.apply_skip_pager));
-   e_widget_frametable_object_append(of, ob, 1, 5, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 5, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Skip Taskbar"),
                            &(cfdata->remember.apply_skip_taskbar));
-   e_widget_frametable_object_append(of, ob, 1, 6, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 6, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Offer Resistance"),
                            &(cfdata->remember.offer_resistance));
-   e_widget_frametable_object_append(of, ob, 1, 7, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 7, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Application file or name (.desktop)"),
                            &(cfdata->remember.apply_desktop_file));
-   e_widget_frametable_object_append(of, ob, 0, 7, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 7, 1, 1, 1, 1, 1, 1);
    ob = e_widget_entry_add(evas, &cfdata->desktop, NULL, NULL, NULL);
-   e_widget_frametable_object_append(of, ob, 0, 8, 2, 1, 1, 1, 1, 1);
-   e_widget_table_object_append(o, of, 1, 0, 1, 2, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 8, 2, 1, 1, 1, 1, 1);
+   e_widget_toolbook_page_append(o, NULL, _("Properties"), of, 1, 1, 1, 1, 0.5, 0.0);
 
-   of = e_widget_frametable_add(evas, _("Options"), 0);
+   of = e_widget_table_add(evas, 0);
    ob = e_widget_check_add(evas, _("Match only one window"),
                            &(cfdata->remember.apply_first_only));
-   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
 
    ob = e_widget_check_add(evas, _("Always focus on start"),
                            &(cfdata->remember.set_focus_on_start));
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
 
    ob = e_widget_check_add(evas, _("Keep current properties"),
                            &(cfdata->remember.keep_settings));
-   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
 
    if (cfdata->command)
      {
         ob = e_widget_check_add(evas, _("Start this program on login"),
                                 &(cfdata->remember.apply_run));
-        e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
+        e_widget_table_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
      }
-   e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_toolbook_page_append(o, NULL, _("Options"), of, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_show(o, 0);
 
    return o;
 }
