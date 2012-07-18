@@ -19,11 +19,10 @@ static void
 _finish(Evry_Plugin *plugin)
 {
    GET_PLUGIN(p, plugin);
-   Evry_Action *act;
 
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
-   EINA_LIST_FREE (p->actions, act) ;
+   eina_list_free(p->actions);
    E_FREE(p);
 }
 
