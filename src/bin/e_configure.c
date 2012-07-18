@@ -147,6 +147,14 @@ e_configure_registry_item_del(const char *path)
  * Can be null to use current theme.
  * @param icon the name of the edje group to use as icon 
  */
+static int
+_E_configure_category_pri_cb(E_Configure_Cat *ecat, E_Configure_Cat *ecat2)
+{
+   if (ecat->pri == ecat2->pri)
+     return strcmp(ecat->label, ecat2->label);
+   return ecat->pri - ecat2->pri;
+}
+
 EAPI void
 e_configure_registry_category_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon)
 {
@@ -166,14 +174,9 @@ e_configure_registry_category_add(const char *path, int pri, const char *label, 
    ecat->label = eina_stringshare_add(label);
    if (icon_file) ecat->icon_file = eina_stringshare_add(icon_file);
    if (icon) ecat->icon = eina_stringshare_add(icon);
-   EINA_LIST_FOREACH(e_configure_registry, l, ecat2)
-     if (ecat2->pri > ecat->pri)
-       {
-          e_configure_registry =
-            eina_list_prepend_relative_list(e_configure_registry, ecat, l);
-          return;
-       }
-   e_configure_registry = eina_list_append(e_configure_registry, ecat);
+   e_configure_registry = eina_list_sorted_insert(e_configure_registry,
+                                                  EINA_COMPARE_CB(_E_configure_category_pri_cb),
+                                                  ecat);
 }
 
 /**  
@@ -448,6 +451,14 @@ _e_configure_compare_cb(E_Configure_It *eci, E_Configure_It *eci2)
    return e_util_strcasecmp(eci->label, eci2->label);
 }
 
+static int
+_e_configure_compare_pri_cb(E_Configure_It *eci, E_Configure_It *eci2)
+{
+   if (eci->pri == eci2->pri)
+     return strcmp(eci->label, eci2->label);
+   return eci->pri - eci2->pri;
+}
+
 static void
 _e_configure_registry_item_full_add(const char *path, int pri, const char *label, const char *icon_file, const char *icon, E_Config_Dialog *(*func)(E_Container * con, const char *params), void (*generic_func)(E_Container *con, const char *params), Efreet_Desktop *desktop, const char *params)
 {
@@ -481,21 +492,12 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      if (!strcmp(cat, ecat->cat))
        {
-          E_Configure_It *eci2;
-          Eina_List *ll;
-
           if (external)
             {
                ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_cb), eci);
-               break;
+               goto done; /* This was a break before, but sounds like it could lead to a double insert */
             }
-          EINA_LIST_FOREACH(ecat->items, ll, eci2)
-            if (eci2->pri > eci->pri)
-              {
-                 ecat->items = eina_list_prepend_relative_list(ecat->items, eci, ll);
-                 goto done;
-              }
-          ecat->items = eina_list_append(ecat->items, eci);
+          ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_pri_cb), eci);
           break;
        }
 
