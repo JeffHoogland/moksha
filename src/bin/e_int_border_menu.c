@@ -233,7 +233,13 @@ _e_border_menu_cb_border(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNU
    char buf[256];
 
    bd = data;
-   if (bd->border_border_dialog) return;
+   if (bd->border_border_dialog)
+     {
+        e_border_desk_set(bd->border_border_dialog->dia->win->border, bd->desk);
+        e_win_raise(bd->border_border_dialog->dia->win);
+        e_border_focus_set(bd->border_border_dialog->dia->win->border, 1, 1);
+        return;
+     }
    snprintf(buf, sizeof(buf), "%p", bd);
    e_configure_registry_call("internal/borders_border", bd->zone->container, buf);
 }
