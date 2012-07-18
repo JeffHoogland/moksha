@@ -3340,7 +3340,7 @@ e_border_idler_before(void)
 }
 
 EAPI Eina_List *
-e_border_client_list()
+e_border_client_list(void)
 {
    /* FIXME: This should be a somewhat ordered list */
    return borders;
