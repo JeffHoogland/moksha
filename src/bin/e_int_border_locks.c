@@ -300,11 +300,12 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for an advanced dialog */
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o, *ob, *of, *ol;
 
-   o = e_widget_list_add(evas, 0, 0);
+   ol = e_widget_list_add(evas, 0, 0);
+   o = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
-   of = e_widget_frametable_add(evas, _("Lock program changing:"), 0);
+   of = e_widget_frametable_add(evas, _("Prevent Changes In:"), 0);
    ob = e_widget_check_add(evas, _("Position"), &(cfdata->lock.client.location));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Size"), &(cfdata->lock.client.size));
@@ -321,9 +322,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Fullscreen state"), &(cfdata->lock.client.fullscreen));
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_toolbook_page_append(o, NULL, _("Program Locks"), of, 1, 1, 1, 1, 0.5, 0.0);
 
-   of = e_widget_frametable_add(evas, _("Lock me from changing:"), 0);
+   of = e_widget_frametable_add(evas, _("Prevent Changes In:"), 0);
    ob = e_widget_check_add(evas, _("Position"), &(cfdata->lock.user.location));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Size"), &(cfdata->lock.user.size));
@@ -342,18 +343,21 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
    ob = e_widget_check_add(evas, _("Border style"), &(cfdata->lock.border));
    e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_toolbook_page_append(o, NULL, _("User Locks"), of, 1, 1, 1, 1, 0.5, 0.0);
 
-   of = e_widget_framelist_add(evas, _("Stop me from:"), 0);
+   of = e_widget_framelist_add(evas, _("Prevent:"), 0);
    ob = e_widget_check_add(evas, _("Closing the window"), &(cfdata->lock.close));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Exiting my login with this window open"), &(cfdata->lock.life));
+   ob = e_widget_check_add(evas, _("Logging out while this window is open"), &(cfdata->lock.life));
    e_widget_framelist_object_append(of, ob);
-   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   e_widget_toolbook_page_append(o, NULL, _("Behavior Locks"), of, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_show(o, 0);
+   e_widget_list_object_append(ol, o, 1, 1, 0.5);
 
    ob = e_widget_check_add(evas, _("Remember these Locks"), &(cfdata->lock.remember));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   
 
-   return o;
+   return ol;
 }
 
