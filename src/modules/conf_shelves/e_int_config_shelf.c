@@ -492,7 +492,6 @@ _new_shelf_cb_ok(void *data, E_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
    E_Config_Shelf *cfg, *c;
-   E_Container *con;
    E_Zone *zone;
    Eina_List *l;
    unsigned int x;
@@ -506,12 +505,14 @@ _new_shelf_cb_ok(void *data, E_Dialog *dia)
         return;
      }
 
-   con = e_container_current_get(e_manager_current_get());
-   zone = e_zone_current_get(con);
+   if (cfdata->cfd && cfdata->cfd->dia && cfdata->cfd->dia->win && cfdata->cfd->dia->win->border && cfdata->cfd->dia->win->border->zone)
+     zone = cfdata->cfd->dia->win->border->zone;
+   else
+     zone = e_util_zone_current_get(e_manager_current_get());
 
    cfg = E_NEW(E_Config_Shelf, 1);
    cfg->name = eina_stringshare_add(cfdata->new_shelf);
-   cfg->container = con->num;
+   cfg->container = zone->container->num;
    cfg->zone = zone->num;
    cfg->popup = 1;
    cfg->layer = 200;
