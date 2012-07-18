@@ -1,10 +1,10 @@
 #include "e.h"
 
 /* PROTOTYPES - same all the time */
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
@@ -13,23 +13,25 @@ struct _E_Config_Dialog_Data
 {
    E_Border *border;
    /*- BASIC -*/
-   int do_what_i_say;
-   int protect_from_me;
-   int keep_my_border;
-   int important_window;
-   int remember_locks;
+   int       do_what_i_say;
+   int       protect_from_me;
+   int       keep_my_border;
+   int       important_window;
+   int       remember_locks;
    /*- ADVANCED -*/
-   struct {
-      struct {
-	 int location;
-	 int size;
-	 int stacking;
-	 int iconify;
-	 int desk; /* unused atm */
-	 int sticky;
-	 int shade;
-	 int maximize;
-	 int fullscreen;
+   struct
+   {
+      struct
+      {
+         int location;
+         int size;
+         int stacking;
+         int iconify;
+         int desk; /* unused atm */
+         int sticky;
+         int shade;
+         int maximize;
+         int fullscreen;
       } user, client;
       int border;
       int close;
@@ -50,22 +52,22 @@ e_int_border_locks(E_Border *bd)
 
    v = E_NEW(E_Config_Dialog_View, 1);
    if (v)
-      {
-         /* methods */
-         v->create_cfdata           = _create_data;
-         v->free_cfdata             = _free_data;
-         v->basic.apply_cfdata      = _basic_apply_data;
-         v->basic.create_widgets    = _basic_create_widgets;
-         v->advanced.apply_cfdata   = _advanced_apply_data;
-         v->advanced.create_widgets = _advanced_create_widgets;
-	 v->override_auto_apply = 1;
-         /* create config diaolg for bd object/data */
-         cfd = e_config_dialog_new(bd->zone->container,
-				   _("Window Locks"),
-				   "E", "_border_locks_dialog",
-				   NULL, 0, v, bd);
-         bd->border_locks_dialog = cfd;
-      }
+     {
+        /* methods */
+        v->create_cfdata = _create_data;
+        v->free_cfdata = _free_data;
+        v->basic.apply_cfdata = _basic_apply_data;
+        v->basic.create_widgets = _basic_create_widgets;
+        v->advanced.apply_cfdata = _advanced_apply_data;
+        v->advanced.create_widgets = _advanced_create_widgets;
+        v->override_auto_apply = 1;
+        /* create config diaolg for bd object/data */
+        cfd = e_config_dialog_new(bd->zone->container,
+                                  _("Window Locks"),
+                                  "E", "_border_locks_dialog",
+                                  NULL, 0, v, bd);
+        bd->border_locks_dialog = cfd;
+     }
 }
 
 /**--CREATE--**/
@@ -180,31 +182,31 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    if (cfdata->remember_locks)
      {
-	if (!cfdata->border->remember)
-	  {
-	     cfdata->border->remember = e_remember_new();
-	     if (cfdata->border->remember)
-		  e_remember_use(cfdata->border->remember);
-	  }
-	if (cfdata->border->remember)
-	  {
-	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
+        if (!cfdata->border->remember)
+          {
+             cfdata->border->remember = e_remember_new();
+             if (cfdata->border->remember)
+               e_remember_use(cfdata->border->remember);
+          }
+        if (cfdata->border->remember)
+          {
+             cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
              e_remember_default_match_set(cfdata->border->remember, cfdata->border);
-	     e_remember_update(cfdata->border);
-	  }
+             e_remember_update(cfdata->border);
+          }
      }
    else
      {
-	if (cfdata->border->remember)
-	  {
-	     cfdata->border->remember->apply &= ~E_REMEMBER_APPLY_LOCKS;
-	     if (cfdata->border->remember->apply == 0)
-	       {
-		  e_remember_unuse(cfdata->border->remember);
-		  e_remember_del(cfdata->border->remember);
-		  cfdata->border->remember = NULL;
-	       }
-	  }
+        if (cfdata->border->remember)
+          {
+             cfdata->border->remember->apply &= ~E_REMEMBER_APPLY_LOCKS;
+             if (cfdata->border->remember->apply == 0)
+               {
+                  e_remember_unuse(cfdata->border->remember);
+                  e_remember_del(cfdata->border->remember);
+                  cfdata->border->remember = NULL;
+               }
+          }
      }
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -240,31 +242,31 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 
    if (cfdata->lock.remember)
      {
-	if (!cfdata->border->remember)
-	  {
-	     cfdata->border->remember = e_remember_new();
-	     if (cfdata->border->remember)
-		  e_remember_use(cfdata->border->remember);
-	  }
-	if (cfdata->border->remember)
-	  {
-	     cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
+        if (!cfdata->border->remember)
+          {
+             cfdata->border->remember = e_remember_new();
+             if (cfdata->border->remember)
+               e_remember_use(cfdata->border->remember);
+          }
+        if (cfdata->border->remember)
+          {
+             cfdata->border->remember->apply |= E_REMEMBER_APPLY_LOCKS;
              e_remember_default_match_set(cfdata->border->remember, cfdata->border);
-	     e_remember_update(cfdata->border);
-	  }
+             e_remember_update(cfdata->border);
+          }
      }
    else
      {
-	if (cfdata->border->remember)
-	  {
-	     cfdata->border->remember->apply &= ~E_REMEMBER_APPLY_LOCKS;
-	     if (cfdata->border->remember->apply == 0)
-	       {
-		  e_remember_unuse(cfdata->border->remember);
-		  e_remember_del(cfdata->border->remember);
-		  cfdata->border->remember = NULL;
-	       }
-	  }
+        if (cfdata->border->remember)
+          {
+             cfdata->border->remember->apply &= ~E_REMEMBER_APPLY_LOCKS;
+             if (cfdata->border->remember->apply == 0)
+               {
+                  e_remember_unuse(cfdata->border->remember);
+                  e_remember_del(cfdata->border->remember);
+                  cfdata->border->remember = NULL;
+               }
+          }
      }
    e_config_save_queue();
    return 1; /* Apply was OK */
@@ -354,3 +356,4 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 
    return o;
 }
+
