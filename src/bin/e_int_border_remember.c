@@ -10,10 +10,15 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 
 /* Actual config data we will be playing with whil the dialog is active */
 #define MODE_NOTHING        0
-#define MODE_GEOMETRY       1
-#define MODE_LOCKS          2
-#define MODE_GEOMETRY_LOCKS 3
-#define MODE_ALL            4
+#define MODE_GEOMETRY       E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE
+#define MODE_LOCKS          E_REMEMBER_APPLY_LOCKS
+#define MODE_GEOMETRY_LOCKS E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LOCKS
+#define MODE_ALL            E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LAYER | \
+                            E_REMEMBER_APPLY_LOCKS | E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_STICKY | \
+                            E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE | \
+                            E_REMEMBER_APPLY_SKIP_WINLIST | E_REMEMBER_APPLY_SKIP_PAGER | \
+                            E_REMEMBER_APPLY_SKIP_TASKBAR | E_REMEMBER_APPLY_FULLSCREEN | E_REMEMBER_APPLY_ICON_PREF | \
+                            E_REMEMBER_APPLY_OFFER_RESISTANCE
 struct _E_Config_Dialog_Data
 {
    E_Border *border;
@@ -417,20 +422,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         return 0;
      }
 
-   if (cfdata->mode == MODE_GEOMETRY)
-     rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE;
-   else if (cfdata->mode == MODE_LOCKS)
-     rem->apply = E_REMEMBER_APPLY_LOCKS;
-   else if (cfdata->mode == MODE_GEOMETRY_LOCKS)
-     rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LOCKS;
-   else if (cfdata->mode == MODE_ALL)
-     rem->apply = E_REMEMBER_APPLY_POS | E_REMEMBER_APPLY_SIZE | E_REMEMBER_APPLY_LAYER |
-       E_REMEMBER_APPLY_LOCKS | E_REMEMBER_APPLY_BORDER | E_REMEMBER_APPLY_STICKY |
-       E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE |
-       E_REMEMBER_APPLY_SKIP_WINLIST | E_REMEMBER_APPLY_SKIP_PAGER |
-       E_REMEMBER_APPLY_SKIP_TASKBAR | E_REMEMBER_APPLY_FULLSCREEN | E_REMEMBER_APPLY_ICON_PREF |
-       E_REMEMBER_APPLY_OFFER_RESISTANCE;
-
+   rem->apply = cfdata->mode;
    rem->apply_first_only = 0;
 
    e_remember_use(rem);
