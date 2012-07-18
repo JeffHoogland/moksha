@@ -36,6 +36,9 @@ E_Mixer_Cb e_mod_mixer_cards_get;
 E_Mixer_Cb e_mod_mixer_cards_free;
 E_Mixer_Cb e_mod_mixer_card_default_get;
 
+static void _mixer_actions_unregister(E_Mixer_Module_Context *ctxt);
+static void _mixer_actions_register(E_Mixer_Module_Context *ctxt);
+
 static void
 _mixer_notify(const float val, E_Mixer_Instance *inst __UNUSED__)
 {
@@ -1016,6 +1019,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
       return NULL;
 
    ctxt = mixer_mod->data;
+   _mixer_actions_register(ctxt);
    if (!ctxt->conf)
    {
       _mixer_module_configuration_setup(ctxt);
@@ -1107,7 +1111,10 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    ctxt->instances = eina_list_remove(ctxt->instances, inst);
 
    if (ctxt->default_instance == inst)
-     ctxt->default_instance = NULL;
+     {
+        ctxt->default_instance = NULL;
+        _mixer_actions_unregister(ctxt);
+     }
 
    E_FREE(inst);
 }
@@ -1373,29 +1380,38 @@ static const char _lbl_mute[] = "Mute Volume";
 static void
 _mixer_actions_register(E_Mixer_Module_Context *ctxt)
 {
-   ctxt->actions.incr = e_action_add(_act_increase);
-   if (ctxt->actions.incr)
-   {
-      ctxt->actions.incr->func.go = _mixer_cb_volume_increase;
-      e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_increase),
-			       _act_increase, NULL, NULL, 0);
-   }
+   if (!ctxt->actions.incr)
+     {
+        ctxt->actions.incr = e_action_add(_act_increase);
+        if (ctxt->actions.incr)
+        {
+           ctxt->actions.incr->func.go = _mixer_cb_volume_increase;
+           e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_increase),
+               _act_increase, NULL, NULL, 0);
+        }
+     }
 
-   ctxt->actions.decr = e_action_add(_act_decrease);
-   if (ctxt->actions.decr)
-   {
-      ctxt->actions.decr->func.go = _mixer_cb_volume_decrease;
-      e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_decrease),
-			       _act_decrease, NULL, NULL, 0);
-   }
+   if (!ctxt->actions.decr)
+     {
+        ctxt->actions.decr = e_action_add(_act_decrease);
+        if (ctxt->actions.decr)
+        {
+           ctxt->actions.decr->func.go = _mixer_cb_volume_decrease;
+           e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_decrease),
+               _act_decrease, NULL, NULL, 0);
+        }
+     }
 
-   ctxt->actions.mute = e_action_add(_act_mute);
-   if (ctxt->actions.mute)
-   {
-      ctxt->actions.mute->func.go = _mixer_cb_volume_mute;
-      e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_mute), _act_mute,
-                               NULL, NULL, 0);
-   }
+   if (!ctxt->actions.mute)
+     {
+        ctxt->actions.mute = e_action_add(_act_mute);
+        if (ctxt->actions.mute)
+        {
+           ctxt->actions.mute->func.go = _mixer_cb_volume_mute;
+           e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_mute), _act_mute,
+                                    NULL, NULL, 0);
+        }
+     }
 }
 
 static void
@@ -1486,7 +1502,6 @@ e_modapi_init(E_Module *m)
 #endif
 
    _mixer_configure_registry_register();
-   _mixer_actions_register(ctxt);
    e_gadcon_provider_register(&_gc_class);
    if (!e_mixer_pulse_init()) e_mixer_default_setup();
    else e_mixer_pulse_setup();
