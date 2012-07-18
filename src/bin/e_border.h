@@ -461,6 +461,7 @@ struct _E_Border
    unsigned int    user_skip_winlist : 1;
    unsigned int    need_maximize : 1;
    E_Maximize      maximized;
+   E_Fullscreen    fullscreen_policy;
    unsigned int    borderless : 1;
    unsigned char   offer_resistance : 1;
    const char     *bordername;

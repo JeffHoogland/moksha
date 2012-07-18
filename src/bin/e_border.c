@@ -2834,6 +2834,7 @@ e_border_fullscreen(E_Border    *bd,
         bd->client.border.changed = 1;
         bd->changed = 1;
      }
+   bd->fullscreen_policy = policy;
 
    ev = E_NEW(E_Event_Border_Fullscreen, 1);
    ev->border = bd;
@@ -2882,6 +2883,7 @@ e_border_unfullscreen(E_Border *bd)
         bd->client.border.changed = 1;
         bd->changed = 1;
      }
+   bd->fullscreen_policy = 0;
 
    ev = E_NEW(E_Event_Border_Unfullscreen, 1);
    ev->border = bd;
