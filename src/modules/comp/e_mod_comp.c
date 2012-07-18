@@ -3366,7 +3366,15 @@ static void
 _e_mod_comp_del(E_Comp *c)
 {
    E_Comp_Win *cw;
-
+   Eina_List *l, *hide_bd = NULL;
+   E_Border *bd;
+   
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     {
+        if (!bd->visible)
+          hide_bd = eina_list_append(hide_bd, bd);
+     }
+   
    if (c->fps_fg)
      {
         evas_object_del(c->fps_fg);
@@ -3420,6 +3428,12 @@ _e_mod_comp_del(E_Comp *c)
    ecore_x_window_free(c->cm_selection);
    ecore_x_e_comp_sync_supported_set(c->man->root, 0);
    ecore_x_screen_is_composited_set(c->man->num, 0);
+   
+   EINA_LIST_FREE(hide_bd, bd)
+     {
+        e_border_show(bd);
+        e_border_hide(bd, 1);
+     }
 
    free(c);
 }
