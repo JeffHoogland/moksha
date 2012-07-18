@@ -95,6 +95,19 @@ e_int_border_remember(E_Border *bd)
 
 /**--CREATE--**/
 static void
+_clear_data(E_Config_Dialog_Data *cfdata)
+{
+   E_FREE(cfdata->name);
+   E_FREE(cfdata->class);
+   E_FREE(cfdata->title);
+   E_FREE(cfdata->role);
+   E_FREE(cfdata->command);
+   E_FREE(cfdata->desktop);
+   cfdata->mode = 0;
+   memset(&cfdata->remember, 0, sizeof(cfdata->remember));
+}
+
+static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    E_Border *bd;
@@ -239,30 +252,7 @@ done:
      }
 
    if (!rem) cfdata->mode = MODE_NOTHING;
-   else if ((cfdata->remember.apply_pos) &&
-            (cfdata->remember.apply_size) &&
-            (cfdata->remember.apply_locks) &&
-            (cfdata->remember.apply_layer) &&
-            (cfdata->remember.apply_border) &&
-            (cfdata->remember.apply_sticky) &&
-            (cfdata->remember.apply_desktop) &&
-            (cfdata->remember.apply_shade) &&
-            (cfdata->remember.apply_zone) &&
-            (cfdata->remember.apply_skip_winlist) &&
-            (cfdata->remember.apply_skip_pager) &&
-            (cfdata->remember.apply_fullscreen) &&
-            (cfdata->remember.apply_skip_taskbar))
-     cfdata->mode = MODE_ALL;
-   else if ((cfdata->remember.apply_pos) &&
-            (cfdata->remember.apply_size) &&
-            (cfdata->remember.apply_locks))
-     cfdata->mode = MODE_GEOMETRY_LOCKS;
-   else if ((cfdata->remember.apply_pos) &&
-            (cfdata->remember.apply_size))
-     cfdata->mode = MODE_GEOMETRY;
-   else if ((cfdata->remember.apply_locks))
-     cfdata->mode = MODE_LOCKS;
-   else cfdata->mode = MODE_NOTHING;
+   else cfdata->mode = rem->apply;
 }
 
 static void *
@@ -277,7 +267,6 @@ _create_data(E_Config_Dialog *cfd)
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->border = cfd->data;
    cfdata->applied = 1;
-   _fill_data(cfdata);
    return cfdata;
 }
 
@@ -605,6 +594,8 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    Evas_Object *o, *ob;
    E_Radio_Group *rg;
 
+   _clear_data(cfdata);
+   _fill_data(cfdata);
    o = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->mode));
    ob = e_widget_radio_add(evas, _("Nothing"), MODE_NOTHING, rg);
@@ -626,6 +617,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    /* generate the core widget layout for an advanced dialog */
    Evas_Object *o, *ob, *of;
 
+   _clear_data(cfdata);
+   _fill_data(cfdata);
    o = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
    of = e_widget_list_add(evas, 0, 0);
