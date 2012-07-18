@@ -200,7 +200,13 @@ _e_border_menu_cb_locks(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
    E_Border *bd;
 
    bd = data;
-   if (bd->border_locks_dialog) return;
+   if (bd->border_locks_dialog)
+     {
+        e_border_desk_set(bd->border_locks_dialog->dia->win->border, bd->desk);
+        e_win_raise(bd->border_locks_dialog->dia->win);
+        e_border_focus_set(bd->border_locks_dialog->dia->win->border, 1, 1);
+        return;
+     }
    e_int_border_locks(bd);
 }
 
@@ -210,7 +216,13 @@ _e_border_menu_cb_remember(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __U
    E_Border *bd;
 
    bd = data;
-   if (bd->border_remember_dialog) return;
+   if (bd->border_remember_dialog)
+     {
+        e_border_desk_set(bd->border_remember_dialog->dia->win->border, bd->desk);
+        e_win_raise(bd->border_remember_dialog->dia->win);
+        e_border_focus_set(bd->border_remember_dialog->dia->win->border, 1, 1);
+        return;
+     }
    e_int_border_remember(bd);
 }
 
