@@ -1655,13 +1655,15 @@ ACT_FN_GO(screen_send_to, )
 
    if (eina_list_count(e_manager_list()) > 1)
      {
-        scr = scr % eina_list_count(e_manager_list());
+        if (scr != -1)
+          scr = scr % eina_list_count(e_manager_list());
         if (scr < 0) scr += eina_list_count(e_manager_list());
         zone2 = e_util_container_zone_number_get(scr, 0);
      }
    else
      {
-        scr = scr % eina_list_count(zone->container->zones);
+        if (scr != -1)
+          scr = scr % eina_list_count(zone->container->zones);
         if (scr < 0) scr += eina_list_count(zone->container->zones);
         zone2 = e_util_container_zone_number_get(0, scr);
      }
@@ -1690,14 +1692,16 @@ ACT_FN_GO(screen_send_by, )
    if (eina_list_count(e_manager_list()) > 1)
      {
         scr += zone->container->num;
-        scr = scr % eina_list_count(e_manager_list());
+        if (scr != -1)
+          scr = scr % eina_list_count(e_manager_list());
         if (scr < 0) scr += eina_list_count(e_manager_list());
         zone2 = e_util_container_zone_number_get(scr, 0);
      }
    else
      {
         scr += zone->num;
-        scr = scr % eina_list_count(zone->container->zones);
+        if (scr != -1)
+          scr = scr % eina_list_count(zone->container->zones);
         if (scr < 0) scr += eina_list_count(zone->container->zones);
         zone2 = e_util_container_zone_number_get(0, scr);
      }
