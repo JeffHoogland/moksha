@@ -33,6 +33,14 @@ e_modapi_init(E_Module *m)
                                  _("IBar Applications"), NULL,
                                  "preferences-applications-ibar",
                                  e_int_config_apps_ibar);
+   e_configure_registry_item_add("applications/desk_lock_applications", 45,
+                                 _("Desk Lock Applications"), NULL,
+                                 "preferences-applications-desk-lock",
+                                 e_int_config_apps_desk_lock);
+   e_configure_registry_item_add("applications/desk_unlock_applications", 46,
+                                 _("Desk Unlock Applications"), NULL,
+                                 "preferences-applications-desk-lock",
+                                 e_int_config_apps_desk_unlock);
    e_configure_registry_item_add("applications/restart_applications", 50,
                                  _("Restart Applications"), NULL,
                                  "preferences-applications-restart",

@@ -9,6 +9,8 @@ E_Config_Dialog *e_int_config_apps_ibar(E_Container *con, const char *params __U
 E_Config_Dialog *e_int_config_apps_ibar_other(E_Container *con, const char *path);
 E_Config_Dialog *e_int_config_apps_startup(E_Container *con, const char *params __UNUSED__);
 E_Config_Dialog *e_int_config_apps_restart(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_apps_desk_lock(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_apps_desk_unlock(E_Container *con, const char *params __UNUSED__);
 
 #endif
 #endif
