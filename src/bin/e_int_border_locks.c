@@ -282,16 +282,16 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Generic Locks"), 0);
-   ob = e_widget_check_add(evas, _("Lock the Window so it does only what I tell it to"), &(cfdata->do_what_i_say));
+   ob = e_widget_check_add(evas, _("Prevent this window from moving on its own"), &(cfdata->do_what_i_say));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Protect this window from me accidentally changing it"), &(cfdata->protect_from_me));
+   ob = e_widget_check_add(evas, _("Prevent this window from being changed by me"), &(cfdata->protect_from_me));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Protect this window from being accidentally closed because it is important"), &(cfdata->important_window));
+   ob = e_widget_check_add(evas, _("Prevent this window from being closed"), &(cfdata->important_window));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Do not allow the border to change on this window"), &(cfdata->keep_my_border));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Remember these Locks for this window next time it appears"), &(cfdata->remember_locks));
+   ob = e_widget_check_add(evas, _("Remember the Locks for this window appears"), &(cfdata->remember_locks));
    e_widget_list_object_append(o, ob, 0, 0, 0.0);
    return o;
 }
