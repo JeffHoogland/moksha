@@ -1743,7 +1743,7 @@ e_util_time_str_get(long int seconds)
    else
      {
         if (seconds <= 60)
-          snprintf(buf, sizeof(buf), _("%d Seconds"), seconds);
+          snprintf(buf, sizeof(buf), _("%li Seconds"), seconds);
         else if (seconds >= 31526000)
           {
              test = seconds / 31526000;
