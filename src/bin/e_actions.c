@@ -1296,8 +1296,10 @@ ACT_FN_GO(window_zone_move_by, )
 {
    E_Border *bd;
    E_Zone *zone;
+   E_Maximize max;
    int move;
    char *end;
+   E_Fullscreen fs;
 
    if (!params) return;
    if (!obj) obj = E_OBJECT(e_border_focused_get());
@@ -1323,7 +1325,13 @@ ACT_FN_GO(window_zone_move_by, )
      move = 0;
    zone = eina_list_nth(bd->zone->container->zones, move);
    if ((!zone) || (zone->num != (unsigned int)move)) return;
+   max = bd->maximized;
+   fs = bd->fullscreen_policy;
+   if (bd->maximized) e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+   if (fs) e_border_unfullscreen(bd);
    e_border_zone_set(bd, zone);
+   if (max) e_border_maximize(bd, max);
+   if (fs) e_border_fullscreen(bd, fs); 
 }
 
 /***************************************************************************/

@@ -2103,9 +2103,11 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
         if (bd)
           {
              E_Maximize max = bd->maximized;
+             E_Fullscreen fs = bd->fullscreen_policy;
              if (bd->iconic) e_border_uniconify(bd);
              if (bd->maximized)
                e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+             if (fs) e_border_unfullscreen(bd);
              e_border_desk_set(bd, pd->desk);
              if ((!pw) || ((pw) && (!pw->drag.no_place)))
                {
@@ -2121,6 +2123,7 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
                   e_border_move(bd, nx + zx, ny + zy);
                }
              if (max) e_border_maximize(bd, max);
+             if (fs) e_border_fullscreen(bd, fs);
           }
      }
 
