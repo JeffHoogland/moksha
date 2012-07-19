@@ -25,7 +25,10 @@ static int fsize = 0;
 static Ecore_Con_Url *url_up = NULL;
 static Eina_List *handlers = NULL;
 static char *url_ret = NULL;
+static E_Dialog *fsel_dia = NULL;
 static E_Border_Menu_Hook *border_hook = NULL;
+
+static void _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia);
 
 static void
 _win_delete_cb(E_Win *w __UNUSED__)
@@ -107,6 +110,16 @@ _key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 }            
 
 static void
+_save_key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
+{
+   Evas_Event_Key_Down *ev = event;
+   if ((!strcmp(ev->keyname, "Return")) || (!strcmp(ev->keyname, "KP_Enter")))
+     {
+        _file_select_ok_cb(NULL, fsel_dia);
+     }            
+}            
+
+static void
 _screen_change_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Eina_List *l;
@@ -178,6 +191,7 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
 {
    const char *file;
 
+   dia = fsel_dia;
    file = e_widget_fsel_selection_path_get(o_fsel);
    if ((!file) || (!file[0]) || ((!eina_str_has_extension(file, "jpg")) && (!eina_str_has_extension(file, "png"))))
      {
@@ -196,6 +210,7 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
         e_object_del(E_OBJECT(win));
         win = NULL;
      }
+   fsel_dia = NULL;
 }
 
 static void
@@ -207,6 +222,7 @@ _file_select_cancel_cb(void *data __UNUSED__, E_Dialog *dia)
         e_object_del(E_OBJECT(win));
         win = NULL;
      }
+   fsel_dia = NULL;
 }
 
 static void
@@ -215,8 +231,9 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    E_Dialog *dia;
    Evas_Object *o;
    Evas_Coord mw, mh;
+   int mask = 0;
    
-   dia = e_dialog_new(scon, "E", "_e_shot_fsel");
+   fsel_dia = dia = e_dialog_new(scon, "E", "_e_shot_fsel");
    e_dialog_title_set(dia, _("Select screenshot save location"));
    o = e_widget_fsel_add(dia->win->evas, "desktop", "/", 
                          (quality == 100) ? "shot.png" : "shot.jpg", 
@@ -234,6 +251,11 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
                        _file_select_cancel_cb, NULL);
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
+   o = evas_object_rectangle_add(dia->win->evas);
+   if (!evas_object_key_grab(o, "Return", mask, ~mask, 0)) printf("grab err\n");
+   mask = 0;
+   if (!evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0)) printf("grab err\n");
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _save_key_down_cb, NULL);
    e_dialog_show(dia);
 }
 
@@ -721,6 +743,8 @@ _shot_now(E_Zone *zone, E_Border *bd)
    if (!evas_object_key_grab(o, "Return", mask, ~mask, 0)) printf("grab err\n");
    mask = 0;
    if (!evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0)) printf("grab err\n");
+   mask = 0;
+   if (!evas_object_key_grab(o, "space", mask, ~mask, 0)) printf("grab err\n");
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
    
    edje_object_size_min_calc(o_bg, &w, &h);
