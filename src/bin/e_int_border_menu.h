@@ -4,7 +4,7 @@
 #ifndef E_INT_BORDER_MENU_H
 #define E_INT_BORDER_MENU_H
 
-typedef void (*E_Border_Menu_Hook_Cb)(E_Border *, void *);
+typedef void (*E_Border_Menu_Hook_Cb)(void *, E_Border *);
 typedef struct E_Border_Menu_Hook
 {
    E_Border_Menu_Hook_Cb cb;

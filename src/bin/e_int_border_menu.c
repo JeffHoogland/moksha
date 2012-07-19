@@ -197,7 +197,7 @@ e_int_border_menu_create(E_Border *bd)
                                   "e/widgets/border/default/close");
      }
    EINA_LIST_FOREACH(menu_hooks, l, h)
-     h->cb(bd, h->data);
+     h->cb(h->data, bd);
 }
 
 EAPI void
