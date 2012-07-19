@@ -562,6 +562,26 @@ $udisks_mount \
 $eeze_mount \
 $device_backend"
 
+
+want_elementary=auto
+have_elementary=no
+AC_ARG_ENABLE(elementary,
+  AC_HELP_STRING([--enable-elementary], [enable Elementary support @<:@default=detect@:>@]),
+  [want_elementary=$enableval],
+  [want_elementary=auto]
+)
+if test "x$want_elementary" != "xno"; then
+   PKG_CHECK_MODULES(ELM, [elementary >= 1.6.9.0],
+                     [have_elementary=yes], [have_elementary=no])
+   if test "x$want_elementary" = "xyes" -a "x$have_elementary" = "xno"; then
+      AC_MSG_ERROR([Elementary support requested but it was not found])
+   fi
+   if test "x$have_elementary" = "xyes"; then
+      AC_DEFINE([HAVE_ELEMENTARY], 1, "Have Elementary support")
+      requirements_e="${requirements_e} elementary > 1.6.9.0"
+   fi
+fi
+
 PKG_CHECK_MODULES(E_OPEN, [
   ecore >= 1.2.0
   efreet >= 1.2.0

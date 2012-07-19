@@ -18,6 +18,10 @@ static double t0, t1, t2;
 # define TS(x)
 #endif
 
+#ifdef HAVE_ELEMENTARY
+#include <Elementary.h>
+#endif
+
 /*
  * i need to make more use of these when i'm baffled as to when something is
  * up. other hooks:
@@ -441,6 +445,17 @@ main(int argc, char **argv)
      }
    TS("Ecore_Evas Init Done");
 //   _e_main_shutdown_push(ecore_evas_shutdown);
+
+#ifdef HAVE_ELEMENTARY
+   TS("Elementary Init");
+   if (!elm_init(argc, argv))
+     {
+        e_error_message_show(_("Enlightenment cannot initialize Elementary!\n"));
+        _e_main_shutdown(-1);
+     }
+   TS("Elementary Init Done");
+   _e_main_shutdown_push(elm_shutdown);
+#endif
 
    /* e doesn't sync to compositor - it should be one */
    ecore_evas_app_comp_sync_set(0);

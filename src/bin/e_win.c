@@ -12,10 +12,185 @@ static void _e_win_cb_delete(Ecore_Evas *ee);
 /* local subsystem globals */
 static Eina_List *wins = NULL;
 
+#ifdef HAVE_ELEMENTARY
+/* intercept elm_win operations so we talk directly to e_border */
+
+#include <Elementary.h>
+
+typedef struct _Elm_Win_Trap_Ctx
+{
+   E_Border *border;
+   Ecore_X_Window xwin;
+   Eina_Bool centered:1;
+   Eina_Bool placed:1;
+} Elm_Win_Trap_Ctx;
+
+static void *
+_elm_win_trap_add(Evas_Object *o __UNUSED__)
+{
+   Elm_Win_Trap_Ctx *ctx = calloc(1, sizeof(Elm_Win_Trap_Ctx));
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, NULL);
+   return ctx;
+}
+
+static void
+_elm_win_trap_del(void *data, Evas_Object *o __UNUSED__)
+{
+   Elm_Win_Trap_Ctx *ctx = data;
+   EINA_SAFETY_ON_NULL_RETURN(ctx);
+   if (ctx->border)
+     {
+        e_border_hide(ctx->border, 1);
+        e_object_del(E_OBJECT(ctx->border));
+     }
+   free(ctx);
+}
+
+static Eina_Bool
+_elm_win_trap_hide(void *data, Evas_Object *o __UNUSED__)
+{
+   Elm_Win_Trap_Ctx *ctx = data;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, EINA_TRUE);
+   if (!ctx->border) return EINA_TRUE;
+   e_border_hide(ctx->border, 1);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_elm_win_trap_show(void *data, Evas_Object *o)
+{
+   Elm_Win_Trap_Ctx *ctx = data;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, EINA_TRUE);
+   if (!ctx->border)
+     {
+        Ecore_X_Window xwin = elm_win_xwindow_get(o);
+        E_Container *con = e_util_container_window_find(xwin);
+        Evas *e = evas_object_evas_get(o);
+        Ecore_Evas *ee = ecore_evas_ecore_evas_get(e);
+
+        if (!con)
+          {
+             E_Manager *man = e_manager_current_get();
+             EINA_SAFETY_ON_NULL_RETURN_VAL(man, EINA_TRUE);
+             con = e_container_current_get(man);
+             if (!con) con = e_container_number_get(man, 0);
+             EINA_SAFETY_ON_NULL_RETURN_VAL(con, EINA_TRUE);
+          }
+
+        ctx->xwin = xwin;
+        ctx->border = e_border_new(con, xwin, 0, 1);
+        EINA_SAFETY_ON_NULL_RETURN_VAL(ctx->border, EINA_TRUE);
+        ctx->border->placed = ctx->placed;
+        ctx->border->internal = 1;
+        ctx->border->internal_ecore_evas = ee;
+     }
+   if (ctx->centered) e_border_center(ctx->border);
+   e_border_show(ctx->border);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_elm_win_trap_move(void *data, Evas_Object *o __UNUSED__, int x, int y)
+{
+   Elm_Win_Trap_Ctx *ctx = data;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, EINA_TRUE);
+   ctx->centered = EINA_FALSE;
+   ctx->placed = EINA_TRUE;
+   if (!ctx->border) return EINA_TRUE;
+   e_border_move_without_border(ctx->border, x, y);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_elm_win_trap_resize(void *data, Evas_Object *o __UNUSED__, int w, int h)
+{
+   Elm_Win_Trap_Ctx *ctx = data;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, EINA_TRUE);
+   ctx->centered = EINA_FALSE;
+   if (!ctx->border) return EINA_TRUE;
+   e_border_resize_without_border(ctx->border, w, h);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_elm_win_trap_center(void *data, Evas_Object *o __UNUSED__)
+{
+   Elm_Win_Trap_Ctx *ctx = data;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, EINA_TRUE);
+   ctx->centered = EINA_TRUE;
+   if (!ctx->border) return EINA_TRUE;
+   if (ctx->centered) e_border_center(ctx->border);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_elm_win_trap_lower(void *data, Evas_Object *o __UNUSED__)
+{
+   Elm_Win_Trap_Ctx *ctx = data;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, EINA_TRUE);
+   if (!ctx->border) return EINA_TRUE;
+   e_border_lower(ctx->border);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_elm_win_trap_raise(void *data, Evas_Object *o __UNUSED__)
+{
+   Elm_Win_Trap_Ctx *ctx = data;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ctx, EINA_TRUE);
+   if (!ctx->border) return EINA_TRUE;
+   e_border_raise(ctx->border);
+   return EINA_FALSE;
+}
+
+static const Elm_Win_Trap _elm_win_trap = {
+  ELM_WIN_TRAP_VERSION,
+  _elm_win_trap_add,
+  _elm_win_trap_del,
+  _elm_win_trap_hide,
+  _elm_win_trap_show,
+  _elm_win_trap_move,
+  _elm_win_trap_resize,
+  _elm_win_trap_center,
+  _elm_win_trap_lower,
+  _elm_win_trap_raise,
+  /* activate */ NULL,
+  /* alpha_set */ NULL,
+  /* aspect_set */ NULL,
+  /* avoid_damage_set */ NULL,
+  /* borderless_set */ NULL,
+  /* demand_attention_set */ NULL,
+  /* focus_skip_set */ NULL,
+  /* fullscreen_set */ NULL,
+  /* iconified_set */ NULL,
+  /* layer_set */ NULL,
+  /* manual_render_set */ NULL,
+  /* maximized_set */ NULL,
+  /* modal_set */ NULL,
+  /* name_class_set */ NULL,
+  /* object_cursor_set */ NULL,
+  /* override_set */ NULL,
+  /* rotation_set */ NULL,
+  /* rotation_with_resize_set */ NULL,
+  /* shaped_set */ NULL,
+  /* size_base_set */ NULL,
+  /* size_step_set */ NULL,
+  /* size_min_set */ NULL,
+  /* size_max_set */ NULL,
+  /* sticky_set */ NULL,
+  /* title_set */ NULL,
+  /* urgent_set */ NULL,
+  /* withdrawn_set */ NULL
+  };
+#endif
+
 /* externally accessible functions */
 EINTERN int
 e_win_init(void)
 {
+#ifdef HAVE_ELEMENTARY
+   if (!elm_win_trap_set(&_elm_win_trap)) return 0;
+#endif
    return 1;
 }
 
