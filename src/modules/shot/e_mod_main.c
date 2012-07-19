@@ -556,6 +556,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    Evas_Object *o, *oa, *op, *ol;
    Evas_Coord w, h;
    Evas_Modifier_Mask mask;
+   Ecore_X_Window xwin, root;
    E_Radio_Group *rg;
 
    memset(&att, 0, sizeof(Ecore_X_Window_Attributes));
@@ -563,18 +564,24 @@ _shot_now(E_Zone *zone, E_Border *bd)
      {
         sman = zone->container->manager;
         scon = zone->container;
-        ecore_x_window_attributes_get(sman->root, &att);
+        xwin = sman->root;
         sw = sman->w, sh = sman->h;
-        img = ecore_x_image_new(sw, sh, att.visual, att.depth);
-        ecore_x_image_get(img, sman->root, 0, 0, 0, 0, sw, sh);
      }
    else
      {
-        ecore_x_window_attributes_get(bd->client.win, &att);
-        sw = bd->w, sh = bd->h;
-        img = ecore_x_image_new(sw, sh, att.visual, att.depth);
-        ecore_x_image_get(img, bd->client.win, 0, 0, 0, 0, sw, sh);
+        sw = bd->client.w, sh = bd->client.h;
+        root = bd->zone->container->manager->root;
+        xwin = bd->client.win;
+        while (xwin != root)
+          {
+             if (ecore_x_window_parent_get(xwin) == root) break;
+             xwin = ecore_x_window_parent_get(xwin);
+          }
+        ecore_x_window_geometry_get(xwin, NULL, NULL, &sw, &sh);
      }
+   ecore_x_window_attributes_get(xwin, &att);
+   img = ecore_x_image_new(sw, sh, att.visual, att.depth);
+   ecore_x_image_get(img, xwin, 0, 0, 0, 0, sw, sh);
    src = ecore_x_image_data_get(img, &bpl, &rows, &bpp);
    if (!ecore_x_image_is_argb32_get(img))
      {
