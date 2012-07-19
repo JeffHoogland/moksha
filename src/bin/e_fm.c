@@ -48,6 +48,7 @@ struct _E_Fm2_Smart_Data
    Evas_Object *clip;
    Evas_Object *underlay;
    Evas_Object *overlay;
+   Evas_Object *overlay_clip;
    Evas_Object *drop;
    Evas_Object *drop_in;
    Evas_Object *sel_rect;
@@ -7767,7 +7768,8 @@ _e_fm2_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd->x = x;
    sd->y = y;
    evas_object_move(sd->underlay, sd->x, sd->y);
-   evas_object_move(sd->overlay, sd->x, sd->y);
+   if (!sd->overlay_clip)
+     evas_object_move(sd->overlay, sd->x, sd->y);
    _e_fm2_dnd_drop_configure(sd->obj);
    evas_object_move(sd->clip, sd->x - OVERCLIP, sd->y - OVERCLIP);
    _e_fm2_obj_icons_place(sd);
@@ -7788,7 +7790,8 @@ _e_fm2_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->w = w;
    sd->h = h;
    evas_object_resize(sd->underlay, sd->w, sd->h);
-   evas_object_resize(sd->overlay, sd->w, sd->h);
+   if (!sd->overlay_clip)
+     evas_object_resize(sd->overlay, sd->w, sd->h);
    _e_fm2_dnd_drop_configure(sd->obj);
    evas_object_resize(sd->clip, sd->w + (OVERCLIP * 2), sd->h + (OVERCLIP * 2));
 
@@ -7872,6 +7875,26 @@ _e_fm2_smart_clip_unset(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_clip_unset(sd->clip);
+}
+
+static void
+_e_fm2_overlay_clip_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+   int w, h;
+
+   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
+   evas_object_resize(sd->overlay, w, h);
+}
+
+static void
+_e_fm2_overlay_clip_move(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+   int x, y;
+
+   evas_object_geometry_get(obj, &x, &y, NULL, NULL);
+   evas_object_move(sd->overlay, x, y);
 }
 
 static void
@@ -10117,4 +10140,32 @@ e_fm2_typebuf_visible_get(Evas_Object *obj)
 {
    EFM_SMART_CHECK(EINA_FALSE);
    return sd->typebuf_visible;
+}
+
+EAPI void
+e_fm2_overlay_clip_to(Evas_Object *obj, Evas_Object *clip)
+{
+   int x, y, w, h;
+   EFM_SMART_CHECK();
+   if (sd->overlay_clip)
+     {
+        evas_object_event_callback_del_full(sd->overlay_clip, EVAS_CALLBACK_MOVE, _e_fm2_overlay_clip_move, sd);
+        evas_object_event_callback_del_full(sd->overlay_clip, EVAS_CALLBACK_RESIZE, _e_fm2_overlay_clip_resize, sd);
+     }
+   sd->overlay_clip = clip;
+   if (clip)
+     {
+        evas_object_clip_set(sd->overlay, clip);
+        evas_object_geometry_get(clip, &x, &y, &w, &h);
+        evas_object_move(sd->overlay, x, y);
+        evas_object_resize(sd->overlay, w, h);
+        evas_object_event_callback_add(clip, EVAS_CALLBACK_MOVE, _e_fm2_overlay_clip_move, sd);
+        evas_object_event_callback_add(clip, EVAS_CALLBACK_RESIZE, _e_fm2_overlay_clip_resize, sd);
+     }
+   else
+     {
+        evas_object_clip_set(sd->overlay, sd->clip);
+        evas_object_move(sd->overlay, sd->x, sd->y);
+        evas_object_resize(sd->overlay, sd->w, sd->h);
+     }
 }
