@@ -48,11 +48,55 @@ static void _e_border_menu_cb_iconpref_user(void *data, E_Menu *m, E_Menu_Item *
 static void _e_border_menu_cb_default_icon(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_border_menu_cb_netwm_icon(void *data, E_Menu *m, E_Menu_Item *mi);
 
+static Eina_List *menu_hooks = NULL;
+
+EAPI E_Border_Menu_Hook *
+e_int_border_menu_hook_add(E_Border_Menu_Hook_Cb cb, const void *data)
+{
+   E_Border_Menu_Hook *h;
+
+   if (!cb) return NULL;
+   h = E_NEW(E_Border_Menu_Hook, 1);
+   if (!h) return NULL;
+
+   h->cb = cb;
+   h->data = (void*)data;
+   menu_hooks = eina_list_append(menu_hooks, h);
+   return h;
+}
+
+EAPI void
+e_int_border_menu_hook_del(E_Border_Menu_Hook *hook)
+{
+   E_Border_Menu_Hook *h;
+   Eina_List *l;
+
+   if (!hook) return;
+
+   EINA_LIST_FOREACH(menu_hooks, l, h)
+     if (h == hook)
+       {
+          menu_hooks = eina_list_remove_list(menu_hooks, l);
+          free(h);
+          return;
+       }
+}
+
+EAPI void
+e_int_border_menu_hooks_clear(void)
+{
+   E_Border_Menu_Hook *h;
+   EINA_LIST_FREE(menu_hooks, h)
+     free(h);
+}
+
 EAPI void
 e_int_border_menu_create(E_Border *bd)
 {
    E_Menu *m;
    E_Menu_Item *mi;
+   Eina_List *l;
+   E_Border_Menu_Hook *h;
    char buf[128];
 
    if (bd->border_menu) return;
@@ -152,6 +196,8 @@ e_int_border_menu_create(E_Border *bd)
                                                         "e/widgets/border/default/close"),
                                   "e/widgets/border/default/close");
      }
+   EINA_LIST_FOREACH(menu_hooks, l, h)
+     h->cb(bd, h->data);
 }
 
 EAPI void

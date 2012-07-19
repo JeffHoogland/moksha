@@ -362,6 +362,7 @@ e_border_shutdown(void)
 
    if (borders_hash) eina_hash_free(borders_hash);
    borders_hash = NULL;
+   e_int_border_menu_hooks_clear();
 
    return 1;
 }
