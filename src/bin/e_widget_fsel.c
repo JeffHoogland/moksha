@@ -5,6 +5,7 @@ typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
    Evas_Object *obj;
+   Evas_Object *fm_overlay_clip;
    Evas_Object *o_table;
    Evas_Object *o_table2;
    Evas_Object *o_preview_frame;
@@ -240,6 +241,17 @@ _e_wid_fsel_files_selected(void *data, Evas_Object *obj __UNUSED__, void *event_
      }
 }
 
+static void
+_e_wid_fsel_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   E_Widget_Data *wd = data;
+   int x, y, w, h;
+   evas_object_geometry_get(wd->o_files_frame, &x, &y, &w, &h);
+   evas_object_resize(wd->fm_overlay_clip, x + w, y + h);
+   evas_object_geometry_get(wd->o_favorites_frame, &x, &y, NULL, NULL);
+   evas_object_move(wd->fm_overlay_clip, x, y);
+}
+
 /* externally accessible functions */
 EAPI Evas_Object *
 e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected, char *filter __UNUSED__,
@@ -386,9 +398,19 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    e_widget_sub_object_add(obj, o);
    if (selected) e_widget_entry_text_set(o, selected);
 
+   wd->fm_overlay_clip = evas_object_rectangle_add(evas);
+   evas_object_static_clip_set(wd->fm_overlay_clip, EINA_TRUE);
+   e_widget_sub_object_add(obj, wd->fm_overlay_clip);
+   e_fm2_overlay_clip_to(wd->o_favorites_fm, wd->fm_overlay_clip);
+   e_fm2_overlay_clip_to(wd->o_files_fm, wd->fm_overlay_clip);
+   evas_object_event_callback_add(wd->o_favorites_frame, EVAS_CALLBACK_RESIZE, _e_wid_fsel_moveresize, wd);
+   evas_object_event_callback_add(wd->o_favorites_frame, EVAS_CALLBACK_MOVE, _e_wid_fsel_moveresize, wd);
+   evas_object_event_callback_add(wd->o_files_frame, EVAS_CALLBACK_RESIZE, _e_wid_fsel_moveresize, wd);
+   evas_object_event_callback_add(wd->o_files_frame, EVAS_CALLBACK_MOVE, _e_wid_fsel_moveresize, wd);
+   evas_object_show(wd->fm_overlay_clip);
+
    if (preview)
      {
-        
         e_widget_table_object_append(wd->o_table2,
                                      wd->o_preview_frame,
                                      2, 1, 1, 1, 1, 1, 1, 1);
