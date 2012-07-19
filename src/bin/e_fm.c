@@ -126,6 +126,7 @@ struct _E_Fm2_Smart_Data
    {
       char        *buf;
       Ecore_Timer *timer;
+      unsigned int wildcard;
       Eina_Bool   setting : 1;
    } typebuf;
 
@@ -5546,7 +5547,7 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic, *ic_match = NULL;
-   Eina_List *l;
+   Eina_List *l, *sel = NULL;
    char *tb;
    int tblen;
 
@@ -5567,8 +5568,8 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
           {
              if (_e_fm2_typebuf_match_func(ic, tb))
                {
-                  ic_match = ic;
-                  break;
+                  sel = eina_list_append(sel, ic);
+                  if (!sd->typebuf.wildcard) break;
                }
           }
      }
@@ -5577,13 +5578,14 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
         ic_match = _e_fm2_icon_next_find(obj, next, &_e_fm2_typebuf_match_func, tb);
      }
 
-   if (ic_match)
+   _e_fm2_icon_desel_any(obj);
+   if (sel)
      {
-        _e_fm2_icon_desel_any(obj);
-        _e_fm2_icon_select(ic_match);
-        evas_object_smart_callback_call(obj, "selection_change", NULL);
-        _e_fm2_icon_make_visible(ic_match);
+        _e_fm2_icon_make_visible(eina_list_data_get(sel));
+        EINA_LIST_FREE(sel, ic)
+          _e_fm2_icon_select(ic);
      }
+   evas_object_smart_callback_call(obj, "selection_change", NULL);
 
    if (sd->typebuf.timer) ecore_timer_reset(sd->typebuf.timer);
    else sd->typebuf.timer = ecore_timer_add(3.5, _e_fm_typebuf_timer_cb, sd);
@@ -5669,6 +5671,8 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
                }
           }
      }
+   else if (ch[0] == '*')
+     sd->typebuf.wildcard++;
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
    evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
 }
@@ -5691,8 +5695,8 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
    p = evas_string_char_prev_get(sd->typebuf.buf, len, &dec);
    if (p < 0) return;
    sd->typebuf.buf[p] = 0;
-   _e_fm2_typebuf_match(obj, 0);
    len--;
+   if (len) _e_fm2_typebuf_match(obj, 0);
    if (dec == '/')
      {
         if ((len > 1) || (sd->typebuf.buf[0] != '~'))
@@ -5717,6 +5721,8 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
                }
           }
      }
+   else if (dec == '*')
+     sd->typebuf.wildcard--;
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
    evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
 }
