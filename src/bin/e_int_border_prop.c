@@ -73,7 +73,6 @@ e_int_border_prop(E_Border *bd)
 
    dia = e_dialog_new(bd->zone->container, "E", "_window_props");
    e_object_del_attach_func_set(E_OBJECT(dia), _bd_cb_dialog_del);
-   e_dialog_title_set(dia, _("Window Properties"));
 
    _create_data(dia, bd);
 
@@ -384,6 +383,7 @@ _bd_go(void *data, void *data2)
    if (!data2)
      {
         o = _bd_icccm_create(dia, NULL);
+        e_dialog_title_set(dia, _("ICCCM Properties"));
         e_widget_list_object_append(c, o, 1, 1, 0.0);
         ob = e_widget_button_add(e_win_evas_get(dia->win), _("NetWM"), "go-next",
                                  _bd_go, dia, (void *)1);
@@ -391,6 +391,7 @@ _bd_go(void *data, void *data2)
    else
      {
         o = _bd_netwm_create(dia, NULL);
+        e_dialog_title_set(dia, _("NetWM Properties"));
         e_widget_list_object_append(c, o, 1, 1, 0.0);
         ob = e_widget_button_add(e_win_evas_get(dia->win), _("ICCCM"), "go-next",
                                  _bd_go, dia, (void *)0);
