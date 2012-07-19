@@ -28,7 +28,6 @@ struct _E_Physics_Win
       int x, y, w, h; // hidden geometry (used when its unmapped and re-instated on map)
    } hidden;
    int                  border;  // border width
-   E_Object_Delfn      *dfn;  // delete function handle for objects being tracked
 
    E_Border_Hook       *begin; // begin move
    E_Border_Hook       *end; // end move
@@ -252,14 +251,9 @@ _e_mod_physics_win_add(E_Physics *p, E_Border *bd)
 static void
 _e_mod_physics_win_del(E_Physics_Win *pw)
 {
-   if (pw->dfn)
-     {
-        eina_hash_del(borders, e_util_winid_str_get(pw->bd->client.win), pw);
-        e_object_delfn_del(E_OBJECT(pw->bd), pw->dfn);
-        pw->bd = NULL;
-        pw->dfn = NULL;
-     }
+   eina_hash_del(borders, e_util_winid_str_get(pw->bd->client.win), pw);
    e_border_move_intercept_cb_set(pw->bd, NULL);
+   pw->bd = NULL;
    pw->p->wins = eina_inlist_remove(pw->p->wins, EINA_INLIST_GET(pw));
    if (pw->body) ephysics_body_del(pw->body);
    memset(pw, 0, sizeof(E_Physics_Win));
