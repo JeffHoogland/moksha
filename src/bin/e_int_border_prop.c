@@ -408,29 +408,29 @@ _bd_go(void *data, void *data2)
      Evas_Coord mw, mh;                                                     \
      ob = e_widget_label_add(evas, label);                                  \
      if (!cfdata->val) e_widget_disabled_set(ob, 1);                        \
-     e_widget_frametable_object_append(of, ob, x, y, 1, 1, 1, 1, 0, 1);     \
+     e_widget_table_object_append(o, ob, x, y, 1, 1, 1, 1, 0, 1);     \
      ob = e_widget_entry_add(evas, & (cfdata->val), NULL, NULL, NULL);      \
      if (!cfdata->val) e_widget_disabled_set(ob, 1);                        \
      e_widget_entry_readonly_set(ob, 1);                                    \
      e_widget_disabled_set(ob, 1);                                          \
      e_widget_size_min_get(ob, &mw, &mh);                                   \
      e_widget_size_min_set(ob, 160, mh);                                    \
-     e_widget_frametable_object_append(of, ob, x + 1, y, 1, 1, 1, 1, 1, 1); \
+     e_widget_table_object_append(o, ob, x + 1, y, 1, 1, 1, 1, 1, 1); \
   }
 #define CHK_ENTRY(label, x, y, val)                                         \
   {                                                                         \
      ob = e_widget_label_add(evas, label);                                  \
-     e_widget_frametable_object_append(of, ob, x, y, 1, 1, 1, 1, 0, 1);     \
+     e_widget_table_object_append(o, ob, x, y, 1, 1, 1, 1, 0, 1);     \
      ob = e_widget_check_add(evas, "", & (cfdata->val));                    \
      e_widget_disabled_set(ob, 1);                                          \
-     e_widget_frametable_object_append(of, ob, x + 1, y, 1, 1, 1, 1, 1, 1); \
+     e_widget_table_object_append(o, ob, x + 1, y, 1, 1, 1, 1, 1, 1); \
   }
 
 static Evas_Object *
 _bd_icccm_create(E_Dialog *dia, void *data __UNUSED__)
 {
    Evas *evas;
-   Evas_Object *o, *ob, *of;
+   Evas_Object *o, *ob, *otb;
    E_Config_Dialog_Data *cfdata;
 
    if (!dia) return NULL;
@@ -440,20 +440,25 @@ _bd_icccm_create(E_Dialog *dia, void *data __UNUSED__)
      evas_object_del(dia->content_object);
 
    evas = e_win_evas_get(dia->win);
-   o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_frametable_add(evas, _("ICCCM Properties"), 0);
+   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+
+   o = e_widget_table_add(evas, 0);
    STR_ENTRY(_("Title"), 0, 0, icccm.title);
    STR_ENTRY(_("Name"), 0, 1, icccm.name);
    STR_ENTRY(_("Class"), 0, 2, icccm.class);
    STR_ENTRY(_("Icon Name"), 0, 3, icccm.icon_name);
    STR_ENTRY(_("Machine"), 0, 4, icccm.machine);
    STR_ENTRY(_("Role"), 0, 5, icccm.role);
+   e_widget_toolbook_page_append(otb, NULL, _("General"), o, 1, 1, 1, 1, 0.5, 0.0);
 
+   o = e_widget_table_add(evas, 0);
    STR_ENTRY(_("Minimum Size"), 0, 6, icccm.min);
    STR_ENTRY(_("Maximum Size"), 0, 7, icccm.max);
    STR_ENTRY(_("Base Size"), 0, 8, icccm.base);
    STR_ENTRY(_("Resize Steps"), 0, 9, icccm.step);
+   e_widget_toolbook_page_append(otb, NULL, _("Sizing"), o, 1, 1, 1, 1, 0.5, 0.0);
 
+   o = e_widget_table_add(evas, 0);
    STR_ENTRY(_("Aspect Ratio"), 2, 0, icccm.aspect);
    STR_ENTRY(_("Initial State"), 2, 1, icccm.initial_state);
    STR_ENTRY(_("State"), 2, 2, icccm.state);
@@ -463,22 +468,25 @@ _bd_icccm_create(E_Dialog *dia, void *data __UNUSED__)
    STR_ENTRY(_("Client Leader"), 2, 6, icccm.client_leader);
    STR_ENTRY(_("Gravity"), 2, 7, icccm.gravity);
    STR_ENTRY(_("Command"), 2, 8, icccm.command);
+   e_widget_toolbook_page_append(otb, NULL, _("States"), o, 1, 1, 1, 1, 0.5, 0.0);
 
+   o = e_widget_table_add(evas, 0);
    CHK_ENTRY(_("Take Focus"), 0, 11, icccm.take_focus);
    CHK_ENTRY(_("Accepts Focus"), 0, 12, icccm.accepts_focus);
    CHK_ENTRY(_("Urgent"), 0, 13, icccm.urgent);
    CHK_ENTRY(_("Request Delete"), 2, 11, icccm.delete_request);
    CHK_ENTRY(_("Request Position"), 2, 12, icccm.request_pos);
+   e_widget_toolbook_page_append(otb, NULL, _("Settings"), o, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_show(otb, 0);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.0);
-   return o;
+   return otb;
 }
 
 static Evas_Object *
 _bd_netwm_create(E_Dialog *dia, void *data __UNUSED__)
 {
    Evas *evas;
-   Evas_Object *o, *of, *ob;
+   Evas_Object *o, *ob, *otb;
    E_Config_Dialog_Data *cfdata;
 
    if (!dia) return NULL;
@@ -488,12 +496,14 @@ _bd_netwm_create(E_Dialog *dia, void *data __UNUSED__)
      evas_object_del(dia->content_object);
 
    evas = e_win_evas_get(dia->win);
-   o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_frametable_add(evas, _("NetWM Properties"), 0);
+   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+   o = e_widget_table_add(evas, 0);
    STR_ENTRY(_("Name"), 0, 1, netwm.name);
    STR_ENTRY(_("Icon Name"), 0, 2, netwm.icon_name);
    STR_ENTRY(_("Stacking"), 0, 3, netwm.stacking);
+   e_widget_toolbook_page_append(otb, NULL, _("General"), o, 1, 1, 1, 1, 0.5, 0.0);
 
+   o = e_widget_table_add(evas, 0);
    CHK_ENTRY(_("Modal"), 0, 4, netwm.modal);
    CHK_ENTRY(_("Sticky"), 0, 5, netwm.sticky);
    CHK_ENTRY(_("Shaded"), 0, 6, netwm.shaded);
@@ -501,8 +511,9 @@ _bd_netwm_create(E_Dialog *dia, void *data __UNUSED__)
    CHK_ENTRY(_("Skip Pager"), 0, 8, netwm.skip_pager);
    CHK_ENTRY(_("Hidden"), 0, 9, netwm.hidden);
    CHK_ENTRY(_("Fullscreen"), 0, 10, netwm.fullscreen);
+   e_widget_toolbook_page_append(otb, NULL, _("Settings"), o, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_show(otb, 0);
 
-   e_widget_list_object_append(o, of, 1, 1, 0.0);
-   return o;
+   return otb;
 }
 
