@@ -1333,7 +1333,8 @@ ACT_FN_GO(window_zone_move_by, )
    if (fullscreen) e_border_unfullscreen(bd);
    e_border_zone_set(bd, zone);
    if (max) e_border_maximize(bd, max);
-   if (fullscreen) e_border_fullscreen(bd, fs); 
+   if (fullscreen) e_border_fullscreen(bd, fs);
+   e_border_focus_set(bd, 1, 1);
 }
 
 /***************************************************************************/
