@@ -3,9 +3,9 @@
 
 static E_Module *shot_module = NULL;
 
-static E_Action *act = NULL;
+static E_Action *border_act = NULL, *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
-static Ecore_Timer *timer = NULL;
+static Ecore_Timer *timer, *border_timer = NULL;
 static E_Win *win = NULL;
 static Evas_Object *o_bg = NULL, *o_box = NULL, *o_content = NULL;
 static Evas_Object *o_event = NULL, *o_img = NULL, *o_hlist = NULL;
@@ -25,6 +25,7 @@ static int fsize = 0;
 static Ecore_Con_Url *url_up = NULL;
 static Eina_List *handlers = NULL;
 static char *url_ret = NULL;
+static E_Border_Menu_Hook *border_hook = NULL;
 
 static void
 _win_delete_cb(E_Win *w __UNUSED__)
@@ -522,32 +523,43 @@ _rect_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 }
 
 static void
-_shot_now(E_Zone *zone)
+_shot_now(E_Zone *zone, E_Border *bd)
 {
    Ecore_X_Image *img;
    Ecore_X_Window_Attributes att;
    unsigned char *src;
    unsigned int *dst;
-   int bpl = 0, rows = 0, bpp = 0;
+   int bpl = 0, rows = 0, bpp = 0, sw, sh;
    Evas *evas, *evas2;
    Evas_Object *o, *oa, *op, *ol;
    Evas_Coord w, h;
    Evas_Modifier_Mask mask;
    E_Radio_Group *rg;
-   
-   sman = zone->container->manager;
-   scon = zone->container;
+
    memset(&att, 0, sizeof(Ecore_X_Window_Attributes));
-   ecore_x_window_attributes_get(sman->root, &att);
-   img = ecore_x_image_new(sman->w, sman->h, att.visual, att.depth);
-   ecore_x_image_get(img, sman->root, 0, 0, 0, 0, sman->w, sman->h);
+   if (zone)
+     {
+        sman = zone->container->manager;
+        scon = zone->container;
+        ecore_x_window_attributes_get(sman->root, &att);
+        sw = sman->w, sh = sman->h;
+        img = ecore_x_image_new(sw, sh, att.visual, att.depth);
+        ecore_x_image_get(img, sman->root, 0, 0, 0, 0, sw, sh);
+     }
+   else
+     {
+        ecore_x_window_attributes_get(bd->client.win, &att);
+        sw = bd->w, sh = bd->h;
+        img = ecore_x_image_new(sw, sh, att.visual, att.depth);
+        ecore_x_image_get(img, bd->client.win, 0, 0, 0, 0, sw, sh);
+     }
    src = ecore_x_image_data_get(img, &bpl, &rows, &bpp);
    if (!ecore_x_image_is_argb32_get(img))
      {
-        dst = malloc(sman->w * sman->h * sizeof(int));
+        dst = malloc(sw * sh * sizeof(int));
         ecore_x_image_to_argb_convert(src, bpp, bpl, att.colormap, att.visual,
-                                      0, 0, sman->w, sman->h,
-                                      dst, (sman->w * sizeof(int)), 0, 0);
+                                      0, 0, sw, sh,
+                                      dst, (sw * sizeof(int)), 0, 0);
      }
    else
       dst = (unsigned int *)src;
@@ -576,9 +588,9 @@ _shot_now(E_Zone *zone)
    edje_object_part_swallow(o_bg, "e.swallow.content", o);
    evas_object_show(o);
 
-   w = sman->w / 4;
+   w = sw / 4;
    if (w < 220) w = 220;
-   h = (w * sman->h) / sman->w;
+   h = (w * sh) / sw;
    
    o = e_widget_aspect_add(evas, w, h);
    oa = o;
@@ -591,11 +603,11 @@ _shot_now(E_Zone *zone)
    o_img = o;
    evas_object_image_colorspace_set(o, EVAS_COLORSPACE_ARGB8888);
    evas_object_image_alpha_set(o, EINA_FALSE);
-   evas_object_image_size_set(o, sman->w, sman->h);
+   evas_object_image_size_set(o, sw, sh);
    evas_object_image_data_copy_set(o, dst);
    if (dst != (unsigned int *)src) free(dst);
    ecore_x_image_free(img);
-   evas_object_image_data_update_add(o, 0, 0, sman->w, sman->h);
+   evas_object_image_data_update_add(o, 0, 0, sw, sh);
    e_widget_preview_extern_object_set(op, o);
    evas_object_show(o);
 
@@ -623,52 +635,55 @@ _shot_now(E_Zone *zone)
    
    e_widget_list_object_append(o_hlist, ol, 1, 0, 0.5);
 
-   screen = -1;
-   if (eina_list_count(scon->zones) > 1)
+   if (zone)
      {
-        Eina_List *l;
-        E_Zone *z;
-        int i;
-        
-        o = e_widget_framelist_add(evas, _("Screen"), 0);
-        ol = o;
-        
-        rg = e_widget_radio_group_new(&screen);
-        o = e_widget_radio_add(evas, _("All"), -1, rg);
-        o_radio_all = o;
-        evas_object_smart_callback_add(o, "changed", _screen_change_cb, NULL);
-        e_widget_framelist_object_append(ol, o);
-        i = 0;
-        EINA_LIST_FOREACH(scon->zones, l, z)
+        screen = -1;
+        if (eina_list_count(scon->zones) > 1)
           {
-             char buf[32];
-
-             if (z->num >= MAXZONES) continue;
-             snprintf(buf, sizeof(buf), "%i", z->num);
-             o = e_widget_radio_add(evas, buf, z->num, rg);
-             o_radio[z->num] = o;
+             Eina_List *l;
+             E_Zone *z;
+             int i;
+             
+             o = e_widget_framelist_add(evas, _("Screen"), 0);
+             ol = o;
+             
+             rg = e_widget_radio_group_new(&screen);
+             o = e_widget_radio_add(evas, _("All"), -1, rg);
+             o_radio_all = o;
              evas_object_smart_callback_add(o, "changed", _screen_change_cb, NULL);
              e_widget_framelist_object_append(ol, o);
+             i = 0;
+             EINA_LIST_FOREACH(scon->zones, l, z)
+               {
+                  char buf[32];
+
+                  if (z->num >= MAXZONES) continue;
+                  snprintf(buf, sizeof(buf), "%i", z->num);
+                  o = e_widget_radio_add(evas, buf, z->num, rg);
+                  o_radio[z->num] = o;
+                  evas_object_smart_callback_add(o, "changed", _screen_change_cb, NULL);
+                  e_widget_framelist_object_append(ol, o);
+                  
+                  o = evas_object_rectangle_add(evas2);
+                  evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
+                                                 _rect_down_cb, NULL);
+                  o_rectdim[z->num] = o;
+                  evas_object_color_set(o, 0, 0, 0, 0);
+                  evas_object_show(o);
+                  evas_object_geometry_get(o_img, NULL, NULL, &w, &h);
+                  evas_object_move(o, 
+                                   (z->x * w) / sw,
+                                   (z->y * h) / sh);
+                  evas_object_resize(o, 
+                                     (z->w * w) / sw,
+                                     (z->h * h) / sh);
+                  i++;
+               }
              
-             o = evas_object_rectangle_add(evas2);
-             evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, 
-                                            _rect_down_cb, NULL);
-             o_rectdim[z->num] = o;
-             evas_object_color_set(o, 0, 0, 0, 0);
-             evas_object_show(o);
-             evas_object_geometry_get(o_img, NULL, NULL, &w, &h);
-             evas_object_move(o, 
-                              (z->x * w) / sman->w,
-                              (z->y * h) / sman->h);
-             evas_object_resize(o, 
-                                (z->w * w) / sman->w,
-                                (z->h * h) / sman->h);
-             i++;
+             e_widget_list_object_append(o_hlist, ol, 1, 0, 0.5);
           }
         
-        e_widget_list_object_append(o_hlist, ol, 1, 0, 0.5);
      }
-   
    e_widget_list_object_append(o_content, o_hlist, 0, 0, 0.5);
 
    o = o_content;
@@ -723,8 +738,23 @@ static Eina_Bool
 _shot_delay(void *data)
 {
    timer = NULL;
-   _shot_now(data);
+   _shot_now(data, NULL);
    return EINA_FALSE;
+}
+
+static Eina_Bool
+_shot_delay_border(void *data)
+{
+   border_timer = NULL;
+   _shot_now(NULL, data);
+   return EINA_FALSE;
+}
+
+static void
+_shot_border(E_Border *bd)
+{
+   if (border_timer) ecore_timer_del(border_timer);
+   border_timer = ecore_timer_add(1.0, _shot_delay_border, bd);
 }
 
 static void
@@ -735,9 +765,29 @@ _shot(E_Zone *zone)
 }
 
 static void
+_e_mod_menu_border_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   _shot_border(data);
+}
+
+static void
 _e_mod_menu_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    if (m->zone) _shot(m->zone);
+}
+
+static void
+_e_mod_action_border_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
+{
+   E_Border *bd;
+   bd = e_border_focused_get();
+   if (!bd) return;
+   if (border_timer)
+      {
+         ecore_timer_del(border_timer);
+         border_timer = NULL;
+      }
+   _shot_now(NULL, bd);
 }
 
 static void
@@ -763,7 +813,30 @@ _e_mod_action_cb(E_Object *obj, const char *params __UNUSED__)
          ecore_timer_del(timer);
          timer = NULL;
       }
-   _shot_now(zone);
+   _shot_now(zone, NULL);
+}
+
+static void
+_bd_hook(void *d __UNUSED__, E_Border *bd)
+{
+   E_Menu_Item *mi;
+   E_Menu *m;
+   Eina_List *l;
+   if (!bd->border_menu) return;
+   m = bd->border_menu;
+
+   /* position menu item just before first separator */
+   EINA_LIST_FOREACH(m->items, l, mi)
+     if (mi->separator) break;
+   if ((!mi) || (!mi->separator)) return;
+   l = eina_list_prev(l);
+   mi = eina_list_data_get(l);
+   if (!mi) return;
+
+   mi = e_menu_item_new_relative(m, mi);
+   e_menu_item_label_set(mi, _("Take Shot"));
+   e_util_menu_item_theme_icon_set(mi, "screenshot");
+   e_menu_item_callback_set(mi, _e_mod_menu_border_cb, bd);
 }
 
 static void
@@ -797,8 +870,16 @@ e_modapi_init(E_Module *m)
         e_action_predef_name_set(_("Screen"), _("Take Screenshot"),
                                  "shot", NULL, NULL, 0);
      }
+   border_act = e_action_add("border_shot");
+   if (border_act)
+     {
+        border_act->func.go = _e_mod_action_border_cb;
+        e_action_predef_name_set(_("Window : Actions"), _("Take Shot"),
+                                 "border_shot", NULL, NULL, 0);
+     }
    maug = e_int_menus_menu_augmentation_add_sorted
       ("main/2",  _("Take Screenshot"), _e_mod_menu_add, NULL, NULL, NULL);
+   border_hook = e_int_border_menu_hook_add(_bd_hook, NULL);
    return m;
 }
 
@@ -828,6 +909,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         act = NULL;
      }
    shot_module = NULL;
+   e_int_border_menu_hook_del(border_hook);
    return 1;
 }
 
