@@ -548,7 +548,6 @@ static void
 _shot_now(E_Zone *zone, E_Border *bd)
 {
    Ecore_X_Image *img;
-   Ecore_X_Window_Attributes att;
    unsigned char *src;
    unsigned int *dst;
    int bpl = 0, rows = 0, bpp = 0, sw, sh;
@@ -558,8 +557,10 @@ _shot_now(E_Zone *zone, E_Border *bd)
    Evas_Modifier_Mask mask;
    Ecore_X_Window xwin, root;
    E_Radio_Group *rg;
+   Ecore_X_Visual visual;
+   Ecore_X_Display *display;
+   Ecore_X_Screen *scr;
 
-   memset(&att, 0, sizeof(Ecore_X_Window_Attributes));
    if (zone)
      {
         sman = zone->container->manager;
@@ -579,14 +580,19 @@ _shot_now(E_Zone *zone, E_Border *bd)
           }
         ecore_x_window_geometry_get(xwin, NULL, NULL, &sw, &sh);
      }
-   ecore_x_window_attributes_get(xwin, &att);
-   img = ecore_x_image_new(sw, sh, att.visual, att.depth);
+   display = ecore_x_display_get();
+   scr = ecore_x_default_screen_get();
+   visual = ecore_x_default_visual_get(display, scr);
+   img = ecore_x_image_new(sw, sh, visual, ecore_x_window_depth_get(xwin));
    ecore_x_image_get(img, xwin, 0, 0, 0, 0, sw, sh);
    src = ecore_x_image_data_get(img, &bpl, &rows, &bpp);
    if (!ecore_x_image_is_argb32_get(img))
      {
+        Ecore_X_Colormap colormap;
+
+        colormap = ecore_x_default_colormap_get(display, scr);
         dst = malloc(sw * sh * sizeof(int));
-        ecore_x_image_to_argb_convert(src, bpp, bpl, att.colormap, att.visual,
+        ecore_x_image_to_argb_convert(src, bpp, bpl, colormap, visual,
                                       0, 0, sw, sh,
                                       dst, (sw * sizeof(int)), 0, 0);
      }
