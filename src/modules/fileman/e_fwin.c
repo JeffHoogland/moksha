@@ -1260,6 +1260,8 @@ _e_fwin_toolbar_resize(E_Fwin_Page *page)
         return;
      }
    e_toolbar_move_resize(page->tbar, tx, ty, tw, th);
+   evas_object_move(page->scrollframe_obj, x, y);
+   evas_object_resize(page->scrollframe_obj, w, h);
 }
 
 /* fwin callbacks */
