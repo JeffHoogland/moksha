@@ -330,6 +330,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
    e_fm2_config_set(o, &fmc);
+   e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_ACTIVATE_CHANGE);
    evas_object_smart_callback_add(o, "changed",
                                   _e_wid_fsel_favorites_files_changed, wd);
    evas_object_smart_callback_add(o, "selected",
@@ -356,7 +357,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
    fmc.view.open_dirs_in_place = 1;
    fmc.view.selector = 1;
-   fmc.view.single_click = 0;
+   fmc.view.single_click = e_config->filemanager_single_click;
    fmc.view.no_subdir_jump = 0;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;

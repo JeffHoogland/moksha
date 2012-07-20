@@ -348,6 +348,7 @@ static void          _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *tit
 static void          _e_fm2_view_image_sel_close(void *data, E_Dialog *dia);
 static void          _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
+static void          _e_fm2_toggle_single_click(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_sort(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -945,7 +946,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         sd->config->view.mode = E_FM2_VIEW_MODE_LIST;
         sd->config->view.open_dirs_in_place = EINA_TRUE;
         sd->config->view.selector = EINA_TRUE;
-        sd->config->view.single_click = EINA_FALSE;
+        sd->config->view.single_click = e_config->filemanager_single_click;
         sd->config->view.single_click_delay = EINA_FALSE;
         sd->config->view.no_subdir_jump = EINA_FALSE;
         sd->config->icon.icon.w = 128;
@@ -8017,7 +8018,15 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
                   e_menu_item_callback_set(mi, _e_fm2_sort, sd);
                }
           }
-
+        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_ACTIVATE_CHANGE))
+          {
+             mi = e_menu_item_new(mn);
+             e_menu_item_label_set(mi, _("Single Click Activation"));
+             /* FIXME: e_util_menu_item_theme_icon_set(mi, NULL); */
+             e_menu_item_check_set(mi, 1);
+             e_menu_item_toggle_set(mi, sd->config->view.single_click);
+             e_menu_item_callback_set(mi, _e_fm2_toggle_single_click, sd);
+          }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
           {
              mi = e_menu_item_new(mn);
@@ -8172,7 +8181,15 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
                   e_menu_item_callback_set(mi, _e_fm2_sort, sd);
                }
           }
-
+        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_ACTIVATE_CHANGE))
+          {
+             mi = e_menu_item_new(mn);
+             e_menu_item_label_set(mi, _("Single Click Activation"));
+             /* FIXME: e_util_menu_item_theme_icon_set(mi, NULL); */
+             e_menu_item_check_set(mi, 1);
+             e_menu_item_toggle_set(mi, sd->config->view.single_click);
+             e_menu_item_callback_set(mi, _e_fm2_toggle_single_click, sd);
+          }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
           {
              /* FIXME: stat the dir itself - move to e_fm_main */
@@ -8973,6 +8990,15 @@ _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi)
 
    sd->inherited_dir_props = EINA_FALSE;
    _e_fm2_refresh(data, m, mi);
+}
+
+static void
+_e_fm2_toggle_single_click(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = data;
+   sd->config->view.single_click = !sd->config->view.single_click;
 }
 
 static void

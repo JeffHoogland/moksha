@@ -535,6 +535,10 @@ _e_mod_fileman_config_load(void)
     fileman_config->tooltip.size = 30.0;
     IFMODCFGEND;
 
+    IFMODCFG(0x0105);
+    e_config->filemanager_single_click = fileman_config->view.single_click;
+    IFMODCFGEND;
+
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
 
     /* UCHAR's give nasty compile warnings about comparisons so not gonna limit those */

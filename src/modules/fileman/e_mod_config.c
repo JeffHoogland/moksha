@@ -157,7 +157,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
 {
    fileman_config->view.mode = cfdata->view.mode;
    fileman_config->view.open_dirs_in_place = cfdata->view.open_dirs_in_place;
-   fileman_config->view.single_click = cfdata->view.single_click;
+   e_config->filemanager_single_click = fileman_config->view.single_click = cfdata->view.single_click;
    fileman_config->view.show_full_path = cfdata->view.show_full_path;
    fileman_config->view.show_desktop_icons = cfdata->view.show_desktop_icons;
    fileman_config->view.show_toolbar = cfdata->view.show_toolbar;
