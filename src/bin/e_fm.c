@@ -5663,7 +5663,7 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
              char buf[PATH_MAX];
 
              snprintf(buf, sizeof(buf), "%s/%s", getenv("HOME"), sd->typebuf.buf + 2);
-             if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(buf))
+             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites")&& ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "~/", sd->typebuf.buf + 1);
@@ -5713,7 +5713,7 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
              char buf[PATH_MAX];
 
              snprintf(buf, sizeof(buf), "%s/%s", getenv("HOME"), sd->typebuf.buf + 2);
-             if (e_util_strcmp(sd->dev, "desktop") && ecore_file_is_dir(buf))
+             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "~/", sd->typebuf.buf + 1);
