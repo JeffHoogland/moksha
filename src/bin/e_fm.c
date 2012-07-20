@@ -5582,6 +5582,7 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
    _e_fm2_icon_desel_any(obj);
    if (sel)
      {
+        if (!ic_match) ic_match = eina_list_data_get(sel);
         _e_fm2_icon_make_visible(eina_list_data_get(sel));
         EINA_LIST_FREE(sel, ic)
           _e_fm2_icon_select(ic);
@@ -5650,12 +5651,24 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    _e_fm2_typebuf_match(obj, 0);
    if (ch[0] == '/')
      {
-        if (sd->typebuf.buf[0] != '~')
+        if (sd->typebuf.buf[0] == '/')
           {
              if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(sd->typebuf.buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "/", sd->typebuf.buf);
+                  sd->typebuf.setting = EINA_FALSE;
+               }
+          }
+        else if (sd->typebuf.buf[0] != '~')
+          {
+             char buf[PATH_MAX];
+
+             snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, sd->typebuf.buf);
+             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
+               {
+                  sd->typebuf.setting = EINA_TRUE;
+                  e_fm2_path_set(obj, sd->dev, buf);
                   sd->typebuf.setting = EINA_FALSE;
                }
           }
@@ -5700,12 +5713,24 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
    if (len) _e_fm2_typebuf_match(obj, 0);
    if (dec == '/')
      {
-        if ((len > 1) || (sd->typebuf.buf[0] != '~'))
+        if ((len > 1) || (sd->typebuf.buf[0] == '/'))
           {
              if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(sd->typebuf.buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "/", sd->typebuf.buf);
+                  sd->typebuf.setting = EINA_FALSE;
+               }
+          }
+        else if ((len > 1) || (sd->typebuf.buf[0] != '~'))
+          {
+             char buf[PATH_MAX];
+
+             snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, sd->typebuf.buf);
+             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
+               {
+                  sd->typebuf.setting = EINA_TRUE;
+                  e_fm2_path_set(obj, sd->dev, buf);
                   sd->typebuf.setting = EINA_FALSE;
                }
           }
