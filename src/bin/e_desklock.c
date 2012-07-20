@@ -36,6 +36,7 @@ struct _E_Desklock_Data
    Ecore_X_Window elock_grab_break_wnd;
    char           passwd[PASSWD_LEN];
    int            state;
+   Eina_Bool     selected : 1;
 };
 
 struct _E_Desklock_Run
@@ -93,6 +94,8 @@ static Eina_Bool _e_desklock_cb_run(void *data, int type, void *event);
 static void      _e_desklock_popup_free(E_Desklock_Popup_Data *edp);
 static void      _e_desklock_popup_add(E_Zone *zone);
 static void      _e_desklock_login_box_add(E_Desklock_Popup_Data *edp);
+static void      _e_desklock_select(void);
+static void      _e_desklock_unselect(void);
 static void      _e_desklock_null(void);
 static void      _e_desklock_passwd_update(void);
 static void      _e_desklock_backspace(void);
@@ -653,23 +656,53 @@ _e_desklock_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
        (edd->state == E_DESKLOCK_STATE_CHECKING)) return 1;
 
    if (!strcmp(ev->key, "Escape"))
-     ;
+     {
+        if (edd->selected)
+          {
+             _e_desklock_unselect();
+             return ECORE_CALLBACK_RENEW;
+          }
+     }
    else if (!strcmp(ev->key, "KP_Enter"))
      _e_desklock_check_auth();
    else if (!strcmp(ev->key, "Return"))
      _e_desklock_check_auth();
    else if (!strcmp(ev->key, "BackSpace"))
-     _e_desklock_backspace();
+     {
+        if (edd->selected)
+          {
+             _e_desklock_null();
+             _e_desklock_unselect();
+             return ECORE_CALLBACK_RENEW;
+          }
+        _e_desklock_backspace();
+     }
    else if (!strcmp(ev->key, "Delete"))
-     _e_desklock_delete();
+     {
+        if (edd->selected)
+          {
+             _e_desklock_null();
+             _e_desklock_unselect();
+             return ECORE_CALLBACK_RENEW;
+          }
+        _e_desklock_delete();
+     }
    else if ((!strcmp(ev->key, "u") &&
              (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
      _e_desklock_null();
+   else if ((!strcmp(ev->key, "a") &&
+             (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)))
+     _e_desklock_select();
    else
      {
         /* here we have to grab a password */
         if (ev->compose)
           {
+             if (edd->selected)
+               {
+                  _e_desklock_null();
+                  _e_desklock_unselect();
+               }
              if ((strlen(edd->passwd) < (PASSWD_LEN - strlen(ev->compose))))
                {
                   strcat(edd->passwd, ev->compose);
@@ -730,6 +763,28 @@ _e_desklock_passwd_update(void)
    EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      if (edp->login_box) edje_object_part_text_set(edp->login_box, "e.text.password",
                                passwd_hidden);
+}
+
+static void
+_e_desklock_select(void)
+{
+   E_Desklock_Popup_Data *edp;
+   Eina_List *l;
+   EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
+     if (edp->login_box)
+       edje_object_signal_emit(edp->login_box, "e,state,selected", "e");
+   edd->selected = EINA_TRUE;
+}
+
+static void
+_e_desklock_unselect(void)
+{
+   E_Desklock_Popup_Data *edp;
+   Eina_List *l;
+   EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
+     if (edp->login_box)
+       edje_object_signal_emit(edp->login_box, "e,state,unselected", "e");
+   edd->selected = EINA_FALSE;
 }
 
 static void
