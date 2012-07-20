@@ -5560,10 +5560,15 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
    if (!sd->icons) return NULL;
 
    tblen = strlen(sd->typebuf.buf);
-   tb = alloca(tblen + 2);
-   memcpy(tb, sd->typebuf.buf, tblen);
-   tb[tblen] = '*';
-   tb[tblen + 1] = '\0';
+   if (sd->typebuf.buf[tblen - 1] != '*')
+     {
+        tb = alloca(tblen + 2);
+        strncpy(tb, sd->typebuf.buf, tblen);
+        tb[tblen] = '*';
+        tb[tblen + 1] = '\0';
+     }
+   else
+     tb = strdupa(sd->typebuf.buf);
 
    if (!next)
      {
@@ -5651,6 +5656,8 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    strcat(ts, ch);
    free(sd->typebuf.buf);
    sd->typebuf.buf = ts;
+   if (ch[0] == '*')
+     sd->typebuf.wildcard++;
    _e_fm2_typebuf_match(obj, 0);
    if (ch[0] == '/')
      {
@@ -5689,8 +5696,6 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
                }
           }
      }
-   else if (ch[0] == '*')
-     sd->typebuf.wildcard++;
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
    evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
 }
@@ -5714,6 +5719,8 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
    if (p < 0) return;
    sd->typebuf.buf[p] = 0;
    len--;
+   if (dec == '*')
+     sd->typebuf.wildcard--;
    if (len) _e_fm2_typebuf_match(obj, 0);
    if (dec == '/')
      {
@@ -5752,8 +5759,6 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
                }
           }
      }
-   else if (dec == '*')
-     sd->typebuf.wildcard--;
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
    evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
 }
