@@ -1795,3 +1795,26 @@ e_util_time_str_get(long int seconds)
      }
    return buf;
 }
+
+static void
+_e_util_size_debug(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   int x, y, w, h;
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   fprintf(stderr, "OBJ[%p]: (%d,%d) - %dx%d\n", obj, x, y, w, h);
+}
+
+EAPI void
+e_util_size_debug_set(Evas_Object *obj, Eina_Bool enable)
+{
+   if (enable)
+     {
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_MOVE, _e_util_size_debug, NULL);
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE, _e_util_size_debug, NULL);
+     }
+   else
+     {
+        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_MOVE, _e_util_size_debug, NULL);
+        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_RESIZE, _e_util_size_debug, NULL);
+     }
+}
