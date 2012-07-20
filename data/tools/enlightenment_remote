@@ -39,7 +39,16 @@ OPTIONS:
   -desktop-bg-list List all current desktop bg definitions
   -desktop-lock Lock the desktop
 
-  -efm-open-dir OPT1 Open dir in OPT1 in EFileManager. Opens /home/$USER if no path is given or it doesn't exist 
+  -efm-open-dir OPT1 Open dir in OPT1 in EFileManager. Opens /home/$USER if no path is given or it doesn't exist
+
+  -window-list List all window names and ids
+  -window-close OPT1 Request the close of window with xwin id OPT1
+  -window-kill OPT1 Request the kill of window with xwin id OPT1
+  -window-focus OPT1 Request the focus of window with xwin id OPT1
+  -window-iconify OPT1 Request iconify of window with xwin id OPT1
+  -window-uniconify OPT1 Request uniconify of window with xwin id OPT1
+  -window-maximize OPT1 Request maximize of window with xwin id OPT1
+  -window-unmaximize OPT1 Request unmaximize of window with xwin id OPT1
 
 Note: This is a new implementation of enlightenment_remote,
       for more information about it see the '--help-new' option.
@@ -193,6 +202,16 @@ ERCII(){
    dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2" int32:"$3"
 }
 
+#===  FUNCTION  ================================================================
+#          NAME:  ERCI
+#   DESCRIPTION:  eremote call with int parameter
+#    PARAMETERS:  interface/method call, int
+#       RETURNS:  
+#===============================================================================
+ERCI(){
+   dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2"
+}
+
 #-------------------------------------------------------------------------------
 #   E Lock
 #-------------------------------------------------------------------------------
@@ -343,7 +362,62 @@ er_efm_open_dir(){
    dbus-send --session --type=method_call --print-reply=literal --dest=org.enlightenment.FileManager /org/enlightenment/FileManager org.enlightenment.FileManager.OpenDirectory "string:$EFM_DIR"
 }
 
+#-------------------------------------------------------------------------------
+#   E Window list
+#-------------------------------------------------------------------------------
+er_window_list(){
+   echo 'Window -- ID'
+   ERGMST org.enlightenment.wm.Window.List
+}
 
+#-------------------------------------------------------------------------------
+#   E Window close
+#-------------------------------------------------------------------------------
+er_window_close(){
+   ERCI org.enlightenment.wm.Window.Close "$2"
+}
+
+#-------------------------------------------------------------------------------
+#   E Window kill
+#-------------------------------------------------------------------------------
+er_window_kill(){
+   ERCI org.enlightenment.wm.Window.Kill "$2"
+}
+
+#-------------------------------------------------------------------------------
+#   E Window focus
+#-------------------------------------------------------------------------------
+er_window_focus(){
+   ERCI org.enlightenment.wm.Window.Focus "$2"
+}
+
+#-------------------------------------------------------------------------------
+#   E Window iconify
+#-------------------------------------------------------------------------------
+er_window_iconify(){
+   ERCI org.enlightenment.wm.Window.Iconify "$2"
+}
+
+#-------------------------------------------------------------------------------
+#   E Window uniconify
+#-------------------------------------------------------------------------------
+er_window_uniconify(){
+   ERCI org.enlightenment.wm.Window.Uniconify "$2"
+}
+
+#-------------------------------------------------------------------------------
+#   E Window maximize
+#-------------------------------------------------------------------------------
+er_window_maximize(){
+   ERCI org.enlightenment.wm.Window.Maximize "$2"
+}
+
+#-------------------------------------------------------------------------------
+#   E Window unmaximize
+#-------------------------------------------------------------------------------
+er_window_unmaximize(){
+   ERCI org.enlightenment.wm.Window.Unmaximize "$2"
+}
 
 
 #===  FUNCTION  ================================================================
@@ -421,6 +495,30 @@ case "$1" in
    ;;
    -efm-open-dir)
       er_efm_open_dir "$@"
+   ;;
+   -window-list)
+      er_window_list
+   ;;
+   -window-close)
+      er_window_close "$@"
+   ;;
+   -window-kill)
+      er_window_kill "$@"
+   ;;
+   -window-focus)
+      er_window_focus "$@"
+   ;;
+   -window-iconify)
+      er_window_iconify "$@"
+   ;;
+   -window-uniconify)
+      er_window_uniconify "$@"
+   ;;
+   -window-maximize)
+      er_window_maximize "$@"
+   ;;
+   -window-unmaximize)
+      er_window_unmaximize "$@"
    ;;
 
    # This entry needs to be always the last option of the list (*)

@@ -32,6 +32,18 @@ static DBusMessage *_e_msgbus_profile_add_cb(E_DBus_Object *obj,
 static DBusMessage *_e_msgbus_profile_delete_cb(E_DBus_Object *obj,
                                                 DBusMessage   *msg);
 
+#define E_MSGBUS_WIN_ACTION_CB_PROTO(NAME) \
+static DBusMessage *_e_msgbus_window_##NAME##_cb(E_DBus_Object *obj __UNUSED__, DBusMessage   *msg)
+
+E_MSGBUS_WIN_ACTION_CB_PROTO(list);
+E_MSGBUS_WIN_ACTION_CB_PROTO(close);
+E_MSGBUS_WIN_ACTION_CB_PROTO(kill);
+E_MSGBUS_WIN_ACTION_CB_PROTO(focus);
+E_MSGBUS_WIN_ACTION_CB_PROTO(iconify);
+E_MSGBUS_WIN_ACTION_CB_PROTO(uniconify);
+E_MSGBUS_WIN_ACTION_CB_PROTO(maximize);
+E_MSGBUS_WIN_ACTION_CB_PROTO(unmaximize);
+
 /* local subsystem globals */
 static E_Msgbus_Data *_e_msgbus_data = NULL;
 
@@ -101,6 +113,25 @@ e_msgbus_init(void)
    e_dbus_interface_method_add(iface, "List", "", "as", _e_msgbus_profile_list_cb);
    e_dbus_interface_method_add(iface, "Add", "s", "", _e_msgbus_profile_add_cb);
    e_dbus_interface_method_add(iface, "Delete", "s", "", _e_msgbus_profile_delete_cb);
+
+   iface = e_dbus_interface_new("org.enlightenment.wm.Window");
+   if (!iface)
+     {
+        WRN("Cannot add org.enlightenment.wm.Window interface");
+        return 0;
+     }
+   e_dbus_object_interface_attach(_e_msgbus_data->obj, iface);
+   e_dbus_interface_unref(iface);
+
+   /* Profile methods */
+   e_dbus_interface_method_add(iface, "List", "", "a(si)", _e_msgbus_window_list_cb);
+   e_dbus_interface_method_add(iface, "Close", "i", "", _e_msgbus_window_close_cb);
+   e_dbus_interface_method_add(iface, "Kill", "i", "", _e_msgbus_window_kill_cb);
+   e_dbus_interface_method_add(iface, "Focus", "i", "", _e_msgbus_window_focus_cb);
+   e_dbus_interface_method_add(iface, "Iconify", "i", "", _e_msgbus_window_iconify_cb);
+   e_dbus_interface_method_add(iface, "Uniconify", "i", "", _e_msgbus_window_uniconify_cb);
+   e_dbus_interface_method_add(iface, "Maximize", "i", "", _e_msgbus_window_maximize_cb);
+   e_dbus_interface_method_add(iface, "Unmaximize", "i", "", _e_msgbus_window_unmaximize_cb);
 
    return 1;
 }
@@ -374,3 +405,78 @@ _e_msgbus_profile_delete_cb(E_DBus_Object *obj __UNUSED__,
 
    return dbus_message_new_method_return(msg);
 }
+
+/* Window handlers */
+static DBusMessage *
+_e_msgbus_window_list_cb(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
+{
+   Eina_List *l;
+   E_Border *bd;
+   DBusMessage *reply;
+   DBusMessageIter iter;
+   DBusMessageIter arr;
+
+   reply = dbus_message_new_method_return(msg);
+   dbus_message_iter_init_append(reply, &iter);
+   dbus_message_iter_open_container(&iter, DBUS_TYPE_ARRAY, "(si)", &arr);
+
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     {
+        DBusMessageIter sub;
+        dbus_message_iter_open_container(&arr, DBUS_TYPE_STRUCT, NULL, &sub);
+        dbus_message_iter_append_basic(&sub, DBUS_TYPE_STRING, &bd->client.icccm.name);
+        dbus_message_iter_append_basic(&sub, DBUS_TYPE_INT32, &bd->client.win);
+        dbus_message_iter_close_container(&arr, &sub);
+     }
+   dbus_message_iter_close_container(&iter, &arr);
+
+   return reply;
+}
+
+#define E_MSGBUS_WIN_ACTION_CB_BEGIN(NAME) \
+static DBusMessage * \
+_e_msgbus_window_##NAME##_cb(E_DBus_Object *obj __UNUSED__, DBusMessage *msg) \
+{ \
+   E_Border *bd; \
+   int xwin;\
+   DBusMessageIter iter;\
+\
+   dbus_message_iter_init(msg, &iter);\
+   dbus_message_iter_get_basic(&iter, &xwin);\
+   bd = e_border_find_by_client_window(xwin);\
+   if (bd)\
+     {
+
+#define E_MSGBUS_WIN_ACTION_CB_END \
+     }\
+\
+   return dbus_message_new_method_return(msg);\
+}
+
+E_MSGBUS_WIN_ACTION_CB_BEGIN(close)
+e_border_act_close_begin(bd);
+E_MSGBUS_WIN_ACTION_CB_END
+
+E_MSGBUS_WIN_ACTION_CB_BEGIN(kill)
+e_border_act_kill_begin(bd);
+E_MSGBUS_WIN_ACTION_CB_END
+
+E_MSGBUS_WIN_ACTION_CB_BEGIN(focus)
+e_border_focus_set(bd, 1, 1);
+E_MSGBUS_WIN_ACTION_CB_END
+
+E_MSGBUS_WIN_ACTION_CB_BEGIN(iconify)
+e_border_iconify(bd);
+E_MSGBUS_WIN_ACTION_CB_END
+
+E_MSGBUS_WIN_ACTION_CB_BEGIN(uniconify)
+e_border_uniconify(bd);
+E_MSGBUS_WIN_ACTION_CB_END
+
+E_MSGBUS_WIN_ACTION_CB_BEGIN(maximize)
+e_border_maximize(bd, e_config->maximize_policy);
+E_MSGBUS_WIN_ACTION_CB_END
+
+E_MSGBUS_WIN_ACTION_CB_BEGIN(unmaximize)
+e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+E_MSGBUS_WIN_ACTION_CB_END
