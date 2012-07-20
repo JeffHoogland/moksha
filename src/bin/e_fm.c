@@ -1145,7 +1145,7 @@ _e_fm2_dir_load_props_from_parent(const char *path)
 
    parent = ecore_file_dir_get(path);
    cf = e_fm2_custom_file_get(parent);
-   if ((cf) && (cf->dir) && (cf->dir->prop.in_use))
+   if (((cf) && (cf->dir) && (cf->dir->prop.in_use)) || (!strcmp(parent, path)))
      {
         free(parent);
         return cf;
