@@ -932,6 +932,8 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop,
    E_Fwin *fwin = page->fwin;
    E_Fm2_Icon_Info *ici;
    char *file;
+   
+   skip_history = EINA_FALSE;
 
    selected = e_fm2_selected_list_get(page->fm_obj);
    if (!selected) return;
@@ -963,15 +965,19 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop,
              files = eina_list_append(files, strdup(ici->file));
           }
      }
-   eina_list_free(selected);
-
    if ((fwin->win) && (desktop))
-     e_exec(fwin->win->border->zone, desktop, NULL, files, "fwin");
+     {
+        e_exec(fwin->win->border->zone, desktop, NULL, files, "fwin");
+        ici = selected->data;
+        if ((ici) && (ici->mime) && (desktop) && !(skip_history))
+          e_exehist_mime_desktop_add(ici->mime, desktop);
+     }
    else if (fwin->zone && desktop)
      e_exec(fwin->zone, desktop, NULL, files, "fwin");
 
-   EINA_LIST_FREE(files, file)
-     free(file);
+   eina_list_free(selected);
+
+   EINA_LIST_FREE(files, file) free(file);
 
    chdir(pcwd);
 }
@@ -1099,6 +1105,7 @@ _e_fwin_file_exec(E_Fwin_Page *page,
                e_exec(fwin->win->border->zone, desktop, NULL, NULL, NULL);
              else if (fwin->zone)
                e_exec(fwin->zone, desktop, NULL, NULL, NULL);
+             e_exehist_mime_desktop_add(ici->mime, desktop);
              efreet_desktop_free(desktop);
           }
         break;
@@ -1971,6 +1978,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
 
    apps = _e_fwin_suggested_apps_list_get(files, &mlist, &has_default);
 
+   fprintf(stderr, "GOGOGOGOOGOGOG\n");
    if (!always)
      {
         /* FIXME: well this is simplisitic - if only 1 mime type is being
@@ -1994,8 +2002,10 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
              Eina_List *files_list = NULL;
 
              need_dia = 1;
+             fprintf(stderr, "XXXXX %i %p\n", has_default, apps);
              if ((has_default) && (apps)) desk = apps->data;
              else if (mlist) desk = e_exehist_mime_desktop_get(mlist->data);
+             fprintf(stderr, "mlist = %p\n", mlist);
              getcwd(pcwd, sizeof(pcwd));
              chdir(e_fm2_real_path_get(page->fm_obj));
 
@@ -2026,6 +2036,11 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
                        if (e_exec(fwin->zone, desk, NULL, files_list, "fwin"))
                          need_dia = 0;
                     }
+                  if (!need_dia)
+                    {
+                       if (mlist)
+                         e_exehist_mime_desktop_add(mlist->data, desk);
+                    }
                }
              EINA_LIST_FREE(files_list, file)
                free(file);
@@ -2033,8 +2048,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
              chdir(pcwd);
              if (!need_dia)
                {
-                  EINA_LIST_FREE(apps, desk)
-                    efreet_desktop_free(desk);
+                  EINA_LIST_FREE(apps, desk) efreet_desktop_free(desk);
                   mlist = eina_list_free(mlist);
                   return;
                }

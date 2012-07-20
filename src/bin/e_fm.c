@@ -1824,7 +1824,7 @@ static Evas_Object *
 _e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb cb, void *data, int force_gen, const char **type_ret)
 {
    char buf[PATH_MAX];
-   const char **itr, *group;
+   const char **itr = NULL, *group = NULL;
    const char *known_groups[] = {
       NULL,
       "e/desktop/background",
@@ -1833,32 +1833,32 @@ _e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb cb, v
       /* XXX TODO: add more? example 'screenshot', 'preview' */
       NULL
    };
+   Evas_Object *o;
 
-   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
-     return NULL;
+   if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf))) return NULL;
 
    known_groups[0] = ic->sd->config->icon.key_hint;
-   if (known_groups[0])
-     itr = known_groups;
-   else
-     itr = known_groups + 1;
+   if (known_groups[0]) itr = known_groups;
+   else itr = known_groups + 1;
 
    for (; *itr; itr++)
-     if (edje_file_group_exists(buf, *itr))
-       break;
+     {
+        if (edje_file_group_exists(buf, *itr)) break;
+     }
 
    if (*itr)
-     group = *itr;
+     group = eina_stringshare_add(*itr);
    else
      {
         Eina_List *l = edje_file_collection_list(buf);
-        if (!l)
-          return NULL;
-        group = eina_list_data_get(l);
+        if (!l) return NULL;
+        group = eina_stringshare_add(eina_list_data_get(l));
         edje_file_collection_list_free(l);
      }
-
-   return _e_fm2_icon_thumb_get(evas, ic, group, cb, data, force_gen, type_ret);
+   if (!group) return NULL;
+   o = _e_fm2_icon_thumb_get(evas, ic, group, cb, data, force_gen, type_ret);
+   eina_stringshare_del(group);
+   return o;
 }
 
 /**

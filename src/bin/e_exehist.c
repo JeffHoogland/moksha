@@ -278,6 +278,8 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
    const char *f;
    E_Exehist_Item *ei;
    Eina_List *l;
+   char buf[PATH_MAX];
+   Efreet_Ini *ini;
 
    if ((!mime) || (!desktop)) return;
    if (!desktop->orig_path) return;
@@ -286,6 +288,25 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
 
    f = efreet_util_path_to_file_id(desktop->orig_path);
    if (!f) return;
+   
+   snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
+            efreet_data_home_get());
+   ini = efreet_ini_new(buf);
+   fprintf(stderr, "try open %s = %p\n", buf, ini);
+   if (ini)
+     {
+        fprintf(stderr, "SAVE mime %s with %s\n", mime, desktop->orig_path);
+        if (!efreet_ini_section_set(ini, "Default Applications"))
+          {
+             efreet_ini_section_add(ini, "Default Applications");
+             efreet_ini_section_set(ini, "Default Applications");
+          }
+        if (desktop->orig_path)
+          efreet_ini_string_set(ini, mime, ecore_file_file_get(desktop->orig_path));
+        efreet_ini_save(ini, buf);
+        efreet_ini_free(ini);
+     }
+   
    EINA_LIST_FOREACH(_e_exehist->mimes, l, ei)
      {
 	if ((ei->launch_method) && (!strcmp(mime, ei->launch_method)))
@@ -325,15 +346,19 @@ e_exehist_mime_desktop_get(const char *mime)
    E_Exehist_Item *ei;
    Eina_List *l;
 
+   fprintf(stderr, "e_exehist_mime_desktop_get(%s)\n", mime);
    if (!mime) return NULL;
    _e_exehist_load();
+   fprintf(stderr, "x\n");
    if (!_e_exehist) return NULL;
    EINA_LIST_FOREACH(_e_exehist->mimes, l, ei)
      {
+        fprintf(stderr, "look for %s == %s\n", mime, ei->launch_method);
 	if ((ei->launch_method) && (!strcmp(mime, ei->launch_method)))
 	  {
 	     desktop = NULL;
 	     if (ei->exe) desktop = efreet_util_desktop_file_id_find(ei->exe);
+             fprintf(stderr, "  desk = %p\n", desktop);
 	     if (desktop)
 	       {
 		  _e_exehist_unload_queue();
