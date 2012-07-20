@@ -2070,6 +2070,8 @@ _e_shelf_on_current_desk(E_Shelf *es, E_Event_Zone_Edge *ev)
    int on_current_desk = 0;
    int on_all_desks = 1;
 
+
+   if (ev->zone != es->zone) return EINA_FALSE;
    EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
      {
         if (!sd) continue;

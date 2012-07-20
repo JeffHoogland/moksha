@@ -314,7 +314,7 @@ e_desk_show(E_Desk *desk)
         cf_es = es->cfg;
         if (!cf_es) continue;
 
-        zone = e_util_zone_current_get(e_manager_current_get());
+        zone = desk->zone;
         if (cf_es->zone != (int)zone->num) continue;
 
         EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
