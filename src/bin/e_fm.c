@@ -5460,6 +5460,7 @@ _e_fm2_typebuf_hide(Evas_Object *obj)
    E_FREE(sd->typebuf.buf);
    edje_object_signal_emit(sd->overlay, "e,state,typebuf,stop", "e");
    sd->typebuf_visible = EINA_FALSE;
+   sd->typebuf.wildcard = 0;
 }
 
 #if 0
