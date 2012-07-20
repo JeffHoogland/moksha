@@ -29,11 +29,11 @@ e_modapi_init(E_Module *m)
                                  "preferences-system-lock-screen",
                                  e_int_config_desklock);
    e_configure_registry_item_add("screen/screen_saver", 40, 
-                                 _("Screen Saver"), NULL, 
+                                 _("Blanking"), NULL, 
                                  "preferences-desktop-screensaver", 
                                  e_int_config_screensaver);
    e_configure_registry_item_add("screen/power_management", 50, 
-                                 _("Power Management"), NULL, 
+                                 _("Backlight"), NULL, 
                                  "preferences-system-power-management",
                                  e_int_config_dpms);
    

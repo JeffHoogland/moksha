@@ -22,9 +22,7 @@ struct _E_Config_Dialog_Data
 
    int enable_screensaver;
    double timeout;
-   double interval;
-   int blanking;
-   int exposures;
+   int presentation_mode;
    int ask_presentation;
    double ask_presentation_timeout;
    
@@ -68,10 +66,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->enable_screensaver = e_config->screensaver_enable;
    cfdata->timeout = e_config->screensaver_timeout / 60;
-   cfdata->interval = e_config->screensaver_interval;
-   cfdata->blanking = e_config->screensaver_blanking;
-   cfdata->exposures = e_config->screensaver_expose;
    cfdata->ask_presentation = e_config->screensaver_ask_presentation;
+   cfdata->presentation_mode = e_config->mode.presentation;
    cfdata->ask_presentation_timeout = e_config->screensaver_ask_presentation_timeout;
    cfdata->screensaver_suspend = e_config->screensaver_suspend;
    cfdata->screensaver_suspend_on_ac = e_config->screensaver_suspend_on_ac;
@@ -101,18 +97,26 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->screensaver_enable = cfdata->enable_screensaver;
    e_config->screensaver_timeout = (cfdata->timeout * 60);
-   e_config->screensaver_interval = cfdata->interval;
-   e_config->screensaver_blanking = cfdata->blanking;
-   e_config->screensaver_expose = cfdata->exposures;
    e_config->screensaver_ask_presentation = cfdata->ask_presentation;
+   e_config->mode.presentation = cfdata->presentation_mode;
    e_config->screensaver_ask_presentation_timeout = cfdata->ask_presentation_timeout;
    e_config->screensaver_suspend = cfdata->screensaver_suspend;
    e_config->screensaver_suspend_on_ac = cfdata->screensaver_suspend_on_ac;
    e_config->screensaver_suspend_delay = cfdata->screensaver_suspend_delay;
+
+   // enough of dpms vs screensaver being different! useless
+   e_config->dpms_enable = e_config->screensaver_enable;
+   e_config->dpms_standby_enable = e_config->dpms_enable;
+   e_config->dpms_suspend_enable = e_config->dpms_enable;
+   e_config->dpms_off_enable = e_config->dpms_enable;
+   e_config->dpms_standby_timeout = e_config->screensaver_timeout;
+   e_config->dpms_suspend_timeout = e_config->screensaver_timeout;
+   e_config->dpms_off_timeout = e_config->screensaver_timeout;
    
    /* Apply settings */
    e_screensaver_update();
-
+   e_dpms_update();
+   
    e_config_save_queue();
    return 1;
 }
@@ -122,10 +126,8 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 {
    return ((e_config->screensaver_enable != cfdata->enable_screensaver) ||
 	   (e_config->screensaver_timeout != (int)(cfdata->timeout * 60)) ||
-	   (e_config->screensaver_interval != cfdata->interval) ||
-	   (e_config->screensaver_blanking != cfdata->blanking) ||
-	   (e_config->screensaver_expose != cfdata->exposures) ||
 	   (e_config->screensaver_ask_presentation != cfdata->ask_presentation) ||
+           (e_config->mode.presentation != cfdata->presentation_mode) ||
 	   (e_config->screensaver_ask_presentation_timeout != cfdata->ask_presentation_timeout) ||
 	   (e_config->screensaver_suspend != cfdata->screensaver_suspend) ||
 	   (e_config->screensaver_suspend_on_ac != cfdata->screensaver_suspend_on_ac) ||
@@ -135,27 +137,35 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *otb, *ol, *ow, *of;
-   E_Radio_Group *rg;
+   Evas_Object *otb, *ol, *ow;
 
    otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
 
    /* Screensaver */
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_check_add(evas, _("Enable X Screensaver"), 
+   ow = e_widget_check_add(evas, _("Enable screen blanking"),
                            &(cfdata->enable_screensaver));
    e_widget_on_change_hook_set(ow, _cb_disable, cfdata);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
+   ow = e_widget_label_add(evas, _("Timeout"));
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
+			    1.0, 90.0, 1.0, 0, &(cfdata->timeout), NULL, 100);
+   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    
    ow = e_widget_check_add(evas, _("Suspend on blank"), 
                            &(cfdata->screensaver_suspend));
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_check_add(evas, _("Even if on power"), 
+   ow = e_widget_check_add(evas, _("Suspend even if AC"),
                            &(cfdata->screensaver_suspend_on_ac));
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_label_add(evas, _("Delay until suspend"));
+   
+   ow = e_widget_label_add(evas, _("Suspend delay"));
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
@@ -163,30 +173,13 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    
-   e_widget_toolbook_page_append(otb, NULL, _("Screensaver"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Blanking"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
-
-   /* Timers */
-   ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_label_add(evas, _("Initial timeout"));
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
-			    1.0, 90.0, 1.0, 0, &(cfdata->timeout), NULL, 100);
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_label_add(evas, _("Alternation timeout"));
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"),
-			    1.0, 300.0, 1.0, 0, &(cfdata->interval), NULL, 100);
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Timers"), ol, 
-                                 1, 0, 1, 0, 0.5, 0.0);
-
    /* Presentation */
    ol = e_widget_list_add(evas, 0, 0);
+   ow = e_widget_check_add(evas, _("Presentation mode enabled"), 
+                           &(cfdata->presentation_mode));
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_check_add(evas, _("Suggest if deactivated before"), 
                            &(cfdata->ask_presentation));
    e_widget_on_change_hook_set(ow, _cb_ask_presentation_changed, cfdata);
@@ -198,40 +191,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->gui.ask_presentation_slider = ow;
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Presentation Mode"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Presentation"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
-
-   /* Misc */
-   ol = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Blanking"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->blanking));
-   ow = e_widget_radio_add(evas, _("Default"), E_CONFIG_BLANKING_DEFAULT, rg);
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Preferred"), E_CONFIG_BLANKING_PREFERRED, rg);
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Not Preferred"), E_CONFIG_BLANKING_NOT_PREFERRED, rg);
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_framelist_object_append(of, ow);
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
-
-   of = e_widget_framelist_add(evas, _("Exposure Events"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->exposures));
-   ow = e_widget_radio_add(evas, _("Default"), E_CONFIG_EXPOSURES_DEFAULT, rg);
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Allow"), E_CONFIG_EXPOSURES_ALLOWED, rg);
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Don't Allow"), 
-                           E_CONFIG_EXPOSURES_NOT_ALLOWED, rg);
-   cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
-   e_widget_framelist_object_append(of, ow);
-   e_widget_list_object_append(ol, of, 1, 1, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Miscellaneous"), ol, 
-                                 1, 0, 1, 0, 0.5, 0.0);
-
+   
    e_widget_toolbook_page_show(otb, 0);
 
    // handler for enable/disable widget array
