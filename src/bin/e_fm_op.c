@@ -1163,30 +1163,36 @@ _e_fm_op_copy_dir(E_Fm_Op_Task *task)
 static int
 _e_fm_op_copy_link(E_Fm_Op_Task *task)
 {
-   size_t len;
+   int len;
    char path[PATH_MAX];
 
-   len = readlink(task->src.name, &path[0], PATH_MAX);
-   path[len] = 0;
-
-   if (symlink(path, task->dst.name) != 0)
+   len = readlink(task->src.name, path, sizeof(path) - 1);
+   if (len < 0)
      {
-        if (errno == EEXIST)
+        _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot read link '%s'.", task->src.name);
+     }
+   else
+     {
+        path[len] = 0;
+
+        if (symlink(path, task->dst.name) != 0)
           {
-             if (unlink(task->dst.name) == -1)
-               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
-             if (symlink(path, task->dst.name) == -1)
+             if (errno == EEXIST)
+               {
+                  if (unlink(task->dst.name) == -1)
+                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
+                  if (symlink(path, task->dst.name) == -1)
+                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", path, task->dst.name);
+               }
+             else
                _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", path, task->dst.name);
           }
-        else
-          _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", path, task->dst.name);
      }
-
    task->dst.done += task->src.st.st_size;
-
+   
    _e_fm_op_update_progress(task, task->src.st.st_size, 0);
    _e_fm_op_copy_stat_info(task);
-
+   
    task->finished = 1;
 
    return 0;
