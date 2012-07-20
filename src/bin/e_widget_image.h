@@ -8,7 +8,6 @@ EAPI Evas_Object     *e_widget_image_add_from_file(Evas *evas, const char *file,
 EAPI void             e_widget_image_edje_set(Evas_Object *obj, const char *file, const char *part);
 EAPI void             e_widget_image_file_set(Evas_Object *obj, const char *file);
 EAPI void             e_widget_image_file_key_set(Evas_Object *obj, const char *file, const char *key);
-EAPI void             e_widget_image_object_set(Evas_Object *obj, Evas_Object *o);
 
 #endif
 #endif

@@ -26,7 +26,7 @@ e_widget_image_add_from_object(Evas *evas, Evas_Object *object, int minw, int mi
    evas_object_show(object);
    o = e_icon_add(evas);
    e_icon_fill_inside_set(o, 1);
-   e_icon_object_set(o, object);
+   e_icon_edje_object_set(o, object);
    wd->img = o;
    e_widget_data_set(obj, wd);
    e_widget_can_focus_set(obj, 0);
@@ -54,9 +54,13 @@ e_widget_image_add_from_file(Evas *evas, const char *file, int minw, int minh)
 
    o = e_icon_add(evas);
    e_icon_fill_inside_set(o, 1);
-   o2 = evas_object_image_add(evas);
-   evas_object_image_file_set(o2, file, NULL);
-   e_icon_object_set(o, o2);
+   if (!e_icon_file_set(o, file))
+     {
+        evas_object_del(o);
+        free(wd);
+        evas_object_del(obj);
+        return NULL;
+     }
 
    wd->img = o;
    evas_object_show(o);
@@ -98,23 +102,6 @@ e_widget_image_file_key_set(Evas_Object *obj, const char *file, const char *key)
    e_icon_file_key_set(wd->img, file, key);
    evas_object_show(wd->img);
 }
-
-EAPI void
-e_widget_image_object_set(Evas_Object *obj, Evas_Object *o)
-{
-   E_Widget_Data *wd;
-   int mw, mh;
-
-   wd = e_widget_data_get(obj);
-   e_icon_object_set(wd->img, o);
-   edje_object_size_min_get(o, &mw, &mh);
-   if (wd->minw || wd->minh)
-     e_widget_size_min_set(obj, wd->minw, wd->minh);
-   else
-     e_widget_size_min_set(obj, mw, mh);
-   evas_object_show(wd->img);
-}
-
 
 static void
 _e_wid_del_hook(Evas_Object *obj)

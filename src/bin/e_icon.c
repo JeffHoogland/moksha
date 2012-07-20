@@ -342,6 +342,35 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    return EINA_TRUE;
 }
 
+EAPI void
+e_icon_edje_object_set(Evas_Object *obj, Evas_Object *edje)
+{
+   E_Smart_Data *sd;
+
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR();
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* smart code here */
+   if (sd->obj) evas_object_del(sd->obj);
+   sd->loading = 0;
+   if (sd->fdo)
+     {
+        eina_stringshare_del(sd->fdo);
+        sd->fdo = NULL;
+     }
+
+   if (sd->timer) ecore_timer_del(sd->timer);
+   sd->timer = NULL;
+   sd->frame = 0;
+   sd->frame_count = 0;
+   sd->edje = EINA_TRUE;
+   sd->obj = edje;
+
+   if (evas_object_visible_get(obj)) evas_object_show(sd->obj);
+   evas_object_smart_member_add(sd->obj, obj);
+   _e_icon_smart_reconfigure(sd);
+}
+
 EAPI Eina_Bool
 e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
 {
@@ -435,8 +464,8 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR();
    if (!(sd = evas_object_smart_data_get(obj))) return;
    str = evas_object_type_get(o);
-   if ((!str) || (strcmp(str, "edje") && strcmp(str, "image")))
-     printf(EINA_COLOR_RED"******************\ntrying to set an image object of type '%s'! this is not what you want!\n******************\n"EINA_COLOR_RESET, str);
+   if ((!str) || strcmp(str, "image"))
+     CRI(EINA_COLOR_RED"******************\ntrying to set an image object of type '%s'! this is not what you want!\n******************\n"EINA_COLOR_RESET, str);
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
