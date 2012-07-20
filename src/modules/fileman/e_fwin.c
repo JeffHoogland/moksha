@@ -387,10 +387,7 @@ e_fwin_reload_all(void)
           e_fwin_zone_shutdown(fwin->zone);
         else
           {
-             E_Fm2_Config *cfg;
-
-             cfg = e_fm2_config_get(fwin->cur_page->fm_obj);
-             cfg->view.single_click = e_config->filemanager_single_click;
+             _e_fwin_config_set(fwin->cur_page);
              if (fileman_config->view.show_toolbar)
                {
                   if (!fwin->cur_page->tbar)
