@@ -385,6 +385,31 @@ e_fwin_reload_all(void)
         if (!fwin) continue;  //safety
         if (fwin->zone)
           e_fwin_zone_shutdown(fwin->zone);
+        else
+          {
+             E_Fm2_Config *cfg;
+
+             cfg = e_fm2_config_get(fwin->cur_page->fm_obj);
+             cfg->view.single_click = e_config->filemanager_single_click;
+             if (fileman_config->view.show_toolbar)
+               {
+                  if (!fwin->cur_page->tbar)
+                    {
+                       fwin->cur_page->tbar = e_toolbar_new(e_win_evas_get(fwin->win), "toolbar",
+                                                            fwin->win, fwin->cur_page->fm_obj);
+                       e_toolbar_show(fwin->cur_page->tbar);
+                    }
+               }
+             else
+               {
+                  if (fwin->cur_page->tbar)
+                    {
+                       e_object_del(E_OBJECT(fwin->cur_page->tbar));
+                       fwin->cur_page->tbar = NULL;
+                    }
+               }
+             _e_fwin_cb_resize(fwin->win);
+          }
      }
 
    /* Hook into zones */
