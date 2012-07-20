@@ -1332,6 +1332,7 @@ EAPI void
 e_fm2_config_set(Evas_Object *obj, E_Fm2_Config *cfg)
 {
    EFM_SMART_CHECK();
+   if (sd->config == cfg) return;
    if (sd->config) _e_fm2_config_free(sd->config);
    sd->config = NULL;
    if (!cfg) return;
