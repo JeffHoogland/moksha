@@ -125,6 +125,7 @@ struct _E_Fm2_Smart_Data
    struct
    {
       char        *buf;
+      const char *start;
       Ecore_Timer *timer;
       unsigned int wildcard;
       Eina_Bool   setting : 1;
@@ -5459,6 +5460,7 @@ _e_fm2_typebuf_hide(Evas_Object *obj)
    if (sd->typebuf.setting) return;
    E_FREE(sd->typebuf.buf);
    edje_object_signal_emit(sd->overlay, "e,state,typebuf,stop", "e");
+   eina_stringshare_replace(&sd->typebuf.start, NULL);
    sd->typebuf_visible = EINA_FALSE;
    sd->typebuf.wildcard = 0;
 }
@@ -5625,6 +5627,7 @@ _e_fm2_typebuf_complete(Evas_Object *obj)
      {
         free(sd->typebuf.buf);
         sd->typebuf.buf = strdup(ic->info.file);
+        eina_stringshare_replace(&sd->typebuf.start, sd->realpath);
         edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
         evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
      }
@@ -5664,7 +5667,8 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
           {
              char buf[PATH_MAX];
 
-             snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, sd->typebuf.buf);
+             if (!sd->typebuf.start) sd->typebuf.start = eina_stringshare_ref(sd->realpath);
+             snprintf(buf, sizeof(buf), "%s/%s", sd->typebuf.start, sd->typebuf.buf);
              if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
@@ -5726,7 +5730,8 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
           {
              char buf[PATH_MAX];
 
-             snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, sd->typebuf.buf);
+             if (!sd->typebuf.start) sd->typebuf.start = eina_stringshare_ref(sd->realpath);
+             snprintf(buf, sizeof(buf), "%s/%s", sd->typebuf.start, sd->typebuf.buf);
              if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
