@@ -1202,6 +1202,12 @@ _e_fwin_toolbar_resize(E_Fwin_Page *page)
 
    w = page->fwin->win->w;
    h = page->fwin->win->h;
+   if (!page->tbar)
+     {
+        evas_object_move(page->scrollframe_obj, 0, 0);
+        evas_object_resize(page->scrollframe_obj, w, h);
+        return;
+     }
    switch (page->tbar->gadcon->orient)
      {
       case E_GADCON_ORIENT_HORIZ:
@@ -1254,8 +1260,6 @@ _e_fwin_toolbar_resize(E_Fwin_Page *page)
         return;
      }
    e_toolbar_move_resize(page->tbar, tx, ty, tw, th);
-   evas_object_move(page->scrollframe_obj, x, y);
-   evas_object_resize(page->scrollframe_obj, w, h);
 }
 
 /* fwin callbacks */
@@ -1315,8 +1319,7 @@ _e_fwin_cb_resize(E_Win *win)
         else if (fwin->zone)
           evas_object_resize(fwin->bg_obj, fwin->zone->w, fwin->zone->h);
      }
-   if (fwin->cur_page->tbar)
-     _e_fwin_toolbar_resize(fwin->cur_page);
+   _e_fwin_toolbar_resize(fwin->cur_page);
    if (fwin->zone)
      evas_object_resize(fwin->cur_page->scrollframe_obj, fwin->zone->w, fwin->zone->h);
    /* _e_fwin_geom_save(fwin); */
