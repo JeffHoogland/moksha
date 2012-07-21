@@ -1280,7 +1280,7 @@ _e_fm_op_copy_chunk(E_Fm_Op_Task *task)
 
         fclose(data->from);
         fclose(data->to);
-        data->from = NULL;
+        data->to = NULL;
         data->from = NULL;
 
         _e_fm_op_copy_stat_info(task);
