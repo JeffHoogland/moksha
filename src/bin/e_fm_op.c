@@ -1163,30 +1163,30 @@ _e_fm_op_copy_dir(E_Fm_Op_Task *task)
 static int
 _e_fm_op_copy_link(E_Fm_Op_Task *task)
 {
-   int len;
-   char path[PATH_MAX];
+   char *lnk_path;
 
-   len = readlink(task->src.name, path, sizeof(path) - 1);
-   if (len < 0)
+   lnk_path = ecore_file_readlink(task->src.name);
+   if (!lnk_path)
      {
         _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot read link '%s'.", task->src.name);
      }
    else
      {
-        path[len] = 0;
+        E_FM_OP_DEBUG("Creating link from '%s' to '%s'\n", lnk_path, task->dst.name);
 
-        if (symlink(path, task->dst.name) != 0)
+        if (symlink(lnk_path, task->dst.name) != 0)
           {
              if (errno == EEXIST)
                {
                   if (unlink(task->dst.name) == -1)
                     _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
-                  if (symlink(path, task->dst.name) == -1)
-                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", path, task->dst.name);
+                  if (symlink(lnk_path, task->dst.name) == -1)
+                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
                }
              else
-               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", path, task->dst.name);
+               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
           }
+        free(lnk_path);
      }
    task->dst.done += task->src.st.st_size;
    
@@ -1345,6 +1345,26 @@ _e_fm_op_copy_atom(E_Fm_Op_Task *task)
               */
              task->finished = 1;
              return 1;
+          }
+
+         if (S_ISLNK(task->src.st.st_mode))
+          {
+             char *dst_dir;
+
+             dst_dir = ecore_file_dir_get(task->dst.name);
+             if (dst_dir)
+               {
+                  char dst_path[PATH_MAX];
+                  const char *dst_name;
+
+                  dst_name = ecore_file_file_get(task->src.name);
+                  if ((strlen(dst_dir) + strlen(dst_name)) >= PATH_MAX)
+                    _E_FM_OP_ERROR_SEND_WORK(task, 0, "Not copying link: path too long", dst_path);
+
+                  snprintf(dst_path, sizeof(dst_path), "%s/%s", dst_dir, dst_name);
+                  task->dst.name = strdup(dst_path);
+                  free(dst_dir);
+               }
           }
 
         if (_e_fm_op_handle_overwrite(task)) return 1;
