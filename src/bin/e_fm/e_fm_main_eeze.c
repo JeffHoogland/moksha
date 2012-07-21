@@ -557,33 +557,12 @@ eet_setup(void)
    es_edd = eet_data_descriptor_stream_new(&eddc);
    EEZE_SCANNER_EDD_SETUP(es_edd);
 }
-
-static Eina_Bool
-_scanner_delay(void *data __UNUSED__)
-{
-   INF("Attempting scanner connection");
-   svr = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, "eeze_scanner", 0, NULL);
-   if (!svr) ERR("Could not create server connection!");
-   return EINA_FALSE;
-}
-
 static Eina_Bool
 _scanner_poll(void *data __UNUSED__)
 {
-   const char *tmp;
-   struct stat st;
-   char buf[1024];
-
    if (svr) return EINA_FALSE;
-   tmp = getenv("TMPDIR");
-   if ((!tmp) || (!tmp[0])) tmp = "/tmp";
-
-   snprintf(buf, sizeof(buf), "%s/.ecore_service|eeze_scanner|0", tmp);
-   if (!stat(buf, &st))
-     {
-        ecore_timer_add(1.0, _scanner_delay, NULL);
-        return EINA_FALSE;
-     }
+   svr = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, "eeze_scanner", 0, NULL);
+   if (!svr) return EINA_FALSE;
    return EINA_TRUE;
 }
 
@@ -593,7 +572,7 @@ _scanner_add(void *data, int type __UNUSED__, Ecore_Exe_Event_Add *ev)
    if (data != ecore_exe_data_get(ev->exe)) return ECORE_CALLBACK_PASS_ON;
    INF("Scanner started");
    if (_scanner_poll(NULL))
-     ecore_poller_add(ECORE_POLLER_CORE, 32, (Ecore_Task_Cb)_scanner_poll, NULL);
+     ecore_poller_add(ECORE_POLLER_CORE, 8, (Ecore_Task_Cb)_scanner_poll, NULL);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -647,17 +626,7 @@ _scanner_write(const void *eet_data __UNUSED__, size_t size __UNUSED__, void *us
 static void
 _scanner_run(void)
 {
-   char buf[1024];
-   struct stat st;
-   snprintf(buf, sizeof(buf),
-            "%s/enlightenment/utils/eeze_scanner", eina_prefix_lib_get(pfx));
-
-   if (stat(buf, &st))
-     {
-        CRI("Could not locate scanner at '%s'! EFM exiting.", buf);
-        exit(1);
-     }
-   scanner = ecore_exe_pipe_run(buf, ECORE_EXE_NOT_LEADER, pfx);
+   scanner = ecore_exe_pipe_run("eeze_scanner", ECORE_EXE_NOT_LEADER, pfx);
 }
 
 
@@ -732,18 +701,8 @@ _e_fm_main_eeze_init(void)
    ecore_event_handler_add(ECORE_CON_EVENT_SERVER_ERROR, (Ecore_Event_Handler_Cb)_scanner_err, NULL);
 
    eet_setup();
-
-   tmp = getenv("TMPDIR");
-   if ((!tmp) || (!tmp[0])) tmp = "/tmp";
-
-   snprintf(buf, sizeof(buf), "%s/.ecore_service|eeze_scanner|0", tmp);
-   if (stat(buf, &st))
-     {
-        INF("Socket file '%s' for eeze_scanner does not exist, attempting to start...", buf);
-        _scanner_run();
-        return;
-     }
-   _scanner_delay(NULL);
+   if (!_scanner_poll(NULL))
+     _scanner_run();
 }
 
 void
