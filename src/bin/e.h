@@ -147,6 +147,15 @@ void *alloca (size_t);
 #  define EINTERN
 # endif
 
+#ifndef strdupa
+# define strdupa(str)       strcpy(alloca(strlen(str) + 1), str)
+#endif
+
+#ifndef strndupa
+# define strndupa(str, len) strncpy(alloca(len + 1), str, len)
+#endif
+
+
 typedef struct _E_Before_Idler E_Before_Idler;
 typedef struct _E_Rect E_Rect;
 
