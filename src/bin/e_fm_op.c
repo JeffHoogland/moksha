@@ -1354,15 +1354,19 @@ _e_fm_op_copy_atom(E_Fm_Op_Task *task)
              dst_dir = ecore_file_dir_get(task->dst.name);
              if (dst_dir)
                {
-                  char dst_path[PATH_MAX];
                   const char *dst_name;
 
                   dst_name = ecore_file_file_get(task->src.name);
-                  if ((strlen(dst_dir) + strlen(dst_name)) >= PATH_MAX)
-                    _E_FM_OP_ERROR_SEND_WORK(task, 0, "Not copying link: path too long", dst_path);
+                  if (dst_name)
+                    {
+                       char dst_path[PATH_MAX];
 
-                  snprintf(dst_path, sizeof(dst_path), "%s/%s", dst_dir, dst_name);
-                  task->dst.name = strdup(dst_path);
+                       if ((strlen(dst_dir) + strlen(dst_name)) >= PATH_MAX)
+                         _E_FM_OP_ERROR_SEND_WORK(task, 0, "Not copying link: path too long", dst_path);
+
+                       snprintf(dst_path, sizeof(dst_path), "%s/%s", dst_dir, dst_name);
+                       task->dst.name = strdup(dst_path);
+                    }
                   free(dst_dir);
                }
           }
