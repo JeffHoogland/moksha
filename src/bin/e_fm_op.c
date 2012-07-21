@@ -1250,6 +1250,7 @@ _e_fm_op_open_files(E_Fm_Op_Task *task)
         data->to = fopen(task->dst.name, "wb");
         if (!data->to)
           _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot open file '%s' for writing: %s.", task->dst.name);
+        _e_fm_op_copy_stat_info(task);
      }
 
    return 0;
