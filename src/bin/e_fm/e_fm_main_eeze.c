@@ -46,7 +46,6 @@ static void _e_fm_main_eeze_volume_rescan(const char *syspath);
 static E_Volume *_e_fm_main_eeze_volume_find_fast(const char *syspath);
 static E_Storage *_e_fm_main_eeze_storage_find_fast(const char *syspath);
 
-
 static Eina_List *_e_stores = NULL;
 static Eina_List *_e_vols = NULL;
 static Eina_Bool _e_fm_eeze_init = EINA_FALSE;
@@ -190,8 +189,8 @@ _e_fm_main_eeze_vol_unmount_timeout(E_Volume *v)
 
 static Eina_Bool
 _e_fm_main_eeze_cb_vol_error(void *user_data __UNUSED__,
-                                 int type __UNUSED__,
-                                 Eeze_Event_Disk_Error *ev)
+                             int type __UNUSED__,
+                             Eeze_Event_Disk_Error *ev)
 {
    E_Volume *v;
    char *buf;
@@ -664,18 +663,14 @@ _scanner_data(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server
 void
 _e_fm_main_eeze_init(void)
 {
-   const char *tmp;
-   char **argv, buf[1024];
-   struct stat st;
+   char **argv;
    int argc;
 
    ecore_app_args_get(&argc, &argv);
    pfx = eina_prefix_new(argv[0], e_storage_find,
-                    "E", "enlightenment", "AUTHORS",
-                    PACKAGE_BIN_DIR,
-                    PACKAGE_LIB_DIR,
-                    PACKAGE_DATA_DIR,
-                    LOCALE_DIR);
+                         "E", "enlightenment", "AUTHORS",
+                         PACKAGE_BIN_DIR, PACKAGE_LIB_DIR,
+                         PACKAGE_DATA_DIR, LOCALE_DIR);
    if (!pfx)
      {
         ERR("Could not determine prefix!");
@@ -687,18 +682,28 @@ _e_fm_main_eeze_init(void)
    eeze_init();
    eina_log_domain_level_set("eeze_disk", EINA_LOG_LEVEL_DBG);
    eeze_mount_tabs_watch();
-   ecore_event_handler_add(EEZE_EVENT_DISK_MOUNT, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_mounted, NULL);
-   ecore_event_handler_add(EEZE_EVENT_DISK_UNMOUNT, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_unmounted, NULL);
-   ecore_event_handler_add(EEZE_EVENT_DISK_EJECT, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_ejected, NULL);
-   ecore_event_handler_add(EEZE_EVENT_DISK_ERROR, (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_error, NULL);
+   ecore_event_handler_add(EEZE_EVENT_DISK_MOUNT, 
+                           (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_mounted, NULL);
+   ecore_event_handler_add(EEZE_EVENT_DISK_UNMOUNT, 
+                           (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_unmounted, NULL);
+   ecore_event_handler_add(EEZE_EVENT_DISK_EJECT, 
+                           (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_ejected, NULL);
+   ecore_event_handler_add(EEZE_EVENT_DISK_ERROR, 
+                           (Ecore_Event_Handler_Cb)_e_fm_main_eeze_cb_vol_error, NULL);
 
-   ecore_event_handler_add(ECORE_EXE_EVENT_ADD, (Ecore_Event_Handler_Cb)_scanner_add, pfx);
-   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)_scanner_del, pfx);
+   ecore_event_handler_add(ECORE_EXE_EVENT_ADD, 
+                           (Ecore_Event_Handler_Cb)_scanner_add, pfx);
+   ecore_event_handler_add(ECORE_EXE_EVENT_DEL, 
+                           (Ecore_Event_Handler_Cb)_scanner_del, pfx);
 
-   ecore_event_handler_add(ECORE_CON_EVENT_SERVER_ADD, (Ecore_Event_Handler_Cb)_scanner_con, NULL);
-   ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DEL, (Ecore_Event_Handler_Cb)_scanner_disc, NULL);
-   ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DATA, (Ecore_Event_Handler_Cb)_scanner_data, NULL);
-   ecore_event_handler_add(ECORE_CON_EVENT_SERVER_ERROR, (Ecore_Event_Handler_Cb)_scanner_err, NULL);
+   ecore_event_handler_add(ECORE_CON_EVENT_SERVER_ADD, 
+                           (Ecore_Event_Handler_Cb)_scanner_con, NULL);
+   ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DEL, 
+                           (Ecore_Event_Handler_Cb)_scanner_disc, NULL);
+   ecore_event_handler_add(ECORE_CON_EVENT_SERVER_DATA, 
+                           (Ecore_Event_Handler_Cb)_scanner_data, NULL);
+   ecore_event_handler_add(ECORE_CON_EVENT_SERVER_ERROR, 
+                           (Ecore_Event_Handler_Cb)_scanner_err, NULL);
 
    eet_setup();
    if (!_scanner_poll(NULL))
