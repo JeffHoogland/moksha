@@ -1999,7 +1999,7 @@ ACT_FN_GO(app, )
 }
 
 /***************************************************************************/
-ACT_FN_GO(app_new_instance, )
+ACT_FN_GO(app_new_instance, __UNUSED__)
 {
    E_Border *bd;
    E_Zone *zone;
