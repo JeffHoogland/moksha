@@ -2005,10 +2005,11 @@ ACT_FN_GO(app_new_instance, )
    E_Zone *zone;
 
    zone = _e_actions_zone_get(obj);
-   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+   if (!zone) 
+     zone = e_util_zone_current_get(e_manager_current_get());
 
    if (!obj) obj = E_OBJECT(e_border_focused_get());
-   if (!obj || !zone) return;
+   if ((!obj) || (!zone)) return;
    if (obj->type != E_BORDER_TYPE)
      {
         obj = E_OBJECT(e_border_focused_get());
