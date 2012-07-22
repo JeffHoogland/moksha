@@ -46,11 +46,12 @@ e_widget_image_add_from_object(Evas *evas, Evas_Object *object, int minw, int mi
 EAPI Evas_Object *
 e_widget_image_add_from_file(Evas *evas, const char *file, int minw, int minh)
 {
-   Evas_Object *obj, *o, *o2;
+   Evas_Object *obj, *o;
    E_Widget_Data *wd;
 
    obj = e_widget_add(evas);
    wd = calloc(1, sizeof(E_Widget_Data));
+   if (!wd) return NULL;
 
    o = e_icon_add(evas);
    e_icon_fill_inside_set(o, 1);
