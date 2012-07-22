@@ -1999,6 +1999,28 @@ ACT_FN_GO(app, )
 }
 
 /***************************************************************************/
+ACT_FN_GO(app_new_instance, )
+{
+   E_Border *bd;
+   E_Zone *zone;
+
+   zone = _e_actions_zone_get(obj);
+   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj || !zone) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+        obj = E_OBJECT(e_border_focused_get());
+        if (!obj) return;
+     }
+   bd = (E_Border *)obj;
+
+   if (bd->desktop)
+     e_exec(zone, bd->desktop, NULL, NULL, "action/app");
+}
+
+/***************************************************************************/
 ACT_FN_GO(desk_deskshow_toggle, __UNUSED__)
 {
    E_Zone *zone;
@@ -3252,6 +3274,11 @@ e_actions_init(void)
    ACT_GO(app);
    e_action_predef_name_set(N_("Launch"), N_("Application"), "app", NULL,
                             "syntax: , example:", 1);
+
+   /* new instance of focused app */
+   ACT_GO(app_new_instance);
+   e_action_predef_name_set(N_("Launch"), N_("New Instance of Focused App"), "app_new_instance", NULL,
+                            NULL, 0);
 
    ACT_GO(restart);
    e_action_predef_name_set(N_("Enlightenment"), N_("Restart"), "restart",
