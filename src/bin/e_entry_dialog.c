@@ -10,10 +10,10 @@ static void _e_entry_cb_key_down(void *data, Evas_Object *obj, void *event_info)
 /* Externally accesible functions */
 EAPI E_Entry_Dialog *
 e_entry_dialog_show(const char *title, const char *icon, const char *text,
-		    const char *initial_text,
-		    const char *button_text, const char *button2_text,
-		    void (*ok_func)(char *text, void *data),
-		    void (*cancel_func)(void *data), void *data)
+                    const char *initial_text,
+                    const char *button_text, const char *button2_text,
+                    void (*ok_func)(char *text, void *data),
+                    void (*cancel_func)(void *data), void *data)
 {
    E_Entry_Dialog *ed;
    E_Dialog *dia;
@@ -32,8 +32,8 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_entry_dialog");
    if (!dia)
      {
-	e_object_del(E_OBJECT(ed));
-	return NULL;
+        e_object_del(E_OBJECT(ed));
+        return NULL;
      }
    dia->data = ed;
    ed->dia = dia;
@@ -49,8 +49,8 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
    o = e_widget_list_add(dia->win->evas, 0, 0);
    if (text)
      {
-	ob = e_widget_label_add(dia->win->evas, text);
-	e_widget_list_object_append(o, ob, 1, 0, 0.5);
+        ob = e_widget_label_add(dia->win->evas, text);
+        e_widget_list_object_append(o, ob, 1, 0, 0.5);
      }
 
    ed->entry = e_widget_entry_add(dia->win->evas, &(ed->text), NULL, NULL, NULL);
@@ -122,8 +122,9 @@ _e_entry_cb_key_down(void *data, Evas_Object *obj __UNUSED__, void *event_info)
    ev = event_info;
    if (!(ed = data)) return;
    if (!strcmp(ev->keyname, "Return"))
-      _e_entry_dialog_ok(data, ed->dia);
+     _e_entry_dialog_ok(data, ed->dia);
    else
-     if (!strcmp(ev->keyname, "Escape"))
-       _e_entry_dialog_cancel(data, ed->dia);
+   if (!strcmp(ev->keyname, "Escape"))
+     _e_entry_dialog_cancel(data, ed->dia);
 }
+
