@@ -174,6 +174,7 @@ struct _E_Fm2_Icon
    E_Menu           *menu;
    E_Entry_Dialog   *entry_dialog;
    Evas_Object      *entry_widget;
+   Ecore_X_Window  keygrab;
    E_Config_Dialog  *prop_dialog;
    E_Dialog         *dialog;
 
@@ -9130,6 +9131,10 @@ static Evas_Object *
 _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
 {
    Evas_Object *eo;
+   Evas *e;
+   E_Container *con;
+   E_Manager *man;
+   Eina_List *l, *ll;
 
    if (ic->sd->iop_icon)
      _e_fm2_icon_entry_widget_accept(ic->sd->iop_icon);
@@ -9137,10 +9142,19 @@ _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
    if (!edje_object_part_exists(ic->obj, "e.swallow.entry"))
      return NULL;
 
-   ic->entry_widget = e_widget_entry_add(evas_object_evas_get(ic->obj),
-                                         NULL, NULL, NULL, NULL);
+   e = evas_object_evas_get(ic->obj);
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     EINA_LIST_FOREACH(man->containers, ll, con)
+       {
+          if (con->bg_evas != e) continue;
+          ic->keygrab = ecore_evas_window_get(con->bg_ecore_evas);
+          break;
+       }
+   ic->entry_widget = e_widget_entry_add(e, NULL, NULL, NULL, NULL);
    evas_object_event_callback_add(ic->entry_widget, EVAS_CALLBACK_KEY_DOWN,
                                   _e_fm2_icon_entry_widget_cb_key_down, ic);
+   if (ic->keygrab)
+     e_grabinput_get(0, 0, ic->keygrab);
    edje_object_part_swallow(ic->obj, "e.swallow.entry", ic->entry_widget);
    evas_object_show(ic->entry_widget);
    e_widget_entry_text_set(ic->entry_widget, ic->info.file);
@@ -9162,6 +9176,9 @@ _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic)
    evas_object_del(ic->entry_widget);
    ic->entry_widget = NULL;
    ic->sd->typebuf.disabled = EINA_FALSE;
+   if (ic->keygrab)
+     e_grabinput_release(0, ic->keygrab);
+   ic->keygrab = 0;
 }
 
 static void
