@@ -73,7 +73,6 @@ static void
 _e_entry_dialog_free(E_Entry_Dialog *ed)
 {
    e_object_del(E_OBJECT(ed->dia));
-   evas_object_smart_callback_del(ed->entry, "key_down", _e_entry_cb_key_down);
    E_FREE(ed->text);
    free(ed);
 }
