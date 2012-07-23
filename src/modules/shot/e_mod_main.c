@@ -1,5 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include <time.h>
 
 static E_Module *shot_module = NULL;
 
@@ -232,11 +233,20 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    Evas_Object *o;
    Evas_Coord mw, mh;
    int mask = 0;
-   
+   time_t tt;
+   struct tm *tm;
+   char buf[PATH_MAX];
+
+   time(&tt);
+   tm = localtime(&tt);
+   if (quality == 100)
+     strftime(buf, sizeof(buf), "shot-%Y-%m-%d_%H-%M-%S.png", tm);
+   else
+     strftime(buf, sizeof(buf), "shot-%Y-%m-%d_%H-%M-%S.jpg", tm);
    fsel_dia = dia = e_dialog_new(scon, "E", "_e_shot_fsel");
    e_dialog_title_set(dia, _("Select screenshot save location"));
    o = e_widget_fsel_add(dia->win->evas, "desktop", "/", 
-                         (quality == 100) ? "shot.png" : "shot.jpg", 
+                         buf,
                          NULL,
                          NULL, NULL,
                          NULL, NULL, 1);
