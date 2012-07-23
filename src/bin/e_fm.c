@@ -129,6 +129,7 @@ struct _E_Fm2_Smart_Data
       Ecore_Timer *timer;
       unsigned int wildcard;
       Eina_Bool   setting : 1;
+      Eina_Bool   disabled : 1;
    } typebuf;
 
    int             busy_count;
@@ -5445,6 +5446,7 @@ _e_fm2_typebuf_show(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (sd->typebuf.disabled) return;
    E_FREE(sd->typebuf.buf);
    sd->typebuf.buf = strdup("");
    edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
@@ -5558,6 +5560,7 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
+   if (sd->typebuf.disabled) return NULL;
    if (!sd->typebuf.buf) return NULL;
    if (!sd->icons) return NULL;
 
@@ -5611,6 +5614,7 @@ _e_fm2_typebuf_complete(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (sd->typebuf.disabled) return;
    if ((!sd->typebuf.buf) || (!sd->typebuf.buf[0])) return;
    ic = _e_fm2_typebuf_match(obj, 0);
    if (!ic) return;
@@ -5650,6 +5654,7 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    if ((!ch) || (!ch[0])) return;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (sd->typebuf.disabled) return;
    if (!sd->typebuf.buf) return;
    len = strlen(sd->typebuf.buf) + strlen(ch);
    ts = malloc(len + 1);
@@ -5710,6 +5715,7 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (sd->typebuf.disabled) return;
    if (!sd->typebuf.buf) return;
    len = strlen(sd->typebuf.buf);
    if (len == 0)
@@ -9143,6 +9149,7 @@ _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
    e_editable_cursor_move_to_start(eo);
    e_editable_selection_move_to_end(eo);
    ic->sd->iop_icon = ic;
+   ic->sd->typebuf.disabled = EINA_TRUE;
 
    return ic->entry_widget;
 }
@@ -9154,6 +9161,7 @@ _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic)
    evas_object_focus_set(ic->sd->obj, 1);
    evas_object_del(ic->entry_widget);
    ic->entry_widget = NULL;
+   ic->sd->typebuf.disabled = EINA_FALSE;
 }
 
 static void
