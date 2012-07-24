@@ -19,6 +19,7 @@ struct _E_Widget_Data
    Evas_Object *o_preview_time;
    Evas_Object *o_preview_time_entry;
    Evas_Object *o_preview_preview;
+   Evas_Object *o_preview_scrollframe;
    Evas_Coord   preview_w, preview_h;
    int w, h;
    char        *preview_extra_text;
@@ -30,6 +31,7 @@ struct _E_Widget_Data
    const char        *mime;
    Eina_Bool mime_icon : 1;
    Eina_Bool is_dir : 1;
+   Eina_Bool prev_is_fm : 1;
 };
 
 static void  _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info);
@@ -39,7 +41,9 @@ static char *_e_wid_file_user_get(uid_t st_uid);
 static char *_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t gid);
 static char *_e_wid_file_time_get(time_t st_modtime);
 static void _e_wid_fprev_img_update(E_Widget_Data *wd, const char *path, const char *key);
-static void  _e_wid_del_hook(Evas_Object *obj);
+static void _e_wid_del_hook(Evas_Object *obj);
+static void _e_wid_fprev_preview_reset(E_Widget_Data *wd);
+static void _e_wid_fprev_preview_fm(E_Widget_Data *wd);
 
 static void
 _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNUSED__)
@@ -109,6 +113,7 @@ static void
 _e_wid_fprev_img_update(E_Widget_Data *wd, const char *path, const char *key)
 {
    if (!path) return;
+   if (wd->is_dir) return;
    e_widget_preview_thumb_set(wd->o_preview_preview, path, key, wd->w, wd->h);
 }
 
@@ -117,6 +122,7 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path)
 {
    char *size, *owner, *perms, *mtime;
    struct stat st;
+   int mw, mh;
 
    if (stat(wd->path, &st) < 0) return;
    wd->mime_icon = EINA_FALSE;
@@ -126,11 +132,12 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path)
    mtime = _e_wid_file_time_get(st.st_mtime);
    wd->is_dir = S_ISDIR(st.st_mode);
 
+   _e_wid_fprev_preview_reset(wd);
+   _e_wid_fprev_preview_fm(wd);
    _e_wid_fprev_img_update(wd, path, NULL);
-   e_widget_table_object_repack(wd->o_preview_preview_table,
-                                wd->o_preview_preview,
-                                0, 0, 1, 1, 0, 0, 1, 1);
 
+   e_widget_size_min_get(wd->o_preview_list, &mw, &mh);
+   e_widget_size_min_set(wd->obj, mw, mh);
    e_widget_entry_text_set(wd->o_preview_extra_entry, "");
    e_widget_entry_text_set(wd->o_preview_size_entry, size);
    e_widget_entry_text_set(wd->o_preview_owner_entry, owner);
@@ -259,6 +266,93 @@ _e_wid_del_hook(Evas_Object *obj)
    free(wd);
 }
 
+static void
+_e_wid_fprev_preview_reset(E_Widget_Data *wd)
+{
+   Evas_Object *o;
+   if (wd->is_dir) return;
+   if (wd->o_preview_scrollframe && wd->prev_is_fm)
+     {
+        evas_object_del(wd->o_preview_scrollframe);
+        wd->o_preview_scrollframe = wd->o_preview_preview = NULL;
+     }
+   if (wd->o_preview_preview) return;
+   o = e_widget_preview_add(evas_object_evas_get(wd->obj), wd->w, wd->h);
+   wd->prev_is_fm = EINA_FALSE;
+   e_widget_disabled_set(o, 1);
+   wd->o_preview_preview = o;
+   evas_object_smart_callback_add(o, "preview_update",
+                                  _e_wid_fprev_preview_update, wd);
+   e_widget_table_object_append(wd->o_preview_preview_table,
+                                wd->o_preview_preview,
+                                0, 0, 1, 1, 0, 0, 1, 1);
+   e_widget_list_object_repack(wd->o_preview_list,
+                               wd->o_preview_preview_table,
+                               0, 1, 0.5);
+   e_widget_list_object_repack(wd->o_preview_list,
+                               wd->o_preview_properties_table,
+                               1, 1, 0.5);
+}
+
+static void
+_e_wid_fprev_preview_fm(E_Widget_Data *wd)
+{
+   E_Fm2_Config fmc;
+   Evas_Object *o;
+   int mw;
+
+   if (!wd->is_dir) return;
+   if (!wd->path) return;
+   if (wd->o_preview_preview && (!wd->prev_is_fm))
+     {
+        evas_object_del(wd->o_preview_preview);
+        wd->o_preview_preview = NULL;
+     }
+   if (!wd->o_preview_preview)
+     {
+        Evas *evas;
+
+        evas = evas_object_evas_get(wd->obj);
+        o = e_fm2_add(evas);
+        wd->o_preview_preview = o;
+        wd->prev_is_fm = EINA_TRUE;
+        memset(&fmc, 0, sizeof(E_Fm2_Config));
+        fmc.view.mode = E_FM2_VIEW_MODE_LIST;
+        fmc.view.open_dirs_in_place = 1;
+        fmc.view.selector = 1;
+        fmc.view.single_click = 1;
+        fmc.view.no_subdir_jump = 1;
+        fmc.view.no_subdir_drop = 1;
+        fmc.view.link_drop = 1;
+        fmc.icon.list.w = 24;
+        fmc.icon.list.h = 24;
+        fmc.icon.fixed.w = 1;
+        fmc.icon.fixed.h = 1;
+        fmc.list.sort.no_case = 1;
+        fmc.selection.single = 1;
+        e_fm2_config_set(o, &fmc);
+        o = e_widget_scrollframe_pan_add(evas, wd->o_preview_preview,
+                                         e_fm2_pan_set,
+                                         e_fm2_pan_get,
+                                         e_fm2_pan_max_get,
+                                         e_fm2_pan_child_size_get);
+        wd->o_preview_scrollframe = o;
+        e_widget_size_min_get(wd->o_preview_list, &mw, NULL);
+        e_widget_size_min_set(o, MAX(wd->w, mw), wd->h);
+        evas_object_propagate_events_set(wd->o_preview_preview, 0);
+        e_widget_scrollframe_focus_object_set(o, wd->o_preview_preview);
+        e_widget_table_object_append(wd->o_preview_preview_table,
+                                     o, 0, 0, 1, 1, 0, 0, 1, 1);
+        e_widget_list_object_repack(wd->o_preview_list,
+                                    wd->o_preview_preview_table,
+                                    0, 1, 0.5);
+        e_widget_list_object_repack(wd->o_preview_list,
+                                    wd->o_preview_properties_table,
+                                    1, 1, 0.5);
+     }
+   e_fm2_path_set(wd->o_preview_preview, "/", wd->path);
+}
+
 EAPI Evas_Object *
 e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
 {
@@ -284,17 +378,8 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    o = e_widget_table_add(evas, 0);
    e_widget_disabled_set(o, 1);
    wd->o_preview_preview_table = o;
-   e_widget_sub_object_add(obj, o);
+   e_widget_size_min_set(o, 32, 32);
 
-   o = e_widget_preview_add(evas, w, h);
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_preview = o;
-   e_widget_sub_object_add(obj, o);
-   evas_object_smart_callback_add(o, "preview_update",
-                                  _e_wid_fprev_preview_update, wd);
-   e_widget_table_object_append(wd->o_preview_preview_table,
-                                wd->o_preview_preview,
-                                0, 0, 1, 1, 0, 0, 1, 1);
    e_widget_list_object_append(wd->o_preview_list,
                                wd->o_preview_preview_table,
                                0, 1, 0.5);
@@ -302,12 +387,10 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    o = e_widget_table_add(evas, 0);
    e_widget_disabled_set(o, 1);
    wd->o_preview_properties_table = o;
-   e_widget_sub_object_add(obj, o);
 
    o = e_widget_label_add(evas, _("Resolution:"));
    e_widget_disabled_set(o, 1);
    wd->o_preview_extra = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_extra,
                                 0, 0, 1, 1, 1, 1, 1, 1);
@@ -316,7 +399,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    e_widget_entry_readonly_set(o, 1);
    e_widget_disabled_set(o, 1);
    wd->o_preview_extra_entry = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 100, -1);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_extra_entry,
@@ -325,7 +407,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    o = e_widget_label_add(evas, _("Size:"));
    e_widget_disabled_set(o, 1);
    wd->o_preview_size = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_size,
                                 0, 1, 1, 1, 1, 1, 1, 1);
@@ -334,7 +415,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    e_widget_entry_readonly_set(o, 1);
    e_widget_disabled_set(o, 1);
    wd->o_preview_size_entry = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 100, -1);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_size_entry,
@@ -343,7 +423,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    o = e_widget_label_add(evas, _("Owner:"));
    e_widget_disabled_set(o, 1);
    wd->o_preview_owner = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_owner,
                                 0, 2, 1, 1, 1, 1, 1, 1);
@@ -352,7 +431,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    e_widget_entry_readonly_set(o, 1);
    e_widget_disabled_set(o, 1);
    wd->o_preview_owner_entry = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 100, -1);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_owner_entry,
@@ -361,7 +439,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    o = e_widget_label_add(evas, _("Permissions:"));
    e_widget_disabled_set(o, 1);
    wd->o_preview_perms = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_perms,
                                 0, 3, 1, 1, 1, 1, 1, 1);
@@ -370,7 +447,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    e_widget_entry_readonly_set(o, 1);
    e_widget_disabled_set(o, 1);
    wd->o_preview_perms_entry = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 100, -1);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_perms_entry,
@@ -379,7 +455,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    o = e_widget_label_add(evas, _("Modified:"));
    e_widget_disabled_set(o, 1);
    wd->o_preview_time = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_time,
                                 0, 4, 1, 1, 1, 1, 1, 1);
@@ -388,7 +463,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    e_widget_entry_readonly_set(o, 1);
    e_widget_disabled_set(o, 1);
    wd->o_preview_time_entry = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 100, -1);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_time_entry,
@@ -400,7 +474,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
 
    e_widget_size_min_get(wd->o_preview_list, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
-   evas_object_show(wd->o_preview_preview);
    evas_object_show(wd->o_preview_preview_table);
    evas_object_show(wd->o_preview_extra);
    evas_object_show(wd->o_preview_extra_entry);
