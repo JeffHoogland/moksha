@@ -284,32 +284,26 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 
    o = e_widget_table_add(evas, 0);
    wd->o_table2 = o;
-   e_widget_sub_object_add(obj, o);
 
    o = e_widget_button_add(evas, _("Add to Favorites"), "bookmark-new",
                            _e_wid_fsel_favorites_add, wd, NULL);
    wd->o_favorites_add = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_table2, o, 0, 0, 1, 1, 0, 0, 0, 0);
 
    o = e_widget_button_add(evas, _("Go up a Directory"), "go-up",
                            _e_wid_fsel_button_up, wd, NULL);
    wd->o_up_button = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_table_object_append(wd->o_table2, o, 1, 0, 1, 1, 0, 0, 1, 0);
 
    if (preview)
      {
         wd->o_preview_frame = e_widget_framelist_add(evas, _("Preview"), 0);
-        e_widget_sub_object_add(obj, o);
         wd->o_preview = e_widget_filepreview_add(evas, 128, 128, 0);
-        e_widget_sub_object_add(obj, wd->o_preview);
         e_widget_framelist_object_append(wd->o_preview_frame, wd->o_preview);
      }
 
    o = e_fm2_add(evas);
    wd->o_favorites_fm = o;
-   e_widget_sub_object_add(obj, o);
    memset(&fmc, 0, sizeof(E_Fm2_Config));
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
    fmc.view.open_dirs_in_place = 1;
@@ -346,13 +340,11 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    e_widget_scrollframe_focus_object_set(o, wd->o_favorites_fm);
 
    wd->o_favorites_frame = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 128, 128);
    e_widget_table_object_append(wd->o_table2, o, 0, 1, 1, 1, 1, 1, 0, 1);
 
    o = e_fm2_add(evas);
    wd->o_files_fm = o;
-   e_widget_sub_object_add(obj, o);
    memset(&fmc, 0, sizeof(E_Fm2_Config));
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
    fmc.view.open_dirs_in_place = 1;
@@ -390,13 +382,11 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    e_widget_scrollframe_focus_object_set(o, wd->o_files_fm);
 
    wd->o_files_frame = o;
-   e_widget_sub_object_add(obj, o);
    e_widget_size_min_set(o, 128, 128);
    e_widget_table_object_append(wd->o_table2, o, 1, 1, 1, 1, 1, 1, 0, 1);
 
    o = e_widget_entry_add(evas, &(wd->entry_text), NULL, NULL, NULL);
    wd->o_entry = o;
-   e_widget_sub_object_add(obj, o);
    if (selected) e_widget_entry_text_set(o, selected);
 
    wd->fm_overlay_clip = evas_object_rectangle_add(evas);
