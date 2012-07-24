@@ -143,23 +143,21 @@ e_widget_sub_object_add(Evas_Object *obj, Evas_Object *sobj)
 
    if (eina_list_data_find(sd->subobjs, sobj)) return;
 
-   evas_object_event_callback_del(sobj, EVAS_CALLBACK_DEL, _sub_obj_del);
-
    sd->subobjs = eina_list_append(sd->subobjs, sobj);
+   evas_object_event_callback_add(sobj, EVAS_CALLBACK_DEL, _sub_obj_del, sd);
    if (!sd->child_can_focus)
      {
         if (e_widget_can_focus_get(sobj)) sd->child_can_focus = 1;
      }
-   if (!strcmp(evas_object_type_get(sobj), SMART_NAME))
+   if (strcmp(evas_object_type_get(sobj), SMART_NAME)) return;
+
+   sd = evas_object_smart_data_get(sobj);
+   if (sd)
      {
-        sd = evas_object_smart_data_get(sobj);
-        if (sd)
-          {
-             if (sd->parent_obj) e_widget_sub_object_del(sd->parent_obj, sobj);
-             sd->parent_obj = obj;
-          }
+        if (sd->parent_obj) e_widget_sub_object_del(sd->parent_obj, sobj);
+        sd->parent_obj = obj;
      }
-   evas_object_event_callback_add(sobj, EVAS_CALLBACK_DEL, _sub_obj_del, sd);
+   evas_object_event_callback_del_full(sobj, EVAS_CALLBACK_DEL, _sub_obj_del, sd);
 }
 
 EAPI void
