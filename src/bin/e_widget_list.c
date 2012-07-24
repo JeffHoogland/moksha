@@ -43,6 +43,49 @@ e_widget_list_add(Evas *evas, int homogenous, int horiz)
 }
 
 /**  
+ * Prepend a widget to the list 
+ *
+ * @param obj the list widget to prepend the sub widget too
+ * @param sobj the sub widget
+ * @param fill DOCUMENT ME!
+ * @param expand DOCUMENT ME! 
+ * @param align who the sub widget to be aligned, to wards the center or sides
+ * @return the new list wdiget
+ */
+EAPI void
+e_widget_list_object_prepend(Evas_Object *obj, Evas_Object *sobj, int fill, int expand, double align)
+{
+   E_Widget_Data *wd;
+   Evas_Coord mw, mh;
+
+   wd = e_widget_data_get(obj);
+
+   e_box_pack_start(wd->o_box, sobj);
+   mw = mh = 0;
+   e_widget_size_min_get(sobj, &mw, &mh);
+   if (e_box_orientation_get(wd->o_box) == 1)
+     e_box_pack_options_set(sobj,
+			    1, fill, /* fill */
+			    expand, expand, /* expand */
+			    0.5, align, /* align */
+			    mw, mh, /* min */
+			    99999, 99999 /* max */
+			    );
+   else
+     e_box_pack_options_set(sobj,
+			    fill, 1, /* fill */
+			    expand, expand, /* expand */
+			    align, 0.5, /* align */
+			    mw, mh, /* min */
+			    99999, 99999 /* max */
+			    );
+   e_box_size_min_get(wd->o_box, &mw, &mh);
+   e_widget_size_min_set(obj, mw, mh);
+   e_widget_sub_object_add(obj, sobj);
+   evas_object_show(sobj);
+}
+
+/**  
  * Append a widget to the list 
  *
  * @param obj the list widget to append the sub widget too
@@ -83,6 +126,36 @@ e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int e
    e_widget_size_min_set(obj, mw, mh);
    e_widget_sub_object_add(obj, sobj);
    evas_object_show(sobj);
+}
+
+EAPI void
+e_widget_list_object_repack(Evas_Object *obj, Evas_Object *sobj, int fill, int expand, double align)
+{
+   E_Widget_Data *wd;
+   Evas_Coord mw, mh;
+
+   wd = e_widget_data_get(obj);
+
+   mw = mh = 0;
+   e_widget_size_min_get(sobj, &mw, &mh);
+   if (e_box_orientation_get(wd->o_box) == 1)
+     e_box_pack_options_set(sobj,
+			    1, fill, /* fill */
+			    expand, expand, /* expand */
+			    0.5, align, /* align */
+			    mw, mh, /* min */
+			    99999, 99999 /* max */
+			    );
+   else
+     e_box_pack_options_set(sobj,
+			    fill, 1, /* fill */
+			    expand, expand, /* expand */
+			    align, 0.5, /* align */
+			    mw, mh, /* min */
+			    99999, 99999 /* max */
+			    );
+   e_box_size_min_get(wd->o_box, &mw, &mh);
+   e_widget_size_min_set(obj, mw, mh);
 }
 
 EAPI void
