@@ -5687,7 +5687,7 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
              if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
-                  e_fm2_path_set(obj, sd->dev, buf);
+                  e_fm2_path_set(obj, "/", buf);
                   sd->typebuf.setting = EINA_FALSE;
                }
           }
@@ -5751,7 +5751,7 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
              if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
-                  e_fm2_path_set(obj, sd->dev, buf);
+                  e_fm2_path_set(obj, "/", buf);
                   sd->typebuf.setting = EINA_FALSE;
                }
           }
