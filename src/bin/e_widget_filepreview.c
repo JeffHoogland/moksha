@@ -29,6 +29,7 @@ struct _E_Widget_Data
    const char        *path;
    const char        *mime;
    Eina_Bool mime_icon : 1;
+   Eina_Bool is_dir : 1;
 };
 
 static void  _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info);
@@ -75,7 +76,7 @@ _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNU
              Eina_Bool edj;
 
              wd->mime_icon = EINA_TRUE;
-             size = (wd->w > 48) ? 48 : wd->w;
+             size = wd->w;
              mime = e_util_mime_icon_get(wd->mime, size);
              if (mime)
                {
@@ -123,6 +124,7 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path)
    owner = _e_wid_file_user_get(st.st_uid);
    perms = _e_wid_file_perms_get(st.st_mode, st.st_uid, st.st_gid);
    mtime = _e_wid_file_time_get(st.st_mtime);
+   wd->is_dir = S_ISDIR(st.st_mode);
 
    _e_wid_fprev_img_update(wd, path, NULL);
    e_widget_table_object_repack(wd->o_preview_preview_table,
