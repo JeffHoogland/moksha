@@ -273,11 +273,10 @@ _fill_files_ilist(void *data)
                      so val remains valid */
                   label = eina_stringshare_add(tmp);
                   e_widget_ilist_append(o, NULL, label, NULL, NULL, label /* val */);
+                  if ((e_config->xsettings.net_theme_name_detected == label) || (cfdata->widget_theme == label))
+                    e_widget_ilist_selected_set(cfdata->gui.widget_list, cnt);
                   eina_stringshare_del(label);
                   free(tmp);
-                  if (cfdata->widget_theme && !strcmp(cfdata->widget_theme, tmp))
-                    e_widget_ilist_selected_set(cfdata->gui.widget_list, cnt);
-
                   cnt++;
                }
 
