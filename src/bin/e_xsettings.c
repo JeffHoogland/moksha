@@ -169,6 +169,8 @@ _e_xsettings_string_set(const char *name, const char *value)
    Eina_List *l;
 
    if (!name) return;
+   if (name == _setting_theme_name)
+     e_config->xsettings.net_theme_name_detected = value;
    name = eina_stringshare_add(name);
 
    EINA_LIST_FOREACH(settings, l, s)

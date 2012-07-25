@@ -365,6 +365,7 @@ struct _E_Config
       const char   *xft_hint_style;
       const char   *xft_rgba;
       const char   *net_theme_name;  // GUI
+      const char   *net_theme_name_detected; // not saved
       const char   *net_icon_theme_name;  // GUI
       const char   *gtk_font_name;
    } xsettings;
