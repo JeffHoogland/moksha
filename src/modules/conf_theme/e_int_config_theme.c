@@ -23,6 +23,8 @@ struct _E_Config_Dialog_Data
    Evas_Object     *o_system;
    int              fmdir;
    const char      *theme;
+   Eio_File        *eio[2];
+   Eina_Bool        free : 1;
 
    /* Advanced */
    Evas_Object     *o_categories_ilist;
@@ -366,8 +368,12 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         eina_stringshare_del(t->category);
         free(t);
      }
-
-   E_FREE(cfdata);
+   if (cfdata->eio[0]) eio_file_cancel(cfdata->eio[0]);
+   if (cfdata->eio[1]) eio_file_cancel(cfdata->eio[1]);
+   if (cfdata->eio[0] || cfdata->eio[1])
+     cfdata->free = EINA_TRUE;
+   else
+     E_FREE(cfdata);
 }
 
 static Evas_Object *
@@ -703,66 +709,67 @@ _theme_file_used(Eina_List *tlist, const char *filename)
    return 0;
 }
 
-static void
-_ilist_files_add(E_Config_Dialog_Data *cfdata,
-                 const char *header, const char *dir,
-                 int *count_cb)
+static Eina_Bool
+_ilist_files_filter_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const char *file)
 {
-   Eina_Iterator *it;
-   const char *file;
-   Eina_List *themefiles = NULL;
-   int count = 0;
-   Evas_Object *o;
-   const char *theme;
-   Evas *evas;
+   return eina_str_has_extension(file, ".edj");
+}
 
-   o = cfdata->o_files_ilist;
-   e_widget_ilist_header_append(o, NULL, header);
-   evas = evas_object_evas_get(o);
+static void
+_ilist_files_main_cb(void *data, Eio_File *handler, const char *file)
+{
+   Evas_Object *ic = NULL;
+   E_Config_Dialog_Data *cfdata = data;
+   char *themename;
 
-   it = eina_file_ls(dir);
-
-   if (it)
+   if (_theme_file_used(cfdata->theme_list, file))
      {
-        EINA_ITERATOR_FOREACH(it, file)
-          if (strstr(file, ".edj"))
-            {
-               themefiles = eina_list_append(themefiles, file);
-            }
-          else
-            {
-               eina_stringshare_del(file);
-            }
-
-        eina_iterator_free(it);
+        ic = e_icon_add(evas_object_evas_get(cfdata->o_files_ilist));
+        e_util_icon_theme_set(ic, "preferences-desktop-theme");
      }
+   themename = strdupa(strrchr(file, '/') + 1);
+   themename[strlen(themename) - 4] = '\0';
+   e_widget_ilist_append(cfdata->o_files_ilist, ic, themename, NULL, NULL, NULL);
+   if (handler == cfdata->eio[0])
+     cfdata->personal_file_count++;
+}
 
-   if (themefiles)
+static void
+_ilist_files_done_cb(void *data, Eio_File *handler)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   if (handler == cfdata->eio[0])
      {
-        char *themename;
-
-        themefiles = eina_list_sort(themefiles, -1, _cb_sort);
-        count = eina_list_count(themefiles);
-
-        EINA_LIST_FREE(themefiles, theme)
-          {
-             Evas_Object *ic = NULL;
-
-             if (_theme_file_used(cfdata->theme_list, theme))
-               {
-                  ic = e_icon_add(evas);
-                  e_util_icon_theme_set(ic, "preferences-desktop-theme");
-               }
-             themename = strdupa(strrchr(theme, '/') + 1);
-             themename[strlen(themename) - 4] = '\0';
-             e_widget_ilist_append(o, ic, themename, NULL, NULL, NULL);
-
-             eina_stringshare_del(theme);
-          }
+        e_widget_ilist_header_prepend(cfdata->o_files_ilist, NULL, _("Personal"));
+        cfdata->eio[0] = NULL;
+        if (!cfdata->eio[1])
+          e_widget_ilist_header_append_relative(cfdata->o_files_ilist, NULL, _("System"), cfdata->personal_file_count);
      }
+   else
+     {
+        if (!cfdata->eio[0])
+          e_widget_ilist_header_append_relative(cfdata->o_files_ilist, NULL, _("System"), cfdata->personal_file_count);
+        cfdata->eio[1] = NULL;
+     }
+   if ((!cfdata->eio[0]) && (!cfdata->eio[1]) && cfdata->free) free(cfdata);
+}
 
-   if (count_cb)
-     *count_cb = count;
+static void
+_ilist_files_error_cb(void *data, Eio_File *handler, int error __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   //oh well
+   if (handler == cfdata->eio[0])
+     cfdata->eio[0] = NULL;
+   else
+     cfdata->eio[1] = NULL;
+   if ((!cfdata->eio[0]) && (!cfdata->eio[1]) && cfdata->free) free(cfdata);
+}
+
+static Eio_File *
+_ilist_files_add(E_Config_Dialog_Data *cfdata, const char *dir)
+{
+   return eio_file_ls(dir, _ilist_files_filter_cb, _ilist_files_main_cb, _ilist_files_done_cb, _ilist_files_error_cb, cfdata);
 }
 
 static void
@@ -779,14 +786,15 @@ _fill_files_ilist(E_Config_Dialog_Data *cfdata)
    edje_freeze();
    e_widget_ilist_freeze(o);
    e_widget_ilist_clear(o);
+   cfdata->personal_file_count = 0;
 
    /* Grab the "Personal" themes. */
    e_user_dir_concat_static(theme_dir, "themes");
-   _ilist_files_add(cfdata, _("Personal"), theme_dir, &cfdata->personal_file_count);
+   cfdata->eio[0] = _ilist_files_add(cfdata, theme_dir);
 
    /* Grab the "System" themes. */
    e_prefix_data_concat_static(theme_dir, "data/themes");
-   _ilist_files_add(cfdata, _("System"), theme_dir, NULL);
+   cfdata->eio[1] = _ilist_files_add(cfdata, theme_dir);
 
    e_widget_ilist_go(o);
    e_widget_ilist_thaw(o);
