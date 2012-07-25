@@ -537,6 +537,7 @@ PKG_CHECK_MODULES(E, [
   eina >= 1.2.0
   dbus-1
   edbus >= 1.2.0
+  eio >= 1.0.0
   $hal_mount
   $eeze_mount
   $udisks_mount
@@ -557,6 +558,7 @@ efreet-mime >= 1.2.0 \
 eina >= 1.2.0 \
 dbus-1 \
 edbus >= 1.2.0 \
+eio >= 1.0.0 \
 $hal_mount \
 $udisks_mount \
 $eeze_mount \

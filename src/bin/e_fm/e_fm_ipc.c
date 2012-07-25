@@ -36,10 +36,10 @@
 #include <Efreet.h>
 #include <Eet.h>
 
-#include "e.h"
 #include "e_fm_ipc.h"
-//#include "e_fm_shared_c.h"
+#define E_TYPEDEFS
 #include "e_fm_op.h"
+#undef E_TYPEDEFS
 #include "e_fm_main.h"
 
 #define DEF_SYNC_NUM             8

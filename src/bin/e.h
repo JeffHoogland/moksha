@@ -104,6 +104,7 @@ void *alloca (size_t);
 # include <Efreet_Mime.h>
 # include <Edje.h>
 # include <E_DBus.h>
+# include <Eio.h>
 
 # ifdef HAVE_HAL
 #  include <E_Hal.h>
