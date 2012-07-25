@@ -370,7 +370,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
    if (cfdata->eio[0]) eio_file_cancel(cfdata->eio[0]);
    if (cfdata->eio[1]) eio_file_cancel(cfdata->eio[1]);
-   if (cfdata->eio[0] || cfdata->eio[1])
+   if ((cfdata->eio[0]) || (cfdata->eio[1]))
      cfdata->free = EINA_TRUE;
    else
      E_FREE(cfdata);
