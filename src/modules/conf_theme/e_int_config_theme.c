@@ -24,6 +24,9 @@ struct _E_Config_Dialog_Data
    int              fmdir;
    const char      *theme;
    Eio_File        *eio[2];
+   Eio_File        *init[2];
+   Eina_List       *theme_init; /* list of eio ops to load themes */
+   Eina_List       *themes; /* eet file refs to work around load locking */
    Eina_Bool        free : 1;
 
    /* Advanced */
@@ -132,6 +135,12 @@ e_int_config_theme_update(E_Config_Dialog *dia, char *file)
      e_widget_preview_edje_set(cfdata->o_preview, cfdata->theme,
                                "e/desktop/background");
    if (cfdata->o_fm) e_widget_change(cfdata->o_fm);
+}
+
+static Eina_Bool
+_eio_filter_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const char *file)
+{
+   return eina_str_has_extension(file, ".edj");
 }
 
 static void
@@ -342,15 +351,75 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->fmdir = 1;
 }
 
+static void
+_open_test_cb(void *file)
+{
+   edje_file_group_exists(eet_file_get(file), "e/desktop/background");
+}
+
+static void
+_open_done_cb(void *data, Eio_File *handler, Eet_File *file)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   cfdata->themes = eina_list_append(cfdata->themes, file);
+   cfdata->theme_init = eina_list_remove(cfdata->theme_init, handler);
+   ecore_job_add(_open_test_cb, file);
+}
+
+static void
+_open_error_cb(void *data, Eio_File *handler, int error __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   cfdata->theme_init = eina_list_remove(cfdata->theme_init, handler);
+   if (cfdata->free) _free_data(NULL, cfdata);
+}
+
+static void
+_init_main_cb(void *data, Eio_File *handler __UNUSED__, const char *file)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   cfdata->theme_init = eina_list_append(cfdata->theme_init, eio_eet_open(file, EET_FILE_MODE_READ, _open_done_cb, _open_error_cb, cfdata));
+}
+
+static void
+_init_done_cb(void *data, Eio_File *handler)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   if (cfdata->init[0] == handler)
+     cfdata->init[0] = NULL;
+   else
+     cfdata->init[1] = NULL;
+   if (cfdata->free) _free_data(NULL, cfdata);
+}
+
+static void
+_init_error_cb(void *data, Eio_File *handler, int error __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   if (cfdata->init[0] == handler)
+     cfdata->init[0] = NULL;
+   else
+     cfdata->init[1] = NULL;
+   if (cfdata->free) _free_data(NULL, cfdata);
+}
+
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
+   char theme_dir[PATH_MAX];
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfd->cfdata = cfdata;
    cfdata->cfd = cfd;
    _fill_data(cfdata);
+   /* Grab the "Personal" themes. */
+   e_user_dir_concat_static(theme_dir, "themes");
+   cfdata->init[0] = eio_file_ls(theme_dir, _eio_filter_cb, _init_main_cb, _init_done_cb, _init_error_cb, cfdata);
+
+   /* Grab the "System" themes. */
+   e_prefix_data_concat_static(theme_dir, "data/themes");
+   cfdata->init[1] = eio_eet_open(theme_dir, EET_FILE_MODE_READ, _open_done_cb, _open_error_cb, cfdata);
    return cfdata;
 }
 
@@ -358,9 +427,13 @@ static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Theme *t;
+   Eina_List *l;
+   Eio_File *ls;
+   Eet_File *ef;
 
    if (cfdata->win_import)
      e_int_config_theme_del(cfdata->win_import);
+   cfdata->win_import = NULL;
 
    EINA_LIST_FREE(cfdata->theme_list, t)
      {
@@ -370,7 +443,11 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
    if (cfdata->eio[0]) eio_file_cancel(cfdata->eio[0]);
    if (cfdata->eio[1]) eio_file_cancel(cfdata->eio[1]);
-   if ((cfdata->eio[0]) || (cfdata->eio[1]))
+   EINA_LIST_FOREACH(cfdata->theme_init, l, ls)
+     eio_file_cancel(ls);
+   EINA_LIST_FREE(cfdata->themes, ef)
+     eet_close(ef);
+   if (cfdata->eio[0] || cfdata->eio[1] || cfdata->themes || cfdata->theme_init)
      cfdata->free = EINA_TRUE;
    else
      E_FREE(cfdata);
@@ -709,12 +786,6 @@ _theme_file_used(Eina_List *tlist, const char *filename)
    return 0;
 }
 
-static Eina_Bool
-_ilist_files_filter_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const char *file)
-{
-   return eina_str_has_extension(file, ".edj");
-}
-
 static void
 _ilist_files_main_cb(void *data, Eio_File *handler, const char *file)
 {
@@ -751,7 +822,7 @@ _ilist_files_done_cb(void *data, Eio_File *handler)
           e_widget_ilist_header_append_relative(cfdata->o_files_ilist, NULL, _("System"), cfdata->personal_file_count);
         cfdata->eio[1] = NULL;
      }
-   if ((!cfdata->eio[0]) && (!cfdata->eio[1]) && cfdata->free) free(cfdata);
+   if (cfdata->free) _free_data(NULL, cfdata);
 }
 
 static void
@@ -763,13 +834,13 @@ _ilist_files_error_cb(void *data, Eio_File *handler, int error __UNUSED__)
      cfdata->eio[0] = NULL;
    else
      cfdata->eio[1] = NULL;
-   if ((!cfdata->eio[0]) && (!cfdata->eio[1]) && cfdata->free) free(cfdata);
+   if (cfdata->free) _free_data(NULL, cfdata);
 }
 
 static Eio_File *
 _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *dir)
 {
-   return eio_file_ls(dir, _ilist_files_filter_cb, _ilist_files_main_cb, _ilist_files_done_cb, _ilist_files_error_cb, cfdata);
+   return eio_file_ls(dir, _eio_filter_cb, _ilist_files_main_cb, _ilist_files_done_cb, _ilist_files_error_cb, cfdata);
 }
 
 static void
