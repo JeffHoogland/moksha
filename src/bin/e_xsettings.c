@@ -51,10 +51,10 @@ static Eina_Bool running = EINA_FALSE;
 static Eio_File *eio_op = NULL;
 static Eina_Bool setting = EINA_FALSE;
 static Eina_Bool reset = EINA_FALSE;
-static const char _setting_icon_theme_name[] = "Net/IconThemeName";
-static const char _setting_theme_name[]      = "Net/ThemeName";
-static const char _setting_font_name[]       = "Gtk/FontName";
-static const char _setting_xft_dpi[]         = "Xft/DPI";
+static const char *_setting_icon_theme_name = NULL;
+static const char *_setting_theme_name = NULL;
+static const char *_setting_font_name = NULL;
+static const char *_setting_xft_dpi = NULL;
 static const char *_setting_theme = NULL;
 
 static void _e_xsettings_done_cb(void *data, Eio_File *handler, const Eina_Stat *stat);
@@ -169,9 +169,6 @@ _e_xsettings_string_set(const char *name, const char *value)
    Eina_List *l;
 
    if (!name) return;
-   if (name == _setting_theme_name)
-     e_config->xsettings.net_theme_name_detected = value;
-   name = eina_stringshare_add(name);
 
    EINA_LIST_FOREACH(settings, l, s)
      {
@@ -181,29 +178,27 @@ _e_xsettings_string_set(const char *name, const char *value)
    if (!value)
      {
         if (!s) return;
-        DBG("remove %s\n", name);
-        eina_stringshare_del(name);
-        eina_stringshare_del(s->name);
+        DBG("remove %s", name);
         eina_stringshare_del(s->s.value);
         settings = eina_list_remove(settings, s);
         E_FREE(s);
+        if (name == _setting_theme_name)
+          e_config->xsettings.net_theme_name_detected = value;
         return;
      }
-   if (s)
+   if (!s)
      {
-        DBG("update %s %s\n", name, value);
-        eina_stringshare_del(name);
-        eina_stringshare_replace(&s->s.value, value);
-     }
-   else
-     {
-        DBG("add %s %s\n", name, value);
+        DBG("add %s %s", name, value);
         s = E_NEW(Setting, 1);
         s->type = SETTING_TYPE_STRING;
         s->name = name;
-        s->s.value = eina_stringshare_add(value);
         settings = eina_list_append(settings, s);
      }
+   else
+     DBG("update %s %s", name, value);
+   eina_stringshare_replace(&s->s.value, value);
+   if (name == _setting_theme_name)
+     e_config->xsettings.net_theme_name_detected = s->s.value;
 
    /* type + pad + name-len + last-change-serial + str_len */
    s->length = 12;
@@ -220,7 +215,6 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
    Eina_List *l;
 
    if (!name) return;
-   name = eina_stringshare_add(name);
 
    EINA_LIST_FOREACH(settings, l, s)
      {
@@ -231,8 +225,6 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
      {
         if (!s) return;
         DBG("remove %s\n", name);
-        eina_stringshare_del(name);
-        eina_stringshare_del(s->name);
         settings = eina_list_remove(settings, s);
         E_FREE(s);
         return;
@@ -240,7 +232,6 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
    if (s)
      {
         DBG("update %s %d\n", name, value);
-        eina_stringshare_del(name);
         s->i.value = value;
      }
    else
@@ -573,7 +564,6 @@ _e_xsettings_stop(void)
 
    EINA_LIST_FREE(settings, s)
      {
-        if (s->name) eina_stringshare_del(s->name);
         if (s->s.value) eina_stringshare_del(s->s.value);
         E_FREE(s);
      }
@@ -593,6 +583,11 @@ e_xsettings_init(void)
    if (e_config->xsettings.enabled)
      _e_xsettings_start();
 
+   _setting_icon_theme_name = eina_stringshare_add("Net/IconThemeName");
+   _setting_theme_name = eina_stringshare_add("Net/ThemeName");
+   _setting_font_name = eina_stringshare_add("Gtk/FontName");
+   _setting_xft_dpi = eina_stringshare_add("Xft/DPI");
+
    return 1;
 }
 
@@ -603,6 +598,11 @@ e_xsettings_shutdown(void)
    if (eio_op) eio_file_cancel(eio_op);
    eio_op = NULL;
    setting = EINA_FALSE;
+
+   eina_stringshare_replace(&_setting_icon_theme_name, NULL);
+   eina_stringshare_replace(&_setting_theme_name, NULL);
+   eina_stringshare_replace(&_setting_font_name, NULL);
+   eina_stringshare_replace(&_setting_xft_dpi, NULL);
 
    return 1;
 }
