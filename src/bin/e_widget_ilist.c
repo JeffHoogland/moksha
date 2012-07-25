@@ -358,6 +358,18 @@ e_widget_ilist_append_full(Evas_Object *obj, Evas_Object *icon, Evas_Object *end
 }
 
 EAPI void
+e_widget_ilist_header_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, int relative)
+{
+   _queue_append(obj, CMD_ADD, icon, NULL, label, 1, NULL, NULL, NULL, relative, CMD_APPEND_RELATIVE, 0);
+}
+
+EAPI void
+e_widget_ilist_header_prepend_relative(Evas_Object *obj, Evas_Object *icon, const char *label, int relative)
+{
+   _queue_append(obj, CMD_ADD, icon, NULL, label, 1, NULL, NULL, NULL, relative, CMD_PREPEND_RELATIVE, 0);
+}
+
+EAPI void
 e_widget_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func)(void *data), void *data, const char *val, int relative)
 {
    _queue_append(obj, CMD_ADD, icon, NULL, label, 0, func, data, val, relative, CMD_APPEND_RELATIVE, 0);
@@ -414,6 +426,12 @@ e_widget_ilist_prepend(Evas_Object *obj, Evas_Object *icon, const char *label, v
    e_ilist_prepend(wd->o_ilist, icon, label, 0, _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
    if (icon) evas_object_show(icon);
  */
+}
+
+EAPI void
+e_widget_ilist_header_prepend(Evas_Object *obj, Evas_Object *icon, const char *label)
+{
+   _queue_append(obj, CMD_ADD, icon, NULL, label, 1, NULL, NULL, NULL, 0, CMD_PREPEND, 0);
 }
 
 EAPI void

@@ -16,6 +16,9 @@ EAPI void         e_widget_ilist_append_relative_full(Evas_Object *obj, Evas_Obj
 EAPI void         e_widget_ilist_prepend_full(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char *label, void (*func) (void *data), void *data, const char *val);
 EAPI void         e_widget_ilist_prepend_relative_full(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char *label, void (*func) (void *data), void *data, const char *val, int relative);
 
+EAPI void         e_widget_ilist_header_append_relative(Evas_Object *obj, Evas_Object *icon, const char *label, int relative);
+EAPI void         e_widget_ilist_header_prepend_relative(Evas_Object *obj, Evas_Object *icon, const char *label, int relative);
+EAPI void         e_widget_ilist_header_prepend(Evas_Object *obj, Evas_Object *icon, const char *label);
 EAPI void         e_widget_ilist_header_append(Evas_Object *obj, Evas_Object *icon, const char *label);
 EAPI void         e_widget_ilist_selector_set(Evas_Object *obj, int selector);
 EAPI void         e_widget_ilist_go(Evas_Object *obj);
