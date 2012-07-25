@@ -323,19 +323,13 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      {
         e_user_dir_snprintf(path, sizeof(path), "themes/%s", cfdata->theme);
         if (ecore_file_exists(path))
-          {
-             eina_stringshare_del(cfdata->theme);
-             cfdata->theme = eina_stringshare_add(path);
-          }
+          eina_stringshare_replace(&cfdata->theme, path);
         else
           {
              e_prefix_data_snprintf(path, sizeof(path), "data/themes/%s",
                                     cfdata->theme);
              if (ecore_file_exists(path))
-               {
-                  eina_stringshare_del(cfdata->theme);
-                  cfdata->theme = eina_stringshare_add(path);
-               }
+               eina_stringshare_replace(&cfdata->theme, path);
           }
      }
 
