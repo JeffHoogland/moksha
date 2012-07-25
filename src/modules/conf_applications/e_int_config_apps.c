@@ -139,11 +139,11 @@ e_int_config_apps_desk_lock(E_Container *con, const char *params __UNUSED__)
    E_Config_Data *data;
    char buff[PATH_MAX];
 
-   e_user_dir_concat_static(buff, "applications/desk-lock/.order");
+   e_user_dir_concat_static(buff, "applications/screen-lock/.order");
    data = E_NEW(E_Config_Data, 1);
-   data->title = eina_stringshare_add(_("Desk Lock Applications"));
-   data->dialog = eina_stringshare_add("applications/desk_lock_applications");
-   data->icon = eina_stringshare_add("preferences-applications-desk-lock");
+   data->title = eina_stringshare_add(_("Screen Lock Applications"));
+   data->dialog = eina_stringshare_add("applications/screen_lock_applications");
+   data->icon = eina_stringshare_add("preferences-applications-screen-lock");
    data->filename = eina_stringshare_add(buff);
    return _create_dialog(con, data);
 }
@@ -154,11 +154,11 @@ e_int_config_apps_desk_unlock(E_Container *con, const char *params __UNUSED__)
    E_Config_Data *data;
    char buff[PATH_MAX];
 
-   e_user_dir_concat_static(buff, "applications/desk-unlock/.order");
+   e_user_dir_concat_static(buff, "applications/screen-unlock/.order");
    data = E_NEW(E_Config_Data, 1);
-   data->title = eina_stringshare_add(_("Desk Unlock Applications"));
-   data->dialog = eina_stringshare_add("applications/desk_unlock_applications");
-   data->icon = eina_stringshare_add("preferences-applications-desk-unlock");
+   data->title = eina_stringshare_add(_("Screen Unlock Applications"));
+   data->dialog = eina_stringshare_add("applications/screen_unlock_applications");
+   data->icon = eina_stringshare_add("preferences-applications-screen-unlock");
    data->filename = eina_stringshare_add(buff);
    return _create_dialog(con, data);
 }
