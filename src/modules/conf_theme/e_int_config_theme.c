@@ -712,7 +712,6 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata,
    const char *file;
    Eina_List *themefiles = NULL;
    int count = 0;
-   char *tmp;
    Evas_Object *o;
    const char *theme;
    Evas *evas;
@@ -740,7 +739,7 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata,
 
    if (themefiles)
      {
-        char themename[PATH_MAX];
+        char *themename;
 
         themefiles = eina_list_sort(themefiles, -1, _cb_sort);
         count = eina_list_count(themefiles);
@@ -754,11 +753,9 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata,
                   ic = e_icon_add(evas);
                   e_util_icon_theme_set(ic, "preferences-desktop-theme");
                }
-             tmp = strdup(strrchr(theme, '/') + 1);
-             strncpy(themename, tmp, strlen(tmp) - 3);
-             themename[strlen(tmp) - 4] = '\0';
+             themename = strdupa(strrchr(theme, '/') + 1);
+             themename[strlen(themename) - 4] = '\0';
              e_widget_ilist_append(o, ic, themename, NULL, NULL, NULL);
-             free(tmp);
 
              eina_stringshare_del(theme);
           }
