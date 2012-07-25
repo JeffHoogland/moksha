@@ -39,13 +39,15 @@ e_about_new(E_Container *con)
 
    {
       FILE *f;
-      char buf[4096], buf2[4096], *tbuf;
+      char buf[4096];
+      Eina_Strbuf *tbuf;
 
       e_prefix_data_concat_static(buf, "AUTHORS");
       f = fopen(buf, "r");
       if (f)
         {
-           tbuf = strdup(_("<title>The Team</><br><br>"));
+           tbuf = eina_strbuf_new();
+           eina_strbuf_append(tbuf, _("<title>The Team</><br><br>"));
            while (fgets(buf, sizeof(buf), f))
              {
                 int len;
@@ -74,18 +76,16 @@ e_about_new(E_Container *con)
                                if (p) *p = 0;
                             }
                           while (p);
-                          snprintf(buf2, sizeof(buf2), "%s<br>", buf);
-                          tbuf = realloc(tbuf, strlen(tbuf) + strlen(buf2) + 1);
-                          strcat(tbuf, buf2);
+                          eina_strbuf_append_printf(tbuf, "%s<br>", buf);
                        }
                   }
              }
            fclose(f);
            if (tbuf)
              {
-                e_obj_dialog_obj_part_text_set
-                  (od, "e.textblock.authors", tbuf);
-                free(tbuf);
+                e_obj_dialog_obj_part_text_set(od, "e.textblock.authors",
+                                               eina_strbuf_string_get(tbuf));
+                eina_strbuf_free(tbuf);
              }
         }
    }
