@@ -100,7 +100,7 @@ e_obj_dialog_show(E_Obj_Dialog *od)
 }
 
 EAPI void
-e_obj_dialog_obj_part_text_set(E_Obj_Dialog *od, char *part, char *text)
+e_obj_dialog_obj_part_text_set(E_Obj_Dialog *od, const char *part, const char *text)
 {
    E_OBJECT_CHECK(od);
    E_OBJECT_TYPE_CHECK(od, E_OBJ_DIALOG_TYPE);
