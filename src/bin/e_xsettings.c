@@ -48,10 +48,16 @@ static Eina_List *managers = NULL;
 static Eina_List *handlers = NULL;
 static Eina_List *settings = NULL;
 static Eina_Bool running = EINA_FALSE;
+static Eio_File *eio_op = NULL;
+static Eina_Bool setting = EINA_FALSE;
+static Eina_Bool reset = EINA_FALSE;
 static const char _setting_icon_theme_name[] = "Net/IconThemeName";
 static const char _setting_theme_name[]      = "Net/ThemeName";
 static const char _setting_font_name[]       = "Gtk/FontName";
 static const char _setting_xft_dpi[]         = "Xft/DPI";
+static const char *_setting_theme = NULL;
+
+static void _e_xsettings_done_cb(void *data, Eio_File *handler, const Eina_Stat *stat);
 
 static Ecore_X_Atom
 _e_xsettings_atom_screen_get(int screen_num)
@@ -391,6 +397,56 @@ _e_xsettings_icon_theme_set(void)
 }
 
 static void
+_e_xsettings_error_cb(void *data, Eio_File *handler __UNUSED__, int error __UNUSED__)
+{
+   Eina_List *l = data;
+   if (reset || setting)
+     {
+        char buf[PATH_MAX];
+        if (reset || (!l)) l = efreet_data_dirs_get();
+        else if (l) l = l->next;
+        reset = EINA_FALSE;
+        if (l)
+          {
+             snprintf(buf, sizeof(buf), "%s/themes/%s", (char*)eina_list_data_get(l), _setting_theme);
+             eio_op = eio_file_direct_stat(buf, _e_xsettings_done_cb, _e_xsettings_error_cb, l);
+             return;
+          }
+     }
+   eio_op = NULL;
+   setting = EINA_FALSE;
+   _setting_theme = NULL;
+
+   if (e_config->xsettings.net_theme_name)
+     {
+        _e_xsettings_string_set(_setting_theme_name,
+                              e_config->xsettings.net_theme_name);
+        return;
+     }
+
+   _e_xsettings_string_set(_setting_theme_name, NULL);
+}
+
+static void
+_e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const Eina_Stat *stat __UNUSED__)
+{
+   Eina_List *l;
+   Settings_Manager *sm;
+   if (reset)
+     {
+        /* should not happen */
+        _e_xsettings_error_cb(NULL, NULL, 0);
+        return;
+     }
+   _e_xsettings_string_set(_setting_theme_name, _setting_theme);
+   _setting_theme = NULL;
+   eio_op = NULL;
+   setting = EINA_FALSE;
+   EINA_LIST_FOREACH(managers, l, sm)
+     _e_xsettings_apply(sm);
+}
+
+static void
 _e_xsettings_theme_set(void)
 {
    if (e_config->xsettings.match_e17_theme)
@@ -398,30 +454,14 @@ _e_xsettings_theme_set(void)
         E_Config_Theme *ct;
         if ((ct = e_theme_config_get("theme")))
           {
-             char *theme;
-
-             if ((theme = edje_file_data_get(ct->file, "gtk-theme")))
+             if ((_setting_theme = edje_file_data_get(ct->file, "gtk-theme")))
                {
-                  char buf[4096], *dir;
-                  Eina_List *xdg_dirs, *l;
+                  char buf[PATH_MAX];
 
-                  e_user_homedir_snprintf(buf, sizeof(buf), ".themes/%s", theme);
-                  if (ecore_file_exists(buf))
-                    {
-                       _e_xsettings_string_set(_setting_theme_name, theme);
-                       return;
-                    }
-
-                  xdg_dirs = efreet_data_dirs_get();
-                  EINA_LIST_FOREACH(xdg_dirs, l, dir)
-                    {
-                       snprintf(buf, sizeof(buf), "%s/themes/%s", dir, theme);
-                       if (ecore_file_exists(buf))
-                         {
-                            _e_xsettings_string_set(_setting_theme_name, theme);
-                            return;
-                         }
-                    }
+                  e_user_homedir_snprintf(buf, sizeof(buf), ".themes/%s", _setting_theme);
+                  eio_op = eio_file_direct_stat(buf, _e_xsettings_done_cb, _e_xsettings_error_cb, NULL);
+                  setting = EINA_TRUE;
+                  return;
                }
           }
      }
@@ -558,6 +598,9 @@ EINTERN int
 e_xsettings_shutdown(void)
 {
    _e_xsettings_stop();
+   if (eio_op) eio_file_cancel(eio_op);
+   eio_op = NULL;
+   setting = EINA_FALSE;
 
    return 1;
 }
@@ -565,6 +608,8 @@ e_xsettings_shutdown(void)
 EAPI void
 e_xsettings_config_update(void)
 {
+   setting = EINA_FALSE;
+   if (eio_op) eio_file_cancel(eio_op);
    if (!e_config->xsettings.enabled)
      {
         _e_xsettings_stop();
@@ -581,5 +626,6 @@ e_xsettings_config_update(void)
         _e_xsettings_icon_theme_set();
         _e_xsettings_font_set();
         _e_xsettings_update();
+        reset = EINA_TRUE;
      }
 }
