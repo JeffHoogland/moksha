@@ -829,6 +829,20 @@ e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, E_Config_Gadcon_Client *cf_gc
    free(cf_gcc);
 }
 
+EAPI E_Gadcon_Client *
+e_gadcon_client_find(E_Config_Gadcon_Client *cf_gcc)
+{
+   E_Gadcon *gc;
+   E_Gadcon_Client *gcc;
+   Eina_List *l, *ll;
+
+   if (!cf_gcc) return NULL;
+   EINA_LIST_FOREACH(gadcons, l, gc)
+     EINA_LIST_FOREACH(gc->clients, ll, gcc)
+       if (gcc->cf == cf_gcc) return gcc;
+   return NULL;
+}
+
 /**  
  * Creates a new gadget  
  *
