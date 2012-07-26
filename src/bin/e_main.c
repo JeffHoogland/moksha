@@ -302,7 +302,7 @@ main(int argc, char **argv)
 # define TS(x)                                               \
   {                                                          \
      t1 = ecore_time_unix_get();                             \
-     INF("ESTART: %1.5f [%1.5f] - %s", t1 - t0, t1 - t2, x); \
+     printf("ESTART: %1.5f [%1.5f] - %s\n", t1 - t0, t1 - t2, x); \
      t2 = t1;                                                \
   }
 #endif
@@ -1166,7 +1166,7 @@ _e_main_shutdown(int errcode)
 {
    int i = 0;
 
-   INF("E17: Begin Shutdown Procedure!\n");
+   printf("E17: Begin Shutdown Procedure!\n");
 
    if (_idle_before) ecore_idle_enterer_del(_idle_before);
    _idle_before = NULL;
