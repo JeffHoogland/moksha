@@ -242,7 +242,7 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone 
      {
         Eina_List *l;
         l = eina_hash_find(_gadman_gadgets, cc->name);
-        eina_hash_set(_gadman_gadgets, cc->name, eina_list_append(l, gcc));
+        eina_hash_set(_gadman_gadgets, cc->name, eina_list_append(l, gcc->cf));
      }
    evas_object_show(gcc->o_frame);
 
@@ -312,16 +312,20 @@ _gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer, E_C
 void
 gadman_gadget_del(E_Gadcon_Client *gcc)
 {
-   Gadman_Layer_Type layer = gcc->gadcon->id - ID_GADMAN_LAYER_BASE;
+   Gadman_Layer_Type layer;
    Eina_List *l;
 
-   Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc->cf);
-
+   if (!gcc) return;
+   layer = gcc->gadcon->id - ID_GADMAN_LAYER_BASE;
 //   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
-   l = eina_hash_find(_gadman_gadgets, gcc->name);
-   eina_hash_set(_gadman_gadgets, gcc->name, eina_list_remove(l, gcc));
-   if (gcc->cf) e_gadcon_client_config_del(gcc->gadcon->cf, gcc->cf);
-   gcc->cf = NULL;
+   if (gcc->cf)
+     {
+        Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc->cf);
+        l = eina_hash_find(_gadman_gadgets, gcc->name);
+        eina_hash_set(_gadman_gadgets, gcc->name, eina_list_remove(l, gcc->cf));
+        e_gadcon_client_config_del(gcc->gadcon->cf, gcc->cf);
+        gcc->cf = NULL;
+     }
    e_object_del(E_OBJECT(gcc));
    current = NULL;
 }
@@ -1450,11 +1454,14 @@ _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update
    if (!ev->enabled)
      {
         Eina_List *l;
+        E_Config_Gadcon_Client *cf_gcc;
         E_Gadcon_Client *gcc;
         l = eina_hash_set(_gadman_gadgets, ev->name, NULL);
         if (!l) return ECORE_CALLBACK_RENEW;
-        EINA_LIST_FREE(l, gcc)
+        EINA_LIST_FREE(l, cf_gcc)
           {
+             gcc = e_gadcon_client_find(cf_gcc);
+             if (!gcc) continue;
              gcc->cf = NULL;
              gadman_gadget_del(gcc);
           }
