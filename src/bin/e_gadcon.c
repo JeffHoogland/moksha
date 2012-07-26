@@ -273,6 +273,7 @@ e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
              if (gcc->client_class == cc)
                dlist = eina_list_append(dlist, gcc);
           }
+        gc->populated_classes = eina_list_remove(gc->populated_classes, cc);
      }
    EINA_LIST_FREE(dlist, gcc)
      {
