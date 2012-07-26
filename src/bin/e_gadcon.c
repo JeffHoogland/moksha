@@ -185,6 +185,7 @@ static Eina_Hash *providers = NULL;
 static Eina_List *providers_list = NULL;
 static Eina_List *gadcons = NULL;
 static Eina_List *gadcon_idle_pos = NULL;
+static Eina_List *gadcon_custom_idle_pos = NULL;
 static Eina_List *dummies = NULL;
 static Eina_List *populate_requests = NULL;
 static Ecore_Idler *populate_idler = NULL;
@@ -5145,24 +5146,42 @@ static Eina_Bool
 _e_gadcon_custom_populate_idler(void *data __UNUSED__)
 {
    const E_Gadcon_Client_Class *cc;
+   E_Config_Gadcon_Client *cf_gcc;
    const Eina_List *l;
    E_Gadcon *gc;
+   double loop;
 
+   loop = ecore_loop_time_get();
    EINA_LIST_FREE(custom_populate_requests, gc)
      {
+        if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get()) break;
+        if (!gc->cf) continue;
         e_gadcon_layout_freeze(gc->o_container);
-        EINA_LIST_FOREACH(providers_list, l, cc)
+        EINA_LIST_FOREACH(gadcon_custom_idle_pos ?: providers_list, gadcon_custom_idle_pos, cc)
           {
-             if (gc->populate_class.func)
-               gc->populate_class.func(gc->populate_class.data, gc, cc);
-             else
-               e_gadcon_populate_class(gc, cc);
+             EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
+               {
+                  if (e_util_strcmp(cf_gcc->name, cc->name)) continue;
+                  if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get())
+                    {
+                       e_gadcon_layout_thaw(gc->o_container);
+                       goto out;
+                    }
+                  if (gc->populate_class.func)
+                    gc->populate_class.func(gc->populate_class.data, gc, cc);
+                  else
+                    e_gadcon_populate_class(gc, cc);
+               }
           }
         e_gadcon_layout_thaw(gc->o_container);
      }
-
-   custom_populate_idler = NULL;
-   return ECORE_CALLBACK_CANCEL;
+out:
+   if (!custom_populate_requests)
+     {
+        custom_populate_idler = NULL;
+        return ECORE_CALLBACK_CANCEL;
+     }
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
