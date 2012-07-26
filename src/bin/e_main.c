@@ -1157,8 +1157,12 @@ e_main_idler_before_del(E_Before_Idler *eb)
 EAPI double
 e_main_ts(const char *str)
 {
-   TS(str);
-   return t1 - t2;
+   double ret;
+   t1 = ecore_time_unix_get();
+   printf("ESTART: %1.5f [%1.5f] - %s\n", t1 - t0, t1 - t2, str);
+   ret = t1 - t2;
+   t2 = t1;
+   return ret;
 }
 
 /* local functions */
