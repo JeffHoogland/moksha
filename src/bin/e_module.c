@@ -17,7 +17,7 @@ static int       _e_module_sort_priority(const void *d1, const void *d2);
 
 /* local subsystem globals */
 static Eina_List *_e_modules = NULL;
-static Ecore_Idler *_e_module_idler = NULL;
+static Ecore_Idle_Enterer *_e_module_idler = NULL;
 static Eina_List *_e_modules_delayed = NULL;
 
 EAPI int E_EVENT_MODULE_UPDATE = 0;
@@ -81,7 +81,7 @@ e_module_all_load(void)
         if ((em->delayed) && (em->enabled))
           {
              if (!_e_module_idler)
-               _e_module_idler = ecore_idler_add(_e_module_cb_idler, NULL);
+               _e_module_idler = ecore_idle_enterer_add(_e_module_cb_idler, NULL);
              _e_modules_delayed =
                eina_list_append(_e_modules_delayed,
                                 eina_stringshare_add(em->name));
