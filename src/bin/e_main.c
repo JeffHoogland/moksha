@@ -1154,10 +1154,11 @@ e_main_idler_before_del(E_Before_Idler *eb)
    eb->delete_me = 1;
 }
 
-EAPI void
+EAPI double
 e_main_ts(const char *str)
 {
    TS(str);
+   return t1 - t2;
 }
 
 /* local functions */

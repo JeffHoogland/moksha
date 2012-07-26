@@ -227,7 +227,7 @@ typedef struct _E_Rect E_Rect;
 
 EAPI E_Before_Idler *e_main_idler_before_add(int (*func) (void *data), void *data, int once);
 EAPI void  e_main_idler_before_del(E_Before_Idler *eb);
-EAPI void e_main_ts(const char *str);
+EAPI double e_main_ts(const char *str);
 
 struct _E_Before_Idler
 {
