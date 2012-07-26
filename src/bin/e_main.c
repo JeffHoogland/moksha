@@ -1154,6 +1154,12 @@ e_main_idler_before_del(E_Before_Idler *eb)
    eb->delete_me = 1;
 }
 
+EAPI void
+e_main_ts(const char *str)
+{
+   TS(str);
+}
+
 /* local functions */
 static void
 _e_main_shutdown(int errcode)
