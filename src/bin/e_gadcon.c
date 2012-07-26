@@ -5202,33 +5202,12 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
         EINA_LIST_FOREACH(gadcon_idle_pos ?: gadcons, gadcon_idle_pos, gc)
           {
              if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get()) goto out;
+             if (eina_list_data_find(gc->populated_classes, cc)) continue;
              if (gc->populate_class.func)
                gc->populate_class.func(gc->populate_class.data, gc, cc);
              else
                e_gadcon_populate_class(gc, cc);
-             if (!eina_list_data_find(gc->populated_classes, cc))
-               {
-                  gc->populated_classes = eina_list_append(gc->populated_classes, cc);
-                  if (gc->cf)
-                    {
-                       Eina_List *ll, *lll;
-                       E_Config_Gadcon_Client *cf_gcc;
-                       E_Gadcon_Client *gcc;
-                       EINA_LIST_FOREACH_SAFE(gc->cf->clients, ll, lll, cf_gcc)
-                         {
-                            if (!e_util_strcmp(cf_gcc->name, cc->name))
-                              {
-                                 EINA_LIST_FOREACH(gc->clients, ll, gcc)
-                                   if (gcc->cf == cf_gcc)
-                                     {
-                                        _e_gadcon_client_unpopulate(gcc);
-                                        break;
-                                     }
-                                 _e_gadcon_client_populate(gc, cc, cf_gcc);
-                              }
-                         }
-                    }
-               }
+             gc->populated_classes = eina_list_append(gc->populated_classes, cc);
           }
      }
 out:
