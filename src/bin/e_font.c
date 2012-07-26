@@ -169,7 +169,7 @@ _e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, con
    if (s1)
      {
         char *s2, *name, *style;
-        int len;
+        int len, len2;
 
         len = s1 - font;
         name = calloc(sizeof(char), len + 1);
@@ -179,15 +179,23 @@ _e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, con
         s2 = strchr(name, ',');
         if (s2)
           {
-             len = s2 - name;
-             name = realloc(name, sizeof(char) * len + 1);
-             memset(name, 0, sizeof(char) * len + 1);
-             strncpy(name, font, len);
+             len2 = s2 - name;
+             if (len2 > len)
+               {
+                  s2 = realloc(name, sizeof(char) * len2 + 1);
+                  if (!s2)
+                    {
+                       free(name);
+                       EINA_LOG_CRIT("alloc!");
+                       return NULL;
+                    }
+               }
+             strncpy(name, font, len2);
           }
 
-        if (strncmp(s1, E_TOK_STYLE, strlen(E_TOK_STYLE)) == 0)
+        if (strncmp(s1, E_TOK_STYLE, sizeof(E_TOK_STYLE) - 1) == 0)
           {
-             style = s1 + strlen(E_TOK_STYLE);
+             style = s1 + sizeof(E_TOK_STYLE) - 1;
 
              if (font_hash) efp = eina_hash_find(*font_hash, name);
              if (!efp)
