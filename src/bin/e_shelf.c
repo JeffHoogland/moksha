@@ -139,7 +139,6 @@ EAPI E_Shelf *
 e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id)
 {
    E_Shelf *es;
-   const char *option;
    char buf[1024];
    const char *locname;
 
@@ -168,7 +167,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      }
    es->fit_along = 1;
    es->layer = layer;
-   es->style = eina_stringshare_add(style);
 
    es->o_event = evas_object_rectangle_add(es->evas);
    evas_object_color_set(es->o_event, 0, 0, 0, 0);
@@ -188,11 +186,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
 
    es->o_base = edje_object_add(es->evas);
    es->name = eina_stringshare_add(name);
-   snprintf(buf, sizeof(buf), "e/shelf/%s/base", es->style);
    evas_object_resize(es->o_base, es->w, es->h);
-   if (!e_theme_edje_object_set(es->o_base, "base/theme/shelf", buf))
-     e_theme_edje_object_set(es->o_base, "base/theme/shelf",
-                             "e/shelf/default/base");
    if (es->popup)
      {
         evas_object_show(es->o_event);
@@ -261,18 +255,9 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->hide_step = 0;
    es->locked = 0;
 
-   option = edje_object_data_get(es->o_base, "hidden_state_size");
-   if (option)
-     es->hidden_state_size = atoi(option);
-   else
-     es->hidden_state_size = 4;
-   option = edje_object_data_get(es->o_base, "instant_delay");
-   if (option)
-     es->instant_delay = atof(option);
-   else
-     es->instant_delay = -1.0;
-
    es->hide_origin = -1;
+
+   e_shelf_style_set(es, style);
 
    {
       E_Event_Shelf *ev;
@@ -790,8 +775,8 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
    if (!es->o_base) return;
-   if (es->style) eina_stringshare_del(es->style);
-   es->style = eina_stringshare_add(style);
+   if (style != es->style)
+     eina_stringshare_replace(&es->style, style);
 
    if (style)
      snprintf(buf, sizeof(buf), "e/shelf/%s/base", style);
