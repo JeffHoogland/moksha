@@ -47,7 +47,7 @@ static void             _e_gadman_handlers_add(void);
 static void             _e_gadman_handler_del(void);
 static Eina_Bool        _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool        _e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event);
-static E_Gadcon_Client *gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
+static E_Gadcon_Client *gadman_gadget_place(E_Gadcon_Client *gcc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
 static void             gadman_gadget_del(E_Gadcon_Client *gcc);
 static E_Gadcon        *gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer);
 
@@ -165,9 +165,9 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
         if (cf_gcc->name && cc->name && !strcmp(cf_gcc->name, cc->name) && (gc->cf->zone == gc->zone->num))
           {
              gcc = e_gadcon_client_find(cf_gcc);
-             if (!gcc)
+             if ((!gcc) || (!eina_list_data_find(Man->gadgets[gcc->gadcon->id - ID_GADMAN_LAYER_BASE], cf_gcc)))
                {
-                  gadman_gadget_place(cf_gcc, layer, gc->zone);
+                  gadman_gadget_place(gcc, cf_gcc, layer, gc->zone);
                   break;
                }
              if ((gcc->cf) && (gcc->cf->id) && (cf_gcc->id))
@@ -188,11 +188,10 @@ gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer)
 }
 
 static E_Gadcon_Client *
-gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone)
+gadman_gadget_place(E_Gadcon_Client *gcc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone)
 {
    const Eina_List *l;
    E_Gadcon *gc;
-   E_Gadcon_Client *gcc;
    E_Gadcon_Client_Class *cc = NULL;
 
    if (!cf->name) return NULL;
@@ -200,20 +199,32 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone 
    gc = gadman_gadcon_get(zone, layer);
 
    /* Find provider */
-   EINA_LIST_FOREACH(e_gadcon_provider_list(), l, cc)
+   EINA_LIST_FOREACH(gc->populated_classes, l, cc)
      {
         if (!strcmp(cc->name, cf->name))
           break;
         else
           cc = NULL;
      }
-   if (!cc) return NULL;
+   if (!cc)
+     {
+        gc->waiting_classes = eina_list_append(gc->waiting_classes, cf);
+        e_gadcon_custom_populate_request(gc);
+        return NULL;
+     }
 
    /* init Gadcon_Client */
-   gcc = cc->func.init(gc, cf->name, cf->id, cc->default_style);
-   if (!gcc) return NULL;
-   gcc->cf = cf;
-   gcc->client_class = cc;
+   if (!gcc)
+     {
+        gcc = cc->func.init(gc, cf->name, cf->id, cc->default_style);
+        if (!gcc) return NULL;
+        gcc->cf = cf;
+        gcc->client_class = cc;
+
+        /* Call the client orientation function */
+        if (cc->func.orient)
+          cc->func.orient(gcc, gcc->cf->orient);
+     }
 
    Man->gadgets[layer] = eina_list_append(Man->gadgets[layer], cf);
 
@@ -232,10 +243,6 @@ gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone 
    edje_object_part_swallow(gcc->o_frame, "e.swallow.content", gcc->o_base);
    evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_DOWN,
                                   on_frame_click, gcc);
-
-   /* Call the client orientation function */
-   if (cc->func.orient)
-     cc->func.orient(gcc, gcc->cf->orient);
 
    _apply_widget_position(gcc);
 
@@ -293,7 +300,7 @@ _gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer, E_C
 
    /* Place the new gadget */
    if (cf)
-     gcc = gadman_gadget_place(cf, layer, gc->zone);
+     gcc = gadman_gadget_place(NULL, cf, layer, gc->zone);
    if (!gcc) return NULL;
 
    /* Respect Aspect */
@@ -711,10 +718,10 @@ _save_widget_position(E_Gadcon_Client *gcc)
    int x, y, w, h;
 
    evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
-   current->cf->geom.pos_x = (double)x / (double)Man->width;
-   current->cf->geom.pos_y = (double)y / (double)Man->height;
-   current->cf->geom.size_w = (double)w / (double)Man->width;
-   current->cf->geom.size_h = (double)h / (double)Man->height;
+   current->config.pos_x = current->cf->geom.pos_x = (double)x / (double)Man->width;
+   current->config.pos_y = current->cf->geom.pos_y = (double)y / (double)Man->height;
+   current->config.size_w = current->cf->geom.size_w = (double)w / (double)Man->width;
+   current->config.size_h = current->cf->geom.size_h = (double)h / (double)Man->height;
 
    e_config_save_queue();
 }
@@ -970,7 +977,7 @@ on_shape_change(void *data __UNUSED__, E_Container_Shape *es, E_Container_Shape_
 
              e_gadcon_unpopulate(gc);
              EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
-               gadman_gadget_place(cf_gcc, layer, gc->zone);
+               gadman_gadget_place(NULL, cf_gcc, layer, gc->zone);
           }
      }
 }
