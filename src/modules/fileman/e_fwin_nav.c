@@ -26,9 +26,9 @@ struct _Instance
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-static const char *_gc_label(E_Gadcon_Client_Class *client_class);
-static Evas_Object *_gc_icon(E_Gadcon_Client_Class *client_class, Evas *evas);
-static const char *_gc_id_new(E_Gadcon_Client_Class *client_class);
+static const char *_gc_label(const E_Gadcon_Client_Class *client_class);
+static Evas_Object *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
+static const char *_gc_id_new(const E_Gadcon_Client_Class *client_class);
 static void _cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _cb_back_click(void *data, Evas_Object *obj, const char *emission, const char *source);
@@ -258,19 +258,19 @@ _gc_orient(E_Gadcon_Client *gcc __UNUSED__, E_Gadcon_Orient orient)
 }
 
 static const char *
-_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
+_gc_label(const E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _("EFM Navigation");
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
+_gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    return e_util_icon_theme_icon_add("system-file-manager", 48, evas);
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
+_gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    static char buf[PATH_MAX];
 

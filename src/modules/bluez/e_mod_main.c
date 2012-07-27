@@ -1067,13 +1067,13 @@ _gc_orient(E_Gadcon_Client       *gcc,
 }
 
 static const char *
-_gc_label(E_Gadcon_Client_Class *client_class __UNUSED__)
+_gc_label(const E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    return _(_e_bluez_Name);
 }
 
 static Evas_Object *
-_gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__,
+_gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__,
          Evas                               *evas)
 {
    Evas_Object *o;
@@ -1084,7 +1084,7 @@ _gc_icon(E_Gadcon_Client_Class *client_class __UNUSED__,
 }
 
 static const char *
-_gc_id_new(E_Gadcon_Client_Class *client_class __UNUSED__)
+_gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    E_Bluez_Module_Context *ctxt;
 
