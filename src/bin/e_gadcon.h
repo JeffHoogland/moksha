@@ -138,13 +138,13 @@ struct _E_Gadcon_Client_Class
       E_Gadcon_Client *(*init)(E_Gadcon * gc, const char *name, const char *id, const char *style);
       void             (*shutdown)(E_Gadcon_Client *gcc);
       void             (*orient)(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-      const char      *(*label)(E_Gadcon_Client_Class * client_class);
-      Evas_Object     *(*icon)(E_Gadcon_Client_Class * client_class, Evas * evas);
+      const char      *(*label)(const E_Gadcon_Client_Class *client_class);
+      Evas_Object     *(*icon)(const E_Gadcon_Client_Class *client_class, Evas * evas);
       /* All members below are part of version 2 */
       /* Create new id, so that the gadcon client can refer to a config set inside the module */
-      const char      *(*id_new)(E_Gadcon_Client_Class * client_class);
+      const char      *(*id_new)(const E_Gadcon_Client_Class *client_class);
       /* Del an id when a gadcon client is removed from the system */
-      void             (*id_del)(E_Gadcon_Client_Class *client_class, const char *id);
+      void             (*id_del)(const E_Gadcon_Client_Class *client_class, const char *id);
       /* All members below are part of version 3 */
       Eina_Bool        (*is_site)(E_Gadcon_Site site);
    } func;
@@ -247,6 +247,7 @@ EAPI E_Gadcon               *e_gadcon_dummy_new(int id);
 EAPI E_Gadcon               *e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *swallow_name);
 EAPI void                    e_gadcon_custom_new(E_Gadcon *gc);
 EAPI void                    e_gadcon_custom_del(E_Gadcon *gc);
+EAPI void                    e_gadcon_custom_populate_request(E_Gadcon *gc);
 EAPI void                    e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 EAPI void                    e_gadcon_min_size_request_callback_set(E_Gadcon *gc, void (*func)(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);
 EAPI void                    e_gadcon_size_request_callback_set(E_Gadcon *gc, void (*func)(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);

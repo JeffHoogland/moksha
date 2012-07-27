@@ -6,7 +6,7 @@
 
 #define E_LAYOUT_ITEM_DRAG_RESIST_LEVEL 10
 
-static Eina_Bool               _e_gadcon_client_populate(E_Gadcon *gc, E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf_gcc);
+static Eina_Bool               _e_gadcon_client_populate(E_Gadcon *gc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf_gcc);
 static void                     _e_gadcon_client_unpopulate(E_Gadcon_Client *gcc);
 static void                     _e_gadcon_free(E_Gadcon *gc);
 static void                     _e_gadcon_client_free(E_Gadcon_Client *gcc);
@@ -318,6 +318,21 @@ e_gadcon_custom_del(E_Gadcon *gc)
    gadcons = eina_list_remove(gadcons, gc);
 }
 
+EAPI void
+e_gadcon_custom_populate_request(E_Gadcon *gc)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+
+   if (!custom_populate_idler)
+     {
+        custom_populate_idler =
+          ecore_idler_add(_e_gadcon_custom_populate_idler, NULL);
+     }
+   if (!eina_list_data_find(custom_populate_requests, gc))
+     custom_populate_requests = eina_list_append(custom_populate_requests, gc);
+}
+
 EAPI E_Gadcon *
 e_gadcon_dummy_new(int id)
 {
@@ -517,41 +532,7 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
         if ((cf_gcc->name) && (cc->name) &&
             (!strcmp(cf_gcc->name, cc->name)) &&
             (cf_gcc->id) && (cf_gcc->style))
-          {
-             E_Gadcon_Client *gcc;
-
-             if ((!cf_gcc->id) &&
-                 (_e_gadcon_client_class_feature_check((E_Gadcon_Client_Class *)cc, "id_new", cc->func.id_new)))
-               cf_gcc->id = eina_stringshare_add(cc->func.id_new((E_Gadcon_Client_Class *)cc));
-
-             gcc = cc->func.init(gc, cf_gcc->name, cf_gcc->id,
-                                 cf_gcc->style);
-             if (gcc)
-               {
-                  gcc->cf = cf_gcc;
-                  gcc->client_class = cc;
-                  gcc->config.pos = cf_gcc->geom.pos;
-                  gcc->config.size = cf_gcc->geom.size;
-                  gcc->config.res = cf_gcc->geom.res;
-                  gcc->state_info.seq = cf_gcc->state_info.seq;
-                  gcc->state_info.flags = cf_gcc->state_info.flags;
-                  if (gcc->o_frame)
-                    e_gadcon_layout_pack_options_set(gcc->o_frame, gcc);
-                  else if (gcc->o_base)
-                    e_gadcon_layout_pack_options_set(gcc->o_base, gcc);
-
-                  if (!gcc->autoscroll_set)
-                    e_gadcon_client_autoscroll_set(gcc, cf_gcc->autoscroll);
-//		  e_gadcon_client_resizable_set(gcc, cf_gcc->resizable);
-                  if (gcc->client_class->func.orient)
-                    gcc->client_class->func.orient(gcc, gc->orient);
-
-                  _e_gadcon_client_save(gcc);
-                  if (gc->editing) e_gadcon_client_edit_begin(gcc);
-                  if (gc->instant_edit)
-                    e_gadcon_client_util_menu_attach(gcc);
-               }
-          }
+          _e_gadcon_client_populate(gc, cc, cf_gcc);
      }
    e_gadcon_layout_thaw(gc->o_container);
 }
@@ -1367,7 +1348,7 @@ e_gadcon_client_zone_get(E_Gadcon_Client *gcc)
 }
 
 static Eina_Bool
-_e_gadcon_client_populate(E_Gadcon *gc, E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf_gcc)
+_e_gadcon_client_populate(E_Gadcon *gc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf_gcc)
 {
    E_Gadcon_Client *gcc;
 
@@ -1974,10 +1955,7 @@ _e_gadcon_client_save(E_Gadcon_Client *gcc)
    gcc->cf->state_info.seq = gcc->state_info.seq;
    gcc->cf->state_info.flags = gcc->state_info.flags;
    gcc->cf->autoscroll = gcc->autoscroll;
-   if (gcc->cf->style) eina_stringshare_del(gcc->cf->style);
-   gcc->cf->style = NULL;
-   if (gcc->style)
-     gcc->cf->style = eina_stringshare_add(gcc->style);
+   eina_stringshare_replace(&gcc->cf->style, gcc->style);
 /*   gcc->cf->resizable = gcc->resizable;*/
    gcc->cf->resizable = 0;
    e_config_save_queue();
