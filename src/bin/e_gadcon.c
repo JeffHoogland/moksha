@@ -244,7 +244,7 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
         EINA_LIST_FOREACH_SAFE(gc->waiting_classes, ll, lll, cf_gcc)
           if (!e_util_strcmp(cf_gcc->name, cc->name))
             {
-               _e_gadcon_client_populate(gc, (E_Gadcon_Client_Class*)cc, cf_gcc);
+               _e_gadcon_client_populate(gc, cc, cf_gcc);
                gc->waiting_classes = eina_list_remove_list(gc->waiting_classes, ll);
             }
         e_gadcon_layout_thaw(gc->o_container);
@@ -1377,6 +1377,13 @@ _e_gadcon_client_populate(E_Gadcon *gc, const E_Gadcon_Client_Class *cc, E_Confi
    gcc->config.res = cf_gcc->geom.res;
    gcc->state_info.seq = cf_gcc->state_info.seq;
    gcc->state_info.flags = cf_gcc->state_info.flags;
+   gcc->config.pos_x = gcc->cf->geom.pos_x;
+   gcc->config.pos_y = gcc->cf->geom.pos_y;
+   gcc->config.size_w = gcc->cf->geom.size_w;
+   gcc->config.size_h = gcc->cf->geom.size_h;
+   gcc->cf->resizable = 0;
+
+   eina_stringshare_replace(&gcc->style, cf_gcc->style);
    if (gcc->o_frame)
      e_gadcon_layout_pack_options_set(gcc->o_frame, gcc);
    else if (gcc->o_base)
@@ -1388,7 +1395,7 @@ _e_gadcon_client_populate(E_Gadcon *gc, const E_Gadcon_Client_Class *cc, E_Confi
    if (gcc->client_class->func.orient)
      gcc->client_class->func.orient(gcc, gc->orient);
 
-   _e_gadcon_client_save(gcc);
+   e_config_save_queue();
    if (gc->editing) e_gadcon_client_edit_begin(gcc);
    if (gc->instant_edit)
      e_gadcon_client_util_menu_attach(gcc);
