@@ -167,10 +167,7 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
              gcc = e_gadcon_client_find(cf_gcc);
              ll = eina_hash_find(_gadman_gadgets, cc->name);
              if ((!gcc) || (ll && (!eina_list_data_find(ll, cf_gcc))))
-               {
-                  gadman_gadget_place(gcc, cc, cf_gcc, layer, gc->zone);
-                  continue;
-               }
+               gadman_gadget_place(gcc, cc, cf_gcc, layer, gc->zone);
           }
      }
 }
