@@ -31,14 +31,7 @@ static void         _cb_fm_change(void *data, Evas_Object *obj, void *event_info
 static void         _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info);
 static void         _cb_button_up(void *data1, void *data2);
 
-static E_Config_Dialog *_cfd = NULL;
-
-static int
-_close_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
-{
-   _cfd = NULL;
-   return 1;
-}
+static E_Config_Dialog_Data *_cfdata = NULL;
 
 E_Config_Dialog *
 _config_gadman_module(E_Container *con, const char *params __UNUSED__)
@@ -57,7 +50,6 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.apply_cfdata = _basic_apply_data;
-   v->close_cfdata = _close_cfdata;
 
    snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", Man->module->dir);
    cfd = e_config_dialog_new(con, _("Gadgets Manager"),
@@ -65,7 +57,6 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
                              buf, 0, v, Man);
 
    Man->config_dialog = cfd;
-   _cfd = cfd;
    return Man->config_dialog;
 }
 
@@ -91,6 +82,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->anim_gad = Man->conf->anim_gad;
 
    e_color_update_rgb(cfdata->color);
+   _cfdata = cfdata;
 
    return cfdata;
 }
@@ -100,6 +92,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Man->config_dialog = NULL;
    E_FREE(cfdata->color);
+   _cfdata = NULL;
    E_FREE(cfdata);
 }
 
@@ -439,6 +432,6 @@ _cb_button_up(void *data1, void *data2 __UNUSED__)
 EAPI void
 e_config_gadman_list_refresh(void)
 {
-   if (!_cfd) return;
-   _fill_gadgets_list(_cfd->cfdata->o_avail);
+   if (!_cfdata) return;
+   _fill_gadgets_list(_cfdata->o_avail);
 }
