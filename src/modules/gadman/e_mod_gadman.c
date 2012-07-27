@@ -730,6 +730,18 @@ _apply_widget_position(E_Gadcon_Client *gcc)
    /* Obtain zone from parent gadcon */
    zone = gcc->gadcon->zone;
 
+   /* something broke the config's geom, make it visible so it can be
+    * resized/deleted
+    */
+   if ((!x) && (!y) && (!w) && (!h))
+     {
+        x = zone->w / 2, y = zone->h / 2;
+        w = h = 64;
+        e_util_dialog_show("Gadget Manager",
+                           "A gadget of type '%s' was detected without any stored geometry.<br>"
+                           "It has been relocated and resized for you.", gcc->client_class->name);
+     }
+
    /* Respect min sizes */
    if (h < gcc->min.h) h = gcc->min.h;
    if (w < gcc->min.w) w = gcc->min.w;
