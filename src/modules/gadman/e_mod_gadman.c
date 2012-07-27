@@ -169,7 +169,7 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
              if ((!gcc) || (ll && (!eina_list_data_find(ll, cf_gcc))))
                {
                   gadman_gadget_place(gcc, cc, cf_gcc, layer, gc->zone);
-                  break;
+                  continue;
                }
              if ((gcc->cf) && (gcc->cf->id) && (cf_gcc->id))
                if (gcc->cf->id == cf_gcc->id) break;
@@ -253,7 +253,6 @@ gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Con
      edje_object_signal_emit(gcc->o_frame, "e,state,visibility,hide", "e");
    if (cc->name)
      {
-        Eina_List *l;
         l = eina_hash_find(_gadman_gadgets, cc->name);
         eina_hash_set(_gadman_gadgets, cc->name, eina_list_append(l, gcc->cf));
      }
