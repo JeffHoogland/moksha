@@ -208,7 +208,8 @@ gadman_gadget_place(E_Gadcon_Client *gcc, E_Config_Gadcon_Client *cf, Gadman_Lay
      }
    if (!cc)
      {
-        gc->waiting_classes = eina_list_append(gc->waiting_classes, cf);
+        if (!eina_list_data_find(gc->waiting_classes, cf))
+          gc->waiting_classes = eina_list_append(gc->waiting_classes, cf);
         e_gadcon_custom_populate_request(gc);
         return NULL;
      }
