@@ -47,7 +47,7 @@ static void             _e_gadman_handlers_add(void);
 static void             _e_gadman_handler_del(void);
 static Eina_Bool        _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool        _e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event);
-static E_Gadcon_Client *gadman_gadget_place(E_Gadcon_Client *gcc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
+static E_Gadcon_Client *gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
 static void             gadman_gadget_del(E_Gadcon_Client *gcc);
 static E_Gadcon        *gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer);
 
@@ -156,7 +156,7 @@ void
 gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
 {
    Gadman_Layer_Type layer = (Gadman_Layer_Type)(long)data;
-   const Eina_List *l;
+   const Eina_List *l, *ll;
    E_Config_Gadcon_Client *cf_gcc;
    E_Gadcon_Client *gcc = NULL;
 
@@ -165,9 +165,10 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
         if (cf_gcc->name && cc->name && !strcmp(cf_gcc->name, cc->name) && (gc->cf->zone == gc->zone->num))
           {
              gcc = e_gadcon_client_find(cf_gcc);
-             if ((!gcc) || (!eina_list_data_find(Man->gadgets[gcc->gadcon->id - ID_GADMAN_LAYER_BASE], cf_gcc)))
+             ll = eina_hash_find(_gadman_gadgets, cc->name);
+             if ((!gcc) || (ll && (!eina_list_data_find(ll, cf_gcc))))
                {
-                  gadman_gadget_place(gcc, cf_gcc, layer, gc->zone);
+                  gadman_gadget_place(gcc, cc, cf_gcc, layer, gc->zone);
                   break;
                }
              if ((gcc->cf) && (gcc->cf->id) && (cf_gcc->id))
@@ -188,24 +189,15 @@ gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer)
 }
 
 static E_Gadcon_Client *
-gadman_gadget_place(E_Gadcon_Client *gcc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone)
+gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone)
 {
-   const Eina_List *l;
    E_Gadcon *gc;
-   E_Gadcon_Client_Class *cc = NULL;
 
    if (!cf->name) return NULL;
 
    gc = gadman_gadcon_get(zone, layer);
 
    /* Find provider */
-   EINA_LIST_FOREACH(gc->populated_classes, l, cc)
-     {
-        if (!strcmp(cc->name, cf->name))
-          break;
-        else
-          cc = NULL;
-     }
    if (!cc)
      {
         if (!eina_list_data_find(gc->waiting_classes, cf))
@@ -301,7 +293,7 @@ _gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer, E_C
 
    /* Place the new gadget */
    if (cf)
-     gcc = gadman_gadget_place(NULL, cf, layer, gc->zone);
+     gcc = gadman_gadget_place(NULL, cc, cf, layer, gc->zone);
    if (!gcc) return NULL;
 
    /* Respect Aspect */
@@ -978,7 +970,7 @@ on_shape_change(void *data __UNUSED__, E_Container_Shape *es, E_Container_Shape_
 
              e_gadcon_unpopulate(gc);
              EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
-               gadman_gadget_place(NULL, cf_gcc, layer, gc->zone);
+               gadman_gadget_place(NULL, NULL, cf_gcc, layer, gc->zone);
           }
      }
 }
