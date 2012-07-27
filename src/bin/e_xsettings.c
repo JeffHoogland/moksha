@@ -56,7 +56,7 @@ static const char *_setting_icon_theme_name = NULL;
 static const char *_setting_theme_name = NULL;
 static const char *_setting_font_name = NULL;
 static const char *_setting_xft_dpi = NULL;
-static const char *_setting_theme = NULL;
+static char *_setting_theme = NULL;
 static void _e_xsettings_done_cb(void *data, Eio_File *handler, const Eina_Stat *stat);
 
 static Ecore_X_Atom
@@ -405,7 +405,7 @@ _e_xsettings_error_cb(void *data, Eio_File *handler __UNUSED__, int error __UNUS
      }
    eio_op = NULL;
    setting = EINA_FALSE;
-   _setting_theme = NULL;
+   E_FREE(_setting_theme);
 
    if (e_config->xsettings.net_theme_name)
      {
@@ -429,7 +429,7 @@ _e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const 
         return;
      }
    _e_xsettings_string_set(_setting_theme_name, _setting_theme);
-   _setting_theme = NULL;
+   E_FREE(_setting_theme);
    eio_op = NULL;
    setting = EINA_FALSE;
    if (xsettings_idler) return;
