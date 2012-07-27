@@ -508,6 +508,14 @@ e_gadcon_populate(E_Gadcon *gc)
         cc = eina_hash_find(providers, cf_gcc->name);
         if (cc)
           {
+             if (!eina_list_data_find(gc->populated_classes, cc))
+               {
+                  _e_gadcon_provider_populate_request(gc, cc);
+                  cc = NULL;
+               }
+          }
+        if (cc)
+          {
              ret = _e_gadcon_client_populate(gc, cc, cf_gcc);
              if (!ret) break;
           }
