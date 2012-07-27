@@ -195,6 +195,12 @@ static E_Gadcon_Client *drag_gcc = NULL;
 /* This is the gadcon client created on entering a new shelf */
 static E_Gadcon_Client *new_gcc = NULL;
 
+static inline void
+_eina_list_free(Eina_List *l)
+{
+   eina_list_free(l);
+}
+
 /* externally accessible functions */
 EINTERN int
 e_gadcon_init(void)
@@ -230,7 +236,7 @@ EAPI void
 e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
 {
    E_Gadcon *gc;
-   Eina_List *l, *ll, *lll;
+   Eina_List *l, *ll;
    E_Config_Gadcon_Client *cf_gcc;
 
    EINA_SAFETY_ON_NULL_RETURN(cc->name);
@@ -239,12 +245,12 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
    EINA_LIST_FOREACH(gadcons, l, gc)
      {
         e_gadcon_layout_freeze(gc->o_container);
-        EINA_LIST_FOREACH_SAFE(gc->waiting_classes, ll, lll, cf_gcc)
-          if (!e_util_strcmp(cf_gcc->name, cc->name))
-            {
+        if (gc->awaiting_classes)
+          {
+             ll = eina_hash_set(gc->awaiting_classes, cc->name, NULL);
+             EINA_LIST_FREE(ll, cf_gcc)
                _e_gadcon_client_populate(gc, cc, cf_gcc);
-               gc->waiting_classes = eina_list_remove_list(gc->waiting_classes, ll);
-            }
+          }
         e_gadcon_layout_thaw(gc->o_container);
      }
    providers_list = eina_list_append(providers_list, cc);
@@ -275,7 +281,7 @@ e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
      }
    EINA_LIST_FREE(dlist, gcc)
      {
-        gcc->gadcon->waiting_classes = eina_list_append(gcc->gadcon->waiting_classes, gcc->cf);
+        e_gadcon_client_queue(gcc->gadcon, gcc->cf);
         gcc->hidden = 0;
         e_gadcon_client_hide(gcc);
         e_object_del(E_OBJECT(gcc));
@@ -283,6 +289,18 @@ e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
 
    eina_hash_del(providers, cc->name, cc);
    providers_list = eina_list_remove(providers_list, cc);
+}
+
+EAPI void
+e_gadcon_client_queue(E_Gadcon *gc, E_Config_Gadcon_Client *cf_gcc)
+{
+   Eina_List *l;
+   if (!gc->awaiting_classes)
+     gc->awaiting_classes = eina_hash_string_superfast_new((Eina_Free_Cb)_eina_list_free);
+   l = eina_hash_find(gc->awaiting_classes, cf_gcc->name);
+   if (eina_list_data_find(l, cf_gcc)) return;
+   l = eina_list_append(l, cf_gcc);
+   eina_hash_set(gc->awaiting_classes, cf_gcc->name, l);
 }
 
 EAPI Eina_List *
@@ -494,7 +512,7 @@ e_gadcon_populate(E_Gadcon *gc)
              if (!ret) break;
           }
         else
-          gc->waiting_classes = eina_list_append(gc->waiting_classes, cf_gcc);
+          e_gadcon_client_queue(gc, cf_gcc);
      }
    e_gadcon_layout_thaw(gc->o_container);
    return EINA_TRUE;
@@ -513,7 +531,9 @@ e_gadcon_unpopulate(E_Gadcon *gc)
         gcc = eina_list_data_get(gc->clients);
         _e_gadcon_client_unpopulate(gcc);
      }
-   gc->waiting_classes = eina_list_free(gc->waiting_classes);
+   if (gc->awaiting_classes)
+     eina_hash_free(gc->awaiting_classes);
+   gc->awaiting_classes = NULL;
 }
 
 EAPI void
@@ -810,9 +830,13 @@ EAPI void
 e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, E_Config_Gadcon_Client *cf_gcc)
 {
    E_Gadcon *gc;
-   Eina_List *l;
+   Eina_List *l, *ll;
    EINA_LIST_FOREACH(gadcons, l, gc)
-     gc->waiting_classes = eina_list_remove(gc->waiting_classes, cf_gcc);
+     {
+        if (!gc->awaiting_classes) continue;
+        ll = eina_hash_find(gc->awaiting_classes, cf_gcc->name);
+        eina_hash_set(gc->awaiting_classes, cf_gcc->name, eina_list_remove(ll, cf_gcc));
+     }
    if (!cf_gcc) return;
    if (cf_gcc->name) eina_stringshare_del(cf_gcc->name);
    if (cf_gcc->id) eina_stringshare_del(cf_gcc->id);

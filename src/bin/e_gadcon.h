@@ -78,7 +78,7 @@ struct _E_Gadcon
    Eina_List             *clients;
    Eina_List             *populate_requests;
    Eina_List             *populated_classes;
-   Eina_List             *waiting_classes;
+   Eina_Hash             *awaiting_classes; /* E_Config_Gadcon_Client */
 
    struct
    {
@@ -284,6 +284,7 @@ EAPI void                    e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, 
 EAPI E_Gadcon_Client        *e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj);
 EAPI void                    e_gadcon_client_edit_begin(E_Gadcon_Client *gcc);
 EAPI void                    e_gadcon_client_edit_end(E_Gadcon_Client *gcc);
+EAPI void                    e_gadcon_client_queue(E_Gadcon *gc, E_Config_Gadcon_Client *cf_gcc);
 EAPI void                    e_gadcon_client_show(E_Gadcon_Client *gcc);
 EAPI void                    e_gadcon_client_hide(E_Gadcon_Client *gcc);
 EAPI void                    e_gadcon_client_size_request(E_Gadcon_Client *gcc, Evas_Coord w, Evas_Coord h);

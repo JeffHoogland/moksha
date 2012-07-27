@@ -211,8 +211,7 @@ gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Con
    /* Find provider */
    if (!cc)
      {
-        if (!eina_list_data_find(gc->waiting_classes, cf))
-          gc->waiting_classes = eina_list_append(gc->waiting_classes, cf);
+        e_gadcon_client_queue(gc, cf);
         e_gadcon_custom_populate_request(gc);
         return NULL;
      }
