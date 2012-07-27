@@ -47,6 +47,9 @@ static void             _e_gadman_handlers_add(void);
 static void             _e_gadman_handler_del(void);
 static Eina_Bool        _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool        _e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event);
+static E_Gadcon_Client *gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
+static void             gadman_gadget_del(E_Gadcon_Client *gcc);
+static E_Gadcon        *gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer);
 
 E_Gadcon_Client *current = NULL;
 Manager *Man = NULL;
@@ -173,7 +176,7 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
      }
 }
 
-E_Gadcon *
+static E_Gadcon *
 gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer)
 {
    const Eina_List *l;
@@ -184,7 +187,7 @@ gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer)
    return NULL;
 }
 
-E_Gadcon_Client *
+static E_Gadcon_Client *
 gadman_gadget_place(E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone)
 {
    const Eina_List *l;
@@ -309,7 +312,7 @@ _gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer, E_C
    return gcc;
 }
 
-void
+static void
 gadman_gadget_del(E_Gadcon_Client *gcc)
 {
    Gadman_Layer_Type layer;
