@@ -236,6 +236,8 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
    E_Gadcon *gc;
    Eina_List *l, *ll, *lll;
    E_Config_Gadcon_Client *cf_gcc;
+
+   EINA_SAFETY_ON_NULL_RETURN(cc->name);
    if (!providers) providers = eina_hash_string_superfast_new(NULL);
    eina_hash_direct_add(providers, cc->name, cc);
    EINA_LIST_FOREACH(gadcons, l, gc)
