@@ -76,6 +76,7 @@ struct _E_Gadcon
    Evas                  *evas;
    Evas_Object           *o_container;
    Eina_List             *clients;
+   Eina_List             *populate_requests;
    Eina_List             *populated_classes;
    Eina_List             *waiting_classes;
 
