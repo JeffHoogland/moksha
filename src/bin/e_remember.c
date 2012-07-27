@@ -131,8 +131,6 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
    E_Action *act_fm, *act;
    E_Container *con;
 
-   act_fm = e_action_find("fileman");
-
    con = e_container_current_get(e_manager_current_get());
 
    EINA_LIST_FOREACH(remembers->list, l, rem)
@@ -142,7 +140,8 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
         if (!strncmp(rem->class, "e_fwin::", 8))
           {
              if (!act_fm)
-               continue;
+               act_fm = e_action_find("fileman");
+             if (!act_fm) continue;
              /* at least '/' */
              if (!rem->class[9]) continue;
 
