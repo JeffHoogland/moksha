@@ -236,7 +236,7 @@ EAPI void
 e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
 {
    E_Gadcon *gc;
-   Eina_List *l, *ll;
+   Eina_List *l, *ll, *lll;
    E_Config_Gadcon_Client *cf_gcc;
 
    EINA_SAFETY_ON_NULL_RETURN(cc->name);
@@ -247,8 +247,8 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
         e_gadcon_layout_freeze(gc->o_container);
         if (gc->awaiting_classes)
           {
-             ll = eina_hash_set(gc->awaiting_classes, cc->name, NULL);
-             EINA_LIST_FREE(ll, cf_gcc)
+             ll = eina_hash_find(gc->awaiting_classes, cc->name);
+             EINA_LIST_FOREACH(ll, lll, cf_gcc)
                _e_gadcon_client_populate(gc, cc, cf_gcc);
           }
         e_gadcon_layout_thaw(gc->o_container);
@@ -5265,24 +5265,13 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
                gc->populated_classes = eina_list_append(gc->populated_classes, cc);
                if (gc->cf)
                  {
-                    Eina_List *ll, *lll;
+                    Eina_List *ll;
                     E_Config_Gadcon_Client *cf_gcc;
-                    E_Gadcon_Client *gcc;
-                    EINA_LIST_FOREACH_SAFE(gc->cf->clients, ll, lll, cf_gcc)
-                      {
-                         if (!e_util_strcmp(cf_gcc->name, cc->name))
-                           {
-                              Eina_Bool found = EINA_FALSE;
-                              EINA_LIST_FOREACH(gc->clients, ll, gcc)
-                                if (gcc->cf == cf_gcc)
-                                  {
-                                     found = EINA_TRUE;
-                                     break;
-                                  }
-                              if (!found)
-                                _e_gadcon_client_populate(gc, cc, cf_gcc);
-                           }
-                      }
+
+                    if (!gc->awaiting_classes) continue;
+                    ll = eina_hash_set(gc->awaiting_classes, cc->name, NULL);
+                    EINA_LIST_FREE(ll, cf_gcc)
+                      _e_gadcon_client_populate(gc, cc, cf_gcc);
                  }
             }
        }
