@@ -192,10 +192,21 @@ static E_Gadcon_Client *
 gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone)
 {
    E_Gadcon *gc;
+   Eina_List *l;
 
    if (!cf->name) return NULL;
 
    gc = gadman_gadcon_get(zone, layer);
+   if (!cc)
+     {
+        EINA_LIST_FOREACH(gc->populated_classes, l, cc)
+          {
+             if (!strcmp(cc->name, cf->name))
+               break;
+             else
+               cc = NULL;
+          }
+     }
 
    /* Find provider */
    if (!cc)
