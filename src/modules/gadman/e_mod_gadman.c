@@ -164,7 +164,7 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
      {
         if ((!strcmp(cf_gcc->name, cc->name)) && (gc->cf->zone == gc->zone->num))
           {
-             gcc = e_gadcon_client_find(cf_gcc);
+             gcc = e_gadcon_client_find(gc, cf_gcc);
              ll = eina_hash_find(_gadman_gadgets, cc->name);
              if ((!gcc) || (ll && (!eina_list_data_find(ll, cf_gcc))))
                gadman_gadget_place(gcc, cc, cf_gcc, layer, gc->zone);
@@ -410,7 +410,7 @@ gadman_gadgets_show(void)
    /* Showing top gadgets */
    EINA_LIST_FOREACH_SAFE(Man->gadgets[GADMAN_LAYER_TOP], l, ll, cf_gcc)
      {
-        gcc = e_gadcon_client_find(cf_gcc);
+        gcc = e_gadcon_client_find(NULL, cf_gcc);
         if (!gcc)
           {
              Man->gadgets[GADMAN_LAYER_TOP] = eina_list_remove_list(Man->gadgets[GADMAN_LAYER_TOP], l);
@@ -456,7 +456,7 @@ gadman_gadgets_hide(void)
    /* Hiding top gadgets */
    EINA_LIST_FOREACH_SAFE(Man->gadgets[GADMAN_LAYER_TOP], l, ll, cf_gcc)
      {
-        gcc = e_gadcon_client_find(cf_gcc);
+        gcc = e_gadcon_client_find(NULL, cf_gcc);
         if (!gcc)
           {
              Man->gadgets[GADMAN_LAYER_TOP] = eina_list_remove_list(Man->gadgets[GADMAN_LAYER_TOP], l);
@@ -1479,7 +1479,7 @@ _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update
         if (!l) return ECORE_CALLBACK_RENEW;
         EINA_LIST_FREE(l, cf_gcc)
           {
-             gcc = e_gadcon_client_find(cf_gcc);
+             gcc = e_gadcon_client_find(NULL, cf_gcc);
              if (!gcc) continue;
              gcc->cf = NULL;
              gadman_gadget_del(gcc);

@@ -278,7 +278,7 @@ EAPI void                    e_gadcon_shelf_set(E_Gadcon *gc, E_Shelf *shelf);
 EAPI E_Shelf                *e_gadcon_shelf_get(E_Gadcon *gc);
 EAPI void                    e_gadcon_toolbar_set(E_Gadcon *gc, E_Toolbar *toolbar);
 EAPI E_Toolbar              *e_gadcon_toolbar_get(E_Gadcon *gc);
-EAPI E_Gadcon_Client      *e_gadcon_client_find(E_Config_Gadcon_Client *cf_gcc);
+EAPI E_Gadcon_Client      *e_gadcon_client_find(E_Gadcon *gc, E_Config_Gadcon_Client *cf_gcc);
 EAPI E_Config_Gadcon_Client *e_gadcon_client_config_new(E_Gadcon *gc, const char *name);
 EAPI void                    e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, E_Config_Gadcon_Client *cf_gcc);
 EAPI E_Gadcon_Client        *e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj);
