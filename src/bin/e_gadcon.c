@@ -5166,6 +5166,11 @@ _e_gadcon_custom_populate_idler(void *data __UNUSED__)
    double loop;
 
    loop = ecore_loop_time_get();
+#ifndef E17_RELEASE_BUILD
+   static Eina_Bool first = EINA_TRUE;
+   if (first)
+     e_main_ts("gadcon custom populate idler start");
+#endif
    EINA_LIST_FREE(custom_populate_requests, gc)
      {
         if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get()) break;
@@ -5190,9 +5195,16 @@ _e_gadcon_custom_populate_idler(void *data __UNUSED__)
         e_gadcon_layout_thaw(gc->o_container);
      }
 out:
+#ifndef E17_RELEASE_BUILD
+   if (first)
+     e_main_ts("gadcon custom populate idler end");
+#endif
    if (!custom_populate_requests)
      {
         custom_populate_idler = NULL;
+#ifndef E17_RELEASE_BUILD
+        first = EINA_FALSE;
+#endif
         return ECORE_CALLBACK_CANCEL;
      }
    return ECORE_CALLBACK_RENEW;
@@ -5210,9 +5222,17 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
    EINA_LIST_FOREACH(gadcons, l, gc)
      e_gadcon_layout_freeze(gc->o_container);
 
+#ifndef E17_RELEASE_BUILD
+   static Eina_Bool first = EINA_TRUE;
+   if (first)
+     e_main_ts("gadcon populate idler start");
+#endif
    EINA_LIST_FREE(populate_requests, cc)
      {
         if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get()) break;
+#ifndef E17_RELEASE_BUILD
+        if (first) e_main_ts(cc->name);
+#endif
         EINA_LIST_FOREACH(gadcon_idle_pos ?: gadcons, gadcon_idle_pos, gc)
           {
              if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get()) goto out;
@@ -5248,12 +5268,19 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
           }
      }
 out:
+#ifndef E17_RELEASE_BUILD
+   if (first)
+     e_main_ts("gadcon populate idler end");
+#endif
    EINA_LIST_FOREACH(gadcons, l, gc)
      e_gadcon_layout_thaw(gc->o_container);
 
    if (!populate_requests)
      {
         populate_idler = NULL;
+#ifndef E17_RELEASE_BUILD
+        first = EINA_FALSE;
+#endif
         return ECORE_CALLBACK_CANCEL;
      }
    return ECORE_CALLBACK_RENEW;
