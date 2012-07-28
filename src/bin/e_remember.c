@@ -128,7 +128,7 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
 {
    E_Remember *rem;
    Eina_List *l;
-   E_Action *act_fm, *act;
+   E_Action *act_fm = NULL, *act;
    E_Container *con;
 
    con = e_container_current_get(e_manager_current_get());
