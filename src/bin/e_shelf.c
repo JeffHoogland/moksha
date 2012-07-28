@@ -660,7 +660,7 @@ EAPI void
 e_shelf_position_calc(E_Shelf *es)
 {
    E_Gadcon_Orient orient = E_GADCON_ORIENT_FLOAT;
-   int size = 40;
+   int size = (40 * e_scale);
 
    if (es->cfg)
      {
