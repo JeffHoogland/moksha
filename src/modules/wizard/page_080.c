@@ -58,6 +58,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
           }
         fclose(f);
      }
+   fclose(fin);
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
