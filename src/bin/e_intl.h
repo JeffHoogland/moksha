@@ -13,10 +13,11 @@
 #define P_(str, str_p, n) (str_p)
 #define dP_(str, str_p, n, dom) (str_p)
 #endif
-/* This macro is used to just mark string for translation, this is useful
+/* These macros are used to just mark strings for translation, this is useful
  * for string lists which are not dynamically allocated
  */
 #define N_(str) (str)
+#define NP_(str, str_p) str, str_p
 
 typedef struct _E_Locale_Parts E_Locale_Parts;
 
