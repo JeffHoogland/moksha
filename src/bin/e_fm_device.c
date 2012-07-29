@@ -88,6 +88,7 @@ _e_fm2_device_volume_setup(E_Volume *v)
    if (icon) eina_stringshare_replace(&v->icon, icon);
 
    if ((!v->mount_point) ||
+       // filter out these mountouts - hack hack
        (strcmp(v->mount_point, "/") &&
         strcmp(v->mount_point, "/home") &&
         strcmp(v->mount_point, "/tmp")))
@@ -157,7 +158,8 @@ e_fm2_device_storage_add(E_Storage *s)
         if ((!v->storage) && (s->udi == v->parent))
           {
              v->storage = s;
-             _e_fm2_device_volume_setup(v);
+// XXX we dont need this anymore ad volume adds handle it!             
+//             _e_fm2_device_volume_setup(v);
           }
      }
 }
@@ -289,7 +291,6 @@ _e_fm2_volume_write(E_Volume *v)
 
    if (!v->storage) return;
    id = ecore_file_file_get(v->storage->udi);
-//   printf("vol write %s\n", id);
    e_user_dir_snprintf(buf, sizeof(buf), "fileman/favorites/|%s_%d.desktop",
                        id, v->partition_number);
 
@@ -323,7 +324,7 @@ _e_fm2_volume_write(E_Volume *v)
 
         /* FIXME: manipulate icon directly */
         _e_fm2_file_force_update(buf);
-        //_e_fm2_file_force_update(buf2);
+        _e_fm2_file_force_update(buf2);
      }
 }
 
@@ -335,19 +336,18 @@ _e_fm2_volume_erase(E_Volume *v)
 
    if (!v->storage) return;
    id = ecore_file_file_get(v->storage->udi);
-   e_user_homedir_snprintf(buf, sizeof(buf), "%s/|%s_%d.desktop",
-                           _("Desktop"), id, v->partition_number);
-   ecore_file_unlink(buf);
-   _e_fm2_file_force_update(buf);
-
    if (e_config->device_desktop)
      {
-        e_user_dir_snprintf(buf, sizeof(buf),
-                            "fileman/favorites/|%s_%d.desktop",
-                            id, v->partition_number);
+        e_user_homedir_snprintf(buf, sizeof(buf), "%s/|%s_%d.desktop",
+                           _("Desktop"), id, v->partition_number);
         ecore_file_unlink(buf);
         _e_fm2_file_force_update(buf);
      }
+   e_user_dir_snprintf(buf, sizeof(buf),
+                       "fileman/favorites/|%s_%d.desktop",
+                       id, v->partition_number);
+   ecore_file_unlink(buf);
+   _e_fm2_file_force_update(buf);
 }
 
 EAPI E_Volume *
