@@ -392,6 +392,16 @@ _e_fm_main_eeze_volume_add(const char *syspath,
         v->partition_label = eeze_disk_udev_get_property(v->disk, "ID_FS_LABEL");
      }
 
+   /* if we have dev/sda ANd dev/sda1 - ia a parent vol - del the parent vol
+    * since we actually have real child partition volumes to mount */
+   if ((v->partition != 0) && (v->parent))
+     {
+        E_Volume *v2 = e_volume_find(v->parent);
+        
+        if ((v2) && (v2->partition == 0))
+          _e_fm_main_eeze_volume_del(v2->udi);
+     }
+   
    {
       E_Storage *s;
       s = e_storage_find(v->parent);
