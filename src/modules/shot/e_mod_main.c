@@ -776,7 +776,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
    e_win_show(win);
-   e_win_border_icon_set(win, "enlightenment/shot");
+   e_win_border_icon_set(win, "screenshot");
    
    if (!e_widget_focus_get(o_bg)) e_widget_focus_set(o_box, 1);
 }
