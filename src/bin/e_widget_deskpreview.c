@@ -154,31 +154,31 @@ _e_wid_reconfigure(E_Widget_Data *wd)
    E_Zone *zone;
    int tw, th, mw, mh, y;
    E_Widget_Desk_Data *dd;
+   double zone_ratio, desk_ratio;
 
    zone = e_util_zone_current_get(e_manager_current_get());
 
    evas_object_geometry_get(wd->table, NULL, NULL, &tw, &th);
-
-   if (wd->dy > wd->dx)
+   if ((tw == 0) || (th == 0))
      {
-        mh = th / wd->dy;
-        mw = (mh * zone->w) / zone->h;
-     }
-   else if (wd->dy < wd->dx)
-     {
-        mw = tw / wd->dx;
-        mh = (mw * zone->h) / zone->w;
+        mw = mh = 0;
      }
    else
      {
-        mw = tw / wd->dx;
-        mh = th / wd->dy;
-     }
+        zone_ratio = (double) zone->w / zone->h;
+        desk_ratio = (tw / wd->dx) / (th / wd->dy);
 
-   if (mw > tw / wd->dx)
-     mw = (tw * zone->h) / zone->w;
-   if (mh > th / wd->dy)
-     mh = (th * zone->w) / zone->h;
+        if (zone_ratio > desk_ratio)
+          {
+             mw = tw / wd->dx;
+             mh = mw / zone_ratio;
+          }
+        else
+          {
+             mh = th / wd->dy;
+             mw = mh * zone_ratio;
+          }
+     }
 
    EINA_LIST_FOREACH_SAFE (wd->desks, l, ll, dw)
      {
