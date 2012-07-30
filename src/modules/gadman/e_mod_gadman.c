@@ -715,10 +715,10 @@ _save_widget_position(E_Gadcon_Client *gcc)
    int x, y, w, h;
 
    evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
-   current->config.pos_x = current->cf->geom.pos_x = (double)x / (double)Man->width;
-   current->config.pos_y = current->cf->geom.pos_y = (double)y / (double)Man->height;
-   current->config.size_w = current->cf->geom.size_w = (double)w / (double)Man->width;
-   current->config.size_h = current->cf->geom.size_h = (double)h / (double)Man->height;
+   current->config.pos_x = current->cf->geom.pos_x = (double)x / (double)gcc->gadcon->zone->w;
+   current->config.pos_y = current->cf->geom.pos_y = (double)y / (double)gcc->gadcon->zone->h;
+   current->config.size_w = current->cf->geom.size_w = (double)w / (double)gcc->gadcon->zone->w;
+   current->config.size_h = current->cf->geom.size_h = (double)h / (double)gcc->gadcon->zone->h;
 
    e_config_save_queue();
 }
