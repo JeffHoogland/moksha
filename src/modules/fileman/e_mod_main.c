@@ -17,6 +17,7 @@ static void _e_mod_menu_volume_cb(void        *data,
                                   E_Menu      *m,
                                   E_Menu_Item *mi);
 static void      _e_mod_main_menu_cb(E_Menu *m, void *category_data, void *data);
+static void      _e_mod_menu_populate(void *d __UNUSED__, E_Menu *m);
 static void      _e_mod_menu_add(void   *data,
                                  E_Menu *m);
 static void      _e_mod_fileman_config_load(void);
@@ -270,7 +271,6 @@ _e_mod_menu_virtual_cb(void           *data,
                        E_Menu_Item *mi __UNUSED__)
 {
    if (m->zone) e_fwin_new(m->zone->container, data, "/");
-   eina_stringshare_del(data);
 }
 
 static void
@@ -347,11 +347,96 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
 }
 
 static void
-_e_mod_menu_virtual_cleanup_cb(void *obj)
+_e_mod_menu_populate_cb(void           *data,
+                       E_Menu         *m,
+                       E_Menu_Item *mi)
 {
-   E_Menu_Item *mi = obj;
+   const char *path;
 
-   eina_stringshare_del(mi->cb.data);
+   if (!m->zone) return;
+   path = e_object_data_get(E_OBJECT(mi));
+   e_fwin_new(m->zone->container, data, path ?: "/");
+}
+
+static void
+_e_mod_menu_cleanup_cb(void *obj)
+{
+   eina_stringshare_del(e_object_data_get(E_OBJECT(obj)));
+}
+
+static Eina_Bool
+_e_mod_menu_populate_filter(void *data __UNUSED__, Eio_File *handler __UNUSED__, const Eina_File_Direct_Info *info)
+{
+   /* don't show .dotfiles */
+   return info->path[info->name_start] != '.';
+}
+
+static void
+_e_mod_menu_populate_item(void *data, Eio_File *handler, const Eina_File_Direct_Info *info)
+{
+   E_Menu *m = data;
+   E_Menu_Item *mi;
+   E_Menu *sub;
+   const char *dev, *path, *realpath;
+
+   mi = m->parent_item;
+   dev = e_object_data_get(E_OBJECT(m));
+   path = mi ? e_object_data_get(E_OBJECT(mi)) : "/";
+   realpath = eio_file_associate_find(handler, "realpath");
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, info->path + info->name_start);
+   if (info->type != EINA_FILE_DIR)
+     {
+        e_util_menu_item_theme_icon_set(mi, "file");
+        return;
+     }
+   e_util_menu_item_theme_icon_set(mi, "folder");
+   e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s%s", path ?: "/", info->path + info->name_start));
+   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_cleanup_cb);
+   e_menu_item_callback_set(mi, _e_mod_menu_populate_cb, dev);
+   sub = e_menu_new();
+   e_object_data_set(E_OBJECT(sub), eina_stringshare_ref(dev));
+   e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
+   e_menu_item_submenu_set(mi, sub);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
+}
+
+static void
+_e_mod_menu_populate_err(void *data, Eio_File *handler __UNUSED__, int error __UNUSED__)
+{
+   e_menu_thaw(data);
+}
+
+static int
+_e_mod_menu_populate_sort(E_Menu_Item *a, E_Menu_Item *b)
+{
+   return strcmp(a->label, b->label);
+}
+
+static void
+_e_mod_menu_populate_done(void *data, Eio_File *handler __UNUSED__)
+{
+   E_Menu *m = data;
+   m->items = eina_list_sort(m->items, 0, (Eina_Compare_Cb)_e_mod_menu_populate_sort);
+   e_menu_thaw(m);
+}
+
+static void
+_e_mod_menu_populate(void *d __UNUSED__, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   const char *dev, *path, *realpath;
+   Eio_File *ls;
+
+   if (m->items) return;
+   mi = m->parent_item;
+   dev = e_object_data_get(E_OBJECT(m));
+   path = mi ? e_object_data_get(E_OBJECT(mi)) : NULL;
+   realpath = e_fm2_real_path_map(dev, path ?: "/");
+   e_menu_freeze(m);
+   ls = eio_file_stat_ls(realpath, _e_mod_menu_populate_filter, _e_mod_menu_populate_item, _e_mod_menu_populate_done, _e_mod_menu_populate_err, m);
+   EINA_SAFETY_ON_NULL_RETURN(ls);
+   eio_file_associate_add(ls, "realpath", realpath, (Eina_Free_Cb)eina_stringshare_del);
 }
 
 /* menu item add hook */
@@ -360,7 +445,9 @@ _e_mod_menu_generate(void *data __UNUSED__,
                      E_Menu    *m)
 {
    E_Menu_Item *mi;
+   E_Menu *sub;
    E_Volume *vol;
+   const char *s;
    const Eina_List *l;
    Eina_Bool need_separator;
    Eina_Bool volumes_visible = 0;
@@ -369,22 +456,37 @@ _e_mod_menu_generate(void *data __UNUSED__,
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Home"));
    e_util_menu_item_theme_icon_set(mi, "user-home");
-   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, eina_stringshare_add("~/"));
-   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_virtual_cleanup_cb);
+   s = eina_stringshare_add("~/");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, s);
+   sub = e_menu_new();
+   e_object_data_set(E_OBJECT(sub), s);
+   e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
+   e_menu_item_submenu_set(mi, sub);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
 
    /* Desktop */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Desktop"));
    e_util_menu_item_theme_icon_set(mi, "user-desktop");
-   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, eina_stringshare_add("desktop"));
-   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_virtual_cleanup_cb);
+   s = eina_stringshare_add("desktop");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, s);
+   sub = e_menu_new();
+   e_object_data_set(E_OBJECT(sub), s);
+   e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
+   e_menu_item_submenu_set(mi, sub);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
 
    /* Favorites */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Favorites"));
    e_util_menu_item_theme_icon_set(mi, "user-bookmarks");
-   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, eina_stringshare_add("favorites"));
-   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_virtual_cleanup_cb);
+   s = eina_stringshare_add("favorites");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, s);
+   sub = e_menu_new();
+   e_object_data_set(E_OBJECT(sub), s);
+   e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
+   e_menu_item_submenu_set(mi, sub);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
 
    /* Trash */
    //~ mi = e_menu_item_new(em);
@@ -396,9 +498,13 @@ _e_mod_menu_generate(void *data __UNUSED__,
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Root"));
    e_util_menu_item_theme_icon_set(mi, "computer");
-   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, eina_stringshare_add("/"));
-   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_virtual_cleanup_cb);
-
+   s = eina_stringshare_add("/");
+   e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, s);
+   sub = e_menu_new();
+   e_object_data_set(E_OBJECT(sub), s);
+   e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
+   e_menu_item_submenu_set(mi, sub);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
    need_separator = 1;
 
    /* Volumes */
@@ -417,6 +523,9 @@ _e_mod_menu_generate(void *data __UNUSED__,
         e_menu_item_label_set(mi, vol->label);
         e_util_menu_item_theme_icon_set(mi, vol->icon);
         e_menu_item_callback_set(mi, _e_mod_menu_volume_cb, vol);
+        sub = e_menu_new();
+        e_menu_item_submenu_set(mi, sub);
+        e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
         volumes_visible = 1;
      }
 
