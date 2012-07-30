@@ -2015,7 +2015,6 @@ _e_menu_active_call(void)
    mi = _e_menu_item_active_get();
    if (mi)
      {
-        if (mi->submenu) return 0;
         if (mi->check)
           e_menu_item_toggle_set(mi, !mi->toggle);
         if ((mi->radio) && (!e_menu_item_toggle_get(mi)))
