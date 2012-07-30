@@ -16,6 +16,8 @@
 #include <Eina.h>
 
 /* local subsystem functions */
+static Eina_Bool mountopts_check(const char *opts);
+static Eina_Bool mount_args_check(int argc, char **argv, const char *action);
 static int auth_action_ok(char *a,
                           uid_t uid,
                           gid_t gid,
@@ -30,6 +32,7 @@ static char *get_word(char *s,
 
 /* local subsystem globals */
 static Eina_Hash *actions = NULL;
+static uid_t uid = -1;
 
 /* externally accessible functions */
 int
@@ -40,8 +43,9 @@ main(int argc,
    int test = 0;
    Eina_Bool mnt = EINA_FALSE;
    char *action, *cmd;
-   uid_t uid;
+   const char *act;
    gid_t gid, gl[65536], egid;
+   Eina_Strbuf *buf = NULL;
 
    for (i = 1; i < argc; i++)
      {
@@ -68,9 +72,11 @@ main(int argc,
              const char *s;
 
              s = strrchr(argv[1], '/');
-             if ((!s) || (!(++s))) exit(1); /* eeze always uses complete path */
+             if ((!s) || (!s[1])) exit(1); /* eeze always uses complete path */
+             s++;
              if (strcmp(s, "mount") && strcmp(s, "umount") && strcmp(s, "eject")) exit(1);
              mnt = EINA_TRUE;
+             act = s;
              action = argv[1];
           }
      }
@@ -125,65 +131,82 @@ main(int argc,
    if ((!test) && (!mnt)) return system(cmd);
    if (mnt)
      {
-        Eina_Strbuf *buf;
         int ret = 0;
         const char *mp = NULL;
 
+        if (!mount_args_check(argc, argv, act)) goto err;
+        /* all options are deemed safe at this point, so away we go! */
+        if (!strcmp(act, "mount"))
+          {
+             struct stat s;
+
+             mp = argv[5];
+             if (stat("/media", &s))
+               {
+                  mode_t um;
+
+                  um = umask(0);
+                  if (mkdir("/media", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+                    {
+                       printf("ERROR: COULD NOT CREATE DIRECTORY /media\n");
+                       exit(40);
+                    }
+                  umask(um);
+               }
+             else if (!S_ISDIR(s.st_mode))
+               {
+                  printf("ERROR: NOT A DIRECTORY: /media\n");
+                  exit(40);
+               }
+
+             if (stat(mp, &s))
+               {
+                  mode_t um;
+
+                  um = umask(0);
+                  if (mkdir(mp, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
+                    {
+                       printf("ERROR: COULD NOT CREATE DIRECTORY %s\n", mp);
+                       exit(40);
+                    }
+                  umask(um);
+               }
+             else if (!S_ISDIR(s.st_mode))
+               {
+                  printf("ERROR: NOT A DIRECTORY: %s\n", mp);
+                  exit(40);
+               }
+          }
         buf = eina_strbuf_new();
         if (!buf) goto err;
         for (i = 1; i < argc; i++)
-          {
-             if (!strncmp(argv[i], "/media/", 7))
-               {
-                  mp = argv[i];
-                  if (!strcmp(action, "mount"))
-                    {
-                       struct stat s;
-
-                       if (stat("/media", &s))
-                         {
-                            mode_t um;
-
-                            um = umask(0);
-                            if (mkdir("/media", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
-                              {
-                                 printf("ERROR: COULD NOT CREATE DIRECTORY /media\n");
-                                 exit(40);
-                              }
-                            umask(um);
-                         }
-                       else if (!S_ISDIR(s.st_mode))
-                         {
-                            printf("ERROR: NOT A DIRECTORY: /media\n");
-                            exit(40);
-                         }
-
-                       if (stat(argv[i], &s))
-                         {
-                            mode_t um;
-
-                            um = umask(0);
-                            if (mkdir(argv[i], S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH))
-                              {
-                                 printf("ERROR: COULD NOT CREATE DIRECTORY %s\n", argv[i]);
-                                 exit(40);
-                              }
-                            umask(um);
-                         }
-                       else if (!S_ISDIR(s.st_mode))
-                         {
-                            printf("ERROR: NOT A DIRECTORY: %s\n", argv[i]);
-                            exit(40);
-                         }
-                    }
-               }
-             eina_strbuf_append_printf(buf, "%s ", argv[i]);
-          }
+          eina_strbuf_append_printf(buf, "%s ", argv[i]);
         ret = system(eina_strbuf_string_get(buf));
-        if (mp && (!strcmp(action, "umount")) && (!ret))
+        if ((!strcmp(act, "umount")) && (!ret))
           {
-               if (rmdir(mp))
-                 printf("ERROR: COULD NOT UNLINK MOUNT POINT %s\n", mp);
+             Eina_Iterator *it;
+             char path[PATH_MAX];
+             const char *s;
+             struct stat st;
+             Eina_Bool rm = EINA_TRUE;
+
+             mp = strrchr(argv[2], '/');
+             if (!mp) return ret;
+             snprintf(path, sizeof(path), "/media%s", mp);
+             if (stat(path, &st)) return ret;
+             if (!S_ISDIR(st.st_mode)) return ret;
+             it = eina_file_ls(path);
+             EINA_ITERATOR_FOREACH(it, s)
+               {
+                  /* don't delete any directories with files in them */
+                  rm = EINA_FALSE;
+                  eina_stringshare_del(s);
+               }
+             if (rm)
+               {
+                  if (rmdir(path))
+                    printf("ERROR: COULD NOT UNLINK MOUNT POINT %s\n", path);
+               }
           }
         return ret;
      }
@@ -193,12 +216,149 @@ main(int argc,
    return 0;
 
 err:
-   printf("ERROR: MEMORY CRISIS\n");
+   if (buf) eina_strbuf_free(buf);
    eina_shutdown();
    return 30;
 }
 
 /* local subsystem functions */
+static Eina_Bool
+mountopts_check(const char *opts)
+{
+   char buf[64];
+   const char *p;
+   char *end;
+   unsigned long muid;
+   Eina_Bool nosuid, nodev, noexec, nuid;
+
+   nosuid = nodev = noexec = nuid = EINA_FALSE;
+
+   /* these are the only possible options which can be present here; check them strictly */
+   if (eina_strlcpy(buf, opts, sizeof(buf)) >= sizeof(buf)) return EINA_FALSE;
+   for (p = buf; p && p[1]; p = strchr(p + 1, ','))
+     {
+        if (p[0] == ',') p++;
+#define CMP(OPT) \
+  if (!strncmp(p, OPT, sizeof(OPT) - 1))
+
+        CMP("nosuid,")
+          {
+             nosuid = EINA_TRUE;
+             continue;
+          }
+        CMP("nodev,")
+          {
+             nodev = EINA_TRUE;
+             continue;
+          }
+        CMP("noexec,")
+          {
+             noexec = EINA_TRUE;
+             continue;
+          }
+        CMP("utf8,") continue;
+        CMP("utf8=0,") continue;
+        CMP("utf8=1,") continue;
+        CMP("iocharset=utf8,") continue;
+        if (!strncmp(p, "uid=", sizeof("uid=") - 1))
+          {
+             p += 4;
+             errno = 0;
+             muid = strtoul(p, &end, 10);
+             if (muid == ULONG_MAX) return EINA_FALSE;
+             if (errno) return EINA_FALSE;
+             if (end[0] != ',') return EINA_FALSE;
+             if (muid != uid) return EINA_FALSE;
+             nuid = EINA_TRUE;
+             continue;
+          }
+        return EINA_FALSE;
+     }
+   if ((!nosuid) || (!nodev) || (!noexec) || (!nuid)) return EINA_FALSE;
+   return EINA_TRUE;
+}
+
+static Eina_Bool
+check_uuid(const char *uuid)
+{
+   const char *p;
+
+   for (p = uuid; p[0]; p++)
+     if ((!isalnum(*p)) && (*p != '-')) return EINA_FALSE;
+   return EINA_TRUE;
+}
+
+static Eina_Bool
+mount_args_check(int argc, char **argv, const char *action)
+{
+   Eina_Bool opts = EINA_FALSE;
+   struct stat st;
+   const char *node;
+   char buf[PATH_MAX];
+
+   if (!strcmp(action, "mount"))
+     {
+        /* will ALWAYS be:
+         /path/to/mount -o nosuid,uid=XYZ,[utf8,] UUID=XXXX-XXXX[-XXXX-XXXX] /media/$devnode
+         */
+        if (argc != 6) return EINA_FALSE;
+        if (argv[2][0] == '-')
+          {
+             /* disallow any -options other than -o */
+             if (strcmp(argv[2], "-o")) return EINA_FALSE;
+             opts = mountopts_check(argv[3]);
+          }
+        if (!opts) return EINA_FALSE;
+        if (!strncmp(argv[4], "UUID=", sizeof("UUID=") - 1))
+          {
+             if (!check_uuid(argv[4] + 5)) return EINA_FALSE;
+          }
+        else
+          {
+             if (strncmp(argv[4], "/dev/", 5)) return EINA_FALSE;
+             if (stat(argv[4], &st)) return EINA_FALSE;
+          }
+        
+        node = strrchr(argv[5], '/');
+        if (!node) return EINA_FALSE;
+        if (!node[1]) return EINA_FALSE;
+        if (node - argv[5] != 6) return EINA_FALSE;
+        snprintf(buf, sizeof(buf), "/dev%s", node);
+        if (stat(buf, &st)) return EINA_FALSE;
+     }
+   else if (!strcmp(action, "umount"))
+     {
+        /* will ALWAYS be:
+         /path/to/umount /dev/$devnode
+         */
+        if (argc != 3) return EINA_FALSE;
+        if (strncmp(argv[2], "/dev/", 5)) return EINA_FALSE;
+        if (stat(argv[2], &st)) return EINA_FALSE;
+        node = strrchr(argv[2], '/');
+        if (!node) return EINA_FALSE;
+        if (!node[1]) return EINA_FALSE;
+        if (node - argv[2] != 4) return EINA_FALSE;
+        snprintf(buf, sizeof(buf), "/media%s", node);
+        if (stat(buf, &st)) return EINA_FALSE;
+        if (!S_ISDIR(st.st_mode)) return EINA_FALSE;
+     }
+   else if (!strcmp(action, "eject"))
+     {
+        /* will ALWAYS be:
+         /path/to/eject /dev/$devnode
+         */
+        if (argc != 3) return EINA_FALSE;
+        if (strncmp(argv[2], "/dev/", 5)) return EINA_FALSE;
+        if (stat(argv[2], &st)) return EINA_FALSE;
+        node = strrchr(argv[2], '/');
+        if (!node) return EINA_FALSE;
+        if (!node[1]) return EINA_FALSE;
+        if (node - argv[2] != 5) return EINA_FALSE;
+     }
+   else return EINA_FALSE;
+   return EINA_TRUE;
+}
+
 static int
 auth_action_ok(char *a,
                uid_t uid,
