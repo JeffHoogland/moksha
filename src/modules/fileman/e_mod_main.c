@@ -346,6 +346,14 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
      }
 }
 
+static void
+_e_mod_menu_virtual_cleanup_cb(void *obj)
+{
+   E_Menu_Item *mi = obj;
+
+   eina_stringshare_del(mi->cb.data);
+}
+
 /* menu item add hook */
 void
 _e_mod_menu_generate(void *data __UNUSED__,
@@ -362,18 +370,21 @@ _e_mod_menu_generate(void *data __UNUSED__,
    e_menu_item_label_set(mi, _("Home"));
    e_util_menu_item_theme_icon_set(mi, "user-home");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, eina_stringshare_add("~/"));
+   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_virtual_cleanup_cb);
 
    /* Desktop */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Desktop"));
    e_util_menu_item_theme_icon_set(mi, "user-desktop");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, eina_stringshare_add("desktop"));
+   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_virtual_cleanup_cb);
 
    /* Favorites */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Favorites"));
    e_util_menu_item_theme_icon_set(mi, "user-bookmarks");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, eina_stringshare_add("favorites"));
+   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_virtual_cleanup_cb);
 
    /* Trash */
    //~ mi = e_menu_item_new(em);
@@ -386,6 +397,7 @@ _e_mod_menu_generate(void *data __UNUSED__,
    e_menu_item_label_set(mi, _("Root"));
    e_util_menu_item_theme_icon_set(mi, "computer");
    e_menu_item_callback_set(mi, _e_mod_menu_virtual_cb, eina_stringshare_add("/"));
+   e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_virtual_cleanup_cb);
 
    need_separator = 1;
 
