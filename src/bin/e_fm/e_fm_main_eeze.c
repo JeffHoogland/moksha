@@ -309,12 +309,6 @@ _e_fm_main_eeze_cb_vol_ejected(void *user_data __UNUSED__,
         return ECORE_CALLBACK_RENEW;
      }
    INF("EJECT: %s from %s", v->udi, v->mount_point);
-   {
-      char rmbuf[PATH_MAX];
-      snprintf(rmbuf, sizeof(rmbuf), "/media%s", strrchr(v->udi, '/'));
-      if (v->mount_point && (!strcmp(v->mount_point, rmbuf)))
-        ecore_file_rmdir(v->mount_point);
-   }
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
    buf = alloca(size);
    strcpy(buf, v->udi);
