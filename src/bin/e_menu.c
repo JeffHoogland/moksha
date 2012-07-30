@@ -447,6 +447,22 @@ e_menu_thaw(E_Menu *m)
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, 0);
    m->frozen--;
    if (m->frozen < 0) m->frozen = 0;
+   if (!m->frozen)
+     {
+        Eina_List *l;
+        E_Menu_Item *mi;
+        evas_event_freeze(m->evas);
+        e_box_freeze(m->container_object);
+        EINA_LIST_FOREACH(m->items, l, mi)
+          _e_menu_item_unrealize(mi);
+        EINA_LIST_FOREACH(m->items, l, mi)
+          _e_menu_item_realize(mi);
+
+        _e_menu_items_layout_update(m);
+        e_box_thaw(m->container_object);
+        evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
+        evas_event_thaw(m->evas);
+     }
    return m->frozen;
 }
 
