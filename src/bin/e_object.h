@@ -88,7 +88,7 @@ EAPI int   e_object_ref                 (E_Object *obj);
 EAPI int   e_object_unref               (E_Object *obj);
 EAPI int   e_object_ref_get             (E_Object *obj);
 EAPI int   e_object_error               (E_Object *obj);
-EAPI void  e_object_data_set            (E_Object *obj, void *data);
+EAPI void  e_object_data_set            (E_Object *obj, const void *data);
 EAPI void *e_object_data_get            (E_Object *obj);
 EAPI void  e_object_free_attach_func_set(E_Object *obj, E_Object_Cleanup_Func func);
 EAPI void  e_object_del_attach_func_set (E_Object *obj, E_Object_Cleanup_Func func);

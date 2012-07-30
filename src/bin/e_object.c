@@ -255,10 +255,10 @@ e_object_error(E_Object *obj)
 }
 
 EAPI void
-e_object_data_set(E_Object *obj, void *data)
+e_object_data_set(E_Object *obj, const void *data)
 {
    E_OBJECT_CHECK(obj);
-   obj->data = data;
+   obj->data = (void*)data;
 }
 
 EAPI void *
