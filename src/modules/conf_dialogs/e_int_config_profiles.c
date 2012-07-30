@@ -8,6 +8,7 @@ static void         _ilist_fill(E_Config_Dialog_Data *cfdata);
 static void         _ilist_cb_selected(void *data);
 static void         _cb_add(void *data, void *data2);
 static void         _cb_delete(void *data, void *data2);
+static void         _cb_scratch(void *data, void *data2);
 static void         _cb_reset(void *data, void *data2);
 static void         _cb_dialog_yes(void *data);
 static void         _cb_dialog_destroy(void *data);
@@ -22,6 +23,7 @@ struct _E_Config_Dialog_Data
    E_Config_Dialog *cfd;
    Evas_Object     *o_list;
    Evas_Object     *o_delete;
+   Evas_Object     *o_scratch;
    Evas_Object     *o_reset;
    Evas_Object     *o_text;
    Evas_Object     *o_textlabel;
@@ -135,14 +137,18 @@ _create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_delete = e_widget_button_add(evas, _("Delete"), "list-remove",
                                           _cb_delete, cfdata, NULL);
    e_widget_table_object_append(ot, cfdata->o_delete, 1, 0, 1, 1, 1, 1, 0, 0);
+   cfdata->o_scratch = e_widget_button_add(evas, _("Scratch"), "system-restart",
+                                           _cb_scratch, cfdata, NULL);
+   e_widget_table_object_align_append(ot, cfdata->o_scratch, 2, 0, 1, 1, 0, 1, 1, 1, 0.5, 0.5);
    cfdata->o_reset = e_widget_button_add(evas, _("Reset"), "system-restart",
                                          _cb_reset, cfdata, NULL);
-   e_widget_table_object_align_append(ot, cfdata->o_reset, 2, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
+   e_widget_table_object_align_append(ot, cfdata->o_reset, 3, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    // if there is a system version of the profile - allow reset
-   e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", e_config_profile_get());
+   e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/",
+                          e_config_profile_get());
    if (ecore_file_is_dir(buf))
      e_widget_disabled_set(cfdata->o_reset, 0);
    else
@@ -321,6 +327,26 @@ _cb_delete(void *data, void *data2 __UNUSED__)
                          "dialog-warning", buf, _("Delete"), _("Keep"),
                          _cb_dialog_yes, NULL, d, NULL,
                          _cb_dialog_destroy, d);
+}
+
+static void
+_cb_scratch(void *data __UNUSED__, void *data2 __UNUSED__)
+{
+   E_Action *a;
+   char *pdir;
+
+   e_config_save_flush();
+   e_config_save_block_set(1);
+
+   pdir = e_config_profile_dir_get(e_config_profile_get());
+   if (pdir)
+     {
+        ecore_file_recursive_rm(pdir);
+        free(pdir);
+     }
+   e_config_profile_set("default");
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
 static void
