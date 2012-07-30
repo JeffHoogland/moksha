@@ -391,7 +391,8 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler, const Eina_File_Direct_
         return;
      }
    e_util_menu_item_theme_icon_set(mi, "folder");
-   e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s%s", path ?: "/", info->path + info->name_start));
+   e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s/%s", path ?: "/", info->path + info->name_start));
+   //fprintf(stderr, "PATH SET: %s\n", e_object_data_get(E_OBJECT(mi)));
    e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_cleanup_cb);
    e_menu_item_callback_set(mi, _e_mod_menu_populate_cb, dev);
    sub = e_menu_new();
