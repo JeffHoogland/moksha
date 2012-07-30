@@ -704,6 +704,7 @@ _e_fm_main_eeze_init(void)
    char **argv;
    int argc;
 
+   if (_e_fm_eeze_init) return;
    ecore_app_args_get(&argc, &argv);
    pfx = eina_prefix_new(argv[0], e_storage_find,
                          "E", "enlightenment", "AUTHORS",
@@ -714,7 +715,6 @@ _e_fm_main_eeze_init(void)
         ERR("Could not determine prefix!");
         exit(1);
      }
-   if (_e_fm_eeze_init) return;
    _e_fm_eeze_init = EINA_TRUE;
    ecore_con_init();
    eeze_init();
