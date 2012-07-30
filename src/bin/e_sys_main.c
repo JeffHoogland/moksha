@@ -16,8 +16,10 @@
 #include <Eina.h>
 
 /* local subsystem functions */
+#ifdef HAVE_EEZE_MOUNT
 static Eina_Bool mountopts_check(const char *opts);
 static Eina_Bool mount_args_check(int argc, char **argv, const char *action);
+#endif
 static int auth_action_ok(char *a,
                           uid_t uid,
                           gid_t gid,
@@ -41,11 +43,12 @@ main(int argc,
 {
    int i, gn;
    int test = 0;
-   Eina_Bool mnt = EINA_FALSE;
    char *action, *cmd;
+#ifdef HAVE_EEZE_MOUNT
+   Eina_Bool mnt = EINA_FALSE;
    const char *act;
+#endif
    gid_t gid, gl[65536], egid;
-   Eina_Strbuf *buf = NULL;
 
    for (i = 1; i < argc; i++)
      {
@@ -67,6 +70,7 @@ main(int argc,
              test = 1;
              action = argv[2];
           }
+#ifdef HAVE_EEZE_MOUNT
         else
           {
              const char *s;
@@ -79,6 +83,7 @@ main(int argc,
              act = s;
              action = argv[1];
           }
+#endif
      }
    else if (argc == 2)
      {
@@ -128,13 +133,20 @@ main(int argc,
         printf("ERROR: UNDEFINED ACTION: %s\n", action);
         exit(20);
      }
-   if ((!test) && (!mnt)) return system(cmd);
+   if ((!test)
+#ifdef HAVE_EEZE_MOUNT
+    && (!mnt)
+#endif
+      )
+     return system(cmd);
+#ifdef HAVE_EEZE_MOUNT
    if (mnt)
      {
         int ret = 0;
         const char *mp = NULL;
+        Eina_Strbuf *buf = NULL;
 
-        if (!mount_args_check(argc, argv, act)) goto err;
+        if (!mount_args_check(argc, argv, act)) exit(40);
         /* all options are deemed safe at this point, so away we go! */
         if (!strcmp(act, "mount"))
           {
@@ -178,7 +190,7 @@ main(int argc,
                }
           }
         buf = eina_strbuf_new();
-        if (!buf) goto err;
+        if (!buf) exit(30);
         for (i = 1; i < argc; i++)
           eina_strbuf_append_printf(buf, "%s ", argv[i]);
         ret = system(eina_strbuf_string_get(buf));
@@ -210,18 +222,14 @@ main(int argc,
           }
         return ret;
      }
-
+#endif
    eina_shutdown();
 
    return 0;
-
-err:
-   if (buf) eina_strbuf_free(buf);
-   eina_shutdown();
-   return 30;
 }
 
 /* local subsystem functions */
+#ifdef HAVE_EEZE_MOUNT
 static Eina_Bool
 mountopts_check(const char *opts)
 {
@@ -358,6 +366,7 @@ mount_args_check(int argc, char **argv, const char *action)
    else return EINA_FALSE;
    return EINA_TRUE;
 }
+#endif
 
 static int
 auth_action_ok(char *a,
