@@ -619,7 +619,7 @@ e_menu_item_new_relative(E_Menu *m, E_Menu_Item *rel)
 
         l = eina_list_data_find_list(m->items, rel);
         m->items = eina_list_append_relative_list(m->items, mi, l);
-        mi->list_position = eina_list_data_find_list(m->items, mi);
+        mi->list_position = l->next;
      }
    else
      {
