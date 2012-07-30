@@ -382,21 +382,21 @@ fi
 if test "x${e_cv_want_mount_udisks}" = "xno" && test "x${e_cv_want_mount_hal}" = "xno" ; then
   DBUS_MOUNT_CONFIG=0
   dbus_mount=
-  test "x${e_cv_want_mount_udisks}" = "xno" && udisks_mount=
-  test "x${e_cv_want_mount_hal}" = "xno" && hal_mount=
+  udisks_mount=
+  hal_mount=
 fi
 
 AC_ARG_ENABLE([mount-eeze],
-  AS_HELP_STRING([--enable-mount-eeze],[enable eeze mounting support @<:@default=enabled@:>@]),
+  AS_HELP_STRING([--enable-mount-eeze],[enable eeze mounting support @<:@default=disabled@:>@]),
   [e_cv_want_mount_eeze=$enableval],
-  [e_cv_want_mount_eeze=yes])
+  [e_cv_want_mount_eeze=no])
 
 AC_MSG_CHECKING([whether the Eeze mounting support is enabled])
 AC_MSG_RESULT([${e_cv_want_mount_eeze}])
 
 eeze_mount=
 EEZE_MOUNT_CONFIG=0
-if test "x$e_cv_want_mount_eeze" != "xno" ; then
+if test "x$e_cv_want_mount_eeze" != "xno" && test -z "$dbus_mount" ; then
       CPPFLAGS_save="$CPPFLAGS"
       LIBS_save="$LIBS"
       CPPFLAGS="$EEZE_CFLAGS $CPPFLAGS"
