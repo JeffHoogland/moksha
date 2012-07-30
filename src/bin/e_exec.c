@@ -116,8 +116,8 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
         if (exec)
           inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
         else
-          inst = efreet_desktop_command_get(desktop, files,
-                                            (Efreet_Desktop_Command_Cb)_e_exec_cb_exec, launch);
+          inst = efreet_desktop_command_get
+          (desktop, files, (Efreet_Desktop_Command_Cb)_e_exec_cb_exec, launch);
      }
    else
      inst = _e_exec_cb_exec(launch, NULL, strdup(exec), 0);
@@ -158,7 +158,8 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 {
    E_Exec_Instance *inst = NULL;
    E_Exec_Launch *launch;
-   Ecore_Exe *exe;
+   Eina_List *l, *lnew;
+   Ecore_Exe *exe = NULL;
    char *penv_display;
    char buf[PATH_MAX];
 
@@ -227,18 +228,20 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
         if (!getcwd(buf, sizeof(buf)))
           {
              E_FREE(inst);
-             e_util_dialog_show(_("Run Error"),
-                                _("Enlightenment was unable to get current directory"));
+             e_util_dialog_show
+               (_("Run Error"),
+                   _("Enlightenment was unable to get current directory"));
              return NULL;
           }
         if (chdir(desktop->path))
           {
              E_FREE(inst);
-             e_util_dialog_show(_("Run Error"),
-                                _("Enlightenment was unable to change to directory:<br>"
-                                  "<br>"
-                                  "%s"),
-                                desktop->path);
+             e_util_dialog_show
+               (_("Run Error"),
+                   _("Enlightenment was unable to change to directory:<br>"
+                     "<br>"
+                     "%s"),
+                   desktop->path);
              return NULL;
           }
         e_util_library_path_strip();
@@ -246,11 +249,12 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
         e_util_library_path_restore();
         if (chdir(buf))
           {
-             e_util_dialog_show(_("Run Error"),
-                                _("Enlightenment was unable to restore to directory:<br>"
-                                  "<br>"
-                                  "%s"),
-                                buf);
+             e_util_dialog_show
+               (_("Run Error"),
+                   _("Enlightenment was unable to restore to directory:<br>"
+                     "<br>"
+                     "%s"),
+                   buf);
              E_FREE(inst);
              return NULL;
           }
@@ -258,7 +262,66 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    else
      {
         e_util_library_path_strip();
-        exe = ecore_exe_run(exec, inst);
+        if ((desktop) && (desktop->terminal))
+          {
+             Efreet_Desktop *tdesktop, *td;
+             int i;
+             // XXX: FIXME: this should become config some day...
+             const char *terms[] =
+               {
+                  "terminology.desktop",
+                  "xterm.desktop",
+                  "rxvt.desktop",
+                  "gnome-terimnal.desktop",
+                  "konsole.desktop",
+                  NULL
+               };
+             
+             for (i = 0; terms[i]; i++)
+               {
+                  tdesktop = efreet_util_desktop_file_id_find(terms[i]);
+                  if (tdesktop) break;
+               }
+             if (!tdesktop)
+               {
+                  l = efreet_util_desktop_category_list("TerminalEmulator");
+                  if (l)
+                    {
+                       // just take first one since above list doesn't work.
+                       tdesktop = l->data;
+                       EINA_LIST_FREE(l, td)
+                         {
+                            // free/unref the desktosp we are not going to use
+                            if (td != tdesktop) efreet_desktop_free(td);
+                         }
+                    }
+               }
+             if (tdesktop)
+               {
+                  if (tdesktop->exec)
+                    {
+                       Eina_Strbuf *sb;
+
+                       sb = eina_strbuf_new();
+                       if (sb)
+                         {
+                            eina_strbuf_append(sb, tdesktop->exec);
+                            eina_strbuf_append(sb, " -e ");
+                            eina_strbuf_append_escaped(sb, exec);
+                            exe = ecore_exe_run(eina_strbuf_string_get(sb),
+                                                inst);
+                            eina_strbuf_free(sb);
+                         }
+                    }
+                  else
+                    exe = ecore_exe_run(exec, inst);
+                  efreet_desktop_free(tdesktop);
+               }
+             else
+               exe = ecore_exe_run(exec, inst);
+          }
+        else
+          exe = ecore_exe_run(exec, inst);
         e_util_library_path_restore();
      }
 
@@ -287,42 +350,29 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 //   ecore_exe_auto_limits_set(exe, 2000, 2000, 20, 20);
    ecore_exe_tag_set(exe, "E/exec");
 
-//   if (desktop)
+   if (desktop)
      {
-        Eina_List *l, *lnew;
-
-        if (desktop)
-          {
-             efreet_desktop_ref(desktop);
-             inst->desktop = desktop;
-             inst->key = eina_stringshare_add(desktop->orig_path);
-          }
-        else
-          inst->key = eina_stringshare_add(exec);
-        inst->exe = exe;
-        inst->startup_id = startup_id;
-        inst->launch_time = ecore_time_get();
-        inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout,
-                                             _e_exec_cb_expire_timer, inst);
-        l = eina_hash_find(e_exec_instances, inst->key);
-        lnew = eina_list_append(l, inst);
-        if (l) eina_hash_modify(e_exec_instances, inst->key, lnew);
-        else eina_hash_add(e_exec_instances, inst->key, lnew);
-        if (inst->desktop)
-          {
-             e_exec_start_pending = eina_list_append(e_exec_start_pending,
-                                                     inst->desktop);
-             e_exehist_add(launch->launch_method, inst->desktop->exec);
-          }
+        efreet_desktop_ref(desktop);
+        inst->desktop = desktop;
+        inst->key = eina_stringshare_add(desktop->orig_path);
      }
-/*   
    else
+     inst->key = eina_stringshare_add(exec);
+   inst->exe = exe;
+   inst->startup_id = startup_id;
+   inst->launch_time = ecore_time_get();
+   inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout,
+                                        _e_exec_cb_expire_timer, inst);
+   l = eina_hash_find(e_exec_instances, inst->key);
+   lnew = eina_list_append(l, inst);
+   if (l) eina_hash_modify(e_exec_instances, inst->key, lnew);
+   else eina_hash_add(e_exec_instances, inst->key, lnew);
+   if (inst->desktop)
      {
-        E_FREE(inst);
-        inst = NULL;
-        ecore_exe_free(exe);
+        e_exec_start_pending = eina_list_append(e_exec_start_pending,
+                                                inst->desktop);
+        e_exehist_add(launch->launch_method, inst->desktop->exec);
      }
- */
 
    if (!remaining)
      {
