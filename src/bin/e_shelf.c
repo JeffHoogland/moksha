@@ -1049,7 +1049,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nh = es->h;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nw != es->w) nx = es->x + ((es->w - nw) / 2);
+        /*if (nw != es->w)*/ nx = es->x + ((es->w - nw) / 2);
+        /*if (nh != es->h)*/ ny = es->y + ((es->h - nh) / 2);
         break;
 
       case E_GADCON_ORIENT_HORIZ:
@@ -1057,7 +1058,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nh = es->h;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nw != es->w) nx = es->x + ((es->w - nw) / 2);
+        /*if (nw != es->w)*/ nx = es->x + ((es->w - nw) / 2);
         break;
 
       case E_GADCON_ORIENT_VERT:
@@ -1065,7 +1066,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nw = es->w;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nh != es->h) ny = es->y + ((es->h - nh) / 2);
+        /*if (nh != es->h)*/ ny = es->y + ((es->h - nh) / 2);
         break;
 
       case E_GADCON_ORIENT_LEFT:
@@ -1073,8 +1074,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nw = es->w;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nh != es->h) ny = (es->zone->h - nh) / 2;
-        // nx = 0;
+        /*if (nh != es->h)*/ ny = (es->zone->h - nh) / 2;
+        //nx = 0;
         break;
 
       case E_GADCON_ORIENT_RIGHT:
@@ -1082,8 +1083,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nw = es->w;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nh != es->h) ny = (es->zone->h - nh) / 2;
-        // nx = es->zone->w - nw;
+        /*if (nh != es->h)*/ ny = (es->zone->h - nh) / 2;
+        //nx = es->zone->w - nw;
         break;
 
       case E_GADCON_ORIENT_TOP:
@@ -1091,8 +1092,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nh = es->h;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nw != es->w) nx = (es->zone->w - nw) / 2;
-        // ny = 0;
+        /*if (nw != es->w)*/ nx = (es->zone->w - nw) / 2;
+        //ny = 0;
         break;
 
       case E_GADCON_ORIENT_BOTTOM:
@@ -1100,7 +1101,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nh = es->h;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nw != es->w) nx = (es->zone->w - nw) / 2;
+        /*if (nw != es->w)*/ nx = (es->zone->w - nw) / 2;
         //ny = es->zone->h - nh;
         break;
 
@@ -1109,8 +1110,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nh = es->h;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nw != es->w) nx = 0;
-        // ny = 0;
+        /*if (nw != es->w)*/ nx = 0;
+        //ny = 0;
         break;
 
       case E_GADCON_ORIENT_CORNER_TR:
@@ -1118,8 +1119,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nh = es->h;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        nx = es->zone->w - nw;
-        // ny = 0;
+        /*if (nw != es->w)*/ nx = es->zone->w - nw;
+        //ny = 0;
         break;
 
       case E_GADCON_ORIENT_CORNER_BL:
@@ -1127,8 +1128,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nh = es->h;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nw != es->w) nx = 0;
-        // ny = es->zone->h - nh;
+        /*if (nw != es->w)*/ nx = 0;
+        //ny = es->zone->h - nh;
         break;
 
       case E_GADCON_ORIENT_CORNER_BR:
@@ -1136,7 +1137,7 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nh = es->h;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        nx = es->zone->w - nw;
+        /*if (nw != es->w)*/ nx = es->zone->w - nw;
         //ny = es->zone->h - nh;
         break;
 
@@ -1145,8 +1146,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nw = es->w;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nh != es->h) ny = 0;
-        // nx = 0;
+        /*if (nh != es->h)*/ ny = 0;
+        //nx = 0;
         break;
 
       case E_GADCON_ORIENT_CORNER_RT:
@@ -1154,8 +1155,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nw = es->w;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nh != es->h) ny = 0;
-        // nx = es->zone->w - nw;
+        /*if (nh != es->h)*/ ny = 0;
+        //nx = es->zone->w - nw;
         break;
 
       case E_GADCON_ORIENT_CORNER_LB:
@@ -1163,8 +1164,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nw = es->w;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nh != es->h) ny = es->zone->h - nh;
-        // nx = 0;
+        /*if (nh != es->h)*/ ny = es->zone->h - nh;
+        //nx = 0;
         break;
 
       case E_GADCON_ORIENT_CORNER_RB:
@@ -1172,8 +1173,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
         if (!es->fit_size) nw = es->w;
         if (nw > es->zone->w) nw = es->zone->w;
         if (nh > es->zone->h) nh = es->zone->h;
-        if (nh != es->h) ny = es->zone->h - nh;
-        // nx = es->zone->w - nw;
+        /*if (nh != es->h)*/ ny = es->zone->h - nh;
+        //nx = es->zone->w - nw;
         break;
 
       default:
