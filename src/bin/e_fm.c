@@ -10263,3 +10263,9 @@ e_fm2_overlay_clip_to(Evas_Object *obj, Evas_Object *clip)
         evas_object_resize(sd->overlay, sd->w, sd->h);
      }
 }
+
+EAPI const char *
+e_fm2_real_path_map(const char *dev, const char *path)
+{
+   return _e_fm2_dev_path_map(dev, path);
+}
