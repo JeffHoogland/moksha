@@ -834,12 +834,12 @@ e_menu_item_toggle_get(E_Menu_Item *mi)
 }
 
 EAPI void
-e_menu_item_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+e_menu_item_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Menu *m, E_Menu_Item *mi), const void *data)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    mi->cb.func = func;
-   mi->cb.data = data;
+   mi->cb.data = (void*)data;
 }
 
 EAPI void
