@@ -520,7 +520,7 @@ e_util_icon_size_normalize(unsigned int desired)
 {
    const unsigned int *itr, known_sizes[] =
    {
-      16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, 256, -1
+      16, 22, 24, 32, 36, 48, 64, 72, 96, 128, 192, 256, 0
    };
 
    for (itr = known_sizes; *itr > 0; itr++)
