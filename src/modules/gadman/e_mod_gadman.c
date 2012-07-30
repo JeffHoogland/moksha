@@ -729,13 +729,13 @@ _apply_widget_position(E_Gadcon_Client *gcc)
    int x, y, w, h;
    E_Zone *zone;
 
-   x = gcc->cf->geom.pos_x * Man->width;
-   y = gcc->cf->geom.pos_y * Man->height;
-   w = gcc->cf->geom.size_w * Man->width;
-   h = gcc->cf->geom.size_h * Man->height;
-
    /* Obtain zone from parent gadcon */
    zone = gcc->gadcon->zone;
+
+   x = gcc->cf->geom.pos_x * zone->w;
+   y = gcc->cf->geom.pos_y * zone->h;
+   w = gcc->cf->geom.size_w * zone->w;
+   h = gcc->cf->geom.size_h * zone->h;
 
    /* something broke the config's geom, make it visible so it can be
     * resized/deleted
