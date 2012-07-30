@@ -83,14 +83,37 @@ e_util_env_set(const char *var, const char *val)
      }
 }
 
+static const char *
+_mount_point_escape(const char *path)
+{
+   const char *p;
+   if (!path) return NULL;
+
+   /* Most app doesn't handle the hostname in the uri so it's put to NULL */
+   for (p = path; *p; p++)
+     if ((!isalnum(*p)) && (*p != '/') && (*p != '_')) return NULL;
+
+   return eina_stringshare_add(path);
+}
+
 static void
 _e_fm_main_eeze_mount_point_set(E_Volume *v)
 {
-   const char *str = v->uuid ?: v->label;
-   /* here we arbitrarily mount everything to $E_HOME/fileman/$something regardless of fstab */
+   const char *str;
+   char path[PATH_MAX];
+
+   str = strrchr(v->udi, '/');
+   if ((!str) || (!str[1]))
+     {
+        CRI("DEV CHANGED, ABORTING");
+        eina_stringshare_replace(&v->mount_point, NULL);
+        eeze_disk_mount_point_set(v->disk, NULL);
+        return;
+     }
+   /* here we arbitrarily mount everything to /media/$devnode regardless of fstab */
    eina_stringshare_del(v->mount_point);
-   if (!str) str = eeze_disk_devpath_get(v->disk);
-   v->mount_point = eina_stringshare_printf("%s/fileman/%s", e_user_dir_get(), str);
+   snprintf(path, sizeof(path), "/media%s", str);
+   v->mount_point = _mount_point_escape(path);
    eeze_disk_mount_point_set(v->disk, v->mount_point);
 }
 
@@ -280,11 +303,16 @@ _e_fm_main_eeze_cb_vol_ejected(void *user_data __UNUSED__,
 
    v->mounted = EINA_FALSE;
    if (!v->mount_point) _e_fm_main_eeze_mount_point_set(v);
+   if (!v->mount_point)
+     {
+        /* we're aborting here, so just fail */
+        return ECORE_CALLBACK_RENEW;
+     }
    INF("EJECT: %s from %s", v->udi, v->mount_point);
    {
       char rmbuf[PATH_MAX];
-      snprintf(rmbuf, sizeof(rmbuf), "%s/fileman", e_user_dir_get());
-      if (v->mount_point && (!strncmp(v->mount_point, rmbuf, strlen(rmbuf))))
+      snprintf(rmbuf, sizeof(rmbuf), "/media%s", strrchr(v->udi, '/'));
+      if (v->mount_point && (!strcmp(v->mount_point, rmbuf)))
         ecore_file_rmdir(v->mount_point);
    }
    size = strlen(v->udi) + 1 + strlen(v->mount_point) + 1;
@@ -396,7 +424,7 @@ _e_fm_main_eeze_volume_add(const char *syspath,
     * since we actually have real child partition volumes to mount */
    if ((v->partition != 0) && (v->parent))
      {
-        E_Volume *v2 = e_volume_find(v->parent);
+        E_Volume *v2 = _e_fm_main_eeze_volume_find_fast(v->parent);
         
         if ((v2) && (v2->partition == 0))
           _e_fm_main_eeze_volume_del(v2->udi);
@@ -517,12 +545,11 @@ _e_fm_main_eeze_volume_unmount(E_Volume *v)
 void
 _e_fm_main_eeze_volume_mount(E_Volume *v)
 {
-   int opts = 0;
+   int size, opts = 0;
+   char *buf;
 
    if (!v || v->guard)
      return;
-
-   INF("mount %s %s [fs type = %s]", v->udi, v->mount_point, v->fstype);
 
    if (v->fstype)
      {
@@ -534,11 +561,12 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
              opts |= EEZE_DISK_MOUNTOPT_UTF8;
           }
      }
-   opts |= EEZE_DISK_MOUNTOPT_UID | EEZE_DISK_MOUNTOPT_NOSUID;
+   opts |= EEZE_DISK_MOUNTOPT_UID | EEZE_DISK_MOUNTOPT_NOSUID | EEZE_DISK_MOUNTOPT_NODEV | EEZE_DISK_MOUNTOPT_NOEXEC;
 
    _e_fm_main_eeze_mount_point_set(v);
+   if (!v->mount_point) goto error;
+   INF("mount %s %s [fs type = %s]", v->udi, v->mount_point, v->fstype);   
    eeze_disk_mountopts_set(v->disk, opts);
-   ecore_file_mkpath(v->mount_point);
    if (!eeze_disk_mount_wrapper_get(v->disk))
      {
         char buf[PATH_MAX];
@@ -548,8 +576,14 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
      }
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_eeze_vol_mount_timeout, v);
    INF("MOUNT: %s", v->udi);
-   if (!eeze_disk_mount(v->disk))
-     CRI("ERROR WHEN ATTEMPTING TO MOUNT!");
+   if (!eeze_disk_mount(v->disk)) goto error;
+   return;
+error:
+   size = _e_fm_main_eeze_format_error_msg(&buf, v, "org.enlightenment.fm2.MountError", "Critical error occurred during mounting!");
+   ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
+                         0, 0, 0, buf, size);
+   free(buf);
+   CRI("ERROR WHEN ATTEMPTING TO MOUNT!");
 }
 
 static void
