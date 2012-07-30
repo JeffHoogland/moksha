@@ -237,6 +237,7 @@ e_volume_mount(E_Volume *v)
 #endif
      default:
        printf("raster can't mount disks by himself!\n");
+       (void)v;
     }
 }
 
@@ -263,6 +264,7 @@ e_volume_unmount(E_Volume *v)
 #endif
      default:
        printf("raster can't unmount disks by himself!\n");
+       (void)v;
     }
 }
 
@@ -288,6 +290,7 @@ e_volume_eject(E_Volume *v)
 #endif
      default:
        printf("raster can't eject disks by himself!\n");
+       (void)v;
     }
 }
 
@@ -310,6 +313,7 @@ e_volume_find(const char *udi)
 #endif
       default:
         printf("raster can't find disks by himself!\n");
+        (void)udi;
      }
    return NULL;
 }
@@ -336,6 +340,7 @@ e_storage_del(const char *udi)
 #endif
      default:
        printf("raster can't delete disks by himself!\n");
+       (void)udi;
     }
 }
 
@@ -358,6 +363,7 @@ e_storage_find(const char *udi)
 #endif
      default:
        printf("raster can't find disks by himself!\n");
+       (void)udi;
     }
   return NULL;
 }
