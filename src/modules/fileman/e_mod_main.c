@@ -16,6 +16,7 @@ static void _e_mod_menu_virtual_cb(void        *data,
 static void _e_mod_menu_volume_cb(void        *data,
                                   E_Menu      *m,
                                   E_Menu_Item *mi);
+static void      _e_mod_main_menu_cb(E_Menu *m, void *category_data, void *data);
 static void      _e_mod_menu_add(void   *data,
                                  E_Menu *m);
 static void      _e_mod_fileman_config_load(void);
@@ -28,6 +29,7 @@ static Eina_Bool _e_mod_zone_add(void *data,
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
+static E_Menu_Category_Callback *mcb = NULL;
 static Ecore_Event_Handler *zone_add_handler = NULL;
 
 static E_Config_DD *conf_edd = NULL;
@@ -72,8 +74,8 @@ e_modapi_init(E_Module *m)
         e_action_predef_name_set(_("Launch"), _("File Manager"),
                                  "fileman", NULL, "syntax: /path/to/dir or ~/path/to/dir or favorites or desktop, examples: /boot/grub, ~/downloads", 1);
      }
-   maug = e_int_menus_menu_augmentation_add_sorted
-       ("main/1", _("Files"), _e_mod_menu_add, NULL, NULL, NULL);
+   maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Files"), _e_mod_menu_add, NULL, NULL, NULL);
+   mcb = e_menu_category_callback_add("e/fileman/action", _e_mod_main_menu_cb, NULL, NULL);
    e_module_delayed_set(m, 1);
 
    /* Hook into zones */
@@ -153,6 +155,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      {
         e_int_menus_menu_augmentation_del("main/1", maug);
         maug = NULL;
+     }
+   if (mcb)
+     {
+        e_menu_category_callback_del(mcb);
+        mcb = NULL;
      }
    /* remove module-supplied action */
    if (act)
@@ -423,6 +430,22 @@ _e_mod_menu_add(void *data __UNUSED__,
    sub = e_menu_new();
    e_menu_item_submenu_set(mi, sub);
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);
+#else
+   (void)m;
+#endif
+}
+
+static void
+_e_mod_main_menu_cb(E_Menu *m, void *category_data __UNUSED__, void *data __UNUSED__)
+{
+#ifdef ENABLE_FILES
+   E_Menu_Item *mi;
+   _e_mod_menu_add(NULL, m);
+   m->items = eina_list_promote_list(m->items, eina_list_last(m->items));
+   mi = e_menu_item_new_relative(m, m->items->data);
+   e_menu_item_separator_set(mi, EINA_TRUE);
+#else
+   (void)m;
 #endif
 }
 
