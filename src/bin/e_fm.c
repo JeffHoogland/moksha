@@ -1357,16 +1357,8 @@ e_fm2_config_get(Evas_Object *obj)
 EAPI Eina_List *
 e_fm2_selected_list_get(Evas_Object *obj)
 {
-   Eina_List *list = NULL, *l;
-   E_Fm2_Icon *ic;
-
    EFM_SMART_CHECK(NULL);
-   EINA_LIST_FOREACH(sd->icons, l, ic)
-     {
-        if (ic->selected)
-          list = eina_list_append(list, &(ic->info));
-     }
-   return list;
+   return eina_list_clone(sd->selected_icons);
 }
 
 EAPI Eina_List *
