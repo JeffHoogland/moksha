@@ -380,17 +380,16 @@ _e_mod_menu_populate_filter(void *data __UNUSED__, Eio_File *handler __UNUSED__,
 }
 
 static void
-_e_mod_menu_populate_item(void *data, Eio_File *handler, const Eina_File_Direct_Info *info)
+_e_mod_menu_populate_item(void *data, Eio_File *handler __UNUSED__, const Eina_File_Direct_Info *info)
 {
    E_Menu *m = data;
    E_Menu_Item *mi;
    E_Menu *sub;
-   const char *dev, *path, *realpath;
+   const char *dev, *path;
 
    mi = m->parent_item;
    dev = e_object_data_get(E_OBJECT(m));
    path = mi ? e_object_data_get(E_OBJECT(mi)) : "/";
-   realpath = eio_file_associate_find(handler, "realpath");
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, info->path + info->name_start);
 #if 0
@@ -471,7 +470,7 @@ _e_mod_menu_populate(void *d __UNUSED__, E_Menu *m)
    e_menu_freeze(m);
    ls = eio_file_stat_ls(realpath, _e_mod_menu_populate_filter, _e_mod_menu_populate_item, _e_mod_menu_populate_done, _e_mod_menu_populate_err, m);
    EINA_SAFETY_ON_NULL_RETURN(ls);
-   eio_file_associate_add(ls, "realpath", realpath, (Eina_Free_Cb)eina_stringshare_del);
+   eina_stringshare_del(realpath);
 }
 
 /* menu item add hook */
