@@ -54,7 +54,11 @@ struct _E_Fwin_Page
    E_Fwin              *fwin;
    Ecore_Event_Handler *fm_op_entry_add_handler;
 
+   Evas_Object         *box;
+   Evas_Object         *flist;
+   Evas_Object         *flist_frame;
    Evas_Object         *scrollframe_obj;
+   Evas_Object         *scr;
    Evas_Object         *fm_obj;
    E_Toolbar           *tbar;
 
@@ -87,6 +91,7 @@ typedef enum
 } E_Fwin_Exec_Type;
 
 /* local subsystem prototypes */
+static void _e_fwin_page_favorites_add(E_Fwin_Page *page);
 static void _e_fwin_icon_mouse_out(void *data, Evas_Object *obj __UNUSED__, void *event_info);
 static void _e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info);
 static E_Fwin          *_e_fwin_new(E_Container *con,
@@ -114,6 +119,9 @@ static Eina_List       *_e_fwin_suggested_apps_list_get(Eina_List *files,
 static void             _e_fwin_changed(void *data,
                                         Evas_Object *obj,
                                         void *event_info);
+static void             _e_fwin_favorite_selected(void *data,
+                                                   Evas_Object *obj,
+                                                   void *event_info);
 static void             _e_fwin_selected(void *data,
                                          Evas_Object *obj,
                                          void *event_info);
@@ -329,7 +337,7 @@ e_fwin_zone_new(E_Zone *zone,
                                 _e_fwin_pan_max_get,
                                 _e_fwin_pan_child_size_get);
    evas_object_propagate_events_set(page->fm_obj, 0);
-   page->scrollframe_obj = o;
+   page->scrollframe_obj = page->scr = o;
 
    e_zone_useful_geometry_get(zone, &x, &y, &w, &h);
    evas_object_move(o, x, y);
@@ -404,6 +412,19 @@ e_fwin_reload_all(void)
                     {
                        e_object_del(E_OBJECT(fwin->cur_page->tbar));
                        fwin->cur_page->tbar = NULL;
+                    }
+               }
+             if (fileman_config->view.show_sidebar)
+               {
+                  if (!fwin->cur_page->flist_frame)
+                    _e_fwin_page_favorites_add(fwin->cur_page);
+               }
+             else
+               {
+                  if (fwin->cur_page->flist_frame)
+                    {
+                       evas_object_del(fwin->cur_page->flist_frame);
+                       fwin->cur_page->flist_frame = fwin->cur_page->flist = NULL;
                     }
                }
              _e_fwin_cb_resize(fwin->win);
@@ -506,7 +527,7 @@ _e_fwin_new(E_Container *con,
 //   o = e_icon_add(e_win_evas_get(fwin->win));
 //   e_icon_scale_size_set(o, 0);
 //   e_icon_fill_inside_set(o, 0);
-   edje_object_part_swallow(e_scrollframe_edje_object_get(page->scrollframe_obj), "e.swallow.overlay", o);
+   edje_object_part_swallow(e_scrollframe_edje_object_get(page->scr), "e.swallow.overlay", o);
    evas_object_pass_events_set(o, 1);
    fwin->over_obj = o;
 
@@ -670,16 +691,70 @@ _e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info)
    fwin->popup_icon = ici;
 }
 
+static void
+_e_fwin_page_favorites_add(E_Fwin_Page *page)
+{
+   E_Fm2_Config fmc;
+   Evas_Object *o;
+   Evas *evas = evas_object_evas_get(page->box);
+
+   o = e_fm2_add(evas);
+   page->flist = o;
+   memset(&fmc, 0, sizeof(E_Fm2_Config));
+   fmc.view.mode = E_FM2_VIEW_MODE_LIST;
+   fmc.view.open_dirs_in_place = 1;
+   fmc.view.selector = 1;
+   fmc.view.single_click = 1;
+   fmc.view.no_subdir_jump = 1;
+   fmc.view.no_subdir_drop = 1;
+   fmc.view.link_drop = 1;
+   fmc.icon.list.w = 24;
+   fmc.icon.list.h = 24;
+   fmc.icon.fixed.w = 1;
+   fmc.icon.fixed.h = 1;
+   fmc.icon.extension.show = 0;
+   fmc.icon.key_hint = NULL;
+   fmc.list.sort.no_case = 1;
+   fmc.list.sort.dirs.first = 0;
+   fmc.list.sort.dirs.last = 0;
+   fmc.selection.single = 1;
+   fmc.selection.windows_modifiers = 0;
+   e_fm2_config_set(o, &fmc);
+   e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_ACTIVATE_CHANGE);
+   //evas_object_smart_callback_add(o, "changed", _cb, fwin);
+   evas_object_smart_callback_add(o, "selected", _e_fwin_favorite_selected, page);
+   e_fm2_path_set(o, "favorites", "/");
+
+   o = e_widget_scrollframe_pan_add(evas, page->flist,
+                                    e_fm2_pan_set,
+                                    e_fm2_pan_get,
+                                    e_fm2_pan_max_get,
+                                    e_fm2_pan_child_size_get);
+   evas_object_propagate_events_set(page->flist, 0);
+   e_widget_scrollframe_focus_object_set(o, page->flist);
+
+   page->flist_frame = o;
+   e_widget_size_min_set(o, 128, 128);
+   e_widget_list_object_prepend(page->box, o, 1, 0, 0);
+}
+
 static E_Fwin_Page *
 _e_fwin_page_create(E_Fwin *fwin)
 {
    Evas_Object *o;
    E_Fwin_Page *page;
+   Evas *evas;
 
    page = E_NEW(E_Fwin_Page, 1);
    page->fwin = fwin;
+   evas = e_win_evas_get(fwin->win);
 
-   o = e_fm2_add(e_win_evas_get(fwin->win));
+   page->box = e_widget_list_add(evas, 0, 1);
+
+   if (fileman_config->view.show_sidebar)
+     _e_fwin_page_favorites_add(page);
+
+   o = e_fm2_add(evas);
    page->fm_obj = o;
    e_fm2_view_flags_set(o, E_FM2_VIEW_DIR_CUSTOM);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_fwin_cb_key_down, page);
@@ -701,10 +776,8 @@ _e_fwin_page_create(E_Fwin *fwin)
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_window_object_set(o, E_OBJECT(fwin->win));
    evas_object_focus_set(o, 1);
+   _e_fwin_config_set(page);
 
-   evas_object_show(o);
-
-   o = e_scrollframe_add(e_win_evas_get(fwin->win));
    /* FIXME: this theme object will have more versions and options later
     * for things like swallowing widgets/buttons ot providing them - a
     * gadcon for starters for fm widgets. need to register the owning
@@ -720,28 +793,28 @@ _e_fwin_page_create(E_Fwin *fwin)
     * same as currently done for bg & overlay. also add to fm2 the ability
     * to specify the .edj files to get the list and icon theme stuff from
     */
-   e_scrollframe_custom_theme_set(o, "base/theme/fileman",
-                                  "e/fileman/default/scrollframe");
    evas_object_data_set(page->fm_obj, "fm_page", page);
-   e_scrollframe_extern_pan_set(o, page->fm_obj,
-                                _e_fwin_pan_set,
-                                _e_fwin_pan_get,
-                                _e_fwin_pan_max_get,
-                                _e_fwin_pan_child_size_get);
+   o = e_widget_scrollframe_pan_add(evas, page->fm_obj,
+                                    e_fm2_pan_set,
+                                    e_fm2_pan_get,
+                                    e_fm2_pan_max_get,
+                                    e_fm2_pan_child_size_get);
    evas_object_propagate_events_set(page->fm_obj, 0);
    page->scrollframe_obj = o;
+   page->scr = e_widget_scrollframe_object_get(o);
+   e_scrollframe_custom_theme_set(page->scr, "base/theme/fileman",
+                                  "e/fileman/default/scrollframe");
 //   edje_object_part_swallow(fwin->bg_obj, "e.swallow.content", o);
-   evas_object_move(o, 0, 0);
-   evas_object_show(o);
+   e_widget_list_object_append(page->box, page->scrollframe_obj, 1, 1, 1);
+   evas_object_move(page->box, 0, 0);
+   evas_object_show(page->box);
 
    if (fileman_config->view.show_toolbar)
      {
-        page->tbar = e_toolbar_new(e_win_evas_get(fwin->win), "toolbar",
+        page->tbar = e_toolbar_new(evas, "toolbar",
                                    fwin->win, page->fm_obj);
         e_toolbar_show(page->tbar);
      }
-
-   _e_fwin_config_set(page);
 
    page->fm_op_entry_add_handler =
      ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_ADD,
@@ -755,7 +828,8 @@ _e_fwin_page_free(E_Fwin_Page *page)
 {
    if (page->fm_obj) evas_object_del(page->fm_obj);
    if (page->tbar) e_object_del(E_OBJECT(page->tbar));
-   if (page->scrollframe_obj) evas_object_del(page->scrollframe_obj);
+   if (page->box) evas_object_del(page->box);
+   else evas_object_del(page->scrollframe_obj);
 
    if (page->fm_op_entry_add_handler)
      ecore_event_handler_del(page->fm_op_entry_add_handler);
@@ -1227,8 +1301,8 @@ _e_fwin_toolbar_resize(E_Fwin_Page *page)
    h = page->fwin->win->h;
    if (!page->tbar)
      {
-        evas_object_move(page->scrollframe_obj, 0, 0);
-        evas_object_resize(page->scrollframe_obj, w, h);
+        evas_object_move(page->box, 0, 0);
+        evas_object_resize(page->box, w, h);
         return;
      }
    switch (page->tbar->gadcon->orient)
@@ -1283,8 +1357,8 @@ _e_fwin_toolbar_resize(E_Fwin_Page *page)
         return;
      }
    e_toolbar_move_resize(page->tbar, tx, ty, tw, th);
-   evas_object_move(page->scrollframe_obj, x, y);
-   evas_object_resize(page->scrollframe_obj, w, h);
+   evas_object_move(page->box, x, y);
+   evas_object_resize(page->box, w, h);
 }
 
 /* fwin callbacks */
@@ -1449,21 +1523,21 @@ _e_fwin_changed(void *data,
      {
         if ((fwin->scrollframe_file) &&
             (e_util_edje_collection_exists(fwin->scrollframe_file, "e/fileman/default/scrollframe")))
-          e_scrollframe_custom_edje_file_set(page->scrollframe_obj,
+          e_scrollframe_custom_edje_file_set(page->scr,
                                              (char *)fwin->scrollframe_file,
                                              "e/fileman/default/scrollframe");
         else
           {
              if (fwin->zone)
-               e_scrollframe_custom_theme_set(page->scrollframe_obj,
+               e_scrollframe_custom_theme_set(page->scr,
                                               "base/theme/fileman",
                                               "e/fileman/desktop/scrollframe");
              else
-               e_scrollframe_custom_theme_set(page->scrollframe_obj,
+               e_scrollframe_custom_theme_set(page->scr,
                                               "base/theme/fileman",
                                               "e/fileman/default/scrollframe");
           }
-        e_scrollframe_child_pos_set(page->scrollframe_obj, 0, 0);
+        e_scrollframe_child_pos_set(page->scr, 0, 0);
      }
    if ((fwin->theme_file) && (ecore_file_exists(fwin->theme_file)))
      e_fm2_custom_theme_set(obj, fwin->theme_file);
@@ -1473,6 +1547,21 @@ _e_fwin_changed(void *data,
    _e_fwin_icon_mouse_out(fwin, NULL, NULL);
    if (fwin->zone) return;
    _e_fwin_window_title_set(page);
+}
+
+static void
+_e_fwin_favorite_selected(void *data,
+                 Evas_Object *obj __UNUSED__,
+                 void *event_info __UNUSED__)
+{
+   E_Fwin_Page *page;
+   Eina_List *selected;
+
+   page = data;
+   selected = e_fm2_selected_list_get(page->flist);
+   if (!selected) return;
+   _e_fwin_file_open_dialog(page, selected, 0);
+   eina_list_free(selected);
 }
 
 static void
@@ -2412,8 +2501,8 @@ _e_fwin_pan_scroll_update(E_Fwin_Page *page)
      edje_object_message_send(page->fwin->under_obj, EDJE_MESSAGE_INT_SET, 1, msg);
    if (page->fwin->over_obj)
      edje_object_message_send(page->fwin->over_obj, EDJE_MESSAGE_INT_SET, 1, msg);
-   if (page->scrollframe_obj)
-     edje_object_message_send(e_scrollframe_edje_object_get(page->scrollframe_obj), EDJE_MESSAGE_INT_SET, 1, msg);
+   if (page->scr)
+     edje_object_message_send(e_scrollframe_edje_object_get(page->scr), EDJE_MESSAGE_INT_SET, 1, msg);
    page->fm_pan_last.x = page->fm_pan.x;
    page->fm_pan_last.y = page->fm_pan.y;
    page->fm_pan_last.max_x = page->fm_pan.max_x;
@@ -2566,7 +2655,7 @@ _e_fwin_op_registry_entry_add_cb(void *data,
                            "e/fileman/default/progress");
 
    // Append the element to the box
-   edje_object_part_box_append(e_scrollframe_edje_object_get(page->scrollframe_obj),
+   edje_object_part_box_append(e_scrollframe_edje_object_get(page->scr),
                                "e.box.operations", o);
    evas_object_size_hint_align_set(o, 1.0, 1.0); //FIXME this should be theme-configurable
 

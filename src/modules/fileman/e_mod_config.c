@@ -20,6 +20,7 @@ struct _E_Config_Dialog_Data
        int show_full_path;
        int show_desktop_icons;
        int show_toolbar;
+       int show_sidebar;
     } view;
    struct
    {
@@ -130,6 +131,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->view.show_full_path = fileman_config->view.show_full_path;
    cfdata->view.show_desktop_icons = fileman_config->view.show_desktop_icons;
    cfdata->view.show_toolbar = fileman_config->view.show_toolbar;
+   cfdata->view.show_sidebar = fileman_config->view.show_sidebar;
    cfdata->icon.icon.w = fileman_config->icon.icon.w;
    cfdata->icon.icon.h = fileman_config->icon.icon.h;
    cfdata->tooltip.delay = fileman_config->tooltip.delay;
@@ -161,6 +163,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
    fileman_config->view.show_full_path = cfdata->view.show_full_path;
    fileman_config->view.show_desktop_icons = cfdata->view.show_desktop_icons;
    fileman_config->view.show_toolbar = cfdata->view.show_toolbar;
+   fileman_config->view.show_sidebar = cfdata->view.show_sidebar;
    fileman_config->icon.extension.show = cfdata->icon.extension.show;
 
    fileman_config->selection.windows_modifiers = cfdata->selection.windows_modifiers;
@@ -202,6 +205,7 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->view.show_full_path != cfdata->view.show_full_path) ||
      (fileman_config->view.show_desktop_icons != cfdata->view.show_desktop_icons) ||
      (fileman_config->view.show_toolbar != cfdata->view.show_toolbar) ||
+     (fileman_config->view.show_sidebar != cfdata->view.show_sidebar) ||
      (fileman_config->icon.extension.show != cfdata->icon.extension.show) ||
      (fileman_config->selection.windows_modifiers != cfdata->selection.windows_modifiers) ||
      (fileman_config->icon.icon.w != cfdata->icon.icon.w) ||
@@ -296,6 +300,9 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Show Toolbar"),
                            &(cfdata->view.show_toolbar));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Show Sidebar"),
+                           &(cfdata->view.show_sidebar));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);

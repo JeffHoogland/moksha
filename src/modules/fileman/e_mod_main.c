@@ -631,6 +631,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, view.show_full_path, UCHAR);
    E_CONFIG_VAL(D, T, view.show_desktop_icons, UCHAR);
    E_CONFIG_VAL(D, T, view.show_toolbar, UCHAR);
+   E_CONFIG_VAL(D, T, view.show_sidebar, UCHAR);
    E_CONFIG_VAL(D, T, icon.icon.w, INT);
    E_CONFIG_VAL(D, T, icon.icon.h, INT);
    E_CONFIG_VAL(D, T, icon.list.w, INT);
@@ -724,6 +725,10 @@ _e_mod_fileman_config_load(void)
 
     IFMODCFG(0x0106);
     fileman_config->view.desktop_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
+    IFMODCFGEND;
+
+    IFMODCFG(0x0107);
+    fileman_config->view.show_sidebar = 1;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
