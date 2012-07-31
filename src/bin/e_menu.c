@@ -481,6 +481,12 @@ e_menu_title_set(E_Menu *m, char *title)
    if (title) m->header.title = eina_stringshare_add(title);
    else m->header.title = NULL;
    m->changed = 1;
+   edje_object_part_text_set(m->bg_object, "e.text.title", m->header.title);
+   if (m->header.title)
+     edje_object_signal_emit(m->bg_object, "e,action,show,title", "e");
+   else
+     edje_object_signal_emit(m->bg_object, "e,action,hide,title", "e");
+   edje_object_message_signal_process(m->bg_object);
 }
 
 EAPI void
