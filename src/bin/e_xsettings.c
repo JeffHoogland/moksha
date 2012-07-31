@@ -547,6 +547,7 @@ _e_xsettings_idler_cb(void *d)
      }
    if (type < 4) return ECORE_CALLBACK_RENEW;
    xsettings_idler = NULL;
+   type = 0;
    return ECORE_CALLBACK_CANCEL;
 }
 
