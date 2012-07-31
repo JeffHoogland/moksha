@@ -24,7 +24,6 @@ typedef struct _Match_Config
 
 struct _E_Config_Dialog_Data
 {
-   int         use_shadow;
    int         engine;
    int         indirect;
    int         texture_from_pixmap;
@@ -76,6 +75,11 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
                                           E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data(E_Config_Dialog *cfd,
                                       E_Config_Dialog_Data *cfdata);
+static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd,
+                                          Evas *evas,
+                                          E_Config_Dialog_Data *cfdata);
+static int          _advanced_apply_data(E_Config_Dialog *cfd,
+                                      E_Config_Dialog_Data *cfdata);
 
 E_Config_Dialog *
 e_int_config_comp_module(E_Container *con,
@@ -93,7 +97,9 @@ e_int_config_comp_module(E_Container *con,
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
-
+   v->advanced.apply_cfdata = _advanced_apply_data;
+   v->advanced.create_widgets = _advanced_create_widgets;
+   
    snprintf(buf, sizeof(buf), "%s/e-module-comp.edj",
             e_module_dir_get(mod->module));
    cfd = e_config_dialog_new(con, _("Composite Settings"),
@@ -124,7 +130,6 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
 
-   cfdata->use_shadow = _comp_mod->conf->use_shadow;
    cfdata->engine = _comp_mod->conf->engine;
    if ((cfdata->engine != ENGINE_SW) &&
        (cfdata->engine != ENGINE_GL))
@@ -233,28 +238,6 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
    free(cfdata);
 }
 
-static void
-_shadow_changed(void *data,
-                Evas_Object *obj,
-                void *event_info __UNUSED__)
-{
-   E_Config_Dialog_Data *cfdata = data;
-   Evas_Object *orec0;
-   Eina_List *style_list;
-   const E_Demo_Style_Item *it;
-   const Eina_List *l;
-
-   orec0 = evas_object_name_find(evas_object_evas_get(obj), "style_shadows");
-   style_list = evas_object_data_get(orec0, "list");
-   EINA_LIST_FOREACH(style_list, l, it)
-     {
-        if (cfdata->use_shadow)
-          edje_object_signal_emit(it->preview, "e,state,shadow,on", "e");
-        else
-          edje_object_signal_emit(it->preview, "e,state,shadow,off", "e");
-     }
-}
-
 static Eina_Bool
 _style_demo(void *data)
 {
@@ -347,7 +330,6 @@ _style_selector_del(void *data       __UNUSED__,
 
 static Evas_Object *
 _style_selector(Evas *evas,
-                int use_shadow,
                 const char **source)
 {
    Evas_Object *oi, *ob, *oo, *obd, *orec, *oly, *orec0;
@@ -390,7 +372,7 @@ _style_selector(Evas *evas,
         e_layout_pack(oly, oo);
         e_layout_child_move(oo, 39, 39);
         e_layout_child_resize(oo, 162, 162);
-        if (use_shadow) edje_object_signal_emit(oo, "e,state,shadow,on", "e");
+        edje_object_signal_emit(oo, "e,state,shadow,on", "e");
         edje_object_signal_emit(oo, "e,state,visible,on", "e");
         evas_object_show(oo);
 
@@ -622,7 +604,7 @@ _edit_ok(void *d1,
          void *d2)
 {
    Match_Config *m = d1;
-   Evas_Object *dia, *bg, *of = d2;
+  Evas_Object *dia, *bg, *of = d2;
    Evas_Object *il;
    char *label;
    int n;
@@ -925,7 +907,7 @@ _create_edit_frame(E_Config_Dialog *cfd,
    e_widget_toolbook_page_append(tb, NULL, _("Flags"), tab2,
                                  1, 1, 1, 1, 0.5, 0.0);
 
-   oi = _style_selector(evas, cfdata->use_shadow, &(m->match.shadow_style));
+   oi = _style_selector(evas, &(m->match.shadow_style));
    e_widget_toolbook_page_append(tb, NULL, _("Style"), oi,
                                  1, 1, 1, 1, 0.5, 0.0);
 
@@ -1131,7 +1113,7 @@ _create_styles_toolbook(E_Config_Dialog *cfd,
 
    tb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
 
-   oi = _style_selector(evas, cfdata->use_shadow, &(cfdata->shadow_style));
+   oi = _style_selector(evas, &(cfdata->shadow_style));
    e_widget_toolbook_page_append(tb, NULL, _("Default"), oi, 1, 1, 1, 1, 0.5, 0.0);
 
    oi = _create_match_editor(cfd, evas, cfdata, &(cfdata->match.borders), &il);
@@ -1156,11 +1138,11 @@ _create_styles_toolbook(E_Config_Dialog *cfd,
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd,
-                      Evas *evas,
-                      E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd,
+                         Evas *evas,
+                         E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *ob, *ol, *ol2, *of, *otb, *oi, *orec0, *tab;
+   Evas_Object *ob,*ol, *ol2, *of, *otb, *oi, *orec0, *tab;
    E_Radio_Group *rg;
 
    orec0 = evas_object_rectangle_add(evas);
@@ -1173,9 +1155,6 @@ _basic_create_widgets(E_Config_Dialog *cfd,
 
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
-   ob = e_widget_check_add(evas, _("Shadows"), &(cfdata->use_shadow));
-   evas_object_smart_callback_add(ob, "changed", _shadow_changed, cfdata);
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_check_add(evas, _("Smooth scaling"), &(cfdata->smooth_windows));
@@ -1205,6 +1184,7 @@ _basic_create_widgets(E_Config_Dialog *cfd,
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Sync"), ol, 0, 0, 0, 0, 0.5, 0.0);
 
+   ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->engine));
    ob = e_widget_radio_add(evas, _("Software"), ENGINE_SW, rg);
@@ -1220,8 +1200,6 @@ _basic_create_widgets(E_Config_Dialog *cfd,
              e_widget_framelist_content_align_set(of, 0.5, 0.0);
              ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
              e_widget_framelist_object_append(of, ob);
-             ob = e_widget_label_add(evas, _("Ctrl+Alt+Shift+Home resets compositor"));
-             e_widget_framelist_object_append(of, ob);
              ob = e_widget_check_add(evas, _("Indirect OpenGL (EXPERIMENTAL)"), &(cfdata->indirect));
              e_widget_framelist_object_append(of, ob);
              e_widget_list_object_append(ol, of, 1, 1, 0.5);
@@ -1235,7 +1213,7 @@ _basic_create_widgets(E_Config_Dialog *cfd,
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Send dump"), &(cfdata->send_dump));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Don't composite fullscreen"), &(cfdata->nocomp_fs));
+   ob = e_widget_check_add(evas, _("Don't composite fullscreen windows"), &(cfdata->nocomp_fs));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Keep hidden windows"), &(cfdata->keep_unmapped));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
@@ -1372,11 +1350,10 @@ _match_dup2(Match_Config *m2,
 }
 
 static int
-_basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
-                  E_Config_Dialog_Data *cfdata)
+_advanced_apply_data(E_Config_Dialog *cfd  __UNUSED__,
+                     E_Config_Dialog_Data *cfdata)
 {
-   if ((cfdata->use_shadow != _comp_mod->conf->use_shadow) ||
-       (cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
+   if ((cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
        (cfdata->smooth_windows != _comp_mod->conf->smooth_windows) ||
        (cfdata->grab != _comp_mod->conf->grab) ||
        (cfdata->keep_unmapped != _comp_mod->conf->keep_unmapped) ||
@@ -1440,7 +1417,184 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
                }
              cfdata->match.changed = 0;
           }
-        _comp_mod->conf->use_shadow = cfdata->use_shadow;
+        _comp_mod->conf->lock_fps = cfdata->lock_fps;
+        _comp_mod->conf->smooth_windows = cfdata->smooth_windows;
+        _comp_mod->conf->grab = cfdata->grab;
+        _comp_mod->conf->keep_unmapped = cfdata->keep_unmapped;
+        _comp_mod->conf->nocomp_fs = cfdata->nocomp_fs;
+        _comp_mod->conf->max_unmapped_pixels = cfdata->max_unmapped_pixels;
+        _comp_mod->conf->max_unmapped_time = cfdata->max_unmapped_time;
+        _comp_mod->conf->min_unmapped_time = cfdata->min_unmapped_time;
+        _comp_mod->conf->send_flush = cfdata->send_flush;
+        _comp_mod->conf->send_dump = cfdata->send_dump;
+        _comp_mod->conf->fps_show = cfdata->fps_show;
+        _comp_mod->conf->fps_corner = cfdata->fps_corner;
+        _comp_mod->conf->fps_average_range = cfdata->fps_average_range;
+        _comp_mod->conf->first_draw_delay = cfdata->first_draw_delay;
+        if (_comp_mod->conf->shadow_style)
+          eina_stringshare_del(_comp_mod->conf->shadow_style);
+        _comp_mod->conf->shadow_style = NULL;
+        if (cfdata->shadow_style)
+          _comp_mod->conf->shadow_style = eina_stringshare_add(cfdata->shadow_style);
+        e_mod_comp_shadow_set();
+     }
+   if ((cfdata->engine != _comp_mod->conf->engine) ||
+       (cfdata->indirect != _comp_mod->conf->indirect) ||
+       (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap) ||
+       (cfdata->efl_sync != _comp_mod->conf->efl_sync) ||
+       (cfdata->loose_sync != _comp_mod->conf->loose_sync) ||
+       (cfdata->vsync != _comp_mod->conf->vsync))
+     {
+        E_Action *a;
+
+        _comp_mod->conf->engine = cfdata->engine;
+        _comp_mod->conf->indirect = cfdata->indirect;
+        _comp_mod->conf->texture_from_pixmap = cfdata->texture_from_pixmap;
+        _comp_mod->conf->efl_sync = cfdata->efl_sync;
+        _comp_mod->conf->loose_sync = cfdata->loose_sync;
+        _comp_mod->conf->vsync = cfdata->vsync;
+
+        a = e_action_find("restart");
+        if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+//        e_mod_comp_shutdown();
+//        e_mod_comp_init();
+     }
+   e_config_save_queue();
+   return 1;
+}
+
+static Evas_Object *
+_basic_create_widgets(E_Config_Dialog *cfd,
+                      Evas *evas,
+                      E_Config_Dialog_Data *cfdata)
+{
+   Evas_Object *ob,*ol, *ol2, *of, *otb, *oi, *orec0, *tab;
+   E_Radio_Group *rg;
+
+   orec0 = evas_object_rectangle_add(evas);
+   evas_object_name_set(orec0, "style_shadows");
+
+   tab = e_widget_table_add(evas, 0);
+   evas_object_name_set(tab, "dia_table");
+
+   otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
+
+   ///////////////////////////////////////////
+   ol = e_widget_list_add(evas, 0, 0);
+   
+   ob = e_widget_check_add(evas, _("Sync screen (VBlank)"), &(cfdata->vsync));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   
+   ob = e_widget_check_add(evas, _("Smooth scaling"), &(cfdata->smooth_windows));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+
+   ob = e_widget_check_add(evas, _("Don't composite fullscreen windows"), &(cfdata->nocomp_fs));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   
+   of = e_widget_frametable_add(evas, _("Select default style"), 0);
+   e_widget_frametable_content_align_set(of, 0.5, 0.5);
+   oi = _style_selector(evas, &(cfdata->shadow_style));
+   e_widget_frametable_object_append(of, oi, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_list_object_append(ol, of, 1, 1, 0.5);
+
+   e_widget_toolbook_page_append(otb, NULL, _("General"), ol, 1, 1, 1, 1, 0.5, 0.0);
+
+   ///////////////////////////////////////////
+   ol = e_widget_list_add(evas, 0, 0);
+   rg = e_widget_radio_group_new(&(cfdata->engine));
+   ob = e_widget_radio_add(evas, _("Software"), ENGINE_SW, rg);
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   if (!getenv("ECORE_X_NO_XLIB"))
+     {
+        if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_OPENGL_X11))
+          {
+             ob = e_widget_radio_add(evas, _("OpenGL"), ENGINE_GL, rg);
+             e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+          }
+     }
+   ob = e_widget_label_add(evas, _("To reset compositor:"));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   ob = e_widget_label_add(evas, _("Ctrl+Alt+Shift+Home"));
+   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+   
+   e_widget_toolbook_page_append(otb, NULL, _("Rendering"), ol, 0, 0, 0, 0, 0.5, 0.0);
+
+   e_widget_toolbook_page_show(otb, 0);
+
+   e_dialog_resizable_set(cfd->dia, 1);
+
+   e_widget_table_object_append(tab, otb, 0, 0, 1, 1, 1, 1, 1, 1);
+   return tab;
+}
+
+static int
+_basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
+                  E_Config_Dialog_Data *cfdata)
+{
+   if ((cfdata->lock_fps != _comp_mod->conf->lock_fps) ||
+       (cfdata->smooth_windows != _comp_mod->conf->smooth_windows) ||
+       (cfdata->grab != _comp_mod->conf->grab) ||
+       (cfdata->keep_unmapped != _comp_mod->conf->keep_unmapped) ||
+       (cfdata->nocomp_fs != _comp_mod->conf->nocomp_fs) ||
+       (cfdata->shadow_style != _comp_mod->conf->shadow_style) ||
+       (cfdata->max_unmapped_pixels != _comp_mod->conf->max_unmapped_pixels) ||
+       (cfdata->max_unmapped_time != _comp_mod->conf->max_unmapped_time) ||
+       (cfdata->min_unmapped_time != _comp_mod->conf->min_unmapped_time) ||
+       (cfdata->send_flush != _comp_mod->conf->send_flush) ||
+       (cfdata->send_dump != _comp_mod->conf->send_dump) ||
+       (cfdata->fps_show != _comp_mod->conf->fps_show) ||
+       (cfdata->fps_corner != _comp_mod->conf->fps_corner) ||
+       (cfdata->fps_average_range != _comp_mod->conf->fps_average_range) ||
+       (cfdata->first_draw_delay != _comp_mod->conf->first_draw_delay) ||
+       (cfdata->match.changed)
+       )
+     {
+        if (cfdata->match.changed)
+          {
+             Eina_List *l;
+             Match *m;
+             Match_Config *m2;
+
+             _match_list_free(_comp_mod->conf->match.popups);
+             _match_list_free(_comp_mod->conf->match.borders);
+             _match_list_free(_comp_mod->conf->match.overrides);
+             _match_list_free(_comp_mod->conf->match.menus);
+
+             _comp_mod->conf->match.popups = NULL;
+             _comp_mod->conf->match.borders = NULL;
+             _comp_mod->conf->match.overrides = NULL;
+             _comp_mod->conf->match.menus = NULL;
+
+             EINA_LIST_FOREACH(cfdata->match.popups, l, m2)
+               {
+                  m = E_NEW(Match, 1);
+                  _match_dup2(m2, m);
+                  _comp_mod->conf->match.popups =
+                    eina_list_append(_comp_mod->conf->match.popups, m);
+               }
+             EINA_LIST_FOREACH(cfdata->match.borders, l, m2)
+               {
+                  m = E_NEW(Match, 1);
+                  _match_dup2(m2, m);
+                  _comp_mod->conf->match.borders =
+                    eina_list_append(_comp_mod->conf->match.borders, m);
+               }
+             EINA_LIST_FOREACH(cfdata->match.overrides, l, m2)
+               {
+                  m = E_NEW(Match, 1);
+                  _match_dup2(m2, m);
+                  _comp_mod->conf->match.overrides =
+                    eina_list_append(_comp_mod->conf->match.overrides, m);
+               }
+             EINA_LIST_FOREACH(cfdata->match.menus, l, m2)
+               {
+                  m = E_NEW(Match, 1);
+                  _match_dup2(m2, m);
+                  _comp_mod->conf->match.menus =
+                    eina_list_append(_comp_mod->conf->match.menus, m);
+               }
+             cfdata->match.changed = 0;
+          }
         _comp_mod->conf->lock_fps = cfdata->lock_fps;
         _comp_mod->conf->smooth_windows = cfdata->smooth_windows;
         _comp_mod->conf->grab = cfdata->grab;

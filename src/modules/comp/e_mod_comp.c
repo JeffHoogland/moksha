@@ -1579,13 +1579,6 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
                                        "base/theme/borders",
                                        "e/comp/none");
      }
-   // use different shadow objects/group per window type?
-   if (!ok)
-     {
-        if (_comp_mod->conf->shadow_file)
-          ok = edje_object_file_set(cw->shobj, _comp_mod->conf->shadow_file,
-                                    "shadow");
-     }
    if (!ok)
      {
         if (_comp_mod->conf->shadow_style)
@@ -1599,18 +1592,9 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
           ok = e_theme_edje_object_set(cw->shobj, "base/theme/borders",
                                        "e/comp/default");
      }
-   if (!ok) // fallback to local shadow.edj - will go when default theme supports this
-     {
-        snprintf(buf, sizeof(buf), "%s/shadow.edj",
-                 e_module_dir_get(_comp_mod->module));
-        ok = edje_object_file_set(cw->shobj, buf, "shadow");
-     }
    edje_object_part_swallow(cw->shobj, "e.swallow.content", cw->obj);
-   if (!_comp_mod->conf->use_shadow
-       || (cw->bd && cw->bd->client.e.state.video))
-     {
-        edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
-     }
+   if (cw->bd && cw->bd->client.e.state.video)
+     edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
    else
      {
         if (_e_mod_comp_win_do_shadow(cw))

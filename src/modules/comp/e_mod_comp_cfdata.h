@@ -6,7 +6,6 @@ typedef struct _Match  Match;
 
 struct _Config
 {
-   const char   *shadow_file;
    const char   *shadow_style;
    int           engine;
    int           max_unmapped_pixels;
@@ -15,7 +14,6 @@ struct _Config
    int           fps_average_range;
    unsigned char fps_corner;
    unsigned char fps_show;
-   unsigned char use_shadow;
    unsigned char indirect;
    unsigned char texture_from_pixmap;
    unsigned char lock_fps;

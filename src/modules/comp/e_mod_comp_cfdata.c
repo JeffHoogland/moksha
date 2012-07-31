@@ -30,7 +30,6 @@ e_mod_comp_cfdata_edd_init(E_Config_DD **conf_edd, E_Config_DD **match_edd)
 #undef D
 #define T Config
 #define D *conf_edd
-   E_CONFIG_VAL(D, T, shadow_file, STR);
    E_CONFIG_VAL(D, T, shadow_style, STR);
    E_CONFIG_VAL(D, T, engine, INT);
    E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
@@ -39,7 +38,6 @@ e_mod_comp_cfdata_edd_init(E_Config_DD **conf_edd, E_Config_DD **match_edd)
    E_CONFIG_VAL(D, T, fps_average_range, INT);
    E_CONFIG_VAL(D, T, fps_corner, UCHAR);
    E_CONFIG_VAL(D, T, fps_show, UCHAR);
-   E_CONFIG_VAL(D, T, use_shadow, UCHAR);
    E_CONFIG_VAL(D, T, indirect, UCHAR);
    E_CONFIG_VAL(D, T, texture_from_pixmap, UCHAR);
    E_CONFIG_VAL(D, T, lock_fps, UCHAR);
@@ -66,7 +64,6 @@ e_mod_comp_cfdata_config_new(void)
    Match *mat;
 
    cfg = E_NEW(Config, 1);
-   cfg->shadow_file = NULL;
    cfg->shadow_style = eina_stringshare_add("default");
    cfg->engine = ENGINE_SW;
    cfg->max_unmapped_pixels = 32 * 1024;  // implement
@@ -75,7 +72,6 @@ e_mod_comp_cfdata_config_new(void)
    cfg->fps_average_range = 30;
    cfg->fps_corner = 0;
    cfg->fps_show = 0;
-   cfg->use_shadow = 1;
    cfg->indirect = 0;
    cfg->texture_from_pixmap = 1;
    cfg->lock_fps = 1;
@@ -159,7 +155,6 @@ _match_list_free(Eina_List *list)
 EAPI void
 e_mod_cfdata_config_free(Config *cfg)
 {
-   if (cfg->shadow_file) eina_stringshare_del(cfg->shadow_file);
    if (cfg->shadow_style) eina_stringshare_del(cfg->shadow_style);
 
    _match_list_free(cfg->match.popups);
