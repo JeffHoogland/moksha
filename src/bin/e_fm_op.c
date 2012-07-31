@@ -47,7 +47,7 @@ void *alloca(size_t);
 #define COPYBUFSIZE     16384
 #define REMOVECHUNKSIZE 4096
 
-#define FREE(p)           do { if (p) {free((void *)p); p = NULL; } } while (0)
+#define E_FREE(p) do { free(p); p = NULL; } while (0)
 
 #define LG(fmt, args ...) {           \
      FILE *f = fopen("log", "a");     \
@@ -196,7 +196,7 @@ main(int argc, char **argv)
              last_len = strlen(argv[last]);
              if ((last_len < 1) || (last_len + 2 >= PATH_MAX))
                {
-                  free(p2);
+                  E_FREE(p2);
                   goto quit;
                }
              memcpy(buf, argv[last], last_len);
@@ -259,10 +259,10 @@ main(int argc, char **argv)
                     }
 
 skip_arg:
-                  free(p);
+                  E_FREE(p);
                }
 
-             free(p2);
+             E_FREE(p2);
           }
         else if (argc == 4)
           {
@@ -273,8 +273,8 @@ skip_arg:
 
              /* Don't move a file on top of itself. */
              i = (strcmp(p, p2) == 0);
-             free(p);
-             free(p2);
+             E_FREE(p);
+             E_FREE(p2);
              if (i) goto quit;
 
              /* Try a rename */
@@ -329,7 +329,7 @@ quit:
    eina_shutdown();
    ecore_shutdown();
 
-   free(_e_fm_op_stdin_buffer);
+   E_FREE(_e_fm_op_stdin_buffer);
 
    E_FM_OP_DEBUG("Slave quit.\n");
 
@@ -378,9 +378,9 @@ _e_fm_op_task_free(void *t)
              if (data->from) fclose(data->from);
              if (data->to) fclose(data->to);
           }
-        FREE(task->data);
+        E_FREE(task->data);
      }
-   FREE(task);
+   E_FREE(task);
 }
 
 /* Removes link task from work queue.
@@ -927,7 +927,7 @@ _e_fm_op_rollback(E_Fm_Op_Task *task)
                   data->to = NULL;
                }
           }
-        FREE(task->data);
+        E_FREE(task->data);
      }
 
    if (task->type == E_FM_OP_COPY)
@@ -1186,7 +1186,7 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
              else
                _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
           }
-        free(lnk_path);
+        E_FREE(lnk_path);
      }
    task->dst.done += task->src.st.st_size;
 
@@ -1286,7 +1286,7 @@ _e_fm_op_copy_chunk(E_Fm_Op_Task *task)
 
         _e_fm_op_copy_stat_info(task);
 
-        FREE(task->data);
+        E_FREE(task->data);
 
         task->finished = 1;
 
@@ -1368,7 +1368,7 @@ _e_fm_op_copy_atom(E_Fm_Op_Task *task)
                        snprintf(dst_path, sizeof(dst_path), "%s/%s", dst_dir, dst_name);
                        task->dst.name = strdup(dst_path);
                     }
-                  free(dst_dir);
+                  E_FREE(dst_dir);
                }
           }
 
