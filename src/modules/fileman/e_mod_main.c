@@ -18,6 +18,7 @@ static void _e_mod_menu_volume_cb(void        *data,
                                   E_Menu_Item *mi);
 static void      _e_mod_main_menu_cb(E_Menu *m, void *category_data, void *data);
 static void      _e_mod_menu_populate(void *d __UNUSED__, E_Menu *m);
+static void      _e_mod_menu_cleanup_cb(void *obj);
 static void      _e_mod_menu_add(void   *data,
                                  E_Menu *m);
 static void      _e_mod_fileman_config_load(void);
@@ -262,7 +263,6 @@ _e_mod_menu_gtk_cb(void           *data,
 
    if (!(path = data)) return;
    if (m->zone) e_fwin_new(m->zone->container, NULL, path);
-   eina_stringshare_del(path);
 }
 
 static void
@@ -325,6 +325,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
                {
                   if (ecore_file_exists(uri->path))
                     {
+                       E_Menu *sub;
                        if (need_separator)
                          {
                             mi = e_menu_item_new(m);
@@ -333,11 +334,17 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
                          }
 
                        mi = e_menu_item_new(m);
+                       e_object_data_set(E_OBJECT(mi), uri->path);
                        e_menu_item_label_set(mi, alias ? alias :
                                              ecore_file_file_get(uri->path));
                        e_util_menu_item_theme_icon_set(mi, "folder");
                        e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
                                                 (void *)eina_stringshare_add(uri->path));
+                       sub = e_menu_new();
+                       e_object_data_set(E_OBJECT(sub), eina_stringshare_add("/"));
+                       e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
+                       e_menu_item_submenu_set(mi, sub);
+                       e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
                     }
                }
              if (uri) efreet_uri_free(uri);
@@ -548,9 +555,6 @@ _e_mod_menu_generate(void *data __UNUSED__,
         e_menu_item_label_set(mi, vol->label);
         e_util_menu_item_theme_icon_set(mi, vol->icon);
         e_menu_item_callback_set(mi, _e_mod_menu_volume_cb, vol);
-        sub = e_menu_new();
-        e_menu_item_submenu_set(mi, sub);
-        e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
         volumes_visible = 1;
      }
 
