@@ -51,18 +51,18 @@ static Eina_Bool running = EINA_FALSE;
 static Eio_File *eio_op = NULL;
 static Eina_Bool setting = EINA_FALSE;
 static Eina_Bool reset = EINA_FALSE;
-static Ecore_Idle_Enterer *xsettings_idler = NULL;
 static const char _setting_icon_theme_name[] = "Net/IconThemeName";
 static const char _setting_theme_name[]      = "Net/ThemeName";
 static const char _setting_font_name[]       = "Gtk/FontName";
 static const char _setting_xft_dpi[]         = "Xft/DPI";
-static char *_setting_theme = NULL;
+static const char *_setting_theme = NULL;
+
 static void _e_xsettings_done_cb(void *data, Eio_File *handler, const Eina_Stat *stat);
 
 static Ecore_X_Atom
 _e_xsettings_atom_screen_get(int screen_num)
 {
-   char buf[64];
+   char buf[32];
    snprintf(buf, sizeof(buf), "_XSETTINGS_S%d", screen_num);
    return ecore_x_atom_get(buf);
 }
@@ -128,6 +128,9 @@ _e_xsettings_activate(Settings_Manager *sm)
                                  ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
                                  ecore_x_current_time_get(), atom,
                                  sm->selection, 0, 0);
+
+   _e_xsettings_apply(sm);
+
    return 1;
 }
 
@@ -414,7 +417,7 @@ _e_xsettings_error_cb(void *data, Eio_File *handler __UNUSED__, int error __UNUS
      }
    eio_op = NULL;
    setting = EINA_FALSE;
-   E_FREE(_setting_theme);
+   _setting_theme = NULL;
 
    if (e_config->xsettings.net_theme_name)
      {
@@ -427,7 +430,7 @@ _e_xsettings_error_cb(void *data, Eio_File *handler __UNUSED__, int error __UNUS
 }
 
 static void
-_e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const Eina_Stat *st __UNUSED__)
+_e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const Eina_Stat *stat __UNUSED__)
 {
    Eina_List *l;
    Settings_Manager *sm;
@@ -438,10 +441,9 @@ _e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const 
         return;
      }
    _e_xsettings_string_set(_setting_theme_name, _setting_theme);
-   E_FREE(_setting_theme);
+   _setting_theme = NULL;
    eio_op = NULL;
    setting = EINA_FALSE;
-   if (xsettings_idler) return;
    EINA_LIST_FOREACH(managers, l, sm)
      _e_xsettings_apply(sm);
 }
@@ -521,64 +523,23 @@ _e_xsettings_xft_set(void)
 }
 #endif
 
-static Eina_Bool
-_e_xsettings_idler_cb(void *d)
-{
-   static int type;
-   double loop, frame;
-
-   if (d)
-     {
-        /* reset */
-        type = 0;
-        return ECORE_CALLBACK_RENEW;
-     }
-   frame = ecore_animator_frametime_get();
-   loop = ecore_loop_time_get();
-   for (; (type < 4) && (ecore_loop_time_get() - loop < frame); type++)
-     {
-        switch (type)
-          {
-             case 0:
-               _e_xsettings_theme_set();
-               break;
-             case 1:
-               _e_xsettings_icon_theme_set();
-               break;
-             case 2:
-               _e_xsettings_font_set();
-               break;
-             case 3:
-               _e_xsettings_update();
-             default:
-               break;
-          }
-     }
-   if (type < 4) return ECORE_CALLBACK_RENEW;
-   xsettings_idler = NULL;
-   return ECORE_CALLBACK_CANCEL;
-}
-
-static Eina_Bool
-_e_xsettings_idler_start(void *d __UNUSED__)
-{
-   if (xsettings_idler)
-     _e_xsettings_idler_cb((void*)1);
-   else
-     xsettings_idler = ecore_idle_enterer_add(_e_xsettings_idler_cb, NULL);
-   return ECORE_CALLBACK_CANCEL;
-}
-
 static void
 _e_xsettings_start(void)
 {
    Eina_List *l;
    E_Manager *man;
+
    if (running) return;
+
+   _e_xsettings_theme_set();
+   _e_xsettings_icon_theme_set();
+   _e_xsettings_font_set();
+
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
         Settings_Manager *sm = E_NEW(Settings_Manager, 1);
         sm->man = man;
+
         if (!_e_xsettings_activate(sm))
           _e_xsettings_retry(sm);
 
@@ -586,8 +547,8 @@ _e_xsettings_start(void)
      }
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME,
-                                                               _cb_icon_theme_change, NULL));
-   ecore_timer_add(2, _e_xsettings_idler_start, NULL);
+                                                                 _cb_icon_theme_change, NULL));
+
    running = EINA_TRUE;
 }
 
@@ -626,7 +587,6 @@ _e_xsettings_stop(void)
 EINTERN int
 e_xsettings_init(void)
 {
-
    _atom_manager = ecore_x_atom_get("MANAGER");
    _atom_xsettings = ecore_x_atom_get("_XSETTINGS_SETTINGS");
 
@@ -642,9 +602,7 @@ e_xsettings_shutdown(void)
    _e_xsettings_stop();
    if (eio_op) eio_file_cancel(eio_op);
    eio_op = NULL;
-   if (xsettings_idler) ecore_idle_enterer_del(xsettings_idler);
-   xsettings_idler = NULL;
-   reset = setting = EINA_FALSE;
+   setting = EINA_FALSE;
 
    return 1;
 }
@@ -661,10 +619,15 @@ e_xsettings_config_update(void)
      }
 
    if (!running)
-     _e_xsettings_start();
+     {
+        _e_xsettings_start();
+     }
    else
      {
-        _e_xsettings_idler_start(NULL);
+        _e_xsettings_theme_set();
+        _e_xsettings_icon_theme_set();
+        _e_xsettings_font_set();
+        _e_xsettings_update();
         reset = EINA_TRUE;
      }
 }
