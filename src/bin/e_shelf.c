@@ -131,11 +131,9 @@ e_shelf_zone_dummy_new(E_Zone *zone, Evas_Object *obj, int id)
    es->zone = zone;
    es->dummy = 1;
    es->o_base = obj;
+   es->cfg = E_NEW(E_Config_Shelf, 1);
+   
    e_object_del_attach_func_set(E_OBJECT(es), _e_shelf_del_cb);
-   es->gadcon = e_gadcon_dummy_new(id);
-   es->gadcon->location = 
-     e_gadcon_location_new(NULL, E_GADCON_SITE_SHELF, NULL, NULL, NULL, NULL);
-   e_gadcon_location_register(es->gadcon->location);
    dummies = eina_list_append(dummies, es);
 
    return es;
@@ -570,9 +568,9 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
    E_OBJECT_IF_NOT_TYPE(es, E_SHELF_DUMMY_TYPE)
      E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
-   e_gadcon_orient(es->gadcon, orient);
    if (!es->dummy)
      {
+        e_gadcon_orient(es->gadcon, orient);
         snprintf(buf, sizeof(buf), "e,state,orientation,%s",
                  e_shelf_orient_string_get(es));
         edje_object_signal_emit(es->o_base, buf, "e");
@@ -923,7 +921,10 @@ _e_shelf_del_cb(void *d)
 
    es = d;
    if (es->dummy)
-     dummies = eina_list_remove(dummies, es);
+     {
+        dummies = eina_list_remove(dummies, es);
+        E_FREE(es->cfg);
+     }
    else
      shelves = eina_list_remove(shelves, es);
 }

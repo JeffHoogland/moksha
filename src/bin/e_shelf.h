@@ -62,6 +62,7 @@ EAPI void             e_shelf_config_update(void);
 EAPI Eina_List       *e_shelf_list(void);
 EAPI Eina_List       *e_shelf_list_all(void); // includes dummy shelves
 EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id);
+EAPI E_Shelf         *e_shelf_zone_dummy_new(E_Zone *zone, Evas_Object *obj, int id);
 EAPI void             e_shelf_zone_move_resize_handle(E_Zone *zone);
 EAPI void             e_shelf_populate(E_Shelf *es);
 EAPI void             e_shelf_show(E_Shelf *es);
