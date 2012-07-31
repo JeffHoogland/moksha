@@ -3122,7 +3122,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
                 .desktop files or symlinks (in fact anything
               * you like
               */
-             if (!path)
+             if ((!path) || (!path[0]) || (path[0] == '/'))
                snprintf(buf, sizeof(buf), "%s",
                         efreet_desktop_dir_get());
              else
