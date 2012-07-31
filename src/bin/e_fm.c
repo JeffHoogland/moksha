@@ -3117,20 +3117,18 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
           }
         else if (strcmp(dev, "desktop") == 0)
           {
-              size_t size;
              /* this is a virtual device - it's where your favorites list is
               * stored - a dir with
                 .desktop files or symlinks (in fact anything
               * you like
               */
-             size = eina_strlcpy(buf, efreet_desktop_dir_get(), sizeof(buf));
-             if (size >= sizeof(buf)) return NULL;
+             if (!path)
+               snprintf(buf, sizeof(buf), "%s",
+                        efreet_desktop_dir_get());
+             else
+               snprintf(buf, sizeof(buf), "%s-%s", 
+                        efreet_desktop_dir_get(), path);
              ecore_file_mkpath(buf);
-             if (path)
-               {
-                  if (eina_strlcat(buf + size, path, sizeof(buf) - size) >= sizeof(buf) - size)
-                    return NULL;
-               }
           }
         else if (strcmp(dev, "temp") == 0)
           PRT("/tmp");
