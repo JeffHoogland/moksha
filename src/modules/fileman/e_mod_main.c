@@ -387,7 +387,31 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler, const Eina_File_Direct_
    e_menu_item_label_set(mi, info->path + info->name_start);
    if (info->type != EINA_FILE_DIR)
      {
-        e_util_menu_item_theme_icon_set(mi, "file");
+        const char *mime = NULL;
+        Efreet_Desktop *ed = NULL;
+        char group[1024];
+
+        if (eina_str_has_extension(mi->label, "desktop"))
+          {
+             ed = efreet_desktop_new(info->path);
+             if (ed)
+               {
+                  e_util_menu_item_theme_icon_set(mi, ed->icon);
+                  efreet_desktop_free(ed);
+                  return;
+               }
+          }
+        mime = efreet_mime_type_get(mi->label);
+        if (!mime) return;
+        if (!strncmp(mime, "image/", 6))
+          {
+             e_menu_item_icon_file_set(mi, info->path);
+             return;
+          }
+        snprintf(group, sizeof(group), "fileman/mime/%s", mime);
+        if (e_util_menu_item_theme_icon_set(mi, group))
+          return;
+        e_util_menu_item_theme_icon_set(mi, "fileman/mime/unknown");
         return;
      }
    e_util_menu_item_theme_icon_set(mi, "folder");
