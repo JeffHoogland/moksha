@@ -181,6 +181,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("fileman/fileman");
    e_configure_registry_category_del("fileman");
 
+   e_config_domain_save("module.fileman", conf_edd, fileman_config);
    _e_mod_fileman_config_free();
    E_CONFIG_DD_FREE(conf_edd);
 
@@ -611,6 +612,7 @@ _e_mod_fileman_config_load(void)
    #define D conf_edd
    E_CONFIG_VAL(D, T, config_version, INT);
    E_CONFIG_VAL(D, T, view.mode, INT);
+   E_CONFIG_VAL(D, T, view.desktop_mode, INT);
    E_CONFIG_VAL(D, T, view.open_dirs_in_place, UCHAR);
    E_CONFIG_VAL(D, T, view.selector, UCHAR);
    E_CONFIG_VAL(D, T, view.single_click, UCHAR);
@@ -711,6 +713,10 @@ _e_mod_fileman_config_load(void)
 
     IFMODCFG(0x0105);
     e_config->filemanager_single_click = fileman_config->view.single_click;
+    IFMODCFGEND;
+
+    IFMODCFG(0x0106);
+    fileman_config->view.desktop_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;

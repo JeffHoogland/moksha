@@ -362,9 +362,10 @@ e_fwin_zone_shutdown(E_Zone *zone)
    Eina_List *f, *fn;
    E_Fwin *win;
 
-   EINA_LIST_FOREACH_SAFE (fwins, f, fn, win)
+   EINA_LIST_FOREACH_SAFE(fwins, f, fn, win)
      {
         if (win->zone != zone) continue;
+        fileman_config->view.desktop_mode = e_fm2_view_mode_get(win->cur_page->fm_obj);
         e_object_del(E_OBJECT(win));
         win = NULL;
      }
@@ -1169,7 +1170,7 @@ _e_fwin_config_set(E_Fwin_Page *page)
         fmc.icon.fixed.w = 1;
         fmc.icon.fixed.h = 1;
 #else
-        fmc.view.mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
+        fmc.view.mode = fileman_config->view.desktop_mode;
         fmc.icon.icon.w = fileman_config->icon.icon.w * e_scale;
         fmc.icon.icon.h = fileman_config->icon.icon.h * e_scale;
         fmc.icon.fixed.w = 0;
