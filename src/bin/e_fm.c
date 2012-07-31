@@ -4582,7 +4582,7 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
         ic->prop_dialog = NULL;
      }
    if (ic->selected)
-     ic->sd->selected_icons = eina_list_append(ic->sd->selected_icons, ic);
+     ic->sd->selected_icons = eina_list_remove(ic->sd->selected_icons, ic);
    eina_stringshare_del(ic->info.file);
    eina_stringshare_del(ic->info.mime);
    eina_stringshare_del(ic->info.label);
