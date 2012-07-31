@@ -376,7 +376,7 @@ static Eina_Bool
 _e_mod_menu_populate_filter(void *data __UNUSED__, Eio_File *handler __UNUSED__, const Eina_File_Direct_Info *info)
 {
    /* don't show .dotfiles */
-   return info->path[info->name_start] != '.';
+   return (info->path[info->name_start] != '.') && (info->type == EINA_FILE_DIR);
 }
 
 static void
@@ -393,6 +393,7 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler, const Eina_File_Direct_
    realpath = eio_file_associate_find(handler, "realpath");
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, info->path + info->name_start);
+#if 0
    if (info->type != EINA_FILE_DIR)
      {
         const char *mime = NULL;
@@ -422,6 +423,7 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler, const Eina_File_Direct_
         e_util_menu_item_theme_icon_set(mi, "fileman/mime/unknown");
         return;
      }
+#endif
    e_util_menu_item_theme_icon_set(mi, "folder");
    e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s/%s", path ?: "/", info->path + info->name_start));
    //fprintf(stderr, "PATH SET: %s\n", e_object_data_get(E_OBJECT(mi)));
