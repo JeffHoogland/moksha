@@ -935,12 +935,9 @@ _e_shelf_free(E_Shelf *es)
    if (!es->dummy)
      _e_shelf_bindings_del(es);
 
-   e_gadcon_location_unregister(es->gadcon->location);
-   e_gadcon_location_free(es->gadcon->location);
    e_zone_useful_geometry_dirty(es->zone);
    E_FREE_LIST(es->handlers, ecore_event_handler_del);
 
-   e_object_del(E_OBJECT(es->gadcon));
    if (es->hide_timer)
      {
         ecore_timer_del(es->hide_timer);
@@ -971,6 +968,12 @@ _e_shelf_free(E_Shelf *es)
                                             (Evas_Object_Event_Cb)_e_shelf_cb_dummy_moveresize, es);
         evas_object_event_callback_del_full(es->o_base, EVAS_CALLBACK_RESIZE, 
                                             (Evas_Object_Event_Cb)_e_shelf_cb_dummy_moveresize, es);
+     }
+   else
+     {
+        e_gadcon_location_unregister(es->gadcon->location);
+        e_gadcon_location_free(es->gadcon->location);
+        e_object_del(E_OBJECT(es->gadcon));
      }
    if (es->config_dialog) e_object_del(E_OBJECT(es->config_dialog));
    eina_stringshare_del(es->name);
