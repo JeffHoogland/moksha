@@ -1170,7 +1170,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
 
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
-   ob = e_widget_check_add(evas, _("Sync screen (VBlank)"), &(cfdata->vsync));
+   ob = e_widget_check_add(evas, _("Tear-free updates (VSynced)"), &(cfdata->vsync));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Sync windows"), &(cfdata->efl_sync));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
@@ -1482,10 +1482,10 @@ _basic_create_widgets(E_Config_Dialog *cfd,
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
    
-   ob = e_widget_check_add(evas, _("Sync screen (VBlank)"), &(cfdata->vsync));
+   ob = e_widget_check_add(evas, _("Tear-free updates (VSynced)"), &(cfdata->vsync));
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    
-   ob = e_widget_check_add(evas, _("Smooth scaling"), &(cfdata->smooth_windows));
+   ob = e_widget_check_add(evas, _("Smooth scaling of window content"), &(cfdata->smooth_windows));
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_check_add(evas, _("Don't composite fullscreen windows"), &(cfdata->nocomp_fs));
