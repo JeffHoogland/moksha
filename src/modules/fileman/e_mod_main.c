@@ -454,7 +454,8 @@ _e_mod_menu_populate_done(void *data, Eio_File *handler __UNUSED__)
    if (!m->items)
      {
         e_menu_deactivate(m);
-        e_menu_item_submenu_set(m->parent_item, NULL);
+        if (m->parent_item)
+          e_menu_item_submenu_set(m->parent_item, NULL);
         return;
      }
    m->items = eina_list_sort(m->items, 0, (Eina_Compare_Cb)_e_mod_menu_populate_sort);
