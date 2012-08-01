@@ -30,6 +30,7 @@ struct _E_Menu_Category
 };
 
 /* local subsystem functions */
+static Eina_Bool   _e_menu_idler(E_Menu *m);
 static void         _e_menu_free(E_Menu *m);
 static void         _e_menu_item_free(E_Menu_Item *mi);
 static void         _e_menu_item_realize(E_Menu_Item *mi);
@@ -447,16 +448,18 @@ e_menu_thaw(E_Menu *m)
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, 0);
    m->frozen--;
    if (m->frozen < 0) m->frozen = 0;
-   if (!m->frozen)
+   if ((!m->frozen) && (m->realized))
      {
-        Eina_List *l;
         E_Menu_Item *mi;
+        Eina_List *l;
+
         evas_event_freeze(m->evas);
         e_box_freeze(m->container_object);
         EINA_LIST_FOREACH(m->items, l, mi)
           _e_menu_item_unrealize(mi);
-        EINA_LIST_FOREACH(m->items, l, mi)
-          _e_menu_item_realize(mi);
+        if (!m->idler)
+          m->idler = ecore_idler_add((Ecore_Task_Cb)_e_menu_idler, m);
+        m->idler_pos = m->items;
 
         _e_menu_items_layout_update(m);
         e_box_thaw(m->container_object);
@@ -1158,6 +1161,31 @@ e_menu_find_by_window(Ecore_X_Window win)
 }
 
 /* local subsystem functions */
+static Eina_Bool
+_e_menu_idler(E_Menu *m)
+{
+   E_Menu_Item *mi;
+   double t;
+
+   t = ecore_loop_time_get();
+   evas_event_freeze(m->evas);
+   e_box_freeze(m->container_object);
+   EINA_LIST_FOREACH(m->items, m->idler_pos, mi)
+     {
+        if (ecore_loop_time_get() - t >= 0.5 * ecore_animator_frametime_get())
+          break;
+        _e_menu_item_realize(mi);
+     }
+
+   _e_menu_items_layout_update(m);
+   e_box_thaw(m->container_object);
+   evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
+   evas_event_thaw(m->evas);
+   if (!m->idler_pos)
+     m->idler = NULL;
+   return !!m->idler_pos;
+}
+
 static void
 _e_menu_free(E_Menu *m)
 {
@@ -1519,12 +1547,13 @@ static void
 _e_menu_realize(E_Menu *m)
 {
    Evas_Object *o;
-   Eina_List *l;
    E_Menu_Item *mi;
    int ok = 0;
+   double t;
 
    if (m->realized) return;
    m->realized = 1;
+   t = ecore_loop_time_get();
    m->ecore_evas = e_canvas_new(m->zone->container->win,
                                 m->cur.x, m->cur.y, m->cur.w, m->cur.h, 1, 1,
                                 &(m->evas_win));
@@ -1596,8 +1625,14 @@ _e_menu_realize(E_Menu *m)
    e_box_homogenous_set(o, 0);
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
 
-   EINA_LIST_FOREACH(m->items, l, mi)
-     _e_menu_item_realize(mi);
+   EINA_LIST_FOREACH(m->items, m->idler_pos, mi)
+     {
+        if (ecore_loop_time_get() - t >= 0.5 * ecore_animator_frametime_get())
+          break;
+        _e_menu_item_realize(mi);
+     }
+   if (m->idler_pos)
+     m->idler = ecore_idler_add((Ecore_Task_Cb)_e_menu_idler, m);
 
    _e_menu_items_layout_update(m);
    e_box_thaw(m->container_object);
