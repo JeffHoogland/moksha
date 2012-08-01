@@ -394,7 +394,7 @@ e_widget_focus_steal(Evas_Object *obj)
    Evas_Object *parent = NULL, *o = NULL;
 
    API_ENTRY return;
-   if ((sd->focused) || (sd->disabled)) return;
+   if ((sd->focused) || (sd->disabled) || (!sd->can_focus)) return;
    parent = obj;
    for (;; )
      {
