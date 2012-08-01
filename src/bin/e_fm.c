@@ -3090,13 +3090,17 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
               * you like
               */
              if ((!path) || (!path[0]) || (!strcmp(path, "/")))
-               snprintf(buf, sizeof(buf), "%s", efreet_desktop_dir_get());
+               {
+                  snprintf(buf, sizeof(buf), "%s", efreet_desktop_dir_get());
+                  ecore_file_mkpath(buf);
+               }
              else if (path[0] == '/')
                snprintf(buf, sizeof(buf), "%s/%s", efreet_desktop_dir_get(), path);
              else
-               snprintf(buf, sizeof(buf), "%s-%s", 
-                        efreet_desktop_dir_get(), path);
-             ecore_file_mkpath(buf);
+               {
+                  snprintf(buf, sizeof(buf), "%s-%s", efreet_desktop_dir_get(), path);
+                  ecore_file_mkpath(buf);
+               }
           }
         else if (strcmp(dev, "temp") == 0)
           PRT("/tmp");
