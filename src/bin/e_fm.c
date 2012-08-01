@@ -1381,6 +1381,13 @@ e_fm2_all_list_get(Evas_Object *obj)
 }
 
 EAPI void
+e_fm2_deselect_all(Evas_Object *obj)
+{
+   EFM_SMART_CHECK();
+   _e_fm2_icon_desel_any(obj);
+}
+
+EAPI void
 e_fm2_select_set(Evas_Object *obj, const char *file, int select_)
 {
    Eina_List *l;

@@ -162,6 +162,7 @@ EAPI E_Fm2_Config    *e_fm2_config_get(Evas_Object *obj);
 EAPI Eina_List       *e_fm2_selected_list_get(Evas_Object *obj);
 EAPI Eina_List       *e_fm2_all_list_get(Evas_Object *obj);
 EAPI void             e_fm2_select_set(Evas_Object *obj, const char *file, int select);
+EAPI void             e_fm2_deselect_all(Evas_Object *obj);
 EAPI void             e_fm2_file_show(Evas_Object *obj, const char *file);
 EAPI void             e_fm2_icon_menu_replace_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data);
 EAPI void             e_fm2_icon_menu_start_extend_callback_set(Evas_Object *obj, E_Fm_Cb func, void *data);
