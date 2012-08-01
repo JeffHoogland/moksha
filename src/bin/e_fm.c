@@ -5068,16 +5068,10 @@ static E_Fm2_Icon *
 _e_fm2_icon_first_selected_find(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
-   const Eina_List *l;
-   E_Fm2_Icon *ic;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
-   EINA_LIST_FOREACH(sd->icons, l, ic)
-     {
-        if (ic->selected) return ic;
-     }
-   return NULL;
+   return eina_list_data_get(sd->selected_icons);
 }
 
 static void
