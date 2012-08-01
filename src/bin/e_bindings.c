@@ -1081,7 +1081,8 @@ e_bindings_acpi_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Acpi
 static Eina_Bool
 _e_bindings_mapping_change_event_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-//  Ecore_X_Event_Mapping_Change *ev = event;
+  Ecore_X_Event_Mapping_Change *ev = event;
+  fprintf(stderr, "MAPPING CHANGE: type: %d || keycode: %d || num: %d\n", ev->type, ev->keycode, ev->num);
   e_managers_keys_ungrab();
   e_border_button_bindings_ungrab_all();
   e_border_button_bindings_grab_all();
