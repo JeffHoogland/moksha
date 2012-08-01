@@ -5055,15 +5055,13 @@ static void
 _e_fm2_icon_desel_any(Evas_Object *obj)
 {
    E_Fm2_Smart_Data *sd;
-   const Eina_List *l;
+   Eina_List *l, *ll;
    E_Fm2_Icon *ic;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   EINA_LIST_FOREACH(sd->icons, l, ic)
-     {
-        if (ic->selected) _e_fm2_icon_deselect(ic);
-     }
+   EINA_LIST_FOREACH_SAFE(sd->selected_icons, l, ll, ic)
+     _e_fm2_icon_deselect(ic);
 }
 
 static E_Fm2_Icon *
