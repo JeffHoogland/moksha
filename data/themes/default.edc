@@ -39913,11 +39913,11 @@ collections {
 	 }
 	 part {
 	 name: "event";
+  type: SPACER;
 	 mouse_events: 1;
 	 repeat_events: 1;
 	    description {
 	    state: "default" 0.0;
-	    color: 0 0 0 0;
 	    }
 	 }
       }
