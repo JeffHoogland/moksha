@@ -138,6 +138,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_show(inst->o_base);
 
    inst->o_scroll = e_scrollframe_add(gc->evas);
+   evas_object_repeat_events_set(inst->o_scroll, EINA_TRUE);
    e_scrollframe_custom_theme_set(inst->o_scroll,
                                   "base/theme/modules/efm_navigation",
                                   "modules/efm_navigation/pathbar_scrollframe");
@@ -149,6 +150,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_show(inst->o_scroll);
 
    inst->o_box = e_box_add(gc->evas);
+   evas_object_repeat_events_set(inst->o_box, EINA_TRUE);
    e_box_orientation_set(inst->o_box, 1);
    e_box_homogenous_set(inst->o_box, 0);
    e_scrollframe_child_set(inst->o_scroll, inst->o_box);
