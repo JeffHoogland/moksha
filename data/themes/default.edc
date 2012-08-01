@@ -39764,7 +39764,7 @@ collections {
 	    rel1.to_x: "favorites_bg";
 	    rel1.relative: 1.0 0.0;
 	    rel1.offset: 10 0;
-	    rel2.offset: -40 -1;
+	    rel2.offset: -2 -1;
 	    color: 200 0 0 200;
 	    }
 	 }
