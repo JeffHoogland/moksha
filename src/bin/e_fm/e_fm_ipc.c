@@ -1087,7 +1087,7 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
 //   printf("MOD %s %3.3f\n", path, ecore_time_unix_get());
    lnk = ecore_file_readlink(path);
    memset(&st, 0, sizeof(struct stat));
-   if (stat(path, &st) == -1)
+   if (stat((lnk && lnk[0]) ? lnk : path, &st) == -1)
      {
         if ((path[0] == 0) || (lnk)) broken_lnk = 1;
         else return;

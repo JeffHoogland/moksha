@@ -174,6 +174,7 @@ struct _E_Fm2_Icon
    E_Menu           *menu;
    E_Entry_Dialog   *entry_dialog;
    Evas_Object      *entry_widget;
+   Eio_File        *eio;
    Ecore_X_Window  keygrab;
    E_Config_Dialog  *prop_dialog;
    E_Dialog         *dialog;
@@ -2397,7 +2398,6 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, 
    args = _e_fm_string_append_quoted(args, &size, &length, dest);
    if (!args) return 0;
 
-   WRN("using new E_FM_OP_SYMLINK, remove deprecated ASAP");
    r = _e_fm_client_file_symlink(args, e_fm);
    free(args);
    return r;
@@ -3379,7 +3379,7 @@ _e_fm2_file_paste(Evas_Object *obj)
       if (eina_list_count(sd->selected_icons) == 1)
         {
            ic = eina_list_data_get(sd->selected_icons);
-           if (!S_ISDIR(ic->info.statinfo.st_mode)) ic = NULL;
+           if (ic->info.link || (!S_ISDIR(ic->info.statinfo.st_mode))) ic = NULL;
         }
       if (ic)
         {
@@ -4347,7 +4347,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
      ic->info.real_link = NULL;
    ic->info.broken_link = finf->broken_link;
 
-   if (S_ISDIR(ic->info.statinfo.st_mode))
+   if ((!ic->info.link) && (S_ISDIR(ic->info.statinfo.st_mode)))
      {
         ic->info.mime = eina_stringshare_ref(_e_fm2_mime_inode_directory);
      }
@@ -4667,8 +4667,7 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
         edje_object_part_text_set(obj, "e.text.label", ic->info.label);
         return;
      }
-   if ((ic->sd->config->icon.extension.show) ||
-       (S_ISDIR(ic->info.statinfo.st_mode)))
+   if ((ic->sd->config->icon.extension.show) || ((!ic->info.link) && (S_ISDIR(ic->info.statinfo.st_mode))))
      edje_object_part_text_set(obj, "e.text.label", ic->info.file);
    else
      {
@@ -4801,6 +4800,36 @@ _e_fm2_icon_desktop_url_eval(const char *val)
    return s;
 }
 
+static void
+_e_fm2_cb_eio_stat(void *data, Eio_File *handler __UNUSED__, const Eina_Stat *stat)
+{
+   E_Fm2_Icon *ic = data;
+   ic->eio = NULL;
+#define FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(member) \
+   ic->info.statinfo.st_##member = stat->member
+
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(dev);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(ino);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(mode);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(nlink);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(uid);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(gid);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(rdev);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(size);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(blksize);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(blocks);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(atime);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(mtime);
+   FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(ctime);
+}
+
+static void
+_e_fm2_cb_eio_err(void *data, Eio_File *handler __UNUSED__, int error __UNUSED__)
+{
+   E_Fm2_Icon *ic = data;
+   ic->eio = NULL;
+}
+
 static int
 _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
 {
@@ -4823,6 +4852,11 @@ _e_fm2_icon_desktop_load(E_Fm2_Icon *ic)
    ic->info.icon = eina_stringshare_add(desktop->icon);
    if (desktop->url)
      ic->info.link = _e_fm2_icon_desktop_url_eval(desktop->url);
+   if (ic->info.link)
+     {
+        if (!ic->eio)
+          ic->eio = eio_file_direct_stat(ic->info.link, _e_fm2_cb_eio_stat, _e_fm2_cb_eio_err, ic);
+     }
    if (desktop->x)
      {
         const char *type;
@@ -5436,9 +5470,10 @@ _e_fm2_inplace_open(const E_Fm2_Icon *ic)
 {
    char buf[PATH_MAX];
 
-   if (!((S_ISDIR(ic->info.statinfo.st_mode)) &&
-         (ic->sd->config->view.open_dirs_in_place) &&
-         (!ic->sd->config->view.no_subdir_jump)))
+   if (((!S_ISDIR(ic->info.statinfo.st_mode)) ||
+         (ic->info.link) ||
+         (!ic->sd->config->view.open_dirs_in_place) ||
+         (ic->sd->config->view.no_subdir_jump)))
      return 0;
 
    if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
@@ -5889,14 +5924,17 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    E_Event_Dnd_Move *ev;
    E_Fm2_Icon *ic;
    Eina_List *l;
+   int dx, dy;
 
    sd = data;
    if (type != _e_fm2_mime_text_uri_list) return;
    ev = (E_Event_Dnd_Move *)event;
+   dx = ev->x - sd->x;
+   dy = ev->y - sd->y;
    e_drop_handler_action_set(ev->action);
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
-        if (E_INSIDE(ev->x, ev->y, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h))
+        if (E_INSIDE(dx, dy, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h))
           {
              if (ic->drag.dnd) continue;
              /* if list view */
@@ -5911,11 +5949,11 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
                          {
                             /* if bottom 25% or top 25% then insert between prev or next */
                             /* if in middle 50% then put in dir */
-                            if (ev->y <= (ic->y - ic->sd->pos.y + (ic->h / 4)))
+                            if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 4)))
                               {
                                  _e_fm2_dnd_drop_show(ic, 0);
                               }
-                            else if (ev->y > (ic->y - ic->sd->pos.y + ((ic->h * 3) / 4)))
+                            else if (dy > (ic->y - ic->sd->pos.y + ((ic->h * 3) / 4)))
                               {
                                  _e_fm2_dnd_drop_show(ic, 1);
                               }
@@ -5927,7 +5965,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
                        else
                          {
                             /* if top 50% or bottom 50% then insert between prev or next */
-                            if (ev->y <= (ic->y - ic->sd->pos.y + (ic->h / 2)))
+                            if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 2)))
                               _e_fm2_dnd_drop_show(ic, 0);
                             else
                               _e_fm2_dnd_drop_show(ic, 1);
@@ -5956,7 +5994,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
           }
      }
    /* FIXME: not over icon - is it within the fm view? if so drop there */
-   if (E_INSIDE(ev->x, ev->y, 0, 0, sd->w, sd->h))
+   if (E_INSIDE(dx, dy, 0, 0, sd->w, sd->h))
      {
         /* if listview - it is now after last file */
         if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
@@ -6288,7 +6326,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                }
 
              if (S_ISDIR(sd->drop_icon->info.statinfo.st_mode))
-               snprintf(dirpath, sizeof(dirpath), "%s/%s", sd->realpath, sd->drop_icon->info.file);
+               {
+                  if (sd->drop_icon->info.link)
+                    snprintf(dirpath, sizeof(dirpath), "%s", sd->drop_icon->info.link);
+                  else
+                    snprintf(dirpath, sizeof(dirpath), "%s/%s", sd->realpath, sd->drop_icon->info.file);
+               }
              else
                snprintf(dirpath, sizeof(dirpath), "%s", sd->realpath);
 
@@ -6309,7 +6352,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                        snprintf(buf, sizeof(buf), "%s/%s",
                                 sd->realpath, ecore_file_file_get(fp));
                        if (sd->config->view.link_drop)
-                         _e_fm2_client_file_symlink(buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h, sd->obj);
+                         _e_fm2_client_file_symlink(fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h, sd->obj);
                        else
                          {
                             if (!memerr)
@@ -7522,8 +7565,22 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
         if ((S_ISDIR(ic1->info.statinfo.st_mode)) !=
             (S_ISDIR(ic2->info.statinfo.st_mode)))
           {
+             if ((!!ic1->info.link) != (!!ic2->info.link))
+               {
+                  if (!ic1->info.link) return -1;
+                  return 1;
+               }
              if (S_ISDIR(ic1->info.statinfo.st_mode)) return -1;
-             else return 1;
+             return 1;
+          }
+        if ((S_ISDIR(ic1->info.statinfo.st_mode)) &&
+            (S_ISDIR(ic2->info.statinfo.st_mode)))
+          {
+             if ((!!ic1->info.link) != (!!ic2->info.link))
+               {
+                  if (!ic1->info.link) return -1;
+                  return 1;
+               }
           }
      }
    else if (ic1->sd->config->list.sort.dirs.last)
@@ -7531,8 +7588,13 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
         if ((S_ISDIR(ic1->info.statinfo.st_mode)) !=
             (S_ISDIR(ic2->info.statinfo.st_mode)))
           {
+             if ((!!ic1->info.link) != (!!ic2->info.link))
+               {
+                  if (!ic1->info.link) return -1;
+                  return 1;
+               }
              if (S_ISDIR(ic1->info.statinfo.st_mode)) return 1;
-             else return -1;
+             return -1;
           }
      }
    if (ic1->sd->config->list.sort.no_case)
