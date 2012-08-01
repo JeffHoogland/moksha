@@ -2386,58 +2386,21 @@ _e_fm_client_file_move(const char *args, Evas_Object *e_fm)
 static int
 _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm)
 {
-#if 0
-   char *d;
-   int l1, l2, l3, l, id;
-
-   l1 = strlen(path);
-   l2 = strlen(dest);
-   l3 = strlen(rel);
-   l = l1 + 1 + l2 + 1 + l3 + 1 + (sizeof(int) * 3);
-   d = alloca(l);
-   strcpy(d, path);
-   strcpy(d + l1 + 1, dest);
-   strcpy(d + l1 + 1 + l2 + 1, rel);
-   memcpy(d + l1 + 1 + l2 + 1 + l3 + 1, &rel_to, sizeof(int));
-   memcpy(d + l1 + 1 + l2 + 1 + l3 + 1 + sizeof(int), &x, sizeof(int));
-   memcpy(d + l1 + 1 + l2 + 1 + l3 + 1 + (2 * sizeof(int)), &y, sizeof(int));
-
-   if ((x != -9999) && (y != -9999))
-     {
-        E_Fm2_Custom_File *cf, cf0;
-
-        cf = e_fm2_custom_file_get(dest);
-        if (!cf)
-          {
-             memset(&cf0, 0, sizeof(E_Fm2_Custom_File));
-             cf = &cf0;
-          }
-        cf->geom.x = x;
-        cf->geom.y = y;
-        cf->geom.res_w = res_w;
-        cf->geom.res_h = res_h;
-        cf->geom.valid = 1;
-        e_fm2_custom_file_set(dest, cf);
-        e_fm2_custom_file_flush();
-     }
-
-   id = _e_fm_client_send_new(E_FM_OP_SYMLINK, (void *)d, l);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_SYMLINK, _e_fm2_operation_abort_internal);
-   return id;
-#else
    char *args = NULL;
    size_t size = 0, length = 0;
    int r;
 
    args = _e_fm_string_append_quoted(args, &size, &length, path);
+   if (!args) return 0;
    args = _e_fm_string_append_char(args, &size, &length, ' ');
+   if (!args) return 0;
    args = _e_fm_string_append_quoted(args, &size, &length, dest);
+   if (!args) return 0;
 
    WRN("using new E_FM_OP_SYMLINK, remove deprecated ASAP");
    r = _e_fm_client_file_symlink(args, e_fm);
    free(args);
    return r;
-#endif
    rel = NULL;
    rel_to = 0;
    x = 0;
@@ -3375,7 +3338,8 @@ _e_fm2_file_paste(Evas_Object *obj)
    size_t length = 0;
    size_t size = 0;
    char *args = NULL;
-
+   Eina_Bool memerr = EINA_FALSE;
+   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
 
@@ -3384,25 +3348,30 @@ _e_fm2_file_paste(Evas_Object *obj)
    EINA_LIST_FREE(paths, filepath)
      {
         /* Get file's full path. */
-        if (!filepath)
-          continue;
-
+        if (!filepath) continue;
         /* Check if file is protected. */
         if (e_filereg_file_protected(filepath))
           {
              eina_stringshare_del(filepath);
              continue;
           }
-
         /* Put filepath into a string of args.
          * If there are more files, put an additional space.
          */
-        args = _e_fm_string_append_quoted(args, &size, &length, filepath);
-        args = _e_fm_string_append_char(args, &size, &length, ' ');
-
+        if (!memerr)
+          {
+             args = _e_fm_string_append_quoted(args, &size, &length, filepath);
+             if (!args) memerr = EINA_TRUE;
+             else
+               {
+                  args = _e_fm_string_append_char(args, &size, &length, ' ');
+                  if (!args) memerr = EINA_TRUE;
+               }
+          }
         eina_stringshare_del(filepath);
      }
-
+   if (memerr) return;
+   
    /* Add destination to the arguments. */
    {
       E_Fm2_Icon *ic = NULL;
@@ -3410,28 +3379,27 @@ _e_fm2_file_paste(Evas_Object *obj)
       if (eina_list_count(sd->selected_icons) == 1)
         {
            ic = eina_list_data_get(sd->selected_icons);
-           if (!S_ISDIR(ic->info.statinfo.st_mode))
-             ic = NULL;
+           if (!S_ISDIR(ic->info.statinfo.st_mode)) ic = NULL;
         }
       if (ic)
         {
            args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+           if (!args) return;
            args = _e_fm_string_append_char(args, &size, &length, '/');
+           if (!args) return;
            args = _e_fm_string_append_quoted(args, &size, &length, ic->info.file);
+           if (!args) return;
         }
       else
-        args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+        {
+           args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+           if (!args) return;
+        }
    }
 
    /* Roll the operation! */
-   if (_e_fm_file_buffer_copying)
-     {
-        _e_fm_client_file_copy(args, sd->obj);
-     }
-   else
-     {
-        _e_fm_client_file_move(args, sd->obj);
-     }
+   if (_e_fm_file_buffer_copying) _e_fm_client_file_copy(args, sd->obj);
+   else _e_fm_client_file_move(args, sd->obj);
 
    free(args);
 }
@@ -3445,7 +3413,8 @@ _e_fm2_file_symlink(Evas_Object *obj)
    size_t length = 0;
    size_t size = 0;
    char *args = NULL;
-
+   Eina_Bool memerr = EINA_FALSE;
+   
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
 
@@ -3467,18 +3436,27 @@ _e_fm2_file_symlink(Evas_Object *obj)
         /* Put filepath into a string of args.
          * If there are more files, put an additional space.
          */
-        args = _e_fm_string_append_quoted(args, &size, &length, filepath);
-        args = _e_fm_string_append_char(args, &size, &length, ' ');
+        if (!memerr)
+          {
+             args = _e_fm_string_append_quoted(args, &size, &length, filepath);
+             if (!args) memerr = EINA_TRUE;
+             else
+               {
+                  args = _e_fm_string_append_char(args, &size, &length, ' ');
+                  if (!args) memerr = EINA_TRUE;
+               }
+          }
 
         eina_stringshare_del(filepath);
      }
-
+   if (memerr) return;
+   
    /* Add destination to the arguments. */
    args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+   if (!args) return;
 
    /* Roll the operation! */
-   if (_e_fm_file_buffer_copying)
-     _e_fm_client_file_symlink(args, sd->obj);
+   if (_e_fm_file_buffer_copying) _e_fm_client_file_symlink(args, sd->obj);
 
    free(args);
 }
@@ -5629,6 +5607,7 @@ _e_fm2_typebuf_complete(Evas_Object *obj)
         s[0] = 0;
         size = s - sd->typebuf.buf + strlen(ic->info.file) + 1;
         buf = malloc(size);
+        if (!buf) return;
         snprintf(buf, size, "%s%s", sd->typebuf.buf, ic->info.file);
         free(sd->typebuf.buf);
         sd->typebuf.buf = buf;
@@ -5639,6 +5618,11 @@ _e_fm2_typebuf_complete(Evas_Object *obj)
      {
         free(sd->typebuf.buf);
         sd->typebuf.buf = strdup(ic->info.file);
+        if (!sd->typebuf.buf)
+          {
+             edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", "");
+             return;
+          }
         eina_stringshare_replace(&sd->typebuf.start, sd->realpath);
         edje_object_part_text_set(sd->overlay, "e.text.typebuf_label", sd->typebuf.buf);
         evas_object_smart_callback_call(sd->obj, "typebuf_changed", sd->typebuf.buf);
@@ -6223,12 +6207,12 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    Evas_Object *obj;
    Evas_Coord ox, oy, x, y;
    int adjust_icons = 0;
-
    char dirpath[PATH_MAX];
    char *args = NULL;
    size_t size = 0;
    size_t length = 0;
-
+   Eina_Bool memerr = EINA_FALSE;
+   
    sd = data;
    if (type != _e_fm2_mime_text_uri_list) return;
    ev = (E_Event_Dnd_Drop *)event;
@@ -6294,9 +6278,16 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                   _e_fm_icon_save_position(buf, x, y, sd->w, sd->h);
                }
 
-             args = _e_fm_string_append_quoted(args, &size, &length, fp);
-             args = _e_fm_string_append_char(args, &size, &length, ' ');
-
+             if (!memerr)
+               {
+                  args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                  if (!args) memerr = EINA_TRUE;
+                  else
+                    {
+                       args = _e_fm_string_append_char(args, &size, &length, ' ');
+                       if (!args) memerr = EINA_TRUE;
+                    }
+               }
              eina_stringshare_del(fp);
           }
         if (adjust_icons)
@@ -6323,10 +6314,16 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                {
                   fp = eina_list_data_get(ll);
                   if (!fp) continue;
-
-                  args = _e_fm_string_append_quoted(args, &size, &length, fp);
-                  args = _e_fm_string_append_char(args, &size, &length, ' ');
-
+                  if (!memerr)
+                    {
+                       args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                       if (!args) memerr = EINA_TRUE;
+                       else
+                         {
+                            args = _e_fm_string_append_char(args, &size, &length, ' ');
+                            if (!args) memerr = EINA_TRUE;
+                         }
+                    }
                   eina_stringshare_del(fp);
                }
 
@@ -6335,7 +6332,11 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
              else
                snprintf(dirpath, sizeof(dirpath), "%s", sd->realpath);
 
-             args = _e_fm_string_append_quoted(args, &size, &length, dirpath);
+             if (!memerr)
+               {
+                  args = _e_fm_string_append_quoted(args, &size, &length, dirpath);
+                  if (!args) memerr = EINA_TRUE;
+               }
           }
         else
           {
@@ -6348,13 +6349,19 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                        snprintf(buf, sizeof(buf), "%s/%s",
                                 sd->realpath, ecore_file_file_get(fp));
                        if (sd->config->view.link_drop)
-                         {
-                            _e_fm2_client_file_symlink(fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h, sd->obj);
-                         }
+                         _e_fm2_client_file_symlink(buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h, sd->obj);
                        else
                          {
-                            args = _e_fm_string_append_quoted(args, &size, &length, fp);
-                            args = _e_fm_string_append_char(args, &size, &length, ' ');
+                            if (!memerr)
+                              {
+                                 args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                                 if (!args) memerr = EINA_TRUE;
+                                 else
+                                   {
+                                      args = _e_fm_string_append_char(args, &size, &length, ' ');
+                                      if (!args) memerr = EINA_TRUE;
+                                   }
+                              }
                          }
 
                        _e_fm_file_reorder(ecore_file_file_get(fp), sd->realpath, sd->drop_icon->info.file, sd->drop_after);
@@ -6362,7 +6369,11 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                        eina_stringshare_del(fp);
                     }
 
-                  args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+                  if (!memerr)
+                    {
+                       args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+                       if (!args) memerr = EINA_TRUE;
+                    }
                }
              else
                {
@@ -6371,12 +6382,23 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                        fp = eina_list_data_get(ll);
                        if (!fp) continue;
 
-                       args = _e_fm_string_append_quoted(args, &size, &length, fp);
-                       args = _e_fm_string_append_char(args, &size, &length, ' ');
-
+                       if (!memerr)
+                         {
+                            args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                            if (!args) memerr = EINA_TRUE;
+                            else
+                              {
+                                 args = _e_fm_string_append_char(args, &size, &length, ' ');
+                                 if (!args) memerr = EINA_TRUE;
+                              }
+                         }
                        eina_stringshare_del(fp);
                     }
-                  args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+                  if (!memerr)
+                    {
+                       args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+                       if (!args) memerr = EINA_TRUE;
+                    }
                }
           }
      }
@@ -9248,8 +9270,11 @@ _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
         if (e_filereg_file_protected(oldpath)) return;
 
         args = _e_fm_string_append_quoted(args, &size, &length, oldpath);
+        if (!args) return;
         args = _e_fm_string_append_char(args, &size, &length, ' ');
+        if (!args) return;
         args = _e_fm_string_append_quoted(args, &size, &length, newpath);
+        if (!args) return;
 
         _e_fm_client_file_move(args, ic->sd->obj);
         free(args);
@@ -9271,6 +9296,7 @@ _e_fm_retry_abort_dialog(int pid, const char *str)
    if (!con) return NULL;
 
    id = malloc(sizeof(int));
+   if (!id) return NULL;
    *id = pid;
 
    dialog = e_dialog_new(con, "E", "_fm_overwrite_dialog");
@@ -9332,6 +9358,7 @@ _e_fm_overwrite_dialog(int pid, const char *str)
    if (!con) return NULL;
 
    id = malloc(sizeof(int));
+   if (!id) return NULL;
    *id = pid;
 
    dialog = e_dialog_new(con, "E", "_fm_overwrite_dialog");
@@ -9412,6 +9439,7 @@ _e_fm_error_dialog(int pid, const char *str)
    if (!con) return NULL;
 
    id = malloc(sizeof(int));
+   if (!id) return NULL;
    *id = pid;
 
    dialog = e_dialog_new(con, "E", "_fm_error_dialog");
@@ -9651,19 +9679,29 @@ _e_fm_string_append_char(char *str, size_t *size, size_t *len, char c)
    if (!str)
      {
         str = malloc(4096);
-        str[0] = '\x00';
+        if (!str) return NULL;
+        str[0] = 0;
         *size = 4096;
         *len = 0;
      }
 
    if (*len >= *size - 1)
      {
+        char *str2;
+        
         *size += 1024;
-        str = realloc(str, *size);
+        str2 = realloc(str, *size);
+        if (!str2)
+          {
+             *size = 0;
+             free(str);
+             return NULL;
+          }
+        str = str2;
      }
 
    str[(*len)++] = c;
-   str[*len] = '\x00';
+   str[*len] = 0;
 
    return str;
 }
@@ -9672,23 +9710,32 @@ static char *
 _e_fm_string_append_quoted(char *str, size_t *size, size_t *len, const char *src)
 {
    str = _e_fm_string_append_char(str, size, len, '\'');
+   if (!str) return NULL;
 
    while (*src)
      {
         if (*src == '\'')
           {
              str = _e_fm_string_append_char(str, size, len, '\'');
+             if (!str) return NULL;
              str = _e_fm_string_append_char(str, size, len, '\\');
+             if (!str) return NULL;
              str = _e_fm_string_append_char(str, size, len, '\'');
+             if (!str) return NULL;
              str = _e_fm_string_append_char(str, size, len, '\'');
+             if (!str) return NULL;
           }
         else
-          str = _e_fm_string_append_char(str, size, len, *src);
+          {
+             str = _e_fm_string_append_char(str, size, len, *src);
+             if (!str) return NULL;
+          }
 
         src++;
      }
 
    str = _e_fm_string_append_char(str, size, len, '\'');
+   if (!str) return NULL;
 
    return str;
 }
@@ -9703,7 +9750,8 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
    size_t len = 0;
    Eina_List *sel, *l;
    E_Fm2_Icon_Info *ici;
-
+   Eina_Bool memerr = EINA_FALSE;
+   
    ic = data;
    ic->dialog = NULL;
 
@@ -9720,23 +9768,34 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
              snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, ici->file);
              if (e_filereg_file_protected(buf)) continue;
 
-             files = _e_fm_string_append_quoted(files, &size, &len, buf);
-             if (eina_list_next(l))
-               files = _e_fm_string_append_char(files, &size, &len, ' ');
+             if (!memerr)
+               {
+                  files = _e_fm_string_append_quoted(files, &size, &len, buf);
+                  if (!files) memerr = EINA_TRUE;
+                  else
+                    {
+                       if (eina_list_next(l))
+                         {
+                            files = _e_fm_string_append_char(files, &size, &len, ' ');
+                            if (!files) memerr = EINA_TRUE;
+                         }
+                    }
+               }
           }
-
         eina_list_free(sel);
      }
    else
      {
+        if (sel) eina_list_free(sel);
         _e_fm2_icon_realpath(ic, buf, sizeof(buf));
         if (e_filereg_file_protected(buf)) return;
         files = _e_fm_string_append_quoted(files, &size, &len, buf);
      }
-
-   _e_fm_client_file_del(files, ic->sd->obj);
-
-   free(files);
+   if (files)
+     {
+        _e_fm_client_file_del(files, ic->sd->obj);
+        free(files);
+     }
 
    if (ic_next)
      {
