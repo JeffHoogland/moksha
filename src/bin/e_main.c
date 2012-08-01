@@ -360,6 +360,15 @@ main(int argc, char **argv)
    TS("Ecore Init Done");
    _e_main_shutdown_push(ecore_shutdown);
 
+   TS("EIO Init");
+   if (!eio_init())
+     {
+        e_error_message_show(_("Enlightenment cannot initialize EIO!\n"));
+        _e_main_shutdown(-1);
+     }
+   TS("EIO Init Done");
+   _e_main_shutdown_push(eio_shutdown);
+
    ecore_app_args_set(argc, (const char **)argv);
 
    TS("Ecore Event Handlers");
