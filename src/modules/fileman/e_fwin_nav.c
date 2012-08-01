@@ -5,42 +5,41 @@ typedef struct _Instance Instance;
 
 struct _Instance
 {
-  E_Gadcon_Client *gcc;
+   E_Gadcon_Client    *gcc;
 
-  E_Toolbar *tbar;
+   E_Toolbar          *tbar;
 
-  Evas_Object *o_base, *o_box, *o_fm, *o_scroll;
+   Evas_Object        *o_base, *o_box, *o_fm, *o_scroll;
 
-  // buttons
-  Eina_List *l_buttons;
-  Eina_List *history, *current;
-  int ignore_dir;
+   // buttons
+   Eina_List          *l_buttons;
+   Eina_List          *history, *current;
+   int                 ignore_dir;
 
-  const char *theme;
+   const char         *theme;
 
-  Ecore_Idle_Enterer *idler;
+   Ecore_Idle_Enterer *idler;
 };
-
 
 /* local function protos */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
-static void _gc_shutdown(E_Gadcon_Client *gcc);
-static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-static const char *_gc_label(const E_Gadcon_Client_Class *client_class);
-static Evas_Object *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
-static const char *_gc_id_new(const E_Gadcon_Client_Class *client_class);
-static void _cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _cb_back_click(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_forward_click(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_up_click(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_refresh_click(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_favorites_click(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_changed(void *data, Evas_Object *obj, void *event_info);
-static void _cb_dir_changed(void *data, Evas_Object *obj, void *event_info);
-static void _cb_button_click(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
-static void _box_button_append(Instance *inst, const char *label, void (*func)(void *data, Evas_Object *obj, const char *emission, const char *source));
+static void             _gc_shutdown(E_Gadcon_Client *gcc);
+static void             _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+static const char      *_gc_label(const E_Gadcon_Client_Class *client_class);
+static Evas_Object     *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
+static const char      *_gc_id_new(const E_Gadcon_Client_Class *client_class);
+static void             _cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void             _cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void             _cb_back_click(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void             _cb_forward_click(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void             _cb_up_click(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void             _cb_refresh_click(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void             _cb_favorites_click(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void             _cb_changed(void *data, Evas_Object *obj, void *event_info);
+static void             _cb_dir_changed(void *data, Evas_Object *obj, void *event_info);
+static void             _cb_button_click(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void             _cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
+static void             _box_button_append(Instance *inst, const char *label, void (*func)(void *data, Evas_Object *obj, const char *emission, const char *source));
 
 static Eina_List *instances = NULL;
 static const char *_nav_mod_dir = NULL;
@@ -49,10 +48,10 @@ static const char *_nav_mod_dir = NULL;
 static const E_Gadcon_Client_Class _gc_class =
 {
    GADCON_CLIENT_CLASS_VERSION, "efm_navigation",
-     {
-        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
-          e_gadcon_site_is_efm_toolbar
-     }, E_GADCON_CLIENT_STYLE_PLAIN
+   {
+      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
+      e_gadcon_site_is_efm_toolbar
+   }, E_GADCON_CLIENT_STYLE_PLAIN
 };
 
 Eina_Bool
@@ -71,7 +70,8 @@ e_fwin_nav_shutdown(void)
    return EINA_TRUE;
 }
 
-static void _cb_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+static void
+_cb_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    Instance *inst;
    int w, h;
@@ -123,28 +123,28 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst->o_base = edje_object_add(gc->evas);
    e_theme_edje_object_set(inst->o_base, "base/theme/modules/efm_navigation",
-			   "modules/efm_navigation/main");
+                           "modules/efm_navigation/main");
 
    edje_object_signal_callback_add(inst->o_base, "e,action,back,click", "",
-				   _cb_back_click, inst);
+                                   _cb_back_click, inst);
    edje_object_signal_callback_add(inst->o_base, "e,action,forward,click", "",
-				   _cb_forward_click, inst);
+                                   _cb_forward_click, inst);
    edje_object_signal_callback_add(inst->o_base, "e,action,up,click", "",
-				   _cb_up_click, inst);
+                                   _cb_up_click, inst);
    edje_object_signal_callback_add(inst->o_base, "e,action,refresh,click", "",
-				   _cb_refresh_click, inst);
+                                   _cb_refresh_click, inst);
    edje_object_signal_callback_add(inst->o_base, "e,action,favorites,click", "",
-				   _cb_favorites_click, inst);
+                                   _cb_favorites_click, inst);
    evas_object_show(inst->o_base);
 
    inst->o_scroll = e_scrollframe_add(gc->evas);
    e_scrollframe_custom_theme_set(inst->o_scroll,
-				       "base/theme/modules/efm_navigation",
-				  "modules/efm_navigation/pathbar_scrollframe");
+                                  "base/theme/modules/efm_navigation",
+                                  "modules/efm_navigation/pathbar_scrollframe");
 
    e_scrollframe_single_dir_set(inst->o_scroll, 1);
    e_scrollframe_policy_set(inst->o_scroll, E_SCROLLFRAME_POLICY_AUTO,
-			    E_SCROLLFRAME_POLICY_OFF);
+                            E_SCROLLFRAME_POLICY_OFF);
    e_scrollframe_thumbscroll_force(inst->o_scroll, 1);
    evas_object_show(inst->o_scroll);
 
@@ -155,8 +155,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_show(inst->o_box);
 
    evas_object_event_callback_add(inst->o_scroll, EVAS_CALLBACK_RESIZE,
-				  _cb_scroll_resize, inst);
-   
+                                  _cb_scroll_resize, inst);
+
    edje_object_part_swallow(inst->o_base, "e.swallow.pathbar", inst->o_scroll);
 
    inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_base);
@@ -164,23 +164,23 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    /* add the hooks to get signals from efm */
    evas_object_event_callback_add(inst->o_fm, EVAS_CALLBACK_KEY_DOWN,
-				  _cb_key_down, inst);
+                                  _cb_key_down, inst);
    evas_object_smart_callback_add(inst->o_fm, "changed",
-				  _cb_changed, inst);
+                                  _cb_changed, inst);
    evas_object_smart_callback_add(inst->o_fm, "dir_changed",
-				  _cb_dir_changed, inst);
+                                  _cb_dir_changed, inst);
 
    evas_object_event_callback_add(inst->o_base,
-				  EVAS_CALLBACK_MOUSE_DOWN,
-				  _cb_mouse_down, inst);
+                                  EVAS_CALLBACK_MOUSE_DOWN,
+                                  _cb_mouse_down, inst);
    if (!inst->gcc->resizable)
      {
-	evas_object_geometry_get(inst->gcc->gadcon->o_container, 0, 0, &w, &h);
-	e_gadcon_client_min_size_set(inst->gcc, w, h);
-	e_gadcon_client_aspect_set(inst->gcc, w, h);
-	evas_object_event_callback_add(inst->gcc->gadcon->o_container,
-				       EVAS_CALLBACK_RESIZE,
-				       _cb_resize, inst);
+        evas_object_geometry_get(inst->gcc->gadcon->o_container, 0, 0, &w, &h);
+        e_gadcon_client_min_size_set(inst->gcc, w, h);
+        e_gadcon_client_aspect_set(inst->gcc, w, h);
+        evas_object_event_callback_add(inst->gcc->gadcon->o_container,
+                                       EVAS_CALLBACK_RESIZE,
+                                       _cb_resize, inst);
      }
 
    edje_object_signal_emit(inst->o_base, "e,state,back,disabled", "e");
@@ -206,8 +206,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    instances = eina_list_remove(instances, inst);
 
    evas_object_event_callback_del_full(inst->o_fm,
-				       EVAS_CALLBACK_KEY_DOWN,
-				       _cb_key_down, inst);
+                                       EVAS_CALLBACK_KEY_DOWN,
+                                       _cb_key_down, inst);
 
    evas_object_smart_callback_del(inst->o_fm, "changed", _cb_changed);
    evas_object_smart_callback_del(inst->o_fm, "dir_changed", _cb_dir_changed);
@@ -217,8 +217,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    if (gcc->gadcon->o_container)
      evas_object_event_callback_del_full(gcc->gadcon->o_container,
-					 EVAS_CALLBACK_RESIZE,
-					 _cb_resize, inst);
+                                         EVAS_CALLBACK_RESIZE,
+                                         _cb_resize, inst);
 
    EINA_LIST_FREE(inst->l_buttons, btn)
      {
@@ -245,14 +245,16 @@ _gc_orient(E_Gadcon_Client *gcc __UNUSED__, E_Gadcon_Orient orient)
      {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_BOTTOM:
-	 /* e_gadcon_client_aspect_set(gcc, 16 * 4, 16); */
-	break;
+        /* e_gadcon_client_aspect_set(gcc, 16 * 4, 16); */
+        break;
+
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_RIGHT:
-	/* e_gadcon_client_aspect_set(gcc, 16, 16 * 4); */
-	break;
+        /* e_gadcon_client_aspect_set(gcc, 16, 16 * 4); */
+        break;
+
       default:
-	break;
+        break;
      }
    /* e_gadcon_client_min_size_set(gcc, 16, 16); */
 }
@@ -275,7 +277,7 @@ _gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
    static char buf[PATH_MAX];
 
    snprintf(buf, sizeof(buf), "%s.%d", _gc_class.name,
-	    (eina_list_count(instances) + 1));
+            (eina_list_count(instances) + 1));
    return buf;
 }
 
@@ -322,7 +324,7 @@ _cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
    m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
    ecore_x_pointer_xy_get(zone->container->win, &x, &y);
    e_menu_activate_mouse(m, zone, x, y, 1, 1,
-			 E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+                         E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
 }
 
 static void
@@ -431,7 +433,7 @@ _cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, v
 {
    Instance *inst = data;
    Evas_Coord mw = 0, mh = 0;
-   
+
    evas_object_geometry_get(inst->o_box, NULL, NULL, &mw, NULL);
    evas_object_geometry_get(inst->o_scroll, NULL, NULL, NULL, &mh);
    evas_object_resize(inst->o_box, mw, mh);
@@ -449,7 +451,7 @@ _box_button_append(Instance *inst, const char *label, void (*func)(void *data, E
    o = edje_object_add(evas_object_evas_get(inst->o_box));
 
    e_theme_edje_object_set(o, "base/theme/modules/efm_navigation",
-			   "modules/efm_navigation/pathbar_button");
+                           "modules/efm_navigation/pathbar_button");
 
    edje_object_signal_callback_add(o, "e,action,click", "", func, inst);
    edje_object_part_text_set(o, "e.text.label", label);
@@ -481,56 +483,56 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
    /* update pathbar */
    if (!inst->l_buttons)
      _box_button_append(inst, "/", _cb_button_click);
-   
+
    sel = inst->l_buttons;
    l = eina_list_next(sel);
    p = path = ecore_file_realpath(real_path);
 
    while (p)
      {
-	dir = strsep(&p, "/");
+        dir = strsep(&p, "/");
 
         if (!(*dir)) continue;
 
-	if (l && (btn = eina_list_data_get(l)))
-	  {
-	     if (strcmp(dir, edje_object_part_text_get(btn, "e.text.label")))
-	       {
-		  changed = 1;
+        if (l && (btn = eina_list_data_get(l)))
+          {
+             if (strcmp(dir, edje_object_part_text_get(btn, "e.text.label")))
+               {
+                  changed = 1;
 
-		  while (l)
-		    {
-		       e_box_unpack(btn);
-		       evas_object_del(btn);
-		       ll = l;
-		       l = eina_list_next(l);
-		       btn = eina_list_data_get(l);
+                  while (l)
+                    {
+                       e_box_unpack(btn);
+                       evas_object_del(btn);
+                       ll = l;
+                       l = eina_list_next(l);
+                       btn = eina_list_data_get(l);
 
-		       inst->l_buttons =
-			 eina_list_remove_list(inst->l_buttons, ll);
-		    }
-	       }
-	     else
-	       {
-		  if (!p) sel = l;
-		  l = eina_list_next(l);
-		  continue;
-	       }
-	  }
+                       inst->l_buttons =
+                         eina_list_remove_list(inst->l_buttons, ll);
+                    }
+               }
+             else
+               {
+                  if (!p) sel = l;
+                  l = eina_list_next(l);
+                  continue;
+               }
+          }
 
-	_box_button_append(inst, dir, _cb_button_click);
-	if (!p)	sel = eina_list_last(inst->l_buttons);
-	changed = 1;
+        _box_button_append(inst, dir, _cb_button_click);
+        if (!p) sel = eina_list_last(inst->l_buttons);
+        changed = 1;
      }
 
    free(path);
 
    if (changed)
      {
-	evas_object_geometry_get(inst->o_box, NULL, NULL, &mw, NULL);
-	edje_object_size_min_calc(e_scrollframe_edje_object_get(inst->o_scroll), &sw, NULL);
+        evas_object_geometry_get(inst->o_box, NULL, NULL, &mw, NULL);
+        edje_object_size_min_calc(e_scrollframe_edje_object_get(inst->o_scroll), &sw, NULL);
 
-	evas_object_size_hint_max_set(inst->o_scroll, mw + sw, 32);
+        evas_object_size_hint_max_set(inst->o_scroll, mw + sw, 32);
      }
 
    EINA_LIST_FOREACH(inst->l_buttons, l, btn)
@@ -546,40 +548,40 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
         btn = eina_list_data_get(sel);
         evas_object_geometry_get(btn, &x, &y, &w, &h);
 
-	/* show buttons around selected */
-	if (sel->next)
-	  {
-	     btn = eina_list_data_get(sel->next);
-	     evas_object_geometry_get(btn, NULL, NULL, &ww, NULL);
-	     w += ww;
-	  }
-	if (sel->prev)
-	  {
-	     btn = eina_list_data_get(sel->prev);
-	     evas_object_geometry_get(btn, NULL, NULL, &ww, NULL);
-	     x -= ww;
-	     w += ww;
-	  }
+        /* show buttons around selected */
+        if (sel->next)
+          {
+             btn = eina_list_data_get(sel->next);
+             evas_object_geometry_get(btn, NULL, NULL, &ww, NULL);
+             w += ww;
+          }
+        if (sel->prev)
+          {
+             btn = eina_list_data_get(sel->prev);
+             evas_object_geometry_get(btn, NULL, NULL, &ww, NULL);
+             x -= ww;
+             w += ww;
+          }
 
-	evas_object_geometry_get(inst->o_box, &xx, &yy, NULL, NULL);
+        evas_object_geometry_get(inst->o_box, &xx, &yy, NULL, NULL);
         e_scrollframe_child_region_show(inst->o_scroll, x - xx, y - yy, w, h);
      }
 
    /* update history */
    if ((!inst->ignore_dir) && (eina_list_data_get(inst->current) != real_path))
      {
-	if (inst->current)
-	  {
-	     while (inst->history != inst->current)
-	       {
-	     	  eina_stringshare_del(eina_list_data_get(inst->history));
-	     	  inst->history =
-		    eina_list_remove_list(inst->history, inst->history);
-	       }
-	  }
-	inst->history =
-	  eina_list_prepend(inst->history, eina_stringshare_ref(real_path));
-	inst->current = inst->history;
+        if (inst->current)
+          {
+             while (inst->history != inst->current)
+               {
+                  eina_stringshare_del(eina_list_data_get(inst->history));
+                  inst->history =
+                    eina_list_remove_list(inst->history, inst->history);
+               }
+          }
+        inst->history =
+          eina_list_prepend(inst->history, eina_stringshare_ref(real_path));
+        inst->current = inst->history;
      }
    inst->ignore_dir = 0;
 
@@ -598,3 +600,4 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
    else
      edje_object_signal_emit(inst->o_base, "e,state,forward,enabled", "e");
 }
+
