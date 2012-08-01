@@ -706,7 +706,6 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
    fmc.view.selector = 1;
    fmc.view.single_click = 1;
    fmc.view.no_subdir_jump = 1;
-   fmc.view.no_subdir_drop = 1;
    fmc.view.link_drop = 1;
    fmc.icon.list.w = 24;
    fmc.icon.list.h = 24;
