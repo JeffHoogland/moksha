@@ -4328,64 +4328,24 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
 {
    Evas_Coord mw = 0, mh = 0;
    Evas_Object *obj, *obj2;
-   char buf[PATH_MAX], *lnk;
+   char buf[PATH_MAX];
    const char *mime;
    E_Fm2_Custom_File *cf;
 
+   if (!finf) return 0;
    if (!_e_fm2_icon_realpath(ic, buf, sizeof(buf)))
      return 0;
    cf = e_fm2_custom_file_get(buf);
-   if (finf)
-     {
-        memcpy(&(ic->info.statinfo), &(finf->st), sizeof(struct stat));
-        if ((finf->lnk) && (finf->lnk[0]))
-          ic->info.link = eina_stringshare_add(finf->lnk);
-        else
-          ic->info.link = NULL;
-        if ((finf->rlnk) && (finf->rlnk[0]))
-          ic->info.real_link = eina_stringshare_add(finf->rlnk);
-        else
-          ic->info.real_link = NULL;
-        ic->info.broken_link = finf->broken_link;
-     }
+   memcpy(&(ic->info.statinfo), &(finf->st), sizeof(struct stat));
+   if ((finf->lnk) && (finf->lnk[0]))
+     ic->info.link = eina_stringshare_add(finf->lnk);
    else
-     {
-        ERR("FIXME: remove old non finf icon fill code");
-        /* FIXME: this should go away... get this from the fm slave proc above */
-        lnk = ecore_file_readlink(buf);
-        if (stat(buf, &(ic->info.statinfo)) == -1)
-          {
-             if (lnk)
-               ic->info.broken_link = EINA_TRUE;
-             else
-               {
-                  return 0;
-               }
-          }
-        if (lnk)
-          {
-             if (lnk[0] == '/')
-               {
-                  ic->info.link = eina_stringshare_add(lnk);
-                  ic->info.real_link = eina_stringshare_add(lnk);
-               }
-             else
-               {
-                  char *rp;
-
-                  snprintf(buf, sizeof(buf), "%s/%s", ic->sd->realpath, lnk);
-                  rp = ecore_file_realpath(buf);
-                  if (rp)
-                    {
-                       ic->info.link = eina_stringshare_add(rp);
-                       free(rp);
-                    }
-                  ic->info.real_link = eina_stringshare_add(lnk);
-               }
-             free(lnk);
-          }
-        /* FIXME: end go away chunk */
-     }
+     ic->info.link = NULL;
+   if ((finf->rlnk) && (finf->rlnk[0]))
+     ic->info.real_link = eina_stringshare_add(finf->rlnk);
+   else
+     ic->info.real_link = NULL;
+   ic->info.broken_link = finf->broken_link;
 
    if (S_ISDIR(ic->info.statinfo.st_mode))
      {
