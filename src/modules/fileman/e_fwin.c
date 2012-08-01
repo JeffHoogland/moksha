@@ -732,6 +732,7 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
                                     e_fm2_pan_child_size_get);
    evas_object_propagate_events_set(page->flist, 0);
    e_widget_can_focus_set(o, EINA_FALSE);
+   e_fm2_window_object_set(page->flist, E_OBJECT(page->fwin->win));
    e_widget_scrollframe_focus_object_set(o, page->flist);
 
    page->flist_frame = o;
