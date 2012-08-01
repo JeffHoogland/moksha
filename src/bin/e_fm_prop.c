@@ -5,6 +5,7 @@
  * basic -
  * + show file
  * + show size
+ * + show last access date
  * + show modified date
  * + show mimetype
  * + show permissions (others read, others write)
@@ -12,19 +13,18 @@
  * + show owner
  * + show icon
  * * show symlink/fifo/socket/etc. status
- * * show broken link status
+ * + show broken link status
  * + change icon for mime type
  * * change icon for just this file
- * + change permissions (others read, others write)
+ * + change permissions
  *
  * advanced (extra) -
- * * show access date
  * * show change date
  * * show comment
  * * show generic
  * * show mount status
  * * show setuid bit
- * * show link destination (if symlink or link)
+ * + show link destination (if symlink or link)
  * * show group
  * * change link destination
  * * change app to open THIS file with (or dir)
@@ -49,7 +49,7 @@ static void         _cb_fsel_sel(void *data, Evas_Object *obj);
 static void         _cb_fsel_ok(void *data, E_Dialog *dia);
 static void         _cb_fsel_cancel(void *data, E_Dialog *dia);
 
-/* Actual config data we will be playing with whil the dialog is active */
+/* Actual config data we will be playing with while the dialog is active */
 struct _E_Config_Dialog_Data
 {
    E_Fm2_Icon      *ic;
@@ -64,16 +64,25 @@ struct _E_Config_Dialog_Data
    } gui;
    /*- BASIC -*/
    char            *file;
+   char            *location;
    char            *size;
    char            *mod_date;
+   char            *acc_date;
+   char            *pms_date;
    char            *mime;
    char            *owner;
    char            *link;
    char            *plink;
+   char            *blocks;
    int              owner_read;
    int              owner_write;
+   int              owner_exec;
    int              others_read;
    int              others_write;
+   int              others_exec;
+   int              group_read;
+   int              group_write;
+   int              group_exec;
    int              picon_type;
    int              picon_mime;
    int              picon_changed;
@@ -101,7 +110,7 @@ e_fm_prop_file(E_Container *con, E_Fm2_Icon *ic)
    v->advanced.apply_cfdata = _advanced_apply_data;
    v->advanced.create_widgets = _advanced_create_widgets;
 #endif
-   /* create config diaolg for NULL object/data */
+   /* create config dialog for NULL object/data */
    cfd = e_config_dialog_new(con,
                              _("File Properties"),
                              "E", "_fm_prop",
@@ -113,6 +122,8 @@ e_fm_prop_file(E_Container *con, E_Fm2_Icon *ic)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata, E_Fm2_Icon *ic)
 {
+   char loc[PATH_MAX];
+   char blks[256];
    struct passwd *pw;
 
    cfdata->ic = ic;
@@ -120,15 +131,29 @@ _fill_data(E_Config_Dialog_Data *cfdata, E_Fm2_Icon *ic)
    if (cfdata->fi->file) cfdata->file = strdup(cfdata->fi->file);
    cfdata->size = e_util_size_string_get(cfdata->fi->statinfo.st_size);
    cfdata->mod_date = e_util_file_time_get(cfdata->fi->statinfo.st_mtime);
+   cfdata->acc_date = e_util_file_time_get(cfdata->fi->statinfo.st_atime);
+   cfdata->pms_date = e_util_file_time_get(cfdata->fi->statinfo.st_ctime);
    if (cfdata->fi->mime) cfdata->mime = strdup(cfdata->fi->mime);
+
+   snprintf(blks, sizeof(blks), "%lu", (unsigned long)cfdata->fi->statinfo.st_blocks);
+   cfdata->blocks = strdup(blks);
+
+   snprintf(loc, sizeof(loc), "%s", e_fm2_real_path_get(cfdata->fi->fm));
+   cfdata->location = strdup(loc);
+
    pw = getpwuid(cfdata->fi->statinfo.st_uid);
    if (pw) cfdata->owner = strdup(pw->pw_name);
    if (cfdata->fi->link) cfdata->link = strdup(cfdata->fi->link);
    if (cfdata->fi->link) cfdata->plink = strdup(cfdata->fi->link);
    if (cfdata->fi->statinfo.st_mode & S_IRUSR) cfdata->owner_read = 1;
    if (cfdata->fi->statinfo.st_mode & S_IWUSR) cfdata->owner_write = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IEXEC) cfdata->owner_exec = 1;
    if (cfdata->fi->statinfo.st_mode & S_IROTH) cfdata->others_read = 1;
    if (cfdata->fi->statinfo.st_mode & S_IWOTH) cfdata->others_write = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IXOTH) cfdata->others_exec = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IRGRP) cfdata->group_read = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IWGRP) cfdata->group_write = 1;
+   if (cfdata->fi->statinfo.st_mode & S_IXGRP) cfdata->group_exec = 1;
 }
 
 static void *
@@ -151,8 +176,12 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->gui.fsel)
      e_object_del(E_OBJECT(cfdata->gui.fsel));
    E_FREE(cfdata->file);
+   E_FREE(cfdata->location);
    E_FREE(cfdata->size);
+   E_FREE(cfdata->blocks);
    E_FREE(cfdata->mod_date);
+   E_FREE(cfdata->acc_date);
+   E_FREE(cfdata->pms_date);
    E_FREE(cfdata->mime);
    E_FREE(cfdata->owner);
    E_FREE(cfdata->link);
@@ -169,7 +198,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    int fperm = 0;
 
    snprintf(buf, sizeof(buf), "%s/%s",
-            e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
+            cfdata->location, cfdata->fi->file);
    if (((cfdata->fi->statinfo.st_mode & S_IRUSR) && (cfdata->owner_read)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IRUSR)) && (!cfdata->owner_read)))
      fperm = 1;
@@ -179,8 +208,23 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (((cfdata->fi->statinfo.st_mode & S_IROTH) && (cfdata->others_read)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IROTH)) && (!cfdata->others_read)))
      fperm = 1;
+   if (((cfdata->fi->statinfo.st_mode & S_IEXEC) && (cfdata->owner_exec)) ||
+       ((!(cfdata->fi->statinfo.st_mode & S_IEXEC)) && (!cfdata->owner_exec)))
+     fperm = 1;
    if (((cfdata->fi->statinfo.st_mode & S_IWOTH) && (cfdata->others_write)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IWOTH)) && (!cfdata->others_write)))
+     fperm = 1;
+   if (((cfdata->fi->statinfo.st_mode & S_IXOTH) && (cfdata->others_exec)) ||
+       ((!(cfdata->fi->statinfo.st_mode & S_IXOTH)) && (!cfdata->others_exec)))
+     fperm = 1;
+   if (((cfdata->fi->statinfo.st_mode & S_IRGRP) && (cfdata->group_read)) ||
+       ((!(cfdata->fi->statinfo.st_mode & S_IRGRP)) && (!cfdata->group_read)))
+     fperm = 1;
+   if (((cfdata->fi->statinfo.st_mode & S_IWGRP) && (cfdata->group_write)) ||
+       ((!(cfdata->fi->statinfo.st_mode & S_IWGRP)) && (!cfdata->group_write)))
+     fperm = 1;
+   if (((cfdata->fi->statinfo.st_mode & S_IXGRP) && (cfdata->group_exec)) ||
+       ((!(cfdata->fi->statinfo.st_mode & S_IXGRP)) && (!cfdata->group_exec)))
      fperm = 1;
    if (fperm)
      {
@@ -191,10 +235,20 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         else cfdata->fi->statinfo.st_mode &= ~S_IRUSR;
         if (cfdata->owner_write) cfdata->fi->statinfo.st_mode |= S_IWUSR;
         else cfdata->fi->statinfo.st_mode &= ~S_IWUSR;
+        if (cfdata->owner_exec) cfdata->fi->statinfo.st_mode |= S_IEXEC;
+        else cfdata->fi->statinfo.st_mode &= ~S_IEXEC;
         if (cfdata->others_read) cfdata->fi->statinfo.st_mode |= S_IROTH;
         else cfdata->fi->statinfo.st_mode &= ~S_IROTH;
         if (cfdata->others_write) cfdata->fi->statinfo.st_mode |= S_IWOTH;
         else cfdata->fi->statinfo.st_mode &= ~S_IWOTH;
+        if (cfdata->others_exec) cfdata->fi->statinfo.st_mode |= S_IXOTH;
+        else cfdata->fi->statinfo.st_mode &= ~S_IXOTH;
+        if (cfdata->group_read) cfdata->fi->statinfo.st_mode |= S_IRGRP;
+        else cfdata->fi->statinfo.st_mode &= ~S_IRGRP;
+        if (cfdata->group_write) cfdata->fi->statinfo.st_mode |= S_IWGRP;
+        else cfdata->fi->statinfo.st_mode &= ~S_IWGRP;
+        if (cfdata->group_exec) cfdata->fi->statinfo.st_mode |= S_IXGRP;
+        else cfdata->fi->statinfo.st_mode &= ~S_IXGRP;
         if (chmod(buf, cfdata->fi->statinfo.st_mode) == -1)
           {
              /* FIXME: error dialog */
@@ -211,7 +265,6 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
              cfdata->plink = strdup(cfdata->link);
           }
      }
-
    if ((cfdata->picon_type != cfdata->icon_type) ||
        (cfdata->picon_mime != cfdata->icon_mime) ||
        (cfdata->picon_changed))
@@ -322,59 +375,102 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    /* generate the core widget layout for a basic dialog */
    Evas_Object *o, *ot, *ob, *of, *oi;
    E_Radio_Group *rg;
-   char buf[4096];
+   char buf[PATH_MAX];
    const char *itype = NULL;
 
    snprintf(buf, sizeof(buf), "%s/%s",
-            e_fm2_real_path_get(cfdata->fi->fm), cfdata->fi->file);
+            cfdata->location, cfdata->fi->file);
    o = e_widget_table_add(evas, 0);
 
    ot = e_widget_table_add(evas, 0);
 
-   ob = e_widget_label_add(evas, _("File:"));
+   ob = e_widget_label_add(evas, _("Name:"));
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    ob = e_widget_entry_add(evas, &(cfdata->file), NULL, NULL, NULL);
    e_widget_size_min_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(evas, _("Size:"));
+   ob = e_widget_label_add(evas, _("Location:"));
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->size), NULL, NULL, NULL);
+   ob = e_widget_entry_add(evas, &(cfdata->location), NULL, NULL, NULL);
    e_widget_size_min_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(evas, _("Last Modified:"));
+   ob = e_widget_label_add(evas, _("Size:"));
    e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->mod_date), NULL, NULL, NULL);
+   ob = e_widget_entry_add(evas, &(cfdata->size), NULL, NULL, NULL);
    e_widget_size_min_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(evas, _("File Type:"));
+   ob = e_widget_label_add(evas, _("Occuped blocks on disk:"));
    e_widget_table_object_append(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->mime), NULL, NULL, NULL);
+   ob = e_widget_entry_add(evas, &(cfdata->blocks), NULL, NULL, NULL);
    e_widget_size_min_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
    e_widget_table_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
 
-   of = e_widget_frametable_add(evas, _("Permissions"), 0);
-   ob = e_widget_label_add(evas, _("Owner:"));
-   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_entry_add(evas, &(cfdata->owner), NULL, NULL, NULL);
-   e_widget_size_min_set(ob, 60, -1);
+   ob = e_widget_label_add(evas, _("Last Accessed:"));
+   e_widget_table_object_append(ot, ob, 0, 4, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->acc_date), NULL, NULL, NULL);
+   e_widget_size_min_set(ob, 140, -1);
    e_widget_entry_readonly_set(ob, 1);
-   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Others can read"), &(cfdata->others_read));
+   e_widget_table_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
+
+   ob = e_widget_label_add(evas, _("Last Modified:"));
+   e_widget_table_object_append(ot, ob, 0, 5, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->mod_date), NULL, NULL, NULL);
+   e_widget_size_min_set(ob, 140, -1);
+   e_widget_entry_readonly_set(ob, 1);
+   e_widget_table_object_append(ot, ob, 1, 5, 1, 1, 1, 0, 1, 0);
+
+   ob = e_widget_label_add(evas, _("Last Modified Permissions:"));
+   e_widget_table_object_append(ot, ob, 0, 6, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->pms_date), NULL, NULL, NULL);
+   e_widget_size_min_set(ob, 140, -1);
+   e_widget_entry_readonly_set(ob, 1);
+   e_widget_table_object_append(ot, ob, 1, 6, 1, 1, 1, 0, 1, 0);
+
+   ob = e_widget_label_add(evas, _("File Type:"));
+   e_widget_table_object_append(ot, ob, 0, 7, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->mime), NULL, NULL, NULL);
+   e_widget_size_min_set(ob, 140, -1);
+   e_widget_entry_readonly_set(ob, 1);
+   e_widget_table_object_append(ot, ob, 1, 7, 1, 1, 1, 0, 1, 0);
+
+   of = e_widget_frametable_add(evas, _("Permissions"), 0);
+   ob = e_widget_entry_add(evas, &(cfdata->owner), NULL, NULL, NULL);
+
+   e_widget_entry_readonly_set(ob, 1);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("read"), &(cfdata->owner_read));
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Others can write"), &(cfdata->others_write));
+   ob = e_widget_check_add(evas, _("write"), &(cfdata->owner_write));
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Owner can read"), &(cfdata->owner_read));
+   ob = e_widget_check_add(evas, _("execute"), &(cfdata->owner_exec));
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
+
+   ob = e_widget_label_add(evas, _("Group:"));
+   e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("read"), &(cfdata->group_read));
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Owner can write"), &(cfdata->owner_write));
+   ob = e_widget_check_add(evas, _("write"), &(cfdata->group_write));
    e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
-   e_widget_table_object_append(ot, of, 0, 4, 2, 1, 1, 0, 1, 0);
+   ob = e_widget_check_add(evas, _("execute"), &(cfdata->group_exec));
+   e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
+
+   ob = e_widget_label_add(evas, _("Others:"));
+   e_widget_frametable_object_append(of, ob, 2, 0, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("read"), &(cfdata->others_read));
+   e_widget_frametable_object_append(of, ob, 2, 1, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("write"), &(cfdata->others_write));
+   e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("execute"), &(cfdata->others_exec));
+   e_widget_frametable_object_append(of, ob, 2, 3, 1, 1, 1, 1, 1, 1);
+
+   e_widget_table_object_append(ot, of, 0, 8, 2, 1, 1, 0, 1, 0);
 
    e_widget_table_object_append(o, ot, 0, 0, 1, 1, 1, 1, 1, 1);
 
@@ -401,7 +497,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
                        cfdata->ic,
                        NULL, NULL, 0, &itype);
    e_widget_button_icon_set(ob, oi);
-   e_widget_frametable_object_append(ot, ob, 0, 0, 1, 3, 0, 1, 0, 1);
+   e_widget_frametable_object_append(ot, ob, 0, 0, 1, 3, 1, 1, 1, 1);
 
    if (itype)
      {
@@ -454,7 +550,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         ob = e_widget_entry_add(evas, &(cfdata->link), NULL, NULL, NULL);
         e_widget_frametable_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
 
-        e_widget_table_object_append(o, ot, 1, 1, 1, 1, 1, 1, 1, 1);
+        if (cfdata->fi->broken_link)
+          {
+            ob = e_widget_label_add(evas, _("This link is broken."));
+            e_widget_frametable_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+          }
+
+        e_widget_table_object_append(o, ot, 1, 1, 2, 1, 1, 1, 1, 1);
      }
    return o;
 }
