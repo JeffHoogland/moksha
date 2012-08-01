@@ -731,6 +731,7 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
                                     e_fm2_pan_max_get,
                                     e_fm2_pan_child_size_get);
    evas_object_propagate_events_set(page->flist, 0);
+   e_widget_can_focus_set(o, EINA_FALSE);
    e_widget_scrollframe_focus_object_set(o, page->flist);
 
    page->flist_frame = o;
@@ -800,6 +801,7 @@ _e_fwin_page_create(E_Fwin *fwin)
                                     e_fm2_pan_max_get,
                                     e_fm2_pan_child_size_get);
    evas_object_propagate_events_set(page->fm_obj, 0);
+   e_widget_can_focus_set(o, EINA_FALSE);
    page->scrollframe_obj = o;
    page->scr = e_widget_scrollframe_object_get(o);
    e_scrollframe_custom_theme_set(page->scr, "base/theme/fileman",
@@ -2095,7 +2097,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
 
    apps = _e_fwin_suggested_apps_list_get(files, &mlist, &has_default);
 
-   fprintf(stderr, "GOGOGOGOOGOGOG\n");
+//   fprintf(stderr, "GOGOGOGOOGOGOG\n");
    if (!always)
      {
         /* FIXME: well this is simplisitic - if only 1 mime type is being
@@ -2119,10 +2121,10 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
              Eina_List *files_list = NULL;
 
              need_dia = 1;
-             fprintf(stderr, "XXXXX %i %p\n", has_default, apps);
+             //fprintf(stderr, "XXXXX %i %p\n", has_default, apps);
              if ((has_default) && (apps)) desk = apps->data;
              else if (mlist) desk = e_exehist_mime_desktop_get(mlist->data);
-             fprintf(stderr, "mlist = %p\n", mlist);
+             //fprintf(stderr, "mlist = %p\n", mlist);
              getcwd(pcwd, sizeof(pcwd));
              chdir(e_fm2_real_path_get(page->fm_obj));
 
