@@ -6349,7 +6349,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
                                 sd->realpath, ecore_file_file_get(fp));
                        if (sd->config->view.link_drop)
                          {
-                            _e_fm2_client_file_symlink(buf, fp, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h, sd->obj);
+                            _e_fm2_client_file_symlink(fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h, sd->obj);
                          }
                        else
                          {
