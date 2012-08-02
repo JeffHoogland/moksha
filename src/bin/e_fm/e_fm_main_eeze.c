@@ -355,10 +355,14 @@ _e_fm_main_eeze_volume_add(const char *syspath,
    type = eeze_disk_type_get(v->disk);
    if ((type == EEZE_DISK_TYPE_INTERNAL) || (type == EEZE_DISK_TYPE_UNKNOWN))
      {
-        INF("VOL is %s, ignoring", (type == EEZE_DISK_TYPE_INTERNAL) ? "internal" : "unknown");
-        eeze_disk_free(v->disk);
-        free(v);
-        return NULL;
+        str = eeze_disk_mount_point_get(v->disk);
+        if ((type != EEZE_DISK_TYPE_INTERNAL) || (str && (strncmp(str, "/media/", 7))))
+          {
+             INF("VOL is %s, ignoring", (type == EEZE_DISK_TYPE_INTERNAL) ? "internal" : "unknown");
+             eeze_disk_free(v->disk);
+             free(v);
+             return NULL;
+          }
      }
    eeze_disk_data_set(v->disk, v);
    v->udi = eina_stringshare_add(syspath);
@@ -560,10 +564,10 @@ _e_fm_main_eeze_volume_mount(E_Volume *v)
    eeze_disk_mountopts_set(v->disk, opts);
    if (!eeze_disk_mount_wrapper_get(v->disk))
      {
-        char buf[PATH_MAX];
+        char buf2[PATH_MAX];
 
-        snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_sys", eina_prefix_lib_get(pfx));
-        eeze_disk_mount_wrapper_set(v->disk, buf);
+        snprintf(buf2, sizeof(buf2), "%s/enlightenment/utils/enlightenment_sys", eina_prefix_lib_get(pfx));
+        eeze_disk_mount_wrapper_set(v->disk, buf2);
      }
    v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_eeze_vol_mount_timeout, v);
    INF("MOUNT: %s", v->udi);
