@@ -1,8 +1,6 @@
 #ifndef E_FM_MAIN_EEZE_H
 #define E_FM_MAIN_EEZE_H
 
-E_Volume *_e_fm_main_eeze_volume_add(const char *syspath, Eina_Bool first_time);
-void _e_fm_main_eeze_volume_del(const char *syspath);
 E_Volume *_e_fm_main_eeze_volume_find(const char *syspath);
 
 void _e_fm_main_eeze_volume_eject(E_Volume *v);

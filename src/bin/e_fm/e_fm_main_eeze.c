@@ -45,6 +45,7 @@ static void _e_fm_main_eeze_storage_rescan(const char *syspath);
 static void _e_fm_main_eeze_volume_rescan(const char *syspath);
 static E_Volume *_e_fm_main_eeze_volume_find_fast(const char *syspath);
 static E_Storage *_e_fm_main_eeze_storage_find_fast(const char *syspath);
+static void _e_fm_main_eeze_volume_del(const char *syspath);
 
 static Eina_List *_e_stores = NULL;
 static Eina_List *_e_vols = NULL;
@@ -341,7 +342,7 @@ _e_fm_main_eeze_volume_add(const char *syspath,
    Eeze_Disk_Type type;
 
    if (!syspath) return NULL;
-   if (e_volume_find(syspath)) return NULL;
+   if (_e_fm_main_eeze_volume_find_fast(syspath)) return NULL;
    v = calloc(1, sizeof(E_Volume));
    if (!v) return NULL;
    v->disk = eeze_disk_new(syspath);
@@ -463,12 +464,12 @@ _e_fm_main_eeze_volume_add(const char *syspath,
    return v;
 }
 
-void
+static void
 _e_fm_main_eeze_volume_del(const char *syspath)
 {
    E_Volume *v;
 
-   v = e_volume_find(syspath);
+   v = _e_fm_main_eeze_volume_find_fast(syspath);
    if (!v) return;
    if (v->guard)
      {
