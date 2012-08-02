@@ -1587,9 +1587,9 @@ EAPI void
 e_fm2_pan_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    EFM_SMART_CHECK();
-   if (x > (sd->max.w - sd->w)) x = sd->max.w - sd->w;
+   x = MIN(x, sd->max.w - sd->w);
    if (x < 0) x = 0;
-   if (y > (sd->max.h - sd->h)) y = sd->max.h - sd->h;
+   y = MIN(y, sd->max.h - sd->h);
    if (y < 0) y = 0;
    if ((sd->pos.x == x) && (sd->pos.y == y)) return;
    sd->pos.x = x;
@@ -4008,8 +4008,6 @@ _e_fm2_icons_place_list(E_Fm2_Smart_Data *sd)
      }
    EINA_LIST_FOREACH(sd->icons, l, ic)
      ic->w = w;
-   if (w > sd->w)
-     evas_object_resize(sd->obj, w, sd->h);
 }
 
 static void
