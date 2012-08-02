@@ -218,11 +218,6 @@ static void
 _file_select_cancel_cb(void *data __UNUSED__, E_Dialog *dia)
 {
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
-   if (win)
-     {
-        e_object_del(E_OBJECT(win));
-        win = NULL;
-     }
    fsel_dia = NULL;
 }
 
