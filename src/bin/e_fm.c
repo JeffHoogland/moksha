@@ -10392,10 +10392,9 @@ e_fm2_favorites_init(void)
    char buf[PATH_MAX], buf2[PATH_MAX], *file;
 
    // make dir for favorites and install ones shipped
-   snprintf(buf, sizeof(buf), "%s/fileman/favorites", e_user_dir_get());
+   e_user_dir_concat_static(buf, "fileman/favorites");
    ecore_file_mkpath(buf);
-   e_user_dir_concat_static(buf2, "fileman/favorites");
-   if (!ecore_file_dir_is_empty(buf2)) return;
+   if (!ecore_file_dir_is_empty(buf)) return;
    e_prefix_data_concat(buf, sizeof(buf), "data/favorites");
    files = ecore_file_ls(buf);
    if (!files) return;
