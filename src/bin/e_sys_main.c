@@ -93,6 +93,7 @@ main(int argc,
      {
         exit(1);
      }
+   if (!action) exit(1);
 
    uid = getuid();
    gid = getgid();
