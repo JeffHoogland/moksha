@@ -20,7 +20,6 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    Eina_List *files;
    char buf[PATH_MAX], buf2[PATH_MAX], *file;
 
-   e_fm2_favorites_init();
    // make desktop dir
    e_user_homedir_concat(buf, sizeof(buf), _("Desktop"));
    ecore_file_mkpath(buf);
