@@ -701,20 +701,17 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
    max_lines = i;
    text = alloca(tlen + 1);
 
-   if (text)
+   text[0] = 0;
+   for (i = 0; i < max_lines; i++)
      {
-        text[0] = 0;
-        for (i = 0; i < max_lines; i++)
-          {
-             strcat(text, lines[i].line);
-             strcat(text, "\n");
-          }
-
-        /* Append the warning about truncated output. */
-        if (lines[max_lines].line) strcat(text, trunc_note);
-
-        e_widget_textblock_plain_set(obj, text);
+        strcat(text, lines[i].line);
+        strcat(text, "\n");
      }
+
+   /* Append the warning about truncated output. */
+   if (lines[max_lines].line) strcat(text, trunc_note);
+
+   e_widget_textblock_plain_set(obj, text);
    e_widget_size_min_set(obj, 240, 120);
 
    e_widget_framelist_object_append(os, obj);
@@ -891,18 +888,15 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
         for (i = 0; cfdata->read->lines[i].line; i++)
           tlen += cfdata->read->lines[i].size + 2;
         text = alloca(tlen + 1);
-        if (text)
+        text[0] = 0;
+        for (i = 0; cfdata->read->lines[i].line; i++)
           {
-             text[0] = 0;
-             for (i = 0; cfdata->read->lines[i].line; i++)
-               {
-                  strcat(text, "\t");
-                  strcat(text, cfdata->read->lines[i].line);
-                  strcat(text, "\n");
-               }
-             snprintf(buffer, sizeof(buffer), "Output Data:\n%s\n\n", text);
-             fwrite(buffer, sizeof(char), strlen(buffer), f);
+             strcat(text, "\t");
+             strcat(text, cfdata->read->lines[i].line);
+             strcat(text, "\n");
           }
+        snprintf(buffer, sizeof(buffer), "Output Data:\n%s\n\n", text);
+        fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
    else
      {
@@ -920,18 +914,15 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
         for (i = 0; cfdata->error->lines[i].line; i++)
           tlen += cfdata->error->lines[i].size + 1;
         text = alloca(tlen + 1);
-        if (text)
+        text[0] = 0;
+        for (i = 0; cfdata->error->lines[i].line; i++)
           {
-             text[0] = 0;
-             for (i = 0; cfdata->error->lines[i].line; i++)
-               {
-                  strcat(text, "\t");
-                  strcat(text, cfdata->error->lines[i].line);
-                  strcat(text, "\n");
-               }
-             snprintf(buffer, sizeof(buffer), "Error Logs:\n%s\n", text);
-             fwrite(buffer, sizeof(char), strlen(buffer), f);
+             strcat(text, "\t");
+             strcat(text, cfdata->error->lines[i].line);
+             strcat(text, "\n");
           }
+        snprintf(buffer, sizeof(buffer), "Error Logs:\n%s\n", text);
+        fwrite(buffer, sizeof(char), strlen(buffer), f);
      }
    else
      {
