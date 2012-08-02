@@ -1331,7 +1331,7 @@ e_fm2_has_parent_get(Evas_Object *obj)
 {
    EFM_SMART_CHECK(0);
    if (!sd->path) return 0;
-   if ((sd->path[0] == 0) || (!strcmp(sd->path, "/"))) return 0;
+   if ((sd->realpath[0] == 0) || (!strcmp(sd->realpath, "/"))) return 0;
    return 1;
 }
 
@@ -1348,15 +1348,20 @@ e_fm2_parent_go(Evas_Object *obj)
    char *p, *path;
    EFM_SMART_CHECK();
    if (!sd->path) return;
-   path = strdup(sd->path);
+   path = strdupa(sd->path);
    if (!path) return;
    if ((p = strrchr(path, '/'))) *p = 0;
-   if (*path == 0)
-     e_fm2_path_set(obj, sd->dev, "/");
-   else
+   if (*path)
      e_fm2_path_set(obj, sd->dev, path);
-
-   free(path);
+   else
+     {
+        path = strdupa(sd->realpath);
+        p = strrchr(path, '/');
+        if (!p) return;
+        *p = 0;
+        e_fm2_path_set(obj, "/", path);
+     }
+     
 }
 
 EAPI void
