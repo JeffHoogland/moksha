@@ -1446,7 +1446,7 @@ _e_fwin_changed(void *data,
    E_Fwin_Page *page;
    E_Fm2_Config *cfg;
    Efreet_Desktop *ef;
-   const char *dev;
+   const char *dev, *path;
    char buf[PATH_MAX];
 
    page = data;
@@ -1456,7 +1456,8 @@ _e_fwin_changed(void *data,
    cfg = e_fm2_config_get(page->fm_obj);
    e_fm2_path_get(page->fm_obj, &dev, NULL);
    e_user_dir_concat_static(buf, "fileman/favorites");
-   if ((dev && (!strcmp(dev, "favorites"))) || (!strcmp(buf, e_fm2_real_path_get(page->fm_obj))))
+   path = e_fm2_real_path_get(page->fm_obj);
+   if ((dev && (!strcmp(dev, "favorites"))) || (path && (!strcmp(buf, path))))
      cfg->view.link_drop = 1;
    else
      cfg->view.link_drop = 0;
