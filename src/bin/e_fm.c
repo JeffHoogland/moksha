@@ -10355,3 +10355,25 @@ e_fm2_real_path_map(const char *dev, const char *path)
 {
    return _e_fm2_dev_path_map(dev, path);
 }
+
+EAPI void
+e_fm2_favorites_init(void)
+{
+   Eina_List *files;
+   char buf[PATH_MAX], buf2[PATH_MAX], *file;
+
+   // make dir for favorites and install ones shipped
+   snprintf(buf, sizeof(buf), "%s/fileman/favorites", e_user_dir_get());
+   ecore_file_mkpath(buf);
+   e_prefix_data_concat(buf, sizeof(buf), "data/favorites");
+   files = ecore_file_ls(buf);
+   if (!files) return 0;
+   EINA_LIST_FREE(files, file)
+     {
+        e_prefix_data_snprintf(buf, sizeof(buf), "data/favorites/%s", file);
+        snprintf(buf2, sizeof(buf2), "%s/fileman/favorites/%s",
+                 e_user_dir_get(), file);
+        ecore_file_cp(buf, buf2);
+        free(file);
+     }
+}
