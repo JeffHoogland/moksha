@@ -1671,16 +1671,12 @@ collections {
             target: "bottom";
             target: "e.swallow.client";
          }
-         // don't have any animation or stat change to do at the start of shading
-         //    program { name: "xx";
-         //       signal: "e,state,shading";
-         //       source: "e";
-         //    }
          program {
             name: "shade_end";
             /* run when the window finishes its
              * shading animation */
             signal: "e,state,shaded";
+            signal: "e,state,shading";
             source: "e";
             action: STATE_SET "shaded" 0.0;
             target: "bottom";
@@ -1696,6 +1692,7 @@ collections {
             name: "unshade_start";
             /* run when the window starts
              * unshading itself */
+            signal: "e,state,unshaded";
             signal: "e,state,unshading";
             source: "e";
             action: STATE_SET "default" 0.0;
@@ -1708,11 +1705,6 @@ collections {
             target: "e.event.resize.t";
             target: "e.event.resize.b";
          }
-         // don't have any animation or stat change to do at the end of unshading
-         //    program { name: "xx";
-         //       signal: "e,state,unshaded";
-         //       source: "e";
-         //    }
          program {
             name: "resize_b_on";
             signal: "mouse,in";
