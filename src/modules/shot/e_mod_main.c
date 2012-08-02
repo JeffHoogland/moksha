@@ -30,6 +30,7 @@ static E_Dialog *fsel_dia = NULL;
 static E_Border_Menu_Hook *border_hook = NULL;
 
 static void _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia);
+static void _file_select_cancel_cb(void *data __UNUSED__, E_Dialog *dia);
 
 static void
 _win_delete_cb(E_Win *w __UNUSED__)
@@ -115,9 +116,9 @@ _save_key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __
 {
    Evas_Event_Key_Down *ev = event;
    if ((!strcmp(ev->keyname, "Return")) || (!strcmp(ev->keyname, "KP_Enter")))
-     {
-        _file_select_ok_cb(NULL, fsel_dia);
-     }            
+     _file_select_ok_cb(NULL, fsel_dia);
+   else if (!strcmp(ev->keyname, "Escape"))
+     _file_select_cancel_cb(NULL, fsel_dia);
 }            
 
 static void
@@ -260,6 +261,8 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    if (!evas_object_key_grab(o, "Return", mask, ~mask, 0)) printf("grab err\n");
    mask = 0;
    if (!evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0)) printf("grab err\n");
+   mask = 0;
+   if (!evas_object_key_grab(o, "Escape", mask, ~mask, 0)) printf("grab err\n");
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _save_key_down_cb, NULL);
    e_dialog_show(dia);
 }
