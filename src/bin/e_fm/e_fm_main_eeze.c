@@ -168,8 +168,7 @@ _e_fm_main_eeze_cb_vol_mounted(void *user_data __UNUSED__,
    char *buf;
    int size;
 
-   //v = eeze_disk_data_get(ev->disk); THIS IS BROKEN DON'T ASK WHY
-   v = _e_fm_main_eeze_volume_find_fast(eeze_disk_syspath_get(ev->disk));
+   v = eeze_disk_data_get(ev->disk);
    if (v->guard)
      {
         ecore_timer_del(v->guard);
@@ -219,8 +218,7 @@ _e_fm_main_eeze_cb_vol_error(void *user_data __UNUSED__,
    char *buf;
    int size;
 
-   //v = eeze_disk_data_get(ev->disk); THIS IS BROKEN DON'T ASK WHY
-   v = _e_fm_main_eeze_volume_find_fast(eeze_disk_syspath_get(ev->disk));
+   v = eeze_disk_data_get(ev->disk);
    if (v->mounted)
      {
         size = _e_fm_main_eeze_format_error_msg(&buf, v, "org.enlightenment.fm2.UnmountError", ev->message);
@@ -246,8 +244,7 @@ _e_fm_main_eeze_cb_vol_unmounted(void *user_data __UNUSED__,
    int size;
    E_Volume *v;
 
-   v = _e_fm_main_eeze_volume_find_fast(eeze_disk_syspath_get(ev->disk));
-   //v = eeze_disk_data_get(ev->disk); THIS IS BROKEN DON'T ASK WHY
+   v = eeze_disk_data_get(ev->disk);
    if (v->guard)
      {
         ecore_timer_del(v->guard);
