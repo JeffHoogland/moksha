@@ -362,7 +362,7 @@ mount_args_check(int argc, char **argv, const char *action)
         node = strrchr(argv[2], '/');
         if (!node) return EINA_FALSE;
         if (!node[1]) return EINA_FALSE;
-        if (node - argv[2] != 5) return EINA_FALSE;
+        if (node - argv[2] != 4) return EINA_FALSE;
      }
    else return EINA_FALSE;
    return EINA_TRUE;
