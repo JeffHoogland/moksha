@@ -11,14 +11,6 @@ desks_DATA = \
 data/extra_desktops/mplayer.desktop \
 data/extra_desktops/xterm.desktop
 
-favsdir = $(libdir)/enlightenment/modules/$(MODULE)/favorites
-favs_DATA = \
-data/favorites/.order \
-data/favorites/desktop.desktop \
-data/favorites/home.desktop \
-data/favorites/root.desktop \
-data/favorites/tmp.desktop
-
 desktopdir = $(libdir)/enlightenment/modules/$(MODULE)/desktop
 desktop_DATA = \
 data/desktop/home.desktop \

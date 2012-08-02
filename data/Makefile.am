@@ -9,4 +9,5 @@ etc \
 icons \
 backgrounds \
 flags \
+favorites \
 desktop

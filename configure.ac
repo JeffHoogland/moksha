@@ -1038,6 +1038,7 @@ src/preload/Makefile
 data/Makefile
 data/images/Makefile
 data/flags/Makefile
+data/favorites/Makefile
 data/desktop/Makefile
 data/input_methods/Makefile
 data/themes/Makefile
