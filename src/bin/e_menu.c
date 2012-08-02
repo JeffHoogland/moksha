@@ -1170,9 +1170,9 @@ _e_menu_idler(E_Menu *m)
    t = ecore_loop_time_get();
    evas_event_freeze(m->evas);
    e_box_freeze(m->container_object);
-   EINA_LIST_FOREACH(m->items, m->idler_pos, mi)
+   EINA_LIST_FOREACH(m->idler_pos, m->idler_pos, mi)
      {
-        if (ecore_loop_time_get() - t >= 0.5 * ecore_animator_frametime_get())
+        if (ecore_time_get() - t >= 0.8 * ecore_animator_frametime_get())
           break;
         _e_menu_item_realize(mi);
      }
@@ -1627,7 +1627,7 @@ _e_menu_realize(E_Menu *m)
 
    EINA_LIST_FOREACH(m->items, m->idler_pos, mi)
      {
-        if (ecore_loop_time_get() - t >= 0.5 * ecore_animator_frametime_get())
+        if (ecore_time_get() - t >= 0.8 * ecore_animator_frametime_get())
           break;
         _e_menu_item_realize(mi);
      }
@@ -1878,6 +1878,9 @@ _e_menu_unrealize(E_Menu *m)
    if (m->bg_object) evas_object_del(m->bg_object);
    m->bg_object = NULL;
    if (m->container_object) evas_object_del(m->container_object);
+   if (m->idler) ecore_idler_del(m->idler);
+   m->idler = NULL;
+   m->idler_pos = NULL;
    m->container_object = NULL;
    m->cur.visible = 0;
    m->prev.visible = 0;

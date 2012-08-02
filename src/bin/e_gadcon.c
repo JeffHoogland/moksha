@@ -5205,14 +5205,14 @@ _e_gadcon_custom_populate_idler(void *data __UNUSED__)
 #endif
    EINA_LIST_FREE(custom_populate_requests, gc)
      {
-        if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get()) break;
+        if (ecore_time_get() - loop >= ecore_animator_frametime_get()) break;
         if (!gc->cf) continue;
         e_gadcon_layout_freeze(gc->o_container);
         EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
           {
              cc = eina_hash_find(providers, cf_gcc->name);
              if (!cc) continue;
-             if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get())
+             if (ecore_time_get() - loop >= ecore_animator_frametime_get())
                {
                   e_gadcon_layout_thaw(gc->o_container);
                   goto out;
@@ -5261,7 +5261,7 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
    EINA_LIST_FOREACH(gadcons, l, gc)
      EINA_LIST_FREE(gc->populate_requests, cc)
        {
-          if (ecore_loop_time_get() - loop >= ecore_animator_frametime_get())
+          if (ecore_time_get() - loop >= ecore_animator_frametime_get())
             {
                more = EINA_TRUE;
                goto out;
