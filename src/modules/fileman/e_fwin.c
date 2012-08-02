@@ -1444,12 +1444,22 @@ _e_fwin_changed(void *data,
 {
    E_Fwin *fwin;
    E_Fwin_Page *page;
+   E_Fm2_Config *cfg;
    Efreet_Desktop *ef;
+   const char *dev;
    char buf[PATH_MAX];
 
    page = data;
    fwin = page->fwin;
    if (!fwin) return;  //safety
+
+   cfg = e_fm2_config_get(page->fm_obj);
+   e_fm2_path_get(page->fm_obj, &dev, NULL);
+   e_user_dir_concat_static(buf, "fileman/favorites");
+   if ((dev && (!strcmp(dev, "favorites"))) || (!strcmp(buf, e_fm2_real_path_get(page->fm_obj))))
+     cfg->view.link_drop = 1;
+   else
+     cfg->view.link_drop = 0;
 
    /* FIXME: first look in E config for a special override for this dir's bg
     * or overlay
