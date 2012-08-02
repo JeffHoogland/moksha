@@ -219,12 +219,12 @@ _e_smart_reconfigure_do(void *data)
    if (sd->h > sd->ch) oy = (sd->h - sd->ch) / 2;
 
    EINA_LIST_FOREACH(sd->items, l, it)
-     { 
+     {
         Evas_Coord dx, dy;
 
         dx = dy = 0;
         if ((sd->sx >= 0) && (sd->selmove > 0.0)
-            
+
 /*            &&
             ((it->x + it->w) > sd->cx) &&
             ((it->x) < (sd->cx + sd->w)) &&
@@ -339,13 +339,13 @@ _e_smart_reconfigure_do(void *data)
 
                             f = e_theme_edje_file_get("base/theme/backgrounds",
                                                       "e/desktop/background");
-                            e_thumb_icon_file_set(it->image, f, 
+                            e_thumb_icon_file_set(it->image, f,
                                                   "e/desktop/background");
                          }
                        else
-                         e_thumb_icon_file_set(it->image, it->file, 
+                         e_thumb_icon_file_set(it->image, it->file,
                                                "e/desktop/background");
-                       e_thumb_icon_size_set(it->image, sd->info->iw, 
+                       e_thumb_icon_size_set(it->image, sd->info->iw,
                                              sd->info->ih);
                        evas_object_show(it->image);
 
@@ -372,7 +372,7 @@ _e_smart_reconfigure_do(void *data)
                   it->frame = NULL;
                }
              it->visible = EINA_FALSE;
-/*             
+/*
              if (it->have_thumb)
                {
                   if (it->do_thumb)
@@ -540,9 +540,9 @@ _pan_add(Evas *evas)
           NULL,
           NULL,
           NULL,
-          NULL, 
-          NULL, 
-          NULL, 
+          NULL,
+          NULL,
+          NULL,
           NULL
      };
    smart = evas_smart_class_new(&sc);
@@ -680,7 +680,7 @@ _pan_sel(Evas_Object *obj, Item *it)
 
    if (sd->selmove > 0.0) return;
    edje_object_signal_emit(it->frame, "e,state,selected", "e");
-   evas_object_raise(it->frame); 
+   evas_object_raise(it->frame);
    if (!it->selected)
      {
         Eina_List *l;
@@ -720,7 +720,7 @@ _pan_sel(Evas_Object *obj, Item *it)
              edje_object_file_set(sd->info->mini, f, "e/desktop/background");
              sd->info->use_theme_bg = 1;
              sd->info->bg_file = NULL;
-             edje_object_part_text_set(sd->info->bg, "e.text.filename", 
+             edje_object_part_text_set(sd->info->bg, "e.text.filename",
                                        _("Theme Wallpaper"));
           }
         evas_object_show(sd->info->mini);
@@ -827,15 +827,15 @@ _thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
      }
 }
 
-static void         
+static void
 _item_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
 //   Evas_Event_Mouse_Down *ev = event_info;
 //   Item *it = data;
 //   _pan_sel(it->obj, it);
 }
-    
-static void         
+
+static void
 _item_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev = event_info;
@@ -851,7 +851,7 @@ _item_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *even
           }
      }
 }
-    
+
 static void
 _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool theme)
 {
@@ -913,7 +913,7 @@ _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool th
         if (sd->info->use_theme_bg)
           {
              _pan_hilight(it->obj, it);
-             edje_object_part_text_set(sd->info->bg, "e.text.filename", 
+             edje_object_part_text_set(sd->info->bg, "e.text.filename",
                                        _("Theme Wallpaper"));
           }
      }
@@ -979,7 +979,7 @@ _bg_clicked(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUS
 }
 
 static void
-_ok(void *data, void *data2 __UNUSED__)
+_apply(void *data, void *data2 __UNUSED__)
 {
    Info *info = data;
 
@@ -1002,7 +1002,7 @@ _ok(void *data, void *data2 __UNUSED__)
      {
         /* specific desk */
         e_bg_del(info->con_num, info->zone_num, info->desk_x, info->desk_y);
-        e_bg_add(info->con_num, info->zone_num, info->desk_x, info->desk_y, 
+        e_bg_add(info->con_num, info->zone_num, info->desk_x, info->desk_y,
                  info->bg_file);
      }
    else
@@ -1022,7 +1022,19 @@ _ok(void *data, void *data2 __UNUSED__)
      }
    e_bg_update();
    e_config_save_queue();
+}
+
+static void
+_close(void *data __UNUSED__, void *data2 __UNUSED__)
+{
    wp_conf_hide();
+}
+
+static void
+_ok(void *data, void *data2 __UNUSED__)
+{
+  _apply(data, data2);
+  wp_conf_hide();
 }
 
 static void
@@ -1093,7 +1105,7 @@ _scan(Info *info)
           {
              info->scans = 0;
              edje_object_signal_emit(info->bg, "e,state,busy,on", "e");
-             edje_object_part_text_set(info->bg, "e.text.busy_label", 
+             edje_object_part_text_set(info->bg, "e.text.busy_label",
                                        _("Loading files..."));
           }
         if (info->curdir) free(info->curdir);
@@ -1115,7 +1127,7 @@ wp_browser_new(E_Container *con)
    Evas_Coord mw, mh;
    Evas_Object *o, *o2, *ob;
    E_Radio_Group *rg;
-   char buf[PATH_MAX];   
+   char buf[PATH_MAX];
 
    info = calloc(1, sizeof(Info));
    if (!info) return NULL;
@@ -1174,11 +1186,23 @@ wp_browser_new(E_Container *con)
    edje_object_signal_callback_add(info->bg, "e,action,click", "e",
                                    _bg_clicked, info);
 
-   // ok button
    info->box = e_widget_list_add(info->win->evas, 1, 1);
 
-   info->button = e_widget_button_add(info->win->evas, _("OK"), NULL, 
+   // ok button
+   info->button = e_widget_button_add(info->win->evas, _("OK"), NULL,
                                       _ok, info, NULL);
+   evas_object_show(info->button);
+   e_widget_list_object_append(info->box, info->button, 1, 0, 0.5);
+
+   // apply button
+   info->button = e_widget_button_add(info->win->evas, _("Apply"), NULL,
+                                      _apply, info, NULL);
+   evas_object_show(info->button);
+   e_widget_list_object_append(info->box, info->button, 1, 0, 0.5);
+
+   // close button
+   info->button = e_widget_button_add(info->win->evas, _("Close"), NULL,
+                                      _close, info, NULL);
    evas_object_show(info->button);
    e_widget_list_object_append(info->box, info->button, 1, 0, 0.5);
 
@@ -1190,7 +1214,7 @@ wp_browser_new(E_Container *con)
    // preview
    info->preview = e_livethumb_add(info->win->evas);
    e_livethumb_vsize_set(info->preview, zone->w, zone->h);
-   edje_extern_object_aspect_set(info->preview, EDJE_ASPECT_CONTROL_NEITHER, 
+   edje_extern_object_aspect_set(info->preview, EDJE_ASPECT_CONTROL_NEITHER,
                                  zone->w, zone->h);
    edje_object_part_swallow(info->bg, "e.swallow.preview", info->preview);
    evas_object_show(info->preview);
@@ -1217,7 +1241,7 @@ wp_browser_new(E_Container *con)
    e_scrollframe_custom_theme_set(info->sframe, "base/theme/widgets",
                                   "e/conf/wallpaper/main/scrollframe");
    e_scrollframe_extern_pan_set(info->sframe, info->span,
-                                _pan_set, _pan_get, _pan_max_get, 
+                                _pan_set, _pan_get, _pan_max_get,
                                 _pan_child_size_get);
    edje_object_part_swallow(info->bg, "e.swallow.list", info->sframe);
    evas_object_show(info->sframe);
@@ -1242,7 +1266,7 @@ wp_browser_new(E_Container *con)
    o2 = e_widget_radio_add(info->win->evas, _("This Screen"), 2, rg);
    evas_object_smart_callback_add(o2, "changed", _wp_changed, info);
    e_widget_list_object_append(o, o2, 1, 0, 0.5);
-   if (!(e_util_container_zone_number_get(0, 1) || 
+   if (!(e_util_container_zone_number_get(0, 1) ||
          (e_util_container_zone_number_get(1, 0))))
      e_widget_disabled_set(o2, EINA_TRUE);
    evas_object_show(o2);
@@ -1252,12 +1276,12 @@ wp_browser_new(E_Container *con)
 
    o = e_widget_list_add(info->win->evas, 1, 0);
 
-   o2 =  e_widget_button_add(info->win->evas, _("Add"), NULL, 
+   o2 =  e_widget_button_add(info->win->evas, _("Add"), NULL,
                              _wp_add, info, NULL);
    e_widget_list_object_append(o, o2, 1, 0, 0.5);
    evas_object_show(o2);
 
-   o2 =  e_widget_button_add(info->win->evas, _("Delete"), NULL, 
+   o2 =  e_widget_button_add(info->win->evas, _("Delete"), NULL,
                              _wp_delete, info, NULL);
    e_widget_list_object_append(o, o2, 1, 0, 0.5);
    evas_object_show(o2);
@@ -1300,7 +1324,7 @@ wp_broser_free(Info *info)
    if (info->dir) eina_iterator_free(info->dir);
    free(info->bg_file);
    free(info->curdir);
-   EINA_LIST_FREE(info->dirs, s) 
+   EINA_LIST_FREE(info->dirs, s)
      free(s);
    if (info->idler) ecore_idler_del(info->idler);
    // del other stuff

@@ -26,15 +26,15 @@ e_modapi_init(E_Module *m)
    maug = e_int_menus_menu_augmentation_add_sorted
      ("config/1", _("Wallpaper 2"), _e_mod_menu_add, NULL, NULL, NULL);
 
-//   import_hdl = e_fm2_mime_handler_new(_("Set As Background 2"), "preferences-desktop-wallpaper", 
+//   import_hdl = e_fm2_mime_handler_new(_("Set As Background 2"), "preferences-desktop-wallpaper",
 //				       e_int_config_wallpaper_handler_set, NULL,
 //				       e_int_config_wallpaper_handler_test, NULL);
-//   if (import_hdl) 
+//   if (import_hdl)
 //     {
 //	e_fm2_mime_handler_mime_add(import_hdl, "image/png");
 //	e_fm2_mime_handler_mime_add(import_hdl, "image/jpeg");
 //     }
-   
+
    conf_module = m;
    e_module_delayed_set(m, 1);
    return m;
@@ -50,20 +50,20 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 	e_int_menus_menu_augmentation_del("config/1", maug);
 	maug = NULL;
      }
-//   while ((cfd = e_config_dialog_get("E", "_config_wallpaper_dialog"))) 
+//   while ((cfd = e_config_dialog_get("E", "_config_wallpaper_dialog")))
 //     e_object_del(E_OBJECT(cfd));
 //   e_configure_registry_item_del("internal/wallpaper_desk");
    e_configure_registry_category_del("internal");
    e_configure_registry_item_del("appearance/wallpaper2");
    e_configure_registry_category_del("appearance");
-   
-//   if (import_hdl) 
+
+//   if (import_hdl)
 //     {
 //	e_fm2_mime_handler_mime_del(import_hdl, "image/png");
 //	e_fm2_mime_handler_mime_del(import_hdl, "image/jpeg");
 //	e_fm2_mime_handler_free(import_hdl);
 //     }
-   
+
    conf_module = NULL;
    return 1;
 }
@@ -75,7 +75,7 @@ e_modapi_save(E_Module *m __UNUSED__)
 }
 
 /* menu item callback(s) */
-static void 
+static void
 _e_mod_run_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    e_configure_registry_call("appearance/wallpaper2", m->zone->container, NULL);
@@ -86,7 +86,7 @@ static void
 _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Wallpaper 2"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-wallpaper");
