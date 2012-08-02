@@ -454,6 +454,10 @@ static void          _e_fm2_volume_icon_update(E_Volume *v);
 
 static void          _e_fm2_operation_abort_internal(E_Fm2_Op_Registry_Entry *ere);
 
+
+static void _e_fm2_favorites_thread_cb(void *d, Ecore_Thread *et);
+static void _e_fm2_thread_cleanup_cb(void *d, Ecore_Thread *et);
+
 static char *_e_fm2_meta_path = NULL;
 static Evas_Smart *_e_fm2_smart = NULL;
 static Eina_List *_e_fm2_list = NULL;
@@ -473,6 +477,7 @@ static const char *_e_fm2_mime_text_uri_list = NULL;
 
 static Ecore_Timer *_e_fm2_mime_flush = NULL;
 static Ecore_Timer *_e_fm2_mime_clear = NULL;
+static Ecore_Thread *_e_fm2_favorites_thread = NULL;
 
 /* contains:
  * _e_volume_edd
@@ -774,6 +779,10 @@ e_fm2_init(void)
    _e_fm2_mime_app_edje = eina_stringshare_add("application/x-extension-edj");
    _e_fm2_mime_text_uri_list = eina_stringshare_add("text/uri-list");
 
+   _e_fm2_favorites_thread = ecore_thread_run(_e_fm2_favorites_thread_cb,
+                                              _e_fm2_thread_cleanup_cb,
+                                              _e_fm2_thread_cleanup_cb, NULL);
+
    /// DBG
    if (!_e_fm2_op_registry_entry_add_handler)
      _e_fm2_op_registry_entry_add_handler =
@@ -824,6 +833,9 @@ e_fm2_shutdown(void)
    _e_fm2_mime_flush = NULL;
    ecore_timer_del(_e_fm2_mime_clear);
    _e_fm2_mime_clear = NULL;
+
+   if (_e_fm2_favorites_thread) ecore_thread_cancel(_e_fm2_favorites_thread);
+   _e_fm2_favorites_thread = NULL;
 
    evas_smart_free(_e_fm2_smart);
    _e_fm2_smart = NULL;
@@ -930,6 +942,18 @@ _e_fm2_path_parent_set(Evas_Object *obj, const char *path)
         else
           e_fm2_path_set(obj, "/", "/");
      }
+}
+
+static void
+_e_fm2_favorites_thread_cb(void *d __UNUSED__, Ecore_Thread *et __UNUSED__)
+{
+   e_fm2_favorites_init();
+}
+
+static void
+_e_fm2_thread_cleanup_cb(void *d __UNUSED__, Ecore_Thread *et __UNUSED__)
+{
+   _e_fm2_favorites_thread = NULL;
 }
 
 EAPI void
@@ -1048,6 +1072,10 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 
    if (!sd->mount || sd->mount->mounted)
      {
+        if (sd->dev && (!strcmp(sd->dev, "favorites")) && (!_e_fm2_favorites_thread))
+          _e_fm2_favorites_thread = ecore_thread_run(_e_fm2_favorites_thread_cb,
+                                                     _e_fm2_thread_cleanup_cb,
+                                                     _e_fm2_thread_cleanup_cb, NULL);
         sd->id = _e_fm2_client_monitor_add(sd->realpath);
         sd->listing = EINA_TRUE;
      }
@@ -10366,9 +10394,11 @@ e_fm2_favorites_init(void)
    // make dir for favorites and install ones shipped
    snprintf(buf, sizeof(buf), "%s/fileman/favorites", e_user_dir_get());
    ecore_file_mkpath(buf);
+   e_user_dir_concat_static(buf2, "fileman/favorites");
+   if (!ecore_file_dir_is_empty(buf2)) return;
    e_prefix_data_concat(buf, sizeof(buf), "data/favorites");
    files = ecore_file_ls(buf);
-   if (!files) return 0;
+   if (!files) return;
    EINA_LIST_FREE(files, file)
      {
         e_prefix_data_snprintf(buf, sizeof(buf), "data/favorites/%s", file);
