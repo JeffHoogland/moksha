@@ -4838,12 +4838,12 @@ _e_fm2_icon_desktop_url_eval(const char *val)
 }
 
 static void
-_e_fm2_cb_eio_stat(void *data, Eio_File *handler __UNUSED__, const Eina_Stat *stat)
+_e_fm2_cb_eio_stat(void *data, Eio_File *handler __UNUSED__, const Eina_Stat *st)
 {
    E_Fm2_Icon *ic = data;
    ic->eio = NULL;
 #define FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(member) \
-   ic->info.statinfo.st_##member = stat->member
+   ic->info.statinfo.st_##member = st->member
 
    FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(dev);
    FUCK_EINA_STAT_WHY_IS_IT_NOT_THE_SAME_AS_STAT(ino);
