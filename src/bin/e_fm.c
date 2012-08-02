@@ -3081,6 +3081,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
               */
              if (e_user_dir_concat_static(buf, "fileman/favorites") >= sizeof(buf))
                return NULL;
+             ecore_file_mkpath(buf);
           }
         else if (strcmp(dev, "desktop") == 0)
           {
