@@ -6444,17 +6444,26 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
      {
         if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_COPY)
           {
-             _e_fm_client_file_copy(args, sd->obj);
+             if (sd->config->view.link_drop)
+               _e_fm_client_file_symlink(args, sd->obj);
+             else
+               _e_fm_client_file_copy(args, sd->obj);
              free(args);
           }
         else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE)
           {
-             _e_fm_client_file_move(args, sd->obj);
+             if (sd->config->view.link_drop)
+               _e_fm_client_file_symlink(args, sd->obj);
+             else
+               _e_fm_client_file_move(args, sd->obj);
              free(args);
           }
         else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
           {
-             _e_fm_drop_menu(args, sd->obj);
+             if (sd->config->view.link_drop)
+               _e_fm_client_file_symlink(args, sd->obj);
+             else
+               _e_fm_drop_menu(args, sd->obj);
           }
      }
 
