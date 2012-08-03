@@ -61,6 +61,7 @@ struct _IBar
    Eina_List   *icons;
    IBar_Order  *io;
    Evas_Coord   dnd_x, dnd_y;
+   Eina_Bool    focused : 1;
 };
 
 struct _IBar_Icon
@@ -69,6 +70,7 @@ struct _IBar_Icon
    Evas_Object    *o_holder, *o_icon;
    Evas_Object    *o_holder2, *o_icon2;
    Efreet_Desktop *app;
+   Ecore_Timer    *reset_timer;
    int             mouse_down;
    struct
    {
@@ -76,6 +78,7 @@ struct _IBar_Icon
       unsigned char dnd : 1;
       int           x, y;
    } drag;
+   Eina_Bool       focused : 1;
 };
 
 static IBar        *_ibar_new(Evas *evas, Instance *inst);
@@ -122,9 +125,9 @@ static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
 
 static Eina_Hash *ibar_orders = NULL;
+static Eina_List *ibars = NULL;
 
 Config *ibar_config = NULL;
-
 
 static IBar_Order *
 _ibar_order_new(IBar *b, const char *path)
@@ -344,6 +347,7 @@ _ibar_new(Evas *evas, Instance *inst)
      eina_strlcpy(buf, inst->ci->dir, sizeof(buf));
    b->io = _ibar_order_new(b, buf);
    _ibar_fill(b);
+   ibars = eina_list_append(ibars, b);
    return b;
 }
 
@@ -357,6 +361,7 @@ _ibar_free(IBar *b)
    if (b->o_empty) evas_object_del(b->o_empty);
    _ibar_order_del(b);
    E_FREE(b);
+   ibars = eina_list_remove(ibars, b);
 }
 
 static void
@@ -621,6 +626,8 @@ _ibar_icon_new(IBar *b, Efreet_Desktop *desktop)
 static void
 _ibar_icon_free(IBar_Icon *ic)
 {
+   if (ic->reset_timer) ecore_timer_del(ic->reset_timer);
+   ic->reset_timer = NULL;
    if (ibar_config->menu)
      {
         e_menu_post_deactivate_callback_set(ibar_config->menu, NULL, NULL);
@@ -796,6 +803,9 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    IBar_Icon *ic;
 
    ic = data;
+   if (ic->reset_timer) ecore_timer_del(ic->reset_timer);
+   ic->reset_timer = NULL;
+   ic->focused = EINA_TRUE;
    _ibar_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibar->inst->ci->show_label)
      _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
@@ -807,6 +817,9 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    IBar_Icon *ic;
 
    ic = data;
+   if (ic->reset_timer) ecore_timer_del(ic->reset_timer);
+   ic->reset_timer = NULL;
+   ic->focused = EINA_FALSE;
    _ibar_icon_signal_emit(ic, "e,state,unfocused", "e");
    if (ic->ibar->inst->ci->show_label)
      _ibar_icon_signal_emit(ic, "e,action,hide,label", "e");
@@ -895,8 +908,48 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
      }
 }
 
+static Eina_Bool
+_ibar_cb_icon_reset(void *data)
+{
+   IBar_Icon *ic = data;
+   
+   if (ic->focused)
+     {
+        _ibar_icon_signal_emit(ic, "e,state,focused", "e");
+        if (ic->ibar->inst->ci->show_label)
+          _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
+     }
+   ic->reset_timer = NULL;
+   return EINA_FALSE;
+}
+
 static void
-_ibar_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info)
+_ibar_icon_go(IBar_Icon *ic, Eina_Bool keep_going)
+{
+   if (ic->app->type == EFREET_DESKTOP_TYPE_APPLICATION)
+     e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
+   else if (ic->app->type == EFREET_DESKTOP_TYPE_LINK)
+     {
+        if (!strncasecmp(ic->app->url, "file:", 5))
+          {
+             E_Action *act;
+             
+             act = e_action_find("fileman");
+             if (act) act->func.go(NULL, ic->app->url + 5);
+          }
+     }
+   /* TODO: bring back "e,action,start|stop" for the startup_notify apps
+    *       when startup_notify is used again
+    */
+   _ibar_icon_signal_emit(ic, "e,action,exec", "e");
+   if (keep_going)
+     {
+        ic->reset_timer = ecore_timer_add(1.0, _ibar_cb_icon_reset, ic);
+     }
+}
+
+static void
+_ibar_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
    IBar_Icon *ic;
@@ -906,25 +959,7 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *e
 
    if ((ev->button == 1) && (ic->mouse_down == 1))
      {
-        if (!ic->drag.dnd)
-          {
-             if (ic->app->type == EFREET_DESKTOP_TYPE_APPLICATION)
-               e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
-             else if (ic->app->type == EFREET_DESKTOP_TYPE_LINK)
-               {
-                  if (!strncasecmp(ic->app->url, "file:", 5))
-                    {
-                       E_Action *act;
-
-                       act = e_action_find("fileman");
-                       if (act) act->func.go(E_OBJECT(obj), ic->app->url + 5);
-                    }
-               }
-             /* TODO: bring back "e,action,start|stop" for the startup_notify apps
-              *       when startup_notify is used again
-              */
-             _ibar_icon_signal_emit(ic, "e,action,exec", "e");
-          }
+        if (!ic->drag.dnd) _ibar_icon_go(ic, EINA_FALSE);
         ic->drag.start = 0;
         ic->drag.dnd = 0;
         ic->mouse_down = 0;
@@ -1225,6 +1260,457 @@ atend:
    _gc_orient(inst->gcc, -1);
 }
 
+static E_Action *act_ibar_focus = NULL;
+static Ecore_X_Window _ibar_focus_win = 0;
+static Ecore_Event_Handler *_ibar_key_down_handler = NULL;
+
+static void _ibar_go_unfocus(void);
+
+static IBar *
+_ibar_manager_find(E_Manager *man)
+{
+   E_Zone *z = e_util_zone_current_get(man);
+   IBar *b;
+   Eina_List *l;
+   
+   if (!z) return NULL;
+   // find iubar on current zone
+   EINA_LIST_FOREACH(ibars, l, b)
+     {
+        if ((!b->inst) || (!b->inst->gcc) || (!b->inst->gcc->gadcon)) continue;
+        if (b->inst->gcc->gadcon->zone == z) return b;
+     }
+   // no ibars on current zone - return any old ibar
+   EINA_LIST_FOREACH(ibars, l, b)
+     {
+        return b;
+     }
+   // no ibars. null.
+   return NULL;
+}
+
+static void
+_ibar_icon_unfocus_focus(IBar_Icon *ic1, IBar_Icon *ic2)
+{
+   if (ic1)
+     {
+        ic1->focused = EINA_FALSE;
+        _ibar_icon_signal_emit(ic1, "e,state,unfocused", "e");
+        if (ic1->ibar->inst->ci->show_label)
+          _ibar_icon_signal_emit(ic1, "e,action,hide,label", "e");
+     }
+   if (ic2)
+     {
+        ic2->focused = EINA_TRUE;
+        _ibar_icon_signal_emit(ic2, "e,state,focused", "e");
+        if (ic2->ibar->inst->ci->show_label)
+          _ibar_icon_signal_emit(ic2, "e,action,show,label", "e");
+     }
+}
+
+static IBar *
+_ibar_focused_find(void)
+{
+   IBar *b;
+   Eina_List *l;
+   
+   EINA_LIST_FOREACH(ibars, l, b)
+     {
+        if (b->focused) return b;
+     }
+   return NULL;
+}
+
+static int
+_ibar_cb_sort(IBar *b1, IBar *b2)
+{
+   E_Zone *z1 = NULL, *z2 = NULL;
+   
+   if ((b1) && (b1->inst) && (b1->inst->gcc) && (b1->inst->gcc->gadcon))
+     z1 = b1->inst->gcc->gadcon->zone;
+   if ((b2) && (b2->inst) && (b2->inst->gcc) && (b2->inst->gcc->gadcon))
+     z2 = b2->inst->gcc->gadcon->zone;
+   if ((z1) && (!z2)) return -1;
+   else if ((!z1) && (z2)) return 1;
+   else if ((!z1) && (!z2)) return 0;
+   else
+     {
+        int id1, id2;
+        
+        id1 = z1->id + (z1->container->num * 100) + (z1->container->manager->num * 10000);
+        id2 = z2->id + (z2->container->num * 100) + (z2->container->manager->num * 10000);
+        return id2 - id1;
+     }
+   return 0;
+}
+
+static IBar *
+_ibar_focused_next_find(void)
+{
+   IBar *b, *bn = NULL;
+   Eina_List *l;
+   Eina_List *tmpl = NULL;
+  
+   EINA_LIST_FOREACH(ibars, l, b)
+     {
+        if (!b->icons) continue;
+        tmpl = eina_list_sorted_insert
+          (tmpl, EINA_COMPARE_CB(_ibar_cb_sort), b);
+     }
+   if (!tmpl) tmpl = ibars;
+   EINA_LIST_FOREACH(tmpl, l, b)
+     {
+        if (b->focused)
+          {
+             if (l->next)
+               {
+                  bn = l->next->data;
+                  break;
+               }
+             else
+               {
+                  bn = tmpl->data;
+                  break;
+               }
+          }
+     }
+   if (tmpl != ibars) eina_list_free(tmpl);
+   return bn;
+}
+
+static IBar *
+_ibar_focused_prev_find(void)
+{
+   IBar *b, *bn = NULL;
+   Eina_List *l;
+   Eina_List *tmpl = NULL;
+  
+   EINA_LIST_FOREACH(ibars, l, b)
+     {
+        if (!b->icons) continue;
+        tmpl = eina_list_sorted_insert
+          (tmpl, EINA_COMPARE_CB(_ibar_cb_sort), b);
+     }
+   if (!tmpl) tmpl = ibars;
+   EINA_LIST_FOREACH(tmpl, l, b)
+     {
+        if (b->focused)
+          {
+             if (l->prev)
+               {
+                  bn = l->prev->data;
+                  break;
+               }
+             else
+               {
+                  bn = eina_list_data_get(eina_list_last(tmpl));
+                  break;
+               }
+          }
+     }
+   if (tmpl != ibars) eina_list_free(tmpl);
+   return bn;
+}
+
+static void
+_ibar_focus(IBar *b)
+{
+   IBar_Icon *ic;
+   Eina_List *l;
+   
+   if (b->focused) return;
+   b->focused = EINA_TRUE;
+   EINA_LIST_FOREACH(b->icons, l, ic)
+     {
+        if (ic->focused)
+          {
+             _ibar_icon_unfocus_focus(ic, NULL);
+             break;
+          }
+     }
+   if (b->icons)
+     _ibar_icon_unfocus_focus(NULL, b->icons->data);
+}
+
+static void
+_ibar_unfocus(IBar *b)
+{
+   IBar_Icon *ic;
+   Eina_List *l;
+
+   if (!b->focused) return;
+   b->focused = EINA_FALSE;
+   EINA_LIST_FOREACH(b->icons, l, ic)
+     {
+        if (ic->focused)
+          {
+             _ibar_icon_unfocus_focus(ic, NULL);
+             break;
+          }
+     }
+}
+
+static void
+_ibar_focus_next(IBar *b)
+{
+   IBar_Icon *ic, *ic1 = NULL, *ic2 = NULL;
+   Eina_List *l;
+   
+   if (!b->focused) return;
+   if (!b->icons) return;
+   EINA_LIST_FOREACH(b->icons, l, ic)
+     {
+        if (!ic1)
+          {
+             if (ic->focused) ic1 = ic;
+          }
+        else
+          {
+             ic2 = ic;
+             break;
+          }
+     }
+   // wrap to start
+   if ((ic1) && (!ic2)) ic2 = b->icons->data;
+   if ((ic1) && (ic2) && (ic1 != ic2))
+     _ibar_icon_unfocus_focus(ic1, ic2);
+}
+
+static void
+_ibar_focus_prev(IBar *b)
+{
+   IBar_Icon *ic, *ic1 = NULL, *ic2 = NULL;
+   Eina_List *l;
+   
+   if (!b->focused) return;
+   if (!b->icons) return;
+   EINA_LIST_FOREACH(b->icons, l, ic)
+     {
+        if (ic->focused)
+          {
+             ic1 = ic;
+             break;
+          }
+        ic2 = ic;
+     }
+   // wrap to end
+   if ((ic1) && (!ic2)) ic2 = eina_list_data_get(eina_list_last(b->icons));
+   if ((ic1) && (ic2) && (ic1 != ic2))
+     _ibar_icon_unfocus_focus(ic1, ic2);
+}
+
+static void
+_ibar_focus_launch(IBar *b)
+{
+   IBar_Icon *ic;
+   Eina_List *l;
+   
+   if (!b->focused) return;
+   EINA_LIST_FOREACH(b->icons, l, ic)
+     {
+        if (ic->focused)
+          {
+             _ibar_icon_go(ic, EINA_TRUE);
+             break;
+          }
+     }
+}
+
+static Eina_Bool
+_ibar_focus_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   Ecore_Event_Key *ev;
+   IBar *b, *b2;
+   
+   ev = event;
+   if (ev->window != _ibar_focus_win) return ECORE_CALLBACK_PASS_ON;
+   b = _ibar_focused_find();
+   if (!b) return ECORE_CALLBACK_PASS_ON;
+   if (!strcmp(ev->key, "Up"))
+     {
+        if (b->inst)
+          {  
+             switch (b->inst->orient)
+               {
+                case E_GADCON_ORIENT_VERT:
+                case E_GADCON_ORIENT_LEFT:
+                case E_GADCON_ORIENT_RIGHT:
+                case E_GADCON_ORIENT_CORNER_LT:
+                case E_GADCON_ORIENT_CORNER_RT:
+                case E_GADCON_ORIENT_CORNER_LB:
+                case E_GADCON_ORIENT_CORNER_RB:
+                   _ibar_focus_prev(b);
+                  break;
+                default:
+                  break;
+               }
+          }
+     }
+   else if (!strcmp(ev->key, "Down"))
+     {
+        if (b->inst)
+          {  
+             switch (b->inst->orient)
+               {
+                case E_GADCON_ORIENT_VERT:
+                case E_GADCON_ORIENT_LEFT:
+                case E_GADCON_ORIENT_RIGHT:
+                case E_GADCON_ORIENT_CORNER_LT:
+                case E_GADCON_ORIENT_CORNER_RT:
+                case E_GADCON_ORIENT_CORNER_LB:
+                case E_GADCON_ORIENT_CORNER_RB:
+                   _ibar_focus_next(b);
+                  break;
+                default:
+                  break;
+               }
+          }
+     }
+   else if (!strcmp(ev->key, "Left"))
+     {
+        if (b->inst)
+          {  
+             switch (b->inst->orient)
+               {
+                case E_GADCON_ORIENT_FLOAT:
+                case E_GADCON_ORIENT_HORIZ:
+                case E_GADCON_ORIENT_TOP:
+                case E_GADCON_ORIENT_BOTTOM:
+                case E_GADCON_ORIENT_CORNER_TL:
+                case E_GADCON_ORIENT_CORNER_TR:
+                case E_GADCON_ORIENT_CORNER_BL:
+                case E_GADCON_ORIENT_CORNER_BR:
+                  _ibar_focus_prev(b);
+                  break;
+                default:
+                  break;
+               }
+          }
+     }
+   else if (!strcmp(ev->key, "Right"))
+     {
+        if (b->inst)
+          {  
+             switch (b->inst->orient)
+               {
+                case E_GADCON_ORIENT_FLOAT:
+                case E_GADCON_ORIENT_HORIZ:
+                case E_GADCON_ORIENT_TOP:
+                case E_GADCON_ORIENT_BOTTOM:
+                case E_GADCON_ORIENT_CORNER_TL:
+                case E_GADCON_ORIENT_CORNER_TR:
+                case E_GADCON_ORIENT_CORNER_BL:
+                case E_GADCON_ORIENT_CORNER_BR:
+                  _ibar_focus_next(b);
+                  break;
+                default:
+                  break;
+               }
+          }
+     }
+   else if (!strcmp(ev->key, "space"))
+     {
+        _ibar_focus_launch(b);
+     }
+   else if ((!strcmp(ev->key, "Return")) ||
+            (!strcmp(ev->key, "KP_Enter")))
+     {
+        _ibar_focus_launch(b);
+        _ibar_go_unfocus();
+     }
+   else if (!strcmp(ev->key, "Escape"))
+     {
+        _ibar_go_unfocus();
+     }
+   else if (!strcmp(ev->key, "Tab"))
+     {
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+          {
+             b2 = _ibar_focused_prev_find();
+             if ((b) && (b2) && (b != b2))
+               {
+                  _ibar_unfocus(b);
+                  _ibar_focus(b2);
+               }
+          }
+        else
+          {
+             b2 = _ibar_focused_next_find();
+             if ((b) && (b2) && (b != b2))
+               {
+                  _ibar_unfocus(b);
+                  _ibar_focus(b2);
+               }
+          }
+     }
+   else if (!strcmp(ev->key, "ISO_Left_Tab"))
+     {
+        b2 = _ibar_focused_prev_find();
+        if ((b) && (b2) && (b != b2))
+          {
+             _ibar_unfocus(b);
+             _ibar_focus(b2);
+          }
+     }
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static void
+_ibar_go_focus(void)
+{
+   E_Manager *man;
+   IBar *b;
+   
+   if (_ibar_focus_win) return;
+   man = e_manager_current_get();
+   if (!man) return;
+   _ibar_focus_win = ecore_x_window_input_new(man->root, -10, -20, 1, 1);
+   ecore_x_window_show(_ibar_focus_win);
+   if (!e_grabinput_get(0, 0, _ibar_focus_win))
+     {
+        ecore_x_window_free(_ibar_focus_win);
+        _ibar_focus_win = 0;
+        return;
+     }
+   _ibar_key_down_handler = ecore_event_handler_add
+     (ECORE_EVENT_KEY_DOWN, _ibar_focus_cb_key_down, NULL);
+   if (!_ibar_key_down_handler) goto err;
+   b = _ibar_manager_find(man);
+   if (!b) goto err;
+   _ibar_focus(b);
+   return;
+err:
+   if (_ibar_key_down_handler) ecore_event_handler_del(_ibar_key_down_handler);
+   _ibar_key_down_handler = NULL;
+   if (_ibar_focus_win)
+     {
+        e_grabinput_release(0, _ibar_focus_win);
+        ecore_x_window_free(_ibar_focus_win);
+     }
+   _ibar_focus_win = 0;
+}
+
+static void
+_ibar_go_unfocus(void)
+{
+   IBar *b;
+   
+   if (!_ibar_focus_win) return;
+   b = _ibar_focused_find();
+   if (b) _ibar_unfocus(b);
+   e_grabinput_release(0, _ibar_focus_win);
+   ecore_x_window_free(_ibar_focus_win);
+   _ibar_focus_win = 0;
+   ecore_event_handler_del(_ibar_key_down_handler);
+   _ibar_key_down_handler = NULL;
+}
+   
+static void
+_ibar_cb_action_focus(E_Object *obj __UNUSED__, const char *params __UNUSED__, Ecore_Event_Key *ev __UNUSED__)
+{
+   _ibar_go_focus();
+}
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -1282,6 +1768,15 @@ e_modapi_init(E_Module *m)
 
    e_gadcon_provider_register(&_gadcon_class);
    ibar_orders = eina_hash_string_superfast_new(NULL);
+   
+   act_ibar_focus = e_action_add("ibar_focus");
+   if (act_ibar_focus)
+     {
+        act_ibar_focus->func.go_key = _ibar_cb_action_focus;
+        e_action_predef_name_set(N_("IBar"), N_("Focus IBar"),
+                                 "ibar_focus", "<none>", NULL, 0);
+     }
+   
    return m;
 }
 
@@ -1291,6 +1786,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    Ecore_Event_Handler *eh;
    Config_Item *ci;
 
+   _ibar_go_unfocus();
+   
+   e_action_del("ibar_focus");
+   e_action_predef_name_del(N_("IBar"), N_("Focus IBar"));
+   act_ibar_focus = NULL;
+   
    e_gadcon_provider_unregister(&_gadcon_class);
 
    if (ibar_config->config_dialog)
