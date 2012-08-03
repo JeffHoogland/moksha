@@ -2166,7 +2166,7 @@ e_border_focus_set(E_Border *bd,
 
              if ((set) && (!focus_next) && (!focusing))
                {
-                  e_grabinput_focus(bd->zone->container->manager->root,
+                  e_grabinput_focus(bd->zone->container->bg_win,
                                     E_FOCUS_METHOD_PASSIVE);
                }
           }
@@ -4532,7 +4532,7 @@ _e_border_free(E_Border *bd)
      {
         if ((!focus_next) && (!focusing))
           {
-             e_grabinput_focus(bd->zone->container->manager->root,
+             e_grabinput_focus(bd->zone->container->bg_win,
                                E_FOCUS_METHOD_PASSIVE);
              e_hints_active_window_set(bd->zone->container->manager, NULL);
           }
