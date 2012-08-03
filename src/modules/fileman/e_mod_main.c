@@ -376,6 +376,8 @@ static Eina_Bool
 _e_mod_menu_populate_filter(void *data __UNUSED__, Eio_File *handler __UNUSED__, const Eina_File_Direct_Info *info)
 {
    /* don't show .dotfiles */
+   if (fileman_config->view.menu_shows_files)
+     return (info->path[info->name_start] != '.');
    return (info->path[info->name_start] != '.') && (info->type == EINA_FILE_DIR);
 }
 
@@ -392,37 +394,38 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler __UNUSED__, const Eina_F
    path = mi ? e_object_data_get(E_OBJECT(mi)) : "/";
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, info->path + info->name_start);
-#if 0
-   if (info->type != EINA_FILE_DIR)
+   if (fileman_config->view.menu_shows_files)
      {
-        const char *mime = NULL;
-        Efreet_Desktop *ed = NULL;
-        char group[1024];
-
-        if (eina_str_has_extension(mi->label, "desktop"))
+        if (info->type != EINA_FILE_DIR)
           {
-             ed = efreet_desktop_new(info->path);
-             if (ed)
+             const char *mime = NULL;
+             Efreet_Desktop *ed = NULL;
+             char group[1024];
+
+             if (eina_str_has_extension(mi->label, "desktop"))
                {
-                  e_util_menu_item_theme_icon_set(mi, ed->icon);
-                  efreet_desktop_free(ed);
+                  ed = efreet_desktop_new(info->path);
+                  if (ed)
+                    {
+                       e_util_menu_item_theme_icon_set(mi, ed->icon);
+                       efreet_desktop_free(ed);
+                       return;
+                    }
+               }
+             mime = efreet_mime_type_get(mi->label);
+             if (!mime) return;
+             if (!strncmp(mime, "image/", 6))
+               {
+                  e_menu_item_icon_file_set(mi, info->path);
                   return;
                }
-          }
-        mime = efreet_mime_type_get(mi->label);
-        if (!mime) return;
-        if (!strncmp(mime, "image/", 6))
-          {
-             e_menu_item_icon_file_set(mi, info->path);
+             snprintf(group, sizeof(group), "fileman/mime/%s", mime);
+             if (e_util_menu_item_theme_icon_set(mi, group))
+               return;
+             e_util_menu_item_theme_icon_set(mi, "fileman/mime/unknown");
              return;
           }
-        snprintf(group, sizeof(group), "fileman/mime/%s", mime);
-        if (e_util_menu_item_theme_icon_set(mi, group))
-          return;
-        e_util_menu_item_theme_icon_set(mi, "fileman/mime/unknown");
-        return;
      }
-#endif
    e_util_menu_item_theme_icon_set(mi, "folder");
    e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s/%s", path ?: "/", info->path + info->name_start));
    //fprintf(stderr, "PATH SET: %s\n", e_object_data_get(E_OBJECT(mi)));
@@ -730,6 +733,10 @@ _e_mod_fileman_config_load(void)
 
     IFMODCFG(0x0107);
     fileman_config->view.show_sidebar = 1;
+    IFMODCFGEND;
+
+    IFMODCFG(0x0108);
+    fileman_config->view.menu_shows_files = 0;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
