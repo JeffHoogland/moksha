@@ -234,7 +234,7 @@ struct _E_Fm2_Context_Menu_Data
    E_Fm2_Mime_Handler *handler;
 };
 
-static const char   *_e_fm2_dev_path_map(const char *dev, const char *path);
+static const char   *_e_fm2_dev_path_map(E_Fm2_Smart_Data *sd, const char *dev, const char *path);
 static void          _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file_rel, int after, E_Fm2_Finfo *finf);
 static void          _e_fm2_file_del(Evas_Object *obj, const char *file);
 static void          _e_fm2_queue_process(Evas_Object *obj);
@@ -994,7 +994,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         sd->config->theme.fixed = EINA_FALSE;
      }
 
-   real_path = _e_fm2_dev_path_map(dev, path);
+   real_path = _e_fm2_dev_path_map(sd, dev, path);
    /* If the path doesn't exist, popup a dialog */
    if (dev && strncmp(dev, "removable:", 10)
        && !ecore_file_exists(real_path))
@@ -3068,7 +3068,7 @@ e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e)
 
 /* local subsystem functions */
 static const char *
-_e_fm2_dev_path_map(const char *dev, const char *path)
+_e_fm2_dev_path_map(E_Fm2_Smart_Data *sd, const char *dev, const char *path)
 {
    char buf[PATH_MAX] = "", *s, *ss;
    int len;
@@ -3114,6 +3114,7 @@ _e_fm2_dev_path_map(const char *dev, const char *path)
               */
              if (e_user_dir_concat_static(buf, "fileman/favorites") >= sizeof(buf))
                return NULL;
+             if (sd && sd->config) sd->config->view.no_typebuf_set = EINA_TRUE;
              ecore_file_mkpath(buf);
           }
         else if (strcmp(dev, "desktop") == 0)
@@ -5708,11 +5709,11 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
    if (ch[0] == '*')
      sd->typebuf.wildcard++;
    _e_fm2_typebuf_match(obj, 0);
-   if (ch[0] == '/')
+   if ((!sd->config->view.no_typebuf_set) && (ch[0] == '/'))
      {
         if (sd->typebuf.buf[0] == '/')
           {
-             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(sd->typebuf.buf))
+             if (ecore_file_is_dir(sd->typebuf.buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "/", sd->typebuf.buf);
@@ -5725,7 +5726,7 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
 
              if (!sd->typebuf.start) sd->typebuf.start = eina_stringshare_ref(sd->realpath);
              snprintf(buf, sizeof(buf), "%s/%s", sd->typebuf.start, sd->typebuf.buf);
-             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
+             if (ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "/", buf);
@@ -5737,7 +5738,7 @@ _e_fm2_typebuf_char_append(Evas_Object *obj, const char *ch)
              char buf[PATH_MAX];
 
              snprintf(buf, sizeof(buf), "%s/%s", getenv("HOME"), sd->typebuf.buf + 2);
-             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
+             if (ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "~/", sd->typebuf.buf + 1);
@@ -5772,11 +5773,11 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
    if (dec == '*')
      sd->typebuf.wildcard--;
    if (len) _e_fm2_typebuf_match(obj, 0);
-   if (dec == '/')
+   if ((!sd->config->view.no_typebuf_set) && (dec == '/'))
      {
         if ((len > 1) || (sd->typebuf.buf[0] == '/'))
           {
-             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(sd->typebuf.buf))
+             if (ecore_file_is_dir(sd->typebuf.buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "/", sd->typebuf.buf);
@@ -5789,7 +5790,7 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
 
              if (!sd->typebuf.start) sd->typebuf.start = eina_stringshare_ref(sd->realpath);
              snprintf(buf, sizeof(buf), "%s/%s", sd->typebuf.start, sd->typebuf.buf);
-             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
+             if (ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "/", buf);
@@ -5801,7 +5802,7 @@ _e_fm2_typebuf_char_backspace(Evas_Object *obj)
              char buf[PATH_MAX];
 
              snprintf(buf, sizeof(buf), "%s/%s", getenv("HOME"), sd->typebuf.buf + 2);
-             if (e_util_strcmp(sd->dev, "desktop") && e_util_strcmp(sd->dev, "favorites") && ecore_file_is_dir(buf))
+             if (ecore_file_is_dir(buf))
                {
                   sd->typebuf.setting = EINA_TRUE;
                   e_fm2_path_set(obj, "~/", sd->typebuf.buf + 1);
@@ -10430,7 +10431,7 @@ e_fm2_overlay_clip_to(Evas_Object *obj, Evas_Object *clip)
 EAPI const char *
 e_fm2_real_path_map(const char *dev, const char *path)
 {
-   return _e_fm2_dev_path_map(dev, path);
+   return _e_fm2_dev_path_map(NULL, dev, path);
 }
 
 EAPI void

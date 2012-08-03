@@ -1253,7 +1253,7 @@ _e_fwin_config_set(E_Fwin_Page *page)
         fmc.icon.fixed.w = 0;
         fmc.icon.fixed.h = 0;
 #endif
-
+        fmc.view.no_typebuf_set = 1;
         fmc.view.open_dirs_in_place = 0;
         fmc.view.fit_custom_pos = 1;
      }
