@@ -742,13 +742,51 @@ e_menu_item_label_set(E_Menu_Item *mi, const char *label)
 EAPI void
 e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
 {
+   Eina_Bool submenu = EINA_FALSE;
+   Evas_Object *o;
+   int ww, hh;
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
+   submenu = !!mi->submenu;
    if (mi->submenu) e_object_unref(E_OBJECT(mi->submenu));
    if (sub) e_object_ref(E_OBJECT(sub));
    mi->submenu = sub;
    mi->changed = 1;
    mi->menu->changed = 1;
+   if (!!sub == submenu) return;
+   if (!mi->bg_object) return;
+   if ((mi->submenu) || (mi->submenu_pre_cb.func))
+     {
+        if (mi->submenu_object) evas_object_del(mi->submenu_object);
+        o = edje_object_add(mi->menu->evas);
+        mi->submenu_object = o;
+        e_theme_edje_object_set(o, "base/theme/menus",
+                                "e/widgets/menu/default/submenu");
+        evas_object_pass_events_set(o, 1);
+        evas_object_show(o);
+        e_box_pack_end(mi->container_object, o);
+        edje_object_size_min_calc(mi->submenu_object, &ww, &hh);
+        mi->submenu_w = ww;
+        mi->submenu_h = hh;
+     }
+   else
+     {
+        if (mi->submenu_object) evas_object_del(mi->submenu_object);
+        o = evas_object_rectangle_add(mi->menu->evas);
+        mi->submenu_object = o;
+        evas_object_color_set(o, 0, 0, 0, 0);
+        evas_object_pass_events_set(o, 1);
+        e_box_pack_end(mi->container_object, o);
+     }
+   if ((mi->submenu) || (mi->submenu_pre_cb.func))
+     {
+        if (e_theme_edje_object_set(mi->bg_object, "base/theme/menus",
+                                     "e/widgets/menu/default/submenu_bg"))
+          return;
+     }
+     
+   e_theme_edje_object_set(mi->bg_object, "base/theme/menus",
+                           "e/widgets/menu/default/item_bg");
 }
 
 EAPI void
