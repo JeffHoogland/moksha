@@ -337,6 +337,7 @@ e_fwin_zone_new(E_Zone *zone,
                                 _e_fwin_pan_max_get,
                                 _e_fwin_pan_child_size_get);
    evas_object_propagate_events_set(page->fm_obj, 0);
+   e_widget_can_focus_set(o, 0);
    page->scrollframe_obj = page->scr = o;
 
    e_zone_useful_geometry_get(zone, &x, &y, &w, &h);
