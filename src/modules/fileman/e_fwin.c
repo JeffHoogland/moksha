@@ -1697,6 +1697,7 @@ _e_fwin_zone_cb_mouse_down(void *data,
    fwin = data;
    if (!fwin) return;
    e_fwin_all_unsel(fwin);
+   e_fm2_typebuf_clear(fwin->cur_page->fm_obj);
 }
 
 static Eina_Bool
