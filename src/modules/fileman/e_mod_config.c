@@ -133,6 +133,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->view.show_desktop_icons = fileman_config->view.show_desktop_icons;
    cfdata->view.show_toolbar = fileman_config->view.show_toolbar;
    cfdata->view.show_sidebar = fileman_config->view.show_sidebar;
+   cfdata->view.menu_shows_files = fileman_config->view.menu_shows_files;
    cfdata->icon.icon.w = fileman_config->icon.icon.w;
    cfdata->icon.icon.h = fileman_config->icon.icon.h;
    cfdata->tooltip.delay = fileman_config->tooltip.delay;
