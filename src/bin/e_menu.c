@@ -1166,19 +1166,26 @@ _e_menu_idler(E_Menu *m)
 {
    E_Menu_Item *mi;
    double t;
+   unsigned int count = 0;
 
    t = ecore_loop_time_get();
    evas_event_freeze(m->evas);
    e_box_freeze(m->container_object);
    EINA_LIST_FOREACH(m->idler_pos, m->idler_pos, mi)
      {
-        if (ecore_time_get() - t >= 0.8 * ecore_animator_frametime_get())
+        if ((count++ >= 2) && (ecore_time_get() - t >= 0.8 * ecore_animator_frametime_get()))
           break;
         _e_menu_item_realize(mi);
      }
 
    _e_menu_items_layout_update(m);
    e_box_thaw(m->container_object);
+   if (m->cur.x + m->cur.w > m->zone->w)
+     m->cur.x = m->zone->w - m->cur.w;
+   m->cur.x = MAX(m->cur.x, 0);
+   if ((m->cur.h < m->zone->h) && (m->cur.y + m->cur.h > m->zone->h))
+     m->cur.y = m->zone->h - m->cur.h;
+   m->cur.y = MAX(m->cur.y, 0);
    evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
    evas_event_thaw(m->evas);
    if (!m->idler_pos)
@@ -1627,8 +1634,11 @@ _e_menu_realize(E_Menu *m)
 
    EINA_LIST_FOREACH(m->items, m->idler_pos, mi)
      {
-        if (ecore_time_get() - t >= 0.8 * ecore_animator_frametime_get())
-          break;
+        if (eina_list_count(m->items) > 5)
+          {
+             if (ecore_time_get() - t >= ecore_animator_frametime_get())
+               break;
+          }
         _e_menu_item_realize(mi);
      }
    if (m->idler_pos)
