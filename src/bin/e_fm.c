@@ -2084,10 +2084,12 @@ _e_fm2_icon_discover_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb gen_fun
    if (_e_fm2_ext_is_edje(p))
      return _e_fm2_icon_thumb_edje_get(evas, ic, gen_func,
                                        data, force_gen, type_ret);
-   else if (_e_fm2_ext_is_desktop(p))
+   if (_e_fm2_ext_is_desktop(p))
      return _e_fm2_icon_desktop_get(evas, ic, type_ret);
-   else if (_e_fm2_ext_is_imc(p))
+   if (_e_fm2_ext_is_imc(p))
      return _e_fm2_icon_imc_get(evas, ic, type_ret);
+   if (evas_object_image_extension_can_load_get(p - 1))
+     return _e_fm2_icon_thumb_get(evas, ic, NULL, gen_func, data, force_gen, type_ret);
    return NULL;
 }
 
@@ -2171,7 +2173,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
         o = _e_fm2_icon_mime_get(evas, ic, gen_func, data, force_gen, type_ret);
         if (o) return o;
      }
-   else if (ic->info.file)
+   if (ic->info.file)
      {
         o = _e_fm2_icon_discover_get(evas, ic, gen_func, data,
                                      force_gen, type_ret);
