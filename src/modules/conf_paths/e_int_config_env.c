@@ -126,7 +126,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         else
            e_env_set(evr->var, evr->val);
      }
-   
+   efreet_lang_reset();
    e_config_save_queue();
    return 1;
 }
