@@ -894,6 +894,13 @@ case "$host_os" in
       ;;
 esac
 
+m4_ifdef([v_mic],
+   [
+    EFL_COMPILER_FLAG([-Wshadow])
+    EFL_COMPILER_FLAG([-Wall])
+    EFL_COMPILER_FLAG([-W])
+   ])
+
 SUID_CFLAGS=-fPIE
 SUID_LDFLAGS=-pie
 AC_SUBST([SUID_CFLAGS])
