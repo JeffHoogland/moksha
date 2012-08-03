@@ -3,6 +3,8 @@
 #define REMEMBER_HIERARCHY 1
 #define REMEMBER_SIMPLE    0
 
+EAPI int E_EVENT_REMEMBER_UPDATE = -1;
+
 typedef struct _E_Remember_List E_Remember_List;
 
 struct _E_Remember_List
@@ -43,6 +45,7 @@ e_remember_init(E_Startup_Mode mode)
              if ((rem->apply & E_REMEMBER_APPLY_RUN) && (rem->prop.command))
                e_util_head_exec(rem->prop.head, rem->prop.command);
           }
+        E_EVENT_REMEMBER_UPDATE = ecore_event_type_new();
      }
 
    h = e_border_hook_add(E_BORDER_HOOK_EVAL_PRE_POST_FETCH,
@@ -441,6 +444,14 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
      rem->prop.fullscreen = bd->fullscreen;
    if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
      rem->prop.offer_resistance = bd->offer_resistance;
+   {
+      E_Event_Remember_Update *ev;
+
+      ev = malloc(sizeof(ev));
+      if (!ev) return;
+      ev->border = bd;
+      ecore_event_add(E_EVENT_REMEMBER_UPDATE, ev, NULL, NULL);
+   }
 }
 
 /* local subsystem functions */

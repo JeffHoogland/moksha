@@ -1,5 +1,11 @@
 #ifdef E_TYPEDEFS
 
+EAPI extern int E_EVENT_REMEMBER_UPDATE;
+
+typedef struct E_Event_Remember_Update
+{
+   void *border;
+} E_Event_Remember_Update;
 typedef struct _E_Remember E_Remember;
 
 #define E_REMEMBER_MATCH_NAME             (1 << 0)
