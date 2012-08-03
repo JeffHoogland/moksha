@@ -5567,7 +5567,7 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
    E_Fm2_Icon *ic, *ic_match = NULL;
    Eina_List *l, *sel = NULL;
    char *tb;
-   int tblen;
+   int tblen, x;
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
@@ -5602,15 +5602,39 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
         ic_match = _e_fm2_icon_next_find(obj, next, &_e_fm2_typebuf_match_func, tb);
      }
 
-   _e_fm2_icon_desel_any(obj);
-   if (sel)
+   for (x = 0; x < 2; x++)
      {
-        if (!ic_match) ic_match = eina_list_data_get(sel);
-        _e_fm2_icon_make_visible(eina_list_data_get(sel));
-        EINA_LIST_FREE(sel, ic)
-          _e_fm2_icon_select(ic);
-     }
-   evas_object_smart_callback_call(obj, "selection_change", NULL);
+        switch (x)
+          {
+           case 0:
+             if (!sd->selected_icons) continue;
+             if (eina_list_count(sel) != eina_list_count(sd->selected_icons)) continue;
+             EINA_LIST_FOREACH(sd->selected_icons, l, ic)
+               if (!eina_list_data_find(sel, ic))
+                 {
+                    x++;
+                    break;
+                 }
+             if (!x)
+               {
+                  /* selections are identical, don't change */
+                  _e_fm2_icon_make_visible(eina_list_data_get(sel));
+                  sel = eina_list_free(sel);
+                  x++;
+                  break;
+               }
+           case 1:
+             _e_fm2_icon_desel_any(obj);
+             if (sel)
+               {
+                  if (!ic_match) ic_match = eina_list_data_get(sel);
+                  _e_fm2_icon_make_visible(eina_list_data_get(sel));
+                  EINA_LIST_FREE(sel, ic)
+                    _e_fm2_icon_select(ic);
+               }
+             evas_object_smart_callback_call(obj, "selection_change", NULL);
+          }
+     } while (0);
 
    if (sd->typebuf.timer) ecore_timer_reset(sd->typebuf.timer);
    else sd->typebuf.timer = ecore_timer_add(3.5, _e_fm_typebuf_timer_cb, sd);
