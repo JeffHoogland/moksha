@@ -6231,12 +6231,40 @@ collections {
             signal: "mouse,down,1";
             source: "left_arrow";
             action: SIGNAL_EMIT "e,action,prev" "e";
+            after: "sb_left_repeat";
+         }
+         program {
+            name: "sb_left_repeat";
+            action: SIGNAL_EMIT "e,action,prev" "e";
+            in: 0.3 0.0;
+            after: "sb_left_repeat";
+         }
+         program {
+            name: "sb_left_repeat_stop";
+            signal: "mouse,up,1";
+            source: "left_arrow";
+            action: ACTION_STOP;
+            target: "sb_left_repeat";
          }
          program {
             name: "sb_right";
             signal: "mouse,down,1";
             source: "right_arrow";
             action: SIGNAL_EMIT "e,action,next" "e";
+            after: "sb_right_repeat";
+         }
+         program {
+            name: "sb_right_repeat";
+            action: SIGNAL_EMIT "e,action,next" "e";
+            in: 0.3 0.0;
+            after: "sb_right_repeat";
+         }
+         program {
+            name: "sb_right_repeat_stop";
+            signal: "mouse,up,1";
+            source: "right_arrow";
+            action: ACTION_STOP;
+            target: "sb_right_repeat";
          }
       }
    }
