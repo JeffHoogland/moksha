@@ -255,7 +255,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
 
    ob = e_widget_label_add(evas, _("Tooltip delay"));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), 0.0, 3.0, 0.5, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), 0.0, 5.0, 0.5, 0,
                             &cfdata->tooltip.delay, NULL, 150);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
