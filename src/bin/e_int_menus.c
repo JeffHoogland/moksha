@@ -58,6 +58,7 @@ static void        _e_int_menus_shelves_pre_cb(void *data, E_Menu *m);
 static void        _e_int_menus_shelves_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void        _e_int_menus_config_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -228,6 +229,7 @@ e_int_menus_main_new(void)
    dat->config = subm;
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Settings"));
+   e_menu_item_callback_set(mi, _e_int_menus_config_cb, NULL);
    e_util_menu_item_theme_icon_set(mi, "preferences-system");
    e_menu_item_submenu_set(mi, subm);
 
@@ -528,6 +530,15 @@ _e_int_menus_themes_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_It
    e_fwin_new(m->zone->container, "favorites", "/");
    }
  */
+
+static void
+_e_int_menus_config_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
+{
+   E_Action *act;
+
+   act = e_action_find("configuration");
+   if (act) act->func.go(E_OBJECT(m->zone), NULL);
+}
 
 static void
 _e_int_menus_main_showhide(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
