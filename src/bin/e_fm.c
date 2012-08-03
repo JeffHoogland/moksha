@@ -2168,15 +2168,15 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
         if (o) return o;
      }
 
-   if (ic->info.mime)
-     {
-        o = _e_fm2_icon_mime_get(evas, ic, gen_func, data, force_gen, type_ret);
-        if (o) return o;
-     }
    if (ic->info.file)
      {
         o = _e_fm2_icon_discover_get(evas, ic, gen_func, data,
                                      force_gen, type_ret);
+        if (o) return o;
+     }
+   if (ic->info.mime)
+     {
+        o = _e_fm2_icon_mime_get(evas, ic, gen_func, data, force_gen, type_ret);
         if (o) return o;
      }
 
