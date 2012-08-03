@@ -376,7 +376,16 @@ static void
 _e_mod_physics_win_mass_set(E_Physics_Win *pw)
 {
    double mass;
-
+   E_Border *bd = pw->bd;
+   if (!bd) return;
+   if (bd->remember)
+     {
+        if ((bd->remember->apply & E_REMEMBER_APPLY_POS) || 
+            (bd->remember->prop.lock_client_location) || 
+            (bd->remember->prop.lock_user_location))
+          ephysics_body_mass_set(pw->body, 50000);
+        return;
+     }
    mass = _physics_mod->conf->max_mass * (((double)pw->w / (double)pw->p->man->w) + ((double)pw->h / (double)pw->p->man->h) / 2.);
    DBG("PHYS: WIN %d MASS %g\n", pw->win, mass);
    ephysics_body_mass_set(pw->body, mass);
@@ -450,7 +459,6 @@ _e_mod_physics_bd_property(void *data __UNUSED__, int type __UNUSED__, void *eve
                                      ecore_x_window_border_width_get(pw->bd->client.win));
      }
 
-out:
    pw->maximize = ev->border->maximized;
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -557,7 +565,7 @@ _e_mod_physics_configure(void *data __UNUSED__,
      }
    return ECORE_CALLBACK_PASS_ON;
 }
-
+#if 0
 static Eina_Bool
 _e_mod_physics_stack(void *data __UNUSED__,
                      int type   __UNUSED__,
@@ -572,7 +580,7 @@ _e_mod_physics_stack(void *data __UNUSED__,
    */
    return ECORE_CALLBACK_PASS_ON;
 }
-
+#endif
 static Eina_Bool
 _e_mod_physics_randr(void *data       __UNUSED__,
                      int type         __UNUSED__,
@@ -598,6 +606,17 @@ _e_mod_physics_bd_resize(void *data __UNUSED__,
    pw->show_ready = 0;
    _e_mod_physics_win_configure(pw, pw->x, pw->y, ev->border->w, ev->border->h, pw->border);
    pw->show_ready = 1;
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_mod_physics_remember_update(void *data __UNUSED__, int type   __UNUSED__, void *event)
+{
+   E_Event_Remember_Update *ev = event;
+   E_Border *bd = ev->border;
+   E_Physics_Win *pw = _e_mod_physics_win_find(bd->client.win);
+   if (!pw) return ECORE_CALLBACK_PASS_ON;
+    _e_mod_physics_win_mass_set(pw);
    return ECORE_CALLBACK_PASS_ON;
 }
 /*
@@ -776,6 +795,7 @@ e_mod_physics_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_HIDE, _e_mod_physics_bd_hide, NULL));
 //   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_MOVE, _e_mod_physics_bd_move, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_RESIZE, _e_mod_physics_bd_resize, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_REMEMBER_UPDATE, _e_mod_physics_remember_update, NULL));
 #if 0
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ICONIFY, _e_mod_physics_bd_iconify, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY, _e_mod_physics_bd_uniconify, NULL));
