@@ -95,6 +95,23 @@ e_widget_toolbar_add(Evas *evas, int icon_w, int icon_h)
    return obj;
 }
 
+EAPI const Eina_List *
+e_widget_toolbar_items_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   if (!obj) return NULL;
+   if (!(wd = e_widget_data_get(obj))) return NULL;
+   return wd->items;
+}
+
+EAPI const char *
+e_widget_toolbar_item_label_get(void *item)
+{
+   Item *it = item;
+   if (!it) return NULL;
+   return edje_object_part_text_get(it->o_base, "e.text.label");
+}
+
 EAPI void
 e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *label, void (*func) (void *data1, void *data2), const void *data1, const void *data2)
 {
