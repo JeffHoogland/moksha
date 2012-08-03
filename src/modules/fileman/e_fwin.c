@@ -194,6 +194,13 @@ static void             _e_fwin_zone_cb_mouse_down(void *data,
                                                    Evas *evas,
                                                    Evas_Object *obj,
                                                    void *event_info);
+static void             _e_fwin_zone_focus_out(void *data,
+                                                   Evas *evas,
+                                                   Evas_Object *obj,
+                                                   void *event_info);
+static void             _e_fwin_zone_focus_in(void *data,
+                                                   Evas *evas,
+                                                   void *event_info);
 static Eina_Bool        _e_fwin_zone_move_resize(void *data,
                                                  int type,
                                                  void *event);
@@ -289,6 +296,8 @@ e_fwin_zone_new(E_Zone *zone,
 
    o = e_fm2_add(zone->container->bg_evas);
    page->fm_obj = o;
+   evas_event_callback_add(zone->container->bg_evas, EVAS_CALLBACK_CANVAS_FOCUS_IN, _e_fwin_zone_focus_in, fwin);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_FOCUS_OUT, _e_fwin_zone_focus_out, fwin);
    _e_fwin_config_set(page);
 
    e_fm2_custom_theme_content_set(o, "desktop");
@@ -375,6 +384,7 @@ e_fwin_zone_shutdown(E_Zone *zone)
      {
         if (win->zone != zone) continue;
         fileman_config->view.desktop_mode = e_fm2_view_mode_get(win->cur_page->fm_obj);
+        evas_event_callback_del_full(zone->container->bg_evas, EVAS_CALLBACK_CANVAS_FOCUS_IN, _e_fwin_zone_focus_in, win);
         e_object_del(E_OBJECT(win));
         win = NULL;
      }
@@ -1595,7 +1605,7 @@ _e_fwin_selected(void *data,
 
 static void
 _e_fwin_selection_change(void *data,
-                         Evas_Object *obj __UNUSED__,
+                         Evas_Object *obj,
                          void *event_info __UNUSED__)
 {
    Eina_List *l;
@@ -1607,6 +1617,7 @@ _e_fwin_selection_change(void *data,
         if (l->data != page->fwin)
           e_fwin_all_unsel(l->data);
      }
+   evas_object_focus_set(obj, 1);
 }
 
 static void
@@ -1698,6 +1709,27 @@ _e_fwin_zone_cb_mouse_down(void *data,
    if (!fwin) return;
    e_fwin_all_unsel(fwin);
    e_fm2_typebuf_clear(fwin->cur_page->fm_obj);
+}
+
+static void
+_e_fwin_zone_focus_out(void *data __UNUSED__,
+                       Evas *evas       __UNUSED__,
+                       Evas_Object *obj,
+                       void *event_info __UNUSED__)
+{
+   evas_object_focus_set(obj, EINA_TRUE);
+}
+
+static void
+_e_fwin_zone_focus_in(void *data,
+                       Evas *evas       __UNUSED__,
+                       void *event_info __UNUSED__)
+{
+   E_Fwin *fwin;
+
+   fwin = data;
+   if (!fwin) return;
+   evas_object_focus_set(fwin->cur_page->fm_obj, EINA_TRUE);
 }
 
 static Eina_Bool
