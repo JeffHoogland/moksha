@@ -1468,7 +1468,7 @@ _basic_create_widgets(E_Config_Dialog *cfd,
                       Evas *evas,
                       E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *ob,*ol, *ol2, *of, *otb, *oi, *orec0, *tab;
+   Evas_Object *ob,*ol, *of, *otb, *oi, *orec0, *tab;
    E_Radio_Group *rg;
 
    orec0 = evas_object_rectangle_add(evas);
