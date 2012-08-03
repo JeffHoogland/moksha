@@ -5471,6 +5471,7 @@ _e_fm2_typebuf_hide(Evas_Object *obj)
 
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
+   if (!sd->typebuf_visible) return;
    if (sd->typebuf.setting) return;
    E_FREE(sd->typebuf.buf);
    edje_object_signal_emit(sd->overlay, "e,state,typebuf,stop", "e");
@@ -6712,6 +6713,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    if (ic->entry_widget)
      return;
 
+   _e_fm2_typebuf_hide(ic->sd->obj);
    if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
      {
         /* if its a directory && open dirs in-place is set then change the dir
@@ -6763,6 +6765,7 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 
    if (ic->entry_widget) return;
 
+   _e_fm2_typebuf_hide(ic->sd->obj);
    if ((ev->button == 1) && (!ic->drag.dnd))
      {
         if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
@@ -7328,6 +7331,7 @@ _e_fm2_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__
 
    sd = data;
    ev = event_info;
+   _e_fm2_typebuf_hide(sd->obj);
    if (ev->button == 1)
      {
         Eina_List *l;
@@ -7391,6 +7395,7 @@ _e_fm2_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
    E_Fm2_Smart_Data *sd;
 
    sd = data;
+   _e_fm2_typebuf_hide(sd->obj);
    sd->selecting = EINA_FALSE;
    sd->selrect.ox = 0;
    sd->selrect.oy = 0;
@@ -10385,6 +10390,13 @@ e_fm2_typebuf_visible_get(Evas_Object *obj)
 {
    EFM_SMART_CHECK(EINA_FALSE);
    return sd->typebuf_visible;
+}
+
+EAPI void
+e_fm2_typebuf_clear(Evas_Object *obj)
+{
+   EFM_SMART_CHECK();
+   _e_fm2_typebuf_hide(obj);
 }
 
 EAPI void
