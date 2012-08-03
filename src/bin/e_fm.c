@@ -5479,6 +5479,8 @@ _e_fm2_typebuf_hide(Evas_Object *obj)
    eina_stringshare_replace(&sd->typebuf.start, NULL);
    sd->typebuf_visible = EINA_FALSE;
    sd->typebuf.wildcard = 0;
+   if (sd->typebuf.timer) ecore_timer_del(sd->typebuf.timer);
+   sd->typebuf.timer = NULL;
 }
 
 #if 0
@@ -7912,6 +7914,8 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (sd->config) _e_fm2_config_free(sd->config);
 
    E_FREE(sd->typebuf.buf);
+   if (sd->typebuf.timer) ecore_timer_del(sd->typebuf.timer);
+   sd->typebuf.timer = NULL;
 
    evas_object_del(sd->underlay);
    evas_object_del(sd->overlay);
