@@ -1219,12 +1219,15 @@ _e_menu_idler(E_Menu *m)
 
    _e_menu_items_layout_update(m);
    e_box_thaw(m->container_object);
-   if (m->cur.x + m->cur.w > m->zone->w)
-     m->cur.x = m->zone->w - m->cur.w;
-   m->cur.x = MAX(m->cur.x, 0);
-   if ((m->cur.h < m->zone->h) && (m->cur.y + m->cur.h > m->zone->h) && (m->zone->h - m->cur.h > 0))
-     m->cur.y = m->zone->h - m->cur.h;
-   m->cur.y = MAX(m->cur.y, 0);
+   if (!m->parent_item)
+     {
+        if (m->cur.x + m->cur.w > m->zone->w)
+          m->cur.x = m->zone->w - m->cur.w;
+        m->cur.x = MAX(m->cur.x, 0);
+        if ((m->cur.h < m->zone->h) && (m->cur.y + m->cur.h > m->zone->h) && (m->zone->h - m->cur.h > 0))
+          m->cur.y = m->zone->h - m->cur.h;
+        m->cur.y = MAX(m->cur.y, 0);
+     }
    if (!m->idler_pos)
      evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
    evas_event_thaw(m->evas);
