@@ -998,6 +998,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    if (!real_path)
      {
         CRI("THIS IS A BUG!!!! HELP! WE'RE SINKING!");
+        CRI("dev='%s',path='%s'", dev, path);
         e_util_dialog_internal(_("BUG!"), _("Congratulations, you found a bug!<br>"
                                             "Please submit a report so we can fix it!"));
         return;
