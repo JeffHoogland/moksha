@@ -56,13 +56,13 @@ static void                  _e_configure_item_add(E_Configure_Category *cat, co
 static void                  _e_configure_item_cb(void *data);
 static void                  _e_configure_focus_cb(void *data, Evas_Object *obj);
 static void                  _e_configure_keydown_cb(void *data, Evas *e, Evas_Object *obj, void *event);
-static void                  _e_configure_fill_cat_list(void *data);
+static void                  _e_configure_fill_cat_list(void *data, const char *sel);
 static Eina_Bool             _e_configure_module_update_cb(void *data, int type, void *event);
 
 static E_Configure *_e_configure = NULL;
 
 void
-e_configure_show(E_Container *con)
+e_configure_show(E_Container *con, const char *params)
 {
    E_Configure *eco;
    E_Manager *man;
@@ -74,6 +74,9 @@ e_configure_show(E_Container *con)
    if (_e_configure)
      {
         E_Zone *z, *z2;
+        const Eina_List *l;
+        void *it;
+        int x = 0;
 
         eco = _e_configure;
         z = e_util_zone_current_get(e_manager_current_get());
@@ -93,6 +96,15 @@ e_configure_show(E_Container *con)
         if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
             (e_config->focus_setting == E_FOCUS_NEW_WINDOW))
           e_border_focus_set(eco->win->border, 1, 1);
+        EINA_LIST_FOREACH(e_widget_toolbar_items_get(eco->cat_list), l, it)
+          {
+             if (e_widget_toolbar_item_label_get(it) == params)
+               {
+                  e_widget_toolbar_item_select(eco->cat_list, x);
+                  break;
+               }
+             x++;
+          }
         return;
      }
 
@@ -157,7 +169,7 @@ e_configure_show(E_Container *con)
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
                                   _e_configure_keydown_cb, eco->win);
 
-   _e_configure_fill_cat_list(eco);
+   _e_configure_fill_cat_list(eco, params);
 
    /* Close Button */
    eco->close = e_widget_button_add(eco->evas, _("Close"), NULL,
@@ -176,7 +188,8 @@ e_configure_show(E_Container *con)
 
    /* Preselect "Appearance" */
    e_widget_focus_set(eco->cat_list, 1);
-   e_widget_toolbar_item_select(eco->cat_list, 0);
+   if (!e_widget_toolbar_item_selected_get(eco->cat_list))
+     e_widget_toolbar_item_select(eco->cat_list, 0);
 
    if (eco->cats)
      {
@@ -450,13 +463,14 @@ _e_configure_keydown_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 }
 
 static void
-_e_configure_fill_cat_list(void *data)
+_e_configure_fill_cat_list(void *data, const char *sel)
 {
    E_Configure *eco;
    Evas_Coord mw, mh;
    E_Configure_Category *cat;
    Eina_List *l, *ll;
    E_Configure_Cat *ecat;
+   int num = -1;
 
    if (!(eco = data)) return;
 
@@ -489,6 +503,8 @@ _e_configure_fill_cat_list(void *data)
                                              eci->icon_file, eci->icon, buf);
                     }
                }
+             if (sel && (ecat->cat == sel))
+               num = e_widget_toolbar_items_count(eco->cat_list) - 1;
           }
      }
    e_widget_on_focus_hook_set(eco->cat_list, _e_configure_focus_cb, eco->win);
@@ -504,6 +520,7 @@ _e_configure_fill_cat_list(void *data)
    if (mh < (120 * e_scale)) mh = 120 * e_scale;
    e_widget_size_min_set(eco->item_list, mw, mh);
    e_widget_list_object_append(eco->o_list, eco->item_list, 1, 1, 0.5);
+   if (num != -1) e_widget_toolbar_item_select(eco->cat_list, num);
 
    e_widget_size_min_get(eco->o_list, &mw, &mh);
    edje_extern_object_min_size_set(eco->o_list, mw, mh);
@@ -518,7 +535,7 @@ _e_configure_module_update_cb(void *data, int type __UNUSED__, void *event __UNU
    if (!(eco = data)) return ECORE_CALLBACK_PASS_ON;
    if (!eco->cat_list) return ECORE_CALLBACK_PASS_ON;
    sel = e_widget_toolbar_item_selected_get(eco->cat_list);
-   _e_configure_fill_cat_list(eco);
+   _e_configure_fill_cat_list(eco, NULL);
    e_widget_toolbar_item_select(eco->cat_list, sel);
    return ECORE_CALLBACK_PASS_ON;
 }

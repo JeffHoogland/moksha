@@ -199,6 +199,13 @@ _config_pre_activate_cb(void *data, E_Menu *m)
 }
 
 static void
+_config_item_activate_cb(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
+{
+   E_Configure_Cat *ecat = data;
+   e_configure_show(m->zone->container, ecat->cat);
+}
+
+static void
 _config_all_pre_activate_cb(void *data __UNUSED__, E_Menu *m)
 {
    const Eina_List *l;
@@ -222,7 +229,7 @@ _config_all_pre_activate_cb(void *data __UNUSED__, E_Menu *m)
              else
                e_util_menu_item_theme_icon_set(mi, ecat->icon);
           }
-
+        e_menu_item_callback_set(mi, _config_item_activate_cb, ecat);
         sub = e_menu_new();
         e_menu_item_submenu_set(mi, sub);
         e_menu_pre_activate_callback_set(sub, _config_pre_activate_cb, ecat);
@@ -404,14 +411,14 @@ _e_mod_action_conf_cb(E_Object *obj, const char *params)
    if ((zone) && (params))
      e_configure_registry_call(params, zone->container, params);
    else if (zone)
-     e_configure_show(zone->container);
+     e_configure_show(zone->container, params);
 }
 
 /* menu item callback(s) */
 static void
 _e_mod_conf_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
-   e_configure_show(m->zone->container);
+   e_configure_show(m->zone->container, NULL);
 }
 
 static void
