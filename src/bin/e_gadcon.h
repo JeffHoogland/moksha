@@ -149,7 +149,7 @@ struct _E_Gadcon_Client_Class
       /* All members below are part of version 3 */
       Eina_Bool        (*is_site)(E_Gadcon_Site site);
    } func;
-   char *default_style;
+   const char *default_style;
 };
 
 struct _E_Gadcon_Client
