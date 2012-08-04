@@ -104,6 +104,15 @@ e_widget_toolbar_items_get(Evas_Object *obj)
    return wd->items;
 }
 
+EAPI unsigned int
+e_widget_toolbar_items_count(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+   if (!obj) return 0;
+   if (!(wd = e_widget_data_get(obj))) return 0;
+   return eina_list_count(wd->items);
+}
+
 EAPI const char *
 e_widget_toolbar_item_label_get(void *item)
 {
