@@ -995,6 +995,13 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
      }
 
    real_path = _e_fm2_dev_path_map(sd, dev, path);
+   if (!real_path)
+     {
+        CRI("THIS IS A BUG!!!! HELP! WE'RE SINKING!");
+        e_util_dialog_internal(_("BUG!"), _("Congratulations, you found a bug!<br>"
+                                            "Please submit a report so we can fix it!"));
+        return;
+     }
    /* If the path doesn't exist, popup a dialog */
    if (dev && strncmp(dev, "removable:", 10)
        && !ecore_file_exists(real_path))
