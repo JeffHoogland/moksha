@@ -461,9 +461,7 @@ e_menu_thaw(E_Menu *m)
           m->idler = ecore_idler_add((Ecore_Task_Cb)_e_menu_idler, m);
         m->idler_pos = m->items;
 
-        _e_menu_items_layout_update(m);
         e_box_thaw(m->container_object);
-        evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
         evas_event_thaw(m->evas);
      }
    return m->frozen;
@@ -1205,13 +1203,16 @@ _e_menu_idler(E_Menu *m)
    E_Menu_Item *mi;
    double t;
    unsigned int count = 0;
+   Eina_Bool comp;
 
+
+   comp = !!e_manager_comp_evas_get(m->zone->container->manager);
    t = ecore_loop_time_get();
    evas_event_freeze(m->evas);
    e_box_freeze(m->container_object);
    EINA_LIST_FOREACH(m->idler_pos, m->idler_pos, mi)
      {
-        if ((count++ >= 2) && (ecore_time_get() - t >= 0.8 * ecore_animator_frametime_get()))
+        if ((!comp) && (count++ >= 2) && (ecore_time_get() - t >= 0.8 * ecore_animator_frametime_get()))
           break;
         _e_menu_item_realize(mi);
      }
@@ -1221,10 +1222,11 @@ _e_menu_idler(E_Menu *m)
    if (m->cur.x + m->cur.w > m->zone->w)
      m->cur.x = m->zone->w - m->cur.w;
    m->cur.x = MAX(m->cur.x, 0);
-   if ((m->cur.h < m->zone->h) && (m->cur.y + m->cur.h > m->zone->h))
+   if ((m->cur.h < m->zone->h) && (m->cur.y + m->cur.h > m->zone->h) && (m->zone->h - m->cur.h > 0))
      m->cur.y = m->zone->h - m->cur.h;
    m->cur.y = MAX(m->cur.y, 0);
-   evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
+   if (!m->idler_pos)
+     evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
    evas_event_thaw(m->evas);
    if (!m->idler_pos)
      m->idler = NULL;
@@ -1670,17 +1672,20 @@ _e_menu_realize(E_Menu *m)
    e_box_homogenous_set(o, 0);
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
 
-   EINA_LIST_FOREACH(m->items, m->idler_pos, mi)
-     {
-        if (eina_list_count(m->items) > 5)
-          {
-             if (ecore_time_get() - t >= ecore_animator_frametime_get())
-               break;
-          }
-        _e_menu_item_realize(mi);
-     }
-   if (m->idler_pos)
-     m->idler = ecore_idler_add((Ecore_Task_Cb)_e_menu_idler, m);
+   {
+      Eina_Bool comp = !!e_manager_comp_evas_get(m->zone->container->manager);
+      EINA_LIST_FOREACH(m->items, m->idler_pos, mi)
+        {
+           if ((!comp) && (eina_list_count(m->items) > 5))
+             {
+                if (ecore_time_get() - t >= ecore_animator_frametime_get())
+                  break;
+             }
+           _e_menu_item_realize(mi);
+        }
+      if (m->idler_pos)
+        m->idler = ecore_idler_add((Ecore_Task_Cb)_e_menu_idler, m);
+   }
 
    _e_menu_items_layout_update(m);
    e_box_thaw(m->container_object);
@@ -1770,6 +1775,7 @@ _e_menu_items_layout_update(E_Menu *m)
      }
    EINA_LIST_FOREACH(m->items, l, mi)
      {
+        if (l == m->idler_pos) break;
         if (mi->separator)
           {
              e_box_pack_options_set(mi->separator_object,
@@ -1873,7 +1879,33 @@ _e_menu_items_layout_update(E_Menu *m)
              e_box_thaw(mi->container_object);
           }
      }
-   e_box_size_min_get(m->container_object, &bw, &bh);
+   if (!m->idler_pos)
+     e_box_size_min_get(m->container_object, &bw, &bh);
+   else
+     {
+        unsigned int count = 0;
+        int sw = 0, sh = 0;
+        E_Menu_Item *mi2 = NULL;
+        EINA_LIST_FOREACH(m->items, l, mi)
+          {
+             if (mi->separator)
+               {
+                  count++;
+                  if (!sw)
+                    edje_object_size_min_calc(mi->bg_object, &sw, &sh);
+               }
+             else
+               {
+                  if (!mi2) mi2 = mi;
+               }
+          }
+        if (!mi2) return;
+        edje_object_size_min_calc(mi2->bg_object, &mw, &mh);
+        if ((mw <= 4) || (!mh)) return;
+        bw = MAX(mw, sw) + 2;
+        bh = (eina_list_count(m->items) - count)  * mh;
+        bh += count * sh;
+     }
    edje_extern_object_min_size_set(m->container_object, bw, bh);
    edje_extern_object_max_size_set(m->container_object, bw, bh);
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
