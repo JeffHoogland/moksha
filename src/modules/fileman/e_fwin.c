@@ -75,6 +75,7 @@ struct _E_Fwin_Apps_Dialog
    E_Dialog    *dia;
    E_Fwin      *fwin;
    const char  *app2;
+   Evas_Object *o_filepreview;
    Evas_Object *o_all;
    Evas_Object *o_entry;
    char        *exec_cmd;
@@ -170,6 +171,8 @@ static void             _e_fwin_file_exec(E_Fwin_Page *page,
 static void             _e_fwin_file_open_dialog(E_Fwin_Page *page,
                                                  Eina_List *files,
                                                  int always);
+static void             _e_fwin_file_open_dialog_preview_set(void *data1,
+                                                             void *data2);
 static void             _e_fwin_file_open_dialog_cb_key_down(void *data,
                                                              Evas *e,
                                                              Evas_Object *obj,
@@ -1941,7 +1944,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    E_Fwin *fwin = page->fwin, *fwin2 = NULL;
    E_Dialog *dia;
    Evas_Coord mw, mh;
-   Evas_Object *o, *of, *ol;
+   Evas_Object *o, *of, *ol, *ot;
    Evas *evas;
    Eina_List *l = NULL, *apps = NULL, *mlist = NULL;
    Eina_List *cats = NULL;
@@ -1950,7 +1953,9 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    E_Fm2_Icon_Info *ici;
    char buf[PATH_MAX];
    Eina_Bool has_default = EINA_FALSE;
-   int need_dia = 0;
+   int need_dia = 0, n = 0;;
+
+   n = eina_list_count(files);
 
    if (fwin->fad)
      {
@@ -2218,7 +2223,6 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
                }
           }
      }
-   mlist = eina_list_free(mlist);
 
    fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    if (fwin->win)
@@ -2248,16 +2252,59 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
 
    l = eina_list_free(l);
 
-   if (eina_list_count(files) == 1)
+#if 1
+   o = e_widget_filepreview_add(evas, 96 * e_scale, 96 * e_scale, 1);
+   fad->o_filepreview = o;
+   if (n == 1)
      {
         ici = eina_list_data_get(files);
         of = e_widget_framelist_add(evas, ici->file, 0);
-        o = e_widget_filepreview_add(evas, 96, 96, 1);
+        snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), ici->file);
+        e_widget_filepreview_path_set(o, buf, ici->mime);
+     }
+   else
+     {
+        snprintf(buf, sizeof(buf), P_("%d file", "%d files", n), n);
+        of = e_widget_framelist_add(evas, buf, 0);
+        ot = e_widget_toolbar_add(evas, 24 * e_scale, 24 * e_scale);
+        e_widget_toolbar_scrollable_set(ot, 1);
+        EINA_LIST_FOREACH(files, l, ici)
+          e_widget_toolbar_item_append(ot, NULL, ici->file, _e_fwin_file_open_dialog_preview_set, page, ici);
+        e_widget_toolbar_item_select(ot, 0);
+        e_widget_framelist_object_append(of, ot);
+     }
+
+   e_widget_framelist_object_append(of, o);
+#else
+   // Here each file has its own widget, created at start, resulting on a longish time to show the dialog.
+   // However, this doesn't display artefacts as the previous method, so is kept here for reference.
+   if (n == 1)
+     {
+        ici = eina_list_data_get(files);
+        of = e_widget_framelist_add(evas, ici->file, 0);
+        o = e_widget_filepreview_add(evas, 96 * e_scale, 96 * e_scale, 1);
         snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), ici->file);
         e_widget_filepreview_path_set(o, buf, ici->mime);
         e_widget_framelist_object_append(of, o);
-        e_widget_list_object_append(ol, of, 1, 0, 0.5);
-   }
+     }
+   else
+     {
+        snprintf(buf, sizeof(buf), P_("%d file", "%d files", n), n);
+        of = e_widget_framelist_add(evas, buf, 0);
+        ot = e_widget_toolbook_add(evas, 24 * e_scale, 24 * e_scale);
+        EINA_LIST_FOREACH(files, l, ici)
+          {
+             o = e_widget_filepreview_add(evas, 96 * e_scale, 96 * e_scale, 1);
+             snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), ici->file);
+             e_widget_filepreview_path_set(o, buf, ici->mime);
+             e_widget_toolbook_page_append(ot, NULL, ici->file, o, 1, 1, 1, 1, .5, .5);
+          }
+        e_widget_toolbook_page_show(ot, 0);
+        e_widget_framelist_object_append(of, ot);
+     }
+#endif
+
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
 
    // Make frame with list of applications
    of = e_widget_framelist_add(evas, _("Known Applications"), 0);
@@ -2271,6 +2318,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    // Adding Specific Applications list into widget
    if (apps)
      e_widget_ilist_header_append(o, NULL, _("Specific Applications"));
+   mlist = eina_list_free(mlist);
    EINA_LIST_FOREACH(apps, l, desk)
      {
         Evas_Object *icon = NULL;
@@ -2314,7 +2362,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    e_widget_ilist_thaw(o);
    edje_thaw();
    evas_event_thaw(evas);
-   e_widget_size_min_set(o, 160, (eina_list_count(files) == 1) ? 160 : 240);
+   e_widget_size_min_set(o, 160, 160);
    e_widget_framelist_object_append(of, o);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
@@ -2330,6 +2378,17 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    e_dialog_show(dia);
    e_dialog_border_icon_set(dia, "preferences-applications");
    e_widget_focus_steal(fad->o_entry);
+}
+
+static void
+_e_fwin_file_open_dialog_preview_set(void *data1, void *data2)
+{
+   E_Fwin_Page *page = data1;
+   E_Fm2_Icon_Info *ici = data2;
+   char buf[PATH_MAX];
+
+   snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), ici->file);
+   e_widget_filepreview_path_set(page->fwin->fad->o_filepreview, buf, ici->mime);
 }
 
 static void
