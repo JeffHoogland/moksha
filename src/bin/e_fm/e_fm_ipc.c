@@ -1092,7 +1092,15 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
         if ((path[0] == 0) || (lnk)) broken_lnk = 1;
         else return;
      }
-   if ((lnk) && (lnk[0] != '/')) rlnk = ecore_file_realpath(path);
+   if ((lnk) && (lnk[0] != '/'))
+     {
+        rlnk = ecore_file_realpath(path);
+        if ((rlnk == NULL) || (rlnk[0] == 0) ||
+            (stat(rlnk, &st) == -1))
+          broken_lnk = 1;
+        else
+          broken_lnk = 0;
+     }
    else if (lnk)
      rlnk = strdup(lnk);
    if (!lnk) lnk = strdup("");
