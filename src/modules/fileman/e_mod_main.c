@@ -266,7 +266,7 @@ _e_mod_menu_gtk_cb(void           *data,
    m = _e_mod_menu_top_get(m);
    fm = e_object_data_get(E_OBJECT(m));
    if (fm && ((fileman_config->view.open_dirs_in_place && evas_object_data_get(fm, "page_is_window")) ||
-       (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_zone"))))
+       (fileman_config->view.desktop_navigation && evas_object_data_get(fm, "page_is_zone"))))
      e_fm2_path_set(fm, NULL, data);
    else if (m->zone) e_fwin_new(m->zone->container, NULL, data);
 }
@@ -281,7 +281,7 @@ _e_mod_menu_virtual_cb(void           *data,
    m = _e_mod_menu_top_get(m);
    fm = e_object_data_get(E_OBJECT(m));
    if (fm && ((fileman_config->view.open_dirs_in_place && evas_object_data_get(fm, "page_is_window")) ||
-       (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_zone"))))
+       (fileman_config->view.desktop_navigation && evas_object_data_get(fm, "page_is_zone"))))
      e_fm2_path_set(fm, data, "/");
    else if (m->zone) e_fwin_new(m->zone->container, data, "/");
 }
@@ -299,7 +299,7 @@ _e_mod_menu_volume_cb(void           *data,
    if (vol->mounted)
      {
        if (fm && ((fileman_config->view.open_dirs_in_place && evas_object_data_get(fm, "page_is_window")) ||
-           (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_zone"))))
+           (fileman_config->view.desktop_navigation && evas_object_data_get(fm, "page_is_zone"))))
          e_fm2_path_set(fm, NULL, vol->mount_point);
         else if (m->zone)
           e_fwin_new(m->zone->container, NULL, vol->mount_point);
@@ -310,7 +310,7 @@ _e_mod_menu_volume_cb(void           *data,
 
         snprintf(buf, sizeof(buf), "removable:%s", vol->udi);
         if (fm && ((fileman_config->view.open_dirs_in_place && evas_object_data_get(fm, "page_is_window")) ||
-            (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_zone"))))
+            (fileman_config->view.desktop_navigation && evas_object_data_get(fm, "page_is_zone"))))
           e_fm2_path_set(fm, buf, "/");
         else if (m->zone)
           e_fwin_new(m->zone->container, buf, "/");
@@ -402,7 +402,7 @@ _e_mod_menu_populate_cb(void      *data,
    fm = e_object_data_get(E_OBJECT(m));
    path = e_object_data_get(E_OBJECT(mi));
    if (fm && ((fileman_config->view.open_dirs_in_place && evas_object_data_get(fm, "page_is_window")) ||
-       (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_zone"))))
+       (fileman_config->view.desktop_navigation && evas_object_data_get(fm, "page_is_zone"))))
      e_fm2_path_set(fm, data, path ?: "/");
    else if (m->zone)
      e_fwin_new(m->zone->container, data, path ?: "/");
