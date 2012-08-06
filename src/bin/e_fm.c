@@ -914,7 +914,7 @@ _e_fm2_cb_unmount_ok(void *data)
    if (sd->mount)
      {
         sd->mount = NULL;
-        if (sd->config->view.open_dirs_in_place)
+        if (sd->config->view.open_dirs_in_place && sd->realpath)
           _e_fm2_path_parent_set(data, sd->realpath);
         else
           evas_object_smart_callback_call(data, "dir_deleted", NULL);
