@@ -345,6 +345,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
                        e_object_data_set(E_OBJECT(sub), eina_stringshare_add("/"));
                        e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
                        e_menu_item_submenu_set(mi, sub);
+                       e_menu_freeze(sub);
                        e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
                     }
                }
@@ -435,6 +436,7 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler __UNUSED__, const Eina_F
    e_object_data_set(E_OBJECT(sub), eina_stringshare_ref(dev));
    e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
    e_menu_item_submenu_set(mi, sub);
+   e_menu_freeze(sub);
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
 }
 
@@ -477,7 +479,6 @@ _e_mod_menu_populate(void *d __UNUSED__, E_Menu *m)
    dev = e_object_data_get(E_OBJECT(m));
    path = mi ? e_object_data_get(E_OBJECT(mi)) : NULL;
    rp = e_fm2_real_path_map(dev, path ?: "/");
-   e_menu_freeze(m);
    ls = eio_file_stat_ls(rp, _e_mod_menu_populate_filter, _e_mod_menu_populate_item, _e_mod_menu_populate_done, _e_mod_menu_populate_err, m);
    EINA_SAFETY_ON_NULL_RETURN(ls);
    eina_stringshare_del(rp);
@@ -506,6 +507,7 @@ _e_mod_menu_generate(void *data __UNUSED__,
    e_object_data_set(E_OBJECT(sub), s);
    e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
    e_menu_item_submenu_set(mi, sub);
+   e_menu_freeze(sub);
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
 
    /* Desktop */
@@ -518,6 +520,7 @@ _e_mod_menu_generate(void *data __UNUSED__,
    e_object_data_set(E_OBJECT(sub), s);
    e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
    e_menu_item_submenu_set(mi, sub);
+   e_menu_freeze(sub);
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
 
    /* Favorites */
@@ -530,6 +533,7 @@ _e_mod_menu_generate(void *data __UNUSED__,
    e_object_data_set(E_OBJECT(sub), s);
    e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
    e_menu_item_submenu_set(mi, sub);
+   e_menu_freeze(sub);
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
 
    /* Trash */
@@ -548,6 +552,7 @@ _e_mod_menu_generate(void *data __UNUSED__,
    e_object_data_set(E_OBJECT(sub), s);
    e_object_free_attach_func_set(E_OBJECT(sub), _e_mod_menu_cleanup_cb);
    e_menu_item_submenu_set(mi, sub);
+   e_menu_freeze(sub);
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_populate, NULL);
    need_separator = 1;
 
