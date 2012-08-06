@@ -1075,6 +1075,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
              if ((m->volume->efm_mode != EFM_MODE_USING_HAL_MOUNT) && (!sd->mount->mounted)) return;
           }
      }
+   if (!sd->realpath) return;
 
    if (!sd->mount || sd->mount->mounted)
      {
