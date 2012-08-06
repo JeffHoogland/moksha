@@ -45,9 +45,6 @@ struct _E_Menu
 
    Eina_List           *items;
 
-   Ecore_Idler         *idler;
-   Eina_List           *idler_pos;
-
    /* the zone it belongs to */
    E_Zone              *zone;
 

@@ -30,7 +30,6 @@ struct _E_Menu_Category
 };
 
 /* local subsystem functions */
-static Eina_Bool   _e_menu_idler(E_Menu *m);
 static void         _e_menu_free(E_Menu *m);
 static void         _e_menu_item_free(E_Menu_Item *mi);
 static void         _e_menu_item_realize(E_Menu_Item *mi);
@@ -450,19 +449,9 @@ e_menu_thaw(E_Menu *m)
    if (m->frozen < 0) m->frozen = 0;
    if ((!m->frozen) && (m->realized))
      {
-        E_Menu_Item *mi;
-        Eina_List *l;
-
-        evas_event_freeze(m->evas);
-        e_box_freeze(m->container_object);
-        EINA_LIST_FOREACH(m->items, l, mi)
-          _e_menu_item_unrealize(mi);
-        if (!m->idler)
-          m->idler = ecore_idler_add((Ecore_Task_Cb)_e_menu_idler, m);
-        m->idler_pos = m->items;
-
-        e_box_thaw(m->container_object);
-        evas_event_thaw(m->evas);
+        E_Zone *zone = m->zone;
+        _e_menu_unrealize(m);
+        m->zone = zone;
      }
    return m->frozen;
 }
@@ -1062,6 +1051,7 @@ e_menu_idler_before(void)
    /* phase 2. move & reisze all the menus that want to moves/resized */
    EINA_LIST_FOREACH(_e_active_menus, l, m)
      {
+        if (m->frozen) continue;
         if (!m->realized) _e_menu_realize(m);
         if (m->realized)
           {
@@ -1086,6 +1076,7 @@ e_menu_idler_before(void)
    /* phase 3. show all the menus that want to be shown */
    EINA_LIST_FOREACH(_e_active_menus, l, m)
      {
+        if (m->frozen) continue;
         if ((m->cur.visible) && (!m->prev.visible))
           {
              m->prev.visible = m->cur.visible;
@@ -1097,6 +1088,7 @@ e_menu_idler_before(void)
    /* phase 4. de-activate... */
    EINA_LIST_FOREACH(_e_active_menus, l, m)
      {
+        if (m->frozen) continue;
         if (!m->active)
           {
              _e_menu_unrealize(m);
@@ -1115,6 +1107,7 @@ e_menu_idler_before(void)
    /* phase 5. shapes... */
    EINA_LIST_FOREACH(_e_active_menus, l, m)
      {
+        if (m->frozen) continue;
         if (m->need_shape_export)
           {
              Ecore_X_Rectangle *rects, *orects;
@@ -1197,45 +1190,6 @@ e_menu_find_by_window(Ecore_X_Window win)
 }
 
 /* local subsystem functions */
-static Eina_Bool
-_e_menu_idler(E_Menu *m)
-{
-   E_Menu_Item *mi;
-   double t;
-   unsigned int count = 0;
-   Eina_Bool comp;
-
-
-   comp = !!e_manager_comp_evas_get(m->zone->container->manager);
-   t = ecore_loop_time_get();
-   evas_event_freeze(m->evas);
-   e_box_freeze(m->container_object);
-   EINA_LIST_FOREACH(m->idler_pos, m->idler_pos, mi)
-     {
-        if ((!comp) && (count++ >= 2) && (ecore_time_get() - t >= 0.8 * ecore_animator_frametime_get()))
-          break;
-        _e_menu_item_realize(mi);
-     }
-
-   _e_menu_items_layout_update(m);
-   e_box_thaw(m->container_object);
-   if (!m->parent_item)
-     {
-        if (m->cur.x + m->cur.w > m->zone->w)
-          m->cur.x = m->zone->w - m->cur.w;
-        m->cur.x = MAX(m->cur.x, 0);
-        if ((m->cur.h < m->zone->h) && (m->cur.y + m->cur.h > m->zone->h) && (m->zone->h - m->cur.h > 0))
-          m->cur.y = m->zone->h - m->cur.h;
-        m->cur.y = MAX(m->cur.y, 0);
-     }
-   if (!m->idler_pos)
-     evas_object_resize(m->bg_object, m->cur.w, m->cur.h);
-   evas_event_thaw(m->evas);
-   if (!m->idler_pos)
-     m->idler = NULL;
-   return !!m->idler_pos;
-}
-
 static void
 _e_menu_free(E_Menu *m)
 {
@@ -1597,13 +1551,12 @@ static void
 _e_menu_realize(E_Menu *m)
 {
    Evas_Object *o;
+   Eina_List *l;
    E_Menu_Item *mi;
    int ok = 0;
-   double t;
 
    if (m->realized) return;
    m->realized = 1;
-   t = ecore_loop_time_get();
    m->ecore_evas = e_canvas_new(m->zone->container->win,
                                 m->cur.x, m->cur.y, m->cur.w, m->cur.h, 1, 1,
                                 &(m->evas_win));
@@ -1675,20 +1628,8 @@ _e_menu_realize(E_Menu *m)
    e_box_homogenous_set(o, 0);
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
 
-   {
-      Eina_Bool comp = !!e_manager_comp_evas_get(m->zone->container->manager);
-      EINA_LIST_FOREACH(m->items, m->idler_pos, mi)
-        {
-           if ((!comp) && (eina_list_count(m->items) > 5))
-             {
-                if (ecore_time_get() - t >= ecore_animator_frametime_get())
-                  break;
-             }
-           _e_menu_item_realize(mi);
-        }
-      if (m->idler_pos)
-        m->idler = ecore_idler_add((Ecore_Task_Cb)_e_menu_idler, m);
-   }
+   EINA_LIST_FOREACH(m->items, l, mi)
+     _e_menu_item_realize(mi);
 
    _e_menu_items_layout_update(m);
    e_box_thaw(m->container_object);
@@ -1778,7 +1719,6 @@ _e_menu_items_layout_update(E_Menu *m)
      }
    EINA_LIST_FOREACH(m->items, l, mi)
      {
-        if (l == m->idler_pos) break;
         if (mi->separator)
           {
              e_box_pack_options_set(mi->separator_object,
@@ -1882,33 +1822,7 @@ _e_menu_items_layout_update(E_Menu *m)
              e_box_thaw(mi->container_object);
           }
      }
-   if (!m->idler_pos)
-     e_box_size_min_get(m->container_object, &bw, &bh);
-   else
-     {
-        unsigned int count = 0;
-        int sw = 0, sh = 0;
-        E_Menu_Item *mi2 = NULL;
-        EINA_LIST_FOREACH(m->items, l, mi)
-          {
-             if (mi->separator)
-               {
-                  count++;
-                  if (!sw)
-                    edje_object_size_min_calc(mi->bg_object, &sw, &sh);
-               }
-             else
-               {
-                  if (!mi2) mi2 = mi;
-               }
-          }
-        if (!mi2) return;
-        edje_object_size_min_calc(mi2->bg_object, &mw, &mh);
-        if ((mw <= 4) || (!mh)) return;
-        bw = MAX(mw, sw) + 2;
-        bh = (eina_list_count(m->items) - count)  * mh;
-        bh += count * sh;
-     }
+   e_box_size_min_get(m->container_object, &bw, &bh);
    edje_extern_object_min_size_set(m->container_object, bw, bh);
    edje_extern_object_max_size_set(m->container_object, bw, bh);
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
@@ -1961,9 +1875,6 @@ _e_menu_unrealize(E_Menu *m)
    if (m->bg_object) evas_object_del(m->bg_object);
    m->bg_object = NULL;
    if (m->container_object) evas_object_del(m->container_object);
-   if (m->idler) ecore_idler_del(m->idler);
-   m->idler = NULL;
-   m->idler_pos = NULL;
    m->container_object = NULL;
    m->cur.visible = 0;
    m->prev.visible = 0;
