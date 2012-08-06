@@ -367,6 +367,20 @@ e_fm2_device_volume_find(const char *udi)
    return NULL;
 }
 
+EAPI E_Volume *
+e_fm2_device_volume_find_fast(const char *udi)
+{
+   Eina_List *l;
+   E_Volume *v;
+
+   if (!udi) return NULL;
+
+   EINA_LIST_FOREACH(_e_vols, l, v)
+     if (udi == v->udi) return v;
+
+   return NULL;
+}
+
 EAPI const char *
 e_fm2_device_volume_mountpoint_get(E_Volume *v)
 {
