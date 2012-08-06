@@ -58,7 +58,7 @@ e_modapi_init(E_Module *m)
    //eina_init();
 
    /* Setup Entry in Config Panel */
-   e_configure_registry_category_add("fileman", 100, _("Files"),
+   e_configure_registry_category_add("fileman", 100, _("Navigate"),
                                      NULL, "system-file-manager");
    e_configure_registry_item_add("fileman/fileman", 10, _("File Manager"),
                                  NULL, "system-file-manager",
@@ -77,7 +77,7 @@ e_modapi_init(E_Module *m)
         e_action_predef_name_set(_("Launch"), _("File Manager"),
                                  "fileman", NULL, "syntax: /path/to/dir or ~/path/to/dir or favorites or desktop, examples: /boot/grub, ~/downloads", 1);
      }
-   maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Files"), _e_mod_menu_add, NULL, NULL, NULL);
+   maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Navigate"), _e_mod_menu_add, NULL, NULL, NULL);
    mcb = e_menu_category_callback_add("e/fileman/action", _e_mod_main_menu_cb, NULL, NULL);
    e_module_delayed_set(m, 1);
 
@@ -634,7 +634,7 @@ _e_mod_menu_add(void *data __UNUSED__,
    E_Menu *sub;
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Files"));
+   e_menu_item_label_set(mi, _("Navigate..."));
    e_util_menu_item_theme_icon_set(mi, "system-file-manager");
    sub = e_menu_new();
    e_menu_item_submenu_set(mi, sub);
