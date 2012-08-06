@@ -469,18 +469,18 @@ static void
 _e_mod_menu_populate(void *d __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
-   const char *dev, *path, *realpath;
+   const char *dev, *path, *rp;
    Eio_File *ls;
 
    if (m->items) return;
    mi = m->parent_item;
    dev = e_object_data_get(E_OBJECT(m));
    path = mi ? e_object_data_get(E_OBJECT(mi)) : NULL;
-   realpath = e_fm2_real_path_map(dev, path ?: "/");
+   rp = e_fm2_real_path_map(dev, path ?: "/");
    e_menu_freeze(m);
-   ls = eio_file_stat_ls(realpath, _e_mod_menu_populate_filter, _e_mod_menu_populate_item, _e_mod_menu_populate_done, _e_mod_menu_populate_err, m);
+   ls = eio_file_stat_ls(rp, _e_mod_menu_populate_filter, _e_mod_menu_populate_item, _e_mod_menu_populate_done, _e_mod_menu_populate_err, m);
    EINA_SAFETY_ON_NULL_RETURN(ls);
-   eina_stringshare_del(realpath);
+   eina_stringshare_del(rp);
 }
 
 /* menu item add hook */
