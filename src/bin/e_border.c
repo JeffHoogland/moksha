@@ -4574,7 +4574,11 @@ _e_border_free(E_Border *bd)
    if (bd->client.icccm.name)
      eina_stringshare_del(bd->client.icccm.name);
    if (bd->client.icccm.class)
-     eina_stringshare_del(bd->client.icccm.class);
+     {
+        if (!strcmp(bd->client.icccm.class, "Vmplayer"))
+          e_bindings_mapping_change_enable(EINA_FALSE);
+        eina_stringshare_del(bd->client.icccm.class);
+     }
    if (bd->client.icccm.title)
      eina_stringshare_del(bd->client.icccm.title);
    if (bd->client.icccm.icon_name)
@@ -6650,11 +6654,13 @@ _e_border_eval0(E_Border *bd)
         const char *pname, *pclass;
         char *nname, *nclass;
 
-	ecore_x_icccm_name_class_get(bd->client.win, &nname, &nclass);
+        ecore_x_icccm_name_class_get(bd->client.win, &nname, &nclass);
         pname = bd->client.icccm.name;
         pclass = bd->client.icccm.class;
         bd->client.icccm.name = eina_stringshare_add(nname);
         bd->client.icccm.class = eina_stringshare_add(nclass);
+        if (bd->client.icccm.class && (!strcmp(bd->client.icccm.class, "Vmplayer")))
+          e_bindings_mapping_change_enable(EINA_FALSE);
         if (nname) free(nname);
         if (nclass) free(nclass);
 
