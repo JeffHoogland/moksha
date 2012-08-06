@@ -463,6 +463,11 @@ E_MSGBUS_WIN_ACTION_CB_END
 
 E_MSGBUS_WIN_ACTION_CB_BEGIN(focus)
 e_border_focus_set(bd, 1, 1);
+if (!bd->lock_user_stacking)
+  {
+     if (e_config->border_raise_on_focus)
+       e_border_raise(bd);
+  }
 E_MSGBUS_WIN_ACTION_CB_END
 
 E_MSGBUS_WIN_ACTION_CB_BEGIN(iconify)
