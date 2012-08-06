@@ -339,6 +339,7 @@ static void          _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned
 static void          _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void          _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_icon_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
+static void          _e_fm2_options_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi);
 static void          _e_fm2_toggle_inherit_dir_props(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -8122,51 +8123,20 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
              e_util_menu_item_theme_icon_set(mi, "preferences-look");
              e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
           }
+        if (!(sd->icon_menu.flags &
+            (E_FM2_MENU_NO_SHOW_HIDDEN | E_FM2_MENU_NO_REMEMBER_ORDERING | E_FM2_MENU_NO_ACTIVATE_CHANGE)))
+          {
+             mi = e_menu_item_new(mn);
+             e_menu_item_label_set(mi, _("Options"));
+             e_util_menu_item_theme_icon_set(mi, "preferences-system");
+             e_menu_item_submenu_pre_callback_set(mi, _e_fm2_options_menu_pre, sd);
+          }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
           {
              mi = e_menu_item_new(mn);
              e_menu_item_label_set(mi, _("Refresh View"));
              e_util_menu_item_theme_icon_set(mi, "view-refresh");
              e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
-          }
-
-        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_SHOW_HIDDEN))
-          {
-             mi = e_menu_item_new(mn);
-             e_menu_item_label_set(mi, _("Show Hidden Files"));
-             e_util_menu_item_theme_icon_set(mi, "view-refresh");
-             e_menu_item_check_set(mi, 1);
-             e_menu_item_toggle_set(mi, sd->show_hidden_files);
-             e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
-          }
-
-        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING))
-          {
-             if (!sd->config->view.always_order)
-               {
-                  mi = e_menu_item_new(mn);
-                  e_menu_item_label_set(mi, _("Remember Ordering"));
-                  e_util_menu_item_theme_icon_set(mi, "view-order");
-                  e_menu_item_check_set(mi, 1);
-                  e_menu_item_toggle_set(mi, sd->order_file);
-                  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
-               }
-             if ((sd->order_file) || (sd->config->view.always_order))
-               {
-                  mi = e_menu_item_new(mn);
-                  e_menu_item_label_set(mi, _("Sort Now"));
-                  e_util_menu_item_theme_icon_set(mi, "view-sort");
-                  e_menu_item_callback_set(mi, _e_fm2_sort, sd);
-               }
-          }
-        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_ACTIVATE_CHANGE))
-          {
-             mi = e_menu_item_new(mn);
-             e_menu_item_label_set(mi, _("Single Click Activation"));
-             /* FIXME: e_util_menu_item_theme_icon_set(mi, NULL); */
-             e_menu_item_check_set(mi, 1);
-             e_menu_item_toggle_set(mi, sd->config->view.single_click);
-             e_menu_item_callback_set(mi, _e_fm2_toggle_single_click, sd);
           }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
           {
@@ -8285,6 +8255,14 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              e_util_menu_item_theme_icon_set(mi, "preferences-look");
              e_menu_item_submenu_pre_callback_set(mi, _e_fm2_icon_view_menu_pre, sd);
           }
+        if (!(sd->icon_menu.flags &
+            (E_FM2_MENU_NO_SHOW_HIDDEN | E_FM2_MENU_NO_REMEMBER_ORDERING | E_FM2_MENU_NO_ACTIVATE_CHANGE)))
+          {
+             mi = e_menu_item_new(mn);
+             e_menu_item_label_set(mi, _("Options"));
+             e_util_menu_item_theme_icon_set(mi, "preferences-system");
+             e_menu_item_submenu_pre_callback_set(mi, _e_fm2_options_menu_pre, sd);
+          }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
           {
              mi = e_menu_item_new(mn);
@@ -8293,44 +8271,6 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
           }
 
-        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_SHOW_HIDDEN))
-          {
-             mi = e_menu_item_new(mn);
-             e_menu_item_label_set(mi, _("Show Hidden Files"));
-             e_util_menu_item_theme_icon_set(mi, "view-hidden-files");
-             e_menu_item_check_set(mi, 1);
-             e_menu_item_toggle_set(mi, sd->show_hidden_files);
-             e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
-          }
-
-        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING))
-          {
-             if (!sd->config->view.always_order)
-               {
-                  mi = e_menu_item_new(mn);
-                  e_menu_item_label_set(mi, _("Remember Ordering"));
-                  e_util_menu_item_theme_icon_set(mi, "view-order");
-                  e_menu_item_check_set(mi, 1);
-                  e_menu_item_toggle_set(mi, sd->order_file);
-                  e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
-               }
-             if ((sd->order_file) || (sd->config->view.always_order))
-               {
-                  mi = e_menu_item_new(mn);
-                  e_menu_item_label_set(mi, _("Sort Now"));
-                  e_util_menu_item_theme_icon_set(mi, "view-sort");
-                  e_menu_item_callback_set(mi, _e_fm2_sort, sd);
-               }
-          }
-        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_ACTIVATE_CHANGE))
-          {
-             mi = e_menu_item_new(mn);
-             e_menu_item_label_set(mi, _("Single Click Activation"));
-             /* FIXME: e_util_menu_item_theme_icon_set(mi, NULL); */
-             e_menu_item_check_set(mi, 1);
-             e_menu_item_toggle_set(mi, sd->config->view.single_click);
-             e_menu_item_callback_set(mi, _e_fm2_toggle_single_click, sd);
-          }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
           {
              /* FIXME: stat the dir itself - move to e_fm_main */
@@ -8828,6 +8768,57 @@ _e_fm2_icon_view_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_item_submenu_set(mi, subm);
 
    _e_fm2_view_menu_common(subm, sd);
+}
+
+static void
+_e_fm2_options_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+   E_Menu *subm;
+   E_Fm2_Smart_Data *sd;
+
+   sd = data;
+
+   subm = e_menu_new();
+   e_object_data_set(E_OBJECT(subm), sd);
+   e_menu_item_submenu_set(mi, subm);
+   if (!(sd->icon_menu.flags & E_FM2_MENU_NO_SHOW_HIDDEN))
+     {
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Show Hidden Files"));
+        e_util_menu_item_theme_icon_set(mi, "view-refresh");
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, sd->show_hidden_files);
+        e_menu_item_callback_set(mi, _e_fm2_toggle_hidden_files, sd);
+     }
+
+   if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REMEMBER_ORDERING))
+     {
+        if (!sd->config->view.always_order)
+          {
+             mi = e_menu_item_new(subm);
+             e_menu_item_label_set(mi, _("Remember Ordering"));
+             e_util_menu_item_theme_icon_set(mi, "view-order");
+             e_menu_item_check_set(mi, 1);
+             e_menu_item_toggle_set(mi, sd->order_file);
+             e_menu_item_callback_set(mi, _e_fm2_toggle_ordering, sd);
+          }
+        if ((sd->order_file) || (sd->config->view.always_order))
+          {
+             mi = e_menu_item_new(subm);
+             e_menu_item_label_set(mi, _("Sort Now"));
+             e_util_menu_item_theme_icon_set(mi, "view-sort");
+             e_menu_item_callback_set(mi, _e_fm2_sort, sd);
+          }
+     }
+   if (!(sd->icon_menu.flags & E_FM2_MENU_NO_ACTIVATE_CHANGE))
+     {
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Single Click Activation"));
+        /* FIXME: e_util_menu_item_theme_icon_set(mi, NULL); */
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, sd->config->view.single_click);
+        e_menu_item_callback_set(mi, _e_fm2_toggle_single_click, sd);
+     }
 }
 
 static void
