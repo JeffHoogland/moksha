@@ -7,6 +7,7 @@
 /* actual module specifics */
 static void _e_mod_action_fileman_cb(E_Object   *obj,
                                      const char *params);
+static E_Menu *_e_mod_menu_top_get(E_Menu *m);
 static void _e_mod_menu_gtk_cb(void        *data,
                                E_Menu      *m,
                                E_Menu_Item *mi);
@@ -260,10 +261,13 @@ _e_mod_menu_gtk_cb(void           *data,
                    E_Menu         *m,
                    E_Menu_Item *mi __UNUSED__)
 {
-   char *path;
+   Evas_Object *fm;
 
-   if (!(path = data)) return;
-   if (m->zone) e_fwin_new(m->zone->container, NULL, path);
+   m = _e_mod_menu_top_get(m);
+   fm = e_object_data_get(E_OBJECT(m));
+   if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+     e_fm2_path_set(fm, NULL, data);
+   else if (m->zone) e_fwin_new(m->zone->container, NULL, data);
 }
 
 static void
@@ -271,7 +275,13 @@ _e_mod_menu_virtual_cb(void           *data,
                        E_Menu         *m,
                        E_Menu_Item *mi __UNUSED__)
 {
-   if (m->zone) e_fwin_new(m->zone->container, data, "/");
+   Evas_Object *fm;
+
+   m = _e_mod_menu_top_get(m);
+   fm = e_object_data_get(E_OBJECT(m));
+   if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+     e_fm2_path_set(fm, data, "/");
+   else if (m->zone) e_fwin_new(m->zone->container, data, "/");
 }
 
 static void
@@ -280,10 +290,15 @@ _e_mod_menu_volume_cb(void           *data,
                       E_Menu_Item *mi __UNUSED__)
 {
    E_Volume *vol = data;
+   Evas_Object *fm;
 
+   m = _e_mod_menu_top_get(m);
+   fm = e_object_data_get(E_OBJECT(m));
    if (vol->mounted)
      {
-        if (m->zone)
+        if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+     e_fm2_path_set(fm, NULL, vol->mount_point);
+        else if (m->zone)
           e_fwin_new(m->zone->container, NULL, vol->mount_point);
      }
    else
@@ -291,8 +306,10 @@ _e_mod_menu_volume_cb(void           *data,
         char buf[PATH_MAX];
 
         snprintf(buf, sizeof(buf), "removable:%s", vol->udi);
-        e_fwin_new(e_container_current_get(e_manager_current_get()),
-                   buf, "/");
+        if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+     e_fm2_path_set(fm, buf, "/");
+        else if (m->zone)
+          e_fwin_new(m->zone->container, buf, "/");
      }
 }
 
@@ -355,16 +372,35 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
      }
 }
 
+static E_Menu *
+_e_mod_menu_top_get(E_Menu *m)
+{
+   while (m->parent_item)
+     {
+        if (m->parent_item->menu->header.title)
+          break;
+        m = m->parent_item->menu;
+     }
+   return m;
+}
+
 static void
-_e_mod_menu_populate_cb(void           *data,
-                       E_Menu         *m,
+_e_mod_menu_populate_cb(void      *data,
+                       E_Menu      *m,
                        E_Menu_Item *mi)
 {
    const char *path;
+   Evas_Object *fm;
 
    if (!m->zone) return;
+   m = _e_mod_menu_top_get(m);
+
+   fm = e_object_data_get(E_OBJECT(m));
    path = e_object_data_get(E_OBJECT(mi));
-   e_fwin_new(m->zone->container, data, path ?: "/");
+   if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+     e_fm2_path_set(fm, data, path ?: "/");
+   else if (m->zone)
+     e_fwin_new(m->zone->container, data, path ?: "/");
 }
 
 static void

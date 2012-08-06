@@ -827,6 +827,7 @@ _e_fwin_page_create(E_Fwin *fwin)
     * to specify the .edj files to get the list and icon theme stuff from
     */
    evas_object_data_set(page->fm_obj, "fm_page", page);
+   evas_object_data_set(page->fm_obj, "page_is_window", page);
    o = e_widget_scrollframe_pan_add(evas, page->fm_obj,
                                     e_fm2_pan_set,
                                     e_fm2_pan_get,
