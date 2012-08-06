@@ -441,6 +441,7 @@ e_fwin_reload_all(void)
                        fwin->cur_page->flist_frame = fwin->cur_page->flist = NULL;
                     }
                }
+             _e_fwin_window_title_set(fwin->cur_page);
              _e_fwin_cb_resize(fwin->win);
           }
      }
