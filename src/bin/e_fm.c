@@ -2573,9 +2573,12 @@ _e_fm2_file_force_update(const char *path)
    if (!dir) return;
    EINA_LIST_FOREACH(_e_fm2_list, l, o)
      {
+        const char *rp;
         if ((_e_fm2_list_walking > 0) &&
             (eina_list_data_find(_e_fm2_list_remove, o))) continue;
-        if (!strcmp(e_fm2_real_path_get(o), dir))
+        rp = e_fm2_real_path_get(o);
+        if (!rp) continue;
+        if (!strcmp(rp, dir))
           {
              E_Fm2_Icon *ic;
 
