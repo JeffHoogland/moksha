@@ -640,6 +640,8 @@ _e_fwin_icon_popup(void *data)
    edje_object_signal_emit(edje, "e,state,focused", "e");
    mw = zone->w * fileman_config->tooltip.size / 100.0;
    mh = zone->h * fileman_config->tooltip.size / 100.0;
+   /*
+    * NO! this causes the filename label to either take up the whole screen or be cut off!!!
    if (fwin->popup_icon->link)
      {
         if (fwin->popup_icon->real_link == NULL)
@@ -654,6 +656,8 @@ _e_fwin_icon_popup(void *data)
    else
      snprintf(buf, sizeof(buf), "%s", fwin->popup_icon->file);
    list = e_widget_framelist_add(fwin->popup->evas, buf, 0);
+   */
+   list = e_widget_framelist_add(fwin->popup->evas, fwin->popup_icon->file, 0);
    o = e_widget_filepreview_add(fwin->popup->evas, mw, mh, 0);
    snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), fwin->popup_icon->file);
    e_widget_filepreview_path_set(o, buf, fwin->popup_icon->mime);
