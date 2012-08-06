@@ -254,18 +254,6 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   ob = e_widget_label_add(evas, _("Tooltip delay"));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), 0.0, 5.0, 0.5, 0,
-                            &cfdata->tooltip.delay, NULL, 150);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-
-   ob = e_widget_label_add(evas, _("Tooltip size (Screen percentage)"));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 10.0, 75.0, 5.0, 0,
-                            &cfdata->tooltip.size, NULL, 150);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-
    ob = e_widget_label_add(evas, _("Icon Size"));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 16.0, 256.0, 1.0, 0,
@@ -274,6 +262,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
 
    e_widget_toolbook_page_append(otb, NULL, _("View"), o, 0, 0, 0, 0, 0.5, 0.0);
 
+   /////////////////////////////////////////////////////////////
    o = e_widget_list_add(evas, 1, 0);
    ob = e_widget_check_add(evas, _("Open Dirs In Place"),
                            &(cfdata->view.open_dirs_in_place));
@@ -313,6 +302,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
+   /////////////////////////////////////////////////////////////
 
    o = e_widget_list_add(evas, 2, 0);
    {
@@ -347,6 +337,20 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
 
    e_widget_toolbook_page_append(otb, NULL, _("Device"), o, 0, 0, 0, 0, 0.5, 0.0);
 
+   /////////////////////////////////////////////////////////////
+   o = e_widget_list_add(evas, 1, 0);
+   ob = e_widget_label_add(evas, _("Tooltip delay"));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), 0.0, 5.0, 0.5, 0,
+                            &cfdata->tooltip.delay, NULL, 150);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
+   ob = e_widget_label_add(evas, _("Tooltip size (Screen percentage)"));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 10.0, 75.0, 5.0, 0,
+                            &cfdata->tooltip.size, NULL, 150);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Tooltips"), o, 0, 0, 0, 0, 0.5, 0.0);
    e_widget_toolbook_page_show(otb, 0);
                                return otb;
 }
