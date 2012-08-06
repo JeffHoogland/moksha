@@ -995,14 +995,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
      }
 
    real_path = _e_fm2_dev_path_map(sd, dev, path);
-   if (!real_path)
-     {
-        CRI("THIS IS A BUG!!!! HELP! WE'RE SINKING!");
-        CRI("dev='%s',path='%s'", dev, path);
-        e_util_dialog_internal(_("BUG!"), _("Congratulations, you found a bug!<br>"
-                                            "Please submit a report so we can fix it!"));
-        return;
-     }
+
    /* If the path doesn't exist, popup a dialog */
    if (dev && strncmp(dev, "removable:", 10)
        && !ecore_file_exists(real_path))
@@ -1046,13 +1039,16 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    _e_fm2_dir_load_props(sd);
 
    /* If the path change from a mountpoint to something else, we fake-unmount */
-   if (sd->mount && sd->mount->mount_point
+   if (sd->mount && sd->mount->mount_point && real_path
        && strncmp(sd->mount->mount_point, sd->realpath,
                   strlen(sd->mount->mount_point)))
      {
         e_fm2_device_unmount(sd->mount);
         sd->mount = NULL;
      }
+
+   /* Clean up typebuf. */
+   _e_fm2_typebuf_hide(obj);
 
    /* If the path is of type removable: we add a new mountpoint */
    if (sd->dev && !sd->mount && !strncmp(sd->dev, "removable:", 10))
@@ -1062,10 +1058,9 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         v = e_fm2_device_volume_find(sd->dev + sizeof("removable:") - 1);
         if (v)
           {
-             sd->mount = e_fm2_device_mount(v,
-                                            _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
+             sd->mount = e_fm2_device_mount(v, _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
                                             _e_fm2_cb_unmount_ok, NULL, obj);
-             if ((v->efm_mode == EFM_MODE_USING_UDISKS_MOUNT) && (!sd->mount->mounted)) return;
+             if ((v->efm_mode == EFM_MODE_USING_HAL_MOUNT) && (!sd->mount->mounted)) return;
           }
      }
    else if (sd->config->view.open_dirs_in_place == 0)
@@ -1073,9 +1068,12 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         E_Fm2_Mount *m;
         m = e_fm2_device_mount_find(sd->realpath);
         if (m)
-          sd->mount = e_fm2_device_mount(m->volume,
-                                         _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
-                                         _e_fm2_cb_unmount_ok, NULL, obj);
+          {
+             sd->mount = e_fm2_device_mount(m->volume,
+                                            _e_fm2_cb_mount_ok, _e_fm2_cb_mount_fail,
+                                            _e_fm2_cb_unmount_ok, NULL, obj);
+             if ((m->volume->efm_mode != EFM_MODE_USING_HAL_MOUNT) && (!sd->mount->mounted)) return;
+          }
      }
 
    if (!sd->mount || sd->mount->mounted)
@@ -1087,9 +1085,6 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         sd->id = _e_fm2_client_monitor_add(sd->realpath);
         sd->listing = EINA_TRUE;
      }
-
-   /* Clean up typebuf. */
-   _e_fm2_typebuf_hide(obj);
 
    evas_object_smart_callback_call(obj, "dir_changed", NULL);
    sd->tmp.iter = EINA_FALSE;
