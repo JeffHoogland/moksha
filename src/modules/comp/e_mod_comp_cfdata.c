@@ -75,9 +75,9 @@ e_mod_comp_cfdata_config_new(void)
    cfg->indirect = 0;
    cfg->texture_from_pixmap = 1;
    cfg->lock_fps = 1;
-   cfg->efl_sync = 1;
+   cfg->efl_sync = 0;
    cfg->loose_sync = 1;
-   cfg->grab = 0;
+   cfg->grab = 1;
    cfg->vsync = 1;
    cfg->keep_unmapped = 1;
    cfg->send_flush = 1; // implement
