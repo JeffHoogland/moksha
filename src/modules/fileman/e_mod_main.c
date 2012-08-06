@@ -265,7 +265,8 @@ _e_mod_menu_gtk_cb(void           *data,
 
    m = _e_mod_menu_top_get(m);
    fm = e_object_data_get(E_OBJECT(m));
-   if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+   if (fileman_config->view.open_dirs_in_place && fm &&
+       (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_window")))
      e_fm2_path_set(fm, NULL, data);
    else if (m->zone) e_fwin_new(m->zone->container, NULL, data);
 }
@@ -279,7 +280,8 @@ _e_mod_menu_virtual_cb(void           *data,
 
    m = _e_mod_menu_top_get(m);
    fm = e_object_data_get(E_OBJECT(m));
-   if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+      if (fileman_config->view.open_dirs_in_place && fm &&
+       (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_window")))
      e_fm2_path_set(fm, data, "/");
    else if (m->zone) e_fwin_new(m->zone->container, data, "/");
 }
@@ -296,7 +298,8 @@ _e_mod_menu_volume_cb(void           *data,
    fm = e_object_data_get(E_OBJECT(m));
    if (vol->mounted)
      {
-        if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+           if (fileman_config->view.open_dirs_in_place && fm &&
+       (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_window")))
      e_fm2_path_set(fm, NULL, vol->mount_point);
         else if (m->zone)
           e_fwin_new(m->zone->container, NULL, vol->mount_point);
@@ -306,7 +309,8 @@ _e_mod_menu_volume_cb(void           *data,
         char buf[PATH_MAX];
 
         snprintf(buf, sizeof(buf), "removable:%s", vol->udi);
-        if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+           if (fileman_config->view.open_dirs_in_place && fm &&
+       (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_window")))
      e_fm2_path_set(fm, buf, "/");
         else if (m->zone)
           e_fwin_new(m->zone->container, buf, "/");
@@ -397,7 +401,8 @@ _e_mod_menu_populate_cb(void      *data,
 
    fm = e_object_data_get(E_OBJECT(m));
    path = e_object_data_get(E_OBJECT(mi));
-   if (fileman_config->view.open_dirs_in_place && fm && evas_object_data_get(fm, "page_is_window"))
+      if (fileman_config->view.open_dirs_in_place && fm &&
+       (fileman_config->view.desktop_navigation || evas_object_data_get(fm, "page_is_window")))
      e_fm2_path_set(fm, data, path ?: "/");
    else if (m->zone)
      e_fwin_new(m->zone->container, data, path ?: "/");
@@ -677,6 +682,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, view.show_desktop_icons, UCHAR);
    E_CONFIG_VAL(D, T, view.show_toolbar, UCHAR);
    E_CONFIG_VAL(D, T, view.show_sidebar, UCHAR);
+   E_CONFIG_VAL(D, T, view.desktop_navigation, UCHAR);
    E_CONFIG_VAL(D, T, icon.icon.w, INT);
    E_CONFIG_VAL(D, T, icon.icon.h, INT);
    E_CONFIG_VAL(D, T, icon.list.w, INT);
@@ -778,6 +784,10 @@ _e_mod_fileman_config_load(void)
 
     IFMODCFG(0x0108);
     fileman_config->view.menu_shows_files = 0;
+    IFMODCFGEND;
+
+    IFMODCFG(0x0109);
+    fileman_config->view.desktop_navigation = 0;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;

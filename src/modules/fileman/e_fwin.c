@@ -343,6 +343,7 @@ e_fwin_zone_new(E_Zone *zone,
     * to specify the .edj files to get the list and icon theme stuff from
     */
    evas_object_data_set(page->fm_obj, "fm_page", page);
+   evas_object_data_set(page->fm_obj, "page_is_zone", page);
    e_scrollframe_extern_pan_set(o, page->fm_obj,
                                 _e_fwin_pan_set,
                                 _e_fwin_pan_get,
@@ -1285,7 +1286,7 @@ _e_fwin_config_set(E_Fwin_Page *page)
         fmc.icon.fixed.w = 0;
         fmc.icon.fixed.h = 0;
 #endif
-        fmc.view.no_typebuf_set = 1;
+        fmc.view.no_typebuf_set = !fileman_config->view.desktop_navigation;
         fmc.view.open_dirs_in_place = 0;
         fmc.view.fit_custom_pos = 1;
      }

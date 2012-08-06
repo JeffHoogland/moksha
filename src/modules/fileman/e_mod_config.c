@@ -21,6 +21,7 @@ struct _E_Config_Dialog_Data
        int show_desktop_icons;
        int show_toolbar;
        int show_sidebar;
+       int desktop_navigation;
        int menu_shows_files;
     } view;
    struct
@@ -133,6 +134,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->view.show_desktop_icons = fileman_config->view.show_desktop_icons;
    cfdata->view.show_toolbar = fileman_config->view.show_toolbar;
    cfdata->view.show_sidebar = fileman_config->view.show_sidebar;
+   cfdata->view.desktop_navigation = fileman_config->view.desktop_navigation;
    cfdata->view.menu_shows_files = fileman_config->view.menu_shows_files;
    cfdata->icon.icon.w = fileman_config->icon.icon.w;
    cfdata->icon.icon.h = fileman_config->icon.icon.h;
@@ -166,6 +168,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
    fileman_config->view.show_desktop_icons = cfdata->view.show_desktop_icons;
    fileman_config->view.show_toolbar = cfdata->view.show_toolbar;
    fileman_config->view.show_sidebar = cfdata->view.show_sidebar;
+   fileman_config->view.desktop_navigation = cfdata->view.desktop_navigation;
    fileman_config->view.menu_shows_files = cfdata->view.menu_shows_files;
    fileman_config->icon.extension.show = cfdata->icon.extension.show;
 
@@ -209,6 +212,7 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->view.show_desktop_icons != cfdata->view.show_desktop_icons) ||
      (fileman_config->view.show_toolbar != cfdata->view.show_toolbar) ||
      (fileman_config->view.show_sidebar != cfdata->view.show_sidebar) ||
+     (fileman_config->view.desktop_navigation != cfdata->view.desktop_navigation) ||
      (fileman_config->view.menu_shows_files != cfdata->view.menu_shows_files) ||
      (fileman_config->icon.extension.show != cfdata->icon.extension.show) ||
      (fileman_config->selection.windows_modifiers != cfdata->selection.windows_modifiers) ||
@@ -300,6 +304,9 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Use Alternate Selection Modifiers"),
                            &(cfdata->selection.windows_modifiers));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Allow Navigation On Desktop"),
+                           &(cfdata->view.desktop_navigation));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
    /////////////////////////////////////////////////////////////
