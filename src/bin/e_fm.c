@@ -8356,9 +8356,6 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 
         if ((can_w) && (can_w2) && !(protect) && !ic->info.removable)
           {
-             mi = e_menu_item_new(mn);
-             e_menu_item_separator_set(mi, 1);
-
              if (!(sd->icon_menu.flags & E_FM2_MENU_NO_DELETE))
                {
                   mi = e_menu_item_new(mn);
@@ -8415,6 +8412,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              e_util_menu_item_theme_icon_set(mi, "configure");
              e_menu_item_callback_set(mi, _e_fm2_file_application_properties, ic);
           }
+        mi = e_menu_item_new(mn);
+        e_menu_item_separator_set(mi, 1);
 
         mi = e_menu_item_new(mn);
         e_menu_item_label_set(mi, _("File Properties"));
