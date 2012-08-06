@@ -447,12 +447,6 @@ e_menu_thaw(E_Menu *m)
    E_OBJECT_TYPE_CHECK_RETURN(m, E_MENU_TYPE, 0);
    m->frozen--;
    if (m->frozen < 0) m->frozen = 0;
-   if ((!m->frozen) && (m->realized))
-     {
-        E_Zone *zone = m->zone;
-        _e_menu_unrealize(m);
-        m->zone = zone;
-     }
    return m->frozen;
 }
 
@@ -1088,7 +1082,6 @@ e_menu_idler_before(void)
    /* phase 4. de-activate... */
    EINA_LIST_FOREACH(_e_active_menus, l, m)
      {
-        if (m->frozen) continue;
         if (!m->active)
           {
              _e_menu_unrealize(m);
@@ -1107,7 +1100,6 @@ e_menu_idler_before(void)
    /* phase 5. shapes... */
    EINA_LIST_FOREACH(_e_active_menus, l, m)
      {
-        if (m->frozen) continue;
         if (m->need_shape_export)
           {
              Ecore_X_Rectangle *rects, *orects;
