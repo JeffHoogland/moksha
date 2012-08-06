@@ -191,14 +191,6 @@ e_configure_show(E_Container *con, const char *params)
    if (!e_widget_toolbar_item_selected_get(eco->cat_list))
      e_widget_toolbar_item_select(eco->cat_list, 0);
 
-   if (eco->cats)
-     {
-        E_Configure_Category *cat;
-
-        cat = eco->cats->data;
-        _e_configure_category_cb(cat, NULL);
-     }
-
    _e_configure = eco;
 }
 
