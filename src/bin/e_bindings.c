@@ -1093,7 +1093,6 @@ e_bindings_mapping_change_enable(Eina_Bool enable)
 static Eina_Bool
 _e_bindings_mapping_change_event_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-  Ecore_X_Event_Mapping_Change *ev = event;
   if (!_e_bindings_mapping_change_enabled) return ECORE_CALLBACK_RENEW;
   e_managers_keys_ungrab();
   e_border_button_bindings_ungrab_all();
