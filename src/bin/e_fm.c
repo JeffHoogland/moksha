@@ -8106,16 +8106,6 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
      {
         if (sd->icon_menu.start.func)
           sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, NULL);
-        if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT)) &&
-            (sd->view_flags & E_FM2_VIEW_INHERIT_DIR_CUSTOM))
-          {
-             mi = e_menu_item_new(mn);
-             e_menu_item_label_set(mi, _("Inherit parent settings"));
-             e_util_menu_item_theme_icon_set(mi, "view-inherit");
-             e_menu_item_check_set(mi, 1);
-             e_menu_item_toggle_set(mi, sd->inherited_dir_props);
-             e_menu_item_callback_set(mi, _e_fm2_toggle_inherit_dir_props, sd);
-          }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_VIEW_MENU))
           {
              mi = e_menu_item_new(mn);
@@ -8238,16 +8228,6 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
      {
         if (sd->icon_menu.start.func)
           sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, NULL);
-        if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT)) &&
-            (sd->view_flags & E_FM2_VIEW_INHERIT_DIR_CUSTOM))
-          {
-             mi = e_menu_item_new(mn);
-             e_menu_item_label_set(mi, _("Inherit parent settings"));
-             e_util_menu_item_theme_icon_set(mi, "view-inherit");
-             e_menu_item_check_set(mi, 1);
-             e_menu_item_toggle_set(mi, sd->inherited_dir_props);
-             e_menu_item_callback_set(mi, _e_fm2_toggle_inherit_dir_props, sd);
-          }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_VIEW_MENU))
           {
              mi = e_menu_item_new(mn);
@@ -8781,6 +8761,16 @@ _e_fm2_options_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), sd);
    e_menu_item_submenu_set(mi, subm);
+   if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT)) &&
+       (sd->view_flags & E_FM2_VIEW_INHERIT_DIR_CUSTOM))
+     {
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Inherit parent settings"));
+        e_util_menu_item_theme_icon_set(mi, "view-inherit");
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, sd->inherited_dir_props);
+        e_menu_item_callback_set(mi, _e_fm2_toggle_inherit_dir_props, sd);
+     }
    if (!(sd->icon_menu.flags & E_FM2_MENU_NO_SHOW_HIDDEN))
      {
         mi = e_menu_item_new(subm);
