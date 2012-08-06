@@ -170,6 +170,8 @@ _e_fm_main_eeze_cb_vol_mounted(void *user_data __UNUSED__,
    int size;
 
    v = eeze_disk_data_get(ev->disk);
+   if (!v) return ECORE_CALLBACK_RENEW;
+   if (!eina_list_data_find(_e_vols, v)) return ECORE_CALLBACK_RENEW;
    if (v->guard)
      {
         ecore_timer_del(v->guard);
@@ -220,6 +222,8 @@ _e_fm_main_eeze_cb_vol_error(void *user_data __UNUSED__,
    int size;
 
    v = eeze_disk_data_get(ev->disk);
+   if (!v) return ECORE_CALLBACK_RENEW;
+   if (!eina_list_data_find(_e_vols, v)) return ECORE_CALLBACK_RENEW;
    if (v->mounted)
      {
         size = _e_fm_main_eeze_format_error_msg(&buf, v, "org.enlightenment.fm2.UnmountError", ev->message);
@@ -246,6 +250,8 @@ _e_fm_main_eeze_cb_vol_unmounted(void *user_data __UNUSED__,
    E_Volume *v;
 
    v = eeze_disk_data_get(ev->disk);
+   if (!v) return ECORE_CALLBACK_RENEW;
+   if (!eina_list_data_find(_e_vols, v)) return ECORE_CALLBACK_RENEW;
    if (v->guard)
      {
         ecore_timer_del(v->guard);
@@ -293,6 +299,8 @@ _e_fm_main_eeze_cb_vol_ejected(void *user_data __UNUSED__,
    int size;
 
    v = eeze_disk_data_get(ev->disk);
+   if (!v) return ECORE_CALLBACK_RENEW;
+   if (!eina_list_data_find(_e_vols, v)) return ECORE_CALLBACK_RENEW;
    if (v->guard)
      {
         ecore_timer_del(v->guard);
