@@ -506,14 +506,14 @@ _cb_method_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UN
         if (e_config->desktop_backgrounds)
           {
              E_Config_Desktop_Background *cdb;
-             int x = 0;
+             int y = 0;
              if (eina_str_has_extension(e_config->desktop_default_background, "edj"))
                {
                   EINA_LIST_FOREACH(cfdata->gui.bgs, l, bg)
                     e_widget_preview_edje_set(bg, e_config->desktop_default_background, "e/desktop/background");
                   EINA_LIST_FREE(cfdata->bgs, theme)
                     eina_stringshare_del(theme);
-                  for (x = 0; x < cfdata->zone_count; x++)
+                  for (y = 0; y < cfdata->zone_count; y++)
                     cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("user_background"));
                }
              /* attempt to set wallpaper from desktop 0,0 on each zone as a desklock bg */
