@@ -38,7 +38,7 @@ e_int_config_powermanagement(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
    v->basic.check_changed = _basic_check_changed;
 
-   cfd = e_config_dialog_new(con, _("Power management Settings"),
+   cfd = e_config_dialog_new(con, _("Power Management Settings"),
 			     "E", "advanced/powermanagement",
 			     "preferences-system-powermanagement", 0, v, NULL);
    return cfd;
@@ -330,7 +330,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //expand
                                       0.0, 0.5 //align
                                       );
-   e_widget_toolbook_page_append(otb, NULL, _("Power management"), ol,
+   e_widget_toolbook_page_append(otb, NULL, _("Power Management"), ol,
                                  0, 0, 1, 1, 0.5, 0.5);
    e_widget_toolbook_page_show(otb, 0);
    e_dialog_resizable_set(cfd->dia, 1);
