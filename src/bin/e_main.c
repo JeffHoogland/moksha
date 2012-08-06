@@ -976,6 +976,7 @@ main(int argc, char **argv)
    if (e_config->show_splash)
      e_init_status_set(_("Setup Bindings"));
    TS("E_Bindings Init");
+   e_bindings_mapping_change_enable(EINA_TRUE);
    if (!e_bindings_init())
      {
         e_error_message_show(_("Enlightenment cannot set up its bindings system."));
@@ -1114,6 +1115,7 @@ main(int argc, char **argv)
    inloop = EINA_TRUE;
 
    TS("MAIN LOOP AT LAST");
+   e_bindings_mapping_change_enable(EINA_FALSE);
    if (!setjmp(x_fatal_buff))
      ecore_main_loop_begin();
    else
