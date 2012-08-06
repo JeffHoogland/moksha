@@ -835,7 +835,6 @@ _e_fm_main_eeze_storage_add(const char *syspath)
    s->model = eina_stringshare_add(eeze_disk_model_get(s->disk));
    s->vendor = eina_stringshare_add(eeze_disk_vendor_get(s->disk));
    s->serial = eina_stringshare_add(eeze_disk_serial_get(s->disk));
-   if (!s->serial) ERR("Error getting serial for %s", s->udi);
    s->removable = !!eeze_disk_removable_get(s->disk);
 
    if (s->removable)
