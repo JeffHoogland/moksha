@@ -264,43 +264,43 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
 
    /////////////////////////////////////////////////////////////
    o = e_widget_list_add(evas, 1, 0);
+
+   ob = e_widget_check_add(evas, _("Directories First"),
+                           &(cfdata->list.sort.dirs.first));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Icon Extensions"),
+                           &(cfdata->icon.extension.show));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Full Path In Title"),
+                           &(cfdata->view.show_full_path));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Icons On Desktop"),
+                           &(cfdata->view.show_desktop_icons));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Toolbar"),
+                           &(cfdata->view.show_toolbar));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Sidebar"),
+                           &(cfdata->view.show_sidebar));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Regular Files In Menu (SLOW)"),
+                           &(cfdata->view.menu_shows_files));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Display"), o, 0, 0, 0, 0, 0.5, 0.0);
+   /////////////////////////////////////////////////////////////
+   o = e_widget_list_add(evas, 1, 0);
    ob = e_widget_check_add(evas, _("Open Dirs In Place"),
                            &(cfdata->view.open_dirs_in_place));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-
-   ob = e_widget_check_add(evas, _("Sort Dirs First"),
-                           &(cfdata->list.sort.dirs.first));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Case Sensitive"),
                            &(cfdata->list.sort.case_sen));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-
    ob = e_widget_check_add(evas, _("Use Single Click"),
                            &(cfdata->view.single_click));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Use Alternate Selection Modifiers"),
                            &(cfdata->selection.windows_modifiers));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-
-   ob = e_widget_check_add(evas, _("Show Icon Extension"),
-                           &(cfdata->icon.extension.show));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Show Full Path"),
-                           &(cfdata->view.show_full_path));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Show Desktop Icons"),
-                           &(cfdata->view.show_desktop_icons));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Show Toolbar"),
-                           &(cfdata->view.show_toolbar));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Show Sidebar"),
-                           &(cfdata->view.show_sidebar));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Show Regular Files In Menu"),
-                           &(cfdata->view.menu_shows_files));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
    /////////////////////////////////////////////////////////////
 
