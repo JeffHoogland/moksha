@@ -20,6 +20,7 @@ static Eina_Bool    _e_shelf_cb_mouse_in(void *data, int type, void *event);
 static Eina_Bool    _e_shelf_cb_mouse_out(void *data, int type, void *event);
 static void          _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e, Evas_Object *obj, Evas_Event_Mouse_Out *ev);
 static int          _e_shelf_cb_id_sort(const void *data1, const void *data2);
+static void         _e_shelf_cb_menu_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static Eina_Bool    _e_shelf_cb_hide_animator(void *data);
 static Eina_Bool    _e_shelf_cb_hide_animator_timer(void *data);
 static Eina_Bool    _e_shelf_cb_hide_urgent_timer(void *data);
@@ -287,6 +288,14 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    }
 
    return es;
+}
+
+EAPI void
+e_shelf_rename_dialog(E_Shelf *es)
+{
+   if (!es) return;
+   if (es->rename_dialog) return;
+   _e_shelf_cb_menu_rename(es, NULL, NULL);
 }
 
 EAPI void
@@ -1889,6 +1898,44 @@ _e_shelf_cb_instant_hide_timer(void *data)
 }
 
 static void
+_e_shelf_cb_menu_rename_yes_cb(char *text, void *data)
+{
+   E_Shelf *es = e_object_data_get(data);
+   Eina_List *l;
+   E_Config_Shelf *cf_es;
+
+   EINA_LIST_FOREACH(e_config->shelves, l, cf_es)
+     if ((!strcmp(cf_es->name, text)) && (cf_es->id == es->id))
+       {
+          e_util_dialog_internal(_("Error"), _("A shelf with that name and id already exists!"));
+          return;
+       }
+   e_shelf_name_set(es, text);
+   e_config_save_queue();
+}
+
+static void
+_e_shelf_cb_menu_rename_cb(void *data)
+{
+   E_Shelf *es = e_object_data_get(data);
+   es->rename_dialog = NULL;
+}
+
+static void
+_e_shelf_cb_menu_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Shelf *es = data;
+   if (es->rename_dialog) return;
+   es->rename_dialog = e_entry_dialog_show(_("Rename Shelf"), "edit-rename",
+                                          _("Name:"), es->name, NULL, NULL,
+                                          _e_shelf_cb_menu_rename_yes_cb,
+                                          NULL, es);
+   E_OBJECT(es->rename_dialog)->data = es;
+   e_object_del_attach_func_set(E_OBJECT(es->rename_dialog),
+                                _e_shelf_cb_menu_rename_cb);
+}
+
+static void
 _e_shelf_menu_pre_cb(void *data, E_Menu *m)
 {
    E_Shelf *es;
@@ -1920,6 +1967,11 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Rename"));
+   e_util_menu_item_theme_icon_set(mi, "edit-rename");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_rename, es);
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Delete"));

@@ -27,6 +27,7 @@ struct _E_Shelf
    E_Config_Shelf      *cfg;
    int                  size;
    E_Config_Dialog     *config_dialog;
+   E_Entry_Dialog      *rename_dialog;
    E_Menu              *menu;
    Ecore_Timer         *hide_timer;
    Ecore_Animator      *hide_animator;
@@ -83,6 +84,7 @@ EAPI void             e_shelf_style_set(E_Shelf *es, const char *style);
 EAPI void             e_shelf_popup_set(E_Shelf *es, int popup);
 EAPI E_Shelf         *e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es);
 EAPI void             e_shelf_name_set(E_Shelf *es, const char *name);
+EAPI void             e_shelf_rename_dialog(E_Shelf *es);
 
 #endif
 #endif
