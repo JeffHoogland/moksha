@@ -4716,7 +4716,7 @@ msgstr "Impostazioni screensaver"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:146
 msgid "Enable screen blanking"
-msgstr "Abilita lampeggio dello schermo"
+msgstr "Abilita oscuramento dello schermo"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:151
 #: src/modules/syscon/e_int_config_syscon.c:165
