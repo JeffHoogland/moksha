@@ -58,7 +58,7 @@ e_modapi_init(E_Module *m)
    //eina_init();
 
    /* Setup Entry in Config Panel */
-   e_configure_registry_category_add("fileman", 100, _("Navigate"),
+   e_configure_registry_category_add("fileman", 100, _("Files"),
                                      NULL, "system-file-manager");
    e_configure_registry_item_add("fileman/fileman", 10, _("File Manager"),
                                  NULL, "system-file-manager",
