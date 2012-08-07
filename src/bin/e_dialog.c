@@ -187,10 +187,16 @@ e_dialog_border_icon_set(E_Dialog *dia, const char *icon)
 EAPI void
 e_dialog_content_set(E_Dialog *dia, Evas_Object *obj, Evas_Coord minw, Evas_Coord minh)
 {
+   int mw, mh;
    dia->content_object = obj;
    e_widget_on_focus_hook_set(obj, _e_dialog_cb_wid_on_focus, dia);
    edje_extern_object_min_size_set(obj, minw, minh);
    edje_object_part_swallow(dia->bg_object, "e.swallow.content", obj);
+   edje_object_size_min_calc(dia->bg_object, &mw, &mh);
+   e_win_resize(dia->win, mw, mh);
+   e_win_size_min_set(dia->win, mw, mh);
+   dia->min_w = mw;
+   dia->min_h = mh;
    evas_object_show(obj);
 }
 
