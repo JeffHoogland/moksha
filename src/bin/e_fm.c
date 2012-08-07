@@ -9260,6 +9260,7 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
         ic->rename_click = NULL;
      }
    if ((ic->entry_dialog) || (ic->entry_widget)) return;
+   if (ic->sd->icon_menu.flags & E_FM2_MENU_NO_RENAME) return;
 
    if (!_e_fm2_icon_entry_widget_add(ic))
      {
