@@ -14,9 +14,9 @@ static void         _cb_dialog_destroy(void *data);
 static void         _cb_config(void *data, void *data2);
 static void         _cb_contents(void *data, void *data2);
 static void         _ilist_refresh(E_Shelf *es);
-static E_Dialog     *_dia_name_shelf(E_Config_Dialog_Data *cfdata);
-static void         _new_shelf_cb_close(void *data, E_Dialog *dia);
-static void         _new_shelf_cb_ok(void *data, E_Dialog *dia);
+static void         _new_shelf_dialog(E_Config_Dialog_Data *cfdata);
+static void         _new_shelf_cb_close(void *data);
+static void         _new_shelf_cb_ok(char *text, void *data);
 static void         _new_shelf_cb_dia_del(void *obj);
 static void         _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es);
 
@@ -33,7 +33,7 @@ struct _E_Config_Dialog_Data
    Ecore_Event_Handler *shelf_handler;
    Eina_List           *shelves;
    E_Config_Dialog     *cfd;
-   E_Dialog            *dia_new_shelf;
+   E_Entry_Dialog    *dia_new_shelf;
    char                *new_shelf;
    Eina_Bool           header;
 };
@@ -378,62 +378,28 @@ _ilist_cb_selected(void *data)
    _widgets_disable(cfdata, 0, EINA_TRUE);
 }
 
-static E_Dialog *
-_dia_name_shelf(E_Config_Dialog_Data *cfdata)
+static void
+_new_shelf_dialog(E_Config_Dialog_Data *cfdata)
 {
-   E_Dialog *dia;
-   Evas *evas;
-   Evas_Coord mw, mh;
-   Evas_Object *ot, *ob;
    char buf[256];
    int id;
-
-   dia = e_dialog_new(cfdata->cfd->con, "E", "shelf_new_shelf_dialog");
-   if (!dia) return NULL;
-   dia->data = cfdata;
-   _widgets_disable(cfdata, 1, EINA_TRUE);
-
-   e_object_del_attach_func_set(E_OBJECT(dia), _new_shelf_cb_dia_del);
-   e_win_centered_set(dia->win, 1);
-
-   evas = e_win_evas_get(dia->win);
-
-  e_dialog_title_set(dia, _("Add New Shelf"));
-
-   ot = e_widget_table_add(evas, 0);
-   ob = e_widget_label_add(evas, _("Name:"));
-   e_widget_table_object_append(ot, ob,
-                                0, 0, 1, 1,
-                                0, 1, 0, 0);
-
    id = e_widget_ilist_count(cfdata->o_list);
    snprintf(buf, sizeof(buf), "%s #%d", _("Shelf"), id);
-   cfdata->new_shelf = strdup(buf);
-   ob = e_widget_entry_add(evas, &(cfdata->new_shelf), NULL, NULL, NULL);
-   e_widget_size_min_set(ob, 100, 1);
-   e_widget_table_object_append(ot, ob, 1, 0, 1, 1, 1, 1, 1, 0);
-
-   e_widget_size_min_get(ot, &mw, &mh);
-   e_dialog_content_set(dia, ot, mw, mh);
-
-   e_dialog_button_add(dia, _("OK"), NULL, _new_shelf_cb_ok, cfdata);
-   e_dialog_button_add(dia, _("Cancel"), NULL, _new_shelf_cb_close, cfdata);
-
-   e_dialog_resizable_set(dia, 0);
-   e_dialog_show(dia);
-
-   return dia;
+   cfdata->dia_new_shelf = e_entry_dialog_show(_("Add New Shelf"), "preferences-desktop-shelf",
+                             _("Name:"), buf, NULL, NULL,
+                             _new_shelf_cb_ok, _new_shelf_cb_close,
+                             cfdata);
+   _widgets_disable(cfdata, 1, EINA_TRUE);
 }
 
 static void
-_new_shelf_cb_close(void *data, E_Dialog *dia)
+_new_shelf_cb_close(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    cfdata = data;
    if (!cfdata) return;
 
    _widgets_disable(cfdata, 0, EINA_TRUE);
-   e_object_unref(E_OBJECT(dia));
    cfdata->dia_new_shelf = NULL;
 }
 
@@ -445,11 +411,11 @@ _cb_add(void *data, void *data2 __UNUSED__)
    cfdata = data;
    if (!cfdata) return;
 
-   cfdata->dia_new_shelf = _dia_name_shelf(cfdata);
+   _new_shelf_dialog(cfdata);
 }
 
 static void
-_new_shelf_cb_ok(void *data, E_Dialog *dia)
+_new_shelf_cb_ok(char *text, void *data)
 {
    E_Config_Dialog_Data *cfdata;
    E_Config_Shelf *cfg, *c;
@@ -460,9 +426,9 @@ _new_shelf_cb_ok(void *data, E_Dialog *dia)
 
    cfdata = data;
    if (!cfdata) return;
-   if (!cfdata->new_shelf)
+   if ((!text) || (!text[0]))
      {
-        _new_shelf_cb_dia_del(dia);
+        _new_shelf_cb_dia_del(cfdata->dia_new_shelf);
         return;
      }
 
@@ -472,7 +438,7 @@ _new_shelf_cb_ok(void *data, E_Dialog *dia)
      zone = e_util_zone_current_get(e_manager_current_get());
 
    cfg = E_NEW(E_Config_Shelf, 1);
-   cfg->name = eina_stringshare_add(cfdata->new_shelf);
+   cfg->name = eina_stringshare_add(text);
    cfg->container = zone->container->num;
    cfg->zone = zone->num;
    cfg->popup = 1;
@@ -497,21 +463,17 @@ _new_shelf_cb_ok(void *data, E_Dialog *dia)
    e_shelf_config_update();
 
    cfdata->dia_new_shelf = NULL;
-   e_object_unref(E_OBJECT(dia));
    _ilist_fill(cfdata);
 }
 
 static void
 _new_shelf_cb_dia_del(void *obj)
 {
-   E_Dialog *dia = obj;
-   E_Config_Dialog_Data *cfdata = dia->data;
+   E_Entry_Dialog *dia = obj;
+   E_Config_Dialog_Data *cfdata = dia->ok.data;
 
    cfdata->dia_new_shelf = NULL;
-   free(cfdata->new_shelf);
-   cfdata->new_shelf = NULL;
    e_widget_disabled_set(cfdata->o_list, 0);
-   e_object_unref(E_OBJECT(dia));
 }
 
 static void
