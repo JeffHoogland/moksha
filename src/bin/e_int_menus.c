@@ -1500,14 +1500,14 @@ _e_int_menus_shelves_pre_cb(void *data __UNUSED__, E_Menu *m)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Add A Shelf"));
+   e_menu_item_label_set(mi, _("Add a Shelf"));
    e_util_menu_item_theme_icon_set(mi, "list-add");
    e_menu_item_callback_set(mi, _e_int_menus_shelves_add_cb, NULL);
 
    if (shelves)
      {
         mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("Delete A Shelf"));
+        e_menu_item_label_set(mi, _("Delete a Shelf"));
         e_util_menu_item_theme_icon_set(mi, "list-remove");
         e_menu_item_callback_set(mi, _e_int_menus_shelves_del_cb, NULL);
      }
