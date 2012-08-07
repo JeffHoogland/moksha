@@ -718,7 +718,7 @@ group "E_Config" struct {
             value "modifiers" int: 6;
             value "key" string: "Insert";
             value "action" string: "exec";
-            value "params" string: "Eterm";
+            value "params" string: "terminology";
             value "any_mod" uchar: 0;
         }
         group "E_Config_Binding_Key" struct {
@@ -1636,10 +1636,6 @@ group "E_Config" struct {
         }
         group "E_Config_Mime_Icon" struct {
             value "mime" string: "video/3gpp";
-            value "icon" string: "THUMB";
-        }
-        group "E_Config_Mime_Icon" struct {
-            value "mime" string: "video/x-msvideo";
             value "icon" string: "THUMB";
         }
         group "E_Config_Mime_Icon" struct {
