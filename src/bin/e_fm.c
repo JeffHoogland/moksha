@@ -178,6 +178,7 @@ struct _E_Fm2_Icon
    Ecore_X_Window  keygrab;
    E_Config_Dialog  *prop_dialog;
    E_Dialog         *dialog;
+   Ecore_Timer    *rename_click;
 
    E_Fm2_Icon_Info   info;
 
@@ -4559,6 +4560,11 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
         e_object_del(E_OBJECT(ic->dialog));
         ic->dialog = NULL;
      }
+   if (ic->rename_click)
+     {
+        ecore_timer_del(ic->rename_click);
+        ic->rename_click = NULL;
+     }
    if (ic->entry_dialog)
      {
         e_object_del(E_OBJECT(ic->entry_dialog));
@@ -4583,6 +4589,21 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
    eina_stringshare_del(ic->info.real_link);
    eina_stringshare_del(ic->info.category);
    free(ic);
+}
+
+static Eina_Bool
+_e_fm2_icon_label_click_cb(void *data)
+{
+   _e_fm2_file_rename(data, NULL, NULL);
+   return EINA_FALSE;
+}
+
+static void
+_e_fm2_icon_label_click(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   E_Fm2_Icon *ic = data;
+   if (ic->rename_click || ic->entry_widget || ic->entry_dialog) return;
+   ic->rename_click = ecore_timer_add(0.75, _e_fm2_icon_label_click_cb, ic);
 }
 
 static void
@@ -4653,6 +4674,7 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_MOVE, _e_fm2_cb_icon_mouse_move, ic);
    evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_IN, _e_fm2_cb_icon_mouse_in, ic);
    evas_object_event_callback_add(ic->obj, EVAS_CALLBACK_MOUSE_OUT, _e_fm2_cb_icon_mouse_out, ic);
+   edje_object_signal_callback_add(ic->obj, "e,action,label,click", "e", _e_fm2_icon_label_click, ic);
 
    _e_fm2_icon_icon_set(ic);
 
@@ -6877,8 +6899,6 @@ _e_fm2_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    ic = data;
    ev = event_info;
 
-   if (ic->entry_widget) return;
-
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    evas_object_smart_callback_call(ic->sd->obj, "icon,mouse,in", &ic->info);
 }
@@ -6891,8 +6911,6 @@ _e_fm2_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 
    ic = data;
    ev = event_info;
-
-   if (ic->entry_widget) return;
 
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    evas_object_smart_callback_call(ic->sd->obj, "icon,mouse,out", &ic->info);
@@ -9236,6 +9254,11 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    char text[PATH_MAX + 256];
 
    ic = data;
+   if (ic->rename_click)
+     {
+        ecore_timer_del(ic->rename_click);
+        ic->rename_click = NULL;
+     }
    if ((ic->entry_dialog) || (ic->entry_widget)) return;
 
    if (!_e_fm2_icon_entry_widget_add(ic))
