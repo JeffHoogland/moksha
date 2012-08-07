@@ -374,6 +374,18 @@ e_shelf_locked_set(E_Shelf *es, int lock)
 }
 
 EAPI void
+e_shelf_name_set(E_Shelf *es, const char *name)
+{
+   if (!es) return;
+   if (!name) return;
+   if (es->name == name) return;
+   eina_stringshare_replace(&es->name, name);
+   eina_stringshare_replace(&es->cfg->name, name);
+   if (es->dummy) return;
+   e_gadcon_name_set(es->gadcon, name);
+}
+
+EAPI void
 e_shelf_toggle(E_Shelf *es, int show)
 {
    E_OBJECT_CHECK(es);

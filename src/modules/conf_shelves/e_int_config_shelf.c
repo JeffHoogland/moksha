@@ -477,14 +477,12 @@ _rename_shelf_cb_ok(void *data, E_Dialog *dia)
         return;
      }
    es = e_widget_ilist_selected_data_get(cfdata->o_list);
-   eina_stringshare_replace(&es->name, cfdata->new_shelf);
+   e_shelf_name_set(es, cfdata->new_shelf);
    e_config_save_queue();
 
    e_shelf_config_update();
    cfdata->dia_new_shelf = NULL;
    e_object_unref(E_OBJECT(dia));
-   _ilist_empty(cfdata);
-   _ilist_fill(cfdata);
 }
 
 static void

@@ -302,6 +302,7 @@ EAPI E_Menu                 *e_gadcon_client_util_menu_items_append(E_Gadcon_Cli
 EAPI void                    e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc);
 EAPI void                    e_gadcon_locked_set(E_Gadcon *gc, int lock);
 EAPI void                    e_gadcon_urgent_show(E_Gadcon *gc);
+EAPI void                    e_gadcon_name_set(E_Gadcon *gc, const char *name);
 
 /* site helpers */
 

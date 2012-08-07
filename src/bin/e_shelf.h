@@ -82,6 +82,7 @@ EAPI void             e_shelf_position_calc(E_Shelf *es);
 EAPI void             e_shelf_style_set(E_Shelf *es, const char *style);
 EAPI void             e_shelf_popup_set(E_Shelf *es, int popup);
 EAPI E_Shelf         *e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es);
+EAPI void             e_shelf_name_set(E_Shelf *es, const char *name);
 
 #endif
 #endif

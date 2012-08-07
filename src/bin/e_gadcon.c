@@ -765,6 +765,16 @@ e_gadcon_xdnd_window_get(E_Gadcon *gc)
 }
 
 EAPI void
+e_gadcon_name_set(E_Gadcon *gc, const char *name)
+{
+   if (!gc) return;
+   if (!name) return;
+   if (gc->name == name) return;
+   eina_stringshare_replace(&gc->name, name);
+   eina_stringshare_replace(&gc->cf->name, name);
+}
+
+EAPI void
 e_gadcon_shelf_set(E_Gadcon *gc, E_Shelf *shelf)
 {
    E_OBJECT_CHECK(gc);
