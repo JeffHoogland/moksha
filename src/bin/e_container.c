@@ -1199,8 +1199,8 @@ _e_container_resize_handle(E_Container *con)
                   /* find any shelves configured for this zone and add them in */
                   EINA_LIST_FOREACH(e_config->shelves, ll, cf_es)
                     {
-                       if (e_util_container_zone_id_get(cf_es->container,
-                                                        cf_es->zone) == zone)
+                       if (e_util_container_zone_number_get
+                           (cf_es->container, cf_es->zone) == zone)
                          e_shelf_config_new(zone, cf_es);
                     }
                }
