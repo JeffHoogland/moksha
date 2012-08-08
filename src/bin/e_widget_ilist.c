@@ -271,6 +271,27 @@ _queue_clear(Evas_Object *obj)
    wd->queue.timer = NULL;
 }
 
+static void
+_e_wid_disable_hook(Evas_Object *obj)
+{
+   E_Ilist_Item *ili;
+   Eina_List *l;
+   Eina_Bool disabled;
+   E_Widget_Data *wd;
+
+   disabled = e_widget_disabled_get(obj);
+   wd = e_widget_data_get(obj);
+
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(obj), l, ili)
+     {
+        if (disabled)
+          edje_object_signal_emit(ili->o_base, "e,state,disabled", "e");
+        else
+          edje_object_signal_emit(ili->o_base, "e,state,enabled", "e");
+     }
+   evas_object_freeze_events_set(wd->o_scrollframe, disabled);
+}
+
 /* externally accessible functions */
 EAPI Evas_Object *
 e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value)
@@ -285,6 +306,7 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value)
 
    e_widget_del_hook_set(obj, _e_wid_del_hook);
    e_widget_focus_hook_set(obj, _e_wid_focus_hook);
+   e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    e_widget_data_set(obj, wd);
 
    wd->value = (char **)value;

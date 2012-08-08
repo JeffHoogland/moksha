@@ -26868,6 +26868,11 @@ collections {
                state: "default" 0.0;
                color: 0 0 0 0;
             }
+            description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
          }
       }
       programs {
@@ -26891,6 +26896,20 @@ collections {
             target: "fg2";
             target: "e.text.label";
             transition: LINEAR 0.1;
+         }
+         program {
+            name: "disable";
+            signal: "e,state,disabled";
+            source: "e";
+            action: STATE_SET "disabled" 0.0;
+            target: "event";
+         }
+         program {
+            name: "enable";
+            signal: "e,state,enabled";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "event";
          }
       }
    }
@@ -27072,6 +27091,11 @@ collections {
                state: "default" 0.0;
                color: 0 0 0 0;
             }
+            description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+            }
          }
       }
       programs {
@@ -27095,6 +27119,20 @@ collections {
             target: "fg2";
             target: "e.text.label";
             transition: LINEAR 0.1;
+         }
+         program {
+            name: "disable";
+            signal: "e,state,disabled";
+            source: "e";
+            action: STATE_SET "disabled" 0.0;
+            target: "event";
+         }
+         program {
+            name: "enable";
+            signal: "e,state,enabled";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "event";
          }
       }
    }
