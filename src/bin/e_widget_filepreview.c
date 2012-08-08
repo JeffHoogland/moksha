@@ -294,6 +294,37 @@ _e_wid_fprev_preview_reset(E_Widget_Data *wd)
                                1, 1, 0.5);
 }
 
+
+static void
+_e_wid_cb_selected(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+   evas_object_smart_callback_call(data, "selected", obj);
+}
+
+static void
+_e_wid_cb_selection_change(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+   evas_object_smart_callback_call(data, "selection_change", obj);
+}
+
+static void
+_e_wid_cb_dir_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+   evas_object_smart_callback_call(data, "dir_changed", obj);
+}
+
+static void
+_e_wid_cb_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+   evas_object_smart_callback_call(data, "changed", obj);
+}
+
+static void
+_e_wid_cb_file_deleted(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+   evas_object_smart_callback_call(data, "files_deleted", obj);
+}
+
 static void
 _e_wid_fprev_preview_fm(E_Widget_Data *wd)
 {
@@ -320,7 +351,7 @@ _e_wid_fprev_preview_fm(E_Widget_Data *wd)
         fmc.view.mode = E_FM2_VIEW_MODE_LIST;
         fmc.view.open_dirs_in_place = 1;
         fmc.view.selector = 1;
-        fmc.view.single_click = 1;
+        fmc.view.single_click = 0;
         fmc.view.no_subdir_jump = 1;
         fmc.view.no_subdir_drop = 1;
         fmc.view.link_drop = 1;
@@ -329,8 +360,20 @@ _e_wid_fprev_preview_fm(E_Widget_Data *wd)
         fmc.icon.fixed.w = 1;
         fmc.icon.fixed.h = 1;
         fmc.list.sort.no_case = 1;
+        fmc.view.no_click_rename = 1;
         fmc.selection.single = 1;
         e_fm2_config_set(o, &fmc);
+        e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_VIEW_MENU);
+        evas_object_smart_callback_add(o, "dir_changed",
+                                       _e_wid_cb_dir_changed, wd->obj);
+        evas_object_smart_callback_add(o, "selection_change",
+                                       _e_wid_cb_selection_change, wd->obj);
+        evas_object_smart_callback_add(o, "changed",
+                                       _e_wid_cb_changed, wd->obj);
+        evas_object_smart_callback_add(o, "files_deleted",
+                                       _e_wid_cb_file_deleted, wd->obj);
+        evas_object_smart_callback_add(o, "selected",
+                                       _e_wid_cb_selected, wd->obj);
         o = e_widget_scrollframe_pan_add(evas, wd->o_preview_preview,
                                          e_fm2_pan_set,
                                          e_fm2_pan_get,

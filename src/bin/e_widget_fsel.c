@@ -230,6 +230,29 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
 }
 
 static void
+_e_wid_fsel_preview_file_selected(void *data, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   E_Widget_Data *wd;
+   Eina_List *l;
+   E_Fm2_Icon_Info *ici;
+   const char *path, *dev, *newpath;
+
+   wd = data;
+   l = e_fm2_selected_list_get(event_info);
+   if (!l) return;
+   ici = eina_list_data_get(l);
+   if (S_ISDIR(ici->statinfo.st_mode))
+     {
+        e_fm2_path_get(event_info, &dev, &path);
+        newpath = eina_stringshare_printf("%s/%s", path, ici->file);
+        e_fm2_path_set(wd->o_files_fm, dev, newpath);
+        eina_stringshare_del(newpath);
+        return;
+     }
+   if (wd->sel_func) wd->sel_func(wd->sel_data, wd->obj);
+}
+
+static void
 _e_wid_fsel_files_selected(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd;
@@ -300,6 +323,8 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
         wd->o_preview_frame = e_widget_framelist_add(evas, _("Preview"), 0);
         wd->o_preview = e_widget_filepreview_add(evas, 128, 128, 0);
         e_widget_framelist_object_append(wd->o_preview_frame, wd->o_preview);
+        evas_object_smart_callback_add(wd->o_preview, "selected",
+                                       _e_wid_fsel_preview_file_selected, wd);
      }
 
    o = e_fm2_add(evas);
@@ -363,6 +388,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.list.sort.dirs.last = 0;
    fmc.selection.single = 1;
    fmc.selection.windows_modifiers = 0;
+   fmc.view.no_click_rename = 1;
    e_fm2_config_set(o, &fmc);
    e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_VIEW_MENU);
    evas_object_smart_callback_add(o, "dir_changed",
