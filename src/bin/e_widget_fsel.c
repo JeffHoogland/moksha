@@ -167,6 +167,17 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_i
 
    wd = data;
    if (!wd->o_files_fm) return;
+   if (e_fm2_selected_count(wd->o_files_fm)) return;
+   e_fm2_first_sel(wd->o_files_fm);
+}
+
+static void
+_e_wid_fsel_files_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   E_Widget_Data *wd;
+
+   wd = data;
+   if (!wd->o_files_fm) return;
    if (!e_fm2_has_parent_get(wd->o_files_fm))
      {
         if (wd->o_up_button)
@@ -391,8 +402,10 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.view.no_click_rename = 1;
    e_fm2_config_set(o, &fmc);
    e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_VIEW_MENU);
-   evas_object_smart_callback_add(o, "dir_changed",
+   evas_object_smart_callback_add(o, "changed",
                                   _e_wid_fsel_files_changed, wd);
+   evas_object_smart_callback_add(o, "dir_changed",
+                                  _e_wid_fsel_files_dir_changed, wd);
    evas_object_smart_callback_add(o, "selection_change",
                                   _e_wid_fsel_files_selection_change, wd);
    evas_object_smart_callback_add(o, "selected",
