@@ -1687,6 +1687,11 @@ e_border_layer_set(E_Border *bd,
 
    oldraise = e_config->transient.raise;
 
+   if (bd->fullscreen)
+     {
+        bd->saved.layer = layer;
+        return;
+     }
    if (bd->layer != 300)
      bd->saved.layer = bd->layer;
    bd->layer = layer;
