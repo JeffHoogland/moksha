@@ -69,6 +69,7 @@ struct _E_Fm2_Config
       Eina_Bool       link_drop : 1;
       Eina_Bool       fit_custom_pos : 1;
       Eina_Bool       no_typebuf_set : 1;
+      Eina_Bool       no_click_rename : 1;
       unsigned int    single_click_delay;
    } view;
    /* display of icons */

@@ -4601,6 +4601,7 @@ _e_fm2_icon_label_click_cb(void *data)
         ecore_timer_del(ic->rename_click);
         ic->rename_click = NULL;
      }
+   if (ic->sd->config->view.no_click_rename) return EINA_FALSE;
    if (eina_list_count(ic->sd->selected_icons) != 1) return EINA_FALSE;
    if (eina_list_data_get(ic->sd->selected_icons) != ic) return EINA_FALSE;
    _e_fm2_file_rename(data, NULL, NULL);
