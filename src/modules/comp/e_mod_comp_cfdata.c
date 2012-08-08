@@ -98,32 +98,44 @@ e_mod_comp_cfdata_config_new(void)
    cfg->match.borders = NULL;
 
    cfg->match.overrides = NULL;
+   
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
    mat->name = eina_stringshare_add("E");
    mat->clas = eina_stringshare_add("Background_Window");
    mat->shadow_style = eina_stringshare_add("none");
+   
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
    mat->name = eina_stringshare_add("E");
    mat->clas = eina_stringshare_add("everything");
    mat->shadow_style = eina_stringshare_add("everything");
+   
+   mat = E_NEW(Match, 1);
+   cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
+   mat->fullscreen = 1;
+   mat->shadow_style = eina_stringshare_add("fullscreen");
+   
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
    mat->primary_type = ECORE_X_WINDOW_TYPE_DROPDOWN_MENU;
    mat->shadow_style = eina_stringshare_add("menu");
+   
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
    mat->primary_type = ECORE_X_WINDOW_TYPE_POPUP_MENU;
    mat->shadow_style = eina_stringshare_add("menu");
+   
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
    mat->primary_type = ECORE_X_WINDOW_TYPE_COMBO;
    mat->shadow_style = eina_stringshare_add("menu");
+   
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
    mat->primary_type = ECORE_X_WINDOW_TYPE_TOOLTIP;
    mat->shadow_style = eina_stringshare_add("menu");
+   
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
    mat->shadow_style = eina_stringshare_add("popup");
