@@ -99,6 +99,11 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
      e_user_dir_concat_static(path, "backgrounds");
 
    cfdata->o_list = e_widget_flist_add(evas);
+   {
+      E_Fm2_Config *cfg;
+      cfg = e_widget_flist_config_get(cfdata->o_list);
+      cfg->view.no_click_rename = 1;
+   }
    evas_object_smart_callback_add(cfdata->o_list, "dir_changed",
                                   _cb_dir_changed, cfdata);
    evas_object_smart_callback_add(cfdata->o_list, "selection_change",

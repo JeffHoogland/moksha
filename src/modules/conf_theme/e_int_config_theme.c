@@ -491,6 +491,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_flist_add(evas);
    cfdata->o_fm = o;
+   {
+      E_Fm2_Config *cfg;
+      cfg = e_widget_flist_config_get(o);
+      cfg->view.no_click_rename = 1;
+   }
    evas_object_smart_callback_add(o, "dir_changed",
                                   _cb_files_changed, cfdata);
    evas_object_smart_callback_add(o, "selection_change",
