@@ -1271,7 +1271,7 @@ e_util_image_import_settings_new(const char *path, void (*cb)(void *data, const 
 
    RD(_("Stretch"), "stretch", E_IMAGE_IMPORT_STRETCH, 0, 0);
    RD(_("Center"), "center", E_IMAGE_IMPORT_CENTER, 1, 0);
-   RD(_("Title"), "tile", E_IMAGE_IMPORT_TILE, 2, 0);
+   RD(_("Tile"), "tile", E_IMAGE_IMPORT_TILE, 2, 0);
    RD(_("Within"), "scale_aspect_in", E_IMAGE_IMPORT_SCALE_ASPECT_IN, 3, 0);
    RD(_("Fill"), "scale_aspect_out", E_IMAGE_IMPORT_SCALE_ASPECT_OUT, 4, 0);
 #undef RD
