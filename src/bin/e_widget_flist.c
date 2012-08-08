@@ -84,6 +84,15 @@ e_widget_flist_add(Evas *evas)
    return obj;
 }
 
+EAPI E_Fm2_Config *
+e_widget_flist_config_get(Evas_Object *obj)
+{
+   E_Widget_Data *wd = NULL;
+
+   wd = e_widget_data_get(obj);
+   return e_fm2_config_get(wd->o_fm);
+}
+
 EAPI void
 e_widget_flist_path_set(Evas_Object *obj, const char *dev, const char *path)
 {

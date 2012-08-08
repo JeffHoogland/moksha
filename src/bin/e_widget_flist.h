@@ -13,6 +13,7 @@ EAPI void e_widget_flist_select_set(Evas_Object *obj, const char *file, int sele
 EAPI void e_widget_flist_file_show(Evas_Object *obj, const char *file);
 EAPI void e_widget_flist_parent_go(Evas_Object *obj);
 EAPI void e_widget_flist_refresh(Evas_Object *obj);
+EAPI E_Fm2_Config *e_widget_flist_config_get(Evas_Object *obj);
 
 #endif
 #endif
