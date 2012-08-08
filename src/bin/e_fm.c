@@ -10496,3 +10496,10 @@ e_fm2_favorites_init(void)
         free(file);
      }
 }
+
+EAPI unsigned int
+e_fm2_selected_count(Evas_Object *obj)
+{
+   EFM_SMART_CHECK(0);
+   return eina_list_count(sd->selected_icons);
+}
