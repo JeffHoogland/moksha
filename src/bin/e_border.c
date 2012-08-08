@@ -4576,7 +4576,7 @@ _e_border_free(E_Border *bd)
    if (bd->client.icccm.class)
      {
         if (!strcmp(bd->client.icccm.class, "Vmplayer"))
-          e_bindings_mapping_change_enable(EINA_FALSE);
+          e_bindings_mapping_change_enable(EINA_TRUE);
         eina_stringshare_del(bd->client.icccm.class);
      }
    if (bd->client.icccm.title)
