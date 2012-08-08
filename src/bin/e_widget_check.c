@@ -87,6 +87,28 @@ e_widget_check_checked_set(Evas_Object *check, int checked)
 }
 
 /**  
+ * Sets the value of the check box
+ *
+ * @param check the check box widget
+ * @param val pointer to int where changes are stored
+ */
+EAPI void
+e_widget_check_valptr_set(Evas_Object *check, int *val)
+{
+   E_Widget_Data *wd;
+   int state;
+
+   wd = e_widget_data_get(check);
+   state = wd->valptr ? *wd->valptr : 0;
+   wd->valptr = val;
+   if (state == (wd->valptr && *wd->valptr)) return;
+   if (wd->valptr && *wd->valptr)
+     edje_object_signal_emit(wd->o_check, "e,state,checked", "e");
+   else
+     edje_object_signal_emit(wd->o_check, "e,state,unchecked", "e");
+}
+
+/**  
  *Get the value of the check box
  *
  * @param check the check box widget
