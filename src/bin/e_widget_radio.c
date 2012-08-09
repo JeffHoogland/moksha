@@ -175,6 +175,7 @@ e_widget_radio_toggle_set(Evas_Object *obj, int toggle)
      }
    else
      edje_object_signal_emit(wd->o_radio, "e,state,off", "e");
+   evas_object_smart_callback_call(obj, "changed", NULL);
 }
 
 static void
