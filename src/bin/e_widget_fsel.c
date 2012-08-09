@@ -336,6 +336,10 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
         e_widget_framelist_object_append(wd->o_preview_frame, wd->o_preview);
         evas_object_smart_callback_add(wd->o_preview, "selected",
                                        _e_wid_fsel_preview_file_selected, wd);
+        
+        e_widget_size_min_get(wd->o_preview, &mw, &mh);
+        /* need size of preview here or min size will be off */
+        e_widget_size_min_set(wd->o_preview_frame, mw, mh + 128);
      }
 
    o = e_fm2_add(evas);
