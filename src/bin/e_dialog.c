@@ -69,6 +69,10 @@ _e_dialog_internal_new(E_Container *con, const char *name, const char *class, in
    if (!kg)
      fprintf(stderr, "ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
    mask = 0;
+   kg = evas_object_key_grab(o, "Escape", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr, "ERROR: unable to redirect \"Escape\" key events to object %p.\n", o);
+   mask = 0;
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr, "ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
@@ -344,6 +348,8 @@ _e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
           o = e_widget_focused_object_get(dia->box_object);
         if (o) e_widget_activate(o);
      }
+   else if (!strcmp(ev->keyname, "Escape"))
+     e_object_del(E_OBJECT(dia));
 }
 
 static void
