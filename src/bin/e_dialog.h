@@ -26,9 +26,11 @@ struct _E_Dialog
    unsigned char        resizable : 1;
 };
 
+typedef void (*E_Dialog_Cb)(void *data, E_Dialog *dia);
+
 EAPI E_Dialog *e_dialog_new                      (E_Container *con, const char *name, const char *class);
 EAPI E_Dialog *e_dialog_normal_win_new           (E_Container *con, const char *name, const char *class);
-EAPI void      e_dialog_button_add               (E_Dialog *dia, const char *label, const char *icon, void (*func) (void *data, E_Dialog *dia), void *data);
+EAPI void      e_dialog_button_add               (E_Dialog *dia, const char *label, const char *icon, E_Dialog_Cb func, void *data);
 EAPI int       e_dialog_button_focus_num         (E_Dialog *dia, int button);
 EAPI int       e_dialog_button_disable_num_set   (E_Dialog *dia, int button, int disabled);
 EAPI int       e_dialog_button_disable_num_get   (E_Dialog *dia, int button);

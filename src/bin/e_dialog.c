@@ -91,7 +91,7 @@ e_dialog_normal_win_new(E_Container *con, const char *name, const char *class)
 }
 
 EAPI void
-e_dialog_button_add(E_Dialog *dia, const char *label, const char *icon, void (*func)(void *data, E_Dialog *dia), void *data)
+e_dialog_button_add(E_Dialog *dia, const char *label, const char *icon, E_Dialog_Cb func, void *data)
 {
    Evas_Object *o;
 
