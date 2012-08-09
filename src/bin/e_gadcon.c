@@ -331,6 +331,10 @@ e_gadcon_custom_del(E_Gadcon *gc)
 {
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+
+   if (eina_list_data_find(custom_populate_requests, gc))
+     custom_populate_requests = eina_list_remove(custom_populate_requests, gc);
+
    gadcons = eina_list_remove(gadcons, gc);
 }
 
