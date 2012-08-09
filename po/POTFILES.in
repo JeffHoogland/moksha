@@ -174,7 +174,6 @@ src/modules/conf_performance/e_mod_main.c
 src/modules/conf_shelves/e_int_config_shelf.c
 src/modules/conf_shelves/e_mod_main.c
 src/modules/conf_theme/e_int_config_wallpaper.c
-src/modules/conf_theme/e_int_config_wallpaper_import.c
 src/modules/conf_theme/e_int_config_wallpaper_web.c
 src/modules/conf_theme/e_int_config_borders.c
 src/modules/conf_theme/e_int_config_color_classes.c
