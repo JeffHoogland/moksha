@@ -55,6 +55,7 @@ _fsel_cb_ok(void *data, E_Dialog *dia __UNUSED__)
      {
         E_Import_Config_Dialog *import;
         import = e_import_config_dialog_show(id->dia->win->container, path, _import_ok, NULL);
+        e_dialog_parent_set(import->dia, id->dia->win);
         e_object_data_set(E_OBJECT(import), id);
         return;
      }
