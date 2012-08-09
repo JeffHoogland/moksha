@@ -226,6 +226,17 @@ e_dialog_resizable_set(E_Dialog *dia, int resizable)
 }
 
 EAPI void
+e_dialog_parent_set(E_Dialog *dia, E_Win *win)
+{
+   if (!dia) return;
+   if (win)
+     ecore_x_icccm_transient_for_set(dia->win->evas_win, win->evas_win);
+   else
+     ecore_x_icccm_transient_for_unset(dia->win->evas_win);
+   ecore_evas_modal_set(dia->win->ecore_evas, !!win);
+}
+
+EAPI void
 e_dialog_show(E_Dialog *dia)
 {
    Evas_Coord mw, mh;
