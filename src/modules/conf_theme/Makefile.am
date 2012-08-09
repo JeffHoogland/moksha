@@ -42,8 +42,6 @@ module_la_SOURCES      = e_mod_main.c \
                          e_int_config_transitions.h \
                          e_int_config_wallpaper.c \
                          e_int_config_wallpaper.h \
-                         e_int_config_wallpaper_import.c \
-                         e_int_config_wallpaper_import.h \
                          e_int_config_wallpaper_web.c \
                          e_int_config_wallpaper_web.h \
                          e_int_config_xsettings.c

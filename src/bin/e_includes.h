@@ -144,3 +144,5 @@
 #include "e_update.h"
 #include "e_xkb.h"
 #include "e_log.h"
+#include "e_import_dialog.h"
+#include "e_import_config_dialog.h"

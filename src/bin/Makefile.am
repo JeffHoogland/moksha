@@ -95,6 +95,8 @@ e.h \
 e_hints.h \
 e_icon.h \
 e_ilist.h \
+e_import_config_dialog.h \
+e_import_dialog.h \
 e_includes.h \
 e_init.h \
 e_int_border_locks.h \
@@ -247,6 +249,8 @@ e_grabinput.c \
 e_hints.c \
 e_icon.c \
 e_ilist.c \
+e_import_config_dialog.c \
+e_import_dialog.c \
 e_init.c \
 e_int_border_locks.c \
 e_int_border_menu.c \
