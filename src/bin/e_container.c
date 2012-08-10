@@ -1191,18 +1191,9 @@ _e_container_resize_handle(E_Container *con)
                }
              else
                {
-                  E_Config_Shelf *cf_es;
-
                   zone = e_zone_new(con, scr->screen, scr->escreen,
                                     scr->x, scr->y, scr->w, scr->h);
                   printf("@@@ NEW ZONE = %p\n", zone);
-                  /* find any shelves configured for this zone and add them in */
-                  EINA_LIST_FOREACH(e_config->shelves, ll, cf_es)
-                    {
-                       if (e_util_container_zone_number_get
-                           (cf_es->container, cf_es->zone) == zone)
-                         e_shelf_config_new(zone, cf_es);
-                    }
                }
           }
         con->zones = eina_list_sort(con->zones, eina_list_count(con->zones),
@@ -1245,6 +1236,7 @@ _e_container_resize_handle(E_Container *con)
                   e_object_del(E_OBJECT(zone));
                }
           }
+        e_shelf_config_update();
      }
    else
      {
