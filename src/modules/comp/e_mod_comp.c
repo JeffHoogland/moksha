@@ -2973,6 +2973,55 @@ _e_mod_comp_bd_property(void *data __UNUSED__,
    return ECORE_CALLBACK_PASS_ON;
 }
 
+static void
+_e_mod_comp_reshadow(E_Comp_Win *cw)
+{
+   if (cw->visible) evas_object_hide(cw->shobj);
+   _e_mod_comp_win_shadow_setup(cw);
+   evas_object_move(cw->shobj, cw->x, cw->y);
+   evas_object_resize(cw->shobj, cw->pw, cw->ph);
+   if (cw->visible)
+     {
+        evas_object_show(cw->shobj);
+        if (cw->show_ready)
+          {
+             cw->defer_hide = 0;
+             if (!cw->hidden_override) _e_mod_comp_child_show(cw);
+             edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
+             if (!cw->animating)
+               {
+                  cw->c->animating++;
+               }
+             cw->animating = 1;
+             _e_mod_comp_win_render_queue(cw);
+          }
+     }
+}
+
+static Eina_Bool
+_e_mod_comp_bd_fullscreen(void *data __UNUSED__,
+                          int type   __UNUSED__,
+                          void *event)
+{
+   E_Event_Border_Property *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
+   _e_mod_comp_reshadow(cw);
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_mod_comp_bd_unfullscreen(void *data __UNUSED__,
+                          int type   __UNUSED__,
+                          void *event)
+{
+   E_Event_Border_Property *ev = event;
+   E_Comp_Win *cw = _e_mod_comp_win_find(ev->border->win);
+   if (!cw) return ECORE_CALLBACK_PASS_ON;
+   _e_mod_comp_reshadow(cw);
+   return ECORE_CALLBACK_PASS_ON;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 static Eina_Bool
@@ -3463,6 +3512,8 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, _e_mod_comp_bd_focus_in, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FOCUS_OUT, _e_mod_comp_bd_focus_out, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_PROPERTY, _e_mod_comp_bd_property, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FULLSCREEN, _e_mod_comp_bd_fullscreen, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNFULLSCREEN, _e_mod_comp_bd_unfullscreen, NULL));
 
    if (!ecore_x_composite_query())
      {
