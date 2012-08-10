@@ -277,6 +277,8 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
         o = edje_object_add(zone->container->bg_evas);
         evas_object_data_set(o, "e_zone", zone);
         edje_object_file_set(o, bgfile, "e/desktop/background");
+        if (edje_object_data_get(o, "noanimation"))
+          edje_object_animation_set(o, EINA_FALSE);
      }
    else
      {
