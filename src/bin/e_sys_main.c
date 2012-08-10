@@ -42,7 +42,7 @@ main(int argc,
 {
    int i, gn;
    int test = 0;
-   char *action, *cmd;
+   char *action = NULL, *cmd;
 #ifdef HAVE_EEZE_MOUNT
    Eina_Bool mnt = EINA_FALSE;
    const char *act;
