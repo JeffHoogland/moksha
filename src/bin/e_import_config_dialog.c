@@ -381,6 +381,14 @@ _e_import_config_preview_size_get(int size, int w, int h,int *tw, int *th)
 }
 
 static void
+_e_import_config_dia_del(void *data)
+{
+   E_Dialog *dia = data;
+
+   e_object_del(dia->data);
+}
+
+static void
 _e_import_config_dialog_del(void *data)
 {
    E_Import_Config_Dialog *import = data;
@@ -433,6 +441,7 @@ e_import_config_dialog_show(E_Container *con, const char *path, Ecore_End_Cb ok,
    import->dia = dia;
    import->ok = ok, import->cancel = cancel;
    import->path = eina_stringshare_add(path);
+   e_object_del_attach_func_set(E_OBJECT(dia), _e_import_config_dia_del);
    e_win_delete_callback_set(dia->win, _e_import_config_dialog_win_del);
 
    evas = e_win_evas_get(dia->win);

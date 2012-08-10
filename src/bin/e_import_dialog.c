@@ -101,6 +101,14 @@ _fsel_cb_ok(void *data, E_Dialog *dia __UNUSED__)
 
 
 static void
+_e_import_dia_del(void *data)
+{
+   E_Dialog *dia = data;
+
+   e_object_del(dia->data);
+}
+
+static void
 _e_import_dialog_del(void *data)
 {
    E_Import_Dialog *id = data;
@@ -120,6 +128,7 @@ _e_import_dialog_win_del(E_Win *win)
    id = dia->data;
    e_object_del(E_OBJECT(id));
 }
+
 //////////////////////////////////////////////////////////////////////////////////
 
 EAPI E_Import_Dialog *
@@ -140,6 +149,7 @@ e_import_dialog_show(E_Container *con, const char *dev, const char *path, Ecore_
    dia->data = id;
    id->dia = dia;
    id->ok = ok, id->cancel = cancel;
+   e_object_del_attach_func_set(E_OBJECT(dia), _e_import_dia_del);
    e_win_delete_callback_set(dia->win, _e_import_dialog_win_del);
 
    evas = e_win_evas_get(dia->win);
