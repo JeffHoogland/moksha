@@ -33,8 +33,6 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object     *o_pager; /* table */
    Pager           *pager;
-   E_Gadcon_Popup *gcpop;
-   Ecore_Timer    *gcpop_timer;
 };
 
 struct _Pager
@@ -98,12 +96,14 @@ struct _Pager_Popup
    unsigned char urgent : 1;
 };
 
+static void             _pager_desk_livethumb_setup(Pager_Desk *pd);
 static void             _pager_cb_obj_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__);
 static void             _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void             _menu_cb_post(void *data __UNUSED__, E_Menu *m __UNUSED__);
 static void             _pager_inst_cb_menu_configure(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void             _pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void             _pager_instance_drop_zone_recalc(Instance *inst);
+static Eina_Bool        _pager_cb_event_bg_update(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool        _pager_cb_event_border_resize(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool        _pager_cb_event_border_move(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool        _pager_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__, void *event);
@@ -236,14 +236,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
 
    inst = gcc->data;
-   if (inst->gcpop)
-     {
-        e_gadcon_popup_hide(inst->gcpop);
-        e_object_del(E_OBJECT(inst->gcpop));
-        inst->gcpop = NULL;
-     }
-   if (inst->gcpop_timer) ecore_timer_del(inst->gcpop_timer);
-   inst->gcpop_timer = NULL;
    pager_config->instances = eina_list_remove(pager_config->instances, inst);
    e_drop_handler_del(inst->pager->drop_handler);
    _pager_free(inst->pager);
@@ -353,6 +345,35 @@ _pager_empty(Pager *p)
      }
 }
 
+static void
+_pager_desk_livethumb_setup(Pager_Desk *pd)
+{
+   const char *bgfile;
+   Evas *e;
+   Evas_Object *o;
+
+   e = evas_object_evas_get(pd->pager->o_table);
+
+   if (!pd->o_bg)
+     {
+        pd->o_bg = e_livethumb_add(e);
+        e_livethumb_vsize_set(pd->o_bg, pd->desk->zone->w, pd->desk->zone->h);
+        edje_extern_object_aspect_set(pd->o_bg, EDJE_ASPECT_CONTROL_NEITHER,
+                                      pd->desk->zone->w, pd->desk->zone->h);
+        edje_object_part_swallow(pd->o_desk, "e.background", pd->o_bg);
+     }
+
+   o = e_livethumb_thumb_get(pd->o_bg);
+   if (!o) o = edje_object_add(e_livethumb_evas_get(pd->o_bg));
+   bgfile = e_bg_file_get(pd->desk->zone->container->num, pd->desk->zone->num, pd->desk->x, pd->desk->y);
+   edje_object_file_set(o, bgfile, "e/desktop/background");
+   e_livethumb_thumb_set(pd->o_bg, o);
+   if (pager_config->disable_live_preview)
+     edje_object_signal_emit(pd->o_desk, "e,preview,off", "e");
+   else
+     edje_object_signal_emit(pd->o_desk, "e,preview,on", "e");
+}
+
 static Pager_Desk *
 _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
 {
@@ -361,6 +382,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    E_Border_List *bl;
    E_Border *bd;
    int w, h;
+   Evas *e;
 
    pd = E_NEW(Pager_Desk, 1);
    if (!pd) return NULL;
@@ -372,7 +394,8 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    e_object_ref(E_OBJECT(desk));
    pd->pager = p;
 
-   o = edje_object_add(evas_object_evas_get(p->o_table));
+   e = evas_object_evas_get(p->o_table);
+   o = edje_object_add(e);
    pd->o_desk = o;
    e_theme_edje_object_set(o, "base/theme/modules/pager",
                            "e/modules/pager/desk");
@@ -380,13 +403,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    if (pager_config->show_desk_names)
      edje_object_signal_emit(o, "e,name,show", "e");
 
-   if (pager_config->disable_live_preview)
-     edje_object_signal_emit(o, "e,preview,off", "e");
-   else
-     edje_object_signal_emit(o, "e,preview,on", "e");
-   pd->o_bg = e_widget_deskpreview_desk_add(o, desk->zone, xpos, ypos, -1, -1);
-   e_widget_deskpreview_desk_configurable_set(pd->o_bg, EINA_FALSE);
-   edje_object_part_swallow(o, "e.background", pd->o_bg);
+   _pager_desk_livethumb_setup(pd);
 
    edje_object_size_min_calc(o, &w, &h);
    e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
@@ -405,7 +422,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
                                   _pager_desk_cb_mouse_wheel, pd);
    evas_object_show(o);
 
-   o = e_layout_add(evas_object_evas_get(p->o_table));
+   o = e_layout_add(e);
    pd->o_layout = o;
 
    e_layout_virtual_size_set(o, desk->zone->w, desk->zone->h);
@@ -1708,6 +1725,42 @@ _pager_cb_event_desk_name_change(void *data __UNUSED__, int type __UNUSED__, voi
 }
 
 static Eina_Bool
+_pager_cb_event_bg_update(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   E_Event_Bg_Update *ev = event;
+   Eina_List *l, *ll;
+   Pager *p;
+   Pager_Desk *pd;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   E_Desk *desk;
+
+   if (ev->zone == -1)
+     {
+        EINA_LIST_FOREACH(pagers, l, p)
+          EINA_LIST_FOREACH(p->desks, ll, pd)
+            _pager_desk_livethumb_setup(pd);
+        return ECORE_CALLBACK_RENEW;
+     }
+   man = e_manager_current_get();
+   con = eina_list_nth(man->containers, ev->container);
+   if (!con) return ECORE_CALLBACK_RENEW;
+   zone = eina_list_nth(con->zones, ev->zone);
+   if (!zone) return ECORE_CALLBACK_RENEW;
+   desk = e_desk_at_xy_get(zone, ev->desk_x, ev->desk_y);
+   if (!zone) return ECORE_CALLBACK_RENEW;
+   EINA_LIST_FOREACH(pagers, l, p)
+     {
+        pd = _pager_desk_find(p, desk);
+        if (!pd) continue;
+        _pager_desk_livethumb_setup(pd);
+        continue;
+     }
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
 _pager_cb_event_container_resize(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Container_Resize *ev = event;
@@ -1730,102 +1783,6 @@ _pager_cb_event_container_resize(void *data __UNUSED__, int type __UNUSED__, voi
      }
 
    return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
-_pager_cb_gcpop_hide_timer(void *data)
-{
-   Instance *inst = data;
-   if (inst->gcpop)
-     {
-        e_gadcon_popup_hide(inst->gcpop);
-        e_object_del(E_OBJECT(inst->gcpop));
-        inst->gcpop = NULL;
-     }
-   if (inst->gcpop_timer) ecore_timer_del(inst->gcpop_timer);
-   inst->gcpop_timer = NULL;
-   return EINA_FALSE;
-}
-
-static void
-_pager_cb_gcpop_hide(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
-{
-   Instance *inst = data;
-   e_gadcon_popup_hide(inst->gcpop);
-   e_object_del(E_OBJECT(inst->gcpop));
-   inst->gcpop = NULL;
-   if (inst->gcpop_timer) ecore_timer_del(inst->gcpop_timer);
-   inst->gcpop_timer = NULL;
-}
-
-static Eina_Bool
-_pager_cb_event_bg_update(void *data __UNUSED__, int type __UNUSED__, void *event)
-{
-   E_Event_Bg_Update *ev = event;
-   Pager *p;
-   E_Zone *zone;
-   E_Container *con;
-   E_Manager *man;
-   Eina_List *l, *ll, *lll;
-   Evas *e;
-   const char *str;
-   Evas_Object *o;
-   Eina_Bool disable = EINA_FALSE;
-
-   if (pager_config->disable_live_preview) return ECORE_CALLBACK_RENEW;
-   if (ev->zone == -1) // all bgs set to default
-     {
-        zone = e_util_zone_current_get(e_manager_current_get());
-        if (!zone) return ECORE_CALLBACK_RENEW;
-        if (!zone->bg_object) return ECORE_CALLBACK_RENEW;
-        str = evas_object_type_get(zone->bg_object);
-        if (!str) return ECORE_CALLBACK_RENEW;
-        if (strcmp(evas_object_type_get(zone->bg_object), "edje")) return ECORE_CALLBACK_RENEW;
-        if (!edje_object_animation_get(zone->bg_object)) return ECORE_CALLBACK_RENEW;
-        disable = EINA_TRUE;
-     }
-   else // check for animated bg
-     {
-        EINA_LIST_FOREACH(e_manager_list(), l, man)
-          EINA_LIST_FOREACH(man->containers, ll, con)
-            EINA_LIST_FOREACH(con->zones, lll, zone)
-              {
-                 if (!zone->bg_object) continue;
-                 str = evas_object_type_get(zone->bg_object);
-                 if (!str) continue;
-                 if (strcmp(evas_object_type_get(zone->bg_object), "edje")) continue;
-                 if (!edje_object_animation_get(zone->bg_object)) continue;
-                 disable = EINA_TRUE;
-                 goto out;
-              }
-     }
-out:
-   if (!disable) return ECORE_CALLBACK_RENEW;
-   pager_config->disable_live_preview = EINA_TRUE;
-   _pager_cb_config_updated();
-   EINA_LIST_FOREACH(pagers, l, p)
-     {
-        Instance *inst = p->inst;
-        int x, y, w, h;
-        e = inst->gcpop->win->evas;
-        inst->gcpop = e_gadcon_popup_new(p->inst->gcc);
-        o = e_widget_label_add(e, _("Live previewing disabled"));
-        e_gadcon_popup_content_set(inst->gcpop, o);
-        e_gadcon_popup_show(inst->gcpop);
-        evas_object_geometry_get(inst->gcpop->o_bg, &x, &y, &w, &h);
-
-        o = evas_object_rectangle_add(e);
-        evas_object_move(o, x, y);
-        evas_object_resize(o, w, h);
-        evas_object_color_set(o, 255, 255, 255, 0);
-        evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN , 
-                                       _pager_cb_gcpop_hide, inst);
-        evas_object_repeat_events_set(o, 1);
-        evas_object_show(o);
-        inst->gcpop_timer = ecore_timer_add(3.0, _pager_cb_gcpop_hide_timer, inst);
-     }
-
-   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -2989,27 +2946,7 @@ e_modapi_init(E_Module *m)
         e_action_predef_name_set(N_("Pager"), N_("Popup Desk Previous"),
                                  "pager_switch", "prev", NULL, 0);
      }
-   if (!pager_config->disable_live_preview)
-     {
-        Eina_List *l, *ll, *lll;
-        E_Manager *man;
-        E_Container *con;
-        E_Zone *zone;
-        const char *str;
-        EINA_LIST_FOREACH(e_manager_list(), l, man)
-          EINA_LIST_FOREACH(man->containers, ll, con)
-            EINA_LIST_FOREACH(con->zones, lll, zone)
-              {
-                 if (!zone->bg_object) continue;
-                 str = evas_object_type_get(zone->bg_object);
-                 if (!str) continue;
-                 if (strcmp(evas_object_type_get(zone->bg_object), "edje")) continue;
-                 if (!edje_object_animation_get(zone->bg_object)) continue;
-                 e_util_dialog_internal(_("Invalid Configuration"),
-                                        _("Live previews cannot be used with animated desktop images!"));
-                 pager_config->disable_live_preview = 1;
-              }
-     }
+
    return m;
 }
 

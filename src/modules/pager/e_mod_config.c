@@ -117,41 +117,10 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata);
 }
 
-static void
-_live_preview_change(void *d __UNUSED__, Evas_Object *obj)
-{
-   Eina_List *l, *ll, *lll;
-   E_Manager *man;
-   E_Container *con;
-   E_Zone *zone;
-   const char *str;
-
-   if (e_widget_check_checked_get(obj)) return;
-
-   EINA_LIST_FOREACH(e_manager_list(), l, man)
-     EINA_LIST_FOREACH(man->containers, ll, con)
-       EINA_LIST_FOREACH(con->zones, lll, zone)
-         {
-            if (!zone->bg_object) continue;
-            str = evas_object_type_get(zone->bg_object);
-            if (!str) continue;
-            if (strcmp(evas_object_type_get(zone->bg_object), "edje")) continue;
-            if (!edje_object_animation_get(zone->bg_object)) continue;
-            e_util_dialog_internal(_("Invalid Configuration"), _("Live previews cannot be used with animated desktop images!"));
-            e_widget_check_checked_set(obj, 1);
-         }
-}
-
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ol, *of, *ow;
-   Eina_Bool disable = EINA_FALSE;
-   Eina_List *l, *ll, *lll;
-   E_Manager *man;
-   E_Container *con;
-   E_Zone *zone;
-   const char *str;
 
    ol = e_widget_list_add(evas, 0, 0);
 
@@ -162,26 +131,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_check_add(evas, _("Always show desktop names"),
                            &(cfdata->show_desk_names));
    e_widget_framelist_object_append(of, ow);
-   EINA_LIST_FOREACH(e_manager_list(), l, man)
-     EINA_LIST_FOREACH(man->containers, ll, con)
-       EINA_LIST_FOREACH(con->zones, lll, zone)
-         {
-            if (!zone->bg_object) continue;
-            str = evas_object_type_get(zone->bg_object);
-            if (!str) continue;
-            if (strcmp(evas_object_type_get(zone->bg_object), "edje")) continue;
-            if (!edje_object_animation_get(zone->bg_object)) continue;
-            disable = EINA_TRUE;
-            goto out;
-         }
-out:
-   if (!disable)
-     {
-        ow = e_widget_check_add(evas, _("Disable live preview"),
-                                &(cfdata->disable_live_preview));
-        e_widget_on_change_hook_set(ow, _live_preview_change, NULL);
-        e_widget_framelist_object_append(of, ow);
-     }
+   ow = e_widget_check_add(evas, _("Disable live preview"),
+                           &(cfdata->disable_live_preview));
+   e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Popup"), 0);
@@ -226,12 +178,6 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
 {
    Evas_Object *otb, *ol, *ow;
    Evas_Object *pc, *uc;
-   Eina_Bool disable = EINA_FALSE;
-   Eina_List *l, *ll, *lll;
-   E_Manager *man;
-   E_Container *con;
-   E_Zone *zone;
-   const char *str;
 
    otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
@@ -243,26 +189,9 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    ow = e_widget_check_add(evas, _("Always show desktop names"),
                            &(cfdata->show_desk_names));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   EINA_LIST_FOREACH(e_manager_list(), l, man)
-     EINA_LIST_FOREACH(man->containers, ll, con)
-       EINA_LIST_FOREACH(con->zones, lll, zone)
-         {
-            if (!zone->bg_object) continue;
-            str = evas_object_type_get(zone->bg_object);
-            if (!str) continue;
-            if (strcmp(evas_object_type_get(zone->bg_object), "edje")) continue;
-            if (!edje_object_animation_get(zone->bg_object)) continue;
-            disable = EINA_TRUE;
-            goto out;
-         }
-out:
-   if (!disable)
-     {
-        ow = e_widget_check_add(evas, _("Disable live preview"),
-                                &(cfdata->disable_live_preview));
-        e_widget_on_change_hook_set(ow, _live_preview_change, NULL);
-        e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-     }
+   ow = e_widget_check_add(evas, _("Disable live preview"),
+                           &(cfdata->disable_live_preview));
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Resistance to dragging"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%.0f px"), 0.0, 10.0, 1.0, 0, NULL,
