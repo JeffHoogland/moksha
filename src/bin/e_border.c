@@ -6897,6 +6897,9 @@ _e_border_eval0(E_Border *bd)
           {
              bd_parent->transients = eina_list_append(bd_parent->transients, bd);
              bd->parent = bd_parent;
+          }
+        if (bd->parent)
+          {
              e_border_layer_set(bd, bd->parent->layer);
              if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
                bd->parent->modal = bd;
