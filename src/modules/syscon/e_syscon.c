@@ -7,10 +7,10 @@ static Eina_Bool _cb_mouse_down(void *data, int type, void *event);
 static Eina_Bool _cb_mouse_up(void *data, int type, void *event);
 static Eina_Bool _cb_mouse_move(void *data, int type, void *event);
 static Eina_Bool _cb_mouse_wheel(void *data, int type, void *event);
-static void _cb_signal_close(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_signal_syscon(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _cb_signal_action_extra(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void      _cb_signal_close(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void      _cb_signal_syscon(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void      _cb_signal_action(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void      _cb_signal_action_extra(void *data, Evas_Object *obj, const char *emission, const char *source);
 static Eina_Bool _cb_timeout_defaction(void *data);
 
 /* local subsystem globals */
@@ -62,7 +62,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
                {
                   E_Config_Syscon_Action *sca;
                   E_Action *a;
-                  
+
                   if (!(sca = l->data)) continue;
                   if (!sca->action) continue;
                   a = e_action_find(sca->action);
@@ -100,41 +100,40 @@ e_syscon_show(E_Zone *zone, const char *defact)
    e_popup_layer_set(popup, 500);
 
    handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (ECORE_EVENT_KEY_DOWN, _cb_key_down, NULL));
+       (handlers, ecore_event_handler_add
+         (ECORE_EVENT_KEY_DOWN, _cb_key_down, NULL));
    handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (ECORE_EVENT_MOUSE_BUTTON_DOWN, _cb_mouse_down, NULL));
+       (handlers, ecore_event_handler_add
+         (ECORE_EVENT_MOUSE_BUTTON_DOWN, _cb_mouse_down, NULL));
    handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (ECORE_EVENT_MOUSE_BUTTON_UP, _cb_mouse_up, NULL));
+       (handlers, ecore_event_handler_add
+         (ECORE_EVENT_MOUSE_BUTTON_UP, _cb_mouse_up, NULL));
    handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (ECORE_EVENT_MOUSE_MOVE, _cb_mouse_move, NULL));
+       (handlers, ecore_event_handler_add
+         (ECORE_EVENT_MOUSE_MOVE, _cb_mouse_move, NULL));
    handlers = eina_list_append
-     (handlers, ecore_event_handler_add
-      (ECORE_EVENT_MOUSE_WHEEL, _cb_mouse_wheel, NULL));
+       (handlers, ecore_event_handler_add
+         (ECORE_EVENT_MOUSE_WHEEL, _cb_mouse_wheel, NULL));
 
    o = edje_object_add(popup->evas);
    o_bg = o;
    e_theme_edje_object_set(o, "base/theme/syscon",
                            "e/widgets/syscon/main");
    edje_object_part_text_set(o, "e.text.label", _("Cancel"));
-   edje_object_signal_callback_add(o, "e,action,close", "", 
+   edje_object_signal_callback_add(o, "e,action,close", "",
                                    _cb_signal_close, NULL);
-   edje_object_signal_callback_add(o, "e,action,syscon", "*", 
+   edje_object_signal_callback_add(o, "e,action,syscon", "*",
                                    _cb_signal_syscon, NULL);
 
    act_count = 0;
    show_time = t;
-   
+
    // main (default):
    //  halt | suspend | desk_lock
    // secondary (default):
    //  reboot | hibernate | logout
    // extra (example for illume):
    //  home | close | kill
-
 
    o = e_flowlayout_add(popup->evas);
    o_flow_main = o;
@@ -169,17 +168,22 @@ e_syscon_show(E_Zone *zone, const char *defact)
         if ((!strcmp(sca->action, "logout")) &&
             (!e_sys_action_possible_get(E_SYS_LOGOUT))) disabled = 1;
         else if ((!strcmp(sca->action, "halt")) &&
-            (!e_sys_action_possible_get(E_SYS_HALT))) disabled = 1;
+                 (!e_sys_action_possible_get(E_SYS_HALT)))
+          disabled = 1;
         else if ((!strcmp(sca->action, "halt_now")) &&
-            (!e_sys_action_possible_get(E_SYS_HALT_NOW))) disabled = 1;
+                 (!e_sys_action_possible_get(E_SYS_HALT_NOW)))
+          disabled = 1;
         else if ((!strcmp(sca->action, "reboot")) &&
-            (!e_sys_action_possible_get(E_SYS_REBOOT))) disabled = 1;
+                 (!e_sys_action_possible_get(E_SYS_REBOOT)))
+          disabled = 1;
         else if ((!strcmp(sca->action, "suspend")) &&
-            (!e_sys_action_possible_get(E_SYS_SUSPEND))) disabled = 1;
+                 (!e_sys_action_possible_get(E_SYS_SUSPEND)))
+          disabled = 1;
         else if ((!strcmp(sca->action, "hibernate")) &&
-            (!e_sys_action_possible_get(E_SYS_HIBERNATE))) disabled = 1;
+                 (!e_sys_action_possible_get(E_SYS_HIBERNATE)))
+          disabled = 1;
         o = edje_object_add(popup->evas);
-        edje_object_signal_callback_add(o, "e,action,click", "", 
+        edje_object_signal_callback_add(o, "e,action,click", "",
                                         _cb_signal_action, sca);
         if (sca->button)
           {
@@ -190,7 +194,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
         else
           e_theme_edje_object_set(o, "base/theme/widgets",
                                   "e/widgets/syscon/item/button");
-        edje_object_part_text_set(o, "e.text.label", 
+        edje_object_part_text_set(o, "e.text.label",
                                   _(e_action_predef_label_get(sca->action, sca->params)));
         if (sca->icon)
           {
@@ -217,7 +221,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
         edje_object_size_min_calc(o, &mw, &mh);
         if (mw > iw) iw = mw;
         if (mh > ih) ih = mh;
-        e_flowlayout_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 
+        e_flowlayout_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5,
                                       iw, ih, iw, ih);
         evas_object_show(o);
      }
@@ -226,7 +230,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
      {
         E_Sys_Con_Action *sca;
         char buf[1024];
-        
+
         sca = l->data;
         o = edje_object_add(popup->evas);
         edje_object_signal_callback_add(o, "e,action,click", "", _cb_signal_action_extra, sca);
@@ -253,7 +257,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
           edje_object_signal_emit(o, "e,state,disabled", "e");
         e_flowlayout_pack_end(o_flow_extra, o);
         iw = ih = e_config->syscon.extra.icon_size * e_scale;
-        e_flowlayout_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 
+        e_flowlayout_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5,
                                       iw, ih, iw, ih);
         evas_object_show(o);
      }
@@ -270,13 +274,13 @@ e_syscon_show(E_Zone *zone, const char *defact)
    edje_object_calc_force(o_bg);
 
    e_flowlayout_size_min_get(o_flow_main, &mw, &mh);
-   edje_extern_object_min_size_set(o_flow_main, mw, mh); 
+   edje_extern_object_min_size_set(o_flow_main, mw, mh);
    edje_object_part_swallow(o_bg, "e.swallow.main", o_flow_main);
    e_flowlayout_size_min_get(o_flow_secondary, &mw, &mh);
-   edje_extern_object_min_size_set(o_flow_secondary, mw, mh); 
+   edje_extern_object_min_size_set(o_flow_secondary, mw, mh);
    edje_object_part_swallow(o_bg, "e.swallow.secondary", o_flow_secondary);
    e_flowlayout_size_min_get(o_flow_extra, &mw, &mh);
-   edje_extern_object_min_size_set(o_flow_extra, mw, mh); 
+   edje_extern_object_min_size_set(o_flow_extra, mw, mh);
    edje_object_part_swallow(o_bg, "e.swallow.extra", o_flow_extra);
 
    edje_object_size_min_calc(o_bg, &mw, &mh);
@@ -296,7 +300,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
 
    if (e_config->syscon.do_input)
      {
-        deftimer = ecore_timer_add(e_config->syscon.timeout, 
+        deftimer = ecore_timer_add(e_config->syscon.timeout,
                                    _cb_timeout_defaction, NULL);
         if (defact) do_defact = eina_stringshare_add(defact);
      }
@@ -425,7 +429,7 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
      {
         E_Action *act;
         double t;
-        
+
         t = ecore_loop_time_get();
         if (t - show_time > 0.5)
           {
@@ -442,11 +446,11 @@ _cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
                   else
                     {
                        Eina_List *l;
-                       
+
                        for (l = e_config->syscon.actions; l; l = l->next)
                          {
                             E_Config_Syscon_Action *sca;
-                            
+
                             if (!(sca = l->data)) continue;
                             if (!sca->action) continue;
                             if (!strcmp(sca->action, act->name))
@@ -524,7 +528,7 @@ _cb_mouse_wheel(__UNUSED__ void *data, __UNUSED__ int type, void *event)
 
    ev = event;
    if (ev->event_window != input_window) return ECORE_CALLBACK_PASS_ON;
-   evas_event_feed_mouse_wheel(popup->evas, ev->direction, ev->z, 
+   evas_event_feed_mouse_wheel(popup->evas, ev->direction, ev->z,
                                ev->timestamp, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -582,7 +586,7 @@ static void
 _cb_signal_action_extra(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Sys_Con_Action *sca;
-  
+
    e_syscon_hide();
    sca = data;
    if (!sca) return;
@@ -604,3 +608,4 @@ _cb_timeout_defaction(void *data __UNUSED__)
      }
    return ECORE_CALLBACK_CANCEL;
 }
+

@@ -1,24 +1,26 @@
 #include "e.h"
 
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 struct _E_Config_Dialog_Data
 {
-   struct {
-      int         icon_size;
+   struct
+   {
+      int icon_size;
    } main, secondary, extra;
-   double         timeout;
-   int            do_input;
-   Eina_List     *actions;
-   
-   struct {
-      Eina_List *disable_iconified;
-      Eina_List *disable_scroll_animate;
-      Eina_List *disable_warp;
+   double     timeout;
+   int        do_input;
+   Eina_List *actions;
+
+   struct
+   {
+      Eina_List   *disable_iconified;
+      Eina_List   *disable_scroll_animate;
+      Eina_List   *disable_warp;
       Evas_Object *min_w, *min_h;
    } gui;
 };
@@ -39,8 +41,8 @@ e_int_config_syscon(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Syscon Settings"),
-			     "E", "windows/conf_syscon",
-			     "preferences-syscon", 0, v, NULL);
+                             "E", "windows/conf_syscon",
+                             "preferences-syscon", 0, v, NULL);
    return cfd;
 }
 
@@ -49,7 +51,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l;
    E_Config_Syscon_Action *sa, *sa2;
-   
+
    cfdata->main.icon_size = e_config->syscon.main.icon_size;
    cfdata->secondary.icon_size = e_config->syscon.secondary.icon_size;
    cfdata->extra.icon_size = e_config->syscon.extra.icon_size;
@@ -82,7 +84,7 @@ static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Syscon_Action *sa;
-   
+
    EINA_LIST_FREE(cfdata->actions, sa)
      {
         if (sa->action) free((char *)sa->action);
@@ -99,7 +101,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l;
    E_Config_Syscon_Action *sa, *sa2;
-   
+
    e_config->syscon.main.icon_size = cfdata->main.icon_size;
    e_config->syscon.secondary.icon_size = cfdata->secondary.icon_size;
    e_config->syscon.extra.icon_size = cfdata->extra.icon_size;
@@ -137,9 +139,9 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ol, *ob;
-   
+
    otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
-   
+
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_label_add(evas, _("Main"));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
@@ -156,7 +158,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 16.0, 256.0, 1.0, 0,
                             NULL, &(cfdata->extra.icon_size), 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   e_widget_toolbook_page_append(otb, NULL, _("Icon Sizes"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Icon Sizes"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
@@ -167,10 +169,11 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), 0.0, 60.0, 0.1, 0,
                             &(cfdata->timeout), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
-   e_widget_toolbook_page_append(otb, NULL, _("Default Action"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("Default Action"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
-   
+
    e_widget_toolbook_page_show(otb, 0);
 
    return otb;
 }
+
