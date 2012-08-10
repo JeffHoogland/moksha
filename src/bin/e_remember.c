@@ -189,7 +189,7 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
    if (handlers) eina_list_free(handlers);
    handlers = NULL;
 
-   return ECORE_CALLBACK_DONE;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 EAPI E_Remember *
