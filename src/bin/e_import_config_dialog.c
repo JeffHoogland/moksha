@@ -53,9 +53,8 @@ _import_edj_gen(E_Import_Config_Dialog *import)
         printf("Error Creating tmp file: %s\n", strerror(errno));
         return;
      }
-   close(fd);
 
-   f = fopen(tmpn, "w");
+   f = fdopen(fd, "w");
    if (!f)
      {
         printf("Cannot open %s for writing\n", tmpn);
