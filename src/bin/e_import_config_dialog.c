@@ -16,6 +16,7 @@ _import_edj_gen(E_Import_Config_Dialog *import)
 {
    Evas *evas;
    Evas_Object *img;
+   Eina_Bool anim = EINA_FALSE;
    int fd, num = 1;
    int w = 0, h = 0;
    const char *file, *locale;
@@ -61,6 +62,7 @@ _import_edj_gen(E_Import_Config_Dialog *import)
         return;
      }
 
+   anim = eina_str_has_extension(import->file, "gif");
    imgdir = ecore_file_dir_get(import->file);
    if (!imgdir) ipart[0] = '\0';
    else
@@ -87,6 +89,8 @@ _import_edj_gen(E_Import_Config_Dialog *import)
         else
           snprintf(enc, sizeof(enc), "LOSSY %i", import->quality);
      }
+   if (!anim)
+     fprintf(f, "data.item: \"noanimation\" \"1\";\n");
    switch (import->method)
      {
       case IMPORT_STRETCH:
