@@ -21,7 +21,6 @@ static Eina_Bool mountopts_check(const char *opts);
 static Eina_Bool mount_args_check(int argc, char **argv, const char *action);
 #endif
 static int auth_action_ok(char *a,
-                          uid_t uid,
                           gid_t gid,
                           gid_t *gl,
                           int gn,
@@ -117,7 +116,7 @@ main(int argc,
 
    eina_init();
 
-   if (!auth_action_ok(action, uid, gid, gl, gn, egid))
+   if (!auth_action_ok(action, gid, gl, gn, egid))
      {
         printf("ERROR: ACTION NOT ALLOWED: %s\n", action);
         exit(10);
@@ -371,7 +370,6 @@ mount_args_check(int argc, char **argv, const char *action)
 
 static int
 auth_action_ok(char *a,
-               uid_t uid,
                gid_t gid,
                gid_t *gl,
                int gn,
