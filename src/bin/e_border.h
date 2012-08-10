@@ -539,6 +539,7 @@ struct _E_Border
       unsigned int layer;
       int          zone;
       E_Maximize   maximized;
+      unsigned int event_mask;
    } saved;
 
    struct

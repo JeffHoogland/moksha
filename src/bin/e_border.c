@@ -4723,7 +4723,12 @@ _e_border_del(E_Border *bd)
      {
         bd->parent->transients = eina_list_remove(bd->parent->transients, bd);
         if (bd->parent->modal == bd)
-          bd->parent->modal = NULL;
+          {
+             ecore_x_event_mask_set(bd->parent->client.win, bd->parent->saved.event_mask);
+             bd->parent->lock_close = 0;
+             bd->parent->saved.event_mask = 0;
+             bd->parent->modal = NULL;
+          }
         bd->parent = NULL;
      }
    EINA_LIST_FREE(bd->transients, child)
@@ -6907,7 +6912,15 @@ _e_border_eval0(E_Border *bd)
           {
              e_border_layer_set(bd, bd->parent->layer);
              if ((e_config->modal_windows) && (bd->client.netwm.state.modal))
-               bd->parent->modal = bd;
+               {
+                  Ecore_X_Window_Attributes attr;
+                  bd->parent->modal = bd;
+                  ecore_x_window_attributes_get(bd->parent->client.win, &attr);
+                  bd->parent->saved.event_mask = attr.event_mask.mine;
+                  bd->parent->lock_close = 1;
+                  ecore_x_event_mask_unset(bd->parent->client.win, attr.event_mask.mine);
+                  ecore_x_event_mask_set(bd->parent->client.win, ECORE_X_EVENT_MASK_WINDOW_DAMAGE | ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+               }
 
              if (e_config->focus_setting == E_FOCUS_NEW_DIALOG ||
                  (bd->parent->focused && (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED)))
