@@ -426,7 +426,8 @@ auth_etc_enlightenment_sysactions(char *a,
    FILE *f;
    char file[4096], buf[4096], id[4096], ugname[4096], perm[4096], act[4096];
    char *p, *pp, *s, **gp;
-   int len, line = 0, ok = 0;
+   int ok = 0;
+   size_t len, line = 0;
    int allow = 0;
    int deny = 0;
 
@@ -519,7 +520,7 @@ auth_etc_enlightenment_sysactions(char *a,
 
         continue;
 malformed:
-        printf("WARNING: %s:%i\n"
+        printf("WARNING: %s:%zu\n"
                "LINE: '%s'\n"
                "MALFORMED LINE. SKIPPED.\n",
                file, line, buf);
