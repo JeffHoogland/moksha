@@ -189,6 +189,8 @@ static Ecore_Idler *populate_idler = NULL;
 static Eina_List *custom_populate_requests = NULL;
 static Ecore_Idler *custom_populate_idler = NULL;
 static Eina_List *gadcon_locations = NULL;
+static Ecore_Event_Handler *_module_init_end_handler = NULL;
+static Eina_Bool _modules_loaded = EINA_FALSE;
 
 /* This is the gadcon client which is currently dragged */
 static E_Gadcon_Client *drag_gcc = NULL;
@@ -201,10 +203,18 @@ _eina_list_free(Eina_List *l)
    eina_list_free(l);
 }
 
+static Eina_Bool
+_module_init_end_cb(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__)
+{
+   _modules_loaded = EINA_TRUE;
+   return ECORE_CALLBACK_RENEW;
+}
+
 /* externally accessible functions */
 EINTERN int
 e_gadcon_init(void)
 {
+   _module_init_end_handler = ecore_event_handler_add(E_EVENT_MODULE_INIT_END, _module_init_end_cb, NULL);
    return 1;
 }
 
@@ -222,6 +232,10 @@ e_gadcon_shutdown(void)
         ecore_idler_del(custom_populate_idler);
         custom_populate_idler = NULL;
      }
+   _modules_loaded = EINA_FALSE;
+   if (_module_init_end_handler)
+     ecore_event_handler_del(_module_init_end_handler);
+   _module_init_end_handler = NULL;
 
    return 1;
 }
@@ -5209,9 +5223,8 @@ _e_gadcon_custom_populate_idler(void *data __UNUSED__)
    E_Config_Gadcon_Client *cf_gcc;
    const Eina_List *l;
    E_Gadcon *gc;
-   double loop;
 
-   loop = ecore_loop_time_get();
+   if (!_modules_loaded) return EINA_TRUE;
 #ifndef E17_RELEASE_BUILD
    static Eina_Bool first = EINA_TRUE;
    if (first)
@@ -5219,18 +5232,12 @@ _e_gadcon_custom_populate_idler(void *data __UNUSED__)
 #endif
    EINA_LIST_FREE(custom_populate_requests, gc)
      {
-        if (ecore_time_get() - loop >= ecore_animator_frametime_get()) break;
         if (!gc->cf) continue;
         e_gadcon_layout_freeze(gc->o_container);
         EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
           {
              cc = eina_hash_find(providers, cf_gcc->name);
              if (!cc) continue;
-             if (ecore_time_get() - loop >= ecore_animator_frametime_get())
-               {
-                  e_gadcon_layout_thaw(gc->o_container);
-                  goto out;
-               }
              if (gc->populate_class.func)
                gc->populate_class.func(gc->populate_class.data, gc, cc);
              else
@@ -5238,7 +5245,7 @@ _e_gadcon_custom_populate_idler(void *data __UNUSED__)
           }
         e_gadcon_layout_thaw(gc->o_container);
      }
-out:
+
 #ifndef E17_RELEASE_BUILD
    if (first)
      e_main_ts("gadcon custom populate idler end");
@@ -5260,10 +5267,9 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
    E_Gadcon_Client_Class *cc;
    Eina_List *l;
    E_Gadcon *gc;
-   double loop;
-   Eina_Bool more = EINA_FALSE;
 
-   loop = ecore_loop_time_get();
+   if (!_modules_loaded) return EINA_TRUE;
+
    EINA_LIST_FOREACH(gadcons, l, gc)
      e_gadcon_layout_freeze(gc->o_container);
 
@@ -5275,11 +5281,6 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
    EINA_LIST_FOREACH(gadcons, l, gc)
      EINA_LIST_FREE(gc->populate_requests, cc)
        {
-          if (ecore_time_get() - loop >= ecore_animator_frametime_get())
-            {
-               more = EINA_TRUE;
-               goto out;
-            }
 #ifndef E17_RELEASE_BUILD
           if (first) e_main_ts(cc->name);
 #endif
@@ -5302,7 +5303,7 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
                  }
             }
        }
-out:
+
 #ifndef E17_RELEASE_BUILD
    if (first)
      e_main_ts("gadcon populate idler end");
@@ -5310,15 +5311,11 @@ out:
    EINA_LIST_FOREACH(gadcons, l, gc)
      e_gadcon_layout_thaw(gc->o_container);
 
-   if (!more)
-     {
-        populate_idler = NULL;
+   populate_idler = NULL;
 #ifndef E17_RELEASE_BUILD
-        first = EINA_FALSE;
+   first = EINA_FALSE;
 #endif
-        return ECORE_CALLBACK_CANCEL;
-     }
-   return ECORE_CALLBACK_RENEW;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
