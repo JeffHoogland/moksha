@@ -5431,6 +5431,11 @@ _e_border_cb_window_property(void *data  __UNUSED__,
         bd->client.e.fetch.video_parent = 1;
         bd->changed = 1;
      }
+   else if (e->atom == ECORE_X_ATOM_NET_WM_STATE)
+     {
+        bd->client.netwm.fetch.state = 1;
+        bd->changed = 1;
+     }
 
    return ECORE_CALLBACK_PASS_ON;
 }
