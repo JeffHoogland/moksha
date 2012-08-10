@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 DPI=${DPI:-142}
 SCREEN=${SCREEN:-640x480}
@@ -10,6 +10,52 @@ MASSIF=${MASSIF}
 CALLGRIND=${CALLGRIND}
 HOST_CURSOR=${HOST_CURSOR}
 TEST_HOME=${TEST_HOME}
+
+xinerama_auto_modes()
+{
+    local x y screen_res screen_res_x screen_res_y div_x div_y single_res single_res_x single_res_y walker_x walker_y
+
+    div_x="${1%x*}"
+    div_y="${1#*x}"
+
+
+    # get your display resolution
+    screen_res="$( xdpyinfo | grep dimensions | awk '{print $2}' )"
+    screen_res_x="${screen_res%x*}"
+    screen_res_y="${screen_res#*x}"
+
+    # add some offset for your window-borders
+    screen_res_x="$(( ${screen_res_x} - 20 ))"
+    screen_res_y="$(( ${screen_res_y} - 40 ))"
+
+    # set size for xephir
+    SCREEN="${screen_res_x}x${screen_res_y}"
+
+
+    # which size per screen ?
+    single_res_x="$(( ${screen_res_x} / ${div_x} ))"
+    single_res_y="$(( ${screen_res_y} / ${div_y} ))"
+    single_res="${single_res_x}x${single_res_y}"
+
+
+    walker_x=0
+    walker_y=0
+
+
+    for (( y=0 ; $y < ${div_y} ; y++ )) ; do
+        for (( x=0 ; $x < ${div_x} ; x++ )) ; do
+            # add a new horizontal xinerama screen
+            xinerama_auto_args="${xinerama_auto_args} -fake-xinerama-screen ${single_res}+${walker_x}+${walker_y}"
+            walker_x="$(( ${walker_x} + ${single_res_x} ))"
+        done
+        # previous loop finished, set horizontal back to 0
+        walker_x=0
+        # add a new vertical xinerama screen
+        walker_y="$(( ${walker_y} + ${single_res_y} ))"
+    done
+
+    #echo "${xinerama_auto_args}"
+}
 
 show_help()
 {
@@ -25,6 +71,8 @@ where options are:
   -s, --screen=SPEC        WIDTHxHEIGHT[xDEPTH] to be used.
   -x, --fxs=WxH+X+Y        Fake xinerama screen resolution
                            (can be applied repeatedly)
+  -ax 2x3                  Automatic set of fake xineramas, 2 horizontal
+                           screens per 3 of vertical ones
   -p, --profile=NAME       Enlightenment profile name.
   -e, --empty-home[=PATH]  Run with \$HOME being a new, empty directory at /tmp
 
@@ -150,6 +198,13 @@ while [ $# -gt 0 ]; do
         -callgrind|--callgrind)
             CALLGRIND="1"
             ;;
+        -ax|-auto-xinerama|--auto-xinerama)
+            if [ -z "$value" ]; then
+                value=$1
+                shift
+            fi
+            xinerama_auto_modes $value
+            ;;
         *)
             echo "Unknown option: $option" 1>&2
             ;;
@@ -221,5 +276,5 @@ enlightenment_start \
     -no-precache \
     -i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it \
     -profile $PROFILE \
-	$E_OPTIONS \
+	$E_OPTIONS $xinerama_auto_args \
     $DEBUGGER
