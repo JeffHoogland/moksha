@@ -77,12 +77,12 @@ _import_edj_gen(E_Import_Config_Dialog *import)
 
    if (import->external)
      {
-        fstrip = strdup(e_util_filename_escape(import->file));
+        fstrip = strdupa(e_util_filename_escape(import->file));
         snprintf(enc, sizeof(enc), "USER");
      }
    else
      {
-        fstrip = strdup(e_util_filename_escape(file));
+        fstrip = strdupa(e_util_filename_escape(file));
         if (import->quality == 100)
           snprintf(enc, sizeof(enc), "COMP");
         else
@@ -251,7 +251,6 @@ _import_edj_gen(E_Import_Config_Dialog *import)
         /* won't happen */
         break;
      }
-   free(fstrip);
 
    fclose(f);
 
