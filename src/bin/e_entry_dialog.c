@@ -1,6 +1,7 @@
 #include "e.h"
 
 /* Private function definitions */
+static void _e_entry_dia_del(void *data);
 static void _e_entry_dialog_free(E_Entry_Dialog *dia);
 static void _e_entry_dialog_ok(void *data, E_Dialog *dia);
 static void _e_entry_dialog_cancel(void *data, E_Dialog *dia);
@@ -40,7 +41,7 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
 
    mask = 0;
    evas_object_key_ungrab(dia->event_object, "space", mask, ~mask);
-
+   e_object_del_attach_func_set(E_OBJECT(dia), _e_entry_dia_del);
    e_win_delete_callback_set(dia->win, _e_entry_dialog_delete);
 
    if (title) e_dialog_title_set(dia, title);
@@ -70,6 +71,14 @@ e_entry_dialog_show(const char *title, const char *icon, const char *text,
 }
 
 /* Private Function Bodies */
+static void
+_e_entry_dia_del(void *data)
+{
+   E_Dialog *dia = data;
+
+   e_object_del(dia->data);
+}
+
 static void
 _e_entry_dialog_free(E_Entry_Dialog *ed)
 {
