@@ -357,9 +357,9 @@ _pager_desk_livethumb_setup(Pager_Desk *pd)
    if (!pd->o_bg)
      {
         pd->o_bg = e_livethumb_add(e);
-        e_livethumb_vsize_set(pd->o_bg, pd->desk->zone->w, pd->desk->zone->h);
-        edje_extern_object_aspect_set(pd->o_bg, EDJE_ASPECT_CONTROL_NEITHER,
-                                      pd->desk->zone->w, pd->desk->zone->h);
+        e_livethumb_vsize_set(pd->o_bg, pd->desk->zone->w / 16, pd->desk->zone->h / 16);
+//        edje_extern_object_aspect_set(pd->o_bg, EDJE_ASPECT_CONTROL_NEITHER,
+//                                      pd->desk->zone->w / 16, pd->desk->zone->h / 16);
         edje_object_part_swallow(pd->o_desk, "e.background", pd->o_bg);
      }
 
@@ -368,10 +368,6 @@ _pager_desk_livethumb_setup(Pager_Desk *pd)
    bgfile = e_bg_file_get(pd->desk->zone->container->num, pd->desk->zone->num, pd->desk->x, pd->desk->y);
    edje_object_file_set(o, bgfile, "e/desktop/background");
    e_livethumb_thumb_set(pd->o_bg, o);
-   if (pager_config->disable_live_preview)
-     edje_object_signal_emit(pd->o_desk, "e,preview,off", "e");
-   else
-     edje_object_signal_emit(pd->o_desk, "e,preview,on", "e");
 }
 
 static Pager_Desk *
@@ -403,7 +399,13 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
    if (pager_config->show_desk_names)
      edje_object_signal_emit(o, "e,name,show", "e");
 
-   _pager_desk_livethumb_setup(pd);
+   if (pager_config->disable_live_preview)
+     edje_object_signal_emit(pd->o_desk, "e,preview,off", "e");
+   else
+     {
+        _pager_desk_livethumb_setup(pd);
+        edje_object_signal_emit(pd->o_desk, "e,preview,on", "e");
+     }
 
    edje_object_size_min_calc(o, &w, &h);
    e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
@@ -914,9 +916,16 @@ _pager_cb_config_updated(void)
      EINA_LIST_FOREACH(p->desks, ll, pd)
        {
           if (pager_config->disable_live_preview)
-            edje_object_signal_emit(pd->o_desk, "e,preview,off", "e");
+            {
+               if (pd->o_bg) evas_object_del(pd->o_bg);
+               pd->o_bg = NULL;
+               edje_object_signal_emit(pd->o_desk, "e,preview,off", "e");
+            }
           else
-            edje_object_signal_emit(pd->o_desk, "e,preview,on", "e");
+            {
+               _pager_desk_livethumb_setup(pd);
+               edje_object_signal_emit(pd->o_desk, "e,preview,on", "e");
+            }
           if (pd->current)
             edje_object_signal_emit(pd->o_desk, "e,state,selected", "e");
           else

@@ -10632,13 +10632,14 @@ collections {
             clip_to: "bg_clip";
             description {
                state: "default" 0.0;
-               visible: 1;
-               color: 255 255 255 255;
                rel1 {
-                  to: "zoom";
-                  offset: -1 -1;
+                  to: "base";
+                  offset: 3 3;
                }
-               rel2.to: "zoom";
+               rel2 {
+                  to: "base";
+                  offset: -4 -4;
+               }
             }
             description {
                state: "hidden" 0.0;
@@ -10651,7 +10652,7 @@ collections {
             type: RECT;
             description {
                state: "default" 0.0;
-               color: 200 200 200 200;
+               color: 255 255 255 200;
                rel1.to: "e.background";
                rel2.to: "e.background";
             }
