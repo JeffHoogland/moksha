@@ -29,7 +29,6 @@ _bl_write_file(const char *file, int val)
         close(fd);
         return -1;
      }
-   printf("BACKLIGHT: %s -> %i\n", file, val);
    close(fd);
    return 0;
 }
