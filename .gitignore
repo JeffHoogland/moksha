@@ -9,6 +9,7 @@ Makefile.in
 *.gmo
 *~
 *.cfg
+*.desktop
 default.edj
 /ABOUT-NLS
 /aclocal.m4
@@ -95,6 +96,7 @@ default.edj
 /src/bin/enlightenment_filemanager
 /src/bin/enlightenment_imc
 /src/bin/enlightenment_init
+/src/bin/enlightenment_open
 /src/bin/enlightenment_start
 /src/bin/enlightenment_sys
 /src/bin/enlightenment_thumb
