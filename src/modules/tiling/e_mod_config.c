@@ -73,8 +73,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
         newvd->nb_stacks = vd->nb_stacks;
         newvd->use_rows = vd->use_rows;
 
-        cfdata->config.vdesks = eina_list_append(cfdata->config.vdesks,
-                                                 newvd);
+        EINA_LIST_APPEND(cfdata->config.vdesks, newvd);
     }
 
     return cfdata;
@@ -121,8 +120,7 @@ _fill_zone_config(E_Zone               *zone,
             vd->nb_stacks = 0;
             vd->use_rows = 0;
 
-            cfdata->config.vdesks = eina_list_append(cfdata->config.vdesks,
-                                                     vd);
+            EINA_LIST_APPEND(cfdata->config.vdesks, vd);
         }
 
         list = e_widget_list_add(evas, false, true);
@@ -305,9 +303,24 @@ _basic_apply_data(E_Config_Dialog      *cfd __UNUSED__,
     EINA_LIST_FREE(tiling_g.config->vdesks, vd) {
         free(vd);
     }
+    tiling_g.config->vdesks = NULL;
 
-    tiling_g.config->vdesks = cfdata->config.vdesks;
-    cfdata->config.vdesks = NULL; /* we don't want this list to be freed */
+    for (l = cfdata->config.vdesks; l; l = l->next) {
+        struct _Config_vdesk *newvd;
+
+        vd = l->data;
+        if (!vd)
+            continue;
+
+        newvd = E_NEW(struct _Config_vdesk, 1);
+        newvd->x = vd->x;
+        newvd->y = vd->y;
+        newvd->zone_num = vd->zone_num;
+        newvd->nb_stacks = vd->nb_stacks;
+        newvd->use_rows = vd->use_rows;
+
+        EINA_LIST_APPEND(tiling_g.config->vdesks, newvd);
+    }
 
     e_tiling_update_conf();
 
