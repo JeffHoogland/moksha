@@ -48,7 +48,6 @@ struct _Pager
    unsigned char   just_dragged : 1;
    Evas_Coord      dnd_x, dnd_y;
    Pager_Desk     *active_drop_pd;
-   Eina_Bool invert : 1;
 };
 
 struct _Pager_Desk
@@ -141,11 +140,11 @@ static void             _pager_desk_cb_mouse_move(void *data, Evas *e __UNUSED__
 static void             _pager_desk_cb_drag_finished(E_Drag *drag, int dropped);
 static void             _pager_desk_cb_mouse_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static Eina_Bool        _pager_popup_cb_timeout(void *data);
-static Pager           *_pager_new(Evas *evas, E_Zone *zone, E_Gadcon *gc);
+static Pager           *_pager_new(Evas *evas, E_Zone *zone);
 static void             _pager_free(Pager *p);
-static void             _pager_fill(Pager *p, E_Gadcon *gc);
+static void             _pager_fill(Pager *p);
 static void             _pager_empty(Pager *p);
-static Pager_Desk      *_pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos, Eina_Bool invert);
+static Pager_Desk      *_pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos);
 static void             _pager_desk_free(Pager_Desk *pd);
 static Pager_Desk      *_pager_desk_at_coord(Pager *p, Evas_Coord x, Evas_Coord y);
 static void             _pager_desk_select(Pager_Desk *pd);
@@ -205,7 +204,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst = E_NEW(Instance, 1);
 
-   p = _pager_new(gc->evas, gc->zone, gc);
+   p = _pager_new(gc->evas, gc->zone);
    p->inst = inst;
    inst->pager = p;
    o = p->o_table;
@@ -249,14 +248,9 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
    Instance *inst;
 
    inst = gcc->data;
-   if (inst->pager->invert)
-     e_gadcon_client_aspect_set(gcc,
-                                inst->pager->ynum * inst->pager->zone->w,
-                                inst->pager->xnum * inst->pager->zone->h);
-   else
-     e_gadcon_client_aspect_set(gcc,
-                                inst->pager->xnum * inst->pager->zone->w,
-                                inst->pager->ynum * inst->pager->zone->h);
+   e_gadcon_client_aspect_set(gcc,
+                              inst->pager->xnum * inst->pager->zone->w,
+                              inst->pager->ynum * inst->pager->zone->h);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
@@ -290,7 +284,7 @@ _gc_id_new(const E_Gadcon_Client_Class *client_class)
 }
 
 static Pager *
-_pager_new(Evas *evas, E_Zone *zone, E_Gadcon *gc)
+_pager_new(Evas *evas, E_Zone *zone)
 {
    Pager *p;
 
@@ -300,7 +294,7 @@ _pager_new(Evas *evas, E_Zone *zone, E_Gadcon *gc)
    p->o_table = e_table_add(evas);
    e_table_homogenous_set(p->o_table, 1);
    p->zone = zone;
-   _pager_fill(p, gc);
+   _pager_fill(p);
    pagers = eina_list_append(pagers, p);
    return p;
 }
@@ -315,38 +309,11 @@ _pager_free(Pager *p)
 }
 
 static void
-_pager_fill(Pager *p, E_Gadcon *gc)
+_pager_fill(Pager *p)
 {
    int x, y;
 
-   if (gc)
-     {
-        switch (gc->orient)
-          {
-
-             case E_GADCON_ORIENT_TOP:
-             case E_GADCON_ORIENT_BOTTOM:
-             case E_GADCON_ORIENT_CORNER_TL:
-             case E_GADCON_ORIENT_CORNER_TR:
-             case E_GADCON_ORIENT_CORNER_BL:
-             case E_GADCON_ORIENT_CORNER_BR:
-             case E_GADCON_ORIENT_HORIZ:
-               p->invert = EINA_FALSE;
-               break;
-             case E_GADCON_ORIENT_FLOAT:
-             case E_GADCON_ORIENT_VERT:
-             case E_GADCON_ORIENT_LEFT:
-             case E_GADCON_ORIENT_RIGHT:
-             case E_GADCON_ORIENT_CORNER_LT:
-             case E_GADCON_ORIENT_CORNER_RT:
-             case E_GADCON_ORIENT_CORNER_LB:
-             case E_GADCON_ORIENT_CORNER_RB:
-             default:
-               p->invert = EINA_TRUE;
-          }
-     }
    e_zone_desk_count_get(p->zone, &(p->xnum), &(p->ynum));
-   if (p->ynum != 1) p->invert = EINA_FALSE;
    e_table_freeze(p->o_table);
    for (x = 0; x < p->xnum; x++)
      {
@@ -356,7 +323,7 @@ _pager_fill(Pager *p, E_Gadcon *gc)
              E_Desk *desk;
 
              desk = e_desk_at_xy_get(p->zone, x, y);
-             pd = _pager_desk_new(p, desk, x, y, p->invert);
+             pd = _pager_desk_new(p, desk, x, y);
              if (pd)
                {
                   p->desks = eina_list_append(p->desks, pd);
@@ -404,7 +371,7 @@ _pager_desk_livethumb_setup(Pager_Desk *pd)
 }
 
 static Pager_Desk *
-_pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos, Eina_Bool invert)
+_pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos)
 {
    Pager_Desk *pd;
    Evas_Object *o, *evo;
@@ -441,10 +408,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos, Eina_Bool invert)
      }
 
    edje_object_size_min_calc(o, &w, &h);
-   if (invert)
-     e_table_pack(p->o_table, o, ypos, xpos, 1, 1);
-   else
-     e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
+   e_table_pack(p->o_table, o, xpos, ypos, 1, 1);
    e_table_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, w, h, -1, -1);
 
    evo = (Evas_Object *)edje_object_part_object_get(o, "e.eventarea");
@@ -773,7 +737,7 @@ _pager_popup_new(E_Zone *zone, int keyaction)
      }
    e_popup_layer_set(pp->popup, 255);
 
-   pp->pager = _pager_new(pp->popup->evas, zone, NULL);
+   pp->pager = _pager_new(pp->popup->evas, zone);
    pp->pager->popup = pp;
    pp->urgent = 0;
 
@@ -1686,7 +1650,7 @@ _pager_cb_event_zone_desk_count_set(void *data __UNUSED__, int type __UNUSED__, 
    EINA_LIST_FOREACH(pagers, l, p)
      {
         _pager_empty(p);
-        _pager_fill(p, p->inst->gcc->gadcon);
+        _pager_fill(p);
         if (p->inst) _gc_orient(p->inst->gcc, p->inst->gcc->gadcon->orient);
      }
 
