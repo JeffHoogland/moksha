@@ -141,7 +141,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0.0, 0.5 //align
                                       );*/
 
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_NONE, rmin);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_NONE, rmin);
    e_widget_table_object_align_append(ol, ob,
                                       0, 1,    //place
                                       1, 1,    //span
@@ -151,7 +151,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_NONE, rmax);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_NONE, rmax);
    e_widget_table_object_align_append(ol, ob,
                                       1, 1,    //place
                                       1, 1,    //span
@@ -179,7 +179,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0.5, 0.5 //align
                                       );
 
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_LOW, rmin);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_LOW, rmin);
    e_widget_table_object_align_append(ol, ob,
                                       0, 2,    //place
                                       1, 1,    //span
@@ -189,7 +189,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_LOW, rmax);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_LOW, rmax);
    e_widget_table_object_align_append(ol, ob,
                                       1, 2,    //place
                                       1, 1,    //span
@@ -217,7 +217,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0.0, 0.5 //align
                                       );
 
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_MEDIUM, rmin);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_MEDIUM, rmin);
    e_widget_table_object_align_append(ol, ob,
                                       0, 3,    //place
                                       1, 1,    //span
@@ -227,7 +227,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_MEDIUM, rmax);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_MEDIUM, rmax);
    e_widget_table_object_align_append(ol, ob,
                                       1, 3,    //place
                                       1, 1,    //span
@@ -255,7 +255,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0.0, 0.5 //align
                                      );
 
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_HIGH, rmin);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_HIGH, rmin);
    e_widget_table_object_align_append(ol, ob,
                                       0, 4,    //place
                                       1, 1,    //span
@@ -265,7 +265,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_HIGH, rmax);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_HIGH, rmax);
    e_widget_table_object_align_append(ol, ob,
                                       1, 4,    //place
                                       1, 1,    //span
@@ -293,7 +293,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0.0, 0.5 //align
                                       );
 
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_EXTREME, rmin);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_EXTREME, rmin);
    e_widget_table_object_align_append(ol, ob,
                                       0, 5,    //place
                                       1, 1,    //span
@@ -303,7 +303,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
-   ob = e_widget_radio_add(evas, NULL, E_POWERSAVE_MODE_EXTREME, rmax);
+   ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_EXTREME, rmax);
    e_widget_table_object_align_append(ol, ob,
                                       1, 5,    //place
                                       1, 1,    //span
