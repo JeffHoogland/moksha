@@ -135,7 +135,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
                            &(cfdata->show_alert));
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
 #ifdef HAVE_ENOTIFY
-   ob = e_widget_check_add(evas, _("Use desktop notifications for alert."),
+   ob = e_widget_check_add(evas, _("Use desktop notifications for alert"),
                            &(cfdata->desktop_notifications));
    e_widget_list_object_append(o, ob, 1, 0, 0.5);
 #endif
