@@ -200,6 +200,7 @@ _battery_udev_battery_update_poll(void *data)
     if (test)                                                                               \
       {                                                                                     \
          TYPE->VALUE = strtod(test, NULL);                                                  \
+         eina_stringshare_del(test);                                                        \
       }                                                                                     \
   while (0)
 
@@ -236,10 +237,7 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
      GET_NUM(bat, last_full_charge, POWER_SUPPLY_CHARGE_FULL);
    test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_ENERGY_NOW");
    if (!test)
-     {
-        eina_stringshare_del(test);
-        test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_CHARGE_NOW");
-     }
+     test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_CHARGE_NOW");
    if (test)
      {
         const char *rate;
