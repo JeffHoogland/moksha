@@ -104,10 +104,9 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *otb, *ob, *ol;
+   Evas_Object *ob, *ol;
    E_Radio_Group *rmin, *rmax;
 
-   otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
    cfdata->powersave_min = e_config->powersave.min;
    cfdata->powersave_max = e_config->powersave.max;
    rmin = e_widget_radio_group_new((int*) &(cfdata->powersave_min));
@@ -330,12 +329,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //expand
                                       0.0, 0.5 //align
                                       );
-   e_widget_toolbook_page_append(otb, NULL, _("Power Management"), ol,
-                                 0, 0, 1, 1, 0.5, 0.5);
-   e_widget_toolbook_page_show(otb, 0);
    e_dialog_resizable_set(cfd->dia, 1);
 
-   return otb;
+   return ol;
 }
 
 
