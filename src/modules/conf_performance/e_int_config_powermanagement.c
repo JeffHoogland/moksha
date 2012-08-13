@@ -102,7 +102,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ob, *ol;
    E_Radio_Group *rmin, *rmax;
@@ -118,7 +118,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 0,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    ob = e_widget_label_add(evas, _("Max"));
@@ -126,7 +126,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       1, 0,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    /*
@@ -145,7 +145,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 1,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
@@ -155,7 +155,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       1, 1,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
@@ -165,7 +165,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       2, 1,    //place
                                       1, 1,    //span
                                       0, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f s"), 0.1, 1.0, 0, 0,
@@ -174,7 +174,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       3, 1,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      1, 1,    //expand
+                                      1, 0,    //expand
                                       0.5, 0.5 //align
                                       );
 
@@ -183,7 +183,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 2,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
@@ -193,7 +193,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       1, 2,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                      );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
@@ -203,7 +203,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       2, 2,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    ob = e_widget_slider_add(evas, 1, 0, _("%1.2f s"), 1.0, 10.0, 1, 0,
@@ -212,7 +212,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       3, 2,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
 
@@ -221,7 +221,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 3,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
@@ -231,7 +231,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       1, 3,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                      );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
@@ -241,7 +241,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       2, 3,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                      );
    ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 10.0, 120.0, 1, 0,
@@ -250,7 +250,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       3, 3,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                      );
 
@@ -259,7 +259,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 4,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
@@ -269,7 +269,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       1, 4,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                      );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
@@ -279,7 +279,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       2, 4,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 120.0, 1200.0, 1, 0,
@@ -288,7 +288,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       3, 4,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
 
@@ -297,7 +297,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       0, 5,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
    cfdata->gui.rmin = eina_list_append(cfdata->gui.rmin, ob);
@@ -307,7 +307,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       1, 5,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                      );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
@@ -317,7 +317,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       2, 5,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                      );
    ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 120.0, 2400.0, 1, 0,
@@ -326,10 +326,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                       3, 5,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
-                                      0, 1,    //expand
+                                      0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
-   e_dialog_resizable_set(cfd->dia, 1);
 
    return ol;
 }
