@@ -40,7 +40,7 @@ e_int_config_powermanagement(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Power Management Settings"),
 			     "E", "advanced/powermanagement",
-			     "preferences-system-powermanagement", 0, v, NULL);
+			     "preferences-system-power-management", 0, v, NULL);
    return cfd;
 }
 
