@@ -34,7 +34,7 @@ e_modapi_init(E_Module *m)
    maug = e_int_menus_menu_augmentation_add_sorted
        ("main/8", _("System"), _e_mod_menu_add, NULL, NULL, NULL);
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "preferences-advanced");
-   e_configure_registry_item_add("advanced/syscon", 10, _("Syscon"), NULL, "preferences-syscon", e_int_config_syscon);
+   e_configure_registry_item_add("advanced/syscon", 10, _("Syscon"), NULL, "system-shutdown", e_int_config_syscon);
    e_syscon_gadget_init(m);
    e_module_delayed_set(m, 1);
    return m;

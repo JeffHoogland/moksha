@@ -42,7 +42,7 @@ e_int_config_syscon(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Syscon Settings"),
                              "E", "windows/conf_syscon",
-                             "preferences-syscon", 0, v, NULL);
+                             "system-shutdown", 0, v, NULL);
    return cfd;
 }
 
