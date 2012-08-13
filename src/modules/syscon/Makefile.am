@@ -22,6 +22,8 @@ module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
 			 e_syscon.c \
                          e_syscon.h \
+			 e_syscon_gadget.c \
+                         e_syscon_gadget.h \
                          e_int_config_syscon.c \
                          e_int_config_syscon.h
 

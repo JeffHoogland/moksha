@@ -31,10 +31,11 @@ e_modapi_init(E_Module *m)
         e_action_predef_name_set(_("System"), _("System Control"), "syscon",
                                  NULL, NULL, 0);
      }
-   maug = e_int_menus_menu_augmentation_add_sorted
-       ("main/8", _("System"), _e_mod_menu_add, NULL, NULL, NULL);
+//   maug = e_int_menus_menu_augmentation_add_sorted
+  //     ("main/8", _("System"), _e_mod_menu_add, NULL, NULL, NULL);
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL, "preferences-advanced");
    e_configure_registry_item_add("advanced/syscon", 10, _("Syscon"), NULL, "preferences-syscon", e_int_config_syscon);
+   e_syscon_gadget_init(m);
    e_module_delayed_set(m, 1);
    return m;
 }
@@ -60,6 +61,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_action_del("syscon");
         act = NULL;
      }
+   e_syscon_gadget_init(m);
    e_syscon_shutdown();
    conf_module = NULL;
    return 1;
@@ -116,15 +118,26 @@ _e_mod_syscon_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
    ecore_idle_enterer_add(_e_mod_syscon_defer_cb, m->zone);
 }
 
+static void
+_e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   mi = e_menu_item_new(m);
+}
+
 /* menu item add hook */
 static void
 _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
+   E_Menu *sub;
    E_Menu_Item *mi;
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("System"));
    e_util_menu_item_theme_icon_set(mi, "system");
    e_menu_item_callback_set(mi, _e_mod_syscon_cb, NULL);
+   sub = e_menu_new();
+   e_menu_item_submenu_set(mi, sub);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);
 }
 
