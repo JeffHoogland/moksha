@@ -15,6 +15,7 @@ EAPI int   e_modapi_save     (E_Module *m);
 
 void e_syscon_gadget_init(E_Module *m);
 void e_syscon_gadget_shutdown(void);
+void e_syscon_menu_fill(E_Menu *m);
 
 /**
  * @addtogroup Optional_Control

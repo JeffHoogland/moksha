@@ -1,4 +1,5 @@
 #include "e.h"
+#include "e_mod_main.h"
 
 /* local structures */
 typedef struct _Instance Instance;
@@ -203,87 +204,9 @@ _cb_menu_sel(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 static void
 _create_menu(Instance *inst)
 {
-   E_Config_Syscon_Action *sca;
-   E_Menu_Item *it;
-
    if (!inst) return;
    inst->menu = e_menu_new();
-
-   if ((sca = _find_action("desk_lock")))
-     {
-        it = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
-                                                              sca->params)));
-        if (sca->icon)
-          e_util_menu_item_theme_icon_set(it, sca->icon);
-        e_menu_item_callback_set(it, _cb_menu_sel, sca);
-     }
-
-   if ((sca = _find_action("logout")))
-     {
-        it = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
-                                                              sca->params)));
-        if (sca->icon)
-          e_util_menu_item_theme_icon_set(it, sca->icon);
-        e_menu_item_callback_set(it, _cb_menu_sel, sca);
-        if (!e_sys_action_possible_get(E_SYS_LOGOUT))
-          e_menu_item_disabled_set(it, EINA_TRUE);
-     }
-
-   it = e_menu_item_new(inst->menu);
-   e_menu_item_separator_set(it, EINA_TRUE);
-
-   if ((sca = _find_action("suspend")))
-     {
-        it = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
-                                                              sca->params)));
-        if (sca->icon)
-          e_util_menu_item_theme_icon_set(it, sca->icon);
-        e_menu_item_callback_set(it, _cb_menu_sel, sca);
-        if (!e_sys_action_possible_get(E_SYS_SUSPEND))
-          e_menu_item_disabled_set(it, EINA_TRUE);
-     }
-
-   if ((sca = _find_action("hibernate")))
-     {
-        it = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
-                                                              sca->params)));
-        if (sca->icon)
-          e_util_menu_item_theme_icon_set(it, sca->icon);
-        e_menu_item_callback_set(it, _cb_menu_sel, sca);
-        if (!e_sys_action_possible_get(E_SYS_HIBERNATE))
-          e_menu_item_disabled_set(it, EINA_TRUE);
-     }
-
-   it = e_menu_item_new(inst->menu);
-   e_menu_item_separator_set(it, EINA_TRUE);
-
-   if ((sca = _find_action("reboot")))
-     {
-        it = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
-                                                              sca->params)));
-        if (sca->icon)
-          e_util_menu_item_theme_icon_set(it, sca->icon);
-        e_menu_item_callback_set(it, _cb_menu_sel, sca);
-        if (!e_sys_action_possible_get(E_SYS_REBOOT))
-          e_menu_item_disabled_set(it, EINA_TRUE);
-     }
-
-   if ((sca = _find_action("halt")))
-     {
-        it = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
-                                                              sca->params)));
-        if (sca->icon)
-          e_util_menu_item_theme_icon_set(it, sca->icon);
-        e_menu_item_callback_set(it, _cb_menu_sel, sca);
-        if (!e_sys_action_possible_get(E_SYS_HALT))
-          e_menu_item_disabled_set(it, EINA_TRUE);
-     }
+   e_syscon_menu_fill(inst->menu);
 }
 
 static E_Config_Syscon_Action *
@@ -319,3 +242,87 @@ e_syscon_gadget_shutdown(void)
    mod = NULL;
 }
 
+
+void
+e_syscon_menu_fill(E_Menu *m)
+{
+   E_Config_Syscon_Action *sca;
+   E_Menu_Item *it;
+
+   if (!m) return;
+   if ((sca = _find_action("desk_lock")))
+     {
+        it = e_menu_item_new(m);
+        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
+                                                              sca->params)));
+        if (sca->icon)
+          e_util_menu_item_theme_icon_set(it, sca->icon);
+        e_menu_item_callback_set(it, _cb_menu_sel, sca);
+     }
+
+   if ((sca = _find_action("logout")))
+     {
+        it = e_menu_item_new(m);
+        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
+                                                              sca->params)));
+        if (sca->icon)
+          e_util_menu_item_theme_icon_set(it, sca->icon);
+        e_menu_item_callback_set(it, _cb_menu_sel, sca);
+        if (!e_sys_action_possible_get(E_SYS_LOGOUT))
+          e_menu_item_disabled_set(it, EINA_TRUE);
+     }
+
+   it = e_menu_item_new(m);
+   e_menu_item_separator_set(it, EINA_TRUE);
+
+   if ((sca = _find_action("suspend")))
+     {
+        it = e_menu_item_new(m);
+        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
+                                                              sca->params)));
+        if (sca->icon)
+          e_util_menu_item_theme_icon_set(it, sca->icon);
+        e_menu_item_callback_set(it, _cb_menu_sel, sca);
+        if (!e_sys_action_possible_get(E_SYS_SUSPEND))
+          e_menu_item_disabled_set(it, EINA_TRUE);
+     }
+
+   if ((sca = _find_action("hibernate")))
+     {
+        it = e_menu_item_new(m);
+        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
+                                                              sca->params)));
+        if (sca->icon)
+          e_util_menu_item_theme_icon_set(it, sca->icon);
+        e_menu_item_callback_set(it, _cb_menu_sel, sca);
+        if (!e_sys_action_possible_get(E_SYS_HIBERNATE))
+          e_menu_item_disabled_set(it, EINA_TRUE);
+     }
+
+   it = e_menu_item_new(m);
+   e_menu_item_separator_set(it, EINA_TRUE);
+
+   if ((sca = _find_action("reboot")))
+     {
+        it = e_menu_item_new(m);
+        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
+                                                              sca->params)));
+        if (sca->icon)
+          e_util_menu_item_theme_icon_set(it, sca->icon);
+        e_menu_item_callback_set(it, _cb_menu_sel, sca);
+        if (!e_sys_action_possible_get(E_SYS_REBOOT))
+          e_menu_item_disabled_set(it, EINA_TRUE);
+     }
+
+   if ((sca = _find_action("halt")))
+     {
+        it = e_menu_item_new(m);
+        e_menu_item_label_set(it, _(e_action_predef_label_get(sca->action,
+                                                              sca->params)));
+        if (sca->icon)
+          e_util_menu_item_theme_icon_set(it, sca->icon);
+        e_menu_item_callback_set(it, _cb_menu_sel, sca);
+        if (!e_sys_action_possible_get(E_SYS_HALT))
+          e_menu_item_disabled_set(it, EINA_TRUE);
+     }
+}
