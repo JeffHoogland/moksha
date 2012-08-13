@@ -272,7 +272,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    ob = e_widget_check_add(evas, _("Directories First"),
                            &(cfdata->list.sort.dirs.first));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Icon Extensions"),
+   ob = e_widget_check_add(evas, _("File Extensions"),
                            &(cfdata->icon.extension.show));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Full Path In Title"),
