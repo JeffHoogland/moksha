@@ -45,6 +45,7 @@ static void      _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, vo
 static void      _menu_cb_post(void *data, E_Menu *m);
 static void      _battery_face_level_set(Evas_Object *battery, double level);
 static void      _battery_face_time_set(Evas_Object *battery, int time);
+static void      _battery_face_cb_menu_powermanagement(void *data, E_Menu *m, E_Menu_Item *mi);
 static void      _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static Eina_Bool _battery_cb_warning_popup_timeout(void *data);
@@ -193,6 +194,13 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
         e_menu_item_label_set(mi, _("Settings"));
         e_util_menu_item_theme_icon_set(mi, "configure");
         e_menu_item_callback_set(mi, _battery_face_cb_menu_configure, NULL);
+        if (e_configure_registry_exists("advanced/powermanagement"))
+          {
+             mi = e_menu_item_new(m);
+             e_menu_item_label_set(mi, _("Power Management Timing"));
+             e_util_menu_item_theme_icon_set(mi, "preferences-system-power-management");
+             e_menu_item_callback_set(mi, _battery_face_cb_menu_powermanagement, NULL);
+          }
 
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
         e_menu_post_deactivate_callback_set(m, _menu_cb_post, inst);
@@ -247,6 +255,12 @@ _battery_face_time_set(Evas_Object *battery, int t)
    if (mins < 0) mins = 0;
    snprintf(buf, sizeof(buf), "%i:%02i", hrs, mins);
    edje_object_part_text_set(battery, "e.text.time", buf);
+}
+
+static void
+_battery_face_cb_menu_powermanagement(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
+{
+   e_configure_registry_call("advanced/powermanagement", m->zone->container, NULL);
 }
 
 static void
