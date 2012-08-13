@@ -111,7 +111,8 @@ int_get(const char *buf)
    const char *p = strchr(buf, ':');
    if (!p) return 0;
    p++;
-   while (*p == ' ') p++;
+   while (*p == ' ')
+     p++;
    return atoi(p);
 }
 
@@ -124,10 +125,12 @@ str_get(const char *buf)
 
    if (!p) return NULL;
    p++;
-   while (*p == ' ') p++;
+   while (*p == ' ')
+     p++;
 
    q = p + strlen(p) - 1;
-   while ((q > p) && ((*q == ' ') || (*q == '\n'))) q--;
+   while ((q > p) && ((*q == ' ') || (*q == '\n')))
+     q--;
 
    if (q < p) return NULL;
    q++;
@@ -139,7 +142,7 @@ str_get(const char *buf)
 }
 
 static char *
-file_str_entry_get(FILE       *f,
+file_str_entry_get(FILE *f,
                    const char *entry)
 {
    char buf[4096];
@@ -283,10 +286,10 @@ bsd_apm_check(void)
    if ((apm_fd != -1) && (ioctl(apm_fd, APMIO_GETINFO, &info) != -1))
      {
         /* set values */
-         ac_stat = info.ai_acline;
-         bat_stat = info.ai_batt_stat;
-         bat_val = info.ai_batt_life;
-         time_val = info.ai_batt_time;
+        ac_stat = info.ai_acline;
+        bat_stat = info.ai_batt_stat;
+        bat_val = info.ai_batt_life;
+        time_val = info.ai_batt_time;
      }
    else
      {
@@ -425,7 +428,7 @@ darwin_check(void)
 /* new linux power class api to get power info - brand new and this code
  * may have bugs, but it is a good attempt to get it right */
 #if 0
-static Eina_Bool linux_sys_class_power_supply_cb_event_fd_active(void             *data,
+static Eina_Bool linux_sys_class_power_supply_cb_event_fd_active(void *data,
                                                                  Ecore_Fd_Handler *fd_handler);
 static void      linux_sys_class_power_supply_check(void);
 #endif
@@ -481,8 +484,8 @@ linux_sys_class_power_supply_cb_re_init(void *data)
 //	     if (sysev->fd_handler)
 //	       ecore_main_fd_handler_del(sysev->fd_handler);
 //	     if (sysev->fd >= 0) close(sysev->fd);
-                   free(sysev->name);
-                   free(sysev);
+             free(sysev->name);
+             free(sysev);
           }
      }
    linux_sys_class_power_supply_init();
@@ -491,7 +494,7 @@ linux_sys_class_power_supply_cb_re_init(void *data)
 }
 
 static Eina_Bool
-linux_sys_class_power_supply_cb_event_fd_active(void             *data,
+linux_sys_class_power_supply_cb_event_fd_active(void *data,
                                                 Ecore_Fd_Handler *fd_handler)
 {
    Sys_Class_Power_Supply_Uevent *sysev;
@@ -807,7 +810,7 @@ linux_sys_class_power_supply_check(void)
              else if (sysev->basis == BASIS_ENERGY)
                snprintf(buf, sizeof(buf), "%s/%s/energy_now", dir, name);
              else if (sysev->basis == BASIS_VOLTAGE)
-                snprintf(buf, sizeof(buf), "%s/%s/voltage_now", dir, name);
+               snprintf(buf, sizeof(buf), "%s/%s/voltage_now", dir, name);
              pwr_now = int_file_get(buf);
              pwr_empty = sysev->basis_empty;
              pwr_full = sysev->basis_full;
@@ -829,9 +832,9 @@ linux_sys_class_power_supply_check(void)
                   else
                     {
                        if (pwr_now < 0)
-                          pwr_now = (((long long)capacity * ((long long)pwr_full - (long long)pwr_empty)) / 100) + pwr_empty;
+                         pwr_now = (((long long)capacity * ((long long)pwr_full - (long long)pwr_empty)) / 100) + pwr_empty;
                     }
-                  
+
                   if (sysev->present) have_battery = 1;
                   if (charging)
                     {
@@ -840,13 +843,13 @@ linux_sys_class_power_supply_check(void)
                        if (time_to_full >= 0)
                          {
                             if (time_to_full > time_left)
-                               time_left = time_to_full;
+                              time_left = time_to_full;
                          }
                        else
                          {
                             if (current == 0) time_left = 0;
                             else if (current < 0)
-                               time_left = -1;
+                              time_left = -1;
                             else
                               {
                                  pwr = (((long long)pwr_full - (long long)pwr_now) * 3600) / -current;
@@ -897,16 +900,16 @@ linux_sys_class_power_supply_check(void)
  * power class api to poll for power stuff
  */
 static Eina_Bool linux_acpi_cb_acpid_add(void *data,
-                                         int   type,
+                                         int type,
                                          void *event);
 static Eina_Bool linux_acpi_cb_acpid_del(void *data,
-                                         int   type,
+                                         int type,
                                          void *event);
 static Eina_Bool linux_acpi_cb_acpid_data(void *data,
-                                          int   type,
+                                          int type,
                                           void *event);
-static void linux_acpi_init(void);
-static void linux_acpi_check(void);
+static void      linux_acpi_init(void);
+static void      linux_acpi_check(void);
 
 static int acpi_max_full = -1;
 static int acpi_max_design = -1;
@@ -1026,7 +1029,7 @@ linux_acpi_init(void)
                     {
                        char *tmp;
 
-     /* state */
+                       /* state */
                        tmp = fgets(buf, sizeof(buf), f);
                        if (tmp) tmp = str_get(tmp);
                        if (tmp)
@@ -1034,7 +1037,7 @@ linux_acpi_init(void)
                             if (!strcmp(tmp, "on-line")) have_power = 1;
                             free(tmp);
                          }
-		       fclose(f);
+                       fclose(f);
                     }
                }
              eina_iterator_free(powers);
@@ -1055,7 +1058,7 @@ linux_acpi_init(void)
                {
                   char *tmp;
 
-     /* present */
+                  /* present */
                   tmp = fgets(buf, sizeof(buf), f);
                   if (tmp) tmp = str_get(tmp);
                   if (tmp)
@@ -1063,7 +1066,7 @@ linux_acpi_init(void)
                        if (!strcmp(tmp, "yes")) have_battery = 1;
                        free(tmp);
                     }
-     /* design cap */
+                  /* design cap */
                   tmp = fgets(buf, sizeof(buf), f);
                   if (tmp) tmp = str_get(tmp);
                   if (tmp)
@@ -1071,7 +1074,7 @@ linux_acpi_init(void)
                        if (strcmp(tmp, "unknown")) acpi_max_design += atoi(tmp);
                        free(tmp);
                     }
-     /* last full cap */
+                  /* last full cap */
                   tmp = fgets(buf, sizeof(buf), f);
                   if (tmp) tmp = str_get(tmp);
                   if (tmp)
@@ -1379,17 +1382,17 @@ fclose_and_continue:
                   fclose(f);
                   if (!current)
                     {
-     /* Neither charging nor discharging */
+                       /* Neither charging nor discharging */
                     }
                   else if (!ac)
                     {
-     /* When on dc, we are discharging */
-                        seconds += timeleft;
+                       /* When on dc, we are discharging */
+                       seconds += timeleft;
                     }
                   else
                     {
-     /* Charging - works in parallel */
-                        seconds = MAX(timeleft, seconds);
+                       /* Charging - works in parallel */
+                       seconds = MAX(timeleft, seconds);
                     }
                }
 
@@ -1561,7 +1564,7 @@ poll_cb(void *data __UNUSED__)
 }
 
 int
-main(int   argc,
+main(int argc,
      char *argv[])
 {
    if (argc != 2)
