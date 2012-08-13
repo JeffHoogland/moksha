@@ -701,6 +701,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, theme.fixed, UCHAR);
    E_CONFIG_VAL(D, T, tooltip.delay, DOUBLE);
    E_CONFIG_VAL(D, T, tooltip.size, DOUBLE);
+   E_CONFIG_VAL(D, T, tooltip.enable, UCHAR);
 
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
    if (fileman_config)
@@ -788,6 +789,10 @@ _e_mod_fileman_config_load(void)
 
     IFMODCFG(0x0109);
     fileman_config->view.desktop_navigation = 0;
+    IFMODCFGEND;
+
+    IFMODCFG(0x0110);
+    fileman_config->tooltip.enable = 1;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;

@@ -721,6 +721,8 @@ _e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info)
    E_Fm2_Icon_Info *ici = event_info;
 
    if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
+   fwin->popup_timer = NULL;
+   if (!fileman_config->tooltip.enable) return;
    fwin->popup_timer = ecore_timer_add(fileman_config->tooltip.delay, _e_fwin_icon_popup, fwin);
    fwin->popup_icon = ici;
 }
