@@ -203,6 +203,12 @@ _eina_list_free(Eina_List *l)
    eina_list_free(l);
 }
 
+static int
+_e_gadcon_provider_list_sort_cb(E_Gadcon_Client_Class *a, E_Gadcon_Client_Class *b)
+{
+   return strcasecmp(a->name, b->name);
+}
+
 static Eina_Bool
 _module_init_end_cb(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__)
 {
@@ -267,7 +273,7 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
           }
         e_gadcon_layout_thaw(gc->o_container);
      }
-   providers_list = eina_list_append(providers_list, cc);
+   providers_list = eina_list_sorted_insert(providers_list, (Eina_Compare_Cb)_e_gadcon_provider_list_sort_cb, cc);
 }
 
 /**  
