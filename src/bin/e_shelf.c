@@ -1611,8 +1611,11 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
         if (!es->popup) return ECORE_CALLBACK_PASS_ON;
         if (ev->win == es->popup->evas_win)
           {
-             edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-             e_shelf_toggle(es, 1);
+             if (es->hidden || (!es->toggle))
+               {
+                  edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+                  e_shelf_toggle(es, 1);
+               }
           }
      }
    else if (type == ECORE_EVENT_MOUSE_MOVE)
@@ -1623,8 +1626,11 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
         if (!es->popup) return ECORE_CALLBACK_PASS_ON;
         if (ev->event_window == es->popup->evas_win)
           {
-             edje_object_signal_emit(es->o_base, "e,state,focused", "e");
-             e_shelf_toggle(es, 1);
+             if (es->hidden || (!es->toggle))
+               {
+                  edje_object_signal_emit(es->o_base, "e,state,focused", "e");
+                  e_shelf_toggle(es, 1);
+               }
           }
      }
    return ECORE_CALLBACK_PASS_ON;
