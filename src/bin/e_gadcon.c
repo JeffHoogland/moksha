@@ -1580,6 +1580,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
      menu_main = menu_gadget;
    else
      menu_main = e_menu_new();
+   e_menu_post_deactivate_callback_set(menu_main, _e_gadcon_client_cb_menu_post, gcc);
 
    if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
      {
