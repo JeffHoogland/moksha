@@ -250,6 +250,7 @@ e_syscon_menu_fill(E_Menu *m)
    E_Menu_Item *it;
 
    if (!m) return;
+   if (m->items) return;
    if ((sca = _find_action("desk_lock")))
      {
         it = e_menu_item_new(m);
