@@ -110,6 +110,8 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, show_all, INT);
    E_CONFIG_VAL(D, T, minw, INT);
    E_CONFIG_VAL(D, T, minh, INT);
+   E_CONFIG_VAL(D, T, icon_only, UCHAR);
+   E_CONFIG_VAL(D, T, text_only, UCHAR);
 
    conf_edd = E_CONFIG_DD_NEW("Tasks_Config", Config);
 
@@ -565,12 +567,20 @@ _tasks_item_fill(Tasks_Item *item)
 {
    const char *label;
 
-   item->o_icon = e_border_icon_add(item->border, evas_object_evas_get(item->tasks->o_items));
-   edje_object_part_swallow(item->o_item, "e.swallow.icon", item->o_icon);
-   evas_object_pass_events_set(item->o_icon, 1);
-   evas_object_show(item->o_icon);
+   if (item->tasks->config->text_only)
+     item->o_icon = NULL;
+   else
+     {
+        item->o_icon = e_border_icon_add(item->border, evas_object_evas_get(item->tasks->o_items));
+        edje_object_part_swallow(item->o_item, "e.swallow.icon", item->o_icon);
+        evas_object_pass_events_set(item->o_icon, 1);
+        evas_object_show(item->o_icon);
+     }
 
-   label = e_border_name_get(item->border);
+   if (item->tasks->config->icon_only)
+     label = "";
+   else
+     label = e_border_name_get(item->border);
    edje_object_part_text_set(item->o_item, "e.text.label", label);
 
    if (item->border->iconic)
