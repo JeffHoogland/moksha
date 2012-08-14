@@ -331,9 +331,9 @@ _pager_fill(Pager *p, E_Gadcon *gc)
              case E_GADCON_ORIENT_CORNER_BL:
              case E_GADCON_ORIENT_CORNER_BR:
              case E_GADCON_ORIENT_HORIZ:
+             case E_GADCON_ORIENT_FLOAT:
                p->invert = EINA_FALSE;
                break;
-             case E_GADCON_ORIENT_FLOAT:
              case E_GADCON_ORIENT_VERT:
              case E_GADCON_ORIENT_LEFT:
              case E_GADCON_ORIENT_RIGHT:
