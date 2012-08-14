@@ -218,6 +218,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
         evas_object_layer_set(es->o_base, layer);
      }
 
+   e_shelf_style_set(es, style);
    es->gadcon = 
      e_gadcon_swallowed_new(es->name, es->id, es->o_base, "e.swallow.content");
    locname = es->name;
@@ -276,8 +277,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->locked = 0;
 
    es->hide_origin = -1;
-
-   e_shelf_style_set(es, style);
 
    {
       E_Event_Shelf *ev;
@@ -840,6 +839,7 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    else
      es->instant_delay = -1.0;
 
+   if (!es->gadcon) return;
    e_gadcon_unpopulate(es->gadcon);
    e_gadcon_populate(es->gadcon);
 }
