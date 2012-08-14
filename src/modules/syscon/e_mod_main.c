@@ -67,12 +67,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    return 1;
 }
 
-EAPI int
-e_modapi_save(E_Module *m __UNUSED__)
-{
-   return 1;
-}
-
 /* action callback */
 static void
 _e_mod_action_syscon_cb(E_Object *obj, const char *params)

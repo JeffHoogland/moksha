@@ -10,6 +10,11 @@ struct _Instance
    E_Menu          *menu;
 };
 
+typedef struct Syscon_Config
+{
+   Eina_Bool menu;
+} Syscon_Config;
+
 /* local function prototypes */
 static E_Gadcon_Client        *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void                    _gc_shutdown(E_Gadcon_Client *gcc);
@@ -24,6 +29,8 @@ static E_Config_Syscon_Action *_find_action(const char *name);
 static void                    _create_menu(Instance *inst);
 
 /* local variables */
+static E_Config_DD *conf_edd = NULL;
+static Syscon_Config *syscon_config = NULL;
 static Eina_List *instances = NULL;
 static E_Module *mod = NULL;
 
@@ -38,6 +45,40 @@ static const E_Gadcon_Client_Class _gc_class =
 };
 
 /* local functions */
+static void
+_cb_menu_change(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   syscon_config->menu = !syscon_config->menu;
+}
+
+
+static void
+_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   Instance *inst;
+   Evas_Event_Mouse_Down *ev;
+   E_Menu *m;
+   E_Menu_Item *mi;
+   E_Zone *zone;
+   int x, y;
+
+   inst = data;
+   ev = event_info;
+   if ((ev->button != 3) || (inst->gcc->menu)) return;
+   zone = e_util_zone_current_get(e_manager_current_get());
+
+   m = e_menu_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Show Menu"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, syscon_config->menu);
+   e_menu_item_callback_set(mi, _cb_menu_change, inst);
+   m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
+   ecore_x_pointer_xy_get(zone->container->win, &x, &y);
+   e_menu_activate_mouse(m, zone, x, y, 1, 1,
+                         E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+}
+
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
@@ -59,6 +100,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc->data = inst;
 
    e_gadcon_client_util_menu_attach(inst->gcc);
+   evas_object_event_callback_add(inst->o_base, EVAS_CALLBACK_MOUSE_DOWN, _cb_mouse_down, inst);
 
    edje_object_signal_callback_add(inst->o_base, "e,action,shutdown,show", "",
                                    _cb_shutdown_show, inst);
@@ -128,6 +170,11 @@ _cb_shutdown_show(void *data, Evas_Object *obj __UNUSED__, const char *emission 
 
    if (!(inst = data)) return;
    zone = e_util_zone_current_get(e_manager_current_get());
+   if (!syscon_config->menu)
+     {
+        e_syscon_show(zone, NULL);
+        return;
+     }
    evas_object_geometry_get(inst->o_base, &x, &y, &w, &h);
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, NULL, NULL);
    x += cx;
@@ -233,12 +280,29 @@ e_syscon_gadget_init(E_Module *m)
    mod = m;
 
    e_gadcon_provider_register(&_gc_class);
+   conf_edd = E_CONFIG_DD_NEW("Syscon_Config", Syscon_Config);
+   #undef T
+   #undef D
+   #define T Syscon_Config
+   #define D conf_edd
+   E_CONFIG_VAL(D, T, menu, UCHAR);
+   syscon_config = e_config_domain_load("module.syscon", conf_edd);
+   if (!syscon_config)
+     {
+        syscon_config = E_NEW(Syscon_Config, 1);
+        syscon_config->menu = EINA_FALSE;
+     }
+   e_config_save_queue();
 }
 
 void
 e_syscon_gadget_shutdown(void)
 {
    e_gadcon_provider_unregister(&_gc_class);
+   e_config_domain_save("module.syscon", conf_edd, syscon_config);
+   E_FREE(syscon_config);
+   E_CONFIG_DD_FREE(conf_edd);
+   conf_edd = NULL;
    mod = NULL;
 }
 
@@ -326,4 +390,12 @@ e_syscon_menu_fill(E_Menu *m)
         if (!e_sys_action_possible_get(E_SYS_HALT))
           e_menu_item_disabled_set(it, EINA_TRUE);
      }
+}
+
+
+EAPI int
+e_modapi_save(E_Module *m __UNUSED__)
+{
+   e_config_domain_save("module.syscon", conf_edd, syscon_config);
+   return 1;
 }
