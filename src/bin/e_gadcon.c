@@ -1581,6 +1581,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
    else
      menu_main = e_menu_new();
    e_menu_post_deactivate_callback_set(menu_main, _e_gadcon_client_cb_menu_post, gcc);
+   gcc->menu = menu_main;
 
    if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
      {
@@ -1617,6 +1618,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
         if (gcc->gadcon->shelf)
           {
              mo = e_menu_new();
+             gcc->gadcon->shelf->menu = menu_main;
 
              mi = e_menu_item_new(mo);
              e_menu_item_label_set(mi, _("Plain"));
