@@ -298,15 +298,6 @@ _e_backlight_update(E_Zone *zone)
    int num = 0;
 
    root = zone->container->manager->root;
-#ifdef HAVE_EEZE
-   _bl_sys_find();
-   if (bl_sysval)
-     {
-        sysmode = MODE_SYS;
-        _bl_sys_level_get();
-        return;
-     }
-#endif
    // try randr
    out = ecore_x_randr_window_outputs_get(root, &num);
    if ((out) && (num > 0) && (ecore_x_randr_output_backlight_available()))
@@ -316,7 +307,17 @@ _e_backlight_update(E_Zone *zone)
      {
         bl_val = x_bl;
         sysmode = MODE_RANDR;
+        return;
      }
+#ifdef HAVE_EEZE
+   _bl_sys_find();
+   if (bl_sysval)
+     {
+        sysmode = MODE_SYS;
+        _bl_sys_level_get();
+        return;
+     }
+#endif
 }
 
 static void
