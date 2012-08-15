@@ -106,43 +106,76 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 {
    Evas_Object *ob, *ol;
    E_Radio_Group *rmin, *rmax;
-
+   int y;
+   
    cfdata->powersave_min = e_config->powersave.min;
    cfdata->powersave_max = e_config->powersave.max;
    rmin = e_widget_radio_group_new((int*) &(cfdata->powersave_min));
    rmax = e_widget_radio_group_new((int*) &(cfdata->powersave_max));
 
    ol = e_widget_table_add(evas, 0);
-   ob = e_widget_label_add(evas, _("Min"));
-   e_widget_table_object_align_append(ol, ob,
-                                      0, 0,    //place
-                                      1, 1,    //span
-                                      1, 1,    //fill
-                                      0, 0,    //expand
-                                      0.0, 0.5 //align
-                                      );
-   ob = e_widget_label_add(evas, _("Max"));
-   e_widget_table_object_align_append(ol, ob,
-                                      1, 0,    //place
-                                      1, 1,    //span
-                                      1, 1,    //fill
-                                      0, 0,    //expand
-                                      0.0, 0.5 //align
-                                      );
-   /*
+   
+   y = 0;
    ob = e_widget_label_add(evas,
-                           _("Time to defer 'power expensive' activities"));
+                           _("Levels Allowed"));
    e_widget_table_object_align_append(ol, ob,
-                                      2, 0,    //place
+                                      0, y,    //place
                                       2, 1,    //span
                                       1, 1,    //fill
                                       1, 1,    //expand
-                                      0.0, 0.5 //align
-                                      );*/
+                                      0.5, 0.5 //align
+                                      );
+   ob = e_widget_label_add(evas,
+                           _("Time to defer power-hungry tasks"));
+   e_widget_table_object_align_append(ol, ob,
+                                      3, y,    //place
+                                      1, 1,    //span
+                                      1, 1,    //fill
+                                      1, 1,    //expand
+                                      0.5, 0.5 //align
+                                      );
 
+   
+   y++;
+   ob = e_widget_label_add(evas, _("Min"));
+   e_widget_table_object_align_append(ol, ob,
+                                      0, y,    //place
+                                      1, 1,    //span
+                                      1, 1,    //fill
+                                      0, 0,    //expand
+                                      0.5, 0.5 //align
+                                      );
+   ob = e_widget_label_add(evas, _("Max"));
+   e_widget_table_object_align_append(ol, ob,
+                                      1, y,    //place
+                                      1, 1,    //span
+                                      1, 1,    //fill
+                                      0, 0,    //expand
+                                      0.5, 0.5 //align
+                                      );
+   ob = e_widget_label_add(evas,
+                           _("Level"));
+   e_widget_table_object_align_append(ol, ob,
+                                      2, y,    //place
+                                      1, 1,    //span
+                                      1, 1,    //fill
+                                      1, 1,    //expand
+                                      0.5, 0.5 //align
+                                      );
+   ob = e_widget_label_add(evas,
+                           _("e.g. Saving to disk"));
+   e_widget_table_object_align_append(ol, ob,
+                                      3, y,    //place
+                                      1, 1,    //span
+                                      1, 1,    //fill
+                                      1, 1,    //expand
+                                      0.5, 0.5 //align
+                                      );
+   y++;
+   
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_NONE, rmin);
    e_widget_table_object_align_append(ol, ob,
-                                      0, 1,    //place
+                                      0, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -152,7 +185,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_NONE, rmax);
    e_widget_table_object_align_append(ol, ob,
-                                      1, 1,    //place
+                                      1, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -160,9 +193,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                       );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
    e_widget_on_change_hook_set(ob, _cb_max_changed, cfdata);
-   ob = e_widget_label_add(evas, _("none"));
+   ob = e_widget_label_add(evas, _("None"));
    e_widget_table_object_align_append(ol, ob,
-                                      2, 1,    //place
+                                      2, y,    //place
                                       1, 1,    //span
                                       0, 1,    //fill
                                       0, 0,    //expand
@@ -171,16 +204,17 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f s"), 0.1, 1.0, 0, 0,
                             &(cfdata->powersave_none), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
-                                      3, 1,    //place
+                                      3, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       1, 0,    //expand
                                       0.5, 0.5 //align
                                       );
-
+   y++;
+   
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_LOW, rmin);
    e_widget_table_object_align_append(ol, ob,
-                                      0, 2,    //place
+                                      0, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -190,7 +224,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_LOW, rmax);
    e_widget_table_object_align_append(ol, ob,
-                                      1, 2,    //place
+                                      1, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -198,9 +232,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                      );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
    e_widget_on_change_hook_set(ob, _cb_max_changed, cfdata);
-   ob = e_widget_label_add(evas, _("low"));
+   ob = e_widget_label_add(evas, _("Low"));
    e_widget_table_object_align_append(ol, ob,
-                                      2, 2,    //place
+                                      2, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -209,16 +243,17 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.2f s"), 1.0, 10.0, 1, 0,
                             &(cfdata->powersave_low), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
-                                      3, 2,    //place
+                                      3, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
-
+   y++;
+   
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_MEDIUM, rmin);
    e_widget_table_object_align_append(ol, ob,
-                                      0, 3,    //place
+                                      0, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -228,7 +263,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_MEDIUM, rmax);
    e_widget_table_object_align_append(ol, ob,
-                                      1, 3,    //place
+                                      1, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -236,9 +271,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                      );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
    e_widget_on_change_hook_set(ob, _cb_max_changed, cfdata);
-   ob = e_widget_label_add(evas, _("medium"));
+   ob = e_widget_label_add(evas, _("Medium"));
    e_widget_table_object_align_append(ol, ob,
-                                      2, 3,    //place
+                                      2, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -247,16 +282,17 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 10.0, 120.0, 1, 0,
                             &(cfdata->powersave_medium), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
-                                      3, 3,    //place
+                                      3, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
                                       0.0, 0.5 //align
                                      );
-
+   y++;
+   
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_HIGH, rmin);
    e_widget_table_object_align_append(ol, ob,
-                                      0, 4,    //place
+                                      0, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -266,7 +302,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_HIGH, rmax);
    e_widget_table_object_align_append(ol, ob,
-                                      1, 4,    //place
+                                      1, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -274,9 +310,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                      );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
    e_widget_on_change_hook_set(ob, _cb_max_changed, cfdata);
-   ob = e_widget_label_add(evas, _("high"));
+   ob = e_widget_label_add(evas, _("High"));
    e_widget_table_object_align_append(ol, ob,
-                                      2, 4,    //place
+                                      2, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -285,16 +321,17 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 120.0, 1200.0, 1, 0,
                             &(cfdata->powersave_high), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
-                                      3, 4,    //place
+                                      3, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
                                       0.0, 0.5 //align
                                       );
-
+   y++;
+   
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_EXTREME, rmin);
    e_widget_table_object_align_append(ol, ob,
-                                      0, 5,    //place
+                                      0, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -304,7 +341,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(ob, _cb_min_changed, cfdata);
    ob = e_widget_radio_add(evas, "", E_POWERSAVE_MODE_EXTREME, rmax);
    e_widget_table_object_align_append(ol, ob,
-                                      1, 5,    //place
+                                      1, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -312,9 +349,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                      );
    cfdata->gui.rmax = eina_list_append(cfdata->gui.rmax, ob);
    e_widget_on_change_hook_set(ob, _cb_max_changed, cfdata);
-   ob = e_widget_label_add(evas, _("extreme"));
+   ob = e_widget_label_add(evas, _("Extreme"));
    e_widget_table_object_align_append(ol, ob,
-                                      2, 5,    //place
+                                      2, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
@@ -323,7 +360,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_slider_add(evas, 1, 0, _("%.0f s"), 120.0, 2400.0, 1, 0,
                             &(cfdata->powersave_extreme), NULL, 100);
    e_widget_table_object_align_append(ol, ob,
-                                      3, 5,    //place
+                                      3, y,    //place
                                       1, 1,    //span
                                       1, 1,    //fill
                                       0, 0,    //expand
