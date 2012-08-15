@@ -161,8 +161,6 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
 
-   if (cpufreq_config->menu) return;
-
    inst = data;
    ev = event_info;
 
@@ -352,8 +350,6 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
         m = e_menu_new();
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-        cpufreq_config->menu = m;
-        e_menu_post_deactivate_callback_set(m, _menu_cb_post, NULL);
 
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
                                           &cx, &cy, NULL, NULL);
@@ -362,6 +358,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                               e_util_zone_current_get(e_manager_current_get()),
                               cx + ev->output.x, cy + ev->output.y, 1, 1,
                               E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+        evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                                 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 

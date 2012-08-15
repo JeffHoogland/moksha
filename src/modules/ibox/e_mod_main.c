@@ -88,7 +88,6 @@ static void         _ibox_icon_empty(IBox_Icon *ic);
 static void         _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src);
 static Eina_List   *_ibox_zone_find(E_Zone *zone);
 static void         _ibox_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void         _ibox_cb_menu_post(void *data, E_Menu *m);
 static void         _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _ibox_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void         _ibox_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -288,32 +287,30 @@ _ibox_cb_empty_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 {
    Evas_Event_Mouse_Down *ev;
    IBox *b;
+   E_Menu *m;
+   E_Menu_Item *mi;
+   int cx, cy;
 
    ev = event_info;
    b = data;
-   if (!ibox_config->menu)
-     {
-        E_Menu *m;
-        E_Menu_Item *mi;
-        int cx, cy;
+   if (ev->button != 3) return;
 
-        m = e_menu_new();
-        mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("Settings"));
-        e_util_menu_item_theme_icon_set(mi, "configure");
-        e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, b);
+   m = e_menu_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Settings"));
+   e_util_menu_item_theme_icon_set(mi, "configure");
+   e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, b);
 
-        m = e_gadcon_client_util_menu_items_append(b->inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _ibox_cb_menu_post, NULL);
-        ibox_config->menu = m;
+   m = e_gadcon_client_util_menu_items_append(b->inst->gcc, m, 0);
 
-        e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
-                                          &cx, &cy, NULL, NULL);
-        e_menu_activate_mouse(m,
-                              e_util_zone_current_get(e_manager_current_get()),
-                              cx + ev->output.x, cy + ev->output.y, 1, 1,
-                              E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-     }
+   e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
+                                     &cx, &cy, NULL, NULL);
+   e_menu_activate_mouse(m,
+                         e_util_zone_current_get(e_manager_current_get()),
+                         cx + ev->output.x, cy + ev->output.y, 1, 1,
+                         E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+   evas_event_feed_mouse_up(b->inst->gcc->gadcon->evas, ev->button,
+                            EVAS_BUTTON_NONE, ev->timestamp, NULL);
 }
 
 static void
@@ -518,12 +515,6 @@ _ibox_icon_new(IBox *b, E_Border *bd)
 static void
 _ibox_icon_free(IBox_Icon *ic)
 {
-   if (ibox_config->menu)
-     {
-        e_menu_post_deactivate_callback_set(ibox_config->menu, NULL, NULL);
-        e_object_del(E_OBJECT(ibox_config->menu));
-        ibox_config->menu = NULL;
-     }
    if (ic->ibox->ic_drop_before == ic)
      ic->ibox->ic_drop_before = NULL;
    _ibox_icon_empty(ic);
@@ -636,14 +627,6 @@ _ibox_cb_obj_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 }
 
 static void
-_ibox_cb_menu_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
-{
-   if (!ibox_config->menu) return;
-   e_object_del(E_OBJECT(ibox_config->menu));
-   ibox_config->menu = NULL;
-}
-
-static void
 _ibox_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBox_Icon *ic;
@@ -683,7 +666,7 @@ _ibox_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         ic->drag.start = 1;
         ic->drag.dnd = 0;
      }
-   else if ((ev->button == 3) && (!ibox_config->menu))
+   else if (ev->button == 3)
      {
         E_Menu *m;
         E_Menu_Item *mi;
@@ -698,8 +681,6 @@ _ibox_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, ic->ibox);
 
         m = e_gadcon_client_util_menu_items_append(ic->ibox->inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _ibox_cb_menu_post, NULL);
-        ibox_config->menu = m;
 
         e_gadcon_canvas_zone_geometry_get(ic->ibox->inst->gcc->gadcon,
                                           &cx, &cy, NULL, NULL);
@@ -1397,12 +1378,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
       */
      e_object_del(E_OBJECT(ibox_config->config_dialog->data));
 
-   if (ibox_config->menu)
-     {
-        e_menu_post_deactivate_callback_set(ibox_config->menu, NULL, NULL);
-        e_object_del(E_OBJECT(ibox_config->menu));
-        ibox_config->menu = NULL;
-     }
    while (ibox_config->items)
      {
         Config_Item *ci;

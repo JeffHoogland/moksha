@@ -37,7 +37,6 @@ struct _Config
    E_Module *module;
    E_Config_Dialog *config_dialog;
    Eina_List *instances, *handlers;
-   E_Menu *menu;
 };
 
 EAPI extern E_Module_Api e_modapi;

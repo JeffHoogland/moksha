@@ -84,7 +84,6 @@ struct _Instance
       Ecore_Job *size_apply;
    } job;
    Eina_List *icons;
-   E_Menu    *menu;
 };
 
 static const char _Name[] = "Systray";
@@ -143,15 +142,6 @@ _systray_theme_path(void)
 }
 
 static void
-_systray_menu_cb_post(void *data, E_Menu *menu __UNUSED__)
-{
-   Instance *inst = data;
-   if (!inst->menu) return;
-   e_object_del(E_OBJECT(inst->menu));
-   inst->menu = NULL;
-}
-
-static void
 _systray_menu_new(Instance *inst, Evas_Event_Mouse_Down *ev)
 {
    E_Zone *zone;
@@ -162,11 +152,11 @@ _systray_menu_new(Instance *inst, Evas_Event_Mouse_Down *ev)
 
    m = e_menu_new();
    m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-   e_menu_post_deactivate_callback_set(m, _systray_menu_cb_post, inst);
-   inst->menu = m;
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
    e_menu_activate_mouse(m, zone, x + ev->output.x, y + ev->output.y,
                          1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+   evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                            EVAS_BUTTON_NONE, ev->timestamp, NULL);
 }
 
 static void
@@ -175,7 +165,7 @@ _systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
    Instance *inst = data;
    Evas_Event_Mouse_Down *ev = event;
 
-   if ((ev->button == 3) && (!inst->menu))
+   if (ev->button == 3)
      _systray_menu_new(inst, ev);
 }
 
@@ -999,12 +989,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    if (!inst)
      return;
-
-   if (inst->menu)
-     {
-        e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-        e_object_del(E_OBJECT(inst->menu));
-     }
 
    _systray_deactivate(inst);
    evas_object_del(inst->ui.gadget);

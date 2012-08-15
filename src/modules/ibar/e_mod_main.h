@@ -12,7 +12,6 @@ struct _Config
    E_Module        *module;
    E_Config_Dialog *config_dialog;
    Eina_List       *instances;
-   E_Menu          *menu;
    Eina_List       *handlers;
 };
 

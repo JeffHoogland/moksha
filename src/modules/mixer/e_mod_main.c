@@ -752,19 +752,6 @@ _mixer_popup_timer_cb(void *data)
 }
 
 static void
-_mixer_menu_cb_post(void *data, E_Menu *menu __UNUSED__)
-{
-   E_Mixer_Instance *inst = data;
-   if ((!inst) || (!inst->menu))
-      return;
-   if (inst->menu)
-   {
-      e_object_del(E_OBJECT(inst->menu));
-      inst->menu = NULL;
-   }
-}
-
-static void
 _mixer_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Mixer_Instance *inst = data;
@@ -794,9 +781,6 @@ _mixer_menu_new(E_Mixer_Instance *inst, Evas_Event_Mouse_Down *ev)
    e_menu_item_callback_set(mi, _mixer_menu_cb_cfg, inst);
 
    m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-   e_menu_post_deactivate_callback_set(m, _mixer_menu_cb_post, inst);
-   inst->menu = m;
-
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
    e_menu_activate_mouse(m, zone, x + ev->output.x, y + ev->output.y,
                          1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
@@ -819,7 +803,7 @@ _mixer_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
    }
    else if (ev->button == 2)
       _mixer_toggle_mute(inst, EINA_FALSE);
-   else if ((ev->button == 3) && (!inst->menu))
+   else if (ev->button == 3)
       _mixer_menu_new(inst, ev);
 }
 
@@ -1098,11 +1082,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (!inst)
       return;
 
-   if (inst->menu)
-   {
-      e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-      e_object_del(E_OBJECT(inst->menu));
-   }
    evas_object_del(inst->ui.gadget);
    e_mod_mixer_channel_del(inst->channel);
    e_mod_mixer_del(inst->sys);

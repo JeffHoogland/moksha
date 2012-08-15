@@ -32,9 +32,6 @@ static void _notification_box_icon_signal_emit(Notification_Box_Icon *ic,
 static E_Border *_notification_find_source_border(E_Notification *n);
 
 /* Notification box callbacks */
-static void _notification_box_cb_menu_post(void   *data,
-                                           E_Menu *m);
-
 void
 notification_box_notify(E_Notification *n,
                         unsigned int    replaces_id,
@@ -297,12 +294,6 @@ _notification_box_find(E_Notification_Urgency urgency)
 static void
 _notification_box_icon_free(Notification_Box_Icon *ic)
 {
-   if (notification_cfg->menu)
-     {
-        e_menu_post_deactivate_callback_set(notification_cfg->menu, NULL, NULL);
-        e_object_del(E_OBJECT(notification_cfg->menu));
-        notification_cfg->menu = NULL;
-     }
    _notification_box_icon_empty(ic);
    evas_object_del(ic->o_holder);
    evas_object_del(ic->o_holder2);
@@ -457,15 +448,6 @@ _notification_find_source_border(E_Notification *n)
 }
 
 static void
-_notification_box_cb_menu_post(void   *data __UNUSED__,
-                               E_Menu *m __UNUSED__)
-{
-   if (!notification_cfg->menu) return;
-   e_object_del(E_OBJECT(notification_cfg->menu));
-   notification_cfg->menu = NULL;
-}
-
-static void
 _notification_box_cb_menu_configuration(Notification_Box *b,
                                         E_Menu      *m __UNUSED__,
                                         E_Menu_Item *mi __UNUSED__)
@@ -490,22 +472,21 @@ _notification_box_cb_empty_mouse_down(Notification_Box *b,
    E_Menu_Item *mi;
    int cx, cy, cw, ch;
 
-   if (notification_cfg->menu) return;
    m = e_menu_new();
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Settings"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system");
    e_menu_item_callback_set(mi, (E_Menu_Cb)_notification_box_cb_menu_configuration, b);
 
-   notification_cfg->menu = m = e_gadcon_client_util_menu_items_append(b->inst->gcc, m, 0);
-   e_menu_post_deactivate_callback_set(m, _notification_box_cb_menu_post, NULL);
-
+   m = e_gadcon_client_util_menu_items_append(b->inst->gcc, m, 0);
    e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
                                      &cx, &cy, &cw, &ch);
    e_menu_activate_mouse(m,
                          e_util_zone_current_get(e_manager_current_get()),
                          cx + ev->output.x, cy + ev->output.y, 1, 1,
                          E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+   evas_event_feed_mouse_up(b->inst->gcc->gadcon->evas, ev->button,
+                            EVAS_BUTTON_NONE, ev->timestamp, NULL);
 }
 
 static void
@@ -628,7 +609,7 @@ _notification_box_cb_icon_mouse_down(Notification_Box_Icon *ic,
    E_Menu_Item *mi;
    int cx, cy, cw, ch;
 
-   if (notification_cfg->menu || (ev->button != 3)) return;
+   if (ev->button != 3) return;
 
    m = e_menu_new();
    mi = e_menu_item_new(m);
@@ -637,9 +618,6 @@ _notification_box_cb_icon_mouse_down(Notification_Box_Icon *ic,
    e_menu_item_callback_set(mi, (E_Menu_Cb)_notification_box_cb_menu_configuration, ic->n_box);
 
    m = e_gadcon_client_util_menu_items_append(ic->n_box->inst->gcc, m, 0);
-   e_menu_post_deactivate_callback_set(m, _notification_box_cb_menu_post, NULL);
-   notification_cfg->menu = m;
-
    e_gadcon_canvas_zone_geometry_get(ic->n_box->inst->gcc->gadcon,
                                      &cx, &cy, &cw, &ch);
    e_menu_activate_mouse(m,

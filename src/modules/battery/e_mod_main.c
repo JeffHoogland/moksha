@@ -42,7 +42,6 @@ static void      _battery_update(int full, int time_left, int time_full, Eina_Bo
 static Eina_Bool _battery_cb_exe_data(void *data, int type, void *event);
 static Eina_Bool _battery_cb_exe_del(void *data, int type, void *event);
 static void      _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void      _menu_cb_post(void *data, E_Menu *m);
 static void      _battery_face_level_set(Evas_Object *battery, double level);
 static void      _battery_face_time_set(Evas_Object *battery, int time);
 static void      _battery_face_cb_menu_powermanagement(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -183,7 +182,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    inst = data;
    ev = event_info;
-   if ((ev->button == 3) && (!battery_config->menu))
+   if (ev->button == 3)
      {
         E_Menu *m;
         E_Menu_Item *mi;
@@ -203,8 +202,6 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
           }
 
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _menu_cb_post, inst);
-        battery_config->menu = m;
 
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
                                           &cx, &cy, NULL, NULL);
@@ -212,17 +209,11 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
                               e_util_zone_current_get(e_manager_current_get()),
                               cx + ev->output.x, cy + ev->output.y, 1, 1,
                               E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+        evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                                 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
    if (ev->button == 1)
      _battery_cb_warning_popup_hide(data, e, obj, event_info);
-}
-
-static void
-_menu_cb_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
-{
-   if (!battery_config->menu) return;
-   e_object_del(E_OBJECT(battery_config->menu));
-   battery_config->menu = NULL;
 }
 
 static void
@@ -855,12 +846,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    if (battery_config->config_dialog)
      e_object_del(E_OBJECT(battery_config->config_dialog));
-   if (battery_config->menu)
-     {
-        e_menu_post_deactivate_callback_set(battery_config->menu, NULL, NULL);
-        e_object_del(E_OBJECT(battery_config->menu));
-        battery_config->menu = NULL;
-     }
 
 #ifdef HAVE_EEZE
    _battery_udev_stop();

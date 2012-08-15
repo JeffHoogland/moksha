@@ -39,7 +39,6 @@ struct _Config
    E_Module        *module;
    E_Config_Dialog *config_dialog;
    Eina_List       *instances;
-   E_Menu          *menu;
    Ecore_Exe           *batget_exe;
    Ecore_Event_Handler *batget_data_handler;
    Ecore_Event_Handler *batget_del_handler;

@@ -54,7 +54,6 @@ struct _Config
   Eina_List  *instances;
   Eina_List  *n_box;
   Eina_List  *config_dialog;
-  E_Menu     *menu;
   Eina_List  *handlers;
   Eina_List  *items;
   Eina_List  *popups;

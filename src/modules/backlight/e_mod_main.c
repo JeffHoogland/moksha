@@ -28,7 +28,6 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object     *o_backlight, *o_table, *o_slider;
    E_Gadcon_Popup  *popup;
-   E_Menu          *menu;
    double           val;
    Ecore_X_Window   input_win;
    Ecore_Event_Handler *hand_mouse_down;
@@ -55,6 +54,7 @@ _backlight_gadget_update(Instance *inst)
 static void
 _backlight_input_win_del(Instance *inst)
 {
+   if (inst->input_win) return;
    e_grabinput_release(0, inst->input_win);
    ecore_x_window_free(inst->input_win);
    inst->input_win = 0;
@@ -263,19 +263,6 @@ _backlight_popup_free(Instance *inst)
 }
 
 static void
-_backlight_menu_cb_post(void *data, E_Menu *menu __UNUSED__)
-{
-   Instance *inst = data;
-   if ((!inst) || (!inst->menu))
-      return;
-   if (inst->menu)
-     {
-        e_object_del(E_OBJECT(inst->menu));
-        inst->menu = NULL;
-     }
-}
-
-static void
 _backlight_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    Instance *inst = data;
@@ -296,7 +283,7 @@ _backlight_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __U
         if (inst->popup) _backlight_popup_free(inst);
         else _backlight_popup_new(inst);
      }
-   else if ((ev->button == 3) && (!inst->menu))
+   else if (ev->button == 3)
      {
         E_Zone *zone;
         E_Menu *m;
@@ -313,8 +300,6 @@ _backlight_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __U
         e_menu_item_callback_set(mi, _backlight_menu_cb_cfg, inst);
         
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _backlight_menu_cb_post, inst);
-        inst->menu = m;
         
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
         e_menu_activate_mouse(m, zone, x + ev->output.x, y + ev->output.y,
@@ -405,13 +390,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
    
    inst = gcc->data;
-   if (inst->menu)
-     {
-        e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-        _backlight_input_win_del(inst);
-        e_object_del(E_OBJECT(inst->menu));
-        inst->menu = NULL;
-     }
+   _backlight_input_win_del(inst);
    _backlight_popup_free(inst);
    backlight_instances = eina_list_remove(backlight_instances, inst);
    evas_object_del(inst->o_backlight);

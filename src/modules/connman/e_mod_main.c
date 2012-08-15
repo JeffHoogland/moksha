@@ -1277,20 +1277,6 @@ _connman_popup_new(E_Connman_Instance *inst)
 }
 
 static void
-_connman_menu_cb_post(void        *data,
-                      E_Menu *menu __UNUSED__)
-{
-   E_Connman_Instance *inst = data;
-   if ((!inst) || (!inst->menu))
-     return;
-   if (inst->menu)
-     {
-        e_object_del(E_OBJECT(inst->menu));
-        inst->menu = NULL;
-     }
-}
-
-static void
 _connman_menu_cb_cfg(void           *data,
                      E_Menu *menu    __UNUSED__,
                      E_Menu_Item *mi __UNUSED__)
@@ -1325,8 +1311,6 @@ _connman_menu_new(E_Connman_Instance    *inst,
    e_menu_item_callback_set(mi, _connman_menu_cb_cfg, inst);
 
    m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-   e_menu_post_deactivate_callback_set(m, _connman_menu_cb_post, inst);
-   inst->menu = m;
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
    e_menu_activate_mouse(m, zone, x + ev->output.x, y + ev->output.y,
                          1, 1, E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
@@ -1386,7 +1370,7 @@ _connman_cb_mouse_down(void            *data,
      }
    else if (ev->button == 2)
      _connman_toggle_offline_mode(inst->ctxt);
-   else if ((ev->button == 3) && (!inst->menu))
+   else if (ev->button == 3)
      _connman_menu_new(inst, ev);
 }
 
@@ -1651,11 +1635,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (!inst)
      return;
 
-   if (inst->menu)
-     {
-        e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-        e_object_del(E_OBJECT(inst->menu));
-     }
    evas_object_del(inst->ui.gadget);
 
    ctxt->instances = eina_list_remove(ctxt->instances, inst);

@@ -9,7 +9,6 @@ struct _Config
    /* just config state */
    E_Module        *module;
    Eina_List       *instances;
-   E_Menu          *menu;
    Eina_List       *handlers;
    Eina_List       *items;
    Eina_List	   *config_dialog;

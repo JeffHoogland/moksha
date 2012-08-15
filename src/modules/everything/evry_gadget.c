@@ -14,7 +14,6 @@ struct _Instance
    Evry_Window     *win;
    Gadget_Config   *cfg;
    E_Config_Dialog *cfd;
-   E_Menu          *menu;
 
    int              mouse_down;
 
@@ -223,16 +222,6 @@ _del_func(void *data, void *obj __UNUSED__)
    inst->del_fn = NULL;
    inst->win = NULL;
    edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
-}
-
-static void
-_cb_menu_post(void *data, E_Menu *m __UNUSED__)
-{
-   Instance *inst = data;
-
-   if (!inst->menu) return;
-   /* e_object_del(E_OBJECT(inst->menu)); */
-   inst->menu = NULL;
 }
 
 static void
@@ -511,7 +500,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
         edje_object_signal_emit(inst->o_button, "e,state,focused", "e");
      }
-   else if ((ev->button == 3) && (!inst->menu))
+   else if (ev->button == 3)
      {
         E_Menu *m;
         E_Menu_Item *mi;
@@ -524,8 +513,6 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         e_menu_item_callback_set(mi, _cb_menu_configure, inst);
 
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _cb_menu_post, inst);
-        inst->menu = m;
 
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy,
                                           NULL, NULL);
@@ -533,6 +520,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                               e_util_zone_current_get(e_manager_current_get()),
                               cx + ev->output.x, cy + ev->output.y, 1, 1,
                               E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+        evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                                 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
 }
 

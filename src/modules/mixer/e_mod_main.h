@@ -35,7 +35,6 @@ typedef struct E_Mixer_Instance
    E_Gadcon_Client *gcc;
    E_Gadcon_Popup *popup;
    Ecore_Timer *popup_timer;
-   E_Menu *menu;
 
    struct
    {

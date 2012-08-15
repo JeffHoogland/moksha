@@ -34,7 +34,6 @@ static const E_Gadcon_Client_Class _gadcon_class =
 /* actual module specifics */
 
 static void _temperature_face_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _temperature_face_cb_post_menu(void *data, E_Menu *m);
 
 static void _temperature_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
 
@@ -159,8 +158,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    inst->o_temp = NULL;
    if (inst->config_dialog) e_object_del(E_OBJECT(inst->config_dialog));
    inst->config_dialog = NULL;
-   if (inst->menu) e_object_del(E_OBJECT(inst->menu));
-   inst->menu = NULL;
 }
 
 static void
@@ -222,7 +219,7 @@ _temperature_face_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj
 
    inst = data;
    ev = event_info;
-   if ((ev->button == 3) && (!inst->menu))
+   if (ev->button == 3)
      {
         E_Menu *m;
         E_Menu_Item *mi;
@@ -235,27 +232,14 @@ _temperature_face_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj
         e_menu_item_callback_set(mi, _temperature_face_cb_menu_configure, inst);
 
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _temperature_face_cb_post_menu, inst);
-        inst->menu = m;
 
-        e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
-					  &cx, &cy, NULL, NULL);
-        e_menu_activate_mouse(m,
-			      e_util_zone_current_get(e_manager_current_get()),
-			      cx + ev->output.x, cy + ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+        e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy, NULL, NULL);
+        e_menu_activate_mouse(m, e_util_zone_current_get(e_manager_current_get()),
+                              cx + ev->output.x, cy + ev->output.y, 1, 1,
+                              E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
+        evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                                 EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
-}
-
-static void
-_temperature_face_cb_post_menu(void *data, E_Menu *m __UNUSED__)
-{
-   Config_Face *inst;
-
-   inst = data;
-   if (!inst->menu) return;
-   e_object_del(E_OBJECT(inst->menu));
-   inst->menu = NULL;
 }
 
 void

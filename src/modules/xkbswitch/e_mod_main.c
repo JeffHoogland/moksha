@@ -13,7 +13,6 @@ static Evas_Object *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *ev
 /* EVENTS */
 static Eina_Bool _xkb_changed(void *data, int type, void *event_info);
 static void _e_xkb_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void _e_xkb_cb_menu_post(void *data, E_Menu *menu __UNUSED__);
 static void _e_xkb_cb_menu_configure(void *data, E_Menu *mn, E_Menu_Item *mi __UNUSED__);
 static void _e_xkb_cb_lmenu_post(void *data, E_Menu *menu __UNUSED__);
 static void _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__);
@@ -31,7 +30,6 @@ typedef struct _Instance
    Evas_Object *o_xkbswitch;
    Evas_Object *o_xkbflag;
    
-   E_Menu *menu;
    E_Menu *lmenu;
 } Instance;
 
@@ -218,12 +216,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
    
-   if (inst->menu) 
-     {
-        e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-        e_object_del(E_OBJECT(inst->menu));
-        inst->menu = NULL;
-     }
    if (inst->lmenu) 
      {
         e_menu_post_deactivate_callback_set(inst->lmenu, NULL, NULL);
@@ -301,36 +293,33 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
 {
    Evas_Event_Mouse_Down *ev = event;
    Instance *inst = data;
+   E_Menu *m;
    
    if (!inst) return;
    
-   if ((ev->button == 3) && (!inst->menu)) /* Right-click utility menu */
+   if (ev->button == 3) /* Right-click utility menu */
      {
         int x, y;
         E_Menu_Item *mi;
         
         /* The menu and menu item */
-        inst->menu = e_menu_new();
-        mi = e_menu_item_new(inst->menu);
+        m = e_menu_new();
+        mi = e_menu_item_new(m);
         /* Menu item specifics */
         e_menu_item_label_set(mi, _("Settings"));
         e_util_menu_item_theme_icon_set(mi, "preferences-system");
         e_menu_item_callback_set(mi, _e_xkb_cb_menu_configure, NULL);
         /* Append into the util menu */
-        inst->menu = e_gadcon_client_util_menu_items_append(inst->gcc, 
-                                                            inst->menu, 0);
-        /* Callback */
-        e_menu_post_deactivate_callback_set(inst->menu, _e_xkb_cb_menu_post,
-                                            inst);
+        m = e_gadcon_client_util_menu_items_append(inst->gcc, 
+                                                            m, 0);
         /* Coords */
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y,
                                           NULL, NULL);
         /* Activate - we show the menu relative to the gadget */
-        e_menu_activate_mouse(inst->menu,
+        e_menu_activate_mouse(m,
                               e_util_zone_current_get(e_manager_current_get()),
                               (x + ev->output.x), (y + ev->output.y), 1, 1, 
                               E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
-
         evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
                                  EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
@@ -457,15 +446,6 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
      }
    else if (ev->button == 2) /* Middle click */
      e_xkb_layout_next();
-}
-
-static void
-_e_xkb_cb_menu_post(void *data, E_Menu *menu __UNUSED__) 
-{
-   Instance *inst = data;
-   
-   if (!(inst) || !inst->menu) return;
-   inst->menu = NULL;
 }
 
 static void

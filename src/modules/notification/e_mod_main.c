@@ -383,13 +383,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("extensions/notification");
    e_configure_registry_category_del("extensions");
 
-   if (notification_cfg->menu)
-     {
-        e_menu_post_deactivate_callback_set(notification_cfg->menu, NULL, NULL);
-        e_object_del(E_OBJECT(notification_cfg->menu));
-        notification_cfg->menu = NULL;
-     }
-
    EINA_LIST_FREE(notification_cfg->items, ci)
      {
         eina_stringshare_del(ci->id);

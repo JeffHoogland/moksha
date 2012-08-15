@@ -26,7 +26,6 @@ struct E_Ofono_Instance
    E_Ofono_Module_Context *ctxt;
    E_Gadcon_Client        *gcc;
    E_Gadcon_Popup         *popup;
-   E_Menu                 *menu;
 
    struct
    {

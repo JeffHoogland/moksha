@@ -100,7 +100,6 @@ struct _Pager_Popup
 static void             _pager_desk_livethumb_setup(Pager_Desk *pd);
 static void             _pager_cb_obj_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__);
 static void             _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
-static void             _menu_cb_post(void *data __UNUSED__, E_Menu *m __UNUSED__);
 static void             _pager_inst_cb_menu_configure(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void             _pager_inst_cb_menu_virtual_desktops_dialog(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void             _pager_instance_drop_zone_recalc(Instance *inst);
@@ -859,48 +858,36 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 {
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
+   E_Menu *m;
+   E_Menu_Item *mi;
+   int cx, cy;
 
    inst = data;
    ev = event_info;
-   if ((ev->button == 3) && (!pager_config->menu))
+   if (ev->button != 3) return;
+
+   m = e_menu_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Settings"));
+   e_util_menu_item_theme_icon_set(mi, "configure");
+   e_menu_item_callback_set(mi, _pager_inst_cb_menu_configure, NULL);
+
+   m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
+   if (e_configure_registry_exists("screen/virtual_desktops"))
      {
-        E_Menu *m;
-        E_Menu_Item *mi;
-        int cx, cy;
-
-        m = e_menu_new();
-        mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("Settings"));
-        e_util_menu_item_theme_icon_set(mi, "configure");
-        e_menu_item_callback_set(mi, _pager_inst_cb_menu_configure, NULL);
-
-        m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _menu_cb_post, inst);
-        pager_config->menu = m;
-
-        if (e_configure_registry_exists("screen/virtual_desktops"))
-          {
-             mi = e_menu_item_new_relative(m, NULL);
-             e_menu_item_label_set(mi, _("Virtual Desktops Settings"));
-             e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
-             e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
-          }
-
-        e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy,
-                                          NULL, NULL);
-        e_menu_activate_mouse(m,
-                              e_util_zone_current_get(e_manager_current_get()),
-                              cx + ev->output.x, cy + ev->output.y, 1, 1,
-                              E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+        mi = e_menu_item_new_relative(m, NULL);
+        e_menu_item_label_set(mi, _("Virtual Desktops Settings"));
+        e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
+        e_menu_item_callback_set(mi, _pager_inst_cb_menu_virtual_desktops_dialog, inst);
      }
-}
 
-static void
-_menu_cb_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
-{
-   if (!pager_config->menu) return;
-   e_object_del(E_OBJECT(pager_config->menu));
-   pager_config->menu = NULL;
+   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy,
+                                     NULL, NULL);
+   e_menu_activate_mouse(m, e_util_zone_current_get(e_manager_current_get()),
+                         cx + ev->output.x, cy + ev->output.y, 1, 1,
+                         E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+   evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                            EVAS_BUTTON_NONE, ev->timestamp, NULL);
 }
 
 static void
@@ -3007,13 +2994,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         ecore_event_handler_del(pager_config->handlers->data);
         pager_config->handlers =
           eina_list_remove_list(pager_config->handlers, pager_config->handlers);
-     }
-
-   if (pager_config->menu)
-     {
-        e_menu_post_deactivate_callback_set(pager_config->menu, NULL, NULL);
-        e_object_del(E_OBJECT(pager_config->menu));
-        pager_config->menu = NULL;
      }
 
    e_configure_registry_item_del("extensions/pager");

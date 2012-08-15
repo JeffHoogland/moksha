@@ -104,7 +104,6 @@ static void         _ibar_cb_menu_icon_add(void *data, E_Menu *m, E_Menu_Item *m
 static void         _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _ibar_cb_menu_icon_remove(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _ibar_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
-static void         _ibar_cb_menu_post(void *data, E_Menu *m);
 static void         _ibar_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void         _ibar_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void         _ibar_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -369,32 +368,30 @@ _ibar_cb_empty_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 {
    Evas_Event_Mouse_Down *ev;
    IBar *b;
+   E_Menu *m;
+   E_Menu_Item *mi;
+   int cx, cy, cw, ch;
 
    ev = event_info;
    b = data;
-   if (!ibar_config->menu)
-     {
-        E_Menu *m;
-        E_Menu_Item *mi;
-        int cx, cy, cw, ch;
+   if (ev->button != 3) return;
 
-        m = e_menu_new();
-        mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("Settings"));
-        e_util_menu_item_theme_icon_set(mi, "configure");
-        e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, b);
+   m = e_menu_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Settings"));
+   e_util_menu_item_theme_icon_set(mi, "configure");
+   e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, b);
 
-        m = e_gadcon_client_util_menu_items_append(b->inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _ibar_cb_menu_post, NULL);
-        ibar_config->menu = m;
+   m = e_gadcon_client_util_menu_items_append(b->inst->gcc, m, 0);
 
-        e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
-                                          &cx, &cy, &cw, &ch);
-        e_menu_activate_mouse(m,
-                              e_util_zone_current_get(e_manager_current_get()),
-                              cx + ev->output.x, cy + ev->output.y, 1, 1,
-                              E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
-     }
+   e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
+                                     &cx, &cy, &cw, &ch);
+   e_menu_activate_mouse(m,
+                         e_util_zone_current_get(e_manager_current_get()),
+                         cx + ev->output.x, cy + ev->output.y, 1, 1,
+                         E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+   evas_event_feed_mouse_up(b->inst->gcc->gadcon->evas, ev->button,
+                            EVAS_BUTTON_NONE, ev->timestamp, NULL);
 }
 
 static void
@@ -628,12 +625,6 @@ _ibar_icon_free(IBar_Icon *ic)
 {
    if (ic->reset_timer) ecore_timer_del(ic->reset_timer);
    ic->reset_timer = NULL;
-   if (ibar_config->menu)
-     {
-        e_menu_post_deactivate_callback_set(ibar_config->menu, NULL, NULL);
-        e_object_del(E_OBJECT(ibar_config->menu));
-        ibar_config->menu = NULL;
-     }
    if (ic->ibar->ic_drop_before == ic)
      ic->ibar->ic_drop_before = NULL;
    _ibar_icon_empty(ic);
@@ -790,14 +781,6 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
  */
 
 static void
-_ibar_cb_menu_post(void *data __UNUSED__, E_Menu *m __UNUSED__)
-{
-   if (!ibar_config->menu) return;
-   e_object_del(E_OBJECT(ibar_config->menu));
-   ibar_config->menu = NULL;
-}
-
-static void
 _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic;
@@ -841,7 +824,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         ic->drag.dnd = 0;
         ic->mouse_down = 1;
      }
-   else if ((ev->button == 3) && (!ibar_config->menu))
+   else if (ev->button == 3)
      {
         E_Menu *m, *mo;
         E_Menu_Item *mi;
@@ -878,8 +861,6 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         e_menu_item_callback_set(mi, _ibar_cb_menu_configuration, ic->ibar);
 
         m = e_gadcon_client_util_menu_items_append(ic->ibar->inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _ibar_cb_menu_post, NULL);
-        ibar_config->menu = m;
 
         mi = e_menu_item_new(mo);
         e_menu_item_label_set(mi, _("Properties"));
@@ -1799,13 +1780,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    EINA_LIST_FREE(ibar_config->handlers, eh)
      ecore_event_handler_del(eh);
-
-   if (ibar_config->menu)
-     {
-        e_menu_post_deactivate_callback_set(ibar_config->menu, NULL, NULL);
-        e_object_del(E_OBJECT(ibar_config->menu));
-        ibar_config->menu = NULL;
-     }
 
    EINA_LIST_FREE(ibar_config->items, ci)
      {

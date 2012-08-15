@@ -25,7 +25,6 @@ struct E_Bluez_Instance
    E_Bluez_Module_Context *ctxt;
    E_Gadcon_Client        *gcc;
    E_Gadcon_Popup         *popup;
-   E_Menu                 *menu;
 
    /* used by popup */
    int                     powered;
