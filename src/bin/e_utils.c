@@ -1451,3 +1451,73 @@ e_util_size_debug_set(Evas_Object *obj, Eina_Bool enable)
                                             _e_util_size_debug, NULL);
      }
 }
+
+static Efreet_Desktop *
+_e_util_default_terminal_get(const char *defaults_list)
+{
+   Efreet_Desktop *tdesktop = NULL;
+   Efreet_Ini *ini;
+   const char *s;
+   
+   ini = efreet_ini_new(defaults_list);
+   if ((ini) && (ini->data) &&
+       (efreet_ini_section_set(ini, "Default Applications")) &&
+       (ini->section))
+     {
+        s = efreet_ini_string_get(ini, "x-scheme-handler/terminal");
+        if (s) tdesktop = efreet_util_desktop_file_id_find(s);
+     }
+   if (ini) efreet_ini_free(ini);
+   return tdesktop;
+}
+
+EAPI Efreet_Desktop *
+e_util_terminal_desktop_get(void)
+{
+   const char *terms[] =
+     {
+        "terminology.desktop",
+        "xterm.desktop",
+        "rxvt.desktop",
+        "gnome-terimnal.desktop",
+        "konsole.desktop",
+        NULL
+     };
+   const char *s;
+   char buf[PATH_MAX];
+   Efreet_Desktop *tdesktop = NULL, *td;
+   Eina_List *l;
+   int i;
+
+   snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
+            efreet_data_home_get());
+   tdesktop = _e_util_default_terminal_get(buf);
+   if (tdesktop) return tdesktop;
+   EINA_LIST_FOREACH(efreet_data_dirs_get(), l, s)
+     {
+        snprintf(buf, sizeof(buf), "%s/applications/defaults.list", s);
+        tdesktop = _e_util_default_terminal_get(buf);
+        if (tdesktop) return tdesktop;
+     }
+   
+   for (i = 0; terms[i]; i++)
+     {
+        tdesktop = efreet_util_desktop_file_id_find(terms[i]);
+        if (tdesktop) return tdesktop;
+     }
+   if (!tdesktop)
+     {
+        l = efreet_util_desktop_category_list("TerminalEmulator");
+        if (l)
+          {
+             // just take first one since above list doesn't work.
+             tdesktop = l->data;
+             EINA_LIST_FREE(l, td)
+               {
+                  // free/unref the desktosp we are not going to use
+                  if (td != tdesktop) efreet_desktop_free(td);
+               }
+          }
+     }
+   return tdesktop;
+}

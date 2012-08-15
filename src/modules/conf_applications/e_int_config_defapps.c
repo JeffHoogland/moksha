@@ -35,6 +35,7 @@ struct _E_Config_Dialog_Data
    const char          *mailto_desktop;
    const char          *file_desktop;
    const char          *trash_desktop;
+   const char          *terminal_desktop;
 
    Ecore_Event_Handler *desk_change_handler;
    int                  gen;
@@ -134,6 +135,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
         if (s) cfdata->file_desktop = eina_stringshare_add(s);
         s = efreet_ini_string_get(myini, "x-scheme-handler/trash");
         if (s) cfdata->trash_desktop = eina_stringshare_add(s);
+        s = efreet_ini_string_get(myini, "x-scheme-handler/terminal");
+        if (s) cfdata->terminal_desktop = eina_stringshare_add(s);
      }
 
    EINA_LIST_FOREACH(e_config->env_vars, l, evr)
@@ -182,6 +185,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->mailto_desktop) eina_stringshare_del(cfdata->mailto_desktop);
    if (cfdata->file_desktop) eina_stringshare_del(cfdata->file_desktop);
    if (cfdata->trash_desktop) eina_stringshare_del(cfdata->trash_desktop);
+   if (cfdata->terminal_desktop) eina_stringshare_del(cfdata->terminal_desktop);
    EINA_LIST_FREE(cfdata->mimes, m)
      {
         Config_Glob *g;
@@ -255,6 +259,15 @@ _def_trash_cb(void *data)
 }
 
 static void
+_def_terminal_cb(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   cfdata->seldest = &(cfdata->terminal_desktop);
+   _fill_apps_list(cfdata, cfdata->obj.deflist, cfdata->seldest, 0);
+   cfdata->gen = 0;
+}
+
+static void
 _sel_mime_cb(void *data)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -297,6 +310,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_append(il, NULL, _("E-Mail"), _def_mailto_cb, cfdata, NULL);
    e_widget_ilist_append(il, NULL, _("File"), _def_file_cb, cfdata, NULL);
    e_widget_ilist_append(il, NULL, _("Trash"), _def_trash_cb, cfdata, NULL);
+   e_widget_ilist_append(il, NULL, _("Terminal"), _def_terminal_cb, cfdata, NULL);
    e_widget_ilist_go(il);
    e_widget_ilist_thaw(il);
    edje_thaw();
@@ -376,6 +390,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         if ((cfdata->trash_desktop) && (cfdata->trash_desktop[0]))
           efreet_ini_string_set(cfdata->ini, "x-scheme-handler/trash",
                                 cfdata->trash_desktop);
+        if ((cfdata->terminal_desktop) && (cfdata->terminal_desktop[0]))
+          efreet_ini_string_set(cfdata->ini, "x-scheme-handler/terminal",
+                                cfdata->terminal_desktop);
         snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
                  efreet_data_home_get());
         efreet_ini_save(cfdata->ini, buf);

@@ -264,38 +264,9 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
         e_util_library_path_strip();
         if ((desktop) && (desktop->terminal))
           {
-             Efreet_Desktop *tdesktop, *td;
-             int i;
-             // XXX: FIXME: this should become config some day...
-             const char *terms[] =
-               {
-                  "terminology.desktop",
-                  "xterm.desktop",
-                  "rxvt.desktop",
-                  "gnome-terimnal.desktop",
-                  "konsole.desktop",
-                  NULL
-               };
+             Efreet_Desktop *tdesktop;
              
-             for (i = 0; terms[i]; i++)
-               {
-                  tdesktop = efreet_util_desktop_file_id_find(terms[i]);
-                  if (tdesktop) break;
-               }
-             if (!tdesktop)
-               {
-                  l = efreet_util_desktop_category_list("TerminalEmulator");
-                  if (l)
-                    {
-                       // just take first one since above list doesn't work.
-                       tdesktop = l->data;
-                       EINA_LIST_FREE(l, td)
-                         {
-                            // free/unref the desktosp we are not going to use
-                            if (td != tdesktop) efreet_desktop_free(td);
-                         }
-                    }
-               }
+             tdesktop = e_util_terminal_desktop_get();
              if (tdesktop)
                {
                   if (tdesktop->exec)

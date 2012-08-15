@@ -141,6 +141,9 @@ static void             _e_fwin_cb_menu_open_fast(void *data,
 static void             _e_fwin_parent(void *data,
                                        E_Menu *m,
                                        E_Menu_Item *mi);
+static void             _e_fwin_terminal(void *data,
+                                         E_Menu *m,
+                                         E_Menu_Item *mi);
 static void             _e_fwin_cb_key_down(void *data,
                                             Evas *e,
                                             Evas_Object *obj,
@@ -1806,7 +1809,7 @@ _e_fwin_zone_del(void *data,
 
 /* fm menu extend */
 static void
-_e_fwin_menu_extend(void *data __UNUSED__,
+_e_fwin_menu_extend(void *data,
                     Evas_Object *obj,
                     E_Menu *m,
                     E_Fm2_Icon_Info *info __UNUSED__)
@@ -1815,6 +1818,8 @@ _e_fwin_menu_extend(void *data __UNUSED__,
 
    if (e_fm2_has_parent_get(obj))
      {
+        Efreet_Desktop *tdesktop;
+        
         mi = e_menu_item_new(m);
         e_menu_item_separator_set(mi, 1);
 
@@ -1825,6 +1830,24 @@ _e_fwin_menu_extend(void *data __UNUSED__,
                                                         "e/fileman/default/button/parent"),
                                   "e/fileman/default/button/parent");
         e_menu_item_callback_set(mi, _e_fwin_parent, obj);
+        
+        tdesktop = e_util_terminal_desktop_get();
+        if (tdesktop)
+          {
+             E_Fwin_Page *page = data;
+                       
+             mi = e_menu_item_new(m);
+             e_menu_item_label_set(mi, _("Open Terminal Here"));
+             e_menu_item_callback_set(mi, _e_fwin_terminal, page->fwin);
+             if (tdesktop->icon)
+               {
+                  if (tdesktop->icon[0] == '/')
+                    e_menu_item_icon_file_set(mi, tdesktop->icon);
+                  else
+                    e_util_menu_item_theme_icon_set(mi, tdesktop->icon);
+               }
+             efreet_desktop_free(tdesktop);
+          }
      }
    /* FIXME: if info != null then check mime type and offer options based
     * on that
@@ -1837,6 +1860,36 @@ _e_fwin_parent(void *data,
                E_Menu_Item *mi __UNUSED__)
 {
    e_fm2_parent_go(data);
+}
+
+static void
+_e_fwin_terminal(void *data,
+                 E_Menu *m       __UNUSED__,
+                 E_Menu_Item *mi __UNUSED__)
+{
+   E_Fwin *fwin = data;
+   Efreet_Desktop *tdesktop;
+   
+   if (!fwin->cur_page) return;
+   tdesktop = e_util_terminal_desktop_get();
+   if (tdesktop)
+     {
+        char buf[PATH_MAX];
+        
+        if (getcwd(buf, sizeof(buf)) > 0)
+          {
+             const char *path;
+             
+             path = e_fm2_real_path_get(fwin->cur_page->fm_obj);
+             if (path)
+               {
+                  chdir(path);
+                  e_exec(fwin->zone, tdesktop, NULL, NULL, "fileman");
+                  chdir(buf);
+               }
+          }
+        efreet_desktop_free(tdesktop);
+     }
 }
 
 static void
