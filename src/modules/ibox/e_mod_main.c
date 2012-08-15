@@ -3,21 +3,21 @@
 
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
-static void _gc_shutdown(E_Gadcon_Client *gcc);
-static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-static const char *_gc_label(const E_Gadcon_Client_Class *client_class);
-static Evas_Object *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
-static const char *_gc_id_new(const E_Gadcon_Client_Class *client_class);
-static void _gc_id_del(const E_Gadcon_Client_Class *client_class, const char *id);
+static void             _gc_shutdown(E_Gadcon_Client *gcc);
+static void             _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+static const char      *_gc_label(const E_Gadcon_Client_Class *client_class);
+static Evas_Object     *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
+static const char      *_gc_id_new(const E_Gadcon_Client_Class *client_class);
+static void             _gc_id_del(const E_Gadcon_Client_Class *client_class, const char *id);
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
 {
    GADCON_CLIENT_CLASS_VERSION,
-     "ibox",
-     {
-        _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, _gc_id_del,
-        e_gadcon_site_is_not_toolbar
-     },
+   "ibox",
+   {
+      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, _gc_id_del,
+      e_gadcon_site_is_not_toolbar
+   },
    E_GADCON_CLIENT_STYLE_INSET
 };
 
@@ -35,21 +35,21 @@ struct _Instance
    IBox            *ibox;
    E_Drop_Handler  *drop_handler;
    Config_Item     *ci;
-   E_Gadcon_Orient orient;
+   E_Gadcon_Orient  orient;
 };
 
 struct _IBox
 {
-   Instance       *inst;
-   Evas_Object    *o_box;
-   Evas_Object    *o_drop;
-   Evas_Object    *o_drop_over;
-   Evas_Object    *o_empty;
-   IBox_Icon      *ic_drop_before;
-   int             drop_before;
-   Eina_List      *icons;
-   E_Zone          *zone;
-   Evas_Coord      dnd_x, dnd_y;
+   Instance    *inst;
+   Evas_Object *o_box;
+   Evas_Object *o_drop;
+   Evas_Object *o_drop_over;
+   Evas_Object *o_empty;
+   IBox_Icon   *ic_drop_before;
+   int          drop_before;
+   Eina_List   *icons;
+   E_Zone      *zone;
+   Evas_Coord   dnd_x, dnd_y;
 };
 
 struct _IBox_Icon
@@ -60,58 +60,58 @@ struct _IBox_Icon
    Evas_Object *o_holder2;
    Evas_Object *o_icon2;
    E_Border    *border;
-   struct 
-     {
-        unsigned char  start : 1;
-        unsigned char  dnd : 1;
-        int            x, y;
-        int            dx, dy;
-     } drag;
+   struct
+   {
+      unsigned char start : 1;
+      unsigned char dnd : 1;
+      int           x, y;
+      int           dx, dy;
+   } drag;
 };
 
-static IBox *_ibox_new(Evas *evas, E_Zone *zone);
-static void _ibox_free(IBox *b);
-static void _ibox_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_empty_handle(IBox *b);
-static void _ibox_fill(IBox *b);
-static void _ibox_empty(IBox *b);
-static void _ibox_orient_set(IBox *b, int horizontal);
-static void _ibox_resize_handle(IBox *b);
-static void _ibox_instance_drop_zone_recalc(Instance *inst);
-static IBox_Icon *_ibox_icon_find(IBox *b, E_Border *bd);
-static IBox_Icon *_ibox_icon_at_coord(IBox *b, Evas_Coord x, Evas_Coord y);
-static IBox_Icon *_ibox_icon_new(IBox *b, E_Border *bd);
-static void _ibox_icon_free(IBox_Icon *ic);
-static void _ibox_icon_fill(IBox_Icon *ic);
-static void _ibox_icon_fill_label(IBox_Icon *ic);
-static void _ibox_icon_empty(IBox_Icon *ic);
-static void _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src);
-static Eina_List *_ibox_zone_find(E_Zone *zone);
-static void _ibox_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_cb_menu_post(void *data, E_Menu *m);
-static void _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
-static void _ibox_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_cb_icon_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_cb_icon_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
-static void _ibox_cb_drag_finished(E_Drag *drag, int dropped);
-static void _ibox_inst_cb_enter(void *data, const char *type, void *event_info);
-static void _ibox_inst_cb_move(void *data, const char *type, void *event_info);
-static void _ibox_inst_cb_leave(void *data, const char *type, void *event_info);
-static void _ibox_inst_cb_drop(void *data, const char *type, void *event_info);
-static void _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
-static void _ibox_inst_cb_scroll(void *data);
-static Eina_Bool _ibox_cb_event_border_add(void *data, int type, void *event);
-static Eina_Bool _ibox_cb_event_border_remove(void *data, int type, void *event);
-static Eina_Bool _ibox_cb_event_border_iconify(void *data, int type, void *event);
-static Eina_Bool _ibox_cb_event_border_uniconify(void *data, int type, void *event);
-static Eina_Bool _ibox_cb_event_border_icon_change(void *data, int type, void *event);
-static Eina_Bool _ibox_cb_event_border_urgent_change(void *data, int type, void *event);
-static Eina_Bool _ibox_cb_event_border_zone_set(void *data, int type, void *event);
-static Eina_Bool _ibox_cb_event_desk_show(void *data, int type, void *event);
+static IBox        *_ibox_new(Evas *evas, E_Zone *zone);
+static void         _ibox_free(IBox *b);
+static void         _ibox_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_empty_handle(IBox *b);
+static void         _ibox_fill(IBox *b);
+static void         _ibox_empty(IBox *b);
+static void         _ibox_orient_set(IBox *b, int horizontal);
+static void         _ibox_resize_handle(IBox *b);
+static void         _ibox_instance_drop_zone_recalc(Instance *inst);
+static IBox_Icon   *_ibox_icon_find(IBox *b, E_Border *bd);
+static IBox_Icon   *_ibox_icon_at_coord(IBox *b, Evas_Coord x, Evas_Coord y);
+static IBox_Icon   *_ibox_icon_new(IBox *b, E_Border *bd);
+static void         _ibox_icon_free(IBox_Icon *ic);
+static void         _ibox_icon_fill(IBox_Icon *ic);
+static void         _ibox_icon_fill_label(IBox_Icon *ic);
+static void         _ibox_icon_empty(IBox_Icon *ic);
+static void         _ibox_icon_signal_emit(IBox_Icon *ic, char *sig, char *src);
+static Eina_List   *_ibox_zone_find(E_Zone *zone);
+static void         _ibox_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_cb_menu_post(void *data, E_Menu *m);
+static void         _ibox_cb_menu_configuration(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _ibox_cb_icon_mouse_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_cb_icon_mouse_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_cb_icon_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_cb_icon_resize(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibox_cb_drag_finished(E_Drag *drag, int dropped);
+static void         _ibox_inst_cb_enter(void *data, const char *type, void *event_info);
+static void         _ibox_inst_cb_move(void *data, const char *type, void *event_info);
+static void         _ibox_inst_cb_leave(void *data, const char *type, void *event_info);
+static void         _ibox_inst_cb_drop(void *data, const char *type, void *event_info);
+static void         _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
+static void         _ibox_inst_cb_scroll(void *data);
+static Eina_Bool    _ibox_cb_event_border_add(void *data, int type, void *event);
+static Eina_Bool    _ibox_cb_event_border_remove(void *data, int type, void *event);
+static Eina_Bool    _ibox_cb_event_border_iconify(void *data, int type, void *event);
+static Eina_Bool    _ibox_cb_event_border_uniconify(void *data, int type, void *event);
+static Eina_Bool    _ibox_cb_event_border_icon_change(void *data, int type, void *event);
+static Eina_Bool    _ibox_cb_event_border_urgent_change(void *data, int type, void *event);
+static Eina_Bool    _ibox_cb_event_border_zone_set(void *data, int type, void *event);
+static Eina_Bool    _ibox_cb_event_desk_show(void *data, int type, void *event);
 static Config_Item *_ibox_config_item_get(const char *id);
 
 static E_Config_DD *conf_edd = NULL;
@@ -150,13 +150,13 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_geometry_get(o, &x, &y, &w, &h);
    inst->drop_handler =
      e_drop_handler_add(E_OBJECT(inst->gcc), inst,
-			_ibox_inst_cb_enter, _ibox_inst_cb_move,
-			_ibox_inst_cb_leave, _ibox_inst_cb_drop,
-			drop, 1, x, y, w, h);
+                        _ibox_inst_cb_enter, _ibox_inst_cb_move,
+                        _ibox_inst_cb_leave, _ibox_inst_cb_drop,
+                        drop, 1, x, y, w, h);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE,
-				  _ibox_cb_obj_moveresize, inst);
+                                  _ibox_cb_obj_moveresize, inst);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE,
-				  _ibox_cb_obj_moveresize, inst);
+                                  _ibox_cb_obj_moveresize, inst);
    ibox_config->instances = eina_list_append(ibox_config->instances, inst);
    return gcc;
 }
@@ -191,9 +191,10 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
       case E_GADCON_ORIENT_CORNER_TR:
       case E_GADCON_ORIENT_CORNER_BL:
       case E_GADCON_ORIENT_CORNER_BR:
-	_ibox_orient_set(inst->ibox, 1);
-	e_gadcon_client_aspect_set(gcc, eina_list_count(inst->ibox->icons) * 16, 16);
-	break;
+        _ibox_orient_set(inst->ibox, 1);
+        e_gadcon_client_aspect_set(gcc, eina_list_count(inst->ibox->icons) * 16, 16);
+        break;
+
       case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_RIGHT:
@@ -201,11 +202,12 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
       case E_GADCON_ORIENT_CORNER_RT:
       case E_GADCON_ORIENT_CORNER_LB:
       case E_GADCON_ORIENT_CORNER_RB:
-	_ibox_orient_set(inst->ibox, 0);
-	e_gadcon_client_aspect_set(gcc, 16, eina_list_count(inst->ibox->icons) * 16);
-	break;
+        _ibox_orient_set(inst->ibox, 0);
+        e_gadcon_client_aspect_set(gcc, 16, eina_list_count(inst->ibox->icons) * 16);
+        break;
+
       default:
-	break;
+        break;
      }
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
@@ -224,7 +226,7 @@ _gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-ibox.edj",
-	    e_module_dir_get(ibox_config->module));
+            e_module_dir_get(ibox_config->module));
    edje_object_file_set(o, buf, "icon");
    return o;
 }
@@ -234,7 +236,7 @@ _gc_id_new(const E_Gadcon_Client_Class *client_class)
 {
    static char buf[PATH_MAX];
 
-   snprintf(buf, sizeof(buf), "%s.%d", client_class->name, 
+   snprintf(buf, sizeof(buf), "%s.%d", client_class->name,
             eina_list_count(ibox_config->instances) + 1);
    return buf;
 }
@@ -250,8 +252,8 @@ _gc_id_del(const E_Gadcon_Client_Class *client_class __UNUSED__, const char *id 
    ci = _ibox_config_item_get(id);
    if (ci)
      {
-	if (ci->id) eina_stringshare_del(ci->id);
-	ibox_config->items = eina_list_remove(ibox_config->items, ci);
+        if (ci->id) eina_stringshare_del(ci->id);
+        ibox_config->items = eina_list_remove(ibox_config->items, ci);
      }
  */
 }
@@ -291,27 +293,26 @@ _ibox_cb_empty_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    b = data;
    if (!ibox_config->menu)
      {
-	E_Menu *m;
-	E_Menu_Item *mi;
-	int cx, cy;
+        E_Menu *m;
+        E_Menu_Item *mi;
+        int cx, cy;
 
-	m = e_menu_new();
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Settings"));
-	e_util_menu_item_theme_icon_set(mi, "configure");
-	e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, b);
+        m = e_menu_new();
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Settings"));
+        e_util_menu_item_theme_icon_set(mi, "configure");
+        e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, b);
 
-	m = e_gadcon_client_util_menu_items_append(b->inst->gcc, m, 0);
-	e_menu_post_deactivate_callback_set(m, _ibox_cb_menu_post, NULL);
-	ibox_config->menu = m;
+        m = e_gadcon_client_util_menu_items_append(b->inst->gcc, m, 0);
+        e_menu_post_deactivate_callback_set(m, _ibox_cb_menu_post, NULL);
+        ibox_config->menu = m;
 
-	
-	e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
-					  &cx, &cy, NULL, NULL);
-	e_menu_activate_mouse(m,
-			      e_util_zone_current_get(e_manager_current_get()),
-			      cx + ev->output.x, cy + ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+        e_gadcon_canvas_zone_geometry_get(b->inst->gcc->gadcon,
+                                          &cx, &cy, NULL, NULL);
+        e_menu_activate_mouse(m,
+                              e_util_zone_current_get(e_manager_current_get()),
+                              cx + ev->output.x, cy + ev->output.y, 1, 1,
+                              E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
      }
 }
 
@@ -320,33 +321,33 @@ _ibox_empty_handle(IBox *b)
 {
    if (!b->icons)
      {
-	if (!b->o_empty)
-	  {
-	     Evas_Coord w, h;
-	
-	     b->o_empty = evas_object_rectangle_add(evas_object_evas_get(b->o_box));
-	     evas_object_event_callback_add(b->o_empty, EVAS_CALLBACK_MOUSE_DOWN, _ibox_cb_empty_mouse_down, b);
-	     evas_object_color_set(b->o_empty, 0, 0, 0, 0);
-	     evas_object_show(b->o_empty);
-	     e_box_pack_end(b->o_box, b->o_empty);
-	     evas_object_geometry_get(b->o_box, NULL, NULL, &w, &h);
-	     if (e_box_orientation_get(b->o_box))
-	       w = h;
-	     else
-	       h = w;
-	     e_box_pack_options_set(b->o_empty,
-				    1, 1, /* fill */
-				    1, 1, /* expand */
-				    0.5, 0.5, /* align */
-				    w, h, /* min */
-				    9999, 9999 /* max */
-				    );
-	  }
+        if (!b->o_empty)
+          {
+             Evas_Coord w, h;
+
+             b->o_empty = evas_object_rectangle_add(evas_object_evas_get(b->o_box));
+             evas_object_event_callback_add(b->o_empty, EVAS_CALLBACK_MOUSE_DOWN, _ibox_cb_empty_mouse_down, b);
+             evas_object_color_set(b->o_empty, 0, 0, 0, 0);
+             evas_object_show(b->o_empty);
+             e_box_pack_end(b->o_box, b->o_empty);
+             evas_object_geometry_get(b->o_box, NULL, NULL, &w, &h);
+             if (e_box_orientation_get(b->o_box))
+               w = h;
+             else
+               h = w;
+             e_box_pack_options_set(b->o_empty,
+                                    1, 1, /* fill */
+                                    1, 1, /* expand */
+                                    0.5, 0.5, /* align */
+                                    w, h, /* min */
+                                    9999, 9999 /* max */
+                                    );
+          }
      }
    else if (b->o_empty)
      {
-	evas_object_del(b->o_empty);
-	b->o_empty = NULL;
+        evas_object_del(b->o_empty);
+        b->o_empty = NULL;
      }
 }
 
@@ -361,34 +362,34 @@ _ibox_fill(IBox *b)
    bl = e_container_border_list_first(b->zone->container);
    while ((bd = e_container_border_list_next(bl)))
      {
-	ok = 0;
-	if ((b->inst->ci->show_zone == 0) && (bd->iconic))
-	  {
-	     ok = 1;
-	  }
-	else if((b->inst->ci->show_zone == 1) && (bd->iconic))
-	  {
- 	     if (bd->sticky)
- 	       {
- 		  ok = 1;
- 	       }
- 	     else if ((b->inst->ci->show_desk == 0) && (bd->zone == b->zone))
-	       {
-		  ok = 1;
-	       }
-	     else if((b->inst->ci->show_desk == 1) && (bd->zone == b->zone) &&
-		     (bd->desk == e_desk_current_get(b->zone)))
-	       {
-		  ok = 1;
-	       }
-	  }
+        ok = 0;
+        if ((b->inst->ci->show_zone == 0) && (bd->iconic))
+          {
+             ok = 1;
+          }
+        else if ((b->inst->ci->show_zone == 1) && (bd->iconic))
+          {
+             if (bd->sticky)
+               {
+                  ok = 1;
+               }
+             else if ((b->inst->ci->show_desk == 0) && (bd->zone == b->zone))
+               {
+                  ok = 1;
+               }
+             else if ((b->inst->ci->show_desk == 1) && (bd->zone == b->zone) &&
+                      (bd->desk == e_desk_current_get(b->zone)))
+               {
+                  ok = 1;
+               }
+          }
 
-	if (ok)
-	  {
-	     ic = _ibox_icon_new(b, bd);
-	     b->icons = eina_list_append(b->icons, ic);
-	     e_box_pack_end(b->o_box, ic->o_holder);
-	  }
+        if (ok)
+          {
+             ic = _ibox_icon_new(b, bd);
+             b->icons = eina_list_append(b->icons, ic);
+             e_box_pack_end(b->o_box, ic->o_holder);
+          }
      }
    e_container_border_list_free(bl);
 
@@ -401,8 +402,8 @@ _ibox_empty(IBox *b)
 {
    while (b->icons)
      {
-	_ibox_icon_free(b->icons->data);
-	b->icons = eina_list_remove_list(b->icons, b->icons);
+        _ibox_icon_free(b->icons->data);
+        b->icons = eina_list_remove_list(b->icons, b->icons);
      }
    _ibox_empty_handle(b);
 }
@@ -429,14 +430,14 @@ _ibox_resize_handle(IBox *b)
    e_box_freeze(b->o_box);
    for (l = b->icons; l; l = l->next)
      {
-	ic = l->data;
-	e_box_pack_options_set(ic->o_holder,
-			       1, 1, /* fill */
-			       0, 0, /* expand */
-			       0.5, 0.5, /* align */
-			       w, h, /* min */
-			       w, h /* max */
-			       );
+        ic = l->data;
+        e_box_pack_options_set(ic->o_holder,
+                               1, 1, /* fill */
+                               0, 0, /* expand */
+                               0.5, 0.5, /* align */
+                               w, h, /* min */
+                               w, h /* max */
+                               );
      }
    e_box_thaw(b->o_box);
 }
@@ -458,9 +459,9 @@ _ibox_icon_find(IBox *b, E_Border *bd)
 
    for (l = b->icons; l; l = l->next)
      {
-	ic = l->data;
-	
-	if (ic->border == bd) return ic;
+        ic = l->data;
+
+        if (ic->border == bd) return ic;
      }
    return NULL;
 }
@@ -474,10 +475,10 @@ _ibox_icon_at_coord(IBox *b, Evas_Coord x, Evas_Coord y)
    for (l = b->icons; l; l = l->next)
      {
         Evas_Coord dx, dy, dw, dh;
-	ic = l->data;
-	
+        ic = l->data;
+
         evas_object_geometry_get(ic->o_holder, &dx, &dy, &dw, &dh);
-	if (E_INSIDE(x, y, dx, dy, dw, dh)) return ic;
+        if (E_INSIDE(x, y, dx, dy, dw, dh)) return ic;
      }
    return NULL;
 }
@@ -493,8 +494,8 @@ _ibox_icon_new(IBox *b, E_Border *bd)
    ic->border = bd;
    ic->o_holder = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder, "base/theme/modules/ibox",
-			   "e/modules/ibox/icon");
-   evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_IN,  _ibox_cb_icon_mouse_in,  ic);
+                           "e/modules/ibox/icon");
+   evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_IN, _ibox_cb_icon_mouse_in, ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_OUT, _ibox_cb_icon_mouse_out, ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_DOWN, _ibox_cb_icon_mouse_down, ic);
    evas_object_event_callback_add(ic->o_holder, EVAS_CALLBACK_MOUSE_UP, _ibox_cb_icon_mouse_up, ic);
@@ -505,7 +506,7 @@ _ibox_icon_new(IBox *b, E_Border *bd)
 
    ic->o_holder2 = edje_object_add(evas_object_evas_get(b->o_box));
    e_theme_edje_object_set(ic->o_holder2, "base/theme/modules/ibox",
-			   "e/modules/ibox/icon_overlay");
+                           "e/modules/ibox/icon_overlay");
    evas_object_layer_set(ic->o_holder2, 9999);
    evas_object_pass_events_set(ic->o_holder2, 1);
    evas_object_show(ic->o_holder2);
@@ -519,9 +520,9 @@ _ibox_icon_free(IBox_Icon *ic)
 {
    if (ibox_config->menu)
      {
-	e_menu_post_deactivate_callback_set(ibox_config->menu, NULL, NULL);
-	e_object_del(E_OBJECT(ibox_config->menu));
-	ibox_config->menu = NULL;
+        e_menu_post_deactivate_callback_set(ibox_config->menu, NULL, NULL);
+        e_object_del(E_OBJECT(ibox_config->menu));
+        ibox_config->menu = NULL;
      }
    if (ic->ibox->ic_drop_before == ic)
      ic->ibox->ic_drop_before = NULL;
@@ -555,24 +556,28 @@ _ibox_icon_fill_label(IBox_Icon *ic)
    switch (ic->ibox->inst->ci->icon_label)
      {
       case 0:
-	label = ic->border->client.netwm.name;
-	if (!label)
-	  label = ic->border->client.icccm.name;
-	break;
+        label = ic->border->client.netwm.name;
+        if (!label)
+          label = ic->border->client.icccm.name;
+        break;
+
       case 1:
-	label = ic->border->client.icccm.title;
-	break;
+        label = ic->border->client.icccm.title;
+        break;
+
       case 2:
-	label = ic->border->client.icccm.class;
-	break;
+        label = ic->border->client.icccm.class;
+        break;
+
       case 3:
-	label = ic->border->client.netwm.icon_name;
-	if (!label)
-	  label = ic->border->client.icccm.icon_name;
-	break;
+        label = ic->border->client.netwm.icon_name;
+        if (!label)
+          label = ic->border->client.icccm.icon_name;
+        break;
+
       case 4:
-	label = e_border_name_get(ic->border);
-	break;
+        label = e_border_name_get(ic->border);
+        break;
      }
 
    if (!label) label = "?";
@@ -609,13 +614,13 @@ _ibox_zone_find(E_Zone *zone)
 
    for (l = ibox_config->instances; l; l = l->next)
      {
-	Instance *inst;
+        Instance *inst;
 
-	inst = l->data;
-	if (inst->ci->show_zone == 0)
-	  ibox = eina_list_append(ibox, inst->ibox);
-	else if ((inst->ci->show_zone == 1) && (inst->ibox->zone == zone))
-	  ibox = eina_list_append(ibox, inst->ibox);
+        inst = l->data;
+        if (inst->ci->show_zone == 0)
+          ibox = eina_list_append(ibox, inst->ibox);
+        else if ((inst->ci->show_zone == 1) && (inst->ibox->zone == zone))
+          ibox = eina_list_append(ibox, inst->ibox);
      }
    return ibox;
 }
@@ -647,8 +652,8 @@ _ibox_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    _ibox_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibox->inst->ci->show_label)
      {
-	_ibox_icon_fill_label(ic);
-	_ibox_icon_signal_emit(ic, "e,action,show,label", "e");
+        _ibox_icon_fill_label(ic);
+        _ibox_icon_signal_emit(ic, "e,action,show,label", "e");
      }
 }
 
@@ -673,35 +678,35 @@ _ibox_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    ic = data;
    if (ev->button == 1)
      {
-	ic->drag.x = ev->output.x;
-	ic->drag.y = ev->output.y;
-	ic->drag.start = 1;
-	ic->drag.dnd = 0;
+        ic->drag.x = ev->output.x;
+        ic->drag.y = ev->output.y;
+        ic->drag.start = 1;
+        ic->drag.dnd = 0;
      }
    else if ((ev->button == 3) && (!ibox_config->menu))
      {
-	E_Menu *m;
-	E_Menu_Item *mi;
-	int cx, cy;
+        E_Menu *m;
+        E_Menu_Item *mi;
+        int cx, cy;
 
-	m = e_menu_new();
+        m = e_menu_new();
 
-	/* FIXME: other icon options go here too */
-	mi = e_menu_item_new(m);
-	e_menu_item_label_set(mi, _("Settings"));
-	e_util_menu_item_theme_icon_set(mi, "configure");
-	e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, ic->ibox);
+        /* FIXME: other icon options go here too */
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Settings"));
+        e_util_menu_item_theme_icon_set(mi, "configure");
+        e_menu_item_callback_set(mi, _ibox_cb_menu_configuration, ic->ibox);
 
-	m = e_gadcon_client_util_menu_items_append(ic->ibox->inst->gcc, m, 0);
-	e_menu_post_deactivate_callback_set(m, _ibox_cb_menu_post, NULL);
-	ibox_config->menu = m;
-	
-	e_gadcon_canvas_zone_geometry_get(ic->ibox->inst->gcc->gadcon,
-					  &cx, &cy, NULL, NULL);
-	e_menu_activate_mouse(m,
-			      e_util_zone_current_get(e_manager_current_get()),
-			      cx + ev->output.x, cy + ev->output.y, 1, 1,
-			      E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+        m = e_gadcon_client_util_menu_items_append(ic->ibox->inst->gcc, m, 0);
+        e_menu_post_deactivate_callback_set(m, _ibox_cb_menu_post, NULL);
+        ibox_config->menu = m;
+
+        e_gadcon_canvas_zone_geometry_get(ic->ibox->inst->gcc->gadcon,
+                                          &cx, &cy, NULL, NULL);
+        e_menu_activate_mouse(m,
+                              e_util_zone_current_get(e_manager_current_get()),
+                              cx + ev->output.x, cy + ev->output.y, 1, 1,
+                              E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
      }
 }
 
@@ -715,8 +720,8 @@ _ibox_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    ic = data;
    if ((ev->button == 1) && (!ic->drag.dnd))
      {
-	e_border_uniconify(ic->border);
-	e_border_focus_set(ic->border, 1, 1);
+        e_border_uniconify(ic->border);
+        e_border_focus_set(ic->border, 1, 1);
      }
 }
 
@@ -730,37 +735,37 @@ _ibox_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    ic = data;
    if (ic->drag.start)
      {
-	int dx, dy;
+        int dx, dy;
 
-	dx = ev->cur.output.x - ic->drag.x;
-	dy = ev->cur.output.y - ic->drag.y;
-	if (((dx * dx) + (dy * dy)) >
-	    (e_config->drag_resist * e_config->drag_resist))
-	  {
-	     E_Drag *d;
-	     Evas_Object *o;
-	     Evas_Coord x, y, w, h;
-	     const char *drag_types[] = { "enlightenment/border" };
-	     E_Gadcon_Client *gcc;
-	     ic->drag.dnd = 1;
-	     ic->drag.start = 0;
+        dx = ev->cur.output.x - ic->drag.x;
+        dy = ev->cur.output.y - ic->drag.y;
+        if (((dx * dx) + (dy * dy)) >
+            (e_config->drag_resist * e_config->drag_resist))
+          {
+             E_Drag *d;
+             Evas_Object *o;
+             Evas_Coord x, y, w, h;
+             const char *drag_types[] = { "enlightenment/border" };
+             E_Gadcon_Client *gcc;
+             ic->drag.dnd = 1;
+             ic->drag.start = 0;
 
-	     evas_object_geometry_get(ic->o_icon, &x, &y, &w, &h);
-	     d = e_drag_new(ic->ibox->inst->gcc->gadcon->zone->container,
-			    x, y, drag_types, 1,
-			    ic->border, -1, NULL, _ibox_cb_drag_finished);
-	     o = e_border_icon_add(ic->border, e_drag_evas_get(d));
-	     e_drag_object_set(d, o);
+             evas_object_geometry_get(ic->o_icon, &x, &y, &w, &h);
+             d = e_drag_new(ic->ibox->inst->gcc->gadcon->zone->container,
+                            x, y, drag_types, 1,
+                            ic->border, -1, NULL, _ibox_cb_drag_finished);
+             o = e_border_icon_add(ic->border, e_drag_evas_get(d));
+             e_drag_object_set(d, o);
 
-	     e_drag_resize(d, w, h);
-	     e_drag_start(d, ic->drag.x, ic->drag.y);
-	     e_object_ref(E_OBJECT(ic->border));
-	     ic->ibox->icons = eina_list_remove(ic->ibox->icons, ic);
-	     _ibox_resize_handle(ic->ibox);
-	     gcc = ic->ibox->inst->gcc;
-	     _gc_orient(gcc, -1);
-	     _ibox_icon_free(ic);
-	  }
+             e_drag_resize(d, w, h);
+             e_drag_start(d, ic->drag.x, ic->drag.y);
+             e_object_ref(E_OBJECT(ic->border));
+             ic->ibox->icons = eina_list_remove(ic->ibox->icons, ic);
+             _ibox_resize_handle(ic->ibox);
+             gcc = ic->ibox->inst->gcc;
+             _gc_orient(gcc, -1);
+             _ibox_icon_free(ic);
+          }
      }
 }
 
@@ -840,37 +845,37 @@ _ibox_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
    inst->ibox->dnd_y = y;
 
    if (inst->ibox->o_drop)
-      e_box_unpack(inst->ibox->o_drop);
+     e_box_unpack(inst->ibox->o_drop);
    ic = _ibox_icon_at_coord(inst->ibox, x, y);
    inst->ibox->ic_drop_before = ic;
    if (ic)
      {
-	Evas_Coord ix, iy, iw, ih;
-	int before = 0;
-	
-	evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
-	if (e_box_orientation_get(inst->ibox->o_box))
-	  {
-	     if (x < (ix + (iw / 2))) before = 1;
-	  }
-	else
-	  {
-	     if (y < (iy + (ih / 2))) before = 1;
-	  }
-	if (before)
-	  e_box_pack_before(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
-	else
-	  e_box_pack_after(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
-	inst->ibox->drop_before = before;
+        Evas_Coord ix, iy, iw, ih;
+        int before = 0;
+
+        evas_object_geometry_get(ic->o_holder, &ix, &iy, &iw, &ih);
+        if (e_box_orientation_get(inst->ibox->o_box))
+          {
+             if (x < (ix + (iw / 2))) before = 1;
+          }
+        else
+          {
+             if (y < (iy + (ih / 2))) before = 1;
+          }
+        if (before)
+          e_box_pack_before(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
+        else
+          e_box_pack_after(inst->ibox->o_box, inst->ibox->o_drop, ic->o_holder);
+        inst->ibox->drop_before = before;
      }
    else e_box_pack_end(inst->ibox->o_box, inst->ibox->o_drop);
    e_box_pack_options_set(inst->ibox->o_drop,
-			  1, 1, /* fill */
-			  1, 1, /* expand */
-			  0.5, 0.5, /* align */
-			  1, 1, /* min */
-			  -1, -1 /* max */
-			  );
+                          1, 1, /* fill */
+                          1, 1, /* expand */
+                          0.5, 0.5, /* align */
+                          1, 1, /* min */
+                          -1, -1 /* max */
+                          );
    _ibox_resize_handle(inst->ibox);
    _gc_orient(inst->gcc, -1);
 }
@@ -891,9 +896,9 @@ _ibox_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE, _ibox_cb_drop_move, inst->ibox);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE, _ibox_cb_drop_resize, inst->ibox);
    e_theme_edje_object_set(o, "base/theme/modules/ibox",
-			   "e/modules/ibox/drop");
+                           "e/modules/ibox/drop");
    e_theme_edje_object_set(o2, "base/theme/modules/ibox",
-			   "e/modules/ibox/drop_overlay");
+                           "e/modules/ibox/drop_overlay");
    evas_object_layer_set(o2, 19999);
    evas_object_show(o);
    evas_object_show(o2);
@@ -944,8 +949,8 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
    inst = data;
    if (!strcmp(type, "enlightenment/border"))
      {
-	bd = ev->data;
-	if (!bd) return;
+        bd = ev->data;
+        if (!bd) return;
      }
    else return;
 
@@ -954,38 +959,38 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
    ic2 = inst->ibox->ic_drop_before;
    if (ic2)
      {
-	/* Add new eapp before this icon */
-	if (!inst->ibox->drop_before)
-	  {
-	     for (l = inst->ibox->icons; l; l = l->next)
-	       {
-		  if (l->data == ic2)
-		    {
-		       if (l->next)
-			 ic2 = l->next->data;
-		       else
-			 ic2 = NULL;
-		       break;
-		    }
-	       }
-	  }
-	if (!ic2) goto atend;
-	b = inst->ibox;
-	if (_ibox_icon_find(b, bd)) return;
-	ic = _ibox_icon_new(b, bd);
-	if (!ic) return;
-	b->icons = eina_list_prepend_relative(b->icons, ic, ic2);
-	e_box_pack_before(b->o_box, ic->o_holder, ic2->o_holder);
+        /* Add new eapp before this icon */
+        if (!inst->ibox->drop_before)
+          {
+             for (l = inst->ibox->icons; l; l = l->next)
+               {
+                  if (l->data == ic2)
+                    {
+                       if (l->next)
+                         ic2 = l->next->data;
+                       else
+                         ic2 = NULL;
+                       break;
+                    }
+               }
+          }
+        if (!ic2) goto atend;
+        b = inst->ibox;
+        if (_ibox_icon_find(b, bd)) return;
+        ic = _ibox_icon_new(b, bd);
+        if (!ic) return;
+        b->icons = eina_list_prepend_relative(b->icons, ic, ic2);
+        e_box_pack_before(b->o_box, ic->o_holder, ic2->o_holder);
      }
    else
      {
-	atend:
-	b = inst->ibox;
-	if (_ibox_icon_find(b, bd)) return;
-	ic = _ibox_icon_new(b, bd);
-	if (!ic) return;
-	b->icons = eina_list_append(b->icons, ic);
-	e_box_pack_end(b->o_box, ic->o_holder);
+atend:
+        b = inst->ibox;
+        if (_ibox_icon_find(b, bd)) return;
+        ic = _ibox_icon_new(b, bd);
+        if (!ic) return;
+        b->icons = eina_list_append(b->icons, ic);
+        e_box_pack_end(b->o_box, ic->o_holder);
      }
 
    evas_object_del(inst->ibox->o_drop);
@@ -1011,24 +1016,24 @@ _ibox_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__, void *even
    desk = e_desk_current_get(ev->border->zone);
    if (ev->border->iconic)
      {
-	Eina_List *l, *ibox;
-	ibox = _ibox_zone_find(ev->border->zone);
-	for (l = ibox; l; l = l->next)
-	  {
-	     b = l->data;
-	     if (_ibox_icon_find(b, ev->border)) continue;
-	     if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
-	     ic = _ibox_icon_new(b, ev->border);
-	     if (!ic) continue;
-	     b->icons = eina_list_append(b->icons, ic);
-	     e_box_pack_end(b->o_box, ic->o_holder);
-	     _ibox_empty_handle(b);
-	     _ibox_resize_handle(b);
-	     _gc_orient(b->inst->gcc, -1);
-	  }
+        Eina_List *l, *ibox;
+        ibox = _ibox_zone_find(ev->border->zone);
+        for (l = ibox; l; l = l->next)
+          {
+             b = l->data;
+             if (_ibox_icon_find(b, ev->border)) continue;
+             if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
+             ic = _ibox_icon_new(b, ev->border);
+             if (!ic) continue;
+             b->icons = eina_list_append(b->icons, ic);
+             e_box_pack_end(b->o_box, ic->o_holder);
+             _ibox_empty_handle(b);
+             _ibox_resize_handle(b);
+             _gc_orient(b->inst->gcc, -1);
+          }
 
-	while (ibox)
-	  ibox = eina_list_remove_list(ibox, ibox);
+        while (ibox)
+          ibox = eina_list_remove_list(ibox, ibox);
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1046,14 +1051,14 @@ _ibox_cb_event_border_remove(void *data __UNUSED__, int type __UNUSED__, void *e
    ibox = _ibox_zone_find(ev->border->zone);
    for (l = ibox; l; l = l->next)
      {
-	b = l->data;
-	ic = _ibox_icon_find(b, ev->border);
-	if (!ic) continue;
-	_ibox_icon_free(ic);
-	b->icons = eina_list_remove(b->icons, ic);
-	_ibox_empty_handle(b);
-	_ibox_resize_handle(b);
-	_gc_orient(b->inst->gcc, -1);
+        b = l->data;
+        ic = _ibox_icon_find(b, ev->border);
+        if (!ic) continue;
+        _ibox_icon_free(ic);
+        b->icons = eina_list_remove(b->icons, ic);
+        _ibox_empty_handle(b);
+        _ibox_resize_handle(b);
+        _gc_orient(b->inst->gcc, -1);
      }
    while (ibox)
      ibox = eina_list_remove_list(ibox, ibox);
@@ -1077,16 +1082,16 @@ _ibox_cb_event_border_iconify(void *data __UNUSED__, int type __UNUSED__, void *
    ibox = _ibox_zone_find(ev->border->zone);
    for (l = ibox; l; l = l->next)
      {
-	b = l->data;
-	if (_ibox_icon_find(b, ev->border)) continue;
-	if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
-	ic = _ibox_icon_new(b, ev->border);
-	if (!ic) continue;
-	b->icons = eina_list_append(b->icons, ic);
-	e_box_pack_end(b->o_box, ic->o_holder);
-	_ibox_empty_handle(b);
-	_ibox_resize_handle(b);
-	_gc_orient(b->inst->gcc, -1);
+        b = l->data;
+        if (_ibox_icon_find(b, ev->border)) continue;
+        if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
+        ic = _ibox_icon_new(b, ev->border);
+        if (!ic) continue;
+        b->icons = eina_list_append(b->icons, ic);
+        e_box_pack_end(b->o_box, ic->o_holder);
+        _ibox_empty_handle(b);
+        _ibox_resize_handle(b);
+        _gc_orient(b->inst->gcc, -1);
      }
 
    while (ibox)
@@ -1108,14 +1113,14 @@ _ibox_cb_event_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void
    ibox = _ibox_zone_find(ev->border->zone);
    for (l = ibox; l; l = l->next)
      {
-	b = l->data;
-	ic = _ibox_icon_find(b, ev->border);
-	if (!ic) continue;
-	_ibox_icon_free(ic);
-	b->icons = eina_list_remove(b->icons, ic);
-	_ibox_empty_handle(b);
-	_ibox_resize_handle(b);
-	_gc_orient(b->inst->gcc, -1);
+        b = l->data;
+        ic = _ibox_icon_find(b, ev->border);
+        if (!ic) continue;
+        _ibox_icon_free(ic);
+        b->icons = eina_list_remove(b->icons, ic);
+        _ibox_empty_handle(b);
+        _ibox_resize_handle(b);
+        _gc_orient(b->inst->gcc, -1);
      }
 
    while (ibox)
@@ -1137,11 +1142,11 @@ _ibox_cb_event_border_icon_change(void *data __UNUSED__, int type __UNUSED__, vo
    ibox = _ibox_zone_find(ev->border->zone);
    for (l = ibox; l; l = l->next)
      {
-	b = l->data;
-	ic = _ibox_icon_find(b, ev->border);
-	if (!ic) continue;
-	_ibox_icon_empty(ic);
-	_ibox_icon_fill(ic);
+        b = l->data;
+        ic = _ibox_icon_find(b, ev->border);
+        if (!ic) continue;
+        _ibox_icon_empty(ic);
+        _ibox_icon_fill(ic);
      }
 
    while (ibox)
@@ -1163,20 +1168,20 @@ _ibox_cb_event_border_urgent_change(void *data __UNUSED__, int type __UNUSED__, 
    ibox = _ibox_zone_find(ev->border->zone);
    for (l = ibox; l; l = l->next)
      {
-	b = l->data;
-	ic = _ibox_icon_find(b, ev->border);
-	if (!ic) continue;
-	if (ev->border->client.icccm.urgent)
-	  {
-	     e_gadcon_urgent_show(b->inst->gcc->gadcon);
-	     edje_object_signal_emit(ic->o_holder, "e,state,urgent", "e");
-	     edje_object_signal_emit(ic->o_holder2, "e,state,urgent", "e");
-	  }
-	else
-	  {
-	     edje_object_signal_emit(ic->o_holder, "e,state,not_urgent", "e");
-	     edje_object_signal_emit(ic->o_holder2, "e,state,not_urgent", "e");
-	  }
+        b = l->data;
+        ic = _ibox_icon_find(b, ev->border);
+        if (!ic) continue;
+        if (ev->border->client.icccm.urgent)
+          {
+             e_gadcon_urgent_show(b->inst->gcc->gadcon);
+             edje_object_signal_emit(ic->o_holder, "e,state,urgent", "e");
+             edje_object_signal_emit(ic->o_holder2, "e,state,urgent", "e");
+          }
+        else
+          {
+             edje_object_signal_emit(ic->o_holder, "e,state,not_urgent", "e");
+             edje_object_signal_emit(ic->o_holder2, "e,state,not_urgent", "e");
+          }
      }
 
    return ECORE_CALLBACK_PASS_ON;
@@ -1207,14 +1212,14 @@ _ibox_cb_event_desk_show(void *data __UNUSED__, int type __UNUSED__, void *event
    ibox = _ibox_zone_find(ev->desk->zone);
    for (l = ibox; l; l = l->next)
      {
-	b = l->data;
-	if (b->inst->ci->show_desk)
-	  {
-	     _ibox_empty(b);
-	     _ibox_fill(b);
-	     _ibox_resize_handle(b);
-	     _gc_orient(b->inst->gcc, -1);
-	  }
+        b = l->data;
+        if (b->inst->ci->show_desk)
+          {
+             _ibox_empty(b);
+             _ibox_fill(b);
+             _ibox_resize_handle(b);
+             _gc_orient(b->inst->gcc, -1);
+          }
      }
 
    while (ibox)
@@ -1246,15 +1251,15 @@ _ibox_config_update(Config_Item *ci)
    Eina_List *l;
    for (l = ibox_config->instances; l; l = l->next)
      {
-	Instance *inst;
+        Instance *inst;
 
-	inst = l->data;
-	if (inst->ci != ci) continue;
+        inst = l->data;
+        if (inst->ci != ci) continue;
 
-	_ibox_empty(inst->ibox);
-	_ibox_fill(inst->ibox);
-	_ibox_resize_handle(inst->ibox);
-	_gc_orient(inst->gcc, -1);
+        _ibox_empty(inst->ibox);
+        _ibox_fill(inst->ibox);
+        _ibox_resize_handle(inst->ibox);
+        _gc_orient(inst->gcc, -1);
      }
 }
 
@@ -1268,14 +1273,14 @@ _ibox_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
    b = data;
    for (l = ibox_config->config_dialog; l; l = l->next)
      {
-	E_Config_Dialog *cfd;
+        E_Config_Dialog *cfd;
 
-	cfd = l->data;
-	if (cfd->data == b->inst->ci)
-	  {
-	     ok = 0;
-	     break;
-	  }
+        cfd = l->data;
+        if (cfd->data == b->inst->ci)
+          {
+             ok = 0;
+             break;
+          }
      }
    if (ok) _config_ibox_module(b->inst->ci);
 }
@@ -1286,7 +1291,7 @@ _ibox_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
 EAPI E_Module_Api e_modapi =
 {
    E_MODULE_API_VERSION,
-     "IBox"
+   "IBox"
 };
 
 EAPI void *
@@ -1313,46 +1318,46 @@ e_modapi_init(E_Module *m)
    ibox_config = e_config_domain_load("module.ibox", conf_edd);
    if (!ibox_config)
      {
-	Config_Item *ci;
+        Config_Item *ci;
 
-	ibox_config = E_NEW(Config, 1);
-	
-	ci = E_NEW(Config_Item, 1);
-	ci->id = eina_stringshare_add("ibox.1");
-	ci->show_label = 0;
-	ci->show_zone = 1;
-	ci->show_desk = 0;
-	ci->icon_label = 0;
-	ibox_config->items = eina_list_append(ibox_config->items, ci);
+        ibox_config = E_NEW(Config, 1);
+
+        ci = E_NEW(Config_Item, 1);
+        ci->id = eina_stringshare_add("ibox.1");
+        ci->show_label = 0;
+        ci->show_zone = 1;
+        ci->show_desk = 0;
+        ci->icon_label = 0;
+        ibox_config->items = eina_list_append(ibox_config->items, ci);
      }
-   
+
    ibox_config->module = m;
-   
+
    ibox_config->handlers = eina_list_append
-     (ibox_config->handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_ADD, _ibox_cb_event_border_add, NULL));
+       (ibox_config->handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_ADD, _ibox_cb_event_border_add, NULL));
    ibox_config->handlers = eina_list_append
-     (ibox_config->handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_REMOVE, _ibox_cb_event_border_remove, NULL));
+       (ibox_config->handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_REMOVE, _ibox_cb_event_border_remove, NULL));
    ibox_config->handlers = eina_list_append
-     (ibox_config->handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_ICONIFY, _ibox_cb_event_border_iconify, NULL));
+       (ibox_config->handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_ICONIFY, _ibox_cb_event_border_iconify, NULL));
    ibox_config->handlers = eina_list_append
-     (ibox_config->handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_UNICONIFY, _ibox_cb_event_border_uniconify, NULL));
+       (ibox_config->handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_UNICONIFY, _ibox_cb_event_border_uniconify, NULL));
    ibox_config->handlers = eina_list_append
-     (ibox_config->handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_ICON_CHANGE, _ibox_cb_event_border_icon_change, NULL));
+       (ibox_config->handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_ICON_CHANGE, _ibox_cb_event_border_icon_change, NULL));
    ibox_config->handlers = eina_list_append
-     (ibox_config->handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_URGENT_CHANGE,
-       _ibox_cb_event_border_urgent_change, NULL));
+       (ibox_config->handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_URGENT_CHANGE,
+         _ibox_cb_event_border_urgent_change, NULL));
    ibox_config->handlers = eina_list_append
-     (ibox_config->handlers, ecore_event_handler_add
-      (E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL));
+       (ibox_config->handlers, ecore_event_handler_add
+         (E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL));
    ibox_config->handlers = eina_list_append
-     (ibox_config->handlers, ecore_event_handler_add
-      (E_EVENT_DESK_SHOW, _ibox_cb_event_desk_show, NULL));
+       (ibox_config->handlers, ecore_event_handler_add
+         (E_EVENT_DESK_SHOW, _ibox_cb_event_desk_show, NULL));
 
 /* FIXME: add these later for things taskbar-like functionality
    ibox_config->handlers = eina_list_append
@@ -1382,8 +1387,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    while (ibox_config->handlers)
      {
-	ecore_event_handler_del(ibox_config->handlers->data);
-	ibox_config->handlers = eina_list_remove_list(ibox_config->handlers, ibox_config->handlers);
+        ecore_event_handler_del(ibox_config->handlers->data);
+        ibox_config->handlers = eina_list_remove_list(ibox_config->handlers, ibox_config->handlers);
      }
 
    while (ibox_config->config_dialog)
@@ -1394,19 +1399,19 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    if (ibox_config->menu)
      {
-	e_menu_post_deactivate_callback_set(ibox_config->menu, NULL, NULL);
-	e_object_del(E_OBJECT(ibox_config->menu));
-	ibox_config->menu = NULL;
+        e_menu_post_deactivate_callback_set(ibox_config->menu, NULL, NULL);
+        e_object_del(E_OBJECT(ibox_config->menu));
+        ibox_config->menu = NULL;
      }
    while (ibox_config->items)
      {
-	Config_Item *ci;
-	
-	ci = ibox_config->items->data;
-	ibox_config->items = eina_list_remove_list(ibox_config->items, ibox_config->items);
-	if (ci->id)
-	  eina_stringshare_del(ci->id);
-	free(ci);
+        Config_Item *ci;
+
+        ci = ibox_config->items->data;
+        ibox_config->items = eina_list_remove_list(ibox_config->items, ibox_config->items);
+        if (ci->id)
+          eina_stringshare_del(ci->id);
+        free(ci);
      }
 
    free(ibox_config);
@@ -1422,3 +1427,4 @@ e_modapi_save(E_Module *m __UNUSED__)
    e_config_domain_save("module.ibox", conf_edd, ibox_config);
    return 1;
 }
+
