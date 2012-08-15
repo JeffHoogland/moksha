@@ -54,7 +54,7 @@ _backlight_gadget_update(Instance *inst)
 static void
 _backlight_input_win_del(Instance *inst)
 {
-   if (inst->input_win) return;
+   if (!inst->input_win) return;
    e_grabinput_release(0, inst->input_win);
    ecore_x_window_free(inst->input_win);
    inst->input_win = 0;
