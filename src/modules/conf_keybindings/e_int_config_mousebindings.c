@@ -1322,8 +1322,8 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
                                               ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
                                                                       _grab_mouse_wheel_cb, cfdata));
 
+   e_dialog_parent_set(cfdata->locals.dia, cfdata->cfd->dia->win);
    e_dialog_show(cfdata->locals.dia);
-   ecore_x_icccm_transient_for_set(cfdata->locals.dia->win->evas_win, cfdata->cfd->dia->win->evas_win);
 }
 
 static void
