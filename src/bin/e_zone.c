@@ -44,6 +44,7 @@ static void        _e_zone_object_del_attach(void *o);
 static E_Zone_Edge _e_zone_detect_edge(E_Zone        *zone,
                                        Ecore_X_Window win);
 static void        _e_zone_edge_move_resize(E_Zone *zone);
+static void        _e_zone_border_geometry_update(E_Zone *zone);
 
 EAPI int E_EVENT_ZONE_DESK_COUNT_SET = 0;
 EAPI int E_EVENT_POINTER_WARP = 0;
@@ -299,6 +300,7 @@ e_zone_move(E_Zone *zone,
         ecore_evas_move(zone->black_ecore_evas, zone->x, zone->y);
         ecore_evas_resize(zone->black_ecore_evas, zone->w, zone->h);
      }
+   _e_zone_border_geometry_update(zone);
 }
 
 EAPI void
@@ -331,6 +333,7 @@ e_zone_resize(E_Zone *zone,
         ecore_evas_move(zone->black_ecore_evas, zone->x, zone->y);
         ecore_evas_resize(zone->black_ecore_evas, zone->w, zone->h);
      }
+   _e_zone_border_geometry_update(zone);
 }
 
 EAPI void
@@ -374,6 +377,7 @@ e_zone_move_resize(E_Zone *zone,
         ecore_evas_move(zone->black_ecore_evas, zone->x, zone->y);
         ecore_evas_resize(zone->black_ecore_evas, zone->w, zone->h);
      }
+   _e_zone_border_geometry_update(zone);
 }
 
 EAPI void
@@ -1829,3 +1833,25 @@ _e_zone_edge_move_resize(E_Zone *zone)
      ecore_x_window_move_resize(zone->corner.bottom_left,
                                 zone->x + zone->w - cw - 2, zone->y + zone->h - 1, cw, 1);
 }
+
+static void
+_e_zone_border_geometry_update(E_Zone *zone)
+{
+   Eina_List *borders, *l;
+   E_Border *bd;
+   unsigned int zgeom[4];
+   
+   zgeom[0] = zone->x;
+   zgeom[1] = zone->y;
+   zgeom[2] = zone->w;
+   zgeom[3] = zone->h;
+   borders = e_border_client_list();
+   EINA_LIST_FOREACH(borders, l, bd)
+     {
+        if (bd->zone == zone)
+          ecore_x_window_prop_card32_set(bd->client.win, 
+                                         E_ATOM_ZONE_GEOMETRY, 
+                                         zgeom, 4);
+     }
+}
+

@@ -708,6 +708,15 @@ e_border_new(E_Container   *con,
    ecore_x_window_prop_card32_set(win, E_ATOM_MANAGED, &managed, 1);
    ecore_x_window_prop_card32_set(win, E_ATOM_CONTAINER, &bd->zone->container->num, 1);
    ecore_x_window_prop_card32_set(win, E_ATOM_ZONE, &bd->zone->num, 1);
+     {
+        unsigned int zgeom[4];
+        
+        zgeom[0] = bd->zone->x;
+        zgeom[1] = bd->zone->y;
+        zgeom[2] = bd->zone->w;
+        zgeom[3] = bd->zone->h;
+        ecore_x_window_prop_card32_set(win, E_ATOM_ZONE_GEOMETRY, zgeom, 4);
+     }
    e_desk_xy_get(bd->desk, &deskx, &desky);
    desk[0] = deskx;
    desk[1] = desky;
@@ -864,6 +873,18 @@ e_border_zone_set(E_Border *bd,
    ecore_event_add(E_EVENT_BORDER_ZONE_SET, ev, _e_border_event_border_zone_set_free, NULL);
 
    ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ZONE, &bd->zone->num, 1);
+   // XXXXXXXXXXXXXXXXXXXXXXXXX
+   // XXX ZZZZZZZZZZZZZZZZZZZzz
+   // need to adjust this if zone pos/size changes
+     {
+        unsigned int zgeom[4];
+        
+        zgeom[0] = bd->zone->x;
+        zgeom[1] = bd->zone->y;
+        zgeom[2] = bd->zone->w;
+        zgeom[3] = bd->zone->h;
+        ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ZONE_GEOMETRY, zgeom, 4);
+     }
    e_remember_update(bd);
 }
 
