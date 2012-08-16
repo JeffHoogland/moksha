@@ -13,9 +13,7 @@ static void         _cb_reset(void *data, void *data2);
 static void         _cb_dialog_yes(void *data);
 static void         _cb_dialog_destroy(void *data);
 
-E_Dialog           *_dia_new_profile(E_Config_Dialog_Data *cfdata);
-static void         _new_profile_cb_close(void *data, E_Dialog *dia);
-static void         _new_profile_cb_ok(void *data, E_Dialog *dia);
+static void         _new_profile_cb_ok(char *text, void *data);
 static void         _new_profile_cb_dia_del(void *obj);
 
 struct _E_Config_Dialog_Data
@@ -29,8 +27,7 @@ struct _E_Config_Dialog_Data
    Evas_Object     *o_textlabel;
    const char      *sel_profile;
 
-   E_Dialog        *dia_new_profile;
-   char            *new_profile;
+   E_Entry_Dialog *dia_new_profile;
 };
 
 typedef struct _Del_Profile_Confirm_Data Del_Profile_Confirm_Data;
@@ -304,9 +301,16 @@ _cb_add(void *data, void *data2 __UNUSED__)
    if (!cfdata) return;
 
    if (cfdata->dia_new_profile)
-     e_win_raise(cfdata->dia_new_profile->win);
+     e_win_raise(cfdata->dia_new_profile->dia->win);
    else
-     cfdata->dia_new_profile = _dia_new_profile(cfdata);
+     {
+        cfdata->dia_new_profile = e_entry_dialog_show(_("Add New Profile"), NULL,
+                                             _("Name:"), NULL, NULL, NULL,
+                                             _new_profile_cb_ok,
+                                             NULL, cfdata);
+        e_object_data_set(E_OBJECT(cfdata->dia_new_profile), cfdata);
+        e_object_del_attach_func_set(E_OBJECT(cfdata->dia_new_profile), _new_profile_cb_dia_del);
+     }
 }
 
 static void
@@ -392,61 +396,8 @@ _cb_dialog_destroy(void *data)
    E_FREE(d);
 }
 
-E_Dialog *
-_dia_new_profile(E_Config_Dialog_Data *cfdata)
-{
-   E_Dialog *dia;
-   Evas *evas;
-   Evas_Coord mw, mh;
-   Evas_Object *ot, *ob;
-
-   dia = e_dialog_new(cfdata->cfd->con, "E", "profiles_new_profile_dialog");
-   if (!dia) return NULL;
-   dia->data = cfdata;
-
-   e_object_del_attach_func_set(E_OBJECT(dia), _new_profile_cb_dia_del);
-   e_win_centered_set(dia->win, 1);
-
-   evas = e_win_evas_get(dia->win);
-
-   e_dialog_title_set(dia, _("Add New Profile"));
-
-   ot = e_widget_table_add(evas, 0);
-   ob = e_widget_label_add(evas, _("Name:"));
-   e_widget_table_object_append(ot, ob,
-                                0, 0, 1, 1,
-                                0, 1, 0, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->new_profile), NULL, NULL, NULL);
-   e_widget_size_min_set(ob, 100, 1);
-   e_widget_table_object_append(ot, ob,
-                                1, 0, 1, 1,
-                                1, 1, 1, 0);
-   e_widget_size_min_get(ot, &mw, &mh);
-   e_dialog_content_set(dia, ot, mw, mh);
-
-   e_dialog_button_add(dia, _("Add"), NULL, _new_profile_cb_ok, cfdata);
-   e_dialog_button_add(dia, _("Cancel"), NULL, _new_profile_cb_close, cfdata);
-
-   e_dialog_resizable_set(dia, 0);
-   e_dialog_show(dia);
-
-   return dia;
-}
-
 static void
-_new_profile_cb_close(void *data, E_Dialog *dia)
-{
-   E_Config_Dialog_Data *cfdata;
-   cfdata = data;
-   if (!cfdata) return;
-
-   e_object_unref(E_OBJECT(dia));
-   cfdata->dia_new_profile = NULL;
-   cfdata->new_profile = NULL;
-}
-
-static void
-_new_profile_cb_ok(void *data, E_Dialog *dia)
+_new_profile_cb_ok(char *text, void *data)
 {
    E_Config_Dialog_Data *cfdata;
    char cur_profile[1024];
@@ -456,28 +407,22 @@ _new_profile_cb_ok(void *data, E_Dialog *dia)
 
    snprintf(cur_profile, sizeof(cur_profile), "%s", e_config_profile_get());
 
-   if (cfdata->new_profile)
+   if (text && text[0])
      {
-        e_config_profile_add(cfdata->new_profile);
-        e_config_profile_set(cfdata->new_profile);
+        e_config_profile_add(text);
+        e_config_profile_set(text);
         e_config_save();
         e_config_profile_set(cur_profile);
      }
 
-   e_object_unref(E_OBJECT(dia));
-   cfdata->dia_new_profile = NULL;
-   cfdata->new_profile = NULL;
    _ilist_fill(cfdata);
 }
 
 static void
-_new_profile_cb_dia_del(void *obj)
+_new_profile_cb_dia_del(void *data)
 {
-   E_Dialog *dia = obj;
-   E_Config_Dialog_Data *cfdata = dia->data;
+   E_Config_Dialog_Data *cfdata = e_object_data_get(data);
 
    cfdata->dia_new_profile = NULL;
-   cfdata->new_profile = NULL;
-   e_object_unref(E_OBJECT(dia));
 }
 
