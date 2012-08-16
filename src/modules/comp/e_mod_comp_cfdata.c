@@ -97,6 +97,11 @@ e_mod_comp_cfdata_config_new(void)
 
    cfg->match.borders = NULL;
 
+   mat = E_NEW(Match, 1);
+   cfg->match.borders = eina_list_append(cfg->match.borders, mat);
+   mat->fullscreen = 1;
+   mat->shadow_style = eina_stringshare_add("fullscreen");
+   
    cfg->match.overrides = NULL;
    
    mat = E_NEW(Match, 1);
@@ -110,11 +115,6 @@ e_mod_comp_cfdata_config_new(void)
    mat->name = eina_stringshare_add("E");
    mat->clas = eina_stringshare_add("everything");
    mat->shadow_style = eina_stringshare_add("everything");
-   
-   mat = E_NEW(Match, 1);
-   cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
-   mat->fullscreen = 1;
-   mat->shadow_style = eina_stringshare_add("fullscreen");
    
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
