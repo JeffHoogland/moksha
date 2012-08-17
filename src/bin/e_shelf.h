@@ -56,6 +56,7 @@ typedef struct E_Event_Shelf
 typedef struct E_Event_Shelf E_Event_Shelf_Add;
 
 EAPI extern int E_EVENT_SHELF_ADD;
+EAPI extern int E_EVENT_SHELF_DEL;
 
 EINTERN int              e_shelf_init(void);
 EINTERN int              e_shelf_shutdown(void);

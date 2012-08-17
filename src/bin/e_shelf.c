@@ -40,12 +40,14 @@ static Eina_List *dummies = NULL;
 static Eina_Hash *winid_shelves = NULL;
 
 EAPI int E_EVENT_SHELF_ADD = -1;
+EAPI int E_EVENT_SHELF_DEL = -1;
 
 /* externally accessible functions */
 EINTERN int
 e_shelf_init(void)
 {
    E_EVENT_SHELF_ADD = ecore_event_type_new();
+   E_EVENT_SHELF_DEL = ecore_event_type_new();
    return 1;
 }
 
@@ -954,8 +956,9 @@ _e_shelf_del_cb(void *d)
 }
 
 static void
-_e_shelf_free(E_Shelf *es)
+_e_shelf_free_cb(void *data __UNUSED__, void *ev)
 {
+   E_Shelf *es = ev;
    if (!es->dummy)
      _e_shelf_bindings_del(es);
 
@@ -1017,6 +1020,16 @@ _e_shelf_free(E_Shelf *es)
         e_object_del(E_OBJECT(es->popup));
      }
    free(es);
+}
+
+static void
+_e_shelf_free(E_Shelf *es)
+{
+   E_Event_Shelf *ev;
+
+   ev = E_NEW(E_Event_Shelf, 1);
+   ev->shelf = es;
+   ecore_event_add(E_EVENT_SHELF_DEL, ev, _e_shelf_free_cb, NULL);
 }
 
 static void
