@@ -6,7 +6,6 @@ static void         _fill_data(E_Config_Dialog_Data *cfdata);
 static void         _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
-static int          _basic_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int          _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static int          _adv_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
@@ -52,15 +51,25 @@ _scale_preview_sel_set(Evas_Object *ob, int sel)
         v = (int)(unsigned long)evas_object_data_get(ob, "scale");
         scl = (double)v / 1000.0;
         if (sc) *sc = scl;
+        if (evas_object_data_get(ob, "dpi"))
+          {
+             cfdata->use_dpi = EINA_TRUE;
+             cfdata->use_mode = 1;
+             cfdata->use_custom = 0;
+             fprintf(stderr, "custom 0\n");
+          }
+        else
+          {
+             cfdata->use_dpi = EINA_FALSE;
+             cfdata->use_mode = 2;
+             cfdata->use_custom = 1;
+             fprintf(stderr, "custom 1\n");
+          }
         EINA_LIST_FOREACH(cfdata->obs, l, ob2)
           {
              if (ob == ob2) continue;
              _scale_preview_sel_set(ob2, 0);
           }
-        if (evas_object_data_get(ob, "dpi"))
-          cfdata->use_dpi = EINA_TRUE;
-        else
-          cfdata->use_dpi = EINA_FALSE;
      }
    else evas_object_color_set(rc, 0, 0, 0, 192);
 }
@@ -161,13 +170,14 @@ e_int_config_scale(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
-   v->basic.check_changed = _basic_changed;
    v->advanced.create_widgets = _adv_create;
    v->advanced.apply_cfdata = _adv_apply;
    v->advanced.check_changed = _adv_changed;
 
    cfd = e_config_dialog_new(con, _("Scale Settings"), "E", "appearance/scale",
                              "preferences-scale", 0, v, NULL);
+   e_config_dialog_changed_auto_set(cfd, 0);
+   e_config_dialog_changed_set(cfd, 1);
    return cfd;
 }
 
@@ -189,8 +199,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->use_custom = e_config->scale.use_custom;
    cfdata->use_mode = 0;
    if (cfdata->use_dpi) cfdata->use_mode = 1;
-   else if (cfdata->use_custom)
-     cfdata->use_mode = 2;
+   else if (cfdata->use_custom) cfdata->use_mode = 2;
    cfdata->min = e_config->scale.min;
    cfdata->max = e_config->scale.max;
    cfdata->factor = e_config->scale.factor;
@@ -227,7 +236,8 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 #define SCALE_OP(v) do { \
    ob = _scale_preview_new(cfdata, evas, v, &(cfdata->factor), NULL, EINA_FALSE); \
    e_widget_table_object_align_append(o, ob, x, y, 1, 1, 0, 0, 0, 0, 0.5, 0.5); \
-   if (cfdata->factor == v) _scale_preview_sel_set(ob, 1); \
+   if ((cfdata->factor >= (v - 0.05)) && (cfdata->factor < v + 0.05)) \
+     _scale_preview_sel_set(ob, 1); \
    x++; if (x >= COL) { x = 0; y++; } \
 } while (0)
 
@@ -247,7 +257,6 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    E_Action *a;
    
-   cfdata->use_custom = 0;
    if (cfdata->use_dpi) cfdata->use_mode = 1;
    else cfdata->use_mode = 0;
 
@@ -258,19 +267,17 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->scale.factor = cfdata->factor;
    e_config->scale.base_dpi = cfdata->base_dpi;
 
+   fprintf(stderr, "dpi: %i, custom: %i, min: %3.3f, max: %3.3f, sc: %3.3f: base: %i\n",
+           e_config->scale.use_dpi, e_config->scale.use_custom,
+           e_config->scale.min, e_config->scale.max, e_config->scale.factor,
+           e_config->scale.base_dpi);
+   
    e_config_save_queue();
 
    a = e_action_find("restart");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
    
    return 1;
-}
-
-static int
-_basic_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
-{
-   return (cfdata->use_dpi != e_config->scale.use_dpi) ||
-          (cfdata->base_dpi != e_config->scale.base_dpi);
 }
 
 static Evas_Object *
