@@ -245,6 +245,8 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   E_Action *a;
+   
    cfdata->use_custom = 0;
    if (cfdata->use_dpi) cfdata->use_mode = 1;
    else cfdata->use_mode = 0;
@@ -256,10 +258,11 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->scale.factor = cfdata->factor;
    e_config->scale.base_dpi = cfdata->base_dpi;
 
-   e_scale_update();
-   e_canvas_recache();
    e_config_save_queue();
 
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+   
    return 1;
 }
 
@@ -335,6 +338,8 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
 static int
 _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   E_Action *a;
+   
    cfdata->use_custom = 0;
    cfdata->use_dpi = 0;
    if (cfdata->use_mode == 1)
@@ -349,10 +354,11 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->scale.factor = cfdata->factor;
    e_config->scale.base_dpi = cfdata->base_dpi;
 
-   e_scale_update();
-   e_canvas_recache();
    e_config_save_queue();
-
+   
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+   
    return 1;
 }
 
