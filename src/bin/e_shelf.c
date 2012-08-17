@@ -956,9 +956,11 @@ _e_shelf_del_cb(void *d)
 }
 
 static void
-_e_shelf_free_cb(void *data __UNUSED__, void *ev)
+_e_shelf_free_cb(void *data __UNUSED__, void *event)
 {
-   E_Shelf *es = ev;
+   E_Event_Shelf *ev = event;
+   E_Shelf *es = ev->shelf;
+   free(ev);
    if (!es->dummy)
      _e_shelf_bindings_del(es);
 
