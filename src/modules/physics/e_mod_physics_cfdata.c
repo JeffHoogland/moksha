@@ -36,6 +36,7 @@ e_mod_physics_cfdata_config_new(void)
    cfg->gravity = 0.0;
    cfg->ignore_fullscreen = EINA_TRUE;
    cfg->ignore_maximized = EINA_TRUE;
+   cfg->ignore_shelves = EINA_TRUE;
 
    return cfg;
 }
