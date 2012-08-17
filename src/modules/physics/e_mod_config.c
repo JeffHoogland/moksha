@@ -5,22 +5,25 @@
 
 struct _E_Config_Dialog_Data
 {
-   double delay;
-   double max_mass;
-   double gravity;
+   double delay; /* delay before applying physics */
+   double max_mass; /* maximum mass for a window */
+   double gravity; /* maximum mass for a window */
    Eina_Bool ignore_fullscreen;
    Eina_Bool ignore_maximized;
+   Eina_Bool ignore_shelves;
+   struct
+   {
+      Eina_Bool disable_rotate;
+      Eina_Bool disable_move;
+   } shelf;
 };
 
 /* Protos */
+static int _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static void        *_create_data(E_Config_Dialog *cfd);
-static void         _free_data(E_Config_Dialog *cfd,
-                               E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
-                                          Evas *evas,
-                                          E_Config_Dialog_Data *cfdata);
-static int          _basic_apply_data(E_Config_Dialog *cfd,
-                                      E_Config_Dialog_Data *cfdata);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
 E_Config_Dialog *
 e_int_config_physics_module(E_Container *con,
@@ -38,6 +41,7 @@ e_int_config_physics_module(E_Container *con,
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create_widgets;
+   v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Physics Settings"),
                              "E", "appearance/physics", buf, 0, v, mod);
@@ -64,6 +68,25 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
 {
    _physics_mod->config_dialog = NULL;
    free(cfdata);
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+#define CHECK(X) \
+   if (cfdata->X != _physics_mod->conf->X) return 1
+
+   CHECK(max_mass);
+   CHECK(gravity);
+   CHECK(ignore_fullscreen);
+   CHECK(ignore_maximized);
+   CHECK(ignore_shelves);
+   CHECK(shelf.disable_move);
+   CHECK(shelf.disable_rotate);
+   if ((unsigned int)cfdata->delay != _physics_mod->conf->delay) return 1;
+
+#undef CHECK
+   return 0;
 }
 
 static Evas_Object *
@@ -99,10 +122,25 @@ _basic_create_widgets(E_Config_Dialog *cfd,
    ///////////////////////////////////////////
 
    ol = e_widget_list_add(evas, 0, 0);
+
+   ob = e_widget_check_add(evas, _("Disable Movement"), (int*)&(cfdata->shelf.disable_move));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+
+   ob = e_widget_check_add(evas, _("Disable Rotation"), (int*)&(cfdata->shelf.disable_rotate));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+
+   e_widget_toolbook_page_append(otb, NULL, _("Shelves"), ol, 1, 1, 1, 1, 0.5, 0.5);
+
+   ///////////////////////////////////////////
+
+   ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_check_add(evas, _("Ignore Fullscreen"), (int*)&(cfdata->ignore_fullscreen));
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_check_add(evas, _("Ignore Maximized"), (int*)&(cfdata->ignore_maximized));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+
+   ob = e_widget_check_add(evas, _("Ignore Shelves"), (int*)&(cfdata->ignore_shelves));
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("Ignore"), ol, 1, 1, 1, 1, 0.5, 0.5);
@@ -132,7 +170,10 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
         SET(max_mass);
         SET(ignore_fullscreen);
         SET(ignore_maximized);
+        SET(ignore_shelves);
         SET(gravity);
+        SET(shelf.disable_move);
+        SET(shelf.disable_rotate);
         e_mod_physics_shutdown();
         e_mod_physics_init();
      }

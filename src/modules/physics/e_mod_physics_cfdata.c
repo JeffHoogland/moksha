@@ -12,11 +12,15 @@ e_mod_physics_cfdata_edd_init(void)
 #undef D
 #define T Config
 #define D conf_edd
+   E_CONFIG_VAL(D, T, config_version, INT);
    E_CONFIG_VAL(D, T, delay, UINT);
    E_CONFIG_VAL(D, T, max_mass, DOUBLE);
    E_CONFIG_VAL(D, T, gravity, DOUBLE);
    E_CONFIG_VAL(D, T, ignore_fullscreen, UCHAR);
    E_CONFIG_VAL(D, T, ignore_maximized, UCHAR);
+   E_CONFIG_VAL(D, T, ignore_shelves, UCHAR);
+   E_CONFIG_VAL(D, T, shelf.disable_move, UCHAR);
+   E_CONFIG_VAL(D, T, shelf.disable_rotate, UCHAR);
    return conf_edd;
 }
 
@@ -26,6 +30,7 @@ e_mod_physics_cfdata_config_new(void)
    Config *cfg;
 
    cfg = E_NEW(Config, 1);
+   cfg->config_version = (MOD_CONFIG_FILE_EPOCH << 16);
    cfg->delay = 10;
    cfg->max_mass = 3.0;
    cfg->gravity = 0.0;

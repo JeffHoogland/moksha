@@ -3,12 +3,26 @@
 #include "e_mod_physics.h"
 #include <EPhysics.h>
 
+typedef struct _E_Physics     E_Physics;
+typedef struct _E_Physics_Win E_Physics_Win;
+typedef struct _E_Physics_Shelf E_Physics_Shelf;
+
 struct _E_Physics
 {
    EPhysics_World *world;
    Ecore_X_Window  win;
    E_Manager      *man;
    Eina_Inlist    *wins;
+   Eina_Inlist    *shelves;
+};
+
+struct _E_Physics_Shelf
+{
+   EINA_INLIST;
+
+   E_Physics *p;
+   E_Shelf *es;
+   EPhysics_Body *body;
 };
 
 struct _E_Physics_Win
@@ -68,6 +82,7 @@ static void _e_mod_physics_win_configure(E_Physics_Win *pw,
                                          int w,
                                          int h,
                                          int border);
+static void _e_mod_physics_shelf_new(E_Physics *p, E_Shelf *es);
 /* TODO
 static void
 _e_mod_physics_fps_update(E_Physics *p)
@@ -436,6 +451,59 @@ _e_mod_physics_win_configure(E_Physics_Win *pw,
      }
 }
 
+static E_Physics_Shelf *
+_e_mod_physics_shelf_find(E_Physics *p, E_Shelf *es)
+{
+   E_Physics_Shelf *eps;
+   EINA_INLIST_FOREACH(p->shelves, eps)
+     if (eps->es == es) return eps;
+   return NULL;
+}
+
+static void
+_e_mod_physics_shelf_free(E_Physics *p, E_Shelf *es)
+{
+   E_Physics_Shelf *eps;
+
+   eps = _e_mod_physics_shelf_find(p, es);
+   if (!eps) return;
+   ephysics_body_del(eps->body);
+   p->shelves = eina_inlist_remove(p->shelves, EINA_INLIST_GET(eps));
+   free(eps);
+}
+
+static void
+_e_mod_physics_shelf_new(E_Physics *p, E_Shelf *es)
+{
+   EPhysics_Body *eb;
+   E_Physics_Shelf *eps;
+
+   eps = E_NEW(E_Physics_Shelf, 1);
+   eps->p = p;
+   eps->es = es;
+   if (!_physics_mod->conf->ignore_shelves)
+     {
+        if (_physics_mod->conf->shelf.disable_move)
+          {
+             eps->body = eb = ephysics_body_box_add(p->world);
+             ephysics_body_evas_object_set(eb, es->o_base, EINA_TRUE);
+             ephysics_body_linear_movement_enable_set(eb, EINA_FALSE, EINA_FALSE);
+             ephysics_body_mass_set(eb, 50000);
+          }
+        else
+          {
+             eps->body = eb = ephysics_body_box_add(p->world);
+             ephysics_body_evas_object_set(eb, es->o_base, EINA_TRUE);
+             if (es->cfg->overlap || es->cfg->autohide)
+               ephysics_body_mass_set(eb, 0);
+             else
+               ephysics_body_mass_set(eb, 50000);
+             if (es->cfg->popup && (!_physics_mod->conf->shelf.disable_rotate))
+               ephysics_body_rotation_on_z_axis_enable_set(eb, EINA_FALSE);
+          }
+     }
+   p->shelves = eina_inlist_append(p->shelves, EINA_INLIST_GET(eps));
+}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -610,6 +678,40 @@ _e_mod_physics_bd_resize(void *data __UNUSED__,
 }
 
 static Eina_Bool
+_e_mod_physics_shelf_add(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   E_Event_Shelf *ev = event;
+   E_Physics *p;
+   Eina_List *l;
+
+   EINA_LIST_FOREACH(physicists, l, p)
+     if (p->man == ev->shelf->zone->container->manager)
+       {
+          _e_mod_physics_shelf_new(p, ev->shelf);
+          break;
+       }
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_e_mod_physics_shelf_del(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   E_Event_Shelf *ev = event;
+   E_Physics *p;
+   Eina_List *l;
+
+   EINA_LIST_FOREACH(physicists, l, p)
+     if (p->man == ev->shelf->zone->container->manager)
+       {
+          _e_mod_physics_shelf_free(p, ev->shelf);
+          break;
+       }
+   return ECORE_CALLBACK_RENEW;
+
+   
+}
+
+static Eina_Bool
 _e_mod_physics_remember_update(void *data __UNUSED__, int type   __UNUSED__, void *event)
 {
    E_Event_Remember_Update *ev = event;
@@ -691,6 +793,7 @@ _e_mod_physics_add(E_Manager *man)
    EPhysics_Body *bound;
    Eina_List *l;
    E_Border *bd;
+   E_Shelf *es;
 
    p = calloc(1, sizeof(E_Physics));
    if (!p) return NULL;
@@ -724,6 +827,9 @@ _e_mod_physics_add(E_Manager *man)
         border = ecore_x_window_border_width_get(bd->client.win);
         _e_mod_physics_win_configure(pw, bd->x, bd->y, bd->w, bd->h, border);
      }
+   l = e_shelf_list_all();
+   EINA_LIST_FREE(l, es)
+     _e_mod_physics_shelf_new(p, es);
 
    return p;
 }
@@ -796,6 +902,10 @@ e_mod_physics_init(void)
 //   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_MOVE, _e_mod_physics_bd_move, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_RESIZE, _e_mod_physics_bd_resize, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_REMEMBER_UPDATE, _e_mod_physics_remember_update, NULL));
+
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_SHELF_ADD, _e_mod_physics_shelf_add, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_SHELF_DEL, _e_mod_physics_shelf_del, NULL));
+
 #if 0
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ICONIFY, _e_mod_physics_bd_iconify, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY, _e_mod_physics_bd_uniconify, NULL));
