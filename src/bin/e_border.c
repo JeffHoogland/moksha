@@ -4745,6 +4745,7 @@ _e_border_del(E_Border *bd)
         bd->parent->transients = eina_list_remove(bd->parent->transients, bd);
         if (bd->parent->modal == bd)
           {
+             ecore_x_event_mask_unset(bd->parent->client.win, ECORE_X_EVENT_MASK_WINDOW_DAMAGE | ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
              ecore_x_event_mask_set(bd->parent->client.win, bd->parent->saved.event_mask);
              bd->parent->lock_close = 0;
              bd->parent->saved.event_mask = 0;
