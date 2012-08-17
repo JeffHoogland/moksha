@@ -467,7 +467,7 @@ _e_mod_physics_shelf_free(E_Physics *p, E_Shelf *es)
 
    eps = _e_mod_physics_shelf_find(p, es);
    if (!eps) return;
-   ephysics_body_del(eps->body);
+   if (eps->body) ephysics_body_del(eps->body);
    p->shelves = eina_inlist_remove(p->shelves, EINA_INLIST_GET(eps));
    free(eps);
 }
