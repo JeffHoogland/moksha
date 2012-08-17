@@ -59,9 +59,6 @@ static void      _grab_wnd_show(E_Config_Dialog_Data *cfdata);
 static Eina_Bool _grab_key_down_cb(void *data,
                                    int type,
                                    void *event);
-static Eina_Bool _grab_mouse_dumb_cb(void *data,
-                                     int type,
-                                     void *event);
 
 struct _E_Config_Dialog_Data
 {
@@ -983,26 +980,13 @@ _grab_wnd_show(E_Config_Dialog_Data *cfdata)
 
    cfdata->locals.bind_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
    ecore_x_window_show(cfdata->locals.bind_win);
-   e_grabinput_get(cfdata->locals.bind_win, 0, cfdata->locals.bind_win);
+   e_grabinput_get(0, 0, cfdata->locals.bind_win);
 
    cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
                                               ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
                                                                       _grab_key_down_cb, cfdata));
-
-   cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-                                              ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
-                                                                      _grab_mouse_dumb_cb, NULL));
-
-   cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-                                              ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-                                                                      _grab_mouse_dumb_cb, NULL));
-
-   cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-                                              ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
-                                                                      _grab_mouse_dumb_cb, NULL));
-
-   e_dialog_parent_set(cfdata->locals.dia, cfdata->cfd->dia->win);
    e_dialog_show(cfdata->locals.dia);
+   e_dialog_parent_set(cfdata->locals.dia, cfdata->cfd->dia->win);
 }
 
 static void
@@ -1016,7 +1000,7 @@ _grab_wnd_hide(E_Config_Dialog_Data *cfdata)
    e_object_del(E_OBJECT(cfdata->locals.dia));
    cfdata->locals.dia = NULL;
 
-   e_grabinput_release(cfdata->locals.bind_win, cfdata->locals.bind_win);
+   e_grabinput_release(0, cfdata->locals.bind_win);
    ecore_x_window_free(cfdata->locals.bind_win);
    cfdata->locals.bind_win = 0;
 }
@@ -1213,13 +1197,6 @@ _grab_key_down_cb(void *data,
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
-_grab_mouse_dumb_cb(__UNUSED__ void *data,
-                    __UNUSED__ int type,
-                    __UNUSED__ void *event)
-{
-   return ECORE_CALLBACK_RENEW;
-}
 
 /********** Helper *********************************/
 static void
