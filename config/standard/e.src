@@ -167,7 +167,7 @@ group "E_Config" struct {
     value "thumbscroll_threshhold" int: 8;
     value "thumbscroll_momentum_threshhold" double: 100.0;
     value "thumbscroll_friction" double: 1.0;
-    value "scale.min" double: 1.0;
+    value "scale.min" double: 0.8;
     value "scale.max" double: 3.0;
     value "scale.factor" double: 1.0;
     value "scale.base_dpi" int: 90;

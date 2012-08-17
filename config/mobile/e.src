@@ -178,9 +178,9 @@ group "E_Config" struct {
     value "border_keyboard.move.dy" uchar: 5;
     value "border_keyboard.resize.dx" uchar: 5;
     value "border_keyboard.resize.dy" uchar: 5;
-    value "scale.min" double: 1.0000000000000000000000000;
-    value "scale.max" double: 3.0000000000000000000000000;
-    value "scale.factor" double: 1.0000000000000000000000000;
+    value "scale.min" double: 0.8;
+    value "scale.max" double: 3.0;
+    value "scale.factor" double: 1.0;
     value "scale.base_dpi" int: 90;
     value "scale.use_dpi" uchar: 1;
     value "scale.use_custom" uchar: 0;

@@ -492,7 +492,7 @@ group "E_Config" struct {
   value "border_keyboard.resize.dx" uchar: 5;
   value "border_keyboard.resize.dy" uchar: 5;
   value "dbus_desktop" int: 1;
-  value "scale.min" double: 1.0;
+  value "scale.min" double: 0.8;
   value "scale.max" double: 3.0;
   value "scale.factor" double: 1.0;
   value "scale.base_dpi" int: 90;
