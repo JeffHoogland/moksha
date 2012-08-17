@@ -206,6 +206,16 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
         else
           ecore_evas_shaped_set(pop->ecore_evas, pop->shaped);
      }
+   else
+     {
+        pop->shaped = 0;
+        ecore_evas_alpha_set(pop->ecore_evas, pop->shaped);
+        eina_hash_del(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);
+        pop->evas_win = ecore_evas_software_x11_window_get(pop->ecore_evas);
+        eina_hash_add(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);
+        e_container_window_raise(pop->zone->container, pop->evas_win, pop->layer);
+        ecore_evas_shaped_set(pop->ecore_evas, pop->shaped);
+     }
 }
 
 EAPI void

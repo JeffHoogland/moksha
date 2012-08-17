@@ -202,11 +202,13 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
    es->o_base = edje_object_add(es->evas);
    es->name = eina_stringshare_add(name);
    evas_object_resize(es->o_base, es->w, es->h);
+   
+   e_shelf_style_set(es, style);
+   
    if (es->popup)
      {
         evas_object_show(es->o_event);
         evas_object_show(es->o_base);
-        e_popup_edje_bg_object_set(es->popup, es->o_base);
         ecore_x_netwm_window_type_set(es->popup->evas_win, 
                                       ECORE_X_WINDOW_TYPE_DOCK);
      }
@@ -218,7 +220,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
         evas_object_layer_set(es->o_base, layer);
      }
 
-   e_shelf_style_set(es, style);
    es->gadcon = 
      e_gadcon_swallowed_new(es->name, es->id, es->o_base, "e.swallow.content");
    locname = es->name;
@@ -839,6 +840,8 @@ e_shelf_style_set(E_Shelf *es, const char *style)
    else
      es->instant_delay = -1.0;
 
+   if (es->popup) e_popup_edje_bg_object_set(es->popup, es->o_base);
+   
    if (!es->gadcon) return;
    e_gadcon_unpopulate(es->gadcon);
    e_gadcon_populate(es->gadcon);
