@@ -209,7 +209,7 @@ parse_rules(void)
              while (p[0] == ' ') ++p;
 
              /* skip "grp" options for switching kbd layouts */
-             if (strncmp(name, "grp", 3))
+             //if (strncmp(name, "grp", 3))
                {
                   if (!strchr(name, ':'))
                     {

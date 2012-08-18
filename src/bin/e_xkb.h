@@ -5,7 +5,7 @@
 
 EAPI int e_xkb_init(void);
 EAPI int e_xkb_shutdown(void);
-EAPI void e_xkb_update(void);
+EAPI void e_xkb_update(int);
 EAPI void e_xkb_layout_next(void);
 EAPI void e_xkb_layout_prev(void);
 EAPI void e_xkb_layout_set(const char *name);

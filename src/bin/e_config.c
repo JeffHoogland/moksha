@@ -929,7 +929,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, xkb.used_options, _e_config_xkb_option_edd);
    E_CONFIG_VAL(D, T, xkb.only_label, INT);
    E_CONFIG_VAL(D, T, xkb.default_model, STR);
-
+   //E_CONFIG_VAL(D, T, xkb.cur_group, INT);    
    e_config_load();
 
    e_config_save_queue();
@@ -1171,7 +1171,6 @@ e_config_load(void)
           COPYVAL(exec.show_run_dialog);
           COPYVAL(exec.show_exit_dialog);
           IFCFGEND;
-
           IFCFG(0x0136);
           _e_config_acpi_bindings_add();
           IFCFGEND;

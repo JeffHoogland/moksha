@@ -382,6 +382,7 @@ struct _E_Config
       Eina_List  *used_options;
       int         only_label;
       const char *default_model;
+      int         cur_group;
    } xkb;
 };
 

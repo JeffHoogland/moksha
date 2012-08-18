@@ -211,8 +211,8 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         e_config->xkb.used_options = eina_list_append(e_config->xkb.used_options, oc);
     }
 
-   e_xkb_update();
-   _xkb_update_icon();
+   e_xkb_update(-1);
+   _xkb_update_icon(0);
 
    e_config_save_queue();
    return 1;
