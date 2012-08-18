@@ -1328,7 +1328,7 @@ e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
 }
 
 EAPI void
-e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable)
+e_gadcon_client_resizable_set(E_Gadcon_Client *gcc __UNUSED__, int resizable __UNUSED__)
 {
    E_OBJECT_CHECK(gcc);
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
@@ -1369,8 +1369,6 @@ e_gadcon_client_resizable_set(E_Gadcon_Client *gcc, int resizable)
           }
      }
  */
-   resizable = 0;
-   gcc = NULL;
 }
 
 EAPI int
@@ -1590,6 +1588,7 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
              mi = e_menu_item_new(menu_gadget);
              e_menu_item_separator_set(mi, 1);
           }
+/*        
         if (!gcc->o_control)
           {
              mi = e_menu_item_new(menu_gadget);
@@ -1597,7 +1596,6 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
              e_util_menu_item_theme_icon_set(mi, "transform-scale");
              e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
           }
-/*
         mi = e_menu_item_new(menu_gadget);
         e_menu_item_label_set(mi, _("Resizeable"));
         e_util_menu_item_theme_icon_set(mi, "transform-scale");
@@ -2889,6 +2887,14 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj 
                               cy + ev->output.y, 1, 1,
                               E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
      }
+   else if (ev->button == 2)
+     {
+        if (gcc->instant_edit_timer)
+          ecore_timer_del(gcc->instant_edit_timer);
+        gcc->instant_edit_timer = NULL;
+        e_gadcon_client_edit_begin(gcc);
+        _e_gadcon_client_move_start(gcc);
+     }
    else if (ev->button == 1)
      {
         if ((!gcc->o_control) && (gcc->gadcon->instant_edit))
@@ -2917,6 +2923,14 @@ _e_gadcon_client_cb_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __
              ecore_timer_del(gcc->instant_edit_timer);
              gcc->instant_edit_timer = NULL;
           }
+        if (gcc->o_control)
+          {
+             _e_gadcon_client_move_stop(gcc);
+             e_gadcon_client_edit_end(gcc);
+          }
+     }
+   else if (ev->button == 2)
+     {
         if (gcc->o_control)
           {
              _e_gadcon_client_move_stop(gcc);
