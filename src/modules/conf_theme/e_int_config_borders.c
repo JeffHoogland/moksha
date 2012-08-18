@@ -116,10 +116,16 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   Eina_Bool remch = ((cfdata->remember_border && 
+                       !((cfdata->border->remember) &&
+                         (cfdata->border->remember->apply & E_REMEMBER_APPLY_BORDER))) ||
+                      (!cfdata->remember_border && 
+                          ((cfdata->border->remember) &&
+                              (cfdata->border->remember->apply & E_REMEMBER_APPLY_BORDER))));
    if (cfdata->border)
-     return cfdata->bordername != cfdata->border->client.border.name;
+     return (cfdata->bordername != cfdata->border->client.border.name) || (remch);
    else
-     return cfdata->bordername != e_config->theme_default_border_style;
+     return (cfdata->bordername != e_config->theme_default_border_style) || (remch);
 }
 
 static int
