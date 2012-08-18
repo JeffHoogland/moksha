@@ -770,7 +770,7 @@ _pager_popup_new(E_Zone *zone, int keyaction)
         E_FREE(pp);
         return NULL;
      }
-   e_popup_layer_set(pp->popup, 255);
+   e_popup_layer_set(pp->popup, 350);
 
    pp->pager = _pager_new(pp->popup->evas, zone, NULL);
    pp->pager->popup = pp;

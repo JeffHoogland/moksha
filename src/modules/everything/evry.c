@@ -165,7 +165,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
 
    if (popup)
      {
-        e_win_layer_set(win->ewin, 255);
+        e_win_layer_set(win->ewin, 350);
         ecore_x_netwm_window_type_set(win->ewin->evas_win,
                                       ECORE_X_WINDOW_TYPE_UTILITY);
 

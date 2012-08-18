@@ -2123,15 +2123,22 @@ e_border_focus_set(E_Border *bd,
    if (focus)
      {
         if (bd->iconic)
-          return;
-
-        if (!bd->visible)
-          return;
-
+          {
+             e_border_uniconify(bd);
+             if (!focus_track_frozen)
+               e_border_focus_latest_set(bd);
+             return;
+          }
+        else if (!bd->visible)
+          {
+             return;
+          }
         /* FIXME: hack for deskflip animation:
          * dont update focus when sliding previous desk */
-        if ((!bd->sticky) && (bd->desk != e_desk_current_get(bd->desk->zone)))
-          return;
+        else if ((!bd->sticky) && (bd->desk != e_desk_current_get(bd->desk->zone)))
+          {
+             return;
+          }
      }
 
    if ((bd->modal) && (bd->modal != bd) && (bd->modal->visible))
@@ -2145,6 +2152,8 @@ e_border_focus_set(E_Border *bd,
         return;
      }
 
+   fprintf(stderr, "focus set bd %p client %x focus %i set %i [%s]\n", bd, bd->client.win, focus, set, bd->client.netwm.name);
+   
    if (focus)
      {
         if (set)
@@ -2170,11 +2179,42 @@ e_border_focus_set(E_Border *bd,
 
         if (!bd->focused)
           {
+             Eina_List *l;
+             E_Border *bd2;
+             
              if (focused) bd_unfocus = focused;
              if (focusing == bd) focusing = NULL;
              bd->focused = 1;
              focused = bd;
-
+             if (!bd_unfocus)
+               {
+                  EINA_LIST_FOREACH(e_border_client_list(), l, bd2)
+                    {
+                       if ((bd2->fullscreen) &&
+                           (bd2 != bd) &&
+                           (bd2->zone == bd->zone) &&
+                           ((bd2->desk == bd->desk) ||
+                               (bd2->sticky) || (bd->sticky)))
+                         {
+                            Eina_Bool unfocus_is_parent = EINA_FALSE;
+                            E_Border *bd_parent;
+                            
+                            bd_parent = bd->parent;
+                            while (bd_parent)
+                              {
+                                 if (bd_parent == bd2)
+                                   {
+                                      unfocus_is_parent = EINA_TRUE;
+                                      break;
+                                   }
+                                 bd_parent = bd->parent;
+                              }
+                            if ((!unfocus_is_parent) && 
+                                (!e_config->allow_above_fullscreen))
+                              e_border_iconify(bd2);
+                         }
+                    }
+               }
              focus_changed = EINA_TRUE;
           }
      }
@@ -2188,7 +2228,8 @@ e_border_focus_set(E_Border *bd,
              bd_unfocus = bd;
 
              /* should always be the case. anyway */
-             if (bd == focused) focused = NULL;
+             if (bd == focused)
+               focused = NULL;
 
              if ((set) && (!focus_next) && (!focusing))
                {
@@ -2197,7 +2238,7 @@ e_border_focus_set(E_Border *bd,
                }
           }
      }
-
+   
    if ((bd_unfocus) &&
        (!e_object_is_del(E_OBJECT(bd_unfocus)) &&
         (e_object_ref_get(E_OBJECT(bd_unfocus)) > 0)))
@@ -3352,7 +3393,7 @@ e_border_idler_before(void)
             (bd->client.icccm.accepts_focus))
           {
              e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
-             /* TODO what if the client doesnt took focus ? */
+             /* TODO what if the client didn't take focus ? */
           }
         else if (!bd->client.icccm.accepts_focus)
           {
@@ -4675,7 +4716,9 @@ _e_border_del(E_Border *bd)
    E_Border *child;
 
    if (bd == focused)
-     focused = NULL;
+     {
+        focused = NULL;
+     }
 
    if (bd == focusing)
      focusing = NULL;
@@ -5563,14 +5606,14 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
       t = time(NULL);
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
-      DBG("FF ->IN %i 0x%x %s md=%s dt=%s",
+      DBG("FF ->IN %i 0x%x %s md=%s dt=%s\n",
              e->time,
              e->win,
              ct,
              modes[e->mode],
              details[e->detail]);
 
-      DBG("%s cb focus in %d %d",
+      DBG("%s cb focus in %d %d\n",
              e_border_name_get(bd),
              bd->client.icccm.accepts_focus,
              bd->client.icccm.take_focus);

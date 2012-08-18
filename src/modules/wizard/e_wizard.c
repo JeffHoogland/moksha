@@ -247,7 +247,7 @@ _e_wizard_main_new(E_Zone *zone)
    Eina_Bool kg;
 
    popup = e_popup_new(zone, 0, 0, zone->w, zone->h);
-   e_popup_layer_set(popup, 255);
+   e_popup_layer_set(popup, 350);
    o = edje_object_add(popup->evas);
 
    e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/main");
@@ -301,7 +301,7 @@ _e_wizard_extra_new(E_Zone *zone)
    Evas_Object *o;
 
    popup = e_popup_new(zone, 0, 0, zone->w, zone->h);
-   e_popup_layer_set(popup, 255);
+   e_popup_layer_set(popup, 350);
    o = edje_object_add(popup->evas);
    e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/extra");
    evas_object_move(o, 0, 0);

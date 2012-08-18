@@ -150,7 +150,7 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
    evas_event_feed_mouse_move(_winlist->evas, -1000000, -1000000,
                               ecore_x_current_time_get(), NULL);
 
-   e_popup_layer_set(_winlist, 255);
+   e_popup_layer_set(_winlist, 350);
    evas_event_freeze(_winlist->evas);
    o = edje_object_add(_winlist->evas);
    _bg_object = o;

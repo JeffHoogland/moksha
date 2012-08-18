@@ -128,7 +128,7 @@ e_container_new(E_Manager *man)
    con->scratch_win = ecore_x_window_override_new(con->win, 0, 0, 7, 7);
 
    /* init layers */
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         con->layers[i].win = ecore_x_window_input_new(con->win, 0, 0, 1, 1);
         ecore_x_window_lower(con->layers[i].win);
@@ -147,7 +147,7 @@ e_container_new(E_Manager *man)
                               ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
                               ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
                               0, 0, 0, 0, 0,
-                              con->layers[6].win, ECORE_X_WINDOW_STACK_ABOVE);
+                              con->layers[10].win, ECORE_X_WINDOW_STACK_ABOVE);
 
    /* Put menu win on top */
    mwin = e_menu_grab_window_get();
@@ -156,7 +156,7 @@ e_container_new(E_Manager *man)
                               ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
                               ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
                               0, 0, 0, 0, 0,
-                              con->layers[6].win, ECORE_X_WINDOW_STACK_ABOVE);
+                              con->layers[10].win, ECORE_X_WINDOW_STACK_ABOVE);
 
    /* Put background win at the bottom */
    ecore_x_window_configure(con->bg_win,
@@ -552,7 +552,11 @@ e_container_shape_solid_rect_get(E_Container_Shape *es, int *x, int *y, int *w, 
  * 100 = normal
  * 150 = above
  * 200 = fullscreen
- * 999 = internal on top windows for E
+ * 250 = fullscreen
+ * 300 = fullscreen
+ * 350 = stuff over fullscreen
+ * 400 = stuff over stuff
+ * 450 = yet more stuff on top
  */
 EAPI int
 e_container_borders_count(E_Container *con)
@@ -560,23 +564,21 @@ e_container_borders_count(E_Container *con)
    return con->clients;
 }
 
-EAPI void
-e_container_border_add(E_Border *bd)
+static int
+_e_container_layer_map(int layer)
 {
    int pos = 0;
 
-   if (!bd->zone) return;
-   if (bd->layer == 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50))
-     pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100))
-     pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150))
-     pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200))
-     pos = 4;
-   else pos = 5;
+   if (layer < 0) layer = 0;
+   pos = 1 + (layer / 50);
+   if (pos > 10) pos = 10;
+   return pos;
+}
 
+EAPI void
+e_container_border_add(E_Border *bd)
+{
+   int pos = _e_container_layer_map(bd->layer);
    bd->zone->container->clients++;
    bd->zone->container->layers[pos].clients =
      eina_list_append(bd->zone->container->layers[pos].clients, bd);
@@ -591,7 +593,7 @@ e_container_border_remove(E_Border *bd)
    if (!bd->zone) return;
    /* FIXME: Could revert to old behaviour, ->layer is consistent
     * with pos now. */
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         bd->zone->container->layers[i].clients =
           eina_list_remove(bd->zone->container->layers[i].clients, bd);
@@ -604,19 +606,7 @@ e_container_border_remove(E_Border *bd)
 EAPI void
 e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 {
-   int pos = 0;
-
-   if (layer <= 0) pos = 0;
-   else if ((layer > 0) && (layer <= 50))
-     pos = 1;
-   else if ((layer > 50) && (layer <= 100))
-     pos = 2;
-   else if ((layer > 100) && (layer <= 150))
-     pos = 3;
-   else if ((layer > 150) && (layer <= 200))
-     pos = 4;
-   else pos = 5;
-
+   int pos = _e_container_layer_map(layer);
    ecore_x_window_configure(win,
                             ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
                             ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
@@ -627,19 +617,7 @@ e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 EAPI void
 e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
 {
-   int pos = 0;
-
-   if (layer <= 0) pos = 0;
-   else if ((layer > 0) && (layer <= 50))
-     pos = 1;
-   else if ((layer > 50) && (layer <= 100))
-     pos = 2;
-   else if ((layer > 100) && (layer <= 150))
-     pos = 3;
-   else if ((layer > 150) && (layer <= 200))
-     pos = 4;
-   else pos = 5;
-
+   int pos = _e_container_layer_map(layer);
    ecore_x_window_configure(win,
                             ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
                             ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
@@ -656,23 +634,14 @@ e_container_border_raise(E_Border *bd)
 
    if (!bd->zone) return NULL;
    /* Remove from old layer */
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         bd->zone->container->layers[i].clients =
           eina_list_remove(bd->zone->container->layers[i].clients, bd);
      }
 
    /* Add to new layer */
-   if (bd->layer <= 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50))
-     pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100))
-     pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150))
-     pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200))
-     pos = 4;
-   else pos = 5;
+   pos = _e_container_layer_map(bd->layer);
 
    ecore_x_window_configure(bd->win,
                             ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
@@ -714,23 +683,14 @@ e_container_border_lower(E_Border *bd)
 
    if (!bd->zone) return NULL;
    /* Remove from old layer */
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         bd->zone->container->layers[i].clients =
           eina_list_remove(bd->zone->container->layers[i].clients, bd);
      }
 
    /* Add to new layer */
-   if (bd->layer <= 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50))
-     pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100))
-     pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150))
-     pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200))
-     pos = 4;
-   else pos = 5;
+   pos = _e_container_layer_map(bd->layer);
 
    ecore_x_window_configure(bd->win,
                             ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
@@ -748,7 +708,7 @@ e_container_border_lower(E_Border *bd)
    else
      {
         /* Need to check the layers above */
-        for (i = pos + 1; i < 10; i++)
+        for (i = pos + 1; i < 11; i++)
           {
              if (bd->zone->container->layers[i].clients)
                {
@@ -769,7 +729,7 @@ e_container_border_stack_above(E_Border *bd, E_Border *above)
 
    if (!bd->zone) return;
    /* Remove from old layer */
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         bd->zone->container->layers[i].clients =
           eina_list_remove(bd->zone->container->layers[i].clients, bd);
@@ -777,18 +737,8 @@ e_container_border_stack_above(E_Border *bd, E_Border *above)
 
    /* Add to new layer */
    bd->layer = above->layer;
-
-   if (bd->layer <= 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50))
-     pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100))
-     pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150))
-     pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200))
-     pos = 4;
-   else pos = 5;
-
+   pos = _e_container_layer_map(bd->layer);
+   
    ecore_x_window_configure(bd->win,
                             ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
                             ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
@@ -806,7 +756,7 @@ e_container_border_stack_below(E_Border *bd, E_Border *below)
 
    if (!bd->zone) return;
    /* Remove from old layer */
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         bd->zone->container->layers[i].clients =
           eina_list_remove(bd->zone->container->layers[i].clients, bd);
@@ -814,17 +764,7 @@ e_container_border_stack_below(E_Border *bd, E_Border *below)
 
    /* Add to new layer */
    bd->layer = below->layer;
-
-   if (bd->layer <= 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50))
-     pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100))
-     pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150))
-     pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200))
-     pos = 4;
-   else pos = 5;
+   pos = _e_container_layer_map(bd->layer);
 
    ecore_x_window_configure(bd->win,
                             ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
@@ -848,7 +788,7 @@ _e_container_border_list_new(E_Container *con)
    list->container = con;
    e_object_ref(E_OBJECT(list->container));
    eina_array_step_set(&(list->client_array), sizeof(list->client_array), 256);
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         EINA_LIST_FOREACH(con->layers[i].clients, l, bd)
           eina_array_push(&(list->client_array), bd);
@@ -952,7 +892,7 @@ _e_container_free(E_Container *con)
    ecore_x_window_free(con->event_win);
    /* We can't use e_object_del here, because border adds a ref to itself
     * when it is removed, and the ref is never unref'ed */
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         ecore_x_window_free(con->layers[i].win);
 /* FIXME: had to disable this as it was freeing already freed items during
@@ -1252,7 +1192,7 @@ _e_container_resize_handle(E_Container *con)
 
    ecore_event_add(E_EVENT_CONTAINER_RESIZE, ev, _e_container_event_container_resize_free, NULL);
 
-   for (i = 0; i < 10; i++)
+   for (i = 0; i < 11; i++)
      {
         Eina_List *tmp = NULL;
         E_Border *bd;

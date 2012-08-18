@@ -20,7 +20,7 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc)
    if (!pop) return NULL;
    zone = e_gadcon_client_zone_get(gcc);
    pop->win = e_popup_new(zone, 0, 0, 0, 0);
-   e_popup_layer_set(pop->win, 255);
+   e_popup_layer_set(pop->win, 350);
 
    o = edje_object_add(pop->win->evas);
    e_theme_edje_object_set(o, "base/theme/gadman", "e/gadman/popup");
