@@ -13748,9 +13748,11 @@ collections {
                freq = (freq - min_freq) / (max_freq - min_freq);
                set_state(PART:"meter", "default", freq);
                if (f < 1000000) {
+                  f += 500;
                   snprintf(text, 100, "%i", f / 1000);
                } 
                else {
+                  f += 50000;
                   snprintf(text, 100, "%i.%i", f / 1000000,
                             (f % 1000000) / 100000);
                }
