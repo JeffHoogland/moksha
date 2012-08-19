@@ -1521,11 +1521,22 @@ static int
 _e_fm_op_symlink_atom(E_Fm_Op_Task *task)
 {
    if (_e_fm_op_abort) return 1;
+   if (_e_fm_op_handle_overwrite(task)) return 1;
 
    E_FM_OP_DEBUG("Symlink: %s -> %s\n", task->src.name, task->dst.name);
 
    if (symlink(task->src.name, task->dst.name) != 0)
-     _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", task->src.name, task->dst.name);
+     {
+        if (errno == EEXIST)
+          {
+             if (unlink(task->dst.name) == -1)
+               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
+             if (symlink(task->src.name, task->dst.name) == -1)
+               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", task->src.name, task->dst.name);
+          }
+        else
+          _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", task->src.name, task->dst.name);
+     }
 
    task->dst.done += REMOVECHUNKSIZE;
    _e_fm_op_update_progress(task, REMOVECHUNKSIZE, 0);
