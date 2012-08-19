@@ -189,17 +189,18 @@ EAPI Evas_Object     *e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic, Evas_Smart_Cb g
                                      void *data, int force_gen, const char **type_ret);
 EAPI E_Fm2_Icon_Info *e_fm2_icon_file_info_get(E_Fm2_Icon *ic);
 EAPI void             e_fm2_icon_geometry_get(E_Fm2_Icon *ic, int *x, int *y, int *w, int *h);
-EAPI Eina_Bool       e_fm2_typebuf_visible_get(Evas_Object *obj);
+EAPI Eina_Bool        e_fm2_typebuf_visible_get(Evas_Object *obj);
 EAPI void             e_fm2_typebuf_clear(Evas_Object *obj);
 EAPI void             e_fm2_overlay_clip_to(Evas_Object *fm, Evas_Object *clip);
 
 EAPI void             e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e);
 EAPI void             e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);
-EAPI E_Fm2_View_Mode e_fm2_view_mode_get(Evas_Object *obj);
+EAPI E_Fm2_View_Mode  e_fm2_view_mode_get(Evas_Object *obj);
 EAPI void             e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h);
 EAPI const char      *e_fm2_real_path_map(const char *dev, const char *path);
 EAPI void             e_fm2_favorites_init(void);
-EAPI unsigned int    e_fm2_selected_count(Evas_Object *obj);
+EAPI unsigned int     e_fm2_selected_count(Evas_Object *obj);
+EAPI const char      *e_fm2_desktop_url_eval(const char *val);
 
 EAPI int              _e_fm2_client_mount(const char *udi, const char *mountpoint);
 EAPI int              _e_fm2_client_unmount(const char *udi);

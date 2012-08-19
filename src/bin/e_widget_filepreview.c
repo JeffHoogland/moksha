@@ -1,4 +1,6 @@
 #include "e.h"
+#include "e_fm_device.h"
+#include <sys/statvfs.h>
 
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
@@ -35,7 +37,7 @@ struct _E_Widget_Data
 };
 
 static void  _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info);
-static void  _e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path);
+static void  _e_wid_fprev_preview_file(E_Widget_Data *wd);
 static char *_e_wid_file_size_get(off_t st_size);
 static char *_e_wid_file_user_get(uid_t st_uid);
 static char *_e_wid_file_perms_get(mode_t st_mode, uid_t st_uid, gid_t gid);
@@ -76,9 +78,9 @@ _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNU
              const char *mime;
              Efreet_Desktop *ed = NULL;
              unsigned int size;
-             char group[1024];
+                  char group[1024];
              Eina_Bool edj;
-
+             
              wd->mime_icon = EINA_TRUE;
              size = wd->w;
              mime = e_util_mime_icon_get(wd->mime, size);
@@ -118,13 +120,279 @@ _e_wid_fprev_img_update(E_Widget_Data *wd, const char *path, const char *key)
 }
 
 static void
-_e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path)
+_e_wid_fprev_clear_widgets(E_Widget_Data *wd)
+{
+#define CLRWID(xx) \
+   do { if (wd->xx) { evas_object_del(wd->xx); wd->xx = NULL; } } while (0)
+   
+   CLRWID(o_preview_preview_table);
+   CLRWID(o_preview_properties_table);
+   CLRWID(o_preview_scroll);
+   CLRWID(o_preview_extra);
+   CLRWID(o_preview_extra_entry);
+   CLRWID(o_preview_size);
+   CLRWID(o_preview_size_entry);
+   CLRWID(o_preview_owner);
+   CLRWID(o_preview_owner_entry);
+   CLRWID(o_preview_perms);
+   CLRWID(o_preview_perms_entry);
+   CLRWID(o_preview_time);
+   CLRWID(o_preview_time_entry);
+   CLRWID(o_preview_preview);
+   CLRWID(o_preview_scrollframe);
+}
+
+static void
+_e_wid_fprev_preview_fs_widgets(E_Widget_Data *wd)
+{
+   Evas *evas = evas_object_evas_get(wd->obj);
+   Evas_Object *o;
+   int mw, mh, y = 0;
+   
+   _e_wid_fprev_clear_widgets(wd);
+
+   o = e_widget_table_add(evas, 0);
+   e_widget_disabled_set(o, 1);
+   wd->o_preview_properties_table = o;
+
+#define WIDROW(lab, labob, entob, entw) \
+   do { \
+      o = e_widget_label_add(evas, lab); \
+      e_widget_disabled_set(o, 1); \
+      wd->labob = o; \
+      e_widget_table_object_append(wd->o_preview_properties_table, \
+                                   wd->labob, \
+                                   0, y, 1, 1, 1, 1, 1, 1); \
+      o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL); \
+      e_widget_entry_readonly_set(o, 1); \
+      e_widget_disabled_set(o, 1); \
+      wd->entob = o; \
+      e_widget_size_min_set(o, entw, -1); \
+      e_widget_table_object_append(wd->o_preview_properties_table, \
+                                   wd->entob, \
+                                   1, y, 1, 1, 1, 1, 1, 1); \
+      y++; \
+   } while (0)
+   
+   WIDROW(_("Used:"), o_preview_extra, o_preview_extra_entry, 100);
+   WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 100);
+   WIDROW(_("Reserved:"), o_preview_owner, o_preview_owner_entry, 100);
+   WIDROW(_("Mount status:"), o_preview_perms, o_preview_perms_entry, 100);
+   WIDROW(_("Type:"), o_preview_time, o_preview_time_entry, 100);
+
+   e_widget_list_object_append(wd->o_preview_list,
+                               wd->o_preview_properties_table,
+                               1, 1, 0.5);
+   
+   e_widget_size_min_get(wd->o_preview_list, &mw, &mh);
+   e_widget_size_min_set(wd->obj, mw, mh);
+   evas_object_show(wd->o_preview_preview_table);
+   evas_object_show(wd->o_preview_extra);
+   evas_object_show(wd->o_preview_extra_entry);
+   evas_object_show(wd->o_preview_size);
+   evas_object_show(wd->o_preview_size_entry);
+   evas_object_show(wd->o_preview_owner);
+   evas_object_show(wd->o_preview_owner_entry);
+   evas_object_show(wd->o_preview_perms);
+   evas_object_show(wd->o_preview_perms_entry);
+   evas_object_show(wd->o_preview_time);
+   evas_object_show(wd->o_preview_time_entry);
+   evas_object_show(wd->o_preview_properties_table);
+}
+
+static void
+_e_wid_fprev_preview_file_widgets(E_Widget_Data *wd)
+{
+   Evas *evas = evas_object_evas_get(wd->obj);
+   Evas_Object *o;
+   int mw, mh, y = 0;
+   
+   _e_wid_fprev_clear_widgets(wd);
+
+   o = e_widget_table_add(evas, 0);
+   e_widget_disabled_set(o, 1);
+   wd->o_preview_preview_table = o;
+   e_widget_size_min_set(o, 32, 32);
+
+   e_widget_list_object_append(wd->o_preview_list,
+                               wd->o_preview_preview_table,
+                               0, 1, 0.5);
+
+   o = e_widget_table_add(evas, 0);
+   e_widget_disabled_set(o, 1);
+   wd->o_preview_properties_table = o;
+
+   WIDROW(_("Resolution:"), o_preview_extra, o_preview_extra_entry, 100);
+   WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 100);
+   WIDROW(_("Owner:"), o_preview_owner, o_preview_owner_entry, 100);
+   WIDROW(_("Permissions:"), o_preview_perms, o_preview_perms_entry, 100);
+   WIDROW(_("Modified:"), o_preview_time, o_preview_time_entry, 100);
+
+   e_widget_list_object_append(wd->o_preview_list,
+                               wd->o_preview_properties_table,
+                               1, 1, 0.5);
+
+   e_widget_size_min_get(wd->o_preview_list, &mw, &mh);
+   e_widget_size_min_set(wd->obj, mw, mh);
+   evas_object_show(wd->o_preview_preview_table);
+   evas_object_show(wd->o_preview_extra);
+   evas_object_show(wd->o_preview_extra_entry);
+   evas_object_show(wd->o_preview_size);
+   evas_object_show(wd->o_preview_size_entry);
+   evas_object_show(wd->o_preview_owner);
+   evas_object_show(wd->o_preview_owner_entry);
+   evas_object_show(wd->o_preview_perms);
+   evas_object_show(wd->o_preview_perms_entry);
+   evas_object_show(wd->o_preview_time);
+   evas_object_show(wd->o_preview_time_entry);
+   evas_object_show(wd->o_preview_properties_table);
+}
+
+static void
+_e_wid_fprev_preview_file(E_Widget_Data *wd)
 {
    char *size, *owner, *perms, *mtime;
    struct stat st;
    int mw, mh;
+   Eina_Bool is_fs = EINA_FALSE;
 
    if (stat(wd->path, &st) < 0) return;
+   // if its a desktop file treat is spcially
+   if (((wd->mime) &&(!strcasecmp(wd->mime, "application/x-desktop"))) ||
+       (eina_str_has_extension(wd->path, "desktop")))
+     {
+        Efreet_Desktop *desktop;
+        const char *type, *file;
+        
+        // load it and if its a specual removable or mount point
+        // desktop file for e, then we want to do something special
+        desktop = efreet_desktop_new(wd->path);
+        if ((desktop) && (desktop->url) &&
+            (desktop->type == EFREET_DESKTOP_TYPE_LINK) &&
+            (desktop->x) &&
+            ((type = eina_hash_find(desktop->x, "X-Enlightenment-Type"))) &&
+            ((!strcmp(type, "Mount")) || (!strcmp(type, "Removable"))))
+          {
+             // find the "mountpoint" or "link" - it's stringshared
+             if ((file = e_fm2_desktop_url_eval(desktop->url)))
+               {
+                  struct statvfs stfs;
+                  Eina_Bool ok = EINA_FALSE;
+                  
+                  memset(&stfs, 0, sizeof(stfs));
+                  if (statvfs(file, &stfs) == 0) ok = EINA_TRUE;
+                  else
+                    {
+                       E_Volume *v;
+                       
+                       v = e_fm2_device_volume_find(file);
+                       if (v)
+                         {
+                            if (statvfs(v->mount_point, &stfs) == 0)
+                              {
+                                 ok = EINA_TRUE;
+                                 eina_stringshare_del(file);
+                                 file = eina_stringshare_add(v->mount_point);
+                              }
+                         }
+                    }
+                  
+                  if (ok)
+                    {
+                       unsigned long fragsz;
+                       unsigned long long blknum, blkused, blkres;
+                       double mbsize, mbused, mbres;
+                       Eina_Bool rdonly = EINA_FALSE;
+                       char buf[PATH_MAX], mpoint[4096], fstype[4096];
+                       FILE *f;
+                       
+                       fragsz = stfs.f_frsize;
+                       blknum  = stfs.f_blocks;
+                       blkused = stfs.f_blocks - stfs.f_bfree;
+                       blkres = stfs.f_bfree - stfs.f_bavail;
+                       
+                       fstype[0] = 0;
+                       mpoint[0] = 0;
+                       f = fopen("/etc/mtab", "r");
+                       if (f)
+                         {
+                            while (fgets(buf, sizeof(buf), f))
+                              {
+                                 if (sscanf(buf, "%*s %4000s %4000s %*s",
+                                            mpoint, fstype) == 2)
+                                   {
+                                      if (!strcmp(mpoint, file)) break;
+                                   }
+                                 fstype[0] = 0;
+                                 mpoint[0] = 0;
+                              }
+                            fclose(f);
+                         }
+                       if (blknum > blkres)
+                         {
+                            is_fs = EINA_TRUE;
+                            
+                            mbres = ((double)blkres * (double)fragsz) / 
+                              (double)(1024*1024);
+                            mbsize = ((double)blknum * (double)fragsz) /
+                              (double)(1024*1024);
+                            mbused = (mbsize * (double)blkused) / 
+                              (double)blknum;
+#ifdef ST_RDONLY                                 
+                            if (stfs.f_flag & ST_RDONLY) rdonly = EINA_TRUE;
+#endif                                 
+                            _e_wid_fprev_preview_fs_widgets(wd);
+                            
+                            //-------------------
+                            if (mbused > 1024.0)
+                              snprintf(buf, sizeof(buf), "%1.2f Gb", mbused / 1024.0);
+                            else
+                              snprintf(buf, sizeof(buf), "%1.2f Mb", mbused);
+                            e_widget_entry_text_set(wd->o_preview_extra_entry, buf);
+                            //-------------------
+                            if (mbsize > 1024.0)
+                              snprintf(buf, sizeof(buf), "%1.2f Gb", mbsize / 1024.0);
+                            else
+                              snprintf(buf, sizeof(buf), "%1.2f Mb", mbsize);
+                            e_widget_entry_text_set(wd->o_preview_size_entry, buf);
+                            //-------------------
+                            if (mbres > 1024.0)
+                              snprintf(buf, sizeof(buf), "%1.2f Gb", mbres / 1024.0);
+                            else
+                              snprintf(buf, sizeof(buf), "%1.2f Mb", mbres);
+                            e_widget_entry_text_set(wd->o_preview_owner_entry, buf);
+                            //-------------------
+                            if (mpoint[0])
+                              {
+                                 if (rdonly) 
+                                   e_widget_entry_text_set(wd->o_preview_perms_entry, _("Read Only"));
+                                 else
+                                   e_widget_entry_text_set(wd->o_preview_perms_entry, _("Read / Write"));
+                              }
+                            else
+                              e_widget_entry_text_set(wd->o_preview_perms_entry, _("Unmounted"));
+                            //-------------------
+                            e_widget_entry_text_set(wd->o_preview_time_entry, fstype);
+                         }
+                    }
+                  if (!is_fs)
+                    {
+                       _e_wid_fprev_preview_fs_widgets(wd);
+                       e_widget_entry_text_set(wd->o_preview_extra_entry, _("Unknown"));
+                       e_widget_entry_text_set(wd->o_preview_size_entry, _("Unknown"));
+                       e_widget_entry_text_set(wd->o_preview_owner_entry, _("Unknown"));
+                       e_widget_entry_text_set(wd->o_preview_perms_entry, _("Unmounted"));
+                       e_widget_entry_text_set(wd->o_preview_time_entry, _("Unknown"));
+                       is_fs = EINA_TRUE;
+                    }
+                  eina_stringshare_del(file);
+               }
+          }
+        if (desktop) efreet_desktop_free(desktop);
+     }
+   if (is_fs) return;
+   _e_wid_fprev_preview_file_widgets(wd);
+   
    wd->mime_icon = EINA_FALSE;
    size = _e_wid_file_size_get(st.st_size);
    owner = _e_wid_file_user_get(st.st_uid);
@@ -134,7 +402,7 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd, const char *path)
 
    _e_wid_fprev_preview_reset(wd);
    _e_wid_fprev_preview_fm(wd);
-   _e_wid_fprev_img_update(wd, path, NULL);
+   _e_wid_fprev_img_update(wd, wd->path, NULL);
 
    e_widget_size_min_get(wd->o_preview_list, &mw, &mh);
    e_widget_size_min_set(wd->obj, mw, mh);
@@ -418,103 +686,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    e_widget_resize_object_set(obj, o);
    e_widget_sub_object_add(obj, o);
 
-   o = e_widget_table_add(evas, 0);
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_preview_table = o;
-   e_widget_size_min_set(o, 32, 32);
-
-   e_widget_list_object_append(wd->o_preview_list,
-                               wd->o_preview_preview_table,
-                               0, 1, 0.5);
-
-   o = e_widget_table_add(evas, 0);
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_properties_table = o;
-
-   o = e_widget_label_add(evas, _("Resolution:"));
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_extra = o;
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_extra,
-                                0, 0, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL);
-   e_widget_entry_readonly_set(o, 1);
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_extra_entry = o;
-   e_widget_size_min_set(o, 100, -1);
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_extra_entry,
-                                1, 0, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_label_add(evas, _("Size:"));
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_size = o;
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_size,
-                                0, 1, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_entry_add(evas, &(wd->preview_size_text), NULL, NULL, NULL);
-   e_widget_entry_readonly_set(o, 1);
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_size_entry = o;
-   e_widget_size_min_set(o, 100, -1);
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_size_entry,
-                                1, 1, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_label_add(evas, _("Owner:"));
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_owner = o;
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_owner,
-                                0, 2, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_entry_add(evas, &(wd->preview_owner_text), NULL, NULL, NULL);
-   e_widget_entry_readonly_set(o, 1);
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_owner_entry = o;
-   e_widget_size_min_set(o, 100, -1);
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_owner_entry,
-                                1, 2, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_label_add(evas, _("Permissions:"));
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_perms = o;
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_perms,
-                                0, 3, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_entry_add(evas, &(wd->preview_perms_text), NULL, NULL, NULL);
-   e_widget_entry_readonly_set(o, 1);
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_perms_entry = o;
-   e_widget_size_min_set(o, 100, -1);
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_perms_entry,
-                                1, 3, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_label_add(evas, _("Modified:"));
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_time = o;
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_time,
-                                0, 4, 1, 1, 1, 1, 1, 1);
-
-   o = e_widget_entry_add(evas, &(wd->preview_time_text), NULL, NULL, NULL);
-   e_widget_entry_readonly_set(o, 1);
-   e_widget_disabled_set(o, 1);
-   wd->o_preview_time_entry = o;
-   e_widget_size_min_set(o, 100, -1);
-   e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_time_entry,
-                                1, 4, 1, 1, 1, 1, 1, 1);
-
-   e_widget_list_object_append(wd->o_preview_list,
-                               wd->o_preview_properties_table,
-                               1, 1, 0.5);
-
    e_widget_size_min_get(wd->o_preview_list, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
    evas_object_show(wd->o_preview_preview_table);
@@ -544,5 +715,5 @@ e_widget_filepreview_path_set(Evas_Object *obj, const char *path, const char *mi
    if (!wd) return;
    eina_stringshare_replace(&wd->path, path);
    eina_stringshare_replace(&wd->mime, mime);
-   _e_wid_fprev_preview_file(wd, wd->path);
+   _e_wid_fprev_preview_file(wd);
 }

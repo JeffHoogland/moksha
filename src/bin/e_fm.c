@@ -4880,6 +4880,12 @@ _e_fm2_icon_desktop_url_eval(const char *val)
    return s;
 }
 
+EAPI const char *
+e_fm2_desktop_url_eval(const char *val)
+{
+   return _e_fm2_icon_desktop_url_eval(val);
+}
+
 static void
 _e_fm2_cb_eio_stat(void *data, Eio_File *handler __UNUSED__, const Eina_Stat *st)
 {
