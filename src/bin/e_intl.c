@@ -853,7 +853,12 @@ _e_intl_locale_system_locales_get(void)
    FILE *output;
 
    locales = NULL;
+   /* FIXME: Maybe needed for other BSD OS, or even Solaris */
+#ifdef __OpenBSD__
+   output = popen("ls /usr/share/locale", "r");
+#else
    output = popen("locale -a", "r");
+#endif
    if (output)
      {
         char line[32];
