@@ -14147,9 +14147,15 @@ collections {
                new text[100];
 
                f = getarg(2);              
-               if (f < 1000000) snprintf(text, 100, "%i", f / 1000);
-               else snprintf(text, 100, "%i.%i", f / 1000000,
-                             (f % 1000000) / 100000);
+               if (f < 1000000) {
+                  f += 500;
+                  snprintf(text, 100, "%i", f / 1000);
+               } 
+               else {
+                  f += 50000;
+                  snprintf(text, 100, "%i.%i", f / 1000000,
+                            (f % 1000000) / 100000);
+               }
                set_text(PART:"readout", text);
               
                ani = get_int(cur_freq_anim);
