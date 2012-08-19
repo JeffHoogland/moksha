@@ -7312,7 +7312,7 @@ _e_border_eval0(E_Border *bd)
              EINA_LIST_FOREACH(borders, l, tmp)
                if (tmp->client.win == bd->client.e.state.video_parent)
                  {
-                    fprintf(stderr, "child added to parent \\o/\n");
+                    /* fprintf(stderr, "child added to parent \\o/\n"); */
                     bd->client.e.state.video_parent_border = tmp;
                     tmp->client.e.state.video_child = eina_list_append(tmp->client.e.state.video_child,
                                                                        bd);
@@ -7322,7 +7322,7 @@ _e_border_eval0(E_Border *bd)
                  }
           }
 
-        fprintf(stderr, "new parent %x => %p\n", bd->client.e.state.video_parent, bd->client.e.state.video_parent_border);
+        /* fprintf(stderr, "new parent %x => %p\n", bd->client.e.state.video_parent, bd->client.e.state.video_parent_border); */
 
         if (bd->client.e.state.video_parent_border) bd->client.e.fetch.video_parent = 0;
 	rem_change = 1;
