@@ -2152,7 +2152,7 @@ e_border_focus_set(E_Border *bd,
         return;
      }
 
-   fprintf(stderr, "focus set bd %p client %x focus %i set %i [%s]\n", bd, bd->client.win, focus, set, bd->client.netwm.name);
+   /* fprintf(stderr, "focus set bd %p client %x focus %i set %i [%s]\n", bd, bd->client.win, focus, set, bd->client.netwm.name); */
    
    if (focus)
      {
