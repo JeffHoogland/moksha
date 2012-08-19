@@ -1191,7 +1191,6 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
    task->dst.done += task->src.st.st_size;
 
    _e_fm_op_update_progress(task, task->src.st.st_size, 0);
-   _e_fm_op_copy_stat_info(task);
 
    task->finished = 1;
 
