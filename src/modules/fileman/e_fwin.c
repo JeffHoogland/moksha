@@ -1876,7 +1876,7 @@ _e_fwin_terminal(void *data,
      {
         char buf[PATH_MAX];
         
-        if (getcwd(buf, sizeof(buf)) > 0)
+        if (getcwd(buf, sizeof(buf)))
           {
              const char *path;
              
