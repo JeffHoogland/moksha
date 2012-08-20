@@ -115,7 +115,7 @@ e_grab_dialog_show(E_Win *parent, Eina_Bool is_mouse, Ecore_Event_Handler_Cb key
    else
      {
         man = e_manager_current_get();
-        e_container_current_get(man);
+        con = e_container_current_get(man);
      }
 
    eg = E_OBJECT_ALLOC(E_Grab_Dialog, E_GRAB_DIALOG_TYPE, _e_grab_dialog_free);
