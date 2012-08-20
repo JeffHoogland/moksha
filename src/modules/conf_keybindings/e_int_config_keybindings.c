@@ -1006,7 +1006,15 @@ _grab_key_down_cb(void *data,
         unsigned int mod = E_BINDING_MODIFIER_NONE;
         unsigned int n, found;
 
-        
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+          mod |= E_BINDING_MODIFIER_SHIFT;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+          mod |= E_BINDING_MODIFIER_CTRL;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+          mod |= E_BINDING_MODIFIER_ALT;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
+          mod |= E_BINDING_MODIFIER_WIN;
+
         if (cfdata->locals.add)
           found = !!e_util_binding_match(cfdata->binding.key, ev, &n, NULL);
         else if (cfdata->locals.cur && cfdata->locals.cur[0])
