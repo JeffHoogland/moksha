@@ -1556,6 +1556,6 @@ e_util_binding_match(const Eina_List *bindlist, Ecore_Event_Key *ev, unsigned in
           }
         if (num) (*num)++;
      }
-   *num = 0;
+   if (num) *num = 0;
    return NULL;
 }
