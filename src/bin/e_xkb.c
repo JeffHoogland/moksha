@@ -173,5 +173,5 @@ e_xkb_flag_file_get(char *buf, size_t bufsize, const char *name)
 static void
 _e_xkb_update_event(int cur_group)
 {
-   ecore_event_add(E_EVENT_XKB_CHANGED, NULL, NULL, (void *)cur_group);
+   ecore_event_add(E_EVENT_XKB_CHANGED, NULL, NULL, (intptr_t*)(long)cur_group);
 }
