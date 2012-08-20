@@ -116,6 +116,67 @@ e_bindings_shutdown(void)
 }
 
 EAPI void
+e_bindings_reset(void)
+{
+   E_Config_Binding_Signal *ebs;
+   E_Config_Binding_Mouse *ebm;
+   E_Config_Binding_Wheel *ebw;
+   E_Config_Binding_Edge *ebe;
+   E_Config_Binding_Key *ebk;
+   E_Config_Binding_Acpi *eba;
+   Eina_List *l;
+   e_managers_keys_ungrab();
+   E_FREE_LIST(mouse_bindings, _e_bindings_mouse_free);
+   E_FREE_LIST(key_bindings, _e_bindings_key_free);
+   E_FREE_LIST(edge_bindings, _e_bindings_edge_free);
+   E_FREE_LIST(signal_bindings, _e_bindings_signal_free);
+   E_FREE_LIST(wheel_bindings, _e_bindings_wheel_free);
+   E_FREE_LIST(acpi_bindings, _e_bindings_acpi_free);
+
+   EINA_LIST_FOREACH(e_config->mouse_bindings, l, ebm)
+     e_bindings_mouse_add(ebm->context, ebm->button, ebm->modifiers,
+                          ebm->any_mod, ebm->action, ebm->params);
+
+   EINA_LIST_FOREACH(e_config->key_bindings, l, ebk)
+     e_bindings_key_add(ebk->context, ebk->key, ebk->modifiers,
+                        ebk->any_mod, ebk->action, ebk->params);
+
+   EINA_LIST_FOREACH(e_config->edge_bindings, l, ebe)
+     e_bindings_edge_add(ebe->context, ebe->edge, ebe->modifiers,
+                         ebe->any_mod, ebe->action, ebe->params, ebe->delay);
+
+   EINA_LIST_FOREACH(e_config->signal_bindings, l, ebs)
+     {
+        e_bindings_signal_add(ebs->context, ebs->signal, ebs->source, ebs->modifiers,
+                              ebs->any_mod, ebs->action, ebs->params);
+        /* FIXME: Can this be solved in a generic way? */
+        /* FIXME: Only change cursor if action is allowed! */
+        if ((ebs->action) && (ebs->signal) && (ebs->source) &&
+            (!strcmp(ebs->action, "window_resize")) &&
+            (!strncmp(ebs->signal, "mouse,down,", 11)) &&
+            (!strncmp(ebs->source, "e.event.resize.", 15)))
+          {
+             char params[32];
+
+             snprintf(params, sizeof(params), "resize_%s", ebs->params);
+             e_bindings_signal_add(ebs->context, "mouse,in", ebs->source, ebs->modifiers,
+                                   ebs->any_mod, "pointer_resize_push", params);
+             e_bindings_signal_add(ebs->context, "mouse,out", ebs->source, ebs->modifiers,
+                                   ebs->any_mod, "pointer_resize_pop", params);
+          }
+     }
+
+   EINA_LIST_FOREACH(e_config->wheel_bindings, l, ebw)
+     e_bindings_wheel_add(ebw->context, ebw->direction, ebw->z, ebw->modifiers,
+                          ebw->any_mod, ebw->action, ebw->params);
+
+   EINA_LIST_FOREACH(e_config->acpi_bindings, l, eba)
+     e_bindings_acpi_add(eba->context, eba->type, eba->status,
+                         eba->action, eba->params);
+   e_managers_keys_grab();
+}
+
+EAPI void
 e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, const char *action, const char *params)
 {
    E_Binding_Mouse *binding;
