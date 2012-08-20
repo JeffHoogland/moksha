@@ -146,3 +146,4 @@
 #include "e_log.h"
 #include "e_import_dialog.h"
 #include "e_import_config_dialog.h"
+#include "e_grab_dialog.h"

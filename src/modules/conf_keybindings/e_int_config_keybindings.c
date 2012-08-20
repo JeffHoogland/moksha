@@ -73,9 +73,7 @@ struct _E_Config_Dialog_Data
       char          *params;
       int            cur_act, add;
 
-      E_Dialog      *dia;
-      Ecore_X_Window bind_win;
-      Eina_List     *handlers;
+      E_Grab_Dialog *eg;
    } locals;
    struct
    {
@@ -127,9 +125,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->locals.params = strdup("");
    cfdata->locals.cur = NULL;
    cfdata->binding.key = NULL;
-   cfdata->locals.bind_win = 0;
-   cfdata->locals.handlers = NULL;
-   cfdata->locals.dia = NULL;
+   cfdata->locals.eg = NULL;
 
    EINA_LIST_FOREACH(e_config->key_bindings, l, bi)
      {
@@ -960,49 +956,23 @@ _key_binding_sort_cb(const void *d1,
 }
 
 /**************** grab window *******/
+
 static void
-_grab_wnd_show(E_Config_Dialog_Data *cfdata)
+_grab_wnd_hide(void *data)
 {
-   E_Manager *man;
+   E_Config_Dialog_Data *cfdata;
 
-   if (cfdata->locals.bind_win != 0) return;
-
-   man = e_manager_current_get();
-
-   cfdata->locals.dia = e_dialog_new(e_container_current_get(man),
-                                     "E", "_keybind_getkey_dialog");
-   if (!cfdata->locals.dia) return;
-   e_dialog_title_set(cfdata->locals.dia, _("Key Binding Sequence"));
-   e_dialog_icon_set(cfdata->locals.dia, "preferences-desktop-keyboard-shortcuts", 48);
-   e_dialog_text_set(cfdata->locals.dia, TEXT_PRESS_KEY_SEQUENCE);
-   e_win_centered_set(cfdata->locals.dia->win, 1);
-   e_win_borderless_set(cfdata->locals.dia->win, 1);
-
-   cfdata->locals.bind_win = ecore_x_window_input_new(man->root, 0, 0, 1, 1);
-   ecore_x_window_show(cfdata->locals.bind_win);
-   e_grabinput_get(0, 0, cfdata->locals.bind_win);
-
-   cfdata->locals.handlers = eina_list_append(cfdata->locals.handlers,
-                                              ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
-                                                                      _grab_key_down_cb, cfdata));
-   e_dialog_show(cfdata->locals.dia);
-   e_dialog_parent_set(cfdata->locals.dia, cfdata->cfd->dia->win);
+   cfdata = e_object_data_get(data);
+   cfdata->locals.eg = NULL;
 }
 
 static void
-_grab_wnd_hide(E_Config_Dialog_Data *cfdata)
+_grab_wnd_show(E_Config_Dialog_Data *cfdata)
 {
-   Ecore_Event_Handler *eh;
-
-   EINA_LIST_FREE(cfdata->locals.handlers, eh)
-     ecore_event_handler_del(eh);
-
-   e_object_del(E_OBJECT(cfdata->locals.dia));
-   cfdata->locals.dia = NULL;
-
-   e_grabinput_release(0, cfdata->locals.bind_win);
-   ecore_x_window_free(cfdata->locals.bind_win);
-   cfdata->locals.bind_win = 0;
+   if (cfdata->locals.eg) return;
+   cfdata->locals.eg = e_grab_dialog_show(cfdata->cfd->dia->win, EINA_FALSE, _grab_key_down_cb, NULL, NULL, cfdata);
+   e_object_data_set(E_OBJECT(cfdata->locals.eg), cfdata);
+   e_object_del_attach_func_set(E_OBJECT(cfdata->locals.eg), _grab_wnd_hide);
 }
 
 static Eina_Bool
@@ -1016,183 +986,170 @@ _grab_key_down_cb(void *data,
    ev = event;
    cfdata = data;
 
-   if (ev->window != cfdata->locals.bind_win) return ECORE_CALLBACK_PASS_ON;
-
-   if (!strcmp(ev->keyname, "Escape") &&
-       !(ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
-       !(ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
-       !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT) &&
-       !(ev->modifiers & ECORE_EVENT_MODIFIER_WIN))
+   if ((ev->keyname) && (ev->key) && (ev->compose))
+     printf("'%s' '%s' '%s'\n", ev->keyname, ev->key, ev->compose);
+   else if ((ev->keyname) && (ev->key))
+     printf("'%s' '%s'\n", ev->keyname, ev->key);
+   else
+     printf("unknown key!!!!\n");
+   if (!strcmp(ev->keyname, "Control_L") || !strcmp(ev->keyname, "Control_R") ||
+       !strcmp(ev->keyname, "Shift_L") || !strcmp(ev->keyname, "Shift_R") ||
+       !strcmp(ev->keyname, "Alt_L") || !strcmp(ev->keyname, "Alt_R") ||
+       !strcmp(ev->keyname, "Super_L") || !strcmp(ev->keyname, "Super_R"))
      {
-        _grab_wnd_hide(cfdata);
+        /* Do nothing */
      }
    else
      {
-        if ((ev->keyname) && (ev->key) && (ev->compose))
-          printf("'%s' '%s' '%s'\n", ev->keyname, ev->key, ev->compose);
-        else if ((ev->keyname) && (ev->key))
-          printf("'%s' '%s'\n", ev->keyname, ev->key);
-        else
-          printf("unknown key!!!!\n");
-        if (!strcmp(ev->keyname, "Control_L") || !strcmp(ev->keyname, "Control_R") ||
-            !strcmp(ev->keyname, "Shift_L") || !strcmp(ev->keyname, "Shift_R") ||
-            !strcmp(ev->keyname, "Alt_L") || !strcmp(ev->keyname, "Alt_R") ||
-            !strcmp(ev->keyname, "Super_L") || !strcmp(ev->keyname, "Super_R"))
-          {
-             /* Do nothing */
-          }
-        else
-          {
-             E_Config_Binding_Key *bi = NULL, *bi2 = NULL;
-             Eina_List *l = NULL;
-             unsigned int mod = E_BINDING_MODIFIER_NONE;
-             int found = 0, n;
+        E_Config_Binding_Key *bi = NULL, *bi2 = NULL;
+        Eina_List *l = NULL;
+        unsigned int mod = E_BINDING_MODIFIER_NONE;
+        int found = 0, n;
 
-             if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
-               mod |= E_BINDING_MODIFIER_SHIFT;
-             if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
-               mod |= E_BINDING_MODIFIER_CTRL;
-             if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
-               mod |= E_BINDING_MODIFIER_ALT;
-             if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
-               mod |= E_BINDING_MODIFIER_WIN;
-             /* see comment in e_bindings on numlock
-                if (ev->modifiers & ECORE_X_LOCK_NUM)
-                mod |= ECORE_X_LOCK_NUM;
-              */
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+          mod |= E_BINDING_MODIFIER_SHIFT;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+          mod |= E_BINDING_MODIFIER_CTRL;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+          mod |= E_BINDING_MODIFIER_ALT;
+        if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
+          mod |= E_BINDING_MODIFIER_WIN;
+        /* see comment in e_bindings on numlock
+           if (ev->modifiers & ECORE_X_LOCK_NUM)
+           mod |= ECORE_X_LOCK_NUM;
+         */
+        if (cfdata->locals.add)
+          {
+             found = 0;
+             for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
+               {
+                  bi = l->data;
+                  if (bi->modifiers == mod && !strcmp(bi->key, ev->keyname))
+                    found = 1;
+               }
+          }
+        else if (cfdata->locals.cur && cfdata->locals.cur[0])
+          {
+             found = 0;
+             sscanf(cfdata->locals.cur, "k%d", &n);
+             bi = eina_list_nth(cfdata->binding.key, n);
+
+             for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
+               {
+                  bi2 = l->data;
+                  if (bi == bi2) continue;
+                  if (bi2->modifiers == mod && !strcmp(bi2->key, ev->keyname))
+                    found = 1;
+               }
+          }
+
+        if (!found)
+          {
              if (cfdata->locals.add)
                {
-                  found = 0;
-                  for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
+                  bi = E_NEW(E_Config_Binding_Key, 1);
+
+                  bi->context = E_BINDING_CONTEXT_ANY;
+                  bi->modifiers = mod;
+                  bi->key = eina_stringshare_add(ev->keyname);
+                  bi->action = NULL;
+                  bi->params = NULL;
+                  bi->any_mod = 0;
+
+                  cfdata->binding.key = eina_list_append(cfdata->binding.key, bi);
+
+                  n = _update_key_binding_list(cfdata, bi);
+
+                  e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
+                  e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n, 0);
+                  e_widget_ilist_unselect(cfdata->gui.o_action_list);
+                  eina_stringshare_del(cfdata->locals.action);
+                  cfdata->locals.action = eina_stringshare_add("");
+                  if ((cfdata->params) && (cfdata->params[0]))
                     {
-                       bi = l->data;
-                       if (bi->modifiers == mod && !strcmp(bi->key, ev->keyname))
-                         found = 1;
+                       int j, g = -1;
+                       _find_key_binding_action("exec", NULL, &g, NULL, &j);
+                       if (j >= 0)
+                         {
+                            e_widget_ilist_unselect(cfdata->gui.o_action_list);
+                            e_widget_ilist_selected_set(cfdata->gui.o_action_list, (j + g + 1));
+                            e_widget_entry_clear(cfdata->gui.o_params);
+                            e_widget_entry_text_set(cfdata->gui.o_params, cfdata->params);
+                         }
+                    }
+                  else
+                    {
+                       e_widget_entry_clear(cfdata->gui.o_params);
+                       e_widget_disabled_set(cfdata->gui.o_params, 1);
                     }
                }
              else if (cfdata->locals.cur && cfdata->locals.cur[0])
                {
-                  found = 0;
+                  char *label;
+                  E_Ilist_Item *it;
+                  int i = 0;
+
                   sscanf(cfdata->locals.cur, "k%d", &n);
                   bi = eina_list_nth(cfdata->binding.key, n);
 
-                  for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
-                    {
-                       bi2 = l->data;
-                       if (bi == bi2) continue;
-                       if (bi2->modifiers == mod && !strcmp(bi2->key, ev->keyname))
-                         found = 1;
-                    }
-               }
+                  bi->modifiers = mod;
+                  if (bi->key) eina_stringshare_del(bi->key);
+                  bi->key = eina_stringshare_add(ev->keyname);
+                  printf("blub\n");
 
-             if (!found)
-               {
-                  if (cfdata->locals.add)
-                    {
-                       bi = E_NEW(E_Config_Binding_Key, 1);
+                  label = _key_binding_text_get(bi);
 
-                       bi->context = E_BINDING_CONTEXT_ANY;
-                       bi->modifiers = mod;
-                       bi->key = eina_stringshare_add(ev->keyname);
-                       bi->action = NULL;
-                       bi->params = NULL;
-                       bi->any_mod = 0;
-
-                       cfdata->binding.key = eina_list_append(cfdata->binding.key, bi);
-
-                       n = _update_key_binding_list(cfdata, bi);
-
-                       e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
-                       e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n, 0);
-                       e_widget_ilist_unselect(cfdata->gui.o_action_list);
-                       eina_stringshare_del(cfdata->locals.action);
-                       cfdata->locals.action = eina_stringshare_add("");
-                       if ((cfdata->params) && (cfdata->params[0]))
-                         {
-                            int j, g = -1;
-                            _find_key_binding_action("exec", NULL, &g, NULL, &j);
-                            if (j >= 0)
-                              {
-                                 e_widget_ilist_unselect(cfdata->gui.o_action_list);
-                                 e_widget_ilist_selected_set(cfdata->gui.o_action_list, (j + g + 1));
-                                 e_widget_entry_clear(cfdata->gui.o_params);
-                                 e_widget_entry_text_set(cfdata->gui.o_params, cfdata->params);
-                              }
-                         }
-                       else
-                         {
-                            e_widget_entry_clear(cfdata->gui.o_params);
-                            e_widget_disabled_set(cfdata->gui.o_params, 1);
-                         }
-                    }
-                  else if (cfdata->locals.cur && cfdata->locals.cur[0])
-                    {
-                       char *label;
-                       E_Ilist_Item *it;
-                       int i = 0;
-
-                       sscanf(cfdata->locals.cur, "k%d", &n);
-                       bi = eina_list_nth(cfdata->binding.key, n);
-
-                       bi->modifiers = mod;
-                       if (bi->key) eina_stringshare_del(bi->key);
-                       bi->key = eina_stringshare_add(ev->keyname);
-                       printf("blub\n");
-
-                       label = _key_binding_text_get(bi);
-
-                       EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.o_binding_list), l, it)
-                         {
-                            if (it->header) n++;
-                            if (i++ >= n) break;
-                         }
-
-                       e_widget_ilist_nth_label_set(cfdata->gui.o_binding_list, n, label);
-                       free(label);
-                    }
-               }
-             else
-               {
-                  int i = 0;
-                  E_Ilist_Item *it;
-#if 0
-                  /* this advice is rather irritating as one sees that the
-                     key is bound to an action. if you want to set a
-                     keybinding you dont care about whether there is
-                     sth else set to it. */
-                  int g, a, j;
-                  const char *label = NULL;
-                  E_Action_Group *actg = NULL;
-                  E_Action_Description *actd = NULL;
-
-                  if (cfdata->locals.add)
-                    _find_key_binding_action(bi->action, bi->params, &g, &a, &j);
-                  else
-                    _find_key_binding_action(bi2->action, bi2->params, &g, &a, &j);
-
-                  actg = eina_list_nth(e_action_groups_get(), g);
-                  if (actg) actd = eina_list_nth(actg->acts, a);
-
-                  if (actd) label = _(actd->act_name);
-
-                  e_util_dialog_show(_("Binding Key Error"),
-                                     _("The binding key sequence, that you choose,"
-                                       " is already used by <br>"
-                                       "<hilight>%s</hilight> action.<br>"
-                                       "Please choose another binding key sequence."),
-                                     label ? label : _("Unknown"));
-#endif
                   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.o_binding_list), l, it)
                     {
                        if (it->header) n++;
                        if (i++ >= n) break;
                     }
 
-                  e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n - 1, 1);
-                  e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n - 1);
+                  e_widget_ilist_nth_label_set(cfdata->gui.o_binding_list, n, label);
+                  free(label);
                }
-             _grab_wnd_hide(cfdata);
           }
+        else
+          {
+             int i = 0;
+             E_Ilist_Item *it;
+#if 0
+             /* this advice is rather irritating as one sees that the
+                key is bound to an action. if you want to set a
+                keybinding you dont care about whether there is
+                sth else set to it. */
+             int g, a, j;
+             const char *label = NULL;
+             E_Action_Group *actg = NULL;
+             E_Action_Description *actd = NULL;
+
+             if (cfdata->locals.add)
+               _find_key_binding_action(bi->action, bi->params, &g, &a, &j);
+             else
+               _find_key_binding_action(bi2->action, bi2->params, &g, &a, &j);
+
+             actg = eina_list_nth(e_action_groups_get(), g);
+             if (actg) actd = eina_list_nth(actg->acts, a);
+
+             if (actd) label = _(actd->act_name);
+
+             e_util_dialog_show(_("Binding Key Error"),
+                                _("The binding key sequence, that you choose,"
+                                  " is already used by <br>"
+                                  "<hilight>%s</hilight> action.<br>"
+                                  "Please choose another binding key sequence."),
+                                label ? label : _("Unknown"));
+#endif
+             EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.o_binding_list), l, it)
+               {
+                  if (it->header) n++;
+                  if (i++ >= n) break;
+               }
+
+             e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n - 1, 1);
+             e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n - 1);
+          }
+        e_object_del(E_OBJECT(cfdata->locals.eg));
      }
    return ECORE_CALLBACK_PASS_ON;
 }
