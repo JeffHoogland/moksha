@@ -1524,3 +1524,38 @@ e_util_terminal_desktop_get(void)
      }
    return tdesktop;
 }
+
+
+EAPI E_Config_Binding_Key *
+e_util_binding_match(const Eina_List *bindlist, Ecore_Event_Key *ev, unsigned int *num, const E_Config_Binding_Key *skip)
+{
+   E_Config_Binding_Key *bi;
+   const Eina_List *l;
+   unsigned int mod = E_BINDING_MODIFIER_NONE;
+
+   if (num) *num = 0;
+
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
+     mod |= E_BINDING_MODIFIER_SHIFT;
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
+     mod |= E_BINDING_MODIFIER_CTRL;
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
+     mod |= E_BINDING_MODIFIER_ALT;
+   if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
+     mod |= E_BINDING_MODIFIER_WIN;
+   /* see comment in e_bindings on numlock
+      if (ev->modifiers & ECORE_X_LOCK_NUM)
+      mod |= ECORE_X_LOCK_NUM;
+    */
+   EINA_LIST_FOREACH(bindlist ?: e_config->key_bindings, l, bi)
+     {
+        if (bi != skip)
+          {
+             if ((bi->modifiers == mod) && (!strcmp(bi->key, ev->keyname)))
+               return bi;
+          }
+        if (num) (*num)++;
+     }
+   *num = 0;
+   return NULL;
+}

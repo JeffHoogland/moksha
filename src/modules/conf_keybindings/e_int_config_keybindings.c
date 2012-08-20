@@ -1001,46 +1001,19 @@ _grab_key_down_cb(void *data,
      }
    else
      {
-        E_Config_Binding_Key *bi = NULL, *bi2 = NULL;
+        E_Config_Binding_Key *bi = NULL;
         Eina_List *l = NULL;
         unsigned int mod = E_BINDING_MODIFIER_NONE;
-        int found = 0, n;
+        unsigned int n, found;
 
-        if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
-          mod |= E_BINDING_MODIFIER_SHIFT;
-        if (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL)
-          mod |= E_BINDING_MODIFIER_CTRL;
-        if (ev->modifiers & ECORE_EVENT_MODIFIER_ALT)
-          mod |= E_BINDING_MODIFIER_ALT;
-        if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
-          mod |= E_BINDING_MODIFIER_WIN;
-        /* see comment in e_bindings on numlock
-           if (ev->modifiers & ECORE_X_LOCK_NUM)
-           mod |= ECORE_X_LOCK_NUM;
-         */
+        
         if (cfdata->locals.add)
-          {
-             found = 0;
-             for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
-               {
-                  bi = l->data;
-                  if (bi->modifiers == mod && !strcmp(bi->key, ev->keyname))
-                    found = 1;
-               }
-          }
+          found = !!e_util_binding_match(cfdata->binding.key, ev, &n, NULL);
         else if (cfdata->locals.cur && cfdata->locals.cur[0])
           {
-             found = 0;
              sscanf(cfdata->locals.cur, "k%d", &n);
              bi = eina_list_nth(cfdata->binding.key, n);
-
-             for (l = cfdata->binding.key, n = 0; l && !found; l = l->next, n++)
-               {
-                  bi2 = l->data;
-                  if (bi == bi2) continue;
-                  if (bi2->modifiers == mod && !strcmp(bi2->key, ev->keyname))
-                    found = 1;
-               }
+             found = !!e_util_binding_match(cfdata->binding.key, ev, &n, bi);
           }
 
         if (!found)
@@ -1087,7 +1060,7 @@ _grab_key_down_cb(void *data,
                {
                   char *label;
                   E_Ilist_Item *it;
-                  int i = 0;
+                  unsigned int i = 0;
 
                   sscanf(cfdata->locals.cur, "k%d", &n);
                   bi = eina_list_nth(cfdata->binding.key, n);
@@ -1111,7 +1084,7 @@ _grab_key_down_cb(void *data,
           }
         else
           {
-             int i = 0;
+             unsigned int i = 0;
              E_Ilist_Item *it;
 #if 0
              /* this advice is rather irritating as one sees that the
