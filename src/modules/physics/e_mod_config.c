@@ -34,7 +34,8 @@ e_int_config_physics_module(E_Container *con,
    char buf[4096];
    Mod *mod = _physics_mod;
 
-   if (e_config_dialog_find("E", "appearance/physics")) return NULL;
+   if (mod->config_dialog) return NULL;
+   snprintf(buf, sizeof(buf), "%s/e-module-physics.edj", e_module_dir_get(mod->module));
    v = E_NEW(E_Config_Dialog_View, 1);
 
    v->create_cfdata = _create_data;
@@ -44,7 +45,7 @@ e_int_config_physics_module(E_Container *con,
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Physics Settings"),
-                             "E", "appearance/physics", buf, 0, v, mod);
+                             "E", "appearance/physics", buf, 32, v, mod);
    mod->config_dialog = cfd;
    return cfd;
 }
