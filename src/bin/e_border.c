@@ -4499,7 +4499,7 @@ e_border_resize_limit(E_Border *bd,
 static void
 _e_border_free(E_Border *bd)
 {
-   if (bd->client.e.state.video_parent)
+   if (bd->client.e.state.video_parent && bd->client.e.state.video_parent_border)
      {
         bd->client.e.state.video_parent_border->client.e.state.video_child =
           eina_list_remove
