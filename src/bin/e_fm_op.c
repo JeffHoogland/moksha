@@ -231,14 +231,7 @@ main(int argc, char **argv)
                   if (p2_len + name_len >= PATH_MAX) goto skip_arg;
                   memcpy(p3, name, name_len + 1);
 
-                  if ((type == E_FM_OP_MOVE) &&
-                      (rename(argv[i], buf) == 0))
-                    {
-                       done++;
-                       _e_fm_op_update_progress_report_simple
-                         (done * 100 / total, argv[i], buf);
-                    }
-                  else if ((type == E_FM_OP_SYMLINK) &&
+                  if ((type == E_FM_OP_SYMLINK) &&
                            (symlink(argv[i], buf) == 0))
                     {
                        done++;
@@ -247,6 +240,10 @@ main(int argc, char **argv)
                     }
                   else
                     {
+                       if ((type == E_FM_OP_MOVE) &&
+                           (!strcmp(argv[i],buf)))
+                         goto skip_arg;
+
                        E_Fm_Op_Task *task;
 
                        task = _e_fm_op_task_new();
@@ -277,13 +274,7 @@ skip_arg:
              E_FREE(p2);
              if (i) goto quit;
 
-             /* Try a rename */
-             if ((type == E_FM_OP_MOVE) && (rename(argv[2], argv[3]) == 0))
-               {
-                  _e_fm_op_update_progress_report_simple(100, argv[2], argv[3]);
-                  goto quit;
-               }
-             else if ((type == E_FM_OP_SYMLINK) &&
+             if ((type == E_FM_OP_SYMLINK) &&
                       (symlink(argv[2], argv[3]) == 0))
                {
                   _e_fm_op_update_progress_report_simple(100, argv[2], argv[3]);
