@@ -160,6 +160,8 @@ e_grab_dialog_show(E_Win *parent, Eina_Bool is_mouse, Ecore_Event_Handler_Cb key
         eg->handlers = eina_list_append(eg->handlers, eh);
      }
    e_dialog_show(eg->dia);
+   e_border_layer_set(eg->dia->win->border, 150);
+   e_hints_window_stacking_set(eg->dia->win->border, E_STACKING_ABOVE);
    if (parent)
      e_dialog_parent_set(eg->dia, parent);
    return eg;
