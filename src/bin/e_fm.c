@@ -6738,7 +6738,7 @@ _e_fm2_mouse_1_handler(E_Fm2_Icon *ic, int up, void *evas_event)
      }
    if (sel_change)
      evas_object_smart_callback_call(ic->sd->obj, "selection_change", NULL);
-   if (ic->sd->config->view.single_click)
+   if (ic->sd->config->view.single_click && (!range_sel) && (!multi_sel))
      {
         if (eu && (eu->timestamp - down_timestamp) > ic->sd->config->view.single_click_delay)
           {
