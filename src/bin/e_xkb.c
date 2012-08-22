@@ -48,21 +48,26 @@ e_xkb_update(int cur_group)
              eina_strbuf_append(buf, ",");
           }
      }
-    eina_strbuf_append(buf, "'");
+   eina_strbuf_append(buf, "' -variant '");
+
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+     {
+        if (cl->variant)
+          {
+             if (strcmp(cl->variant, "basic"))
+               eina_strbuf_append(buf, cl->variant);
+             eina_strbuf_append(buf, ",");
+             /* workaround xkb bug where basic variants work with ',' at the
+             * end, but dvorak (and mayby others) don't */
+//           if (!strcmp(cl->variant, "basic")) eina_strbuf_append(buf, ",");
+          }
+        else
+          eina_strbuf_append(buf, ",");
+     }
+   eina_strbuf_append(buf, "'");
+
    /* use first entry in used layouts */
    cl = e_config->xkb.used_layouts->data;
-
-   if ((cl->variant)
-/* workaround xkb bug */
-       && (!(!strcmp(cl->variant, "basic"))))
-     {
-        eina_strbuf_append(buf, " -variant '");
-        eina_strbuf_append(buf, cl->variant);
-        /* workaround xkb bug where basic variants work with ',' at the
-         * end, but dvorak (and mayby others) don't */
-//        if (!strcmp(cl->variant, "basic")) eina_strbuf_append(buf, ",");
-        eina_strbuf_append(buf, "'");
-     }
 
    if (cl->model)
      {
