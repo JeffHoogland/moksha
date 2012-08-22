@@ -52,6 +52,7 @@ e_configure_registry_call(const char *path, E_Container *con, const char *params
    cat = ecore_file_dir_get(path);
    if (!cat) return;
    item = ecore_file_file_get(path);
+   if (!con) con = e_container_current_get(e_manager_current_get());
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
      if (!strcmp(cat, ecat->cat))
        {
