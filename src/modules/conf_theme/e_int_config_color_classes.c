@@ -232,7 +232,7 @@ _color_class_list_selection_idler(void *data)
         if ((!enabled) && (ccc->val.enabled))
           enabled = EINA_TRUE;
 
-#define _X(_n)                                       \
+#define _CX(_n)                                      \
   do                                                 \
     {                                                \
        for (i = 0; i < 3; i++)                       \
@@ -249,11 +249,11 @@ _color_class_list_selection_idler(void *data)
     }                                                \
   while (0)
 
-        _X(r);
-        _X(g);
-        _X(b);
-        _X(a);
-#undef _X
+        _CX(r);
+        _CX(g);
+        _CX(b);
+        _CX(a);
+#undef _CX
      }
 
    for (i = 0; i < 3; i++)
