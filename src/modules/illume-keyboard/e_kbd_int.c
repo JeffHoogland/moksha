@@ -956,7 +956,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
    while (fgets(buf, sizeof(buf), f))
      {
         int len;
-        char str[PATH_MAX];
+        char str[4096];
 
         if (!isok)
           {
