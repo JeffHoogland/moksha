@@ -843,24 +843,30 @@ _e_desklock_check_auth(void)
    if (!edd) return 0;
 #ifdef HAVE_PAM
    if (e_config->desklock_auth_method == 0)
-     return _desklock_auth(edd->passwd);
+     {
+        int ret;
+        
+        ret = _desklock_auth(edd->passwd);
+        // passwd off in child proc now - null out from parent
+        memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
+     }
    else if (e_config->desklock_auth_method == 1)
      {
 #endif
-   if ((e_config->desklock_personal_passwd) &&
-       (!strcmp(!edd->passwd ? "" : edd->passwd,
-                !e_config->desklock_personal_passwd ? "" :
-                e_config->desklock_personal_passwd)))
-     {
-        /* password ok */
-        /* security - null out passwd string once we are done with it */
-        memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
-        e_desklock_hide();
-        return 1;
-     }
+        if ((e_config->desklock_personal_passwd) &&
+            (!strcmp(!edd->passwd ? "" : edd->passwd,
+                     !e_config->desklock_personal_passwd ? "" :
+                     e_config->desklock_personal_passwd)))
+          {
+             /* password ok */
+             /* security - null out passwd string once we are done with it */
+             memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
+             e_desklock_hide();
+             return 1;
+          }
 #ifdef HAVE_PAM
-}
-
+     }
+   
 #endif
    /* password is definitely wrong */
    _e_desklock_state_set(E_DESKLOCK_STATE_INVALID);
