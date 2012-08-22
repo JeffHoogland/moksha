@@ -1,6 +1,9 @@
 [Desktop Entry]
 Type=Link
 Name=Wayland Screenshot
+Name[pt]=Wayland - Captura de ecrã
 Icon=e-module-wl_screenshot.edj
 Comment=Enlightenment Wayland Screenshot Module
+Comment[it]=Modulo di Enlightenment per screenshot in Wayland
+Comment[pt]=Módulo de captura de ecrã 
 X-Enlightenment-ModuleType=look

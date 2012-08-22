@@ -1,9 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Home
+Name[pt]=Pasta pessoal
 Comment=The Directory containing all your personal files
 Comment[it]=La directory contenente i vostri file personali
 Comment[fr]=Le dossier contenant vos fichiers personnels
+Comment[pt]=O diretório dos ficheiros do utilizador
 Type=Link
 X-Enlightenment-Type=Mount
 URL=file:$HOME

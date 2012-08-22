@@ -2,9 +2,11 @@
 Encoding=UTF-8
 Name=Desktop
 Name[fr]=Bureau
+Name[pt]=Área de trabalho
 Comment=Files on your Desktop
 Comment[it]=I file sul vostro desktop
 Comment[fr]=Les fichiers sur votre bureau
+Comment[pt]=Os ficheiros da área de trabalho
 Type=Link
 X-Enlightenment-Type=Mount
 URL=file:$HOME/Desktop

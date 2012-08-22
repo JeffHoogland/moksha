@@ -18,5 +18,5 @@ Comment[it]=Alternativa a notification-daemon.<br>Mostra un popup al verificarsi
 Comment[hu]=notification-daemon alternatíva.<br>Egy esemény megtörténtét jelzi.
 Comment[fr]=Alternative à notification-daemon.<br>Signale par pop-up l'occurrence d'un événement.
 Comment[el]=εναλλακτικό του notification-daemon.<br>Εμφανίζεται όταν συμβεί ένα γεγονός.
-Comment[pt]=Uma alternativa ao notification-daemon.<br>Alertas sobre eventos.
+Comment[pt]=Uma alternativa ao notification-daemon.<br>Mostra alertas sobre eventos.
 X-Enlightenment-ModuleType=core

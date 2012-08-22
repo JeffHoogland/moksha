@@ -1,6 +1,9 @@
 [Desktop Entry]
 Type=Link
 Name=Physics
+Name[pt]=Física
 Icon=e-module-physics
 Comment=Enlightenment Physics Professor
+Comment[it]=Il professore di fisica di Enlightenment
+Comment[pt]=Professor de física do Enlightenment
 X-Enlightenment-ModuleType=look

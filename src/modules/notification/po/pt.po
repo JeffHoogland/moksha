@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: notifications\n"
 "Report-Msgid-Bugs-To: http://trac.enlightenment.org/e\n"
 "POT-Creation-Date: 2011-07-26 02:01-0700\n"
-"PO-Revision-Date: 2011-07-27 22:34-0000\n"
+"PO-Revision-Date: 2012-08-22 17:17+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -47,19 +47,19 @@ msgstr "Terminou o modo de demonstração.<br> Os serviços de bloqueio, poupan�
 
 #: ../src/e_mod_main.c:236
 msgid "Enter Offline Mode"
-msgstr "Entrar no modo \"off-line\""
+msgstr "Entrar no modo \"offline\""
 
 #: ../src/e_mod_main.c:237
 msgid "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules that use network will stop polling remote services."
-msgstr "O Enlightenment está no modo <b>\"off-line\".</b> Durante este modo, os módulo que utilizem a rede irão parar de analisar os serviços remotos."
+msgstr "O Enlightenment está no modo <b>\"offline\".</b> Neste modo, os módulos que utilizem a rede irão parar de analisar os serviços remotos."
 
 #: ../src/e_mod_main.c:243
 msgid "Exited Offline Mode"
-msgstr "Saiu do modo \"off-line\""
+msgstr "Saiu do modo \"offline\""
 
 #: ../src/e_mod_main.c:244
 msgid "Now in <b>online</b> mode.<br>Now modules that use network will resume regular tasks."
-msgstr "Terminou o modo <b>\"off-line\"</b>. Os módulos que utilizam a rede irão retomar os serviços."
+msgstr "Terminou o modo <b>\"offline\"</b>. Os módulos que utilizam a rede irão retomar os serviços."
 
 #. register config panel entry
 #: ../src/e_mod_main.c:301
@@ -112,11 +112,11 @@ msgstr "crítico"
 
 #: ../src/e_mod_config.c:92
 msgid "Default Timeout"
-msgstr "Expiração por omissão"
+msgstr "Tempo limite padrão"
 
 #: ../src/e_mod_config.c:93
 msgid "Force timeout for all notifications"
-msgstr "Tempo limite para as notificações"
+msgstr "Forçar tempo limite para as notificações"
 
 #: ../src/e_mod_config.c:95
 #, c-format
@@ -154,7 +154,7 @@ msgstr "Mostrar um alerta ao passar com o rato"
 
 #: ../src/e_mod_config_item.c:87
 msgid "Focus the source window when clicking"
-msgstr "Focar a janela de origem ao clicar "
+msgstr "Focar a janela original ao clicar "
 
 #: ../src/e_mod_config_item.c:92
 msgid "Levels of urgency to store : "

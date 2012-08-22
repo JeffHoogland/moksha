@@ -2,8 +2,10 @@
 Type=Link
 Name=Keyboard
 Name[fr]=Clavier
+Name[pt]=Teclado
 Icon=preferences-desktop-keyboard
 X-Enlightenment-ModuleType=utils
 Comment=Keyboard layout configuration and switcher
 Comment[fr]=Pour configurer et basculer l'agencement du clavier.
 Comment[it]=Per configurare e commutare il layout di tastiera.
+Comment[pt]=Configuração e alteração dos esquemas de teclado

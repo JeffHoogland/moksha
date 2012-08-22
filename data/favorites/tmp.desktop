@@ -1,9 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Temp
+Name[pt]=Temporários
 Comment=Temporary files
 Comment[it]=File temporanei
 Comment[fr]=Les fichiers temporaires
+Comment[pt]=Ficheiros temporários
 Type=Link
 X-Enlightenment-Type=Mount
 URL=file:/tmp

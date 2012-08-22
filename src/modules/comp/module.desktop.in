@@ -4,6 +4,7 @@ Name=Composite
 Name[ru]=Композитный менеджер
 Name[de]=Composite-Grafik
 Name[tr]=Birleşiklik
+Name[pt]=Composição
 Icon=e-module-comp
 Comment=Enlightenment Composite Manager
 Comment[ru]=Композитный менеджер для Enlightenment.

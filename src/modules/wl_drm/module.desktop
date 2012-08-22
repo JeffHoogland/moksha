@@ -3,4 +3,6 @@ Type=Link
 Name=Wayland Drm
 Icon=e-module-wl_drm
 Comment=Enlightenment DRM Composite Manager
+Comment[it]=Composite manager DRM di Enlightenment
+Comment[pt]=Gestor de composição Enlightenment DRM
 X-Enlightenment-ModuleType=look
