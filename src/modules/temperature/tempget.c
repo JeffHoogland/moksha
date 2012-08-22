@@ -358,7 +358,7 @@ check(void)
    FILE *f;
    int ret = 0;
    int temp = 0;
-   char buf[PATH_MAX];
+   char buf[4096];
 #ifdef __FreeBSD__
    int len;
    size_t ftemp = 0;

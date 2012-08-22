@@ -391,7 +391,7 @@ _menu_cb_post(void *data, E_Menu *m __UNUSED__)
 static void
 _cpufreq_set_governor(const char *governor)
 {
-   char buf[PATH_MAX];
+   char buf[4096];
    int ret;
 
    snprintf(buf, sizeof(buf),
@@ -419,7 +419,7 @@ _cpufreq_set_governor(const char *governor)
 static void
 _cpufreq_set_frequency(int frequency)
 {
-   char buf[PATH_MAX];
+   char buf[4096];
    int ret;
 
 #ifdef __FreeBSD__
@@ -546,7 +546,7 @@ _cpufreq_cb_sort(const void *item1, const void *item2)
 static int
 _cpufreq_status_check_available(Status *s)
 {
-   char buf[PATH_MAX];
+   char buf[4096];
    Eina_List *l;
    // FIXME: this sssumes all cores accept the same freqs/ might be wrong
 #ifdef __FreeBSD__
@@ -665,7 +665,7 @@ _cpufreq_status_check_available(Status *s)
 static int
 _cpufreq_status_check_current(Status *s)
 {
-   char buf[PATH_MAX];
+   char buf[4096];
    int i;
    FILE *f;
    int ret = 0;

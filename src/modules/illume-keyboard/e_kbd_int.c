@@ -940,7 +940,7 @@ static void
 _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
 {
    FILE *f;
-   char buf[PATH_MAX];
+   char buf[4096];
    int isok = 0;
    E_Kbd_Int_Key *ky = NULL;
    E_Kbd_Int_Key_State *st = NULL;
@@ -1010,7 +1010,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
             (!strcmp(str, "capslock")) || (!strcmp(str, "altgr")))
           {
              char *p;
-             char label[PATH_MAX];
+             char label[4096];
 
              if (sscanf(buf, "%*s %4000s", label) != 1) continue;
              st = calloc(1, sizeof(E_Kbd_Int_Key_State));

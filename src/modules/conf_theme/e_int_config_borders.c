@@ -219,7 +219,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FREE(borders, str)
      {
-        char buf[PATH_MAX];
+        char buf[4096];
 
         ob = e_livethumb_add(evas);
         e_livethumb_vsize_set(ob, 96, 96);

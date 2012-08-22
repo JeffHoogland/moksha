@@ -1421,7 +1421,7 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
 {
    Evas_Object *o;
    int ok = 0;
-   char buf[PATH_MAX];
+   char buf[4096];
    Eina_List *list = NULL, *l;
    Match *m;
    const char *title = NULL, *name = NULL, *clas = NULL, *role = NULL;

@@ -617,7 +617,7 @@ _e_fwin_icon_popup(void *data)
    E_Fwin *fwin = data;
    Evas_Object *bg, *edje, *list, *o;
    E_Zone *zone;
-   char buf[PATH_MAX];
+   char buf[4096];
    int x, y, w, h, mw, mh, fx, fy, px, py;
 
    fwin->popup_timer = NULL;
@@ -1313,7 +1313,7 @@ _e_fwin_config_set(E_Fwin_Page *page)
 static void
 _e_fwin_window_title_set(E_Fwin_Page *page)
 {
-   char buf[PATH_MAX];
+   char buf[PATH_MAX + sizeof("e_fwin::")];
    const char *file;
 
    if (!page) return;
@@ -2028,7 +2028,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    Efreet_Desktop *desk = NULL;
    E_Fwin_Apps_Dialog *fad;
    E_Fm2_Icon_Info *ici;
-   char buf[PATH_MAX];
+   char buf[PATH_MAX + sizeof("removable:")];
    Eina_Bool has_default = EINA_FALSE;
    int need_dia = 0, n = 0;;
 
@@ -2700,7 +2700,7 @@ _e_fwin_op_registry_listener_cb(void *data,
                                 const E_Fm2_Op_Registry_Entry *ere)
 {
    Evas_Object *o = data;
-   char buf[PATH_MAX];
+   char buf[4096];
    char *total;
    int mw, mh;
 

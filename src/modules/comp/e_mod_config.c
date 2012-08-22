@@ -351,7 +351,7 @@ _style_selector(Evas *evas,
    EINA_LIST_FOREACH(styles, l, style)
      {
         E_Demo_Style_Item *ds_it;
-        char buf[PATH_MAX];
+        char buf[4096];
 
         ds_it = malloc(sizeof(E_Demo_Style_Item));
 

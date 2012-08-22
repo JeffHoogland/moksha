@@ -276,7 +276,7 @@ _gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 static const char *
 _gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   static char buf[PATH_MAX];
+   static char buf[4096];
 
    snprintf(buf, sizeof(buf), "%s.%d", _gc_class.name,
             (eina_list_count(instances) + 1));

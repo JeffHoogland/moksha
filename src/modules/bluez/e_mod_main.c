@@ -21,7 +21,7 @@
 #include "e_mod_main.h"
 
 static E_Module *bluez_mod = NULL;
-static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
+static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
 static const char _e_bluez_agent_path[] = "/org/enlightenment/bluez/Agent";
 const char _e_bluez_name[] = "bluez";

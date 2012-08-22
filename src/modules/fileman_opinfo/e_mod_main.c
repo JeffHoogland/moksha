@@ -53,7 +53,7 @@ static void
 _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
 {
    Evas_Object *o = data;
-   char *total, buf[PATH_MAX];
+   char *total, buf[4096];
 
    if (!o || !ere) return;
    

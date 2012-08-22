@@ -540,7 +540,7 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
 {
    E_Config_Dialog_Data *cfdata = dlg->data;
    E_Config_XKB_Layout  *cl;
-   char buf[PATH_MAX];
+   char buf[4096];
    /* Configuration information */
    const char *layout = e_widget_ilist_selected_value_get(cfdata->layout_list);
    const char *model = e_widget_ilist_selected_value_get(cfdata->model_list);
@@ -602,7 +602,7 @@ _cb_dlg_fill_delay(void *data)
    E_Config_Dialog_Data *cfdata;
    Eina_List *l;
    E_XKB_Layout *layout;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    if (!(cfdata = data)) return ECORE_CALLBACK_RENEW;
 
@@ -645,7 +645,7 @@ _cb_layout_select(void *data)
    Eina_List *l;
    const char *label;
    int n;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    if (!(cfdata = data)) return;
 
@@ -708,7 +708,7 @@ _cb_fill_delay(void *data)
    E_Config_XKB_Layout *cl;
    E_XKB_Model *model;
    int n = 0;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    if (!(cfdata = data)) return ECORE_CALLBACK_RENEW;
 

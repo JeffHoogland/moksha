@@ -87,7 +87,7 @@ str_file_get(const char *file)
    FILE *f = fopen(file, "r");
    if (f)
      {
-        char buf[PATH_MAX];
+        char buf[4096];
         char *str = fgets(buf, sizeof(buf), f);
         if (str)
           {

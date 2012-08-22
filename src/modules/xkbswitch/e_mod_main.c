@@ -258,7 +258,7 @@ _gc_label(const E_Gadcon_Client_Class *client_class __UNUSED__)
 static const char *
 _gc_id_new(const E_Gadcon_Client_Class *client_class) 
 {
-   static char buf[PATH_MAX];
+   static char buf[4096];
 
    snprintf(buf, sizeof(buf), "%s.%d", client_class->name, 
             eina_list_count(instances) + 1);
@@ -362,7 +362,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
              E_Menu_Item *mi;
              Eina_List *l;
              int dir;
-             char buf[PATH_MAX];
+             char buf[4096];
              int grp = -1;
              
              mi = e_menu_item_new(inst->lmenu);

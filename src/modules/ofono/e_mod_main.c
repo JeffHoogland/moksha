@@ -4,7 +4,7 @@
 #include "e_mod_main.h"
 
 static E_Module *ofono_mod = NULL;
-static char tmpbuf[PATH_MAX];
+static char tmpbuf[4096];
 
 const char _e_ofono_name[] = "ofono";
 const char _e_ofono_Name[] = N_("Mobile Modems Info");

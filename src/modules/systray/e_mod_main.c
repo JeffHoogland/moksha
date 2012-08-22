@@ -107,7 +107,7 @@ static int _last_st_num = -1;
 
 static E_Module *systray_mod = NULL;
 static Instance *instance = NULL; /* only one systray ever possible */
-static char tmpbuf[PATH_MAX]; /* general purpose buffer, just use immediately */
+static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
 static Eina_Bool
 _systray_site_is_safe(E_Gadcon_Site site)

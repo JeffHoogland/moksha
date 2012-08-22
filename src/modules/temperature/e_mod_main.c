@@ -301,7 +301,7 @@ _temperature_face_id_max(const Eina_Hash *hash __UNUSED__, const void *key, void
 void 
 temperature_face_update_config(Config_Face *inst)
 {
-   char buf[PATH_MAX];
+   char buf[8192];
 
    if (inst->tempget_exe)
      {

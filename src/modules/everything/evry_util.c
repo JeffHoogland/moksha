@@ -846,7 +846,7 @@ evry_file_url_get(Evry_Item_File *file)
    if (!file->path)
      return NULL;
 
-   memset(dest, 0, PATH_MAX * 3 + 7);
+   memset(dest, 0, sizeof(dest));
 
    snprintf(dest, 8, "file://");
 

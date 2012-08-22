@@ -306,7 +306,7 @@ _e_mod_menu_volume_cb(void           *data,
      }
    else
      {
-        char buf[PATH_MAX];
+        char buf[PATH_MAX + sizeof("removable:")];
 
         snprintf(buf, sizeof(buf), "removable:%s", vol->udi);
         if (fm && ((fileman_config->view.open_dirs_in_place && evas_object_data_get(fm, "page_is_window")) ||
@@ -321,7 +321,7 @@ static void
 _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
                                    Eina_Bool need_separator)
 {
-   char line[PATH_MAX];
+   char line[4096];
    char buf[PATH_MAX];
    E_Menu_Item *mi;
    Efreet_Uri *uri;

@@ -285,7 +285,7 @@ _il_home_desktop_run(Il_Home_Win *hwin, Efreet_Desktop *desktop)
    Il_Home_Exec *exec;
    Eina_List *l;
    E_Border *bd;
-   char buff[PATH_MAX];
+   char buff[4096];
 
    if ((!hwin) || (!desktop) || (!desktop->exec)) return;
    EINA_LIST_FOREACH(exes, l, exec) 

@@ -113,7 +113,7 @@ _e_mod_kbd_device_ignore_load(void)
 static void 
 _e_mod_kbd_device_ignore_load_file(const char *file) 
 {
-   char buff[PATH_MAX];
+   char buff[4096];
    FILE *f;
 
    /* can this file be opened */
