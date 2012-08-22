@@ -21,13 +21,10 @@ Battery *bat;
 int
 _battery_openbsd_start(void)
 {
-   Eina_List *devices;
    int mib[] = {CTL_HW, HW_SENSORS, 0, 0, 0};
    int devn;
    struct sensordev snsrdev;
    size_t sdlen = sizeof(struct sensordev);
-   struct sensor s;
-   size_t slen = sizeof(struct sensor);
 
    for (devn = 0;; devn++) {
         mib[2] = devn;
@@ -45,6 +42,7 @@ _battery_openbsd_start(void)
                return 0;
              bat->udi = eina_stringshare_add("acpibat0"),
              bat->mib = malloc(sizeof(int) * 5);
+             if (!bat->mib) return 0;
              bat->mib[0] = mib[0];
              bat->mib[1] = mib[1];
              bat->mib[2] = mib[2];
@@ -63,6 +61,7 @@ _battery_openbsd_start(void)
                return 0;
              ac->udi = eina_stringshare_add("acpiac0");
              ac->mib = malloc(sizeof(int) * 5);
+             if (!ac->mib) return 0;
              ac->mib[0] = mib[0];
              ac->mib[1] = mib[1];
              ac->mib[2] = mib[2];
@@ -103,7 +102,7 @@ _battery_openbsd_battery_update_poll(void *data)
 static void
 _battery_openbsd_battery_update()
 {
-   double time, charge;
+   double _time, charge;
    struct sensor s;
    size_t slen = sizeof(struct sensor);
 
@@ -127,10 +126,10 @@ _battery_openbsd_battery_update()
         charge = (double)s.value;
      }
 
-   time = ecore_time_get();
+   _time = ecore_time_get();
    if ((bat->got_prop) && (charge != bat->current_charge))
-     bat->charge_rate = ((charge - bat->current_charge) / (time - bat->last_update));
-   bat->last_update = time;
+     bat->charge_rate = ((charge - bat->current_charge) / (_time - bat->last_update));
+   bat->last_update = _time;
    bat->current_charge = charge;
    bat->percent = 100 * (bat->current_charge / bat->last_full_charge);
    if (bat->got_prop)
@@ -184,4 +183,3 @@ _battery_openbsd_battery_update()
      _battery_device_update();
    bat->got_prop = 1;
 }
-
