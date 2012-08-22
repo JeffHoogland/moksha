@@ -6512,8 +6512,10 @@ _e_border_cb_grab_replay(void *data __UNUSED__,
 
    if (type != ECORE_EVENT_MOUSE_BUTTON_DOWN) return ECORE_CALLBACK_DONE;
    ev = event;
-   if ((e_config->pass_click_on) || (e_config->always_click_to_raise) ||
-       (e_config->always_click_to_focus))
+   if ((e_config->pass_click_on)
+//       || (e_config->always_click_to_raise)
+//       || (e_config->always_click_to_focus)
+      )
      {
         E_Border *bd;
 
