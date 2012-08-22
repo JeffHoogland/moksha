@@ -1004,7 +1004,7 @@ _grab_key_down_cb(void *data,
         E_Config_Binding_Key *bi = NULL;
         Eina_List *l = NULL;
         unsigned int mod = E_BINDING_MODIFIER_NONE;
-        unsigned int n, found;
+        unsigned int n, found = 0;
 
         if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
           mod |= E_BINDING_MODIFIER_SHIFT;
