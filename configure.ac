@@ -860,6 +860,7 @@ AC_E_OPTIONAL_MODULE([everything], true)
 AC_E_OPTIONAL_MODULE([systray], true)
 AC_E_OPTIONAL_MODULE([comp], true)
 AC_E_OPTIONAL_MODULE([physics], true, [CHECK_MODULE_PHYSICS])
+AC_E_OPTIONAL_MODULE([quickaccess], true)
 AC_E_OPTIONAL_MODULE([shot], true)
 AC_E_OPTIONAL_MODULE([backlight], true)
 AC_E_OPTIONAL_MODULE([tasks], true)
@@ -1029,6 +1030,8 @@ src/modules/comp/Makefile
 src/modules/comp/module.desktop
 src/modules/physics/Makefile
 src/modules/physics/module.desktop
+src/modules/quickaccess/Makefile
+src/modules/quickaccess/module.desktop
 src/modules/shot/Makefile
 src/modules/shot/module.desktop
 src/modules/backlight/Makefile

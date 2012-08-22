@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Quickaccess
+Icon=e-module-quickaccess
+Comment=Enlightenment Quickaccess Launcher
+X-Enlightenment-ModuleType=launcher

@@ -179,6 +179,10 @@ if USE_MODULE_PHYSICS
 SUBDIRS += physics
 endif
 
+if USE_MODULE_QUICKACCESS
+SUBDIRS += quickaccess
+endif
+
 if USE_MODULE_OFONO
 SUBDIRS += ofono
 endif
