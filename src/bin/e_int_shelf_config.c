@@ -421,7 +421,7 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
    EINA_LIST_FOREACH(styles, l, style)
      {
         Evas_Object *thumb, *ow;
-        char buff[PATH_MAX];
+        char buff[4096];
 
         thumb = e_livethumb_add(evas);
         e_livethumb_vsize_set(thumb, 120, 40);

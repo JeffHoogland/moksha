@@ -14,10 +14,6 @@
 #include <xcb/xcb.h>
 #include <xcb/shape.h>
 
-#ifndef PATH_MAX
-#define PATH_MAX 4096
-#endif
-
 #define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 240
 
@@ -451,7 +447,7 @@ static void
 _e_alert_draw_text(void)
 {
    xcb_void_cookie_t cookie;
-   char warn[1024], msg[PATH_MAX], line[1024];
+   char warn[1024], msg[4096], line[1024];
    unsigned int i = 0, j = 0, k = 0;
 
    snprintf(msg, sizeof(msg),

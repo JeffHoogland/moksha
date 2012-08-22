@@ -54,8 +54,8 @@ struct _E_Desklock_Auth
       pam_handle_t   *handle;
    } pam;
 
-   char user[PATH_MAX];
-   char passwd[PATH_MAX];
+   char user[4096];
+   char passwd[4096];
 };
 #endif
 

@@ -1148,7 +1148,7 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
 {
    Ecore_X_Window win;
    Ecore_Evas *bg_ecore_evas;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    bd->argb = argb;
 
@@ -7554,7 +7554,7 @@ _e_border_eval0(E_Border *bd)
         if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
           {
              Evas_Object *o;
-             char buf[PATH_MAX];
+             char buf[4096];
              int ok;
 
              bd->changes.border = 1;

@@ -195,7 +195,7 @@ _xdg_data_dirs_augment(void)
 {
    const char *s = getenv("XDG_DATA_DIRS");
    const char *p = e_prefix_get();
-   char newpath[PATH_MAX], buf[PATH_MAX];
+   char newpath[4096], buf[4096];
 
    if (!p) return;
    
@@ -1296,7 +1296,7 @@ _e_main_parse_arguments(int argc, char **argv)
    s = getenv("DISPLAY");
    if (s)
      {
-        char *p, buff[PATH_MAX];
+        char *p, buff[4096];
 
         if (!(p = strrchr(s, ':')))
           {

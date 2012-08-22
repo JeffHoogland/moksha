@@ -152,7 +152,7 @@ static void
 _update_machid_get(void)
 {
    FILE *f;
-   char buf[PATH_MAX], *c;
+   char buf[4096], *c;
    size_t len;
 
    f = fopen("/etc/machine-id", "r");

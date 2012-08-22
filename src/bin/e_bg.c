@@ -447,7 +447,7 @@ EAPI void
 e_bg_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __UNUSED__)
 {
    E_Container *con;
-   char buf[PATH_MAX];
+   char buf[4096];
    int copy = 1;
    E_Zone *zone;
    E_Desk *desk;

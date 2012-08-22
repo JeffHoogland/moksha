@@ -312,7 +312,7 @@ _e_sys_cb_logout_abort(void *data __UNUSED__, E_Dialog *dia)
 static void
 _e_sys_logout_confirm_dialog_update(int remaining)
 {
-   char txt[PATH_MAX];
+   char txt[4096];
 
    if (!_e_sys_logout_confirm_dialog)
      {

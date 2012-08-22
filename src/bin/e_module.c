@@ -112,7 +112,7 @@ e_module_new(const char *name)
 {
    E_Module *m;
    char buf[PATH_MAX];
-   char body[PATH_MAX], title[1024];
+   char body[4096], title[1024];
    const char *modpath;
    char *s;
    Eina_List *l;
@@ -502,7 +502,7 @@ static void
 _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
 {
    E_Dialog *dia;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    printf("MODULE ERR:\n%s\n", body);
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()),

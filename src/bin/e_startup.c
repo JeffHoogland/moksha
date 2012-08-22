@@ -45,7 +45,7 @@ static void
 _e_startup(void)
 {
    Efreet_Desktop *desktop;
-   char buf[PATH_MAX];
+   char buf[8192];
 
    if (!startup_apps)
      {

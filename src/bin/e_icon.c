@@ -973,7 +973,7 @@ _e_icon_cache_find(Evas_Object *obj, const char *file)
 {
    E_Smart_Data *sd;
    Cache_Item *ci;
-   char buf[PATH_MAX];
+   char buf[4096];
    const char *id;
    Eina_List *l;
 
@@ -982,7 +982,7 @@ _e_icon_cache_find(Evas_Object *obj, const char *file)
    if (!(sd = evas_object_smart_data_get(obj)))
      return EINA_FALSE;
 
-   snprintf(buf, PATH_MAX, "%d:%s", sd->size, file);
+   snprintf(buf, sizeof(buf), "%d:%s", sd->size, file);
 
    if ((ci = eina_hash_find(_cache->hash, buf)))
      {

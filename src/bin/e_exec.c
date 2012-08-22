@@ -161,7 +161,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    Eina_List *l, *lnew;
    Ecore_Exe *exe = NULL;
    char *penv_display;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    launch = data;
    inst = E_NEW(E_Exec_Instance, 1);
@@ -427,7 +427,7 @@ _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
                                 "E", "_e_exec_run_error_dialog");
              if (dia)
                {
-                  char buf[PATH_MAX];
+                  char buf[4096];
 
                   e_dialog_title_set(dia, _("Application run error"));
                   snprintf(buf, sizeof(buf),
@@ -539,7 +539,7 @@ _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   char buf[PATH_MAX];
+   char buf[4096];
 
    if (!cfdata->label)
      {
@@ -693,7 +693,7 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   char buf[PATH_MAX];
+   char buf[4096];
    int error_length = 0;
    Evas_Object *o, *ob, *os;
 
@@ -736,7 +736,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   char buf[PATH_MAX];
+   char buf[4096];
    int read_length = 0;
    int error_length = 0;
    Evas_Object *o, *of, *ob, *ot;

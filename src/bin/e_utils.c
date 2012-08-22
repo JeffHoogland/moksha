@@ -160,7 +160,7 @@ e_util_head_exec(int head, const char *cmd)
 {
    char *penv_display;
    char *p1, *p2;
-   char buf[PATH_MAX], buf2[32];
+   char buf[4096], buf2[32];
    int ok = 0;
    Ecore_Exe *exe;
 
@@ -359,7 +359,7 @@ EAPI int
 e_util_edje_icon_check(const char *name)
 {
    const char *file;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    if ((!name) || (!name[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", name);
@@ -375,7 +375,7 @@ EAPI int
 e_util_edje_icon_set(Evas_Object *obj, const char *name)
 {
    const char *file;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    if ((!name) || (!name[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", name);
@@ -392,7 +392,7 @@ static int
 _e_util_icon_theme_set(Evas_Object *obj, const char *icon, Eina_Bool fallback)
 {
    const char *file;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    if ((!icon) || (!icon[0])) return 0;
    snprintf(buf, sizeof(buf), "e/icons/%s", icon);
@@ -455,7 +455,7 @@ int
 _e_util_menu_item_edje_icon_set(E_Menu_Item *mi, const char *name, Eina_Bool fallback)
 {
    const char *file;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    if ((!name) || (!name[0])) return 0;
 
@@ -1246,7 +1246,7 @@ static Eina_Bool
 _e_util_conf_timer_old(void *data)
 {
    char *module_name = data;
-   char buf[PATH_MAX];
+   char buf[4096];
    char *msg =
      _("Configuration data needed "
        "upgrading. Your old configuration<br> has been"

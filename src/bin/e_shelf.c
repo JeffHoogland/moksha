@@ -585,7 +585,7 @@ e_shelf_unsave(E_Shelf *es)
 EAPI void
 e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
 {
-   char buf[PATH_MAX];
+   char buf[4096];
 
    E_OBJECT_CHECK(es);
    E_OBJECT_IF_NOT_TYPE(es, E_SHELF_DUMMY_TYPE)
@@ -1235,7 +1235,7 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
 {
    E_Shelf *es;
    Evas_Object *o;
-   char buf[PATH_MAX];
+   char buf[4096];
 
    es = data;
    o = edje_object_add(gcc->gadcon->evas);
