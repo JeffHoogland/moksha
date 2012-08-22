@@ -453,7 +453,7 @@ e_menu_thaw(E_Menu *m)
 }
 
 EAPI void
-e_menu_title_set(E_Menu *m, char *title)
+e_menu_title_set(E_Menu *m, const char *title)
 {
    E_OBJECT_CHECK(m);
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
@@ -476,7 +476,7 @@ e_menu_title_set(E_Menu *m, char *title)
 }
 
 EAPI void
-e_menu_icon_file_set(E_Menu *m __UNUSED__, char *icon __UNUSED__)
+e_menu_icon_file_set(E_Menu *m __UNUSED__, const char *icon __UNUSED__)
 {
    /* FIXME: support menu icons
       E_OBJECT_CHECK(m);
@@ -485,7 +485,7 @@ e_menu_icon_file_set(E_Menu *m __UNUSED__, char *icon __UNUSED__)
 }
 
 EAPI void
-e_menu_category_set(E_Menu *m, char *category)
+e_menu_category_set(E_Menu *m, const char *category)
 {
    E_OBJECT_CHECK(m);
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);

@@ -168,11 +168,11 @@ EAPI void         e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, 
 EAPI void         e_menu_deactivate(E_Menu *m);
 EAPI int          e_menu_freeze(E_Menu *m);
 EAPI int          e_menu_thaw(E_Menu *m);
-EAPI void         e_menu_title_set(E_Menu *m, char *title);
-EAPI void         e_menu_icon_file_set(E_Menu *m, char *icon);
+EAPI void         e_menu_title_set(E_Menu *m, const char *title);
+EAPI void         e_menu_icon_file_set(E_Menu *m, const char *icon);
 
 /* menu categories functions */
-EAPI void         e_menu_category_set(E_Menu *m, char *category);
+EAPI void         e_menu_category_set(E_Menu *m, const char *category);
 EAPI void         e_menu_category_data_set(char *category, void *data);
 EAPI E_Menu_Category_Callback  *e_menu_category_callback_add(char *category, void (*create) (E_Menu *m, void *category_data, void *data), void (free) (void *data), void *data);
 EAPI void         e_menu_category_callback_del(E_Menu_Category_Callback *cb);
