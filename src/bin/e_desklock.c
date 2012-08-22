@@ -849,6 +849,7 @@ _e_desklock_check_auth(void)
         ret = _desklock_auth(edd->passwd);
         // passwd off in child proc now - null out from parent
         memset(edd->passwd, 0, sizeof(char) * PASSWD_LEN);
+        return ret;
      }
    else if (e_config->desklock_auth_method == 1)
      {
