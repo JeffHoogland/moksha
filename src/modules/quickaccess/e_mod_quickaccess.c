@@ -222,6 +222,7 @@ _e_qa_entry_border_props_apply(E_Quick_Access_Entry *entry)
         if (qa_config->skip_pager)
           entry->border->client.netwm.state.skip_pager = 1;
      }
+   entry->border->changed = 1;
 }
 
 static void
