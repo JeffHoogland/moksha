@@ -61,7 +61,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_action_del("syscon");
         act = NULL;
      }
-   e_syscon_gadget_init(m);
+   e_syscon_gadget_shutdown();
    e_syscon_shutdown();
    conf_module = NULL;
    return 1;
