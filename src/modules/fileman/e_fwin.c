@@ -1091,7 +1091,7 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop,
          */
         buf[0] = 0;
         ext = _e_fwin_file_is_exec(ici);
-        if (ext == E_FWIN_EXEC_NONE)
+        if ((ext == E_FWIN_EXEC_NONE) || (desktop))
           {
              if (!((ici->link) && (ici->mount)))
                eina_strlcpy(buf, ici->file, sizeof(buf));
@@ -1215,25 +1215,25 @@ _e_fwin_file_exec(E_Fwin_Page *page,
       case E_FWIN_EXEC_SH:
         snprintf(buf, sizeof(buf), "/bin/sh %s", e_util_filename_escape(ici->file));
         if (fwin->win)
-          e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+          e_exec(fwin->win->border->zone, NULL, buf, NULL, "fwin");
         else if (fwin->zone)
-          e_exec(fwin->zone, NULL, buf, NULL, NULL);
+          e_exec(fwin->zone, NULL, buf, NULL, "fwin");
         break;
 
       case E_FWIN_EXEC_TERMINAL_DIRECT:
         snprintf(buf, sizeof(buf), "%s %s", e_config->exebuf_term_cmd, e_util_filename_escape(ici->file));
         if (fwin->win)
-          e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+          e_exec(fwin->win->border->zone, NULL, buf, NULL, "fwin");
         else if (fwin->zone)
-          e_exec(fwin->zone, NULL, buf, NULL, NULL);
+          e_exec(fwin->zone, NULL, buf, NULL, "fwin");
         break;
 
       case E_FWIN_EXEC_TERMINAL_SH:
         snprintf(buf, sizeof(buf), "%s /bin/sh %s", e_config->exebuf_term_cmd, e_util_filename_escape(ici->file));
         if (fwin->win)
-          e_exec(fwin->win->border->zone, NULL, buf, NULL, NULL);
+          e_exec(fwin->win->border->zone, NULL, buf, NULL, "fwin");
         else if (fwin->zone)
-          e_exec(fwin->zone, NULL, buf, NULL, NULL);
+          e_exec(fwin->zone, NULL, buf, NULL, "fwin");
         break;
 
       case E_FWIN_EXEC_DESKTOP:
@@ -1242,9 +1242,9 @@ _e_fwin_file_exec(E_Fwin_Page *page,
         if (desktop)
           {
              if (fwin->win)
-               e_exec(fwin->win->border->zone, desktop, NULL, NULL, NULL);
+               e_exec(fwin->win->border->zone, desktop, NULL, NULL, "fwin");
              else if (fwin->zone)
-               e_exec(fwin->zone, desktop, NULL, NULL, NULL);
+               e_exec(fwin->zone, desktop, NULL, NULL, "fwin");
              e_exehist_mime_desktop_add(ici->mime, desktop);
              efreet_desktop_free(desktop);
           }
