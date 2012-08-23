@@ -84,7 +84,7 @@ msgstr "예"
 #: src/bin/e_desklock.c:1130 src/bin/e_fm.c:9044 src/bin/e_fm.c:9301
 #: src/bin/e_module.c:519 src/bin/e_screensaver.c:147
 msgid "No"
-msgstr "아니오"
+msgstr "아니요"
 
 #: src/bin/e_actions.c:1939
 msgid "Are you sure you want to exit?"
@@ -295,23 +295,23 @@ msgstr "전환 고정된 상태"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_main.c:360 src/modules/ibox/e_mod_config.c:162
 msgid "Desktop"
-msgstr "데스크탑"
+msgstr "데스크톱"
 
 #: src/bin/e_actions.c:2867
 msgid "Flip Desktop Left"
-msgstr "왼쪽으로 이동"
+msgstr "왼쪽 데스크톱으로 이동"
 
 #: src/bin/e_actions.c:2869
 msgid "Flip Desktop Right"
-msgstr "오른쪽으로 이동"
+msgstr "오른쪽 데스크톱으로 이동"
 
 #: src/bin/e_actions.c:2871
 msgid "Flip Desktop Up"
-msgstr "위로 이동"
+msgstr "윗쪽 데스크톱으로 이동"
 
 #: src/bin/e_actions.c:2873
 msgid "Flip Desktop Down"
-msgstr "아래로 이동"
+msgstr "아랫쪽 데스크톱으로 이동"
 
 #: src/bin/e_actions.c:2875
 #, fuzzy
@@ -320,7 +320,7 @@ msgstr "하여 바탕 화면을 뒤집 ..."
 
 #: src/bin/e_actions.c:2881
 msgid "Show The Desktop"
-msgstr "데스크탑 표시"
+msgstr "데스크톱 표시"
 
 #: src/bin/e_actions.c:2887
 #, fuzzy
@@ -339,55 +339,55 @@ msgstr "선형적으로 데스크톱을 뒤집 ..."
 
 #: src/bin/e_actions.c:2904
 msgid "Switch To Desktop 0"
-msgstr "데스크탑 0으로 변경"
+msgstr "데스크톱 0으로 변경"
 
 #: src/bin/e_actions.c:2906
 msgid "Switch To Desktop 1"
-msgstr "데스크탑 1로 변경"
+msgstr "데스크톱 1로 변경"
 
 #: src/bin/e_actions.c:2908
 msgid "Switch To Desktop 2"
-msgstr "데스크탑 2로 변경"
+msgstr "데스크톱 2로 변경"
 
 #: src/bin/e_actions.c:2910
 msgid "Switch To Desktop 3"
-msgstr "데스크탑 3으로 변경"
+msgstr "데스크톱 3으로 변경"
 
 #: src/bin/e_actions.c:2912
 msgid "Switch To Desktop 4"
-msgstr "데스크탑 4로 변경"
+msgstr "데스크톱 4로 변경"
 
 #: src/bin/e_actions.c:2914
 msgid "Switch To Desktop 5"
-msgstr "데스크탑 5로 변경"
+msgstr "데스크톱 5로 변경"
 
 #: src/bin/e_actions.c:2916
 msgid "Switch To Desktop 6"
-msgstr "데스크탑 6으로 변경"
+msgstr "데스크톱 6으로 변경"
 
 #: src/bin/e_actions.c:2918
 msgid "Switch To Desktop 7"
-msgstr "데스크탑 7로 변경"
+msgstr "데스크톱 7로 변경"
 
 #: src/bin/e_actions.c:2920
 msgid "Switch To Desktop 8"
-msgstr "데스크탑 8로 변경"
+msgstr "데스크톱 8로 변경"
 
 #: src/bin/e_actions.c:2922
 msgid "Switch To Desktop 9"
-msgstr "데스크탑 9로 변경"
+msgstr "데스크톱 9로 변경"
 
 #: src/bin/e_actions.c:2924
 msgid "Switch To Desktop 10"
-msgstr "데스크탑 10으로 변경"
+msgstr "데스크톱 10으로 변경"
 
 #: src/bin/e_actions.c:2926
 msgid "Switch To Desktop 11"
-msgstr "데스크탑 11로 변경"
+msgstr "데스크톱 11로 변경"
 
 #: src/bin/e_actions.c:2928
 msgid "Switch To Desktop..."
-msgstr "데스크탑 변경..."
+msgstr "데스크톱 변경..."
 
 #: src/bin/e_actions.c:2934
 #, fuzzy
@@ -397,12 +397,12 @@ msgstr "왼쪽 플립 바탕 화면 (전체 화면."
 #: src/bin/e_actions.c:2936
 #, fuzzy
 msgid "Flip Desktop Right (All Screens)"
-msgstr "플립 데스크탑 마우스 (전체 화면."
+msgstr "플립 데스크톱 마우스 (전체 화면."
 
 #: src/bin/e_actions.c:2938
 #, fuzzy
 msgid "Flip Desktop Up (All Screens)"
-msgstr "데스크탑 최대 를 (전체 화면) 뒤집기"
+msgstr "데스크톱 최대 를 (전체 화면) 뒤집기"
 
 #: src/bin/e_actions.c:2940
 #, fuzzy
@@ -432,7 +432,7 @@ msgstr "방향 에서 바탕 화면을 뒤집 ..."
 #: src/bin/e_actions.c:2965
 #, fuzzy
 msgid "Switch To Desktop 0 (All Screens)"
-msgstr "데스크탑 0 (전체 화면) 으로 전환"
+msgstr "데스크톱 0 (전체 화면) 으로 전환"
 
 #: src/bin/e_actions.c:2967
 #, fuzzy
@@ -472,12 +472,12 @@ msgstr "(전체 화면) 바탕 화면 7로 전환"
 #: src/bin/e_actions.c:2981
 #, fuzzy
 msgid "Switch To Desktop 8 (All Screens)"
-msgstr "데스크탑 8 (전체 화면) 으로 전환"
+msgstr "데스크톱 8 (전체 화면) 으로 전환"
 
 #: src/bin/e_actions.c:2983
 #, fuzzy
 msgid "Switch To Desktop 9 (All Screens)"
-msgstr "(전체 화면) 데스크탑 9 전환"
+msgstr "(전체 화면) 데스크톱 9 전환"
 
 #: src/bin/e_actions.c:2985
 #, fuzzy
@@ -611,11 +611,11 @@ msgstr "창 : 이동"
 
 #: src/bin/e_actions.c:3070
 msgid "To Next Desktop"
-msgstr "다음 데스크탑으로"
+msgstr "다음 데스크톱으로"
 
 #: src/bin/e_actions.c:3072
 msgid "To Previous Desktop"
-msgstr "이전 데스크탑으로"
+msgstr "이전 데스크톱으로"
 
 #: src/bin/e_actions.c:3074
 msgid "By Desktop #..."
@@ -623,7 +623,7 @@ msgstr ""
 
 #: src/bin/e_actions.c:3080
 msgid "To Desktop..."
-msgstr "데스크탑으로..."
+msgstr "데스크톱으로..."
 
 #: src/bin/e_actions.c:3086
 msgid "Show Main Menu"
@@ -1135,7 +1135,7 @@ msgstr "MIME 형식"
 
 #: src/bin/e_eap_editor.c:765
 msgid "Desktop file"
-msgstr "데스크탑 파일"
+msgstr "데스크톱 파일"
 
 #: src/bin/e_eap_editor.c:775
 #: src/modules/conf_performance/e_int_config_performance.c:115
@@ -1308,11 +1308,11 @@ msgstr "오류 기록"
 
 #: src/bin/e_exec.c:686 src/bin/e_exec.c:762
 msgid "There was no error message."
-msgstr "오류 메세지가 없음."
+msgstr "오류 메시지가 없음."
 
 #: src/bin/e_exec.c:690 src/bin/e_exec.c:769
 msgid "Save This Message"
-msgstr "이 메세지 저장"
+msgstr "이 메시지 저장"
 
 #: src/bin/e_exec.c:694 src/bin/e_exec.c:773
 #, c-format
@@ -1508,7 +1508,7 @@ msgstr ""
 
 #: src/bin/e_fm.c:9045
 msgid "No to all"
-msgstr "전부 아니오"
+msgstr "전부 아니요"
 
 #: src/bin/e_fm.c:9047
 msgid "Yes to all"
@@ -2213,7 +2213,7 @@ msgstr "아이콘 환경 설정"
 
 #: src/bin/e_int_border_remember.c:726
 msgid "Virtual Desktop"
-msgstr "가상 데스크탑"
+msgstr "가상 데스크톱"
 
 #: src/bin/e_int_border_remember.c:735
 msgid "Current Screen"
@@ -2418,7 +2418,7 @@ msgstr "(응용프로그램 없음)"
 
 #: src/bin/e_int_menus.c:757
 msgid "Set Virtual Desktops"
-msgstr "가상 데스크탑 설정"
+msgstr "가상 데스크톱 설정"
 
 #: src/bin/e_int_menus.c:1132 src/bin/e_int_menus.c:1313
 msgid "(No Windows)"
@@ -2793,7 +2793,7 @@ msgstr "설치 Desklock"
 
 #: src/bin/e_main.c:663
 msgid "Enlightenment cannot set up its desk locking system."
-msgstr "데스크탑 고정 시스템을 설정 할 수 없습니다."
+msgstr "데스크톱 고정 시스템을 설정 할 수 없습니다."
 
 #: src/bin/e_main.c:670
 #, fuzzy
@@ -2976,7 +2976,7 @@ msgstr "시스템 명령 시스템을 초기화 할 수 없습니다.\n"
 #: src/bin/e_main.c:914
 #, fuzzy
 msgid "Setup Desktop Environment"
-msgstr "설치 데스크탑 환경"
+msgstr "설치 데스크톱 환경"
 
 #: src/bin/e_main.c:918
 #, fuzzy
@@ -3953,7 +3953,7 @@ msgstr "기본 응용프로그램"
 #: src/modules/conf_applications/e_mod_main.c:49
 #, fuzzy
 msgid "Desktop Environments"
-msgstr "데스크탑 이름"
+msgstr "데스크톱 이름"
 
 #: src/modules/conf_applications/e_mod_main.c:54
 #, fuzzy
@@ -4159,11 +4159,11 @@ msgstr ""
 #: src/modules/conf_display/e_int_config_desks.c:49
 #: src/modules/pager/e_mod_main.c:802
 msgid "Virtual Desktops Settings"
-msgstr "가상 데스크탑 설정"
+msgstr "가상 데스크톱 설정"
 
 #: src/modules/conf_display/e_int_config_desks.c:150
 msgid "Number of Desktops"
-msgstr "데스크탑 갯수"
+msgstr "데스크톱 갯수"
 
 #: src/modules/conf_display/e_int_config_desks.c:157
 #: src/modules/conf_display/e_int_config_desks.c:162
@@ -4184,7 +4184,7 @@ msgstr ""
 #: src/modules/conf_display/e_int_config_desks.c:169
 #, fuzzy
 msgid "Desktop Flip"
-msgstr "데스크탑 마우스 설정"
+msgstr "데스크톱 마우스 설정"
 
 #: src/modules/conf_display/e_int_config_desks.c:170
 msgid "Flip when dragging objects to the screen edge"
@@ -4192,11 +4192,11 @@ msgstr "객체를 화면 가장자리로 끌면 변경"
 
 #: src/modules/conf_display/e_int_config_desks.c:173
 msgid "Wrap desktops around when flipping"
-msgstr "바꿀 때 데스크탑 주변에 있으면 변경"
+msgstr "바꿀 때 데스크톱 주변에 있으면 변경"
 
 #: src/modules/conf_display/e_int_config_desks.c:179
 msgid "Desktops"
-msgstr "데스크탑"
+msgstr "데스크톱"
 
 #: src/modules/conf_display/e_int_config_desks.c:184
 #: src/modules/everything/evry_config.c:495
@@ -4230,15 +4230,15 @@ msgstr "바꾸기 효과"
 
 #: src/modules/conf_display/e_int_config_desk.c:52
 msgid "Desk Settings"
-msgstr "데스크탑 설정"
+msgstr "데스크톱 설정"
 
 #: src/modules/conf_display/e_int_config_desk.c:153
 msgid "Desktop Name"
-msgstr "데스크탑 이름"
+msgstr "데스크톱 이름"
 
 #: src/modules/conf_display/e_int_config_desk.c:160
 msgid "Desktop Wallpaper"
-msgstr "데스크탑 배경화면"
+msgstr "데스크톱 배경화면"
 
 #: src/modules/conf_display/e_int_config_desk.c:166
 #: src/modules/fileman/e_int_config_mime.c:183
@@ -4509,7 +4509,7 @@ msgstr "역광"
 #: src/modules/conf_display/e_mod_main.c:21
 #: src/modules/tiling/e_mod_config.c:200
 msgid "Virtual Desktops"
-msgstr "가상 데스크탑"
+msgstr "가상 데스크톱"
 
 #: src/modules/conf_display/e_mod_main.c:24
 msgid "Screen Resolution"
@@ -5107,7 +5107,7 @@ msgstr "배경"
 
 #: src/modules/conf_paths/e_int_config_paths.c:84
 msgid "Messages"
-msgstr "메세지"
+msgstr "메시지"
 
 #: src/modules/conf_paths/e_int_config_paths.c:165
 #, fuzzy
@@ -5279,11 +5279,11 @@ msgstr "배경을 적용할 곳"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:647
 msgid "All Desktops"
-msgstr "모든 데스크탑"
+msgstr "모든 데스크톱"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:649
 msgid "This Desktop"
-msgstr "이 데스크탑"
+msgstr "이 데스크톱"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:651
 msgid "This Screen"
@@ -6085,7 +6085,7 @@ msgstr "시작"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:163
 msgid "Desk Change"
-msgstr "데스크탑 변경"
+msgstr "데스크톱 변경"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:164
 msgid "Background Change"
@@ -6220,7 +6220,7 @@ msgstr "정렬 순서"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:142
 #, fuzzy
 msgid "Group with owning desktop"
-msgstr "데스크탑을 소유하고 있는 그룹"
+msgstr "데스크톱을 소유하고 있는 그룹"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:145
 #, fuzzy
@@ -6235,7 +6235,7 @@ msgstr "별도의 그룹"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:151
 #, fuzzy
 msgid "Warp to owning desktop"
-msgstr "데스크탑을 소유 으로 워프"
+msgstr "데스크톱을 소유 으로 워프"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:154
 #, fuzzy
@@ -6467,7 +6467,7 @@ msgstr "클릭 하면 창이 초점을 맞춘"
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:245
 #, fuzzy
 msgid "Refocus last window on desktop switch"
-msgstr "데스크탑 스위치 에 마지막으로 창문을 집중할"
+msgstr "데스크톱 스위치 에 마지막으로 창문을 집중할"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:248
 #, fuzzy
@@ -6503,7 +6503,7 @@ msgstr "화면의 가장자리"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:176
 #, fuzzy
 msgid "Desktop gadgets"
-msgstr "데스크탑 이름"
+msgstr "데스크톱 이름"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:187
 #, fuzzy
@@ -6568,7 +6568,7 @@ msgstr "레이어 를 따르십시오"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:239
 #, fuzzy
 msgid "Follow Desktop"
-msgstr "모든 데스크탑"
+msgstr "모든 데스크톱"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:242
 #, fuzzy
@@ -7952,11 +7952,11 @@ msgstr "현재 화면에서 창 표시"
 
 #: src/modules/ibox/e_mod_config.c:165 src/modules/tasks/e_mod_config.c:74
 msgid "Show windows from all desktops"
-msgstr "모든 데스크탑에서 창 표시"
+msgstr "모든 데스크톱에서 창 표시"
 
 #: src/modules/ibox/e_mod_config.c:170
 msgid "Show windows from active desktop"
-msgstr "활성화된 데스크탑에서 창 표시"
+msgstr "활성화된 데스크톱에서 창 표시"
 
 #: src/modules/ibox/e_mod_main.c:216
 #, fuzzy
@@ -8018,7 +8018,7 @@ msgstr "버튼을 드래그 앤 드롭"
 #: src/modules/pager/e_mod_config.c:206
 #, fuzzy
 msgid "Drag whole desktop"
-msgstr "전체 데스크탑을 끕니다"
+msgstr "전체 데스크톱을 끕니다"
 
 #: src/modules/pager/e_mod_config.c:222
 #, fuzzy
@@ -8929,7 +8929,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Show home directory"
-#~ msgstr "상위 디렉토리로 이동"
+#~ msgstr "상위 디렉터리로 이동"
 
 #~ msgid "Change Icon Properties"
 #~ msgstr "아이콘 속성 변경"
@@ -8972,7 +8972,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "From other desks"
-#~ msgstr "다른 데스크탑의 창 표시"
+#~ msgstr "다른 데스크톱의 창 표시"
 
 #, fuzzy
 #~ msgid "From other screens"
@@ -9000,7 +9000,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Set as Wallpaper"
-#~ msgstr "데스크탑 배경화면"
+#~ msgstr "데스크톱 배경화면"
 
 #~ msgid "Desktop file scan"
 #~ msgstr "아이콘 파일을 검색합니다."
@@ -9129,7 +9129,7 @@ msgstr ""
 #~ msgstr "창 확장"
 
 #~ msgid "Configure Virtual Desktops"
-#~ msgstr "가상 데스크탑 설정"
+#~ msgstr "가상 데스크톱 설정"
 
 #~ msgid "Configure Contents..."
 #~ msgstr "내용 설정..."
@@ -9138,7 +9138,7 @@ msgstr ""
 #~ msgstr "도구모음 크기"
 
 #~ msgid "Flip desktops when mouse at screen edge"
-#~ msgstr "마우스가 화면 가장자리로 이동하면 데스크탑 변경"
+#~ msgstr "마우스가 화면 가장자리로 이동하면 데스크톱 변경"
 
 #~ msgid "Flip when moving mouse to the screen edge"
 #~ msgstr "마우스가 화면 가장자리로 이동하면 바꾸기"
@@ -9153,7 +9153,7 @@ msgstr ""
 #~ msgstr "임의로 종료"
 
 #~ msgid "Desktop Lock"
-#~ msgstr "데스크탑 고정"
+#~ msgstr "데스크톱 고정"
 
 #~ msgid "Shutting down of your system failed."
 #~ msgstr "시스템 종료가 실패 했습니다."
@@ -9183,7 +9183,7 @@ msgstr ""
 #~ msgstr "로그아웃"
 
 #~ msgid "Desktop %i, %i"
-#~ msgstr "데스크탑 %i, %i"
+#~ msgstr "데스크톱 %i, %i"
 
 #~ msgid "Enlightenment Configuration"
 #~ msgstr "Enlightenment 설정"
@@ -9201,7 +9201,7 @@ msgstr ""
 #~ msgstr "IBox 설정"
 
 #~ msgid "Virtual Desktops Configuration"
-#~ msgstr "가상 데스크탑 설정"
+#~ msgstr "가상 데스크톱 설정"
 
 #~ msgid "Temperature Configuration"
 #~ msgstr "온도 설정"
