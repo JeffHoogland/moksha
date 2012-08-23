@@ -738,7 +738,7 @@ _e_qa_bd_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
         mi = e_menu_item_new(subm);
         e_menu_item_check_set(mi, 1);
         e_menu_item_toggle_set(mi, entry->config.relaunch);
-        e_menu_item_label_set(mi, _("Automatically Reopen When Closed"));
+        e_menu_item_label_set(mi, _("Relaunch When Closed"));
         e_menu_item_callback_set(mi, _e_qa_bd_menu_relaunch, entry);
      }
 
