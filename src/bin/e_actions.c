@@ -1153,6 +1153,7 @@ window_jump_to(const char *params)
      l = l->next;
    EINA_LIST_FOREACH(l, ll, bd)
      {
+        if (!bd->client.icccm.name) continue;
         if (strcmp(bd->client.icccm.name, params)) continue;
         /* Jump to the screen the window is on if it isn't on the current screen but
          * only if we don't have to warp the pointer anyway */
