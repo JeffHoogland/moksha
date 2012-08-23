@@ -578,9 +578,15 @@ typedef	union {
 /* additions to detect mmx - */
 /* Raster <raster@rasterman.com> */
 
-#define CPUID_MMX  (1 << 23) /* flags: mmx */
-#define CPUID_SSE  (1 << 25) /* flags: xmm */
-#define CPUID_SSE2 (1 << 26) /* flags: ? */
+#ifndef CPUID_MMX
+# define CPUID_MMX  (1 << 23) /* flags: mmx */
+#endif
+#ifndef CPUID_SSE
+# define CPUID_SSE  (1 << 25) /* flags: xmm */
+#endif
+#ifndef CPUID_SSE2
+# define CPUID_SSE2 (1 << 26) /* flags: ? */
+#endif
 
 #ifdef __amd64
 #define have_cpuid(cpuid_ret) \
