@@ -340,10 +340,7 @@ e_winlist_hide(void)
         if ((e_config->focus_policy != E_FOCUS_CLICK) ||
             (e_config->winlist_warp_at_end) ||
             (e_config->winlist_warp_while_selecting))
-          {
-             if (!e_border_under_pointer_get(bd->desk, bd))
-               ecore_x_pointer_warp(bd->zone->container->win, _warp_to_x, _warp_to_y);
-          }
+          ecore_x_pointer_warp(bd->zone->container->win, _warp_to_x, _warp_to_y);
 
         e_object_unref(E_OBJECT(bd));
      }
