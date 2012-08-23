@@ -49,7 +49,6 @@ pkg_LTLIBRARIES        = module.la \
                          page_080.la \
                          page_090.la \
                          page_100.la \
-                         page_110.la \
                          page_120.la \
                          page_130.la \
                          page_140.la \
@@ -57,6 +56,10 @@ pkg_LTLIBRARIES        = module.la \
                          page_160.la \
                          page_170.la \
                          page_200.la
+
+if USE_MODULE_CONNMAN
+pkg_LTLIBRARIES +=       page_110.la
+endif
 
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
@@ -139,11 +142,13 @@ page_100_la_LIBADD       = @e_libs@ @dlopen_libs@
 page_100_la_LDFLAGS      = -module -avoid-version
 page_100_la_DEPENDENCIES = $(top_builddir)/config.h
 
+if USE_MODULE_CONNMAN
 #Auto+feedback - do we need connman?
 page_110_la_SOURCES      = page_110.c
 page_110_la_LIBADD       = @e_libs@ @dlopen_libs@ @ECONNMAN_LIBS@
 page_110_la_LDFLAGS      = -module -avoid-version
 page_110_la_DEPENDENCIES = $(top_builddir)/config.h
+endif
 
 #Auto - do we need temperature?
 page_120_la_SOURCES      = page_120.c
