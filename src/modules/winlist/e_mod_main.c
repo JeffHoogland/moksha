@@ -9,7 +9,8 @@ static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params,
                                          Ecore_Event_Key *ev);
 
 static E_Module *conf_module = NULL;
-static E_Action *act = NULL;
+const char *_winlist_act = NULL;
+E_Action *_act_winlist = NULL;
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -25,13 +26,14 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("windows", 50, _("Windows"), NULL, "preferences-system-windows");
    e_configure_registry_item_add("windows/window_list", 70, _("Window Switcher"), NULL, "preferences-winlist", e_int_config_winlist);
    e_winlist_init();
+   _winlist_act = eina_stringshare_add("winlist");
    /* add module supplied action */
-   act = e_action_add("winlist");
-   if (act)
+   _act_winlist = e_action_add(_winlist_act);
+   if (_act_winlist)
      {
-        act->func.go = _e_mod_action_winlist_cb;
-        act->func.go_mouse = _e_mod_action_winlist_mouse_cb;
-        act->func.go_key = _e_mod_action_winlist_key_cb;
+        _act_winlist->func.go = _e_mod_action_winlist_cb;
+        _act_winlist->func.go_mouse = _e_mod_action_winlist_mouse_cb;
+        _act_winlist->func.go_key = _e_mod_action_winlist_key_cb;
         e_action_predef_name_set(_("Window : List"), _("Next Window"),
                                  "winlist", "next", NULL, 0);
         e_action_predef_name_set(_("Window : List"), _("Previous Window"),
@@ -67,7 +69,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    E_Config_Dialog *cfd;
 
    /* remove module-supplied action */
-   if (act)
+   if (_act_winlist)
      {
         e_action_predef_name_del(_("Window : List"), _("Previous Window"));
         e_action_predef_name_del(_("Window : List"), _("Next Window"));
@@ -80,7 +82,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_action_predef_name_del(_("Window : List"), _("Window Up"));
         e_action_predef_name_del(_("Window : List"), _("Window on the Right"));
         e_action_del("winlist");
-        act = NULL;
+        _act_winlist = NULL;
      }
    e_winlist_shutdown();
 
@@ -89,6 +91,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("windows/window_list");
    e_configure_registry_category_del("windows");
    conf_module = NULL;
+   eina_stringshare_replace(&_winlist_act, NULL);
    return 1;
 }
 

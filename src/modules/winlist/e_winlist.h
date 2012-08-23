@@ -4,6 +4,8 @@
 #ifndef E_WINLIST_H
 #define E_WINLIST_H
 
+#include "e_mod_main.h"
+
 int e_winlist_init(void);
 int e_winlist_shutdown(void);
 

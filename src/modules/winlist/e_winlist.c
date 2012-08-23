@@ -76,7 +76,7 @@ _wmclass_picked(const Eina_List *lst, const char *wmclass)
    if (!wmclass) return EINA_FALSE;
 
    EINA_LIST_FOREACH(lst, l, s)
-     if ((s) && (!strcmp(s, wmclass)))
+     if (s == wmclass)
        return EINA_TRUE;
 
    return EINA_FALSE;
@@ -183,8 +183,7 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
              if (!_last_border)
                pick = EINA_FALSE;
              else
-               pick = !strcmp(_last_border->client.icccm.class,
-                              bd->client.icccm.class);
+               pick = _last_border->client.icccm.class == bd->client.icccm.class;
              break;
            case E_WINLIST_FILTER_CLASSES:
              pick = (!_wmclass_picked(wmclasses, bd->client.icccm.class));
@@ -1319,14 +1318,13 @@ _e_winlist_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
      _e_winlist_activate_nth(9);
    else
      {
-        E_Action *act;
         Eina_List *l;
         E_Config_Binding_Key *binding;
         E_Binding_Modifier mod;
 
         EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
           {
-             if (binding->action && strcmp(binding->action, "winlist")) continue;
+             if (binding->action != _winlist_act) continue;
 
              mod = 0;
 
@@ -1342,11 +1340,11 @@ _e_winlist_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
              if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
                  ((binding->modifiers == mod) || (binding->any_mod)))
                {
-                  if (!(act = e_action_find(binding->action))) continue;
-                  if (act->func.go_key)
-                    act->func.go_key(E_OBJECT(_winlist->zone), binding->params, ev);
-                  else if (act->func.go)
-                    act->func.go(E_OBJECT(_winlist->zone), binding->params);
+                  if (!_act_winlist) continue;
+                  if (_act_winlist->func.go_key)
+                    _act_winlist->func.go_key(E_OBJECT(_winlist->zone), binding->params, ev);
+                  else if (_act_winlist->func.go)
+                    _act_winlist->func.go(E_OBJECT(_winlist->zone), binding->params);
                }
           }
      }
@@ -1357,7 +1355,6 @@ static Eina_Bool
 _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev;
-   E_Action *act;
    Eina_List *l;
    E_Config_Binding_Key *binding;
    E_Binding_Modifier mod;
@@ -1405,7 +1402,7 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
      {
-        if (binding->action && strcmp(binding->action, "winlist")) continue;
+        if (binding->action != _winlist_act) continue;
         mod = 0;
 
         if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
@@ -1420,11 +1417,11 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
         if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
             ((binding->modifiers == mod) || (binding->any_mod)))
           {
-             if (!(act = e_action_find(binding->action))) continue;
-             if (act->func.end_key)
-               act->func.end_key(E_OBJECT(_winlist->zone), binding->params, ev);
-             else if (act->func.end)
-               act->func.end(E_OBJECT(_winlist->zone), binding->params);
+             if (!_act_winlist) continue;
+             if (_act_winlist->func.end_key)
+               _act_winlist->func.end_key(E_OBJECT(_winlist->zone), binding->params, ev);
+             else if (_act_winlist->func.end)
+               _act_winlist->func.end(E_OBJECT(_winlist->zone), binding->params);
           }
      }
 

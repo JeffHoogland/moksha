@@ -9,6 +9,8 @@
 #include "e_winlist.h"
 #include "e_int_config_winlist.h"
 
+extern const char *_winlist_act;
+extern E_Action *_act_winlist;
 EAPI extern E_Module_Api e_modapi;
 
 EAPI void *e_modapi_init     (E_Module *m);
