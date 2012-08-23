@@ -739,7 +739,7 @@ _e_qa_bd_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    E_Menu *subm;
 
    subm = e_menu_new();
-   e_menu_title_set(subm, entry->id);
+   e_menu_title_set(subm, entry->class);
    e_object_data_set(E_OBJECT(subm), entry);
    e_menu_item_submenu_set(mi, subm);
 
