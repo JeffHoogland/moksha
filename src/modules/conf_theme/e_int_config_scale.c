@@ -287,6 +287,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    E_Radio_Group *rg;
    char buff[256];
 
+   if (cfdata->obs) cfdata->obs = eina_list_free(cfdata->obs);
    otb = e_widget_toolbook_add(evas, 24, 24);
 
    /* Policy */
