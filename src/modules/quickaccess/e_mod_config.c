@@ -450,6 +450,7 @@ e_qa_config_dd_new(void)
    E_CONFIG_VAL(D, T, config.autohide, UCHAR);
    E_CONFIG_VAL(D, T, config.relaunch, UCHAR);
    E_CONFIG_VAL(D, T, config.hidden, UCHAR);
+   E_CONFIG_VAL(D, T, config.jump, UCHAR);
    E_CONFIG_VAL(D, T, transient, UCHAR);
 #undef T
 #undef D

@@ -173,6 +173,8 @@ _e_qa_border_activate(E_Quick_Access_Entry *entry)
 {
    entry->config.hidden = 0;
    if (!entry->border) return;
+   if (entry->config.jump)
+     e_desk_show(entry->border->desk);
    e_border_raise(entry->border);
    e_border_show(entry->border);
    e_border_focus_set(entry->border, 1, 1);
@@ -182,6 +184,7 @@ _e_qa_border_activate(E_Quick_Access_Entry *entry)
 static void
 _e_qa_border_deactivate(E_Quick_Access_Entry *entry)
 {
+   if (entry->config.jump) return;
    entry->config.hidden = 1;
    if (!entry->border) return;
    e_border_hide(entry->border, 1);
@@ -194,10 +197,18 @@ _e_qa_entry_border_props_apply(E_Quick_Access_Entry *entry)
    
    if (entry->config.autohide && (!entry->border->focused))
      _e_qa_border_deactivate(entry);
-   if (qa_config->skip_taskbar)
-     entry->border->client.netwm.state.skip_taskbar = 1;
-   if (qa_config->skip_pager)
-     entry->border->client.netwm.state.skip_pager = 1;
+   if (entry->config.jump)
+     {
+        entry->border->client.netwm.state.skip_taskbar = 0;
+        entry->border->client.netwm.state.skip_pager = 0;
+     }
+   else
+     {
+        if (qa_config->skip_taskbar)
+          entry->border->client.netwm.state.skip_taskbar = 1;
+        if (qa_config->skip_pager)
+          entry->border->client.netwm.state.skip_pager = 1;
+     }
 }
 
 static void
@@ -225,7 +236,6 @@ _e_qa_entry_border_associate(E_Quick_Access_Entry *entry, E_Border *bd)
    /* FIXME: doesn't work, causes window to flicker on associate
    if (entry->config.hidden)
      _e_qa_border_deactivate(entry);
-   else
    */
    _e_qa_entry_border_props_apply(entry);
 }
@@ -410,7 +420,7 @@ _e_qa_border_new(E_Quick_Access_Entry *entry)
 {
    E_Exec_Instance *ei;
 
-   if (!entry->cmd) return;
+   if ((!entry->cmd) || (!entry->config.relaunch)) return;
    if (entry->exe)
      {
         INF("already waiting '%s' to start for '%s' (name=%s, class=%s), "
@@ -466,7 +476,7 @@ _e_qa_toggle_cb(E_Object *obj __UNUSED__, const char *params)
 
    if (entry->border)
      {
-        if (entry->border->focused || entry->config.hide_when_behind)
+        if ((!entry->config.jump) && (entry->border->focused || entry->config.hide_when_behind))
           {
              _e_qa_border_deactivate(entry);
              return;
@@ -666,6 +676,19 @@ _e_qa_bd_menu_relaunch(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
 }
 
 static void
+_e_qa_bd_menu_jump(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Quick_Access_Entry *entry = data;
+
+   entry->config.jump = !entry->config.jump;
+   if (entry->config.jump)
+     {
+        entry->config.autohide = entry->config.hide_when_behind = 0;
+     }
+   _e_qa_entry_border_props_apply(entry);
+}
+
+static void
 _e_qa_bd_menu_hideraise(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Quick_Access_Entry *entry = data;
@@ -720,17 +743,26 @@ _e_qa_bd_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_object_data_set(E_OBJECT(subm), entry);
    e_menu_item_submenu_set(mi, subm);
 
-   mi = e_menu_item_new(subm);
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, entry->config.autohide);
-   e_menu_item_label_set(mi, _("Autohide"));
-   e_menu_item_callback_set(mi, _e_qa_bd_menu_autohide, entry);
+   if (!entry->config.jump)
+     {
+        mi = e_menu_item_new(subm);
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, entry->config.autohide);
+        e_menu_item_label_set(mi, _("Autohide"));
+        e_menu_item_callback_set(mi, _e_qa_bd_menu_autohide, entry);
+
+        mi = e_menu_item_new(subm);
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, entry->config.hide_when_behind);
+        e_menu_item_label_set(mi, _("Hide Instead Of Raise"));
+        e_menu_item_callback_set(mi, _e_qa_bd_menu_hideraise, entry);
+     }
 
    mi = e_menu_item_new(subm);
    e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, entry->config.hide_when_behind);
-   e_menu_item_label_set(mi, _("Hide Instead Of Raise"));
-   e_menu_item_callback_set(mi, _e_qa_bd_menu_hideraise, entry);
+   e_menu_item_toggle_set(mi, entry->config.jump);
+   e_menu_item_label_set(mi, _("Jump Mode"));
+   e_menu_item_callback_set(mi, _e_qa_bd_menu_jump, entry);
 
    /* can't set relaunch for internal E dialogs; safety #1 */
    if (strcmp(entry->name, "E"))

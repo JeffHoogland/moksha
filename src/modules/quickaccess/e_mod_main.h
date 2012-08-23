@@ -32,6 +32,7 @@ typedef struct E_Quick_Access_Entry
       Eina_Bool hide_when_behind; // hide when window is not focused instead of raising
       Eina_Bool hidden; // FIXME: used for tracking current state to restore on restart
       Eina_Bool relaunch; // reopen on exit
+      Eina_Bool jump; // don't hide window, just jump to it when activated
    } config;
    Eina_Bool transient;
 } E_Quick_Access_Entry;
