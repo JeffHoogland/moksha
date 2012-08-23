@@ -267,7 +267,7 @@ EOF
     set -x
 fi
 
-Xephyr :1 -noreset -ac -br -dpi $DPI -screen $SCREEN $HOST_CURSOR &
+Xephyr :1 -nolisten tcp -noreset -ac -br -dpi $DPI -screen $SCREEN $HOST_CURSOR &
 
 sleep 1
 export DISPLAY=:1
