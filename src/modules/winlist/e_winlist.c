@@ -337,7 +337,7 @@ e_winlist_hide(void)
              e_border_focus_set(bd, 1, 1);
              e_border_focus_latest_set(bd);
           }
-        if ((e_config->focus_policy == E_FOCUS_MOUSE) ||
+        if ((e_config->focus_policy != E_FOCUS_CLICK) ||
             (e_config->winlist_warp_at_end) ||
             (e_config->winlist_warp_while_selecting))
           ecore_x_pointer_warp(bd->zone->container->win, _warp_to_x, _warp_to_y);
