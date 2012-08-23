@@ -173,12 +173,25 @@ _e_qa_border_activate(E_Quick_Access_Entry *entry)
 {
    entry->config.hidden = 0;
    if (!entry->border) return;
-   if (entry->config.jump)
-     e_desk_show(entry->border->desk);
-   e_border_raise(entry->border);
+   if (entry->border->iconic)
+     {
+        if (!entry->border->lock_user_iconify)
+          e_border_uniconify(entry->border);
+     }
+   if (entry->border->shaded)
+     {
+        if (!entry->border->lock_user_shade)
+          e_border_unshade(entry->border, entry->border->shade.dir);
+     }
+   else if (entry->border->desk && entry->config.jump)
+     {
+        if (!entry->border->sticky) e_desk_show(entry->border->desk);
+     }
+   if (!entry->border->lock_user_stacking)
+     e_border_raise(entry->border);
    e_border_show(entry->border);
-   e_border_focus_set(entry->border, 1, 1);
-   
+   if (!entry->border->lock_focus_out)
+     e_border_focus_set_with_pointer(entry->border);
 }
 
 static void
