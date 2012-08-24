@@ -21,6 +21,7 @@ pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
 			 e_int_config_edgebindings.c \
+			 e_int_config_signalbindings.c \
                          e_int_config_edgebindings.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@

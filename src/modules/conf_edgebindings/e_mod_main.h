@@ -13,6 +13,9 @@ EAPI void *e_modapi_init     (E_Module *m);
 EAPI int   e_modapi_shutdown (E_Module *m);
 EAPI int   e_modapi_save     (E_Module *m);
 
+E_Config_Dialog *e_int_config_signalbindings(E_Container *con, const char *params);
+
+
 /**
  * @addtogroup Optional_Conf
  * @{
