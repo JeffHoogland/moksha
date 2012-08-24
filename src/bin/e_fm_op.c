@@ -49,12 +49,6 @@ void *alloca(size_t);
 
 #define E_FREE(p) do { free(p); p = NULL; } while (0)
 
-#define LG(fmt, args ...) {           \
-     FILE *f = fopen("log", "a");     \
-     if (f) fprintf(f, fmt, ##args);  \
-     if (f) fclose(f);                \
-}
-
 typedef struct _E_Fm_Op_Task      E_Fm_Op_Task;
 typedef struct _E_Fm_Op_Copy_Data E_Fm_Op_Copy_Data;
 
@@ -284,8 +278,6 @@ skip_arg:
                {
                   E_Fm_Op_Task *task;
 
-                  /* If that doesn't work, setup a copy and delete operation.
-                     It's not atomic, but it's the best we can do. */
                   task = _e_fm_op_task_new();
                   task->type = type;
                   task->src.name = eina_stringshare_add(argv[2]);
@@ -1165,7 +1157,7 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
      {
         E_FM_OP_DEBUG("Creating link from '%s' to '%s'\n", lnk_path, task->dst.name);
 
-        if (symlink(lnk_path, task->dst.name) != 0)
+        if (symlink(lnk_path, task->dst.name) == -1)
           {
              if (errno == EEXIST)
                {
@@ -1264,7 +1256,7 @@ _e_fm_op_copy_chunk(E_Fm_Op_Task *task)
      }
 
    dread = fread(buf, 1, sizeof(buf), data->from);
-   if (dread <= 0)
+   if (dread == 0)
      {
         if (!feof(data->from))
           _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot read data from '%s': %s.", task->dst.name);
@@ -1338,7 +1330,7 @@ _e_fm_op_copy_atom(E_Fm_Op_Task *task)
              return 1;
           }
 
-         if (S_ISLNK(task->src.st.st_mode))
+        if (S_ISLNK(task->src.st.st_mode))
           {
              char *dst_dir;
 
@@ -1516,7 +1508,7 @@ _e_fm_op_symlink_atom(E_Fm_Op_Task *task)
 
    E_FM_OP_DEBUG("Symlink: %s -> %s\n", task->src.name, task->dst.name);
 
-   if (symlink(task->src.name, task->dst.name) != 0)
+   if (symlink(task->src.name, task->dst.name) == -1)
      {
         if (errno == EEXIST)
           {
@@ -1550,7 +1542,9 @@ _e_fm_op_remove_atom(E_Fm_Op_Task *task)
              if (errno == ENOTEMPTY)
                {
                   E_FM_OP_DEBUG("Attempt to remove non-empty directory.\n");
-                  /* This should never happen due to way tasks are added to the work queue. If this happens (for example new files were created after the scan was complete), implicitly delete everything. */
+                  /* This should never happen due to way tasks are added to the work queue.
+                     If this happens (for example new files were created after the scan was
+                     complete), implicitly delete everything. */
                   ecore_file_recursive_rm(task->src.name);
                   task->finished = 1; /* Make sure that task is removed. */
                   return 1;
