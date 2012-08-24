@@ -10,7 +10,7 @@ struct _E_Config_Dialog_Data
       Evas_Object *list;
       struct mixer_config_ui_general
       {
-         Evas_Object *frame;
+         Evas_Object   *frame;
          E_Radio_Group *radio;
       } general;
    } ui;
@@ -63,15 +63,15 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
                                           cfdata->default_instance);
    if (ctxt->default_instance)
      {
-	E_Mixer_Module_Config *conf;
-	const char *id;
+        E_Mixer_Module_Config *conf;
+        const char *id;
 
-	conf = ctxt->conf;
-	if (conf->default_gc_id)
-	  eina_stringshare_del(conf->default_gc_id);
+        conf = ctxt->conf;
+        if (conf->default_gc_id)
+          eina_stringshare_del(conf->default_gc_id);
 
-	id = ctxt->default_instance->gcc->cf->id;
-	conf->default_gc_id = eina_stringshare_add(id);
+        id = ctxt->default_instance->gcc->cf->id;
+        conf->default_gc_id = eina_stringshare_add(id);
 
         conf->desktop_notification = ctxt->desktop_notification;
      }
@@ -96,23 +96,22 @@ _basic_create_general(E_Config_Dialog *dialog, Evas *evas, E_Config_Dialog_Data 
    ui->radio = e_widget_radio_group_new(&cfdata->default_instance);
    for (i = 0, l = ctxt->instances; l; l = l->next, i++)
      {
-	E_Mixer_Instance *inst;
-	E_Mixer_Gadget_Config *conf;
-	Evas_Object *o;
-	char name[128];
-	const char *card_name;
+        E_Mixer_Instance *inst;
+        E_Mixer_Gadget_Config *conf;
+        Evas_Object *o;
+        char name[128];
+        const char *card_name;
 
-	inst = l->data;
-	conf = inst->conf;
+        inst = l->data;
+        conf = inst->conf;
 
-	card_name = e_mixer_system_get_card_name(conf->card);
-	snprintf(name, sizeof(name), "%s: %s", card_name, conf->channel_name);
-	eina_stringshare_del(card_name);
+        card_name = e_mixer_system_get_card_name(conf->card);
+        snprintf(name, sizeof(name), "%s: %s", card_name, conf->channel_name);
+        eina_stringshare_del(card_name);
 
-	o = e_widget_radio_add(evas, name, i, ui->radio);
-	e_widget_framelist_object_append(ui->frame, o);
+        o = e_widget_radio_add(evas, name, i, ui->radio);
+        e_widget_framelist_object_append(ui->frame, o);
      }
-
 
    e_widget_list_object_append(cfdata->ui.list, ui->frame, 1, 1, 0.5);
    chk = e_widget_check_add(evas, _("Display desktop notifications on volume change"), &ctxt->desktop_notification);
@@ -138,8 +137,8 @@ cb_mixer_call(void *data, void *data2 __UNUSED__)
 
    if (ctxt->mixer_dialog)
      {
-	e_dialog_show(ctxt->mixer_dialog);
-	return;
+        e_dialog_show(ctxt->mixer_dialog);
+        return;
      }
 
    con = e_container_current_get(e_manager_current_get());
@@ -192,3 +191,4 @@ e_mixer_config_module_dialog_new(E_Container *con, E_Mixer_Module_Context *ctxt)
 
    return dialog;
 }
+

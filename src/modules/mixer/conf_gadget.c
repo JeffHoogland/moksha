@@ -4,16 +4,16 @@ extern const char _e_mixer_Name[];
 
 struct _E_Config_Dialog_Data
 {
-   int lock_sliders;
-   int show_locked;
-   int keybindings_popup;
-   int card_num;
-   int channel;
+   int         lock_sliders;
+   int         show_locked;
+   int         keybindings_popup;
+   int         card_num;
+   int         channel;
    const char *card;
    const char *channel_name;
-   Eina_List *cards;
-   Eina_List *cards_names;
-   Eina_List *channels_names;
+   Eina_List  *cards;
+   Eina_List  *cards_names;
+   Eina_List  *channels_names;
    struct mixer_config_ui
    {
       Evas_Object *table;
@@ -26,16 +26,16 @@ struct _E_Config_Dialog_Data
       } general;
       struct mixer_config_ui_cards
       {
-         Evas_Object *frame;
+         Evas_Object   *frame;
          E_Radio_Group *radio;
       } cards;
       struct mixer_config_ui_channels
       {
-         Evas_Object *frame;
-         Evas_Object *scroll;
-         Evas_Object *list;
+         Evas_Object   *frame;
+         Evas_Object   *scroll;
+         Evas_Object   *list;
          E_Radio_Group *radio;
-         Eina_List *radios;
+         Eina_List     *radios;
       } channels;
    } ui;
    E_Mixer_Gadget_Config *conf;
@@ -54,14 +54,14 @@ _mixer_fill_cards_info(E_Config_Dialog_Data *cfdata)
    cfdata->cards_names = NULL;
    EINA_LIST_FOREACH(cfdata->cards, l, card)
      {
-	name = e_mod_mixer_card_name_get(card);
-	if ((cfdata->card_num < 0) && card && cfdata->card &&
+        name = e_mod_mixer_card_name_get(card);
+        if ((cfdata->card_num < 0) && card && cfdata->card &&
             (strcmp(card, cfdata->card) == 0))
-	  cfdata->card_num = i;
+          cfdata->card_num = i;
 
-	cfdata->cards_names = eina_list_append(cfdata->cards_names, name);
+        cfdata->cards_names = eina_list_append(cfdata->cards_names, name);
 
-	i++;
+        i++;
      }
 
    if (cfdata->card_num < 0)
@@ -85,15 +85,15 @@ _mixer_fill_channels_info(E_Config_Dialog_Data *cfdata)
    cfdata->channels_names = e_mod_mixer_channels_names_get(sys);
    EINA_LIST_FOREACH(cfdata->channels_names, l, channel)
      {
-	if (channel && cfdata->channel_name &&
+        if (channel && cfdata->channel_name &&
             (channel == cfdata->channel_name ||
              strcmp(channel, cfdata->channel_name) == 0))
-	  {
-	     cfdata->channel = i;
-	     break;
-	  }
+          {
+             cfdata->channel = i;
+             break;
+          }
 
-	i++;
+        i++;
      }
    e_mod_mixer_del(sys);
 }
@@ -161,15 +161,15 @@ _basic_apply(E_Config_Dialog *dialog, E_Config_Dialog_Data *cfdata)
    card = eina_list_nth(cfdata->cards, cfdata->card_num);
    if (card)
      {
-	eina_stringshare_del(conf->card);
-	conf->card = eina_stringshare_ref(card);
+        eina_stringshare_del(conf->card);
+        conf->card = eina_stringshare_ref(card);
      }
 
    channel = eina_list_nth(cfdata->channels_names, cfdata->channel);
    if (channel)
      {
-	eina_stringshare_del(conf->channel_name);
-	conf->channel_name = eina_stringshare_ref(channel);
+        eina_stringshare_del(conf->channel_name);
+        conf->channel_name = eina_stringshare_ref(channel);
      }
 
    e_mixer_update(conf->instance);
@@ -191,18 +191,18 @@ _basic_create_general(Evas *evas, E_Config_Dialog_Data *cfdata)
    ui->frame = e_widget_framelist_add(evas, _("General Settings"), 0);
 
    ui->lock_sliders = e_widget_check_add(
-					 evas, _("Lock Sliders"), &cfdata->lock_sliders);
+       evas, _("Lock Sliders"), &cfdata->lock_sliders);
    evas_object_smart_callback_add(
-				  ui->lock_sliders, "changed", _lock_change, cfdata);
+     ui->lock_sliders, "changed", _lock_change, cfdata);
    e_widget_framelist_object_append(ui->frame, ui->lock_sliders);
 
    ui->show_locked = e_widget_check_add(
-					evas, _("Show both sliders when locked"), &cfdata->show_locked);
+       evas, _("Show both sliders when locked"), &cfdata->show_locked);
    e_widget_disabled_set(ui->show_locked, !cfdata->lock_sliders);
    e_widget_framelist_object_append(ui->frame, ui->show_locked);
 
    ui->keybindings_popup = e_widget_check_add(
-					evas, _("Show Popup on volume change via keybindings"), &cfdata->keybindings_popup);
+       evas, _("Show Popup on volume change via keybindings"), &cfdata->keybindings_popup);
    e_widget_framelist_object_append(ui->frame, ui->keybindings_popup);
 }
 
@@ -228,15 +228,15 @@ _fill_channels(Evas *evas, E_Config_Dialog_Data *cfdata)
    ui->radio = e_widget_radio_group_new(&cfdata->channel);
    EINA_LIST_FOREACH(cfdata->channels_names, l, name)
      {
-	Evas_Object *ow;
+        Evas_Object *ow;
 
-	if (!name) continue;
+        if (!name) continue;
 
-	ow = e_widget_radio_add(evas, name, i, ui->radio);
-	ui->radios = eina_list_append(ui->radios, ow);
-	e_widget_list_object_append(ui->list, ow, 1, 1, 0.0);
+        ow = e_widget_radio_add(evas, name, i, ui->radio);
+        ui->radios = eina_list_append(ui->radios, ow);
+        e_widget_list_object_append(ui->list, ow, 1, 1, 0.0);
 
-	++i;
+        ++i;
      }
 
    e_widget_size_min_get(ui->list, &mw, &mh);
@@ -245,13 +245,13 @@ _fill_channels(Evas *evas, E_Config_Dialog_Data *cfdata)
    selected = eina_list_nth(ui->radios, cfdata->channel);
    if (selected)
      {
-	Evas_Coord x, y, w, h, lx, ly;
-	evas_object_geometry_get(selected, &x, &y, &w, &h);
-	evas_object_geometry_get(ui->list, &lx, &ly, NULL, NULL);
-	x -= lx;
-	y -= ly - 10;
-	h += 20;
-	e_widget_scrollframe_child_region_show(ui->scroll, x, y, w, h);
+        Evas_Coord x, y, w, h, lx, ly;
+        evas_object_geometry_get(selected, &x, &y, &w, &h);
+        evas_object_geometry_get(ui->list, &lx, &ly, NULL, NULL);
+        x -= lx;
+        y -= ly - 10;
+        h += 20;
+        e_widget_scrollframe_child_region_show(ui->scroll, x, y, w, h);
      }
 }
 
@@ -317,15 +317,15 @@ _basic_create_cards(Evas *evas, E_Config_Dialog_Data *cfdata)
    ui->radio = e_widget_radio_group_new(&cfdata->card_num);
    EINA_LIST_FOREACH(cfdata->cards_names, l, card)
      {
-	Evas_Object *ow;
+        Evas_Object *ow;
 
-	if (!card) continue;
+        if (!card) continue;
 
-	ow = e_widget_radio_add(evas, card, i, ui->radio);
-	e_widget_framelist_object_append(ui->frame, ow);
-	evas_object_smart_callback_add(ow, "changed", _card_change, cfdata);
+        ow = e_widget_radio_add(evas, card, i, ui->radio);
+        e_widget_framelist_object_append(ui->frame, ow);
+        evas_object_smart_callback_add(ow, "changed", _card_change, cfdata);
 
-	++i;
+        ++i;
      }
 }
 
@@ -353,7 +353,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 void
 e_mixer_config_pulse_toggle(void)
 {
-
 }
 
 E_Config_Dialog *
@@ -381,3 +380,4 @@ e_mixer_config_dialog_new(E_Container *con, E_Mixer_Gadget_Config *conf)
 
    return dialog;
 }
+

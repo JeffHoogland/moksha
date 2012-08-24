@@ -14,9 +14,9 @@ e_mixer_system_new(const char *name)
    _e_mixer_dummy_set();
 
    if (name == _name || strcmp(name, _name) == 0)
-      return (E_Mixer_System *)-1;
+     return (E_Mixer_System *)-1;
    else
-      return NULL;
+     return NULL;
 }
 
 void
@@ -58,9 +58,9 @@ e_mixer_system_get_card_name(const char *card)
    _e_mixer_dummy_set();
 
    if (card == _name || strcmp(card, _name) == 0)
-      return eina_stringshare_ref(_name);
+     return eina_stringshare_ref(_name);
    else
-      return NULL;
+     return NULL;
 }
 
 Eina_List *
@@ -103,9 +103,9 @@ e_mixer_system_get_channel_by_name(E_Mixer_System *self __UNUSED__, const char *
    _e_mixer_dummy_set();
 
    if (name == _name || strcmp(name, _name) == 0)
-      return (E_Mixer_Channel *)-2;
+     return (E_Mixer_Channel *)-2;
    else
-      return NULL;
+     return NULL;
 }
 
 void
@@ -117,18 +117,18 @@ const char *
 e_mixer_system_get_channel_name(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel)
 {
    if (channel == (E_Mixer_Channel *)-2)
-      return eina_stringshare_ref(_name);
+     return eina_stringshare_ref(_name);
    else
-      return NULL;
+     return NULL;
 }
 
 int
 e_mixer_system_get_volume(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__, int *left, int *right)
 {
    if (left)
-      *left = 0;
+     *left = 0;
    if (right)
-      *right = 0;
+     *right = 0;
 
    return 1;
 }
@@ -149,7 +149,7 @@ int
 e_mixer_system_get_mute(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__, int *mute)
 {
    if (mute)
-      *mute = 1;
+     *mute = 1;
 
    return 1;
 }
@@ -166,7 +166,7 @@ e_mixer_system_get_state(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *chann
    const E_Mixer_Channel_State def = {1, 0, 0};
 
    if (state)
-      *state = def;
+     *state = def;
 
    return 1;
 }
@@ -182,3 +182,4 @@ e_mixer_system_has_capture(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *cha
 {
    return 0;
 }
+
