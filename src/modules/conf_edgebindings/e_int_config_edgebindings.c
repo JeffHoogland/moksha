@@ -1199,11 +1199,10 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
 
         if (actd) label = _(actd->act_name);
 
-        e_util_dialog_show(_("Binding Edge Error"),
-                           _("The binding key sequence, that you choose,"
-                             " is already used by <br>"
+        e_util_dialog_show(_("Edge Binding Error"),
+                           _("The edge binding that you chose is already used by<br>"
                              "<hilight>%s</hilight> action.<br>"
-                             "Please choose another binding edge sequence."),
+                             "Please choose another edge to bind."),
                            label ? label : _("Unknown"));
      }
 }
