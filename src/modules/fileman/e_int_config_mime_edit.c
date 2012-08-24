@@ -268,6 +268,17 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    return 1;
 }
 
+static void
+_dia_del(void *data)
+{
+   E_Dialog *dia = data;
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = dia->data;
+   if (!cfdata) return;
+   cfdata->gui.fsel = NULL;
+}
+
 static void 
 _cb_icon_sel(void *data, void *data2) 
 {
@@ -292,6 +303,7 @@ _cb_icon_sel(void *data, void *data2)
      e_dialog_title_set(dia, _("Select an image"));
      
    dia->data = cfdata;
+   e_object_del_attach_func_set(E_OBJECT(dia), _dia_del);
    o = e_widget_fsel_add(dia->win->evas, "~/", "/", NULL, NULL,
 			 _cb_fsel_sel, cfdata, NULL, cfdata, 1);
 

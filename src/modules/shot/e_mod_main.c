@@ -223,6 +223,12 @@ _file_select_cancel_cb(void *data __UNUSED__, E_Dialog *dia)
 }
 
 static void
+_file_select_del_cb(void *d __UNUSED__)
+{
+   fsel_dia = NULL;
+}
+
+static void
 _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
 { 
    E_Dialog *dia;
@@ -246,6 +252,7 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
                          NULL,
                          NULL, NULL,
                          NULL, NULL, 1);
+   e_object_del_attach_func_set(E_OBJECT(dia), _file_select_del_cb);
    e_widget_fsel_window_object_set(o, E_OBJECT(dia->win));
    o_fsel = o;
    evas_object_show(o);

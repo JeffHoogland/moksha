@@ -847,6 +847,16 @@ _edge_binding_sort_cb(const void *d1, const void *d2)
 
 /**************** grab window *******/
 static void
+_dia_del(void *data)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = e_object_data_get(data);
+   if (!cfdata) return;
+   cfdata->locals.dia = NULL;
+}
+
+static void
 _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *obg, *os;
@@ -868,6 +878,8 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
    e_dialog_icon_set(cfdata->locals.dia, "enlightenment/edges", 48);
    e_dialog_button_add(cfdata->locals.dia, _("Apply"), NULL, _edge_grab_wnd_cb_apply, cfdata);
    e_dialog_button_add(cfdata->locals.dia, _("Close"), NULL, _edge_grab_wnd_cb_close, cfdata);
+   e_object_data_set(E_OBJECT(cfdata->locals.dia), cfdata);
+   e_object_del_attach_func_set(E_OBJECT(cfdata->locals.dia), _dia_del);
    e_win_centered_set(cfdata->locals.dia->win, 1);
 
    evas = e_win_evas_get(cfdata->locals.dia->win);

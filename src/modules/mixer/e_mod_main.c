@@ -636,8 +636,7 @@ _mixer_popup_cb_mixer(void *data, void *data2 __UNUSED__)
      }
 
    con = e_container_current_get(e_manager_current_get());
-   ctxt->mixer_dialog = e_mixer_app_dialog_new(
-       con, _mixer_app_cb_del, ctxt);
+   ctxt->mixer_dialog = e_mixer_app_dialog_new(con, _mixer_app_cb_del, ctxt);
 
    _mixer_app_select_current(ctxt->mixer_dialog, inst);
 }
