@@ -59,6 +59,50 @@ static Eina_Hash *_gadman_gadgets = NULL;
 
 /* Implementation */
 void
+gadman_reset(void)
+{
+   E_Gadcon *gc;
+   unsigned int layer;
+   const Eina_List *l;
+   E_Zone *zone;
+   
+   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+     {
+        EINA_LIST_FREE(Man->gadcons[layer], gc)
+          {
+             e_gadcon_unpopulate(gc);
+             e_gadcon_custom_del(gc);
+
+             /* free gadcons */
+             e_config->gadcons = eina_list_remove(e_config->gadcons, gc);
+             eina_stringshare_del(gc->name);
+
+             if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
+          }
+
+        evas_object_del(Man->movers[layer]);
+     }
+   if (_gadman_gadgets)
+     {
+        eina_hash_free_cb_set(_gadman_gadgets, EINA_FREE_CB(eina_list_free));
+        eina_hash_free(_gadman_gadgets);
+     }
+   /* iterating through zones - and making gadmans on each */
+   EINA_LIST_FOREACH(Man->container->zones, l, zone)
+     {
+        const char *layer_name[] = {"gadman", "gadman_top"};
+
+        for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+          {
+             gc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
+             Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
+          }
+     }
+
+   _gadman_gadgets = eina_hash_string_superfast_new(NULL);
+}
+
+void
 gadman_init(E_Module *m)
 {
    const Eina_List *l;
@@ -1504,9 +1548,7 @@ _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event)
    if ((!zone->x) || (!zone->y))
      {
         /* first zone removed, need to reinit to re-place every gadget */
-        E_Module *m = Man->module;
-        gadman_shutdown();
-        gadman_init(m);
+        gadman_reset();
         return ECORE_CALLBACK_RENEW;
      }
 
@@ -1540,9 +1582,7 @@ _e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event)
    if ((!zone->x) || (!zone->y))
      {
         /* another first zone added, need to reinit to re-place every gadget */
-        E_Module *m = Man->module;
-        gadman_shutdown();
-        gadman_init(m);
+        gadman_reset();
         return ECORE_CALLBACK_RENEW;
      }
 
