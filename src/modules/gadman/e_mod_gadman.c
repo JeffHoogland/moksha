@@ -81,6 +81,7 @@ gadman_reset(void)
           }
 
         evas_object_del(Man->movers[layer]);
+        Man->movers[layer] = NULL;
      }
    if (_gadman_gadgets)
      {
