@@ -221,7 +221,7 @@ init_done:
    EINA_LIST_FOREACH(e_config->modules, l, em)
      {
         if (!em) continue;
-        if (!e_util_strcmp(em->name, m->name))
+        if (em->name == m->name)
           {
              in_list = 1;
              break;
