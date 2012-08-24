@@ -2999,7 +2999,7 @@ e_actions_init(void)
                             "window_shaded_toggle", NULL, NULL, 0);
 
    ACT_GO(window_shaded);
-   e_action_predef_name_set(N_("Window : Shaded"), N_("Set Shaded State"),
+   e_action_predef_name_set(N_("Window : State"), N_("Set Shaded State"),
                             "window_shaded", NULL, _("syntax: \"(0|1) (up|down|left|right)\"") , 1);
 
    /* window_borderless_toggle */
