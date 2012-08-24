@@ -2942,6 +2942,8 @@ e_actions_init(void)
                             "window_sticky_toggle", NULL, NULL, 0);
 
    ACT_GO(window_sticky);
+   e_action_predef_name_set(N_("Window : State"), N_("Sticky Mode Enable"),
+                            "window_sticky", NULL, NULL, 0);
 
    /* window_iconic_toggle */
    ACT_GO(window_iconic_toggle);
@@ -2949,6 +2951,8 @@ e_actions_init(void)
                             "window_iconic_toggle", NULL, NULL, 0);
 
    ACT_GO(window_iconic);
+   e_action_predef_name_set(N_("Window : State"), N_("Iconic Mode Enable"),
+                            "window_iconic", NULL, NULL, 0);
 
    /* window_fullscreen_toggle */
    ACT_GO(window_fullscreen_toggle);
@@ -2956,6 +2960,9 @@ e_actions_init(void)
                             "window_fullscreen_toggle", NULL, NULL, 0);
 
    ACT_GO(window_fullscreen);
+   e_action_predef_name_set(N_("Window : State"), N_("Fullscreen Mode Enable"),
+                            "window_fullscreen", NULL, NULL, 0);
+
 
    /* window_maximized_toggle */
    ACT_GO(window_maximized_toggle);
@@ -2992,6 +2999,8 @@ e_actions_init(void)
                             "window_shaded_toggle", NULL, NULL, 0);
 
    ACT_GO(window_shaded);
+   e_action_predef_name_set(N_("Window : Shaded"), N_("Set Shaded State"),
+                            "window_shaded", NULL, _("syntax: \"(0|1) (up|down|left|right)\"") , 1);
 
    /* window_borderless_toggle */
    ACT_GO(window_borderless_toggle);
