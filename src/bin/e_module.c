@@ -546,12 +546,15 @@ _e_module_cb_idler(void *data __UNUSED__)
           eina_list_remove_list(_e_modules_delayed, _e_modules_delayed);
         m = NULL;
         if (name) m = e_module_new(name);
+        if (m)
+          {
 #ifndef E17_RELEASE_BUILD
-        char buf[1024];
-        snprintf(buf, sizeof(buf), "DELAYED MODULE LOAD: %s", name);
-        e_main_ts(buf);
+             char buf[1024];
+             snprintf(buf, sizeof(buf), "DELAYED MODULE LOAD: %s", name);
+             e_main_ts(buf);
 #endif
-        if (m) e_module_enable(m);
+             e_module_enable(m);
+          }
         eina_stringshare_del(name);
      }
    if (_e_modules_delayed)
