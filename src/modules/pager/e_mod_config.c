@@ -20,7 +20,7 @@ struct _E_Config_Dialog_Data
    struct
    {
       Ecore_X_Window bind_win;
-      E_Dialog      *dia;
+      E_Grab_Dialog  *dia;
       Eina_List     *hdls;
       int            btn;
    } grab;
@@ -30,6 +30,7 @@ struct _E_Config_Dialog_Data
       Eina_List   *popup_list, *urgent_list;
    } gui;
    int drag_resist, flip_desk, show_desk_names, live_preview;
+   E_Config_Dialog *cfd;
 };
 
 /* local function prototypes */
@@ -46,7 +47,6 @@ static void         _update_btn_lbl(E_Config_Dialog_Data *cfdata);
 static void         _grab_window_show(void *data1, void *data2);
 static Eina_Bool    _grab_cb_mouse_down(void *data, int type, void *event);
 static Eina_Bool    _grab_cb_key_down(void *data, int type, void *event);
-static void         _grab_window_hide(E_Config_Dialog_Data *cfdata);
 static void         _cb_disable_check_list(void *data, Evas_Object *obj);
 
 void
@@ -118,10 +118,11 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ol, *of, *ow;
 
+   cfdata->cfd = cfd;
    ol = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("General"), 0);
@@ -174,11 +175,12 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 }
 
 static Evas_Object *
-_adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ol, *ow;
    Evas_Object *pc, *uc;
 
+   cfdata->cfd = cfd;
    otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
    /* General Page */
@@ -363,14 +365,22 @@ _update_btn_lbl(E_Config_Dialog_Data *cfdata)
 }
 
 static void
+_grab_window_del(void *data)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = e_object_data_get(data);
+   if (!cfdata) return;
+   cfdata->grab.dia = NULL;
+   _update_btn_lbl(cfdata);
+}
+
+static void
 _grab_window_show(void *data1, void *data2)
 {
-   E_Manager *man = NULL;
-   E_Config_Dialog_Data *cfdata = NULL;
-   Ecore_Event_Handler *hdl = NULL;
+   E_Config_Dialog_Data *cfdata;
 
    if (!(cfdata = data2)) return;
-   man = e_manager_current_get();
 
    cfdata->grab.btn = 0;
    if ((long)data1 == BUTTON_DRAG)
@@ -378,64 +388,19 @@ _grab_window_show(void *data1, void *data2)
    else if ((long)data1 == BUTTON_NOPLACE)
      cfdata->grab.btn = 2;
 
-   cfdata->grab.dia = e_dialog_new(e_container_current_get(man), "Pager",
-                                   "_pager_button_grab_dialog");
-   if (!cfdata->grab.dia) return;
-   e_dialog_title_set(cfdata->grab.dia, _("Pager Button Grab"));
-   e_dialog_icon_set(cfdata->grab.dia, "preferences-desktop-mouse", 48);
-   e_dialog_text_set(cfdata->grab.dia, _("Please press a mouse button<br>"
-                                         "Press <hilight>Escape</hilight> to abort.<br>"
-                                         "Or <hilight>Del</hilight> to reset the button."));
-   e_win_centered_set(cfdata->grab.dia->win, 1);
-   e_win_borderless_set(cfdata->grab.dia->win, 1);
-
-   cfdata->grab.bind_win = ecore_x_window_input_new(man->root, 0, 0,
-                                                    man->w, man->h);
-   ecore_x_window_show(cfdata->grab.bind_win);
-   if (!e_grabinput_get(cfdata->grab.bind_win, 0, cfdata->grab.bind_win))
-     {
-        ecore_x_window_free(cfdata->grab.bind_win);
-        cfdata->grab.bind_win = 0;
-        e_object_del(E_OBJECT(cfdata->grab.dia));
-        cfdata->grab.dia = NULL;
-        return;
-     }
-   hdl = ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
-                                 _grab_cb_key_down, cfdata);
-   cfdata->grab.hdls = eina_list_append(cfdata->grab.hdls, hdl);
-   hdl = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
-                                 _grab_cb_mouse_down, cfdata);
-   cfdata->grab.hdls = eina_list_append(cfdata->grab.hdls, hdl);
-
-   e_dialog_show(cfdata->grab.dia);
-   ecore_x_icccm_transient_for_set(cfdata->grab.dia->win->evas_win,
-                                   pager_config->config_dialog->dia->win->evas_win);
+   cfdata->grab.dia = e_grab_dialog_show(cfdata->cfd->dia->win, EINA_TRUE, _grab_cb_key_down, _grab_cb_mouse_down, NULL, cfdata);
+   e_object_data_set(E_OBJECT(cfdata->grab.dia), cfdata);
+   e_object_del_attach_func_set(E_OBJECT(cfdata->grab.dia), _grab_window_del);
 }
 
 static Eina_Bool
-_grab_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_grab_cb_mouse_down(void *data, __UNUSED__ int type, void *event)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Ecore_Event_Mouse_Button *ev;
 
    ev = event;
    if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
-   if (ev->window != cfdata->grab.bind_win) return ECORE_CALLBACK_PASS_ON;
-
-   if (ev->buttons == cfdata->btn.drag)
-     cfdata->btn.drag = 0;
-   else if (ev->buttons == cfdata->btn.noplace)
-     cfdata->btn.noplace = 0;
-   else if (ev->buttons == cfdata->btn.desk)
-     cfdata->btn.desk = 0;
-
-   if (cfdata->grab.btn == 1)
-     cfdata->btn.drag = ev->buttons;
-   else if (cfdata->grab.btn == 2)
-     cfdata->btn.noplace = ev->buttons;
-   else
-     cfdata->btn.desk = ev->buttons;
-
    if (ev->buttons == 3)
      {
         e_util_dialog_show(_("Attention"),
@@ -444,20 +409,35 @@ _grab_cb_mouse_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
                              "code for context menus.<br>"
                              "This button only works in the popup."));
      }
-   _grab_window_hide(cfdata);
+   else
+     {
+        if (ev->buttons == cfdata->btn.drag)
+          cfdata->btn.drag = 0;
+        else if (ev->buttons == cfdata->btn.noplace)
+          cfdata->btn.noplace = 0;
+        else if (ev->buttons == cfdata->btn.desk)
+          cfdata->btn.desk = 0;
+
+        if (cfdata->grab.btn == 1)
+          cfdata->btn.drag = ev->buttons;
+        else if (cfdata->grab.btn == 2)
+          cfdata->btn.noplace = ev->buttons;
+        else
+          cfdata->btn.desk = ev->buttons;
+     }
+
+   e_object_del(E_OBJECT(cfdata->grab.dia));
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_grab_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
+_grab_cb_key_down(void *data, __UNUSED__ int type, void *event)
 {
    E_Config_Dialog_Data *cfdata = NULL;
    Ecore_Event_Key *ev;
 
    ev = event;
    if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
-   if (ev->window != cfdata->grab.bind_win) return ECORE_CALLBACK_PASS_ON;
-   if (!strcmp(ev->keyname, "Escape")) _grab_window_hide(cfdata);
    if (!strcmp(ev->keyname, "Delete"))
      {
         if (cfdata->grab.btn == 1)
@@ -466,29 +446,9 @@ _grab_cb_key_down(__UNUSED__ void *data, __UNUSED__ int type, void *event)
           cfdata->btn.noplace = 0;
         else
           cfdata->btn.desk = 0;
-        _grab_window_hide(cfdata);
      }
+   e_object_del(E_OBJECT(cfdata->grab.dia));
    return ECORE_CALLBACK_PASS_ON;
-}
-
-static void
-_grab_window_hide(E_Config_Dialog_Data *cfdata)
-{
-   while (cfdata->grab.hdls)
-     {
-        ecore_event_handler_del(cfdata->grab.hdls->data);
-        cfdata->grab.hdls =
-          eina_list_remove_list(cfdata->grab.hdls, cfdata->grab.hdls);
-     }
-   cfdata->grab.hdls = NULL;
-   e_grabinput_release(cfdata->grab.bind_win, cfdata->grab.bind_win);
-   if (cfdata->grab.bind_win) ecore_x_window_free(cfdata->grab.bind_win);
-   cfdata->grab.bind_win = 0;
-
-   if (cfdata->grab.dia) e_object_del(E_OBJECT(cfdata->grab.dia));
-   cfdata->grab.dia = NULL;
-
-   _update_btn_lbl(cfdata);
 }
 
 static void
