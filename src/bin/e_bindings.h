@@ -103,6 +103,11 @@ struct _E_Binding_Acpi
 EINTERN int         e_bindings_init(void);
 EINTERN int         e_bindings_shutdown(void);
 
+EAPI void        e_bindings_mouse_reset(void);
+EAPI void        e_bindings_key_reset(void);
+EAPI void        e_bindings_wheel_reset(void);
+EAPI void        e_bindings_edge_reset(void);
+EAPI void        e_bindings_signal_reset(void);
 EAPI void        e_bindings_reset(void);
 
 EAPI void        e_bindings_mouse_add(E_Binding_Context ctxt, int button, E_Binding_Modifier mod, int any_mod, const char *action, const char *params);
