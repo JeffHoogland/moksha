@@ -135,12 +135,7 @@ _mixer_gadget_configuration_new(E_Mixer_Module_Config *mod_conf, const char *id)
    if (!conf)
      return NULL;
 
-   if (!_mixer_gadget_configuration_defaults(conf))
-     {
-        E_FREE(conf);
-        return NULL;
-     }
-
+   _mixer_gadget_configuration_defaults(conf);
    conf->id = eina_stringshare_add(id);
    if (!mod_conf->gadgets)
      mod_conf->gadgets = eina_hash_string_superfast_new(NULL);
@@ -1443,6 +1438,10 @@ e_mixer_default_setup(void)
 void
 e_mixer_pulse_setup(void)
 {
+   E_Mixer_Instance *inst;
+   E_Mixer_Module_Context *ctxt;
+   Eina_List *l;
+
    e_mod_mixer_volume_get = (void *)e_mixer_pulse_get_volume;
    e_mod_mixer_volume_set = (void *)e_mixer_pulse_set_volume;
    e_mod_mixer_mute_get = (void *)e_mixer_pulse_get_mute;
@@ -1464,6 +1463,15 @@ e_mixer_pulse_setup(void)
    e_mod_mixer_cards_free = (void *)e_mixer_pulse_free_cards;
    e_mod_mixer_card_default_get = (void *)e_mixer_pulse_get_default_card;
    _mixer_using_default = EINA_FALSE;
+
+   if (!mixer_mod) return;
+
+   ctxt = mixer_mod->data;
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     {
+        if (!inst->conf->card)
+          _mixer_gadget_configuration_defaults(inst->conf);
+     }
 }
 
 EAPI void *
