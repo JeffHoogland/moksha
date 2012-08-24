@@ -179,6 +179,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    Evas_Object *o, *ob, *sf;
    Evas_Coord mw = 0, mh = 0;
    char buf[256];
+   void *cfdata;
 
    pdia = cfd->dia;
    /* FIXME: get name/class form new call and use here */
@@ -203,6 +204,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    cfd->view_type = type;
    cfd->dia->data = cfd;
    e_dialog_title_set(cfd->dia, cfd->title);
+   cfdata = cfd->cfdata;
    if (!cfd->cfdata) cfd->cfdata = cfd->view->create_cfdata(cfd);
 
    evas = e_win_evas_get(cfd->dia->win);
@@ -287,7 +289,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
                             _e_config_dialog_cb_close, cfd);
      }
 
-   if (cfd->cfg_changed_auto)
+   if (cfdata && cfd->cfg_changed_auto)
      {
         int changed;
 
