@@ -264,6 +264,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
         e_drop_xdnd_register_set(es->zone->container->bg_win, 1);
         e_gadcon_xdnd_window_set(es->gadcon, es->zone->container->bg_win);
         e_gadcon_dnd_window_set(es->gadcon, es->zone->container->event_win);
+        evas_object_clip_set(es->o_base, es->zone->bg_clip_object);
      }
    e_gadcon_util_menu_attach_func_set(es->gadcon,
                                       _e_shelf_cb_menu_items_append, es);
@@ -807,6 +808,47 @@ e_shelf_position_calc(E_Shelf *es)
      }
    e_zone_useful_geometry_dirty(es->zone);
    _e_shelf_bindings_add(es);
+
+   do
+     {
+        Eina_Bool err = EINA_FALSE;
+
+        if (!es->cfg) break;
+        if (!es->zone) break;
+        if ((!es->cfg->popup) || (!es->cfg->autohide)) break;
+        switch (es->cfg->orient)
+          {
+           case E_GADCON_ORIENT_LEFT:
+           case E_GADCON_ORIENT_CORNER_LT:
+           case E_GADCON_ORIENT_CORNER_LB:
+             if (!e_zone_exists_direction(es->zone, E_ZONE_EDGE_LEFT)) break;
+             err = EINA_TRUE;
+             break;
+           case E_GADCON_ORIENT_RIGHT:
+           case E_GADCON_ORIENT_CORNER_RT:
+           case E_GADCON_ORIENT_CORNER_RB:
+             if (!e_zone_exists_direction(es->zone, E_ZONE_EDGE_RIGHT)) break;
+             err = EINA_TRUE;
+             break;
+           case E_GADCON_ORIENT_TOP:
+           case E_GADCON_ORIENT_CORNER_TL:
+           case E_GADCON_ORIENT_CORNER_TR:
+             if (!e_zone_exists_direction(es->zone, E_ZONE_EDGE_TOP)) break;
+             err = EINA_TRUE;
+             break;
+           case E_GADCON_ORIENT_BOTTOM:
+           case E_GADCON_ORIENT_CORNER_BL:
+           case E_GADCON_ORIENT_CORNER_BR:
+             if (!e_zone_exists_direction(es->zone, E_ZONE_EDGE_BOTTOM)) break;
+             err = EINA_TRUE;
+             break;
+          }
+        if (err)
+          e_util_dialog_show(_("Shelf Autohide Error"), _("Shelf autohiding will not work properly<br>"
+                                                          "with the current configuration; set your shelf to<br>"
+                                                          "\"Below Everything\" or disable autohiding."));
+        break;
+     } while (0);
 }
 
 EAPI void
@@ -861,6 +903,7 @@ e_shelf_popup_set(E_Shelf *es, int popup)
 
    if (popup)
      {
+        evas_object_clip_unset(es->o_base);
         es->popup = e_popup_new(es->zone, es->x, es->y, es->w, es->h);
         e_popup_name_set(es->popup, "shelf");
         e_popup_layer_set(es->popup, es->cfg->layer);
@@ -894,6 +937,7 @@ e_shelf_popup_set(E_Shelf *es, int popup)
         e_drop_xdnd_register_set(es->zone->container->bg_win, 1);
         e_gadcon_xdnd_window_set(es->gadcon, es->zone->container->bg_win);
         e_gadcon_dnd_window_set(es->gadcon, es->zone->container->event_win);
+        evas_object_clip_set(es->o_base, es->zone->bg_clip_object);
      }
 }
 
@@ -1650,16 +1694,27 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
    else if (type == ECORE_EVENT_MOUSE_MOVE)
      {
         Ecore_Event_Mouse_Move *ev;
+        Eina_Bool inside = EINA_FALSE;
 
         ev = event;
-        if (!es->popup) return ECORE_CALLBACK_PASS_ON;
-        if (ev->event_window == es->popup->evas_win)
+        inside = (
+                  ((!es->popup) &&
+                  (E_INSIDE(ev->x, ev->y, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4)) &&
+                  (E_INSIDE(ev->x, ev->y, es->x, es->y, es->w, es->h))) || 
+                  (es->popup && (ev->event_window == es->popup->evas_win))
+                 );
+        if (inside)
           {
              if (es->hidden || (!es->toggle))
                {
                   edje_object_signal_emit(es->o_base, "e,state,focused", "e");
                   e_shelf_toggle(es, 1);
                }
+          }
+        else
+          {
+             if ((!es->hidden) && (es->toggle))
+               e_shelf_toggle(es, 0);
           }
      }
    return ECORE_CALLBACK_PASS_ON;
