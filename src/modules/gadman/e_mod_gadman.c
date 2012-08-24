@@ -531,7 +531,6 @@ gadman_update_bg(void)
      }
 }
 
-/* Internals */
 static E_Gadcon *
 _gadman_gadcon_new(const char *name, Gadman_Layer_Type layer, E_Zone *zone, E_Gadcon_Location *loc)
 {
@@ -1496,29 +1495,30 @@ _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    E_Event_Zone_Add *ev;
    E_Zone *zone;
-   E_Gadcon *gc;
-   Eina_List *l;
    unsigned int layer;
+   const char *layer_name[] = {"gadman", "gadman_top"};
 
    ev = event;
    zone = ev->zone;
 
-   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+   if ((!zone->x) || (!zone->y))
      {
-        EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
-          if (gc->zone == zone) return ECORE_CALLBACK_PASS_ON;
+        /* first zone removed, need to reinit to re-place every gadget */
+        E_Module *m = Man->module;
+        gadman_shutdown();
+        gadman_init(m);
+        return ECORE_CALLBACK_RENEW;
      }
 
    // Not exist, then add
    /* iterating through zones - and making gadmans on each */
-   const char *layer_name[] = {"gadman", "gadman_top"};
 
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
-        E_Gadcon *gdc;
+        E_Gadcon *gc;
 
-        gdc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
-        Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gdc);
+        gc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
+        Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
      }
 
    return ECORE_CALLBACK_PASS_ON;
@@ -1536,6 +1536,15 @@ _e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    ev = event;
    zone = ev->zone;
+
+   if ((!zone->x) || (!zone->y))
+     {
+        /* another first zone added, need to reinit to re-place every gadget */
+        E_Module *m = Man->module;
+        gadman_shutdown();
+        gadman_init(m);
+        return ECORE_CALLBACK_RENEW;
+     }
 
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
