@@ -2120,9 +2120,6 @@ e_border_focus_set(E_Border *bd,
      return;
    if ((set) && (focus) && (bd->lock_focus_out)) return;
    
-   void *btc[200];
-   int btn = backtrace(btc, 200);
-   backtrace_symbols_fd(btc, btn, 2);
    /* dont focus an iconified window. that's silly! */
    if (focus)
      {
