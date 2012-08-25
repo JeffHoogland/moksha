@@ -2119,6 +2119,10 @@ e_border_focus_set(E_Border *bd,
        (!bd->client.icccm.take_focus))
      return;
    if ((set) && (focus) && (bd->lock_focus_out)) return;
+   
+   void *btc[200];
+   int btn = backtrace(btc, 200);
+   backtrace_symbols_fd(btc, btn, 2);
    /* dont focus an iconified window. that's silly! */
    if (focus)
      {
@@ -2135,7 +2139,8 @@ e_border_focus_set(E_Border *bd,
           }
         /* FIXME: hack for deskflip animation:
          * dont update focus when sliding previous desk */
-        else if ((!bd->sticky) && (bd->desk != e_desk_current_get(bd->desk->zone)))
+        else if ((!bd->sticky) &&
+                 (bd->desk != e_desk_current_get(bd->desk->zone)))
           {
              return;
           }
@@ -2152,8 +2157,6 @@ e_border_focus_set(E_Border *bd,
         return;
      }
 
-   /* fprintf(stderr, "focus set bd %p client %x focus %i set %i [%s]\n", bd, bd->client.win, focus, set, bd->client.netwm.name); */
-   
    if (focus)
      {
         if (set)
@@ -2211,7 +2214,9 @@ e_border_focus_set(E_Border *bd,
                               }
                             if ((!unfocus_is_parent) && 
                                 (!e_config->allow_above_fullscreen))
-                              e_border_iconify(bd2);
+                              {
+                                 e_border_iconify(bd2);
+                              }
                          }
                     }
                }
@@ -2223,18 +2228,47 @@ e_border_focus_set(E_Border *bd,
         bd->want_focus = 0;
         focus_next = eina_list_remove(focus_next, bd);
         if (bd == focusing) focusing = NULL;
+
         if (bd->focused)
           {
+             Eina_Bool wasfocused = EINA_FALSE;
              bd_unfocus = bd;
 
              /* should always be the case. anyway */
              if (bd == focused)
-               focused = NULL;
+               {
+                  focused = NULL;
+                  wasfocused = EINA_TRUE;
+               }
 
              if ((set) && (!focus_next) && (!focusing))
                {
                   e_grabinput_focus(bd->zone->container->bg_win,
                                     E_FOCUS_METHOD_PASSIVE);
+               }
+             if ((bd->fullscreen) && (wasfocused))
+               {
+                  Eina_Bool have_vis_child = EINA_FALSE;
+                  Eina_List *l;
+                  E_Border *bd2;
+                  
+                  EINA_LIST_FOREACH(e_border_client_list(), l, bd2)
+                    {
+                       if ((bd2 != bd) &&
+                           (bd2->zone == bd->zone) &&
+                           ((bd2->desk == bd->desk) ||
+                               (bd2->sticky) || (bd->sticky)))
+                         {
+                            if (bd2->parent == bd)
+                              {
+                                 have_vis_child = EINA_TRUE;
+                                 break;
+                              }
+                         }
+                    }
+                  if ((!have_vis_child) && 
+                      (!e_config->allow_above_fullscreen))
+                    e_border_iconify(bd);
                }
           }
      }
@@ -2282,7 +2316,9 @@ e_border_focus_set(E_Border *bd,
                   bd_parent = bd->parent;
                }
              if ((!unfocus_is_parent) && (!e_config->allow_above_fullscreen))
-               e_border_iconify(bd_unfocus);
+               {
+                  e_border_iconify(bd_unfocus);
+               }
           }
      }
 
@@ -8474,7 +8510,9 @@ _e_border_eval(E_Border *bd)
                }
 
              if (!bd2)
-               e_border_focus_set_with_pointer(bd);
+               {
+                  e_border_focus_set_with_pointer(bd);
+               }
           }
      }
 
