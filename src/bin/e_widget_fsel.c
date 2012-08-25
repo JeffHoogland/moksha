@@ -331,15 +331,19 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
 
    if (preview)
      {
+        Evas_Coord mw2, mh2;
+        
         wd->o_preview_frame = e_widget_framelist_add(evas, _("Preview"), 0);
         wd->o_preview = e_widget_filepreview_add(evas, 128, 128, 0);
+        e_widget_filepreview_filemode_force(wd->o_preview);
         e_widget_framelist_object_append(wd->o_preview_frame, wd->o_preview);
         evas_object_smart_callback_add(wd->o_preview, "selected",
                                        _e_wid_fsel_preview_file_selected, wd);
         
         e_widget_size_min_get(wd->o_preview, &mw, &mh);
+        e_widget_size_min_get(wd->o_preview_frame, &mw2, &mh2);
         /* need size of preview here or min size will be off */
-        e_widget_size_min_set(wd->o_preview_frame, mw, mh + 128);
+        e_widget_size_min_set(wd->o_preview_frame, mw2, mh + 128);
      }
 
    o = e_fm2_add(evas);

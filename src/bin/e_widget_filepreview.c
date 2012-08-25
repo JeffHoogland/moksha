@@ -649,14 +649,15 @@ _e_wid_fprev_preview_fm(E_Widget_Data *wd)
                                          e_fm2_pan_child_size_get);
         wd->o_preview_scrollframe = o;
         e_widget_size_min_get(wd->o_preview_list, &mw, NULL);
-        e_widget_size_min_set(o, MAX(wd->w, mw), wd->h);
+//        e_widget_size_min_set(o, MAX(wd->w, mw), wd->h);
+        e_widget_size_min_set(o, 0, wd->h);
         evas_object_propagate_events_set(wd->o_preview_preview, 0);
         e_widget_scrollframe_focus_object_set(o, wd->o_preview_preview);
         e_widget_table_object_append(wd->o_preview_preview_table,
-                                     o, 0, 0, 1, 1, 0, 0, 1, 1);
+                                     o, 0, 0, 1, 1, 1, 1, 1, 1);
         e_widget_list_object_repack(wd->o_preview_list,
                                     wd->o_preview_preview_table,
-                                    0, 1, 0.5);
+                                    1, 1, 0.5);
         e_widget_list_object_repack(wd->o_preview_list,
                                     wd->o_preview_properties_table,
                                     1, 1, 0.5);
@@ -716,4 +717,15 @@ e_widget_filepreview_path_set(Evas_Object *obj, const char *path, const char *mi
    eina_stringshare_replace(&wd->path, path);
    eina_stringshare_replace(&wd->mime, mime);
    _e_wid_fprev_preview_file(wd);
+}
+
+EAPI void
+e_widget_filepreview_filemode_force(Evas_Object *obj)
+{
+   E_Widget_Data *wd;
+
+   if (!obj) return;
+   wd = e_widget_data_get(obj);
+   if (!wd) return;
+   _e_wid_fprev_preview_file_widgets(wd);
 }
