@@ -315,11 +315,6 @@ e_winlist_hide(void)
      }
    if (bd)
      {
-        if (bd->iconic)
-          {
-             if (!bd->lock_user_iconify)
-               e_border_uniconify(bd);
-          }
         if (bd->shaded)
           {
              if (!bd->lock_user_shade)
