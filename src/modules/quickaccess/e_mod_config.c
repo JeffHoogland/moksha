@@ -143,7 +143,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 static void
 _list_select(void *data)
 {
-   Config_Entry *ce = data;
+   (void) data;
 }
 
 static void
