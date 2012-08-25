@@ -107,6 +107,8 @@ e_grab_dialog_show(E_Win *parent, Eina_Bool is_mouse, Ecore_Event_Handler_Cb key
    E_Grab_Dialog *eg;
    Ecore_Event_Handler *eh;
 
+   e_border_focus_set(parent->border, 0, 1);
+   
    if (parent)
      {
         con = parent->container;
