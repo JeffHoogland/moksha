@@ -340,6 +340,8 @@ e_winlist_hide(void)
 
         e_object_unref(E_OBJECT(bd));
      }
+   
+   e_border_idler_before();
 
    ecore_x_window_free(_input_window);
    e_grabinput_release(_input_window, _input_window);
