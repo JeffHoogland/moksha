@@ -7687,22 +7687,8 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
         if ((S_ISDIR(ic1->info.statinfo.st_mode)) !=
             (S_ISDIR(ic2->info.statinfo.st_mode)))
           {
-             if ((!!ic1->info.link) != (!!ic2->info.link))
-               {
-                  if (!ic1->info.link) return -1;
-                  return 1;
-               }
              if (S_ISDIR(ic1->info.statinfo.st_mode)) return -1;
              return 1;
-          }
-        if ((S_ISDIR(ic1->info.statinfo.st_mode)) &&
-            (S_ISDIR(ic2->info.statinfo.st_mode)))
-          {
-             if ((!!ic1->info.link) != (!!ic2->info.link))
-               {
-                  if (!ic1->info.link) return -1;
-                  return 1;
-               }
           }
      }
    else if (ic1->sd->config->list.sort.dirs.last)
@@ -7710,11 +7696,6 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
         if ((S_ISDIR(ic1->info.statinfo.st_mode)) !=
             (S_ISDIR(ic2->info.statinfo.st_mode)))
           {
-             if ((!!ic1->info.link) != (!!ic2->info.link))
-               {
-                  if (!ic1->info.link) return -1;
-                  return 1;
-               }
              if (S_ISDIR(ic1->info.statinfo.st_mode)) return 1;
              return -1;
           }
