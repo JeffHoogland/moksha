@@ -686,7 +686,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
         if (p->command != CMD_SHOW_PARENT)
           {
              char *dir;
-             char buf[PATH_MAX];
+             char buf[PATH_MAX+1];
              int prio = 0;
 
              if (strncmp(p->directory, "/", 1))
@@ -694,16 +694,16 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
              _free_files(p);
 
-             strncpy(buf, p->directory, sizeof(buf));
+             strncpy(buf, p->directory, sizeof buf - 1);
 
              _folder_item_add(p, p->directory, prio++);
 
              while (strlen(buf) > 1)
                {
-                  buf[PATH_MAX] = 0;
+                  buf[sizeof buf - 1] = 0;
                   dir = dirname(buf);
                   _folder_item_add(p, dir, prio++);
-                  strncpy(buf, dir, sizeof(buf));
+                  strncpy(buf, dir, sizeof buf - 1);
                }
 
              p->command = CMD_SHOW_PARENT;
