@@ -344,8 +344,8 @@ _upload_data_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
              n = malloc(strlen(url_ret) + ev->size + 1);
              if (n)
                {
-                  free(url_ret);
                   strcpy(n, url_ret);
+                  free(url_ret);
                   strcat(n, txt);
                   url_ret = n;
                }
