@@ -283,8 +283,7 @@ _share_done(void)
    o_label = NULL;
    if (url_ret)
      {
-        free(url_ret);
-        url_ret = NULL;
+        E_FREE(url_ret);
      }
    if (url_up)
      {
@@ -411,11 +410,9 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    else snprintf(buf, sizeof(buf), "/tmp/e-shot-XXXXXX.jpg");
    if (!mkstemp(buf))
      {
-        e_util_dialog_show
-           (_("Error - Can't create File"),
-               _("Cannot create temporary file:\n"
-                 "%s"),
-               buf);
+        e_util_dialog_show(_("Error - Can't create file"),
+                           _("Cannot create temporary file '%s': %s"),
+                           buf, strerror(errno));
         if (win)
           {
              e_object_del(E_OBJECT(win));
@@ -432,14 +429,18 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    f = fopen(buf, "rb");
    if (!f)
      {
-        // FIXME: error disp
+        e_util_dialog_show(_("Error - Can't open file"),
+                           _("Cannot open temporary file '%s': %s"),
+                           buf, strerror(errno));
         return;
      }
    fseek(f, 0, SEEK_END);
    fsize = ftell(f);
    if (fsize < 1)
      {
-        // FIXME: error disp
+        e_util_dialog_show(_("Error - Bad size"),
+                           _("Cannot get size of file '%s'"),
+                           buf);
         fclose(f);
         return;
      }
@@ -448,15 +449,17 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    fdata = malloc(fsize);
    if (!fdata)
      {
-        // FIXME: error disp
+        e_util_dialog_show(_("Error - Can't allocate memory"),
+                           _("Cannot allocate memory for picture: %s"),
+                           strerror(errno));
         fclose(f);
         return;
      }
    if (fread(fdata, fsize, 1, f) != 1)
      {
-        // FIXME: error disp
-        free(fdata);
-        fdata = NULL;
+        e_util_dialog_show(_("Error - Can't read picture"),
+                           _("Cannot read picture"));
+        E_FREE(fdata);
         fclose(f);
         return;
      }
@@ -467,9 +470,9 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    
    if (!ecore_con_url_init())
      {
-        // FIXME: error disp
-        free(fdata);
-        fdata = NULL;
+        e_util_dialog_show(_("Error - Can't initialize network"),
+                           _("Cannot initialize network"));
+        E_FREE(fdata);
         return;
      }
    
