@@ -109,9 +109,12 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->dpms_standby_enable = e_config->dpms_enable;
    e_config->dpms_suspend_enable = e_config->dpms_enable;
    e_config->dpms_off_enable = e_config->dpms_enable;
-   e_config->dpms_standby_timeout = e_config->screensaver_timeout;
-   e_config->dpms_suspend_timeout = e_config->screensaver_timeout;
-   e_config->dpms_off_timeout = e_config->screensaver_timeout;
+   // XXX: 5 seconds after screenblank until dpms - enough for most anims;
+   e_config->dpms_standby_timeout = e_config->screensaver_timeout + 5;
+   e_config->dpms_suspend_timeout = e_config->screensaver_timeout + 6;
+   e_config->dpms_off_timeout = e_config->screensaver_timeout + 7;
+
+   e_config->screensaver_interval = 0;
    
    /* Apply settings */
    e_screensaver_update();
