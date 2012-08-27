@@ -38330,17 +38330,31 @@ collections {
       }
    }
 
-   group { name: "e/modules/comp/screen/default";
+   group { name: "e/modules/comp/screen/base/default";
+      parts {
+         part { name: "black"; type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               visible: 1;
+               color: 0 0 0 255;
+            }
+         }
+      }
+   }
+   group { name: "e/modules/comp/screen/overlay/default";
       images {
          image: "bg_shadow.png" COMP;
       }
       parts {
-         part { name: "e.swallow.content"; type: SWALLOW;
+         part { name: "clip"; type: RECT;
             mouse_events: 0;
-            description { state: "default" 0.0; }
+            description { state: "default" 0.0;
+               visible: 1;
+            }
          }
          part { name: "shadow";
             mouse_events: 0;
+            clip_to: "clip";
             description { state: "default" 0.0;
                rel1.relative: -1.0 -1.0;
                rel2.relative: 2.0 2.0;

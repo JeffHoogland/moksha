@@ -268,6 +268,8 @@ _e_layout_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
 {
    E_Layout_Item *li;
 
+   li = evas_object_data_get(obj, "e_layout_data");
+   if (li) e_layout_unpack(obj);
    li = calloc(1, sizeof(E_Layout_Item));
    if (!li) return NULL;
    li->sd = sd;
