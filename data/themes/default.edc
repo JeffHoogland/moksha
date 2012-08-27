@@ -38375,21 +38375,21 @@ collections {
             signal: "e,state,screensaver,on";
             source: "e";
             action: STATE_SET "visible" 0.0;
-            transition: ACCELERATE 3.0;
+            transition: ACCELERATE 3.0 CURRENT;
             target: "blanker";
          }
          program { name: "save-on2";
             signal: "e,state,screensaver,on";
             source: "e";
             action: STATE_SET "visible" 0.0;
-            transition: DECELERATE 1.5;
+            transition: DECELERATE 1.5 CURRENT;
             target: "shadow";
          }
          program { name: "save-off";
             signal: "e,state,screensaver,off";
             source: "e";
             action: STATE_SET "default" 0.0;
-            transition: ACCELERATE 0.5;
+            transition: ACCELERATE 0.5 CURRENT;
             target: "blanker";
             target: "shadow";
          }
@@ -38397,7 +38397,7 @@ collections {
             signal: "e,state,screensaver,off";
             source: "e";
             action: STATE_SET "default" 0.0;
-            transition: ACCELERATE 0.25;
+            transition: ACCELERATE 0.25 CURRENT;
             target: "shadow";
          }
       }
