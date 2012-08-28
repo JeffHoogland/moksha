@@ -582,6 +582,17 @@ e_util_zone_window_find(Ecore_X_Window win)
    return NULL;
 }
 
+static int
+_e_util_layer_map(int layer)
+{
+   int pos = 0;
+   
+   if (layer < 0) layer = 0;
+   pos = 1 + (layer / 50);
+   if (pos > 10) pos = 10;
+   return pos;
+}
+
 EAPI E_Border *
 e_util_desk_border_above(E_Border *bd)
 {
@@ -592,16 +603,7 @@ e_util_desk_border_above(E_Border *bd)
    E_OBJECT_CHECK_RETURN(bd, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
 
-   if (bd->layer == 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50))
-     pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100))
-     pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150))
-     pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200))
-     pos = 4;
-   else pos = 5;
+   pos = _e_util_layer_map(bd->layer);
 
    EINA_LIST_FOREACH(eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd), l, bd2)
      {
@@ -637,16 +639,7 @@ e_util_desk_border_below(E_Border *bd)
    E_OBJECT_CHECK_RETURN(bd, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(bd, E_BORDER_TYPE, NULL);
 
-   if (bd->layer == 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50))
-     pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100))
-     pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150))
-     pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200))
-     pos = 4;
-   else pos = 5;
+   pos = _e_util_layer_map(bd->layer);
 
    for (l = eina_list_data_find_list(bd->zone->container->layers[pos].clients, bd); l; l = l->prev)
      {
