@@ -80,6 +80,7 @@ gadman_reset(void)
              if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
              free(gc);
           }
+        Man->gadgets[layer] = eina_list_free(Man->gadgets[layer]);
 
         evas_object_del(Man->movers[layer]);
         Man->movers[layer] = NULL;
@@ -179,6 +180,7 @@ gadman_shutdown(void)
           }
 
         evas_object_del(Man->movers[layer]);
+        Man->gadgets[layer] = eina_list_free(Man->gadgets[layer]);
      }
 
    if (Man->icon_name) eina_stringshare_del(Man->icon_name);
