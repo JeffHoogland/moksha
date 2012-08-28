@@ -1208,6 +1208,11 @@ _e_menu_free(E_Menu *m)
              if (cb->free) cb->free(cb->data);
           }
      }
+   if (m->parent_item)
+     {
+        if (m->parent_item->submenu == m)
+          m->parent_item->submenu = NULL;
+     }
    _e_menu_unrealize(m);
    E_FREE(m->shape_rects);
    m->shape_rects_num = 0;
@@ -2984,7 +2989,7 @@ _e_menu_cb_item_submenu_post_default(void *data __UNUSED__, E_Menu *m __UNUSED__
    if (!mi->submenu) return;
 
    subm = mi->submenu;
-   e_menu_item_submenu_set(mi, NULL);
+   //e_menu_item_submenu_set(mi, NULL);
    e_object_del(E_OBJECT(subm));
 }
 
