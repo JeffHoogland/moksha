@@ -273,9 +273,7 @@ e_fm2_mime_handler_glob_del(E_Fm2_Mime_Handler *handler, const char *glob_)
      }
 }
 
-/* get the list of mime handlers for a mime.
-   NOTE: the list should be free()'ed */
-EAPI Eina_List *
+EAPI const Eina_List *
 e_fm2_mime_handler_mime_handlers_get(const char *mime)
 {
    if ((!mime) || (!_mime_handlers)) return NULL;
@@ -327,8 +325,7 @@ e_fm2_mime_handler_call(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const cha
 EAPI void
 e_fm2_mime_handler_mime_handlers_call_all(Evas_Object *obj, const char *path, const char *mime)
 {
-   Eina_List *handlers = NULL;
-   Eina_List *l = NULL;
+   const Eina_List *l, *handlers;
    E_Fm2_Mime_Handler *handler = NULL;
 
    if ((!obj) || (!path) || (!mime)) return;

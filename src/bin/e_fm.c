@@ -440,7 +440,7 @@ static int           _e_fm_client_file_copy(const char *args, Evas_Object *e_fm)
 static int           _e_fm_client_file_symlink(const char *args, Evas_Object *e_fm);
 
 static void          _e_fm2_sel_rect_update(void *data);
-static void          _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
+static void          _e_fm2_context_menu_append(Evas_Object *obj, const char *path, const Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
 static int           _e_fm2_context_list_sort(const void *data1, const void *data2);
 
 static char         *_e_fm_string_append_char(char *str, size_t *size, size_t *len, char c);
@@ -8224,7 +8224,8 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Manager *man;
    E_Container *con;
    E_Zone *zone;
-   Eina_List *sel, *l = NULL;
+   Eina_List *sel;
+   const Eina_List *l = NULL;
    int x, y, can_w, can_w2, protect;
    char buf[PATH_MAX], *ext;
 
@@ -8489,13 +8490,15 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 }
 
 static void
-_e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic)
+_e_fm2_context_menu_append(Evas_Object *obj, const char *path, const Eina_List *list, E_Menu *mn, E_Fm2_Icon *ic)
 {
    E_Fm2_Mime_Handler *handler;
+   Eina_List *l;
    Eina_Bool added = EINA_FALSE;
 
-   if (!l) return;
+   if (!list) return;
 
+   l = eina_list_clone(list);
    l = eina_list_sort(l, -1, _e_fm2_context_list_sort);
 
    EINA_LIST_FREE(l, handler)
