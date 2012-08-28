@@ -200,7 +200,7 @@ _e_qa_border_deactivate(E_Quick_Access_Entry *entry)
    if (entry->config.jump) return;
    entry->config.hidden = 1;
    if (!entry->border) return;
-   e_border_hide(entry->border, 1);
+   e_border_hide(entry->border, 3);
 }
 
 static void
