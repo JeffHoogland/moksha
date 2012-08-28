@@ -186,6 +186,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    Ecore_Event_Handler *eh;
    Tasks *tasks;
+   Config_Item *cfg;
 
    e_gadcon_provider_unregister(&_gadcon_class);
 
@@ -196,6 +197,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    if (tasks_config->config_dialog)
      e_object_del(E_OBJECT(tasks_config->config_dialog));
+
+   EINA_LIST_FREE(tasks_config->items, cfg)
+     {
+        eina_stringshare_del(cfg->id);
+        free(cfg);
+     }
 
    EINA_LIST_FREE(tasks_config->handlers, eh)
      {
