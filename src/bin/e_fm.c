@@ -8456,6 +8456,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
                {
                   _e_fm2_icon_realpath(ic, buf, sizeof(buf));
                   _e_fm2_context_menu_append(obj, buf, l, mn, ic); // frees l
+                  eina_list_free(l);
                }
           }
 
