@@ -8940,6 +8940,16 @@ _e_fm2_view_menu_use_default_cb(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_image_sel_del(void *data)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = e_object_data_get(data);
+   if (!sd) return;
+   sd->image_dialog = NULL;
+}
+
+static void
 _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title,
                       void (*ok_cb)(void *data, E_Dialog *dia),
                       void (*clear_cb)(void *data, E_Dialog *dia))
@@ -8970,6 +8980,8 @@ _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title,
    e_dialog_button_add(dia, _("Cancel"), NULL, _e_fm2_view_image_sel_close, sd);
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
+   e_object_data_set(E_OBJECT(dia), sd);
+   e_object_del_attach_func_set(E_OBJECT(dia), _image_sel_del);
    e_dialog_show(dia);
 
    sd->image_dialog = dia;

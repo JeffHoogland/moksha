@@ -6,6 +6,14 @@ static void _e_confirm_dialog_delete(E_Win *win);
 static void _e_confirm_dialog_yes(void *data, E_Dialog *dia);
 static void _e_confirm_dialog_no(void *data, E_Dialog *dia);
 
+static void
+_dia_del(void *data)
+{
+   E_Dialog *dia = data;
+
+   e_object_del(dia->data);
+}
+
 /********** externally accesible functions ****************/
 EAPI E_Confirm_Dialog *
 e_confirm_dialog_show(const char *title, const char *icon, const char *text,
@@ -35,6 +43,7 @@ e_confirm_dialog_show(const char *title, const char *icon, const char *text,
    cd->dia = dia;
 
    e_win_delete_callback_set(dia->win, _e_confirm_dialog_delete);
+   e_object_del_attach_func_set(E_OBJECT(dia), _dia_del);
 
    if (title) e_dialog_title_set(dia, title);
    if (icon) e_dialog_icon_set(dia, icon, 64);

@@ -575,6 +575,18 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 #endif
 
 static void
+_dia_del(void *data)
+{
+   E_Dialog *dia = data;
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = dia->data;
+   if (!cfdata) return;
+   cfdata->gui.fsel = NULL;
+   cfdata->gui.fsel_wid = NULL;
+}
+
+static void
 _cb_icon_sel(void *data, void *data2)
 {
    E_Config_Dialog_Data *cfdata;
@@ -612,6 +624,7 @@ _cb_icon_sel(void *data, void *data2)
    e_util_win_auto_resize_fill(dia->win);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+   e_object_del_attach_func_set(E_OBJECT(dia), _dia_del);
 
    cfdata->gui.fsel = dia;
 }
