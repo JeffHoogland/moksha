@@ -898,23 +898,23 @@ e_menu_item_realize_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Men
 }
 
 EAPI void
-e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Menu *m, E_Menu_Item *mi), const void *data)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    mi->submenu_pre_cb.func = func;
-   mi->submenu_pre_cb.data = data;
+   mi->submenu_pre_cb.data = (void*)data;
    if (!mi->submenu_post_cb.func)
      mi->submenu_post_cb.func = _e_menu_cb_item_submenu_post_default;
 }
 
 EAPI void
-e_menu_item_submenu_post_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Menu *m, E_Menu_Item *mi), void *data)
+e_menu_item_submenu_post_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Menu *m, E_Menu_Item *mi), const void *data)
 {
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    mi->submenu_post_cb.func = func;
-   mi->submenu_post_cb.data = data;
+   mi->submenu_post_cb.data = (void*)data;
 }
 
 EAPI void
