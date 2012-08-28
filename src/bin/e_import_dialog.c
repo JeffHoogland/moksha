@@ -182,7 +182,7 @@ e_import_dialog_show(E_Container *con, const char *dev, const char *path, Ecore_
    e_widget_size_min_get(ofm, &w, &h);
    e_dialog_content_set(dia, ofm, w, h);
 
-   e_dialog_button_add(dia, _("Import"), NULL, _fsel_cb_ok, id);
+   e_dialog_button_add(dia, _("Use"), NULL, _fsel_cb_ok, id);
    e_dialog_button_add(dia, _("Cancel"), NULL, _fsel_cb_close, id);
    e_dialog_border_icon_set(dia, "enlightenment/background");
    e_dialog_show(dia);
