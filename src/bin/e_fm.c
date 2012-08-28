@@ -8225,7 +8225,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    E_Container *con;
    E_Zone *zone;
    Eina_List *sel;
-   const Eina_List *l = NULL;
+   Eina_List *l = NULL;
    int x, y, can_w, can_w2, protect;
    char buf[PATH_MAX], *ext;
 
@@ -8275,6 +8275,61 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              e_util_menu_item_theme_icon_set(mi, "add");
              e_menu_item_submenu_pre_callback_set(mi, _e_fm2_add_menu_pre, sd);
           }
+        {
+           E_Menu *subm = NULL;
+           if (ic->info.mime)
+             {
+                const Eina_List *ll;
+                /* see if we have any mime handlers registered for this file */
+                ll = e_fm2_mime_handler_mime_handlers_get(ic->info.mime);
+                if (ll)
+                  {
+                     mi = e_menu_item_new(mn);
+                     e_menu_item_separator_set(mi, 1);
+
+                     mi = e_menu_item_new(mn);
+                     e_menu_item_label_set(mi, _("Actions..."));
+                     e_util_menu_item_theme_icon_set(mi, "preferences-plugin");
+                     subm = e_menu_new();
+                     e_menu_item_submenu_set(mi, subm);
+                     _e_fm2_icon_realpath(ic, buf, sizeof(buf));
+                     _e_fm2_context_menu_append(obj, buf, ll, subm, ic);
+                  }
+             }
+
+           /* see if we have any glob handlers registered for this file */
+           ext = strrchr(ic->info.file, '.');
+           if (ext)
+             {
+                snprintf(buf, sizeof(buf), "*%s", ext);
+                l = e_fm2_mime_handler_glob_handlers_get(buf);
+                if (l)
+                  {
+                     if (subm)
+                       {
+                          if (subm->items)
+                            {
+                               mi = e_menu_item_new(mn);
+                               e_menu_item_separator_set(mi, 1);
+                            }
+                       }
+                     else
+                       {
+                          mi = e_menu_item_new(mn);
+                          e_menu_item_separator_set(mi, 1);
+
+                          mi = e_menu_item_new(mn);
+                          e_menu_item_label_set(mi, _("Actions..."));
+                          e_util_menu_item_theme_icon_set(mi, "preferences-plugin");
+                          subm = e_menu_new();
+                          e_menu_item_submenu_set(mi, subm);
+                       }
+                     _e_fm2_icon_realpath(ic, buf, sizeof(buf));
+                     _e_fm2_context_menu_append(obj, buf, l, subm, ic);
+                     eina_list_free(l);
+                  }
+          }
+        }
         if (!ic->info.removable)
           {
              if (!(sd->icon_menu.flags & E_FM2_MENU_NO_CUT))
@@ -8435,31 +8490,6 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
         e_util_menu_item_theme_icon_set(mi, "document-properties");
         e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
 
-        if (ic->info.mime)
-          {
-             /* see if we have any mime handlers registered for this file */
-             l = e_fm2_mime_handler_mime_handlers_get(ic->info.mime);
-             if (l)
-               {
-                  _e_fm2_icon_realpath(ic, buf, sizeof(buf));
-                  _e_fm2_context_menu_append(obj, buf, l, mn, ic); // frees l
-               }
-          }
-
-        /* see if we have any glob handlers registered for this file */
-        ext = strrchr(ic->info.file, '.');
-        if (ext)
-          {
-             snprintf(buf, sizeof(buf), "*%s", ext);
-             l = e_fm2_mime_handler_glob_handlers_get(buf);
-             if (l)
-               {
-                  _e_fm2_icon_realpath(ic, buf, sizeof(buf));
-                  _e_fm2_context_menu_append(obj, buf, l, mn, ic); // frees l
-                  eina_list_free(l);
-               }
-          }
-
         if (sd->icon_menu.end.func)
           sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, &(ic->info));
      }
@@ -8495,7 +8525,6 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, const Eina_List *
 {
    E_Fm2_Mime_Handler *handler;
    Eina_List *l;
-   Eina_Bool added = EINA_FALSE;
 
    if (!list) return;
 
@@ -8509,15 +8538,6 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, const Eina_List *
 
         if ((!handler) || (!handler->label) || (!e_fm2_mime_handler_test(handler, obj, path)))
           continue;
-        if (!added)
-          {
-             /* only append the separator if this is the first item */
-             /* we do this in here because we dont want to add a separator
-              * when we have no context entries */
-             mi = e_menu_item_new(mn);
-             e_menu_item_separator_set(mi, 1);
-             added = EINA_TRUE;
-          }
 
         md = E_NEW(E_Fm2_Context_Menu_Data, 1);
         if (!md) continue;
