@@ -516,6 +516,12 @@ _config_free(void)
         IF_RELEASE(pc->trigger);
         E_FREE(pc);
      }
+   EINA_LIST_FREE (evry_conf->conf_views, pc)
+     {
+        IF_RELEASE(pc->name);
+        IF_RELEASE(pc->trigger);
+        E_FREE(pc);
+     }
    EINA_LIST_FREE (evry_conf->conf_objects, pc)
      {
         IF_RELEASE(pc->name);
