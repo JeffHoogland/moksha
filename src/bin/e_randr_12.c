@@ -186,25 +186,14 @@ _12_screen_info_free(E_Randr_Screen_Info_12 *screen_info)
    EINA_SAFETY_ON_NULL_RETURN(screen_info);
    EINA_SAFETY_ON_TRUE_RETURN(E_RANDR_12_NO);
 
-   if (screen_info->crtcs)
-     {
-        EINA_LIST_FREE(screen_info->crtcs, crtc_info)
-          _crtc_info_free(crtc_info);
-        free(eina_list_nth(screen_info->crtcs, 0));
-     }
+   EINA_LIST_FREE(screen_info->crtcs, crtc_info)
+     _crtc_info_free(crtc_info);
 
-   if (screen_info->outputs)
-     {
-        EINA_LIST_FREE(screen_info->outputs, output_info)
-          _output_info_free(output_info);
-        free(eina_list_nth(screen_info->outputs, 0));
-     }
+   EINA_LIST_FREE(screen_info->outputs, output_info)
+     _output_info_free(output_info);
 
-   if (screen_info->modes)
-     {
-        EINA_LIST_FREE(screen_info->modes, mode_info)
-          ecore_x_randr_mode_info_free(mode_info);
-     }
+   EINA_LIST_FREE(screen_info->modes, mode_info)
+     ecore_x_randr_mode_info_free(mode_info);
 
    free(screen_info);
 }
