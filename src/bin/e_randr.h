@@ -93,13 +93,13 @@ struct _E_Randr_Output_Info
 
 struct _E_Randr_Screen_Info_11
 {
-   //List of Ecore_X_Randr_Screen_Size_MM*
-   Eina_List *sizes;
+   Ecore_X_Randr_Screen_Size_MM *sizes;
+   int nsizes;
    int csize_index;
    Ecore_X_Randr_Orientation corientation;
    Ecore_X_Randr_Orientation orientations;
-   //List of Ecore_X_Randr_Refresh_Rate*
-   Eina_List *rates;
+   Ecore_X_Randr_Refresh_Rate **rates;
+   int *nrates; // size is nsizes
    Ecore_X_Randr_Refresh_Rate current_rate;
 };
 

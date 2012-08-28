@@ -22,7 +22,9 @@ _serialized_setup_11_new(void)
 
    if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
      {
-        if (!(size = (Ecore_X_Randr_Screen_Size_MM *)eina_list_data_get(eina_list_nth(e_randr_screen_info.rrvd_info.randr_info_11->sizes, e_randr_screen_info.rrvd_info.randr_info_11->csize_index)))) goto _serialized_setup_11_new_failed_free_ss;
+        if (e_randr_screen_info.rrvd_info.randr_info_11->csize_index >= e_randr_screen_info.rrvd_info.randr_info_11->nsizes) goto _serialized_setup_11_new_failed_free_ss;
+        size = e_randr_screen_info.rrvd_info.randr_info_11->sizes + e_randr_screen_info.rrvd_info.randr_info_11->csize_index;
+        if (!size) goto _serialized_setup_11_new_failed_free_ss;;
         rate = e_randr_screen_info.rrvd_info.randr_info_11->current_rate;
         ori = e_randr_screen_info.rrvd_info.randr_info_11->corientation;
         ss->size.width = size->width;
@@ -94,8 +96,7 @@ e_randr_11_serialized_setup_free(E_Randr_Serialized_Setup_11 *ss_11)
 Eina_Bool
 _11_try_restore_configuration(void)
 {
-   Ecore_X_Randr_Screen_Size_MM *stored_size, *size, *sizes;
-   Eina_List *iter;
+   Ecore_X_Randr_Screen_Size_MM *stored_size, *sizes;
    int i = 0, nsizes;
 
 #define SIZE_EQUAL(size) \
@@ -108,9 +109,10 @@ _11_try_restore_configuration(void)
    stored_size = &e_config->randr_serialized_setup->serialized_setup_11->size;
    if (e_randr_screen_info.randr_version == ECORE_X_RANDR_1_1)
      {
-        EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_11->sizes, iter, size)
+        int x;
+        for (x = 0; x < e_randr_screen_info.rrvd_info.randr_info_11->nsizes; x++)
           {
-             if (SIZE_EQUAL(*size))
+             if (SIZE_EQUAL(e_randr_screen_info.rrvd_info.randr_info_11->sizes[x]))
                {
                   return ecore_x_randr_screen_primary_output_size_set(e_randr_screen_info.root, i);
                }
