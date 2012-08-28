@@ -440,7 +440,7 @@ static int           _e_fm_client_file_copy(const char *args, Evas_Object *e_fm)
 static int           _e_fm_client_file_symlink(const char *args, Evas_Object *e_fm);
 
 static void          _e_fm2_sel_rect_update(void *data);
-static inline void   _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
+static void          _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
 static int           _e_fm2_context_list_sort(const void *data1, const void *data2);
 
 static char         *_e_fm_string_append_char(char *str, size_t *size, size_t *len, char c);
@@ -8490,7 +8490,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
                          E_MENU_POP_DIRECTION_DOWN, timestamp);
 }
 
-static inline void
+static void
 _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic)
 {
    E_Fm2_Mime_Handler *handler;
