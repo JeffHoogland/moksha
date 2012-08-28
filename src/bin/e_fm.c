@@ -8441,8 +8441,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              if (l)
                {
                   _e_fm2_icon_realpath(ic, buf, sizeof(buf));
-                  _e_fm2_context_menu_append(obj, buf, l, mn, ic);
-                  eina_list_free(l);
+                  _e_fm2_context_menu_append(obj, buf, l, mn, ic); // frees l
                }
           }
 
@@ -8455,8 +8454,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              if (l)
                {
                   _e_fm2_icon_realpath(ic, buf, sizeof(buf));
-                  _e_fm2_context_menu_append(obj, buf, l, mn, ic);
-                  eina_list_free(l);
+                  _e_fm2_context_menu_append(obj, buf, l, mn, ic); // frees l
                }
           }
 
@@ -8494,14 +8492,13 @@ static void
 _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic)
 {
    E_Fm2_Mime_Handler *handler;
-   const Eina_List *ll;
    Eina_Bool added = EINA_FALSE;
 
    if (!l) return;
 
    l = eina_list_sort(l, -1, _e_fm2_context_list_sort);
 
-   EINA_LIST_FOREACH(l, ll, handler)
+   EINA_LIST_FREE(l, handler)
      {
         E_Fm2_Context_Menu_Data *md = NULL;
         E_Menu_Item *mi;
