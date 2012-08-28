@@ -1331,36 +1331,21 @@ _pager_cb_event_border_stack(void *data __UNUSED__, int type __UNUSED__, void *e
              pw = _pager_desk_window_find(pd, ev->border);
              if (pw)
                {
-                  if (ev->stack)
+                  E_Border *bd;
+                  
+                  bd = e_util_desk_border_below(ev->border);
+                  if (bd) pw2 = _pager_desk_window_find(pd, bd);
+                  if (pw2)
                     {
-                       pw2 = _pager_desk_window_find(pd, ev->stack);
-                       if (!pw2)
-                         {
-                            /* This border is on another desk... */
-                            E_Border *bd = NULL;
-
-                            if (ev->type == E_STACKING_ABOVE)
-                              bd = e_util_desk_border_below(ev->border);
-                            else if (ev->type == E_STACKING_BELOW)
-                              bd = e_util_desk_border_above(ev->border);
-                            if (bd) pw2 = _pager_desk_window_find(pd, bd);
-                         }
+                       e_layout_child_raise_above(pw->o_window, pw2->o_window);
+                       continue;
                     }
-                  if (ev->type == E_STACKING_ABOVE)
+                  bd = e_util_desk_border_above(ev->border);
+                  if (bd) pw2 = _pager_desk_window_find(pd, bd);
+                  if (pw2)
                     {
-                       if (pw2)
-                         e_layout_child_raise_above(pw->o_window, pw2->o_window);
-                       else
-                         /* If we aren't above any window, we are at the bottom */
-                         e_layout_child_lower(pw->o_window);
-                    }
-                  else if (ev->type == E_STACKING_BELOW)
-                    {
-                       if (pw2)
-                         e_layout_child_lower_below(pw->o_window, pw2->o_window);
-                       else
-                         /* If we aren't below any window, we are at the top */
-                         e_layout_child_raise(pw->o_window);
+                       e_layout_child_lower_below(pw->o_window, pw2->o_window);
+                       continue;
                     }
                }
           }
