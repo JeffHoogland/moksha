@@ -111,7 +111,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         Man->action = NULL;
      }
    E_CONFIG_DD_FREE(Man->conf_edd);
-
+   if (Man->conf)
+     {
+        eina_stringshare_del(Man->conf->custom_bg);
+        E_FREE(Man->conf);
+     }
    gadman_shutdown();
 
    return 1;
