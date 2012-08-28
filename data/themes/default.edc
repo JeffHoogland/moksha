@@ -24330,12 +24330,12 @@ collections {
                min: 16 2;
                rel1 {
                   relative: 0.0  1.0;
-                  offset: 4    -1;
+                  offset: 4    1;
                   to_y: "e.swallow.content";
                }
                rel2 {
                   relative: 1.0  1.0;
-                  offset: -5   0;
+                  offset: -5   2;
                   to_y: "e.swallow.content";
                }
                image {
