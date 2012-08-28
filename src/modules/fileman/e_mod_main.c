@@ -523,17 +523,14 @@ _e_mod_menu_populate(void *d, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 
 /* menu item add hook */
 void
-_e_mod_menu_generate(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi)
+_e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
 {
    E_Volume *vol;
+   E_Menu_Item *mi;
    const char *s;
    const Eina_List *l;
    Eina_Bool need_separator;
    Eina_Bool volumes_visible = 0;
-
-   m = e_menu_new();
-   e_menu_item_submenu_set(mi, m);
-   e_menu_freeze(m);
 
    /* Home */
    mi = e_menu_item_new(m);
@@ -600,7 +597,6 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi)
    //~ }
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
-   e_menu_thaw(m);
 }
 
 void
@@ -609,11 +605,14 @@ _e_mod_menu_add(void *data __UNUSED__,
 {
 #ifdef ENABLE_FILES
    E_Menu_Item *mi;
+   E_Menu *sub;
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Navigate..."));
    e_util_menu_item_theme_icon_set(mi, "system-file-manager");
-   e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_generate, NULL);
+   sub = e_menu_new();
+   e_menu_item_submenu_set(mi, sub);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);
 #else
    (void)m;
 #endif
