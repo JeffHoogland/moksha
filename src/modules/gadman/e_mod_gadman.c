@@ -78,6 +78,7 @@ gadman_reset(void)
              eina_stringshare_del(gc->name);
 
              if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
+             free(gc);
           }
 
         evas_object_del(Man->movers[layer]);
@@ -174,6 +175,7 @@ gadman_shutdown(void)
              eina_stringshare_del(gc->name);
 
              if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
+             free(gc);
           }
 
         evas_object_del(Man->movers[layer]);
