@@ -8495,6 +8495,7 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_M
 {
    E_Fm2_Mime_Handler *handler;
    const Eina_List *ll;
+   Eina_Bool added = EINA_FALSE;
 
    if (!l) return;
 
@@ -8505,15 +8506,16 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, Eina_List *l, E_M
         E_Fm2_Context_Menu_Data *md = NULL;
         E_Menu_Item *mi;
 
-        if ((!handler) || (!e_fm2_mime_handler_test(handler, obj, path)) ||
-            (!handler->label)) continue;
-        if (ll == l)
+        if ((!handler) || (!handler->label) || (!e_fm2_mime_handler_test(handler, obj, path)))
+          continue;
+        if (!added)
           {
              /* only append the separator if this is the first item */
              /* we do this in here because we dont want to add a separator
               * when we have no context entries */
              mi = e_menu_item_new(mn);
              e_menu_item_separator_set(mi, 1);
+             added = EINA_TRUE;
           }
 
         md = E_NEW(E_Fm2_Context_Menu_Data, 1);
