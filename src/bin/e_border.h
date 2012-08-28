@@ -462,6 +462,7 @@ struct _E_Border
    E_Container_Shape *shape;
 
    unsigned int       visible : 1;
+   Eina_Bool          hidden : 1; // set when window has been hidden by api and should not be shown
    unsigned int       await_hide_event;
    unsigned int       moving : 1;
    unsigned int       focused : 1;

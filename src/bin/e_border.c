@@ -958,6 +958,7 @@ e_border_show(E_Border *bd)
    if (!bd->need_reparent)
      ecore_x_window_show(bd->client.win);
    e_hints_window_visible_set(bd);
+   bd->hidden = 0;
    bd->visible = 1;
    bd->changes.visible = 1;
 
@@ -1033,13 +1034,15 @@ e_border_hide(E_Border *bd,
                     }
                }
           }
-        if (manage == 1)
+        switch (manage)
           {
+           case 2: break;
+           case 3:
+             bd->hidden = 1;
+           case 1:
              /* Make sure that this border isn't deleted */
              bd->await_hide_event++;
-          }
-        if (manage != 2)
-          {
+           default:
              if (!e_manager_comp_evas_get(bd->zone->container->manager))
                ecore_x_window_hide(bd->client.win);
           }

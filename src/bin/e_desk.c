@@ -270,7 +270,7 @@ e_desk_show(E_Desk *desk)
         bl = e_container_border_list_first(desk->zone->container);
         while ((bd = e_container_border_list_next(bl)))
           {
-             if ((bd->desk->zone == desk->zone) && (!bd->iconic))
+             if ((!bd->hidden) && (bd->desk->zone == desk->zone) && (!bd->iconic))
                {
                   if ((bd->desk == desk) || (bd->sticky))
                     e_border_show(bd);
