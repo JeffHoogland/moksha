@@ -183,32 +183,45 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
      {
         const char *p1, *p2;
         char buf2[32];
+        char *buf3 = NULL;
         int head;
+        int head_length;
+        int penv_display_length;
 
         head = launch->zone->container->manager->num;
+
+        penv_display_length = strlen(penv_display);
+        /* Check for insane length for DISPLAY env */
+        if (penv_display_length + 32 > 4096) return NULL;
+
+        /* buf2 = '.%i' */
+        *buf2 = '.';
+        head_length = eina_convert_itoa(head, buf2 + 1) + 2;
 
         /* set env vars */
         p1 = strrchr(penv_display, ':');
         p2 = strrchr(penv_display, '.');
         if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
           {
-             /* yes it could overflow... but who will overflow DISPLAY eh? why? to
-              * "exploit" your own applications running as you?
-              */
-             strcpy(buf, penv_display);
-             buf[p2 - penv_display + 1] = 0;
-             snprintf(buf2, sizeof(buf2), "%i", head);
-             strcat(buf, buf2);
+             buf3 = alloca((p2 - penv_display) + head_length + 1);
+
+             memcpy(buf3, penv_display, p2 - penv_display);
+             memcpy(buf3 + (p2 - penv_display), buf2, head_length);
           }
         else if (p1) /* "blah:x */
           {
-             strcpy(buf, penv_display);
-             snprintf(buf2, sizeof(buf2), ".%i", head);
-             strcat(buf, buf2);
+             buf3 = alloca(penv_display_length + head_length);
+
+             memcpy(buf3, penv_display, penv_display_length);
+             memcpy(buf3 + penv_display_length, buf2, head_length);
           }
         else
-          strcpy(buf, penv_display);
-        e_util_env_set("DISPLAY", buf);
+          {
+             buf3 = alloca(penv_display_length + 1);
+             memcpy(buf3, penv_display, penv_display_length + 1);
+          }
+
+        e_util_env_set("DISPLAY", buf3);
      }
    snprintf(buf, sizeof(buf), "E_START|%i", startup_id);
    e_util_env_set("DESKTOP_STARTUP_ID", buf);
