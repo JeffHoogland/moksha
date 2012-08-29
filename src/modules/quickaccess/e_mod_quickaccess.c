@@ -551,6 +551,14 @@ _e_qa_event_module_init_end_cb(void *data __UNUSED__, int type __UNUSED__, void 
      }
    if (count != eina_list_count(qa_config->transient_entries)) e_bindings_reset();
    qa_running = EINA_TRUE;
+   EINA_LIST_FOREACH(qa_config->entries, l, entry)
+     {
+        if (entry->config.relaunch && (!entry->border))
+          {
+             DBG("qa window for relaunch entry %s not present, starting", entry->id);
+             _e_qa_border_new(entry);
+          }
+     }
    return ECORE_CALLBACK_RENEW;
 }
 
