@@ -532,6 +532,8 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
    Eina_Bool need_separator;
    Eina_Bool volumes_visible = 0;
 
+   if (m->items) return;
+
    /* Home */
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Home"));
