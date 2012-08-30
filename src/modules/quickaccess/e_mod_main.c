@@ -71,13 +71,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_qa_shutdown();
 
-   conf_edd = e_qa_config_dd_free(conf_edd);
+   conf_edd = e_qa_config_dd_free();
    eina_log_domain_unregister(_e_quick_access_log_dom);
    _e_quick_access_log_dom = -1;
    e_qa_config_free(qa_config);
-   free(qa_mod);
+   E_FREE(qa_mod);
    qa_config = NULL;
-   qa_mod = NULL;
    return 1;
 }
 

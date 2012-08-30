@@ -468,11 +468,10 @@ e_qa_config_dd_new(void)
 }
 
 void *
-e_qa_config_dd_free(E_Config_DD *conf_dd)
+e_qa_config_dd_free(void)
 {
-   free(entry_edd);
-   free(conf_dd);
-   entry_edd = conf_edd = NULL;
+   E_FREE(entry_edd);
+   E_FREE(conf_edd);
    return NULL;
 }
 

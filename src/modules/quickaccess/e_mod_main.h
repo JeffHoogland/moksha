@@ -81,7 +81,7 @@ Eina_Bool e_qa_entry_rename(E_Quick_Access_Entry *entry, const char *name);
 E_Config_DD *e_qa_config_dd_new(void);
 void e_qa_config_free(Config *conf);
 Config *e_qa_config_new(void);
-void *e_qa_config_dd_free(E_Config_DD *conf_dd);
+void *e_qa_config_dd_free(void);
 void e_qa_config_entry_free(E_Quick_Access_Entry *entry);
 void e_qa_config_entry_add(E_Quick_Access_Entry *entry);
 void e_qa_config_entry_transient_convert(E_Quick_Access_Entry *entry);
