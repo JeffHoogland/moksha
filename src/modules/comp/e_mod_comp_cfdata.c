@@ -167,7 +167,8 @@ _match_list_free(Eina_List *list)
 EAPI void
 e_mod_cfdata_config_free(Config *cfg)
 {
-   if (cfg->shadow_style) eina_stringshare_del(cfg->shadow_style);
+   if (!cfg) return;
+   eina_stringshare_del(cfg->shadow_style);
 
    _match_list_free(cfg->match.popups);
    _match_list_free(cfg->match.borders);
