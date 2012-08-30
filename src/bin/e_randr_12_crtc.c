@@ -27,6 +27,7 @@ _crtc_outputs_refs_set(E_Randr_Crtc_Info *crtc_info)
         crtc_info->outputs = eina_list_append(crtc_info->outputs, output_info);
      }
    free(outputs);
+   E_FREE_LIST(crtc_info->outputs_common_modes, ecore_x_randr_mode_info_free);
    crtc_info->outputs_common_modes = _outputs_common_modes_get(crtc_info->outputs, NULL);
 }
 
