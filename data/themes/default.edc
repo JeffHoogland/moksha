@@ -10419,7 +10419,7 @@ collections {
          image: "base_bg.png" COMP;
          image: "bd_top_hilight.png" COMP;
          image: "bd_title_bg.png" COMP;
-         image: "bd_title_over.png";
+         image: "bd_title_over.png" COMP;
       }
       parts {
          part {
@@ -15842,7 +15842,7 @@ collections {
          image: "base_bg.png" COMP;
          image: "bd_top_hilight.png" COMP;
          image: "bd_title_bg.png" COMP;
-         image: "bd_title_over.png";
+         image: "bd_title_over.png" COMP;
       }
       parts {
          part {
@@ -16034,7 +16034,7 @@ collections {
          image: "menu_sel_fg.png" COMP;
          image: "pager_window.png" COMP;
          image: "pager_window_shaded.png" COMP;
-         image: "pager_base2.png";
+         image: "pager_base2.png" COMP;
       }
       parts {
          part {
