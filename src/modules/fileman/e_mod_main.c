@@ -472,6 +472,7 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler __UNUSED__, const Eina_F
 static void
 _e_mod_menu_populate_err(void *data, Eio_File *handler __UNUSED__, int error __UNUSED__)
 {
+   if (!e_object_unref(data)) return;
    e_menu_thaw(data);
 }
 
@@ -485,6 +486,7 @@ static void
 _e_mod_menu_populate_done(void *data, Eio_File *handler __UNUSED__)
 {
    E_Menu *m = data;
+   if (!e_object_unref(data)) return;
    if (!m->items)
      {
         e_menu_deactivate(m);
@@ -518,11 +520,28 @@ _e_mod_menu_populate(void *d, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    rp = e_fm2_real_path_map(dev, path ?: "/");
    ls = eio_file_stat_ls(rp, _e_mod_menu_populate_filter, _e_mod_menu_populate_item, _e_mod_menu_populate_done, _e_mod_menu_populate_err, subm);
    EINA_SAFETY_ON_NULL_RETURN(ls);
+   e_object_ref(E_OBJECT(subm));
    eina_stringshare_del(rp);
 }
 
+static void
+_e_mod_menu_free(void *data)
+{
+   Eina_List *l;
+   E_Menu_Item *mi;
+   E_Menu *m = data;
+
+   EINA_LIST_FOREACH(m->items, l, mi)
+     if (mi->submenu)
+       {
+          //INF("SUBMENU %p REF: %d", mi->submenu, e_object_ref_get(E_OBJECT(mi->submenu)) - 1);
+          _e_mod_menu_free(mi->submenu);
+          e_object_unref(E_OBJECT(mi->submenu));
+       }
+}
+
 /* menu item add hook */
-void
+static void
 _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
 {
    E_Volume *vol;
@@ -533,6 +552,7 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
    Eina_Bool volumes_visible = 0;
 
    if (m->items) return;
+   e_object_free_attach_func_set(E_OBJECT(m), _e_mod_menu_free);
 
    /* Home */
    mi = e_menu_item_new(m);
@@ -614,6 +634,7 @@ _e_mod_menu_add(void *data __UNUSED__,
    e_util_menu_item_theme_icon_set(mi, "system-file-manager");
    sub = e_menu_new();
    e_menu_item_submenu_set(mi, sub);
+   e_object_unref(E_OBJECT(sub)); //allow deletion whenever main menu deletes
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);
 #else
    (void)m;
