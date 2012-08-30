@@ -24,6 +24,8 @@ struct _E_Config_Dialog_Data
    int dont_bug_me;
 };
 
+static E_Config_DD *conf_edd, *entry_edd;
+
 /**
  * in priority order:
  *
@@ -433,8 +435,6 @@ _list_item_delete(E_Quick_Access_Entry *entry)
 E_Config_DD *
 e_qa_config_dd_new(void)
 {
-   E_Config_DD *conf_edd, *entry_edd;
-
    conf_edd = E_CONFIG_DD_NEW("Quickaccess_Config", Config);
    entry_edd = E_CONFIG_DD_NEW("E_Quick_Access_Entry", E_Quick_Access_Entry);
 
@@ -470,7 +470,9 @@ e_qa_config_dd_new(void)
 void *
 e_qa_config_dd_free(E_Config_DD *conf_dd)
 {
+   free(entry_edd);
    free(conf_dd);
+   entry_edd = conf_edd = NULL;
    return NULL;
 }
 
