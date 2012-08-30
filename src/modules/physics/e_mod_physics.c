@@ -850,7 +850,6 @@ _e_mod_physics_del(E_Physics *p)
      ephysics_world_del(p->world);
    EINA_INLIST_FOREACH_SAFE(p->shelves, l, eps)
      {
-        if (eps->body) ephysics_body_del(eps->body);
         free(eps);
      }
    free(p);
