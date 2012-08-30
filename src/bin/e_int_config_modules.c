@@ -72,6 +72,7 @@ static void         _module_end_state_apply(CFModule *cfm);
 
 static void         _toolbar_select_cb(void *data, void *data2);
 
+static CFType      *_cftype_find(E_Config_Dialog_Data *cfdata, const char *key, const char *name, const char *icon);
 static CFType      *_cftype_new(const char *key, const char *name, const char *icon);
 static void         _load_modules(const char *dir, Eina_Hash *types_hash);
 static Eina_Bool    _types_list_create_foreach_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata);
@@ -209,7 +210,7 @@ _fill_cat_list(E_Config_Dialog_Data *cfdata)
 
    for (itr = _types; itr->key_len > 0; itr++)
      {
-        cft = _cftype_new(itr->key, _(itr->name), itr->icon);
+        cft = _cftype_find(cfdata, itr->key, _(itr->name), itr->icon);
         icon = e_icon_add(cfdata->evas);
         if (icon)
           {
@@ -368,6 +369,17 @@ _module_end_state_apply(CFModule *cfm)
    if (!cfm->end) return;
    sig = cfm->enabled ? "e,state,checked" : "e,state,unchecked";
    edje_object_signal_emit(cfm->end, sig, "e");
+}
+
+static CFType *
+_cftype_find(E_Config_Dialog_Data *cfdata, const char *key, const char *name, const char *icon)
+{
+   CFType *cft;
+   Eina_List *l;
+
+   EINA_LIST_FOREACH(cfdata->types, l, cft)
+     if ((!strcmp(cft->key, key)) && (!strcmp(cft->name, name)) && (!strcmp(cft->icon, icon))) return cft;
+   return NULL;
 }
 
 static CFType *
