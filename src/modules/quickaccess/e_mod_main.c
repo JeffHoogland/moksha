@@ -25,13 +25,6 @@ Config *qa_config = NULL;
 
 EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, "Quickaccess"};
 
-static Eina_Bool
-_e_mod_cb_config_timer(void *data)
-{
-   e_util_dialog_show(_("Quickaccess Settings Updated"), "%s", (char *)data);
-   return ECORE_CALLBACK_CANCEL;
-}
-
 //////////////////////////////
 EAPI void *
 e_modapi_init(E_Module *m)
@@ -51,31 +44,10 @@ e_modapi_init(E_Module *m)
    qa_config = e_config_domain_load("module.quickaccess", conf_edd);
    if (qa_config)
      {
-        if ((qa_config->config_version >> 16) < MOD_CONFIG_FILE_EPOCH)
+        if (!e_util_module_config_check("Quickaccess", qa_config->config_version, MOD_CONFIG_FILE_VERSION))
           {
              e_qa_config_free(qa_config);
              qa_config = NULL;
-             ecore_timer_add(1.0, _e_mod_cb_config_timer,
-                             _("Quickaccess module settings data needed upgrading. Your old configuration<br>"
-                               "has been wiped and a new set of defaults initialized. This<br>"
-                               "will happen regularly during development, so don't report a<br>"
-                               "bug. This means Quickaccess module needs new configuration<br>"
-                               "data by default for usable functionality that your old<br>"
-                               "configuration lacked. This new set of defaults will fix<br>"
-                               "that by adding it in. You can re-configure things now to your<br>"
-                               "liking. Sorry for the hiccup in your configuration.<br>"));
-          }
-        else if (qa_config->config_version > MOD_CONFIG_FILE_VERSION)
-          {
-             e_qa_config_free(qa_config);
-             qa_config = NULL;
-             ecore_timer_add(1.0, _e_mod_cb_config_timer,
-                             _("Your Quickaccess module configuration is NEWER than Quickaccess module version. This is very<br>"
-                               "strange. This should not happen unless you downgraded<br>"
-                               "the Quickaccess Module or copied the configuration from a place where<br>"
-                               "a newer version of the Quickaccess Module was running. This is bad and<br>"
-                               "as a precaution your configuration has been now restored to<br>"
-                               "defaults. Sorry for the inconvenience.<br>"));
           }
      }
 

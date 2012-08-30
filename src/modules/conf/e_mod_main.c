@@ -27,7 +27,6 @@ static void             _cb_action_conf(void *data, Evas_Object *obj, const char
 
 static void             _conf_new(void);
 static void             _conf_free(void);
-static Eina_Bool        _conf_timer(void *data);
 
 static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
@@ -295,38 +294,8 @@ e_modapi_init(E_Module *m)
    conf = e_config_domain_load("module.conf", conf_edd);
    if (conf)
      {
-        if ((conf->version >> 16) < MOD_CONFIG_FILE_EPOCH)
-          {
-             _conf_free();
-             ecore_timer_add(1.0, _conf_timer,
-                             _("Configuration Panel Module Configuration data needed "
-                               "upgrading. Your old configuration<br> has been"
-                               " wiped and a new set of defaults initialized. "
-                               "This<br>will happen regularly during "
-                               "development, so don't report a<br>bug. "
-                               "This simply means the module needs "
-                               "new configuration<br>data by default for "
-                               "usable functionality that your old<br>"
-                               "configuration simply lacks. This new set of "
-                               "defaults will fix<br>that by adding it in. "
-                               "You can re-configure things now to your<br>"
-                               "liking. Sorry for the inconvenience.<br>"));
-          }
-        else if (conf->version > MOD_CONFIG_FILE_VERSION)
-          {
-             _conf_free();
-             ecore_timer_add(1.0, _conf_timer,
-                             _("Your Configuration Panel Module configuration is NEWER "
-                               "than the module version. This is "
-                               "very<br>strange. This should not happen unless"
-                               " you downgraded<br>the module or "
-                               "copied the configuration from a place where"
-                               "<br>a newer version of the module "
-                               "was running. This is bad and<br>as a "
-                               "precaution your configuration has been now "
-                               "restored to<br>defaults. Sorry for the "
-                               "inconvenience.<br>"));
-          }
+        if (!e_util_module_config_check("Configuration Panel", conf->version, MOD_CONFIG_FILE_VERSION))
+          _conf_free();
      }
 
    if (!conf) _conf_new();
@@ -510,12 +479,3 @@ _conf_free(void)
 {
    E_FREE(conf);
 }
-
-static Eina_Bool
-_conf_timer(__UNUSED__ void *data)
-{
-   e_util_dialog_show(_("Configuration Panel Configuration Updated"),
-                      "%s", (char *)data);
-   return ECORE_CALLBACK_CANCEL;
-}
-

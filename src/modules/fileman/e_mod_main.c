@@ -24,7 +24,6 @@ static void      _e_mod_menu_add(void   *data,
                                  E_Menu *m);
 static void      _e_mod_fileman_config_load(void);
 static void      _e_mod_fileman_config_free(void);
-static Eina_Bool _e_mod_cb_config_timer(void *data);
 static Eina_Bool _e_mod_zone_add(void *data,
                                  int   type,
                                  void *event);
@@ -703,30 +702,8 @@ _e_mod_fileman_config_load(void)
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
    if (fileman_config)
      {
-        if ((fileman_config->config_version >> 16) < MOD_CONFIG_FILE_EPOCH)
-          {
-             _e_mod_fileman_config_free();
-             ecore_timer_add(1.0, _e_mod_cb_config_timer,
-                             _("Fileman Module Settings data needed upgrading. Your old configuration<br>"
-                               "has been wiped and a new set of defaults initialized. This<br>"
-                               "will happen regularly during development, so don't report a<br>"
-                               "bug. This simply means Fileman module needs new configuration<br>"
-                               "data by default for usable functionality that your old<br>"
-                               "configuration simply lacks. This new set of defaults will fix<br>"
-                               "that by adding it in. You can re-configure things now to your<br>"
-                               "liking. Sorry for the hiccup in your configuration.<br>"));
-          }
-        else if (fileman_config->config_version > MOD_CONFIG_FILE_VERSION)
-          {
-             _e_mod_fileman_config_free();
-             ecore_timer_add(1.0, _e_mod_cb_config_timer,
-                             _("Your Fileman Module configuration is NEWER than Fileman Module version. This is very<br>"
-                               "strange. This should not happen unless you downgraded<br>"
-                               "the Fileman Module or copied the configuration from a place where<br>"
-                               "a newer version of the Fileman Module was running. This is bad and<br>"
-                               "as a precaution your configuration has been now restored to<br>"
-                               "defaults. Sorry for the inconvenience.<br>"));
-          }
+        if (!e_util_module_config_check("Fileman", fileman_config->config_version, MOD_CONFIG_FILE_VERSION))
+          _e_mod_fileman_config_free();
      }
 
    if (!fileman_config)
@@ -817,13 +794,6 @@ _e_mod_fileman_config_free(void)
    if (fileman_config->theme.icons)
      eina_stringshare_del(fileman_config->theme.icons);
    E_FREE(fileman_config);
-}
-
-static Eina_Bool
-_e_mod_cb_config_timer(void *data)
-{
-   e_util_dialog_show(_("Fileman Settings Updated"), "%s", (char *)data);
-   return ECORE_CALLBACK_CANCEL;
 }
 
 static Eina_Bool

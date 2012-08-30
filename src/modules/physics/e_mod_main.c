@@ -14,13 +14,6 @@ EAPI E_Module_Api e_modapi =
    "Physics"
 };
 
-static Eina_Bool
-_e_mod_cb_config_timer(void *data)
-{
-   e_util_dialog_show(_("Physics Settings Updated"), "%s", (char *)data);
-   return ECORE_CALLBACK_CANCEL;
-}
-
 EAPI void *
 e_modapi_init(E_Module *m)
 {
@@ -59,30 +52,9 @@ e_modapi_init(E_Module *m)
    mod->conf = e_config_domain_load("module.physics", mod->conf_edd);
    if (mod->conf)
      {
-        if ((mod->conf->config_version >> 16) < MOD_CONFIG_FILE_EPOCH)
+        if (!e_util_module_config_check("Physics", mod->conf->config_version, MOD_CONFIG_FILE_VERSION))
           {
              e_mod_cfdata_config_free(mod->conf);
-             ecore_timer_add(1.0, _e_mod_cb_config_timer,
-                             _("Physics module settings data needed upgrading. Your old configuration<br>"
-                               "has been wiped and a new set of defaults initialized. This<br>"
-                               "will happen regularly during development, so don't report a<br>"
-                               "bug. This simply means Physics module needs new configuration<br>"
-                               "data by default for usable functionality that your old<br>"
-                               "configuration simply lacks. This new set of defaults will fix<br>"
-                               "that by adding it in. You can re-configure things now to your<br>"
-                               "liking. Sorry for the hiccup in your configuration.<br>"));
-             mod->conf = NULL;
-          }
-        else if (mod->conf->config_version > MOD_CONFIG_FILE_VERSION)
-          {
-             e_mod_cfdata_config_free(mod->conf);
-             ecore_timer_add(1.0, _e_mod_cb_config_timer,
-                             _("Your Physics module configuration is NEWER than Fileman Module version. This is very<br>"
-                               "strange. This should not happen unless you downgraded<br>"
-                               "the Physics Module or copied the configuration from a place where<br>"
-                               "a newer version of the Physics module was running. This is bad and<br>"
-                               "as a precaution your configuration has been now restored to<br>"
-                               "defaults. Sorry for the inconvenience.<br>"));
              mod->conf = NULL;
           }
      }
