@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-29 09:27+0200\n"
+"POT-Creation-Date: 2012-08-30 19:06+0900\n"
 "PO-Revision-Date: 2012-08-29 10:01+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -353,7 +353,7 @@ msgstr "Commuta stato attaccata"
 #: src/bin/e_fm_device.c:636 src/bin/e_fm_device.c:663
 #: src/bin/e_int_menus.c:145 src/bin/e_int_shelf_config.c:247
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
-#: src/modules/fileman/e_mod_main.c:545 src/modules/ibox/e_mod_config.c:162
+#: src/modules/fileman/e_mod_main.c:566 src/modules/ibox/e_mod_config.c:162
 msgid "Desktop"
 msgstr "Desktop"
 
@@ -695,8 +695,8 @@ msgid "Show Menu..."
 msgstr "Mostra menù..."
 
 #: src/bin/e_actions.c:3281 src/bin/e_actions.c:3286 src/bin/e_actions.c:3291
-#: src/modules/conf/e_mod_main.c:271 src/modules/conf/e_mod_main.c:374
-#: src/modules/fileman/e_mod_main.c:77 src/modules/fileman/e_mod_main.c:170
+#: src/modules/conf/e_mod_main.c:270 src/modules/conf/e_mod_main.c:343
+#: src/modules/fileman/e_mod_main.c:76 src/modules/fileman/e_mod_main.c:169
 msgid "Launch"
 msgstr "Lancia"
 
@@ -986,7 +986,7 @@ msgstr ""
 "<br>"
 
 #: src/bin/e_config_dialog.c:226 src/modules/battery/e_mod_main.c:811
-#: src/modules/conf/e_mod_main.c:282
+#: src/modules/conf/e_mod_main.c:281
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1407,6 +1407,13 @@ msgstr "Errore di espulsione"
 msgid "Can't eject device"
 msgstr "Impossibile espellere il dispositivo"
 
+#: src/bin/e_fm.c:3654
+#, fuzzy, c-format
+msgid "%i file"
+msgid_plural "%i files"
+msgstr[0] "%1.0f file"
+msgstr[1] "%1.0f file"
+
 #: src/bin/e_fm.c:6281 src/bin/e_fm.c:8173 src/bin/e_fm.c:8378
 msgid "Link"
 msgstr "Collega"
@@ -1591,6 +1598,21 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
+"Siete sicuri di voler eliminare<br><hilight>tutti</hilight>i %d file "
+"in<br><hilight>%s</hilight>?"
+
+#: src/bin/e_fm.c:9814
+#, fuzzy, c-format
+msgid ""
+"Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
+"hilight>?"
+msgid_plural ""
+"Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
+"hilight>?"
+msgstr[0] ""
+"Siete sicuri di voler eliminare<br><hilight>tutti</hilight>i %d file "
+"in<br><hilight>%s</hilight>?"
+msgstr[1] ""
 "Siete sicuri di voler eliminare<br><hilight>tutti</hilight>i %d file "
 "in<br><hilight>%s</hilight>?"
 
@@ -2236,7 +2258,7 @@ msgstr "Richiede posizione"
 #: src/bin/e_shelf.c:2043 src/modules/battery/e_mod_main.c:193
 #: src/modules/clock/e_mod_main.c:300 src/modules/clock/e_mod_main.c:535
 #: src/modules/conf/e_conf.c:136 src/modules/conf/e_conf.c:146
-#: src/modules/conf/e_mod_main.c:102 src/modules/conf_dialogs/e_mod_main.c:17
+#: src/modules/conf/e_mod_main.c:101 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
 #: src/modules/ibar/e_mod_main.c:381 src/modules/ibar/e_mod_main.c:859
 #: src/modules/ibox/e_mod_main.c:300 src/modules/ibox/e_mod_main.c:679
@@ -2328,7 +2350,7 @@ msgstr "Dimensione e posizione"
 msgid "Size, Position and Locks"
 msgstr "Dimensione, posizione e blocchi"
 
-#: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
+#: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:251
 #: src/modules/shot/e_mod_main.c:704
 msgid "All"
 msgstr "Tutto"
@@ -2407,7 +2429,7 @@ msgstr "Utilità"
 
 #: src/bin/e_int_config_modules.c:53
 #: src/modules/everything/evry_plug_files.c:1585
-#: src/modules/fileman/e_mod_main.c:61
+#: src/modules/fileman/e_mod_main.c:60
 msgid "Files"
 msgstr "File"
 
@@ -3391,7 +3413,11 @@ msgstr "Errore scomparsa automatica mensola"
 msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
-msgstr "La scomparsa automatica della mensola non<br>funziona correttamente con l'attuale<br>configurazione, si prega di impostare<br>\"Al di sotto di tutto\" o di disabilitare<br>la scomparsa automatica nelle proprietà<br>della mensola."
+msgstr ""
+"La scomparsa automatica della mensola non<br>funziona correttamente con "
+"l'attuale<br>configurazione, si prega di impostare<br>\"Al di sotto di tutto"
+"\" o di disabilitare<br>la scomparsa automatica nelle proprietà<br>della "
+"mensola."
 
 #: src/bin/e_shelf.c:1406 src/modules/conf_shelves/e_int_config_shelf.c:191
 #: src/modules/conf_shelves/e_int_config_shelf.c:387
@@ -3715,15 +3741,16 @@ msgstr "%li minuti fa"
 msgid "Unknown"
 msgstr "Sconosciuto"
 
-#: src/bin/e_utils.c:1244
+#: src/bin/e_utils.c:1243
+#, fuzzy
 msgid ""
-"Configuration data needed upgrading. Your old configuration<br> has been "
+"Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
-"during development, so don't report a<br>bug. This simply means the module "
-"needs new configuration<br>data by default for usable functionality that "
-"your old<br>configuration simply lacks. This new set of defaults will "
-"fix<br>that by adding it in. You can re-configure things now to "
-"your<br>liking. Sorry for the inconvenience.<br>"
+"during development, so don't report a<br>bug. This means the module needs "
+"new configuration<br>data by default for usable functionality that your "
+"old<br>configuration lacked. This new set of defaults will fix<br>that by "
+"adding it in. You can re-configure things now to your<br>liking. Sorry for "
+"the hiccup in your configuration.<br>"
 msgstr ""
 "I dati di configurazione avevano bisogno di essere aggiornati.<br>La vecchia "
 "configurazione è stata sostituita con un nuovo set di impostazioni "
@@ -3735,12 +3762,12 @@ msgstr ""
 "nuove funzionalità. Adesso è<br>possibile riconfigurare le cose a proprio "
 "piacimento. Ci scusiamo per il disagio.<br>"
 
-#: src/bin/e_utils.c:1257 src/bin/e_utils.c:1281
+#: src/bin/e_utils.c:1252 src/bin/e_utils.c:1276
 #, c-format
 msgid "%s Configuration Updated"
 msgstr "Configurazione %s aggiornata"
 
-#: src/bin/e_utils.c:1270
+#: src/bin/e_utils.c:1265
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -3755,72 +3782,72 @@ msgstr ""
 "male, quindi la vostra<br>configurazione è stata ripristinata a scopo "
 "precauzionale ai valori predefiniti. Ci scusiamo<br>per l'inconveniente.<br>"
 
-#: src/bin/e_utils.c:1363
+#: src/bin/e_utils.c:1358
 #, c-format
 msgid "Never"
 msgstr "Mai"
 
-#: src/bin/e_utils.c:1367
+#: src/bin/e_utils.c:1362
 #, c-format
 msgid "%li Seconds"
 msgstr "%li Secondi"
 
-#: src/bin/e_utils.c:1372
+#: src/bin/e_utils.c:1367
 #, c-format
 msgid "One year"
 msgstr "Un anno"
 
-#: src/bin/e_utils.c:1374
+#: src/bin/e_utils.c:1369
 #, c-format
 msgid "%li Years"
 msgstr "%li Anni"
 
-#: src/bin/e_utils.c:1380
+#: src/bin/e_utils.c:1375
 #, c-format
 msgid "One month"
 msgstr "Un mese"
 
-#: src/bin/e_utils.c:1382
+#: src/bin/e_utils.c:1377
 #, c-format
 msgid "%li Months"
 msgstr "%li Mesi"
 
-#: src/bin/e_utils.c:1388
+#: src/bin/e_utils.c:1383
 #, c-format
 msgid "One week"
 msgstr "Una settimana"
 
-#: src/bin/e_utils.c:1390
+#: src/bin/e_utils.c:1385
 #, c-format
 msgid "%li Weeks"
 msgstr "%li Settimane"
 
-#: src/bin/e_utils.c:1396
+#: src/bin/e_utils.c:1391
 #, c-format
 msgid "One day"
 msgstr "Un giorno"
 
-#: src/bin/e_utils.c:1398
+#: src/bin/e_utils.c:1393
 #, c-format
 msgid "%li Days"
 msgstr "%li Giorni"
 
-#: src/bin/e_utils.c:1404
+#: src/bin/e_utils.c:1399
 #, c-format
 msgid "An hour"
 msgstr "Un'ora"
 
-#: src/bin/e_utils.c:1406
+#: src/bin/e_utils.c:1401
 #, c-format
 msgid "%li Hours"
 msgstr "%li Ore"
 
-#: src/bin/e_utils.c:1412
+#: src/bin/e_utils.c:1407
 #, c-format
 msgid "A minute"
 msgstr "Un minuto"
 
-#: src/bin/e_utils.c:1414
+#: src/bin/e_utils.c:1409
 #, c-format
 msgid "%li Minutes"
 msgstr "%li Minuti"
@@ -4077,7 +4104,7 @@ msgstr "Giorni"
 msgid "Show calendar"
 msgstr "Mostra calendario"
 
-#: src/modules/conf/e_mod_config.c:35 src/modules/conf/e_mod_main.c:284
+#: src/modules/conf/e_mod_config.c:35 src/modules/conf/e_mod_main.c:283
 msgid "Configuration Panel"
 msgstr "Pannello di configurazione"
 
@@ -4085,64 +4112,23 @@ msgstr "Pannello di configurazione"
 msgid "Show configurations in menu"
 msgstr "Mostra voci di configurazione in menù"
 
-#: src/modules/conf/e_mod_main.c:271 src/modules/conf/e_mod_main.c:275
-#: src/modules/conf/e_mod_main.c:374 src/modules/conf/e_mod_main.c:481
+#: src/modules/conf/e_mod_main.c:270 src/modules/conf/e_mod_main.c:274
+#: src/modules/conf/e_mod_main.c:343 src/modules/conf/e_mod_main.c:450
 msgid "Settings Panel"
 msgstr "Pannello impostazioni"
 
-#: src/modules/conf/e_mod_main.c:302
-msgid ""
-"Configuration Panel Module Configuration data needed upgrading. Your old "
-"configuration<br> has been wiped and a new set of defaults initialized. "
-"This<br>will happen regularly during development, so don't report a<br>bug. "
-"This simply means the module needs new configuration<br>data by default for "
-"usable functionality that your old<br>configuration simply lacks. This new "
-"set of defaults will fix<br>that by adding it in. You can re-configure "
-"things now to your<br>liking. Sorry for the inconvenience.<br>"
-msgstr ""
-"La configurazione del modulo \"Pannello di configurazione\" aveva bisogno di "
-"essere aggiornata.<br>La vecchia configurazione è stata sostituita con un "
-"nuovo set di impostazioni predefinite.<br>Questo avverrà spesso durante lo "
-"sviluppo, quindi non riportate bug in proposito. Significa<br>semplicemente "
-"che il modulo ha bisogno di nuovi dati di configurazione da usare "
-"per<br>funzionalità che non erano presenti nella vecchia configurazione. "
-"Questo nuovo set di<br>impostazioni predefinite sistemerà il tutto "
-"aggiungendo le nuove funzionalità. Adesso è<br>possibile riconfigurare le "
-"cose a proprio piacimento. Ci scusiamo per il disagio.<br>"
-
-#: src/modules/conf/e_mod_main.c:319
-msgid ""
-"Your Configuration Panel Module configuration is NEWER than the module "
-"version. This is very<br>strange. This should not happen unless you "
-"downgraded<br>the module or copied the configuration from a place where<br>a "
-"newer version of the module was running. This is bad and<br>as a precaution "
-"your configuration has been now restored to<br>defaults. Sorry for the "
-"inconvenience.<br>"
-msgstr ""
-"La vostra configurazione del modulo \"Pannello di configurazione\" è più "
-"NUOVA di Enlightenment.<br>Questo è molto strano. Non dovrebbe accadere a "
-"meno che si sia passati ad una versione<br>precedente di del modulo Fileman "
-"o si abbia copiato la configurazione da una macchina su cui<br>gira una "
-"versione più recente del modulo Fileman. Questo è male, quindi la "
-"vostra<br>configurazione è stata ripristinata a scopo precauzionale ai "
-"valori predefiniti. Ci scusiamo<br>per l'inconveniente.<br>"
-
-#: src/modules/conf/e_mod_main.c:450
+#: src/modules/conf/e_mod_main.c:419
 #: src/modules/conf_display/e_int_config_screensaver.c:197
 msgid "Presentation"
 msgstr "Presentazione"
 
-#: src/modules/conf/e_mod_main.c:457
+#: src/modules/conf/e_mod_main.c:426
 msgid "Offline"
 msgstr "Disconnesso"
 
-#: src/modules/conf/e_mod_main.c:486
+#: src/modules/conf/e_mod_main.c:455
 msgid "Modes"
 msgstr "Modalità"
-
-#: src/modules/conf/e_mod_main.c:517
-msgid "Configuration Panel Configuration Updated"
-msgstr "Impostazioni del pannello di configurazioni aggiornate"
 
 #: src/modules/conf_applications/e_int_config_apps.c:84
 #: src/modules/conf_applications/e_int_config_apps.c:98
@@ -4341,6 +4327,46 @@ msgstr "Finestre di dialogo"
 #: src/modules/conf_dialogs/e_mod_main.c:19
 msgid "Profiles"
 msgstr "Profili"
+
+#: src/modules/conf_display/e_int_config_display.c:124
+#, fuzzy, c-format
+msgid ""
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+"<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
+"will be restored in %d second."
+msgid_plural ""
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+"<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
+"will be restored in %d seconds."
+msgstr[0] ""
+"Si vede bene? Se è così <hilight>Salvate</hilight>, altrimenti Ripristinate."
+"<br>Se non si preme alcun bottone verrà <hilight>IMMEDIATAMENTE</hilight> "
+"ripristinata<br>la vecchia risoluzione di %dx%d a %d Hz."
+msgstr[1] ""
+"Si vede bene? Se è così <hilight>Salvate</hilight>, altrimenti Ripristinate."
+"<br>Se non si preme alcun bottone verrà <hilight>IMMEDIATAMENTE</hilight> "
+"ripristinata<br>la vecchia risoluzione di %dx%d a %d Hz."
+
+#: src/modules/conf_display/e_int_config_display.c:134
+#, fuzzy, c-format
+msgid ""
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+"<br>If you do not press a button, the old resolution of<br>%d×%d will be "
+"restored in %d second."
+msgid_plural ""
+"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+"<br>If you do not press a button, the old resolution of<br>%d×%d will be "
+"restored in %d seconds."
+msgstr[0] ""
+"Si vede bene? Se è così premere <hilight>Salvate</hilight>, altrimenti "
+"Ripristinate.<br>Se non si preme alcun bottone verrà "
+"<hilight>IMMEDIATAMENTE</hilight> ripristinata<br>la vecchia risoluzione di "
+"%dx%d."
+msgstr[1] ""
+"Si vede bene? Se è così premere <hilight>Salvate</hilight>, altrimenti "
+"Ripristinate.<br>Se non si preme alcun bottone verrà "
+"<hilight>IMMEDIATAMENTE</hilight> ripristinata<br>la vecchia risoluzione di "
+"%dx%d."
 
 #: src/modules/conf_display/e_int_config_display.c:147
 #, c-format
@@ -4819,7 +4845,9 @@ msgstr "Errore azione su bordo schermo"
 msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
 "action.<br>Please choose another edge to bind."
-msgstr "La sequenza sul bordo dello schermo che avete scelto è già<br>usata dall'azione <hilight>%s</hilight>.<br>Si prega di scegliere un bordo diverso."
+msgstr ""
+"La sequenza sul bordo dello schermo che avete scelto è già<br>usata "
+"dall'azione <hilight>%s</hilight>.<br>Si prega di scegliere un bordo diverso."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1350
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1269
@@ -5221,7 +5249,7 @@ msgid "Main Menu"
 msgstr "Menù principale"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
-#: src/modules/fileman/e_mod_main.c:553
+#: src/modules/fileman/e_mod_main.c:574
 msgid "Favorites"
 msgstr "Preferiti"
 
@@ -6036,6 +6064,13 @@ msgstr "Molto grande"
 #: src/modules/conf_theme/e_int_config_fonts.c:282
 msgid "Huge"
 msgstr "Grandissima"
+
+#: src/modules/conf_theme/e_int_config_fonts.c:291
+#, fuzzy, c-format
+msgid "%d pixel"
+msgid_plural "%d pixels"
+msgstr[0] "%1.0f pixel"
+msgstr[1] "%1.0f pixel"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:426
 msgid "Enable Custom Font Classes"
@@ -7157,6 +7192,13 @@ msgstr "Geometria"
 msgid "Everything Collection"
 msgstr "Raccolta di Everything"
 
+#: src/modules/everything/evry_plug_aggregator.c:122
+#, c-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] ""
+msgstr[1] ""
+
 #: src/modules/everything/evry_plug_aggregator.c:302
 msgid "No plugins loaded"
 msgstr "Nessun plugin caricato"
@@ -7247,7 +7289,7 @@ msgid "Clear cache"
 msgstr "Svuota cache"
 
 #: src/modules/fileman/e_int_config_mime.c:61
-#: src/modules/fileman/e_mod_main.c:66
+#: src/modules/fileman/e_mod_main.c:65
 msgid "File Icons"
 msgstr "Icone dei file"
 
@@ -7295,67 +7337,26 @@ msgstr "Seleziona un file Edje"
 msgid "Select an image"
 msgstr "Seleziona un'immagine"
 
-#: src/modules/fileman/e_mod_main.c:63 src/modules/fileman/e_mod_main.c:77
-#: src/modules/fileman/e_mod_main.c:170
+#: src/modules/fileman/e_mod_main.c:62 src/modules/fileman/e_mod_main.c:76
+#: src/modules/fileman/e_mod_main.c:169
 msgid "File Manager"
 msgstr "File manager"
 
-#: src/modules/fileman/e_mod_main.c:80
+#: src/modules/fileman/e_mod_main.c:79
 msgid "Navigate"
 msgstr "Naviga"
 
-#: src/modules/fileman/e_mod_main.c:537
+#: src/modules/fileman/e_mod_main.c:558
 msgid "Home"
 msgstr "Home"
 
-#: src/modules/fileman/e_mod_main.c:567
+#: src/modules/fileman/e_mod_main.c:588
 msgid "Root"
 msgstr "Directory principale"
 
-#: src/modules/fileman/e_mod_main.c:611
+#: src/modules/fileman/e_mod_main.c:632
 msgid "Navigate..."
 msgstr "Naviga..."
-
-#: src/modules/fileman/e_mod_main.c:687
-msgid ""
-"Fileman Module Settings data needed upgrading. Your old configuration<br>has "
-"been wiped and a new set of defaults initialized. This<br>will happen "
-"regularly during development, so don't report a<br>bug. This simply means "
-"Fileman module needs new configuration<br>data by default for usable "
-"functionality that your old<br>configuration simply lacks. This new set of "
-"defaults will fix<br>that by adding it in. You can re-configure things now "
-"to your<br>liking. Sorry for the hiccup in your configuration.<br>"
-msgstr ""
-"La configurazione del modulo Fileman aveva bisogno di essere aggiornata."
-"<br>La vecchia configurazione è stata sostituita con un nuovo set<br>di "
-"impostazioni predefinite. Questo avverrà spesso durante lo<br>sviluppo, "
-"quindi non riportate bug in proposito. Significa<br>semplicemente che il "
-"modulo Fileman ha bisogno di nuovi dati di<br>configurazione da usare per "
-"funzionalità che non erano presenti<br>nella vecchia configurazione. Questo "
-"nuovo set di impostazioni<br>predefinite sistemerà il tutto aggiungendo le "
-"nuove funzionalità.<br>Adesso è possibile riconfigurare le cose a proprio "
-"piacimento.<br>Ci scusiamo per il disagio.<br>"
-
-#: src/modules/fileman/e_mod_main.c:700
-msgid ""
-"Your Fileman Module configuration is NEWER than Fileman Module version. This "
-"is very<br>strange. This should not happen unless you downgraded<br>the "
-"Fileman Module or copied the configuration from a place where<br>a newer "
-"version of the Fileman Module was running. This is bad and<br>as a "
-"precaution your configuration has been now restored to<br>defaults. Sorry "
-"for the inconvenience.<br>"
-msgstr ""
-"La vostra configurazione del modulo Fileman è più NUOVA di Enlightenment."
-"<br>Questo è molto strano. Non dovrebbe accadere a meno che si sia "
-"passati<br>ad una versione precedente di del modulo Fileman o si abbia "
-"copiato la<br>configurazione da una macchina su cui gira una versione più "
-"recente<br>del modulo Fileman. Questo è male, quindi la vostra "
-"configurazione è<br>stata ripristinata a scopo precauzionale ai valori "
-"predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
-
-#: src/modules/fileman/e_mod_main.c:802
-msgid "Fileman Settings Updated"
-msgstr "Impostazioni di Fileman aggiornate"
 
 #: src/modules/fileman/e_mod_config.c:112
 msgid "Fileman Settings"
@@ -7493,6 +7494,13 @@ msgstr "Apri"
 msgid "Open with..."
 msgstr "Apri con..."
 
+#: src/modules/fileman/e_fwin.c:2344 src/modules/fileman/e_fwin.c:2369
+#, fuzzy, c-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%1.0f file"
+msgstr[1] "%1.0f file"
+
 #: src/modules/fileman/e_fwin.c:2387
 msgid "Known Applications"
 msgstr "Applicazioni conosciute"
@@ -7602,6 +7610,13 @@ msgstr "Da: %s"
 #, c-format
 msgid "To: %s"
 msgstr "A: %s"
+
+#: src/modules/fileman_opinfo/e_mod_main.c:324
+#, c-format
+msgid "Processing %d operation"
+msgid_plural "Processing %d operations"
+msgstr[0] ""
+msgstr[1] ""
 
 #: src/modules/fileman_opinfo/e_mod_main.c:328
 msgid "Filemanager is idle"
@@ -8661,3 +8676,83 @@ msgstr "Modello"
 #: src/modules/xkbswitch/e_mod_config.c:508
 msgid "Variant"
 msgstr "Variante"
+
+#~ msgid ""
+#~ "Configuration Panel Module Configuration data needed upgrading. Your old "
+#~ "configuration<br> has been wiped and a new set of defaults initialized. "
+#~ "This<br>will happen regularly during development, so don't report "
+#~ "a<br>bug. This simply means the module needs new configuration<br>data by "
+#~ "default for usable functionality that your old<br>configuration simply "
+#~ "lacks. This new set of defaults will fix<br>that by adding it in. You can "
+#~ "re-configure things now to your<br>liking. Sorry for the inconvenience."
+#~ "<br>"
+#~ msgstr ""
+#~ "La configurazione del modulo \"Pannello di configurazione\" aveva bisogno "
+#~ "di essere aggiornata.<br>La vecchia configurazione è stata sostituita con "
+#~ "un nuovo set di impostazioni predefinite.<br>Questo avverrà spesso "
+#~ "durante lo sviluppo, quindi non riportate bug in proposito. "
+#~ "Significa<br>semplicemente che il modulo ha bisogno di nuovi dati di "
+#~ "configurazione da usare per<br>funzionalità che non erano presenti nella "
+#~ "vecchia configurazione. Questo nuovo set di<br>impostazioni predefinite "
+#~ "sistemerà il tutto aggiungendo le nuove funzionalità. Adesso "
+#~ "è<br>possibile riconfigurare le cose a proprio piacimento. Ci scusiamo "
+#~ "per il disagio.<br>"
+
+#~ msgid ""
+#~ "Your Configuration Panel Module configuration is NEWER than the module "
+#~ "version. This is very<br>strange. This should not happen unless you "
+#~ "downgraded<br>the module or copied the configuration from a place "
+#~ "where<br>a newer version of the module was running. This is bad and<br>as "
+#~ "a precaution your configuration has been now restored to<br>defaults. "
+#~ "Sorry for the inconvenience.<br>"
+#~ msgstr ""
+#~ "La vostra configurazione del modulo \"Pannello di configurazione\" è più "
+#~ "NUOVA di Enlightenment.<br>Questo è molto strano. Non dovrebbe accadere a "
+#~ "meno che si sia passati ad una versione<br>precedente di del modulo "
+#~ "Fileman o si abbia copiato la configurazione da una macchina su "
+#~ "cui<br>gira una versione più recente del modulo Fileman. Questo è male, "
+#~ "quindi la vostra<br>configurazione è stata ripristinata a scopo "
+#~ "precauzionale ai valori predefiniti. Ci scusiamo<br>per l'inconveniente."
+#~ "<br>"
+
+#~ msgid "Configuration Panel Configuration Updated"
+#~ msgstr "Impostazioni del pannello di configurazioni aggiornate"
+
+#~ msgid ""
+#~ "Fileman Module Settings data needed upgrading. Your old "
+#~ "configuration<br>has been wiped and a new set of defaults initialized. "
+#~ "This<br>will happen regularly during development, so don't report "
+#~ "a<br>bug. This simply means Fileman module needs new "
+#~ "configuration<br>data by default for usable functionality that your "
+#~ "old<br>configuration simply lacks. This new set of defaults will "
+#~ "fix<br>that by adding it in. You can re-configure things now to "
+#~ "your<br>liking. Sorry for the hiccup in your configuration.<br>"
+#~ msgstr ""
+#~ "La configurazione del modulo Fileman aveva bisogno di essere aggiornata."
+#~ "<br>La vecchia configurazione è stata sostituita con un nuovo set<br>di "
+#~ "impostazioni predefinite. Questo avverrà spesso durante lo<br>sviluppo, "
+#~ "quindi non riportate bug in proposito. Significa<br>semplicemente che il "
+#~ "modulo Fileman ha bisogno di nuovi dati di<br>configurazione da usare per "
+#~ "funzionalità che non erano presenti<br>nella vecchia configurazione. "
+#~ "Questo nuovo set di impostazioni<br>predefinite sistemerà il tutto "
+#~ "aggiungendo le nuove funzionalità.<br>Adesso è possibile riconfigurare le "
+#~ "cose a proprio piacimento.<br>Ci scusiamo per il disagio.<br>"
+
+#~ msgid ""
+#~ "Your Fileman Module configuration is NEWER than Fileman Module version. "
+#~ "This is very<br>strange. This should not happen unless you "
+#~ "downgraded<br>the Fileman Module or copied the configuration from a place "
+#~ "where<br>a newer version of the Fileman Module was running. This is bad "
+#~ "and<br>as a precaution your configuration has been now restored "
+#~ "to<br>defaults. Sorry for the inconvenience.<br>"
+#~ msgstr ""
+#~ "La vostra configurazione del modulo Fileman è più NUOVA di Enlightenment."
+#~ "<br>Questo è molto strano. Non dovrebbe accadere a meno che si sia "
+#~ "passati<br>ad una versione precedente di del modulo Fileman o si abbia "
+#~ "copiato la<br>configurazione da una macchina su cui gira una versione più "
+#~ "recente<br>del modulo Fileman. Questo è male, quindi la vostra "
+#~ "configurazione è<br>stata ripristinata a scopo precauzionale ai valori "
+#~ "predefiniti. Ci<br>scusiamo per l'inconveniente.<br>"
+
+#~ msgid "Fileman Settings Updated"
+#~ msgstr "Impostazioni di Fileman aggiornate"
