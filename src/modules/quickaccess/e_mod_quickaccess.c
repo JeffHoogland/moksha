@@ -760,6 +760,7 @@ _e_qa_bd_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_title_set(subm, entry->class);
    e_object_data_set(E_OBJECT(subm), entry);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    if (!entry->config.jump)
      {
