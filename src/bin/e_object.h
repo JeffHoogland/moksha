@@ -95,6 +95,7 @@ EAPI void  e_object_del_attach_func_set (E_Object *obj, E_Object_Cleanup_Func fu
 
 EAPI E_Object_Delfn *e_object_delfn_add (E_Object *obj, void (*func) (void *data, void *obj), void *data);
 EAPI void            e_object_delfn_del (E_Object *obj, E_Object_Delfn *dfn);
+EAPI void            e_object_delfn_clear(E_Object *obj);
 
 /*
 EAPI void  e_object_breadcrumb_add      (E_Object *obj, char *crumb);
