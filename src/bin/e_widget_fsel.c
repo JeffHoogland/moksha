@@ -203,34 +203,34 @@ _e_wid_fsel_typebuf_change(E_Widget_Data *wd, Evas_Object *obj __UNUSED__, const
 }
 
 static void
-_e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+_e_wid_fsel_sel_chg(E_Widget_Data *wd, Evas_Object *fm)
 {
-   E_Widget_Data *wd;
    Eina_List *selected;
    E_Fm2_Icon_Info *ici;
    const char *rp;
    char buf[PATH_MAX];
    struct stat st;
+   Eina_Bool preview;
 
-   wd = data;
-   if (!wd->o_files_fm) return;
-   selected = e_fm2_selected_list_get(wd->o_files_fm);
+   preview = !!fm;
+   fm = fm ?: wd->o_files_fm;
+   selected = e_fm2_selected_list_get(fm);
    if (!selected) return;
    ici = eina_list_data_get(selected);
-   rp = e_fm2_real_path_get(wd->o_files_fm);
+   rp = e_fm2_real_path_get(fm);
    if (!strcmp(rp, "/"))
      {
         snprintf(buf, sizeof(buf), "/%s", ici->file);
      }
    else
      {
-        snprintf(buf, sizeof(buf), "%s/%s",
-                 rp, ici->file);
+        snprintf(buf, sizeof(buf), "%s/%s", rp, ici->file);
      }
    eina_stringshare_replace(&wd->path, buf);
    if (stat(wd->path, &st) == 0)
      {
-        if (wd->preview) e_widget_filepreview_path_set(wd->o_preview, wd->path, ici->mime);
+        if (wd->preview && (!preview))
+          e_widget_filepreview_path_set(wd->o_preview, wd->path, ici->mime);
         if (!S_ISDIR(st.st_mode))
           e_widget_entry_text_set(wd->o_entry, ici->file);
 //	else
@@ -238,6 +238,18 @@ _e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void
      }
    eina_list_free(selected);
    if (wd->chg_func) wd->chg_func(wd->chg_data, wd->obj);
+}
+
+static void
+_e_wid_fsel_fprev_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   _e_wid_fsel_sel_chg(data, event_info);
+}
+
+static void
+_e_wid_fsel_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   _e_wid_fsel_sel_chg(data, NULL);
 }
 
 static void
@@ -344,6 +356,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
         e_widget_size_min_get(wd->o_preview_frame, &mw2, &mh2);
         /* need size of preview here or min size will be off */
         e_widget_size_min_set(wd->o_preview_frame, mw2, mh + 128);
+        evas_object_smart_callback_add(wd->o_preview, "selection_change", _e_wid_fsel_fprev_selection_change, wd);
      }
 
    o = e_fm2_add(evas);
@@ -492,22 +505,9 @@ EAPI const char *
 e_widget_fsel_selection_path_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
-   const char *s, *dir;
-   char buf[PATH_MAX];
 
    if (!obj) return NULL;
    wd = e_widget_data_get(obj);
-   s = e_widget_entry_text_get(wd->o_entry);
-   dir = e_fm2_real_path_get(wd->o_files_fm);
-   if (s)
-     {
-        snprintf(buf, sizeof(buf), "%s/%s", dir, s);
-        eina_stringshare_replace(&wd->path, buf);
-     }
-   else
-     {
-        eina_stringshare_replace(&wd->path, dir);
-     }
    return wd->path;
 }
 

@@ -175,7 +175,10 @@ e_import_dialog_show(E_Container *con, const char *dev, const char *path, Ecore_
      }
 
    //printf("LAST: [%s] '%s' '%s'\n", buf, fdev, fpath);
-   ofm = e_widget_fsel_add(evas, fdev, fpath, NULL, NULL, NULL, NULL,
+   /* if we ever use the second param in _fsel_cb_ok() then we will have to create a second function
+    * for this callback, but as of now it's okay
+    */
+   ofm = e_widget_fsel_add(evas, fdev, fpath, NULL, NULL, (void*)_fsel_cb_ok, id,
                            NULL, NULL, 1);
    e_widget_fsel_window_object_set(ofm, E_OBJECT(dia->win));
    id->fsel_obj = ofm;
