@@ -91,6 +91,7 @@ static Ecore_X_Window _e_menu_win = 0;
 static Eina_List *_e_active_menus = NULL;
 static Eina_Hash *_e_menu_hash = NULL;
 static E_Menu_Item *_e_active_menu_item = NULL;
+static E_Menu_Item *_e_prev_active_menu_item = NULL;
 /*static Eina_Hash	   *_e_menu_category_items	= NULL;*/
 static Eina_Hash *_e_menu_categories = NULL;
 static Ecore_X_Time _e_menu_activate_time = 0;
@@ -130,11 +131,33 @@ static Eina_List *
 _e_menu_list_free_unref(Eina_List *l)
 {
    E_Object *o;
+   Eina_List *ll, *lll;
 
-   EINA_LIST_FREE(l, o)
-     e_object_unref(o);
+   /* list must be freed in reverse to ensure that submenus
+    * (which are added to the end of the list)
+    * are deleted before their parents
+    */
+   EINA_LIST_REVERSE_FOREACH_SAFE(l, ll, lll, o)
+     {
+        e_object_unref(o);
+        l = eina_list_remove_list(l, ll);
+     }
    return l;
 }
+
+/* macros for debugging menu refcounts */
+#if 0
+#define e_object_ref(X) do {\
+   int xx; \
+   xx = e_object_ref(X); \
+   INF("REF: %p || %d", X, xx); \
+  } while (0)
+#define e_object_unref(X) do {\
+   int xx; \
+   xx = e_object_unref(X); \
+   INF("UNREF: %p || %d", X, xx); \
+  } while (0)
+#endif
 
 /* externally accessible functions */
 EINTERN int
@@ -939,7 +962,13 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
         if (mi->disable) return;
         pmi = _e_menu_item_active_get();
         if (mi == pmi) return;
-        if (pmi) e_menu_item_active_set(pmi, 0);
+        if (pmi)
+          e_menu_item_active_set(pmi, 0);
+        if (_e_prev_active_menu_item && (mi != _e_prev_active_menu_item))
+          {
+             if (_e_prev_active_menu_item != mi->menu->parent_item)
+               _e_menu_submenu_deactivate(_e_prev_active_menu_item);
+          }
         mi->active = 1;
         _e_active_menu_item = mi;
         if (mi->bg_object)
@@ -968,6 +997,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
    else if ((!active) && (mi->active))
      {
         mi->active = 0;
+        _e_prev_active_menu_item = mi;
         _e_active_menu_item = NULL;
         if (mi->bg_object)
           edje_object_signal_emit(mi->bg_object, "e,state,unselected", "e");
@@ -990,7 +1020,6 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
                }
           }
         edje_object_signal_emit(mi->menu->bg_object, "e,state,unselected", "e");
-        _e_menu_submenu_deactivate(mi);
      }
 }
 
@@ -1208,11 +1237,8 @@ _e_menu_free(E_Menu *m)
              if (cb->free) cb->free(cb->data);
           }
      }
-   if (m->parent_item)
-     {
-        if (m->parent_item->submenu == m)
-          m->parent_item->submenu = NULL;
-     }
+   if (m->parent_item && (m->parent_item->submenu == m))
+     m->parent_item->submenu = NULL;
    _e_menu_unrealize(m);
    E_FREE(m->shape_rects);
    m->shape_rects_num = 0;
@@ -1233,11 +1259,25 @@ static void
 _e_menu_item_free(E_Menu_Item *mi)
 {
    if (mi == _e_active_menu_item) _e_active_menu_item = NULL;
+   if (mi == _e_prev_active_menu_item) _e_prev_active_menu_item = NULL;
    if (mi->submenu)
      {
-        mi->submenu->parent_item = NULL;
-        e_object_unref(E_OBJECT(mi->submenu)); /* added on submenu_set() */
-/*	e_object_del(E_OBJECT(mi->submenu)); */
+        int ref = 0;
+
+        /* parent_item gets unset in a few places, reapply it for use in cleanup */
+        if (!mi->submenu->parent_item)
+          mi->submenu->parent_item = mi;
+        /* menu may not have been deactivated, ensure deactivate callback is called */
+        if (mi->active)
+          _e_menu_submenu_deactivate(mi);
+        /* submenus CANNOT exist without their parent menu+item, so ensure that they get deleted */
+        if (mi->submenu)
+          {
+             ref = e_object_ref_get(E_OBJECT(mi->submenu)) - 1;
+             e_object_unref(E_OBJECT(mi->submenu));
+          }
+       if (ref)
+         WRN("DANGLING SUBMENU FOR %s: REF(%d)||MENU(%p)", mi->label, ref, mi->submenu);
      }
    if (mi->menu->realized) _e_menu_item_unrealize(mi);
    mi->menu->items = eina_list_remove(mi->menu->items, mi);
@@ -2989,7 +3029,7 @@ _e_menu_cb_item_submenu_post_default(void *data __UNUSED__, E_Menu *m __UNUSED__
    if (!mi->submenu) return;
 
    subm = mi->submenu;
-   //e_menu_item_submenu_set(mi, NULL);
+   e_menu_item_submenu_set(mi, NULL);
    e_object_del(E_OBJECT(subm));
 }
 
