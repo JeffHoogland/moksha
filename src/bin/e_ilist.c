@@ -1314,9 +1314,12 @@ _e_typebuf_add(Evas_Object *obj, const char *s)
    len = strlen(sd->typebuf.buf);
    if (len + strlen(s) + 2 + 1 >= sd->typebuf.size)
      {
-        sd->typebuf.buf = realloc(sd->typebuf.buf, sd->typebuf.size + strlen(s) + 16);
-        if (sd->typebuf.buf)
-          sd->typebuf.size = sd->typebuf.size + strlen(s) + 16;
+        char *p = realloc(sd->typebuf.buf, sd->typebuf.size + strlen(s) + 16);
+        if (p)
+          {
+             sd->typebuf.buf = p;
+             sd->typebuf.size = sd->typebuf.size + strlen(s) + 16;
+          }
         else
           {
              _e_typebuf_clean(obj);

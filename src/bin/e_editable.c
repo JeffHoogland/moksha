@@ -209,8 +209,7 @@ e_editable_text_set(Evas_Object *editable, const char *text)
      return;
 
    if (sd->password_mode) memset(sd->text, 0, sd->char_length);
-   free(sd->text);
-   sd->text = NULL;
+   E_FREE(sd->text);
    sd->char_length = 0;
    sd->unicode_length = 0;
    sd->allocated_length = -1;
@@ -280,6 +279,8 @@ e_editable_text_range_get(Evas_Object *editable, int start, int end)
    if (end_id <= start_id) return NULL;
 
    range = malloc((end_id - start_id + 1) * sizeof(char));
+   if (!range) return NULL;
+
    strncpy(range, &sd->text[start_id], end_id - start_id);
    range[end_id - start_id] = '\0';
 
@@ -936,12 +937,13 @@ _e_editable_text_insert(Evas_Object *editable, int pos, const char *text)
           }
         else
           {
-             sd->text = realloc(sd->text, new_allocated_length + 1);
-             if (!sd->text)
+             char *p = realloc(sd->text, new_allocated_length + 1);
+             if (!p)
                {
                   sd->text = old;
                   return 0;
                }
+             sd->text = p;
           }
         sd->allocated_length = new_allocated_length;
      }
@@ -1080,6 +1082,8 @@ _e_editable_text_update(Evas_Object *editable)
         char *text;
 
         text = malloc((sd->unicode_length + 1) * sizeof(char));
+        if (!text) return;
+
         memset(text, '*', sd->unicode_length * sizeof(char));
         text[sd->unicode_length] = '\0';
         edje_object_part_text_set(sd->text_object, "e.text.text", text);
@@ -1202,6 +1206,8 @@ _e_editable_smart_add(Evas_Object *object)
    evas_object_geometry_get(object, &ox, &oy, NULL, NULL);
 
    sd->text = malloc((E_EDITABLE_BLOCK_SIZE + 1) * sizeof(char));
+   if (!sd->text) return;
+
    sd->text[0] = '\0';
    sd->char_length = 0;
    sd->unicode_length = 0;
