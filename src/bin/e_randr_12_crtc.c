@@ -117,19 +117,12 @@ _crtc_info_new(Ecore_X_Randr_Crtc crtc)
 void
 _crtc_info_free(E_Randr_Crtc_Info *crtc_info)
 {
-   EINA_SAFETY_ON_NULL_RETURN(crtc_info);
+   if (!crtc_info) return;
 
-   if (crtc_info->gamma_ramps) free(crtc_info->gamma_ramps);
-   if (crtc_info->outputs)
-     {
-        eina_list_free(crtc_info->outputs);
-        crtc_info->outputs = NULL;
-     }
-   if (crtc_info->possible_outputs)
-     {
-        eina_list_free(crtc_info->possible_outputs);
-        crtc_info->possible_outputs = NULL;
-     }
+   free(crtc_info->gamma_ramps);
+   crtc_info->outputs = eina_list_free(crtc_info->outputs);
+   crtc_info->possible_outputs = eina_list_free(crtc_info->possible_outputs);
+   free(crtc_info);
 }
 
 /*
