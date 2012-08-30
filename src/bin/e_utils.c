@@ -1240,19 +1240,14 @@ _e_util_conf_timer_old(void *data)
 {
    char *module_name = data;
    char buf[4096];
-   char *msg =
-     _("Configuration data needed "
-       "upgrading. Your old configuration<br> has been"
-       " wiped and a new set of defaults initialized. "
-       "This<br>will happen regularly during "
-       "development, so don't report a<br>bug. "
-       "This simply means the module needs "
-       "new configuration<br>data by default for "
-       "usable functionality that your old<br>"
-       "configuration simply lacks. This new set of "
-       "defaults will fix<br>that by adding it in. "
-       "You can re-configure things now to your<br>"
-       "liking. Sorry for the inconvenience.<br>");
+   char *msg = _("Configuration data needed upgrading. Your old configuration<br>"
+                 "has been wiped and a new set of defaults initialized. This<br>"
+                 "will happen regularly during development, so don't report a<br>"
+                 "bug. This means the module needs new configuration<br>"
+                 "data by default for usable functionality that your old<br>"
+                 "configuration lacked. This new set of defaults will fix<br>"
+                 "that by adding it in. You can re-configure things now to your<br>"
+                 "liking. Sorry for the hiccup in your configuration.<br>");
 
    snprintf(buf, sizeof(buf), N_("%s Configuration Updated"), module_name);
    e_util_dialog_internal(buf, msg);
