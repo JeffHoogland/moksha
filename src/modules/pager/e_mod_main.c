@@ -2190,6 +2190,7 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
                e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
              if (fullscreen) e_border_unfullscreen(bd);
              e_border_desk_set(bd, pd->desk);
+             e_border_raise(bd);
              if ((!pw) || ((pw) && (!pw->drag.no_place)))
                {
                   int zx, zy;
