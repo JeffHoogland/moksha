@@ -59,8 +59,7 @@ e_modapi_init(E_Module *m)
 
    if (!e_qa_init())
      {
-        eina_log_domain_unregister(_e_quick_access_log_dom);
-        _e_quick_access_log_dom = -1;
+        e_modapi_shutdown(NULL);
         return NULL;
      }
 

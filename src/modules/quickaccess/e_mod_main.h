@@ -91,4 +91,6 @@ char *e_qa_db_class_lookup(const char *class);
 
 void e_qa_entry_bindings_cleanup(E_Quick_Access_Entry *entry);
 void e_qa_entry_bindings_rename(E_Quick_Access_Entry *entry, const char *name);
+
+EAPI int e_modapi_shutdown(E_Module *m __UNUSED__);
 #endif
