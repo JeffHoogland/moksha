@@ -29,7 +29,7 @@ struct _E_Physics_Win
 {
    EINA_INLIST;
 
-   E_Physics           *p;     // parent compositor
+   E_Physics           *p;     // parent physics
    Ecore_X_Window       win;  // raw window - for menus etc.
    E_Border            *bd;  // if its a border - later
    E_Popup             *pop;  // if its a popup - later
@@ -838,11 +838,20 @@ static void
 _e_mod_physics_del(E_Physics *p)
 {
    E_Physics_Win *pw;
+   Eina_Inlist *l;
+   E_Physics_Shelf *eps;
 
    while (p->wins)
      {
         pw = (E_Physics_Win *)(p->wins);
         _e_mod_physics_win_del(pw);
+     }
+   if (p->world)
+     ephysics_world_del(p->world);
+   EINA_INLIST_FOREACH_SAFE(p->shelves, l, eps)
+     {
+        if (eps->body) ephysics_body_del(eps->body);
+        free(eps);
      }
    free(p);
 }
