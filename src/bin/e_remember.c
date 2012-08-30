@@ -45,8 +45,8 @@ e_remember_init(E_Startup_Mode mode)
              if ((rem->apply & E_REMEMBER_APPLY_RUN) && (rem->prop.command))
                e_util_head_exec(rem->prop.head, rem->prop.command);
           }
-        E_EVENT_REMEMBER_UPDATE = ecore_event_type_new();
      }
+   E_EVENT_REMEMBER_UPDATE = ecore_event_type_new();
 
    h = e_border_hook_add(E_BORDER_HOOK_EVAL_PRE_POST_FETCH,
                          _e_remember_cb_hook_pre_post_fetch, NULL);
