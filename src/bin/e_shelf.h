@@ -45,6 +45,7 @@ struct _E_Shelf
    unsigned char        edge        : 1;
    unsigned char        urgent_show : 1;
    unsigned char        dummy : 1;
+   Eina_Bool            cfg_delete : 1;
    unsigned int         locked;
 };
 

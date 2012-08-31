@@ -1065,6 +1065,15 @@ _e_shelf_free_cb(void *data __UNUSED__, void *event)
           }
         e_object_del(E_OBJECT(es->popup));
      }
+   if (es->cfg_delete)
+     {
+        e_config->shelves = eina_list_remove(e_config->shelves, es->cfg);
+        eina_stringshare_del(es->cfg->name);
+        eina_stringshare_del(es->cfg->style);
+        free(es->cfg);
+
+        e_config_save_queue();
+     }
    free(es);
 }
 
@@ -1510,13 +1519,8 @@ _e_shelf_cb_confirm_dialog_yes(void *data)
    es = data;
    cfg = es->cfg;
    if (e_object_is_del(E_OBJECT(es))) return;
+   es->cfg_delete = 1;
    e_object_del(E_OBJECT(es));
-   e_config->shelves = eina_list_remove(e_config->shelves, cfg);
-   if (cfg->name) eina_stringshare_del(cfg->name);
-   if (cfg->style) eina_stringshare_del(cfg->style);
-   E_FREE(cfg);
-
-   e_config_save_queue();
 }
 
 static void
