@@ -63,8 +63,12 @@ e_confirm_dialog_show(const char *title, const char *icon, const char *text,
 static void
 _e_confirm_dialog_free(E_Confirm_Dialog *cd)
 {
-   if ((cd->dia) && (cd->dia->win))
-     _e_confirm_dialog_delete(cd->dia->win);
+   E_Dialog *dia;
+
+   dia = cd->dia;
+   if (cd->del.func) cd->del.func(cd->del.data);
+   e_object_del(E_OBJECT(cd->dia));
+   free(cd);
 }
 
 static void
@@ -73,8 +77,10 @@ _e_confirm_dialog_yes(void *data, E_Dialog *dia __UNUSED__)
    E_Confirm_Dialog *cd;
 
    cd = data;
+   e_object_ref(data);
    if (cd->yes.func) cd->yes.func(cd->yes.data);
-   _e_confirm_dialog_delete(cd->dia->win);
+   e_object_del(data);
+   e_object_unref(data);
 }
 
 static void
@@ -83,21 +89,18 @@ _e_confirm_dialog_no(void *data, E_Dialog *dia __UNUSED__)
    E_Confirm_Dialog *cd;
 
    cd = data;
+   e_object_ref(data);
    if (cd->no.func) cd->no.func(cd->no.data);
-   _e_confirm_dialog_delete(cd->dia->win);
+   e_object_del(data);
+   e_object_unref(data);
 }
 
 static void
 _e_confirm_dialog_delete(E_Win *win)
 {
    E_Dialog *dia;
-   E_Confirm_Dialog *cd;
 
    dia = win->data;
-   cd = dia->data;
-
-   if (cd->del.func) cd->del.func(cd->del.data);
-   e_util_defer_object_del(E_OBJECT(dia));
-   free(cd);
+   e_object_del(dia->data);
 }
 
