@@ -105,6 +105,10 @@ static struct tiling_mod_main_g
                          *act_tg_stack,
                          *act_swap,
                          *act_move,
+                         *act_move_left,
+                         *act_move_right,
+                         *act_move_up,
+                         *act_move_down,
                          *act_adjusttransitions,
                          *act_go;
 
@@ -1984,9 +1988,9 @@ _check_moving_anims(const E_Border *bd, const Border_Extra *extra, int stack)
 }
 
 static void
-_move_up_cols(void)
+_move_up_cols(E_Border *bd, Eina_Bool check_moving_anims)
 {
-    E_Border *bd_1 = _G.focused_bd,
+    E_Border *bd_1 = bd,
              *bd_2 = NULL;
     Border_Extra *extra_1 = NULL,
                  *extra_2 = NULL;
@@ -1994,11 +1998,11 @@ _move_up_cols(void)
               *l_2 = NULL;
     int stack;
 
-    stack = get_stack(_G.focused_bd);
+    stack = get_stack(bd);
     if (stack < 0)
         return;
 
-    if (_G.tinfo->stacks[stack]->data == _G.focused_bd)
+    if (_G.tinfo->stacks[stack]->data == bd)
         return;
 
     l_1 = eina_list_data_find_list(_G.tinfo->stacks[stack], bd_1);
@@ -2031,16 +2035,18 @@ _move_up_cols(void)
                    extra_2->expected.x,
                    extra_2->expected.y);
 
-    _check_moving_anims(bd_1, extra_1, stack);
+    if (check_moving_anims)
+        _check_moving_anims(bd_1, extra_1, stack);
+
     ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
                          extra_1->expected.x + extra_1->expected.w/2,
                          extra_1->expected.y + extra_1->expected.h/2);
 }
 
 static void
-_move_down_cols(void)
+_move_down_cols(E_Border *bd, Eina_Bool check_moving_anims)
 {
-    E_Border *bd_1 = _G.focused_bd,
+    E_Border *bd_1 = bd,
              *bd_2 = NULL;
     Border_Extra *extra_1 = NULL,
                  *extra_2 = NULL;
@@ -2048,7 +2054,7 @@ _move_down_cols(void)
               *l_2 = NULL;
     int stack;
 
-    stack = get_stack(_G.focused_bd);
+    stack = get_stack(bd);
     if (stack < 0)
         return;
 
@@ -2082,21 +2088,22 @@ _move_down_cols(void)
                    extra_2->expected.x,
                    extra_2->expected.y);
 
-    _check_moving_anims(bd_1, extra_1, stack);
+    if (check_moving_anims)
+        _check_moving_anims(bd_1, extra_1, stack);
+
     ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
                          extra_1->expected.x + extra_1->expected.w/2,
                          extra_1->expected.y + extra_1->expected.h/2);
 }
 
 static void
-_move_left_cols(void)
+_move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
 {
-    E_Border *bd = _G.focused_bd;
     Border_Extra *extra;
     int stack;
     int i;
 
-    stack = get_stack(_G.focused_bd);
+    stack = get_stack(bd);
     if (stack <= 0)
         return;
 
@@ -2139,16 +2146,17 @@ _move_left_cols(void)
         return;
     }
 
-    _check_moving_anims(bd, extra, stack - 1);
+    if (check_moving_anims)
+        _check_moving_anims(bd, extra, stack - 1);
+
     ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
                          extra->expected.x + extra->expected.w/2,
                          extra->expected.y + extra->expected.h/2);
 }
 
 static void
-_move_right_cols(void)
+_move_right_cols(E_Border *bd, Eina_Bool check_moving_anims)
 {
-    E_Border *bd = _G.focused_bd;
     int stack;
     int nb_stacks;
     Border_Extra *extra;
@@ -2174,7 +2182,8 @@ _move_right_cols(void)
     if (_G.tinfo->stacks[stack] && _G.tinfo->stacks[stack + 1]->next) {
         _reorganize_stack(stack);
         _reorganize_stack(stack + 1);
-        _check_moving_anims(bd, extra, stack + 1);
+        if (check_moving_anims)
+            _check_moving_anims(bd, extra, stack + 1);
     } else
     if (_G.tinfo->stacks[stack]) {
         /* Add stack */
@@ -2212,7 +2221,8 @@ _move_right_cols(void)
             _G.tinfo->conf->nb_stacks = nb_stacks + 1;
             e_config_save_queue();
         }
-        _check_moving_anims(bd, extra, stack + 1);
+        if (check_moving_anims)
+            _check_moving_anims(bd, extra, stack + 1);
     } else {
         int x, y, w, h;
         int width;
@@ -2234,7 +2244,8 @@ _move_right_cols(void)
         _G.tinfo->pos[nb_stacks] = 0;
         _G.tinfo->size[nb_stacks] = 0;
         _reorganize_stack(stack);
-        _check_moving_anims(bd, extra, stack);
+        if (check_moving_anims)
+            _check_moving_anims(bd, extra, stack);
     }
 
     ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
@@ -2243,9 +2254,9 @@ _move_right_cols(void)
 }
 
 static void
-_move_left_rows(void)
+_move_left_rows(E_Border *bd, Eina_Bool check_moving_anims)
 {
-    E_Border *bd_1 = _G.focused_bd,
+    E_Border *bd_1 = bd,
              *bd_2 = NULL;
     Border_Extra *extra_1 = NULL,
                  *extra_2 = NULL;
@@ -2253,11 +2264,11 @@ _move_left_rows(void)
               *l_2 = NULL;
     int stack;
 
-    stack = get_stack(_G.focused_bd);
+    stack = get_stack(bd);
     if (stack < 0)
         return;
 
-    if (_G.tinfo->stacks[stack]->data == _G.focused_bd)
+    if (_G.tinfo->stacks[stack]->data == bd)
         return;
 
     l_1 = eina_list_data_find_list(_G.tinfo->stacks[stack], bd_1);
@@ -2290,16 +2301,18 @@ _move_left_rows(void)
                    extra_2->expected.x,
                    extra_2->expected.y);
 
-    _check_moving_anims(bd_1, extra_1, stack);
+    if (check_moving_anims)
+        _check_moving_anims(bd_1, extra_1, stack);
+
     ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
                          extra_1->expected.x + extra_1->expected.w/2,
                          extra_1->expected.y + extra_1->expected.h/2);
 }
 
 static void
-_move_right_rows(void)
+_move_right_rows(E_Border *bd, Eina_Bool check_moving_anims)
 {
-    E_Border *bd_1 = _G.focused_bd,
+    E_Border *bd_1 = bd,
              *bd_2 = NULL;
     Border_Extra *extra_1 = NULL,
                  *extra_2 = NULL;
@@ -2307,7 +2320,7 @@ _move_right_rows(void)
               *l_2 = NULL;
     int stack;
 
-    stack = get_stack(_G.focused_bd);
+    stack = get_stack(bd);
     if (stack < 0)
         return;
 
@@ -2341,21 +2354,22 @@ _move_right_rows(void)
                    extra_2->expected.x,
                    extra_2->expected.y);
 
-    _check_moving_anims(bd_1, extra_1, stack);
+    if (check_moving_anims)
+        _check_moving_anims(bd_1, extra_1, stack);
+
     ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
                          extra_1->expected.x + extra_1->expected.w/2,
                          extra_1->expected.y + extra_1->expected.h/2);
 }
 
 static void
-_move_up_rows(void)
+_move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
 {
-    E_Border *bd = _G.focused_bd;
     Border_Extra *extra;
     int stack;
     int i;
 
-    stack = get_stack(_G.focused_bd);
+    stack = get_stack(bd);
     if (stack <= 0)
         return;
 
@@ -2398,16 +2412,17 @@ _move_up_rows(void)
         return;
     }
 
-    _check_moving_anims(bd, extra, stack - 1);
+    if (check_moving_anims)
+        _check_moving_anims(bd, extra, stack - 1);
+
     ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
                          extra->expected.x + extra->expected.w/2,
                          extra->expected.y + extra->expected.h/2);
 }
 
 static void
-_move_down_rows(void)
+_move_down_rows(E_Border *bd, Eina_Bool check_moving_anims)
 {
-    E_Border *bd = _G.focused_bd;
     int stack;
     int nb_stacks;
     Border_Extra *extra;
@@ -2433,7 +2448,8 @@ _move_down_rows(void)
     if (_G.tinfo->stacks[stack] && _G.tinfo->stacks[stack + 1]->next) {
         _reorganize_stack(stack);
         _reorganize_stack(stack + 1);
-        _check_moving_anims(bd, extra, stack + 1);
+        if (check_moving_anims)
+            _check_moving_anims(bd, extra, stack + 1);
     } else
     if (_G.tinfo->stacks[stack]) {
         /* Add stack */
@@ -2471,7 +2487,8 @@ _move_down_rows(void)
             _G.tinfo->conf->nb_stacks = nb_stacks + 1;
             e_config_save_queue();
         }
-        _check_moving_anims(bd, extra, stack + 1);
+        if (check_moving_anims)
+            _check_moving_anims(bd, extra, stack + 1);
     } else {
         int x, y, w, h;
 
@@ -2494,7 +2511,8 @@ _move_down_rows(void)
         _G.tinfo->pos[nb_stacks] = 0;
         _G.tinfo->size[nb_stacks] = 0;
         _reorganize_stack(stack);
-        _check_moving_anims(bd, extra, stack);
+        if (check_moving_anims)
+            _check_moving_anims(bd, extra, stack);
     }
 
     ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
@@ -2520,33 +2538,33 @@ move_key_down(void *data __UNUSED__,
     ||  (strcmp(ev->key, "k") == 0))
     {
         if (_G.tinfo->conf->use_rows)
-            _move_up_rows();
+            _move_up_rows(_G.focused_bd, true);
         else
-            _move_up_cols();
+            _move_up_cols(_G.focused_bd, true);
         return ECORE_CALLBACK_PASS_ON;
     } else if ((strcmp(ev->key, "Down") == 0)
            ||  (strcmp(ev->key, "j") == 0))
     {
         if (_G.tinfo->conf->use_rows)
-            _move_down_rows();
+            _move_down_rows(_G.focused_bd, true);
         else
-            _move_down_cols();
+            _move_down_cols(_G.focused_bd, true);
         return ECORE_CALLBACK_PASS_ON;
     } else if ((strcmp(ev->key, "Left") == 0)
            ||  (strcmp(ev->key, "h") == 0))
     {
         if (_G.tinfo->conf->use_rows)
-            _move_left_rows();
+            _move_left_rows(_G.focused_bd, true);
         else
-            _move_left_cols();
+            _move_left_cols(_G.focused_bd, true);
         return ECORE_CALLBACK_PASS_ON;
     } else if ((strcmp(ev->key, "Right") == 0)
            ||  (strcmp(ev->key, "l") == 0))
     {
         if (_G.tinfo->conf->use_rows)
-            _move_right_rows();
+            _move_right_rows(_G.focused_bd, true);
         else
-            _move_right_cols();
+            _move_right_cols(_G.focused_bd, true);
         return ECORE_CALLBACK_PASS_ON;
     }
 
@@ -2559,6 +2577,57 @@ move_key_down(void *data __UNUSED__,
 stop:
     end_special_input();
     return ECORE_CALLBACK_DONE;
+}
+
+static void
+_e_mod_action_move_direct_cb(E_Object   *obj __UNUSED__,
+                             const char *params)
+{
+    E_Desk *desk;
+    E_Border *focused_bd;
+
+    desk = get_current_desk();
+    if (!desk)
+        return;
+
+    focused_bd = e_border_focused_get();
+    if (!focused_bd || focused_bd->desk != desk)
+        return;
+
+    check_tinfo(desk);
+    if (!_G.tinfo->conf || !_G.tinfo->conf->nb_stacks) {
+        return;
+    }
+
+
+    assert(params != NULL);
+
+    switch (params[0]) {
+      case 'l': /* left */
+        if (_G.tinfo->conf->use_rows)
+            _move_left_rows(focused_bd, false);
+        else
+            _move_left_cols(focused_bd, false);
+        break;
+      case 'r': /* right */
+        if (_G.tinfo->conf->use_rows)
+            _move_right_rows(focused_bd, false);
+        else
+            _move_right_cols(focused_bd, false);
+        break;
+      case 'u': /* up */
+        if (_G.tinfo->conf->use_rows)
+            _move_up_rows(focused_bd, false);
+        else
+            _move_up_cols(focused_bd, false);
+        break;
+      case 'd': /* down */
+        if (_G.tinfo->conf->use_rows)
+            _move_down_rows(focused_bd, false);
+        else
+            _move_down_cols(focused_bd, false);
+        break;
+    }
 }
 
 static void
@@ -3535,20 +3604,20 @@ _remove_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Remove *
     end_special_input();
 
     if (_G.currently_switching_desktop)
-        return EINA_TRUE;
+        return true;
 
     check_tinfo(bd->desk);
     if (!_G.tinfo->conf)
-        return EINA_TRUE;
+        return true;
 
     if (EINA_LIST_IS_IN(_G.tinfo->floating_windows, bd)) {
         EINA_LIST_REMOVE(_G.tinfo->floating_windows, bd);
-        return EINA_TRUE;
+        return true;
     }
 
     _remove_border(bd);
 
-    return EINA_TRUE;
+    return true;
 }
 
 static bool
@@ -3623,7 +3692,7 @@ _desk_show_hook(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED
 
     end_special_input();
 
-    return EINA_TRUE;
+    return true;
 }
 
 static Eina_Bool
@@ -3633,7 +3702,7 @@ _desk_before_show_hook(void *data __UNUSED__, int type __UNUSED__, void *event _
 
     _G.currently_switching_desktop = 1;
 
-    return EINA_TRUE;
+    return true;
 }
 
 static bool
@@ -3786,34 +3855,56 @@ e_modapi_init(E_Module *m)
     HANDLER(_G.handler_container_resize, CONTAINER_RESIZE, _container_resize_hook);
 #undef HANDLER
 
-#define ACTION_ADD(_act, _cb, _title, _value)                                \
+#define ACTION_ADD(_act, _cb, _title, _value, _params, _example, _editable)  \
     {                                                                        \
         E_Action *_action = _act;                                            \
         const char *_name = _value;                                          \
         if ((_action = e_action_add(_name))) {                               \
             _action->func.go = _cb;                                          \
-            e_action_predef_name_set(_("Tiling"), _(_title), _name,      \
-                                     NULL, NULL, 0);                         \
+            e_action_predef_name_set(_("Tiling"), _(_title), _name,          \
+                                     _params, _example, _editable);          \
         }                                                                    \
     }
 
     /* Module's actions */
     ACTION_ADD(_G.act_togglefloat, _e_mod_action_toggle_floating_cb,
-               "Toggle floating", "toggle_floating");
+               "Toggle floating", "toggle_floating",
+               NULL, NULL, 0);
     ACTION_ADD(_G.act_addstack, _e_mod_action_add_stack_cb,
-               "Add a stack", "add_stack");
+               "Add a stack", "add_stack",
+               NULL, NULL, 0);
     ACTION_ADD(_G.act_removestack, _e_mod_action_remove_stack_cb,
-               "Remove a stack", "remove_stack");
+               "Remove a stack", "remove_stack",
+               NULL, NULL, 0);
     ACTION_ADD(_G.act_tg_stack, _e_mod_action_tg_stack_cb,
-               "Toggle between rows and columns", "tg_cols_rows");
+               "Toggle between rows and columns", "tg_cols_rows",
+               NULL, NULL, 0);
     ACTION_ADD(_G.act_swap, _e_mod_action_swap_cb,
-               "Swap a window with an other", "swap");
+               "Swap a window with an other", "swap",
+               NULL, NULL, 0);
+
     ACTION_ADD(_G.act_move, _e_mod_action_move_cb,
-               "Move window", "move");
+               "Move window", "move",
+               NULL, NULL, 0);
+    ACTION_ADD(_G.act_move_left, _e_mod_action_move_direct_cb,
+               "Move window to the left", "move_left",
+               "left", NULL, 0);
+    ACTION_ADD(_G.act_move_right, _e_mod_action_move_direct_cb,
+               "Move window to the right", "move_right",
+               "right", NULL, 0);
+    ACTION_ADD(_G.act_move_up, _e_mod_action_move_direct_cb,
+               "Move window up", "move_up",
+               "up", NULL, 0);
+    ACTION_ADD(_G.act_move_down, _e_mod_action_move_direct_cb,
+               "Move window down", "move_down",
+               "down", NULL, 0);
+
     ACTION_ADD(_G.act_adjusttransitions, _e_mod_action_adjust_transitions,
-               "Adjust transitions", "adjust_transitions");
+               "Adjust transitions", "adjust_transitions",
+               NULL, NULL, 0);
     ACTION_ADD(_G.act_go, _e_mod_action_go_cb,
-               "Focus a particular window", "go");
+               "Focus a particular window", "go",
+               NULL, NULL, 0);
 #undef ACTION_ADD
 
     /* Configuration entries */
@@ -3919,7 +4010,13 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
     ACTION_DEL(_G.act_removestack, "Remove a stack", "remove_stack");
     ACTION_DEL(_G.act_tg_stack, "Toggle between rows and columns", "tg_cols_rows");
     ACTION_DEL(_G.act_swap, "Swap a window with an other", "swap");
+
     ACTION_DEL(_G.act_move, "Move window", "move");
+    ACTION_DEL(_G.act_move_left, "Move window to the left", "move_left");
+    ACTION_DEL(_G.act_move_right, "Move window to the right", "move_right");
+    ACTION_DEL(_G.act_move_up, "Move window up", "move_up");
+    ACTION_DEL(_G.act_move_down, "Move window down", "move_down");
+
     ACTION_DEL(_G.act_adjusttransitions, "Adjust transitions",
                "adjust_transitions");
     ACTION_DEL(_G.act_go, "Focus a particular window", "go");
@@ -3953,6 +4050,6 @@ e_modapi_save(E_Module *m __UNUSED__)
 {
     e_config_domain_save("module.tiling", _G.config_edd, tiling_g.config);
 
-    return EINA_TRUE;
+    return true;
 }
 /* }}} */

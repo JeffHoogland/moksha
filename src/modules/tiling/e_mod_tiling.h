@@ -7,6 +7,8 @@
 
 #include <stdbool.h>
 
+#include <assert.h>
+
 #include "config.h"
 
 typedef struct _Config      Config;
