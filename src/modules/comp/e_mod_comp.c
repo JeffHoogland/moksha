@@ -3636,11 +3636,99 @@ _e_mod_comp_del(E_Comp *c)
 
 //////////////////////////////////////////////////////////////////////////
 
+
+static void
+_e_mod_comp_sys_done_cb(void *data, Evas_Object *obj, const char *sig, const char *src)
+{
+   edje_object_signal_callback_del(obj, sig, src, _e_mod_comp_sys_done_cb);
+   e_sys_action_raw_do((E_Sys_Action)(long)data, NULL);
+}
+
+static void
+_e_mod_comp_sys_emit_cb_wait(E_Sys_Action a, const char *sig, const char *rep)
+{
+   Eina_List *l, *ll;
+   E_Comp_Zone *cz;
+   E_Comp *c;
+   Eina_Bool first = EINA_TRUE;
+   
+   EINA_LIST_FOREACH(compositors, l, c)
+     {
+        EINA_LIST_FOREACH(c->zones, ll, cz)
+          {
+             edje_object_signal_emit(cz->base, sig, "e");
+             edje_object_signal_emit(cz->over, sig, "e");
+             if ((rep) && (first))
+               edje_object_signal_callback_add(cz->over, rep, "e",
+                                               _e_mod_comp_sys_done_cb,
+                                               (void *)(long)a);
+             first = EINA_FALSE;
+          }
+     }
+}
+
+static void
+_e_mod_comp_sys_suspend(void)
+{
+   _e_mod_comp_sys_emit_cb_wait(E_SYS_SUSPEND,
+                                "e,state,sys,suspend",
+                                "e,state,sys,suspend,done");
+}
+
+static void
+_e_mod_comp_sys_hibernate(void)
+{
+   _e_mod_comp_sys_emit_cb_wait(E_SYS_HIBERNATE,
+                                "e,state,sys,hibernate",
+                                "e,state,sys,hibernate,done");
+}
+
+static void
+_e_mod_comp_sys_reboot(void)
+{
+   _e_mod_comp_sys_emit_cb_wait(E_SYS_REBOOT,
+                                "e,state,sys,reboot",
+                                "e,state,sys,reboot,done");
+}
+
+static void
+_e_mod_comp_sys_shutdown(void)
+{
+   _e_mod_comp_sys_emit_cb_wait(E_SYS_HALT,
+                                "e,state,sys,halt",
+                                "e,state,sys,halt,done");
+}
+
+static void
+_e_mod_comp_sys_logout(void)
+{
+   _e_mod_comp_sys_emit_cb_wait(E_SYS_LOGOUT,
+                                "e,state,sys,logout",
+                                "e,state,sys,logout,done");
+}
+
+static void
+_e_mod_comp_sys_resume(void)
+{
+   _e_mod_comp_sys_emit_cb_wait(E_SYS_SUSPEND,
+                                "e,state,sys,resume",
+                                NULL);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 Eina_Bool
 e_mod_comp_init(void)
 {
    Eina_List *l;
    E_Manager *man;
+   
+   e_sys_handlers_set(_e_mod_comp_sys_suspend,
+                      _e_mod_comp_sys_hibernate,
+                      _e_mod_comp_sys_reboot,
+                      _e_mod_comp_sys_shutdown,
+                      _e_mod_comp_sys_logout,
+                      _e_mod_comp_sys_resume);
 
    windows = eina_hash_string_superfast_new(NULL);
    borders = eina_hash_string_superfast_new(NULL);
@@ -3744,6 +3832,8 @@ e_mod_comp_shutdown(void)
    damages = NULL;
    windows = NULL;
    borders = NULL;
+   
+   e_sys_handlers_set(NULL, NULL, NULL, NULL, NULL, NULL);
 }
 
 void

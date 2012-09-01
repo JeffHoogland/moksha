@@ -35,6 +35,7 @@ EINTERN int e_sys_init(void);
 EINTERN int e_sys_shutdown(void);
 EAPI int e_sys_action_possible_get(E_Sys_Action a);
 EAPI int e_sys_action_do(E_Sys_Action a, char *param);
+EAPI int e_sys_action_raw_do(E_Sys_Action a, char *param);
 
 EAPI E_Sys_Con_Action *e_sys_con_extra_action_register(const char *label,
                                                        const char *icon_group,
@@ -43,6 +44,12 @@ EAPI E_Sys_Con_Action *e_sys_con_extra_action_register(const char *label,
                                                        const void *data);
 EAPI void e_sys_con_extra_action_unregister(E_Sys_Con_Action *sca);
 EAPI const Eina_List *e_sys_con_extra_action_list_get(void);
+EAPI void e_sys_handlers_set(void (*suspend_func) (void),
+                             void (*hibernate_func) (void),
+                             void (*reboot_func) (void),
+                             void (*shutdown_func) (void),
+                             void (*logout_func) (void),
+                             void (*resume_func) (void));
 
 #endif
 #endif
