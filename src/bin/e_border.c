@@ -2176,8 +2176,22 @@ e_border_focus_set(E_Border *bd,
                   else
                     focus_next = eina_list_prepend(focus_next, bd);
                }
-
-             return;
+             if ((bd->client.icccm.take_focus) &&
+                 (bd->client.icccm.accepts_focus))
+               {
+                  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_LOCALLY_ACTIVE);
+                  /* TODO what if the client didn't take focus ? */
+               }
+             else if (!bd->client.icccm.accepts_focus)
+               {
+                  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_GLOBALLY_ACTIVE);
+               }
+             else if (!bd->client.icccm.take_focus)
+               {
+                  e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
+                  /* e_border_focus_set(bd, 1, 0); */
+               }
+            return;
           }
 
         if (!bd->focused)
@@ -3414,14 +3428,15 @@ e_border_idler_before(void)
              /* TODO revert focus when lost here ? */
              return;
           }
-
+#if 0
         if (bd == focused)
           {
              /* already focused. but anyway dont be so strict, this
                 fcks up illume setting focus on internal windows */
              return;
           }
-
+#endif
+        
         focus_time = ecore_x_current_time_get();
 
         focusing = bd;
