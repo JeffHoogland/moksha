@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-30 19:06+0900\n"
+"POT-Creation-Date: 2012-09-01 17:41+0900\n"
 "PO-Revision-Date: 2009-11-06 10:41+0000\n"
 "Last-Translator:  Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: E17-de\n"
@@ -1243,7 +1243,7 @@ msgid "Select an Executable"
 msgstr "Wählen Sie eine ausführbare Datei aus"
 
 #: src/bin/e_entry.c:506 src/bin/e_fm.c:8432 src/bin/e_fm.c:9786
-#: src/bin/e_shelf.c:1549 src/bin/e_shelf.c:2056
+#: src/bin/e_shelf.c:1553 src/bin/e_shelf.c:2060
 #: src/modules/conf_dialogs/e_int_config_profiles.c:134
 #: src/modules/conf_dialogs/e_int_config_profiles.c:331
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1485,7 +1485,7 @@ msgstr ""
 msgid "Actions..."
 msgstr "Aktionen"
 
-#: src/bin/e_fm.c:8440 src/bin/e_shelf.c:2051
+#: src/bin/e_fm.c:8440 src/bin/e_shelf.c:2055
 #: src/modules/conf_shelves/e_int_config_shelf.c:135
 msgid "Rename"
 msgstr "Umbenennen"
@@ -1592,7 +1592,7 @@ msgstr "Datei umbenennen"
 msgid "Retry"
 msgstr "Wiederholen"
 
-#: src/bin/e_fm.c:9470 src/bin/e_fm.c:9615 src/bin/e_shelf.c:2000
+#: src/bin/e_fm.c:9470 src/bin/e_fm.c:9615 src/bin/e_shelf.c:2004
 msgid "Error"
 msgstr "Fehler"
 
@@ -1689,7 +1689,7 @@ msgstr "Unbekanntes Laufwerk"
 msgid "Removable Device"
 msgstr "Entfernbare Geräte"
 
-#: src/bin/e_fm_prop.c:387 src/bin/e_shelf.c:2020
+#: src/bin/e_fm_prop.c:387 src/bin/e_shelf.c:2024
 #: src/modules/conf_dialogs/e_int_config_profiles.c:308
 #: src/modules/conf_display/e_int_config_desk.c:154
 #: src/modules/conf_shelves/e_int_config_shelf.c:389
@@ -1755,7 +1755,7 @@ msgstr "Gruppieren nach"
 msgid "Others:"
 msgstr "Andere"
 
-#: src/bin/e_fm_prop.c:477 src/bin/e_widget_fsel.c:336
+#: src/bin/e_fm_prop.c:477 src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:218
 #: src/modules/conf_theme/e_int_config_theme.c:1166
 #: src/modules/conf_theme/e_int_config_xsettings.c:474
@@ -2090,13 +2090,13 @@ msgid "Window List"
 msgstr "Fensterliste"
 
 #: src/bin/e_int_border_menu.c:1230 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2939 src/modules/pager/e_mod_main.c:2946
-#: src/modules/pager/e_mod_main.c:2953 src/modules/pager/e_mod_main.c:2955
-#: src/modules/pager/e_mod_main.c:2957 src/modules/pager/e_mod_main.c:2959
-#: src/modules/pager/e_mod_main.c:2961 src/modules/pager/e_mod_main.c:2963
-#: src/modules/pager/e_mod_main.c:2989 src/modules/pager/e_mod_main.c:2990
-#: src/modules/pager/e_mod_main.c:2991 src/modules/pager/e_mod_main.c:2992
-#: src/modules/pager/e_mod_main.c:2993 src/modules/pager/e_mod_main.c:2994
+#: src/modules/pager/e_mod_main.c:2940 src/modules/pager/e_mod_main.c:2947
+#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2956
+#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2960
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
+#: src/modules/pager/e_mod_main.c:2990 src/modules/pager/e_mod_main.c:2991
+#: src/modules/pager/e_mod_main.c:2992 src/modules/pager/e_mod_main.c:2993
+#: src/modules/pager/e_mod_main.c:2994 src/modules/pager/e_mod_main.c:2995
 msgid "Pager"
 msgstr "Arbeitsflächenumschalter"
 
@@ -2330,7 +2330,7 @@ msgstr "Position anfordern"
 
 #: src/bin/e_int_border_prop.c:480 src/bin/e_int_border_prop.c:515
 #: src/bin/e_int_config_modules.c:57 src/bin/e_int_menus.c:231
-#: src/bin/e_shelf.c:2043 src/modules/battery/e_mod_main.c:193
+#: src/bin/e_shelf.c:2047 src/modules/battery/e_mod_main.c:193
 #: src/modules/clock/e_mod_main.c:300 src/modules/clock/e_mod_main.c:535
 #: src/modules/conf/e_conf.c:136 src/modules/conf/e_conf.c:146
 #: src/modules/conf/e_mod_main.c:101 src/modules/conf_dialogs/e_mod_main.c:17
@@ -2521,23 +2521,23 @@ msgstr "Basis"
 msgid "Mobile"
 msgstr "Mobil"
 
-#: src/bin/e_int_config_modules.c:96
+#: src/bin/e_int_config_modules.c:97
 msgid "Module Settings"
 msgstr "Modul-Einstellungen"
 
-#: src/bin/e_int_config_modules.c:174
+#: src/bin/e_int_config_modules.c:175
 msgid "Load"
 msgstr "Laden"
 
-#: src/bin/e_int_config_modules.c:179 src/bin/e_module.c:518
+#: src/bin/e_int_config_modules.c:180 src/bin/e_module.c:518
 msgid "Unload"
 msgstr "Entladen"
 
-#: src/bin/e_int_config_modules.c:306 src/bin/e_int_config_modules.c:582
+#: src/bin/e_int_config_modules.c:307 src/bin/e_int_config_modules.c:594
 msgid "No modules selected."
 msgstr "Keine Module ausgewählt."
 
-#: src/bin/e_int_config_modules.c:580
+#: src/bin/e_int_config_modules.c:592
 msgid "More than one module selected."
 msgstr "Mehr als ein Modul ist ausgewählt."
 
@@ -3439,7 +3439,7 @@ msgstr "Enlightenment-Modul %s"
 msgid "What action should be taken with this module?<br>"
 msgstr "Möchten Sie dieses Modul abschalten?<br>"
 
-#: src/bin/e_module.c:519 src/bin/e_shelf.c:1549
+#: src/bin/e_module.c:519 src/bin/e_shelf.c:1553
 #: src/modules/conf_dialogs/e_int_config_profiles.c:331
 #: src/modules/conf_shelves/e_int_config_shelf.c:518
 #: src/modules/ibar/e_mod_config.c:194
@@ -3470,41 +3470,41 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 
-#: src/bin/e_shelf.c:1406 src/modules/conf_shelves/e_int_config_shelf.c:191
+#: src/bin/e_shelf.c:1415 src/modules/conf_shelves/e_int_config_shelf.c:191
 #: src/modules/conf_shelves/e_int_config_shelf.c:387
 msgid "Shelf"
 msgstr "Modulablage"
 
-#: src/bin/e_shelf.c:1425
+#: src/bin/e_shelf.c:1434
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "Verschieben/Größenänderung von Helfern beenden"
 
-#: src/bin/e_shelf.c:1427
+#: src/bin/e_shelf.c:1436
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "Verschieben/Größenänderung von Helfern starten"
 
-#: src/bin/e_shelf.c:1544 src/modules/conf_shelves/e_int_config_shelf.c:517
+#: src/bin/e_shelf.c:1548 src/modules/conf_shelves/e_int_config_shelf.c:517
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Möchten Sie diese Modulablage wirklich entfernen?"
 
-#: src/bin/e_shelf.c:1546
+#: src/bin/e_shelf.c:1550
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "Sie wollen diese Modulablage entfernen.<br><br>Sind Sie sicher?"
 
-#: src/bin/e_shelf.c:2000
+#: src/bin/e_shelf.c:2004
 msgid "A shelf with that name and id already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:2019
+#: src/bin/e_shelf.c:2023
 #, fuzzy
 msgid "Rename Shelf"
 msgstr "Datei umbenennen"
 
-#: src/bin/e_shelf.c:2038 src/modules/conf_shelves/e_int_config_shelf.c:138
+#: src/bin/e_shelf.c:2042 src/modules/conf_shelves/e_int_config_shelf.c:138
 #: src/modules/ibar/e_mod_main.c:853
 msgid "Contents"
 msgstr "Inhalte"
@@ -3961,11 +3961,11 @@ msgstr ""
 msgid "Alpha"
 msgstr ""
 
-#: src/bin/e_widget_fsel.c:322
+#: src/bin/e_widget_fsel.c:334
 msgid "Add to Favorites"
 msgstr "Zu Favoriten hinzufügen"
 
-#: src/bin/e_widget_fsel.c:327
+#: src/bin/e_widget_fsel.c:339
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:831
 #: src/modules/conf_theme/e_int_config_wallpaper.c:469
@@ -8210,31 +8210,31 @@ msgstr ""
 "sie bereits intern<br>für Kontextmenüs vergeben ist.<br>Diese Maustaste "
 "funktioniert nur im Popup."
 
-#: src/modules/pager/e_mod_main.c:2946
+#: src/modules/pager/e_mod_main.c:2947
 msgid "Show Pager Popup"
 msgstr "Zeige Arbeitsflächenumschalter-Popup"
 
-#: src/modules/pager/e_mod_main.c:2953 src/modules/pager/e_mod_main.c:2989
+#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2990
 msgid "Popup Desk Right"
 msgstr "Popup mit rechter Arbeitsfläche"
 
-#: src/modules/pager/e_mod_main.c:2955 src/modules/pager/e_mod_main.c:2990
+#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2991
 msgid "Popup Desk Left"
 msgstr "Popup mit linker Arbeitsfläche"
 
-#: src/modules/pager/e_mod_main.c:2957 src/modules/pager/e_mod_main.c:2991
+#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2992
 msgid "Popup Desk Up"
 msgstr "Popup mit oberer Arbeitsfläche"
 
-#: src/modules/pager/e_mod_main.c:2959 src/modules/pager/e_mod_main.c:2992
+#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2993
 msgid "Popup Desk Down"
 msgstr "Popup mit unterer Arbeitsfläche"
 
-#: src/modules/pager/e_mod_main.c:2961 src/modules/pager/e_mod_main.c:2993
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2994
 msgid "Popup Desk Next"
 msgstr "Popup mit nächster Arbeitsfläche"
 
-#: src/modules/pager/e_mod_main.c:2963 src/modules/pager/e_mod_main.c:2994
+#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2995
 msgid "Popup Desk Previous"
 msgstr "Popup mit voriger Arbeitsfläche"
 
