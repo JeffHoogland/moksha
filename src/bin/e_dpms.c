@@ -65,6 +65,25 @@ e_dpms_update(void)
    if (changed) ecore_x_dpms_timeouts_set(standby, suspend, off);
 }
 
+EAPI void
+e_dpms_force_update(void)
+{
+   unsigned int standby = 0, suspend = 0, off = 0;
+   int enabled;
+
+   enabled = ((e_config->dpms_enable) && (!e_config->mode.presentation) &&
+              (!e_util_fullscreen_curreny_any()));
+   ecore_x_dpms_enabled_set(enabled);
+   if (!enabled) return;
+   if (e_config->dpms_standby_enable)
+     standby = e_config->dpms_standby_timeout;
+   if (e_config->dpms_suspend_enable)
+     suspend = e_config->dpms_suspend_timeout;
+   if (e_config->dpms_off_enable)
+     off = e_config->dpms_off_timeout;
+   ecore_x_dpms_timeouts_set(standby, suspend, off);
+}
+
 static Eina_Bool
 _e_dpms_handler_config_mode_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {

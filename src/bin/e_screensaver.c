@@ -60,6 +60,20 @@ e_screensaver_update(void)
    if (changed) ecore_x_screensaver_set(timeout, interval, blanking, expose);
 }
 
+EAPI void
+e_screensaver_force_update(void)
+{
+   int timeout = 0, count = (1 + _e_screensaver_ask_presentation_count);
+
+   if ((e_config->screensaver_enable) && (!e_config->mode.presentation) &&
+       (!e_util_fullscreen_curreny_any()))
+     timeout = e_config->screensaver_timeout * count;
+   ecore_x_screensaver_set(timeout,
+                           e_config->screensaver_interval,
+                           e_config->screensaver_blanking,
+                           e_config->screensaver_expose);
+}
+
 static Eina_Bool
 _e_screensaver_handler_config_mode_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
@@ -210,6 +224,9 @@ _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __U
      }
    else
      {
+        e_screensaver_force_update();
+        e_dpms_force_update();
+        
         _e_screensaver_on = EINA_FALSE;
         if (_e_screensaver_suspend_timer)
           {

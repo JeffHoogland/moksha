@@ -7,6 +7,7 @@ EINTERN int e_screensaver_init(void);
 EINTERN int e_screensaver_shutdown(void);
 
 EAPI void e_screensaver_update(void);
+EAPI void e_screensaver_force_update(void);
 
 #endif
 #endif
