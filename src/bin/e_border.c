@@ -2229,7 +2229,8 @@ e_border_focus_set(E_Border *bd,
         focus_next = eina_list_remove(focus_next, bd);
         if (bd == focusing) focusing = NULL;
 
-        if (bd->focused)
+        if ((bd->focused) && 
+            ((bd->desk == e_desk_current_get(bd->zone)) || (bd->sticky)))
           {
              Eina_Bool wasfocused = EINA_FALSE;
              bd_unfocus = bd;
