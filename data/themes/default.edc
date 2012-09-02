@@ -40591,6 +40591,24 @@ collections {
 	    }
 	 }
 	 part {
+	 name: "label3";
+	 type: TEXT;
+	 mouse_events: 0;
+	 scale: 1;
+	    description {
+	    state: "default" 0.0;
+	    rel1.to: "e.text.label";
+	    rel2.to: "e.text.label";
+	    visible: 0;
+	       text {
+	       font: "Sans";
+	       text_source: "e.text.label";
+	       size: 10;
+	       min: 1 1;
+	       }
+	    }
+	 }
+	 part {
 	 name: "label2";
 	 type: TEXT;
 	 mouse_events: 0;
@@ -40605,7 +40623,7 @@ collections {
 	       font: "Sans";
 	       text_source: "e.text.label";
 	       size: 10;
-	       min: 1 1;
+	       min: 0 1;
 	       align: 0.5 0.5;
 	       elipsis: 0.0;
 	       }
