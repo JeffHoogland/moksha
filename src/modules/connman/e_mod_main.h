@@ -28,6 +28,9 @@ struct E_Connman_Instance
         struct
           {
              Evas_Object *list;
+
+             Ecore_X_Window input_win;
+             Ecore_Event_Handler *input_mouse_up;
           } popup;
      } ui;
 };

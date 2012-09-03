@@ -89,6 +89,55 @@ void econnman_mod_services_changed(struct Connman_Manager *cm)
      }
 }
 
+static void _econnman_popup_del(E_Connman_Instance *inst);
+
+static Eina_Bool _econnman_popup_input_window_mouse_up_cb(void *data,
+                                                          int type __UNUSED__,
+                                                          void *event)
+{
+   Ecore_Event_Mouse_Button *ev = event;
+   E_Connman_Instance *inst = data;
+
+   if (ev->window != inst->ui.popup.input_win)
+     return ECORE_CALLBACK_PASS_ON;
+
+   _econnman_popup_del(inst);
+
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static void _econnman_popup_input_window_destroy(E_Connman_Instance *inst)
+{
+   ecore_x_window_free(inst->ui.popup.input_win);
+   inst->ui.popup.input_win = 0;
+
+   ecore_event_handler_del(inst->ui.popup.input_mouse_up);
+   inst->ui.popup.input_mouse_up = NULL;
+}
+
+static void _econnman_popup_input_window_create(E_Connman_Instance *inst)
+{
+   Ecore_X_Window_Configure_Mask mask;
+   Ecore_X_Window w, popup_w;
+   E_Manager *man;
+
+   man = e_manager_current_get();
+
+   w = ecore_x_window_input_new(man->root, 0, 0, man->w, man->h);
+   mask = (ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE |
+           ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING);
+   popup_w = inst->popup->win->evas_win;
+   ecore_x_window_configure(w, mask, 0, 0, 0, 0, 0, popup_w,
+                            ECORE_X_WINDOW_STACK_BELOW);
+   ecore_x_window_show(w);
+
+   inst->ui.popup.input_mouse_up =
+         ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
+                                 _econnman_popup_input_window_mouse_up_cb, inst);
+
+   inst->ui.popup.input_win = w;
+}
+
 static void _econnman_popup_new(E_Connman_Instance *inst)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
@@ -121,10 +170,12 @@ static void _econnman_popup_new(E_Connman_Instance *inst)
 
    e_gadcon_popup_content_set(inst->popup, ot);
    e_gadcon_popup_show(inst->popup);
+   _econnman_popup_input_window_create(inst);
 }
 
 static void _econnman_popup_del(E_Connman_Instance *inst)
 {
+   _econnman_popup_input_window_destroy(inst);
    e_object_del(E_OBJECT(inst->popup));
    inst->popup = NULL;
 }
