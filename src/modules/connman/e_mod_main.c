@@ -137,6 +137,7 @@ static void _econnman_popup_update(struct Connman_Manager *cm,
    Evas_Object *list = inst->ui.popup.list;
    Evas *evas = evas_object_evas_get(list);
    struct Connman_Service *cs;
+   const char *hidden = "«hidden»";
 
    EINA_SAFETY_ON_NULL_RETURN(cm);
 
@@ -147,7 +148,7 @@ static void _econnman_popup_update(struct Connman_Manager *cm,
      {
         Evas_Object *icon = _econnman_service_new_icon(cs, evas);
         Evas_Object *end = _econnman_service_new_end(cs, evas);
-        e_widget_ilist_append_full(list, icon, end, cs->name,
+        e_widget_ilist_append_full(list, icon, end, cs->name ?: hidden,
                                    _econnman_popup_selected_cb,
                                    inst, cs->obj.path);
      }
