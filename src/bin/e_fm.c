@@ -8236,6 +8236,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    char buf[PATH_MAX], *ext;
 
    sd = ic->sd;
+   if (ic->menu) return;
 
    mn = e_menu_new();
    e_object_data_set(E_OBJECT(mn), obj);
@@ -8661,6 +8662,68 @@ _e_fm2_view_menu_icon_size_use_default(void *data, E_Menu *m, E_Menu_Item *mi)
 }
 
 static void
+_e_fm2_view_menu_sorting_change_case(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   sd->config->list.sort.no_case = !mi->toggle;
+   _e_fm2_refresh(sd, NULL, NULL);
+}
+
+static void
+_e_fm2_view_menu_sorting_change_dirs_first(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   sd->config->list.sort.dirs.first = mi->toggle;
+   if (mi->toggle)
+     
+   _e_fm2_refresh(sd, NULL, NULL);
+}
+
+static void
+_e_fm2_view_menu_sorting_change_dirs_last(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   sd->config->list.sort.dirs.last = mi->toggle;
+   _e_fm2_refresh(sd, NULL, NULL);
+}
+
+static void
+_e_fm2_view_menu_sorting_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+   E_Menu *subm;
+
+   subm = e_menu_new();
+   e_menu_item_submenu_set(mi, subm);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Case Sensitive"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, !sd->config->list.sort.no_case);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_case, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Directories First"));
+   e_menu_item_radio_group_set(mi, 1);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->config->list.sort.dirs.first);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_dirs_first, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Directories Last"));
+   e_menu_item_radio_group_set(mi, 1);
+   e_menu_item_radio_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->config->list.sort.dirs.last);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_dirs_last, sd);
+}
+
+static void
 _e_fm2_view_menu_icon_size_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Fm2_Smart_Data *sd = data;
@@ -8765,6 +8828,14 @@ _e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->view_mode == -1);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_use_default_cb, sd);
+
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Sorting"));
+   e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_sorting_pre, sd);
 
    if (view_mode == E_FM2_VIEW_MODE_LIST)
      return;
