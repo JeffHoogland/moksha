@@ -2,12 +2,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 #ifdef HAVE_ECONNMAN
-#define E_CONNMAN_I_KNOW_THIS_API_IS_SUBJECT_TO_CHANGE 1
-#include <connman0_7x/E_Connman.h>
+#include <E_DBus.h>
 #endif
-
-static Ecore_Event_Handler *handler = NULL;
-static Ecore_Timer *connman_timeout = NULL;
 
 static void
 _recommend_connman(E_Wizard_Page *pg)
@@ -36,26 +32,11 @@ _recommend_connman(E_Wizard_Page *pg)
 }
 
 #ifdef HAVE_ECONNMAN
-static Eina_Bool
-_connman_in(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
-{
-   if (handler)
-     {
-        ecore_event_handler_del(handler);
-        handler = NULL;
-     }
-   if (connman_timeout)
-     {
-        ecore_timer_del(connman_timeout);
-        connman_timeout = NULL;
-     }
-   e_wizard_button_next_enable_set(1);
-   e_wizard_next();
-   return EINA_TRUE;
-}
+static DBusPendingCall *pending_connman;
+static Ecore_Timer *connman_timeout = NULL;
 
 static Eina_Bool
-_connman_timeout(void *data)
+_connman_fail(void *data)
 {
    E_Wizard_Page *pg = data;
    E_Config_Module *em;
@@ -73,17 +54,38 @@ _connman_timeout(void *data)
              break;
           }
      }
+
    e_config_save_queue();
-   connman_timeout = NULL;
-   if (handler)
+   if (pending_connman)
      {
-        ecore_event_handler_del(handler);
-        handler = NULL;
+        dbus_pending_call_cancel(pending_connman);
+        pending_connman = NULL;
      }
+   connman_timeout = NULL;
    _recommend_connman(pg);
    return EINA_FALSE;
 }
 
+static void
+_check_connman_owner(void *data, DBusMessage *msg, DBusError *err)
+{
+   pending_connman = NULL;
+
+   if (connman_timeout)
+     {
+        ecore_timer_del(connman_timeout);
+        connman_timeout = NULL;
+     }
+
+   if (!msg)
+     {
+        _connman_fail(data);
+        return;
+     }
+
+   e_wizard_button_next_enable_set(1);
+   e_wizard_next();
+}
 #endif
 
 EAPI int
@@ -108,12 +110,16 @@ wizard_page_show(E_Wizard_Page *pg)
    if (c)
      {
 #ifdef HAVE_ECONNMAN
-        if (e_connman_system_init(c))
+        if (pending_connman)
+          dbus_pending_call_cancel(pending_connman);
+
+        pending_connman = e_dbus_name_has_owner(c, "net.connman",
+                                                _check_connman_owner,
+                                                pg);
+        if (pending_connman)
           {
-             handler = ecore_event_handler_add
-                 (E_CONNMAN_EVENT_MANAGER_IN, _connman_in, NULL);
              if (connman_timeout) ecore_timer_del(connman_timeout);
-             connman_timeout = ecore_timer_add(2.0, _connman_timeout, pg);
+             connman_timeout = ecore_timer_add(2.0, _connman_fail, pg);
              have_connman = 1;
              e_wizard_button_next_enable_set(0);
           }
@@ -146,17 +152,19 @@ wizard_page_show(E_Wizard_Page *pg)
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
-   if (handler)
+#ifdef HAVE_ECONNMAN
+   if (pending_connman)
      {
-        ecore_event_handler_del(handler);
-        handler = NULL;
+        dbus_pending_call_cancel(pending_connman);
+        pending_connman = NULL;
      }
    if (connman_timeout)
      {
         ecore_timer_del(connman_timeout);
         connman_timeout = NULL;
      }
-//   if (pg->data) evas_object_del(pg->data);
+#endif
+
    return 1;
 }
 

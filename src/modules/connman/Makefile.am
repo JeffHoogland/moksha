@@ -23,7 +23,10 @@ pkg_LTLIBRARIES   = module.la
 
 module_la_SOURCES = e_mod_main.h \
 		    e_mod_main.c \
-		    e_mod_config.c
+		    e_mod_config.c \
+		    e_connman.c \
+		    e_connman_private.h \
+		    E_Connman.h
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@ @ECONNMAN_LIBS@
 module_la_LDFLAGS      = -module -avoid-version
