@@ -7676,6 +7676,22 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
    if (ic1->info.label) l1 = (char *)ic1->info.label;
    l2 = (char *)ic2->info.file;
    if (ic2->info.label) l2 = (char *)ic2->info.label;
+   if (ic1->sd->config->list.sort.extension)
+     {
+        int cmp;
+        const char *f1, *f2;
+        f1 = ecore_file_file_get(l1);
+        f1 = strrchr(f1, '.');
+        f2 = ecore_file_file_get(l2);
+        f2 = strrchr(f2, '.');
+        if (f1 && f2)
+          {
+             cmp = strcasecmp(f1, f2);
+             if (cmp) return cmp;
+          }
+        else if (f1) return 1;
+        else if (f2) return -1;
+     }
    if (ic1->sd->config->list.sort.dirs.first)
      {
         if ((S_ISDIR(ic1->info.statinfo.st_mode)) !=
@@ -7695,32 +7711,7 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
           }
      }
    if (ic1->sd->config->list.sort.no_case)
-     {
-        char buf1[4096], buf2[4096], *p;
-
-/*	if (ic1->sd->config->list.sort.category)
-          {
- * FIXME: implement category sorting
-          }
-        else
- */     {
-           eina_strlcpy(buf1, l1, sizeof(buf1));
-           eina_strlcpy(buf2, l2, sizeof(buf2));
-        }
-        p = buf1;
-        while (*p)
-          {
-             *p = tolower(*p);
-             p++;
-          }
-        p = buf2;
-        while (*p)
-          {
-             *p = tolower(*p);
-             p++;
-          }
-        return strcmp(buf1, buf2);
-     }
+     return strcasecmp(l1, l2);
    return strcmp(l1, l2);
 }
 
@@ -8671,6 +8662,15 @@ _e_fm2_view_menu_sorting_change_case(void *data, E_Menu *m __UNUSED__, E_Menu_It
 }
 
 static void
+_e_fm2_view_menu_sorting_change_extension(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   sd->config->list.sort.extension = mi->toggle;
+   _e_fm2_refresh(sd, NULL, NULL);
+}
+
+static void
 _e_fm2_view_menu_sorting_change_dirs_first(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Fm2_Smart_Data *sd = data;
@@ -8704,6 +8704,12 @@ _e_fm2_view_menu_sorting_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, !sd->config->list.sort.no_case);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_case, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Sort By Extension"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->config->list.sort.extension);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_extension, sd);
 
    mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
