@@ -10,6 +10,7 @@
 
 #define CONNMAN_BUS_NAME "net.connman"
 #define CONNMAN_MANAGER_IFACE CONNMAN_BUS_NAME ".Manager"
+#define CONNMAN_SERVICE_IFACE CONNMAN_BUS_NAME ".Service"
 
 enum Connman_State
 {
@@ -18,6 +19,13 @@ enum Connman_State
    CONNMAN_STATE_IDLE,
    CONNMAN_STATE_READY,
    CONNMAN_STATE_ONLINE,
+};
+
+enum Connman_Service_Type
+{
+   CONNMAN_SERVICE_TYPE_NONE = -1, /* All non-supported types */
+   CONNMAN_SERVICE_TYPE_ETHERNET,
+   CONNMAN_SERVICE_TYPE_WIFI,
 };
 
 struct Connman_Object
@@ -42,6 +50,17 @@ struct Connman_Manager
         DBusPendingCall *get_services;
         DBusPendingCall *get_properties;
      } pending;
+};
+
+struct Connman_Service
+{
+   struct Connman_Object obj;
+   EINA_INLIST;
+
+   /* Properties */
+   char *name;
+   enum Connman_State state;
+   enum Connman_Service_Type type;
 };
 
 static unsigned int init_count;
@@ -79,6 +98,17 @@ static enum Connman_State str_to_state(const char *s)
    return CONNMAN_STATE_NONE;
 }
 
+static enum Connman_Service_Type str_to_type(const char *s)
+{
+   if (strcmp(s, "ethernet") == 0)
+     return CONNMAN_SERVICE_TYPE_ETHERNET;
+   else if (strcmp(s, "wifi") == 0)
+     return CONNMAN_SERVICE_TYPE_WIFI;
+
+   DBG("Unknown type %s", s);
+   return CONNMAN_SERVICE_TYPE_NONE;
+}
+
 /* ---- */
 
 static void _connman_object_init(struct Connman_Object *obj, const char *path)
@@ -87,17 +117,177 @@ static void _connman_object_init(struct Connman_Object *obj, const char *path)
    obj->path = path;
 }
 
-static void _service_changed(const char *service, DBusMessageIter *props)
+static void _service_parse_prop_changed(struct Connman_Service *cs,
+                                        const char *prop_name,
+                                        DBusMessageIter *value)
 {
+   DBG("service %p %s prop %s", cs, cs->obj.path, prop_name);
+
+   if (strcmp(prop_name, "State") == 0)
+     {
+        const char *state;
+        dbus_message_iter_get_basic(value, &state);
+        cs->state = str_to_state(state);
+        DBG("New state: %s %d", state, cs->state);
+     }
+   else if (strcmp(prop_name, "Name") == 0)
+     {
+        const char *name;
+        dbus_message_iter_get_basic(value, &name);
+        free(cs->name);
+        cs->name = strdup(name);
+        DBG("New name: %s", cs->name);
+     }
+   else if (strcmp(prop_name, "Type") == 0)
+     {
+        const char *type;
+        dbus_message_iter_get_basic(value, &type);
+        cs->type = str_to_type(type);
+        DBG("New type: %s %d", type, cs->type);
+     }
+   else
+     DBG("Unhandled property '%s'", prop_name);
+}
+
+static void _service_prop_dict_changed(struct Connman_Service *cs,
+                                       DBusMessageIter *dict)
+{
+   EINA_SAFETY_ON_FALSE_RETURN(dbus_message_iter_get_arg_type(dict) !=
+                               DBUS_TYPE_ARRAY);
+
+   for (; dbus_message_iter_get_arg_type(dict) != DBUS_TYPE_INVALID;
+        dbus_message_iter_next(dict))
+     {
+        DBusMessageIter entry, var;
+        const char *name;
+
+        dbus_message_iter_recurse(dict, &entry);
+
+        EINA_SAFETY_ON_FALSE_RETURN(dbus_message_iter_get_arg_type(dict) !=
+                                    DBUS_TYPE_STRING);
+        dbus_message_iter_get_basic(&entry, &name);
+        dbus_message_iter_next(&entry);
+
+        EINA_SAFETY_ON_FALSE_RETURN(dbus_message_iter_get_arg_type(dict) !=
+                                    DBUS_TYPE_VARIANT);
+        dbus_message_iter_recurse(&entry, &var);
+
+        _service_parse_prop_changed(cs, name, &var);
+     }
+}
+
+static void _service_prop_changed(void *data, DBusMessage *msg)
+{
+   struct Connman_Service *cs = data;
+   DBusMessageIter iter, var;
+   const char *name;
+
+   if (!msg || !dbus_message_iter_init(msg, &iter))
+     {
+        ERR("Could not parse message %p", msg);
+        return;
+     }
+
+   dbus_message_iter_get_basic(&iter, &name);
+   dbus_message_iter_next(&iter);
+   dbus_message_iter_recurse(&iter, &var);
+
+   _service_parse_prop_changed(cs, name, &var);
+}
+
+static void _service_free(struct Connman_Service *cs)
+{
+   Eina_List *l;
+
+   EINA_LIST_FREE(cs->obj.handlers, l)
+     e_dbus_signal_handler_del(conn, l->data);
+
+   free(cs->name);
+}
+
+static struct Connman_Service *_service_new(const char *path, DBusMessageIter *props)
+{
+   struct Connman_Service *cs;
+   E_DBus_Signal_Handler *h;
+
+   size_t pathlen;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(path, NULL);
+   pathlen = strlen(path);
+
+   cs = calloc(1, sizeof(*cs) + pathlen + 1);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(cs, NULL);
+
+   memcpy(cs + sizeof(*cs), path, 1);
+   _connman_object_init(&cs->obj, path);
+
+   h = e_dbus_signal_handler_add(conn, bus_owner,
+                                 path, CONNMAN_SERVICE_IFACE, "PropertyChanged",
+                                 _service_prop_changed, cs);
+   cs->obj.handlers =  eina_list_append(cs->obj.handlers, h);
+
+   _service_prop_dict_changed(cs, props);
+   return cs;
 }
 
 static void _manager_services_changed(void *data, DBusMessage *msg)
 {
+   //TODO: parse message with the new service order + property changes
 }
 
 static void _manager_get_services_cb(void *data, DBusMessage *reply,
                                      DBusError *err)
 {
+   struct Connman_Manager *cm = data;
+   DBusMessageIter iter, array;
+
+   cm->pending.get_services = NULL;
+
+   if (dbus_error_is_set(err))
+     {
+        DBG("Could not get services. %s: %s", err->name, err->message);
+        return;
+     }
+
+   /* Did we already receive a ServicesChanged signal in the meantime?
+    *
+    * FIXME: but if there was a ServicesChanged signal, it might not contain all
+    * properties for all services.
+    */
+   if (cm->services)
+     return;
+
+   DBG(" ");
+
+   dbus_message_iter_init(reply, &iter);
+   if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY)
+     {
+        ERR("type=%d", dbus_message_iter_get_arg_type(&iter));
+        return;
+     }
+
+   dbus_message_iter_recurse(&iter, &array);
+
+   for (; dbus_message_iter_get_arg_type(&array) != DBUS_TYPE_INVALID;
+        dbus_message_iter_next(&array))
+     {
+        struct Connman_Service *cs;
+        const char *path;
+        DBusMessageIter entry, dict;
+
+        dbus_message_iter_recurse(&array, &entry);
+        dbus_message_iter_get_basic(&entry, &path);
+        dbus_message_iter_next(&entry);
+        dbus_message_iter_recurse(&entry, &dict);
+
+        cs = _service_new(path, &dict);
+
+        if (cs == NULL)
+          continue;
+
+        cm->services = eina_inlist_append(cm->services, EINA_INLIST_GET(cs));
+        DBG("Added service: %p %s", cs, path);
+     }
 }
 
 static void _manager_parse_prop_changed(struct Connman_Manager *cm,
@@ -171,6 +361,14 @@ static void _manager_get_prop_cb(void *data, DBusMessage *reply,
 static void _manager_free(struct Connman_Manager *cm)
 {
    Eina_List *l;
+
+   while (cm->services)
+     {
+        struct Connman_Service *cs = EINA_INLIST_CONTAINER_GET(cm->services,
+                                                      struct Connman_Service);
+        cm->services = eina_inlist_remove(cm->services, cm->services);
+        _service_free(cs);
+     }
 
    EINA_LIST_FREE(cm->obj.handlers, l)
      e_dbus_signal_handler_del(conn, l->data);
