@@ -7884,7 +7884,8 @@ collections {
                aspect_preference: BOTH; \
                color: 255 255 255 0; \
                image.normal: "connman_status_ready"; \
-               rel1.relative: 1 0; \
+               rel1.relative: 0.8 0.8; \
+               rel2.relative: 1 1; \
                align: 1 1; \
                min: 8 8; \
             } \
@@ -7971,17 +7972,17 @@ CONNMAN_ICON(ethernet)
 
 #undef CONNMAN_ICON
 
-#define CONNMAN_IMAGES_SET(_name) \
+#define CONNMAN_IMAGES_SET(_name, _min) \
          images { \
             set { \
                name: "connman_"##_name; \
                image { \
                   image: "connman_"##_name##"_128.png" COMP; \
-                  size: 33 33 1000 1000; \
+                  size: (_min+1) (_min+1) 1000 1000; \
                } \
                image { \
                   image: "connman_"##_name##"_32.png" COMP; \
-                  size: 1 1 32 32; \
+                  size: 1 1 _min _min; \
                } \
             } \
          } \
@@ -8147,8 +8148,8 @@ CONNMAN_ICON(ethernet)
                color: 255 255 255 255;
             }
          }
-         CONNMAN_IMAGES_SET(status_ready)
-         CONNMAN_IMAGES_SET(status_online)
+         CONNMAN_IMAGES_SET(status_ready, 8)
+         CONNMAN_IMAGES_SET(status_online, 8)
          CONNMAN_STATE_PART_ADD()
       }
       programs {
@@ -8224,6 +8225,39 @@ CONNMAN_ICON(ethernet)
    group {
       name: "e/modules/connman/main";
 
+#define CONNMAN_TECH_ICON_ADD(_tech) \
+         part { \
+            name: #_tech##"_icon"; \
+            type: GROUP; \
+            mouse_events: 0; \
+            source: "e/modules/connman/icon/"##_tech; \
+            description { \
+               state: "default" 0.0; \
+               visible: 0; \
+            } \
+            description { \
+               state: "visible" 0.0; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+            } \
+         } \
+         program { \
+            name: "technology_"##_tech; \
+            signal: "e,changed,technology,"##_tech; \
+            source: "e"; \
+            action: STATE_SET "default" 0.0; \
+            target: "wifi_icon"; \
+            target: "ethernet_icon"; \
+            target: "cellular_icon"; \
+            target: "bluetooth_icon"; \
+            after: "technology_"##_tech##",2"; \
+         } \
+         program { \
+            name: "technology_"##_tech##",2"; \
+            action: STATE_SET "visible" 0.0; \
+            target: #_tech##"_icon"; \
+         }
+
       parts {
          part {
             name: "eventarea";
@@ -8234,23 +8268,49 @@ CONNMAN_ICON(ethernet)
                color: 255 255 255 0;
             }
          }
-         part {
-            name: "icon";
-            type: GROUP;
-            mouse_events: 0;
-            source: "e/modules/connman/icon/wifi";
-            description {
-               state: "default" 0.0;
-            }
+         CONNMAN_TECH_ICON_ADD(wifi)
+         CONNMAN_TECH_ICON_ADD(ethernet)
+         CONNMAN_TECH_ICON_ADD(cellular)
+         CONNMAN_TECH_ICON_ADD(bluetooth)
+      }
+      programs {
+         program {
+            name: "technology_other";
+            signal: "e,changed,technology,other";
+            source: "e";
+            after: "technology_wifi";
+         }
+         program {
+            name: "connman,disabled";
+            signal: "e,unavailable";
+            source: "e";
+            after: "connman,enabled";
+         }
+         program {
+            name: "connman,enabled";
+            signal: "e,available";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "wifi_icon";
+            target: "ethernet_icon";
+            target: "cellular_icon";
+            target: "bluetooth_icon";
+            after: "connman,enabled,2";
+         }
+         program {
+            name: "connman,enabled,2";
+            action: STATE_SET "visible" 0.0;
+            target: "wifi_icon";
          }
       }
+#undef CONNMAN_TECH_ICON_ADD
    }
 
    group {
       name: "e/modules/connman/end";
 
-      CONNMAN_IMAGES_SET(security1)
-      CONNMAN_IMAGES_SET(security2)
+      CONNMAN_IMAGES_SET(security1, 32)
+      CONNMAN_IMAGES_SET(security2, 32)
 
       parts {
          part {

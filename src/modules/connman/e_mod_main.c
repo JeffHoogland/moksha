@@ -261,17 +261,21 @@ static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
                                               enum Connman_Service_Type type)
 {
    Evas_Object *o = inst->ui.gadget;
-   const char *statestr, *typestr;
+   Edje_Message_Int_Set *msg;
+   const char *typestr;
    char buf[128];
 
-   if ((state == CONNMAN_STATE_ONLINE) || (state == CONNMAN_STATE_READY))
-     edje_object_signal_emit(o, "e,changed,connected,yes", "e");
+   msg = malloc(sizeof(*msg) + sizeof(int));
+   msg->count = 2;
+   msg->val[0] = state;
+   /* FIXME check if it's possible to receive strenght as props of cm */
+   if (type == -1)
+       msg->val[1] = 0;
    else
-     edje_object_signal_emit(o, "e,changed,connected,no", "e");
+       msg->val[1] = 100;
 
-   statestr = econnman_state_to_str(state);
-   snprintf(buf, sizeof(buf), "e,changed,state,%s", statestr);
-   edje_object_signal_emit(o, buf, "e");
+   edje_object_message_send(o, EDJE_MESSAGE_INT_SET, 1, msg);
+   free(msg);
 
    typestr = econnman_service_type_to_str(type);
    snprintf(buf, sizeof(buf), "e,changed,technology,%s", typestr);
@@ -291,8 +295,12 @@ void econnman_mod_manager_update(struct Connman_Manager *cm)
 
    DBG("cm->services=%p", cm->services);
 
-   if (cm->services && (cm->state == CONNMAN_STATE_ONLINE ||
-                        cm->state == CONNMAN_STATE_READY))
+   if ((cm->services) && ((cm->state == CONNMAN_STATE_ONLINE) ||
+                          (cm->state == CONNMAN_STATE_READY)))
+     /* FIXME would be nice to represent "configuring state".
+        theme already supports it */
+     /*                 (cm->state == CONNMAN_STATE_ASSOCIATION) ||
+                          (cm->state == CONNMAN_STATE_CONFIGURATION))) */
      {
         struct Connman_Service *cs = EINA_INLIST_CONTAINER_GET(cm->services,
                                                       struct Connman_Service);
