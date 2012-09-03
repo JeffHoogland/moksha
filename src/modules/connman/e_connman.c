@@ -501,7 +501,7 @@ static struct Connman_Manager *_manager_new(void)
 
 static inline void _e_connman_system_name_owner_exit(void)
 {
-   econnman_mod_manager_inout(connman_manager, false);
+   econnman_mod_manager_inout(NULL);
    _manager_free(connman_manager);
    connman_manager = NULL;
 
@@ -516,7 +516,7 @@ static inline void _e_connman_system_name_owner_enter(const char *owner)
    bus_owner = strdup(owner);
    connman_manager = _manager_new();
    ecore_event_add(E_CONNMAN_EVENT_MANAGER_IN, NULL, NULL, NULL);
-   econnman_mod_manager_inout(connman_manager, true);
+   econnman_mod_manager_inout(connman_manager);
 }
 
 static void _e_connman_system_name_owner_changed(void *data __UNUSED__,

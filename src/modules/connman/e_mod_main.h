@@ -36,7 +36,7 @@ struct E_Connman_Module_Context
         Ecore_Event_Handler *manager_out;
      } event;
 
-   Eina_Bool has_manager;
+   struct Connman_Manager *cm;
    Eina_Bool offline_mode;
 };
 

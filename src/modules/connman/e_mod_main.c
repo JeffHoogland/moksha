@@ -85,6 +85,8 @@ void econnman_mod_manager_update(struct Connman_Manager *cm)
    E_Connman_Instance *inst;
    Eina_List *l;
 
+   EINA_SAFETY_ON_NULL_RETURN(cm);
+
    DBG("cm->services=%p", cm->services);
 
    if (cm->services)
@@ -105,9 +107,9 @@ static void _econnman_gadget_setup(E_Connman_Instance *inst)
    E_Connman_Module_Context *ctxt = inst->ctxt;
    Evas_Object *o = inst->ui.gadget;
 
-   DBG("has_manager=%d", ctxt->has_manager);
+   DBG("has_manager=%d", ctxt->cm != NULL);
 
-   if (!ctxt->has_manager)
+   if (!ctxt->cm)
      {
         edje_object_signal_emit(o, "e,unavailable", "e");
         edje_object_part_text_set(o, "e.text.name", _("No ConnMan"));
@@ -123,14 +125,14 @@ static void _econnman_gadget_setup(E_Connman_Instance *inst)
    return;
 }
 
-void econnman_mod_manager_inout(struct Connman_Manager *cm, bool in)
+void econnman_mod_manager_inout(struct Connman_Manager *cm)
 {
    E_Connman_Module_Context *ctxt = connman_mod->data;
    const Eina_List *l;
    E_Connman_Instance *inst;
 
-   DBG("Manager %s", in ? "in" : "out");
-   ctxt->has_manager = in;
+   DBG("Manager %s", cm ? "in" : "out");
+   ctxt->cm = cm;
 
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      _econnman_gadget_setup(inst);
