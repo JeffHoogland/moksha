@@ -22,7 +22,7 @@ static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data
 static void         _cb_add(void *data, void *data2);
 static void         _cb_del(void *data, void *data2);
 static void         _cb_config(void *data, void *data2);
-static void         _cb_entry_ok(char *text, void *data);
+static void         _cb_entry_ok(void *data, char *text);
 static void         _cb_confirm_dialog_yes(void *data);
 static void         _cb_confirm_dialog_destroy(void *data);
 static void         _load_tlist(E_Config_Dialog_Data *cfdata);
@@ -212,7 +212,7 @@ _cb_config(void *data, void *data2 __UNUSED__)
 }
 
 static void
-_cb_entry_ok(char *text, void *data)
+_cb_entry_ok(void *data, char *text)
 {
    char buf[4096];
    char tmp[4096];

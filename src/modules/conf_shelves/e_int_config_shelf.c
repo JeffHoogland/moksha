@@ -16,7 +16,7 @@ static void         _cb_contents(void *data, void *data2);
 static void         _ilist_refresh(E_Shelf *es);
 static void         _new_shelf_dialog(E_Config_Dialog_Data *cfdata);
 static void         _new_shelf_cb_close(void *data);
-static void         _new_shelf_cb_ok(char *text, void *data);
+static void         _new_shelf_cb_ok(void *data, char *text);
 static void         _new_shelf_cb_dia_del(void *obj);
 static void         _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es);
 
@@ -415,7 +415,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
 }
 
 static void
-_new_shelf_cb_ok(char *text, void *data)
+_new_shelf_cb_ok(void *data, char *text)
 {
    E_Config_Dialog_Data *cfdata;
    E_Config_Shelf *cfg, *c;

@@ -16,7 +16,7 @@ struct _E_Entry_Dialog
    Evas_Object *entry;
    char *text;
    struct {
-      void (*func) (char *text, void *data);
+      void (*func) (void *data, char *text);
       void *data;
    } ok;
    struct {
@@ -31,7 +31,7 @@ EAPI E_Entry_Dialog *e_entry_dialog_show(const char *title,
 					 const char *initial_text,
 					 const char *button_text,
 					 const char *button2_text,
-					 void (*ok_func) (char *text, void *data),
+					 void (*ok_func) (void *data, char *text),
 					 void (*cancel_func) (void *data),
 					 void *data);
 

@@ -1991,7 +1991,7 @@ _e_shelf_cb_instant_hide_timer(void *data)
 }
 
 static void
-_e_shelf_cb_menu_rename_yes_cb(char *text, void *data)
+_e_shelf_cb_menu_rename_yes_cb(void *data, char *text)
 {
    E_Shelf *es = e_object_data_get(data);
    Eina_List *l;

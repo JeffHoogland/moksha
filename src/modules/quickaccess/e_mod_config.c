@@ -168,7 +168,7 @@ _rename_del(void *data)
 }
 
 static void
-_rename_ok(char *text, void *data)
+_rename_ok(void *data, char *text)
 {
    Config_Entry *ce = data;
    const char *name;

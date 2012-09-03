@@ -13,7 +13,7 @@ static void         _cb_reset(void *data, void *data2);
 static void         _cb_dialog_yes(void *data);
 static void         _cb_dialog_destroy(void *data);
 
-static void         _new_profile_cb_ok(char *text, void *data);
+static void         _new_profile_cb_ok(void *data, char *text);
 static void         _new_profile_cb_dia_del(void *obj);
 
 struct _E_Config_Dialog_Data
@@ -397,7 +397,7 @@ _cb_dialog_destroy(void *data)
 }
 
 static void
-_new_profile_cb_ok(char *text, void *data)
+_new_profile_cb_ok(void *data, char *text)
 {
    E_Config_Dialog_Data *cfdata;
    char cur_profile[1024];

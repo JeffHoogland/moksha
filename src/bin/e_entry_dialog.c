@@ -13,7 +13,7 @@ EAPI E_Entry_Dialog *
 e_entry_dialog_show(const char *title, const char *icon, const char *text,
                     const char *initial_text,
                     const char *button_text, const char *button2_text,
-                    void (*ok_func)(char *text, void *data),
+                    void (*ok_func)(void *data, char *text),
                     void (*cancel_func)(void *data), void *data)
 {
    E_Entry_Dialog *ed;
@@ -94,7 +94,7 @@ _e_entry_dialog_ok(void *data, E_Dialog *dia __UNUSED__)
 
    ed = data;
    e_object_ref(E_OBJECT(ed));
-   if (ed->ok.func) ed->ok.func(ed->text, ed->ok.data);
+   if (ed->ok.func) ed->ok.func(ed->ok.data, ed->text);
    e_object_del(E_OBJECT(ed));
    e_object_unref(E_OBJECT(ed));
 }

@@ -359,11 +359,11 @@ static void          _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *
 static void          _e_fm2_sort(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_new_directory_delete_cb(void *obj);
-static void          _e_fm2_new_directory_yes_cb(char *text, void *data);
+static void          _e_fm2_new_directory_yes_cb(void *data, char *text);
 static void          _e_fm2_new_directory_no_cb(void *data);
 static void          _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_file_rename_delete_cb(void *obj);
-static void          _e_fm2_file_rename_yes_cb(char *text, void *data);
+static void          _e_fm2_file_rename_yes_cb(void *data, char *text);
 static void          _e_fm2_file_rename_no_cb(void *data);
 static void          _e_fm2_file_application_properties(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void          _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -9256,7 +9256,7 @@ _e_fm2_new_directory_delete_cb(void *obj)
 }
 
 static void
-_e_fm2_new_directory_yes_cb(char *text, void *data)
+_e_fm2_new_directory_yes_cb(void *data, char *text)
 {
    E_Fm2_Smart_Data *sd;
    char buf[PATH_MAX];
@@ -9396,7 +9396,7 @@ _e_fm2_file_rename_delete_cb(void *obj)
 }
 
 static void
-_e_fm2_file_rename_yes_cb(char *text, void *data)
+_e_fm2_file_rename_yes_cb(void *data, char *text)
 {
    E_Fm2_Icon *ic;
 
