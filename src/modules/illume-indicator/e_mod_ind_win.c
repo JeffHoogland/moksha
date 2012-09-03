@@ -476,6 +476,7 @@ _e_mod_ind_win_cb_menu_append(Ind_Win *iwin, E_Menu *mn)
    e_menu_item_icon_edje_set(mi, buff, "icon");
    e_menu_pre_activate_callback_set(subm, _e_mod_ind_win_cb_menu_pre, iwin);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 }
 
 static void 

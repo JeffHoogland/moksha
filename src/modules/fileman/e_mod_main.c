@@ -512,6 +512,7 @@ _e_mod_menu_populate(void *d, E_Menu *m __UNUSED__, E_Menu_Item *mi)
         e_object_data_set(E_OBJECT(subm), d);
         e_object_free_attach_func_set(E_OBJECT(subm), _e_mod_menu_cleanup_cb);
         e_menu_item_submenu_set(mi, subm);
+        e_object_unref(E_OBJECT(subm));
         e_menu_freeze(subm);
      }
    dev = d;

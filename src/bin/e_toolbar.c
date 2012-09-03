@@ -367,6 +367,7 @@ _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn)
    e_util_menu_item_theme_icon_set(mi, "preferences-toolbar");
    e_menu_pre_activate_callback_set(subm, _e_toolbar_menu_cb_pre, tbar);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 }
 
 static void

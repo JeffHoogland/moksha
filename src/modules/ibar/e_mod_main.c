@@ -879,6 +879,8 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
                                           e_util_icon_size_normalize(24 * e_scale),
                                           mi);
         e_menu_item_submenu_set(mi, mo);
+        e_object_unref(E_OBJECT(mo));
+        e_gadcon_client_menu_set(ic->ibar->inst->gcc, m);
 
         e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon,
                                           &cx, &cy, NULL, NULL);

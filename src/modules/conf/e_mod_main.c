@@ -231,6 +231,7 @@ _config_all_pre_activate_cb(void *data __UNUSED__, E_Menu *m)
         e_menu_item_callback_set(mi, _config_item_activate_cb, ecat);
         sub = e_menu_new();
         e_menu_item_submenu_set(mi, sub);
+        e_object_unref(E_OBJECT(sub));
         e_menu_pre_activate_callback_set(sub, _config_pre_activate_cb, ecat);
      }
 }
@@ -250,6 +251,7 @@ e_mod_config_menu_add(void *data __UNUSED__, E_Menu *m)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("All"));
    e_menu_item_submenu_set(mi, sub);
+   e_object_unref(E_OBJECT(sub));
 }
 
 /* module setup */
@@ -455,6 +457,7 @@ _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_label_set(mi, _("Modes"));
    e_util_menu_item_theme_icon_set(mi, "preferences-modes");
    e_menu_item_submenu_set(mi, _e_mod_submenu_modes_get());
+   e_object_unref(E_OBJECT(mi->submenu));
 }
 
 static void

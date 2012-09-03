@@ -1425,6 +1425,7 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    e_object_free_attach_func_set(E_OBJECT(mi), _e_shelf_menu_item_free);
    e_object_data_set(E_OBJECT(mi), es);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    mi = e_menu_item_new(mn);
    e_menu_item_separator_set(mi, 1);

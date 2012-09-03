@@ -131,6 +131,7 @@ _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_callback_set(mi, _e_mod_syscon_cb, NULL);
    sub = e_menu_new();
    e_menu_item_submenu_set(mi, sub);
+   e_object_unref(E_OBJECT(sub));
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);
 }
 

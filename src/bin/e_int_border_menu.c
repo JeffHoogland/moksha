@@ -361,6 +361,7 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    if ((!bd->lock_user_fullscreen) && (!bd->shaded))
      {
@@ -518,6 +519,7 @@ _e_border_menu_cb_application_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item 
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    if (bd->desktop)
      {
@@ -569,6 +571,7 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
        (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
@@ -870,6 +873,7 @@ _e_border_menu_cb_sendto_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    EINA_LIST_FOREACH(bd->zone->container->zones, l, zone)
      {
@@ -948,6 +952,7 @@ _e_border_menu_cb_stacking_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    /* Only allow to change layer for windows in "normal" layers */
    e_menu_category_set(subm, "border/stacking");
@@ -1116,6 +1121,7 @@ _e_border_menu_cb_border_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    if (e_configure_registry_exists("internal/borders_border"))
      {
@@ -1215,6 +1221,7 @@ _e_border_menu_cb_skip_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    subm = e_menu_new();
    e_object_data_set(E_OBJECT(subm), bd);
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    submi = e_menu_item_new(subm);
    e_menu_item_label_set(submi, _("Window List"));
@@ -1314,6 +1321,7 @@ _e_border_menu_cb_ibar_add_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
      }
    e_object_data_set(E_OBJECT(sm), bd);
    e_menu_item_submenu_set(mi, sm);
+   e_object_unref(E_OBJECT(sm));
 }
 
 static void

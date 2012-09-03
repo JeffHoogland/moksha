@@ -708,6 +708,7 @@ _tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
         mi = e_menu_item_new(item->border->border_menu);
         e_menu_item_label_set(mi, _("Tasks"));
         e_menu_item_submenu_set(mi, m);
+        e_object_unref(E_OBJECT(m));
         e_util_menu_item_theme_icon_set(mi, "preferences-system");
         e_gadcon_client_menu_set(item->tasks->gcc, item->border->border_menu);
 

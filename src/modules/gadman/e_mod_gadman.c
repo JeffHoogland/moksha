@@ -894,7 +894,7 @@ _attach_menu(void *data __UNUSED__, E_Gadcon_Client *gcc, E_Menu *menu)
    e_menu_item_label_set(mi, _("Appearance"));
    e_util_menu_item_theme_icon_set(mi, "preferences-look");
    e_menu_item_submenu_set(mi, mn);
-   e_object_del(E_OBJECT(mn));
+   e_object_unref(E_OBJECT(mn));
 
    /* bg / ontop */
    mn = e_menu_new();
@@ -922,7 +922,7 @@ _attach_menu(void *data __UNUSED__, E_Gadcon_Client *gcc, E_Menu *menu)
    e_menu_item_label_set(mi, _("Behavior"));
    e_util_menu_item_theme_icon_set(mi, "preferences-look");
    e_menu_item_submenu_set(mi, mn);
-   e_object_del(E_OBJECT(mn));
+   e_object_unref(E_OBJECT(mn));
 
    mi = e_menu_item_new(menu);
    e_menu_item_separator_set(mi, 1);
