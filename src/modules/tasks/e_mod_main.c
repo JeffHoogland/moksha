@@ -709,6 +709,7 @@ _tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
         e_menu_item_label_set(mi, _("Tasks"));
         e_menu_item_submenu_set(mi, m);
         e_util_menu_item_theme_icon_set(mi, "preferences-system");
+        e_gadcon_client_menu_set(item->tasks->gcc, item->border->border_menu);
 
         e_menu_activate_mouse(item->border->border_menu,
                               e_util_zone_current_get(e_manager_current_get()),
@@ -716,6 +717,8 @@ _tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
                               E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
         evas_event_feed_mouse_up(item->tasks->gcc->gadcon->evas, ev->button,
                                  EVAS_BUTTON_NONE, ev->timestamp, NULL);
+        /* gadcon menu post cb won't remove this so we'll do it now to prevent problems later */
+        item->border->border_menu = NULL;
      }
 }
 
