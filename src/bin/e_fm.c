@@ -2426,7 +2426,7 @@ _e_fm_client_file_move(const char *args, Evas_Object *e_fm)
 }
 
 static int
-_e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm)
+_e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel __UNUSED__, int rel_to __UNUSED__, int x __UNUSED__, int y __UNUSED__, int res_w __UNUSED__, int res_h __UNUSED__, Evas_Object *e_fm)
 {
    char *args = NULL;
    size_t size = 0, length = 0;
@@ -2442,12 +2442,6 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, 
    r = _e_fm_client_file_symlink(args, e_fm);
    free(args);
    return r;
-   rel = NULL;
-   rel_to = 0;
-   x = 0;
-   y = 0;
-   res_w = 0;
-   res_h = 0;
 }
 
 static int
