@@ -139,19 +139,19 @@ void econnman_mod_manager_inout(struct Connman_Manager *cm, bool in)
 }
 
 static void
-_connman_cb_mouse_down(void *data, Evas *evas __UNUSED__,
+_econnman_cb_mouse_down(void *data, Evas *evas __UNUSED__,
                        Evas_Object *obj __UNUSED__, void *event)
 {
 }
 
 static void
-_connman_cb_mouse_in(void *data, Evas *evas __UNUSED__,
+_econnman_cb_mouse_in(void *data, Evas *evas __UNUSED__,
                      Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
 }
 
 static void
-_connman_cb_mouse_out(void *data, Evas *evas __UNUSED__,
+_econnman_cb_mouse_out(void *data, Evas *evas __UNUSED__,
                       Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
 }
@@ -179,11 +179,11 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc->data = inst;
 
    evas_object_event_callback_add
-     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_DOWN, _connman_cb_mouse_down, inst);
+     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_DOWN, _econnman_cb_mouse_down, inst);
    evas_object_event_callback_add
-     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_IN, _connman_cb_mouse_in, inst);
+     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_IN, _econnman_cb_mouse_in, inst);
    evas_object_event_callback_add
-     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_OUT, _connman_cb_mouse_out, inst);
+     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_OUT, _econnman_cb_mouse_out, inst);
 
    _econnman_gadget_setup(inst);
 
