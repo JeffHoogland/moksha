@@ -343,7 +343,27 @@ _mouse_move(Cover *cov, Ecore_Event_Mouse_Move *ev)
 static void
 _mouse_wheel(Cover *cov __UNUSED__, Ecore_Event_Mouse_Wheel *ev __UNUSED__)
 {
-   // XXX: fake wheel?
+   E_Border *bd = e_border_focused_get();
+   if (!bd) return;
+
+   if (ev->z == -1) // up
+     {
+        printf("wheel up\n");
+#if ECORE_VERSION_MAJOR >= 1
+# if ECORE_VERSION_MINOR >= 8
+        ecore_x_e_illume_access_action_up_send(bd->client.win);
+# endif   
+#endif   
+     }
+   else if (ev->z == 1) // down
+     {
+        printf("wheel down\n");
+#if ECORE_VERSION_MAJOR >= 1
+# if ECORE_VERSION_MINOR >= 8
+        ecore_x_e_illume_access_action_down_send(bd->client.win);
+# endif   
+#endif   
+     }
 }
 
 static Eina_Bool
