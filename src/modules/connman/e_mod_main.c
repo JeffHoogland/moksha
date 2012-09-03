@@ -52,6 +52,39 @@ static Evas_Object * _econnman_service_new_icon(struct Connman_Service *cs,
    return icon;
 }
 
+static Evas_Object * _econnman_service_new_end(struct Connman_Service *cs,
+                                               Evas *evas)
+{
+   const char *state = econnman_state_to_str(cs->state);
+   Eina_Iterator *iter;
+   Evas_Object *end;
+   void *security;
+   char buf[128];
+
+   end = edje_object_add(evas);
+   e_theme_edje_object_set(end, "base/theme/modules/connman",
+                           "e/modules/connman/end");
+
+   if (state)
+     {
+        snprintf(buf, sizeof(buf), "e,state,%s", state);
+        edje_object_signal_emit(end, buf, "e");
+     }
+
+   if (!cs->security)
+     return end;
+
+   iter = eina_array_iterator_new(cs->security);
+   while (eina_iterator_next(iter, &security))
+     {
+        snprintf(buf, sizeof(buf), "e,security,%s", (const char *)security);
+        edje_object_signal_emit(end, buf, "e");
+     }
+   eina_iterator_free(iter);
+
+   return end;
+}
+
 static void _econnman_disconnect_cb(void *data, const char *error)
 {
    const char *path = data;
@@ -115,8 +148,10 @@ static void _econnman_popup_update(struct Connman_Manager *cm,
    EINA_INLIST_FOREACH(cm->services, cs)
      {
         Evas_Object *icon = _econnman_service_new_icon(cs, evas);
-        e_widget_ilist_append(list, icon, cs->name, _econnman_popup_selected_cb,
-                              inst, cs->obj.path);
+        Evas_Object *end = _econnman_service_new_end(cs, evas);
+        e_widget_ilist_append_full(list, icon, end, cs->name,
+                                   _econnman_popup_selected_cb,
+                                   inst, cs->obj.path);
      }
 
    e_widget_ilist_thaw(list);
