@@ -1304,6 +1304,7 @@ _e_fwin_config_set(E_Fwin_Page *page)
    fmc.view.no_subdir_jump = 0;
    fmc.icon.extension.show = fileman_config->icon.extension.show;
    fmc.list.sort.no_case = fileman_config->list.sort.no_case;
+   fmc.list.sort.extension = fileman_config->list.sort.extension;
    fmc.list.sort.dirs.first = fileman_config->list.sort.dirs.first;
    fmc.list.sort.dirs.last = fileman_config->list.sort.dirs.last;
    fmc.selection.single = fileman_config->selection.single;

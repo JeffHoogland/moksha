@@ -688,6 +688,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, icon.fixed.h, UCHAR);
    E_CONFIG_VAL(D, T, icon.extension.show, UCHAR);
    E_CONFIG_VAL(D, T, list.sort.no_case, UCHAR);
+   E_CONFIG_VAL(D, T, list.sort.extension, UCHAR);
    E_CONFIG_VAL(D, T, list.sort.dirs.first, UCHAR);
    E_CONFIG_VAL(D, T, list.sort.dirs.last, UCHAR);
    E_CONFIG_VAL(D, T, selection.single, UCHAR);

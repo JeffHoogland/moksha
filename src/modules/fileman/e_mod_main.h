@@ -76,6 +76,7 @@ struct _Config
       struct
       {
          unsigned char no_case;
+         unsigned char extension;
          struct
          {
             unsigned char first;

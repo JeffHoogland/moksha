@@ -51,6 +51,7 @@ struct _E_Config_Dialog_Data
        struct
        {
           int case_sen;
+          int extension;
           struct
           {
              int first, last;
@@ -148,6 +149,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->selection.windows_modifiers = fileman_config->selection.windows_modifiers;
    cfdata->list.sort.dirs.first = fileman_config->list.sort.dirs.first;
    cfdata->list.sort.case_sen = !(fileman_config->list.sort.no_case);
+   cfdata->list.sort.extension = fileman_config->list.sort.extension;
    cfdata->dbus.desktop = e_config->device_desktop;
    cfdata->dbus.auto_mount = e_config->device_auto_mount;
    cfdata->dbus.auto_open = e_config->device_auto_open;
@@ -188,6 +190,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
 
    fileman_config->list.sort.dirs.first = cfdata->list.sort.dirs.first;
    fileman_config->list.sort.dirs.last = !(cfdata->list.sort.dirs.first);
+   fileman_config->list.sort.extension = cfdata->list.sort.extension;
    fileman_config->list.sort.no_case = !(cfdata->list.sort.case_sen);
 
    e_config->device_desktop = cfdata->dbus.desktop;
@@ -225,6 +228,7 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->icon.icon.h != cfdata->icon.icon.w) ||
      (fileman_config->list.sort.dirs.first != cfdata->list.sort.dirs.first) ||
      (fileman_config->list.sort.dirs.last != !(cfdata->list.sort.dirs.first)) ||
+     (fileman_config->list.sort.extension != cfdata->list.sort.extension) ||
      (fileman_config->list.sort.no_case != !(cfdata->list.sort.case_sen)) ||
      (fileman_config->tooltip.delay != !(cfdata->tooltip.delay)) ||
      (fileman_config->tooltip.size != !(cfdata->tooltip.size)) ||
@@ -313,6 +317,9 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Case Sensitive"),
                            &(cfdata->list.sort.case_sen));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Sort By Extension"),
+                           &(cfdata->list.sort.extension));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Use Single Click"),
                            &(cfdata->view.single_click));
