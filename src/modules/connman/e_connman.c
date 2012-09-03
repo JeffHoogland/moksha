@@ -8,8 +8,16 @@
 
 static const char CONNMAN_BUS_NAME[] = "net.connman";
 
-static E_DBus_Signal_Handler *cb_name_owner_changed;
-static DBusPendingCall *pending_get_name_owner;
+static struct
+{
+   E_DBus_Signal_Handler *name_owner_changed;
+} handlers;
+
+static struct
+{
+   DBusPendingCall *get_name_owner;
+} pending;
+
 static unsigned int init_count;
 static E_DBus_Connection *conn;
 
@@ -65,7 +73,7 @@ _e_connman_system_name_owner_changed(void *data __UNUSED__, DBusMessage *msg)
 static void
 _e_connman_get_name_owner(void *data __UNUSED__, DBusMessage *msg, DBusError *err)
 {
-   pending_get_name_owner = NULL;
+   pending.get_name_owner = NULL;
    DBG("get_name_owner msg=%p", msg);
 
    if (dbus_error_is_set(err))
@@ -108,12 +116,12 @@ e_connman_system_init(E_DBus_Connection *edbus_conn)
    E_CONNMAN_EVENT_MANAGER_OUT = ecore_event_type_new();
 
    conn = edbus_conn;
-   cb_name_owner_changed = e_dbus_signal_handler_add(conn,
+   handlers.name_owner_changed = e_dbus_signal_handler_add(conn,
                         E_DBUS_FDO_BUS, E_DBUS_FDO_PATH, E_DBUS_FDO_INTERFACE,
                         "NameOwnerChanged", _e_connman_system_name_owner_changed,
                         NULL);
 
-   pending_get_name_owner = e_dbus_get_name_owner(conn,
+   pending.get_name_owner = e_dbus_get_name_owner(conn,
                                  CONNMAN_BUS_NAME, _e_connman_get_name_owner,
                                  NULL);
 
@@ -139,17 +147,15 @@ e_connman_system_shutdown(void)
    if (init_count > 0)
       return init_count;
 
-   if (pending_get_name_owner)
-     {
-        dbus_pending_call_cancel(pending_get_name_owner);
-        pending_get_name_owner = NULL;
-     }
+   if (pending.get_name_owner)
+     dbus_pending_call_cancel(pending.get_name_owner);
 
-   if (cb_name_owner_changed)
-     {
-        e_dbus_signal_handler_del(conn, cb_name_owner_changed);
-        cb_name_owner_changed = NULL;
-     }
+   memset(&pending, 0, sizeof(pending));
+
+   if (handlers.name_owner_changed)
+     e_dbus_signal_handler_del(conn, handlers.name_owner_changed);
+
+   memset(&handlers, 0, sizeof(handlers));
 
    eina_log_domain_unregister(_e_dbus_connman_log_dom);
    conn = NULL;
