@@ -1648,6 +1648,7 @@ _e_fwin_selection_change(void *data,
           e_fwin_all_unsel(l->data);
      }
    evas_object_focus_set(obj, 1);
+   _e_fwin_icon_mouse_out(page->fwin, NULL, NULL);
 }
 
 static void
