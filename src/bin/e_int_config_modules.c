@@ -394,7 +394,7 @@ _cftype_new(const char *key, const char *name, const char *icon)
 
    if (!cft) return NULL;
    cft->key = eina_stringshare_add(key);
-   cft->name = eina_stringshare_add(name);
+   cft->name = eina_stringshare_add(_(name));
    cft->icon = eina_stringshare_add(icon);
    INF("CFT NEW: key(%s) name(%s) icon(%s)", key, name, icon);
    return cft;
