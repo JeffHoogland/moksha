@@ -7896,6 +7896,21 @@ CONNMAN_ICON(ethernet)
 
 #undef CONNMAN_ICON
 
+#define CONNMAN_IMAGES_SET(_name) \
+         images { \
+            set { \
+               name: "connman_"##_name; \
+               image { \
+                  image: "connman_"##_name##"_128.png" COMP; \
+                  size: 33 33 1000 1000; \
+               } \
+               image { \
+                  image: "connman_"##_name##"_32.png" COMP; \
+                  size: 1 1 32 32; \
+               } \
+            } \
+         } \
+
    group {
       name: "e/modules/connman/icon/wifi";
 
@@ -8135,6 +8150,10 @@ CONNMAN_ICON(ethernet)
 
    group {
       name: "e/modules/connman/end";
+
+      CONNMAN_IMAGES_SET(security1)
+      CONNMAN_IMAGES_SET(security2)
+
       parts {
          part {
             name: "state";
@@ -8172,27 +8191,18 @@ CONNMAN_ICON(ethernet)
                aspect_preference: BOTH;
                color: 255 255 255 0;
                rel1.relative: 0.3 0;
-               image.image: "connman_unsecure.png" COMP;
-               image.normal: "connman_unsecure.png";
-            }
-            description {
-               state: "unsecure" 0.0;
-               inherit: "default" 0.0;
-               color: 255 255 255 255;
+               image.normal: "connman_security1";
             }
             description {
                state: "almost_secure" 0.0;
                inherit: "default" 0.0;
                color: 255 255 255 255;
-               image.image: "connman_almost_secure.png" COMP;
-               image.normal: "connman_almost_secure.png";
             }
             description {
                state: "secure" 0.0;
                inherit: "default" 0.0;
                color: 255 255 255 255;
-               image.image: "connman_secure.png" COMP;
-               image.normal: "connman_secure.png";
+               image.normal: "connman_security2";
             }
          }
       }
@@ -8229,7 +8239,7 @@ CONNMAN_ICON(ethernet)
             name: "security,none";
             signal: "e,security,none";
             source: "e";
-            action: STATE_SET "unsecure" 0.0;
+            action: STATE_SET "default" 0.0;
             target: "security";
          }
          program {
@@ -8249,6 +8259,7 @@ CONNMAN_ICON(ethernet)
       }
    }
 
+#undef CONNMAN_IMAGES_SET
 
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: BLUEZ ***/
