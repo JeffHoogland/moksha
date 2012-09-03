@@ -1,0 +1,24 @@
+ - Module icon
+   - Show 'connecting' animation
+   - Show strength when available
+
+ - Treat ReportError() calls from ConnMan. When a connection fail,
+   ReportError() indicates the reason so we can decide if we should
+   show a message to user asking the password again
+
+ - Streamline the Cancel() and Release() callbacks because they are very
+   similar
+
+ - Destroy popup when we are going to ask for user input
+
+ - When we request user input, give focus to the first 'Mandatory'
+   entry field
+
+ - Search for entries with the same type when we receive an
+   'Informational' field so we can use it in an useful manner
+
+ - Add "config" button in popup that will call the external binary for
+   advanced configuration
+
+ - Add configuration entry to set the external binary - econnman-bin is
+   the default 
