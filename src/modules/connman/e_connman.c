@@ -13,6 +13,9 @@
 #define CONNMAN_MANAGER_IFACE CONNMAN_BUS_NAME ".Manager"
 #define CONNMAN_SERVICE_IFACE CONNMAN_BUS_NAME ".Service"
 
+#define MILLI_PER_SEC 1000
+#define CONNMAN_CONNECTION_TIMEOUT 60 * MILLI_PER_SEC
+
 static unsigned int init_count;
 static E_DBus_Connection *conn;
 static char *bus_owner;
@@ -253,10 +256,27 @@ static void _service_prop_changed(void *data, DBusMessage *msg)
    _service_parse_prop_changed(cs, name, &var);
 }
 
+struct connection_data {
+   struct Connman_Service *cs;
+   Econnman_Simple_Cb cb;
+   void *user_data;
+};
+
 static void _service_free(struct Connman_Service *cs)
 {
    if (!cs)
      return;
+
+   if (cs->pending.connect)
+     {
+        dbus_pending_call_cancel(cs->pending.connect);
+        free(cs->pending.data);
+     }
+   if (cs->pending.disconnect)
+     {
+        dbus_pending_call_cancel(cs->pending.disconnect);
+        free(cs->pending.data);
+     }
 
    free(cs->name);
    _eina_str_array_clean(cs->security);
@@ -285,6 +305,96 @@ static struct Connman_Service *_service_new(const char *path, DBusMessageIter *p
 
    _service_prop_dict_changed(cs, props);
    return cs;
+}
+
+static void _service_connection_cb(void *data, DBusMessage *reply,
+                                DBusError *err)
+{
+   struct connection_data *cd = data;
+
+   if (cd->cb)
+     {
+        const char *s = dbus_error_is_set(err) ? err->message : NULL;
+        cd->cb(cd->user_data, s);
+     }
+
+   cd->cs->pending.connect = NULL;
+   cd->cs->pending.disconnect = NULL;
+   cd->cs->pending.data = NULL;
+
+   free(cd);
+}
+
+bool econnman_service_connect(struct Connman_Service *cs,
+                              Econnman_Simple_Cb cb, void *data)
+{
+   DBusMessage *msg;
+   struct connection_data *cd;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(cs, false);
+
+   if (cs->pending.connect || cs->pending.disconnect)
+     {
+        ERR("Pending connection: connect=%p disconnect=%p", cs->pending.connect,
+            cs->pending.disconnect);
+        return false;
+     }
+
+   msg = dbus_message_new_method_call(CONNMAN_BUS_NAME, cs->obj.path,
+                                      CONNMAN_SERVICE_IFACE, "Connect");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(msg, false);
+
+   cd = calloc(1, sizeof(*cd));
+   EINA_SAFETY_ON_NULL_GOTO(cd, fail);
+
+   cd->cs = cs;
+   cd->cb = cb;
+   cd->user_data = data;
+
+   cs->pending.connect = e_dbus_message_send(conn, msg,
+                     _service_connection_cb, CONNMAN_CONNECTION_TIMEOUT, cd);
+
+   return true;
+
+fail:
+   dbus_message_unref(msg);
+   return false;
+}
+
+bool econnman_service_disconnect(struct Connman_Service *cs,
+                                 Econnman_Simple_Cb cb, void *data)
+{
+   DBusMessage *msg;
+   struct connection_data *cd;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(cs, false);
+
+   if (cs->pending.connect || cs->pending.disconnect)
+     {
+        ERR("Pending connection: connect=%p disconnect=%p", cs->pending.connect,
+            cs->pending.disconnect);
+        return false;
+     }
+
+   msg = dbus_message_new_method_call(CONNMAN_BUS_NAME, cs->obj.path,
+                                      CONNMAN_SERVICE_IFACE, "Disconnect");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(msg, false);
+
+   cd = calloc(1, sizeof(*cd));
+   EINA_SAFETY_ON_NULL_GOTO(cd, fail);
+
+   cd->cs = cs;
+   cd->cb = cb;
+   cd->user_data = data;
+
+   cs->pending.connect = e_dbus_message_send(conn, msg,
+                                             _service_connection_cb, -1, cd);
+
+   return true;
+
+fail:
+   dbus_message_unref(msg);
+   return false;
 }
 
 static struct Connman_Service *_manager_find_service_stringshared(

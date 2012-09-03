@@ -62,6 +62,14 @@ struct Connman_Service
    enum Connman_State state;
    enum Connman_Service_Type type;
    uint8_t strength;
+
+   /* Private */
+   struct
+     {
+        DBusPendingCall *connect;
+        DBusPendingCall *disconnect;
+        void *data;
+     } pending;
 };
 
 /* Ecore Events */
@@ -79,6 +87,11 @@ unsigned int e_connman_system_shutdown(void);
  * Find service using a non-stringshared path
  */
 struct Connman_Service *econnman_manager_find_service(struct Connman_Manager *cm, const char *path) EINA_ARG_NONNULL(1, 2);
+
+typedef void (*Econnman_Simple_Cb)(void *data, const char *error);
+
+bool econnman_service_connect(struct Connman_Service *cs, Econnman_Simple_Cb cb, void *data);
+bool econnman_service_disconnect(struct Connman_Service *cs, Econnman_Simple_Cb cb, void *data);
 
 /* UI calls from econnman */
 

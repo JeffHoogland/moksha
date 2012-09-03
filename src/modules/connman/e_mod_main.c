@@ -52,6 +52,54 @@ static Evas_Object * _econnman_service_new_icon(struct Connman_Service *cs,
    return icon;
 }
 
+static void _econnman_disconnect_cb(void *data, const char *error)
+{
+   const char *path = data;
+
+   if (error == NULL)
+     return;
+
+   ERR("Could not disconnect %s: %s", path, error);
+}
+
+static void _econnman_connect_cb(void *data, const char *error)
+{
+   const char *path = data;
+
+   if (error == NULL)
+     return;
+
+   ERR("Could not connect %s: %s", path, error);
+}
+
+static void _econnman_popup_selected_cb(void *data)
+{
+   E_Connman_Instance *inst = data;
+   const char *path;
+   struct Connman_Service *cs;
+
+   path = e_widget_ilist_selected_value_get(inst->ui.popup.list);
+   if (path == NULL)
+     return;
+
+   cs = econnman_manager_find_service(inst->ctxt->cm, path);
+   if (cs == NULL)
+     return;
+
+   switch (cs->state)
+     {
+      case CONNMAN_STATE_READY:
+      case CONNMAN_STATE_ONLINE:
+         INF("Disconnect %s", path);
+         econnman_service_disconnect(cs, _econnman_disconnect_cb, (void *) path);
+         break;
+      default:
+         INF("Connect %s", path);
+         econnman_service_connect(cs, _econnman_connect_cb, (void *) path);
+         break;
+     }
+}
+
 static void _econnman_popup_update(struct Connman_Manager *cm,
                                    E_Connman_Instance *inst)
 {
@@ -67,7 +115,8 @@ static void _econnman_popup_update(struct Connman_Manager *cm,
    EINA_INLIST_FOREACH(cm->services, cs)
      {
         Evas_Object *icon = _econnman_service_new_icon(cs, evas);
-        e_widget_ilist_append(list, icon, cs->name, NULL, NULL, cs->obj.path);
+        e_widget_ilist_append(list, icon, cs->name, _econnman_popup_selected_cb,
+                              inst, cs->obj.path);
      }
 
    e_widget_ilist_thaw(list);
