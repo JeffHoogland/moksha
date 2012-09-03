@@ -82,4 +82,9 @@ void econnman_mod_manager_update(struct Connman_Manager *cm);
 void econnman_mod_manager_inout(struct Connman_Manager *cm);
 void econnman_mod_services_changed(struct Connman_Manager *cm);
 
+/* Util */
+
+const char *econnman_state_to_str(enum Connman_State state);
+const char *econnman_service_type_to_str(enum Connman_Service_Type type);
+
 #endif /* E_CONNMAN_H */

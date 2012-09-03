@@ -27,10 +27,33 @@ e_connman_theme_path(void)
 #undef TF
 }
 
+static Evas_Object * _econnman_service_new_icon(struct Connman_Service *cs,
+                                                Evas *evas)
+{
+   const char *type = econnman_service_type_to_str(cs->type);
+   const char *state = econnman_state_to_str(cs->state);
+   Evas_Object *icon;
+   Edje_Message_Int msg;
+   char buf[128];
+
+   snprintf(buf, sizeof(buf), "e/modules/connman/icon/%s", type);
+   icon = edje_object_add(evas);
+   e_theme_edje_object_set(icon, "base/theme/modules/connman", buf);
+
+   if (state)
+     {
+        snprintf(buf, sizeof(buf), "e,state,%s", state);
+        edje_object_signal_emit(icon, buf, "e");
+     }
+
+   return icon;
+}
+
 static void _econnman_popup_update(struct Connman_Manager *cm,
                                    E_Connman_Instance *inst)
 {
    Evas_Object *list = inst->ui.popup.list;
+   Evas *evas = evas_object_evas_get(list);
    struct Connman_Service *cs;
 
    EINA_SAFETY_ON_NULL_RETURN(cm);
@@ -39,7 +62,10 @@ static void _econnman_popup_update(struct Connman_Manager *cm,
    e_widget_ilist_clear(list);
 
    EINA_INLIST_FOREACH(cm->services, cs)
-      e_widget_ilist_append(list, NULL, cs->name, NULL, NULL, cs->obj.path);
+     {
+        Evas_Object *icon = _econnman_service_new_icon(cs, evas);
+        e_widget_ilist_append(list, icon, cs->name, NULL, NULL, cs->obj.path);
+     }
 
    e_widget_ilist_thaw(list);
    e_widget_ilist_go(list);

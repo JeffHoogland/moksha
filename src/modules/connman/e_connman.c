@@ -47,6 +47,25 @@ static enum Connman_State str_to_state(const char *s)
    return CONNMAN_STATE_NONE;
 }
 
+const char *econnman_state_to_str(enum Connman_State state)
+{
+   switch (state)
+     {
+      case CONNMAN_STATE_OFFLINE:
+         return "offline";
+      case CONNMAN_STATE_IDLE:
+         return "idle";
+      case CONNMAN_STATE_READY:
+         return "ready";
+      case CONNMAN_STATE_ONLINE:
+         return "online";
+      case CONNMAN_STATE_NONE:
+         break;
+     }
+
+   return NULL;
+}
+
 static enum Connman_Service_Type str_to_type(const char *s)
 {
    if (strcmp(s, "ethernet") == 0)
@@ -56,6 +75,21 @@ static enum Connman_Service_Type str_to_type(const char *s)
 
    DBG("Unknown type %s", s);
    return CONNMAN_SERVICE_TYPE_NONE;
+}
+
+const char *econnman_service_type_to_str(enum Connman_Service_Type type)
+{
+   switch (type)
+     {
+      case CONNMAN_SERVICE_TYPE_ETHERNET:
+         return "ethernet";
+      case CONNMAN_SERVICE_TYPE_WIFI:
+         return "wifi";
+      case CONNMAN_SERVICE_TYPE_NONE:
+         break;
+     }
+
+   return "other";
 }
 
 /* ---- */
