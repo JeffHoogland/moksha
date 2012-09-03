@@ -14,8 +14,7 @@ INCLUDES          = -I. \
                     -I$(top_srcdir)/src/modules/$(MODULE) \
                     -I$(top_srcdir)/src/bin \
                     -I$(top_builddir)/src/bin \
-                    -I$(top_srcdir)/src/modules \
-                    @e_cflags@ @ECONNMAN_CFLAGS@
+                    -I$(top_srcdir)/src/modules
 
 pkgdir            = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 
@@ -32,6 +31,7 @@ module_la_SOURCES = e_mod_main.h \
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@ @ECONNMAN_LIBS@
 module_la_LDFLAGS      = -module -avoid-version
+module_la_CFLAGS       = $(AM_CFLAGS) @e_cflags@ @ECONNMAN_CFLAGS@
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
 uninstall:
