@@ -46,6 +46,9 @@ static Evas_Object * _econnman_service_new_icon(struct Connman_Service *cs,
         edje_object_signal_emit(icon, buf, "e");
      }
 
+   msg.val = cs->strength;
+   edje_object_message_send(icon, EDJE_MESSAGE_INT, 1, &msg);
+
    return icon;
 }
 

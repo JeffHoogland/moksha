@@ -137,6 +137,13 @@ static void _service_parse_prop_changed(struct Connman_Service *cs,
         cs->type = str_to_type(type);
         DBG("New type: %s %d", type, cs->type);
      }
+   else if (strcmp(prop_name, "Strength") == 0)
+     {
+        uint8_t strength;
+        dbus_message_iter_get_basic(value, &strength);
+        cs->strength = strength;
+        DBG("New strength: %d", strength);;
+     }
 }
 
 static void _service_prop_dict_changed(struct Connman_Service *cs,
