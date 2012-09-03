@@ -63,9 +63,6 @@ e_confirm_dialog_show(const char *title, const char *icon, const char *text,
 static void
 _e_confirm_dialog_free(E_Confirm_Dialog *cd)
 {
-   E_Dialog *dia;
-
-   dia = cd->dia;
    if (cd->del.func) cd->del.func(cd->del.data);
    e_object_del(E_OBJECT(cd->dia));
    free(cd);
