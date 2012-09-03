@@ -238,11 +238,11 @@ static struct Connman_Manager *_manager_new(void)
 
 static inline void _e_connman_system_name_owner_exit(void)
 {
-   free(bus_owner);
-   bus_owner = NULL;
-
    _manager_free(connman_manager);
    connman_manager = NULL;
+
+   free(bus_owner);
+   bus_owner = NULL;
 
    ecore_event_add(E_CONNMAN_EVENT_MANAGER_OUT, NULL, NULL, NULL);
 }
