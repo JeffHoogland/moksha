@@ -134,31 +134,28 @@ static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
                                               enum Connman_State state,
                                               enum Connman_Service_Type type)
 {
+   char buf[128];
    Evas_Object *o = inst->ui.gadget;
+   const char *statestr;
 
    switch (state)
      {
       case CONNMAN_STATE_ONLINE:
          edje_object_signal_emit(o, "e,changed,connected,yes", "e");
-         edje_object_signal_emit(o, "e,changed,state,online", "e");
          break;
       case CONNMAN_STATE_READY:
          edje_object_signal_emit(o, "e,changed,connected,yes", "e");
-         edje_object_signal_emit(o, "e,changed,state,ready", "e");
          break;
       case CONNMAN_STATE_IDLE:
-         edje_object_signal_emit(o, "e,changed,connected,no", "e");
-         edje_object_signal_emit(o, "e,changed,state,idle", "e");
-         break;
       case CONNMAN_STATE_OFFLINE:
-         edje_object_signal_emit(o, "e,changed,connected,no", "e");
-         edje_object_signal_emit(o, "e,changed,state,disconnect", "e");
-         break;
       case CONNMAN_STATE_NONE:
          edje_object_signal_emit(o, "e,changed,connected,no", "e");
-         edje_object_signal_emit(o, "e,changed,state,failure", "e");
          break;
      }
+
+   statestr = econnman_state_to_str(state);
+   snprintf(buf, sizeof(buf), "e,changed,state,%s", statestr);
+   edje_object_signal_emit(o, statestr, "e");
 
    switch (type)
      {
@@ -169,11 +166,7 @@ static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
          edje_object_signal_emit(o, "e,changed,technology,wifi", "e");
          break;
       case CONNMAN_SERVICE_TYPE_NONE:
-         if (state == CONNMAN_STATE_ONLINE || state == CONNMAN_STATE_READY)
-           edje_object_signal_emit(o, "e,changed,technology,none,others", "e");
-         else
-           edje_object_signal_emit(o, "e,changed,technology,none,others", "e");
-
+         edje_object_signal_emit(o, "e,changed,technology,none", "e");
          break;
      }
 
@@ -191,7 +184,8 @@ void econnman_mod_manager_update(struct Connman_Manager *cm)
 
    DBG("cm->services=%p", cm->services);
 
-   if (cm->services)
+   if (cm->services && (cm->state == CONNMAN_STATE_ONLINE ||
+                        cm->state == CONNMAN_STATE_READY))
      {
         struct Connman_Service *cs = EINA_INLIST_CONTAINER_GET(cm->services,
                                                       struct Connman_Service);
@@ -234,7 +228,8 @@ void econnman_mod_manager_inout(struct Connman_Manager *cm)
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      _econnman_gadget_setup(inst);
 
-   econnman_mod_manager_update(cm);
+   if (ctxt->cm)
+     econnman_mod_manager_update(cm);
 }
 
 static void
