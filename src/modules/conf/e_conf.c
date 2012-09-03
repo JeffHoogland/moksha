@@ -166,6 +166,10 @@ e_configure_show(E_Container *con, const char *params)
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr, "ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
+   mask = 0;
+   kg = evas_object_key_grab(o, "Escape", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr, "ERROR: unable to redirect \"Escape\" key events to object %p.\n", o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
                                   _e_configure_keydown_cb, eco->win);
 
@@ -452,6 +456,8 @@ _e_configure_keydown_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
              e_widget_activate(o);
           }
      }
+   else if (!strcmp(ev->keyname, "Escape"))
+     e_widget_activate(eco->close);
 }
 
 static void
