@@ -13,7 +13,6 @@ static unsigned int init_count;
 static E_DBus_Connection *conn;
 static E_DBus_Object *agent_obj;
 
-#define AGENT_PATH "/org/enlightenment/connman/agent"
 #define AGENT_IFACE "net.connman.Agent"
 
 static DBusMessage *_agent_release(E_DBus_Object *obj, DBusMessage *msg)

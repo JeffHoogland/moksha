@@ -672,6 +672,49 @@ static void _manager_get_prop_cb(void *data, DBusMessage *reply,
      }
 }
 
+static void
+_manager_agent_register_cb(void *data, DBusMessage *reply, DBusError *err)
+{
+   struct Connman_Manager *cm = data;
+
+   cm->pending.register_agent = NULL;
+
+   if (dbus_error_is_set(err))
+     {
+        WRN("Could not register agent. %s: %s", err->name, err->message);
+        return;
+     }
+
+   INF("Agent registered");
+}
+
+static void
+_manager_agent_register(struct Connman_Manager *cm)
+{
+   const char *path = AGENT_PATH;
+   DBusMessageIter itr;
+   DBusMessage *msg;
+
+   if (!cm)
+     return;
+
+   msg = dbus_message_new_method_call(CONNMAN_BUS_NAME, "/",
+                                      CONNMAN_MANAGER_IFACE, "RegisterAgent");
+
+   if (!msg)
+     {
+        ERR("Could not create D-Bus message");
+        return;
+     }
+
+   dbus_message_iter_init_append(msg, &itr);
+   dbus_message_iter_append_basic(&itr, DBUS_TYPE_OBJECT_PATH, &path);
+
+   cm->pending.register_agent = e_dbus_message_send(conn, msg,
+                                                    _manager_agent_register_cb,
+                                                    -1, cm);
+}
+
 static void _manager_free(struct Connman_Manager *cm)
 {
    if (!cm)
@@ -695,6 +738,12 @@ static void _manager_free(struct Connman_Manager *cm)
      {
         dbus_pending_call_cancel(cm->pending.get_properties);
         cm->pending.get_properties = NULL;
+     }
+
+   if (cm->pending.register_agent)
+     {
+        dbus_pending_call_cancel(cm->pending.register_agent);
+        cm->pending.register_agent = NULL;
      }
 
    _connman_object_clear(&cm->obj);
@@ -764,6 +813,7 @@ static inline void _e_connman_system_name_owner_enter(const char *owner)
 {
    bus_owner = strdup(owner);
    connman_manager = _manager_new();
+   _manager_agent_register(connman_manager);
    ecore_event_add(E_CONNMAN_EVENT_MANAGER_IN, NULL, NULL, NULL);
    econnman_mod_manager_inout(connman_manager);
 }

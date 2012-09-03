@@ -54,6 +54,7 @@ struct Connman_Manager
      {
         DBusPendingCall *get_services;
         DBusPendingCall *get_properties;
+        DBusPendingCall *register_agent;
      } pending;
 };
 
