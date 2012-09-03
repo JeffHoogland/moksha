@@ -211,6 +211,11 @@ _fill_cat_list(E_Config_Dialog_Data *cfdata)
    for (itr = _types; itr->key_len > 0; itr++)
      {
         cft = _cftype_find(cfdata, itr->key, _(itr->name), itr->icon);
+        if (!cft)
+          {
+             WRN("CFT MISSING!!! key(%s) name(%s) icon(%s)", itr->key, _(itr->name), itr->icon);
+             continue;
+          }
         icon = e_icon_add(cfdata->evas);
         if (icon)
           {
