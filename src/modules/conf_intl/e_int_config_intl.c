@@ -909,6 +909,7 @@ _lc_check(void)
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   E_Action *a;
    if (cfdata->cur_language)
      {
         if (e_config->language) eina_stringshare_del(e_config->language);
@@ -920,12 +921,15 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
 
    e_config_save_queue();
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
    return 1;
 }
 
 static int
 _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   E_Action *a;
    if (cfdata->cur_language)
      {
         if (e_config->language) eina_stringshare_del(e_config->language);
@@ -937,6 +941,8 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
      }
 
    e_config_save_queue();
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
    return 1;
 }
 
