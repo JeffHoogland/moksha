@@ -486,7 +486,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    evas_object_show(wd->o_entry);
    evas_object_show(wd->o_table2);
    evas_object_show(wd->o_table);
-   e_fm2_first_sel(wd->o_files_fm);
+   if (!selected) e_fm2_first_sel(wd->o_files_fm);
    evas_object_focus_set(wd->o_files_fm, EINA_TRUE);
    return obj;
 }
@@ -505,9 +505,22 @@ EAPI const char *
 e_widget_fsel_selection_path_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+   const char *s, *dir;
+   char buf[PATH_MAX];
 
    if (!obj) return NULL;
    wd = e_widget_data_get(obj);
+   s = e_widget_entry_text_get(wd->o_entry);
+   dir = e_fm2_real_path_get(wd->o_files_fm);
+   if (s)
+     {
+        snprintf(buf, sizeof(buf), "%s/%s", dir, s);
+        eina_stringshare_replace(&wd->path, buf);
+     }
+   else
+     {
+        eina_stringshare_replace(&wd->path, dir);
+     }
    return wd->path;
 }
 
