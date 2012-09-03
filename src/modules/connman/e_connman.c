@@ -185,9 +185,126 @@ static struct Connman_Service *_service_new(const char *path, DBusMessageIter *p
    return cs;
 }
 
+static struct Connman_Service *_manager_find_service_by_path(struct Connman_Manager *cm,
+                                                             const char *path)
+{
+   struct Connman_Service *cs, *found = NULL;
+
+   path = eina_stringshare_add(path);
+   EINA_INLIST_FOREACH(cm->services, cs)
+     {
+        if (cs->obj.path == path)
+          {
+             found = cs;
+             break;
+          }
+        }
+
+   eina_stringshare_del(path);
+   return found;
+}
+
+static void _manager_services_remove(struct Connman_Manager *cm,
+                                     DBusMessageIter *array)
+{
+   for (; dbus_message_iter_get_arg_type(array) != DBUS_TYPE_INVALID;
+        dbus_message_iter_next(array))
+     {
+        struct Connman_Service *cs;
+        const char *path;
+
+        if (dbus_message_iter_get_arg_type(array) != DBUS_TYPE_OBJECT_PATH)
+          {
+             ERR("Unexpected D-Bus type %d",
+                 dbus_message_iter_get_arg_type(array));
+             continue;
+          }
+        dbus_message_iter_get_basic(array, &path);
+        cs = _manager_find_service_by_path(cm, path);
+        if (cs == NULL)
+          {
+             ERR("Received object path '%s' to remove, but it's not in list",
+                 path);
+             continue;
+          }
+
+        cm->services = eina_inlist_remove(cm->services, EINA_INLIST_GET(cs));
+        DBG("Removed service: %p %s", cs, path);
+        _service_free(cs);
+     }
+}
+
 static void _manager_services_changed(void *data, DBusMessage *msg)
 {
-   //TODO: parse message with the new service order + property changes
+   struct Connman_Manager *cm = data;
+   DBusMessageIter iter, changed, removed;
+   Eina_Inlist *tmp = NULL;
+
+   if (cm->pending.get_services)
+     return;
+
+   dbus_message_iter_init(msg, &iter);
+   if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY)
+     {
+        ERR("type=%d", dbus_message_iter_get_arg_type(&iter));
+        return;
+     }
+
+   dbus_message_iter_recurse(&iter, &changed);
+   dbus_message_iter_next(&iter);
+   if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY)
+     {
+        ERR("type=%d", dbus_message_iter_get_arg_type(&iter));
+        return;
+     }
+   dbus_message_iter_recurse(&iter, &removed);
+
+   _manager_services_remove(cm, &removed);
+
+   for (; dbus_message_iter_get_arg_type(&changed) != DBUS_TYPE_INVALID;
+        dbus_message_iter_next(&changed))
+     {
+        struct Connman_Service *cs;
+        DBusMessageIter entry, dict;
+        const char *path;
+
+        dbus_message_iter_recurse(&changed, &entry);
+        if (dbus_message_iter_get_arg_type(&entry) != DBUS_TYPE_OBJECT_PATH)
+          {
+             ERR("Unexpected D-Bus type %d",
+                 dbus_message_iter_get_arg_type(&entry));
+             continue;
+          }
+        dbus_message_iter_get_basic(&entry, &path);
+
+        cs = _manager_find_service_by_path(cm, path);
+
+        dbus_message_iter_next(&entry);
+        if (dbus_message_iter_get_arg_type(&entry) != DBUS_TYPE_ARRAY)
+          {
+             ERR("Unexpected D-Bus type %d",
+                 dbus_message_iter_get_arg_type(&entry));
+             continue;
+          }
+        dbus_message_iter_recurse(&entry, &dict);
+
+        if (cs == NULL)
+          {
+             cs = _service_new(path, &dict);
+             DBG("Added service: %p %s", cs, path);
+          }
+        else
+          {
+             _service_prop_dict_changed(cs, &dict);
+             cm->services = eina_inlist_remove(cm->services,
+                                               EINA_INLIST_GET(cs));
+             DBG("Changed service: %p %s", cs, path);
+          }
+
+        tmp = eina_inlist_append(tmp, EINA_INLIST_GET(cs));
+     }
+
+   cm->services = tmp;
 }
 
 static void _manager_get_services_cb(void *data, DBusMessage *reply,
@@ -204,15 +321,7 @@ static void _manager_get_services_cb(void *data, DBusMessage *reply,
         return;
      }
 
-   /* Did we already receive a ServicesChanged signal in the meantime?
-    *
-    * FIXME: but if there was a ServicesChanged signal, it might not contain all
-    * properties for all services.
-    */
-   if (cm->services)
-     return;
-
-   DBG(" ");
+   DBG("cm->services=%p", cm->services);
 
    dbus_message_iter_init(reply, &iter);
    if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY)
