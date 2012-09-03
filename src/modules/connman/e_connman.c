@@ -62,8 +62,17 @@ static enum Connman_Service_Type str_to_type(const char *s)
 
 static void _connman_object_init(struct Connman_Object *obj, const char *path)
 {
-   EINA_SAFETY_ON_NULL_RETURN(path);
-   obj->path = path;
+   obj->path = eina_stringshare_add(path);
+}
+
+static void _connman_object_clear(struct Connman_Object *obj)
+{
+   E_DBus_Signal_Handler *h;
+
+   EINA_LIST_FREE(obj->handlers, h)
+     e_dbus_signal_handler_del(conn, h);
+
+   eina_stringshare_del(obj->path);
 }
 
 static void _service_parse_prop_changed(struct Connman_Service *cs,
@@ -146,12 +155,13 @@ static void _service_prop_changed(void *data, DBusMessage *msg)
 
 static void _service_free(struct Connman_Service *cs)
 {
-   Eina_List *l;
-
-   EINA_LIST_FREE(cs->obj.handlers, l)
-     e_dbus_signal_handler_del(conn, l->data);
+   if (!cs)
+     return;
 
    free(cs->name);
+   _connman_object_clear(&cs->obj);
+
+   free(cs);
 }
 
 static struct Connman_Service *_service_new(const char *path, DBusMessageIter *props)
@@ -159,21 +169,17 @@ static struct Connman_Service *_service_new(const char *path, DBusMessageIter *p
    struct Connman_Service *cs;
    E_DBus_Signal_Handler *h;
 
-   size_t pathlen;
-
    EINA_SAFETY_ON_NULL_RETURN_VAL(path, NULL);
-   pathlen = strlen(path);
 
-   cs = calloc(1, sizeof(*cs) + pathlen + 1);
+   cs = calloc(1, sizeof(*cs));
    EINA_SAFETY_ON_NULL_RETURN_VAL(cs, NULL);
 
-   memcpy(cs + sizeof(*cs), path, 1);
    _connman_object_init(&cs->obj, path);
 
    h = e_dbus_signal_handler_add(conn, bus_owner,
                                  path, CONNMAN_SERVICE_IFACE, "PropertyChanged",
                                  _service_prop_changed, cs);
-   cs->obj.handlers =  eina_list_append(cs->obj.handlers, h);
+   cs->obj.handlers = eina_list_append(cs->obj.handlers, h);
 
    _service_prop_dict_changed(cs, props);
    return cs;
@@ -315,7 +321,8 @@ static void _manager_get_prop_cb(void *data, DBusMessage *reply,
 
 static void _manager_free(struct Connman_Manager *cm)
 {
-   Eina_List *l;
+   if (!cm)
+     return;
 
    while (cm->services)
      {
@@ -324,9 +331,6 @@ static void _manager_free(struct Connman_Manager *cm)
         cm->services = eina_inlist_remove(cm->services, cm->services);
         _service_free(cs);
      }
-
-   EINA_LIST_FREE(cm->obj.handlers, l)
-     e_dbus_signal_handler_del(conn, l->data);
 
    if (cm->pending.get_services)
      {
@@ -339,6 +343,9 @@ static void _manager_free(struct Connman_Manager *cm)
         dbus_pending_call_cancel(cm->pending.get_properties);
         cm->pending.get_properties = NULL;
      }
+
+   _connman_object_clear(&cm->obj);
+   free(cm);
 }
 
 static struct Connman_Manager *_manager_new(void)
@@ -359,21 +366,20 @@ static struct Connman_Manager *_manager_new(void)
         return NULL;
      }
 
-   cm = calloc(1, sizeof(*cm) + 2);
+   cm = calloc(1, sizeof(*cm));
    EINA_SAFETY_ON_NULL_RETURN_VAL(cm, NULL);
 
-   memcpy(cm + sizeof(*cm), path, 1);
    _connman_object_init(&cm->obj, path);
 
    h = e_dbus_signal_handler_add(conn, bus_owner,
                                  path, CONNMAN_MANAGER_IFACE, "PropertyChanged",
                                  _manager_prop_changed, cm);
-   cm->obj.handlers =  eina_list_append(cm->obj.handlers, h);
+   cm->obj.handlers = eina_list_append(cm->obj.handlers, h);
 
    h = e_dbus_signal_handler_add(conn, bus_owner,
                                  path, CONNMAN_MANAGER_IFACE, "ServicesChanged",
                                  _manager_services_changed, cm);
-   cm->obj.handlers =  eina_list_append(cm->obj.handlers, h);
+   cm->obj.handlers = eina_list_append(cm->obj.handlers, h);
 
    /*
     * PropertyChanged signal in service's path is guaranteed to arrive only
