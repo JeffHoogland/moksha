@@ -462,7 +462,7 @@ _e_connman_get_name_owner(void *data __UNUSED__, DBusMessage *msg, DBusError *er
 
    if (dbus_error_is_set(err))
      {
-        if (!strcmp(err->name, DBUS_ERROR_NAME_HAS_NO_OWNER))
+        if (strcmp(err->name, DBUS_ERROR_NAME_HAS_NO_OWNER) != 0)
           ERR("could not get bus name owner: %s %s", err->name, err->message);
         return;
      }
