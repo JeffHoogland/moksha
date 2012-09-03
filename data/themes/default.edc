@@ -7901,23 +7901,27 @@ CONNMAN_ICON(ethernet)
 
 #define MSG_ID_STRENGTH 1
 
-#define CONNMAN_BAR_OFF(_num) \
-         part { \
-            name: "bar_"##_num##"_off"; \
-            type: IMAGE; \
-            mouse_events: 0; \
-            description { \
-               state: "default" 0.0; \
-               aspect: 1 1; \
-               aspect_preference: BOTH; \
-               image.image: "connman_wifi_"##_num##"_off.png" COMP; \
-               image.normal: "connman_wifi_"##_num##"_off.png"; \
+#define CONNMAN_BAR_IMAGES_SET(_name) \
+         images { \
+            set { \
+               name: "wifi_bar_"##_name; \
+               image { \
+                  image: "connman_wifi_"##_name##"_128.png" COMP; \
+                  /* FIXME: check why it doesn't work */ \
+                  /* size: 33 33 128 128; \ */ \
+                  size: 33 33 1000 1000; \
+               } \
+               image { \
+                  image: "connman_wifi_"##_name##"_32.png" COMP; \
+                  size: 1 1 32 32; \
+               } \
             } \
-         }
+         } \
 
-#define CONNMAN_BAR_ON(_num) \
+#define CONNMAN_BAR_ON(_name) \
+         CONNMAN_BAR_IMAGES_SET(_name) \
          part { \
-            name: "bar_"##_num##"_on"; \
+            name: "bar_"##_name; \
             type: IMAGE; \
             mouse_events: 0; \
             description { \
@@ -7925,8 +7929,7 @@ CONNMAN_ICON(ethernet)
                aspect: 1 1; \
                aspect_preference: BOTH; \
                color: 255 255 255 0; \
-               image.image: "connman_wifi_"##_num##"_on.png" COMP; \
-               image.normal: "connman_wifi_"##_num##"_on.png"; \
+               image.normal: "wifi_bar_"##_name; \
             } \
             description { \
                state: "visible" 0.0; \
@@ -7984,14 +7987,25 @@ CONNMAN_ICON(ethernet)
       }
 
       parts {
-         CONNMAN_BAR_OFF(0)
-         CONNMAN_BAR_OFF(1)
-         CONNMAN_BAR_OFF(2)
-         CONNMAN_BAR_OFF(3)
-         CONNMAN_BAR_ON(0)
-         CONNMAN_BAR_ON(1)
-         CONNMAN_BAR_ON(2)
-         CONNMAN_BAR_ON(3)
+
+         CONNMAN_BAR_IMAGES_SET(off)
+         part {
+            name: "bar_off";
+            type: IMAGE;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1 1;
+               aspect_preference: BOTH;
+               image.normal: "wifi_bar_off";
+            }
+         }
+
+         CONNMAN_BAR_ON(0_on)
+         CONNMAN_BAR_ON(1_on)
+         CONNMAN_BAR_ON(2_on)
+         CONNMAN_BAR_ON(3_on)
+
          part {
             name: "e.text.strength";
             type: TEXT;
@@ -8086,7 +8100,7 @@ CONNMAN_ICON(ethernet)
          CONNMAN_CONNECTING_OFF(3)
       }
 
-#undef CONNMAN_BAR_OFF
+#undef CONNMAN_BAR_IMAGES_SET
 #undef CONNMAN_BAR_ON
 #undef CONNMAN_CONNECTING_ON
 #undef CONNMAN_CONNECTING_OFF
