@@ -214,12 +214,7 @@ static void _econnman_gadget_setup(E_Connman_Instance *inst)
    if (!ctxt->cm)
      {
         edje_object_signal_emit(o, "e,unavailable", "e");
-        edje_object_part_text_set(o, "e.text.name", _("No ConnMan"));
-        edje_object_part_text_set(o, "e.text.error",
-                                  _("No ConnMan server found."));
         edje_object_signal_emit(o, "e,changed,connected,no", "e");
-        edje_object_part_text_set(o, "e.text.offline_mode", "");
-        edje_object_signal_emit(o, "e,changed,offline_mode,no", "e");
      }
    else
      edje_object_signal_emit(o, "e,available", "e");
