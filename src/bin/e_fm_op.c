@@ -66,6 +66,7 @@ static Eina_Bool     _e_fm_op_scan_idler(void *data);
 
 static void          _e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...);
 static void          _e_fm_op_rollback(E_Fm_Op_Task *task);
+static void          _e_fm_op_update_progress_report_simple(int percent, const char *src, const char *dst);
 static void          _e_fm_op_update_progress(E_Fm_Op_Task *task, off_t _plus_e_fm_op_done, off_t _plus_e_fm_op_total);
 static void          _e_fm_op_copy_stat_info(E_Fm_Op_Task *task);
 static int           _e_fm_op_handle_overwrite(E_Fm_Op_Task *task);
@@ -180,7 +181,7 @@ main(int argc, char **argv)
           {
              char buf[PATH_MAX];
              char *p2, *p3;
-             size_t p2_len, last_len;
+             int p2_len, last_len, done, total;
 
              p2 = ecore_file_realpath(argv[last]);
              if (!p2) goto quit;
@@ -201,11 +202,14 @@ main(int argc, char **argv)
 
              p3 = buf + last_len;
 
+             done = 0;
+             total = last - 2;
+
              for (; i < last; i++)
                {
                   char *p = ecore_file_realpath(argv[i]);
                   const char *name;
-                  size_t name_len;
+                  int name_len;
 
                   if (!p) continue;
 
@@ -221,20 +225,29 @@ main(int argc, char **argv)
                   if (p2_len + name_len >= PATH_MAX) goto skip_arg;
                   memcpy(p3, name, name_len + 1);
 
-                  if ((type == E_FM_OP_MOVE) &&
-                      (!strcmp(argv[i],buf)))
-                    goto skip_arg;
+                  if ((type == E_FM_OP_SYMLINK) &&
+                           (symlink(argv[i], buf) == 0))
+                    {
+                       done++;
+                       _e_fm_op_update_progress_report_simple
+                         (done * 100 / total, argv[i], buf);
+                    }
+                  else
+                    {
+                       if ((type == E_FM_OP_MOVE) &&
+                           (!strcmp(argv[i],buf)))
+                         goto skip_arg;
 
-                  /* Creating task */
-                  E_Fm_Op_Task *task;
+                       E_Fm_Op_Task *task;
 
-                  task = _e_fm_op_task_new();
-                  task->type = type;
-                  task->src.name = eina_stringshare_add(argv[i]);
-                  task->dst.name = eina_stringshare_add(buf);
+                       task = _e_fm_op_task_new();
+                       task->type = type;
+                       task->src.name = eina_stringshare_add(argv[i]);
+                       task->dst.name = eina_stringshare_add(buf);
 
-                  _e_fm_op_scan_queue =
-                    eina_list_append(_e_fm_op_scan_queue, task);
+                       _e_fm_op_scan_queue =
+                         eina_list_append(_e_fm_op_scan_queue, task);
+                    }
 
 skip_arg:
                   E_FREE(p);
@@ -255,14 +268,22 @@ skip_arg:
              E_FREE(p2);
              if (i) goto quit;
 
-             /* Creating task */
-             E_Fm_Op_Task *task;
+             if ((type == E_FM_OP_SYMLINK) &&
+                      (symlink(argv[2], argv[3]) == 0))
+               {
+                  _e_fm_op_update_progress_report_simple(100, argv[2], argv[3]);
+                  goto quit;
+               }
+             else
+               {
+                  E_Fm_Op_Task *task;
 
-             task = _e_fm_op_task_new();
-             task->type = type;
-             task->src.name = eina_stringshare_add(argv[2]);
-             task->dst.name = eina_stringshare_add(argv[3]);
-             _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
+                  task = _e_fm_op_task_new();
+                  task->type = type;
+                  task->src.name = eina_stringshare_add(argv[2]);
+                  task->dst.name = eina_stringshare_add(argv[3]);
+                  _e_fm_op_scan_queue = eina_list_append(_e_fm_op_scan_queue, task);
+               }
           }
         else
           goto quit;
@@ -938,6 +959,14 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
 
    E_FM_OP_DEBUG("Time left: %d at %e\n", eta, elapsed);
    E_FM_OP_DEBUG("Progress %d. \n", percent);
+}
+
+static void
+_e_fm_op_update_progress_report_simple(int percent, const char *src, const char *dst)
+{
+   size_t done = (percent * REMOVECHUNKSIZE) / 100;
+   _e_fm_op_update_progress_report
+     (percent, 0, 0, done, REMOVECHUNKSIZE, src, dst);
 }
 
 /* Updates progress.
