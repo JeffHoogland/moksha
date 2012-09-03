@@ -1,6 +1,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+#include "E_Connman.h"
+
 static E_Module *connman_mod;
 static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
@@ -23,6 +25,75 @@ e_connman_theme_path(void)
 
    return tmpbuf;
 #undef TF
+}
+
+static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
+                                              E_Connman_Instance *inst,
+                                              enum Connman_State state,
+                                              enum Connman_Service_Type type)
+{
+   Evas_Object *o = inst->ui.gadget;
+
+   switch (state)
+     {
+      case CONNMAN_STATE_ONLINE:
+         edje_object_signal_emit(o, "e,changed,connected,yes", "e");
+         edje_object_signal_emit(o, "e,changed,state,online", "e");
+         break;
+      case CONNMAN_STATE_READY:
+         edje_object_signal_emit(o, "e,changed,connected,yes", "e");
+         edje_object_signal_emit(o, "e,changed,state,ready", "e");
+         break;
+      case CONNMAN_STATE_IDLE:
+         edje_object_signal_emit(o, "e,changed,connected,no", "e");
+         edje_object_signal_emit(o, "e,changed,state,idle", "e");
+         break;
+      case CONNMAN_STATE_OFFLINE:
+         edje_object_signal_emit(o, "e,changed,connected,no", "e");
+         edje_object_signal_emit(o, "e,changed,state,disconnect", "e");
+         break;
+      case CONNMAN_STATE_NONE:
+         edje_object_signal_emit(o, "e,changed,connected,no", "e");
+         edje_object_signal_emit(o, "e,changed,state,failure", "e");
+         break;
+     }
+
+   switch (type)
+     {
+      case CONNMAN_SERVICE_TYPE_ETHERNET:
+         edje_object_signal_emit(o, "e,changed,technology,ethernet", "e");
+         break;
+      case CONNMAN_SERVICE_TYPE_WIFI:
+         edje_object_signal_emit(o, "e,changed,technology,wifi", "e");
+         break;
+      case CONNMAN_SERVICE_TYPE_NONE:
+         edje_object_signal_emit(o, "e,changed,technology,none", "e");
+         break;
+     }
+
+   DBG("state=%d type=%d", state, type);
+}
+
+void econnman_mod_manager_update(struct Connman_Manager *cm)
+{
+   enum Connman_Service_Type type;
+   E_Connman_Module_Context *ctxt = connman_mod->data;
+   E_Connman_Instance *inst;
+   Eina_List *l;
+
+   DBG("cm->services=%p", cm->services);
+
+   if (cm->services)
+     {
+        struct Connman_Service *cs = EINA_INLIST_CONTAINER_GET(cm->services,
+                                                      struct Connman_Service);
+        type = cs->type;
+     }
+   else
+     type = CONNMAN_SERVICE_TYPE_NONE;
+
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     _econnman_mod_manager_update_inst(ctxt, inst, cm->state, type);
 }
 
 static void _econnman_gadget_setup(E_Connman_Instance *inst)

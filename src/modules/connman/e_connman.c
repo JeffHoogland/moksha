@@ -239,7 +239,7 @@ static void _manager_get_services_cb(void *data, DBusMessage *reply,
      }
 }
 
-static void _manager_parse_prop_changed(struct Connman_Manager *cm,
+static bool _manager_parse_prop_changed(struct Connman_Manager *cm,
                                         const char *name,
                                         DBusMessageIter *value)
 {
@@ -253,7 +253,13 @@ static void _manager_parse_prop_changed(struct Connman_Manager *cm,
    else if (strcmp(name, "OfflineMode") == 0)
      cm->offline_mode = _dbus_bool_get(value);
    else
-     DBG("Unhandled property '%s'", name);
+     {
+        DBG("Unhandled property '%s'", name);
+        return false;
+     }
+
+   econnman_mod_manager_update(cm);
+   return true;
 }
 
 static void _manager_prop_changed(void *data, DBusMessage *msg)
