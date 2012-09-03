@@ -104,11 +104,8 @@ e_connman_system_init(E_DBus_Connection *edbus_conn)
         return -1;
      }
 
-   if (E_CONNMAN_EVENT_MANAGER_IN == 0)
-      E_CONNMAN_EVENT_MANAGER_IN = ecore_event_type_new();
-
-   if (E_CONNMAN_EVENT_MANAGER_OUT == 0)
-      E_CONNMAN_EVENT_MANAGER_OUT = ecore_event_type_new();
+   E_CONNMAN_EVENT_MANAGER_IN = ecore_event_type_new();
+   E_CONNMAN_EVENT_MANAGER_OUT = ecore_event_type_new();
 
    conn = edbus_conn;
    cb_name_owner_changed = e_dbus_signal_handler_add(conn,
@@ -156,6 +153,9 @@ e_connman_system_shutdown(void)
 
    eina_log_domain_unregister(_e_dbus_connman_log_dom);
    conn = NULL;
+
+   E_CONNMAN_EVENT_MANAGER_OUT = 0;
+   E_CONNMAN_EVENT_MANAGER_IN = 0;
 
    return init_count;
 }
