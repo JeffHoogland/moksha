@@ -213,12 +213,18 @@ static void _econnman_popup_input_window_create(E_Connman_Instance *inst)
    inst->ui.popup.input_win = w;
 }
 
+static void
+_econnman_configure_cb(void *data __UNUSED__, void *data2 __UNUSED__)
+{
+   /* FIXME call econnman-bin or other set on modules settings */
+}
+
 static void _econnman_popup_new(E_Connman_Instance *inst)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
-   Evas *evas;
+   Evas_Object *list, *bt;
    Evas_Coord mw, mh;
-   Evas_Object *ot;
+   Evas *evas;
 
    EINA_SAFETY_ON_FALSE_RETURN(inst->popup == NULL);
 
@@ -228,22 +234,25 @@ static void _econnman_popup_new(E_Connman_Instance *inst)
    inst->popup = e_gadcon_popup_new(inst->gcc);
    evas = inst->popup->win->evas;
 
-   ot = e_widget_table_add(evas, 0);
+   list = e_widget_list_add(evas, 0, 0);
    inst->ui.popup.list = e_widget_ilist_add(evas, 24, 24, NULL);
    e_widget_size_min_set(inst->ui.popup.list, 120, 100);
-   e_widget_table_object_append(ot, inst->ui.popup.list, 0, 0, 1, 5,
-                                1, 1, 1, 1);
+   e_widget_list_object_append(list, inst->ui.popup.list, 1, 1, 0.5);
 
    _econnman_popup_update(ctxt->cm, inst);
 
-   e_widget_size_min_get(ot, &mw, &mh);
-   if (mh < 200)
-     mh = 200;
+   bt = e_widget_button_add(evas, "Configure", NULL,
+                            _econnman_configure_cb, NULL, NULL);
+   e_widget_list_object_append(list, bt, 1, 0, 0.5);
+
+   e_widget_size_min_get(list, &mw, &mh);
+   if (mh < 220)
+     mh = 220;
    if (mw < 200)
      mw = 200;
-   e_widget_size_min_set(ot, mw, mh);
+   e_widget_size_min_set(list, mw, mh);
 
-   e_gadcon_popup_content_set(inst->popup, ot);
+   e_gadcon_popup_content_set(inst->popup, list);
    e_gadcon_popup_show(inst->popup);
    _econnman_popup_input_window_create(inst);
 }
