@@ -8004,6 +8004,7 @@ CONNMAN_ICON(ethernet)
       parts {
 
          CONNMAN_BAR_IMAGES_SET(off)
+         CONNMAN_BAR_IMAGES_SET(not)
          part {
             name: "bar_off";
             type: IMAGE;
@@ -8013,6 +8014,11 @@ CONNMAN_ICON(ethernet)
                aspect: 1 1;
                aspect_preference: BOTH;
                image.normal: "wifi_bar_off";
+            }
+            description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 0;
             }
          }
 
@@ -8051,12 +8057,11 @@ CONNMAN_ICON(ethernet)
                state: "default" 0.0;
                aspect: 1 1;
                aspect_preference: BOTH;
-               image.image: "connman_wifi_not.png" COMP;
-               image.normal: "connman_wifi_not.png";
+               image.normal: "wifi_bar_not";
                color: 255 255 255 0;
             }
             description {
-               state: "visible" 0.0;
+               state: "disabled" 0.0;
                inherit: "default" 0.0;
                color: 255 255 255 255;
             }
@@ -8069,6 +8074,7 @@ CONNMAN_ICON(ethernet)
             source: "e";
             action: STATE_SET "default" 0.0;
             target: "bar_not";
+            target: "bar_off";
          }
          program {
             name: "connman,disabled";
@@ -8082,8 +8088,9 @@ CONNMAN_ICON(ethernet)
          }
          program {
             name: "connman,disabled,2";
-            action: STATE_SET "visible" 0.0;
+            action: STATE_SET "disabled" 0.0;
             target: "bar_not";
+            target: "bar_off";
          }
          program {
             name: "strength,show";

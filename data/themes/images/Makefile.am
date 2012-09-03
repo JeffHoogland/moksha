@@ -79,7 +79,6 @@ connman_cellular.png \
 connman_ethernet.png \
 connman_online.png \
 connman_ready.png \
-connman_wifi_not.png \
 connman_security1_128.png \
 connman_security1_32.png \
 connman_security2_128.png \
@@ -92,6 +91,8 @@ connman_wifi_2_on_128.png \
 connman_wifi_2_on_32.png \
 connman_wifi_3_on_128.png \
 connman_wifi_3_on_32.png \
+connman_wifi_not_128.png \
+connman_wifi_not_32.png \
 connman_wifi_off_128.png \
 connman_wifi_off_32.png \
 dia_botshad.png \
