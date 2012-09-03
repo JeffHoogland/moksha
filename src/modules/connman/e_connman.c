@@ -25,11 +25,64 @@ EAPI int E_CONNMAN_EVENT_MANAGER_OUT;
 
 /* utility functions */
 
+static void _eina_str_array_clean(Eina_Array *array)
+{
+   const char *item;
+   Eina_Array_Iterator itr;
+   unsigned int i;
+
+   EINA_ARRAY_ITER_NEXT(array, i, item, itr)
+     eina_stringshare_del(item);
+
+   eina_array_clean(array);
+}
+
 static bool _dbus_bool_get(DBusMessageIter *itr)
 {
    dbus_bool_t val;
    dbus_message_iter_get_basic(itr, &val);
    return val;
+}
+
+static void _dbus_str_array_to_eina(DBusMessageIter *value, Eina_Array **old,
+                                    unsigned nelem)
+{
+   DBusMessageIter itr;
+   Eina_Array *array;
+   EINA_SAFETY_ON_NULL_RETURN(value);
+   EINA_SAFETY_ON_NULL_RETURN(old);
+
+   EINA_SAFETY_ON_FALSE_RETURN(
+      dbus_message_iter_get_arg_type(value) == DBUS_TYPE_ARRAY);
+
+   dbus_message_iter_recurse(value, &itr);
+
+   array = *old;
+   if (array == NULL)
+     {
+        array = eina_array_new(nelem);
+        *old = array;
+     }
+   else
+     _eina_str_array_clean(array);
+
+   for (; dbus_message_iter_get_arg_type(&itr) != DBUS_TYPE_INVALID;
+        dbus_message_iter_next(&itr))
+     {
+        const char *s;
+        if (dbus_message_iter_get_arg_type(&itr) != DBUS_TYPE_STRING)
+          {
+             ERR("Unexpected D-Bus type %d",
+                 dbus_message_iter_get_arg_type(&itr));
+             continue;
+          }
+
+        dbus_message_iter_get_basic(&itr, &s);
+        eina_array_push(array, eina_stringshare_add(s));
+        DBG("Push %s", s);
+     }
+
+   return;
 }
 
 static enum Connman_State str_to_state(const char *s)
@@ -144,6 +197,13 @@ static void _service_parse_prop_changed(struct Connman_Service *cs,
         cs->strength = strength;
         DBG("New strength: %d", strength);;
      }
+   else if (strcmp(prop_name, "Security") == 0)
+     {
+        DBG("Old security count: %d",
+            cs->security ? eina_array_count(cs->security) : 0);
+        _dbus_str_array_to_eina(value, &cs->security, 2);
+        DBG("New security count: %d", eina_array_count(cs->security));
+     }
 }
 
 static void _service_prop_dict_changed(struct Connman_Service *cs,
@@ -198,6 +258,8 @@ static void _service_free(struct Connman_Service *cs)
      return;
 
    free(cs->name);
+   _eina_str_array_clean(cs->security);
+   eina_array_free(cs->security);
    _connman_object_clear(&cs->obj);
 
    free(cs);

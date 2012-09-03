@@ -58,6 +58,7 @@ struct Connman_Service
 
    /* Properties */
    char *name;
+   Eina_Array *security;
    enum Connman_State state;
    enum Connman_Service_Type type;
    uint8_t strength;
