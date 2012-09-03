@@ -74,5 +74,6 @@ unsigned int e_connman_system_shutdown(void);
 /* UI calls from econnman */
 
 void econnman_mod_manager_update(struct Connman_Manager *cm);
+void econnman_mod_manager_inout(struct Connman_Manager *cm, bool in);
 
 #endif /* E_CONNMAN_H */

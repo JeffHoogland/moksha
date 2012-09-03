@@ -117,6 +117,19 @@ static void _econnman_gadget_setup(E_Connman_Instance *inst)
    return;
 }
 
+void econnman_mod_manager_inout(struct Connman_Manager *cm, bool in)
+{
+   E_Connman_Module_Context *ctxt = connman_mod->data;
+   const Eina_List *l;
+   E_Connman_Instance *inst;
+
+   DBG("Manager %s", in ? "in" : "out");
+   ctxt->has_manager = in;
+
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     _econnman_gadget_setup(inst);
+}
+
 static void
 _connman_cb_mouse_down(void *data, Evas *evas __UNUSED__,
                        Evas_Object *obj __UNUSED__, void *event)
@@ -248,40 +261,6 @@ static const E_Gadcon_Client_Class _gc_class =
 
 EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, _e_connman_Name };
 
-static Eina_Bool
-_econnman_event_manager_in(void *data, int type __UNUSED__,
-                          void *event __UNUSED__)
-{
-   E_Connman_Module_Context *ctxt = data;
-   const Eina_List *l;
-   E_Connman_Instance *inst;
-
-   DBG("Manager in");
-   ctxt->has_manager = EINA_TRUE;
-
-   EINA_LIST_FOREACH(ctxt->instances, l, inst)
-     _econnman_gadget_setup(inst);
-
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
-_econnman_event_manager_out(void *data, int type __UNUSED__,
-                           void *event __UNUSED__)
-{
-   E_Connman_Module_Context *ctxt = data;
-   const Eina_List *l;
-   E_Connman_Instance *inst;
-
-   DBG("Manager out");
-   ctxt->has_manager = EINA_FALSE;
-
-   EINA_LIST_FOREACH(ctxt->instances, l, inst)
-     _econnman_gadget_setup(inst);
-
-   return ECORE_CALLBACK_PASS_ON;
-}
-
 static E_Config_Dialog * _econnman_config(E_Container *con,
                                           const char *params __UNUSED__)
 {
@@ -320,24 +299,6 @@ _econnman_configure_registry_unregister(void)
    e_configure_registry_category_del(_reg_cat);
 }
 
-static void
-_econnman_events_register(E_Connman_Module_Context *ctxt)
-{
-   ctxt->event.manager_in = ecore_event_handler_add
-       (E_CONNMAN_EVENT_MANAGER_IN, _econnman_event_manager_in, ctxt);
-   ctxt->event.manager_out = ecore_event_handler_add
-       (E_CONNMAN_EVENT_MANAGER_OUT, _econnman_event_manager_out, ctxt);
-}
-
-static void
-_econnman_events_unregister(E_Connman_Module_Context *ctxt)
-{
-   if (ctxt->event.manager_in)
-     ecore_event_handler_del(ctxt->event.manager_in);
-   if (ctxt->event.manager_out)
-     ecore_event_handler_del(ctxt->event.manager_out);
-}
-
 EAPI void *
 e_modapi_init(E_Module *m)
 {
@@ -369,8 +330,6 @@ e_modapi_init(E_Module *m)
 
    _econnman_configure_registry_register();
    e_gadcon_provider_register(&_gc_class);
-
-   _econnman_events_register(ctxt);
 
    return ctxt;
 
@@ -406,7 +365,6 @@ e_modapi_shutdown(E_Module *m)
    if (!ctxt)
      return 0;
 
-   _econnman_events_unregister(ctxt);
    _econnman_instances_free(ctxt);
    _econnman_configure_registry_unregister();
    e_gadcon_provider_unregister(&_gc_class);
