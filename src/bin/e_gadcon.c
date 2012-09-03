@@ -1565,6 +1565,24 @@ e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu)
 }
 
 EAPI E_Menu *
+e_gadcon_client_menu_set(E_Gadcon_Client *gcc, E_Menu *m)
+{
+   E_Menu *ret;
+
+   E_OBJECT_CHECK_RETURN(gcc, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(gcc, E_GADCON_CLIENT_TYPE, NULL);
+
+   ret = gcc->menu;
+   if (ret)
+     e_menu_post_deactivate_callback_set(ret, NULL, NULL);
+   gcc->menu = m;
+   if (gcc->gadcon->shelf) gcc->gadcon->shelf->menu = m;
+   if (m)
+     e_menu_post_deactivate_callback_set(m, _e_gadcon_client_cb_menu_post, gcc);
+   return ret;
+}
+
+EAPI E_Menu *
 e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget, int flags __UNUSED__)
 {
    E_Menu *mo, *menu_main = NULL;
