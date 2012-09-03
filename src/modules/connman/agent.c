@@ -34,7 +34,8 @@ struct Connman_Field
    Eina_Array *alternates;
 };
 
-static struct dialog *_dialog_create(void)
+static struct dialog *
+_dialog_create(void)
 {
    struct dialog *dia;
 
@@ -56,7 +57,8 @@ static struct dialog *_dialog_create(void)
    return dia;
 }
 
-void _dialog_release(void)
+void
+_dialog_release(void)
 {
    EINA_SAFETY_ON_NULL_RETURN(dialog);
 
@@ -65,59 +67,66 @@ void _dialog_release(void)
    dialog = NULL;
 }
 
-static DBusMessage *_agent_release(E_DBus_Object *obj, DBusMessage *msg)
+static DBusMessage *
+_agent_release(E_DBus_Object *obj, DBusMessage *msg)
 {
    return NULL;
 }
 
-static DBusMessage *_agent_report_error(E_DBus_Object *obj, DBusMessage *msg)
+static DBusMessage *
+_agent_report_error(E_DBus_Object *obj, DBusMessage *msg)
 {
    return NULL;
 }
 
-static DBusMessage *_agent_request_browser(E_DBus_Object *obj, DBusMessage *msg)
+static DBusMessage *
+_agent_request_browser(E_DBus_Object *obj, DBusMessage *msg)
 {
    return NULL;
 }
 
-static bool _parse_field_value(struct Connman_Field *field, const char *key,
-                               DBusMessageIter *value)
+static Eina_Bool
+_parse_field_value(struct Connman_Field *field, const char *key,
+                   DBusMessageIter *value)
 {
    if (!strcmp(key, "Type"))
      {
         EINA_SAFETY_ON_FALSE_RETURN_VAL(
            dbus_message_iter_get_arg_type(value) == DBUS_TYPE_STRING, false);
         dbus_message_iter_get_basic(value, &field->type);
-        return true;
+        return EINA_TRUE;
      }
-   else if (!strcmp(key, "Requirement"))
+
+   if (!strcmp(key, "Requirement"))
      {
         EINA_SAFETY_ON_FALSE_RETURN_VAL(
            dbus_message_iter_get_arg_type(value) == DBUS_TYPE_STRING, false);
         dbus_message_iter_get_basic(value, &field->requirement);
-        return true;
+        return EINA_TRUE;
      }
-   else if (!strcmp(key, "Alternates"))
+
+   if (!strcmp(key, "Alternates"))
      {
         EINA_SAFETY_ON_FALSE_RETURN_VAL(
            dbus_message_iter_get_arg_type(value) == DBUS_TYPE_ARRAY, false);
          /* ignore alternates */
-        return true;
+        return EINA_TRUE;
      }
-   else if (!strcmp(key, "Value"))
+
+   if (!strcmp(key, "Value"))
      {
         EINA_SAFETY_ON_FALSE_RETURN_VAL(
            dbus_message_iter_get_arg_type(value) == DBUS_TYPE_STRING, false);
         dbus_message_iter_get_basic(value, &field->value);
-        return true;
+        return EINA_TRUE;
      }
-   else
-     DBG("Ignored unknown argument: %s", key);
 
-   return false;
+   DBG("Ignored unknown argument: %s", key);
+   return EINA_FALSE;
 }
 
-static bool _parse_field(struct Connman_Field *field, DBusMessageIter *value)
+static Eina_Bool
+_parse_field(struct Connman_Field *field, DBusMessageIter *value)
 {
    DBusMessageIter dict;
 
@@ -142,19 +151,20 @@ static bool _parse_field(struct Connman_Field *field, DBusMessageIter *value)
         dbus_message_iter_recurse(&entry, &var);
 
         if (!_parse_field_value(field, key, &var))
-          return false;
+          return EINA_FALSE;
      }
 
-   return true;
+   return EINA_TRUE;
 }
 
-static DBusMessage *_agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
+static DBusMessage *
+_agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
 {
    DBusMessage *reply;
    DBusMessageIter iter, dict;
    const char *path;
 
-   if (dialog != NULL)
+   if (dialog)
      _dialog_release();
 
    reply = dbus_message_new_method_return(msg);
@@ -204,15 +214,17 @@ static DBusMessage *_agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
    return NULL;
 }
 
-static DBusMessage *_agent_cancel(E_DBus_Object *obj, DBusMessage *msg)
+static DBusMessage *
+_agent_cancel(E_DBus_Object *obj, DBusMessage *msg)
 {
-   if (dialog != NULL)
+   if (dialog)
      _dialog_release();
 
    return dbus_message_new_method_return(msg);
 }
 
-static void _econnman_agent_object_create(void)
+static void
+_econnman_agent_object_create(void)
 {
    E_DBus_Interface *iface = e_dbus_interface_new(AGENT_IFACE);
 
@@ -231,7 +243,8 @@ static void _econnman_agent_object_create(void)
    e_dbus_interface_unref(iface);
 }
 
-unsigned int econnman_agent_init(E_DBus_Connection *edbus_conn)
+unsigned int
+econnman_agent_init(E_DBus_Connection *edbus_conn)
 {
    init_count++;
 
@@ -244,9 +257,10 @@ unsigned int econnman_agent_init(E_DBus_Connection *edbus_conn)
    return init_count;
 }
 
-unsigned int econnman_agent_shutdown(void)
+unsigned int
+econnman_agent_shutdown(void)
 {
-   if (init_count == 0)
+   if (!init_count)
      {
         ERR("connman agent already shut down.");
         return 0;
