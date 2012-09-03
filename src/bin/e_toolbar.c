@@ -1,23 +1,23 @@
 #include "e.h"
 
 /* local function protos */
-static void _e_toolbar_free(E_Toolbar *tbar);
-static void _e_toolbar_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
-static void _e_toolbar_menu_cb_post(void *data, E_Menu *mn);
-static void _e_toolbar_menu_cb_pre(void *data, E_Menu *mn);
-static void _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn);
-static void _e_toolbar_menu_cb_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
-static void _e_toolbar_menu_cb_config(void *data, E_Menu *mn, E_Menu_Item *mi);
-static void _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
-static void _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
+static void        _e_toolbar_free(E_Toolbar *tbar);
+static void        _e_toolbar_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+static void        _e_toolbar_menu_cb_post(void *data, E_Menu *mn);
+static void        _e_toolbar_menu_cb_pre(void *data, E_Menu *mn);
+static void        _e_toolbar_menu_append(E_Toolbar *tbar, E_Menu *mn);
+static void        _e_toolbar_menu_cb_edit(void *data, E_Menu *mn, E_Menu_Item *mi);
+static void        _e_toolbar_menu_cb_config(void *data, E_Menu *mn, E_Menu_Item *mi);
+static void        _e_toolbar_menu_cb_contents(void *data, E_Menu *mn, E_Menu_Item *mi);
+static void        _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 static const char *_e_toolbar_orient_string_get(E_Toolbar *tbar);
-static void _e_toolbar_fm2_changed(void *data, Evas_Object *obj, void *event_info);
-static void _e_toolbar_fm2_dir_changed(void *data, Evas_Object *obj, void *event_info);
-static void _e_toolbar_fm2_dir_deleted(void *data, Evas_Object *obj, void *event_info);
-static void _e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj, void *event_info);
-static void _e_toolbar_fm2_selected(void *data, Evas_Object *obj, void *event_info);
-static void _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void *event_info);
-static void _e_toolbar_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
+static void        _e_toolbar_fm2_changed(void *data, Evas_Object *obj, void *event_info);
+static void        _e_toolbar_fm2_dir_changed(void *data, Evas_Object *obj, void *event_info);
+static void        _e_toolbar_fm2_dir_deleted(void *data, Evas_Object *obj, void *event_info);
+static void        _e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj, void *event_info);
+static void        _e_toolbar_fm2_selected(void *data, Evas_Object *obj, void *event_info);
+static void        _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void *event_info);
+static void        _e_toolbar_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
 
 /* local vars */
 static Eina_List *toolbars = NULL;
@@ -33,10 +33,10 @@ e_toolbar_shutdown(void)
 {
    while (toolbars)
      {
-	E_Toolbar *tbar;
+        E_Toolbar *tbar;
 
-	tbar = eina_list_data_get(toolbars);
-	e_object_del(E_OBJECT(tbar));
+        tbar = eina_list_data_get(toolbars);
+        e_object_del(E_OBJECT(tbar));
      }
    return 1;
 }
@@ -62,44 +62,44 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
    tbar->fm2 = fm2;
 
    evas_object_smart_callback_add(tbar->fm2, "changed",
-				  _e_toolbar_fm2_changed, tbar);
+                                  _e_toolbar_fm2_changed, tbar);
    evas_object_smart_callback_add(tbar->fm2, "dir_changed",
-				  _e_toolbar_fm2_dir_changed, tbar);
+                                  _e_toolbar_fm2_dir_changed, tbar);
    evas_object_smart_callback_add(tbar->fm2, "dir_deleted",
-				  _e_toolbar_fm2_dir_deleted, tbar);
+                                  _e_toolbar_fm2_dir_deleted, tbar);
    evas_object_smart_callback_add(tbar->fm2, "files_deleted",
-				  _e_toolbar_fm2_files_deleted, tbar);
+                                  _e_toolbar_fm2_files_deleted, tbar);
    evas_object_smart_callback_add(tbar->fm2, "selected",
-				  _e_toolbar_fm2_selected, tbar);
+                                  _e_toolbar_fm2_selected, tbar);
    evas_object_smart_callback_add(tbar->fm2, "selection_change",
-				  _e_toolbar_fm2_selection_changed, tbar);
+                                  _e_toolbar_fm2_selection_changed, tbar);
 
    tbar->o_event = evas_object_rectangle_add(evas);
    evas_object_color_set(tbar->o_event, 0, 0, 0, 0);
    evas_object_resize(tbar->o_event, tbar->w, tbar->h);
    evas_object_event_callback_add(tbar->o_event, EVAS_CALLBACK_MOUSE_DOWN,
-				  _e_toolbar_cb_mouse_down, tbar);
+                                  _e_toolbar_cb_mouse_down, tbar);
    evas_object_layer_set(tbar->o_event, 0);
    evas_object_show(tbar->o_event);
 
    tbar->o_base = edje_object_add(evas);
    evas_object_resize(tbar->o_base, tbar->w, tbar->h);
    e_theme_edje_object_set(tbar->o_base, "base/theme/fileman/toolbar",
-			   "e/fileman/toolbar/default/base");
+                           "e/fileman/toolbar/default/base");
 
    e_toolbar_move_resize(tbar, tbar->x, tbar->y, tbar->w, tbar->h);
 
    tbar->gadcon = e_gadcon_swallowed_new(tbar->name, tbar->id, tbar->o_base,
-					 "e.swallow.content");
+                                         "e.swallow.content");
    e_gadcon_size_request_callback_set(tbar->gadcon,
-				      _e_toolbar_gadcon_size_request, tbar);
+                                      _e_toolbar_gadcon_size_request, tbar);
    /* FIXME: We want to implement "styles" here ? */
 
    e_toolbar_orient(tbar, E_GADCON_ORIENT_TOP);
 
    e_gadcon_toolbar_set(tbar->gadcon, tbar);
    e_gadcon_util_menu_attach_func_set(tbar->gadcon,
-				      _e_toolbar_menu_items_append, tbar);
+                                      _e_toolbar_menu_items_append, tbar);
    e_gadcon_populate(tbar->gadcon);
 
    toolbars = eina_list_append(toolbars, tbar);
@@ -206,7 +206,7 @@ e_toolbar_orient(E_Toolbar *tbar, E_Gadcon_Orient orient)
    E_OBJECT_TYPE_CHECK(tbar, E_TOOLBAR_TYPE);
    e_gadcon_orient(tbar->gadcon, orient);
    snprintf(buf, sizeof(buf), "e,state,orientation,%s",
-	    _e_toolbar_orient_string_get(tbar));
+            _e_toolbar_orient_string_get(tbar));
    edje_object_signal_emit(tbar->o_base, buf, "e");
    edje_object_message_signal_process(tbar->o_base);
 }
@@ -224,32 +224,36 @@ e_toolbar_position_calc(E_Toolbar *tbar)
      {
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_TOP:
-	tbar->x = 0;
-	tbar->y = 0;
-	tbar->h = 32;
-	tbar->w = tbar->fwin->w;
-	break;
+        tbar->x = 0;
+        tbar->y = 0;
+        tbar->h = 32;
+        tbar->w = tbar->fwin->w;
+        break;
+
       case E_GADCON_ORIENT_BOTTOM:
-	tbar->x = 0;
-	tbar->h = 32;
-	tbar->w = tbar->fwin->w;
-	tbar->y = (tbar->fwin->h - tbar->h);
-	break;
+        tbar->x = 0;
+        tbar->h = 32;
+        tbar->w = tbar->fwin->w;
+        tbar->y = (tbar->fwin->h - tbar->h);
+        break;
+
       case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
-	tbar->x = 0;
-	tbar->w = 32;
-	tbar->h = tbar->fwin->h;
-	tbar->y = 0;
-	break;
+        tbar->x = 0;
+        tbar->w = 32;
+        tbar->h = tbar->fwin->h;
+        tbar->y = 0;
+        break;
+
       case E_GADCON_ORIENT_RIGHT:
-	tbar->y = 0;
-	tbar->w = 32;
-	tbar->x = (tbar->fwin->w - tbar->w);
-	tbar->h = tbar->fwin->h;
-	break;
+        tbar->y = 0;
+        tbar->w = 32;
+        tbar->x = (tbar->fwin->w - tbar->w);
+        tbar->h = tbar->fwin->h;
+        break;
+
       default:
-	break;
+        break;
      }
    e_toolbar_move_resize(tbar, tbar->x, tbar->y, tbar->w, tbar->h);
 }
@@ -270,9 +274,9 @@ _e_toolbar_free(E_Toolbar *tbar)
 
    if (tbar->menu)
      {
-	e_menu_post_deactivate_callback_set(tbar->menu, NULL, NULL);
-	e_object_del(E_OBJECT(tbar->menu));
-	tbar->menu = NULL;
+        e_menu_post_deactivate_callback_set(tbar->menu, NULL, NULL);
+        e_object_del(E_OBJECT(tbar->menu));
+        tbar->menu = NULL;
      }
    if (tbar->cfg_dlg) e_object_del(E_OBJECT(tbar->cfg_dlg));
    e_object_del(E_OBJECT(tbar->gadcon));
@@ -301,7 +305,7 @@ _e_toolbar_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __U
    zone = e_util_zone_current_get(e_manager_current_get());
    ecore_x_pointer_xy_get(zone->container->win, &x, &y);
    e_menu_activate_mouse(mn, zone, x, y, 1, 1,
-			 E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+                         E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
 }
 
 static void
@@ -417,53 +421,59 @@ _e_toolbar_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coor
      {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_BOTTOM:
-	w = ww;
-	h = 32;
-	break;
+        w = ww;
+        h = 32;
+        break;
+
       case E_GADCON_ORIENT_LEFT:
       case E_GADCON_ORIENT_RIGHT:
-	w = 32;
-	h = hh;
-	break;
+        w = 32;
+        h = hh;
+        break;
+
       default:
-	break;
+        break;
      }
    e_gadcon_swallowed_min_size_set(gc, w, h);
    edje_object_size_min_calc(tbar->o_base, &nw, &nh);
    switch (gc->orient)
      {
       case E_GADCON_ORIENT_TOP:
-	nx = ny = 0;
-	nw = tbar->w;
-	nh = tbar->h;
-	if (nw > tbar->fwin->w) nw = tbar->fwin->w;
-	if (nh > tbar->fwin->h) nh = 32;
-	break;
+        nx = ny = 0;
+        nw = tbar->w;
+        nh = tbar->h;
+        if (nw > tbar->fwin->w) nw = tbar->fwin->w;
+        if (nh > tbar->fwin->h) nh = 32;
+        break;
+
       case E_GADCON_ORIENT_BOTTOM:
-	nx = 0;
-	nw = tbar->w;
-	nh = tbar->h;
-	if (nw > tbar->fwin->w) nw = tbar->fwin->w;
-	if (nh > tbar->fwin->h) nh = 32;
-	ny = (tbar->fwin->h - nh);
-	break;
+        nx = 0;
+        nw = tbar->w;
+        nh = tbar->h;
+        if (nw > tbar->fwin->w) nw = tbar->fwin->w;
+        if (nh > tbar->fwin->h) nh = 32;
+        ny = (tbar->fwin->h - nh);
+        break;
+
       case E_GADCON_ORIENT_LEFT:
-	nx = ny = 0;
-	nw = tbar->w;
-	nh = tbar->h;
-	if (nh > tbar->fwin->h) nh = tbar->fwin->h;
-	if (nw > tbar->fwin->w) nw = 32;
-	break;
+        nx = ny = 0;
+        nw = tbar->w;
+        nh = tbar->h;
+        if (nh > tbar->fwin->h) nh = tbar->fwin->h;
+        if (nw > tbar->fwin->w) nw = 32;
+        break;
+
       case E_GADCON_ORIENT_RIGHT:
-	ny = 0;
-	nh = tbar->h;
-	nw = tbar->w;
-	if (nw > tbar->fwin->w) nw = 32;
-	if (nh > tbar->fwin->h) nh = tbar->fwin->h;
-	nx = (tbar->fwin->w - tbar->w);
-	break;
+        ny = 0;
+        nh = tbar->h;
+        nw = tbar->w;
+        if (nw > tbar->fwin->w) nw = 32;
+        if (nh > tbar->fwin->h) nh = tbar->fwin->h;
+        nx = (tbar->fwin->w - tbar->w);
+        break;
+
       default:
-	break;
+        break;
      }
    e_toolbar_move_resize(tbar, nx, ny, nw, nh);
 }
@@ -476,25 +486,31 @@ _e_toolbar_orient_string_get(E_Toolbar *tbar)
    switch (tbar->gadcon->orient)
      {
       case E_GADCON_ORIENT_HORIZ:
-	sig = "horizontal";
-	break;
+        sig = "horizontal";
+        break;
+
       case E_GADCON_ORIENT_VERT:
-	sig = "vertical";
-	break;
+        sig = "vertical";
+        break;
+
       case E_GADCON_ORIENT_LEFT:
-	sig = "left";
-	break;
+        sig = "left";
+        break;
+
       case E_GADCON_ORIENT_RIGHT:
-	sig = "right";
-	break;
+        sig = "right";
+        break;
+
       case E_GADCON_ORIENT_TOP:
-	sig = "top";
-	break;
+        sig = "top";
+        break;
+
       case E_GADCON_ORIENT_BOTTOM:
-	sig = "bottom";
-	break;
+        sig = "bottom";
+        break;
+
       default:
-	break;
+        break;
      }
    return sig;
 }
@@ -510,8 +526,8 @@ _e_toolbar_fm2_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info
    if (!tbar) return;
    EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	if (!gcc) continue;
-	evas_object_smart_callback_call(gcc->o_base, "changed", tbar);
+        if (!gcc) continue;
+        evas_object_smart_callback_call(gcc->o_base, "changed", tbar);
      }
 }
 
@@ -526,8 +542,8 @@ _e_toolbar_fm2_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_
    if (!tbar) return;
    EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	if (!gcc) continue;
-	evas_object_smart_callback_call(gcc->o_base, "dir_changed", tbar);
+        if (!gcc) continue;
+        evas_object_smart_callback_call(gcc->o_base, "dir_changed", tbar);
      }
 }
 
@@ -542,8 +558,8 @@ _e_toolbar_fm2_dir_deleted(void *data, Evas_Object *obj __UNUSED__, void *event_
    if (!tbar) return;
    EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	if (!gcc) continue;
-	evas_object_smart_callback_call(gcc->o_base, "dir_deleted", tbar);
+        if (!gcc) continue;
+        evas_object_smart_callback_call(gcc->o_base, "dir_deleted", tbar);
      }
 }
 
@@ -558,8 +574,8 @@ _e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj __UNUSED__, void *even
    if (!tbar) return;
    EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	if (!gcc) continue;
-	evas_object_smart_callback_call(gcc->o_base, "files_deleted", tbar);
+        if (!gcc) continue;
+        evas_object_smart_callback_call(gcc->o_base, "files_deleted", tbar);
      }
 }
 
@@ -574,8 +590,8 @@ _e_toolbar_fm2_selected(void *data, Evas_Object *obj __UNUSED__, void *event_inf
    if (!tbar) return;
    EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	if (!gcc) continue;
-	evas_object_smart_callback_call(gcc->o_base, "selected", tbar);
+        if (!gcc) continue;
+        evas_object_smart_callback_call(gcc->o_base, "selected", tbar);
      }
 }
 
@@ -590,7 +606,8 @@ _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj __UNUSED__, void *
    if (!tbar) return;
    EINA_LIST_FOREACH(tbar->gadcon->clients, l, gcc)
      {
-	if (!gcc) continue;
-	evas_object_smart_callback_call(gcc->o_base, "selection_changed", tbar);
+        if (!gcc) continue;
+        evas_object_smart_callback_call(gcc->o_base, "selection_changed", tbar);
      }
 }
+
