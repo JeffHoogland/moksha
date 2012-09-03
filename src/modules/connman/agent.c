@@ -171,7 +171,10 @@ _page_del(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *eve
 
    input_list = evas_object_data_get(obj, "input_list");
    EINA_LIST_FREE(input_list, input)
-      free(input);
+     {
+        free(input->key);
+        free(input);
+     }
 }
 
 static void
