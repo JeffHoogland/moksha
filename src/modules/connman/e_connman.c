@@ -673,6 +673,28 @@ static void _manager_get_prop_cb(void *data, DBusMessage *reply,
 }
 
 static void
+_manager_agent_unregister(void)
+{
+   const char *path = AGENT_PATH;
+   DBusMessageIter itr;
+   DBusMessage *msg;
+
+   msg = dbus_message_new_method_call(CONNMAN_BUS_NAME, "/",
+                                      CONNMAN_MANAGER_IFACE, "UnregisterAgent");
+
+   if (!msg)
+     {
+        ERR("Could not create D-Bus message");
+        return;
+     }
+
+   dbus_message_iter_init_append(msg, &itr);
+   dbus_message_iter_append_basic(&itr, DBUS_TYPE_OBJECT_PATH, &path);
+
+   e_dbus_message_send(conn, msg, NULL, -1, NULL);
+}
+
+static void
 _manager_agent_register_cb(void *data, DBusMessage *reply, DBusError *err)
 {
    struct Connman_Manager *cm = data;
@@ -799,6 +821,7 @@ static struct Connman_Manager *_manager_new(void)
 
 static inline void _e_connman_system_name_owner_exit(void)
 {
+   _manager_agent_unregister();
    econnman_mod_manager_inout(NULL);
    _manager_free(connman_manager);
    connman_manager = NULL;
