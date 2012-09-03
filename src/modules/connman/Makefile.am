@@ -31,7 +31,7 @@ module_la_SOURCES = e_mod_main.h \
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@ @ECONNMAN_LIBS@
 module_la_LDFLAGS      = -module -avoid-version
-module_la_CFLAGS       = $(AM_CFLAGS) @e_cflags@ @ECONNMAN_CFLAGS@
+module_la_CFLAGS       = $(AM_CFLAGS) @e_cflags@ @ECONNMAN_CFLAGS@ -Wno-unused-parameter
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 
 uninstall:

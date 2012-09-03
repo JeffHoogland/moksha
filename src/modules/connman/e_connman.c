@@ -626,8 +626,7 @@ static inline void _e_connman_system_name_owner_enter(const char *owner)
    econnman_mod_manager_inout(connman_manager);
 }
 
-static void _e_connman_system_name_owner_changed(void *data __UNUSED__,
-                                                 DBusMessage *msg)
+static void _e_connman_system_name_owner_changed(void *data, DBusMessage *msg)
 {
    const char *name, *from, *to;
    DBusError err;
@@ -659,7 +658,7 @@ static void _e_connman_system_name_owner_changed(void *data __UNUSED__,
 }
 
 static void
-_e_connman_get_name_owner(void *data __UNUSED__, DBusMessage *msg, DBusError *err)
+_e_connman_get_name_owner(void *data, DBusMessage *msg, DBusError *err)
 {
    const char *owner;
 

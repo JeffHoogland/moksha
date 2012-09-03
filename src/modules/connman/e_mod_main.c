@@ -92,8 +92,7 @@ void econnman_mod_services_changed(struct Connman_Manager *cm)
 static void _econnman_popup_del(E_Connman_Instance *inst);
 
 static Eina_Bool _econnman_popup_input_window_mouse_up_cb(void *data,
-                                                          int type __UNUSED__,
-                                                          void *event)
+                                                          int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    E_Connman_Instance *inst = data;
@@ -311,8 +310,7 @@ static void _econnman_menu_new(E_Connman_Instance *inst,
 }
 
 static void
-_econnman_cb_mouse_down(void *data, Evas *evas __UNUSED__,
-                        Evas_Object *obj __UNUSED__, void *event)
+_econnman_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
 {
    E_Connman_Instance *inst = data;
    Evas_Event_Mouse_Down *ev = event;
@@ -332,14 +330,12 @@ _econnman_cb_mouse_down(void *data, Evas *evas __UNUSED__,
 }
 
 static void
-_econnman_cb_mouse_in(void *data, Evas *evas __UNUSED__,
-                     Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_econnman_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event)
 {
 }
 
 static void
-_econnman_cb_mouse_out(void *data, Evas *evas __UNUSED__,
-                      Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_econnman_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event)
 {
 }
 
@@ -407,20 +403,20 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 }
 
 static void
-_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 {
    e_gadcon_client_aspect_set(gcc, 16, 16);
    e_gadcon_client_min_size_set(gcc, 16, 16);
 }
 
 static const char *
-_gc_label(const E_Gadcon_Client_Class *client_class __UNUSED__)
+_gc_label(const E_Gadcon_Client_Class *client_class)
 {
    return _(_e_connman_Name);
 }
 
 static Evas_Object *
-_gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
+_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas)
 {
    Evas_Object *o;
 
@@ -430,7 +426,7 @@ _gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 }
 
 static const char *
-_gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
+_gc_id_new(const E_Gadcon_Client_Class *client_class)
 {
    E_Connman_Module_Context *ctxt;
    Eina_List *instances;
@@ -459,8 +455,7 @@ static const E_Gadcon_Client_Class _gc_class =
 
 EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, _e_connman_Name };
 
-static E_Config_Dialog * _econnman_config(E_Container *con,
-                                          const char *params __UNUSED__)
+static E_Config_Dialog * _econnman_config(E_Container *con, const char *params)
 {
    E_Connman_Module_Context *ctxt;
 
