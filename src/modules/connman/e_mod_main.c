@@ -283,9 +283,36 @@ void econnman_mod_manager_inout(struct Connman_Manager *cm)
      econnman_mod_manager_update(cm);
 }
 
+static void _econnman_menu_cb_configure(void *data, E_Menu *menu,
+                                        E_Menu_Item *mi)
+{
+   /* TODO */
+}
+
+static void _econnman_menu_new(E_Connman_Instance *inst,
+                               Evas_Event_Mouse_Down *ev)
+{
+   E_Menu *m;
+   E_Menu_Item *mi;
+   int x, y;
+
+   m = e_menu_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Settings"));
+   e_util_menu_item_theme_icon_set(mi, "configure");
+   e_menu_item_callback_set(mi, _econnman_menu_cb_configure, inst);
+
+   m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
+   e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
+   e_menu_activate_mouse(m,
+                         e_util_zone_current_get(e_manager_current_get()),
+                         x + ev->output.x, y + ev->output.y, 1, 1,
+                         E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+}
+
 static void
 _econnman_cb_mouse_down(void *data, Evas *evas __UNUSED__,
-                       Evas_Object *obj __UNUSED__, void *event)
+                        Evas_Object *obj __UNUSED__, void *event)
 {
    E_Connman_Instance *inst = data;
    Evas_Event_Mouse_Down *ev = event;
@@ -300,6 +327,8 @@ _econnman_cb_mouse_down(void *data, Evas *evas __UNUSED__,
         else
           _econnman_popup_del(inst);
      }
+   else if (ev->button == 3)
+     _econnman_menu_new(inst, ev);
 }
 
 static void
