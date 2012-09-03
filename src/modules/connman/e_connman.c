@@ -24,6 +24,7 @@ static struct
 
 static unsigned int init_count;
 static E_DBus_Connection *conn;
+static char *bus_owner;
 
 EAPI int E_CONNMAN_EVENT_MANAGER_IN;
 EAPI int E_CONNMAN_EVENT_MANAGER_OUT;
@@ -31,6 +32,14 @@ EAPI int E_CONNMAN_EVENT_MANAGER_OUT;
 static inline void
 _e_connman_system_name_owner_exit(void)
 {
+   e_dbus_signal_handler_del(conn, handlers.services_changed);
+   handlers.services_changed = NULL;
+   e_dbus_signal_handler_del(conn, handlers.prop_changed);
+   handlers.prop_changed = NULL;
+
+   free(bus_owner);
+   bus_owner = NULL;
+
    ecore_event_add(E_CONNMAN_EVENT_MANAGER_OUT, NULL, NULL, NULL);
 }
 
@@ -43,15 +52,16 @@ static void _manager_prop_changed(void *data __UNUSED__, DBusMessage *msg)
 }
 
 static inline void
-_e_connman_system_name_owner_enter(void)
+_e_connman_system_name_owner_enter(const char *owner)
 {
-   if (!handlers.prop_changed)
-     handlers.prop_changed = e_dbus_signal_handler_add(conn, CONNMAN_BUS_NAME,
+   free(bus_owner);
+   bus_owner = strdup(owner);
+
+   handlers.prop_changed = e_dbus_signal_handler_add(conn, bus_owner,
                                  "/", CONNMAN_MANAGER_IFACE, "PropertyChanged",
                                  _manager_prop_changed, NULL);
 
-   if (!handlers.services_changed)
-     handlers.services_changed = e_dbus_signal_handler_add(conn, CONNMAN_BUS_NAME,
+   handlers.services_changed = e_dbus_signal_handler_add(conn, bus_owner,
                                  "/", CONNMAN_MANAGER_IFACE, "ServicesChanged",
                                  _manager_services_changed, NULL);
 
@@ -83,7 +93,7 @@ _e_connman_system_name_owner_changed(void *data __UNUSED__, DBusMessage *msg)
    DBG("NameOwnerChanged %s from=[%s] to=[%s]", name, from, to);
 
    if (from[0] == '\0' && to[0] != '\0')
-     _e_connman_system_name_owner_enter();
+     _e_connman_system_name_owner_enter(to);
    else if (from[0] != '\0' && to[0] == '\0')
      _e_connman_system_name_owner_exit();
    else
@@ -93,6 +103,8 @@ _e_connman_system_name_owner_changed(void *data __UNUSED__, DBusMessage *msg)
 static void
 _e_connman_get_name_owner(void *data __UNUSED__, DBusMessage *msg, DBusError *err)
 {
+   const char *owner;
+
    pending.get_name_owner = NULL;
    DBG("get_name_owner msg=%p", msg);
 
@@ -103,7 +115,14 @@ _e_connman_get_name_owner(void *data __UNUSED__, DBusMessage *msg, DBusError *er
         return;
      }
 
-   _e_connman_system_name_owner_enter();
+   if (!dbus_message_get_args(msg, NULL, DBUS_TYPE_STRING, &owner,
+                              DBUS_TYPE_INVALID))
+     {
+        ERR("Could not get name owner");
+        return;
+     }
+
+   _e_connman_system_name_owner_enter(owner);
 }
 
 /**
