@@ -25,6 +25,8 @@ module_la_SOURCES = e_mod_main.h \
 		    e_mod_main.c \
 		    e_mod_config.c \
 		    e_connman.c \
+		    agent.c \
+		    agent.h \
 		    log.h \
 		    E_Connman.h
 

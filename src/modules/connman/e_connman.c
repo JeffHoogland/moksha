@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "E_Connman.h"
+#include "agent.h"
 
 #define CONNMAN_BUS_NAME "net.connman"
 #define CONNMAN_MANAGER_IFACE CONNMAN_BUS_NAME ".Manager"
@@ -716,6 +717,8 @@ e_connman_system_init(E_DBus_Connection *edbus_conn)
                                  CONNMAN_BUS_NAME, _e_connman_get_name_owner,
                                  NULL);
 
+   econnman_agent_init(edbus_conn);
+
    return init_count;
 }
 
@@ -742,6 +745,7 @@ e_connman_system_shutdown(void)
    if (pending_get_name_owner)
      dbus_pending_call_cancel(pending_get_name_owner);
 
+   econnman_agent_shutdown();
    conn = NULL;
 
    E_CONNMAN_EVENT_MANAGER_OUT = 0;
