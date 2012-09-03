@@ -8764,7 +8764,7 @@ _e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
    e_menu_item_separator_set(mi, 1);
 
    mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Use default"));
+   e_menu_item_label_set(mi, _("Default View"));
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->view_mode == -1);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_use_default_cb, sd);
