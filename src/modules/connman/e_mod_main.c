@@ -128,6 +128,8 @@ void econnman_mod_manager_inout(struct Connman_Manager *cm, bool in)
 
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      _econnman_gadget_setup(inst);
+
+   econnman_mod_manager_update(cm);
 }
 
 static void
