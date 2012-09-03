@@ -562,22 +562,10 @@ e_modapi_init(E_Module *m)
    E_Connman_Module_Context *ctxt;
    E_DBus_Connection *c;
 
-   c = e_dbus_bus_get(DBUS_BUS_SYSTEM);
-   if (!c)
-     goto error_dbus_bus_get;
-   if (!e_connman_system_init(c))
-     goto error_connman_system_init;
-
-   ctxt = E_NEW(E_Connman_Module_Context, 1);
-   if (!ctxt)
-     goto error_connman_context;
-
-   ctxt->conf_dialog = NULL;
-   connman_mod = m;
-
    if (_e_connman_log_dom < 0)
      {
-        _e_connman_log_dom = eina_log_domain_register("econnman", EINA_COLOR_ORANGE);
+        _e_connman_log_dom = eina_log_domain_register("econnman",
+                                                      EINA_COLOR_ORANGE);
         if (_e_connman_log_dom < 0)
           {
              EINA_LOG_CRIT("could not register logging domain econnman");
@@ -585,19 +573,31 @@ e_modapi_init(E_Module *m)
           }
      }
 
+   ctxt = E_NEW(E_Connman_Module_Context, 1);
+   if (!ctxt)
+     goto error_connman_context;
+
+   c = e_dbus_bus_get(DBUS_BUS_SYSTEM);
+   if (!c)
+     goto error_dbus_bus_get;
+   if (!e_connman_system_init(c))
+     goto error_connman_system_init;
+
+   ctxt->conf_dialog = NULL;
+   connman_mod = m;
+
    _econnman_configure_registry_register();
    e_gadcon_provider_register(&_gc_class);
 
    return ctxt;
 
-error_log_domain:
-   _e_connman_log_dom = -1;
-   connman_mod = NULL;
-   E_FREE(ctxt);
-error_connman_context:
-   e_connman_system_shutdown();
 error_connman_system_init:
 error_dbus_bus_get:
+   E_FREE(ctxt);
+error_connman_context:
+   eina_log_domain_unregister(_e_connman_log_dom);
+error_log_domain:
+   _e_connman_log_dom = -1;
    return NULL;
 }
 
@@ -622,6 +622,8 @@ e_modapi_shutdown(E_Module *m)
    if (!ctxt)
      return 0;
 
+   e_connman_system_shutdown();
+
    _econnman_instances_free(ctxt);
    _econnman_configure_registry_unregister();
    e_gadcon_provider_unregister(&_gc_class);
@@ -629,7 +631,9 @@ e_modapi_shutdown(E_Module *m)
    E_FREE(ctxt);
    connman_mod = NULL;
 
-   e_connman_system_shutdown();
+   eina_log_domain_unregister(_e_connman_log_dom);
+   _e_connman_log_dom = -1;
+
    return 1;
 }
 

@@ -20,6 +20,7 @@ static unsigned int init_count;
 static E_DBus_Connection *conn;
 static char *bus_owner;
 static struct Connman_Manager *connman_manager;
+static E_Connman_Agent *agent;
 
 static DBusPendingCall *pending_get_name_owner;
 static E_DBus_Signal_Handler *handler_name_owner;
@@ -928,7 +929,7 @@ e_connman_system_init(E_DBus_Connection *edbus_conn)
                                  CONNMAN_BUS_NAME, _e_connman_get_name_owner,
                                  NULL);
 
-   econnman_agent_init(edbus_conn);
+   agent = econnman_agent_new(edbus_conn);
 
    return init_count;
 }
@@ -956,7 +957,10 @@ e_connman_system_shutdown(void)
    if (pending_get_name_owner)
      dbus_pending_call_cancel(pending_get_name_owner);
 
-   econnman_agent_shutdown();
+   if (agent)
+     econnman_agent_del(agent);
+
+   agent = NULL;
    conn = NULL;
 
    E_CONNMAN_EVENT_MANAGER_OUT = 0;

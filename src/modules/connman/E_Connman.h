@@ -11,6 +11,8 @@
 
 #include "log.h"
 
+typedef struct _E_Connman_Agent E_Connman_Agent;
+
 enum Connman_State
 {
    CONNMAN_STATE_NONE = -1, /* All unknown states */
