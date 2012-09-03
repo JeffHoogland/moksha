@@ -37,3 +37,7 @@ your CFLAGS.
 distributions (2.1.9 and 2.1.10) with certain patches or missing certain
 patches. be aware of this as a possible font problem.
 
+* if you do not want security issues make sure sysactions.conf is in
+/etc/enlightenment (not PREFIX/etc/enlightenment) as this is the first place
+it looks at. This file is intended to be customized by packagers and
+system integrators to match your policies and scripts/tools.
