@@ -53,7 +53,6 @@ static Evas_Object * _econnman_service_new_icon(struct Connman_Service *cs,
 static Evas_Object * _econnman_service_new_end(struct Connman_Service *cs,
                                                Evas *evas)
 {
-   const char *state = econnman_state_to_str(cs->state);
    Eina_Iterator *iter;
    Evas_Object *end;
    void *security;
@@ -62,12 +61,6 @@ static Evas_Object * _econnman_service_new_end(struct Connman_Service *cs,
    end = edje_object_add(evas);
    e_theme_edje_object_set(end, "base/theme/modules/connman",
                            "e/modules/connman/end");
-
-   if (state)
-     {
-        snprintf(buf, sizeof(buf), "e,state,%s", state);
-        edje_object_signal_emit(end, buf, "e");
-     }
 
    if (!cs->security)
      return end;

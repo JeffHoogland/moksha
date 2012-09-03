@@ -7871,12 +7871,65 @@ collections {
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: CONNMAN ***/
 
+#define MSG_ID_STRENGTH 1
+
+#define CONNMAN_STATE_PART_ADD() \
+         part { \
+            name: "state"; \
+            type: IMAGE; \
+            mouse_events: 0; \
+            description { \
+               state: "default" 0.0; \
+               aspect: 1 1; \
+               aspect_preference: BOTH; \
+               color: 255 255 255 0; \
+               image.normal: "connman_status_ready"; \
+               rel1.relative: 1 0; \
+               align: 1 1; \
+               min: 8 8; \
+            } \
+            description { \
+               state: "ready" 0.0; \
+               inherit: "default" 0.0; \
+               color: 255 255 255 255; \
+            } \
+            description { \
+               state: "online" 0.0; \
+               inherit: "default" 0.0; \
+               color: 255 255 255 255; \
+               image.normal: "connman_status_online"; \
+            } \
+         }
+
 #define CONNMAN_ICON(_icon) \
    group { \
       name: "e/modules/connman/icon/"##_icon; \
+      script { \
+         public message(Msg_Type:type, id, ...) { \
+            if ((type == MSG_INT_SET) && (id == MSG_ID_STRENGTH)) { \
+               new state = getarg(2); \
+               /* Connecting if in association or configuration */ \
+               if ((state == 2)) \
+               { \
+                  set_state(PART:"state", "default", 0.0); \
+                  run_program(PROGRAM:"connecting"); \
+                  return; \
+               } \
+               if ((state == 3)) \
+                  return; \
+               if ((state == 4)) \
+                  set_state(PART:"state", "ready", 0.0); \
+               else if ((state == 5)) \
+                  set_state(PART:"state", "online", 0.0); \
+               else \
+                  set_state(PART:"state", "default", 0.0); \
+               set_state(PART:"icon", "default", 0.0); \
+            } \
+         } \
+      } \
       parts { \
          part { \
-            name: #_icon; \
+            name: "icon"; \
             type: IMAGE; \
             mouse_events: 0; \
             description { \
@@ -7886,6 +7939,28 @@ collections {
                image.image: "connman_"##_icon##".png" COMP; \
                image.normal: "connman_"##_icon##".png"; \
             } \
+            description { \
+               state: "hidden" 0.0; \
+               inherit: "default" 0.0; \
+               color: 255 255 255 0; \
+            } \
+         } \
+         CONNMAN_STATE_PART_ADD() \
+      } \
+      programs { \
+         program { \
+            name: "connecting"; \
+            action: STATE_SET "hidden" 0.0; \
+            transition: ACCEL 0.3; \
+            target: "icon"; \
+            after: "connecting,2"; \
+         } \
+         program { \
+            name: "connecting,2"; \
+            action: STATE_SET "default" 0.0; \
+            transition: DECEL 0.3; \
+            target: "icon"; \
+            after: "connecting"; \
          } \
       } \
    }
@@ -7913,8 +7988,6 @@ CONNMAN_ICON(ethernet)
 
    group {
       name: "e/modules/connman/icon/wifi";
-
-#define MSG_ID_STRENGTH 1
 
 #define CONNMAN_BAR_IMAGES_SET(_name) \
          images { \
@@ -7984,11 +8057,19 @@ CONNMAN_ICON(ethernet)
                /* Connecting if in association or configuration */
                if ((state == 2))
                {
+                  set_state(PART:"state", "default", 0.0);
                   run_program(PROGRAM:"connecting");
                   return;
                }
                if ((state == 3))
                   return;
+
+               if ((state == 4))
+                  set_state(PART:"state", "ready", 0.0);
+               else if ((state == 5))
+                  set_state(PART:"state", "online", 0.0);
+               else
+                  set_state(PART:"state", "default", 0.0);
 
                set_state(PART:"bar_0_on", "visible", 0.0);
                set_tween_state(PART:"bar_1_on", (str - (100/3) * 0) / (100/3),
@@ -8066,6 +8147,9 @@ CONNMAN_ICON(ethernet)
                color: 255 255 255 255;
             }
          }
+         CONNMAN_IMAGES_SET(status_ready)
+         CONNMAN_IMAGES_SET(status_online)
+         CONNMAN_STATE_PART_ADD()
       }
       programs {
          program {
@@ -8081,6 +8165,7 @@ CONNMAN_ICON(ethernet)
             signal: "e,unavailable";
             source: "e";
             action: STATE_SET "default" 0.0;
+            target: "bar_0_on";
             target: "bar_1_on";
             target: "bar_2_on";
             target: "bar_3_on";
@@ -8112,6 +8197,12 @@ CONNMAN_ICON(ethernet)
             target: "bar_1_on";
             target: "bar_2_on";
             target: "bar_3_on";
+            after: "connecting,2";
+         }
+         program {
+            name: "connecting,2";
+            action: STATE_SET "visible" 0.0;
+            target: "bar_0_on";
             after: "connecting,1,on";
          }
          CONNMAN_CONNECTING_ON(1, 2)
@@ -8163,32 +8254,6 @@ CONNMAN_ICON(ethernet)
 
       parts {
          part {
-            name: "state";
-            type: IMAGE;
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-               aspect: 1 1;
-               aspect_preference: BOTH;
-               color: 255 255 255 0;
-               image.image: "connman_ready.png" COMP;
-               image.normal: "connman_ready.png";
-               rel2.relative: 0.3 1;
-            }
-            description {
-               state: "ready" 0.0;
-               inherit: "default" 0.0;
-               color: 255 255 255 255;
-            }
-            description {
-               state: "online" 0.0;
-               inherit: "default" 0.0;
-               color: 255 255 255 255;
-               image.image: "connman_online.png" COMP;
-               image.normal: "connman_online.png";
-            }
-         }
-         part {
             name: "security";
             type: IMAGE;
             mouse_events: 0;
@@ -8197,7 +8262,6 @@ CONNMAN_ICON(ethernet)
                aspect: 1 1;
                aspect_preference: BOTH;
                color: 255 255 255 0;
-               rel1.relative: 0.3 0;
                image.normal: "connman_security1";
             }
             description {
@@ -8214,27 +8278,6 @@ CONNMAN_ICON(ethernet)
          }
       }
       programs {
-         program {
-            name: "state,idle";
-            signal: "e,state,idle";
-            source: "e";
-            action: STATE_SET "default" 0.0;
-            target: "state";
-         }
-         program {
-            name: "state,ready";
-            signal: "e,state,ready";
-            source: "e";
-            action: STATE_SET "ready" 0.0;
-            target: "state";
-         }
-         program {
-            name: "state,online";
-            signal: "e,state,online";
-            source: "e";
-            action: STATE_SET "online" 0.0;
-            target: "state";
-         }
          program {
             name: "security,off";
             signal: "e,security,off";
@@ -8266,6 +8309,7 @@ CONNMAN_ICON(ethernet)
       }
    }
 
+#undef CONNMAN_STATE_PART_ADD
 #undef CONNMAN_IMAGES_SET
 
 /////////////////////////////////////////////////////////////////////////////

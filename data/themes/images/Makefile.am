@@ -77,12 +77,14 @@ clock_base.png \
 connman_bluetooth.png \
 connman_cellular.png \
 connman_ethernet.png \
-connman_online.png \
-connman_ready.png \
 connman_security1_128.png \
 connman_security1_32.png \
 connman_security2_128.png \
 connman_security2_32.png \
+connman_status_online_128.png \
+connman_status_online_32.png \
+connman_status_ready_128.png \
+connman_status_ready_32.png \
 connman_wifi_0_on_128.png \
 connman_wifi_0_on_32.png \
 connman_wifi_1_on_128.png \
