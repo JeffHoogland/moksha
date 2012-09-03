@@ -7955,18 +7955,30 @@ CONNMAN_ICON(ethernet)
 
       script {
          public message(Msg_Type:type, id, ...) {
-            if ((type == MSG_INT) && (id == MSG_ID_STRENGHT)) {
-               new Float:st = getarg(2);
+            if ((type == MSG_INT_SET) && (id == MSG_ID_STRENGHT)) {
+               new state = getarg(2);
+               new Float:str = getarg(3);
                new buf[8];
-               set_state(PART:"bar_0_on", "visible", 0.0);
-               set_tween_state(PART:"bar_1_on", (st - (100/3) * 0) / (100/3),
-                     "default", 0.0, "visible", 0.0);
-               set_tween_state(PART:"bar_2_on", (st - (100/3) * 1) / (100/3),
-                     "default", 0.0, "visible", 0.0);
-               set_tween_state(PART:"bar_3_on", (st - (100/3) * 2) / (100/3),
-                     "default", 0.0, "visible", 0.0);
-               snprintf(buf, sizeof(buf), "%i%%", st);
+
+               snprintf(buf, sizeof(buf), "%i%%", str);
                set_text(PART:"e.text.strenght", buf);
+
+               /* Connecting if in association or configuration */
+               if ((state == 2))
+               {
+                  run_program(PROGRAM:"connecting");
+                  return;
+               }
+               if ((state == 3))
+                  return;
+
+               set_state(PART:"bar_0_on", "visible", 0.0);
+               set_tween_state(PART:"bar_1_on", (str - (100/3) * 0) / (100/3),
+                     "default", 0.0, "visible", 0.0);
+               set_tween_state(PART:"bar_2_on", (str - (100/3) * 1) / (100/3),
+                     "default", 0.0, "visible", 0.0);
+               set_tween_state(PART:"bar_3_on", (str - (100/3) * 2) / (100/3),
+                     "default", 0.0, "visible", 0.0);
             }
          }
       }

@@ -31,23 +31,21 @@ static Evas_Object * _econnman_service_new_icon(struct Connman_Service *cs,
                                                 Evas *evas)
 {
    const char *type = econnman_service_type_to_str(cs->type);
-   const char *state = econnman_state_to_str(cs->state);
+   Edje_Message_Int_Set *msg;
    Evas_Object *icon;
-   Edje_Message_Int msg;
    char buf[128];
 
    snprintf(buf, sizeof(buf), "e/modules/connman/icon/%s", type);
    icon = edje_object_add(evas);
    e_theme_edje_object_set(icon, "base/theme/modules/connman", buf);
 
-   if (state)
-     {
-        snprintf(buf, sizeof(buf), "e,state,%s", state);
-        edje_object_signal_emit(icon, buf, "e");
-     }
+   msg = malloc(sizeof(*msg) + sizeof(int));
+   msg->count = 2;
+   msg->val[0] = cs->state;
+   msg->val[1] = cs->strength;
 
-   msg.val = cs->strength;
-   edje_object_message_send(icon, EDJE_MESSAGE_INT, 1, &msg);
+   edje_object_message_send(icon, EDJE_MESSAGE_INT_SET, 1, msg);
+   free(msg);
 
    return icon;
 }
