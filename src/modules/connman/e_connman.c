@@ -6,11 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const char CONNMAN_BUS_NAME[] = "net.connman";
+#define CONNMAN_BUS_NAME "net.connman"
+#define CONNMAN_MANAGER_IFACE CONNMAN_BUS_NAME ".Manager"
 
 static struct
 {
    E_DBus_Signal_Handler *name_owner_changed;
+   E_DBus_Signal_Handler *services_changed;
+   E_DBus_Signal_Handler *prop_changed;
 } handlers;
 
 static struct
@@ -32,9 +35,27 @@ _e_connman_system_name_owner_exit(void)
    ecore_event_add(E_CONNMAN_EVENT_MANAGER_OUT, NULL, NULL, NULL);
 }
 
+static void _manager_services_changed(void *data __UNUSED__, DBusMessage *msg)
+{
+}
+
+static void _manager_prop_changed(void *data __UNUSED__, DBusMessage *msg)
+{
+}
+
 static inline void
 _e_connman_system_name_owner_enter(void)
 {
+   if (!handlers.prop_changed)
+     handlers.prop_changed = e_dbus_signal_handler_add(conn, CONNMAN_BUS_NAME,
+                                 "/", CONNMAN_MANAGER_IFACE, "PropertyChanged",
+                                 _manager_prop_changed, NULL);
+
+   if (!handlers.services_changed)
+     handlers.services_changed = e_dbus_signal_handler_add(conn, CONNMAN_BUS_NAME,
+                                 "/", CONNMAN_MANAGER_IFACE, "ServicesChanged",
+                                 _manager_services_changed, NULL);
+
    ecore_event_add(E_CONNMAN_EVENT_MANAGER_IN, NULL, NULL, NULL);
 }
 
@@ -154,6 +175,10 @@ e_connman_system_shutdown(void)
 
    if (handlers.name_owner_changed)
      e_dbus_signal_handler_del(conn, handlers.name_owner_changed);
+   if (handlers.services_changed)
+     e_dbus_signal_handler_del(conn, handlers.services_changed);
+   if (handlers.prop_changed)
+     e_dbus_signal_handler_del(conn, handlers.prop_changed);
 
    memset(&handlers, 0, sizeof(handlers));
 
