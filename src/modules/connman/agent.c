@@ -391,11 +391,16 @@ _agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
    const char *path;
 
    agent = e_dbus_object_data_get(obj);
+
+   /* Discard previous requests */
+   if (agent->msg)
+     dbus_message_unref(agent->msg);
    agent->msg = dbus_message_ref(msg);
 
    if (agent->dialog)
      _dialog_del(agent->dialog);
    agent->dialog = _dialog_new(agent);
+   EINA_SAFETY_ON_NULL_GOTO(agent->dialog, err);
 
    dbus_message_iter_init(msg, &iter);
    if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_OBJECT_PATH)
@@ -441,6 +446,7 @@ _agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
 
 err:
    dbus_message_unref(msg);
+   agent->msg = NULL;
    WRN("Failed to parse msg");
    reply = dbus_message_new_method_return(msg);
    return reply;
