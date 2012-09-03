@@ -73,6 +73,13 @@ extern int E_CONNMAN_EVENT_MANAGER_OUT;
 unsigned int e_connman_system_init(E_DBus_Connection *edbus_conn) EINA_ARG_NONNULL(1);
 unsigned int e_connman_system_shutdown(void);
 
+/* Requests from UI */
+
+/**
+ * Find service using a non-stringshared path
+ */
+struct Connman_Service *econnman_manager_find_service(struct Connman_Manager *cm, const char *path) EINA_ARG_NONNULL(1, 2);
+
 /* UI calls from econnman */
 
 /*

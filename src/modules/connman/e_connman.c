@@ -287,12 +287,11 @@ static struct Connman_Service *_service_new(const char *path, DBusMessageIter *p
    return cs;
 }
 
-static struct Connman_Service *_manager_find_service_by_path(struct Connman_Manager *cm,
-                                                             const char *path)
+static struct Connman_Service *_manager_find_service_stringshared(
+                                 struct Connman_Manager *cm, const char *path)
 {
    struct Connman_Service *cs, *found = NULL;
 
-   path = eina_stringshare_add(path);
    EINA_INLIST_FOREACH(cm->services, cs)
      {
         if (cs->obj.path == path)
@@ -300,10 +299,19 @@ static struct Connman_Service *_manager_find_service_by_path(struct Connman_Mana
              found = cs;
              break;
           }
-        }
-
-   eina_stringshare_del(path);
+     }
    return found;
+}
+
+struct Connman_Service *econnman_manager_find_service(struct Connman_Manager *cm,
+                                                      const char *path)
+{
+   struct Connman_Service *cs;
+
+   path = eina_stringshare_add(path);
+   cs = _manager_find_service_stringshared(cm, path);
+   eina_stringshare_del(path);
+   return cs;
 }
 
 static void _manager_services_remove(struct Connman_Manager *cm,
@@ -322,7 +330,7 @@ static void _manager_services_remove(struct Connman_Manager *cm,
              continue;
           }
         dbus_message_iter_get_basic(array, &path);
-        cs = _manager_find_service_by_path(cm, path);
+        cs = econnman_manager_find_service(cm, path);
         if (cs == NULL)
           {
              ERR("Received object path '%s' to remove, but it's not in list",
@@ -379,7 +387,7 @@ static void _manager_services_changed(void *data, DBusMessage *msg)
           }
         dbus_message_iter_get_basic(&entry, &path);
 
-        cs = _manager_find_service_by_path(cm, path);
+        cs = econnman_manager_find_service(cm, path);
 
         dbus_message_iter_next(&entry);
         if (dbus_message_iter_get_arg_type(&entry) != DBUS_TYPE_ARRAY)
