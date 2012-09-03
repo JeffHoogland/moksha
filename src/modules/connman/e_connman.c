@@ -103,8 +103,6 @@ static void _service_parse_prop_changed(struct Connman_Service *cs,
         cs->type = str_to_type(type);
         DBG("New type: %s %d", type, cs->type);
      }
-   else
-     DBG("Unhandled property '%s'", prop_name);
 }
 
 static void _service_prop_dict_changed(struct Connman_Service *cs,
@@ -368,10 +366,7 @@ static bool _manager_parse_prop_changed(struct Connman_Manager *cm,
    else if (strcmp(name, "OfflineMode") == 0)
      cm->offline_mode = _dbus_bool_get(value);
    else
-     {
-        DBG("Unhandled property '%s'", name);
-        return false;
-     }
+     return false;
 
    econnman_mod_manager_update(cm);
    return true;
