@@ -68,6 +68,7 @@ struct _E_Fwin_Page
    } fm_pan, fm_pan_last;
 
    int                  index;
+   Eina_Bool           setting : 1;
 };
 
 struct _E_Fwin_Apps_Dialog
@@ -1601,6 +1602,8 @@ _e_fwin_changed(void *data,
    _e_fwin_icon_mouse_out(fwin, NULL, NULL);
    if (fwin->zone) return;
    _e_fwin_window_title_set(page);
+   if (page->setting) return;
+   if (page->flist) e_fm2_deselect_all(page->flist);
 }
 
 static void
@@ -1614,8 +1617,10 @@ _e_fwin_favorite_selected(void *data,
    page = data;
    selected = e_fm2_selected_list_get(page->flist);
    if (!selected) return;
+   page->setting = 1;
    _e_fwin_file_open_dialog(page, selected, 0);
    eina_list_free(selected);
+   page->setting = 0;
 }
 
 static void
