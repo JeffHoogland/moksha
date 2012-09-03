@@ -7899,7 +7899,7 @@ CONNMAN_ICON(ethernet)
    group {
       name: "e/modules/connman/icon/wifi";
 
-#define MSG_ID_STRENGHT 1
+#define MSG_ID_STRENGTH 1
 
 #define CONNMAN_BAR_OFF(_num) \
          part { \
@@ -7955,13 +7955,13 @@ CONNMAN_ICON(ethernet)
 
       script {
          public message(Msg_Type:type, id, ...) {
-            if ((type == MSG_INT_SET) && (id == MSG_ID_STRENGHT)) {
+            if ((type == MSG_INT_SET) && (id == MSG_ID_STRENGTH)) {
                new state = getarg(2);
                new Float:str = getarg(3);
                new buf[8];
 
                snprintf(buf, sizeof(buf), "%i%%", str);
-               set_text(PART:"e.text.strenght", buf);
+               set_text(PART:"e.text.strength", buf);
 
                /* Connecting if in association or configuration */
                if ((state == 2))
@@ -7993,7 +7993,7 @@ CONNMAN_ICON(ethernet)
          CONNMAN_BAR_ON(2)
          CONNMAN_BAR_ON(3)
          part {
-            name: "e.text.strenght";
+            name: "e.text.strength";
             type: TEXT;
             mouse_events: 0;
             effect: SOFT_SHADOW;
@@ -8057,18 +8057,18 @@ CONNMAN_ICON(ethernet)
             target: "bar_not";
          }
          program {
-            name: "strenght,show";
-            signal: "e,strenght,show";
+            name: "strength,show";
+            signal: "e,strength,show";
             source: "e";
             action: STATE_SET "visible" 0.0;
-            target: "e.text.strenght";
+            target: "e.text.strength";
          }
          program {
-            name: "strenght,hide";
-            signal: "e,strenght,hide";
+            name: "strength,hide";
+            signal: "e,strength,hide";
             source: "e";
             action: STATE_SET "default" 0.0;
-            target: "e.text.strenght";
+            target: "e.text.strength";
          }
          program {
             name: "connecting";
@@ -8090,7 +8090,7 @@ CONNMAN_ICON(ethernet)
 #undef CONNMAN_BAR_ON
 #undef CONNMAN_CONNECTING_ON
 #undef CONNMAN_CONNECTING_OFF
-#undef MSG_ID_STRENGHT
+#undef MSG_ID_STRENGTH
 
    }
 
