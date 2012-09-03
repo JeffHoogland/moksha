@@ -1513,11 +1513,9 @@ _e_shelf_cb_confirm_dialog_destroy(void *data)
 static void
 _e_shelf_cb_confirm_dialog_yes(void *data)
 {
-   E_Config_Shelf *cfg;
    E_Shelf *es;
 
    es = data;
-   cfg = es->cfg;
    if (e_object_is_del(E_OBJECT(es))) return;
    es->cfg_delete = 1;
    e_object_del(E_OBJECT(es));
