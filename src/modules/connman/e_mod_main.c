@@ -67,7 +67,11 @@ static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
          edje_object_signal_emit(o, "e,changed,technology,wifi", "e");
          break;
       case CONNMAN_SERVICE_TYPE_NONE:
-         edje_object_signal_emit(o, "e,changed,technology,none", "e");
+         if (state == CONNMAN_STATE_ONLINE || state == CONNMAN_STATE_READY)
+           edje_object_signal_emit(o, "e,changed,technology,none,others", "e");
+         else
+           edje_object_signal_emit(o, "e,changed,technology,none,others", "e");
+
          break;
      }
 
@@ -100,6 +104,8 @@ static void _econnman_gadget_setup(E_Connman_Instance *inst)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
    Evas_Object *o = inst->ui.gadget;
+
+   DBG("has_manager=%d", ctxt->has_manager);
 
    if (!ctxt->has_manager)
      {
