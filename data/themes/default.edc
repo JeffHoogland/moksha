@@ -7890,8 +7890,8 @@ collections {
       } \
    }
 
-CONNMAN_ICON(3g)
 CONNMAN_ICON(bluetooth)
+CONNMAN_ICON(cellular)
 CONNMAN_ICON(ethernet)
 
 #undef CONNMAN_ICON

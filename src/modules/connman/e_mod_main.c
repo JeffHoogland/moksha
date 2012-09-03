@@ -268,41 +268,22 @@ static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
                                               enum Connman_State state,
                                               enum Connman_Service_Type type)
 {
-   char buf[128];
    Evas_Object *o = inst->ui.gadget;
-   const char *statestr;
+   const char *statestr, *typestr;
+   char buf[128];
 
-   switch (state)
-     {
-      case CONNMAN_STATE_ONLINE:
-         edje_object_signal_emit(o, "e,changed,connected,yes", "e");
-         break;
-      case CONNMAN_STATE_READY:
-         edje_object_signal_emit(o, "e,changed,connected,yes", "e");
-         break;
-      case CONNMAN_STATE_IDLE:
-      case CONNMAN_STATE_OFFLINE:
-      case CONNMAN_STATE_NONE:
-         edje_object_signal_emit(o, "e,changed,connected,no", "e");
-         break;
-     }
+   if ((state == CONNMAN_STATE_ONLINE) || (state == CONNMAN_STATE_READY))
+     edje_object_signal_emit(o, "e,changed,connected,yes", "e");
+   else
+     edje_object_signal_emit(o, "e,changed,connected,no", "e");
 
    statestr = econnman_state_to_str(state);
    snprintf(buf, sizeof(buf), "e,changed,state,%s", statestr);
-   edje_object_signal_emit(o, statestr, "e");
+   edje_object_signal_emit(o, buf, "e");
 
-   switch (type)
-     {
-      case CONNMAN_SERVICE_TYPE_ETHERNET:
-         edje_object_signal_emit(o, "e,changed,technology,ethernet", "e");
-         break;
-      case CONNMAN_SERVICE_TYPE_WIFI:
-         edje_object_signal_emit(o, "e,changed,technology,wifi", "e");
-         break;
-      case CONNMAN_SERVICE_TYPE_NONE:
-         edje_object_signal_emit(o, "e,changed,technology,none", "e");
-         break;
-     }
+   typestr = econnman_service_type_to_str(type);
+   snprintf(buf, sizeof(buf), "e,changed,technology,%s", typestr);
+   edje_object_signal_emit(o, buf, "e");
 
    DBG("state=%d type=%d", state, type);
 }

@@ -91,14 +91,22 @@ static void _dbus_str_array_to_eina(DBusMessageIter *value, Eina_Array **old,
 
 static enum Connman_State str_to_state(const char *s)
 {
-   if (strcmp(s, "offline") == 0)
+   if (!strcmp(s, "offline"))
      return CONNMAN_STATE_OFFLINE;
-   if (strcmp(s, "idle") == 0)
+   if (!strcmp(s, "idle"))
      return CONNMAN_STATE_IDLE;
-   if (strcmp(s, "ready") == 0)
+   if (!strcmp(s, "association"))
+     return CONNMAN_STATE_ASSOCIATION;
+   if (!strcmp(s, "configuration"))
+     return CONNMAN_STATE_CONFIGURATION;
+   if (!strcmp(s, "ready"))
      return CONNMAN_STATE_READY;
-   if (strcmp(s, "online") == 0)
+   if (!strcmp(s, "online"))
      return CONNMAN_STATE_ONLINE;
+   if (!strcmp(s, "disconnect"))
+     return CONNMAN_STATE_DISCONNECT;
+   if (!strcmp(s, "failure"))
+     return CONNMAN_STATE_FAILURE;
 
    ERR("Unknown state %s", s);
    return CONNMAN_STATE_NONE;
@@ -112,10 +120,18 @@ const char *econnman_state_to_str(enum Connman_State state)
          return "offline";
       case CONNMAN_STATE_IDLE:
          return "idle";
+      case CONNMAN_STATE_ASSOCIATION:
+         return "association";
+      case CONNMAN_STATE_CONFIGURATION:
+         return "configuration";
       case CONNMAN_STATE_READY:
          return "ready";
       case CONNMAN_STATE_ONLINE:
          return "online";
+      case CONNMAN_STATE_DISCONNECT:
+         return "disconnect";
+      case CONNMAN_STATE_FAILURE:
+         return "failure";
       case CONNMAN_STATE_NONE:
          break;
      }
@@ -125,10 +141,14 @@ const char *econnman_state_to_str(enum Connman_State state)
 
 static enum Connman_Service_Type str_to_type(const char *s)
 {
-   if (strcmp(s, "ethernet") == 0)
+   if (!strcmp(s, "ethernet"))
      return CONNMAN_SERVICE_TYPE_ETHERNET;
-   else if (strcmp(s, "wifi") == 0)
+   else if (!strcmp(s, "wifi"))
      return CONNMAN_SERVICE_TYPE_WIFI;
+   else if (!strcmp(s, "bluetooth"))
+     return CONNMAN_SERVICE_TYPE_BLUETOOTH;
+   else if (!strcmp(s, "cellular"))
+     return CONNMAN_SERVICE_TYPE_CELLULAR;
 
    DBG("Unknown type %s", s);
    return CONNMAN_SERVICE_TYPE_NONE;
@@ -142,6 +162,10 @@ const char *econnman_service_type_to_str(enum Connman_Service_Type type)
          return "ethernet";
       case CONNMAN_SERVICE_TYPE_WIFI:
          return "wifi";
+      case CONNMAN_SERVICE_TYPE_BLUETOOTH:
+         return "bluetooth";
+      case CONNMAN_SERVICE_TYPE_CELLULAR:
+         return "cellular";
       case CONNMAN_SERVICE_TYPE_NONE:
          break;
      }

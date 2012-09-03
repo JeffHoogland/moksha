@@ -74,9 +74,9 @@ ch-m2-3.png \
 ch-s1-3.png \
 ch-s2-3.png \
 clock_base.png \
-connman_3g.png \
 connman_almost_secure.png \
 connman_bluetooth.png \
+connman_cellular.png \
 connman_ethernet.png \
 connman_online.png \
 connman_ready.png \
