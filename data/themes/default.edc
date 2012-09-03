@@ -7902,6 +7902,22 @@ collections {
             } \
          }
 
+#define CONNMAN_IMAGES_SET(_name, _min) \
+         images { \
+            set { \
+               name: "connman_"##_name; \
+               image { \
+                  image: "connman_"##_name##"_128.png" COMP; \
+                  size: (_min+1) (_min+1) 1000 1000; \
+               } \
+               image { \
+                  image: "connman_"##_name##"_32.png" COMP; \
+                  size: 1 1 _min _min; \
+               } \
+            } \
+         } \
+
+
 #define CONNMAN_ICON(_icon) \
    group { \
       name: "e/modules/connman/icon/"##_icon; \
@@ -7929,6 +7945,7 @@ collections {
          } \
       } \
       parts { \
+         CONNMAN_IMAGES_SET(_icon, 32) \
          part { \
             name: "icon"; \
             type: IMAGE; \
@@ -7937,8 +7954,7 @@ collections {
                state: "default" 0.0; \
                aspect: 1 1; \
                aspect_preference: BOTH; \
-               image.image: "connman_"##_icon##".png" COMP; \
-               image.normal: "connman_"##_icon##".png"; \
+               image.normal: "connman_"##_icon##; \
             } \
             description { \
                state: "hidden" 0.0; \
@@ -7971,21 +7987,6 @@ CONNMAN_ICON(cellular)
 CONNMAN_ICON(ethernet)
 
 #undef CONNMAN_ICON
-
-#define CONNMAN_IMAGES_SET(_name, _min) \
-         images { \
-            set { \
-               name: "connman_"##_name; \
-               image { \
-                  image: "connman_"##_name##"_128.png" COMP; \
-                  size: (_min+1) (_min+1) 1000 1000; \
-               } \
-               image { \
-                  image: "connman_"##_name##"_32.png" COMP; \
-                  size: 1 1 _min _min; \
-               } \
-            } \
-         } \
 
    group {
       name: "e/modules/connman/icon/wifi";

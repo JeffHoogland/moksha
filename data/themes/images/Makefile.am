@@ -74,9 +74,12 @@ ch-m2-3.png \
 ch-s1-3.png \
 ch-s2-3.png \
 clock_base.png \
-connman_bluetooth.png \
-connman_cellular.png \
-connman_ethernet.png \
+connman_bluetooth_128.png \
+connman_bluetooth_32.png \
+connman_cellular_128.png \
+connman_cellular_32.png \
+connman_ethernet_128.png \
+connman_ethernet_32.png \
 connman_security1_128.png \
 connman_security1_32.png \
 connman_security2_128.png \
