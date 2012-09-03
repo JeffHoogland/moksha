@@ -394,17 +394,6 @@ exq-logo.png \
 exq-dot.png \
 exq-dot-glow.png \
 exq-vgrad.png \
-connman-disconnect.png \
-connman-disconnect-offline.png \
-connman-ethernet.png \
-connman-wifi.png \
-connman-wifi-good.png \
-connman-wifi-medium.png \
-connman-wifi-bad.png \
-connman-connecting-1.png \
-connman-connecting-2.png \
-connman-connecting-3.png \
-connman-connecting-4.png \
 comp-sh1.png \
 shelf_alt_vert_bg.png \
 icon_look.png \
