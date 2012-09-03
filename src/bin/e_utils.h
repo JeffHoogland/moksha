@@ -39,7 +39,7 @@ EAPI E_Zone      *e_util_zone_window_find(Ecore_X_Window win);
 EAPI E_Border    *e_util_desk_border_above(E_Border *bd);
 EAPI E_Border    *e_util_desk_border_below(E_Border *bd);
 EAPI int          e_util_edje_collection_exists(const char *file, const char *coll);
-EAPI void         e_util_dialog_internal(const char *title, const char *txt);
+EAPI E_Dialog     *e_util_dialog_internal(const char *title, const char *txt);
 EAPI const char  *e_util_filename_escape(const char *filename);
 EAPI int          e_util_icon_save(Ecore_X_Icon *icon, const char *filename);
 EAPI char        *e_util_shell_env_path_eval(const char *path);

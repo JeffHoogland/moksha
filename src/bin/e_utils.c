@@ -689,13 +689,13 @@ e_util_edje_collection_exists(const char *file, const char *coll)
    return 0;
 }
 
-EAPI void
+EAPI E_Dialog *
 e_util_dialog_internal(const char *title, const char *txt)
 {
    E_Dialog *dia;
 
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_error_dialog");
-   if (!dia) return;
+   if (!dia) return NULL;
    e_dialog_title_set(dia, title);
    e_dialog_text_set(dia, txt);
    e_dialog_icon_set(dia, "dialog-error", 64);
@@ -703,6 +703,7 @@ e_util_dialog_internal(const char *title, const char *txt)
    e_dialog_button_focus_num(dia, 0);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+   return dia;
 }
 
 EAPI const char *
