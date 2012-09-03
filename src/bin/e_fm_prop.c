@@ -195,38 +195,38 @@ static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    char buf[PATH_MAX];
-   int fperm = 0;
+   Eina_Bool fperm = EINA_FALSE;
 
    snprintf(buf, sizeof(buf), "%s/%s",
             cfdata->location, cfdata->fi->file);
    if (((cfdata->fi->statinfo.st_mode & S_IRUSR) && (cfdata->owner_read)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IRUSR)) && (!cfdata->owner_read)))
-     fperm = 1;
+     fperm = EINA_TRUE;
    if (((cfdata->fi->statinfo.st_mode & S_IWUSR) && (cfdata->owner_write)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IWUSR)) && (!cfdata->owner_write)))
-     fperm = 1;
+     fperm = EINA_TRUE;
    if (((cfdata->fi->statinfo.st_mode & S_IROTH) && (cfdata->others_read)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IROTH)) && (!cfdata->others_read)))
-     fperm = 1;
+     fperm = EINA_TRUE;
    if (((cfdata->fi->statinfo.st_mode & S_IEXEC) && (cfdata->owner_exec)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IEXEC)) && (!cfdata->owner_exec)))
-     fperm = 1;
+     fperm = EINA_TRUE;
    if (((cfdata->fi->statinfo.st_mode & S_IWOTH) && (cfdata->others_write)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IWOTH)) && (!cfdata->others_write)))
-     fperm = 1;
+     fperm = EINA_TRUE;
    if (((cfdata->fi->statinfo.st_mode & S_IXOTH) && (cfdata->others_exec)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IXOTH)) && (!cfdata->others_exec)))
-     fperm = 1;
+     fperm = EINA_TRUE;
    if (((cfdata->fi->statinfo.st_mode & S_IRGRP) && (cfdata->group_read)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IRGRP)) && (!cfdata->group_read)))
-     fperm = 1;
+     fperm = EINA_TRUE;
    if (((cfdata->fi->statinfo.st_mode & S_IWGRP) && (cfdata->group_write)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IWGRP)) && (!cfdata->group_write)))
-     fperm = 1;
+     fperm = EINA_TRUE;
    if (((cfdata->fi->statinfo.st_mode & S_IXGRP) && (cfdata->group_exec)) ||
        ((!(cfdata->fi->statinfo.st_mode & S_IXGRP)) && (!cfdata->group_exec)))
-     fperm = 1;
-   if (fperm)
+     fperm = EINA_TRUE;
+   if (fperm == EINA_TRUE)
      {
         mode_t pmode;
 
@@ -251,7 +251,10 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         else cfdata->fi->statinfo.st_mode &= ~S_IXGRP;
         if (chmod(buf, cfdata->fi->statinfo.st_mode) == -1)
           {
-             /* FIXME: error dialog */
+             e_util_dialog_show(_("Error"),
+                                _("Cannot change permissions: %s"),
+                                strerror(errno));
+
              cfdata->fi->statinfo.st_mode = pmode;
           }
      }
@@ -273,7 +276,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
           {
              Eina_List *l;
              E_Config_Mime_Icon *mi = NULL;
-             int found = 0;
+             Eina_Bool found = EINA_FALSE;
 
              if (!cfdata->picon_mime) /* remove previous custom icon info */
                e_fm2_custom_file_del(buf);
@@ -286,10 +289,10 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
                        eina_stringshare_del(mi->icon);
                        mi->icon = NULL;
                     }
-                  found = 1;
+                  found = EINA_TRUE;
                   break;
                }
-             if ((!found) && (cfdata->icon_type != 0))
+             if ((found == EINA_FALSE) && (cfdata->icon_type != 0))
                {
                   mi = E_NEW(E_Config_Mime_Icon, 1);
                   mi->mime = eina_stringshare_add(cfdata->mime);
@@ -298,7 +301,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
              /* FIXME: modify mime info */
              if (cfdata->icon_type == 0)
                {
-                  if (found)
+                  if (found == EINA_TRUE)
                     {
                        e_config->mime_icons = eina_list_remove(e_config->mime_icons, mi);
                        if (mi->mime) eina_stringshare_del(mi->mime);
