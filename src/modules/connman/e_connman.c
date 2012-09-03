@@ -237,9 +237,6 @@ static void _service_parse_prop_changed(struct Connman_Service *cs,
 static void _service_prop_dict_changed(struct Connman_Service *cs,
                                        DBusMessageIter *dict)
 {
-   EINA_SAFETY_ON_FALSE_RETURN(dbus_message_iter_get_arg_type(dict) !=
-                               DBUS_TYPE_ARRAY);
-
    for (; dbus_message_iter_get_arg_type(dict) != DBUS_TYPE_INVALID;
         dbus_message_iter_next(dict))
      {
@@ -248,13 +245,13 @@ static void _service_prop_dict_changed(struct Connman_Service *cs,
 
         dbus_message_iter_recurse(dict, &entry);
 
-        EINA_SAFETY_ON_FALSE_RETURN(dbus_message_iter_get_arg_type(dict) !=
-                                    DBUS_TYPE_STRING);
+        EINA_SAFETY_ON_FALSE_RETURN(
+           dbus_message_iter_get_arg_type(&entry) == DBUS_TYPE_STRING);
         dbus_message_iter_get_basic(&entry, &name);
-        dbus_message_iter_next(&entry);
 
-        EINA_SAFETY_ON_FALSE_RETURN(dbus_message_iter_get_arg_type(dict) !=
-                                    DBUS_TYPE_VARIANT);
+        dbus_message_iter_next(&entry);
+        EINA_SAFETY_ON_FALSE_RETURN(
+           dbus_message_iter_get_arg_type(&entry) == DBUS_TYPE_VARIANT);
         dbus_message_iter_recurse(&entry, &var);
 
         _service_parse_prop_changed(cs, name, &var);
