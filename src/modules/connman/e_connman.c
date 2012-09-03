@@ -303,6 +303,7 @@ static void _manager_services_changed(void *data, DBusMessage *msg)
      }
 
    cm->services = tmp;
+   econnman_mod_services_changed(cm);
 }
 
 static void _manager_get_services_cb(void *data, DBusMessage *reply,
@@ -350,6 +351,8 @@ static void _manager_get_services_cb(void *data, DBusMessage *reply,
         cm->services = eina_inlist_append(cm->services, EINA_INLIST_GET(cs));
         DBG("Added service: %p %s", cs, path);
      }
+
+   econnman_mod_services_changed(cm);
 }
 
 static bool _manager_parse_prop_changed(struct Connman_Manager *cm,

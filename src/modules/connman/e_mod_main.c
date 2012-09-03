@@ -27,6 +27,79 @@ e_connman_theme_path(void)
 #undef TF
 }
 
+static void _econnman_popup_update(struct Connman_Manager *cm,
+                                   E_Connman_Instance *inst)
+{
+   Evas_Object *list = inst->ui.popup.list;
+   struct Connman_Service *cs;
+
+   EINA_SAFETY_ON_NULL_RETURN(cm);
+
+   e_widget_ilist_freeze(list);
+   e_widget_ilist_clear(list);
+
+   EINA_INLIST_FOREACH(cm->services, cs)
+      e_widget_ilist_append(list, NULL, cs->name, NULL, NULL, cs->obj.path);
+
+   e_widget_ilist_thaw(list);
+   e_widget_ilist_go(list);
+}
+
+void econnman_mod_services_changed(struct Connman_Manager *cm)
+{
+   E_Connman_Module_Context *ctxt = connman_mod->data;
+   const Eina_List *l;
+   E_Connman_Instance *inst;
+
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     {
+        if (!inst->popup)
+          continue;
+
+        _econnman_popup_update(cm, inst);
+     }
+}
+
+static void _econnman_popup_new(E_Connman_Instance *inst)
+{
+   E_Connman_Module_Context *ctxt = inst->ctxt;
+   Evas *evas;
+   Evas_Coord mw, mh;
+   Evas_Object *ot;
+
+   EINA_SAFETY_ON_FALSE_RETURN(inst->popup == NULL);
+
+   if (!ctxt->cm)
+     return;
+
+   inst->popup = e_gadcon_popup_new(inst->gcc);
+   evas = inst->popup->win->evas;
+
+   ot = e_widget_table_add(evas, 0);
+   inst->ui.popup.list = e_widget_ilist_add(evas, 24, 24, NULL);
+   e_widget_size_min_set(inst->ui.popup.list, 120, 100);
+   e_widget_table_object_append(ot, inst->ui.popup.list, 0, 0, 1, 5,
+                                1, 1, 1, 1);
+
+   _econnman_popup_update(ctxt->cm, inst);
+
+   e_widget_size_min_get(ot, &mw, &mh);
+   if (mh < 200)
+     mh = 200;
+   if (mw < 200)
+     mw = 200;
+   e_widget_size_min_set(ot, mw, mh);
+
+   e_gadcon_popup_content_set(inst->popup, ot);
+   e_gadcon_popup_show(inst->popup);
+}
+
+static void _econnman_popup_del(E_Connman_Instance *inst)
+{
+   e_object_del(E_OBJECT(inst->popup));
+   inst->popup = NULL;
+}
+
 static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
                                               E_Connman_Instance *inst,
                                               enum Connman_State state,
@@ -144,6 +217,19 @@ static void
 _econnman_cb_mouse_down(void *data, Evas *evas __UNUSED__,
                        Evas_Object *obj __UNUSED__, void *event)
 {
+   E_Connman_Instance *inst = data;
+   Evas_Event_Mouse_Down *ev = event;
+
+   if (!inst)
+     return;
+
+   if (ev->button == 1)
+     {
+        if (!inst->popup)
+          _econnman_popup_new(inst);
+        else
+          _econnman_popup_del(inst);
+     }
 }
 
 static void
@@ -210,6 +296,9 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    inst = gcc->data;
    if (!inst)
      return;
+
+   if (inst->popup)
+     _econnman_popup_del(inst);
 
    evas_object_del(inst->ui.gadget);
 

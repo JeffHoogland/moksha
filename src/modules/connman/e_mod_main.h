@@ -19,9 +19,16 @@ struct E_Connman_Instance
    E_Connman_Module_Context *ctxt;
    E_Gadcon_Client *gcc;
 
+   E_Gadcon_Popup *popup;
+
    struct
      {
         Evas_Object *gadget;
+
+        struct
+          {
+             Evas_Object *list;
+          } popup;
      } ui;
 };
 

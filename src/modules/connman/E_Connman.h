@@ -73,7 +73,13 @@ unsigned int e_connman_system_shutdown(void);
 
 /* UI calls from econnman */
 
+/*
+ * TODO: transform these in proper callbacks or ops that UI calls to register
+ * itself
+ */
+
 void econnman_mod_manager_update(struct Connman_Manager *cm);
 void econnman_mod_manager_inout(struct Connman_Manager *cm);
+void econnman_mod_services_changed(struct Connman_Manager *cm);
 
 #endif /* E_CONNMAN_H */
