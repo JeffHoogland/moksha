@@ -18,30 +18,11 @@ struct E_Connman_Instance
 {
    E_Connman_Module_Context *ctxt;
    E_Gadcon_Client *gcc;
-   E_Gadcon_Popup *popup;
-
-   /* used by popup */
-   int offline_mode;
-   const char *service_path;
 
    struct
      {
         Evas_Object *gadget;
-        Evas_Object *list;
-        Evas_Object *offline_mode;
-        Evas_Object *button;
-        Evas_Object *table;
-
-        struct
-          {
-             Ecore_X_Window       win;
-             Ecore_Event_Handler *mouse_up;
-             Ecore_Event_Handler *key_down;
-          } input;
      } ui;
-
-   E_Gadcon_Popup *tip;
-   Evas_Object    *o_tip;
 };
 
 struct E_Connman_Module_Context
@@ -49,22 +30,11 @@ struct E_Connman_Module_Context
    Eina_List *instances;
    E_Config_Dialog *conf_dialog;
 
-   struct st_connman_actions
-     {
-        E_Action *toggle_offline_mode;
-     } actions;
-
    struct
      {
         Ecore_Event_Handler *manager_in;
         Ecore_Event_Handler *manager_out;
      } event;
-
-   struct
-   {
-      Ecore_Poller *default_service_changed;
-      Ecore_Poller *manager_changed;
-   } poller;
 
    Eina_Bool has_manager;
    Eina_Bool offline_mode;

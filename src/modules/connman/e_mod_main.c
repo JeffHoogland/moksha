@@ -1,13 +1,6 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-/*
- * STATUS:
- *
- * ConnMan in, ConnMan out
- *
- */
-
 static E_Module *connman_mod;
 static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
@@ -32,12 +25,10 @@ e_connman_theme_path(void)
 #undef TF
 }
 
-static void
-_connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
+static void _econnman_gadget_setup(E_Connman_Instance *inst)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
-   Edje_Message_Int msg;
-   char buf[128];
+   Evas_Object *o = inst->ui.gadget;
 
    if (!ctxt->has_manager)
      {
@@ -48,65 +39,11 @@ _connman_edje_view_update(E_Connman_Instance *inst, Evas_Object *o)
         edje_object_signal_emit(o, "e,changed,connected,no", "e");
         edje_object_part_text_set(o, "e.text.offline_mode", "");
         edje_object_signal_emit(o, "e,changed,offline_mode,no", "e");
-        return;
-     }
-
-   edje_object_signal_emit(o, "e,available", "e");
-
-   if (ctxt->offline_mode)
-     {
-        edje_object_signal_emit(o, "e,changed,offline_mode,yes", "e");
-        edje_object_part_text_set(o, "e.text.offline_mode",
-                                  _("Offline mode: all radios are turned off"));
      }
    else
-     {
-        edje_object_signal_emit(o, "e,changed,offline_mode,no", "e");
-        edje_object_part_text_set(o, "e.text.offline_mode", "");
-     }
+     edje_object_signal_emit(o, "e,available", "e");
 
-        edje_object_part_text_set(o, "e.text.technology", "");
-        edje_object_signal_emit(o, "e,changed,technology,none", "e");
-
-
-   if (1) // not connected
-     {
-        edje_object_part_text_set(o, "e.text.name", _("No Connection"));
-        edje_object_signal_emit(o, "e,changed,service,none", "e");
-        edje_object_signal_emit(o, "e,changed,connected,no", "e");
-
-        edje_object_part_text_set(o, "e.text.error", _("Not connected"));
-        edje_object_signal_emit(o, "e,changed,error,no", "e");
-
-        edje_object_part_text_set(o, "e.text.state", _("disconnect"));
-        edje_object_signal_emit(o, "e,changed,state,disconnect", "e");
-
-        edje_object_signal_emit(o, "e,changed,mode,no", "e");
-
-        edje_object_signal_emit(o, "e,changed,mode,none", "e");
-        edje_object_signal_emit(o, "e,changed,security,none", "e");
-
-        edje_object_part_text_set(o, "e.text.ipv4_address", "");
-        edje_object_signal_emit(o, "e,changed,ipv4_address,no", "e");
-
-        edje_object_signal_emit(o, "e,changed,favorite,no", "e");
-        edje_object_signal_emit(o, "e,changed,auto_connect,no", "e");
-        edje_object_signal_emit(o, "e,changed,pass_required,no", "e");
-
-        return;
-     }
-}
-
-static void
-_connman_gadget_update(E_Connman_Instance *inst)
-{
-   _connman_edje_view_update(inst, inst->ui.gadget);
-}
-
-static void
-_connman_cb_toggle_offline_mode(E_Object *obj __UNUSED__,
-                                const char *params __UNUSED__)
-{
+   return;
 }
 
 static void
@@ -156,7 +93,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_event_callback_add
      (inst->ui.gadget, EVAS_CALLBACK_MOUSE_OUT, _connman_cb_mouse_out, inst);
 
-   _connman_gadget_update(inst);
+   _econnman_gadget_setup(inst);
 
    ctxt->instances = eina_list_append(ctxt->instances, inst);
 
@@ -240,104 +177,42 @@ static const E_Gadcon_Client_Class _gc_class =
 
 EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, _e_connman_Name };
 
-static const char _act_toggle_offline_mode[] = "toggle_offline_mode";
-static const char _lbl_toggle_offline_mode[] = "Toggle Offline Mode";
-
-static void
-_connman_actions_register(E_Connman_Module_Context *ctxt)
-{
-   ctxt->actions.toggle_offline_mode = e_action_add(_act_toggle_offline_mode);
-   if (ctxt->actions.toggle_offline_mode)
-     {
-        ctxt->actions.toggle_offline_mode->func.go =
-          _connman_cb_toggle_offline_mode;
-        e_action_predef_name_set
-          (_(_e_connman_Name), _(_lbl_toggle_offline_mode), _act_toggle_offline_mode,
-          NULL, NULL, 0);
-     }
-}
-
-static void
-_connman_actions_unregister(E_Connman_Module_Context *ctxt)
-{
-   if (ctxt->actions.toggle_offline_mode)
-     {
-        e_action_predef_name_del(_(_e_connman_Name), _(_lbl_toggle_offline_mode));
-        e_action_del(_act_toggle_offline_mode);
-     }
-}
-
 static Eina_Bool
-_connman_manager_changed_do(void *data)
-{
-   E_Connman_Module_Context *ctxt = data;
-
-   ctxt->poller.manager_changed = NULL;
-   return ECORE_CALLBACK_CANCEL;
-}
-
-static void
-_connman_manager_changed(void *data)
-{
-   E_Connman_Module_Context *ctxt = data;
-   if (ctxt->poller.manager_changed)
-     ecore_poller_del(ctxt->poller.manager_changed);
-   ctxt->poller.manager_changed = ecore_poller_add
-       (ECORE_POLLER_CORE, 1, _connman_manager_changed_do, ctxt);
-}
-
-static Eina_Bool
-_connman_event_manager_in(void *data, int type __UNUSED__,
+_econnman_event_manager_in(void *data, int type __UNUSED__,
                           void *event __UNUSED__)
 {
-   DBG("Manager in");
    E_Connman_Module_Context *ctxt = data;
    const Eina_List *l;
    E_Connman_Instance *inst;
 
+   DBG("Manager in");
    ctxt->has_manager = EINA_TRUE;
 
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
-     _connman_gadget_update(inst);
+     _econnman_gadget_setup(inst);
 
-// Get manager
-// Set poller when changed
-// Load services
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_connman_event_manager_out(void *data, int type __UNUSED__,
+_econnman_event_manager_out(void *data, int type __UNUSED__,
                            void *event __UNUSED__)
 {
-   DBG("Manager out");
    E_Connman_Module_Context *ctxt = data;
    const Eina_List *l;
    E_Connman_Instance *inst;
 
+   DBG("Manager out");
    ctxt->has_manager = EINA_FALSE;
+
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
-     _connman_gadget_update(inst);
+     _econnman_gadget_setup(inst);
 
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool
-_connman_event_mode_changed(void *data, int type __UNUSED__,
-                            void *event __UNUSED__)
-{
-   E_Connman_Module_Context *ctxt = data;
-   if ((ctxt->offline_mode == e_config->mode.offline) ||
-       (!ctxt->has_manager))
-     return ECORE_CALLBACK_PASS_ON;
-
-//TODO: set offline mode
-
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static E_Config_Dialog *
-_connman_config(E_Container *con, const char *params __UNUSED__)
+static E_Config_Dialog * _econnman_config(E_Container *con,
+                                          const char *params __UNUSED__)
 {
    E_Connman_Module_Context *ctxt;
 
@@ -358,44 +233,38 @@ static const char _reg_cat[] = "extensions";
 static const char _reg_item[] = "extensions/connman";
 
 static void
-_connman_configure_registry_register(void)
+_econnman_configure_registry_register(void)
 {
    e_configure_registry_category_add(_reg_cat, 90, _("Extensions"), NULL,
                                      "preferences-extensions");
    e_configure_registry_item_add(_reg_item, 110, _(_e_connman_Name), NULL,
                                  e_connman_theme_path(),
-                                 _connman_config);
+                                 _econnman_config);
 }
 
 static void
-_connman_configure_registry_unregister(void)
+_econnman_configure_registry_unregister(void)
 {
    e_configure_registry_item_del(_reg_item);
    e_configure_registry_category_del(_reg_cat);
 }
 
 static void
-_connman_events_register(E_Connman_Module_Context *ctxt)
+_econnman_events_register(E_Connman_Module_Context *ctxt)
 {
    ctxt->event.manager_in = ecore_event_handler_add
-       (E_CONNMAN_EVENT_MANAGER_IN, _connman_event_manager_in, ctxt);
+       (E_CONNMAN_EVENT_MANAGER_IN, _econnman_event_manager_in, ctxt);
    ctxt->event.manager_out = ecore_event_handler_add
-       (E_CONNMAN_EVENT_MANAGER_OUT, _connman_event_manager_out, ctxt);
-
-//TODO: register for state changed (offline-mode)
+       (E_CONNMAN_EVENT_MANAGER_OUT, _econnman_event_manager_out, ctxt);
 }
 
 static void
-_connman_events_unregister(E_Connman_Module_Context *ctxt)
+_econnman_events_unregister(E_Connman_Module_Context *ctxt)
 {
    if (ctxt->event.manager_in)
      ecore_event_handler_del(ctxt->event.manager_in);
    if (ctxt->event.manager_out)
      ecore_event_handler_del(ctxt->event.manager_out);
-
-// TODO: unregister for state changed (offline-mode)
-//   if (ctxt->event.mode_changed)
-//     ecore_event_handler_del(ctxt->event.mode_changed);
 }
 
 EAPI void *
@@ -427,11 +296,10 @@ e_modapi_init(E_Module *m)
           }
      }
 
-   _connman_configure_registry_register();
-   _connman_actions_register(ctxt);
+   _econnman_configure_registry_register();
    e_gadcon_provider_register(&_gc_class);
 
-   _connman_events_register(ctxt);
+   _econnman_events_register(ctxt);
 
    return ctxt;
 
@@ -447,20 +315,13 @@ error_dbus_bus_get:
 }
 
 static void
-_connman_instances_free(E_Connman_Module_Context *ctxt)
+_econnman_instances_free(E_Connman_Module_Context *ctxt)
 {
    while (ctxt->instances)
      {
-        E_Connman_Instance *inst;
-
-        inst = ctxt->instances->data;
-#if 0
-//TODO: enable this aprt
-        if (inst->popup)
-          _connman_popup_del(inst);
-        if (inst->tip)
-          _connman_tip_del(inst);
-#endif
+        E_Connman_Instance *inst = ctxt->instances->data;
+        ctxt->instances = eina_list_remove_list(ctxt->instances,
+                                                ctxt->instances);
         e_object_del(E_OBJECT(inst->gcc));
      }
 }
@@ -474,14 +335,10 @@ e_modapi_shutdown(E_Module *m)
    if (!ctxt)
      return 0;
 
-   _connman_events_unregister(ctxt);
-   _connman_instances_free(ctxt);
-   _connman_configure_registry_unregister();
-   _connman_actions_unregister(ctxt);
+   _econnman_events_unregister(ctxt);
+   _econnman_instances_free(ctxt);
+   _econnman_configure_registry_unregister();
    e_gadcon_provider_unregister(&_gc_class);
-
-   if (ctxt->poller.manager_changed)
-     ecore_poller_del(ctxt->poller.manager_changed);
 
    E_FREE(ctxt);
    connman_mod = NULL;
