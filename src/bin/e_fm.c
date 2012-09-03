@@ -339,11 +339,11 @@ static void          _e_fm2_menu_post_cb(void *data, E_Menu *m);
 static void          _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp);
 static void          _e_fm2_icon_menu_post_cb(void *data, E_Menu *m);
 static void          _e_fm2_icon_menu_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void          _e_fm2_icon_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
-static void          _e_fm2_options_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi);
-static void          _e_fm2_add_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi);
+static void          _e_fm2_icon_view_menu_pre(void *data, E_Menu *m);
+static void          _e_fm2_options_menu_pre(void *data, E_Menu *m);
+static void          _e_fm2_add_menu_pre(void *data, E_Menu *m);
 static void          _e_fm2_toggle_inherit_dir_props(void *data, E_Menu *m, E_Menu_Item *mi);
-static void          _e_fm2_view_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
+static void          _e_fm2_view_menu_pre(void *data, E_Menu *m);
 static void          _e_fm2_view_menu_grid_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_custom_icons_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -8095,7 +8095,7 @@ static void
 _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
 {
    E_Fm2_Smart_Data *sd;
-   E_Menu *mn;
+   E_Menu *mn, *sub;
    E_Menu_Item *mi;
    E_Manager *man;
    E_Container *con;
@@ -8120,7 +8120,11 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
              mi = e_menu_item_new(mn);
              e_menu_item_label_set(mi, _("View Mode"));
              e_util_menu_item_theme_icon_set(mi, "preferences-look");
-             e_menu_item_submenu_pre_callback_set(mi, _e_fm2_view_menu_pre, sd);
+             sub = e_menu_new();
+             e_menu_item_submenu_set(mi, sub);
+             e_object_unref(E_OBJECT(sub));
+             e_object_data_set(E_OBJECT(sub), sd);
+             e_menu_pre_activate_callback_set(sub, _e_fm2_view_menu_pre, sd);
           }
         if (!(sd->icon_menu.flags &
             (E_FM2_MENU_NO_SHOW_HIDDEN | E_FM2_MENU_NO_REMEMBER_ORDERING | E_FM2_MENU_NO_ACTIVATE_CHANGE)))
@@ -8128,7 +8132,11 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
              mi = e_menu_item_new(mn);
              e_menu_item_label_set(mi, _("Options"));
              e_util_menu_item_theme_icon_set(mi, "preferences-system");
-             e_menu_item_submenu_pre_callback_set(mi, _e_fm2_options_menu_pre, sd);
+             sub = e_menu_new();
+             e_menu_item_submenu_set(mi, sub);
+             e_object_unref(E_OBJECT(sub));
+             e_object_data_set(E_OBJECT(sub), sd);
+             e_menu_pre_activate_callback_set(sub, _e_fm2_options_menu_pre, sd);
           }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
           {
@@ -8143,7 +8151,11 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
         mi = e_menu_item_new(mn);
         e_menu_item_label_set(mi, _("New..."));
         e_util_menu_item_theme_icon_set(mi, "add");
-        e_menu_item_submenu_pre_callback_set(mi, _e_fm2_add_menu_pre, sd);
+        sub = e_menu_new();
+        e_menu_item_submenu_set(mi, sub);
+        e_object_unref(E_OBJECT(sub));
+        e_object_data_set(E_OBJECT(sub), sd);
+        e_menu_pre_activate_callback_set(sub, _e_fm2_add_menu_pre, sd);
 
         if (((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) ||
              (!(sd->icon_menu.flags & E_FM2_MENU_NO_SYMLINK))) &&
@@ -8213,7 +8225,7 @@ static void
 _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 {
    E_Fm2_Smart_Data *sd;
-   E_Menu *mn;
+   E_Menu *mn, *sub;
    E_Menu_Item *mi;
    E_Manager *man;
    E_Container *con;
@@ -8240,7 +8252,11 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              mi = e_menu_item_new(mn);
              e_menu_item_label_set(mi, _("View Mode"));
              e_util_menu_item_theme_icon_set(mi, "preferences-look");
-             e_menu_item_submenu_pre_callback_set(mi, _e_fm2_icon_view_menu_pre, sd);
+             sub = e_menu_new();
+             e_menu_item_submenu_set(mi, sub);
+             e_object_data_set(E_OBJECT(sub), sd);
+             e_object_unref(E_OBJECT(sub));
+             e_menu_pre_activate_callback_set(sub, _e_fm2_icon_view_menu_pre, sd);
           }
         if (!(sd->icon_menu.flags &
             (E_FM2_MENU_NO_SHOW_HIDDEN | E_FM2_MENU_NO_REMEMBER_ORDERING | E_FM2_MENU_NO_ACTIVATE_CHANGE)))
@@ -8248,7 +8264,11 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              mi = e_menu_item_new(mn);
              e_menu_item_label_set(mi, _("Options"));
              e_util_menu_item_theme_icon_set(mi, "preferences-system");
-             e_menu_item_submenu_pre_callback_set(mi, _e_fm2_options_menu_pre, sd);
+             sub = e_menu_new();
+             e_menu_item_submenu_set(mi, sub);
+             e_object_unref(E_OBJECT(sub));
+             e_object_data_set(E_OBJECT(sub), sd);
+             e_menu_pre_activate_callback_set(sub, _e_fm2_options_menu_pre, sd);
           }
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_REFRESH))
           {
@@ -8267,7 +8287,11 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
              mi = e_menu_item_new(mn);
              e_menu_item_label_set(mi, _("New..."));
              e_util_menu_item_theme_icon_set(mi, "add");
-             e_menu_item_submenu_pre_callback_set(mi, _e_fm2_add_menu_pre, sd);
+             sub = e_menu_new();
+             e_menu_item_submenu_set(mi, sub);
+             e_object_unref(E_OBJECT(sub));
+             e_object_data_set(E_OBJECT(sub), sd);
+             e_menu_pre_activate_callback_set(sub, _e_fm2_add_menu_pre, sd);
           }
         {
            E_Menu *subm = NULL;
@@ -8762,31 +8786,24 @@ _e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
 }
 
 static void
-_e_fm2_icon_view_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+_e_fm2_icon_view_menu_pre(void *data, E_Menu *subm)
 {
-   E_Menu *subm;
    E_Fm2_Smart_Data *sd;
 
    sd = data;
-
-   subm = e_menu_new();
-   e_object_data_set(E_OBJECT(subm), sd);
-   e_menu_item_submenu_set(mi, subm);
-
+   if (subm->items) return;
    _e_fm2_view_menu_common(subm, sd);
 }
 
 static void
-_e_fm2_add_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+_e_fm2_add_menu_pre(void *data, E_Menu *subm)
 {
-   E_Menu *subm;
+   E_Menu_Item *mi;
    E_Fm2_Smart_Data *sd;
 
    sd = data;
+   if (subm->items) return;
 
-   subm = e_menu_new();
-   e_object_data_set(E_OBJECT(subm), sd);
-   e_menu_item_submenu_set(mi, subm);
    if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
      {
         mi = e_menu_item_new(subm);
@@ -8796,16 +8813,15 @@ _e_fm2_add_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
      }
 }
 static void
-_e_fm2_options_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+_e_fm2_options_menu_pre(void *data, E_Menu *subm)
 {
-   E_Menu *subm;
    E_Fm2_Smart_Data *sd;
+   E_Menu_Item *mi;
 
    sd = data;
 
-   subm = e_menu_new();
-   e_object_data_set(E_OBJECT(subm), sd);
-   e_menu_item_submenu_set(mi, subm);
+   if (subm->items) return;
+
    if ((!(sd->icon_menu.flags & E_FM2_MENU_NO_INHERIT_PARENT)) &&
        (sd->view_flags & E_FM2_VIEW_INHERIT_DIR_CUSTOM))
      {
@@ -8857,17 +8873,15 @@ _e_fm2_options_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 }
 
 static void
-_e_fm2_view_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+_e_fm2_view_menu_pre(void *data, E_Menu *subm)
 {
-   E_Menu *subm;
    E_Fm2_Smart_Data *sd;
+   E_Menu_Item *mi;
    char buf[PATH_MAX];
    int access_ok;
    sd = data;
 
-   subm = e_menu_new();
-   e_object_data_set(E_OBJECT(subm), sd);
-   e_menu_item_submenu_set(mi, subm);
+   if (subm->items) return;
 
    _e_fm2_view_menu_common(subm, sd);
 
