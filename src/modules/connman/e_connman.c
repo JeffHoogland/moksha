@@ -2,9 +2,10 @@
 #include "config.h"
 #endif
 
-#include "e_connman_private.h"
 #include <stdlib.h>
 #include <string.h>
+
+#include "E_Connman.h"
 
 #define CONNMAN_BUS_NAME "net.connman"
 #define CONNMAN_MANAGER_IFACE CONNMAN_BUS_NAME ".Manager"
@@ -26,8 +27,6 @@ static E_DBus_Connection *conn;
 
 EAPI int E_CONNMAN_EVENT_MANAGER_IN;
 EAPI int E_CONNMAN_EVENT_MANAGER_OUT;
-
-int _e_dbus_connman_log_dom = -1;
 
 static inline void
 _e_connman_system_name_owner_exit(void)
@@ -124,15 +123,6 @@ e_connman_system_init(E_DBus_Connection *edbus_conn)
    if (init_count > 1)
       return init_count;
 
-   _e_dbus_connman_log_dom = eina_log_domain_register("e_dbus_connman",
-                                                      EINA_LOG_DEFAULT_COLOR);
-
-   if (_e_dbus_connman_log_dom < 0)
-     {
-        EINA_LOG_ERR("impossible to create a log domain for edbus_connman module");
-        return -1;
-     }
-
    E_CONNMAN_EVENT_MANAGER_IN = ecore_event_type_new();
    E_CONNMAN_EVENT_MANAGER_OUT = ecore_event_type_new();
 
@@ -182,7 +172,6 @@ e_connman_system_shutdown(void)
 
    memset(&handlers, 0, sizeof(handlers));
 
-   eina_log_domain_unregister(_e_dbus_connman_log_dom);
    conn = NULL;
 
    E_CONNMAN_EVENT_MANAGER_OUT = 0;

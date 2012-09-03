@@ -8,6 +8,8 @@
 #include <Ecore.h>
 #include <E_DBus.h>
 
+#include "log.h"
+
 /* Ecore Events */
 extern int E_CONNMAN_EVENT_MANAGER_IN;
 extern int E_CONNMAN_EVENT_MANAGER_OUT;
