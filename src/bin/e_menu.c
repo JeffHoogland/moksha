@@ -1023,6 +1023,12 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
      }
 }
 
+EAPI E_Menu_Item *
+e_menu_item_active_get(void)
+{
+   return _e_active_menu_item;
+}
+
 EAPI void
 e_menu_item_disabled_set(E_Menu_Item *mi, int disable)
 {
