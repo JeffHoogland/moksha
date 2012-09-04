@@ -210,10 +210,10 @@ _fill_cat_list(E_Config_Dialog_Data *cfdata)
 
    for (itr = _types; itr->key_len > 0; itr++)
      {
-        cft = _cftype_find(cfdata, itr->key, _(itr->name), itr->icon);
+        cft = _cftype_find(cfdata, itr->key, itr->name, itr->icon);
         if (!cft)
           {
-             WRN("CFT MISSING!!! key(%s) name(%s) icon(%s)", itr->key, _(itr->name), itr->icon);
+             WRN("CFT MISSING!!! key(%s) name(%s) icon(%s)", itr->key, itr->name, itr->icon);
              continue;
           }
         icon = e_icon_add(cfdata->evas);
@@ -226,7 +226,7 @@ _fill_cat_list(E_Config_Dialog_Data *cfdata)
                }
           }
 
-        e_widget_toolbar_item_append(cfdata->o_toolbar, icon, cft->name,
+        e_widget_toolbar_item_append(cfdata->o_toolbar, icon, _(cft->name),
                                      _toolbar_select_cb, cfdata, cft);
      }
 
@@ -394,9 +394,9 @@ _cftype_new(const char *key, const char *name, const char *icon)
 
    if (!cft) return NULL;
    cft->key = eina_stringshare_add(key);
-   cft->name = eina_stringshare_add(_(name));
+   cft->name = eina_stringshare_add(name);
    cft->icon = eina_stringshare_add(icon);
-   INF("CFT NEW: key(%s) name(%s) icon(%s)", key, name, icon);
+   //INF("CFT NEW: key(%s) name(%s) icon(%s)", key, name, icon);
    return cft;
 }
 
