@@ -1030,6 +1030,13 @@ e_menu_item_active_get(void)
 }
 
 EAPI void
+e_menu_active_item_activate(void)
+{
+   _e_menu_active_call();
+   _e_menu_deactivate_all();
+}
+
+EAPI void
 e_menu_item_disabled_set(E_Menu_Item *mi, int disable)
 {
    E_OBJECT_CHECK(mi);

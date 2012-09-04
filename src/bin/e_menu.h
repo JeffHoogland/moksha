@@ -203,6 +203,7 @@ EAPI void         e_menu_item_submenu_pre_callback_set(E_Menu_Item *mi,  E_Menu_
 EAPI void         e_menu_item_submenu_post_callback_set(E_Menu_Item *mi,  E_Menu_Cb func, const void *data);
 EAPI void         e_menu_item_drag_callback_set(E_Menu_Item *mi,  E_Menu_Cb func, void *data);
 EAPI E_Menu_Item *e_menu_item_active_get(void);
+EAPI void         e_menu_active_item_activate(void);
 EAPI void         e_menu_item_active_set(E_Menu_Item *mi, int active);
 EAPI void         e_menu_item_disabled_set(E_Menu_Item *mi, int disable);
 
