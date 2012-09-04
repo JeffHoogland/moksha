@@ -268,7 +268,7 @@ mountopts_check(const char *opts)
         CMP("utf8=0,") continue;
         CMP("utf8=1,") continue;
         CMP("iocharset=utf8,") continue;
-        if (!strncmp(p, "uid=", sizeof("uid=") - 1))
+        CMP("uid=")
           {
              p += 4;
              errno = 0;
@@ -474,14 +474,13 @@ auth_etc_enlightenment_sysactions(char *a,
           }
         else if (!strcmp(id, "group:"))
           {
-             int matched;
+             Eina_Bool matched = EINA_FALSE;
 
-             matched = 0;
              for (gp = g; *gp; gp++)
                {
                   if (!fnmatch(ugname, *gp, 0))
                     {
-                       matched = 1;
+                       matched = EINA_TRUE;
                        if (!strcmp(perm, "allow:")) allow = 1;
                        else if (!strcmp(perm, "deny:"))
                          deny = 1;
