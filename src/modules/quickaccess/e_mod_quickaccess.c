@@ -19,11 +19,14 @@ static E_Border_Menu_Hook *border_hook = NULL;
 
 static Eina_Bool qa_running = EINA_FALSE;
 
-
 static void _e_qa_bd_menu_add(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_qa_bd_menu_del(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_qa_entry_transient_convert(E_Quick_Access_Entry *entry);
 
+static void e_qa_help(void);
+static Eina_Bool _e_qa_help_timer_cb(void *data);
+static Eina_Bool _e_qa_help_timer2_cb(void *data);
+static void _e_qa_help_activate_hook(E_Quick_Access_Entry *entry);
 /**
  * in priority order:
  *
@@ -484,6 +487,8 @@ _e_qa_toggle_cb(E_Object *obj __UNUSED__, const char *params)
 
    if (entry->border)
      {
+        if (entry->help_watch)
+          _e_qa_help_activate_hook(entry);
         if ((!entry->config.jump) && (entry->border->focused || entry->config.hide_when_behind))
           {
              _e_qa_border_deactivate(entry);
@@ -724,6 +729,12 @@ _e_qa_bd_menu_autohide(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
 }
 
 static void
+_e_qa_bd_menu_help(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   e_qa_help();
+}
+
+static void
 _e_qa_bd_menu_del(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Quick_Access_Entry *entry = data;
@@ -751,16 +762,23 @@ _e_qa_bd_menu_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 }
 
 static void
+_e_qa_bd_menu_free(void *data __UNUSED__)
+{
+   qa_mod->menu = NULL;
+}
+
+static void
 _e_qa_bd_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Quick_Access_Entry *entry = data;
    E_Menu *subm;
 
-   subm = e_menu_new();
+   qa_mod->menu = subm = e_menu_new();
    e_menu_title_set(subm, entry->class);
    e_object_data_set(E_OBJECT(subm), entry);
    e_menu_item_submenu_set(mi, subm);
    e_object_unref(E_OBJECT(subm));
+   e_object_free_attach_func_set(E_OBJECT(subm), _e_qa_bd_menu_free);
 
    if (!entry->config.jump)
      {
@@ -805,6 +823,13 @@ _e_qa_bd_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Remove Quickaccess"));
    e_menu_item_callback_set(mi, _e_qa_bd_menu_del, entry);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Quickaccess Help"));
+   e_menu_item_callback_set(mi, _e_qa_bd_menu_help, NULL);
 }
 
 static void
@@ -844,6 +869,392 @@ _e_qa_entry_config_apply(E_Quick_Access_Entry *entry)
         SET(autohide);
         SET(hide_when_behind);
 #undef SET
+}
+
+static Eina_Bool
+_e_qa_help_timeout(void *data __UNUSED__)
+{
+   if (qa_mod->help_dia) e_object_del(qa_mod->help_dia);
+   if (qa_mod->demo_dia)
+     {
+        E_Quick_Access_Entry *entry;
+        entry = _e_qa_entry_find_border(qa_mod->demo_dia->win->border);
+        e_qa_entry_free(entry);
+        e_object_del(E_OBJECT(qa_mod->demo_dia));
+     }
+   if (qa_mod->help_timer) ecore_timer_del(qa_mod->help_timer);
+   qa_mod->demo_state = 0;
+   qa_mod->help_timeout = qa_mod->help_timer = NULL;
+   return EINA_FALSE;
+}
+
+static void
+_e_qa_dia_end_del(void *data __UNUSED__)
+{
+   qa_mod->help_dia = NULL;
+   _e_qa_help_timeout(NULL);
+   qa_config->first_run = EINA_TRUE;
+}
+
+static void
+_e_qa_dia_del(void *data __UNUSED__)
+{
+   qa_mod->help_dia = NULL;
+   if (qa_mod->help_timeout)
+     ecore_timer_reset(qa_mod->help_timeout);
+   else
+     qa_mod->help_timeout = ecore_timer_add(10.0, _e_qa_help_timeout, NULL);
+}
+
+static void
+_e_qa_demo_dia_del(void *data __UNUSED__)
+{
+   qa_mod->demo_dia = NULL;
+   if (qa_mod->help_dia) e_object_del(qa_mod->help_dia);
+   if (qa_mod->help_timeout)
+     ecore_timer_reset(qa_mod->help_timeout);
+   else
+     qa_mod->help_timeout = ecore_timer_add(10.0, _e_qa_help_timeout, NULL);
+}
+
+static void
+_e_qa_help_cancel(void *data __UNUSED__)
+{
+   qa_config->first_run = EINA_TRUE;
+   _e_qa_help_timeout(NULL);
+}
+
+static void
+e_qa_help(void)
+{
+   char buf[PATH_MAX];
+
+   if (qa_mod->help_dia) return;
+   snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));
+   qa_mod->help_dia = (E_Object*)e_util_dialog_internal(_("Quickaccess Help"),
+                                                        _("The options found in the Quickaccess menu are as follows:<br>"
+                                                          "<hilight>Autohide</hilight> - hide the window whenever it loses focus<br>"
+                                                          "<hilight>Hide Instead of Raise</hilight> - Hide window when activated without focus<br>"
+                                                          "<hilight>Jump Mode</hilight> - Switch to window's desk and raise instead of showing/hiding<br>"
+                                                          "<hilight>Relaunch When Closed</hilight> - Run the entry's command again when its window exits<br>"
+                                                          "<hilight>Transient</hilight> - Remember only this instance of the window (not permanent)"));
+   if (qa_mod->help_timeout) ecore_timer_freeze(qa_mod->help_timeout);
+   e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_end_del);
+}
+
+static void
+_e_qa_help6(void *data __UNUSED__)
+{
+   if (qa_mod->help_dia)
+     {
+        ecore_job_add(_e_qa_help6, NULL);
+        return;
+     }
+   e_qa_help();
+}
+
+static void
+_e_qa_help5(void *data __UNUSED__)
+{
+   char buf[PATH_MAX];
+
+   if (_e_qa_entry_find_border(qa_mod->demo_dia->win->border))
+     {
+        qa_mod->help_timer = ecore_timer_add(1, _e_qa_help_timer_cb, NULL);
+        return;
+     }
+
+   if (qa_mod->help_dia)
+     {
+        ecore_job_add(_e_qa_help5, NULL);
+        return;
+     }
+   snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));   
+   qa_mod->help_dia = (E_Object*)e_confirm_dialog_show(_("Quickaccess Help"), buf,
+                                                        _("You deleted it on your own, you rascal!<br>"
+                                                          "Way to go!"),
+                                                        _("Continue"), _("Stop"),
+                                                        _e_qa_help6, _e_qa_help_cancel, NULL, NULL, NULL, NULL);
+   e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_del);
+}
+
+static void
+_e_qa_help_activate_hook(E_Quick_Access_Entry *entry)
+{
+   char buf[PATH_MAX];
+
+   switch (qa_mod->demo_state++)
+     {
+      case 0:
+        snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));
+        if (entry->config.hidden)
+          e_dialog_text_set((E_Dialog*)qa_mod->help_dia, _("Great! Activate the Quickaccess entry again to show it!"));
+        else
+          e_dialog_text_set((E_Dialog*)qa_mod->help_dia, _("Great! Activate the Quickaccess entry again to hide it!"));
+        break;
+      case 1:
+        e_object_del(qa_mod->help_dia);
+        ecore_job_add((Ecore_Cb)_e_qa_help_activate_hook, entry);
+        break;
+      default:
+        snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));
+        if (entry->config.hidden)
+          _e_qa_border_activate(_e_qa_entry_find_border(qa_mod->demo_dia->win->border));
+        qa_mod->help_dia = (E_Object*)e_confirm_dialog_show(_("Quickaccess Help"), buf,
+                                                             _("Well done.<br>"
+                                                               "Now to delete the entry we just made..."),
+                                                             _("Continue"), _("Stop"),
+                                                             _e_qa_help5, _e_qa_help_cancel, NULL, NULL, NULL, NULL);
+        e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_del);
+        qa_mod->demo_state = 0;
+     }
+}
+
+static void
+_e_qa_help4(void *data __UNUSED__)
+{
+   char buf[PATH_MAX];
+
+   snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));   
+   qa_mod->help_dia = (E_Object*)e_util_dialog_internal(_("Quickaccess Help"),
+                                                         _("The demo dialog has been bound to the keys you pressed.<br>"
+                                                           "Try pressing the same keys!"));
+   e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_del);
+}
+
+static void
+_e_qa_help_qa_added_cb(void *data __UNUSED__)
+{
+   E_Quick_Access_Entry *entry;
+
+   ecore_timer_thaw(qa_mod->help_timeout);
+   if ((!qa_mod->demo_dia) || (!_e_qa_entry_find_border(qa_mod->demo_dia->win->border)))
+     {
+        _e_qa_help_timeout(NULL);
+        return;
+     }
+   entry = eina_list_data_get(eina_list_last(qa_config->transient_entries));
+   entry->help_watch = EINA_TRUE;
+   ecore_job_add(_e_qa_help4, NULL);
+   e_object_del(qa_mod->help_dia);
+}
+
+static void
+_e_qa_help_bd_menu_del(void *data __UNUSED__)
+{
+   if (qa_mod->help_timer) ecore_timer_del(qa_mod->help_timer);
+   qa_mod->demo_state = 0;
+   qa_mod->help_timer = NULL;
+   if (eg)
+     {
+        e_object_free_attach_func_set(E_OBJECT(eg), _e_qa_help_qa_added_cb);
+        return;
+     }
+   _e_qa_help_timeout(NULL);
+}
+
+static void
+_e_qa_help_bd_menu2_del(void *data __UNUSED__)
+{
+   if (qa_mod->help_timer) ecore_timer_del(qa_mod->help_timer);
+   qa_mod->demo_state = 0;
+   qa_mod->help_timer = NULL;
+   if (!qa_config->transient_entries) return;
+   _e_qa_help_timeout(NULL);   
+}
+
+static Eina_Bool
+_e_qa_help_timer_helper(void)
+{
+   E_Border *bd;
+   E_Menu_Item *mi;
+   Eina_List *items;
+
+   bd = qa_mod->demo_dia->win->border;
+   ecore_timer_interval_set(qa_mod->help_timer, 0.2);
+   mi = e_menu_item_active_get();
+   if (qa_mod->menu)
+     {
+        if (mi && ((mi->cb.func == _e_qa_bd_menu_del)))
+          {
+             e_menu_active_item_activate();
+             qa_mod->demo_state = 0;
+             qa_mod->help_timer = NULL;
+             return EINA_FALSE;
+          }
+        if (mi && (qa_mod->demo_state != 1) && (!mi->menu->parent_item) && (mi->submenu_pre_cb.func == _e_qa_bd_menu_pre))
+          {
+             qa_mod->demo_state = 0;
+             qa_mod->help_timer = NULL;
+             if (mi->menu != qa_mod->menu)
+               qa_mod->help_timer = ecore_timer_add(0.2, _e_qa_help_timer2_cb, NULL);
+             return EINA_FALSE;
+          }
+        items = qa_mod->menu->items;
+     }
+   else
+     {
+        if (mi && (mi->cb.func == _e_qa_bd_menu_add))
+          {
+             e_menu_active_item_activate();
+             qa_mod->demo_state = 0;
+             qa_mod->help_timer = NULL;
+             return EINA_FALSE;
+          }
+        items = bd->border_menu->items;
+     }
+   do
+     {
+        mi = eina_list_nth(items, qa_mod->demo_state - 1);
+        if (mi)
+          {
+             if (mi->separator)
+               qa_mod->demo_state++;
+             else
+               e_menu_item_active_set(mi, 1);
+          }
+        else
+          /* someone's messing with the menu. joke's on them, we can dance all day */
+          qa_mod->demo_state = 0;
+     } while (mi->separator);
+   return EINA_TRUE;
+}
+
+static Eina_Bool
+_e_qa_help_timer2_cb(void *data __UNUSED__)
+{
+   E_Border *bd;
+
+   if ((!qa_mod->demo_dia) || (!qa_mod->demo_dia->win) || (!qa_mod->demo_dia->win->border))
+     /* FIXME */
+     return EINA_TRUE;
+
+   bd = qa_mod->demo_dia->win->border;
+   switch (qa_mod->demo_state)
+     {
+      case 0:
+        e_object_free_attach_func_set(E_OBJECT(bd->border_menu), _e_qa_help_bd_menu2_del);
+        break;
+      default:
+        if (_e_qa_help_timer_helper()) break;
+        e_qa_help();
+        return EINA_FALSE;
+     }
+   qa_mod->demo_state++;
+   return EINA_TRUE;
+}
+
+static Eina_Bool
+_e_qa_help_timer_cb(void *data __UNUSED__)
+{
+   E_Border *bd;
+
+   if ((!qa_mod->demo_dia) || (!qa_mod->demo_dia->win) || (!qa_mod->demo_dia->win->border))
+     /* wait longer */
+     return EINA_TRUE;
+
+   bd = qa_mod->demo_dia->win->border;
+   switch (qa_mod->demo_state)
+     {
+      case 0:
+        e_int_border_menu_show(bd, bd->x + bd->w * .5, bd->y + 5, 0, 0);
+        ecore_timer_interval_set(qa_mod->help_timer, 0.8);
+        e_object_free_attach_func_set(E_OBJECT(bd->border_menu), _e_qa_help_bd_menu_del);
+        break;
+      default:
+        if (!_e_qa_help_timer_helper()) return EINA_FALSE;
+     }
+   qa_mod->demo_state++;
+   return EINA_TRUE;
+}
+
+static void
+_e_qa_help3(void *data __UNUSED__)
+{
+   char buf[PATH_MAX];
+   E_Dialog *dia;
+
+   if (qa_mod->help_dia)
+     {
+        ecore_job_add(_e_qa_help3, NULL);
+        return;
+     }
+   snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));
+
+   qa_mod->help_dia = (E_Object*)e_util_dialog_internal(_("Quickaccess Help"),
+                                                        _("The newly displayed window will activate<br>"
+                                                          "the Quickaccess binding sequence."));
+   e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_del);
+
+   qa_mod->demo_dia = dia = e_dialog_normal_win_new(NULL, "E", "_qa_demo_dia");
+   e_dialog_border_icon_set(dia, buf);
+   e_dialog_icon_set(dia, buf, 128);
+   e_dialog_title_set(dia, _("Quickaccess Demo"));
+   e_dialog_text_set(dia, _("This is a demo dialog used in the Quickaccess tutorial"));
+   e_dialog_show(dia);
+
+   qa_mod->help_timer = ecore_timer_add(1, _e_qa_help_timer_cb, NULL);
+   ecore_timer_reset(qa_mod->help_timeout);
+   ecore_timer_freeze(qa_mod->help_timeout);
+
+   e_object_free_attach_func_set(E_OBJECT(qa_mod->demo_dia), _e_qa_demo_dia_del);
+}
+
+static void
+_e_qa_help2(void *data __UNUSED__)
+{
+   char buf[PATH_MAX];
+
+   if (qa_mod->help_dia)
+     {
+        ecore_job_add(_e_qa_help2, NULL);
+        return;
+     }
+   snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));   
+   qa_mod->help_dia = (E_Object*)e_confirm_dialog_show(_("Quickaccess Help"), buf,
+                                                        _("Quickaccess entries can be created from<br>"
+                                                          "the border menu of any window.<br>"
+                                                          "Click Continue to see a demonstration."),
+                                                        _("Continue"), _("Stop"),
+                                                        _e_qa_help3, _e_qa_help_cancel, NULL, NULL, NULL, NULL);
+   e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_del);
+}
+
+static void
+_e_qa_help(void *data)
+{
+   char buf[PATH_MAX];
+
+   if (data && qa_mod->help_dia)
+     {
+        ecore_job_add(_e_qa_help, (void*)1);
+        return;
+     }
+   if (qa_mod->help_dia) return;
+   snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));   
+   qa_mod->help_dia = (E_Object*)e_confirm_dialog_show(_("Quickaccess Help"), buf,
+                                                        _("Quickaccess is a way of binding user-selected<br>"
+                                                          "windows and applications to keyboard shortcuts.<br>"
+                                                          "Once a Quickaccess entry has been created,<br>"
+                                                          "the associated window can be returned to immediately<br>"
+                                                          "on demand by pushing the keyboard shortcut."),
+                                                        _("Continue"), _("Stop"),
+                                                        _e_qa_help2, _e_qa_help_cancel, NULL, NULL, NULL, NULL);
+   e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_del);
+}
+
+static void
+_e_qa_first_run(void)
+{
+   char buf[PATH_MAX];
+
+   snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));
+   qa_mod->help_dia = (E_Object*)e_confirm_dialog_show(_("Quickaccess Help"), buf,
+                                                        _("This appears to be your first time using the Quickaccess module.<br>"
+                                                          "Would you like some usage tips?"),
+                                                        _("Yes"), _("No"),
+                                                        _e_qa_help, _e_qa_help_cancel, (void*)1, NULL, NULL, NULL);
+   e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_del);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -894,8 +1305,7 @@ e_qa_init(void)
    INF("loaded qa module, registered %s action.", _act_toggle);
    
    border_hook = e_int_border_menu_hook_add(_e_qa_bd_menu_hook, NULL);
-   // TODO: on first usage (ie: no config), show instructions that user
-   // should set a match and keybinding
+   if (!qa_config->first_run) _e_qa_first_run();
 
    return EINA_TRUE;
 }
@@ -927,7 +1337,8 @@ e_qa_shutdown(void)
 
    E_FREE_LIST(_e_qa_event_handlers, ecore_event_handler_del);
    E_FREE_LIST(_e_qa_border_hooks, e_border_hook_del);
-
+   if (qa_mod->help_timeout) ecore_timer_del(qa_mod->help_timeout);
+   _e_qa_help_timeout(NULL);
    e_int_border_menu_hook_del(border_hook);
    border_hook = NULL;
    INF("unloaded quickaccess module, unregistered %s action.", _act_toggle);
@@ -939,6 +1350,7 @@ e_qa_shutdown(void)
 void
 e_qa_entry_free(E_Quick_Access_Entry *entry)
 {
+   if (!entry) return;
    if (entry->exe_handler) ecore_event_handler_del(entry->exe_handler);
    if (entry->border) _e_qa_entry_border_props_restore(entry, entry->border);
    if (entry->cfg_entry) e_qa_config_entry_free(entry);

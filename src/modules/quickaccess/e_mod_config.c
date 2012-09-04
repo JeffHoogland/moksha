@@ -21,7 +21,9 @@ struct _E_Config_Dialog_Data
    int hide_when_behind;
    int skip_taskbar;
    int skip_pager;
+
    int dont_bug_me;
+   int first_run;
 };
 
 static E_Config_DD *conf_edd, *entry_edd;
@@ -78,6 +80,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->skip_taskbar = qa_config->skip_taskbar;
    cfdata->skip_pager = qa_config->skip_pager;
 
+   cfdata->dont_bug_me = qa_config->dont_bug_me;
+   cfdata->first_run = qa_config->first_run;
+
    EINA_LIST_FOREACH(qa_config->entries, l, entry)
      cfdata->entries = eina_inlist_append(cfdata->entries, EINA_INLIST_GET(_config_entry_new(entry)));
 
@@ -117,6 +122,7 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
    if (cfdata->X != qa_config->X) return 1
 
    CHECK(dont_bug_me);
+   CHECK(first_run);
 
    EINA_INLIST_FOREACH(cfdata->entries, ce)
      if (ce->id) return 1;
@@ -239,6 +245,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ol = e_widget_list_add(evas, 0, 0);
    ob = e_widget_check_add(evas, _("Disable Warning Dialogs"), (int*)&(cfdata->dont_bug_me));
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+   ob = e_widget_check_add(evas, _("Disable Startup Tutorial"), (int*)&(cfdata->first_run));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), ol, 1, 1, 1, 1, 0.5, 0.5);
 
@@ -355,6 +363,7 @@ _advanced_apply_data(E_Config_Dialog *cfd  __UNUSED__, E_Config_Dialog_Data *cfd
 #define SET(X) qa_config->X = cfdata->X
 
    SET(dont_bug_me);
+   SET(first_run);
 
    EINA_INLIST_FOREACH(cfdata->entries, ce)
      {
@@ -464,6 +473,7 @@ e_qa_config_dd_new(void)
    E_CONFIG_VAL(D, T, skip_taskbar, UCHAR);
    E_CONFIG_VAL(D, T, skip_pager, UCHAR);
    E_CONFIG_VAL(D, T, dont_bug_me, UCHAR);
+   E_CONFIG_VAL(D, T, first_run, UCHAR);
    return conf_edd;
 }
 
