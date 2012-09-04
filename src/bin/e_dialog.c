@@ -165,7 +165,8 @@ e_dialog_icon_set(E_Dialog *dia, const char *icon, Evas_Coord size)
    if (!icon) return;
 
    dia->icon_object = e_icon_add(e_win_evas_get(dia->win));
-   e_util_icon_theme_set(dia->icon_object, icon);
+   if (!e_util_icon_theme_set(dia->icon_object, icon))
+     e_icon_file_edje_set(dia->icon_object, icon, "icon");
    edje_extern_object_min_size_set(dia->icon_object, size * e_scale, size * e_scale);
    edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
    edje_object_signal_emit(dia->bg_object, "e,state,icon", "e");
