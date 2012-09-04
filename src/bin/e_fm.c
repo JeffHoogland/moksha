@@ -7710,6 +7710,21 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
         else if (f1) return 1;
         else if (f2) return -1;
      }
+   if (ic1->sd->config->list.sort.size)
+     {
+        if (ic1->info.link)
+          {
+             if (!ic2->info.link) return 1;
+          }
+        else
+          {
+             if (ic2->info.link) return -1;
+             if (ic1->info.statinfo.st_size > ic2->info.statinfo.st_size)
+               return -1;
+             else if (ic1->info.statinfo.st_size < ic2->info.statinfo.st_size)
+               return 1;
+          }
+     }
    if (ic1->sd->config->list.sort.no_case)
      return strcasecmp(l1, l2);
    return strcmp(l1, l2);
@@ -8662,6 +8677,15 @@ _e_fm2_view_menu_sorting_change_case(void *data, E_Menu *m __UNUSED__, E_Menu_It
 }
 
 static void
+_e_fm2_view_menu_sorting_change_size(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   sd->config->list.sort.size = mi->toggle;
+   _e_fm2_refresh(sd, NULL, NULL);
+}
+
+static void
 _e_fm2_view_menu_sorting_change_extension(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Fm2_Smart_Data *sd = data;
@@ -8710,6 +8734,12 @@ _e_fm2_view_menu_sorting_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->config->list.sort.extension);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_extension, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Sort By Size"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->config->list.sort.size);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_size, sd);
 
    mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
