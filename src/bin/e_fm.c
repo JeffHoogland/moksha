@@ -7676,22 +7676,6 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
    if (ic1->info.label) l1 = (char *)ic1->info.label;
    l2 = (char *)ic2->info.file;
    if (ic2->info.label) l2 = (char *)ic2->info.label;
-   if (ic1->sd->config->list.sort.extension)
-     {
-        int cmp;
-        const char *f1, *f2;
-        f1 = ecore_file_file_get(l1);
-        f1 = strrchr(f1, '.');
-        f2 = ecore_file_file_get(l2);
-        f2 = strrchr(f2, '.');
-        if (f1 && f2)
-          {
-             cmp = strcasecmp(f1, f2);
-             if (cmp) return cmp;
-          }
-        else if (f1) return 1;
-        else if (f2) return -1;
-     }
    if (ic1->sd->config->list.sort.dirs.first)
      {
         if ((S_ISDIR(ic1->info.statinfo.st_mode)) !=
@@ -7709,6 +7693,22 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
              if (S_ISDIR(ic1->info.statinfo.st_mode)) return 1;
              return -1;
           }
+     }
+   if (ic1->sd->config->list.sort.extension)
+     {
+        int cmp;
+        const char *f1, *f2;
+        f1 = ecore_file_file_get(l1);
+        f1 = strrchr(f1, '.');
+        f2 = ecore_file_file_get(l2);
+        f2 = strrchr(f2, '.');
+        if (f1 && f2)
+          {
+             cmp = strcasecmp(f1, f2);
+             if (cmp) return cmp;
+          }
+        else if (f1) return 1;
+        else if (f2) return -1;
      }
    if (ic1->sd->config->list.sort.no_case)
      return strcasecmp(l1, l2);
