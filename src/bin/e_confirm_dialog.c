@@ -63,6 +63,14 @@ e_confirm_dialog_show(const char *title, const char *icon, const char *text,
 static void
 _e_confirm_dialog_free(E_Confirm_Dialog *cd)
 {
+   if (!cd->no_run)
+     {
+        e_object_ref(E_OBJECT(cd));
+        cd->no_run = EINA_TRUE;
+        if (cd->no.func) cd->no.func(cd->no.data);
+        e_object_unref(E_OBJECT(cd));
+        return;
+     }
    if (cd->del.func) cd->del.func(cd->del.data);
    e_object_del(E_OBJECT(cd->dia));
    free(cd);
@@ -75,6 +83,7 @@ _e_confirm_dialog_yes(void *data, E_Dialog *dia __UNUSED__)
 
    cd = data;
    e_object_ref(data);
+   cd->no_run = EINA_TRUE;
    if (cd->yes.func) cd->yes.func(cd->yes.data);
    e_object_del(data);
    e_object_unref(data);
@@ -87,6 +96,7 @@ _e_confirm_dialog_no(void *data, E_Dialog *dia __UNUSED__)
 
    cd = data;
    e_object_ref(data);
+   cd->no_run = EINA_TRUE;
    if (cd->no.func) cd->no.func(cd->no.data);
    e_object_del(data);
    e_object_unref(data);
