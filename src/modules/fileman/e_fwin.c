@@ -1889,7 +1889,7 @@ _e_fwin_terminal(void *data,
    if (path)
      {
         chdir(path);
-        e_exec(fwin->zone, tdesktop, NULL, NULL, "fileman");
+        e_exec(e_util_zone_current_get(e_manager_current_get()), tdesktop, NULL, NULL, "fileman");
         chdir(buf);
      }
    efreet_desktop_free(tdesktop);
