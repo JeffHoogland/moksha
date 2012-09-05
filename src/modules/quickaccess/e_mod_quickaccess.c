@@ -911,11 +911,7 @@ static void
 _e_qa_demo_dia_del(void *data __UNUSED__)
 {
    qa_mod->demo_dia = NULL;
-   if (qa_mod->help_dia) e_object_del(qa_mod->help_dia);
-   if (qa_mod->help_timeout)
-     ecore_timer_reset(qa_mod->help_timeout);
-   else
-     qa_mod->help_timeout = ecore_timer_add(20.0, _e_qa_help_timeout, NULL);
+   _e_qa_help_timeout(NULL);
 }
 
 static void
