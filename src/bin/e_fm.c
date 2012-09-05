@@ -7694,6 +7694,13 @@ _e_fm2_cb_icon_sort(const void *data1, const void *data2)
              return -1;
           }
      }
+   if (ic1->sd->config->list.sort.mtime)
+     {
+        if (ic1->info.statinfo.st_mtime > ic2->info.statinfo.st_mtime)
+          return -1;
+        if (ic1->info.statinfo.st_mtime < ic2->info.statinfo.st_mtime)
+          return 1;
+     }
    if (ic1->sd->config->list.sort.extension)
      {
         int cmp;
@@ -8686,6 +8693,15 @@ _e_fm2_view_menu_sorting_change_size(void *data, E_Menu *m __UNUSED__, E_Menu_It
 }
 
 static void
+_e_fm2_view_menu_sorting_change_mtime(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   sd->config->list.sort.mtime = mi->toggle;
+   _e_fm2_refresh(sd, NULL, NULL);
+}
+
+static void
 _e_fm2_view_menu_sorting_change_extension(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Fm2_Smart_Data *sd = data;
@@ -8734,6 +8750,12 @@ _e_fm2_view_menu_sorting_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->config->list.sort.extension);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_extension, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Sort By Modification Time"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, sd->config->list.sort.mtime);
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_mtime, sd);
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Sort By Size"));

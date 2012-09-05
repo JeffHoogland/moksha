@@ -52,6 +52,7 @@ struct _E_Config_Dialog_Data
        {
           int case_sen;
           int extension;
+          int mtime;
           int size;
           struct
           {
@@ -151,6 +152,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->list.sort.dirs.first = fileman_config->list.sort.dirs.first;
    cfdata->list.sort.case_sen = !(fileman_config->list.sort.no_case);
    cfdata->list.sort.extension = fileman_config->list.sort.extension;
+   cfdata->list.sort.mtime = fileman_config->list.sort.mtime;
    cfdata->list.sort.size = fileman_config->list.sort.size;
    cfdata->dbus.desktop = e_config->device_desktop;
    cfdata->dbus.auto_mount = e_config->device_auto_mount;
@@ -193,6 +195,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
    fileman_config->list.sort.dirs.first = cfdata->list.sort.dirs.first;
    fileman_config->list.sort.dirs.last = !(cfdata->list.sort.dirs.first);
    fileman_config->list.sort.extension = cfdata->list.sort.extension;
+   fileman_config->list.sort.mtime = cfdata->list.sort.mtime;
    fileman_config->list.sort.size = cfdata->list.sort.size;
    fileman_config->list.sort.no_case = !(cfdata->list.sort.case_sen);
 
@@ -233,6 +236,7 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->list.sort.dirs.last != !(cfdata->list.sort.dirs.first)) ||
      (fileman_config->list.sort.size != cfdata->list.sort.size) ||
      (fileman_config->list.sort.extension != cfdata->list.sort.extension) ||
+     (fileman_config->list.sort.mtime != cfdata->list.sort.mtime) ||
      (fileman_config->list.sort.no_case != !(cfdata->list.sort.case_sen)) ||
      (fileman_config->tooltip.delay != !(cfdata->tooltip.delay)) ||
      (fileman_config->tooltip.size != !(cfdata->tooltip.size)) ||
@@ -324,6 +328,9 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Sort By Extension"),
                            &(cfdata->list.sort.extension));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Sort By Modification Time"),
+                           &(cfdata->list.sort.mtime));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Sort By Size"),
                            &(cfdata->list.sort.size));

@@ -98,6 +98,7 @@ struct _E_Fm2_Config
          Eina_Bool no_case : 1;
          Eina_Bool size : 1;
          Eina_Bool extension : 1;
+         Eina_Bool mtime : 1;
          struct
          {
             Eina_Bool first : 1;

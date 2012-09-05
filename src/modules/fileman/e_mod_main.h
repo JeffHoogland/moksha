@@ -78,6 +78,7 @@ struct _Config
          unsigned char no_case;
          unsigned char extension;
          unsigned char size;
+         unsigned char mtime;
          struct
          {
             unsigned char first;
