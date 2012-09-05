@@ -2783,7 +2783,10 @@ e_border_maximize(E_Border  *bd,
      }
 
    bd->pre_res_change.valid = 0;
-   if (!(bd->maximized & E_MAXIMIZE_HORIZONTAL))
+   if (!(bd->maximized & E_MAXIMIZE_HORIZONTAL) ||
+        (bd->maximized & E_MAXIMIZE_LEFT) ||
+        (bd->maximized & E_MAXIMIZE_RIGHT))
+
      {
         /* Horizontal hasn't been set */
         bd->saved.x = bd->x - bd->zone->x;
@@ -2795,6 +2798,7 @@ e_border_maximize(E_Border  *bd,
         bd->saved.y = bd->y - bd->zone->y;
         bd->saved.h = bd->h;
      }
+
    bd->saved.zone = bd->zone->num;
    e_hints_window_size_set(bd);
 
@@ -2868,8 +2872,16 @@ e_border_unmaximize(E_Border  *bd,
                   y = bd->saved.y + bd->zone->y;
                   bd->saved.h = bd->saved.y = 0;
                   bd->maximized &= ~E_MAXIMIZE_VERTICAL;
-                  bd->maximized &= ~E_MAXIMIZE_LEFT;
-                  bd->maximized &= ~E_MAXIMIZE_RIGHT;
+
+                  if (max & E_MAXIMIZE_LEFT ||
+                      max & E_MAXIMIZE_RIGHT)
+                    {
+                       w = bd->saved.w;
+                       x = bd->saved.x + bd->zone->x;
+                       bd->saved.w = bd->saved.x = 0;
+                       bd->maximized &= ~E_MAXIMIZE_LEFT;
+                       bd->maximized &= ~E_MAXIMIZE_RIGHT;
+                    }
                }
              if (max & E_MAXIMIZE_HORIZONTAL)
                {
