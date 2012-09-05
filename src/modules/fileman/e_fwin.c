@@ -322,8 +322,7 @@ e_fwin_zone_new(E_Zone *zone,
    evas_object_smart_callback_add(o, "icon,mouse,in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
    evas_object_smart_callback_add(o, "icon,mouse,out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
-   if (fileman_config->view.desktop_navigation)
-     e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
+   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_underlay_hide(o);
    evas_object_show(o);
 
