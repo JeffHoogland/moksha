@@ -176,7 +176,7 @@ _save_to(const char *file)
              sstd = evas_object_image_stride_get(o_img);
              dst = evas_object_image_data_get(o, EINA_TRUE);
              d = dst;
-             for (y = 0; y < z->h; y++)
+             for (y = z->y; y < z->y + z->h; y++)
                {
                   s = src + (sstd * y) + (z->x * 4);
                   memcpy(d, s, z->w * 4);
