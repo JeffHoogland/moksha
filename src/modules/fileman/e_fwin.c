@@ -1157,7 +1157,7 @@ _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici)
                       (!strcmp(ici->mime, "text/x-sh"))
                       )
                {
-                  return E_FWIN_EXEC_DIRECT;
+                  return E_FWIN_EXEC_SH;
                }
           }
      }
