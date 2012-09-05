@@ -69,17 +69,7 @@ gadman_reset(void)
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
         EINA_LIST_FREE(Man->gadcons[layer], gc)
-          {
-             e_gadcon_unpopulate(gc);
-             e_gadcon_custom_del(gc);
-
-             /* free gadcons */
-             e_config->gadcons = eina_list_remove(e_config->gadcons, gc);
-             eina_stringshare_del(gc->name);
-
-             if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
-             free(gc);
-          }
+          e_object_del(E_OBJECT(gc));
         Man->gadgets[layer] = eina_list_free(Man->gadgets[layer]);
 
         evas_object_del(Man->movers[layer]);
@@ -167,17 +157,7 @@ gadman_shutdown(void)
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
         EINA_LIST_FREE(Man->gadcons[layer], gc)
-          {
-             e_gadcon_unpopulate(gc);
-             e_gadcon_custom_del(gc);
-
-             /* free gadcons */
-             e_config->gadcons = eina_list_remove(e_config->gadcons, gc);
-             eina_stringshare_del(gc->name);
-
-             if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
-             free(gc);
-          }
+          e_object_del(E_OBJECT(gc));
 
         evas_object_del(Man->movers[layer]);
         Man->gadgets[layer] = eina_list_free(Man->gadgets[layer]);
@@ -580,6 +560,20 @@ gadman_update_bg(void)
      }
 }
 
+static void
+_gadman_gadcon_free(E_Gadcon *gc)
+{
+   e_gadcon_unpopulate(gc);
+   e_gadcon_custom_del(gc);
+
+   /* free gadcons */
+   e_config->gadcons = eina_list_remove(e_config->gadcons, gc);
+   eina_stringshare_del(gc->name);
+
+   if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
+   free(gc);
+}
+
 static E_Gadcon *
 _gadman_gadcon_new(const char *name, Gadman_Layer_Type layer, E_Zone *zone, E_Gadcon_Location *loc)
 {
@@ -588,7 +582,7 @@ _gadman_gadcon_new(const char *name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
    E_Config_Gadcon *cg;
 
    /* Create Gadcon */
-   gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, NULL);
+   gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, _gadman_gadcon_free);
    if (!gc) return NULL;
 
    gc->name = eina_stringshare_add(name);
