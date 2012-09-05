@@ -8716,8 +8716,8 @@ _e_fm2_view_menu_sorting_change_dirs_first(void *data, E_Menu *m __UNUSED__, E_M
    E_Fm2_Smart_Data *sd = data;
 
    sd->config->list.sort.dirs.first = mi->toggle;
-   if (mi->toggle)
-     
+   if (mi->toggle && sd->config->list.sort.dirs.last)
+     sd->config->list.sort.dirs.last = 0;
    _e_fm2_refresh(sd, NULL, NULL);
 }
 
@@ -8727,6 +8727,8 @@ _e_fm2_view_menu_sorting_change_dirs_last(void *data, E_Menu *m __UNUSED__, E_Me
    E_Fm2_Smart_Data *sd = data;
 
    sd->config->list.sort.dirs.last = mi->toggle;
+   if (mi->toggle && sd->config->list.sort.dirs.first)
+     sd->config->list.sort.dirs.first = 0;
    _e_fm2_refresh(sd, NULL, NULL);
 }
 
@@ -8768,15 +8770,13 @@ _e_fm2_view_menu_sorting_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Directories First"));
-   e_menu_item_radio_group_set(mi, 1);
-   e_menu_item_radio_set(mi, 1);
+   e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->config->list.sort.dirs.first);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_dirs_first, sd);
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Directories Last"));
-   e_menu_item_radio_group_set(mi, 1);
-   e_menu_item_radio_set(mi, 1);
+   e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, sd->config->list.sort.dirs.last);
    e_menu_item_callback_set(mi, _e_fm2_view_menu_sorting_change_dirs_last, sd);
 }
