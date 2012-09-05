@@ -1,8 +1,5 @@
 #ifdef E_TYPEDEFS
 
-EAPI extern int E_EVENT_GADCON_POPULATE;
-EAPI extern int E_EVENT_GADCON_UNPOPULATE;
-
 #define E_GADCON_CLIENT(x) ((E_Gadcon_Client *)(x))
 
 /* different layout policies - only 1 supported for now */
@@ -48,9 +45,6 @@ typedef struct _E_Gadcon              E_Gadcon;
 typedef struct _E_Gadcon_Client       E_Gadcon_Client;
 typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
 typedef struct _E_Gadcon_Location     E_Gadcon_Location;
-
-typedef struct _E_Event_Gadcon E_Event_Gadcon_Populate;
-typedef struct _E_Event_Gadcon E_Event_Gadcon_Unpopulate;
 
 #else
 #ifndef E_GADCON_H
@@ -130,11 +124,6 @@ struct _E_Gadcon
 
    unsigned char      instant_edit : 1;
    unsigned char      dummy : 1;
-};
-
-struct _E_Event_Gadcon
-{
-   E_Gadcon *gadcon;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 3
