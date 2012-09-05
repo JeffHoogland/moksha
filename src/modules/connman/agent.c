@@ -424,7 +424,7 @@ _agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
    for (; dbus_message_iter_get_arg_type(&dict) != DBUS_TYPE_INVALID;
         dbus_message_iter_next(&dict))
      {
-        struct Connman_Field field = { NULL };
+        struct Connman_Field field = { NULL, NULL, NULL, NULL, NULL };
         DBusMessageIter entry, var;
 
         dbus_message_iter_recurse(&dict, &entry);
