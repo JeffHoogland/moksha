@@ -643,6 +643,10 @@ ACT_FN_GO(window_maximized, )
                     max = E_MAXIMIZE_HORIZONTAL;
                   else if (!strcmp(s2, "vertical"))
                     max = E_MAXIMIZE_VERTICAL;
+                  else if (!strcmp(s2, "left"))
+                    max = E_MAXIMIZE_LEFT;
+                  else if (!strcmp(s2, "right"))
+                    max = E_MAXIMIZE_RIGHT;
                   else
                     max = E_MAXIMIZE_BOTH;
                }
@@ -2987,6 +2991,12 @@ e_actions_init(void)
                             NULL, 0);
    e_action_predef_name_set(N_("Window : State"), N_("Maximize Horizontally"),
                             "window_maximized_toggle", "default horizontal",
+                            NULL, 0);
+   e_action_predef_name_set(N_("Window : State"), N_("Maximize Left"),
+                            "window_maximized_toggle", "default left",
+                            NULL, 0);
+   e_action_predef_name_set(N_("Window : State"), N_("Maximize Right"),
+                            "window_maximized_toggle", "default right",
                             NULL, 0);
    e_action_predef_name_set(N_("Window : State"), N_("Maximize Fullscreen"),
                             "window_maximized_toggle", "fullscreen", NULL, 0);
