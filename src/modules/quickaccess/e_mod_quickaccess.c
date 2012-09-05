@@ -883,6 +883,7 @@ _e_qa_help_timeout(void *data __UNUSED__)
         e_object_del(E_OBJECT(qa_mod->demo_dia));
      }
    if (qa_mod->help_timer) ecore_timer_del(qa_mod->help_timer);
+   if (qa_mod->help_timeout) ecore_timer_del(qa_mod->help_timeout);
    qa_mod->demo_state = 0;
    qa_mod->help_timeout = qa_mod->help_timer = NULL;
    return EINA_FALSE;
