@@ -1157,7 +1157,7 @@ _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici)
                       (!strcmp(ici->mime, "text/x-sh"))
                       )
                {
-                  return E_FWIN_EXEC_SH;
+                  return E_FWIN_EXEC_DIRECT;
                }
           }
      }
@@ -1206,10 +1206,11 @@ _e_fwin_file_exec(E_Fwin_Page *page,
         break;
 
       case E_FWIN_EXEC_DIRECT:
+        snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), ici->file);
         if (fwin->win)
-          e_exec(fwin->win->border->zone, NULL, ici->file, NULL, "fwin");
+          e_exec(fwin->win->border->zone, NULL, buf, NULL, "fwin");
         else if (fwin->zone)
-          e_exec(fwin->zone, NULL, ici->file, NULL, "fwin");
+          e_exec(fwin->zone, NULL, buf, NULL, "fwin");
         break;
 
       case E_FWIN_EXEC_SH:
