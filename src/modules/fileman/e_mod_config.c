@@ -82,6 +82,8 @@ struct _E_Config_Dialog_Data
        int auto_open;
     } dbus;
 
+   Evas_Object *dir_sort_first;
+   Evas_Object *dir_sort_last;
     E_Config_Dialog *cfd;
 };
 
@@ -247,6 +249,24 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static void
+_dir_sort_first_changed(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+
+   if (cfdata->list.sort.dirs.first)
+     e_widget_check_checked_set(cfdata->dir_sort_last, 0);
+}
+
+static void
+_dir_sort_last_changed(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+
+   if (cfdata->list.sort.dirs.last)
+     e_widget_check_checked_set(cfdata->dir_sort_first, 0);
+}
+
+static void
 _tooltip_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -260,8 +280,9 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
               Evas                 *evas,
               E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o, *ob, *of, *otb;
+   Evas_Object *o, *oi, *ob, *of, *otb;
    E_Radio_Group *rg;
+   int mw, mh;
 
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
 
@@ -296,9 +317,6 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    /////////////////////////////////////////////////////////////
    o = e_widget_list_add(evas, 1, 0);
 
-   ob = e_widget_check_add(evas, _("Directories First"),
-                           &(cfdata->list.sort.dirs.first));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("File Extensions"),
                            &(cfdata->icon.extension.show));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
@@ -318,11 +336,10 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
                            &(cfdata->view.menu_shows_files));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Display"), o, 0, 0, 0, 0, 0.5, 0.0);
+
    /////////////////////////////////////////////////////////////
-   o = e_widget_list_add(evas, 1, 0);
-   ob = e_widget_check_add(evas, _("Open Dirs In Place"),
-                           &(cfdata->view.open_dirs_in_place));
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   o = e_widget_list_add(evas, 0, 0);
+
    ob = e_widget_check_add(evas, _("Case Sensitive"),
                            &(cfdata->list.sort.case_sen));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
@@ -334,6 +351,25 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Sort By Size"),
                            &(cfdata->list.sort.size));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   oi = edje_object_add(evas);
+   e_theme_edje_object_set(oi, "base/theme/menus", "e/widgets/menu/default/separator");
+   edje_object_size_min_calc(oi, &mw, &mh);
+   ob = e_widget_image_add_from_object(evas, oi, mw, mh);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   cfdata->dir_sort_first = ob = e_widget_check_add(evas, _("Directories First"),
+                           &(cfdata->list.sort.dirs.first));
+   e_widget_on_change_hook_set(ob, _dir_sort_first_changed, cfdata);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   cfdata->dir_sort_last = ob = e_widget_check_add(evas, _("Directories Last"),
+                           &(cfdata->list.sort.dirs.last));
+   e_widget_on_change_hook_set(ob, _dir_sort_last_changed, cfdata);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Sorting"), o, 0, 0, 0, 0, 0.5, 0.0);
+   /////////////////////////////////////////////////////////////
+   o = e_widget_list_add(evas, 1, 0);
+   ob = e_widget_check_add(evas, _("Open Dirs In Place"),
+                           &(cfdata->view.open_dirs_in_place));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Use Single Click"),
                            &(cfdata->view.single_click));
