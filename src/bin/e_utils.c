@@ -1468,7 +1468,7 @@ e_util_terminal_desktop_get(void)
         "terminology.desktop",
         "xterm.desktop",
         "rxvt.desktop",
-        "gnome-terimnal.desktop",
+        "gnome-terminal.desktop",
         "konsole.desktop",
         NULL
      };
