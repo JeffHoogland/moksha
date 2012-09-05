@@ -1878,27 +1878,21 @@ _e_fwin_terminal(void *data,
 {
    E_Fwin *fwin = data;
    Efreet_Desktop *tdesktop;
+   char buf[PATH_MAX];
+   const char *path;
    
    if (!fwin->cur_page) return;
+   if (!getcwd(buf, sizeof(buf))) return;
    tdesktop = e_util_terminal_desktop_get();
-   if (tdesktop)
+   if (!tdesktop) return;
+   path = e_fm2_real_path_get(fwin->cur_page->fm_obj);
+   if (path)
      {
-        char buf[PATH_MAX];
-        
-        if (getcwd(buf, sizeof(buf)))
-          {
-             const char *path;
-             
-             path = e_fm2_real_path_get(fwin->cur_page->fm_obj);
-             if (path)
-               {
-                  chdir(path);
-                  e_exec(fwin->zone, tdesktop, NULL, NULL, "fileman");
-                  chdir(buf);
-               }
-          }
-        efreet_desktop_free(tdesktop);
+        chdir(path);
+        e_exec(fwin->zone, tdesktop, NULL, NULL, "fileman");
+        chdir(buf);
      }
+   efreet_desktop_free(tdesktop);
 }
 
 static void
