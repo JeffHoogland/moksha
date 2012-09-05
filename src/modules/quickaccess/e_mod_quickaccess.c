@@ -903,7 +903,7 @@ _e_qa_dia_del(void *data __UNUSED__)
    if (qa_mod->help_timeout)
      ecore_timer_reset(qa_mod->help_timeout);
    else
-     qa_mod->help_timeout = ecore_timer_add(10.0, _e_qa_help_timeout, NULL);
+     qa_mod->help_timeout = ecore_timer_add(20.0, _e_qa_help_timeout, NULL);
 }
 
 static void
@@ -914,7 +914,7 @@ _e_qa_demo_dia_del(void *data __UNUSED__)
    if (qa_mod->help_timeout)
      ecore_timer_reset(qa_mod->help_timeout);
    else
-     qa_mod->help_timeout = ecore_timer_add(10.0, _e_qa_help_timeout, NULL);
+     qa_mod->help_timeout = ecore_timer_add(20.0, _e_qa_help_timeout, NULL);
 }
 
 static void
