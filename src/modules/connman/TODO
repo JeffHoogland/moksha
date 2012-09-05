@@ -9,8 +9,6 @@
  - Streamline the Cancel() and Release() callbacks because they are very
    similar
 
- - Destroy popup when we are going to ask for user input
-
  - When we request user input, give focus to the first 'Mandatory'
    entry field
 

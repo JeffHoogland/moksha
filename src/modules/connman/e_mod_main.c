@@ -3,7 +3,7 @@
 
 #include "E_Connman.h"
 
-static E_Module *connman_mod;
+E_Module *connman_mod = NULL;
 static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
 const char _e_connman_name[] = "connman";
@@ -165,8 +165,6 @@ void econnman_mod_services_changed(struct Connman_Manager *cm)
      }
 }
 
-static void _econnman_popup_del(E_Connman_Instance *inst);
-
 static Eina_Bool _econnman_popup_input_window_mouse_up_cb(void *data,
                                                           int type, void *event)
 {
@@ -176,7 +174,7 @@ static Eina_Bool _econnman_popup_input_window_mouse_up_cb(void *data,
    if (ev->window != inst->ui.popup.input_win)
      return ECORE_CALLBACK_PASS_ON;
 
-   _econnman_popup_del(inst);
+   econnman_popup_del(inst);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -257,8 +255,10 @@ static void _econnman_popup_new(E_Connman_Instance *inst)
    _econnman_popup_input_window_create(inst);
 }
 
-static void _econnman_popup_del(E_Connman_Instance *inst)
+void
+econnman_popup_del(E_Connman_Instance *inst)
 {
+   if (!inst->popup) return;
    _econnman_popup_input_window_destroy(inst);
    e_object_del(E_OBJECT(inst->popup));
    inst->popup = NULL;
@@ -397,7 +397,7 @@ _econnman_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
         if (!inst->popup)
           _econnman_popup_new(inst);
         else
-          _econnman_popup_del(inst);
+          econnman_popup_del(inst);
      }
    else if (ev->button == 3)
      _econnman_menu_new(inst, ev);
@@ -467,7 +467,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
      return;
 
    if (inst->popup)
-     _econnman_popup_del(inst);
+     econnman_popup_del(inst);
 
    evas_object_del(inst->ui.gadget);
 

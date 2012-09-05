@@ -9,7 +9,7 @@
 #include "e.h"
 #include "agent.h"
 #include "E_Connman.h"
-
+#include "e_mod_main.h"
 #define AGENT_IFACE "net.connman.Agent"
 
 typedef struct _E_Connman_Agent_Input E_Connman_Agent_Input;
@@ -388,6 +388,9 @@ _parse_field(struct Connman_Field *field, DBusMessageIter *value)
 static DBusMessage *
 _agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
 {
+   E_Connman_Module_Context *ctxt = connman_mod->data;
+   const Eina_List *l;
+   E_Connman_Instance *inst;
    DBusMessageIter iter, dict;
    E_Connman_Agent *agent;
    DBusMessage *reply;
@@ -399,6 +402,9 @@ _agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
    if (agent->msg)
      dbus_message_unref(agent->msg);
    agent->msg = dbus_message_ref(msg);
+
+   EINA_LIST_FOREACH(ctxt->instances, l, inst)
+     econnman_popup_del(inst);
 
    if (agent->dialog)
      _dialog_del(agent->dialog);

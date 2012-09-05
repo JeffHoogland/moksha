@@ -9,6 +9,7 @@
 
 #define MOD_CONF_VERSION 3
 
+extern E_Module *connman_mod;
 extern int _e_connman_log_dom;
 
 typedef struct E_Connman_Instance E_Connman_Instance;
@@ -55,6 +56,7 @@ EAPI void *e_modapi_init(E_Module *m);
 EAPI int e_modapi_shutdown(E_Module *m);
 EAPI int e_modapi_save(E_Module *m);
 
+void econnman_popup_del(E_Connman_Instance *inst);
 const char *e_connman_theme_path(void);
 E_Config_Dialog *e_connman_config_dialog_new(E_Container *con,
                                              E_Connman_Module_Context *ctxt);
