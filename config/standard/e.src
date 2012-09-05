@@ -1342,6 +1342,22 @@ group "E_Config" struct {
         }
         group "E_Config_Binding_Key" struct {
             value "context" int: 9;
+            value "modifiers" int: 8;
+            value "key" string: "Left";
+            value "action" string: "window_maximized_toggle";
+            value "params" string: "default left";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 8;
+            value "key" string: "Right";
+            value "action" string: "window_maximized_toggle";
+            value "params" string: "default right";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
             value "modifiers" int: 6;
             value "key" string: "r";
             value "action" string: "window_shaded_toggle";

@@ -531,6 +531,12 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "F10",
                     E_BINDING_MODIFIER_CTRL, 0,
                     "window_maximized_toggle", "default horizontal");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Left",
+                    E_BINDING_MODIFIER_WIN, 0,
+                    "window_maximized_toggle", "default left");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Right",
+                    E_BINDING_MODIFIER_WIN, 0,
+                    "window_maximized_toggle", "default right");
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "r",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "window_shaded_toggle", NULL);

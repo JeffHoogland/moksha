@@ -2631,12 +2631,28 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
          /* center y-direction */
          yy1 = bd->zone->y + (bd->zone->h - h) / 2;
 
-         if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-           e_border_move_resize(bd, x1, yy1, w, h);
-         else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-           e_border_move_resize(bd, bd->x, yy1, bd->w, h);
-         else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-           e_border_move_resize(bd, x1, bd->y, w, bd->h);
+         switch (max & E_MAXIMIZE_DIRECTION)
+           {
+            case E_MAXIMIZE_BOTH:
+              e_border_move_resize(bd, x1, yy1, w, h);
+              break;
+
+            case E_MAXIMIZE_VERTICAL:
+              e_border_move_resize(bd, bd->x, yy1, bd->w, h);
+              break;
+
+            case E_MAXIMIZE_HORIZONTAL:
+              e_border_move_resize(bd, x1, bd->y, w, bd->h);
+              break;
+
+            case E_MAXIMIZE_LEFT:
+              e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h);
+              break;
+
+            case E_MAXIMIZE_RIGHT:
+              e_border_move_resize(bd, x1, bd->zone->y, w / 2, h);
+              break;
+           }
          break;
 
       case E_MAXIMIZE_SMART:
@@ -2668,12 +2684,29 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
          else // window normal position
            yy1 = bd->y;
 
-         if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-           e_border_move_resize(bd, zx, zy, zw, zh);
-         else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-           e_border_move_resize(bd, x1, zy, w, zh);
-         else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-           e_border_move_resize(bd, zx, yy1, zw, h);
+         switch (max & E_MAXIMIZE_DIRECTION)
+           {
+            case E_MAXIMIZE_BOTH:
+              e_border_move_resize(bd, zx, zy, zw, zh);
+              break;
+
+            case E_MAXIMIZE_VERTICAL:
+              e_border_move_resize(bd, x1, zy, w, zh);
+              break;
+
+            case E_MAXIMIZE_HORIZONTAL:
+              e_border_move_resize(bd, zx, yy1, zw, h);
+              break;
+
+            case E_MAXIMIZE_LEFT:
+              e_border_move_resize(bd, zx, zy, zw / 2, zh);
+              break;
+
+            case E_MAXIMIZE_RIGHT:
+              e_border_move_resize(bd, zx + zw / 2, zy, zw / 2, zh);
+              break;
+           }
+
          edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
          break;
 
@@ -2698,12 +2731,29 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
          x1 = x1 + (pw - w) / 2;
          /* center y-direction */
          yy1 = yy1 + (ph - h) / 2;
-         if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_BOTH)
-           e_border_move_resize(bd, x1, yy1, w, h);
-         else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-           e_border_move_resize(bd, bd->x, yy1, bd->w, h);
-         else if ((max & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-           e_border_move_resize(bd, x1, bd->y, w, bd->h);
+
+         switch (max & E_MAXIMIZE_DIRECTION)
+           {
+            case E_MAXIMIZE_BOTH:
+              e_border_move_resize(bd, x1, yy1, w, h);
+              break;
+
+            case E_MAXIMIZE_VERTICAL:
+              e_border_move_resize(bd, bd->x, yy1, bd->w, h);
+              break;
+
+            case E_MAXIMIZE_HORIZONTAL:
+              e_border_move_resize(bd, x1, bd->y, w, bd->h);
+              break;
+
+            case E_MAXIMIZE_LEFT:
+              e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h);
+              break;
+
+            case E_MAXIMIZE_RIGHT:
+              e_border_move_resize(bd, x1, bd->zone->y, w / 2, h);
+              break;
+           }
          break;
      }
 }
@@ -2818,6 +2868,8 @@ e_border_unmaximize(E_Border  *bd,
                   y = bd->saved.y + bd->zone->y;
                   bd->saved.h = bd->saved.y = 0;
                   bd->maximized &= ~E_MAXIMIZE_VERTICAL;
+                  bd->maximized &= ~E_MAXIMIZE_LEFT;
+                  bd->maximized &= ~E_MAXIMIZE_RIGHT;
                }
              if (max & E_MAXIMIZE_HORIZONTAL)
                {
