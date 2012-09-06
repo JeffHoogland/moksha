@@ -358,12 +358,13 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 
    if (n > -1)
      {
-        _widgets_disable(cfdata, 0, EINA_FALSE);
+        _widgets_disable(cfdata, 0, EINA_TRUE);
         e_widget_ilist_selected_set(cfdata->o_list, n);
      }
    else
      {
         _widgets_disable(cfdata, 1, EINA_FALSE);
+        e_widget_disabled_set(cfdata->o_list, 0);
         e_widget_disabled_set(cfdata->o_add, 0);
      }
 }
