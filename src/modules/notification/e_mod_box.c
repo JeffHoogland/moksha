@@ -261,7 +261,6 @@ _notification_box_resize_handle(Notification_Box *b)
    Notification_Box_Icon *ic;
    Evas_Coord w, h;
 
-   if (!b) return;
    evas_object_geometry_get(b->o_box, NULL, NULL, &w, &h);
    if (e_box_orientation_get(b->o_box))
      w = h;

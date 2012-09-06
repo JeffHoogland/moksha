@@ -77,6 +77,10 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
 
    inst = gcc->data;
+   evas_object_event_callback_del_full(inst->n_box->o_box, EVAS_CALLBACK_MOVE,
+                                  notification_box_cb_obj_moveresize, inst);
+   evas_object_event_callback_del_full(inst->n_box->o_box, EVAS_CALLBACK_RESIZE,
+                                  notification_box_cb_obj_moveresize, inst);
    notification_box_visible_set(inst->n_box, EINA_FALSE);
    notification_cfg->instances = eina_list_remove(notification_cfg->instances, inst);
    free(inst);
