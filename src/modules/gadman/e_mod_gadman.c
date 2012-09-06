@@ -199,6 +199,7 @@ gadman_populate_class(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
                gadman_gadget_place(gcc, cc, cf_gcc, layer, gc->zone);
           }
      }
+   gc->populated_classes = eina_list_append(gc->populated_classes, cc);
 }
 
 static E_Gadcon *
