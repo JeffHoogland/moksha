@@ -11,7 +11,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *o_sf; //Filemanager Scrollframe
    Evas_Object *o_btn; //Filemanager updir button
    E_Color     *color; //Custom Color
-   int          bg_method; //Type of background
+   int          bg_type; //Type of background
    int          anim_bg; //Anim the background
    int          anim_gad; //Anim the gadgets
    int          fmdir; //Filemanager dir (personal or system)
@@ -23,7 +23,7 @@ struct _E_Config_Dialog_Data
 static const char *gadman_layer_names[] =
 {
    "Background",
-   "Hover",
+   "Hover (Key Toggle)",
    NULL
 };
 
@@ -40,6 +40,27 @@ static void         _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_
 static void         _cb_button_up(void *data1, void *data2);
 
 static E_Config_Dialog_Data *_cfdata = NULL;
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   Eina_List *sel;
+
+#define CHECK(X, Y) \
+   if (Man->conf->X != cfdata->Y) return 1
+   CHECK(bg_type, bg_type);
+   CHECK(color_r, color->r);
+   CHECK(color_g, color->g);
+   CHECK(color_b, color->b);
+   CHECK(anim_bg, anim_bg);
+   CHECK(anim_gad, anim_gad);
+#undef CHECK
+
+   sel = e_fm2_selected_list_get(cfdata->o_fm);
+   if ((!sel) && (!Man->conf->custom_bg)) return 0;
+   eina_list_free(sel);
+   return 1;
+}
 
 E_Config_Dialog *
 _config_gadman_module(E_Container *con, const char *params __UNUSED__)
@@ -58,6 +79,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.check_changed = _basic_check_changed;
 
    snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", Man->module->dir);
    cfd = e_config_dialog_new(con, _("Desktop Gadgets"),
@@ -92,7 +114,7 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
-   cfdata->bg_method = Man->conf->bg_type;
+   cfdata->bg_type = Man->conf->bg_type;
    if (Man->conf->custom_bg)
      {
         if (!strstr(Man->conf->custom_bg, e_user_homedir_get()))
@@ -204,7 +226,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    //Background mode
    of = e_widget_frametable_add(evas, _("Mode"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->bg_method));
+   rg = e_widget_radio_group_new(&(cfdata->bg_type));
    ow = e_widget_radio_add(evas, _("Theme Defined"), BG_STD, rg);
    //~ evas_object_smart_callback_add(ow, "changed", _cb_method_change, cfdata);
    e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 0, 1, 0);
@@ -313,7 +335,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_Fm2_Icon_Info *ic;
    char path[PATH_MAX];
 
-   Man->conf->bg_type = cfdata->bg_method;
+   Man->conf->bg_type = cfdata->bg_type;
    Man->conf->color_r = cfdata->color->r;
    Man->conf->color_g = cfdata->color->g;
    Man->conf->color_b = cfdata->color->b;
@@ -329,9 +351,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         if (ic->file)
           {
              snprintf(path, sizeof(path), "%s/%s", p, ic->file);
-             if (Man->conf->custom_bg)
-               eina_stringshare_del(Man->conf->custom_bg);
-             Man->conf->custom_bg = eina_stringshare_add(path);
+             eina_stringshare_replace(&Man->conf->custom_bg, path);
           }
         eina_list_free(sel);
      }
