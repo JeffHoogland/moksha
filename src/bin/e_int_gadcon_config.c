@@ -36,6 +36,7 @@ static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dia
 static Evas_Object *_advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Eina_Bool _cb_load_timer(void *data);
 static void _fill_list(E_Config_Dialog_Data *cfdata);
+static void _fill_list_advanced(E_Config_Dialog_Data *cfdata);
 static void _cb_list_selected(void *data);
 static void _cb_add(void *data, void *data2 __UNUSED__);
 static void _cb_del(void *data, void *data2 __UNUSED__);
@@ -181,6 +182,11 @@ _list_item_del_advanced(E_Config_Dialog_Data *cfdata, E_Gadcon_Client *gcc)
    Eina_List *l;
    int x = 0;
 
+   if (!gcc->cf)
+     {
+        _fill_list_advanced(cfdata);
+        return;
+     }
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->advanced.o_list), l, ili)
      {
         if (e_widget_ilist_item_value_get(ili) == gcc->cf->id)
@@ -247,6 +253,9 @@ _list_item_add_advanced(E_Config_Dialog_Data *cfdata, E_Gadcon_Client *gcc, E_Co
 
    e_widget_ilist_append_full(cfdata->advanced.o_list, icon, end, cf_gcc->id,
                               NULL, cfdata, cf_gcc->id);
+   if (!e_widget_ilist_count(cfdata->advanced.o_list)) return;
+   e_widget_disabled_set(cfdata->o_del, 0);
+   e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
 }
 
 static void
@@ -327,8 +336,10 @@ _fill_list_advanced(E_Config_Dialog_Data *cfdata)
    e_widget_ilist_thaw(cfdata->advanced.o_list);
    edje_thaw();
    evas_event_thaw(evas);
-   e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
-   e_widget_disabled_set(cfdata->o_del, 0);
+   if (e_widget_ilist_count(cfdata->advanced.o_list))
+     e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
+   else
+     e_widget_disabled_set(cfdata->o_del, 1);
 ///////////////
    evas = evas_object_evas_get(cfdata->class_list);
    evas_event_freeze(evas);
@@ -556,6 +567,12 @@ _cb_gcc_del(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Gadcon_Cl
 {
    if (cfdata->advanced.o_list)
      _list_item_del_advanced(cfdata, ev->gcc);
+   else
+     {
+        eina_hash_foreach(cfdata->gadget_hash, _free_gadgets, NULL);
+        _fill_data(cfdata);
+        _fill_list(cfdata);
+     }
    return ECORE_CALLBACK_PASS_ON;
 }
 
