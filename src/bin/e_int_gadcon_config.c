@@ -53,6 +53,12 @@ _create_dialog(E_Gadcon *gc, const char *title)
    E_Config_Dialog_View *v;
    E_Container *con;
 
+   if (gc->config_dialog)
+     {
+        e_win_raise(gc->config_dialog->dia->win);
+        e_border_focus_set(gc->config_dialog->dia->win->border, 1, 1);
+        return;
+     }
    if (!(v = E_NEW(E_Config_Dialog_View, 1))) return;
 
    v->create_cfdata = _create_data;
