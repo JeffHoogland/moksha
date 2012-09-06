@@ -691,3 +691,9 @@ e_int_gadcon_config_toolbar(E_Gadcon *gc)
 {
    _create_dialog(gc, _("Toolbar Contents"));
 }
+
+EAPI void
+e_int_gadcon_config_hook(E_Gadcon *gc, const char *name)
+{
+   _create_dialog(gc, name);
+}

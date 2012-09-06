@@ -5,6 +5,7 @@
 
 EAPI void e_int_gadcon_config_shelf   (E_Gadcon *gc);
 EAPI void e_int_gadcon_config_toolbar (E_Gadcon *gc);
+EAPI void e_int_gadcon_config_hook(E_Gadcon *gc, const char *name);
 
 #endif
 #endif
