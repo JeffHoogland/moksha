@@ -36,7 +36,7 @@ static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dia
 static Evas_Object *_advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Eina_Bool _cb_load_timer(void *data);
 static void _fill_list(E_Config_Dialog_Data *cfdata);
-static void _fill_list_advanced(E_Config_Dialog_Data *cfdata);
+static void _fill_list_advanced(E_Config_Dialog_Data *cfdata, Eina_Bool, Eina_Bool);
 static void _cb_list_selected(void *data);
 static void _cb_add(void *data, void *data2 __UNUSED__);
 static void _cb_del(void *data, void *data2 __UNUSED__);
@@ -184,7 +184,11 @@ _list_item_del_advanced(E_Config_Dialog_Data *cfdata, E_Gadcon_Client *gcc)
 
    if (!gcc->cf)
      {
-        _fill_list_advanced(cfdata);
+        eina_hash_foreach(cfdata->gadget_hash, _free_gadgets, NULL);
+        eina_hash_free(cfdata->gadget_hash);
+        cfdata->gadget_hash = eina_hash_string_superfast_new(NULL);
+        _fill_data(cfdata);
+        _fill_list_advanced(cfdata, EINA_TRUE, EINA_FALSE);
         return;
      }
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->advanced.o_list), l, ili)
@@ -233,8 +237,21 @@ _list_item_add_advanced(E_Config_Dialog_Data *cfdata, E_Gadcon_Client *gcc, E_Co
           if (gcc->cf == cf_gcc) break;
         if (gcc && (gcc->cf != cf_gcc)) gcc = NULL;
      }
-   else if (!cf_gcc)
-     cf_gcc = gcc->cf;
+   else
+     {
+        Eina_List *l;
+        E_Ilist_Item *ili;
+
+        EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->advanced.o_list), l, ili)
+          {
+             if (e_widget_ilist_item_label_get(ili) == cf_gcc->id)
+               {
+                  end = e_widget_ilist_item_end_get(ili);
+                  edje_object_signal_emit(end, "e,state,checked", "e");
+                  return;
+               }
+          }
+     }
    evas = evas_object_evas_get(cfdata->advanced.o_list);
    if (gcc && gcc->client_class->func.icon) icon = gcc->client_class->func.icon(gcc->client_class, evas);
 
@@ -312,7 +329,7 @@ _list_item_add(E_Config_Dialog_Data *cfdata, const E_Gadcon_Client_Class *cc)
 }
 
 static void
-_fill_list_advanced(E_Config_Dialog_Data *cfdata)
+_fill_list_advanced(E_Config_Dialog_Data *cfdata, Eina_Bool clients, Eina_Bool classes)
 {
    Eina_List *l;
    E_Config_Gadcon_Client *cf_gcc;
@@ -320,45 +337,53 @@ _fill_list_advanced(E_Config_Dialog_Data *cfdata)
    Evas *evas;
    int mw;
 
-   evas = evas_object_evas_get(cfdata->advanced.o_list);
-   evas_event_freeze(evas);
-   edje_freeze();
-   e_widget_ilist_freeze(cfdata->advanced.o_list);
-   e_widget_ilist_clear(cfdata->advanced.o_list);
+   while (clients)
+     {
+        evas = evas_object_evas_get(cfdata->advanced.o_list);
+        evas_event_freeze(evas);
+        edje_freeze();
+        e_widget_ilist_freeze(cfdata->advanced.o_list);
+        e_widget_ilist_clear(cfdata->advanced.o_list);
 
-   EINA_LIST_FOREACH(cfdata->gc->cf->clients, l, cf_gcc)
-     _list_item_add_advanced(cfdata, NULL, cf_gcc);
+        EINA_LIST_FOREACH(cfdata->gc->cf->clients, l, cf_gcc)
+          _list_item_add_advanced(cfdata, NULL, cf_gcc);
 
-   e_widget_ilist_go(cfdata->advanced.o_list);
-   e_widget_size_min_get(cfdata->advanced.o_list, &mw, NULL);
-   if (mw < (200 * e_scale)) mw = (200 * e_scale);
-   e_widget_size_min_set(cfdata->advanced.o_list, mw, (160 * e_scale));
-   e_widget_ilist_thaw(cfdata->advanced.o_list);
-   edje_thaw();
-   evas_event_thaw(evas);
-   if (e_widget_ilist_count(cfdata->advanced.o_list))
-     e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
-   else
-     e_widget_disabled_set(cfdata->o_del, 1);
+        e_widget_ilist_go(cfdata->advanced.o_list);
+        e_widget_size_min_get(cfdata->advanced.o_list, &mw, NULL);
+        if (mw < (200 * e_scale)) mw = (200 * e_scale);
+        e_widget_size_min_set(cfdata->advanced.o_list, mw, (160 * e_scale));
+        e_widget_ilist_thaw(cfdata->advanced.o_list);
+        edje_thaw();
+        evas_event_thaw(evas);
+        if (e_widget_ilist_count(cfdata->advanced.o_list))
+          e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
+        else
+          e_widget_disabled_set(cfdata->o_del, 1);
+        break;
+     }
 ///////////////
-   evas = evas_object_evas_get(cfdata->class_list);
-   evas_event_freeze(evas);
-   edje_freeze();
-   e_widget_ilist_freeze(cfdata->class_list);
-   e_widget_ilist_clear(cfdata->class_list);
+   while (classes)
+     {
+        evas = evas_object_evas_get(cfdata->class_list);
+        evas_event_freeze(evas);
+        edje_freeze();
+        e_widget_ilist_freeze(cfdata->class_list);
+        e_widget_ilist_clear(cfdata->class_list);
 
-   EINA_LIST_FOREACH(e_gadcon_provider_list(), l, cc)
-     _list_item_class_add(cfdata, cc);
+        EINA_LIST_FOREACH(e_gadcon_provider_list(), l, cc)
+          _list_item_class_add(cfdata, cc);
 
-   e_widget_ilist_go(cfdata->class_list);
-   e_widget_size_min_get(cfdata->class_list, &mw, NULL);
-   if (mw < (200 * e_scale)) mw = (200 * e_scale);
-   e_widget_size_min_set(cfdata->class_list, mw, (160 * e_scale));
-   e_widget_ilist_thaw(cfdata->class_list);
-   edje_thaw();
-   evas_event_thaw(evas);
-   e_widget_ilist_selected_set(cfdata->class_list, 0);
-   e_widget_disabled_set(cfdata->o_add, 0);
+        e_widget_ilist_go(cfdata->class_list);
+        e_widget_size_min_get(cfdata->class_list, &mw, NULL);
+        if (mw < (200 * e_scale)) mw = (200 * e_scale);
+        e_widget_size_min_set(cfdata->class_list, mw, (160 * e_scale));
+        e_widget_ilist_thaw(cfdata->class_list);
+        edje_thaw();
+        evas_event_thaw(evas);
+        e_widget_ilist_selected_set(cfdata->class_list, 0);
+        e_widget_disabled_set(cfdata->o_add, 0);
+        break;
+     }
 }
 
 static void
@@ -403,7 +428,10 @@ _cb_add_advanced(void *data, void *data2 __UNUSED__)
    eina_hash_direct_add(cfdata->gadget_hash, gad->id, gad);
 
    e_gadcon_unpopulate(cfdata->gc);
-   e_gadcon_populate(cfdata->gc);
+   if (cfdata->gc->custom)
+     e_gadcon_custom_populate_request(cfdata->gc);
+   else
+     e_gadcon_populate(cfdata->gc);
    e_config_save_queue();
    e_widget_ilist_selected_set(cfdata->class_list, 0);
 }
@@ -439,9 +467,13 @@ _cb_add(void *data, void *data2 __UNUSED__)
      }
    if (update)
      {
-        e_gadcon_unpopulate(cfdata->gc);
-        if (!e_gadcon_populate(cfdata->gc))
-          _cb_del(cfdata, NULL);
+        if (cfdata->gc->custom)
+          e_gadcon_custom_populate_request(cfdata->gc);
+        else
+          {
+             e_gadcon_unpopulate(cfdata->gc);
+             e_gadcon_populate(cfdata->gc);
+          }
         e_config_save_queue();
      }
    e_widget_ilist_unselect(cfdata->basic.o_list);
@@ -462,6 +494,8 @@ _cb_del_advanced(void *data, void *data2 __UNUSED__)
         if (cf_gcc->id == cfdata->sel)
           {
              CFGadget *gad;
+             E_Gadcon_Client *gcc;
+
              if ((gad = eina_hash_find(cfdata->gadget_hash, cf_gcc->id)))
                {
                   eina_hash_del(cfdata->gadget_hash, gad->id, gad);
@@ -469,9 +503,19 @@ _cb_del_advanced(void *data, void *data2 __UNUSED__)
                   if (gad->id) eina_stringshare_del(gad->id);
                   E_FREE(gad);
                }
+             EINA_LIST_FOREACH(cfdata->gc->clients, l, gcc)
+               {
+                  if (gcc->cf != cf_gcc) continue;
+                  gcc->cf = NULL;
+                  e_object_del(E_OBJECT(gcc));
+                  break;
+               }
              e_gadcon_client_config_del(cfdata->gc->cf, cf_gcc);
-             e_gadcon_unpopulate(cfdata->gc);
-             e_gadcon_populate(cfdata->gc);
+             if (!cfdata->gc->custom)
+               {
+                  e_gadcon_unpopulate(cfdata->gc);
+                  e_gadcon_populate(cfdata->gc);
+               }
              e_config_save_queue();
              e_widget_ilist_remove_num(cfdata->advanced.o_list, x);
              e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
@@ -493,6 +537,7 @@ _cb_del(void *data, void *data2 __UNUSED__)
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->basic.o_list), l, it)
      {
         E_Config_Gadcon_Client *cf_gcc;
+        E_Gadcon_Client *gcc;
         Eina_List *cl;
         Evas_Object *end;
         const char *name;
@@ -522,6 +567,13 @@ _cb_del(void *data, void *data2 __UNUSED__)
                   if ((end = e_widget_ilist_item_end_get(it)))
                     edje_object_signal_emit(end, "e,state,unchecked", "e");
                }
+             EINA_LIST_FOREACH(cfdata->gc->clients, cl, gcc)
+               {
+                  if (gcc->cf != cf_gcc) continue;
+                  gcc->cf = NULL;
+                  e_object_del(E_OBJECT(gcc));
+                  break;
+               }
 
              /* remove from gadget container */
              e_gadcon_client_config_del(cfdata->gc->cf, cf_gcc);
@@ -532,8 +584,11 @@ _cb_del(void *data, void *data2 __UNUSED__)
      }
    if (update)
      {
-        e_gadcon_unpopulate(cfdata->gc);
-        e_gadcon_populate(cfdata->gc);
+        if (!cfdata->gc->custom)
+          {
+             e_gadcon_unpopulate(cfdata->gc);
+             e_gadcon_populate(cfdata->gc);
+          }
         e_config_save_queue();
      }
    e_widget_ilist_unselect(cfdata->basic.o_list);
@@ -570,6 +625,8 @@ _cb_gcc_del(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Gadcon_Cl
    else
      {
         eina_hash_foreach(cfdata->gadget_hash, _free_gadgets, NULL);
+        eina_hash_free(cfdata->gadget_hash);
+        cfdata->gadget_hash = eina_hash_string_superfast_new(NULL);
         _fill_data(cfdata);
         _fill_list(cfdata);
      }
@@ -698,7 +755,7 @@ _cb_load_timer(void *data)
    if (cfdata->basic.o_list)
      _fill_list(cfdata);
    else
-     _fill_list_advanced(cfdata);
+     _fill_list_advanced(cfdata, EINA_TRUE, EINA_TRUE);
    cfdata->load_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
