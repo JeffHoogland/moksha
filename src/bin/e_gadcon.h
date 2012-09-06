@@ -133,6 +133,7 @@ struct _E_Gadcon
 
    unsigned char      instant_edit : 1;
    unsigned char      dummy : 1;
+   Eina_Bool          custom : 1;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 3

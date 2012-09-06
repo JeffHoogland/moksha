@@ -366,6 +366,7 @@ e_gadcon_custom_new(E_Gadcon *gc)
      }
    if (!eina_list_data_find(custom_populate_requests, gc))
      custom_populate_requests = eina_list_append(custom_populate_requests, gc);
+   gc->custom = EINA_TRUE;
 }
 
 EAPI void
@@ -386,6 +387,7 @@ e_gadcon_custom_populate_request(E_Gadcon *gc)
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
 
+   if (!gc->custom) return;
    if (!custom_populate_idler)
      {
         custom_populate_idler =
@@ -927,6 +929,20 @@ e_gadcon_client_find(E_Gadcon *gc, E_Config_Gadcon_Client *cf_gcc)
    return NULL;
 }
 
+static void
+_e_gadcon_client_box_del(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   E_Gadcon_Client *gcc = data;
+   gcc->o_box = NULL;
+}
+
+static void
+_e_gadcon_client_frame_del(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   E_Gadcon_Client *gcc = data;
+   gcc->o_frame = NULL;
+}
+
 /**  
  * Creates a new gadget  
  *
@@ -966,6 +982,7 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id __UNUSED__, c
           {
              edje_object_size_min_calc(gcc->o_frame, &(gcc->pad.w), &(gcc->pad.h));
              gcc->o_box = e_box_add(gcc->gadcon->evas);
+             evas_object_event_callback_add(gcc->o_box, EVAS_CALLBACK_DEL, _e_gadcon_client_box_del, gcc);
              switch (gcc->gadcon->orient)
                {
                 case E_GADCON_ORIENT_FLOAT:
@@ -1015,7 +1032,10 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id __UNUSED__, c
           }
      }
    if (gcc->o_frame)
-     e_gadcon_layout_pack(gc->o_container, gcc->o_frame);
+     {
+        e_gadcon_layout_pack(gc->o_container, gcc->o_frame);
+        evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_DEL, _e_gadcon_client_frame_del, gcc);
+     }
    else if (gcc->o_base)
      e_gadcon_layout_pack(gc->o_container, gcc->o_base);
    if (gcc->o_base) evas_object_show(gcc->o_base);
@@ -1948,7 +1968,7 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
    if (gcc->o_box) evas_object_del(gcc->o_box);
    if (gcc->o_frame) evas_object_del(gcc->o_frame);
    eina_stringshare_del(gcc->name);
-   if (gcc->style) eina_stringshare_del(gcc->style);
+   eina_stringshare_del(gcc->style);
    free(gcc);
 }
 
@@ -2704,6 +2724,7 @@ _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
      {
         /* free client config */
         e_gadcon_client_config_del(NULL, gcc->cf);
+        gcc->cf = NULL;
         /* delete the gadcon client */
         /* TODO: Clean up module config too? */
         e_object_del(E_OBJECT(gcc));
@@ -3105,8 +3126,13 @@ _e_gadcon_client_cb_menu_remove(void *data, E_Menu *m __UNUSED__, E_Menu_Item *m
    gc = gcc->gadcon;
 
    e_gadcon_client_config_del(gc->cf, gcc->cf);
-   e_gadcon_unpopulate(gc);
-   e_gadcon_populate(gc);
+   gcc->cf = NULL;
+   e_object_del(E_OBJECT(gcc));
+   if (!gc->custom)
+     {
+        e_gadcon_unpopulate(gc);
+        e_gadcon_populate(gc);
+     }
    e_config_save_queue();
 }
 
@@ -3133,6 +3159,11 @@ _e_gadcon_client_del_hook(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 
    gcc = data;
    gcc->o_base = NULL;
+   if (gcc->o_box)
+     {
+        evas_object_del(gcc->o_box);
+        gcc->o_box = NULL;
+     }
    if (gcc->o_frame)
      {
         evas_object_del(gcc->o_frame);
@@ -3797,6 +3828,7 @@ _e_gadcon_layout_smart_del(Evas_Object *obj)
      }
    evas_object_del(sd->clip);
    free(sd);
+   evas_object_smart_data_set(obj, NULL);
 }
 
 static void
