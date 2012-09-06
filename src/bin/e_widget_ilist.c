@@ -8,7 +8,7 @@ struct _E_Widget_Data
 {
    Evas_Object *o_widget, *o_scrollframe, *o_ilist;
    Eina_List   *callbacks;
-   char       **value;
+   const char       **value;
    struct
    {
       Eina_List   *queue;
@@ -23,7 +23,7 @@ struct _E_Widget_Callback
 {
    void  (*func)(void *data);
    void *data;
-   char *value;
+   const char *value;
 };
 
 struct _E_Widget_Queue_Item
@@ -97,7 +97,7 @@ _queue_timer(void *data)
              if (!wcb) break;
              wcb->func = qi->func;
              wcb->data = qi->data;
-             if (qi->val) wcb->value = strdup(qi->val);
+             if (qi->val) wcb->value = eina_stringshare_add(qi->val);
              if (qi->use_relative == CMD_APPEND)
                {
                   wd->callbacks = eina_list_append(wd->callbacks, wcb);
@@ -182,7 +182,7 @@ _queue_timer(void *data)
              if (item)
                {
                   wcb = eina_list_data_get(item);
-                  if (wcb && wcb->value) free(wcb->value);
+                  if (wcb && wcb->value) eina_stringshare_del(wcb->value);
                   free(wcb);
                   wd->callbacks = eina_list_remove_list(wd->callbacks, item);
                }
@@ -309,7 +309,7 @@ e_widget_ilist_add(Evas *evas, int icon_w, int icon_h, const char **value)
    e_widget_disable_hook_set(obj, _e_wid_disable_hook);
    e_widget_data_set(obj, wd);
 
-   wd->value = (char **)value;
+   wd->value = value;
 
    o = e_scrollframe_add(evas);
    wd->o_scrollframe = o;
@@ -562,7 +562,7 @@ e_widget_ilist_clear(Evas_Object *obj)
    e_scrollframe_child_pos_set(wd->o_scrollframe, 0, 0);
    EINA_LIST_FREE(wd->callbacks, wcb)
      {
-        if (wcb->value) free(wcb->value);
+        eina_stringshare_del(wcb->value);
         free(wcb);
      }
 }
@@ -930,7 +930,7 @@ e_widget_ilist_remove_num(Evas_Object *obj, int n)
    if (item)
      {
         wcb = eina_list_data_get(item);
-        if (wcb && wcb->value) free(wcb->value);
+        if (wcb) eina_stringshare_del(wcb->value);
         free(wcb);
         wd->callbacks = eina_list_remove_list(wd->callbacks, item);
      }
@@ -1004,7 +1004,7 @@ _e_wid_del_hook(Evas_Object *obj)
    _queue_clear(obj);
    EINA_LIST_FREE(wd->callbacks, wcb)
      {
-        if (wcb->value) free(wcb->value);
+        if (wcb) eina_stringshare_del(wcb->value);
         free(wcb);
      }
    free(wd);
@@ -1060,7 +1060,7 @@ _e_wid_cb_item_sel(void *data, void *data2)
           {
              if (*(wd->value)) eina_stringshare_del(*(wd->value));
              if (wcb->value)
-               *(wd->value) = (char *)eina_stringshare_add(wcb->value);
+               *(wd->value) = eina_stringshare_ref(wcb->value);
              else
                *(wd->value) = NULL;
           }
