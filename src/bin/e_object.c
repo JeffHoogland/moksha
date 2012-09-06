@@ -101,6 +101,7 @@ e_object_unref(E_Object *obj)
    int ref;
 
    E_OBJECT_CHECK_RETURN(obj, -1);
+   if (!obj->references) return 0;
    obj->references--;
    ref = obj->references;
    if (obj->references == 0) e_object_free(obj);
