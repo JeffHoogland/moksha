@@ -63,6 +63,7 @@ e_object_free(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
    if (obj->free_att_func) obj->free_att_func(obj);
+   obj->free_att_func = NULL;
    obj->walking_list++;
    while (obj->del_fn_list)
      {
@@ -73,6 +74,7 @@ e_object_free(E_Object *obj)
         free(dfn);
      }
    obj->walking_list--;
+   if (obj->references) return;
    /*
     * FIXME:
     * although this is good - if during cleanup the cleanup func calls
