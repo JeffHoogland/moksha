@@ -43,6 +43,8 @@ typedef enum _E_Gadcon_Site
 
 typedef struct _E_Gadcon              E_Gadcon;
 typedef struct _E_Gadcon_Client       E_Gadcon_Client;
+typedef struct _E_Event_Gadcon_Client       E_Event_Gadcon_Client_Add;
+typedef struct _E_Event_Gadcon_Client       E_Event_Gadcon_Client_Del;
 typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
 typedef struct _E_Gadcon_Location     E_Gadcon_Location;
 
@@ -53,6 +55,9 @@ typedef struct _E_Gadcon_Location     E_Gadcon_Location;
 #define E_GADCON_TYPE        0xE0b01006
 #define E_GADCON_DUMMY_TYPE  0xE0b01016
 #define E_GADCON_CLIENT_TYPE 0xE0b01007
+
+EAPI extern int E_EVENT_GADCON_CLIENT_ADD;
+EAPI extern int E_EVENT_GADCON_CLIENT_DEL;
 
 struct _E_Gadcon
 {
@@ -214,6 +219,11 @@ struct _E_Gadcon_Client
    unsigned char           hidden : 1;
 
    E_Config_Gadcon_Client *cf;
+};
+
+struct _E_Event_Gadcon_Client
+{
+   E_Gadcon_Client *gcc;
 };
 
 /* defines usable gadget placements such as Desktop, Shelf #, etc */

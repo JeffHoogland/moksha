@@ -61,9 +61,9 @@ static void                     _e_gadcon_client_cb_menu_autoscroll(void *data, 
 static void                     _e_gadcon_client_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void                     _e_gadcon_client_cb_menu_remove(void *data, E_Menu *m, E_Menu_Item *mi);
 static void                     _e_gadcon_client_cb_menu_pre(void *data, E_Menu *m, E_Menu_Item *mi);
-
+static void                     _e_gadcon_client_delfn(void *d, void *o);
 static void                     _e_gadcon_client_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
-
+static void                     _e_gadcon_client_event_free(void *d, void *e);
 static Evas_Object             *e_gadcon_layout_add(Evas *evas);
 static void                     e_gadcon_layout_orientation_set(Evas_Object *obj, int horizontal);
 static int                      e_gadcon_layout_orientation_get(Evas_Object *obj);
@@ -180,6 +180,8 @@ struct _E_Layout_Item_Container
   }
 
 /********************/
+EAPI int E_EVENT_GADCON_CLIENT_ADD = -1;
+EAPI int E_EVENT_GADCON_CLIENT_DEL = -1;
 
 static Eina_Hash *providers = NULL;
 static Eina_List *providers_list = NULL;
@@ -220,6 +222,8 @@ _module_init_end_cb(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__
 EINTERN int
 e_gadcon_init(void)
 {
+   E_EVENT_GADCON_CLIENT_ADD = ecore_event_type_new();
+   E_EVENT_GADCON_CLIENT_DEL = ecore_event_type_new();
    _module_init_end_handler = ecore_event_handler_add(E_EVENT_MODULE_INIT_END, _module_init_end_cb, NULL);
    return 1;
 }
@@ -925,6 +929,7 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id __UNUSED__, c
    gcc = E_OBJECT_ALLOC(E_Gadcon_Client, E_GADCON_CLIENT_TYPE,
                         _e_gadcon_client_free);
    if (!gcc) return NULL;
+   e_object_delfn_add(E_OBJECT(gcc), _e_gadcon_client_delfn, NULL);
    gcc->name = eina_stringshare_add(name);
    gcc->gadcon = gc;
    gcc->o_base = base_obj;
@@ -996,6 +1001,14 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id __UNUSED__, c
    else if (gcc->o_base)
      e_gadcon_layout_pack(gc->o_container, gcc->o_base);
    if (gcc->o_base) evas_object_show(gcc->o_base);
+   {
+      E_Event_Gadcon_Client_Add *ev;
+
+      ev = E_NEW(E_Event_Gadcon_Client_Add, 1);
+      ev->gcc = gcc;
+      e_object_ref(E_OBJECT(gcc));
+      ecore_event_add(E_EVENT_GADCON_CLIENT_ADD, ev, _e_gadcon_client_event_free, NULL);
+   }
    return gcc;
 }
 
@@ -1868,8 +1881,20 @@ _e_gadcon_free(E_Gadcon *gc)
 }
 
 static void
-_e_gadcon_client_free(E_Gadcon_Client *gcc)
+_e_gadcon_client_event_free(void *d __UNUSED__, void *e)
 {
+   E_Event_Gadcon_Client_Del *ev = e;
+
+   e_object_unref(E_OBJECT(ev->gcc));
+   free(ev);
+}
+
+static void
+_e_gadcon_client_delfn(void *d __UNUSED__, void *o)
+{
+   E_Gadcon_Client *gcc = o;
+   E_Event_Gadcon_Client_Add *ev;
+
    if (gcc->instant_edit_timer)
      {
         ecore_timer_del(gcc->instant_edit_timer);
@@ -1891,11 +1916,20 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
      gcc->client_class->func.id_del((E_Gadcon_Client_Class *)gcc->client_class,
                                     gcc->cf->id);
    gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
+   if (gcc->scroll_timer) ecore_timer_del(gcc->scroll_timer);
+   if (gcc->scroll_animator) ecore_animator_del(gcc->scroll_animator);
+   e_object_ref(E_OBJECT(gcc));
+   ev = E_NEW(E_Event_Gadcon_Client_Add, 1);
+   ev->gcc = gcc;
+   ecore_event_add(E_EVENT_GADCON_CLIENT_DEL, ev, _e_gadcon_client_event_free, NULL);
+}
+
+static void
+_e_gadcon_client_free(E_Gadcon_Client *gcc)
+{
    if (gcc->o_box) evas_object_del(gcc->o_box);
    if (gcc->o_frame) evas_object_del(gcc->o_frame);
    eina_stringshare_del(gcc->name);
-   if (gcc->scroll_timer) ecore_timer_del(gcc->scroll_timer);
-   if (gcc->scroll_animator) ecore_animator_del(gcc->scroll_animator);
    if (gcc->style) eina_stringshare_del(gcc->style);
    free(gcc);
 }
