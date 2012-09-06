@@ -4589,7 +4589,7 @@ msgstr "창"
 
 #: src/modules/conf_display/e_int_config_desks.c:193
 msgid "Zoom"
-msgstr "화대"
+msgstr "확대"
 
 #: src/modules/conf_display/e_int_config_desks.c:197
 msgid "Animation speed"
