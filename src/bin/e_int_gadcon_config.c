@@ -444,6 +444,14 @@ _cb_del_advanced(void *data, void *data2 __UNUSED__)
      {
         if (cf_gcc->id == cfdata->sel)
           {
+             CFGadget *gad;
+             if ((gad = eina_hash_find(cfdata->gadget_hash, cf_gcc->id)))
+               {
+                  eina_hash_del(cfdata->gadget_hash, gad->id, gad);
+                  if (gad->name) eina_stringshare_del(gad->name);
+                  if (gad->id) eina_stringshare_del(gad->id);
+                  E_FREE(gad);
+               }
              e_gadcon_client_config_del(cfdata->gc->cf, cf_gcc);
              e_gadcon_unpopulate(cfdata->gc);
              e_gadcon_populate(cfdata->gc);
@@ -549,7 +557,6 @@ static Eina_Bool
 _cb_gcc_add(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Gadcon_Client_Add *ev)
 {
    if (cfdata->advanced.o_list)
-     
      _list_item_add_advanced(cfdata, ev->gcc, ev->gcc->cf);
    return ECORE_CALLBACK_PASS_ON;
 }
