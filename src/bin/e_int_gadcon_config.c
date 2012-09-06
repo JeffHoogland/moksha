@@ -28,7 +28,6 @@ struct _E_Config_Dialog_Data
 };
 
 /* local function prototypes */
-static void _create_dialog(E_Gadcon *gc, const char *title);
 static void *_create_data(E_Config_Dialog *cfd);
 static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -48,7 +47,7 @@ static Eina_Bool _cb_gcc_del(E_Config_Dialog_Data *cfdata, int type, E_Event_Gad
 
 /* local function prototypes */
 static void
-_create_dialog(E_Gadcon *gc, const char *title)
+_create_dialog(E_Gadcon *gc, const char *title, E_Gadcon_Site site)
 {
    E_Config_Dialog_View *v;
    E_Container *con;
@@ -70,6 +69,7 @@ _create_dialog(E_Gadcon *gc, const char *title)
    gc->config_dialog =
      e_config_dialog_new(con, title, "E", "_gadcon_config_dialog",
                          "preferences-desktop-shelf", 0, v, gc);
+   if (site) gc->config_dialog->cfdata->site = site;
    e_dialog_resizable_set(gc->config_dialog->dia, EINA_TRUE);
    e_win_centered_set(gc->config_dialog->dia->win, EINA_TRUE);
 }
@@ -689,17 +689,17 @@ _cb_load_timer(void *data)
 EAPI void
 e_int_gadcon_config_shelf(E_Gadcon *gc)
 {
-   _create_dialog(gc, _("Shelf Contents"));
+   _create_dialog(gc, _("Shelf Contents"), 0);
 }
 
 EAPI void
 e_int_gadcon_config_toolbar(E_Gadcon *gc)
 {
-   _create_dialog(gc, _("Toolbar Contents"));
+   _create_dialog(gc, _("Toolbar Contents"), 0);
 }
 
 EAPI void
-e_int_gadcon_config_hook(E_Gadcon *gc, const char *name)
+e_int_gadcon_config_hook(E_Gadcon *gc, const char *name, E_Gadcon_Site site)
 {
-   _create_dialog(gc, name);
+   _create_dialog(gc, name, site);
 }
