@@ -212,9 +212,34 @@ static void _econnman_popup_input_window_create(E_Connman_Instance *inst)
 }
 
 static void
-_econnman_configure_cb(void *data __UNUSED__, void *data2 __UNUSED__)
+_econnman_app_launch(E_Connman_Instance *inst)
 {
-   /* FIXME call econnman-bin or other set on modules settings */
+   Efreet_Desktop *desktop = efreet_util_desktop_name_find("EConnMan");
+   E_Zone *zone;
+
+   if (!desktop)
+     {
+        e_util_dialog_internal
+          (_("Missing Application"),
+          _("This module wants to execute an external application "
+            "EConnMan that does not exist.<br>"
+            "Please install <b>EConnMan</b> application."));
+        return;
+     }
+
+   zone = e_gadcon_client_zone_get(inst->gcc);
+   if (!zone)
+     zone = e_util_zone_current_get(e_manager_current_get());
+
+   e_exec(zone, desktop, NULL, NULL, "econnman/app");
+   efreet_desktop_free(desktop);
+}
+
+static void
+_econnman_configure_cb(void *data, void *data2 __UNUSED__)
+{
+   E_Connman_Instance *inst = data;
+   _econnman_app_launch(inst);
 }
 
 static void _econnman_popup_new(E_Connman_Instance *inst)
@@ -240,7 +265,7 @@ static void _econnman_popup_new(E_Connman_Instance *inst)
    _econnman_popup_update(ctxt->cm, inst);
 
    bt = e_widget_button_add(evas, "Configure", NULL,
-                            _econnman_configure_cb, NULL, NULL);
+                            _econnman_configure_cb, inst, NULL);
    e_widget_list_object_append(list, bt, 1, 0, 0.5);
 
    e_widget_size_min_get(list, &mw, &mh);
@@ -359,7 +384,8 @@ void econnman_mod_manager_inout(struct Connman_Manager *cm)
 static void _econnman_menu_cb_configure(void *data, E_Menu *menu,
                                         E_Menu_Item *mi)
 {
-   /* TODO */
+   E_Connman_Instance *inst = data;
+   _econnman_app_launch(inst);
 }
 
 static void _econnman_menu_new(E_Connman_Instance *inst,

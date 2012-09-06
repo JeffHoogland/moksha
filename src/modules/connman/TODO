@@ -14,9 +14,3 @@
 
  - Search for entries with the same type when we receive an
    'Informational' field so we can use it in an useful manner
-
- - Add "config" button in popup that will call the external binary for
-   advanced configuration
-
- - Add configuration entry to set the external binary - econnman-bin is
-   the default 
