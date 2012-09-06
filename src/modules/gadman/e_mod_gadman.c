@@ -48,7 +48,7 @@ static void             _e_gadman_handler_del(void);
 static Eina_Bool        _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event);
 static Eina_Bool        _e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event);
 static E_Gadcon_Client *gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
-static void             gadman_gadget_del(E_Gadcon_Client *gcc);
+
 static E_Gadcon        *gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer);
 
 E_Gadcon_Client *current = NULL;
@@ -213,6 +213,40 @@ gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer)
    return NULL;
 }
 
+static void
+gadman_gadcon_place_job(E_Gadcon_Client *gcc)
+{
+   _apply_widget_position(gcc);
+   if (gcc == current)
+     gadman_gadget_edit_start(gcc);
+   evas_object_show(gcc->o_frame);
+}
+
+static void
+_gadman_gadget_free(void *data __UNUSED__, void *obj)
+{
+   E_Gadcon_Client *gcc = obj;
+   Eina_List *l;
+   int layer;
+   Eina_Bool edit;
+
+   layer = gcc->gadcon->id - ID_GADMAN_LAYER_BASE;
+//   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
+   if (gcc->cf)
+     {
+        Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc->cf);
+        l = eina_hash_find(_gadman_gadgets, gcc->name);
+        if (l)
+          {
+             eina_hash_set(_gadman_gadgets, gcc->name, eina_list_remove(l, gcc->cf));
+          }
+        gcc->cf = NULL;
+     }
+   edit = (gcc == current);
+   current = NULL;
+   if (edit) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
+}
+
 static E_Gadcon_Client *
 gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone)
 {
@@ -246,6 +280,7 @@ gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Con
      {
         gcc = cc->func.init(gc, cf->name, cf->id, cc->default_style);
         if (!gcc) return NULL;
+        e_object_delfn_add(E_OBJECT(gcc), _gadman_gadget_free, NULL);
         gcc->cf = cf;
         gcc->client_class = cc;
 
@@ -272,8 +307,6 @@ gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Con
    evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_DOWN,
                                   on_frame_click, gcc);
 
-   _apply_widget_position(gcc);
-
    if (gcc->gadcon->id == ID_GADMAN_LAYER_TOP)
      edje_object_signal_emit(gcc->o_frame, "e,state,visibility,hide", "e");
    if (cc->name)
@@ -281,7 +314,7 @@ gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Con
         l = eina_hash_find(_gadman_gadgets, cc->name);
         eina_hash_set(_gadman_gadgets, cc->name, eina_list_append(l, gcc->cf));
      }
-   evas_object_show(gcc->o_frame);
+   ecore_job_add((Ecore_Cb)gadman_gadcon_place_job, gcc);
 
    return gcc;
 }
@@ -347,24 +380,9 @@ _gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer, E_C
 }
 
 static void
-gadman_gadget_del(E_Gadcon_Client *gcc)
+gadman_edit(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
-   Gadman_Layer_Type layer;
-   Eina_List *l;
-
-   if (!gcc) return;
-   layer = gcc->gadcon->id - ID_GADMAN_LAYER_BASE;
-//   edje_object_part_unswallow(gcc->o_frame, gcc->o_base);
-   if (gcc->cf)
-     {
-        Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc->cf);
-        l = eina_hash_find(_gadman_gadgets, gcc->name);
-        eina_hash_set(_gadman_gadgets, gcc->name, eina_list_remove(l, gcc->cf));
-        e_gadcon_client_config_del(gcc->gadcon->cf, gcc->cf);
-        gcc->cf = NULL;
-     }
-   e_object_del(E_OBJECT(gcc));
-   current = NULL;
+   _apply_widget_position(data);
 }
 
 void
@@ -374,19 +392,21 @@ gadman_gadget_edit_start(E_Gadcon_Client *gcc)
    Evas_Object *mover;
    int x, y, w, h;
 
-   current = gcc;
-
    gc = gcc->gadcon;
    gc->editing = 1;
 
    /* Move/resize the correct mover */
-   evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
    mover = _get_mover(gcc);
+   if (!mover) return;
+   evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
 
    evas_object_move(mover, x, y);
    evas_object_resize(mover, w, h);
    evas_object_raise(mover);
    evas_object_show(mover);
+   evas_object_event_callback_del(mover, EVAS_CALLBACK_HIDE, gadman_edit);
+   evas_object_event_callback_add(mover, EVAS_CALLBACK_HIDE, gadman_edit, gcc);
+   current = gcc;
 }
 
 void
@@ -399,6 +419,7 @@ gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
         const Eina_List *l;
         E_Gadcon *gc;
 
+        evas_object_event_callback_del(Man->movers[layer], EVAS_CALLBACK_HIDE, gadman_edit);
         evas_object_hide(Man->movers[layer]);
 
         EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
@@ -572,6 +593,7 @@ _gadman_gadcon_free(E_Gadcon *gc)
    eina_stringshare_del(gc->name);
 
    if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
+   eina_list_free(gc->populated_classes);
    free(gc);
 }
 
@@ -1127,7 +1149,8 @@ _on_menu_layer(E_Gadcon_Client *gcc, Gadman_Layer_Type layer)
    cf = gcc->cf;
 
    new_gcc = _gadman_gadget_add(cc, layer, cf);
-   gadman_gadget_del(gcc);
+   gcc->cf = NULL;
+   e_object_del(E_OBJECT(gcc));
    current = new_gcc;
 
    e_config_save_queue();
@@ -1163,7 +1186,9 @@ on_menu_add(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 static void
 on_menu_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   gadman_gadget_del(data);
+   E_Gadcon_Client *gcc = data;
+   e_gadcon_client_config_del(gcc->gadcon->cf, gcc->cf);
+   e_object_del(data);
    e_config_save_queue();
 }
 
@@ -1488,7 +1513,7 @@ _e_gadman_client_add(void *data __UNUSED__, const E_Gadcon_Client_Class *cc)
 static void
 _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc)
 {
-   gadman_gadget_del(gcc);
+   e_object_del(E_OBJECT(gcc));
 }
 
 static void
@@ -1527,10 +1552,9 @@ _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update
              gcc = e_gadcon_client_find(NULL, cf_gcc);
              if (!gcc) continue;
              gcc->cf = NULL;
-             gadman_gadget_del(gcc);
+             e_object_del(E_OBJECT(gcc));
           }
      }
-   e_config_gadman_list_refresh();
    return ECORE_CALLBACK_RENEW;
 }
 

@@ -5,8 +5,8 @@
 
 struct _E_Config_Dialog_Data
 {
-   Evas_Object *o_avail; //List of available gadgets
-   Evas_Object *o_add; //Add button
+   Evas_Object *o_avail;
+   Evas_Object *o_config;
    Evas_Object *o_fm; //Filemanager Object
    Evas_Object *o_sf; //Filemanager Scrollframe
    Evas_Object *o_btn; //Filemanager updir button
@@ -15,6 +15,16 @@ struct _E_Config_Dialog_Data
    int          anim_bg; //Anim the background
    int          anim_gad; //Anim the gadgets
    int          fmdir; //Filemanager dir (personal or system)
+   Ecore_Event_Handler *add;
+   Eina_List *waiting;
+   E_Config_Dialog *cfd;
+};
+
+static const char *gadman_layer_names[] =
+{
+   "Background",
+   "Hover",
+   NULL
 };
 
 /* Local protos */
@@ -22,9 +32,7 @@ static void        *_create_data(E_Config_Dialog *cfd);
 static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
-static void         _fill_gadgets_list(Evas_Object *ilist);
-static void         _cb_add(void *data, void *data2);
-static void         _avail_list_cb_change(void *data, Evas_Object *obj);
+static void         _avail_list_cb_change(void *data);
 static void         _cb_fm_radio_change(void *data, Evas_Object *obj);
 static void         _cb_color_changed(void *data, Evas_Object *o);
 static void         _cb_fm_change(void *data, Evas_Object *obj, void *event_info);
@@ -52,7 +60,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply_data;
 
    snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", Man->module->dir);
-   cfd = e_config_dialog_new(con, _("Gadgets Manager"),
+   cfd = e_config_dialog_new(con, _("Desktop Gadgets"),
                              "E", "extensions/gadman",
                              buf, 0, v, Man);
 
@@ -60,12 +68,30 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    return Man->config_dialog;
 }
 
+static Eina_Bool
+_gcc_add(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Gadcon_Client_Add *ev)
+{
+   Eina_List *l;
+   if (!cfdata->waiting) return ECORE_CALLBACK_RENEW;
+   l = eina_list_data_find_list(cfdata->waiting, ev->gcc->gadcon);
+   if (!l) return ECORE_CALLBACK_RENEW;
+   if (ev->gcc->cf != eina_list_data_get(eina_list_last(ev->gcc->gadcon->cf->clients))) return ECORE_CALLBACK_RENEW;
+   gadman_gadget_edit_start(ev->gcc);
+   ev->gcc->cf->style = eina_stringshare_add(ev->gcc->client_class->default_style);
+   ev->gcc->cf->geom.pos_x = DEFAULT_POS_X;
+   ev->gcc->cf->geom.pos_y = DEFAULT_POS_Y;
+   ev->gcc->cf->geom.size_w = DEFAULT_SIZE_W;
+   ev->gcc->cf->geom.size_h = DEFAULT_SIZE_H;
+   return ECORE_CALLBACK_RENEW;
+}
+
 static void *
-_create_data(E_Config_Dialog *cfd __UNUSED__)
+_create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->cfd = cfd;
    cfdata->bg_method = Man->conf->bg_type;
    if (Man->conf->custom_bg)
      {
@@ -73,6 +99,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
           cfdata->fmdir = 1;
      }
 
+   cfdata->add = ecore_event_handler_add(E_EVENT_GADCON_CLIENT_ADD, (Ecore_Event_Handler_Cb)_gcc_add, cfdata);
    cfdata->color = E_NEW(E_Color, 1);
    cfdata->color->r = Man->conf->color_r;
    cfdata->color->g = Man->conf->color_g;
@@ -90,10 +117,47 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   int layer;
+   Eina_List *l;
+   E_Gadcon *gc;
+
    Man->config_dialog = NULL;
+   ecore_event_handler_del(cfdata->add);
    E_FREE(cfdata->color);
    _cfdata = NULL;
+   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+     EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
+       gc->config_dialog = NULL;
+   eina_list_free(cfdata->waiting);
    E_FREE(cfdata);
+}
+
+static void
+_cb_config_del(void *data)
+{
+   E_Config_Dialog_Data *cfdata = e_object_data_get(data);
+   cfdata->waiting = eina_list_remove(cfdata->waiting, data);
+}
+
+static void
+_cb_config(void *data, void *data2 __UNUSED__)
+{
+   int x;
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_List *l;
+   E_Gadcon *gc;
+
+   x = e_widget_ilist_selected_get(cfdata->o_avail);
+   EINA_LIST_FOREACH(Man->gadcons[x], l, gc)
+     {
+        if (gc->zone != cfdata->cfd->dia->win->border->zone) continue;
+        if (gc->config_dialog) return;
+        e_int_gadcon_config_hook(gc, _("Desktop Gadgets"), E_GADCON_SITE_DESKTOP);
+        cfdata->waiting = eina_list_append(cfdata->waiting, gc);
+        e_object_data_set(E_OBJECT(gc->config_dialog), cfdata);
+        e_object_del_attach_func_set(E_OBJECT(gc->config_dialog), _cb_config_del);
+        break;
+     }
 }
 
 static Evas_Object *
@@ -104,24 +168,24 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    Evas_Coord mw, mh;
    E_Fm2_Config fmc;
    char path[PATH_MAX];
+   int layer;
 
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
    o = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_framelist_add(evas, _("Available Gadgets"), 0);
+   of = e_widget_framelist_add(evas, _("Available Layers"), 0);
 
-   //o_avail  List of available gadgets
+   //o_avail  List of available layers
    ol = e_widget_ilist_add(evas, 24, 24, NULL);
-   e_widget_ilist_multi_select_set(ol, 0);
-   e_widget_on_change_hook_set(ol, _avail_list_cb_change, cfdata);
    cfdata->o_avail = ol;
-   _fill_gadgets_list(ol);
+   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+     e_widget_ilist_append(ol, NULL, _(gadman_layer_names[layer]), _avail_list_cb_change, cfdata, NULL);
    e_widget_framelist_object_append(of, ol);
 
-   //o_add  Button to add a gadget
-   ob = e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add, cfdata, NULL);
+   //o_config  Button to configure a layer
+   ob = e_widget_button_add(evas, _("Configure Layer"), NULL, _cb_config, cfdata, NULL);
    e_widget_disabled_set(ob, 1);
-   cfdata->o_add = ob;
+   cfdata->o_config = ob;
    e_widget_size_min_get(ob, &mw, &mh);
    e_widget_framelist_object_append_full(of, ob,
                                          1, 1, /* fill */
@@ -134,7 +198,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    e_dialog_resizable_set(cfd->dia, 1);
 
-   e_widget_toolbook_page_append(otb, NULL, _("Add Gadget"), o, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Layers"), o, 1, 1, 1, 1, 0.5, 0.0);
+   /////////////////////////////////////////////////////////////////////
    ft = e_widget_table_add(evas, 0);
 
    //Background mode
@@ -280,74 +345,12 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
 //Basic Callbacks
 static void
-_fill_gadgets_list(Evas_Object *ilist)
-{
-   Eina_List *l = NULL;
-   Evas *evas;
-   int w;
-
-   e_widget_ilist_freeze(ilist);
-   e_widget_ilist_clear(ilist);
-
-   evas = evas_object_evas_get(ilist);
-
-   for (l = e_gadcon_provider_list(); l; l = l->next)
-     {
-        E_Gadcon_Client_Class *cc;
-        Evas_Object *icon = NULL;
-        const char *lbl = NULL;
-
-        if (!(cc = l->data)) continue;
-        if (cc->func.is_site && !cc->func.is_site(E_GADCON_SITE_DESKTOP))
-          continue;
-        if (cc->func.label) lbl = cc->func.label(cc);
-        if (!lbl) lbl = cc->name;
-        if (cc->func.icon) icon = cc->func.icon(cc, evas);
-        e_widget_ilist_append(ilist, icon, lbl, NULL, (void *)cc, NULL);
-     }
-
-   e_widget_ilist_go(ilist);
-   e_widget_size_min_get(ilist, &w, NULL);
-   if (w < 200) w = 200;
-   e_widget_size_min_set(ilist, w, 100);
-   e_widget_ilist_thaw(ilist);
-}
-
-static void
-_cb_add(void *data, void *data2 __UNUSED__)
-{
-   E_Config_Dialog_Data *cfdata;
-   Eina_List *l = NULL;
-   int i;
-
-   if (!(cfdata = data)) return;
-
-   for (i = 0, l = e_widget_ilist_items_get(cfdata->o_avail); l; l = l->next, i++)
-     {
-        E_Ilist_Item *item = NULL;
-        E_Gadcon_Client_Class *cc;
-        E_Gadcon_Client *gcc;
-
-        if (!(item = l->data)) continue;
-        if (!item->selected) continue;
-
-        cc = e_widget_ilist_nth_data_get(cfdata->o_avail, i);
-        if (!cc) continue;
-
-        gcc = gadman_gadget_add(cc, GADMAN_LAYER_BG);
-        if (gcc) gadman_gadget_edit_start(gcc);
-     }
-
-   if (l) eina_list_free(l);
-}
-
-static void
-_avail_list_cb_change(void *data, Evas_Object *obj __UNUSED__)
+_avail_list_cb_change(void *data)
 {
    E_Config_Dialog_Data *cfdata;
 
    if (!(cfdata = data)) return;
-   e_widget_disabled_set(cfdata->o_add, 0);
+   e_widget_disabled_set(cfdata->o_config, 0);
 }
 
 //Advanced Callbacks
@@ -427,11 +430,4 @@ _cb_button_up(void *data1, void *data2 __UNUSED__)
 
    e_fm2_parent_go(cfdata->o_fm);
    e_widget_scrollframe_child_pos_set(cfdata->o_sf, 0, 0);
-}
-
-EAPI void
-e_config_gadman_list_refresh(void)
-{
-   if (!_cfdata) return;
-   _fill_gadgets_list(_cfdata->o_avail);
 }
