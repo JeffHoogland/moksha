@@ -180,6 +180,8 @@ struct _E_Layout_Item_Container
   }
 
 /********************/
+EAPI int E_EVENT_GADCON_CLIENT_CLASS_ADD = -1;
+EAPI int E_EVENT_GADCON_CLIENT_CLASS_DEL = -1;
 EAPI int E_EVENT_GADCON_CLIENT_ADD = -1;
 EAPI int E_EVENT_GADCON_CLIENT_DEL = -1;
 
@@ -222,6 +224,8 @@ _module_init_end_cb(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__
 EINTERN int
 e_gadcon_init(void)
 {
+   E_EVENT_GADCON_CLIENT_CLASS_ADD = ecore_event_type_new();
+   E_EVENT_GADCON_CLIENT_CLASS_DEL = ecore_event_type_new();
    E_EVENT_GADCON_CLIENT_ADD = ecore_event_type_new();
    E_EVENT_GADCON_CLIENT_DEL = ecore_event_type_new();
    _module_init_end_handler = ecore_event_handler_add(E_EVENT_MODULE_INIT_END, _module_init_end_cb, NULL);
@@ -246,6 +250,8 @@ e_gadcon_shutdown(void)
    if (_module_init_end_handler)
      ecore_event_handler_del(_module_init_end_handler);
    _module_init_end_handler = NULL;
+   E_EVENT_GADCON_CLIENT_ADD = E_EVENT_GADCON_CLIENT_DEL =
+     E_EVENT_GADCON_CLIENT_CLASS_ADD = E_EVENT_GADCON_CLIENT_CLASS_DEL = -1;
 
    return 1;
 }
@@ -278,6 +284,12 @@ e_gadcon_provider_register(const E_Gadcon_Client_Class *cc)
         e_gadcon_layout_thaw(gc->o_container);
      }
    providers_list = eina_list_sorted_insert(providers_list, (Eina_Compare_Cb)_e_gadcon_provider_list_sort_cb, cc);
+   {
+      E_Event_Gadcon_Client_Class_Add *ev;
+      ev = E_NEW(E_Event_Gadcon_Client_Class_Add, 1);
+      ev->cc = cc;
+      ecore_event_add(E_EVENT_GADCON_CLIENT_CLASS_ADD, ev, NULL, NULL);
+   }
 }
 
 /**  
@@ -313,6 +325,12 @@ e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc)
 
    eina_hash_del(providers, cc->name, cc);
    providers_list = eina_list_remove(providers_list, cc);
+   {
+      E_Event_Gadcon_Client_Class_Add *ev;
+      ev = E_NEW(E_Event_Gadcon_Client_Class_Add, 1);
+      ev->cc = cc;
+      ecore_event_add(E_EVENT_GADCON_CLIENT_CLASS_DEL, ev, NULL, NULL);
+   }
 }
 
 EAPI void

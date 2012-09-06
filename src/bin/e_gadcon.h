@@ -46,6 +46,8 @@ typedef struct _E_Gadcon_Client       E_Gadcon_Client;
 typedef struct _E_Event_Gadcon_Client       E_Event_Gadcon_Client_Add;
 typedef struct _E_Event_Gadcon_Client       E_Event_Gadcon_Client_Del;
 typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
+typedef struct _E_Event_Gadcon_Client_Class E_Event_Gadcon_Client_Class_Add;
+typedef struct _E_Event_Gadcon_Client_Class E_Event_Gadcon_Client_Class_Del;
 typedef struct _E_Gadcon_Location     E_Gadcon_Location;
 
 #else
@@ -58,6 +60,8 @@ typedef struct _E_Gadcon_Location     E_Gadcon_Location;
 
 EAPI extern int E_EVENT_GADCON_CLIENT_ADD;
 EAPI extern int E_EVENT_GADCON_CLIENT_DEL;
+EAPI extern int E_EVENT_GADCON_CLIENT_CLASS_ADD;
+EAPI extern int E_EVENT_GADCON_CLIENT_CLASS_DEL;
 
 struct _E_Gadcon
 {
@@ -219,6 +223,11 @@ struct _E_Gadcon_Client
    unsigned char           hidden : 1;
 
    E_Config_Gadcon_Client *cf;
+};
+
+struct _E_Event_Gadcon_Client_Class
+{
+   const E_Gadcon_Client_Class *cc;
 };
 
 struct _E_Event_Gadcon_Client
