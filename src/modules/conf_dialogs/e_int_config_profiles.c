@@ -198,7 +198,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         if (!desk)
           {
              e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", prof);
-             pdir = strdup(buf);
+             pdir = strdupa(buf);
              if (pdir)
                {
                   snprintf(buf, sizeof(buf), "%s/profile.desktop", pdir);
@@ -211,12 +211,16 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         if (pdir)
           snprintf(buf, sizeof(buf), "%s/icon.edj", pdir);
         if ((desk) && (desk->icon) && (pdir))
-          snprintf(buf, sizeof(buf), "%s/%s", pdir, desk->icon);
+          {
+             if (eina_str_has_extension(desk->icon, "png"))
+               snprintf(buf, sizeof(buf), "%s/%s", pdir, desk->icon);
+             else
+               snprintf(buf, sizeof(buf), "%s/%s.png", pdir, desk->icon);
+          }
         else
           e_prefix_data_concat_static(buf, "data/images/enlightenment.png");
         ic = e_util_icon_add(buf, evas);
         e_widget_ilist_append(cfdata->o_list, ic, label, _ilist_cb_selected, cfdata, prof);
-        if (pdir) free(pdir);
         free(prof);
         if (desk) efreet_desktop_free(desk);
      }

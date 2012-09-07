@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Enlightenment
 Name[ru]=Enlightenment
 Name[el]=Enlightenment
@@ -14,7 +13,7 @@ Comment[it]=Accedi con Enlightenment (Versione @VERSION@)
 Comment[pt]=Iniciar sessão no Enlightenment (Versão @VERSION@)
 Comment[tr]=Enlightenment kullanarak giriş yaın (Version @VERSION@)
 Comment[ko]=Enlightenment 로그인(버전 @VERSION@)
-Type=XSession
+Type=Application
 Icon=@prefix@/share/enlightenment/data/images/enlightenment.png
 Exec=@prefix@/bin/enlightenment_start
 TryExec=@prefix@/bin/enlightenment_start

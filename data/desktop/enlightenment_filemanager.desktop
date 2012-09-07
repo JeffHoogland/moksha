@@ -1,19 +1,16 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Application
 Name=Enlightenment File Manager
 Name[it]=Filemanager di Enlightenment
 Name[pt]=Gestor de ficheiros do Enlightenment
-Generic=File Manager
-GenericName[pt]=Gestor de ficheiros
 Comment=File Manager provided by Enlightenment
 Comment[it]=Il filemanager fornito da Enlightenment
 Comment[pt]=Gestor de ficheiros para o Enlightenment
 Exec=enlightenment_filemanager %U
 Icon=system-file-manager
-Categories=FileManager;Utility;Core;Enlightenment;
+Categories=FileManager;Utility;Core;System;FileTools
 Terminal=false
 StartupNotify=false
 StartupWMClass=e_fm
 OnlyShowIn=Enlightenment;
-MimeType=x-directory/normal;inode/directory;
+MimeType=inode/directory;

@@ -4,7 +4,7 @@ EET_EET = @eet_eet@
 
 EXTRA_DIST = \
         profile.desktop \
-        icon.png \
+        enlightenment-mobile.png \
         e.src \
 	module.battery.src \
 	module.illume-home.src \
@@ -17,7 +17,7 @@ EXTRA_DIST = \
 filesdir = $(datadir)/enlightenment/data/config/mobile
 files_DATA = \
         profile.desktop \
-        icon.png \
+        enlightenment-mobile.png \
 	e.cfg \
 	module.battery.cfg \
 	module.illume-home.cfg \

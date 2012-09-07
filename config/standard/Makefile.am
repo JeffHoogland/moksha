@@ -4,7 +4,7 @@ EET_EET = @eet_eet@
 
 EXTRA_DIST = \
         profile.desktop \
-        icon.png \
+        enlightenment-standard.png \
 	e.src \
 	module.battery.src \
 	module.cpufreq.src \
@@ -19,7 +19,7 @@ EXTRA_DIST = \
 filesdir = $(datadir)/enlightenment/data/config/standard
 files_DATA = \
         profile.desktop \
-        icon.png \
+        enlightenment-standard.png \
 	e.cfg \
 	module.battery.cfg \
 	module.cpufreq.cfg \

@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Application
 Name=XTerm
 GenericName=Terminal
@@ -7,6 +6,6 @@ Comment=Run commands in a shell
 Comment[it]=Esegue comandi in una shell
 Comment[pt]=Execução de comandos na consola
 Exec=xterm
-Icon=xterm.png
+Icon=xterm
 StartupWMClass=XTerm
-Categories=Utility;TerminalEmulator;
+Categories=Utility;TerminalEmulator;System;
