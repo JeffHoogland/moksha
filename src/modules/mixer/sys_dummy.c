@@ -12,6 +12,7 @@ E_Mixer_System *
 e_mixer_system_new(const char *name)
 {
    _e_mixer_dummy_set();
+   if (!name) return NULL;
 
    if (name == _name || strcmp(name, _name) == 0)
      return (E_Mixer_System *)-1;
