@@ -1004,7 +1004,28 @@ _e_shelf_free_cb(void *data __UNUSED__, void *event)
 {
    E_Event_Shelf *ev = event;
    E_Shelf *es = ev->shelf;
+
+   eina_stringshare_del(es->name);
+   eina_stringshare_del(es->style);
+
+   if (es->cfg_delete)
+     {
+        e_config->shelves = eina_list_remove(e_config->shelves, es->cfg);
+        eina_stringshare_del(es->cfg->name);
+        eina_stringshare_del(es->cfg->style);
+        free(es->cfg);
+
+        e_config_save_queue();
+     }
+   free(es);
    free(ev);
+}
+
+static void
+_e_shelf_free(E_Shelf *es)
+{
+   E_Event_Shelf *ev;
+
    if (!es->dummy)
      _e_shelf_bindings_del(es);
 
@@ -1047,12 +1068,13 @@ _e_shelf_free_cb(void *data __UNUSED__, void *event)
         e_gadcon_location_unregister(es->gadcon->location);
         e_gadcon_location_free(es->gadcon->location);
         e_object_del(E_OBJECT(es->gadcon));
+        es->gadcon = NULL;
      }
    if (es->config_dialog) e_object_del(E_OBJECT(es->config_dialog));
-   eina_stringshare_del(es->name);
-   eina_stringshare_del(es->style);
+   es->config_dialog = NULL;
    evas_object_del(es->o_event);
    evas_object_del(es->o_base);
+   es->o_base = es->o_event = NULL;
    if (es->popup)
      {
         e_drop_xdnd_register_set(es->popup->evas_win, 0);
@@ -1065,22 +1087,7 @@ _e_shelf_free_cb(void *data __UNUSED__, void *event)
           }
         e_object_del(E_OBJECT(es->popup));
      }
-   if (es->cfg_delete)
-     {
-        e_config->shelves = eina_list_remove(e_config->shelves, es->cfg);
-        eina_stringshare_del(es->cfg->name);
-        eina_stringshare_del(es->cfg->style);
-        free(es->cfg);
-
-        e_config_save_queue();
-     }
-   free(es);
-}
-
-static void
-_e_shelf_free(E_Shelf *es)
-{
-   E_Event_Shelf *ev;
+   es->popup = NULL;
 
    ev = E_NEW(E_Event_Shelf, 1);
    ev->shelf = es;
