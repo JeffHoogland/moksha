@@ -574,13 +574,7 @@ e_shelf_unsave(E_Shelf *es)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
-   if (es->cfg)
-     {
-        e_config->shelves = eina_list_remove(e_config->shelves, es->cfg);
-        eina_stringshare_del(es->cfg->name);
-        if (es->cfg->style) eina_stringshare_del(es->cfg->style);
-        free(es->cfg);
-     }
+   es->cfg_delete = 1;
 }
 
 EAPI void
@@ -1010,11 +1004,13 @@ _e_shelf_free_cb(void *data __UNUSED__, void *event)
 
    if (es->cfg_delete)
      {
-        e_config->shelves = eina_list_remove(e_config->shelves, es->cfg);
-        eina_stringshare_del(es->cfg->name);
-        eina_stringshare_del(es->cfg->style);
-        free(es->cfg);
-
+        if (es->cfg)
+          {
+             e_config->shelves = eina_list_remove(e_config->shelves, es->cfg);
+             eina_stringshare_del(es->cfg->name);
+             eina_stringshare_del(es->cfg->style);
+             free(es->cfg);
+          }
         e_config_save_queue();
      }
    free(es);
@@ -1067,6 +1063,7 @@ _e_shelf_free(E_Shelf *es)
      {
         e_gadcon_location_unregister(es->gadcon->location);
         e_gadcon_location_free(es->gadcon->location);
+        if (es->cfg_delete) e_gadcon_config_del(es->gadcon);
         e_object_del(E_OBJECT(es->gadcon));
         es->gadcon = NULL;
      }
@@ -1533,18 +1530,13 @@ static void
 _e_shelf_cb_menu_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Shelf *es;
-   E_Config_Shelf *cfg;
 
    es = data;
    if (e_config->cnfmdlg_disabled)
      {
-        cfg = es->cfg;
         if (e_object_is_del(E_OBJECT(es))) return;
+        es->cfg_delete = 1;
         e_object_del(E_OBJECT(es));
-        e_config->shelves = eina_list_remove(e_config->shelves, cfg);
-        if (cfg->name) eina_stringshare_del(cfg->name);
-        if (cfg->style) eina_stringshare_del(cfg->style);
-        E_FREE(cfg);
 
         e_config_save_queue();
         return;
@@ -2000,12 +1992,14 @@ _e_shelf_cb_instant_hide_timer(void *data)
 static void
 _e_shelf_cb_menu_rename_yes_cb(void *data, char *text)
 {
-   E_Shelf *es = e_object_data_get(data);
+   E_Shelf *es = data;
    Eina_List *l;
    E_Config_Shelf *cf_es;
 
+   if ((!text) || (!text[0])) return;
+   if (!strcmp(text, es->cfg->name)) return;
    EINA_LIST_FOREACH(e_config->shelves, l, cf_es)
-     if ((!strcmp(cf_es->name, text)) && (cf_es->id == es->id))
+     if (!strcmp(cf_es->name, text))
        {
           e_util_dialog_internal(_("Error"), _("A shelf with that name and id already exists!"));
           return;
@@ -2030,7 +2024,7 @@ _e_shelf_cb_menu_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
                                           _("Name:"), es->name, NULL, NULL,
                                           _e_shelf_cb_menu_rename_yes_cb,
                                           NULL, es);
-   E_OBJECT(es->rename_dialog)->data = es;
+   e_object_data_set(E_OBJECT(es->rename_dialog), es);
    e_object_del_attach_func_set(E_OBJECT(es->rename_dialog),
                                 _e_shelf_cb_menu_rename_cb);
 }

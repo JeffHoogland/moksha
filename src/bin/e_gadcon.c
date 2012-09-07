@@ -415,6 +415,14 @@ e_gadcon_dummy_new(int id)
    return gc;
 }
 
+EAPI void
+e_gadcon_config_del(E_Gadcon *gc)
+{
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   gc->cfg_delete = 1;
+}
+
 EAPI E_Gadcon *
 e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *swallow_name)
 {
@@ -878,6 +886,25 @@ e_gadcon_client_config_new(E_Gadcon *gc, const char *name)
    cf_gcc->name = eina_stringshare_add(name);
    if (gc->zone)
      cf_gcc->geom.res = gc->zone->w;
+   else if (gc->o_container)
+     {
+        int w, h;
+        evas_object_geometry_get(gc->o_container, NULL, NULL, &w, &h);
+        switch (gc->orient)
+          {
+             case E_GADCON_ORIENT_VERT:
+             case E_GADCON_ORIENT_LEFT:
+             case E_GADCON_ORIENT_RIGHT:
+             case E_GADCON_ORIENT_CORNER_LT:
+             case E_GADCON_ORIENT_CORNER_RT:
+             case E_GADCON_ORIENT_CORNER_LB:
+             case E_GADCON_ORIENT_CORNER_RB:
+             cf_gcc->geom.res = h;
+             break;
+             default:
+             cf_gcc->geom.res = w;
+          }
+     }
    else
      cf_gcc->geom.res = 800;
    cf_gcc->geom.size = 80;
@@ -1914,6 +1941,13 @@ _e_gadcon_free(E_Gadcon *gc)
    eina_stringshare_del(gc->edje.swallow_name);
    if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
    if (gc->drop_handler) e_drop_handler_del(gc->drop_handler);
+   if (gc->cfg_delete)
+     {
+        eina_stringshare_del(gc->cf->name);
+        e_config->gadcons = eina_list_remove(e_config->gadcons, gc->cf);
+        free(gc->cf);
+        e_config_save_queue();
+     }
    free(gc);
 }
 
@@ -3480,6 +3514,7 @@ e_gadcon_layout_pack_options_set(Evas_Object *obj, E_Gadcon_Client *gcc)
      {
         bi2 = evas_object_data_get(item, "e_gadcon_layout_data");
         if (bi == bi2) continue;
+        if (bi->gcc->id == bi2->gcc->id) continue;
         if (bi->gcc->state_info.seq == bi2->gcc->state_info.seq)
           ok = 1;
 
@@ -3737,6 +3772,11 @@ _e_gadcon_layout_smart_reconfigure(E_Smart_Data *sd)
           {
              evas_object_move(obj, yy, xx);
              evas_object_resize(obj, bi->h, bi->w);
+          }
+        if ((recurse == 1) && bi->gcc->state_info.want_save)
+          {
+             _e_gadcon_client_save(bi->gcc);
+             bi->gcc->state_info.want_save = 0;
           }
      }
    sd->doing_config = 0;

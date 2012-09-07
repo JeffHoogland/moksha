@@ -134,6 +134,7 @@ struct _E_Gadcon
    unsigned char      instant_edit : 1;
    unsigned char      dummy : 1;
    Eina_Bool          custom : 1;
+   Eina_Bool          cfg_delete : 1;
 };
 
 #define GADCON_CLIENT_CLASS_VERSION 3
@@ -265,6 +266,7 @@ EAPI void                    e_gadcon_provider_register(const E_Gadcon_Client_Cl
 EAPI void                    e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc);
 EAPI Eina_List              *e_gadcon_provider_list(void);
 EAPI E_Gadcon               *e_gadcon_dummy_new(int id);
+EAPI void                    e_gadcon_config_del(E_Gadcon *gc);
 EAPI E_Gadcon               *e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *swallow_name);
 EAPI void                    e_gadcon_custom_new(E_Gadcon *gc);
 EAPI void                    e_gadcon_custom_del(E_Gadcon *gc);
