@@ -1607,3 +1607,62 @@ e_util_gadcon_orient_icon_set(E_Gadcon_Orient orient, Evas_Object *obj)
         break;
      }
 }
+
+EAPI void
+e_util_gadcon_orient_menu_item_icon_set(E_Gadcon_Orient orient, E_Menu_Item *mi)
+{
+   switch (orient)
+     {
+      case E_GADCON_ORIENT_LEFT:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-left");
+        break;
+
+      case E_GADCON_ORIENT_RIGHT:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-right");
+        break;
+
+      case E_GADCON_ORIENT_TOP:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-top");
+        break;
+
+      case E_GADCON_ORIENT_BOTTOM:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-bottom");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_TL:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-top-left");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_TR:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-top-right");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_BL:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-bottom-left");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_BR:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-bottom-right");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_LT:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-left-top");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_RT:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-right-top");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_LB:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-left-bottom");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_RB:
+        e_util_menu_item_theme_icon_set(mi, "preferences-position-right-bottom");
+        break;
+
+      default:
+        e_util_menu_item_theme_icon_set(mi, "enlightenment");
+        break;
+     }
+}
