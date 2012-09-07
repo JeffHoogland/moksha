@@ -59,6 +59,25 @@ static int orientations[] =
    [E_GADCON_ORIENT_CORNER_RB] = 2
 };
 
+static const char *orient_names[] =
+{
+   [E_GADCON_ORIENT_FLOAT] = "Float",
+   [E_GADCON_ORIENT_HORIZ] = "Horizontal",
+   [E_GADCON_ORIENT_VERT] = "Vertical",
+   [E_GADCON_ORIENT_LEFT] = "Left",
+   [E_GADCON_ORIENT_RIGHT] = "Right",
+   [E_GADCON_ORIENT_TOP] = "Top",
+   [E_GADCON_ORIENT_BOTTOM] = "Bottom",
+   [E_GADCON_ORIENT_CORNER_TL] = "Top-left Corner",
+   [E_GADCON_ORIENT_CORNER_TR] = "Top-right Corner",
+   [E_GADCON_ORIENT_CORNER_BL] = "Bottom-left Corner",
+   [E_GADCON_ORIENT_CORNER_BR] = "Bottom-right Corner",
+   [E_GADCON_ORIENT_CORNER_LT] = "Left-top Corner",
+   [E_GADCON_ORIENT_CORNER_RT] = "Right-top Corner",
+   [E_GADCON_ORIENT_CORNER_LB] = "Left-bottom Corner",
+   [E_GADCON_ORIENT_CORNER_RB] = "Right-bottom Corner"
+};
+
 EAPI int E_EVENT_SHELF_ADD = -1;
 EAPI int E_EVENT_SHELF_DEL = -1;
 
@@ -1484,6 +1503,7 @@ _e_shelf_menu_item_free(void *data)
 
    es = e_object_data_get(data);
    e_shelf_locked_set(es, 0);
+   e_object_unref(E_OBJECT(es));
 }
 
 static void
@@ -1506,6 +1526,7 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    e_menu_item_label_set(mi, buf);
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-shelf");
    e_menu_pre_activate_callback_set(subm, _e_shelf_menu_pre_cb, es);
+   e_object_ref(E_OBJECT(es));
    e_object_free_attach_func_set(E_OBJECT(mi), _e_shelf_menu_item_free);
    e_object_data_set(E_OBJECT(mi), es);
    e_menu_item_submenu_set(mi, subm);
@@ -1696,12 +1717,6 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 
         switch (es->gadcon->orient)
           {
-           case E_GADCON_ORIENT_FLOAT:
-           case E_GADCON_ORIENT_HORIZ:
-           case E_GADCON_ORIENT_VERT:
-             /* noop */
-             break;
-
            case E_GADCON_ORIENT_LEFT:
            case E_GADCON_ORIENT_CORNER_LT:
            case E_GADCON_ORIENT_CORNER_LB:
@@ -1740,6 +1755,13 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
                   (ev->edge == E_ZONE_EDGE_BOTTOM_RIGHT)) &&
                  (ev->x >= es->x) && (ev->x <= (es->x + es->w)))
                show = 1;
+             break;
+
+           case E_GADCON_ORIENT_FLOAT:
+           case E_GADCON_ORIENT_HORIZ:
+           case E_GADCON_ORIENT_VERT:
+           default:
+             /* noop */
              break;
           }
 
@@ -1920,6 +1942,7 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_VERT:
+      default:
         break;
      }
 
@@ -1978,6 +2001,7 @@ _e_shelf_cb_hide_animator(void *data)
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_VERT:
+      default:
         break;
      }
 
@@ -2110,10 +2134,59 @@ _e_shelf_cb_menu_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
 }
 
 static void
+_e_shelf_cb_menu_orient(void *data, E_Menu *m, E_Menu_Item *mi)
+{
+   E_Shelf *es = data;
+   E_Menu_Item *mii;
+   int orient = E_GADCON_ORIENT_LEFT;
+   Eina_List *l;
+
+   EINA_LIST_FOREACH(m->items, l, mii)
+     {
+        if (mi == mii)
+          {
+             E_Zone *zone;
+             E_Config_Shelf *cf_es;
+             if (es->cfg->orient == orient) return;
+             es->cfg->orient = orient;
+             zone = es->zone;
+             cf_es = es->cfg;
+             e_object_del(E_OBJECT(es));
+             e_shelf_config_new(zone, cf_es);
+             return;
+          }
+        orient++;
+     }
+}
+
+static void
+_e_shelf_menu_orientation_pre_cb(void *data, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   E_Shelf *es = data;
+   int orient;
+
+   if (m->items) return;
+
+   for (orient = E_GADCON_ORIENT_LEFT; orient < E_GADCON_ORIENT_LAST; orient++)
+     {
+        mi = e_menu_item_new(m);
+        e_util_gadcon_orient_menu_item_icon_set(orient, mi);
+        e_menu_item_radio_set(mi, 1);
+        e_menu_item_radio_group_set(mi, 1);
+        e_menu_item_label_set(mi, _(orient_names[orient]));
+        e_menu_item_callback_set(mi, _e_shelf_cb_menu_orient, es);
+        if (es->cfg->orient == orient)
+          e_menu_item_toggle_set(mi, 1);
+     }
+}
+
+static void
 _e_shelf_menu_pre_cb(void *data, E_Menu *m)
 {
    E_Shelf *es;
    E_Menu_Item *mi;
+   E_Menu *subm;
 
    es = data;
    e_menu_pre_activate_callback_set(m, NULL, NULL);
@@ -2127,6 +2200,15 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Settings"));
    e_util_menu_item_theme_icon_set(mi, "configure");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Orientation"));
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_config, es);
+   subm = e_menu_new();
+   e_menu_pre_activate_callback_set(subm, _e_shelf_menu_orientation_pre_cb, es);
+   e_object_data_set(E_OBJECT(subm), es);
+   e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
@@ -2251,6 +2333,7 @@ _e_shelf_bindings_add(E_Shelf *es)
       case E_GADCON_ORIENT_FLOAT:
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_VERT:
+      default:
         /* noop */
         break;
 
