@@ -2099,20 +2099,19 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
                }
              else
                {
-                  snprintf(buf, sizeof(buf), "%s/%s",
-                           e_fm2_real_path_get(page->fm_obj), ici->file);
+                  snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), ici->file);
                   if (S_ISDIR(ici->statinfo.st_mode))
                     {
                        if ((!fileman_config->view.open_dirs_in_place) || (fwin->zone))
                          {
                             if (fwin->win)
-                              fwin2 = _e_fwin_new(fwin->win->container, NULL, buf);
+                              fwin2 = _e_fwin_new(fwin->win->container, NULL, ici->link ?: buf);
                             else if (fwin->zone)
-                              fwin2 = _e_fwin_new(fwin->zone->container, NULL, buf);
+                              fwin2 = _e_fwin_new(fwin->zone->container, NULL, ici->link ?: buf);
                          }
                        else
                          {
-                            e_fm2_path_set(page->fm_obj, NULL, buf);
+                            e_fm2_path_set(page->fm_obj, NULL, ici->link ?: buf);
                             _e_fwin_window_title_set(page);
                             l = NULL;
                          }
