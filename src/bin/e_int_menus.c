@@ -1409,7 +1409,7 @@ _e_int_menus_shelves_pre_cb(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
    Eina_List *l, *shelves = NULL;
-   E_Shelf *s;
+   E_Shelf *es;
    E_Container *con;
    E_Zone *zone;
 
@@ -1419,29 +1419,22 @@ _e_int_menus_shelves_pre_cb(void *data __UNUSED__, E_Menu *m)
 
    /* get the current clients */
    shelves = e_shelf_list();
-
-   if (!shelves)
-     {
-        /* FIXME here we want nothing, but that crashes!!! */
-        mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("(No Shelves)"));
-     }
-   EINA_LIST_FOREACH(shelves, l, s)
+   EINA_LIST_FOREACH(shelves, l, es)
      {
         const char *name;
         char buf[4096];
 
-        if (!s) continue;
-        if (s->zone->num != zone->num) continue;
-        if (s->cfg->container != (int)con->num) continue;
+        if (!es) continue;
+        if (es->zone->num != zone->num) continue;
+        if (es->cfg->container != (int)con->num) continue;
 
-        name = e_shelf_orient_string_get(s);
+        name = e_shelf_orient_string_get(es);
         snprintf(buf, sizeof(buf), "Shelf %s", name);
 
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, buf);
-        e_menu_item_callback_set(mi, _e_int_menus_shelves_item_cb, s);
-        switch (s->cfg->orient)
+        e_menu_item_callback_set(mi, _e_int_menus_shelves_item_cb, es);
+        switch (es->cfg->orient)
           {
            case E_GADCON_ORIENT_LEFT:
              e_util_menu_item_theme_icon_set(mi, "preferences-position-left");
@@ -1496,8 +1489,11 @@ _e_int_menus_shelves_pre_cb(void *data __UNUSED__, E_Menu *m)
              break;
           }
      }
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   if (shelves)
+     {
+        mi = e_menu_item_new(m);
+        e_menu_item_separator_set(mi, 1);
+     }
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Add a Shelf"));
