@@ -1521,28 +1521,10 @@ _e_int_menus_shelves_item_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi _
 static void
 _e_int_menus_shelves_add_cb(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   E_Container *con;
    E_Zone *zone;
-   E_Config_Shelf *cs;
 
-   con = e_container_current_get(e_manager_current_get());
-   zone = e_zone_current_get(con);
-   cs = E_NEW(E_Config_Shelf, 1);
-   cs->name = eina_stringshare_add("shelf");
-   cs->container = con->num;
-   cs->zone = zone->num;
-   cs->popup = 1;
-   cs->layer = 200;
-   cs->orient = E_GADCON_ORIENT_CORNER_BR;
-   cs->fit_along = 1;
-   cs->fit_size = 0;
-   cs->style = eina_stringshare_add("default");
-   cs->size = 40;
-   cs->overlap = 0;
-   e_config->shelves = eina_list_append(e_config->shelves, cs);
-   e_config_save_queue();
-
-   e_shelf_config_update();
+   zone = e_util_zone_current_get(e_manager_current_get());
+   e_shelf_new_dialog(zone);
 }
 
 static void
