@@ -687,7 +687,7 @@ _advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ot, cfdata->o_del, 0, 1, 1, 1, 1, 1, 1, 0);
    /* e_widget_list_object_append(ot, cfdata->o_del, 1, 0, 0.5); */
 
-   e_widget_toolbook_page_append(otb, NULL, _("Gadgets"), ot, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Loaded Gadgets"), ot, 1, 1, 1, 1, 0.5, 0.0);
    ////////////////////////////////////////////////////////////
 //   ot = e_widget_list_add(evas, 0, 0);
    ot = e_widget_table_add(evas, EINA_FALSE);
@@ -707,7 +707,7 @@ _advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ot, cfdata->o_add, 0, 1, 1, 1, 1, 1, 1, 0);
 //   e_widget_list_object_append(ot, cfdata->o_add, 1, 0, 0.5);
 
-   e_widget_toolbook_page_append(otb, NULL, _("Classes"), ot, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Available Gadgets"), ot, 1, 1, 1, 1, 0.5, 0.0);
    ////////////////////////////////////////////////////////////
    e_widget_toolbook_page_show(otb, 0);
    if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
