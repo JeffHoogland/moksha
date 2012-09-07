@@ -15,7 +15,6 @@ Comment[cs]=Zde mùžete nastavit zkratky pro okraje a rohy obrazovky.
 Comment[eo]=Agordas la fulmklavoj de ekranrandoj.
 Comment[fr]=Configure les raccourcis des bords de l'écran.
 Comment[it]=Configurate qui le azioni da associare ai confini dello schermo.
-Comment[tr]=.Kenar kÄ±sayollarÄ±nÄ± yapÄ±landÄ±rÄ±r.
 Comment[pt]=Configurar as associações aos limites do ecrã
 Comment[tr]=Kenar bağlayıcılarınızı yapılandırın.
 X-Enlightenment-ModuleType=settings
