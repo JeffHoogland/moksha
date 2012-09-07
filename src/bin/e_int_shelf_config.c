@@ -354,20 +354,16 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (recreate)
      {
         E_Zone *zone;
+        E_Config_Shelf *cf_es;
 
         zone = cfdata->es->zone;
+        cf_es = cfdata->es->cfg;
+        cf_es->fit_along = cfdata->escfg->fit_along;
+        cf_es->orient = cfdata->escfg->orient;
         cfdata->es->config_dialog = NULL;
         e_object_del(E_OBJECT(cfdata->es));
 
-        cfdata->es =
-          e_shelf_zone_new(zone, cfdata->escfg->name,
-                           cfdata->escfg->style, cfdata->escfg->popup,
-                           cfdata->escfg->layer, cfdata->escfg->id);
-        cfdata->es->cfg = cfdata->escfg;
-        cfdata->es->fit_along = cfdata->escfg->fit_along;
-        e_shelf_orient(cfdata->es, cfdata->escfg->orient);
-        e_shelf_position_calc(cfdata->es);
-        e_shelf_populate(cfdata->es);
+        cfdata->es = e_shelf_config_new(zone, cf_es);
      }
 
    if (cfdata->escfg->desk_show_mode)
