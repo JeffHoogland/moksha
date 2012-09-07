@@ -75,13 +75,20 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
-
+   Notification_Box_Icon *ic;
+   
    inst = gcc->data;
-   evas_object_event_callback_del_full(inst->n_box->o_box, EVAS_CALLBACK_MOVE,
-                                  notification_box_cb_obj_moveresize, inst);
-   evas_object_event_callback_del_full(inst->n_box->o_box, EVAS_CALLBACK_RESIZE,
-                                  notification_box_cb_obj_moveresize, inst);
-   notification_box_visible_set(inst->n_box, EINA_FALSE);
+   EINA_LIST_FREE(inst->n_box->icons, ic)
+     {
+        evas_object_del(ic->o_holder);
+        evas_object_del(ic->o_holder2);
+        if (ic->border) e_object_unref(E_OBJECT(ic->border));
+        if (ic->notif) e_notification_unref(ic->notif);
+        free(ic);
+     }
+   if (inst->n_box->o_empty) evas_object_del(inst->n_box->o_empty);
+   if (inst->n_box->o_box) evas_object_del(inst->n_box->o_box);
+   inst->n_box->o_box = inst->n_box->o_empty = NULL;
    notification_cfg->instances = eina_list_remove(notification_cfg->instances, inst);
    free(inst);
 }

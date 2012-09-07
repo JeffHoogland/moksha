@@ -89,7 +89,7 @@ notification_box_visible_set(Notification_Box *b, Eina_Bool visible)
    Notification_Box_Icon *ic;
    Ecore_Cb cb = (Ecore_Cb)(visible ? evas_object_show : evas_object_hide);
 
-   cb(b->o_box);
+   if (b->o_box) cb(b->o_box);
    if (b->o_empty) cb(b->o_empty);
    EINA_LIST_FOREACH(b->icons, l, ic)
      {
@@ -222,7 +222,7 @@ _notification_box_evas_set(Notification_Box *b,
    Eina_List *new_icons = NULL;
    Notification_Box_Icon *ic, *new_ic;
 
-   evas_object_del(b->o_box);
+   if (b->o_box) evas_object_del(b->o_box);
    if (b->o_empty) evas_object_del(b->o_empty);
    b->o_empty = NULL;
    b->o_box = e_box_add(evas);
