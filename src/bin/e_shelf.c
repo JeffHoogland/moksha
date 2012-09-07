@@ -1018,6 +1018,7 @@ _e_shelf_new_dialog_ok(void *data, char *text)
    Eina_List *l;
    unsigned int x;
    unsigned long orient = 1;
+   E_Shelf *es;
 
    if ((!text) || (!text[0])) return;
    EINA_LIST_FOREACH(e_config->shelves, l, es_cf)
@@ -1052,7 +1053,9 @@ _e_shelf_new_dialog_ok(void *data, char *text)
 
    es_cf = eina_list_data_get(eina_list_last(e_config->shelves));
    cfg->id = es_cf->id + 1;
-   e_shelf_config_new(zone, cfg);
+   es = e_shelf_config_new(zone, cfg);
+   if (es && es->gadcon)
+     e_int_gadcon_config_shelf(es->gadcon);
 }
 
 static void
