@@ -176,60 +176,7 @@ _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es)
    evas_object_data_set(es->o_base, "cfdata", cfdata);
 
    ob = e_icon_add(evas_object_evas_get(cfdata->o_list));
-   switch (es->cfg->orient)
-     {
-      case E_GADCON_ORIENT_LEFT:
-        e_util_icon_theme_set(ob, "preferences-position-left");
-        break;
-
-      case E_GADCON_ORIENT_RIGHT:
-        e_util_icon_theme_set(ob, "preferences-position-right");
-        break;
-
-      case E_GADCON_ORIENT_TOP:
-        e_util_icon_theme_set(ob, "preferences-position-top");
-        break;
-
-      case E_GADCON_ORIENT_BOTTOM:
-        e_util_icon_theme_set(ob, "preferences-position-bottom");
-        break;
-
-      case E_GADCON_ORIENT_CORNER_TL:
-        e_util_icon_theme_set(ob, "preferences-position-top-left");
-        break;
-
-      case E_GADCON_ORIENT_CORNER_TR:
-        e_util_icon_theme_set(ob, "preferences-position-top-right");
-        break;
-
-      case E_GADCON_ORIENT_CORNER_BL:
-        e_util_icon_theme_set(ob, "preferences-position-bottom-left");
-        break;
-
-      case E_GADCON_ORIENT_CORNER_BR:
-        e_util_icon_theme_set(ob, "preferences-position-bottom-right");
-        break;
-
-      case E_GADCON_ORIENT_CORNER_LT:
-        e_util_icon_theme_set(ob, "preferences-position-left-top");
-        break;
-
-      case E_GADCON_ORIENT_CORNER_RT:
-        e_util_icon_theme_set(ob, "preferences-position-right-top");
-        break;
-
-      case E_GADCON_ORIENT_CORNER_LB:
-        e_util_icon_theme_set(ob, "preferences-position-left-bottom");
-        break;
-
-      case E_GADCON_ORIENT_CORNER_RB:
-        e_util_icon_theme_set(ob, "preferences-position-right-bottom");
-        break;
-
-      default:
-        e_util_icon_theme_set(ob, "enlightenment");
-        break;
-     }
+   e_util_gadcon_orient_icon_set(es->cfg->orient, ob);
    if (append)
      e_widget_ilist_append(cfdata->o_list, ob, buf,
                            _ilist_cb_selected, es, buf);

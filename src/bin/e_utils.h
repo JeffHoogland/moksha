@@ -66,6 +66,6 @@ EAPI Eina_Bool e_util_fullscreen_any(void);
 EAPI const char *e_util_time_str_get(long int seconds);
 EAPI void e_util_size_debug_set(Evas_Object *obj, Eina_Bool enable);
 EAPI Efreet_Desktop *e_util_terminal_desktop_get(void);
-
+EAPI void e_util_gadcon_orient_icon_set(E_Gadcon_Orient orient, Evas_Object *obj);
 #endif
 #endif

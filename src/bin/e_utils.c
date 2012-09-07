@@ -1548,3 +1548,62 @@ e_util_binding_match(const Eina_List *bindlist, Ecore_Event_Key *ev, unsigned in
    if (num) *num = 0;
    return NULL;
 }
+
+EAPI void
+e_util_gadcon_orient_icon_set(E_Gadcon_Orient orient, Evas_Object *obj)
+{
+   switch (orient)
+     {
+      case E_GADCON_ORIENT_LEFT:
+        e_util_icon_theme_set(obj, "preferences-position-left");
+        break;
+
+      case E_GADCON_ORIENT_RIGHT:
+        e_util_icon_theme_set(obj, "preferences-position-right");
+        break;
+
+      case E_GADCON_ORIENT_TOP:
+        e_util_icon_theme_set(obj, "preferences-position-top");
+        break;
+
+      case E_GADCON_ORIENT_BOTTOM:
+        e_util_icon_theme_set(obj, "preferences-position-bottom");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_TL:
+        e_util_icon_theme_set(obj, "preferences-position-top-left");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_TR:
+        e_util_icon_theme_set(obj, "preferences-position-top-right");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_BL:
+        e_util_icon_theme_set(obj, "preferences-position-bottom-left");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_BR:
+        e_util_icon_theme_set(obj, "preferences-position-bottom-right");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_LT:
+        e_util_icon_theme_set(obj, "preferences-position-left-top");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_RT:
+        e_util_icon_theme_set(obj, "preferences-position-right-top");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_LB:
+        e_util_icon_theme_set(obj, "preferences-position-left-bottom");
+        break;
+
+      case E_GADCON_ORIENT_CORNER_RB:
+        e_util_icon_theme_set(obj, "preferences-position-right-bottom");
+        break;
+
+      default:
+        e_util_icon_theme_set(obj, "enlightenment");
+        break;
+     }
+}
