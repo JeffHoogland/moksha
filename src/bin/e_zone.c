@@ -1311,6 +1311,8 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
               if (x1 > zone->w - shelf->w)
                 x1 = zone->w - shelf->w;
               break;
+            default:
+              break;
           }
      }
 

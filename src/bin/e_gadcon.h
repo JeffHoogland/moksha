@@ -11,7 +11,7 @@ typedef enum _E_Gadcon_Layout_Policy
 typedef enum _E_Gadcon_Orient
 {
    /* generic orientations */
-   E_GADCON_ORIENT_FLOAT,
+   E_GADCON_ORIENT_FLOAT = 0,
    E_GADCON_ORIENT_HORIZ,
    E_GADCON_ORIENT_VERT,
    E_GADCON_ORIENT_LEFT,
@@ -25,7 +25,8 @@ typedef enum _E_Gadcon_Orient
    E_GADCON_ORIENT_CORNER_LT,
    E_GADCON_ORIENT_CORNER_RT,
    E_GADCON_ORIENT_CORNER_LB,
-   E_GADCON_ORIENT_CORNER_RB
+   E_GADCON_ORIENT_CORNER_RB,
+   E_GADCON_ORIENT_LAST
 } E_Gadcon_Orient;
 
 typedef enum _E_Gadcon_Site
