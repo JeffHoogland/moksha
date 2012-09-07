@@ -1,5 +1,6 @@
 #include "e.h"
 
+static void         _e_shelf_new_dialog_ok(void *data, char *text);
 static void         _e_shelf_del_cb(void *d);
 static void         _e_shelf_free(E_Shelf *es);
 static void         _e_shelf_gadcon_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
@@ -38,6 +39,25 @@ static void          _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Objec
 static Eina_List *shelves = NULL;
 static Eina_List *dummies = NULL;
 static Eina_Hash *winid_shelves = NULL;
+
+static int orientations[] =
+{
+   [E_GADCON_ORIENT_FLOAT] = 2,
+   [E_GADCON_ORIENT_HORIZ] = 2,
+   [E_GADCON_ORIENT_VERT] = 2,
+   [E_GADCON_ORIENT_LEFT] = 37,
+   [E_GADCON_ORIENT_RIGHT] = 31,
+   [E_GADCON_ORIENT_TOP] = 29,
+   [E_GADCON_ORIENT_BOTTOM] = 23,
+   [E_GADCON_ORIENT_CORNER_TL] = 19,
+   [E_GADCON_ORIENT_CORNER_TR] = 17,
+   [E_GADCON_ORIENT_CORNER_BL] = 13,
+   [E_GADCON_ORIENT_CORNER_BR] = 11,
+   [E_GADCON_ORIENT_CORNER_LT] = 7,
+   [E_GADCON_ORIENT_CORNER_RT] = 5,
+   [E_GADCON_ORIENT_CORNER_LB] = 3,
+   [E_GADCON_ORIENT_CORNER_RB] = 2
+};
 
 EAPI int E_EVENT_SHELF_ADD = -1;
 EAPI int E_EVENT_SHELF_DEL = -1;
@@ -977,7 +997,64 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
    return es;
 }
 
+EAPI E_Entry_Dialog *
+e_shelf_new_dialog(E_Zone *zone)
+{
+   char buf[256];
+
+   snprintf(buf, sizeof(buf), "%s #%d", _("Shelf"), eina_list_count(e_config->shelves));
+   return e_entry_dialog_show(_("Add New Shelf"), "preferences-desktop-shelf",
+                               _("Name:"), buf, NULL, NULL,
+                               _e_shelf_new_dialog_ok, NULL, zone);
+}
+
 /* local subsystem functions */
+
+static void
+_e_shelf_new_dialog_ok(void *data, char *text)
+{
+   E_Config_Shelf *cfg, *es_cf;
+   E_Zone *zone = data;
+   Eina_List *l;
+   unsigned int x;
+   unsigned long orient = 1;
+
+   if ((!text) || (!text[0])) return;
+   EINA_LIST_FOREACH(e_config->shelves, l, es_cf)
+     {
+        if (strcmp(es_cf->name, text)) continue;
+        e_util_dialog_internal(_("Shelf Error"), _("A shelf with that name already exists!"));
+        return;
+     }
+
+   cfg = E_NEW(E_Config_Shelf, 1);
+   cfg->name = eina_stringshare_add(text);
+   cfg->container = zone->container->num;
+   cfg->zone = zone->num;
+   cfg->popup = 1;
+   cfg->layer = 200;
+   EINA_LIST_FOREACH(e_config->shelves, l, es_cf)
+     orient *= orientations[es_cf->orient];
+   for (x = 3; x < (sizeof(orientations) / sizeof(orientations[0])); x++)
+     if (orient % orientations[x])
+       {
+          cfg->orient = x;
+          break;
+       }
+   cfg->fit_along = 1;
+   cfg->fit_size = 0;
+   cfg->style = eina_stringshare_add("default");
+   cfg->size = 40;
+   cfg->overlap = 0;
+   cfg->autohide = 0;
+   e_config->shelves = eina_list_append(e_config->shelves, cfg);
+   e_config_save_queue();
+
+   es_cf = eina_list_data_get(eina_list_last(e_config->shelves));
+   cfg->id = es_cf->id + 1;
+   e_shelf_config_new(zone, cfg);
+}
+
 static void
 _e_shelf_del_cb(void *d)
 {

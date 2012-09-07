@@ -14,10 +14,7 @@ static void         _cb_dialog_destroy(void *data);
 static void         _cb_config(void *data, void *data2);
 static void         _cb_contents(void *data, void *data2);
 static void         _ilist_refresh(E_Shelf *es);
-static void         _new_shelf_dialog(E_Config_Dialog_Data *cfdata);
 static void         _new_shelf_cb_close(void *data);
-static void         _new_shelf_cb_ok(void *data, char *text);
-static void         _new_shelf_cb_dia_del(void *obj);
 static void         _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es);
 
 struct _E_Config_Dialog_Data
@@ -36,25 +33,7 @@ struct _E_Config_Dialog_Data
    E_Entry_Dialog    *dia_new_shelf;
    char                *new_shelf;
    Eina_Bool           header;
-};
-
-static int orientations[] =
-{
-   [E_GADCON_ORIENT_FLOAT] = 2,
-   [E_GADCON_ORIENT_HORIZ] = 2,
-   [E_GADCON_ORIENT_VERT] = 2,
-   [E_GADCON_ORIENT_LEFT] = 37,
-   [E_GADCON_ORIENT_RIGHT] = 31,
-   [E_GADCON_ORIENT_TOP] = 29,
-   [E_GADCON_ORIENT_BOTTOM] = 23,
-   [E_GADCON_ORIENT_CORNER_TL] = 19,
-   [E_GADCON_ORIENT_CORNER_TR] = 17,
-   [E_GADCON_ORIENT_CORNER_BL] = 13,
-   [E_GADCON_ORIENT_CORNER_BR] = 11,
-   [E_GADCON_ORIENT_CORNER_LT] = 7,
-   [E_GADCON_ORIENT_CORNER_RT] = 5,
-   [E_GADCON_ORIENT_CORNER_LB] = 3,
-   [E_GADCON_ORIENT_CORNER_RB] = 2
+   unsigned int num_shelves;
 };
 
 E_Config_Dialog *
@@ -76,10 +55,14 @@ e_int_config_shelf(E_Container *con, const char *params __UNUSED__)
 }
 
 static Eina_Bool
-_shelf_handler_cb(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Shelf_Add *ev __UNUSED__)
+_shelf_handler_cb(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Shelf_Add *ev)
 {
-   _ilist_empty(cfdata);
-   _ilist_fill(cfdata);
+   E_Zone *zone;
+
+   if (!cfdata->cfd->dia->win->border) return ECORE_CALLBACK_RENEW;
+   zone = cfdata->cfd->dia->win->border->zone;
+   if (ev->shelf->zone == zone)
+   _ilist_item_new(cfdata, 1, ev->shelf);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -380,110 +363,33 @@ _ilist_cb_selected(void *data)
 }
 
 static void
-_new_shelf_dialog(E_Config_Dialog_Data *cfdata)
-{
-   char buf[256];
-   int id;
-   id = e_widget_ilist_count(cfdata->o_list);
-   snprintf(buf, sizeof(buf), "%s #%d", _("Shelf"), id);
-   cfdata->dia_new_shelf = e_entry_dialog_show(_("Add New Shelf"), "preferences-desktop-shelf",
-                             _("Name:"), buf, NULL, NULL,
-                             _new_shelf_cb_ok, _new_shelf_cb_close,
-                             cfdata);
-   _widgets_disable(cfdata, 1, EINA_TRUE);
-}
-
-static void
 _new_shelf_cb_close(void *data)
 {
    E_Config_Dialog_Data *cfdata;
-   cfdata = data;
-   if (!cfdata) return;
 
-   _widgets_disable(cfdata, 0, EINA_TRUE);
+   cfdata = e_object_data_get(data);
    cfdata->dia_new_shelf = NULL;
+   if (e_widget_ilist_selected_get(cfdata->o_list) >= 0)
+     _widgets_disable(cfdata, 0, EINA_TRUE);
+   else
+     e_widget_disabled_set(cfdata->o_list, 0);
 }
 
 static void
 _cb_add(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-
-   cfdata = data;
-   if (!cfdata) return;
-
-   _new_shelf_dialog(cfdata);
-}
-
-static void
-_new_shelf_cb_ok(void *data, char *text)
-{
-   E_Config_Dialog_Data *cfdata;
-   E_Config_Shelf *cfg, *c;
    E_Zone *zone;
-   Eina_List *l;
-   unsigned int x;
-   unsigned long orient = 1;
 
    cfdata = data;
    if (!cfdata) return;
-   if ((!text) || (!text[0]))
-     {
-        _new_shelf_cb_dia_del(cfdata->dia_new_shelf);
-        return;
-     }
-   EINA_LIST_FOREACH(e_config->shelves, l, c)
-     {
-        if (strcmp(c->name, text)) continue;
-        e_util_dialog_internal(_("Shelf Error"), _("A shelf with that name already exists!"));
-        _new_shelf_cb_dia_del(cfdata->dia_new_shelf);
-        return;
-     }
 
-   if (cfdata->cfd && cfdata->cfd->dia && cfdata->cfd->dia->win && cfdata->cfd->dia->win->border && cfdata->cfd->dia->win->border->zone)
-     zone = cfdata->cfd->dia->win->border->zone;
-   else
-     zone = e_util_zone_current_get(e_manager_current_get());
-
-   cfg = E_NEW(E_Config_Shelf, 1);
-   cfg->name = eina_stringshare_add(text);
-   cfg->container = zone->container->num;
-   cfg->zone = zone->num;
-   cfg->popup = 1;
-   cfg->layer = 200;
-   EINA_LIST_FOREACH(e_config->shelves, l, c)
-     orient *= orientations[c->orient];
-   for (x = 3; x < (sizeof(orientations) / sizeof(orientations[0])); x++)
-     if (orient % orientations[x])
-       {
-          cfg->orient = x;
-          break;
-       }
-   cfg->fit_along = 1;
-   cfg->fit_size = 0;
-   cfg->style = eina_stringshare_add("default");
-   cfg->size = 40;
-   cfg->overlap = 0;
-   cfg->autohide = 0;
-   e_config->shelves = eina_list_append(e_config->shelves, cfg);
-   e_config_save_queue();
-
-   c = eina_list_data_get(eina_list_last(e_config->shelves));
-   cfg->id = c->id + 1;
-   e_shelf_config_new(zone, cfg);
-
-   cfdata->dia_new_shelf = NULL;
-   _ilist_fill(cfdata);
-}
-
-static void
-_new_shelf_cb_dia_del(void *obj)
-{
-   E_Entry_Dialog *dia = obj;
-   E_Config_Dialog_Data *cfdata = dia->ok.data;
-
-   cfdata->dia_new_shelf = NULL;
-   e_widget_disabled_set(cfdata->o_list, 0);
+   zone = cfdata->cfd->dia->win->border ? cfdata->cfd->dia->win->border->zone : e_zone_current_get(cfdata->cfd->con);
+   cfdata->dia_new_shelf = e_shelf_new_dialog(zone);
+   e_object_data_set(E_OBJECT(cfdata->dia_new_shelf), cfdata);
+   e_object_del_attach_func_set(E_OBJECT(cfdata->dia_new_shelf), _new_shelf_cb_close);
+   _widgets_disable(cfdata, 1, EINA_TRUE);
+   cfdata->num_shelves = eina_list_count(e_config->shelves);
 }
 
 static void

@@ -63,6 +63,7 @@ EAPI extern int E_EVENT_SHELF_DEL;
 EINTERN int              e_shelf_init(void);
 EINTERN int              e_shelf_shutdown(void);
 EAPI void             e_shelf_config_update(void);
+EAPI E_Entry_Dialog *e_shelf_new_dialog(E_Zone *zone);
 EAPI Eina_List       *e_shelf_list(void);
 EAPI Eina_List       *e_shelf_list_all(void); // includes dummy shelves
 EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id);
