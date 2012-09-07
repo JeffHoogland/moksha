@@ -302,9 +302,10 @@ _battery_device_update(void)
    int charging = 0;
 
    int batnum = 0;
+   int acnum = 0;
 
    EINA_LIST_FOREACH(device_ac_adapters, l, ac)
-     if (ac->present) have_power++;
+     if (ac->present) acnum++;
 
    EINA_LIST_FOREACH(device_batteries, l, bat)
      {
@@ -312,6 +313,7 @@ _battery_device_update(void)
           continue;
         have_battery = 1;
         batnum++;
+        if (bat->charging == 1) have_power = 1;
         if (full == -1) full = 0;
         if (bat->percent >= 0)
           full += bat->percent;

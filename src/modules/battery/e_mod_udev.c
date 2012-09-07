@@ -1,17 +1,15 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static void      _battery_udev_event_battery(const char *syspath, Eeze_Udev_Event event, void *data, Eeze_Udev_Watch *watch);
-static void      _battery_udev_event_ac(const char *syspath, Eeze_Udev_Event event, void *data, Eeze_Udev_Watch *watch);
-static void      _battery_udev_battery_add(const char *syspath);
-static void      _battery_udev_ac_add(const char *syspath);
-static void      _battery_udev_battery_del(const char *syspath);
-static void      _battery_udev_ac_del(const char *syspath);
-#if 0
+static void _battery_udev_event_battery(const char *syspath, Eeze_Udev_Event event, void *data, Eeze_Udev_Watch *watch);
+static void _battery_udev_event_ac(const char *syspath, Eeze_Udev_Event event, void *data, Eeze_Udev_Watch *watch);
+static void _battery_udev_battery_add(const char *syspath);
+static void _battery_udev_ac_add(const char *syspath);
+static void _battery_udev_battery_del(const char *syspath);
+static void _battery_udev_ac_del(const char *syspath);
 static Eina_Bool _battery_udev_battery_update_poll(void *data);
-#endif
-static void      _battery_udev_battery_update(const char *syspath, Battery *bat);
-static void      _battery_udev_ac_update(const char *syspath, Ac_Adapter *ac);
+static void _battery_udev_battery_update(const char *syspath, Battery *bat);
+static void _battery_udev_ac_update(const char *syspath, Ac_Adapter *ac);
 
 extern Eina_List *device_batteries;
 extern Eina_List *device_ac_adapters;
@@ -61,9 +59,7 @@ _battery_udev_stop(void)
         eina_stringshare_del(bat->technology);
         eina_stringshare_del(bat->model);
         eina_stringshare_del(bat->vendor);
-#if 0
         ecore_poller_del(bat->poll);
-#endif
         free(bat);
      }
 }
@@ -113,11 +109,9 @@ _battery_udev_battery_add(const char *syspath)
      }
    bat->last_update = ecore_time_get();
    bat->udi = eina_stringshare_add(syspath);
-#if 0
-   bat->poll = ecore_poller_add(ECORE_POLLER_CORE,
-                                battery_config->poll_interval,
-                                _battery_udev_battery_update_poll, bat);
-#endif
+   bat->poll = ecore_poller_add(ECORE_POLLER_CORE, 
+				battery_config->poll_interval, 
+				_battery_udev_battery_update_poll, bat);
    device_batteries = eina_list_append(device_batteries, bat);
    _battery_udev_battery_update(syspath, bat);
 }
@@ -161,9 +155,7 @@ _battery_udev_battery_del(const char *syspath)
    eina_stringshare_del(bat->technology);
    eina_stringshare_del(bat->model);
    eina_stringshare_del(bat->vendor);
-#if 0
    ecore_poller_del(bat->poll);
-#endif
    free(bat);
 }
 
@@ -184,16 +176,13 @@ _battery_udev_ac_del(const char *syspath)
    free(ac);
 }
 
-#if 0
-static Eina_Bool
+static Eina_Bool 
 _battery_udev_battery_update_poll(void *data)
 {
    _battery_udev_battery_update(NULL, data);
 
    return EINA_TRUE;
 }
-
-#endif
 
 #define GET_NUM(TYPE, VALUE, PROP) test = eeze_udev_syspath_get_property(TYPE->udi, #PROP); \
   do                                                                                        \
@@ -218,9 +207,7 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
           return _battery_udev_battery_add(syspath);
      }
    /* update the poller interval */
-#if 0
    ecore_poller_poller_interval_set(bat->poll, battery_config->poll_interval);
-#endif
 
    GET_NUM(bat, present, POWER_SUPPLY_PRESENT);
    if (!bat->got_prop) /* only need to get these once */
@@ -237,28 +224,19 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
      GET_NUM(bat, last_full_charge, POWER_SUPPLY_CHARGE_FULL);
    test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_ENERGY_NOW");
    if (!test)
-     test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_CHARGE_NOW");
+     {
+       	eina_stringshare_del(test);
+        test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_CHARGE_NOW");
+     }
    if (test)
      {
-        const char *rate;
-
-        rate = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_POWER_NOW");
-        if (!rate)
-          rate = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_CURRENT_NOW");
 
         charge = strtod(test, NULL);
         eina_stringshare_del(test);
         t = ecore_time_get();
-        if (rate)
-          {
-             bat->charge_rate = -strtod(rate, NULL) / 3600.0;
-             eina_stringshare_del(rate);
-          }
-        else if ((bat->got_prop) && (charge != bat->current_charge))
-          {
-             bat->charge_rate = ((charge - bat->current_charge) / (t - bat->last_update));
-             bat->last_update = t;
-          }
+        if ((bat->got_prop) && (charge != bat->current_charge))
+          bat->charge_rate = ((charge - bat->current_charge) / (t - bat->last_update));
+        bat->last_update = t;
         bat->current_charge = charge;
         bat->percent = 100 * (bat->current_charge / bat->last_full_charge);
         if (bat->got_prop)
