@@ -38,6 +38,7 @@ struct _E_Shelf
    float                instant_delay;
    Ecore_Timer         *instant_timer;
    Eina_List           *handlers;
+   Ecore_Event_Handler *autohide;
    unsigned char        fit_along   : 1;
    unsigned char        fit_size    : 1;
    unsigned char        hidden      : 1;
@@ -89,6 +90,6 @@ EAPI void             e_shelf_popup_set(E_Shelf *es, int popup);
 EAPI E_Shelf         *e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es);
 EAPI void             e_shelf_name_set(E_Shelf *es, const char *name);
 EAPI void             e_shelf_rename_dialog(E_Shelf *es);
-
+EAPI void             e_shelf_autohide_set(E_Shelf *es, Eina_Bool autohide);
 #endif
 #endif

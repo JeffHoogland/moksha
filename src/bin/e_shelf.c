@@ -18,8 +18,8 @@ static void         _e_shelf_cb_locked_set(void *data, int lock);
 static void         _e_shelf_cb_urgent_show(void *data);
 static void         _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static Eina_Bool    _e_shelf_cb_mouse_in(void *data, int type, void *event);
-static Eina_Bool    _e_shelf_cb_mouse_out(void *data, int type, void *event);
-static void          _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e, Evas_Object *obj, Evas_Event_Mouse_Out *ev);
+//static Eina_Bool    _e_shelf_cb_mouse_out(void *data, int type, void *event);
+//static void          _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e, Evas_Object *obj, Evas_Event_Mouse_Out *ev);
 static int          _e_shelf_cb_id_sort(const void *data1, const void *data2);
 static void         _e_shelf_cb_menu_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static Eina_Bool    _e_shelf_cb_hide_animator(void *data);
@@ -224,22 +224,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, i
      eina_list_append(es->handlers,
                       ecore_event_handler_add(E_EVENT_ZONE_EDGE_MOVE, 
                                               _e_shelf_cb_mouse_in, es));
-   es->handlers = 
-     eina_list_append(es->handlers,
-                      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, 
-                                              _e_shelf_cb_mouse_in, es));
-   es->handlers = 
-     eina_list_append(es->handlers,
-                      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, 
-                                              _e_shelf_cb_mouse_in, es));
-   es->handlers = 
-     eina_list_append(es->handlers,
-                      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, 
-                                              _e_shelf_cb_mouse_out, es));
-   if (!popup)
-     evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_OUT, 
-                                    (Evas_Object_Event_Cb)_e_shelf_cb_mouse_out2, es);
-
    es->o_base = edje_object_add(es->evas);
    es->name = eina_stringshare_add(name);
    evas_object_resize(es->o_base, es->w, es->h);
@@ -974,6 +958,41 @@ e_shelf_popup_set(E_Shelf *es, int popup)
      }
 }
 
+EAPI void
+e_shelf_autohide_set(E_Shelf *es, Eina_Bool autohide)
+{
+   E_OBJECT_CHECK(es);
+   E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
+
+   if (es->cfg->autohide == autohide) return;
+   es->cfg->autohide = !!autohide;
+   if (!es->cfg->autohide)
+     {
+        if (!es->autohide) return;
+        ecore_event_handler_del(es->autohide);
+        es->autohide = NULL;
+        return;
+     }
+/*
+ * see FIXME in _e_shelf_cb_mouse_in() for why these are commented out
+   es->handlers = 
+     eina_list_append(es->handlers,
+                      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, 
+                                              _e_shelf_cb_mouse_in, es));
+*/
+   es->autohide = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, 
+                                          _e_shelf_cb_mouse_in, es);
+/*
+   es->handlers = 
+     eina_list_append(es->handlers,
+                      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, 
+                                              _e_shelf_cb_mouse_out, es));
+   if (!popup)
+     evas_object_event_callback_add(es->o_event, EVAS_CALLBACK_MOUSE_OUT, 
+                                    (Evas_Object_Event_Cb)_e_shelf_cb_mouse_out2, es);
+*/
+}
+
 EAPI E_Shelf *
 e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
 {
@@ -988,6 +1007,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
    es->cfg = cf_es;
    es->fit_along = cf_es->fit_along;
    es->fit_size = cf_es->fit_size;
+
 
    e_shelf_orient(es, cf_es->orient);
    e_shelf_position_calc(es);
@@ -1126,6 +1146,12 @@ _e_shelf_free(E_Shelf *es)
 
    e_zone_useful_geometry_dirty(es->zone);
    E_FREE_LIST(es->handlers, ecore_event_handler_del);
+
+   if (es->autohide)
+     {
+        ecore_event_handler_del(es->autohide);
+        es->autohide = NULL;
+     }
 
    if (es->hide_timer)
      {
@@ -1773,6 +1799,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
         else
           e_shelf_toggle(es, 0);
      }
+     /*
    else if (type == ECORE_X_EVENT_MOUSE_IN)
      {
         Ecore_X_Event_Mouse_In *ev;
@@ -1795,12 +1822,18 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
                }
           }
      }
+     */
    else if (type == ECORE_EVENT_MOUSE_MOVE)
      {
         Ecore_Event_Mouse_Move *ev;
         Eina_Bool inside = EINA_FALSE;
 
         ev = event;
+        /* FIXME: checking every mouse movement here is only necessary because of
+         * shitty systray embedding xwindows into itself which generates inreliable
+         * mouse in/out events. in the future, when we remove systray, we should go
+         * back to mouse in/out events
+         */
         inside = (es->popup && ((ev->event_window == es->popup->evas_win)));
         if (!inside)
           inside = (
@@ -1823,7 +1856,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
      }
    return ECORE_CALLBACK_PASS_ON;
 }
-
+#if 0
 static void
 _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, Evas_Event_Mouse_Out *ev)
 {
@@ -1877,7 +1910,7 @@ _e_shelf_cb_mouse_out(void *data, int type, void *event)
      }
    return ECORE_CALLBACK_PASS_ON;
 }
-
+#endif
 static void
 _e_shelf_cb_dummy_moveresize(E_Shelf *es, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {

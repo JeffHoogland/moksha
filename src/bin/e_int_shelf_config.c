@@ -320,7 +320,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
 
    cfdata->escfg->overlap = cfdata->overlap;
-   cfdata->escfg->autohide = cfdata->autohide;
+   e_shelf_autohide_set(cfdata->es, cfdata->autohide);
    cfdata->escfg->autohide_show_action = cfdata->autohide_action;
    cfdata->escfg->hide_timeout = cfdata->hide_timeout;
    cfdata->escfg->hide_duration = cfdata->hide_duration;
@@ -358,9 +358,6 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
         zone = cfdata->es->zone;
         cf_es = cfdata->es->cfg;
-        cf_es->fit_along = cfdata->escfg->fit_along;
-        cf_es->orient = cfdata->escfg->orient;
-        cfdata->es->config_dialog = NULL;
         e_object_del(E_OBJECT(cfdata->es));
 
         cfdata->es = e_shelf_config_new(zone, cf_es);
