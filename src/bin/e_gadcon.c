@@ -472,7 +472,6 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *s
         gc->cf = E_NEW(E_Config_Gadcon, 1);
         gc->cf->name = eina_stringshare_add(gc->name);
         gc->cf->id = gc->id;
-        if (gc->zone) gc->cf->zone = gc->zone->num;
         e_config->gadcons = eina_list_append(e_config->gadcons, gc->cf);
         e_config_save_queue();
      }
