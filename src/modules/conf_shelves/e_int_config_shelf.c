@@ -432,6 +432,13 @@ _new_shelf_cb_ok(void *data, char *text)
         _new_shelf_cb_dia_del(cfdata->dia_new_shelf);
         return;
      }
+   EINA_LIST_FOREACH(e_config->shelves, l, c)
+     {
+        if (strcmp(c->name, text)) continue;
+        e_util_dialog_internal(_("Shelf Error"), _("A shelf with that name already exists!"));
+        _new_shelf_cb_dia_del(cfdata->dia_new_shelf);
+        return;
+     }
 
    if (cfdata->cfd && cfdata->cfd->dia && cfdata->cfd->dia->win && cfdata->cfd->dia->win->border && cfdata->cfd->dia->win->border->zone)
      zone = cfdata->cfd->dia->win->border->zone;
@@ -552,6 +559,7 @@ _cb_dialog_destroy(void *data)
    cfdata = evas_object_data_get(es->o_base, "cfdata");
    if (!cfdata) return;
    evas_object_data_del(es->o_base, "cfdata");
+   e_shelf_unsave(es);
    e_object_unref(E_OBJECT(es));
    _widgets_disable(cfdata, 0, EINA_TRUE);
 }
