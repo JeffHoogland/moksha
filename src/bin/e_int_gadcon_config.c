@@ -670,36 +670,44 @@ _advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->basic.o_list = NULL;
    otb = e_widget_toolbook_add(evas, 48 * e_scale, 48 * e_scale);
    ////////////////////////////////////////////////////////////
-   ot = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, EINA_FALSE);
 
-   cfdata->advanced.o_list = e_widget_ilist_add(evas, 24, 24, &cfdata->sel);
+   cfdata->advanced.o_list = 
+     e_widget_ilist_add(evas, (24 * e_scale), (24 * e_scale), &cfdata->sel);
    e_widget_ilist_multi_select_set(cfdata->advanced.o_list, EINA_TRUE);
    e_widget_size_min_get(cfdata->advanced.o_list, &mw, NULL);
    if (mw < (200 * e_scale)) mw = (200 * e_scale);
    e_widget_size_min_set(cfdata->advanced.o_list, mw, (160 * e_scale));
-   e_widget_list_object_append(ot, cfdata->advanced.o_list, 1, 1, 0.5);
+   e_widget_table_object_append(ot, cfdata->advanced.o_list, 
+                                0, 0, 1, 1, 1, 1, 1, 1);
 
    cfdata->o_del =
      e_widget_button_add(evas, _("Remove Gadget"), NULL, _cb_del_advanced, cfdata, NULL);
    e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
-   e_widget_list_object_append(ot, cfdata->o_del, 1, 0, 0.5);
+   e_widget_table_object_append(ot, cfdata->o_del, 0, 1, 1, 1, 1, 1, 1, 0);
+   /* e_widget_list_object_append(ot, cfdata->o_del, 1, 0, 0.5); */
 
-   e_widget_toolbook_page_append(otb, NULL, _("Gadgets"), ot, 0, 0, 0, 0, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Gadgets"), ot, 1, 1, 1, 1, 0.5, 0.0);
    ////////////////////////////////////////////////////////////
-   ot = e_widget_list_add(evas, 0, 0);
+//   ot = e_widget_list_add(evas, 0, 0);
+   ot = e_widget_table_add(evas, EINA_FALSE);
 
-   cfdata->class_list = e_widget_ilist_add(evas, 24, 24, NULL);
+   cfdata->class_list = 
+     e_widget_ilist_add(evas, (24 * e_scale), (24 * e_scale), NULL);
    e_widget_size_min_get(cfdata->class_list, &mw, NULL);
    if (mw < (200 * e_scale)) mw = (200 * e_scale);
    e_widget_size_min_set(cfdata->class_list, mw, (160 * e_scale));
-   e_widget_list_object_append(ot, cfdata->class_list, 1, 1, 0.5);
+   e_widget_table_object_append(ot, cfdata->class_list, 
+                                0, 0, 1, 1, 1, 1, 1, 1);
+//   e_widget_list_object_append(ot, cfdata->class_list, 1, 1, 0.5);
 
    cfdata->o_add =
      e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add_advanced, cfdata, NULL);
    e_widget_disabled_set(cfdata->o_add, EINA_TRUE);
-   e_widget_list_object_append(ot, cfdata->o_add, 1, 0, 0.5);
+   e_widget_table_object_append(ot, cfdata->o_add, 0, 1, 1, 1, 1, 1, 1, 0);
+//   e_widget_list_object_append(ot, cfdata->o_add, 1, 0, 0.5);
 
-   e_widget_toolbook_page_append(otb, NULL, _("Classes"), ot, 0, 0, 0, 0, 0.5, 0.0);
+   e_widget_toolbook_page_append(otb, NULL, _("Classes"), ot, 1, 1, 1, 1, 0.5, 0.0);
    ////////////////////////////////////////////////////////////
    e_widget_toolbook_page_show(otb, 0);
    if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
