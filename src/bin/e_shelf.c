@@ -964,8 +964,9 @@ e_shelf_autohide_set(E_Shelf *es, Eina_Bool autohide)
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
-   if (es->cfg->autohide == autohide) return;
-   es->cfg->autohide = !!autohide;
+   autohide = !!autohide;
+   if ((es->cfg->autohide == autohide) && ((!!es->autohide) == autohide)) return;
+   es->cfg->autohide = autohide;
    if (!es->cfg->autohide)
      {
         if (!es->autohide) return;
@@ -1008,7 +1009,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
    es->fit_along = cf_es->fit_along;
    es->fit_size = cf_es->fit_size;
 
-
+   e_shelf_autohide_set(es, cf_es->autohide);
    e_shelf_orient(es, cf_es->orient);
    e_shelf_position_calc(es);
    e_shelf_populate(es);
