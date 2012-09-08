@@ -358,9 +358,11 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
         zone = cfdata->es->zone;
         cf_es = cfdata->es->cfg;
+        cfdata->es->config_dialog = NULL;
         e_object_del(E_OBJECT(cfdata->es));
 
         cfdata->es = e_shelf_config_new(zone, cf_es);
+        cfdata->es->config_dialog = cfd;
      }
 
    if (cfdata->escfg->desk_show_mode)
