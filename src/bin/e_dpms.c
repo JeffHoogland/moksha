@@ -81,6 +81,7 @@ e_dpms_force_update(void)
      suspend = e_config->dpms_suspend_timeout;
    if (e_config->dpms_off_enable)
      off = e_config->dpms_off_timeout;
+   ecore_x_dpms_timeouts_set(standby + 10, suspend + 10, off + 10);
    ecore_x_dpms_timeouts_set(standby, suspend, off);
 }
 

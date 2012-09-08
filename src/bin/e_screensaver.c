@@ -68,6 +68,10 @@ e_screensaver_force_update(void)
    if ((e_config->screensaver_enable) && (!e_config->mode.presentation) &&
        (!e_util_fullscreen_curreny_any()))
      timeout = e_config->screensaver_timeout * count;
+   ecore_x_screensaver_set(timeout + 10,
+                           e_config->screensaver_interval + 10,
+                           !e_config->screensaver_blanking,
+                           !e_config->screensaver_expose);
    ecore_x_screensaver_set(timeout,
                            e_config->screensaver_interval,
                            e_config->screensaver_blanking,
