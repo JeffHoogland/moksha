@@ -81,6 +81,7 @@ _queue_timer(void *data)
 
    obj = data;
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    wd->queue.timer = NULL;
    e_widget_ilist_freeze(obj);
    num = 0;
@@ -211,6 +212,7 @@ _queue_queue(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    if (!wd->queue.queue) return;
    if (wd->queue.timer) return;
    wd->queue.timer = ecore_timer_add(0.00001, _queue_timer, obj);
@@ -225,6 +227,7 @@ _queue_append(Evas_Object *obj, int command, Evas_Object *icon, Evas_Object *end
    E_Widget_Queue_Item *qi;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    qi = E_NEW(E_Widget_Queue_Item, 1);
    if (!qi) return;
    qi->command = command;
@@ -248,6 +251,7 @@ _queue_remove(Evas_Object *obj, E_Widget_Queue_Item *qi, int del)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    wd->queue.queue = eina_list_remove(wd->queue.queue, qi);
    if (del)
      {
@@ -265,6 +269,7 @@ _queue_clear(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    while (wd->queue.queue)
      _queue_remove(obj, eina_list_data_get(wd->queue.queue), 1);
    if (wd->queue.timer) ecore_timer_del(wd->queue.timer);
@@ -281,6 +286,7 @@ _e_wid_disable_hook(Evas_Object *obj)
 
    disabled = e_widget_disabled_get(obj);
    wd = e_widget_data_get(obj);
+   if (!wd) return;
 
    EINA_LIST_FOREACH(e_widget_ilist_items_get(obj), l, ili)
      {
@@ -340,6 +346,7 @@ e_widget_ilist_freeze(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    e_ilist_freeze(wd->o_ilist);
 }
 
@@ -349,6 +356,7 @@ e_widget_ilist_thaw(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    e_ilist_thaw(wd->o_ilist);
 }
 
@@ -524,6 +532,7 @@ e_widget_ilist_selector_set(Evas_Object *obj, int selector)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    e_ilist_selector_set(wd->o_ilist, selector);
 }
 
@@ -534,6 +543,7 @@ e_widget_ilist_go(Evas_Object *obj)
    Evas_Coord mw, mh, vw, vh, w, h;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    wd->o_widget = obj;
    e_ilist_size_min_get(wd->o_ilist, &mw, &mh);
    evas_object_resize(wd->o_ilist, mw, mh);
@@ -557,6 +567,7 @@ e_widget_ilist_clear(Evas_Object *obj)
    E_Widget_Callback *wcb;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    _queue_clear(obj);
    e_ilist_clear(wd->o_ilist);
    e_scrollframe_child_pos_set(wd->o_scrollframe, 0, 0);
@@ -573,6 +584,7 @@ e_widget_ilist_count(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return 0;
 
    if (wd->queue.queue)
      {
@@ -595,6 +607,7 @@ e_widget_ilist_items_get(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    return e_ilist_items_get(wd->o_ilist);
 }
 
@@ -604,6 +617,7 @@ e_widget_ilist_nth_is_header(Evas_Object *obj, int n)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return EINA_FALSE;
    return e_ilist_nth_is_header(wd->o_ilist, n);
 }
 
@@ -625,6 +639,7 @@ e_widget_ilist_nth_label_get(Evas_Object *obj, int n)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    return e_ilist_nth_label_get(wd->o_ilist, n);
 }
 
@@ -646,6 +661,7 @@ e_widget_ilist_nth_icon_get(Evas_Object *obj, int n)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    return e_ilist_nth_icon_get(wd->o_ilist, n);
 }
 
@@ -661,6 +677,7 @@ e_widget_ilist_nth_end_get(Evas_Object *obj, int n)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    return e_ilist_nth_end_get(wd->o_ilist, n);
 }
 
@@ -671,6 +688,7 @@ e_widget_ilist_nth_data_get(Evas_Object *obj, int n)
    E_Widget_Callback *wcb;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    wcb = eina_list_nth(wd->callbacks, n);
 
    if (!wcb)
@@ -686,6 +704,7 @@ e_widget_ilist_nth_value_get(Evas_Object *obj, int n)
    E_Widget_Callback *wcb;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    wcb = eina_list_nth(wd->callbacks, n);
 
    if (!wcb)
@@ -824,6 +843,7 @@ e_widget_ilist_selected_items_get(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    return e_ilist_selected_items_get(wd->o_ilist);
 }
 
@@ -833,6 +853,7 @@ e_widget_ilist_selected_get(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return 0;
    return e_ilist_selected_get(wd->o_ilist);
 }
 
@@ -842,6 +863,7 @@ e_widget_ilist_selected_label_get(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    return e_ilist_selected_label_get(wd->o_ilist);
 }
 
@@ -851,6 +873,7 @@ e_widget_ilist_selected_icon_get(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    return e_ilist_selected_icon_get(wd->o_ilist);
 }
 
@@ -861,6 +884,7 @@ e_widget_ilist_selected_data_get(Evas_Object *obj)
    E_Widget_Callback *wcb;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    wcb = eina_list_nth(wd->callbacks, e_ilist_selected_get(wd->o_ilist));
 
    return wcb ? wcb->data : NULL;
@@ -872,6 +896,7 @@ e_widget_ilist_selected_end_get(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    return e_ilist_selected_end_get(wd->o_ilist);
 }
 
@@ -881,6 +906,7 @@ e_widget_ilist_selected_count_get(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return 0;
    return e_ilist_selected_count_get(wd->o_ilist);
 }
 
@@ -891,6 +917,7 @@ e_widget_ilist_selected_value_get(Evas_Object *obj)
    E_Widget_Callback *wcb;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return NULL;
    wcb = eina_list_nth(wd->callbacks, e_ilist_selected_get(wd->o_ilist));
 
    if (!wcb)
@@ -925,6 +952,7 @@ e_widget_ilist_remove_num(Evas_Object *obj, int n)
    Eina_List *item;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    e_ilist_remove_num(wd->o_ilist, n);
    item = eina_list_nth_list(wd->callbacks, n);
    if (item)
@@ -942,6 +970,7 @@ e_widget_ilist_multi_select_set(Evas_Object *obj, Eina_Bool multi)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    e_ilist_multi_select_set(wd->o_ilist, multi);
 }
 
@@ -951,6 +980,7 @@ e_widget_ilist_multi_select_get(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return EINA_FALSE;
    return e_ilist_multi_select_get(wd->o_ilist);
 }
 
@@ -985,6 +1015,7 @@ e_widget_ilist_preferred_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    evas_object_geometry_get(wd->o_scrollframe, NULL, NULL, &ww, &hh);
    evas_object_resize(wd->o_scrollframe, 200, 200);
    e_scrollframe_child_viewport_size_get(wd->o_scrollframe, &vw, &vh);
@@ -1001,6 +1032,7 @@ _e_wid_del_hook(Evas_Object *obj)
    E_Widget_Callback *wcb;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    _queue_clear(obj);
    EINA_LIST_FREE(wd->callbacks, wcb)
      {
@@ -1016,6 +1048,7 @@ _e_wid_focus_hook(Evas_Object *obj)
    E_Widget_Data *wd;
 
    wd = e_widget_data_get(obj);
+   if (!wd) return;
    if (e_widget_focus_get(obj))
      {
         edje_object_signal_emit(e_scrollframe_edje_object_get(wd->o_scrollframe), "e,state,focused", "e");
