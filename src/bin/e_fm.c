@@ -1024,7 +1024,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         e_dialog_show(dialog);
         return;
      }
-   if (sd->realpath == real_path) return;
+   if (real_path && (sd->realpath == real_path)) return;
 
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
    sd->listing = EINA_FALSE;
@@ -6344,7 +6344,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
 
    fsel = _e_fm2_uri_path_list_get(ev->data);
    fp = eina_list_data_get(fsel);
-   if (fp)
+   if (fp && sd->realpath)
      {
         const char *f;
 
