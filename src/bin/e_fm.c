@@ -79,6 +79,12 @@ struct _E_Fm2_Smart_Data
       E_Fm2_Menu_Flags flags;
    } icon_menu;
 
+   struct
+   {
+      Ecore_Thread   *thread;
+      const char *filename;
+   } new_file;
+
    Eina_List       *icons;
    E_Fm2_Icon      *last_selected;
    Eina_List       *selected_icons;
@@ -4714,6 +4720,14 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 
    if (ic->info.removable)
      _e_fm2_icon_removable_update(ic);
+   if (ic->sd->new_file.filename)
+     {
+        if (ic->info.file == ic->sd->new_file.filename)
+          {
+             _e_fm2_file_rename(ic, NULL, NULL);
+             eina_stringshare_replace(&ic->sd->new_file.filename, NULL);
+          }
+     }
 }
 
 static void
@@ -7969,6 +7983,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    eina_stringshare_del(sd->dev);
    eina_stringshare_del(sd->path);
    eina_stringshare_del(sd->realpath);
+   eina_stringshare_del(sd->new_file.filename);
    sd->dev = sd->path = sd->realpath = NULL;
    if (sd->mount)
      {
@@ -8972,6 +8987,104 @@ _e_fm2_icon_view_menu_pre(void *data, E_Menu *subm)
 }
 
 static void
+_e_fm2_new_file_notify(void *data, Ecore_Thread *eth __UNUSED__, char *filename)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   if (filename)
+     sd->new_file.filename = eina_stringshare_add(ecore_file_file_get(filename));
+   else
+     e_util_dialog_internal(_("Error"), _("Could not create a file!"));
+   free(filename);
+}
+
+static void
+_e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
+{
+   char buf[PATH_MAX];
+   const char *path;
+   struct stat st;
+   unsigned int x;
+   FILE *f;
+
+   path = ecore_thread_global_data_wait("path", 2.0);
+   snprintf(buf, sizeof(buf), "%s/%s", path, _("New File"));
+   errno = 0;
+   if (stat(buf, &st) && (errno == ENOENT))
+     {
+        f = fopen(buf, "w");
+        if (f)
+          {
+             fwrite("", 1, 1, f);
+             fclose(f);
+             ecore_thread_feedback(eth, strdup(buf));
+             return;
+          }
+        goto error;
+     }
+   else if (errno)
+     goto error;
+   for (x = 0; x < UINT_MAX; x++)
+     {
+        snprintf(buf, sizeof(buf), "%s/%s %u", path, _("New File"), x);
+        errno = 0;
+        if (stat(buf, &st) && (errno == ENOENT))
+          {
+             f = fopen(buf, "w");
+             if (f)
+               {
+                  fwrite("", 1, 1, f);
+                  fclose(f);
+                  ecore_thread_feedback(eth, strdup(buf));
+                  return;
+               }
+             goto error;
+          }
+        else if (errno)
+          goto error;
+     }
+error:
+   ecore_thread_feedback(eth, NULL);
+}
+
+static void
+_e_fm2_new_file_end(void *data, Ecore_Thread *eth __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+   sd->new_file.thread = NULL;
+   evas_object_unref(sd->obj);
+}
+
+static void
+_e_fm2_new_file_cancel(void *data, Ecore_Thread *eth __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+   sd->new_file.thread = NULL;
+   evas_object_unref(sd->obj);
+}
+
+static void
+_e_fm2_new_file(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   if (sd->new_file.thread || sd->new_file.filename)
+     {
+        e_util_dialog_internal(_("Error"), _("Already creating a new file for this directory!"));
+        return;
+     }
+   if (!ecore_file_can_write(sd->realpath))
+     {
+        e_util_dialog_show(_("Error"), _("%s is not able to be written to!"), sd->realpath);
+        return;
+     }
+   sd->new_file.thread = ecore_thread_feedback_run(_e_fm2_new_file_thread, (Ecore_Thread_Notify_Cb)_e_fm2_new_file_notify,
+                                                   _e_fm2_new_file_end, _e_fm2_new_file_cancel, sd, EINA_FALSE);
+   ecore_thread_global_data_add("path", (void*)eina_stringshare_ref(sd->realpath), (void*)eina_stringshare_del, EINA_FALSE);
+   evas_object_ref(sd->obj);
+}
+
+static void
 _e_fm2_add_menu_pre(void *data, E_Menu *subm)
 {
    E_Menu_Item *mi;
@@ -8984,6 +9097,11 @@ _e_fm2_add_menu_pre(void *data, E_Menu *subm)
    e_menu_item_label_set(mi, _("Directory"));
    e_util_menu_item_theme_icon_set(mi, "folder-new");
    e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("File"));
+   e_util_menu_item_theme_icon_set(mi, "document-new");
+   e_menu_item_callback_set(mi, _e_fm2_new_file, sd);
 }
 static void
 _e_fm2_options_menu_pre(void *data, E_Menu *subm)
