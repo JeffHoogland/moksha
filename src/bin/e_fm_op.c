@@ -1157,6 +1157,7 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
    else
      {
         E_FM_OP_DEBUG("Creating link from '%s' to '%s'\n", lnk_path, task->dst.name);
+        _e_fm_op_update_progress_report_simple(0.0, lnk_path, task->dst.name);
 
         if (symlink(lnk_path, task->dst.name) == -1)
           {
@@ -1508,6 +1509,7 @@ _e_fm_op_symlink_atom(E_Fm_Op_Task *task)
    if (_e_fm_op_handle_overwrite(task)) return 1;
 
    E_FM_OP_DEBUG("Symlink: %s -> %s\n", task->src.name, task->dst.name);
+   _e_fm_op_update_progress_report_simple(0.0, task->src.name, task->dst.name);
 
    if (symlink(task->src.name, task->dst.name) == -1)
      {
