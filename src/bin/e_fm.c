@@ -1032,6 +1032,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         e_dialog_show(dialog);
         return;
      }
+   if (sd->realpath == real_path) return;
 
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
    sd->listing = EINA_FALSE;
