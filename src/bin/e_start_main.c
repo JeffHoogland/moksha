@@ -224,7 +224,7 @@ _env_path_prepend(const char *env, const char *path)
              strcat(s, p2);
              strcat(s, ":");
           }
-        strcat(s, p);
+        if (p) strcat(s, p);
         env_set(env, s);
         free(s);
      }
@@ -254,7 +254,7 @@ _env_path_append(const char *env, const char *path)
    if (s)
      {
         s[0] = 0;
-        strcat(s, p);
+        if (p) strcat(s, p);
         if (p2)
           {
              strcat(s, ":");
