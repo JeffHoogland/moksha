@@ -622,6 +622,8 @@ _e_fwin_icon_popup(void *data)
 
    fwin->popup_timer = NULL;
    if (!fwin->popup_icon) return EINA_FALSE;
+   snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), fwin->popup_icon->file);
+   if (!ecore_file_can_read(buf)) return EINA_FALSE;
    if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
    zone = fwin->zone ?: fwin->win->border->zone;
    e_fm2_icon_geometry_get(fwin->popup_icon->ic, &x, &y, &w, &h);
@@ -665,7 +667,6 @@ _e_fwin_icon_popup(void *data)
    */
    list = e_widget_framelist_add(fwin->popup->evas, fwin->popup_icon->file, 0);
    o = e_widget_filepreview_add(fwin->popup->evas, mw, mh, 0);
-   snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(fwin->cur_page->fm_obj), fwin->popup_icon->file);
    e_widget_filepreview_path_set(o, buf, fwin->popup_icon->mime);
    e_widget_framelist_object_append(list, o);
    e_widget_size_min_get(list, &mw, &mh);
