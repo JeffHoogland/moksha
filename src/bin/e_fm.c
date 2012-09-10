@@ -8158,17 +8158,21 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
              e_util_menu_item_theme_icon_set(mi, "view-refresh");
              e_menu_item_callback_set(mi, _e_fm2_refresh, sd);
           }
-        mi = e_menu_item_new(mn);
-        e_menu_item_separator_set(mi, 1);
 
-        mi = e_menu_item_new(mn);
-        e_menu_item_label_set(mi, _("New..."));
-        e_util_menu_item_theme_icon_set(mi, "add");
-        sub = e_menu_new();
-        e_menu_item_submenu_set(mi, sub);
-        e_object_unref(E_OBJECT(sub));
-        e_object_data_set(E_OBJECT(sub), sd);
-        e_menu_pre_activate_callback_set(sub, _e_fm2_add_menu_pre, sd);
+        if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW))
+          {
+             mi = e_menu_item_new(mn);
+             e_menu_item_separator_set(mi, 1);
+
+             mi = e_menu_item_new(mn);
+             e_menu_item_label_set(mi, _("New..."));
+             e_util_menu_item_theme_icon_set(mi, "add");
+             sub = e_menu_new();
+             e_menu_item_submenu_set(mi, sub);
+             e_object_unref(E_OBJECT(sub));
+             e_object_data_set(E_OBJECT(sub), sd);
+             e_menu_pre_activate_callback_set(sub, _e_fm2_add_menu_pre, sd);
+          }
 
         if (((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) ||
              (!(sd->icon_menu.flags & E_FM2_MENU_NO_SYMLINK))) &&
@@ -8293,7 +8297,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
           }
 
         /* FIXME: stat the dir itself - move to e_fm_main */
-        if (ecore_file_can_write(sd->realpath))
+        if (ecore_file_can_write(sd->realpath) && !(sd->icon_menu.flags & E_FM2_MENU_NO_NEW))
           {
              mi = e_menu_item_new(mn);
              e_menu_item_separator_set(mi, 1);
@@ -8933,13 +8937,10 @@ _e_fm2_add_menu_pre(void *data, E_Menu *subm)
    sd = data;
    if (subm->items) return;
 
-   if (!(sd->icon_menu.flags & E_FM2_MENU_NO_NEW_DIRECTORY))
-     {
-        mi = e_menu_item_new(subm);
-        e_menu_item_label_set(mi, _("Directory"));
-        e_util_menu_item_theme_icon_set(mi, "folder-new");
-        e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
-     }
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Directory"));
+   e_util_menu_item_theme_icon_set(mi, "folder-new");
+   e_menu_item_callback_set(mi, _e_fm2_new_directory, sd);
 }
 static void
 _e_fm2_options_menu_pre(void *data, E_Menu *subm)

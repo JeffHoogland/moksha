@@ -21,7 +21,7 @@ typedef enum _E_Fm2_Menu_Flags
    E_FM2_MENU_NO_REFRESH = (1 << 0),
    E_FM2_MENU_NO_SHOW_HIDDEN = (1 << 1),
    E_FM2_MENU_NO_REMEMBER_ORDERING = (1 << 2),
-   E_FM2_MENU_NO_NEW_DIRECTORY = (1 << 3),
+   E_FM2_MENU_NO_NEW = (1 << 3),
    E_FM2_MENU_NO_DELETE = (1 << 4),
    E_FM2_MENU_NO_RENAME = (1 << 5),
    E_FM2_MENU_NO_CUT = (1 << 6),
