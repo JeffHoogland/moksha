@@ -3169,6 +3169,59 @@ _e_mod_comp_bd_unfullscreen(void *data __UNUSED__,
 }
 
 //////////////////////////////////////////////////////////////////////////
+static void
+_e_mod_comp_fps_toggle(void)
+{
+   if (_comp_mod)
+     {
+        Eina_List *l;
+        E_Comp *c;
+
+        if (_comp_mod->conf->fps_show)
+          {
+             _comp_mod->conf->fps_show = 0;
+             e_config_save_queue();
+          }
+        else
+          {
+             _comp_mod->conf->fps_show = 1;
+             e_config_save_queue();
+          }
+        EINA_LIST_FOREACH(compositors, l, c) _e_mod_comp_cb_update(c);
+     }
+}
+
+static Eina_Bool
+_e_mod_comp_key_down(void *data __UNUSED__,
+                     int type   __UNUSED__,
+                     void *event)
+{
+   Ecore_Event_Key *ev = event;
+
+   if ((!strcmp(ev->keyname, "Home")) &&
+       (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+       (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+       (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))
+     {
+        if (_comp_mod)
+          {
+             _e_mod_config_free(_comp_mod->module);
+             _e_mod_config_new(_comp_mod->module);
+             e_config_save();
+             e_module_disable(_comp_mod->module);
+             e_config_save();
+             e_sys_action_do(E_SYS_RESTART, NULL);
+          }
+     }
+   else if ((!strcasecmp(ev->keyname, "f")) &&
+            (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
+            (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
+            (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))
+     {
+        _e_mod_comp_fps_toggle();
+     }
+   return ECORE_CALLBACK_PASS_ON;
+}
 
 static Eina_Bool
 _e_mod_comp_signal_user(void *data __UNUSED__,
@@ -3183,7 +3236,7 @@ _e_mod_comp_signal_user(void *data __UNUSED__,
      }
    else if (ev->number == 2)
      {
-        e_mod_comp_fps_toggle();
+        _e_mod_comp_fps_toggle();
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -3750,6 +3803,7 @@ e_mod_comp_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DAMAGE, _e_mod_comp_damage_win, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_mod_comp_screensaver, NULL));
 
+   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_mod_comp_key_down, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER, _e_mod_comp_signal_user, NULL));
 
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE, _e_mod_comp_randr, NULL));
@@ -3834,29 +3888,6 @@ e_mod_comp_shutdown(void)
    borders = NULL;
    
    e_sys_handlers_set(NULL, NULL, NULL, NULL, NULL, NULL);
-}
-
-void
-e_mod_comp_fps_toggle(void)
-{
-   if (_comp_mod)
-     {
-        Eina_List *l;
-        E_Comp *c;
-
-        if (_comp_mod->conf->fps_show)
-          {
-             _comp_mod->conf->fps_show = 0;
-             e_config_save_queue();
-          }
-        else
-          {
-             _comp_mod->conf->fps_show = 1;
-             e_config_save_queue();
-          }
-        EINA_LIST_FOREACH(compositors, l, c)
-          _e_mod_comp_cb_update(c);
-     }
 }
 
 void
