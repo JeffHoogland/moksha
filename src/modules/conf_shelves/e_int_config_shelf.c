@@ -125,7 +125,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                                             _cb_contents, cfdata, NULL);
    e_widget_table_object_align_append(ot, cfdata->o_contents,
                                       3, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
-   cfdata->o_config = e_widget_button_add(evas, _("Setup"), "configure",
+   cfdata->o_config = e_widget_button_add(evas, _("Settings"), "configure",
                                           _cb_config, cfdata, NULL);
    e_widget_table_object_align_append(ot, cfdata->o_config,
                                       4, 0, 1, 1, 0, 1, 1, 1, 1.0, 0.5);
