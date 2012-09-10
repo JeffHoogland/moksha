@@ -1006,17 +1006,10 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    if (dev && strncmp(dev, "removable:", 10)
        && !ecore_file_exists(real_path))
      {
-        E_Manager *man;
-        E_Container *con;
         E_Dialog *dialog;
         char text[4096 + 256];
 
-        man = e_manager_current_get();
-        if (!man) return;
-        con = e_container_current_get(man);
-        if (!con) return;
-
-        dialog = e_dialog_new(con, "E", "_fm_file_unexisting_path_dialog");
+        dialog = e_dialog_new(NULL, "E", "_fm_file_unexisting_path_dialog");
         e_dialog_button_add(dialog, _("Close"), NULL, NULL, dialog);
         e_dialog_button_focus_num(dialog, 0);
         e_dialog_title_set(dialog, _("Nonexistent path"));
@@ -9276,18 +9269,11 @@ _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title,
                       void (*ok_cb)(void *data, E_Dialog *dia),
                       void (*clear_cb)(void *data, E_Dialog *dia))
 {
-   E_Manager *man;
-   E_Container *con;
    E_Dialog *dia;
    Evas_Object *o;
    Evas_Coord w, h;
 
-   man = e_manager_current_get();
-   if (!man) return;
-   con = e_container_current_get(man);
-   if (!con) return;
-
-   dia = e_dialog_new(con, "E", "_fm2_view_image_select_dialog");
+   dia = e_dialog_new(NULL, "E", "_fm2_view_image_select_dialog");
    if (!dia) return;
    e_dialog_title_set(dia, title);
 
@@ -9524,16 +9510,9 @@ static void
 _e_fm2_new_directory(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Fm2_Smart_Data *sd;
-   E_Manager *man;
-   E_Container *con;
 
    sd = data;
    if (sd->entry_dialog) return;
-
-   man = e_manager_current_get();
-   if (!man) return;
-   con = e_container_current_get(man);
-   if (!con) return;
 
    sd->entry_dialog = e_entry_dialog_show(_("Create a new Directory"), "folder",
                                           _("New Directory Name:"),
@@ -9743,20 +9722,13 @@ _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
 static E_Dialog *
 _e_fm_retry_abort_dialog(int pid, const char *str)
 {
-   E_Manager *man;
-   E_Container *con;
    E_Dialog *dialog;
    void *id;
    char text[4096 + PATH_MAX];
 
-   man = e_manager_current_get();
-   if (!man) return NULL;
-   con = e_container_current_get(man);
-   if (!con) return NULL;
-
    id = (intptr_t*)(long)pid;
 
-   dialog = e_dialog_new(con, "E", "_fm_overwrite_dialog");
+   dialog = e_dialog_new(NULL, "E", "_fm_overwrite_dialog");
    E_OBJECT(dialog)->data = id;
    e_dialog_button_add(dialog, _("Retry"), NULL, _e_fm_retry_abort_retry_cb, NULL);
    e_dialog_button_add(dialog, _("Abort"), NULL, _e_fm_retry_abort_abort_cb, NULL);
@@ -9795,20 +9767,13 @@ _e_fm_retry_abort_abort_cb(void *data __UNUSED__, E_Dialog *dialog)
 static E_Dialog *
 _e_fm_overwrite_dialog(int pid, const char *str)
 {
-   E_Manager *man;
-   E_Container *con;
    E_Dialog *dialog;
    void *id;
    char text[4096 + PATH_MAX];
 
-   man = e_manager_current_get();
-   if (!man) return NULL;
-   con = e_container_current_get(man);
-   if (!con) return NULL;
-
    id = (intptr_t*)(long)pid;
 
-   dialog = e_dialog_new(con, "E", "_fm_overwrite_dialog");
+   dialog = e_dialog_new(NULL, "E", "_fm_overwrite_dialog");
    E_OBJECT(dialog)->data = id;
    e_dialog_button_add(dialog, _("No"), NULL, _e_fm_overwrite_no_cb, NULL);
    e_dialog_button_add(dialog, _("No to all"), NULL, _e_fm_overwrite_no_all_cb, NULL);
@@ -9866,20 +9831,13 @@ _e_fm_overwrite_yes_all_cb(void *data __UNUSED__, E_Dialog *dialog)
 static E_Dialog *
 _e_fm_error_dialog(int pid, const char *str)
 {
-   E_Manager *man;
-   E_Container *con;
    E_Dialog *dialog;
    void *id;
    char text[4096 + PATH_MAX];
 
-   man = e_manager_current_get();
-   if (!man) return NULL;
-   con = e_container_current_get(man);
-   if (!con) return NULL;
-
    id = (intptr_t*)(long)pid;
 
-   dialog = e_dialog_new(con, "E", "_fm_error_dialog");
+   dialog = e_dialog_new(NULL, "E", "_fm_error_dialog");
    E_OBJECT(dialog)->data = id;
    e_dialog_button_add(dialog, _("Retry"), NULL, _e_fm_error_retry_cb, NULL);
    e_dialog_button_add(dialog, _("Abort"), NULL, _e_fm_error_abort_cb, NULL);
@@ -9938,18 +9896,11 @@ _e_fm_error_ignore_all_cb(void *data __UNUSED__, E_Dialog *dialog)
 static void
 _e_fm_device_error_dialog(const char *title, const char *msg, const char *pstr)
 {
-   E_Manager *man;
-   E_Container *con;
    E_Dialog *dialog;
    char text[PATH_MAX];
    const char *u, *d, *n, *m;
 
-   man = e_manager_current_get();
-   if (!man) return;
-   con = e_container_current_get(man);
-   if (!con) return;
-
-   dialog = e_dialog_new(con, "E", "_fm_device_error_dialog");
+   dialog = e_dialog_new(NULL, "E", "_fm_device_error_dialog");
    e_dialog_title_set(dialog, title);
    e_dialog_icon_set(dialog, "drive-harddisk", 64);
    e_dialog_button_add(dialog, _("OK"), NULL, NULL, NULL);
@@ -10032,22 +9983,16 @@ _e_fm2_file_delete_menu(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
 static void
 _e_fm2_file_delete(Evas_Object *obj)
 {
-   E_Manager *man;
-   E_Container *con;
    E_Dialog *dialog;
    E_Fm2_Icon *ic;
    char text[4096 + 256];
    Eina_List *sel;
    int n = 0, folder_count = 0;
 
-   man = e_manager_current_get();
-   if (!man) return;
-   con = e_container_current_get(man);
-   if (!con) return;
    ic = _e_fm2_icon_first_selected_find(obj);
    if (!ic) return;
    if (ic->dialog) return;
-   dialog = e_dialog_new(con, "E", "_fm_file_delete_dialog");
+   dialog = e_dialog_new(NULL, "E", "_fm_file_delete_dialog");
    ic->dialog = dialog;
    E_OBJECT(dialog)->data = ic;
    e_object_del_attach_func_set(E_OBJECT(dialog), _e_fm2_file_delete_delete_cb);
