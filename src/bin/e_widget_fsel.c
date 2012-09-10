@@ -382,7 +382,7 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    fmc.selection.windows_modifiers = 0;
    fmc.view.no_click_rename = 1;
    e_fm2_config_set(o, &fmc);
-   e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_VIEW_MENU | E_FM2_MENU_NO_ACTIVATE_CHANGE);
+   e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_VIEW_CHANGE | E_FM2_MENU_NO_ACTIVATE_CHANGE);
    evas_object_smart_callback_add(o, "changed",
                                   _e_wid_fsel_favorites_files_changed, wd);
    evas_object_smart_callback_add(o, "selected",
