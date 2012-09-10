@@ -6323,6 +6323,26 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    ev = (E_Event_Dnd_Drop *)event;
 
    fsel = _e_fm2_uri_path_list_get(ev->data);
+   fp = eina_list_data_get(fsel);
+   if (fp)
+     {
+        const char *f;
+
+        /* if we're dropping into a link_drop view, we need to stop here so we
+         * don't accidentally replace an original file with a link!
+         */
+        f = ecore_file_file_get(fp);
+        if (((f - fp - 1 == 0) && (!strcmp(sd->realpath, "/"))) ||
+            ((f - fp - 1 > 0) && (!strncmp(sd->realpath, fp, f - fp - 1))))
+          {
+             if (sd->config->view.link_drop)
+               {
+                  E_FREE_LIST(fsel, eina_stringshare_del);
+                  return;
+               }
+          }
+     }
+
    isel = _e_fm2_uri_icon_list_get(fsel);
    if (!isel) return;
    ox = 0; oy = 0;
