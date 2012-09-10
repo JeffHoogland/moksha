@@ -559,7 +559,7 @@ noflip:
    if (!ok) return;
    binding = e_bindings_edge_get("desk_flip_in_direction", edge, 0);
    if (!binding) binding = e_bindings_edge_get("desk_flip_by", edge, 0);
-   if (binding)
+   if (binding && (!binding->timer))
      {
         zev = E_NEW(E_Event_Zone_Edge, 1);
         zev->zone = zone;
