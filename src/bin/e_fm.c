@@ -96,6 +96,7 @@ struct _E_Fm2_Smart_Data
    Ecore_Job       *resize_job;
    Ecore_Job       *refresh_job;
    E_Menu          *menu;
+   Eina_List       *rename_dialogs;
    E_Entry_Dialog  *entry_dialog;
    E_Dialog        *image_dialog;
    Eina_Bool        iconlist_changed : 1;
@@ -388,6 +389,7 @@ static void          _e_fm_retry_abort_abort_cb(void *data, E_Dialog *dialog);
 static E_Dialog     *_e_fm_overwrite_dialog(int pid, const char *str);
 static void          _e_fm_overwrite_no_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_overwrite_no_all_cb(void *data, E_Dialog *dialog);
+static void          _e_fm_overwrite_rename(void *data, E_Dialog *dialog);
 static void          _e_fm_overwrite_yes_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_overwrite_yes_all_cb(void *data, E_Dialog *dialog);
 
@@ -7966,6 +7968,7 @@ _e_fm2_smart_del(Evas_Object *obj)
         e_object_del(E_OBJECT(sd->image_dialog));
         sd->image_dialog = NULL;
      }
+   E_FREE_LIST(sd->rename_dialogs, e_object_del);
    if (sd->scroll_job) ecore_job_del(sd->scroll_job);
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    if (sd->refresh_job) ecore_job_del(sd->refresh_job);
@@ -9777,6 +9780,7 @@ _e_fm_overwrite_dialog(int pid, const char *str)
    E_OBJECT(dialog)->data = id;
    e_dialog_button_add(dialog, _("No"), NULL, _e_fm_overwrite_no_cb, NULL);
    e_dialog_button_add(dialog, _("No to all"), NULL, _e_fm_overwrite_no_all_cb, NULL);
+   e_dialog_button_add(dialog, _("Rename"), NULL, _e_fm_overwrite_rename, NULL);
    e_dialog_button_add(dialog, _("Yes"), NULL, _e_fm_overwrite_yes_cb, NULL);
    e_dialog_button_add(dialog, _("Yes to all"), NULL, _e_fm_overwrite_yes_all_cb, NULL);
 
@@ -9808,6 +9812,80 @@ _e_fm_overwrite_no_all_cb(void *data __UNUSED__, E_Dialog *dialog)
    _e_fm2_op_registry_go_on(id);
    _e_fm_client_send(E_FM_OP_OVERWRITE_RESPONSE_NO_ALL, id, NULL, 0);
    e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_overwrite_rename_del(void *data)
+{
+   E_Fm2_Op_Registry_Entry *ere;
+   E_Fm2_Smart_Data *sd;
+
+   ere = e_object_data_get(data);
+   if (!ere) return;
+   sd = evas_object_smart_data_get(ere->e_fm);
+   sd->rename_dialogs = eina_list_remove(sd->rename_dialogs, data);
+   e_fm2_op_registry_entry_unref(ere);
+}
+
+static void
+_e_fm_overwrite_rename_yes_cb(void *data, char *text)
+{
+   E_Fm2_Op_Registry_Entry *ere = data;
+   char newpath[PATH_MAX];
+   char *args = NULL;
+   const char *f;
+   size_t size = 0;
+   size_t length = 0;
+
+   if ((!text) || (!text[0])) return;
+   if ((!ere->src) || (!ere->dst)) return;
+   f = ecore_file_file_get(ere->dst);
+   if (!f) return;
+   length = strlen(text);
+   if (f - ere->dst + length >= PATH_MAX) return;
+
+   newpath[0] = 0;
+   strncat(newpath, ere->dst, f - ere->dst);
+   strcat(newpath, text);
+   if (e_filereg_file_protected(newpath)) return;
+   length = 0;
+   args = _e_fm_string_append_quoted(args, &size, &length, ere->src);
+   if (!args) return;
+   args = _e_fm_string_append_char(args, &size, &length, ' ');
+   if (!args) return;
+   args = _e_fm_string_append_quoted(args, &size, &length, newpath);
+   if (!args) return;
+
+   _e_fm_client_file_copy(args, ere->e_fm);
+   free(args);
+}
+
+static void
+_e_fm_overwrite_rename(void *data __UNUSED__, E_Dialog *dialog)
+{
+   char text[PATH_MAX + 256];
+   int id = (int)(intptr_t)E_OBJECT(dialog)->data;
+   E_Fm2_Op_Registry_Entry *ere;
+   E_Entry_Dialog *ed;
+   E_Fm2_Smart_Data *sd;
+   const char *file;
+
+   ere = e_fm2_op_registry_entry_get(id);
+   if (!ere) return;
+   sd = evas_object_smart_data_get(ere->e_fm);
+   e_object_del(E_OBJECT(dialog));
+   file = ecore_file_file_get(ere->src);
+   snprintf(text, sizeof(text), _("Rename %s to:"), file);
+   ed = e_entry_dialog_show(_("Rename File"), "edit-rename",
+                            text, file, NULL, NULL,
+                            _e_fm_overwrite_rename_yes_cb,
+                            NULL, ere);
+   sd->rename_dialogs = eina_list_append(sd->rename_dialogs, ed);
+   e_object_del_attach_func_set(E_OBJECT(ed), _e_fm_overwrite_rename_del);
+   E_OBJECT(ed)->data = ere;
+   e_fm2_op_registry_entry_ref(ere);
+   _e_fm2_op_registry_go_on(id);
+   _e_fm_client_send(E_FM_OP_OVERWRITE_RESPONSE_NO, id, NULL, 0);
 }
 
 static void
