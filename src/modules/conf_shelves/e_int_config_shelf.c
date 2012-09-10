@@ -36,6 +36,8 @@ struct _E_Config_Dialog_Data
    unsigned int num_shelves;
 };
 
+static E_Config_Dialog_Data *_cfdata;
+
 E_Config_Dialog *
 e_int_config_shelf(E_Container *con, const char *params __UNUSED__)
 {
@@ -71,9 +73,11 @@ _create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
 
+   if (_cfdata) return NULL;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->shelf_handler = ecore_event_handler_add(E_EVENT_SHELF_ADD, (Ecore_Event_Handler_Cb)_shelf_handler_cb, cfdata);
    cfdata->cfd = cfd;
+   _cfdata = cfdata;
    return cfdata;
 }
 
@@ -84,12 +88,12 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    EINA_LIST_FREE(cfdata->shelves, es)
      {
         if (e_object_is_del(E_OBJECT(es))) continue;
-        evas_object_data_del(es->o_base, "cfdata");
         e_object_del_func_set(E_OBJECT(es), NULL);
         if (es->config_dialog) e_object_del_attach_func_set(E_OBJECT(es->config_dialog), NULL);
      }
    ecore_event_handler_del(cfdata->shelf_handler);
    E_FREE(cfdata);
+   _cfdata = NULL;
 }
 
 static Evas_Object *
@@ -137,14 +141,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
 /* private functions */
 static void
-_ilist_refresh(E_Shelf *es)
+_ilist_refresh(E_Shelf *es __UNUSED__)
 {
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = evas_object_data_get(es->o_base, "cfdata");
-   if (!cfdata) return;
-   _ilist_empty(cfdata);
-   _ilist_fill(cfdata);
+   _ilist_empty(_cfdata);
+   _ilist_fill(_cfdata);
 }
 
 static void
@@ -172,7 +172,6 @@ _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es)
    else
      snprintf(buf, sizeof(buf), "%s %s", _("Shelf"), e_shelf_orient_string_get(es));
    e_object_del_func_set(E_OBJECT(es), (E_Object_Cleanup_Func)_ilist_refresh);
-   evas_object_data_set(es->o_base, "cfdata", cfdata);
 
    ob = e_icon_add(evas_object_evas_get(cfdata->o_list));
    e_util_gadcon_orient_icon_set(es->cfg->orient, ob);
@@ -210,7 +209,6 @@ _ilist_empty(E_Config_Dialog_Data *cfdata)
                   if ((desk->x == sd->x) && (desk->y == sd->y))
                     {
                        e_object_del_func_set(E_OBJECT(es), NULL);
-                       evas_object_data_del(es->o_base, "cfdata");
                        break;
                     }
                }
@@ -218,7 +216,6 @@ _ilist_empty(E_Config_Dialog_Data *cfdata)
         else
           {
              e_object_del_func_set(E_OBJECT(es), NULL);
-             evas_object_data_del(es->o_base, "cfdata");
           }
      }
    e_widget_ilist_clear(cfdata->o_list);
@@ -299,13 +296,9 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_ilist_cb_selected(void *data)
+_ilist_cb_selected(void *data __UNUSED__)
 {
-   E_Config_Dialog_Data *cfdata;
-   E_Shelf *es = data;
-
-   if (!(cfdata = evas_object_data_get(es->o_base, "cfdata"))) return;
-   _widgets_disable(cfdata, 0, EINA_TRUE);
+   _widgets_disable(_cfdata, 0, EINA_TRUE);
 }
 
 static void
@@ -374,7 +367,6 @@ _cb_delete(void *data, void *data2 __UNUSED__)
    snprintf(buf, sizeof(buf), _("Are you sure you want to delete \"%s\"?"),
             cfdata->cur_shelf);
 
-   evas_object_data_set(es->o_base, "cfdata", cfdata);
    e_confirm_dialog_show(_("Confirm Shelf Deletion"),
                          "application-exit", buf, _("Delete"), _("Keep"),
                          _cb_dialog_yes, NULL, es, NULL, _cb_dialog_destroy, es);
@@ -384,16 +376,13 @@ static void
 _cb_dialog_yes(void *data)
 {
    E_Shelf *es;
-   E_Config_Dialog_Data *cfdata;
+   E_Config_Dialog_Data *cfdata = _cfdata;
 
    es = data;;
    if (e_object_is_del(E_OBJECT(es))) return;
-   cfdata = evas_object_data_get(es->o_base, "cfdata");
-   if (!cfdata) return;
-   evas_object_data_del(es->o_base, "cfdata");
    e_shelf_unsave(es);
-   e_object_unref(E_OBJECT(es));
    e_object_del(E_OBJECT(es));
+   e_object_unref(E_OBJECT(es));
    e_config_save_queue();
    _ilist_empty(cfdata);
    _ilist_fill(cfdata);
@@ -403,30 +392,19 @@ static void
 _cb_dialog_destroy(void *data)
 {
    E_Shelf *es;
-   E_Config_Dialog_Data *cfdata;
+   E_Config_Dialog_Data *cfdata = _cfdata;
 
    es = data;;
    if (e_object_is_del(E_OBJECT(es))) return;
-   cfdata = evas_object_data_get(es->o_base, "cfdata");
-   if (!cfdata) return;
-   evas_object_data_del(es->o_base, "cfdata");
    e_shelf_unsave(es);
    e_object_unref(E_OBJECT(es));
    _widgets_disable(cfdata, 0, EINA_TRUE);
 }
 
 static void
-_cb_config_end(void *data)
+_cb_config_end(void *data __UNUSED__)
 {
-   E_Config_Dialog *cfd = data;
-   E_Shelf *es;
-   E_Config_Dialog_Data *cfdata;
-
-   es = cfd->data;
-   cfdata = evas_object_data_get(es->o_base, "cfdata");
-   if (!cfdata) return;
-   evas_object_data_del(es->o_base, "cfdata");
-   e_widget_disabled_set(cfdata->o_list, 0);
+   e_widget_disabled_set(_cfdata->o_list, 0);
 }
 
 static void
@@ -441,25 +419,14 @@ _cb_config(void *data, void *data2 __UNUSED__)
    if (!es->config_dialog)
      {
         e_int_shelf_config(es);
-        evas_object_data_set(es->o_base, "cfdata", cfdata);
         e_object_del_attach_func_set(E_OBJECT(es->config_dialog), _cb_config_end);
      }
 }
 
 static void
-_cb_contents_end(void *data)
+_cb_contents_end(void *data __UNUSED__)
 {
-   E_Config_Dialog *cfd = data;
-   E_Shelf *es;
-   E_Gadcon *gc;
-   E_Config_Dialog_Data *cfdata;
-
-   gc = cfd->data;
-   es = gc->shelf;
-   cfdata = evas_object_data_get(es->o_base, "cfdata");
-   if (!cfdata) return;
-   evas_object_data_del(es->o_base, "cfdata");
-   e_widget_disabled_set(cfdata->o_list, 0);
+   e_widget_disabled_set(_cfdata->o_list, 0);
 }
 
 static void
@@ -474,7 +441,6 @@ _cb_contents(void *data, void *data2 __UNUSED__)
    if (!es->config_dialog)
      {
         e_int_gadcon_config_shelf(es->gadcon);
-        evas_object_data_set(es->o_base, "cfdata", cfdata);
         e_object_del_attach_func_set(E_OBJECT(es->gadcon->config_dialog), _cb_contents_end);
      }
 }
