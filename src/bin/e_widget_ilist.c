@@ -81,7 +81,7 @@ _queue_timer(void *data)
 
    obj = data;
    wd = e_widget_data_get(obj);
-   if (!wd) return;
+   if (!wd) return EINA_FALSE;
    wd->queue.timer = NULL;
    e_widget_ilist_freeze(obj);
    num = 0;
