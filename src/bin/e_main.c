@@ -119,77 +119,6 @@ EAPI Eina_Bool starting = EINA_TRUE;
 EAPI Eina_Bool stopping = EINA_FALSE;
 EAPI Eina_Bool restart = EINA_FALSE;
 
-/*
-static void
-_env_path_prepend(const char *env, const char *path)
-{
-   char *p, *p2, *s;
-   int len = 0, len2 = 0;
-   
-   p = getenv(env);
-   if (p) len = strlen(p);
-   p2 = (char *)path;
-   if (p2) len2 = strlen(p2);
-   if (p && p2)
-     {
-        // path already there at the start. dont prepend. :)
-        if ((!strcmp(p, p2)) ||
-            ((len > len2) &&
-                (!strncmp(p, p2, len2)) &&
-                (p[len2] == ':')))
-          return;
-     }
-   s = malloc(len + 1 + len2 + 1);
-   if (s)
-     {
-        s[0] = 0;
-        if (p2)
-          {
-             strcat(s, p2);
-             strcat(s, ":");
-          }
-        strcat(s, p);
-        e_util_env_set(env, s);
-        free(s);
-     }
-}
-*/
-
-static void
-_env_path_append(const char *env, const char *path)
-{
-   char *p, *p2, *s;
-   int len = 0, len2 = 0;
-
-   p = getenv(env);
-   if (!p) return;
-   len = strlen(p);
-   p2 = (char *)path;
-   if (p2) len2 = strlen(p2);
-   if (p && p2)
-     {
-        // path already there at the end. dont append. :)
-        if ((!strcmp(p, p2)) ||
-            ((len > len2) &&
-                (!strcmp((p + len - len2), p2)) &&
-                (p[len - len2 - 1] == ':')))
-          return;
-     }
-   s = malloc(len + 1 + len2 + 1);
-   if (s)
-     {
-        s[0] = 0;
-        strcat(s, p);
-        if (p2)
-          {
-             strcat(s, ":");
-             strcat(s, p2);
-          }
-        e_util_env_set(env, s);
-        free(s);
-     }
-}
-
 static void
 _xdg_data_dirs_augment(void)
 {
@@ -319,9 +248,6 @@ main(int argc, char **argv)
                 "       executed strangely. This is unusual.\n");
      }
    TS("Determine Prefix Done");
-
-   _env_path_append("PATH", e_prefix_bin_get());
-   _env_path_append("LD_LIBRARY_PATH", e_prefix_lib_get());
 
    /* for debugging by redirecting stdout of e to a log file to tail */
    setvbuf(stdout, NULL, _IONBF, 0);

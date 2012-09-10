@@ -196,6 +196,75 @@ copy_args(char **dst, char **src, size_t count)
    for (; count > 0; count--, dst++, src++) *dst = *src;
 }
 
+static void
+_env_path_prepend(const char *env, const char *path)
+{
+   char *p, *p2, *s;
+   int len = 0, len2 = 0;
+   
+   p = getenv(env);
+   if (p) len = strlen(p);
+   p2 = (char *)path;
+   if (p2) len2 = strlen(p2);
+   if (p && p2)
+     {
+        // path already there at the start. dont prepend. :)
+        if ((!strcmp(p, p2)) ||
+            ((len > len2) &&
+                (!strncmp(p, p2, len2)) &&
+                (p[len2] == ':')))
+          return;
+     }
+   s = malloc(len + 1 + len2 + 1);
+   if (s)
+     {
+        s[0] = 0;
+        if (p2)
+          {
+             strcat(s, p2);
+             strcat(s, ":");
+          }
+        strcat(s, p);
+        env_set(env, s);
+        free(s);
+     }
+}
+
+static void
+_env_path_append(const char *env, const char *path)
+{
+   char *p, *p2, *s;
+   int len = 0, len2 = 0;
+   
+   p = getenv(env);
+   if (!p) return;
+   len = strlen(p);
+   p2 = (char *)path;
+   if (p2) len2 = strlen(p2);
+   if (p && p2)
+     {
+        // path already there at the end. dont append. :)
+        if ((!strcmp(p, p2)) ||
+            ((len > len2) &&
+                (!strcmp((p + len - len2), p2)) &&
+                (p[len - len2 - 1] == ':')))
+          return;
+     }
+   s = malloc(len + 1 + len2 + 1);
+   if (s)
+     {
+        s[0] = 0;
+        strcat(s, p);
+        if (p2)
+          {
+             strcat(s, ":");
+             strcat(s, p2);
+          }
+        env_set(env, s);
+        free(s);
+     }
+}
+
 int
 main(int argc, char **argv)
 {
@@ -205,21 +274,12 @@ main(int argc, char **argv)
    char buf[16384], **args, *p;
    char valgrind_path[PATH_MAX] = "";
    const char *valgrind_log = NULL;
-
+   Eina_Bool really_know = EINA_FALSE;
+   
    eina_init();
    prefix_determine(argv[0]);
 
    env_set("E_START", argv[0]);
-
-   p = getenv("PATH");
-   if (p) snprintf(buf, sizeof(buf), "%s:%s", eina_prefix_bin_get(pfx), p);
-   else snprintf(buf, sizeof(buf), "%s", eina_prefix_bin_get(pfx));
-   env_set("PATH", buf);
-
-   p = getenv("LD_LIBRARY_PATH");
-   if (p) snprintf(buf, sizeof(buf), "%s:%s", eina_prefix_lib_get(pfx), p);
-   else snprintf(buf, sizeof(buf), "%s", eina_prefix_lib_get(pfx));
-   env_set("LD_LIBRARY_PATH", buf);
 
    for (i = 1; i < argc; i++)
      {
@@ -279,8 +339,21 @@ main(int argc, char **argv)
                     argv[i]);
 	     exit(0);
 	  }
+        else if (!strcmp(argv[i], "-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it"))
+          really_know = EINA_TRUE;
      }
 
+   if (really_know)
+     {
+        _env_path_append("PATH", eina_prefix_bin_get(pfx));
+        _env_path_append("LD_LIBRARY_PATH", eina_prefix_lib_get(pfx));
+     }
+   else
+     {
+        _env_path_prepend("PATH", eina_prefix_bin_get(pfx));
+        _env_path_prepend("LD_LIBRARY_PATH", eina_prefix_lib_get(pfx));
+     }
+   
    if (valgrind_mode || valgrind_tool)
      {
 	if (!find_valgrind(valgrind_path, sizeof(valgrind_path)))
