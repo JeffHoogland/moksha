@@ -1036,7 +1036,8 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
 
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
    sd->listing = EINA_FALSE;
-
+   if (sd->new_file.thread) ecore_thread_cancel(sd->new_file.thread);
+   eina_stringshare_replace(&sd->new_file.filename, NULL);
    eina_stringshare_replace(&sd->dev, dev);
    eina_stringshare_replace(&sd->path, path);
    eina_stringshare_del(sd->realpath);
