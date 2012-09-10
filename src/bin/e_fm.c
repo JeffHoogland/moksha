@@ -2862,7 +2862,9 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
                {
                   e_config->device_detect_mode = v->efm_mode;
                   e_fm2_device_volume_add(v);
-                  if (e_config->device_auto_mount && !v->mounted && !v->first_time)
+                  if (v->mounted)
+                    e_fm2_device_mount(v, NULL, NULL, NULL, NULL, NULL);
+                  else if (e_config->device_auto_mount && !v->mounted && !v->first_time)
                     _e_fm2_client_mount(v->udi, v->mount_point);
                   v->first_time = 0;
                }
