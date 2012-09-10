@@ -396,6 +396,7 @@ static void          _e_fm_overwrite_yes_all_cb(void *data, E_Dialog *dialog);
 static E_Dialog     *_e_fm_error_dialog(int pid, const char *str);
 static void          _e_fm_error_retry_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_error_abort_cb(void *data, E_Dialog *dialog);
+static void          _e_fm_error_link_source(void *data, E_Dialog *dialog);
 static void          _e_fm_error_ignore_this_cb(void *data, E_Dialog *dialog);
 static void          _e_fm_error_ignore_all_cb(void *data, E_Dialog *dialog);
 
@@ -9912,13 +9913,39 @@ _e_fm_error_dialog(int pid, const char *str)
    E_Dialog *dialog;
    void *id;
    char text[4096 + PATH_MAX];
+   E_Fm2_Op_Registry_Entry *ere;
+   E_Fm2_Smart_Data *sd;
+   E_Fm2_Mount *m;
+   Eina_Bool devlink = EINA_FALSE;
 
    id = (intptr_t*)(long)pid;
+   ere = e_fm2_op_registry_entry_get(pid);
+   sd = evas_object_smart_data_get(ere->e_fm);
+   while (sd->realpath)
+     {
+        /* trying to make or move a link onto a device will fail, create button for
+         * moving source at this point if this is what failed
+         */
+        struct stat st;
+        if (sd->config->view.link_drop) break;
+        m = e_fm2_device_mount_find(sd->realpath);
+        if (!m) break;
+        if (ere->op == E_FM_OP_SYMLINK)
+          {
+             devlink = EINA_TRUE;
+             break;
+          }
+        if (stat(ere->src, &st)) break;
+        if (S_ISLNK(st.st_mode)) devlink = EINA_TRUE;
+        break;
+     }
 
    dialog = e_dialog_new(NULL, "E", "_fm_error_dialog");
    E_OBJECT(dialog)->data = id;
    e_dialog_button_add(dialog, _("Retry"), NULL, _e_fm_error_retry_cb, NULL);
    e_dialog_button_add(dialog, _("Abort"), NULL, _e_fm_error_abort_cb, NULL);
+   if (devlink)
+     e_dialog_button_add(dialog, _("Move Source"), NULL, _e_fm_error_link_source, ere);
    e_dialog_button_add(dialog, _("Ignore this"), NULL, _e_fm_error_ignore_this_cb, NULL);
    e_dialog_button_add(dialog, _("Ignore all"), NULL, _e_fm_error_ignore_all_cb, NULL);
 
@@ -9948,6 +9975,46 @@ static void
 _e_fm_error_abort_cb(void *data __UNUSED__, E_Dialog *dialog)
 {
    int id = (int)(intptr_t)E_OBJECT(dialog)->data;
+   _e_fm2_op_registry_aborted(id);
+   _e_fm_client_send(E_FM_OP_ERROR_RESPONSE_ABORT, id, NULL, 0);
+   e_object_del(E_OBJECT(dialog));
+}
+
+static void
+_e_fm_error_link_source(void *data, E_Dialog *dialog)
+{
+   E_Fm2_Op_Registry_Entry *ere = data;
+   int id = (int)(intptr_t)E_OBJECT(dialog)->data;
+   char *file;
+   char newpath[PATH_MAX];
+   char *args = NULL;
+   const char *f;
+   size_t size = 0;
+   size_t length = 0;
+
+   file = ecore_file_readlink(ere->src);
+   if (!file) file = (char*)ere->src;
+
+   f = ecore_file_file_get(file);
+   if (!f) return;
+   if (strlen(ere->dst) + length >= PATH_MAX) return;
+
+   newpath[0] = 0;
+   strncat(newpath, ere->dst, f - ere->dst);
+   strcat(newpath, f);
+   if (e_filereg_file_protected(newpath)) return;
+   length = 0;
+   args = _e_fm_string_append_quoted(args, &size, &length, file);
+   if (!args) return;
+   args = _e_fm_string_append_char(args, &size, &length, ' ');
+   if (!args) return;
+   args = _e_fm_string_append_quoted(args, &size, &length, newpath);
+   if (!args) return;
+
+   _e_fm_client_file_move(args, ere->e_fm);
+   free(args);
+   if (file != ere->src) free(file);
+
    _e_fm2_op_registry_aborted(id);
    _e_fm_client_send(E_FM_OP_ERROR_RESPONSE_ABORT, id, NULL, 0);
    e_object_del(E_OBJECT(dialog));
