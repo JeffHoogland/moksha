@@ -8880,40 +8880,43 @@ _e_fm2_view_menu_common(E_Menu *subm, E_Fm2_Smart_Data *sd)
    int icon_size;
 
    view_mode = _e_fm2_view_mode_get(sd);
+   if (!(sd->icon_menu.flags & E_FM2_MENU_NO_VIEW_CHANGE))
+     {
 
-   mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Grid Icons"));
-   e_menu_item_radio_group_set(mi, 1);
-   e_menu_item_radio_set(mi, 1);
-   if (view_mode == E_FM2_VIEW_MODE_GRID_ICONS)
-     e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_fm2_view_menu_grid_icons_cb, sd);
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Grid Icons"));
+        e_menu_item_radio_group_set(mi, 1);
+        e_menu_item_radio_set(mi, 1);
+        if (view_mode == E_FM2_VIEW_MODE_GRID_ICONS)
+          e_menu_item_toggle_set(mi, 1);
+        e_menu_item_callback_set(mi, _e_fm2_view_menu_grid_icons_cb, sd);
 
-   mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Custom Icons"));
-   e_menu_item_radio_group_set(mi, 1);
-   e_menu_item_radio_set(mi, 1);
-   if (view_mode == E_FM2_VIEW_MODE_CUSTOM_ICONS)
-     e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_fm2_view_menu_custom_icons_cb, sd);
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Custom Icons"));
+        e_menu_item_radio_group_set(mi, 1);
+        e_menu_item_radio_set(mi, 1);
+        if (view_mode == E_FM2_VIEW_MODE_CUSTOM_ICONS)
+          e_menu_item_toggle_set(mi, 1);
+        e_menu_item_callback_set(mi, _e_fm2_view_menu_custom_icons_cb, sd);
 
-   mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("List"));
-   e_menu_item_radio_group_set(mi, 1);
-   e_menu_item_radio_set(mi, 1);
-   if (view_mode == E_FM2_VIEW_MODE_LIST)
-     e_menu_item_toggle_set(mi, 1);
-   e_menu_item_callback_set(mi, _e_fm2_view_menu_list_cb, sd);
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("List"));
+        e_menu_item_radio_group_set(mi, 1);
+        e_menu_item_radio_set(mi, 1);
+        if (view_mode == E_FM2_VIEW_MODE_LIST)
+          e_menu_item_toggle_set(mi, 1);
+        e_menu_item_callback_set(mi, _e_fm2_view_menu_list_cb, sd);
 
-   mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Default View"));
-   e_menu_item_check_set(mi, 1);
-   e_menu_item_toggle_set(mi, sd->view_mode == -1);
-   e_menu_item_callback_set(mi, _e_fm2_view_menu_use_default_cb, sd);
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Default View"));
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, sd->view_mode == -1);
+        e_menu_item_callback_set(mi, _e_fm2_view_menu_use_default_cb, sd);
 
 
-   mi = e_menu_item_new(subm);
-   e_menu_item_separator_set(mi, 1);
+        mi = e_menu_item_new(subm);
+        e_menu_item_separator_set(mi, 1);
+     }
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Sorting"));

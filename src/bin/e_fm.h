@@ -30,7 +30,8 @@ typedef enum _E_Fm2_Menu_Flags
    E_FM2_MENU_NO_SYMLINK = (1 << 9),
    E_FM2_MENU_NO_VIEW_MENU = (1 << 10),
    E_FM2_MENU_NO_INHERIT_PARENT = (1 << 11),
-   E_FM2_MENU_NO_ACTIVATE_CHANGE = (1 << 12)
+   E_FM2_MENU_NO_ACTIVATE_CHANGE = (1 << 12),
+   E_FM2_MENU_NO_VIEW_CHANGE = (1 << 13),
 } E_Fm2_Menu_Flags;
 
 typedef enum _E_Fm2_View_Flags
