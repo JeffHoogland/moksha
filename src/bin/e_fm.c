@@ -3443,8 +3443,20 @@ _e_fm2_file_paste(Evas_Object *obj)
    }
 
    /* Roll the operation! */
-   if (_e_fm_file_buffer_copying) _e_fm_client_file_copy(args, sd->obj);
-   else _e_fm_client_file_move(args, sd->obj);
+   if (_e_fm_file_buffer_copying)
+     {
+        if (sd->config->view.link_drop)
+          _e_fm_client_file_symlink(args, sd->obj);
+        else
+          _e_fm_client_file_copy(args, sd->obj);
+     }
+   else
+     {
+        if (sd->config->view.link_drop)
+          _e_fm_client_file_symlink(args, sd->obj);
+        else
+          _e_fm_client_file_move(args, sd->obj);
+     }
 
    free(args);
 }
