@@ -13,17 +13,17 @@ typedef struct _E_Fm2_Op_Registry_Entry_Internal E_Fm2_Op_Registry_Entry_Interna
 struct _E_Fm2_Op_Registry_Entry_Listener
 {
    EINA_INLIST;
-   void (*cb)(void *data, const E_Fm2_Op_Registry_Entry *entry);
+   void  (*cb)(void *data, const E_Fm2_Op_Registry_Entry *entry);
    void *data;
-   void (*free_data)(void *data);
+   void  (*free_data)(void *data);
 };
 
 struct _E_Fm2_Op_Registry_Entry_Internal
 {
    E_Fm2_Op_Registry_Entry entry;
-   Eina_Inlist *listeners;
-   int references;
-   Ecore_Event *changed_event;
+   Eina_Inlist            *listeners;
+   int                     references;
+   Ecore_Event            *changed_event;
 };
 
 static void
@@ -41,7 +41,7 @@ _e_fm2_op_registry_entry_e_fm_monitor_start(const E_Fm2_Op_Registry_Entry *entry
    if (!entry->e_fm) return;
    evas_object_event_callback_add
      (entry->e_fm, EVAS_CALLBACK_DEL,
-      _e_fm2_op_registry_entry_e_fm_deleted, entry);
+     _e_fm2_op_registry_entry_e_fm_deleted, entry);
 }
 
 static void
@@ -50,9 +50,8 @@ _e_fm2_op_registry_entry_e_fm_monitor_stop(const E_Fm2_Op_Registry_Entry *entry)
    if (!entry->e_fm) return;
    evas_object_event_callback_del_full
      (entry->e_fm, EVAS_CALLBACK_DEL,
-      _e_fm2_op_registry_entry_e_fm_deleted, entry);
+     _e_fm2_op_registry_entry_e_fm_deleted, entry);
 }
-
 
 static inline E_Fm2_Op_Registry_Entry_Internal *
 _e_fm2_op_registry_entry_internal_get(const E_Fm2_Op_Registry_Entry *entry)
@@ -67,11 +66,11 @@ _e_fm2_op_registry_entry_internal_free(E_Fm2_Op_Registry_Entry_Internal *e)
 
    while (e->listeners)
      {
-	E_Fm2_Op_Registry_Entry_Listener *listener = (void *)e->listeners;
-	e->listeners = eina_inlist_remove(e->listeners, e->listeners);
+        E_Fm2_Op_Registry_Entry_Listener *listener = (void *)e->listeners;
+        e->listeners = eina_inlist_remove(e->listeners, e->listeners);
 
-	if (listener->free_data) listener->free_data(listener->data);
-	free(listener);
+        if (listener->free_data) listener->free_data(listener->data);
+        free(listener);
      }
 
    eina_stringshare_del(e->entry.src);
@@ -108,7 +107,7 @@ _e_fm2_op_registry_entry_listeners_call(const E_Fm2_Op_Registry_Entry_Internal *
 
    if (eina_inlist_count(e->listeners) < 1) return;
 
-   EINA_INLIST_FOREACH_SAFE(e->listeners, l, listener)
+   EINA_INLIST_FOREACH_SAFE (e->listeners, l, listener)
      listener->cb(listener->data, &e->entry);
 }
 
@@ -124,7 +123,7 @@ _e_fm2_op_registry_entry_internal_event(E_Fm2_Op_Registry_Entry_Internal *e, int
 {
    _e_fm2_op_registry_entry_internal_ref(e);
    ecore_event_add(event_type, &(e->entry),
-		   _e_fm2_op_registry_entry_internal_unref_on_event, e);
+                   _e_fm2_op_registry_entry_internal_unref_on_event, e);
 }
 
 Eina_Bool
@@ -145,8 +144,8 @@ e_fm2_op_registry_entry_add(int id, Evas_Object *e_fm, E_Fm_Op_Type op, E_Fm2_Op
 
    if (!eina_hash_add(_e_fm2_op_registry, &id, e))
      {
-	free(e);
-	return 0;
+        free(e);
+        return 0;
      }
 
    _e_fm2_op_registry_entry_e_fm_monitor_start(&(e->entry));
@@ -191,8 +190,8 @@ e_fm2_op_registry_entry_changed(const E_Fm2_Op_Registry_Entry *entry)
    if (e->changed_event) return;
    _e_fm2_op_registry_entry_internal_ref(e);
    e->changed_event = ecore_event_add
-     (E_EVENT_FM_OP_REGISTRY_CHANGED, &(e->entry),
-      _e_fm2_op_registry_entry_internal_unref_on_changed_event, e);
+       (E_EVENT_FM_OP_REGISTRY_CHANGED, &(e->entry),
+       _e_fm2_op_registry_entry_internal_unref_on_changed_event, e);
 }
 
 /**
@@ -326,15 +325,15 @@ e_fm2_op_registry_entry_listener_add(E_Fm2_Op_Registry_Entry *entry, void (*cb)(
 
    if ((!entry) || (!cb))
      {
-	if (free_data) free_data((void *)data);
-	return;
+        if (free_data) free_data((void *)data);
+        return;
      }
 
    listener = malloc(sizeof(*listener));
    if (!listener)
      {
-	if (free_data) free_data((void *)data);
-	return;
+        if (free_data) free_data((void *)data);
+        return;
      }
    listener->cb = cb;
    listener->data = (void *)data;
@@ -346,9 +345,9 @@ e_fm2_op_registry_entry_listener_add(E_Fm2_Op_Registry_Entry *entry, void (*cb)(
    if (err)
      {
         printf("could not add listener: %s\n", eina_error_msg_get(err));
-	if (free_data) free_data((void *)data);
-	free(listener);
-	return;
+        if (free_data) free_data((void *)data);
+        free(listener);
+        return;
      }
 }
 
@@ -374,10 +373,10 @@ e_fm2_op_registry_entry_listener_del(E_Fm2_Op_Registry_Entry *entry, void (*cb)(
    EINA_INLIST_FOREACH(e->listeners, l)
      if ((l->cb == cb) && (l->data == data))
        {
-	  e->listeners = eina_inlist_remove(e->listeners, EINA_INLIST_GET(l));
-	  if (l->free_data) l->free_data(l->data);
-	  free(l);
-	  return;
+          e->listeners = eina_inlist_remove(e->listeners, EINA_INLIST_GET(l));
+          if (l->free_data) l->free_data(l->data);
+          free(l);
+          return;
        }
 }
 
@@ -422,8 +421,8 @@ e_fm2_op_registry_get_all(void)
    it = eina_hash_iterator_data_new(_e_fm2_op_registry);
    EINA_ITERATOR_FOREACH(it, e)
      {
-	_e_fm2_op_registry_entry_internal_ref(e);
-	list = eina_list_append(list, &(e->entry));
+        _e_fm2_op_registry_entry_internal_ref(e);
+        list = eina_list_append(list, &(e->entry));
      }
    eina_iterator_free(it);
 
@@ -450,7 +449,6 @@ e_fm2_op_registry_count(void)
    return eina_hash_population(_e_fm2_op_registry);
 }
 
-
 EINTERN unsigned int
 e_fm2_op_registry_init(void)
 {
@@ -460,8 +458,8 @@ e_fm2_op_registry_init(void)
    _e_fm2_op_registry = eina_hash_int32_new(NULL);
    if (!_e_fm2_op_registry)
      {
-	_e_fm2_init_count = 0;
-	return 0;
+        _e_fm2_init_count = 0;
+        return 0;
      }
 
    if (E_EVENT_FM_OP_REGISTRY_ADD == 0)
@@ -493,5 +491,6 @@ e_fm2_op_registry_entry_abort(E_Fm2_Op_Registry_Entry *entry)
    if (!entry) return;
 
    if (entry->func.abort)
-      entry->func.abort(entry);
+     entry->func.abort(entry);
 }
+
