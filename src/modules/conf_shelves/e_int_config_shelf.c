@@ -372,12 +372,11 @@ _cb_delete(void *data, void *data2 __UNUSED__)
         return;
      }
    _widgets_disable(data, 1, EINA_TRUE);
-   snprintf(buf, sizeof(buf), _("You requested to delete \"%s\".<br><br>"
-                                "Are you sure you want to delete this shelf?"),
+   snprintf(buf, sizeof(buf), _("Are you sure you want to delete \"%s\"?"),
             cfdata->cur_shelf);
 
    evas_object_data_set(es->o_base, "cfdata", cfdata);
-   e_confirm_dialog_show(_("Are you sure you want to delete this shelf?"),
+   e_confirm_dialog_show(_("Confirm Shelf Deletion"),
                          "application-exit", buf, _("Delete"), _("Keep"),
                          _cb_dialog_yes, NULL, es, NULL, _cb_dialog_destroy, es);
 }
