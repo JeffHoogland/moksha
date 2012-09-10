@@ -184,13 +184,16 @@ _battery_udev_battery_update_poll(void *data)
    return EINA_TRUE;
 }
 
-#define GET_NUM(TYPE, VALUE, PROP) test = eeze_udev_syspath_get_property(TYPE->udi, #PROP); \
+#define GET_NUM(TYPE, VALUE, PROP) \
   do                                                                                        \
-    if (test)                                                                               \
-      {                                                                                     \
-         TYPE->VALUE = strtod(test, NULL);                                                  \
-         eina_stringshare_del(test);                                                        \
-      }                                                                                     \
+    {                                                                                       \
+      test = eeze_udev_syspath_get_property(TYPE->udi, #PROP);                              \
+      if (test)                                                                             \
+        {                                                                                   \
+           TYPE->VALUE = strtod(test, NULL);                                                \
+           eina_stringshare_del(test);                                                      \
+        }                                                                                   \
+    }                                                                                       \
   while (0)
 
 #define GET_STR(TYPE, VALUE, PROP) TYPE->VALUE = eeze_udev_syspath_get_property(TYPE->udi, #PROP)
@@ -224,10 +227,7 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
      GET_NUM(bat, last_full_charge, POWER_SUPPLY_CHARGE_FULL);
    test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_ENERGY_NOW");
    if (!test)
-     {
-       	eina_stringshare_del(test);
-        test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_CHARGE_NOW");
-     }
+     test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_CHARGE_NOW");
    if (test)
      {
 
