@@ -2181,12 +2181,16 @@ _e_shelf_cb_menu_orient(void *data, E_Menu *m, E_Menu_Item *mi)
           {
              E_Zone *zone;
              E_Config_Shelf *cf_es;
+             void *cfd;
              if (es->cfg->orient == orient) return;
              es->cfg->orient = orient;
              zone = es->zone;
              cf_es = es->cfg;
+             cfd = es->config_dialog;
+             es->config_dialog = NULL;
              e_object_del(E_OBJECT(es));
-             e_shelf_config_new(zone, cf_es);
+             es = e_shelf_config_new(zone, cf_es);
+             es->config_dialog = cfd;
              return;
           }
         orient++;
