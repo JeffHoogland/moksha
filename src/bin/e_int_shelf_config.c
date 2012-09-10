@@ -15,6 +15,7 @@ struct _E_Config_Dialog_Data
    int autohide, autohide_action;
    double hide_timeout, hide_duration;
    int desk_show_mode;
+   Eina_List *handlers;
 };
 
 /* local function prototypes */
@@ -47,6 +48,22 @@ e_int_shelf_config(E_Shelf *es)
 }
 
 /* local functions */
+static Eina_Bool
+_shelf_event_add(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Shelf *ev)
+{
+   if (ev->shelf->cfg == cfdata->escfg)
+     cfdata->es = ev->shelf;
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_shelf_event_del(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Shelf *ev)
+{
+   if (ev->shelf == cfdata->es)
+     cfdata->es = NULL;
+   return ECORE_CALLBACK_RENEW;
+}
+
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
@@ -55,6 +72,8 @@ _create_data(E_Config_Dialog *cfd)
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->es = cfd->data;
    cfdata->escfg = cfdata->es->cfg;
+   E_LIST_HANDLERS_APPEND(cfdata->handlers, E_EVENT_SHELF_ADD, _shelf_event_add, cfdata);
+   E_LIST_HANDLERS_APPEND(cfdata->handlers, E_EVENT_SHELF_DEL, _shelf_event_del, cfdata);
    _fill_data(cfdata);
    return cfdata;
 }
@@ -102,9 +121,10 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    eina_list_free(cfdata->autohide_list);
 
-   if (cfdata->style) eina_stringshare_del(cfdata->style);
+   eina_stringshare_del(cfdata->style);
    cfdata->style = NULL;
 
+   E_FREE_LIST(cfdata->handlers, ecore_event_handler_del);
    cfdata->es->config_dialog = NULL;
    E_FREE(cfdata);
 }
@@ -272,8 +292,6 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->escfg->orient != cfdata->orient)
      {
         cfdata->escfg->orient = cfdata->orient;
-        e_shelf_orient(cfdata->es, cfdata->orient);
-        e_shelf_position_calc(cfdata->es);
         recreate = 1;
      }
 
