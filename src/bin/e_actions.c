@@ -2895,6 +2895,49 @@ ACT_FN_GO(kbd_layout_prev, __UNUSED__)
    e_xkb_layout_prev();
 }
 
+ACT_FN_GO(module_enable, )
+{
+   E_Module *m;
+   
+   if (!params) return;
+   m = e_module_find(params);
+   if (!m)
+     {
+        m = e_module_new(params);
+        if (!m) return;
+     }
+   e_module_enable(m);
+}
+
+ACT_FN_GO(module_disable, )
+{
+   E_Module *m;
+   
+   if (!params) return;
+   m = e_module_find(params);
+   if (!m) return;
+   e_module_disable(m);
+}
+
+ACT_FN_GO(module_toggle, )
+{
+   E_Module *m;
+   
+   fprintf(stderr, "toggle\n");
+   if (!params) return;
+   fprintf(stderr, "'%s'\n", params);
+   m = e_module_find(params);
+   fprintf(stderr, "m = %p\n", m);
+   if (!m)
+     {
+        m = e_module_new(params);
+        if (!m) return;
+     }
+   fprintf(stderr, "currently %i\n", e_module_enabled_get(m));
+   if (e_module_enabled_get(m)) e_module_disable(m);
+   else e_module_enable(m);
+}
+
 /* local subsystem globals */
 static Eina_Hash *actions = NULL;
 static Eina_List *action_list = NULL;
@@ -3340,7 +3383,20 @@ e_actions_init(void)
    e_action_predef_name_set(N_("Enlightenment : Mode"),
                             N_("Offline Mode Toggle"),
                             "mode_offline_toggle", NULL, NULL, 0);
-
+   /* modules */
+   ACT_GO(module_enable);
+   e_action_predef_name_set(N_("Enlightenment : Module"),
+                            N_("Enable the named module"),
+                            "module_enable", NULL, NULL, 1);
+   ACT_GO(module_disable);
+   e_action_predef_name_set(N_("Enlightenment : Module"),
+                            N_("Disable the named module"),
+                            "module_disable", NULL, NULL, 1);
+   ACT_GO(module_toggle);
+   e_action_predef_name_set(N_("Enlightenment : Module"),
+                            N_("Toggle the named module"),
+                            "module_toggle", NULL, NULL, 1);
+   
    ACT_GO(logout);
    e_action_predef_name_set(N_("System"), N_("Log Out"), "logout",
                             NULL, NULL, 0);
