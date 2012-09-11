@@ -239,6 +239,7 @@ static void
 _econnman_configure_cb(void *data, void *data2 __UNUSED__)
 {
    E_Connman_Instance *inst = data;
+   econnman_popup_del(inst);
    _econnman_app_launch(inst);
 }
 
