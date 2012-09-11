@@ -551,10 +551,16 @@ gadman_update_bg(void)
         break;
 
       case BG_COLOR:
-        obj = evas_object_rectangle_add(Man->gc_top->evas);
-        evas_object_color_set(obj, Man->conf->color_r * (200/255), Man->conf->color_g * (200/255),
-                              Man->conf->color_b * (200/255), 200);
-        edje_object_part_swallow(Man->full_bg, "e.swallow.bg", obj);
+        {
+           double r, g, b;
+
+           r = (double)Man->conf->color_r * (200. / 255.);
+           g = (double)Man->conf->color_g * (200. / 255.);
+           b = (double)Man->conf->color_b * (200. / 255.);
+           obj = evas_object_rectangle_add(Man->gc_top->evas);
+           evas_object_color_set(obj, lround(r), lround(g), lround(b), 200);
+           edje_object_part_swallow(Man->full_bg, "e.swallow.bg", obj);
+        }
         break;
 
       case BG_CUSTOM:
