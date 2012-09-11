@@ -150,7 +150,9 @@ _save_to(const char *file)
       snprintf(opts, sizeof(opts), "quality=%i", quality);
    if (screen == -1)
      {
-        evas_object_image_save(o_img, file, NULL, opts);
+        if (!evas_object_image_save(o_img, file, NULL, opts))
+          e_util_dialog_show(_("Error saving screenshot file"),
+                             _("Path: %s"), file);
      }
    else
      {
@@ -182,7 +184,10 @@ _save_to(const char *file)
                   memcpy(d, s, z->w * 4);
                   d += z->w * 4;
                }
-             evas_object_image_save(o, file, NULL, opts);
+             if (!evas_object_image_save(o, file, NULL, opts))
+               e_util_dialog_show(_("Error saving screenshot file"),
+                                  _("Path: %s"), file);
+
              evas_object_del(o);
           }
      }
