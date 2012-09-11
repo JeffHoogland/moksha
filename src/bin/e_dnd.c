@@ -61,8 +61,11 @@ static Eina_List *_drag_list = NULL;
 static E_Drag *_drag_current = NULL;
 
 static XDnd *_xdnd = NULL;
-
+#define XDS_ATOM "XdndDirectSave0"
+static Ecore_X_Atom _xds_atom = 0;
+static Ecore_X_Atom _text_atom = 0;
 static const char *_type_text_uri_list = NULL;
+static const char *_type_xds = NULL;
 static const char *_type_text_x_moz_url = NULL;
 static const char *_type_enlightenment_x_file = NULL;
 
@@ -75,8 +78,11 @@ EINTERN int
 e_dnd_init(void)
 {
    _type_text_uri_list = eina_stringshare_add("text/uri-list");
+   _type_xds = eina_stringshare_add(XDS_ATOM);
    _type_text_x_moz_url = eina_stringshare_add("text/x-moz-url");
    _type_enlightenment_x_file = eina_stringshare_add("enlightenment/x-file");
+   _xds_atom = ecore_x_atom_get(XDS_ATOM);
+   _text_atom = ecore_x_atom_get("text/plain");
 
    _drop_win_hash = eina_hash_string_superfast_new(NULL);
    _drop_handlers_responsives = eina_hash_string_superfast_new(NULL);
@@ -137,11 +143,14 @@ e_dnd_shutdown(void)
    eina_hash_free(_drop_handlers_responsives);
 
    eina_stringshare_del(_type_text_uri_list);
+   eina_stringshare_del(_type_xds);
    eina_stringshare_del(_type_text_x_moz_url);
    eina_stringshare_del(_type_enlightenment_x_file);
    _type_text_uri_list = NULL;
+   _type_xds = NULL;
    _type_text_x_moz_url = NULL;
    _type_enlightenment_x_file = NULL;
+   _text_atom = _xds_atom = 0;
 
    return 1;
 }
@@ -346,6 +355,44 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
 
    _drag_current = drag;
    return 1;
+}
+
+EAPI void
+e_drop_handler_xds_set(E_Drop_Handler *handler, Ecore_Task_Cb cb)
+{
+   handler->cb.xds = cb;
+}
+
+/* should only be used for windows */
+EAPI void
+e_drop_xds_update(Eina_Bool enable, const char *value)
+{
+   Ecore_X_Window xwin;
+   char buf[PATH_MAX + 8];
+   char *file;
+   int size;
+   size_t len;
+
+   enable = !!enable;
+     
+   xwin = ecore_x_selection_owner_get(ECORE_X_ATOM_SELECTION_XDND);
+   if (enable)
+     {
+        if (!ecore_x_window_prop_property_get(xwin, _xds_atom, _text_atom, 8, (unsigned char **)&file, &size))
+          return;
+        len = strlen(value);
+        if (size + len + 8 + 1 > sizeof(buf))
+          {
+             free(file);
+             return;
+          }
+        snprintf(buf, sizeof(buf), "file://%s/", value);
+        strncat(buf, file, size);
+        free(file);
+        ecore_x_window_prop_property_set(xwin, _xds_atom, _text_atom, 8, (void*)buf, size + len + 8);
+     }
+   else
+     ecore_x_window_prop_property_del(xwin, _xds_atom);
 }
 
 EAPI E_Drop_Handler *
@@ -1360,7 +1407,19 @@ _e_dnd_cb_event_dnd_drop(void *data __UNUSED__, int type __UNUSED__, void *event
 
    if (_xdnd)
      {
-        ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
+        E_Drop_Handler *h;
+        Eina_Bool req = EINA_TRUE;
+        Eina_List *l;
+
+        EINA_LIST_FOREACH(_drop_handlers, l, h)
+          {
+             if (!h->active) continue;
+             if (_e_drag_win_matches(h, ev->win, 1) && h->entered && h->cb.xds)
+               {
+                  req = h->cb.xds(h->cb.data);
+               }
+          }
+        if (req) ecore_x_selection_xdnd_request(ev->win, _xdnd->type);
 
         _xdnd->x = ev->position.x;
         _xdnd->y = ev->position.y;

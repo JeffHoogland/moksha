@@ -67,6 +67,7 @@ struct _E_Drop_Handler
       void  (*move)(void *data, const char *type, void *event);
       void  (*leave)(void *data, const char *type, void *event);
       void  (*drop)(void *data, const char *type, void *event);
+      Ecore_Task_Cb xds;
       void *data;
    } cb;
 
@@ -127,6 +128,8 @@ EAPI void            e_drag_key_up_cb_set(E_Drag *drag, void (*func)(E_Drag *dra
 EAPI int             e_drag_start(E_Drag *drag, int x, int y);
 EAPI int             e_drag_xdnd_start(E_Drag *drag, int x, int y);
 
+EAPI void e_drop_xds_update(Eina_Bool enable, const char *value);
+EAPI void e_drop_handler_xds_set(E_Drop_Handler *handler, Ecore_Task_Cb cb);
 EAPI E_Drop_Handler *e_drop_handler_add(E_Object *obj,
                                         void *data,
                                         void (*enter_cb)(void *data, const char *type, void *event),

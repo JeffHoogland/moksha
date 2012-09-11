@@ -483,6 +483,14 @@ static const char *_e_fm2_mime_inode_directory = NULL;
 static const char *_e_fm2_mime_app_desktop = NULL;
 static const char *_e_fm2_mime_app_edje = NULL;
 static const char *_e_fm2_mime_text_uri_list = NULL;
+static const char *_e_fm2_xds = NULL;
+
+static const char **_e_fm2_dnd_types[] =
+{
+   &_e_fm2_mime_text_uri_list,
+   &_e_fm2_xds,
+   NULL
+};
 
 static Ecore_Timer *_e_fm2_mime_flush = NULL;
 static Ecore_Timer *_e_fm2_mime_clear = NULL;
@@ -787,6 +795,7 @@ e_fm2_init(void)
    _e_fm2_mime_app_desktop = eina_stringshare_add("application/x-desktop");
    _e_fm2_mime_app_edje = eina_stringshare_add("application/x-extension-edj");
    _e_fm2_mime_text_uri_list = eina_stringshare_add("text/uri-list");
+   _e_fm2_xds = eina_stringshare_add("XdndDirectSave0");
 
    _e_fm2_favorites_thread = ecore_thread_run(_e_fm2_favorites_thread_cb,
                                               _e_fm2_thread_cleanup_cb,
@@ -819,6 +828,7 @@ e_fm2_shutdown(void)
    eina_stringshare_replace(&_e_fm2_mime_app_desktop, NULL);
    eina_stringshare_replace(&_e_fm2_mime_app_edje, NULL);
    eina_stringshare_replace(&_e_fm2_mime_text_uri_list, NULL);
+   eina_stringshare_replace(&_e_fm2_xds, NULL);
 
    /// DBG
    if (_e_fm2_op_registry_entry_add_handler)
@@ -862,6 +872,16 @@ EAPI Evas_Object *
 e_fm2_add(Evas *evas)
 {
    return evas_object_smart_add(evas, _e_fm2_smart);
+}
+
+static Eina_Bool
+_e_fm2_dir_xds_update(E_Fm2_Smart_Data *sd)
+{
+   Eina_Bool allow;
+
+   allow = (sd->realpath && ecore_file_can_write(sd->realpath));
+   e_drop_xds_update(allow, sd->realpath);
+   return allow;
 }
 
 static void
@@ -1523,7 +1543,7 @@ e_fm2_view_flags_get(Evas_Object *obj)
 EAPI void
 e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 {
-   const char *drop[] = { "enlightenment/desktop", "enlightenment/border", "text/uri-list" };
+   const char *drop[] = { "enlightenment/desktop", "enlightenment/border", "text/uri-list", "XdndDirectSave0"};
 
    EFM_SMART_CHECK();
    sd->eobj = eobj;
@@ -1534,9 +1554,10 @@ e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
                                          _e_fm2_cb_dnd_move,
                                          _e_fm2_cb_dnd_leave,
                                          _e_fm2_cb_dnd_drop,
-                                         drop, 3,
+                                         drop, 4,
                                          sd->x, sd->y, sd->w, sd->h);
    e_drop_handler_responsive_set(sd->drop_handler);
+   e_drop_handler_xds_set(sd->drop_handler, (Ecore_Task_Cb)_e_fm2_dir_xds_update);
 }
 
 EAPI void
@@ -6016,6 +6037,16 @@ _e_fm2_dnd_drop_hide(Evas_Object *obj)
 }
 
 /* FIXME: prototype + reposition + implement */
+static Eina_Bool
+_e_fm2_dnd_type_implemented(const char *type)
+{
+   const char **t;
+
+   for (t = *_e_fm2_dnd_types; t; t++)
+     if (type == *t) return EINA_TRUE;
+   return EINA_FALSE;
+}
+
 static void
 _e_fm2_dnd_finish(Evas_Object *obj, int refresh)
 {
@@ -6042,7 +6073,7 @@ _e_fm2_cb_dnd_enter(void *data __UNUSED__, const char *type, void *event)
 {
    E_Event_Dnd_Enter *ev;
 
-   if (type != _e_fm2_mime_text_uri_list) return;
+   if (!_e_fm2_dnd_type_implemented(type)) return;
    ev = (E_Event_Dnd_Enter *)event;
    e_drop_handler_action_set(ev->action);
 }
@@ -6057,7 +6088,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    int dx, dy;
 
    sd = data;
-   if (type != _e_fm2_mime_text_uri_list) return;
+   if (!_e_fm2_dnd_type_implemented(type)) return;
    ev = (E_Event_Dnd_Move *)event;
    dx = ev->x - sd->x;
    dy = ev->y - sd->y;
@@ -6160,7 +6191,7 @@ _e_fm2_cb_dnd_leave(void *data, const char *type, void *event __UNUSED__)
    E_Fm2_Smart_Data *sd;
 
    sd = data;
-   if (type != _e_fm2_mime_text_uri_list) return;
+   if (!_e_fm2_dnd_type_implemented(type)) return;
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
 }
@@ -6330,7 +6361,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    E_Event_Dnd_Drop *ev;
    E_Fm2_Icon *ic;
    Eina_List *fsel, *l, *ll, *il, *isel;
-   char buf[4096];
+   char buf[PATH_MAX];
    const char *fp;
    Evas_Object *obj;
    Evas_Coord ox, oy, x, y;
@@ -6342,8 +6373,8 @@ _e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
    Eina_Bool memerr = EINA_FALSE;
    
    sd = data;
-   if (type != _e_fm2_mime_text_uri_list) return;
-   ev = (E_Event_Dnd_Drop *)event;
+   ev = event;
+   if (!_e_fm2_dnd_type_implemented(type)) return;
 
    fsel = _e_fm2_uri_path_list_get(ev->data);
    fp = eina_list_data_get(fsel);
