@@ -75,6 +75,7 @@ gadman_reset(void)
         evas_object_del(Man->movers[layer]);
         Man->movers[layer] = NULL;
      }
+   Man->gc_top = NULL;
    if (_gadman_gadgets)
      {
         eina_hash_free_cb_set(_gadman_gadgets, EINA_FREE_CB(eina_list_free));
