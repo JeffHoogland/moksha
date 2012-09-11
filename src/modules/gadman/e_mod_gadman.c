@@ -93,6 +93,7 @@ gadman_reset(void)
      }
 
    _gadman_gadgets = eina_hash_string_superfast_new(NULL);
+   gadman_update_bg();
 }
 
 void
@@ -1592,6 +1593,7 @@ _e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event)
         gc = _gadman_gadcon_new(layer_name[layer], layer, zone, location);
         Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
      }
+   gadman_update_bg();
 
    return ECORE_CALLBACK_PASS_ON;
 }
