@@ -112,6 +112,7 @@ static Ecore_Event_Handler *_e_menu_mouse_up_handler = NULL;
 static Ecore_Event_Handler *_e_menu_mouse_move_handler = NULL;
 static Ecore_Event_Handler *_e_menu_mouse_wheel_handler = NULL;
 static Ecore_Event_Handler *_e_menu_window_shape_handler = NULL;
+static Eina_Bool _e_menu_lock = EINA_FALSE;
 
 static Eina_List *
 _e_active_menus_copy_ref(void)
@@ -224,6 +225,7 @@ e_menu_shutdown(void)
         eina_hash_free(_e_menu_hash);
         _e_menu_hash = NULL;
      }
+   _e_menu_lock = EINA_FALSE;
 
    return 1;
 }
@@ -761,10 +763,14 @@ e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
    mi->menu->changed = 1;
    if (!!sub == submenu) return;
    if (!mi->bg_object) return;
+   if (sub) e_object_ref(E_OBJECT(sub));
+   _e_menu_lock = EINA_TRUE;
    if ((mi->submenu) || (mi->submenu_pre_cb.func))
      {
         if (mi->submenu_object) evas_object_del(mi->submenu_object);
         o = edje_object_add(mi->menu->evas);
+        if (sub && (mi->submenu != sub)) e_object_ref(E_OBJECT(sub));
+        mi->submenu = sub;
         mi->submenu_object = o;
         e_theme_edje_object_set(o, "base/theme/menus",
                                 "e/widgets/menu/default/submenu");
@@ -784,6 +790,8 @@ e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
         evas_object_pass_events_set(o, 1);
         e_box_pack_end(mi->container_object, o);
      }
+   _e_menu_lock = EINA_FALSE;
+   if (sub) e_object_unref(E_OBJECT(sub));
    if ((mi->submenu) || (mi->submenu_pre_cb.func))
      {
         if (e_theme_edje_object_set(mi->bg_object, "base/theme/menus",
@@ -2730,6 +2738,7 @@ _e_menu_cb_item_in(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
 {
    E_Menu_Item *mi;
 
+   if (_e_menu_lock) return;
    mi = data;
    e_menu_item_active_set(mi, 1);
 }
