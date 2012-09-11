@@ -512,7 +512,11 @@ e_widget_fsel_selection_path_get(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    s = e_widget_entry_text_get(wd->o_entry);
    dir = e_fm2_real_path_get(wd->o_files_fm);
-   if (s)
+   if ((dir) && (s) && (s[0] == '/'))
+     {
+        eina_stringshare_replace(&wd->path, s);
+     }
+   else if (s)
      {
         snprintf(buf, sizeof(buf), "%s/%s", dir, s);
         eina_stringshare_replace(&wd->path, buf);
