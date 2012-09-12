@@ -21,6 +21,17 @@ typedef struct Pulse_Sink_Port_Info {
     uint32_t priority;                  /**< The higher this value is the more useful this port is as a default */
 } Pulse_Sink_Port_Info;
 
+typedef struct Pulse_Server_Info
+{
+   Pulse *conn;
+   const char *name;
+   const char *version;
+   const char *username;
+   const char *hostname;
+   const char *default_sink;
+   const char *default_source;
+} Pulse_Server_Info;
+
 int pulse_init(void);
 void pulse_shutdown(void);
 
@@ -28,7 +39,9 @@ Pulse *pulse_new(void);
 Eina_Bool pulse_connect(Pulse *conn);
 void pulse_free(Pulse *conn);
 void pulse_cb_set(Pulse *conn, uint32_t tagnum, Pulse_Cb cb);
+void pulse_server_info_free(Pulse_Server_Info *ev);
 
+uint32_t pulse_server_info_get(Pulse *conn);
 uint32_t pulse_cards_get(Pulse *conn);
 #define pulse_sinks_get(conn) pulse_types_get((conn), EINA_FALSE)
 #define pulse_sources_get(conn) pulse_types_get((conn), EINA_TRUE)

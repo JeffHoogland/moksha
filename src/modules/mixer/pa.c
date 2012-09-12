@@ -498,6 +498,28 @@ pulse_type_volume_set(Pulse *conn, uint32_t sink_num, uint8_t channels, double v
 }
 
 uint32_t
+pulse_server_info_get(Pulse *conn)
+{
+   Pulse_Tag *tag;
+   int pa_read;
+   uint32_t type = PA_COMMAND_GET_SERVER_INFO;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(conn, 0);
+   tag = calloc(1, sizeof(Pulse_Tag));
+   EINA_SAFETY_ON_NULL_RETURN_VAL(tag, 0);
+   tag->dsize = 2 * PA_TAG_SIZE_U32;
+   tag->data = malloc(tag->dsize);
+   tag->tag_count = conn->tag_count;
+   tag_simple_init(conn, tag, type, PA_TAG_U32);
+   tag_finish(tag);
+   pa_read = !!ecore_main_fd_handler_active_get(conn->fdh, ECORE_FD_READ) * ECORE_FD_READ;
+   ecore_main_fd_handler_active_set(conn->fdh, pa_read | ECORE_FD_WRITE);
+   conn->oq = eina_list_append(conn->oq, tag);
+   eina_hash_add(conn->tag_handlers, &tag->tag_count, (uintptr_t*)((uintptr_t)type));
+   return tag->tag_count;
+}
+
+uint32_t
 pulse_sink_channel_volume_set(Pulse *conn, Pulse_Sink *sink, uint32_t id, double vol)
 {
    Pulse_Tag *tag;
@@ -717,4 +739,18 @@ pulse_connect(Pulse *conn)
    EINA_SAFETY_ON_NULL_RETURN_VAL(conn, EINA_FALSE);
    conn->svr = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, conn->socket, -1, conn);
    return !!conn->svr;
+}
+
+void
+pulse_server_info_free(Pulse_Server_Info *ev)
+{
+   if (!ev) return;
+
+   eina_stringshare_del(ev->name);
+   eina_stringshare_del(ev->version);
+   eina_stringshare_del(ev->username);
+   eina_stringshare_del(ev->hostname);
+   eina_stringshare_del(ev->default_sink);
+   eina_stringshare_del(ev->default_source);
+   free(ev);
 }

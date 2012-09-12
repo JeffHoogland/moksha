@@ -1,5 +1,28 @@
 #include "pa.h"
 
+static Pulse_Server_Info *
+deserialize_server_info(Pulse *conn, Pulse_Tag *tag)
+{
+   Pulse_Server_Info *ev;
+   pa_sample_spec spec;
+
+   ev = calloc(1, sizeof(Pulse_Server_Info));
+   ev->conn = conn;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(ev, NULL);
+   EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &ev->name), error);
+   EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &ev->version), error);
+   EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &ev->username), error);
+   EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &ev->hostname), error);
+   EINA_SAFETY_ON_FALSE_GOTO(untag_sample(tag, &spec), error);
+   EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &ev->default_sink), error);
+   EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &ev->default_source), error);
+   
+   return ev;
+error:
+   pulse_server_info_free(ev);
+   return NULL;
+}
+
 static void
 deserialize_sinks_watcher(Pulse *conn, Pulse_Tag *tag)
 {
@@ -113,6 +136,11 @@ deserialize_tag(Pulse *conn, PA_Commands command, Pulse_Tag *tag)
      conn->watching = EINA_TRUE;
    switch (command)
      {
+      case PA_COMMAND_GET_SERVER_INFO:
+        if (!cb) return EINA_TRUE;
+        ev = NULL;
+        ev = deserialize_server_info(conn, tag);
+        break;
       case PA_COMMAND_GET_SINK_INFO_LIST:
       case PA_COMMAND_GET_SOURCE_INFO_LIST:
         if (!cb) return EINA_TRUE;
