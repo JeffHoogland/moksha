@@ -12,6 +12,7 @@
 #define CONNMAN_BUS_NAME "net.connman"
 #define CONNMAN_MANAGER_IFACE CONNMAN_BUS_NAME ".Manager"
 #define CONNMAN_SERVICE_IFACE CONNMAN_BUS_NAME ".Service"
+#define CONNMAN_TECHNOLOGY_IFACE CONNMAN_BUS_NAME ".Technology"
 
 #define MILLI_PER_SEC 1000
 #define CONNMAN_CONNECTION_TIMEOUT 60 * MILLI_PER_SEC
@@ -670,6 +671,70 @@ static void _manager_get_prop_cb(void *data, DBusMessage *reply,
      }
 }
 
+static bool _manager_parse_wifi_prop_changed(struct Connman_Manager *cm,
+                                             const char *name,
+                                             DBusMessageIter *value)
+{
+   if (strcmp(name, "Powered") == 0)
+     cm->powered = _dbus_bool_get(value);
+   else
+     return false;
+   
+   econnman_mod_manager_update(cm);
+   return true;
+}
+
+static void _manager_wifi_prop_changed(void *data, DBusMessage *msg)
+{
+   struct Connman_Manager *cm = data;
+   DBusMessageIter iter, var;
+   const char *name;
+
+   if (!msg || !dbus_message_iter_init(msg, &iter))
+     {
+        ERR("Could not parse message %p", msg);
+        return;
+     }
+
+   dbus_message_iter_get_basic(&iter, &name);
+   dbus_message_iter_next(&iter);
+   dbus_message_iter_recurse(&iter, &var);
+
+   _manager_parse_wifi_prop_changed(cm, name, &var);
+}
+
+static void _manager_get_wifi_prop_cb(void *data, DBusMessage *reply,
+                                      DBusError *err)
+{
+   struct Connman_Manager *cm = data;
+   DBusMessageIter iter, dict;
+
+   cm->pending.get_wifi_properties = NULL;
+
+   if (dbus_error_is_set(err))
+     {
+        DBG("Could not get properties. %s: %s", err->name, err->message);
+        return;
+     }
+
+   dbus_message_iter_init(reply, &iter);
+   dbus_message_iter_recurse(&iter, &dict);
+
+   for (; dbus_message_iter_get_arg_type(&dict) != DBUS_TYPE_INVALID;
+        dbus_message_iter_next(&dict))
+     {
+        DBusMessageIter entry, var;
+        const char *name;
+
+        dbus_message_iter_recurse(&dict, &entry);
+        dbus_message_iter_get_basic(&entry, &name);
+        dbus_message_iter_next(&entry);
+        dbus_message_iter_recurse(&entry, &var);
+
+        _manager_parse_wifi_prop_changed(cm, name, &var);
+     }
+}
+
 static void
 _manager_agent_unregister(void)
 {
@@ -760,6 +825,18 @@ static void _manager_free(struct Connman_Manager *cm)
         cm->pending.get_properties = NULL;
      }
 
+   if (cm->pending.get_wifi_properties)
+     {
+        dbus_pending_call_cancel(cm->pending.get_wifi_properties);
+        cm->pending.get_wifi_properties = NULL;
+     }
+
+   if (cm->pending.set_powered)
+     {
+        dbus_pending_call_cancel(cm->pending.set_powered);
+        cm->pending.set_powered = NULL;
+     }
+
    if (cm->pending.register_agent)
      {
         dbus_pending_call_cancel(cm->pending.register_agent);
@@ -770,18 +847,69 @@ static void _manager_free(struct Connman_Manager *cm)
    free(cm);
 }
 
+static void _manager_powered_cb(void *data, DBusMessage *reply,
+                                DBusError *err)
+{
+   struct Connman_Manager *cm = data;
+   DBusMessage *msg;
+   
+   cm->pending.set_powered = NULL;
+   if (!((err) && (dbus_error_is_set(err))))
+     {
+        if (cm->pending.get_wifi_properties)
+          dbus_pending_call_cancel(cm->pending.get_wifi_properties);
+        msg = dbus_message_new_method_call(CONNMAN_BUS_NAME, 
+                                           "/net/connman/technology/wifi",
+                                           CONNMAN_TECHNOLOGY_IFACE, 
+                                           "GetProperties");
+        cm->pending.get_wifi_properties = 
+          e_dbus_message_send(conn, msg, _manager_get_wifi_prop_cb, -1, cm);
+     }
+}
+
+void econnman_powered_set(struct Connman_Manager *cm, Eina_Bool powered)
+{
+   DBusMessageIter itr, var;
+   DBusMessage *msg;
+   const char *p = "Powered";
+   int v = 0;
+   
+   if (powered) v = 1;
+   if (cm->pending.set_powered)
+     dbus_pending_call_cancel(cm->pending.set_powered);
+   msg = dbus_message_new_method_call(CONNMAN_BUS_NAME,
+                                      "/net/connman/technology/wifi",
+                                      CONNMAN_TECHNOLOGY_IFACE,
+                                      "SetProperty");
+   dbus_message_iter_init_append(msg, &itr);
+   dbus_message_iter_append_basic(&itr, DBUS_TYPE_STRING, &p);
+   if (dbus_message_iter_open_container(&itr, DBUS_TYPE_VARIANT, "b", &var))
+     {
+        dbus_message_iter_append_basic(&var, DBUS_TYPE_BOOLEAN, &v);
+        dbus_message_iter_close_container(&itr, &var);
+     }
+   cm->pending.set_powered = 
+     e_dbus_message_send(conn, msg, _manager_powered_cb, -1, cm);
+
+}
+
 static struct Connman_Manager *_manager_new(void)
 {
-   DBusMessage *msg_props, *msg_services;
+   DBusMessage *msg_props, *msg_services, *msg_wifi_props;
    const char *path = "/";
    struct E_DBus_Signal_Handler *h;
    struct Connman_Manager *cm;
 
    msg_services = dbus_message_new_method_call(CONNMAN_BUS_NAME, "/",
-                                      CONNMAN_MANAGER_IFACE, "GetServices");
+                                               CONNMAN_MANAGER_IFACE,
+                                               "GetServices");
    msg_props = dbus_message_new_method_call(CONNMAN_BUS_NAME, "/",
-                                      CONNMAN_MANAGER_IFACE, "GetProperties");
-
+                                            CONNMAN_MANAGER_IFACE,
+                                            "GetProperties");
+   msg_wifi_props = dbus_message_new_method_call(CONNMAN_BUS_NAME, 
+                                                 "/net/connman/technology/wifi",
+                                                 CONNMAN_TECHNOLOGY_IFACE, 
+                                                 "GetProperties");
    if (!msg_services || !msg_services)
      {
         ERR("Could not create D-Bus messages");
@@ -803,6 +931,12 @@ static struct Connman_Manager *_manager_new(void)
                                  _manager_services_changed, cm);
    cm->obj.handlers = eina_list_append(cm->obj.handlers, h);
 
+   h = e_dbus_signal_handler_add(conn, bus_owner,
+                                 "/net/connman/technology/wifi", 
+                                 CONNMAN_TECHNOLOGY_IFACE, "PropertyChanged",
+                                 _manager_wifi_prop_changed, cm);
+   cm->obj.handlers = eina_list_append(cm->obj.handlers, h);
+   
    /*
     * PropertyChanged signal in service's path is guaranteed to arrive only
     * after ServicesChanged above. So we only add the handler later, in a per
@@ -810,10 +944,14 @@ static struct Connman_Manager *_manager_new(void)
     */
 
    cm->pending.get_services = e_dbus_message_send(conn, msg_services,
-                                             _manager_get_services_cb, -1, cm);
+                                                  _manager_get_services_cb,
+                                                  -1, cm);
    cm->pending.get_properties = e_dbus_message_send(conn, msg_props,
-                                             _manager_get_prop_cb, -1, cm);
-
+                                                    _manager_get_prop_cb,
+                                                    -1, cm);
+   cm->pending.get_wifi_properties = e_dbus_message_send(conn, msg_wifi_props,
+                                                         _manager_get_wifi_prop_cb,
+                                                         -1, cm);
    return cm;
 }
 

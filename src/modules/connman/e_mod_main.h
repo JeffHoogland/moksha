@@ -29,6 +29,7 @@ struct E_Connman_Instance
         struct
           {
              Evas_Object *list;
+             Evas_Object *powered;
 
              Ecore_X_Window input_win;
              Ecore_Event_Handler *input_mouse_up;
@@ -49,6 +50,7 @@ struct E_Connman_Module_Context
 
    struct Connman_Manager *cm;
    Eina_Bool offline_mode;
+   int powered;
 };
 
 EAPI extern E_Module_Api e_modapi;

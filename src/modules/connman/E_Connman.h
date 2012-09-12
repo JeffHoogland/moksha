@@ -50,12 +50,15 @@ struct Connman_Manager
    /* Properties */
    enum Connman_State state;
    bool offline_mode;
+   bool powered;
 
    /* Private */
    struct
      {
         DBusPendingCall *get_services;
         DBusPendingCall *get_properties;
+        DBusPendingCall *get_wifi_properties;
+        DBusPendingCall *set_powered;
         DBusPendingCall *register_agent;
      } pending;
 };
@@ -85,8 +88,8 @@ struct Connman_Service
 extern int E_CONNMAN_EVENT_MANAGER_IN;
 extern int E_CONNMAN_EVENT_MANAGER_OUT;
 
-/* Daemon monitoring */
 
+/* Daemon monitoring */
 unsigned int e_connman_system_init(E_DBus_Connection *edbus_conn) EINA_ARG_NONNULL(1);
 unsigned int e_connman_system_shutdown(void);
 
@@ -101,6 +104,8 @@ typedef void (*Econnman_Simple_Cb)(void *data, const char *error);
 
 bool econnman_service_connect(struct Connman_Service *cs, Econnman_Simple_Cb cb, void *data);
 bool econnman_service_disconnect(struct Connman_Service *cs, Econnman_Simple_Cb cb, void *data);
+
+void econnman_powered_set(struct Connman_Manager *cm, Eina_Bool powered);
 
 /* UI calls from econnman */
 

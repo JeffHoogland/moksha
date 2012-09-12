@@ -128,6 +128,7 @@ static void _econnman_popup_update(struct Connman_Manager *cm,
                                    E_Connman_Instance *inst)
 {
    Evas_Object *list = inst->ui.popup.list;
+   Evas_Object *powered = inst->ui.popup.powered;
    Evas *evas = evas_object_evas_get(list);
    struct Connman_Service *cs;
    const char *hidden = "«hidden»";
@@ -148,6 +149,12 @@ static void _econnman_popup_update(struct Connman_Manager *cm,
 
    e_widget_ilist_thaw(list);
    e_widget_ilist_go(list);
+
+   if (inst->ctxt)
+     {
+        inst->ctxt->powered = cm->powered;
+     }
+   e_widget_check_checked_set(powered, cm->powered);
 }
 
 void econnman_mod_services_changed(struct Connman_Manager *cm)
@@ -243,10 +250,21 @@ _econnman_configure_cb(void *data, void *data2 __UNUSED__)
    _econnman_app_launch(inst);
 }
 
+static void
+_econnman_powered_changed(void *data, Evas_Object *obj, void *info __UNUSED__)
+{
+   E_Connman_Instance *inst = data;
+   E_Connman_Module_Context *ctxt = inst->ctxt;
+   
+   if (!ctxt) return;
+   if (!ctxt->cm) return;
+   econnman_powered_set(ctxt->cm, ctxt->powered);
+}
+
 static void _econnman_popup_new(E_Connman_Instance *inst)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
-   Evas_Object *list, *bt;
+   Evas_Object *list, *bt, *ck;
    Evas_Coord mw, mh;
    Evas *evas;
 
@@ -263,9 +281,15 @@ static void _econnman_popup_new(E_Connman_Instance *inst)
    e_widget_size_min_set(inst->ui.popup.list, 120, 100);
    e_widget_list_object_append(list, inst->ui.popup.list, 1, 1, 0.5);
 
+   ck = e_widget_check_add(evas, _("Wifi On"), &(ctxt->powered));
+   inst->ui.popup.powered = ck;
+   e_widget_list_object_append(list, ck, 1, 0, 0.5);
+   evas_object_smart_callback_add(ck, "changed", 
+                                  _econnman_powered_changed, inst);
+   
    _econnman_popup_update(ctxt->cm, inst);
 
-   bt = e_widget_button_add(evas, "Configure", NULL,
+   bt = e_widget_button_add(evas, _("Configure"), NULL,
                             _econnman_configure_cb, inst, NULL);
    e_widget_list_object_append(list, bt, 1, 0, 0.5);
 
