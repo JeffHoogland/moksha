@@ -159,7 +159,7 @@ _cb_list_selected(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    const E_Ilist_Item *it;
-   Eina_List *l;
+   const Eina_List *l;
    unsigned int loaded = 0;
 
    if (!(cfdata = data)) return;
@@ -179,7 +179,7 @@ static void
 _list_item_del_advanced(E_Config_Dialog_Data *cfdata, E_Gadcon_Client *gcc)
 {
    E_Ilist_Item *ili;
-   Eina_List *l;
+   const Eina_List *l;
    int x = 0;
 
    if (!gcc->cf)
@@ -206,7 +206,7 @@ static void
 _list_item_del(E_Config_Dialog_Data *cfdata __UNUSED__, Evas_Object *list, const E_Gadcon_Client_Class *cc)
 {
    E_Ilist_Item *ili;
-   Eina_List *l;
+   const Eina_List *l;
    int x = 0;
 
    EINA_LIST_FOREACH(e_widget_ilist_items_get(list), l, ili)
@@ -239,7 +239,7 @@ _list_item_add_advanced(E_Config_Dialog_Data *cfdata, E_Gadcon_Client *gcc, E_Co
      }
    else
      {
-        Eina_List *l;
+        const Eina_List *l;
         E_Ilist_Item *ili;
 
         EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->advanced.o_list), l, ili)
@@ -441,7 +441,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const E_Ilist_Item *it;
-   Eina_List *l;
+   const Eina_List *l;
    int update = 0;
 
    if (!(cfdata = data)) return;
@@ -486,43 +486,51 @@ _cb_del_advanced(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    E_Config_Gadcon_Client *cf_gcc;
-   Eina_List *l;
+   const Eina_List *l, *sel, *ll, *lll, *llll;
+   E_Ilist_Item *ili;
    int x = 0;
-   
-   EINA_LIST_FOREACH(cfdata->gc->cf->clients, l, cf_gcc)
-     {
-        if (cf_gcc->id == cfdata->sel)
-          {
-             CFGadget *gad;
-             E_Gadcon_Client *gcc;
 
-             if ((gad = eina_hash_find(cfdata->gadget_hash, cf_gcc->id)))
+   sel = e_widget_ilist_items_get(cfdata->advanced.o_list);
+   EINA_LIST_FOREACH_SAFE(sel, ll, lll, ili)
+     {
+        if (!ili) continue;
+        if (!ili->selected) continue;
+        x = 0;
+        EINA_LIST_FOREACH_SAFE(cfdata->gc->cf->clients, l, llll, cf_gcc)
+          {
+             if (cf_gcc->id == e_widget_ilist_item_value_get(ili))
                {
-                  eina_hash_del(cfdata->gadget_hash, gad->id, gad);
-                  if (gad->name) eina_stringshare_del(gad->name);
-                  if (gad->id) eina_stringshare_del(gad->id);
-                  E_FREE(gad);
-               }
-             EINA_LIST_FOREACH(cfdata->gc->clients, l, gcc)
-               {
-                  if (gcc->cf != cf_gcc) continue;
-                  gcc->cf = NULL;
-                  e_object_del(E_OBJECT(gcc));
+                  CFGadget *gad;
+                  E_Gadcon_Client *gcc;
+
+                  if ((gad = eina_hash_find(cfdata->gadget_hash, cf_gcc->id)))
+                    {
+                       eina_hash_del(cfdata->gadget_hash, gad->id, gad);
+                       if (gad->name) eina_stringshare_del(gad->name);
+                       if (gad->id) eina_stringshare_del(gad->id);
+                       E_FREE(gad);
+                    }
+                  EINA_LIST_FOREACH(cfdata->gc->clients, l, gcc)
+                    {
+                       if (gcc->cf != cf_gcc) continue;
+                       gcc->cf = NULL;
+                       e_object_del(E_OBJECT(gcc));
+                       break;
+                    }
+                  e_gadcon_client_config_del(cfdata->gc->cf, cf_gcc);
+                  if (!cfdata->gc->custom)
+                    {
+                       e_gadcon_unpopulate(cfdata->gc);
+                       e_gadcon_populate(cfdata->gc);
+                    }
+                  e_config_save_queue();
+                  e_widget_ilist_remove_num(cfdata->advanced.o_list, x);
+                  x++;
                   break;
                }
-             e_gadcon_client_config_del(cfdata->gc->cf, cf_gcc);
-             if (!cfdata->gc->custom)
-               {
-                  e_gadcon_unpopulate(cfdata->gc);
-                  e_gadcon_populate(cfdata->gc);
-               }
-             e_config_save_queue();
-             e_widget_ilist_remove_num(cfdata->advanced.o_list, x);
-             e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
-             break;
           }
-        x++;
      }
+   e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
 }
 
 static void
@@ -530,7 +538,7 @@ _cb_del(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const E_Ilist_Item *it;
-   Eina_List *l;
+   const Eina_List *l;
    int update = 0;
 
    if (!(cfdata = data)) return;
