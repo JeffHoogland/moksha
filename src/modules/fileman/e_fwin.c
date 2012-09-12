@@ -459,7 +459,7 @@ e_fwin_reload_all(void)
             if (e_fwin_zone_find(zone)) continue;
             if ((zone->container->num == 0) && (zone->num == 0) &&
                 (fileman_config->view.show_desktop_icons))
-              e_fwin_zone_new(zone, "desktop", "/");
+              e_fwin_zone_new(zone, fileman_config->dev, fileman_config->path);
             else
               {
                  char buf[256];
@@ -1604,7 +1604,14 @@ _e_fwin_changed(void *data,
      e_fm2_custom_theme_set(obj, NULL);
 
    _e_fwin_icon_mouse_out(fwin, NULL, NULL);
-   if (fwin->zone) return;
+   if (fwin->zone)
+     {
+        if (fwin->zone->num) return;
+        e_fm2_path_get(page->fm_obj, &dev, &path);
+        eina_stringshare_replace(&fileman_config->dev, dev);
+        eina_stringshare_replace(&fileman_config->path, path);
+        return;
+     }
    _e_fwin_window_title_set(page);
    if (page->setting) return;
    if (page->flist) e_fm2_deselect_all(page->flist);

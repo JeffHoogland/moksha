@@ -93,7 +93,7 @@ e_modapi_init(E_Module *m)
                   if (e_fwin_zone_find(zone)) continue;
                   if ((zone->container->num == 0) && (zone->num == 0) &&
                       (fileman_config->view.show_desktop_icons))
-                    e_fwin_zone_new(zone, "desktop", "/");
+                    e_fwin_zone_new(zone, fileman_config->dev, fileman_config->path);
                   else
                     {
                        char buf[256];
@@ -701,6 +701,8 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, tooltip.delay, DOUBLE);
    E_CONFIG_VAL(D, T, tooltip.size, DOUBLE);
    E_CONFIG_VAL(D, T, tooltip.enable, UCHAR);
+   E_CONFIG_VAL(D, T, dev, STR);
+   E_CONFIG_VAL(D, T, path, STR);
 
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
    if (fileman_config)
@@ -772,6 +774,11 @@ _e_mod_fileman_config_load(void)
     fileman_config->tooltip.enable = 1;
     IFMODCFGEND;
 
+    IFMODCFG(0x0111);
+    fileman_config->dev = eina_stringshare_add("desktop");
+    fileman_config->path = eina_stringshare_add("/");
+    IFMODCFGEND;
+
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
 
     /* UCHAR's give nasty compile warnings about comparisons so not gonna limit those */
@@ -790,12 +797,11 @@ _e_mod_fileman_config_load(void)
 static void
 _e_mod_fileman_config_free(void)
 {
-   if (fileman_config->theme.background)
-     eina_stringshare_del(fileman_config->theme.background);
-   if (fileman_config->theme.frame)
-     eina_stringshare_del(fileman_config->theme.frame);
-   if (fileman_config->theme.icons)
-     eina_stringshare_del(fileman_config->theme.icons);
+   eina_stringshare_del(fileman_config->theme.background);
+   eina_stringshare_del(fileman_config->theme.frame);
+   eina_stringshare_del(fileman_config->theme.icons);
+   eina_stringshare_del(fileman_config->dev);
+   eina_stringshare_del(fileman_config->path);
    E_FREE(fileman_config);
 }
 
@@ -813,7 +819,7 @@ _e_mod_zone_add(__UNUSED__ void *data,
    if (e_fwin_zone_find(zone)) return ECORE_CALLBACK_PASS_ON;
    if ((zone->container->num == 0) && (zone->num == 0) &&
        (fileman_config->view.show_desktop_icons))
-     e_fwin_zone_new(zone, "desktop", "/");
+     e_fwin_zone_new(zone, fileman_config->dev, fileman_config->path);
    else
      {
         char buf[256];
