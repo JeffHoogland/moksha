@@ -13,6 +13,8 @@
 #define PULSE_INTERFACE "org.PulseAudio.Core1"
 
 static Pulse *conn = NULL;
+static Pulse_Server_Info *info = NULL;
+static Pulse_Sink *default_sink = NULL;
 static Ecore_Event_Handler *ph = NULL;
 static Ecore_Event_Handler *pch = NULL;
 static Ecore_Event_Handler *pdh = NULL;
@@ -90,9 +92,31 @@ _dbus_test(void *data       __UNUSED__,
      }
 }
 
+static void
+_pulse_info_get(Pulse *d __UNUSED__, int type __UNUSED__, Pulse_Server_Info *ev)
+{
+   Eina_List *l;
+   Pulse_Sink *sink;
+
+   pulse_server_info_free(info);
+   EINA_LIST_FOREACH(sinks, l, sink)
+     if (ev->default_sink == pulse_sink_name_get(sink))
+       {
+          default_sink = sink;
+          e_mod_mixer_pulse_update();
+          break;
+       }
+   info = ev;
+}
+
 static Eina_Bool
 _pulse_update(Pulse *d __UNUSED__, int type __UNUSED__, Pulse_Sink *ev __UNUSED__)
 {
+   Pulse_Tag_Id id;
+
+   id = pulse_server_info_get(conn);
+   if (id)
+     pulse_cb_set(conn, id, (Pulse_Cb)_pulse_info_get);
    e_mod_mixer_pulse_update();
    return EINA_TRUE;
 }
@@ -100,12 +124,12 @@ _pulse_update(Pulse *d __UNUSED__, int type __UNUSED__, Pulse_Sink *ev __UNUSED_
 static void
 _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
 {
-/*
    Eina_List *l;
    Pulse_Sink *sink;
 
    EINA_LIST_FOREACH(ev, l, sink)
      {
+/*
         printf("Sink:\n");
         printf("\tname: %s\n", pulse_sink_name_get(sink));
         printf("\tidx: %"PRIu32"\n", pulse_sink_idx_get(sink));
@@ -114,8 +138,17 @@ _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
         printf("\tmuted: %s\n", pulse_sink_muted_get(sink) ? "yes" : "no");
         printf("\tavg: %g\n", pulse_sink_avg_get_pct(sink));
         printf("\tbalance: %f\n", pulse_sink_balance_get(sink));
+*/
+        if (info && (!default_sink))
+          {
+             if (info->default_sink == pulse_sink_name_get(sink))
+               {
+                  default_sink = sink;
+                  break;
+               }
+          }
      }
- */
+
    sinks = ev;
    pulse_sinks_watch(conn);
    e_mod_mixer_pulse_ready(EINA_TRUE);
@@ -159,6 +192,9 @@ _pulse_connected(Pulse *d, int type __UNUSED__, Pulse *ev)
    id = pulse_sources_get(conn);
    if (id)
      pulse_cb_set(conn, id, (Pulse_Cb)_pulse_sources_get);
+   id = pulse_server_info_get(conn);
+   if (id)
+     pulse_cb_set(conn, id, (Pulse_Cb)_pulse_info_get);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -173,6 +209,9 @@ _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
      pulse_sink_free(sink);
    EINA_LIST_FREE(sources, sink)
      pulse_sink_free(sink);
+   pulse_server_info_free(info);
+   info = NULL;
+   default_sink = NULL;
 
 //   printf("PULSEAUDIO: disconnected at %g\n", ecore_time_unix_get());
 
@@ -287,6 +326,9 @@ e_mixer_pulse_shutdown(void)
      pulse_sink_free(sink);
    EINA_LIST_FREE(sources, sink)
      pulse_sink_free(sink);
+   pulse_server_info_free(info);
+   info = NULL;
+   default_sink = NULL;
 
    pulse_free(conn);
    conn = NULL;
@@ -343,8 +385,8 @@ e_mixer_pulse_free_cards(Eina_List *cards)
 const char *
 e_mixer_pulse_get_default_card(void)
 {
-   if (eina_list_data_get(sinks))
-     return eina_stringshare_ref(pulse_sink_name_get(eina_list_last(sinks)->data));
+   if (default_sink)
+     return eina_stringshare_ref(pulse_sink_name_get(default_sink));
    return NULL;
 }
 
