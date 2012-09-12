@@ -61,6 +61,8 @@ group:    operator  allow: *
 group:    staff     allow: *
 group:    admin     allow: *
 group:    sys       allow: *
+group:    wheel     allow: *
+group:    adm       allow: *
 # common "user" groups for "console users" on desktops/laptops
 group:    dialout   allow: *
 group:    disk      allow: *
@@ -70,6 +72,12 @@ group:    floppy    allow: *
 group:    audio     allow: *
 group:    dip       allow: *
 group:    plugdev   allow: *
+group:    netdev    allow: *
+group:    bluetooth allow: *
+group:    video     allow: *
+group:    voice     allow: *
+group:    fax       allow: *
+group:    tty       allow: *
 # put in a list of other users and groups here that are allowed or denied etc.
 # e.g.
 # user:     myuser     allow:  *
