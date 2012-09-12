@@ -266,7 +266,7 @@ static void
 _cb_delete(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
-   Eina_List *l = NULL;
+   const Eina_List *l = NULL;
    int i = 0, changed = 0, deleted = 0;
    int last_selected = -1;
 
