@@ -310,7 +310,7 @@ static void          _e_fm2_typebuf_char_backspace(Evas_Object *obj);
 static void          _e_fm2_cb_dnd_enter(void *data, const char *type, void *event);
 static void          _e_fm2_cb_dnd_move(void *data, const char *type, void *event);
 static void          _e_fm2_cb_dnd_leave(void *data, const char *type, void *event);
-static void          _e_fm2_cb_dnd_drop(void *data, const char *type, void *event);
+static void          _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event);
 static void          _e_fm2_cb_icon_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_fm2_cb_icon_mouse_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_fm2_cb_icon_mouse_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -875,12 +875,20 @@ e_fm2_add(Evas *evas)
 }
 
 static Eina_Bool
-_e_fm2_dir_xds_update(E_Fm2_Smart_Data *sd)
+_e_fm2_cb_dnd_drop(void *data)
 {
+   E_Fm2_Smart_Data *sd = data;
    Eina_Bool allow;
+   char buf[PATH_MAX];
 
-   allow = (sd->realpath && ecore_file_can_write(sd->realpath));
-   e_drop_xds_update(allow, sd->realpath);
+   if (sd->drop_icon)
+     {
+        snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, sd->drop_icon->info.file);
+        allow = ecore_file_can_write(buf);
+     }
+   else
+     allow = (sd->realpath && ecore_file_can_write(sd->realpath));
+   e_drop_xds_update(allow, sd->drop_icon ? buf : sd->realpath);
    return allow;
 }
 
@@ -1553,11 +1561,11 @@ e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
                                          _e_fm2_cb_dnd_enter,
                                          _e_fm2_cb_dnd_move,
                                          _e_fm2_cb_dnd_leave,
-                                         _e_fm2_cb_dnd_drop,
+                                         _e_fm2_cb_dnd_selection_notify,
                                          drop, 4,
                                          sd->x, sd->y, sd->w, sd->h);
    e_drop_handler_responsive_set(sd->drop_handler);
-   e_drop_handler_xds_set(sd->drop_handler, (Ecore_Task_Cb)_e_fm2_dir_xds_update);
+   e_drop_handler_xds_set(sd->drop_handler, (Ecore_Task_Cb)_e_fm2_cb_dnd_drop);
 }
 
 EAPI void
@@ -6355,7 +6363,7 @@ error:
 }
 
 static void
-_e_fm2_cb_dnd_drop(void *data, const char *type, void *event)
+_e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
 {
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Drop *ev;
