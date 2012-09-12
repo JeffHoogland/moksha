@@ -423,7 +423,6 @@ _e_layout_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    if ((x == sd->x) && (y == sd->y)) return;
-   if ((x == sd->x) && (y == sd->y)) return;
      {
 	Eina_List *l;
 	Evas_Coord dx, dy;
