@@ -51,7 +51,7 @@ static E_Gadcon_Client *gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon
 
 static E_Gadcon        *gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer);
 
-E_Gadcon_Client *current = NULL;
+E_Gadcon_Client *drag_gcc = NULL;
 Manager *Man = NULL;
 static E_Gadcon_Location *location = NULL;
 static Eina_List *_gadman_hdls = NULL;
@@ -219,7 +219,7 @@ static void
 gadman_gadcon_place_job(E_Gadcon_Client *gcc)
 {
    _apply_widget_position(gcc);
-   if (gcc == current)
+   if (gcc == drag_gcc)
      gadman_gadget_edit_start(gcc);
    evas_object_show(gcc->o_frame);
 }
@@ -244,8 +244,8 @@ _gadman_gadget_free(void *data __UNUSED__, void *obj)
           }
         gcc->cf = NULL;
      }
-   edit = (gcc == current);
-   current = NULL;
+   edit = (gcc == drag_gcc);
+   drag_gcc = NULL;
    if (edit) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
 }
 
@@ -408,7 +408,7 @@ gadman_gadget_edit_start(E_Gadcon_Client *gcc)
    evas_object_show(mover);
    evas_object_event_callback_del(mover, EVAS_CALLBACK_HIDE, gadman_edit);
    evas_object_event_callback_add(mover, EVAS_CALLBACK_HIDE, gadman_edit, gcc);
-   current = gcc;
+   drag_gcc = gcc;
 }
 
 void
@@ -428,7 +428,7 @@ gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
           gc->editing = 0;
      }
 
-   if (current) _save_widget_position(current);
+   if (drag_gcc) _save_widget_position(drag_gcc);
 }
 
 void
@@ -673,6 +673,7 @@ _gadman_gadcon_new(const char *name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
         e_gadcon_ecore_evas_set(gc, Man->container->bg_ecore_evas);
         e_gadcon_xdnd_window_set(gc, Man->container->bg_win);
         e_gadcon_dnd_window_set(gc, Man->container->event_win);
+        e_gadcon_drop_handler_add(gc, zone->x, zone->y, zone->w, zone->h);
         e_drop_xdnd_register_set(Man->container->bg_win, 1);
      }
 
@@ -788,10 +789,10 @@ _save_widget_position(E_Gadcon_Client *gcc)
    int x, y, w, h;
 
    evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
-   current->config.pos_x = current->cf->geom.pos_x = (double)x / (double)gcc->gadcon->zone->w;
-   current->config.pos_y = current->cf->geom.pos_y = (double)y / (double)gcc->gadcon->zone->h;
-   current->config.size_w = current->cf->geom.size_w = (double)w / (double)gcc->gadcon->zone->w;
-   current->config.size_h = current->cf->geom.size_h = (double)h / (double)gcc->gadcon->zone->h;
+   drag_gcc->config.pos_x = drag_gcc->cf->geom.pos_x = (double)x / (double)gcc->gadcon->zone->w;
+   drag_gcc->config.pos_y = drag_gcc->cf->geom.pos_y = (double)y / (double)gcc->gadcon->zone->h;
+   drag_gcc->config.size_w = drag_gcc->cf->geom.size_w = (double)w / (double)gcc->gadcon->zone->w;
+   drag_gcc->config.size_h = drag_gcc->cf->geom.size_h = (double)h / (double)gcc->gadcon->zone->h;
 
    e_config_save_queue();
 }
@@ -1057,7 +1058,7 @@ on_menu_style_plain(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi
 {
    E_Gadcon_Client *gcc;
 
-   gcc = current;
+   gcc = drag_gcc;
    if (gcc->style) eina_stringshare_del(gcc->style);
    gcc->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
 
@@ -1074,7 +1075,7 @@ on_menu_style_inset(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi
 {
    E_Gadcon_Client *gcc;
 
-   gcc = current;
+   gcc = drag_gcc;
 
    if (gcc->style) eina_stringshare_del(gcc->style);
    gcc->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
@@ -1159,7 +1160,7 @@ _on_menu_layer(E_Gadcon_Client *gcc, Gadman_Layer_Type layer)
    new_gcc = _gadman_gadget_add(cc, layer, cf);
    gcc->cf = NULL;
    e_object_del(E_OBJECT(gcc));
-   current = new_gcc;
+   drag_gcc = new_gcc;
 
    e_config_save_queue();
 }
@@ -1212,7 +1213,7 @@ on_frame_click(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
 
    if (gcc->gadcon->editing) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
 
-   current = gcc;
+   drag_gcc = gcc;
 
    if (ev->button == 5)
      {
@@ -1241,33 +1242,33 @@ on_top(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const c
    int action = (int)(long)data;
    Evas_Object *mover;
 
-   mover = _get_mover(current);
+   mover = _get_mover(drag_gcc);
 
    if (action == DRAG_START)
      {
-        current->resizing = 1;
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        drag_gcc->resizing = 1;
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
         dy = my - oy;
      }
    else if (action == DRAG_STOP)
      {
-        current->resizing = 0;
+        drag_gcc->resizing = 0;
         dy = 0;
-        _save_widget_position(current);
+        _save_widget_position(drag_gcc);
      }
-   else if ((action == DRAG_MOVE) && current->resizing)
+   else if ((action == DRAG_MOVE) && drag_gcc->resizing)
      {
         int h;
 
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
 
         h = oy + oh + dy - my;
 
-        if (h < current->min.h)
+        if (h < drag_gcc->min.h)
           {
-             my -= current->min.h - h;
-             h = current->min.h;
+             my -= drag_gcc->min.h - h;
+             h = drag_gcc->min.h;
           }
         /* don't go out of the screen */
         if (my < dy)
@@ -1279,8 +1280,8 @@ on_top(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const c
         evas_object_resize(mover, ow, h);
         evas_object_move(mover, ox, my - dy);
 
-        evas_object_resize(current->o_frame, ow, h);
-        evas_object_move(current->o_frame, ox, my - dy);
+        evas_object_resize(drag_gcc->o_frame, ow, h);
+        evas_object_move(drag_gcc->o_frame, ox, my - dy);
      }
 }
 
@@ -1293,35 +1294,35 @@ on_right(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const
    int mx, my; //Mouse coord
    int action;
 
-   mover = _get_mover(current);
+   mover = _get_mover(drag_gcc);
 
    action = (int)(long)data;
    if (action == DRAG_START)
      {
-        current->resizing = 1;
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        drag_gcc->resizing = 1;
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
         dx = mx - ow;
      }
    else if (action == DRAG_STOP)
      {
-        current->resizing = 0;
+        drag_gcc->resizing = 0;
         dx = 0;
-        _save_widget_position(current);
+        _save_widget_position(drag_gcc);
      }
-   else if ((action == DRAG_MOVE) && current->resizing)
+   else if ((action == DRAG_MOVE) && drag_gcc->resizing)
      {
         int w;
 
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         w = mx - dx;
 
-        if (w < current->min.w) w = current->min.w;
+        if (w < drag_gcc->min.w) w = drag_gcc->min.w;
         /* don't go out of the screen */
         if (w > (Man->width - ox)) w = Man->width - ox;
 
         evas_object_resize(mover, w, oh);
-        evas_object_resize(current->o_frame, w, oh);
+        evas_object_resize(drag_gcc->o_frame, w, oh);
      }
 }
 
@@ -1335,34 +1336,34 @@ on_down(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
    int action;
 
    action = (int)(long)data;
-   mover = _get_mover(current);
+   mover = _get_mover(drag_gcc);
 
    if (action == DRAG_START)
      {
-        current->resizing = 1;
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        drag_gcc->resizing = 1;
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
         dy = my - oh;
      }
    else if (action == DRAG_STOP)
      {
-        current->resizing = 0;
+        drag_gcc->resizing = 0;
         dy = 0;
-        _save_widget_position(current);
+        _save_widget_position(drag_gcc);
      }
-   else if ((action == DRAG_MOVE) && current->resizing)
+   else if ((action == DRAG_MOVE) && drag_gcc->resizing)
      {
         int h;
 
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         h = my - dy;
 
-        if (h < current->min.h) h = current->min.h;
+        if (h < drag_gcc->min.h) h = drag_gcc->min.h;
         /* don't go out of the screen */
         if (h > (Man->height - oy)) h = Man->height - oy;
 
         evas_object_resize(mover, ow, h);
-        evas_object_resize(current->o_frame, ow, h);
+        evas_object_resize(drag_gcc->o_frame, ow, h);
      }
 }
 
@@ -1376,33 +1377,33 @@ on_left(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
    int action;
 
    action = (int)(long)data;
-   mover = _get_mover(current);
+   mover = _get_mover(drag_gcc);
 
    if (action == DRAG_START)
      {
-        current->resizing = 1;
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        drag_gcc->resizing = 1;
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
         dx = mx - ox;
      }
    else if (action == DRAG_STOP)
      {
-        current->resizing = 0;
+        drag_gcc->resizing = 0;
         dx = 0;
-        _save_widget_position(current);
+        _save_widget_position(drag_gcc);
      }
-   else if ((action == DRAG_MOVE) && current->resizing)
+   else if ((action == DRAG_MOVE) && drag_gcc->resizing)
      {
         int w;
 
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
 
         w = ox + ow + dx - mx;
 
-        if (w < current->min.w)
+        if (w < drag_gcc->min.w)
           {
-             mx -= current->min.w - w;
-             w = current->min.w;
+             mx -= drag_gcc->min.w - w;
+             w = drag_gcc->min.w;
           }
         /* don't go out of the screen */
         if (mx < dx)
@@ -1414,8 +1415,8 @@ on_left(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         evas_object_resize(mover, w, oh);
         evas_object_move(mover, mx - dx, oy);
 
-        evas_object_resize(current->o_frame, w, oh);
-        evas_object_move(current->o_frame, mx - dx, oy);
+        evas_object_resize(drag_gcc->o_frame, w, oh);
+        evas_object_move(drag_gcc->o_frame, mx - dx, oy);
      }
 }
 
@@ -1430,13 +1431,13 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
    int action;
 
    action = (int)(long)data;
-   mover = _get_mover(current);
+   mover = _get_mover(drag_gcc);
 
    /* DRAG_START */
    if (action == DRAG_START)
      {
-        current->moving = 1;
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        drag_gcc->moving = 1;
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
 
         dx = mx - ox;
@@ -1453,18 +1454,18 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         E_Gadcon *dst_gadcon;
         int gx, gy;
 
-        current->moving = 0;
+        drag_gcc->moving = 0;
         dx = dy = 0;
 
         /* checking if zone was changed for dragged gadget */
-        evas_object_geometry_get(current->o_frame, &gx, &gy, NULL, NULL);
+        evas_object_geometry_get(drag_gcc->o_frame, &gx, &gy, NULL, NULL);
         dst_zone = e_container_zone_at_point_get(e_container_current_get(e_manager_current_get()), gx, gy);
-        if (dst_zone && (current->gadcon->zone != dst_zone))
+        if (dst_zone && (drag_gcc->gadcon->zone != dst_zone))
           {
-             unsigned int layer = current->gadcon->id - ID_GADMAN_LAYER_BASE;
-             cf = current->cf;
+             unsigned int layer = drag_gcc->gadcon->id - ID_GADMAN_LAYER_BASE;
+             cf = drag_gcc->cf;
 
-             current->gadcon->cf->clients = eina_list_remove(current->gadcon->cf->clients, cf);
+             drag_gcc->gadcon->cf->clients = eina_list_remove(drag_gcc->gadcon->cf->clients, cf);
              dst_gadcon = gadman_gadcon_get(dst_zone, layer);
              if (dst_gadcon)
                {
@@ -1473,16 +1474,16 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
                }
           }
         else
-          _save_widget_position(current);
+          _save_widget_position(drag_gcc);
         return;
      }
 
    /* DRAG_MOVE */
-   if ((action == DRAG_MOVE) && current->moving)
+   if ((action == DRAG_MOVE) && drag_gcc->moving)
      {
         int x, y;
 
-        evas_pointer_output_xy_get(current->gadcon->evas, &mx, &my);
+        evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
 
         x = mx - dx;
         y = my - dy;
@@ -1493,9 +1494,9 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         if (y < 0) y = 0;
         if (y > (Man->height - oh)) y = Man->height - oh;
 
-        evas_object_move(current->o_frame, x, y);
+        evas_object_move(drag_gcc->o_frame, x, y);
         evas_object_move(mover, x, y);
-        evas_object_raise(current->o_frame);
+        evas_object_raise(drag_gcc->o_frame);
         evas_object_raise(mover);
      }
 }
