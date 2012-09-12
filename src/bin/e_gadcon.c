@@ -2875,6 +2875,8 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
    E_Event_Dnd_Move *ev;
    E_Gadcon *gc;
    E_Gadcon_Client *gcc = NULL;
+   int dx, dy;
+   Evas_Object *o;
 
    ev = event;
    gc = data;
@@ -2884,39 +2886,35 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
    /* If we move in the newly entered gadcon */
    else if (new_gcc->gadcon == gc)
      gcc = new_gcc;
-   if (gcc)
+   if (!gcc) return;
+
+   if (gcc->state_info.resist > 0)
      {
-        Evas_Coord dx, dy;
-        Evas_Object *o;
-
-        if (gcc->state_info.resist > 0)
-          {
-             gcc->state_info.resist--;
-             return;
-          }
-        e_gadcon_layout_freeze(gc->o_container);
-
-        if (e_gadcon_layout_orientation_get(gc->o_container))
-          gcc->config.pos = ev->x - gcc->config.size / 2;
-        else
-          gcc->config.pos = ev->y - gcc->config.size / 2;
-        gcc->state_info.prev_pos = gcc->config.pos;
-
-        evas_object_geometry_get(gc->o_container, &dx, &dy, NULL, NULL);
-        _e_gadcon_client_inject(gc, gcc, ev->x + dx, ev->y + dy);
-
-        o = gcc->o_frame ? gcc->o_frame : gcc->o_base;
-        if (o)
-          {
-             if (e_gadcon_layout_orientation_get(gc->o_container))
-               e_gadcon_layout_pack_request_set(o, gcc->config.pos,
-                                                gcc->config.size);
-             else
-               e_gadcon_layout_pack_request_set(o, gcc->config.pos,
-                                                gcc->config.size);
-          }
-        e_gadcon_layout_thaw(gc->o_container);
+        gcc->state_info.resist--;
+        return;
      }
+   e_gadcon_layout_freeze(gc->o_container);
+
+   if (e_gadcon_layout_orientation_get(gc->o_container))
+     gcc->config.pos = ev->x - gcc->config.size / 2;
+   else
+     gcc->config.pos = ev->y - gcc->config.size / 2;
+   gcc->state_info.prev_pos = gcc->config.pos;
+
+   evas_object_geometry_get(gc->o_container, &dx, &dy, NULL, NULL);
+   _e_gadcon_client_inject(gc, gcc, ev->x + dx, ev->y + dy);
+
+   o = gcc->o_frame ? gcc->o_frame : gcc->o_base;
+   if (o)
+     {
+        if (e_gadcon_layout_orientation_get(gc->o_container))
+          e_gadcon_layout_pack_request_set(o, gcc->config.pos,
+                                           gcc->config.size);
+        else
+          e_gadcon_layout_pack_request_set(o, gcc->config.pos,
+                                           gcc->config.size);
+     }
+   e_gadcon_layout_thaw(gc->o_container);
 }
 
 static void
