@@ -970,6 +970,11 @@ _e_winlist_border_add(E_Border *bd, E_Zone *zone, E_Desk *desk)
                     {
                        if (!e_config->winlist_list_show_other_screen_windows)
                          return;
+                       if (bd->zone && bd->desk && (bd->desk != e_desk_current_get(bd->zone)))
+                         {
+                            if (!e_config->winlist_list_show_other_desk_windows)
+                              return;
+                         }
                     }
                   else if (!e_config->winlist_list_show_other_desk_windows)
                     return;
