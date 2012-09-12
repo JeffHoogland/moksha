@@ -1229,12 +1229,16 @@ _e_dnd_cb_event_dnd_enter(void *data __UNUSED__, int type __UNUSED__, void *even
      }
    for (i = 0; i < ev->num_types; i++)
      {
+        const char *t = NULL;
         /* FIXME: Maybe we want to get something else then files dropped? */
-        if ((_type_text_uri_list == ev->types[i]) ||
-            (!strcmp(_type_text_uri_list, ev->types[i]))) /* not sure it is stringshared */
+        if (!strcmp(_type_text_uri_list, ev->types[i]))
+          t = eina_stringshare_ref(_type_text_uri_list);
+        else if (!strcmp(_type_xds, ev->types[i]))
+          t = eina_stringshare_ref(_type_xds);
+        if (t)
           {
              _xdnd = E_NEW(XDnd, 1);
-             _xdnd->type = eina_stringshare_ref(_type_text_uri_list);
+             _xdnd->type = t;
              EINA_LIST_FOREACH(_drop_handlers, l, h)
                {
                   h->active = 0;
