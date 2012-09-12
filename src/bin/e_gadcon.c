@@ -423,6 +423,21 @@ e_gadcon_config_del(E_Gadcon *gc)
    gc->cfg_delete = 1;
 }
 
+EAPI void
+e_gadcon_drop_handler_add(E_Gadcon *gc, int x, int y, int w, int h)
+{
+   const char *drop_types[] = { "enlightenment/gadcon_client" };
+
+   E_OBJECT_CHECK(gc);
+   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   if (gc->drop_handler) return;
+   gc->drop_handler =
+     e_drop_handler_add(E_OBJECT(gc), gc,
+                        _e_gadcon_cb_dnd_enter, _e_gadcon_cb_dnd_move,
+                        _e_gadcon_cb_dnd_leave, _e_gadcon_cb_drop,
+                        drop_types, 1, x, y, w, h);
+}
+
 EAPI E_Gadcon *
 e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *swallow_name)
 {
@@ -430,7 +445,6 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *s
    E_Config_Gadcon *cf_gc;
    Eina_List *l;
    Evas_Coord x, y, w, h;
-   const char *drop_types[] = { "enlightenment/gadcon_client" };
 
    gc = E_OBJECT_ALLOC(E_Gadcon, E_GADCON_TYPE, _e_gadcon_free);
    if (!gc) return NULL;
@@ -447,11 +461,7 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *s
    gc->evas = evas_object_evas_get(obj);
    gc->o_container = e_gadcon_layout_add(gc->evas);
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
-   gc->drop_handler =
-     e_drop_handler_add(E_OBJECT(gc), gc,
-                        _e_gadcon_cb_dnd_enter, _e_gadcon_cb_dnd_move,
-                        _e_gadcon_cb_dnd_leave, _e_gadcon_cb_drop,
-                        drop_types, 1, x, y, w, h);
+   e_gadcon_drop_handler_add(gc, x, y, w, h);
    evas_object_event_callback_add(gc->o_container, EVAS_CALLBACK_MOVE,
                                   _e_gadcon_cb_moveresize, gc);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE,
