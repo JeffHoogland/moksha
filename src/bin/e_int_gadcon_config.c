@@ -488,7 +488,7 @@ _cb_del_advanced(void *data, void *data2 __UNUSED__)
    E_Config_Gadcon_Client *cf_gcc;
    const Eina_List *l, *sel, *ll, *lll, *llll;
    E_Ilist_Item *ili;
-   int x = 0;
+   int x = 0, refresh = 0;;
 
    sel = e_widget_ilist_items_get(cfdata->advanced.o_list);
    EINA_LIST_FOREACH_SAFE(sel, ll, lll, ili)
@@ -517,18 +517,19 @@ _cb_del_advanced(void *data, void *data2 __UNUSED__)
                        e_object_del(E_OBJECT(gcc));
                        break;
                     }
+                  refresh = 1;
                   e_gadcon_client_config_del(cfdata->gc->cf, cf_gcc);
-                  if (!cfdata->gc->custom)
-                    {
-                       e_gadcon_unpopulate(cfdata->gc);
-                       e_gadcon_populate(cfdata->gc);
-                    }
                   e_config_save_queue();
                   e_widget_ilist_remove_num(cfdata->advanced.o_list, x);
                   x++;
                   break;
                }
           }
+     }
+   if (refresh && (!cfdata->gc->custom))
+     {
+        e_gadcon_unpopulate(cfdata->gc);
+        e_gadcon_populate(cfdata->gc);
      }
    e_widget_ilist_selected_set(cfdata->advanced.o_list, 0);
 }
