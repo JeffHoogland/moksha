@@ -533,7 +533,7 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    int i;
-   Eina_List *l;
+   const Eina_List *l;
    CFText_Class *tc;
    E_Ilist_Item *ili;
 
@@ -812,7 +812,7 @@ _adv_class_cb_change(void *data, Evas_Object *obj __UNUSED__)
 
    {
       E_Ilist_Item *ili;
-      Eina_List *l;
+      const Eina_List *l;
       unsigned int sel = 0;
 
       /* Select the configured font */
@@ -876,7 +876,7 @@ _size_cb_change(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    E_Font_Size_Data *size_data;
-   Eina_List *l;
+   const Eina_List *l;
    int n;
 
    size_data = data;
@@ -1084,7 +1084,7 @@ _adv_style_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    E_Ilist_Item *i;
-   Eina_List *l;
+   const Eina_List *l;
    int n = 0;
 
    if (!(cfdata = data)) return;

@@ -400,7 +400,7 @@ _cb_bindings_changed(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    E_Config_Binding_Acpi *binding;
-   Eina_List *items;
+   const Eina_List *items;
    const E_Ilist_Item *item;
    int i = -1;
 

@@ -852,7 +852,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
      }
 }
 
-EAPI Eina_List *
+EAPI const Eina_List *
 e_ilist_items_get(Evas_Object *obj)
 {
    API_ENTRY return NULL;

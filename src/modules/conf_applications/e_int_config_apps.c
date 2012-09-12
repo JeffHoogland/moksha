@@ -591,7 +591,7 @@ _cb_apps_list_selected(void *data)
 {
    E_Config_App_List *apps;
    const E_Ilist_Item *it;
-   Eina_List *l;
+   const Eina_List *l;
    unsigned int enabled = 0, disabled = 0;
 
    if (!(apps = data)) return;
@@ -662,7 +662,7 @@ _cb_add(void *data, void *data2 __UNUSED__)
 {
    E_Config_App_List *apps;
    const E_Ilist_Item *it;
-   Eina_List *l;
+   const Eina_List *l;
 
    if (!(apps = data)) return;
    EINA_LIST_FOREACH(e_widget_ilist_items_get(apps->o_list), l, it)
@@ -692,7 +692,7 @@ _cb_del(void *data, void *data2 __UNUSED__)
 {
    E_Config_App_List *apps;
    const E_Ilist_Item *it;
-   Eina_List *l;
+   const Eina_List *l;
 
    if (!(apps = data)) return;
    EINA_LIST_FOREACH(e_widget_ilist_items_get(apps->o_list), l, it)
@@ -722,7 +722,7 @@ _cb_order_del(void *data, void *data2 __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    const E_Ilist_Item *it;
-   Eina_List *l;
+   const Eina_List *l;
 
    if (!(cfdata = data)) return;
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_list), l, it)

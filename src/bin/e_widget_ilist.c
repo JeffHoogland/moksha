@@ -280,7 +280,7 @@ static void
 _e_wid_disable_hook(Evas_Object *obj)
 {
    E_Ilist_Item *ili;
-   Eina_List *l;
+   const Eina_List *l;
    Eina_Bool disabled;
    E_Widget_Data *wd;
 
@@ -601,7 +601,7 @@ e_widget_ilist_count(Evas_Object *obj)
      return e_ilist_count(wd->o_ilist);
 }
 
-EAPI Eina_List *
+EAPI const Eina_List *
 e_widget_ilist_items_get(Evas_Object *obj)
 {
    E_Widget_Data *wd;

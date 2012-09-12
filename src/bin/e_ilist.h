@@ -57,7 +57,7 @@ EAPI void         e_ilist_nth_end_set           (Evas_Object *obj, int n, Evas_O
 EAPI Eina_Bool    e_ilist_nth_is_header         (Evas_Object *obj, int n);
 EAPI void         e_ilist_nth_geometry_get      (Evas_Object *obj, int n, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 EAPI void         e_ilist_icon_size_set         (Evas_Object *obj, Evas_Coord w, Evas_Coord h);
-EAPI Eina_List   *e_ilist_items_get             (Evas_Object *obj);
+EAPI const Eina_List   *e_ilist_items_get             (Evas_Object *obj);
 EAPI void         e_ilist_multi_select          (Evas_Object *obj, int n);
 EAPI void         e_ilist_range_select          (Evas_Object *obj, int n);
 

@@ -421,7 +421,7 @@ _list_item_add(E_Quick_Access_Entry *entry)
 static void
 _list_item_delete(E_Quick_Access_Entry *entry)
 {
-   Eina_List *l, *ll;
+   const Eina_List *l, *ll;
    E_Ilist_Item *ili;
    Evas_Object *list;
    unsigned int x = 0;
