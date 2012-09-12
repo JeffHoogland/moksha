@@ -129,6 +129,7 @@ struct _E_Gadcon
    E_Gadcon_Location *location;
 
    E_Drop_Handler    *drop_handler;
+   E_Gadcon_Client *drag;
 
    E_Config_Gadcon   *cf;
 
@@ -221,6 +222,7 @@ struct _E_Gadcon_Client
    struct
    {
       int x, y;
+      E_Drag *drag;
    } drag;
 
    unsigned char           hidden : 1;

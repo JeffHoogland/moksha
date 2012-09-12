@@ -2198,7 +2198,7 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 
    ecore_x_pointer_xy_get(gcc->gadcon->zone->container->win, &x, &y);
 
-   drag = e_drag_new(gcc->gadcon->zone->container, x, y,
+   gcc->drag.drag = drag = e_drag_new(gcc->gadcon->zone->container, x, y,
                      drag_types, 1, gcc, -1, NULL,
                      _e_gadcon_cb_drag_finished);
    if (drag)
@@ -2763,6 +2763,7 @@ _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
    E_Gadcon_Client *gcc;
 
    gcc = drag->data;
+   drag_gcc->drag.drag = NULL;
    if (!dropped)
      {
         /* free client config */
@@ -2791,6 +2792,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
 
    ev = event;
    gc = data;
+   if (gc->drag) return;
    e_gadcon_layout_freeze(gc->o_container);
    gcc = drag_gcc;
 
@@ -2830,16 +2832,15 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
         if (cc)
           {
              if (!gcc->style)
-               {
-                  new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
-                                          cc->default_style);
-               }
+               new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
+                                       cc->default_style);
              else
                new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
                                        gcc->style);
 
              if (new_gcc)
                {
+                  gc->drag = new_gcc;
                   new_gcc->cf = gcc->cf;
                   new_gcc->client_class = cc;
                   new_gcc->config.pos = gcc->config.pos;
@@ -2850,7 +2851,23 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
                   if (new_gcc->o_frame)
                     e_gadcon_layout_pack_options_set(new_gcc->o_frame, new_gcc);
                   else if (new_gcc->o_base)
-                    e_gadcon_layout_pack_options_set(new_gcc->o_base, new_gcc);
+                    {
+                       e_gadcon_layout_pack_options_set(new_gcc->o_base, new_gcc);
+                       if (!gc->o_container)
+                         {
+                            int w, h;
+                            evas_object_hide(drag_gcc->drag.drag->object);
+                            evas_output_size_get(gc->evas, &w, &h);
+                            new_gcc->config.pos_x = (double)ev->x / (double)w;
+                            new_gcc->config.pos_y = (double)ev->y / (double)h;
+                            new_gcc->config.size_w = (double)new_gcc->config.size / (double)w;
+                            new_gcc->config.size_h = (double)new_gcc->config.size / (double)h;
+                            evas_object_resize(new_gcc->o_base, new_gcc->config.size, new_gcc->config.size);
+                            evas_object_move(new_gcc->o_base, ev->x, ev->y);
+                         }
+                    }
+                  if (gc->o_container)
+                    evas_object_show(drag_gcc->drag.drag->object);
 
                   e_gadcon_client_autoscroll_set(new_gcc, gcc->autoscroll);
 /*		  e_gadcon_client_resizable_set(new_gcc, gcc->resizable);*/
@@ -2899,8 +2916,14 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
      gcc->config.pos = ev->x - gcc->config.size / 2;
    else
      gcc->config.pos = ev->y - gcc->config.size / 2;
-   gcc->state_info.prev_pos = gcc->config.pos;
-
+   if (!gcc->gadcon->o_container)
+     {
+        int w, h;
+        evas_output_size_get(gc->evas, &w, &h);
+        new_gcc->config.pos_x = (double)ev->x / (double)w;
+        new_gcc->config.pos_y = (double)ev->y / (double)h;
+        if (gcc->o_base) evas_object_move(gcc->o_base, ev->x, ev->y);
+     }
    evas_object_geometry_get(gc->o_container, &dx, &dy, NULL, NULL);
    _e_gadcon_client_inject(gc, gcc, ev->x + dx, ev->y + dy);
 
@@ -2929,6 +2952,7 @@ _e_gadcon_cb_dnd_leave(void *data, const char *type __UNUSED__, void *event __UN
    /* Delete temporary object */
    if (new_gcc)
      {
+        new_gcc->gadcon->drag = NULL;
         e_object_del(E_OBJECT(new_gcc));
         new_gcc = NULL;
      }
@@ -2941,13 +2965,27 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
    E_Gadcon_Client *gcc = NULL;
 
    gc = data;
+   if (new_gcc)
+     new_gcc->gadcon->drag = NULL;
    if (drag_gcc->gadcon == gc) gcc = drag_gcc;
    else if ((new_gcc) && (new_gcc->gadcon == gc))
      gcc = new_gcc;
    else return;  /* make clang happy */
 
    gc->cf->clients = eina_list_append(gc->cf->clients, gcc->cf);
-
+   if ((new_gcc == gcc) && (!new_gcc->gadcon->o_container))
+     {
+        /* FIXME: gadman sucks and should probably use a regular gadcon layout, but it doesn't
+         * so we need to repop here
+         */
+        new_gcc->cf = gcc->cf;
+        _e_gadcon_client_save(new_gcc);
+        new_gcc->cf = NULL;
+        e_object_del(E_OBJECT(new_gcc)); // we don't null new_gcc here since it gets checked in _drag_finished
+        e_gadcon_custom_populate_request(gc);
+        e_config_save_queue();
+        return;
+     }
    if (gc->editing) e_gadcon_client_edit_begin(gcc);
    e_config_save_queue();
 }
