@@ -178,7 +178,7 @@ _notification_popup_merge(E_Notification *n)
 
    len = strlen(body_old);
    len += strlen(body_new);
-   len += 4; /* \xE2\x80\xA9 or <PS> */
+   len += 5; /* \xE2\x80\xA9 or <PS/> */
    if (len < 65536) body_final = alloca(len + 1);
    else body_final = malloc(len + 1);
    /* Hack to allow e to include markup */
