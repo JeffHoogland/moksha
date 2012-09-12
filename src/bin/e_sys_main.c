@@ -28,6 +28,7 @@ static int auth_action_ok(char *a,
 static int auth_etc_enlightenment_sysactions(char *a,
                                              char *u,
                                              char **g);
+static void auth_etc_enlightenment_sysactions_perm(char *path);
 static char *get_word(char *s,
                       char *d);
 
@@ -439,6 +440,9 @@ auth_etc_enlightenment_sysactions(char *a,
         f = fopen(file, "r");
         if (!f) return 0;
      }
+
+   auth_etc_enlightenment_sysactions_perm(file);
+
    while (fgets(buf, sizeof(buf), f))
      {
         line++;
@@ -527,6 +531,21 @@ malformed:
 done:
    fclose(f);
    return ok;
+}
+
+static void
+auth_etc_enlightenment_sysactions_perm(char *path)
+{
+   struct stat st;
+   if (stat(path, &st) == -1)
+     return;
+
+   if ((st.st_mode & S_IWGRP) || (st.st_mode & S_IXGRP) ||
+       (st.st_mode & S_IWOTH) || (st.st_mode & S_IXOTH))
+     {
+        printf("ERROR: CONFIGURATION FILE HAS BAD PERMISSIONS\n");
+        exit(10);
+     }
 }
 
 static char *
