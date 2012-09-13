@@ -890,7 +890,7 @@ _e_fm2_cb_dnd_drop(void *data)
      }
    else
      allow = (sd->realpath && ecore_file_can_write(sd->realpath));
-   if (sd->config->view.link_drop) allow = EINA_FALSE;
+   if (sd->config->view.link_drop && (!sd->drop_icon)) allow = EINA_FALSE;
    e_drop_xds_update(allow, sd->drop_icon ? buf : sd->realpath);
    if (sd->dnd_scroller) ecore_animator_del(sd->dnd_scroller);
    sd->dnd_scroller = NULL;
