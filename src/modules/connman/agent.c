@@ -77,7 +77,6 @@ _dialog_ok_cb(void *data, E_Dialog *dialog)
           {
              ERR("Couldn't get user input.");
              e_object_del(E_OBJECT(dialog));
-             agent->dialog = NULL;
              return;
           }
      }
@@ -95,9 +94,7 @@ _dialog_ok_cb(void *data, E_Dialog *dialog)
       DBUS_DICT_ENTRY_END_CHAR_AS_STRING, &dict);
 
    EINA_LIST_FOREACH(input_list, l, input)
-     {
-        _dict_append_basic(&dict, input->key, input->value);
-     }
+      _dict_append_basic(&dict, input->key, input->value);
 
    dbus_message_iter_close_container(&iter, &dict);
 
@@ -105,7 +102,6 @@ _dialog_ok_cb(void *data, E_Dialog *dialog)
    e_dbus_message_send(agent->conn, reply, NULL, -1, NULL);
 
    e_object_del(E_OBJECT(dialog));
-   agent->dialog = NULL;
 }
 
 static void
@@ -114,7 +110,6 @@ _dialog_cancel_cb(void *data, E_Dialog *dialog)
    E_Connman_Agent *agent = data;
    agent->canceled = EINA_TRUE;
    e_object_del(E_OBJECT(dialog));
-   agent->dialog = NULL;
 }
 
 static void
@@ -153,6 +148,7 @@ _dialog_del_cb(void *data)
 
    // FIXME need to mark cs->pending_connect = NULL;
    dbus_message_unref(agent->msg);
+   agent->dialog = NULL;
 }
 
 static void
@@ -279,10 +275,7 @@ _agent_release(E_DBus_Object *obj, DBusMessage *msg)
    EINA_SAFETY_ON_FALSE_RETURN_VAL(agent, reply);
 
    if (agent->dialog)
-     {
-        e_object_del(E_OBJECT(agent->dialog));
-        agent->dialog = NULL;
-     }
+     e_object_del(E_OBJECT(agent->dialog));
 
    return reply;
 }
@@ -467,10 +460,7 @@ _agent_cancel(E_DBus_Object *obj, DBusMessage *msg)
    EINA_SAFETY_ON_FALSE_RETURN_VAL(agent, reply);
 
    if (agent->dialog)
-     {
-        e_object_del(E_OBJECT(agent->dialog));
-        agent->dialog = NULL;
-     }
+     e_object_del(E_OBJECT(agent->dialog));
 
    return reply;
 }
