@@ -34,7 +34,7 @@ static E_Int_Menu_Augmentation *maug = NULL;
 static E_Menu_Category_Callback *mcb = NULL;
 static Ecore_Event_Handler *zone_add_handler = NULL;
 
-static E_Config_DD *conf_edd = NULL;
+static E_Config_DD *paths_edd = NULL, *conf_edd = NULL;
 Config *fileman_config = NULL;
 
 /* module setup */
@@ -91,26 +91,8 @@ e_modapi_init(E_Module *m)
                {
                   zone = lll->data;
                   if (e_fwin_zone_find(zone)) continue;
-                  if ((zone->container->num == 0) && (zone->num == 0) &&
-                      (fileman_config->view.show_desktop_icons))
-                    {
-// disable until such a day as this handles both screens properly!
-//                       if ((fileman_config->dev) && (fileman_config->path))
-//                         e_fwin_zone_new(zone, fileman_config->dev, fileman_config->path);
-//                       else
-                         e_fwin_zone_new(zone, "desktop", "/");
-                    }
-                  else
-                    {
-                       char buf[256];
-
-                       if (fileman_config->view.show_desktop_icons)
-                         {
-                            snprintf(buf, sizeof(buf), "%i",
-                                     (zone->container->num + zone->num));
-                            e_fwin_zone_new(zone, "desktop", buf);
-                         }
-                    }
+                  if (fileman_config->view.show_desktop_icons)
+                    e_fwin_zone_new(zone, e_mod_fileman_path_find(zone));
                }
           }
      }
@@ -190,6 +172,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_config_domain_save("module.fileman", conf_edd, fileman_config);
    _e_mod_fileman_config_free();
    E_CONFIG_DD_FREE(conf_edd);
+   E_CONFIG_DD_FREE(paths_edd);
 
    //eina_shutdown();
 
@@ -664,6 +647,15 @@ _e_mod_main_menu_cb(E_Menu *m, void *category_data __UNUSED__, void *data __UNUS
 static void
 _e_mod_fileman_config_load(void)
 {
+#undef T
+#undef D
+#define T Fileman_Path
+#define D paths_edd
+   paths_edd = E_CONFIG_DD_NEW("Fileman_Path", Fileman_Path);
+   E_CONFIG_VAL(D, T, dev, STR);
+   E_CONFIG_VAL(D, T, path, STR);
+   E_CONFIG_VAL(D, T, zone, UINT);
+   E_CONFIG_VAL(D, T, desktop_mode, INT);
    conf_edd = E_CONFIG_DD_NEW("Fileman_Config", Config);
    #undef T
    #undef D
@@ -671,7 +663,6 @@ _e_mod_fileman_config_load(void)
    #define D conf_edd
    E_CONFIG_VAL(D, T, config_version, INT);
    E_CONFIG_VAL(D, T, view.mode, INT);
-   E_CONFIG_VAL(D, T, view.desktop_mode, INT);
    E_CONFIG_VAL(D, T, view.open_dirs_in_place, UCHAR);
    E_CONFIG_VAL(D, T, view.selector, UCHAR);
    E_CONFIG_VAL(D, T, view.single_click, UCHAR);
@@ -707,8 +698,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, tooltip.delay, DOUBLE);
    E_CONFIG_VAL(D, T, tooltip.size, DOUBLE);
    E_CONFIG_VAL(D, T, tooltip.enable, UCHAR);
-   E_CONFIG_VAL(D, T, dev, STR);
-   E_CONFIG_VAL(D, T, path, STR);
+   E_CONFIG_LIST(D, T, paths, paths_edd);
 
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
    if (fileman_config)
@@ -760,10 +750,6 @@ _e_mod_fileman_config_load(void)
     e_config->filemanager_single_click = fileman_config->view.single_click;
     IFMODCFGEND;
 
-    IFMODCFG(0x0106);
-    fileman_config->view.desktop_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
-    IFMODCFGEND;
-
     IFMODCFG(0x0107);
     fileman_config->view.show_sidebar = 1;
     IFMODCFGEND;
@@ -778,11 +764,6 @@ _e_mod_fileman_config_load(void)
 
     IFMODCFG(0x0110);
     fileman_config->tooltip.enable = 1;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0111);
-    fileman_config->dev = eina_stringshare_add("desktop");
-    fileman_config->path = eina_stringshare_add("/");
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
@@ -801,13 +782,21 @@ _e_mod_fileman_config_load(void)
 }
 
 static void
+_e_mod_fileman_path_free(Fileman_Path *path)
+{
+   if (!path) return;
+   eina_stringshare_del(path->dev);
+   eina_stringshare_del(path->path);
+   free(path);
+}
+
+static void
 _e_mod_fileman_config_free(void)
 {
    eina_stringshare_del(fileman_config->theme.background);
    eina_stringshare_del(fileman_config->theme.frame);
    eina_stringshare_del(fileman_config->theme.icons);
-   eina_stringshare_del(fileman_config->dev);
-   eina_stringshare_del(fileman_config->path);
+   E_FREE_LIST(fileman_config->paths, _e_mod_fileman_path_free);
    E_FREE(fileman_config);
 }
 
@@ -823,20 +812,31 @@ _e_mod_zone_add(__UNUSED__ void *data,
    ev = event;
    zone = ev->zone;
    if (e_fwin_zone_find(zone)) return ECORE_CALLBACK_PASS_ON;
-   if ((zone->container->num == 0) && (zone->num == 0) &&
-       (fileman_config->view.show_desktop_icons))
-     e_fwin_zone_new(zone, fileman_config->dev, fileman_config->path);
-   else
-     {
-        char buf[256];
-
-        if (fileman_config->view.show_desktop_icons)
-          {
-             snprintf(buf, sizeof(buf), "%i",
-                      (zone->container->num + zone->num));
-             e_fwin_zone_new(zone, "desktop", buf);
-          }
-     }
+   if (fileman_config->view.show_desktop_icons)
+     e_fwin_zone_new(zone, e_mod_fileman_path_find(zone));
    return ECORE_CALLBACK_PASS_ON;
 }
 
+Fileman_Path *
+e_mod_fileman_path_find(E_Zone *zone)
+{
+   Eina_List *l;
+   Fileman_Path *path;
+   char buf[256];
+
+   EINA_LIST_FOREACH(fileman_config->paths, l, path)
+     if (path->zone == zone->container->num + zone->num) return path;
+   path = E_NEW(Fileman_Path, 1);
+   path->zone = zone->container->num + zone->num;
+   path->dev = eina_stringshare_add("desktop");
+   path->desktop_mode = E_FM2_VIEW_MODE_GRID_ICONS;
+   if ((zone->container->num == 0) && (zone->num == 0))
+     path->path = eina_stringshare_add("/");
+   else
+     {
+        snprintf(buf, sizeof(buf), "%i", (zone->container->num + zone->num));
+        path->path = eina_stringshare_add(buf);
+     }
+   fileman_config->paths = eina_list_append(fileman_config->paths, path);
+   return path;
+}

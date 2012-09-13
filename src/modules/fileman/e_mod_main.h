@@ -4,7 +4,7 @@
 /* Increment for Major Changes */
 #define MOD_CONFIG_FILE_EPOCH      0x0001
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
-#define MOD_CONFIG_FILE_GENERATION 0x0112
+#define MOD_CONFIG_FILE_GENERATION 0x0113
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
 typedef struct _Config Config;
@@ -19,6 +19,13 @@ typedef struct _Config Config;
 #include "e_int_config_mime_edit.h"
 #include "e_int_config_mime.h"
 
+typedef struct Fileman_Path
+{
+   const char *dev, *path;
+   unsigned int zone;
+   E_Fm2_View_Mode desktop_mode;
+} Fileman_Path;
+
 struct _Config
 {
    int config_version;
@@ -26,7 +33,6 @@ struct _Config
    struct
    {
       E_Fm2_View_Mode mode;
-      E_Fm2_View_Mode desktop_mode;
       unsigned char   open_dirs_in_place;
       unsigned char   selector;
       unsigned char   single_click;
@@ -101,7 +107,7 @@ struct _Config
       const char   *icons;
       unsigned char fixed;
    } theme;
-   const char *dev, *path; // stored from desktop navigation mode
+   Eina_List *paths; // Fileman_Path
 };
 
 EAPI extern E_Module_Api e_modapi;
@@ -111,6 +117,7 @@ EAPI int   e_modapi_shutdown(E_Module *m);
 EAPI int   e_modapi_save(E_Module *m);
 
 extern Config *fileman_config;
+Fileman_Path *e_mod_fileman_path_find(E_Zone *zone);
 
 /**
  * @addtogroup Optional_Fileman

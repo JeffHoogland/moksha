@@ -27,6 +27,7 @@ struct _E_Fwin
 
    E_Win               *win;
    E_Zone              *zone;
+   Fileman_Path *path; /* not freed with fwin, actually attached to config */
    Evas_Object         *bg_obj;
    E_Fwin_Apps_Dialog  *fad;
 
@@ -270,11 +271,10 @@ e_fwin_new(E_Container *con,
 }
 
 void
-e_fwin_zone_new(E_Zone *zone,
-                const char *dev,
-                const char *path)
+e_fwin_zone_new(E_Zone *zone, void *p)
 {
    E_Fwin *fwin;
+   Fileman_Path *path = p;
    E_Fwin_Page *page;
    Evas_Object *o;
    int x, y, w, h;
@@ -285,6 +285,7 @@ e_fwin_zone_new(E_Zone *zone,
 
    page = E_NEW(E_Fwin_Page, 1);
    page->fwin = fwin;
+   fwin->path = path;
 
    /* Add Event Handler for zone move/resize & del */
    fwin->zone_handler =
@@ -366,7 +367,7 @@ e_fwin_zone_new(E_Zone *zone,
 
    evas_object_focus_set(page->fm_obj, 1);
 
-   e_fm2_path_set(page->fm_obj, dev, path);
+   e_fm2_path_set(page->fm_obj, path->dev, path->path);
 
    fwin->cur_page = page;
 }
@@ -387,11 +388,15 @@ e_fwin_zone_shutdown(E_Zone *zone)
 {
    Eina_List *f, *fn;
    E_Fwin *win;
+   const char *dev, *path;
 
    EINA_LIST_FOREACH_SAFE(fwins, f, fn, win)
      {
         if (win->zone != zone) continue;
-        fileman_config->view.desktop_mode = e_fm2_view_mode_get(win->cur_page->fm_obj);
+        win->path->desktop_mode = e_fm2_view_mode_get(win->cur_page->fm_obj);
+        e_fm2_path_get(win->cur_page->fm_obj, &dev, &path);
+        eina_stringshare_replace(&win->path->dev, dev);
+        eina_stringshare_replace(&win->path->path, path);
         evas_event_callback_del_full(zone->container->bg_evas, EVAS_CALLBACK_CANVAS_FOCUS_IN, _e_fwin_zone_focus_in, win);
         e_object_del(E_OBJECT(win));
         win = NULL;
@@ -457,26 +462,8 @@ e_fwin_reload_all(void)
        EINA_LIST_FOREACH(con->zones, lll, zone)
          {
             if (e_fwin_zone_find(zone)) continue;
-            if ((zone->container->num == 0) && (zone->num == 0) &&
-                (fileman_config->view.show_desktop_icons))
-              {
-// disable until such a day as this handles both screens properly!
-//               if ((fileman_config->dev) && (fileman_config->path))
-//                 e_fwin_zone_new(zone, fileman_config->dev, fileman_config->path);
-//               else
-                 e_fwin_zone_new(zone, "desktop", "/");
-              }
-            else
-              {
-                 char buf[256];
-
-                 if (fileman_config->view.show_desktop_icons)
-                   {
-                      snprintf(buf, sizeof(buf), "%i",
-                               (zone->container->num + zone->num));
-                      e_fwin_zone_new(zone, "desktop", buf);
-                   }
-              }
+            if (fileman_config->view.show_desktop_icons)
+              e_fwin_zone_new(zone, e_mod_fileman_path_find(zone));
          }
 }
 
@@ -1295,7 +1282,7 @@ _e_fwin_config_set(E_Fwin_Page *page)
         fmc.icon.fixed.w = 1;
         fmc.icon.fixed.h = 1;
 #else
-        fmc.view.mode = fileman_config->view.desktop_mode;
+        fmc.view.mode = page->fwin->path->desktop_mode;
         fmc.icon.icon.w = fileman_config->icon.icon.w * e_scale;
         fmc.icon.icon.h = fileman_config->icon.icon.h * e_scale;
         fmc.icon.fixed.w = 0;
@@ -1612,10 +1599,9 @@ _e_fwin_changed(void *data,
    _e_fwin_icon_mouse_out(fwin, NULL, NULL);
    if (fwin->zone)
      {
-        if (fwin->zone->num) return;
         e_fm2_path_get(page->fm_obj, &dev, &path);
-        eina_stringshare_replace(&fileman_config->dev, dev);
-        eina_stringshare_replace(&fileman_config->path, path);
+        eina_stringshare_replace(&fwin->path->dev, dev);
+        eina_stringshare_replace(&fwin->path->path, path);
         return;
      }
    _e_fwin_window_title_set(page);
