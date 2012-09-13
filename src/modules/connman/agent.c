@@ -39,14 +39,6 @@ struct _E_Connman_Agent
    Eina_Bool canceled:1;
 };
 
-void
-_dialog_del(E_Dialog *dialog)
-{
-   EINA_SAFETY_ON_NULL_RETURN(dialog);
-   e_object_del(E_OBJECT(dialog));
-   free(dialog);
-}
-
 static void
 _dict_append_basic(DBusMessageIter *dict, const char *key, void *val)
 {
@@ -288,7 +280,7 @@ _agent_release(E_DBus_Object *obj, DBusMessage *msg)
 
    if (agent->dialog)
      {
-        _dialog_del(agent->dialog);
+        e_object_del(E_OBJECT(agent->dialog));
         agent->dialog = NULL;
      }
 
@@ -407,7 +399,7 @@ _agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
      econnman_popup_del(inst);
 
    if (agent->dialog)
-     _dialog_del(agent->dialog);
+     e_object_del(E_OBJECT(agent->dialog));
    agent->dialog = _dialog_new(agent);
    EINA_SAFETY_ON_NULL_GOTO(agent->dialog, err);
 
@@ -476,7 +468,7 @@ _agent_cancel(E_DBus_Object *obj, DBusMessage *msg)
 
    if (agent->dialog)
      {
-        _dialog_del(agent->dialog);
+        e_object_del(E_OBJECT(agent->dialog));
         agent->dialog = NULL;
      }
 
