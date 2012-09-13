@@ -23,6 +23,7 @@ struct _E_Config_Dialog_Data
        int show_sidebar;
        int desktop_navigation;
        int menu_shows_files;
+       int spring_delay;
     } view;
    struct
    {
@@ -182,6 +183,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
    fileman_config->view.show_sidebar = cfdata->view.show_sidebar;
    fileman_config->view.desktop_navigation = cfdata->view.desktop_navigation;
    fileman_config->view.menu_shows_files = cfdata->view.menu_shows_files;
+   fileman_config->view.spring_delay = cfdata->view.spring_delay;
    fileman_config->icon.extension.show = cfdata->icon.extension.show;
 
    fileman_config->selection.windows_modifiers = cfdata->selection.windows_modifiers;
@@ -243,6 +245,7 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->tooltip.delay != !(cfdata->tooltip.delay)) ||
      (fileman_config->tooltip.size != !(cfdata->tooltip.size)) ||
      (fileman_config->tooltip.enable != !(cfdata->tooltip.enable)) ||
+     (fileman_config->view.spring_delay != cfdata->view.spring_delay) ||
      (e_config->device_desktop != cfdata->dbus.desktop) ||
      (e_config->device_auto_mount != cfdata->dbus.auto_mount) ||
      (e_config->device_auto_open != cfdata->dbus.auto_open);
@@ -379,6 +382,12 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Allow Navigation On Desktop"),
                            &(cfdata->view.desktop_navigation));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
+   ob = e_widget_label_add(evas, _("Spring Delay"));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1, 0,
+                            NULL, &(cfdata->view.spring_delay), 150);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
    /////////////////////////////////////////////////////////////

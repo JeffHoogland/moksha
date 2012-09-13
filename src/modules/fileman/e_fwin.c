@@ -45,6 +45,10 @@ struct _E_Fwin
    Ecore_Timer *popup_timer;
    E_Fm2_Icon_Info *popup_icon;
    E_Popup *popup;
+
+   Ecore_Timer *spring_timer;
+   E_Fwin *spring_parent;
+   E_Fwin *spring_child;
    
    Ecore_Event_Handler *zone_handler;
    Ecore_Event_Handler *zone_del_handler;
@@ -97,6 +101,7 @@ typedef enum
 static void _e_fwin_page_favorites_add(E_Fwin_Page *page);
 static void _e_fwin_icon_mouse_out(void *data, Evas_Object *obj __UNUSED__, void *event_info);
 static void _e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info);
+static E_Fwin *_e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need_dia);
 static E_Fwin          *_e_fwin_new(E_Container *con,
                                     const char *dev,
                                     const char *path);
@@ -173,7 +178,7 @@ static E_Fwin_Exec_Type _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici);
 static void             _e_fwin_file_exec(E_Fwin_Page *page,
                                           E_Fm2_Icon_Info *ici,
                                           E_Fwin_Exec_Type ext);
-static void             _e_fwin_file_open_dialog(E_Fwin_Page *page,
+static void            _e_fwin_file_open_dialog(E_Fwin_Page *page,
                                                  Eina_List *files,
                                                  int always);
 static void             _e_fwin_file_open_dialog_preview_set(void *data1,
@@ -234,6 +239,8 @@ static void             _e_fwin_op_registry_abort_cb(void *data,
                                                      const char *emission,
                                                      const char *source);
 
+static E_Fwin *drag_fwin = NULL;
+
 /* local subsystem globals */
 static Eina_List *fwins = NULL;
 
@@ -268,6 +275,83 @@ e_fwin_new(E_Container *con,
            const char *path)
 {
    _e_fwin_new(con, dev, path);
+}
+
+static Eina_Bool
+_e_fwin_spring_cb(E_Fwin *fwin)
+{
+   E_Fm2_Icon_Info *ici;
+   E_Fwin *f;
+
+   ici = e_fm2_drop_icon_get(fwin->cur_page->fm_obj);
+   while (ici)
+     {
+        /* FIXME: could use an animation here */
+        f = _e_fwin_open(fwin->cur_page, ici, EINA_TRUE, NULL);
+        if (!f) break;
+        f->spring_parent = fwin;
+        fwin->spring_child = f;
+        break;
+     }
+   if (fwin->spring_timer) ecore_timer_del(fwin->spring_timer);
+   fwin->spring_timer = NULL;
+   return EINA_FALSE;
+}
+
+/* called on the drop source */
+static void
+_e_fwin_dnd_end_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   if (drag_fwin->spring_timer) ecore_timer_del(drag_fwin->spring_timer);
+   drag_fwin->spring_timer = NULL;
+
+   /* NOTE: closing the drop target window here WILL break things */
+   fwin = drag_fwin->spring_parent;
+   if (!fwin) return;
+
+   fwin->spring_child->spring_parent = NULL;
+   fwin->spring_child = NULL;
+   while (fwin->spring_parent)
+     {
+        /* FIXME: needs closing animation? */
+        fwin = fwin->spring_parent;
+        _e_fwin_free(fwin->spring_child);
+     }
+   drag_fwin = NULL;
+}
+
+static void
+_e_fwin_dnd_change_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   drag_fwin = fwin;
+   if (fwin->spring_timer)
+     ecore_timer_reset(fwin->spring_timer);
+   else
+     fwin->spring_timer = ecore_timer_add(fileman_config->view.spring_delay, (Ecore_Task_Cb)_e_fwin_spring_cb, fwin);
+}
+
+static void
+_e_fwin_dnd_enter_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   drag_fwin = fwin;
+   if (fwin->spring_timer) ecore_timer_del(fwin->spring_timer);
+   fwin->spring_timer = NULL;
+   if (fwin->spring_child) _e_fwin_free(fwin->spring_child);
+}
+
+static void
+_e_fwin_dnd_leave_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   if (fwin->spring_timer) ecore_timer_del(fwin->spring_timer);
+   fwin->spring_timer = NULL;
+   if (fwin->spring_parent && (!fwin->spring_child)) _e_fwin_free(fwin);
+   drag_fwin = NULL;
+}
+
+static void
+_e_fwin_dnd_begin_cb(E_Fwin *fwin __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   drag_fwin = NULL;
 }
 
 void
@@ -320,6 +404,11 @@ e_fwin_zone_new(E_Zone *zone, void *p)
                                   _e_fwin_selection_change, page);
    evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
                                   _e_fwin_cb_page_obj_del, page);
+   evas_object_smart_callback_add(o, "dnd_enter", (Evas_Smart_Cb)_e_fwin_dnd_enter_cb, fwin);
+   evas_object_smart_callback_add(o, "dnd_leave", (Evas_Smart_Cb)_e_fwin_dnd_leave_cb, fwin);
+   evas_object_smart_callback_add(o, "dnd_changed", (Evas_Smart_Cb)_e_fwin_dnd_change_cb, fwin);
+   evas_object_smart_callback_add(o, "dnd_begin", (Evas_Smart_Cb)_e_fwin_dnd_begin_cb, fwin);
+   evas_object_smart_callback_add(o, "dnd_end", (Evas_Smart_Cb)_e_fwin_dnd_end_cb, fwin);
    evas_object_smart_callback_add(o, "icon,mouse,in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
    evas_object_smart_callback_add(o, "icon,mouse,out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
@@ -586,7 +675,8 @@ _e_fwin_free(E_Fwin *fwin)
      ecore_event_handler_del(fwin->zone_handler);
    if (fwin->zone_del_handler)
      ecore_event_handler_del(fwin->zone_del_handler);
-
+   if (fwin->spring_timer) ecore_timer_del(fwin->spring_timer);
+   fwin->spring_timer = NULL;
    fwins = eina_list_remove(fwins, fwin);
    if (fwin->wallpaper_file) eina_stringshare_del(fwin->wallpaper_file);
    if (fwin->overlay_file) eina_stringshare_del(fwin->overlay_file);
@@ -600,6 +690,7 @@ _e_fwin_free(E_Fwin *fwin)
    if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
    if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
    fwin->popup_timer = NULL;
+   if (fwin->spring_parent) fwin->spring_parent->spring_child = NULL;
    if (fwin->win) e_object_del(E_OBJECT(fwin->win));
    free(fwin);
 }
@@ -804,6 +895,11 @@ _e_fwin_page_create(E_Fwin *fwin)
                                   _e_fwin_selection_change, page);
    evas_object_event_callback_add(o, EVAS_CALLBACK_DEL,
                                   _e_fwin_cb_page_obj_del, page);
+   evas_object_smart_callback_add(o, "dnd_enter", (Evas_Smart_Cb)_e_fwin_dnd_enter_cb, fwin);
+   evas_object_smart_callback_add(o, "dnd_leave", (Evas_Smart_Cb)_e_fwin_dnd_leave_cb, fwin);
+   evas_object_smart_callback_add(o, "dnd_changed", (Evas_Smart_Cb)_e_fwin_dnd_change_cb, fwin);
+   evas_object_smart_callback_add(o, "dnd_begin", (Evas_Smart_Cb)_e_fwin_dnd_begin_cb, fwin);
+   evas_object_smart_callback_add(o, "dnd_end", (Evas_Smart_Cb)_e_fwin_dnd_end_cb, fwin);
    evas_object_smart_callback_add(o, "double_clicked", (Evas_Smart_Cb)_e_fwin_bg_mouse_down, fwin);
    evas_object_smart_callback_add(o, "icon,mouse,in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
    evas_object_smart_callback_add(o, "icon,mouse,out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
@@ -2015,13 +2111,208 @@ _e_fwin_cb_menu_open_with(void *data,
    eina_list_free(selected);
 }
 
+static void
+_e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
+{
+   Evas_Object *oic;
+   const char *itype = NULL;
+   int ix, iy, iw, ih, nx, ny, found = 0;
+   E_Remember *rem = NULL;
+   Eina_List *ll;
+   const char *file = NULL, *group = NULL;
+   int w, h, zw, zh;
+   char buf[PATH_MAX + sizeof("removable:")];
+   /* E_Fm2_Custom_File *cf; */
+
+   if (ici->label)
+     e_win_title_set(fwin->win, ici->label);
+   else if (ici->file)
+     e_win_title_set(fwin->win, ici->file);
+   oic = e_fm2_icon_get(evas_object_evas_get(ici->fm),
+                        ici->ic, NULL, NULL, 0, &itype);
+   if (!oic) return;
+   if (fwin->win->border->internal_icon)
+     eina_stringshare_del(fwin->win->border->internal_icon);
+   fwin->win->border->internal_icon = NULL;
+   if (fwin->win->border->internal_icon_key)
+     eina_stringshare_del(fwin->win->border->internal_icon_key);
+   fwin->win->border->internal_icon_key = NULL;
+
+   if (!strcmp(evas_object_type_get(oic), "edje"))
+     {
+        edje_object_file_get(oic, &file, &group);
+        if (file)
+          {
+             fwin->win->border->internal_icon =
+               eina_stringshare_add(file);
+             if (group)
+               fwin->win->border->internal_icon_key =
+                 eina_stringshare_add(group);
+          }
+     }
+   else
+     {
+        file = e_icon_file_get(oic);
+        fwin->win->border->internal_icon =
+          eina_stringshare_add(file);
+     }
+   evas_object_del(oic);
+
+   snprintf(buf, sizeof(buf), "e_fwin::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
+   EINA_LIST_FOREACH(e_config->remembers, ll, rem)
+     if (rem->class && !strcmp(rem->class, buf))
+       {
+          found = 1;
+          break;
+       }
+
+   if (found) return;
+
+   e_zone_useful_geometry_get(fwin->win->border->zone,
+                              NULL, NULL, &zw, &zh);
+
+   /* No custom info, so just put window near icon */
+   e_fm2_icon_geometry_get(ici->ic, &ix, &iy, &iw, &ih);
+   nx = (ix + (iw / 2));
+   ny = (iy + (ih / 2));
+   if (page->fwin->win)
+     {
+        nx += page->fwin->win->x;
+        ny += page->fwin->win->y;
+     }
+
+   /* checking width and height */
+   /* TODO add config for preffered
+      initial size? */
+   w = 5 * iw * e_scale;
+   if (w > DEFAULT_WIDTH)
+     w = DEFAULT_WIDTH;
+   if (w > zw)
+     w = zw;
+
+   h = 4 * ih * e_scale;
+   if (h > DEFAULT_HEIGHT)
+     h = DEFAULT_HEIGHT;
+   if (h > zh)
+     h = zh;
+
+   /* iff going out of zone - adjust to be in */
+   if ((fwin->win->border->zone->x + fwin->win->border->zone->w) < (w + nx))
+     nx -= w;
+   if ((fwin->win->border->zone->y + fwin->win->border->zone->h) < (h + ny))
+     ny -= h;
+
+   e_win_move_resize(fwin->win, nx, ny, w, h);
+   fwin->win->border->placed = 1;
+}
+
+static E_Fwin *
+_e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need_dia)
+{
+   E_Fwin *fwin = NULL;
+   char buf[PATH_MAX + sizeof("removable:")];
+   Eina_Bool new_fwin;
+
+   new_fwin = (force || ((!fileman_config->view.open_dirs_in_place || page->fwin->zone)));
+
+   if ((ici->link) && (ici->mount))
+     {
+        if (new_fwin)
+          {
+             if (page->fwin->win)
+               fwin = _e_fwin_new(page->fwin->win->container, ici->link, "/");
+             else if (page->fwin->zone)
+               fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
+          }
+        else
+          {
+             e_fm2_path_set(page->fm_obj, ici->link, "/");
+             _e_fwin_window_title_set(page);
+             fwin = page->fwin;
+          }
+     }
+   else if ((ici->link) && (ici->removable))
+     {
+        snprintf(buf, sizeof(buf), "removable:%s", ici->link);
+        if (new_fwin)
+          {
+             if (page->fwin->win)
+               fwin = _e_fwin_new(page->fwin->win->container, buf, "/");
+             else if (page->fwin->zone)
+               fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
+          }
+        else
+          {
+             e_fm2_path_set(page->fm_obj, buf, "/");
+             _e_fwin_window_title_set(page);
+             fwin = page->fwin;
+          }
+     }
+   else if (ici->real_link)
+     {
+        if (S_ISDIR(ici->statinfo.st_mode))
+          {
+             if (new_fwin)
+               {
+                  if (page->fwin->win)
+                    fwin = _e_fwin_new(page->fwin->win->container, NULL, ici->real_link);
+                  else if (page->fwin->zone)
+                    fwin = _e_fwin_new(page->fwin->zone->container, NULL, ici->real_link);
+               }
+             else
+               {
+                  e_fm2_path_set(page->fm_obj, NULL, ici->real_link);
+                  _e_fwin_window_title_set(page);
+                  fwin = page->fwin;
+               }
+          }
+        else
+          {
+             if (need_dia) *need_dia = 1;
+          }
+     }
+   else
+     {
+        snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), ici->file);
+        if (S_ISDIR(ici->statinfo.st_mode))
+          {
+             if (new_fwin)
+               {
+                  if (page->fwin->win)
+                    fwin = _e_fwin_new(page->fwin->win->container, NULL, ici->link ?: buf);
+                  else if (page->fwin->zone)
+                    fwin = _e_fwin_new(page->fwin->zone->container, NULL, ici->link ?: buf);
+               }
+             else
+               {
+                  e_fm2_path_set(page->fm_obj, NULL, ici->link ?: buf);
+                  _e_fwin_window_title_set(page);
+                  fwin = page->fwin;
+               }
+          }
+        else
+          {
+             if (need_dia) *need_dia = 1;
+          }
+     }
+   if (!fwin) return NULL;
+   if ((!fwin->win) || (!fwin->win->border))
+     {
+        _e_fwin_free(fwin);
+        return NULL;
+     }
+   _e_fwin_border_set(page, fwin, ici);
+        
+   return fwin;
+}
+
 /* 'open with' dialog*/
 static void
 _e_fwin_file_open_dialog(E_Fwin_Page *page,
                          Eina_List *files,
                          int always)
 {
-   E_Fwin *fwin = page->fwin, *fwin2 = NULL;
+   E_Fwin *fwin = page->fwin;
    E_Dialog *dia;
    Evas_Coord mw, mh;
    Evas_Object *o, *of, *ol, *ot;
@@ -2044,182 +2335,12 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
      }
    if (!always)
      {
-        EINA_LIST_FOREACH(files, l, ici)
+        if ((fileman_config->view.open_dirs_in_place) && (!page->fwin->zone))
+          _e_fwin_open(page, eina_list_data_get(files), EINA_FALSE, &need_dia);
+        else
           {
-             if ((ici->link) && (ici->mount))
-               {
-                  if (!fileman_config->view.open_dirs_in_place || fwin->zone)
-                    {
-                       if (fwin->win)
-                         fwin2 = _e_fwin_new(fwin->win->container, ici->link, "/");
-                       else if (fwin->zone)
-                         fwin2 = _e_fwin_new(fwin->zone->container, ici->link, "/");
-                    }
-                  else
-                    {
-                       e_fm2_path_set(page->fm_obj, ici->link, "/");
-                       _e_fwin_window_title_set(page);
-                    }
-               }
-             else if ((ici->link) && (ici->removable))
-               {
-                  snprintf(buf, sizeof(buf), "removable:%s", ici->link);
-                  if (!fileman_config->view.open_dirs_in_place || fwin->zone)
-                    {
-                       if (fwin->win)
-                         fwin2 = _e_fwin_new(fwin->win->container, buf, "/");
-                       else if (fwin->zone)
-                         fwin2 = _e_fwin_new(fwin->zone->container, buf, "/");
-                    }
-                  else
-                    {
-                       e_fm2_path_set(page->fm_obj, buf, "/");
-                       _e_fwin_window_title_set(page);
-                    }
-               }
-             else if (ici->real_link)
-               {
-                  if (S_ISDIR(ici->statinfo.st_mode))
-                    {
-                       if ((!fileman_config->view.open_dirs_in_place) || (fwin->zone))
-                         {
-                            if (fwin->win)
-                              fwin2 = _e_fwin_new(fwin->win->container, NULL, ici->real_link);
-                            else if (fwin->zone)
-                              fwin2 = _e_fwin_new(fwin->zone->container, NULL, ici->real_link);
-                         }
-                       else
-                         {
-                            e_fm2_path_set(page->fm_obj, NULL, ici->real_link);
-                            _e_fwin_window_title_set(page);
-                         }
-                    }
-                  else
-                    need_dia = 1;
-               }
-             else
-               {
-                  snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), ici->file);
-                  if (S_ISDIR(ici->statinfo.st_mode))
-                    {
-                       if ((!fileman_config->view.open_dirs_in_place) || (fwin->zone))
-                         {
-                            if (fwin->win)
-                              fwin2 = _e_fwin_new(fwin->win->container, NULL, ici->link ?: buf);
-                            else if (fwin->zone)
-                              fwin2 = _e_fwin_new(fwin->zone->container, NULL, ici->link ?: buf);
-                         }
-                       else
-                         {
-                            e_fm2_path_set(page->fm_obj, NULL, ici->link ?: buf);
-                            _e_fwin_window_title_set(page);
-                            l = NULL;
-                         }
-                    }
-                  else
-                    need_dia = 1;
-               }
-             if (fwin2)
-               {
-                  if ((fwin2->win) && (fwin2->win->border))
-                    {
-                       Evas_Object *oic;
-                       const char *itype = NULL;
-                       int ix, iy, iw, ih, nx, ny, found = 0;
-                       E_Remember *rem = NULL;
-                       Eina_List *ll;
-
-                       oic = e_fm2_icon_get(evas_object_evas_get(page->fm_obj),
-                                            ici->ic, NULL, NULL, 0, &itype);
-                       if (oic)
-                         {
-                            const char *file = NULL, *group = NULL;
-                            /* E_Fm2_Custom_File *cf; */
-
-                            if (fwin2->win->border->internal_icon)
-                              eina_stringshare_del(fwin2->win->border->internal_icon);
-                            fwin2->win->border->internal_icon = NULL;
-                            if (fwin2->win->border->internal_icon_key)
-                              eina_stringshare_del(fwin2->win->border->internal_icon_key);
-                            fwin2->win->border->internal_icon_key = NULL;
-
-                            if (!strcmp(evas_object_type_get(oic), "edje"))
-                              {
-                                 edje_object_file_get(oic, &file, &group);
-                                 if (file)
-                                   {
-                                      fwin2->win->border->internal_icon =
-                                        eina_stringshare_add(file);
-                                      if (group)
-                                        fwin2->win->border->internal_icon_key =
-                                          eina_stringshare_add(group);
-                                   }
-                              }
-                            else
-                              {
-                                 file = e_icon_file_get(oic);
-                                 fwin2->win->border->internal_icon =
-                                   eina_stringshare_add(file);
-                              }
-                            evas_object_del(oic);
-
-                            snprintf(buf, sizeof(buf), "e_fwin::%s", e_fm2_real_path_get(fwin2->cur_page->fm_obj));
-                            EINA_LIST_FOREACH(e_config->remembers, ll, rem)
-                              if (rem->class && !strcmp(rem->class, buf))
-                                {
-                                   found = 1;
-                                   break;
-                                }
-
-                            if (!found)
-                              {
-                                 int w, h, zw, zh;
-
-                                 e_zone_useful_geometry_get(fwin2->win->border->zone,
-                                                            NULL, NULL, &zw, &zh);
-
-                                 /* No custom info, so just put window near icon */
-                                 e_fm2_icon_geometry_get(ici->ic, &ix, &iy, &iw, &ih);
-                                 nx = (ix + (iw / 2));
-                                 ny = (iy + (ih / 2));
-                                 if (fwin->win)
-                                   {
-                                      nx += fwin->win->x;
-                                      ny += fwin->win->y;
-                                   }
-
-                                 /* checking width and height */
-                                 /* TODO add config for preffered
-                                    initial size? */
-                                 w = 5 * iw * e_scale;
-                                 if (w > DEFAULT_WIDTH)
-                                   w = DEFAULT_WIDTH;
-                                 if (w > zw)
-                                   w = zw;
-
-                                 h = 4 * ih * e_scale;
-                                 if (h > DEFAULT_HEIGHT)
-                                   h = DEFAULT_HEIGHT;
-                                 if (h > zh)
-                                   h = zh;
-
-                                 /* iff going out of zone - adjust to be in */
-                                 if ((fwin2->win->border->zone->x + fwin2->win->border->zone->w) < (w + nx))
-                                   nx -= w;
-                                 if ((fwin2->win->border->zone->y + fwin2->win->border->zone->h) < (h + ny))
-                                   ny -= h;
-
-                                 e_win_move_resize(fwin2->win, nx, ny, w, h);
-                                 fwin2->win->border->placed = 1;
-                              }
-                         }
-                       if (ici->label)
-                         e_win_title_set(fwin2->win, ici->label);
-                       else if (ici->file)
-                         e_win_title_set(fwin2->win, ici->file);
-                    }
-                  fwin2 = NULL;
-               }
+             EINA_LIST_FOREACH(files, l, ici)
+               _e_fwin_open(page, ici, EINA_FALSE, &need_dia);
           }
         if (!need_dia) return;
      }

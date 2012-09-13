@@ -698,6 +698,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, tooltip.delay, DOUBLE);
    E_CONFIG_VAL(D, T, tooltip.size, DOUBLE);
    E_CONFIG_VAL(D, T, tooltip.enable, UCHAR);
+   E_CONFIG_VAL(D, T, view.spring_delay, INT);
    E_CONFIG_LIST(D, T, paths, paths_edd);
 
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
@@ -766,6 +767,10 @@ _e_mod_fileman_config_load(void)
     fileman_config->tooltip.enable = 1;
     IFMODCFGEND;
 
+    IFMODCFG(0x0114);
+    fileman_config->view.spring_delay = 1;
+    IFMODCFGEND;
+
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
 
     /* UCHAR's give nasty compile warnings about comparisons so not gonna limit those */
@@ -777,6 +782,7 @@ _e_mod_fileman_config_load(void)
 
     E_CONFIG_LIMIT(fileman_config->tooltip.delay, 0.0, 5.0);
     E_CONFIG_LIMIT(fileman_config->tooltip.size, 10.0, 75.0);
+    E_CONFIG_LIMIT(fileman_config->view.spring_delay, 1, 10);
 
     e_config_save_queue();
 }
