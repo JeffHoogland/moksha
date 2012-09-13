@@ -144,6 +144,8 @@ struct _E_Fm2_Smart_Data
    E_Object       *eobj;
    E_Drop_Handler *drop_handler;
    E_Fm2_Icon     *drop_icon;
+   Ecore_Animator *dnd_scroller;
+   Evas_Point dnd_current;
    E_Fm2_Mount    *mount;
    signed char     drop_after;
    Eina_Bool       drop_show : 1;
@@ -890,6 +892,9 @@ _e_fm2_cb_dnd_drop(void *data)
      allow = (sd->realpath && ecore_file_can_write(sd->realpath));
    if (sd->config->view.link_drop) allow = EINA_FALSE;
    e_drop_xds_update(allow, sd->drop_icon ? buf : sd->realpath);
+   if (sd->dnd_scroller) ecore_animator_del(sd->dnd_scroller);
+   sd->dnd_scroller = NULL;
+   sd->dnd_current.x = sd->dnd_current.y = 0;
    return allow;
 }
 
@@ -6078,6 +6083,73 @@ _e_fm2_dnd_finish(Evas_Object *obj, int refresh)
    if (refresh) e_fm2_refresh(obj);
 }
 
+static Eina_Bool
+_e_fm2_cb_dnd_scroller(E_Fm2_Smart_Data *sd)
+{
+   int cx, cy, x, y, w, h, mx, my;
+   double px;
+#undef EFM_MAX_PIXEL_DRAG
+#define EFM_MAX_PIXEL_DRAG 20
+
+   px = EFM_MAX_PIXEL_DRAG * ecore_animator_frametime_get();
+   x = y = 500;
+
+   if (sd->w < 100)
+     w = sd->w / 5;
+   else if (sd->w < 500)
+     w = sd->w / 8;
+   else
+     w = sd->w / 10;
+
+   if (sd->h < 100)
+     h = sd->h / 5;
+   else if (sd->h < 500)
+     h = sd->h / 8;
+   else
+     h = sd->h / 10;
+
+   if (sd->dnd_current.x < w)
+     {
+        /* left scroll */
+        x = lround((-px) * (double)(w - sd->dnd_current.x));
+     }
+   else if (sd->dnd_current.x > sd->w - w)
+     {
+        /* right scroll */
+        x = lround((px) * (double)(sd->dnd_current.x - (sd->w - w)));
+     }
+
+   if (sd->dnd_current.y < h)
+     {
+        /* up scroll */
+        y = lround((-px) * (double)(h - sd->dnd_current.y));
+     }
+   else if (sd->dnd_current.y > sd->h - h)
+     {
+        /* down scroll */
+        y = lround((px) * (double)(sd->dnd_current.y - (sd->h - h)));
+     }
+
+   if ((x == 500) && (y == 500)) return EINA_TRUE;
+
+   e_fm2_pan_get(sd->obj, &cx, &cy);
+   e_fm2_pan_max_get(sd->obj, &mx, &my);
+   x = MIN(cx + x, mx);
+   y = MIN(cy + y, my);
+   x = MAX(0, x);
+   y = MAX(0, y);
+   e_fm2_pan_set(sd->obj, cx + x, cx + y);
+   if (sd->drop_icon && (!E_INSIDE(sd->dnd_current.x, sd->dnd_current.y, sd->drop_icon->x - sd->drop_icon->sd->pos.x, sd->drop_icon->y - sd->drop_icon->sd->pos.y, sd->drop_icon->w, sd->drop_icon->h)))
+     _e_fm2_dnd_drop_hide(sd->obj);
+/*
+ * FIXME: this is slow and doesn't do much, need a better way...
+   if (!sd->drop_icon)
+     _e_fm2_cb_dnd_move(sd, NULL, NULL);
+*/
+#undef EFM_MAX_PIXEL_DRAG
+   return EINA_TRUE;
+}
+
 static void
 _e_fm2_cb_dnd_enter(void *data, const char *type, void *event)
 {
@@ -6087,7 +6159,68 @@ _e_fm2_cb_dnd_enter(void *data, const char *type, void *event)
    if (!_e_fm2_dnd_type_implemented(type)) return;
    ev = (E_Event_Dnd_Enter *)event;
    e_drop_handler_action_set(ev->action);
+   sd->dnd_scroller = ecore_animator_add((Ecore_Task_Cb)_e_fm2_cb_dnd_scroller, sd);
    evas_object_smart_callback_call(sd->obj, "dnd_enter", NULL);
+}
+
+static Eina_Bool
+_e_fm2_cb_dnd_move_helper(E_Fm2_Smart_Data *sd, E_Fm2_Icon *ic, int dx, int dy)
+{
+
+   if (!E_INSIDE(dx, dy, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h)) return EINA_FALSE;
+   if (ic->drag.dnd) return EINA_FALSE;
+   if (!S_ISDIR(ic->info.statinfo.st_mode))
+     {
+        if (ic->sd->drop_icon)
+          _e_fm2_dnd_drop_hide(sd->obj);
+        _e_fm2_dnd_drop_all_show(sd->obj);
+        return EINA_TRUE;
+     }
+   /* if list view */
+   if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
+     {
+        /* if there is a .order file - we can re-order files */
+        if (ic->sd->order_file)
+          {
+             /* if dir: */
+             if (!ic->sd->config->view.no_subdir_drop)
+               {
+                  /* if bottom 25% or top 25% then insert between prev or next */
+                  /* if in middle 50% then put in dir */
+                  if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 4)))
+                    _e_fm2_dnd_drop_show(ic, 0);
+                  else if (dy > (ic->y - ic->sd->pos.y + ((ic->h * 3) / 4)))
+                    _e_fm2_dnd_drop_show(ic, 1);
+                  else
+                    _e_fm2_dnd_drop_show(ic, -1);
+               }
+             else
+               {
+                  /* if top 50% or bottom 50% then insert between prev or next */
+                  if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 2)))
+                    _e_fm2_dnd_drop_show(ic, 0);
+                  else
+                    _e_fm2_dnd_drop_show(ic, 1);
+               }
+          }
+        /* if we are over subdirs or files */
+        else
+          {
+             /*
+              * if it's over a dir - hilight as it will be dropped info
+              * FIXME: should there be a separate highlighting function for files?
+              * */
+             if (!ic->sd->config->view.no_subdir_drop)
+               _e_fm2_dnd_drop_show(ic, -1);
+          }
+     }
+   else
+     {
+        /* if it's over a dir - hilight as it will be dropped in */
+        if (!ic->sd->config->view.no_subdir_drop)
+          _e_fm2_dnd_drop_show(ic, -1);
+     }
+   return EINA_TRUE;
 }
 
 static void
@@ -6100,74 +6233,21 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    int dx, dy;
 
    sd = data;
-   if (!_e_fm2_dnd_type_implemented(type)) return;
+   /* also called from the scroll animator with only the first param */
+   if (type && (!_e_fm2_dnd_type_implemented(type))) return;
    ev = (E_Event_Dnd_Move *)event;
-   dx = ev->x - sd->x;
-   dy = ev->y - sd->y;
-   e_drop_handler_action_set(ev->action);
-   EINA_LIST_FOREACH(sd->icons, l, ic)
+   if (ev)
      {
-        if (!E_INSIDE(dx, dy, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h)) continue;
-        if (ic->drag.dnd) continue;
-        if (!S_ISDIR(ic->info.statinfo.st_mode))
-          {
-             if (ic->sd->drop_icon)
-               _e_fm2_dnd_drop_hide(sd->obj);
-             _e_fm2_dnd_drop_all_show(sd->obj);
-             return;
-          }
-        /* if list view */
-        if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
-          {
-             /* if there is a .order file - we can re-order files */
-             if (ic->sd->order_file)
-               {
-                  /* if dir: */
-                  if (!ic->sd->config->view.no_subdir_drop)
-                    {
-                       /* if bottom 25% or top 25% then insert between prev or next */
-                       /* if in middle 50% then put in dir */
-                       if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 4)))
-                         {
-                            _e_fm2_dnd_drop_show(ic, 0);
-                         }
-                       else if (dy > (ic->y - ic->sd->pos.y + ((ic->h * 3) / 4)))
-                         {
-                            _e_fm2_dnd_drop_show(ic, 1);
-                         }
-                       else
-                         {
-                            _e_fm2_dnd_drop_show(ic, -1);
-                         }
-                    }
-                  else
-                    {
-                       /* if top 50% or bottom 50% then insert between prev or next */
-                       if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 2)))
-                         _e_fm2_dnd_drop_show(ic, 0);
-                       else
-                         _e_fm2_dnd_drop_show(ic, 1);
-                    }
-               }
-             /* if we are over subdirs or files */
-             else
-               {
-                  /*
-                   * if it's over a dir - hilight as it will be dropped info
-                   * FIXME: should there be a separate highlighting function for files?
-                   * */
-                  if (!ic->sd->config->view.no_subdir_drop)
-                    _e_fm2_dnd_drop_show(ic, -1);
-               }
-          }
-        else
-          {
-             /* if it's over a dir - hilight as it will be dropped in */
-             if (!ic->sd->config->view.no_subdir_drop)
-               _e_fm2_dnd_drop_show(ic, -1);
-          }
-        return;
+        dx = ev->x - sd->x;
+        dy = ev->y - sd->y;
+        sd->dnd_current.x = dx, sd->dnd_current.y = dy;
+        e_drop_handler_action_set(ev->action);
      }
+   else
+     dx = sd->dnd_current.x, dy = sd->dnd_current.y;
+
+   EINA_LIST_FOREACH(sd->icons, l, ic)
+     if (_e_fm2_cb_dnd_move_helper(sd, ic, dx, dy)) return;
    /* FIXME: not over icon - is it within the fm view? if so drop there */
    if (E_INSIDE(dx, dy, 0, 0, sd->w, sd->h))
      {
@@ -6208,7 +6288,13 @@ _e_fm2_cb_dnd_leave(void *data, const char *type, void *event __UNUSED__)
    if (!_e_fm2_dnd_type_implemented(type)) return;
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
+   if (sd->dnd_scroller) ecore_animator_del(sd->dnd_scroller);
+   sd->dnd_scroller = NULL;
+   sd->dnd_current.x = sd->dnd_current.y = 0;
    evas_object_smart_callback_call(sd->obj, "dnd_leave", NULL);
+   /* NOTE: DO NOT PERFORM ANY OPERATIONS USING sd AT THIS POINT!
+    * things use this callback to delete the efm object
+    */
 }
 
 static void
