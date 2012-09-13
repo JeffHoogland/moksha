@@ -178,7 +178,7 @@ _policy_border_show_below(E_Border *bd)
 {
    Eina_List *l;
    E_Border *prev;
-   int pos = 0, i;
+   int pos = 0, layer = 0, i;
 
 //   printf("Show Borders Below: %s %d %d\n", 
 //          bd->client.icccm.class, bd->x, bd->y);
@@ -195,12 +195,10 @@ _policy_border_show_below(E_Border *bd)
      }
 
    /* determine layering position */
-   if (bd->layer <= 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
-   else pos = 5;
+   layer = bd->layer;
+   if (layer <= 0) layer = 0;
+   pos = 1 + (layer / 50);
+   if (pos > 10) pos = 10;
 
    /* Find the windows below this one */
    for (i = pos; i >= 2; i--) 
@@ -1196,7 +1194,7 @@ _policy_border_activate(E_Border *bd)
 {
    E_Border *sft;
 
-//   printf("Border Activate: %s\n", bd->client.icccm.name);
+   printf("Border Activate: %s\n", bd->client.icccm.name);
 
    if (!bd) return;
 
@@ -1699,10 +1697,8 @@ _policy_focus_home(E_Zone *zone)
 {
    E_Border *bd;
 
-   printf("Policy Focus Home\n");
    if (!zone) return;
    if (!(bd = e_illume_border_home_get(zone))) return;
-   printf("\tHave Home\n");
    _policy_border_set_focus(bd);
 }
 
@@ -1831,7 +1827,7 @@ _policy_property_change(Ecore_X_Event_Window_Property *event)
         w = kbd->border->w;
         h = kbd->border->h;
 
-        /* adjust Y for keyboard visibility because keyboard uses fx_offset */
+        /* adjust for keyboard visibility because keyboard uses fx_offset */
         y = 0;
         if (kbd->border->fx.y <= 0) y = kbd->border->y;
 
