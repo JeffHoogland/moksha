@@ -125,20 +125,15 @@ _policy_border_resize(E_Border *bd, int w, int h)
 static void 
 _policy_border_hide_below(E_Border *bd) 
 {
-   int pos = 0, i;
-
-//   printf("Hide Borders Below: %s %d %d\n", 
-//          bd->client.icccm.name, bd->x, bd->y);
+   int pos = 0, layer = 0, i;
 
    if (!bd) return;
 
    /* determine layering position */
-   if (bd->layer <= 0) pos = 0;
-   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
-   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
-   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
-   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
-   else pos = 5;
+   layer = bd->layer;
+   if (layer <= 0) layer = 0;
+   pos = 1 + (layer / 50);
+   if (pos > 10) pos = 10;
 
    /* Find the windows below this one */
    for (i = pos; i >= 2; i--) 
@@ -1038,9 +1033,9 @@ _policy_zone_layout_conformant_dual_left(E_Border *bd, E_Illume_Config_Zone *cz)
 void 
 _policy_border_add(E_Border *bd) 
 {
-//   printf("Border added: %s\n", bd->client.icccm.class);
-
    if (!bd) return;
+
+//   printf("\nBorder added: %s\n", bd->client.icccm.class);
 
    /* NB: this call sets an atom on the window that specifices the zone.
     * the logic here is that any new windows created can access the zone 
@@ -1158,7 +1153,7 @@ _policy_border_focus_in(E_Border *bd)
         /* try to get the Indicator on this zone */
         if ((ind = e_illume_border_indicator_get(bd->zone))) 
           {
-             /* we have the indicator, show it if needed */
+             /* we have the indicator, hide it if needed */
 	     if (ind->visible) e_illume_border_hide(ind);
           }
      }
@@ -1177,9 +1172,9 @@ _policy_border_focus_in(E_Border *bd)
 void 
 _policy_border_focus_out(E_Border *bd) 
 {
-//   printf("Border focus out: %s\n", bd->client.icccm.name);
-
    if (!bd) return;
+
+//   printf("Border focus out: %s\n", bd->client.icccm.name);
 
    /* NB: if we got this focus_out event on a deleted border, we check if 
     * it is a transient (child) of another window. If it is, then we 
@@ -1704,8 +1699,10 @@ _policy_focus_home(E_Zone *zone)
 {
    E_Border *bd;
 
+   printf("Policy Focus Home\n");
    if (!zone) return;
    if (!(bd = e_illume_border_home_get(zone))) return;
+   printf("\tHave Home\n");
    _policy_border_set_focus(bd);
 }
 
