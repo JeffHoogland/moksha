@@ -460,6 +460,10 @@ e_fwin_reload_all(void)
             if ((zone->container->num == 0) && (zone->num == 0) &&
                 (fileman_config->view.show_desktop_icons))
               {
+// disable until such a day as this handles both screens properly!
+//               if ((fileman_config->dev) && (fileman_config->path))
+//                 e_fwin_zone_new(zone, fileman_config->dev, fileman_config->path);
+//               else
                  e_fwin_zone_new(zone, "desktop", "/");
               }
             else
