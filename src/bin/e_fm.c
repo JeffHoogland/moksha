@@ -6107,64 +6107,66 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    e_drop_handler_action_set(ev->action);
    EINA_LIST_FOREACH(sd->icons, l, ic)
      {
-        if (E_INSIDE(dx, dy, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h))
+        if (!E_INSIDE(dx, dy, ic->x - ic->sd->pos.x, ic->y - ic->sd->pos.y, ic->w, ic->h)) continue;
+        if (ic->drag.dnd) continue;
+        if (!S_ISDIR(ic->info.statinfo.st_mode))
           {
-             if (ic->drag.dnd) continue;
-             /* if list view */
-             if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
+             if (ic->sd->drop_icon)
+               _e_fm2_dnd_drop_hide(sd->obj);
+             _e_fm2_dnd_drop_all_show(sd->obj);
+             return;
+          }
+        /* if list view */
+        if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
+          {
+             /* if there is a .order file - we can re-order files */
+             if (ic->sd->order_file)
                {
-                  /* if there is a .order file - we can re-order files */
-                  if (ic->sd->order_file)
+                  /* if dir: */
+                  if (!ic->sd->config->view.no_subdir_drop)
                     {
-                       /* if dir: */
-                       if ((S_ISDIR(ic->info.statinfo.st_mode)) &&
-                           (!ic->sd->config->view.no_subdir_drop))
+                       /* if bottom 25% or top 25% then insert between prev or next */
+                       /* if in middle 50% then put in dir */
+                       if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 4)))
                          {
-                            /* if bottom 25% or top 25% then insert between prev or next */
-                            /* if in middle 50% then put in dir */
-                            if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 4)))
-                              {
-                                 _e_fm2_dnd_drop_show(ic, 0);
-                              }
-                            else if (dy > (ic->y - ic->sd->pos.y + ((ic->h * 3) / 4)))
-                              {
-                                 _e_fm2_dnd_drop_show(ic, 1);
-                              }
-                            else
-                              {
-                                 _e_fm2_dnd_drop_show(ic, -1);
-                              }
+                            _e_fm2_dnd_drop_show(ic, 0);
+                         }
+                       else if (dy > (ic->y - ic->sd->pos.y + ((ic->h * 3) / 4)))
+                         {
+                            _e_fm2_dnd_drop_show(ic, 1);
                          }
                        else
                          {
-                            /* if top 50% or bottom 50% then insert between prev or next */
-                            if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 2)))
-                              _e_fm2_dnd_drop_show(ic, 0);
-                            else
-                              _e_fm2_dnd_drop_show(ic, 1);
+                            _e_fm2_dnd_drop_show(ic, -1);
                          }
                     }
-                  /* if we are over subdirs or files */
                   else
                     {
-                       /*
-                        * if it's over a dir - hilight as it will be dropped info
-                        * FIXME: should there be a separate highlighting function for files?
-                        * */
-                       if (!(S_ISDIR(ic->info.statinfo.st_mode)) ||
-                           (!ic->sd->config->view.no_subdir_drop))
-                         _e_fm2_dnd_drop_show(ic, -1);
+                       /* if top 50% or bottom 50% then insert between prev or next */
+                       if (dy <= (ic->y - ic->sd->pos.y + (ic->h / 2)))
+                         _e_fm2_dnd_drop_show(ic, 0);
+                       else
+                         _e_fm2_dnd_drop_show(ic, 1);
                     }
                }
+             /* if we are over subdirs or files */
              else
                {
-                  /* if it's over a dir - hilight as it will be dropped in */
-                  if (!(S_ISDIR(ic->info.statinfo.st_mode)) ||
-                      (!ic->sd->config->view.no_subdir_drop))
+                  /*
+                   * if it's over a dir - hilight as it will be dropped info
+                   * FIXME: should there be a separate highlighting function for files?
+                   * */
+                  if (!ic->sd->config->view.no_subdir_drop)
                     _e_fm2_dnd_drop_show(ic, -1);
                }
-             return;
           }
+        else
+          {
+             /* if it's over a dir - hilight as it will be dropped in */
+             if (!ic->sd->config->view.no_subdir_drop)
+               _e_fm2_dnd_drop_show(ic, -1);
+          }
+        return;
      }
    /* FIXME: not over icon - is it within the fm view? if so drop there */
    if (E_INSIDE(dx, dy, 0, 0, sd->w, sd->h))
