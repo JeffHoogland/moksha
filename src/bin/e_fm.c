@@ -890,7 +890,6 @@ _e_fm2_cb_dnd_drop(void *data)
      allow = (sd->realpath && ecore_file_can_write(sd->realpath));
    if (sd->config->view.link_drop) allow = EINA_FALSE;
    e_drop_xds_update(allow, sd->drop_icon ? buf : sd->realpath);
-   evas_object_smart_callback_call(sd->obj, "dnd_end", sd->drop_icon ? &sd->drop_icon->info : NULL);
    return allow;
 }
 
@@ -6941,6 +6940,7 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
                   ic->drag.dnd = EINA_FALSE;
                   if (ic->obj) evas_object_show(ic->obj);
                   if (ic->obj_icon) evas_object_show(ic->obj_icon);
+                  evas_object_smart_callback_call(ic->sd->obj, "dnd_end", &ic->info);
                }
 
              if (uri->hostname) eina_stringshare_del(uri->hostname);
