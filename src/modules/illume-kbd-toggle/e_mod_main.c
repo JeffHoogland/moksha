@@ -157,7 +157,7 @@ _cb_action_vkbd_enable(void *data, Evas_Object *obj __UNUSED__, const char *emis
    if (!(inst = data)) return;
    if (!(bd = e_border_focused_get())) return;
    if (bd->zone != inst->gcc->gadcon->zone) return;
-   if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) return;
+   if (bd->client.vkbd.state >= ECORE_X_VIRTUAL_KEYBOARD_STATE_ON) return;
 
    ecore_x_e_virtual_keyboard_state_set(bd->client.win,
                                         ECORE_X_VIRTUAL_KEYBOARD_STATE_ON);
@@ -172,7 +172,7 @@ _cb_action_vkbd_disable(void *data, Evas_Object *obj __UNUSED__, const char *emi
    if (!(inst = data)) return;
    if (!(bd = e_border_focused_get())) return;
    if (bd->zone != inst->gcc->gadcon->zone) return;
-   if (bd->client.vkbd.state == ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) return;
+   if (bd->client.vkbd.state <= ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF) return;
 
    ecore_x_e_virtual_keyboard_state_set(bd->client.win,
                                         ECORE_X_VIRTUAL_KEYBOARD_STATE_OFF);
@@ -226,7 +226,7 @@ _cb_border_property(void *data, int type __UNUSED__, void *event)
 static void
 _set_btn_icon(Evas_Object *obj, Ecore_X_Virtual_Keyboard_State state)
 {
-   if (state == ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
+   if (state >= ECORE_X_VIRTUAL_KEYBOARD_STATE_ON)
      edje_object_signal_emit(obj, "e,state,vkbd,on", "e");
    else
      edje_object_signal_emit(obj, "e,state,vkbd,off", "e");
