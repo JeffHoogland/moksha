@@ -47,6 +47,7 @@ struct _E_Fwin
    E_Popup *popup;
 
    Ecore_Timer *spring_timer;
+   Ecore_Timer *spring_close_timer;
    E_Fwin *spring_parent;
    E_Fwin *spring_child;
    
@@ -287,6 +288,8 @@ _e_fwin_spring_cb(E_Fwin *fwin)
      _e_fwin_free(fwin->spring_child);
 
    ici = e_fm2_drop_icon_get(fwin->cur_page->fm_obj);
+   if (!ici)
+     ici = e_fm2_drop_icon_get(fwin->cur_page->flist);
    while (ici)
      {
         /* FIXME: could use an animation here */
@@ -339,10 +342,20 @@ _e_fwin_dnd_change_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_inf
 static void
 _e_fwin_dnd_enter_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
-   drag_fwin = fwin;
+   if (drag_fwin == fwin) return;
    if (fwin->spring_timer) ecore_timer_del(fwin->spring_timer);
    fwin->spring_timer = NULL;
-   if (fwin->spring_child) _e_fwin_free(fwin->spring_child);
+   if (fwin->spring_child && (drag_fwin == fwin->spring_child)) _e_fwin_free(fwin->spring_child);
+   drag_fwin = fwin;
+   if (fwin->spring_close_timer) ecore_timer_del(fwin->spring_close_timer);
+   fwin->spring_close_timer = NULL;
+}
+
+static Eina_Bool
+_e_fwin_dnd_close_cb(E_Fwin *fwin)
+{
+   _e_fwin_free(fwin);
+   return EINA_FALSE;
 }
 
 static void
@@ -350,7 +363,11 @@ _e_fwin_dnd_leave_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_info
 {
    if (fwin->spring_timer) ecore_timer_del(fwin->spring_timer);
    fwin->spring_timer = NULL;
-   if (fwin->spring_parent && (!fwin->spring_child)) _e_fwin_free(fwin);
+   if (fwin->spring_parent && (!fwin->spring_child))
+     {
+        if (!fwin->spring_close_timer)
+          fwin->spring_close_timer = ecore_timer_add(0.01, (Ecore_Task_Cb)_e_fwin_dnd_close_cb, fwin);
+     }
    drag_fwin = NULL;
 }
 
@@ -683,6 +700,8 @@ _e_fwin_free(E_Fwin *fwin)
      ecore_event_handler_del(fwin->zone_del_handler);
    if (fwin->spring_timer) ecore_timer_del(fwin->spring_timer);
    fwin->spring_timer = NULL;
+   if (fwin->spring_close_timer) ecore_timer_del(fwin->spring_close_timer);
+   fwin->spring_close_timer = NULL;
    fwins = eina_list_remove(fwins, fwin);
    if (fwin->wallpaper_file) eina_stringshare_del(fwin->wallpaper_file);
    if (fwin->overlay_file) eina_stringshare_del(fwin->overlay_file);
@@ -853,6 +872,11 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
    e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_NEW | E_FM2_MENU_NO_ACTIVATE_CHANGE | E_FM2_MENU_NO_VIEW_CHANGE);
    //evas_object_smart_callback_add(o, "changed", _cb, fwin);
    evas_object_smart_callback_add(o, "selected", _e_fwin_favorite_selected, page);
+   evas_object_smart_callback_add(o, "dnd_enter", (Evas_Smart_Cb)_e_fwin_dnd_enter_cb, page->fwin);
+   evas_object_smart_callback_add(o, "dnd_leave", (Evas_Smart_Cb)_e_fwin_dnd_leave_cb, page->fwin);
+   evas_object_smart_callback_add(o, "dnd_changed", (Evas_Smart_Cb)_e_fwin_dnd_change_cb, page->fwin);
+   evas_object_smart_callback_add(o, "dnd_begin", (Evas_Smart_Cb)_e_fwin_dnd_begin_cb, page->fwin);
+   evas_object_smart_callback_add(o, "dnd_end", (Evas_Smart_Cb)_e_fwin_dnd_end_cb, page->fwin);
    e_fm2_path_set(o, "favorites", "/");
 
    o = e_widget_scrollframe_pan_add(evas, page->flist,
