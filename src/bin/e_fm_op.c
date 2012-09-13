@@ -49,6 +49,26 @@ void *alloca(size_t);
 
 #define E_FREE(p) do { free(p); p = NULL; } while (0)
 
+#define _E_FM_OP_ERROR_SEND_SCAN(_task, _e_fm_op_error_type, _fmt, ...)                      \
+  do                                                                                         \
+    {                                                                                        \
+       int _errno = errno;                                                                   \
+       _e_fm_op_scan_error = 1;                                                              \
+       _e_fm_op_send_error(_task, _e_fm_op_error_type, _fmt, __VA_ARGS__, strerror(_errno)); \
+       return 1;                                                                             \
+    }                                                                                        \
+  while (0)
+
+#define _E_FM_OP_ERROR_SEND_WORK(_task, _e_fm_op_error_type, _fmt, ...)                      \
+  do                                                                                         \
+    {                                                                                        \
+       int _errno = errno;                                                                   \
+       _e_fm_op_work_error = 1;                                                              \
+       _e_fm_op_send_error(_task, _e_fm_op_error_type, _fmt, __VA_ARGS__, strerror(_errno)); \
+       return 1;                                                                             \
+    }                                                                                        \
+  while (0)
+
 typedef struct _E_Fm_Op_Task      E_Fm_Op_Task;
 typedef struct _E_Fm_Op_Copy_Data E_Fm_Op_Copy_Data;
 
@@ -234,9 +254,15 @@ main(int argc, char **argv)
                     }
                   else
                     {
-                       if ((type == E_FM_OP_MOVE) &&
-                           (!strcmp(argv[i],buf)))
-                         goto skip_arg;
+                       if (type == E_FM_OP_MOVE)
+                         {
+                            if (!strcmp(argv[i],buf))
+                              goto skip_arg;
+
+                            if (buf[0]!='/')
+                              _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
+                                                       "Unknown destination '%s': %s.", buf);
+                         }
 
                        E_Fm_Op_Task *task;
 
@@ -507,26 +533,6 @@ _e_fm_op_set_up_idlers()
    if (!_e_fm_op_work_idler_p)
      _e_fm_op_work_idler_p = ecore_idler_add(_e_fm_op_work_idler, NULL);
 }
-
-#define _E_FM_OP_ERROR_SEND_SCAN(_task, _e_fm_op_error_type, _fmt, ...)                      \
-  do                                                                                         \
-    {                                                                                        \
-       int _errno = errno;                                                                   \
-       _e_fm_op_scan_error = 1;                                                              \
-       _e_fm_op_send_error(_task, _e_fm_op_error_type, _fmt, __VA_ARGS__, strerror(_errno)); \
-       return 1;                                                                             \
-    }                                                                                        \
-  while (0)
-
-#define _E_FM_OP_ERROR_SEND_WORK(_task, _e_fm_op_error_type, _fmt, ...)                      \
-  do                                                                                         \
-    {                                                                                        \
-       int _errno = errno;                                                                   \
-       _e_fm_op_work_error = 1;                                                              \
-       _e_fm_op_send_error(_task, _e_fm_op_error_type, _fmt, __VA_ARGS__, strerror(_errno)); \
-       return 1;                                                                             \
-    }                                                                                        \
-  while (0)
 
 static void
 _e_fm_op_delete_idler(int *mark)
