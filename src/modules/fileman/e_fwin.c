@@ -283,6 +283,9 @@ _e_fwin_spring_cb(E_Fwin *fwin)
    E_Fm2_Icon_Info *ici;
    E_Fwin *f;
 
+   if (fwin->spring_child)
+     _e_fwin_free(fwin->spring_child);
+
    ici = e_fm2_drop_icon_get(fwin->cur_page->fm_obj);
    while (ici)
      {
