@@ -7119,6 +7119,8 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
                   ici->ic->drag.dnd = EINA_TRUE;
                   if (ici->ic->obj) evas_object_hide(ici->ic->obj);
                   if (ici->ic->obj_icon) evas_object_hide(ici->ic->obj_icon);
+                  if (ici->ic->rename_click) ecore_timer_del(ici->ic->rename_click);
+                  ici->ic->rename_click = NULL;
                }
              if (!sel) return;
              sel[sel_length] = '\0';
