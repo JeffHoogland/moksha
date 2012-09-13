@@ -829,7 +829,7 @@ e_mod_fileman_path_find(E_Zone *zone)
    path = E_NEW(Fileman_Path, 1);
    path->zone = zone->container->num + zone->num;
    path->dev = eina_stringshare_add("desktop");
-   path->desktop_mode = E_FM2_VIEW_MODE_GRID_ICONS;
+   path->desktop_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
    if ((zone->container->num == 0) && (zone->num == 0))
      path->path = eina_stringshare_add("/");
    else
