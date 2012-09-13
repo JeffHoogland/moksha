@@ -888,6 +888,7 @@ _e_fm2_cb_dnd_drop(void *data)
      }
    else
      allow = (sd->realpath && ecore_file_can_write(sd->realpath));
+   if (sd->config->view.link_drop) allow = EINA_FALSE;
    e_drop_xds_update(allow, sd->drop_icon ? buf : sd->realpath);
    evas_object_smart_callback_call(sd->obj, "dnd_end", sd->drop_icon ? &sd->drop_icon->info : NULL);
    return allow;
