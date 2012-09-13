@@ -345,11 +345,20 @@ static Eina_Bool
 con(Pulse *conn, int type __UNUSED__, Ecore_Con_Event_Server_Add *ev)
 {
    int on = 1;
+   int fd;
 
    if (conn != ecore_con_server_data_get(ev->server)) return ECORE_CALLBACK_PASS_ON;
    INF("connected to %s", ecore_con_server_name_get(ev->server));
 
-   conn->fd = dup(ecore_con_server_fd_get(ev->server));
+   fd = ecore_con_server_fd_get(ev->server);
+   if (fd == -1)
+     {
+        conn->state = PA_STATE_INIT;
+        ecore_con_server_del(ev->server);
+        ecore_event_add(PULSE_EVENT_DISCONNECTED, conn, pulse_fake_free, NULL);
+        return ECORE_CALLBACK_RENEW;
+     }
+   conn->fd = dup(fd);
 #ifdef SO_PASSCRED
    setsockopt(conn->fd, SOL_SOCKET, SO_PASSCRED, &on, sizeof(on));
 #endif
