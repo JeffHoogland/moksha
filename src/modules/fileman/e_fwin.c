@@ -305,6 +305,9 @@ _e_fwin_spring_cb(E_Fwin *fwin)
 static void
 _e_fwin_dnd_end_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
+   if (fwin->spring_timer) ecore_timer_del(fwin->spring_timer);
+   fwin->spring_timer = NULL;
+   if (!drag_fwin) return;
    if (drag_fwin->spring_timer) ecore_timer_del(drag_fwin->spring_timer);
    drag_fwin->spring_timer = NULL;
 
