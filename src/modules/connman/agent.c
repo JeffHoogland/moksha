@@ -171,18 +171,24 @@ _dialog_field_add(E_Connman_Agent *agent, struct Connman_Field *field)
    Evas_Object *toolbook, *list, *framelist, *entry;
    E_Connman_Agent_Input *input;
    Eina_List *input_list;
+   Eina_Bool mandatory;
    char header[64];
    Evas *evas;
 
    evas = agent->dialog->win->evas;
    toolbook = agent->dialog->content_object;
+   mandatory = !strcmp(field->requirement, "mandatory");
 
-   if ((strcmp(field->requirement, "mandatory")) &&
-       (strcmp(field->requirement, "alternate")))
+   if ((!mandatory) && (strcmp(field->requirement, "alternate")))
      {
         WRN("Field not handled: %s %s", field->name, field->type);
         return;
      }
+
+   input = E_NEW(E_Connman_Agent_Input, 1);
+   input->key = strdup(field->name);
+   entry = e_widget_entry_add(evas, &(input->value), NULL, NULL, NULL);
+   evas_object_show(entry);
 
    list = evas_object_data_get(toolbook, field->requirement);
    if (!list)
@@ -195,10 +201,10 @@ _dialog_field_add(E_Connman_Agent *agent, struct Connman_Field *field)
         e_widget_toolbook_page_show(toolbook, 0);
         evas_object_event_callback_add(list, EVAS_CALLBACK_DEL,
                                        _page_del, NULL);
-     }
 
-   input = E_NEW(E_Connman_Agent_Input, 1);
-   input->key = strdup(field->name);
+        if (mandatory)
+          e_widget_focus_set(entry, 1);
+     }
 
    input_list = evas_object_data_get(list, "input_list");
    input_list = eina_list_append(input_list, input);
@@ -210,8 +216,6 @@ _dialog_field_add(E_Connman_Agent *agent, struct Connman_Field *field)
    evas_object_show(framelist);
    e_widget_list_object_append(list, framelist, 1, 1, 0.5);
 
-   entry = e_widget_entry_add(evas, &(input->value), NULL, NULL, NULL);
-   evas_object_show(entry);
    e_widget_framelist_object_append(framelist, entry);
 }
 

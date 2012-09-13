@@ -9,8 +9,5 @@
  - Streamline the Cancel() and Release() callbacks because they are very
    similar
 
- - When we request user input, give focus to the first 'Mandatory'
-   entry field
-
  - Search for entries with the same type when we receive an
    'Informational' field so we can use it in an useful manner
