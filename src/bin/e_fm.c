@@ -6089,7 +6089,7 @@ _e_fm2_cb_dnd_scroller(E_Fm2_Smart_Data *sd)
    int cx, cy, x, y, w, h, mx, my;
    double px;
 #undef EFM_MAX_PIXEL_DRAG
-#define EFM_MAX_PIXEL_DRAG 20
+#define EFM_MAX_PIXEL_DRAG 25
 
    px = EFM_MAX_PIXEL_DRAG * ecore_animator_frametime_get();
    x = y = 500;
@@ -6138,7 +6138,7 @@ _e_fm2_cb_dnd_scroller(E_Fm2_Smart_Data *sd)
    y = MIN(cy + y, my);
    x = MAX(0, x);
    y = MAX(0, y);
-   e_fm2_pan_set(sd->obj, cx + x, cx + y);
+   e_fm2_pan_set(sd->obj, x, y);
    if (sd->drop_icon && (!E_INSIDE(sd->dnd_current.x, sd->dnd_current.y, sd->drop_icon->x - sd->drop_icon->sd->pos.x, sd->drop_icon->y - sd->drop_icon->sd->pos.y, sd->drop_icon->w, sd->drop_icon->h)))
      _e_fm2_dnd_drop_hide(sd->obj);
 /*
@@ -6159,7 +6159,8 @@ _e_fm2_cb_dnd_enter(void *data, const char *type, void *event)
    if (!_e_fm2_dnd_type_implemented(type)) return;
    ev = (E_Event_Dnd_Enter *)event;
    e_drop_handler_action_set(ev->action);
-   sd->dnd_scroller = ecore_animator_add((Ecore_Task_Cb)_e_fm2_cb_dnd_scroller, sd);
+   if (!sd->dnd_scroller)
+     sd->dnd_scroller = ecore_animator_add((Ecore_Task_Cb)_e_fm2_cb_dnd_scroller, sd);
    evas_object_smart_callback_call(sd->obj, "dnd_enter", NULL);
 }
 
@@ -7028,6 +7029,8 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
                   ic->drag.dnd = EINA_FALSE;
                   if (ic->obj) evas_object_show(ic->obj);
                   if (ic->obj_icon) evas_object_show(ic->obj_icon);
+                  if (ic->sd->dnd_scroller) ecore_animator_del(ic->sd->dnd_scroller);
+                  ic->sd->dnd_scroller = NULL;
                   evas_object_smart_callback_call(ic->sd->obj, "dnd_end", &ic->info);
                }
 
