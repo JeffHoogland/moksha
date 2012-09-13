@@ -480,8 +480,8 @@ e_qa_config_dd_new(void)
 void *
 e_qa_config_dd_free(void)
 {
-   E_FREE(entry_edd);
-   E_FREE(conf_edd);
+   E_CONFIG_DD_FREE(entry_edd);
+   E_CONFIG_DD_FREE(conf_edd);
    return NULL;
 }
 
