@@ -895,7 +895,7 @@ _e_fm2_cb_dnd_drop(void *data)
    if (sd->dnd_scroller) ecore_animator_del(sd->dnd_scroller);
    sd->dnd_scroller = NULL;
    sd->dnd_current.x = sd->dnd_current.y = 0;
-   return allow;
+   return EINA_TRUE;
 }
 
 static void
