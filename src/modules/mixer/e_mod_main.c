@@ -881,8 +881,8 @@ _mixer_sys_setup_default_card(E_Mixer_Instance *inst)
    const char *card;
 
    conf = inst->conf;
-   if (conf->card)
-     eina_stringshare_del(conf->card);
+   conf->using_default = EINA_TRUE;
+   eina_stringshare_del(conf->card);
 
    card = e_mod_mixer_card_default_get();
    if (!card)
@@ -980,6 +980,8 @@ e_mod_mixer_pulse_update(void)
    ctxt = mixer_mod->data;
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      {
+        if (inst->conf->using_default) 
+          _mixer_sys_setup_default_card(inst);
         e_mod_mixer_state_get(inst->sys, inst->channel, &inst->mixer_state);
         _mixer_gadget_update(inst);
      }
@@ -1288,6 +1290,7 @@ _mixer_gadget_configuration_descriptor_new(void)
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, keybindings_popup, INT);
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, card, STR);
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, channel_name, STR);
+   E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, using_default, UCHAR);
 
    return conf_edd;
 }

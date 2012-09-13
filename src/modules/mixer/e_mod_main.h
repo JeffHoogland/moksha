@@ -18,6 +18,7 @@ typedef struct E_Mixer_Gadget_Config
    const char *card;
    const char *channel_name;
    const char *id;
+   Eina_Bool using_default;
    E_Config_Dialog *dialog;
    struct E_Mixer_Instance *instance;
 } E_Mixer_Gadget_Config;
