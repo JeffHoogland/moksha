@@ -443,7 +443,7 @@ static int           _e_fm_client_file_del(const char *args, Evas_Object *e_fm);
 //static int _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm);
 static int           _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
 static int           _e_fm_client_file_move(const char *args, Evas_Object *e_fm);
-static int           _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
+//static int           _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
 static int           _e_fm_client_file_copy(const char *args, Evas_Object *e_fm);
 static int           _e_fm_client_file_symlink(const char *args, Evas_Object *e_fm);
 
@@ -2461,6 +2461,7 @@ _e_fm_client_file_move(const char *args, Evas_Object *e_fm)
    return id;
 }
 
+#if 0
 static int
 _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel __UNUSED__, int rel_to __UNUSED__, int x __UNUSED__, int y __UNUSED__, int res_w __UNUSED__, int res_h __UNUSED__, Evas_Object *e_fm)
 {
@@ -2479,6 +2480,7 @@ _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel _
    free(args);
    return r;
 }
+#endif
 
 static int
 _e_fm_client_file_copy(const char *args, Evas_Object *e_fm)
@@ -6632,21 +6634,15 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                     {
                        fp = eina_list_data_get(ll);
                        if (!fp) continue;
-                       snprintf(buf, sizeof(buf), "%s/%s",
-                                sd->realpath, ecore_file_file_get(fp));
-                       if (sd->config->view.link_drop)
-                         _e_fm2_client_file_symlink(fp, buf, sd->drop_icon->info.file, sd->drop_after, -9999, -9999, sd->h, sd->h, sd->obj);
-                       else
+                       snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ecore_file_file_get(fp));
+                       if (!memerr)
                          {
-                            if (!memerr)
+                            args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                            if (!args) memerr = EINA_TRUE;
+                            else
                               {
-                                 args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                                 args = _e_fm_string_append_char(args, &size, &length, ' ');
                                  if (!args) memerr = EINA_TRUE;
-                                 else
-                                   {
-                                      args = _e_fm_string_append_char(args, &size, &length, ' ');
-                                      if (!args) memerr = EINA_TRUE;
-                                   }
                               }
                          }
 
@@ -6693,7 +6689,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
      {
         if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_COPY)
           {
-             if (sd->config->view.link_drop)
+             if (sd->config->view.link_drop && (!sd->drop_icon))
                _e_fm_client_file_symlink(args, sd->obj);
              else
                _e_fm_client_file_copy(args, sd->obj);
@@ -6701,7 +6697,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
           }
         else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE)
           {
-             if (sd->config->view.link_drop)
+             if (sd->config->view.link_drop && (!sd->drop_icon))
                _e_fm_client_file_symlink(args, sd->obj);
              else
                _e_fm_client_file_move(args, sd->obj);
@@ -6709,7 +6705,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
           }
         else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
           {
-             if (sd->config->view.link_drop)
+             if (sd->config->view.link_drop && (!sd->drop_icon))
                _e_fm_client_file_symlink(args, sd->obj);
              else
                _e_fm_drop_menu(args, sd->obj);
