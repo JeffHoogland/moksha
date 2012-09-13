@@ -409,8 +409,8 @@ e_fwin_zone_new(E_Zone *zone, void *p)
    evas_object_smart_callback_add(o, "dnd_changed", (Evas_Smart_Cb)_e_fwin_dnd_change_cb, fwin);
    evas_object_smart_callback_add(o, "dnd_begin", (Evas_Smart_Cb)_e_fwin_dnd_begin_cb, fwin);
    evas_object_smart_callback_add(o, "dnd_end", (Evas_Smart_Cb)_e_fwin_dnd_end_cb, fwin);
-   evas_object_smart_callback_add(o, "icon,mouse,in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
-   evas_object_smart_callback_add(o, "icon,mouse,out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
+   evas_object_smart_callback_add(o, "icon_mouse_in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
+   evas_object_smart_callback_add(o, "icon_mouse_out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_underlay_hide(o);
@@ -901,8 +901,8 @@ _e_fwin_page_create(E_Fwin *fwin)
    evas_object_smart_callback_add(o, "dnd_begin", (Evas_Smart_Cb)_e_fwin_dnd_begin_cb, fwin);
    evas_object_smart_callback_add(o, "dnd_end", (Evas_Smart_Cb)_e_fwin_dnd_end_cb, fwin);
    evas_object_smart_callback_add(o, "double_clicked", (Evas_Smart_Cb)_e_fwin_bg_mouse_down, fwin);
-   evas_object_smart_callback_add(o, "icon,mouse,in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
-   evas_object_smart_callback_add(o, "icon,mouse,out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
+   evas_object_smart_callback_add(o, "icon_mouse_in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
+   evas_object_smart_callback_add(o, "icon_mouse_out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
    e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
    e_fm2_window_object_set(o, E_OBJECT(fwin->win));

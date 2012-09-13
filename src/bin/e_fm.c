@@ -6998,7 +6998,7 @@ _e_fm2_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    ev = event_info;
 
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
-   evas_object_smart_callback_call(ic->sd->obj, "icon,mouse,in", &ic->info);
+   evas_object_smart_callback_call(ic->sd->obj, "icon_mouse_in", &ic->info);
 }
 
 static void
@@ -7011,7 +7011,7 @@ _e_fm2_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    ev = event_info;
 
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
-   evas_object_smart_callback_call(ic->sd->obj, "icon,mouse,out", &ic->info);
+   evas_object_smart_callback_call(ic->sd->obj, "icon_mouse_out", &ic->info);
 }
 
 static void
