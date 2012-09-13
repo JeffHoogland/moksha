@@ -205,6 +205,7 @@ EAPI const char      *e_fm2_real_path_map(const char *dev, const char *path);
 EAPI void             e_fm2_favorites_init(void);
 EAPI unsigned int     e_fm2_selected_count(Evas_Object *obj);
 EAPI const char      *e_fm2_desktop_url_eval(const char *val);
+EAPI E_Fm2_Icon_Info *e_fm2_drop_icon_get(Evas_Object *obj);
 
 EAPI int              _e_fm2_client_mount(const char *udi, const char *mountpoint);
 EAPI int              _e_fm2_client_unmount(const char *udi);

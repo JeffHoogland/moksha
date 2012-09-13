@@ -889,6 +889,7 @@ _e_fm2_cb_dnd_drop(void *data)
    else
      allow = (sd->realpath && ecore_file_can_write(sd->realpath));
    e_drop_xds_update(allow, sd->drop_icon ? buf : sd->realpath);
+   evas_object_smart_callback_call(sd->obj, "dnd_end", sd->drop_icon ? &sd->drop_icon->info : NULL);
    return allow;
 }
 
@@ -5999,6 +6000,7 @@ _e_fm2_dnd_drop_show(E_Fm2_Icon *ic, int after)
        ((after < 0) && (ic->sd->drop_after >= 0)) ||
        ((after >= 0) && (ic->sd->drop_after < 0)))
      emit = 1;
+   evas_object_smart_callback_call(ic->sd->obj, "dnd_changed", &ic->info);
    ic->sd->drop_icon = ic;
    ic->sd->drop_after = after;
    if (emit)
@@ -6077,13 +6079,15 @@ _e_fm2_dnd_finish(Evas_Object *obj, int refresh)
 }
 
 static void
-_e_fm2_cb_dnd_enter(void *data __UNUSED__, const char *type, void *event)
+_e_fm2_cb_dnd_enter(void *data, const char *type, void *event)
 {
    E_Event_Dnd_Enter *ev;
+   E_Fm2_Smart_Data *sd = data;
 
    if (!_e_fm2_dnd_type_implemented(type)) return;
    ev = (E_Event_Dnd_Enter *)event;
    e_drop_handler_action_set(ev->action);
+   evas_object_smart_callback_call(sd->obj, "dnd_enter", NULL);
 }
 
 static void
@@ -6202,6 +6206,7 @@ _e_fm2_cb_dnd_leave(void *data, const char *type, void *event __UNUSED__)
    if (!_e_fm2_dnd_type_implemented(type)) return;
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
+   evas_object_smart_callback_call(sd->obj, "dnd_leave", NULL);
 }
 
 static void
@@ -10924,4 +10929,11 @@ e_fm2_selected_count(Evas_Object *obj)
 {
    EFM_SMART_CHECK(0);
    return eina_list_count(sd->selected_icons);
+}
+
+EAPI E_Fm2_Icon_Info *
+e_fm2_drop_icon_get(Evas_Object *obj)
+{
+   EFM_SMART_CHECK(NULL);
+   return sd->drop_icon ? &sd->drop_icon->info : NULL;
 }
