@@ -38,8 +38,6 @@ e_modapi_init(E_Module *m)
 
    conf_module = m;
 
-   //eina_init();
-
    /* Setup Entry in Config Panel */
    e_configure_registry_category_add("fileman", 100, _("Files"),
                                      NULL, "system-file-manager");
@@ -62,6 +60,8 @@ e_modapi_init(E_Module *m)
      }
    maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Navigate"), _e_mod_menu_add, NULL, NULL, NULL);
    e_module_delayed_set(m, 1);
+
+   e_fwin_init();
 
    /* Hook into zones */
    for (l = e_manager_list(); l; l = l->next)
@@ -129,6 +129,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_int_menus_menu_augmentation_del("main/1", maug);
         maug = NULL;
      }
+   e_fwin_shutdown();
    /* remove module-supplied action */
    if (act)
      {

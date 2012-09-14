@@ -99,6 +99,8 @@ typedef enum
 } E_Fwin_Exec_Type;
 
 /* local subsystem prototypes */
+static int _e_fwin_cb_dir_handler_test(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path);
+static void _e_fwin_cb_dir_handler(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path);
 static void _e_fwin_page_favorites_add(E_Fwin_Page *page);
 static void _e_fwin_icon_mouse_out(void *data, Evas_Object *obj __UNUSED__, void *event_info);
 static void _e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info);
@@ -137,10 +139,6 @@ static void             _e_fwin_selected(void *data,
 static void             _e_fwin_selection_change(void *data,
                                                  Evas_Object *obj,
                                                  void *event_info);
-static void             _e_fwin_cb_menu_extend_end(void *data,
-                                            Evas_Object *obj,
-                                            E_Menu *m,
-                                            E_Fm2_Icon_Info *info);
 static void             _e_fwin_cb_menu_extend_open_with(void *data,
                                                          E_Menu *m);
 static void             _e_fwin_cb_menu_open_fast(void *data,
@@ -149,9 +147,6 @@ static void             _e_fwin_cb_menu_open_fast(void *data,
 static void             _e_fwin_parent(void *data,
                                        E_Menu *m,
                                        E_Menu_Item *mi);
-static void             _e_fwin_terminal(void *data,
-                                         E_Menu *m,
-                                         E_Menu_Item *mi);
 static void             _e_fwin_cb_key_down(void *data,
                                             Evas *e,
                                             Evas_Object *obj,
@@ -244,11 +239,20 @@ static E_Fwin *drag_fwin = NULL;
 
 /* local subsystem globals */
 static Eina_List *fwins = NULL;
+static E_Fm2_Mime_Handler *dir_handler = NULL;
+static Efreet_Desktop *tdesktop = NULL;
 
 /* externally accessible functions */
 int
 e_fwin_init(void)
 {
+   tdesktop = e_util_terminal_desktop_get();
+   if (!tdesktop) return 1;
+   dir_handler = e_fm2_mime_handler_new(_("Open Terminal Here"),
+                                   tdesktop->icon,
+                                   _e_fwin_cb_dir_handler, NULL,
+                                   _e_fwin_cb_dir_handler_test, NULL);
+   e_fm2_mime_handler_mime_add(dir_handler, "inode/directory");
    return 1;
 }
 
@@ -259,6 +263,16 @@ e_fwin_shutdown(void)
 
    EINA_LIST_FREE(fwins, fwin)
      e_object_del(E_OBJECT(fwin));
+
+   if (dir_handler)
+     {
+        e_fm2_mime_handler_mime_del(dir_handler, "inode/directory");
+        e_fm2_mime_handler_free(dir_handler);
+     }
+   efreet_desktop_free(tdesktop);
+
+   tdesktop = NULL;
+   dir_handler = NULL;
 
    return 1;
 }
@@ -431,7 +445,6 @@ e_fwin_zone_new(E_Zone *zone, void *p)
    evas_object_smart_callback_add(o, "icon_mouse_in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
    evas_object_smart_callback_add(o, "icon_mouse_out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
-   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_cb_menu_extend_end, page);
    e_fm2_underlay_hide(o);
    evas_object_show(o);
 
@@ -930,7 +943,6 @@ _e_fwin_page_create(E_Fwin *fwin)
    evas_object_smart_callback_add(o, "icon_mouse_in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
    evas_object_smart_callback_add(o, "icon_mouse_out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
-   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_cb_menu_extend_end, page);
    e_fm2_window_object_set(o, E_OBJECT(fwin->win));
    evas_object_focus_set(o, 1);
    _e_fwin_config_set(page);
@@ -1938,32 +1950,22 @@ _e_fwin_zone_del(void *data,
    return ECORE_CALLBACK_PASS_ON;
 }
 
-/* fm menu extend */
-static void
-_e_fwin_cb_menu_extend_end(void *data,
-                    Evas_Object *obj __UNUSED__,
-                    E_Menu *m,
-                    E_Fm2_Icon_Info *info __UNUSED__)
+static int
+_e_fwin_cb_dir_handler_test(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path)
 {
-   E_Menu_Item *mi;
-   Efreet_Desktop *tdesktop;
-   E_Fwin_Page *page = data;
+   return ecore_file_is_dir(path);
+}
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
-   tdesktop = e_util_terminal_desktop_get();
-   if (!tdesktop) return;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Open Terminal Here"));
-   e_menu_item_callback_set(mi, _e_fwin_terminal, page->fwin);
-   if (tdesktop->icon)
-     {
-        if (tdesktop->icon[0] == '/')
-          e_menu_item_icon_file_set(mi, tdesktop->icon);
-        else
-          e_util_menu_item_theme_icon_set(mi, tdesktop->icon);
-     }
-   efreet_desktop_free(tdesktop);
+static void
+_e_fwin_cb_dir_handler(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path)
+{
+   char buf[PATH_MAX];
+
+   if (!getcwd(buf, sizeof(buf))) return;
+
+   chdir(path);
+   e_exec(e_util_zone_current_get(e_manager_current_get()), tdesktop, NULL, NULL, "fileman");
+   chdir(buf);
    /* FIXME: if info != null then check mime type and offer options based
     * on that
     */
@@ -1975,30 +1977,6 @@ _e_fwin_parent(void *data,
                E_Menu_Item *mi __UNUSED__)
 {
    e_fm2_parent_go(data);
-}
-
-static void
-_e_fwin_terminal(void *data,
-                 E_Menu *m       __UNUSED__,
-                 E_Menu_Item *mi __UNUSED__)
-{
-   E_Fwin *fwin = data;
-   Efreet_Desktop *tdesktop;
-   char buf[PATH_MAX];
-   const char *path;
-   
-   if (!fwin->cur_page) return;
-   if (!getcwd(buf, sizeof(buf))) return;
-   tdesktop = e_util_terminal_desktop_get();
-   if (!tdesktop) return;
-   path = e_fm2_real_path_get(fwin->cur_page->fm_obj);
-   if (path)
-     {
-        chdir(path);
-        e_exec(e_util_zone_current_get(e_manager_current_get()), tdesktop, NULL, NULL, "fileman");
-        chdir(buf);
-     }
-   efreet_desktop_free(tdesktop);
 }
 
 static void
