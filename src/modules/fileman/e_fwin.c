@@ -2187,6 +2187,7 @@ _e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
           eina_stringshare_add(file);
      }
    evas_object_del(oic);
+   if (fwin->win->border->placed) return;
 
    snprintf(buf, sizeof(buf), "e_fwin::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
    EINA_LIST_FOREACH(e_config->remembers, ll, rem)
@@ -2214,15 +2215,11 @@ _e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
    /* checking width and height */
    /* TODO add config for preffered
       initial size? */
-   w = 5 * iw * e_scale;
-   if (w > DEFAULT_WIDTH)
-     w = DEFAULT_WIDTH;
+   w = DEFAULT_WIDTH;
    if (w > zw)
      w = zw;
 
-   h = 4 * ih * e_scale;
-   if (h > DEFAULT_HEIGHT)
-     h = DEFAULT_HEIGHT;
+   h = DEFAULT_HEIGHT;
    if (h > zh)
      h = zh;
 
