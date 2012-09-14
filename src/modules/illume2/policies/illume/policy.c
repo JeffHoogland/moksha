@@ -12,6 +12,7 @@
 static void _policy_border_set_focus(E_Border *bd);
 static void _policy_border_move(E_Border *bd, int x, int y);
 static void _policy_border_resize(E_Border *bd, int w, int h);
+static void _policy_border_hide_above(E_Border *bd);
 static void _policy_border_hide_below(E_Border *bd);
 static void _policy_border_show_below(E_Border *bd);
 static void _policy_zone_layout_update(E_Zone *zone);
@@ -123,6 +124,45 @@ _policy_border_resize(E_Border *bd, int w, int h)
 }
 
 static void 
+_policy_border_hide_above(E_Border *bd)
+{
+   int pos = 0, layer = 0, i;
+
+   if (!bd) return;
+
+   /* determine layering position */
+   layer = bd->layer;
+   if (layer < 0) layer = 0;
+   pos = 1 + (layer / 50);
+   if (pos > 10) pos = 10;
+
+   /* Find the windows above this one */
+   for (i = (pos + 1); i < 11; i++)
+     {
+        Eina_List *l;
+        E_Border *b;
+
+        EINA_LIST_REVERSE_FOREACH(bd->zone->container->layers[i].clients, l, b) 
+          {
+             /* skip if it's the same border */
+             if (b == bd) continue;
+
+             /* skip if it's not on this zone */
+             if (b->zone != bd->zone) continue;
+
+             /* skip special borders */
+             if (e_illume_border_is_indicator(b)) continue;
+             if (e_illume_border_is_softkey(b)) continue;
+             if (e_illume_border_is_keyboard(b)) continue;
+             if (e_illume_border_is_quickpanel(b)) continue;
+             if (e_illume_border_is_home(b)) continue;
+
+             e_border_iconify(b);
+          }
+     }
+}
+
+static void 
 _policy_border_hide_below(E_Border *bd) 
 {
    int pos = 0, layer = 0, i;
@@ -131,12 +171,12 @@ _policy_border_hide_below(E_Border *bd)
 
    /* determine layering position */
    layer = bd->layer;
-   if (layer <= 0) layer = 0;
+   if (layer < 0) layer = 0;
    pos = 1 + (layer / 50);
    if (pos > 10) pos = 10;
 
    /* Find the windows below this one */
-   for (i = pos; i >= 2; i--) 
+   for (i = (pos - 1); i >= 0; i--)
      {
         Eina_List *l;
         E_Border *b;
@@ -196,12 +236,12 @@ _policy_border_show_below(E_Border *bd)
 
    /* determine layering position */
    layer = bd->layer;
-   if (layer <= 0) layer = 0;
+   if (layer < 0) layer = 0;
    pos = 1 + (layer / 50);
    if (pos > 10) pos = 10;
 
    /* Find the windows below this one */
-   for (i = pos; i >= 2; i--) 
+   for (i = (pos + 1); i < 11; i++)
      {
         E_Border *b;
 
@@ -1699,7 +1739,20 @@ _policy_focus_home(E_Zone *zone)
 
    if (!zone) return;
    if (!(bd = e_illume_border_home_get(zone))) return;
-   _policy_border_set_focus(bd);
+
+   /* if the border was hidden due to layout, we need to unhide */
+   if (!bd->visible) e_illume_border_show(bd);
+
+   if ((bd->iconic) && (!bd->lock_user_iconify)) 
+     e_border_uniconify(bd);
+
+   if (!bd->lock_user_stacking) e_border_raise(bd);
+
+   /* hide the border(s) above this one */
+   _policy_border_hide_above(bd);
+
+   /* focus the border */
+   e_border_focus_set(bd, 1, 1);
 }
 
 void 
