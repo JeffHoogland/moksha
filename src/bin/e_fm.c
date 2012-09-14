@@ -9236,6 +9236,19 @@ _e_fm2_add_menu_pre(void *data, E_Menu *subm)
    e_util_menu_item_theme_icon_set(mi, "document-new");
    e_menu_item_callback_set(mi, _e_fm2_new_file, sd);
 }
+
+static void
+_e_fm2_settings_icon_item(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   e_configure_registry_call("fileman/file_icons", NULL, NULL);
+}
+
+static void
+_e_fm2_settings_item(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   e_configure_registry_call("fileman/fileman", NULL, NULL);
+}
+
 static void
 _e_fm2_options_menu_pre(void *data, E_Menu *subm)
 {
@@ -9294,6 +9307,20 @@ _e_fm2_options_menu_pre(void *data, E_Menu *subm)
         e_menu_item_toggle_set(mi, sd->config->view.single_click);
         e_menu_item_callback_set(mi, _e_fm2_toggle_single_click, sd);
      }
+   if (!e_configure_registry_exists("fileman/fileman")) return;
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("File Manager Settings"));
+   e_util_menu_item_theme_icon_set(mi, "system-file-manager");
+   e_menu_item_callback_set(mi, _e_fm2_settings_item, sd);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("File Icon Settings"));
+   e_util_menu_item_theme_icon_set(mi, "preferences-file-icons");
+   e_menu_item_callback_set(mi, _e_fm2_settings_icon_item, sd);
 }
 
 static void
