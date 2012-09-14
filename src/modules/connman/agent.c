@@ -28,6 +28,7 @@ struct _E_Connman_Agent_Input
 {
    char *key;
    char *value;
+   int show_password;
 };
 
 struct _E_Connman_Agent
@@ -166,9 +167,19 @@ _page_del(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *eve
 }
 
 static void
+_show_password_cb(void *data, Evas_Object *obj, void *event  __UNUSED__)
+{
+   Evas_Object *entry = data;
+   int hidden;
+
+   hidden = !e_widget_check_checked_get(obj);
+   e_widget_entry_password_set(entry, hidden);
+}
+
+static void
 _dialog_field_add(E_Connman_Agent *agent, struct Connman_Field *field)
 {
-   Evas_Object *toolbook, *list, *framelist, *entry;
+   Evas_Object *toolbook, *list, *framelist, *entry, *check;
    E_Connman_Agent_Input *input;
    Eina_List *input_list;
    Eina_Bool mandatory;
@@ -217,6 +228,20 @@ _dialog_field_add(E_Connman_Agent *agent, struct Connman_Field *field)
    e_widget_list_object_append(list, framelist, 1, 1, 0.5);
 
    e_widget_framelist_object_append(framelist, entry);
+
+   if ((!strcmp(field->name, "Passphrase")) ||
+       (!strcmp(field->name, "Password")))
+     {
+        e_widget_entry_password_set(entry, 1);
+
+        check = e_widget_check_add(evas, _("Show password"),
+                                   &(input->show_password));
+        evas_object_show(check);
+        e_widget_framelist_object_append(framelist, check);
+
+        evas_object_smart_callback_add(check, "changed", _show_password_cb,
+                                       entry);
+     }
 }
 
 static E_Dialog *
