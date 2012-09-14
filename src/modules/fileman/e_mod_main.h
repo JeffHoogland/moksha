@@ -120,6 +120,8 @@ EAPI int   e_modapi_save(E_Module *m);
 extern Config *fileman_config;
 Fileman_Path *e_mod_fileman_path_find(E_Zone *zone);
 
+void e_mod_menu_add(E_Menu *m);
+
 /**
  * @addtogroup Optional_Fileman
  * @{

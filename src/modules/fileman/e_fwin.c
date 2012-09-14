@@ -2094,6 +2094,12 @@ _e_fwin_cb_menu_extend_start(void *data,
    selected = e_fm2_selected_list_get(page->fm_obj);
    if (!selected) return;
 
+#ifdef ENABLE_FILES
+   e_mod_menu_add(m);
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, EINA_TRUE);
+#endif
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Open"));
    e_util_menu_item_theme_icon_set(mi, "document-open");
