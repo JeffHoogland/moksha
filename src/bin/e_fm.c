@@ -2457,8 +2457,11 @@ _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, i
 static int
 _e_fm_client_file_move(const char *args, Evas_Object *e_fm)
 {
-   int id = _e_fm_client_send_new(E_FM_OP_MOVE, (void *)args, strlen(args) + 1);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_MOVE, _e_fm2_operation_abort_internal);
+   int id;
+   E_Fm_Op_Type op = e_config->filemanager_copy ? E_FM_OP_MOVE : E_FM_OP_RENAME;
+
+   id = _e_fm_client_send_new(op, (void *)args, strlen(args) + 1);
+   e_fm2_op_registry_entry_add(id, e_fm, op, _e_fm2_operation_abort_internal);
    return id;
 }
 
@@ -6255,6 +6258,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
    /* FIXME: not over icon - is it within the fm view? if so drop there */
    if (E_INSIDE(dx, dy, 0, 0, sd->w, sd->h))
      {
+#if 0 //this is broken since we don't allow custom list sorting
         /* if listview - it is now after last file */
         if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
           {
@@ -6276,6 +6280,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
                _e_fm2_dnd_drop_all_show(sd->obj);
           }
         else
+#endif
           _e_fm2_dnd_drop_all_show(sd->obj);
         return;
      }
@@ -6491,10 +6496,11 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
          * don't accidentally replace an original file with a link!
          */
         f = ecore_file_file_get(fp);
-        if (((f - fp - 1 == 0) && (!strcmp(sd->realpath, "/"))) ||
-            ((f - fp - 1 > 0) && (!strncmp(sd->realpath, fp, f - fp - 1))))
+        if ((((f - fp - 1 == 0) && (!strcmp(sd->realpath, "/"))) ||
+            ((f - fp - 1 > 0) && (!strncmp(sd->realpath, fp, f - fp - 1)))) &&
+            ((size_t)(f - fp - 1) == strlen(sd->realpath)))
           {
-             if (sd->config->view.link_drop)
+             if ((e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE) || (sd->config->view.link_drop))
                {
                   E_FREE_LIST(fsel, eina_stringshare_del);
                   return;
@@ -7211,6 +7217,8 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
              if (!sel) return;
              sel[sel_length] = '\0';
 
+             if (ic->rename_click) ecore_timer_del(ic->rename_click);
+             ic->rename_click = NULL;
              d = e_drag_new(con, x, y, drag_types, 1,
                             sel, sel_length, NULL, _e_fm2_cb_drag_finished);
              o = edje_object_add(e_drag_evas_get(d));
