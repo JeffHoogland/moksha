@@ -127,6 +127,8 @@ _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
    Eina_List *l;
    Pulse_Sink *sink;
 
+   E_FREE_LIST(sinks, pulse_sink_free);
+
    EINA_LIST_FOREACH(ev, l, sink)
      {
 /*
@@ -370,16 +372,16 @@ e_mixer_pulse_get_cards(void)
    Pulse_Sink *sink;
 
    EINA_LIST_FOREACH(sinks, l, sink)
-     ret = eina_list_append(ret, pulse_sink_name_get(sink));
+     ret = eina_list_append(ret, eina_stringshare_ref(pulse_sink_name_get(sink)));
    EINA_LIST_FOREACH(sources, l, sink)
-     ret = eina_list_append(ret, pulse_sink_name_get(sink));
+     ret = eina_list_append(ret, eina_stringshare_ref(pulse_sink_name_get(sink)));
    return ret;
 }
 
 void
 e_mixer_pulse_free_cards(Eina_List *cards)
 {
-   eina_list_free(cards);
+   E_FREE_LIST(cards, eina_stringshare_del);
 }
 
 const char *
@@ -393,10 +395,13 @@ e_mixer_pulse_get_default_card(void)
 const char *
 e_mixer_pulse_get_card_name(const char *card)
 {
-   Pulse_Sink *sink = _pulse_sink_find(card);
-   const char *s = pulse_sink_desc_get(sink);
+   Pulse_Sink *sink;
+   const char *s;
+
+   sink = _pulse_sink_find(card);
+   s = pulse_sink_desc_get(sink);
    if ((!s) || (!s[0])) s = pulse_sink_name_get(sink);
-   return eina_stringshare_add(s);
+   return eina_stringshare_ref(s);
 }
 
 Eina_List *

@@ -1545,6 +1545,7 @@ e_modapi_shutdown(E_Module *m)
 #ifdef HAVE_ENOTIFY
    e_notification_shutdown();
 #endif
+   e_mixer_pulse_shutdown();
 
    E_FREE(ctxt);
    mixer_mod = NULL;
