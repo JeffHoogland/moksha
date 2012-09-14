@@ -117,7 +117,9 @@ _mixer_gadget_configuration_defaults(E_Mixer_Gadget_Config *conf)
         return 0;
      }
 
+   eina_stringshare_del(conf->card);
    conf->card = card;
+   eina_stringshare_del(conf->channel_name);
    conf->channel_name = channel;
    conf->lock_sliders = 1;
    conf->show_locked = 0;
@@ -952,6 +954,7 @@ e_mod_mixer_pulse_ready(Eina_Bool ready)
    E_Mixer_Instance *inst;
    E_Mixer_Module_Context *ctxt;
    Eina_List *l;
+   Eina_Bool pulse = _mixer_using_default;
 
    if (!mixer_mod) return;
 
@@ -961,14 +964,16 @@ e_mod_mixer_pulse_ready(Eina_Bool ready)
    ctxt = mixer_mod->data;
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      {
+        if (pulse != _mixer_using_default)
+          _mixer_gadget_configuration_defaults(inst->conf);
         if ((!_mixer_sys_setup(inst)) && (!_mixer_sys_setup_defaults(inst)))
           {
              if (inst->sys)
                e_mod_mixer_del(inst->sys);
-             _mixer_gadget_configuration_free(ctxt->conf, inst->conf);
-             E_FREE(inst);
+             inst->sys = NULL;
              return;
           }
+        if (_mixer_using_default) e_mixer_system_callback_set(inst->sys, _mixer_system_cb_update, inst);
         e_mod_mixer_state_get(inst->sys, inst->channel, &inst->mixer_state);
         _mixer_gadget_update(inst);
      }
