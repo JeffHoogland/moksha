@@ -1951,8 +1951,9 @@ _e_fwin_menu_extend(void *data,
 {
    E_Menu_Item *mi;
    Efreet_Desktop *tdesktop;
+   E_Fwin_Page *page = data;
 
-   if (e_fm2_has_parent_get(obj))
+   if (((!page->fwin->zone) || fileman_config->view.desktop_navigation) && e_fm2_has_parent_get(obj))
      {
         mi = e_menu_item_new(m);
         e_menu_item_separator_set(mi, 1);
@@ -1965,23 +1966,20 @@ _e_fwin_menu_extend(void *data,
                                   "e/fileman/default/button/parent");
         e_menu_item_callback_set(mi, _e_fwin_parent, obj);
      }
+
    tdesktop = e_util_terminal_desktop_get();
-   if (tdesktop)
+   if (!tdesktop) return;
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Open Terminal Here"));
+   e_menu_item_callback_set(mi, _e_fwin_terminal, page->fwin);
+   if (tdesktop->icon)
      {
-        E_Fwin_Page *page = data;
-                  
-        mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("Open Terminal Here"));
-        e_menu_item_callback_set(mi, _e_fwin_terminal, page->fwin);
-        if (tdesktop->icon)
-          {
-             if (tdesktop->icon[0] == '/')
-               e_menu_item_icon_file_set(mi, tdesktop->icon);
-             else
-               e_util_menu_item_theme_icon_set(mi, tdesktop->icon);
-          }
-        efreet_desktop_free(tdesktop);
+        if (tdesktop->icon[0] == '/')
+          e_menu_item_icon_file_set(mi, tdesktop->icon);
+        else
+          e_util_menu_item_theme_icon_set(mi, tdesktop->icon);
      }
+   efreet_desktop_free(tdesktop);
    /* FIXME: if info != null then check mime type and offer options based
     * on that
     */
