@@ -103,10 +103,11 @@ _pulse_info_get(Pulse *d __UNUSED__, int type __UNUSED__, Pulse_Server_Info *ev)
      if (ev->default_sink == pulse_sink_name_get(sink))
        {
           default_sink = sink;
-          e_mod_mixer_pulse_update();
+          if (!_mixer_using_default) e_mod_mixer_pulse_update();
           break;
        }
    info = ev;
+   if (_mixer_using_default) e_mod_mixer_pulse_ready(EINA_TRUE);
 }
 
 static Eina_Bool
@@ -153,7 +154,7 @@ _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
 
    sinks = ev;
    pulse_sinks_watch(conn);
-   e_mod_mixer_pulse_ready(EINA_TRUE);
+   if (default_sink) e_mod_mixer_pulse_ready(EINA_TRUE);
 }
 
 static void
@@ -226,7 +227,12 @@ _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
      }
    else
      {
-        pulse_connect(conn);
+        if (!pulse_connect(conn))
+          {
+             e_mod_mixer_pulse_ready(EINA_FALSE);
+             e_mixer_pulse_shutdown();
+             e_mixer_pulse_init();
+          }
         last_disc = ecore_time_unix_get();
      }
    return ECORE_CALLBACK_RENEW;
