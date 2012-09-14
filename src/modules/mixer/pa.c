@@ -355,6 +355,7 @@ con(Pulse *conn, int type __UNUSED__, Ecore_Con_Event_Server_Add *ev)
      {
         conn->state = PA_STATE_INIT;
         ecore_con_server_del(ev->server);
+        conn->svr = NULL;
         ecore_event_add(PULSE_EVENT_DISCONNECTED, conn, pulse_fake_free, NULL);
         return ECORE_CALLBACK_RENEW;
      }
