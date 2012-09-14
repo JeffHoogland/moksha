@@ -42,6 +42,7 @@ typedef enum _E_Fm_Op_Type
    E_FM_OP_UNMOUNT_DONE,
    E_FM_OP_QUIT,
    E_FM_OP_SYMLINK,
+   E_FM_OP_RENAME,
    E_FM_OP_OK,
    E_FM_OP_ERROR_RETRY_ABORT,
    E_FM_OP_REORDER,

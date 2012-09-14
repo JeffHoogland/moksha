@@ -102,6 +102,7 @@ static int           _e_fm_op_scan_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_copy_stat_info_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_symlink_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_remove_atom(E_Fm_Op_Task *task);
+static int           _e_fm_op_rename_atom(E_Fm_Op_Task *task);
 
 Ecore_Fd_Handler *_e_fm_op_stdin_handler = NULL;
 
@@ -183,11 +184,14 @@ main(int argc, char **argv)
      type = E_FM_OP_REMOVE;
    else if (!strcmp(argv[1], "lns"))
      type = E_FM_OP_SYMLINK;
+   else if (!strcmp(argv[1], "mvf"))
+     type = E_FM_OP_RENAME;
    else return 0;
 
    if ((type == E_FM_OP_COPY) ||
        (type == E_FM_OP_SYMLINK) ||
-       (type == E_FM_OP_MOVE))
+       (type == E_FM_OP_MOVE) ||
+       (type == E_FM_OP_RENAME))
      {
         if (argc < 4) goto quit;
 
@@ -262,6 +266,42 @@ main(int argc, char **argv)
                             if (buf[0]!='/')
                               _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
                                                        "Unknown destination '%s': %s.", buf);
+
+                            if (access(buf, F_OK) == -1)
+                              {
+                                 /* race condition, i know, but it's
+                                  * unvoidable. */
+                                 if (rename(argv[i], buf) == -1)
+                                   {
+                                      if (errno != EXDEV)
+                                        {
+                                           _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
+                                                                    "Cannot move '%s' to '%s': %s.",
+                                                                    argv[i], buf);
+                                        }
+                                   }
+                                 else
+                                   {
+                                      done++;
+                                      _e_fm_op_update_progress_report_simple
+                                        (done * 100 / total, argv[i], buf);
+                                      goto skip_arg;
+                                   }
+                              }
+                            else
+                              {
+                                 struct stat st1;
+                                 struct stat st2;
+                                 if ((stat(argv[i], &st1) == 0) &&
+                                     (stat(buf, &st2) == 0))
+                                   {
+                                      /* if files are on the same device */
+                                      if (st1.st_dev == st2.st_dev)
+                                        type = E_FM_OP_RENAME;
+                                      else
+                                        type = E_FM_OP_COPY;
+                                   }
+                              }
                          }
 
                        E_Fm_Op_Task *task;
@@ -697,6 +737,8 @@ _e_fm_op_work_idler(void *data __UNUSED__)
      _e_fm_op_copy_stat_info_atom(task);
    else if (task->type == E_FM_OP_SYMLINK)
      _e_fm_op_symlink_atom(task);
+   else if (task->type == E_FM_OP_RENAME)
+     _e_fm_op_rename_atom(task);
 
    if (task->finished)
      {
@@ -769,7 +811,9 @@ _e_fm_op_scan_idler(void *data __UNUSED__)
           _E_FM_OP_ERROR_SEND_SCAN(task, E_FM_OP_ERROR,
                                    "Cannot lstat '%s': %s.", task->src.name);
 
-        if (S_ISDIR(task->src.st.st_mode))
+        if ((task->type != E_FM_OP_SYMLINK) &&
+            (task->type != E_FM_OP_RENAME) &&
+            S_ISDIR(task->src.st.st_mode))
           {
              /* If it's a dir, then look through it and add a task for each. */
 
@@ -1490,6 +1534,19 @@ _e_fm_op_scan_atom(E_Fm_Op_Task *task)
 
         _e_fm_op_work_queue = eina_list_prepend(_e_fm_op_work_queue, rtask);
      }
+   else if (task->type == E_FM_OP_RENAME)
+     {
+        _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
+
+        rtask = _e_fm_op_task_new();
+        rtask->src.name = eina_stringshare_add(task->src.name);
+        memcpy(&(rtask->src.st), &(task->src.st), sizeof(struct stat));
+        if (task->dst.name)
+          rtask->dst.name = eina_stringshare_add(task->dst.name);
+        rtask->type = E_FM_OP_RENAME;
+
+        _e_fm_op_work_queue = eina_list_prepend(_e_fm_op_work_queue, rtask);
+     }
 
    return 1;
 }
@@ -1571,4 +1628,25 @@ _e_fm_op_remove_atom(E_Fm_Op_Task *task)
    task->finished = 1;
 
    return 1;
+}
+
+static int
+_e_fm_op_rename_atom(E_Fm_Op_Task *task)
+{
+   if (_e_fm_op_abort) return 1;
+   if (_e_fm_op_handle_overwrite(task)) return 1;
+
+   E_FM_OP_DEBUG("Move: %s -> %s\n", task->src.name, task->dst.name);
+   _e_fm_op_update_progress_report_simple(0.0, task->src.name, task->dst.name);
+
+   if (rename(task->src.name, task->dst.name) == -1)
+     {
+        _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot move '%s' to '%s': %s.", task->src.name, task->dst.name);
+     }
+
+   task->dst.done += REMOVECHUNKSIZE;
+   _e_fm_op_update_progress(task, REMOVECHUNKSIZE, 0);
+   task->finished = 1;
+
+   return 0;
 }
