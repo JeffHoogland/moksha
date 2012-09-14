@@ -305,7 +305,7 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
    Eina_Bool need_separator;
    Eina_Bool volumes_visible = 0;
 
-   if (eina_list_count(m->items) > 2) return; /* go to parent and separator */
+   if (eina_list_count(m->items) > 4) return; /* parent, clone,, copy, and separator */
    e_object_free_attach_func_set(E_OBJECT(m), _e_mod_menu_free);
 
    /* Home */

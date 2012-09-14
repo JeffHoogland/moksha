@@ -857,6 +857,7 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
    Evas *evas = evas_object_evas_get(page->box);
 
    o = e_fm2_add(evas);
+   evas_object_data_set(o, "fm_page", page);
    page->flist = o;
    memset(&fmc, 0, sizeof(E_Fm2_Config));
    fmc.view.mode = E_FM2_VIEW_MODE_LIST;
@@ -2037,12 +2038,40 @@ _e_fwin_cb_menu_extend_open_with(void *data,
 }
 
 static void
+_e_fwin_path(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   const char *path;
+   E_Fwin_Page *page;
+   Ecore_X_Window xwin;
+
+   path = e_fm2_real_path_get(data);
+   page = evas_object_data_get(data, "fm_page");
+   if (page->fwin->win)
+     xwin = page->fwin->win->border->client.win;
+   else
+     xwin = page->fwin->zone->container->event_win;
+   ecore_x_selection_clipboard_set(xwin, path, strlen(path) + 1);
+}
+
+static void
+_e_fwin_clone(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Fwin *fwin = data;
+   E_Action *act_fm;
+
+   /* path of least resistance! */
+   act_fm = e_action_find("fileman");
+   if (!act_fm) return;
+   act_fm->func.go(NULL, fwin->win->border->client.icccm.class + 8);
+}
+
+static void
 _e_fwin_cb_menu_extend_start(void *data,
-                             Evas_Object *obj      __UNUSED__,
+                             Evas_Object *obj,
                              E_Menu *m,
                              E_Fm2_Icon_Info *info __UNUSED__)
 {
-   E_Menu_Item *mi;
+   E_Menu_Item *mi = NULL;
    E_Fwin_Page *page;
    E_Menu *subm;
    Eina_List *selected = NULL;
@@ -2063,10 +2092,23 @@ _e_fwin_cb_menu_extend_start(void *data,
                                                         "e/fileman/default/button/parent"),
                                   "e/fileman/default/button/parent");
         e_menu_item_callback_set(mi, _e_fwin_parent, obj);
-
-        mi = e_menu_item_new(subm);
-        e_menu_item_separator_set(mi, EINA_TRUE);
      }
+   if (!page->fwin->zone)
+     {
+        mi = e_menu_item_new_relative(subm, mi);
+        e_menu_item_label_set(mi, _("Clone Window"));
+        e_util_menu_item_theme_icon_set(mi, "window-duplicate");
+        e_menu_item_callback_set(mi, _e_fwin_clone, page->fwin);
+     }
+
+   mi = e_menu_item_new_relative(subm, mi);
+   e_menu_item_label_set(mi, _("Copy Path"));
+   e_util_menu_item_theme_icon_set(mi, "edit-copy");
+   e_menu_item_callback_set(mi, _e_fwin_path, obj);
+
+   mi = e_menu_item_new_relative(subm, mi);
+   e_menu_item_separator_set(mi, EINA_TRUE);
+   
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, EINA_TRUE);
 #endif
