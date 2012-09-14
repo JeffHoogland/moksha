@@ -8772,7 +8772,12 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, const Eina_List *
         mi = e_menu_item_new(mn);
         e_menu_item_label_set(mi, handler->label);
         if (handler->icon_group)
-          e_util_menu_item_theme_icon_set(mi, handler->icon_group);
+          {
+             if (handler->icon_group[0] == '/')
+               e_menu_item_icon_file_set(mi, handler->icon_group);
+             else
+               e_util_menu_item_theme_icon_set(mi, handler->icon_group);
+          }
         e_menu_item_callback_set(mi, _e_fm2_icon_menu_item_cb, md);
      }
 }
