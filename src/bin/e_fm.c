@@ -1065,6 +1065,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
    sd->listing = EINA_FALSE;
    if (sd->new_file.thread) ecore_thread_cancel(sd->new_file.thread);
+   sd->new_file.thread = NULL;
    eina_stringshare_replace(&sd->new_file.filename, NULL);
    eina_stringshare_replace(&sd->dev, dev);
    eina_stringshare_replace(&sd->path, path);
@@ -9224,6 +9225,7 @@ _e_fm2_new_file_end(void *data, Ecore_Thread *eth __UNUSED__)
 {
    E_Fm2_Smart_Data *sd = data;
    sd->new_file.thread = NULL;
+   ecore_thread_global_data_del("path");
    evas_object_unref(sd->obj);
 }
 
@@ -9232,6 +9234,7 @@ _e_fm2_new_file_cancel(void *data, Ecore_Thread *eth __UNUSED__)
 {
    E_Fm2_Smart_Data *sd = data;
    sd->new_file.thread = NULL;
+   ecore_thread_global_data_del("path");
    evas_object_unref(sd->obj);
 }
 
