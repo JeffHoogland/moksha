@@ -2149,9 +2149,8 @@ _e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
    int ix, iy, iw, ih, nx, ny, found = 0;
    E_Remember *rem = NULL;
    Eina_List *ll;
-   const char *file = NULL, *group = NULL;
+   const char *file = NULL, *group = NULL, *class;
    int w, h, zw, zh;
-   char buf[PATH_MAX + sizeof("removable:")];
    /* E_Fm2_Custom_File *cf; */
 
    if (ici->label)
@@ -2189,13 +2188,14 @@ _e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
    evas_object_del(oic);
    if (fwin->win->border->placed) return;
 
-   snprintf(buf, sizeof(buf), "e_fwin::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
+   class = eina_stringshare_printf("e_fwin::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
    EINA_LIST_FOREACH(e_config->remembers, ll, rem)
-     if (rem->class && !strcmp(rem->class, buf))
+     if (rem->class && (rem->class == class))
        {
           found = 1;
           break;
        }
+   eina_stringshare_del(class);
 
    if (found) return;
 
