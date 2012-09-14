@@ -145,6 +145,7 @@ struct _E_Fm_Op_Task
 
    void        *data;
 
+   E_Fm_Op_Task *parent;
    E_Fm_Op_Type type;
    E_Fm_Op_Type overwrite;
 
@@ -342,6 +343,9 @@ skip_arg:
                }
              else
                {
+                  if (type == E_FM_OP_MOVE)
+                    type = E_FM_OP_RENAME;
+
                   E_Fm_Op_Task *task;
 
                   task = _e_fm_op_task_new();
