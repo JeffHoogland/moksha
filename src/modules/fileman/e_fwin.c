@@ -137,7 +137,7 @@ static void             _e_fwin_selected(void *data,
 static void             _e_fwin_selection_change(void *data,
                                                  Evas_Object *obj,
                                                  void *event_info);
-static void             _e_fwin_menu_extend(void *data,
+static void             _e_fwin_cb_menu_extend_end(void *data,
                                             Evas_Object *obj,
                                             E_Menu *m,
                                             E_Fm2_Icon_Info *info);
@@ -435,7 +435,7 @@ e_fwin_zone_new(E_Zone *zone, void *p)
    evas_object_smart_callback_add(o, "icon_mouse_in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
    evas_object_smart_callback_add(o, "icon_mouse_out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
-   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
+   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_cb_menu_extend_end, page);
    e_fm2_underlay_hide(o);
    evas_object_show(o);
 
@@ -934,7 +934,7 @@ _e_fwin_page_create(E_Fwin *fwin)
    evas_object_smart_callback_add(o, "icon_mouse_in", (Evas_Smart_Cb)_e_fwin_icon_mouse_in, fwin);
    evas_object_smart_callback_add(o, "icon_mouse_out", (Evas_Smart_Cb)_e_fwin_icon_mouse_out, fwin);
    e_fm2_icon_menu_start_extend_callback_set(o, _e_fwin_cb_menu_extend_start, page);
-   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_menu_extend, page);
+   e_fm2_icon_menu_end_extend_callback_set(o, _e_fwin_cb_menu_extend_end, page);
    e_fm2_window_object_set(o, E_OBJECT(fwin->win));
    evas_object_focus_set(o, 1);
    _e_fwin_config_set(page);
@@ -1944,8 +1944,8 @@ _e_fwin_zone_del(void *data,
 
 /* fm menu extend */
 static void
-_e_fwin_menu_extend(void *data,
-                    Evas_Object *obj,
+_e_fwin_cb_menu_extend_end(void *data,
+                    Evas_Object *obj __UNUSED__,
                     E_Menu *m,
                     E_Fm2_Icon_Info *info __UNUSED__)
 {
@@ -1953,20 +1953,8 @@ _e_fwin_menu_extend(void *data,
    Efreet_Desktop *tdesktop;
    E_Fwin_Page *page = data;
 
-   if (((!page->fwin->zone) || fileman_config->view.desktop_navigation) && e_fm2_has_parent_get(obj))
-     {
-        mi = e_menu_item_new(m);
-        e_menu_item_separator_set(mi, 1);
-
-        mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("Go to Parent Directory"));
-        e_menu_item_icon_edje_set(mi,
-                                  e_theme_edje_file_get("base/theme/fileman",
-                                                        "e/fileman/default/button/parent"),
-                                  "e/fileman/default/button/parent");
-        e_menu_item_callback_set(mi, _e_fwin_parent, obj);
-     }
-
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
    tdesktop = e_util_terminal_desktop_get();
    if (!tdesktop) return;
    mi = e_menu_item_new(m);
@@ -2092,6 +2080,17 @@ _e_fwin_cb_menu_extend_start(void *data,
 
 #ifdef ENABLE_FILES
    e_mod_menu_add(m);
+
+   if (((!page->fwin->zone) || fileman_config->view.desktop_navigation) && e_fm2_has_parent_get(obj))
+     {
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Go to Parent Directory"));
+        e_menu_item_icon_edje_set(mi,
+                                  e_theme_edje_file_get("base/theme/fileman",
+                                                        "e/fileman/default/button/parent"),
+                                  "e/fileman/default/button/parent");
+        e_menu_item_callback_set(mi, _e_fwin_parent, obj);
+     }
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, EINA_TRUE);
 #endif
