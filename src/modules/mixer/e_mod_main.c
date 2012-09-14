@@ -834,6 +834,12 @@ _mixer_sys_setup(E_Mixer_Instance *inst)
    conf = inst->conf;
    if ((!_mixer_using_default) && (!e_mixer_pulse_ready())) return 1;
 
+   if (!conf->card)
+     {
+        ERR("conf->card in mixer sys setup is NULL");
+        return 1;
+     }
+   
    if (inst->sys)
      e_mod_mixer_del(inst->sys);
 

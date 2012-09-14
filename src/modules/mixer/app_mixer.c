@@ -152,6 +152,10 @@ _populate_channel_editor(E_Mixer_App_Dialog_Data *app)
    const char *card_name;
 
    card_name = e_mod_mixer_card_name_get(app->card);
+   
+   if (!card_name)
+     return;
+   
    e_widget_entry_text_set(ui->card, card_name);
    eina_stringshare_del(card_name);
 
@@ -346,6 +350,9 @@ _create_cards(E_Dialog *dialog __UNUSED__, Evas *evas, E_Mixer_App_Dialog_Data *
         const char *card_name;
 
         card_name = e_mod_mixer_card_name_get(card);
+        
+        if (!card_name)
+          continue;
 
         e_widget_ilist_append(ui->list, NULL, card_name, _cb_card_selected,
                               app, card);
@@ -528,6 +535,9 @@ _find_card_by_name(E_Mixer_App_Dialog_Data *app, const char *card_name)
    Eina_List *l;
    int i;
 
+   if (!card_name)
+     return 0;
+   
    for (i = 0, l = app->cards; l; i++, l = l->next)
      if (strcmp(card_name, l->data) == 0)
        return i;
@@ -543,6 +553,9 @@ _find_channel_by_name(E_Mixer_App_Dialog_Data *app, const char *channel_name)
    int i = 0;
    int header_input;
 
+   if (!channel_name)
+     return 0;
+   
    if (app->channels_infos)
      {
         info = app->channels_infos->data;
@@ -575,6 +588,9 @@ e_mixer_app_dialog_select(E_Dialog *dialog, const char *card_name, const char *c
    int n;
 
    if (!dialog)
+     return 0;
+   
+   if ((!card_name) || (!channel_name))
      return 0;
 
    app = dialog->data;
