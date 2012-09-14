@@ -226,6 +226,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
 {
    char line[4096];
    char buf[PATH_MAX];
+   E_Menu *subm = NULL;
    E_Menu_Item *mi;
    Efreet_Uri *uri;
    char *alias;
@@ -235,7 +236,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
    fp = fopen(buf, "r");
    if (fp)
      {
-        while(fgets(line, sizeof(line), fp))
+        while (fgets(line, sizeof(line), fp))
           {
              alias = NULL;
              line[strlen(line) - 1] = '\0';
@@ -246,27 +247,32 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
                   alias++;
                }
              uri = efreet_uri_decode(line);
-             if (uri && uri->path)
+             if ((!uri) || (!uri->path)) continue;
+             if (!ecore_file_exists(uri->path)) continue;
+             if (!subm)
                {
-                  if (ecore_file_exists(uri->path))
+                  if (need_separator)
                     {
-                       if (need_separator)
-                         {
-                            mi = e_menu_item_new(m);
-                            e_menu_item_separator_set(mi, 1);
-                            need_separator = 0;
-                         }
-
                        mi = e_menu_item_new(m);
-                       e_object_data_set(E_OBJECT(mi), uri->path);
-                       e_menu_item_label_set(mi, alias ? alias :
-                                             ecore_file_file_get(uri->path));
-                       e_util_menu_item_theme_icon_set(mi, "folder");
-                       e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
-                                                (void *)eina_stringshare_add(uri->path));
-                       e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_add("/"));
+                       e_menu_item_separator_set(mi, 1);
+                       need_separator = 0;
                     }
+                  mi = e_menu_item_new(m);
+                  e_menu_item_label_set(mi, _("GTK Bookmarks"));
+                  e_util_menu_item_theme_icon_set(mi, "bookmarks");
+                  subm = e_menu_new();
+                  e_menu_item_submenu_set(mi, subm);
+                  e_object_unref(E_OBJECT(subm));
                }
+
+             mi = e_menu_item_new(subm);
+             e_object_data_set(E_OBJECT(mi), uri->path);
+             e_menu_item_label_set(mi, alias ? alias :
+                                   ecore_file_file_get(uri->path));
+             e_util_menu_item_theme_icon_set(mi, "folder");
+             e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
+                                      (void *)eina_stringshare_add(uri->path));
+             e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_add("/"));
              if (uri) efreet_uri_free(uri);
           }
         fclose(fp);
@@ -361,11 +367,7 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
         volumes_visible = 1;
      }
 
-   /* Favorites */
-   //~ if (places_conf->show_bookm)
-   //~ {
    _e_mod_fileman_parse_gtk_bookmarks(m, need_separator || volumes_visible > 0);
-   //~ }
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 }
