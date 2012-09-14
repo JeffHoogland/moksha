@@ -241,6 +241,7 @@ struct _E_Fm2_Uri
 struct _E_Fm2_Context_Menu_Data
 {
    E_Fm2_Icon         *icon;
+   E_Fm2_Smart_Data *sd;
    E_Fm2_Mime_Handler *handler;
 };
 
@@ -448,7 +449,7 @@ static int           _e_fm_client_file_copy(const char *args, Evas_Object *e_fm)
 static int           _e_fm_client_file_symlink(const char *args, Evas_Object *e_fm);
 
 static void          _e_fm2_sel_rect_update(void *data);
-static void          _e_fm2_context_menu_append(Evas_Object *obj, const char *path, const Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
+static void          _e_fm2_context_menu_append(E_Fm2_Smart_Data *sd, const char *path, const Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
 static int           _e_fm2_context_list_sort(const void *data1, const void *data2);
 
 static char         *_e_fm_string_append_char(char *str, size_t *size, size_t *len, char c);
@@ -8354,6 +8355,25 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
              e_menu_pre_activate_callback_set(sub, _e_fm2_add_menu_pre, sd);
           }
 
+        if (sd->realpath)
+          {
+             const Eina_List *ll;
+             /* see if we have any mime handlers registered for this file */
+             ll = e_fm2_mime_handler_mime_handlers_get("inode/directory");
+             if (ll)
+               {
+                  mi = e_menu_item_new(mn);
+                  e_menu_item_separator_set(mi, 1);
+
+                  mi = e_menu_item_new(mn);
+                  e_menu_item_label_set(mi, _("Actions..."));
+                  e_util_menu_item_theme_icon_set(mi, "preferences-plugin");
+                  sub = e_menu_new();
+                  e_menu_item_submenu_set(mi, sub);
+                  _e_fm2_context_menu_append(sd, sd->realpath, ll, sub, NULL);
+               }
+          }
+
         if (((!(sd->icon_menu.flags & E_FM2_MENU_NO_PASTE)) ||
              (!(sd->icon_menu.flags & E_FM2_MENU_NO_SYMLINK))) &&
             (eina_list_count(_e_fm_file_buffer) > 0) &&
@@ -8509,7 +8529,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
                      subm = e_menu_new();
                      e_menu_item_submenu_set(mi, subm);
                      _e_fm2_icon_realpath(ic, buf, sizeof(buf));
-                     _e_fm2_context_menu_append(obj, buf, ll, subm, ic);
+                     _e_fm2_context_menu_append(sd, buf, ll, subm, ic);
                   }
              }
 
@@ -8541,7 +8561,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
                           e_menu_item_submenu_set(mi, subm);
                        }
                      _e_fm2_icon_realpath(ic, buf, sizeof(buf));
-                     _e_fm2_context_menu_append(obj, buf, l, subm, ic);
+                     _e_fm2_context_menu_append(sd, buf, l, subm, ic);
                      eina_list_free(l);
                   }
           }
@@ -8745,7 +8765,7 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
 }
 
 static void
-_e_fm2_context_menu_append(Evas_Object *obj, const char *path, const Eina_List *list, E_Menu *mn, E_Fm2_Icon *ic)
+_e_fm2_context_menu_append(E_Fm2_Smart_Data *sd, const char *path, const Eina_List *list, E_Menu *mn, E_Fm2_Icon *ic)
 {
    E_Fm2_Mime_Handler *handler;
    Eina_List *l;
@@ -8760,13 +8780,14 @@ _e_fm2_context_menu_append(Evas_Object *obj, const char *path, const Eina_List *
         E_Fm2_Context_Menu_Data *md = NULL;
         E_Menu_Item *mi;
 
-        if ((!handler) || (!handler->label) || (!e_fm2_mime_handler_test(handler, obj, path)))
+        if ((!handler) || (!handler->label) || (!e_fm2_mime_handler_test(handler, sd->obj, path)))
           continue;
 
         md = E_NEW(E_Fm2_Context_Menu_Data, 1);
         if (!md) continue;
         md->icon = ic;
         md->handler = handler;
+        md->sd = sd;
         _e_fm2_menu_contexts = eina_list_append(_e_fm2_menu_contexts, md);
 
         mi = e_menu_item_new(mn);
@@ -8817,11 +8838,16 @@ _e_fm2_icon_menu_item_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNU
 
    md = data;
    if (!md) return;
-   obj = md->icon->info.fm;
-   if (!obj) return;
-   snprintf(buf, sizeof(buf), "%s/%s",
-            e_fm2_real_path_get(obj), md->icon->info.file);
-   e_fm2_mime_handler_call(md->handler, obj, buf);
+   if (md->icon)
+     {
+        obj = md->icon->info.fm;
+        if (!obj) return;
+        snprintf(buf, sizeof(buf), "%s/%s",
+                 e_fm2_real_path_get(obj), md->icon->info.file);
+        e_fm2_mime_handler_call(md->handler, obj, buf);
+     }
+   else
+     e_fm2_mime_handler_call(md->handler, md->sd->obj, md->sd->realpath);
 }
 
 struct e_fm2_view_menu_icon_size_data
