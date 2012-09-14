@@ -8378,9 +8378,6 @@ _e_fm2_menu(Evas_Object *obj, unsigned int timestamp)
                   e_menu_item_callback_set(mi, _e_fm2_file_symlink_menu, sd);
                }
           }
-
-        if (sd->icon_menu.end.func)
-          sd->icon_menu.end.func(sd->icon_menu.end.data, sd->obj, mn, NULL);
      }
 
    man = e_manager_current_get();
