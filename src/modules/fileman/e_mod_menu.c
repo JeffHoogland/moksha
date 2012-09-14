@@ -262,7 +262,6 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
                   e_util_menu_item_theme_icon_set(mi, "bookmarks");
                   subm = e_menu_new();
                   e_menu_item_submenu_set(mi, subm);
-                  e_object_unref(E_OBJECT(subm));
                }
 
              mi = e_menu_item_new(subm);
