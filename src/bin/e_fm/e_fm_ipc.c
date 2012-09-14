@@ -588,7 +588,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
       }
       break;
 
-      case E_FM_OP_MOVE: /* fop mv file/dir */
+      case E_FM_OP_MOVE: /* fop cp file/dir && rm file/dir */
       {
          _e_fm_ipc_slave_run(E_FM_OP_MOVE, (const char *)e->data, e->ref);
       }
@@ -603,6 +603,12 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
       case E_FM_OP_SYMLINK: /* fop ln -s */
       {
          _e_fm_ipc_slave_run(E_FM_OP_SYMLINK, (const char *)e->data, e->ref);
+      }
+      break;
+
+      case E_FM_OP_RENAME: /* fop mv */
+      {
+         _e_fm_ipc_slave_run(E_FM_OP_RENAME, (const char *)e->data, e->ref);
       }
       break;
 
@@ -1435,6 +1441,8 @@ _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
      strcpy(command, "cp");
    else if (type == E_FM_OP_SYMLINK)
      strcpy(command, "lns");
+   else if (type == E_FM_OP_RENAME)
+     strcpy(command, "mvf");
    else
      return NULL;
 
