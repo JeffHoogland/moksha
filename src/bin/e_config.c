@@ -853,6 +853,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, device_desktop, INT);
    E_CONFIG_VAL(D, T, device_auto_mount, INT);
    E_CONFIG_VAL(D, T, device_auto_open, INT);
+   E_CONFIG_VAL(D, T, filemanager_copy, UCHAR);
 
    E_CONFIG_VAL(D, T, border_keyboard.timeout, DOUBLE);
    E_CONFIG_VAL(D, T, border_keyboard.move.dx, UCHAR);
