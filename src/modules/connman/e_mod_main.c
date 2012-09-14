@@ -27,8 +27,8 @@ e_connman_theme_path(void)
 #undef TF
 }
 
-static Evas_Object * _econnman_service_new_icon(struct Connman_Service *cs,
-                                                Evas *evas)
+static Evas_Object *
+_econnman_service_new_icon(struct Connman_Service *cs, Evas *evas)
 {
    const char *type = econnman_service_type_to_str(cs->type);
    Edje_Message_Int_Set *msg;
@@ -50,8 +50,8 @@ static Evas_Object * _econnman_service_new_icon(struct Connman_Service *cs,
    return icon;
 }
 
-static Evas_Object * _econnman_service_new_end(struct Connman_Service *cs,
-                                               Evas *evas)
+static Evas_Object *
+_econnman_service_new_end(struct Connman_Service *cs, Evas *evas)
 {
    Eina_Iterator *iter;
    Evas_Object *end;
@@ -76,7 +76,8 @@ static Evas_Object * _econnman_service_new_end(struct Connman_Service *cs,
    return end;
 }
 
-static void _econnman_disconnect_cb(void *data, const char *error)
+static void
+_econnman_disconnect_cb(void *data, const char *error)
 {
    const char *path = data;
 
@@ -86,7 +87,8 @@ static void _econnman_disconnect_cb(void *data, const char *error)
    ERR("Could not disconnect %s: %s", path, error);
 }
 
-static void _econnman_connect_cb(void *data, const char *error)
+static void
+_econnman_connect_cb(void *data, const char *error)
 {
    const char *path = data;
 
@@ -96,7 +98,8 @@ static void _econnman_connect_cb(void *data, const char *error)
    ERR("Could not connect %s: %s", path, error);
 }
 
-static void _econnman_popup_selected_cb(void *data)
+static void
+_econnman_popup_selected_cb(void *data)
 {
    E_Connman_Instance *inst = data;
    const char *path;
@@ -115,7 +118,8 @@ static void _econnman_popup_selected_cb(void *data)
       case CONNMAN_STATE_READY:
       case CONNMAN_STATE_ONLINE:
          INF("Disconnect %s", path);
-         econnman_service_disconnect(cs, _econnman_disconnect_cb, (void *) path);
+         econnman_service_disconnect(cs, _econnman_disconnect_cb,
+                                     (void *) path);
          break;
       default:
          INF("Connect %s", path);
@@ -124,8 +128,8 @@ static void _econnman_popup_selected_cb(void *data)
      }
 }
 
-static void _econnman_popup_update(struct Connman_Manager *cm,
-                                   E_Connman_Instance *inst)
+static void
+_econnman_popup_update(struct Connman_Manager *cm, E_Connman_Instance *inst)
 {
    Evas_Object *list = inst->ui.popup.list;
    Evas_Object *powered = inst->ui.popup.powered;
@@ -157,7 +161,8 @@ static void _econnman_popup_update(struct Connman_Manager *cm,
    e_widget_check_checked_set(powered, cm->powered);
 }
 
-void econnman_mod_services_changed(struct Connman_Manager *cm)
+void
+econnman_mod_services_changed(struct Connman_Manager *cm)
 {
    E_Connman_Module_Context *ctxt = connman_mod->data;
    const Eina_List *l;
@@ -172,8 +177,8 @@ void econnman_mod_services_changed(struct Connman_Manager *cm)
      }
 }
 
-static Eina_Bool _econnman_popup_input_window_mouse_up_cb(void *data,
-                                                          int type, void *event)
+static Eina_Bool
+_econnman_popup_input_window_mouse_up_cb(void *data, int type, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    E_Connman_Instance *inst = data;
@@ -186,7 +191,8 @@ static Eina_Bool _econnman_popup_input_window_mouse_up_cb(void *data,
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static void _econnman_popup_input_window_destroy(E_Connman_Instance *inst)
+static void
+_econnman_popup_input_window_destroy(E_Connman_Instance *inst)
 {
    ecore_x_window_free(inst->ui.popup.input_win);
    inst->ui.popup.input_win = 0;
@@ -195,7 +201,8 @@ static void _econnman_popup_input_window_destroy(E_Connman_Instance *inst)
    inst->ui.popup.input_mouse_up = NULL;
 }
 
-static void _econnman_popup_input_window_create(E_Connman_Instance *inst)
+static void
+_econnman_popup_input_window_create(E_Connman_Instance *inst)
 {
    Ecore_X_Window_Configure_Mask mask;
    Ecore_X_Window w, popup_w;
@@ -212,8 +219,8 @@ static void _econnman_popup_input_window_create(E_Connman_Instance *inst)
    ecore_x_window_show(w);
 
    inst->ui.popup.input_mouse_up =
-         ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-                                 _econnman_popup_input_window_mouse_up_cb, inst);
+      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
+                              _econnman_popup_input_window_mouse_up_cb, inst);
 
    inst->ui.popup.input_win = w;
 }
@@ -255,13 +262,14 @@ _econnman_powered_changed(void *data, Evas_Object *obj, void *info __UNUSED__)
 {
    E_Connman_Instance *inst = data;
    E_Connman_Module_Context *ctxt = inst->ctxt;
-   
+
    if (!ctxt) return;
    if (!ctxt->cm) return;
    econnman_powered_set(ctxt->cm, ctxt->powered);
 }
 
-static void _econnman_popup_new(E_Connman_Instance *inst)
+static void
+_econnman_popup_new(E_Connman_Instance *inst)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
    Evas_Object *list, *bt, *ck;
@@ -284,9 +292,9 @@ static void _econnman_popup_new(E_Connman_Instance *inst)
    ck = e_widget_check_add(evas, _("Wifi On"), &(ctxt->powered));
    inst->ui.popup.powered = ck;
    e_widget_list_object_append(list, ck, 1, 0, 0.5);
-   evas_object_smart_callback_add(ck, "changed", 
+   evas_object_smart_callback_add(ck, "changed",
                                   _econnman_powered_changed, inst);
-   
+
    _econnman_popup_update(ctxt->cm, inst);
 
    bt = e_widget_button_add(evas, _("Configure"), NULL,
@@ -314,10 +322,11 @@ econnman_popup_del(E_Connman_Instance *inst)
    inst->popup = NULL;
 }
 
-static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
-                                              E_Connman_Instance *inst,
-                                              enum Connman_State state,
-                                              enum Connman_Service_Type type)
+static void
+_econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
+                                  E_Connman_Instance *inst,
+                                  enum Connman_State state,
+                                  enum Connman_Service_Type type)
 {
    Evas_Object *o = inst->ui.gadget;
    Edje_Message_Int_Set *msg;
@@ -343,7 +352,8 @@ static void _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
    DBG("state=%d type=%d", state, type);
 }
 
-void econnman_mod_manager_update(struct Connman_Manager *cm)
+void
+econnman_mod_manager_update(struct Connman_Manager *cm)
 {
    enum Connman_Service_Type type;
    E_Connman_Module_Context *ctxt = connman_mod->data;
@@ -372,7 +382,8 @@ void econnman_mod_manager_update(struct Connman_Manager *cm)
      _econnman_mod_manager_update_inst(ctxt, inst, cm->state, type);
 }
 
-static void _econnman_gadget_setup(E_Connman_Instance *inst)
+static void
+_econnman_gadget_setup(E_Connman_Instance *inst)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
    Evas_Object *o = inst->ui.gadget;
@@ -390,7 +401,8 @@ static void _econnman_gadget_setup(E_Connman_Instance *inst)
    return;
 }
 
-void econnman_mod_manager_inout(struct Connman_Manager *cm)
+void
+econnman_mod_manager_inout(struct Connman_Manager *cm)
 {
    E_Connman_Module_Context *ctxt = connman_mod->data;
    const Eina_List *l;
@@ -406,15 +418,15 @@ void econnman_mod_manager_inout(struct Connman_Manager *cm)
      econnman_mod_manager_update(cm);
 }
 
-static void _econnman_menu_cb_configure(void *data, E_Menu *menu,
-                                        E_Menu_Item *mi)
+static void
+_econnman_menu_cb_configure(void *data, E_Menu *menu, E_Menu_Item *mi)
 {
    E_Connman_Instance *inst = data;
    _econnman_app_launch(inst);
 }
 
-static void _econnman_menu_new(E_Connman_Instance *inst,
-                               Evas_Event_Mouse_Down *ev)
+static void
+_econnman_menu_new(E_Connman_Instance *inst, Evas_Event_Mouse_Down *ev)
 {
    E_Menu *m;
    E_Menu_Item *mi;
@@ -580,7 +592,8 @@ static const E_Gadcon_Client_Class _gc_class =
 
 EAPI E_Module_Api e_modapi = { E_MODULE_API_VERSION, _e_connman_Name };
 
-static E_Config_Dialog * _econnman_config(E_Container *con, const char *params)
+static E_Config_Dialog *
+_econnman_config(E_Container *con, const char *params)
 {
    E_Connman_Module_Context *ctxt;
 
