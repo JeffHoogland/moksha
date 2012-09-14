@@ -122,6 +122,8 @@ Fileman_Path *e_mod_fileman_path_find(E_Zone *zone);
 
 void e_mod_menu_add(E_Menu *m);
 
+E_Config_Dialog *e_int_config_fileman(E_Container *con, const char *params __UNUSED__);
+
 /**
  * @addtogroup Optional_Fileman
  * @{
