@@ -137,12 +137,7 @@ e_fm_mime_icon_cache_flush(void)
 }
 
 /* create (allocate), set properties, and return a new mime handler */
-EAPI E_Fm2_Mime_Handler *
-e_fm2_mime_handler_new(const char *label, const char *icon_group,
-                       void (*action_func)(Evas_Object *obj, const char *path, void *data),
-                       void *action_data,
-                       int(test_func) (Evas_Object * obj, const char *path, void *data),
-                       void *test_data)
+EAPI E_Fm2_Mime_Handler *e_fm2_mime_handler_new(const char *label, const char *icon_group, void (*action_func) (void *data, Evas_Object *obj, const char *path), void *action_data, int (test_func) (void *data, Evas_Object *obj, const char *path), void *test_data)
 {
    E_Fm2_Mime_Handler *handler;
 
@@ -308,16 +303,16 @@ e_fm2_mime_handler_call(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const cha
 
    if (handler->test_func)
      {
-        if (handler->test_func(obj, path, handler->test_data))
+        if (handler->test_func(handler->test_data, obj, path))
           {
-             handler->action_func(obj, path, handler->action_data);
+             handler->action_func(handler->action_data, obj, path);
              return 1;
           }
         else
           return 0;
      }
 
-   handler->action_func(obj, path, handler->action_data);
+   handler->action_func(handler->action_data, obj, path);
    return 1;
 }
 
@@ -369,7 +364,7 @@ e_fm2_mime_handler_test(E_Fm2_Mime_Handler *handler, Evas_Object *obj, const cha
    if ((!handler) || (!obj) || (!path)) return 0;
    if (!handler->test_func) return 1;
 
-   return handler->test_func(obj, path, handler->test_data);
+   return handler->test_func(handler->test_data, obj, path);
 }
 
 /* local subsystem functions */

@@ -3,7 +3,8 @@
 /* local subsystem functions */
 static void _e_bg_signal(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_bg_event_bg_update_free(void *data, void *event);
-
+static void e_bg_handler_set(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path);
+static int e_bg_handler_test(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path);
 static void _e_bg_handler_image_imported(const char *image_path, void *data);
 
 /* local subsystem globals */
@@ -439,12 +440,13 @@ e_bg_update(void)
      }
 }
 
+/* local subsystem functions */
 
 /**
  * Set background to image, as required in e_fm2_mime_handler_new()
  */
-EAPI void
-e_bg_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __UNUSED__)
+static void
+e_bg_handler_set(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path)
 {
    E_Container *con;
    char buf[4096];
@@ -511,8 +513,8 @@ e_bg_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __UNU
  *
  * Just edje files with "e/desktop/background" group are used.
  */
-EAPI int
-e_bg_handler_test(Evas_Object *obj __UNUSED__, const char *path, void *data __UNUSED__)
+static int
+e_bg_handler_test(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path)
 {
    if (!path) return 0;
 
@@ -526,7 +528,6 @@ e_bg_handler_test(Evas_Object *obj __UNUSED__, const char *path, void *data __UN
    return 1;
 }
 
-/* local subsystem functions */
 static void
 _e_bg_signal(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {

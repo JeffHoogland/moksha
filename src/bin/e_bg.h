@@ -35,8 +35,6 @@ EAPI void e_bg_add(int container, int zone, int desk_x, int desk_y, const char *
 EAPI void e_bg_del(int container, int zone, int desk_x, int desk_y);
 EAPI void e_bg_default_set(const char *file);
 EAPI void e_bg_update(void);
-EAPI void e_bg_handler_set(Evas_Object *obj, const char *path, void *data);
-EAPI int  e_bg_handler_test(Evas_Object *obj, const char *path, void *data);
 
 EAPI E_Bg_Image_Import_Handle *e_bg_image_import_new(const char *image_file, void (*cb)(void *data, const char *edje_file), const void *data);
 EAPI void                      e_bg_image_import_cancel(E_Bg_Image_Import_Handle *handle);

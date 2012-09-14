@@ -15,6 +15,8 @@ static Eina_Bool  _e_theme_mappings_quickfind_free_cb(const Eina_Hash *hash, con
 static void       _e_theme_category_register(const char *category);
 static Eina_List *_e_theme_collection_item_register(Eina_List *list, const char *name);
 static Eina_List *_e_theme_collection_items_find(const char *base, const char *collname);
+static void e_theme_handler_set(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path);
+static int e_theme_handler_test(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path);
 
 /* local subsystem globals */
 static Eina_Hash *mappings = NULL;
@@ -515,8 +517,9 @@ e_theme_comp_list(void)
    return _e_theme_collection_items_find("base/theme/borders", "e/comp");
 }
 
-EAPI void
-e_theme_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __UNUSED__)
+/* local subsystem functions */
+static void
+e_theme_handler_set(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path)
 {
    E_Action *a;
    char buf[PATH_MAX];
@@ -561,8 +564,8 @@ e_theme_handler_set(Evas_Object *obj __UNUSED__, const char *path, void *data __
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
-EAPI int
-e_theme_handler_test(Evas_Object *obj __UNUSED__, const char *path, void *data __UNUSED__)
+static int
+e_theme_handler_test(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path)
 {
    if (!path) return 0;
    if (!edje_file_group_exists(path, "e/widgets/border/default/border"))
@@ -570,7 +573,6 @@ e_theme_handler_test(Evas_Object *obj __UNUSED__, const char *path, void *data _
    return 1;
 }
 
-/* local subsystem functions */
 static Eina_Bool
 _e_theme_mappings_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
 {
