@@ -102,9 +102,7 @@ deserialize_sink(Pulse *conn __UNUSED__, Pulse_Tag *tag, Eina_Bool source)
 
         pi = calloc(1, sizeof(Pulse_Sink_Port_Info));
         EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &pi->name), error);
-        eina_stringshare_del(pi->name);
         EINA_SAFETY_ON_FALSE_GOTO(untag_string(tag, &pi->description), error);
-        eina_stringshare_del(pi->description);
         EINA_SAFETY_ON_FALSE_GOTO(untag_uint32(tag, &pi->priority), error);
         sink->ports = eina_list_append(sink->ports, pi);
      }
