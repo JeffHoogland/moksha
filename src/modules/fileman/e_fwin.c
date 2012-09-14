@@ -2052,17 +2052,20 @@ _e_fwin_cb_menu_extend_start(void *data,
    selected = e_fm2_selected_list_get(page->fm_obj);
 
 #ifdef ENABLE_FILES
-   e_mod_menu_add(m);
+   subm = e_mod_menu_add(m);
 
    if (((!page->fwin->zone) || fileman_config->view.desktop_navigation) && e_fm2_has_parent_get(obj))
      {
-        mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("Go to Parent Directory"));
+        mi = e_menu_item_new_relative(subm, NULL);
+        e_menu_item_label_set(mi, _("Go To Parent Directory"));
         e_menu_item_icon_edje_set(mi,
                                   e_theme_edje_file_get("base/theme/fileman",
                                                         "e/fileman/default/button/parent"),
                                   "e/fileman/default/button/parent");
         e_menu_item_callback_set(mi, _e_fwin_parent, obj);
+
+        mi = e_menu_item_new(subm);
+        e_menu_item_separator_set(mi, EINA_TRUE);
      }
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, EINA_TRUE);

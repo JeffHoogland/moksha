@@ -300,7 +300,7 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
    Eina_Bool need_separator;
    Eina_Bool volumes_visible = 0;
 
-   if (m->items) return;
+   if (eina_list_count(m->items) > 2) return; /* go to parent and separator */
    e_object_free_attach_func_set(E_OBJECT(m), _e_mod_menu_free);
 
    /* Home */
@@ -370,7 +370,8 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 }
 
-void
+/* returns submenu so we can add Go to Parent */
+E_Menu *
 e_mod_menu_add(E_Menu *m)
 {
 #ifdef ENABLE_FILES
@@ -384,7 +385,9 @@ e_mod_menu_add(E_Menu *m)
    e_menu_item_submenu_set(mi, sub);
    e_object_unref(E_OBJECT(sub)); //allow deletion whenever main menu deletes
    e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);
+   return sub;
 #else
    (void)m;
+   return NULL;
 #endif
 }
