@@ -67,7 +67,8 @@ _connman_fail(void *data)
 }
 
 static void
-_check_connman_owner(void *data, DBusMessage *msg, DBusError *err)
+_check_connman_owner(void *data, DBusMessage *msg,
+                     DBusError *err __UNUSED__)
 {
    pending_connman = NULL;
 
