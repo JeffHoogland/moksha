@@ -419,6 +419,7 @@ e_winlist_left(E_Zone *zone)
    E_Desk *desk;
    E_Border *bd_orig;
    int delta = INT_MAX;
+   int delta2 = INT_MAX;
    int center;
 
    _bd_next = NULL;
@@ -437,6 +438,7 @@ e_winlist_left(E_Zone *zone)
      {
         int center_next;
         int delta_next;
+        int delta2_next;
 
         if (bd == bd_orig) continue;
         if ((!bd->client.icccm.accepts_focus) &&
@@ -479,10 +481,13 @@ e_winlist_left(E_Zone *zone)
         if (center_next >= center) continue;
         delta_next = bd_orig->x - (bd->x + bd->w);
         if (delta_next < 0) delta_next = center - center_next;
-        if (delta_next >= 0 && delta_next < delta)
+        delta2_next = abs(bd_orig->y - bd_orig->h / 2 - bd->y + bd->h/2);
+        if (delta_next >= 0 && delta_next <= delta &&
+            delta2_next >= 0 && delta2_next <= delta2)
           {
              _bd_next = bd;
              delta = delta_next;
+             delta2 = delta2_next;
           }
      }
    e_border_focus_track_thaw();
@@ -538,6 +543,7 @@ e_winlist_down(E_Zone *zone)
    E_Desk *desk;
    E_Border *bd_orig;
    int delta = INT_MAX;
+   int delta2 = INT_MAX;
    int center;
 
    _bd_next = NULL;
@@ -556,6 +562,7 @@ e_winlist_down(E_Zone *zone)
      {
         int center_next;
         int delta_next;
+        int delta2_next;
 
         if (bd == bd_orig) continue;
         if ((!bd->client.icccm.accepts_focus) &&
@@ -598,10 +605,13 @@ e_winlist_down(E_Zone *zone)
         if (center_next <= center) continue;
         delta_next = bd->y - (bd_orig->y + bd_orig->h);
         if (delta_next < 0) delta_next = center - center_next;
-        if (delta_next >= 0 && delta_next < delta)
+        delta2_next = abs(bd_orig->x - bd_orig->w / 2 - bd->x + bd->w/2);
+        if (delta_next >= 0 && delta_next <= delta &&
+            delta2_next >= 0 && delta2_next <= delta2)
           {
              _bd_next = bd;
              delta = delta_next;
+             delta2 = delta2_next;
           }
      }
    e_border_focus_track_thaw();
@@ -657,6 +667,7 @@ e_winlist_up(E_Zone *zone)
    E_Desk *desk;
    E_Border *bd_orig;
    int delta = INT_MAX;
+   int delta2 = INT_MAX;
    int center;
 
    _bd_next = NULL;
@@ -675,6 +686,7 @@ e_winlist_up(E_Zone *zone)
      {
         int center_next;
         int delta_next;
+        int delta2_next;
 
         if (bd == bd_orig) continue;
         if ((!bd->client.icccm.accepts_focus) &&
@@ -717,10 +729,13 @@ e_winlist_up(E_Zone *zone)
         if (center_next >= center) continue;
         delta_next = bd_orig->y - (bd->y + bd->h);
         if (delta_next < 0) delta_next = center - center_next;
-        if (delta_next >= 0 && delta_next < delta)
+        delta2_next = abs(bd_orig->x - bd_orig->w / 2 - bd->x + bd->w/2);
+        if (delta_next >= 0 && delta_next <= delta &&
+            delta2_next >= 0 && delta2_next <= delta2)
           {
              _bd_next = bd;
              delta = delta_next;
+             delta2 = delta2_next;
           }
      }
    e_border_focus_track_thaw();
@@ -776,6 +791,7 @@ e_winlist_right(E_Zone *zone)
    E_Desk *desk;
    E_Border *bd_orig;
    int delta = INT_MAX;
+   int delta2 = INT_MAX;
    int center;
 
    _bd_next = NULL;
@@ -794,6 +810,7 @@ e_winlist_right(E_Zone *zone)
      {
         int center_next;
         int delta_next;
+        int delta2_next;
 
         if (bd == bd_orig) continue;
         if ((!bd->client.icccm.accepts_focus) &&
@@ -836,10 +853,13 @@ e_winlist_right(E_Zone *zone)
         if (center_next <= center) continue;
         delta_next = bd->x - (bd_orig->x + bd_orig->w);
         if (delta_next < 0) delta = center_next - center;
-        if (delta_next >= 0 && delta_next < delta)
+        delta2_next = abs(bd_orig->y - bd_orig->h / 2 - bd->y + bd->h/2);
+        if (delta_next >= 0 && delta_next <= delta &&
+            delta2_next >= 0 && delta2_next <= delta2)
           {
              _bd_next = bd;
              delta = delta_next;
+             delta2 = delta2_next;
           }
      }
    e_border_focus_track_thaw();
