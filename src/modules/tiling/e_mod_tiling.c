@@ -110,7 +110,11 @@ static struct tiling_mod_main_g
                          *act_move_up,
                          *act_move_down,
                          *act_adjusttransitions,
-                         *act_go;
+                         *act_go,
+                         *act_send_ne,
+                         *act_send_nw,
+                         *act_send_se,
+                         *act_send_sw;
 
     int                   warp_x,
                           warp_y,
@@ -3338,6 +3342,81 @@ _e_mod_action_go_cb(E_Object   *obj __UNUSED__,
 }
 
 /* }}} */
+/* Send to a corner {{{ */
+
+static void
+_e_mod_action_send_cb(E_Object   *obj __UNUSED__,
+                      const char *params) EINA_ARG_NONNULL(2)
+{
+    E_Desk *desk;
+    E_Border *bd;
+    int x, y, w, h;
+    geom_t g;
+
+    assert(params != NULL);
+
+    desk = get_current_desk();
+    if (!desk)
+        return;
+
+    bd = e_border_focused_get();
+    if (!bd || bd->desk != desk)
+        return;
+
+    if (!is_tilable(bd))
+        return;
+
+    check_tinfo(desk);
+    if (!_G.tinfo->conf)
+        return;
+
+    /* Fill initial values if not already done */
+    _get_or_create_border_extra(bd);
+
+    if (!tiling_g.config->show_titles) {
+        if ((bd->bordername && strcmp(bd->bordername, "pixel"))
+        ||  !bd->bordername)
+        {
+            change_window_border(bd, "pixel");
+        }
+    }
+
+    if (bd->maximized)
+        _e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+
+    /* add to floating */
+    if (!EINA_LIST_IS_IN(_G.tinfo->floating_windows, bd)) {
+        _remove_border(bd);
+        EINA_LIST_APPEND(_G.tinfo->floating_windows, bd);
+    }
+
+    e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
+    g.w = w / 2;
+    g.h = h / 2;
+
+    if (params[0] == 'n') {
+        g.y = 0;
+        if (params[1] == 'w') {
+            /* NW */
+            g.x = 0;
+        } else {
+            /* NE */
+            g.x = w / 2;
+        }
+    } else {
+        g.y = h / 2;
+        if (params[1] == 'w') {
+            /* SW */
+            g.x = 0;
+        } else {
+            /* SE */
+            g.x = w / 2;
+        }
+    }
+    _e_border_move_resize(bd, g.x, g.y, g.w, g.h);
+}
+
+/* }}} */
 /* Hooks {{{*/
 
 static void
@@ -3905,6 +3984,19 @@ e_modapi_init(E_Module *m)
     ACTION_ADD(_G.act_go, _e_mod_action_go_cb,
                "Focus a particular window", "go",
                NULL, NULL, 0);
+
+    ACTION_ADD(_G.act_send_ne, _e_mod_action_send_cb,
+               "Send to upper right corner", "send_ne",
+               "ne", NULL, 0);
+    ACTION_ADD(_G.act_send_nw, _e_mod_action_send_cb,
+               "Send to upper left corner", "send_nw",
+               "nw", NULL, 0);
+    ACTION_ADD(_G.act_send_se, _e_mod_action_send_cb,
+               "Send to lower right corner", "send_se",
+               "se", NULL, 0);
+    ACTION_ADD(_G.act_send_sw, _e_mod_action_send_cb,
+               "Send to lower left corner", "send_sw",
+               "sw", NULL, 0);
 #undef ACTION_ADD
 
     /* Configuration entries */
@@ -4020,6 +4112,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
     ACTION_DEL(_G.act_adjusttransitions, "Adjust transitions",
                "adjust_transitions");
     ACTION_DEL(_G.act_go, "Focus a particular window", "go");
+
+    ACTION_DEL(_G.act_send_ne, "Send to upper right corner", "send_ne");
+    ACTION_DEL(_G.act_send_nw, "Send to upper left corner", "send_nw");
+    ACTION_DEL(_G.act_send_se, "Send to lower right corner", "send_se");
+    ACTION_DEL(_G.act_send_sw, "Send to lower left corner", "send_sw");
 #undef ACTION_DEL
 
     e_configure_registry_item_del("windows/tiling");
