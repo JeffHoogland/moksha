@@ -6062,10 +6062,12 @@ _e_fm2_dnd_drop_hide(Evas_Object *obj)
 static Eina_Bool
 _e_fm2_dnd_type_implemented(const char *type)
 {
-   const char **t;
+   const char ***t;
 
-   for (t = *_e_fm2_dnd_types; t; t++)
-     if (type == *t) return EINA_TRUE;
+   for (t = _e_fm2_dnd_types; *t; t++)
+     {
+        if (type == **t) return EINA_TRUE;
+     }
    return EINA_FALSE;
 }
 
