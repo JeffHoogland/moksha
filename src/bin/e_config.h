@@ -332,8 +332,9 @@ struct _E_Config
       double        normal; // GUI
       double        dim; // GUI
       double        transition; // GUI
-      unsigned char idle_dim; // GUI
       double        timer; // GUI
+      const char   *sysdev; // GUI  
+      unsigned char idle_dim; // GUI
       E_Backlight_Mode mode; /* not saved, display-only */
    } backlight;
 

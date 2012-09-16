@@ -15,6 +15,7 @@ static double bl_val = 1.0;
 static double bl_animval = 1.0;
 static int sysmode = MODE_NONE;
 static Ecore_Animator *bl_anim = NULL;
+static Eina_List *bl_devs = NULL;
 
 static Ecore_Event_Handler *_e_backlight_handler_config_mode = NULL;
 static Ecore_Event_Handler *_e_backlight_handler_border_fullscreen = NULL;
@@ -96,8 +97,11 @@ e_backlight_init(void)
 EINTERN int
 e_backlight_shutdown(void)
 {
+   const char *s;
+   
    if (bl_anim) ecore_animator_del(bl_anim);
    bl_anim = NULL;
+   EINA_LIST_FREE(bl_devs, s) eina_stringshare_del(s);
 #ifdef HAVE_EEZE
    if (bl_sysval) eina_stringshare_del(bl_sysval);
    bl_sysval = NULL;
@@ -272,6 +276,12 @@ e_backlight_mode_get(E_Zone *zone __UNUSED__)
    return e_config->backlight.mode;
 }
 
+EAPI const Eina_List *
+e_backlight_devices_get(void)
+{
+   return bl_devs;
+}
+
 /* local subsystem functions */
 
 static Eina_Bool
@@ -295,13 +305,33 @@ _e_backlight_update(E_Zone *zone)
    double x_bl = -1.0;
    Ecore_X_Window root;
    Ecore_X_Randr_Output *out;
-   int num = 0;
+   int i, num = 0;
 
    root = zone->container->manager->root;
    // try randr
    out = ecore_x_randr_window_outputs_get(root, &num);
    if ((out) && (num > 0) && (ecore_x_randr_output_backlight_available()))
-      x_bl = ecore_x_randr_output_backlight_level_get(root, out[0]);
+     {
+        char *name;
+        const char *s;
+        Eina_Bool gotten = EINA_FALSE;
+        
+        EINA_LIST_FREE(bl_devs, s) eina_stringshare_del(s);
+        for (i = 0; i < num; i++)
+          {
+             name = ecore_x_randr_output_name_get(root, out[i], NULL);
+             bl_devs = eina_list_append(bl_devs, eina_stringshare_add(name));
+             if ((name) && (e_config->backlight.sysdev) &&
+                 (!strcmp(name, e_config->backlight.sysdev)))
+               {
+                  x_bl = ecore_x_randr_output_backlight_level_get(root, out[i]);
+                  gotten = EINA_TRUE;
+               }
+             if (name) free(name);
+          }
+        if (!gotten)
+          x_bl = ecore_x_randr_output_backlight_level_get(root, out[0]);
+     }
    if (out) free(out);
    if (x_bl >= 0.0)
      {
@@ -327,13 +357,33 @@ _e_backlight_set(E_Zone *zone, double val)
      {
         Ecore_X_Window root;
         Ecore_X_Randr_Output *out;
-        int num = 0;
+        int num = 0, i;
+        char *name;
 
         root = zone->container->manager->root;
         out = ecore_x_randr_window_outputs_get(root, &num);
         if ((out) && (num > 0))
           {
-             ecore_x_randr_output_backlight_level_set(root, out[0], val);
+             Eina_Bool gotten = EINA_FALSE;
+             for (i = 0; i < num; i++)
+               {
+                  name = ecore_x_randr_output_name_get(root, out[i], NULL);
+                  if (name)
+                    {
+                       if ((e_config->backlight.sysdev) &&
+                           (!strcmp(name, e_config->backlight.sysdev)))
+                         {
+                            ecore_x_randr_output_backlight_level_set(root, out[i], val);
+                            gotten = EINA_TRUE;
+                         }
+                       free(name);
+                    }
+               }
+             if (!gotten)
+               {
+                  for (i = 0; i < num; i++)
+                    ecore_x_randr_output_backlight_level_set(root, out[i], val);
+               }
           }
         if (out) free(out);
      }
@@ -370,8 +420,10 @@ _bl_anim(void *data, double pos)
 static void
 _bl_sys_find(void)
 {
-   Eina_List *devs;
-   const char *f;
+   Eina_List *l, *devs, *pdevs = NULL;
+   Eina_Bool use;
+   const char *f, *s;
+   int v;
 
    devs = eeze_udev_find_by_filter("backlight", NULL, NULL);
    if (!devs)
@@ -382,10 +434,6 @@ _bl_sys_find(void)
      }
    if (eina_list_count(devs) > 1)
      {
-        const char *s = NULL;
-        Eina_List *l;
-        Eina_Bool use = EINA_FALSE;
-
         /* prefer backlights of type "firmware" where available */
         EINA_LIST_FOREACH(devs, l, f)
           {
@@ -393,18 +441,77 @@ _bl_sys_find(void)
              use = (s && (!strcmp(s, "firmware")));
              eina_stringshare_del(s);
              if (!use) continue;
+             s = eeze_udev_syspath_get_sysattr(f, "brightness");
+             if (!s) continue;
+             v = atoi(s);
+             eina_stringshare_del(s);
+             if (v < 0) continue;
+             pdevs = eina_list_append(pdevs, eina_stringshare_add(f));
+             eina_stringshare_del(f);
              l->data = NULL;
-             eina_stringshare_del(bl_sysval);
-             bl_sysval = f;
-             EINA_LIST_FREE(devs, f)
-               eina_stringshare_del(f);
-             return;
+          }
+        EINA_LIST_FOREACH(devs, l, f)
+          {
+             if (!l->data) continue;
+             s = eeze_udev_syspath_get_sysattr(f, "brightness");
+             if (!s) continue;
+             v = atoi(s);
+             eina_stringshare_del(s);
+             if (v < 0) continue;
+             pdevs = eina_list_append(pdevs, eina_stringshare_add(f));
           }
      }
+   if (!pdevs)
+     {
+        /* add the other backlight or led's if none found */
+        EINA_LIST_FOREACH(devs, l, f)
+          {
+             use = EINA_FALSE;
+             s = eeze_udev_syspath_get_sysattr(f, "brightness");
+             if (!s) continue;
+             v = atoi(s);
+             eina_stringshare_del(s);
+             if (v < 0) continue;
+             pdevs = eina_list_append(pdevs, eina_stringshare_add(f));
+          }
+     }
+   /* clear out original devs list now we've filtered */
    EINA_LIST_FREE(devs, f)
      {
-        eina_stringshare_replace(&bl_sysval, NULL);
-        bl_sysval = f;
+        if (f) eina_stringshare_del(f);
+     }
+   /* clear out old configured bl sysval */
+   if (bl_sysval)
+     {
+        eina_stringshare_del(bl_sysval);
+        bl_sysval = NULL;
+     }
+   EINA_LIST_FREE(bl_devs, s) eina_stringshare_del(s);
+   /* if configured backlight is there - use it, or if not use first */
+   EINA_LIST_FOREACH(pdevs, l, f)
+     {
+        bl_devs = eina_list_append(bl_devs, eina_stringshare_add(f));
+         if (!bl_sysval)
+          {
+             if ((e_config->backlight.sysdev) &&
+                 (!strcmp(e_config->backlight.sysdev, f)))
+               bl_sysval = eina_stringshare_add(f);
+             else
+               bl_sysval = eina_stringshare_add(f);
+          }
+     }
+   if (!bl_sysval)
+     {
+        EINA_LIST_FOREACH(pdevs, l, f)
+          {
+             if (!bl_sysval)
+               bl_sysval = eina_stringshare_add(f);
+          }
+     }
+   /* clear out preferred devs list */
+   EINA_LIST_FREE(pdevs, f)
+     {
+        eina_stringshare_del(f);
      }
 }
 
@@ -472,8 +579,8 @@ _bl_sys_level_set(double val)
      }
 //   printf("SET: %1.3f\n", val);
    snprintf(buf, sizeof(buf),
-            "%s/enlightenment/utils/enlightenment_backlight %i",
-            e_prefix_lib_get(), (int)(val * 1000.0));
+            "%s/enlightenment/utils/enlightenment_backlight %i %s",
+            e_prefix_lib_get(), (int)(val * 1000.0), bl_sysval);
    bl_sys_set_exe = ecore_exe_run(buf, NULL);
 }
 #endif

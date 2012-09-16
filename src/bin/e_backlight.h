@@ -32,6 +32,7 @@ EAPI void                e_backlight_level_set(E_Zone *zone, double val, double 
 EAPI double              e_backlight_level_get(E_Zone *zone);
 EAPI void                e_backlight_mode_set(E_Zone *zone, E_Backlight_Mode mode);
 EAPI E_Backlight_Mode    e_backlight_mode_get(E_Zone *zone);
+EAPI const Eina_List    *e_backlight_devices_get(void);
 
 #endif
 #endif

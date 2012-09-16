@@ -37,11 +37,10 @@ _bl_write_file(const char *file, int val)
 int
 main(int argc, char **argv)
 {
-   int i;
-   int level;
-   const char *f;
+   int i, level, devok = 0;
+   const char *f, *dev = NULL, *str;
    int maxlevel = 0, curlevel = -1;
-   Eina_List *devs;
+   Eina_List *devs, *l;
    char buf[4096] = "";
 
    for (i = 1; i < argc; i++)
@@ -55,10 +54,15 @@ main(int argc, char **argv)
              exit(0);
           }
      }
-   if (argc == 2)
-     level = atoi(argv[1]);
+   if (argc == 3)
+     {
+        level = atoi(argv[1]);
+        dev = argv[2];
+     }
    else
      exit(1);
+   
+   if (!dev) return -1;
 
    if (setuid(0) != 0)
      {
@@ -78,56 +82,44 @@ main(int argc, char **argv)
         devs = eeze_udev_find_by_filter("leds", NULL, NULL);
         if (!devs) return -1;
      }
-   if (eina_list_count(devs) > 1)
+   if (devs)
      {
-        const char *s = NULL;
-        Eina_List *l, *new = NULL;
-        Eina_Bool use = EINA_FALSE;
-
-        /* prefer backlights of type "firmware" where available */
         EINA_LIST_FOREACH(devs, l, f)
           {
-             s = eeze_udev_syspath_get_sysattr(f, "type");
-             use = (s && (!strcmp(s, "firmware")));
-             eina_stringshare_del(s);
-             if (!use) continue;
-             eina_list_move_list(&new, &devs, l);
-             EINA_LIST_FREE(devs, f)
-               eina_stringshare_del(f);
-             devs = new;
-             break;
-          }
-     }
-   EINA_LIST_FREE(devs, f)
-     {
-        const char *str;
-
-        str = eeze_udev_syspath_get_sysattr(f, "max_brightness");
-        if (str)
-          {
-             maxlevel = atoi(str);
-             eina_stringshare_del(str);
-             str = eeze_udev_syspath_get_sysattr(f, "brightness");
-             if (str)
+             if (!strcmp(f, dev))
                {
-                  curlevel = atoi(str);
-                  eina_stringshare_del(str);
+                  dev = f;
+                  devok = 1;
+                  break;
                }
           }
-
-        if (maxlevel <= 0) maxlevel = 255;
-        if (curlevel >= 0)
-          {
-             curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
-     //        printf("SET: %i, %i/%i\n", level, curlevel, maxlevel);
-             snprintf(buf, sizeof(buf), "%s/brightness", f);
-             return _bl_write_file(buf, curlevel);
-          }
-        eina_stringshare_del(f);
-        /* Currently this will set brightness levels on ALL detected devices
-           If this is not desired, add a break here
-         */
      }
-
+   
+   if (!devok) return -1;
+   
+   str = eeze_udev_syspath_get_sysattr(dev, "max_brightness");
+   if (str)
+     {
+        maxlevel = atoi(str);
+        eina_stringshare_del(str);
+        str = eeze_udev_syspath_get_sysattr(dev, "brightness");
+        if (str)
+          {
+             curlevel = atoi(str);
+             eina_stringshare_del(str);
+          }
+     }
+   
+   if (maxlevel <= 0) maxlevel = 255;
+   if (curlevel >= 0)
+     {
+        curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
+        snprintf(buf, sizeof(buf), "%s/brightness", f);
+        return _bl_write_file(buf, curlevel);
+     }
+   
+   EINA_LIST_FREE(devs, f)
+     eina_stringshare_del(f);
+   
    return -1;
 }

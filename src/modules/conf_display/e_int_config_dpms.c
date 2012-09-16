@@ -14,6 +14,8 @@ struct _E_Config_Dialog_Data
 
    Evas_Object *backlight_slider;
 
+   char *bl_dev;
+   
    int enable_idle_dim;
 
    double backlight_normal;
@@ -110,6 +112,8 @@ static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ob;
+   Eina_List *devs, *l;
+   const char *s, *label;
 
    o = e_widget_list_add(evas, 0, 0);
 /*
@@ -158,6 +162,28 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
 			    &(cfdata->backlight_transition), NULL, 100);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    
+   devs = (Eina_List *)e_backlight_devices_get();
+   if ((devs) && (eina_list_count(devs) > 1))
+     {
+        int sel = -1, i = 0;
+        
+        ob = e_widget_ilist_add(evas, 16, 16, NULL);
+        e_widget_size_min_set(ob, 100, 100);
+        e_widget_list_object_append(o, ob, 1, 1, 0.5);
+        EINA_LIST_FOREACH(devs, l, s)
+          {
+             label = strchr(s, '/');
+             if (!label) label = s;
+             else label++;
+             e_widget_ilist_append(ob, NULL, label, NULL, NULL, s);
+             if ((e_config->backlight.sysdev) &&
+                 (!strcmp(e_config->backlight.sysdev, s)))
+               sel = i;
+             i++;
+          }
+        e_widget_ilist_go(ob);
+        if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
+     }
    return o;
 }
 

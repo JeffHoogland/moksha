@@ -896,8 +896,9 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, backlight.normal, DOUBLE);
    E_CONFIG_VAL(D, T, backlight.dim, DOUBLE);
    E_CONFIG_VAL(D, T, backlight.transition, DOUBLE);
-   E_CONFIG_VAL(D, T, backlight.idle_dim, UCHAR);
    E_CONFIG_VAL(D, T, backlight.timer, DOUBLE);
+   E_CONFIG_VAL(D, T, backlight.sysdev, STR);
+   E_CONFIG_VAL(D, T, backlight.idle_dim, UCHAR);
 
    E_CONFIG_VAL(D, T, deskenv.load_xrdb, UCHAR);
    E_CONFIG_VAL(D, T, deskenv.load_xmodmap, UCHAR);
@@ -2152,6 +2153,8 @@ _e_config_free(E_Config *ecf)
      eina_stringshare_del(ecf->xsettings.net_theme_name);
    if (ecf->xsettings.gtk_font_name)
      eina_stringshare_del(ecf->xsettings.gtk_font_name);
+   if (ecf->backlight.sysdev)
+     eina_stringshare_del(ecf->backlight.sysdev);
 
    E_FREE(ecf);
 }
