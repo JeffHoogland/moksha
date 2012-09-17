@@ -129,7 +129,7 @@ struct _E_Gadcon
    E_Gadcon_Location *location;
 
    E_Drop_Handler    *drop_handler;
-   E_Gadcon_Client *drag;
+   E_Gadcon_Client *drag_gcc, *new_gcc;
 
    E_Config_Gadcon   *cf;
 
