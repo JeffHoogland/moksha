@@ -2803,7 +2803,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
 
    ev = event;
    gc = data;
-   INF("DND ENTER");
+   //INF("DND ENTER");
    e_gadcon_layout_freeze(gc->o_container);
    gcc = gc->drag_gcc;
 
@@ -2945,14 +2945,14 @@ _e_gadcon_cb_dnd_leave(void *data, const char *type __UNUSED__, void *event __UN
    E_Gadcon *gc;
 
    gc = data;
-   INF("DND LEAVE");
+   //INF("DND LEAVE");
    /* If we exit the starting container hide the gadcon visual */
    if (gc->drag_gcc->gadcon == gc) e_gadcon_client_hide(gc->drag_gcc);
 
    /* Delete temporary object */
    if (!gc->new_gcc) return;
 
-   INF("DELETING new_gcc");
+   //INF("DELETING new_gcc");
    e_object_del(E_OBJECT(gc->new_gcc));
    gc->new_gcc = NULL;
 }
@@ -2964,7 +2964,7 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
    E_Gadcon_Client *gcc = NULL;
 
    gc = data;
-   INF("DND DROP");
+   //INF("DND DROP");
    /* still has refcount from drag */
    e_object_del(E_OBJECT(gc->drag_gcc));
    gcc = gc->new_gcc;
@@ -2976,7 +2976,6 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
          * so we need to repop here
          */
         gcc->cf = gc->drag_gcc->cf;
-        INF("CF=%p", gcc->cf);
         _e_gadcon_client_save(gc->new_gcc);
         e_object_del(E_OBJECT(gc->new_gcc));
         gc->new_gcc = NULL;
