@@ -106,10 +106,12 @@ _e_mod_menu_cleanup_cb(void *obj)
 static Eina_Bool
 _e_mod_menu_populate_filter(void *data __UNUSED__, Eio_File *handler __UNUSED__, const Eina_File_Direct_Info *info)
 {
+   struct stat st;
    /* don't show .dotfiles */
    if (fileman_config->view.menu_shows_files)
      return (info->path[info->name_start] != '.');
-   return (info->path[info->name_start] != '.') && (info->type == EINA_FILE_DIR);
+   if (lstat(info->path, &st)) return EINA_FALSE;
+   return (info->path[info->name_start] != '.') && (info->type == EINA_FILE_DIR) && (!S_ISLNK(st.st_mode));
 }
 
 static void
