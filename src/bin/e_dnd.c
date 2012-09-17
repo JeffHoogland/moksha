@@ -1427,6 +1427,13 @@ _e_dnd_cb_event_dnd_drop(void *data __UNUSED__, int type __UNUSED__, void *event
 
         _xdnd->x = ev->position.x;
         _xdnd->y = ev->position.y;
+        if (!req)
+          {
+             _e_drag_xdnd_end(ev->win, _xdnd->x, _xdnd->y);
+             ecore_x_dnd_send_finished();
+             eina_stringshare_del(_xdnd->type);
+             E_FREE(_xdnd);
+          }
      }
 
    return ECORE_CALLBACK_PASS_ON;
