@@ -1237,7 +1237,6 @@ static void
 on_top(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const char *src __UNUSED__)
 {
    static int ox, oy, ow, oh; //Object coord
-   static int dy; //Mouse offset
    int mx, my; //Mouse coord
    int action = (int)(long)data;
    Evas_Object *mover;
@@ -1249,12 +1248,12 @@ on_top(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const c
         drag_gcc->resizing = 1;
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        dy = my - oy;
+        drag_gcc->dy = my - oy;
      }
    else if (action == DRAG_STOP)
      {
         drag_gcc->resizing = 0;
-        dy = 0;
+        drag_gcc->dy = 0;
         _save_widget_position(drag_gcc);
      }
    else if ((action == DRAG_MOVE) && drag_gcc->resizing)
@@ -1263,7 +1262,7 @@ on_top(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const c
 
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
 
-        h = oy + oh + dy - my;
+        h = oy + oh + drag_gcc->dy - my;
 
         if (h < drag_gcc->min.h)
           {
@@ -1271,17 +1270,17 @@ on_top(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const c
              h = drag_gcc->min.h;
           }
         /* don't go out of the screen */
-        if (my < dy)
+        if (my < drag_gcc->dy)
           {
-             h += my - dy;
-             my = dy;
+             h += my - drag_gcc->dy;
+             my = drag_gcc->dy;
           }
 
         evas_object_resize(mover, ow, h);
-        evas_object_move(mover, ox, my - dy);
+        evas_object_move(mover, ox, my - drag_gcc->dy);
 
         evas_object_resize(drag_gcc->o_frame, ow, h);
-        evas_object_move(drag_gcc->o_frame, ox, my - dy);
+        evas_object_move(drag_gcc->o_frame, ox, my - drag_gcc->dy);
      }
 }
 
@@ -1290,7 +1289,6 @@ on_right(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const
 {
    Evas_Object *mover;
    static int ox, oy, ow, oh; //Object coord
-   static int dx; //Mouse offset
    int mx, my; //Mouse coord
    int action;
 
@@ -1302,12 +1300,12 @@ on_right(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const
         drag_gcc->resizing = 1;
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        dx = mx - ow;
+        drag_gcc->dx = mx - ow;
      }
    else if (action == DRAG_STOP)
      {
         drag_gcc->resizing = 0;
-        dx = 0;
+        drag_gcc->dx = 0;
         _save_widget_position(drag_gcc);
      }
    else if ((action == DRAG_MOVE) && drag_gcc->resizing)
@@ -1315,7 +1313,7 @@ on_right(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const
         int w;
 
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
-        w = mx - dx;
+        w = mx - drag_gcc->dx;
 
         if (w < drag_gcc->min.w) w = drag_gcc->min.w;
         /* don't go out of the screen */
@@ -1331,7 +1329,6 @@ on_down(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
 {
    Evas_Object *mover;
    static int ox, oy, ow, oh; //Object coord
-   static int dy; //Mouse offset
    int mx, my; //Mouse coord
    int action;
 
@@ -1343,12 +1340,12 @@ on_down(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         drag_gcc->resizing = 1;
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        dy = my - oh;
+        drag_gcc->dy = my - oh;
      }
    else if (action == DRAG_STOP)
      {
         drag_gcc->resizing = 0;
-        dy = 0;
+        drag_gcc->dy = 0;
         _save_widget_position(drag_gcc);
      }
    else if ((action == DRAG_MOVE) && drag_gcc->resizing)
@@ -1356,7 +1353,7 @@ on_down(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         int h;
 
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
-        h = my - dy;
+        h = my - drag_gcc->dy;
 
         if (h < drag_gcc->min.h) h = drag_gcc->min.h;
         /* don't go out of the screen */
@@ -1372,7 +1369,6 @@ on_left(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
 {
    Evas_Object *mover;
    static int ox, oy, ow, oh; //Object coord
-   static int dx; //Mouse offset
    int mx, my; //Mouse coord
    int action;
 
@@ -1384,12 +1380,12 @@ on_left(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         drag_gcc->resizing = 1;
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
-        dx = mx - ox;
+        drag_gcc->dx = mx - ox;
      }
    else if (action == DRAG_STOP)
      {
         drag_gcc->resizing = 0;
-        dx = 0;
+        drag_gcc->dx = 0;
         _save_widget_position(drag_gcc);
      }
    else if ((action == DRAG_MOVE) && drag_gcc->resizing)
@@ -1398,7 +1394,7 @@ on_left(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
 
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
 
-        w = ox + ow + dx - mx;
+        w = ox + ow + drag_gcc->dx - mx;
 
         if (w < drag_gcc->min.w)
           {
@@ -1406,17 +1402,17 @@ on_left(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
              w = drag_gcc->min.w;
           }
         /* don't go out of the screen */
-        if (mx < dx)
+        if (mx < drag_gcc->dx)
           {
-             w += mx - dx;
-             mx = dx;
+             w += mx - drag_gcc->dx;
+             mx = drag_gcc->dx;
           }
 
         evas_object_resize(mover, w, oh);
-        evas_object_move(mover, mx - dx, oy);
+        evas_object_move(mover, mx - drag_gcc->dx, oy);
 
         evas_object_resize(drag_gcc->o_frame, w, oh);
-        evas_object_move(drag_gcc->o_frame, mx - dx, oy);
+        evas_object_move(drag_gcc->o_frame, mx - drag_gcc->dx, oy);
      }
 }
 
@@ -1424,7 +1420,6 @@ static void
 on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const char *src __UNUSED__)
 {
    Evas_Object *mover;
-   static int dx, dy;  //Offset of mouse pointer inside the mover
    static int ox, oy;  //Starting object position
    static int ow, oh;  //Starting object size
    int mx, my; //Mouse coord
@@ -1440,8 +1435,8 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
 
-        dx = mx - ox;
-        dy = my - oy;
+        drag_gcc->dx = mx - ox;
+        drag_gcc->dy = my - oy;
 
         return;
      }
@@ -1455,7 +1450,7 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         int gx, gy;
 
         drag_gcc->moving = 0;
-        dx = dy = 0;
+        drag_gcc->dx = drag_gcc->dy = 0;
 
         /* checking if zone was changed for dragged gadget */
         evas_object_geometry_get(drag_gcc->o_frame, &gx, &gy, NULL, NULL);
@@ -1485,8 +1480,8 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
 
         evas_pointer_output_xy_get(drag_gcc->gadcon->evas, &mx, &my);
 
-        x = mx - dx;
-        y = my - dy;
+        x = mx - drag_gcc->dx;
+        y = my - drag_gcc->dy;
 
         /* don't go out of the screen */
         if (x < 0) x = 0;
