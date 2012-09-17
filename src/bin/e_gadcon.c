@@ -2859,7 +2859,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
                        if (!gc->o_container)
                          {
                             int w, h, gw, gh;
-                            evas_object_hide(gc->drag_gcc->drag.drag->object);
+
                             w = gc->zone->w;
                             h = gc->zone->h;
                             gc->new_gcc->config.pos_x = (double)ev->x / (double)w;
@@ -2872,6 +2872,8 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
                          }
                     }
 
+                  evas_object_hide(gc->drag_gcc->drag.drag->object);
+                  e_gadcon_client_edit_begin(gc->new_gcc);
                   e_gadcon_client_autoscroll_set(gc->new_gcc, gcc->autoscroll);
 /*		  e_gadcon_client_resizable_set(gc->new_gcc, gcc->resizable);*/
                   gc->new_gcc->state_info.resist = 1;
@@ -2955,6 +2957,7 @@ _e_gadcon_cb_dnd_leave(void *data, const char *type __UNUSED__, void *event __UN
    //INF("DELETING new_gcc");
    e_object_del(E_OBJECT(gc->new_gcc));
    gc->new_gcc = NULL;
+   evas_object_show(gc->drag_gcc->drag.drag->object);
 }
 
 static void
