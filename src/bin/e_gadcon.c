@@ -2986,6 +2986,12 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
         e_config_save_queue();
         return;
      }
+   if (new_gcc && (new_gcc != gcc))
+     {
+        new_gcc->cf = NULL;
+        e_object_del(E_OBJECT(new_gcc));
+        new_gcc = NULL;
+     }
    if (gc->editing) e_gadcon_client_edit_begin(gcc);
    e_config_save_queue();
 }
