@@ -99,8 +99,35 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
 {
    E_Exec_Launch *launch;
    E_Exec_Instance *inst = NULL;
+   const char *single = NULL;
 
    if ((!desktop) && (!exec)) return NULL;
+
+   single = eina_hash_find(desktop->x, "X-Enlightenment-Single-Instance");
+   if (single)
+     {
+        if ((!strcasecmp(single, "true")) ||
+            (!strcasecmp(single, "yes"))||
+            (!strcasecmp(single, "1")))
+          {
+             Eina_List *l;
+             E_Border *bd;
+             
+             EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+               {
+                  if (bd->desktop == desktop)
+                    {
+                       if (bd)
+                         {
+                            if (!bd->focused) e_border_activate(bd, EINA_TRUE);
+                            else e_border_raise(bd);
+                            return NULL;
+                         }
+                    }
+               }
+          }
+     }
+   
    launch = E_NEW(E_Exec_Launch, 1);
    if (!launch) return NULL;
    if (zone)

@@ -9700,4 +9700,39 @@ e_border_tmp_input_hidden_pop(E_Border *bd)
         ecore_x_window_ignore_set(bd->win, EINA_FALSE);
      }
 }
+
+EAPI void
+e_border_activate(E_Border *bd, Eina_Bool just_do_it)
+{
+   if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) ||
+       ((bd->parent) &&
+        ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
+         ((bd->parent->focused) &&
+          (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED)))) ||
+       (just_do_it))
+     {
+        if (bd->iconic)
+          {
+             if (e_config->clientlist_warp_to_iconified_desktop == 1)
+               e_desk_show(bd->desk);
+             
+             if (!bd->lock_user_iconify)
+               e_border_uniconify(bd);
+          }
+        if ((!bd->iconic) && (!bd->sticky))
+          e_desk_show(bd->desk);
+        if (!bd->lock_user_stacking) e_border_raise(bd);
+        if (!bd->lock_focus_out)
+          {
+             /* XXX ooffice does send this request for
+              config dialogs when the main window gets focus.
+              causing the pointer to jump back and forth.  */
+             if ((e_config->focus_policy != E_FOCUS_CLICK) &&
+                 !(bd->client.icccm.name && !strcmp(bd->client.icccm.name, "VCLSalFrame")))
+               ecore_x_pointer_warp(bd->zone->container->win,
+                                    bd->x + (bd->w / 2), bd->y + (bd->h / 2));
+             e_border_focus_set(bd, 1, 1);
+          }
+     }
+}
 /*vim:ts=8 sw=3 sts=3 expandtab cino=>5n-3f0^-2{2(0W1st0*/

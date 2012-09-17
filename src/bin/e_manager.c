@@ -981,7 +981,7 @@ _e_manager_cb_client_message(void *data __UNUSED__, int ev_type __UNUSED__, void
    if (e->message_type == ECORE_X_ATOM_NET_ACTIVE_WINDOW)
      {
 	bd = e_border_find_by_client_window(e->win);
-	if ((bd) && (!bd->focused))
+	if (bd)
 	  {
 #if 0 /* notes */
 	     if (e->data.l[0] == 0 /* 0 == old, 1 == client, 2 == pager */)
@@ -997,35 +997,8 @@ _e_manager_cb_client_message(void *data __UNUSED__, int ev_type __UNUSED__, void
 	     timestamp = e->data.l[1];
 	     requestor_id e->data.l[2];
 #endif
-             if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) ||
-		 ((bd->parent) &&
-		  ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
-		   ((bd->parent->focused) &&
-		    (e_config->focus_setting == E_FOCUS_NEW_DIALOG_IF_OWNER_FOCUSED)))))
-	       {
-		  if (bd->iconic)
-		    {
-		       if (e_config->clientlist_warp_to_iconified_desktop == 1)
-			 e_desk_show(bd->desk);
-
-		       if (!bd->lock_user_iconify)
-			 e_border_uniconify(bd);
-		    }
-		  if ((!bd->iconic) && (!bd->sticky))
-		    e_desk_show(bd->desk);
-		  if (!bd->lock_user_stacking) e_border_raise(bd);
-		  if (!bd->lock_focus_out)
-		    {
-		       /* XXX ooffice does send this request for
-		       config dialogs when the main window gets focus.
-		       causing the pointer to jump back and forth.  */
-		       if ((e_config->focus_policy != E_FOCUS_CLICK) &&
-			   !(bd->client.icccm.name && !strcmp(bd->client.icccm.name, "VCLSalFrame")))
-			 ecore_x_pointer_warp(bd->zone->container->win,
-					      bd->x + (bd->w / 2), bd->y + (bd->h / 2));
-		       e_border_focus_set(bd, 1, 1);
-		    }
-	       }
+             if (!bd->focused) e_border_activate(bd, EINA_FALSE);
+             else e_border_raise(bd);
 	  }
      }
 

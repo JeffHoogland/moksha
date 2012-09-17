@@ -776,6 +776,8 @@ EAPI void           e_border_comp_hidden_set(E_Border *bd, Eina_Bool hidden);
 EAPI void           e_border_tmp_input_hidden_push(E_Border *bd);
 EAPI void           e_border_tmp_input_hidden_pop(E_Border *bd);
 
+EAPI void           e_border_activate(E_Border *bd, Eina_Bool just_do_it);
+
 extern EAPI int E_EVENT_BORDER_RESIZE;
 extern EAPI int E_EVENT_BORDER_MOVE;
 extern EAPI int E_EVENT_BORDER_ADD;
