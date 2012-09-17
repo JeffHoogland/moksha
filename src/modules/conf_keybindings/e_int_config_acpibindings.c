@@ -332,7 +332,7 @@ _selected_action_get(E_Config_Dialog_Data *cfdata)
 //            (strcmp(grp->act_grp, "Launch"))) continue;
         EINA_LIST_FOREACH(grp->acts, ll, dsc)
           {
-             if ((dsc->act_name) && (!strcmp(dsc->act_name, lbl)))
+             if ((dsc->act_name) && (!strcmp(_(dsc->act_name), lbl)))
                return dsc;
           }
      }
