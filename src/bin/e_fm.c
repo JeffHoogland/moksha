@@ -8729,23 +8729,26 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
         mi = e_menu_item_new(mn);
         e_menu_item_separator_set(mi, 1);
 
-        mi = e_menu_item_new(mn);
-        e_menu_item_label_set(mi, _("Properties"));
-        e_util_menu_item_theme_icon_set(mi, "document-properties");
-        e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
-        sub = e_menu_new();
-        e_menu_item_submenu_set(mi, sub);
-        e_object_unref(E_OBJECT(sub));
-
         if ((!ic->info.removable) && ic->info.file && (ic->info.file[0] != '|') && ic->info.mime && (!strcmp(ic->info.mime, "application/x-desktop")))
           {
+
+             mi = e_menu_item_new(mn);
+             e_menu_item_label_set(mi, _("Properties"));
+             e_util_menu_item_theme_icon_set(mi, "document-properties");
+             e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
+             sub = e_menu_new();
+             e_menu_item_submenu_set(mi, sub);
+             e_object_unref(E_OBJECT(sub));
+
              mi = e_menu_item_new(sub);
              e_menu_item_label_set(mi, _("Application Properties"));
              e_util_menu_item_theme_icon_set(mi, "configure");
              e_menu_item_callback_set(mi, _e_fm2_file_application_properties, ic);
           }
+        else
+          sub = NULL;
 
-        mi = e_menu_item_new(sub);
+        mi = e_menu_item_new(sub ?: mn);
         e_menu_item_label_set(mi, _("File Properties"));
         e_util_menu_item_theme_icon_set(mi, "document-properties");
         e_menu_item_callback_set(mi, _e_fm2_file_properties, ic);
