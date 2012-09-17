@@ -307,8 +307,10 @@ _e_thumb_generate(E_Thumb *eth)
 
    mtime_orig = ecore_file_mod_time(eth->file);
    mtime_thumb = ecore_file_mod_time(buf);
-   if (mtime_thumb <= mtime_orig)
+   while (mtime_thumb <= mtime_orig)
      {
+        unsigned int *data1;
+
         ecore_file_mkdir(dbuf);
 
         edje_file_cache_set(0);
@@ -372,151 +374,142 @@ _e_thumb_generate(E_Thumb *eth)
         evas_object_resize(im, ww, hh);
         ecore_evas_resize(ee, ww, hh);
         evas_object_show(im);
-        if (ww > 0)
+        if (ww <= 0) break;
+        data = ecore_evas_buffer_pixels_get(ee);
+        if (!data) break;
+        ef = eet_open(buf, EET_FILE_MODE_WRITE);
+        if (!ef) break;
+        eet_write(ef, "/thumbnail/orig_file",
+                  eth->file, strlen(eth->file), 1);
+        if (eth->key)
+          eet_write(ef, "/thumbnail/orig_key",
+                    eth->key, strlen(eth->key), 1);
+        eet_data_image_write(ef, "/thumbnail/data",
+                             (void *)data, ww, hh, alpha,
+                             0, 91, 1);
+        ww = 4; hh = 4;
+        evas_object_image_fill_set(im, 0, 0, ww, hh);
+        evas_object_resize(im, ww, hh);
+        ecore_evas_resize(ee, ww, hh);
+        data = ecore_evas_buffer_pixels_get(ee);
+        if (!data) break;
+
+        data1 = malloc(ww * hh * sizeof(unsigned int));
+        memcpy(data1, data, ww * hh * sizeof(unsigned int));
+        ww = 2; hh = 2;
+        evas_object_image_fill_set(im, 0, 0, ww, hh);
+        evas_object_resize(im, ww, hh);
+        ecore_evas_resize(ee, ww, hh);
+        data = ecore_evas_buffer_pixels_get(ee);
+        if (data)
           {
+             unsigned int *data2;
+
+             data2 = malloc(ww * hh * sizeof(unsigned int));
+             memcpy(data2, data, ww * hh * sizeof(unsigned int));
+             ww = 1; hh = 1;
+             evas_object_image_fill_set(im, 0, 0, ww, hh);
+             evas_object_resize(im, ww, hh);
+             ecore_evas_resize(ee, ww, hh);
              data = ecore_evas_buffer_pixels_get(ee);
              if (data)
                {
-                  ef = eet_open(buf, EET_FILE_MODE_WRITE);
-                  if (ef)
-                    {
-                       eet_write(ef, "/thumbnail/orig_file",
-                                 eth->file, strlen(eth->file), 1);
-                       if (eth->key)
-                         eet_write(ef, "/thumbnail/orig_key",
-                                   eth->key, strlen(eth->key), 1);
-                       eet_data_image_write(ef, "/thumbnail/data",
-                                            (void *)data, ww, hh, alpha,
-                                            0, 91, 1);
-                       ww = 4; hh = 4;
-                       evas_object_image_fill_set(im, 0, 0, ww, hh);
-                       evas_object_resize(im, ww, hh);
-                       ecore_evas_resize(ee, ww, hh);
-                       data = ecore_evas_buffer_pixels_get(ee);
-                       if (data)
-                         {
-                            unsigned int *data1;
+                  unsigned int *data3;
+                  unsigned char id2[(21 * 4) + 1];
+                  int n, i;
+                  int hi, si, vi;
+                  float h, s, v;
+                  const int pat2[4] =
+                  {
+                     0, 3, 1, 2
+                  };
+                  const int pat1[16] =
+                  {
+                     5, 10, 6, 9,
+                     0, 15, 3, 12,
+                     1, 14, 7, 8,
+                     4, 11, 2, 13
+                  };
 
-                            data1 = malloc(ww * hh * sizeof(unsigned int));
-                            memcpy(data1, data, ww * hh * sizeof(unsigned int));
-                            ww = 2; hh = 2;
-                            evas_object_image_fill_set(im, 0, 0, ww, hh);
-                            evas_object_resize(im, ww, hh);
-                            ecore_evas_resize(ee, ww, hh);
-                            data = ecore_evas_buffer_pixels_get(ee);
-                            if (data)
-                              {
-                                 unsigned int *data2;
-
-                                 data2 = malloc(ww * hh * sizeof(unsigned int));
-                                 memcpy(data2, data, ww * hh * sizeof(unsigned int));
-                                 ww = 1; hh = 1;
-                                 evas_object_image_fill_set(im, 0, 0, ww, hh);
-                                 evas_object_resize(im, ww, hh);
-                                 ecore_evas_resize(ee, ww, hh);
-                                 data = ecore_evas_buffer_pixels_get(ee);
-                                 if (data)
-                                   {
-                                      unsigned int *data3;
-                                      unsigned char id2[(21 * 4) + 1];
-                                      int n, i;
-                                      int hi, si, vi;
-                                      float h, s, v;
-                                      const int pat2[4] =
-                                      {
-                                         0, 3, 1, 2
-                                      };
-                                      const int pat1[16] =
-                                      {
-                                         5, 10, 6, 9,
-                                         0, 15, 3, 12,
-                                         1, 14, 7, 8,
-                                         4, 11, 2, 13
-                                      };
-
-                                      data3 = malloc(ww * hh * sizeof(unsigned int));
-                                      memcpy(data3, data, ww * hh * sizeof(unsigned int));
-                                      // sort_id
-                                      n = 0;
+                  data3 = malloc(ww * hh * sizeof(unsigned int));
+                  memcpy(data3, data, ww * hh * sizeof(unsigned int));
+                  // sort_id
+                  n = 0;
 #define A(v) (((v) >> 24) & 0xff)
 #define R(v) (((v) >> 16) & 0xff)
 #define G(v) (((v) >> 8) & 0xff)
 #define B(v) (((v)) & 0xff)
 #define HSV(p)                                         \
-  evas_color_rgb_to_hsv(R(p), G(p), B(p), &h, &s, &v); \
-  hi = 20 * (h / 360.0);                               \
-  si = 20 * s;                                         \
-  vi = 20 * v;                                         \
-  if (si < 2) hi = 25;
+evas_color_rgb_to_hsv(R(p), G(p), B(p), &h, &s, &v); \
+hi = 20 * (h / 360.0);                               \
+si = 20 * s;                                         \
+vi = 20 * v;                                         \
+if (si < 2) hi = 25;
 #define SAVEHSV(h, s, v) \
-  id2[n++] = 'a' + h;    \
-  id2[n++] = 'a' + v;    \
-  id2[n++] = 'a' + s;
+id2[n++] = 'a' + h;    \
+id2[n++] = 'a' + v;    \
+id2[n++] = 'a' + s;
 #define SAVEX(x) \
-  id2[n++] = 'a' + x;
+id2[n++] = 'a' + x;
 #if 0
-                                      HSV(data3[0]);
-                                      SAVEHSV(hi, si, vi);
-                                      for (i = 0; i < 4; i++)
-                                        {
-                                           HSV(data2[pat2[i]]);
-                                           SAVEHSV(hi, si, vi);
-                                        }
-                                      for (i = 0; i < 16; i++)
-                                        {
-                                           HSV(data1[pat1[i]]);
-                                           SAVEHSV(hi, si, vi);
-                                        }
-#else
-                                      HSV(data3[0]);
-                                      SAVEX(hi);
-                                      for (i = 0; i < 4; i++)
-                                        {
-                                           HSV(data2[pat2[i]]);
-                                           SAVEX(hi);
-                                        }
-                                      for (i = 0; i < 16; i++)
-                                        {
-                                           HSV(data1[pat1[i]]);
-                                           SAVEX(hi);
-                                        }
-                                      HSV(data3[0]);
-                                      SAVEX(vi);
-                                      for (i = 0; i < 4; i++)
-                                        {
-                                           HSV(data2[pat2[i]]);
-                                           SAVEX(vi);
-                                        }
-                                      for (i = 0; i < 16; i++)
-                                        {
-                                           HSV(data1[pat1[i]]);
-                                           SAVEX(vi);
-                                        }
-                                      HSV(data3[0]);
-                                      SAVEX(si);
-                                      for (i = 0; i < 4; i++)
-                                        {
-                                           HSV(data2[pat2[i]]);
-                                           SAVEX(si);
-                                        }
-                                      for (i = 0; i < 16; i++)
-                                        {
-                                           HSV(data1[pat1[i]]);
-                                           SAVEX(si);
-                                        }
-#endif
-                                      id2[n++] = 0;
-                                      eet_write(ef, "/thumbnail/sort_id", id2, n, 1);
-                                      free(data3);
-                                   }
-                                 free(data2);
-                              }
-                            free(data1);
-                         }
-                       eet_close(ef);
+                  HSV(data3[0]);
+                  SAVEHSV(hi, si, vi);
+                  for (i = 0; i < 4; i++)
+                    {
+                       HSV(data2[pat2[i]]);
+                       SAVEHSV(hi, si, vi);
                     }
+                  for (i = 0; i < 16; i++)
+                    {
+                       HSV(data1[pat1[i]]);
+                       SAVEHSV(hi, si, vi);
+                    }
+#else
+                  HSV(data3[0]);
+                  SAVEX(hi);
+                  for (i = 0; i < 4; i++)
+                    {
+                       HSV(data2[pat2[i]]);
+                       SAVEX(hi);
+                    }
+                  for (i = 0; i < 16; i++)
+                    {
+                       HSV(data1[pat1[i]]);
+                       SAVEX(hi);
+                    }
+                  HSV(data3[0]);
+                  SAVEX(vi);
+                  for (i = 0; i < 4; i++)
+                    {
+                       HSV(data2[pat2[i]]);
+                       SAVEX(vi);
+                    }
+                  for (i = 0; i < 16; i++)
+                    {
+                       HSV(data1[pat1[i]]);
+                       SAVEX(vi);
+                    }
+                  HSV(data3[0]);
+                  SAVEX(si);
+                  for (i = 0; i < 4; i++)
+                    {
+                       HSV(data2[pat2[i]]);
+                       SAVEX(si);
+                    }
+                  for (i = 0; i < 16; i++)
+                    {
+                       HSV(data1[pat1[i]]);
+                       SAVEX(si);
+                    }
+#endif
+                  id2[n++] = 0;
+                  eet_write(ef, "/thumbnail/sort_id", id2, n, 1);
+                  free(data3);
                }
+             free(data2);
           }
+        free(data1);
+        eet_close(ef);
 
         /* will free all */
         if (edje) evas_object_del(edje);
@@ -525,6 +518,7 @@ _e_thumb_generate(E_Thumb *eth)
           evas_object_del(im);
         ecore_evas_free(ee);
         eet_clearcache();
+        break;
      }
    /* send back path to thumb */
    ecore_ipc_server_send(_e_ipc_server, 5, 2, eth->objid, 0, 0, buf, strlen(buf) + 1);
