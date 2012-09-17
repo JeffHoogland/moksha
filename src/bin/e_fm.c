@@ -884,19 +884,24 @@ _e_fm2_cb_dnd_drop(void *data)
    Eina_Bool allow;
    char buf[PATH_MAX];
 
-   if (sd->drop_icon)
-     {
-        snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, sd->drop_icon->info.file);
-        allow = ecore_file_can_write(buf);
-     }
+   if (sd->config->view.link_drop && (!sd->drop_icon))
+     allow = EINA_FALSE;
    else
-     allow = (sd->realpath && ecore_file_can_write(sd->realpath));
-   if (sd->config->view.link_drop && (!sd->drop_icon)) allow = EINA_FALSE;
+     {
+        if (sd->drop_icon)
+          {
+             snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, sd->drop_icon->info.file);
+             allow = ecore_file_can_write(buf);
+          }
+        else
+          allow = (sd->realpath && ecore_file_can_write(sd->realpath));
+     }
+   
    e_drop_xds_update(allow, sd->drop_icon ? buf : sd->realpath);
    if (sd->dnd_scroller) ecore_animator_del(sd->dnd_scroller);
    sd->dnd_scroller = NULL;
    sd->dnd_current.x = sd->dnd_current.y = 0;
-   return EINA_TRUE;
+   return allow;
 }
 
 static void
