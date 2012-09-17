@@ -198,6 +198,7 @@ pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh)
              ERR("Kicked!");
              conn->state = PA_STATE_INIT;
              ecore_main_fd_handler_del(conn->fdh);
+             conn->fdh = NULL;
              close(conn->fd);
              ecore_event_add(PULSE_EVENT_DISCONNECTED, conn, pulse_fake_free, NULL);
              return NULL;
