@@ -28,7 +28,6 @@ void *alloca(size_t);
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <dirent.h>
 #include <utime.h>
 #include <errno.h>
 #include <limits.h>
@@ -173,7 +172,7 @@ main(int argc, char **argv)
      ecore_main_fd_handler_add(STDIN_FILENO, ECORE_FD_READ, _e_fm_op_stdin_data, NULL,
                                NULL, NULL);
 
-   if (argc <= 2) return 0;
+   if (argc < 3) return 0;
 
    last = argc - 1;
    i = 2;
@@ -360,12 +359,10 @@ skip_arg:
      }
    else if (type == E_FM_OP_REMOVE)
      {
-        if (argc < 3) return 0;
+        E_Fm_Op_Task *task;
 
         while (i <= last)
           {
-             E_Fm_Op_Task *task;
-
              task = _e_fm_op_task_new();
              task->type = type;
              task->src.name = eina_stringshare_add(argv[i]);
@@ -1208,25 +1205,24 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
      {
         _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot read link '%s'.", task->src.name);
      }
-   else
-     {
-        E_FM_OP_DEBUG("Creating link from '%s' to '%s'\n", lnk_path, task->dst.name);
-        _e_fm_op_update_progress_report_simple(0.0, lnk_path, task->dst.name);
 
-        if (symlink(lnk_path, task->dst.name) == -1)
+   E_FM_OP_DEBUG("Creating link from '%s' to '%s'\n", lnk_path, task->dst.name);
+   _e_fm_op_update_progress_report_simple(0.0, lnk_path, task->dst.name);
+
+   if (symlink(lnk_path, task->dst.name) == -1)
+     {
+        if (errno == EEXIST)
           {
-             if (errno == EEXIST)
-               {
-                  if (unlink(task->dst.name) == -1)
-                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
-                  if (symlink(lnk_path, task->dst.name) == -1)
-                    _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
-               }
-             else
+             if (unlink(task->dst.name) == -1)
+               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
+             if (symlink(lnk_path, task->dst.name) == -1)
                _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
           }
-        E_FREE(lnk_path);
+        else
+          _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
      }
+   E_FREE(lnk_path);
+
    task->dst.done += task->src.st.st_size;
 
    _e_fm_op_update_progress(task, task->src.st.st_size, 0);
