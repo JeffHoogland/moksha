@@ -2205,8 +2205,9 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
      {
         o = gcc->client_class->func.icon((E_Gadcon_Client_Class *)gcc->client_class,
                                          e_drag_evas_get(drag));
-        evas_object_geometry_get(o, NULL, NULL, &w, &h);
-        if (!o)
+        if (o)
+          evas_object_geometry_get(o, NULL, NULL, &w, &h);
+        else
           {
              /* FIXME: fallback icon for drag */
              o = evas_object_rectangle_add(e_drag_evas_get(drag));
