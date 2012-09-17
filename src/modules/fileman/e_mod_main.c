@@ -209,7 +209,7 @@ _e_mod_action_fileman_cb(E_Object   *obj,
 void
 _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
-   e_mod_menu_add(m);
+   e_mod_menu_add(m, NULL);
 }
 
 /* Abstract fileman config load/create to one function for maintainability */

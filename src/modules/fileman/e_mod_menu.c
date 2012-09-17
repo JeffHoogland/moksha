@@ -296,10 +296,11 @@ _e_mod_menu_free(void *data)
 
 /* menu item add hook */
 static void
-_e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
+_e_mod_menu_generate(void *data, E_Menu *m)
 {
    E_Volume *vol;
    E_Menu_Item *mi;
+   const char *path = data;
    const char *s;
    const Eina_List *l;
    Eina_Bool need_separator;
@@ -307,6 +308,15 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
 
    if (eina_list_count(m->items) > 4) return; /* parent, clone,, copy, and separator */
    e_object_free_attach_func_set(E_OBJECT(m), _e_mod_menu_free);
+
+   if (path)
+     {
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Current Directory"));
+        e_util_menu_item_theme_icon_set(mi, "folder");
+        e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_ref(path));
+     }
+   eina_stringshare_del(path);
 
    /* Home */
    mi = e_menu_item_new(m);
@@ -373,7 +383,7 @@ _e_mod_menu_generate(void *data __UNUSED__, E_Menu *m)
 
 /* returns submenu so we can add Go to Parent */
 E_Menu *
-e_mod_menu_add(E_Menu *m)
+e_mod_menu_add(E_Menu *m, const char *path)
 {
 #ifdef ENABLE_FILES
    E_Menu_Item *mi;
@@ -385,7 +395,7 @@ e_mod_menu_add(E_Menu *m)
    sub = e_menu_new();
    e_menu_item_submenu_set(mi, sub);
    e_object_unref(E_OBJECT(sub)); //allow deletion whenever main menu deletes
-   e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, NULL);
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, (void*)eina_stringshare_ref(path));
    return sub;
 #else
    (void)m;

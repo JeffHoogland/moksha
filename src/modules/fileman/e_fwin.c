@@ -2081,7 +2081,7 @@ _e_fwin_cb_menu_extend_start(void *data,
    selected = e_fm2_selected_list_get(page->fm_obj);
 
 #ifdef ENABLE_FILES
-   subm = e_mod_menu_add(m);
+   subm = e_mod_menu_add(m, e_fm2_real_path_get(page->fm_obj));
 
    if (((!page->fwin->zone) || fileman_config->view.desktop_navigation) && e_fm2_has_parent_get(obj))
      {
