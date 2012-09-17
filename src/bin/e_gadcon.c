@@ -2901,7 +2901,7 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
    /* If we move in the same gadcon as the client originates */
    if (drag_gcc->gadcon == gc) gcc = drag_gcc;
    /* If we move in the newly entered gadcon */
-   else if (new_gcc->gadcon == gc)
+   else if (new_gcc && (new_gcc->gadcon == gc))
      gcc = new_gcc;
    if (!gcc) return;
 
