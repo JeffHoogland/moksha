@@ -2951,15 +2951,11 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
 
    gc = data;
    //INF("DND DROP");
-   if (new_gcc)
-     new_gcc->gadcon->drag = NULL;
-   if (drag_gcc->gadcon == gc) gcc = drag_gcc;
-   else if ((new_gcc) && (new_gcc->gadcon == gc))
-     gcc = new_gcc;
-   else return;  /* make clang happy */
+   new_gcc->gadcon->drag = NULL;
+   gcc = new_gcc;
 
    gc->cf->clients = eina_list_append(gc->cf->clients, gcc->cf);
-   if ((new_gcc == gcc) && (!new_gcc->gadcon->o_container))
+   if (!new_gcc->gadcon->o_container)
      {
         /* FIXME: gadman sucks and should probably use a regular gadcon layout, but it doesn't
          * so we need to repop here
@@ -2971,12 +2967,6 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
         e_gadcon_custom_populate_request(gc);
         e_config_save_queue();
         return;
-     }
-   if (new_gcc && (new_gcc != gcc))
-     {
-        new_gcc->cf = NULL;
-        e_object_del(E_OBJECT(new_gcc));
-        new_gcc = NULL;
      }
    if (gc->editing) e_gadcon_client_edit_begin(gcc);
    e_config_save_queue();
