@@ -7113,6 +7113,14 @@ _e_fm2_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    ev = event_info;
 
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
+   /* here we have some stupid checks to see if we're REALLY getting a mouse out or
+    * if some jackass is sending us bad events
+    * ticket #1324
+    */
+   if (E_INSIDE(ev->output.x, ev->output.y - 10, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h) &&
+       E_INSIDE(ev->output.x - 10, ev->output.y, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h) &&
+       E_INSIDE(ev->output.x + 10, ev->output.y, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h) &&
+       E_INSIDE(ev->output.x, ev->output.y + 10, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h)) return;
    evas_object_smart_callback_call(ic->sd->obj, "icon_mouse_out", &ic->info);
 }
 
