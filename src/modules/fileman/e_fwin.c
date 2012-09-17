@@ -1281,6 +1281,7 @@ _e_fwin_file_is_exec(E_Fm2_Icon_Info *ici)
                       (!strcmp(ici->mime, "application/x-csh")) ||
                       (!strcmp(ici->mime, "application/x-perl")) ||
                       (!strcmp(ici->mime, "application/x-shar")) ||
+                      (!strcmp(ici->mime, "application/x-executable")) ||
                       (!strcmp(ici->mime, "text/x-csh")) ||
                       (!strcmp(ici->mime, "text/x-python")) ||
                       (!strcmp(ici->mime, "text/x-sh"))
