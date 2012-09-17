@@ -158,8 +158,7 @@ e_fm2_device_storage_add(E_Storage *s)
         if ((!v->storage) && (s->udi == v->parent))
           {
              v->storage = s;
-// XXX we dont need this anymore ad volume adds handle it!             
-//             _e_fm2_device_volume_setup(v);
+             _e_fm2_device_volume_setup(v);
           }
      }
 }
