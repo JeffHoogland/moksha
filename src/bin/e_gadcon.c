@@ -620,7 +620,7 @@ e_gadcon_populate_class(E_Gadcon *gc, const E_Gadcon_Client_Class *cc)
    e_gadcon_layout_freeze(gc->o_container);
    EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
      {
-        if ((!strcmp(cf_gcc->name, cc->name)) &&
+        if (cf_gcc->name && (!strcmp(cf_gcc->name, cc->name)) &&
             (cf_gcc->id) && (cf_gcc->style))
           _e_gadcon_client_populate(gc, cc, cf_gcc);
      }
