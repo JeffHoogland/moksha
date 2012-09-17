@@ -998,6 +998,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
                   dropped = 1;
                }
              h->entered = 0;
+             if (dropped) break;
           }
         if (_drag_current->cb.finished)
           _drag_current->cb.finished(_drag_current, dropped);
