@@ -1800,6 +1800,12 @@ e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc)
    E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
    if (gcc->o_frame)
      {
+        evas_object_event_callback_del_full(gcc->o_frame, EVAS_CALLBACK_MOUSE_DOWN,
+                                       _e_gadcon_client_cb_mouse_down, gcc);
+        evas_object_event_callback_del_full(gcc->o_frame, EVAS_CALLBACK_MOUSE_UP,
+                                       _e_gadcon_client_cb_mouse_up, gcc);
+        evas_object_event_callback_del_full(gcc->o_frame, EVAS_CALLBACK_MOUSE_MOVE,
+                                       _e_gadcon_client_cb_mouse_move, gcc);
         evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_DOWN,
                                        _e_gadcon_client_cb_mouse_down, gcc);
         evas_object_event_callback_add(gcc->o_frame, EVAS_CALLBACK_MOUSE_UP,
@@ -1809,6 +1815,12 @@ e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc)
      }
    else if (gcc->o_base)
      {
+        evas_object_event_callback_del_full(gcc->o_base, EVAS_CALLBACK_MOUSE_DOWN,
+                                       _e_gadcon_client_cb_mouse_down, gcc);
+        evas_object_event_callback_del_full(gcc->o_base, EVAS_CALLBACK_MOUSE_UP,
+                                       _e_gadcon_client_cb_mouse_up, gcc);
+        evas_object_event_callback_del_full(gcc->o_base, EVAS_CALLBACK_MOUSE_MOVE,
+                                       _e_gadcon_client_cb_mouse_move, gcc);
         evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_DOWN,
                                        _e_gadcon_client_cb_mouse_down, gcc);
         evas_object_event_callback_add(gcc->o_base, EVAS_CALLBACK_MOUSE_UP,
