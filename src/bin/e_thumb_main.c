@@ -283,7 +283,7 @@ _e_thumb_generate(E_Thumb *eth)
    Evas *evas = NULL, *evas_im = NULL;
    Ecore_Evas *ee = NULL, *ee_im = NULL;
    Evas_Object *im = NULL, *edje = NULL;
-   Eet_File *ef;
+   Eet_File *ef = NULL;
    int iw, ih, alpha, ww, hh;
    const unsigned int *data = NULL;
    time_t mtime_orig, mtime_thumb;
@@ -374,11 +374,11 @@ _e_thumb_generate(E_Thumb *eth)
         evas_object_resize(im, ww, hh);
         ecore_evas_resize(ee, ww, hh);
         evas_object_show(im);
-        if (ww <= 0) break;
+        if (ww <= 0) goto end;
         data = ecore_evas_buffer_pixels_get(ee);
-        if (!data) break;
+        if (!data) goto end;
         ef = eet_open(buf, EET_FILE_MODE_WRITE);
-        if (!ef) break;
+        if (!ef) goto end;
         eet_write(ef, "/thumbnail/orig_file",
                   eth->file, strlen(eth->file), 1);
         if (eth->key)
@@ -392,7 +392,7 @@ _e_thumb_generate(E_Thumb *eth)
         evas_object_resize(im, ww, hh);
         ecore_evas_resize(ee, ww, hh);
         data = ecore_evas_buffer_pixels_get(ee);
-        if (!data) break;
+        if (!data) goto end;
 
         data1 = malloc(ww * hh * sizeof(unsigned int));
         memcpy(data1, data, ww * hh * sizeof(unsigned int));
@@ -509,7 +509,8 @@ id2[n++] = 'a' + x;
              free(data2);
           }
         free(data1);
-        eet_close(ef);
+end:
+        if (ef) eet_close(ef);
 
         /* will free all */
         if (edje) evas_object_del(edje);
