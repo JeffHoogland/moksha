@@ -2793,8 +2793,16 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
    ev = event;
    gc = data;
    if (gc->drag) return;
+   //INF("DND ENTER");
    e_gadcon_layout_freeze(gc->o_container);
    gcc = drag_gcc;
+
+   if (new_gcc)
+     {
+        new_gcc->gadcon->drag = NULL;
+        e_object_del(E_OBJECT(new_gcc));
+        new_gcc = NULL;
+     }
 
    if (gcc->gadcon == gc)
      {
@@ -2946,12 +2954,15 @@ _e_gadcon_cb_dnd_leave(void *data, const char *type __UNUSED__, void *event __UN
    E_Gadcon *gc;
 
    gc = data;
+   //INF("DND LEAVE");
+   gc->drag = NULL;
    /* If we exit the starting container hide the gadcon visual */
    if (drag_gcc->gadcon == gc) e_gadcon_client_hide(drag_gcc);
 
    /* Delete temporary object */
    if (new_gcc)
      {
+        //INF("DELETING new_gcc");
         new_gcc->gadcon->drag = NULL;
         e_object_del(E_OBJECT(new_gcc));
         new_gcc = NULL;
@@ -2965,6 +2976,7 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
    E_Gadcon_Client *gcc = NULL;
 
    gc = data;
+   //INF("DND DROP");
    if (new_gcc)
      new_gcc->gadcon->drag = NULL;
    if (drag_gcc->gadcon == gc) gcc = drag_gcc;
