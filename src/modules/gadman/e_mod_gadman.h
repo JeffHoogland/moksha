@@ -51,6 +51,8 @@ struct _Manager
    Evas_Object *movers[GADMAN_LAYER_COUNT];
    Evas_Object *full_bg;
    const char  *icon_name;
+
+   Eina_List *drag_handlers;
    
    int             visible;
    int             use_composite;

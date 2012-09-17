@@ -353,6 +353,8 @@ EAPI void                    e_gadcon_location_register(E_Gadcon_Location *loc);
 EAPI void                    e_gadcon_location_unregister(E_Gadcon_Location *loc);
 EAPI void                    e_gadcon_location_set_icon_name(E_Gadcon_Location *loc, const char *name);
 EAPI void                    e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu);
+EAPI void                    e_gadcon_drag_finished_cb(E_Drag *drag, int dropped);
+EAPI void                    e_gadcon_client_drag_set(E_Gadcon_Client *gcc);
 
 #define GADCON_CLIENT_CONFIG_GET(_type, _items, _gc_class, _id)                             \
   if (!_id)                                                                                 \

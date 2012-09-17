@@ -43,7 +43,6 @@ static void                     _e_gadcon_cb_signal_resize_left_go(void *data, E
 static void                     _e_gadcon_cb_signal_resize_right_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void                     _e_gadcon_cb_signal_resize_right_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void                     _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void                     _e_gadcon_cb_drag_finished(E_Drag *drag, int dropped);
 static void                     _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event);
 static void                     _e_gadcon_cb_dnd_move(void *data, const char *type, void *event);
 static void                     _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event);
@@ -972,6 +971,28 @@ _e_gadcon_client_frame_del(void *data, Evas *e __UNUSED__, Evas_Object *obj __UN
 {
    E_Gadcon_Client *gcc = data;
    gcc->o_frame = NULL;
+}
+
+EAPI void
+e_gadcon_drag_finished_cb(E_Drag *drag, int dropped)
+{
+   E_Gadcon_Client *gcc;
+
+   gcc = drag->data;
+   gcc->drag.drag = NULL;
+   if (!dropped)
+     {
+        /* free client config */
+        e_gadcon_client_config_del(NULL, gcc->cf);
+        gcc->cf = NULL;
+        /* delete the gadcon client */
+        /* TODO: Clean up module config too? */
+        e_object_del(E_OBJECT(gcc));
+     }
+   if (!gcc->gadcon->custom)
+     e_gadcon_client_drag_set(NULL);
+   gcc->gadcon->new_gcc = NULL;
+   e_object_unref(E_OBJECT(gcc));
 }
 
 /**  
@@ -1941,6 +1962,16 @@ e_gadcon_site_is_not_toolbar(E_Gadcon_Site site)
    return EINA_TRUE;
 }
 
+EAPI void
+e_gadcon_client_drag_set(E_Gadcon_Client *gcc)
+{
+   Eina_List *l;
+   E_Gadcon *gc;
+
+   EINA_LIST_FOREACH(gadcons, l, gc)
+     gc->drag_gcc = gcc;
+}
+
 /* local subsystem functions */
 static void
 _e_gadcon_free(E_Gadcon *gc)
@@ -2186,15 +2217,12 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
    E_Drag *drag;
    Evas_Object *o = NULL;
    Evas_Coord w = 0, h = 0;
-   Eina_List *l;
-   E_Gadcon *gc;
    const char *drag_types[] = { "enlightenment/gadcon_client" };
 
    if ((gcc->gadcon->drag_gcc) || (!gcc->gadcon->zone) || (!gcc->gadcon->zone->container))
      return;
 
-   EINA_LIST_FOREACH(gadcons, l, gc)
-     gc->drag_gcc = gcc;
+   e_gadcon_client_drag_set(gcc);
 
    e_object_ref(E_OBJECT(gcc));
    /* Remove this config from the current gadcon */
@@ -2210,7 +2238,7 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
 
    gcc->drag.drag = drag = e_drag_new(gcc->gadcon->zone->container, x, y,
                      drag_types, 1, gcc, -1, NULL,
-                     _e_gadcon_cb_drag_finished);
+                     e_gadcon_drag_finished_cb);
    if (!drag) return;
 
    o = gcc->client_class->func.icon((E_Gadcon_Client_Class *)gcc->client_class,
@@ -2771,30 +2799,6 @@ _e_gadcon_cb_signal_resize_right_go(void *data, Evas_Object *obj __UNUSED__, con
 }
 
 static void
-_e_gadcon_cb_drag_finished(E_Drag *drag, int dropped)
-{
-   E_Gadcon_Client *gcc;
-   Eina_List *l;
-   E_Gadcon *gc;
-
-   gcc = drag->data;
-   gcc->drag.drag = NULL;
-   if (!dropped)
-     {
-        /* free client config */
-        e_gadcon_client_config_del(NULL, gcc->cf);
-        gcc->cf = NULL;
-        /* delete the gadcon client */
-        /* TODO: Clean up module config too? */
-        e_object_del(E_OBJECT(gcc));
-     }
-   EINA_LIST_FOREACH(gadcons, l, gc)
-     gc->drag_gcc = NULL;
-   gcc->gadcon->new_gcc = NULL;
-   e_object_unref(E_OBJECT(gcc));
-}
-
-static void
 _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
 {
    E_Event_Dnd_Enter *ev;
@@ -2804,8 +2808,11 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
    ev = event;
    gc = data;
    //INF("DND ENTER");
-   e_gadcon_layout_freeze(gc->o_container);
    gcc = gc->drag_gcc;
+   if ((!gcc->hidden) && (gcc->gadcon == gc)) return;
+   if (gcc->gadcon != gc)
+     e_gadcon_client_hide(gc->drag_gcc);
+   e_gadcon_layout_freeze(gc->o_container);
 
    if (gc->new_gcc)
      {
@@ -2838,6 +2845,10 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
                   gc->new_gcc->config.res = gcc->config.res;
                   gc->new_gcc->state_info.seq = gcc->state_info.seq;
                   gc->new_gcc->state_info.flags = gcc->state_info.flags;
+                  gc->new_gcc->config.pos_x = gcc->config.pos_x;
+                  gc->new_gcc->config.pos_y = gcc->config.pos_y;
+                  gc->new_gcc->config.size_w = gcc->config.size_w;
+                  gc->new_gcc->config.size_h = gcc->config.size_h;
                   if (gc->new_gcc->client_class->func.orient)
                     {
                        if (gc->orient == E_GADCON_ORIENT_FLOAT)
@@ -2862,11 +2873,22 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
 
                             w = gc->zone->w;
                             h = gc->zone->h;
-                            gc->new_gcc->config.pos_x = (double)ev->x / (double)w;
-                            gc->new_gcc->config.pos_y = (double)ev->y / (double)h;
-                            evas_object_geometry_get(gcc->o_frame ?: gcc->o_base, NULL, NULL, &gw, &gh);
-                            gc->new_gcc->config.size_w = (double)gw / (double)w;
-                            gc->new_gcc->config.size_h = (double)gh / (double)h;
+                            if ((!gc->new_gcc->config.pos_x) && (!gc->new_gcc->config.pos_y))
+                              {
+                                 gc->new_gcc->config.pos_x = (double)ev->x / (double)w;
+                                 gc->new_gcc->config.pos_y = (double)ev->y / (double)h;
+                              }
+                            if ((!gc->new_gcc->config.size_w) && (!gc->new_gcc->config.size_h))
+                              {
+                                 evas_object_geometry_get(gcc->o_frame ?: gcc->o_base, NULL, NULL, &gw, &gh);
+                                 gc->new_gcc->config.size_w = (double)gw / (double)w;
+                                 gc->new_gcc->config.size_h = (double)gh / (double)h;
+                              }
+                            else
+                              {
+                                 gw = gc->new_gcc->config.size_w * w;
+                                 gh = gc->new_gcc->config.size_h * h;
+                              }
                             evas_object_resize(gc->new_gcc->o_base, gw, gh);
                             evas_object_move(gc->new_gcc->o_base, ev->x, ev->y);
                          }
@@ -2968,11 +2990,12 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
 
    gc = data;
    //INF("DND DROP");
+   gc->cf->clients = eina_list_append(gc->cf->clients, gc->drag_gcc->cf);
    /* still has refcount from drag */
+   if (!gc->new_gcc) return;
    e_object_del(E_OBJECT(gc->drag_gcc));
    gcc = gc->new_gcc;
 
-   gc->cf->clients = eina_list_append(gc->cf->clients, gcc->cf);
    if (!gc->o_container)
      {
         /* FIXME: gadman sucks and should probably use a regular gadcon layout, but it doesn't
