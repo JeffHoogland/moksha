@@ -1223,13 +1223,13 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
    if (gcc->o_control) evas_object_del(gcc->o_control);
    gcc->o_control = NULL;
 
+   e_gadcon_locked_set(gcc->gadcon, 0);
    EINA_LIST_FOREACH(gcc->gadcon->clients, l, client)
      {
         if (!client) continue;
         if (client->o_control) return;
      }
    gcc->gadcon->editing = 0;
-   e_gadcon_locked_set(gcc->gadcon, 0);
 }
 
 EAPI void
