@@ -2510,18 +2510,21 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
              return;
           }
 
-        if (x > 0 && (cx + gcc->drag.x > gcc->config.pos))
+        /* DRAG RIGHT */
+        if (x > 0 && (cx + gcc->drag.x > gcc->config.pos + gcc->config.size / 2))
           {
              if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
                gcc->state_info.resist = 0;
              gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_INC;
              changes = 1;
           }
-        else if (x < 0 && (cx + gcc->drag.x < gcc->config.pos))
+        /* DRAG LEFT */
+        else if (x < 0 && (gcc->drag.x - cx < gcc->config.pos))
           {
              if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_DEC)
                gcc->state_info.resist = 0;
              gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_DEC;
+             cx = -cx;
              changes = 1;
           }
 
