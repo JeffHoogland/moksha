@@ -2804,33 +2804,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
         new_gcc = NULL;
      }
 
-   if (gcc->gadcon == gc)
-     {
-        /* We have re-entered the gadcon we left, revive gadcon client */
-        Evas_Coord dx, dy;
-        Evas_Object *o;
-
-        if (e_gadcon_layout_orientation_get(gc->o_container))
-          gcc->config.pos = ev->x - gcc->config.size / 2;
-        else
-          gcc->config.pos = ev->y - gcc->config.size / 2;
-        gcc->state_info.prev_pos = gcc->config.pos;
-
-        evas_object_geometry_get(gc->o_container, &dx, &dy, NULL, NULL);
-        _e_gadcon_client_inject(gc, gcc, ev->x + dx, ev->y + dy);
-        e_gadcon_client_show(gcc);
-
-        o = gcc->o_frame ? gcc->o_frame : gcc->o_base;
-        if (o)
-          {
-             if (e_gadcon_layout_orientation_get(gc->o_container))
-               e_gadcon_layout_pack_request_set(o, gcc->config.pos, gcc->config.size);
-             else
-               e_gadcon_layout_pack_request_set(o, gcc->config.pos, gcc->config.size);
-          }
-        gcc->state_info.resist = 1;
-     }
-   else if (ev->data)
+   if (ev->data)
      {
         /* Create a new gadcon to show where the gadcon will end up */
         E_Gadcon_Client_Class *cc;
