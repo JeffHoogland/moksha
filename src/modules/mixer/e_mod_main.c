@@ -964,6 +964,8 @@ e_mod_mixer_pulse_ready(Eina_Bool ready)
    ctxt = mixer_mod->data;
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      {
+        if (_mixer_using_default) e_mixer_system_callback_set(inst->sys, _mixer_system_cb_update, inst);
+        else e_mixer_system_callback_set(inst->sys, NULL, NULL);
         if (pulse != _mixer_using_default)
           _mixer_gadget_configuration_defaults(inst->conf);
         if ((!_mixer_sys_setup(inst)) && (!_mixer_sys_setup_defaults(inst)))
@@ -973,7 +975,6 @@ e_mod_mixer_pulse_ready(Eina_Bool ready)
              inst->sys = NULL;
              return;
           }
-        if (_mixer_using_default) e_mixer_system_callback_set(inst->sys, _mixer_system_cb_update, inst);
         e_mod_mixer_state_get(inst->sys, inst->channel, &inst->mixer_state);
         _mixer_gadget_update(inst);
      }
