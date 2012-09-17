@@ -230,13 +230,13 @@ main(int argc, char **argv)
              done = 0;
              total = last - 2;
 
+             char *p;
+
              for (; i < last; i++)
                {
-                  char *p = ecore_file_realpath(argv[i]);
+                  p = argv[i];
                   const char *name;
                   int name_len;
-
-                  if (!p) continue;
 
                   /* Don't move a dir into itself */
                   if (ecore_file_is_dir(p) &&
@@ -317,7 +317,7 @@ main(int argc, char **argv)
                     }
 
 skip_arg:
-                  E_FREE(p);
+                  continue;
                }
 
              E_FREE(p2);
@@ -1385,31 +1385,6 @@ _e_fm_op_copy_atom(E_Fm_Op_Task *task)
              task->finished = 1;
              return 1;
           }
-
-        if (S_ISLNK(task->src.st.st_mode))
-          {
-             char *dst_dir;
-
-             dst_dir = ecore_file_dir_get(task->dst.name);
-             if (dst_dir)
-               {
-                  const char *dst_name;
-
-                  dst_name = ecore_file_file_get(task->src.name);
-                  if (dst_name)
-                    {
-                       char dst_path[PATH_MAX];
-
-                       if ((strlen(dst_dir) + strlen(dst_name)) >= PATH_MAX)
-                         _E_FM_OP_ERROR_SEND_WORK(task, 0, "Not copying link: path too long", dst_path);
-
-                       snprintf(dst_path, sizeof(dst_path), "%s/%s", dst_dir, dst_name);
-                       task->dst.name = strdup(dst_path);
-                    }
-                  E_FREE(dst_dir);
-               }
-          }
-
         if (_e_fm_op_handle_overwrite(task)) return 1;
 
         if (S_ISDIR(task->src.st.st_mode))
