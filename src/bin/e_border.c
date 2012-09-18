@@ -624,6 +624,8 @@ e_border_new(E_Container   *con,
                     bd->client.illume.drag.fetch.locked = 1;
                   else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG)
                     bd->client.illume.drag.fetch.drag = 1;
+                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_WINDOW_STATE)
+                    bd->client.illume.win_state.fetch.state = 1;
                   else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_PARENT)
                     video_parent = EINA_TRUE;
                   else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_POSITION)
@@ -5575,6 +5577,11 @@ _e_border_cb_window_property(void *data  __UNUSED__,
         bd->client.illume.drag.fetch.drag = 1;
         bd->changed = 1;
      }
+   else if (e->atom == ECORE_X_ATOM_E_ILLUME_WINDOW_STATE)
+     {
+        bd->client.illume.win_state.fetch.state = 1;
+        bd->changed = 1;
+     }
    /*
       else if (e->atom == ECORE_X_ATOM_NET_WM_USER_TIME)
       {
@@ -7266,6 +7273,12 @@ _e_border_eval0(E_Border *bd)
         bd->client.illume.drag.locked =
           ecore_x_e_illume_drag_locked_get(bd->client.win);
         bd->client.illume.drag.fetch.locked = 0;
+     }
+   if (bd->client.illume.win_state.fetch.state)
+     {
+        bd->client.illume.win_state.state =
+           ecore_x_e_illume_window_state_get(bd->client.win);
+        bd->client.illume.win_state.fetch.state = 0;
      }
    if (bd->changes.shape)
      {

@@ -456,6 +456,14 @@ struct _E_Border
             unsigned char drag : 1;
             unsigned char locked : 1;
          } drag;
+         struct
+         {
+            struct
+            {
+               unsigned char state : 1;
+            } fetch;
+            Ecore_X_Illume_Window_State state;
+         } win_state;
       } illume;
 
       Ecore_X_Window_Attributes initial_attributes;
