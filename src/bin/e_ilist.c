@@ -872,6 +872,30 @@ e_ilist_range_select(Evas_Object *obj, int n)
      }
 }
 
+EAPI Eina_Bool
+e_ilist_custom_edje_file_set(Evas_Object *obj, const char *file, const char *group)
+{
+   Eina_List *l;
+   E_Ilist_Item *si;
+   Eina_Bool even = EINA_FALSE;
+
+   API_ENTRY return EINA_FALSE;
+
+   if (!edje_object_file_set(sd->o_edje, file, group)) return EINA_FALSE;
+   eina_stringshare_replace(&sd->theme, group);
+
+   EINA_LIST_FOREACH(sd->items, l, si)
+     {
+        _e_ilist_item_theme_set(si, !!sd->theme, si->header, even);
+        if (si->o_icon)
+          edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
+        if (si->o_end)
+          edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
+        even = !even;
+     }
+   return EINA_TRUE;
+}
+
 /* SMART FUNCTIONS */
 static void
 _e_smart_init(void)
@@ -942,6 +966,7 @@ _e_smart_del(Evas_Object *obj)
    e_ilist_clear(obj);
    evas_object_del(sd->o_box);
    evas_object_del(sd->o_edje);
+   eina_stringshare_del(sd->theme);
    free(sd);
 }
 

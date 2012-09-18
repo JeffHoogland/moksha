@@ -1008,6 +1008,16 @@ e_widget_ilist_range_select(Evas_Object *obj, int n)
  */
 }
 
+EAPI Eina_Bool
+e_widget_ilist_custom_edje_file_set(Evas_Object *obj, const char *file, const char *group)
+{
+   E_Widget_Data *wd;
+
+   wd = e_widget_data_get(obj);
+   if (!wd) return EINA_FALSE;
+   return e_ilist_custom_edje_file_set(wd->o_ilist, file, group);
+}
+
 EAPI void
 e_widget_ilist_preferred_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 {
