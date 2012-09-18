@@ -433,8 +433,9 @@ _e_thumb_generate(E_Thumb *eth)
                      4, 11, 2, 13
                   };
 
-                  data3 = malloc(ww * hh * sizeof(unsigned int));
-                  memcpy(data3, data, ww * hh * sizeof(unsigned int));
+                  /* ww = hh = 1 here */
+                  data3 = malloc(sizeof(unsigned int));
+                  memcpy(data3, data, sizeof(unsigned int));
                   // sort_id
                   n = 0;
 #define A(v) (((v) >> 24) & 0xff)
