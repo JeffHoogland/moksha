@@ -2260,6 +2260,19 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_menu_item_label_set(mi, _("Delete"));
    e_util_menu_item_theme_icon_set(mi, "list-remove");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);
+
+   if (m->parent_item) return;
+
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(m);
+   if (es->gadcon->editing)
+     e_menu_item_label_set(mi, _("Stop Moving Gadgets"));
+   else
+     e_menu_item_label_set(mi, _("Begin Moving Gadgets"));
+   e_util_menu_item_theme_icon_set(mi, "transform-scale");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_edit, es);
 }
 
 static void
