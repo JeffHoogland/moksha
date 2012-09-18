@@ -1091,6 +1091,8 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
    int found = 0, n = -1;
 
    if (cfdata->locals.click) cfdata->locals.delay = -1.0 * cfdata->locals.button;
+   else if (cfdata->locals.delay < 0)
+     cfdata->locals.delay = 0;
    if (cfdata->locals.add)
      {
         EINA_LIST_FOREACH(cfdata->binding.edge, l, bi)
