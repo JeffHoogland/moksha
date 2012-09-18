@@ -12,6 +12,7 @@ struct _E_Smart_Data
    Eina_List    *items;
    Eina_List    *selected_items;
    int           selected;
+   const char *theme;
    unsigned char selector : 1;
    unsigned char multi_select : 1;
    unsigned char on_hold : 1;
@@ -46,6 +47,7 @@ static void      _e_typebuf_timer_update(Evas_Object *obj);
 static void      _e_typebuf_timer_delete(Evas_Object *obj);
 static void      _e_typebuf_clean(Evas_Object *obj);
 
+static void      _e_ilist_item_theme_set(E_Ilist_Item *si, Eina_Bool custom, Eina_Bool header, Eina_Bool even);
 static void      _e_ilist_widget_hack_cb(E_Smart_Data *sd, Evas_Object *obj __UNUSED__, Evas_Object *scr);
 
 static void      _item_select(E_Ilist_Item *si);
@@ -74,29 +76,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char
    si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
 
    isodd = eina_list_count(sd->items) & 0x1;
-   if (header)
-     {
-        if (isodd)
-          {
-             if (!e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                          "e/widgets/ilist_header_odd"))
-               e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                       "e/widgets/ilist_header");
-          }
-        else
-          e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                  "e/widgets/ilist_header");
-     }
-   else
-     {
-        if (isodd)
-          e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                  "e/widgets/ilist_odd");
-        else
-          e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                  "e/widgets/ilist");
-     }
-
+   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
    if (label)
      {
         si->label = eina_stringshare_add(label);
@@ -168,28 +148,7 @@ e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, c
    si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
 
    isodd = eina_list_count(sd->items) & 0x1;
-   if (header)
-     {
-        if (isodd)
-          {
-             if (!e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                          "e/widgets/ilist_header_odd"))
-               e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                       "e/widgets/ilist_header");
-          }
-        else
-          e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                  "e/widgets/ilist_header");
-     }
-   else
-     {
-        if (isodd)
-          e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                  "e/widgets/ilist_odd");
-        else
-          e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                                  "e/widgets/ilist");
-     }
+   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
    if (label)
      {
         si->label = eina_stringshare_add(label);
@@ -259,21 +218,15 @@ e_ilist_prepend(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const cha
 {
    E_Ilist_Item *si;
    Evas_Coord mw = 0, mh = 0;
+   int isodd;
 
    API_ENTRY return;
    si = E_NEW(E_Ilist_Item, 1);
    si->sd = sd;
    si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
 
-   if (header)
-     e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                             "e/widgets/ilist_header");
-   else if (eina_list_count(sd->items) & 0x1)
-     e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                             "e/widgets/ilist_odd");
-   else
-     e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                             "e/widgets/ilist");
+   isodd = eina_list_count(sd->items) & 0x1;
+   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
    if (label)
      {
         si->label = eina_stringshare_add(label);
@@ -328,21 +281,15 @@ e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, 
 {
    E_Ilist_Item *si, *ri;
    Evas_Coord mw = 0, mh = 0;
+   int isodd;
 
    API_ENTRY return;
    si = E_NEW(E_Ilist_Item, 1);
    si->sd = sd;
    si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
 
-   if (header)
-     e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                             "e/widgets/ilist_header");
-   else if (eina_list_count(sd->items) & 0x1)
-     e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                             "e/widgets/ilist_odd");
-   else
-     e_theme_edje_object_set(si->o_base, "base/theme/widgets",
-                             "e/widgets/ilist");
+   isodd = eina_list_count(sd->items) & 0x1;
+   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
    if (label)
      {
         si->label = eina_stringshare_add(label);
@@ -1462,3 +1409,63 @@ _item_unselect(E_Ilist_Item *si)
    sd->selected_items = eina_list_remove(sd->selected_items, si);
 }
 
+static void
+_e_ilist_item_theme_set(E_Ilist_Item *si, Eina_Bool custom, Eina_Bool header, Eina_Bool even)
+{
+   E_Smart_Data *sd = si->sd;
+   const char *file;
+   char buf[4096];
+
+   if ((!custom) || (!sd->theme))
+     {
+        if (header)
+          {
+             if (!even)
+               {
+                  if (!e_theme_edje_object_set(si->o_base, "base/theme/widgets",
+                                               "e/widgets/ilist_header_odd"))
+                    e_theme_edje_object_set(si->o_base, "base/theme/widgets",
+                                            "e/widgets/ilist_header");
+               }
+             else
+               e_theme_edje_object_set(si->o_base, "base/theme/widgets",
+                                       "e/widgets/ilist_header");
+          }
+        else
+          {
+             if (!even)
+               e_theme_edje_object_set(si->o_base, "base/theme/widgets",
+                                       "e/widgets/ilist_odd");
+             else
+               e_theme_edje_object_set(si->o_base, "base/theme/widgets",
+                                       "e/widgets/ilist");
+          }
+        return;
+     }
+   edje_object_file_get(sd->o_edje, &file, NULL);
+   if (header)
+     {
+        if (even)
+          {
+             snprintf(buf, sizeof(buf), "%s/ilist_header", sd->theme);
+             if (edje_object_file_set(si->o_base, file, buf)) return;
+             _e_ilist_item_theme_set(si, EINA_FALSE, header, even);
+             return;
+          }
+        snprintf(buf, sizeof(buf), "%s/ilist_header_odd", sd->theme);
+        if (edje_object_file_set(si->o_base, file, buf)) return;
+        _e_ilist_item_theme_set(si, EINA_FALSE, header, even);
+        return;
+     }
+   if (even)
+     {
+        snprintf(buf, sizeof(buf), "%s/ilist", sd->theme);
+        if (edje_object_file_set(si->o_base, file, buf)) return;
+        _e_ilist_item_theme_set(si, EINA_FALSE, header, even);
+        return;
+     }
+   snprintf(buf, sizeof(buf), "%s/ilist_odd", sd->theme);
+   if (edje_object_file_set(si->o_base, file, buf)) return;
+   _e_ilist_item_theme_set(si, EINA_FALSE, header, even);
+   return;
+}
