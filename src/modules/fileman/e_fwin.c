@@ -2273,9 +2273,9 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
           }
         else
           {
+             _e_fwin_border_set(page, page->fwin, ici);
              e_fm2_path_set(page->fm_obj, ici->link, "/");
-             _e_fwin_window_title_set(page);
-             fwin = page->fwin;
+             return page->fwin;
           }
      }
    else if ((ici->link) && (ici->removable))
@@ -2290,9 +2290,9 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
           }
         else
           {
+             _e_fwin_border_set(page, page->fwin, ici);
              e_fm2_path_set(page->fm_obj, buf, "/");
-             _e_fwin_window_title_set(page);
-             fwin = page->fwin;
+             return page->fwin;
           }
      }
    else if (ici->real_link)
@@ -2308,9 +2308,9 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                }
              else
                {
+                  _e_fwin_border_set(page, page->fwin, ici);
                   e_fm2_path_set(page->fm_obj, NULL, ici->real_link);
-                  _e_fwin_window_title_set(page);
-                  fwin = page->fwin;
+                  return page->fwin;
                }
           }
         else
@@ -2332,9 +2332,9 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                }
              else
                {
+                  _e_fwin_border_set(page, page->fwin, ici);
                   e_fm2_path_set(page->fm_obj, NULL, ici->link ?: buf);
-                  _e_fwin_window_title_set(page);
-                  fwin = page->fwin;
+                  return page->fwin;
                }
           }
         else
