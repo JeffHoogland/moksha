@@ -10228,6 +10228,7 @@ _e_fm_error_link_source(void *data, E_Dialog *dialog)
 
    f = ecore_file_file_get(file);
    if (!f) return;
+   length = strlen(f);
    if (strlen(ere->dst) + length >= PATH_MAX) return;
 
    newpath[0] = 0;
