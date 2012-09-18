@@ -826,11 +826,18 @@ _apply_widget_position(E_Gadcon_Client *gcc)
     */
    if ((!x) && (!y) && (!w) && (!h))
      {
+        E_Gadcon_Popup *pop;
+        Evas_Object *o;
+        char buf[4096];
+
         x = zone->w / 2, y = zone->h / 2;
         w = h = 64;
-        e_util_dialog_show("Gadget Manager",
-                           "A gadget of type '%s' was detected without any stored geometry.<br>"
-                           "It has been relocated and resized for you.", gcc->client_class->name);
+        pop = e_gadcon_popup_new(gcc);
+        snprintf(buf, sizeof(buf), "A gadget of type '%s' was detected without any stored geometry.<br>"
+                 "It has been relocated and resized for you.", gcc->client_class->name);
+        o = e_widget_label_add(pop->win->evas, buf);
+        e_gadcon_popup_content_set(pop, o);
+        e_gadcon_popup_show(pop);
      }
 
    /* Respect min sizes */
