@@ -1012,14 +1012,15 @@ EAPI Eina_Bool
 e_widget_ilist_custom_edje_file_set(Evas_Object *obj, const char *file, const char *group)
 {
    E_Widget_Data *wd;
-   char buf[1024];
 
    wd = e_widget_data_get(obj);
    if (!wd) return EINA_FALSE;
    if (group)
      {
+        char buf[1024];
+
         snprintf(buf, sizeof(buf), "%s/scrollframe", group);
-        e_scrollframe_custom_edje_file_set(wd->o_scrollframe, file, group);
+        e_scrollframe_custom_edje_file_set(wd->o_scrollframe, file, buf);
      }
    return e_ilist_custom_edje_file_set(wd->o_ilist, file, group);
 }
