@@ -71,6 +71,9 @@ static int startup_id = 0;
 static Ecore_Event_Handler *_e_exec_exit_handler = NULL;
 static Ecore_Event_Handler *_e_exec_border_add_handler = NULL;
 
+static E_Exec_Instance *(*_e_exec_executor_func) (void *data, E_Zone *zone, Efreet_Desktop *desktop, const char *exec, Eina_List *files, const char *launch_method) = NULL;
+static void *_e_exec_executor_data = NULL;
+
 /* externally accessible functions */
 EINTERN int
 e_exec_init(void)
@@ -102,6 +105,13 @@ e_exec_shutdown(void)
    return 1;
 }
 
+EAPI void
+e_exec_executor_set(E_Exec_Instance *(*func) (void *data, E_Zone *zone, Efreet_Desktop *desktop, const char *exec, Eina_List *files, const char *launch_method), const void *data)
+{
+   _e_exec_executor_func = func;
+   _e_exec_executor_data = (void *)data;
+}
+
 EAPI E_Exec_Instance *
 e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
        Eina_List *files, const char *launch_method)
@@ -110,6 +120,10 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
    E_Exec_Instance *inst = NULL;
 
    if ((!desktop) && (!exec)) return NULL;
+   
+   if (_e_exec_executor_func)
+     return _e_exec_executor_func(_e_exec_executor_data, zone,
+                                  desktop, exec, files, launch_method);
 
    if (desktop)
      {
