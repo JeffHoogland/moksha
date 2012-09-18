@@ -43,6 +43,7 @@ struct _E_Fwin
    const char          *theme_file;
 
    Ecore_Timer *popup_timer;
+   Ecore_Event_Handler *popup_handler;
    E_Fm2_Icon_Info *popup_icon;
    E_Popup *popup;
 
@@ -724,9 +725,34 @@ _e_fwin_free(E_Fwin *fwin)
    if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
    if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
    fwin->popup_timer = NULL;
+   if (fwin->popup_handler) ecore_event_handler_del(fwin->popup_handler);
    if (fwin->spring_parent) fwin->spring_parent->spring_child = NULL;
    if (fwin->win) e_object_del(E_OBJECT(fwin->win));
    free(fwin);
+}
+
+static Eina_Bool
+_e_fwin_icon_popup_handler(void *data, int type __UNUSED__, void *event)
+{
+   E_Fwin *fwin = data;
+   Ecore_Event_Mouse_IO *ev = event;
+
+   if (fwin->zone)
+     {
+        if (ev->event_window == fwin->zone->container->event_win) return ECORE_CALLBACK_RENEW;
+     }
+   else
+     {
+        if (ev->event_window == fwin->win->border->client.win) return ECORE_CALLBACK_RENEW;
+     }
+   if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
+   if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
+   ecore_event_handler_del(fwin->popup_handler);
+   fwin->popup_icon = NULL;
+   fwin->popup_handler = NULL;
+   fwin->popup_timer = NULL;
+   fwin->popup = NULL;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
@@ -820,6 +846,8 @@ _e_fwin_icon_popup(void *data)
    if (py < 0) py = 0;
    e_popup_move_resize(fwin->popup, px, py, mw, mh);
    evas_object_resize(bg, mw, mh);
+   if (!fwin->popup_handler)
+     fwin->popup_handler = ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_fwin_icon_popup_handler, fwin);
    e_popup_show(fwin->popup);
    return EINA_FALSE;
 }
