@@ -813,7 +813,7 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
 
    if (action)
      {
-        if (!strcmp(action, actd->act_cmd))
+        if (!e_util_strcmp(action, actd->act_cmd))
           {
              if ((cfdata->locals.cur_act >= 0) && (cfdata->locals.cur_act != e_widget_ilist_selected_get(cfdata->gui.o_action_list)))
                KB_EXAMPLE_PARAMS;
@@ -992,10 +992,10 @@ _grab_key_down_cb(void *data,
      printf("'%s' '%s'\n", ev->keyname, ev->key);
    else
      printf("unknown key!!!!\n");
-   if (!strcmp(ev->keyname, "Control_L") || !strcmp(ev->keyname, "Control_R") ||
-       !strcmp(ev->keyname, "Shift_L") || !strcmp(ev->keyname, "Shift_R") ||
-       !strcmp(ev->keyname, "Alt_L") || !strcmp(ev->keyname, "Alt_R") ||
-       !strcmp(ev->keyname, "Super_L") || !strcmp(ev->keyname, "Super_R"))
+   if (!e_util_strcmp(ev->keyname, "Control_L") || !e_util_strcmp(ev->keyname, "Control_R") ||
+       !e_util_strcmp(ev->keyname, "Shift_L") || !e_util_strcmp(ev->keyname, "Shift_R") ||
+       !e_util_strcmp(ev->keyname, "Alt_L") || !e_util_strcmp(ev->keyname, "Alt_R") ||
+       !e_util_strcmp(ev->keyname, "Super_L") || !e_util_strcmp(ev->keyname, "Super_R"))
      {
         /* Do nothing */
      }
@@ -1174,10 +1174,10 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
         ok = 1;
         if (cfdata->locals.params)
           {
-             if (!strcmp(cfdata->locals.params, TEXT_NO_PARAMS))
+             if (!e_util_strcmp(cfdata->locals.params, TEXT_NO_PARAMS))
                ok = 0;
 
-             if ((actd->param_example) && (!strcmp(cfdata->locals.params, actd->param_example)))
+             if ((actd->param_example) && (!e_util_strcmp(cfdata->locals.params, actd->param_example)))
                ok = 0;
           }
         else
@@ -1212,7 +1212,7 @@ _find_key_binding_action(const char *action,
         for (l2 = actg->acts, aa = 0; l2; l2 = l2->next, aa++)
           {
              actd = l2->data;
-             if (!strcmp((!action ? "" : action), (!actd->act_cmd ? "" : actd->act_cmd)))
+             if (!e_util_strcmp((!action ? "" : action), (!actd->act_cmd ? "" : actd->act_cmd)))
                {
                   if (!params || !params[0])
                     {
@@ -1237,7 +1237,7 @@ _find_key_binding_action(const char *action,
                          }
                        else
                          {
-                            if (!strcmp(params, actd->act_params))
+                            if (!e_util_strcmp(params, actd->act_params))
                               {
                                  if (g) *g = gg;
                                  if (a) *a = aa;
