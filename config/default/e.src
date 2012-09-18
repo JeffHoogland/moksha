@@ -525,6 +525,7 @@ group "E_Config" struct {
   value "update.later" uchar: 0;
   value "xkb.only_label" int: 0;
   value "xkb.default_model" string: "default";
+  value "exe_always_single_instance" uchar: 0;
   value "powersave.none" double: 0.25;
   value "powersave.low" double: 5.0;
   value "powersave.medium" double: 60.0;

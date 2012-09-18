@@ -260,12 +260,12 @@ struct _E_Config
    double                    thumbscroll_momentum_threshhold; // GUI
    double                    thumbscroll_friction; // GUI
 
-   Eina_Bool                filemanager_single_click; // GUI
+   unsigned char             filemanager_single_click; // GUI
    int                       device_desktop; // GUI
    int                       device_auto_mount; // GUI
    int                       device_auto_open; // GUI
    Efm_Mode                  device_detect_mode; /* not saved, display-only */
-   Eina_Bool                filemanager_copy; // GUI
+   unsigned char             filemanager_copy; // GUI
 
    struct
    {
@@ -386,6 +386,8 @@ struct _E_Config
       const char *default_model;
       int         cur_group;
    } xkb;
+   
+   unsigned char exe_always_single_instance;
 };
 
 struct _E_Config_Desklock_Background

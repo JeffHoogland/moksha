@@ -932,6 +932,8 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, xkb.only_label, INT);
    E_CONFIG_VAL(D, T, xkb.default_model, STR);
    //E_CONFIG_VAL(D, T, xkb.cur_group, INT);    
+   
+   E_CONFIG_VAL(D, T, exe_always_single_instance, UCHAR);
    e_config_load();
 
    e_config_save_queue();

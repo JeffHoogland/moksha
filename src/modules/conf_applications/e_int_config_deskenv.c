@@ -14,6 +14,7 @@ struct _E_Config_Dialog_Data
    int load_xmodmap;
    int load_gnome;
    int load_kde;
+   int exe_always_single_instance;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -48,6 +49,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->load_xmodmap = e_config->deskenv.load_xmodmap;
    cfdata->load_gnome = e_config->deskenv.load_gnome;
    cfdata->load_kde = e_config->deskenv.load_kde;
+   cfdata->exe_always_single_instance = e_config->exe_always_single_instance;
 }
 
 static void *
@@ -74,6 +76,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->deskenv.load_xmodmap = cfdata->load_xmodmap;
    e_config->deskenv.load_gnome = cfdata->load_gnome;
    e_config->deskenv.load_kde = cfdata->load_kde;
+   e_config->exe_always_single_instance = cfdata->exe_always_single_instance;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -83,21 +86,34 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    /* generate the core widget layout for a basic dialog */
-   Evas_Object *o, *ob;
+   Evas_Object *o, *fr, *ob;
 
    o = e_widget_list_add(evas, 0, 0);
+   
+   fr = e_widget_framelist_add(evas, _("Execution"), 0);
+   ob = e_widget_check_add(evas, _("Only launch single instances"),
+                           &(cfdata->exe_always_single_instance));
+   e_widget_framelist_object_append(fr, ob);
+   e_widget_list_object_append(o, fr, 1, 0, 0.0);
+   
+   fr = e_widget_framelist_add(evas, _("X11 Basics"), 0);
    ob = e_widget_check_add(evas, _("Load X Resources"),
                            &(cfdata->load_xrdb));
-   e_widget_list_object_append(o, ob, 1, 0, 0.0);
+   e_widget_framelist_object_append(fr, ob);
    ob = e_widget_check_add(evas, _("Load X Modifier Map"),
                            &(cfdata->load_xmodmap));
-   e_widget_list_object_append(o, ob, 1, 0, 0.0);
+   e_widget_framelist_object_append(fr, ob);
+   e_widget_list_object_append(o, fr, 1, 0, 0.0);
+   
+   fr = e_widget_framelist_add(evas, _("Major Desktops"), 0);
    ob = e_widget_check_add(evas, _("Start GNOME services on login"),
                            &(cfdata->load_gnome));
-   e_widget_list_object_append(o, ob, 1, 0, 0.0);
+   e_widget_framelist_object_append(fr, ob);
    ob = e_widget_check_add(evas, _("Start KDE services on login"),
                            &(cfdata->load_kde));
-   e_widget_list_object_append(o, ob, 1, 0, 0.0);
+   e_widget_framelist_object_append(fr, ob);
+   e_widget_list_object_append(o, fr, 1, 0, 0.0);
+   
    return o;
 }
 

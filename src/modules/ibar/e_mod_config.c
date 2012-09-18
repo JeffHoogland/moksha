@@ -6,6 +6,7 @@ struct _E_Config_Dialog_Data
    const char       *dir;
    int               show_label, eap_label;
    int               lock_move;
+   int               track_launch;
 
    Evas_Object      *tlist;
    Evas_Object      *radio_name;
@@ -66,6 +67,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->show_label = ci->show_label;
    cfdata->eap_label = ci->eap_label;
    cfdata->lock_move = ci->lock_move;
+   cfdata->track_launch = !ci->dont_track_launch;
 }
 
 static void *
@@ -97,7 +99,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    o = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_frametable_add(evas, _("Selected Bar Source"), 0);
+   of = e_widget_frametable_add(evas, _("Selected source"), 0);
    ol = e_widget_ilist_add(evas, 32, 32, &(cfdata->dir));
    cfdata->tlist = ol;
    _load_tlist(cfdata);
@@ -119,28 +121,30 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Icon Labels"), 0);
-   ob = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
+   ob = e_widget_check_add(evas, _("Show icon label"), &(cfdata->show_label));
    e_widget_on_change_hook_set(ob, _show_label_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);
 
    rg = e_widget_radio_group_new(&(cfdata->eap_label));
 
-   cfdata->radio_name = e_widget_radio_add(evas, _("Display App Name"), 0, rg);
+   cfdata->radio_name = e_widget_radio_add(evas, _("Name"), 0, rg);
    e_widget_framelist_object_append(of, cfdata->radio_name);
    if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_name, 1);
 
-   cfdata->radio_comment = e_widget_radio_add(evas, _("Display App Comment"), 1, rg);
+   cfdata->radio_comment = e_widget_radio_add(evas, _("Comment"), 1, rg);
    e_widget_framelist_object_append(of, cfdata->radio_comment);
    if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_comment, 1);
 
-   cfdata->radio_generic = e_widget_radio_add(evas, _("Display App Generic"), 2, rg);
+   cfdata->radio_generic = e_widget_radio_add(evas, _("Generic"), 2, rg);
    e_widget_framelist_object_append(of, cfdata->radio_generic);
    if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_generic, 1);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Icon Movement"), 0);
-   ob = e_widget_check_add(evas, _("Lock Icon Move"), &(cfdata->lock_move));
+   of = e_widget_framelist_add(evas, _("Misc"), 0);
+   ob = e_widget_check_add(evas, _("Lock icon move"), &(cfdata->lock_move));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Track launch"), &(cfdata->track_launch));
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -160,6 +164,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    ci->show_label = cfdata->show_label;
    ci->eap_label = cfdata->eap_label;
    ci->lock_move = cfdata->lock_move;
+   ci->dont_track_launch = !cfdata->track_launch;
    _ibar_config_update(ci);
    e_config_save_queue();
    return 1;
@@ -231,9 +236,13 @@ _cb_entry_ok(void *data, char *text)
              int ret = 0;
 
              /* Populate this .order file with some defaults */
-             snprintf(tmp, sizeof(tmp), "xterm.desktop\n" "sylpheed.desktop\n"
-                                                          "firefox.desktop\n" "openoffice.desktop\n" "xchat.desktop\n"
-                                                                                                     "gimp.desktop\n" "xmms.desktop\n");
+             snprintf(tmp, sizeof(tmp), 
+                      "terminology.desktop\n"
+                      "sylpheed.desktop\n"
+                      "firefox.desktop\n"
+                      "openoffice.desktop\n" 
+                      "xchat.desktop\n"
+                      "gimp.desktop\n");
              ret = fwrite(tmp, sizeof(char), strlen(tmp), f);
              fclose(f);
           }

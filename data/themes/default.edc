@@ -13432,22 +13432,22 @@ CONNMAN_ICON(ethernet)
             name: "item_clip";
             type: RECT;
             mouse_events: 0;
-            description {
-               state: "default" 0.0;
+            description { state: "default" 0.0;
                color: 255 255 255 255;
+            }
+            description { state: "disabled" 0.0;
+               color: 255 255 255 64;
             }
          }
          part {
             name: "e.swallow.content";
             type: SWALLOW;
             clip_to: "item_clip";
-            description {
-               state: "default" 0.0;
+            description { state: "default" 0.0;
                rel1.offset: 2   2;
                rel2.offset: -3   -3;
             }
-            description {
-               state: "bigger" 0.0;
+            description { state: "bigger" 0.0;
             }
          }
          part {
@@ -13529,12 +13529,18 @@ CONNMAN_ICON(ethernet)
       }
       programs {
          program {
-            name: "hover_in";
-            signal: "mouse,in";
-            source: "over";
-            action: STATE_SET "bigger" 0.0;
-            transition: LINEAR 0.1;
-            target: "e.swallow.content";
+            name: "starting";
+            signal: "e,state,starting";
+            source: "e";
+            action: STATE_SET "disabled" 0.0;
+            target: "item_clip";
+         }
+         program {
+            name: "started";
+            signal: "e,state,started";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "item_clip";
          }
          program {
             name: "hover_out";

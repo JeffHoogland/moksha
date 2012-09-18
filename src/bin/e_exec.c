@@ -11,6 +11,7 @@
 
 typedef struct _E_Exec_Launch E_Exec_Launch;
 typedef struct _E_Exec_Search E_Exec_Search;
+typedef struct _E_Exec_Watch E_Exec_Watch;
 
 struct _E_Exec_Launch
 {
@@ -21,8 +22,16 @@ struct _E_Exec_Launch
 struct _E_Exec_Search
 {
    E_Exec_Instance *inst;
+   Efreet_Desktop  *desktop;
    int              startup_id;
    pid_t            pid;
+};
+
+struct _E_Exec_Watch
+{
+   void (*func) (void *data, E_Exec_Instance *inst, E_Exec_Watch_Type type);
+   const void *data;
+   Eina_Bool delete_me : 1;
 };
 
 struct _E_Config_Dialog_Data
@@ -99,18 +108,36 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
 {
    E_Exec_Launch *launch;
    E_Exec_Instance *inst = NULL;
-   const char *single = NULL;
 
    if ((!desktop) && (!exec)) return NULL;
 
    if (desktop)
      {
+        const char *single;
+        
         single = eina_hash_find(desktop->x, "X-Enlightenment-Single-Instance");
-        if (single)
+        if ((single) ||
+            (e_config->exe_always_single_instance))
           {
-             if ((!strcasecmp(single, "true")) ||
-                 (!strcasecmp(single, "yes"))||
-                 (!strcasecmp(single, "1")))
+             Eina_Bool dosingle = EINA_FALSE;
+             
+             // first take system config for always single instance if set
+             if (e_config->exe_always_single_instance) dosingle = EINA_TRUE;
+             
+             // and now let desktop file override it
+             if (single)
+               {
+                  if ((!strcasecmp(single, "true")) ||
+                      (!strcasecmp(single, "yes"))||
+                      (!strcasecmp(single, "1")))
+                    dosingle = EINA_TRUE;
+                  else if ((!strcasecmp(single, "false")) ||
+                           (!strcasecmp(single, "no"))||
+                           (!strcasecmp(single, "0")))
+                    dosingle = EINA_FALSE;
+               }
+             
+             if (dosingle)
                {
                   Eina_List *l;
                   E_Border *bd;
@@ -121,7 +148,8 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
                          {
                             if (bd)
                               {
-                                 if (!bd->focused) e_border_activate(bd, EINA_TRUE);
+                                 if (!bd->focused)
+                                   e_border_activate(bd, EINA_TRUE);
                                  else e_border_raise(bd);
                                  return NULL;
                               }
@@ -166,6 +194,7 @@ e_exec_startup_id_pid_instance_find(int id, pid_t pid)
    E_Exec_Search search;
 
    search.inst = NULL;
+   search.desktop = NULL;
    search.startup_id = id;
    search.pid = pid;
    eina_hash_foreach(e_exec_instances, _e_exec_startup_id_pid_find, &search);
@@ -180,6 +209,87 @@ e_exec_startup_id_pid_find(int id, pid_t pid)
    inst = e_exec_startup_id_pid_instance_find(id, pid);
    if (!inst) return NULL;
    return inst->desktop;
+}
+
+EAPI E_Exec_Instance *
+e_exec_startup_desktop_instance_find(Efreet_Desktop *desktop)
+{
+   E_Exec_Search search;
+   
+   search.inst = NULL;
+   search.desktop = desktop;
+   search.startup_id = 0;
+   search.pid = 0;
+   eina_hash_foreach(e_exec_instances, _e_exec_startup_id_pid_find, &search);
+   return search.inst;
+}
+
+static void
+_e_exe_instance_watchers_call(E_Exec_Instance *inst, E_Exec_Watch_Type type)
+{
+   E_Exec_Watch *iw;
+   Eina_List *l, *ln;
+   
+   inst->walking++;
+   EINA_LIST_FOREACH(inst->watchers, l, iw)
+     {
+        if (iw->func) iw->func((void *)(iw->data), inst, type);
+     }
+   inst->walking--;
+   if (inst->walking == 0)
+     {
+        EINA_LIST_FOREACH_SAFE(inst->watchers, l, ln, iw)
+          {
+             if (iw->delete_me)
+               {
+                  inst->watchers = eina_list_remove_list(inst->watchers, l);
+                  free(iw);
+               }
+          }
+     }
+}
+
+EAPI void
+e_exec_instance_found(E_Exec_Instance *inst)
+{
+   _e_exe_instance_watchers_call(inst, E_EXEC_WATCH_STARTED);
+}
+
+EAPI void
+e_exec_instance_watcher_add(E_Exec_Instance *inst, void (*func) (void *data, E_Exec_Instance *inst, E_Exec_Watch_Type type), const void *data)
+{
+   E_Exec_Watch *iw;
+   
+   iw = E_NEW(E_Exec_Watch, 1);
+   if (!iw) return;
+   iw->func = func;
+   iw->data = data;
+   inst->watchers = eina_list_append(inst->watchers, iw);
+}
+
+EAPI void
+e_exec_instance_watcher_del(E_Exec_Instance *inst, void (*func) (void *data, E_Exec_Instance *inst, E_Exec_Watch_Type type), const void *data)
+{
+   E_Exec_Watch *iw;
+   Eina_List *l, *ln;
+   
+   EINA_LIST_FOREACH_SAFE(inst->watchers, l, ln, iw)
+     {
+        if ((iw->func == func) && (iw->data == data))
+          {
+             if (inst->walking == 0)
+               {
+                  inst->watchers = eina_list_remove_list(inst->watchers, l);
+                  free(iw);
+                  return;
+               }
+             else
+               {
+                  iw->delete_me = EINA_TRUE;
+                  return;
+               }
+          }
+     }
 }
 
 /* local subsystem functions */
@@ -407,6 +517,7 @@ _e_exec_cb_expire_timer(void *data)
      e_exec_start_pending = eina_list_remove(e_exec_start_pending,
                                              inst->desktop);
    inst->expire_timer = NULL;
+   _e_exe_instance_watchers_call(inst, E_EXEC_WATCH_TIMEOUT);
    return ECORE_CALLBACK_CANCEL;
 }
 
@@ -414,7 +525,11 @@ static void
 _e_exec_instance_free(E_Exec_Instance *inst)
 {
    Eina_List *instances;
-
+   E_Exec_Watch *iw;
+   
+   _e_exe_instance_watchers_call(inst, E_EXEC_WATCH_STOPPED);
+   EINA_LIST_FREE(inst->watchers, iw) free(iw);
+   
    if (inst->key)
      {
         instances = eina_hash_find(e_exec_instances, inst->key);
@@ -435,13 +550,14 @@ _e_exec_instance_free(E_Exec_Instance *inst)
    if (inst->desktop) efreet_desktop_free(inst->desktop);
    free(inst);
 }
-
+/*
 static Eina_Bool
 _e_exec_cb_instance_finish(void *data)
 {
    _e_exec_instance_free(data);
    return ECORE_CALLBACK_CANCEL;
 }
+*/
 
 static Eina_Bool
 _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
@@ -509,14 +625,17 @@ _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
           }
      }
 
-   /* maybe better 1 minute? it might be openoffice */
-   if (ecore_time_get() - inst->launch_time < 2.0)
+/* scripts that fork off children with & break child tracking... but this hack
+ * also breaks apps that handle single-instance themselves */
+/*   
+   if ((ecore_time_get() - inst->launch_time) < 2.0)
      {
         inst->exe = NULL;
         if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
         inst->expire_timer = ecore_timer_add(e_config->exec.expire_timeout, _e_exec_cb_instance_finish, inst);
      }
    else
+ */
      _e_exec_instance_free(inst);
 
    return ECORE_CALLBACK_PASS_ON;
@@ -532,8 +651,12 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
    search = data;
    EINA_LIST_FOREACH(value, l, inst)
      {
-        if (((search->startup_id > 0) &&
+        if (((search->desktop) &&
+             (search->desktop == inst->desktop)) ||
+            
+            ((search->startup_id > 0) &&
              (search->startup_id == inst->startup_id)) ||
+            
             ((inst->exe) && (search->pid > 1) &&
              (search->pid == ecore_exe_pid_get(inst->exe))))
           {

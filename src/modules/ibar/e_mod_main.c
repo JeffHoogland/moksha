@@ -66,12 +66,13 @@ struct _IBar
 
 struct _IBar_Icon
 {
-   IBar           *ibar;
-   Evas_Object    *o_holder, *o_icon;
-   Evas_Object    *o_holder2, *o_icon2;
-   Efreet_Desktop *app;
-   Ecore_Timer    *reset_timer;
-   int             mouse_down;
+   IBar            *ibar;
+   Evas_Object     *o_holder, *o_icon;
+   Evas_Object     *o_holder2, *o_icon2;
+   Efreet_Desktop  *app;
+   Ecore_Timer     *reset_timer;
+   E_Exec_Instance *exe_inst;
+   int              mouse_down;
    struct
    {
       unsigned char start : 1;
@@ -85,6 +86,7 @@ static IBar        *_ibar_new(Evas *evas, Instance *inst);
 static void         _ibar_free(IBar *b);
 static void         _ibar_cb_empty_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void         _ibar_empty_handle(IBar *b);
+static void         _ibar_instance_watch(void *data, E_Exec_Instance *inst, E_Exec_Watch_Type type);
 static void         _ibar_fill(IBar *b);
 static void         _ibar_empty(IBar *b);
 static void         _ibar_orient_set(IBar *b, int horizontal);
@@ -515,7 +517,8 @@ _ibar_config_item_get(const char *id)
    ci->dir = eina_stringshare_add("default");
    ci->show_label = 1;
    ci->eap_label = 0;
-   ci->lock_move= 0;
+   ci->lock_move = 0;
+   ci->dont_track_launch = 0;
    ibar_config->items = eina_list_append(ibar_config->items, ci);
    return ci;
 }
@@ -630,6 +633,11 @@ _ibar_icon_free(IBar_Icon *ic)
    _ibar_icon_empty(ic);
    evas_object_del(ic->o_holder);
    evas_object_del(ic->o_holder2);
+   if (ic->exe_inst)
+     {
+        e_exec_instance_watcher_del(ic->exe_inst, _ibar_instance_watch, ic);
+        ic->exe_inst = NULL;
+     }
    E_FREE(ic);
 }
 
@@ -788,6 +796,7 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    ic = data;
    if (ic->reset_timer) ecore_timer_del(ic->reset_timer);
    ic->reset_timer = NULL;
+   if (ic->exe_inst) return;
    ic->focused = EINA_TRUE;
    _ibar_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibar->inst->ci->show_label)
@@ -907,10 +916,50 @@ _ibar_cb_icon_reset(void *data)
 }
 
 static void
+_ibar_instance_watch(void *data, E_Exec_Instance *inst, E_Exec_Watch_Type type)
+{
+   IBar_Icon *ic = data;
+     
+   switch (type)
+     {
+      case E_EXEC_WATCH_STARTED:
+      case E_EXEC_WATCH_STOPPED:
+      case E_EXEC_WATCH_TIMEOUT:
+        if (ic->exe_inst == inst)
+          {
+             _ibar_icon_signal_emit(ic, "e,state,started", "e");
+             e_exec_instance_watcher_del(inst, _ibar_instance_watch, ic);
+             ic->exe_inst = NULL;
+          }
+        break;
+      default:
+        break;
+     }
+}
+
+static void
 _ibar_icon_go(IBar_Icon *ic, Eina_Bool keep_going)
 {
    if (ic->app->type == EFREET_DESKTOP_TYPE_APPLICATION)
-     e_exec(ic->ibar->inst->gcc->gadcon->zone, ic->app, NULL, NULL, "ibar");
+     {
+        if (ic->ibar->inst->ci->dont_track_launch)
+          e_exec(ic->ibar->inst->gcc->gadcon->zone,
+                 ic->app, NULL, NULL, "ibar");
+        else
+          {
+             E_Exec_Instance *einst;
+             
+             if (ic->exe_inst) return;
+             einst = e_exec(ic->ibar->inst->gcc->gadcon->zone,
+                            ic->app, NULL, NULL, "ibar");
+             if (einst)
+               {
+                  ic->exe_inst = einst;
+                  e_exec_instance_watcher_add(einst, _ibar_instance_watch, ic);
+                  _ibar_icon_signal_emit(ic, "e,state,starting", "e");
+               }
+          }
+     }
    else if (ic->app->type == EFREET_DESKTOP_TYPE_LINK)
      {
         if (!strncasecmp(ic->app->url, "file:", 5))
@@ -921,14 +970,9 @@ _ibar_icon_go(IBar_Icon *ic, Eina_Bool keep_going)
              if (act) act->func.go(NULL, ic->app->url + 5);
           }
      }
-   /* TODO: bring back "e,action,start|stop" for the startup_notify apps
-    *       when startup_notify is used again
-    */
    _ibar_icon_signal_emit(ic, "e,action,exec", "e");
    if (keep_going)
-     {
-        ic->reset_timer = ecore_timer_add(1.0, _ibar_cb_icon_reset, ic);
-     }
+     ic->reset_timer = ecore_timer_add(1.0, _ibar_cb_icon_reset, ic);
 }
 
 static void
@@ -1713,6 +1757,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, show_label, INT);
    E_CONFIG_VAL(D, T, eap_label, INT);
    E_CONFIG_VAL(D, T, lock_move, INT);
+   E_CONFIG_VAL(D, T, dont_track_launch, UCHAR);
 
    conf_edd = E_CONFIG_DD_NEW("IBar_Config", Config);
 #undef T
@@ -1734,7 +1779,8 @@ e_modapi_init(E_Module *m)
         ci->dir = eina_stringshare_add("default");
         ci->show_label = 1;
         ci->eap_label = 0;
-        ci->lock_move= 0;
+        ci->lock_move = 0;
+        ci->dont_track_launch = 0;
         ibar_config->items = eina_list_append(ibar_config->items, ci);
      }
 

@@ -7553,6 +7553,7 @@ _e_border_eval0(E_Border *bd)
                   desk = e_desk_at_xy_get(bd->zone, inst->desk_x,
                                           inst->desk_y);
                   if (desk) e_border_desk_set(bd, desk);
+                  e_exec_instance_found(inst);
                }
 
              if (e_config->window_grouping) // FIXME: We may want to make the border "urgent" so that the user knows it appeared.
