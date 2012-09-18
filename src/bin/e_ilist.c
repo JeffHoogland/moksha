@@ -881,7 +881,7 @@ e_ilist_custom_edje_file_set(Evas_Object *obj, const char *file, const char *gro
 
    API_ENTRY return EINA_FALSE;
 
-   if (!edje_object_file_set(sd->o_edje, file, group)) return EINA_FALSE;
+   edje_object_file_set(sd->o_edje, file, group);
    eina_stringshare_replace(&sd->theme, group);
 
    EINA_LIST_FOREACH(sd->items, l, si)
