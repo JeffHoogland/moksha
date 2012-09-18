@@ -9307,7 +9307,7 @@ CONNMAN_ICON(ethernet)
                }
                rel2 {
                   relative: 1 1;
-                  offset: -5 30;
+                  offset: -5 24;
                   to_y: "e.text.description";
                }
             }
@@ -9319,13 +9319,13 @@ CONNMAN_ICON(ethernet)
                state: "default" 0.0;
                rel1 {
                   relative: 1 1;
-                  offset: 5 2;
-                  to_x: "e.swallow.background";
+                  offset: 5 1;
+                  to_x: "e.edge.bottom_right";
                   to_y: "e.swallow.check";
                }
                rel2 {
                   relative: 1 1;
-                  offset: -5 10;
+                  offset: -5 -1;
                }
             }
          }
