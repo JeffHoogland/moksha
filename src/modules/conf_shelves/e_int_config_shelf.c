@@ -311,7 +311,10 @@ _new_shelf_cb_close(void *data)
    if (e_widget_ilist_selected_get(cfdata->o_list) >= 0)
      _widgets_disable(cfdata, 0, EINA_TRUE);
    else
-     e_widget_disabled_set(cfdata->o_list, 0);
+     {
+        e_widget_disabled_set(cfdata->o_list, 0);
+        e_widget_disabled_set(cfdata->o_add, 0);
+     }
 }
 
 static void
