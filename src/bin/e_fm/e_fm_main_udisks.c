@@ -588,7 +588,8 @@ _e_fm_main_udisks_vol_mount_timeout(E_Volume *v)
    int size;
 
    v->guard = NULL;
-   dbus_pending_call_cancel(v->op);
+   if (!dbus_pending_call_get_completed(v->op))
+     dbus_pending_call_cancel(v->op);
    v->op = NULL;
    v->optype = E_VOLUME_OP_TYPE_NONE;
    error.name = "org.enlightenment.fm2.MountTimeout";
@@ -648,7 +649,8 @@ _e_fm_main_udisks_vol_unmount_timeout(E_Volume *v)
    int size;
 
    v->guard = NULL;
-   dbus_pending_call_cancel(v->op);
+   if (!dbus_pending_call_get_completed(v->op))
+     dbus_pending_call_cancel(v->op);
    v->op = NULL;
    v->optype = E_VOLUME_OP_TYPE_NONE;
    error.name = "org.enlightenment.fm2.UnmountTimeout";
@@ -709,7 +711,8 @@ _e_fm_main_udisks_vol_eject_timeout(E_Volume *v)
    int size;
 
    v->guard = NULL;
-   dbus_pending_call_cancel(v->op);
+   if (!dbus_pending_call_get_completed(v->op))
+     dbus_pending_call_cancel(v->op);
    v->op = NULL;
    v->optype = E_VOLUME_OP_TYPE_NONE;
    error.name = "org.enlightenment.fm2.EjectTimeout";

@@ -675,7 +675,8 @@ _e_fm_main_hal_vol_mount_timeout(void *data)
    int size;
 
    v->guard = NULL;
-   dbus_pending_call_cancel(v->op);
+   if (!dbus_pending_call_get_completed(v->op))
+     dbus_pending_call_cancel(v->op);
    error.name = "org.enlightenment.fm2.MountTimeout";
    error.message = "Unable to mount the volume with specified time-out.";
    size = _e_fm_main_hal_format_error_msg(&buf, v, &error);
@@ -734,7 +735,8 @@ _e_fm_main_hal_vol_unmount_timeout(void *data)
    int size;
 
    v->guard = NULL;
-   dbus_pending_call_cancel(v->op);
+   if (!dbus_pending_call_get_completed(v->op))
+     dbus_pending_call_cancel(v->op);
    error.name = "org.enlightenment.fm2.UnmountTimeout";
    error.message = "Unable to unmount the volume with specified time-out.";
    size = _e_fm_main_hal_format_error_msg(&buf, v, &error);
@@ -793,7 +795,8 @@ _e_fm_main_hal_vol_eject_timeout(void *data)
    int size;
 
    v->guard = NULL;
-   dbus_pending_call_cancel(v->op);
+   if (!dbus_pending_call_get_completed(v->op))
+     dbus_pending_call_cancel(v->op);
    error.name = "org.enlightenment.fm2.EjectTimeout";
    error.message = "Unable to eject the media with specified time-out.";
    size = _e_fm_main_hal_format_error_msg(&buf, v, &error);
