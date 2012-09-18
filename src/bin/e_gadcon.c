@@ -2917,7 +2917,7 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
    E_Event_Dnd_Move *ev;
    E_Gadcon *gc;
    E_Gadcon_Client *gcc = NULL;
-   int dx, dy;
+   int dx, dy = 0;
    Evas_Object *o;
 
    ev = event;
