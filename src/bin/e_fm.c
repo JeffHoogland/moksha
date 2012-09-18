@@ -4805,14 +4805,12 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
 {
    char buf[4096], *p;
    int len;
+   const char *lbl, *type;
 
    if (ic->info.label)
-     {
-        edje_object_part_text_set(obj, "e.text.label", ic->info.label);
-        return;
-     }
-   if ((ic->sd->config->icon.extension.show) || ((!ic->info.link) && (S_ISDIR(ic->info.statinfo.st_mode))))
-     edje_object_part_text_set(obj, "e.text.label", ic->info.file);
+     lbl = ic->info.label;
+   else if ((ic->sd->config->icon.extension.show) || ((!ic->info.link) && (S_ISDIR(ic->info.statinfo.st_mode))))
+     lbl = ic->info.file;
    else
      {
         /* remove extension. handle double extensions like .tar.gz too
@@ -4831,8 +4829,17 @@ _e_fm2_icon_label_set(E_Fm2_Icon *ic, Evas_Object *obj)
              p = strrchr(buf, '.');
              if ((p) && ((len - (p - buf)) < 6)) *p = 0;
           }
-        edje_object_part_text_set(obj, "e.text.label", buf);
+        lbl = buf;
      }
+   type = evas_object_type_get(edje_object_part_object_get(obj, "e.text.label"));
+   if (!e_util_strcmp(type, "textblock"))
+     {
+        p = evas_textblock_text_utf8_to_markup(NULL, lbl);
+        edje_object_part_text_set(obj, "e.text.label", p);
+        free(p);
+     }
+   else
+     edje_object_part_text_set(obj, "e.text.label", lbl);
 }
 
 static Evas_Object *
