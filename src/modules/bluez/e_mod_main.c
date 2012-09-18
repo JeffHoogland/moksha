@@ -721,7 +721,6 @@ _bluez_popup_new(E_Bluez_Instance *inst)
    e_widget_size_min_set(inst->ui.list, 180, 100);
    e_widget_list_object_append(ol, inst->ui.list, 1, 1, 0.5);
 
-   inst->powered = inst->powered;
    inst->ui.powered = e_widget_check_add(evas, _("Powered"), &inst->powered);
    e_widget_on_change_hook_set
      (inst->ui.powered, _bluez_popup_cb_powered_changed, inst);
