@@ -77,6 +77,8 @@ EFL_CHECK_PATH_MAX
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 
+efl_version="1.7.0"
+
 dnl AC_CHECK_HEADERS(X11/extensions/shape.h,, AC_MSG_ERROR([Cannot find X11/extensions/shape.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
 
 AC_CHECK_HEADERS(fnmatch.h,, AC_MSG_ERROR([Cannot find fnmatch.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
@@ -319,7 +321,7 @@ AC_MSG_CHECKING([whether the UDEV device backend is enabled])
 AC_MSG_RESULT([${e_cv_want_device_udev}])
 
 if test "x$e_cv_want_device_udev" != "xno";then
-  PKG_CHECK_MODULES([EEZE], [eeze >= 1.2.0 ecore >= 1.2.0 eina >= 1.2.0],
+  PKG_CHECK_MODULES([EEZE], [eeze >= ${efl_version} ecore >= ${efl_version} eina >= ${efl_version}],
     [
       device_backend=eeze
       AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
@@ -349,7 +351,7 @@ AC_MSG_CHECKING([whether the HAL mounting support is enabled])
 AC_MSG_RESULT([${e_cv_want_mount_hal}])
 
 if test "x$e_cv_want_mount_hal" != "xno";then
-  PKG_CHECK_EXISTS([ehal >= 1.2.0],
+  PKG_CHECK_EXISTS([ehal >= ${efl_version}],
     [],[
       hal_mount=
       AC_MSG_NOTICE([HAL mounting disabled])
@@ -368,7 +370,7 @@ AC_MSG_CHECKING([whether the UDISKS mounting support is enabled])
 AC_MSG_RESULT([${e_cv_want_mount_udisks}])
 
 if test "x$e_cv_want_mount_udisks" != "xno";then
-  PKG_CHECK_EXISTS([eukit >= 1.2.0],
+  PKG_CHECK_EXISTS([eukit >= ${efl_version}],
     [],[
       udisks_mount=
       AC_MSG_NOTICE([udisks mounting disabled])
@@ -434,32 +436,32 @@ EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
 
 # explicit libs for each binary to reduce linkage requirements
 PKG_CHECK_MODULES(E_REMOTE, [
-  ecore >= 1.2.0
-  ecore-ipc >= 1.2.0
-  eet >= 1.6.0
-  eina >= 1.2.0
+  ecore >= ${efl_version}
+  ecore-ipc >= ${efl_version}
+  eet >= ${efl_version}
+  eina >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E_START, [
-  eina >= 1.2.0
+  eina >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E_IMC, [
-  ecore-file >= 1.2.0
-  eet >= 1.6.0
-  eina >= 1.2.0
+  ecore-file >= ${efl_version}
+  eet >= ${efl_version}
+  eina >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E_THUMB, [
-  eina >= 1.2.0
-  evas >= 1.2.0
-  ecore >= 1.2.0
-  ecore-evas >= 1.2.0
-  edje >= 1.2.0
-  ecore-file >= 1.2.0
-  ecore-ipc >= 1.2.0
-  eet >= 1.6.0
-  efreet >= 1.2.99
+  eina >= ${efl_version}
+  evas >= ${efl_version}
+  ecore >= ${efl_version}
+  ecore-evas >= ${efl_version}
+  edje >= ${efl_version}
+  ecore-file >= ${efl_version}
+  ecore-ipc >= ${efl_version}
+  eet >= ${efl_version}
+  efreet >= ${efl_version}
 ])
 
 efm_requires="\
@@ -477,88 +479,88 @@ AC_MSG_WARN([EFM requirements : $efm_requires])
 PKG_CHECK_MODULES(E_FM, [$efm_requires])
 
 PKG_CHECK_MODULES(E_FM_CMDLINE, [
-  ecore >= 1.2.0
-  ecore-file >= 1.2.0
-  edbus >= 1.2.0
+  ecore >= ${efl_version}
+  ecore-file >= ${efl_version}
+  edbus >= ${efl_version}
   dbus-1
 ])
 
 PKG_CHECK_MODULES(E_FM_OP, [
-  ecore >= 1.2.0
-  ecore-file >= 1.2.0
-  eina >= 1.2.0
+  ecore >= ${efl_version}
+  ecore-file >= ${efl_version}
+  eina >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E_FM_OPEN, [
-  ecore >= 1.2.0
-  ecore-ipc >= 1.2.0
-  ecore-con >= 1.2.0
-  eet >= 1.6.0
-  eina >= 1.2.0
+  ecore >= ${efl_version}
+  ecore-ipc >= ${efl_version}
+  ecore-con >= ${efl_version}
+  eet >= ${efl_version}
+  eina >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E_SYS, [
-  eina >= 1.2.0
+  eina >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E_INIT, [
-  evas >= 1.2.0
-  ecore >= 1.2.0
-  ecore-evas >= 1.2.0
-  ecore-x >= 1.2.0
-  edje >= 1.2.0
-  ecore-ipc >= 1.2.0
-  eina >= 1.2.0
+  evas >= ${efl_version}
+  ecore >= ${efl_version}
+  ecore-evas >= ${efl_version}
+  ecore-x >= ${efl_version}
+  edje >= ${efl_version}
+  ecore-ipc >= ${efl_version}
+  eina >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E_ALERT, [
   xcb
   xcb-shape
-  eina >= 1.2.0
-  ecore >= 1.2.0
-  ecore-ipc >= 1.2.0
+  eina >= ${efl_version}
+  ecore >= ${efl_version}
+  ecore-ipc >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E, [
-  evas >= 1.2.0
-  ecore >= 1.2.0
-  ecore-x >= 1.2.99
-  ecore-evas >= 1.2.0
-  ecore-input >= 1.2.0
-  ecore-input-evas >= 1.2.0
-  ecore-con >= 1.2.0
-  ecore-ipc >= 1.2.0
-  ecore-file >= 1.2.0
-  eet >= 1.6.0
-  edje >= 1.2.0
-  efreet >= 1.2.0
-  efreet-mime >= 1.2.0
-  efreet-trash >= 1.2.0
-  eina >= 1.2.0
+  evas >= ${efl_version}
+  ecore >= ${efl_version}
+  ecore-x >= ${efl_version}
+  ecore-evas >= ${efl_version}
+  ecore-input >= ${efl_version}
+  ecore-input-evas >= ${efl_version}
+  ecore-con >= ${efl_version}
+  ecore-ipc >= ${efl_version}
+  ecore-file >= ${efl_version}
+  eet >= ${efl_version}
+  edje >= ${efl_version}
+  efreet >= ${efl_version}
+  efreet-mime >= ${efl_version}
+  efreet-trash >= ${efl_version}
+  eina >= ${efl_version}
   dbus-1
-  edbus >= 1.2.0
-  eio >= 1.0.0
+  edbus >= ${efl_version}
+  eio >= ${efl_version}
   $hal_mount
   $eeze_mount
   $udisks_mount
   $device_backend
 ])
 requirements_e="\
-evas >= 1.2.0 \
-ecore >= 1.2.0 \
-ecore-x >= 1.2.99 \
-ecore-evas >= 1.2.0 \
-ecore-con >= 1.2.0 \
-ecore-ipc >= 1.2.0 \
-ecore-file >= 1.2.0 \
-eet >= 1.6.0 \
-edje >= 1.2.0 \
-efreet >= 1.2.0 \
-efreet-mime >= 1.2.0 \
-eina >= 1.2.0 \
+evas >= ${efl_version} \
+ecore >= ${efl_version} \
+ecore-x >= ${efl_version} \
+ecore-evas >= ${efl_version} \
+ecore-con >= ${efl_version} \
+ecore-ipc >= ${efl_version} \
+ecore-file >= ${efl_version} \
+eet >= ${efl_version} \
+edje >= ${efl_version} \
+efreet >= ${efl_version} \
+efreet-mime >= ${efl_version} \
+eina >= ${efl_version} \
 dbus-1 \
-edbus >= 1.2.0 \
-eio >= 1.0.0 \
+edbus >= ${efl_version} \
+eio >= ${efl_version} \
 $hal_mount \
 $udisks_mount \
 $eeze_mount \
@@ -573,7 +575,7 @@ AC_ARG_ENABLE(elementary,
   [want_elementary=auto]
 )
 if test "x$want_elementary" != "xno"; then
-   PKG_CHECK_MODULES(ELM, [elementary >= 1.6.9.0],
+   PKG_CHECK_MODULES(ELM, [elementary >= ${efl_version}],
                      [have_elementary=yes], [have_elementary=no])
    if test "x$want_elementary" = "xyes" -a "x$have_elementary" = "xno"; then
       AC_MSG_ERROR([Elementary support requested but it was not found])
@@ -585,12 +587,12 @@ if test "x$want_elementary" != "xno"; then
 fi
 
 PKG_CHECK_MODULES(E_OPEN, [
-  ecore >= 1.2.0
-  efreet >= 1.2.0
-  efreet-mime >= 1.2.0
+  ecore >= ${efl_version}
+  efreet >= ${efl_version}
+  efreet-mime >= ${efl_version}
 ])
 
-AC_E_CHECK_PKG(ECORE_IMF, [ ecore-imf >= 1.2.0 ecore-imf-evas >= 1.2.0 ], [], [:])
+AC_E_CHECK_PKG(ECORE_IMF, [ ecore-imf >= ${efl_version} ecore-imf-evas >= ${efl_version} ], [], [:])
 
 e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "$execinfo_libs
 e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
@@ -623,7 +625,7 @@ AC_ARG_WITH(edje-cc,
 ])
 AC_SUBST(edje_cc)
 
-PKG_CHECK_MODULES(EET, [eet >= 1.6.0])
+PKG_CHECK_MODULES(EET, [eet >= ${efl_version}])
 AC_ARG_WITH(eet-eet,
 [  --with-eet-eet=PATH              specify a specific path to eet utility],
 [
