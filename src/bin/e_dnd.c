@@ -1377,14 +1377,20 @@ _e_dnd_cb_event_dnd_status(void *data __UNUSED__, int type __UNUSED__, void *eve
 }
 
 static Eina_Bool
-_e_dnd_cb_event_dnd_finished(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_dnd_cb_event_dnd_finished(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
+/*
+ * this is broken since the completed flag doesn't tell us anything with current
+ * ecore-x and results in never-ending dnd operation which breaks the window
+ * 18 September 2012
+ * BORKER CERTIFICATION: BRONZE
+ * -discomfitor
    Ecore_X_Event_Xdnd_Finished *ev;
 
    ev = event;
 
    if (!ev->completed) return ECORE_CALLBACK_PASS_ON;
-
+*/
    if (_drag_current)
      {
         E_Drag *tmp;
