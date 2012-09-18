@@ -419,7 +419,7 @@ void
 gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    unsigned int layer;
-   E_Gadcon_Client *drag_gcc;
+   E_Gadcon_Client *drag_gcc = NULL;
 
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
