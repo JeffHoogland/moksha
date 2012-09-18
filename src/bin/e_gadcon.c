@@ -3037,7 +3037,7 @@ _e_gadcon_client_cb_menu_post(void *data, E_Menu *m __UNUSED__)
    if (!(gcc = data)) return;
    if (gcc->gadcon) e_gadcon_locked_set(gcc->gadcon, 0);
    if (!gcc->menu) return;
-   if (gcc->gadcon->shelf && (gcc->menu == gcc->gadcon->shelf->menu)) gcc->gadcon->shelf->menu = NULL;
+   if (gcc->gadcon && gcc->gadcon->shelf && (gcc->menu == gcc->gadcon->shelf->menu)) gcc->gadcon->shelf->menu = NULL;
    e_object_del(E_OBJECT(gcc->menu));
    gcc->menu = NULL;
 }

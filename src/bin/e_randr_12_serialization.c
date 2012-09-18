@@ -449,7 +449,8 @@ _12_try_restore_configuration(void)
           }
 
         // DEBUG
-        DBG("E_RANDR: \tRestoring CRTC %d (index %d) in mode %s.", ci->xid, sc->index, (mode == Ecore_X_Randr_None) ? "(disabled)" : mi->name);
+        if (mi)
+          DBG("E_RANDR: \tRestoring CRTC %d (index %d) in mode %s.", ci->xid, sc->index, (mode == Ecore_X_Randr_None) ? "(disabled)" : mi->name);
         DBG("E_RANDR: \t\tUsed outputs:");
         EINA_LIST_FOREACH(outputs_list, outputs_iter, output_info)
             DBG("\t\t%s", output_info->name);

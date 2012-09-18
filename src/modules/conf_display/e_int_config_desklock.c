@@ -119,11 +119,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      for (x = 0; x < cfdata->zone_count; x++)
      cfdata->bgs = eina_list_append(cfdata->bgs, eina_stringshare_add("theme_desklock_background"));
 
-   if (!e_util_strcmp(cfdata->bgs->data, "theme_desklock_background"))
+   if (!e_util_strcmp(eina_list_data_get(cfdata->bgs), "theme_desklock_background"))
      cfdata->bg_method = E_DESKLOCK_BACKGROUND_METHOD_THEME_DESKLOCK;
-   else if (!e_util_strcmp(cfdata->bgs->data, "theme_background"))
+   else if (!e_util_strcmp(eina_list_data_get(cfdata->bgs), "theme_background"))
      cfdata->bg_method = E_DESKLOCK_BACKGROUND_METHOD_THEME;
-   else if (!e_util_strcmp(cfdata->bgs->data, "user_background"))
+   else if (!e_util_strcmp(eina_list_data_get(cfdata->bgs), "user_background"))
      cfdata->bg_method = E_DESKLOCK_BACKGROUND_METHOD_WALLPAPER;
    else
      cfdata->bg_method = E_DESKLOCK_BACKGROUND_METHOD_CUSTOM;

@@ -33,21 +33,21 @@ _e_fm2_device_volume_setup(E_Volume *v)
    else if (((v->storage->vendor) && (v->storage->vendor[0])) &&
             ((v->storage->model) && (v->storage->model[0])))
      {
-        if (size[0] != '\0')
+        if (size && (size[0] != '\0'))
           snprintf(label, sizeof(label) - 1, _("%s %s—%s"), v->storage->vendor, v->storage->model, size);
         else
           snprintf(label, sizeof(label) - 1, "%s %s", v->storage->vendor, v->storage->model);
      }
    else if ((v->storage->model) && (v->storage->model[0]))
      {
-        if (size[0] != '\0')
+        if (size && (size[0] != '\0'))
           snprintf(label, sizeof(label) - 1, _("%s—%s"), v->storage->model, size);
         else
           snprintf(label, sizeof(label) - 1, "%s", v->storage->model);
      }
    else if ((v->storage->vendor) && (v->storage->vendor[0]))
      {
-        if (size[0] != '\0')
+        if (size && (size[0] != '\0'))
           snprintf(label, sizeof(label) - 1, _("%s—%s"), v->storage->vendor, size);
         else
           snprintf(label, sizeof(label) - 1, "%s", v->storage->vendor);

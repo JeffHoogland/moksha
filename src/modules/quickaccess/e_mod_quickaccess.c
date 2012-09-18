@@ -1113,7 +1113,7 @@ _e_qa_help_timer_helper(void)
         else
           /* someone's messing with the menu. joke's on them, we can dance all day */
           qa_mod->demo_state = 0;
-     } while (mi->separator);
+     } while (mi && mi->separator);
    return EINA_TRUE;
 }
 

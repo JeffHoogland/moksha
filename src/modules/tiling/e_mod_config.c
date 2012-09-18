@@ -219,7 +219,7 @@ _basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
     /* List of individual tiling modes */
     cfdata->evas = evas;
 
-    _fill_zone_config(con->zones->data, cfdata);
+    _fill_zone_config(eina_list_data_get(con->zones), cfdata);
 
     e_widget_ilist_selected_set(cfdata->o_zonelist, 0);
 
