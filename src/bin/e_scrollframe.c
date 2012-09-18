@@ -196,7 +196,7 @@ e_scrollframe_extern_pan_set(Evas_Object *obj, Evas_Object *pan,
 }
 
 EAPI int
-e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *custom_group)
+e_scrollframe_custom_theme_set(Evas_Object *obj, const char *custom_category, const char *custom_group)
 {
    API_ENTRY return 0;
 
@@ -211,7 +211,7 @@ e_scrollframe_custom_theme_set(Evas_Object *obj, char *custom_category, char *cu
 }
 
 EAPI int
-e_scrollframe_custom_edje_file_set(Evas_Object *obj, char *file, char *group)
+e_scrollframe_custom_edje_file_set(Evas_Object *obj, const char *file, const char *group)
 {
    API_ENTRY return 0;
 
