@@ -286,7 +286,7 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
                        E_Volume *v;
                        
                        v = e_fm2_device_volume_find(file);
-                       if (v)
+                       if (v && v->mount_point)
                          {
                             if (statvfs(v->mount_point, &stfs) == 0)
                               {
