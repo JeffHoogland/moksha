@@ -121,12 +121,16 @@ EAPI int E_EVENT_DESKLOCK = 0;
 EINTERN int
 e_desklock_init(void)
 {
+   Eina_List *l;
+   E_Config_Desklock_Background *bg;
    /* A poller to tick every 256 ticks, watching for an idle user */
    _e_desklock_idle_poller = ecore_poller_add(ECORE_POLLER_CORE, 256,
                                               _e_desklock_cb_idle_poller, NULL);
 
    if (e_config->desklock_background)
      e_filereg_register(e_config->desklock_background);
+   EINA_LIST_FOREACH(e_config->desklock_backgrounds, l, bg)
+     e_filereg_register(bg->file);
 
    E_EVENT_DESKLOCK = ecore_event_type_new();
 
@@ -141,6 +145,8 @@ e_desklock_shutdown(void)
 {
    Eina_Bool waslocked = EINA_FALSE;
    E_Desklock_Run *task;
+   Eina_List *l;
+   E_Config_Desklock_Background *bg;
 
    if (edd) waslocked = EINA_TRUE;
    if (!x_fatal)
@@ -155,6 +161,11 @@ e_desklock_shutdown(void)
 
    if (job) ecore_job_del(job);
    job = NULL;
+
+   if (e_config->desklock_background)
+     e_filereg_deregister(e_config->desklock_background);
+   EINA_LIST_FOREACH(e_config->desklock_backgrounds, l, bg)
+     e_filereg_deregister(bg->file);
 
    EINA_LIST_FREE(tasks, task)
      {
