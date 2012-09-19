@@ -505,13 +505,28 @@ _config_free(void)
              IF_RELEASE(pc2->trigger);
              E_FREE(pc2);
           }
-        eina_stringshare_del(pc->name);
-        eina_stringshare_del(pc->trigger);
-        free(pc);
+        // collections become registered as SUBJECT
+        // plugin, therefore dont free  pc here
      }
-   evry_conf->conf_subjects = eina_list_free(evry_conf->conf_subjects);
-   evry_conf->conf_actions = eina_list_free(evry_conf->conf_actions);
-   evry_conf->conf_objects = eina_list_free(evry_conf->conf_objects);
+
+   EINA_LIST_FREE (evry_conf->conf_subjects, pc)
+     {
+        IF_RELEASE(pc->name);
+        IF_RELEASE(pc->trigger);
+        E_FREE(pc);
+     }
+   EINA_LIST_FREE (evry_conf->conf_actions, pc)
+     {
+        IF_RELEASE(pc->name);
+        IF_RELEASE(pc->trigger);
+        E_FREE(pc);
+     }
+   EINA_LIST_FREE (evry_conf->conf_objects, pc)
+     {
+        IF_RELEASE(pc->name);
+        IF_RELEASE(pc->trigger);
+        E_FREE(pc);
+     }
    EINA_LIST_FREE (evry_conf->conf_views, pc)
      {
         IF_RELEASE(pc->name);
