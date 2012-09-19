@@ -1,10 +1,10 @@
 #include "e.h"
 
 /* local subsystem functions */
-static void _e_order_free(E_Order *eo);
-static void _e_order_cb_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
-static void _e_order_read(E_Order *eo);
-static void _e_order_save(E_Order *eo);
+static void      _e_order_free(E_Order *eo);
+static void      _e_order_cb_monitor(void *data, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path);
+static void      _e_order_read(E_Order *eo);
+static void      _e_order_save(E_Order *eo);
 static Eina_Bool _e_order_cb_efreet_cache_update(void *data, int ev_type, void *ev);
 
 static Eina_List *orders = NULL;
@@ -22,9 +22,9 @@ e_order_init(void)
                                               _e_order_cb_efreet_cache_update,
                                               NULL));
    if (e_config->default_system_menu)
-      menu_file = strdup(e_config->default_system_menu);
+     menu_file = strdup(e_config->default_system_menu);
    if (!menu_file)
-      menu_file = strdup("/etc/xdg/menus/applications.menu");
+     menu_file = strdup("/etc/xdg/menus/applications.menu");
    if (menu_file)
      {
         if (!ecore_file_exists(menu_file))
@@ -133,11 +133,11 @@ e_order_files_append(E_Order *eo, Eina_List *files)
 
    EINA_LIST_FOREACH(files, l, file)
      {
-	Efreet_Desktop *desktop;
+        Efreet_Desktop *desktop;
 
-	desktop = efreet_desktop_get(file);
-	if (!desktop) continue;
-	eo->desktops = eina_list_append(eo->desktops, desktop);
+        desktop = efreet_desktop_get(file);
+        if (!desktop) continue;
+        eo->desktops = eina_list_append(eo->desktops, desktop);
      }
    _e_order_save(eo);
 }
@@ -153,11 +153,11 @@ e_order_files_prepend_relative(E_Order *eo, Eina_List *files, Efreet_Desktop *be
 
    EINA_LIST_FOREACH(files, l, file)
      {
-	Efreet_Desktop *desktop;
+        Efreet_Desktop *desktop;
 
-	desktop = efreet_desktop_get(file);
-	if (!desktop) continue;
-	eo->desktops = eina_list_prepend_relative(eo->desktops, desktop, before);
+        desktop = efreet_desktop_get(file);
+        if (!desktop) continue;
+        eo->desktops = eina_list_prepend_relative(eo->desktops, desktop, before);
      }
    _e_order_save(eo);
 }
@@ -218,36 +218,36 @@ _e_order_read(E_Order *eo)
    f = fopen(eo->path, "rb");
    if (f)
      {
-	char buf[4096];
+        char buf[4096];
 
-	while (fgets(buf, sizeof(buf), f))
-	  {
-	     int len;
+        while (fgets(buf, sizeof(buf), f))
+          {
+             int len;
 
-	     len = strlen(buf);
-	     if (len > 0)
-	       {
-		  if (buf[len - 1] == '\n')
-		    {
-		       buf[len - 1] = 0;
-		       len--;
-		    }
-		  if (len > 0)
-		    {
-		       Efreet_Desktop *desktop = NULL;
+             len = strlen(buf);
+             if (len > 0)
+               {
+                  if (buf[len - 1] == '\n')
+                    {
+                       buf[len - 1] = 0;
+                       len--;
+                    }
+                  if (len > 0)
+                    {
+                       Efreet_Desktop *desktop = NULL;
 
-		       if (buf[0] == '/')
-		         desktop = efreet_desktop_get(buf);
-		       if (!desktop)
-		         desktop = efreet_desktop_get(ecore_file_file_get(buf));
-		       if (!desktop)
-			 desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
-		       if (desktop)
+                       if (buf[0] == '/')
+                         desktop = efreet_desktop_get(buf);
+                       if (!desktop)
+                         desktop = efreet_desktop_get(ecore_file_file_get(buf));
+                       if (!desktop)
+                         desktop = efreet_util_desktop_file_id_find(ecore_file_file_get(buf));
+                       if (desktop)
                          eo->desktops = eina_list_append(eo->desktops, desktop);
-		    }
-	       }
-	  }
-	fclose(f);
+                    }
+               }
+          }
+        fclose(f);
      }
    if (dir) free(dir);
 }
@@ -265,12 +265,12 @@ _e_order_save(E_Order *eo)
 
    EINA_LIST_FOREACH(eo->desktops, l, desktop)
      {
-	const char *id;
+        const char *id;
 
-	id = efreet_util_path_to_file_id(desktop->orig_path);
-	if (id)
+        id = efreet_util_path_to_file_id(desktop->orig_path);
+        if (id)
           fprintf(f, "%s\n", id);
-	else
+        else
           fprintf(f, "%s\n", desktop->orig_path);
      }
 
@@ -286,8 +286,9 @@ _e_order_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, v
    /* reread all .order files */
    EINA_LIST_FOREACH(orders, l, eo)
      {
-	_e_order_read(eo);
-	if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
+        _e_order_read(eo);
+        if (eo->cb.update) eo->cb.update(eo->cb.data, eo);
      }
    return ECORE_CALLBACK_PASS_ON;
 }
+
