@@ -692,7 +692,6 @@ e_menu_item_num_get(const E_Menu_Item *mi)
 EAPI void
 e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
 {
-   int len;
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (((mi->icon) && (icon) && (!strcmp(icon, mi->icon))) ||
@@ -705,8 +704,7 @@ e_menu_item_icon_file_set(E_Menu_Item *mi, const char *icon)
    if (icon)
      {
         mi->icon = eina_stringshare_add(icon);
-        len = strlen(icon);
-        if ((len > 4) && (!strcasecmp(icon + len - 4, ".edj")))
+        if (eina_str_has_extension(mi->icon, ".edj"))
           mi->icon_key = eina_stringshare_add("icon");
      }
    mi->changed = 1;
