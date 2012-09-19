@@ -757,6 +757,8 @@ _e_int_menus_apps_start(void *data, E_Menu *m)
         menu = _e_int_menus_apps_thread_new(m, dir);
      }
    if (!menu) return;
+   if (_e_int_menus_app_cleaner)
+     ecore_timer_reset(_e_int_menus_app_cleaner);
    eina_stringshare_del(dir);
    _e_int_menus_apps_scan(m, menu);
    e_menu_pre_activate_callback_set(m, NULL, NULL);
