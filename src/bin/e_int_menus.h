@@ -62,5 +62,6 @@ EAPI void                     e_int_menus_menu_augmentation_del(const char *menu
 EAPI void                     e_int_menus_menu_augmentation_point_disabled_set(const char *menu,
                                        Eina_Bool disabled);
 
+EINTERN void e_int_menus_shutdown(void);
 #endif
 #endif

@@ -226,6 +226,7 @@ e_menu_shutdown(void)
         _e_menu_hash = NULL;
      }
    _e_menu_lock = EINA_FALSE;
+   e_int_menus_shutdown();
 
    return 1;
 }
