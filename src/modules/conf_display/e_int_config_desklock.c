@@ -15,13 +15,6 @@ static int          _zone_count_get(void);
 static void         _cb_bg_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void         _cb_ask_presentation_changed(void *data, Evas_Object *obj);
 
-typedef enum _E_Desklock_Background_Method {
-    E_DESKLOCK_BACKGROUND_METHOD_THEME_DESKLOCK = 0,
-    E_DESKLOCK_BACKGROUND_METHOD_THEME,
-    E_DESKLOCK_BACKGROUND_METHOD_WALLPAPER,
-    E_DESKLOCK_BACKGROUND_METHOD_CUSTOM,
-} E_Desklock_Background_Method;
-
 struct _E_Config_Dialog_Data
 {
    E_Config_Dialog *cfd, *bg_fsel;

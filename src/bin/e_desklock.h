@@ -2,6 +2,12 @@
 
 typedef struct _E_Event_Desklock E_Event_Desklock;
 
+typedef enum _E_Desklock_Background_Method {
+    E_DESKLOCK_BACKGROUND_METHOD_THEME_DESKLOCK = 0,
+    E_DESKLOCK_BACKGROUND_METHOD_THEME,
+    E_DESKLOCK_BACKGROUND_METHOD_WALLPAPER,
+    E_DESKLOCK_BACKGROUND_METHOD_CUSTOM,
+} E_Desklock_Background_Method;
 #else
 #ifndef E_DESKLOCK_H
 #define E_DESKLOCK_H
