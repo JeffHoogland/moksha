@@ -427,7 +427,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
                            &(cfdata->cur_enabled));
    cfdata->gui.enabled = ob;
    e_widget_on_change_hook_set(ob, _basic_enable_cb_change, cfdata);
-   e_widget_disabled_set(ob, 0);
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0);
 
    of = e_widget_framelist_add(evas, _("Fonts"), 1);
@@ -445,7 +444,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_size_min_set(ob, 100, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
-
+   e_widget_disabled_set(cfdata->gui.font_list, !cfdata->cur_enabled);
+   e_widget_disabled_set(cfdata->gui.size_list, !cfdata->cur_enabled);
    ob =
      e_widget_font_preview_add(evas, _("Basic preview text: 123: 我的天空！"));
    cfdata->gui.preview = ob;
