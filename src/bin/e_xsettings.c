@@ -524,6 +524,26 @@ _e_xsettings_xft_set(void)
 #endif
 
 static void
+_e_xsettings_cursor_path_set(void)
+{
+   struct stat st;
+   char buf[PATH_MAX], env[4096], *path;
+
+   e_user_homedir_concat_static(buf, ".icons");
+
+   if (stat(buf, &st)) return;
+   path = getenv("XCURSOR_PATH");
+   if (path)
+     {
+       snprintf(env, sizeof(env), "%s:%s", buf, path);
+       path = env;
+     }
+   else
+     path = buf;
+   e_env_set("XCURSOR_PATH", path);
+}
+
+static void
 _e_xsettings_start(void)
 {
    Eina_List *l;
@@ -534,6 +554,7 @@ _e_xsettings_start(void)
    _e_xsettings_theme_set();
    _e_xsettings_icon_theme_set();
    _e_xsettings_font_set();
+   _e_xsettings_cursor_path_set();
 
    EINA_LIST_FOREACH(e_manager_list(), l, man)
      {
