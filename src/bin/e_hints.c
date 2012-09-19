@@ -1166,6 +1166,18 @@ e_hints_allowed_action_get(E_Border *bd)
      }
 }
 
+static void
+_e_hints_process_wakeup(E_Border *bd)
+{
+   // check for e vkbd state property - if its there, it's efl, so sending a
+   // a fake sigchild to wake things up os just fine
+   if (!bd->client.vkbd.have_property) return;
+   if (bd->client.netwm.pid <= 0) return;
+#ifdef SIGCHLD
+   kill(bd->client.netwm.pid, SIGCHLD);
+#endif             
+}
+
 EAPI void
 e_hints_window_visible_set(E_Border *bd)
 {
@@ -1180,6 +1192,7 @@ e_hints_window_visible_set(E_Border *bd)
         bd->client.netwm.state.hidden = 0;
         bd->changed = 1;
      }
+   _e_hints_process_wakeup(bd);
 }
 
 EAPI void
@@ -1196,6 +1209,7 @@ e_hints_window_iconic_set(E_Border *bd)
         bd->client.netwm.state.hidden = 1;
         bd->changed = 1;
      }
+   _e_hints_process_wakeup(bd);
 }
 
 EAPI void
@@ -1212,6 +1226,7 @@ e_hints_window_hidden_set(E_Border *bd)
         bd->client.netwm.state.hidden = 0;
         bd->changed = 1;
      }
+   _e_hints_process_wakeup(bd);
 }
 
 EAPI void
@@ -1230,6 +1245,7 @@ e_hints_window_shaded_set(E_Border *bd,
         bd->client.netwm.state.shaded = 0;
         bd->changed = 1;
      }
+   _e_hints_process_wakeup(bd);
 }
 
 EAPI void
@@ -1448,7 +1464,14 @@ e_hints_window_qtopia_soft_menus_get(E_Border *bd)
 EAPI void
 e_hints_window_virtual_keyboard_state_get(E_Border *bd)
 {
+   Ecore_X_Atom atom = 0;
    bd->client.vkbd.state = ecore_x_e_virtual_keyboard_state_get(bd->client.win);
+   if (ecore_x_window_prop_atom_get(bd->client.win, 
+                                    ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE,
+                                    &atom, 1))
+     bd->client.vkbd.have_property = 1;
+   else
+     bd->client.vkbd.have_property = 0;
 }
 
 EAPI void

@@ -411,6 +411,7 @@ struct _E_Border
             unsigned char vkbd : 1;
          } fetch;
          Ecore_X_Virtual_Keyboard_State state;
+         unsigned char                  have_property : 1;
          unsigned char                  vkbd : 1;
       } vkbd;
 
