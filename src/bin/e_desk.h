@@ -4,7 +4,6 @@ typedef struct _E_Desk E_Desk;
 typedef struct _E_Event_Desk_Show E_Event_Desk_Show;
 typedef struct _E_Event_Desk_Before_Show E_Event_Desk_Before_Show;
 typedef struct _E_Event_Desk_After_Show E_Event_Desk_After_Show;
-typedef struct _E_Event_Desk_DeskShow E_Event_Desk_DeskShow;
 typedef struct _E_Event_Desk_Name_Change E_Event_Desk_Name_Change;
 
 #else
