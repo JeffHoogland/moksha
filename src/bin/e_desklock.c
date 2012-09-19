@@ -177,16 +177,24 @@ e_desklock_shutdown(void)
 }
 
 static const char *
-_user_wallpaper_get(void)
+_user_wallpaper_get(E_Zone *zone)
 {
    const E_Config_Desktop_Background *cdbg;
    const Eina_List *l;
+   E_Desk *desk;
 
    if (e_config->desktop_default_background)
      return e_config->desktop_default_background;
 
+   desk = e_desk_current_get(zone);
    EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cdbg)
-     if (cdbg->file) return cdbg->file;
+     {
+        if ((cdbg->container > -1) && (cdbg->container != (int)zone->container->num)) continue;
+        if ((cdbg->zone > -1) && (cdbg->zone != (int)zone->num)) continue;
+        if ((cdbg->desk_x > -1) && (cdbg->desk_x != desk->x)) continue;
+        if ((cdbg->desk_y > -1) && (cdbg->desk_y != desk->y)) continue;
+        if (cdbg->file) return cdbg->file;
+     }
 
    return e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
 }
@@ -456,7 +464,7 @@ _e_desklock_popup_add(E_Zone *zone)
         const char *f;
 
         if (!strcmp(bg, "user_background"))
-          f = _user_wallpaper_get();
+          f = _user_wallpaper_get(zone);
         else
           f = bg;
 
