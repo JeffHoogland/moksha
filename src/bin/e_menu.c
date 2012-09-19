@@ -720,12 +720,8 @@ e_menu_item_icon_edje_set(E_Menu_Item *mi, const char *icon, const char *key)
        ((!mi->icon) && (!icon)) ||
        ((key) && (mi->icon_key) && (!strcmp(key, mi->icon_key))))
      return;
-   if (mi->icon) eina_stringshare_del(mi->icon);
-   if (mi->icon_key) eina_stringshare_del(mi->icon_key);
-   mi->icon = NULL;
-   mi->icon_key = NULL;
-   if (icon) mi->icon = eina_stringshare_add(icon);
-   if (key) mi->icon_key = eina_stringshare_add(key);
+   eina_stringshare_replace(&mi->icon, icon);
+   eina_stringshare_replace(&mi->icon_key, key);
    mi->changed = 1;
    mi->menu->changed = 1;
 }
