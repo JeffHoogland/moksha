@@ -610,6 +610,7 @@ _gadman_gadcon_free(E_Gadcon *gc)
 
    if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
    eina_list_free(gc->populated_classes);
+   if (gc->drop_handler) e_drop_handler_del(gc->drop_handler);
    free(gc);
 }
 
@@ -1738,7 +1739,7 @@ _e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event)
 
              eina_stringshare_del(gc->name);
              if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
-
+             if (gc->drop_handler) e_drop_handler_del(gc->drop_handler);
              E_FREE(gc);
           }
      }
