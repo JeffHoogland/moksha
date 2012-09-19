@@ -42,7 +42,6 @@ int  parse_rules(void);
 void clear_rules(void);
 void  find_rules(void);
 
-int layout_sort_cb        (const void *data1, const void *data2);
 int layout_sort_by_name_cb(const void *data1, const void *data2);
 
 extern Eina_List *models;

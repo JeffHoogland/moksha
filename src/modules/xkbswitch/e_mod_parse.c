@@ -7,6 +7,8 @@ Eina_List *optgroups = NULL;
 
 static const char *rules_file = NULL;
 
+static int layout_sort_cb(const void *data1, const void *data2);
+
 void
 find_rules(void)
 {
@@ -306,17 +308,17 @@ clear_rules(void)
    models = NULL;
 }
 
-int
+static int
 layout_sort_cb(const void *data1, const void *data2)
 {
    const E_XKB_Layout *l1, *l2;
 
    if (!(l1 = data1)) return 1;
-   if (!l1->name) return 1;
+   if (!l1->description) return 1;
    if (!(l2 = data2)) return -1;
-   if (!l2->name) return -1;
+   if (!l2->description) return -1;
 
-   return strcmp(l1->name, l2->name);
+   return strcmp(l1->description, l2->description);
 }
 
 int
