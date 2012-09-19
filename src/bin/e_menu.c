@@ -1123,6 +1123,7 @@ e_menu_idler_before(void)
    EINA_LIST_FOREACH(_e_active_menus, l, m)
      {
         if (m->frozen) continue;
+        if (!m->realized) continue;
         if ((m->cur.visible) && (!m->prev.visible))
           {
              m->prev.visible = m->cur.visible;
@@ -1616,7 +1617,7 @@ _e_menu_realize(E_Menu *m)
    int ok = 0;
    int w, h;
    
-   if (m->realized) return;
+   if (m->realized || (!m->items)) return;
    m->realized = 1;
    m->ecore_evas = e_canvas_new(m->zone->container->win,
                                 m->cur.x, m->cur.y, m->cur.w, m->cur.h, 1, 1,
