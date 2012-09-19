@@ -135,6 +135,8 @@ e_order_files_append(E_Order *eo, Eina_List *files)
      {
         Efreet_Desktop *desktop;
 
+        if (!strncmp(file, "file://", 7))
+          file += 7;
         desktop = efreet_desktop_get(file);
         if (!desktop) continue;
         eo->desktops = eina_list_append(eo->desktops, desktop);
@@ -155,6 +157,8 @@ e_order_files_prepend_relative(E_Order *eo, Eina_List *files, Efreet_Desktop *be
      {
         Efreet_Desktop *desktop;
 
+        if (!strncmp(file, "file://", 7))
+          file += 7;
         desktop = efreet_desktop_get(file);
         if (!desktop) continue;
         eo->desktops = eina_list_prepend_relative(eo->desktops, desktop, before);
