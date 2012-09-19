@@ -7127,7 +7127,8 @@ _e_fm2_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    if (E_INSIDE(ev->output.x, ev->output.y - 10, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h) &&
        E_INSIDE(ev->output.x - 10, ev->output.y, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h) &&
        E_INSIDE(ev->output.x + 10, ev->output.y, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h) &&
-       E_INSIDE(ev->output.x, ev->output.y + 10, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h)) return;
+       E_INSIDE(ev->output.x, ev->output.y + 10, ic->sd->x + ic->x - ic->sd->pos.x, ic->sd->y + ic->y - ic->sd->pos.y, ic->w, ic->h) &&
+       evas_pointer_inside_get(evas_object_evas_get(ic->sd->obj))) return;
    evas_object_smart_callback_call(ic->sd->obj, "icon_mouse_out", &ic->info);
 }
 
