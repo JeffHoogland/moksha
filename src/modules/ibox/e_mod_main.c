@@ -425,9 +425,8 @@ _ibox_resize_handle(IBox *b)
    else
      h = w;
    e_box_freeze(b->o_box);
-   for (l = b->icons; l; l = l->next)
+   EINA_LIST_FOREACH(b->icons, l, ic)
      {
-        ic = l->data;
         e_box_pack_options_set(ic->o_holder,
                                1, 1, /* fill */
                                0, 0, /* expand */
@@ -454,10 +453,8 @@ _ibox_icon_find(IBox *b, E_Border *bd)
    Eina_List *l;
    IBox_Icon *ic;
 
-   for (l = b->icons; l; l = l->next)
+   EINA_LIST_FOREACH(b->icons, l, ic)
      {
-        ic = l->data;
-
         if (ic->border == bd) return ic;
      }
    return NULL;
@@ -469,10 +466,9 @@ _ibox_icon_at_coord(IBox *b, Evas_Coord x, Evas_Coord y)
    Eina_List *l;
    IBox_Icon *ic;
 
-   for (l = b->icons; l; l = l->next)
+   EINA_LIST_FOREACH(b->icons, l, ic)
      {
         Evas_Coord dx, dy, dw, dh;
-        ic = l->data;
 
         evas_object_geometry_get(ic->o_holder, &dx, &dy, &dw, &dh);
         if (E_INSIDE(x, y, dx, dy, dw, dh)) return ic;
@@ -602,12 +598,10 @@ _ibox_zone_find(E_Zone *zone)
 {
    Eina_List *ibox = NULL;
    Eina_List *l;
+   Instance *inst;
 
-   for (l = ibox_config->instances; l; l = l->next)
+   EINA_LIST_FOREACH(ibox_config->instances, l, inst)
      {
-        Instance *inst;
-
-        inst = l->data;
         if (inst->ci->show_zone == 0)
           ibox = eina_list_append(ibox, inst->ibox);
         else if ((inst->ci->show_zone == 1) && (inst->ibox->zone == zone))
@@ -943,14 +937,11 @@ _ibox_inst_cb_drop(void *data, const char *type, void *event_info)
         /* Add new eapp before this icon */
         if (!inst->ibox->drop_before)
           {
-             for (l = inst->ibox->icons; l; l = l->next)
+             EINA_LIST_FOREACH(inst->ibox->icons, l, ic)
                {
-                  if (l->data == ic2)
+                  if (ic == ic2)
                     {
-                       if (l->next)
-                         ic2 = l->next->data;
-                       else
-                         ic2 = NULL;
+                       ic2 = eina_list_data_get(l->next);
                        break;
                     }
                }
@@ -999,9 +990,8 @@ _ibox_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__, void *even
      {
         Eina_List *l, *ibox;
         ibox = _ibox_zone_find(ev->border->zone);
-        for (l = ibox; l; l = l->next)
+        EINA_LIST_FOREACH(ibox, l, b)
           {
-             b = l->data;
              if (_ibox_icon_find(b, ev->border)) continue;
              if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
              ic = _ibox_icon_new(b, ev->border);
@@ -1030,9 +1020,8 @@ _ibox_cb_event_border_remove(void *data __UNUSED__, int type __UNUSED__, void *e
    ev = event;
    /* find icon and remove if there */
    ibox = _ibox_zone_find(ev->border->zone);
-   for (l = ibox; l; l = l->next)
+   EINA_LIST_FOREACH(ibox, l, b)
      {
-        b = l->data;
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
         _ibox_icon_free(ic);
@@ -1061,9 +1050,8 @@ _ibox_cb_event_border_iconify(void *data __UNUSED__, int type __UNUSED__, void *
    /* do some sort of anim when iconifying */
    desk = e_desk_current_get(ev->border->zone);
    ibox = _ibox_zone_find(ev->border->zone);
-   for (l = ibox; l; l = l->next)
+   EINA_LIST_FOREACH(ibox, l, b)
      {
-        b = l->data;
         if (_ibox_icon_find(b, ev->border)) continue;
         if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
         ic = _ibox_icon_new(b, ev->border);
@@ -1092,9 +1080,8 @@ _ibox_cb_event_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void
    /* del icon for ibox for right zone */
    /* do some sort of anim when uniconifying */
    ibox = _ibox_zone_find(ev->border->zone);
-   for (l = ibox; l; l = l->next)
+   EINA_LIST_FOREACH(ibox, l, b)
      {
-        b = l->data;
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
         _ibox_icon_free(ic);
@@ -1121,9 +1108,8 @@ _ibox_cb_event_border_icon_change(void *data __UNUSED__, int type __UNUSED__, vo
    ev = event;
    /* update icon */
    ibox = _ibox_zone_find(ev->border->zone);
-   for (l = ibox; l; l = l->next)
+   EINA_LIST_FOREACH(ibox, l, b)
      {
-        b = l->data;
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
         _ibox_icon_empty(ic);
@@ -1147,9 +1133,8 @@ _ibox_cb_event_border_urgent_change(void *data __UNUSED__, int type __UNUSED__, 
    ev = event;
    /* update icon */
    ibox = _ibox_zone_find(ev->border->zone);
-   for (l = ibox; l; l = l->next)
+   EINA_LIST_FOREACH(ibox, l, b)
      {
-        b = l->data;
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
         if (ev->border->client.icccm.urgent)
@@ -1191,9 +1176,8 @@ _ibox_cb_event_desk_show(void *data __UNUSED__, int type __UNUSED__, void *event
    ev = event;
    /* delete all wins from ibox and add only for current desk */
    ibox = _ibox_zone_find(ev->desk->zone);
-   for (l = ibox; l; l = l->next)
+   EINA_LIST_FOREACH(ibox, l, b)
      {
-        b = l->data;
         if (b->inst->ci->show_desk)
           {
              _ibox_empty(b);
@@ -1230,11 +1214,10 @@ void
 _ibox_config_update(Config_Item *ci)
 {
    Eina_List *l;
-   for (l = ibox_config->instances; l; l = l->next)
-     {
-        Instance *inst;
+   Instance *inst;
 
-        inst = l->data;
+   EINA_LIST_FOREACH(ibox_config->instances, l, inst)
+     {
         if (inst->ci != ci) continue;
 
         _ibox_empty(inst->ibox);
@@ -1250,13 +1233,11 @@ _ibox_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
    IBox *b;
    int ok = 1;
    Eina_List *l;
+   E_Config_Dialog *cfd;
 
    b = data;
-   for (l = ibox_config->config_dialog; l; l = l->next)
+   EINA_LIST_FOREACH(ibox_config->config_dialog, l, cfd)
      {
-        E_Config_Dialog *cfd;
-
-        cfd = l->data;
         if (cfd->data == b->inst->ci)
           {
              ok = 0;
