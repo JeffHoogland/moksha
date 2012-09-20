@@ -37473,7 +37473,6 @@ CONNMAN_ICON(ethernet)
             action: STATE_SET "default" 0.0;
             transition: ACCELERATE 0.5 CURRENT;
             target: "blanker";
-            target: "shadow";
          }
          program { name: "save-off2";
             signal: "e,state,screensaver,off";
