@@ -30,7 +30,6 @@ struct _E_Comp
 {
    Ecore_X_Window  win;
    Ecore_Evas     *ee;
-   Ecore_X_Window  ee_win;
    Evas           *evas;
    Evas_Object    *layout;
    Eina_List      *zones;
@@ -44,17 +43,23 @@ struct _E_Comp
    Evas_Object    *fps_bg;
    Evas_Object    *fps_fg;
    Ecore_Job      *screen_job;
+   Ecore_Timer    *nocomp_delay_timer;
+   Ecore_Timer    *nocomp_override_timer;
+   Ecore_X_Window  ee_win;
    int             animating;
    int             render_overflow;
    double          frametimes[122];
    int             frameskip;
 
+   int             nocomp_override;
+   
    E_Manager_Comp  comp;
    Ecore_X_Window  cm_selection;
 
    Eina_Bool       gl : 1;
    Eina_Bool       grabbed : 1;
    Eina_Bool       nocomp : 1;
+   Eina_Bool       nocomp_want : 1;
    Eina_Bool       wins_invalid : 1;
    Eina_Bool       saver : 1;
 };
@@ -137,11 +142,13 @@ struct _E_Comp_Win
 
    Eina_Bool            invalid : 1;  // invalid depth used - just use as marker
    Eina_Bool            nocomp : 1;  // nocomp applied
+   Eina_Bool            nocomp_need_update : 1;  // nocomp in effect, but this window updated while in nocomp mode
    Eina_Bool            needpix : 1;  // need new pixmap
    Eina_Bool            needxim : 1;  // need new xim
    Eina_Bool            real_hid : 1;  // last hide was a real window unmap
    Eina_Bool            inhash : 1;  // is in the windows hash
    Eina_Bool            show_ready : 1;  // is this window ready for its first show
+   
    Eina_Bool            show_anim : 1; // ran show animation
 };
 
@@ -168,7 +175,10 @@ static void _e_mod_comp_win_damage(E_Comp_Win *cw,
                                    int h,
                                    Eina_Bool dmg);
 static void _e_mod_comp_win_render_queue(E_Comp_Win *cw);
+static void _e_mod_comp_win_release(E_Comp_Win *cw);
+static void _e_mod_comp_win_adopt(E_Comp_Win *cw);
 static void _e_mod_comp_win_del(E_Comp_Win *cw);
+static void _e_mod_comp_win_show(E_Comp_Win *cw);
 static void _e_mod_comp_win_real_hide(E_Comp_Win *cw);
 static void _e_mod_comp_win_hide(E_Comp_Win *cw);
 static void _e_mod_comp_win_configure(E_Comp_Win *cw,
@@ -304,7 +314,7 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw,
           {
              if (cw->native)
                {
-                  printf("BUGGER: shape with native surface? cw=%p\n", cw);
+                  fprintf(stderr, "BUGGER: shape with native surface? cw=%p\n", cw);
                   return;
                }
 
@@ -568,7 +578,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           }
      }
 
-   if ((!cw->pixmap) || (cw->needpix))
+   if (((!cw->pixmap) || (cw->needpix)) &&
+       (!cw->real_hid) && (!cw->nocomp) && (!cw->c->nocomp))
      {
         Ecore_X_Pixmap pm = 0;
 
@@ -628,6 +639,8 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
              if (oldpm)
                {
                   DBG("  [0x%x] free pm %x\n", cw->win, oldpm);
+                  // XXX the below is unreachable code! :)
+/*
                   if (cw->native)
                     {
                        cw->native = 0;
@@ -640,6 +653,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                               }
                          }
                     }
+ */
                   ecore_x_pixmap_free(oldpm);
                }
           }
@@ -656,7 +670,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
    _e_mod_comp_win_geometry_update(cw);
 
    if ((cw->c->gl) && (_comp_mod->conf->texture_from_pixmap) &&
-       (!cw->shaped) && (!cw->rects))
+       (!cw->shaped) && (!cw->rects) && (cw->pixmap))
      {
 /* #ifdef HAVE_WAYLAND_CLIENTS */
 /*         DBG("DEBUG - pm now %x\n", e_mod_comp_wl_pixmap_get(cw->win)); */
@@ -708,7 +722,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 //             cw->update = 1;
           }
      }
-   else
+   else if (cw->pixmap)
      {
         if (cw->native)
           {
@@ -908,11 +922,221 @@ _e_mod_comp_fps_update(E_Comp *c)
      }
 }
 
-static Eina_Bool
-_e_mod_comp_cb_update(E_Comp *c)
+static void
+_e_mod_comp_win_release(E_Comp_Win *cw)
 {
    Eina_List *l;
    Evas_Object *o;
+ 
+   if (cw->xim)
+     {
+        evas_object_image_size_set(cw->obj, 1, 1);
+        evas_object_image_data_set(cw->obj, NULL);
+        ecore_x_image_free(cw->xim);
+        cw->xim = NULL;
+     }
+   evas_object_image_native_surface_set(cw->obj, NULL);
+   cw->native = 0;
+   EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+     {
+        if (cw->xim)
+          {
+             evas_object_image_size_set(o, 1, 1);
+             evas_object_image_data_set(o, NULL);
+             evas_object_image_data_set(o, NULL);
+          }
+        evas_object_image_native_surface_set(o, NULL);
+     }
+   if (cw->pixmap)
+     {
+        ecore_x_pixmap_free(cw->pixmap);
+        cw->pixmap = 0;
+        cw->pw = 0;
+        cw->ph = 0;
+        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
+        cw->show_ready = 0; // hmm maybe not needed?
+     }
+   if (cw->redirected)
+     {
+// we redirect all subwindows anyway
+//        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+        cw->redirected = 0;
+     }
+   if (cw->damage)
+     {
+        Ecore_X_Region parts;
+
+        eina_hash_del(damages, e_util_winid_str_get(cw->damage), cw);
+        parts = ecore_x_region_new(NULL, 0);
+        ecore_x_damage_subtract(cw->damage, 0, parts);
+        ecore_x_region_free(parts);
+        ecore_x_damage_free(cw->damage);
+        cw->damage = 0;
+     }
+}
+
+static void
+_e_mod_comp_win_adopt(E_Comp_Win *cw)
+{
+   if (!cw->damage)
+     {
+        cw->damage = ecore_x_damage_new
+          (cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
+        eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
+     }
+   if (!cw->update)
+     {
+        cw->update = 1;
+        cw->c->updates = eina_list_append(cw->c->updates, cw);
+     }
+   cw->redirected = 1;
+   e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+   e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+   _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
+   _e_mod_comp_win_render_queue(cw);
+}
+
+static void
+_e_mod_comp_cb_nocomp_begin(E_Comp *c)
+{
+   E_Comp_Win *cw, *cwf;
+   
+   if (c->nocomp) return;
+   
+   if (c->nocomp_delay_timer)
+     {
+        ecore_timer_del(c->nocomp_delay_timer);
+        c->nocomp_delay_timer = NULL;
+     }
+
+   cwf = _e_mod_comp_fullscreen_check(c);
+   if (!cwf) return;
+   
+   EINA_INLIST_FOREACH(c->wins, cw)
+     {
+        _e_mod_comp_win_release(cw);
+     }
+   cw = cwf;
+
+   fprintf(stderr, "NOCOMP win %x shobj %p\n", cw->win, cw->shobj);
+   
+   _e_mod_comp_win_release(cw);
+   
+   ecore_x_composite_unredirect_subwindows
+     (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+   c->nocomp = 1;
+   c->render_overflow = OVER_FLOW;
+   ecore_x_window_hide(c->win);
+   ecore_evas_manual_render_set(c->ee, EINA_TRUE);
+   ecore_evas_resize(c->ee, 1, 1);
+   edje_file_cache_flush();
+   edje_collection_cache_flush();
+   evas_image_cache_flush(c->evas);
+   evas_font_cache_flush(c->evas);
+   evas_render_dump(c->evas);
+   cw->nocomp = 1;
+   if (cw->redirected)
+     {
+//        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+        cw->redirected = 0;
+     }
+   if (cw->update_timeout)
+     {
+        ecore_timer_del(cw->update_timeout);
+        cw->update_timeout = NULL;
+     }
+   if (cw->update)
+     {
+        cw->update = 0;
+        cw->c->updates = eina_list_remove(cw->c->updates, cw);
+     }
+   if (cw->counter)
+     {
+        if (cw->bd)
+          ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
+        else
+          ecore_x_e_comp_sync_cancel_send(cw->win);
+        ecore_x_sync_counter_inc(cw->counter, 1);
+     }
+   DBG("JOB2...\n");
+   _e_mod_comp_render_queue(c);
+}
+
+static void
+_e_mod_comp_cb_nocomp_end(E_Comp *c)
+{
+   E_Comp_Win *cw;
+   
+   if (!c->nocomp) return;
+
+   ecore_x_composite_redirect_subwindows
+     (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
+   
+   fprintf(stderr, "COMP!\n");
+   c->nocomp = 0;
+   c->render_overflow = OVER_FLOW;
+//   ecore_evas_manual_render_set(c->ee, _comp_mod->conf->lock_fps);
+   ecore_evas_manual_render_set(c->ee, EINA_FALSE);
+   ecore_evas_resize(c->ee, c->man->w, c->man->h);
+   ecore_x_window_show(c->win);
+   EINA_INLIST_FOREACH(c->wins, cw)
+     {
+        if (!cw->nocomp)
+          {
+             if ((cw->input_only) || (cw->invalid) || (cw->real_hid)) continue;
+             
+             if (cw->nocomp_need_update)
+               {
+                  cw->nocomp_need_update = EINA_FALSE;
+                  
+                  e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
+                  e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
+               }
+             _e_mod_comp_win_adopt(cw);
+             continue;
+          }
+        cw->nocomp = 0;
+        
+        _e_mod_comp_win_adopt(cw);
+        
+        fprintf(stderr, "restore comp %x --- %p\n", cw->win, cw->shobj);
+        
+        if (cw->visible)
+          {
+             if (!cw->hidden_override) _e_mod_comp_child_show(cw);
+             cw->pending_count++;
+             e_manager_comp_event_src_visibility_send
+               (cw->c->man, (E_Manager_Comp_Source *)cw,
+                   _e_mod_comp_cb_pending_after, cw->c);
+             // no need for effect
+          }
+        if (cw->counter)
+          {
+             if (cw->bd)
+               ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
+             else
+               ecore_x_e_comp_sync_begin_send(cw->win);
+          }
+     }
+}
+
+static Eina_Bool
+_e_mod_comp_cb_nocomp_begin_timeout(void *data)
+{
+   E_Comp *c = data;
+
+   c->nocomp_delay_timer = NULL;
+   if (c->nocomp_override == 0)
+     {
+        if (_e_mod_comp_fullscreen_check(c)) c->nocomp_want = 1;
+        _e_mod_comp_cb_nocomp_begin(c);
+     }
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_e_mod_comp_cb_update(E_Comp *c)
+{
    E_Comp_Win *cw;
    Eina_List *new_updates = NULL; // for failed pixmap fetches - get them next frame
    Eina_List *update_done = NULL;
@@ -1015,7 +1239,7 @@ _e_mod_comp_cb_update(E_Comp *c)
    if (_comp_mod->conf->lock_fps)
      {
         DBG("MANUAL RENDER...\n");
-//        ecore_evas_manual_render(c->ee);
+//        if (!c->nocomp) ecore_evas_manual_render(c->ee);
      }
    if (_comp_mod->conf->efl_sync)
      {
@@ -1072,160 +1296,24 @@ nocomp:
      {
         if (_comp_mod->conf->nocomp_fs)
           {
-             if (!c->nocomp)
+             if ((!c->nocomp) && (!c->nocomp_override > 0))
                {
-                  printf("NOCOMP!\n");
-                  printf("kill comp %x\n", cw->win);
-                  c->nocomp = 1;
-                  c->render_overflow = OVER_FLOW;
-                  ecore_x_window_hide(c->win);
-                  cw->nocomp = 1;
-                  if (cw->redirected)
-                    {
-                       printf("^^^^ undirect1 %x\n", cw->win);
-                       ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-                       cw->redirected = 0;
-                       cw->pw = 0;
-                       cw->ph = 0;
-                    }
-                  if (cw->pixmap)
-                    {
-                       ecore_x_pixmap_free(cw->pixmap);
-                       cw->pixmap = 0;
-                       cw->pw = 0;
-                       cw->ph = 0;
-                       ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
-                       cw->show_ready = 0; // hmm maybe not needed?
-                    }
-                  if (cw->xim)
-                    {
-                       evas_object_image_size_set(cw->obj, 1, 1);
-                       evas_object_image_data_set(cw->obj, NULL);
-                       EINA_LIST_FOREACH(cw->obj_mirror, l, o)
-                         {
-                            evas_object_image_size_set(o, 1, 1);
-                            evas_object_image_data_set(o, NULL);
-                         }
-                       ecore_x_image_free(cw->xim);
-                       cw->xim = NULL;
-                    }
-                  if (cw->damage)
-                    {
-                       Ecore_X_Region parts;
-
-                       eina_hash_del(damages, e_util_winid_str_get(cw->damage), cw);
-                       parts = ecore_x_region_new(NULL, 0);
-                       ecore_x_damage_subtract(cw->damage, 0, parts);
-                       ecore_x_region_free(parts);
-                       ecore_x_damage_free(cw->damage);
-                       cw->damage = 0;
-                    }
-                  if (cw->update_timeout)
-                    {
-                       ecore_timer_del(cw->update_timeout);
-                       cw->update_timeout = NULL;
-                    }
-                  if (cw->update)
-                    {
-                       cw->update = 0;
-                       cw->c->updates = eina_list_remove(cw->c->updates, cw);
-                    }
-                  if (cw->counter)
-                    {
-                       if (cw->bd)
-                         ecore_x_e_comp_sync_cancel_send(cw->bd->client.win);
-                       else
-                         ecore_x_e_comp_sync_cancel_send(cw->win);
-                       ecore_x_sync_counter_inc(cw->counter, 1);
-                    }
-//                  ecore_x_window_hide(cw->win);
-//                  ecore_x_window_show(cw->win);
-                  DBG("JOB2...\n");
-                  _e_mod_comp_render_queue(c);
+                  if (!c->nocomp_delay_timer)
+                    c->nocomp_delay_timer = ecore_timer_add
+                    (1.0, _e_mod_comp_cb_nocomp_begin_timeout, c);
                }
           }
      }
    else
      {
-        if (c->nocomp)
+        c->nocomp_want = 0;
+        if (c->nocomp_delay_timer)
           {
-             printf("COMP!\n");
-             c->nocomp = 0;
-             c->render_overflow = OVER_FLOW;
-             ecore_x_window_show(c->win);
-             EINA_INLIST_FOREACH(c->wins, cw)
-               {
-                  if (!cw->nocomp) continue;
-                  cw->nocomp = 0;
-                  printf("restore comp %x --- %x\n", cw->win, cw->pixmap);
-                  if (cw->pixmap) ecore_x_pixmap_free(cw->pixmap);
-                  cw->pixmap = 0;
-                  cw->pw = 0;
-                  cw->ph = 0;
-                  cw->native = 0;
-                  cw->show_ready = 0; // hmm maybe not needed?
-                  if (!cw->damage)
-                    {
-                       cw->damage = ecore_x_damage_new
-                           (cw->win, ECORE_X_DAMAGE_REPORT_DELTA_RECTANGLES);
-                       eina_hash_add(damages, e_util_winid_str_get(cw->damage), cw);
-                    }
-                  if (!cw->redirected)
-                    {
-                       printf("^^^^ redirect2 %x\n", cw->win);
-                       printf("  redr\n");
-                       ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-
-#ifdef HAVE_WAYLAND_CLIENTS
-                       if ((cw->bd) && (cw->bd->borderless))
-                         cw->pixmap = e_mod_comp_wl_pixmap_get(cw->win);
-#endif
-                       if (!cw->pixmap)
-                         cw->pixmap = ecore_x_composite_name_window_pixmap_get(cw->win);
-                       if (cw->pixmap)
-                         {
-                            ecore_x_pixmap_geometry_get(cw->pixmap, NULL, NULL, &(cw->pw), &(cw->ph));
-                            _e_mod_comp_win_ready_timeout_setup(cw);
-                         }
-                       else
-                         {
-                            cw->pw = 0;
-                            cw->ph = 0;
-                         }
-                       printf("  %x %ix%i\n", cw->pixmap, cw->pw, cw->ph);
-                       if ((cw->pw <= 0) || (cw->ph <= 0))
-                         {
-                            ecore_x_pixmap_free(cw->pixmap);
-                            cw->pixmap = 0;
-//                            cw->show_ready = 0; // hmm maybe not needed?
-                         }
-                       ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
-                       cw->redirected = 1;
-                       cw->dmg_updates = 0;
-                       DBG("  [0x%x] up resize2 %ix%i\n", cw->win, cw->pw, cw->ph);
-                       e_mod_comp_update_resize(cw->up, cw->pw, cw->ph);
-                       e_mod_comp_update_add(cw->up, 0, 0, cw->pw, cw->ph);
-                    }
-//                  _e_mod_comp_win_damage(cw, 0, 0, cw->w, cw->h, 0);
-                  if (cw->visible)
-                    {
-                       if (!cw->hidden_override) _e_mod_comp_child_show(cw);
-                       cw->pending_count++;
-                       e_manager_comp_event_src_visibility_send
-                         (cw->c->man, (E_Manager_Comp_Source *)cw,
-                         _e_mod_comp_cb_pending_after, cw->c);
-                       // no need for effect
-                    }
-                  _e_mod_comp_win_render_queue(cw);
-                  if (cw->counter)
-                    {
-                       if (cw->bd)
-                         ecore_x_e_comp_sync_begin_send(cw->bd->client.win);
-                       else
-                         ecore_x_e_comp_sync_begin_send(cw->win);
-                    }
-               }
+             ecore_timer_del(c->nocomp_delay_timer);
+             c->nocomp_delay_timer = NULL;
           }
+        if (c->nocomp)
+          _e_mod_comp_cb_nocomp_end(c);
      }
 
    DBG("UPDATE ALL DONE: overflow = %i\n", c->render_overflow);
@@ -1656,6 +1744,16 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
         if (cw->bd->client.icccm.urgent)
           edje_object_signal_emit(cw->shobj, "e,state,urgent,on", "e");
      }
+   if (cw->visible)
+     edje_object_signal_emit(cw->shobj, "e,state,visible,on", "e");
+   else
+     edje_object_signal_emit(cw->shobj, "e,state,visible,off", "e");
+   if (!cw->animating)
+     {
+        cw->c->animating++;
+     }
+   cw->animating = 1;
+   _e_mod_comp_win_render_queue(cw);
 }
 
 static void
@@ -1741,6 +1839,7 @@ _e_mod_comp_win_add(E_Comp *c,
    if (!cw) return NULL;
    cw->win = win;
    cw->c = c;
+   cw->real_hid = 1;
    cw->opacity = 255.0;
    cw->bd = e_border_find_by_window(cw->win);
    if (_comp_mod->conf->grab) ecore_x_grab();
@@ -1833,7 +1932,7 @@ _e_mod_comp_win_add(E_Comp *c,
                                         _e_mod_comp_hide_done, cw);
         
         _e_mod_comp_win_layout_populate(cw);
-        
+
         evas_object_show(cw->obj);
         ecore_x_window_shape_events_select(cw->win, 1);
         rects = ecore_x_window_shape_rectangles_get(cw->win, &num);
@@ -1953,28 +2052,14 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
           }
         cw->dfn = NULL;
      }
-   if (cw->pixmap)
-     {
-        ecore_x_pixmap_free(cw->pixmap);
-        cw->pixmap = 0;
-        cw->pw = 0;
-        cw->ph = 0;
-        ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
-        cw->show_ready = 0; // hmm maybe not needed?
-     }
-   if (cw->redirected)
-     {
-// we redirect all subwindows anyway
-//        ecore_x_composite_unredirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
-        cw->redirected = 0;
-        cw->pw = 0;
-        cw->ph = 0;
-     }
    if (cw->update)
      {
         cw->update = 0;
         cw->c->updates = eina_list_remove(cw->c->updates, cw);
      }
+   
+   _e_mod_comp_win_release(cw);
+   
    if (cw->obj_mirror)
      {
         EINA_LIST_FREE(cw->obj_mirror, o)
@@ -1984,12 +2069,6 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
                                             _e_mod_comp_cb_win_mirror_del);
              evas_object_del(o);
           }
-     }
-   if (cw->xim)
-     {
-        evas_object_image_data_set(cw->obj, NULL);
-        ecore_x_image_free(cw->xim);
-        cw->xim = NULL;
      }
    if (cw->obj)
      {
@@ -2004,17 +2083,7 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
    
    if (cw->inhash)
      eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
-   if (cw->damage)
-     {
-        Ecore_X_Region parts;
-
-        eina_hash_del(damages, e_util_winid_str_get(cw->damage), cw);
-        parts = ecore_x_region_new(NULL, 0);
-        ecore_x_damage_subtract(cw->damage, 0, parts);
-        ecore_x_region_free(parts);
-        ecore_x_damage_free(cw->damage);
-        cw->damage = 0;
-     }
+   
    if (cw->title) free(cw->title);
    if (cw->name) free(cw->name);
    if (cw->clas) free(cw->clas);
@@ -2453,6 +2522,12 @@ _e_mod_comp_win_damage(E_Comp_Win *cw,
         ecore_x_region_free(parts);
         cw->dmg_updates++;
      }
+   if (cw->nocomp) return;
+   if (cw->c->nocomp)
+     {
+        cw->nocomp_need_update = EINA_TRUE;
+        return;
+     }
    e_mod_comp_update_add(cw->up, x, y, w, h);
    if (dmg)
      {
@@ -2478,6 +2553,11 @@ _e_mod_comp_win_reshape(E_Comp_Win *cw)
 {
    if (cw->shape_changed) return;
    cw->shape_changed = 1;
+   if (cw->c->nocomp)
+     {
+        cw->nocomp_need_update = EINA_TRUE;
+        return;
+     }
    if (!cw->update)
      {
         cw->update = 1;
@@ -2823,6 +2903,50 @@ _e_mod_comp_damage_win(void *data __UNUSED__,
 }
 
 static Eina_Bool
+_e_mod_comp_override_expire(void *data)
+{
+   E_Comp *c = data;
+
+   c->nocomp_override_timer = NULL;
+   c->nocomp_override--;
+   
+   if (c->nocomp_override <= 0)
+     {
+        c->nocomp_override = 0;
+        if (c->nocomp_want) _e_mod_comp_cb_nocomp_begin(c);
+     }
+   return EINA_FALSE;
+}
+
+static void
+_e_mod_comp_override_timed_pop(E_Comp *c)
+{
+   if (c->nocomp_override <= 0) return;
+   if (c->nocomp_override_timer)
+       ecore_timer_del(c->nocomp_override_timer);
+   c->nocomp_override_timer =
+     ecore_timer_add(5.0, _e_mod_comp_override_expire, c);
+}
+
+static void
+_e_mod_comp_override_pop(E_Comp *c)
+{
+   c->nocomp_override--;
+   if (c->nocomp_override <= 0)
+     {
+        c->nocomp_override = 0;
+        if (c->nocomp_want) _e_mod_comp_cb_nocomp_begin(c);
+     }
+}
+
+static void
+_e_mod_comp_override_push(E_Comp *c)
+{
+   c->nocomp_override++;
+   if ((c->nocomp_override > 0) && (c->nocomp)) _e_mod_comp_cb_nocomp_end(c);
+}
+
+static Eina_Bool
 _e_mod_comp_screensaver(void *data __UNUSED__,
                         int type   __UNUSED__,
                         void *event)
@@ -2842,6 +2966,7 @@ _e_mod_comp_screensaver(void *data __UNUSED__,
                {
                   if (c->saver)
                     {
+                       _e_mod_comp_override_push(c);
                        edje_object_signal_emit(cz->base, 
                                                "e,state,screensaver,on", "e");
                        edje_object_signal_emit(cz->over, 
@@ -2849,6 +2974,7 @@ _e_mod_comp_screensaver(void *data __UNUSED__,
                     }
                   else
                     {
+                       _e_mod_comp_override_timed_pop(c);
                        edje_object_signal_emit(cz->base, 
                                                "e,state,screensaver,off", "e");
                        edje_object_signal_emit(cz->over, 
@@ -2933,7 +3059,7 @@ _e_mod_comp_screen_change(void *data)
    E_Comp *c = data;
    
    c->screen_job = NULL;
-   ecore_evas_resize(c->ee, c->man->w, c->man->h);
+   if (!c->nocomp) ecore_evas_resize(c->ee, c->man->w, c->man->h);
    _e_mod_comp_screens_eval(c);
 }
 
@@ -3673,6 +3799,8 @@ _e_mod_comp_del(E_Comp *c)
    if (c->update_job) ecore_job_del(c->update_job);
    if (c->wins_list) eina_list_free(c->wins_list);
    if (c->screen_job) ecore_job_del(c->screen_job);
+   if (c->nocomp_delay_timer) ecore_timer_del(c->nocomp_delay_timer);
+   if (c->nocomp_override_timer) ecore_timer_del(c->nocomp_override_timer);
 
    ecore_x_window_free(c->cm_selection);
    ecore_x_e_comp_sync_supported_set(c->man->root, 0);
@@ -3698,7 +3826,7 @@ _e_mod_comp_sys_done_cb(void *data, Evas_Object *obj, const char *sig, const cha
 }
 
 static void
-_e_mod_comp_sys_emit_cb_wait(E_Sys_Action a, const char *sig, const char *rep)
+_e_mod_comp_sys_emit_cb_wait(E_Sys_Action a, const char *sig, const char *rep, Eina_Bool nocomp_push)
 {
    Eina_List *l, *ll;
    E_Comp_Zone *cz;
@@ -3707,6 +3835,8 @@ _e_mod_comp_sys_emit_cb_wait(E_Sys_Action a, const char *sig, const char *rep)
    
    EINA_LIST_FOREACH(compositors, l, c)
      {
+        if (nocomp_push) _e_mod_comp_override_push(c);
+        else _e_mod_comp_override_timed_pop(c);
         EINA_LIST_FOREACH(c->zones, ll, cz)
           {
              edje_object_signal_emit(cz->base, sig, "e");
@@ -3725,7 +3855,8 @@ _e_mod_comp_sys_suspend(void)
 {
    _e_mod_comp_sys_emit_cb_wait(E_SYS_SUSPEND,
                                 "e,state,sys,suspend",
-                                "e,state,sys,suspend,done");
+                                "e,state,sys,suspend,done",
+                                EINA_TRUE);
 }
 
 static void
@@ -3733,7 +3864,8 @@ _e_mod_comp_sys_hibernate(void)
 {
    _e_mod_comp_sys_emit_cb_wait(E_SYS_HIBERNATE,
                                 "e,state,sys,hibernate",
-                                "e,state,sys,hibernate,done");
+                                "e,state,sys,hibernate,done",
+                                EINA_TRUE);
 }
 
 static void
@@ -3741,7 +3873,8 @@ _e_mod_comp_sys_reboot(void)
 {
    _e_mod_comp_sys_emit_cb_wait(E_SYS_REBOOT,
                                 "e,state,sys,reboot",
-                                "e,state,sys,reboot,done");
+                                "e,state,sys,reboot,done",
+                                EINA_TRUE);
 }
 
 static void
@@ -3749,7 +3882,8 @@ _e_mod_comp_sys_shutdown(void)
 {
    _e_mod_comp_sys_emit_cb_wait(E_SYS_HALT,
                                 "e,state,sys,halt",
-                                "e,state,sys,halt,done");
+                                "e,state,sys,halt,done",
+                                EINA_TRUE);
 }
 
 static void
@@ -3757,7 +3891,8 @@ _e_mod_comp_sys_logout(void)
 {
    _e_mod_comp_sys_emit_cb_wait(E_SYS_LOGOUT,
                                 "e,state,sys,logout",
-                                "e,state,sys,logout,done");
+                                "e,state,sys,logout,done",
+                                EINA_TRUE);
 }
 
 static void
@@ -3765,7 +3900,8 @@ _e_mod_comp_sys_resume(void)
 {
    _e_mod_comp_sys_emit_cb_wait(E_SYS_SUSPEND,
                                 "e,state,sys,resume",
-                                NULL);
+                                NULL,
+                                EINA_FALSE);
 }
 
 //////////////////////////////////////////////////////////////////////////
