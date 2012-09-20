@@ -47,6 +47,7 @@ static void      _e_typebuf_timer_update(Evas_Object *obj);
 static void      _e_typebuf_timer_delete(Evas_Object *obj);
 static void      _e_typebuf_clean(Evas_Object *obj);
 
+static E_Ilist_Item *_e_ilist_item_new(E_Smart_Data *sd, Evas_Object *icon, Evas_Object *end, const char *label, int header, Ecore_End_Cb func, Ecore_End_Cb func_hilight, void *data, void *data2);
 static void      _e_ilist_item_theme_set(E_Ilist_Item *si, Eina_Bool custom, Eina_Bool header, Eina_Bool even);
 static void      _e_ilist_widget_hack_cb(E_Smart_Data *sd, Evas_Object *obj __UNUSED__, Evas_Object *scr);
 
@@ -67,49 +68,10 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char
 {
    E_Ilist_Item *si;
    Evas_Coord mw = 0, mh = 0;
-   int isodd;
    const char *stacking;
 
    API_ENTRY return;
-   si = E_NEW(E_Ilist_Item, 1);
-   si->sd = sd;
-   si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
-
-   isodd = eina_list_count(sd->items) & 0x1;
-   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
-   if (label)
-     {
-        si->label = eina_stringshare_add(label);
-        edje_object_part_text_set(si->o_base, "e.text.label", label);
-     }
-
-   si->o_icon = icon;
-   if (si->o_icon)
-     {
-        edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
-        edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
-        evas_object_show(si->o_icon);
-     }
-   si->o_end = end;
-   if (si->o_end)
-     {
-        Evas_Coord ew = 0, eh = 0;
-
-        evas_object_size_hint_min_get(si->o_end, &ew, &eh);
-        if ((ew <= 0) || (eh <= 0))
-          {
-             ew = sd->iw;
-             eh = sd->ih;
-          }
-        edje_extern_object_min_size_set(si->o_end, ew, eh);
-        edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
-        evas_object_show(si->o_end);
-     }
-   si->func = func;
-   si->func_hilight = func_hilight;
-   si->data = data;
-   si->data2 = data2;
-   si->header = header;
+   si = _e_ilist_item_new(sd, icon, end, label, header, func, func_hilight, data, data2);
    sd->items = eina_list_append(sd->items, si);
 
    edje_object_size_min_calc(si->o_base, &mw, &mh);
@@ -127,10 +89,7 @@ e_ilist_append(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const char
    e_box_thaw(sd->o_box);
 
    evas_object_lower(sd->o_box);
-   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_DOWN,
-                                  _e_smart_event_mouse_down, si);
-   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_UP,
-                                  _e_smart_event_mouse_up, si);
+
    evas_object_show(si->o_base);
 }
 
@@ -139,48 +98,10 @@ e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, c
 {
    E_Ilist_Item *si, *ri;
    Evas_Coord mw = 0, mh = 0;
-   int isodd;
    const char *stacking;
 
    API_ENTRY return;
-   si = E_NEW(E_Ilist_Item, 1);
-   si->sd = sd;
-   si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
-
-   isodd = eina_list_count(sd->items) & 0x1;
-   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
-   if (label)
-     {
-        si->label = eina_stringshare_add(label);
-        edje_object_part_text_set(si->o_base, "e.text.label", label);
-     }
-
-   si->o_icon = icon;
-   if (si->o_icon)
-     {
-        edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
-        edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
-        evas_object_show(si->o_icon);
-     }
-   si->o_end = end;
-   if (si->o_end)
-     {
-        Evas_Coord ew = 0, eh = 0;
-        evas_object_size_hint_min_get(si->o_end, &ew, &eh);
-        if ((ew <= 0) || (eh <= 0))
-          {
-             ew = sd->iw;
-             eh = sd->ih;
-          }
-        edje_extern_object_min_size_set(si->o_end, ew, eh);
-        edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
-        evas_object_show(si->o_end);
-     }
-   si->func = func;
-   si->func_hilight = func_hilight;
-   si->data = data;
-   si->data2 = data2;
-   si->header = header;
+   si = _e_ilist_item_new(sd, icon, end, label, header, func, func_hilight, data, data2);
 
    ri = eina_list_nth(sd->items, relative);
    if (ri)
@@ -206,10 +127,6 @@ e_ilist_append_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, c
    e_box_thaw(sd->o_box);
 
    evas_object_lower(sd->o_box);
-   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_DOWN,
-                                  _e_smart_event_mouse_down, si);
-   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_UP,
-                                  _e_smart_event_mouse_up, si);
    evas_object_show(si->o_base);
 }
 
@@ -218,47 +135,9 @@ e_ilist_prepend(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const cha
 {
    E_Ilist_Item *si;
    Evas_Coord mw = 0, mh = 0;
-   int isodd;
 
    API_ENTRY return;
-   si = E_NEW(E_Ilist_Item, 1);
-   si->sd = sd;
-   si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
-
-   isodd = eina_list_count(sd->items) & 0x1;
-   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
-   if (label)
-     {
-        si->label = eina_stringshare_add(label);
-        edje_object_part_text_set(si->o_base, "e.text.label", label);
-     }
-
-   si->o_icon = icon;
-   if (si->o_icon)
-     {
-        edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
-        edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
-        evas_object_show(si->o_icon);
-     }
-   si->o_end = end;
-   if (si->o_end)
-     {
-        Evas_Coord ew = 0, eh = 0;
-        evas_object_size_hint_min_get(si->o_end, &ew, &eh);
-        if ((ew <= 0) || (eh <= 0))
-          {
-             ew = sd->iw;
-             eh = sd->ih;
-          }
-        edje_extern_object_min_size_set(si->o_end, ew, eh);
-        edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
-        evas_object_show(si->o_end);
-     }
-   si->func = func;
-   si->func_hilight = func_hilight;
-   si->data = data;
-   si->data2 = data2;
-   si->header = header;
+   si = _e_ilist_item_new(sd, icon, end, label, header, func, func_hilight, data, data2);
    sd->items = eina_list_prepend(sd->items, si);
 
    edje_object_size_min_calc(si->o_base, &mw, &mh);
@@ -269,10 +148,6 @@ e_ilist_prepend(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, const cha
    e_box_thaw(sd->o_box);
 
    evas_object_lower(sd->o_box);
-   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_DOWN,
-                                  _e_smart_event_mouse_down, si);
-   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_UP,
-                                  _e_smart_event_mouse_up, si);
    evas_object_show(si->o_base);
 }
 
@@ -281,48 +156,9 @@ e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, 
 {
    E_Ilist_Item *si, *ri;
    Evas_Coord mw = 0, mh = 0;
-   int isodd;
 
    API_ENTRY return;
-   si = E_NEW(E_Ilist_Item, 1);
-   si->sd = sd;
-   si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
-
-   isodd = eina_list_count(sd->items) & 0x1;
-   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
-   if (label)
-     {
-        si->label = eina_stringshare_add(label);
-        edje_object_part_text_set(si->o_base, "e.text.label", label);
-     }
-
-   si->o_icon = icon;
-   if (si->o_icon)
-     {
-        edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
-        edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
-        evas_object_show(si->o_icon);
-     }
-   si->o_end = end;
-   if (si->o_end)
-     {
-        Evas_Coord ew = 0, eh = 0;
-
-        evas_object_size_hint_min_get(si->o_end, &ew, &eh);
-        if ((ew <= 0) || (eh <= 0))
-          {
-             ew = sd->iw;
-             eh = sd->ih;
-          }
-        edje_extern_object_min_size_set(si->o_end, ew, eh);
-        edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
-        evas_object_show(si->o_end);
-     }
-   si->func = func;
-   si->func_hilight = func_hilight;
-   si->data = data;
-   si->data2 = data2;
-   si->header = header;
+   si = _e_ilist_item_new(sd, icon, end, label, header, func, func_hilight, data, data2);
 
    ri = eina_list_nth(sd->items, relative);
    if (ri)
@@ -341,10 +177,6 @@ e_ilist_prepend_relative(Evas_Object *obj, Evas_Object *icon, Evas_Object *end, 
    e_box_thaw(sd->o_box);
 
    evas_object_lower(sd->o_box);
-   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_DOWN,
-                                  _e_smart_event_mouse_down, si);
-   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_UP,
-                                  _e_smart_event_mouse_up, si);
    evas_object_show(si->o_base);
 }
 
@@ -1493,4 +1325,57 @@ _e_ilist_item_theme_set(E_Ilist_Item *si, Eina_Bool custom, Eina_Bool header, Ei
    if (edje_object_file_set(si->o_base, file, buf)) return;
    _e_ilist_item_theme_set(si, EINA_FALSE, header, even);
    return;
+}
+
+static E_Ilist_Item *
+_e_ilist_item_new(E_Smart_Data *sd, Evas_Object *icon, Evas_Object *end, const char *label, int header, Ecore_End_Cb func, Ecore_End_Cb func_hilight, void *data, void *data2)
+{
+   int isodd;
+   E_Ilist_Item *si;
+
+   si = E_NEW(E_Ilist_Item, 1);
+   si->sd = sd;
+   si->o_base = edje_object_add(evas_object_evas_get(sd->o_smart));
+
+   isodd = eina_list_count(sd->items) & 0x1;
+   _e_ilist_item_theme_set(si, !!sd->theme, header, !isodd);
+   if (label)
+     {
+        si->label = eina_stringshare_add(label);
+        edje_object_part_text_set(si->o_base, "e.text.label", label);
+     }
+
+   si->o_icon = icon;
+   if (si->o_icon)
+     {
+        edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
+        edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
+        evas_object_show(si->o_icon);
+     }
+   si->o_end = end;
+   if (si->o_end)
+     {
+        Evas_Coord ew = 0, eh = 0;
+
+        evas_object_size_hint_min_get(si->o_end, &ew, &eh);
+        if ((ew <= 0) || (eh <= 0))
+          {
+             ew = sd->iw;
+             eh = sd->ih;
+          }
+        edje_extern_object_min_size_set(si->o_end, ew, eh);
+        edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
+        evas_object_show(si->o_end);
+     }
+   si->func = func;
+   si->func_hilight = func_hilight;
+   si->data = data;
+   si->data2 = data2;
+   si->header = header;
+
+   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_DOWN,
+                                  _e_smart_event_mouse_down, si);
+   evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_UP,
+                                  _e_smart_event_mouse_up, si);
+   return si;
 }
