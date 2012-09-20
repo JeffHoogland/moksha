@@ -183,9 +183,6 @@ _user_wallpaper_get(E_Zone *zone)
    const Eina_List *l;
    E_Desk *desk;
 
-   if (e_config->desktop_default_background)
-     return e_config->desktop_default_background;
-
    desk = e_desk_current_get(zone);
    EINA_LIST_FOREACH(e_config->desktop_backgrounds, l, cdbg)
      {
@@ -195,6 +192,9 @@ _user_wallpaper_get(E_Zone *zone)
         if ((cdbg->desk_y > -1) && (cdbg->desk_y != desk->y)) continue;
         if (cdbg->file) return cdbg->file;
      }
+
+   if (e_config->desktop_default_background)
+     return e_config->desktop_default_background;
 
    return e_theme_edje_file_get("base/theme/desklock", "e/desklock/background");
 }
