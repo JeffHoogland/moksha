@@ -68,7 +68,7 @@ parse_rules(void)
    models = eina_list_append(models, model);
 
    /* read models here */
-   for (;;)
+   for (;; )
      {
         if (fgets(buf, sizeof(buf), f))
           {
@@ -82,7 +82,7 @@ parse_rules(void)
              /* means end of section */
              if (!buf[0]) break;
              /* get rid of initial 2 spaces here */
-             p   = buf + 2;
+             p = buf + 2;
              tmp = strdup(p);
 
              model = E_NEW(E_XKB_Model, 1);
@@ -91,7 +91,8 @@ parse_rules(void)
              free(tmp);
 
              p += strlen(model->name);
-             while (p[0] == ' ') ++p;
+             while (p[0] == ' ')
+               ++p;
 
              model->description = eina_stringshare_add(p);
 
@@ -105,7 +106,7 @@ parse_rules(void)
    if (!fgets(buf, sizeof(buf), f)) goto err;
 
    /* read layouts here */
-   for (;;)
+   for (;; )
      {
         if (fgets(buf, sizeof(buf), f))
           {
@@ -114,11 +115,11 @@ parse_rules(void)
              char *tmp;
 
              n = strchr(buf, '\n');
-             if   (n) *n = '\0';
+             if (n) *n = '\0';
 
              if (!buf[0]) break;
 
-             p   = buf + 2;
+             p = buf + 2;
              tmp = strdup(p);
 
              layout = E_NEW(E_XKB_Layout, 1);
@@ -127,7 +128,8 @@ parse_rules(void)
              free(tmp);
 
              p += strlen(layout->name);
-             while (p[0] == ' ') ++p;
+             while (p[0] == ' ')
+               ++p;
 
              variant = E_NEW(E_XKB_Variant, 1);
              variant->name = eina_stringshare_add("basic");
@@ -146,21 +148,21 @@ parse_rules(void)
    if (!fgets(buf, sizeof(buf), f)) goto err;
 
    /* read variants here */
-   for (;;)
+   for (;; )
      {
         if (fgets(buf, sizeof(buf), f))
           {
              char *n;
              char *p;
              char *tmp;
-             char   *tok;
+             char *tok;
 
              n = strchr(buf, '\n');
-             if   (n) *n = '\0';
+             if (n) *n = '\0';
 
              if (!buf[0]) break;
 
-             p   = buf + 2;
+             p = buf + 2;
              tmp = strdup(p);
 
              variant = E_NEW(E_XKB_Variant, 1);
@@ -173,7 +175,8 @@ parse_rules(void)
              layout->variants = eina_list_append(layout->variants, variant);
 
              p += strlen(variant->name);
-             while (p[0] == ' ') ++p;
+             while (p[0] == ' ')
+               ++p;
              p += strlen(tok);
              p += 2;
 
@@ -189,7 +192,7 @@ parse_rules(void)
    if (!fgets(buf, sizeof(buf), f)) goto err;
 
    /* read options here */
-   for (;;)
+   for (;; )
      {
         if (fgets(buf, sizeof(buf), f))
           {
@@ -199,46 +202,48 @@ parse_rules(void)
              char *name;
 
              n = strchr(buf, '\n');
-             if   (n) *n = '\0';
+             if (n) *n = '\0';
 
              if (!buf[0]) break;
 
-             p   = buf + 2;
-             tmp  = strdup(p);
+             p = buf + 2;
+             tmp = strdup(p);
              name = strtok(tmp, " ");
 
              p += strlen(name);
-             while (p[0] == ' ') ++p;
+             while (p[0] == ' ')
+               ++p;
 
              /* skip "grp" options for switching kbd layouts */
              //if (strncmp(name, "grp", 3))
-               {
-                  if (!strchr(name, ':'))
-                    {
-                       group = E_NEW(E_XKB_Option_Group, 1);
+             {
+                if (!strchr(name, ':'))
+                  {
+                     group = E_NEW(E_XKB_Option_Group, 1);
 
-                       /* A hack to get it to parse right if
-                        * the group name contains a space
-                        */
-                       if (strstr(p, "  "))
-                         {
-                            p = strstr(p, "  ");
-                            while (p[0] == ' ') ++p;
-                         }
+                     /* A hack to get it to parse right if
+                      * the group name contains a space
+                      */
+                     if (strstr(p, "  "))
+                       {
+                          p = strstr(p, "  ");
+                          while (p[0] == ' ')
+                            ++p;
+                       }
 
-                       group->description = eina_stringshare_add(p);
+                     group->description = eina_stringshare_add(p);
 
-                       optgroups = eina_list_append(optgroups, group);
-                    }
-                  else if (group)
-                    {
-                       option = E_NEW(E_XKB_Option, 1);
-                       option->name = eina_stringshare_add(name);
-                       option->description = eina_stringshare_add(p);
-                       group->options = eina_list_append(group->options,
-                                                         option);
-                    }
-               }
+                     optgroups = eina_list_append(optgroups, group);
+                  }
+                else if (group)
+                  {
+                     option = E_NEW(E_XKB_Option, 1);
+                     option->name = eina_stringshare_add(name);
+                     option->description = eina_stringshare_add(p);
+                     group->options = eina_list_append(group->options,
+                                                       option);
+                  }
+             }
 
              free(tmp);
           }
@@ -259,10 +264,10 @@ void
 clear_rules(void)
 {
    E_XKB_Option_Group *og;
-   E_XKB_Variant      *v;
-   E_XKB_Option       *o;
-   E_XKB_Layout       *la;
-   E_XKB_Model        *m;
+   E_XKB_Variant *v;
+   E_XKB_Option *o;
+   E_XKB_Layout *la;
+   E_XKB_Model *m;
 
    EINA_LIST_FREE(layouts, la)
      {
@@ -333,3 +338,4 @@ layout_sort_by_name_cb(const void *data1, const void *data2)
 
    return strcmp(l1->name, l2);
 }
+

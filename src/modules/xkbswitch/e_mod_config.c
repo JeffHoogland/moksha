@@ -4,54 +4,54 @@
 
 struct _E_Config_Dialog_Data
 {
-   Evas *evas, *dlg_evas;
+   Evas        *evas, *dlg_evas;
    Evas_Object *layout_list, *used_list;
    Evas_Object *dmodel_list, *model_list, *variant_list;
    Evas_Object *btn_add, *btn_del, *btn_up, *btn_down;
    Ecore_Timer *fill_delay;
    Ecore_Timer *dlg_fill_delay;
 
-   Eina_List  *cfg_layouts;
-   Eina_List  *cfg_options;
-   const char *default_model;
+   Eina_List   *cfg_layouts;
+   Eina_List   *cfg_options;
+   const char  *default_model;
 
-   int only_label;
+   int          only_label;
 
-   E_Dialog *dlg_add_new;
+   E_Dialog    *dlg_add_new;
 };
 
 typedef struct _E_XKB_Dialog_Option
 {
-   int enabled;
+   int         enabled;
    const char *name;
 } E_XKB_Dialog_Option;
 
 /* Local prototypes */
 
-static void *_create_data(E_Config_Dialog *cfd);
-static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void        *_create_data(E_Config_Dialog *cfd);
+static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 
-static void _cb_add(void *data, void *data2 __UNUSED__);
-static void _cb_del(void *data, void *data2 __UNUSED__);
+static void         _cb_add(void *data, void *data2 __UNUSED__);
+static void         _cb_del(void *data, void *data2 __UNUSED__);
 
-static void _cb_up(void *data, void *data2 __UNUSED__);
-static void _cb_dn(void *data, void *data2 __UNUSED__);
+static void         _cb_up(void *data, void *data2 __UNUSED__);
+static void         _cb_dn(void *data, void *data2 __UNUSED__);
 
-static void _dlg_add_cb_ok(void *data, E_Dialog *dlg);
-static void _dlg_add_cb_cancel(void *data, E_Dialog *dlg);
+static void         _dlg_add_cb_ok(void *data, E_Dialog *dlg);
+static void         _dlg_add_cb_cancel(void *data, E_Dialog *dlg);
 
-static E_Dialog *_dlg_add_new(E_Config_Dialog_Data *cfdata);
+static E_Dialog    *_dlg_add_new(E_Config_Dialog_Data *cfdata);
 
-static void _dlg_add_cb_del(void *obj);
+static void         _dlg_add_cb_del(void *obj);
 
-static Eina_Bool _cb_dlg_fill_delay(void *data);
+static Eina_Bool    _cb_dlg_fill_delay(void *data);
 
-static void _cb_layout_select(void *data);
-static void _cb_used_select  (void *data);
+static void         _cb_layout_select(void *data);
+static void         _cb_used_select(void *data);
 
-static Eina_Bool _cb_fill_delay(void *data);
+static Eina_Bool    _cb_fill_delay(void *data);
 
 /* Externals */
 
@@ -65,10 +65,10 @@ _xkb_cfg_dialog(E_Container *con, const char *params __UNUSED__)
      return NULL;
    if (!(v = E_NEW(E_Config_Dialog_View, 1))) return NULL;
 
-   v->create_cfdata        = _create_data;
-   v->free_cfdata          = _free_data;
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
-   v->basic.apply_cfdata   = _basic_apply;
+   v->basic.apply_cfdata = _basic_apply;
 
    cfd = e_config_dialog_new(con, _("Keyboard Settings"), "E",
                              "keyboard_and_mouse/xkbswitch",
@@ -99,9 +99,9 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->cfg_layouts = NULL;
    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
      {
-        nl          = E_NEW(E_Config_XKB_Layout, 1);
-        nl->name    = eina_stringshare_add(cl->name);
-        nl->model   = eina_stringshare_add(cl->model);
+        nl = E_NEW(E_Config_XKB_Layout, 1);
+        nl->name = eina_stringshare_add(cl->name);
+        nl->model = eina_stringshare_add(cl->model);
         nl->variant = eina_stringshare_add(cl->variant);
 
         cfdata->cfg_layouts = eina_list_append(cfdata->cfg_layouts, nl);
@@ -109,7 +109,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 
    /* Initialize options */
 
-   cfdata->only_label  = e_config->xkb.only_label;
+   cfdata->only_label = e_config->xkb.only_label;
    cfdata->cfg_options = NULL;
 
    lll = e_config->xkb.used_options;
@@ -179,9 +179,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH(cfdata->cfg_layouts, l, cl)
      {
-        nl          = E_NEW(E_Config_XKB_Layout, 1);
-        nl->name    = eina_stringshare_add(cl->name);
-        nl->model   = eina_stringshare_add(cl->model);
+        nl = E_NEW(E_Config_XKB_Layout, 1);
+        nl->name = eina_stringshare_add(cl->name);
+        nl->model = eina_stringshare_add(cl->model);
         nl->variant = eina_stringshare_add(cl->variant);
 
         e_config->xkb.used_layouts =
@@ -209,7 +209,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         oc = E_NEW(E_Config_XKB_Option, 1);
         oc->name = eina_stringshare_add(od->name);
         e_config->xkb.used_options = eina_list_append(e_config->xkb.used_options, oc);
-    }
+     }
 
    e_xkb_update(-1);
    _xkb_update_icon(0);
@@ -223,121 +223,121 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 {
    /* Holds the dialog contents, displays a toolbar on the top */
    Evas_Object *mainn = e_widget_toolbook_add(evas, 24, 24);
-     {
-        /* Holds the used layouts ilist and the button table */
-        Evas_Object *layoutss;
-        Evas_Object *modelss;
-        Evas_Object *options;
+   {
+      /* Holds the used layouts ilist and the button table */
+      Evas_Object *layoutss;
+      Evas_Object *modelss;
+      Evas_Object *options;
 
-        layoutss = e_widget_list_add(evas, 0, 0);
-          {
-             /* Holds the used layouts */
-             Evas_Object *configs;
-             Evas_Object *buttons;
+      layoutss = e_widget_list_add(evas, 0, 0);
+      {
+         /* Holds the used layouts */
+         Evas_Object *configs;
+         Evas_Object *buttons;
 
-             configs = e_widget_ilist_add(evas, 32, 32, NULL);
+         configs = e_widget_ilist_add(evas, 32, 32, NULL);
 
-               {
-                  e_widget_size_min_set(configs, 220, 160);
-                  e_widget_ilist_go(configs);
+         {
+            e_widget_size_min_set(configs, 220, 160);
+            e_widget_ilist_go(configs);
 
-                  e_widget_list_object_append(layoutss, configs, 1, 1, 0.5);
-                  cfdata->used_list = configs;
-               }
+            e_widget_list_object_append(layoutss, configs, 1, 1, 0.5);
+            cfdata->used_list = configs;
+         }
 
-             /* Holds the buttons */
-             buttons = e_widget_table_add(evas, 1);
-               {
-                  cfdata->btn_up = e_widget_button_add(evas, _("Up"), "go-up", _cb_up, cfdata, NULL);
-                    {
-                       e_widget_disabled_set(cfdata->btn_up, EINA_TRUE);
-                       e_widget_table_object_append(buttons, cfdata->btn_up, 0, 0, 1, 1, 1, 1, 1, 0);
-                    }
+         /* Holds the buttons */
+         buttons = e_widget_table_add(evas, 1);
+         {
+            cfdata->btn_up = e_widget_button_add(evas, _("Up"), "go-up", _cb_up, cfdata, NULL);
+            {
+               e_widget_disabled_set(cfdata->btn_up, EINA_TRUE);
+               e_widget_table_object_append(buttons, cfdata->btn_up, 0, 0, 1, 1, 1, 1, 1, 0);
+            }
 
-                  cfdata->btn_down = e_widget_button_add(evas, _("Down"), "go-down", _cb_dn, cfdata, NULL);
-                    {
-                       e_widget_disabled_set(cfdata->btn_down, EINA_TRUE);
-                       e_widget_table_object_append(buttons, cfdata->btn_down, 1, 0, 1, 1, 1, 1, 1, 0);
-                    }
+            cfdata->btn_down = e_widget_button_add(evas, _("Down"), "go-down", _cb_dn, cfdata, NULL);
+            {
+               e_widget_disabled_set(cfdata->btn_down, EINA_TRUE);
+               e_widget_table_object_append(buttons, cfdata->btn_down, 1, 0, 1, 1, 1, 1, 1, 0);
+            }
 
-                  cfdata->btn_add = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
-                    {
-                       e_widget_table_object_append(buttons, cfdata->btn_add, 0, 1, 1, 1, 1, 1, 1, 0);
-                    }
+            cfdata->btn_add = e_widget_button_add(evas, _("Add"), "list-add", _cb_add, cfdata, NULL);
+            {
+               e_widget_table_object_append(buttons, cfdata->btn_add, 0, 1, 1, 1, 1, 1, 1, 0);
+            }
 
-                  cfdata->btn_del = e_widget_button_add(evas, _("Remove"), "list-remove", _cb_del, cfdata, NULL);
-                    {
-                       e_widget_disabled_set(cfdata->btn_del,  EINA_TRUE);
-                       e_widget_table_object_append(buttons, cfdata->btn_del, 1, 1, 1, 1, 1, 1, 1, 0);
-                    }
+            cfdata->btn_del = e_widget_button_add(evas, _("Remove"), "list-remove", _cb_del, cfdata, NULL);
+            {
+               e_widget_disabled_set(cfdata->btn_del, EINA_TRUE);
+               e_widget_table_object_append(buttons, cfdata->btn_del, 1, 1, 1, 1, 1, 1, 1, 0);
+            }
 
-                  e_widget_list_object_append(layoutss, buttons, 1, 0, 1);
-               }
+            e_widget_list_object_append(layoutss, buttons, 1, 0, 1);
+         }
 
-             e_widget_toolbook_page_append(mainn, NULL, _("Configurations"), layoutss, 1, 1, 1, 1, 0.5, 0.0);
-          }
+         e_widget_toolbook_page_append(mainn, NULL, _("Configurations"), layoutss, 1, 1, 1, 1, 0.5, 0.0);
+      }
 
-        /* Holds the default models */
-        modelss = e_widget_ilist_add(evas, 32, 32, &cfdata->default_model);
-          {
-             e_widget_size_min_set(modelss, 220, 160);
-             cfdata->dmodel_list = modelss;
+      /* Holds the default models */
+      modelss = e_widget_ilist_add(evas, 32, 32, &cfdata->default_model);
+      {
+         e_widget_size_min_set(modelss, 220, 160);
+         cfdata->dmodel_list = modelss;
 
-             e_widget_toolbook_page_append(mainn, NULL, _("Models"), modelss, 1, 1, 1, 1, 0.5, 0.0);
-          }
+         e_widget_toolbook_page_append(mainn, NULL, _("Models"), modelss, 1, 1, 1, 1, 0.5, 0.0);
+      }
 
-        /* Holds the options */
-        options = e_widget_list_add(evas, 0, 0);
-          {
-             E_XKB_Option *option;
-             E_XKB_Option_Group *group;
-             Eina_List *l, *ll, *lll;
-             Evas_Coord mw, mh;
-             Evas_Object *general;
-             Evas_Object *scroller;
+      /* Holds the options */
+      options = e_widget_list_add(evas, 0, 0);
+      {
+         E_XKB_Option *option;
+         E_XKB_Option_Group *group;
+         Eina_List *l, *ll, *lll;
+         Evas_Coord mw, mh;
+         Evas_Object *general;
+         Evas_Object *scroller;
 
-             general =  e_widget_framelist_add(evas, _("Gadgets"), 0);
-               {
-                  Evas_Object *only_label = e_widget_check_add(evas, _("Label only"), &(cfdata->only_label));
-                    {
-                       e_widget_framelist_object_append(general, only_label);
-                    }
-                  e_widget_list_object_append(options, general, 1, 1, 0.0);
-               }
+         general = e_widget_framelist_add(evas, _("Gadgets"), 0);
+         {
+            Evas_Object *only_label = e_widget_check_add(evas, _("Label only"), &(cfdata->only_label));
+            {
+               e_widget_framelist_object_append(general, only_label);
+            }
+            e_widget_list_object_append(options, general, 1, 1, 0.0);
+         }
 
-             lll  = cfdata->cfg_options;
+         lll = cfdata->cfg_options;
 
-             EINA_LIST_FOREACH(optgroups, l, group)
-               {
-                  Evas_Object *grp = e_widget_framelist_add(evas, group->description, 0);
+         EINA_LIST_FOREACH(optgroups, l, group)
+           {
+              Evas_Object *grp = e_widget_framelist_add(evas, group->description, 0);
 
-                  EINA_LIST_FOREACH(group->options, ll, option)
-                    {
-                       Evas_Object *chk = e_widget_check_add(evas, option->description,
-                                                             &(((E_XKB_Dialog_Option *)
-                                                                eina_list_data_get(lll))->enabled));
-                       e_widget_framelist_object_append(grp, chk);
-                       lll = eina_list_next(lll);
-                    }
-                  e_widget_list_object_append(options, grp, 1, 1, 0.0);
-               }
+              EINA_LIST_FOREACH(group->options, ll, option)
+                {
+                   Evas_Object *chk = e_widget_check_add(evas, option->description,
+                                                         &(((E_XKB_Dialog_Option *)
+                                                            eina_list_data_get(lll))->enabled));
+                   e_widget_framelist_object_append(grp, chk);
+                   lll = eina_list_next(lll);
+                }
+              e_widget_list_object_append(options, grp, 1, 1, 0.0);
+           }
 
-             e_widget_size_min_get(options, &mw, &mh);
+         e_widget_size_min_get(options, &mw, &mh);
 
-             if (mw < 220) mw = 220;
-             if (mh < 160) mh = 160;
+         if (mw < 220) mw = 220;
+         if (mh < 160) mh = 160;
 
-             evas_object_resize(options, mw, mh);
+         evas_object_resize(options, mw, mh);
 
-             scroller = e_widget_scrollframe_simple_add(evas, options);
-             e_widget_size_min_set(scroller, 220, 160);
+         scroller = e_widget_scrollframe_simple_add(evas, options);
+         e_widget_size_min_set(scroller, 220, 160);
 
-             e_widget_toolbook_page_append(mainn, NULL, _("Options"), scroller, 1, 1, 1, 1, 0.5, 0.0);
-          }
+         e_widget_toolbook_page_append(mainn, NULL, _("Options"), scroller, 1, 1, 1, 1, 0.5, 0.0);
+      }
 
-        /* Display the first page by default */
-        e_widget_toolbook_page_show(mainn, 0);
-     }
+      /* Display the first page by default */
+      e_widget_toolbook_page_show(mainn, 0);
+   }
 
    /* The main evas */
    cfdata->evas = evas;
@@ -482,37 +482,37 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
 
    /* The main toolbook, holds the lists and tabs */
    mainn = e_widget_toolbook_add(evas, 24, 24);
-     {
-        /* Holds the available layouts */
-        Evas_Object *available = e_widget_ilist_add(evas, 32, 32, NULL);
-        Evas_Object *modelss;
-        Evas_Object *variants;
+   {
+      /* Holds the available layouts */
+      Evas_Object *available = e_widget_ilist_add(evas, 32, 32, NULL);
+      Evas_Object *modelss;
+      Evas_Object *variants;
 
-          {
-             e_widget_size_min_set(available, 220, 160);
-             e_widget_ilist_go(available);
-             e_widget_toolbook_page_append(mainn, NULL, _("Available"), available, 1, 1, 1, 1, 0.5, 0.0);
-             cfdata->layout_list = available;
-          }
+      {
+         e_widget_size_min_set(available, 220, 160);
+         e_widget_ilist_go(available);
+         e_widget_toolbook_page_append(mainn, NULL, _("Available"), available, 1, 1, 1, 1, 0.5, 0.0);
+         cfdata->layout_list = available;
+      }
 
-        /* Holds the available models */
-        modelss = e_widget_ilist_add(evas, 32, 32, NULL);
-          {
-             e_widget_toolbook_page_append(mainn, NULL, _("Model"), modelss, 1, 1, 1, 1, 0.5, 0.0);
-             cfdata->model_list = modelss;
-        }
+      /* Holds the available models */
+      modelss = e_widget_ilist_add(evas, 32, 32, NULL);
+      {
+         e_widget_toolbook_page_append(mainn, NULL, _("Model"), modelss, 1, 1, 1, 1, 0.5, 0.0);
+         cfdata->model_list = modelss;
+      }
 
-        /* Holds the available variants */
-        variants = e_widget_ilist_add(evas, 32, 32, NULL);
-          {
-             e_widget_toolbook_page_append(mainn, NULL, _("Variant"), variants, 1, 1, 1, 1, 0.5, 0.0);
-             cfdata->variant_list = variants;
-          }
-        e_widget_toolbook_page_show(mainn, 0);
-     }
+      /* Holds the available variants */
+      variants = e_widget_ilist_add(evas, 32, 32, NULL);
+      {
+         e_widget_toolbook_page_append(mainn, NULL, _("Variant"), variants, 1, 1, 1, 1, 0.5, 0.0);
+         cfdata->variant_list = variants;
+      }
+      e_widget_toolbook_page_show(mainn, 0);
+   }
 
    e_widget_size_min_get(mainn, &mw, &mh);
-   e_dialog_content_set(dlg, mainn, mw,  mh);
+   e_dialog_content_set(dlg, mainn, mw, mh);
 
    cfdata->dlg_evas = evas;
 
@@ -539,7 +539,7 @@ static void
 _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
 {
    E_Config_Dialog_Data *cfdata = dlg->data;
-   E_Config_XKB_Layout  *cl;
+   E_Config_XKB_Layout *cl;
    char buf[4096];
    /* Configuration information */
    const char *layout = e_widget_ilist_selected_value_get(cfdata->layout_list);
@@ -547,9 +547,9 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
    const char *variant = e_widget_ilist_selected_value_get(cfdata->variant_list);
 
    /* The new configuration */
-   cl          = E_NEW(E_Config_XKB_Layout, 1);
-   cl->name    = eina_stringshare_add(layout);
-   cl->model   = eina_stringshare_add(model);
+   cl = E_NEW(E_Config_XKB_Layout, 1);
+   cl->name = eina_stringshare_add(layout);
+   cl->model = eina_stringshare_add(model);
    cl->variant = eina_stringshare_add(variant);
 
    cfdata->cfg_layouts = eina_list_append(cfdata->cfg_layouts, cl);
@@ -559,18 +559,18 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
    edje_freeze();
    e_widget_ilist_freeze(cfdata->used_list);
 
-     {
-        Evas_Object *ic = e_icon_add(cfdata->evas);
-        const char *name = cl->name;
+   {
+      Evas_Object *ic = e_icon_add(cfdata->evas);
+      const char *name = cl->name;
 
-        e_xkb_e_icon_flag_setup(ic, name);
-        snprintf(buf, sizeof(buf), "%s (%s, %s)",
-                 cl->name, cl->model, cl->variant);
-        e_widget_ilist_append_full(cfdata->used_list, ic, NULL, buf,
-                                   _cb_used_select, cfdata, NULL);
-     }
+      e_xkb_e_icon_flag_setup(ic, name);
+      snprintf(buf, sizeof(buf), "%s (%s, %s)",
+               cl->name, cl->model, cl->variant);
+      e_widget_ilist_append_full(cfdata->used_list, ic, NULL, buf,
+                                 _cb_used_select, cfdata, NULL);
+   }
 
-   e_widget_ilist_go  (cfdata->used_list);
+   e_widget_ilist_go(cfdata->used_list);
    e_widget_ilist_thaw(cfdata->used_list);
    edje_thaw();
    evas_event_thaw(cfdata->evas);
@@ -611,7 +611,7 @@ _cb_dlg_fill_delay(void *data)
    edje_freeze();
 
    e_widget_ilist_freeze(cfdata->layout_list);
-   e_widget_ilist_clear (cfdata->layout_list);
+   e_widget_ilist_clear(cfdata->layout_list);
 
    EINA_LIST_FOREACH(layouts, l, layout)
      {
@@ -625,7 +625,7 @@ _cb_dlg_fill_delay(void *data)
                                    _cb_layout_select, cfdata, layout->name);
      }
 
-   e_widget_ilist_go  (cfdata->layout_list);
+   e_widget_ilist_go(cfdata->layout_list);
    e_widget_ilist_thaw(cfdata->layout_list);
 
    edje_thaw();
@@ -657,9 +657,9 @@ _cb_layout_select(void *data)
      return;
 
    if (!(layout = eina_list_search_unsorted
-         (layouts, layout_sort_by_name_cb,
+             (layouts, layout_sort_by_name_cb,
              e_widget_ilist_nth_value_get(cfdata->layout_list, n)
-         ))) return;
+             ))) return;
 
    /* Update the lists */
    evas_event_freeze(cfdata->dlg_evas);
@@ -684,7 +684,7 @@ _cb_layout_select(void *data)
 
    EINA_LIST_FOREACH(layout->variants, l, variant)
      {
-        snprintf(buf, sizeof(buf),  "%s (%s)", variant->name, variant->description);
+        snprintf(buf, sizeof(buf), "%s (%s)", variant->name, variant->description);
         e_widget_ilist_append(cfdata->variant_list, NULL, buf, NULL, cfdata, variant->name);
      }
 
@@ -694,7 +694,7 @@ _cb_layout_select(void *data)
    edje_thaw();
    evas_event_thaw(cfdata->dlg_evas);
 
-   e_widget_ilist_selected_set(cfdata->model_list,   0);
+   e_widget_ilist_selected_set(cfdata->model_list, 0);
    e_widget_ilist_selected_set(cfdata->variant_list, 0);
 
    e_dialog_button_disable_num_set(cfdata->dlg_add_new, 0, 0);
@@ -729,7 +729,7 @@ _cb_fill_delay(void *data)
                  cl->name, cl->model, cl->variant);
         e_widget_ilist_append_full(cfdata->used_list, ic, NULL, buf,
                                    _cb_used_select, cfdata, NULL);
-    }
+     }
 
    e_widget_ilist_go(cfdata->used_list);
    e_widget_ilist_thaw(cfdata->used_list);
@@ -771,17 +771,18 @@ _cb_used_select(void *data)
 
    if (n == (c - 1))
      {
-        e_widget_disabled_set(cfdata->btn_up,   EINA_FALSE);
-        e_widget_disabled_set(cfdata->btn_down, EINA_TRUE );
+        e_widget_disabled_set(cfdata->btn_up, EINA_FALSE);
+        e_widget_disabled_set(cfdata->btn_down, EINA_TRUE);
      }
    else if (n == 0)
      {
-        e_widget_disabled_set(cfdata->btn_up,   EINA_TRUE );
+        e_widget_disabled_set(cfdata->btn_up, EINA_TRUE);
         e_widget_disabled_set(cfdata->btn_down, EINA_FALSE);
      }
    else
      {
-        e_widget_disabled_set(cfdata->btn_up,   EINA_FALSE);
+        e_widget_disabled_set(cfdata->btn_up, EINA_FALSE);
         e_widget_disabled_set(cfdata->btn_down, EINA_FALSE);
      }
 }
+
