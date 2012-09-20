@@ -988,9 +988,9 @@ _ibox_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__, void *even
    desk = e_desk_current_get(ev->border->zone);
    if (ev->border->iconic)
      {
-        Eina_List *l, *ibox;
+        Eina_List *ibox;
         ibox = _ibox_zone_find(ev->border->zone);
-        EINA_LIST_FOREACH(ibox, l, b)
+        EINA_LIST_FREE(ibox, b)
           {
              if (_ibox_icon_find(b, ev->border)) continue;
              if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
@@ -1002,9 +1002,6 @@ _ibox_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__, void *even
              _ibox_resize_handle(b);
              _gc_orient(b->inst->gcc, -1);
           }
-
-        while (ibox)
-          ibox = eina_list_remove_list(ibox, ibox);
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1015,12 +1012,12 @@ _ibox_cb_event_border_remove(void *data __UNUSED__, int type __UNUSED__, void *e
    E_Event_Border_Remove *ev;
    IBox *b;
    IBox_Icon *ic;
-   Eina_List *l, *ibox;
+   Eina_List *ibox;
 
    ev = event;
    /* find icon and remove if there */
    ibox = _ibox_zone_find(ev->border->zone);
-   EINA_LIST_FOREACH(ibox, l, b)
+   EINA_LIST_FREE(ibox, b)
      {
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
@@ -1030,8 +1027,6 @@ _ibox_cb_event_border_remove(void *data __UNUSED__, int type __UNUSED__, void *e
         _ibox_resize_handle(b);
         _gc_orient(b->inst->gcc, -1);
      }
-   while (ibox)
-     ibox = eina_list_remove_list(ibox, ibox);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1042,7 +1037,7 @@ _ibox_cb_event_border_iconify(void *data __UNUSED__, int type __UNUSED__, void *
    E_Event_Border_Iconify *ev;
    IBox *b;
    IBox_Icon *ic;
-   Eina_List *l, *ibox;
+   Eina_List *ibox;
    E_Desk *desk;
 
    ev = event;
@@ -1050,7 +1045,7 @@ _ibox_cb_event_border_iconify(void *data __UNUSED__, int type __UNUSED__, void *
    /* do some sort of anim when iconifying */
    desk = e_desk_current_get(ev->border->zone);
    ibox = _ibox_zone_find(ev->border->zone);
-   EINA_LIST_FOREACH(ibox, l, b)
+   EINA_LIST_FREE(ibox, b)
      {
         if (_ibox_icon_find(b, ev->border)) continue;
         if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
@@ -1062,9 +1057,6 @@ _ibox_cb_event_border_iconify(void *data __UNUSED__, int type __UNUSED__, void *
         _ibox_resize_handle(b);
         _gc_orient(b->inst->gcc, -1);
      }
-
-   while (ibox)
-     ibox = eina_list_remove_list(ibox, ibox);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1074,13 +1066,13 @@ _ibox_cb_event_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void
    E_Event_Border_Uniconify *ev;
    IBox *b;
    IBox_Icon *ic;
-   Eina_List *l, *ibox;
+   Eina_List *ibox;
 
    ev = event;
    /* del icon for ibox for right zone */
    /* do some sort of anim when uniconifying */
    ibox = _ibox_zone_find(ev->border->zone);
-   EINA_LIST_FOREACH(ibox, l, b)
+   EINA_LIST_FREE(ibox, b)
      {
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
@@ -1091,9 +1083,6 @@ _ibox_cb_event_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void
         _gc_orient(b->inst->gcc, -1);
      }
 
-   while (ibox)
-     ibox = eina_list_remove_list(ibox, ibox);
-
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -1103,21 +1092,18 @@ _ibox_cb_event_border_icon_change(void *data __UNUSED__, int type __UNUSED__, vo
    E_Event_Border_Icon_Change *ev;
    IBox *b;
    IBox_Icon *ic;
-   Eina_List *l, *ibox;
+   Eina_List *ibox;
 
    ev = event;
    /* update icon */
    ibox = _ibox_zone_find(ev->border->zone);
-   EINA_LIST_FOREACH(ibox, l, b)
+   EINA_LIST_FREE(ibox, b)
      {
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
         _ibox_icon_empty(ic);
         _ibox_icon_fill(ic);
      }
-
-   while (ibox)
-     ibox = eina_list_remove_list(ibox, ibox);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1128,12 +1114,12 @@ _ibox_cb_event_border_urgent_change(void *data __UNUSED__, int type __UNUSED__, 
    E_Event_Border_Urgent_Change *ev;
    IBox *b;
    IBox_Icon *ic;
-   Eina_List *l, *ibox;
+   Eina_List *ibox;
 
    ev = event;
    /* update icon */
    ibox = _ibox_zone_find(ev->border->zone);
-   EINA_LIST_FOREACH(ibox, l, b)
+   EINA_LIST_FREE(ibox, b)
      {
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
@@ -1171,12 +1157,12 @@ _ibox_cb_event_desk_show(void *data __UNUSED__, int type __UNUSED__, void *event
 {
    E_Event_Desk_Show *ev;
    IBox *b;
-   Eina_List *l, *ibox;
+   Eina_List *ibox;
 
    ev = event;
    /* delete all wins from ibox and add only for current desk */
    ibox = _ibox_zone_find(ev->desk->zone);
-   EINA_LIST_FOREACH(ibox, l, b)
+   EINA_LIST_FREE(ibox, b)
      {
         if (b->inst->ci->show_desk)
           {
@@ -1186,9 +1172,6 @@ _ibox_cb_event_desk_show(void *data __UNUSED__, int type __UNUSED__, void *event
              _gc_orient(b->inst->gcc, -1);
           }
      }
-
-   while (ibox)
-     ibox = eina_list_remove_list(ibox, ibox);
 
    return ECORE_CALLBACK_PASS_ON;
 }
