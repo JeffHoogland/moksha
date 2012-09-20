@@ -188,10 +188,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
           eina_list_append(e_config->xkb.used_layouts, nl);
      }
 
-   if (e_config->xkb.default_model)
-     eina_stringshare_del(e_config->xkb.default_model);
-
-   e_config->xkb.default_model = eina_stringshare_add(cfdata->default_model);
+   eina_stringshare_replace(&e_config->xkb.default_model, cfdata->default_model);
 
    /* Save options */
    e_config->xkb.only_label = cfdata->only_label;
