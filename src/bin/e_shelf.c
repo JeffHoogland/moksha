@@ -1044,7 +1044,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
          * if its gadcon has not populated; instead we show it in
          * the E_EVENT_GADCON_POPULATE handler
          */
-        if (es->gadcon->clients)
+        if (es->gadcon->clients || (!es->gadcon->cf->clients))
           e_shelf_show(es);
      }
 
