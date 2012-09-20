@@ -5588,7 +5588,7 @@ out:
      e_main_ts("gadcon populate idler end");
 #endif
 
-   if (cont)
+   if (!cont)
      populate_idler = NULL;
 #ifndef E17_RELEASE_BUILD
    first = EINA_FALSE;
