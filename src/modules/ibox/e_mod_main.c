@@ -141,6 +141,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    o = b->o_box;
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
+   ci->gcc = gcc;
 
    inst->gcc = gcc;
    inst->o_ibox = o;
@@ -166,6 +167,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
 
    inst = gcc->data;
+   inst->ci->gcc = NULL;
    ibox_config->instances = eina_list_remove(ibox_config->instances, inst);
    e_drop_handler_del(inst->drop_handler);
    _ibox_free(inst->ibox);
@@ -355,6 +357,7 @@ _ibox_fill(IBox *b)
    E_Border_List *bl;
    E_Border *bd;
    int ok;
+   int mw, mh, h;
 
    bl = e_container_border_list_first(b->zone->container);
    while ((bd = e_container_border_list_next(bl)))
@@ -392,16 +395,18 @@ _ibox_fill(IBox *b)
 
    _ibox_empty_handle(b);
    _ibox_resize_handle(b);
+   if (!b->inst->gcc) return;
+   if (!b->inst->ci->expand_on_desktop) return;
+   if (!e_gadcon_site_is_desktop(b->inst->gcc->gadcon->location->site)) return;
+   e_box_size_min_get(b->o_box, &mw, &mh);
+   evas_object_geometry_get(b->inst->gcc->o_frame, NULL, NULL, NULL, &h);
+   evas_object_resize(b->inst->gcc->o_frame, MIN(mw, b->inst->gcc->gadcon->zone->w), MAX(h, mh));
 }
 
 static void
 _ibox_empty(IBox *b)
 {
-   while (b->icons)
-     {
-        _ibox_icon_free(b->icons->data);
-        b->icons = eina_list_remove_list(b->icons, b->icons);
-     }
+   E_FREE_LIST(b->icons, _ibox_icon_free);
    _ibox_empty_handle(b);
 }
 
@@ -417,7 +422,7 @@ _ibox_resize_handle(IBox *b)
 {
    Eina_List *l;
    IBox_Icon *ic;
-   Evas_Coord w, h;
+   int w, h;
 
    evas_object_geometry_get(b->o_box, NULL, NULL, &w, &h);
    if (e_box_orientation_get(b->o_box))
@@ -1047,6 +1052,7 @@ _ibox_cb_event_border_iconify(void *data __UNUSED__, int type __UNUSED__, void *
    ibox = _ibox_zone_find(ev->border->zone);
    EINA_LIST_FREE(ibox, b)
      {
+        int h, mw, mh;
         if (_ibox_icon_find(b, ev->border)) continue;
         if ((b->inst->ci->show_desk) && (ev->border->desk != desk) && (!ev->border->sticky)) continue;
         ic = _ibox_icon_new(b, ev->border);
@@ -1056,6 +1062,11 @@ _ibox_cb_event_border_iconify(void *data __UNUSED__, int type __UNUSED__, void *
         _ibox_empty_handle(b);
         _ibox_resize_handle(b);
         _gc_orient(b->inst->gcc, -1);
+        if (!b->inst->ci->expand_on_desktop) continue;
+        if (!e_gadcon_site_is_desktop(b->inst->gcc->gadcon->location->site)) continue;
+        e_box_size_min_get(b->o_box, &mw, &mh);
+        evas_object_geometry_get(b->inst->gcc->o_frame, NULL, NULL, NULL, &h);
+        evas_object_resize(b->inst->gcc->o_frame, MIN(mw, b->inst->gcc->gadcon->zone->w), MAX(h, mh));
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1074,6 +1085,7 @@ _ibox_cb_event_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void
    ibox = _ibox_zone_find(ev->border->zone);
    EINA_LIST_FREE(ibox, b)
      {
+        int mw, mh, h;
         ic = _ibox_icon_find(b, ev->border);
         if (!ic) continue;
         _ibox_icon_free(ic);
@@ -1081,6 +1093,11 @@ _ibox_cb_event_border_uniconify(void *data __UNUSED__, int type __UNUSED__, void
         _ibox_empty_handle(b);
         _ibox_resize_handle(b);
         _gc_orient(b->inst->gcc, -1);
+        if (!b->inst->ci->expand_on_desktop) continue;
+        if (!e_gadcon_site_is_desktop(b->inst->gcc->gadcon->location->site)) continue;
+        e_box_size_min_get(b->o_box, &mw, &mh);
+        evas_object_geometry_get(b->inst->gcc->o_frame, NULL, NULL, NULL, &h);
+        evas_object_resize(b->inst->gcc->o_frame, MIN(mw, b->inst->gcc->gadcon->zone->w), MAX(h, mh));
      }
 
    return ECORE_CALLBACK_PASS_ON;
@@ -1248,6 +1265,7 @@ e_modapi_init(E_Module *m)
    #define T Config_Item
    #define D conf_item_edd
    E_CONFIG_VAL(D, T, id, STR);
+   E_CONFIG_VAL(D, T, expand_on_desktop, INT);
    E_CONFIG_VAL(D, T, show_label, INT);
    E_CONFIG_VAL(D, T, show_zone, INT);
    E_CONFIG_VAL(D, T, show_desk, INT);

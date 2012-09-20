@@ -7,6 +7,7 @@ struct _E_Config_Dialog_Data
    int	 zone_policy;
    int	 desk_policy;
    int   icon_label;
+   int   expand_on_desktop;
    struct
      {
 	Evas_Object *o_desk_show_all;
@@ -94,6 +95,9 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("General Settings"), 0);
+   ob = e_widget_check_add(evas, _("Expand When On Desktop"), &(cfdata->expand_on_desktop));
+   e_widget_framelist_object_append(of, ob);
+
    show_check = e_widget_check_add(evas, _("Show Icon Label"), &(cfdata->show_label));
    e_widget_framelist_object_append(of, show_check);
    rg = e_widget_radio_group_new(&(cfdata->icon_label));
@@ -187,6 +191,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    ci->icon_label = cfdata->icon_label;
    ci->show_zone = cfdata->zone_policy;
    ci->show_desk = cfdata->desk_policy;
+   ci->expand_on_desktop = cfdata->expand_on_desktop;
 
    _ibox_config_update(ci);
    e_config_save_queue();

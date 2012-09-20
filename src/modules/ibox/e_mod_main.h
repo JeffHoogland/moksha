@@ -21,6 +21,8 @@ struct _Config_Item
    int show_zone;
    int show_desk;
    int icon_label;
+   int expand_on_desktop;
+   E_Gadcon_Client *gcc;
 };
 
 EAPI extern E_Module_Api e_modapi;
