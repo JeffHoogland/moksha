@@ -35,6 +35,7 @@ static void         _e_shelf_bindings_del(E_Shelf *es);
 static Eina_Bool    _e_shelf_on_current_desk(E_Shelf *es, E_Event_Zone_Edge *ev);
 static void          _e_shelf_cb_dummy_del(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
+static Eina_Bool    _e_shelf_gadcon_populate_handler_cb(void *, int, void *);
 
 static Eina_List *shelves = NULL;
 static Eina_List *dummies = NULL;
@@ -80,6 +81,7 @@ static const char *orient_names[] =
 
 EAPI int E_EVENT_SHELF_ADD = -1;
 EAPI int E_EVENT_SHELF_DEL = -1;
+static Ecore_Event_Handler *_e_shelf_gadcon_populate_handler = NULL;
 
 /* externally accessible functions */
 EINTERN int
@@ -87,6 +89,7 @@ e_shelf_init(void)
 {
    E_EVENT_SHELF_ADD = ecore_event_type_new();
    E_EVENT_SHELF_DEL = ecore_event_type_new();
+   _e_shelf_gadcon_populate_handler = ecore_event_handler_add(E_EVENT_GADCON_POPULATE, _e_shelf_gadcon_populate_handler_cb, NULL);
    return 1;
 }
 
@@ -101,6 +104,7 @@ e_shelf_shutdown(void)
         es = eina_list_data_get(shelves);
         e_object_del(E_OBJECT(es));
      }
+   _e_shelf_gadcon_populate_handler = ecore_event_handler_del(_e_shelf_gadcon_populate_handler);
 
    return 1;
 }
@@ -998,6 +1002,7 @@ EAPI E_Shelf *
 e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
 {
    E_Shelf *es;
+   Eina_Bool can_show = EINA_FALSE;
 
    es = e_shelf_zone_new(zone, cf_es->name, cf_es->style,
                          cf_es->popup, cf_es->layer, cf_es->id);
@@ -1025,13 +1030,23 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
           {
              if ((desk->x == sd->x) && (desk->y == sd->y))
                {
-                  e_shelf_show(es);
+                  can_show = EINA_TRUE;
                   break;
                }
           }
      }
    else
-     e_shelf_show(es);
+     can_show = EINA_TRUE;
+
+   if (can_show)
+     {
+        /* at this point, we cleverly avoid showing the shelf
+         * if its gadcon has not populated; instead we show it in
+         * the E_EVENT_GADCON_POPULATE handler
+         */
+        if (es->gadcon->clients)
+          e_shelf_show(es);
+     }
 
    e_shelf_toggle(es, 0);
    return es;
@@ -2125,6 +2140,26 @@ _e_shelf_cb_instant_hide_timer(void *data)
    es->instant_timer = NULL;
    _e_shelf_toggle_border_fix(es);
    return ECORE_CALLBACK_CANCEL;
+}
+
+static Eina_Bool
+_e_shelf_gadcon_populate_handler_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   E_Event_Gadcon_Populate *ev = event;
+   Eina_List *l;
+   E_Shelf *es;
+
+   EINA_LIST_FOREACH(shelves, l, es)
+     if (es->gadcon == ev->gc)
+       {
+          /* any shelf that's not already shown at this point will be
+           * waiting for this event to show it so that we don't ever resize the shelf
+           * object
+           */
+          e_shelf_show(es);
+          break;
+       }
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void

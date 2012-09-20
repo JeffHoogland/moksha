@@ -911,17 +911,6 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_bindings_shutdown);
 
    if (e_config->show_splash)
-     e_init_status_set(_("Setup Shelves"));
-   TS("E_Shelf Init");
-   if (!e_shelf_init())
-     {
-        e_error_message_show(_("Enlightenment cannot set up its module system."));
-        _e_main_shutdown(-1);
-     }
-   TS("E_Shelf Init Done");
-   _e_main_shutdown_push(e_shelf_shutdown);
-
-   if (e_config->show_splash)
      e_init_status_set(_("Setup Thumbnailer"));
    TS("E_Thumb Init");
    if (!e_thumb_init())
@@ -1021,6 +1010,18 @@ main(int argc, char **argv)
    TS("E_Test Init");
    e_test();
    TS("E_Test Done");
+
+
+   if (e_config->show_splash)
+     e_init_status_set(_("Setup Shelves"));
+   TS("E_Shelf Init");
+   if (!e_shelf_init())
+     {
+        e_error_message_show(_("Enlightenment cannot set up its module system."));
+        _e_main_shutdown(-1);
+     }
+   TS("E_Shelf Init Done");
+   _e_main_shutdown_push(e_shelf_shutdown);
 
    if (e_config->show_splash)
      e_init_status_set(_("Configure Shelves"));

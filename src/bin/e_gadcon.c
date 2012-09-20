@@ -5,7 +5,7 @@
  */
 
 #define E_LAYOUT_ITEM_DRAG_RESIST_LEVEL 10
-
+static void                     _e_gadcon_event_populate(E_Gadcon *gc);
 static Eina_Bool               _e_gadcon_client_populate(E_Gadcon *gc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf_gcc);
 static void                     _e_gadcon_client_unpopulate(E_Gadcon_Client *gcc);
 static void                     _e_gadcon_free(E_Gadcon *gc);
@@ -81,6 +81,7 @@ static void                     e_gadcon_layout_unpack(Evas_Object *obj);
 static void                     _e_gadcon_provider_populate_request(E_Gadcon *gc, const E_Gadcon_Client_Class *cc);
 static void                     _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc);
 static Eina_Bool                _e_gadcon_provider_populate_idler(void *data);
+static void                      _e_gadcon_event_populate_free(void *data __UNUSED__, void *event);
 static Eina_Bool                _e_gadcon_custom_populate_idler(void *data);
 
 static int                      _e_gadcon_location_change(E_Gadcon_Client *gcc, E_Gadcon_Location *src, E_Gadcon_Location *dst);
@@ -183,6 +184,7 @@ EAPI int E_EVENT_GADCON_CLIENT_CLASS_ADD = -1;
 EAPI int E_EVENT_GADCON_CLIENT_CLASS_DEL = -1;
 EAPI int E_EVENT_GADCON_CLIENT_ADD = -1;
 EAPI int E_EVENT_GADCON_CLIENT_DEL = -1;
+EAPI int E_EVENT_GADCON_POPULATE = -1;
 
 static Eina_Hash *providers = NULL;
 static Eina_List *providers_list = NULL;
@@ -222,6 +224,7 @@ e_gadcon_init(void)
    E_EVENT_GADCON_CLIENT_CLASS_DEL = ecore_event_type_new();
    E_EVENT_GADCON_CLIENT_ADD = ecore_event_type_new();
    E_EVENT_GADCON_CLIENT_DEL = ecore_event_type_new();
+   E_EVENT_GADCON_POPULATE = ecore_event_type_new();
    _module_init_end_handler = ecore_event_handler_add(E_EVENT_MODULE_INIT_END, _module_init_end_cb, NULL);
    return 1;
 }
@@ -244,8 +247,6 @@ e_gadcon_shutdown(void)
    if (_module_init_end_handler)
      ecore_event_handler_del(_module_init_end_handler);
    _module_init_end_handler = NULL;
-   E_EVENT_GADCON_CLIENT_ADD = E_EVENT_GADCON_CLIENT_DEL =
-     E_EVENT_GADCON_CLIENT_CLASS_ADD = E_EVENT_GADCON_CLIENT_CLASS_DEL = -1;
 
    return 1;
 }
@@ -582,6 +583,8 @@ e_gadcon_populate(E_Gadcon *gc)
           e_gadcon_client_queue(gc, cf_gcc);
      }
    e_gadcon_layout_thaw(gc->o_container);
+   if (gc->populated_classes && (!gc->populate_requests))
+     _e_gadcon_event_populate(gc);
    return EINA_TRUE;
 }
 
@@ -2006,6 +2009,17 @@ _e_gadcon_client_event_free(void *d __UNUSED__, void *e)
 
    e_object_unref(E_OBJECT(ev->gcc));
    free(ev);
+}
+
+static void
+_e_gadcon_event_populate(E_Gadcon *gc)
+{
+   E_Event_Gadcon_Populate *ev;
+
+   ev = E_NEW(E_Event_Gadcon_Populate, 1);
+   e_object_ref(E_OBJECT(gc));
+   ev->gc = gc;
+   ecore_event_add(E_EVENT_GADCON_POPULATE, ev, _e_gadcon_event_populate_free, NULL);
 }
 
 static void
@@ -5455,6 +5469,15 @@ _e_gadcon_layout_smart_restore_gadcons_position_before_move(E_Smart_Data *sd, E_
      }
 }
 
+static void
+_e_gadcon_event_populate_free(void *data __UNUSED__, void *event)
+{
+   E_Event_Gadcon_Populate *ev = event;
+
+   e_object_unref(E_OBJECT(ev->gc));
+   free(ev);
+}
+
 static Eina_Bool
 _e_gadcon_custom_populate_idler(void *data __UNUSED__)
 {
@@ -5483,6 +5506,7 @@ _e_gadcon_custom_populate_idler(void *data __UNUSED__)
                e_gadcon_populate_class(gc, cc);
           }
         e_gadcon_layout_thaw(gc->o_container);
+        _e_gadcon_event_populate(gc);
      }
 
 #ifndef E17_RELEASE_BUILD
@@ -5506,11 +5530,9 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
    E_Gadcon_Client_Class *cc;
    Eina_List *l;
    E_Gadcon *gc;
+   Eina_Bool cont = EINA_FALSE;
 
    if (!_modules_loaded) return EINA_TRUE;
-
-   EINA_LIST_FOREACH(gadcons, l, gc)
-     e_gadcon_layout_freeze(gc->o_container);
 
 #ifndef E17_RELEASE_BUILD
    static Eina_Bool first = EINA_TRUE;
@@ -5518,43 +5540,60 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
      e_main_ts("gadcon populate idler start");
 #endif
    EINA_LIST_FOREACH(gadcons, l, gc)
-     EINA_LIST_FREE(gc->populate_requests, cc)
-       {
+     {
+        int x = 0;
+        Eina_Bool freeze = EINA_FALSE;
+        if (gc->populate_requests)
+          {
+             freeze = EINA_TRUE;
+             e_gadcon_layout_freeze(gc->o_container);
+          }
+        EINA_LIST_FREE(gc->populate_requests, cc)
+          {
+             if (x)
+               {
+                  cont = EINA_TRUE;
+                  e_gadcon_layout_thaw(gc->o_container);
+                  goto out;
+               }
 #ifndef E17_RELEASE_BUILD
-          if (first) e_main_ts(cc->name);
+             if (first) e_main_ts(cc->name);
 #endif
-          if (gc->populate_class.func)
-            gc->populate_class.func(gc->populate_class.data, gc, cc);
-          else
-            e_gadcon_populate_class(gc, cc);
-          if (!eina_list_data_find(gc->populated_classes, cc))
-            {
-               gc->populated_classes = eina_list_append(gc->populated_classes, cc);
-               if (gc->cf)
-                 {
-                    Eina_List *ll;
-                    E_Config_Gadcon_Client *cf_gcc;
+             if (gc->populate_class.func)
+               gc->populate_class.func(gc->populate_class.data, gc, cc);
+             else
+               e_gadcon_populate_class(gc, cc);
+             if (!eina_list_data_find(gc->populated_classes, cc))
+               {
+                  gc->populated_classes = eina_list_append(gc->populated_classes, cc);
+                  if (gc->cf)
+                    {
+                       Eina_List *ll;
+                       E_Config_Gadcon_Client *cf_gcc;
 
-                    if (!gc->awaiting_classes) continue;
-                    ll = eina_hash_set(gc->awaiting_classes, cc->name, NULL);
-                    EINA_LIST_FREE(ll, cf_gcc)
-                      _e_gadcon_client_populate(gc, cc, cf_gcc);
-                 }
-            }
+                       if (!gc->awaiting_classes) continue;
+                       ll = eina_hash_set(gc->awaiting_classes, cc->name, NULL);
+                       EINA_LIST_FREE(ll, cf_gcc)
+                         _e_gadcon_client_populate(gc, cc, cf_gcc);
+                    }
+               }
+             x++;
+          }
+          if (freeze) e_gadcon_layout_thaw(gc->o_container);
+          if (x) _e_gadcon_event_populate(gc);
        }
-
+out:
 #ifndef E17_RELEASE_BUILD
    if (first)
      e_main_ts("gadcon populate idler end");
 #endif
-   EINA_LIST_FOREACH(gadcons, l, gc)
-     e_gadcon_layout_thaw(gc->o_container);
 
-   populate_idler = NULL;
+   if (cont)
+     populate_idler = NULL;
 #ifndef E17_RELEASE_BUILD
    first = EINA_FALSE;
 #endif
-   return ECORE_CALLBACK_CANCEL;
+   return cont;
 }
 
 static void

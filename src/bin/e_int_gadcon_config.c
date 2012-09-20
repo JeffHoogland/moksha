@@ -595,6 +595,8 @@ _cb_del(void *data, void *data2 __UNUSED__)
      {
         if (!cfdata->gc->custom)
           {
+             if (cfdata->gc->shelf)
+               e_shelf_hide(cfdata->gc->shelf);
              e_gadcon_unpopulate(cfdata->gc);
              e_gadcon_populate(cfdata->gc);
           }

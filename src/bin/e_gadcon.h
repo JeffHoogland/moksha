@@ -50,6 +50,7 @@ typedef struct _E_Gadcon_Client_Class E_Gadcon_Client_Class;
 typedef struct _E_Event_Gadcon_Client_Class E_Event_Gadcon_Client_Class_Add;
 typedef struct _E_Event_Gadcon_Client_Class E_Event_Gadcon_Client_Class_Del;
 typedef struct _E_Gadcon_Location     E_Gadcon_Location;
+typedef struct _E_Event_Gadcon_Populate E_Event_Gadcon_Populate;
 
 #else
 #ifndef E_GADCON_H
@@ -63,6 +64,7 @@ EAPI extern int E_EVENT_GADCON_CLIENT_ADD;
 EAPI extern int E_EVENT_GADCON_CLIENT_DEL;
 EAPI extern int E_EVENT_GADCON_CLIENT_CLASS_ADD;
 EAPI extern int E_EVENT_GADCON_CLIENT_CLASS_DEL;
+EAPI extern int E_EVENT_GADCON_POPULATE;
 
 struct _E_Gadcon
 {
@@ -238,6 +240,11 @@ struct _E_Event_Gadcon_Client_Class
 struct _E_Event_Gadcon_Client
 {
    E_Gadcon_Client *gcc;
+};
+
+struct _E_Event_Gadcon_Populate
+{
+   E_Gadcon *gc;
 };
 
 /* defines usable gadget placements such as Desktop, Shelf #, etc */
