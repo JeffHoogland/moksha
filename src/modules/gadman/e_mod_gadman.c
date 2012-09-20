@@ -394,11 +394,12 @@ gadman_gadget_edit_start(E_Gadcon_Client *gcc)
    Evas_Object *mover;
    int x, y, w, h;
 
+   gc = gcc->gadcon;
+   if (gc->editing) return;
+   gc->editing = 1;
+
    /* this gets an unref in e_gadcon_drag_finished_cb() */
    e_object_ref(E_OBJECT(gcc));
-
-   gc = gcc->gadcon;
-   gc->editing = 1;
 
    /* Move/resize the correct mover */
    mover = _get_mover(gcc);
@@ -1506,8 +1507,8 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
    int action = (int)(long)data;
    E_Gadcon *gc;
 
-   gc = eina_list_data_get(Man->gadcons[0]);
-
+   gc = eina_list_data_get(Man->gadcons[GADMAN_LAYER_BG]);
+   if (!gc->drag_gcc) return;
    mover = _get_mover(gc->drag_gcc);
 
    /* DRAG_START */
