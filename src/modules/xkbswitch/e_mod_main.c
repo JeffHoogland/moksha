@@ -77,6 +77,19 @@ e_modapi_init(E_Module *m)
    _xkb.module = m;
    _xkb.evh = ecore_event_handler_add(E_EVENT_XKB_CHANGED, _xkb_changed, NULL);
    ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_changed_state, NULL);
+   if (!e_config->xkb.default_model) e_config->xkb.default_model = eina_stringshare_add("default");
+   if (!e_config->xkb.used_layouts)
+     {
+        E_Config_XKB_Layout *nl;
+
+        nl = E_NEW(E_Config_XKB_Layout, 1);
+        nl->name = eina_stringshare_add("default");
+        nl->model = eina_stringshare_add("default");
+        nl->variant = eina_stringshare_add("basic");
+
+        e_config->xkb.used_layouts =
+          eina_list_append(e_config->xkb.used_layouts, nl);
+     }
    /* Gadcon */
    e_gadcon_provider_register(&_gc_class);
    return m;
@@ -390,8 +403,10 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
                     (mi, (grp == e_config->xkb.cur_group) ? 1 : 0);
                   e_xkb_flag_file_get(buf, sizeof(buf), name);
                   e_menu_item_icon_file_set(mi, buf);
-                  snprintf(buf, sizeof(buf), "%s (%s, %s)", cl->name,
-                           cl->model, cl->variant);
+                  if (cl->variant)
+                    snprintf(buf, sizeof(buf), "%s (%s, %s)", cl->name, cl->model, cl->variant);
+                  else
+                    snprintf(buf, sizeof(buf), "%s (%s)", cl->name, cl->model);
                   e_menu_item_label_set(mi, buf);
                   e_menu_item_callback_set(mi, _e_xkb_cb_lmenu_set, cl);
                }
