@@ -1155,8 +1155,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
 
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
-   ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
-   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+// disabled because this is disabled in code for now   
+//   ob = e_widget_check_add(evas, _("Limit framerate"), &(cfdata->lock_fps));
+//   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
    ob = e_widget_check_add(evas, _("Smooth scaling"), &(cfdata->smooth_windows));
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
