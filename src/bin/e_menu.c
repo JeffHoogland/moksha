@@ -186,6 +186,7 @@ e_menu_init(void)
    _e_menu_categories = eina_hash_string_superfast_new(NULL);
 
    if (!_e_menu_hash) _e_menu_hash = eina_hash_string_superfast_new(NULL);
+   e_int_menus_init();
    return 1;
 }
 

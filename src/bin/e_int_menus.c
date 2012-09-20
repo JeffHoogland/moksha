@@ -64,7 +64,7 @@ static void        _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi
 static void        _e_int_menus_desktops_free_hook(void *obj);
 static void        _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void        _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
-
+static Efreet_Menu *_e_int_menus_apps_thread_new(E_Menu *m, const char *dir);
 //static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped __UNUSED__);
 
 /* local subsystem globals */
@@ -478,17 +478,20 @@ e_int_menus_menu_augmentation_point_disabled_set(const char *menu, Eina_Bool dis
 }
 
 EINTERN void
+e_int_menus_init(void)
+{
+   if (e_config->menu_apps_show)
+     _e_int_menus_apps_thread_new(NULL, NULL);
+}
+
+EINTERN void
 e_int_menus_shutdown(void)
 {
    E_FREE_LIST(_e_int_menus_app_threads, ecore_thread_cancel);
    if (_e_int_menus_app_cleaner) ecore_timer_del(_e_int_menus_app_cleaner);
    _e_int_menus_app_cleaner = NULL;
-   eina_hash_free(_e_int_menus_app_menus);
-   _e_int_menus_app_menus = NULL;
    eina_hash_free(_e_int_menus_app_menus_waiting);
    _e_int_menus_app_menus_waiting = NULL;
-   if (_e_int_menus_app_menu_default) efreet_menu_free(_e_int_menus_app_menu_default);
-   _e_int_menus_app_menu_default = NULL;
    _e_int_menus_app_menu_default_waiting = NULL;
 }
 
@@ -731,7 +734,7 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
      mn = _e_int_menus_app_menu_default_waiting;
 
    if (mn) return NULL;
-   if (dir)
+   if (dir && m)
      eina_hash_add(_e_int_menus_app_menus_waiting, dir, m);
    else
      _e_int_menus_app_menu_default_waiting = m;
