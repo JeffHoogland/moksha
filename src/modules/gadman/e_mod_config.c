@@ -99,11 +99,17 @@ _gcc_add(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Gadcon_Clien
    if (!l) return ECORE_CALLBACK_RENEW;
    if (ev->gcc->cf != eina_list_data_get(eina_list_last(ev->gcc->gadcon->cf->clients))) return ECORE_CALLBACK_RENEW;
    ev->gcc->gadcon->drag_gcc = ev->gcc;
-   ev->gcc->cf->style = eina_stringshare_add(ev->gcc->client_class->default_style);
+   ev->gcc->cf->style = eina_stringshare_add(ev->gcc->client_class->default_style ?: E_GADCON_CLIENT_STYLE_INSET);
+   ev->gcc->style = eina_stringshare_ref(ev->gcc->cf->style);
    ev->gcc->cf->geom.pos_x = DEFAULT_POS_X;
    ev->gcc->cf->geom.pos_y = DEFAULT_POS_Y;
    ev->gcc->cf->geom.size_w = DEFAULT_SIZE_W;
    ev->gcc->cf->geom.size_h = DEFAULT_SIZE_H;
+   if (!strcmp(ev->gcc->style, E_GADCON_CLIENT_STYLE_INSET))
+     edje_object_signal_emit(ev->gcc->o_frame, "e,state,visibility,inset", "e");
+   else
+     edje_object_signal_emit(ev->gcc->o_frame, "e,state,visibility,plain", "e");
+
    return ECORE_CALLBACK_RENEW;
 }
 
