@@ -1295,31 +1295,14 @@ e_modapi_init(E_Module *m)
 
    ibox_config->module = m;
 
-   ibox_config->handlers = eina_list_append
-       (ibox_config->handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_ADD, _ibox_cb_event_border_add, NULL));
-   ibox_config->handlers = eina_list_append
-       (ibox_config->handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_REMOVE, _ibox_cb_event_border_remove, NULL));
-   ibox_config->handlers = eina_list_append
-       (ibox_config->handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_ICONIFY, _ibox_cb_event_border_iconify, NULL));
-   ibox_config->handlers = eina_list_append
-       (ibox_config->handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_UNICONIFY, _ibox_cb_event_border_uniconify, NULL));
-   ibox_config->handlers = eina_list_append
-       (ibox_config->handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_ICON_CHANGE, _ibox_cb_event_border_icon_change, NULL));
-   ibox_config->handlers = eina_list_append
-       (ibox_config->handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_URGENT_CHANGE,
-         _ibox_cb_event_border_urgent_change, NULL));
-   ibox_config->handlers = eina_list_append
-       (ibox_config->handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL));
-   ibox_config->handlers = eina_list_append
-       (ibox_config->handlers, ecore_event_handler_add
-         (E_EVENT_DESK_SHOW, _ibox_cb_event_desk_show, NULL));
+   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_ADD, _ibox_cb_event_border_add, NULL);
+   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_REMOVE, _ibox_cb_event_border_remove, NULL);
+   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_ICONIFY, _ibox_cb_event_border_iconify, NULL);
+   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_UNICONIFY, _ibox_cb_event_border_uniconify, NULL);
+   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_ICON_CHANGE, _ibox_cb_event_border_icon_change, NULL);
+   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_URGENT_CHANGE, _ibox_cb_event_border_urgent_change, NULL);
+   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL);
+   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_DESK_SHOW, _ibox_cb_event_desk_show, NULL);
 
 /* FIXME: add these later for things taskbar-like functionality
    ibox_config->handlers = eina_list_append
@@ -1345,13 +1328,10 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
+   Config_Item *ci;
    e_gadcon_provider_unregister(&_gadcon_class);
 
-   while (ibox_config->handlers)
-     {
-        ecore_event_handler_del(ibox_config->handlers->data);
-        ibox_config->handlers = eina_list_remove_list(ibox_config->handlers, ibox_config->handlers);
-     }
+   E_FREE_LIST(ibox_config->handlers, ecore_event_handler_del);
 
    while (ibox_config->config_dialog)
      /* there is no need to eves_list_remove_list. It is done implicitly in
@@ -1359,19 +1339,13 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
       */
      e_object_del(E_OBJECT(ibox_config->config_dialog->data));
 
-   while (ibox_config->items)
+   EINA_LIST_FREE(ibox_config->items, ci)
      {
-        Config_Item *ci;
-
-        ci = ibox_config->items->data;
-        ibox_config->items = eina_list_remove_list(ibox_config->items, ibox_config->items);
-        if (ci->id)
-          eina_stringshare_del(ci->id);
+        eina_stringshare_del(ci->id);
         free(ci);
      }
 
-   free(ibox_config);
-   ibox_config = NULL;
+   E_FREE(ibox_config);
    E_CONFIG_DD_FREE(conf_item_edd);
    E_CONFIG_DD_FREE(conf_edd);
    return 1;
