@@ -850,6 +850,7 @@ _e_fwin_icon_popup(void *data)
    evas_object_resize(bg, mw, mh);
    if (!fwin->popup_handlers)
      {
+        E_LIST_HANDLERS_APPEND(fwin->popup_handlers, ECORE_X_EVENT_XDND_POSITION, _e_fwin_icon_popup_handler, fwin);
         E_LIST_HANDLERS_APPEND(fwin->popup_handlers, ECORE_X_EVENT_MOUSE_IN, _e_fwin_icon_popup_handler, fwin);
         E_LIST_HANDLERS_APPEND(fwin->popup_handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_fwin_icon_popup_handler, fwin);
         E_LIST_HANDLERS_APPEND(fwin->popup_handlers, ECORE_X_EVENT_MOUSE_OUT, _e_fwin_icon_popup_handler, fwin);
