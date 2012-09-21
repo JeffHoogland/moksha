@@ -185,7 +185,6 @@ struct _E_Fm2_Icon
    Ecore_X_Window  keygrab;
    E_Config_Dialog  *prop_dialog;
    E_Dialog         *dialog;
-   Ecore_Timer    *rename_click;
 
    E_Fm2_Icon_Info   info;
 
@@ -196,6 +195,8 @@ struct _E_Fm2_Icon
       Eina_Bool  dnd : 1;
       Eina_Bool  src : 1;
    } drag;
+
+   double selected_time;
 
    Eina_Bool         realized : 1;
    Eina_Bool         selected : 1;
@@ -4594,11 +4595,6 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
         e_object_del(E_OBJECT(ic->dialog));
         ic->dialog = NULL;
      }
-   if (ic->rename_click)
-     {
-        ecore_timer_del(ic->rename_click);
-        ic->rename_click = NULL;
-     }
    if (ic->entry_dialog)
      {
         e_object_del(E_OBJECT(ic->entry_dialog));
@@ -4625,29 +4621,18 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
    free(ic);
 }
 
-static Eina_Bool
-_e_fm2_icon_label_click_cb(void *data)
-{
-   E_Fm2_Icon *ic = data;
-
-   if (ic->rename_click)
-     {
-        ecore_timer_del(ic->rename_click);
-        ic->rename_click = NULL;
-     }
-   if (ic->sd->config->view.no_click_rename) return EINA_FALSE;
-   if (eina_list_count(ic->sd->selected_icons) != 1) return EINA_FALSE;
-   if (eina_list_data_get(ic->sd->selected_icons) != ic) return EINA_FALSE;
-   _e_fm2_file_rename(data, NULL, NULL);
-   return EINA_FALSE;
-}
-
 static void
 _e_fm2_icon_label_click(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    E_Fm2_Icon *ic = data;
-   if (ic->rename_click || ic->entry_widget || ic->entry_dialog) return;
-   ic->rename_click = ecore_timer_add(0.75, _e_fm2_icon_label_click_cb, ic);
+   if (ic->entry_widget || ic->entry_dialog) return;
+   if (!ic->selected) return;
+   if (ecore_loop_time_get() - ic->selected_time < 0.1) return;
+
+   if (ic->sd->config->view.no_click_rename) return;
+   if (eina_list_count(ic->sd->selected_icons) != 1) return;
+   if (eina_list_data_get(ic->sd->selected_icons) != ic) return;
+   _e_fm2_file_rename(data, NULL, NULL);
 }
 
 static void
@@ -4866,6 +4851,7 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
    ic->sd->last_selected = ic;
    ic->sd->selected_icons = eina_list_append(ic->sd->selected_icons, ic);
    ic->last_selected = EINA_TRUE;
+   ic->selected_time = ecore_loop_time_get();
    if (ic->realized)
      {
         const char *selectraise;
@@ -4890,6 +4876,7 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
    ic->last_selected = EINA_FALSE;
    if (ic->sd->last_selected == ic) ic->sd->last_selected = NULL;
    ic->sd->selected_icons = eina_list_remove(ic->sd->selected_icons, ic);
+   ic->selected_time = 0.0;
    if (ic->realized)
      {
         const char *stacking, *selectraise;
@@ -7213,14 +7200,10 @@ _e_fm2_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
                   ici->ic->drag.dnd = EINA_TRUE;
                   if (ici->ic->obj) evas_object_hide(ici->ic->obj);
                   if (ici->ic->obj_icon) evas_object_hide(ici->ic->obj_icon);
-                  if (ici->ic->rename_click) ecore_timer_del(ici->ic->rename_click);
-                  ici->ic->rename_click = NULL;
                }
              if (!sel) return;
              sel[sel_length] = '\0';
 
-             if (ic->rename_click) ecore_timer_del(ic->rename_click);
-             ic->rename_click = NULL;
              d = e_drag_new(con, x, y, drag_types, 1,
                             sel, sel_length, NULL, _e_fm2_cb_drag_finished);
              o = edje_object_add(e_drag_evas_get(d));
@@ -9778,11 +9761,6 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    char text[PATH_MAX + 256];
 
    ic = data;
-   if (ic->rename_click)
-     {
-        ecore_timer_del(ic->rename_click);
-        ic->rename_click = NULL;
-     }
    if ((ic->entry_dialog) || (ic->entry_widget)) return;
    if (ic->sd->icon_menu.flags & E_FM2_MENU_NO_RENAME) return;
 
