@@ -15,8 +15,7 @@ INCLUDES               = -I. \
                          -I$(top_srcdir)/src/bin \
                          -I$(top_builddir)/src/bin \
                          -I$(top_srcdir)/src/modules \
-                         @e_cflags@ \
-			 @EXCHANGE_CFLAGS@
+                         @e_cflags@
 
 pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)
 pkg_LTLIBRARIES        = module.la
@@ -36,17 +35,13 @@ module_la_SOURCES      = e_mod_main.c \
                          e_int_config_theme.h \
                          e_int_config_theme_import.c \
                          e_int_config_theme_import.h \
-                         e_int_config_theme_web.c \
-                         e_int_config_theme_web.h \
                          e_int_config_transitions.c \
                          e_int_config_transitions.h \
                          e_int_config_wallpaper.c \
                          e_int_config_wallpaper.h \
-                         e_int_config_wallpaper_web.c \
-                         e_int_config_wallpaper_web.h \
                          e_int_config_xsettings.c
 
-module_la_LIBADD       = @e_libs@ @dlopen_libs@ @EXCHANGE_LIBS@
+module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
 module_la_DEPENDENCIES = $(top_builddir)/config.h
 

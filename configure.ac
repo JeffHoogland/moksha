@@ -667,22 +667,22 @@ define([CHECK_MODULE_TEMPERATURE],
   AC_E_CHECK_PKG(TEMPERATURE, [ ecore >= 1.2.0 ecore-file >= 1.2.0 eina >= 1.2.0 ], [], [TEMPERATURE=false])
 ])
 
-have_exchange=no
-AC_ARG_ENABLE(exchange,
-  AC_HELP_STRING([--disable-exchange], [disable Exchange support @<:@default=detect@:>@]),
-  [want_exchange=$enableval],
-  [want_exchange=auto]
-)
+##have_exchange=no
+##AC_ARG_ENABLE(exchange,
+##  AC_HELP_STRING([--disable-exchange], [disable Exchange support @<:@default=detect@:>@]),
+##  [want_exchange=$enableval],
+##  [want_exchange=auto]
+##)
 
 AM_CONDITIONAL(HAVE_EXCHANGE, false)
-define([CHECK_MODULE_CONF_THEME],
-[
-  if test "x$want_exchange" != "xno" ; then
-    AC_E_CHECK_PKG(EXCHANGE, [exchange], [], [:])
-  else
-    AC_MSG_NOTICE([requested to not use exchange library])
-  fi
-])
+##define([CHECK_MODULE_CONF_THEME],
+##[
+##  if test "x$want_exchange" != "xno" ; then
+##    AC_E_CHECK_PKG(EXCHANGE, [exchange], [], [:])
+##  else
+##    AC_MSG_NOTICE([requested to not use exchange library])
+##  fi
+##])
 
 
 have_enotify=no
@@ -840,7 +840,7 @@ AC_E_OPTIONAL_MODULE([fileman_opinfo], true)
 AC_E_OPTIONAL_MODULE([wizard], true)
 AC_E_OPTIONAL_MODULE([conf], true)
 AC_E_OPTIONAL_MODULE([conf_wallpaper2], true)
-AC_E_OPTIONAL_MODULE([conf_theme], true, [CHECK_MODULE_CONF_THEME])
+AC_E_OPTIONAL_MODULE([conf_theme], true, true)
 AC_E_OPTIONAL_MODULE([conf_intl], true)
 AC_E_OPTIONAL_MODULE([msgbus], true)
 AC_E_OPTIONAL_MODULE([conf_applications], true)
