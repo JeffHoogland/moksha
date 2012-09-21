@@ -1618,6 +1618,15 @@ _e_shelf_cb_urgent_show(void *data)
 }
 
 static void
+_e_shelf_cb_menu_refresh(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Shelf *es = data;
+
+   e_gadcon_unpopulate(es->gadcon);
+   e_gadcon_populate(es->gadcon);
+}
+
+static void
 _e_shelf_cb_menu_config(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Shelf *es;
@@ -2302,6 +2311,11 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_object_data_set(E_OBJECT(subm), es);
    e_menu_item_submenu_set(mi, subm);
    e_object_unref(E_OBJECT(subm));
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Refresh"));
+   e_util_menu_item_theme_icon_set(mi, "view-refresh");
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_refresh, es);
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
