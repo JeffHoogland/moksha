@@ -22,6 +22,10 @@ static double t0, t1, t2;
 #include <Elementary.h>
 #endif
 
+#ifdef HAVE_EMOTION
+#include <Emotion.h>
+#endif
+
 /*
  * i need to make more use of these when i'm baffled as to when something is
  * up. other hooks:
@@ -390,6 +394,17 @@ main(int argc, char **argv)
      }
    TS("Elementary Init Done");
    _e_main_shutdown_push(elm_shutdown);
+#endif
+
+#ifdef HAVE_EMOTION
+   TS("Emotion Init");
+   if (!emotion_init())
+     {
+        e_error_message_show(_("Enlightenment cannot initialize Emotion!\n"));
+        _e_main_shutdown(-1);
+     }
+   TS("Emotion Init Done");
+   _e_main_shutdown_push((void*)emotion_shutdown);
 #endif
 
    /* e doesn't sync to compositor - it should be one */

@@ -588,6 +588,25 @@ if test "x$want_elementary" != "xno"; then
    fi
 fi
 
+want_emotion=auto
+have_emotion=no
+AC_ARG_ENABLE(emotion,
+  AC_HELP_STRING([--enable-emotion], [enable emotion support @<:@default=detect@:>@]),
+  [want_emotion=$enableval],
+  [want_emotion=auto]
+)
+if test "x$want_emotion" != "xno"; then
+   PKG_CHECK_MODULES(EMOTION, [emotion >= ${efl_version}],
+                     [have_emotion=yes], [have_emotion=no])
+   if test "x$want_emotion" = "xyes" -a "x$have_emotion" = "xno"; then
+      AC_MSG_ERROR([emotion support requested but it was not found])
+   fi
+   if test "x$have_emotion" = "xyes"; then
+      AC_DEFINE([HAVE_EMOTION], 1, "Have emotion support")
+      requirements_e="${requirements_e} emotion > ${efl_version}"
+   fi
+fi
+
 PKG_CHECK_MODULES(E_OPEN, [
   ecore >= ${efl_version}
   efreet >= ${efl_version}

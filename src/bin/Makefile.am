@@ -13,6 +13,7 @@ INCLUDES = \
 @VALGRIND_CFLAGS@ \
 @EDJE_DEF@ \
 @ELM_CFLAGS@ \
+@EMOTION_CFLAGS@ \
 -DPACKAGE_BIN_DIR=\"@PACKAGE_BIN_DIR@\" \
 -DPACKAGE_LIB_DIR=\"@PACKAGE_LIB_DIR@\" \
 -DPACKAGE_DATA_DIR=\"@PACKAGE_DATA_DIR@\" \
@@ -363,7 +364,7 @@ e_main.c \
 $(enlightenment_src)
 
 enlightenment_LDFLAGS = -export-dynamic
-enlightenment_LDADD = @e_libs@ @ELM_LIBS@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@ -lm
+enlightenment_LDADD = @e_libs@ @ELM_LIBS@ @EMOTION_LIBS@ @dlopen_libs@ @cf_libs@ @VALGRIND_LIBS@ -lm
 
 enlightenment_imc_SOURCES = \
 e.h \
