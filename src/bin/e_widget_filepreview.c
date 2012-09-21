@@ -182,6 +182,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    o = emotion_object_add(evas);
    emotion_object_init(o, NULL);
    emotion_object_file_set(o, wd->path);
+   emotion_object_play_set(o, EINA_TRUE);
    evas_object_size_hint_aspect_set(o, EVAS_ASPECT_CONTROL_BOTH, wd->w, wd->h);
    wd->o_preview_preview = e_widget_image_add_from_object(evas, o, wd->w, wd->h);
    e_widget_table_object_append(wd->o_preview_properties_table,
