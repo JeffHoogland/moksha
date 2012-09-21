@@ -880,6 +880,7 @@ e_modapi_init(E_Module *m)
    E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_DELETED, _clock_eio_update, NULL);
    E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_DELETED, _clock_eio_update, NULL);
    E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_RENAME, _clock_eio_update, NULL);
+   E_LIST_HANDLERS_APPEND(clock_eio_handlers, E_EVENT_SYS_RESUME, _clock_eio_update, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
 
