@@ -464,6 +464,7 @@ static void          _e_fm2_volume_icon_update(E_Volume *v);
 
 static void          _e_fm2_operation_abort_internal(E_Fm2_Op_Registry_Entry *ere);
 
+static Eina_Bool    _e_fm2_sys_suspend_hibernate(void *, int, void *);
 
 static void _e_fm2_favorites_thread_cb(void *d, Ecore_Thread *et);
 static void _e_fm2_thread_cleanup_cb(void *d, Ecore_Thread *et);
@@ -485,6 +486,8 @@ static const char *_e_fm2_mime_app_desktop = NULL;
 static const char *_e_fm2_mime_app_edje = NULL;
 static const char *_e_fm2_mime_text_uri_list = NULL;
 static const char *_e_fm2_xds = NULL;
+
+static Eina_List *_e_fm_handlers = NULL;
 
 static const char **_e_fm2_dnd_types[] =
 {
@@ -738,9 +741,6 @@ _e_fm2_op_registry_entry_changed_cb(void *data __UNUSED__, int type __UNUSED__, 
    return ECORE_CALLBACK_RENEW;
 }
 
-static Ecore_Event_Handler *_e_fm2_op_registry_entry_add_handler = NULL;
-static Ecore_Event_Handler *_e_fm2_op_registry_entry_del_handler = NULL;
-static Ecore_Event_Handler *_e_fm2_op_registry_entry_changed_handler = NULL;
 /////////////// DBG:
 
 /***/
@@ -803,19 +803,12 @@ e_fm2_init(void)
                                               _e_fm2_thread_cleanup_cb, NULL);
 
    /// DBG
-   if (!_e_fm2_op_registry_entry_add_handler)
-     _e_fm2_op_registry_entry_add_handler =
-       ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_ADD,
-                               _e_fm2_op_registry_entry_add_cb, NULL);
-   if (!_e_fm2_op_registry_entry_del_handler)
-     _e_fm2_op_registry_entry_del_handler =
-       ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_DEL,
-                               _e_fm2_op_registry_entry_del_cb, NULL);
-   if (!_e_fm2_op_registry_entry_changed_handler)
-     _e_fm2_op_registry_entry_changed_handler =
-       ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_CHANGED,
-                               _e_fm2_op_registry_entry_changed_cb, NULL);
+   E_LIST_HANDLER_APPEND(_e_fm_handlers, E_EVENT_FM_OP_REGISTRY_ADD, _e_fm2_op_registry_entry_add_cb, NULL);
+   E_LIST_HANDLER_APPEND(_e_fm_handlers, E_EVENT_FM_OP_REGISTRY_DEL, _e_fm2_op_registry_entry_del_cb, NULL);
+   E_LIST_HANDLER_APPEND(_e_fm_handlers, E_EVENT_FM_OP_REGISTRY_CHANGED, _e_fm2_op_registry_entry_changed_cb, NULL);
    /// DBG
+   E_LIST_HANDLER_APPEND(_e_fm_handlers, E_EVENT_SYS_HIBERNATE, _e_fm2_sys_suspend_hibernate, NULL);
+   E_LIST_HANDLER_APPEND(_e_fm_handlers, E_EVENT_SYS_RESUME, _e_fm2_sys_suspend_hibernate, NULL);
 
    return 1;
 }
@@ -831,23 +824,7 @@ e_fm2_shutdown(void)
    eina_stringshare_replace(&_e_fm2_mime_text_uri_list, NULL);
    eina_stringshare_replace(&_e_fm2_xds, NULL);
 
-   /// DBG
-   if (_e_fm2_op_registry_entry_add_handler)
-     {
-        ecore_event_handler_del(_e_fm2_op_registry_entry_add_handler);
-        _e_fm2_op_registry_entry_add_handler = NULL;
-     }
-   if (_e_fm2_op_registry_entry_del_handler)
-     {
-        ecore_event_handler_del(_e_fm2_op_registry_entry_del_handler);
-        _e_fm2_op_registry_entry_del_handler = NULL;
-     }
-   if (_e_fm2_op_registry_entry_changed_handler)
-     {
-        ecore_event_handler_del(_e_fm2_op_registry_entry_changed_handler);
-        _e_fm2_op_registry_entry_changed_handler = NULL;
-     }
-   /// DBG
+   E_FREE_LIST(_e_fm_handlers, ecore_event_handler_del);
 
    ecore_timer_del(_e_fm2_mime_flush);
    _e_fm2_mime_flush = NULL;
@@ -10579,6 +10556,21 @@ _e_fm2_file_delete_no_cb(void *data, E_Dialog *dialog)
    ic = data;
    ic->dialog = NULL;
    e_object_del(E_OBJECT(dialog));
+}
+
+static Eina_Bool
+_e_fm2_sys_suspend_hibernate(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__)
+{
+   Eina_List *l, *ll, *lll;
+   E_Volume *v;
+   E_Fm2_Mount *m;
+
+   EINA_LIST_FOREACH(e_fm2_device_volume_list_get(), l, v)
+     {
+        EINA_LIST_FOREACH_SAFE(v->mounts, ll, lll, m)
+          e_fm2_device_unmount(m);
+     }
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
