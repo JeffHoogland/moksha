@@ -21,7 +21,7 @@
 \
    if (evas_object_smart_smart_get(obj) != _e_fm2_smart) SMARTERRNR() args; \
    sd = evas_object_smart_data_get(obj); \
-   if ((!sd) || (!evas_object_type_get(obj)) || strcmp(evas_object_type_get(obj), "e_fm")) return args
+   if ((!sd) || (e_util_strcmp(evas_object_type_get(obj), "e_fm"))) return args
 
 typedef enum _E_Fm2_Action_Type
 {
