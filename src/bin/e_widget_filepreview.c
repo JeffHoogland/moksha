@@ -165,17 +165,17 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
       o = e_widget_label_add(evas, lab); \
       e_widget_disabled_set(o, 1); \
       wd->labob = o; \
-      e_widget_table_object_append(wd->o_preview_properties_table, \
-                                   wd->labob, \
-                                   0, y, 1, 1, 1, 1, 1, 1); \
+      e_widget_table_object_align_append(wd->o_preview_properties_table, \
+                                         wd->labob,                     \
+                                         0, y, 1, 1, 0, 1, 0, 0, 1.0, 0.0); \
       o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL); \
       e_widget_entry_readonly_set(o, 1); \
       e_widget_disabled_set(o, 1); \
       wd->entob = o; \
       e_widget_size_min_set(o, entw, -1); \
-      e_widget_table_object_append(wd->o_preview_properties_table, \
-                                   wd->entob, \
-                                   1, y, 1, 1, 1, 1, 1, 1); \
+      e_widget_table_object_align_append(wd->o_preview_properties_table, \
+                                         wd->entob,                     \
+                                         1, y, 1, 1, 1, 1, 1, 0, 0.0, 0.0); \
       y++; \
    } while (0)
 
@@ -232,17 +232,17 @@ _e_wid_fprev_preview_fs_widgets(E_Widget_Data *wd)
       o = e_widget_label_add(evas, lab); \
       e_widget_disabled_set(o, 1); \
       wd->labob = o; \
-      e_widget_table_object_append(wd->o_preview_properties_table, \
-                                   wd->labob, \
-                                   0, y, 1, 1, 1, 1, 1, 1); \
+      e_widget_table_object_align_append(wd->o_preview_properties_table, \
+                                         wd->labob,                     \
+                                         0, y, 1, 1, 0, 1, 0, 0, 1.0, 0.0); \
       o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL); \
       e_widget_entry_readonly_set(o, 1); \
       e_widget_disabled_set(o, 1); \
       wd->entob = o; \
       e_widget_size_min_set(o, entw, -1); \
-      e_widget_table_object_append(wd->o_preview_properties_table, \
-                                   wd->entob, \
-                                   1, y, 1, 1, 1, 1, 1, 1); \
+      e_widget_table_object_align_append(wd->o_preview_properties_table, \
+                                         wd->entob,                     \
+                                         1, y, 1, 1, 1, 1, 1, 0, 0.0, 0.0); \
       y++; \
    } while (0)
    
