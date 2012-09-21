@@ -600,6 +600,12 @@ e_gadcon_unpopulate(E_Gadcon *gc)
      {
         gcc = eina_list_data_get(gc->clients);
         _e_gadcon_client_unpopulate(gcc);
+        /* FIXME: this seems to happen under some rare and as-yet
+         * undetermined circumstances in gadman
+         */
+        if (gcc != eina_list_data_get(gc->clients)) continue;
+        WRN("DANGLING GADCON CLIENT %p! THIS IS A BUG!!!", gcc);
+        e_object_unref(E_OBJECT(gcc));
      }
    if (gc->awaiting_classes)
      eina_hash_free(gc->awaiting_classes);
