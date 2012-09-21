@@ -3,6 +3,9 @@
 
 #include <sys/time.h>
 #include <time.h>
+#ifdef HAVE_SYS_TIMERFD_H
+# include <sys/timerfd.h>
+#endif
 
 /* actual module specifics */
 typedef struct _Instance Instance;
@@ -50,6 +53,9 @@ static E_Config_DD *conf_item_edd = NULL;
 static Eina_List *clock_instances = NULL;
 static E_Action *act = NULL;
 static Ecore_Timer *update_today = NULL;
+#ifdef HAVE_SYS_TIMERFD_H
+static Ecore_Fd_Handler *timerfd_handler = NULL;
+#endif
 
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
@@ -810,6 +816,16 @@ _clock_eio_error(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__
    return ECORE_CALLBACK_RENEW;
 }
 
+static Eina_Bool
+_clock_fd_update(void *d __UNUSED__, Ecore_Fd_Handler *fdh)
+{
+   char buf[64];
+
+   read(ecore_main_fd_handler_fd_get(fdh), buf, sizeof(buf));
+   e_int_clock_instances_redo();
+   return EINA_TRUE;
+}
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -866,6 +882,16 @@ e_modapi_init(E_Module *m)
    E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_RENAME, _clock_eio_update, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
+
+#ifdef HAVE_SYS_TIMERFD_H
+   int timer_fd;
+
+   /* on old systems, flags must be 0, so we'll play nice and do it always */
+   timer_fd = timerfd_create(CLOCK_REALTIME, 0);
+   if (timer_fd < 0) return m;
+   fcntl(timer_fd, F_SETFL, O_NONBLOCK | FD_CLOEXEC);
+   timerfd_handler = ecore_main_fd_handler_add(timer_fd, ECORE_FD_READ, _clock_fd_update, NULL, NULL, NULL);
+#endif
    return m;
 }
 
@@ -908,6 +934,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      }
    eio_monitor_del(clock_tz_monitor);
    clock_tz_monitor = NULL;
+#ifdef HAVE_SYS_TIMERFD_H
+   timerfd_handler = ecore_main_fd_handler_del(timerfd_handler);
+#endif
 
    return 1;
 }
