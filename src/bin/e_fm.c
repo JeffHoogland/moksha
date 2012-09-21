@@ -2152,24 +2152,6 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
         if (o) return o;
      }
 
-
-   if (ic->info.mime)
-     {
-        if (!strncasecmp(ic->info.mime, "video/", 6))
-          ic->thumb_failed = EINA_TRUE;
-     }
-   else if (eina_str_has_extension(ic->info.file, ".avi") ||
-             eina_str_has_extension(ic->info.file, ".mpg") ||
-             eina_str_has_extension(ic->info.file, ".mpeg") ||
-             eina_str_has_extension(ic->info.file, ".mkv")
-            )
-     ic->thumb_failed = EINA_TRUE;
-   else if (ic->info.statinfo.st_size >= (ic->sd->config->icon.max_thumb_size ?: 5) * 1024 * 1024)
-     /* block movie thumbnails, which we can't do, and large file previews,
-      * which we won't do
-      */
-     ic->thumb_failed = EINA_TRUE;
-
    /* create thumbnails for edje files */
    if (_e_fm2_file_is_edje(ic->info.file))
      {
