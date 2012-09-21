@@ -3995,44 +3995,44 @@ e_mod_comp_init(void)
    damages = eina_hash_string_superfast_new(NULL);
 
    ecore_x_screensaver_custom_blanking_enable();
+
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_CREATE, _e_mod_comp_create, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_DESTROY, _e_mod_comp_destroy, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHOW, _e_mod_comp_show, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_HIDE, _e_mod_comp_hide, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_REPARENT, _e_mod_comp_reparent, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_CONFIGURE, _e_mod_comp_configure, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STACK, _e_mod_comp_stack, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_PROPERTY, _e_mod_comp_property, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_CLIENT_MESSAGE, _e_mod_comp_message, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHAPE, _e_mod_comp_shape, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_DAMAGE_NOTIFY, _e_mod_comp_damage, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_DAMAGE, _e_mod_comp_damage_win, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_mod_comp_screensaver, NULL);
+
+   E_LIST_HANDLER_APPEND(handlers, ECORE_EVENT_KEY_DOWN, _e_mod_comp_key_down, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_EVENT_SIGNAL_USER, _e_mod_comp_signal_user, NULL);
+
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONTAINER_RESIZE, _e_mod_comp_randr, NULL);
+
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_ZONE_MOVE_RESIZE, _e_mod_comp_zonech, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_ZONE_ADD, _e_mod_comp_zonech, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_ZONE_DEL, _e_mod_comp_zonech, NULL);
    
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CREATE, _e_mod_comp_create, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DESTROY, _e_mod_comp_destroy, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHOW, _e_mod_comp_show, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_HIDE, _e_mod_comp_hide, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_REPARENT, _e_mod_comp_reparent, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_mod_comp_configure, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STACK, _e_mod_comp_stack, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_PROPERTY, _e_mod_comp_property, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _e_mod_comp_message, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE, _e_mod_comp_shape, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_DAMAGE_NOTIFY, _e_mod_comp_damage, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_DAMAGE, _e_mod_comp_damage_win, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_mod_comp_screensaver, NULL));
-
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _e_mod_comp_key_down, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER, _e_mod_comp_signal_user, NULL));
-
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE, _e_mod_comp_randr, NULL));
-
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, _e_mod_comp_zonech, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_ZONE_ADD, _e_mod_comp_zonech, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_ZONE_DEL, _e_mod_comp_zonech, NULL));
-   
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_mod_comp_bd_add, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_REMOVE, _e_mod_comp_bd_del, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_SHOW, _e_mod_comp_bd_show, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_HIDE, _e_mod_comp_bd_hide, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_MOVE, _e_mod_comp_bd_move, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_RESIZE, _e_mod_comp_bd_resize, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ICONIFY, _e_mod_comp_bd_iconify, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY, _e_mod_comp_bd_uniconify, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_URGENT_CHANGE, _e_mod_comp_bd_urgent_change, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, _e_mod_comp_bd_focus_in, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FOCUS_OUT, _e_mod_comp_bd_focus_out, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_PROPERTY, _e_mod_comp_bd_property, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FULLSCREEN, _e_mod_comp_bd_fullscreen, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNFULLSCREEN, _e_mod_comp_bd_unfullscreen, NULL));
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_ADD, _e_mod_comp_bd_add, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_REMOVE, _e_mod_comp_bd_del, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_SHOW, _e_mod_comp_bd_show, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_HIDE, _e_mod_comp_bd_hide, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_MOVE, _e_mod_comp_bd_move, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_RESIZE, _e_mod_comp_bd_resize, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_ICONIFY, _e_mod_comp_bd_iconify, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_UNICONIFY, _e_mod_comp_bd_uniconify, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_URGENT_CHANGE, _e_mod_comp_bd_urgent_change, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_FOCUS_IN, _e_mod_comp_bd_focus_in, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_FOCUS_OUT, _e_mod_comp_bd_focus_out, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_PROPERTY, _e_mod_comp_bd_property, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_FULLSCREEN, _e_mod_comp_bd_fullscreen, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_UNFULLSCREEN, _e_mod_comp_bd_unfullscreen, NULL);
 
    if (!ecore_x_composite_query())
      {
@@ -4074,11 +4074,7 @@ e_mod_comp_init(void)
 void
 e_mod_comp_shutdown(void)
 {
-   E_Comp *c;
-
-   EINA_LIST_FREE(compositors, c)
-     _e_mod_comp_del(c);
-
+   E_FREE_LIST(compositors, _e_mod_comp_del);
    E_FREE_LIST(handlers, ecore_event_handler_del);
 
 #ifdef HAVE_WAYLAND_CLIENTS
