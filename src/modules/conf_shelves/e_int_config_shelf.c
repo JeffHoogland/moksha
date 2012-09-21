@@ -440,7 +440,7 @@ _cb_contents(void *data, void *data2 __UNUSED__)
    if (!(cfdata = data)) return;
    es = e_widget_ilist_selected_data_get(cfdata->o_list);
    if (!es) return;
-   if (!es->config_dialog)
+   if (!es->gadcon->config_dialog)
      {
         e_int_gadcon_config_shelf(es->gadcon);
         e_object_del_attach_func_set(E_OBJECT(es->gadcon->config_dialog), _cb_contents_end);
