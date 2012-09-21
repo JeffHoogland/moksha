@@ -90,6 +90,7 @@ struct _E_Fm2_Config
          Eina_Bool show : 1;
       } extension;
       const char *key_hint;
+      unsigned int max_thumb_size;
    } icon;
    /* how to sort files */
    struct

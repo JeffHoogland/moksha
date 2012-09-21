@@ -1432,6 +1432,7 @@ _e_fwin_config_set(E_Fwin_Page *page)
    fmc.view.selector = 0;
    fmc.view.single_click = fileman_config->view.single_click;
    fmc.view.no_subdir_jump = 0;
+   fmc.icon.max_thumb_size = fileman_config->icon.max_thumb_size;
    fmc.icon.extension.show = fileman_config->icon.extension.show;
    fmc.list.sort.no_case = fileman_config->list.sort.no_case;
    fmc.list.sort.extension = fileman_config->list.sort.extension;

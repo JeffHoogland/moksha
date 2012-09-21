@@ -4,7 +4,7 @@
 /* Increment for Major Changes */
 #define MOD_CONFIG_FILE_EPOCH      0x0001
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
-#define MOD_CONFIG_FILE_GENERATION 0x0114
+#define MOD_CONFIG_FILE_GENERATION 0x0115
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
 typedef struct _Config Config;
@@ -76,6 +76,7 @@ struct _Config
          unsigned char show;
       } extension;
       const char *key_hint;
+      unsigned int max_thumb_size;
    } icon;
    /* how to sort files */
    struct

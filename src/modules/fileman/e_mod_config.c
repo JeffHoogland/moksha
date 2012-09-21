@@ -44,6 +44,7 @@ struct _E_Config_Dialog_Data
           int show;
        } extension;
        const char *key_hint;
+       int max_thumb_size;
     } icon;
     /* how to sort files */
     struct
@@ -147,6 +148,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->view.show_sidebar = fileman_config->view.show_sidebar;
    cfdata->view.desktop_navigation = fileman_config->view.desktop_navigation;
    cfdata->view.menu_shows_files = fileman_config->view.menu_shows_files;
+   cfdata->icon.max_thumb_size = fileman_config->icon.max_thumb_size;
    cfdata->icon.icon.w = fileman_config->icon.icon.w;
    cfdata->icon.icon.h = fileman_config->icon.icon.h;
    cfdata->tooltip.delay = fileman_config->tooltip.delay;
@@ -237,6 +239,7 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->view.desktop_navigation != cfdata->view.desktop_navigation) ||
      (fileman_config->view.menu_shows_files != cfdata->view.menu_shows_files) ||
      (fileman_config->icon.extension.show != cfdata->icon.extension.show) ||
+     ((int)fileman_config->icon.max_thumb_size != cfdata->icon.max_thumb_size) ||
      (fileman_config->selection.windows_modifiers != cfdata->selection.windows_modifiers) ||
      (fileman_config->icon.icon.w != cfdata->icon.icon.w) ||
      (fileman_config->icon.icon.h != cfdata->icon.icon.w) ||
@@ -389,6 +392,12 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Allow Navigation On Desktop"),
                            &(cfdata->view.desktop_navigation));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+
+   ob = e_widget_label_add(evas, _("Max File Size For Thumbnailing"));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1, 0,
+                            NULL, &(cfdata->icon.max_thumb_size), 150);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    ob = e_widget_label_add(evas, _("Spring Delay"));

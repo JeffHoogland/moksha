@@ -1025,6 +1025,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
         sd->config->view.single_click = e_config->filemanager_single_click;
         sd->config->view.single_click_delay = EINA_FALSE;
         sd->config->view.no_subdir_jump = EINA_FALSE;
+        sd->config->icon.max_thumb_size = 5;
         sd->config->icon.icon.w = 128;
         sd->config->icon.icon.h = 128;
         sd->config->icon.list.w = 24;
@@ -2174,6 +2175,19 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
 
         o = _e_fm2_icon_explicit_theme_icon_get(evas, ic, ic->info.icon, type_ret);
         if (o) return o;
+     }
+
+
+   if (eina_str_has_extension(ic->info.file, ".avi") ||
+       eina_str_has_extension(ic->info.file, ".mpg") ||
+       eina_str_has_extension(ic->info.file, ".mpeg") ||
+       eina_str_has_extension(ic->info.file, ".mkv") ||
+       (ic->info.statinfo.st_size >= (ic->sd->config->icon.max_thumb_size ?: 5) * 1024 * 1024))
+     {
+        /* block movie thumbnails, which we can't do, and large file previews,
+         * which we won't do
+         */
+        ic->thumb_failed = EINA_TRUE;
      }
 
    /* create thumbnails for edje files */

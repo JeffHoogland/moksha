@@ -252,6 +252,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, icon.fixed.w, UCHAR);
    E_CONFIG_VAL(D, T, icon.fixed.h, UCHAR);
    E_CONFIG_VAL(D, T, icon.extension.show, UCHAR);
+   E_CONFIG_VAL(D, T, icon.max_thumb_size, UINT);
    E_CONFIG_VAL(D, T, list.sort.no_case, UCHAR);
    E_CONFIG_VAL(D, T, list.sort.extension, UCHAR);
    E_CONFIG_VAL(D, T, list.sort.mtime, UCHAR);
@@ -340,6 +341,10 @@ _e_mod_fileman_config_load(void)
     fileman_config->view.spring_delay = 1;
     IFMODCFGEND;
 
+    IFMODCFG(0x0115);
+    fileman_config->icon.max_thumb_size = 5;
+    IFMODCFGEND;
+
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
 
     /* UCHAR's give nasty compile warnings about comparisons so not gonna limit those */
@@ -352,6 +357,7 @@ _e_mod_fileman_config_load(void)
     E_CONFIG_LIMIT(fileman_config->tooltip.delay, 0.0, 5.0);
     E_CONFIG_LIMIT(fileman_config->tooltip.size, 10.0, 75.0);
     E_CONFIG_LIMIT(fileman_config->view.spring_delay, 1, 10);
+    E_CONFIG_LIMIT(fileman_config->icon.max_thumb_size, 1, 10);
 
     e_config_save_queue();
 }
