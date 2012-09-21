@@ -71,7 +71,7 @@ wizard_page_show(E_Wizard_Page *pg)
 
    memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
    ecore_x_window_attributes_get(ecore_x_window_root_first_get(), &att);
-   if ((att.depth != 24) && (att.depth != 32)) return 0;
+   if ((att.depth <= 8)) return 0;
 
    ee = ecore_evas_gl_x11_new(NULL, 0, 0, 0, 320, 240);
    if (ee)

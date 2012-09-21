@@ -93,6 +93,7 @@ struct _E_Comp_Win
    Ecore_X_Pixmap       pixmap;  // the compositing pixmap
    Ecore_X_Damage       damage;  // damage region
    Ecore_X_Visual       vis;  // window visual
+   Ecore_X_Colormap     cmap; // colormap of window
    int                  depth;  // window depth
    Evas_Object         *obj;  // composite object
    Evas_Object         *shobj;  // shadow object
@@ -759,43 +760,99 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
           {
              if (cw->xim)
                {
-                  unsigned int *pix;
-
-                  pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
-                  evas_object_image_data_set(cw->obj, pix);
-                  evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
-                  EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+                  if (ecore_x_image_is_argb32_get(cw->xim))
                     {
-                       evas_object_image_data_set(o, pix);
-                       evas_object_image_size_set(o, cw->pw, cw->ph);
-                    }
-
-                  e_mod_comp_update_clear(cw->up);
-                  for (i = 0; r[i].w > 0; i++)
-                    {
-                       int x, y, w, h;
-
-                       x = r[i].x; y = r[i].y;
-                       w = r[i].w; h = r[i].h;
-                       if (!ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h))
+                       unsigned int *pix;
+                       
+                       pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
+                       evas_object_image_data_set(cw->obj, pix);
+                       evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+                       EINA_LIST_FOREACH(cw->obj_mirror, l, o)
                          {
-                            DBG("UPDATE [0x%x] %i %i %ix%i FAIL!!!!!!!!!!!!!!!!!\n", cw->win, x, y, w, h);
-                            e_mod_comp_update_add(cw->up, x, y, w, h);
-                            cw->update = 1;
+                            evas_object_image_data_set(o, pix);
+                            evas_object_image_size_set(o, cw->pw, cw->ph);
                          }
-                       else
+                       
+                       e_mod_comp_update_clear(cw->up);
+                       for (i = 0; r[i].w > 0; i++)
                          {
-// why do we neeed these 2? this smells wrong
-                            pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
-                            DBG("UPDATE [0x%x] %i %i %ix%i -- pix = %p\n", cw->win, x, y, w, h, pix);
-                            evas_object_image_data_set(cw->obj, pix);
-                            evas_object_image_data_update_add(cw->obj, x, y, w, h);
-                            EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+                            int x, y, w, h;
+                            
+                            x = r[i].x; y = r[i].y;
+                            w = r[i].w; h = r[i].h;
+                            if (!ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h))
                               {
-                                 evas_object_image_data_set(o, pix);
-                                 evas_object_image_data_update_add(o, x, y, w, h);
+                                 DBG("UPDATE [0x%x] %i %i %ix%i FAIL!!!!!!!!!!!!!!!!!\n", cw->win, x, y, w, h);
+                                 e_mod_comp_update_add(cw->up, x, y, w, h);
+                                 cw->update = 1;
+                              }
+                            else
+                              {
+                                 // why do we neeed these 2? this smells wrong
+                                 pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
+                                 DBG("UPDATE [0x%x] %i %i %ix%i -- pix = %p\n", cw->win, x, y, w, h, pix);
+                                 evas_object_image_data_set(cw->obj, pix);
+                                 evas_object_image_data_update_add(cw->obj, x, y, w, h);
+                                 EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+                                   {
+                                      evas_object_image_data_set(o, pix);
+                                      evas_object_image_data_update_add(o, x, y, w, h);
+                                   }
                               }
                          }
+                    }
+                  else
+                    {
+                       unsigned int *pix;
+                       int stride;
+                       
+                       evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
+                       pix = evas_object_image_data_get(cw->obj, EINA_TRUE);
+                       stride = evas_object_image_stride_get(cw->obj);
+                       EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+                         {
+                            evas_object_image_data_set(o, pix);
+                            evas_object_image_size_set(o, cw->pw, cw->ph);
+                         }
+                       
+                       e_mod_comp_update_clear(cw->up);
+                       for (i = 0; r[i].w > 0; i++)
+                         {
+                            int x, y, w, h;
+                            
+                            x = r[i].x; y = r[i].y;
+                            w = r[i].w; h = r[i].h;
+                            if (!ecore_x_image_get(cw->xim, cw->pixmap, x, y, x, y, w, h))
+                              {
+                                 DBG("UPDATE [0x%x] %i %i %ix%i FAIL!!!!!!!!!!!!!!!!!\n", cw->win, x, y, w, h);
+                                 e_mod_comp_update_add(cw->up, x, y, w, h);
+                                 cw->update = 1;
+                              }
+                            else
+                              {
+                                 unsigned int *srcpix;
+                                 int srcbpp = 0, srcbpl = 0;
+                                 // why do we neeed these 2? this smells wrong
+                                 srcpix = ecore_x_image_data_get
+                                   (cw->xim, &srcbpl, NULL, &srcbpp);
+                                 ecore_x_image_to_argb_convert(srcpix, 
+                                                               srcbpp,
+                                                               srcbpl, 
+                                                               cw->cmap,
+                                                               cw->vis,
+                                                               x, y, w, h,
+                                                               pix,
+                                                               stride,
+                                                               x, y);
+                                 DBG("UPDATE [0x%x] %i %i %ix%i -- pix = %p\n", cw->win, x, y, w, h, pix);
+                                 evas_object_image_data_update_add(cw->obj, x, y, w, h);
+                                 EINA_LIST_FOREACH(cw->obj_mirror, l, o)
+                                   {
+                                      evas_object_image_data_update_add(o, x, y, w, h);
+                                   }
+                              }
+                         }
+                       evas_object_image_data_set(cw->obj, pix);
                     }
                }
              free(r);
@@ -1815,10 +1872,19 @@ _e_mod_comp_win_mirror_add(E_Comp_Win *cw)
                }
              else if (cw->xim)
                {
-                  pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
-                  evas_object_image_data_set(o, pix);
-                  evas_object_image_size_set(o, w, h);
-                  evas_object_image_data_set(o, pix);
+                  if (ecore_x_image_is_argb32_get(cw->xim))
+                    {
+                       pix = ecore_x_image_data_get(cw->xim, NULL, NULL, NULL);
+                       evas_object_image_data_set(o, pix);
+                       evas_object_image_size_set(o, w, h);
+                    }
+                  else
+                    {
+                       pix = evas_object_image_data_get(cw->obj, EINA_TRUE);
+                       evas_object_image_data_set(o, pix);
+                       evas_object_image_size_set(o, w, h);
+                       evas_object_image_data_set(cw->obj, pix);
+                    }
                   evas_object_image_data_update_add(o, 0, 0, w, h);
                }
           }
@@ -1897,12 +1963,13 @@ _e_mod_comp_win_add(E_Comp *c,
    if ((!att.input_only) &&
        ((att.depth != 24) && (att.depth != 32)))
      {
-        printf("WARNING: window 0x%x not 24/32bpp -> %ibpp\n", cw->win, att.depth);
-        cw->invalid = 1;
+//        printf("WARNING: window 0x%x not 24/32bpp -> %ibpp\n", cw->win, att.depth);
+//        cw->invalid = 1;
      }
    cw->input_only = att.input_only;
    cw->override = att.override;
    cw->vis = att.visual;
+   cw->cmap = att.colormap;
    cw->depth = att.depth;
    cw->argb = ecore_x_window_argb_get(cw->win);
    eina_hash_add(windows, e_util_winid_str_get(cw->win), cw);
@@ -2928,6 +2995,7 @@ _e_mod_comp_override_timed_pop(E_Comp *c)
      ecore_timer_add(5.0, _e_mod_comp_override_expire, c);
 }
 
+/* here for completeness
 static void
 _e_mod_comp_override_pop(E_Comp *c)
 {
@@ -2938,6 +3006,7 @@ _e_mod_comp_override_pop(E_Comp *c)
         if (c->nocomp_want) _e_mod_comp_cb_nocomp_begin(c);
      }
 }
+*/
 
 static void
 _e_mod_comp_override_push(E_Comp *c)
@@ -3586,6 +3655,7 @@ _e_mod_comp_add(E_Manager *man)
 
    if ((att.depth != 24) && (att.depth != 32))
      {
+/*        
         e_util_dialog_internal
           (_("Compositor Error"),
           _("Your screen is not in 24/32bit display mode.<br>"
@@ -3594,6 +3664,7 @@ _e_mod_comp_add(E_Manager *man)
         ecore_x_composite_render_window_disable(c->win);
         free(c);
         return NULL;
+ */
      }
 
    if (c->man->num == 0) e_alert_composite_win = c->win;
