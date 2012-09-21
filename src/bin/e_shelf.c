@@ -1850,17 +1850,17 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
 
         ev = event;
         /* FIXME: checking every mouse movement here is only necessary because of
-         * shitty systray embedding xwindows into itself which generates inreliable
+         * shitty systray embedding xwindows into itself which generates unreliable
          * mouse in/out events. in the future, when we remove systray, we should go
          * back to mouse in/out events
          */
         inside = (es->popup && ((ev->event_window == es->popup->evas_win)));
         if (!inside)
           inside = (
-                    (E_INSIDE(ev->root.x - 4, ev->root.y - 4, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4)) &&
-                    (E_INSIDE(ev->root.x + 4, ev->root.y + 4, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4)) &&
                     (E_INSIDE(ev->root.x, ev->root.y, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4)) &&
-                    (E_INSIDE(ev->root.x, ev->root.y, es->x, es->y, es->w, es->h))
+                    ((E_INSIDE(ev->root.x, ev->root.y, es->x, es->y, es->w, es->h)) ||
+                    (E_INSIDE(ev->root.x, ev->root.y, es->x - 2, es->y - 2, es->w + 4, es->h + 4)) ||
+                    (E_INSIDE(ev->root.x, ev->root.y, es->x + 2, es->y + 2, es->w + 4, es->h + 4)))
                    );
         if (inside)
           {
