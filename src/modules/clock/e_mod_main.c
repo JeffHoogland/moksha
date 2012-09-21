@@ -41,6 +41,8 @@ static const char      *_gc_id_new(const E_Gadcon_Client_Class *client_class);
 static Config_Item     *_conf_item_get(const char *id);
 static void             _clock_popup_free(Instance *inst);
 
+static Eio_Monitor *clock_tz_monitor = NULL;
+static Eina_List *clock_eio_handlers = NULL;
 Config *clock_config = NULL;
 
 static E_Config_DD *conf_edd = NULL;
@@ -793,6 +795,21 @@ _e_mod_action_cb_mouse(E_Object *obj __UNUSED__, const char *params, Ecore_Event
    _e_mod_action(params);
 }
 
+static Eina_Bool
+_clock_eio_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   e_int_clock_instances_redo();
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_clock_eio_error(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   eio_monitor_del(clock_tz_monitor);
+   clock_tz_monitor = eio_monitor_add("/etc/localtime");
+   return ECORE_CALLBACK_RENEW;
+}
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -840,6 +857,13 @@ e_modapi_init(E_Module *m)
      }
 
    clock_config->module = m;
+   clock_tz_monitor = eio_monitor_add("/etc/localtime");
+   E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_ERROR, _clock_eio_error, NULL);
+   E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_CREATED, _clock_eio_update, NULL);
+   E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_MODIFIED, _clock_eio_update, NULL);
+   E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_DELETED, _clock_eio_update, NULL);
+   E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_DELETED, _clock_eio_update, NULL);
+   E_LIST_HANDLERS_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_RENAME, _clock_eio_update, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
    return m;
@@ -882,6 +906,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         ecore_timer_del(update_today);
         update_today = NULL;
      }
+   eio_monitor_del(clock_tz_monitor);
+   clock_tz_monitor = NULL;
 
    return 1;
 }
