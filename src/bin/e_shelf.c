@@ -1195,6 +1195,11 @@ _e_shelf_free(E_Shelf *es)
         e_object_del(E_OBJECT(es->menu));
         es->menu = NULL;
      }
+   if (es->module_init_end_timer)
+     {
+        ecore_timer_del(es->module_init_end_timer);
+        es->module_init_end_timer = NULL;
+     }
    if (es->dummy)
      {
         evas_object_event_callback_del_full(es->o_base, EVAS_CALLBACK_DEL, 
@@ -2158,6 +2163,15 @@ _e_shelf_cb_instant_hide_timer(void *data)
 }
 
 static Eina_Bool
+_e_shelf_module_init_end_timer_cb(void *data)
+{
+   E_Shelf *es = data;
+   e_shelf_show(es);
+   es->module_init_end_timer = NULL;
+   return EINA_FALSE;
+}
+
+static Eina_Bool
 _e_shelf_module_init_end_handler_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    Eina_List *l;
@@ -2167,6 +2181,8 @@ _e_shelf_module_init_end_handler_cb(void *data __UNUSED__, int type __UNUSED__, 
      {
         if ((!es->gadcon->populate_requests) || (!es->gadcon->cf->clients))
           e_shelf_show(es);
+        else if (!es->module_init_end_timer)
+          es->module_init_end_timer = ecore_timer_add(1.0, _e_shelf_module_init_end_timer_cb, es);
      }
    return ECORE_CALLBACK_RENEW;
 }
