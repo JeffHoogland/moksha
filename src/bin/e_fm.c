@@ -12,10 +12,8 @@
  */
 //#define E_FM2_SIMPLE_STRCASE_FILES 1
 
-/* FIXME: this is NOT complete. dnd not complete (started). only list view
- * works. in icon view it needs to be much better about placement of icons and
- * being able to save/load icon placement. it doesn't support backgrounds or
- * custom frames or icons yet
+/* FIXME: this is NOT complete. in icon view dnd needs to be much better about placement of icons and
+ * being able to save/load icon placement. it doesn't support custom frames or icons yet
  */
 
 #define EFM_SMART_CHECK(args...) \
