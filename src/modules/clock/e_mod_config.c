@@ -8,13 +8,13 @@ struct _E_Config_Dialog_Data
 
 /* Protos */
 static void        *_create_data(E_Config_Dialog *cfd);
-static void         _free_data(E_Config_Dialog      *cfd,
+static void         _free_data(E_Config_Dialog *cfd,
                                E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create_widgets(E_Config_Dialog      *cfd,
-                                          Evas                 *evas,
+static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
+                                          Evas *evas,
                                           E_Config_Dialog_Data *cfdata);
-static int _basic_apply_data(E_Config_Dialog      *cfd,
-                             E_Config_Dialog_Data *cfdata);
+static int          _basic_apply_data(E_Config_Dialog *cfd,
+                                      E_Config_Dialog_Data *cfdata);
 
 void
 e_int_config_clock_module(E_Container *con, Config_Item *ci)
@@ -33,7 +33,7 @@ e_int_config_clock_module(E_Container *con, Config_Item *ci)
 
    snprintf(buf, sizeof(buf), "%s/e-module-clock.edj",
             e_module_dir_get(clock_config->module));
-   cfd = e_config_dialog_new(con,_("Clock Settings"),
+   cfd = e_config_dialog_new(con, _("Clock Settings"),
                              "E", "utils/clock", buf, 0, v, ci);
    clock_config->config_dialog = cfd;
 }
@@ -61,8 +61,8 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
-                      Evas                 *evas,
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
+                      Evas *evas,
                       E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ob, *tab, *of;
