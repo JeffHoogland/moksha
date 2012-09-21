@@ -31,6 +31,10 @@ struct _E_Sys_Con_Action
 #ifndef E_SYS_H
 #define E_SYS_H
 
+EAPI extern int E_EVENT_SYS_SUSPEND;
+EAPI extern int E_EVENT_SYS_HIBERNATE;
+EAPI extern int E_EVENT_SYS_RESUME;
+
 EINTERN int e_sys_init(void);
 EINTERN int e_sys_shutdown(void);
 EAPI int e_sys_action_possible_get(E_Sys_Action a);

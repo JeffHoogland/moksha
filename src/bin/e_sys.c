@@ -45,10 +45,17 @@ static void (*_e_sys_resume_func) (void) = NULL;
 static const int E_LOGOUT_AUTO_TIME = 60;
 static const int E_LOGOUT_WAIT_TIME = 15;
 
+EAPI int E_EVENT_SYS_SUSPEND = -1;
+EAPI int E_EVENT_SYS_HIBERNATE = -1;
+EAPI int E_EVENT_SYS_RESUME = -1;
+
 /* externally accessible functions */
 EINTERN int
 e_sys_init(void)
 {
+   E_EVENT_SYS_SUSPEND = ecore_event_type_new();
+   E_EVENT_SYS_HIBERNATE = ecore_event_type_new();
+   E_EVENT_SYS_RESUME = ecore_event_type_new();
    /* this is not optimal - but it does work cleanly */
    _e_sys_exe_exit_handler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
                                                      _e_sys_cb_exit, NULL);
@@ -258,6 +265,7 @@ _e_sys_susp_hib_check_timer_cb(void *data __UNUSED__)
              e_object_del(E_OBJECT(_e_sys_dialog));
              _e_sys_dialog = NULL;
           }
+        ecore_event_add(E_EVENT_SYS_RESUME, NULL, NULL, NULL);
         if (_e_sys_resume_func) _e_sys_resume_func();
         return EINA_FALSE;
      }
@@ -824,6 +832,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
                }
              else
                {
+                  ecore_event_add(E_EVENT_SYS_SUSPEND, NULL, NULL, NULL);
                   if (_e_sys_suspend_func)
                     {
                        _e_sys_suspend_func();
@@ -868,6 +877,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
           }
         else
           {
+             ecore_event_add(E_EVENT_SYS_HIBERNATE, NULL, NULL, NULL);
              if (_e_sys_hibernate_func)
                {
                   _e_sys_hibernate_func();
