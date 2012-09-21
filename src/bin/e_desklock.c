@@ -906,12 +906,12 @@ _e_desklock_state_set(int state)
    if (state == E_DESKLOCK_STATE_CHECKING)
      {
         signal_desklock = "e,state,checking";
-        text = "Authenticating...";
+        text = _("Authenticating...");
      }
    else if (state == E_DESKLOCK_STATE_INVALID)
      {
         signal_desklock = "e,state,invalid";
-        text = "The password you entered is invalid. Try again.";
+        text = _("The password you entered is invalid. Try again.");
      }
    else
      return;

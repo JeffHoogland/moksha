@@ -9951,7 +9951,7 @@ _e_fm_retry_abort_dialog(int pid, const char *str)
    e_dialog_title_set(dialog, _("Error"));
    e_dialog_icon_set(dialog, "dialog-error", 64);
    snprintf(text, sizeof(text),
-            _("%s"),
+            "%s",
             str);
 
    e_dialog_text_set(dialog, text);
