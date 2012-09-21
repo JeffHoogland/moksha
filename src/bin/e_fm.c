@@ -2894,16 +2894,18 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
              E_Volume *v;
 
              v = _e_fm_shared_codec_volume_decode(e->data, e->size);
-             if (v)
-               {
-                  e_config->device_detect_mode = v->efm_mode;
-                  e_fm2_device_volume_add(v);
-                  if (v->mounted)
-                    e_fm2_device_mount(v, NULL, NULL, NULL, NULL, NULL);
-                  else if (e_config->device_auto_mount && !v->mounted && !v->first_time)
-                    _e_fm2_client_mount(v->udi, v->mount_point);
-                  v->first_time = 0;
-               }
+             if (!v) break;
+             e_config->device_detect_mode = v->efm_mode;
+             e_fm2_device_volume_add(v);
+             if (v->mounted)
+               e_fm2_device_mount(v, NULL, NULL, NULL, NULL, NULL);
+             else if (e_config->device_auto_mount && !v->mounted && !v->first_time)
+               _e_fm2_client_mount(v->udi, v->mount_point);
+             if (e_config->device_desktop)
+               e_fm2_device_show_desktop_icons();
+             else
+               e_fm2_device_hide_desktop_icons();
+             v->first_time = 0;
           }
         break;
 
