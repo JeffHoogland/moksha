@@ -1538,8 +1538,8 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
              evas_object_color_set(o, 255, 255, 255, 100);
           }
 
-        E_LIST_HANDLERS_APPEND(Man->drag_handlers, ECORE_EVENT_MOUSE_MOVE, _on_move_cb, gc->drag_gcc);
-        E_LIST_HANDLERS_APPEND(Man->drag_handlers, ECORE_EVENT_MOUSE_BUTTON_UP, _on_mouse_up_cb, gc->drag_gcc);
+        E_LIST_HANDLER_APPEND(Man->drag_handlers, ECORE_EVENT_MOUSE_MOVE, _on_move_cb, gc->drag_gcc);
+        E_LIST_HANDLER_APPEND(Man->drag_handlers, ECORE_EVENT_MOUSE_BUTTON_UP, _on_mouse_up_cb, gc->drag_gcc);
         e_drag_object_set(drag, o);
         e_drag_resize(drag, ow, oh);
         evas_object_hide(o);

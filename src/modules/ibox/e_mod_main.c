@@ -1296,14 +1296,14 @@ e_modapi_init(E_Module *m)
 
    ibox_config->module = m;
 
-   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_ADD, _ibox_cb_event_border_add, NULL);
-   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_REMOVE, _ibox_cb_event_border_remove, NULL);
-   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_ICONIFY, _ibox_cb_event_border_iconify, NULL);
-   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_UNICONIFY, _ibox_cb_event_border_uniconify, NULL);
-   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_ICON_CHANGE, _ibox_cb_event_border_icon_change, NULL);
-   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_URGENT_CHANGE, _ibox_cb_event_border_urgent_change, NULL);
-   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL);
-   E_LIST_HANDLERS_APPEND(ibox_config->handlers, E_EVENT_DESK_SHOW, _ibox_cb_event_desk_show, NULL);
+   E_LIST_HANDLER_APPEND(ibox_config->handlers, E_EVENT_BORDER_ADD, _ibox_cb_event_border_add, NULL);
+   E_LIST_HANDLER_APPEND(ibox_config->handlers, E_EVENT_BORDER_REMOVE, _ibox_cb_event_border_remove, NULL);
+   E_LIST_HANDLER_APPEND(ibox_config->handlers, E_EVENT_BORDER_ICONIFY, _ibox_cb_event_border_iconify, NULL);
+   E_LIST_HANDLER_APPEND(ibox_config->handlers, E_EVENT_BORDER_UNICONIFY, _ibox_cb_event_border_uniconify, NULL);
+   E_LIST_HANDLER_APPEND(ibox_config->handlers, E_EVENT_BORDER_ICON_CHANGE, _ibox_cb_event_border_icon_change, NULL);
+   E_LIST_HANDLER_APPEND(ibox_config->handlers, E_EVENT_BORDER_URGENT_CHANGE, _ibox_cb_event_border_urgent_change, NULL);
+   E_LIST_HANDLER_APPEND(ibox_config->handlers, E_EVENT_BORDER_ZONE_SET, _ibox_cb_event_border_zone_set, NULL);
+   E_LIST_HANDLER_APPEND(ibox_config->handlers, E_EVENT_DESK_SHOW, _ibox_cb_event_desk_show, NULL);
 
 /* FIXME: add these later for things taskbar-like functionality
    ibox_config->handlers = eina_list_append

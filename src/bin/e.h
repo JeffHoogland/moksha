@@ -184,7 +184,19 @@ typedef struct _E_Rect         E_Rect;
     }                               \
   while (0)
 
-# define E_LIST_HANDLERS_APPEND(list, type, callback, data) \
+# define E_LIST_FOREACH(list, func)    \
+  do                                \
+    {                               \
+       void *_tmp_;                 \
+       const Eina_List *_list, *_list2;  \
+       EINA_LIST_FOREACH_SAFE(list, _list, _list2, _tmp_) \
+         {                          \
+            func(_tmp_);            \
+         }                          \
+    }                               \
+  while (0)
+
+# define E_LIST_HANDLER_APPEND(list, type, callback, data) \
   do \
     { \
        Ecore_Event_Handler *_eh; \
@@ -192,7 +204,7 @@ typedef struct _E_Rect         E_Rect;
        if (_eh) \
          list = eina_list_append(list, _eh); \
        else \
-         ERR("E_LIST_HANDLERS_APPEND"); \
+         ERR("E_LIST_HANDLER_APPEND"); \
     } \
   while (0)
 

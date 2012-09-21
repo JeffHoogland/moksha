@@ -72,8 +72,8 @@ _create_data(E_Config_Dialog *cfd)
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->es = cfd->data;
    cfdata->escfg = cfdata->es->cfg;
-   E_LIST_HANDLERS_APPEND(cfdata->handlers, E_EVENT_SHELF_ADD, _shelf_event_add, cfdata);
-   E_LIST_HANDLERS_APPEND(cfdata->handlers, E_EVENT_SHELF_DEL, _shelf_event_del, cfdata);
+   E_LIST_HANDLER_APPEND(cfdata->handlers, E_EVENT_SHELF_ADD, _shelf_event_add, cfdata);
+   E_LIST_HANDLER_APPEND(cfdata->handlers, E_EVENT_SHELF_DEL, _shelf_event_del, cfdata);
    _fill_data(cfdata);
    return cfdata;
 }
