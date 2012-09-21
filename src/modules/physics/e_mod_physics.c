@@ -890,33 +890,33 @@ e_mod_physics_init(void)
 
    borders = eina_hash_string_superfast_new(NULL);
 
-//   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_REPARENT, _e_mod_physics_reparent, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE, _e_mod_physics_configure, NULL));
-   //handlers = eina_list_append(handlers, ecore_event_handler_add(ECORE_X_EVENT_WINDOW_STACK, _e_mod_physics_stack, NULL));
+//   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_REPARENT, _e_mod_physics_reparent, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_CONFIGURE, _e_mod_physics_configure, NULL);
+   //E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STACK, _e_mod_physics_stack, NULL);
 
    if (_physics_mod->conf->ignore_maximized)
-     handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_PROPERTY, _e_mod_physics_bd_property, NULL));
+     E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_PROPERTY, _e_mod_physics_bd_property, NULL);
    if (_physics_mod->conf->ignore_fullscreen)
      {
-        handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_FULLSCREEN, _e_mod_physics_bd_fullscreen, NULL));
-        handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNFULLSCREEN, _e_mod_physics_bd_fullscreen, NULL));
+        E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_FULLSCREEN, _e_mod_physics_bd_fullscreen, NULL);
+        E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_UNFULLSCREEN, _e_mod_physics_bd_fullscreen, NULL);
      }
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONTAINER_RESIZE, _e_mod_physics_randr, NULL));
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONTAINER_RESIZE, _e_mod_physics_randr, NULL);
 
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ADD, _e_mod_physics_bd_add, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_REMOVE, _e_mod_physics_bd_del, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_SHOW, _e_mod_physics_bd_show, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_HIDE, _e_mod_physics_bd_hide, NULL));
-//   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_MOVE, _e_mod_physics_bd_move, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_RESIZE, _e_mod_physics_bd_resize, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_REMEMBER_UPDATE, _e_mod_physics_remember_update, NULL));
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_ADD, _e_mod_physics_bd_add, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_REMOVE, _e_mod_physics_bd_del, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_SHOW, _e_mod_physics_bd_show, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_HIDE, _e_mod_physics_bd_hide, NULL);
+//   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_MOVE, _e_mod_physics_bd_move, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_RESIZE, _e_mod_physics_bd_resize, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_REMEMBER_UPDATE, _e_mod_physics_remember_update, NULL);
 
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_SHELF_ADD, _e_mod_physics_shelf_add, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_SHELF_DEL, _e_mod_physics_shelf_del, NULL));
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_SHELF_ADD, _e_mod_physics_shelf_add, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_SHELF_DEL, _e_mod_physics_shelf_del, NULL);
 
 #if 0
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_ICONIFY, _e_mod_physics_bd_iconify, NULL));
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_BORDER_UNICONIFY, _e_mod_physics_bd_uniconify, NULL));
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_ICONIFY, _e_mod_physics_bd_iconify, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BORDER_UNICONIFY, _e_mod_physics_bd_uniconify, NULL);
 #endif
    EINA_LIST_FOREACH (e_manager_list(), l, man)
      {
@@ -934,11 +934,7 @@ e_mod_physics_init(void)
 void
 e_mod_physics_shutdown(void)
 {
-   E_Physics *p;
-
-   EINA_LIST_FREE (physicists, p)
-     _e_mod_physics_del(p);
-
+   E_FREE_LIST(physicists, _e_mod_physics_del);
    E_FREE_LIST(handlers, ecore_event_handler_del);
 
    if (borders) eina_hash_free(borders);
