@@ -1857,6 +1857,8 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
         inside = (es->popup && ((ev->event_window == es->popup->evas_win)));
         if (!inside)
           inside = (
+                    (E_INSIDE(ev->root.x - 4, ev->root.y - 4, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4)) &&
+                    (E_INSIDE(ev->root.x + 4, ev->root.y + 4, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4)) &&
                     (E_INSIDE(ev->root.x, ev->root.y, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4)) &&
                     (E_INSIDE(ev->root.x, ev->root.y, es->x, es->y, es->w, es->h))
                    );
