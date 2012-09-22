@@ -352,16 +352,9 @@ _econnman_mod_manager_update_inst(E_Connman_Module_Context *ctxt,
    DBG("state=%d type=%d", state, type);
 }
 
-void
-econnman_mod_manager_update(struct Connman_Manager *cm)
+static enum Connman_Service_Type _econnman_manager_service_type_get(
+                                                   struct Connman_Manager *cm)
 {
-   enum Connman_Service_Type type;
-   E_Connman_Module_Context *ctxt = connman_mod->data;
-   E_Connman_Instance *inst;
-   Eina_List *l;
-
-   EINA_SAFETY_ON_NULL_RETURN(cm);
-
    DBG("cm->services=%p", cm->services);
 
    if ((cm->services) && ((cm->state == CONNMAN_STATE_ONLINE) ||
@@ -373,11 +366,22 @@ econnman_mod_manager_update(struct Connman_Manager *cm)
      {
         struct Connman_Service *cs = EINA_INLIST_CONTAINER_GET(cm->services,
                                                       struct Connman_Service);
-        type = cs->type;
+        return cs->type;
      }
-   else
-     type = CONNMAN_SERVICE_TYPE_NONE;
+   return CONNMAN_SERVICE_TYPE_NONE;
+}
 
+void
+econnman_mod_manager_update(struct Connman_Manager *cm)
+{
+   enum Connman_Service_Type type;
+   E_Connman_Module_Context *ctxt = connman_mod->data;
+   E_Connman_Instance *inst;
+   Eina_List *l;
+
+   EINA_SAFETY_ON_NULL_RETURN(cm);
+
+   type = _econnman_manager_service_type_get(cm);
    EINA_LIST_FOREACH(ctxt->instances, l, inst)
      _econnman_mod_manager_update_inst(ctxt, inst, cm->state, type);
 }
@@ -483,6 +487,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    E_Connman_Instance *inst;
    E_Connman_Module_Context *ctxt;
+   enum Connman_Service_Type type;
 
    if (!connman_mod)
      return NULL;
@@ -507,6 +512,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    _econnman_gadget_setup(inst);
 
+   if (ctxt->cm)
+     {
+        /* Update main icon with the current state */
+        type = _econnman_manager_service_type_get(ctxt->cm);
+        _econnman_mod_manager_update_inst(ctxt, inst, ctxt->cm->state, type);
+     }
    ctxt->instances = eina_list_append(ctxt->instances, inst);
 
    return inst->gcc;
