@@ -235,12 +235,11 @@ main(int argc, char **argv)
                {
                   p = argv[i];
                   const char *name;
-                  int name_len;
+                  size_t name_len;
 
                   /* Don't move a dir into itself */
                   if (ecore_file_is_dir(p) &&
-                      (strncmp(p, p2, PATH_MAX) == 0) &&
-                      ((p[p2_len] == '/') || (p[p2_len] == '\0')))
+                      (strcmp(p, p2) == 0))
                     goto skip_arg;
 
                   name = ecore_file_file_get(p);
@@ -258,7 +257,16 @@ main(int argc, char **argv)
                     }
                   else
                     {
-                       if (type == E_FM_OP_MOVE)
+                       if (type == E_FM_OP_RENAME)
+                         {
+                            if (!strcmp(argv[i],buf))
+                              goto skip_arg;
+
+                            if (buf[0]!='/')
+                              _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
+                                                       "Unknown destination '%s': %s.", buf);
+                         }
+                       else if (type == E_FM_OP_MOVE)
                          {
                             if (!strcmp(argv[i],buf))
                               goto skip_arg;
@@ -962,11 +970,9 @@ _e_fm_op_rollback(E_Fm_Op_Task *task)
                }
           }
         E_FREE(task->data);
+        _e_fm_op_update_progress(task, -task->dst.done,
+                                 -task->src.st.st_size - (task->link ? REMOVECHUNKSIZE : 0));
      }
-
-   if (task->type == E_FM_OP_COPY)
-     _e_fm_op_update_progress(task, -task->dst.done,
-                              -task->src.st.st_size - (task->link ? REMOVECHUNKSIZE : 0));
    else
      _e_fm_op_update_progress(task, -REMOVECHUNKSIZE, -REMOVECHUNKSIZE);
 }
