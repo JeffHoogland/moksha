@@ -33,6 +33,16 @@ static void _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia);
 static void _file_select_cancel_cb(void *data __UNUSED__, E_Dialog *dia);
 
 static void
+_win_cancel_cb(void *data __UNUSED__, void *data2 __UNUSED__)
+{
+   if (win)
+     {
+        e_object_del(E_OBJECT(win));
+        win = NULL;
+     }
+}
+
+static void
 _win_delete_cb(E_Win *w __UNUSED__)
 {
    if (win)
@@ -109,6 +119,8 @@ _key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
            o = e_widget_focused_object_get(o_box);
         if (o) e_widget_activate(o);
      }            
+   else if (!strcmp(ev->keyname, "Escape"))
+     _win_cancel_cb(NULL, NULL);
 }            
 
 static void
@@ -526,16 +538,6 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
 }
 
 static void
-_win_cancel_cb(void *data __UNUSED__, void *data2 __UNUSED__)
-{
-   if (win)
-     {
-        e_object_del(E_OBJECT(win));
-        win = NULL;
-     }
-}
-
-static void
 _rect_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev = event_info;
@@ -781,6 +783,8 @@ _shot_now(E_Zone *zone, E_Border *bd)
    if (!evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0)) printf("grab err\n");
    mask = 0;
    if (!evas_object_key_grab(o, "space", mask, ~mask, 0)) printf("grab err\n");
+   mask = 0;
+   if (!evas_object_key_grab(o, "Escape", mask, ~mask, 0)) printf("grab err\n");
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
    
    edje_object_size_min_calc(o_bg, &w, &h);
