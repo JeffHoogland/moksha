@@ -986,6 +986,8 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
    int size, src_len, dst_len;
    int ret = 0;
 
+   if (!dst) return;
+
    src_len = strlen(src);
    dst_len = strlen(dst);
 
