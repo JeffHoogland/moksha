@@ -50,7 +50,9 @@ typedef enum _E_Fm_Op_Type
    E_FM_OP_UNMOUNT_ERROR,
    E_FM_OP_EJECT,
    E_FM_OP_EJECT_DONE,
-   E_FM_OP_EJECT_ERROR
+   E_FM_OP_EJECT_ERROR,
+   E_FM_OP_SECURE_REMOVE,
+   E_FM_OP_DESTROY
 } E_Fm_Op_Type;
 
 #else

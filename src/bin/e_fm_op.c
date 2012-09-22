@@ -31,6 +31,7 @@ void *alloca(size_t);
 #include <utime.h>
 #include <errno.h>
 #include <limits.h>
+#include <fcntl.h>
 
 #include <Ecore.h>
 #include <Ecore_File.h>
@@ -45,6 +46,7 @@ void *alloca(size_t);
 #define READBUFSIZE     65536
 #define COPYBUFSIZE     16384
 #define REMOVECHUNKSIZE 4096
+#define NB_PASS         3
 
 #define E_FREE(p) do { free(p); p = NULL; } while (0)
 
@@ -102,6 +104,9 @@ static int           _e_fm_op_copy_stat_info_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_symlink_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_remove_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_rename_atom(E_Fm_Op_Task *task);
+static int           _e_fm_op_destroy_atom(E_Fm_Op_Task *task);
+static int           _e_fm_op_random_buf(char *buf, ssize_t len);
+static char          _e_fm_op_random_char();
 
 Ecore_Fd_Handler *_e_fm_op_stdin_handler = NULL;
 
@@ -182,11 +187,20 @@ main(int argc, char **argv)
      type = E_FM_OP_MOVE;
    else if (!strcmp(argv[1], "rm"))
      type = E_FM_OP_REMOVE;
+   else if (!strcmp(argv[1], "srm"))
+     type = E_FM_OP_SECURE_REMOVE;
    else if (!strcmp(argv[1], "lns"))
      type = E_FM_OP_SYMLINK;
    else if (!strcmp(argv[1], "mvf"))
      type = E_FM_OP_RENAME;
    else return 0;
+
+   if ((type == E_FM_OP_SECURE_REMOVE) ||
+       (type == E_FM_OP_MOVE))
+     {
+       _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
+       _e_fm_op_separator = _e_fm_op_work_queue;
+     }
 
    if ((type == E_FM_OP_COPY) ||
        (type == E_FM_OP_SYMLINK) ||
@@ -194,12 +208,6 @@ main(int argc, char **argv)
        (type == E_FM_OP_RENAME))
      {
         if (argc < 4) goto quit;
-
-        if (type == E_FM_OP_MOVE)
-          {
-             _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
-             _e_fm_op_separator = _e_fm_op_work_queue;
-          }
 
         if ((argc >= 4) && (ecore_file_is_dir(argv[last])))
           {
@@ -365,7 +373,7 @@ skip_arg:
         else
           goto quit;
      }
-   else if (type == E_FM_OP_REMOVE)
+   else if ((type == E_FM_OP_REMOVE) || (type == E_FM_OP_SECURE_REMOVE))
      {
         E_Fm_Op_Task *task;
 
@@ -742,6 +750,8 @@ _e_fm_op_work_idler(void *data __UNUSED__)
      _e_fm_op_copy_atom(task);
    else if (task->type == E_FM_OP_REMOVE)
      _e_fm_op_remove_atom(task);
+   else if (task->type == E_FM_OP_DESTROY)
+     _e_fm_op_destroy_atom(task);
    else if (task->type == E_FM_OP_COPY_STAT_INFO)
      _e_fm_op_copy_stat_info_atom(task);
    else if (task->type == E_FM_OP_SYMLINK)
@@ -1466,6 +1476,34 @@ _e_fm_op_scan_atom(E_Fm_Op_Task *task)
 
         _e_fm_op_work_queue = eina_list_prepend(_e_fm_op_work_queue, rtask);
      }
+   else if (task->type == E_FM_OP_SECURE_REMOVE)
+     {
+        /* Overwrite task. */
+        _e_fm_op_update_progress(NULL, 0, task->src.st.st_size);
+        ctask = _e_fm_op_task_new();
+
+        ctask->src.name = eina_stringshare_add(task->src.name);
+        memcpy(&(ctask->src.st), &(task->src.st), sizeof(struct stat));
+        if (task->dst.name)
+          ctask->dst.name = eina_stringshare_add(task->dst.name);
+        ctask->type = E_FM_OP_DESTROY;
+
+        _e_fm_op_work_queue = eina_list_prepend(_e_fm_op_work_queue, ctask);
+
+        /* Remove task. */
+        _e_fm_op_update_progress(NULL, 0, REMOVECHUNKSIZE);
+        rtask = _e_fm_op_task_new();
+
+        rtask->src.name = eina_stringshare_add(task->src.name);
+        memcpy(&(rtask->src.st), &(task->src.st), sizeof(struct stat));
+        if (task->dst.name)
+          rtask->dst.name = eina_stringshare_add(task->dst.name);
+        rtask->type = E_FM_OP_REMOVE;
+
+        _e_fm_op_work_queue = eina_list_append_relative_list(_e_fm_op_work_queue, rtask, _e_fm_op_separator);
+
+        ctask->link = eina_list_next(_e_fm_op_separator);
+     }
    else if (task->type == E_FM_OP_MOVE)
      {
         /* Copy task. */
@@ -1632,4 +1670,100 @@ _e_fm_op_rename_atom(E_Fm_Op_Task *task)
    task->finished = 1;
 
    return 0;
+}
+
+/* EXPERIMENTAL */
+static int
+_e_fm_op_destroy_atom(E_Fm_Op_Task *task)
+{
+   if (_e_fm_op_abort) goto finish;
+   static int fd = -1;
+   static char *buf = NULL;
+
+   if (fd == -1)
+     {
+       E_FM_OP_DEBUG("Secure remove: %s\n", task->src.name);
+       struct stat st2;
+
+       if (!S_ISREG(task->src.st.st_mode))
+         goto finish;
+
+       if (task->src.st.st_nlink > 1)
+         goto finish;
+
+       if ((fd = open(task->src.name, O_WRONLY|O_NONBLOCK|O_NOFOLLOW, 0)) == -1)
+         goto finish;
+
+       if (fstat(fd, &st2) == -1)
+         goto finish;
+
+       if (st2.st_dev != task->src.st.st_dev ||
+           st2.st_ino != task->src.st.st_ino ||
+           !S_ISREG(st2.st_mode))
+         goto finish;
+
+       if ((buf = malloc(st2.st_size)) == NULL)
+         goto finish;
+
+       task->src.st.st_size = st2.st_size;
+     }
+
+   if (lseek(fd, SEEK_SET, 0) == -1)
+     goto finish;
+
+   if (_e_fm_op_random_buf(buf, task->src.st.st_size) == -1)
+     memset(buf, 0xFF, task->src.st.st_size);
+   if (write(fd, buf, task->src.st.st_size) != task->src.st.st_size)
+     goto finish;
+   if (fsync(fd) == -1)
+     goto finish;
+
+   task->dst.done++;
+   _e_fm_op_update_progress_report_simple((double)task->dst.done/NB_PASS*100, "/dev/urandom", task->src.name);
+
+   if (task->dst.done == NB_PASS)
+     goto finish;
+
+   return 1;
+
+finish:
+   close(fd);
+   fd = -1;
+   E_FREE(buf);
+   task->finished = 1;
+   return 1;
+}
+
+static int
+_e_fm_op_random_buf(char *buf, ssize_t len)
+{
+   int f = -1;
+   ssize_t i;
+
+   if ((f = open("/dev/urandom", O_RDONLY)) == -1)
+     {
+       for (i=0; i < len; i++)
+         {
+            buf[i] = _e_fm_op_random_char();
+         }
+       return 0;
+     }
+
+   if (read(f, buf, len) != len)
+     {
+       for (i=0; i < len; i++)
+         {
+            buf[i] = _e_fm_op_random_char();
+         }
+     }
+
+   close(f);
+   return 0;
+}
+
+static char
+_e_fm_op_random_char()
+{
+   srand((unsigned int)time(NULL));
+   return (rand() % 256) + 'a';
 }
