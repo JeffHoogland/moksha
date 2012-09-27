@@ -804,14 +804,6 @@ dnl  AC_E_CHECK_PKG(DUMMY, [ connman >= 1.0 ], [], [CONNMAN=false])
 AC_SUBST(ECONNMAN_CFLAGS)
 AC_SUBST(ECONNMAN_LIBS)
 
-AM_CONDITIONAL(HAVE_EOFONO, false)
-define([CHECK_MODULE_OFONO],
-[
-  AC_E_CHECK_PKG(EOFONO, [ edbus >= 1.2.0 eofono >= 1.2.0 ], [], [OFONO=false])
-])
-AC_SUBST(EOFONO_CFLAGS)
-AC_SUBST(EOFONO_LIBS)
-
 have_wayland_clients=no
 AC_ARG_ENABLE([wayland-clients],
   AS_HELP_STRING([--enable-wayland-clients],[enable wayland clients in composite module @<:@default=disabled@:>@]),
@@ -869,7 +861,6 @@ AC_E_OPTIONAL_MODULE([conf_interaction], true)
 AC_E_OPTIONAL_MODULE([gadman], true)
 AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
 AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
-AC_E_OPTIONAL_MODULE([ofono], true, [CHECK_MODULE_OFONO])
 AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
@@ -1001,8 +992,6 @@ src/modules/mixer/Makefile
 src/modules/mixer/module.desktop
 src/modules/connman/Makefile
 src/modules/connman/module.desktop
-src/modules/ofono/Makefile
-src/modules/ofono/module.desktop
 src/modules/illume2/Makefile
 src/modules/illume2/doc/illume.dox
 src/modules/illume2/doc/Makefile
