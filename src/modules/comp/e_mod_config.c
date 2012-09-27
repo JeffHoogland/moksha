@@ -33,6 +33,7 @@ struct _E_Config_Dialog_Data
    int         loose_sync;
    int         grab;
    int         vsync;
+   int         swap_mode;
 
    const char *shadow_style;
 
@@ -142,6 +143,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->loose_sync = _comp_mod->conf->loose_sync;
    cfdata->grab = _comp_mod->conf->grab;
    cfdata->vsync = _comp_mod->conf->vsync;
+   cfdata->swap_mode = _comp_mod->conf->swap_mode;
    if (_comp_mod->conf->shadow_style)
      cfdata->shadow_style = eina_stringshare_add(_comp_mod->conf->shadow_style);
 
@@ -1171,8 +1173,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
 
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
-   ob = e_widget_check_add(evas, _("Tear-free updates (VSynced)"), &(cfdata->vsync));
-   e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Sync windows"), &(cfdata->efl_sync));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Loose sync"), &(cfdata->loose_sync));
@@ -1199,10 +1199,33 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
 
              of = e_widget_framelist_add(evas, _("OpenGL options"), 0);
              e_widget_framelist_content_align_set(of, 0.5, 0.0);
+             ob = e_widget_check_add(evas, _("Tear-free updates (VSynced)"), &(cfdata->vsync));
+             e_widget_framelist_object_append(of, ob);
              ob = e_widget_check_add(evas, _("Texture from pixmap"), &(cfdata->texture_from_pixmap));
              e_widget_framelist_object_append(of, ob);
-             ob = e_widget_check_add(evas, _("Indirect OpenGL (EXPERIMENTAL)"), &(cfdata->indirect));
-             e_widget_framelist_object_append(of, ob);
+#ifdef ECORE_EVAS_GL_X11_OPT_SWAP_MODE             
+             if ((evas_version->major >= 1) &&
+                 (evas_version->minor >= 7) &&
+                 (evas_version->micro >= 99))
+               {
+                  ob = e_widget_label_add(evas, _("Assume swapping method:"));
+                  e_widget_framelist_object_append(of, ob);
+                  rg = e_widget_radio_group_new(&(cfdata->swap_mode));
+                  ob = e_widget_radio_add(evas, _("Auto"), ECORE_EVAS_GL_X11_SWAP_MODE_AUTO, rg);
+                  e_widget_framelist_object_append(of, ob);
+                  ob = e_widget_radio_add(evas, _("Invalidate (full redraw)"), ECORE_EVAS_GL_X11_SWAP_MODE_FULL, rg);
+                  e_widget_framelist_object_append(of, ob);
+                  ob = e_widget_radio_add(evas, _("Copy from back to front"), ECORE_EVAS_GL_X11_SWAP_MODE_COPY, rg);
+                  e_widget_framelist_object_append(of, ob);
+                  ob = e_widget_radio_add(evas, _("Double buffered swaps"), ECORE_EVAS_GL_X11_SWAP_MODE_DOUBLE, rg);
+                  e_widget_framelist_object_append(of, ob);
+                  ob = e_widget_radio_add(evas, _("Triple buffered swaps"), ECORE_EVAS_GL_X11_SWAP_MODE_TRIPLE, rg);
+                  e_widget_framelist_object_append(of, ob);
+               }
+#endif             
+// lets not offer this anymore             
+//             ob = e_widget_check_add(evas, _("Indirect OpenGL (EXPERIMENTAL)"), &(cfdata->indirect));
+//             e_widget_framelist_object_append(of, ob);
              e_widget_list_object_append(ol, of, 1, 1, 0.5);
           }
      }
@@ -1444,7 +1467,8 @@ _advanced_apply_data(E_Config_Dialog *cfd  __UNUSED__,
        (cfdata->texture_from_pixmap != _comp_mod->conf->texture_from_pixmap) ||
        (cfdata->efl_sync != _comp_mod->conf->efl_sync) ||
        (cfdata->loose_sync != _comp_mod->conf->loose_sync) ||
-       (cfdata->vsync != _comp_mod->conf->vsync))
+       (cfdata->vsync != _comp_mod->conf->vsync) ||
+       (cfdata->swap_mode != _comp_mod->conf->swap_mode))
      {
         E_Action *a;
 
@@ -1454,6 +1478,7 @@ _advanced_apply_data(E_Config_Dialog *cfd  __UNUSED__,
         _comp_mod->conf->efl_sync = cfdata->efl_sync;
         _comp_mod->conf->loose_sync = cfdata->loose_sync;
         _comp_mod->conf->vsync = cfdata->vsync;
+        _comp_mod->conf->swap_mode = cfdata->swap_mode;
 
         a = e_action_find("restart");
         if ((a) && (a->func.go)) a->func.go(NULL, NULL);

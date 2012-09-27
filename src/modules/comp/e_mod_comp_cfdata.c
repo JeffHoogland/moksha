@@ -45,6 +45,7 @@ e_mod_comp_cfdata_edd_init(E_Config_DD **conf_edd, E_Config_DD **match_edd)
    E_CONFIG_VAL(D, T, loose_sync, UCHAR);
    E_CONFIG_VAL(D, T, grab, UCHAR);
    E_CONFIG_VAL(D, T, vsync, UCHAR);
+   E_CONFIG_VAL(D, T, swap_mode, UCHAR);
    E_CONFIG_VAL(D, T, keep_unmapped, UCHAR);
    E_CONFIG_VAL(D, T, send_flush, UCHAR);
    E_CONFIG_VAL(D, T, send_dump, UCHAR);
@@ -79,6 +80,7 @@ e_mod_comp_cfdata_config_new(void)
    cfg->loose_sync = 1;
    cfg->grab = 1;
    cfg->vsync = 1;
+   cfg->swap_mode = ECORE_EVAS_GL_X11_SWAP_MODE_AUTO;
    cfg->keep_unmapped = 1;
    cfg->send_flush = 1; // implement
    cfg->send_dump = 1; // implement

@@ -21,6 +21,7 @@ struct _Config
    unsigned char efl_sync;
    unsigned char grab;
    unsigned char vsync;
+   unsigned char swap_mode;
    unsigned char keep_unmapped;
    unsigned char send_flush;
    unsigned char send_dump;
