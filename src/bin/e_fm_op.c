@@ -1679,6 +1679,7 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
    if (_e_fm_op_abort) goto finish;
    static int fd = -1;
    static char *buf = NULL;
+   off_t pos, sz;
 
    if (fd == -1)
      {
@@ -1702,7 +1703,7 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
            !S_ISREG(st2.st_mode))
          goto finish;
 
-       if ((buf = malloc(st2.st_size)) == NULL)
+       if ((buf = malloc(65536)) == NULL)
          goto finish;
 
        task->src.st.st_size = st2.st_size;
@@ -1711,10 +1712,17 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
    if (lseek(fd, SEEK_SET, 0) == -1)
      goto finish;
 
-   if (_e_fm_op_random_buf(buf, task->src.st.st_size) == -1)
-     memset(buf, 0xFF, task->src.st.st_size);
-   if (write(fd, buf, task->src.st.st_size) != task->src.st.st_size)
-     goto finish;
+   for (pos = 0; pos < task->src.st.st_size; pos += 65536)
+     {
+        sz = 65536;
+        if ((task->src.st.st_size - pos) < sz) sz = task->src.st.st_size - pos;
+        if (_e_fm_op_random_buf(buf, sz) == -1) memset(buf, 0xff, sz);
+        if (write(fd, buf, sz) != sz)
+          {
+             fsync(fd);
+             goto finish;
+          }
+     }
    if (fsync(fd) == -1)
      goto finish;
 
