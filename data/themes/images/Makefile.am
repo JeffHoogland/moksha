@@ -25,9 +25,6 @@ bd_top_hilight.png \
 bd_top.png \
 big_arrow_down.png \
 big_arrow_up.png \
-bluetooth-powered.png \
-bluetooth-inactive.png \
-bluetooth-hidden.png \
 bnw.png \
 bt_base1.png \
 bt_base2.png \

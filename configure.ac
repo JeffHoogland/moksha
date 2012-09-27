@@ -804,14 +804,6 @@ dnl  AC_E_CHECK_PKG(DUMMY, [ connman >= 1.0 ], [], [CONNMAN=false])
 AC_SUBST(ECONNMAN_CFLAGS)
 AC_SUBST(ECONNMAN_LIBS)
 
-AM_CONDITIONAL(HAVE_EBLUEZ, false)
-define([CHECK_MODULE_BLUEZ],
-[
-  AC_E_CHECK_PKG(EBLUEZ, [ edbus >= 1.2.0 ebluez >= 1.2.0 ], [], [BLUEZ=false])
-])
-AC_SUBST(EBLUEZ_CFLAGS)
-AC_SUBST(EBLUEZ_LIBS)
-
 AM_CONDITIONAL(HAVE_EOFONO, false)
 define([CHECK_MODULE_OFONO],
 [
@@ -877,7 +869,6 @@ AC_E_OPTIONAL_MODULE([conf_interaction], true)
 AC_E_OPTIONAL_MODULE([gadman], true)
 AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
 AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
-AC_E_OPTIONAL_MODULE([bluez], true, [CHECK_MODULE_BLUEZ])
 AC_E_OPTIONAL_MODULE([ofono], true, [CHECK_MODULE_OFONO])
 AC_E_OPTIONAL_MODULE([illume2], true)
 AC_E_OPTIONAL_MODULE([syscon], true)
@@ -1010,8 +1001,6 @@ src/modules/mixer/Makefile
 src/modules/mixer/module.desktop
 src/modules/connman/Makefile
 src/modules/connman/module.desktop
-src/modules/bluez/Makefile
-src/modules/bluez/module.desktop
 src/modules/ofono/Makefile
 src/modules/ofono/module.desktop
 src/modules/illume2/Makefile

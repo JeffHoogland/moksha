@@ -114,7 +114,6 @@ src/bin/enlightenment_open
 src/modules/access/module.desktop
 src/modules/backlight/module.desktop
 src/modules/battery/module.desktop
-src/modules/bluez/module.desktop
 src/modules/clock/module.desktop
 src/modules/comp/module.desktop
 src/modules/conf/module.desktop

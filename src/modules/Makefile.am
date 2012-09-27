@@ -142,10 +142,6 @@ if USE_MODULE_CONNMAN
 SUBDIRS += connman
 endif
 
-if USE_MODULE_BLUEZ
-SUBDIRS += bluez
-endif
-
 if USE_MODULE_ILLUME2
 SUBDIRS += \
         illume2 \
