@@ -22,12 +22,12 @@ pkgdir                 = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH
 pkg_LTLIBRARIES        = module.la
 module_la_SOURCES      = e_mod_main.c \
                          e_mod_main.h \
-                         e_int_config_randr_orientation.c \
-                         e_int_config_randr_resolution.c \
-                         e_int_config_randr_arrangement.c \
-                         e_int_config_randr_policy.c \
+                         e_int_config_randr.h \
                          e_int_config_randr.c \
-                         e_int_config_randr.h
+                         e_smart_randr.h \
+                         e_smart_randr.c \
+                         e_smart_monitor.h \
+                         e_smart_monitor.c
 
 module_la_LIBADD       = @e_libs@ @dlopen_libs@
 module_la_LDFLAGS      = -module -avoid-version
