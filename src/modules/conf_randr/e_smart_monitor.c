@@ -3,6 +3,7 @@
 #include "e_smart_monitor.h"
 
 #define RESISTANCE_THRESHOLD 5
+#define SNAP_FUZZINESS 80
 
 /* local structures */
 typedef struct _E_Smart_Data E_Smart_Data;
@@ -818,20 +819,33 @@ _e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord h
 
    EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
      {
-        /* FIXME: These comparisons may need some 'fuzzy'-ness:
-         * 
-         * That is to say, the width & height checks should probably not 
-         * search for <=>, but rather "is the width/height Within 5/10 pixels" 
-         * of the requested size */
         if (smaller)
           {
-             if (((int)mode->width < width) && ((int)mode->height < height))
-               return mode;
+             if ((((int)mode->width - SNAP_FUZZINESS) <= width) || 
+                 (((int)mode->width + SNAP_FUZZINESS) <= width))
+               {
+                  /* we have found a width which can be used for 'smaller' */
+                  /* we should check height now */
+                  if ((((int)mode->height - SNAP_FUZZINESS) <= height) || 
+                      (((int)mode->height + SNAP_FUZZINESS) <= height))
+                    {
+                       return mode;
+                    }
+               }
           }
         else
           {
-             if (((int)mode->width > width) && ((int)mode->height > height))
-               return mode;
+             if ((((int)mode->width - SNAP_FUZZINESS) >= width) || 
+                 (((int)mode->width + SNAP_FUZZINESS) >= width))
+               {
+                  /* we have found a width which can be used for 'larger' */
+                  /* we should check height now */
+                  if ((((int)mode->height - SNAP_FUZZINESS) >= height) || 
+                      (((int)mode->height + SNAP_FUZZINESS) >= height))
+                    {
+                       return mode;
+                    }
+               }
           }
      }
 
