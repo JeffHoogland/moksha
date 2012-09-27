@@ -817,9 +817,9 @@ _e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord h
 
    if (!sd) return NULL;
 
-   EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
+   if (smaller)
      {
-        if (smaller)
+        EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
           {
              if ((((int)mode->width - SNAP_FUZZINESS) <= width) || 
                  (((int)mode->width + SNAP_FUZZINESS) <= width))
@@ -833,7 +833,10 @@ _e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord h
                     }
                }
           }
-        else
+     }
+   else
+     {
+        EINA_LIST_FOREACH(sd->modes, l, mode)
           {
              if ((((int)mode->width - SNAP_FUZZINESS) >= width) || 
                  (((int)mode->width + SNAP_FUZZINESS) >= width))
