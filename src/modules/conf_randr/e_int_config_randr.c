@@ -77,7 +77,7 @@ _randr_info_new(E_Container *con)
    /* create background */
    info->o_bg = edje_object_add(evas);
    e_theme_edje_object_set(info->o_bg, "base/theme/widgets", 
-                           "e/conf/randr/main/window"))
+                           "e/conf/randr/main/window");
    evas_object_move(info->o_bg, 0, 0);
    evas_object_show(info->o_bg);
 
