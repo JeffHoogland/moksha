@@ -381,6 +381,10 @@ pointer.png \
 radio_base.png \
 radio_on.png \
 radio_sel.png \
+randr_icon_off.png \
+randr_icon_on.png \
+randr_monitor.png \
+randr_stand.png \
 refresh.png \
 sb_runnerh.png \
 sb_runnerv.png \
