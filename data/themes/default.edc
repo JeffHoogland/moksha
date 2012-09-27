@@ -40576,4 +40576,484 @@ CONNMAN_ICON(ethernet)
          }
       }
    }
+
+/////////////////////////////////////////////////////////////////////////////
+/*** MOD: CONF_RANDR ***/
+   group
+     {
+        name: "e/conf/randr/main/window";
+        images
+          {
+             image: "dia_grad.png" COMP;
+             image: "dia_topshad.png" COMP;
+             image: "dia_botshad.png" COMP;
+             image: "menu_sep.png" COMP;
+          }
+        parts
+          {
+             part
+               {
+                  name: "base";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color_class: "dialog_base";
+                       image.normal: "dia_grad.png";
+                       fill
+                         {
+                            smooth: 0;
+                            size
+                              {
+                                 relative: 0.0 1.0;
+                                 offset: 64 0;
+                              }
+                         }
+                    }
+               }
+             part
+               {
+                  name: "shadow";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       rel2
+                         {
+                            relative: 1.0 0.0;
+                            offset: -1 31;
+                         }
+                       image.normal: "dia_topshad.png";
+                       fill
+                         {
+                            smooth: 0;
+                            size
+                              {
+                                 relative: 0.0 1.0;
+                                 offset: 64 0;
+                              }
+                         }
+                    }
+               }
+             part
+               {
+                  name: "shadow2";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       rel1
+                         {
+                            relative: 0.0 1.0;
+                            offset: 0 -4;
+                         }
+                       image.normal: "dia_botshad.png";
+                       fill
+                         {
+                            smooth: 0;
+                            size
+                              {
+                                 relative: 0.0 1.0;
+                                 offset: 64 0;
+                              }
+                         }
+                    }
+               }
+             part
+               {
+                  name: "e.swallow.content";
+                  type: SWALLOW;
+                  description
+                    {
+                       state: "default" 0.0;
+                       align: 0.5 0.0;
+                       min: 100 100;
+                       rel1.offset: 2 2;
+                       rel2
+                         {
+                            relative: 1.0 0.0;
+                            offset: -3 -5;
+                            to_y: "e.swallow.button";
+                         }
+                    }
+               }
+             part
+               {
+                  name: "separator";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       min: 16 2;
+                       rel1
+                         {
+                            relative: 0.0 1.0;
+                            offset: 4 -1;
+                            to_y: "e.swallow.content";
+                         }
+                       rel2
+                         {
+                            offset: -5 0;
+                            to_y: "e.swallow.content";
+                         }
+                       image
+                         {
+                            normal: "menu_sep.png";
+                            border: 2 2 0 0;
+                         }
+                       fill.smooth: 0;
+                    }
+               }
+             part
+               {
+                  name: "e.swallow.button";
+                  type: SWALLOW;
+                  description
+                    {
+                       state: "default" 0.0;
+                       align: 0.5 1.0;
+                       fixed: 1 1;
+                       rel1.relative: 0.5 1.0;
+                       rel2.relative: 0.5 1.0;
+                    }
+               }
+          }
+     }
+
+   group
+     {
+        name: "e/conf/randr/main/monitor";
+        parts
+          {
+             part 
+               {
+                  name: "base";
+                  type: RECT;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 255 255 0;
+                    }
+                  description
+                    {
+                       state: "disabled" 0.0;
+                       inherit: "default" 0.0;
+                       color: 255 0 0 64;
+                    }
+               }
+             part
+               {
+                  name: "e.swallow.frame";
+                  type: SWALLOW;
+                  clip_to: "base";
+                  description
+                    {
+                       state: "default" 0.0;
+                       rel1
+                         {
+                            offset: 2 0;
+                            to: "base";
+                         }
+                       rel2.to: "base";
+                    }
+               }
+             part
+               {
+                  name: "e.swallow.stand";
+                  type: SWALLOW;
+                  clip_to: "base";
+                  description
+                    {
+                       state: "default" 0.0;
+                       align: 0.5 0.0;
+                       rel1
+                         {
+                            relative: 0.0 1.0;
+                            offset: 0 19;
+                            to_x: "base";
+                            to_y: "e.swallow.frame";
+                         }
+                       rel2.to_x: "e.swallow.frame";
+                    }
+               }
+          }
+        programs
+          {
+             program
+               {
+                  name: "enabled";
+                  signal: "e,state,enabled";
+                  source: "e";
+                  action: STATE_SET "default" 0.0;
+                  target: "base";
+               }
+             program
+               {
+                  name: "disabled";
+                  signal: "e,state,disabled";
+                  source: "e";
+                  action: STATE_SET "disabled" 0.0;
+                  target: "base";
+               }
+          }
+     }
+
+   group
+     {
+        name: "e/conf/randr/main/frame";
+        images
+          {
+             image: "randr_monitor.png" COMP;
+             image: "randr_icon_off.png" COMP;
+             image: "randr_icon_on.png" COMP;
+          }
+        styles 
+          {
+             style 
+               {
+                  name: "output_name";
+                  base: "font=Sans:style=Bold font_size=10 text_class=tb_plain align=center valign=center color=#ffffff style=soft_shadow shadow_color=#000000 wrap=word";
+                  tag:  "br" "\n";
+                  tag:  "hilight" "+ font=Sans:style=Bold text_class=tb_light";
+               }
+          }
+        parts
+          {
+             part
+               {
+                  name: "clip";
+                  type: RECT;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       rel1.to: "e.swallow.preview";
+                       rel2.to: "e.swallow.preview";
+                    }
+               }
+             part
+               {
+                  name: "e.swallow.preview";
+                  type: SWALLOW;
+                  clip_to: "clip";
+                  description
+                    {
+                       state: "default" 0.0;
+                       rel1
+                         {
+                            offset: 12 14;
+                            to: "frame";
+                         }
+                       rel2
+                         {
+                            offset: -14 -14;
+                            to: "frame";
+                         }
+                    }
+               }
+             part
+               {
+                  name: "e.text.name";
+                  type: TEXTBLOCK;
+                  mouse_events: 0;
+                  clip_to: "clip";
+                  description
+                    {
+                       state: "default" 0.0;
+                       align: 0.5 0.0;
+                       color: 255 255 255 255;
+                       rel1
+                         {
+                            offset: 0 10;
+                            to: "e.swallow.preview";
+                         }
+                       rel2.to: "e.swallow.preview";
+                       text
+                         {
+                            style: "output_name";
+                            min: 1.0 1.0;
+                            max: 1.0 1.0;
+                         }
+                    }
+               }
+             part
+               {
+                  name: "frame";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       image
+                         {
+                            normal: "randr_monitor.png";
+                            border: 14 14 15 14;
+                         }
+                    }
+               }
+             part
+               {
+                  name: "indicator";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       rel1
+                         {
+                            offset: -13 0;
+                            to: "e.event.resize";
+                         }
+                       rel2
+                         {
+                            relative: 0.0 1.0;
+                            offset: 0 -1;
+                            to: "e.event.resize";
+                         }
+                       image.normal: "randr_icon_on.png";
+                    }
+               }
+
+             /* we will use a rect in this theme. Other themes could use 
+              * an icon to indicate rotate (or whatever they want).
+              * 
+              * Regardless of what is used, the 'rotate' object 
+              * should emit signals for mouse_in, mouse_out, and also 
+              * signals to indicate when to start or stop rotating */
+             part
+               {
+                  name: "e.event.rotate";
+                  type: RECT;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 0 0 64;
+                       rel1
+                         {
+                            relative: 0.0 1.0;
+                            offset: 0 -13;
+                            to: "frame";
+                         }
+                       rel2
+                         {
+                            relative: 0.0 1.0;
+                            offset: 11 -1;
+                            to: "frame";
+                         }
+                    }
+               }
+
+             /* we will use a rect in this theme. Other themes could use 
+              * an icon to indicate resize (or whatever they want).
+              * 
+              * Regardless of what is used, the 'resize' object 
+              * should emit signals for mouse_in, mouse_out, and also 
+              * signals to indicate when to start or stop resizing */
+             part
+               {
+                  name: "e.event.resize";
+                  type: RECT;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 0 0 64;
+                       rel1
+                         {
+                            relative: 1.0 1.0;
+                            offset: -13 -13;
+                            to: "frame";
+                         }
+                       rel2.to: "frame";
+                    }
+               }
+          }
+        programs
+          {
+             program
+               {
+                  name: "resize_mouse_in";
+                  signal: "mouse,in";
+                  source: "e.event.resize";
+                  action: SIGNAL_EMIT "e,action,resize,in" "e";
+               }
+             program
+               {
+                  name: "resize_mouse_out";
+                  signal: "mouse,out";
+                  source: "e.event.resize";
+                  action: SIGNAL_EMIT "e,action,resize,out" "e";
+               }
+             program
+               {
+                  name: "resize_start";
+                  signal: "mouse,down,1";
+                  source: "e.event.resize";
+                  action: SIGNAL_EMIT "e,action,resize,start" "e";
+               }
+             program
+               {
+                  name: "resize_stop";
+                  signal: "mouse,up,1";
+                  source: "e.event.resize";
+                  action: SIGNAL_EMIT "e,action,resize,stop" "e";
+               }
+             program
+               {
+                  name: "rotate_mouse_in";
+                  signal: "mouse,in";
+                  source: "e.event.rotate";
+                  action: SIGNAL_EMIT "e,action,rotate,in" "e";
+               }
+             program
+               {
+                  name: "rotate_mouse_out";
+                  signal: "mouse,out";
+                  source: "e.event.rotate";
+                  action: SIGNAL_EMIT "e,action,rotate,out" "e";
+               }
+             program
+               {
+                  name: "rotate_start";
+                  signal: "mouse,down,1";
+                  source: "e.event.rotate";
+                  action: SIGNAL_EMIT "e,action,rotate,start" "e";
+               }
+             program
+               {
+                  name: "rotate_stop";
+                  signal: "mouse,up,1";
+                  source: "e.event.rotate";
+                  action: SIGNAL_EMIT "e,action,rotate,stop" "e";
+               }
+          }
+     }
+
+   group
+     {
+        name: "e/conf/randr/main/stand";
+        images.image: "randr_stand.png" COMP;
+        parts
+          {
+             part
+               {
+                  name: "stand";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       aspect: (299/81) (299/81);
+                       min: 150 41;
+                       max: 150 41;
+                       image.normal: "randr_stand.png";
+                    }
+               }
+          }
+     }
+
 }
