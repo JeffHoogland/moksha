@@ -343,7 +343,6 @@ _e_smart_add(Evas_Object *obj)
    e_theme_edje_object_set(sd->o_frame, "base/theme/widgets", 
                            "e/conf/randr/main/frame");
    edje_object_part_swallow(sd->o_base, "e.swallow.frame", sd->o_frame);
-   evas_object_smart_member_add(sd->o_frame, obj);
    evas_object_event_callback_add(sd->o_frame, EVAS_CALLBACK_MOUSE_MOVE, 
                                   _e_smart_cb_frame_mouse_move, obj);
 
@@ -356,7 +355,6 @@ _e_smart_add(Evas_Object *obj)
    sd->o_stand = edje_object_add(evas);
    e_theme_edje_object_set(sd->o_stand, "base/theme/widgets", 
                            "e/conf/randr/main/stand");
-   evas_object_smart_member_add(sd->o_stand, obj);
    edje_object_part_swallow(sd->o_base, "e.swallow.stand", sd->o_stand);
    evas_object_stack_below(sd->o_stand, sd->o_frame);
 
