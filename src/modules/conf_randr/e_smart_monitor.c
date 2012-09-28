@@ -27,6 +27,9 @@ struct _E_Smart_Data
    /* rotating flag */
    Eina_Bool rotating : 1;
 
+   /* connected flag */
+   Eina_Bool connected : 1;
+
    /* layout object (this monitors parent) */
    Evas_Object *o_layout;
 
@@ -85,6 +88,9 @@ static void _e_smart_cb_rotate_mouse_in(void *data, Evas_Object *obj __UNUSED__,
 static void _e_smart_cb_rotate_mouse_out(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_cb_rotate_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_cb_indicator_mouse_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_cb_indicator_mouse_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static int _e_smart_cb_modes_sort(const void *data1, const void *data2);
 
@@ -201,9 +207,17 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
         /* tell monitor object we are enabled/disabled */
         if (output->connection_status == 
             ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
-          edje_object_signal_emit(sd->o_base, "e,state,enabled", "e");
+          {
+             sd->connected = EINA_TRUE;
+             edje_object_signal_emit(sd->o_base, "e,state,enabled", "e");
+             edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
+          }
         else
-          edje_object_signal_emit(sd->o_base, "e,state,disabled", "e");
+          {
+             sd->connected = EINA_FALSE;
+             edje_object_signal_emit(sd->o_base, "e,state,disabled", "e");
+             edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
+          }
 
         /* get and display monitor name if available */
         if ((monitor = output->monitor))
@@ -331,9 +345,9 @@ _e_smart_add(Evas_Object *obj)
 
    /* add callbacks for 'resize' edje signals */
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,in", "e", 
-                                   _e_smart_cb_resize_mouse_in, sd);
+                                   _e_smart_cb_resize_mouse_in, NULL);
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,out", "e", 
-                                   _e_smart_cb_resize_mouse_out, sd);
+                                   _e_smart_cb_resize_mouse_out, NULL);
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,start", "e", 
                                    _e_smart_cb_resize_start, obj);
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,stop", "e", 
@@ -348,6 +362,15 @@ _e_smart_add(Evas_Object *obj)
                                    _e_smart_cb_rotate_start, obj);
    edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,stop", "e", 
                                    _e_smart_cb_rotate_stop, obj);
+
+   /* add callback for indicator edje signals */
+   edje_object_signal_callback_add(sd->o_frame, "e,action,indicator,in", "e", 
+                                   _e_smart_cb_indicator_mouse_in, NULL);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,indicator,out", "e", 
+                                   _e_smart_cb_indicator_mouse_out, NULL);
+   edje_object_signal_callback_add(sd->o_frame, 
+                                   "e,action,indicator,toggle", "e", 
+                                   _e_smart_cb_indicator_toggle, sd);
 
    /* create event handlers */
    sd->hdls = 
@@ -386,6 +409,15 @@ _e_smart_del(Evas_Object *obj)
                                    _e_smart_cb_rotate_start);
    edje_object_signal_callback_del(sd->o_frame, "e,action,rotate,stop", "e", 
                                    _e_smart_cb_rotate_stop);
+
+   /* delete callback for indicator edje signals */
+   edje_object_signal_callback_del(sd->o_frame, "e,action,indicator,in", "e", 
+                                   _e_smart_cb_indicator_mouse_in);
+   edje_object_signal_callback_del(sd->o_frame, "e,action,indicator,out", "e", 
+                                   _e_smart_cb_indicator_mouse_out);
+   edje_object_signal_callback_del(sd->o_frame, 
+                                   "e,action,indicator,toggle", "e", 
+                                   _e_smart_cb_indicator_toggle);
 
    /* delete event handlers */
    EINA_LIST_FREE(sd->hdls, hdl)
@@ -640,11 +672,51 @@ _e_smart_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
+
    sd->rotating = EINA_FALSE;
 
    e_layout_child_lower(mon);
 
    if (sd->map) evas_map_free(sd->map);
+}
+
+static void 
+_e_smart_cb_indicator_mouse_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   E_Manager *man;
+
+   man = e_manager_current_get();
+   e_pointer_type_push(man->pointer, obj, "hand");
+}
+
+static void 
+_e_smart_cb_indicator_mouse_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   E_Manager *man;
+
+   man = e_manager_current_get();
+   e_pointer_type_pop(man->pointer, obj, "hand");
+}
+
+static void 
+_e_smart_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = data)) return;
+
+   if (sd->connected)
+     {
+        sd->connected = EINA_FALSE;
+        edje_object_signal_emit(sd->o_base, "e,state,disabled", "e");
+        edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
+     }
+   else
+     {
+        sd->connected = EINA_TRUE;
+        edje_object_signal_emit(sd->o_base, "e,state,enabled", "e");
+        edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
+     }
 }
 
 static void 
