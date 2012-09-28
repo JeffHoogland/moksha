@@ -99,6 +99,7 @@ static void _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas
 static int _e_smart_cb_modes_sort(const void *data1, const void *data2);
 
 static void _e_smart_monitor_rotate(E_Smart_Data *sd, void *event);
+static void _e_smart_monitor_rotate_snap(Evas_Object *obj);
 static void _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event);
 static void _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode);
 static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height);
@@ -590,6 +591,7 @@ _e_smart_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, const char *em
 
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
+
    sd->resizing = EINA_TRUE;
    e_layout_child_raise(mon);
 }
@@ -605,7 +607,9 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
+
    sd->resizing = EINA_FALSE;
+   e_layout_child_lower(mon);
 
    /* get the object geometry and convert to virtual space */
    evas_object_geometry_get(mon, NULL, NULL, &ow, &oh);
@@ -623,8 +627,6 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
         /* actually snap the object */
         _e_smart_monitor_resize_snap(mon, mode);
      }
-
-   e_layout_child_lower(mon);
 }
 
 static void 
@@ -711,6 +713,9 @@ _e_smart_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
         evas_map_free(map);
 
         sd->rotation = orient;
+
+        /* actually snap the object */
+        _e_smart_monitor_rotate_snap(mon);
      }
 }
 
@@ -817,6 +822,26 @@ _e_smart_monitor_rotate(E_Smart_Data *sd, void *event)
    evas_map_free(map);
 
    sd->rotation += mx;
+}
+
+static void 
+_e_smart_monitor_rotate_snap(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   Evas_Coord w, h;
+
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
+
+   if ((sd->rotation == 90) || (sd->rotation == 270))
+     evas_object_resize(obj, h, w);
+   else if ((sd->rotation == 0) || (sd->rotation == 180))
+     evas_object_resize(obj, w, h);
+
+   /* tell randr widget we rotated this monitor so that it can 
+    * update the layout for any monitors around this one */
+   /* evas_object_smart_callback_call(mon, "monitor_rotated", NULL); */
 }
 
 static void 
