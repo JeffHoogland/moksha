@@ -154,6 +154,7 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
         Ecore_X_Randr_Mode_Info *mode = NULL;
         E_Randr_Monitor_Info *monitor = NULL;
         const char *name = NULL;
+        char buff[1024];
 
         printf("Output: %d %s\n", output->xid, output->name);
 
@@ -203,6 +204,12 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
         mode = eina_list_data_get(eina_list_last(sd->modes));
         sd->max.w = mode->width;
         sd->max.h = mode->height;
+
+        /* set resolution label based on current mode */
+        snprintf(buff, sizeof(buff), "%d x %d", 
+                 output->crtc->current_mode->width, 
+                 output->crtc->current_mode->height);
+        edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
 
         /* tell monitor object we are enabled/disabled */
         if (output->connection_status == 
@@ -598,7 +605,19 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 
    /* find the closest resolution to this one and snap to it */
    if ((mode = _e_smart_monitor_resolution_get(sd, nrw, nrh)))
-     _e_smart_monitor_snap(mon, mode);
+     {
+        char buff[1024];
+        /* double rate = 0.0; */
+
+        /* if ((mode->hTotal) && (mode->vTotal)) */
+        /*   rate = ((float)mode->dotClock /  */
+        /*           ((float)mode->hTotal * (float)mode->vTotal)); */
+
+        snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height);
+        edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
+
+        _e_smart_monitor_snap(mon, mode);
+     }
 
    e_layout_child_lower(mon);
 }
@@ -787,6 +806,7 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
    Evas_Coord w, h;
    Evas_Coord mx, my;
    Evas_Coord nrw, nrh;
+   Ecore_X_Randr_Mode_Info *mode;
 
    ev = event;
 
@@ -811,6 +831,15 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    /* graphically resize the monitor */
    evas_object_resize(mon, w + mx, h + my);
+
+   /* find the closest resolution to this one that we would snap to */
+   if ((mode = _e_smart_monitor_resolution_get(sd, nrw, nrh)))
+     {
+        char buff[1024];
+
+        snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height);
+        edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
+     }
 
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
