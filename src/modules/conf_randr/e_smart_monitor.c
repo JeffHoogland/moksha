@@ -48,8 +48,8 @@ struct _E_Smart_Data
    /* list of event handlers */
    Eina_List *hdls;
 
-   /* evas_maps for rotation */
-   Evas_Map *map[2];
+   /* evas_map for rotation */
+   Evas_Map *map;
 
    /* container number (for bg preview) */
    int con;
@@ -624,11 +624,11 @@ _e_smart_cb_rotate_start(void *data, Evas_Object *obj __UNUSED__, const char *em
     * They will be needed to handle Resize While Rotated */
 
    /* create frame 'map' for rotation */
-   sd->map[0] = evas_map_new(4);
-   evas_map_smooth_set(sd->map[0], EINA_TRUE);
-   evas_map_alpha_set(sd->map[0], EINA_TRUE);
-   evas_map_util_points_populate_from_object(sd->map[0], sd->o_frame);
-   evas_object_map_set(sd->o_frame, sd->map[0]);
+   sd->map = evas_map_new(4);
+   evas_map_smooth_set(sd->map, EINA_TRUE);
+   evas_map_alpha_set(sd->map, EINA_TRUE);
+   evas_map_util_points_populate_from_object(sd->map, sd->o_frame);
+   evas_object_map_set(sd->o_frame, sd->map);
    evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
 }
 
@@ -644,8 +644,7 @@ _e_smart_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 
    e_layout_child_lower(mon);
 
-   if (sd->map[0]) evas_map_free(sd->map[0]);
-   if (sd->map[1]) evas_map_free(sd->map[1]);
+   if (sd->map) evas_map_free(sd->map);
 }
 
 static void 
