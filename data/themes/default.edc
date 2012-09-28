@@ -40164,7 +40164,7 @@ CONNMAN_ICON(ethernet)
                   description
                     {
                        state: "default" 0.0;
-                       color: 255 0 0 64;
+                       color: 255 255 255 0;
                        rel1.to: "indicator";
                        rel2.to: "indicator";
                     }
