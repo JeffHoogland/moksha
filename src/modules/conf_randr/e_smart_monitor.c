@@ -918,9 +918,13 @@ _e_smart_monitor_orientation_get(E_Smart_Data *sd)
 
    degree = sd->rotation;
    if (degree < 0) degree += 360;
+   else if (degree > 360) degree -= 360;
 
    /* find the closest degree of rotation within 'fuzziness' tolerance */
-   if (((degree - ROTATE_SNAP_FUZZINESS) <= 90) || 
+   if (((degree - ROTATE_SNAP_FUZZINESS) <= 0) || 
+       ((degree + ROTATE_SNAP_FUZZINESS) <= 0))
+     return 0;
+   else if (((degree - ROTATE_SNAP_FUZZINESS) <= 90) || 
        ((degree + ROTATE_SNAP_FUZZINESS) <= 90))
      return 90;
    else if (((degree - ROTATE_SNAP_FUZZINESS) <= 180) || 
