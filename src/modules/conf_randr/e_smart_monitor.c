@@ -319,8 +319,7 @@ _e_smart_add(Evas_Object *obj)
    /* create bg preview */
    sd->o_thumb = e_livethumb_add(evas);
    edje_object_part_swallow(sd->o_frame, "e.swallow.preview", sd->o_thumb);
-   evas_object_smart_member_add(sd->o_thumb, obj);
-   evas_object_stack_below(sd->o_thumb, sd->o_frame);
+   evas_object_show(sd->o_thumb);
 
    /* create monitor stand */
    sd->o_stand = edje_object_add(evas);
@@ -467,7 +466,6 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
 
-   evas_object_clip_set(sd->o_thumb, clip);
    evas_object_clip_set(sd->o_stand, clip);
    evas_object_clip_set(sd->o_frame, clip);
    evas_object_clip_set(sd->o_base, clip);
@@ -481,7 +479,6 @@ _e_smart_clip_unset(Evas_Object *obj)
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
 
-   evas_object_clip_unset(sd->o_thumb);
    evas_object_clip_unset(sd->o_stand);
    evas_object_clip_unset(sd->o_frame);
    evas_object_clip_unset(sd->o_base);
@@ -633,14 +630,6 @@ _e_smart_cb_rotate_start(void *data, Evas_Object *obj __UNUSED__, const char *em
    evas_map_util_points_populate_from_object(sd->map[0], sd->o_frame);
    evas_object_map_set(sd->o_frame, sd->map[0]);
    evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
-
-   /* create livethumb 'map' for rotation */
-   sd->map[1] = evas_map_new(4);
-   evas_map_smooth_set(sd->map[1], EINA_TRUE);
-   evas_map_alpha_set(sd->map[1], EINA_TRUE);
-   evas_map_util_points_populate_from_object(sd->map[1], sd->o_thumb);
-   evas_object_map_set(sd->o_thumb, sd->map[1]);
-   evas_object_map_enable_set(sd->o_thumb, EINA_TRUE);
 }
 
 static void 
@@ -717,14 +706,6 @@ _e_smart_monitor_rotate(E_Smart_Data *sd, void *event)
    m2 = evas_map_dup(m);
    evas_map_util_rotate(m2, mx, x + (w / 2), y + (h / 2));
    evas_object_map_set(sd->o_frame, m2);
-   evas_map_free(m2);
-
-   /* update map for thumb object to reflect this rotation */
-   evas_object_geometry_get(sd->o_thumb, &x, &y, &w, &h);
-   m = evas_object_map_get(sd->o_thumb);
-   m2 = evas_map_dup(m);
-   evas_map_util_rotate(m2, mx, x + (w / 2), y + (h / 2));
-   evas_object_map_set(sd->o_thumb, m2);
    evas_map_free(m2);
 }
 
