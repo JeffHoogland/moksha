@@ -40120,6 +40120,12 @@ CONNMAN_ICON(ethernet)
                          }
                        image.normal: "randr_icon_on.png";
                     }
+                  description
+                    {
+                       state: "disabled" 0.0;
+                       inherit: "default" 0.0;
+                       image.normal: "randr_icon_off.png";
+                    }
                }
 
              /* we will use a rect in this theme. Other themes could use 
@@ -40135,7 +40141,7 @@ CONNMAN_ICON(ethernet)
                   description
                     {
                        state: "default" 0.0;
-                       color: 255 0 0 64;
+                       color: 255 255 255 0;
                        rel1
                          {
                             relative: 0.0 1.0;
@@ -40148,6 +40154,19 @@ CONNMAN_ICON(ethernet)
                             offset: 11 -1;
                             to: "frame";
                          }
+                    }
+               }
+
+             part
+               {
+                  name: "e.event.indicator";
+                  type: RECT;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 0 0 64;
+                       rel1.to: "indicator";
+                       rel2.to: "indicator";
                     }
                }
 
@@ -40164,7 +40183,7 @@ CONNMAN_ICON(ethernet)
                   description
                     {
                        state: "default" 0.0;
-                       color: 255 0 0 64;
+                       color: 255 255 255 0;
                        rel1
                          {
                             relative: 1.0 1.0;
@@ -40232,6 +40251,43 @@ CONNMAN_ICON(ethernet)
                   signal: "mouse,up,1";
                   source: "e.event.rotate";
                   action: SIGNAL_EMIT "e,action,rotate,stop" "e";
+               }
+             program
+               {
+                  name: "indicator_mouse_in";
+                  signal: "mouse,in";
+                  source: "e.event.indicator";
+                  action: SIGNAL_EMIT "e,action,indicator,in" "e";
+               }
+             program
+               {
+                  name: "indicator_mouse_out";
+                  signal: "mouse,out";
+                  source: "e.event.indicator";
+                  action: SIGNAL_EMIT "e,action,indicator,out" "e";
+               }
+             program
+               {
+                  name: "indicator_toggle";
+                  signal: "mouse,clicked,1";
+                  source: "e.event.indicator";
+                  action: SIGNAL_EMIT "e,action,indicator,toggle" "e";
+               }
+             program
+               {
+                  name: "enabled";
+                  signal: "e,state,enabled";
+                  source: "e";
+                  action: STATE_SET "default" 0.0;
+                  target: "indicator";
+               }
+             program
+               {
+                  name: "disabled";
+                  signal: "e,state,disabled";
+                  source: "e";
+                  action: STATE_SET "disabled" 0.0;
+                  target: "indicator";
                }
           }
      }
