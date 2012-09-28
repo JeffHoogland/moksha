@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@...\n"
-"POT-Creation-Date: 2012-09-24 00:37+0100\n"
-"PO-Revision-Date: 2012-09-24 00:41+0100\n"
+"POT-Creation-Date: 2012-09-28 00:19+0100\n"
+"PO-Revision-Date: 2012-09-28 00:22+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -44,7 +44,7 @@ msgstr "Fechar"
 #: src/bin/e_main.c:619
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:221
-#: src/modules/wizard/page_000.c:31
+#: src/modules/wizard/page_000.c:47
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
@@ -6361,7 +6361,7 @@ msgstr "Exibir informações"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:141
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:152
 msgid "Follows the window"
-msgstr "Segue a janela"
+msgstr "Acompanha a janela"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:148
 msgid "Resize Geometry"
@@ -6649,31 +6649,31 @@ msgstr "Ajustar janelas ao ocultar o painel"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:277
 msgid "Follow Move"
-msgstr "Segue o movimento"
+msgstr "Acompanha o movimento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:280
 msgid "Follow Resize"
-msgstr "Segue o redimensionamento"
+msgstr "Acompanha o redimensionamento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:283
 msgid "Follow Raise"
-msgstr "Segue o aparecimento"
+msgstr "Acompanha o aparecimento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:286
 msgid "Follow Lower"
-msgstr "Segue o desaparecimento"
+msgstr "Acompanha o desaparecimento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:289
 msgid "Follow Layer"
-msgstr "Segue a camada"
+msgstr "Acompanha a camada"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:292
 msgid "Follow Desktop"
-msgstr "Segue a área de trabalho"
+msgstr "Acompanha a área de trabalho"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:295
 msgid "Follow Iconify"
-msgstr "Segue a minimização"
+msgstr "Acompanha a minimização"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:299
 msgid "Transients"
@@ -7780,7 +7780,7 @@ msgstr "Bloquear movimentação de ícones"
 
 #: src/modules/ibar/e_mod_config.c:147
 msgid "Track launch"
-msgstr ""
+msgstr "Acompanhar aplicações"
 
 #: src/modules/ibar/e_mod_config.c:179
 msgid "Create new IBar source"
