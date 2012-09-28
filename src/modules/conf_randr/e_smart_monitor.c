@@ -90,7 +90,8 @@ static int _e_smart_cb_modes_sort(const void *data1, const void *data2);
 
 static void _e_smart_monitor_rotate(E_Smart_Data *sd, void *event);
 static void _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event);
-static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height, Eina_Bool smaller);
+static void _e_smart_monitor_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode);
+static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height);
 
 Evas_Object *
 e_smart_monitor_add(Evas *evas)
@@ -554,10 +555,22 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
+   Evas_Coord ow, oh;
+   Evas_Coord nrw, nrh;
+   Ecore_X_Randr_Mode_Info *mode;
 
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
    sd->resizing = EINA_FALSE;
+
+   /* get the object geometry and convert to virtual space */
+   evas_object_geometry_get(mon, NULL, NULL, &ow, &oh);
+   e_layout_coord_canvas_to_virtual(sd->o_layout, ow, oh, &nrw, &nrh);
+
+   /* find the closest resolution to this one and snap to it */
+   if ((mode = _e_smart_monitor_resolution_get(sd, nrw, nrh)))
+     _e_smart_monitor_snap(mon, mode);
+
    e_layout_child_lower(mon);
 }
 
@@ -734,37 +747,15 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* calculate resize difference */
    mx = (ev->cur.output.x - ev->prev.output.x);
    my = (ev->cur.output.y - ev->prev.output.y);
-   /* printf("Resize Difference: %d %d\n", mx, my); */
 
    /* determine what resolution this geometry would be */
    e_layout_coord_canvas_to_virtual(sd->o_layout, 
                                     (w + mx), (h + my), &nrw, &nrh);
-   printf("\nNew Resolution: %d %d\n", nrw, nrh);
 
    /* determine if this new size is below or above the 
     * available resolutions and stop resizing if so */
-
-   /* compare new size vs smallest size */
    if ((nrw < sd->min.w) || (nrh < sd->min.h)) return;
-
-   /* compare new size vs largest size */
    if ((nrw > sd->max.w) || (nrh > sd->max.h)) return;
-
-   /* if we are snapped to a resolution, provide some resistance to resize */
-   if (sd->snapped)
-     {
-        /* if the difference in movement is less than the 
-         * threshold then we should not resize as we are 'snapped' and 
-         * should provide the 'feel' of resistance */
-        if ((mx < RESISTANCE_THRESHOLD) || (my < RESISTANCE_THRESHOLD))
-          return;
-        else
-          {
-             /* movement is greater than the 'snap' threshold, so we should 
-              * unsnap and allow resize */
-             sd->snapped = EINA_FALSE;
-          }
-     }
 
    /* graphically resize the monitor */
    evas_object_resize(mon, w + mx, h + my);
@@ -772,83 +763,45 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
    evas_object_smart_callback_call(mon, "monitor_resized", NULL);
+}
 
-   /* if we are not snapped yet, then let's see if there is a resolution 
-    * within the threshold that we can snap to */
-   if (!sd->snapped)
-     {
-        /* if we are resizing smaller, find a resolution below */
-        if ((mx < 0) || (my < 0))
-          {
-             Ecore_X_Randr_Mode_Info *mode;
+static void 
+_e_smart_monitor_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
+{
+   E_Smart_Data *sd;
+   Evas_Coord nw, nh;
 
-             printf("Resizing Smaller\n");
-             if ((mode = 
-                  _e_smart_monitor_resolution_get(sd, nrw, nrh, EINA_TRUE)))
-               {
-                  printf("\tFound Mode: %d %d\n", mode->width, mode->height);
-               }
-             else
-               printf("\tNO MODE FOUND\n");
-          }
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+   sd->snapped = EINA_TRUE;
 
-        /* if we are resizing larger, find a resolution greater */
-        else if ((mx > 0) || (my > 0))
-          {
-             Ecore_X_Randr_Mode_Info *mode;
+   /* get the new canvas size */
+   e_layout_coord_virtual_to_canvas(sd->o_layout, 
+                                    mode->width, mode->height, &nw, &nh);
 
-             printf("Resizing Larger\n");
-             if ((mode = 
-                  _e_smart_monitor_resolution_get(sd, nrw, nrh, EINA_FALSE)))
-               {
-                  printf("\tFound Mode: %d %d\n", mode->width, mode->height);
-               }
-             else
-               printf("\tNO MODE FOUND\n");
-          }
-     }
+   /* graphically resize the monitor */
+   evas_object_resize(obj, nw, nh);
+
+   /* tell randr widget we resized this monitor so that it can 
+    * update the layout for any monitors around this one */
+   evas_object_smart_callback_call(obj, "monitor_resized", NULL);
 }
 
 static Ecore_X_Randr_Mode_Info *
-_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height, Eina_Bool smaller)
+_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height)
 {
    Ecore_X_Randr_Mode_Info *mode;
    Eina_List *l;
 
    if (!sd) return NULL;
 
-   if (smaller)
+   EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
      {
-        EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
+        if ((((int)mode->width - SNAP_FUZZINESS) <= width) || 
+            (((int)mode->width + SNAP_FUZZINESS) <= width))
           {
-             if ((((int)mode->width - SNAP_FUZZINESS) <= width) || 
-                 (((int)mode->width + SNAP_FUZZINESS) <= width))
-               {
-                  /* we have found a width which can be used for 'smaller' */
-                  /* we should check height now */
-                  if ((((int)mode->height - SNAP_FUZZINESS) <= height) || 
-                      (((int)mode->height + SNAP_FUZZINESS) <= height))
-                    {
-                       return mode;
-                    }
-               }
-          }
-     }
-   else
-     {
-        EINA_LIST_FOREACH(sd->modes, l, mode)
-          {
-             if ((((int)mode->width - SNAP_FUZZINESS) >= width) || 
-                 (((int)mode->width + SNAP_FUZZINESS) >= width))
-               {
-                  /* we have found a width which can be used for 'larger' */
-                  /* we should check height now */
-                  if ((((int)mode->height - SNAP_FUZZINESS) >= height) || 
-                      (((int)mode->height + SNAP_FUZZINESS) >= height))
-                    {
-                       return mode;
-                    }
-               }
+             if ((((int)mode->height - SNAP_FUZZINESS) <= height) || 
+                 (((int)mode->height + SNAP_FUZZINESS) <= height))
+               return mode;
           }
      }
 
