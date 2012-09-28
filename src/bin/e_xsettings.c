@@ -491,15 +491,29 @@ _e_xsettings_font_set(void)
         efp = e_font_fontconfig_name_parse(efd->font);
         if (efp->name)
           {
+             Eina_Strbuf *buf;
+             Eina_List *l;
              int size = efd->size;
-             char buf[128];
+             char size_buf[8];
+             const char *p;
+
              /* TODO better way to convert evas font sizes? */
              if (size < 0) size /= -10;
              if (size < 5) size = 5;
              if (size > 25) size = 25;
+             snprintf(size_buf, sizeof(size_buf), "%d", size);
 
-             snprintf(buf, sizeof(buf), "%s %d", efp->name, size);
-             _e_xsettings_string_set(_setting_font_name, buf);
+             buf = eina_strbuf_new();
+             eina_strbuf_append(buf, efp->name);
+             eina_strbuf_append_char(buf, ' ');
+             EINA_LIST_FOREACH(efp->styles, l, p)
+               {
+                  eina_strbuf_append(buf, p);
+                  eina_strbuf_append_char(buf, ' ');
+               }
+             eina_strbuf_append(buf, size_buf);
+             _e_xsettings_string_set(_setting_font_name, eina_strbuf_string_get(buf));
+             eina_strbuf_free(buf);
              e_font_properties_free(efp);
              return;
           }
