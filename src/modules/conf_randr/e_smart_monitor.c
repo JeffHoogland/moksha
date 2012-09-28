@@ -3,7 +3,8 @@
 #include "e_smart_monitor.h"
 
 #define RESISTANCE_THRESHOLD 5
-#define SNAP_FUZZINESS 80
+#define RESIZE_SNAP_FUZZINESS 60
+#define ROTATE_SNAP_FUZZINESS 45
 
 /* local structures */
 typedef struct _E_Smart_Data E_Smart_Data;
@@ -51,8 +52,11 @@ struct _E_Smart_Data
    /* list of event handlers */
    Eina_List *hdls;
 
-   /* evas_map for rotation */
-   Evas_Map *map;
+   /* current orientation */
+   Ecore_X_Randr_Orientation orientation;
+
+   /* current rotation */
+   int rotation;
 
    /* container number (for bg preview) */
    int con;
@@ -96,8 +100,10 @@ static int _e_smart_cb_modes_sort(const void *data1, const void *data2);
 
 static void _e_smart_monitor_rotate(E_Smart_Data *sd, void *event);
 static void _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event);
-static void _e_smart_monitor_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode);
+static void _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode);
 static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height);
+static int _e_smart_monitor_orientation_get(E_Smart_Data *sd);
+static int _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient);
 
 Evas_Object *
 e_smart_monitor_add(Evas *evas)
@@ -147,6 +153,10 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
 
    sd->crtc = crtc;
    if (!crtc) return;
+
+   /* record the current rotation */
+   sd->orientation = crtc->current_orientation;
+   sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
 
    EINA_LIST_FOREACH(crtc->outputs, l, output)
      {
@@ -607,16 +617,13 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
    if ((mode = _e_smart_monitor_resolution_get(sd, nrw, nrh)))
      {
         char buff[1024];
-        /* double rate = 0.0; */
 
-        /* if ((mode->hTotal) && (mode->vTotal)) */
-        /*   rate = ((float)mode->dotClock /  */
-        /*           ((float)mode->hTotal * (float)mode->vTotal)); */
-
+        /* set resolution text */
         snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height);
         edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
 
-        _e_smart_monitor_snap(mon, mode);
+        /* actually snap the object */
+        _e_smart_monitor_resize_snap(mon, mode);
      }
 
    e_layout_child_lower(mon);
@@ -667,20 +674,7 @@ _e_smart_cb_rotate_start(void *data, Evas_Object *obj __UNUSED__, const char *em
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    sd->rotating = EINA_TRUE;
-
    e_layout_child_raise(mon);
-
-   /* NB: Dont' free these maps yet.
-    * 
-    * They will be needed to handle Resize While Rotated */
-
-   /* create frame 'map' for rotation */
-   sd->map = evas_map_new(4);
-   evas_map_smooth_set(sd->map, EINA_TRUE);
-   evas_map_alpha_set(sd->map, EINA_TRUE);
-   evas_map_util_points_populate_from_object(sd->map, sd->o_frame);
-   evas_object_map_set(sd->o_frame, sd->map);
-   evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
 }
 
 static void 
@@ -688,15 +682,38 @@ _e_smart_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
+   int orient = 0;
 
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    sd->rotating = EINA_FALSE;
-
    e_layout_child_lower(mon);
 
-   if (sd->map) evas_map_free(sd->map);
+   /* get closest rotation to this one */
+   orient = _e_smart_monitor_orientation_get(sd);
+   if (orient >= 0)
+     {
+        Evas_Coord x, y, w, h;
+        Evas_Map *map;
+
+        evas_object_geometry_get(sd->o_frame, &x, &y, &w, &h);
+
+        /* snap to rotation */
+
+        /* create frame 'map' for rotation */
+        map = evas_map_new(4);
+        evas_map_smooth_set(map, EINA_TRUE);
+        evas_map_alpha_set(map, EINA_TRUE);
+        evas_map_util_points_populate_from_object(map, sd->o_frame);
+        evas_map_util_rotate(map, orient,
+                             x + (w / 2), y + (h / 2));
+        evas_object_map_set(sd->o_frame, map);
+        evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
+        evas_map_free(map);
+
+        sd->rotation = orient;
+     }
 }
 
 static void 
@@ -784,19 +801,24 @@ _e_smart_monitor_rotate(E_Smart_Data *sd, void *event)
    Evas_Event_Mouse_Move *ev;
    Evas_Coord mx;
    Evas_Coord x, y, w, h;
-   const Evas_Map *m;
-   Evas_Map *m2;
+   Evas_Map *map;
 
    ev = event;
-   mx = (ev->prev.output.x - ev->cur.output.x);
 
-   /* update map for frame object to reflect this rotation */
+   mx = (ev->prev.output.x - ev->cur.output.x);
    evas_object_geometry_get(sd->o_frame, &x, &y, &w, &h);
-   m = evas_object_map_get(sd->o_frame);
-   m2 = evas_map_dup(m);
-   evas_map_util_rotate(m2, mx, x + (w / 2), y + (h / 2));
-   evas_object_map_set(sd->o_frame, m2);
-   evas_map_free(m2);
+
+   /* create frame 'map' for rotation */
+   map = evas_map_new(4);
+   evas_map_smooth_set(map, EINA_TRUE);
+   evas_map_alpha_set(map, EINA_TRUE);
+   evas_map_util_points_populate_from_object(map, sd->o_frame);
+   evas_map_util_rotate(map, sd->rotation + mx, x + (w / 2), y + (h / 2));
+   evas_object_map_set(sd->o_frame, map);
+   evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
+   evas_map_free(map);
+
+   sd->rotation += mx;
 }
 
 static void 
@@ -832,22 +854,23 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* graphically resize the monitor */
    evas_object_resize(mon, w + mx, h + my);
 
+   /* tell randr widget we resized this monitor so that it can 
+    * update the layout for any monitors around this one */
+   evas_object_smart_callback_call(mon, "monitor_resized", NULL);
+
    /* find the closest resolution to this one that we would snap to */
    if ((mode = _e_smart_monitor_resolution_get(sd, nrw, nrh)))
      {
         char buff[1024];
 
+        /* set resolution text */
         snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height);
         edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
      }
-
-   /* tell randr widget we resized this monitor so that it can 
-    * update the layout for any monitors around this one */
-   evas_object_smart_callback_call(mon, "monitor_resized", NULL);
 }
 
 static void 
-_e_smart_monitor_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
+_e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
 {
    E_Smart_Data *sd;
    Evas_Coord nw, nh;
@@ -875,16 +898,59 @@ _e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord h
 
    if (!sd) return NULL;
 
+   /* find the closest resolution we have, within 'fuzziness' range */
    EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
      {
-        if ((((int)mode->width - SNAP_FUZZINESS) <= width) || 
-            (((int)mode->width + SNAP_FUZZINESS) <= width))
+        if ((((int)mode->width - RESIZE_SNAP_FUZZINESS) <= width) || 
+            (((int)mode->width + RESIZE_SNAP_FUZZINESS) <= width))
           {
-             if ((((int)mode->height - SNAP_FUZZINESS) <= height) || 
-                 (((int)mode->height + SNAP_FUZZINESS) <= height))
+             if ((((int)mode->height - RESIZE_SNAP_FUZZINESS) <= height) || 
+                 (((int)mode->height + RESIZE_SNAP_FUZZINESS) <= height))
                return mode;
           }
      }
 
    return NULL;
+}
+
+static int 
+_e_smart_monitor_orientation_get(E_Smart_Data *sd)
+{
+   int degree = 0;
+
+   degree = sd->rotation;
+   if (degree < 0) degree += 360;
+
+   /* find the closest degree of rotation within 'fuzziness' tolerance */
+   if (((degree - ROTATE_SNAP_FUZZINESS) <= 90) || 
+       ((degree + ROTATE_SNAP_FUZZINESS) <= 90))
+     return 90;
+   else if (((degree - ROTATE_SNAP_FUZZINESS) <= 180) || 
+            ((degree + ROTATE_SNAP_FUZZINESS) <= 180))
+     return 180;
+   else if (((degree - ROTATE_SNAP_FUZZINESS) <=  270) || 
+            ((degree + ROTATE_SNAP_FUZZINESS) <= 270))
+     return 270;
+   else if (((degree - ROTATE_SNAP_FUZZINESS) <= 360) || 
+            ((degree + ROTATE_SNAP_FUZZINESS) <= 360))
+     return 0;
+
+   return -1;
+}
+
+static int 
+_e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient)
+{
+   switch (orient)
+     {
+      case ECORE_X_RANDR_ORIENTATION_ROT_90:
+        return 90;
+      case ECORE_X_RANDR_ORIENTATION_ROT_180:
+        return 180;
+      case ECORE_X_RANDR_ORIENTATION_ROT_270:
+        return 270;
+      case ECORE_X_RANDR_ORIENTATION_ROT_0:
+      default:
+        return 0;
+     }
 }
