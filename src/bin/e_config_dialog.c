@@ -118,7 +118,7 @@ e_config_dialog_find(const char *name, const char *class)
                                        cfd->dia->win->border->zone->x + (cfd->dia->win->border->zone->w / 2),
                                        cfd->dia->win->border->zone->y + (cfd->dia->win->border->zone->h / 2));
                }
-             e_border_unshade(cfd->dia->win->border, E_DIRECTION_DOWN);
+             e_border_unshade(cfd->dia->win->border, cfd->dia->win->border->shade.dir);
              if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
                  (e_config->focus_setting == E_FOCUS_NEW_WINDOW))
                e_border_focus_set(cfd->dia->win->border, 1, 1);

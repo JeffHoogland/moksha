@@ -537,7 +537,7 @@ _e_border_menu_cb_shade(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
    if (!bd->lock_user_shade)
      {
         if (bd->shaded)
-          e_border_unshade(bd, E_DIRECTION_UP);
+          e_border_unshade(bd, bd->shade.dir);
         else
           e_border_shade(bd, E_DIRECTION_UP);
      }

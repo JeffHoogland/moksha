@@ -92,7 +92,7 @@ e_configure_show(E_Container *con, const char *params)
              ecore_x_pointer_warp(z2->container->win,
                                   z2->x + (z2->w / 2), z2->y + (z2->h / 2));
           }
-        e_border_unshade(eco->win->border, E_DIRECTION_DOWN);
+        e_border_unshade(eco->win->border, eco->win->border->shade.dir);
         if ((e_config->focus_setting == E_FOCUS_NEW_DIALOG) ||
             (e_config->focus_setting == E_FOCUS_NEW_WINDOW))
           e_border_focus_set(eco->win->border, 1, 1);

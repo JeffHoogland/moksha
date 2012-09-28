@@ -375,7 +375,7 @@ _act_border(Evry_Action *act)
    if (focus)
      {
         if (bd->shaded)
-          e_border_unshade(bd, E_DIRECTION_UP);
+          e_border_unshade(bd, bd->shade.dir);
 
         if (bd->iconic)
           e_border_uniconify(bd);
