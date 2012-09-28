@@ -40076,8 +40076,18 @@ CONNMAN_ICON(ethernet)
                     {
                        state: "default" 0.0;
                        align: 0.5 0.5;
-                       rel1.to: "e.swallow.preview";
-                       rel2.to: "e.swallow.preview";
+                       rel1
+                         {
+                            relative: 0.0 1.0;
+                            offset: 0 0;
+                            to_x: "e.swallow.preview";
+                            to_y: "e.text.name";
+                         }
+                       rel2
+                         {
+                            offset: -1 -3;
+                            to: "e.swallow.preview";
+                         }
                        text
                          {
                             style: "resolution";
