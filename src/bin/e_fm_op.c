@@ -105,7 +105,7 @@ static int           _e_fm_op_symlink_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_remove_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_rename_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_destroy_atom(E_Fm_Op_Task *task);
-static int           _e_fm_op_random_buf(char *buf, ssize_t len);
+static void          _e_fm_op_random_buf(char *buf, ssize_t len);
 static char          _e_fm_op_random_char();
 
 Ecore_Fd_Handler *_e_fm_op_stdin_handler = NULL;
@@ -1679,10 +1679,9 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
    if (_e_fm_op_abort) goto finish;
    static int fd = -1;
    static char *buf = NULL;
-   off_t pos, sz;
-// if we do this 7 times! we're    
-//   int cnt, overwrite_count = 7;
-   int cnt, overwrite_count = 1;
+   static int passes = 0;
+   static off_t pos = 0;
+   off_t sz;
 
    if (fd == -1)
      {
@@ -1706,39 +1705,39 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
            !S_ISREG(st2.st_mode))
          goto finish;
 
-       if ((buf = malloc(65536)) == NULL)
+       if ((buf = malloc(READBUFSIZE)) == NULL)
          goto finish;
 
        task->src.st.st_size = st2.st_size;
      }
 
-   for (cnt = 0; cnt < overwrite_count; cnt++)
-     {
-        if (lseek(fd, SEEK_SET, 0) == -1)
-          goto finish;
-        
-        for (pos = 0; pos < task->src.st.st_size; pos += 65536)
-          {
-             sz = 65536;
-             if ((task->src.st.st_size - pos) < sz) sz = task->src.st.st_size - pos;
-             if (_e_fm_op_random_buf(buf, sz) == -1)
-               // alternate patterb between 0x00 and 0xff each round starting with 0xff
-               memset(buf, 0xff * ((cnt + 1) & 0x1), sz);
-             if (write(fd, buf, sz) != sz)
-               {
-                  fsync(fd);
-                  goto finish;
-               }
-          }
-        if (fsync(fd) == -1)
-          goto finish;
-     }
+   if (pos + READBUFSIZE > task->src.st.st_size) sz = task->src.st.st_size - pos;
+   else sz = READBUFSIZE;
 
-   task->dst.done++;
-   _e_fm_op_update_progress_report_simple((double)task->dst.done/NB_PASS*100, "/dev/urandom", task->src.name);
-
-   if (task->dst.done == NB_PASS)
+   _e_fm_op_random_buf(buf, sz);
+   if (write(fd, buf, sz) != sz)
      goto finish;
+   if (fsync(fd) == -1)
+     goto finish;
+
+   pos += sz;
+
+   _e_fm_op_update_progress_report_simple((double) (pos + (passes * task->src.st.st_size)) /
+                                          (task->src.st.st_size * NB_PASS) * 100,
+                                          "/dev/urandom", task->src.name);
+
+   if (pos >= task->src.st.st_size)
+     {
+       passes++;
+
+       if (passes == NB_PASS)
+         goto finish;
+       if (lseek(fd, SEEK_SET, 0) == -1)
+         goto finish;
+
+       pos = 0;
+       return 1;
+     }
 
    return 1;
 
@@ -1746,11 +1745,13 @@ finish:
    close(fd);
    fd = -1;
    E_FREE(buf);
+   passes = 0;
+   pos = 0;
    task->finished = 1;
    return 1;
 }
 
-static int
+static void
 _e_fm_op_random_buf(char *buf, ssize_t len)
 {
    int f = -1;
@@ -1762,7 +1763,7 @@ _e_fm_op_random_buf(char *buf, ssize_t len)
          {
             buf[i] = _e_fm_op_random_char();
          }
-       return 0;
+       return;
      }
 
    if (read(f, buf, len) != len)
@@ -1774,7 +1775,7 @@ _e_fm_op_random_buf(char *buf, ssize_t len)
      }
 
    close(f);
-   return 0;
+   return;
 }
 
 static char
