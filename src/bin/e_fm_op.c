@@ -108,8 +108,6 @@ static int           _e_fm_op_destroy_atom(E_Fm_Op_Task *task);
 static void          _e_fm_op_random_buf(char *buf, ssize_t len);
 static char          _e_fm_op_random_char();
 
-Ecore_Fd_Handler *_e_fm_op_stdin_handler = NULL;
-
 Eina_List *_e_fm_op_work_queue = NULL, *_e_fm_op_scan_queue = NULL;
 Ecore_Idler *_e_fm_op_work_idler_p = NULL, *_e_fm_op_scan_idler_p = NULL;
 
@@ -172,10 +170,10 @@ main(int argc, char **argv)
    eina_init();
 
    _e_fm_op_stdin_buffer = malloc(READBUFSIZE);
+   if (!_e_fm_op_stdin_buffer) return 0;
 
-   _e_fm_op_stdin_handler =
-     ecore_main_fd_handler_add(STDIN_FILENO, ECORE_FD_READ, _e_fm_op_stdin_data, NULL,
-                               NULL, NULL);
+   ecore_main_fd_handler_add(STDIN_FILENO, ECORE_FD_READ, _e_fm_op_stdin_data,
+                             NULL, NULL, NULL);
 
    if (argc < 3) return 0;
 
@@ -198,8 +196,8 @@ main(int argc, char **argv)
    if ((type == E_FM_OP_SECURE_REMOVE) ||
        (type == E_FM_OP_MOVE))
      {
-       _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
-       _e_fm_op_separator = _e_fm_op_work_queue;
+        _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
+        _e_fm_op_separator = _e_fm_op_work_queue;
      }
 
    if ((type == E_FM_OP_COPY) ||
@@ -209,7 +207,7 @@ main(int argc, char **argv)
      {
         if (argc < 4) goto quit;
 
-        if ((argc >= 4) && (ecore_file_is_dir(argv[last])))
+        if (ecore_file_is_dir(argv[last]))
           {
              char buf[PATH_MAX];
              char *p2, *p3;
@@ -237,20 +235,17 @@ main(int argc, char **argv)
              done = 0;
              total = last - 2;
 
-             char *p;
-
              for (; i < last; i++)
                {
-                  p = argv[i];
                   const char *name;
                   size_t name_len;
 
                   /* Don't move a dir into itself */
-                  if (ecore_file_is_dir(p) &&
-                      (strcmp(p, p2) == 0))
+                  if (ecore_file_is_dir(argv[i]) &&
+                      (strcmp(argv[i], p2) == 0))
                     goto skip_arg;
 
-                  name = ecore_file_file_get(p);
+                  name = ecore_file_file_get(argv[i]);
                   if (!name) goto skip_arg;
                   name_len = strlen(name);
                   if (p2_len + name_len >= PATH_MAX) goto skip_arg;
@@ -267,19 +262,19 @@ main(int argc, char **argv)
                     {
                        if (type == E_FM_OP_RENAME)
                          {
-                            if (!strcmp(argv[i],buf))
+                            if (!strcmp(argv[i], buf))
                               goto skip_arg;
 
-                            if (buf[0]!='/')
+                            if (buf[0] != '/')
                               _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
                                                        "Unknown destination '%s': %s.", buf);
                          }
                        else if (type == E_FM_OP_MOVE)
                          {
-                            if (!strcmp(argv[i],buf))
+                            if (!strcmp(argv[i], buf))
                               goto skip_arg;
 
-                            if (buf[0]!='/')
+                            if (buf[0] != '/')
                               _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
                                                        "Unknown destination '%s': %s.", buf);
 
@@ -673,7 +668,8 @@ _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm
                   *queue = eina_list_remove_list(*queue, *node);
                   *node = NULL;
                   *mark = 0;
-                  /* Do not clean out _e_fm_op_error_response. This way when another error occures, it would be handled automatically. */
+                  /* Do not clean out _e_fm_op_error_response. This way when another error
+                   * occures, it would be handled automatically. */
                   return 1;
                }
           }
@@ -935,8 +931,6 @@ _e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...)
      }
    else
      {
-        int ret = 0;
-
         vsnprintf(str, READBUFSIZE - 3 * sizeof(int), fmt, ap);
         len = strlen(str);
 
@@ -944,7 +938,7 @@ _e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...)
         *((int *)(buf + sizeof(int))) = type;
         *((int *)(buf + (2 * sizeof(int)))) = len + 1;
 
-        ret = write(STDOUT_FILENO, buf, (3 * sizeof(int)) + len + 1);
+        write(STDOUT_FILENO, buf, (3 * sizeof(int)) + len + 1);
 
         E_FM_OP_DEBUG("%s", str);
         E_FM_OP_DEBUG(" Error sent.\n");
@@ -993,8 +987,7 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
    const int magic = E_FM_OP_MAGIC;
    const int id = E_FM_OP_PROGRESS;
    char *p, *data;
-   int size, src_len, dst_len;
-   int ret = 0;
+   size_t size, src_len, dst_len;
 
    if (!dst) return;
 
@@ -1024,7 +1017,7 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
    P(dst);
 #undef P
 
-   ret = write(STDOUT_FILENO, data, (3 * sizeof(int)) + size);
+   write(STDOUT_FILENO, data, (3 * sizeof(int)) + size);
 
    E_FM_OP_DEBUG("Time left: %d at %e\n", eta, elapsed);
    E_FM_OP_DEBUG("Progress %d. \n", percent);
@@ -1100,12 +1093,11 @@ static void
 _e_fm_op_copy_stat_info(E_Fm_Op_Task *task)
 {
    struct utimbuf ut;
-   int ret = 0;
 
    if (!task->dst.name) return;
 
    chmod(task->dst.name, task->src.st.st_mode);
-   ret = chown(task->dst.name, task->src.st.st_uid, task->src.st.st_gid);
+   chown(task->dst.name, task->src.st.st_uid, task->src.st.st_gid);
    ut.actime = task->src.st.st_atime;
    ut.modtime = task->src.st.st_mtime;
    utime(task->dst.name, &ut);
@@ -1402,25 +1394,17 @@ _e_fm_op_copy_atom(E_Fm_Op_Task *task)
         if (_e_fm_op_handle_overwrite(task)) return 1;
 
         if (S_ISDIR(task->src.st.st_mode))
-          {
-             if (_e_fm_op_copy_dir(task)) return 1;
-          }
+          _e_fm_op_copy_dir(task);
         else if (S_ISLNK(task->src.st.st_mode))
-          {
-             if (_e_fm_op_copy_link(task)) return 1;
-          }
+          _e_fm_op_copy_link(task);
         else if (S_ISFIFO(task->src.st.st_mode))
-          {
-             if (_e_fm_op_copy_fifo(task)) return 1;
-          }
+          _e_fm_op_copy_fifo(task);
         else if (S_ISREG(task->src.st.st_mode))
-          {
-             if (_e_fm_op_open_files(task)) return 1;
-          }
+          _e_fm_op_open_files(task);
      }
    else
      {
-        if (_e_fm_op_copy_chunk(task)) return 1;
+        _e_fm_op_copy_chunk(task);
      }
 
    return 1;
@@ -1759,7 +1743,7 @@ _e_fm_op_random_buf(char *buf, ssize_t len)
 
    if ((f = open("/dev/urandom", O_RDONLY)) == -1)
      {
-       for (i=0; i < len; i++)
+       for (i = 0; i < len; i++)
          {
             buf[i] = _e_fm_op_random_char();
          }
@@ -1768,7 +1752,7 @@ _e_fm_op_random_buf(char *buf, ssize_t len)
 
    if (read(f, buf, len) != len)
      {
-       for (i=0; i < len; i++)
+       for (i = 0; i < len; i++)
          {
             buf[i] = _e_fm_op_random_char();
          }
