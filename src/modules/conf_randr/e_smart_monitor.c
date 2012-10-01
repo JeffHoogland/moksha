@@ -952,18 +952,19 @@ static void
 _e_smart_monitor_rotate_snap(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   Evas_Coord w, h;
+   Evas_Coord w, h, nw, nh;
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    evas_object_geometry_get(obj, NULL, NULL, &w, &h);
+   e_layout_coord_canvas_to_virtual(sd->o_layout, w, h, &nw, &nh);
 
    if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
        (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
-     evas_object_resize(obj, h, w);
+     e_layout_child_resize(obj, nh, nw);
    else if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
             (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
-     evas_object_resize(obj, w, h);
+     e_layout_child_resize(obj, nw, nh);
 
    /* tell randr widget we rotated this monitor so that it can 
     * update the layout for any monitors around this one */
@@ -1001,7 +1002,7 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if ((nrw > sd->max.w) || (nrh > sd->max.h)) return;
 
    /* graphically resize the monitor */
-   evas_object_resize(mon, w + mx, h + my);
+   evas_object_resize(mon, (w + mx), (h + my));
 
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
