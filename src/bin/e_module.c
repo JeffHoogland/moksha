@@ -126,7 +126,7 @@ e_module_new(const char *name)
         snprintf(buf, sizeof(buf), "%s/%s/module.so", name, MODULE_ARCH);
         modpath = e_path_find(path_modules, buf);
      }
-   else
+   else if (eina_str_has_extension(name, ".so"))
      modpath = eina_stringshare_add(name);
    if (!modpath)
      {
