@@ -2197,6 +2197,11 @@ e_border_focus_set(E_Border *bd,
                   e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
                   /* e_border_focus_set(bd, 1, 0); */
                }
+             if (bd->was_fullscreen)
+               {
+                  bd->need_fullscreen = 1;
+                  bd->was_fullscreen = 0;
+               }
             return;
           }
 
@@ -2235,7 +2240,8 @@ e_border_focus_set(E_Border *bd,
                             if ((!unfocus_is_parent) && 
                                 (!e_config->allow_above_fullscreen))
                               {
-                                 e_border_iconify(bd2);
+                                 e_border_unfullscreen(bd2);
+                                 bd2->was_fullscreen = 1;
                               }
                          }
                     }
@@ -2296,7 +2302,10 @@ e_border_focus_set(E_Border *bd,
                     }
                   if ((!have_vis_child) && 
                       (!e_config->allow_above_fullscreen))
-                    e_border_iconify(bd);
+                    {
+                       e_border_unfullscreen(bd);
+                       bd->was_fullscreen = 1;
+                    }
                }
           }
      }
@@ -2345,7 +2354,8 @@ e_border_focus_set(E_Border *bd,
                }
              if ((!unfocus_is_parent) && (!e_config->allow_above_fullscreen))
                {
-                  e_border_iconify(bd_unfocus);
+                  e_border_unfullscreen(bd_unfocus);
+                  bd_unfocus->was_fullscreen = 1;
                }
           }
      }
