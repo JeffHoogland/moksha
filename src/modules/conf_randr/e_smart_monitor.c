@@ -624,7 +624,7 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
    Evas_Object *mon;
    E_Smart_Data *sd;
    Evas_Coord ow, oh;
-   Evas_Coord nrw, nrh;
+   /* Evas_Coord nrw, nrh; */
    Ecore_X_Randr_Mode_Info *mode;
 
    if (!(mon = data)) return;
@@ -633,12 +633,11 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
    sd->resizing = EINA_FALSE;
    e_layout_child_lower(mon);
 
-   /* get the object geometry and convert to virtual space */
-   evas_object_geometry_get(mon, NULL, NULL, &ow, &oh);
-   e_layout_coord_canvas_to_virtual(sd->o_layout, ow, oh, &nrw, &nrh);
+   /* get the object geometry */
+   e_layout_child_geometry_get(mon, NULL, NULL, &ow, &oh);
 
    /* find the closest resolution to this one and snap to it */
-   if ((mode = _e_smart_monitor_resolution_get(sd, nrw, nrh)))
+   if ((mode = _e_smart_monitor_resolution_get(sd, ow, oh)))
      {
         char buff[1024];
 
@@ -975,7 +974,7 @@ static void
 _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
-   Evas_Coord w, h;
+   Evas_Coord w, h, cw, ch;
    Evas_Coord mx, my;
    Evas_Coord nrw, nrh;
    Ecore_X_Randr_Mode_Info *mode;
@@ -985,8 +984,9 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* FIXME: Ideally, this should use the evas_map to get geometry 
     * (for cases where the user has rotated the monitor and is now resizing) */
 
-   /* grab size of monitor object */
-   evas_object_geometry_get(mon, NULL, NULL, &w, &h);
+   /* grab size of monitor object and convert to canvas coords */
+   e_layout_child_geometry_get(mon, NULL, NULL, &cw, &ch);
+   e_layout_coord_virtual_to_canvas(sd->o_layout, cw, ch, &w, &h);
 
    /* calculate resize difference */
    mx = (ev->cur.output.x - ev->prev.output.x);
@@ -1002,7 +1002,7 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if ((nrw > sd->max.w) || (nrh > sd->max.h)) return;
 
    /* graphically resize the monitor */
-   evas_object_resize(mon, (w + mx), (h + my));
+   e_layout_child_resize(mon, nrw, nrh);
 
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
