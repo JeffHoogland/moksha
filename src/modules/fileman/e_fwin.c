@@ -850,6 +850,7 @@ _e_fwin_icon_popup(void *data)
    evas_object_resize(bg, mw, mh);
    if (!fwin->popup_handlers)
      {
+        E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_X_EVENT_XDND_ENTER, _e_fwin_icon_popup_handler, fwin);
         E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_X_EVENT_XDND_POSITION, _e_fwin_icon_popup_handler, fwin);
         E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_X_EVENT_MOUSE_IN, _e_fwin_icon_popup_handler, fwin);
         E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_fwin_icon_popup_handler, fwin);
@@ -882,6 +883,14 @@ _e_fwin_icon_mouse_in(void *data, Evas_Object *obj __UNUSED__, void *event_info)
    if (!fileman_config->tooltip.enable) return;
    fwin->popup_timer = ecore_timer_add(fileman_config->tooltip.delay, _e_fwin_icon_popup, fwin);
    fwin->popup_icon = ici;
+   if (!fwin->popup_handlers)
+     {
+        E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_X_EVENT_XDND_ENTER, _e_fwin_icon_popup_handler, fwin);
+        E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_X_EVENT_XDND_POSITION, _e_fwin_icon_popup_handler, fwin);
+        E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_X_EVENT_MOUSE_IN, _e_fwin_icon_popup_handler, fwin);
+        E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_fwin_icon_popup_handler, fwin);
+        E_LIST_HANDLER_APPEND(fwin->popup_handlers, ECORE_X_EVENT_MOUSE_OUT, _e_fwin_icon_popup_handler, fwin);
+     }
 }
 
 static void
