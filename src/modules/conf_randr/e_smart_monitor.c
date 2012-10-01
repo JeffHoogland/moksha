@@ -1003,7 +1003,7 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
-   evas_object_smart_callback_call(mon, "monitor_resized", NULL);
+   /* evas_object_smart_callback_call(mon, "monitor_resized", NULL); */
 
    /* find the closest resolution to this one that we would snap to */
    if ((mode = _e_smart_monitor_resolution_get(sd, nrw, nrh)))
