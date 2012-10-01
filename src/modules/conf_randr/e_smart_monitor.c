@@ -31,6 +31,9 @@ struct _E_Smart_Data
    /* connected flag */
    Eina_Bool connected : 1;
 
+   /* moving flag */
+   Eina_Bool moving : 1;
+
    /* layout object (this monitors parent) */
    Evas_Object *o_layout;
 
@@ -102,13 +105,15 @@ static void _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas
 static void _e_smart_cb_thumb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_thumb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_thumb_mouse_down(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
-static void _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
+static void _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
 static int _e_smart_cb_modes_sort(const void *data1, const void *data2);
 
 static void _e_smart_monitor_rotate(E_Smart_Data *sd, void *event);
 static void _e_smart_monitor_rotate_snap(Evas_Object *obj);
 static void _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event);
 static void _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode);
+static void _e_smart_monitor_move(E_Smart_Data *sd, void *event);
+
 static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height);
 static int _e_smart_monitor_orientation_get(E_Smart_Data *sd);
 static int _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient);
@@ -363,9 +368,9 @@ _e_smart_add(Evas_Object *obj)
    sd->o_thumb = e_livethumb_add(evas);
    edje_object_part_swallow(sd->o_frame, "e.swallow.preview", sd->o_thumb);
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_IN, 
-                                  _e_smart_cb_thumb_mouse_in, obj);
+                                  _e_smart_cb_thumb_mouse_in, NULL);
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_OUT, 
-                                  _e_smart_cb_thumb_mouse_out, obj);
+                                  _e_smart_cb_thumb_mouse_out, NULL);
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_UP, 
                                   _e_smart_cb_thumb_mouse_up, obj);
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_DOWN, 
@@ -787,12 +792,14 @@ _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    /* if we are not rotating or resizing, then we have nothing to do */
-   if ((!sd->rotating) && (!sd->resizing)) return;
+   if ((!sd->rotating) && (!sd->resizing) && (!sd->moving)) return;
 
    if (sd->rotating) 
      _e_smart_monitor_rotate(sd, event);
    else if (sd->resizing) 
      _e_smart_monitor_resize(sd, mon, event);
+   else if (sd->moving)
+     _e_smart_monitor_move(sd, event);
 }
 
 static void 
@@ -814,9 +821,14 @@ _e_smart_cb_thumb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_O
 }
 
 static void 
-_e_smart_cb_thumb_mouse_down(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
+_e_smart_cb_thumb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
 {
+   Evas_Object *mon;
+   E_Smart_Data *sd;
    Evas_Event_Mouse_Up *ev;
+
+   if (!(mon = data)) return;
+   if (!(sd = evas_object_smart_data_get(mon))) return;
 
    ev = event;
    if (ev->button == 1)
@@ -825,11 +837,14 @@ _e_smart_cb_thumb_mouse_down(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_
 
         man = e_manager_current_get();
         e_pointer_type_push(man->pointer, obj, "move");
+
+        /* update moving state */
+        sd->moving = EINA_TRUE;
      }
 }
 
 static void 
-_e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
+_e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -876,6 +891,9 @@ _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj _
 
         man = e_manager_current_get();
         e_pointer_type_pop(man->pointer, obj, "move");
+
+        /* update moving state */
+        sd->moving = EINA_FALSE;
      }
 }
 
@@ -1014,6 +1032,15 @@ _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
    evas_object_smart_callback_call(obj, "monitor_resized", NULL);
+}
+
+static void 
+_e_smart_monitor_move(E_Smart_Data *sd, void *event)
+{
+   Evas_Event_Mouse_Move *ev;
+
+   if (!sd) return;
+   ev = event;
 }
 
 static Ecore_X_Randr_Mode_Info *
