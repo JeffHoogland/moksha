@@ -51,6 +51,7 @@ struct _Manager
    Evas_Object *movers[GADMAN_LAYER_COUNT];
    Evas_Object *full_bg;
    const char  *icon_name;
+   E_Gadcon_Client *drag_gcc[GADMAN_LAYER_COUNT];
 
    Eina_List *drag_handlers;
    

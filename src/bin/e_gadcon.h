@@ -51,6 +51,7 @@ typedef struct _E_Event_Gadcon_Client_Class E_Event_Gadcon_Client_Class_Add;
 typedef struct _E_Event_Gadcon_Client_Class E_Event_Gadcon_Client_Class_Del;
 typedef struct _E_Gadcon_Location     E_Gadcon_Location;
 typedef struct _E_Event_Gadcon_Populate E_Event_Gadcon_Populate;
+typedef void (*E_Gadcon_DND_Cb)(E_Gadcon*, E_Gadcon_Client*);
 
 #else
 #ifndef E_GADCON_H
@@ -132,6 +133,7 @@ struct _E_Gadcon
 
    E_Drop_Handler    *drop_handler;
    E_Gadcon_Client *drag_gcc, *new_gcc;
+   E_Gadcon_DND_Cb dnd_enter_cb, dnd_leave_cb, dnd_move_cb, dnd_drop_cb;
 
    E_Config_Gadcon   *cf;
 
@@ -276,7 +278,7 @@ EAPI void                    e_gadcon_provider_register(const E_Gadcon_Client_Cl
 EAPI void                    e_gadcon_provider_unregister(const E_Gadcon_Client_Class *cc);
 EAPI Eina_List              *e_gadcon_provider_list(void);
 EAPI E_Gadcon               *e_gadcon_dummy_new(int id);
-EAPI void                     e_gadcon_drop_handler_add(E_Gadcon *gc, int x, int y, int w, int h);
+EAPI void                    e_gadcon_drop_handler_add(E_Gadcon *gc, E_Gadcon_DND_Cb enter, E_Gadcon_DND_Cb leave, E_Gadcon_DND_Cb move, E_Gadcon_DND_Cb drop, int x, int y, int w, int h);
 EAPI void                    e_gadcon_config_del(E_Gadcon *gc);
 EAPI E_Gadcon               *e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *swallow_name);
 EAPI void                    e_gadcon_custom_new(E_Gadcon *gc);

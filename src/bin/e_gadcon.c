@@ -46,7 +46,7 @@ static void                     _e_gadcon_cb_signal_resize_right_go(void *data, 
 static void                     _e_gadcon_cb_dnd_enter(void *data, const char *type, void *event);
 static void                     _e_gadcon_cb_dnd_move(void *data, const char *type, void *event);
 static void                     _e_gadcon_cb_dnd_leave(void *data, const char *type, void *event);
-static void                     _e_gadcon_cb_drop(void *data, const char *type, void *event);
+static void                     _e_gadcon_cb_dnd_drop(void *data, const char *type, void *event);
 
 static int                      _e_gadcon_client_class_feature_check(const E_Gadcon_Client_Class *cc, const char *name, void *feature);
 static void                     _e_gadcon_client_cb_menu_post(void *data, E_Menu *m);
@@ -419,7 +419,7 @@ e_gadcon_config_del(E_Gadcon *gc)
 }
 
 EAPI void
-e_gadcon_drop_handler_add(E_Gadcon *gc, int x, int y, int w, int h)
+e_gadcon_drop_handler_add(E_Gadcon *gc, E_Gadcon_DND_Cb enter, E_Gadcon_DND_Cb leave, E_Gadcon_DND_Cb move, E_Gadcon_DND_Cb drop, int x, int y, int w, int h)
 {
    const char *drop_types[] = { "enlightenment/gadcon_client" };
 
@@ -429,8 +429,12 @@ e_gadcon_drop_handler_add(E_Gadcon *gc, int x, int y, int w, int h)
    gc->drop_handler =
      e_drop_handler_add(E_OBJECT(gc), gc,
                         _e_gadcon_cb_dnd_enter, _e_gadcon_cb_dnd_move,
-                        _e_gadcon_cb_dnd_leave, _e_gadcon_cb_drop,
+                        _e_gadcon_cb_dnd_leave, _e_gadcon_cb_dnd_drop,
                         drop_types, 1, x, y, w, h);
+   gc->dnd_enter_cb = enter;
+   gc->dnd_leave_cb = leave;
+   gc->dnd_move_cb = move;
+   gc->dnd_drop_cb = drop;
 }
 
 EAPI E_Gadcon *
@@ -456,7 +460,7 @@ e_gadcon_swallowed_new(const char *name, int id, Evas_Object *obj, const char *s
    gc->evas = evas_object_evas_get(obj);
    gc->o_container = e_gadcon_layout_add(gc->evas);
    evas_object_geometry_get(gc->o_container, &x, &y, &w, &h);
-   e_gadcon_drop_handler_add(gc, x, y, w, h);
+   e_gadcon_drop_handler_add(gc, NULL, NULL, NULL, NULL, x, y, w, h);
    evas_object_event_callback_add(gc->o_container, EVAS_CALLBACK_MOVE,
                                   _e_gadcon_cb_moveresize, gc);
    evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE,
@@ -604,7 +608,7 @@ e_gadcon_unpopulate(E_Gadcon *gc)
          * undetermined circumstances in gadman
          */
         if (gcc != eina_list_data_get(gc->clients)) continue;
-        WRN("DANGLING GADCON CLIENT %p! THIS IS A BUG!!!", gcc);
+        CRI("DANGLING GADCON CLIENT %p! THIS IS A BUG!!!", gcc);
         e_object_unref(E_OBJECT(gcc));
      }
    if (gc->awaiting_classes)
@@ -998,8 +1002,7 @@ e_gadcon_drag_finished_cb(E_Drag *drag, int dropped)
         /* TODO: Clean up module config too? */
         e_object_del(E_OBJECT(gcc));
      }
-   if (!gcc->gadcon->custom)
-     e_gadcon_client_drag_set(NULL);
+   e_gadcon_client_drag_set(NULL);
    gcc->gadcon->new_gcc = NULL;
    e_object_unref(E_OBJECT(gcc));
 }
@@ -2829,9 +2832,20 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
    gc = data;
    //INF("DND ENTER");
    gcc = gc->drag_gcc;
-   if ((!gcc->hidden) && (gcc->gadcon == gc)) return;
+   if ((!gcc->hidden) && (gcc->gadcon == gc))
+     {
+        if (gc->dnd_enter_cb) gc->dnd_enter_cb(gc, gc->drag_gcc);
+        return;
+     }
    if (gcc->gadcon != gc)
      e_gadcon_client_hide(gc->drag_gcc);
+   else if (e_gadcon_site_is_desktop(gcc->gadcon->location->site))
+     {
+        e_gadcon_client_show(gc->drag_gcc);
+        evas_object_hide(gc->drag_gcc->drag.drag->object);
+        if (gc->dnd_enter_cb) gc->dnd_enter_cb(gc, gc->drag_gcc);
+        return;
+     }
    e_gadcon_layout_freeze(gc->o_container);
 
    if (gc->new_gcc)
@@ -2922,6 +2936,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
         break;
      }
    e_gadcon_layout_thaw(gc->o_container);
+   if (gc->dnd_enter_cb) gc->dnd_enter_cb(gc, gc->drag_gcc);
 }
 
 static void
@@ -2935,8 +2950,8 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
 
    ev = event;
    gc = data;
-
-   gcc = gc->new_gcc;
+INF("DND (%d,%d)", ev->x, ev->y);
+   gcc = gc->new_gcc ?: gc->drag_gcc;
    if (!gcc) return;
 
    if (gcc->state_info.resist > 0)
@@ -2955,9 +2970,10 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
         int w, h;
         w = gc->zone->w;
         h = gc->zone->h;
-        gc->new_gcc->config.pos_x = (double)ev->x / (double)w;
-        gc->new_gcc->config.pos_y = (double)ev->y / (double)h;
-        if (gcc->o_base) evas_object_move(gcc->o_base, ev->x, ev->y);
+        gcc->config.pos_x = (double)ev->x / (double)w;
+        gcc->config.pos_y = (double)ev->y / (double)h;
+        if (gcc->o_frame) evas_object_move(gcc->o_frame, ev->x, ev->y);
+        else if (gcc->o_base) evas_object_move(gcc->o_base, ev->x, ev->y);
      }
    else
      evas_object_geometry_get(gc->o_container, &dx, &dy, NULL, NULL);
@@ -2974,6 +2990,7 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
                                            gcc->config.size);
      }
    e_gadcon_layout_thaw(gc->o_container);
+   if (gc->dnd_move_cb) gc->dnd_move_cb(gc, gcc);
 }
 
 static void
@@ -2983,20 +3000,26 @@ _e_gadcon_cb_dnd_leave(void *data, const char *type __UNUSED__, void *event __UN
 
    gc = data;
    //INF("DND LEAVE");
+
    /* If we exit the starting container hide the gadcon visual */
    if (gc->drag_gcc->gadcon == gc) e_gadcon_client_hide(gc->drag_gcc);
 
    /* Delete temporary object */
-   if (!gc->new_gcc) return;
+   if (!gc->new_gcc)
+     {
+        if (gc->dnd_leave_cb) gc->dnd_leave_cb(gc, gc->drag_gcc);
+        return;
+     }
 
    //INF("DELETING new_gcc");
    e_object_del(E_OBJECT(gc->new_gcc));
    gc->new_gcc = NULL;
    evas_object_show(gc->drag_gcc->drag.drag->object);
+   if (gc->dnd_leave_cb) gc->dnd_leave_cb(gc, gc->drag_gcc);
 }
 
 static void
-_e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED__)
+_e_gadcon_cb_dnd_drop(void *data, const char *type __UNUSED__, void *event __UNUSED__)
 {
    E_Gadcon *gc;
    E_Gadcon_Client *gcc = NULL;
@@ -3004,8 +3027,17 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
    gc = data;
    //INF("DND DROP");
    gc->cf->clients = eina_list_append(gc->cf->clients, gc->drag_gcc->cf);
+   if (!gc->new_gcc)
+     {
+        /* using drag_gcc, so do things a bit differently
+         * this only happens with gadman dnd, broken on shelves
+         */
+        _e_gadcon_client_save(gc->drag_gcc);
+        e_gadcon_client_show(gc->drag_gcc);
+        if (gc->dnd_drop_cb) gc->dnd_drop_cb(gc, gc->drag_gcc);
+        return;
+     }
    /* still has refcount from drag */
-   if (!gc->new_gcc) return;
    e_object_del(E_OBJECT(gc->drag_gcc));
    gcc = gc->new_gcc;
 
@@ -3022,11 +3054,13 @@ _e_gadcon_cb_drop(void *data, const char *type __UNUSED__, void *event __UNUSED_
         gc->drag_gcc->moving = 0;
         e_gadcon_custom_populate_request(gc);
         e_config_save_queue();
+        if (gc->dnd_drop_cb) gc->dnd_drop_cb(gc, gc->drag_gcc);
         return;
      }
    if (gc->editing) e_gadcon_client_edit_begin(gc->new_gcc);
    gc->new_gcc = NULL;
    e_config_save_queue();
+   if (gc->dnd_drop_cb) gc->dnd_drop_cb(gc, gc->drag_gcc);
 }
 
 static int
