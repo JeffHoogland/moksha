@@ -104,7 +104,7 @@ static void _e_smart_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__
 static void _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static void _e_smart_cb_thumb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_thumb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
-static void _e_smart_cb_thumb_mouse_down(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_cb_thumb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
 static void _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
 static int _e_smart_cb_modes_sort(const void *data1, const void *data2);
 
@@ -118,9 +118,10 @@ static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd
 static int _e_smart_monitor_orientation_get(E_Smart_Data *sd);
 static int _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient);
 
-static E_Menu *_e_smart_monitor_menu_new(E_Smart_Data *sd);
+static E_Menu *_e_smart_monitor_menu_new(Evas_Object *obj);
 static void _e_smart_monitor_menu_cb_end(void *data __UNUSED__, E_Menu *m);
-static void _e_smart_monitor_menu_cb_resolution_pre(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi);
+static void _e_smart_monitor_menu_cb_resolution_pre(void *data, E_Menu *mn, E_Menu_Item *mi);
+static void _e_smart_monitor_menu_cb_resolution_change(void *data, E_Menu *mn, E_Menu_Item *mi);
 
 Evas_Object *
 e_smart_monitor_add(Evas *evas)
@@ -821,7 +822,7 @@ _e_smart_cb_thumb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_O
 }
 
 static void 
-_e_smart_cb_thumb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
+_e_smart_cb_thumb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -874,7 +875,7 @@ _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, 
         else
           {
              /* create and show the resolution popup menu */
-             if ((sd->menu = _e_smart_monitor_menu_new(sd)))
+             if ((sd->menu = _e_smart_monitor_menu_new(mon)))
                {
                   E_Zone *zone;
 
@@ -1018,6 +1019,7 @@ _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
 {
    E_Smart_Data *sd;
    Evas_Coord nw, nh;
+   char buff[1024];
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
    sd->snapped = EINA_TRUE;
@@ -1028,6 +1030,10 @@ _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
 
    /* graphically resize the monitor */
    evas_object_resize(obj, nw, nh);
+
+   /* set resolution text */
+   snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height);
+   edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
 
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
@@ -1113,12 +1119,13 @@ _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient)
 }
 
 static E_Menu *
-_e_smart_monitor_menu_new(E_Smart_Data *sd)
+_e_smart_monitor_menu_new(Evas_Object *obj)
 {
+   E_Smart_Data *sd = NULL;
    E_Menu *m;
    E_Menu_Item *mi = NULL;
 
-   if (!sd) return NULL;
+   if (!(sd = evas_object_smart_data_get(obj))) return NULL;
 
    /* create the base menu */
    m = e_menu_new();
@@ -1137,7 +1144,7 @@ _e_smart_monitor_menu_new(E_Smart_Data *sd)
                                         "preferences-system-screen-resolution");
         e_menu_item_submenu_pre_callback_set(mi, 
                                              _e_smart_monitor_menu_cb_resolution_pre, 
-                                             sd);
+                                             obj);
      }
 
    return m;
@@ -1158,14 +1165,16 @@ _e_smart_monitor_menu_cb_end(void *data __UNUSED__, E_Menu *m)
 }
 
 static void 
-_e_smart_monitor_menu_cb_resolution_pre(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi)
+_e_smart_monitor_menu_cb_resolution_pre(void *data, E_Menu *mn, E_Menu_Item *mi)
 {
+   Evas_Object *obj = NULL;
    E_Smart_Data *sd = NULL;
    E_Menu *subm = NULL;
    Eina_List *m = NULL;
    Ecore_X_Randr_Mode_Info *mode = NULL;
 
-   if (!(sd = data)) return;
+   if (!(obj = data)) return;
+   if (!(sd = e_object_data_get(E_OBJECT(mn)))) return;
 
    /* create resolution submenu */
    subm = e_menu_new();
@@ -1183,10 +1192,40 @@ _e_smart_monitor_menu_cb_resolution_pre(void *data, E_Menu *mn __UNUSED__, E_Men
         e_menu_item_label_set(submi, mode->name);
         e_menu_item_radio_set(submi, EINA_TRUE);
         e_menu_item_radio_group_set(submi, 1);
+        e_menu_item_callback_set(submi, 
+                                 _e_smart_monitor_menu_cb_resolution_change, 
+                                 obj);
 
         /* if this is the current mode, mark menu item as selected */
         if ((mode->width == sd->crtc->current_mode->width) && 
             (mode->height == sd->crtc->current_mode->height))
           e_menu_item_toggle_set(submi, EINA_TRUE);
+     }
+}
+
+static void 
+_e_smart_monitor_menu_cb_resolution_change(void *data, E_Menu *mn, E_Menu_Item *mi)
+{
+   Evas_Object *obj = NULL;
+   E_Smart_Data *sd = NULL;
+   Eina_List *m = NULL;
+   Ecore_X_Randr_Mode_Info *mode = NULL;
+
+   if (!(obj = data)) return;
+   if (!(sd = e_object_data_get(E_OBJECT(mn)))) return;
+
+   /* loop the list of Modes */
+   EINA_LIST_FOREACH(sd->modes, m, mode)
+     {
+        if ((mi->label) && (mode->name))
+          {
+             /* compare mode name to menu item label */
+             if (!strcmp(mode->name, mi->label))
+               {
+                  /* found requested mode, set it */
+                  _e_smart_monitor_resize_snap(obj, mode);
+                  break;
+               }
+          }
      }
 }
