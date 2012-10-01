@@ -437,7 +437,11 @@ gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
           }
      }
    e_gadcon_client_drag_set(NULL);
-   if (drag_gcc) _save_widget_position(drag_gcc);
+   if (drag_gcc)
+     {
+        _save_widget_position(drag_gcc);
+        e_object_unref(E_OBJECT(drag_gcc));
+     }
 }
 
 void
@@ -1518,6 +1522,7 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
         const char *drag_types[] = { "enlightenment/gadcon_client" };
 
         gc->drag_gcc->moving = 1;
+        e_object_ref(E_OBJECT(gc->drag_gcc));
         evas_pointer_output_xy_get(gc->drag_gcc->gadcon->evas, &mx, &my);
         evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
 
