@@ -428,6 +428,9 @@ _e_smart_del(Evas_Object *obj)
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
 
+   /* delete the menu if it exists */
+   if (sd->menu) e_object_del(E_OBJECT(sd->menu));
+
    /* delete callbacks for 'resize' edje signals */
    edje_object_signal_callback_del(sd->o_frame, "e,action,resize,in", "e", 
                                    _e_smart_cb_resize_mouse_in);
