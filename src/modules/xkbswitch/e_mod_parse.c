@@ -72,9 +72,7 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n;
-             char *p;
-             char *tmp;
+             char *n, *p, *tmp, *txt;
 
              n = strchr(buf, '\n');
              if (n) *n = '\0';
@@ -94,7 +92,9 @@ parse_rules(void)
              while (p[0] == ' ')
                ++p;
 
-             model->description = eina_stringshare_add(p);
+             txt = evas_textblock_text_markup_to_utf8(NULL, p);
+             model->description = eina_stringshare_add(txt);
+             E_FREE(txt);
 
              models = eina_list_append(models, model);
           }
@@ -110,9 +110,7 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n;
-             char *p;
-             char *tmp;
+             char *n, *p, *tmp, *txt;
 
              n = strchr(buf, '\n');
              if (n) *n = '\0';
@@ -135,7 +133,9 @@ parse_rules(void)
              variant->name = eina_stringshare_add("basic");
              variant->description = eina_stringshare_add("Default layout variant");
 
-             layout->description = eina_stringshare_add(p);
+             txt = evas_textblock_text_markup_to_utf8(NULL, p);
+             layout->description = eina_stringshare_add(txt);
+             E_FREE(txt);
              layout->variants = eina_list_append(layout->variants, variant);
 
              layouts = eina_list_append(layouts, layout);
@@ -152,10 +152,7 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n;
-             char *p;
-             char *tmp;
-             char *tok;
+             char *n, *p, *tmp, *tok, *txt;
 
              n = strchr(buf, '\n');
              if (n) *n = '\0';
@@ -182,7 +179,9 @@ parse_rules(void)
 
              free(tmp);
 
-             variant->description = eina_stringshare_add(p);
+             txt = evas_textblock_text_markup_to_utf8(NULL, p);
+             variant->description = eina_stringshare_add(txt);
+             E_FREE(txt);
           }
         else
           break;
@@ -196,10 +195,7 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n;
-             char *p;
-             char *tmp;
-             char *name;
+             char *n, *p, *tmp, *name, *txt;
 
              n = strchr(buf, '\n');
              if (n) *n = '\0';
@@ -231,7 +227,9 @@ parse_rules(void)
                             ++p;
                        }
 
-                     group->description = eina_stringshare_add(p);
+                     txt = evas_textblock_text_markup_to_utf8(NULL, p);
+                     group->description = eina_stringshare_add(txt);
+                     E_FREE(txt);
 
                      optgroups = eina_list_append(optgroups, group);
                   }
@@ -239,7 +237,9 @@ parse_rules(void)
                   {
                      option = E_NEW(E_XKB_Option, 1);
                      option->name = eina_stringshare_add(name);
-                     option->description = eina_stringshare_add(p);
+                     txt = evas_textblock_text_markup_to_utf8(NULL, p);
+                     option->description = eina_stringshare_add(txt);
+                     E_FREE(txt);
                      group->options = eina_list_append(group->options,
                                                        option);
                   }
