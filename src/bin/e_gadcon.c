@@ -2840,93 +2840,86 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
         gc->new_gcc = NULL;
      }
 
-   if (ev->data)
+   while (ev->data)
      {
         /* Create a new gadcon to show where the gadcon will end up */
         E_Gadcon_Client_Class *cc;
 
         gcc = ev->data;
         cc = eina_hash_find(providers, gcc->name);
-        if (cc)
+        if (!cc) break;
+        if (!gcc->style)
+          gc->new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
+                                  cc->default_style);
+        else
+          gc->new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
+                                  gcc->style);
+
+        if (!gc->new_gcc) break;
+        gc->new_gcc->cf = gcc->cf;
+        gc->new_gcc->client_class = cc;
+        gc->new_gcc->config.pos = gcc->config.pos;
+        gc->new_gcc->config.size = gcc->config.size;
+        gc->new_gcc->config.res = gcc->config.res;
+        gc->new_gcc->state_info.seq = gcc->state_info.seq;
+        gc->new_gcc->state_info.flags = gcc->state_info.flags;
+        gc->new_gcc->config.pos_x = gcc->config.pos_x;
+        gc->new_gcc->config.pos_y = gcc->config.pos_y;
+        gc->new_gcc->config.size_w = gcc->config.size_w;
+        gc->new_gcc->config.size_h = gcc->config.size_h;
+        if (gc->new_gcc->client_class->func.orient)
           {
-             if (!gcc->style)
-               gc->new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
-                                       cc->default_style);
-             else
-               gc->new_gcc = cc->func.init(gc, gcc->name, gcc->cf->id,
-                                       gcc->style);
-
-             if (gc->new_gcc)
+             if (gc->orient == E_GADCON_ORIENT_FLOAT)
                {
-                  gc->new_gcc->cf = gcc->cf;
-                  gc->new_gcc->client_class = cc;
-                  gc->new_gcc->config.pos = gcc->config.pos;
-                  gc->new_gcc->config.size = gcc->config.size;
-                  gc->new_gcc->config.res = gcc->config.res;
-                  gc->new_gcc->state_info.seq = gcc->state_info.seq;
-                  gc->new_gcc->state_info.flags = gcc->state_info.flags;
-                  gc->new_gcc->config.pos_x = gcc->config.pos_x;
-                  gc->new_gcc->config.pos_y = gcc->config.pos_y;
-                  gc->new_gcc->config.size_w = gcc->config.size_w;
-                  gc->new_gcc->config.size_h = gcc->config.size_h;
-                  if (gc->new_gcc->client_class->func.orient)
-                    {
-                       if (gc->orient == E_GADCON_ORIENT_FLOAT)
-                         {
-                            gc->new_gcc->client_class->func.orient(gc->new_gcc, gcc->gadcon->orient);
-                            gc->new_gcc->cf->orient = gcc->gadcon->orient;
-                         }
-                       else
-                         {
-                            gc->new_gcc->client_class->func.orient(gc->new_gcc, gc->orient);
-                            gc->new_gcc->cf->orient = gc->orient;
-                         }
-                    }
-                  if (gc->new_gcc->o_frame)
-                    e_gadcon_layout_pack_options_set(gc->new_gcc->o_frame, gc->new_gcc);
-                  else if (gc->new_gcc->o_base)
-                    {
-                       e_gadcon_layout_pack_options_set(gc->new_gcc->o_base, gc->new_gcc);
-                       if (!gc->o_container)
-                         {
-                            int w, h, gw, gh;
-
-                            w = gc->zone->w;
-                            h = gc->zone->h;
-                            if ((!gc->new_gcc->config.pos_x) && (!gc->new_gcc->config.pos_y))
-                              {
-                                 gc->new_gcc->config.pos_x = (double)ev->x / (double)w;
-                                 gc->new_gcc->config.pos_y = (double)ev->y / (double)h;
-                              }
-                            if ((!gc->new_gcc->config.size_w) && (!gc->new_gcc->config.size_h))
-                              {
-                                 evas_object_geometry_get(gcc->o_frame ?: gcc->o_base, NULL, NULL, &gw, &gh);
-                                 gc->new_gcc->config.size_w = (double)gw / (double)w;
-                                 gc->new_gcc->config.size_h = (double)gh / (double)h;
-                              }
-                            else
-                              {
-                                 gw = gc->new_gcc->config.size_w * w;
-                                 gh = gc->new_gcc->config.size_h * h;
-                              }
-                            evas_object_resize(gc->new_gcc->o_base, gw, gh);
-                            evas_object_move(gc->new_gcc->o_base, ev->x, ev->y);
-                         }
-                    }
-
-                  evas_object_hide(gc->drag_gcc->drag.drag->object);
-                  e_gadcon_client_edit_begin(gc->new_gcc);
-                  e_gadcon_client_autoscroll_set(gc->new_gcc, gcc->autoscroll);
-/*		  e_gadcon_client_resizable_set(gc->new_gcc, gcc->resizable);*/
-                  gc->new_gcc->state_info.resist = 1;
-                  if (gc->instant_edit)
-                    e_gadcon_client_util_menu_attach(gc->new_gcc);
+                  gc->new_gcc->client_class->func.orient(gc->new_gcc, gcc->gadcon->orient);
+                  gc->new_gcc->cf->orient = gcc->gadcon->orient;
+               }
+             else
+               {
+                  gc->new_gcc->client_class->func.orient(gc->new_gcc, gc->orient);
+                  gc->new_gcc->cf->orient = gc->orient;
                }
           }
-     }
-   else
-     {
-        /* TODO: Create a placeholder to show where the gadcon will end up */
+        if (gc->new_gcc->o_frame)
+          e_gadcon_layout_pack_options_set(gc->new_gcc->o_frame, gc->new_gcc);
+        else if (gc->new_gcc->o_base)
+          {
+             e_gadcon_layout_pack_options_set(gc->new_gcc->o_base, gc->new_gcc);
+             if (!gc->o_container)
+               {
+                  int w, h, gw, gh;
+
+                  w = gc->zone->w;
+                  h = gc->zone->h;
+                  if ((!gc->new_gcc->config.pos_x) && (!gc->new_gcc->config.pos_y))
+                    {
+                       gc->new_gcc->config.pos_x = (double)ev->x / (double)w;
+                       gc->new_gcc->config.pos_y = (double)ev->y / (double)h;
+                    }
+                  if ((!gc->new_gcc->config.size_w) && (!gc->new_gcc->config.size_h))
+                    {
+                       evas_object_geometry_get(gcc->o_frame ?: gcc->o_base, NULL, NULL, &gw, &gh);
+                       gc->new_gcc->config.size_w = (double)gw / (double)w;
+                       gc->new_gcc->config.size_h = (double)gh / (double)h;
+                    }
+                  else
+                    {
+                       gw = gc->new_gcc->config.size_w * w;
+                       gh = gc->new_gcc->config.size_h * h;
+                    }
+                  evas_object_resize(gc->new_gcc->o_base, gw, gh);
+                  evas_object_move(gc->new_gcc->o_base, ev->x, ev->y);
+               }
+          }
+
+        evas_object_hide(gc->drag_gcc->drag.drag->object);
+        e_gadcon_client_edit_begin(gc->new_gcc);
+        e_gadcon_client_autoscroll_set(gc->new_gcc, gcc->autoscroll);
+/*		  e_gadcon_client_resizable_set(gc->new_gcc, gcc->resizable);*/
+        gc->new_gcc->state_info.resist = 1;
+        if (gc->instant_edit)
+          e_gadcon_client_util_menu_attach(gc->new_gcc);
+        break;
      }
    e_gadcon_layout_thaw(gc->o_container);
 }
