@@ -112,7 +112,7 @@ static void _e_smart_monitor_rotate(E_Smart_Data *sd, void *event);
 static void _e_smart_monitor_rotate_snap(Evas_Object *obj);
 static void _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event);
 static void _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode);
-static void _e_smart_monitor_move(E_Smart_Data *sd, void *event);
+static void _e_smart_monitor_move(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
 static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height);
 static int _e_smart_monitor_orientation_get(E_Smart_Data *sd);
@@ -800,7 +800,7 @@ _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj
    else if (sd->resizing) 
      _e_smart_monitor_resize(sd, mon, event);
    else if (sd->moving)
-     _e_smart_monitor_move(sd, event);
+     _e_smart_monitor_move(sd, mon, event);
 }
 
 static void 
@@ -841,6 +841,8 @@ _e_smart_cb_thumb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj
 
         /* update moving state */
         sd->moving = EINA_TRUE;
+
+        e_layout_child_raise(mon);
      }
 }
 
@@ -1018,18 +1020,13 @@ static void
 _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
 {
    E_Smart_Data *sd;
-   Evas_Coord nw, nh;
    char buff[1024];
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
    sd->snapped = EINA_TRUE;
 
-   /* get the new canvas size */
-   e_layout_coord_virtual_to_canvas(sd->o_layout, 
-                                    mode->width, mode->height, &nw, &nh);
-
-   /* graphically resize the monitor */
-   evas_object_resize(obj, nw, nh);
+   /* resize the child object */
+   e_layout_child_resize(obj, mode->width, mode->height);
 
    /* set resolution text */
    snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height);
@@ -1041,12 +1038,66 @@ _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
 }
 
 static void 
-_e_smart_monitor_move(E_Smart_Data *sd, void *event)
+_e_smart_monitor_move(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
+   Evas_Coord px, py, pw, ph;
+   Evas_Coord gx, gy, gw, gh;
+   Evas_Coord dx, dy;
+   Evas_Coord nx, ny;
 
    if (!sd) return;
    ev = event;
+
+   /* grab size of layout widget */
+   evas_object_geometry_get(sd->o_layout, &px, &py, NULL, NULL);
+   e_layout_virtual_size_get(sd->o_layout, &pw, &ph);
+
+   /* account for mouse movement */
+   dx = (ev->cur.canvas.x - ev->prev.canvas.x);
+   dy = (ev->cur.canvas.y - ev->prev.canvas.y);
+
+   /* convert coordinates to virtual space */
+   e_layout_coord_canvas_to_virtual(sd->o_layout, (px + dx), (py + dy), 
+                                    &nx, &ny);
+
+   /* get current monitor geometry */
+   e_layout_child_geometry_get(mon, &gx, &gy, &gw, &gh);
+   nx += gx;
+   ny += gy;
+
+   /* make sure we do not move beyond the layout bounds */
+   if (nx < px) nx = px;
+   else if (nx > px + pw - gw)
+     nx = px + pw - gw;
+
+   if (ny < py) ny = py;
+   else if (ny > py + ph - gh)
+     ny = py + ph - gh;
+
+   /* actually move the monitor */
+   if ((gx != nx) || (gy != ny))
+     e_layout_child_move(mon, nx, ny);
+
+   /* Hmm, this below code worked also ... and seems lighter.
+    * but the above code seems more "proper".
+    * Which to use ?? */
+
+   /* Evas_Coord mx, my; */
+   /* Evas_Coord nx, ny; */
+
+   /* get current monitor position */
+   /* evas_object_geometry_get(mon, &mx, &my, NULL, NULL); */
+
+   /* update for mouse movement */
+   /* mx = mx + (ev->cur.output.x - ev->prev.output.x); */
+   /* my = my + (ev->cur.output.y - ev->prev.output.y); */
+
+   /* convert to virtual coordinates */
+   /* e_layout_coord_canvas_to_virtual(sd->o_layout, mx, my, &nx, &ny); */
+
+   /* actually move the monitor */
+   /* e_layout_child_move(mon, nx, ny); */
 }
 
 static Ecore_X_Randr_Mode_Info *
