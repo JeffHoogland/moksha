@@ -958,8 +958,8 @@ _e_smart_monitor_rotate_snap(Evas_Object *obj)
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
-   e_layout_coord_canvas_to_virtual(sd->o_layout, w, h, &nw, &nh);
+   /* get the object geometry */
+   e_layout_child_geometry_get(obj, NULL, NULL, &nw, &nh);
 
    if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
        (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
