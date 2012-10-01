@@ -2950,7 +2950,7 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
 
    ev = event;
    gc = data;
-INF("DND (%d,%d)", ev->x, ev->y);
+   //INF("DND (%d,%d)", ev->x, ev->y);
    gcc = gc->new_gcc ?: gc->drag_gcc;
    if (!gcc) return;
 
