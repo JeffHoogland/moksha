@@ -1397,6 +1397,8 @@ _mixer_actions_register(E_Mixer_Module_Context *ctxt)
              ctxt->actions.mute->func.go = _mixer_cb_volume_mute;
              e_action_predef_name_set(_(_e_mixer_Name), _(_lbl_mute), _act_mute,
                                       NULL, NULL, 0);
+             e_managers_keys_ungrab();
+             e_managers_keys_grab();
           }
      }
 }
@@ -1420,6 +1422,8 @@ _mixer_actions_unregister(E_Mixer_Module_Context *ctxt)
      {
         e_action_predef_name_del(_(_e_mixer_Name), _(_lbl_mute));
         e_action_del(_act_mute);
+        e_managers_keys_ungrab();
+        e_managers_keys_grab();
      }
 }
 
