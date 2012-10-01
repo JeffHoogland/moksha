@@ -99,6 +99,9 @@ static void _e_smart_cb_indicator_mouse_in(void *data __UNUSED__, Evas_Object *o
 static void _e_smart_cb_indicator_mouse_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
+static void _e_smart_cb_thumb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_cb_thumb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_cb_thumb_mouse_down(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static int _e_smart_cb_modes_sort(const void *data1, const void *data2);
 
@@ -359,8 +362,14 @@ _e_smart_add(Evas_Object *obj)
    /* create bg preview */
    sd->o_thumb = e_livethumb_add(evas);
    edje_object_part_swallow(sd->o_frame, "e.swallow.preview", sd->o_thumb);
+   evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_IN, 
+                                  _e_smart_cb_thumb_mouse_in, obj);
+   evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_OUT, 
+                                  _e_smart_cb_thumb_mouse_out, obj);
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_UP, 
                                   _e_smart_cb_thumb_mouse_up, obj);
+   evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_DOWN, 
+                                  _e_smart_cb_thumb_mouse_down, obj);
 
    /* create monitor stand */
    sd->o_stand = edje_object_add(evas);
@@ -787,6 +796,39 @@ _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj
 }
 
 static void 
+_e_smart_cb_thumb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
+{
+   E_Manager *man;
+
+   man = e_manager_current_get();
+   e_pointer_type_push(man->pointer, obj, "hand");
+}
+
+static void 
+_e_smart_cb_thumb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
+{
+   E_Manager *man;
+
+   man = e_manager_current_get();
+   e_pointer_type_pop(man->pointer, obj, "hand");
+}
+
+static void 
+_e_smart_cb_thumb_mouse_down(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
+{
+   Evas_Event_Mouse_Up *ev;
+
+   ev = event;
+   if (ev->button == 1)
+     {
+        E_Manager *man;
+
+        man = e_manager_current_get();
+        e_pointer_type_push(man->pointer, obj, "move");
+     }
+}
+
+static void 
 _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Evas_Object *mon;
@@ -827,6 +869,13 @@ _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj _
                                   E_MENU_POP_DIRECTION_DOWN);
                }
           }
+     }
+   else if (ev->button == 1)
+     {
+        E_Manager *man;
+
+        man = e_manager_current_get();
+        e_pointer_type_pop(man->pointer, obj, "move");
      }
 }
 
