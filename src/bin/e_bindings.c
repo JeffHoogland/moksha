@@ -681,10 +681,10 @@ EAPI void
 e_bindings_edge_del(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier mod, int any_mod, const char *action, const char *params, float delay)
 {
    E_Binding_Edge *binding;
-   Eina_List *l;
+   Eina_List *l, *ll;
    int ref_count = 0;
 
-   EINA_LIST_FOREACH(edge_bindings, l, binding)
+   EINA_LIST_FOREACH_SAFE(edge_bindings, l, ll, binding)
      {
         if (binding->edge == edge)
           {
