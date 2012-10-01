@@ -965,7 +965,7 @@ _e_smart_monitor_rotate_snap(Evas_Object *obj)
 
    /* tell randr widget we rotated this monitor so that it can 
     * update the layout for any monitors around this one */
-   /* evas_object_smart_callback_call(mon, "monitor_rotated", NULL); */
+   evas_object_smart_callback_call(mon, "monitor_rotated", NULL);
 }
 
 static void 
@@ -1078,6 +1078,8 @@ _e_smart_monitor_move(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* actually move the monitor */
    if ((gx != nx) || (gy != ny))
      e_layout_child_move(mon, nx, ny);
+
+   evas_object_smart_callback_call(mon, "monitor_moved", NULL);
 
    /* Hmm, this below code worked also ... and seems lighter.
     * but the above code seems more "proper".

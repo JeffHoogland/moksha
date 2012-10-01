@@ -112,7 +112,6 @@ _randr_info_new(E_Container *con)
    /* create close button */
    ob = e_widget_button_add(evas, _("Close"), NULL, 
                             _close_cb_click, info->win, NULL);
-//   e_widget_on_focus_hook_set(ob, _close_cb_focus, win);
    e_widget_size_min_get(ob, &mw, &mh);
    edje_extern_object_min_size_set(ob, mw, mh);
    edje_object_part_swallow(info->o_bg, "e.swallow.button", ob);
