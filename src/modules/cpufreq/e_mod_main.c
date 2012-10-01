@@ -1,9 +1,8 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-#ifdef __FreeBSD__
-#include <sys/types.h>
-#include <sys/sysctl.h>
+#if defined (__FreeBSD__) || defined (__OpenBSD__)
+# include <sys/sysctl.h>
 #endif
 
 /* gadcon requirements */
@@ -291,17 +290,29 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
                   frequency = (long)l->data;
                   mi = e_menu_item_new(mo);
+
+#ifdef __OpenBSD__
+                  snprintf(buf, sizeof(buf), "%i %%", frequency);
+#else
                   if (frequency < 1000000)
                     snprintf(buf, sizeof(buf), _("%i MHz"), frequency / 1000);
                   else
                     snprintf(buf, sizeof(buf), _("%'.1f GHz"),
                              frequency / 1000000.);
+#endif
+
                   buf[sizeof(buf) - 1] = 0;
                   e_menu_item_label_set(mi, buf);
                   e_menu_item_radio_set(mi, 1);
                   e_menu_item_radio_group_set(mi, 1);
+
+#ifdef __OpenBSD__
+                  if (cpufreq_config->status->cur_percent == frequency)
+                    e_menu_item_toggle_set(mi, 1);
+#else
                   if (cpufreq_config->status->cur_frequency == frequency)
                     e_menu_item_toggle_set(mi, 1);
+#endif
                   e_menu_item_callback_set(mi, _cpufreq_menu_frequency, l->data);
                }
           }
@@ -445,8 +456,10 @@ _cpufreq_set_frequency(int frequency)
         return;
      }
 
-   // change it to "userspace"
+#ifndef __OpenBSD__
+   /* OpenBSD doesn't have governors */
    _cpufreq_set_governor("userspace");
+#endif
 
    snprintf(buf, sizeof(buf),
             "%s %s %i", cpufreq_config->set_exe_path, "frequency", frequency);
@@ -548,14 +561,45 @@ _cpufreq_status_check_available(Status *s)
 {
    char buf[4096];
    Eina_List *l;
-   // FIXME: this sssumes all cores accept the same freqs/ might be wrong
-#ifdef __FreeBSD__
-   int freq, i;
-   size_t len = 0;
+   // FIXME: this assumes all cores accept the same freqs/ might be wrong
+
+#if defined (__OpenBSD__)
+   int freq, mib[] = {CTL_HW, HW_CPUSPEED};
+   size_t len = sizeof(freq);
+   int p;
+
+   if (sysctl(mib, 2, &freq, &len, NULL, 0) == 0)
+     {
+        if (s->frequencies)
+          {
+             eina_list_free(s->frequencies);
+             s->frequencies = NULL;
+          }
+
+        if (s->governors)
+          {
+             for (l = s->governors; l; l = l->next)
+               free(l->data);
+             eina_list_free(s->governors);
+             s->governors = NULL;
+          }
+
+        /* storing percents */
+        p = 100;
+        s->frequencies = eina_list_append(s->frequencies, (void *)p);
+        p = 75;
+        s->frequencies = eina_list_append(s->frequencies, (void *)p);
+        p = 50;
+        s->frequencies = eina_list_append(s->frequencies, (void *)p);
+        p = 25;
+        s->frequencies = eina_list_append(s->frequencies, (void *)p);
+     }
+#elif defined (__FreeBSD__)
+   int freq;
+   size_t len = sizeof(buf);
    char *freqs, *pos, *q;
 
    /* read freq_levels sysctl and store it in freq */
-   len = sizeof(buf);
    if (sysctlbyname("dev.cpu.0.freq_levels", buf, &len, NULL, 0) == 0)
      {
         /* sysctl returns 0 on success */
@@ -665,18 +709,37 @@ _cpufreq_status_check_available(Status *s)
 static int
 _cpufreq_status_check_current(Status *s)
 {
-   char buf[4096];
-   int i;
-   FILE *f;
    int ret = 0;
    int frequency = 0;
-   int frequency_min = 0x7fffffff;
-   int frequency_max = 0;
-   int freqtot = 0;
-#ifdef __FreeBSD__
-   int len = 4;
 
+#if defined (__OpenBSD__)
+   size_t len = sizeof(frequency);
+   int percent, mib[] = {CTL_HW, HW_CPUSPEED};
    s->active = 0;
+
+   _cpufreq_status_check_available(s);
+
+   if (sysctl(mib, 2, &frequency, &len, NULL, 0) == 0)
+     {
+        frequency *= 1000;
+        if (frequency != s->cur_frequency) ret = 1;
+        s->cur_frequency = frequency;
+        s->active = 1;
+     }
+
+   mib[1] = HW_SETPERF;
+
+   if (sysctl(mib, 2, &percent, &len, NULL, 0) == 0)
+     {
+        s->cur_percent = percent;
+     }
+
+   s->can_set_frequency = 1;
+   s->cur_governor = NULL;
+#elif defined (__FreeBSD__)
+   size_t len = sizeof(frequency);
+   s->active = 0;
+
    /* frequency is stored in dev.cpu.0.freq */
    if (sysctlbyname("dev.cpu.0.freq", &frequency, &len, NULL, 0) == 0)
      {
@@ -690,6 +753,13 @@ _cpufreq_status_check_current(Status *s)
    s->can_set_frequency = 1;
    s->cur_governor = NULL;
 #else
+   char buf[4096];
+   FILE *f;
+   int frequency_min = 0x7fffffff;
+   int frequency_max = 0;
+   int freqtot = 0;
+   int i;
+
    s->active = 0;
 
    _cpufreq_status_check_available(s);
@@ -724,7 +794,7 @@ _cpufreq_status_check_current(Status *s)
 
 //  printf("%i | %i %i\n", frequency, frequency_min, frequency_max);
 
-   // FIXME: this sssumes all cores are on the same governor
+   // FIXME: this assumes all cores are on the same governor
    f = fopen("/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed", "r");
    if (f)
      {

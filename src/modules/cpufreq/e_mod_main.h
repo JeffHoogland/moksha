@@ -11,6 +11,9 @@ struct _Status
    Eina_List     *frequencies;
    Eina_List     *governors;
    int            cur_frequency;
+#ifdef __OpenBSD__
+   int            cur_percent;
+#endif
    int            cur_min_frequency;
    int            cur_max_frequency;
    int            can_set_frequency;

@@ -5,8 +5,13 @@
 #include <string.h>
 
 #ifdef __FreeBSD__
-#include <sys/types.h>
-#include <sys/sysctl.h>
+# include <sys/sysctl.h>
+#endif
+
+#ifdef __OpenBSD__
+# include <sys/param.h>
+# include <sys/resource.h>
+# include <sys/sysctl.h>
 #endif
 
 static int sys_cpu_setall(const char *control, const char *value);
@@ -25,9 +30,29 @@ main(int argc, char *argv[])
    if (seteuid(0))
      {
         fprintf(stderr, "Unable to assume root privileges\n");
+        return 1;
      }
 
-#ifdef __FreeBSD__
+#if defined __OpenBSD__
+   if (!strcmp(argv[1], "frequency"))
+     {
+        int mib[] = {CTL_HW, HW_SETPERF};
+        int new_perf = atoi(argv[2]);
+        size_t len = sizeof(new_perf);
+
+        if (sysctl(mib, 2, NULL, 0, &new_perf, len) == -1)
+          {
+             return 1;
+          }
+
+        return 0;
+     }
+   else
+     {
+        fprintf(stderr, "Unknown command (%s %s).\n", argv[1], argv[2]);
+        return 1;
+     }
+#elif defined __FreeBSD__
    if (!strcmp(argv[1], "frequency"))
      {
         int new_frequency = atoi(argv[2]);
