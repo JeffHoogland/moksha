@@ -248,68 +248,49 @@ static void
 _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    E_Smart_Data *sd;
-   Evas_Coord w, h, nw, nh;
-   Eina_List *l;
-   /* E_Randr_Crtc_Info *crtc; */
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+   Eina_Rectangle o;
 
    if (!(sd = data)) return;
 
-   /* get randr output info for this monitor */
-   /* crtc = e_smart_monitor_crtc_get(obj); */
-   /* printf("Monitor Output Policy: %d\n", crtc->policy); */
-
-   /* grab size of this monitor object */
-   evas_object_geometry_get(obj, NULL, NULL, &w, &h);
-
-   /* convert to layout coords */
-   e_layout_coord_canvas_to_virtual(sd->o_layout, w, h, &nw, &nh);
+   /* get the geometry of this monitor */
+   e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
 
    /* freeze layout */
    e_layout_freeze(sd->o_layout);
 
-   /* search for this monitor */
-//   if ((l = eina_list_data_find_list(sd->items, obj)))
+   /* find any monitors to the right or below this one */
+   /* NB: We do not have to worry about monitors to the left or above as their 
+    * size will not change because of this resize event */
+   EINA_LIST_FOREACH(sd->items, l, mon)
      {
-        Evas_Object *mon;
-        Evas_Coord mx, my;
-        Eina_Rectangle rm;
+        Eina_Rectangle m;
 
-        e_layout_child_geometry_get(obj, &mx, &my, NULL, NULL);
-        /* printf("Monitor New Geom: %d %d %d %d\n", mx, my, nw, nh); */
-        EINA_RECTANGLE_SET(&rm, mx, my, nw, nh);
+        /* skip if it's the current monitor */
+        if ((mon == obj)) continue;
 
-        /* found monitor, check for one the will intersect */
-        EINA_LIST_FOREACH(sd->items, l, mon)
+        /* get the geometry of this monitor */
+        e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+
+        if ((m.x >= (o.x + o.w)))
           {
-             /* E_Randr_Crtc_Info *cinfo; */
-             Evas_Coord cx, cy, cw, ch;
-             Eina_Rectangle rc;
-
-             if ((mon == obj)) continue;
-
-             /* cinfo = e_smart_monitor_crtc_get(mon); */
-             /* printf("\tChild Policy: %d\n", cinfo->policy); */
-
-             e_layout_child_geometry_get(mon, &cx, &cy, &cw, &ch);
-             /* printf("\tNext Mon Geom: %d %d %d %d\n", cx, cy, cw, ch); */
-             EINA_RECTANGLE_SET(&rc, cx, cy, cw, ch);
-
-             if (eina_rectangles_intersect(&rm, &rc))
-               {
-                  printf("\nMONITORS INTERSECT !!\n");
-
-                  /* if position of new monitor overlaps the existing one's 
-                   * X position, we need to move the existing one over */
-                  if ((mx + nw) >= cx)
-                    cx = (mx + nw);
-                  else if ((my + nh) >= cy)
-                    cy = (my + nh);
- 
-                  /* update This monitors position based on new size 
-                   * of the previous one (that was resized) */
-                  /* e_layout_child_geometry_get(mon, &cx, &cy, NULL, NULL); */
-                  e_layout_child_move(mon, cx, cy);
-               }
+             /* if this monitor is to the right, move it */
+             e_layout_child_move(mon, (o.x + o.w), m.y);
+          }
+        else if ((m.y >= (o.y + o.h)))
+          {
+             /* if this monitor is below, move it */
+             e_layout_child_move(mon, m.x, (o.y + o.h));
+          }
+        else if (eina_rectangles_intersect(&o, &m))
+          {
+             /* they intersect, we need to move this one */
+             /* NB: This can happen when monitors get moved manually */
+             if ((m.x < (o.x + o.w)))
+               e_layout_child_move(mon, (o.x + o.w), m.y);
+             else if ((m.y <= (o.y + o.h)))
+               e_layout_child_move(mon, m.x, (o.y + o.h));
           }
      }
 
@@ -317,18 +298,24 @@ _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__
    e_layout_thaw(sd->o_layout);
 }
 
+/* callback received from the monitor object to let us know that it was 
+ * rotated, and we should adjust position of any adjacent monitors */
 static void 
 _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
-
+   printf("Monitor Rotated\n");
 }
 
+/* callback received from the monitor object to let us know that it was 
+ * moved, and we should adjust position of any adjacent monitors */
 static void 
 _e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
-
+   printf("Monitor Moved\n");
 }
 
+/* callback received from the monitor object to let us know that it was 
+ * deleted, and we should cleanup */
 static void 
 _e_smart_cb_monitor_deleted(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
 {

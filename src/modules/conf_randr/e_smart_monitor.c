@@ -897,6 +897,9 @@ _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, 
 
         /* update moving state */
         sd->moving = EINA_FALSE;
+
+        /* tell randr widget that we moved this monitor */
+        evas_object_smart_callback_call(mon, "monitor_moved", NULL);
      }
 }
 
@@ -1079,7 +1082,7 @@ _e_smart_monitor_move(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if ((gx != nx) || (gy != ny))
      e_layout_child_move(mon, nx, ny);
 
-   evas_object_smart_callback_call(mon, "monitor_moved", NULL);
+   /* evas_object_smart_callback_call(mon, "monitor_moved", NULL); */
 
    /* Hmm, this below code worked also ... and seems lighter.
     * but the above code seems more "proper".
