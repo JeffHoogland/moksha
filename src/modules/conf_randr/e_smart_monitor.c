@@ -965,7 +965,7 @@ _e_smart_monitor_rotate_snap(Evas_Object *obj)
 
    /* tell randr widget we rotated this monitor so that it can 
     * update the layout for any monitors around this one */
-   evas_object_smart_callback_call(mon, "monitor_rotated", NULL);
+   evas_object_smart_callback_call(obj, "monitor_rotated", NULL);
 }
 
 static void 

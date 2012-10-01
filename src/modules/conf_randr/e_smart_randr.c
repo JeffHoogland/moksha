@@ -29,6 +29,9 @@ static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_reconfigure(E_Smart_Data *sd);
 static void _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_cb_monitor_deleted(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
 
 /* public functions */
 Evas_Object *
@@ -77,6 +80,14 @@ e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
    /* add listeners for when this monitor changes */
    evas_object_smart_callback_add(mon, "monitor_resized", 
                                   _e_smart_cb_monitor_resized, sd);
+   evas_object_smart_callback_add(mon, "monitor_rotated", 
+                                  _e_smart_cb_monitor_rotated, sd);
+   evas_object_smart_callback_add(mon, "monitor_moved", 
+                                  _e_smart_cb_monitor_moved, sd);
+
+   /* add listener for when this monitor gets removed */
+   evas_object_event_callback_add(mon, EVAS_CALLBACK_DEL, 
+                                  _e_smart_cb_monitor_deleted, sd);
 
    /* pack this monitor into the layout */
    e_layout_pack(sd->o_layout, mon);
@@ -304,4 +315,27 @@ _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__
 
    /* thaw layout to allow redraw */
    e_layout_thaw(sd->o_layout);
+}
+
+static void 
+_e_smart_cb_monitor_rotated(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+
+}
+
+static void 
+_e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+
+}
+
+static void 
+_e_smart_cb_monitor_deleted(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
+{
+   evas_object_smart_callback_del(obj, "monitor_resized", 
+                                  _e_smart_cb_monitor_resized);
+   evas_object_smart_callback_del(obj, "monitor_rotated", 
+                                  _e_smart_cb_monitor_rotated);
+   evas_object_smart_callback_del(obj, "monitor_moved", 
+                                  _e_smart_cb_monitor_moved);
 }
