@@ -273,10 +273,12 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
    /* get bg file for this screen */
    bg = e_bg_file_get(con->num, zone->num, desk->x, desk->y);
 
+   /* set livethumb size */
    w = zone->w;
    h = (w * zone->h) / zone->w;
    e_livethumb_vsize_set(sd->o_thumb, w, h);
 
+   /* set livethumb image */
    o = e_livethumb_thumb_get(sd->o_thumb);
    if (!o) o = edje_object_add(e_livethumb_evas_get(sd->o_thumb));
    edje_object_file_set(o, bg, "e/desktop/background");
@@ -334,7 +336,6 @@ _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Evas *evas;
-   /* Evas_Object *o_resize; */
 
    if (!(sd = calloc(1, sizeof(E_Smart_Data)))) return;
 
@@ -803,10 +804,6 @@ _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj _
 
         root = ecore_x_window_root_first_get();
         ecore_x_pointer_xy_get(root, &px, &py);
-
-        /* Evas_Coord ox, oy; */
-        /* evas_object_geometry_get(obj, &ox, &oy, NULL, NULL); */
-        /* printf("\tObj: %d %d\n", ox, oy); */
 
         /* if we have the menu, show it */
         if (sd->menu)
