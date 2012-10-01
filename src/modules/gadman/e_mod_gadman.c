@@ -1440,6 +1440,7 @@ _on_mouse_up_cb(void *data, int type __UNUSED__, void *event)
    E_Config_Gadcon_Client *cf;
    E_Zone *dst_zone = NULL;
    E_Gadcon *dst_gadcon;
+   Evas_Object *mover;
    int gx, gy;
 
    if (ev->buttons != 1) return ECORE_CALLBACK_RENEW;
@@ -1448,7 +1449,8 @@ _on_mouse_up_cb(void *data, int type __UNUSED__, void *event)
    gcc->dx = gcc->dy = 0;
 
    /* checking if zone was changed for dragged gadget */
-   evas_object_geometry_get(gcc->o_frame, &gx, &gy, NULL, NULL);
+   mover = _get_mover(gcc);
+   evas_object_geometry_get(mover, &gx, &gy, NULL, NULL);
    dst_zone = e_container_zone_at_point_get(e_container_current_get(e_manager_current_get()), gx, gy);
    if (dst_zone && (gcc->gadcon->zone != dst_zone))
      {
@@ -1463,8 +1465,6 @@ _on_mouse_up_cb(void *data, int type __UNUSED__, void *event)
              e_config_save_queue();
           }
      }
-   else
-     _save_widget_position(gcc);
    E_FREE_LIST(Man->drag_handlers, ecore_event_handler_del);
    return ECORE_CALLBACK_RENEW;
 }
