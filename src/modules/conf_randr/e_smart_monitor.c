@@ -22,9 +22,6 @@ struct _E_Smart_Data
    /* resizing flag */
    Eina_Bool resizing : 1;
 
-   /* snapped flag */
-   Eina_Bool snapped : 1;
-
    /* rotating flag */
    Eina_Bool rotating : 1;
 
@@ -1026,7 +1023,6 @@ _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
    char buff[1024];
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
-   sd->snapped = EINA_TRUE;
 
    /* resize the child object */
    e_layout_child_resize(obj, mode->width, mode->height);
