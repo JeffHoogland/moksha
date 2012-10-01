@@ -347,9 +347,13 @@ mount_args_check(int argc, char **argv, const char *action)
         if (!node) return EINA_FALSE;
         if (!node[1]) return EINA_FALSE;
         if (node - argv[2] != 4) return EINA_FALSE;
+        /* this is good, but it prevents umounting user-mounted removable media;
+         * need to figure out a better way...
+         * 
         snprintf(buf, sizeof(buf), "/media%s", node);
         if (stat(buf, &st)) return EINA_FALSE;
         if (!S_ISDIR(st.st_mode)) return EINA_FALSE;
+        */
      }
    else if (!strcmp(action, "eject"))
      {
