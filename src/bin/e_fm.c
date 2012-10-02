@@ -2772,7 +2772,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
                                          {
                                           
                                             sd->overlay_count = n + 1;
-                                            snprintf(buf, sizeof(buf), P_("%i file", "%i files", sd->overlay_count), sd->overlay_count);
+                                            snprintf(buf, sizeof(buf), P_("%u file", "%u files", sd->overlay_count), sd->overlay_count);
                                             edje_object_part_text_set(sd->overlay, "e.text.busy_label", buf);
                                          }
                                     }
@@ -3698,7 +3698,7 @@ _e_fm2_queue_process(Evas_Object *obj)
 //	  ecore_time_get() - tt, eina_list_count(sd->icons), queued,
 //	  added, sd->tmp.iter);
    sd->overlay_count = eina_list_count(sd->icons);
-   snprintf(buf, sizeof(buf), P_("%i file", "%i files", sd->overlay_count), sd->overlay_count);
+   snprintf(buf, sizeof(buf), P_("%u file", "%u files", sd->overlay_count), sd->overlay_count);
    edje_object_part_text_set(sd->overlay, "e.text.busy_label", buf);
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
