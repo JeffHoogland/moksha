@@ -34,9 +34,11 @@ struct _E_Widget_Data
    char        *preview_time_text;
    const char        *path;
    const char        *mime;
+   double vid_pct;
    Eina_Bool mime_icon : 1;
    Eina_Bool is_dir : 1;
    Eina_Bool prev_is_fm : 1;
+   Eina_Bool prev_is_video : 1;
 };
 
 static void  _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info);
@@ -127,7 +129,7 @@ _e_wid_fprev_clear_widgets(E_Widget_Data *wd)
 {
 #define CLRWID(xx) \
    do { if (wd->xx) { evas_object_del(wd->xx); wd->xx = NULL; } } while (0)
-   
+
    CLRWID(o_preview_preview_table);
    CLRWID(o_preview_properties_table);
    CLRWID(o_preview_scroll);
@@ -143,9 +145,23 @@ _e_wid_fprev_clear_widgets(E_Widget_Data *wd)
    CLRWID(o_preview_time_entry);
    CLRWID(o_preview_preview);
    CLRWID(o_preview_scrollframe);
+   wd->prev_is_fm = wd->prev_is_video = EINA_FALSE;
+   wd->vid_pct = 0;
 }
 
 #ifdef HAVE_EMOTION
+
+static void
+_e_wid_fprev_preview_video_position(E_Widget_Data *wd, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   double t, tot;
+
+   tot = emotion_object_play_length_get(obj);
+   if (!tot) return;
+   t = emotion_object_position_get(obj) / emotion_object_play_length_get(obj);
+   if (t - wd->vid_pct < 0.5) return;
+   e_widget_slider_value_double_set(wd->o_preview_time, wd->vid_pct = t);
+}
 
 static void
 _e_wid_fprev_preview_video_opened(E_Widget_Data *wd, Evas_Object *obj, void *event_info __UNUSED__)
@@ -158,7 +174,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
 {
    Evas *evas = evas_object_evas_get(wd->obj);
    Evas_Object *o;
-   int mw, mh, y = 2;
+   int mw, mh, y = 3;
    
    _e_wid_fprev_clear_widgets(wd);
 
@@ -190,11 +206,21 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    emotion_object_file_set(o, wd->path);
    emotion_object_play_set(o, EINA_TRUE);
    evas_object_size_hint_aspect_set(o, EVAS_ASPECT_CONTROL_BOTH, wd->w, wd->h);
+   /* this works through sheer because e_icon doesn't fail */
    wd->o_preview_preview = e_widget_image_add_from_object(evas, o, wd->w, wd->h);
    e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_preview, 0, 0, 1, 2, 1, 1, 1, 1);
+                                wd->o_preview_preview, 0, 0, 2, 2, 1, 1, 1, 1);
    
    evas_object_smart_callback_add(o, "length_change", (Evas_Smart_Cb)_e_wid_fprev_preview_video_opened, wd);
+   evas_object_smart_callback_add(o, "frame_decode", (Evas_Smart_Cb)_e_wid_fprev_preview_video_position, wd);
+
+   o = e_widget_slider_add(evas, 1, 0, _("%3.1"), 0, 100, 0.5, 0, &wd->vid_pct, NULL, wd->w);
+   e_widget_disabled_set(o, 1);
+   wd->o_preview_time = o;
+   e_widget_table_object_align_append(wd->o_preview_properties_table,
+                                      wd->o_preview_time,                    
+                                      0, 2, 2, 1, 0, 1, 0, 0, 0.0, 0.0);
+   
    WIDROW(_("Length:"), o_preview_extra, o_preview_extra_entry, 100);
    WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 100);
    /* FIXME: other infos? */
@@ -217,6 +243,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    evas_object_show(wd->o_preview_time);
    evas_object_show(wd->o_preview_time_entry);
    evas_object_show(wd->o_preview_properties_table);
+   wd->prev_is_video = EINA_TRUE;
 #undef WIDROW
 }
 
@@ -471,11 +498,23 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
         if (desktop) efreet_desktop_free(desktop);
      }
 #ifdef HAVE_EMOTION
-   else if (wd->mime && (eina_str_has_prefix(wd->mime, "video/")))
+   else if (wd->mime && (emotion_object_extension_may_play_get(wd->path)))
      {
+        size_t sz;
+
         _e_wid_fprev_preview_video_widgets(wd);
         e_widget_entry_text_set(wd->o_preview_extra_entry, _("Unknown"));
-        e_widget_entry_text_set(wd->o_preview_size_entry, _("Unknown"));
+        sz = ecore_file_size(wd->path);
+        if (sz)
+          {
+             char *s;
+
+             s = e_util_size_string_get(sz);
+             e_widget_entry_text_set(wd->o_preview_size_entry, s);
+             free(s);
+          }
+        else
+          e_widget_entry_text_set(wd->o_preview_size_entry, _("Unknown"));
         is_fs = EINA_TRUE;
      }
 #endif
