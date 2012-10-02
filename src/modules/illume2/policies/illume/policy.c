@@ -132,7 +132,7 @@ _policy_border_hide_above(E_Border *bd)
 
    /* determine layering position */
    pos = (bd->layer / 50);
-   if (pos > 10) pos = 10;
+   if (pos >= 10) return;
 
    /* Find the windows above this one */
    for (i = (pos + 1); i < 11; i++)
@@ -169,6 +169,7 @@ _policy_border_hide_below(E_Border *bd)
 
    /* determine layering position */
    pos = (bd->layer / 50);
+   if (pos == 0) return;
    if (pos > 10) pos = 10;
 
    /* Find the windows below this one */
