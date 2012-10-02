@@ -119,7 +119,7 @@ _policy_border_hide_below(E_Border *bd)
    /* printf("_policy_border_hide_below %s\n", e_border_name_get(bd)); */
    /* determine layering position */
    pos = (bd->layer / 50);
-   if (pos <= 1) return;
+   if (pos <= 0) return;
    if (pos > 5) pos = 5;
 
    /* Find the windows below this one */
