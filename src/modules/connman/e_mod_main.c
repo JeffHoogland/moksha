@@ -470,16 +470,6 @@ _econnman_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
      _econnman_menu_new(inst, ev);
 }
 
-static void
-_econnman_cb_mouse_in(void *data, Evas *evas, Evas_Object *obj, void *event)
-{
-}
-
-static void
-_econnman_cb_mouse_out(void *data, Evas *evas, Evas_Object *obj, void *event)
-{
-}
-
 /* Gadcon Api Functions */
 
 static E_Gadcon_Client *
@@ -505,10 +495,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    evas_object_event_callback_add
      (inst->ui.gadget, EVAS_CALLBACK_MOUSE_DOWN, _econnman_cb_mouse_down, inst);
-   evas_object_event_callback_add
-     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_IN, _econnman_cb_mouse_in, inst);
-   evas_object_event_callback_add
-     (inst->ui.gadget, EVAS_CALLBACK_MOUSE_OUT, _econnman_cb_mouse_out, inst);
 
    _econnman_gadget_setup(inst);
 
