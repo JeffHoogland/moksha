@@ -30,8 +30,8 @@ e_xkb_update(int cur_group)
    if (!e_config->xkb.used_layouts) return;
    if (cur_group != -1)
      {
-	ecore_x_xkb_select_group(cur_group);
-	return;
+        ecore_x_xkb_select_group(cur_group);
+        return;
      }
    /* We put an empty -option here in order to override all previously
     * set options.
@@ -101,7 +101,7 @@ EAPI void
 e_xkb_layout_next(void)
 {
    int nb_groups = eina_list_count(e_config->xkb.used_layouts);
-   
+
    e_config->xkb.cur_group = (e_config->xkb.cur_group + 1) % nb_groups;
    e_xkb_update(e_config->xkb.cur_group);
    _e_xkb_update_event(e_config->xkb.cur_group);
@@ -112,8 +112,8 @@ EAPI void
 e_xkb_layout_prev(void)
 {
    int nb_groups = eina_list_count(e_config->xkb.used_layouts);
-   
-   e_config->xkb.cur_group = (e_config->xkb.cur_group == 0) ? 
+
+   e_config->xkb.cur_group = (e_config->xkb.cur_group == 0) ?
      (nb_groups - 1) : (e_config->xkb.cur_group - 1);
    e_xkb_update(e_config->xkb.cur_group);
    _e_xkb_update_event(e_config->xkb.cur_group);
@@ -175,5 +175,6 @@ e_xkb_flag_file_get(char *buf, size_t bufsize, const char *name)
 static void
 _e_xkb_update_event(int cur_group)
 {
-   ecore_event_add(E_EVENT_XKB_CHANGED, NULL, NULL, (intptr_t*)(long)cur_group);
+   ecore_event_add(E_EVENT_XKB_CHANGED, NULL, NULL, (intptr_t *)(long)cur_group);
 }
+
