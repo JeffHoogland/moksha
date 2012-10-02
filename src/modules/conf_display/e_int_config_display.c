@@ -197,7 +197,7 @@ _surebox_new(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_dialog_button_focus_num(sb->dia, 1);
    e_win_centered_set(sb->dia->win, 1);
    e_win_borderless_set(sb->dia->win, 1);
-   e_win_layer_set(sb->dia->win, 6);
+   e_win_layer_set(sb->dia->win, E_WIN_LAYER_ABOVE);
    e_win_sticky_set(sb->dia->win, 1);
    e_dialog_show(sb->dia);
    e_object_ref(E_OBJECT(cfd));

@@ -86,7 +86,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      cfdata->layer = 0;
    else if ((cfdata->escfg->popup) && (cfdata->escfg->layer == 0))
      cfdata->layer = 1;
-   else if ((cfdata->escfg->popup) && (cfdata->escfg->layer == 200))
+   else if ((cfdata->escfg->popup) && (cfdata->escfg->layer == E_LAYER_ABOVE))
      cfdata->layer = 2;
    else
      cfdata->layer = 2;
@@ -329,10 +329,10 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
    else if (cfdata->layer == 2)
      {
-        if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != 200))
+        if ((cfdata->escfg->popup != 1) || (cfdata->escfg->layer != E_LAYER_ABOVE))
           {
              cfdata->escfg->popup = 1;
-             cfdata->escfg->layer = 200;
+             cfdata->escfg->layer = E_LAYER_ABOVE;
              recreate = 1;
           }
      }

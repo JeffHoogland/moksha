@@ -13,7 +13,7 @@ struct _E_Popup
    E_Object             e_obj_inherit;
 
    int                  x, y, w, h, zx, zy;
-   int                  layer;
+   E_Layer              layer;
    unsigned char        visible : 1;
    unsigned char        shaped : 1;
    unsigned char        need_shape_export : 1;
@@ -41,7 +41,7 @@ EAPI void        e_popup_resize(E_Popup *pop, int w, int h);
 EAPI void        e_popup_move_resize(E_Popup *pop, int x, int y, int w, int h);
 EAPI void        e_popup_ignore_events_set(E_Popup *pop, int ignore);
 EAPI void        e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o);
-EAPI void        e_popup_layer_set(E_Popup *pop, int layer);
+EAPI void        e_popup_layer_set(E_Popup *pop, E_Layer layer);
 EAPI void        e_popup_idler_before(void);
 EAPI E_Popup    *e_popup_find_by_window(Ecore_X_Window win);
 

@@ -97,7 +97,7 @@ e_syscon_show(E_Zone *zone, const char *defact)
         return 0;
      }
    evas_event_freeze(popup->evas);
-   e_popup_layer_set(popup, 500);
+   e_popup_layer_set(popup, E_LAYER_POPUP);
 
    handlers = eina_list_append
        (handlers, ecore_event_handler_add

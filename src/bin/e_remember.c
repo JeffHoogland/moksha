@@ -803,12 +803,7 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
      }
    if (rem->apply & E_REMEMBER_APPLY_LAYER)
      {
-        bd->layer = rem->prop.layer;
-        if (bd->layer == 100)
-          e_hints_window_stacking_set(bd, E_STACKING_NONE);
-        else if (bd->layer == 150)
-          e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
-        e_container_border_raise(bd);
+        e_border_layer_set(bd, rem->prop.layer);
      }
    if (rem->apply & E_REMEMBER_APPLY_BORDER)
      {

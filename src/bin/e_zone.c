@@ -391,7 +391,7 @@ e_zone_fullscreen_set(E_Zone *zone,
      {
         _e_zone_black_get(zone);
         ecore_evas_show(zone->black_ecore_evas);
-        e_container_window_raise(zone->container, zone->black_win, 150);
+        e_container_window_raise(zone->container, zone->black_win, E_LAYER_POPUP);
         zone->fullscreen = 1;
      }
    else if ((zone->fullscreen) && (!on))
@@ -1125,9 +1125,9 @@ e_zone_edge_new(E_Zone_Edge edge)
                        break;
                     }
                   if (e_config->fullscreen_flip)
-                    e_zone_edge_win_layer_set(zone, 350);
+                    e_zone_edge_win_layer_set(zone, E_LAYER_TOP);
                   else
-                    e_zone_edge_win_layer_set(zone, 200);
+                    e_zone_edge_win_layer_set(zone, E_LAYER_EDGE);
                }
           }
      }
@@ -1207,8 +1207,8 @@ e_zone_edge_free(E_Zone_Edge edge)
 }
 
 EAPI void
-e_zone_edge_win_layer_set(E_Zone *zone,
-                          int     layer)
+e_zone_edge_win_layer_set(E_Zone  *zone,
+                          E_Layer  layer)
 {
    if (zone->corner.left_bottom) e_container_window_raise(zone->container, zone->corner.left_bottom, layer);
    if (zone->corner.left_top) e_container_window_raise(zone->container, zone->corner.left_top, layer);

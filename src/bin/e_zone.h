@@ -152,7 +152,7 @@ EAPI void      e_zone_edge_enable(void);
 EAPI void      e_zone_edge_disable(void);
 EAPI void      e_zone_edges_desk_flip_capable(E_Zone *zone, Eina_Bool l, Eina_Bool r, Eina_Bool t, Eina_Bool b);
 EAPI Eina_Bool e_zone_exists_direction(E_Zone *zone, E_Zone_Edge edge);
-EAPI void      e_zone_edge_win_layer_set(E_Zone *zone, int layer);
+EAPI void      e_zone_edge_win_layer_set(E_Zone *zone, E_Layer layer);
 
 EAPI void      e_zone_useful_geometry_dirty(E_Zone *zone);
 EAPI void      e_zone_useful_geometry_get(E_Zone *zone, int *x, int *y, int *w, int *h);

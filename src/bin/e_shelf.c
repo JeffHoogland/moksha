@@ -190,7 +190,7 @@ e_shelf_zone_dummy_new(E_Zone *zone, Evas_Object *obj, int id)
 }
 
 EAPI E_Shelf *
-e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, int layer, int id)
+e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, E_Layer layer, int id)
 {
    E_Shelf *es;
    char buf[1024];
@@ -550,7 +550,7 @@ e_shelf_move_resize(E_Shelf *es, int x, int y, int w, int h)
 }
 
 EAPI void
-e_shelf_layer_set(E_Shelf *es, int layer)
+e_shelf_layer_set(E_Shelf *es, E_Layer layer)
 {
    E_OBJECT_CHECK(es);
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);

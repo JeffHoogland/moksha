@@ -565,12 +565,11 @@ e_container_borders_count(E_Container *con)
 }
 
 static int
-_e_container_layer_map(int layer)
+_e_container_layer_map(E_Layer layer)
 {
    int pos = 0;
 
-   if (layer < 0) layer = 0;
-   pos = 1 + (layer / 50);
+   pos = layer / 50;
    if (pos > 10) pos = 10;
    return pos;
 }
@@ -604,7 +603,7 @@ e_container_border_remove(E_Border *bd)
 }
 
 EAPI void
-e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
+e_container_window_raise(E_Container *con, Ecore_X_Window win, E_Layer layer)
 {
    int pos = _e_container_layer_map(layer);
    ecore_x_window_configure(win,
@@ -615,7 +614,7 @@ e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer)
 }
 
 EAPI void
-e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer)
+e_container_window_lower(E_Container *con, Ecore_X_Window win, E_Layer layer)
 {
    int pos = _e_container_layer_map(layer);
    ecore_x_window_configure(win,

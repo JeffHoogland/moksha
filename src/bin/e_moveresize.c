@@ -74,7 +74,7 @@ _e_resize_begin(void *data __UNUSED__, void *border)
 
    _disp_pop = e_popup_new(bd->zone, 0, 0, 1, 1);
    if (!_disp_pop) return;
-   e_popup_layer_set(_disp_pop, 255);
+   e_popup_layer_set(_disp_pop, E_LAYER_POPUP);
    _obj = edje_object_add(_disp_pop->evas);
    e_theme_edje_object_set(_obj, "base/theme/borders",
                            "e/widgets/border/default/resize");

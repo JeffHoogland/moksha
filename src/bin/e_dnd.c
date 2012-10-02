@@ -175,7 +175,7 @@ e_drag_new(E_Container *container, int x, int y,
    drag->y = y;
    drag->w = 24;
    drag->h = 24;
-   drag->layer = 250;
+   drag->layer = E_LAYER_DRAG;
    drag->container = container;
    e_object_ref(E_OBJECT(drag->container));
    drag->ecore_evas = e_canvas_new(drag->container->win,

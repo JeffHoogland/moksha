@@ -549,7 +549,7 @@ struct _E_Border
    struct
    {
       int          x, y, w, h;
-      unsigned int layer;
+      E_Layer      layer;
       int          zone;
       E_Maximize   maximized;
       unsigned int event_mask;
@@ -610,7 +610,7 @@ struct _E_Border
       int           x, y;
    } drag;
 
-   unsigned int               layer;
+   E_Layer                    layer;
    E_Action                  *cur_mouse_action;
    Ecore_Timer               *raise_timer;
    Ecore_Poller              *ping_poller;
@@ -708,7 +708,7 @@ EAPI void           e_border_resize(E_Border *bd, int w, int h);
 EAPI void           e_border_resize_without_border(E_Border *bd, int w, int h);
 EAPI void           e_border_move_resize(E_Border *bd, int x, int y, int w, int h);
 EAPI void           e_border_move_resize_without_border(E_Border *bd, int x, int y, int w, int h);
-EAPI void           e_border_layer_set(E_Border *bd, int layer);
+EAPI void           e_border_layer_set(E_Border *bd, E_Layer layer);
 EAPI void           e_border_raise(E_Border *bd);
 EAPI void           e_border_lower(E_Border *bd);
 EAPI void           e_border_stack_above(E_Border *bd, E_Border *above);

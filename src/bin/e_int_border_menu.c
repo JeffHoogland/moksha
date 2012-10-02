@@ -789,11 +789,8 @@ _e_border_menu_cb_on_top(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNU
    E_Border *bd;
 
    bd = data;
-   if (bd->layer != 150)
-     {
-        e_border_layer_set(bd, 150);
-        e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
-     }
+   if (bd->layer != E_LAYER_ABOVE)
+     e_border_layer_set(bd, E_LAYER_ABOVE);
 }
 
 static void
@@ -802,11 +799,8 @@ _e_border_menu_cb_below(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
    E_Border *bd;
 
    bd = data;
-   if (bd->layer != 50)
-     {
-        e_border_layer_set(bd, 50);
-        e_hints_window_stacking_set(bd, E_STACKING_BELOW);
-     }
+   if (bd->layer != E_LAYER_BELOW)
+     e_border_layer_set(bd, E_LAYER_BELOW);
 }
 
 static void
@@ -815,11 +809,8 @@ _e_border_menu_cb_normal(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNU
    E_Border *bd;
 
    bd = data;
-   if (bd->layer != 100)
-     {
-        e_border_layer_set(bd, 100);
-        e_hints_window_stacking_set(bd, E_STACKING_NONE);
-     }
+   if (bd->layer != E_LAYER_NORMAL)
+     e_border_layer_set(bd, E_LAYER_NORMAL);
 }
 
 static void

@@ -434,7 +434,7 @@ e_win_borderless_set(E_Win *win, int borderless)
 }
 
 EAPI void
-e_win_layer_set(E_Win *win, int layer)
+e_win_layer_set(E_Win *win, E_Win_Layer layer)
 {
    E_OBJECT_CHECK(win);
    E_OBJECT_TYPE_CHECK(win, E_WIN_TYPE);

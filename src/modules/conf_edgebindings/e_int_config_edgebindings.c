@@ -190,7 +190,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_Container *con;
    E_Zone *zone;
    E_Config_Binding_Edge *bi, *bi2;
-   int layer;
+   E_Layer layer;
 
    _auto_apply_changes(cfdata);
 
@@ -225,9 +225,9 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->fullscreen_flip != e_config->fullscreen_flip)
      {
         if (cfdata->fullscreen_flip)
-          layer = 350;
+          layer = E_LAYER_TOP;
         else
-          layer = 200;
+          layer = E_LAYER_EDGE;
 
         EINA_LIST_FOREACH(e_manager_list(), l, man)
           {

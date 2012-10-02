@@ -11,6 +11,20 @@ typedef enum _E_Container_Shape_Change
    E_CONTAINER_SHAPE_RECTS
 } E_Container_Shape_Change;
 
+typedef enum _E_Layer
+{
+   E_LAYER_DESKTOP = 0,
+   E_LAYER_BELOW = 50,
+   E_LAYER_NORMAL = 100,
+   E_LAYER_ABOVE = 150,
+   E_LAYER_POPUP = 200,
+   E_LAYER_EDGE = 250,
+   E_LAYER_FULLSCREEN = 300,
+   E_LAYER_TOP = 350,
+   E_LAYER_DRAG = 400,
+   E_LAYER_PRIO = 500
+} E_Layer;
+
 typedef struct _E_Container                E_Container;
 typedef struct _E_Border_List              E_Border_List;
 typedef struct _E_Container_Shape          E_Container_Shape;
@@ -128,8 +142,8 @@ EAPI void               e_container_shape_solid_rect_get(E_Container_Shape *es, 
 EAPI int                e_container_borders_count(E_Container *con);
 EAPI void               e_container_border_add(E_Border *bd);
 EAPI void               e_container_border_remove(E_Border *bd);
-EAPI void               e_container_window_raise(E_Container *con, Ecore_X_Window win, int layer);
-EAPI void               e_container_window_lower(E_Container *con, Ecore_X_Window win, int layer);
+EAPI void               e_container_window_raise(E_Container *con, Ecore_X_Window win, E_Layer layer);
+EAPI void               e_container_window_lower(E_Container *con, Ecore_X_Window win, E_Layer layer);
 EAPI E_Border          *e_container_border_raise(E_Border *bd);
 EAPI E_Border          *e_container_border_lower(E_Border *bd);
 EAPI void               e_container_border_stack_above(E_Border *bd, E_Border *above);

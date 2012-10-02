@@ -754,7 +754,7 @@ _gadman_gadcon_new(const char *name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
           ecore_evas_shaped_set(Man->top_ee, 1);
 
         e_canvas_add(Man->top_ee); //??
-        e_container_window_raise(Man->container, Man->top_win, 250);
+        e_container_window_raise(Man->container, Man->top_win, E_LAYER_POPUP);
 
         ecore_evas_move_resize(Man->top_ee, 0, 0, Man->width, Man->height);
         ecore_evas_hide(Man->top_ee);

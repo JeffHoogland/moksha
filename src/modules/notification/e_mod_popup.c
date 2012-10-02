@@ -316,7 +316,7 @@ _notification_popup_new(E_Notification *n)
    _notification_popup_refresh(popup);
    next_pos = _notification_popup_place(popup, next_pos);
    e_popup_show(popup->win);
-   e_popup_layer_set(popup->win, 999);
+   e_popup_layer_set(popup->win, E_LAYER_POPUP);
    popups_displayed++;
 
    return popup;

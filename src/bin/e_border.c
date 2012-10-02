@@ -1706,7 +1706,7 @@ e_border_resize_without_border(E_Border *bd,
 
 EAPI void
 e_border_layer_set(E_Border *bd,
-                   int       layer)
+                   E_Layer   layer)
 {
    int oldraise;
 
@@ -1722,7 +1722,7 @@ e_border_layer_set(E_Border *bd,
         bd->saved.layer = layer;
         return;
      }
-   if (bd->layer != 300)
+   if (bd->layer != E_LAYER_FULLSCREEN)
      bd->saved.layer = bd->layer;
    bd->layer = layer;
    if (e_config->transient.layer)
@@ -1743,6 +1743,12 @@ e_border_layer_set(E_Border *bd,
           }
      }
    e_border_raise(bd);
+   if (layer == E_LAYER_BELOW)
+     e_hints_window_stacking_set(bd, E_STACKING_BELOW);
+   else if (layer == E_LAYER_ABOVE)
+     e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
+   else
+     e_hints_window_stacking_set(bd, E_STACKING_NONE);
    e_config->transient.raise = oldraise;
 }
 
@@ -2965,7 +2971,7 @@ e_border_fullscreen(E_Border    *bd,
 
         /* e_zone_fullscreen_set(bd->zone, 1); */
         if (!e_config->allow_above_fullscreen)
-          e_border_layer_set(bd, 300);
+          e_border_layer_set(bd, E_LAYER_FULLSCREEN);
 
         if ((eina_list_count(bd->zone->container->zones) > 1) ||
             (policy == E_FULLSCREEN_RESIZE) || (!ecore_x_randr_query()))
@@ -3253,26 +3259,18 @@ EAPI void
 e_border_pinned_set(E_Border *bd,
                     int       set)
 {
-   int layer;
-   int stacking;
+   E_Layer layer;
 
    if (bd)
      {
         bd->borderless = set;
         bd->user_skip_winlist = set;
         if (set)
-          {
-             layer = 50;
-             stacking = E_STACKING_BELOW;
-          }
+          layer = E_LAYER_BELOW;
         else
-          {
-             layer = 100;
-             stacking = E_STACKING_NONE;
-          }
+          layer = E_LAYER_NORMAL;
 
         e_border_layer_set(bd, layer);
-        e_hints_window_stacking_set(bd, stacking);
 
         bd->client.border.changed = 1;
         bd->changed = 1;

@@ -4,7 +4,6 @@
 
 #define TILING_OVERLAY_TIMEOUT 5.0
 #define TILING_RESIZE_STEP 5
-#define TILING_POPUP_LAYER 101
 #define TILING_WRAP_SPEED 0.1
 
 typedef enum {
@@ -378,7 +377,6 @@ _restore_border(E_Border *bd)
                           extra->orig.geom.w,
                           extra->orig.geom.h);
     e_border_layer_set(bd, extra->orig.layer);
-    e_hints_window_stacking_set(bd, extra->orig.stacking);
     if (extra->orig.maximized) {
         e_border_maximize(bd, extra->orig.maximized);
         bd->maximized = extra->orig.maximized;
@@ -629,7 +627,7 @@ _do_overlay(E_Border *focused_bd,
                 if (!extra->overlay.popup)
                     continue;
 
-                e_popup_layer_set(extra->overlay.popup, TILING_POPUP_LAYER);
+                e_popup_layer_set(extra->overlay.popup, E_LAYER_NORMAL);
                 extra->overlay.obj =
                     edje_object_add(extra->overlay.popup->evas);
                 e_theme_edje_object_set(extra->overlay.obj,
@@ -1243,8 +1241,7 @@ _add_border(E_Border *bd)
     extra = _get_or_create_border_extra(bd);
 
     /* Stack tiled window below so that winlist doesn't mix up stacking */
-    e_border_layer_set(bd, 75);
-    e_hints_window_stacking_set(bd, E_STACKING_BELOW);
+    e_border_layer_set(bd, E_LAYER_BELOW);
 
     DBG("adding %p", bd);
 
@@ -1807,7 +1804,7 @@ _check_moving_anims(const E_Border *bd, const Border_Extra *extra, int stack)
             if (!overlay->popup)
                 return;
 
-            e_popup_layer_set(overlay->popup, TILING_POPUP_LAYER);
+            e_popup_layer_set(overlay->popup, E_LAYER_NORMAL);
             overlay->obj = edje_object_add(overlay->popup->evas);
             _theme_edje_object_set(overlay->obj,
                                    "modules/tiling/move/left");
@@ -1859,7 +1856,7 @@ _check_moving_anims(const E_Border *bd, const Border_Extra *extra, int stack)
             if (!overlay->popup)
                 return;
 
-            e_popup_layer_set(overlay->popup, TILING_POPUP_LAYER);
+            e_popup_layer_set(overlay->popup, E_LAYER_NORMAL);
             overlay->obj = edje_object_add(overlay->popup->evas);
             _theme_edje_object_set(overlay->obj,
                                    "modules/tiling/move/right");
@@ -1908,7 +1905,7 @@ _check_moving_anims(const E_Border *bd, const Border_Extra *extra, int stack)
             if (!overlay->popup)
                 return;
 
-            e_popup_layer_set(overlay->popup, TILING_POPUP_LAYER);
+            e_popup_layer_set(overlay->popup, E_LAYER_NORMAL);
             overlay->obj = edje_object_add(overlay->popup->evas);
             _theme_edje_object_set(overlay->obj, "modules/tiling/move/up");
             edje_object_size_min_calc(overlay->obj, &ew, &eh);
@@ -1959,7 +1956,7 @@ _check_moving_anims(const E_Border *bd, const Border_Extra *extra, int stack)
             if (!overlay->popup)
                 return;
 
-            e_popup_layer_set(overlay->popup, TILING_POPUP_LAYER);
+            e_popup_layer_set(overlay->popup, E_LAYER_NORMAL);
             overlay->obj = edje_object_add(overlay->popup->evas);
             _theme_edje_object_set(overlay->obj,
                                    "modules/tiling/move/down");
@@ -2986,7 +2983,7 @@ _transition_overlay_key_down(void *data __UNUSED__,
             if (!trov->overlay.popup) {
                 trov->overlay.popup = e_popup_new(_G.tinfo->desk->zone,
                                                   0, 0, 1, 1);
-                e_popup_layer_set(trov->overlay.popup, TILING_POPUP_LAYER);
+                e_popup_layer_set(trov->overlay.popup, E_LAYER_NORMAL);
             }
             if (!trov->overlay.obj) {
                 trov->overlay.obj =
@@ -3108,7 +3105,7 @@ _do_transition_overlay(void)
                 if (!trov->overlay.popup)
                     continue;
 
-                e_popup_layer_set(trov->overlay.popup, TILING_POPUP_LAYER);
+                e_popup_layer_set(trov->overlay.popup, E_LAYER_NORMAL);
                 trov->overlay.obj = edje_object_add(trov->overlay.popup->evas);
                 e_theme_edje_object_set(trov->overlay.obj,
                                         "base/theme/borders",
@@ -3179,7 +3176,7 @@ _do_transition_overlay(void)
             if (!trov->overlay.popup)
                 continue;
 
-            e_popup_layer_set(trov->overlay.popup, TILING_POPUP_LAYER);
+            e_popup_layer_set(trov->overlay.popup, E_LAYER_NORMAL);
             trov->overlay.obj = edje_object_add(trov->overlay.popup->evas);
             e_theme_edje_object_set(trov->overlay.obj,
                                     "base/theme/borders",

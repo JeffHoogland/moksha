@@ -48,7 +48,7 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
    pop->y = y;
    pop->w = w;
    pop->h = h;
-   pop->layer = e_desklock_state_get() ? 200 : 250;
+   pop->layer = E_LAYER_POPUP;
    pop->ecore_evas = e_canvas_new(pop->zone->container->win,
                                   pop->zone->x + pop->x, pop->zone->y + pop->y, pop->w, pop->h, 1, 1,
                                   &(pop->evas_win));
@@ -219,7 +219,7 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
 }
 
 EAPI void
-e_popup_layer_set(E_Popup *pop, int layer)
+e_popup_layer_set(E_Popup *pop, E_Layer layer)
 {
    E_OBJECT_CHECK(pop);
    E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);

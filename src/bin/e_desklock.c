@@ -8,7 +8,6 @@
 #define E_DESKLOCK_STATE_CHECKING 1
 #define E_DESKLOCK_STATE_INVALID  2
 
-#define ELOCK_POPUP_LAYER         10000
 #define PASSWD_LEN                256
 
 /**************************** private data ******************************/
@@ -36,7 +35,7 @@ struct _E_Desklock_Data
    Ecore_X_Window elock_grab_break_wnd;
    char           passwd[PASSWD_LEN];
    int            state;
-   Eina_Bool     selected : 1;
+   Eina_Bool      selected : 1;
 };
 
 struct _E_Desklock_Run
@@ -441,7 +440,7 @@ _e_desklock_popup_add(E_Zone *zone)
    evas_event_feed_mouse_move(edp->popup_wnd->evas, -1000000, -1000000,
                               ecore_x_current_time_get(), NULL);
 
-   e_popup_layer_set(edp->popup_wnd, ELOCK_POPUP_LAYER);
+   e_popup_layer_set(edp->popup_wnd, E_LAYER_PRIO);
    ecore_evas_raise(edp->popup_wnd->ecore_evas);
 
    evas_event_freeze(edp->popup_wnd->evas);

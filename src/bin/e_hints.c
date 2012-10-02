@@ -430,15 +430,15 @@ e_hints_window_init(E_Border *bd)
         if (!bd->lock_client_stacking)
           {
              if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
-               e_border_layer_set(bd, 0);
+               e_border_layer_set(bd, E_LAYER_DESKTOP);
              else if (bd->client.netwm.state.stacking == E_STACKING_BELOW)
-               e_border_layer_set(bd, 50);
+               e_border_layer_set(bd, E_LAYER_BELOW);
              else if (bd->client.netwm.state.stacking == E_STACKING_ABOVE)
-               e_border_layer_set(bd, 150);
+               e_border_layer_set(bd, E_LAYER_ABOVE);
              else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
-               e_border_layer_set(bd, 150);
+               e_border_layer_set(bd, E_LAYER_ABOVE);
              else
-               e_border_layer_set(bd, 100);
+               e_border_layer_set(bd, E_LAYER_NORMAL);
           }
         else
           e_border_raise(bd);
@@ -896,26 +896,18 @@ e_hints_window_state_update(E_Border                   *bd,
         switch (action)
           {
            case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-             e_border_layer_set(bd, 100);
-             e_hints_window_stacking_set(bd, E_STACKING_NONE);
+             e_border_layer_set(bd, E_LAYER_NORMAL);
              break;
 
            case ECORE_X_WINDOW_STATE_ACTION_ADD:
-             e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
-             e_border_layer_set(bd, 150);
+             e_border_layer_set(bd, E_LAYER_ABOVE);
              break;
 
            case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-             if (bd->layer == 150)
-               {
-                  e_hints_window_stacking_set(bd, E_STACKING_NONE);
-                  e_border_layer_set(bd, 100);
-               }
+             if (bd->layer == E_LAYER_ABOVE)
+               e_border_layer_set(bd, E_LAYER_NORMAL);
              else
-               {
-                  e_hints_window_stacking_set(bd, E_STACKING_ABOVE);
-                  e_border_layer_set(bd, 150);
-               }
+               e_border_layer_set(bd, E_LAYER_ABOVE);
              break;
           }
         break;
@@ -927,26 +919,18 @@ e_hints_window_state_update(E_Border                   *bd,
         switch (action)
           {
            case ECORE_X_WINDOW_STATE_ACTION_REMOVE:
-             e_hints_window_stacking_set(bd, E_STACKING_NONE);
-             e_border_layer_set(bd, 100);
+             e_border_layer_set(bd, E_LAYER_NORMAL);
              break;
 
            case ECORE_X_WINDOW_STATE_ACTION_ADD:
-             e_hints_window_stacking_set(bd, E_STACKING_BELOW);
-             e_border_layer_set(bd, 50);
+             e_border_layer_set(bd, E_LAYER_BELOW);
              break;
 
            case ECORE_X_WINDOW_STATE_ACTION_TOGGLE:
-             if (bd->layer == 50)
-               {
-                  e_hints_window_stacking_set(bd, E_STACKING_NONE);
-                  e_border_layer_set(bd, 100);
-               }
+             if (bd->layer == E_LAYER_BELOW)
+               e_border_layer_set(bd, E_LAYER_NORMAL);
              else
-               {
-                  e_hints_window_stacking_set(bd, E_STACKING_BELOW);
-                  e_border_layer_set(bd, 50);
-               }
+               e_border_layer_set(bd, E_LAYER_BELOW);
              break;
           }
         break;

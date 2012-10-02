@@ -1,5 +1,12 @@
 #ifdef E_TYPEDEFS
 
+typedef enum _E_Win_Layer
+{
+   E_WIN_LAYER_BELOW = 3,
+   E_WIN_LAYER_NORMAL = 4,
+   E_WIN_LAYER_ABOVE = 5
+} E_Win_Layer;
+
 typedef struct _E_Win E_Win;
 
 #else
@@ -51,7 +58,7 @@ EAPI Evas  *e_win_evas_get           (E_Win *win);
 EAPI void   e_win_shaped_set         (E_Win *win, int shaped);
 EAPI void   e_win_avoid_damage_set   (E_Win *win, int avoid);
 EAPI void   e_win_borderless_set     (E_Win *win, int borderless);
-EAPI void   e_win_layer_set          (E_Win *win, int layer);
+EAPI void   e_win_layer_set          (E_Win *win, E_Win_Layer layer);
 EAPI void   e_win_sticky_set         (E_Win *win, int sticky);
 EAPI void   e_win_move_callback_set  (E_Win *win, void (*func) (E_Win *win));
 EAPI void   e_win_resize_callback_set(E_Win *win, void (*func) (E_Win *win));

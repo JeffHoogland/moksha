@@ -50,7 +50,7 @@ struct _E_Drag
    int                shape_rects_num;
    Ecore_X_Rectangle *shape_rects;
 
-   unsigned int       layer;
+   E_Layer            layer;
    unsigned char      visible : 1;
    unsigned char      need_shape_export : 1;
    unsigned char      xy_update : 1;
