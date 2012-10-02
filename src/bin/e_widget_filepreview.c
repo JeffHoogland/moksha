@@ -173,10 +173,19 @@ _e_wid_fprev_preview_video_opened(E_Widget_Data *wd, Evas_Object *obj, void *eve
 }
 
 static void
+_e_wid_fprev_preview_video_change(void *data, Evas_Object *obj)
+{
+   double pos;
+
+   e_widget_slider_value_double_get(obj, &pos);
+   emotion_object_position_set(data, pos / 100. * emotion_object_play_length_get(data));
+}
+
+static void
 _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
 {
    Evas *evas = evas_object_evas_get(wd->obj);
-   Evas_Object *o;
+   Evas_Object *o, *em;
    int mw, mh, y = 3;
    
    _e_wid_fprev_clear_widgets(wd);
@@ -204,7 +213,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
       y++; \
    } while (0)
 
-   o = emotion_object_add(evas);
+   em = o = emotion_object_add(evas);
    emotion_object_init(o, NULL);
    emotion_object_file_set(o, wd->path);
    emotion_object_play_set(o, EINA_TRUE);
@@ -218,12 +227,11 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    evas_object_smart_callback_add(o, "frame_decode", (Evas_Smart_Cb)_e_wid_fprev_preview_video_position, wd);
 
    o = e_widget_slider_add(evas, 1, 0, _("%3.1"), 0, 100, 0.5, 0, &wd->vid_pct, NULL, wd->w);
-   e_widget_disabled_set(o, 1);
    wd->o_preview_time = o;
    e_widget_table_object_align_append(wd->o_preview_properties_table,
                                       wd->o_preview_time,                    
                                       0, 2, 2, 1, 0, 1, 0, 0, 0.0, 0.0);
-   
+   e_widget_on_change_hook_set(o, _e_wid_fprev_preview_video_change, em);
    WIDROW(_("Length:"), o_preview_extra, o_preview_extra_entry, 100);
    WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 100);
    /* FIXME: other infos? */
