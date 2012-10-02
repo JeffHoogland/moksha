@@ -310,7 +310,7 @@ _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__
 /* callback received from the monitor object to let us know that it was 
  * rotated, and we should adjust position of any adjacent monitors */
 static void 
-_e_smart_cb_monitor_rotated(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_e_smart_cb_monitor_rotated(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    E_Smart_Data *sd;
 
