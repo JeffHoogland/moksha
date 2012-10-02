@@ -61,10 +61,13 @@ _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNU
    int iw = 0, ih = 0;
 
    wd = data;
-   o = evas_object_image_add(evas_object_evas_get(obj));
-   evas_object_image_file_set(o, wd->path, NULL);
-   evas_object_image_size_get(o, &iw, &ih);
-   evas_object_del(o);
+   if (evas_object_image_extension_can_load_get(wd->path))
+     {
+        o = evas_object_image_add(evas_object_evas_get(obj));
+        evas_object_image_file_set(o, wd->path, NULL);
+        evas_object_image_size_get(o, &iw, &ih);
+        evas_object_del(o);
+     }
    if ((iw > 0) && (ih > 0))
      {
         e_widget_label_text_set(wd->o_preview_extra, _("Resolution:"));
