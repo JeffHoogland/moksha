@@ -123,7 +123,7 @@ _policy_border_hide_below(E_Border *bd)
    if (pos > 5) pos = 5;
 
    /* Find the windows below this one */
-   for (i = pos; i >= 2; i--)
+   for (i = pos; i >= 1; i--)
      {
 	Eina_List *l;
 	E_Border *b;
