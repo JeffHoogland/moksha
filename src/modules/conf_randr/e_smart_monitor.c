@@ -638,13 +638,19 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
    /* get the object geometry */
    if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
        (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
-     e_layout_child_geometry_get(mon, NULL, NULL, &oh, &ow);
+     {
+        e_layout_child_geometry_get(mon, NULL, NULL, &oh, &ow);
+        mode = _e_smart_monitor_resolution_get(sd, oh, ow);
+     }
    else if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
             (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
-     e_layout_child_geometry_get(mon, NULL, NULL, &ow, &oh);
+     {
+        e_layout_child_geometry_get(mon, NULL, NULL, &ow, &oh);
+        mode = _e_smart_monitor_resolution_get(sd, ow, oh);
+     }
 
    /* find the closest resolution to this one and snap to it */
-   if ((mode = _e_smart_monitor_resolution_get(sd, ow, oh)))
+   if (mode)
      {
         char buff[1024];
 
