@@ -631,7 +631,7 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
    Evas_Object *mon;
    E_Smart_Data *sd;
    Evas_Coord ow, oh;
-   Ecore_X_Randr_Mode_Info *mode;
+   Ecore_X_Randr_Mode_Info *mode = NULL;
 
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
