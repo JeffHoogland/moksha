@@ -59,7 +59,7 @@ struct _E_Smart_Data
    Ecore_X_Randr_Orientation orientation;
 
    /* current rotation */
-   int rotation, start_rotation;
+   int rotation;
 
    /* container number (for bg preview) */
    int con;
@@ -698,7 +698,6 @@ _e_smart_cb_rotate_start(void *data, Evas_Object *obj __UNUSED__, const char *em
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    sd->rotating = EINA_TRUE;
-   sd->start_rotation = _e_smart_monitor_rotation_get(sd->orientation);
    sd->rotation = 0;
 
    e_layout_child_raise(mon);
@@ -954,7 +953,7 @@ static void
 _e_smart_monitor_rotate_snap(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   Evas_Coord w, h, nw, nh;
+   Evas_Coord nw, nh;
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
