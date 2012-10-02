@@ -225,6 +225,9 @@ e_desklock_show(Eina_Bool suspend)
         e_util_library_path_strip();
         if (e_config->desklock_language)
           e_intl_language_set(e_config->desklock_language);
+
+        if (e_config->xkb.desklock_group != -1)
+          e_xkb_update(e_config->xkb.desklock_group);
         _e_custom_desklock_exe =
           ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
         e_util_library_path_restore();
