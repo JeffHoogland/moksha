@@ -148,11 +148,17 @@ _e_wid_fprev_clear_widgets(E_Widget_Data *wd)
 #ifdef HAVE_EMOTION
 
 static void
+_e_wid_fprev_preview_video_opened(E_Widget_Data *wd, Evas_Object *obj, void *event_info __UNUSED__)
+{
+    e_widget_entry_text_set(wd->o_preview_extra_entry, e_util_time_str_get(emotion_object_play_length_get(obj)));
+}
+
+static void
 _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
 {
    Evas *evas = evas_object_evas_get(wd->obj);
    Evas_Object *o;
-   int mw, mh, y = 1;
+   int mw, mh, y = 2;
    
    _e_wid_fprev_clear_widgets(wd);
 
@@ -167,7 +173,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
       wd->labob = o; \
       e_widget_table_object_align_append(wd->o_preview_properties_table, \
                                          wd->labob,                     \
-                                         0, y, 1, 1, 0, 1, 0, 0, 1.0, 0.0); \
+                                         0, y, 1, 1, 0, 1, 0, 0, 0.0, 0.0); \
       o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL); \
       e_widget_entry_readonly_set(o, 1); \
       e_widget_disabled_set(o, 1); \
@@ -186,8 +192,9 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    evas_object_size_hint_aspect_set(o, EVAS_ASPECT_CONTROL_BOTH, wd->w, wd->h);
    wd->o_preview_preview = e_widget_image_add_from_object(evas, o, wd->w, wd->h);
    e_widget_table_object_append(wd->o_preview_properties_table,
-                                wd->o_preview_preview, 0, 0, 1, 1, 1, 1, 1, 1);
+                                wd->o_preview_preview, 0, 0, 1, 2, 1, 1, 1, 1);
    
+   evas_object_smart_callback_add(o, "length_change", (Evas_Smart_Cb)_e_wid_fprev_preview_video_opened, wd);
    WIDROW(_("Length:"), o_preview_extra, o_preview_extra_entry, 100);
    WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 100);
    /* FIXME: other infos? */
@@ -210,6 +217,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    evas_object_show(wd->o_preview_time);
    evas_object_show(wd->o_preview_time_entry);
    evas_object_show(wd->o_preview_properties_table);
+#undef WIDROW
 }
 
 #endif
@@ -466,6 +474,8 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
    else if (wd->mime && (eina_str_has_prefix(wd->mime, "video/")))
      {
         _e_wid_fprev_preview_video_widgets(wd);
+        e_widget_entry_text_set(wd->o_preview_extra_entry, _("Unknown"));
+        e_widget_entry_text_set(wd->o_preview_size_entry, _("Unknown"));
         is_fs = EINA_TRUE;
      }
 #endif
