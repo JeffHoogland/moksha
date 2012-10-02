@@ -202,7 +202,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("launcher/run_everything");
    e_configure_registry_category_del("launcher");
 
-   while ((cfd = e_config_dialog_get("E", "_config_everything_dialog")))
+   while ((cfd = e_config_dialog_get("E", "launcher/run_everything")))
      e_object_del(E_OBJECT(cfd));
 
    if (act)
