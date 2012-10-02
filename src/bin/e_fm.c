@@ -7987,18 +7987,37 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
 
              EINA_LIST_FOREACH(rg->list, ll, ic)
                {
-                  if (ic->realized)
+                  if (!ic->realized) continue;
+                  if (!_e_fm2_icon_visible(ic))
                     {
-                       if (!_e_fm2_icon_visible(ic))
-                         {
-                            e_thumb_icon_end(ic->obj_icon);
-                         }
-                       evas_object_move(ic->obj,
-                                        sd->x + ic->x - sd->pos.x,
-                                        sd->y + ic->y - sd->pos.y);
-                       evas_object_resize(ic->obj, ic->w, ic->h);
-                       _e_fm2_icon_thumb(ic, ic->obj_icon, 0);
+                       e_thumb_icon_end(ic->obj_icon);
                     }
+                  evas_object_move(ic->obj,
+                                   sd->x + ic->x - sd->pos.x,
+                                   sd->y + ic->y - sd->pos.y);
+                  evas_object_resize(ic->obj, ic->w, ic->h);
+                  _e_fm2_icon_thumb(ic, ic->obj_icon, 0);
+                  if (_e_fm2_view_mode_get(ic->sd) != E_FM2_VIEW_MODE_LIST) continue;
+                  /* FIXME: this is probably something that should be unnecessary,
+                   * but currently we add icons in semi-randomly and it messes up ordering.
+                   * current process is:
+                   * 1 receive file info from slave
+                   * 2 create icon struct
+                   * 3 either directly add icon or queue it (usually queue)
+                   * 4 process queue on timer, determining even/odd for all icons at this time
+                   * 4.5 icons are realized, theme is set here <-- where bug occurs
+                   * 5 goto 1
+                   * 6 if icon is inserted into current viewport during 4.5, even/odd for surrounding items
+                   *   will always be wrong (ticket #1579)
+                   */
+                  if (ic->odd)
+                    _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
+                                                 "base/theme/widgets",
+                                                 "list_odd/fixed");
+                  else
+                    _e_fm2_theme_edje_object_set(ic->sd, ic->obj,
+                                                 "base/theme/widgets",
+                                                 "list/fixed");
                }
           }
      }
