@@ -2974,7 +2974,12 @@ e_border_fullscreen(E_Border    *bd,
         /* e_zone_fullscreen_set(bd->zone, 1); */
         bd->saved.layer = bd->layer;
         if (!e_config->allow_above_fullscreen)
-          e_border_layer_set(bd, E_LAYER_FULLSCREEN);
+          {
+             if (e_config->mode.presentation)
+               e_border_layer_set(bd, E_LAYER_TOP);
+             else
+               e_border_layer_set(bd, E_LAYER_FULLSCREEN);
+          }
 
         if ((eina_list_count(bd->zone->container->zones) > 1) ||
             (policy == E_FULLSCREEN_RESIZE) || (!ecore_x_randr_query()))
@@ -6162,7 +6167,7 @@ static Eina_Bool _e_border_cb_config_mode(void *data    __UNUSED__,
      {
         EINA_LIST_FOREACH(borders, l, bd)
           {
-             if ((bd->fullscreen) || (bd->need_fullscreen) || (bd->was_fullscreen))
+             if ((bd->fullscreen) || (bd->need_fullscreen))
                {
                   bd->fullscreen = 0;
                   e_border_layer_set(bd, E_LAYER_TOP);
@@ -6174,7 +6179,7 @@ static Eina_Bool _e_border_cb_config_mode(void *data    __UNUSED__,
      {
         EINA_LIST_FOREACH(borders, l, bd)
           {
-             if ((bd->fullscreen) || (bd->need_fullscreen) || (bd->was_fullscreen))
+             if ((bd->fullscreen) || (bd->need_fullscreen))
                {
                   bd->fullscreen = 0;
                   e_border_layer_set(bd, E_LAYER_FULLSCREEN);
