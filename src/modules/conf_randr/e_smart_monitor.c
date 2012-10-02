@@ -59,7 +59,10 @@ struct _E_Smart_Data
    Ecore_X_Randr_Orientation orientation;
 
    /* current rotation */
-   int rotation;
+   int rotation, start_rotation;
+
+   /* current mode */
+   Ecore_X_Randr_Mode_Info *mode;
 
    /* container number (for bg preview) */
    int con;
@@ -172,6 +175,7 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
    /* record the current rotation */
    sd->orientation = crtc->current_orientation;
    sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
+   sd->mode = crtc->current_mode;
 
    EINA_LIST_FOREACH(crtc->outputs, l, output)
      {
@@ -640,7 +644,7 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
        (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
      {
         e_layout_child_geometry_get(mon, NULL, NULL, &oh, &ow);
-        mode = _e_smart_monitor_resolution_get(sd, oh, ow);
+        mode = _e_smart_monitor_resolution_get(sd, ow, oh);
      }
    else if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
             (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
@@ -709,6 +713,7 @@ _e_smart_cb_rotate_start(void *data, Evas_Object *obj __UNUSED__, const char *em
 
    sd->rotating = EINA_TRUE;
    sd->rotation = 0;
+   sd->start_rotation = _e_smart_monitor_rotation_get(sd->orientation);
 
    e_layout_child_raise(mon);
 }
@@ -725,17 +730,21 @@ _e_smart_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
    sd->rotating = EINA_FALSE;
    e_layout_child_lower(mon);
 
-   /* get closest rotation to this one */
+   /* accumulate rotation values from start */
+   sd->rotation += sd->start_rotation;
+
+   /* get closest orientation to this one */
    sd->orientation = _e_smart_monitor_orientation_get(sd->rotation);
+
+   /* set rotation to be the angle of this orientation */
+   sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
+
    if (sd->orientation >= ECORE_X_RANDR_ORIENTATION_ROT_0)
      {
         Evas_Coord x, y, w, h;
         Evas_Map *map;
 
         evas_object_geometry_get(sd->o_frame, &x, &y, &w, &h);
-
-        /* snap to rotation */
-        sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
 
         /* create frame 'map' for rotation */
         map = evas_map_new(4);
@@ -970,9 +979,10 @@ _e_smart_monitor_rotate_snap(Evas_Object *obj)
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   /* get the object geometry */
-   e_layout_child_geometry_get(obj, NULL, NULL, &nw, &nh);
+   nw = sd->mode->width;
+   nh = sd->mode->height;
 
+   /* get the object geometry */
    if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
        (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
      e_layout_child_resize(obj, nh, nw);
@@ -996,35 +1006,54 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    ev = event;
 
-   /* FIXME: Ideally, this should use the evas_map to get geometry 
-    * (for cases where the user has rotated the monitor and is now resizing) */
-
-   /* grab size of monitor object and convert to canvas coords */
-   e_layout_child_geometry_get(mon, NULL, NULL, &cw, &ch);
-   e_layout_coord_virtual_to_canvas(sd->o_layout, cw, ch, &w, &h);
-
    /* calculate resize difference */
    mx = (ev->cur.output.x - ev->prev.output.x);
    my = (ev->cur.output.y - ev->prev.output.y);
 
-   /* determine what resolution this geometry would be */
-   e_layout_coord_canvas_to_virtual(sd->o_layout, 
-                                    (w + mx), (h + my), &nrw, &nrh);
+   /* grab size of monitor object and convert to canvas coords */
+   if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+       (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
+     {
+        e_layout_child_geometry_get(mon, NULL, NULL, &ch, &cw);
+        e_layout_coord_virtual_to_canvas(sd->o_layout, ch, cw, &h, &w);
 
-   /* determine if this new size is below or above the 
-    * available resolutions and stop resizing if so */
-   if ((nrw < sd->min.w) || (nrh < sd->min.h)) return;
-   if ((nrw > sd->max.w) || (nrh > sd->max.h)) return;
+        e_layout_coord_canvas_to_virtual(sd->o_layout, 
+                                         (h + mx), (w + my), &nrh, &nrw);
 
-   /* graphically resize the monitor */
-   e_layout_child_resize(mon, nrw, nrh);
+        /* determine if this new size is below or above the 
+         * available resolutions and stop resizing if so */
+        if ((nrw < sd->min.w) || (nrh < sd->min.h)) return;
+        if ((nrw > sd->max.w) || (nrh > sd->max.h)) return;
+
+        e_layout_child_resize(mon, nrh, nrw);
+
+        /* find the closest resolution to this one that we would snap to */
+        mode = _e_smart_monitor_resolution_get(sd, nrw, nrh);
+     }
+   else if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
+     {
+        e_layout_child_geometry_get(mon, NULL, NULL, &cw, &ch);
+        e_layout_coord_virtual_to_canvas(sd->o_layout, cw, ch, &w, &h);
+        e_layout_coord_canvas_to_virtual(sd->o_layout, 
+                                         (w + mx), (h + my), &nrw, &nrh);
+
+        /* determine if this new size is below or above the 
+         * available resolutions and stop resizing if so */
+        if ((nrw < sd->min.w) || (nrh < sd->min.h)) return;
+        if ((nrw > sd->max.w) || (nrh > sd->max.h)) return;
+
+        e_layout_child_resize(mon, nrw, nrh);
+
+        /* find the closest resolution to this one that we would snap to */
+        mode = _e_smart_monitor_resolution_get(sd, nrw, nrh);
+     }
 
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
    /* evas_object_smart_callback_call(mon, "monitor_resized", NULL); */
 
-   /* find the closest resolution to this one that we would snap to */
-   if ((mode = _e_smart_monitor_resolution_get(sd, nrw, nrh)))
+   if (mode)
      {
         char buff[1024];
 
@@ -1042,8 +1071,16 @@ _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
 
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
+   /* set this to the current mode */
+   sd->mode = mode;
+
    /* resize the child object */
-   e_layout_child_resize(obj, mode->width, mode->height);
+   if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+       (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
+     e_layout_child_resize(obj, mode->height, mode->width);
+   else if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
+     e_layout_child_resize(obj, mode->width, mode->height);
 
    /* set resolution text */
    snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height);
