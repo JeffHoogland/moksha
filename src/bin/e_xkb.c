@@ -54,12 +54,9 @@ e_xkb_update(int cur_group)
      {
         if (cl->variant)
           {
-             if (strcmp(cl->variant, "basic"))
-               eina_strbuf_append(buf, cl->variant);
+             if (!strcmp(cl->variant, "basic")) continue;
+             eina_strbuf_append(buf, cl->variant);
              eina_strbuf_append(buf, ",");
-             /* workaround xkb bug where basic variants work with ',' at the
-             * end, but dvorak (and mayby others) don't */
-//           if (!strcmp(cl->variant, "basic")) eina_strbuf_append(buf, ",");
           }
         else
           eina_strbuf_append(buf, ",");
