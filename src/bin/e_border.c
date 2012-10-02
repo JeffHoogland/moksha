@@ -93,6 +93,9 @@ static Eina_Bool _e_border_cb_efreet_cache_update(void *data,
 static Eina_Bool _e_border_cb_config_icon_theme(void *data,
                                                 int   ev_type,
                                                 void *ev);
+static Eina_Bool _e_border_cb_config_mode(void *data,
+                                          int   ev_type,
+                                          void *ev);
 
 static Eina_Bool _e_border_cb_pointer_warp(void *data,
                                            int   ev_type,
@@ -326,6 +329,7 @@ e_border_init(void)
    handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_border_cb_efreet_cache_update, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(EFREET_EVENT_ICON_CACHE_UPDATE, _e_border_cb_efreet_cache_update, NULL));
    handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL));
+   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_MODE_CHANGED, _e_border_cb_config_mode, NULL));
 
    if (!borders_hash) borders_hash = eina_hash_string_superfast_new(NULL);
 
@@ -1722,8 +1726,6 @@ e_border_layer_set(E_Border *bd,
         bd->saved.layer = layer;
         return;
      }
-   if (bd->layer != E_LAYER_FULLSCREEN)
-     bd->saved.layer = bd->layer;
    bd->layer = layer;
    if (e_config->transient.layer)
      {
@@ -2970,6 +2972,7 @@ e_border_fullscreen(E_Border    *bd,
         bd->desk->fullscreen_borders++;
 
         /* e_zone_fullscreen_set(bd->zone, 1); */
+        bd->saved.layer = bd->layer;
         if (!e_config->allow_above_fullscreen)
           e_border_layer_set(bd, E_LAYER_FULLSCREEN);
 
@@ -6143,6 +6146,41 @@ _e_border_cb_config_icon_theme(void *data  __UNUSED__,
      {
         bd->changes.icon = 1;
         bd->changed = 1;
+     }
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool _e_border_cb_config_mode(void *data    __UNUSED__,
+                                          int   ev_type __UNUSED__,
+                                          void *ev      __UNUSED__)
+{
+   Eina_List *l;
+   E_Border *bd;
+
+   /* move fullscreen borders above everything */
+   if (e_config->mode.presentation)
+     {
+        EINA_LIST_FOREACH(borders, l, bd)
+          {
+             if ((bd->fullscreen) || (bd->need_fullscreen) || (bd->was_fullscreen))
+               {
+                  bd->fullscreen = 0;
+                  e_border_layer_set(bd, E_LAYER_TOP);
+                  bd->fullscreen = 1;
+               }
+          }
+     }
+   else
+     {
+        EINA_LIST_FOREACH(borders, l, bd)
+          {
+             if ((bd->fullscreen) || (bd->need_fullscreen) || (bd->was_fullscreen))
+               {
+                  bd->fullscreen = 0;
+                  e_border_layer_set(bd, E_LAYER_FULLSCREEN);
+                  bd->fullscreen = 1;
+               }
+          }
      }
    return ECORE_CALLBACK_PASS_ON;
 }

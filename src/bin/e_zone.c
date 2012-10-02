@@ -1125,7 +1125,7 @@ e_zone_edge_new(E_Zone_Edge edge)
                        break;
                     }
                   if (e_config->fullscreen_flip)
-                    e_zone_edge_win_layer_set(zone, E_LAYER_TOP);
+                    e_zone_edge_win_layer_set(zone, E_LAYER_EDGE_FULLSCREEN);
                   else
                     e_zone_edge_win_layer_set(zone, E_LAYER_EDGE);
                }

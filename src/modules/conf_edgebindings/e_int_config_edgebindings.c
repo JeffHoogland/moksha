@@ -225,7 +225,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->fullscreen_flip != e_config->fullscreen_flip)
      {
         if (cfdata->fullscreen_flip)
-          layer = E_LAYER_TOP;
+          layer = E_LAYER_EDGE_FULLSCREEN;
         else
           layer = E_LAYER_EDGE;
 
