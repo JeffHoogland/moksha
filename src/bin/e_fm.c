@@ -45,6 +45,7 @@ struct _E_Fm2_Smart_Data
    Evas_Object *obj;
    Evas_Object *clip;
    Evas_Object *underlay;
+   unsigned int overlay_count;
    Evas_Object *overlay;
    Evas_Object *overlay_clip;
    Evas_Object *drop;
@@ -245,7 +246,7 @@ struct _E_Fm2_Context_Menu_Data
 };
 
 static const char   *_e_fm2_dev_path_map(E_Fm2_Smart_Data *sd, const char *dev, const char *path);
-static void          _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file_rel, int after, E_Fm2_Finfo *finf);
+static void          _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, Eina_Stringshare *file_rel, int after, E_Fm2_Finfo *finf);
 static void          _e_fm2_file_del(Evas_Object *obj, const char *file);
 static void          _e_fm2_queue_process(Evas_Object *obj);
 static void          _e_fm2_queue_free(Evas_Object *obj);
@@ -1056,6 +1057,7 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
    _e_fm2_queue_free(obj);
    _e_fm2_regions_free(obj);
    _e_fm2_icons_free(obj);
+   sd->overlay_count = 0;
    edje_object_part_text_set(sd->overlay, "e.text.busy_label", "");
 
    _e_fm2_dir_load_props(sd);
@@ -2706,6 +2708,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
                   ((!strcmp(evdir, "") || ((dir) && (!strcmp(dir, evdir))))))
                 {
 //                       printf(" ch/add response = %i\n", e->response);
+                   free(evdir);
                    if (e->response == 0)    /*live changes*/
                      {
                         if (e->minor == E_FM_OP_FILE_ADD)    /*file add*/
@@ -2713,77 +2716,75 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
                              _e_fm2_live_file_add
                                (obj, ecore_file_file_get(path),
                                NULL, 0, &finf);
+                             break;
                           }
-                        else if (e->minor == E_FM_OP_FILE_CHANGE)    /*file change*/
+                        if (e->minor == E_FM_OP_FILE_CHANGE)    /*file change*/
                           {
                              _e_fm2_live_file_changed
                                (obj, (char *)ecore_file_file_get(path),
                                &finf);
                           }
+                        break;
                      }
-                   else    /*file add - listing*/
+                     /*file add - listing*/
+                   if (e->minor == E_FM_OP_FILE_ADD)    /*file add*/
                      {
-                        if (e->minor == E_FM_OP_FILE_ADD)    /*file add*/
+                        if (!sd->scan_timer)
                           {
-                             if (!sd->scan_timer)
+                             sd->scan_timer =
+                               ecore_timer_add(0.5,
+                                               _e_fm2_cb_scan_timer,
+                                               sd->obj);
+                             sd->busy_count++;
+                             if (sd->busy_count == 1)
+                               edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
+                          }
+                        else
+                          {
+                             if ((eina_list_count(sd->icons) > 50) && (ecore_timer_interval_get(sd->scan_timer) < 1.5))
                                {
-                                  sd->scan_timer =
-                                    ecore_timer_add(0.5,
-                                                    _e_fm2_cb_scan_timer,
-                                                    sd->obj);
-                                  sd->busy_count++;
-                                  if (sd->busy_count == 1)
-                                    edje_object_signal_emit(sd->overlay, "e,state,busy,start", "e");
+                                  /* increase timer interval when loading large directories to
+                                   * dramatically improve load times
+                                   */
+                                  ecore_timer_interval_set(sd->scan_timer, 1.5);
+                                  ecore_timer_reset(sd->scan_timer);                                       
                                }
-                             if (path[0] != 0)
+                          }
+                        if (path[0] != 0)
+                          {
+                             file = ecore_file_file_get(path);
+                             if ((!strcmp(file, ".order")))
+                               sd->order_file = EINA_TRUE;
+                             else
                                {
-                                  file = ecore_file_file_get(path);
-                                  if ((!strcmp(file, ".order")))
-                                    sd->order_file = EINA_TRUE;
-                                  else
+                                  unsigned int n;
+
+                                  n = eina_list_count(sd->queue) + eina_list_count(sd->icons);
+                                  if (!((file[0] == '.') &&
+                                        (!sd->show_hidden_files)))
                                     {
-                                       if (!((file[0] == '.') &&
-                                             (!sd->show_hidden_files)))
-                                         _e_fm2_file_add(obj, file,
-                                                         sd->order_file,
-                                                         NULL, 0, &finf);
-                                    }
-                               }
-                             if (e->response == 2)    /* end of scan */
-                               {
-                                  sd->listing = EINA_FALSE;
-                                  if (sd->scan_timer)
-                                    {
-                                       ecore_timer_del(sd->scan_timer);
-                                       sd->scan_timer =
-                                         ecore_timer_add(0.0001,
-                                                         _e_fm2_cb_scan_timer,
-                                                         sd->obj);
-                                    }
-                                  else
-                                    {
-                                       _e_fm2_client_monitor_list_end(obj);
+                                       char buf[1024];
+
+                                       _e_fm2_file_add(obj, file,
+                                                       sd->order_file,
+                                                       NULL, 0, &finf);
+                                       if (n - sd->overlay_count > 150)
+                                         {
+                                          
+                                            sd->overlay_count = n + 1;
+                                            snprintf(buf, sizeof(buf), P_("%i file", "%i files", sd->overlay_count), sd->overlay_count);
+                                            edje_object_part_text_set(sd->overlay, "e.text.busy_label", buf);
+                                         }
                                     }
                                }
                           }
-                     }
-                }
-              else
-                {
-//                       printf(" ...\n");
-                   if ((sd->id == e->ref_to) && (path[0] == 0))
-                     {
-//                            printf(" end response = %i\n", e->response);
-                        if (e->response == 2)     /* end of scan */
+                        if (e->response == 2)    /* end of scan */
                           {
                              sd->listing = EINA_FALSE;
                              if (sd->scan_timer)
                                {
-                                  ecore_timer_del(sd->scan_timer);
-                                  sd->scan_timer =
-                                    ecore_timer_add(0.0001,
-                                                    _e_fm2_cb_scan_timer,
-                                                    sd->obj);
+                                  ecore_timer_interval_set(sd->scan_timer, 0.0001);
+                                  ecore_timer_reset(sd->scan_timer);
                                }
                              else
                                {
@@ -2791,8 +2792,27 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
                                }
                           }
                      }
+                   break;
                 }
-              if (evdir) free(evdir);
+//                       printf(" ...\n");
+              if ((sd->id != e->ref_to) || (path[0] != 0)) break;
+//                            printf(" end response = %i\n", e->response);
+              if (e->response == 2)     /* end of scan */
+                {
+                   sd->listing = EINA_FALSE;
+                   if (sd->scan_timer)
+                     {
+                        ecore_timer_del(sd->scan_timer);
+                        sd->scan_timer =
+                          ecore_timer_add(0.0001,
+                                          _e_fm2_cb_scan_timer,
+                                          sd->obj);
+                     }
+                   else
+                     {
+                        _e_fm2_client_monitor_list_end(obj);
+                     }
+                }
            }
            break;
 
@@ -3242,7 +3262,7 @@ _e_fm2_dev_path_map(E_Fm2_Smart_Data *sd, const char *dev, const char *path)
 }
 
 static void
-_e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file_rel, int after, E_Fm2_Finfo *finf)
+_e_fm2_file_add(Evas_Object *obj, const char *file, int unique, Eina_Stringshare *file_rel, int after, E_Fm2_Finfo *finf)
 {
    E_Fm2_Smart_Data *sd;
    E_Fm2_Icon *ic, *ic2;
@@ -3282,22 +3302,14 @@ _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, const char *file
              else
                {
                   /* insertion sort it here to spread the sort load into idle time */
-                  EINA_LIST_FOREACH(sd->queue, l, ic2)
-                    {
-                       if (_e_fm2_cb_icon_sort(ic, ic2) < 0)
-                         {
-                            sd->queue = eina_list_prepend_relative_list(sd->queue, ic, l);
-                            break;
-                         }
-                    }
-                  if (!l) sd->queue = eina_list_append(sd->queue, ic);
+                  sd->queue = eina_list_sorted_insert(sd->queue, _e_fm2_cb_icon_sort, ic);
                }
           }
         else
           {
              EINA_LIST_FOREACH(sd->icons, l, ic2)
                {
-                  if (!strcmp(ic2->info.file, file_rel))
+                  if (ic2->info.file == file_rel)
                     {
                        if (after)
                          sd->icons = eina_list_append_relative(sd->icons, ic, ic2);
@@ -3685,8 +3697,8 @@ _e_fm2_queue_process(Evas_Object *obj)
 //   printf("FM: SORT %1.3f (%i files) (%i queued, %i added) [%i iter]\n",
 //	  ecore_time_get() - tt, eina_list_count(sd->icons), queued,
 //	  added, sd->tmp.iter);
-   n = eina_list_count(sd->icons);
-   snprintf(buf, sizeof(buf), P_("%i file", "%i files", n), n);
+   sd->overlay_count = eina_list_count(sd->icons);
+   snprintf(buf, sizeof(buf), P_("%i file", "%i files", sd->overlay_count), sd->overlay_count);
    edje_object_part_text_set(sd->overlay, "e.text.busy_label", buf);
    if (sd->resize_job) ecore_job_del(sd->resize_job);
    sd->resize_job = ecore_job_add(_e_fm2_cb_resize_job, obj);
