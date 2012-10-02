@@ -126,13 +126,15 @@ _policy_border_resize(E_Border *bd, int w, int h)
 static void 
 _policy_border_hide_above(E_Border *bd)
 {
-   int pos = 0, i;
+   int pos = 0, layer = 0, i;
 
    if (!bd) return;
 
    /* determine layering position */
-   pos = (bd->layer / 50);
-   if (pos >= 10) return;
+   layer = bd->layer;
+   if (layer < 0) layer = 0;
+   pos = 1 + (layer / 50);
+   if (pos > 10) pos = 10;
 
    /* Find the windows above this one */
    for (i = (pos + 1); i < 11; i++)
@@ -163,13 +165,14 @@ _policy_border_hide_above(E_Border *bd)
 static void 
 _policy_border_hide_below(E_Border *bd) 
 {
-   int pos = 0, i;
+   int pos = 0, layer = 0, i;
 
    if (!bd) return;
 
    /* determine layering position */
-   pos = (bd->layer / 50);
-   if (pos == 0) return;
+   layer = bd->layer;
+   if (layer < 0) layer = 0;
+   pos = 1 + (layer / 50);
    if (pos > 10) pos = 10;
 
    /* Find the windows below this one */
@@ -215,7 +218,7 @@ _policy_border_show_below(E_Border *bd)
 {
    Eina_List *l;
    E_Border *prev;
-   int pos = 0, i;
+   int pos = 0, layer = 0, i;
 
 //   printf("Show Borders Below: %s %d %d\n", 
 //          bd->client.icccm.class, bd->x, bd->y);
@@ -232,7 +235,9 @@ _policy_border_show_below(E_Border *bd)
      }
 
    /* determine layering position */
-   pos = (bd->layer / 50);
+   layer = bd->layer;
+   if (layer < 0) layer = 0;
+   pos = 1 + (layer / 50);
    if (pos > 10) pos = 10;
 
    /* Find the windows below this one */

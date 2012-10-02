@@ -22,7 +22,7 @@ typedef enum _E_Layer
    E_LAYER_FULLSCREEN = 300,
    E_LAYER_TOP = 350,
    E_LAYER_DRAG = 400,
-   E_LAYER_PRIO = 500
+   E_LAYER_PRIO = 450
 } E_Layer;
 
 typedef struct _E_Container                E_Container;

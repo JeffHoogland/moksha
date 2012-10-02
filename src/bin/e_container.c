@@ -569,7 +569,7 @@ _e_container_layer_map(E_Layer layer)
 {
    int pos = 0;
 
-   pos = layer / 50;
+   pos = 1 + (layer / 50);
    if (pos > 10) pos = 10;
    return pos;
 }

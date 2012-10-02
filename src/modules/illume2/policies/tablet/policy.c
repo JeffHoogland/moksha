@@ -118,12 +118,15 @@ _policy_border_hide_below(E_Border *bd)
    if (!bd) return;
    /* printf("_policy_border_hide_below %s\n", e_border_name_get(bd)); */
    /* determine layering position */
-   pos = (bd->layer / 50);
-   if (pos <= 0) return;
-   if (pos > 5) pos = 5;
+   if (bd->layer <= 0) pos = 0;
+   else if ((bd->layer > 0) && (bd->layer <= 50)) pos = 1;
+   else if ((bd->layer > 50) && (bd->layer <= 100)) pos = 2;
+   else if ((bd->layer > 100) && (bd->layer <= 150)) pos = 3;
+   else if ((bd->layer > 150) && (bd->layer <= 200)) pos = 4;
+   else pos = 5;
 
    /* Find the windows below this one */
-   for (i = pos; i >= 1; i--)
+   for (i = pos; i >= 2; i--)
      {
 	Eina_List *l;
 	E_Border *b;
