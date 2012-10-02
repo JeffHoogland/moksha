@@ -161,8 +161,8 @@ _e_wid_fprev_preview_video_position(E_Widget_Data *wd, Evas_Object *obj, void *e
 
    tot = emotion_object_play_length_get(obj);
    if (!tot) return;
-   t = emotion_object_position_get(obj) / emotion_object_play_length_get(obj);
-   if (t - wd->vid_pct < 0.5) return;
+   t = emotion_object_position_get(obj) / emotion_object_play_length_get(obj) * 100;
+   if (t - wd->vid_pct < 1.0) return;
    e_widget_slider_value_double_set(wd->o_preview_time, wd->vid_pct = t);
 }
 
