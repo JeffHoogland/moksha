@@ -725,13 +725,15 @@ _e_smart_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
         evas_object_geometry_get(sd->o_frame, &x, &y, &w, &h);
 
         /* snap to rotation */
+        sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
 
         /* create frame 'map' for rotation */
         map = evas_map_new(4);
         evas_map_smooth_set(map, EINA_TRUE);
         evas_map_alpha_set(map, EINA_TRUE);
-        evas_map_util_points_populate_from_object(map, sd->o_frame);
-        evas_map_util_rotate(map, sd->orientation,
+        evas_map_util_points_populate_from_object_full(map, sd->o_frame, 
+                                                      sd->rotation);
+        evas_map_util_rotate(map, sd->rotation,
                              x + (w / 2), y + (h / 2));
         evas_object_map_set(sd->o_frame, map);
         evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
@@ -940,7 +942,8 @@ _e_smart_monitor_rotate(E_Smart_Data *sd, void *event)
    map = evas_map_new(4);
    evas_map_smooth_set(map, EINA_TRUE);
    evas_map_alpha_set(map, EINA_TRUE);
-   evas_map_util_points_populate_from_object(map, sd->o_frame);
+   evas_map_util_points_populate_from_object_full(map, sd->o_frame, 
+                                                 sd->rotation);
    evas_map_util_rotate(map, sd->rotation + mx, x + (w / 2), y + (h / 2));
    evas_object_map_set(sd->o_frame, map);
    evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
