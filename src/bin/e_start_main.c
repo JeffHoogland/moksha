@@ -199,15 +199,18 @@ copy_args(char **dst, char **src, size_t count)
 static void
 _env_path_prepend(const char *env, const char *path)
 {
-   char *p, *p2, *s;
+   char *p, *s;
+   const char *p2;
    int len = 0, len2 = 0;
+
+   if (!path) return;
    
    p = getenv(env);
-   if (p) len = strlen(p);
-   p2 = (char *)path;
-   if (p2) len2 = strlen(p2);
-   if (p && p2)
+   p2 = path;
+   len2 = strlen(p2);
+   if (p)
      {
+        len = strlen(p);
         // path already there at the start. dont prepend. :)
         if ((!strcmp(p, p2)) ||
             ((len > len2) &&
@@ -219,12 +222,12 @@ _env_path_prepend(const char *env, const char *path)
    if (s)
      {
         s[0] = 0;
-        if (p2)
+        strcat(s, p2);
+        if (p)
           {
-             strcat(s, p2);
              strcat(s, ":");
+             strcat(s, p);
           }
-        if (p) strcat(s, p);
         env_set(env, s);
         free(s);
      }
@@ -233,16 +236,18 @@ _env_path_prepend(const char *env, const char *path)
 static void
 _env_path_append(const char *env, const char *path)
 {
-   char *p, *p2, *s;
+   char *p, *s;
+   const char *p2;
    int len = 0, len2 = 0;
    
+   if (!path) return;
+   
    p = getenv(env);
-   if (!p) return;
-   len = strlen(p);
-   p2 = (char *)path;
-   if (p2) len2 = strlen(p2);
-   if (p && p2)
+   p2 = path;
+   len2 = strlen(p2);
+   if (p)
      {
+        len = strlen(p);
         // path already there at the end. dont append. :)
         if ((!strcmp(p, p2)) ||
             ((len > len2) &&
@@ -254,12 +259,12 @@ _env_path_append(const char *env, const char *path)
    if (s)
      {
         s[0] = 0;
-        if (p) strcat(s, p);
-        if (p2)
+        if (p)
           {
+             strcat(s, p);
              strcat(s, ":");
-             strcat(s, p2);
           }
+        strcat(s, p2);
         env_set(env, s);
         free(s);
      }
