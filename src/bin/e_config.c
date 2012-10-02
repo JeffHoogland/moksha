@@ -932,6 +932,7 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, xkb.used_options, _e_config_xkb_option_edd);
    E_CONFIG_VAL(D, T, xkb.only_label, INT);
    E_CONFIG_VAL(D, T, xkb.default_model, STR);
+   E_CONFIG_VAL(D, T, xkb.desklock_group, INT);    
    //E_CONFIG_VAL(D, T, xkb.cur_group, INT);    
    
    E_CONFIG_VAL(D, T, exe_always_single_instance, UCHAR);
@@ -1237,6 +1238,10 @@ e_config_load(void)
 
           IFCFG(0x0152);
           COPYVAL(window_grouping);
+          IFCFGEND;
+
+          IFCFG(0x0156);
+          e_config->xkb.desklock_group = -1;
           IFCFGEND;
 
           e_config->config_version = E_CONFIG_FILE_VERSION;

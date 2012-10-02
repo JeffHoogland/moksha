@@ -309,6 +309,10 @@ e_desklock_show(Eina_Bool suspend)
 works:
    if (e_config->desklock_language)
      e_intl_language_set(e_config->desklock_language);
+
+   if (e_config->xkb.desklock_group != -1)
+     e_xkb_update(e_config->xkb.desklock_group);
+
    total_zone_num = _e_desklock_zone_num_get();
    EINA_LIST_FOREACH(managers, l, man)
      {
@@ -377,6 +381,9 @@ e_desklock_hide(void)
 
    if (e_config->desklock_language)
      e_intl_language_set(e_config->language);
+
+   if (e_config->xkb.desklock_group != -1)
+     e_xkb_update(e_config->xkb.cur_group);
 
    _e_desklock_state = EINA_FALSE;
    ev = E_NEW(E_Event_Desklock, 1);

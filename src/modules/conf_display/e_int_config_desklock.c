@@ -32,6 +32,9 @@ struct _E_Config_Dialog_Data
    int              zone;
    char            *custom_lock_cmd;
 
+   /* Layout */
+   int              desklock_group;
+
    /* Timers */
    int              screensaver_lock;
    double           idle_time;
@@ -47,6 +50,7 @@ struct _E_Config_Dialog_Data
 
    struct
    {
+      Evas_Object *kbd_list;
       Evas_Object *loginbox_slider;
       Evas_Object *post_screensaver_slider;
       Evas_Object *auto_lock_slider;
@@ -128,6 +132,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (e_config->desklock_custom_desklock_cmd)
      cfdata->custom_lock_cmd = strdup(e_config->desklock_custom_desklock_cmd);
 
+   cfdata->desklock_group = e_config->xkb.desklock_group;
    cfdata->start_locked = e_config->desklock_start_locked;
    cfdata->lock_on_suspend = e_config->desklock_on_suspend;
    cfdata->auto_lock = e_config->desklock_autolock_idle;
@@ -195,9 +200,19 @@ _basic_screensaver_lock_cb_changed(void *data, Evas_Object *o __UNUSED__)
    e_widget_disabled_set(cfdata->gui.post_screensaver_slider, disable);
 }
 
+static void
+_layout_changed(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+
+   cfdata->desklock_group = e_widget_ilist_selected_get(cfdata->gui.kbd_list);
+}
+
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
+   E_Config_XKB_Layout *cl;
+   int grp = 0;
    Evas_Object *otb, *ol, *ow, *of, *ot;
    Eina_List *l, *ll, *lll;
    E_Zone *zone;
@@ -228,6 +243,45 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Locking"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
+
+   /* Keyboard Layout */
+   cfdata->gui.kbd_list = ol = e_widget_ilist_add(evas, 32 * e_scale, 32 * e_scale, NULL);
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+     {
+        Evas_Object *icon, *end;
+        char buf[4096];
+        const char *name = cl->name;
+
+        end = edje_object_add(evas);
+        if (e_theme_edje_object_set(end, "base/theme/widgets",
+                                    "e/widgets/ilist/toggle_end"))
+          {
+             if (grp == cfdata->desklock_group)
+               edje_object_signal_emit(end, "e,state,checked", "e");
+             else
+               edje_object_signal_emit(end, "e,state,unchecked", "e");
+          }
+        else
+          {
+             evas_object_del(end);
+             end = NULL;
+          }
+        e_xkb_flag_file_get(buf, sizeof(buf), name);
+        icon = e_icon_add(evas);
+        if (!e_icon_file_set(icon, buf))
+          {
+             evas_object_del(icon);
+             icon = NULL;
+          }
+        if (cl->variant)
+          snprintf(buf, sizeof(buf), "%s (%s, %s)", cl->name, cl->model, cl->variant);
+        else
+          snprintf(buf, sizeof(buf), "%s (%s)", cl->name, cl->model);
+        e_widget_ilist_append_full(ol, icon, end, buf, _layout_changed, cfdata, NULL);
+        grp++;
+     }
+   e_widget_toolbook_page_append(otb, NULL, _("Keyboard Layout"), ol,
+                                 1, 1, 1, 1, 0.5, 0.0);
 
    /* Login */
    ol = e_widget_list_add(evas, 0, 0);
@@ -359,8 +413,8 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->desklock_autolock_screensaver = cfdata->screensaver_lock;
    e_config->desklock_autolock_idle_timeout = (cfdata->idle_time * 60);
    e_config->desklock_ask_presentation = cfdata->ask_presentation;
-   e_config->desklock_ask_presentation_timeout =
-     cfdata->ask_presentation_timeout;
+   e_config->desklock_ask_presentation_timeout = cfdata->ask_presentation_timeout;
+   e_config->xkb.desklock_group = cfdata->desklock_group;
 
    if (cfdata->bgs)
      {
@@ -399,6 +453,10 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 {
    Eina_List *l, *ll;
    E_Config_Desklock_Background *cbg;
+
+   if (e_config->xkb.desklock_group != cfdata->desklock_group)
+     return 1;
+
    if (e_config->desklock_start_locked != cfdata->start_locked)
      return 1;
 
