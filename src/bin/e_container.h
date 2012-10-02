@@ -64,7 +64,7 @@ struct _E_Container
    struct {
       Ecore_X_Window win;
       Eina_List *clients;
-   } layers[11];
+   } layers[12];
 
    Ecore_X_Window       scratch_win;
 };

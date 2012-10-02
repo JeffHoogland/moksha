@@ -128,7 +128,7 @@ e_container_new(E_Manager *man)
    con->scratch_win = ecore_x_window_override_new(con->win, 0, 0, 7, 7);
 
    /* init layers */
-   for (i = 0; i < 11; i++)
+   for (i = 0; i < 12; i++)
      {
         con->layers[i].win = ecore_x_window_input_new(con->win, 0, 0, 1, 1);
         ecore_x_window_lower(con->layers[i].win);
@@ -147,7 +147,7 @@ e_container_new(E_Manager *man)
                               ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
                               ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
                               0, 0, 0, 0, 0,
-                              con->layers[10].win, ECORE_X_WINDOW_STACK_ABOVE);
+                              con->layers[11].win, ECORE_X_WINDOW_STACK_ABOVE);
 
    /* Put menu win on top */
    mwin = e_menu_grab_window_get();
@@ -156,7 +156,7 @@ e_container_new(E_Manager *man)
                               ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
                               ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
                               0, 0, 0, 0, 0,
-                              con->layers[10].win, ECORE_X_WINDOW_STACK_ABOVE);
+                              con->layers[11].win, ECORE_X_WINDOW_STACK_ABOVE);
 
    /* Put background win at the bottom */
    ecore_x_window_configure(con->bg_win,
