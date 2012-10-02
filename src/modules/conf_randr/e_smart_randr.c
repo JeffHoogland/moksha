@@ -117,7 +117,6 @@ _e_smart_add(Evas_Object *obj)
    evas_object_resize(sd->o_layout, 
                       E_RANDR_12->max_size.width / 8,
                       E_RANDR_12->max_size.height / 8);
-   evas_object_smart_member_add(sd->o_layout, obj);
 
    /* add scroll object */
    sd->o_scroll = e_scrollframe_add(evas);
