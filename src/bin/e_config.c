@@ -657,6 +657,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, edge_flip_dragging, INT); /**/
    E_CONFIG_VAL(D, T, use_composite, INT); /**/
    E_CONFIG_VAL(D, T, language, STR); /**/
+   E_CONFIG_VAL(D, T, desklock_language, STR); /**/
    E_CONFIG_LIST(D, T, modules, _e_config_module_edd); /**/
    E_CONFIG_LIST(D, T, font_fallbacks, _e_config_font_fallback_edd); /**/
    E_CONFIG_LIST(D, T, font_defaults, _e_config_font_default_edd); /**/
@@ -2119,6 +2120,7 @@ _e_config_free(E_Config *ecf)
    if (ecf->desktop_default_background) eina_stringshare_del(ecf->desktop_default_background);
    if (ecf->desktop_default_name) eina_stringshare_del(ecf->desktop_default_name);
    if (ecf->language) eina_stringshare_del(ecf->language);
+   eina_stringshare_del(ecf->desklock_language);
    if (ecf->transition_start) eina_stringshare_del(ecf->transition_start);
    if (ecf->transition_desk) eina_stringshare_del(ecf->transition_desk);
    if (ecf->transition_change) eina_stringshare_del(ecf->transition_change);

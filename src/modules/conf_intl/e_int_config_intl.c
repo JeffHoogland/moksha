@@ -5,6 +5,7 @@ typedef struct _E_Intl_Langauge_Node E_Intl_Language_Node;
 typedef struct _E_Intl_Region_Node   E_Intl_Region_Node;
 
 static void        *_create_data(E_Config_Dialog *cfd);
+static void        *_create_desklock_data(E_Config_Dialog *cfd);
 static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
@@ -96,8 +97,8 @@ struct _E_Config_Dialog_Data
       Evas_Object *mod_list;
 
       Evas_Object *locale_entry;
-   }
-   gui;
+   } gui;
+   Eina_Bool desklock : 1;
 };
 
 const E_Intl_Pair basic_language_predefined_pairs[] = {
@@ -599,6 +600,29 @@ e_int_config_intl(E_Container *con, const char *params __UNUSED__)
    return cfd;
 }
 
+E_Config_Dialog *
+e_int_config_desklock_intl(E_Container *con, const char *params __UNUSED__)
+{
+   E_Config_Dialog *cfd;
+   E_Config_Dialog_View *v;
+
+   if (e_config_dialog_find("E", "language/desklock_language_settings")) return NULL;
+   v = E_NEW(E_Config_Dialog_View, 1);
+
+   v->create_cfdata = _create_desklock_data;
+   v->free_cfdata = _free_data;
+   v->advanced.create_widgets = _advanced_create_widgets;
+   v->advanced.apply_cfdata = _advanced_apply_data;
+   v->basic.create_widgets = _basic_create_widgets;
+   v->basic.apply_cfdata = _basic_apply_data;
+
+   cfd = e_config_dialog_new(con,
+                             _("Desklock Language Settings"),
+                             "E", "language/desklock_language_settings",
+                             "preferences-desktop-locale", 0, v, NULL);
+   return cfd;
+}
+
 /* Build hash tables used for locale navigation. The locale information is
  * gathered using the locale -a command.
  *
@@ -813,6 +837,19 @@ _create_data(E_Config_Dialog *cfd)
    return cfdata;
 }
 
+static void *
+_create_desklock_data(E_Config_Dialog *cfd)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = _create_data(cfd);
+   E_FREE(cfdata->cur_language);
+   if (e_config->desklock_language)
+     cfdata->cur_language = strdup(e_config->desklock_language);
+   cfdata->desklock = 1;
+   return cfdata;
+}
+
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
@@ -923,12 +960,22 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->cur_language)
      {
-        if (e_config->language) eina_stringshare_del(e_config->language);
-        e_config->language = NULL;
-        if ((cfdata->cur_language) && (cfdata->cur_language[0]))
-          e_config->language = eina_stringshare_add(cfdata->cur_language);
-        e_intl_language_set(e_config->language);
-        _lc_check();
+        if (cfdata->desklock)
+          {
+             if (e_config->desklock_language) eina_stringshare_del(e_config->desklock_language);
+             e_config->desklock_language = NULL;
+             if ((cfdata->cur_language) && (cfdata->cur_language[0]))
+               e_config->desklock_language = eina_stringshare_add(cfdata->cur_language);
+          }
+        else
+          {
+             if (e_config->language) eina_stringshare_del(e_config->language);
+             e_config->language = NULL;
+             if ((cfdata->cur_language) && (cfdata->cur_language[0]))
+               e_config->language = eina_stringshare_add(cfdata->cur_language);
+             e_intl_language_set(e_config->language);
+             _lc_check();
+          }
      }
 
    e_config_save_queue();
@@ -940,12 +987,22 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 {
    if (cfdata->cur_language)
      {
-        if (e_config->language) eina_stringshare_del(e_config->language);
-        e_config->language = NULL;
-        if ((cfdata->cur_language) && (cfdata->cur_language[0]))
-          e_config->language = eina_stringshare_add(cfdata->cur_language);
-        e_intl_language_set(e_config->language);
-        _lc_check();
+        if (cfdata->desklock)
+          {
+             if (e_config->desklock_language) eina_stringshare_del(e_config->desklock_language);
+             e_config->desklock_language = NULL;
+             if ((cfdata->cur_language) && (cfdata->cur_language[0]))
+               e_config->desklock_language = eina_stringshare_add(cfdata->cur_language);
+          }
+        else
+          {
+             if (e_config->language) eina_stringshare_del(e_config->language);
+             e_config->language = NULL;
+             if ((cfdata->cur_language) && (cfdata->cur_language[0]))
+               e_config->language = eina_stringshare_add(cfdata->cur_language);
+             e_intl_language_set(e_config->language);
+             _lc_check();
+          }
      }
 
    e_config_save_queue();

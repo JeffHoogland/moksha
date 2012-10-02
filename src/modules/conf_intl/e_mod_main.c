@@ -20,6 +20,10 @@ e_modapi_init(E_Module *m)
                                  _("Language Settings"), NULL,
                                  "preferences-desktop-locale",
                                  e_int_config_intl);
+   e_configure_registry_item_add("language/desklock_language_settings", 10,
+                                 _("Desklock Language Settings"), NULL,
+                                 "preferences-desktop-locale",
+                                 e_int_config_desklock_intl);
    e_configure_registry_item_add("language/input_method_settings", 20,
                                  _("Input Method Settings"), NULL,
                                  "preferences-imc", e_int_config_imc);
@@ -37,7 +41,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "language/language_settings")))
      e_object_del(E_OBJECT(cfd));
+   while ((cfd = e_config_dialog_get("E", "language/desklock_language_settings")))
+     e_object_del(E_OBJECT(cfd));
    e_configure_registry_item_del("language/input_method_settings");
+   e_configure_registry_item_del("language/desklock_language_settings");
    e_configure_registry_item_del("language/language_settings");
    e_configure_registry_category_del("language");
    conf_module = NULL;

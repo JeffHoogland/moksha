@@ -223,6 +223,8 @@ e_desklock_show(Eina_Bool suspend)
           ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
                                   _e_desklock_cb_custom_desklock_exit, NULL);
         e_util_library_path_strip();
+        if (e_config->desklock_language)
+          e_intl_language_set(e_config->desklock_language);
         _e_custom_desklock_exe =
           ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
         e_util_library_path_restore();
@@ -305,7 +307,8 @@ e_desklock_show(Eina_Bool suspend)
         return 0;
      }
 works:
-
+   if (e_config->desklock_language)
+     e_intl_language_set(e_config->desklock_language);
    total_zone_num = _e_desklock_zone_num_get();
    EINA_LIST_FOREACH(managers, l, man)
      {
@@ -371,6 +374,9 @@ e_desklock_hide(void)
    E_Event_Desklock *ev;
 
    if ((!edd) && (!_e_custom_desklock_exe)) return;
+
+   if (e_config->desklock_language)
+     e_intl_language_set(e_config->language);
 
    _e_desklock_state = EINA_FALSE;
    ev = E_NEW(E_Event_Desklock, 1);
