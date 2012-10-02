@@ -28,6 +28,8 @@ static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_reconfigure(E_Smart_Data *sd);
+static void _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj);
+
 static void _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__);
@@ -241,17 +243,14 @@ _e_smart_reconfigure(E_Smart_Data *sd)
    e_layout_thaw(sd->o_layout);
 }
 
-/* callback received from the monitor object to let us know that it was 
- * resized, and we should adjust position of any adjacent monitors */
 static void 
-_e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__)
+_e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
 {
-   E_Smart_Data *sd;
    Eina_List *l = NULL;
    Evas_Object *mon;
    Eina_Rectangle o;
 
-   if (!(sd = data)) return;
+   if (!sd) return;
 
    /* get the geometry of this monitor */
    e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
@@ -298,11 +297,25 @@ _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__
 }
 
 /* callback received from the monitor object to let us know that it was 
+ * resized, and we should adjust position of any adjacent monitors */
+static void 
+_e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = data)) return;
+   _e_smart_randr_layout_adjust(sd, obj);
+}
+
+/* callback received from the monitor object to let us know that it was 
  * rotated, and we should adjust position of any adjacent monitors */
 static void 
 _e_smart_cb_monitor_rotated(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
-   printf("Monitor Rotated\n");
+   E_Smart_Data *sd;
+
+   if (!(sd = data)) return;
+   _e_smart_randr_layout_adjust(sd, obj);
 }
 
 /* callback received from the monitor object to let us know that it was 
