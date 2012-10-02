@@ -627,7 +627,6 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
    Evas_Object *mon;
    E_Smart_Data *sd;
    Evas_Coord ow, oh;
-   /* Evas_Coord nrw, nrh; */
    Ecore_X_Randr_Mode_Info *mode;
 
    if (!(mon = data)) return;
@@ -637,7 +636,12 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
    e_layout_child_lower(mon);
 
    /* get the object geometry */
-   e_layout_child_geometry_get(mon, NULL, NULL, &ow, &oh);
+   if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+       (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
+     e_layout_child_geometry_get(mon, NULL, NULL, &oh, &ow);
+   else if ((sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
+     e_layout_child_geometry_get(mon, NULL, NULL, &ow, &oh);
 
    /* find the closest resolution to this one and snap to it */
    if ((mode = _e_smart_monitor_resolution_get(sd, ow, oh)))
