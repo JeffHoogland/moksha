@@ -716,7 +716,7 @@ e_border_new(E_Container   *con,
    ecore_x_window_prop_card32_set(win, E_ATOM_ZONE, &bd->zone->num, 1);
      {
         unsigned int zgeom[4];
-        
+
         zgeom[0] = bd->zone->x;
         zgeom[1] = bd->zone->y;
         zgeom[2] = bd->zone->w;
@@ -884,7 +884,7 @@ e_border_zone_set(E_Border *bd,
    // need to adjust this if zone pos/size changes
      {
         unsigned int zgeom[4];
-        
+
         zgeom[0] = bd->zone->x;
         zgeom[1] = bd->zone->y;
         zgeom[2] = bd->zone->w;
@@ -2136,7 +2136,7 @@ e_border_focus_set(E_Border *bd,
        (!bd->client.icccm.take_focus))
      return;
    if ((set) && (focus) && (bd->lock_focus_out)) return;
-   
+
    /* dont focus an iconified window. that's silly! */
    if (focus)
      {
@@ -2218,7 +2218,7 @@ e_border_focus_set(E_Border *bd,
                {
                   Eina_List *l;
                   E_Border *bd2;
-             
+
                   EINA_LIST_FOREACH(e_border_client_list(), l, bd2)
                     {
                        if ((bd2->fullscreen) &&
@@ -2229,7 +2229,7 @@ e_border_focus_set(E_Border *bd,
                          {
                             Eina_Bool unfocus_is_parent = EINA_FALSE;
                             E_Border *bd_parent;
-                            
+
                             bd_parent = bd->parent;
                             while (bd_parent)
                               {
@@ -2278,7 +2278,7 @@ e_border_focus_set(E_Border *bd,
                   Eina_Bool have_vis_child = EINA_FALSE;
                   Eina_List *l;
                   E_Border *bd2;
-                  
+
                   EINA_LIST_FOREACH(e_border_client_list(), l, bd2)
                     {
                        if ((bd2 != bd) &&
@@ -2298,7 +2298,7 @@ e_border_focus_set(E_Border *bd,
                }
           }
      }
-   
+
    if ((bd_unfocus) &&
        (!e_object_is_del(E_OBJECT(bd_unfocus)) &&
         (e_object_ref_get(E_OBJECT(bd_unfocus)) > 0)))
@@ -2322,7 +2322,7 @@ e_border_focus_set(E_Border *bd,
 
         ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
                         _e_border_event_border_focus_out_free, NULL);
-        if ((!e_config->allow_above_fullscreen) && 
+        if ((!e_config->allow_above_fullscreen) &&
             (bd_unfocus->fullscreen) &&
             (bd != bd_unfocus) &&
             (bd->zone == bd_unfocus->zone) &&
@@ -3494,7 +3494,7 @@ e_border_idler_before(void)
              return;
           }
 #endif
-        
+
         focus_time = ecore_x_current_time_get();
 
         focusing = bd;
@@ -4703,7 +4703,7 @@ _e_border_free(E_Border *bd)
      focusing = NULL;
 
    focus_next = eina_list_remove(focus_next, bd);
-   
+
    if ((focused == bd) ||
        (e_grabinput_last_focus_win_get() == bd->client.win))
      {
@@ -9767,7 +9767,7 @@ e_border_activate(E_Border *bd, Eina_Bool just_do_it)
           {
              if (e_config->clientlist_warp_to_iconified_desktop == 1)
                e_desk_show(bd->desk);
-             
+
              if (!bd->lock_user_iconify)
                e_border_uniconify(bd);
           }
