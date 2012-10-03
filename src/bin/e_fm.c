@@ -7534,12 +7534,7 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
           }
      }
    else if (!strcmp(ev->key, "Delete"))
-     {
-        /* FIXME: typebuf extras */
-        if (sd->typebuf_visible)
-          { /* typebuf mode: delete */ }else
-          _e_fm2_file_delete(obj);
-     }
+     _e_fm2_file_delete(obj);
    else if (!evas_key_modifier_is_set(ev->modifiers, "Control") &&
             !evas_key_modifier_is_set(ev->modifiers, "Alt"))
      {
