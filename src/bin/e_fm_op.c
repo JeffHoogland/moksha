@@ -260,7 +260,7 @@ main(int argc, char **argv)
                     }
                   else
                     {
-                       if (type == E_FM_OP_RENAME)
+                       if (type == E_FM_OP_MOVE)
                          {
                             if (!strcmp(argv[i], buf))
                               goto skip_arg;
@@ -269,7 +269,7 @@ main(int argc, char **argv)
                               _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
                                                        "Unknown destination '%s': %s.", buf);
                          }
-                       else if (type == E_FM_OP_MOVE)
+                       else if (type == E_FM_OP_RENAME)
                          {
                             if (!strcmp(argv[i], buf))
                               goto skip_arg;
@@ -284,7 +284,10 @@ main(int argc, char **argv)
                                   * unvoidable. */
                                  if (rename(argv[i], buf) == -1)
                                    {
-                                      if (errno != EXDEV)
+                                      /* if it's another device */
+                                      if (errno == EXDEV)
+                                        type = E_FM_OP_COPY;
+                                      else
                                         {
                                            _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
                                                                     "Cannot move '%s' to '%s': %s.",
@@ -301,6 +304,8 @@ main(int argc, char **argv)
                               }
                             else
                               {
+                                 /* if the destination file already exists,
+                                  * store a task which handles overwrite */
                                  struct stat st1;
                                  struct stat st2;
                                  if ((stat(argv[i], &st1) == 0) &&
