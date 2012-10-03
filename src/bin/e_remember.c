@@ -447,7 +447,7 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
    {
       E_Event_Remember_Update *ev;
 
-      ev = malloc(sizeof(ev));
+      ev = malloc(sizeof(E_Event_Remember_Update));
       if (!ev) return;
       ev->border = bd;
       ecore_event_add(E_EVENT_REMEMBER_UPDATE, ev, NULL, NULL);
