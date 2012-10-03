@@ -2222,7 +2222,7 @@ e_border_focus_set(E_Border *bd,
              if (focusing == bd) focusing = NULL;
              bd->focused = 1;
              focused = bd;
-             if (!bd_unfocus)
+             if ((!e_config->allow_above_fullscreen) && (!bd_unfocus))
                {
                   EINA_LIST_FOREACH(e_border_client_list(), l, bd2)
                     {
@@ -2245,8 +2245,7 @@ e_border_focus_set(E_Border *bd,
                                    }
                                  bd_parent = bd->parent;
                               }
-                            if ((!unfocus_is_parent) && 
-                                (!e_config->allow_above_fullscreen))
+                            if (!unfocus_is_parent)
                               {
                                  e_border_unfullscreen(bd2);
                                  bd2->was_fullscreen = 1;
@@ -2288,7 +2287,7 @@ e_border_focus_set(E_Border *bd,
                   e_grabinput_focus(bd->zone->container->bg_win,
                                     E_FOCUS_METHOD_PASSIVE);
                }
-             if ((bd->fullscreen) && (wasfocused))
+             if ((!e_config->allow_above_fullscreen) && (bd->fullscreen) && (wasfocused))
                {
                   Eina_Bool have_vis_child = EINA_FALSE;
                   Eina_List *l;
@@ -2308,8 +2307,7 @@ e_border_focus_set(E_Border *bd,
                               }
                          }
                     }
-                  if ((!have_vis_child) && 
-                      (!e_config->allow_above_fullscreen))
+                  if (!have_vis_child)
                     {
                        e_border_unfullscreen(bd);
                        bd->was_fullscreen = 1;
@@ -2341,7 +2339,8 @@ e_border_focus_set(E_Border *bd,
 
         ecore_event_add(E_EVENT_BORDER_FOCUS_OUT, ev,
                         _e_border_event_border_focus_out_free, NULL);
-        if ((bd_unfocus->fullscreen) &&
+        if ((!e_config->allow_above_fullscreen) && 
+            (bd_unfocus->fullscreen) &&
             (bd != bd_unfocus) &&
             (bd->zone == bd_unfocus->zone) &&
             ((bd->desk == bd_unfocus->desk) ||
@@ -2360,7 +2359,7 @@ e_border_focus_set(E_Border *bd,
                     }
                   bd_parent = bd->parent;
                }
-             if ((!unfocus_is_parent) && (!e_config->allow_above_fullscreen))
+             if (!unfocus_is_parent)
                {
                   e_border_unfullscreen(bd_unfocus);
                   bd_unfocus->was_fullscreen = 1;
