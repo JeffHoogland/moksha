@@ -209,7 +209,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
       wd->labob = o; \
       e_widget_table_object_align_append(wd->o_preview_properties_table, \
                                          wd->labob,                     \
-                                         0, y, 1, 1, 0, 1, 0, 0, 0.0, 0.0); \
+                                         0, y, 1, 1, 0, 1, 0, 0, 1.0, 0.0); \
       o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL); \
       e_widget_entry_readonly_set(o, 1); \
       e_widget_disabled_set(o, 1); \
@@ -234,7 +234,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    evas_object_smart_callback_add(o, "length_change", (Evas_Smart_Cb)_e_wid_fprev_preview_video_opened, wd);
    evas_object_smart_callback_add(o, "frame_decode", (Evas_Smart_Cb)_e_wid_fprev_preview_video_position, wd);
 
-   o = e_widget_slider_add(evas, 1, 0, _("%3.1"), 0, 100, 0.5, 0, &wd->vid_pct, NULL, wd->w);
+   o = e_widget_slider_add(evas, 1, 0, _("%3.1f%%"), 0, 100, 0.5, 0, &wd->vid_pct, NULL, wd->w);
    wd->o_preview_time = o;
    e_widget_table_object_align_append(wd->o_preview_properties_table,
                                       wd->o_preview_time,                    
