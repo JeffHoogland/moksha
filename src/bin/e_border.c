@@ -5006,8 +5006,7 @@ _e_border_cb_window_hide(void *data  __UNUSED__,
         return ECORE_CALLBACK_PASS_ON;
      }
    /* Don't delete hidden or iconified windows */
-   if ((bd->iconic) || ((!bd->visible) && (!bd->new_client)) ||
-       (bd->await_hide_event > 0))
+   if ((bd->iconic) || (bd->await_hide_event > 0))
      {
 //        printf("  Don't delete hidden or iconified windows\n");
 //        printf("  bd->iconic = %i, bd->visible = %i, bd->new_client = %i, bd->await_hide_event = %i\n",
