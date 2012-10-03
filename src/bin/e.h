@@ -204,7 +204,7 @@ typedef struct _E_Rect         E_Rect;
        if (_eh) \
          list = eina_list_append(list, _eh); \
        else \
-         ERR("E_LIST_HANDLER_APPEND"); \
+         fprintf(stderr, "E_LIST_HANDLER_APPEND\n"); \
     } \
   while (0)
 
