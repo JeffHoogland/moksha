@@ -340,8 +340,11 @@ _e_wid_fprev_preview_file_widgets(E_Widget_Data *wd)
    e_widget_disabled_set(o, 1);
    wd->o_preview_properties_table = o;
 
-   WIDROW(_("Resolution:"), o_preview_extra, o_preview_extra_entry, 100);
-   WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 100);
+   if (e_util_strcmp(wd->mime, "inode/directory"))
+     {
+        WIDROW(_("Resolution:"), o_preview_extra, o_preview_extra_entry, 100);
+        WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 100);
+     }
    WIDROW(_("Owner:"), o_preview_owner, o_preview_owner_entry, 100);
    WIDROW(_("Permissions:"), o_preview_perms, o_preview_perms_entry, 100);
    WIDROW(_("Modified:"), o_preview_time, o_preview_time_entry, 100);
@@ -544,8 +547,11 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
 
    e_widget_size_min_get(wd->o_preview_list, &mw, &mh);
    e_widget_size_min_set(wd->obj, mw, mh);
-   e_widget_entry_text_set(wd->o_preview_extra_entry, "");
-   e_widget_entry_text_set(wd->o_preview_size_entry, size);
+   if (e_util_strcmp(wd->mime, "inode/directory"))
+     {
+        e_widget_entry_text_set(wd->o_preview_extra_entry, "");
+        e_widget_entry_text_set(wd->o_preview_size_entry, size);
+     }
    e_widget_entry_text_set(wd->o_preview_owner_entry, owner);
    e_widget_entry_text_set(wd->o_preview_perms_entry, perms);
    e_widget_entry_text_set(wd->o_preview_time_entry, mtime);
