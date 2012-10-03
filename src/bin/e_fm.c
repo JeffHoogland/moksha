@@ -7527,8 +7527,9 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
         /* typebuf mode: backspace */
         if (sd->typebuf_visible)
           _e_fm2_typebuf_char_backspace(obj);
-        else
+        else if (!sd->config->view.no_typebuf_set)
           {
+             /* only allow this action when typebuf navigation is allowed in config */
              if (e_fm2_has_parent_get(obj))
                e_fm2_parent_go(obj);
           }
