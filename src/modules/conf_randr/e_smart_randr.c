@@ -29,6 +29,7 @@ static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_reconfigure(E_Smart_Data *sd);
 static void _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj);
+static void _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj);
 
 static void _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj, void *event __UNUSED__);
@@ -75,6 +76,8 @@ e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
 
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
+
+   printf("Adding Monitor Object: %p\n", mon);
 
    /* tell monitor what layout it is in */
    e_smart_monitor_layout_set(mon, sd->o_layout);
@@ -252,6 +255,8 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
 
    if (!sd) return;
 
+#define RESISTANCE_THRESHOLD 5
+
    /* get the geometry of this monitor */
    e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
 
@@ -285,10 +290,58 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
           {
              /* they intersect, we need to move this one */
              /* NB: This can happen when monitors get moved manually */
-             if ((m.x < (o.x + o.w)))
+
+             if ((m.x <= (o.x + o.w)))
                e_layout_child_move(mon, (o.x + o.w), m.y);
              else if ((m.y <= (o.y + o.h)))
                e_layout_child_move(mon, m.x, (o.y + o.h));
+          }
+     }
+
+   /* thaw layout to allow redraw */
+   e_layout_thaw(sd->o_layout);
+}
+
+static void 
+_e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj)
+{
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+   Eina_Rectangle o;
+   Evas_Coord mx, my;
+
+   if (!sd) return;
+
+   /* get this monitor geometry Before it was moved
+    * 
+    * NB: This is returned in Virtual coordinates */
+   e_smart_monitor_move_geometry_get(obj, &mx, &my, NULL, NULL);
+
+   /* get the geometry of this monitor */
+   evas_object_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+
+   /* freeze layout */
+   e_layout_freeze(sd->o_layout);
+
+   /* find any monitors that this one intersects with */
+   EINA_LIST_FOREACH(sd->items, l, mon)
+     {
+        Eina_Rectangle m;
+
+        /* skip if it's the current monitor */
+        if ((mon == obj)) continue;
+
+        /* get the geometry of this monitor */
+        evas_object_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+
+        if (eina_rectangles_intersect(&o, &m))
+          {
+             /* if these 2 monitors intersect, we need to move the second one 
+              * as the user is currently moving the first one
+              * 
+              * NB: Currently, this will move This monitor to the 
+              * position of the old one. This is probably not ideal */
+             e_layout_child_move(mon, mx, my);
           }
      }
 
@@ -321,9 +374,18 @@ _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj, void *event __UNUSED__
 /* callback received from the monitor object to let us know that it was 
  * moved, and we should adjust position of any adjacent monitors */
 static void 
-_e_smart_cb_monitor_moved(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
-   printf("Monitor Moved\n");
+   E_Smart_Data *sd;
+
+   if (!(sd = data)) return;
+
+//   printf("Monitor Moved: %p\n", obj);
+
+   if (e_smart_monitor_moving_get(obj)) 
+     _e_smart_randr_layout_reposition(sd, obj);
+   else 
+     _e_smart_randr_layout_adjust(sd, obj);
 }
 
 /* callback received from the monitor object to let us know that it was 

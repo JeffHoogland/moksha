@@ -13,6 +13,9 @@ struct _E_Smart_Data
    /* object geometry */
    Evas_Coord x, y, w, h;
 
+   /* object geometry before move started */
+   Evas_Coord mx, my, mw, mh;
+
    /* visible flag */
    Eina_Bool visible : 1;
 
@@ -338,6 +341,31 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
    /*           if (h) *h = sd->crtc->monitor->size_mm.height; */
    /*        } */
    /*   } */
+}
+
+void 
+e_smart_monitor_move_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return;
+
+   if (x) *x = sd->mx;
+   if (y) *y = sd->my;
+   if (w) *w = sd->mw;
+   if (h) *h = sd->mh;
+}
+
+Eina_Bool 
+e_smart_monitor_moving_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return EINA_FALSE;
+
+   return sd->moving;
 }
 
 /* local functions */
@@ -858,6 +886,9 @@ _e_smart_cb_thumb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj
         man = e_manager_current_get();
         e_pointer_type_push(man->pointer, obj, "move");
 
+        /* record this monitors geometry before moving */
+        e_layout_child_geometry_get(mon, &sd->mx, &sd->my, &sd->mw, &sd->mh);
+
         /* update moving state */
         sd->moving = EINA_TRUE;
 
@@ -1131,9 +1162,10 @@ _e_smart_monitor_move(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    /* actually move the monitor */
    if ((gx != nx) || (gy != ny))
-     e_layout_child_move(mon, nx, ny);
-
-   /* evas_object_smart_callback_call(mon, "monitor_moved", NULL); */
+     {
+        e_layout_child_move(mon, nx, ny);
+        evas_object_smart_callback_call(mon, "monitor_moved", NULL);
+     }
 
    /* Hmm, this below code worked also ... and seems lighter.
     * but the above code seems more "proper".
