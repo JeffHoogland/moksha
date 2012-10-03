@@ -2215,15 +2215,15 @@ e_border_focus_set(E_Border *bd,
 
         if (!bd->focused)
           {
-             Eina_List *l;
-             E_Border *bd2;
-             
              if (focused) bd_unfocus = focused;
              if (focusing == bd) focusing = NULL;
              bd->focused = 1;
              focused = bd;
              if ((!e_config->allow_above_fullscreen) && (!bd_unfocus))
                {
+                  Eina_List *l;
+                  E_Border *bd2;
+             
                   EINA_LIST_FOREACH(e_border_client_list(), l, bd2)
                     {
                        if ((bd2->fullscreen) &&
