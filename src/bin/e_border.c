@@ -4879,7 +4879,6 @@ _e_border_del(E_Border *bd)
                                 bd->x + bd->client_inset.l,
                                 bd->y + bd->client_inset.t);
         ecore_x_window_save_set_del(bd->client.win);
-        bd->already_unparented = 1;
 //	bd->client.win = 0;
      }
    bd->already_unparented = 1;
