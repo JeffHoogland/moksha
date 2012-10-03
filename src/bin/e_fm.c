@@ -2155,6 +2155,9 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
         if (o) return o;
      }
 
+   if (ic->sd->config->icon.max_thumb_size && (ic->info.statinfo.st_size > ic->sd->config->icon.max_thumb_size * 1024 * 1024))
+     ic->thumb_failed = EINA_TRUE;
+
    /* create thumbnails for edje files */
    if (_e_fm2_file_is_edje(ic->info.file))
      {
