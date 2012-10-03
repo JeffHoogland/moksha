@@ -136,7 +136,7 @@ _xkb_update_icon(int cur_group)
    int grp = -1;
 
    if (!e_config->xkb.used_layouts) return;
-   INF("ui: %d", cur_group);
+   //INF("ui: %d", cur_group);
    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, layout)
      {
         grp++;
@@ -301,7 +301,7 @@ _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event __UNU
 {
    Ecore_X_Event_Xkb *ev = (Ecore_X_Event_Xkb *)event;
 
-   INF("xkb group %d", ev->group);
+   //INF("xkb group %d", ev->group);
    e_config->xkb.cur_group = ev->group;
    _xkb_update_icon(ev->group);
    return ECORE_CALLBACK_PASS_ON;
