@@ -2262,15 +2262,7 @@ e_border_focus_set(E_Border *bd,
         focus_next = eina_list_remove(focus_next, bd);
         if (bd == focusing) focusing = NULL;
 
-        if ((bd->focused) && 
-            (
-             (bd->desk == e_desk_current_get(bd->zone)) ||
-             (
-              (bd->desk != e_desk_current_get(bd->zone)) &&
-              (bd->zone == e_util_zone_current_get(e_manager_current_get()))
-             ) ||
-             (bd->sticky)
-            ))
+        if (bd->focused)
           {
              Eina_Bool wasfocused = EINA_FALSE;
              bd_unfocus = bd;
@@ -2287,7 +2279,9 @@ e_border_focus_set(E_Border *bd,
                   e_grabinput_focus(bd->zone->container->bg_win,
                                     E_FOCUS_METHOD_PASSIVE);
                }
-             if ((!e_config->allow_above_fullscreen) && (bd->fullscreen) && (wasfocused))
+             if ((!e_config->allow_above_fullscreen) &&
+                 (bd->fullscreen) && (wasfocused) &&
+                 ((bd->desk == e_desk_current_get(bd->zone)) || (bd->sticky)))
                {
                   Eina_Bool have_vis_child = EINA_FALSE;
                   Eina_List *l;
