@@ -2245,6 +2245,9 @@ _e_gadcon_client_drag_begin(E_Gadcon_Client *gcc, int x, int y)
    if ((gcc->gadcon->drag_gcc) || (!gcc->gadcon->zone) || (!gcc->gadcon->zone->container))
      return;
 
+   if (!e_util_strcmp(gcc->client_class->name, "systray"))
+     return;
+
    e_gadcon_client_drag_set(gcc);
 
    e_object_ref(E_OBJECT(gcc));
