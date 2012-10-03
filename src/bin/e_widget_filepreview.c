@@ -409,8 +409,7 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
                             if (statvfs(v->mount_point, &stfs) == 0)
                               {
                                  ok = EINA_TRUE;
-                                 eina_stringshare_del(file);
-                                 file = eina_stringshare_add(v->mount_point);
+                                 eina_stringshare_replace(&file, v->mount_point);
                               }
                          }
                     }
