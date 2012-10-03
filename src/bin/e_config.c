@@ -932,7 +932,9 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, xkb.used_options, _e_config_xkb_option_edd);
    E_CONFIG_VAL(D, T, xkb.only_label, INT);
    E_CONFIG_VAL(D, T, xkb.default_model, STR);
-   E_CONFIG_VAL(D, T, xkb.desklock_group, INT);    
+   E_CONFIG_VAL(D, T, xkb.selected_layout, STR);    
+   E_CONFIG_VAL(D, T, xkb.cur_layout, STR);    
+   E_CONFIG_VAL(D, T, xkb.desklock_layout, STR);    
    //E_CONFIG_VAL(D, T, xkb.cur_group, INT);    
    
    E_CONFIG_VAL(D, T, exe_always_single_instance, UCHAR);
@@ -1240,8 +1242,10 @@ e_config_load(void)
           COPYVAL(window_grouping);
           IFCFGEND;
 
-          IFCFG(0x0156);
-          e_config->xkb.desklock_group = -1;
+          IFCFG(0x0157);
+          e_config->xkb.selected_layout = NULL;
+          e_config->xkb.cur_layout = NULL;
+          e_config->xkb.desklock_layout = NULL;
           IFCFGEND;
 
           e_config->config_version = E_CONFIG_FILE_VERSION;
@@ -2126,6 +2130,9 @@ _e_config_free(E_Config *ecf)
    if (ecf->desktop_default_name) eina_stringshare_del(ecf->desktop_default_name);
    if (ecf->language) eina_stringshare_del(ecf->language);
    eina_stringshare_del(ecf->desklock_language);
+   eina_stringshare_del(ecf->xkb.selected_layout);
+   eina_stringshare_del(ecf->xkb.cur_layout);
+   eina_stringshare_del(ecf->xkb.desklock_layout);
    if (ecf->transition_start) eina_stringshare_del(ecf->transition_start);
    if (ecf->transition_desk) eina_stringshare_del(ecf->transition_desk);
    if (ecf->transition_change) eina_stringshare_del(ecf->transition_change);

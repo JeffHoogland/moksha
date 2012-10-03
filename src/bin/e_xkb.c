@@ -2,6 +2,8 @@
 
 static void _e_xkb_update_event(int);
 
+static int _e_xkb_cur_group = -1;
+
 EAPI int E_EVENT_XKB_CHANGED = 0;
 
 /* externally accessible functions */
@@ -10,6 +12,15 @@ e_xkb_init(void)
 {
    E_EVENT_XKB_CHANGED = ecore_event_type_new();
    e_xkb_update(-1);
+   if (e_config->xkb.cur_layout) e_xkb_layout_set(e_config->xkb.cur_layout);
+   else if (e_config->xkb.selected_layout) e_xkb_layout_set(e_config->xkb.selected_layout);
+   else if (e_config->xkb.used_layouts)
+     {
+        E_Config_XKB_Layout *cl;
+
+        cl = eina_list_data_get(e_config->xkb.used_layouts);
+        e_xkb_layout_set(cl->name);
+     }
    return 1;
 }
 
@@ -30,6 +41,7 @@ e_xkb_update(int cur_group)
    if (!e_config->xkb.used_layouts) return;
    if (cur_group != -1)
      {
+        _e_xkb_cur_group = cur_group;
         ecore_x_xkb_select_group(cur_group);
         return;
      }
@@ -120,6 +132,22 @@ e_xkb_layout_prev(void)
    e_config_save_queue();
 }
 
+/* always use this function to get the current layout's name
+ * to ensure the most accurate results!!!
+ */
+EAPI const char *
+e_xkb_layout_get(void)
+{
+   E_Config_XKB_Layout *cl;
+   unsigned int n = 0;
+
+   if (e_config->xkb.cur_layout) return e_config->xkb.cur_layout;
+   if (_e_xkb_cur_group >= 0)
+     n = _e_xkb_cur_group;
+   cl = eina_list_nth(e_config->xkb.used_layouts, n);
+   return cl ? cl->name : NULL;
+}
+
 EAPI void
 e_xkb_layout_set(const char *name)
 {
@@ -128,12 +156,14 @@ e_xkb_layout_set(const char *name)
    int cur_group = -1;
 
    if (!name) return;
-   EINA_LIST_FOREACH(eina_list_next(e_config->xkb.used_layouts), l, cl)
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
      {
         cur_group++;
         if (!cl->name) continue;
-        if (!strcmp(cl->name, name))
+        if ((cl->name == name) || (!strcmp(cl->name, name)))
           {
+             eina_stringshare_replace(&e_config->xkb.cur_layout, cl->name);
+             INF("Setting keyboard layout: %s", name);
              e_xkb_update(cur_group);
              _e_xkb_update_event(cur_group);
              break;

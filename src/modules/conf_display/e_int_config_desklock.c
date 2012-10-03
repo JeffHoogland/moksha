@@ -33,7 +33,7 @@ struct _E_Config_Dialog_Data
    char            *custom_lock_cmd;
 
    /* Layout */
-   int              desklock_group;
+   const char     *desklock_layout;
 
    /* Timers */
    int              screensaver_lock;
@@ -132,7 +132,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    if (e_config->desklock_custom_desklock_cmd)
      cfdata->custom_lock_cmd = strdup(e_config->desklock_custom_desklock_cmd);
 
-   cfdata->desklock_group = e_config->xkb.desklock_group;
+   cfdata->desklock_layout = e_config->xkb.desklock_layout;
    cfdata->start_locked = e_config->desklock_start_locked;
    cfdata->lock_on_suspend = e_config->desklock_on_suspend;
    cfdata->auto_lock = e_config->desklock_autolock_idle;
@@ -200,14 +200,6 @@ _basic_screensaver_lock_cb_changed(void *data, Evas_Object *o __UNUSED__)
    e_widget_disabled_set(cfdata->gui.post_screensaver_slider, disable);
 }
 
-static void
-_layout_changed(void *data)
-{
-   E_Config_Dialog_Data *cfdata = data;
-
-   cfdata->desklock_group = e_widget_ilist_selected_get(cfdata->gui.kbd_list);
-}
-
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -245,7 +237,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                  1, 0, 1, 0, 0.5, 0.0);
 
    /* Keyboard Layout */
-   cfdata->gui.kbd_list = ol = e_widget_ilist_add(evas, 32 * e_scale, 32 * e_scale, NULL);
+   cfdata->gui.kbd_list = ol = e_widget_ilist_add(evas, 32 * e_scale, 32 * e_scale, &cfdata->desklock_layout);
    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
      {
         Evas_Object *icon, *end;
@@ -256,8 +248,11 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
         if (e_theme_edje_object_set(end, "base/theme/widgets",
                                     "e/widgets/ilist/toggle_end"))
           {
-             if (grp == cfdata->desklock_group)
-               edje_object_signal_emit(end, "e,state,checked", "e");
+             if (name == cfdata->desklock_layout)
+               {
+                  edje_object_signal_emit(end, "e,state,checked", "e");
+                  e_widget_ilist_selected_set(ol, grp);
+               }
              else
                edje_object_signal_emit(end, "e,state,unchecked", "e");
           }
@@ -277,7 +272,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
           snprintf(buf, sizeof(buf), "%s (%s, %s)", cl->name, cl->model, cl->variant);
         else
           snprintf(buf, sizeof(buf), "%s (%s)", cl->name, cl->model);
-        e_widget_ilist_append_full(ol, icon, end, buf, _layout_changed, cfdata, NULL);
+        e_widget_ilist_append_full(ol, icon, end, buf, NULL, cfdata, cl->name);
         grp++;
      }
    e_widget_toolbook_page_append(otb, NULL, _("Keyboard Layout"), ol,
@@ -402,7 +397,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l;
+   const Eina_List *l;
    const char *bg;
    E_Config_Desklock_Background *cbg;
 
@@ -414,7 +409,22 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->desklock_autolock_idle_timeout = (cfdata->idle_time * 60);
    e_config->desklock_ask_presentation = cfdata->ask_presentation;
    e_config->desklock_ask_presentation_timeout = cfdata->ask_presentation_timeout;
-   e_config->xkb.desklock_group = cfdata->desklock_group;
+   if (e_config->xkb.desklock_layout != cfdata->desklock_layout)
+     {
+        e_config->xkb.desklock_layout = eina_stringshare_ref(cfdata->desklock_layout);
+        if (cfdata->desklock_layout)
+          {
+             E_Ilist_Item *ili;
+
+             EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->gui.kbd_list), l, ili)
+               {
+                  if (ili->selected)
+                    edje_object_signal_emit(ili->o_end, "e,state,checked", "e");
+                  else
+                    edje_object_signal_emit(ili->o_end, "e,state,unchecked", "e");
+               }
+          }
+     }
 
    if (cfdata->bgs)
      {
@@ -454,7 +464,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    Eina_List *l, *ll;
    E_Config_Desklock_Background *cbg;
 
-   if (e_config->xkb.desklock_group != cfdata->desklock_group)
+   if (e_config->xkb.desklock_layout != cfdata->desklock_layout)
      return 1;
 
    if (e_config->desklock_start_locked != cfdata->start_locked)

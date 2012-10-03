@@ -180,9 +180,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    EINA_LIST_FOREACH(cfdata->cfg_layouts, l, cl)
      {
         nl = E_NEW(E_Config_XKB_Layout, 1);
-        nl->name = eina_stringshare_add(cl->name);
-        nl->model = eina_stringshare_add(cl->model);
-        nl->variant = eina_stringshare_add(cl->variant);
+        nl->name = eina_stringshare_ref(cl->name);
+        nl->model = eina_stringshare_ref(cl->model);
+        nl->variant = eina_stringshare_ref(cl->variant);
 
         e_config->xkb.used_layouts =
           eina_list_append(e_config->xkb.used_layouts, nl);
@@ -204,7 +204,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         if (!od->enabled) continue;
 
         oc = E_NEW(E_Config_XKB_Option, 1);
-        oc->name = eina_stringshare_add(od->name);
+        oc->name = eina_stringshare_ref(od->name);
         e_config->xkb.used_options = eina_list_append(e_config->xkb.used_options, oc);
      }
 

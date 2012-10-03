@@ -76,7 +76,6 @@ static Ecore_Event_Handler *_e_desklock_run_handler = NULL;
 static Ecore_Job *job = NULL;
 static Eina_List *tasks = NULL;
 
-
 /***********************************************************************/
 
 static Eina_Bool _e_desklock_cb_key_down(void *data, int type, void *event);
@@ -226,8 +225,8 @@ e_desklock_show(Eina_Bool suspend)
         if (e_config->desklock_language)
           e_intl_language_set(e_config->desklock_language);
 
-        if (e_config->xkb.desklock_group != -1)
-          e_xkb_update(e_config->xkb.desklock_group);
+        if (e_config->xkb.desklock_layout)
+          e_xkb_layout_set(e_config->xkb.desklock_layout);
         _e_custom_desklock_exe =
           ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
         e_util_library_path_restore();
@@ -313,8 +312,8 @@ works:
    if (e_config->desklock_language)
      e_intl_language_set(e_config->desklock_language);
 
-   if (e_config->xkb.desklock_group != -1)
-     e_xkb_update(e_config->xkb.desklock_group);
+   if (e_config->xkb.desklock_layout)
+     e_xkb_layout_set(e_config->xkb.desklock_layout);
 
    total_zone_num = _e_desklock_zone_num_get();
    EINA_LIST_FOREACH(managers, l, man)
@@ -385,8 +384,11 @@ e_desklock_hide(void)
    if (e_config->desklock_language)
      e_intl_language_set(e_config->language);
 
-   if (e_config->xkb.desklock_group != -1)
-     e_xkb_update(e_config->xkb.cur_group);
+   if (e_config->xkb.cur_layout == e_config->xkb.desklock_layout)
+     {
+        if (e_config->xkb.selected_layout)
+          e_xkb_layout_set(e_config->xkb.selected_layout);
+     }
 
    _e_desklock_state = EINA_FALSE;
    ev = E_NEW(E_Event_Desklock, 1);

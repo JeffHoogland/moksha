@@ -37,7 +37,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 0x0156
+#define E_CONFIG_FILE_GENERATION 0x0157
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH << 16) | E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -386,7 +386,9 @@ struct _E_Config
       int         only_label;
       const char *default_model;
       int         cur_group;
-      int         desklock_group;
+      const char *cur_layout; // whatever the current layout is
+      const char *selected_layout; // whatever teh current layout that the user has selected is
+      const char *desklock_layout;
    } xkb;
    
    unsigned char exe_always_single_instance;

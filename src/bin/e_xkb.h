@@ -8,6 +8,7 @@ EAPI int e_xkb_shutdown(void);
 EAPI void e_xkb_update(int);
 EAPI void e_xkb_layout_next(void);
 EAPI void e_xkb_layout_prev(void);
+EAPI const char *e_xkb_layout_get(void);
 EAPI void e_xkb_layout_set(const char *name);
 EAPI const char *e_xkb_layout_name_reduce(const char *name);
 EAPI void e_xkb_e_icon_flag_setup(Evas_Object *eicon, const char *name);

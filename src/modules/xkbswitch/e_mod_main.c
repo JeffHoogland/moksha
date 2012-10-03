@@ -187,10 +187,11 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    Instance *inst;
    const char *name;
 
-   if (e_config->xkb.used_layouts)
+   name = e_config->xkb.cur_layout;
+   if (!name) name = e_config->xkb.selected_layout;
+   if ((!name) && e_config->xkb.used_layouts)
      name = ((E_Config_XKB_Layout *)
              eina_list_data_get(e_config->xkb.used_layouts))->name;
-   else name = NULL;
 
    /* The instance */
    inst = E_NEW(Instance, 1);
@@ -374,11 +375,11 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
         if (inst->lmenu)
           {
              E_Config_XKB_Layout *cl;
+             const char *cur;
              E_Menu_Item *mi;
              Eina_List *l;
              int dir;
              char buf[4096];
-             int grp = -1;
 
              mi = e_menu_item_new(inst->lmenu);
 
@@ -388,6 +389,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
 
              mi = e_menu_item_new(inst->lmenu);
              e_menu_item_separator_set(mi, 1);
+             cur = e_xkb_layout_get();
 
              /* Append all the layouts */
              EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
@@ -398,9 +400,8 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
 
                   e_menu_item_radio_set(mi, 1);
                   e_menu_item_radio_group_set(mi, 1);
-                  grp++;
-                  e_menu_item_toggle_set
-                    (mi, (grp == e_config->xkb.cur_group) ? 1 : 0);
+                  if (cur == name)
+                    e_menu_item_toggle_set(mi, 1);
                   e_xkb_flag_file_get(buf, sizeof(buf), name);
                   e_menu_item_icon_file_set(mi, buf);
                   if (cl->variant)
@@ -512,6 +513,7 @@ _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED_
    Eina_List *l;
    void *ndata;
    int cur_group = -1, grp = -1;
+   E_Config_XKB_Layout *cl = data;
 
    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, ndata)
      {
@@ -520,7 +522,8 @@ _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED_
      }
    if (cur_group != -1)
      {
-        e_xkb_update(cur_group);
+        e_xkb_layout_set(cl->name);
+        eina_stringshare_replace(&e_config->xkb.selected_layout, cl->name);
         _xkb_update_icon(cur_group);
      }
 }
