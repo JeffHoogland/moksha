@@ -84,6 +84,7 @@ struct _E_Config_Dialog_Data
     } dbus;
 
    int copy;
+   int secure_rm;
 
    Evas_Object *dir_sort_first;
    Evas_Object *dir_sort_last;
@@ -142,6 +143,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->view.open_dirs_in_place = fileman_config->view.open_dirs_in_place;
    cfdata->view.single_click = fileman_config->view.single_click;
    cfdata->copy = e_config->filemanager_copy;
+   cfdata->secure_rm = e_config->filemanager_secure_rm;
    cfdata->view.show_full_path = fileman_config->view.show_full_path;
    cfdata->view.show_desktop_icons = fileman_config->view.show_desktop_icons;
    cfdata->view.show_toolbar = fileman_config->view.show_toolbar;
@@ -182,6 +184,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
    fileman_config->view.open_dirs_in_place = cfdata->view.open_dirs_in_place;
    e_config->filemanager_single_click = fileman_config->view.single_click = cfdata->view.single_click;
    e_config->filemanager_copy = cfdata->copy;
+   e_config->filemanager_secure_rm = cfdata->secure_rm;
    fileman_config->view.show_full_path = cfdata->view.show_full_path;
    fileman_config->view.show_desktop_icons = cfdata->view.show_desktop_icons;
    fileman_config->view.show_toolbar = cfdata->view.show_toolbar;
@@ -231,7 +234,7 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->view.mode != cfdata->view.mode) ||
      (fileman_config->view.open_dirs_in_place != cfdata->view.open_dirs_in_place) ||
      (fileman_config->view.single_click != cfdata->view.single_click) ||
-     (e_config->filemanager_copy != cfdata->copy) ||
+     (e_config->filemanager_secure_rm != cfdata->secure_rm) ||
      (fileman_config->view.show_full_path != cfdata->view.show_full_path) ||
      (fileman_config->view.show_desktop_icons != cfdata->view.show_desktop_icons) ||
      (fileman_config->view.show_toolbar != cfdata->view.show_toolbar) ||
@@ -386,6 +389,9 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Really Move"),
                            &(cfdata->copy));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_check_add(evas, _("Secure Deletion"),
+                           &(cfdata->secure_rm));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Use Alternate Selection Modifiers"),
                            &(cfdata->selection.windows_modifiers));

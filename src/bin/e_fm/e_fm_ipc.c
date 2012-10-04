@@ -573,6 +573,12 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
       }
       break;
 
+      case E_FM_OP_SECURE_REMOVE: /* fop delete file/dir */
+      {
+         _e_fm_ipc_slave_run(E_FM_OP_SECURE_REMOVE, (const char *)e->data, e->ref);
+      }
+      break;
+
       case E_FM_OP_TRASH: /* fop trash file/dir */
       {
          E_Fop *fop;
@@ -1437,6 +1443,8 @@ _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
      strcpy(command, "mv");
    else if (type == E_FM_OP_REMOVE)
      strcpy(command, "rm");
+   else if (type == E_FM_OP_SECURE_REMOVE)
+     strcpy(command, "srm");
    else if (type == E_FM_OP_COPY)
      strcpy(command, "cp");
    else if (type == E_FM_OP_SYMLINK)

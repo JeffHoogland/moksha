@@ -440,7 +440,7 @@ static void          _e_fm2_client_spawn(void);
 static E_Fm2_Client *_e_fm2_client_get(void);
 static int           _e_fm2_client_monitor_add(const char *path);
 static void          _e_fm2_client_monitor_del(int id, const char *path);
-static int           _e_fm_client_file_del(const char *args, Evas_Object *e_fm);
+static int           _e_fm_client_file_del(const char *files, Eina_Bool secure, Evas_Object *e_fm);
 //static int _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm);
 static int           _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
 static int           _e_fm_client_file_move(const char *args, Evas_Object *e_fm);
@@ -2403,10 +2403,14 @@ _e_fm2_client_monitor_del(int id, const char *path)
 }
 
 static int
-_e_fm_client_file_del(const char *files, Evas_Object *e_fm)
+_e_fm_client_file_del(const char *files, Eina_Bool secure, Evas_Object *e_fm)
 {
-   int id = _e_fm_client_send_new(E_FM_OP_REMOVE, (void *)files, strlen(files) + 1);
-   e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_REMOVE, _e_fm2_operation_abort_internal);
+   int id, op = E_FM_OP_REMOVE;
+
+   if (secure) op = E_FM_OP_SECURE_REMOVE;
+
+   id = _e_fm_client_send_new(op, (void *)files, strlen(files) + 1);
+   e_fm2_op_registry_entry_add(id, e_fm, op, _e_fm2_operation_abort_internal);
    return id;
 }
 
@@ -10531,7 +10535,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
      }
    if (files)
      {
-        _e_fm_client_file_del(files, ic->sd->obj);
+        _e_fm_client_file_del(files, e_config->filemanager_secure_rm, ic->sd->obj);
         free(files);
      }
 
