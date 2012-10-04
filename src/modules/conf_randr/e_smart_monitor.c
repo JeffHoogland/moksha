@@ -1033,7 +1033,7 @@ _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event)
    Evas_Coord w, h, cw, ch;
    Evas_Coord mx, my;
    Evas_Coord nrw, nrh;
-   Ecore_X_Randr_Mode_Info *mode;
+   Ecore_X_Randr_Mode_Info *mode = NULL;
 
    ev = event;
 
