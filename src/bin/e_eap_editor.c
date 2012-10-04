@@ -808,6 +808,7 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    E_Desktop_Edit *editor;
    char *path = NULL;
    const char *icon_path = NULL;
+   char buf[PATH_MAX + 32];
 
    editor = data2;
    cfdata = data1;
@@ -818,7 +819,8 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
    if (!dia) return;
    e_object_del_attach_func_set(E_OBJECT(dia),
                                 _e_desktop_edit_cb_icon_select_destroy);
-   e_dialog_title_set(dia, _("Select an Icon"));
+   snprintf(buf, sizeof(buf), "%s '%s'", "Select an Icon for", ecore_file_file_get(cfdata->orig_path));
+   e_dialog_title_set(dia, buf);
    dia->data = cfdata;
 
    /* absolute path to icon */
