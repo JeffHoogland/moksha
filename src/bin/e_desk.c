@@ -303,30 +303,7 @@ e_desk_show(E_Desk *desk)
 
    EINA_LIST_FOREACH(e_shelf_list(), l, es)
      {
-        Eina_List *ll;
-        E_Config_Shelf *cf_es;
-        E_Zone *zone;
-        E_Config_Shelf_Desk *sd;
-        int show_shelf = 0;
-
-        if (!es) continue;
-        if (!es->cfg->desk_show_mode) continue;
-        cf_es = es->cfg;
-        if (!cf_es) continue;
-
-        zone = desk->zone;
-        if (cf_es->zone != (int)zone->num) continue;
-
-        EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
-          {
-             if (!sd) continue;
-             if ((desk->x == sd->x) && (desk->y == sd->y))
-               {
-                  show_shelf = 1;
-                  break;
-               }
-          }
-        if (show_shelf)
+        if (e_shelf_desk_visible(es, desk))
           e_shelf_show(es);
         else
           e_shelf_hide(es);

@@ -876,6 +876,32 @@ e_shelf_position_calc(E_Shelf *es)
      } while (0);
 }
 
+EAPI Eina_Bool
+e_shelf_desk_visible(E_Shelf *es, E_Desk *desk)
+{
+   Eina_List *ll;
+   E_Config_Shelf *cf_es;
+   E_Zone *zone;
+   E_Config_Shelf_Desk *sd;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(es, EINA_FALSE);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(desk, EINA_FALSE);
+   if (!es->cfg->desk_show_mode) return EINA_TRUE;
+   cf_es = es->cfg;
+   if (!cf_es) return EINA_FALSE;
+
+   zone = desk->zone;
+   if (cf_es->zone != (int)zone->num) return EINA_FALSE;
+
+   EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
+     {
+        if (!sd) continue;
+        if ((desk->x == sd->x) && (desk->y == sd->y))
+          return EINA_TRUE;
+     }
+   return EINA_FALSE;
+}
+
 EAPI void
 e_shelf_style_set(E_Shelf *es, const char *style)
 {
