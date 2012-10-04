@@ -15,12 +15,7 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object     *o_clock, *o_table, *o_popclock, *o_cal;
    E_Gadcon_Popup  *popup;
-   struct
-   {
-      Ecore_X_Window       win;
-      Ecore_Event_Handler *mouse_up;
-      Ecore_Event_Handler *key_down;
-   } input;
+   Eina_List *handlers;
 
    int              madj;
 
@@ -258,83 +253,24 @@ _clock_settings_cb(void *d1, void *d2 __UNUSED__)
 {
    Instance *inst = d1;
    e_int_config_clock_module(inst->popup->win->zone->container, inst->cfg);
-   _clock_popup_free(inst);
-}
-
-static void
-_clock_popup_input_window_destroy(Instance *inst)
-{
-   e_grabinput_release(0, inst->input.win);
-   ecore_x_window_free(inst->input.win);
-   inst->input.win = 0;
-
-   ecore_event_handler_del(inst->input.mouse_up);
-   inst->input.mouse_up = NULL;
-
-   ecore_event_handler_del(inst->input.key_down);
-   inst->input.key_down = NULL;
-}
-
-static void
-_clock_popup_free(Instance *inst)
-{
-   if (!inst->popup) return;
-   _clock_popup_input_window_destroy(inst);
-   if (inst->popup) e_object_del(E_OBJECT(inst->popup));
+   e_object_del(E_OBJECT(inst->popup));
    inst->popup = NULL;
-   inst->o_popclock = NULL;
 }
 
 static Eina_Bool
-_clock_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
+_clock_popup_fullscreen_change(Instance *inst, int type __UNUSED__, void *ev __UNUSED__)
 {
-   Ecore_Event_Mouse_Button *ev = event;
-   Instance *inst = data;
-
-   if (ev->window != inst->input.win)
-     return ECORE_CALLBACK_PASS_ON;
-
-   _clock_popup_free(inst);
-
-   return ECORE_CALLBACK_PASS_ON;
-}
-
-static Eina_Bool
-_clock_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event __UNUSED__)
-{
-   Instance *inst = data;
-
    _clock_popup_free(inst);
    return ECORE_CALLBACK_RENEW;
 }
 
-static void
-_clock_popup_input_window_create(Instance *inst)
+static Eina_Bool
+_clock_popup_desk_change(Instance *inst, int type __UNUSED__, E_Event_Desk_After_Show *ev)
 {
-   Ecore_X_Window_Configure_Mask mask;
-   Ecore_X_Window w, popup_w;
-   E_Manager *man;
-
-   man = e_manager_current_get();
-
-   w = ecore_x_window_input_new(man->root, 0, 0, man->w, man->h);
-   mask = (ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE |
-           ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING);
-   popup_w = inst->popup->win->evas_win;
-   ecore_x_window_configure(w, mask, 0, 0, 0, 0, 0, popup_w,
-                            ECORE_X_WINDOW_STACK_BELOW);
-   ecore_x_window_show(w);
-
-   inst->input.mouse_up =
-     ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-                             _clock_popup_input_window_mouse_up_cb, inst);
-
-   inst->input.key_down =
-     ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
-                             _clock_popup_input_window_key_down_cb, inst);
-
-   inst->input.win = w;
-   e_grabinput_get(0, 0, inst->input.win);
+   if (!inst->gcc->gadcon->shelf) return ECORE_CALLBACK_RENEW;
+   if (e_shelf_desk_visible(inst->gcc->gadcon->shelf, ev->desk)) return ECORE_CALLBACK_RENEW;
+   _clock_popup_free(inst);
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -412,7 +348,9 @@ _clock_popup_new(Instance *inst)
 
    e_gadcon_popup_content_set(inst->popup, inst->o_table);
    e_gadcon_popup_show(inst->popup);
-   _clock_popup_input_window_create(inst);
+
+   E_LIST_HANDLER_APPEND(inst->handlers, E_EVENT_DESK_AFTER_SHOW, _clock_popup_desk_change, inst);
+   E_LIST_HANDLER_APPEND(inst->handlers, E_EVENT_BORDER_FULLSCREEN, _clock_popup_fullscreen_change, inst);
 }
 
 static void
@@ -576,12 +514,26 @@ _update_today_timer(void *data __UNUSED__)
 }
 
 static void
+_clock_popup_free(Instance *inst)
+{
+   if (!inst->popup) return;
+   if (inst->popup) e_object_del(E_OBJECT(inst->popup));
+   E_FREE_LIST(inst->handlers, ecore_event_handler_del);
+   inst->popup = NULL;
+   inst->o_popclock = NULL;
+}
+
+static void
 _clock_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    Instance *inst = data;
    E_Container *con;
 
-   _clock_popup_free(inst);
+   if (inst->popup)
+     {
+        e_object_del(E_OBJECT(inst->popup));
+        inst->popup = NULL;
+     }
    con = e_container_current_get(e_manager_current_get());
    e_int_config_clock_module(con, inst->cfg);
 }
