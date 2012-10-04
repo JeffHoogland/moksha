@@ -910,7 +910,7 @@ static struct Connman_Manager *_manager_new(void)
                                                  "/net/connman/technology/wifi",
                                                  CONNMAN_TECHNOLOGY_IFACE, 
                                                  "GetProperties");
-   if (!msg_services || !msg_services)
+   if (!msg_services || !msg_props)
      {
         ERR("Could not create D-Bus messages");
         return NULL;
