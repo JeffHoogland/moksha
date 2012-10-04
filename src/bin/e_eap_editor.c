@@ -268,6 +268,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata) return NULL;
+   cfd->dia->win->state.no_reopen = EINA_TRUE;
    cfdata->editor = cfd->data;
 
    /*

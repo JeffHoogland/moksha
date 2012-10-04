@@ -139,6 +139,7 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
    EINA_LIST_FOREACH(remembers->list, l, rem)
      {
         if (!rem->class) continue;
+        if (rem->no_reopen) continue;
 
         if (!strncmp(rem->class, "e_fwin::", 8))
           {
@@ -157,9 +158,6 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
              const char *p;
 
              p = rem->class + 9;
-             /* if shelf config dialog is opened from a remember, it will break the world */
-             if (!strncmp(p, "extensions/shelves", sizeof("extensions/shelves") - 1))
-               continue;
              if ((param = strstr(p, "::")))
                {
                   snprintf(path, (param - p) + sizeof(char), "%s", p);
@@ -444,6 +442,7 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
      rem->prop.fullscreen = bd->fullscreen;
    if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
      rem->prop.offer_resistance = bd->offer_resistance;
+   rem->no_reopen = bd->internal_no_reopen;
    {
       E_Event_Remember_Update *ev;
 
@@ -883,6 +882,7 @@ _e_remember_init_edd(void)
 #define T E_Remember
 #define D e_remember_edd
    E_CONFIG_VAL(D, T, match, INT);
+   E_CONFIG_VAL(D, T, no_reopen, INT);
    E_CONFIG_VAL(D, T, apply_first_only, UCHAR);
    E_CONFIG_VAL(D, T, keep_settings, UCHAR);
    E_CONFIG_VAL(D, T, name, STR);

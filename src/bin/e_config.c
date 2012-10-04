@@ -403,6 +403,7 @@ e_config_init(void)
 #define T E_Remember
 #define D _e_config_remember_edd
    E_CONFIG_VAL(D, T, match, INT);
+   E_CONFIG_VAL(D, T, no_reopen, INT);
    E_CONFIG_VAL(D, T, apply_first_only, UCHAR);
    E_CONFIG_VAL(D, T, keep_settings, UCHAR);
    E_CONFIG_VAL(D, T, name, STR);

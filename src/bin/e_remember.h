@@ -43,6 +43,7 @@ typedef struct _E_Remember E_Remember;
 struct _E_Remember
 {
    int           match;
+   int           no_reopen;
    unsigned char apply_first_only;
    unsigned char keep_settings;
    int           used_count;

@@ -38,6 +38,7 @@ struct _E_Win
       unsigned char     centered : 1;
       unsigned char     dialog : 1;
       unsigned char     no_remember : 1;
+      unsigned char     no_reopen : 1;
    } state;
 
    E_Pointer           *pointer;

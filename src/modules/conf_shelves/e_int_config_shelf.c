@@ -77,6 +77,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->shelf_handler = ecore_event_handler_add(E_EVENT_SHELF_ADD, (Ecore_Event_Handler_Cb)_shelf_handler_cb, cfdata);
    cfdata->cfd = cfd;
+   cfd->dia->win->state.no_reopen = EINA_TRUE;
    _cfdata = cfdata;
    return cfdata;
 }
