@@ -185,6 +185,7 @@ _e_remember_restore_idler_cb(void *d __UNUSED__)
           }
         done = EINA_TRUE;
      }
+   if (!done) remember_idler = NULL;
 
    return done;
 }
