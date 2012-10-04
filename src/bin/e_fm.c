@@ -365,6 +365,7 @@ static void          _e_fm2_view_image_sel_close(void *data, E_Dialog *dia);
 static void          _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_toggle_single_click(void *data, E_Menu *m, E_Menu_Item *mi);
+static void          _e_fm2_toggle_secure_rm(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_sort(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -9370,6 +9371,18 @@ _e_fm2_options_menu_pre(void *data, E_Menu *subm)
         e_menu_item_toggle_set(mi, sd->config->view.single_click);
         e_menu_item_callback_set(mi, _e_fm2_toggle_single_click, sd);
      }
+
+   if (!e_config->filemanager_secure_rm)
+     {
+        /* can't disable this if it's globally enabled */
+        mi = e_menu_item_new(subm);
+        e_menu_item_label_set(mi, _("Secure Deletion"));
+        /* FIXME: e_util_menu_item_theme_icon_set(mi, NULL); */
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, e_config->filemanager_secure_rm | sd->config->secure_rm);
+        e_menu_item_callback_set(mi, _e_fm2_toggle_secure_rm, sd);
+     }
+
    if (!e_configure_registry_exists("fileman/fileman")) return;
 
    mi = e_menu_item_new(subm);
@@ -9690,6 +9703,14 @@ _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi)
 
    sd->inherited_dir_props = EINA_FALSE;
    _e_fm2_refresh(data, m, mi);
+}
+
+static void
+_e_fm2_toggle_secure_rm(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   sd->config->secure_rm = !sd->config->secure_rm;
 }
 
 static void
@@ -10535,7 +10556,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
      }
    if (files)
      {
-        _e_fm_client_file_del(files, e_config->filemanager_secure_rm, ic->sd->obj);
+        _e_fm_client_file_del(files, e_config->filemanager_secure_rm | ic->sd->config->secure_rm, ic->sd->obj);
         free(files);
      }
 

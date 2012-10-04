@@ -121,6 +121,7 @@ struct _E_Fm2_Config
       const char *background, *frame, *icons;
       Eina_Bool   fixed : 1;
    } theme;
+   Eina_Bool secure_rm : 1;
 };
 
 struct _E_Fm2_Icon_Info
