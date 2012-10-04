@@ -9171,8 +9171,10 @@ CONNMAN_ICON(ethernet)
                     set_state(PART:"clip", "active", 0.0);
                     set_state(PART:"over", "active", 0.0);
                     set_state(PART:"over2", "active", 0.0);
-               } else
+               } else {
                  set_state(PART:"bg_clip", "active", 0.0);
+                 set_state(PART:"clip", "active", 0.0);
+               }
             }
             transition: LINEAR 0.2;
          }
@@ -9188,8 +9190,10 @@ CONNMAN_ICON(ethernet)
                     set_state(PART:"clip", "default", 0.0);
                     set_state(PART:"over", "default", 0.0);
                     set_state(PART:"over2", "default", 0.0);
-               } else
+               } else {
                  set_state(PART:"bg_clip", "default", 0.0);
+                 set_state(PART:"clip", "default", 0.0);
+               }
             }
             transition: LINEAR 0.3;
          }
