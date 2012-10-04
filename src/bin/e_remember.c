@@ -27,6 +27,8 @@ static E_Config_DD *e_remember_edd = NULL;
 static E_Config_DD *e_remember_list_edd = NULL;
 static E_Remember_List *remembers = NULL;
 static Eina_List *handlers = NULL;
+static Ecore_Idler *remember_idler = NULL;
+static Eina_List *remember_idler_list = NULL;
 
 /* static Eina_List *e_remember_restart_list = NULL; */
 
@@ -71,17 +73,15 @@ e_remember_init(E_Startup_Mode mode)
 EINTERN int
 e_remember_shutdown(void)
 {
-   E_Border_Hook *h;
-   Ecore_Event_Handler *hh;
-
-   EINA_LIST_FREE(hooks, h)
-     e_border_hook_del(h);
+   E_FREE_LIST(hooks, e_border_hook_del);
 
    E_CONFIG_DD_FREE(e_remember_edd);
    E_CONFIG_DD_FREE(e_remember_list_edd);
 
-   EINA_LIST_FREE(handlers, hh)
-     ecore_event_handler_del(hh);
+   E_FREE_LIST(handlers, ecore_event_handler_del);
+   if (remember_idler) ecore_idler_del(remember_idler);
+   remember_idler = NULL;
+   remember_idler_list = eina_list_free(remember_idler_list);
 
    return 1;
 }
@@ -127,19 +127,20 @@ e_remember_internal_save(void)
 }
 
 static Eina_Bool
-_e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+_e_remember_restore_idler_cb(void *d __UNUSED__)
 {
    E_Remember *rem;
-   Eina_List *l;
    E_Action *act_fm = NULL, *act;
    E_Container *con;
+   Eina_Bool done = EINA_FALSE;
 
    con = e_container_current_get(e_manager_current_get());
 
-   EINA_LIST_FOREACH(remembers->list, l, rem)
+   EINA_LIST_FREE(remember_idler_list, rem)
      {
         if (!rem->class) continue;
         if (rem->no_reopen) continue;
+        if (done) break;
 
         if (!strncmp(rem->class, "e_fwin::", 8))
           {
@@ -182,11 +183,19 @@ _e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event _
              if (act)
                act->func.go(NULL, NULL);
           }
+        done = EINA_TRUE;
      }
 
-   if (handlers) eina_list_free(handlers);
-   handlers = NULL;
+   return done;
+}
 
+static Eina_Bool
+_e_remember_restore_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   handlers = eina_list_free(handlers);
+   if (!remembers->list) return ECORE_CALLBACK_PASS_ON;
+   remember_idler_list = eina_list_clone(remembers->list);
+   remember_idler = ecore_idler_add(_e_remember_restore_idler_cb, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
 
