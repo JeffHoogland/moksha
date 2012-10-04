@@ -519,6 +519,22 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
                   eina_stringshare_del(file);
                }
           }
+        else if ((desktop) && (desktop->url) &&
+                 (desktop->type == EFREET_DESKTOP_TYPE_LINK))
+          {
+             const char *url;
+             /* we don't know what the desktop points to here,
+              * so we'll just run recursively until we get a real file
+              */
+             url = e_fm2_desktop_url_eval(desktop->url);
+             if (url)
+               {
+                  eina_stringshare_del(wd->path);
+                  wd->path = url;
+                  _e_wid_fprev_preview_file(wd);
+                  return;
+               }
+          }
         if (desktop) efreet_desktop_free(desktop);
      }
 #ifdef HAVE_EMOTION
