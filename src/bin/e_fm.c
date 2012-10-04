@@ -9366,7 +9366,7 @@ _e_fm2_options_menu_pre(void *data, E_Menu *subm)
      {
         mi = e_menu_item_new(subm);
         e_menu_item_label_set(mi, _("Single Click Activation"));
-        /* FIXME: e_util_menu_item_theme_icon_set(mi, NULL); */
+        e_util_menu_item_theme_icon_set(mi, "access");
         e_menu_item_check_set(mi, 1);
         e_menu_item_toggle_set(mi, sd->config->view.single_click);
         e_menu_item_callback_set(mi, _e_fm2_toggle_single_click, sd);
