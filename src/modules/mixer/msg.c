@@ -125,7 +125,12 @@ msg_sendmsg_creds(Pulse *conn, Pulse_Tag *tag)
    if ((!r) || (r == (int)sizeof(tag->header))) tag->auth = EINA_TRUE;
    else if (r < 0)
      {
-        if (errno != EAGAIN) ecore_main_fd_handler_del(conn->fdh);
+        if (errno != EAGAIN)
+          {
+             ERR("%d: %s", errno, strerror(errno));
+             ecore_main_fd_handler_del(conn->fdh);
+             conn->fdh = NULL;
+          }
      }
    else
      tag->pos += r;
