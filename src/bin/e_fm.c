@@ -9377,7 +9377,7 @@ _e_fm2_options_menu_pre(void *data, E_Menu *subm)
         /* can't disable this if it's globally enabled */
         mi = e_menu_item_new(subm);
         e_menu_item_label_set(mi, _("Secure Deletion"));
-        /* FIXME: e_util_menu_item_theme_icon_set(mi, NULL); */
+        e_util_menu_item_theme_icon_set(mi, "security-high");
         e_menu_item_check_set(mi, 1);
         e_menu_item_toggle_set(mi, e_config->filemanager_secure_rm | sd->config->secure_rm);
         e_menu_item_callback_set(mi, _e_fm2_toggle_secure_rm, sd);
