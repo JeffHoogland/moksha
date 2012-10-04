@@ -2160,8 +2160,24 @@ _e_fwin_cb_menu_extend_start(void *data,
 #endif
    if (!selected) return;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Open"));
-   e_util_menu_item_theme_icon_set(mi, "document-open");
+   {
+      Eina_Bool set = EINA_FALSE;
+
+      while (eina_list_count(selected) == 1)
+        {
+           if (_e_fwin_file_is_exec(eina_list_data_get(selected)) == E_FWIN_EXEC_NONE) break;
+           
+           e_menu_item_label_set(mi, _("Run"));
+           e_util_menu_item_theme_icon_set(mi, "system-run");
+           set = EINA_TRUE;
+           break;
+        }
+      if (!set)
+        {
+           e_menu_item_label_set(mi, _("Open"));
+           e_util_menu_item_theme_icon_set(mi, "document-open");
+        }
+   }
    e_menu_item_callback_set(mi, _e_fwin_cb_menu_open, page);
 
    mi = e_menu_item_new(m);
