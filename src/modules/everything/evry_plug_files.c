@@ -694,11 +694,11 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
              _free_files(p);
 
-             strncpy(buf, p->directory, sizeof buf - 1);
+             strncpy(buf, p->directory, sizeof(buf) - 1);
 
              _folder_item_add(p, p->directory, prio++);
 
-             buf[sizeof buf - 1] = 0;
+             buf[sizeof(buf) - 1] = 0;
              while (strlen(buf) > 1)
                {
                   dir = dirname(buf);
