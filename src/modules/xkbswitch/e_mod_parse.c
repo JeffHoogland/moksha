@@ -20,6 +20,7 @@ find_rules(void)
       "/usr/local/share/X11/xkb/rules/xfree86.lst",
       "/usr/X11R6/lib/X11/xkb/rules/xorg.lst",
       "/usr/X11R6/lib/X11/xkb/rules/xfree86.lst",
+      "/usr/X11R6/share/X11/xkb/rules/base.lst",
       "/usr/local/X11R6/lib/X11/xkb/rules/xorg.lst",
       "/usr/local/X11R6/lib/X11/xkb/rules/xfree86.lst",
       NULL
