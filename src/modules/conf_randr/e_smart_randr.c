@@ -125,8 +125,6 @@ _e_smart_add(Evas_Object *obj)
 
    /* add scroll object */
    sd->o_scroll = e_scrollframe_add(evas);
-   /* e_scrollframe_custom_theme_set(sd->o_scroll, "base/theme/widgets",  */
-   /*                                "e/conf/randr/main/scrollframe"); */
    e_scrollframe_child_set(sd->o_scroll, sd->o_layout);
    evas_object_smart_member_add(sd->o_scroll, obj);
 
