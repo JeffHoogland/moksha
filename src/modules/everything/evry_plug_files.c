@@ -698,12 +698,12 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
              _folder_item_add(p, p->directory, prio++);
 
+             buf[sizeof buf - 1] = 0;
              while (strlen(buf) > 1)
                {
-                  buf[sizeof buf - 1] = 0;
                   dir = dirname(buf);
                   _folder_item_add(p, dir, prio++);
-                  strncpy(buf, dir, sizeof buf - 1);
+                  strcpy(buf, dir);
                }
 
              p->command = CMD_SHOW_PARENT;

@@ -532,8 +532,9 @@ _e_fm_main_eeze_volume_find(const char *syspath)
 void
 _e_fm_main_eeze_volume_unmount(E_Volume *v)
 {
-   INF("unmount %s %s", v->udi, v->mount_point);
    if (!v || v->guard) return;
+
+   INF("unmount %s %s", v->udi, v->mount_point);
 
    if (!eeze_disk_mount_wrapper_get(v->disk))
      {

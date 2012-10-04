@@ -2582,15 +2582,9 @@ _evry_state_clear(Evry_Window *win)
 static void
 _evry_view_hide(Evry_Window *win, Evry_View *v, int slide)
 {
-   if (v->state->delete_me)
-     {
-        _evry_state_clear(win);
-        return;
-     }
-
    _evry_state_clear(win);
 
-   if (!v) return;
+   if (!v || v->state->delete_me) return;
 
    if (slide && v->o_list)
      {

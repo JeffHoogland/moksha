@@ -113,7 +113,7 @@ e_module_new(const char *name)
    E_Module *m;
    char buf[PATH_MAX];
    char body[4096], title[1024];
-   const char *modpath;
+   const char *modpath = NULL;
    char *s;
    Eina_List *l;
    E_Config_Module *em;

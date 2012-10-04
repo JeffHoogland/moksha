@@ -1234,9 +1234,9 @@ _policy_border_activate(E_Border *bd)
 {
    E_Border *sft;
 
-   printf("Border Activate: %s\n", bd->client.icccm.name);
-
    if (!bd) return;
+
+   printf("Border Activate: %s\n", bd->client.icccm.name);
 
    /* NB: stolen borders may or may not need focus call...have to test */
    if (bd->stolen) return;

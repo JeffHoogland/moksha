@@ -158,15 +158,13 @@ e_exec(E_Zone *zone, Efreet_Desktop *desktop, const char *exec,
                   
                   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
                     {
-                       if (bd->desktop == desktop)
+                       if (bd && bd->desktop == desktop)
                          {
-                            if (bd)
-                              {
-                                 if (!bd->focused)
-                                   e_border_activate(bd, EINA_TRUE);
-                                 else e_border_raise(bd);
-                                 return NULL;
-                              }
+                            if (!bd->focused)
+                              e_border_activate(bd, EINA_TRUE);
+                            else
+                              e_border_raise(bd);
+                            return NULL;
                          }
                     }
                }
