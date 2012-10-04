@@ -704,14 +704,11 @@ _e_wid_fprev_preview_reset(E_Widget_Data *wd)
 {
    Evas_Object *o;
    
-   if (wd->o_preview_scrollframe && (wd->prev_is_fm || wd->prev_is_txt))
-     {
-        evas_object_del(wd->o_preview_scrollframe);
-        wd->o_preview_scrollframe = wd->o_preview_preview = NULL;
-     }
+   evas_object_del(wd->o_preview_scrollframe);
+   wd->o_preview_scrollframe = wd->o_preview_preview = NULL;
    if (wd->preview_text_file_thread) ecore_thread_cancel(wd->preview_text_file_thread);
    wd->preview_text_file_thread = NULL;
-   if (wd->o_preview_preview) return;
+   if (wd->is_dir || wd->is_txt) return;
    o = e_widget_preview_add(evas_object_evas_get(wd->obj), wd->w, wd->h);
    wd->prev_is_txt = wd->prev_is_fm = EINA_FALSE;
    e_widget_disabled_set(o, 1);
@@ -720,7 +717,7 @@ _e_wid_fprev_preview_reset(E_Widget_Data *wd)
                                   _e_wid_fprev_preview_update, wd);
    e_widget_table_object_append(wd->o_preview_preview_table,
                                 wd->o_preview_preview,
-                                0, 0, 1, 1, 0, 0, 1, 1);
+                                0, 0, 2, 1, 0, 0, 1, 1);
    e_widget_list_object_repack(wd->o_preview_list,
                                wd->o_preview_preview_table,
                                0, 1, 0.5);
@@ -828,7 +825,7 @@ _e_wid_fprev_preview_txt(E_Widget_Data *wd)
         e_widget_size_min_set(o, wd->w, wd->h);
         evas_object_propagate_events_set(wd->o_preview_preview, 0);
         e_widget_table_object_append(wd->o_preview_preview_table,
-                                     o, 0, 0, 1, 1, 1, 1, 1, 1);
+                                     o, 0, 0, 2, 1, 1, 1, 1, 1);
         e_widget_list_object_repack(wd->o_preview_list,
                                     wd->o_preview_preview_table,
                                     1, 1, 0.5);
@@ -904,7 +901,7 @@ _e_wid_fprev_preview_fm(E_Widget_Data *wd)
         evas_object_propagate_events_set(wd->o_preview_preview, 0);
         e_widget_scrollframe_focus_object_set(o, wd->o_preview_preview);
         e_widget_table_object_append(wd->o_preview_preview_table,
-                                     o, 0, 0, 1, 1, 1, 1, 1, 1);
+                                     o, 0, 0, 2, 1, 1, 1, 1, 1);
         e_widget_list_object_repack(wd->o_preview_list,
                                     wd->o_preview_preview_table,
                                     1, 1, 0.5);
