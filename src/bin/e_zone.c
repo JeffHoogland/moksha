@@ -1296,7 +1296,6 @@ _e_zone_useful_geometry_calc(E_Zone *zone)
               if (yy1 > zone->h - shelf->h)
                 yy1 = zone->h - shelf->h;
               break;
-              break;
 
             case E_GADCON_ORIENT_LEFT:
             case E_GADCON_ORIENT_CORNER_LT:

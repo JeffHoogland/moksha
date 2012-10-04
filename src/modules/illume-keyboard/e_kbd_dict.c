@@ -153,7 +153,6 @@ _e_kbd_dict_writes_cb_sort(const void *d1, const void *d2)
    kw1 = d1;
    kw2 = d2;
    return _e_kbd_dict_normalized_strcmp(kw1->word, kw2->word);
-   return 0;
 }
 
 static const char *

@@ -272,8 +272,6 @@ static void
 bsd_apm_check(void)
 {
    int ac_stat, bat_stat, bat_val, time_val;
-   char buf[4096];
-   int hours, minutes;
    int apm_fd = -1;
    struct apm_info info;
 
@@ -357,7 +355,6 @@ darwin_check(void)
    const void *values;
    int device_num, device_count;
    int currentval = 0, maxval = 0;
-   char buf[4096];
    CFTypeRef blob;
    CFArrayRef sources;
    CFDictionaryRef device_dict;

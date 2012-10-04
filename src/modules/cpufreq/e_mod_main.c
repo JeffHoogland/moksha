@@ -597,7 +597,7 @@ _cpufreq_status_check_available(Status *s)
 #elif defined (__FreeBSD__)
    int freq;
    size_t len = sizeof(buf);
-   char *freqs, *pos, *q;
+   char *pos, *q;
 
    /* read freq_levels sysctl and store it in freq */
    if (sysctlbyname("dev.cpu.0.freq_levels", buf, &len, NULL, 0) == 0)

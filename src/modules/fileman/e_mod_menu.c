@@ -274,7 +274,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
              e_menu_item_callback_set(mi, _e_mod_menu_gtk_cb,
                                       (void *)eina_stringshare_add(uri->path));
              e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_add("/"));
-             if (uri) efreet_uri_free(uri);
+             efreet_uri_free(uri);
           }
         fclose(fp);
      }

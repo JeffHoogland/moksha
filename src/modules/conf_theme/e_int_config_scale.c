@@ -386,7 +386,6 @@ _adv_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
           (cfdata->max != e_config->scale.max) ||
           (cfdata->factor != e_config->scale.factor) ||
           (cfdata->base_dpi != e_config->scale.base_dpi);
-   return 1;
 }
 
 static void
