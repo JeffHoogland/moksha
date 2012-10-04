@@ -507,7 +507,7 @@ gadman_gadgets_hide(void)
                                   "e,state,visibility,hide", "e");
         else
           edje_object_signal_emit(Man->full_bg,
-                                  "e,state,visibility,hide", "e");
+                                  "e,state,visibility,hide,now", "e");
      }
    else
      {
