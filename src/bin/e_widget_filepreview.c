@@ -832,6 +832,7 @@ _e_wid_fprev_preview_txt(E_Widget_Data *wd)
          * themes to be updated
          */
         e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/text");
+        edje_object_part_text_set(wd->o_preview_preview, "e.textblock.message", "");
         wd->o_preview_preview = o;
         wd->prev_is_txt = EINA_TRUE;
         evas_object_resize(o, wd->w, wd->h);
