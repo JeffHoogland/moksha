@@ -885,7 +885,16 @@ e_shelf_desk_visible(E_Shelf *es, E_Desk *desk)
    E_Config_Shelf_Desk *sd;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(es, EINA_FALSE);
-   EINA_SAFETY_ON_NULL_RETURN_VAL(desk, EINA_FALSE);
+   if (!desk)
+     {
+        Eina_Bool vis = EINA_FALSE;
+        EINA_LIST_FOREACH(e_util_container_current_get()->zones, ll, zone)
+          {
+             desk = e_desk_current_get(zone);
+             vis |= e_shelf_desk_visible(es, desk);
+          }
+        return vis;
+     }
    if (!es->cfg->desk_show_mode) return EINA_TRUE;
    cf_es = es->cfg;
    if (!cf_es) return EINA_FALSE;
@@ -1075,7 +1084,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
          * the E_EVENT_GADCON_POPULATE handler
          */
         if ((es->gadcon->populated_classes && es->gadcon->clients) || (!es->gadcon->cf->clients))
-          e_shelf_show(es);
+          if (e_shelf_desk_visible(es, NULL)) e_shelf_show(es);
      }
 
    e_shelf_toggle(es, 0);
@@ -2192,7 +2201,7 @@ static Eina_Bool
 _e_shelf_module_init_end_timer_cb(void *data)
 {
    E_Shelf *es = data;
-   e_shelf_show(es);
+   if (e_shelf_desk_visible(es, NULL)) e_shelf_show(es);
    es->module_init_end_timer = NULL;
    return EINA_FALSE;
 }
@@ -2206,7 +2215,10 @@ _e_shelf_module_init_end_handler_cb(void *data __UNUSED__, int type __UNUSED__, 
    EINA_LIST_FOREACH(shelves, l, es)
      {
         if ((!es->gadcon->populate_requests) || (!es->gadcon->cf->clients))
-          e_shelf_show(es);
+          {
+             if (e_shelf_desk_visible(es, NULL))
+               e_shelf_show(es);
+          }
         else if (!es->module_init_end_timer)
           es->module_init_end_timer = ecore_timer_add(1.0, _e_shelf_module_init_end_timer_cb, es);
      }
@@ -2227,7 +2239,7 @@ _e_shelf_gadcon_populate_handler_cb(void *data __UNUSED__, int type __UNUSED__, 
            * waiting for this event to show it so that we don't ever resize the shelf
            * object
            */
-          e_shelf_show(es);
+          if (e_shelf_desk_visible(es, NULL)) e_shelf_show(es);
           break;
        }
    return ECORE_CALLBACK_RENEW;
