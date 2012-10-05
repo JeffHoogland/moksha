@@ -56,6 +56,7 @@ struct _Manager
 {
    Eina_List   *gadcons[GADMAN_LAYER_COUNT];
    E_Gadcon    *gc_top;
+   E_Gadcon_Location *location[GADMAN_LAYER_COUNT];
    Eina_List   *gadgets[GADMAN_LAYER_COUNT];
    Evas_Object *movers[GADMAN_LAYER_COUNT];
    Evas_Object *full_bg;
