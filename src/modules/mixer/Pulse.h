@@ -37,6 +37,7 @@ void pulse_shutdown(void);
 
 Pulse *pulse_new(void);
 Eina_Bool pulse_connect(Pulse *conn);
+void pulse_disconnect(Pulse *conn);
 void pulse_free(Pulse *conn);
 void pulse_cb_set(Pulse *conn, uint32_t tagnum, Pulse_Cb cb);
 void pulse_server_info_free(Pulse_Server_Info *ev);

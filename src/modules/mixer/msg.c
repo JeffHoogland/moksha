@@ -33,8 +33,7 @@ msg_recv_creds(Pulse *conn, Pulse_Tag *tag)
         if (errno != EAGAIN)
           {
              ERR("%d: %s", errno, strerror(errno));
-             ecore_main_fd_handler_del(conn->fdh);
-             conn->fdh = NULL;
+             pulse_disconnect(conn);
           }
      }
    else
@@ -84,8 +83,7 @@ msg_recv(Pulse *conn, Pulse_Tag *tag)
         if (errno != EAGAIN)
           {
              ERR("%d: %s", errno, strerror(errno));
-             ecore_main_fd_handler_del(conn->fdh);
-             conn->fdh = NULL;
+             pulse_disconnect(conn);
           }
      }
    else
@@ -138,8 +136,7 @@ msg_sendmsg_creds(Pulse *conn, Pulse_Tag *tag)
         if (errno != EAGAIN)
           {
              ERR("%d: %s", errno, strerror(errno));
-             ecore_main_fd_handler_del(conn->fdh);
-             conn->fdh = NULL;
+             pulse_disconnect(conn);
           }
      }
    else
@@ -165,8 +162,7 @@ msg_send_creds(Pulse *conn, Pulse_Tag *tag)
         if (errno != EAGAIN)
           {
              ERR("%d: %s", errno, strerror(errno));
-             ecore_main_fd_handler_del(conn->fdh);
-             conn->fdh = NULL;
+             pulse_disconnect(conn);
           }
      }
    else
@@ -198,8 +194,7 @@ msg_send(Pulse *conn, Pulse_Tag *tag)
         if (errno != EAGAIN)
           {
              ERR("%d: %s", errno, strerror(errno));
-             ecore_main_fd_handler_del(conn->fdh);
-             conn->fdh = NULL;
+             pulse_disconnect(conn);
           }
      }
    else

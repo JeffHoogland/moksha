@@ -196,11 +196,7 @@ pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh)
         if (!tag->dsize)
           {
              ERR("Kicked!");
-             conn->state = PA_STATE_INIT;
-             ecore_main_fd_handler_del(conn->fdh);
-             conn->fdh = NULL;
-             close(conn->fd);
-             ecore_event_add(PULSE_EVENT_DISCONNECTED, conn, pulse_fake_free, NULL);
+             pulse_disconnect(conn);
              return NULL;
           }
         tag->data = malloc(tag->dsize);
@@ -274,6 +270,7 @@ fdh_func(Pulse *conn, Ecore_Fd_Handler *fdh)
 
         if (!wprev->auth)
           msg_sendmsg_creds(conn, wprev);
+          
 
         if (wprev->auth && msg_send(conn, wprev))
           {
@@ -354,10 +351,7 @@ con(Pulse *conn, int type __UNUSED__, Ecore_Con_Event_Server_Add *ev)
    fd = ecore_con_server_fd_get(ev->server);
    if (fd == -1)
      {
-        conn->state = PA_STATE_INIT;
-        ecore_con_server_del(ev->server);
-        conn->svr = NULL;
-        ecore_event_add(PULSE_EVENT_DISCONNECTED, conn, pulse_fake_free, NULL);
+        pulse_disconnect(conn);
         return ECORE_CALLBACK_RENEW;
      }
    conn->fd = dup(fd);
@@ -750,6 +744,27 @@ pulse_connect(Pulse *conn)
    EINA_SAFETY_ON_NULL_RETURN_VAL(conn, EINA_FALSE);
    conn->svr = ecore_con_server_connect(ECORE_CON_LOCAL_SYSTEM, conn->socket, -1, conn);
    return !!conn->svr;
+}
+
+void
+pulse_disconnect(Pulse *conn)
+{
+   EINA_SAFETY_ON_NULL_RETURN(conn);
+   if (conn->state == PA_STATE_INIT) return;
+   conn->state = PA_STATE_INIT;
+   if (conn->fdh)
+     {
+        ecore_main_fd_handler_del(conn->fdh);
+        conn->fdh = NULL;
+        close(conn->fd);
+        conn->fd = -1;
+     }
+   else if (conn->svr)
+     {
+        ecore_con_server_del(conn->svr);
+        conn->svr = NULL;
+     }
+   ecore_event_add(PULSE_EVENT_DISCONNECTED, conn, pulse_fake_free, NULL);
 }
 
 void
