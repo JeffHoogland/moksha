@@ -304,32 +304,55 @@ _e_border_sub_borders_new(E_Border *bd)
 EINTERN int
 e_border_init(void)
 {
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHOW_REQUEST, _e_border_cb_window_show_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_DESTROY, _e_border_cb_window_destroy, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_HIDE, _e_border_cb_window_hide, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_REPARENT, _e_border_cb_window_reparent, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_CONFIGURE_REQUEST, _e_border_cb_window_configure_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_RESIZE_REQUEST, _e_border_cb_window_resize_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_GRAVITY, _e_border_cb_window_gravity, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STACK_REQUEST, _e_border_cb_window_stack_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_PROPERTY, _e_border_cb_window_property, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_COLORMAP, _e_border_cb_window_colormap, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHAPE, _e_border_cb_window_shape, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_IN, _e_border_cb_window_focus_in, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_OUT, _e_border_cb_window_focus_out, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_CLIENT_MESSAGE, _e_border_cb_client_message, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STATE_REQUEST, _e_border_cb_window_state_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_MOVE_RESIZE_REQUEST, _e_border_cb_window_move_resize_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_DESKTOP_CHANGE, _e_border_cb_desktop_change, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_SYNC_ALARM, _e_border_cb_sync_alarm, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHOW_REQUEST, 
+                         _e_border_cb_window_show_request, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_DESTROY, 
+                         _e_border_cb_window_destroy, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_HIDE, 
+                         _e_border_cb_window_hide, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_REPARENT, 
+                         _e_border_cb_window_reparent, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_CONFIGURE_REQUEST, 
+                         _e_border_cb_window_configure_request, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_RESIZE_REQUEST, 
+                         _e_border_cb_window_resize_request, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_GRAVITY, 
+                         _e_border_cb_window_gravity, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STACK_REQUEST, 
+                         _e_border_cb_window_stack_request, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_PROPERTY, 
+                         _e_border_cb_window_property, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_COLORMAP, 
+                         _e_border_cb_window_colormap, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHAPE, 
+                         _e_border_cb_window_shape, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_IN, 
+                         _e_border_cb_window_focus_in, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_OUT, 
+                         _e_border_cb_window_focus_out, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_CLIENT_MESSAGE, 
+                         _e_border_cb_client_message, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STATE_REQUEST, 
+                         _e_border_cb_window_state_request, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_MOVE_RESIZE_REQUEST, 
+                         _e_border_cb_window_move_resize_request, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_DESKTOP_CHANGE, 
+                         _e_border_cb_desktop_change, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_SYNC_ALARM, 
+                         _e_border_cb_sync_alarm, NULL);
 
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
-   E_LIST_HANDLER_APPEND(handlers, E_EVENT_POINTER_WARP, _e_border_cb_pointer_warp, NULL);
-   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_border_cb_efreet_cache_update, NULL);
-   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_ICON_CACHE_UPDATE, _e_border_cb_efreet_cache_update, NULL);
-   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_ICON_THEME, _e_border_cb_config_icon_theme, NULL);
-   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_MODE_CHANGED, _e_border_cb_config_mode, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_POINTER_WARP, 
+                         _e_border_cb_pointer_warp, NULL);
+   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_DESKTOP_CACHE_UPDATE, 
+                         _e_border_cb_efreet_cache_update, NULL);
+   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_ICON_CACHE_UPDATE, 
+                         _e_border_cb_efreet_cache_update, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_ICON_THEME, 
+                         _e_border_cb_config_icon_theme, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_MODE_CHANGED, 
+                         _e_border_cb_config_mode, NULL);
 
    if (!borders_hash) borders_hash = eina_hash_string_superfast_new(NULL);
 
