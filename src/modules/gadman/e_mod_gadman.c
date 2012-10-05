@@ -1682,22 +1682,15 @@ _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc)
 static void
 _e_gadman_handlers_add(void)
 {
-   _gadman_hdls = eina_list_append(_gadman_hdls,
-                      ecore_event_handler_add(E_EVENT_ZONE_ADD, _e_gadman_cb_zone_add, NULL));
-   _gadman_hdls = eina_list_append(_gadman_hdls,
-                      ecore_event_handler_add(E_EVENT_ZONE_DEL, _e_gadman_cb_zone_del, NULL));
-   _gadman_hdls = eina_list_append(_gadman_hdls,
-                      ecore_event_handler_add(E_EVENT_MODULE_UPDATE, (Ecore_Event_Handler_Cb)_gadman_module_cb, NULL));
+   E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_ZONE_ADD, _e_gadman_cb_zone_add, NULL);
+   E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_ZONE_DEL, _e_gadman_cb_zone_del, NULL);
+   E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_MODULE_UPDATE, (Ecore_Event_Handler_Cb)_gadman_module_cb, NULL);
 }
 
 static void
 _e_gadman_handler_del(void)
 {
-   Ecore_Event_Handler *hdl;
-
-   /* remove the ecore event handlers */
-   EINA_LIST_FREE(_gadman_hdls, hdl)
-     ecore_event_handler_del(hdl);
+   E_FREE_LIST(_gadman_hdls, ecore_event_handler_del);
 }
 
 static Eina_Bool
