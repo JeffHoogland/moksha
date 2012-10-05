@@ -65,6 +65,7 @@ gadman_popup_free(Gadman_Popup *gp)
    e_object_del_attach_func_set(E_OBJECT(gp->gcc), NULL);
    ecore_event_handler_del(gp->eh);
    Man->gadman_popups = eina_inlist_remove(Man->gadman_popups, EINA_INLIST_GET(gp));
+   e_object_del(E_OBJECT(gp->pop));
    free(gp);
 }
 
@@ -96,9 +97,11 @@ gadman_popup_new(E_Gadcon_Client *gcc)
 
    gp = E_NEW(Gadman_Popup, 1);
    gp->gcc = gcc;
+   gp->pop = e_gadcon_popup_new(gcc);
    gp->timer = ecore_timer_add(5.0, (Ecore_Task_Cb)_gadman_popup_timer, gp);
    e_object_data_set(E_OBJECT(gcc), gp);
    e_object_del_attach_func_set(E_OBJECT(gcc), _gadman_popup_del);
+   Man->gadman_popups = eina_inlist_append(Man->gadman_popups, EINA_INLIST_GET(gp));
    gp->eh = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, (Ecore_Event_Handler_Cb)_gadman_popup_mouse, gp);
 
    return gp;
@@ -985,9 +988,11 @@ _apply_widget_position(E_Gadcon_Client *gcc)
         w = DEFAULT_SIZE_W;
         h = DEFAULT_SIZE_H;
         pop = gadman_popup_new(gcc);
-        snprintf(buf, sizeof(buf), "A gadget of type '%s' was detected without any stored geometry.<br>"
+        o = edje_object_add(pop->pop->win->evas);
+        e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/text");
+        snprintf(buf, sizeof(buf), "A gadget of type '%s' was detected without any stored geometry.<ps>"
                  "It has been relocated and resized for you.", gcc->client_class->name);
-        o = e_widget_label_add(pop->pop->win->evas, buf);
+        edje_object_part_text_set(o, "e.textblock.message", buf);
         e_gadcon_popup_content_set(pop->pop, o);
         e_gadcon_popup_show(pop->pop);
      }
