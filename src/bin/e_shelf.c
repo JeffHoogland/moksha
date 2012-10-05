@@ -887,13 +887,12 @@ e_shelf_desk_visible(E_Shelf *es, E_Desk *desk)
    EINA_SAFETY_ON_NULL_RETURN_VAL(es, EINA_FALSE);
    if (!desk)
      {
-        Eina_Bool vis = EINA_FALSE;
         EINA_LIST_FOREACH(e_util_container_current_get()->zones, ll, zone)
           {
              desk = e_desk_current_get(zone);
-             vis |= e_shelf_desk_visible(es, desk);
+             if (e_shelf_desk_visible(es, desk)) return EINA_TRUE;
           }
-        return vis;
+        return EINA_FALSE;
      }
    if (!es->cfg->desk_show_mode) return EINA_TRUE;
    cf_es = es->cfg;
