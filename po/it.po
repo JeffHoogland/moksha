@@ -1026,10 +1026,12 @@ msgstr "Basilari"
 msgid "Apply"
 msgstr "Applica"
 
+#. #-#-#-#-#  it.po (Enlightenment 0.17)  #-#-#-#-#
+#. register config panel entry
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1254
 #: src/modules/connman/e_mod_main.c:616
-#: src/modules/notification/e_mod_main.c:294
+#: src/modules/notification/e_mod_main.c:294 ../src/e_mod_main.c:301
 msgid "Extensions"
 msgstr "Estensioni"
 
@@ -2389,7 +2391,8 @@ msgstr "Richiede posizione"
 #: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:344
 #: src/modules/xkbswitch/e_mod_main.c:386
 #: src/modules/notification/e_mod_box.c:477
-#: src/modules/notification/e_mod_box.c:616
+#: src/modules/notification/e_mod_box.c:616 ../src/e_mod_box.c:666
+#: ../src/e_mod_box.c:810
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -2767,7 +2770,7 @@ msgid "Hide timeout"
 msgstr "Timeout per la scomparsa"
 
 #: src/bin/e_int_shelf_config.c:237
-#: src/modules/notification/e_mod_config.c:107
+#: src/modules/notification/e_mod_config.c:107 ../src/e_mod_config.c:95
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f secondi"
@@ -4447,6 +4450,7 @@ msgstr "Impostazioni finestre di dialogo"
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
 #: src/modules/notification/e_mod_config_item.c:89
+#: ../src/e_mod_config_item.c:82
 msgid "General Settings"
 msgstr "Impostazioni generali"
 
@@ -8031,6 +8035,7 @@ msgstr "Espandi se sul desktop"
 
 #: src/modules/ibox/e_mod_config.c:101
 #: src/modules/notification/e_mod_config_item.c:90
+#: ../src/e_mod_config_item.c:83
 msgid "Show Icon Label"
 msgstr "Mostra etichetta icona"
 
@@ -8699,85 +8704,87 @@ msgstr "Modello"
 msgid "Variant"
 msgstr "Variante"
 
-#: src/modules/notification/e_mod_main.c:137
+#: ../src/e_mod_main.c:121
 msgid "Notification Box"
-msgstr ""
+msgstr "Notification"
 
-#: src/modules/notification/e_mod_main.c:212
-#, fuzzy
+#: ../src/e_mod_main.c:213
 msgid "Enter Presentation Mode"
-msgstr "Modalità presentazione"
+msgstr "Entra in modalità presentazione"
 
-#: src/modules/notification/e_mod_main.c:213
+#: ../src/e_mod_main.c:214
 msgid ""
 "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
+"Enlightenment è in modalità <b>presentazione</b>.<br>Durante la modalità "
+"presentazione vengono disabilitati lo screensaver, il bloccaschermo e la "
+"gestione energetica in modo da non essere interrotti."
 
-#: src/modules/notification/e_mod_main.c:219
-#, fuzzy
+#: ../src/e_mod_main.c:220
 msgid "Exited Presentation Mode"
-msgstr "Modalità presentazione"
+msgstr "Uscita da modalità presentazione"
 
-#: src/modules/notification/e_mod_main.c:220
+#: ../src/e_mod_main.c:221
 msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
+"La modalità presentazione è terminata.<br>Adesso verranno riabilitati lo "
+"screensaver, il bloccaschermo e la gestione energetica."
 
-#: src/modules/notification/e_mod_main.c:235
-#, fuzzy
+#: ../src/e_mod_main.c:236
 msgid "Enter Offline Mode"
-msgstr "Commuta modalità disconnessa"
+msgstr "Entra in modalità non in linea"
 
-#: src/modules/notification/e_mod_main.c:236
+#: ../src/e_mod_main.c:237
 msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
+"Enlightenment è in modalità <b>non in linea</b>.<br>Durante la modalità non "
+"in linea i moduli che usano la rete smettono di interrogare i servizi remoti."
 
-#: src/modules/notification/e_mod_main.c:242
-#, fuzzy
+#: ../src/e_mod_main.c:243
 msgid "Exited Offline Mode"
-msgstr "Commuta modalità disconnessa"
+msgstr "Uscita da modalità non in linea"
 
-#: src/modules/notification/e_mod_main.c:243
+#: ../src/e_mod_main.c:244
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
+"Adesso si è in modalità <b>non in linea</b>.<br>Da ora in poi i moduli che "
+"usano la rete riprenderanno i loro compiti normali."
 
-#: src/modules/notification/e_mod_main.c:297
-#, fuzzy
+#: ../src/e_mod_main.c:303
 msgid "Notification"
-msgstr "Rotazione"
+msgstr "Notification"
 
-#: src/modules/notification/e_mod_main.c:331
-#, fuzzy
+#: ../src/e_mod_main.c:336
 msgid "Notification Module"
-msgstr "Modalità presentazione"
+msgstr "Modulo Notification"
 
-#: src/modules/notification/e_mod_main.c:350
+#: ../src/e_mod_main.c:364
 msgid "Error During DBus Init!"
-msgstr ""
+msgstr "Errore nell'inizializzazione di DBus!"
 
-#: src/modules/notification/e_mod_main.c:351
+#: ../src/e_mod_main.c:365
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
+"Errore nell'inizializzazione di DBus! Si prega di controllare che dbus sia "
+"correttamente installato e in funzione."
 
-#: src/modules/notification/e_mod_config.c:45
-#, fuzzy
+#: ../src/e_mod_config.c:38
 msgid "Notification Settings"
-msgstr "Impostazioni interazione"
+msgstr "Impostazioni di Notification"
 
-#: src/modules/notification/e_mod_config.c:93
-#: src/modules/notification/e_mod_config_item.c:98
-#, fuzzy
+#: ../src/e_mod_config.c:81 ../src/e_mod_config_item.c:91
 msgid "Urgency"
-msgstr "Urgente"
+msgstr "Urgenza"
 
 #: src/modules/notification/e_mod_config.c:94
 msgid "Levels of urgency to display:"
@@ -8789,19 +8796,26 @@ msgstr ""
 msgid "Critical"
 msgstr "Verticale"
 
-#: src/modules/notification/e_mod_config.c:104
-#, fuzzy
+#: ../src/e_mod_config.c:92
 msgid "Default Timeout"
-msgstr "Vista predefinita"
+msgstr "Timeout predefinito"
 
-#: src/modules/notification/e_mod_config.c:105
+#: ../src/e_mod_config.c:93
 msgid "Force timeout for all notifications"
-msgstr ""
+msgstr "Forza timeout per tutte le notifiche"
 
-#: src/modules/notification/e_mod_config.c:122
-#, fuzzy
+#. man = e_manager_current_get();
+#. * of = e_widget_framelist_add(evas, D_("Placement"), 0);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f x"), 0.0, man->w, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.x), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f y"), 0.0, man->h, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.y), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * e_widget_list_object_append(o, of, 1, 1, 0.5);
+#: ../src/e_mod_config.c:110
 msgid "Popup Corner"
-msgstr "Dimensione popup"
+msgstr "Angolo per popup"
 
 #: src/modules/notification/e_mod_config.c:124
 #, fuzzy
@@ -8831,20 +8845,38 @@ msgstr ""
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config_item.c:42
-#, fuzzy
+#: ../src/e_mod_config_item.c:37
 msgid "Notification Box Configuration"
-msgstr "Configurazione di Tiling"
+msgstr "Configurazione modulo Notification"
 
-#: src/modules/notification/e_mod_config_item.c:92
-#, fuzzy
+#: ../src/e_mod_config_item.c:85
 msgid "Show the popup on mouse over"
-msgstr "Mostra popup con finestre con fuoco"
+msgstr "Mostra popup al passaggio del mouse"
 
-#: src/modules/notification/e_mod_config_item.c:94
+#: ../src/e_mod_config_item.c:87
 msgid "Focus the source window when clicking"
-msgstr ""
+msgstr "Sposta fuoco su finestra sorgente al click"
 
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr ""
+
+#: ../src/e_mod_config.c:82
+msgid "Levels of urgency to popup : "
+msgstr "Livelli di urgenza da notificare:"
+
+#: ../src/e_mod_config.c:84 ../src/e_mod_config_item.c:94
+msgid "low"
+msgstr "basso"
+
+#: ../src/e_mod_config.c:86 ../src/e_mod_config_item.c:96
+msgid "normal"
+msgstr "normale"
+
+#: ../src/e_mod_config.c:88 ../src/e_mod_config_item.c:98
+msgid "critical"
+msgstr "critico"
+
+#: ../src/e_mod_config_item.c:92
+msgid "Levels of urgency to store : "
+msgstr "Livelli di urgenza da salvare:"

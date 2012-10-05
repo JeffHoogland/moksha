@@ -1031,10 +1031,12 @@ msgstr "Základní"
 msgid "Apply"
 msgstr "Použít"
 
+#. #-#-#-#-#  cs.po (DR17)  #-#-#-#-#
+#. register config panel entry
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1254
 #: src/modules/connman/e_mod_main.c:616
-#: src/modules/notification/e_mod_main.c:294
+#: src/modules/notification/e_mod_main.c:294 ../src/e_mod_main.c:300
 msgid "Extensions"
 msgstr "Rozšíření"
 
@@ -2427,7 +2429,8 @@ msgstr "Získat pozici"
 #: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:344
 #: src/modules/xkbswitch/e_mod_main.c:386
 #: src/modules/notification/e_mod_box.c:477
-#: src/modules/notification/e_mod_box.c:616
+#: src/modules/notification/e_mod_box.c:616 ../src/e_mod_box.c:650
+#: ../src/e_mod_box.c:794
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -2811,7 +2814,7 @@ msgid "Hide timeout"
 msgstr "Čas před skrytím"
 
 #: src/bin/e_int_shelf_config.c:237
-#: src/modules/notification/e_mod_config.c:107
+#: src/modules/notification/e_mod_config.c:107 ../src/e_mod_config.c:95
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f sekund"
@@ -4444,6 +4447,7 @@ msgstr "Nastavení dialogů"
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
 #: src/modules/notification/e_mod_config_item.c:89
+#: ../src/e_mod_config_item.c:82
 msgid "General Settings"
 msgstr "Obecná nastavení"
 
@@ -8165,8 +8169,14 @@ msgstr "Žádné ikony na ploše"
 
 #: src/modules/ibox/e_mod_config.c:101
 #: src/modules/notification/e_mod_config_item.c:90
+#: ../src/e_mod_config_item.c:83
+#, fuzzy
 msgid "Show Icon Label"
-msgstr "Zobrazit název ikony"
+msgstr ""
+"#-#-#-#-#  cs.po (DR17)  #-#-#-#-#\n"
+"Zobrazit název ikony\n"
+"#-#-#-#-#  cs.po (DR17)  #-#-#-#-#\n"
+"Zobrazit titulek ikony"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -8876,84 +8886,91 @@ msgstr "Režim"
 msgid "Variant"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:137
+#: ../src/e_mod_main.c:120
 msgid "Notification Box"
-msgstr ""
+msgstr "Upozorňování"
 
-#: src/modules/notification/e_mod_main.c:212
+#: src/modules/notification/e_mod_main.c:212 ../src/e_mod_main.c:212
+#, fuzzy
 msgid "Enter Presentation Mode"
-msgstr "Vstup do prezentačního módu"
+msgstr ""
+"#-#-#-#-#  cs.po (DR17)  #-#-#-#-#\n"
+"Vstup do prezentačního módu\n"
+"#-#-#-#-#  cs.po (DR17)  #-#-#-#-#\n"
+"Vstup do prezentačního režimu"
 
-#: src/modules/notification/e_mod_main.c:213
+#: ../src/e_mod_main.c:213
 msgid ""
 "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
+"Enlightenment je nyní v <b>prezentačním</b> režimu.<br>Během tohoto režimu "
+"budou spořič obrazovky, zamčení obrazovky a správa napájení zakázány."
 
-#: src/modules/notification/e_mod_main.c:219
-#, fuzzy
+#: ../src/e_mod_main.c:219
 msgid "Exited Presentation Mode"
-msgstr "Vstup do prezentačního módu"
+msgstr "Opuštěn prezentační režim"
 
-#: src/modules/notification/e_mod_main.c:220
+#: ../src/e_mod_main.c:220
 msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
+"Prezentační režim byl vypnut.<br>Nyní budou obnoveny nastavení spořiče, "
+"zamčení obrazovky a správy napájení."
 
-#: src/modules/notification/e_mod_main.c:235
-#, fuzzy
+#: ../src/e_mod_main.c:235
 msgid "Enter Offline Mode"
-msgstr "Offline režim"
+msgstr "Vstup do režimu offline"
 
-#: src/modules/notification/e_mod_main.c:236
+#: ../src/e_mod_main.c:236
 msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
+"Enlightenment je nyní v režimu <b>offline</b>.<br>Během offline módu moduly "
+"přestanou využívat sít."
 
-#: src/modules/notification/e_mod_main.c:242
-#, fuzzy
+#: ../src/e_mod_main.c:242
 msgid "Exited Offline Mode"
-msgstr "Offline režim"
+msgstr "Opuštěn režim offline"
 
-#: src/modules/notification/e_mod_main.c:243
+#: ../src/e_mod_main.c:243
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
+"Nyní v režimu <b>online</b>.<br>Moduly používající síť nyní znovu spustí "
+"běžné úlohy."
 
-#: src/modules/notification/e_mod_main.c:297
-#, fuzzy
+#: ../src/e_mod_main.c:302
 msgid "Notification"
-msgstr "Rotace"
+msgstr "Upozornění"
 
-#: src/modules/notification/e_mod_main.c:331
-#, fuzzy
+#: ../src/e_mod_main.c:334
 msgid "Notification Module"
-msgstr "Prezentační režim"
+msgstr "Modul upozornění"
 
-#: src/modules/notification/e_mod_main.c:350
+#: ../src/e_mod_main.c:353
 msgid "Error During DBus Init!"
-msgstr ""
+msgstr "Chyba při načítání DBus!"
 
-#: src/modules/notification/e_mod_main.c:351
+#: ../src/e_mod_main.c:354
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
+"Chyba při načítání DBus! Prosím zkontrolujte, jestli máte dbus správně "
+"nainstalovaný a spuštěný."
 
-#: src/modules/notification/e_mod_config.c:45
-#, fuzzy
+#: ../src/e_mod_config.c:38
 msgid "Notification Settings"
-msgstr "Nastavení pozice"
+msgstr "Nastavení upozorňování"
 
-#: src/modules/notification/e_mod_config.c:93
-#: src/modules/notification/e_mod_config_item.c:98
-#, fuzzy
+#: ../src/e_mod_config.c:81 ../src/e_mod_config_item.c:91
 msgid "Urgency"
-msgstr "Urgentní"
+msgstr "Důležitost"
 
 #: src/modules/notification/e_mod_config.c:94
 msgid "Levels of urgency to display:"
@@ -8965,19 +8982,26 @@ msgstr ""
 msgid "Critical"
 msgstr "Svisle"
 
-#: src/modules/notification/e_mod_config.c:104
-#, fuzzy
+#: ../src/e_mod_config.c:92
 msgid "Default Timeout"
-msgstr "Výchozí pohled"
+msgstr "Výchozí časový limit"
 
-#: src/modules/notification/e_mod_config.c:105
+#: ../src/e_mod_config.c:93
 msgid "Force timeout for all notifications"
-msgstr ""
+msgstr "Vynutit časový limit pro všechna upozornění"
 
-#: src/modules/notification/e_mod_config.c:122
-#, fuzzy
+#. man = e_manager_current_get();
+#. * of = e_widget_framelist_add(evas, D_("Placement"), 0);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f x"), 0.0, man->w, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.x), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f y"), 0.0, man->h, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.y), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * e_widget_list_object_append(o, of, 1, 1, 0.5);
+#: ../src/e_mod_config.c:110
 msgid "Popup Corner"
-msgstr "Popup"
+msgstr "Roh bubliny"
 
 #: src/modules/notification/e_mod_config.c:124
 #, fuzzy
@@ -9005,24 +9029,41 @@ msgstr ""
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config_item.c:42
-#, fuzzy
+#: ../src/e_mod_config_item.c:37
 msgid "Notification Box Configuration"
-msgstr "Nastavení iBoxu"
+msgstr "Nastavení modulu Notification"
 
-#: src/modules/notification/e_mod_config_item.c:92
-#, fuzzy
+#: ../src/e_mod_config_item.c:85
 msgid "Show the popup on mouse over"
-msgstr "Zobrazit popup oken na soustředěné"
+msgstr "Zobrazit bublinu při aktivaci kurzorem"
 
-#: src/modules/notification/e_mod_config_item.c:94
-#, fuzzy
+#: ../src/e_mod_config_item.c:87
 msgid "Focus the source window when clicking"
-msgstr "Aktivovat okno při výběru"
+msgstr "Aktivovat zdrojové okno při kliknutí"
 
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr ""
+
+#: ../src/e_mod_config.c:82
+msgid "Levels of urgency to popup : "
+msgstr "Úoveń důležitosti ke zobrazení :"
+
+#: ../src/e_mod_config.c:84 ../src/e_mod_config_item.c:94
+msgid "low"
+msgstr "nízký"
+
+#: ../src/e_mod_config.c:86 ../src/e_mod_config_item.c:96
+msgid "normal"
+msgstr "normální"
+
+#: ../src/e_mod_config.c:88 ../src/e_mod_config_item.c:98
+msgid "critical"
+msgstr "kritický"
+
+#: ../src/e_mod_config_item.c:92
+msgid "Levels of urgency to store : "
+msgstr "Stupně důležitosti k zaznamenání:"
 
 #~ msgid "%s"
 #~ msgstr "%s"

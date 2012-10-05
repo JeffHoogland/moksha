@@ -1063,10 +1063,12 @@ msgstr "Базове"
 msgid "Apply"
 msgstr "Застосувати"
 
+#. #-#-#-#-#  uk.po (e.HEAD)  #-#-#-#-#
+#. register config panel entry
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1254
 #: src/modules/connman/e_mod_main.c:616
-#: src/modules/notification/e_mod_main.c:294
+#: src/modules/notification/e_mod_main.c:294 ../src/e_mod_main.c:301
 msgid "Extensions"
 msgstr "Розширення"
 
@@ -2472,7 +2474,8 @@ msgstr "Запросив позицію"
 #: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:344
 #: src/modules/xkbswitch/e_mod_main.c:386
 #: src/modules/notification/e_mod_box.c:477
-#: src/modules/notification/e_mod_box.c:616
+#: src/modules/notification/e_mod_box.c:616 ../src/e_mod_box.c:677
+#: ../src/e_mod_box.c:824
 msgid "Settings"
 msgstr "Налаштування"
 
@@ -2863,7 +2866,7 @@ msgid "Hide timeout"
 msgstr "Час затримки до приховування"
 
 #: src/bin/e_int_shelf_config.c:237
-#: src/modules/notification/e_mod_config.c:107
+#: src/modules/notification/e_mod_config.c:107 ../src/e_mod_config.c:91
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f секунд"
@@ -4537,6 +4540,7 @@ msgstr "Налаштування діалогу"
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
 #: src/modules/notification/e_mod_config_item.c:89
+#: ../src/e_mod_config_item.c:82
 msgid "General Settings"
 msgstr "Загальні налаштування"
 
@@ -6755,11 +6759,6 @@ msgstr "Геометрія зміни розмірів вікна"
 msgid "Display"
 msgstr "Відображення"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
-#, fuzzy
-msgid "Placement"
-msgstr "Розумне розташування"
-
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:165
 msgid "Smart Placement"
 msgstr "Розумне розташування"
@@ -6999,11 +6998,6 @@ msgstr "Розумне розтягнення"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:222
 msgid "Fill available space"
 msgstr "Заповнити доступне місце"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
-#, fuzzy
-msgid "Direction"
-msgstr "Вибрати один"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #: src/modules/everything/evry_config.c:568
@@ -8380,8 +8374,14 @@ msgstr "Без піктограм на стільниці"
 
 #: src/modules/ibox/e_mod_config.c:101
 #: src/modules/notification/e_mod_config_item.c:90
+#: ../src/e_mod_config_item.c:83
+#, fuzzy
 msgid "Show Icon Label"
-msgstr "Показувати ярлик піктограми"
+msgstr ""
+"#-#-#-#-#  uk.po (e.HEAD)  #-#-#-#-#\n"
+"Показувати ярлик піктограми\n"
+"#-#-#-#-#  uk.po (e.HEAD)  #-#-#-#-#\n"
+"Показувати мітку піктограми"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -9100,84 +9100,95 @@ msgstr "Режими"
 msgid "Variant"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:137
+#: ../src/e_mod_main.c:121
 msgid "Notification Box"
-msgstr ""
+msgstr "Сповіщення"
 
-#: src/modules/notification/e_mod_main.c:212
+#: src/modules/notification/e_mod_main.c:212 ../src/e_mod_main.c:213
+#, fuzzy
 msgid "Enter Presentation Mode"
-msgstr "Ввімкнути режим презентації"
+msgstr ""
+"#-#-#-#-#  uk.po (e.HEAD)  #-#-#-#-#\n"
+"Ввімкнути режим презентації\n"
+"#-#-#-#-#  uk.po (e.HEAD)  #-#-#-#-#\n"
+"Увійти в презентаційний режим"
 
-#: src/modules/notification/e_mod_main.c:213
+#: ../src/e_mod_main.c:214
 msgid ""
 "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
+"Enlightenment знаходиться в <b>презентаційному</b> режимі.<br>Упродовж "
+"презентаційного режиму зберігач екрана, замикач і зберігач живлення будуть "
+"вимкнуті, щоб ви не змогли втрутитись."
 
-#: src/modules/notification/e_mod_main.c:219
-#, fuzzy
+#: ../src/e_mod_main.c:220
 msgid "Exited Presentation Mode"
-msgstr "Ввімкнути режим презентації"
+msgstr "Покинути презентаційний режим"
 
-#: src/modules/notification/e_mod_main.c:220
+#: ../src/e_mod_main.c:221
 msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
+"Презентаційний режим завершився.<br>Тепер налаштування зберігача екрана, "
+"замикача і зберігача живлення буде відновлено."
 
-#: src/modules/notification/e_mod_main.c:235
-#, fuzzy
+#: ../src/e_mod_main.c:236
 msgid "Enter Offline Mode"
-msgstr "Поза мережею"
+msgstr "Увійти в автономний режим"
 
-#: src/modules/notification/e_mod_main.c:236
+#: ../src/e_mod_main.c:237
 msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
+"Enlightenment знаходиться в <b>автономному</b> режимі.<br>Упродовж "
+"автономного режима модулі, котрі використовують мережу, припинять свою "
+"роботу."
 
-#: src/modules/notification/e_mod_main.c:242
-#, fuzzy
+#: ../src/e_mod_main.c:243
 msgid "Exited Offline Mode"
-msgstr "Поза мережею"
+msgstr "Покинути автономний режим"
 
-#: src/modules/notification/e_mod_main.c:243
+#: ../src/e_mod_main.c:244
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
+"Зараз ви покинули <b>автономний</b> режим.<br>Тепер модулі, котрі "
+"використовували мережу відновлять свою роботу."
 
-#: src/modules/notification/e_mod_main.c:297
-#, fuzzy
+#: ../src/e_mod_main.c:303
 msgid "Notification"
-msgstr "Обертання"
+msgstr "Сповіщення"
 
-#: src/modules/notification/e_mod_main.c:331
-#, fuzzy
+#: ../src/e_mod_main.c:335
+#| msgid "Notification Box"
 msgid "Notification Module"
-msgstr "Ввімкнути режим презентації"
+msgstr "Сповіщення"
 
-#: src/modules/notification/e_mod_main.c:350
+#: ../src/e_mod_main.c:363
 msgid "Error During DBus Init!"
-msgstr ""
+msgstr "Помилка при запуску DBus!"
 
-#: src/modules/notification/e_mod_main.c:351
+#: ../src/e_mod_main.c:364
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
+"Помилка при запуску DBus! Будь ласка, перевірте, чи DBus коректно "
+"встановлений і запущений."
 
-#: src/modules/notification/e_mod_config.c:45
-#, fuzzy
+#: ../src/e_mod_config.c:37
+#| msgid "Notification"
 msgid "Notification Settings"
-msgstr "Налаштування позиціонування"
+msgstr "Налаштування сповіщень"
 
-#: src/modules/notification/e_mod_config.c:93
-#: src/modules/notification/e_mod_config_item.c:98
-#, fuzzy
+#: ../src/e_mod_config.c:79 ../src/e_mod_config_item.c:91
 msgid "Urgency"
-msgstr "Термінове"
+msgstr "Потреба"
 
 #: src/modules/notification/e_mod_config.c:94
 msgid "Levels of urgency to display:"
@@ -9189,19 +9200,26 @@ msgstr ""
 msgid "Critical"
 msgstr "Вертикально"
 
-#: src/modules/notification/e_mod_config.c:104
-#, fuzzy
+#: ../src/e_mod_config.c:90
 msgid "Default Timeout"
-msgstr "Типовий рушій"
+msgstr "Типовий лічильник часу"
 
 #: src/modules/notification/e_mod_config.c:105
 msgid "Force timeout for all notifications"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:122
-#, fuzzy
+#. man = e_manager_current_get();
+#. * of = e_widget_framelist_add(evas, D_("Placement"), 0);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f x"), 0.0, man->w, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.x), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f y"), 0.0, man->h, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.y), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * e_widget_list_object_append(o, of, 1, 1, 0.5);
+#: ../src/e_mod_config.c:106
 msgid "Popup Corner"
-msgstr "Підказка"
+msgstr "Куток для виринань"
 
 #: src/modules/notification/e_mod_config.c:124
 #, fuzzy
@@ -9229,24 +9247,47 @@ msgstr ""
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config_item.c:42
-#, fuzzy
+#: ../src/e_mod_config_item.c:37
 msgid "Notification Box Configuration"
-msgstr "(немає інформації)"
+msgstr "Налаштування"
 
-#: src/modules/notification/e_mod_config_item.c:92
-#, fuzzy
+#: ../src/e_mod_config_item.c:85
 msgid "Show the popup on mouse over"
-msgstr "Показати спливаючі вікна для цілеспрямованого"
+msgstr "Показувати виринання при натисненні правої клавіші миші"
 
-#: src/modules/notification/e_mod_config_item.c:94
-#, fuzzy
+#: ../src/e_mod_config_item.c:87
 msgid "Focus the source window when clicking"
-msgstr "Фокусувати вікно під час виділення"
+msgstr "При натиснені фокусуватись на джерелі вікна"
 
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr ""
+
+#: ../src/e_mod_config.c:80
+msgid "Levels of urgency to popup : "
+msgstr "Рівні потреби у виринанні :"
+
+#: ../src/e_mod_config.c:82 ../src/e_mod_config_item.c:94
+msgid "low"
+msgstr "низький"
+
+#: ../src/e_mod_config.c:84 ../src/e_mod_config_item.c:96
+msgid "normal"
+msgstr "звичайний"
+
+#: ../src/e_mod_config.c:86 ../src/e_mod_config_item.c:98
+msgid "critical"
+msgstr "важливий"
+
+#: ../src/e_mod_config_item.c:92
+msgid "Levels of urgency to store : "
+msgstr "Рівні потреби у зберіганні :"
+
+#~ msgid "Placement"
+#~ msgstr "Розташовування"
+
+#~ msgid "Direction"
+#~ msgstr "Напрям"
 
 #~ msgid "%s"
 #~ msgstr "%s"
@@ -10574,3 +10615,60 @@ msgstr ""
 
 #~ msgid "Allow window manipulation"
 #~ msgstr "Дозволити маніпулювання вікном"
+
+#~ msgid "Configuration"
+#~ msgstr "Налаштування"
+
+#~ msgid "Notification Configuration Updated"
+#~ msgstr "Налаштування повідомлення оновлені"
+
+#~ msgid ""
+#~ "Notification Module Configuration data needed upgrading. Your old "
+#~ "configuration<br> has been wiped and a new set of defaults initialized. "
+#~ "This<br>will happen regularly during development, so don't report "
+#~ "a<br>bug. This simply means the Notification module needs new "
+#~ "configuration<br>data by default for usable functionality that your "
+#~ "old<br>configuration simply lacks. This new set of defaults will "
+#~ "fix<br>that by adding it in. You can re-configure things now to "
+#~ "your<br>liking. Sorry for the inconvenience.<br>"
+#~ msgstr ""
+#~ "Налаштування модуля повідомлення потребує оновлення даних. Ваші старі "
+#~ "налаштування<br> витерлись і встановлено типові. Це<br> буде "
+#~ "здійснюватись постійно під час розробки, тому не повідомляйте про "
+#~ "цю<br>ваду. Це просто-напросто означає, що модуль потребує зміни "
+#~ "даних<br>налаштувань до типових для залучення нових функцій, яких "
+#~ "бракувало в старій версії. Встановлення до типових виправить,<br>це "
+#~ "залучивши нові функції. Тепер ви можете налаштувати все на ваші<br> "
+#~ "вподобання. Вибачте за незручності.<br>"
+
+#~ msgid ""
+#~ "Your Notification Module Configuration is NEWER than the Notification "
+#~ "Module version. This is very<br>strange. This should not happen unless "
+#~ "you downgraded<br>the Notification Module or copied the configuration "
+#~ "from a place where<br>a newer version of the Notification Module was "
+#~ "running. This is bad and<br>as a precaution your configuration has been "
+#~ "now restored to<br>defaults. Sorry for the inconvenience.<br>"
+#~ msgstr ""
+#~ "Ваші налаштування модуля повідомлення — новіші ніж версія самого модуля. "
+#~ "Це дуже<br>дивно. Цьому не слід траплятися, хіба що ви знизили "
+#~ "версію<br>модуля або скопіювали налаштування звідкіллясь, де<br>є новіша "
+#~ "версія модуля. Це недобре,<br>тому, для надійності роботи, налаштування "
+#~ "будуть повернуті до<br>типових. Вибачте за незручність.<br>"
+
+#~ msgid "Notification Configuration"
+#~ msgstr "Налаштування повідомлення"
+
+#~ msgid "%2.0f x"
+#~ msgstr "%2.0f x"
+
+#~ msgid "%2.0f y"
+#~ msgstr "%2.0f y"
+
+#~ msgid "Direction in which popups will stack themselves : "
+#~ msgstr "Напрям виринаннь:"
+
+#~ msgid "Gap"
+#~ msgstr "Проміжок"
+
+#~ msgid "Size of the gap between two popups : "
+#~ msgstr "Розмір проміжка між двома виринаннями:"

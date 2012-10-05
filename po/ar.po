@@ -1028,12 +1028,19 @@ msgstr "أساسي"
 msgid "Apply"
 msgstr "طبق"
 
+#. #-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#
+#. register config panel entry
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1254
 #: src/modules/connman/e_mod_main.c:616
-#: src/modules/notification/e_mod_main.c:294
+#: src/modules/notification/e_mod_main.c:294 ../src/e_mod_main.c:301
+#, fuzzy
 msgid "Extensions"
-msgstr "اﻹمتدادات"
+msgstr ""
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"اﻹمتدادات\n"
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"الملحقات"
 
 #: src/bin/e_configure.c:30 src/bin/e_configure.c:33 src/bin/e_configure.c:280
 #: src/modules/conf_paths/e_int_config_paths.c:80
@@ -2418,9 +2425,15 @@ msgstr "أطلب الموضع"
 #: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:344
 #: src/modules/xkbswitch/e_mod_main.c:386
 #: src/modules/notification/e_mod_box.c:477
-#: src/modules/notification/e_mod_box.c:616
+#: src/modules/notification/e_mod_box.c:616 ../src/e_mod_box.c:677
+#: ../src/e_mod_box.c:824
+#, fuzzy
 msgid "Settings"
-msgstr "إعدادات"
+msgstr ""
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"إعدادات\n"
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"اﻹعدادات"
 
 #: src/bin/e_int_border_prop.c:508
 msgid "Modal"
@@ -2800,7 +2813,7 @@ msgid "Hide timeout"
 msgstr "أخف المهلة"
 
 #: src/bin/e_int_shelf_config.c:237
-#: src/modules/notification/e_mod_config.c:107
+#: src/modules/notification/e_mod_config.c:107 ../src/e_mod_config.c:91
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f ثواني"
@@ -4410,6 +4423,7 @@ msgstr "إعدادات الحوار"
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
 #: src/modules/notification/e_mod_config_item.c:89
+#: ../src/e_mod_config_item.c:82
 msgid "General Settings"
 msgstr "اﻹعدادات العامة"
 
@@ -6573,8 +6587,13 @@ msgid "Display"
 msgstr "العرض"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
+#, fuzzy
 msgid "Placement"
-msgstr "التموضع"
+msgstr ""
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"التموضع\n"
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"الموضع"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:165
 msgid "Smart Placement"
@@ -6793,8 +6812,13 @@ msgid "Fill available space"
 msgstr "عبئ ما توفر من فراغ "
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
+#, fuzzy
 msgid "Direction"
-msgstr "اتجاه"
+msgstr ""
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"اتجاه\n"
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"الإتجاه"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #: src/modules/everything/evry_config.c:568
@@ -8103,8 +8127,14 @@ msgstr "لا يوجد أيقونات على سطح المكتب"
 
 #: src/modules/ibox/e_mod_config.c:101
 #: src/modules/notification/e_mod_config_item.c:90
+#: ../src/e_mod_config_item.c:83
+#, fuzzy
 msgid "Show Icon Label"
-msgstr "اعرض تسمية اﻷيقونة"
+msgstr ""
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"اعرض تسمية اﻷيقونة\n"
+"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
+"اعرض ملصق اﻷيقونة"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -8816,84 +8846,87 @@ msgstr "الوضع"
 msgid "Variant"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:137
+#: ../src/e_mod_main.c:121
 msgid "Notification Box"
-msgstr ""
+msgstr "صندوق التنبيه"
 
-#: src/modules/notification/e_mod_main.c:212
+#: src/modules/notification/e_mod_main.c:212 ../src/e_mod_main.c:213
 msgid "Enter Presentation Mode"
 msgstr "ادخل نمط العرض"
 
-#: src/modules/notification/e_mod_main.c:213
+#: ../src/e_mod_main.c:214
 msgid ""
 "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
+"إنلايتنمينت في نمط <b>العرض</b> اﻵن.<br>أثناء نمط العرض ، خدمات حافظة الشاشة "
+"من قفل و حفظ الطاقة سيتم تعطيلها لضمان عدم مقاطعتك."
 
-#: src/modules/notification/e_mod_main.c:219
-#, fuzzy
+#: ../src/e_mod_main.c:220
 msgid "Exited Presentation Mode"
-msgstr "ادخل نمط العرض"
+msgstr "تم الخروج من نمط العرض"
 
-#: src/modules/notification/e_mod_main.c:220
+#: ../src/e_mod_main.c:221
 msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
+"انتهى نمط العرض.<br>اﻵن إعدادات خدمات حافظة الشاشة من, قفل و حفظ طاقة "
+"ستستعاد."
 
-#: src/modules/notification/e_mod_main.c:235
-#, fuzzy
+#: ../src/e_mod_main.c:236
 msgid "Enter Offline Mode"
-msgstr "وضع دون اتصال"
+msgstr "أدخل نمط خارج الشبكة"
 
-#: src/modules/notification/e_mod_main.c:236
+#: ../src/e_mod_main.c:237
 msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
+"إنلايتنمينت في نمط <b>خارج الشبكة</b>اﻵن.<br>أثناء وضع خارج الشبكة فإن "
+"الوحدات التي تستخدم الشبكة ستوقف خدمات اﻹستطلاع عن بعد."
 
-#: src/modules/notification/e_mod_main.c:242
-#, fuzzy
+#: ../src/e_mod_main.c:243
 msgid "Exited Offline Mode"
-msgstr "وضع دون اتصال"
+msgstr "تم الخروج من نمط خارج الشبكة"
 
-#: src/modules/notification/e_mod_main.c:243
+#: ../src/e_mod_main.c:244
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
+"أنت اﻵن في نمط<b>في الشبكة</b> .<br>كما أن الوحدات التي تستخدم الشبكة ستكمل "
+"مهامها اﻹعتيادية."
 
-#: src/modules/notification/e_mod_main.c:297
-#, fuzzy
+#: ../src/e_mod_main.c:303
 msgid "Notification"
-msgstr "الدوران"
+msgstr "تنبيه"
 
-#: src/modules/notification/e_mod_main.c:331
-#, fuzzy
+#: ../src/e_mod_main.c:335
+#| msgid "Notification Box"
 msgid "Notification Module"
-msgstr "نمط العرض"
+msgstr "وحدة التنبيه"
 
-#: src/modules/notification/e_mod_main.c:350
+#: ../src/e_mod_main.c:363
 msgid "Error During DBus Init!"
-msgstr ""
+msgstr "خطأ أثناء بدء DBus !"
 
-#: src/modules/notification/e_mod_main.c:351
+#: ../src/e_mod_main.c:364
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
+"خطأ أثناء بدء DBus! رجاءا تفقد ما إذا كان dbus قد نصب بشكل صحيح و يعمل جيدا."
 
-#: src/modules/notification/e_mod_config.c:45
-#, fuzzy
+#: ../src/e_mod_config.c:37
+#| msgid "Notification"
 msgid "Notification Settings"
-msgstr "إعدادات الموضع"
+msgstr "إعدادات التنبيه"
 
-#: src/modules/notification/e_mod_config.c:93
-#: src/modules/notification/e_mod_config_item.c:98
-#, fuzzy
+#: ../src/e_mod_config.c:79 ../src/e_mod_config_item.c:91
 msgid "Urgency"
-msgstr "عاجل"
+msgstr "اﻹلحاح"
 
 #: src/modules/notification/e_mod_config.c:94
 msgid "Levels of urgency to display:"
@@ -8905,19 +8938,26 @@ msgstr ""
 msgid "Critical"
 msgstr "عمودي"
 
-#: src/modules/notification/e_mod_config.c:104
-#, fuzzy
+#: ../src/e_mod_config.c:90
 msgid "Default Timeout"
-msgstr "عرض افتراضي"
+msgstr "المهلة اﻹفتراضية"
 
 #: src/modules/notification/e_mod_config.c:105
 msgid "Force timeout for all notifications"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:122
-#, fuzzy
+#. man = e_manager_current_get();
+#. * of = e_widget_framelist_add(evas, D_("Placement"), 0);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f x"), 0.0, man->w, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.x), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f y"), 0.0, man->h, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.y), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * e_widget_list_object_append(o, of, 1, 1, 0.5);
+#: ../src/e_mod_config.c:106
 msgid "Popup Corner"
-msgstr "حجم المنبثقة"
+msgstr "ركن المنبثقة"
 
 #: src/modules/notification/e_mod_config.c:124
 #, fuzzy
@@ -8945,23 +8985,42 @@ msgstr ""
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config_item.c:42
-#, fuzzy
+#: ../src/e_mod_config_item.c:37
 msgid "Notification Box Configuration"
-msgstr "إعدادات كل شيء"
+msgstr "إعدادات صندوق التنبيه"
 
-#: src/modules/notification/e_mod_config_item.c:92
-#, fuzzy
+#: ../src/e_mod_config_item.c:85
 msgid "Show the popup on mouse over"
-msgstr "أعرض النوافذ المنبثقة للنوافذ المحددة"
+msgstr "اعرض النافذة المنبثقة عند مرور الفأرة"
 
 #: src/modules/notification/e_mod_config_item.c:94
+#: ../src/e_mod_config_item.c:87
 msgid "Focus the source window when clicking"
 msgstr ""
 
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr ""
+
+#: ../src/e_mod_config.c:80
+msgid "Levels of urgency to popup : "
+msgstr "مستوى اﻹستعجال للمنبثقة"
+
+#: ../src/e_mod_config.c:82 ../src/e_mod_config_item.c:94
+msgid "low"
+msgstr "منخفض"
+
+#: ../src/e_mod_config.c:84 ../src/e_mod_config_item.c:96
+msgid "normal"
+msgstr "عادي"
+
+#: ../src/e_mod_config.c:86 ../src/e_mod_config_item.c:98
+msgid "critical"
+msgstr "حرج"
+
+#: ../src/e_mod_config_item.c:92
+msgid "Levels of urgency to store : "
+msgstr "مستوى اﻹستعجال ﻷجل اﻹستعادة:"
 
 #~ msgid "%s"
 #~ msgstr "%s"
@@ -10054,3 +10113,18 @@ msgstr ""
 
 #~ msgid "Background Mode"
 #~ msgstr "نمط الخلفية"
+
+#~ msgid "Configuration"
+#~ msgstr "الإعدادات"
+
+#~ msgid "Notification Configuration"
+#~ msgstr "إعددات التنبيه"
+
+#~ msgid "%2.0f x"
+#~ msgstr "%2.0f x"
+
+#~ msgid "Gap"
+#~ msgstr "تباعد"
+
+#~ msgid "Size of the gap between two popups : "
+#~ msgstr "حجم التباعد بين نافذتين منبثقتين : "

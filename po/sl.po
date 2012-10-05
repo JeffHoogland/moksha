@@ -1056,10 +1056,12 @@ msgstr "Osnovno"
 msgid "Apply"
 msgstr "Uveljavi"
 
+#. #-#-#-#-#  sl.po (trunk.HEAD)  #-#-#-#-#
+#. register config panel entry
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1254
 #: src/modules/connman/e_mod_main.c:616
-#: src/modules/notification/e_mod_main.c:294
+#: src/modules/notification/e_mod_main.c:294 ../src/e_mod_main.c:301
 msgid "Extensions"
 msgstr "Razširitve"
 
@@ -2461,7 +2463,8 @@ msgstr "Zahtevaj položaj"
 #: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:344
 #: src/modules/xkbswitch/e_mod_main.c:386
 #: src/modules/notification/e_mod_box.c:477
-#: src/modules/notification/e_mod_box.c:616
+#: src/modules/notification/e_mod_box.c:616 ../src/e_mod_box.c:677
+#: ../src/e_mod_box.c:824
 msgid "Settings"
 msgstr "Nastavitve"
 
@@ -2841,10 +2844,14 @@ msgid "Hide timeout"
 msgstr "Časovna zakasnitev skritja"
 
 #: src/bin/e_int_shelf_config.c:237
-#: src/modules/notification/e_mod_config.c:107
-#, c-format
+#: src/modules/notification/e_mod_config.c:107 ../src/e_mod_config.c:91
+#, fuzzy, c-format
 msgid "%.1f seconds"
-msgstr "%.1f sek."
+msgstr ""
+"#-#-#-#-#  sl.po (trunk.HEAD)  #-#-#-#-#\n"
+"%.1f sek.\n"
+"#-#-#-#-#  sl.po (trunk.HEAD)  #-#-#-#-#\n"
+"%.1f·sek."
 
 #: src/bin/e_int_shelf_config.c:243
 msgid "Hide duration"
@@ -4515,6 +4522,7 @@ msgstr "Nastavitev pogovornih oken"
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
 #: src/modules/notification/e_mod_config_item.c:89
+#: ../src/e_mod_config_item.c:82
 msgid "General Settings"
 msgstr "Splošne nastavitve"
 
@@ -8206,8 +8214,14 @@ msgstr "Na namizju ni ikon"
 
 #: src/modules/ibox/e_mod_config.c:101
 #: src/modules/notification/e_mod_config_item.c:90
+#: ../src/e_mod_config_item.c:83
+#, fuzzy
 msgid "Show Icon Label"
-msgstr "Prikaži oznako ikone"
+msgstr ""
+"#-#-#-#-#  sl.po (trunk.HEAD)  #-#-#-#-#\n"
+"Prikaži oznako ikone\n"
+"#-#-#-#-#  sl.po (trunk.HEAD)  #-#-#-#-#\n"
+"Prikaži ime ikone"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -8914,85 +8928,88 @@ msgstr "Način"
 msgid "Variant"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:137
+#: ../src/e_mod_main.c:121
 msgid "Notification Box"
-msgstr ""
+msgstr "Obvestilna škatla"
 
-#: src/modules/notification/e_mod_main.c:212
-#, fuzzy
+#: ../src/e_mod_main.c:213
 msgid "Enter Presentation Mode"
-msgstr "Predstavitveni način"
+msgstr "Zagon predstavitvenega načina"
 
-#: src/modules/notification/e_mod_main.c:213
+#: ../src/e_mod_main.c:214
 msgid ""
 "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
+"Enlightenment·je·v·<b>predstavitvenem</b>·načinu.<br>Med predstavitvenim "
+"načinom,·so ohranjevalnik zaslona,·zaklepanje·in upravljanje porabe "
+"onemogočeni, tako·da vas nič ne prekinja."
 
-#: src/modules/notification/e_mod_main.c:219
-#, fuzzy
+#: ../src/e_mod_main.c:220
 msgid "Exited Presentation Mode"
-msgstr "Predstavitveni način"
+msgstr "Predstavitveni način zaključen"
 
-#: src/modules/notification/e_mod_main.c:220
+#: ../src/e_mod_main.c:221
 msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
+"Predstavitveni način je zaključen.<br>Zdaj bodo nastavitve za ohranjevalnik "
+"zaslona, zaklepanje in upravljanje porabe obnovljene."
 
-#: src/modules/notification/e_mod_main.c:235
-#, fuzzy
+#: ../src/e_mod_main.c:236
 msgid "Enter Offline Mode"
-msgstr "Nepovezan način"
+msgstr "Zagon nepovezanega načina"
 
-#: src/modules/notification/e_mod_main.c:236
+#: ../src/e_mod_main.c:237
 msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
+"Enlightenment·je v·<b>nepovezanem</b>·načinu.<br>Med nepovezanim načinom,"
+"·bodo moduli, ki uporabljajo·omrežje prenehali preverjati storitve "
+"oddaljenega dostopa."
 
-#: src/modules/notification/e_mod_main.c:242
-#, fuzzy
+#: ../src/e_mod_main.c:243
 msgid "Exited Offline Mode"
-msgstr "Nepovezan način"
+msgstr "Povezan način zaključen"
 
-#: src/modules/notification/e_mod_main.c:243
+#: ../src/e_mod_main.c:244
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
+"Zdaj ste v·<b>povezanem</b>·načinu.<br>Moduli, ki uporabljajo omrežje, bodo "
+"zdaj ponovno začeli svoja redna opravila."
 
-#: src/modules/notification/e_mod_main.c:297
-#, fuzzy
+#: ../src/e_mod_main.c:303
 msgid "Notification"
-msgstr "Kroženje"
+msgstr "Obvestila"
 
-#: src/modules/notification/e_mod_main.c:331
-#, fuzzy
+#: ../src/e_mod_main.c:335
 msgid "Notification Module"
-msgstr "Predstavitveni način"
+msgstr "Modul Obvestila"
 
-#: src/modules/notification/e_mod_main.c:350
+#: ../src/e_mod_main.c:363
 msgid "Error During DBus Init!"
-msgstr ""
+msgstr "Napaka·med·zagonom DBus !"
 
-#: src/modules/notification/e_mod_main.c:351
+#: ../src/e_mod_main.c:364
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
+"Napaka med zagonom·DBus·!·Prosim, preverite, če je·dbus·pravilno nameščen in "
+"ali je zagnan."
 
-#: src/modules/notification/e_mod_config.c:45
-#, fuzzy
+#: ../src/e_mod_config.c:37
 msgid "Notification Settings"
-msgstr "Nastavitev interakcij"
+msgstr "Nastavitve modula Obvestila"
 
-#: src/modules/notification/e_mod_config.c:93
-#: src/modules/notification/e_mod_config_item.c:98
-#, fuzzy
+#: ../src/e_mod_config.c:79 ../src/e_mod_config_item.c:91
 msgid "Urgency"
-msgstr "Nujno"
+msgstr "Nujnost"
 
 #: src/modules/notification/e_mod_config.c:94
 msgid "Levels of urgency to display:"
@@ -9004,19 +9021,26 @@ msgstr ""
 msgid "Critical"
 msgstr "Navpično"
 
-#: src/modules/notification/e_mod_config.c:104
-#, fuzzy
+#: ../src/e_mod_config.c:90
 msgid "Default Timeout"
-msgstr "Privzeti pogled"
+msgstr "Privzeta časovna zakasnitev"
 
 #: src/modules/notification/e_mod_config.c:105
 msgid "Force timeout for all notifications"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:122
-#, fuzzy
+#. man = e_manager_current_get();
+#. * of = e_widget_framelist_add(evas, D_("Placement"), 0);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f x"), 0.0, man->w, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.x), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f y"), 0.0, man->h, 1.0, 0,
+#. *                          NULL, &(cfdata->placement.y), 200);
+#. * e_widget_framelist_object_append(of, ow);
+#. * e_widget_list_object_append(o, of, 1, 1, 0.5);
+#: ../src/e_mod_config.c:106
 msgid "Popup Corner"
-msgstr "Velikost pojavnega okna"
+msgstr "Vogal pojavnega okna"
 
 #: src/modules/notification/e_mod_config.c:124
 msgid "Top left"
@@ -9043,23 +9067,41 @@ msgstr ""
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config_item.c:42
-#, fuzzy
+#: ../src/e_mod_config_item.c:37
 msgid "Notification Box Configuration"
-msgstr "Nastavitev modula Everything"
+msgstr "Nastavitev Obvestilne škatle"
 
-#: src/modules/notification/e_mod_config_item.c:92
-#, fuzzy
+#: ../src/e_mod_config_item.c:85
 msgid "Show the popup on mouse over"
-msgstr "Prikaži pojavno okno za  okna v fokusu"
+msgstr "Prikaz pojavnega okna ob prehodu z miško"
 
-#: src/modules/notification/e_mod_config_item.c:94
+#: ../src/e_mod_config_item.c:87
 msgid "Focus the source window when clicking"
-msgstr ""
+msgstr "Ob kliku na izvorno okno ga postavi v fokus "
 
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr ""
+
+#: ../src/e_mod_config.c:80
+msgid "Levels of urgency to popup : "
+msgstr "Nivoji nujnosti za odpiranje pojavnih oken"
+
+#: ../src/e_mod_config.c:82 ../src/e_mod_config_item.c:94
+msgid "low"
+msgstr "nizek"
+
+#: ../src/e_mod_config.c:84 ../src/e_mod_config_item.c:96
+msgid "normal"
+msgstr "normalen"
+
+#: ../src/e_mod_config.c:86 ../src/e_mod_config_item.c:98
+msgid "critical"
+msgstr "kritičen"
+
+#: ../src/e_mod_config_item.c:92
+msgid "Levels of urgency to store : "
+msgstr "Nivoji nujnosti za shranjevanje"
 
 #~ msgid "%s"
 #~ msgstr "%s"

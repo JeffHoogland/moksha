@@ -1052,7 +1052,7 @@ msgstr "Appliquer"
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1254
 #: src/modules/connman/e_mod_main.c:616
-#: src/modules/notification/e_mod_main.c:294
+#: src/modules/notification/e_mod_main.c:294 src/e_mod_main.c:301
 msgid "Extensions"
 msgstr "Extensions"
 
@@ -2432,7 +2432,8 @@ msgstr "Demande de position"
 #: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:344
 #: src/modules/xkbswitch/e_mod_main.c:386
 #: src/modules/notification/e_mod_box.c:477
-#: src/modules/notification/e_mod_box.c:616
+#: src/modules/notification/e_mod_box.c:616 src/e_mod_box.c:666
+#: src/e_mod_box.c:810
 msgid "Settings"
 msgstr "Configuration"
 
@@ -2812,10 +2813,14 @@ msgid "Hide timeout"
 msgstr "Délai avant masquage"
 
 #: src/bin/e_int_shelf_config.c:237
-#: src/modules/notification/e_mod_config.c:107
-#, c-format
+#: src/modules/notification/e_mod_config.c:107 src/e_mod_config.c:95
+#, fuzzy, c-format
 msgid "%.1f seconds"
-msgstr "%.1f seconde(s)"
+msgstr ""
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"%.1f seconde(s)\n"
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"%.1f secondes"
 
 #: src/bin/e_int_shelf_config.c:243
 msgid "Hide duration"
@@ -4468,7 +4473,7 @@ msgstr "Paramétrage des boîtes de dialogue"
 #: src/modules/conf_theme/e_int_config_fonts.c:668
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
-#: src/modules/notification/e_mod_config_item.c:89
+#: src/modules/notification/e_mod_config_item.c:89 src/e_mod_config_item.c:82
 msgid "General Settings"
 msgstr "Paramètres généraux"
 
@@ -5486,9 +5491,13 @@ msgstr "Marge"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:201
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:249
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
-#, c-format
+#, fuzzy, c-format
 msgid "%2.0f pixels"
-msgstr "%2.0f pixel(s)"
+msgstr ""
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"%2.0f pixel(s)\n"
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"%2.0f pixels"
 
 #: src/modules/conf_menus/e_int_config_menus.c:292
 msgid "Cursor Margin"
@@ -6580,8 +6589,13 @@ msgid "Display"
 msgstr "Affichage"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
+#, fuzzy
 msgid "Placement"
-msgstr "Positionnement"
+msgstr ""
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"Positionnement\n"
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"Position"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:165
 msgid "Smart Placement"
@@ -8080,9 +8094,14 @@ msgid "Expand When On Desktop"
 msgstr "Pas d'icônes sur le bureau"
 
 #: src/modules/ibox/e_mod_config.c:101
-#: src/modules/notification/e_mod_config_item.c:90
+#: src/modules/notification/e_mod_config_item.c:90 src/e_mod_config_item.c:83
+#, fuzzy
 msgid "Show Icon Label"
-msgstr "Afficher l'étiquette de l'icône"
+msgstr ""
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"Afficher l'étiquette de l'icône\n"
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"Montrer l'étiquette de l'icone"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -8755,84 +8774,92 @@ msgstr "Modèle"
 msgid "Variant"
 msgstr "Variante"
 
-#: src/modules/notification/e_mod_main.c:137
+#: src/e_mod_main.c:121
 msgid "Notification Box"
-msgstr ""
+msgstr "Boîte de notification"
 
-#: src/modules/notification/e_mod_main.c:212
+#: src/modules/notification/e_mod_main.c:212 src/e_mod_main.c:213
+#, fuzzy
 msgid "Enter Presentation Mode"
-msgstr "Entrer en mode présentation"
+msgstr ""
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"Entrer en mode présentation\n"
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"Entrée en mode présentation"
 
-#: src/modules/notification/e_mod_main.c:213
+#: src/e_mod_main.c:214
 msgid ""
 "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
+"Enlightenment est en mode <b>présentation</b>.<br>Dans ce mode, l'écran de "
+"veille, le verrouillage et la gestion de l'énergie sont désactivés pour ne "
+"pas vous interrompre."
 
-#: src/modules/notification/e_mod_main.c:219
-#, fuzzy
+#: src/e_mod_main.c:220
 msgid "Exited Presentation Mode"
-msgstr "Entrer en mode présentation"
+msgstr "Sortie du mode présentation"
 
-#: src/modules/notification/e_mod_main.c:220
+#: src/e_mod_main.c:221
 msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
+"Le mode présentation est terminé.<br>L'écran de veille, le verrouillage et "
+"la gestion de l'énergie sont réactivés."
 
-#: src/modules/notification/e_mod_main.c:235
-#, fuzzy
+#: src/e_mod_main.c:236
 msgid "Enter Offline Mode"
-msgstr "Mode hors ligne"
+msgstr "Entrée en mode hors ligne"
 
-#: src/modules/notification/e_mod_main.c:236
+#: src/e_mod_main.c:237
 msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
+"Enlightenment est en mode <b>hors ligne</b>.<br>Dans ce mode, les modules "
+"qui utilisent le réseau n'interrogent plus les services distants."
 
-#: src/modules/notification/e_mod_main.c:242
-#, fuzzy
+#: src/e_mod_main.c:243
 msgid "Exited Offline Mode"
-msgstr "Mode hors ligne"
+msgstr "Sortie du mode hors ligne"
 
-#: src/modules/notification/e_mod_main.c:243
+#: src/e_mod_main.c:244
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
+"De nouveau <b>en ligne</b>.<br>Les modules qui utilisent le réseau "
+"retrouvent leurs fonctions habituelles."
 
-#: src/modules/notification/e_mod_main.c:297
-#, fuzzy
+#: src/e_mod_main.c:303
 msgid "Notification"
-msgstr "Rotation"
+msgstr "Notification"
 
-#: src/modules/notification/e_mod_main.c:331
-#, fuzzy
+#: src/e_mod_main.c:335
 msgid "Notification Module"
-msgstr "Mode présentation"
+msgstr "Module Notification"
 
-#: src/modules/notification/e_mod_main.c:350
+#: src/e_mod_main.c:364
 msgid "Error During DBus Init!"
-msgstr ""
+msgstr "Échec de l'initialisation de DBus !"
 
-#: src/modules/notification/e_mod_main.c:351
+#: src/e_mod_main.c:365
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
+"Échec de l'initialisation de DBus ! Veuillez vérifier que dbus est installé "
+"et qu'il se lance correctement."
 
-#: src/modules/notification/e_mod_config.c:45
-#, fuzzy
+#: src/e_mod_config.c:38
 msgid "Notification Settings"
-msgstr "Paramétrage de la position"
+msgstr "Paramétrage de Notification"
 
-#: src/modules/notification/e_mod_config.c:93
-#: src/modules/notification/e_mod_config_item.c:98
-#, fuzzy
+#: src/e_mod_config.c:81 src/e_mod_config_item.c:91
 msgid "Urgency"
-msgstr "Urgent"
+msgstr "Urgence"
 
 #: src/modules/notification/e_mod_config.c:94
 msgid "Levels of urgency to display:"
@@ -8844,19 +8871,17 @@ msgstr ""
 msgid "Critical"
 msgstr "Vertical(e)"
 
-#: src/modules/notification/e_mod_config.c:104
-#, fuzzy
+#: src/e_mod_config.c:92
 msgid "Default Timeout"
-msgstr "Affichage par défaut"
+msgstr "Délai d'expiration par défaut"
 
-#: src/modules/notification/e_mod_config.c:105
+#: src/e_mod_config.c:93
 msgid "Force timeout for all notifications"
-msgstr ""
+msgstr "Imposer ce délai à toutes les notifications"
 
-#: src/modules/notification/e_mod_config.c:122
-#, fuzzy
+#: src/e_mod_config.c:110
 msgid "Popup Corner"
-msgstr "Taille du pop-up"
+msgstr "Coin du pop-up"
 
 #: src/modules/notification/e_mod_config.c:124
 #, fuzzy
@@ -8886,24 +8911,46 @@ msgstr ""
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config_item.c:42
-#, fuzzy
+#: src/e_mod_config_item.c:37
 msgid "Notification Box Configuration"
-msgstr "Configuration IBox"
+msgstr "Configuration de la notification"
 
-#: src/modules/notification/e_mod_config_item.c:92
-#, fuzzy
+#: src/e_mod_config_item.c:85
 msgid "Show the popup on mouse over"
-msgstr "Afficher un pop-up pour les fenêtres focalisées"
+msgstr "Montrer le pop-up au survol"
 
-#: src/modules/notification/e_mod_config_item.c:94
-#, fuzzy
+#: src/e_mod_config_item.c:87
 msgid "Focus the source window when clicking"
-msgstr "Focaliser la fenêtre lors de la sélection"
+msgstr "Focaliser la fenêtre source lors du clic"
 
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr ""
+
+#: src/e_mod_config.c:84 src/e_mod_config_item.c:94
+#, fuzzy
+msgid "low"
+msgstr ""
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"Bas(se)\n"
+"#-#-#-#-#  fr.po (Enlightenment DR17)  #-#-#-#-#\n"
+"faible"
+
+#: src/e_mod_config.c:82
+msgid "Levels of urgency to popup : "
+msgstr "Niveaux d'urgence à notifier par pop-up :"
+
+#: src/e_mod_config.c:86 src/e_mod_config_item.c:96
+msgid "normal"
+msgstr "normal"
+
+#: src/e_mod_config.c:88 src/e_mod_config_item.c:98
+msgid "critical"
+msgstr "critique"
+
+#: src/e_mod_config_item.c:92
+msgid "Levels of urgency to store : "
+msgstr "Niveaux d'urgence à conserver :"
 
 #~ msgid "%s"
 #~ msgstr "%s"
@@ -9274,9 +9321,6 @@ msgstr ""
 
 #~ msgid "none"
 #~ msgstr "Aucun(e)"
-
-#~ msgid "low"
-#~ msgstr "Bas(se)"
 
 #~ msgid "medium"
 #~ msgstr "Moyen(ne)"
@@ -10613,3 +10657,62 @@ msgstr ""
 
 #~ msgid "Mouse Acceleration Settings"
 #~ msgstr "Paramètres de l'accélération souris"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuration"
+
+#~ msgid "Notification Configuration"
+#~ msgstr "Configuration de la notification"
+
+#~ msgid "Notification Configuration Updated"
+#~ msgstr "Configuration de la notification actualisée"
+
+#~ msgid ""
+#~ "Notification Module Configuration data needed upgrading. Your old "
+#~ "configuration<br> has been wiped and a new set of defaults initialized. "
+#~ "This<br>will happen regularly during development, so don't report "
+#~ "a<br>bug. This simply means the Notification module needs new "
+#~ "configuration<br>data by default for usable functionality that your "
+#~ "old<br>configuration simply lacks. This new set of defaults will "
+#~ "fix<br>that by adding it in. You can re-configure things now to "
+#~ "your<br>liking. Sorry for the inconvenience.<br>"
+#~ msgstr ""
+#~ "La configuration du module de notification a dû être mise à jour. Votre "
+#~ "ancienne<br>configuration a été supprimée et de nouveaux paramètres "
+#~ "par<br>défaut sont en place. Ceci risque d'arriver en phase "
+#~ "de<br>développement, aussi est-il inutile de faire un rapport de bogue."
+#~ "<br>Cela signifie simplement que le module de notification a besoin<br>de "
+#~ "cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez "
+#~ "maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne "
+#~ "occasionnée.<br>"
+
+#~ msgid ""
+#~ "Your Notification Module Configuration is NEWER than the Notification "
+#~ "Module version. This is very<br>strange. This should not happen unless "
+#~ "you downgraded<br>the Notification Module or copied the configuration "
+#~ "from a place where<br>a newer version of the Notification Module was "
+#~ "running. This is bad and<br>as a precaution your configuration has been "
+#~ "now restored to<br>defaults. Sorry for the inconvenience.<br>"
+#~ msgstr ""
+#~ "La configuration du module de notification est PLUS RÉCENTE que la "
+#~ "version du module Notification.<br>C'est vraiment étonnant. Cela ne "
+#~ "devrait pas se produire à<br>moins que vous n'ayez installé une version "
+#~ "antérieure ou copié<br>la configuration depuis une machine sur laquelle "
+#~ "une version<br>plus récente était en cours. Ce n'est pas bon et, "
+#~ "par<br>mesure de précaution, votre configuration a été<br>remise à zéro. "
+#~ "Désolé pour le désagrément.<br>"
+
+#~ msgid "%2.0f x"
+#~ msgstr "%2.0f x"
+
+#~ msgid "%2.0f y"
+#~ msgstr "%2.0f y"
+
+#~ msgid "Direction in which popups will stack themselves : "
+#~ msgstr "Direction de l'empilement des pop-up :"
+
+#~ msgid "Gap"
+#~ msgstr "Espace"
+
+#~ msgid "Size of the gap between two popups : "
+#~ msgstr "Espace entre deux pop-up :"
