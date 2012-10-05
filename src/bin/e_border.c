@@ -455,12 +455,30 @@ e_border_new(E_Container   *con,
 
    _e_border_hook_call(E_BORDER_HOOK_NEW_BORDER, bd);
 
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, _e_border_cb_mouse_in, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, _e_border_cb_mouse_out, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_border_cb_mouse_down, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, _e_border_cb_mouse_up, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _e_border_cb_mouse_move, bd));
-   bd->handlers = eina_list_append(bd->handlers, ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, _e_border_cb_mouse_wheel, bd));
+   bd->handlers = 
+     eina_list_append(bd->handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_IN, 
+                                              _e_border_cb_mouse_in, bd));
+   bd->handlers = 
+     eina_list_append(bd->handlers, 
+                      ecore_event_handler_add(ECORE_X_EVENT_MOUSE_OUT, 
+                                              _e_border_cb_mouse_out, bd));
+   bd->handlers = 
+     eina_list_append(bd->handlers, 
+                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, 
+                                              _e_border_cb_mouse_down, bd));
+   bd->handlers = 
+     eina_list_append(bd->handlers, 
+                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, 
+                                              _e_border_cb_mouse_up, bd));
+   bd->handlers = 
+     eina_list_append(bd->handlers, 
+                      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, 
+                                              _e_border_cb_mouse_move, bd));
+   bd->handlers = 
+     eina_list_append(bd->handlers, 
+                      ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, 
+                                              _e_border_cb_mouse_wheel, bd));
 
    bd->client.icccm.title = NULL;
    bd->client.icccm.name = NULL;
