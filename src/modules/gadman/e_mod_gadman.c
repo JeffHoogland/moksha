@@ -56,6 +56,54 @@ static E_Gadcon_Location *location = NULL;
 static Eina_List *_gadman_hdls = NULL;
 static Eina_Hash *_gadman_gadgets = NULL;
 
+static void
+gadman_popup_free(Gadman_Popup *gp)
+{
+   if (!gp) return;
+   if (gp->timer) ecore_timer_del(gp->timer);
+   e_object_data_set(E_OBJECT(gp->gcc), NULL);
+   e_object_del_attach_func_set(E_OBJECT(gp->gcc), NULL);
+   ecore_event_handler_del(gp->eh);
+   Man->gadman_popups = eina_inlist_remove(Man->gadman_popups, EINA_INLIST_GET(gp));
+   free(gp);
+}
+
+static void
+_gadman_popup_del(void *obj)
+{
+   gadman_popup_free(e_object_data_get(obj));
+}
+
+static Eina_Bool
+_gadman_popup_timer(Gadman_Popup *gp)
+{
+   gadman_popup_free(gp);
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_gadman_popup_mouse(Gadman_Popup *gp, int type __UNUSED__, Ecore_Event_Mouse_Button *ev)
+{
+   if (ev->event_window != gp->pop->win->evas_win) return ECORE_CALLBACK_RENEW;
+   gadman_popup_free(gp);
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Gadman_Popup *
+gadman_popup_new(E_Gadcon_Client *gcc)
+{
+   Gadman_Popup *gp;
+
+   gp = E_NEW(Gadman_Popup, 1);
+   gp->gcc = gcc;
+   gp->timer = ecore_timer_add(5.0, (Ecore_Task_Cb)_gadman_popup_timer, gp);
+   e_object_data_set(E_OBJECT(gcc), gp);
+   e_object_del_attach_func_set(E_OBJECT(gcc), _gadman_popup_del);
+   gp->eh = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, (Ecore_Event_Handler_Cb)_gadman_popup_mouse, gp);
+
+   return gp;
+}
+
 /* Implementation */
 void
 gadman_reset(void)
@@ -928,7 +976,7 @@ _apply_widget_position(E_Gadcon_Client *gcc)
     */
    if ((!x) && (!y) && (!w) && (!h))
      {
-        E_Gadcon_Popup *pop;
+        Gadman_Popup *pop;
         Evas_Object *o;
         char buf[4096];
 
@@ -936,12 +984,12 @@ _apply_widget_position(E_Gadcon_Client *gcc)
         y = DEFAULT_POS_Y;
         w = DEFAULT_SIZE_W;
         h = DEFAULT_SIZE_H;
-        pop = e_gadcon_popup_new(gcc);
+        pop = gadman_popup_new(gcc);
         snprintf(buf, sizeof(buf), "A gadget of type '%s' was detected without any stored geometry.<br>"
                  "It has been relocated and resized for you.", gcc->client_class->name);
-        o = e_widget_label_add(pop->win->evas, buf);
-        e_gadcon_popup_content_set(pop, o);
-        e_gadcon_popup_show(pop);
+        o = e_widget_label_add(pop->pop->win->evas, buf);
+        e_gadcon_popup_content_set(pop->pop, o);
+        e_gadcon_popup_show(pop->pop);
      }
 
    /* Respect min sizes */
