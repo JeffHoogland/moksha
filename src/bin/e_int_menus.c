@@ -284,6 +284,7 @@ e_int_menus_desktops_new(void)
    m = e_menu_new();
 
    subm = e_menu_new();
+   e_menu_category_set(m, "desktop");
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Virtual"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
