@@ -6264,7 +6264,8 @@ _e_border_cb_mouse_in(void    *data,
    if (grabbed) return ECORE_CALLBACK_PASS_ON;
    if (ev->event_win == bd->win)
      {
-        e_focus_event_mouse_in(bd);
+        if (!bd->iconic)
+          e_focus_event_mouse_in(bd);
      }
 #if 0
    if ((ev->win != bd->win) &&
@@ -6339,7 +6340,8 @@ _e_border_cb_mouse_out(void    *data,
         if ((ev->mode == ECORE_X_EVENT_MODE_NORMAL) &&
             (ev->detail == ECORE_X_EVENT_DETAIL_INFERIOR))
           return ECORE_CALLBACK_PASS_ON;
-        e_focus_event_mouse_out(bd);
+        if (!bd->iconic)
+          e_focus_event_mouse_out(bd);
      }
 #if 0
    if ((ev->win != bd->win) &&
