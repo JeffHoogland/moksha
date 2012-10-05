@@ -983,10 +983,11 @@ _apply_widget_position(E_Gadcon_Client *gcc)
         Evas_Object *o;
         char buf[4096];
 
-        x = DEFAULT_POS_X;
-        y = DEFAULT_POS_Y;
-        w = DEFAULT_SIZE_W * gcc->gadcon->zone->w;
-        h = DEFAULT_SIZE_H * gcc->gadcon->zone->h;
+        gcc->cf->geom.pos_x = DEFAULT_POS_X;
+        gcc->cf->geom.pos_y = DEFAULT_POS_Y;
+        gcc->cf->geom.size_w = DEFAULT_SIZE_W;
+        gcc->cf->geom.size_h = DEFAULT_SIZE_H;
+        _apply_widget_position(gcc);
         pop = gadman_popup_new(gcc);
         o = edje_object_add(pop->pop->win->evas);
         e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/text");
@@ -995,6 +996,8 @@ _apply_widget_position(E_Gadcon_Client *gcc)
         edje_object_part_text_set(o, "e.textblock.message", buf);
         e_gadcon_popup_content_set(pop->pop, o);
         e_gadcon_popup_show(pop->pop);
+        gadman_gadget_edit_start(gcc);
+        return;
      }
 
    /* Respect min sizes */
