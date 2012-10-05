@@ -28,7 +28,7 @@ static Eina_Bool    _e_shelf_cb_hide_urgent_timer(void *data);
 static Eina_Bool    _e_shelf_cb_instant_hide_timer(void *data);
 static void         _e_shelf_menu_pre_cb(void *data, E_Menu *m);
 static void         _e_shelf_gadcon_client_remove(void *data, E_Gadcon_Client *gcc);
-static int          _e_shelf_gadcon_client_add(void *data, const E_Gadcon_Client_Class *cc);
+static int          _e_shelf_gadcon_client_add(void *data, E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc);
 static const char  *_e_shelf_orient_icon_name_get(E_Shelf *s);
 static void         _e_shelf_bindings_add(E_Shelf *es);
 static void         _e_shelf_bindings_del(E_Shelf *es);
@@ -2405,21 +2405,52 @@ _e_shelf_gadcon_client_remove(void *data, E_Gadcon_Client *gcc)
 
    s = data;
    gc = s->gadcon;
-   e_gadcon_client_config_del(gc->cf, gcc->cf);
+   if (gcc->cf) e_gadcon_client_config_del(gc->cf, gcc->cf);
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
    e_config_save_queue();
 }
 
 static int
-_e_shelf_gadcon_client_add(void *data, const E_Gadcon_Client_Class *cc)
+_e_shelf_gadcon_client_add(void *data, E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc)
 {
    E_Shelf *s;
    E_Gadcon *gc;
+   E_Config_Gadcon_Client *cf_gcc = gcc->cf;
 
    s = data;
    gc = s->gadcon;
-   if (!e_gadcon_client_config_new(gc, cc->name)) return 0;
+   if (gcc)
+     {
+        gcc->gadcon->cf->clients = eina_list_remove(gcc->gadcon->cf->clients, cf_gcc);
+        if (gc->zone)
+          cf_gcc->geom.res = gc->zone->w;
+        else if (gc->o_container)
+          {
+             int w, h;
+             evas_object_geometry_get(gc->o_container, NULL, NULL, &w, &h);
+             switch (gc->orient)
+               {
+                  case E_GADCON_ORIENT_VERT:
+                  case E_GADCON_ORIENT_LEFT:
+                  case E_GADCON_ORIENT_RIGHT:
+                  case E_GADCON_ORIENT_CORNER_LT:
+                  case E_GADCON_ORIENT_CORNER_RT:
+                  case E_GADCON_ORIENT_CORNER_LB:
+                  case E_GADCON_ORIENT_CORNER_RB:
+                  cf_gcc->geom.res = h;
+                  break;
+                  default:
+                  cf_gcc->geom.res = w;
+               }
+          }
+        else
+          cf_gcc->geom.res = 800;
+        cf_gcc->geom.size = 80;
+        cf_gcc->geom.pos = cf_gcc->geom.res - cf_gcc->geom.size;
+        gc->cf->clients = eina_list_append(gc->cf->clients, cf_gcc);
+     }
+   else if (!e_gadcon_client_config_new(gc, cc->name)) return 0;
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
    e_config_save_queue();

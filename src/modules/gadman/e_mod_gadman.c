@@ -40,7 +40,7 @@ static void             on_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void             on_menu_add(void *data, E_Menu *m, E_Menu_Item *mi);
 
 static Eina_Bool       _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update *ev);
-static int              _e_gadman_client_add(void *data __UNUSED__, const E_Gadcon_Client_Class *cc);
+static int              _e_gadman_client_add(void *data __UNUSED__, E_Gadcon_Client *, const E_Gadcon_Client_Class *cc);
 static void             _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc);
 
 static void             _e_gadman_handlers_add(void);
@@ -373,9 +373,9 @@ gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Con
 }
 
 E_Gadcon_Client *
-gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer)
+gadman_gadget_add(const E_Gadcon_Client_Class *cc, E_Gadcon_Client *gcc, Gadman_Layer_Type layer)
 {
-   return _gadman_gadget_add(cc, layer, NULL);
+   return _gadman_gadget_add(cc, layer, gcc->cf);
 }
 
 static E_Gadcon_Client *
@@ -1666,15 +1666,16 @@ on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__, const char *em __
 }
 
 static int
-_e_gadman_client_add(void *data __UNUSED__, const E_Gadcon_Client_Class *cc)
+_e_gadman_client_add(void *data __UNUSED__, E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc)
 {
-   return !!gadman_gadget_add(cc, GADMAN_LAYER_BG);
+   return !!gadman_gadget_add(cc, gcc, GADMAN_LAYER_BG);
 }
 
 static void
 _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc)
 {
-   gcc->gadcon->cf->clients = eina_list_remove(gcc->gadcon->cf->clients, gcc->cf);
+   if (gcc->cf)
+     gcc->gadcon->cf->clients = eina_list_remove(gcc->gadcon->cf->clients, gcc->cf);
    e_object_del(E_OBJECT(gcc));
 }
 

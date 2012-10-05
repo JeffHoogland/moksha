@@ -261,7 +261,7 @@ struct _E_Gadcon_Location
    /* adds gadcon client to location. Returns nonzero on success */
    struct
    {
-      int   (*func)(void *data, const E_Gadcon_Client_Class *cc);
+      int   (*func)(void *data, E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc);
       void *data;
    } gadget_add;
    /* removes existing gadcon client from location */
@@ -353,7 +353,7 @@ EAPI Eina_Bool               e_gadcon_site_is_not_toolbar(E_Gadcon_Site site); /
 
 EAPI E_Gadcon_Location *
                              e_gadcon_location_new(const char *name, E_Gadcon_Site site,
-                      int (*add_func)(void *data, const E_Gadcon_Client_Class *cc),
+                      int (*add_func)(void *data, E_Gadcon_Client *, const E_Gadcon_Client_Class *cc),
                       void *add_data,
                       void (*remove_func)(void *data, E_Gadcon_Client *cc),
                       void *remove_data);

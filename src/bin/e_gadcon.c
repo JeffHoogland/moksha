@@ -5664,7 +5664,7 @@ _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc)
 EAPI E_Gadcon_Location *
 e_gadcon_location_new(const char *name,
                       E_Gadcon_Site site,
-                      int (*add_func)(void *data, const E_Gadcon_Client_Class *cc),
+                      int (*add_func)(void *data, E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc),
                       void *add_data,
                       void (*remove_func)(void *data, E_Gadcon_Client *cc),
                       void *remove_data)
@@ -5719,7 +5719,8 @@ _e_gadcon_location_change(E_Gadcon_Client *gcc, E_Gadcon_Location *src, E_Gadcon
 
    cc = eina_hash_find(providers, gcc->cf->name);
    if (!cc) return 0;
-   if (!dst->gadget_add.func(dst->gadget_add.data, cc)) return 0;
+   if (!dst->gadget_add.func(dst->gadget_add.data, gcc, cc)) return 0;
+   gcc->cf = NULL;
    src->gadget_remove.func(src->gadget_remove.data, gcc);
    return 1;
 }
