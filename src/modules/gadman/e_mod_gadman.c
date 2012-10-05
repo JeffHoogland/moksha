@@ -1684,7 +1684,7 @@ _e_gadman_handlers_add(void)
 {
    E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_ZONE_ADD, _e_gadman_cb_zone_add, NULL);
    E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_ZONE_DEL, _e_gadman_cb_zone_del, NULL);
-   E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_MODULE_UPDATE, (Ecore_Event_Handler_Cb)_gadman_module_cb, NULL);
+   E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_MODULE_UPDATE, _gadman_module_cb, NULL);
 }
 
 static void
