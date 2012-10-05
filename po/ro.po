@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-30 10:06+0200\n"
+"POT-Creation-Date: 2012-10-05 13:26+0200\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -23,11 +23,11 @@ msgid "About Enlightenment"
 msgstr "Despre Enlightenment"
 
 #: src/bin/e_about.c:17 src/bin/e_actions.c:2996 src/bin/e_config_dialog.c:288
-#: src/bin/e_fm.c:1033 src/bin/e_int_border_menu.c:194
+#: src/bin/e_fm.c:1035 src/bin/e_int_border_menu.c:194
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
-#: src/modules/fileman/e_fwin.c:2523 src/modules/mixer/app_mixer.c:521
+#: src/modules/fileman/e_fwin.c:2546 src/modules/mixer/app_mixer.c:521
 msgid "Close"
 msgstr "Închide"
 
@@ -75,8 +75,8 @@ msgstr "Termină"
 
 #: src/bin/e_actions.c:385 src/bin/e_actions.c:2219 src/bin/e_actions.c:2282
 #: src/bin/e_actions.c:2345 src/bin/e_actions.c:2413 src/bin/e_actions.c:2481
-#: src/bin/e_confirm_dialog.c:53 src/bin/e_desklock.c:1294 src/bin/e_fm.c:9970
-#: src/bin/e_fm.c:10334 src/bin/e_screensaver.c:165
+#: src/bin/e_confirm_dialog.c:53 src/bin/e_desklock.c:1311
+#: src/bin/e_fm.c:10025 src/bin/e_fm.c:10389 src/bin/e_screensaver.c:165
 msgid "No"
 msgstr "Nu"
 
@@ -94,8 +94,8 @@ msgid "Exit"
 msgstr "Ieșire"
 
 #: src/bin/e_actions.c:2122 src/bin/e_color_dialog.c:47
-#: src/bin/e_eap_editor.c:859 src/bin/e_eap_editor.c:923
-#: src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9485 src/bin/e_fm_prop.c:625
+#: src/bin/e_eap_editor.c:862 src/bin/e_eap_editor.c:926
+#: src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9532 src/bin/e_fm_prop.c:625
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:316
@@ -183,7 +183,7 @@ msgstr "Hibernează"
 msgid "Window : Actions"
 msgstr "Fereastră: Acțiuni"
 
-#: src/bin/e_actions.c:2956 src/bin/e_fm.c:6411
+#: src/bin/e_actions.c:2956 src/bin/e_fm.c:6431
 #: src/bin/e_int_border_menu.c:665
 msgid "Move"
 msgstr "Mută"
@@ -202,12 +202,12 @@ msgstr "Meniu"
 msgid "Window Menu"
 msgstr "Meniu fereastră"
 
-#: src/bin/e_actions.c:2986 src/bin/e_int_border_menu.c:1056
+#: src/bin/e_actions.c:2986 src/bin/e_int_border_menu.c:1047
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "Ridică"
 
-#: src/bin/e_actions.c:2991 src/bin/e_int_border_menu.c:1064
+#: src/bin/e_actions.c:2991 src/bin/e_int_border_menu.c:1055
 msgid "Lower"
 msgstr "Coboară"
 
@@ -747,7 +747,7 @@ msgstr "Lansează"
 msgid "Command"
 msgstr "Comandă"
 
-#: src/bin/e_actions.c:3357 src/bin/e_eap_editor.c:696
+#: src/bin/e_actions.c:3357 src/bin/e_eap_editor.c:697
 #: src/bin/e_int_border_menu.c:118
 #, c-format
 msgid "Application"
@@ -890,7 +890,7 @@ msgstr "Selector culoare"
 msgid "Select"
 msgstr "Selectați o imagine"
 
-#: src/bin/e_config.c:994 src/bin/e_config.c:1027
+#: src/bin/e_config.c:1000 src/bin/e_config.c:1033
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -901,7 +901,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1011
+#: src/bin/e_config.c:1017
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -910,11 +910,11 @@ msgid ""
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1653 src/bin/e_config.c:2276
+#: src/bin/e_config.c:1665 src/bin/e_config.c:2292
 msgid "Enlightenment Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1656
+#: src/bin/e_config.c:1668
 #, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -922,37 +922,37 @@ msgid ""
 "<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1666 src/bin/e_config.c:2289
-#: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:857
-#: src/bin/e_eap_editor.c:921 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
-#: src/bin/e_fm.c:9483 src/bin/e_fm.c:10240 src/bin/e_fm_prop.c:624
+#: src/bin/e_config.c:1678 src/bin/e_config.c:2305
+#: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:612
+#: src/bin/e_fm.c:9530 src/bin/e_fm.c:10295 src/bin/e_fm_prop.c:624
 #: src/bin/e_int_border_remember.c:318 src/bin/e_int_border_remember.c:507
 #: src/bin/e_module.c:415 src/bin/e_sys.c:618 src/bin/e_sys.c:659
 #: src/bin/e_utils.c:702 src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
-#: src/modules/cpufreq/e_mod_main.c:413 src/modules/cpufreq/e_mod_main.c:442
-#: src/modules/cpufreq/e_mod_main.c:467
+#: src/modules/cpufreq/e_mod_main.c:424 src/modules/cpufreq/e_mod_main.c:453
+#: src/modules/cpufreq/e_mod_main.c:480
 #: src/modules/fileman/e_int_config_mime_edit.c:315
 #: src/modules/xkbswitch/e_mod_config.c:523
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2167
+#: src/bin/e_config.c:2183
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "Setări modernizate"
 
-#: src/bin/e_config.c:2185
+#: src/bin/e_config.c:2201
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "De fişier EET este rău."
 
-#: src/bin/e_config.c:2189
+#: src/bin/e_config.c:2205
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Fisier de date este gol."
 
-#: src/bin/e_config.c:2193
+#: src/bin/e_config.c:2209
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -961,19 +961,19 @@ msgstr ""
 "Fişierul nu poate fi scris. Poate cădiscul este read-only<br>sau ai pierdut "
 "permisiunile la fişiere."
 
-#: src/bin/e_config.c:2197
+#: src/bin/e_config.c:2213
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "De memorie a fugit în timp ce pregătireade scriere. Vă rugăm să<br>de "
 "memorie de până gratuit."
 
-#: src/bin/e_config.c:2201
+#: src/bin/e_config.c:2217
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Aceasta este o eroare de generic."
 
-#: src/bin/e_config.c:2205
+#: src/bin/e_config.c:2221
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -982,70 +982,70 @@ msgstr ""
 "Fişier de setări este prea mare.<br>Ar trebui să fie foarte mici (câteva "
 "sute de KB de la cea mai mare)."
 
-#: src/bin/e_config.c:2209
+#: src/bin/e_config.c:2225
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2213
+#: src/bin/e_config.c:2229
 #, fuzzy
 msgid "You ran out of space while writing the file"
 msgstr "Ai fugit din spaţiu în timp ce scriereafişierului"
 
-#: src/bin/e_config.c:2217
+#: src/bin/e_config.c:2233
 #, fuzzy
 msgid "The file was closed on it while writing."
 msgstr "Dosarul a fost închis pe ea în timp ce scris."
 
-#: src/bin/e_config.c:2221
+#: src/bin/e_config.c:2237
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memorie - cartografiere (mmap) dinfişierul nu a reuşit."
 
-#: src/bin/e_config.c:2225
+#: src/bin/e_config.c:2241
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Codificarea nu a reuşit."
 
-#: src/bin/e_config.c:2229
+#: src/bin/e_config.c:2245
 #, fuzzy
 msgid "Signature failed."
 msgstr "Semnătura nu a reuşit."
 
-#: src/bin/e_config.c:2233
+#: src/bin/e_config.c:2249
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Semnătura a fost invalid."
 
-#: src/bin/e_config.c:2237
+#: src/bin/e_config.c:2253
 #, fuzzy
 msgid "Not signed."
 msgstr "Nu a semnat."
 
-#: src/bin/e_config.c:2241
+#: src/bin/e_config.c:2257
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Nu dispun de pus în aplicare."
 
-#: src/bin/e_config.c:2245
+#: src/bin/e_config.c:2261
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "Prng nu a fost însămânţate."
 
-#: src/bin/e_config.c:2249
+#: src/bin/e_config.c:2265
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Criptarea a eşuat."
 
-#: src/bin/e_config.c:2253
+#: src/bin/e_config.c:2269
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Decriptarea a eşuat."
 
-#: src/bin/e_config.c:2257
+#: src/bin/e_config.c:2273
 msgid "The error is unknown to Enlightenment."
 msgstr ""
 
-#: src/bin/e_config.c:2279
+#: src/bin/e_config.c:2295
 #, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -1062,7 +1062,7 @@ msgstr ""
 msgid "Advanced"
 msgstr "Avansat"
 
-#: src/bin/e_config_dialog.c:255 src/bin/e_eap_editor.c:717
+#: src/bin/e_config_dialog.c:255 src/bin/e_eap_editor.c:718
 msgid "Basic"
 msgstr "Standard"
 
@@ -1073,7 +1073,8 @@ msgstr "Aplică"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1254
-#: src/modules/connman/e_mod_main.c:630
+#: src/modules/connman/e_mod_main.c:616
+#: src/modules/notification/e_mod_main.c:294
 msgid "Extensions"
 msgstr "Extensii"
 
@@ -1090,8 +1091,8 @@ msgstr "Module"
 msgid "Preferences"
 msgstr "preferinţe"
 
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1292 src/bin/e_fm.c:9973
-#: src/bin/e_screensaver.c:163
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1309
+#: src/bin/e_fm.c:10028 src/bin/e_screensaver.c:163
 msgid "Yes"
 msgstr "Da"
 
@@ -1100,21 +1101,21 @@ msgstr "Da"
 msgid "Container %d"
 msgstr ""
 
-#: src/bin/e_desklock.c:235
+#: src/bin/e_desklock.c:238
 #, fuzzy
 msgid "Error - no PAM support"
 msgstr "Eroare - nu suport PAM"
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:239
 msgid ""
 "No PAM support was built into Enlightenment, so<br>desk locking is disabled."
 msgstr ""
 
-#: src/bin/e_desklock.c:300
+#: src/bin/e_desklock.c:303
 msgid "Lock Failed"
 msgstr "Blocare eșuată"
 
-#: src/bin/e_desklock.c:301
+#: src/bin/e_desklock.c:304
 #, fuzzy
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
@@ -1124,26 +1125,26 @@ msgstr ""
 "fietastatura sau mouse-ul sau ambele<br>si apuca lor este în imposibilitatea "
 "de a fi rupte."
 
-#: src/bin/e_desklock.c:524
+#: src/bin/e_desklock.c:541
 #, fuzzy
 msgid "Please enter your unlock password"
 msgstr "Va rugam sa introduceti parola de deblocare"
 
-#: src/bin/e_desklock.c:909
+#: src/bin/e_desklock.c:926
 #, fuzzy
 msgid "Authenticating..."
 msgstr "Alte proceduri de aplicare ..."
 
-#: src/bin/e_desklock.c:914
+#: src/bin/e_desklock.c:931
 msgid "The password you entered is invalid. Try again."
 msgstr ""
 
-#: src/bin/e_desklock.c:949
+#: src/bin/e_desklock.c:966
 #, fuzzy
 msgid "Authentication System Error"
 msgstr "Eroare de sistem de autentificare"
 
-#: src/bin/e_desklock.c:950
+#: src/bin/e_desklock.c:967
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1151,24 +1152,24 @@ msgid ""
 "happening. Please report this bug."
 msgstr ""
 
-#: src/bin/e_desklock.c:1283 src/bin/e_screensaver.c:154
+#: src/bin/e_desklock.c:1300 src/bin/e_screensaver.c:154
 #, fuzzy
 msgid "Activate Presentation Mode?"
 msgstr "Activaţi modul de prezentare."
 
-#: src/bin/e_desklock.c:1286
+#: src/bin/e_desklock.c:1303
 msgid ""
 "You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
 
-#: src/bin/e_desklock.c:1296 src/bin/e_screensaver.c:167
+#: src/bin/e_desklock.c:1313 src/bin/e_screensaver.c:167
 #, fuzzy
 msgid "No, but increase timeout"
 msgstr "Nu , dar creşte timeout"
 
-#: src/bin/e_desklock.c:1298 src/bin/e_screensaver.c:169
+#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:169
 #, fuzzy
 msgid "No, and stop asking"
 msgstr "Nu , şi nu mai solicită"
@@ -1199,7 +1200,7 @@ msgstr ""
 msgid "Desktop Entry Editor"
 msgstr "Desktop Entry Editor"
 
-#: src/bin/e_eap_editor.c:675 src/bin/e_int_border_prop.c:448
+#: src/bin/e_eap_editor.c:676 src/bin/e_int_border_prop.c:448
 #: src/bin/e_int_border_prop.c:502
 #: src/modules/conf_intl/e_int_config_imc.c:902
 #: src/modules/conf_menus/e_int_config_menus.c:265
@@ -1207,45 +1208,45 @@ msgstr "Desktop Entry Editor"
 msgid "Name"
 msgstr "Nume"
 
-#: src/bin/e_eap_editor.c:686 src/modules/ibar/e_mod_config.c:134
+#: src/bin/e_eap_editor.c:687 src/modules/ibar/e_mod_config.c:134
 msgid "Comment"
 msgstr "Comentariu"
 
-#: src/bin/e_eap_editor.c:708
+#: src/bin/e_eap_editor.c:709
 #, fuzzy
 msgid "URL"
 msgstr "URL-ul"
 
-#: src/bin/e_eap_editor.c:730 src/bin/e_eap_editor.c:739
+#: src/bin/e_eap_editor.c:731 src/bin/e_eap_editor.c:740
 #: src/bin/e_fm_prop.c:495 src/modules/conf_theme/e_int_config_fonts.c:95
 #: src/modules/fileman/e_int_config_mime_edit.c:147
 msgid "Icon"
 msgstr "Iconiță"
 
-#: src/bin/e_eap_editor.c:743
+#: src/bin/e_eap_editor.c:744
 msgid "Generic Name"
 msgstr "Nume generic"
 
-#: src/bin/e_eap_editor.c:749
+#: src/bin/e_eap_editor.c:750
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:103
 #, fuzzy
 msgid "Window Class"
 msgstr "Clasa window"
 
-#: src/bin/e_eap_editor.c:755 src/modules/fileman/e_int_config_mime.c:169
+#: src/bin/e_eap_editor.c:756 src/modules/fileman/e_int_config_mime.c:169
 msgid "Categories"
 msgstr "Categorii"
 
-#: src/bin/e_eap_editor.c:762
+#: src/bin/e_eap_editor.c:763
 msgid "Mime Types"
 msgstr "Tipuri MIME"
 
-#: src/bin/e_eap_editor.c:769
+#: src/bin/e_eap_editor.c:770
 #, fuzzy
 msgid "Desktop file"
 msgstr "Desktop fişier"
 
-#: src/bin/e_eap_editor.c:779 src/bin/e_int_border_prop.c:453
+#: src/bin/e_eap_editor.c:780 src/bin/e_int_border_prop.c:453
 #: src/bin/e_int_border_prop.c:505
 #: src/modules/conf_applications/e_int_config_defapps.c:357
 #: src/modules/conf_performance/e_int_config_performance.c:115
@@ -1256,59 +1257,59 @@ msgstr "Desktop fişier"
 msgid "General"
 msgstr "General"
 
-#: src/bin/e_eap_editor.c:782
+#: src/bin/e_eap_editor.c:783
 #, fuzzy
 msgid "Startup Notify"
 msgstr "Startup Notify"
 
-#: src/bin/e_eap_editor.c:784
+#: src/bin/e_eap_editor.c:785
 msgid "Run in Terminal"
 msgstr "Execută în terminal"
 
-#: src/bin/e_eap_editor.c:786
+#: src/bin/e_eap_editor.c:787
 msgid "Show in Menus"
 msgstr "Arată în meniuri"
 
-#: src/bin/e_eap_editor.c:789 src/bin/e_fm.c:8320 src/bin/e_fm.c:8476
+#: src/bin/e_eap_editor.c:790 src/bin/e_fm.c:8355 src/bin/e_fm.c:8511
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:332
 msgid "Options"
 msgstr "Opțiuni"
 
-#: src/bin/e_eap_editor.c:820
-#, fuzzy
-msgid "Select an Icon"
+#: src/bin/e_eap_editor.c:822
+#, fuzzy, c-format
+msgid "Select an Icon for '%s'"
 msgstr "Selectaţi o pictogramă"
 
-#: src/bin/e_eap_editor.c:886
+#: src/bin/e_eap_editor.c:889
 #, fuzzy
 msgid "Select an Executable"
 msgstr "Selectaţi un executabil"
 
-#: src/bin/e_entry.c:506 src/bin/e_fm.c:8661 src/bin/e_fm.c:10333
-#: src/bin/e_shelf.c:1712 src/bin/e_shelf.c:2345
+#: src/bin/e_entry.c:506 src/bin/e_fm.c:8696 src/bin/e_fm.c:10388
+#: src/bin/e_shelf.c:1746 src/bin/e_shelf.c:2382
 #: src/modules/conf_dialogs/e_int_config_profiles.c:134
 #: src/modules/conf_dialogs/e_int_config_profiles.c:335
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:315
-#: src/modules/conf_shelves/e_int_config_shelf.c:118
-#: src/modules/conf_shelves/e_int_config_shelf.c:374
+#: src/modules/conf_shelves/e_int_config_shelf.c:119
+#: src/modules/conf_shelves/e_int_config_shelf.c:375
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:126
 #: src/modules/ibar/e_mod_config.c:112 src/modules/ibar/e_mod_config.c:199
 msgid "Delete"
 msgstr "Șterge"
 
-#: src/bin/e_entry.c:516 src/bin/e_fm.c:8572
+#: src/bin/e_entry.c:516 src/bin/e_fm.c:8607
 msgid "Cut"
 msgstr "Taie"
 
-#: src/bin/e_entry.c:524 src/bin/e_fm.c:6406 src/bin/e_fm.c:8586
+#: src/bin/e_entry.c:524 src/bin/e_fm.c:6426 src/bin/e_fm.c:8621
 msgid "Copy"
 msgstr "Copiază"
 
-#: src/bin/e_entry.c:532 src/bin/e_fm.c:8381 src/bin/e_fm.c:8599
+#: src/bin/e_entry.c:532 src/bin/e_fm.c:8416 src/bin/e_fm.c:8634
 msgid "Paste"
 msgstr "Lipește"
 
@@ -1316,484 +1317,489 @@ msgstr "Lipește"
 msgid "Select All"
 msgstr "Selectează tot"
 
-#: src/bin/e_exec.c:399 src/bin/e_exec.c:407 src/bin/e_exec.c:420
-#: src/bin/e_exec.c:474 src/bin/e_utils.c:198
+#: src/bin/e_exec.c:397 src/bin/e_exec.c:405 src/bin/e_exec.c:418
+#: src/bin/e_exec.c:472 src/bin/e_utils.c:198
 #: src/modules/conf_intl/e_int_config_imc.c:275
 #: src/modules/conf_intl/e_int_config_imc.c:526
 msgid "Run Error"
 msgstr "Eroare la execuție"
 
-#: src/bin/e_exec.c:400
+#: src/bin/e_exec.c:398
 msgid "Enlightenment was unable to get current directory"
 msgstr ""
 
-#: src/bin/e_exec.c:408
+#: src/bin/e_exec.c:406
 #, c-format
 msgid "Enlightenment was unable to change to directory:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:421
+#: src/bin/e_exec.c:419
 #, c-format
 msgid "Enlightenment was unable to restore to directory:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:475
+#: src/bin/e_exec.c:473
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:605
+#: src/bin/e_exec.c:603
 #, fuzzy
 msgid "Application run error"
 msgstr "Run Application eroare"
 
-#: src/bin/e_exec.c:607
+#: src/bin/e_exec.c:605
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
 
-#: src/bin/e_exec.c:714
+#: src/bin/e_exec.c:712
 #, fuzzy
 msgid "Application Execution Error"
 msgstr "Cerere de executare Eroare"
 
-#: src/bin/e_exec.c:727 src/bin/e_exec.c:729
+#: src/bin/e_exec.c:725 src/bin/e_exec.c:727
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr ""
 
-#: src/bin/e_exec.c:735
+#: src/bin/e_exec.c:733
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr ""
 
-#: src/bin/e_exec.c:743
+#: src/bin/e_exec.c:741
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:746
+#: src/bin/e_exec.c:744
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:750
+#: src/bin/e_exec.c:748
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:753
+#: src/bin/e_exec.c:751
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr ""
 
-#: src/bin/e_exec.c:757
+#: src/bin/e_exec.c:755
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:761
+#: src/bin/e_exec.c:759
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr ""
 
-#: src/bin/e_exec.c:765
+#: src/bin/e_exec.c:763
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr ""
 
-#: src/bin/e_exec.c:768
+#: src/bin/e_exec.c:766
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:772
+#: src/bin/e_exec.c:770
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr ""
 
-#: src/bin/e_exec.c:775
+#: src/bin/e_exec.c:773
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr ""
 
-#: src/bin/e_exec.c:831
+#: src/bin/e_exec.c:829
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 
-#: src/bin/e_exec.c:890 src/bin/e_exec.c:968 src/bin/e_exec.c:975
+#: src/bin/e_exec.c:888 src/bin/e_exec.c:966 src/bin/e_exec.c:973
 #, fuzzy
 msgid "Error Logs"
 msgstr "Activitate de eroare"
 
-#: src/bin/e_exec.c:896 src/bin/e_exec.c:976
+#: src/bin/e_exec.c:894 src/bin/e_exec.c:974
 #, fuzzy
 msgid "There was no error message."
 msgstr "Nu a fost nici un mesaj de eroare."
 
-#: src/bin/e_exec.c:900 src/bin/e_exec.c:983
+#: src/bin/e_exec.c:898 src/bin/e_exec.c:981
 #, fuzzy
 msgid "Save This Message"
 msgstr "Salvaţi acest mesaj"
 
-#: src/bin/e_exec.c:905 src/bin/e_exec.c:908 src/bin/e_exec.c:988
-#: src/bin/e_exec.c:991
+#: src/bin/e_exec.c:903 src/bin/e_exec.c:906 src/bin/e_exec.c:986
+#: src/bin/e_exec.c:989
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr ""
 
-#: src/bin/e_exec.c:934
+#: src/bin/e_exec.c:932
 #, fuzzy
 msgid "Error Information"
 msgstr "informaţii despre eroare"
 
-#: src/bin/e_exec.c:942
+#: src/bin/e_exec.c:940
 #, fuzzy
 msgid "Error Signal Information"
 msgstr "Eroare semnal de informaţii"
 
-#: src/bin/e_exec.c:952 src/bin/e_exec.c:959
+#: src/bin/e_exec.c:950 src/bin/e_exec.c:957
 #, fuzzy
 msgid "Output Data"
 msgstr "date de ieşire"
 
-#: src/bin/e_exec.c:960
+#: src/bin/e_exec.c:958
 #, fuzzy
 msgid "There was no output."
 msgstr "Nu a fost nici o ieşire."
 
-#: src/bin/e_fm.c:1035
+#: src/bin/e_fm.c:1037
 #, fuzzy
 msgid "Nonexistent path"
 msgstr "inexistent cale"
 
-#: src/bin/e_fm.c:1038
+#: src/bin/e_fm.c:1040
 #, c-format
 msgid "%s doesn't exist."
 msgstr ""
 
-#: src/bin/e_fm.c:2969
+#: src/bin/e_fm.c:2783 src/bin/e_fm.c:3709
+#, c-format
+msgid "%u file"
+msgid_plural "%u files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/bin/e_fm.c:2997
 msgid "Mount Error"
 msgstr "Eroare la montare"
 
-#: src/bin/e_fm.c:2969
+#: src/bin/e_fm.c:2997
 #, fuzzy
 msgid "Can't mount device"
 msgstr "Nu se poate monta dispozitivul"
 
-#: src/bin/e_fm.c:2985
+#: src/bin/e_fm.c:3013
 msgid "Unmount Error"
 msgstr "Eroare la demontare"
 
-#: src/bin/e_fm.c:2985
+#: src/bin/e_fm.c:3013
 #, fuzzy
 msgid "Can't unmount device"
 msgstr "Nu se poate demonta dispozitivul"
 
-#: src/bin/e_fm.c:3000
+#: src/bin/e_fm.c:3028
 msgid "Eject Error"
 msgstr "Eroare la ejectare"
 
-#: src/bin/e_fm.c:3000
+#: src/bin/e_fm.c:3028
 #, fuzzy
 msgid "Can't eject device"
 msgstr "Nu se poate scoate dispozitivul"
 
-#: src/bin/e_fm.c:3689
-#, c-format
-msgid "%i file"
-msgid_plural "%i files"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/bin/e_fm.c:6419 src/bin/e_fm.c:8389 src/bin/e_fm.c:8607
+#: src/bin/e_fm.c:6439 src/bin/e_fm.c:8424 src/bin/e_fm.c:8642
 msgid "Link"
 msgstr "Legătură"
 
-#: src/bin/e_fm.c:6427 src/bin/e_fm.c:9926 src/bin/e_fm.c:10134
+#: src/bin/e_fm.c:6447 src/bin/e_fm.c:9981 src/bin/e_fm.c:10189
 msgid "Abort"
 msgstr "Abandonează"
 
-#: src/bin/e_fm.c:8308 src/bin/e_fm.c:8464
-#: src/modules/fileman/e_mod_config.c:300
+#: src/bin/e_fm.c:8343 src/bin/e_fm.c:8499
+#: src/modules/fileman/e_mod_config.c:303
 msgid "View Mode"
 msgstr "Mod de vizualizare"
 
-#: src/bin/e_fm.c:8331 src/bin/e_fm.c:8487
+#: src/bin/e_fm.c:8366 src/bin/e_fm.c:8522
 #, fuzzy
 msgid "Refresh View"
 msgstr "Vezi refresh"
 
-#: src/bin/e_fm.c:8342 src/bin/e_fm.c:8499
+#: src/bin/e_fm.c:8377 src/bin/e_fm.c:8534
 msgid "New..."
 msgstr ""
 
-#: src/bin/e_fm.c:8362 src/bin/e_fm.c:8520 src/bin/e_fm.c:8551
+#: src/bin/e_fm.c:8397 src/bin/e_fm.c:8555 src/bin/e_fm.c:8586
 #, fuzzy
 msgid "Actions..."
 msgstr "Opțiuni"
 
-#: src/bin/e_fm.c:8669 src/bin/e_fm.c:9972 src/bin/e_shelf.c:2340
-#: src/modules/conf_shelves/e_int_config_shelf.c:121
+#: src/bin/e_fm.c:8704 src/bin/e_fm.c:10027 src/bin/e_shelf.c:2377
+#: src/modules/conf_shelves/e_int_config_shelf.c:122
 msgid "Rename"
 msgstr "Redenumește"
 
-#: src/bin/e_fm.c:8688
+#: src/bin/e_fm.c:8723
 msgid "Unmount"
 msgstr "Demontează"
 
-#: src/bin/e_fm.c:8693
+#: src/bin/e_fm.c:8728
 msgid "Mount"
 msgstr "Montează"
 
-#: src/bin/e_fm.c:8698
+#: src/bin/e_fm.c:8733
 msgid "Eject"
 msgstr "Ejectează"
 
-#: src/bin/e_fm.c:8713 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:8748 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:875
 msgid "Properties"
 msgstr "Proprietăți"
 
-#: src/bin/e_fm.c:8721
+#: src/bin/e_fm.c:8756
 #, fuzzy
 msgid "Application Properties"
 msgstr "Aplicație"
 
-#: src/bin/e_fm.c:8729 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:8764 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "Proprietăți fișier"
 
-#: src/bin/e_fm.c:8964 src/modules/fileman/e_mod_config.c:353
+#: src/bin/e_fm.c:8999 src/modules/fileman/e_mod_config.c:356
 #, fuzzy
 msgid "Case Sensitive"
 msgstr "Cauza sensibile"
 
-#: src/bin/e_fm.c:8970 src/modules/fileman/e_mod_config.c:356
+#: src/bin/e_fm.c:9005 src/modules/fileman/e_mod_config.c:359
 #, fuzzy
 msgid "Sort By Extension"
 msgstr "Arată Icon Extensie"
 
-#: src/bin/e_fm.c:8976 src/modules/fileman/e_mod_config.c:359
+#: src/bin/e_fm.c:9011 src/modules/fileman/e_mod_config.c:362
 msgid "Sort By Modification Time"
 msgstr ""
 
-#: src/bin/e_fm.c:8982 src/modules/fileman/e_mod_config.c:362
+#: src/bin/e_fm.c:9017 src/modules/fileman/e_mod_config.c:365
 msgid "Sort By Size"
 msgstr ""
 
-#: src/bin/e_fm.c:8991 src/modules/fileman/e_mod_config.c:370
+#: src/bin/e_fm.c:9026 src/modules/fileman/e_mod_config.c:373
 #, fuzzy
 msgid "Directories First"
 msgstr "Caută Directoare"
 
-#: src/bin/e_fm.c:8997 src/modules/fileman/e_mod_config.c:374
+#: src/bin/e_fm.c:9032 src/modules/fileman/e_mod_config.c:377
 #, fuzzy
 msgid "Directories Last"
 msgstr "Caută Directoare"
 
-#: src/bin/e_fm.c:9052
+#: src/bin/e_fm.c:9087
 #, fuzzy
 msgid "Use default"
 msgstr "Folosiţi implicit"
 
-#: src/bin/e_fm.c:9082 src/modules/fileman/e_mod_config.c:305
+#: src/bin/e_fm.c:9117 src/modules/fileman/e_mod_config.c:308
 #, fuzzy
 msgid "Grid Icons"
 msgstr "Grid Icoane"
 
-#: src/bin/e_fm.c:9090 src/modules/fileman/e_mod_config.c:307
+#: src/bin/e_fm.c:9125 src/modules/fileman/e_mod_config.c:310
 #, fuzzy
 msgid "Custom Icons"
 msgstr "Icoane personalizate"
 
-#: src/bin/e_fm.c:9098 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9133 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
-#: src/modules/fileman/e_mod_config.c:315
+#: src/modules/fileman/e_mod_config.c:318
 msgid "List"
 msgstr "Listă"
 
-#: src/bin/e_fm.c:9106 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9141 src/modules/everything/evry_config.c:458
 #, fuzzy
 msgid "Default View"
 msgstr "Implicit"
 
-#: src/bin/e_fm.c:9117 src/modules/everything/evry_config.c:503
-#: src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:9152 src/modules/everything/evry_config.c:503
+#: src/modules/fileman/e_mod_config.c:381
 #, fuzzy
 msgid "Sorting"
 msgstr "Stivuire"
 
-#: src/bin/e_fm.c:9132
+#: src/bin/e_fm.c:9167
 #, c-format
 msgid "Icon Size (%d)"
 msgstr ""
 
-#: src/bin/e_fm.c:9157 src/bin/e_fm.c:9235 src/bin/e_fm.c:9240
-#: src/bin/e_fm.c:9929 src/bin/e_fm.c:10141 src/bin/e_fm_prop.c:254
-#: src/bin/e_shelf.c:2222
+#: src/bin/e_fm.c:9192 src/bin/e_fm.c:9270 src/bin/e_fm.c:9275
+#: src/bin/e_fm.c:9984 src/bin/e_fm.c:10196 src/bin/e_fm_prop.c:254
+#: src/bin/e_shelf.c:2259
 msgid "Error"
 msgstr "Eroare"
 
-#: src/bin/e_fm.c:9157
+#: src/bin/e_fm.c:9192
 #, fuzzy
 msgid "Could not create a file!"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/bin/e_fm.c:9171 src/bin/e_fm.c:9189
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:9224
 #, fuzzy
 msgid "New File"
 msgstr "Fișier:"
 
-#: src/bin/e_fm.c:9235
+#: src/bin/e_fm.c:9270
 msgid "Already creating a new file for this directory!"
 msgstr ""
 
-#: src/bin/e_fm.c:9240
+#: src/bin/e_fm.c:9275
 #, c-format
 msgid "%s is not able to be written to!"
 msgstr ""
 
-#: src/bin/e_fm.c:9259
+#: src/bin/e_fm.c:9294
 #, fuzzy
 msgid "Directory"
 msgstr "nou director"
 
-#: src/bin/e_fm.c:9264
+#: src/bin/e_fm.c:9299
 #: src/modules/conf_applications/e_int_config_defapps.c:311
 #, fuzzy
 msgid "File"
 msgstr "Fișier:"
 
-#: src/bin/e_fm.c:9295
+#: src/bin/e_fm.c:9330
 #, fuzzy
 msgid "Inherit parent settings"
 msgstr "Moşteni setările de mamă"
 
-#: src/bin/e_fm.c:9304
+#: src/bin/e_fm.c:9339
 msgid "Show Hidden Files"
 msgstr "Arată fișierele ascunse"
 
-#: src/bin/e_fm.c:9316
+#: src/bin/e_fm.c:9351
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "amintiţi-vă de comandă"
 
-#: src/bin/e_fm.c:9325
+#: src/bin/e_fm.c:9360
 #, fuzzy
 msgid "Sort Now"
 msgstr "acum, după"
 
-#: src/bin/e_fm.c:9333
+#: src/bin/e_fm.c:9368
 #, fuzzy
 msgid "Single Click Activation"
 msgstr "Utilizaţi singur clic"
 
-#: src/bin/e_fm.c:9345
+#: src/bin/e_fm.c:9379 src/modules/fileman/e_mod_config.c:393
+#, fuzzy
+msgid "Secure Deletion"
+msgstr "Rezoluţia ecranului"
+
+#: src/bin/e_fm.c:9392
 #, fuzzy
 msgid "File Manager Settings"
 msgstr "pager Setări"
 
-#: src/bin/e_fm.c:9350
+#: src/bin/e_fm.c:9397
 #, fuzzy
 msgid "File Icon Settings"
 msgstr "font Setări"
 
-#: src/bin/e_fm.c:9377 src/bin/e_fm.c:9588
+#: src/bin/e_fm.c:9424 src/bin/e_fm.c:9635
 #, fuzzy
 msgid "Set background..."
 msgstr "Set de fundal ..."
 
-#: src/bin/e_fm.c:9382 src/bin/e_fm.c:9632
+#: src/bin/e_fm.c:9429 src/bin/e_fm.c:9679
 #, fuzzy
 msgid "Set overlay..."
 msgstr "Set de acoperire ..."
 
-#: src/bin/e_fm.c:9484 src/modules/conf_theme/e_int_config_theme.c:1127
+#: src/bin/e_fm.c:9531 src/modules/conf_theme/e_int_config_theme.c:1127
 msgid "Clear"
 msgstr "Curăță"
 
-#: src/bin/e_fm.c:9714
+#: src/bin/e_fm.c:9769
 #, fuzzy
 msgid "Create a new Directory"
 msgstr "Creaţi un director nou"
 
-#: src/bin/e_fm.c:9715
+#: src/bin/e_fm.c:9770
 #, fuzzy
 msgid "New Directory Name:"
 msgstr "Nume nou director:"
 
-#: src/bin/e_fm.c:9770 src/bin/e_fm.c:10067
+#: src/bin/e_fm.c:9825 src/bin/e_fm.c:10122
 #, c-format
 msgid "Rename %s to:"
 msgstr ""
 
-#: src/bin/e_fm.c:9772 src/bin/e_fm.c:10068
+#: src/bin/e_fm.c:9827 src/bin/e_fm.c:10123
 msgid "Rename File"
 msgstr "Redenumește fișierul"
 
-#: src/bin/e_fm.c:9925 src/bin/e_fm.c:10133
+#: src/bin/e_fm.c:9980 src/bin/e_fm.c:10188
 msgid "Retry"
 msgstr "Încearcă din nou"
 
-#: src/bin/e_fm.c:9971
+#: src/bin/e_fm.c:10026
 #, fuzzy
 msgid "No to all"
 msgstr "Nu pentru toate"
 
-#: src/bin/e_fm.c:9974
+#: src/bin/e_fm.c:10029
 #, fuzzy
 msgid "Yes to all"
 msgstr "Da pentru toate"
 
-#: src/bin/e_fm.c:9977
+#: src/bin/e_fm.c:10032
 msgid "Warning"
 msgstr "Avertisment"
 
-#: src/bin/e_fm.c:9980
+#: src/bin/e_fm.c:10035
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr ""
 
-#: src/bin/e_fm.c:10136
+#: src/bin/e_fm.c:10191
 #, fuzzy
 msgid "Move Source"
 msgstr "Mută"
 
-#: src/bin/e_fm.c:10137
+#: src/bin/e_fm.c:10192
 #, fuzzy
 msgid "Ignore this"
 msgstr "ignoraţi acest"
 
-#: src/bin/e_fm.c:10138
+#: src/bin/e_fm.c:10193
 msgid "Ignore all"
 msgstr "Ignoră tot"
 
-#: src/bin/e_fm.c:10143
+#: src/bin/e_fm.c:10198
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:10336
+#: src/bin/e_fm.c:10391
 msgid "Confirm Delete"
 msgstr "Confirmă ștergerea"
 
-#: src/bin/e_fm.c:10346
+#: src/bin/e_fm.c:10401
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această raft."
 
-#: src/bin/e_fm.c:10351
+#: src/bin/e_fm.c:10406
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
 
-#: src/bin/e_fm.c:10361
+#: src/bin/e_fm.c:10416
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1833,7 +1839,7 @@ msgstr "Dispozitiv amovibil"
 msgid "Cannot change permissions: %s"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1066 src/bin/e_shelf.c:2242
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1100 src/bin/e_shelf.c:2279
 #: src/modules/conf_dialogs/e_int_config_profiles.c:312
 #: src/modules/conf_display/e_int_config_desk.c:154
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
@@ -1916,7 +1922,7 @@ msgid "Thumbnail"
 msgstr "Miniatură"
 
 #: src/bin/e_fm_prop.c:533
-#: src/modules/conf_display/e_int_config_desklock.c:315
+#: src/modules/conf_display/e_int_config_desklock.c:364
 msgid "Custom"
 msgstr "Personalizat"
 
@@ -1938,44 +1944,44 @@ msgstr ""
 msgid "Select an Image"
 msgstr "Selectați o imagine"
 
-#: src/bin/e_gadcon.c:1672 src/bin/e_int_border_menu.c:140
+#: src/bin/e_gadcon.c:1675 src/bin/e_int_border_menu.c:140
 #, fuzzy
 msgid "Move to"
 msgstr "Mută"
 
-#: src/bin/e_gadcon.c:1740
+#: src/bin/e_gadcon.c:1743
 #, fuzzy
 msgid "Automatically scroll contents"
 msgstr "Conţinutul în mod automat de defilare"
 
-#: src/bin/e_gadcon.c:1753 src/modules/gadman/e_mod_gadman.c:895
+#: src/bin/e_gadcon.c:1756 src/modules/gadman/e_mod_gadman.c:1045
 msgid "Plain"
 msgstr "Simplu"
 
-#: src/bin/e_gadcon.c:1762 src/modules/gadman/e_mod_gadman.c:903
+#: src/bin/e_gadcon.c:1765 src/modules/gadman/e_mod_gadman.c:1053
 #, fuzzy
 msgid "Inset"
 msgstr "medalion"
 
-#: src/bin/e_gadcon.c:1771 src/bin/e_int_config_modules.c:52
+#: src/bin/e_gadcon.c:1774 src/bin/e_int_config_modules.c:52
 #: src/modules/conf_theme/e_mod_main.c:30
 #: src/modules/dropshadow/e_mod_main.c:89
 #, fuzzy
 msgid "Look"
 msgstr "uite"
 
-#: src/bin/e_gadcon.c:1783 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1786 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:269
 #: src/modules/conf_applications/e_int_config_apps.c:290
 #: src/modules/conf_applications/e_int_config_apps.c:310
 #: src/modules/conf_applications/e_int_config_apps_personal.c:95
-#: src/modules/gadman/e_mod_gadman.c:979 src/modules/ibar/e_mod_main.c:880
+#: src/modules/gadman/e_mod_gadman.c:1129 src/modules/ibar/e_mod_main.c:880
 #: src/modules/xkbswitch/e_mod_config.c:265
 #, fuzzy
 msgid "Remove"
 msgstr "scoate"
 
-#: src/bin/e_gadcon.c:2412
+#: src/bin/e_gadcon.c:2418
 #, fuzzy
 msgid "Stop moving"
 msgstr "se opresc"
@@ -2120,7 +2126,7 @@ msgstr "Amintiţi-vă aceste Broaste"
 msgid "Window"
 msgstr "Meniu fereastră"
 
-#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1016
+#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1007
 #, fuzzy
 msgid "Always on Top"
 msgstr "Întotdeauna pe Top"
@@ -2222,65 +2228,67 @@ msgstr "amintiţi-vă"
 msgid "ICCCM/NetWM"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:936
+#: src/bin/e_int_border_menu.c:927
 #, fuzzy, c-format
 msgid "Screen %d"
 msgstr "Ecran"
 
-#: src/bin/e_int_border_menu.c:1027 src/bin/e_int_border_prop.c:158
+#: src/bin/e_int_border_menu.c:1018 src/bin/e_int_border_prop.c:158
 #: src/bin/e_int_border_prop.c:180
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
+#: src/modules/notification/e_mod_config.c:98
+#: src/modules/notification/e_mod_config_item.c:103
 #, fuzzy, c-format
 msgid "Normal"
 msgstr "normal"
 
-#: src/bin/e_int_border_menu.c:1038
+#: src/bin/e_int_border_menu.c:1029
 #, fuzzy
 msgid "Always Below"
 msgstr "întotdeauna sub"
 
-#: src/bin/e_int_border_menu.c:1082
+#: src/bin/e_int_border_menu.c:1073
 #, fuzzy
 msgid "Pin to Desktop"
 msgstr "Pin pentru Desktop"
 
-#: src/bin/e_int_border_menu.c:1093
+#: src/bin/e_int_border_menu.c:1084
 #, fuzzy
 msgid "Unpin from Desktop"
 msgstr "Anulare marcator de la Desktop"
 
-#: src/bin/e_int_border_menu.c:1183
+#: src/bin/e_int_border_menu.c:1174
 #, fuzzy
 msgid "Select Border Style"
 msgstr "Selectaţi stilul de frontieră"
 
-#: src/bin/e_int_border_menu.c:1195
+#: src/bin/e_int_border_menu.c:1186
 #, fuzzy
 msgid "Use Enlightenment Default Icon Preference"
 msgstr "Utilizaţi Preferinţe E17 pictograma implicită"
 
-#: src/bin/e_int_border_menu.c:1203
+#: src/bin/e_int_border_menu.c:1194
 #, fuzzy
 msgid "Use Application Provided Icon"
 msgstr "Cererea de utilizare condiţia Icon "
 
-#: src/bin/e_int_border_menu.c:1211
+#: src/bin/e_int_border_menu.c:1202
 #, fuzzy
 msgid "Use User Defined Icon"
 msgstr "Utilizaţi definite de utilizator Icon"
 
-#: src/bin/e_int_border_menu.c:1220 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1211 src/bin/e_int_border_remember.c:734
 #, fuzzy
 msgid "Offer Resistance"
 msgstr "oferă o rezistenţă"
 
-#: src/bin/e_int_border_menu.c:1281
+#: src/bin/e_int_border_menu.c:1272
 #, fuzzy
 msgid "Window List"
 msgstr "Lista de fereastră"
 
-#: src/bin/e_int_border_menu.c:1291 src/modules/pager/e_mod_main.c:265
+#: src/bin/e_int_border_menu.c:1282 src/modules/pager/e_mod_main.c:265
 #: src/modules/pager/e_mod_main.c:2940 src/modules/pager/e_mod_main.c:2947
 #: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2956
 #: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2960
@@ -2292,7 +2300,7 @@ msgstr "Lista de fereastră"
 msgid "Pager"
 msgstr "pager"
 
-#: src/bin/e_int_border_menu.c:1301
+#: src/bin/e_int_border_menu.c:1292
 #, fuzzy
 msgid "Taskbar"
 msgstr "Bara de activităţi"
@@ -2550,18 +2558,20 @@ msgstr "solicitare de poziţie"
 
 #: src/bin/e_int_border_prop.c:480 src/bin/e_int_border_prop.c:515
 #: src/bin/e_int_config_modules.c:57 src/bin/e_int_menus.c:236
-#: src/bin/e_shelf.c:2318 src/modules/battery/e_mod_main.c:193
-#: src/modules/clock/e_mod_main.c:389 src/modules/clock/e_mod_main.c:612
+#: src/bin/e_shelf.c:2355 src/modules/battery/e_mod_main.c:193
+#: src/modules/clock/e_mod_main.c:325 src/modules/clock/e_mod_main.c:564
 #: src/modules/conf/e_conf.c:136 src/modules/conf/e_conf.c:146
 #: src/modules/conf/e_mod_main.c:101 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
-#: src/modules/conf_shelves/e_int_config_shelf.c:128
+#: src/modules/conf_shelves/e_int_config_shelf.c:129
 #: src/modules/ibar/e_mod_main.c:383 src/modules/ibar/e_mod_main.c:868
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:871 src/modules/temperature/e_mod_main.c:230
 #: src/modules/mixer/e_mod_main.c:778 src/modules/connman/e_mod_main.c:441
-#: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:343
-#: src/modules/xkbswitch/e_mod_main.c:385
+#: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:344
+#: src/modules/xkbswitch/e_mod_main.c:386
+#: src/modules/notification/e_mod_box.c:477
+#: src/modules/notification/e_mod_box.c:616
 #, fuzzy
 msgid "Settings"
 msgstr "Setări"
@@ -2866,7 +2876,7 @@ msgstr "aplicaţii"
 #: src/bin/e_int_menus.c:157 src/bin/e_int_menus.c:1245
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
-#: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4005
+#: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4002
 #, fuzzy
 msgid "Windows"
 msgstr "ferestre"
@@ -2999,6 +3009,7 @@ msgid "Hide timeout"
 msgstr "Ascunde timeout"
 
 #: src/bin/e_int_shelf_config.c:237
+#: src/modules/notification/e_mod_config.c:107
 #, c-format
 msgid "%.1f seconds"
 msgstr ""
@@ -3628,9 +3639,9 @@ msgstr ""
 msgid "What action should be taken with this module?<br>"
 msgstr "Doriţi să descărcaţi acest modul.<br>"
 
-#: src/bin/e_module.c:519 src/bin/e_shelf.c:1712
+#: src/bin/e_module.c:519 src/bin/e_shelf.c:1746
 #: src/modules/conf_dialogs/e_int_config_profiles.c:335
-#: src/modules/conf_shelves/e_int_config_shelf.c:374
+#: src/modules/conf_shelves/e_int_config_shelf.c:375
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Keep"
 msgstr ""
@@ -3656,42 +3667,42 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 
-#: src/bin/e_shelf.c:1064 src/bin/e_shelf.c:1570
-#: src/modules/conf_shelves/e_int_config_shelf.c:173
+#: src/bin/e_shelf.c:1098 src/bin/e_shelf.c:1604
+#: src/modules/conf_shelves/e_int_config_shelf.c:174
 #, fuzzy
 msgid "Shelf"
 msgstr "rafturi"
 
-#: src/bin/e_shelf.c:1065
+#: src/bin/e_shelf.c:1099
 #, fuzzy
 msgid "Add New Shelf"
 msgstr "Adauga un Perioada de valabilitate"
 
-#: src/bin/e_shelf.c:1086
+#: src/bin/e_shelf.c:1120
 #, fuzzy
 msgid "Shelf Error"
 msgstr "Eroare la ejectare"
 
-#: src/bin/e_shelf.c:1086
+#: src/bin/e_shelf.c:1120
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1591 src/bin/e_shelf.c:2356
+#: src/bin/e_shelf.c:1625 src/bin/e_shelf.c:2393
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "se opresc"
 
-#: src/bin/e_shelf.c:1593 src/bin/e_shelf.c:2358
+#: src/bin/e_shelf.c:1627 src/bin/e_shelf.c:2395
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "Scoateţi Gadget"
 
-#: src/bin/e_shelf.c:1707
+#: src/bin/e_shelf.c:1741
 #, fuzzy
 msgid "Are you sure you want to delete this shelf?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această raft."
 
-#: src/bin/e_shelf.c:1709
+#: src/bin/e_shelf.c:1743
 #, fuzzy
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
@@ -3700,27 +3711,27 @@ msgstr ""
 "Aţi solicitat pentru a şterge acest raft.<br><br>Sunteţi sigur că doriţi să-"
 "l ştergeţi."
 
-#: src/bin/e_shelf.c:2222
+#: src/bin/e_shelf.c:2259
 msgid "A shelf with that name and id already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:2241
+#: src/bin/e_shelf.c:2278
 #, fuzzy
 msgid "Rename Shelf"
 msgstr "Redenumește fișierul"
 
-#: src/bin/e_shelf.c:2313 src/modules/conf_shelves/e_int_config_shelf.c:124
+#: src/bin/e_shelf.c:2350 src/modules/conf_shelves/e_int_config_shelf.c:125
 #: src/modules/ibar/e_mod_main.c:862
 #, fuzzy
 msgid "Contents"
 msgstr "Comentariu"
 
-#: src/bin/e_shelf.c:2323
+#: src/bin/e_shelf.c:2360
 #, fuzzy
 msgid "Orientation"
 msgstr "prezentare"
 
-#: src/bin/e_shelf.c:2332 src/modules/conf_display/e_int_config_display.c:405
+#: src/bin/e_shelf.c:2369 src/modules/conf_display/e_int_config_display.c:405
 #, fuzzy
 msgid "Refresh"
 msgstr "reîmprospătare"
@@ -4148,7 +4159,7 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:243
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:292
 #: src/modules/conf_paths/e_int_config_env.c:309
-#: src/modules/conf_shelves/e_int_config_shelf.c:116
+#: src/modules/conf_shelves/e_int_config_shelf.c:117
 #: src/modules/ibar/e_mod_config.c:110
 #: src/modules/xkbswitch/e_mod_config.c:260
 #, fuzzy
@@ -4376,8 +4387,8 @@ msgstr "baterie"
 msgid "Clock Settings"
 msgstr "Focus Setări"
 
-#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:717
-#: src/modules/clock/e_mod_main.c:872 src/modules/clock/e_mod_main.c:904
+#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:669
+#: src/modules/clock/e_mod_main.c:824 src/modules/clock/e_mod_main.c:856
 #, fuzzy
 msgid "Clock"
 msgstr "ceas"
@@ -4422,7 +4433,7 @@ msgstr ""
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:872 src/modules/clock/e_mod_main.c:904
+#: src/modules/clock/e_mod_main.c:824 src/modules/clock/e_mod_main.c:856
 #, fuzzy
 msgid "Show calendar"
 msgstr "Executabil"
@@ -4656,6 +4667,7 @@ msgstr "de dialog Setări"
 #: src/modules/conf_theme/e_int_config_fonts.c:668
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
+#: src/modules/notification/e_mod_config_item.c:89
 #, fuzzy
 msgid "General Settings"
 msgstr "Setări generale"
@@ -4836,7 +4848,7 @@ msgstr "schimb de imagini de fundal"
 
 #: src/modules/conf_display/e_int_config_desks.c:160
 #: src/modules/conf_display/e_int_config_desks.c:165
-#: src/modules/conf_display/e_int_config_desklock.c:251
+#: src/modules/conf_display/e_int_config_desklock.c:300
 #: src/modules/conf_interaction/e_int_config_mouse.c:222
 #: src/modules/conf_interaction/e_int_config_mouse.c:228
 #: src/modules/everything/evry_config.c:405
@@ -4844,9 +4856,7 @@ msgstr "schimb de imagini de fundal"
 #: src/modules/everything/evry_config.c:554
 #: src/modules/everything/evry_config.c:580
 #: src/modules/everything/evry_config.c:587
-#: src/modules/fileman/e_mod_config.c:321
-#: src/modules/fileman/e_mod_config.c:399
-#: src/modules/fileman/e_mod_config.c:405
+#: src/modules/fileman/e_mod_config.c:324
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
 #: src/modules/syscon/e_int_config_syscon.c:158
@@ -4949,114 +4959,120 @@ msgstr "Selectaţi un fundal ..."
 msgid "Personal"
 msgstr "personal"
 
-#: src/modules/conf_display/e_int_config_desklock.c:76
+#: src/modules/conf_display/e_int_config_desklock.c:80
 #, fuzzy
 msgid "Screen Lock Settings"
 msgstr "De blocare a ecranului Setări"
 
-#: src/modules/conf_display/e_int_config_desklock.c:215
+#: src/modules/conf_display/e_int_config_desklock.c:222
 #, fuzzy
 msgid "Lock on Startup"
 msgstr "Blocare la pornire"
 
-#: src/modules/conf_display/e_int_config_desklock.c:218
+#: src/modules/conf_display/e_int_config_desklock.c:225
 #, fuzzy
 msgid "Lock on Suspend"
 msgstr "Lock On Suspend"
 
-#: src/modules/conf_display/e_int_config_desklock.c:222
+#: src/modules/conf_display/e_int_config_desklock.c:229
 #, fuzzy
 msgid "Custom Screenlock Command"
 msgstr "Personalizat Screenlock comandă"
 
-#: src/modules/conf_display/e_int_config_desklock.c:226
+#: src/modules/conf_display/e_int_config_desklock.c:233
 #, fuzzy
 msgid "Use Custom Screenlock Command"
 msgstr "Personalizat Screenlock comandă"
 
-#: src/modules/conf_display/e_int_config_desklock.c:229
+#: src/modules/conf_display/e_int_config_desklock.c:236
 #, fuzzy
 msgid "Locking"
 msgstr "Blochează"
 
-#: src/modules/conf_display/e_int_config_desklock.c:235
+#: src/modules/conf_display/e_int_config_desklock.c:278
+#, fuzzy
+msgid "Keyboard Layout"
+msgstr "tastatură"
+
+#: src/modules/conf_display/e_int_config_desklock.c:284
 #, fuzzy
 msgid "Show on all screens"
 msgstr "Arată pe toate ecranele"
 
-#: src/modules/conf_display/e_int_config_desklock.c:240
+#: src/modules/conf_display/e_int_config_desklock.c:289
 #, fuzzy
 msgid "Show on current screen"
 msgstr "Arată pe ecranul curent"
 
-#: src/modules/conf_display/e_int_config_desklock.c:245
+#: src/modules/conf_display/e_int_config_desklock.c:294
 #, fuzzy
 msgid "Show on screen #:"
 msgstr "Arată în meniuri"
 
-#: src/modules/conf_display/e_int_config_desklock.c:255
+#: src/modules/conf_display/e_int_config_desklock.c:304
 #, fuzzy
 msgid "Login Box"
 msgstr "Autentifica-te Box"
 
-#: src/modules/conf_display/e_int_config_desklock.c:260
+#: src/modules/conf_display/e_int_config_desklock.c:309
 #, fuzzy
 msgid "Lock after X screensaver activates"
 msgstr "Blocarea după activează screensaver."
 
-#: src/modules/conf_display/e_int_config_desklock.c:266
-#: src/modules/conf_display/e_int_config_desklock.c:291
+#: src/modules/conf_display/e_int_config_desklock.c:315
+#: src/modules/conf_display/e_int_config_desklock.c:340
 #: src/modules/conf_display/e_int_config_screensaver.c:174
 #: src/modules/conf_display/e_int_config_screensaver.c:191
+#: src/modules/fileman/e_mod_config.c:411
 #, c-format
 msgid "%1.0f seconds"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_desklock.c:272
+#: src/modules/conf_display/e_int_config_desklock.c:321
 #, fuzzy
 msgid "Lock when idle time exceeded"
 msgstr "De blocare atunci când timpul de inactivitate a depăşit"
 
-#: src/modules/conf_display/e_int_config_desklock.c:277
+#: src/modules/conf_display/e_int_config_desklock.c:326
 #: src/modules/conf_display/e_int_config_screensaver.c:157
 #: src/modules/conf_display/e_int_config_dpms.c:152
 #, c-format
 msgid "%1.0f minutes"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_desklock.c:282
+#: src/modules/conf_display/e_int_config_desklock.c:331
 #, fuzzy
 msgid "Timers"
 msgstr "Timere"
 
-#: src/modules/conf_display/e_int_config_desklock.c:287
+#: src/modules/conf_display/e_int_config_desklock.c:336
 #: src/modules/conf_display/e_int_config_screensaver.c:186
 #, fuzzy
 msgid "Suggest if deactivated before"
 msgstr "Rezultate dezactivat în cazul în care înainte de"
 
-#: src/modules/conf_display/e_int_config_desklock.c:296
+#: src/modules/conf_display/e_int_config_desklock.c:345
 #, fuzzy
 msgid "Presentation Mode"
 msgstr "Mod de prezentare"
 
-#: src/modules/conf_display/e_int_config_desklock.c:303
+#: src/modules/conf_display/e_int_config_desklock.c:352
 #: src/modules/gadman/e_mod_config.c:236
 #, fuzzy
 msgid "Theme Defined"
 msgstr "tematice definite"
 
-#: src/modules/conf_display/e_int_config_desklock.c:307
+#: src/modules/conf_display/e_int_config_desklock.c:356
 #, fuzzy
 msgid "Theme Wallpaper"
 msgstr "Tema Wallpaper"
 
-#: src/modules/conf_display/e_int_config_desklock.c:311
+#: src/modules/conf_display/e_int_config_desklock.c:360
 #, fuzzy
 msgid "Current Wallpaper"
 msgstr "Personalizat"
 
-#: src/modules/conf_display/e_int_config_desklock.c:337
+#: src/modules/conf_display/e_int_config_desklock.c:386
 #: src/modules/conf_theme/e_mod_main.c:25
 #: src/modules/conf_theme/e_mod_main.c:32
 #: src/modules/conf_theme/e_mod_main.c:61
@@ -5272,7 +5288,7 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1352
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1269
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1301
-#: src/modules/gadman/e_mod_gadman.c:1003
+#: src/modules/gadman/e_mod_gadman.c:1153
 #, fuzzy
 msgid "CTRL"
 msgstr "CTRL"
@@ -5280,7 +5296,7 @@ msgstr "CTRL"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1357
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1274
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1306
-#: src/modules/gadman/e_mod_gadman.c:1008
+#: src/modules/gadman/e_mod_gadman.c:1158
 #, fuzzy
 msgid "ALT"
 msgstr "ALT"
@@ -5288,7 +5304,7 @@ msgstr "ALT"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1363
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1280
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1312
-#: src/modules/gadman/e_mod_gadman.c:1014
+#: src/modules/gadman/e_mod_gadman.c:1164
 #, fuzzy
 msgid "SHIFT"
 msgstr "SHIFT"
@@ -5296,7 +5312,7 @@ msgstr "SHIFT"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1369
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1286
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1318
-#: src/modules/gadman/e_mod_gadman.c:1020
+#: src/modules/gadman/e_mod_gadman.c:1170
 #, fuzzy
 msgid "WIN"
 msgstr "WIN"
@@ -5462,7 +5478,7 @@ msgid "Touch"
 msgstr "atingeţi"
 
 #: src/modules/conf_intl/e_int_config_imc.c:104
-#: src/modules/conf_intl/e_mod_main.c:24
+#: src/modules/conf_intl/e_mod_main.c:28
 #, fuzzy
 msgid "Input Method Settings"
 msgstr "Metoda de intrare Setări"
@@ -5536,13 +5552,19 @@ msgid ""
 "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:596
+#: src/modules/conf_intl/e_int_config_intl.c:597
 #: src/modules/conf_intl/e_mod_main.c:20
 #, fuzzy
 msgid "Language Settings"
 msgstr "setările de limbă"
 
-#: src/modules/conf_intl/e_int_config_intl.c:909
+#: src/modules/conf_intl/e_int_config_intl.c:620
+#: src/modules/conf_intl/e_mod_main.c:24
+#, fuzzy
+msgid "Desklock Language Settings"
+msgstr "setările de limbă"
+
+#: src/modules/conf_intl/e_int_config_intl.c:946
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5551,33 +5573,33 @@ msgid ""
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:917
+#: src/modules/conf_intl/e_int_config_intl.c:954
 #, fuzzy
 msgid "Possible Locale problems"
 msgstr "Posibile probleme de localizare"
 
-#: src/modules/conf_intl/e_int_config_intl.c:966
-#: src/modules/conf_intl/e_int_config_intl.c:1058
+#: src/modules/conf_intl/e_int_config_intl.c:1023
+#: src/modules/conf_intl/e_int_config_intl.c:1115
 #, fuzzy
 msgid "Language Selector"
 msgstr "selectorul de limbi"
 
-#: src/modules/conf_intl/e_int_config_intl.c:997
-#: src/modules/conf_intl/e_int_config_intl.c:1447
+#: src/modules/conf_intl/e_int_config_intl.c:1054
+#: src/modules/conf_intl/e_int_config_intl.c:1504
 #: src/modules/conf_menus/e_int_config_menus.c:169
 #: src/modules/wizard/page_010.c:168
 #, fuzzy
 msgid "System Default"
 msgstr "sistem implicit"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1031
-#: src/modules/conf_intl/e_int_config_intl.c:1109
+#: src/modules/conf_intl/e_int_config_intl.c:1088
+#: src/modules/conf_intl/e_int_config_intl.c:1166
 #, fuzzy
 msgid "Locale Selected"
 msgstr "Locale selectate"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1032
-#: src/modules/conf_intl/e_int_config_intl.c:1110
+#: src/modules/conf_intl/e_int_config_intl.c:1089
+#: src/modules/conf_intl/e_int_config_intl.c:1167
 #, fuzzy
 msgid "Locale"
 msgstr "Locale"
@@ -5811,6 +5833,7 @@ msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:316
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:330
+#: src/modules/notification/e_mod_config.c:141
 #, fuzzy
 msgid "Miscellaneous"
 msgstr "Diverse"
@@ -5964,6 +5987,7 @@ msgid "Image cache size"
 msgstr "Imagine Dimensiune cache"
 
 #: src/modules/conf_performance/e_int_config_performance.c:133
+#: src/modules/fileman/e_mod_config.c:405
 #, c-format
 msgid "%1.0f MiB"
 msgstr ""
@@ -6031,6 +6055,8 @@ msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
 #: src/modules/shot/e_mod_main.c:693
+#: src/modules/notification/e_mod_config.c:96
+#: src/modules/notification/e_mod_config_item.c:101
 #, fuzzy
 msgid "Low"
 msgstr "Coboară"
@@ -6073,17 +6099,17 @@ msgstr "motor"
 msgid "Power Management"
 msgstr "putere de Management"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:108
+#: src/modules/conf_shelves/e_int_config_shelf.c:109
 #, fuzzy
 msgid "Configured Shelves: Display"
 msgstr "Rafturi configurate"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:370
+#: src/modules/conf_shelves/e_int_config_shelf.c:371
 #, fuzzy, c-format
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această raft."
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:373
+#: src/modules/conf_shelves/e_int_config_shelf.c:374
 #, fuzzy
 msgid "Confirm Shelf Deletion"
 msgstr "Confirmă ștergerea"
@@ -6700,7 +6726,7 @@ msgstr "bytecode"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:679
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:272
-#: src/modules/cpufreq/e_mod_main.c:225 src/modules/cpufreq/e_mod_main.c:257
+#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_main.c:256
 #, fuzzy
 msgid "Automatic"
 msgstr "automat"
@@ -7061,7 +7087,7 @@ msgid "Resize Geometry"
 msgstr "Redimensionarea Geometrie"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:158
-#: src/modules/fileman/e_mod_config.c:348
+#: src/modules/fileman/e_mod_config.c:351
 #: src/modules/winlist/e_int_config_winlist.c:210
 #: src/modules/tasks/e_mod_config.c:86
 #, fuzzy
@@ -7342,14 +7368,14 @@ msgstr "Selectează tot"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:923
+#: src/modules/gadman/e_mod_gadman.c:1073
 #, fuzzy
 msgid "Horizontal"
 msgstr "orizontală"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:229
 #: src/modules/everything/evry_config.c:561
-#: src/modules/gadman/e_mod_gadman.c:931
+#: src/modules/gadman/e_mod_gadman.c:1081
 #, fuzzy
 msgid "Vertical"
 msgstr "vertical"
@@ -7386,7 +7412,7 @@ msgstr "Redimensionează"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:257
 #: src/modules/xkbswitch/e_mod_main.c:74
-#: src/modules/xkbswitch/e_mod_main.c:267
+#: src/modules/xkbswitch/e_mod_main.c:268
 #, fuzzy
 msgid "Keyboard"
 msgstr "tastatură"
@@ -7545,97 +7571,97 @@ msgstr "rolul:"
 msgid "<No Role>"
 msgstr "<No Role>"
 
-#: src/modules/cpufreq/e_mod_main.c:132
+#: src/modules/cpufreq/e_mod_main.c:131
 #, fuzzy
 msgid "Cpufreq"
 msgstr "cpufreq"
 
-#: src/modules/cpufreq/e_mod_main.c:179
+#: src/modules/cpufreq/e_mod_main.c:178
 #, fuzzy
 msgid "Fast (4 ticks)"
 msgstr "Rapid (4 capuse."
 
-#: src/modules/cpufreq/e_mod_main.c:186
+#: src/modules/cpufreq/e_mod_main.c:185
 #, fuzzy
 msgid "Medium (8 ticks)"
 msgstr "Mediu (8 căpuşelor."
 
-#: src/modules/cpufreq/e_mod_main.c:193
+#: src/modules/cpufreq/e_mod_main.c:192
 #, fuzzy
 msgid "Normal (32 ticks)"
 msgstr "Normal (32 căpuşe."
 
-#: src/modules/cpufreq/e_mod_main.c:200
+#: src/modules/cpufreq/e_mod_main.c:199
 #, fuzzy
 msgid "Slow (64 ticks)"
 msgstr "Slow (64 căpuşe."
 
-#: src/modules/cpufreq/e_mod_main.c:207
+#: src/modules/cpufreq/e_mod_main.c:206
 #, fuzzy
 msgid "Very Slow (256 ticks)"
 msgstr "Foarte lent (256 căpuşelor."
 
-#: src/modules/cpufreq/e_mod_main.c:223
+#: src/modules/cpufreq/e_mod_main.c:222
 #, fuzzy
 msgid "Manual"
 msgstr "manual"
 
-#: src/modules/cpufreq/e_mod_main.c:227 src/modules/cpufreq/e_mod_main.c:259
+#: src/modules/cpufreq/e_mod_main.c:226 src/modules/cpufreq/e_mod_main.c:258
 #, fuzzy
 msgid "Lower Power Automatic"
 msgstr "Mai mic de putere automata"
 
-#: src/modules/cpufreq/e_mod_main.c:229 src/modules/cpufreq/e_mod_main.c:261
+#: src/modules/cpufreq/e_mod_main.c:228 src/modules/cpufreq/e_mod_main.c:260
 #, fuzzy
 msgid "Minimum Speed"
 msgstr "Viteza minima"
 
-#: src/modules/cpufreq/e_mod_main.c:231 src/modules/cpufreq/e_mod_main.c:263
+#: src/modules/cpufreq/e_mod_main.c:230 src/modules/cpufreq/e_mod_main.c:262
 #, fuzzy
 msgid "Maximum Speed"
 msgstr "viteza maximă"
 
-#: src/modules/cpufreq/e_mod_main.c:242
+#: src/modules/cpufreq/e_mod_main.c:241
 #, fuzzy
 msgid "Restore CPU Power Policy"
 msgstr "Restaurare CPU Politica de alimentare"
 
-#: src/modules/cpufreq/e_mod_main.c:276
+#: src/modules/cpufreq/e_mod_main.c:275
 #, fuzzy
 msgid "Automatic powersaving"
 msgstr "automată powersaving"
 
-#: src/modules/cpufreq/e_mod_main.c:295
+#: src/modules/cpufreq/e_mod_main.c:298
 #, c-format
 msgid "%i MHz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:297
+#: src/modules/cpufreq/e_mod_main.c:300
 #, c-format
 msgid "%'.1f GHz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:311
+#: src/modules/cpufreq/e_mod_main.c:322
 #, fuzzy
 msgid "Time Between Updates"
 msgstr "Între timp Actualizări"
 
-#: src/modules/cpufreq/e_mod_main.c:317
+#: src/modules/cpufreq/e_mod_main.c:328
 #, fuzzy
 msgid "Set CPU Power Policy"
 msgstr "Politica de a seta puterea procesorului"
 
-#: src/modules/cpufreq/e_mod_main.c:324
+#: src/modules/cpufreq/e_mod_main.c:335
 #, fuzzy
 msgid "Set CPU Speed"
 msgstr "Seta viteza procesorului"
 
-#: src/modules/cpufreq/e_mod_main.c:330
+#: src/modules/cpufreq/e_mod_main.c:341
 #, fuzzy
 msgid "Powersaving behavior"
 msgstr "Powersaving comportament"
 
-#: src/modules/cpufreq/e_mod_main.c:410
+#: src/modules/cpufreq/e_mod_main.c:421
 #, fuzzy
 msgid ""
 "There was an error trying to set the<br>cpu frequency governor via the "
@@ -7644,7 +7670,7 @@ msgstr ""
 "Nu a fost o eroare la încercarea de a setafrecvenţa<br>guvernatorul "
 "procesorului prin intermediulmodulului de utilitate<br>setfreq."
 
-#: src/modules/cpufreq/e_mod_main.c:438
+#: src/modules/cpufreq/e_mod_main.c:449
 #, fuzzy
 msgid ""
 "Your kernel does not support setting the<br>CPU frequency at all. You may be "
@@ -7655,7 +7681,7 @@ msgstr ""
 "fi, lipsesc module<br>kernel sau caracteristici , sau pe procesor<br>pur şi "
 "simplu nu acceptă această caracteristică."
 
-#: src/modules/cpufreq/e_mod_main.c:464
+#: src/modules/cpufreq/e_mod_main.c:477
 #, fuzzy
 msgid ""
 "There was an error trying to set the<br>cpu frequency setting via the "
@@ -8161,142 +8187,142 @@ msgstr "file Manager"
 msgid "Navigate"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:120
+#: src/modules/fileman/e_mod_config.c:121
 msgid "Fileman Settings"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:319
+#: src/modules/fileman/e_mod_config.c:322
 #, fuzzy
 msgid "Icon Size"
 msgstr "Icon Dimensiune"
 
-#: src/modules/fileman/e_mod_config.c:325
+#: src/modules/fileman/e_mod_config.c:328
 #, fuzzy
 msgid "View"
 msgstr "vedere"
 
-#: src/modules/fileman/e_mod_config.c:330
+#: src/modules/fileman/e_mod_config.c:333
 #, fuzzy
 msgid "File Extensions"
 msgstr "Extensii"
 
-#: src/modules/fileman/e_mod_config.c:333
+#: src/modules/fileman/e_mod_config.c:336
 #, fuzzy
 msgid "Full Path In Title"
 msgstr "Splash titlu"
 
-#: src/modules/fileman/e_mod_config.c:336
+#: src/modules/fileman/e_mod_config.c:339
 #, fuzzy
 msgid "Icons On Desktop"
 msgstr "Pin pentru Desktop"
 
-#: src/modules/fileman/e_mod_config.c:339
+#: src/modules/fileman/e_mod_config.c:342
 #, fuzzy
 msgid "Toolbar"
 msgstr "Afişare bară de instrumente"
 
-#: src/modules/fileman/e_mod_config.c:342
+#: src/modules/fileman/e_mod_config.c:345
 msgid "Sidebar"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:345
+#: src/modules/fileman/e_mod_config.c:348
 msgid "Regular Files In Menu (SLOW)"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:381
+#: src/modules/fileman/e_mod_config.c:384
 #, fuzzy
 msgid "Open Dirs In Place"
 msgstr "Directoare deschise în vigoare"
 
-#: src/modules/fileman/e_mod_config.c:384
+#: src/modules/fileman/e_mod_config.c:387
 #, fuzzy
 msgid "Use Single Click"
 msgstr "Utilizaţi singur clic"
 
-#: src/modules/fileman/e_mod_config.c:387
+#: src/modules/fileman/e_mod_config.c:390
 #, fuzzy
 msgid "Really Move"
 msgstr "foarte mare"
 
-#: src/modules/fileman/e_mod_config.c:390
+#: src/modules/fileman/e_mod_config.c:396
 #, fuzzy
 msgid "Use Alternate Selection Modifiers"
 msgstr "Utilizaţi Modificatori alternative de selecţie"
 
-#: src/modules/fileman/e_mod_config.c:393
+#: src/modules/fileman/e_mod_config.c:399
 #, fuzzy
 msgid "Allow Navigation On Desktop"
 msgstr "Afişare pictograme de dispozitiv de pe desktop"
 
-#: src/modules/fileman/e_mod_config.c:397
+#: src/modules/fileman/e_mod_config.c:403
 msgid "Max File Size For Thumbnailing"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:403
+#: src/modules/fileman/e_mod_config.c:409
 #, fuzzy
 msgid "Spring Delay"
 msgstr "Suspendare de timp"
 
-#: src/modules/fileman/e_mod_config.c:408
-#: src/modules/gadman/e_mod_gadman.c:967
+#: src/modules/fileman/e_mod_config.c:414
+#: src/modules/gadman/e_mod_gadman.c:1117
 #, fuzzy
 msgid "Behavior"
 msgstr "comportament"
 
-#: src/modules/fileman/e_mod_config.c:417
-#: src/modules/fileman/e_mod_config.c:420
 #: src/modules/fileman/e_mod_config.c:423
 #: src/modules/fileman/e_mod_config.c:426
+#: src/modules/fileman/e_mod_config.c:429
+#: src/modules/fileman/e_mod_config.c:432
 #: src/modules/gadman/e_mod_config.c:234
 #, fuzzy
 msgid "Mode"
 msgstr "Mută"
 
-#: src/modules/fileman/e_mod_config.c:432
+#: src/modules/fileman/e_mod_config.c:438
 #, fuzzy
 msgid "Show device icons on desktop"
 msgstr "Afişare pictograme de dispozitiv de pe desktop"
 
-#: src/modules/fileman/e_mod_config.c:435
+#: src/modules/fileman/e_mod_config.c:441
 #, fuzzy
 msgid "Mount volumes on insert"
 msgstr "Montaţi volume pe Inserare"
 
-#: src/modules/fileman/e_mod_config.c:438
+#: src/modules/fileman/e_mod_config.c:444
 #, fuzzy
 msgid "Open filemanager on mount"
 msgstr "Filemanager deschise pe Muntele"
 
-#: src/modules/fileman/e_mod_config.c:442
+#: src/modules/fileman/e_mod_config.c:448
 #, fuzzy
 msgid "Device"
 msgstr "Previzualizează"
 
-#: src/modules/fileman/e_mod_config.c:446
+#: src/modules/fileman/e_mod_config.c:452
 #, fuzzy
 msgid "Show tooltip"
 msgstr "Afişare bară de instrumente"
 
-#: src/modules/fileman/e_mod_config.c:450
+#: src/modules/fileman/e_mod_config.c:456
 msgid "Tooltip delay"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:452
+#: src/modules/fileman/e_mod_config.c:458
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:456
+#: src/modules/fileman/e_mod_config.c:462
 msgid "Tooltip size (Screen percentage)"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:458
+#: src/modules/fileman/e_mod_config.c:464
 #, c-format
 msgid "%2.0f"
 msgstr ""
 
-#: src/modules/fileman/e_mod_config.c:462
+#: src/modules/fileman/e_mod_config.c:468
 msgid "Tooltips"
 msgstr ""
 
@@ -8305,122 +8331,126 @@ msgstr ""
 msgid "Open Terminal Here"
 msgstr "Execută în terminal"
 
-#: src/modules/fileman/e_fwin.c:2067
+#: src/modules/fileman/e_fwin.c:2076
 #, fuzzy
 msgid "Other application..."
 msgstr "Alte proceduri de aplicare ..."
 
-#: src/modules/fileman/e_fwin.c:2126
+#: src/modules/fileman/e_fwin.c:2136
 #, fuzzy
 msgid "Go To Parent Directory"
 msgstr "Du-te la Parent Directory"
 
-#: src/modules/fileman/e_fwin.c:2136
+#: src/modules/fileman/e_fwin.c:2146
 #, fuzzy
 msgid "Clone Window"
 msgstr "Windows CleanUp"
 
-#: src/modules/fileman/e_fwin.c:2142
+#: src/modules/fileman/e_fwin.c:2152
 #, fuzzy
 msgid "Copy Path"
 msgstr "E Căi"
 
-#: src/modules/fileman/e_fwin.c:2154 src/modules/fileman/e_fwin.c:2521
+#: src/modules/fileman/e_fwin.c:2168
+msgid "Run"
+msgstr ""
+
+#: src/modules/fileman/e_fwin.c:2175 src/modules/fileman/e_fwin.c:2544
 #, fuzzy
 msgid "Open"
 msgstr "deschide"
 
-#: src/modules/fileman/e_fwin.c:2159 src/modules/fileman/e_fwin.c:2519
+#: src/modules/fileman/e_fwin.c:2182 src/modules/fileman/e_fwin.c:2542
 #, fuzzy
 msgid "Open with..."
 msgstr "Deschideţi cu ..."
 
-#: src/modules/fileman/e_fwin.c:2550 src/modules/fileman/e_fwin.c:2575
+#: src/modules/fileman/e_fwin.c:2573 src/modules/fileman/e_fwin.c:2598
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/modules/fileman/e_fwin.c:2593
+#: src/modules/fileman/e_fwin.c:2616
 #, fuzzy
 msgid "Known Applications"
 msgstr "Aplicatii cunoscute"
 
-#: src/modules/fileman/e_fwin.c:2603
+#: src/modules/fileman/e_fwin.c:2626
 #, fuzzy
 msgid "Specific Applications"
 msgstr "aplicaţii specifice"
 
-#: src/modules/fileman/e_fwin.c:2629
+#: src/modules/fileman/e_fwin.c:2652
 #, fuzzy
 msgid "All Applications"
 msgstr "toate Aplicaţii"
 
-#: src/modules/fileman/e_fwin.c:2652
+#: src/modules/fileman/e_fwin.c:2675
 #, fuzzy
 msgid "Custom Command"
 msgstr "obiceiul de comandă"
 
-#: src/modules/fileman/e_fwin.c:2948
+#: src/modules/fileman/e_fwin.c:2971
 #: src/modules/fileman_opinfo/e_mod_main.c:89
 #, fuzzy, c-format
 msgid "Copying is aborted"
 msgstr "Copierea este abordata"
 
-#: src/modules/fileman/e_fwin.c:2952
+#: src/modules/fileman/e_fwin.c:2975
 #: src/modules/fileman_opinfo/e_mod_main.c:92
 #, fuzzy, c-format
 msgid "Moving is aborted"
 msgstr "Mutarea este abordata"
 
-#: src/modules/fileman/e_fwin.c:2956
+#: src/modules/fileman/e_fwin.c:2979
 #: src/modules/fileman_opinfo/e_mod_main.c:95
 #, fuzzy, c-format
 msgid "Deleting is aborted"
 msgstr "Ştergerea este abordata"
 
-#: src/modules/fileman/e_fwin.c:2960
+#: src/modules/fileman/e_fwin.c:2983
 #: src/modules/fileman_opinfo/e_mod_main.c:98
 #, fuzzy, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Operaţiune necunoscut de la sclav este abandonată"
 
-#: src/modules/fileman/e_fwin.c:2970
+#: src/modules/fileman/e_fwin.c:2993
 #: src/modules/fileman_opinfo/e_mod_main.c:108
 #, c-format
 msgid "Copy of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2972
+#: src/modules/fileman/e_fwin.c:2995
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2977
+#: src/modules/fileman/e_fwin.c:3000
 #: src/modules/fileman_opinfo/e_mod_main.c:114
 #, c-format
 msgid "Move of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2979
+#: src/modules/fileman/e_fwin.c:3002
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2984
+#: src/modules/fileman/e_fwin.c:3007
 #: src/modules/fileman_opinfo/e_mod_main.c:120
 #, fuzzy, c-format
 msgid "Delete done"
 msgstr "ştergeţi făcut"
 
-#: src/modules/fileman/e_fwin.c:2986
+#: src/modules/fileman/e_fwin.c:3009
 #: src/modules/fileman_opinfo/e_mod_main.c:122
 #, fuzzy, c-format
 msgid "Deleting files..."
 msgstr "Ştergerea fişierelor ..."
 
-#: src/modules/fileman/e_fwin.c:2990
+#: src/modules/fileman/e_fwin.c:3013
 #: src/modules/fileman_opinfo/e_mod_main.c:125
 #, c-format
 msgid "Unknow operation from slave %d"
@@ -8524,30 +8554,30 @@ msgstr "fundal"
 msgid "Background Options"
 msgstr "Context Opţiuni"
 
-#: src/modules/gadman/e_mod_gadman.c:885
+#: src/modules/gadman/e_mod_gadman.c:1035
 msgid "Begin move/resize"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:915
+#: src/modules/gadman/e_mod_gadman.c:1065
 #, fuzzy
 msgid "Free"
 msgstr "gratuit"
 
-#: src/modules/gadman/e_mod_gadman.c:939
+#: src/modules/gadman/e_mod_gadman.c:1089
 msgid "Appearance"
 msgstr "Aspect"
 
-#: src/modules/gadman/e_mod_gadman.c:947
+#: src/modules/gadman/e_mod_gadman.c:1097
 #, fuzzy
 msgid "Always on desktop"
 msgstr "Întotdeauna pe desktop"
 
-#: src/modules/gadman/e_mod_gadman.c:957
+#: src/modules/gadman/e_mod_gadman.c:1107
 #, fuzzy
 msgid "On top pressing"
 msgstr "Pe partea de sus apăsând"
 
-#: src/modules/gadman/e_mod_gadman.c:988
+#: src/modules/gadman/e_mod_gadman.c:1138
 #, fuzzy
 msgid "Add other gadgets"
 msgstr "Adăugaţi obiecte gadget alte"
@@ -8815,6 +8845,7 @@ msgid "Expand When On Desktop"
 msgstr "Pin pentru Desktop"
 
 #: src/modules/ibox/e_mod_config.c:101
+#: src/modules/notification/e_mod_config_item.c:90
 #, fuzzy
 msgid "Show Icon Label"
 msgstr "Arăta eticheta Icon"
@@ -9549,9 +9580,9 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "totul de configurare"
 
-#: src/modules/tiling/e_mod_tiling.c:3943
-#: src/modules/tiling/e_mod_tiling.c:4007
-#: src/modules/tiling/e_mod_tiling.c:4096
+#: src/modules/tiling/e_mod_tiling.c:3940
+#: src/modules/tiling/e_mod_tiling.c:4004
+#: src/modules/tiling/e_mod_tiling.c:4093
 #, fuzzy
 msgid "Tiling"
 msgstr "Interogare"
@@ -9593,6 +9624,153 @@ msgstr "Mută"
 
 #: src/modules/xkbswitch/e_mod_config.c:505
 msgid "Variant"
+msgstr ""
+
+#: src/modules/notification/e_mod_main.c:137
+msgid "Notification Box"
+msgstr ""
+
+#: src/modules/notification/e_mod_main.c:212
+#, fuzzy
+msgid "Enter Presentation Mode"
+msgstr "Mod de prezentare"
+
+#: src/modules/notification/e_mod_main.c:213
+msgid ""
+"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"screen saver, lock and power saving will be disabled so you are not "
+"interrupted."
+msgstr ""
+
+#: src/modules/notification/e_mod_main.c:219
+#, fuzzy
+msgid "Exited Presentation Mode"
+msgstr "Mod de prezentare"
+
+#: src/modules/notification/e_mod_main.c:220
+msgid ""
+"Presentation mode is over.<br>Now screen saver, lock and power saving "
+"settings will be restored."
+msgstr ""
+
+#: src/modules/notification/e_mod_main.c:235
+#, fuzzy
+msgid "Enter Offline Mode"
+msgstr "modul offline"
+
+#: src/modules/notification/e_mod_main.c:236
+msgid ""
+"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"that use network will stop polling remote services."
+msgstr ""
+
+#: src/modules/notification/e_mod_main.c:242
+#, fuzzy
+msgid "Exited Offline Mode"
+msgstr "modul offline"
+
+#: src/modules/notification/e_mod_main.c:243
+msgid ""
+"Now in <b>online</b> mode.<br>Now modules that use network will resume "
+"regular tasks."
+msgstr ""
+
+#: src/modules/notification/e_mod_main.c:297
+#, fuzzy
+msgid "Notification"
+msgstr "rotaţie"
+
+#: src/modules/notification/e_mod_main.c:331
+#, fuzzy
+msgid "Notification Module"
+msgstr "Mod de prezentare"
+
+#: src/modules/notification/e_mod_main.c:350
+msgid "Error During DBus Init!"
+msgstr ""
+
+#: src/modules/notification/e_mod_main.c:351
+msgid ""
+"Error during DBus init! Please check if dbus is correctly installed and "
+"running."
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:45
+#, fuzzy
+msgid "Notification Settings"
+msgstr "Setări de interacţiune"
+
+#: src/modules/notification/e_mod_config.c:93
+#: src/modules/notification/e_mod_config_item.c:98
+#, fuzzy
+msgid "Urgency"
+msgstr "de urgenţă"
+
+#: src/modules/notification/e_mod_config.c:94
+msgid "Levels of urgency to display:"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:100
+#: src/modules/notification/e_mod_config_item.c:105
+#, fuzzy
+msgid "Critical"
+msgstr "vertical"
+
+#: src/modules/notification/e_mod_config.c:104
+#, fuzzy
+msgid "Default Timeout"
+msgstr "Implicit"
+
+#: src/modules/notification/e_mod_config.c:105
+msgid "Force timeout for all notifications"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:122
+#, fuzzy
+msgid "Popup Corner"
+msgstr "pop-up Dimensiune"
+
+#: src/modules/notification/e_mod_config.c:124
+msgid "Top left"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:126
+#, fuzzy
+msgid "Top right"
+msgstr "popup Înălţime"
+
+#: src/modules/notification/e_mod_config.c:128
+msgid "Bottom left"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:130
+msgid "Bottom right"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:142
+msgid "Ignore replace ID"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:144
+msgid "Use multiple monitor geometry"
+msgstr ""
+
+#: src/modules/notification/e_mod_config_item.c:42
+#, fuzzy
+msgid "Notification Box Configuration"
+msgstr "totul de configurare"
+
+#: src/modules/notification/e_mod_config_item.c:92
+#, fuzzy
+msgid "Show the popup on mouse over"
+msgstr "Arată popup concentrat pentru ferestre"
+
+#: src/modules/notification/e_mod_config_item.c:94
+msgid "Focus the source window when clicking"
+msgstr ""
+
+#: src/modules/notification/e_mod_config_item.c:99
+msgid "Levels of urgency to store:"
 msgstr ""
 
 #~ msgid "%s"
@@ -9705,10 +9883,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Could not set service's passphrase"
 #~ msgstr "Nu a putut fi stabilit de servicii de fraza de autentificare"
-
-#, fuzzy
-#~ msgid "Offline mode"
-#~ msgstr "modul offline"
 
 #, fuzzy
 #~ msgid "Controls"
