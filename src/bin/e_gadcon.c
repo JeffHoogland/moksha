@@ -1620,6 +1620,7 @@ _e_gadcon_add_locations_menu_for_site(E_Menu *m, E_Gadcon_Client *gcc, E_Gadcon_
      {
         if (loc->site == site)
           {
+             if (loc == gcc->gadcon->location) continue;
              if (k)
                {
                   k = 0;
@@ -1631,7 +1632,6 @@ _e_gadcon_add_locations_menu_for_site(E_Menu *m, E_Gadcon_Client *gcc, E_Gadcon_
              e_menu_item_label_set(mi, loc->name);
              e_object_data_set(E_OBJECT(mi), loc);
              e_menu_item_callback_set(mi, _e_gadcon_client_change_gadcon, gcc);
-             if (loc == gcc->gadcon->location) e_menu_item_disabled_set(mi, 1);
              if (loc->icon_name)
                e_util_menu_item_theme_icon_set(mi, loc->icon_name);
              (*count)++;
