@@ -68,5 +68,12 @@ EAPI void e_util_size_debug_set(Evas_Object *obj, Eina_Bool enable);
 EAPI Efreet_Desktop *e_util_terminal_desktop_get(void);
 EAPI void e_util_gadcon_orient_icon_set(E_Gadcon_Orient orient, Evas_Object *obj);
 EAPI void e_util_gadcon_orient_menu_item_icon_set(E_Gadcon_Orient orient, E_Menu_Item *mi);
+
+static inline E_Container *
+e_util_container_current_get(void)
+{
+   return e_container_current_get(e_manager_current_get());
+}
+
 #endif
 #endif
