@@ -985,8 +985,8 @@ _apply_widget_position(E_Gadcon_Client *gcc)
 
         x = DEFAULT_POS_X;
         y = DEFAULT_POS_Y;
-        w = DEFAULT_SIZE_W;
-        h = DEFAULT_SIZE_H;
+        w = DEFAULT_SIZE_W * gcc->gadcon->zone->w;
+        h = DEFAULT_SIZE_H * gcc->gadcon->zone->h;
         pop = gadman_popup_new(gcc);
         o = edje_object_add(pop->pop->win->evas);
         e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/text");
