@@ -932,8 +932,10 @@ _apply_widget_position(E_Gadcon_Client *gcc)
         Evas_Object *o;
         char buf[4096];
 
-        x = zone->w / 2, y = zone->h / 2;
-        w = h = 64;
+        x = DEFAULT_POS_X;
+        y = DEFAULT_POS_Y;
+        w = DEFAULT_SIZE_W;
+        h = DEFAULT_SIZE_H;
         pop = e_gadcon_popup_new(gcc);
         snprintf(buf, sizeof(buf), "A gadget of type '%s' was detected without any stored geometry.<br>"
                  "It has been relocated and resized for you.", gcc->client_class->name);
