@@ -15,7 +15,6 @@ struct _E_Config_Dialog_Data
    int          anim_bg; //Anim the background
    int          anim_gad; //Anim the gadgets
    int          fmdir; //Filemanager dir (personal or system)
-   Ecore_Event_Handler *add;
    Eina_List *waiting;
    E_Config_Dialog *cfd;
 };
@@ -38,8 +37,6 @@ static void         _cb_color_changed(void *data, Evas_Object *o);
 static void         _cb_fm_change(void *data, Evas_Object *obj, void *event_info);
 static void         _cb_fm_sel_change(void *data, Evas_Object *obj, void *event_info);
 static void         _cb_button_up(void *data1, void *data2);
-
-static E_Config_Dialog_Data *_cfdata = NULL;
 
 static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
@@ -90,29 +87,6 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    return Man->config_dialog;
 }
 
-static Eina_Bool
-_gcc_add(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Gadcon_Client_Add *ev)
-{
-   Eina_List *l;
-   if (!cfdata->waiting) return ECORE_CALLBACK_RENEW;
-   l = eina_list_data_find_list(cfdata->waiting, ev->gcc->gadcon);
-   if (!l) return ECORE_CALLBACK_RENEW;
-   if (ev->gcc->cf != eina_list_data_get(eina_list_last(ev->gcc->gadcon->cf->clients))) return ECORE_CALLBACK_RENEW;
-   Man->drag_gcc[ev->gcc->gadcon->id - ID_GADMAN_LAYER_BASE] = ev->gcc;
-   ev->gcc->cf->style = eina_stringshare_add(ev->gcc->client_class->default_style ?: E_GADCON_CLIENT_STYLE_INSET);
-   ev->gcc->style = eina_stringshare_ref(ev->gcc->cf->style);
-   ev->gcc->cf->geom.pos_x = DEFAULT_POS_X;
-   ev->gcc->cf->geom.pos_y = DEFAULT_POS_Y;
-   ev->gcc->cf->geom.size_w = DEFAULT_SIZE_W;
-   ev->gcc->cf->geom.size_h = DEFAULT_SIZE_H;
-   if (!strcmp(ev->gcc->style, E_GADCON_CLIENT_STYLE_INSET))
-     edje_object_signal_emit(ev->gcc->o_frame, "e,state,visibility,inset", "e");
-   else
-     edje_object_signal_emit(ev->gcc->o_frame, "e,state,visibility,plain", "e");
-
-   return ECORE_CALLBACK_RENEW;
-}
-
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
@@ -127,7 +101,6 @@ _create_data(E_Config_Dialog *cfd)
           cfdata->fmdir = 1;
      }
 
-   cfdata->add = ecore_event_handler_add(E_EVENT_GADCON_CLIENT_ADD, (Ecore_Event_Handler_Cb)_gcc_add, cfdata);
    cfdata->color = E_NEW(E_Color, 1);
    cfdata->color->r = Man->conf->color_r;
    cfdata->color->g = Man->conf->color_g;
@@ -137,7 +110,6 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->anim_gad = Man->conf->anim_gad;
 
    e_color_update_rgb(cfdata->color);
-   _cfdata = cfdata;
 
    return cfdata;
 }
@@ -145,26 +117,28 @@ _create_data(E_Config_Dialog *cfd)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   int layer;
-   Eina_List *l;
-   E_Gadcon *gc;
-
    Man->config_dialog = NULL;
-   ecore_event_handler_del(cfdata->add);
    E_FREE(cfdata->color);
-   _cfdata = NULL;
-   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
-     EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
-       gc->config_dialog = NULL;
-   eina_list_free(cfdata->waiting);
    E_FREE(cfdata);
 }
 
 static void
 _cb_config_del(void *data)
 {
-   E_Config_Dialog_Data *cfdata = e_object_data_get(data);
-   cfdata->waiting = eina_list_remove(cfdata->waiting, data);
+   int layer;
+   Eina_List *l;
+   E_Gadcon *gc;
+   Eina_Bool del = EINA_TRUE;
+
+   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+     EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
+       if (gc->config_dialog)
+         {
+            del = EINA_FALSE;
+            break;
+         }
+   Man->waiting = eina_list_remove(Man->waiting, data);
+   if (del && Man->add) ecore_event_handler_del(Man->add);
 }
 
 static void
@@ -181,7 +155,9 @@ _cb_config(void *data, void *data2 __UNUSED__)
         if (gc->zone != cfdata->cfd->dia->win->border->zone) continue;
         if (gc->config_dialog) return;
         e_int_gadcon_config_hook(gc, _("Desktop Gadgets"), E_GADCON_SITE_DESKTOP);
-        cfdata->waiting = eina_list_append(cfdata->waiting, gc);
+        if (!Man->add)
+          Man->add = ecore_event_handler_add(E_EVENT_GADCON_CLIENT_ADD, (Ecore_Event_Handler_Cb)gadman_gadget_add_handler, NULL);
+        Man->waiting = eina_list_append(Man->waiting, gc);
         e_object_data_set(E_OBJECT(gc->config_dialog), cfdata);
         e_object_del_attach_func_set(E_OBJECT(gc->config_dialog), _cb_config_del);
         break;

@@ -7,6 +7,7 @@
 static void _gadman_maug_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _gadman_maug_add(void *data, E_Menu *m);
 static void _gadman_action_cb(E_Object *obj, const char *params);
+static void _gadman_desktop_menu(E_Menu *m, void *d __UNUSED__, void *icon);
 
 /* public module routines. all modules must have these */
 EAPI E_Module_Api e_modapi =
@@ -72,6 +73,7 @@ e_modapi_init(E_Module *m)
    /* Menu augmentation */
    Man->icon_name = eina_stringshare_add(buf);
    Man->maug = NULL;
+   Man->mcat = e_menu_category_callback_add("desktop", _gadman_desktop_menu, NULL, (void*)Man->icon_name);
    Man->maug =
      e_int_menus_menu_augmentation_add_sorted
        ("config/1", _("Gadgets"), _gadman_maug_add, (void *)Man->icon_name,
@@ -98,6 +100,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    e_configure_registry_item_del("extensions/gadman");
    e_configure_registry_category_del("extensions");
+   if (Man->mcat) e_menu_category_callback_del(Man->mcat);
 
    if (Man->config_dialog)
      {
@@ -110,6 +113,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_action_del("gadman_toggle");
         Man->action = NULL;
      }
+   if (Man->add)
+     ecore_event_handler_del(Man->add);
+   Man->waiting = eina_list_free(Man->waiting);
    E_CONFIG_DD_FREE(Man->conf_edd);
    if (Man->conf)
      {
@@ -126,6 +132,59 @@ e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.gadman", Man->conf_edd, Man->conf);
    return 1;
+}
+
+static void
+_cb_config_del(void *data)
+{
+   int layer;
+   Eina_List *l;
+   E_Gadcon *gc;
+   Eina_Bool del = EINA_TRUE;
+
+   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
+     EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
+       if (gc->config_dialog)
+         {
+            del = EINA_FALSE;
+            break;
+         }
+   Man->waiting = eina_list_remove(Man->waiting, data);
+   if (del && Man->add) ecore_event_handler_del(Man->add);
+}
+
+static void
+_gadman_desktop_menu_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
+{
+   Eina_List *l;
+   E_Gadcon *gc;
+
+   EINA_LIST_FOREACH(Man->gadcons[0], l, gc)
+     {
+        if (gc->zone == m->zone)
+          {
+             e_int_gadcon_config_hook(gc, _("Desktop Gadgets"), E_GADCON_SITE_DESKTOP);
+             if (!Man->add)
+               Man->add = ecore_event_handler_add(E_EVENT_GADCON_CLIENT_ADD, (Ecore_Event_Handler_Cb)gadman_gadget_add_handler, NULL);
+             Man->waiting = eina_list_append(Man->waiting, gc);
+             e_object_del_attach_func_set(E_OBJECT(gc->config_dialog), _cb_config_del);
+             break;
+          }
+     }
+}
+
+static void
+_gadman_desktop_menu(E_Menu *m, void *d __UNUSED__, void *icon)
+{
+   E_Menu_Item *mi;
+
+   mi = e_menu_item_new_relative(m, NULL);
+   e_menu_item_label_set(mi, _("Change Gadgets"));
+   e_menu_item_icon_edje_set(mi, icon, "icon");
+   e_menu_item_callback_set(mi, _gadman_desktop_menu_cb, NULL);
+
+   mi = e_menu_item_new_relative(m, mi);
+   e_menu_item_separator_set(mi, 1);
 }
 
 static void
@@ -151,3 +210,26 @@ _gadman_action_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
    gadman_gadgets_toggle();
 }
 
+Eina_Bool
+gadman_gadget_add_handler(void *d __UNUSED__, int type __UNUSED__, E_Event_Gadcon_Client_Add *ev)
+{
+   Eina_List *l;
+   if (!Man->waiting) return ECORE_CALLBACK_RENEW;
+   l = eina_list_data_find_list(Man->waiting, ev->gcc->gadcon);
+   if (!l) return ECORE_CALLBACK_RENEW;
+   if (ev->gcc->cf != eina_list_data_get(eina_list_last(ev->gcc->gadcon->cf->clients))) return ECORE_CALLBACK_RENEW;
+   Man->drag_gcc[ev->gcc->gadcon->id - ID_GADMAN_LAYER_BASE] = ev->gcc;
+   ev->gcc->cf->style = eina_stringshare_add(ev->gcc->client_class->default_style ?: E_GADCON_CLIENT_STYLE_INSET);
+   ev->gcc->style = eina_stringshare_ref(ev->gcc->cf->style);
+   ev->gcc->cf->geom.pos_x = DEFAULT_POS_X;
+   ev->gcc->cf->geom.pos_y = DEFAULT_POS_Y;
+   ev->gcc->cf->geom.size_w = DEFAULT_SIZE_W;
+   ev->gcc->cf->geom.size_h = DEFAULT_SIZE_H;
+   if (!strcmp(ev->gcc->style, E_GADCON_CLIENT_STYLE_INSET))
+     edje_object_signal_emit(ev->gcc->o_frame, "e,state,visibility,inset", "e");
+   else
+     edje_object_signal_emit(ev->gcc->o_frame, "e,state,visibility,plain", "e");
+   gadman_gadget_edit_start(ev->gcc);
+
+   return ECORE_CALLBACK_RENEW;
+}

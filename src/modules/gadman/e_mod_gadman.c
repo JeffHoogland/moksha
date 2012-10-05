@@ -965,6 +965,7 @@ _apply_widget_position(E_Gadcon_Client *gcc)
 {
    int x, y, w, h;
    E_Zone *zone;
+   Evas_Object *mover;
 
    /* Obtain zone from parent gadcon */
    zone = gcc->gadcon->zone;
@@ -1019,6 +1020,13 @@ _apply_widget_position(E_Gadcon_Client *gcc)
 
    evas_object_move(gcc->o_frame, x, y);
    evas_object_resize(gcc->o_frame, w, h);
+
+   if (Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE] != gcc) return;
+   /* Move/resize the correct mover */
+   mover = _get_mover(gcc);
+   if (!mover) return;
+   evas_object_move(mover, x, y);
+   evas_object_resize(mover, w, h);
 }
 
 static void

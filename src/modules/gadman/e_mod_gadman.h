@@ -65,6 +65,9 @@ struct _Manager
    Eina_List *drag_handlers;
 
    Eina_Inlist *gadman_popups;
+
+   Eina_List *waiting;
+   Ecore_Event_Handler *add;
    
    int             visible;
    int             use_composite;
@@ -77,6 +80,7 @@ struct _Manager
    E_Module                *module;
    E_Config_Dialog         *config_dialog;
    E_Int_Menu_Augmentation *maug;
+   E_Menu_Category_Callback *mcat;
    E_Action                *action;
 
    E_Config_DD    *conf_edd;
@@ -92,5 +96,5 @@ void             gadman_gadget_edit_start(E_Gadcon_Client *gcc);
 void             gadman_gadget_edit_end(void *data, Evas_Object *obj, const char *emission, const char *source);
 void             gadman_gadgets_toggle(void);
 void             gadman_update_bg(void);
-
+Eina_Bool gadman_gadget_add_handler(void *d, int type, E_Event_Gadcon_Client_Add *ev);
 #endif
