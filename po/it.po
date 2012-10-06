@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-05 13:26+0200\n"
-"PO-Revision-Date: 2012-10-03 22:06+0200\n"
+"POT-Creation-Date: 2012-10-05 21:58+0200\n"
+"PO-Revision-Date: 2012-10-05 22:15+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -770,7 +770,7 @@ msgstr "Commuta il modulo specificato"
 #: src/modules/conf_theme/e_int_config_theme.c:452
 #: src/modules/conf_theme/e_int_config_theme.c:828
 #: src/modules/conf_theme/e_int_config_theme.c:842
-#: src/modules/gadman/e_mod_config.c:278 src/modules/syscon/e_mod_main.c:31
+#: src/modules/gadman/e_mod_config.c:254 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:60
 #: src/modules/syscon/e_mod_main.c:129
 msgid "System"
@@ -800,7 +800,7 @@ msgstr "Iberna adesso"
 msgid "Lock"
 msgstr "Blocca"
 
-#: src/bin/e_actions.c:3442 src/bin/e_int_menus.c:1286
+#: src/bin/e_actions.c:3442 src/bin/e_int_menus.c:1287
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
@@ -1026,12 +1026,10 @@ msgstr "Basilari"
 msgid "Apply"
 msgstr "Applica"
 
-#. #-#-#-#-#  it.po (Enlightenment 0.17)  #-#-#-#-#
-#. register config panel entry
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:25 src/modules/mixer/e_mod_main.c:1254
+#: src/modules/gadman/e_mod_main.c:26 src/modules/mixer/e_mod_main.c:1254
 #: src/modules/connman/e_mod_main.c:616
-#: src/modules/notification/e_mod_main.c:294 ../src/e_mod_main.c:301
+#: src/modules/notification/e_mod_main.c:294
 msgid "Extensions"
 msgstr "Estensioni"
 
@@ -1226,9 +1224,9 @@ msgid "Options"
 msgstr "Opzioni"
 
 #: src/bin/e_eap_editor.c:822
-#, fuzzy, c-format
+#, c-format
 msgid "Select an Icon for '%s'"
-msgstr "Seleziona un'icona"
+msgstr "Selezionare un'icona per '%s'"
 
 #: src/bin/e_eap_editor.c:889
 msgid "Select an Executable"
@@ -1613,9 +1611,8 @@ msgid "Single Click Activation"
 msgstr "Usa clic singolo"
 
 #: src/bin/e_fm.c:9379 src/modules/fileman/e_mod_config.c:393
-#, fuzzy
 msgid "Secure Deletion"
-msgstr "Risoluzione dello schermo"
+msgstr "Cancellazione sicura"
 
 #: src/bin/e_fm.c:9392
 msgid "File Manager Settings"
@@ -1857,11 +1854,11 @@ msgstr "Sposta in"
 msgid "Automatically scroll contents"
 msgstr "Scorri automaticamente contenuto"
 
-#: src/bin/e_gadcon.c:1756 src/modules/gadman/e_mod_gadman.c:1045
+#: src/bin/e_gadcon.c:1756 src/modules/gadman/e_mod_gadman.c:1059
 msgid "Plain"
 msgstr "Liscio"
 
-#: src/bin/e_gadcon.c:1765 src/modules/gadman/e_mod_gadman.c:1053
+#: src/bin/e_gadcon.c:1765 src/modules/gadman/e_mod_gadman.c:1067
 msgid "Inset"
 msgstr "Incassato"
 
@@ -1876,7 +1873,7 @@ msgstr "Aspetto"
 #: src/modules/conf_applications/e_int_config_apps.c:290
 #: src/modules/conf_applications/e_int_config_apps.c:310
 #: src/modules/conf_applications/e_int_config_apps_personal.c:95
-#: src/modules/gadman/e_mod_gadman.c:1129 src/modules/ibar/e_mod_main.c:880
+#: src/modules/gadman/e_mod_gadman.c:1115 src/modules/ibar/e_mod_main.c:880
 #: src/modules/xkbswitch/e_mod_config.c:265
 msgid "Remove"
 msgstr "Elimina"
@@ -2391,8 +2388,7 @@ msgstr "Richiede posizione"
 #: src/modules/tasks/e_mod_main.c:702 src/modules/xkbswitch/e_mod_main.c:344
 #: src/modules/xkbswitch/e_mod_main.c:386
 #: src/modules/notification/e_mod_box.c:477
-#: src/modules/notification/e_mod_box.c:616 ../src/e_mod_box.c:666
-#: ../src/e_mod_box.c:810
+#: src/modules/notification/e_mod_box.c:616
 msgid "Settings"
 msgstr "Impostazioni"
 
@@ -2657,14 +2653,14 @@ msgstr "Applicazioni preferite"
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: src/bin/e_int_menus.c:157 src/bin/e_int_menus.c:1245
+#: src/bin/e_int_menus.c:157 src/bin/e_int_menus.c:1246
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4002
 msgid "Windows"
 msgstr "Finestre"
 
-#: src/bin/e_int_menus.c:167 src/bin/e_int_menus.c:1299
+#: src/bin/e_int_menus.c:167 src/bin/e_int_menus.c:1300
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
@@ -2680,41 +2676,41 @@ msgstr "Informazioni su..."
 msgid "Theme"
 msgstr "Tema"
 
-#: src/bin/e_int_menus.c:288
+#: src/bin/e_int_menus.c:289
 msgid "Virtual"
 msgstr "Virtuali"
 
-#: src/bin/e_int_menus.c:295 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:296 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Mensole porta-gadget"
 
-#: src/bin/e_int_menus.c:304
+#: src/bin/e_int_menus.c:305
 msgid "Show/Hide All Windows"
 msgstr "Mostra/nascondi tutte le finestre"
 
-#: src/bin/e_int_menus.c:644
+#: src/bin/e_int_menus.c:645
 msgid "(No Applications)"
 msgstr "(Nessuna Applicazione)"
 
-#: src/bin/e_int_menus.c:876
+#: src/bin/e_int_menus.c:877
 msgid "Set Virtual Desktops"
 msgstr "Imposta desktop virtuali"
 
-#: src/bin/e_int_menus.c:1251 src/bin/e_int_menus.c:1432
+#: src/bin/e_int_menus.c:1252 src/bin/e_int_menus.c:1433
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:1345 src/bin/e_int_menus.c:1444
+#: src/bin/e_int_menus.c:1346 src/bin/e_int_menus.c:1445
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
-#: src/bin/e_int_menus.c:1607
+#: src/bin/e_int_menus.c:1608
 msgid "Add a Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1615
 msgid "Delete a Shelf"
 msgstr "Elimina mensola"
 
@@ -2770,7 +2766,7 @@ msgid "Hide timeout"
 msgstr "Timeout per la scomparsa"
 
 #: src/bin/e_int_shelf_config.c:237
-#: src/modules/notification/e_mod_config.c:107 ../src/e_mod_config.c:95
+#: src/modules/notification/e_mod_config.c:107
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f secondi"
@@ -4068,7 +4064,7 @@ msgstr "Aggiungi ai preferiti"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:596
 #: src/modules/conf_theme/e_int_config_startup.c:266
 #: src/modules/conf_theme/e_int_config_theme.c:459
-#: src/modules/gadman/e_mod_config.c:282
+#: src/modules/gadman/e_mod_config.c:258
 msgid "Go up a Directory"
 msgstr "Directory superiore"
 
@@ -4450,7 +4446,6 @@ msgstr "Impostazioni finestre di dialogo"
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
 #: src/modules/notification/e_mod_config_item.c:89
-#: ../src/e_mod_config_item.c:82
 msgid "General Settings"
 msgstr "Impostazioni generali"
 
@@ -4729,7 +4724,7 @@ msgstr "Seleziona uno sfondo..."
 #: src/modules/conf_theme/e_int_config_theme.c:448
 #: src/modules/conf_theme/e_int_config_theme.c:825
 #: src/modules/conf_theme/e_int_config_theme.c:834
-#: src/modules/gadman/e_mod_config.c:274
+#: src/modules/gadman/e_mod_config.c:250
 msgid "Personal"
 msgstr "Personali"
 
@@ -4815,7 +4810,7 @@ msgid "Presentation Mode"
 msgstr "Modalità presentazione"
 
 #: src/modules/conf_display/e_int_config_desklock.c:352
-#: src/modules/gadman/e_mod_config.c:236
+#: src/modules/gadman/e_mod_config.c:212
 msgid "Theme Defined"
 msgstr "Definita dal tema"
 
@@ -5015,28 +5010,24 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1352
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1269
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1301
-#: src/modules/gadman/e_mod_gadman.c:1153
 msgid "CTRL"
 msgstr "Ctrl"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1357
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1274
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1306
-#: src/modules/gadman/e_mod_gadman.c:1158
 msgid "ALT"
 msgstr "Alt"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1363
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1280
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1312
-#: src/modules/gadman/e_mod_gadman.c:1164
 msgid "SHIFT"
 msgstr "Maiuscole"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1369
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1286
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1318
-#: src/modules/gadman/e_mod_gadman.c:1170
 msgid "WIN"
 msgstr "Windows"
 
@@ -5434,9 +5425,9 @@ msgid "Comments"
 msgstr "Commenti"
 
 #: src/modules/conf_menus/e_int_config_menus.c:273
-#: src/modules/gadman/e_mod_config.c:258 src/modules/gadman/e_mod_main.c:27
-#: src/modules/gadman/e_mod_main.c:77 src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:109 src/modules/gadman/e_mod_main.c:143
+#: src/modules/gadman/e_mod_config.c:234 src/modules/gadman/e_mod_main.c:28
+#: src/modules/gadman/e_mod_main.c:79 src/modules/gadman/e_mod_main.c:86
+#: src/modules/gadman/e_mod_main.c:112 src/modules/gadman/e_mod_main.c:202
 #: src/modules/xkbswitch/e_mod_config.c:296
 msgid "Gadgets"
 msgstr "Gadget"
@@ -6772,13 +6763,13 @@ msgstr "Direzione"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:1073
+#: src/modules/gadman/e_mod_gadman.c:1087
 msgid "Horizontal"
 msgstr "Orizzontale"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:229
 #: src/modules/everything/evry_config.c:561
-#: src/modules/gadman/e_mod_gadman.c:1081
+#: src/modules/gadman/e_mod_gadman.c:1095
 msgid "Vertical"
 msgstr "Verticale"
 
@@ -7531,7 +7522,6 @@ msgid "Spring Delay"
 msgstr "Ritardo apertura tramite trascinamento"
 
 #: src/modules/fileman/e_mod_config.c:414
-#: src/modules/gadman/e_mod_gadman.c:1117
 msgid "Behavior"
 msgstr "Comportamento"
 
@@ -7539,7 +7529,7 @@ msgstr "Comportamento"
 #: src/modules/fileman/e_mod_config.c:426
 #: src/modules/fileman/e_mod_config.c:429
 #: src/modules/fileman/e_mod_config.c:432
-#: src/modules/gadman/e_mod_config.c:234
+#: src/modules/gadman/e_mod_config.c:210
 msgid "Mode"
 msgstr "Modalità"
 
@@ -7608,7 +7598,7 @@ msgstr "Copia percorso"
 
 #: src/modules/fileman/e_fwin.c:2168
 msgid "Run"
-msgstr ""
+msgstr "Esegui"
 
 #: src/modules/fileman/e_fwin.c:2175 src/modules/fileman/e_fwin.c:2544
 msgid "Open"
@@ -7750,74 +7740,71 @@ msgstr "Filemanager in attesa"
 msgid "EFM Operation Info"
 msgstr "Info operazioni EFM"
 
-#: src/modules/gadman/e_mod_config.c:85 src/modules/gadman/e_mod_config.c:183
+#: src/modules/gadman/e_mod_config.c:82 src/modules/gadman/e_mod_config.c:157
+#: src/modules/gadman/e_mod_main.c:166
 msgid "Desktop Gadgets"
 msgstr "Gadget sul desktop"
 
-#: src/modules/gadman/e_mod_config.c:204
+#: src/modules/gadman/e_mod_config.c:180
 msgid "Available Layers"
 msgstr "Livelli disponibili"
 
-#: src/modules/gadman/e_mod_config.c:214
+#: src/modules/gadman/e_mod_config.c:190
 msgid "Configure Layer"
 msgstr "Configura livello"
 
-#: src/modules/gadman/e_mod_config.c:229
+#: src/modules/gadman/e_mod_config.c:205
 msgid "Layers"
 msgstr "Livelli"
 
-#: src/modules/gadman/e_mod_config.c:239 src/modules/gadman/e_mod_config.c:271
+#: src/modules/gadman/e_mod_config.c:215 src/modules/gadman/e_mod_config.c:247
 msgid "Custom Image"
 msgstr "Immagine personalizzata"
 
-#: src/modules/gadman/e_mod_config.c:243 src/modules/gadman/e_mod_config.c:264
+#: src/modules/gadman/e_mod_config.c:219 src/modules/gadman/e_mod_config.c:240
 msgid "Custom Color"
 msgstr "Colore personalizzato"
 
-#: src/modules/gadman/e_mod_config.c:247
+#: src/modules/gadman/e_mod_config.c:223
 msgid "Transparent"
 msgstr "Trasparente"
 
-#: src/modules/gadman/e_mod_config.c:254
+#: src/modules/gadman/e_mod_config.c:230
 #: src/modules/winlist/e_int_config_winlist.c:256
 msgid "Animations"
 msgstr "Animazioni"
 
-#: src/modules/gadman/e_mod_config.c:255
+#: src/modules/gadman/e_mod_config.c:231
 msgid "Background"
 msgstr "Sfondo"
 
-#: src/modules/gadman/e_mod_config.c:329
+#: src/modules/gadman/e_mod_config.c:305
 msgid "Background Options"
 msgstr "Opzioni dello sfondo"
 
-#: src/modules/gadman/e_mod_gadman.c:1035
+#: src/modules/gadman/e_mod_gadman.c:1049
 msgid "Begin move/resize"
 msgstr "Inizio spostamento/ridimensionamento"
 
-#: src/modules/gadman/e_mod_gadman.c:1065
+#: src/modules/gadman/e_mod_gadman.c:1079
 msgid "Free"
 msgstr "Libero"
 
-#: src/modules/gadman/e_mod_gadman.c:1089
+#: src/modules/gadman/e_mod_gadman.c:1103
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: src/modules/gadman/e_mod_gadman.c:1097
-msgid "Always on desktop"
-msgstr "Sempre sul desktop"
-
-#: src/modules/gadman/e_mod_gadman.c:1107
-msgid "On top pressing"
-msgstr "Sopra le finestre premendo"
-
-#: src/modules/gadman/e_mod_gadman.c:1138
+#: src/modules/gadman/e_mod_gadman.c:1124
 msgid "Add other gadgets"
 msgstr "Aggiungi altri gadget"
 
-#: src/modules/gadman/e_mod_main.c:84 src/modules/gadman/e_mod_main.c:109
+#: src/modules/gadman/e_mod_main.c:86 src/modules/gadman/e_mod_main.c:112
 msgid "Show/hide gadgets"
 msgstr "Mostra/nascondi i gadget"
+
+#: src/modules/gadman/e_mod_main.c:182
+msgid "Change Gadgets"
+msgstr "Cambia gadget"
 
 #: src/modules/winlist/e_int_config_winlist.c:58
 msgid "Window Switcher Settings"
@@ -8035,7 +8022,6 @@ msgstr "Espandi se sul desktop"
 
 #: src/modules/ibox/e_mod_config.c:101
 #: src/modules/notification/e_mod_config_item.c:90
-#: ../src/e_mod_config_item.c:83
 msgid "Show Icon Label"
 msgstr "Mostra etichetta icona"
 
@@ -8704,15 +8690,15 @@ msgstr "Modello"
 msgid "Variant"
 msgstr "Variante"
 
-#: ../src/e_mod_main.c:121
+#: src/modules/notification/e_mod_main.c:137
 msgid "Notification Box"
 msgstr "Notification"
 
-#: ../src/e_mod_main.c:213
+#: src/modules/notification/e_mod_main.c:212
 msgid "Enter Presentation Mode"
 msgstr "Entra in modalità presentazione"
 
-#: ../src/e_mod_main.c:214
+#: src/modules/notification/e_mod_main.c:213
 msgid ""
 "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
@@ -8722,161 +8708,129 @@ msgstr ""
 "presentazione vengono disabilitati lo screensaver, il bloccaschermo e la "
 "gestione energetica in modo da non essere interrotti."
 
-#: ../src/e_mod_main.c:220
+#: src/modules/notification/e_mod_main.c:219
 msgid "Exited Presentation Mode"
 msgstr "Uscita da modalità presentazione"
 
-#: ../src/e_mod_main.c:221
+#: src/modules/notification/e_mod_main.c:220
 msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
-"La modalità presentazione è terminata.<br>Adesso verranno riabilitati lo "
-"screensaver, il bloccaschermo e la gestione energetica."
+"La modalità presentazione è terminata.<br>Adesso verranno riabilitati "
+"lo screensaver, il bloccaschermo e la gestione energetica."
 
-#: ../src/e_mod_main.c:236
+#: src/modules/notification/e_mod_main.c:235
 msgid "Enter Offline Mode"
 msgstr "Entra in modalità non in linea"
 
-#: ../src/e_mod_main.c:237
+#: src/modules/notification/e_mod_main.c:236
 msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
-"Enlightenment è in modalità <b>non in linea</b>.<br>Durante la modalità non "
-"in linea i moduli che usano la rete smettono di interrogare i servizi remoti."
+"Enlightenment è in modalità <b>non in linea</b>.<br>Durante la modalità "
+"non in linea i moduli che usano la rete smettono di interrogare i "
+"servizi remoti."
 
-#: ../src/e_mod_main.c:243
+#: src/modules/notification/e_mod_main.c:242
 msgid "Exited Offline Mode"
 msgstr "Uscita da modalità non in linea"
 
-#: ../src/e_mod_main.c:244
+#: src/modules/notification/e_mod_main.c:243
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
-"Adesso si è in modalità <b>non in linea</b>.<br>Da ora in poi i moduli che "
-"usano la rete riprenderanno i loro compiti normali."
+"Adesso si è in modalità <b>non in linea</b>.<br>Da ora in poi i moduli "
+"che usano la rete riprenderanno i loro compiti normali."
 
-#: ../src/e_mod_main.c:303
+#: src/modules/notification/e_mod_main.c:297
 msgid "Notification"
 msgstr "Notification"
 
-#: ../src/e_mod_main.c:336
+#: src/modules/notification/e_mod_main.c:331
 msgid "Notification Module"
 msgstr "Modulo Notification"
 
-#: ../src/e_mod_main.c:364
+#: src/modules/notification/e_mod_main.c:350
 msgid "Error During DBus Init!"
 msgstr "Errore nell'inizializzazione di DBus!"
 
-#: ../src/e_mod_main.c:365
+#: src/modules/notification/e_mod_main.c:351
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
-"Errore nell'inizializzazione di DBus! Si prega di controllare che dbus sia "
-"correttamente installato e in funzione."
+"Errore nell'inizializzazione di DBus! Si prega di controllare che dbus "
+"sia correttamente installato e in funzione."
 
-#: ../src/e_mod_config.c:38
+#: src/modules/notification/e_mod_config.c:45
 msgid "Notification Settings"
 msgstr "Impostazioni di Notification"
 
-#: ../src/e_mod_config.c:81 ../src/e_mod_config_item.c:91
+#: src/modules/notification/e_mod_config.c:93
+#: src/modules/notification/e_mod_config_item.c:98
 msgid "Urgency"
 msgstr "Urgenza"
 
 #: src/modules/notification/e_mod_config.c:94
 msgid "Levels of urgency to display:"
-msgstr ""
+msgstr "Livelli di urgenza da notificare:"
 
 #: src/modules/notification/e_mod_config.c:100
 #: src/modules/notification/e_mod_config_item.c:105
-#, fuzzy
 msgid "Critical"
-msgstr "Verticale"
+msgstr "Critico"
 
-#: ../src/e_mod_config.c:92
+#: src/modules/notification/e_mod_config.c:104
 msgid "Default Timeout"
 msgstr "Timeout predefinito"
 
-#: ../src/e_mod_config.c:93
+#: src/modules/notification/e_mod_config.c:105
 msgid "Force timeout for all notifications"
 msgstr "Forza timeout per tutte le notifiche"
 
-#. man = e_manager_current_get();
-#. * of = e_widget_framelist_add(evas, D_("Placement"), 0);
-#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f x"), 0.0, man->w, 1.0, 0,
-#. *                          NULL, &(cfdata->placement.x), 200);
-#. * e_widget_framelist_object_append(of, ow);
-#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f y"), 0.0, man->h, 1.0, 0,
-#. *                          NULL, &(cfdata->placement.y), 200);
-#. * e_widget_framelist_object_append(of, ow);
-#. * e_widget_list_object_append(o, of, 1, 1, 0.5);
-#: ../src/e_mod_config.c:110
+#: src/modules/notification/e_mod_config.c:122
 msgid "Popup Corner"
 msgstr "Angolo per popup"
 
 #: src/modules/notification/e_mod_config.c:124
-#, fuzzy
 msgid "Top left"
-msgstr "Bordo superiore sinistro"
+msgstr "Superiore sinistro"
 
 #: src/modules/notification/e_mod_config.c:126
-#, fuzzy
 msgid "Top right"
-msgstr "Bordo superiore destro"
+msgstr "Superiore destro"
 
 #: src/modules/notification/e_mod_config.c:128
-#, fuzzy
 msgid "Bottom left"
-msgstr "Bordo inferiore sinistro"
+msgstr "Inferiore sinistro"
 
 #: src/modules/notification/e_mod_config.c:130
-#, fuzzy
 msgid "Bottom right"
-msgstr "Bordo inferiore destro"
+msgstr "Inferiore destro"
 
 #: src/modules/notification/e_mod_config.c:142
 msgid "Ignore replace ID"
-msgstr ""
+msgstr "Ignora ID sostitutivo"
 
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
-msgstr ""
+msgstr "Usa geometria per monitor multipli"
 
-#: ../src/e_mod_config_item.c:37
+#: src/modules/notification/e_mod_config_item.c:42
 msgid "Notification Box Configuration"
-msgstr "Configurazione modulo Notification"
+msgstr "Configurazione di Notification"
 
-#: ../src/e_mod_config_item.c:85
+#: src/modules/notification/e_mod_config_item.c:92
 msgid "Show the popup on mouse over"
 msgstr "Mostra popup al passaggio del mouse"
 
-#: ../src/e_mod_config_item.c:87
+#: src/modules/notification/e_mod_config_item.c:94
 msgid "Focus the source window when clicking"
-msgstr "Sposta fuoco su finestra sorgente al click"
+msgstr "Dai fuoco alla finestra quando si clicca"
 
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
-msgstr ""
-
-#: ../src/e_mod_config.c:82
-msgid "Levels of urgency to popup : "
-msgstr "Livelli di urgenza da notificare:"
-
-#: ../src/e_mod_config.c:84 ../src/e_mod_config_item.c:94
-msgid "low"
-msgstr "basso"
-
-#: ../src/e_mod_config.c:86 ../src/e_mod_config_item.c:96
-msgid "normal"
-msgstr "normale"
-
-#: ../src/e_mod_config.c:88 ../src/e_mod_config_item.c:98
-msgid "critical"
-msgstr "critico"
-
-#: ../src/e_mod_config_item.c:92
-msgid "Levels of urgency to store : "
 msgstr "Livelli di urgenza da salvare:"
