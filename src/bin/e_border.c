@@ -304,54 +304,54 @@ _e_border_sub_borders_new(E_Border *bd)
 EINTERN int
 e_border_init(void)
 {
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHOW_REQUEST, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHOW_REQUEST,
                          _e_border_cb_window_show_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_DESTROY, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_DESTROY,
                          _e_border_cb_window_destroy, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_HIDE, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_HIDE,
                          _e_border_cb_window_hide, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_REPARENT, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_REPARENT,
                          _e_border_cb_window_reparent, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_CONFIGURE_REQUEST, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_CONFIGURE_REQUEST,
                          _e_border_cb_window_configure_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_RESIZE_REQUEST, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_RESIZE_REQUEST,
                          _e_border_cb_window_resize_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_GRAVITY, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_GRAVITY,
                          _e_border_cb_window_gravity, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STACK_REQUEST, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STACK_REQUEST,
                          _e_border_cb_window_stack_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_PROPERTY, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_PROPERTY,
                          _e_border_cb_window_property, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_COLORMAP, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_COLORMAP,
                          _e_border_cb_window_colormap, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHAPE, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHAPE,
                          _e_border_cb_window_shape, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_IN, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_IN,
                          _e_border_cb_window_focus_in, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_OUT, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_OUT,
                          _e_border_cb_window_focus_out, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_CLIENT_MESSAGE, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_CLIENT_MESSAGE,
                          _e_border_cb_client_message, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STATE_REQUEST, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STATE_REQUEST,
                          _e_border_cb_window_state_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_MOVE_RESIZE_REQUEST, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_MOVE_RESIZE_REQUEST,
                          _e_border_cb_window_move_resize_request, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_DESKTOP_CHANGE, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_DESKTOP_CHANGE,
                          _e_border_cb_desktop_change, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_SYNC_ALARM, 
+   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_SYNC_ALARM,
                          _e_border_cb_sync_alarm, NULL);
 
    ecore_x_passive_grab_replay_func_set(_e_border_cb_grab_replay, NULL);
 
-   E_LIST_HANDLER_APPEND(handlers, E_EVENT_POINTER_WARP, 
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_POINTER_WARP,
                          _e_border_cb_pointer_warp, NULL);
-   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_DESKTOP_CACHE_UPDATE, 
+   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_DESKTOP_CACHE_UPDATE,
                          _e_border_cb_efreet_cache_update, NULL);
-   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_ICON_CACHE_UPDATE, 
+   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_ICON_CACHE_UPDATE,
                          _e_border_cb_efreet_cache_update, NULL);
-   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_ICON_THEME, 
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_ICON_THEME,
                          _e_border_cb_config_icon_theme, NULL);
-   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_MODE_CHANGED, 
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_MODE_CHANGED,
                          _e_border_cb_config_mode, NULL);
 
    if (!borders_hash) borders_hash = eina_hash_string_superfast_new(NULL);
@@ -478,17 +478,17 @@ e_border_new(E_Container   *con,
 
    _e_border_hook_call(E_BORDER_HOOK_NEW_BORDER, bd);
 
-   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_X_EVENT_MOUSE_IN, 
+   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_X_EVENT_MOUSE_IN,
                          _e_border_cb_mouse_in, bd);
-   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_X_EVENT_MOUSE_OUT, 
+   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_X_EVENT_MOUSE_OUT,
                          _e_border_cb_mouse_out, bd);
-   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN, 
+   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN,
                          _e_border_cb_mouse_down, bd);
-   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_BUTTON_UP, 
+   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_BUTTON_UP,
                          _e_border_cb_mouse_up, bd);
-   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_MOVE, 
+   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_MOVE,
                          _e_border_cb_mouse_move, bd);
-   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_WHEEL, 
+   E_LIST_HANDLER_APPEND(bd->handlers, ECORE_EVENT_MOUSE_WHEEL,
                          _e_border_cb_mouse_wheel, bd);
 
    bd->client.icccm.title = NULL;
@@ -5832,7 +5832,8 @@ _e_border_cb_window_focus_out(void *data  __UNUSED__,
    _e_border_pri_norm(bd);
    if (e->mode == ECORE_X_EVENT_MODE_NORMAL)
      {
-        if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return ECORE_CALLBACK_PASS_ON;
+        if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)
+          return ECORE_CALLBACK_PASS_ON;
         else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR)
           return ECORE_CALLBACK_PASS_ON;
         else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL)
@@ -5840,7 +5841,8 @@ _e_border_cb_window_focus_out(void *data  __UNUSED__,
      }
    else if (e->mode == ECORE_X_EVENT_MODE_GRAB)
      {
-        if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR) return ECORE_CALLBACK_PASS_ON;
+        if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR)
+          return ECORE_CALLBACK_PASS_ON;
         else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)
           return ECORE_CALLBACK_PASS_ON;
         else if (e->detail == ECORE_X_EVENT_DETAIL_NON_LINEAR_VIRTUAL)
@@ -5854,13 +5856,15 @@ _e_border_cb_window_focus_out(void *data  __UNUSED__,
      {
         /* for firefox/thunderbird (xul) menu walking */
         /* NB: why did i disable this before? */
-        if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR) return ECORE_CALLBACK_PASS_ON;
+        if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)
+          return ECORE_CALLBACK_PASS_ON;
         else if (e->detail == ECORE_X_EVENT_DETAIL_POINTER)
           return ECORE_CALLBACK_PASS_ON;
      }
    else if (e->mode == ECORE_X_EVENT_MODE_WHILE_GRABBED)
      {
-        if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR) return ECORE_CALLBACK_PASS_ON;
+        if (e->detail == ECORE_X_EVENT_DETAIL_ANCESTOR)
+          return ECORE_CALLBACK_PASS_ON;
         else if (e->detail == ECORE_X_EVENT_DETAIL_INFERIOR)
           return ECORE_CALLBACK_PASS_ON;
      }
