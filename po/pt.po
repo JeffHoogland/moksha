@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-05 13:26+0200\n"
-"PO-Revision-Date: 2012-10-07 01:17+0100\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@...\n"
+"POT-Creation-Date: 2012-10-07 11:00+0100\n"
+"PO-Revision-Date: 2012-10-07 11:03+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -416,6 +416,7 @@ msgstr "Alternar estado fixo"
 #: src/bin/e_int_menus.c:150
 #: src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
+#: src/modules/fileman/e_mod_menu.c:333
 #: src/modules/ibox/e_mod_config.c:166
 msgid "Desktop"
 msgstr "Área de trabalho"
@@ -868,7 +869,7 @@ msgstr "Alternar o módulo referenciado"
 #: src/modules/conf_theme/e_int_config_theme.c:452
 #: src/modules/conf_theme/e_int_config_theme.c:828
 #: src/modules/conf_theme/e_int_config_theme.c:842
-#: src/modules/gadman/e_mod_config.c:278
+#: src/modules/gadman/e_mod_config.c:254
 #: src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35
 #: src/modules/syscon/e_mod_main.c:60
@@ -901,7 +902,7 @@ msgid "Lock"
 msgstr "Bloquear"
 
 #: src/bin/e_actions.c:3442
-#: src/bin/e_int_menus.c:1286
+#: src/bin/e_int_menus.c:1287
 msgid "Cleanup Windows"
 msgstr "Limpar janelas"
 
@@ -1093,15 +1094,12 @@ msgstr "Básico"
 msgid "Apply"
 msgstr "Aplicar"
 
-#. #-#-#-#-#  pt.po (e17)  #-#-#-#-#
-#. register config panel entry
 #: src/bin/e_configure.c:29
 #: src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:25
+#: src/modules/gadman/e_mod_main.c:26
 #: src/modules/mixer/e_mod_main.c:1254
 #: src/modules/connman/e_mod_main.c:616
 #: src/modules/notification/e_mod_main.c:294
-#: ../src/e_mod_main.c:301
 msgid "Extensions"
 msgstr "Extensões"
 
@@ -1962,12 +1960,12 @@ msgid "Automatically scroll contents"
 msgstr "Deslocar conteúdo automaticamente"
 
 #: src/bin/e_gadcon.c:1756
-#: src/modules/gadman/e_mod_gadman.c:1045
+#: src/modules/gadman/e_mod_gadman.c:1059
 msgid "Plain"
 msgstr "Simples"
 
 #: src/bin/e_gadcon.c:1765
-#: src/modules/gadman/e_mod_gadman.c:1053
+#: src/modules/gadman/e_mod_gadman.c:1067
 msgid "Inset"
 msgstr "Encaixar"
 
@@ -1984,7 +1982,7 @@ msgstr "Aparência"
 #: src/modules/conf_applications/e_int_config_apps.c:290
 #: src/modules/conf_applications/e_int_config_apps.c:310
 #: src/modules/conf_applications/e_int_config_apps_personal.c:95
-#: src/modules/gadman/e_mod_gadman.c:1129
+#: src/modules/gadman/e_mod_gadman.c:1115
 #: src/modules/ibar/e_mod_main.c:880
 #: src/modules/xkbswitch/e_mod_config.c:265
 msgid "Remove"
@@ -2549,8 +2547,6 @@ msgstr "Solicitar posição"
 #: src/modules/xkbswitch/e_mod_main.c:386
 #: src/modules/notification/e_mod_box.c:477
 #: src/modules/notification/e_mod_box.c:616
-#: ../src/e_mod_box.c:666
-#: ../src/e_mod_box.c:810
 msgid "Settings"
 msgstr "Definições"
 
@@ -2791,7 +2787,7 @@ msgid "Applications"
 msgstr "Aplicações"
 
 #: src/bin/e_int_menus.c:157
-#: src/bin/e_int_menus.c:1245
+#: src/bin/e_int_menus.c:1246
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/winlist/e_mod_main.c:26
@@ -2800,7 +2796,7 @@ msgid "Windows"
 msgstr "Janelas"
 
 #: src/bin/e_int_menus.c:167
-#: src/bin/e_int_menus.c:1299
+#: src/bin/e_int_menus.c:1300
 msgid "Lost Windows"
 msgstr "Janelas perdidas"
 
@@ -2816,44 +2812,44 @@ msgstr "Sobre"
 msgid "Theme"
 msgstr "Tema"
 
-#: src/bin/e_int_menus.c:288
+#: src/bin/e_int_menus.c:289
 msgid "Virtual"
 msgstr "Virtual"
 
-#: src/bin/e_int_menus.c:295
+#: src/bin/e_int_menus.c:296
 #: src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Painéis"
 
-#: src/bin/e_int_menus.c:304
+#: src/bin/e_int_menus.c:305
 msgid "Show/Hide All Windows"
 msgstr "Mostrar/ocultar todas as janelas"
 
-#: src/bin/e_int_menus.c:644
+#: src/bin/e_int_menus.c:645
 msgid "(No Applications)"
 msgstr "(Sem aplicações)"
 
-#: src/bin/e_int_menus.c:876
+#: src/bin/e_int_menus.c:877
 msgid "Set Virtual Desktops"
 msgstr "Definir área de trabalho virtuais"
 
-#: src/bin/e_int_menus.c:1251
-#: src/bin/e_int_menus.c:1432
+#: src/bin/e_int_menus.c:1252
+#: src/bin/e_int_menus.c:1433
 msgid "(No Windows)"
 msgstr "(Sem janelas)"
 
-#: src/bin/e_int_menus.c:1345
-#: src/bin/e_int_menus.c:1444
+#: src/bin/e_int_menus.c:1346
+#: src/bin/e_int_menus.c:1445
 msgid "No name!!"
 msgstr "Sem nome!"
 
-#: src/bin/e_int_menus.c:1607
+#: src/bin/e_int_menus.c:1608
 msgid "Add a Shelf"
 msgstr "Adicionar um painel"
 
-#: src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1615
 msgid "Delete a Shelf"
 msgstr "Eliminar um painel"
 
@@ -2910,7 +2906,6 @@ msgstr "Intervalo para ocultar"
 
 #: src/bin/e_int_shelf_config.c:237
 #: src/modules/notification/e_mod_config.c:107
-#: ../src/e_mod_config.c:95
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f segundos"
@@ -4017,7 +4012,7 @@ msgstr "Adicionar aos favoritos"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:596
 #: src/modules/conf_theme/e_int_config_startup.c:266
 #: src/modules/conf_theme/e_int_config_theme.c:459
-#: src/modules/gadman/e_mod_config.c:282
+#: src/modules/gadman/e_mod_config.c:258
 msgid "Go up a Directory"
 msgstr "Subir um diretório"
 
@@ -4411,7 +4406,6 @@ msgstr "Definições dos diálogos"
 #: src/modules/mixer/conf_gadget.c:192
 #: src/modules/mixer/conf_module.c:91
 #: src/modules/notification/e_mod_config_item.c:89
-#: ../src/e_mod_config_item.c:82
 msgid "General Settings"
 msgstr "Definições gerais"
 
@@ -4634,7 +4628,7 @@ msgstr "Escolha a imagem de fundo..."
 #: src/modules/conf_theme/e_int_config_theme.c:448
 #: src/modules/conf_theme/e_int_config_theme.c:825
 #: src/modules/conf_theme/e_int_config_theme.c:834
-#: src/modules/gadman/e_mod_config.c:274
+#: src/modules/gadman/e_mod_config.c:250
 msgid "Personal"
 msgstr "Pessoal"
 
@@ -4720,7 +4714,7 @@ msgid "Presentation Mode"
 msgstr "Modo de demonstração"
 
 #: src/modules/conf_display/e_int_config_desklock.c:352
-#: src/modules/gadman/e_mod_config.c:236
+#: src/modules/gadman/e_mod_config.c:212
 msgid "Theme Defined"
 msgstr "Definido pelo tema"
 
@@ -4909,28 +4903,24 @@ msgstr "A associação da margem escolhida já está a ser utilizada pela ação
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1352
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1269
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1301
-#: src/modules/gadman/e_mod_gadman.c:1153
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1357
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1274
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1306
-#: src/modules/gadman/e_mod_gadman.c:1158
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1363
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1280
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1312
-#: src/modules/gadman/e_mod_gadman.c:1164
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1369
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1286
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1318
-#: src/modules/gadman/e_mod_gadman.c:1170
 msgid "WIN"
 msgstr "WIN"
 
@@ -5280,6 +5270,7 @@ msgid "Main Menu"
 msgstr "Menu principal"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
+#: src/modules/fileman/e_mod_menu.c:341
 msgid "Favorites"
 msgstr "Favoritos"
 
@@ -5297,12 +5288,12 @@ msgid "Comments"
 msgstr "Comentários"
 
 #: src/modules/conf_menus/e_int_config_menus.c:273
-#: src/modules/gadman/e_mod_config.c:258
-#: src/modules/gadman/e_mod_main.c:27
-#: src/modules/gadman/e_mod_main.c:77
-#: src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:109
-#: src/modules/gadman/e_mod_main.c:143
+#: src/modules/gadman/e_mod_config.c:234
+#: src/modules/gadman/e_mod_main.c:28
+#: src/modules/gadman/e_mod_main.c:79
+#: src/modules/gadman/e_mod_main.c:86
+#: src/modules/gadman/e_mod_main.c:112
+#: src/modules/gadman/e_mod_main.c:202
 #: src/modules/xkbswitch/e_mod_config.c:296
 msgid "Gadgets"
 msgstr "Gadgets"
@@ -6628,13 +6619,13 @@ msgstr "Direção"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:1073
+#: src/modules/gadman/e_mod_gadman.c:1087
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:229
 #: src/modules/everything/evry_config.c:561
-#: src/modules/gadman/e_mod_gadman.c:1081
+#: src/modules/gadman/e_mod_gadman.c:1095
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -7220,185 +7211,6 @@ msgstr "Colocar diretórios visitados em cache"
 msgid "Clear cache"
 msgstr "Limpar cache"
 
-#: src/modules/fileman/e_int_config_mime.c:61
-#: src/modules/fileman/e_mod_main.c:47
-msgid "File Icons"
-msgstr "Ícones de ficheiros"
-
-#: src/modules/fileman/e_int_config_mime.c:176
-msgid "File Types"
-msgstr "Tipos de ficheiro"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:71
-msgid "File Icon"
-msgstr "Ícone de ficheiro"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:138
-msgid "Basic Info"
-msgstr "Informações"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:139
-msgid "Mime:"
-msgstr "Mime:"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:149
-msgid "Use Generated Thumbnail"
-msgstr "Utilizar miniatura gerada"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:152
-msgid "Use Theme Icon"
-msgstr "Utilizar ícones do tema"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:155
-msgid "Use Edje File"
-msgstr "Utilizar ficheiro edje"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:158
-msgid "Use Image"
-msgstr "Utilizar imagem"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:161
-msgid "Use Default"
-msgstr "Utilizar predefinições"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:301
-msgid "Select an Edje file"
-msgstr "Escolha o ficheiro edje"
-
-#: src/modules/fileman/e_int_config_mime_edit.c:303
-msgid "Select an image"
-msgstr "Escolha a imagem"
-
-#: src/modules/fileman/e_mod_main.c:44
-#: src/modules/fileman/e_mod_main.c:58
-#: src/modules/fileman/e_mod_main.c:136
-msgid "File Manager"
-msgstr "Gestor de ficheiros"
-
-#: src/modules/fileman/e_mod_main.c:61
-msgid "Navigate"
-msgstr "Explorar"
-
-#: src/modules/fileman/e_mod_config.c:121
-msgid "Fileman Settings"
-msgstr "Definições do gestor de ficheiros"
-
-#: src/modules/fileman/e_mod_config.c:322
-msgid "Icon Size"
-msgstr "Tamanho dos ícones"
-
-#: src/modules/fileman/e_mod_config.c:328
-msgid "View"
-msgstr "Ver"
-
-#: src/modules/fileman/e_mod_config.c:333
-msgid "File Extensions"
-msgstr "Extensões de fcheiro"
-
-#: src/modules/fileman/e_mod_config.c:336
-msgid "Full Path In Title"
-msgstr "Caminho completo no título"
-
-#: src/modules/fileman/e_mod_config.c:339
-msgid "Icons On Desktop"
-msgstr "Ícones na área de trabalho"
-
-#: src/modules/fileman/e_mod_config.c:342
-msgid "Toolbar"
-msgstr "Barra de ferramentas"
-
-#: src/modules/fileman/e_mod_config.c:345
-msgid "Sidebar"
-msgstr "Barra lateral"
-
-#: src/modules/fileman/e_mod_config.c:348
-msgid "Regular Files In Menu (SLOW)"
-msgstr "Ficheiros regulares no menu (Lento)"
-
-#: src/modules/fileman/e_mod_config.c:384
-msgid "Open Dirs In Place"
-msgstr "Abrir diretórios no local"
-
-#: src/modules/fileman/e_mod_config.c:387
-msgid "Use Single Click"
-msgstr "Utilizar um clique"
-
-#: src/modules/fileman/e_mod_config.c:390
-msgid "Really Move"
-msgstr "Realmente mover"
-
-#: src/modules/fileman/e_mod_config.c:396
-msgid "Use Alternate Selection Modifiers"
-msgstr "Utilizar modificadores de seleção alternativos"
-
-#: src/modules/fileman/e_mod_config.c:399
-msgid "Allow Navigation On Desktop"
-msgstr "Permitir alteração do diretório a visualizar na área de trabalho"
-
-#: src/modules/fileman/e_mod_config.c:403
-msgid "Max File Size For Thumbnailing"
-msgstr "Tamanho máximo do ficheiro para miniatura"
-
-#: src/modules/fileman/e_mod_config.c:409
-msgid "Spring Delay"
-msgstr "Atraso para abrir o diretório após arrastar e largar um item"
-
-#: src/modules/fileman/e_mod_config.c:414
-#: src/modules/gadman/e_mod_gadman.c:1117
-msgid "Behavior"
-msgstr "Comportamento"
-
-#: src/modules/fileman/e_mod_config.c:423
-#: src/modules/fileman/e_mod_config.c:426
-#: src/modules/fileman/e_mod_config.c:429
-#: src/modules/fileman/e_mod_config.c:432
-#: src/modules/gadman/e_mod_config.c:234
-msgid "Mode"
-msgstr "Modo"
-
-#: src/modules/fileman/e_mod_config.c:438
-msgid "Show device icons on desktop"
-msgstr "Mostrar ícones dos dispositivos na área de trabalho"
-
-#: src/modules/fileman/e_mod_config.c:441
-msgid "Mount volumes on insert"
-msgstr "Montar discos ao inserir"
-
-#: src/modules/fileman/e_mod_config.c:444
-msgid "Open filemanager on mount"
-msgstr "Abrir gestor de ficheiros ao montar"
-
-#: src/modules/fileman/e_mod_config.c:448
-msgid "Device"
-msgstr "Dispositivo"
-
-#: src/modules/fileman/e_mod_config.c:452
-msgid "Show tooltip"
-msgstr "Mostrar ajudas"
-
-#: src/modules/fileman/e_mod_config.c:456
-msgid "Tooltip delay"
-msgstr "Atraso das ajudas"
-
-#: src/modules/fileman/e_mod_config.c:458
-#: src/modules/syscon/e_int_config_syscon.c:169
-#, c-format
-msgid "%1.1f"
-msgstr "%1.1f"
-
-#: src/modules/fileman/e_mod_config.c:462
-msgid "Tooltip size (Screen percentage)"
-msgstr "Tamanho das ajudas (percentagem do ecrã)"
-
-#: src/modules/fileman/e_mod_config.c:464
-#, c-format
-msgid "%2.0f"
-msgstr "%2.0f"
-
-#: src/modules/fileman/e_mod_config.c:468
-msgid "Tooltips"
-msgstr "Ajudas"
-
 #: src/modules/fileman/e_fwin.c:252
 msgid "Open Terminal Here"
 msgstr "Abrir terminal aqui"
@@ -7521,6 +7333,208 @@ msgstr "A eliminar ficheiros..."
 msgid "Unknow operation from slave %d"
 msgstr "Operação desconhecida de %d"
 
+#: src/modules/fileman/e_fwin_nav.c:267
+msgid "EFM Navigation"
+msgstr "Navegação EFM"
+
+#: src/modules/fileman/e_int_config_mime.c:61
+#: src/modules/fileman/e_mod_main.c:47
+msgid "File Icons"
+msgstr "Ícones de ficheiros"
+
+#: src/modules/fileman/e_int_config_mime.c:176
+msgid "File Types"
+msgstr "Tipos de ficheiro"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:71
+msgid "File Icon"
+msgstr "Ícone de ficheiro"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:138
+msgid "Basic Info"
+msgstr "Informações"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:139
+msgid "Mime:"
+msgstr "Mime:"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:149
+msgid "Use Generated Thumbnail"
+msgstr "Utilizar miniatura gerada"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:152
+msgid "Use Theme Icon"
+msgstr "Utilizar ícones do tema"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:155
+msgid "Use Edje File"
+msgstr "Utilizar ficheiro edje"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:158
+msgid "Use Image"
+msgstr "Utilizar imagem"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:161
+msgid "Use Default"
+msgstr "Utilizar predefinições"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:301
+msgid "Select an Edje file"
+msgstr "Escolha o ficheiro edje"
+
+#: src/modules/fileman/e_int_config_mime_edit.c:303
+msgid "Select an image"
+msgstr "Escolha a imagem"
+
+#: src/modules/fileman/e_mod_config.c:121
+msgid "Fileman Settings"
+msgstr "Definições do gestor de ficheiros"
+
+#: src/modules/fileman/e_mod_config.c:322
+msgid "Icon Size"
+msgstr "Tamanho dos ícones"
+
+#: src/modules/fileman/e_mod_config.c:328
+msgid "View"
+msgstr "Ver"
+
+#: src/modules/fileman/e_mod_config.c:333
+msgid "File Extensions"
+msgstr "Extensões de fcheiro"
+
+#: src/modules/fileman/e_mod_config.c:336
+msgid "Full Path In Title"
+msgstr "Caminho completo no título"
+
+#: src/modules/fileman/e_mod_config.c:339
+msgid "Icons On Desktop"
+msgstr "Ícones na área de trabalho"
+
+#: src/modules/fileman/e_mod_config.c:342
+msgid "Toolbar"
+msgstr "Barra de ferramentas"
+
+#: src/modules/fileman/e_mod_config.c:345
+msgid "Sidebar"
+msgstr "Barra lateral"
+
+#: src/modules/fileman/e_mod_config.c:348
+msgid "Regular Files In Menu (SLOW)"
+msgstr "Ficheiros regulares no menu (Lento)"
+
+#: src/modules/fileman/e_mod_config.c:384
+msgid "Open Dirs In Place"
+msgstr "Abrir diretórios no local"
+
+#: src/modules/fileman/e_mod_config.c:387
+msgid "Use Single Click"
+msgstr "Utilizar um clique"
+
+#: src/modules/fileman/e_mod_config.c:390
+msgid "Really Move"
+msgstr "Realmente mover"
+
+#: src/modules/fileman/e_mod_config.c:396
+msgid "Use Alternate Selection Modifiers"
+msgstr "Utilizar modificadores de seleção alternativos"
+
+#: src/modules/fileman/e_mod_config.c:399
+msgid "Allow Navigation On Desktop"
+msgstr "Permitir alteração do diretório a visualizar na área de trabalho"
+
+#: src/modules/fileman/e_mod_config.c:403
+msgid "Max File Size For Thumbnailing"
+msgstr "Tamanho máximo do ficheiro para miniatura"
+
+#: src/modules/fileman/e_mod_config.c:409
+msgid "Spring Delay"
+msgstr "Atraso para abrir o diretório após arrastar e largar um item"
+
+#: src/modules/fileman/e_mod_config.c:414
+msgid "Behavior"
+msgstr "Comportamento"
+
+#: src/modules/fileman/e_mod_config.c:423
+#: src/modules/fileman/e_mod_config.c:426
+#: src/modules/fileman/e_mod_config.c:429
+#: src/modules/fileman/e_mod_config.c:432
+#: src/modules/gadman/e_mod_config.c:210
+msgid "Mode"
+msgstr "Modo"
+
+#: src/modules/fileman/e_mod_config.c:438
+msgid "Show device icons on desktop"
+msgstr "Mostrar ícones dos dispositivos na área de trabalho"
+
+#: src/modules/fileman/e_mod_config.c:441
+msgid "Mount volumes on insert"
+msgstr "Montar discos ao inserir"
+
+#: src/modules/fileman/e_mod_config.c:444
+msgid "Open filemanager on mount"
+msgstr "Abrir gestor de ficheiros ao montar"
+
+#: src/modules/fileman/e_mod_config.c:448
+msgid "Device"
+msgstr "Dispositivo"
+
+#: src/modules/fileman/e_mod_config.c:452
+msgid "Show tooltip"
+msgstr "Mostrar ajudas"
+
+#: src/modules/fileman/e_mod_config.c:456
+msgid "Tooltip delay"
+msgstr "Atraso das ajudas"
+
+#: src/modules/fileman/e_mod_config.c:458
+#: src/modules/syscon/e_int_config_syscon.c:169
+#, c-format
+msgid "%1.1f"
+msgstr "%1.1f"
+
+#: src/modules/fileman/e_mod_config.c:462
+msgid "Tooltip size (Screen percentage)"
+msgstr "Tamanho das ajudas (percentagem do ecrã)"
+
+#: src/modules/fileman/e_mod_config.c:464
+#, c-format
+msgid "%2.0f"
+msgstr "%2.0f"
+
+#: src/modules/fileman/e_mod_config.c:468
+msgid "Tooltips"
+msgstr "Ajudas"
+
+#: src/modules/fileman/e_mod_main.c:44
+#: src/modules/fileman/e_mod_main.c:58
+#: src/modules/fileman/e_mod_main.c:136
+msgid "File Manager"
+msgstr "Gestor de ficheiros"
+
+#: src/modules/fileman/e_mod_main.c:61
+msgid "Navigate"
+msgstr "Explorar"
+
+#: src/modules/fileman/e_mod_menu.c:263
+msgid "GTK Bookmarks"
+msgstr "Marcadores GTK"
+
+#: src/modules/fileman/e_mod_menu.c:317
+msgid "Current Directory"
+msgstr "Diretório atual"
+
+#: src/modules/fileman/e_mod_menu.c:325
+msgid "Home"
+msgstr "Pasta pessoal"
+
+#: src/modules/fileman/e_mod_menu.c:355
+msgid "Root"
+msgstr "Root"
+
+#: src/modules/fileman/e_mod_menu.c:395
+msgid "Navigate..."
+msgstr "Explorar..."
+
 #: src/modules/fileman_opinfo/e_mod_main.c:110
 #, c-format
 msgid "Copying %s (eta: %d s)"
@@ -7566,78 +7580,75 @@ msgstr "O gestor de ficheiros não está ativo"
 msgid "EFM Operation Info"
 msgstr "Informação das operações do EFM"
 
-#: src/modules/gadman/e_mod_config.c:85
-#: src/modules/gadman/e_mod_config.c:183
+#: src/modules/gadman/e_mod_config.c:82
+#: src/modules/gadman/e_mod_config.c:157
+#: src/modules/gadman/e_mod_main.c:166
 msgid "Desktop Gadgets"
 msgstr "Gadgets da área de trabalho"
 
-#: src/modules/gadman/e_mod_config.c:204
+#: src/modules/gadman/e_mod_config.c:180
 msgid "Available Layers"
 msgstr "Camadas disponíveis"
 
-#: src/modules/gadman/e_mod_config.c:214
+#: src/modules/gadman/e_mod_config.c:190
 msgid "Configure Layer"
 msgstr "Configurar camada"
 
-#: src/modules/gadman/e_mod_config.c:229
+#: src/modules/gadman/e_mod_config.c:205
 msgid "Layers"
 msgstr "Camadas"
 
-#: src/modules/gadman/e_mod_config.c:239
-#: src/modules/gadman/e_mod_config.c:271
+#: src/modules/gadman/e_mod_config.c:215
+#: src/modules/gadman/e_mod_config.c:247
 msgid "Custom Image"
 msgstr "Imagem personalizada"
 
-#: src/modules/gadman/e_mod_config.c:243
-#: src/modules/gadman/e_mod_config.c:264
+#: src/modules/gadman/e_mod_config.c:219
+#: src/modules/gadman/e_mod_config.c:240
 msgid "Custom Color"
 msgstr "Cor personalizada"
 
-#: src/modules/gadman/e_mod_config.c:247
+#: src/modules/gadman/e_mod_config.c:223
 msgid "Transparent"
 msgstr "Transparente"
 
-#: src/modules/gadman/e_mod_config.c:254
+#: src/modules/gadman/e_mod_config.c:230
 #: src/modules/winlist/e_int_config_winlist.c:256
 msgid "Animations"
 msgstr "Animações"
 
-#: src/modules/gadman/e_mod_config.c:255
+#: src/modules/gadman/e_mod_config.c:231
 msgid "Background"
 msgstr "Imagem de fundo"
 
-#: src/modules/gadman/e_mod_config.c:329
+#: src/modules/gadman/e_mod_config.c:305
 msgid "Background Options"
 msgstr "Opções do fundo"
 
-#: src/modules/gadman/e_mod_gadman.c:1035
+#: src/modules/gadman/e_mod_gadman.c:1049
 msgid "Begin move/resize"
 msgstr "Mover/redimensionar"
 
-#: src/modules/gadman/e_mod_gadman.c:1065
+#: src/modules/gadman/e_mod_gadman.c:1079
 msgid "Free"
 msgstr "Livre"
 
-#: src/modules/gadman/e_mod_gadman.c:1089
+#: src/modules/gadman/e_mod_gadman.c:1103
 msgid "Appearance"
 msgstr "Aparência"
 
-#: src/modules/gadman/e_mod_gadman.c:1097
-msgid "Always on desktop"
-msgstr "Sempre na área de trabalho"
-
-#: src/modules/gadman/e_mod_gadman.c:1107
-msgid "On top pressing"
-msgstr "Ao pressionar"
-
-#: src/modules/gadman/e_mod_gadman.c:1138
+#: src/modules/gadman/e_mod_gadman.c:1124
 msgid "Add other gadgets"
 msgstr "Adicionar outros gadgets"
 
-#: src/modules/gadman/e_mod_main.c:84
-#: src/modules/gadman/e_mod_main.c:109
+#: src/modules/gadman/e_mod_main.c:86
+#: src/modules/gadman/e_mod_main.c:112
 msgid "Show/hide gadgets"
 msgstr "Mostrar/ocultar gadgets"
+
+#: src/modules/gadman/e_mod_main.c:182
+msgid "Change Gadgets"
+msgstr "Alterar gadgets"
 
 #: src/modules/winlist/e_int_config_winlist.c:58
 msgid "Window Switcher Settings"
@@ -7861,7 +7872,6 @@ msgstr "Expandir quando na área de trabalho"
 
 #: src/modules/ibox/e_mod_config.c:101
 #: src/modules/notification/e_mod_config_item.c:90
-#: ../src/e_mod_config_item.c:83
 msgid "Show Icon Label"
 msgstr "Mostrar texto do ícone"
 
@@ -8540,64 +8550,64 @@ msgstr "Modelo"
 msgid "Variant"
 msgstr "Variante"
 
-#: ../src/e_mod_main.c:121
+#: src/modules/notification/e_mod_main.c:137
 msgid "Notification Box"
 msgstr "Caixa de notificação"
 
-#: ../src/e_mod_main.c:213
+#: src/modules/notification/e_mod_main.c:212
 msgid "Enter Presentation Mode"
 msgstr "Entrar no modo de demonstração"
 
-#: ../src/e_mod_main.c:214
+#: src/modules/notification/e_mod_main.c:213
 msgid "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, screen saver, lock and power saving will be disabled so you are not interrupted."
 msgstr "O Enlightenment está no modo de <b>demostração.</b> Durante este modo e para que não seja incomodado, os serviços de bloqueio, poupança de energia e proteção de ecrã estarão inativos."
 
-#: ../src/e_mod_main.c:220
+#: src/modules/notification/e_mod_main.c:219
 msgid "Exited Presentation Mode"
 msgstr "Saiu do modo de demonstração"
 
-#: ../src/e_mod_main.c:221
+#: src/modules/notification/e_mod_main.c:220
 msgid "Presentation mode is over.<br>Now screen saver, lock and power saving settings will be restored."
 msgstr "Terminou o modo de demonstração.<br> Os serviços de bloqueio, poupança de energia e proteção de ecrã vão ser restaurados."
 
-#: ../src/e_mod_main.c:236
+#: src/modules/notification/e_mod_main.c:235
 msgid "Enter Offline Mode"
 msgstr "Entrar no modo \"offline\""
 
-#: ../src/e_mod_main.c:237
+#: src/modules/notification/e_mod_main.c:236
 msgid "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules that use network will stop polling remote services."
 msgstr "O Enlightenment está no modo <b>\"offline\".</b> Neste modo, os módulos que utilizem a rede irão parar de analisar os serviços remotos."
 
-#: ../src/e_mod_main.c:243
+#: src/modules/notification/e_mod_main.c:242
 msgid "Exited Offline Mode"
 msgstr "Saiu do modo \"offline\""
 
-#: ../src/e_mod_main.c:244
+#: src/modules/notification/e_mod_main.c:243
 msgid "Now in <b>online</b> mode.<br>Now modules that use network will resume regular tasks."
 msgstr "Terminou o modo <b>\"offline\"</b>. Os módulos que utilizam a rede irão retomar os serviços."
 
-#: ../src/e_mod_main.c:303
+#: src/modules/notification/e_mod_main.c:297
 msgid "Notification"
 msgstr "Notificações"
 
-#: ../src/e_mod_main.c:336
+#: src/modules/notification/e_mod_main.c:331
 msgid "Notification Module"
 msgstr "Módulo de notificações"
 
-#: ../src/e_mod_main.c:364
+#: src/modules/notification/e_mod_main.c:350
 msgid "Error During DBus Init!"
 msgstr "Erro ao iniciar DBus!"
 
-#: ../src/e_mod_main.c:365
+#: src/modules/notification/e_mod_main.c:351
 msgid "Error during DBus init! Please check if dbus is correctly installed and running."
 msgstr "Erro ao iniciar DBus! Verifique se o DBus está bem instalado e em execução."
 
-#: ../src/e_mod_config.c:38
+#: src/modules/notification/e_mod_config.c:45
 msgid "Notification Settings"
 msgstr "Definições das notificações"
 
-#: ../src/e_mod_config.c:81
-#: ../src/e_mod_config_item.c:91
+#: src/modules/notification/e_mod_config.c:93
+#: src/modules/notification/e_mod_config_item.c:98
 msgid "Urgency"
 msgstr "Urgência"
 
@@ -8610,24 +8620,15 @@ msgstr "Níveis de urgência a exibir:"
 msgid "Critical"
 msgstr "Crítica"
 
-#: ../src/e_mod_config.c:92
+#: src/modules/notification/e_mod_config.c:104
 msgid "Default Timeout"
 msgstr "Duração"
 
-#: ../src/e_mod_config.c:93
+#: src/modules/notification/e_mod_config.c:105
 msgid "Force timeout for all notifications"
 msgstr "Forçar tempo limite para as notificações"
 
-#. man = e_manager_current_get();
-#. * of = e_widget_framelist_add(evas, D_("Placement"), 0);
-#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f x"), 0.0, man->w, 1.0, 0,
-#. *                          NULL, &(cfdata->placement.x), 200);
-#. * e_widget_framelist_object_append(of, ow);
-#. * ow = e_widget_slider_add(evas, 1, 0, D_("%2.0f y"), 0.0, man->h, 1.0, 0,
-#. *                          NULL, &(cfdata->placement.y), 200);
-#. * e_widget_framelist_object_append(of, ow);
-#. * e_widget_list_object_append(o, of, 1, 1, 0.5);
-#: ../src/e_mod_config.c:110
+#: src/modules/notification/e_mod_config.c:122
 msgid "Popup Corner"
 msgstr "Local do alerta"
 
@@ -8655,15 +8656,15 @@ msgstr "Ignorar substituição de ID"
 msgid "Use multiple monitor geometry"
 msgstr "Utilizar geometria de monitores múltiplos"
 
-#: ../src/e_mod_config_item.c:37
+#: src/modules/notification/e_mod_config_item.c:42
 msgid "Notification Box Configuration"
 msgstr "Configuração da caixa de notificação"
 
-#: ../src/e_mod_config_item.c:85
+#: src/modules/notification/e_mod_config_item.c:92
 msgid "Show the popup on mouse over"
 msgstr "Mostrar um alerta ao passar com o rato"
 
-#: ../src/e_mod_config_item.c:87
+#: src/modules/notification/e_mod_config_item.c:94
 msgid "Focus the source window when clicking"
 msgstr "Focar a janela original ao clicar "
 
@@ -8671,28 +8672,26 @@ msgstr "Focar a janela original ao clicar "
 msgid "Levels of urgency to store:"
 msgstr "Níveis de urgência a guardar:"
 
-#: ../src/e_mod_config.c:82
-msgid "Levels of urgency to popup : "
-msgstr "Níveis para o alerta de urgência: "
+#~ msgid "Always on desktop"
+#~ msgstr "Sempre na área de trabalho"
 
-#: ../src/e_mod_config.c:84
-#: ../src/e_mod_config_item.c:94
-msgid "low"
-msgstr "baixo"
+#~ msgid "On top pressing"
+#~ msgstr "Ao pressionar"
 
-#: ../src/e_mod_config.c:86
-#: ../src/e_mod_config_item.c:96
-msgid "normal"
-msgstr "normal"
+#~ msgid "Levels of urgency to popup : "
+#~ msgstr "Níveis para o alerta de urgência: "
 
-#: ../src/e_mod_config.c:88
-#: ../src/e_mod_config_item.c:98
-msgid "critical"
-msgstr "crítico"
+#~ msgid "low"
+#~ msgstr "baixo"
 
-#: ../src/e_mod_config_item.c:92
-msgid "Levels of urgency to store : "
-msgstr "Níveis de urgência a guardar: "
+#~ msgid "normal"
+#~ msgstr "normal"
+
+#~ msgid "critical"
+#~ msgstr "crítico"
+
+#~ msgid "Levels of urgency to store : "
+#~ msgstr "Níveis de urgência a guardar: "
 
 #~ msgid "%s"
 #~ msgstr "%s"
@@ -8735,15 +8734,6 @@ msgstr "Níveis de urgência a guardar: "
 
 #~ msgid "Icon Movement"
 #~ msgstr "Movimentação de ícones"
-
-#~ msgid "Home"
-#~ msgstr "Pasta pessoal"
-
-#~ msgid "Root"
-#~ msgstr "Root"
-
-#~ msgid "Navigate..."
-#~ msgstr "Explorar..."
 
 #~ msgid ""
 #~ "You requested to delete \"%s\".<br><br>Are you sure you want to delete "
