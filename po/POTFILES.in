@@ -209,11 +209,14 @@ src/modules/everything/evry_plug_calc.c
 src/modules/everything/evry_plug_files.c
 src/modules/everything/evry_plug_settings.c
 src/modules/everything/evry_plug_windows.c
+src/modules/fileman/e_fwin.c
+src/modules/fileman/e_fwin_nav.c
 src/modules/fileman/e_int_config_mime.c
 src/modules/fileman/e_int_config_mime_edit.c
-src/modules/fileman/e_mod_main.c
 src/modules/fileman/e_mod_config.c
-src/modules/fileman/e_fwin.c
+src/modules/fileman/e_mod_dbus.c
+src/modules/fileman/e_mod_main.c
+src/modules/fileman/e_mod_menu.c
 src/modules/fileman_opinfo/e_mod_main.c
 src/modules/gadman/e_mod_config.c
 src/modules/gadman/e_mod_gadman.c
