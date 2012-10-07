@@ -14,13 +14,17 @@ find_rules(void)
 {
    int i = 0;
    const char *lstfiles[] = {
+#if defined __NetBSD__
+      "/usr/X11R7/lib/X11/xkb/rules/xorg.lst",
+#elif defined __OpenBSD__
+      "/usr/X11R6/share/X11/xkb/rules/base.lst",
+#endif
       "/usr/share/X11/xkb/rules/xorg.lst",
       "/usr/share/X11/xkb/rules/xfree86.lst",
       "/usr/local/share/X11/xkb/rules/xorg.lst",
       "/usr/local/share/X11/xkb/rules/xfree86.lst",
       "/usr/X11R6/lib/X11/xkb/rules/xorg.lst",
       "/usr/X11R6/lib/X11/xkb/rules/xfree86.lst",
-      "/usr/X11R6/share/X11/xkb/rules/base.lst",
       "/usr/local/X11R6/lib/X11/xkb/rules/xorg.lst",
       "/usr/local/X11R6/lib/X11/xkb/rules/xfree86.lst",
       NULL
