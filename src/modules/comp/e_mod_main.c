@@ -48,6 +48,10 @@ e_modapi_init(E_Module *m)
 
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
    if (!mod->conf) _e_mod_config_new(m);
+   
+   /* force some config vals off */
+   mod->conf->lock_fps = 0;
+   mod->conf->indirect = 0;
 
    if (!e_config->use_composite)
      {

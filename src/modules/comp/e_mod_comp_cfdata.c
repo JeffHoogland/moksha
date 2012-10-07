@@ -75,10 +75,10 @@ e_mod_comp_cfdata_config_new(void)
    cfg->fps_show = 0;
    cfg->indirect = 0;
    cfg->texture_from_pixmap = 1;
-   cfg->lock_fps = 1;
+   cfg->lock_fps = 0;
    cfg->efl_sync = 0;
    cfg->loose_sync = 1;
-   cfg->grab = 1;
+   cfg->grab = 0;
    cfg->vsync = 1;
    cfg->swap_mode = ECORE_EVAS_GL_X11_SWAP_MODE_AUTO;
    cfg->keep_unmapped = 1;
