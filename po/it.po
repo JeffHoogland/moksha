@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-05 21:58+0200\n"
-"PO-Revision-Date: 2012-10-05 22:15+0200\n"
+"POT-Creation-Date: 2012-10-07 09:37+0200\n"
+"PO-Revision-Date: 2012-10-07 09:40+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -360,7 +360,7 @@ msgstr "Commuta stato attaccata"
 #: src/bin/e_fm_device.c:635 src/bin/e_fm_device.c:662
 #: src/bin/e_int_menus.c:150 src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
-#: src/modules/ibox/e_mod_config.c:166
+#: src/modules/fileman/e_mod_menu.c:333 src/modules/ibox/e_mod_config.c:166
 msgid "Desktop"
 msgstr "Desktop"
 
@@ -5408,6 +5408,7 @@ msgid "Main Menu"
 msgstr "Menù principale"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
+#: src/modules/fileman/e_mod_menu.c:341
 msgid "Favorites"
 msgstr "Preferiti"
 
@@ -7399,6 +7400,129 @@ msgstr "Cache per directory visitate"
 msgid "Clear cache"
 msgstr "Svuota cache"
 
+#: src/modules/fileman/e_fwin.c:252
+msgid "Open Terminal Here"
+msgstr "Esegui terminale qui"
+
+#: src/modules/fileman/e_fwin.c:2076
+msgid "Other application..."
+msgstr "Altre applicazioni..."
+
+#: src/modules/fileman/e_fwin.c:2136
+msgid "Go To Parent Directory"
+msgstr "Vai alla directory superiore"
+
+#: src/modules/fileman/e_fwin.c:2146
+msgid "Clone Window"
+msgstr "Clona finestra"
+
+#: src/modules/fileman/e_fwin.c:2152
+msgid "Copy Path"
+msgstr "Copia percorso"
+
+#: src/modules/fileman/e_fwin.c:2168
+msgid "Run"
+msgstr "Esegui"
+
+#: src/modules/fileman/e_fwin.c:2175 src/modules/fileman/e_fwin.c:2544
+msgid "Open"
+msgstr "Apri"
+
+#: src/modules/fileman/e_fwin.c:2182 src/modules/fileman/e_fwin.c:2542
+msgid "Open with..."
+msgstr "Apri con..."
+
+#: src/modules/fileman/e_fwin.c:2573 src/modules/fileman/e_fwin.c:2598
+#, c-format
+msgid "%d file"
+msgid_plural "%d files"
+msgstr[0] "%d file"
+msgstr[1] "%d file"
+
+#: src/modules/fileman/e_fwin.c:2616
+msgid "Known Applications"
+msgstr "Applicazioni conosciute"
+
+#: src/modules/fileman/e_fwin.c:2626
+msgid "Specific Applications"
+msgstr "Applicazioni specifiche"
+
+#: src/modules/fileman/e_fwin.c:2652
+msgid "All Applications"
+msgstr "Tutte le applicazioni"
+
+#: src/modules/fileman/e_fwin.c:2675
+msgid "Custom Command"
+msgstr "Comando personalizzato"
+
+#: src/modules/fileman/e_fwin.c:2971
+#: src/modules/fileman_opinfo/e_mod_main.c:89
+#, c-format
+msgid "Copying is aborted"
+msgstr "Copiatura abortita"
+
+#: src/modules/fileman/e_fwin.c:2975
+#: src/modules/fileman_opinfo/e_mod_main.c:92
+#, c-format
+msgid "Moving is aborted"
+msgstr "Spostamento abortito"
+
+#: src/modules/fileman/e_fwin.c:2979
+#: src/modules/fileman_opinfo/e_mod_main.c:95
+#, c-format
+msgid "Deleting is aborted"
+msgstr "Eliminazione abortita"
+
+#: src/modules/fileman/e_fwin.c:2983
+#: src/modules/fileman_opinfo/e_mod_main.c:98
+#, c-format
+msgid "Unknown operation from slave is aborted"
+msgstr "Operazione sconosciuta dallo slave abortita"
+
+#: src/modules/fileman/e_fwin.c:2993
+#: src/modules/fileman_opinfo/e_mod_main.c:108
+#, c-format
+msgid "Copy of %s done"
+msgstr "Copiatura di %s eseguita"
+
+#: src/modules/fileman/e_fwin.c:2995
+#, c-format
+msgid "Copying %s (eta: %s)"
+msgstr "Copio %s (tempo rimanente: %s)"
+
+#: src/modules/fileman/e_fwin.c:3000
+#: src/modules/fileman_opinfo/e_mod_main.c:114
+#, c-format
+msgid "Move of %s done"
+msgstr "Spostamento di %s eseguito"
+
+#: src/modules/fileman/e_fwin.c:3002
+#, c-format
+msgid "Moving %s (eta: %s)"
+msgstr "Sposto %s (tempo rimanente: %s)"
+
+#: src/modules/fileman/e_fwin.c:3007
+#: src/modules/fileman_opinfo/e_mod_main.c:120
+#, c-format
+msgid "Delete done"
+msgstr "Eliminazione eseguita"
+
+#: src/modules/fileman/e_fwin.c:3009
+#: src/modules/fileman_opinfo/e_mod_main.c:122
+#, c-format
+msgid "Deleting files..."
+msgstr "Eliminazione file..."
+
+#: src/modules/fileman/e_fwin.c:3013
+#: src/modules/fileman_opinfo/e_mod_main.c:125
+#, c-format
+msgid "Unknow operation from slave %d"
+msgstr "Operazione sconosciuta dallo slave %d"
+
+#: src/modules/fileman/e_fwin_nav.c:267
+msgid "EFM Navigation"
+msgstr "Navigazione EFM"
+
 #: src/modules/fileman/e_int_config_mime.c:61
 #: src/modules/fileman/e_mod_main.c:47
 msgid "File Icons"
@@ -7447,15 +7571,6 @@ msgstr "Seleziona un file Edje"
 #: src/modules/fileman/e_int_config_mime_edit.c:303
 msgid "Select an image"
 msgstr "Seleziona un'immagine"
-
-#: src/modules/fileman/e_mod_main.c:44 src/modules/fileman/e_mod_main.c:58
-#: src/modules/fileman/e_mod_main.c:136
-msgid "File Manager"
-msgstr "File manager"
-
-#: src/modules/fileman/e_mod_main.c:61
-msgid "Navigate"
-msgstr "Esplora"
 
 #: src/modules/fileman/e_mod_config.c:121
 msgid "Fileman Settings"
@@ -7576,124 +7691,34 @@ msgstr "%2.0f"
 msgid "Tooltips"
 msgstr "Tooltip"
 
-#: src/modules/fileman/e_fwin.c:252
-msgid "Open Terminal Here"
-msgstr "Esegui terminale qui"
+#: src/modules/fileman/e_mod_main.c:44 src/modules/fileman/e_mod_main.c:58
+#: src/modules/fileman/e_mod_main.c:136
+msgid "File Manager"
+msgstr "File manager"
 
-#: src/modules/fileman/e_fwin.c:2076
-msgid "Other application..."
-msgstr "Altre applicazioni..."
+#: src/modules/fileman/e_mod_main.c:61
+msgid "Navigate"
+msgstr "Esplora"
 
-#: src/modules/fileman/e_fwin.c:2136
-msgid "Go To Parent Directory"
-msgstr "Vai alla directory superiore"
+#: src/modules/fileman/e_mod_menu.c:263
+msgid "GTK Bookmarks"
+msgstr "Segnalibri GTK"
 
-#: src/modules/fileman/e_fwin.c:2146
-msgid "Clone Window"
-msgstr "Clona finestra"
+#: src/modules/fileman/e_mod_menu.c:317
+msgid "Current Directory"
+msgstr "Directory attuale"
 
-#: src/modules/fileman/e_fwin.c:2152
-msgid "Copy Path"
-msgstr "Copia percorso"
+#: src/modules/fileman/e_mod_menu.c:325
+msgid "Home"
+msgstr "Home"
 
-#: src/modules/fileman/e_fwin.c:2168
-msgid "Run"
-msgstr "Esegui"
+#: src/modules/fileman/e_mod_menu.c:355
+msgid "Root"
+msgstr "File system"
 
-#: src/modules/fileman/e_fwin.c:2175 src/modules/fileman/e_fwin.c:2544
-msgid "Open"
-msgstr "Apri"
-
-#: src/modules/fileman/e_fwin.c:2182 src/modules/fileman/e_fwin.c:2542
-msgid "Open with..."
-msgstr "Apri con..."
-
-#: src/modules/fileman/e_fwin.c:2573 src/modules/fileman/e_fwin.c:2598
-#, c-format
-msgid "%d file"
-msgid_plural "%d files"
-msgstr[0] "%d file"
-msgstr[1] "%d file"
-
-#: src/modules/fileman/e_fwin.c:2616
-msgid "Known Applications"
-msgstr "Applicazioni conosciute"
-
-#: src/modules/fileman/e_fwin.c:2626
-msgid "Specific Applications"
-msgstr "Applicazioni specifiche"
-
-#: src/modules/fileman/e_fwin.c:2652
-msgid "All Applications"
-msgstr "Tutte le applicazioni"
-
-#: src/modules/fileman/e_fwin.c:2675
-msgid "Custom Command"
-msgstr "Comando personalizzato"
-
-#: src/modules/fileman/e_fwin.c:2971
-#: src/modules/fileman_opinfo/e_mod_main.c:89
-#, c-format
-msgid "Copying is aborted"
-msgstr "Copiatura abortita"
-
-#: src/modules/fileman/e_fwin.c:2975
-#: src/modules/fileman_opinfo/e_mod_main.c:92
-#, c-format
-msgid "Moving is aborted"
-msgstr "Spostamento abortito"
-
-#: src/modules/fileman/e_fwin.c:2979
-#: src/modules/fileman_opinfo/e_mod_main.c:95
-#, c-format
-msgid "Deleting is aborted"
-msgstr "Eliminazione abortita"
-
-#: src/modules/fileman/e_fwin.c:2983
-#: src/modules/fileman_opinfo/e_mod_main.c:98
-#, c-format
-msgid "Unknown operation from slave is aborted"
-msgstr "Operazione sconosciuta dallo slave abortita"
-
-#: src/modules/fileman/e_fwin.c:2993
-#: src/modules/fileman_opinfo/e_mod_main.c:108
-#, c-format
-msgid "Copy of %s done"
-msgstr "Copiatura di %s eseguita"
-
-#: src/modules/fileman/e_fwin.c:2995
-#, c-format
-msgid "Copying %s (eta: %s)"
-msgstr "Copio %s (tempo rimanente: %s)"
-
-#: src/modules/fileman/e_fwin.c:3000
-#: src/modules/fileman_opinfo/e_mod_main.c:114
-#, c-format
-msgid "Move of %s done"
-msgstr "Spostamento di %s eseguito"
-
-#: src/modules/fileman/e_fwin.c:3002
-#, c-format
-msgid "Moving %s (eta: %s)"
-msgstr "Sposto %s (tempo rimanente: %s)"
-
-#: src/modules/fileman/e_fwin.c:3007
-#: src/modules/fileman_opinfo/e_mod_main.c:120
-#, c-format
-msgid "Delete done"
-msgstr "Eliminazione eseguita"
-
-#: src/modules/fileman/e_fwin.c:3009
-#: src/modules/fileman_opinfo/e_mod_main.c:122
-#, c-format
-msgid "Deleting files..."
-msgstr "Eliminazione file..."
-
-#: src/modules/fileman/e_fwin.c:3013
-#: src/modules/fileman_opinfo/e_mod_main.c:125
-#, c-format
-msgid "Unknow operation from slave %d"
-msgstr "Operazione sconosciuta dallo slave %d"
+#: src/modules/fileman/e_mod_menu.c:395
+msgid "Navigate..."
+msgstr "Esplora..."
 
 #: src/modules/fileman_opinfo/e_mod_main.c:110
 #, c-format
@@ -8717,8 +8742,8 @@ msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
-"La modalità presentazione è terminata.<br>Adesso verranno riabilitati "
-"lo screensaver, il bloccaschermo e la gestione energetica."
+"La modalità presentazione è terminata.<br>Adesso verranno riabilitati lo "
+"screensaver, il bloccaschermo e la gestione energetica."
 
 #: src/modules/notification/e_mod_main.c:235
 msgid "Enter Offline Mode"
@@ -8729,9 +8754,8 @@ msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
-"Enlightenment è in modalità <b>non in linea</b>.<br>Durante la modalità "
-"non in linea i moduli che usano la rete smettono di interrogare i "
-"servizi remoti."
+"Enlightenment è in modalità <b>non in linea</b>.<br>Durante la modalità non "
+"in linea i moduli che usano la rete smettono di interrogare i servizi remoti."
 
 #: src/modules/notification/e_mod_main.c:242
 msgid "Exited Offline Mode"
@@ -8742,8 +8766,8 @@ msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
-"Adesso si è in modalità <b>non in linea</b>.<br>Da ora in poi i moduli "
-"che usano la rete riprenderanno i loro compiti normali."
+"Adesso si è in modalità <b>non in linea</b>.<br>Da ora in poi i moduli che "
+"usano la rete riprenderanno i loro compiti normali."
 
 #: src/modules/notification/e_mod_main.c:297
 msgid "Notification"
@@ -8762,8 +8786,8 @@ msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
-"Errore nell'inizializzazione di DBus! Si prega di controllare che dbus "
-"sia correttamente installato e in funzione."
+"Errore nell'inizializzazione di DBus! Si prega di controllare che dbus sia "
+"correttamente installato e in funzione."
 
 #: src/modules/notification/e_mod_config.c:45
 msgid "Notification Settings"
@@ -8813,7 +8837,7 @@ msgstr "Inferiore destro"
 
 #: src/modules/notification/e_mod_config.c:142
 msgid "Ignore replace ID"
-msgstr "Ignora ID sostitutivo"
+msgstr "Non sostituire ID notifica"
 
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"

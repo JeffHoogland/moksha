@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-10-05 13:26+0200\n"
-"PO-Revision-Date: 2012-10-05 22:58+0100\n"
+"PO-Revision-Date: 2012-10-07 01:17+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -8578,7 +8578,7 @@ msgstr "Terminou o modo <b>\"offline\"</b>. Os módulos que utilizam a rede irã
 
 #: ../src/e_mod_main.c:303
 msgid "Notification"
-msgstr "Notificação"
+msgstr "Notificações"
 
 #: ../src/e_mod_main.c:336
 msgid "Notification Module"
@@ -8612,7 +8612,7 @@ msgstr "Crítica"
 
 #: ../src/e_mod_config.c:92
 msgid "Default Timeout"
-msgstr "Tempo limite padrão"
+msgstr "Duração"
 
 #: ../src/e_mod_config.c:93
 msgid "Force timeout for all notifications"
@@ -8629,7 +8629,7 @@ msgstr "Forçar tempo limite para as notificações"
 #. * e_widget_list_object_append(o, of, 1, 1, 0.5);
 #: ../src/e_mod_config.c:110
 msgid "Popup Corner"
-msgstr "Alerta no canto"
+msgstr "Local do alerta"
 
 #: src/modules/notification/e_mod_config.c:124
 msgid "Top left"
@@ -8649,7 +8649,7 @@ msgstr "Margem inferior direita"
 
 #: src/modules/notification/e_mod_config.c:142
 msgid "Ignore replace ID"
-msgstr ""
+msgstr "Ignorar substituição de ID"
 
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
