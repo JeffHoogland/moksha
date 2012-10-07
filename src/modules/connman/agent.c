@@ -413,6 +413,9 @@ _agent_request_input(E_DBus_Object *obj, DBusMessage *msg)
    agent = e_dbus_object_data_get(obj);
 
    /* Discard previous requests */
+   // if msg is the current agent msg? eek.
+   if (agent->msg == msg) return NULL;
+
    if (agent->msg)
      dbus_message_unref(agent->msg);
    agent->msg = dbus_message_ref(msg);
