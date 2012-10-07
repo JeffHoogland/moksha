@@ -66,6 +66,7 @@ struct _E_Config
    int         show_desktop_icons; // GUI
    int         edge_flip_dragging; // GUI
    int         use_composite; // GUI
+   int         no_module_delay; // GUI
    const char *language; // GUI
    const char *desklock_language; // GUI
    Eina_List  *modules; // GUI

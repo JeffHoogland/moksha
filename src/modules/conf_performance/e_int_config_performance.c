@@ -10,6 +10,7 @@ struct _E_Config_Dialog_Data
 {
    double framerate;
    int priority;
+   int module_delay;
    int cache_flush_poll_interval;
    double font_cache;
    double image_cache;
@@ -47,6 +48,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    if (!cfdata) return NULL;
    cfdata->framerate = e_config->framerate;
    cfdata->priority = e_config->priority;
+   cfdata->module_delay = !e_config->no_module_delay;
    cfdata->font_cache = ((double)e_config->font_cache / 1024);
    cfdata->image_cache = ((double)e_config->image_cache / 1024);
    cfdata->edje_cache = e_config->edje_cache;
@@ -73,6 +75,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->edje_collection_cache = cfdata->edje_collection_cache;
    edje_frametime_set(1.0 / e_config->framerate);
    e_config->priority = cfdata->priority;
+   e_config->no_module_delay = !cfdata->module_delay;
    ecore_exe_run_priority_set(e_config->priority);
    e_canvas_recache();
    e_config_save_queue();
@@ -89,7 +92,8 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 	   (e_config->image_cache != (cfdata->image_cache * 1024)) ||
 	   (e_config->edje_cache != cfdata->edje_cache) ||
 	   (e_config->edje_collection_cache != cfdata->edje_collection_cache) ||
-	   (e_config->priority != cfdata->priority));
+	   (e_config->priority != cfdata->priority) ||
+           (e_config->no_module_delay != (!cfdata->module_delay)));
 }
 
 static Evas_Object *
@@ -106,12 +110,15 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                             &(cfdata->framerate), NULL, 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
-   ob = e_widget_label_add(evas, _("Applications priority"));
+   ob = e_widget_label_add(evas, _("Application priority"));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, "%1.0f", 0, 19, 1, 0, NULL, 
                             &(cfdata->priority), 100);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
-
+   
+   ob = e_widget_check_add(evas, _("Allow module load delay"), &(cfdata->module_delay));
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+                                                               
    e_widget_toolbook_page_append(otb, NULL, _("General"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
 

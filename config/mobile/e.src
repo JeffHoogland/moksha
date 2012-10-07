@@ -219,6 +219,7 @@ group "E_Config" struct {
     value "powersave.extreme" double: 1200.0;
     value "powersave.min" int: 0;
     value "powersave.max" int: 5;
+    value "no_module_delay" int: 1;
     group "syscon.actions" list {
         group "E_Config_Syscon_Action" struct {
             value "action" string: "halt";

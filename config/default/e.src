@@ -20,6 +20,7 @@ group "E_Config" struct {
   value "show_desktop_icons" int: 1;
   value "edge_flip_dragging" int: 0;
   value "use_composite" int: 0;
+  value "no_module_delay" int: 1;
   group "modules" list {
     group "E_Config_Module" struct {
       value "name" string: "wizard";

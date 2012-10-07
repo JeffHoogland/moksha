@@ -80,9 +80,9 @@ static void                     e_gadcon_layout_pack_aspect_pad_set(Evas_Object 
 static void                     e_gadcon_layout_unpack(Evas_Object *obj);
 static void                     _e_gadcon_provider_populate_request(E_Gadcon *gc, const E_Gadcon_Client_Class *cc);
 static void                     _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc);
-static Eina_Bool                _e_gadcon_provider_populate_idler(void *data);
-static void                      _e_gadcon_event_populate_free(void *data __UNUSED__, void *event);
-static Eina_Bool                _e_gadcon_custom_populate_idler(void *data);
+static void                     _e_gadcon_provider_populate_job(void *data);
+static void                     _e_gadcon_event_populate_free(void *data __UNUSED__, void *event);
+static void                     _e_gadcon_custom_populate_job(void *data);
 
 static int                      _e_gadcon_location_change(E_Gadcon_Client *gcc, E_Gadcon_Location *src, E_Gadcon_Location *dst);
 
@@ -190,9 +190,9 @@ static Eina_Hash *providers = NULL;
 static Eina_List *providers_list = NULL;
 static Eina_List *gadcons = NULL;
 static Eina_List *dummies = NULL;
-static Ecore_Idler *populate_idler = NULL;
+static Ecore_Job *populate_job = NULL;
 static Eina_List *custom_populate_requests = NULL;
-static Ecore_Idler *custom_populate_idler = NULL;
+static Ecore_Job *custom_populate_job = NULL;
 static Eina_List *gadcon_locations = NULL;
 static Ecore_Event_Handler *_module_init_end_handler = NULL;
 static Eina_Bool _modules_loaded = EINA_FALSE;
@@ -232,16 +232,16 @@ e_gadcon_init(void)
 EINTERN int
 e_gadcon_shutdown(void)
 {
-   if (populate_idler)
+   if (populate_job)
      {
-        ecore_idler_del(populate_idler);
-        populate_idler = NULL;
+        ecore_job_del(populate_job);
+        populate_job = NULL;
      }
    custom_populate_requests = eina_list_free(custom_populate_requests);
-   if (custom_populate_idler)
+   if (custom_populate_job)
      {
-        ecore_idler_del(custom_populate_idler);
-        custom_populate_idler = NULL;
+        ecore_job_del(custom_populate_job);
+        custom_populate_job = NULL;
      }
    _modules_loaded = EINA_FALSE;
    if (_module_init_end_handler)
@@ -354,10 +354,10 @@ e_gadcon_custom_new(E_Gadcon *gc)
 
    gadcons = eina_list_append(gadcons, gc);
 
-   if (!custom_populate_idler)
+   if (!custom_populate_job)
      {
-        custom_populate_idler =
-          ecore_idler_add(_e_gadcon_custom_populate_idler, NULL);
+        custom_populate_job =
+          ecore_job_add(_e_gadcon_custom_populate_job, NULL);
      }
    if (!eina_list_data_find(custom_populate_requests, gc))
      custom_populate_requests = eina_list_append(custom_populate_requests, gc);
@@ -383,10 +383,10 @@ e_gadcon_custom_populate_request(E_Gadcon *gc)
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
 
    if (!gc->custom) return;
-   if (!custom_populate_idler)
+   if (!custom_populate_job)
      {
-        custom_populate_idler =
-          ecore_idler_add(_e_gadcon_custom_populate_idler, NULL);
+        custom_populate_job =
+          ecore_job_add(_e_gadcon_custom_populate_job, NULL);
      }
    if (!eina_list_data_find(custom_populate_requests, gc))
      custom_populate_requests = eina_list_append(custom_populate_requests, gc);
@@ -5514,15 +5514,14 @@ _e_gadcon_event_populate_free(void *data __UNUSED__, void *event)
    free(ev);
 }
 
-static Eina_Bool
-_e_gadcon_custom_populate_idler(void *data __UNUSED__)
+static void
+_e_gadcon_custom_populate_job(void *data __UNUSED__)
 {
    const E_Gadcon_Client_Class *cc;
    E_Config_Gadcon_Client *cf_gcc;
    const Eina_List *l;
    E_Gadcon *gc;
 
-   if (!_modules_loaded) return EINA_TRUE;
 #ifndef E17_RELEASE_BUILD
    static Eina_Bool first = EINA_TRUE;
    if (first)
@@ -5551,24 +5550,19 @@ _e_gadcon_custom_populate_idler(void *data __UNUSED__)
 #endif
    if (!custom_populate_requests)
      {
-        custom_populate_idler = NULL;
+        custom_populate_job = NULL;
 #ifndef E17_RELEASE_BUILD
         first = EINA_FALSE;
 #endif
-        return ECORE_CALLBACK_CANCEL;
      }
-   return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
-_e_gadcon_provider_populate_idler(void *data __UNUSED__)
+static void
+_e_gadcon_provider_populate_job(void *data __UNUSED__)
 {
    E_Gadcon_Client_Class *cc;
    Eina_List *l;
    E_Gadcon *gc;
-   Eina_Bool cont = EINA_FALSE;
-
-   if (!_modules_loaded) return EINA_TRUE;
 
 #ifndef E17_RELEASE_BUILD
    static Eina_Bool first = EINA_TRUE;
@@ -5586,12 +5580,6 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
           }
         EINA_LIST_FREE(gc->populate_requests, cc)
           {
-             if (x)
-               {
-                  cont = EINA_TRUE;
-                  e_gadcon_layout_thaw(gc->o_container);
-                  goto out;
-               }
 #ifndef E17_RELEASE_BUILD
              if (first) e_main_ts(cc->name);
 #endif
@@ -5618,18 +5606,16 @@ _e_gadcon_provider_populate_idler(void *data __UNUSED__)
           if (freeze) e_gadcon_layout_thaw(gc->o_container);
           if (x) _e_gadcon_event_populate(gc);
        }
-out:
+//out:
 #ifndef E17_RELEASE_BUILD
    if (first)
      e_main_ts("gadcon populate idler end");
 #endif
 
-   if (!cont)
-     populate_idler = NULL;
+   populate_job = NULL;
 #ifndef E17_RELEASE_BUILD
    first = EINA_FALSE;
 #endif
-   return cont;
 }
 
 static void
@@ -5637,8 +5623,8 @@ _e_gadcon_provider_populate_request(E_Gadcon *gc, const E_Gadcon_Client_Class *c
 {
    if (eina_list_data_find(gc->populate_requests, cc)) return;
    gc->populate_requests = eina_list_append(gc->populate_requests, cc);
-   if (!populate_idler)
-     populate_idler = ecore_idler_add(_e_gadcon_provider_populate_idler, NULL);
+   if (populate_job) ecore_job_del(populate_job);
+   populate_job = ecore_job_add(_e_gadcon_provider_populate_job, NULL);
 }
 
 static void
@@ -5652,10 +5638,10 @@ _e_gadcon_provider_populate_unrequest(const E_Gadcon_Client_Class *cc)
         gc->populate_requests = eina_list_remove(gc->populate_requests, cc);
         more += eina_list_count(gc->populate_requests);
      }
-   if ((!more) && (populate_idler))
+   if ((!more) && (populate_job))
      {
-        ecore_idler_del(populate_idler);
-        populate_idler = NULL;
+        ecore_job_del(populate_job);
+        populate_job = NULL;
      }
 }
 
