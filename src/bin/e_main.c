@@ -1303,8 +1303,8 @@ _e_main_cb_signal_user(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 
    if (e->number == 1)
      {
-        E_Action *a = e_action_find("configuration");
-        if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+//        E_Action *a = e_action_find("configuration");
+//        if ((a) && (a->func.go)) a->func.go(NULL, NULL);
      }
    else if (e->number == 2)
      {
