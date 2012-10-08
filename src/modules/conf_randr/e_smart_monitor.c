@@ -19,9 +19,6 @@ struct _E_Smart_Data
    /* visible flag */
    Eina_Bool visible : 1;
 
-   /* changed flag */
-   Eina_Bool changed : 1;
-
    /* resizing flag */
    Eina_Bool resizing : 1;
 
