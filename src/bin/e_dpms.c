@@ -23,7 +23,7 @@ e_dpms_update(void)
    Eina_Bool changed = EINA_FALSE;
 
    enabled = ((e_config->dpms_enable) && (!e_config->mode.presentation) &&
-              (!e_util_fullscreen_curreny_any()));
+              (!e_util_fullscreen_current_any()));
 
    if (_e_dpms_enabled != enabled)
      {
@@ -72,7 +72,7 @@ e_dpms_force_update(void)
    int enabled;
 
    enabled = ((e_config->dpms_enable) && (!e_config->mode.presentation) &&
-              (!e_util_fullscreen_curreny_any()));
+              (!e_util_fullscreen_current_any()));
    ecore_x_dpms_enabled_set(enabled);
    if (!enabled) return;
    if (e_config->dpms_standby_enable)

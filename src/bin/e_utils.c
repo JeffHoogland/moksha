@@ -1302,7 +1302,7 @@ e_util_module_config_check(const char *module_name, int loaded, int current)
  * Checks whenever the current manager/container/zone have fullscreen windows.
  */
 EAPI Eina_Bool
-e_util_fullscreen_curreny_any(void)
+e_util_fullscreen_current_any(void)
 {
    E_Manager *man = e_manager_current_get();
    E_Container *con = e_container_current_get(man);

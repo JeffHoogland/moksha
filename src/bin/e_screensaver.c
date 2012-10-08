@@ -29,7 +29,7 @@ e_screensaver_update(void)
    Eina_Bool changed = EINA_FALSE;
 
    if ((e_config->screensaver_enable) && (!e_config->mode.presentation) &&
-       (!e_util_fullscreen_curreny_any()))
+       (!e_util_fullscreen_current_any()))
      timeout = e_config->screensaver_timeout * count;
 
    interval = e_config->screensaver_interval;
@@ -66,7 +66,7 @@ e_screensaver_force_update(void)
    int timeout = 0, count = (1 + _e_screensaver_ask_presentation_count);
 
    if ((e_config->screensaver_enable) && (!e_config->mode.presentation) &&
-       (!e_util_fullscreen_curreny_any()))
+       (!e_util_fullscreen_current_any()))
      timeout = e_config->screensaver_timeout * count;
    ecore_x_screensaver_set(timeout + 10,
                            e_config->screensaver_interval + 10,
