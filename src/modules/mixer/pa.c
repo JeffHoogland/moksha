@@ -727,7 +727,7 @@ pulse_free(Pulse *conn)
    if (!conn) return;
    if (conn->fdh) ecore_main_fd_handler_del(conn->fdh);
    else if (conn->svr) ecore_con_server_del(conn->svr);
-   ecore_event_handler_del(conn->con);
+   if (conn->con) ecore_event_handler_del(conn->con);
    eina_stringshare_del(conn->socket);
    EINA_LIST_FREE(conn->oq, tag)
      pulse_tag_free(tag);
