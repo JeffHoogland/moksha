@@ -63,9 +63,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 }
 
 static void 
-_fill_data(E_Config_Dialog_Data *cfdata)
+_fill_data(E_Config_Dialog_Data *cfdata __UNUSED__)
 {
-
 }
 
 static void 
@@ -79,7 +78,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
 {
    return 1;
 }
