@@ -87,7 +87,7 @@ e_int_config_modules(E_Container *con, const char *params __UNUSED__)
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
 
-   if (e_config_dialog_find("E", "_config_modules_dialog")) return NULL;
+   if (e_config_dialog_find("E", "extensions/modules")) return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
    v->create_cfdata = _create_data;
@@ -95,7 +95,7 @@ e_int_config_modules(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
 
    cfd = e_config_dialog_new(con, _("Module Settings"),
-                             "E", "_config_modules_dialog",
+                             "E", "extensions/modules",
                              "preferences-plugin", 0, v, NULL);
    return cfd;
 }
