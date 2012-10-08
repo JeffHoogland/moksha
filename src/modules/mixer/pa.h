@@ -23,9 +23,8 @@
 # define PA_MACHINE_ID "/var/lib/dbus/machine-id"
 #endif
 
-#ifndef _
-# define _(X) (X)
-#endif
+#undef _
+#define _(X) (X)
 
 #undef DBG
 #undef INF
