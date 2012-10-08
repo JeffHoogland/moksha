@@ -1,9 +1,7 @@
 #ifndef PA_HACKS_H
 #define PA_HACKS_H
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
+#include "e.h"
 
 #include <Ecore.h>
 #include <Ecore_Con.h>
@@ -28,6 +26,12 @@
 #ifndef _
 # define _(X) (X)
 #endif
+
+#undef DBG
+#undef INF
+#undef WRN
+#undef ERR
+#undef CRI
 
 #define DBG(...)            EINA_LOG_DOM_DBG(pa_log_dom, __VA_ARGS__)
 #define INF(...)            EINA_LOG_DOM_INFO(pa_log_dom, __VA_ARGS__)

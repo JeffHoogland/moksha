@@ -1,3 +1,4 @@
+#include "e.h"
 #include <Ecore.h>
 #include <Ecore_Con.h>
 #include <arpa/inet.h>
@@ -746,7 +747,7 @@ pulse_connect(Pulse *conn)
    return !!conn->svr;
 }
 
-void
+EINTERN void
 pulse_disconnect(Pulse *conn)
 {
    EINA_SAFETY_ON_NULL_RETURN(conn);
