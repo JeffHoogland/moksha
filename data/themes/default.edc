@@ -22559,9 +22559,9 @@ CONNMAN_ICON(ethernet)
                   to_y: "e.swallow.content";
                }
                rel2 {
-                  relative: 1.0  1.0;
-                  offset: -5   0;
-                  to_y: "e.swallow.content";
+                  relative: 1.0  0.0;
+                  offset: 5   0;
+                  to_y: "e.swallow.buttons";
                }
                image {
                   normal: "menu_sep.png";
