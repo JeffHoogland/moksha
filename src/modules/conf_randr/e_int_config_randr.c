@@ -15,7 +15,8 @@ static void *_create_data(E_Config_Dialog *cfd __UNUSED__);
 static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create(E_Config_Dialog *cfd  __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static void _randr_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
 
 /* local variables */
 
@@ -36,6 +37,7 @@ e_int_config_randr(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
+
    v->override_auto_apply = EINA_TRUE;
 
    cfd = e_config_dialog_new(con, _("Screen Setup"), 
@@ -69,6 +71,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 static void 
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   evas_object_smart_callback_del(cfdata->o_scroll, "changed", 
+                                  _randr_cb_changed);
+   evas_object_del(cfdata->o_scroll);
+
    E_FREE(cfdata);
 }
 
@@ -79,7 +85,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o;
    Eina_List *l;
@@ -92,6 +98,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                   E_RANDR_12->max_size.width,
                                   E_RANDR_12->max_size.height);
    evas_object_show(cfdata->o_scroll);
+
+   evas_object_smart_callback_add(cfdata->o_scroll, "changed", 
+                                  _randr_cb_changed, cfd);
 
    /* create monitors based on 'CRTCS' */
    EINA_LIST_FOREACH(E_RANDR_12->crtcs, l, crtc)
@@ -111,4 +120,13 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_list_object_append(o, cfdata->o_scroll, 1, 1, 0.5);
 
    return o;
+}
+
+static void 
+_randr_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+{
+   E_Config_Dialog *cfd;
+
+   if (!(cfd = data)) return;
+   e_config_dialog_changed_set(cfd, EINA_TRUE);
 }
