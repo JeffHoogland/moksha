@@ -5,167 +5,110 @@
 #include "e_smart_monitor.h"
 
 /* local structures */
-typedef struct _Randr_Info Randr_Info;
-struct _Randr_Info
+struct _E_Config_Dialog_Data
 {
-   E_Win *win;
-   Evas_Object *o_bg;
    Evas_Object *o_scroll;
 };
 
 /* local function prototypes */
-static Randr_Info *_randr_info_new(E_Container *con);
-static void _randr_info_free(void);
-static void _win_cb_resize(E_Win *win);
-static void _win_cb_delete(E_Win *win __UNUSED__);
-static void _close_cb_click(void *data __UNUSED__, void *data2 __UNUSED__);
+static void *_create_data(E_Config_Dialog *cfd __UNUSED__);
+static void _fill_data(E_Config_Dialog_Data *cfdata);
+static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd  __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 
 /* local variables */
-static Randr_Info *_randr_info = NULL;
 
 E_Config_Dialog *
 e_int_config_randr(E_Container *con, const char *params __UNUSED__)
 {
+   E_Config_Dialog *cfd;
+   E_Config_Dialog_View *v;
+
    if (e_randr_screen_info.randr_version < ECORE_X_RANDR_1_2) 
      return NULL;
 
-   if (_randr_info)
-     {
-        /* already have an existing window, show it */
-        e_win_show(_randr_info->win);
-        e_win_raise(_randr_info->win);
-        return NULL;
-     }
+   if (e_config_dialog_find("E", "screen/screen_setup")) return NULL;
 
-   /* create new window */
-   _randr_info = _randr_info_new(con);
+   if (!(v = E_NEW(E_Config_Dialog_View, 1))) return NULL;
 
-   return NULL;
+   v->create_cfdata = _create_data;
+   v->free_cfdata = _free_data;
+   v->basic.create_widgets = _basic_create;
+   v->basic.apply_cfdata = _basic_apply;
+   v->override_auto_apply = EINA_TRUE;
+
+   cfd = e_config_dialog_new(con, _("Screen Setup"), 
+                             "E", "screen/screen_setup", 
+                             "preferences-system-screen-setup", 0, v, NULL);
+
+   /* NB: These are just arbitrary values I picked. Feel free to change */
+   e_win_size_min_set(cfd->dia->win, 180, 230);
+   e_dialog_resizable_set(cfd->dia, 1);
+
+   return cfd;
 }
 
 /* local functions */
-static Randr_Info *
-_randr_info_new(E_Container *con)
+static void *
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
+   E_Config_Dialog_Data *cfdata;
+
+   if (!(cfdata = E_NEW(E_Config_Dialog_Data, 1))) return NULL;
+   _fill_data(cfdata);
+   return cfdata;
+}
+
+static void 
+_fill_data(E_Config_Dialog_Data *cfdata)
+{
+
+}
+
+static void 
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   E_FREE(cfdata);
+}
+
+static int 
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return 1;
+}
+
+static Evas_Object *
+_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+{
+   Evas_Object *o;
    Eina_List *l;
    E_Randr_Crtc_Info *crtc;
-   Randr_Info *info = NULL;
-   Evas *evas;
-   Evas_Object *ob;
-   int mw = 0, mh = 0;
 
-   if (!(info = calloc(1, sizeof(Randr_Info)))) return NULL;
+   o = e_widget_list_add(evas, 0, 0);
 
-   /* create window */
-   if (!(info->win = e_win_new(con)))
-     {
-        free(info);
-        return NULL;
-     }
-
-   info->win->data = info;
-
-   /* set window properties */
-   e_win_dialog_set(info->win, EINA_FALSE);
-   e_win_title_set(info->win, _("Screen Setup"));
-   e_win_name_class_set(info->win, "E", "_config::screen/screen_setup");
-   e_win_resize_callback_set(info->win, _win_cb_resize);
-   e_win_delete_callback_set(info->win, _win_cb_delete);
-
-   evas = e_win_evas_get(info->win);
-
-   /* create background */
-   info->o_bg = edje_object_add(evas);
-   e_theme_edje_object_set(info->o_bg, "base/theme/widgets", 
-                           "e/conf/randr/main/window");
-   evas_object_move(info->o_bg, 0, 0);
-   evas_object_show(info->o_bg);
-
-   printf("Max Size: %d %d\n", E_RANDR_12->max_size.width, 
-          E_RANDR_12->max_size.height);
-
-   /* create scrolling widget */
-   info->o_scroll = e_smart_randr_add(evas);
-   e_smart_randr_virtual_size_set(info->o_scroll, 
+   cfdata->o_scroll = e_smart_randr_add(evas);
+   e_smart_randr_virtual_size_set(cfdata->o_scroll, 
                                   E_RANDR_12->max_size.width,
                                   E_RANDR_12->max_size.height);
-   edje_object_part_swallow(info->o_bg, "e.swallow.content", info->o_scroll);
+   evas_object_show(cfdata->o_scroll);
 
    /* create monitors based on 'CRTCS' */
-   /* int i = 0; */
    EINA_LIST_FOREACH(E_RANDR_12->crtcs, l, crtc)
      {
         Evas_Object *m;
 
-        /* if (i > 0) break; */
         if (!crtc) continue;
 
-        printf("ADD CRTC %d\n", crtc->xid);
+        /* printf("ADD CRTC %d\n", crtc->xid); */
 
         if (!(m = e_smart_monitor_add(evas))) continue;
         e_smart_monitor_crtc_set(m, crtc);
-        e_smart_randr_monitor_add(info->o_scroll, m);
+        e_smart_randr_monitor_add(cfdata->o_scroll, m);
         evas_object_show(m);
-        /* i++; */
      }
 
-   /* create close button */
-   ob = e_widget_button_add(evas, _("Close"), NULL, 
-                            _close_cb_click, info->win, NULL);
-   e_widget_size_min_get(ob, &mw, &mh);
-   edje_extern_object_min_size_set(ob, mw, mh);
-   edje_object_part_swallow(info->o_bg, "e.swallow.button", ob);
+   e_widget_list_object_append(o, cfdata->o_scroll, 1, 1, 0.5);
 
-   /* set window minimum size */
-   edje_object_size_min_calc(info->o_bg, &mw, &mh);
-   e_win_size_min_set(info->win, mw, mh);
-   e_util_win_auto_resize_fill(info->win);
-
-   e_win_centered_set(info->win, EINA_TRUE);
-   e_win_show(info->win);
-   e_win_border_icon_set(info->win, "preferences-system-screen-resolution");
-
-   return info;
-}
-
-static void 
-_randr_info_free(void)
-{
-   if (!_randr_info) return;
-
-   /* delete scroller */
-   if (_randr_info->o_scroll) evas_object_del(_randr_info->o_scroll);
-   _randr_info->o_scroll = NULL;
-
-   /* delete background */
-   if (_randr_info->o_bg) evas_object_del(_randr_info->o_bg);
-   _randr_info->o_bg = NULL;
-
-   /* delete window */
-   if (_randr_info->win) e_object_del(E_OBJECT(_randr_info->win));
-   _randr_info->win = NULL;
-
-   /* free structure */
-   E_FREE(_randr_info);
-}
-
-static void 
-_win_cb_resize(E_Win *win)
-{
-   Randr_Info *info = NULL;
-
-   if (!(info = win->data)) return;
-   evas_object_resize(info->o_bg, win->w, win->h);
-}
-
-static void 
-_win_cb_delete(E_Win *win __UNUSED__)
-{
-   _randr_info_free();
-}
-
-static void 
-_close_cb_click(void *data __UNUSED__, void *data2 __UNUSED__)
-{
-   _randr_info_free();
+   return o;
 }

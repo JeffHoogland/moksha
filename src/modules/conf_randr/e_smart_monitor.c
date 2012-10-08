@@ -150,10 +150,25 @@ void
 e_smart_monitor_layout_set(Evas_Object *obj, Evas_Object *layout)
 {
    E_Smart_Data *sd;
+   Evas_Coord mw, mh, mfw;
 
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
+
    sd->o_layout = layout;
+
+   /* grab min size of frame */
+   edje_object_size_min_get(sd->o_frame, &mfw, NULL);
+
+   /* grab smallest resolution and convert to smallest canvas size */
+   e_layout_coord_virtual_to_canvas(sd->o_layout, sd->min.w, sd->min.h, 
+                                    &mw, &mh);
+
+   /* if min resolution width is smaller than frame, then set 
+    * object min width to frame width */
+   if (mw < mfw) mw = mfw;
+
+   evas_object_size_hint_min_set(obj, mw, mh);
 }
 
 void 

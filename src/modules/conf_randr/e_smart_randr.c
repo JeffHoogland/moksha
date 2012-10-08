@@ -77,8 +77,6 @@ e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
 
-   printf("Adding Monitor Object: %p\n", mon);
-
    /* tell monitor what layout it is in */
    e_smart_monitor_layout_set(mon, sd->o_layout);
 
@@ -122,6 +120,7 @@ _e_smart_add(Evas_Object *obj)
    evas_object_resize(sd->o_layout, 
                       E_RANDR_12->max_size.width / 8,
                       E_RANDR_12->max_size.height / 8);
+   evas_object_show(sd->o_layout);
 
    /* add scroll object */
    sd->o_scroll = e_scrollframe_add(evas);
@@ -253,8 +252,6 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
 
    if (!sd) return;
 
-#define RESISTANCE_THRESHOLD 5
-
    /* get the geometry of this monitor */
    e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
 
@@ -377,8 +374,6 @@ _e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__)
    E_Smart_Data *sd;
 
    if (!(sd = data)) return;
-
-//   printf("Monitor Moved: %p\n", obj);
 
    if (e_smart_monitor_moving_get(obj)) 
      _e_smart_randr_layout_reposition(sd, obj);
