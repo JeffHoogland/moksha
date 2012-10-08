@@ -37,6 +37,7 @@ static void _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj)
 static void _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_cb_monitor_toggled(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
 static void _e_smart_cb_monitor_deleted(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
 
 /* public functions */
@@ -90,6 +91,8 @@ e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
                                   _e_smart_cb_monitor_rotated, obj);
    evas_object_smart_callback_add(mon, "monitor_moved", 
                                   _e_smart_cb_monitor_moved, obj);
+   evas_object_smart_callback_add(mon, "monitor_toggled", 
+                                  _e_smart_cb_monitor_toggled, obj);
 
    /* add listener for when this monitor gets removed */
    evas_object_event_callback_add(mon, EVAS_CALLBACK_DEL, 
@@ -426,6 +429,20 @@ _e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__)
    sd->changed = EINA_FALSE;
 }
 
+static void 
+_e_smart_cb_monitor_toggled(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+{
+   Evas_Object *o_randr;
+   E_Smart_Data *sd;
+
+   if (!(o_randr = data)) return;
+   if (!(sd = evas_object_smart_data_get(o_randr)))
+     return;
+
+   evas_object_smart_callback_call(o_randr, "changed", NULL);
+   sd->changed = EINA_FALSE;
+}
+
 /* callback received from the monitor object to let us know that it was 
  * deleted, and we should cleanup */
 static void 
@@ -437,4 +454,6 @@ _e_smart_cb_monitor_deleted(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_O
                                   _e_smart_cb_monitor_rotated);
    evas_object_smart_callback_del(obj, "monitor_moved", 
                                   _e_smart_cb_monitor_moved);
+   evas_object_smart_callback_del(obj, "monitor_toggled", 
+                                  _e_smart_cb_monitor_toggled);
 }

@@ -452,7 +452,7 @@ _e_smart_add(Evas_Object *obj)
                                    _e_smart_cb_indicator_mouse_out, NULL);
    edje_object_signal_callback_add(sd->o_frame, 
                                    "e,action,indicator,toggle", "e", 
-                                   _e_smart_cb_indicator_toggle, sd);
+                                   _e_smart_cb_indicator_toggle, obj);
 
    /* create event handlers */
    sd->hdls = 
@@ -824,9 +824,11 @@ _e_smart_cb_indicator_mouse_out(void *data __UNUSED__, Evas_Object *obj, const c
 static void 
 _e_smart_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
+   Evas_Object *mon;
    E_Smart_Data *sd;
 
-   if (!(sd = data)) return;
+   if (!(mon = data)) return;
+   if (!(sd = evas_object_smart_data_get(mon))) return;
 
    if (sd->connected)
      {
@@ -840,6 +842,9 @@ _e_smart_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char
         edje_object_signal_emit(sd->o_base, "e,state,enabled", "e");
         edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
      }
+
+   /* tell randr widget that we enabled/disabled this monitor */
+   evas_object_smart_callback_call(mon, "monitor_toggled", NULL);
 }
 
 static void 
