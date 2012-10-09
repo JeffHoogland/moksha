@@ -269,6 +269,8 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
 
    if (!sd) return;
 
+   sd->changed = EINA_TRUE;
+
    /* get the geometry of this monitor */
    e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
 
@@ -292,13 +294,11 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
           {
              /* if this monitor is to the right, move it */
              e_layout_child_move(mon, (o.x + o.w), m.y);
-             sd->changed = EINA_TRUE;
           }
         else if ((m.y >= (o.y + o.h)))
           {
              /* if this monitor is below, move it */
              e_layout_child_move(mon, m.x, (o.y + o.h));
-             sd->changed = EINA_TRUE;
           }
         else if (eina_rectangles_intersect(&o, &m))
           {
@@ -309,8 +309,6 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
                e_layout_child_move(mon, (o.x + o.w), m.y);
              else if ((m.y <= (o.y + o.h)))
                e_layout_child_move(mon, m.x, (o.y + o.h));
-
-             sd->changed = EINA_TRUE;
           }
      }
 
@@ -327,6 +325,8 @@ _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj)
    Evas_Coord mx, my;
 
    if (!sd) return;
+
+   sd->changed = EINA_TRUE;
 
    /* get this monitor geometry Before it was moved
     * 
@@ -358,7 +358,6 @@ _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj)
               * NB: Currently, this will move This monitor to the 
               * position of the old one. This is probably not ideal */
              e_layout_child_move(mon, mx, my);
-             sd->changed = EINA_TRUE;
           }
      }
 
