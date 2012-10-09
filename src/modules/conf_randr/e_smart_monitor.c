@@ -46,6 +46,9 @@ struct _E_Smart_Data
    /* livethumbnail for background image */
    Evas_Object *o_thumb;
 
+   /* 'refresh rate' object */
+   Evas_Object *o_refresh;
+
    /* popup menu for resolutions */
    E_Menu *menu;
 
@@ -60,6 +63,9 @@ struct _E_Smart_Data
 
    /* current rotation */
    int rotation, start_rotation;
+
+   /* current refresh rate */
+   int rate;
 
    /* current mode */
    Ecore_X_Randr_Mode_Info *mode;
@@ -106,6 +112,7 @@ static void _e_smart_cb_thumb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSE
 static void _e_smart_cb_thumb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_thumb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
 static void _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
+
 static int _e_smart_cb_modes_sort(const void *data1, const void *data2);
 
 static void _e_smart_monitor_rotate(E_Smart_Data *sd, void *event);
@@ -113,6 +120,7 @@ static void _e_smart_monitor_rotate_snap(Evas_Object *obj);
 static void _e_smart_monitor_resize(E_Smart_Data *sd, Evas_Object *mon, void *event);
 static void _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode);
 static void _e_smart_monitor_move(E_Smart_Data *sd, Evas_Object *mon, void *event);
+static void _e_smart_monitor_refresh_rates_refill(Evas_Object *obj);
 
 static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height);
 static Ecore_X_Randr_Orientation _e_smart_monitor_orientation_get(int rotation);
@@ -191,6 +199,7 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
    sd->orientation = crtc->current_orientation;
    sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
    sd->mode = crtc->current_mode;
+   sd->rate = sd->mode->xid;
 
    EINA_LIST_FOREACH(crtc->outputs, l, output)
      {
@@ -284,6 +293,8 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
         if (!name) name = output->name;
         edje_object_part_text_set(sd->o_frame, "e.text.name", name);
      }
+
+   _e_smart_monitor_refresh_rates_refill(obj);
 
    /* get which desk this is based on monitor geometry */
    con = e_container_current_get(e_manager_current_get());
@@ -512,6 +523,7 @@ _e_smart_del(Evas_Object *obj)
    if (sd->modes) eina_list_free(sd->modes);
 
    /* delete the monitor objects */
+   if (sd->o_refresh) evas_object_del(sd->o_refresh);
    if (sd->o_stand) evas_object_del(sd->o_stand);
    if (sd->o_thumb) evas_object_del(sd->o_thumb);
    if (sd->o_frame) evas_object_del(sd->o_frame);
@@ -1134,6 +1146,8 @@ _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
    snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height);
    edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
 
+   _e_smart_monitor_refresh_rates_refill(obj);
+
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
    evas_object_smart_callback_call(obj, "monitor_resized", NULL);
@@ -1203,6 +1217,73 @@ _e_smart_monitor_move(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    /* actually move the monitor */
    /* e_layout_child_move(mon, nx, ny); */
+}
+
+static void 
+_e_smart_monitor_refresh_rates_refill(Evas_Object *obj)
+{
+   Evas *evas;
+   Eina_List *l;
+   E_Randr_Output_Info *output;
+   E_Radio_Group *rg;
+   E_Smart_Data *sd;
+   Evas_Coord mw, mh;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return;
+
+   evas = evas_object_evas_get(obj);
+
+   if (sd->o_refresh)
+     {
+        /* NB: Hmmm, this really should not be necessary to delete the 
+         * existing e_widget_list object, however e_widget_list has no 
+         * methods available for clearing existing content */
+        edje_object_part_unswallow(sd->o_frame, sd->o_refresh);
+        evas_object_del(sd->o_refresh);
+     }
+
+   /* create refresh rate list */
+   sd->o_refresh = e_widget_list_add(evas, 0, 0);
+
+   rg = e_widget_radio_group_new(&sd->rate);
+
+   EINA_LIST_FOREACH(sd->crtc->outputs, l, output)
+     {
+        Eina_List *modes = NULL, *m = NULL;
+        Ecore_X_Randr_Mode_Info *mode = NULL;
+
+        if (output->crtc)
+          modes = output->crtc->outputs_common_modes;
+        else if (output->monitor)
+          modes = output->monitor->modes;
+
+        /* grab a copy of this monitor's modes, 
+         * filtering out duplicate resolutions */
+        EINA_LIST_FOREACH(modes, m, mode)
+          {
+             if (!strcmp(mode->name, sd->mode->name))
+               {
+                  Evas_Object *ow;
+                  double rate = 0.0;
+                  char buff[1024];
+
+                  if ((mode->hTotal) && (mode->vTotal))
+                    rate = ((float)mode->dotClock / 
+                            ((float)mode->hTotal * (float)mode->vTotal));
+
+                  snprintf(buff, sizeof(buff), "%.1fHz", rate);
+
+                  ow = e_widget_radio_add(evas, buff, mode->xid, rg);
+                  e_widget_list_object_append(sd->o_refresh, ow, 1, 0, 0.5);
+               }
+          }
+     }
+
+   e_widget_size_min_get(sd->o_refresh, &mw, &mh);
+   edje_extern_object_min_size_set(sd->o_refresh, mw, mh);
+   edje_object_part_swallow(sd->o_frame, "e.swallow.refresh", sd->o_refresh);
+   evas_object_show(sd->o_refresh);
 }
 
 static Ecore_X_Randr_Mode_Info *
