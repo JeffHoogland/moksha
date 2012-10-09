@@ -39969,6 +39969,7 @@ CONNMAN_ICON(ethernet)
              image: "randr_monitor.png" COMP;
              image: "randr_icon_off.png" COMP;
              image: "randr_icon_on.png" COMP;
+             image: "big_arrow_up.png" COMP;
           }
         styles 
           {
@@ -40011,7 +40012,7 @@ CONNMAN_ICON(ethernet)
                        state: "default" 0.0;
                        rel1
                          {
-                            offset: 12 14;
+                            offset: 12 15;
                             to: "frame";
                          }
                        rel2
@@ -40074,6 +40075,146 @@ CONNMAN_ICON(ethernet)
                             min: 1.0 1.0;
                             max: 1.0 1.0;
                          }
+                    }
+               }
+             part
+               {
+                  name: "refresh_tab";
+                  type: RECT;
+                  mouse_events: 0;
+                  clip_to: "clip";
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 255 255 128;
+                       rel1
+                         {
+                            relative: 0.0 1.0;
+                            offset: 2 -16;
+                            to: "e.swallow.preview";
+                         }
+                       rel2
+                         {
+                            relative: 0.0 1.0;
+                            offset: 23 0;
+                            to: "e.swallow.preview";
+                         }
+                    }
+                  description
+                    {
+                       state: "out" 0.0;
+                       inherit: "default" 0.0;
+                       color: 255 255 255 200;
+                       rel1
+                         {
+                            relative: 0.0 0.0;
+                            offset: 2 2;
+                            to: "e.swallow.preview";
+                         }
+                       rel2
+                         {
+                            relative: 0.0 0.0;
+                            offset: 23 16;
+                            to: "e.swallow.preview";
+                         }
+                    }
+               }
+             part
+               {
+                  name: "refresh_arrow";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       fixed: 1 1;
+                       align: 0.5 0.5;
+                       min: 22 22;
+                       max: 22 22;
+                       rel1.to: "refresh_tab";
+                       rel2.to: "refresh_tab";
+                       image.normal: "big_arrow_up.png";
+                    }
+               }
+             part
+               {
+                  name: "refresh_bg";
+                  type: RECT;
+                  mouse_events: 0;
+                  clip_to: "clip";
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 255 255 200;
+                       rel1.to: "e.swallow.refresh";
+                       rel2.to: "e.swallow.refresh";
+                       visible: 0;
+                    }
+                  description
+                    {
+                       state: "out" 0.0;
+                       inherit: "default" 0.0;
+                       visible: 1;
+                    }
+               }
+             part
+               {
+                  name: "e.swallow.refresh";
+                  type: SWALLOW;
+                  clip_to: "clip";
+                  description
+                    {
+                       state: "default" 0.0;
+                       align: 0.0 0.0;
+                       fixed: 1 0;
+                       rel1
+                         {
+                            relative: 0.0 1.0;
+                            to: "refresh_tab";
+                         }
+                       rel2
+                         {
+                            relative: 0.0 1.0;
+                            to_x: "refresh_tab";
+                            to_y: "e.swallow.preview";
+                         }
+                    }
+               }
+             part
+               {
+                  name: "e.event.arrow.hide";
+                  type: RECT;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 255 255 0;
+                       rel1.to: "refresh_tab";
+                       rel2.to: "refresh_tab";
+                    }
+                  description
+                    {
+                       state: "out" 0.0;
+                       inherit: "default" 0.0;
+                       visible: 0;
+                    }
+               }
+             part
+               {
+                  name: "e.event.arrow.show";
+                  type: RECT;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 255 255 0;
+                       visible: 0;
+                       rel1.to: "refresh_tab";
+                       rel2.to: "refresh_tab";
+                    }
+                  description
+                    {
+                       state: "out" 0.0;
+                       inherit: "default" 0.0;
+                       visible: 1;
                     }
                }
              part
@@ -40280,6 +40421,44 @@ CONNMAN_ICON(ethernet)
                   source: "e";
                   action: STATE_SET "disabled" 0.0;
                   target: "indicator";
+               }
+             program
+               {
+                  name: "refresh_click_show";
+                  signal: "mouse,down,1";
+                  source: "e.event.arrow.hide";
+                  action: SIGNAL_EMIT "e,action,panel,show" "e";
+               }
+             program
+               {
+                  name: "refresh_show";
+                  signal: "e,action,panel,show";
+                  source: "e";
+                  action: STATE_SET "out" 0.0;
+                  target: "refresh_bg";
+                  target: "refresh_tab";
+                  target: "e.event.arrow.hide";
+                  target: "e.event.arrow.show";
+                  transition: DECELERATE 0.5;
+               }
+             program
+               {
+                  name: "refresh_click_hide";
+                  signal: "mouse,down,1";
+                  source: "e.event.arrow.show";
+                  action: SIGNAL_EMIT "e,action,panel,hide" "e";
+               }
+             program
+               {
+                  name: "refresh_hide";
+                  signal: "e,action,panel,hide";
+                  source: "e";
+                  action: STATE_SET "default" 0.0;
+                  target: "refresh_bg";
+                  target: "refresh_tab";
+                  target: "e.event.arrow.hide";
+                  target: "e.event.arrow.show";
+                  transition: ACCELERATE 0.2;
                }
           }
      }
