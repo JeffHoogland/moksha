@@ -4,6 +4,19 @@
 #include <Eina.h>
 #include <inttypes.h>
 
+# ifdef EINTERN
+#  undef EINTERN
+# endif
+# ifdef __GNUC__
+#  if __GNUC__ >= 4
+#   define EINTERN __attribute__ ((visibility("hidden")))
+#  else
+#   define EINTERN
+#  endif
+# else
+#  define EINTERN
+# endif
+
 #define PULSE_SUCCESS (void*)1
 
 extern int PULSE_EVENT_CONNECTED;

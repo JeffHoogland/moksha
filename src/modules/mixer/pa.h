@@ -1,7 +1,9 @@
 #ifndef PA_HACKS_H
 #define PA_HACKS_H
 
-#include "e.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #include <Ecore.h>
 #include <Ecore_Con.h>
@@ -17,14 +19,28 @@
 # define __UNUSED__ __attribute__((unused))
 #endif
 
+# ifdef EINTERN
+#  undef EINTERN
+# endif
+# ifdef __GNUC__
+#  if __GNUC__ >= 4
+#   define EINTERN __attribute__ ((visibility("hidden")))
+#  else
+#   define EINTERN
+#  endif
+# else
+#  define EINTERN
+# endif
+
 #define PA_PROTOCOL_VERSION 16
 #define PA_NATIVE_COOKIE_LENGTH 256
 #ifndef PA_MACHINE_ID
 # define PA_MACHINE_ID "/var/lib/dbus/machine-id"
 #endif
 
-#undef _
-#define _(X) (X)
+#ifndef _
+# define _(X) (X)
+#endif
 
 #undef DBG
 #undef INF
