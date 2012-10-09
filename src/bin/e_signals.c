@@ -55,19 +55,18 @@ _e_write_safe_int(int fd, const char *buf, size_t size)
 }
 
 static void
-_e_gdb_print_backtrace(int fd)
+_e_gdb_print_backtrace(int fd __UNUSED__)
 {
-   char cmd[1024];
-   size_t size;
-   int ret;
-
    // FIXME: we are in a segv'd state. do as few function calls and things
    // depending on a known working state as possible. this also prevents the
    // white box allowing recovery or deeper gdbing, thus until this works
    // properly, it's disabled (properly means always reliable, always
    // printf bt and allows e to continue and pop up box, perferably allowing
    // debugging in the gui etc. etc.
-   return;
+#if 0
+   char cmd[1024];
+   size_t size;
+   int ret;
 
    if (getenv("E_NO_GDB_BACKTRACE"))
      return;
@@ -84,6 +83,7 @@ _e_gdb_print_backtrace(int fd)
    _e_write_safe_int(fd, cmd, size);
    _e_write_safe(fd, "\n");
    ret = system(cmd); // TODO: use popen() or fork()+pipe()+exec() and save to 'fd'
+#endif
 }
 
 #define _e_backtrace(msg) _e_backtrace_int(2, msg, sizeof(msg))
