@@ -199,7 +199,9 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
    sd->orientation = crtc->current_orientation;
    sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
    sd->mode = crtc->current_mode;
-   sd->rate = sd->mode->xid;
+
+   sd->rate = ((float)sd->mode->dotClock / 
+               ((float)sd->mode->hTotal * (float)sd->mode->vTotal));
 
    EINA_LIST_FOREACH(crtc->outputs, l, output)
      {
@@ -1274,7 +1276,7 @@ _e_smart_monitor_refresh_rates_refill(Evas_Object *obj)
 
                   snprintf(buff, sizeof(buff), "%.1fHz", rate);
 
-                  ow = e_widget_radio_add(evas, buff, mode->xid, rg);
+                  ow = e_widget_radio_add(evas, buff, abs((int)rate), rg);
                   e_widget_list_object_append(sd->o_refresh, ow, 1, 0, 0.5);
                }
           }
