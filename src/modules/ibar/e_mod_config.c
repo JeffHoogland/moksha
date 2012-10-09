@@ -233,8 +233,6 @@ _cb_entry_ok(void *data, char *text)
         f = fopen(buf, "w");
         if (f)
           {
-             int ret = 0;
-
              /* Populate this .order file with some defaults */
              snprintf(tmp, sizeof(tmp), 
                       "terminology.desktop\n"
@@ -243,7 +241,7 @@ _cb_entry_ok(void *data, char *text)
                       "openoffice.desktop\n" 
                       "xchat.desktop\n"
                       "gimp.desktop\n");
-             ret = fwrite(tmp, sizeof(char), strlen(tmp), f);
+             fwrite(tmp, sizeof(char), strlen(tmp), f);
              fclose(f);
           }
      }
