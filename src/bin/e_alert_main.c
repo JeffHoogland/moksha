@@ -421,15 +421,13 @@ _e_alert_draw_title_outline(void)
 static void
 _e_alert_draw_title(void)
 {
-   xcb_void_cookie_t cookie;
    int x = 0, y = 0;
 
    /* draw title */
    x = (2 + 2 + ((WINDOW_WIDTH - 4 - 4 - fw) / 2));
    y = (2 + 2 + fh);
 
-   cookie =
-     xcb_image_text_8(conn, strlen(title), win, gc, x, y, title);
+   xcb_image_text_8(conn, strlen(title), win, gc, x, y, title);
 }
 
 struct {
@@ -446,7 +444,6 @@ struct {
 static void
 _e_alert_draw_text(void)
 {
-   xcb_void_cookie_t cookie;
    char warn[1024], msg[4096], line[1024];
    unsigned int i = 0, j = 0, k = 0;
 
@@ -470,9 +467,8 @@ _e_alert_draw_text(void)
 
    /* draw text */
    k = (fh + 12);
-   cookie =
-     xcb_image_text_8(conn, strlen(warn), win, gc,
-                      4, (k + fa), warn);
+   xcb_image_text_8(conn, strlen(warn), win, gc,
+                    4, (k + fa), warn);
    k += (2 * (fh + 2));
    while (msg[i])
      {
@@ -481,9 +477,8 @@ _e_alert_draw_text(void)
           {
              line[j - 1] = 0;
              j = 0;
-             cookie =
-               xcb_image_text_8(conn, strlen(line), win, gc,
-                                4, (k + fa), line);
+             xcb_image_text_8(conn, strlen(line), win, gc,
+                              4, (k + fa), line);
              k += (fh + 2);
           }
      }
@@ -507,7 +502,6 @@ _e_alert_draw_button_outlines(void)
 static void
 _e_alert_draw_button_text(void)
 {
-   xcb_void_cookie_t dcookie;
    xcb_char2b_t *str = NULL;
    xcb_query_text_extents_cookie_t cookie;
    xcb_query_text_extents_reply_t *reply;
@@ -530,8 +524,7 @@ _e_alert_draw_button_text(void)
 
    x = (5 + ((bw - w) / 2));
 
-   dcookie =
-     xcb_image_text_8(conn, strlen(str1), btn1, gc, x, (10 + fa), str1);
+   xcb_image_text_8(conn, strlen(str1), btn1, gc, x, (10 + fa), str1);
 
    /* draw button2 text */
    str = _e_alert_build_string(str2);
@@ -548,6 +541,5 @@ _e_alert_draw_button_text(void)
 
    x = (5 + ((bw - w) / 2));
 
-   dcookie =
-     xcb_image_text_8(conn, strlen(str2), btn2, gc, x, (10 + fa), str2);
+   xcb_image_text_8(conn, strlen(str2), btn2, gc, x, (10 + fa), str2);
 }
