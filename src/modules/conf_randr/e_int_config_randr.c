@@ -42,7 +42,8 @@ e_int_config_randr(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Screen Setup"), 
                              "E", "screen/screen_setup", 
-                             "preferences-system-screen-setup", 0, v, NULL);
+                             "preferences-system-screen-resolution", 
+                             0, v, NULL);
 
    /* NB: These are just arbitrary values I picked. Feel free to change */
    e_win_size_min_set(cfd->dia->win, 180, 230);
