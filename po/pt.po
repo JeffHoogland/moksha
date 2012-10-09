@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@...\n"
-"POT-Creation-Date: 2012-10-07 11:00+0100\n"
-"PO-Revision-Date: 2012-10-07 11:03+0100\n"
+"POT-Creation-Date: 2012-10-08 22:11+0100\n"
+"PO-Revision-Date: 2012-10-08 22:13+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -944,27 +944,27 @@ msgstr "Seletor de cores"
 msgid "Select"
 msgstr "Selecionar"
 
-#: src/bin/e_config.c:1000
-#: src/bin/e_config.c:1033
+#: src/bin/e_config.c:1001
+#: src/bin/e_config.c:1034
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "As definições precisam de ser atualizadas. As suas antigas definições serão apagadas e serão iniciados novos valores pré-definidos.<br>Isto irá ocorrer recorrentemente durante o desenvolvimento e não deve reportar qualquer erro.<br>Isto significa que o Enlightenment precisa de dados que as suas antigas definições não possuem.<br>Este conjunto de valores corrije a situação.<br> Mais tarde poderá configurar o Enlightenment ao seu gosto.<br>Desculpe qualquer inconveniente.<br>"
 
-#: src/bin/e_config.c:1017
+#: src/bin/e_config.c:1018
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "As suas definições são mais recentes que as do Enlightenment.<br>Isto é muito estranho e só acontece se reverter a versão do Enlightenment ou se copiar as definições de um local em que está instalada uma versão mais recente do Enlightenment.<br>Isto é mau e por precaução, as definições originais foram restauradas.<br>Desculpe qualquer inconveniente.<br>"
 
-#: src/bin/e_config.c:1665
-#: src/bin/e_config.c:2292
+#: src/bin/e_config.c:1666
+#: src/bin/e_config.c:2293
 msgid "Enlightenment Settings Write Problems"
 msgstr "Erros ao escrever as definições do Enlightenment"
 
-#: src/bin/e_config.c:1668
+#: src/bin/e_config.c:1669
 #, c-format
 msgid "Enlightenment has had an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr "O Enlightenment produziu um erro ao mover os ficheiros de configuração<br>de:<br>%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança.<br>"
 
-#: src/bin/e_config.c:1678
-#: src/bin/e_config.c:2305
+#: src/bin/e_config.c:1679
+#: src/bin/e_config.c:2306
 #: src/bin/e_config_dialog.c:278
 #: src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:924
@@ -989,87 +989,87 @@ msgstr "O Enlightenment produziu um erro ao mover os ficheiros de configuração
 msgid "OK"
 msgstr "Aceitar"
 
-#: src/bin/e_config.c:2183
+#: src/bin/e_config.c:2184
 msgid "Settings Upgraded"
 msgstr "Definições atualizadas"
 
-#: src/bin/e_config.c:2201
+#: src/bin/e_config.c:2202
 msgid "The EET file handle is bad."
 msgstr "O identificador do ficheiro EET está errado"
 
-#: src/bin/e_config.c:2205
+#: src/bin/e_config.c:2206
 msgid "The file data is empty."
 msgstr "O ficheiro está vazio"
 
-#: src/bin/e_config.c:2209
+#: src/bin/e_config.c:2210
 msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
 msgstr "Não pode escrever no ficheiro. Pode ser que o ficheiro seja só de leitura ou que não tenha acesso aos ficheiros."
 
-#: src/bin/e_config.c:2213
+#: src/bin/e_config.c:2214
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Ficou sem memória ao preparar o ficheiro.<br>Por favor liberte espaço de memória."
 
-#: src/bin/e_config.c:2217
+#: src/bin/e_config.c:2218
 msgid "This is a generic error."
 msgstr "Este é um erro genérico"
 
-#: src/bin/e_config.c:2221
+#: src/bin/e_config.c:2222
 msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
 msgstr "O ficheiro das definições é muito grande.<br>Em princípio seria pequeno (algumas centenas de KB)."
 
-#: src/bin/e_config.c:2225
+#: src/bin/e_config.c:2226
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Possui erros de E/S no disco.<br>Talvez precise de ser substituido?"
 
-#: src/bin/e_config.c:2229
+#: src/bin/e_config.c:2230
 msgid "You ran out of space while writing the file"
 msgstr "Ficou sem espaço ao escrever no ficheiro"
 
-#: src/bin/e_config.c:2233
+#: src/bin/e_config.c:2234
 msgid "The file was closed on it while writing."
 msgstr "O ficheiro foi fechado durante a escrita"
 
-#: src/bin/e_config.c:2237
+#: src/bin/e_config.c:2238
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Falha ao fazer \"memory-mapping (mmap)\" do ficheiro"
 
-#: src/bin/e_config.c:2241
+#: src/bin/e_config.c:2242
 msgid "X509 Encoding failed."
 msgstr "Falha na codificação X509"
 
-#: src/bin/e_config.c:2245
+#: src/bin/e_config.c:2246
 msgid "Signature failed."
 msgstr "Falha de assinatura"
 
-#: src/bin/e_config.c:2249
+#: src/bin/e_config.c:2250
 msgid "The signature was invalid."
 msgstr "A assinatura era inválida"
 
-#: src/bin/e_config.c:2253
+#: src/bin/e_config.c:2254
 msgid "Not signed."
 msgstr "Não assinado"
 
-#: src/bin/e_config.c:2257
+#: src/bin/e_config.c:2258
 msgid "Feature not implemented."
 msgstr "Opção não implementada"
 
-#: src/bin/e_config.c:2261
+#: src/bin/e_config.c:2262
 msgid "PRNG was not seeded."
 msgstr "O PRNG não foi semeado"
 
-#: src/bin/e_config.c:2265
+#: src/bin/e_config.c:2266
 msgid "Encryption failed."
 msgstr "Falha ao cifrar"
 
-#: src/bin/e_config.c:2269
+#: src/bin/e_config.c:2270
 msgid "Decryption failed."
 msgstr "Falha ao decifrar"
 
-#: src/bin/e_config.c:2273
+#: src/bin/e_config.c:2274
 msgid "The error is unknown to Enlightenment."
 msgstr "O erro não é reconhecido pelo Enlightenment"
 
-#: src/bin/e_config.c:2295
+#: src/bin/e_config.c:2296
 #, c-format
 msgid "Enlightenment has had an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 msgstr "O Enlightenment produziu um erro ao escrever o ficheiro de configurações.<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi eliminado para evitar a danificação dos dados.<br>"
@@ -1249,7 +1249,7 @@ msgstr "Ficheiro .desktop"
 #: src/bin/e_int_border_prop.c:453
 #: src/bin/e_int_border_prop.c:505
 #: src/modules/conf_applications/e_int_config_defapps.c:357
-#: src/modules/conf_performance/e_int_config_performance.c:115
+#: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
 #: src/modules/everything/evry_plug_files.c:1476
 #: src/modules/pager/e_mod_config.c:128
@@ -4033,7 +4033,7 @@ msgid "Check every:"
 msgstr "Verificar a cada:"
 
 #: src/modules/battery/e_mod_config.c:237
-#: src/modules/conf_performance/e_int_config_performance.c:121
+#: src/modules/conf_performance/e_int_config_performance.c:128
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:109
 #: src/modules/temperature/e_mod_config.c:233
 #, c-format
@@ -5448,69 +5448,73 @@ msgstr "Optou por ativar o suporte à composição ARGB<br>mas o seu ecrã atual
 msgid "Enable"
 msgstr "Ativar"
 
-#: src/modules/conf_performance/e_int_config_performance.c:35
+#: src/modules/conf_performance/e_int_config_performance.c:36
 msgid "Performance Settings"
 msgstr "Definições de desempenho"
 
-#: src/modules/conf_performance/e_int_config_performance.c:103
+#: src/modules/conf_performance/e_int_config_performance.c:107
 msgid "Framerate"
 msgstr "Taxa de imagens"
 
-#: src/modules/conf_performance/e_int_config_performance.c:105
+#: src/modules/conf_performance/e_int_config_performance.c:109
 #, c-format
 msgid "%1.0f fps"
 msgstr "%1.0f ips"
 
-#: src/modules/conf_performance/e_int_config_performance.c:109
-msgid "Applications priority"
+#: src/modules/conf_performance/e_int_config_performance.c:113
+msgid "Application priority"
 msgstr "Prioridade das aplicações"
 
 #: src/modules/conf_performance/e_int_config_performance.c:119
+msgid "Allow module load delay"
+msgstr "Permitir atraso de carregamento de módulos"
+
+#: src/modules/conf_performance/e_int_config_performance.c:126
 msgid "Cache flush interval"
 msgstr "Intervalo entre limpezas de cache"
 
-#: src/modules/conf_performance/e_int_config_performance.c:125
+#: src/modules/conf_performance/e_int_config_performance.c:132
 msgid "Font cache size"
 msgstr "Cache para letras"
 
-#: src/modules/conf_performance/e_int_config_performance.c:127
+#: src/modules/conf_performance/e_int_config_performance.c:134
 #, c-format
 msgid "%1.1f MiB"
 msgstr "%1.1f MB"
 
-#: src/modules/conf_performance/e_int_config_performance.c:131
+#: src/modules/conf_performance/e_int_config_performance.c:138
 msgid "Image cache size"
 msgstr "Cache para imagens"
 
-#: src/modules/conf_performance/e_int_config_performance.c:133
+#: src/modules/conf_performance/e_int_config_performance.c:140
 #: src/modules/fileman/e_mod_config.c:405
 #, c-format
 msgid "%1.0f MiB"
 msgstr "%1.0f MB"
 
-#: src/modules/conf_performance/e_int_config_performance.c:137
+#: src/modules/conf_performance/e_int_config_performance.c:144
 msgid "Caches"
 msgstr "Caches"
 
-#: src/modules/conf_performance/e_int_config_performance.c:141
+#: src/modules/conf_performance/e_int_config_performance.c:148
 msgid "Number of Edje files to cache"
 msgstr "Número de ficheiros edje a guardar"
 
-#: src/modules/conf_performance/e_int_config_performance.c:143
+#: src/modules/conf_performance/e_int_config_performance.c:150
 #, c-format
 msgid "%1.0f files"
 msgstr "%1.0f ficheiros"
 
-#: src/modules/conf_performance/e_int_config_performance.c:147
+#: src/modules/conf_performance/e_int_config_performance.c:154
 msgid "Number of Edje collections to cache"
 msgstr "Número de coleções edje a guardar"
 
-#: src/modules/conf_performance/e_int_config_performance.c:149
+#: src/modules/conf_performance/e_int_config_performance.c:156
 #, c-format
 msgid "%1.0f collections"
 msgstr "%1.0f coleções"
 
-#: src/modules/conf_performance/e_int_config_performance.c:152
+#: src/modules/conf_performance/e_int_config_performance.c:159
 msgid "Edje Cache"
 msgstr "Cache edje"
 
@@ -7420,7 +7424,7 @@ msgstr "Barra lateral"
 
 #: src/modules/fileman/e_mod_config.c:348
 msgid "Regular Files In Menu (SLOW)"
-msgstr "Ficheiros regulares no menu (Lento)"
+msgstr "Ficheiros normais no menu (Lento)"
 
 #: src/modules/fileman/e_mod_config.c:384
 msgid "Open Dirs In Place"
