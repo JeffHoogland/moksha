@@ -3688,6 +3688,7 @@ _e_mod_comp_add(E_Manager *man)
              opt[opt_i] = 1;
              opt_i++;
           }
+#ifdef ECORE_EVAS_GL_X11_OPT_SWAP_MODE
         if (_comp_mod->conf->swap_mode)
           {
              opt[opt_i] = ECORE_EVAS_GL_X11_OPT_SWAP_MODE;
@@ -3695,6 +3696,7 @@ _e_mod_comp_add(E_Manager *man)
              opt[opt_i] = _comp_mod->conf->swap_mode;
              opt_i++;
           }
+#endif        
         if (opt_i > 0)
           {
              opt[opt_i] = ECORE_EVAS_GL_X11_OPT_NONE;

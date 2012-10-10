@@ -80,7 +80,11 @@ e_mod_comp_cfdata_config_new(void)
    cfg->loose_sync = 1;
    cfg->grab = 0;
    cfg->vsync = 1;
+#ifdef ECORE_EVAS_GL_X11_OPT_SWAP_MODE
    cfg->swap_mode = ECORE_EVAS_GL_X11_SWAP_MODE_AUTO;
+#else   
+   cfg->swap_mode = 0;
+#endif
    cfg->keep_unmapped = 1;
    cfg->send_flush = 1; // implement
    cfg->send_dump = 1; // implement
