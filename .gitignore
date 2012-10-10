@@ -126,7 +126,6 @@ src/modules/conf_keybindings/module.desktop
 src/modules/conf_menus/module.desktop
 src/modules/conf_paths/module.desktop
 src/modules/conf_performance/module.desktop
-src/modules/conf_randr/e-module-conf_randr.edj
 src/modules/conf_randr/module.desktop
 src/modules/conf_shelves/module.desktop
 src/modules/conf_theme/module.desktop
