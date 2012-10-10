@@ -1541,6 +1541,13 @@ e_fm2_view_flags_get(Evas_Object *obj)
    return sd->view_flags;
 }
 
+EAPI E_Object *
+e_fm2_window_object_get(Evas_Object *obj)
+{
+   EFM_SMART_CHECK(NULL);
+   return sd->eobj;
+}
+
 EAPI void
 e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 {

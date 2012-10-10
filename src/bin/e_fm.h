@@ -179,6 +179,7 @@ EAPI void             e_fm2_icon_menu_flags_set(Evas_Object *obj, E_Fm2_Menu_Fla
 EAPI E_Fm2_Menu_Flags e_fm2_icon_menu_flags_get(Evas_Object *obj);
 EAPI void             e_fm2_view_flags_set(Evas_Object *obj, E_Fm2_View_Flags flags);
 EAPI E_Fm2_View_Flags e_fm2_view_flags_get(Evas_Object *obj);
+EAPI E_Object         *e_fm2_window_object_get(Evas_Object *obj);
 EAPI void             e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj);
 EAPI void             e_fm2_icons_update(Evas_Object *obj);
 
