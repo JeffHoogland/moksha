@@ -11,7 +11,6 @@ static const char      *_gc_id_new(const E_Gadcon_Client_Class *client_class __U
 static Evas_Object     *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
 
 /* EVENTS */
-static Eina_Bool        _xkb_changed(void *data, int type, void *event_info);
 static Eina_Bool        _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void             _e_xkb_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void             _e_xkb_cb_menu_configure(void *data, E_Menu *mn, E_Menu_Item *mi __UNUSED__);
@@ -30,6 +29,7 @@ typedef struct _Instance
 
    Evas_Object     *o_xkbswitch;
    Evas_Object     *o_xkbflag;
+   Eina_Stringshare *cur_layout;
 
    E_Menu          *lmenu;
 } Instance;
@@ -91,7 +91,6 @@ e_modapi_init(E_Module *m)
                                  "preferences-desktop-keyboard",
                                  _xkb_cfg_dialog);
    _xkb.module = m;
-   _xkb.evh = ecore_event_handler_add(E_EVENT_XKB_CHANGED, _xkb_changed, NULL);
    ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_changed_state, NULL);
    if (!e_config->xkb.default_model) e_config->xkb.default_model = eina_stringshare_add("default");
    if (!e_config->xkb.used_layouts) _e_xkb_default_add();
@@ -152,6 +151,8 @@ _xkb_update_icon(int cur_group)
      {
         EINA_LIST_FOREACH(instances, l, inst)
           {
+             if (e_config->xkb.cur_layout == inst->cur_layout) continue;
+             eina_stringshare_replace(&inst->cur_layout, e_config->xkb.cur_layout);
              if (inst->o_xkbflag)
                {
                   evas_object_del(inst->o_xkbflag);
@@ -168,6 +169,8 @@ _xkb_update_icon(int cur_group)
      {
         EINA_LIST_FOREACH(instances, l, inst)
           {
+             if (e_config->xkb.cur_layout == inst->cur_layout) continue;
+             eina_stringshare_replace(&inst->cur_layout, e_config->xkb.cur_layout);
              if (!inst->o_xkbflag)
                inst->o_xkbflag = e_icon_add(inst->gcc->gadcon->evas);
              e_theme_edje_object_set(inst->o_xkbswitch,
@@ -200,6 +203,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    inst = E_NEW(Instance, 1);
    /* The gadget */
    inst->o_xkbswitch = edje_object_add(gc->evas);
+   inst->cur_layout = eina_stringshare_ref(name);
    if (e_config->xkb.only_label)
      e_theme_edje_object_set(inst->o_xkbswitch,
                              "base/theme/modules/xkbswitch",
@@ -255,6 +259,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
         evas_object_del(inst->o_xkbswitch);
         evas_object_del(inst->o_xkbflag);
      }
+   eina_stringshare_del(inst->cur_layout);
    E_FREE(inst);
 }
 
@@ -291,13 +296,6 @@ _gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
    o = edje_object_add(evas);
    edje_object_file_set(o, buf, "icon");
    return o;
-}
-
-static Eina_Bool
-_xkb_changed(void *data __UNUSED__, int type __UNUSED__, void *event_info __UNUSED__)
-{
-   _xkb_update_icon((int)(intptr_t)data);
-   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
@@ -522,11 +520,10 @@ _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED_
         grp++;
         if (ndata == data) cur_group = grp;
      }
-   if (cur_group != -1)
-     {
-        e_xkb_layout_set(cl->name);
-        eina_stringshare_replace(&e_config->xkb.selected_layout, cl->name);
-        _xkb_update_icon(cur_group);
-     }
+   if (cur_group == -1) return;
+   if (cl->name == e_xkb_layout_get()) return;
+   e_xkb_layout_set(cl->name);
+   eina_stringshare_replace(&e_config->xkb.selected_layout, cl->name);
+   _xkb_update_icon(cur_group);
 }
 
