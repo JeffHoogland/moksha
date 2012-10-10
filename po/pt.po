@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@...\n"
 "POT-Creation-Date: 2012-10-08 22:11+0100\n"
-"PO-Revision-Date: 2012-10-08 22:13+0100\n"
+"PO-Revision-Date: 2012-10-10 01:19+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -4283,7 +4283,7 @@ msgstr "Comando de navegador personalizado"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:309
 msgid "Browser"
-msgstr "Nevagador"
+msgstr "Navegador"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:310
 msgid "E-Mail"
