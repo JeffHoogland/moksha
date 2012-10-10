@@ -1379,8 +1379,6 @@ _e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord h
              if ((((int)mode->height - RESIZE_SNAP_FUZZINESS) <= height) || 
                  (((int)mode->height + RESIZE_SNAP_FUZZINESS) <= height))
                {
-                  double rate = 0.0;
-
                   /* since we did not match on refresh rate, then we need 
                    * to update the smart data struct with the rate 
                    * from this mode */
