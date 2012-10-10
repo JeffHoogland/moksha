@@ -253,6 +253,7 @@ _e_smart_reconfigure(E_Smart_Data *sd)
         Evas_Coord cx, cy, cw, ch;
 
         e_smart_monitor_crtc_geometry_get(mon, &cx, &cy, &cw, &ch);
+
         e_layout_child_move(mon, cx, cy);
         e_layout_child_resize(mon, cw, ch);
         e_layout_child_lower(mon);
