@@ -39897,12 +39897,6 @@ CONNMAN_ICON(ethernet)
                        state: "default" 0.0;
                        color: 255 255 255 0;
                     }
-                  description
-                    {
-                       state: "disabled" 0.0;
-                       inherit: "default" 0.0;
-                       color: 255 0 0 64;
-                    }
                }
              part
                {
@@ -40232,34 +40226,6 @@ CONNMAN_ICON(ethernet)
                          }
                     }
                }
-             part
-               {
-                  name: "indicator";
-                  type: IMAGE;
-                  mouse_events: 0;
-                  description
-                    {
-                       state: "default" 0.0;
-                       rel1
-                         {
-                            offset: -13 0;
-                            to: "e.event.resize";
-                         }
-                       rel2
-                         {
-                            relative: 0.0 1.0;
-                            offset: 0 -1;
-                            to: "e.event.resize";
-                         }
-                       image.normal: "randr_icon_on.png";
-                    }
-                  description
-                    {
-                       state: "disabled" 0.0;
-                       inherit: "default" 0.0;
-                       image.normal: "randr_icon_off.png";
-                    }
-               }
 
              /* we will use a rect in this theme. Other themes could use 
               * an icon to indicate rotate (or whatever they want).
@@ -40290,19 +40256,6 @@ CONNMAN_ICON(ethernet)
                     }
                }
 
-             part
-               {
-                  name: "e.event.indicator";
-                  type: RECT;
-                  description
-                    {
-                       state: "default" 0.0;
-                       color: 255 255 255 0;
-                       rel1.to: "indicator";
-                       rel2.to: "indicator";
-                    }
-               }
-
              /* we will use a rect in this theme. Other themes could use 
               * an icon to indicate resize (or whatever they want).
               * 
@@ -40324,6 +40277,64 @@ CONNMAN_ICON(ethernet)
                             to: "frame";
                          }
                        rel2.to: "frame";
+                    }
+               }
+             part
+               {
+                  name: "overlay";
+                  type: RECT;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 255 255 128;
+                       visible: 0;
+                    }
+                  description
+                    {
+                       state: "disabled" 0.0;
+                       inherit: "default" 0.0;
+                       visible: 1;
+                    }
+               }
+
+             part
+               {
+                  name: "indicator";
+                  type: IMAGE;
+                  mouse_events: 0;
+                  description
+                    {
+                       state: "default" 0.0;
+                       rel1
+                         {
+                            offset: -13 0;
+                            to: "e.event.resize";
+                         }
+                       rel2
+                         {
+                            relative: 0.0 1.0;
+                            offset: 0 -1;
+                            to: "e.event.resize";
+                         }
+                       image.normal: "randr_icon_on.png";
+                    }
+                  description
+                    {
+                       state: "disabled" 0.0;
+                       inherit: "default" 0.0;
+                       image.normal: "randr_icon_off.png";
+                    }
+               }
+             part
+               {
+                  name: "e.event.indicator";
+                  type: RECT;
+                  description
+                    {
+                       state: "default" 0.0;
+                       color: 255 255 255 0;
+                       rel1.to: "indicator";
+                       rel2.to: "indicator";
                     }
                }
           }
@@ -40413,6 +40424,7 @@ CONNMAN_ICON(ethernet)
                   source: "e";
                   action: STATE_SET "default" 0.0;
                   target: "indicator";
+                  target: "overlay";
                }
              program
                {
@@ -40421,6 +40433,7 @@ CONNMAN_ICON(ethernet)
                   source: "e";
                   action: STATE_SET "disabled" 0.0;
                   target: "indicator";
+                  target: "overlay";
                }
              program
                {
