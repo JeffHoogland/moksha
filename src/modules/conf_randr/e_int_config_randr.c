@@ -127,7 +127,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o;
    Eina_List *l;
-   E_Randr_Crtc_Info *crtc;
+   E_Randr_Output_Info *output;
 
    o = e_widget_list_add(evas, 0, 0);
 
@@ -140,17 +140,15 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    evas_object_smart_callback_add(cfdata->o_scroll, "changed", 
                                   _randr_cb_changed, cfd);
 
-   /* create monitors based on 'CRTCS' */
-   EINA_LIST_FOREACH(E_RANDR_12->crtcs, l, crtc)
+   /* create monitors based on 'outputs' */
+   EINA_LIST_FOREACH(E_RANDR_12->outputs, l, output)
      {
         Evas_Object *m;
 
-        if (!crtc) continue;
-
-        /* printf("ADD CRTC %d\n", crtc->xid); */
+        if (!output) continue;
 
         if (!(m = e_smart_monitor_add(evas))) continue;
-        e_smart_monitor_crtc_set(m, crtc);
+        e_smart_monitor_info_set(m, output, output->crtc);
         e_smart_randr_monitor_add(cfdata->o_scroll, m);
         evas_object_show(m);
      }
