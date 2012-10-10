@@ -3715,9 +3715,11 @@ _e_border_action_move_timeout(void *data __UNUSED__)
 static void
 _e_border_action_move_timeout_add(void)
 {
+   if (!e_config->border_keyboard.timeout) return;
    if (action_timer)
-     ecore_timer_del(action_timer);
-   action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_move_timeout, NULL);
+     ecore_timer_reset(action_timer);
+   else
+     action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_move_timeout, NULL);
 }
 
 static Eina_Bool
@@ -3740,13 +3742,13 @@ _e_border_move_key_down(void *data __UNUSED__,
    y = action_border->y;
 
    if ((strcmp(ev->key, "Up") == 0) || (strcmp(ev->key, "k") == 0))
-     y -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dy);
+     y -= _e_border_key_down_modifier_apply(ev->modifiers, MAX(e_config->border_keyboard.move.dy, 1));
    else if ((strcmp(ev->key, "Down") == 0) || (strcmp(ev->key, "j") == 0))
-     y += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dy);
+     y += _e_border_key_down_modifier_apply(ev->modifiers, MAX(e_config->border_keyboard.move.dy, 1));
    else if ((strcmp(ev->key, "Left") == 0) || (strcmp(ev->key, "h") == 0))
-     x -= _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dx);
+     x -= _e_border_key_down_modifier_apply(ev->modifiers, MAX(e_config->border_keyboard.move.dx, 1));
    else if ((strcmp(ev->key, "Right") == 0) || (strcmp(ev->key, "l") == 0))
-     x += _e_border_key_down_modifier_apply(ev->modifiers, e_config->border_keyboard.move.dx);
+     x += _e_border_key_down_modifier_apply(ev->modifiers, MAX(e_config->border_keyboard.move.dx, 1));
    else if (strcmp(ev->key, "Return") == 0)
      goto stop;
    else if (strcmp(ev->key, "Escape") == 0)
