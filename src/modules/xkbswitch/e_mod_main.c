@@ -151,7 +151,7 @@ _xkb_update_icon(int cur_group)
    const char *name = NULL;
    int grp = -1;
 
-   if (!e_config->xkb.used_layouts) return;
+   EINA_SAFETY_ON_NULL_RETURN(e_config->xkb.used_layouts);
    //INF("ui: %d", cur_group);
    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, layout)
      {
