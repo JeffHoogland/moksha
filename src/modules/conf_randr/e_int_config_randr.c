@@ -89,6 +89,9 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         E_Randr_Output_Info *output;
         Ecore_X_Randr_Output *outputs = NULL;
 
+        if (!e_smart_monitor_changed_get(mon))
+          continue;
+
         if (!(crtc = e_smart_monitor_crtc_get(mon)))
           continue;
 
