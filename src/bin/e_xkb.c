@@ -43,6 +43,7 @@ e_xkb_update(int cur_group)
      {
         _e_xkb_cur_group = cur_group;
         ecore_x_xkb_select_group(cur_group);
+        _e_xkb_update_event(cur_group);
         return;
      }
    /* We put an empty -option here in order to override all previously
@@ -183,7 +184,6 @@ e_xkb_layout_set(const char *name)
              eina_stringshare_replace(&e_config->xkb.cur_layout, cl->name);
              INF("Setting keyboard layout: %s", name);
              e_xkb_update(cur_group);
-             _e_xkb_update_event(cur_group);
              break;
           }
      }
