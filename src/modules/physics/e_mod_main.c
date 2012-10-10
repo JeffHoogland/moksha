@@ -115,6 +115,7 @@ e_modapi_shutdown(E_Module *m)
 
    if (mod == _physics_mod) _physics_mod = NULL;
 
+   ephysics_shutdown();
    return 1;
 }
 
