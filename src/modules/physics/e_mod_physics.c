@@ -177,7 +177,8 @@ _e_mod_physics_win_show(E_Physics_Win *pw)
    pw->visible = 1;
    pw->body = ephysics_body_box_add(pw->p->world);
    ephysics_body_friction_set(pw->body, 1.0);
-   ephysics_body_rotation_on_z_axis_enable_set(pw->body, EINA_FALSE);
+   ephysics_body_angular_movement_enable_set(pw->body, EINA_FALSE, EINA_FALSE,
+                                             EINA_FALSE);
    ephysics_body_event_callback_add(pw->body, EPHYSICS_CALLBACK_BODY_UPDATE, (EPhysics_Body_Event_Cb)_e_mod_physics_win_update_cb, pw);
    pw->begin = e_border_hook_add(E_BORDER_HOOK_MOVE_BEGIN, _e_mod_physics_move_begin, pw);
    pw->end = e_border_hook_add(E_BORDER_HOOK_MOVE_END, _e_mod_physics_move_end, pw);
@@ -214,7 +215,7 @@ _e_mod_physics_bd_move_intercept_cb(E_Border *bd, int x, int y)
         DBG("PHYS: IMPULSE APPLY\n");
         pw->impulse_x = (x - bd->x) * 5;
         pw->impulse_y = (bd->y - y) * 5;
-        ephysics_body_central_impulse_apply(pw->body, pw->impulse_x, pw->impulse_y);
+        ephysics_body_central_impulse_apply(pw->body, pw->impulse_x, pw->impulse_y, 0);
         bd->x = x, bd->y = y;
         pw->impulse = EINA_TRUE;
         return;
@@ -446,7 +447,7 @@ _e_mod_physics_win_configure(E_Physics_Win *pw,
    if ((!pw->show_ready) && pw->body)
      {
         _e_mod_physics_win_mass_set(pw);
-        ephysics_body_geometry_set(pw->body, x, y, w, border + h);
+        ephysics_body_geometry_set(pw->body, x, y, -15, w, border + h, 30);
         pw->show_ready = 1;
      }
 }
@@ -487,7 +488,8 @@ _e_mod_physics_shelf_new(E_Physics *p, E_Shelf *es)
           {
              eps->body = eb = ephysics_body_box_add(p->world);
              ephysics_body_evas_object_set(eb, es->o_base, EINA_TRUE);
-             ephysics_body_linear_movement_enable_set(eb, EINA_FALSE, EINA_FALSE);
+             ephysics_body_linear_movement_enable_set(eb, EINA_FALSE,
+                                                      EINA_FALSE, EINA_FALSE);
              ephysics_body_mass_set(eb, 50000);
           }
         else
@@ -499,7 +501,9 @@ _e_mod_physics_shelf_new(E_Physics *p, E_Shelf *es)
              else
                ephysics_body_mass_set(eb, 50000);
              if (es->cfg->popup && (!_physics_mod->conf->shelf.disable_rotate))
-               ephysics_body_rotation_on_z_axis_enable_set(eb, EINA_FALSE);
+               ephysics_body_angular_movement_enable_set(eb, EINA_FALSE,
+                                                         EINA_FALSE,
+                                                         EINA_FALSE);
           }
      }
    p->shelves = eina_inlist_append(p->shelves, EINA_INLIST_GET(eps));
@@ -789,6 +793,7 @@ _e_mod_physics_bd_uniconify(void *data __UNUSED__,
 static E_Physics *
 _e_mod_physics_add(E_Manager *man)
 {
+   const int boundary_depth = 10;
    E_Physics *p;
    EPhysics_Body *bound;
    Eina_List *l;
@@ -802,18 +807,18 @@ _e_mod_physics_add(E_Manager *man)
    /* TODO: world per zone */
    DBG("PHYS: world++ || %dx%d\n", man->w, man->h);
    ephysics_world_render_geometry_set(p->world, 0, 0, man->w, man->h);
-   ephysics_world_gravity_set(p->world, 0, _physics_mod->conf->gravity);
+   ephysics_world_gravity_set(p->world, 0, _physics_mod->conf->gravity, 0);
 
-   bound = ephysics_body_left_boundary_add(p->world);
+   bound = ephysics_body_left_boundary_add(p->world, boundary_depth);
    ephysics_body_restitution_set(bound, 1);
    ephysics_body_friction_set(bound, 3);
-   bound = ephysics_body_right_boundary_add(p->world);
+   bound = ephysics_body_right_boundary_add(p->world, boundary_depth);
    ephysics_body_restitution_set(bound, 1);
    ephysics_body_friction_set(bound, 3);
-   bound = ephysics_body_top_boundary_add(p->world);
+   bound = ephysics_body_top_boundary_add(p->world, boundary_depth);
    ephysics_body_restitution_set(bound, 1);
    ephysics_body_friction_set(bound, 3);
-   bound = ephysics_body_bottom_boundary_add(p->world);
+   bound = ephysics_body_bottom_boundary_add(p->world, boundary_depth);
    ephysics_body_restitution_set(bound, 1);
    ephysics_body_friction_set(bound, 3);
 
@@ -865,7 +870,7 @@ _e_mod_physics_win_update_cb(E_Physics_Win *pw, EPhysics_Body *body, void *event
         _e_mod_physics_win_configure(pw, pw->x, pw->y, pw->w, pw->h, pw->border);
         return;
      }
-   ephysics_body_geometry_get(body, &pw->ix, &pw->iy, NULL, NULL);
+   ephysics_body_geometry_get(body, &pw->ix, &pw->iy, NULL, NULL, NULL, NULL);
    e_border_move(pw->bd, pw->ix, pw->iy);
 }
 
