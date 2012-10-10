@@ -1047,7 +1047,6 @@ src/modules/tiling/Makefile
 src/modules/tiling/module.desktop
 src/modules/access/Makefile
 src/modules/access/module.desktop
-src/preload/Makefile
 data/Makefile
 data/images/Makefile
 data/flags/Makefile

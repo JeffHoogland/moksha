@@ -60,69 +60,6 @@ prefix_determine(char *argv0)
    return 1;
 }
 
-static void
-precache(void)
-{
-   FILE *f;
-   char *home;
-   char buf[4096], tbuf[256 * 1024];
-   struct stat st;
-   int l, fd, children = 0, cret;
-
-   home = getenv("HOME");
-   if (home) snprintf(buf, sizeof(buf), "%s/.e-precache", home);
-   else snprintf(buf, sizeof(buf), "/tmp/.e-precache");
-   f = fopen(buf, "r");
-   if (!f) return;
-   unlink(buf);
-   if (fork()) return;
-//   while (fgets(buf, sizeof(buf), f));
-//   rewind(f);
-   while (fgets(buf, sizeof(buf), f))
-     {
-        l = strlen(buf);
-        if (l > 0) buf[l - 1] = 0;
-        if (!fork())
-          {
-             if (buf[0] == 's') stat(buf + 2, &st);
-             else if (buf[0] == 'o')
-               {
-                  fd = open(buf + 2, O_RDONLY);
-                  if (fd >= 0)
-                    {
-                       while (read(fd, tbuf, 256 * 1024) > 0)
-                         ;
-                       close(fd);
-                    }
-               }
-             else if (buf[0] == 'd')
-               {
-                  fd = open(buf + 2, O_RDONLY);
-                  if (fd >= 0)
-                    {
-                       while (read(fd, tbuf, 256 * 1024) > 0)
-                         ;
-                       close(fd);
-                    }
-               }
-             exit(0);
-          }
-        children++;
-        if (children > 400)
-          {
-             wait(&cret);
-             children--;
-          }
-     }
-   fclose(f);
-   while (children > 0)
-     {
-        wait(&cret);
-        children--;
-     }
-   exit(0);
-}
-
 static int
 find_valgrind(char *path, size_t path_len)
 {
@@ -277,7 +214,7 @@ _env_path_append(const char *env, const char *path)
 int
 main(int argc, char **argv)
 {
-   int i, do_precache = 0, valgrind_mode = 0;
+   int i, valgrind_mode = 0;
    int valgrind_tool = 0;
    int valgrind_gdbserver = 0;
    char buf[16384], **args, *p;
@@ -292,8 +229,7 @@ main(int argc, char **argv)
 
    for (i = 1; i < argc; i++)
      {
-        if (!strcmp(argv[i], "-no-precache")) do_precache = 0;
-        else if (!strcmp(argv[i], "-valgrind-gdb"))
+        if (!strcmp(argv[i], "-valgrind-gdb"))
           valgrind_gdbserver = 1;
         else if (!strncmp(argv[i], "-valgrind", sizeof("-valgrind") - 1))
           {
@@ -329,8 +265,6 @@ main(int argc, char **argv)
              printf
              (
                "Options:\n"
-               "\t-no-precache\n"
-               "\t\tDisable pre-caching of files\n"
                "\t-valgrind[=MODE]\n"
                "\t\tRun enlightenment from inside valgrind, mode is OR of:\n"
                "\t\t   1 = plain valgrind to catch crashes (default)\n"
@@ -375,70 +309,13 @@ main(int argc, char **argv)
           }
      }
 
-   printf("E - PID=%i, do_precache=%i, valgrind=%d", getpid(), do_precache, valgrind_mode);
+   printf("E - PID=%i, valgrind=%d", getpid(), valgrind_mode);
    if (valgrind_mode)
      {
         printf(" valgrind-command='%s'", valgrind_path);
         if (valgrind_log) printf(" valgrind-log-file='%s'", valgrind_log);
      }
    putchar('\n');
-
-   if (do_precache)
-     {
-        void *lib, *func;
-
-        /* sanity checks - if precache might fail - check here first */
-        lib = dlopen("libeina.so", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) dlopen("libeina.so.1", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) goto done;
-        func = dlsym(lib, "eina_init");
-        if (!func) goto done;
-
-        lib = dlopen("libecore.so", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) dlopen("libecore.so.1", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) goto done;
-        func = dlsym(lib, "ecore_init");
-        if (!func) goto done;
-
-        lib = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) dlopen("libecore_file.so.1", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) goto done;
-        func = dlsym(lib, "ecore_file_init");
-        if (!func) goto done;
-
-        lib = dlopen("libecore_x.so", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) dlopen("libecore_x.so.1", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) goto done;
-        func = dlsym(lib, "ecore_x_init");
-        if (!func) goto done;
-
-        lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) goto done;
-        func = dlsym(lib, "evas_init");
-        if (!func) goto done;
-
-        lib = dlopen("libedje.so", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) dlopen("libedje.so.1", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) goto done;
-        func = dlsym(lib, "edje_init");
-        if (!func) goto done;
-
-        lib = dlopen("libeet.so", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) dlopen("libeet.so.0", RTLD_GLOBAL | RTLD_LAZY);
-        if (!lib) goto done;
-        func = dlsym(lib, "eet_init");
-        if (!func) goto done;
-
-        /* precache SHOULD work */
-        snprintf(buf, sizeof(buf), "%s/enlightenment/preload/e_precache.so",
-                 eina_prefix_lib_get(pfx));
-        env_set("LD_PRELOAD", buf);
-        printf("E - PRECACHE GOING NOW...\n");
-        fflush(stdout);
-        precache();
-     }
-done:
 
    /* mtrack memory tracker support */
    p = getenv("HOME");
