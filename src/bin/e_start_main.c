@@ -16,7 +16,7 @@
 #include <Eina.h>
 
 static void env_set(const char *var, const char *val);
-EAPI int prefix_determine(char *argv0);
+EAPI int    prefix_determine(char *argv0);
 
 static void
 env_set(const char *var, const char *val)
@@ -24,23 +24,23 @@ env_set(const char *var, const char *val)
    if (val)
      {
 #ifdef HAVE_SETENV
-	setenv(var, val, 1);
+        setenv(var, val, 1);
 #else
-	char *buf;
+        char *buf;
         size_t size = strlen(var) + 1 + strlen(val) + 1;
 
-	buf = alloca(size);
-	snprintf(buf, size, "%s=%s", var, val);
-	if (getenv(var)) putenv(buf);
-	else putenv(strdup(buf));
+        buf = alloca(size);
+        snprintf(buf, size, "%s=%s", var, val);
+        if (getenv(var)) putenv(buf);
+        else putenv(strdup(buf));
 #endif
      }
    else
      {
 #ifdef HAVE_UNSETENV
-	unsetenv(var);
+        unsetenv(var);
 #else
-	if (getenv(var)) putenv(var);
+        if (getenv(var)) putenv(var);
 #endif
      }
 }
@@ -80,43 +80,45 @@ precache(void)
 //   rewind(f);
    while (fgets(buf, sizeof(buf), f))
      {
-	l = strlen(buf);
-	if (l > 0) buf[l - 1] = 0;
-	if (!fork())
-	  {
-	     if (buf[0] == 's') stat(buf + 2, &st);
-	     else if (buf[0] == 'o')
-	       {
-		  fd = open(buf + 2, O_RDONLY);
-		  if (fd >= 0)
-		    {
-		       while (read(fd, tbuf, 256 * 1024) > 0);
-		       close(fd);
-		    }
-	       }
-	     else if (buf[0] == 'd')
-	       {
-		  fd = open(buf + 2, O_RDONLY);
-		  if (fd >= 0)
-		    {
-		       while (read(fd, tbuf, 256 * 1024) > 0);
-		       close(fd);
-		    }
-	       }
-	     exit(0);
-	  }
-	children++;
-	if (children > 400)
-	  {
-	     wait(&cret);
-	     children--;
-	  }
+        l = strlen(buf);
+        if (l > 0) buf[l - 1] = 0;
+        if (!fork())
+          {
+             if (buf[0] == 's') stat(buf + 2, &st);
+             else if (buf[0] == 'o')
+               {
+                  fd = open(buf + 2, O_RDONLY);
+                  if (fd >= 0)
+                    {
+                       while (read(fd, tbuf, 256 * 1024) > 0)
+                         ;
+                       close(fd);
+                    }
+               }
+             else if (buf[0] == 'd')
+               {
+                  fd = open(buf + 2, O_RDONLY);
+                  if (fd >= 0)
+                    {
+                       while (read(fd, tbuf, 256 * 1024) > 0)
+                         ;
+                       close(fd);
+                    }
+               }
+             exit(0);
+          }
+        children++;
+        if (children > 400)
+          {
+             wait(&cret);
+             children--;
+          }
      }
    fclose(f);
    while (children > 0)
      {
-	wait(&cret);
-	children--;
+        wait(&cret);
+        children--;
      }
    exit(0);
 }
@@ -128,24 +130,24 @@ find_valgrind(char *path, size_t path_len)
 
    while (env)
      {
-	const char *p = strchr(env, ':');
-	ssize_t p_len;
+        const char *p = strchr(env, ':');
+        ssize_t p_len;
 
-	if (p) p_len = p - env;
-	else p_len = strlen(env);
-	if (p_len <= 0) goto next;
-	else if (p_len + sizeof("/valgrind") >= path_len) goto next;
-	memcpy(path, env, p_len);
-	memcpy(path + p_len, "/valgrind", sizeof("/valgrind"));
-	if (access(path, X_OK | R_OK) == 0) return 1;
+        if (p) p_len = p - env;
+        else p_len = strlen(env);
+        if (p_len <= 0) goto next;
+        else if (p_len + sizeof("/valgrind") >= path_len)
+          goto next;
+        memcpy(path, env, p_len);
+        memcpy(path + p_len, "/valgrind", sizeof("/valgrind"));
+        if (access(path, X_OK | R_OK) == 0) return 1;
 next:
-	if (p) env = p + 1;
-	else break;
+        if (p) env = p + 1;
+        else break;
      }
    path[0] = '\0';
    return 0;
 }
-
 
 /* maximum number of arguments added above */
 #define VALGRIND_MAX_ARGS 10
@@ -159,13 +161,14 @@ valgrind_append(char **dst, int valgrind_gdbserver, int valgrind_mode, int valgr
 
    if (valgrind_tool)
      {
-	dst[i++] = valgrind_path;
-	switch (valgrind_tool)
-	  {
-	   case 1: dst[i++] = "--tool=massif"; break;
-	   case 2: dst[i++] = "--tool=callgrind"; break;
-	  }
-	return i;
+        dst[i++] = valgrind_path;
+        switch (valgrind_tool)
+          {
+           case 1: dst[i++] = "--tool=massif"; break;
+
+           case 2: dst[i++] = "--tool=callgrind"; break;
+          }
+        return i;
      }
    if (valgrind_gdbserver) dst[i++] = "--db-attach=yes";
    if (!valgrind_mode) return 0;
@@ -174,17 +177,17 @@ valgrind_append(char **dst, int valgrind_gdbserver, int valgrind_mode, int valgr
    dst[i++] = "--malloc-fill=13"; /* invalid pointer, make it crash */
    if (valgrind_log)
      {
-	static char logparam[PATH_MAX + sizeof("--log-file=")];
+        static char logparam[PATH_MAX + sizeof("--log-file=")];
 
-	snprintf(logparam, sizeof(logparam), "--log-file=%s", valgrind_log);
-	dst[i++] = logparam;
+        snprintf(logparam, sizeof(logparam), "--log-file=%s", valgrind_log);
+        dst[i++] = logparam;
      }
    if (valgrind_mode & 2) dst[i++] = "--trace-children=yes";
    if (valgrind_mode & 4)
      {
-	dst[i++] = "--leak-check=full";
-	dst[i++] = "--leak-resolution=high";
-	dst[i++] = "--track-fds=yes";
+        dst[i++] = "--leak-check=full";
+        dst[i++] = "--leak-resolution=high";
+        dst[i++] = "--track-fds=yes";
      }
    if (valgrind_mode & 8) dst[i++] = "--show-reachable=yes";
    return i;
@@ -193,7 +196,8 @@ valgrind_append(char **dst, int valgrind_gdbserver, int valgrind_mode, int valgr
 static void
 copy_args(char **dst, char **src, size_t count)
 {
-   for (; count > 0; count--, dst++, src++) *dst = *src;
+   for (; count > 0; count--, dst++, src++)
+     *dst = *src;
 }
 
 static void
@@ -204,7 +208,7 @@ _env_path_prepend(const char *env, const char *path)
    int len = 0, len2 = 0;
 
    if (!path) return;
-   
+
    p = getenv(env);
    p2 = path;
    len2 = strlen(p2);
@@ -214,8 +218,8 @@ _env_path_prepend(const char *env, const char *path)
         // path already there at the start. dont prepend. :)
         if ((!strcmp(p, p2)) ||
             ((len > len2) &&
-                (!strncmp(p, p2, len2)) &&
-                (p[len2] == ':')))
+             (!strncmp(p, p2, len2)) &&
+             (p[len2] == ':')))
           return;
      }
    s = malloc(len + 1 + len2 + 1);
@@ -239,9 +243,9 @@ _env_path_append(const char *env, const char *path)
    char *p, *s;
    const char *p2;
    int len = 0, len2 = 0;
-   
+
    if (!path) return;
-   
+
    p = getenv(env);
    p2 = path;
    len2 = strlen(p2);
@@ -251,8 +255,8 @@ _env_path_append(const char *env, const char *path)
         // path already there at the end. dont append. :)
         if ((!strcmp(p, p2)) ||
             ((len > len2) &&
-                (!strcmp((p + len - len2), p2)) &&
-                (p[len - len2 - 1] == ':')))
+             (!strcmp((p + len - len2), p2)) &&
+             (p[len - len2 - 1] == ':')))
           return;
      }
    s = malloc(len + 1 + len2 + 1);
@@ -280,7 +284,7 @@ main(int argc, char **argv)
    char valgrind_path[PATH_MAX] = "";
    const char *valgrind_log = NULL;
    Eina_Bool really_know = EINA_FALSE;
-   
+
    eina_init();
    prefix_determine(argv[0]);
 
@@ -288,62 +292,65 @@ main(int argc, char **argv)
 
    for (i = 1; i < argc; i++)
      {
-	if (!strcmp(argv[i], "-no-precache")) do_precache = 0;
-	else if (!strcmp(argv[i], "-valgrind-gdb")) valgrind_gdbserver = 1;
-	else if (!strncmp(argv[i], "-valgrind", sizeof("-valgrind") - 1))
-	  {
-	     const char *val = argv[i] + sizeof("-valgrind") - 1;
+        if (!strcmp(argv[i], "-no-precache")) do_precache = 0;
+        else if (!strcmp(argv[i], "-valgrind-gdb"))
+          valgrind_gdbserver = 1;
+        else if (!strncmp(argv[i], "-valgrind", sizeof("-valgrind") - 1))
+          {
+             const char *val = argv[i] + sizeof("-valgrind") - 1;
 
-	     if (*val == '\0') valgrind_mode = 1;
-	     else if (*val == '-')
-	       {
-		  val++;
-		  if (!strncmp(val, "log-file=", sizeof("log-file=") - 1))
-		    {
-		       valgrind_log = val + sizeof("log-file=") - 1;
-		       if (*valgrind_log == '\0') valgrind_log = NULL;
-		    }
-	       }
-	     else if (*val == '=')
-	       {
-		  val++;
-		  if (!strcmp(val, "all")) valgrind_mode = VALGRIND_MODE_ALL;
-		  else valgrind_mode = atoi(val);
-	       }
-	     else
-                printf("Unknown valgrind option: %s\n", argv[i]);
-	  }
-	else if (!strcmp(argv[i], "-massif")) valgrind_tool = 1;
-	else if (!strcmp(argv[i], "-callgrind")) valgrind_tool = 2;
+             if (*val == '\0') valgrind_mode = 1;
+             else if (*val == '-')
+               {
+                  val++;
+                  if (!strncmp(val, "log-file=", sizeof("log-file=") - 1))
+                    {
+                       valgrind_log = val + sizeof("log-file=") - 1;
+                       if (*valgrind_log == '\0') valgrind_log = NULL;
+                    }
+               }
+             else if (*val == '=')
+               {
+                  val++;
+                  if (!strcmp(val, "all")) valgrind_mode = VALGRIND_MODE_ALL;
+                  else valgrind_mode = atoi(val);
+               }
+             else
+               printf("Unknown valgrind option: %s\n", argv[i]);
+          }
+        else if (!strcmp(argv[i], "-massif"))
+          valgrind_tool = 1;
+        else if (!strcmp(argv[i], "-callgrind"))
+          valgrind_tool = 2;
         else if ((!strcmp(argv[i], "-h")) ||
-		 (!strcmp(argv[i], "-help")) ||
-		 (!strcmp(argv[i], "--help")))
-	  {
-	     printf
-                (
-                    "Options:\n"
-                    "\t-no-precache\n"
-                    "\t\tDisable pre-caching of files\n"
-                    "\t-valgrind[=MODE]\n"
-                    "\t\tRun enlightenment from inside valgrind, mode is OR of:\n"
-                    "\t\t   1 = plain valgrind to catch crashes (default)\n"
-                    "\t\t   2 = trace children (thumbnailer, efm slaves, ...)\n"
-                    "\t\t   4 = check leak\n"
-                    "\t\t   8 = show reachable after processes finish.\n"
-                    "\t\t all = all of above\n"
-                    "\t-massif\n"
-                    "\t\tRun enlightenment from inside massif valgrind tool.\n"
-                    "\t-callgrind\n"
-                    "\t\tRun enlightenment from inside callgrind valgrind tool.\n"
-                    "\t-valgrind-log-file=<FILENAME>\n"
-                    "\t\tSave valgrind log to file, see valgrind's --log-file for details.\n"
-                    "\n"
-                    "Please run:\n"
-                    "\tenlightenment %s\n"
-                    "for more options.\n",
-                    argv[i]);
-	     exit(0);
-	  }
+                 (!strcmp(argv[i], "-help")) ||
+                 (!strcmp(argv[i], "--help")))
+          {
+             printf
+             (
+               "Options:\n"
+               "\t-no-precache\n"
+               "\t\tDisable pre-caching of files\n"
+               "\t-valgrind[=MODE]\n"
+               "\t\tRun enlightenment from inside valgrind, mode is OR of:\n"
+               "\t\t   1 = plain valgrind to catch crashes (default)\n"
+               "\t\t   2 = trace children (thumbnailer, efm slaves, ...)\n"
+               "\t\t   4 = check leak\n"
+               "\t\t   8 = show reachable after processes finish.\n"
+               "\t\t all = all of above\n"
+               "\t-massif\n"
+               "\t\tRun enlightenment from inside massif valgrind tool.\n"
+               "\t-callgrind\n"
+               "\t\tRun enlightenment from inside callgrind valgrind tool.\n"
+               "\t-valgrind-log-file=<FILENAME>\n"
+               "\t\tSave valgrind log to file, see valgrind's --log-file for details.\n"
+               "\n"
+               "Please run:\n"
+               "\tenlightenment %s\n"
+               "for more options.\n",
+               argv[i]);
+             exit(0);
+          }
         else if (!strcmp(argv[i], "-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it"))
           really_know = EINA_TRUE;
      }
@@ -358,78 +365,78 @@ main(int argc, char **argv)
         _env_path_prepend("PATH", eina_prefix_bin_get(pfx));
         _env_path_prepend("LD_LIBRARY_PATH", eina_prefix_lib_get(pfx));
      }
-   
+
    if (valgrind_mode || valgrind_tool)
      {
-	if (!find_valgrind(valgrind_path, sizeof(valgrind_path)))
-	  {
-	     printf("E - valgrind required but no binary found! Ignoring request.\n");
-	     valgrind_mode = 0;
-	  }
+        if (!find_valgrind(valgrind_path, sizeof(valgrind_path)))
+          {
+             printf("E - valgrind required but no binary found! Ignoring request.\n");
+             valgrind_mode = 0;
+          }
      }
 
    printf("E - PID=%i, do_precache=%i, valgrind=%d", getpid(), do_precache, valgrind_mode);
    if (valgrind_mode)
      {
-	printf(" valgrind-command='%s'", valgrind_path);
-	if (valgrind_log) printf(" valgrind-log-file='%s'", valgrind_log);
+        printf(" valgrind-command='%s'", valgrind_path);
+        if (valgrind_log) printf(" valgrind-log-file='%s'", valgrind_log);
      }
    putchar('\n');
 
    if (do_precache)
      {
-	void *lib, *func;
+        void *lib, *func;
 
-	/* sanity checks - if precache might fail - check here first */
-	lib = dlopen("libeina.so", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) dlopen("libeina.so.1", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) goto done;
-	func = dlsym(lib, "eina_init");
-	if (!func) goto done;
+        /* sanity checks - if precache might fail - check here first */
+        lib = dlopen("libeina.so", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) dlopen("libeina.so.1", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) goto done;
+        func = dlsym(lib, "eina_init");
+        if (!func) goto done;
 
-	lib = dlopen("libecore.so", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) dlopen("libecore.so.1", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) goto done;
-	func = dlsym(lib, "ecore_init");
-	if (!func) goto done;
+        lib = dlopen("libecore.so", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) dlopen("libecore.so.1", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) goto done;
+        func = dlsym(lib, "ecore_init");
+        if (!func) goto done;
 
-	lib = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) dlopen("libecore_file.so.1", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) goto done;
-	func = dlsym(lib, "ecore_file_init");
-	if (!func) goto done;
+        lib = dlopen("libecore_file.so", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) dlopen("libecore_file.so.1", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) goto done;
+        func = dlsym(lib, "ecore_file_init");
+        if (!func) goto done;
 
-	lib = dlopen("libecore_x.so", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) dlopen("libecore_x.so.1", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) goto done;
-	func = dlsym(lib, "ecore_x_init");
-	if (!func) goto done;
+        lib = dlopen("libecore_x.so", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) dlopen("libecore_x.so.1", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) goto done;
+        func = dlsym(lib, "ecore_x_init");
+        if (!func) goto done;
 
-	lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) goto done;
-	func = dlsym(lib, "evas_init");
-	if (!func) goto done;
+        lib = dlopen("libevas.so", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) dlopen("libevas.so.1", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) goto done;
+        func = dlsym(lib, "evas_init");
+        if (!func) goto done;
 
-	lib = dlopen("libedje.so", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) dlopen("libedje.so.1", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) goto done;
-	func = dlsym(lib, "edje_init");
-	if (!func) goto done;
+        lib = dlopen("libedje.so", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) dlopen("libedje.so.1", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) goto done;
+        func = dlsym(lib, "edje_init");
+        if (!func) goto done;
 
-	lib = dlopen("libeet.so", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) dlopen("libeet.so.0", RTLD_GLOBAL | RTLD_LAZY);
-	if (!lib) goto done;
-	func = dlsym(lib, "eet_init");
-	if (!func) goto done;
+        lib = dlopen("libeet.so", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) dlopen("libeet.so.0", RTLD_GLOBAL | RTLD_LAZY);
+        if (!lib) goto done;
+        func = dlsym(lib, "eet_init");
+        if (!func) goto done;
 
-	/* precache SHOULD work */
-	snprintf(buf, sizeof(buf), "%s/enlightenment/preload/e_precache.so",
+        /* precache SHOULD work */
+        snprintf(buf, sizeof(buf), "%s/enlightenment/preload/e_precache.so",
                  eina_prefix_lib_get(pfx));
-	env_set("LD_PRELOAD", buf);
-	printf("E - PRECACHE GOING NOW...\n");
-	fflush(stdout);
-	precache();
+        env_set("LD_PRELOAD", buf);
+        printf("E - PRECACHE GOING NOW...\n");
+        fflush(stdout);
+        precache();
      }
 done:
 
@@ -471,14 +478,14 @@ done:
    if ((!getenv("DBUS_SESSION_BUS_ADDRESS")) &&
        (!getenv("DBUS_LAUNCHD_SESSION_BUS_SOCKET")))
      {
-	args[0] = "dbus-launch";
-	args[1] = "--exit-with-session";
+        args[0] = "dbus-launch";
+        args[1] = "--exit-with-session";
 
-	i = 2 + valgrind_append(args + 2, valgrind_gdbserver, valgrind_mode, valgrind_tool, valgrind_path, valgrind_log);
-	args[i++] = buf;
-	copy_args(args + i, argv + 1, argc - 1);
-	args[i + argc - 1] = NULL;
-	execvp("dbus-launch", args);
+        i = 2 + valgrind_append(args + 2, valgrind_gdbserver, valgrind_mode, valgrind_tool, valgrind_path, valgrind_log);
+        args[i++] = buf;
+        copy_args(args + i, argv + 1, argc - 1);
+        args[i + argc - 1] = NULL;
+        execvp("dbus-launch", args);
      }
 
    /* dbus-launch failed - run e direct */
@@ -493,3 +500,4 @@ done:
    perror("execv");
    return -1;
 }
+
