@@ -138,17 +138,15 @@ _xkb_update_icon(int cur_group)
    Eina_List *l;
    E_Config_XKB_Layout *layout;
    const char *name = NULL;
-   int grp = -1;
 
    EINA_SAFETY_ON_NULL_RETURN(e_config->xkb.used_layouts);
    //INF("ui: %d", cur_group);
-   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, layout)
-     {
-        grp++;
-        if (cur_group == grp) name = layout->name;
-     }
-
-   if ((name) && (strchr(name, '/'))) name = strchr(name, '/') + 1;
+   layout = eina_list_nth(e_config->xkb.used_layouts, cur_group);
+   if (layout) name = layout->name;
+   EINA_SAFETY_ON_NULL_RETURN(name);
+   if (strchr(name, '/')) name = strchr(name, '/') + 1;
+   if (e_config->xkb.cur_layout != name)
+     eina_stringshare_replace(&e_config->xkb.cur_layout, name);
 
    if (e_config->xkb.only_label)
      {
