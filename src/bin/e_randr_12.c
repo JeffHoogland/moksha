@@ -319,7 +319,11 @@ _12_screen_info_refresh(void)
 static Eina_Bool
 _x_poll_cb(void *data __UNUSED__)
 {
-   EINA_SAFETY_ON_NULL_RETURN_VAL(e_randr_screen_info.rrvd_info.randr_info_12, ECORE_CALLBACK_CANCEL);
+   if (!e_randr_screen_info.rrvd_info.randr_info_12)
+     {
+        poller = NULL;
+        return ECORE_CALLBACK_CANCEL;
+     }
 
    ecore_x_randr_screen_primary_output_orientations_get(e_randr_screen_info.root);
 
@@ -359,7 +363,7 @@ _output_change_event_cb(void *data __UNUSED__, int type, void *ev)
    E_Randr_Crtc_Info *crtc_info = NULL;
    Eina_Bool policy_success = EINA_FALSE, con_state_changed = EINA_FALSE;
 
-   EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, ECORE_CALLBACK_CANCEL);
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, ECORE_CALLBACK_RENEW);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((type != ECORE_X_EVENT_RANDR_OUTPUT_CHANGE), ECORE_CALLBACK_RENEW);
 
    /* event information:
@@ -470,7 +474,7 @@ _crtc_change_event_cb(void *data __UNUSED__, int type, void *ev)
    Ecore_X_Event_Randr_Crtc_Change *cce = (Ecore_X_Event_Randr_Crtc_Change *)ev;
    E_Randr_Crtc_Info *crtc_info;
 
-   EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, ECORE_CALLBACK_CANCEL);
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, ECORE_CALLBACK_RENEW);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((type != ECORE_X_EVENT_RANDR_CRTC_CHANGE), ECORE_CALLBACK_RENEW);
 
    /* event information:
@@ -543,7 +547,7 @@ _output_property_change_event_cb(void *data __UNUSED__, int type, void *ev)
    Ecore_X_Event_Randr_Output_Property_Notify *opce = (Ecore_X_Event_Randr_Output_Property_Notify *)ev;
    E_Randr_Output_Info *output_info;
 
-   EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, ECORE_CALLBACK_CANCEL);
+   EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, ECORE_CALLBACK_RENEW);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((type != ECORE_X_EVENT_RANDR_OUTPUT_PROPERTY_NOTIFY), ECORE_CALLBACK_RENEW);
 
    /* event information:
