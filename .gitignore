@@ -103,7 +103,6 @@ default.edj
 /src/bin/enlightenment_open
 /src/modules/*/module.desktop
 /src/modules/battery/batget
-/src/modules/conf_randr/e-module-conf_randr.edj
 /src/modules/cpufreq/freqset
 /src/modules/everything/everything.pc
 /src/modules/illume2/doc/illume.dox
