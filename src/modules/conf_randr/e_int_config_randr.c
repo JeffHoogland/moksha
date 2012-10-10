@@ -86,21 +86,35 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         Evas_Coord mx, my;
         Ecore_X_Randr_Orientation orient;
         Ecore_X_Randr_Mode_Info *mode;
+        E_Randr_Output_Info *output;
+        Ecore_X_Randr_Output *outputs = NULL;
 
         if (!(crtc = e_smart_monitor_crtc_get(mon)))
           continue;
 
+        output = eina_list_data_get(crtc->outputs);
+        outputs = &output->xid;
+
         orient = e_smart_monitor_orientation_get(mon);
-        mode = e_smart_monitor_mode_get(mon);
+        /* ecore_x_randr_crtc_orientation_set(root, crtc->xid, orient); */
+
         e_smart_monitor_position_get(mon, &mx, &my);
+        /* ecore_x_randr_crtc_pos_set(root, crtc->xid, mx, my); */
 
-        ecore_x_randr_crtc_pos_set(root, crtc->xid, mx, my);
-        ecore_x_randr_crtc_orientation_set(root, crtc->xid, orient);
+        if (!e_smart_monitor_connected_get(mon))
+          {
+             Ecore_X_Randr_Mode_Info disabled = 
+               { .xid = 0, .name = "Disabled" };
 
-        if (mode)
-          if (!ecore_x_randr_crtc_settings_set(root, crtc->xid, NULL, -1, 
-                                               -1, -1, mode->xid, -1))
-            printf("Saving Settings Failed\n");
+             mode = &disabled;
+          }
+        else
+          mode = e_smart_monitor_mode_get(mon);
+
+        if (!ecore_x_randr_crtc_settings_set(root, crtc->xid, 
+                                             outputs, 1, 
+                                             mx, my, mode->xid, orient))
+          printf("Saving Settings Failed\n");
      }
 
    ecore_x_randr_screen_reset(root);
