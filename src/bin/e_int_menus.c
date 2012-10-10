@@ -674,6 +674,7 @@ _e_int_menus_app_thread_notify_cb(void *data, Ecore_Thread *eth __UNUSED__, void
         _e_int_menus_app_menu_default_waiting = NULL;
      }
    if (!m) return;
+   e_object_del_attach_func_set(E_OBJECT(m), NULL);
 
    if (_e_int_menus_app_cleaner)
      ecore_timer_reset(_e_int_menus_app_cleaner);
@@ -704,6 +705,15 @@ _e_int_menus_app_thread_cb(void *data, Ecore_Thread *eth)
    else
      menu = efreet_menu_get();
    ecore_thread_feedback(eth, menu);
+}
+
+static void
+_e_int_menus_apps_menu_del(void *data)
+{
+   const char *dir;
+
+   dir = e_object_data_get(data);
+   eina_hash_del_by_key(_e_int_menus_app_menus_waiting, dir);
 }
 
 static Efreet_Menu *
@@ -743,6 +753,7 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
    eth = ecore_thread_feedback_run(_e_int_menus_app_thread_cb, _e_int_menus_app_thread_notify_cb,
                                    _e_int_menus_app_thread_end_cb, _e_int_menus_app_thread_end_cb, dir, EINA_FALSE);
    _e_int_menus_app_threads = eina_list_append(_e_int_menus_app_threads, eth);
+   if (m) e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_apps_menu_del);
    return NULL;
 }
 
@@ -781,7 +792,7 @@ _e_int_menus_apps_free_hook2(void *obj)
    m = obj;
    // XXX TODO: this should be automatic in e_menu, just get references right!
    // XXX TODO: fix references and remove me!!!
-   EINA_LIST_FOREACH_SAFE (m->items, l, l_next, mi)
+   EINA_LIST_FOREACH_SAFE(m->items, l, l_next, mi)
      {
         if (mi->submenu)
           e_object_del(E_OBJECT(mi->submenu));
