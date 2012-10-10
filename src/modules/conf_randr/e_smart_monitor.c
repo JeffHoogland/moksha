@@ -16,6 +16,9 @@ struct _E_Smart_Data
    /* object geometry before move started */
    Evas_Coord mx, my, mw, mh;
 
+   /* changed flag */
+   Eina_Bool changed : 1;
+
    /* visible flag */
    Eina_Bool visible : 1;
 
@@ -877,12 +880,14 @@ _e_smart_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char
    if (sd->connected)
      {
         sd->connected = EINA_FALSE;
+        sd->changed = EINA_TRUE;
         edje_object_signal_emit(sd->o_base, "e,state,disabled", "e");
         edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
      }
    else
      {
         sd->connected = EINA_TRUE;
+        sd->changed = EINA_TRUE;
         edje_object_signal_emit(sd->o_base, "e,state,enabled", "e");
         edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
      }
@@ -1082,6 +1087,8 @@ _e_smart_monitor_rotate_snap(Evas_Object *obj)
             (sd->orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
      e_layout_child_resize(obj, nw, nh);
 
+   sd->changed = EINA_TRUE;
+
    /* tell randr widget we rotated this monitor so that it can 
     * update the layout for any monitors around this one */
    evas_object_smart_callback_call(obj, "monitor_rotated", NULL);
@@ -1180,6 +1187,8 @@ _e_smart_monitor_resize_snap(Evas_Object *obj, Ecore_X_Randr_Mode_Info *mode)
 
    _e_smart_monitor_refresh_rates_refill(obj);
 
+   sd->changed = EINA_TRUE;
+
    /* tell randr widget we resized this monitor so that it can 
     * update the layout for any monitors around this one */
    evas_object_smart_callback_call(obj, "monitor_resized", NULL);
@@ -1226,6 +1235,7 @@ _e_smart_monitor_move(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* actually move the monitor */
    if ((gx != nx) || (gy != ny))
      {
+        sd->changed = EINA_TRUE;
         e_layout_child_move(mon, nx, ny);
         evas_object_smart_callback_call(mon, "monitor_moved", NULL);
      }
@@ -1497,6 +1507,8 @@ _e_smart_monitor_menu_cb_resolution_change(void *data, E_Menu *mn, E_Menu_Item *
              /* compare mode name to menu item label */
              if (!strcmp(mode->name, mi->label))
                {
+                  sd->changed = EINA_TRUE;
+
                   /* found requested mode, set it */
                   _e_smart_monitor_resize_snap(obj, mode);
                   break;
