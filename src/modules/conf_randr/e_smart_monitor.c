@@ -1368,6 +1368,34 @@ _e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord h
           }
      }
 
+   /* if we got here, then no mode was found which matched on refresh rate.
+    * Search again, this time ignoring refresh rate */
+   /* find the closest resolution we have, within 'fuzziness' range */
+   EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
+     {
+        if ((((int)mode->width - RESIZE_SNAP_FUZZINESS) <= width) || 
+            (((int)mode->width + RESIZE_SNAP_FUZZINESS) <= width))
+          {
+             if ((((int)mode->height - RESIZE_SNAP_FUZZINESS) <= height) || 
+                 (((int)mode->height + RESIZE_SNAP_FUZZINESS) <= height))
+               {
+                  double rate = 0.0;
+
+                  /* since we did not match on refresh rate, then we need 
+                   * to update the smart data struct with the rate 
+                   * from this mode */
+                  if ((mode->hTotal) && (mode->vTotal))
+                    {
+                       sd->rate = (int)((float)sd->mode->dotClock / 
+                                        ((float)sd->mode->hTotal * 
+                                            (float)sd->mode->vTotal));
+                    }
+
+                  return mode;
+               }
+          }
+     }
+
    return NULL;
 }
 
