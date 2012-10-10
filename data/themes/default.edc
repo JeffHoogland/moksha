@@ -40012,7 +40012,7 @@ CONNMAN_ICON(ethernet)
                        state: "default" 0.0;
                        rel1
                          {
-                            offset: 12 15;
+                            offset: 12 14;
                             to: "frame";
                          }
                        rel2
