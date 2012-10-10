@@ -426,6 +426,17 @@ e_smart_monitor_connected_get(Evas_Object *obj)
    return sd->connected;
 }
 
+Eina_Bool 
+e_smart_monitor_changed_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return EINA_FALSE;
+
+   return sd->changed;
+}
+
 /* local functions */
 static void 
 _e_smart_add(Evas_Object *obj)
