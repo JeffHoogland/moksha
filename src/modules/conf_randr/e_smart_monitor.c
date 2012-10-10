@@ -159,6 +159,11 @@ e_smart_monitor_layout_set(Evas_Object *obj, Evas_Object *layout)
 {
    E_Smart_Data *sd;
    Evas_Coord mw, mh, mfw;
+   E_Container *con;
+   E_Desk *desk;
+   E_Zone *zone;
+   Evas_Object *o;
+   const char *bg = NULL;
 
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
@@ -177,18 +182,40 @@ e_smart_monitor_layout_set(Evas_Object *obj, Evas_Object *layout)
    if (mw < mfw) mw = mfw;
 
    evas_object_size_hint_min_set(obj, mw, mh);
+
+   /* grab slargest resolution and convert to largest canvas size */
+   e_layout_coord_virtual_to_canvas(sd->o_layout, sd->max.w, sd->max.h, 
+                                    &mw, &mh);
+
+   /* get which desk this is based on monitor geometry */
+   con = e_container_current_get(e_manager_current_get());
+   zone = 
+     e_container_zone_at_point_get(con, sd->crtc->geometry.x, 
+                                   sd->crtc->geometry.y);
+   desk = e_desk_at_xy_get(zone, sd->crtc->geometry.x, sd->crtc->geometry.y);
+   if (!desk) desk = e_desk_current_get(zone);
+
+   sd->con = con->num;
+   sd->zone = zone->num;
+
+   /* get bg file for this screen */
+   bg = e_bg_file_get(con->num, zone->num, desk->x, desk->y);
+
+   /* set livethumb size */
+   mh = (mw * mh) / mw;
+   e_livethumb_vsize_set(sd->o_thumb, mw, mh);
+
+   /* set livethumb image */
+   o = e_livethumb_thumb_get(sd->o_thumb);
+   if (!o) o = edje_object_add(e_livethumb_evas_get(sd->o_thumb));
+   edje_object_file_set(o, bg, "e/desktop/background");
+   e_livethumb_thumb_set(sd->o_thumb, o);
 }
 
 void 
 e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
 {
    E_Smart_Data *sd;
-   Evas_Object *o;
-   const char *bg = NULL;
-   E_Container *con;
-   E_Desk *desk;
-   E_Zone *zone;
-   Evas_Coord w, h;
    Eina_List *l;
    E_Randr_Output_Info *output;
 
@@ -296,30 +323,6 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
      }
 
    _e_smart_monitor_refresh_rates_refill(obj);
-
-   /* get which desk this is based on monitor geometry */
-   con = e_container_current_get(e_manager_current_get());
-   zone = 
-     e_container_zone_at_point_get(con, crtc->geometry.x, crtc->geometry.y);
-   desk = e_desk_at_xy_get(zone, crtc->geometry.x, crtc->geometry.y);
-   if (!desk) desk = e_desk_current_get(zone);
-
-   sd->con = con->num;
-   sd->zone = zone->num;
-
-   /* get bg file for this screen */
-   bg = e_bg_file_get(con->num, zone->num, desk->x, desk->y);
-
-   /* set livethumb size */
-   w = zone->w;
-   h = (w * zone->h) / zone->w;
-   e_livethumb_vsize_set(sd->o_thumb, w, h);
-
-   /* set livethumb image */
-   o = e_livethumb_thumb_get(sd->o_thumb);
-   if (!o) o = edje_object_add(e_livethumb_evas_get(sd->o_thumb));
-   edje_object_file_set(o, bg, "e/desktop/background");
-   e_livethumb_thumb_set(sd->o_thumb, o);
 }
 
 E_Randr_Crtc_Info *
