@@ -96,10 +96,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         outputs = &output->xid;
 
         orient = e_smart_monitor_orientation_get(mon);
-        /* ecore_x_randr_crtc_orientation_set(root, crtc->xid, orient); */
-
         e_smart_monitor_position_get(mon, &mx, &my);
-        /* ecore_x_randr_crtc_pos_set(root, crtc->xid, mx, my); */
 
         if (!e_smart_monitor_connected_get(mon))
           {
