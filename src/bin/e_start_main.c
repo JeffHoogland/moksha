@@ -290,15 +290,9 @@ main(int argc, char **argv)
      }
 
    if (really_know)
-     {
-        _env_path_append("PATH", eina_prefix_bin_get(pfx));
-        _env_path_append("LD_LIBRARY_PATH", eina_prefix_lib_get(pfx));
-     }
+     _env_path_append("PATH", eina_prefix_bin_get(pfx));
    else
-     {
-        _env_path_prepend("PATH", eina_prefix_bin_get(pfx));
-        _env_path_prepend("LD_LIBRARY_PATH", eina_prefix_lib_get(pfx));
-     }
+     _env_path_prepend("PATH", eina_prefix_bin_get(pfx));
 
    if (valgrind_mode || valgrind_tool)
      {

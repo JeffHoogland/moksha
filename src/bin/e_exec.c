@@ -409,9 +409,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
                    desktop->path);
              return NULL;
           }
-        e_util_library_path_strip();
         exe = ecore_exe_run(exec, inst);
-        e_util_library_path_restore();
         if (chdir(buf))
           {
              e_util_dialog_show
@@ -426,7 +424,6 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
      }
    else
      {
-        e_util_library_path_strip();
         if ((desktop) && (desktop->terminal))
           {
              Efreet_Desktop *tdesktop;
@@ -458,7 +455,6 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
           }
         else
           exe = ecore_exe_run(exec, inst);
-        e_util_library_path_restore();
      }
 
    if (penv_display)

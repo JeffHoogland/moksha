@@ -221,7 +221,6 @@ e_desklock_show(Eina_Bool suspend)
         _e_custom_desklock_exe_handler =
           ecore_event_handler_add(ECORE_EXE_EVENT_DEL,
                                   _e_desklock_cb_custom_desklock_exit, NULL);
-        e_util_library_path_strip();
         if (e_config->desklock_language)
           e_intl_language_set(e_config->desklock_language);
 
@@ -229,7 +228,6 @@ e_desklock_show(Eina_Bool suspend)
           e_xkb_layout_set(e_config->xkb.desklock_layout);
         _e_custom_desklock_exe =
           ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
-        e_util_library_path_restore();
         _e_desklock_state = EINA_TRUE;
         return 1;
      }

@@ -190,9 +190,7 @@ e_util_head_exec(int head, const char *cmd)
      strcpy(buf, penv_display);
 
    ok = 1;
-   e_util_library_path_strip();
    exe = ecore_exe_run(cmd, NULL);
-   e_util_library_path_restore();
    if (!exe)
      {
         e_util_dialog_show(_("Run Error"),
@@ -959,53 +957,6 @@ e_util_file_time_get(time_t ftime)
    else
      s = strdup(_("Unknown"));
    return s;
-}
-
-//static char *prev_ld_library_path = NULL;
-//static char *prev_path = NULL;
-
-EAPI void
-e_util_library_path_strip(void)
-{
-/* disabled as i think we dont need/want this anymore - leftover from a bygone era
-   char *p, *p2;
-
-   p = getenv("LD_LIBRARY_PATH");
-   E_FREE(prev_ld_library_path);
-   if (p)
-     {
-        prev_ld_library_path = strdup(p);
-        p2 = strchr(p, ':');
-        if (p2) p2++;
-        e_util_env_set("LD_LIBRARY_PATH", p2);
-     }
-   p = getenv("PATH");
-   E_FREE(prev_path);
-   if (p)
-     {
-        prev_path = strdup(p);
-        p2 = strchr(p, ':');
-        if (p2) p2++;
-        e_util_env_set("PATH", p2);
-     }
- */
-}
-
-EAPI void
-e_util_library_path_restore(void)
-{
-/* disabled as i think we dont need/want this anymore - leftover from a bygone era
-   if (prev_ld_library_path)
-     {
-        e_util_env_set("LD_LIBRARY_PATH", prev_ld_library_path);
-        E_FREE(prev_ld_library_path);
-     }
-   if (prev_path)
-     {
-        e_util_env_set("PATH", prev_path);
-        E_FREE(prev_path);
-     }
- */
 }
 
 EAPI Evas_Object *

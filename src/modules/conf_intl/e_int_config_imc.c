@@ -266,9 +266,7 @@ _e_imc_setup_cb(void *data, void *data2 __UNUSED__)
 
              cmd = imc->e_im_setup_exec;
 
-             e_util_library_path_strip();
              exe = ecore_exe_run(cmd, NULL);
-             e_util_library_path_restore();
 
              if (!exe)
                {
@@ -517,9 +515,7 @@ _e_imc_adv_setup_cb(void *data, void *data2 __UNUSED__)
 
         cmd = cfdata->imc.e_im_setup_exec;
 
-        e_util_library_path_strip();
         exe = ecore_exe_run(cmd, NULL);
-        e_util_library_path_restore();
 
         if (!exe)
           {
