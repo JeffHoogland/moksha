@@ -203,8 +203,9 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
    sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
    sd->mode = crtc->current_mode;
 
-   sd->rate = (int)((float)sd->mode->dotClock / 
-                    ((float)sd->mode->hTotal * (float)sd->mode->vTotal));
+   if ((sd->mode->hTotal) && (sd->mode->vTotal))
+     sd->rate = (int)((float)sd->mode->dotClock / 
+                      ((float)sd->mode->hTotal * (float)sd->mode->vTotal));
 
    EINA_LIST_FOREACH(crtc->outputs, l, output)
      {
