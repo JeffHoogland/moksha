@@ -1406,6 +1406,11 @@ e_config_load(void)
      E_CONFIG_LIMIT(e_config->powersave.min, E_POWERSAVE_MODE_NONE, E_POWERSAVE_MODE_EXTREME);
      E_CONFIG_LIMIT(e_config->powersave.max, E_POWERSAVE_MODE_NONE, E_POWERSAVE_MODE_EXTREME);
 
+     E_CONFIG_LIMIT(e_config->border_keyboard.move.dx, 1, 255);
+     E_CONFIG_LIMIT(e_config->border_keyboard.move.dy, 1, 255);
+     E_CONFIG_LIMIT(e_config->border_keyboard.resize.dx, 1, 255);
+     E_CONFIG_LIMIT(e_config->border_keyboard.resize.dy, 1, 255);
+
      E_CONFIG_LIMIT(e_config->multiscreen_flip, 0, 1);
 
      /* FIXME: disabled auto apply because it causes problems */
