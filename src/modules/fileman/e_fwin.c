@@ -1953,30 +1953,18 @@ _e_fwin_zone_focus_in(void *data,
 }
 
 static Eina_Bool
-_e_fwin_zone_move_resize(void *data,
-                         int type,
-                         void *event)
+_e_fwin_zone_move_resize(void *data, int type __UNUSED__, void *event)
 {
    E_Event_Zone_Move_Resize *ev;
    E_Fwin *fwin;
 
-   if (type != E_EVENT_ZONE_MOVE_RESIZE) return ECORE_CALLBACK_PASS_ON;
    fwin = data;
    ev = event;
    if (!fwin) return ECORE_CALLBACK_PASS_ON;
    if (fwin->zone != ev->zone) return ECORE_CALLBACK_PASS_ON;
-   if (fwin->bg_obj)
-     {
-        evas_object_move(fwin->bg_obj, ev->zone->x, ev->zone->y);
-        evas_object_resize(fwin->bg_obj, ev->zone->w, ev->zone->h);
-     }
-   if (fwin->cur_page->scrollframe_obj)
-     {
-        int x, y, w, h;
-        e_zone_useful_geometry_get(ev->zone, &x, &y, &w, &h);
-        evas_object_move(fwin->cur_page->scrollframe_obj, x, y);
-        evas_object_resize(fwin->cur_page->scrollframe_obj, w, h);
-     }
+   /* prevent scrollbars from showing up on the desktop! */
+   e_fwin_zone_shutdown(ev->zone);
+   e_fwin_zone_new(ev->zone, e_mod_fileman_path_find(ev->zone));
    return ECORE_CALLBACK_PASS_ON;
 }
 
