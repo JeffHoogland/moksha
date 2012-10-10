@@ -353,14 +353,6 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
         if (w) *w = sd->crtc->geometry.w;
         if (h) *h = sd->crtc->geometry.h;
      }
-   /* else */
-   /*   { */
-   /*      if (sd->crtc->monitor) */
-   /*        { */
-   /*           if (w) *w = sd->crtc->monitor->size_mm.width; */
-   /*           if (h) *h = sd->crtc->monitor->size_mm.height; */
-   /*        } */
-   /*   } */
 }
 
 void 
