@@ -60,6 +60,22 @@ EAPI E_Module_Api e_modapi =
    "XKB Switcher"
 };
 
+static void
+_e_xkb_default_add(void)
+{
+   E_Config_XKB_Layout *nl;
+
+   CRI("No kbd layouts found! Probably hit super-annoying-xkb-module bug!");
+
+   nl = E_NEW(E_Config_XKB_Layout, 1);
+   nl->name = eina_stringshare_add("default");
+   nl->model = eina_stringshare_add("default");
+   nl->variant = eina_stringshare_add("basic");
+
+   e_config->xkb.used_layouts =
+     eina_list_append(e_config->xkb.used_layouts, nl);
+}
+
 /* Module initializer
  * Initializes the configuration file, checks its versions, populates
  * menus, finds the rules file, initializes gadget icon.
@@ -78,7 +94,7 @@ e_modapi_init(E_Module *m)
    _xkb.evh = ecore_event_handler_add(E_EVENT_XKB_CHANGED, _xkb_changed, NULL);
    ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_changed_state, NULL);
    if (!e_config->xkb.default_model) e_config->xkb.default_model = eina_stringshare_add("default");
-   if (!e_config->xkb.used_layouts)
+   if (!e_config->xkb.used_layouts) _e_xkb_default_add();
      {
         E_Config_XKB_Layout *nl;
 
