@@ -289,10 +289,13 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
         sd->max.h = mode->height;
 
         /* set resolution label based on current mode */
-        snprintf(buff, sizeof(buff), "%d x %d", 
-                 output->crtc->current_mode->width, 
-                 output->crtc->current_mode->height);
-        edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
+        if ((output->crtc->current_mode))
+          {
+             snprintf(buff, sizeof(buff), "%d x %d", 
+                      output->crtc->current_mode->width, 
+                      output->crtc->current_mode->height);
+             edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
+          }
 
         /* tell monitor object we are enabled/disabled */
         if (output->connection_status == 
@@ -1525,9 +1528,12 @@ _e_smart_monitor_menu_cb_resolution_pre(void *data, E_Menu *mn, E_Menu_Item *mi)
                                  obj);
 
         /* if this is the current mode, mark menu item as selected */
-        if ((mode->width == sd->crtc->current_mode->width) && 
-            (mode->height == sd->crtc->current_mode->height))
-          e_menu_item_toggle_set(submi, EINA_TRUE);
+        if ((sd->crtc->current_mode))
+          {
+             if ((mode->width == sd->crtc->current_mode->width) && 
+                 (mode->height == sd->crtc->current_mode->height))
+               e_menu_item_toggle_set(submi, EINA_TRUE);
+          }
      }
 }
 
