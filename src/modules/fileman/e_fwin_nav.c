@@ -39,7 +39,7 @@ static void             _cb_changed(void *data, Evas_Object *obj, void *event_in
 static void             _cb_dir_changed(void *data, Evas_Object *obj, void *event_info);
 static void             _cb_button_click(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void             _cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
-static void             _box_button_append(Instance *inst, const char *label, void (*func)(void *data, Evas_Object *obj, const char *emission, const char *source));
+static void             _box_button_append(Instance *inst, const char *label, Edje_Signal_Cb func);
 
 static Eina_List *instances = NULL;
 static const char *_nav_mod_dir = NULL;
@@ -444,7 +444,7 @@ _cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, v
 }
 
 static void
-_box_button_append(Instance *inst, const char *label, void (*func)(void *data, Evas_Object *obj, const char *emission, const char *source))
+_box_button_append(Instance *inst, const char *label, Edje_Signal_Cb func)
 {
    Evas_Object *o;
    Evas_Coord mw = 0, mh = 0;
