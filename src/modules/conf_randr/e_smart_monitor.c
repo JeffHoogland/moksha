@@ -200,8 +200,8 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
    sd->rotation = _e_smart_monitor_rotation_get(sd->orientation);
    sd->mode = crtc->current_mode;
 
-   sd->rate = ((float)sd->mode->dotClock / 
-               ((float)sd->mode->hTotal * (float)sd->mode->vTotal));
+   sd->rate = (int)((float)sd->mode->dotClock / 
+                    ((float)sd->mode->hTotal * (float)sd->mode->vTotal));
 
    EINA_LIST_FOREACH(crtc->outputs, l, output)
      {
@@ -213,32 +213,22 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
 
         printf("Output: %d %s\n", output->xid, output->name);
 
-        if (output->crtc)
-          modes = output->crtc->outputs_common_modes;
-        else if (output->monitor)
-          modes = output->monitor->modes;
-
-        /* grab a copy of this monitor's modes, 
-         * filtering out duplicate resolutions */
-        EINA_LIST_FOREACH(modes, m, mode)
+        if (sd->mode)
           {
-             Ecore_X_Randr_Mode_Info *nmode = NULL;
-
-             if ((nmode = eina_list_data_get(m->next)))
-               {
-                  if (!strcmp(mode->name, nmode->name))
-                    continue;
-               }
-
-             sd->modes = eina_list_append(sd->modes, mode);
+             printf("\tCurrent Mode\n");
+             printf("\t\tID: %d\n", sd->mode->xid);
+             printf("\t\tSize: %d x %d\n", sd->mode->width, sd->mode->height);
+             printf("\t\tRate: %dHz\n", sd->rate);
           }
 
-        /* sort the mode list */
-        sd->modes = eina_list_sort(sd->modes, 0, _e_smart_cb_modes_sort);
+        if (output->monitor)
+          modes = output->monitor->modes;
+        else if (output->crtc)
+          modes = output->crtc->outputs_common_modes;
 
         /* NB: This is just a development printf to list modes.
          * Remove when dialog is complete */
-        EINA_LIST_FOREACH(sd->modes, m, mode)
+        EINA_LIST_FOREACH(modes, m, mode)
           {
              double rate = 0.0;
 
@@ -246,9 +236,14 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
                rate = ((float)mode->dotClock / 
                        ((float)mode->hTotal * (float)mode->vTotal));
 
-             printf("\tMode: %d %dx%d @ %.1fHz\n", mode->xid, 
+             printf("\t\tMode: %d %dx%d @ %.1fHz\n", mode->xid, 
                     mode->width, mode->height, rate);
+
+             sd->modes = eina_list_append(sd->modes, mode);
           }
+
+        /* sort the mode list */
+        sd->modes = eina_list_sort(sd->modes, 0, _e_smart_cb_modes_sort);
 
         /* get the min resolution for this monitor */
         mode = eina_list_nth(sd->modes, 0);
@@ -391,6 +386,38 @@ e_smart_monitor_moving_get(Evas_Object *obj)
      return EINA_FALSE;
 
    return sd->moving;
+}
+
+void 
+e_smart_monitor_position_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y)
+{
+   Evas_Coord mx, my;
+
+   e_layout_child_geometry_get(obj, &mx, &my, NULL, NULL);
+   if (x) *x = mx;
+   if (y) *y = my;
+}
+
+Ecore_X_Randr_Orientation 
+e_smart_monitor_orientation_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return ECORE_X_RANDR_ORIENTATION_ROT_0;
+
+   return sd->orientation;
+}
+
+Ecore_X_Randr_Mode_Info *
+e_smart_monitor_mode_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return NULL;
+
+   return sd->mode;
 }
 
 /* local functions */
@@ -1255,10 +1282,10 @@ _e_smart_monitor_refresh_rates_refill(Evas_Object *obj)
         Eina_List *modes = NULL, *m = NULL;
         Ecore_X_Randr_Mode_Info *mode = NULL;
 
-        if (output->crtc)
-          modes = output->crtc->outputs_common_modes;
-        else if (output->monitor)
+        if (output->monitor)
           modes = output->monitor->modes;
+        else if (output->crtc)
+          modes = output->crtc->outputs_common_modes;
 
         /* grab a copy of this monitor's modes, 
          * filtering out duplicate resolutions */
@@ -1276,7 +1303,7 @@ _e_smart_monitor_refresh_rates_refill(Evas_Object *obj)
 
                   snprintf(buff, sizeof(buff), "%.1fHz", rate);
 
-                  ow = e_widget_radio_add(evas, buff, abs((int)rate), rg);
+                  ow = e_widget_radio_add(evas, buff, (int)rate, rg);
                   e_widget_list_object_append(sd->o_refresh, ow, 1, 0, 0.5);
                }
           }
@@ -1304,7 +1331,16 @@ _e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord h
           {
              if ((((int)mode->height - RESIZE_SNAP_FUZZINESS) <= height) || 
                  (((int)mode->height + RESIZE_SNAP_FUZZINESS) <= height))
-               return mode;
+               {
+                  double rate = 0.0;
+
+                  if ((mode->hTotal) && (mode->vTotal))
+                    rate = (((float)mode->dotClock / 
+                             ((float)mode->hTotal * (float)mode->vTotal)));
+
+                  if (((int)rate == sd->rate))
+                    return mode;
+               }
           }
      }
 
