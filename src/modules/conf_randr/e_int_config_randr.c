@@ -12,7 +12,6 @@ struct _E_Config_Dialog_Data
 
 /* local function prototypes */
 static void *_create_data(E_Config_Dialog *cfd __UNUSED__);
-static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
@@ -59,13 +58,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    E_Config_Dialog_Data *cfdata;
 
    if (!(cfdata = E_NEW(E_Config_Dialog_Data, 1))) return NULL;
-   _fill_data(cfdata);
    return cfdata;
-}
-
-static void 
-_fill_data(E_Config_Dialog_Data *cfdata __UNUSED__)
-{
 }
 
 static void 
@@ -79,8 +72,39 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata __UNUSED__)
+_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   Eina_List *l;
+   Evas_Object *mon;
+   Ecore_X_Window root;
+
+   root = cfd->con->manager->root;
+
+   EINA_LIST_FOREACH(e_smart_randr_monitors_get(cfdata->o_scroll), l, mon)
+     {
+        E_Randr_Crtc_Info *crtc;
+        Evas_Coord mx, my;
+        Ecore_X_Randr_Orientation orient;
+        Ecore_X_Randr_Mode_Info *mode;
+
+        if (!(crtc = e_smart_monitor_crtc_get(mon)))
+          continue;
+
+        orient = e_smart_monitor_orientation_get(mon);
+        mode = e_smart_monitor_mode_get(mon);
+        e_smart_monitor_position_get(mon, &mx, &my);
+
+        ecore_x_randr_crtc_pos_set(root, crtc->xid, mx, my);
+        ecore_x_randr_crtc_orientation_set(root, crtc->xid, orient);
+
+        if (mode)
+          if (!ecore_x_randr_crtc_settings_set(root, crtc->xid, NULL, -1, 
+                                               -1, -1, mode->xid, -1))
+            printf("Saving Settings Failed\n");
+     }
+
+   ecore_x_randr_screen_reset(root);
+
    return 1;
 }
 
