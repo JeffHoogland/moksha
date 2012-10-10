@@ -41,11 +41,11 @@ e_screensaver_update(void)
         _e_screensaver_timeout = timeout;
         changed = EINA_TRUE;
      }
-   if (_e_screensaver_interval != interval)
-     {
-        _e_screensaver_interval = interval;
-        changed = EINA_TRUE;
-     }
+//   if (_e_screensaver_interval != interval)
+//     {
+//        _e_screensaver_interval = interval;
+//        changed = EINA_TRUE;
+//     }
    if (_e_screensaver_blanking != blanking)
      {
         _e_screensaver_blanking = blanking;
@@ -69,11 +69,13 @@ e_screensaver_force_update(void)
        (!e_util_fullscreen_current_any()))
      timeout = e_config->screensaver_timeout * count;
    ecore_x_screensaver_set(timeout + 10,
-                           e_config->screensaver_interval + 10,
+                           0,
+//                           e_config->screensaver_interval,
                            !e_config->screensaver_blanking,
                            !e_config->screensaver_expose);
    ecore_x_screensaver_set(timeout,
-                           e_config->screensaver_interval,
+                           0,
+//                           e_config->screensaver_interval,
                            e_config->screensaver_blanking,
                            e_config->screensaver_expose);
 }
@@ -313,7 +315,7 @@ e_screensaver_init(void)
      (E_EVENT_POWERSAVE_UPDATE, _e_screensaver_handler_powersave_cb, NULL);
 
    _e_screensaver_timeout = ecore_x_screensaver_timeout_get();
-   _e_screensaver_interval = ecore_x_screensaver_interval_get();
+//   _e_screensaver_interval = ecore_x_screensaver_interval_get();
    _e_screensaver_blanking = ecore_x_screensaver_blank_get();
    _e_screensaver_expose = ecore_x_screensaver_expose_get();
 
