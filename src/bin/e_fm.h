@@ -209,6 +209,7 @@ EAPI void             e_fm2_favorites_init(void);
 EAPI unsigned int     e_fm2_selected_count(Evas_Object *obj);
 EAPI const char      *e_fm2_desktop_url_eval(const char *val);
 EAPI E_Fm2_Icon_Info *e_fm2_drop_icon_get(Evas_Object *obj);
+EAPI void             e_fm2_drop_menu(Evas_Object *e_fm, char *args);
 EAPI Eina_List       *e_fm2_uri_path_list_get(const Eina_List *uri_list);
 
 EAPI int              _e_fm2_client_mount(const char *udi, const char *mountpoint);

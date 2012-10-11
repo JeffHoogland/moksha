@@ -6309,30 +6309,37 @@ _e_fm_icon_save_position(const char *file, Evas_Coord x, Evas_Coord y, Evas_Coor
 static void
 _e_fm_drop_menu_copy_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   Evas_Object *e_fm = data;
-   if (!e_fm) return;
-   _e_fm_client_file_copy(evas_object_data_get(e_fm, "drop_menu_data"), e_fm);
+   char *args;
+
+   args = evas_object_data_get(data, "drop_menu_data");
+   _e_fm_client_file_copy(args, data);
+   free(args);
 }
 
 static void
 _e_fm_drop_menu_move_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   Evas_Object *e_fm = data;
-   if (!e_fm) return;
-   _e_fm_client_file_move(evas_object_data_get(e_fm, "drop_menu_data"), e_fm);
+   char *args;
+
+   args = evas_object_data_get(data, "drop_menu_data");
+   _e_fm_client_file_move(args, data);
+   free(args);
 }
 
 static void
 _e_fm_drop_menu_symlink_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   Evas_Object *e_fm = data;
-   if (!e_fm) return;
-   _e_fm_client_file_symlink(evas_object_data_get(e_fm, "drop_menu_data"), e_fm);
+   char *args;
+
+   args = evas_object_data_get(data, "drop_menu_data");
+   _e_fm_client_file_symlink(args, data);
+   free(args);
 }
 
 static void
-_e_fm_drop_menu_abort_cb(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+_e_fm_drop_menu_abort_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
+   free(evas_object_data_get(data, "drop_menu_data"));
 }
 
 static void
@@ -6342,67 +6349,7 @@ _e_fm_drop_menu_free(void *data)
 
    e_fm = e_object_data_get(data);
    if (!e_fm) return;
-   free(evas_object_data_get(e_fm, "drop_menu_data"));
    evas_object_data_del(e_fm, "drop_menu_data");
-}
-
-static void
-_e_fm_drop_menu(char *args, Evas_Object *e_fm)
-{
-   E_Menu *menu;
-   E_Menu_Item *item = NULL;
-   E_Manager *man = NULL;
-   E_Container *con = NULL;
-   E_Zone *zone = NULL;
-   int x, y;
-
-   menu = e_menu_new();
-   if (!menu) return;
-
-   evas_object_data_set(e_fm, "drop_menu_data", args);
-   e_object_data_set(E_OBJECT(menu), e_fm);
-   e_object_free_attach_func_set(E_OBJECT(menu), _e_fm_drop_menu_free);
-
-   item = e_menu_item_new(menu);
-   e_menu_item_label_set(item, _("Copy"));
-   e_menu_item_callback_set(item, _e_fm_drop_menu_copy_cb, e_fm);
-   e_util_menu_item_theme_icon_set(item, "edit-copy");
-
-   item = e_menu_item_new(menu);
-   e_menu_item_label_set(item, _("Move"));
-   e_menu_item_callback_set(item, _e_fm_drop_menu_move_cb, e_fm);
-   e_menu_item_icon_edje_set(item,
-                             e_theme_edje_file_get("base/theme/fileman",
-                                                   "e/fileman/default/button/move"),
-                             "e/fileman/default/button/move");
-
-   item = e_menu_item_new(menu);
-   e_menu_item_label_set(item, _("Link"));
-   e_menu_item_callback_set(item, _e_fm_drop_menu_symlink_cb, e_fm);
-   e_util_menu_item_theme_icon_set(item, "emblem-symbolic-link");
-
-   item = e_menu_item_new(menu);
-   e_menu_item_separator_set(item, 1);
-
-   item = e_menu_item_new(menu);
-   e_menu_item_label_set(item, _("Abort"));
-   e_menu_item_callback_set(item, _e_fm_drop_menu_abort_cb, e_fm);
-   e_menu_item_icon_edje_set(item,
-                             e_theme_edje_file_get("base/theme/fileman",
-                                                   "e/fileman/default/button/abort"),
-                             "e/fileman/default/button/abort");
-
-   man = e_manager_current_get();
-   if (!man) goto error;
-   con = e_container_current_get(man);
-   if (!con) goto error;
-   ecore_x_pointer_xy_get(con->win, &x, &y);
-   zone = e_util_zone_current_get(man);
-   if (!zone) goto error;
-   e_menu_activate_mouse(menu, zone, x, y, 1, 1, E_MENU_POP_DIRECTION_DOWN, 0);
-
-error:
-   e_object_del(E_OBJECT(menu));
 }
 
 static void
@@ -6656,7 +6603,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
              if (sd->config->view.link_drop && (!sd->drop_icon))
                _e_fm_client_file_symlink(args, sd->obj);
              else
-               _e_fm_drop_menu(args, sd->obj);
+               e_fm2_drop_menu(sd->obj, args);
           }
      }
 
@@ -11122,4 +11069,64 @@ e_fm2_uri_path_list_get(const Eina_List *uri_list)
      }
 
    return path_list;
+}
+
+
+EAPI void
+e_fm2_drop_menu(Evas_Object *e_fm, char *args)
+{
+   E_Menu *menu;
+   E_Menu_Item *item;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   int x, y;
+
+   menu = e_menu_new();
+   if (!menu) return;
+
+   evas_object_data_set(e_fm, "drop_menu_data", args);
+   e_object_data_set(E_OBJECT(menu), e_fm);
+   e_object_free_attach_func_set(E_OBJECT(menu), _e_fm_drop_menu_free);
+
+   item = e_menu_item_new(menu);
+   e_menu_item_label_set(item, _("Copy"));
+   e_menu_item_callback_set(item, _e_fm_drop_menu_copy_cb, e_fm);
+   e_util_menu_item_theme_icon_set(item, "edit-copy");
+
+   item = e_menu_item_new(menu);
+   e_menu_item_label_set(item, _("Move"));
+   e_menu_item_callback_set(item, _e_fm_drop_menu_move_cb, e_fm);
+   e_menu_item_icon_edje_set(item,
+                             e_theme_edje_file_get("base/theme/fileman",
+                                                   "e/fileman/default/button/move"),
+                             "e/fileman/default/button/move");
+
+   item = e_menu_item_new(menu);
+   e_menu_item_label_set(item, _("Link"));
+   e_menu_item_callback_set(item, _e_fm_drop_menu_symlink_cb, e_fm);
+   e_util_menu_item_theme_icon_set(item, "emblem-symbolic-link");
+
+   item = e_menu_item_new(menu);
+   e_menu_item_separator_set(item, 1);
+
+   item = e_menu_item_new(menu);
+   e_menu_item_label_set(item, _("Abort"));
+   e_menu_item_callback_set(item, _e_fm_drop_menu_abort_cb, e_fm);
+   e_menu_item_icon_edje_set(item,
+                             e_theme_edje_file_get("base/theme/fileman",
+                                                   "e/fileman/default/button/abort"),
+                             "e/fileman/default/button/abort");
+
+   man = e_manager_current_get();
+   if (!man) goto error;
+   con = e_container_current_get(man);
+   if (!con) goto error;
+   ecore_x_pointer_xy_get(con->win, &x, &y);
+   zone = e_util_zone_current_get(man);
+   if (!zone) goto error;
+   e_menu_activate_mouse(menu, zone, x, y, 1, 1, E_MENU_POP_DIRECTION_DOWN, 0);
+
+error:
+   e_object_del(E_OBJECT(menu));
 }
