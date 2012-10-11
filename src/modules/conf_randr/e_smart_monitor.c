@@ -518,6 +518,24 @@ e_smart_monitor_changes_get(Evas_Object *obj)
    return sd->changes;
 }
 
+void 
+e_smart_monitor_changes_sent(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return;
+
+   sd->changes = E_SMART_MONITOR_CHANGED_NONE;
+
+   sd->orig.orientation = sd->current.orientation;
+   sd->orig.refresh_rate = sd->current.refresh_rate;
+   sd->orig.mode = sd->current.mode;
+   sd->orig.x = sd->current.x;
+   sd->orig.y = sd->current.y;
+   sd->orig.enabled = sd->current.enabled;
+}
+
 /* local functions */
 static void 
 _e_smart_add(Evas_Object *obj)
