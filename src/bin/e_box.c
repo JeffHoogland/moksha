@@ -421,7 +421,32 @@ e_box_item_at_xy_get(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR() NULL;
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
-   EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
+   if (!E_INSIDE(x, y, sd->x, sd->y, sd->w, sd->h)) return NULL;
+   if (sd->horizontal)
+     {
+        if (x < sd->w / 2)
+          {
+             EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
+               {
+                  if (E_INSIDE(x, y, bi->x, bi->y, bi->w, bi->h)) return bi->obj;
+               }
+             return NULL;
+          }
+        EINA_INLIST_REVERSE_FOREACH(EINA_INLIST_GET(sd->items), bi)
+          {
+             if (E_INSIDE(x, y, bi->x, bi->y, bi->w, bi->h)) return bi->obj;
+          }
+        return NULL;
+     }
+   if (y < sd->h / 2)
+     {
+        EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
+          {
+             if (E_INSIDE(x, y, bi->x, bi->y, bi->w, bi->h)) return bi->obj;
+          }
+        return NULL;
+     }
+   EINA_INLIST_REVERSE_FOREACH(EINA_INLIST_GET(sd->items), bi)
      {
         if (E_INSIDE(x, y, bi->x, bi->y, bi->w, bi->h)) return bi->obj;
      }
