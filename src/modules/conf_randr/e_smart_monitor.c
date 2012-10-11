@@ -234,12 +234,6 @@ e_smart_monitor_info_set(Evas_Object *obj, E_Randr_Output_Info *output, E_Randr_
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
 
-   /* set output of this monitor */
-   sd->output = output;
-
-   /* set crtc of this monitor */
-   sd->crtc = crtc;
-
    /* set some defaults */
    sd->orig.orientation = ECORE_X_RANDR_ORIENTATION_ROT_0;
    sd->orig.refresh_rate = 0;//60.0;
@@ -247,6 +241,12 @@ e_smart_monitor_info_set(Evas_Object *obj, E_Randr_Output_Info *output, E_Randr_
    sd->orig.x = 0;
    sd->orig.y = 0;
    sd->orig.enabled = EINA_FALSE;
+
+   /* set output of this monitor */
+   sd->output = output;
+
+   /* set crtc of this monitor */
+   sd->crtc = crtc;
 
    if (crtc)
      {
