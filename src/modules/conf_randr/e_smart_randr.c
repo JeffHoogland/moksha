@@ -33,6 +33,7 @@ static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_reconfigure(E_Smart_Data *sd);
 static void _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj);
 static void _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj);
+static void _e_smart_randr_changed_set(Evas_Object *obj);
 
 static void _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
@@ -118,6 +119,17 @@ e_smart_randr_monitors_get(Evas_Object *obj)
      return NULL;
 
    return sd->items;
+}
+
+Eina_Bool 
+e_smart_randr_changed_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return EINA_FALSE;
+
+   return sd->changed;
 }
 
 /* local functions */
@@ -270,8 +282,6 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
 
    if (!sd) return;
 
-   sd->changed = EINA_TRUE;
-
    /* get the geometry of this monitor */
    e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
 
@@ -327,8 +337,6 @@ _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj)
 
    if (!sd) return;
 
-   sd->changed = EINA_TRUE;
-
    /* get this monitor geometry Before it was moved
     * 
     * NB: This is returned in Virtual coordinates */
@@ -366,6 +374,32 @@ _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj)
    e_layout_thaw(sd->o_layout);
 }
 
+static void 
+_e_smart_randr_changed_set(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   Evas_Object *mon = NULL;
+   Eina_List *l = NULL;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return;
+
+   sd->changed = EINA_FALSE;
+   EINA_LIST_FOREACH(sd->items, l, mon)
+     {
+        E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
+
+        changes = e_smart_monitor_changes_get(mon);
+        if (changes > E_SMART_MONITOR_CHANGED_NONE)
+          {
+             sd->changed = EINA_TRUE;
+             break;
+          }
+     }
+
+   evas_object_smart_callback_call(obj, "changed", NULL);
+}
+
 /* callback received from the monitor object to let us know that it was 
  * resized, and we should adjust position of any adjacent monitors */
 static void 
@@ -380,10 +414,7 @@ _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__
 
    _e_smart_randr_layout_adjust(sd, obj);
 
-   if (sd->changed)
-     evas_object_smart_callback_call(o_randr, "changed", NULL);
-
-   sd->changed = EINA_FALSE;
+   _e_smart_randr_changed_set(o_randr);
 }
 
 /* callback received from the monitor object to let us know that it was 
@@ -392,14 +423,10 @@ static void
 _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    Evas_Object *o_randr;
-   E_Smart_Data *sd;
 
    if (!(o_randr = data)) return;
-   if (!(sd = evas_object_smart_data_get(o_randr)))
-     return;
 
-   evas_object_smart_callback_call(o_randr, "changed", NULL);
-   sd->changed = EINA_FALSE;
+   _e_smart_randr_changed_set(o_randr);
 }
 
 /* callback received from the monitor object to let us know that it was 
@@ -419,24 +446,17 @@ _e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__)
    else 
      _e_smart_randr_layout_adjust(sd, obj);
 
-   if (sd->changed)
-     evas_object_smart_callback_call(o_randr, "changed", NULL);
-
-   sd->changed = EINA_FALSE;
+   _e_smart_randr_changed_set(o_randr);
 }
 
 static void 
 _e_smart_cb_monitor_toggled(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    Evas_Object *o_randr;
-   E_Smart_Data *sd;
 
    if (!(o_randr = data)) return;
-   if (!(sd = evas_object_smart_data_get(o_randr)))
-     return;
 
-   evas_object_smart_callback_call(o_randr, "changed", NULL);
-   sd->changed = EINA_FALSE;
+   _e_smart_randr_changed_set(o_randr);
 }
 
 /* callback received from the monitor object to let us know that it was 
