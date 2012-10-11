@@ -405,7 +405,6 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
         /* NB: For now, I am just returning the geometry of the 
          * 'possible' crtc, and the width of the mode. This Will Be Fixed 
          * Very Shortly so please do not report/bitch/etc, etc */
-        /* crtc = eina_list_nth(sd->output->possible_crtcs, 0); */
 
         if (crtc)
           {
