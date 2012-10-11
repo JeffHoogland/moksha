@@ -263,7 +263,6 @@ static void          _e_fm2_dir_save_props(E_Fm2_Smart_Data *sd);
 static Evas_Object  *_e_fm2_file_fm2_find(const char *file);
 static E_Fm2_Icon   *_e_fm2_icon_find(Evas_Object *obj, const char *file);
 static const char   *_e_fm2_uri_escape(const char *path);
-static Eina_List    *_e_fm2_uri_path_list_get(Eina_List *uri_list);
 static Eina_List    *_e_fm2_uri_icon_list_get(Eina_List *uri);
 
 static E_Fm2_Icon   *_e_fm2_icon_new(E_Fm2_Smart_Data *sd, const char *file, E_Fm2_Finfo *finf);
@@ -3445,7 +3444,7 @@ _e_fm2_file_paste(Evas_Object *obj)
    if (!sd) return;
 
    /* Convert URI list to a list of real paths. */
-   paths = _e_fm2_uri_path_list_get(_e_fm_file_buffer);
+   paths = e_fm2_uri_path_list_get(_e_fm_file_buffer);
    EINA_LIST_FREE(paths, filepath)
      {
         /* Get file's full path. */
@@ -3532,7 +3531,7 @@ _e_fm2_file_symlink(Evas_Object *obj)
    if (!sd) return;
 
    /* Convert URI list to a list of real paths. */
-   paths = _e_fm2_uri_path_list_get(_e_fm_file_buffer);
+   paths = e_fm2_uri_path_list_get(_e_fm_file_buffer);
    EINA_LIST_FREE(paths, filepath)
      {
         /* Get file's full path. */
@@ -4309,37 +4308,6 @@ _e_fm2_uri_parse(const char *val)
 }
 
 /* Takes an Eina_List of uri and return an Eina_List of real paths */
-static Eina_List *
-_e_fm2_uri_path_list_get(Eina_List *uri_list)
-{
-   E_Fm2_Uri *uri;
-   Eina_List *l, *path_list = NULL;
-   char current_hostname[_POSIX_HOST_NAME_MAX];
-   const char *uri_str;
-
-   if (gethostname(current_hostname, _POSIX_HOST_NAME_MAX) == -1)
-     current_hostname[0] = '\0';
-
-   EINA_LIST_FOREACH(uri_list, l, uri_str)
-     {
-        if (!(uri = _e_fm2_uri_parse(uri_str)))
-          continue;
-
-        if (!uri->hostname || !strcmp(uri->hostname, "localhost")
-            || !strcmp(uri->hostname, current_hostname))
-          {
-             path_list = eina_list_append(path_list, uri->path);
-          }
-        else
-          eina_stringshare_del(uri->path);
-
-        if (uri->hostname) eina_stringshare_del(uri->hostname);
-        E_FREE(uri);
-     }
-
-   return path_list;
-}
-
 static Eina_List *
 _e_fm2_uri_icon_list_get(Eina_List *uri)
 {
@@ -6493,7 +6461,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
    ev = event;
    if (!_e_fm2_dnd_type_implemented(type)) return;
 
-   fsel = _e_fm2_uri_path_list_get(ev->data);
+   fsel = e_fm2_uri_path_list_get(ev->data);
    fp = eina_list_data_get(fsel);
    if (fp && sd->realpath)
      {
@@ -11156,4 +11124,36 @@ e_fm2_drop_icon_get(Evas_Object *obj)
 {
    EFM_SMART_CHECK(NULL);
    return sd->drop_icon ? &sd->drop_icon->info : NULL;
+}
+
+EAPI Eina_List *
+e_fm2_uri_path_list_get(const Eina_List *uri_list)
+{
+   E_Fm2_Uri *uri;
+   const Eina_List *l;
+   Eina_List *path_list = NULL;
+   char current_hostname[_POSIX_HOST_NAME_MAX];
+   const char *uri_str;
+
+   if (gethostname(current_hostname, _POSIX_HOST_NAME_MAX) == -1)
+     current_hostname[0] = '\0';
+
+   EINA_LIST_FOREACH(uri_list, l, uri_str)
+     {
+        if (!(uri = _e_fm2_uri_parse(uri_str)))
+          continue;
+
+        if (!uri->hostname || !strcmp(uri->hostname, "localhost")
+            || !strcmp(uri->hostname, current_hostname))
+          {
+             path_list = eina_list_append(path_list, uri->path);
+          }
+        else
+          eina_stringshare_del(uri->path);
+
+        eina_stringshare_del(uri->hostname);
+        E_FREE(uri);
+     }
+
+   return path_list;
 }
