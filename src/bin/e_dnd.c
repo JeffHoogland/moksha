@@ -646,12 +646,21 @@ _e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy)
      {
         switch (h->obj->type)
           {
+           E_Gadcon *gc;
            case E_GADCON_TYPE:
-             e_gadcon_canvas_zone_geometry_get((E_Gadcon *)(h->obj), &px, &py, NULL, NULL);
+             gc = (E_Gadcon*)h->obj;
+             e_gadcon_canvas_zone_geometry_get(gc, &px, &py, NULL, NULL);
+             if (!gc->toolbar) break;
+             px += gc->toolbar->fwin->x;
+             py += gc->toolbar->fwin->y;
              break;
 
            case E_GADCON_CLIENT_TYPE:
-             e_gadcon_canvas_zone_geometry_get(((E_Gadcon_Client *)(h->obj))->gadcon, &px, &py, NULL, NULL);
+             gc = ((E_Gadcon_Client *)(h->obj))->gadcon;
+             e_gadcon_canvas_zone_geometry_get(gc, &px, &py, NULL, NULL);
+             if (!gc->toolbar) break;
+             px += gc->toolbar->fwin->x;
+             py += gc->toolbar->fwin->y;
              break;
 
            case E_WIN_TYPE:
