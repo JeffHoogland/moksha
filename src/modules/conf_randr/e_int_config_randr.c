@@ -77,51 +77,134 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    Eina_List *l;
    Evas_Object *mon;
    Ecore_X_Window root;
+   Eina_Bool reset = EINA_FALSE;
 
    root = cfd->con->manager->root;
 
    EINA_LIST_FOREACH(e_smart_randr_monitors_get(cfdata->o_scroll), l, mon)
      {
         E_Randr_Crtc_Info *crtc;
-        Evas_Coord mx, my;
-        Ecore_X_Randr_Orientation orient;
-        Ecore_X_Randr_Mode_Info *mode;
         E_Randr_Output_Info *output;
-        Ecore_X_Randr_Output *outputs = NULL;
-        int noutputs = 0;
+        E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
 
-        if (!e_smart_monitor_changed_get(mon))
-          continue;
+        crtc = e_smart_monitor_crtc_get(mon);
+        output = e_smart_monitor_output_get(mon);
+        changes = e_smart_monitor_changes_get(mon);
 
-        if (!(crtc = e_smart_monitor_crtc_get(mon)))
-          continue;
-
-        if (!(output = e_smart_monitor_output_get(mon)))
-          output = eina_list_data_get(crtc->outputs);
-
-        outputs = &output->xid;
-        noutputs = eina_list_count(crtc->outputs);
-
-        orient = e_smart_monitor_orientation_get(mon);
-        e_smart_monitor_position_get(mon, &mx, &my);
-
-        if (!e_smart_monitor_connected_get(mon))
+        if (changes & E_SMART_MONITOR_CHANGED_ENABLED)
           {
-             Ecore_X_Randr_Mode_Info disabled = 
-               { .xid = 0, .name = "Disabled" };
+             if (e_smart_monitor_enabled_get(mon))
+               {
+                  if (crtc)
+                    {
+                       Ecore_X_Randr_Output *outputs;
+                       Ecore_X_Randr_Mode_Info *mode;
+                       Ecore_X_Randr_Orientation orient;
+                       Evas_Coord mx, my;
+                       int noutputs = -1;
 
-             mode = &disabled;
+                       mode = e_smart_monitor_mode_get(mon);
+                       orient = e_smart_monitor_orientation_get(mon);
+                       e_smart_monitor_position_get(mon, &mx, &my);
+
+                       noutputs = eina_list_count(crtc->outputs);
+                       if (noutputs < 1)
+                         {
+                            outputs = calloc(1, sizeof(Ecore_X_Randr_Output));
+                            outputs[0] = output->xid;
+                            noutputs = 1;
+                         }
+                       else
+                         {
+                            int i = 0;
+
+                            outputs = 
+                              calloc(noutputs, sizeof(Ecore_X_Randr_Output));
+                            for (i = 0; i < noutputs; i++)
+                              {
+                                 E_Randr_Output_Info *ero;
+
+                                 ero = eina_list_data_get(eina_list_nth(crtc->outputs, i));
+                                 outputs[i] = ero->xid;
+                              }
+                         }
+
+                       ecore_x_randr_crtc_settings_set(root, crtc->xid, 
+                                                       outputs, 
+                                                       noutputs, mx, my,
+                                                       mode->xid, orient);
+                       if (outputs) free(outputs);
+                    }
+               }
+             else
+               ecore_x_randr_crtc_settings_set(root, crtc->xid, 
+                                               NULL, 0, 0, 0, 0, 
+                                               ECORE_X_RANDR_ORIENTATION_ROT_0);
+
+             reset = EINA_TRUE;
           }
-        else
-          mode = e_smart_monitor_mode_get(mon);
 
-        if (!ecore_x_randr_crtc_settings_set(root, crtc->xid, 
-                                             outputs, noutputs, 
-                                             mx, my, mode->xid, orient))
-          printf("Saving Settings Failed\n");
+        if (changes & E_SMART_MONITOR_CHANGED_POSITION)
+          {
+             if (crtc)
+               {
+                  Evas_Coord mx, my;
+                  Evas_Coord cx, cy;
+
+                  e_smart_monitor_position_get(mon, &mx, &my);
+                  ecore_x_randr_crtc_pos_get(root, crtc->xid, &cx, &cy);
+                  if ((cx != mx) || (cy != my))
+                    {
+                       ecore_x_randr_crtc_pos_set(root, crtc->xid, mx, my);
+                       reset = EINA_TRUE;
+                    }
+               }
+          }
+
+        if (changes & E_SMART_MONITOR_CHANGED_ROTATION)
+          {
+             if (crtc)
+               {
+                  Ecore_X_Randr_Orientation orient;
+
+                  orient = e_smart_monitor_orientation_get(mon);
+                  if ((crtc) && (orient != crtc->current_orientation))
+                    {
+                       ecore_x_randr_crtc_orientation_set(root, 
+                                                          crtc->xid, orient);
+                       reset = EINA_TRUE;
+                    }
+               }
+          }
+
+        if ((changes & E_SMART_MONITOR_CHANGED_REFRESH) || 
+            (changes & E_SMART_MONITOR_CHANGED_RESOLUTION))
+          {
+//             if (crtc)
+               {
+                  Ecore_X_Randr_Mode_Info *mode;
+                  Ecore_X_Randr_Output *outputs = NULL;
+                  int noutputs = -1;
+
+                  if (output) outputs = &output->xid;
+
+                  if ((crtc) && (crtc->outputs))
+                    noutputs = eina_list_count(crtc->outputs);
+
+                  mode = e_smart_monitor_mode_get(mon);
+                  ecore_x_randr_crtc_mode_set(root, crtc->xid, 
+                                              outputs, noutputs, mode->xid);
+                  reset = EINA_TRUE;
+               }
+          }
+
+        /* if (!ecore_x_randr_crtc_settings_set(root, crtc->xid,  */
+        /*                                      outputs, noutputs,  */
+        /*                                      mx, my, mode->xid, orient)) */
+        /*   printf("Saving Settings Failed\n"); */
      }
 
-   ecore_x_randr_screen_reset(root);
+   if (reset) ecore_x_randr_screen_reset(root);
 
    return 1;
 }
@@ -163,10 +246,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static void 
-_randr_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_randr_cb_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    E_Config_Dialog *cfd;
+   Eina_Bool changed = EINA_FALSE;
 
    if (!(cfd = data)) return;
-   e_config_dialog_changed_set(cfd, EINA_TRUE);
+   changed = e_smart_randr_changed_get(obj);
+   e_config_dialog_changed_set(cfd, changed);
 }
