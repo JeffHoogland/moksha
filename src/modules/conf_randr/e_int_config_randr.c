@@ -180,7 +180,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         if ((changes & E_SMART_MONITOR_CHANGED_REFRESH) || 
             (changes & E_SMART_MONITOR_CHANGED_RESOLUTION))
           {
-//             if (crtc)
+             if (crtc)
                {
                   Ecore_X_Randr_Mode_Info *mode;
                   Ecore_X_Randr_Output *outputs = NULL;
@@ -197,11 +197,6 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
                   reset = EINA_TRUE;
                }
           }
-
-        /* if (!ecore_x_randr_crtc_settings_set(root, crtc->xid,  */
-        /*                                      outputs, noutputs,  */
-        /*                                      mx, my, mode->xid, orient)) */
-        /*   printf("Saving Settings Failed\n"); */
      }
 
    if (reset) ecore_x_randr_screen_reset(root);
