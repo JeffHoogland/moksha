@@ -339,11 +339,6 @@ e_smart_monitor_info_set(Evas_Object *obj, E_Randr_Output_Info *output, E_Randr_
 
    /* fill in list of refresh rates */
    _e_smart_monitor_refresh_rates_refill(obj);
-
-   /* printf("Orig\n"); */
-   /* printf("\tID: %d\n", sd->orig.mode->xid); */
-   /* printf("\tRate: %.1fHz\n", sd->orig.refresh_rate); */
-   /* printf("\tSize: %d %d\n", sd->orig.mode->width, sd->orig.mode->height); */
 }
 
 E_Randr_Crtc_Info *
