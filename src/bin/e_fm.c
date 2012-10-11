@@ -2464,27 +2464,6 @@ _e_fm_client_file_move(const char *args, Evas_Object *e_fm)
    return id;
 }
 
-#if 0
-static int
-_e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel __UNUSED__, int rel_to __UNUSED__, int x __UNUSED__, int y __UNUSED__, int res_w __UNUSED__, int res_h __UNUSED__, Evas_Object *e_fm)
-{
-   char *args = NULL;
-   size_t size = 0, length = 0;
-   int r;
-
-   args = _e_fm_string_append_quoted(args, &size, &length, path);
-   if (!args) return 0;
-   args = _e_fm_string_append_char(args, &size, &length, ' ');
-   if (!args) return 0;
-   args = _e_fm_string_append_quoted(args, &size, &length, dest);
-   if (!args) return 0;
-
-   r = _e_fm_client_file_symlink(args, e_fm);
-   free(args);
-   return r;
-}
-#endif
-
 static int
 _e_fm_client_file_copy(const char *args, Evas_Object *e_fm)
 {
