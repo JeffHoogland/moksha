@@ -107,7 +107,9 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
         if (!crtc) continue;
 
-        changes = e_smart_monitor_changes_get(mon);
+        if (!(changes = e_smart_monitor_changes_get(mon)))
+          continue;
+
         if (changes & E_SMART_MONITOR_CHANGED_ENABLED)
           {
              if (e_smart_monitor_enabled_get(mon))
