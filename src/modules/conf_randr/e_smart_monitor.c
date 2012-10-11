@@ -287,6 +287,7 @@ e_smart_monitor_info_set(Evas_Object *obj, E_Randr_Output_Info *output, E_Randr_
    mode = eina_list_data_get(eina_list_last(sd->modes));
    sd->max.w = mode->width;
    sd->max.h = mode->height;
+   if (!crtc) sd->orig.mode = mode;
 
    /* set monitor name */
    if (output)
@@ -394,8 +395,6 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
                break;
           }
 
-        if (!crtc) return;
-
         /* The case here is that crtc has not been set, so 
          * effectively this monitor is "disabled". As such, we cannot 
          * really retrieve the 'crtc' geometry for it. That geometry is 
@@ -408,13 +407,14 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
          * Very Shortly so please do not report/bitch/etc, etc */
         /* crtc = eina_list_nth(sd->output->possible_crtcs, 0); */
 
-        if (x) *x = crtc->geometry.x;
-        if (y) *y = crtc->geometry.y;
-        if (w) *w = crtc->geometry.w;
-        if (h) *h = crtc->geometry.h;
+        if (crtc)
+          {
+             if (x) *x = crtc->geometry.x;
+             if (y) *y = crtc->geometry.y;
+          }
 
-        /* if (w) *w = sd->current.mode->width; */
-        /* if (h) *h = sd->current.mode->height; */
+        if (w) *w = sd->current.mode->width;
+        if (h) *h = sd->current.mode->height;
      }
    else
      {
