@@ -251,6 +251,9 @@ struct _E_Config
 
    Eina_List                *mime_icons; // GUI
    int                       desk_auto_switch; // GUI;
+   
+   int                       window_out_of_vscreen_limits;
+   int                       window_out_of_vscreen_limits_partly;
 
    int                       thumb_nice;
 

@@ -1299,7 +1299,7 @@ _e_int_menus_clients_pre_cb(void *data __UNUSED__, E_Menu *m)
    e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_callback_set(mi, _e_int_menus_clients_cleanup_cb, zone);
 
-   if (dat)
+   if ((dat) && (e_config->window_out_of_vscreen_limits))
      {
         mi = e_menu_item_new(m);
         e_menu_item_separator_set(mi, 1);

@@ -21,6 +21,8 @@ struct _E_Config_Dialog_Data
    int window_placement_policy;
    int window_grouping;
    int desk_auto_switch;
+   int window_out_of_vscreen_limits;
+   int window_out_of_vscreen_limits_partly;
 
    Eina_List *shading_list;
 };
@@ -67,6 +69,9 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->window_grouping = e_config->window_grouping;
    cfdata->desk_auto_switch = e_config->desk_auto_switch;
 
+   cfdata->window_out_of_vscreen_limits = e_config->window_out_of_vscreen_limits;
+   cfdata->window_out_of_vscreen_limits_partly = e_config->window_out_of_vscreen_limits_partly;
+
    cfdata->border_shade_animate = e_config->border_shade_animate;
    cfdata->border_shade_transition = e_config->border_shade_transition;
    cfdata->border_shade_speed = e_config->border_shade_speed;
@@ -96,6 +101,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->use_app_icon = cfdata->use_app_icon;
 
    e_config->desk_auto_switch = cfdata->desk_auto_switch;
+
+   e_config->window_out_of_vscreen_limits = cfdata->window_out_of_vscreen_limits;
+   e_config->window_out_of_vscreen_limits_partly = cfdata->window_out_of_vscreen_limits_partly;
    e_config_save_queue();
    return 1;
 }
@@ -113,7 +121,9 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 	   (e_config->border_shade_transition != cfdata->border_shade_transition) ||
 	   (e_config->border_shade_speed != cfdata->border_shade_speed) ||
 	   (e_config->use_app_icon != cfdata->use_app_icon) ||
-	   (e_config->desk_auto_switch != cfdata->desk_auto_switch));
+	   (e_config->desk_auto_switch != cfdata->desk_auto_switch) ||
+          (e_config->window_out_of_vscreen_limits != cfdata->window_out_of_vscreen_limits) ||
+          (e_config->window_out_of_vscreen_limits_partly != cfdata->window_out_of_vscreen_limits_partly));
 }
 
 static Evas_Object *
@@ -248,6 +258,19 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_on_change_hook_set(oc, _cb_disable_check_list, 
                                cfdata->shading_list);
+   /* Screen Limits */
+   ol = e_widget_list_add(evas, 0, 0);
+
+   oc = e_widget_check_add(evas, _("Allow windows out of visual screen limits"), 
+                           &(cfdata->window_out_of_vscreen_limits));
+   e_widget_list_object_append(ol, oc, 1, 1, 0.5);
+
+   oc = e_widget_check_add(evas, _("Allow windows partly out of screen limits"), 
+                           &(cfdata->window_out_of_vscreen_limits_partly));
+   e_widget_list_object_append(ol, oc, 1, 1, 0.5);
+
+   e_widget_toolbook_page_append(otb, NULL, _("Screen Limits"), ol, 
+                                 0, 0, 1, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
    return otb;
