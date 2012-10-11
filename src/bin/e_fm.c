@@ -448,9 +448,6 @@ static void          _e_fm2_sel_rect_update(void *data);
 static void          _e_fm2_context_menu_append(E_Fm2_Smart_Data *sd, const char *path, const Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
 static int           _e_fm2_context_list_sort(const void *data1, const void *data2);
 
-static char         *_e_fm_string_append_char(char *str, size_t *size, size_t *len, char c);
-static char         *_e_fm_string_append_quoted(char *str, size_t *size, size_t *len, const char *src);
-
 void                 _e_fm2_path_parent_set(Evas_Object *obj, const char *path);
 
 static void          _e_fm2_volume_mount(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -3435,11 +3432,11 @@ _e_fm2_file_paste(Evas_Object *obj)
          */
         if (!memerr)
           {
-             args = _e_fm_string_append_quoted(args, &size, &length, filepath);
+             args = e_util_string_append_quoted(args, &size, &length, filepath);
              if (!args) memerr = EINA_TRUE;
              else
                {
-                  args = _e_fm_string_append_char(args, &size, &length, ' ');
+                  args = e_util_string_append_char(args, &size, &length, ' ');
                   if (!args) memerr = EINA_TRUE;
                }
           }
@@ -3458,16 +3455,16 @@ _e_fm2_file_paste(Evas_Object *obj)
         }
       if (ic)
         {
-           args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+           args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
            if (!args) return;
-           args = _e_fm_string_append_char(args, &size, &length, '/');
+           args = e_util_string_append_char(args, &size, &length, '/');
            if (!args) return;
-           args = _e_fm_string_append_quoted(args, &size, &length, ic->info.file);
+           args = e_util_string_append_quoted(args, &size, &length, ic->info.file);
            if (!args) return;
         }
       else
         {
-           args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+           args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
            if (!args) return;
         }
    }
@@ -3525,11 +3522,11 @@ _e_fm2_file_symlink(Evas_Object *obj)
          */
         if (!memerr)
           {
-             args = _e_fm_string_append_quoted(args, &size, &length, filepath);
+             args = e_util_string_append_quoted(args, &size, &length, filepath);
              if (!args) memerr = EINA_TRUE;
              else
                {
-                  args = _e_fm_string_append_char(args, &size, &length, ' ');
+                  args = e_util_string_append_char(args, &size, &length, ' ');
                   if (!args) memerr = EINA_TRUE;
                }
           }
@@ -3539,7 +3536,7 @@ _e_fm2_file_symlink(Evas_Object *obj)
    if (memerr) return;
    
    /* Add destination to the arguments. */
-   args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+   args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
    if (!args) return;
 
    /* Roll the operation! */
@@ -6454,11 +6451,11 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
 
              if (!memerr)
                {
-                  args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                  args = e_util_string_append_quoted(args, &size, &length, fp);
                   if (!args) memerr = EINA_TRUE;
                   else
                     {
-                       args = _e_fm_string_append_char(args, &size, &length, ' ');
+                       args = e_util_string_append_char(args, &size, &length, ' ');
                        if (!args) memerr = EINA_TRUE;
                     }
                }
@@ -6477,7 +6474,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
              evas_object_smart_callback_call(sd->obj, "changed", NULL);
           }
 
-        args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+        args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
      }
    else if (sd->drop_icon) /* into or before/after an icon */
      {
@@ -6490,11 +6487,11 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                   if (!fp) continue;
                   if (!memerr)
                     {
-                       args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                       args = e_util_string_append_quoted(args, &size, &length, fp);
                        if (!args) memerr = EINA_TRUE;
                        else
                          {
-                            args = _e_fm_string_append_char(args, &size, &length, ' ');
+                            args = e_util_string_append_char(args, &size, &length, ' ');
                             if (!args) memerr = EINA_TRUE;
                          }
                     }
@@ -6513,7 +6510,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
 
              if (!memerr)
                {
-                  args = _e_fm_string_append_quoted(args, &size, &length, dirpath);
+                  args = e_util_string_append_quoted(args, &size, &length, dirpath);
                   if (!args) memerr = EINA_TRUE;
                }
           }
@@ -6528,11 +6525,11 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                        snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ecore_file_file_get(fp));
                        if (!memerr)
                          {
-                            args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                            args = e_util_string_append_quoted(args, &size, &length, fp);
                             if (!args) memerr = EINA_TRUE;
                             else
                               {
-                                 args = _e_fm_string_append_char(args, &size, &length, ' ');
+                                 args = e_util_string_append_char(args, &size, &length, ' ');
                                  if (!args) memerr = EINA_TRUE;
                               }
                          }
@@ -6544,7 +6541,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
 
                   if (!memerr)
                     {
-                       args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+                       args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
                        if (!args) memerr = EINA_TRUE;
                     }
                }
@@ -6557,11 +6554,11 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
 
                        if (!memerr)
                          {
-                            args = _e_fm_string_append_quoted(args, &size, &length, fp);
+                            args = e_util_string_append_quoted(args, &size, &length, fp);
                             if (!args) memerr = EINA_TRUE;
                             else
                               {
-                                 args = _e_fm_string_append_char(args, &size, &length, ' ');
+                                 args = e_util_string_append_char(args, &size, &length, ' ');
                                  if (!args) memerr = EINA_TRUE;
                               }
                          }
@@ -6569,7 +6566,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                     }
                   if (!memerr)
                     {
-                       args = _e_fm_string_append_quoted(args, &size, &length, sd->realpath);
+                       args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
                        if (!args) memerr = EINA_TRUE;
                     }
                }
@@ -9838,11 +9835,11 @@ _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
         snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
         if (e_filereg_file_protected(oldpath)) return;
 
-        args = _e_fm_string_append_quoted(args, &size, &length, oldpath);
+        args = e_util_string_append_quoted(args, &size, &length, oldpath);
         if (!args) return;
-        args = _e_fm_string_append_char(args, &size, &length, ' ');
+        args = e_util_string_append_char(args, &size, &length, ' ');
         if (!args) return;
-        args = _e_fm_string_append_quoted(args, &size, &length, newpath);
+        args = e_util_string_append_quoted(args, &size, &length, newpath);
         if (!args) return;
 
         e_fm2_client_file_move(ic->sd->obj, args);
@@ -9977,11 +9974,11 @@ _e_fm_overwrite_rename_yes_cb(void *data, char *text)
    strcat(newpath, text);
    if (e_filereg_file_protected(newpath)) return;
    length = 0;
-   args = _e_fm_string_append_quoted(args, &size, &length, ere->src);
+   args = e_util_string_append_quoted(args, &size, &length, ere->src);
    if (!args) return;
-   args = _e_fm_string_append_char(args, &size, &length, ' ');
+   args = e_util_string_append_char(args, &size, &length, ' ');
    if (!args) return;
-   args = _e_fm_string_append_quoted(args, &size, &length, newpath);
+   args = e_util_string_append_quoted(args, &size, &length, newpath);
    if (!args) return;
 
    e_fm2_client_file_copy(ere->e_fm, args);
@@ -10132,11 +10129,11 @@ _e_fm_error_link_source(void *data, E_Dialog *dialog)
    strcat(newpath, f);
    if (e_filereg_file_protected(newpath)) return;
    length = 0;
-   args = _e_fm_string_append_quoted(args, &size, &length, file);
+   args = e_util_string_append_quoted(args, &size, &length, file);
    if (!args) return;
-   args = _e_fm_string_append_char(args, &size, &length, ' ');
+   args = e_util_string_append_char(args, &size, &length, ' ');
    if (!args) return;
-   args = _e_fm_string_append_quoted(args, &size, &length, newpath);
+   args = e_util_string_append_quoted(args, &size, &length, newpath);
    if (!args) return;
 
    e_fm2_client_file_move(ere->e_fm, args);
@@ -10320,73 +10317,6 @@ _e_fm2_file_delete_delete_cb(void *obj)
    ic->dialog = NULL;
 }
 
-static char *
-_e_fm_string_append_char(char *str, size_t *size, size_t *len, char c)
-{
-   if (!str)
-     {
-        str = malloc(4096);
-        if (!str) return NULL;
-        str[0] = 0;
-        *size = 4096;
-        *len = 0;
-     }
-
-   if (*len >= *size - 1)
-     {
-        char *str2;
-        
-        *size += 1024;
-        str2 = realloc(str, *size);
-        if (!str2)
-          {
-             *size = 0;
-             free(str);
-             return NULL;
-          }
-        str = str2;
-     }
-
-   str[(*len)++] = c;
-   str[*len] = 0;
-
-   return str;
-}
-
-static char *
-_e_fm_string_append_quoted(char *str, size_t *size, size_t *len, const char *src)
-{
-   str = _e_fm_string_append_char(str, size, len, '\'');
-   if (!str) return NULL;
-
-   while (*src)
-     {
-        if (*src == '\'')
-          {
-             str = _e_fm_string_append_char(str, size, len, '\'');
-             if (!str) return NULL;
-             str = _e_fm_string_append_char(str, size, len, '\\');
-             if (!str) return NULL;
-             str = _e_fm_string_append_char(str, size, len, '\'');
-             if (!str) return NULL;
-             str = _e_fm_string_append_char(str, size, len, '\'');
-             if (!str) return NULL;
-          }
-        else
-          {
-             str = _e_fm_string_append_char(str, size, len, *src);
-             if (!str) return NULL;
-          }
-
-        src++;
-     }
-
-   str = _e_fm_string_append_char(str, size, len, '\'');
-   if (!str) return NULL;
-
-   return str;
-}
-
 static void
 _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 {
@@ -10417,13 +10347,13 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
 
              if (!memerr)
                {
-                  files = _e_fm_string_append_quoted(files, &size, &len, buf);
+                  files = e_util_string_append_quoted(files, &size, &len, buf);
                   if (!files) memerr = EINA_TRUE;
                   else
                     {
                        if (eina_list_next(l))
                          {
-                            files = _e_fm_string_append_char(files, &size, &len, ' ');
+                            files = e_util_string_append_char(files, &size, &len, ' ');
                             if (!files) memerr = EINA_TRUE;
                          }
                     }
@@ -10436,7 +10366,7 @@ _e_fm2_file_delete_yes_cb(void *data, E_Dialog *dialog)
         if (sel) eina_list_free(sel);
         _e_fm2_icon_realpath(ic, buf, sizeof(buf));
         if (e_filereg_file_protected(buf)) return;
-        files = _e_fm_string_append_quoted(files, &size, &len, buf);
+        files = e_util_string_append_quoted(files, &size, &len, buf);
      }
    if (files)
      {

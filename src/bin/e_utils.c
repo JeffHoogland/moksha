@@ -1617,3 +1617,71 @@ e_util_gadcon_orient_menu_item_icon_set(E_Gadcon_Orient orient, E_Menu_Item *mi)
         break;
      }
 }
+
+
+EAPI char *
+e_util_string_append_char(char *str, size_t *size, size_t *len, char c)
+{
+   if (!str)
+     {
+        str = malloc(4096);
+        if (!str) return NULL;
+        str[0] = 0;
+        *size = 4096;
+        *len = 0;
+     }
+
+   if (*len >= *size - 1)
+     {
+        char *str2;
+        
+        *size += 1024;
+        str2 = realloc(str, *size);
+        if (!str2)
+          {
+             *size = 0;
+             free(str);
+             return NULL;
+          }
+        str = str2;
+     }
+
+   str[(*len)++] = c;
+   str[*len] = 0;
+
+   return str;
+}
+
+EAPI char *
+e_util_string_append_quoted(char *str, size_t *size, size_t *len, const char *src)
+{
+   str = e_util_string_append_char(str, size, len, '\'');
+   if (!str) return NULL;
+
+   while (*src)
+     {
+        if (*src == '\'')
+          {
+             str = e_util_string_append_char(str, size, len, '\'');
+             if (!str) return NULL;
+             str = e_util_string_append_char(str, size, len, '\\');
+             if (!str) return NULL;
+             str = e_util_string_append_char(str, size, len, '\'');
+             if (!str) return NULL;
+             str = e_util_string_append_char(str, size, len, '\'');
+             if (!str) return NULL;
+          }
+        else
+          {
+             str = e_util_string_append_char(str, size, len, *src);
+             if (!str) return NULL;
+          }
+
+        src++;
+     }
+
+   str = e_util_string_append_char(str, size, len, '\'');
+   if (!str) return NULL;
+
+   return str;
+}
