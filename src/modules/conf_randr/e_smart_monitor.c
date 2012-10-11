@@ -1157,7 +1157,7 @@ _e_smart_monitor_modes_fill(E_Smart_Data *sd)
 
         /* printf("Mode: %d %dx%d @ %.1fHz\n", mode->xid,  */
         /*        mode->width, mode->height, rate); */
-        
+
         sd->modes = eina_list_append(sd->modes, mode);
      }
 
