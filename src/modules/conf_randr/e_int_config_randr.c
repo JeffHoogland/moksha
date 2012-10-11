@@ -88,6 +88,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         Ecore_X_Randr_Mode_Info *mode;
         E_Randr_Output_Info *output;
         Ecore_X_Randr_Output *outputs = NULL;
+        int noutputs = 0;
 
         if (!e_smart_monitor_changed_get(mon))
           continue;
@@ -95,8 +96,11 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         if (!(crtc = e_smart_monitor_crtc_get(mon)))
           continue;
 
-        output = eina_list_data_get(crtc->outputs);
+        if (!(output = e_smart_monitor_output_get(mon)))
+          output = eina_list_data_get(crtc->outputs);
+
         outputs = &output->xid;
+        noutputs = eina_list_count(crtc->outputs);
 
         orient = e_smart_monitor_orientation_get(mon);
         e_smart_monitor_position_get(mon, &mx, &my);
@@ -112,7 +116,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           mode = e_smart_monitor_mode_get(mon);
 
         if (!ecore_x_randr_crtc_settings_set(root, crtc->xid, 
-                                             outputs, 1, 
+                                             outputs, noutputs, 
                                              mx, my, mode->xid, orient))
           printf("Saving Settings Failed\n");
      }
