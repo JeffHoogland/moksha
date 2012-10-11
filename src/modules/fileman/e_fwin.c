@@ -1955,17 +1955,21 @@ _e_fwin_zone_focus_in(void *data,
 static Eina_Bool
 _e_fwin_zone_move_resize(void *data, int type __UNUSED__, void *event)
 {
-   E_Event_Zone_Move_Resize *ev;
-   E_Fwin *fwin;
+   E_Event_Zone_Move_Resize *ev = event;
+   E_Fwin *fwin = data;
+   int x, y, w, h, sx, sy, sw, sh;
 
-   fwin = data;
-   ev = event;
    if (!fwin) return ECORE_CALLBACK_PASS_ON;
    if (fwin->zone != ev->zone) return ECORE_CALLBACK_PASS_ON;
-   /* prevent scrollbars from showing up on the desktop! */
-   e_fwin_zone_shutdown(ev->zone);
-   e_fwin_zone_new(ev->zone, e_mod_fileman_path_find(ev->zone));
-   return ECORE_CALLBACK_PASS_ON;
+   if (!fwin->cur_page->scrollframe_obj) return ECORE_CALLBACK_RENEW;
+   e_zone_useful_geometry_get(ev->zone, &x, &y, &w, &h);
+   evas_object_geometry_get(fwin->cur_page->scrollframe_obj, &sx, &sy, &sw, &sh);
+   /* if same, do nothing */
+   if ((sx == x) && (sy == y) && (sw == w) && (sh == h)) return ECORE_CALLBACK_RENEW;
+   evas_object_move(fwin->cur_page->scrollframe_obj, x, y);
+   evas_object_resize(fwin->cur_page->scrollframe_obj, w, h);
+   e_fm2_refresh(fwin->cur_page->fm_obj);
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
