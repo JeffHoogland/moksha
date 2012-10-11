@@ -35,6 +35,7 @@ static void         _e_shelf_bindings_del(E_Shelf *es);
 static Eina_Bool    _e_shelf_on_current_desk(E_Shelf *es, E_Event_Zone_Edge *ev);
 static void          _e_shelf_cb_dummy_del(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
+static Eina_Bool    _e_shelf_zone_moveresize_handler_cb(void *, int, void *);
 static Eina_Bool    _e_shelf_gadcon_populate_handler_cb(void *, int, void *);
 static Eina_Bool    _e_shelf_module_init_end_handler_cb(void *, int, void *);
 
@@ -84,6 +85,7 @@ EAPI int E_EVENT_SHELF_ADD = -1;
 EAPI int E_EVENT_SHELF_DEL = -1;
 static Ecore_Event_Handler *_e_shelf_gadcon_populate_handler = NULL;
 static Ecore_Event_Handler *_e_shelf_module_init_end_handler = NULL;
+static Ecore_Event_Handler *_e_shelf_zone_moveresize_handler = NULL;
 
 /* externally accessible functions */
 EINTERN int
@@ -109,6 +111,7 @@ e_shelf_shutdown(void)
      }
    _e_shelf_gadcon_populate_handler = ecore_event_handler_del(_e_shelf_gadcon_populate_handler);
    _e_shelf_module_init_end_handler = ecore_event_handler_del(_e_shelf_module_init_end_handler);
+   _e_shelf_zone_moveresize_handler = ecore_event_handler_del(_e_shelf_zone_moveresize_handler);
 
    return 1;
 }
@@ -708,7 +711,9 @@ e_shelf_position_calc(E_Shelf *es)
 {
    E_Gadcon_Orient orient = E_GADCON_ORIENT_FLOAT;
    int size = (40 * e_scale);
+   int x, y, w, h;
 
+   x = es->x, y = es->y, w = es->w, h = es->h;
    if (es->cfg)
      {
         orient = es->cfg->orient;
@@ -824,6 +829,8 @@ e_shelf_position_calc(E_Shelf *es)
      }
    es->hide_step = 0;
    es->hide_origin = -1;
+
+   if ((es->x == x) && (es->y == y) && (es->w == w) && (es->h == h)) return;
 
    e_shelf_move_resize(es, es->x, es->y, es->w, es->h);
    if (es->hidden)
@@ -2235,6 +2242,19 @@ _e_shelf_module_init_end_handler_cb(void *data __UNUSED__, int type __UNUSED__, 
         else if (!es->module_init_end_timer)
           es->module_init_end_timer = ecore_timer_add(1.0, _e_shelf_module_init_end_timer_cb, es);
      }
+   _e_shelf_zone_moveresize_handler = ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, _e_shelf_zone_moveresize_handler_cb, NULL);
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_e_shelf_zone_moveresize_handler_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
+{
+   E_Event_Zone_Move_Resize *ev = event;
+   E_Shelf *es;
+   Eina_List *l;
+
+   EINA_LIST_FOREACH(shelves, l, es)
+     if (ev->zone == es->zone) e_shelf_position_calc(es);
    return ECORE_CALLBACK_RENEW;
 }
 
