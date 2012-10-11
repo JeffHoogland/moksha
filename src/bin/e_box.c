@@ -412,6 +412,22 @@ e_box_align_pixel_offset_get(Evas_Object *obj, int *x, int *y)
    if (y) *y = (sd->min.h - sd->h) * (1.0 - sd->align.y);
 }
 
+EAPI Evas_Object *
+e_box_item_at_xy_get(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
+{
+   E_Smart_Data *sd;
+   E_Box_Item *bi;
+
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR() NULL;
+   sd = evas_object_smart_data_get(obj);
+   if (!sd) return NULL;
+   EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
+     {
+        if (E_INSIDE(x, y, bi->x, bi->y, bi->w, bi->h)) return bi->obj;
+     }
+   return NULL;
+}
+
 /* local subsystem functions */
 static void
 _e_box_unpack_internal(E_Smart_Data *sd, E_Box_Item *bi)
