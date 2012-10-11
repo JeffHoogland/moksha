@@ -817,14 +817,7 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 
    /* find the closest resolution to this one and snap to it */
    if ((mode = _e_smart_monitor_resolution_get(sd, ow, oh)))
-     {
-        /* set resolution text */
-        /* snprintf(buff, sizeof(buff), "%d x %d", mode->width, mode->height); */
-        /* edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff); */
-
-        _e_smart_monitor_resize_snap(mon, mode);
-     }
-
+     _e_smart_monitor_resize_snap(mon, mode);
 }
 
 static void 
