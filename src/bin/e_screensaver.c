@@ -14,7 +14,7 @@ static E_Dialog *_e_screensaver_ask_presentation_dia = NULL;
 static int _e_screensaver_ask_presentation_count = 0;
 
 static int _e_screensaver_timeout = 0;
-static int _e_screensaver_interval = 0;
+//static int _e_screensaver_interval = 0;
 static int _e_screensaver_blanking = 0;
 static int _e_screensaver_expose = 0;
 
