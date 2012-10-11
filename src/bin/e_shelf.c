@@ -1657,6 +1657,20 @@ _e_shelf_cb_urgent_show(void *data)
 }
 
 static void
+_e_shelf_cb_menu_autohide(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Shelf *es = data;
+
+   e_shelf_autohide_set(es, !es->cfg->autohide);
+   if ((es->cfg->autohide) && (!es->hidden))
+     e_shelf_toggle(es, 0);
+   else if ((!es->cfg->autohide) && (es->hidden))
+     e_shelf_toggle(es, 1);
+   e_zone_useful_geometry_dirty(es->zone);
+   e_config_save_queue();
+}
+
+static void
 _e_shelf_cb_menu_refresh(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Shelf *es = data;
@@ -2364,6 +2378,13 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_object_data_set(E_OBJECT(subm), es);
    e_menu_item_submenu_set(mi, subm);
    e_object_unref(E_OBJECT(subm));
+
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Autohide"));
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, es->cfg->autohide);
+   //e_util_menu_item_theme_icon_set(mi, ""); FIXME
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_autohide, es);
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Refresh"));
