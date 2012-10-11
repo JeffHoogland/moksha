@@ -443,10 +443,6 @@ static void          _e_fm2_client_monitor_del(int id, const char *path);
 static int           _e_fm_client_file_del(const char *files, Eina_Bool secure, Evas_Object *e_fm);
 //static int _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm);
 static int           _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
-static int           _e_fm_client_file_move(const char *args, Evas_Object *e_fm);
-//static int           _e_fm2_client_file_symlink(const char *path, const char *dest, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
-static int           _e_fm_client_file_copy(const char *args, Evas_Object *e_fm);
-static int           _e_fm_client_file_symlink(const char *args, Evas_Object *e_fm);
 
 static void          _e_fm2_sel_rect_update(void *data);
 static void          _e_fm2_context_menu_append(E_Fm2_Smart_Data *sd, const char *path, const Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
@@ -2453,8 +2449,8 @@ _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, i
    return id;
 }
 
-static int
-_e_fm_client_file_move(const char *args, Evas_Object *e_fm)
+EAPI int
+e_fm2_client_file_move(Evas_Object *e_fm, const char *args)
 {
    int id;
    E_Fm_Op_Type op = e_config->filemanager_copy ? E_FM_OP_MOVE : E_FM_OP_RENAME;
@@ -2464,16 +2460,16 @@ _e_fm_client_file_move(const char *args, Evas_Object *e_fm)
    return id;
 }
 
-static int
-_e_fm_client_file_copy(const char *args, Evas_Object *e_fm)
+EAPI int
+e_fm2_client_file_copy(Evas_Object *e_fm, const char *args)
 {
    int id = _e_fm_client_send_new(E_FM_OP_COPY, (void *)args, strlen(args) + 1);
    e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_COPY, _e_fm2_operation_abort_internal);
    return id;
 }
 
-static int
-_e_fm_client_file_symlink(const char *args, Evas_Object *e_fm)
+EAPI int
+e_fm2_client_file_symlink(Evas_Object *e_fm, const char *args)
 {
    int id = _e_fm_client_send_new(E_FM_OP_SYMLINK, (void *)args, strlen(args) + 1);
    e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_SYMLINK, _e_fm2_operation_abort_internal);
@@ -3480,16 +3476,16 @@ _e_fm2_file_paste(Evas_Object *obj)
    if (_e_fm_file_buffer_copying)
      {
         if (sd->config->view.link_drop)
-          _e_fm_client_file_symlink(args, sd->obj);
+          e_fm2_client_file_symlink(sd->obj, args);
         else
-          _e_fm_client_file_copy(args, sd->obj);
+          e_fm2_client_file_copy(sd->obj, args);
      }
    else
      {
         if (sd->config->view.link_drop)
-          _e_fm_client_file_symlink(args, sd->obj);
+          e_fm2_client_file_symlink(sd->obj, args);
         else
-          _e_fm_client_file_move(args, sd->obj);
+          e_fm2_client_file_move(sd->obj, args);
      }
 
    free(args);
@@ -3547,7 +3543,7 @@ _e_fm2_file_symlink(Evas_Object *obj)
    if (!args) return;
 
    /* Roll the operation! */
-   if (_e_fm_file_buffer_copying) _e_fm_client_file_symlink(args, sd->obj);
+   if (_e_fm_file_buffer_copying) e_fm2_client_file_symlink(sd->obj, args);
 
    free(args);
 }
@@ -6312,7 +6308,7 @@ _e_fm_drop_menu_copy_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
    char *args;
 
    args = evas_object_data_get(data, "drop_menu_data");
-   _e_fm_client_file_copy(args, data);
+   e_fm2_client_file_copy(data, args);
    free(args);
 }
 
@@ -6322,7 +6318,7 @@ _e_fm_drop_menu_move_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
    char *args;
 
    args = evas_object_data_get(data, "drop_menu_data");
-   _e_fm_client_file_move(args, data);
+   e_fm2_client_file_move(data, args);
    free(args);
 }
 
@@ -6332,7 +6328,7 @@ _e_fm_drop_menu_symlink_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __U
    char *args;
 
    args = evas_object_data_get(data, "drop_menu_data");
-   _e_fm_client_file_symlink(args, data);
+   e_fm2_client_file_symlink(data, args);
    free(args);
 }
 
@@ -6585,23 +6581,23 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
         if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_COPY)
           {
              if (sd->config->view.link_drop && (!sd->drop_icon))
-               _e_fm_client_file_symlink(args, sd->obj);
+               e_fm2_client_file_symlink(sd->obj, args);
              else
-               _e_fm_client_file_copy(args, sd->obj);
+               e_fm2_client_file_copy(sd->obj, args);
              free(args);
           }
         else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE)
           {
              if (sd->config->view.link_drop && (!sd->drop_icon))
-               _e_fm_client_file_symlink(args, sd->obj);
+               e_fm2_client_file_symlink(sd->obj, args);
              else
-               _e_fm_client_file_move(args, sd->obj);
+               e_fm2_client_file_move(sd->obj, args);
              free(args);
           }
         else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
           {
              if (sd->config->view.link_drop && (!sd->drop_icon))
-               _e_fm_client_file_symlink(args, sd->obj);
+               e_fm2_client_file_symlink(sd->obj, args);
              else
                e_fm2_drop_menu(sd->obj, args);
           }
@@ -9849,7 +9845,7 @@ _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
         args = _e_fm_string_append_quoted(args, &size, &length, newpath);
         if (!args) return;
 
-        _e_fm_client_file_move(args, ic->sd->obj);
+        e_fm2_client_file_move(ic->sd->obj, args);
         free(args);
      }
 }
@@ -9988,7 +9984,7 @@ _e_fm_overwrite_rename_yes_cb(void *data, char *text)
    args = _e_fm_string_append_quoted(args, &size, &length, newpath);
    if (!args) return;
 
-   _e_fm_client_file_copy(args, ere->e_fm);
+   e_fm2_client_file_copy(ere->e_fm, args);
    free(args);
 }
 
@@ -10143,7 +10139,7 @@ _e_fm_error_link_source(void *data, E_Dialog *dialog)
    args = _e_fm_string_append_quoted(args, &size, &length, newpath);
    if (!args) return;
 
-   _e_fm_client_file_move(args, ere->e_fm);
+   e_fm2_client_file_move(ere->e_fm, args);
    free(args);
    if (file != ere->src) free(file);
 

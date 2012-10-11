@@ -212,6 +212,10 @@ EAPI E_Fm2_Icon_Info *e_fm2_drop_icon_get(Evas_Object *obj);
 EAPI void             e_fm2_drop_menu(Evas_Object *e_fm, char *args);
 EAPI Eina_List       *e_fm2_uri_path_list_get(const Eina_List *uri_list);
 
+EAPI int e_fm2_client_file_move(Evas_Object *e_fm, const char *args);
+EAPI int e_fm2_client_file_copy(Evas_Object *e_fm, const char *args);
+EAPI int e_fm2_client_file_symlink(Evas_Object *e_fm, const char *args);
+
 EAPI int              _e_fm2_client_mount(const char *udi, const char *mountpoint);
 EAPI int              _e_fm2_client_unmount(const char *udi);
 EAPI void             _e_fm2_file_force_update(const char *path);
