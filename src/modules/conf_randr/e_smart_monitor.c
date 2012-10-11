@@ -372,7 +372,6 @@ void
 e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
 {
    E_Smart_Data *sd;
-   E_Randr_Crtc_Info *crtc;
 
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
@@ -382,9 +381,10 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
    if (w) *w = 0;
    if (h) *h = 0;
 
-   if (!(crtc = sd->crtc))
+   if (!sd->crtc)
      {
         Eina_List *l;
+        E_Randr_Crtc_Info *crtc;
 
         /* FIXME: This really should return a "suggested" position !! */
 
@@ -421,10 +421,10 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
      }
    else
      {
-        if (x) *x = crtc->geometry.x;
-        if (y) *y = crtc->geometry.y;
-        if (w) *w = crtc->geometry.w;
-        if (h) *h = crtc->geometry.h;
+        if (x) *x = sd->crtc->geometry.x;
+        if (y) *y = sd->crtc->geometry.y;
+        if (w) *w = sd->crtc->geometry.w;
+        if (h) *h = sd->crtc->geometry.h;
      }
 }
 
