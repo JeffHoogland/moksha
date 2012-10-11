@@ -9,6 +9,10 @@ struct _Instance
 
    E_Toolbar          *tbar;
 
+   E_Drop_Handler    *dnd_handler;
+   Evas_Object *dnd_obj, *sel_obj;
+   char *dnd_path;
+
    Evas_Object        *o_base, *o_box, *o_fm, *o_scroll;
 
    // buttons
@@ -92,15 +96,141 @@ _cb_initial_dir(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
+static void
+_box_button_cb_dnd_enter(void *data __UNUSED__, const char *type, void *event)
+{
+   E_Event_Dnd_Enter *ev = event;
+
+   if (strcmp(type, "text/uri-list") && strcmp(type, "XdndDirectSave0")) return;
+   e_drop_handler_action_set(ev->action);
+}
+
+static void
+_box_button_cb_dnd_leave(void *data, const char *type __UNUSED__, void *event __UNUSED__)
+{
+   Instance *inst = data;
+
+   if (!inst->dnd_obj) return;
+   edje_object_signal_emit(inst->dnd_obj, "e,state,default", "e");
+   inst->dnd_obj = NULL;
+   if (inst->sel_obj) edje_object_signal_emit(inst->sel_obj, "e,state,selected", "e");
+}
+
+static void
+_box_button_cb_dnd_move(void *data, const char *type, void *event)
+{
+   Instance *inst = data;
+   Evas_Object *obj;
+   E_Event_Dnd_Move *ev = event;
+
+   if (strcmp(type, "text/uri-list") && strcmp(type, "XdndDirectSave0")) return;
+   obj = e_box_item_at_xy_get(inst->o_box, ev->x, ev->y);
+   if (!obj)
+     {
+        _box_button_cb_dnd_leave(inst, type, NULL);
+        return;
+     }
+   e_drop_handler_action_set(ev->action);
+   if (obj == inst->dnd_obj) return;
+   if (inst->sel_obj)
+     edje_object_signal_emit(inst->sel_obj, "e,state,default", "e");
+   if (inst->dnd_obj)
+     edje_object_signal_emit(inst->dnd_obj, "e,state,default", "e");
+   inst->dnd_obj = obj;
+   edje_object_signal_emit(inst->dnd_obj, "e,state,selected", "e");
+}
+
+static void
+_box_button_cb_dnd_selection_notify(void *data, const char *type, void *event)
+{
+   Instance *inst = data;
+   E_Event_Dnd_Drop *ev = event;
+   char buf[PATH_MAX], *args = NULL;
+   Eina_Bool memerr = EINA_FALSE, link_drop;
+   Eina_Stringshare *fp;
+   Eina_List *files, *l, *ll;
+   size_t size = 0, length = 0;
+
+   if ((strcmp(type, "text/uri-list") && strcmp(type, "XdndDirectSave0")) || (!inst->dnd_obj))
+     goto out;
+   e_user_dir_concat_static(buf, "fileman/favorites");
+   link_drop = !strcmp(buf, inst->dnd_path);
+   files = e_fm2_uri_path_list_get(ev->data);
+   EINA_LIST_FOREACH_SAFE(files, l, ll, fp)
+     {
+        if (memerr) continue;
+        args = e_util_string_append_quoted(args, &size, &length, fp);
+        if (!args) memerr = EINA_TRUE;
+        if (memerr) continue;
+        args = e_util_string_append_char(args, &size, &length, ' ');
+        if (!args) memerr = EINA_TRUE;
+        eina_stringshare_del(fp);
+        files = eina_list_remove_list(files, l);
+     }
+   E_FREE_LIST(files, eina_stringshare_del);
+   if (!args) goto out;
+   args = e_util_string_append_quoted(args, &size, &length, inst->dnd_path);
+   if (!args) goto out;
+   if (link_drop || (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_LINK))
+     e_fm2_client_file_symlink(inst->o_fm, args);
+   else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_COPY)
+     e_fm2_client_file_copy(inst->o_fm, args);
+   else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE)
+     e_fm2_client_file_move(inst->o_fm, args);
+   else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
+     e_fm2_drop_menu(inst->o_fm, args);
+   free(args);
+out:
+   E_FREE(inst->dnd_path);
+   _box_button_cb_dnd_leave(inst, type, NULL);
+}
+
+static Eina_Bool
+_box_button_cb_dnd_drop(void *data)
+{
+   Instance *inst = data;
+   Eina_List *l;
+   Evas_Object *btn;
+   Eina_Bool allow;
+   char path[PATH_MAX] = {0};
+
+   if (!inst->dnd_obj) return EINA_FALSE;
+
+   EINA_LIST_FOREACH(inst->l_buttons, l, btn)
+     {
+        strcat(path, edje_object_part_text_get(btn, "e.text.label"));
+        if (btn == inst->dnd_obj) break;
+        if (path[1]) strcat(path, "/");
+     }
+   allow = ecore_file_can_write(path);
+   if (allow)
+     {
+        e_drop_xds_update(allow, path);
+        inst->dnd_path = strdup(path);
+     }
+   return allow;
+}
+
+static void
+_gc_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   Instance *inst = data;
+   int x, y, w, h;
+
+   e_gadcon_client_viewport_geometry_get(inst->gcc, &x, &y, &w, &h);
+   e_drop_handler_geometry_set(inst->dnd_handler, x, y, w, h);
+}
+
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    Instance *inst = NULL;
    char buf[PATH_MAX];
-   int w, h;
+   int x, y, w, h;
    E_Toolbar *tbar;
    Eina_List *l;
    Evas_Object *o_fm;
+   const char *drop[] = { "text/uri-list", "XdndDirectSave0"};
 
    tbar = e_gadcon_toolbar_get(gc);
    if (!tbar) return NULL;
@@ -189,6 +319,20 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    edje_object_signal_emit(inst->o_base, "e,state,forward,disabled", "e");
    edje_object_message_signal_process(inst->o_base);
 
+   evas_object_geometry_get(inst->o_scroll, &x, &y, &w, &h);
+   inst->dnd_handler = e_drop_handler_add(E_OBJECT(inst->gcc),
+                                         inst,
+                                         _box_button_cb_dnd_enter,
+                                         _box_button_cb_dnd_move,
+                                         _box_button_cb_dnd_leave,
+                                         _box_button_cb_dnd_selection_notify,
+                                         drop, 2,
+                                         x, y, w, h);
+   evas_object_event_callback_add(inst->o_scroll, EVAS_CALLBACK_MOVE, _gc_moveresize, inst);
+   evas_object_event_callback_add(inst->o_scroll, EVAS_CALLBACK_RESIZE, _gc_moveresize, inst);
+   e_drop_handler_responsive_set(inst->dnd_handler);
+   e_drop_handler_xds_set(inst->dnd_handler, (Ecore_Task_Cb)_box_button_cb_dnd_drop);
+
    instances = eina_list_append(instances, inst);
 
    inst->idler = ecore_idle_enterer_add(_cb_initial_dir, inst);
@@ -231,6 +375,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (inst->o_base) evas_object_del(inst->o_base);
    if (inst->o_box) evas_object_del(inst->o_box);
    if (inst->o_scroll) evas_object_del(inst->o_scroll);
+   e_drop_handler_del(inst->dnd_handler);
+   E_FREE(inst->dnd_path);
 
    eina_stringshare_del(inst->theme);
 
@@ -541,7 +687,10 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
 
    EINA_LIST_FOREACH(inst->l_buttons, l, btn)
      if (l == sel)
-       edje_object_signal_emit(btn, "e,state,selected", "e");
+       {
+          edje_object_signal_emit(btn, "e,state,selected", "e");
+          inst->sel_obj = btn;
+       }
      else
        edje_object_signal_emit(btn, "e,state,default", "e");
 
