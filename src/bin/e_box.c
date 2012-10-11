@@ -12,7 +12,8 @@ struct _E_Smart_Data
    unsigned char changed : 1;
    unsigned char horizontal : 1;
    unsigned char homogenous : 1;
-   Eina_List    *items;
+   E_Box_Item  *items;
+   unsigned int item_count;
    struct
    {
       Evas_Coord w, h;
@@ -25,6 +26,7 @@ struct _E_Smart_Data
 
 struct _E_Box_Item
 {
+   EINA_INLIST;
    E_Smart_Data *sd;
    unsigned char fill_w : 1;
    unsigned char fill_h : 1;
@@ -43,8 +45,9 @@ struct _E_Box_Item
 };
 
 /* local subsystem functions */
+static void        _e_box_unpack_internal(E_Smart_Data *sd, E_Box_Item *bi);
 static E_Box_Item *_e_box_smart_adopt(E_Smart_Data *sd, Evas_Object *obj);
-static void        _e_box_smart_disown(Evas_Object *obj);
+static void        _e_box_smart_disown(E_Box_Item *bi);
 static void        _e_box_smart_item_del_hook(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void        _e_box_smart_reconfigure(E_Smart_Data *sd);
 static void        _e_box_smart_extents_calculate(E_Smart_Data *sd);
@@ -68,6 +71,31 @@ _e_box_item_object_get(E_Box_Item *bi)
 {
    if (!bi) return NULL;
    return bi->obj;
+}
+
+static inline Evas_Object *
+_e_box_item_nth_get(E_Smart_Data *sd, unsigned int n)
+{
+   unsigned int x;
+   E_Box_Item *bi;
+
+   if (n > sd->item_count / 2)
+     {
+        x = sd->item_count - 1;
+        EINA_INLIST_REVERSE_FOREACH(EINA_INLIST_GET(sd->items)->last, bi)
+          {
+             if (n == x) return bi->obj;
+             x++;
+          }
+        return NULL;
+     }
+   x = 0;
+   EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items)->last, bi)
+     {
+        if (n == x) return bi->obj;
+        x++;
+     }
+   return NULL;
 }
 
 /* externally accessible functions */
@@ -147,13 +175,17 @@ e_box_pack_start(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
    E_Box_Item *bi;
+   Eina_Inlist *l;
 
    if (!child) return 0;
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    bi = _e_box_smart_adopt(sd, child);
-   sd->items = eina_list_prepend(sd->items, bi);
+   l = EINA_INLIST_GET(sd->items);
+   l = eina_inlist_prepend(l, EINA_INLIST_GET(bi));
+   sd->items = EINA_INLIST_CONTAINER_GET(l, E_Box_Item);
+   sd->item_count++;
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
    return 0;
@@ -164,16 +196,20 @@ e_box_pack_end(Evas_Object *obj, Evas_Object *child)
 {
    E_Smart_Data *sd;
    E_Box_Item *bi;
+   Eina_Inlist *l;
 
    if (!child) return 0;
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return 0;
    bi = _e_box_smart_adopt(sd, child);
-   sd->items = eina_list_append(sd->items, bi);
+   l = EINA_INLIST_GET(sd->items);
+   l = eina_inlist_append(l, EINA_INLIST_GET(bi));
+   sd->items = EINA_INLIST_CONTAINER_GET(l, E_Box_Item);
+   sd->item_count++;
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
-   return eina_list_count(sd->items) - 1;
+   return sd->item_count - 1;
 }
 
 EAPI int
@@ -182,8 +218,7 @@ e_box_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *before)
    E_Smart_Data *sd;
    E_Box_Item *bi, *bi2;
    int i = 0;
-   Eina_List *l;
-   E_Box_Item *item;
+   Eina_Inlist *l;
 
    if (!child) return 0;
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
@@ -192,12 +227,13 @@ e_box_pack_before(Evas_Object *obj, Evas_Object *child, Evas_Object *before)
    bi2 = evas_object_data_get(before, "e_box_data");
    if (!bi2) return 0;
    bi = _e_box_smart_adopt(sd, child);
-   sd->items = eina_list_prepend_relative(sd->items, bi, bi2);
-   EINA_LIST_FOREACH(sd->items, l, item)
-     {
-        if (item->obj == child) break;
-        i++;
-     }
+   l = EINA_INLIST_GET(sd->items);
+   l = eina_inlist_prepend_relative(l, EINA_INLIST_GET(bi), EINA_INLIST_GET(bi2));
+   sd->items = EINA_INLIST_CONTAINER_GET(l, E_Box_Item);
+   sd->item_count++;
+   
+   for (l = EINA_INLIST_GET(bi)->prev; l; l = l->prev)
+     i++;
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
    return i;
@@ -209,8 +245,7 @@ e_box_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after)
    E_Smart_Data *sd;
    E_Box_Item *bi, *bi2;
    int i = 0;
-   Eina_List *l;
-   E_Box_Item *item;
+   Eina_Inlist *l;
 
    if (!child) return 0;
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
@@ -219,12 +254,12 @@ e_box_pack_after(Evas_Object *obj, Evas_Object *child, Evas_Object *after)
    bi2 = evas_object_data_get(after, "e_box_data");
    if (!bi2) return 0;
    bi = _e_box_smart_adopt(sd, child);
-   sd->items = eina_list_append_relative(sd->items, bi, bi2);
-   EINA_LIST_FOREACH(sd->items, l, item)
-     {
-        if (item->obj == child) break;
-        i++;
-     }
+   l = EINA_INLIST_GET(sd->items);
+   l = eina_inlist_append_relative(l, EINA_INLIST_GET(bi), EINA_INLIST_GET(bi2));
+   sd->items = EINA_INLIST_CONTAINER_GET(l, E_Box_Item);
+   sd->item_count++;
+   for (l = EINA_INLIST_GET(bi)->prev; l; l = l->prev)
+     i++;
    sd->changed = 1;
    if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
    return i;
@@ -238,7 +273,7 @@ e_box_pack_count_get(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(0);
    if (!sd) return 0;
-   return eina_list_count(sd->items);
+   return sd->item_count;
 }
 
 EAPI Evas_Object *
@@ -249,7 +284,7 @@ e_box_pack_object_nth(Evas_Object *obj, int n)
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
-   return _e_box_item_object_get(eina_list_nth(sd->items, n));
+   return _e_box_item_nth_get(sd, n);
 }
 
 EAPI Evas_Object *
@@ -260,7 +295,7 @@ e_box_pack_object_first(Evas_Object *obj)
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
-   return _e_box_item_object_get(eina_list_data_get(sd->items));
+   return sd->items ? sd->items->obj : NULL;
 }
 
 EAPI Evas_Object *
@@ -270,8 +305,8 @@ e_box_pack_object_last(Evas_Object *obj)
 
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
-   if (!sd) return NULL;
-   return _e_box_item_object_get(eina_list_data_get(eina_list_last(sd->items)));
+   if ((!sd) || (!sd->items)) return NULL;
+   return EINA_INLIST_CONTAINER_GET(EINA_INLIST_GET(sd->items)->last, E_Box_Item)->obj;
 }
 
 EAPI void
@@ -306,10 +341,7 @@ e_box_unpack(Evas_Object *obj)
    if (!bi) return;
    sd = bi->sd;
    if (!sd) return;
-   sd->items = eina_list_remove(sd->items, bi);
-   _e_box_smart_disown(obj);
-   sd->changed = 1;
-   if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
+   _e_box_unpack_internal(sd, bi);
 }
 
 EAPI void
@@ -381,6 +413,20 @@ e_box_align_pixel_offset_get(Evas_Object *obj, int *x, int *y)
 }
 
 /* local subsystem functions */
+static void
+_e_box_unpack_internal(E_Smart_Data *sd, E_Box_Item *bi)
+{
+   Eina_Inlist *l;
+
+   l = EINA_INLIST_GET(sd->items);
+   l = eina_inlist_remove(l, EINA_INLIST_GET(bi));
+   sd->items = EINA_INLIST_CONTAINER_GET(l, E_Box_Item);
+   sd->item_count--;
+   _e_box_smart_disown(bi);
+   sd->changed = 1;
+   if (sd->frozen <= 0) _e_box_smart_reconfigure(sd);
+}
+
 static E_Box_Item *
 _e_box_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
 {
@@ -413,23 +459,20 @@ _e_box_smart_adopt(E_Smart_Data *sd, Evas_Object *obj)
 }
 
 static void
-_e_box_smart_disown(Evas_Object *obj)
+_e_box_smart_disown(E_Box_Item *bi)
 {
-   E_Box_Item *bi;
-
-   bi = evas_object_data_get(obj, "e_box_data");
    if (!bi) return;
    if (!bi->sd->items)
      {
         if (evas_object_visible_get(bi->sd->clip))
           evas_object_hide(bi->sd->clip);
      }
-   evas_object_event_callback_del(obj,
+   evas_object_event_callback_del(bi->obj,
                                   EVAS_CALLBACK_FREE,
                                   _e_box_smart_item_del_hook);
-   evas_object_smart_member_del(obj);
-   evas_object_clip_unset(obj);
-   evas_object_data_del(obj, "e_box_data");
+   evas_object_smart_member_del(bi->obj);
+   evas_object_clip_unset(bi->obj);
+   evas_object_data_del(bi->obj, "e_box_data");
    free(bi);
 }
 
@@ -443,7 +486,6 @@ static void
 _e_box_smart_reconfigure(E_Smart_Data *sd)
 {
    Evas_Coord x, y, w, h, xx, yy;
-   Eina_List *l;
    E_Box_Item *bi;
    int minw, minh, wdif, hdif;
    int count, expand;
@@ -458,7 +500,7 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
    _e_box_smart_extents_calculate(sd);
    minw = sd->min.w;
    minh = sd->min.h;
-   count = eina_list_count(sd->items);
+   count = sd->item_count;
    expand = 0;
    if (w < minw)
      {
@@ -470,9 +512,8 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
         y = y + ((h - minh) * (1.0 - sd->align.y));
         h = minh;
      }
-   EINA_LIST_FOREACH(sd->items, l, bi)
+   EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
      {
-        if (!bi) continue;
         if (sd->horizontal)
           {
              if (bi->expand_w) expand++;
@@ -499,9 +540,8 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
    hdif = h - minh;
    xx = x;
    yy = y;
-   EINA_LIST_FOREACH(sd->items, l, bi)
+   EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
      {
-        if (!bi) continue;
         if (sd->horizontal)
           {
              if (sd->homogenous)
@@ -603,7 +643,6 @@ _e_box_smart_reconfigure(E_Smart_Data *sd)
 static void
 _e_box_smart_extents_calculate(E_Smart_Data *sd)
 {
-   Eina_List *l;
    E_Box_Item *bi;
    int minw, minh;
 
@@ -615,22 +654,20 @@ _e_box_smart_extents_calculate(E_Smart_Data *sd)
    minh = 0;
    if (sd->homogenous)
      {
-        EINA_LIST_FOREACH(sd->items, l, bi)
+        EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
           {
-             if (!bi) continue;
              if (minh < bi->min.h) minh = bi->min.h;
              if (minw < bi->min.w) minw = bi->min.w;
           }
         if (sd->horizontal)
-          minw *= eina_list_count(sd->items);
+          minw *= sd->item_count;
         else
-          minh *= eina_list_count(sd->items);
+          minh *= sd->item_count;
      }
    else
      {
-        EINA_LIST_FOREACH(sd->items, l, bi)
+        EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
           {
-             if (!bi) continue;
              if (sd->horizontal)
                {
                   if (minh < bi->min.h) minh = bi->min.h;
@@ -711,12 +748,7 @@ _e_box_smart_del(Evas_Object *obj)
     */
    e_box_freeze(obj);
    while (sd->items)
-     {
-        E_Box_Item *bi;
-
-        bi = eina_list_data_get(sd->items);
-        e_box_unpack(bi->obj);
-     }
+     e_box_unpack(sd->items->obj);
    e_box_thaw(obj);
    evas_object_del(sd->clip);
    free(sd);
@@ -734,12 +766,11 @@ _e_box_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if (!sd) return;
    if ((x == sd->x) && (y == sd->y)) return;
    {
-      Eina_List *l;
       Evas_Coord dx, dy;
 
       dx = x - sd->x;
       dy = y - sd->y;
-      EINA_LIST_FOREACH(sd->items, l, bi)
+      EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
         {
            bi->x += dx;
            bi->y += dy;
