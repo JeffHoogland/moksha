@@ -373,6 +373,19 @@ e_smart_monitor_crtc_get(Evas_Object *obj)
    return crtc;
 }
 
+E_Randr_Output_Info *
+e_smart_monitor_output_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   if (!obj) return NULL;
+
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return NULL;
+
+   return sd->output;
+}
+
 void 
 e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
 {
