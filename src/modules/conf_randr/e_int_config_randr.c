@@ -216,6 +216,14 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
                   reset = EINA_TRUE;
                }
           }
+
+        if (reset)
+          {
+             /* monitors changes have been sent. Signal this monitor so that 
+              * we can reset the 'original' values to the 'current' values 
+              * and reset the 'changes' variable */
+             e_smart_monitor_changes_sent(mon);
+          }
      }
 
    if (reset) ecore_x_randr_screen_reset(root);
