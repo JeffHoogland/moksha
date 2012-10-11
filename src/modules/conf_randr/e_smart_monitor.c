@@ -236,7 +236,7 @@ e_smart_monitor_info_set(Evas_Object *obj, E_Randr_Output_Info *output, E_Randr_
 
    /* set some defaults */
    sd->orig.orientation = ECORE_X_RANDR_ORIENTATION_ROT_0;
-   sd->orig.refresh_rate = 0;//60.0;
+   sd->orig.refresh_rate = 0;
    sd->orig.mode = NULL;
    sd->orig.x = 0;
    sd->orig.y = 0;
