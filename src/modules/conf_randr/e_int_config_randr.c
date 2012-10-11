@@ -87,10 +87,27 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         E_Randr_Output_Info *output;
         E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
 
-        crtc = e_smart_monitor_crtc_get(mon);
-        output = e_smart_monitor_output_get(mon);
-        changes = e_smart_monitor_changes_get(mon);
+        if (!(output = e_smart_monitor_output_get(mon)))
+          continue;
 
+        if (!(crtc = e_smart_monitor_crtc_get(mon)))
+          {
+             Eina_List *c;
+
+             EINA_LIST_FOREACH(E_RANDR_12->crtcs, c, crtc)
+               {
+                  if (crtc->current_mode)
+                    {
+                       crtc = NULL;
+                       continue;
+                    }
+                  break;
+               }
+          }
+
+        if (!crtc) continue;
+
+        changes = e_smart_monitor_changes_get(mon);
         if (changes & E_SMART_MONITOR_CHANGED_ENABLED)
           {
              if (e_smart_monitor_enabled_get(mon))
