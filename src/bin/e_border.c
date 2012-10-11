@@ -25,7 +25,7 @@ static void _e_border_del(E_Border *bd);
 #define E_PRINT_BORDER_INFO(X) \
   _e_border_print(X, __PRETTY_FUNC__)
 
-static void _e_border_print(E_Border   *bd,
+static void _e_border_print(E_Border *bd,
                             const char *func);
 #endif
 
@@ -33,106 +33,106 @@ static void _e_border_print(E_Border   *bd,
 /* and the border needs to become a dumb object that just does what its */
 /* told to do */
 static Eina_Bool _e_border_cb_window_show_request(void *data,
-                                                  int   ev_type,
+                                                  int ev_type,
                                                   void *ev);
 static Eina_Bool _e_border_cb_window_destroy(void *data,
-                                             int   ev_type,
+                                             int ev_type,
                                              void *ev);
 static Eina_Bool _e_border_cb_window_hide(void *data,
-                                          int   ev_type,
+                                          int ev_type,
                                           void *ev);
 static Eina_Bool _e_border_cb_window_reparent(void *data,
-                                              int   ev_type,
+                                              int ev_type,
                                               void *ev);
 static Eina_Bool _e_border_cb_window_configure_request(void *data,
-                                                       int   ev_type,
+                                                       int ev_type,
                                                        void *ev);
 static Eina_Bool _e_border_cb_window_resize_request(void *data,
-                                                    int   ev_type,
+                                                    int ev_type,
                                                     void *ev);
 static Eina_Bool _e_border_cb_window_gravity(void *data,
-                                             int   ev_type,
+                                             int ev_type,
                                              void *ev);
 static Eina_Bool _e_border_cb_window_stack_request(void *data,
-                                                   int   ev_type,
+                                                   int ev_type,
                                                    void *ev);
 static Eina_Bool _e_border_cb_window_property(void *data,
-                                              int   ev_type,
+                                              int ev_type,
                                               void *ev);
 static Eina_Bool _e_border_cb_window_colormap(void *data,
-                                              int   ev_type,
+                                              int ev_type,
                                               void *ev);
 static Eina_Bool _e_border_cb_window_shape(void *data,
-                                           int   ev_type,
+                                           int ev_type,
                                            void *ev);
 static Eina_Bool _e_border_cb_window_focus_in(void *data,
-                                              int   ev_type,
+                                              int ev_type,
                                               void *ev);
 static Eina_Bool _e_border_cb_window_focus_out(void *data,
-                                               int   ev_type,
+                                               int ev_type,
                                                void *ev);
 static Eina_Bool _e_border_cb_client_message(void *data,
-                                             int   ev_type,
+                                             int ev_type,
                                              void *ev);
 
 static Eina_Bool _e_border_cb_window_state_request(void *data,
-                                                   int   ev_type,
+                                                   int ev_type,
                                                    void *ev);
 static Eina_Bool _e_border_cb_window_move_resize_request(void *data,
-                                                         int   ev_type,
+                                                         int ev_type,
                                                          void *ev);
 static Eina_Bool _e_border_cb_desktop_change(void *data,
-                                             int   ev_type,
+                                             int ev_type,
                                              void *ev);
 static Eina_Bool _e_border_cb_sync_alarm(void *data,
-                                         int   ev_type,
+                                         int ev_type,
                                          void *ev);
 static Eina_Bool _e_border_cb_efreet_cache_update(void *data,
-                                                  int   ev_type,
+                                                  int ev_type,
                                                   void *ev);
 static Eina_Bool _e_border_cb_config_icon_theme(void *data,
-                                                int   ev_type,
+                                                int ev_type,
                                                 void *ev);
 static Eina_Bool _e_border_cb_config_mode(void *data,
-                                          int   ev_type,
+                                          int ev_type,
                                           void *ev);
 
 static Eina_Bool _e_border_cb_pointer_warp(void *data,
-                                           int   ev_type,
+                                           int ev_type,
                                            void *ev);
-static void _e_border_cb_signal_bind(void        *data,
-                                     Evas_Object *obj,
-                                     const char  *emission,
-                                     const char  *source);
+static void      _e_border_cb_signal_bind(void *data,
+                                          Evas_Object *obj,
+                                          const char *emission,
+                                          const char *source);
 static Eina_Bool _e_border_cb_mouse_in(void *data,
-                                       int   type,
+                                       int type,
                                        void *event);
 static Eina_Bool _e_border_cb_mouse_out(void *data,
-                                        int   type,
+                                        int type,
                                         void *event);
 static Eina_Bool _e_border_cb_mouse_wheel(void *data,
-                                          int   type,
+                                          int type,
                                           void *event);
 static Eina_Bool _e_border_cb_mouse_down(void *data,
-                                         int   type,
+                                         int type,
                                          void *event);
 static Eina_Bool _e_border_cb_mouse_up(void *data,
-                                       int   type,
+                                       int type,
                                        void *event);
 static Eina_Bool _e_border_cb_mouse_move(void *data,
-                                         int   type,
+                                         int type,
                                          void *event);
 static Eina_Bool _e_border_cb_grab_replay(void *data,
-                                          int   type,
+                                          int type,
                                           void *event);
-static void _e_border_cb_drag_finished(E_Drag *drag,
-                                       int     dropped);
+static void      _e_border_cb_drag_finished(E_Drag *drag,
+                                            int dropped);
 
 static void      _e_border_eval(E_Border *bd);
 static void      _e_border_eval0(E_Border *bd);
 static void      _e_border_container_layout_hook(E_Container *con);
 
-static void      _e_border_moveinfo_gather(E_Border   *bd,
+static void      _e_border_moveinfo_gather(E_Border *bd,
                                            const char *source);
 static void      _e_border_resize_handle(E_Border *bd);
 
@@ -198,16 +198,16 @@ static void      _e_border_pointer_move_begin(E_Border *bd);
 static void      _e_border_pointer_move_end(E_Border *bd);
 
 static void      _e_border_hook_call(E_Border_Hook_Point hookpoint,
-                                     void               *bd);
+                                     void *bd);
 
-static void _e_border_client_move_resize_send(E_Border *bd);
+static void      _e_border_client_move_resize_send(E_Border *bd);
 
-static void _e_border_frame_replace(E_Border *bd,
-            Eina_Bool argb);
+static void      _e_border_frame_replace(E_Border *bd,
+                                         Eina_Bool argb);
 
-static void _e_border_shape_input_rectangle_set(E_Border* bd);
-static void _e_border_show(E_Border *bd);
-static void _e_border_hide(E_Border *bd);
+static void      _e_border_shape_input_rectangle_set(E_Border *bd);
+static void      _e_border_show(E_Border *bd);
+static void      _e_border_hide(E_Border *bd);
 
 static Eina_Bool _e_border_lost_window_internal_get(E_Border *bd);
 static void      _e_border_reset_lost_window(E_Border *bd);
@@ -398,10 +398,10 @@ e_border_shutdown(void)
 }
 
 EAPI E_Border *
-e_border_new(E_Container   *con,
+e_border_new(E_Container *con,
              Ecore_X_Window win,
-             int            first_map,
-             int            internal)
+             int first_map,
+             int internal)
 {
    E_Border *bd, *bd2;
    Ecore_X_Window_Attributes *att;
@@ -449,14 +449,14 @@ e_border_new(E_Container   *con,
    if ((!ecore_x_window_attributes_get(win, att)) || (att->input_only))
      {
         //	printf("##- ATTR FETCH FAILED/INPUT ONLY FOR 0x%x - ABORT MANAGE\n", win);
-          e_canvas_del(bd->bg_ecore_evas);
-          ecore_evas_free(bd->bg_ecore_evas);
-          ecore_x_window_free(bd->client.shell_win);
-          e_bindings_mouse_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
-          e_bindings_wheel_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
-          ecore_x_window_free(bd->win);
-          free(bd);
-          return NULL;
+        e_canvas_del(bd->bg_ecore_evas);
+        ecore_evas_free(bd->bg_ecore_evas);
+        ecore_x_window_free(bd->client.shell_win);
+        e_bindings_mouse_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
+        e_bindings_wheel_ungrab(E_BINDING_CONTEXT_WINDOW, bd->win);
+        ecore_x_window_free(bd->win);
+        free(bd);
+        return NULL;
      }
 
    /* printf("##- ON MAP CLIENT 0x%x SIZE %ix%i %i:%i\n",
@@ -468,12 +468,12 @@ e_border_new(E_Container   *con,
    if (first_map)
      {
         // printf("##- FIRST MAP\n");
-          bd->x = att->x;
-          bd->y = att->y;
-          bd->changes.pos = 1;
-          bd->re_manage = 1;
-          // needed to be 1 for internal windw and on restart.
-          // bd->ignore_first_unmap = 2;
+        bd->x = att->x;
+        bd->y = att->y;
+        bd->changes.pos = 1;
+        bd->re_manage = 1;
+        // needed to be 1 for internal windw and on restart.
+        // bd->ignore_first_unmap = 2;
      }
 
    bd->client.win = win;
@@ -549,135 +549,135 @@ e_border_new(E_Container   *con,
            Eina_Bool video_position = EINA_FALSE;
 
            /* icccm */
-            for (i = 0; i < at_num; i++)
-              {
-                 if (atoms[i] == ECORE_X_ATOM_WM_NAME)
-                   bd->client.icccm.fetch.title = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_CLASS)
-                   bd->client.icccm.fetch.name_class = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_ICON_NAME)
-                   bd->client.icccm.fetch.icon_name = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_MACHINE)
-                   bd->client.icccm.fetch.machine = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_HINTS)
-                   bd->client.icccm.fetch.hints = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_NORMAL_HINTS)
-                   bd->client.icccm.fetch.size_pos_hints = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_PROTOCOLS)
-                   bd->client.icccm.fetch.protocol = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_MOTIF_WM_HINTS)
-                   bd->client.mwm.fetch.hints = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_TRANSIENT_FOR)
-                   {
-                      bd->client.icccm.fetch.transient_for = 1;
-                      bd->client.netwm.fetch.type = 1;
-                   }
-                 else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_LEADER)
-                   bd->client.icccm.fetch.client_leader = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
-                   bd->client.icccm.fetch.window_role = 1;
-                 else if (atoms[i] == ECORE_X_ATOM_WM_STATE)
-                   bd->client.icccm.fetch.state = 1;
-              }
-            /* netwm, loop again, netwm will ignore some icccm, so we
-             * have to be sure that netwm is checked after */
-            for (i = 0; i < at_num; i++)
-              {
-                 if (atoms[i] == ECORE_X_ATOM_NET_WM_NAME)
-                   {
-     /* Ignore icccm */
-                       bd->client.icccm.fetch.title = 0;
-                       bd->client.netwm.fetch.name = 1;
-                   }
-                 else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON_NAME)
-                   {
-     /* Ignore icccm */
-                       bd->client.icccm.fetch.icon_name = 0;
-                       bd->client.netwm.fetch.icon_name = 1;
-                   }
-                 else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON)
-                   {
-                      bd->client.netwm.fetch.icon = 1;
-                   }
-                 else if (atoms[i] == ECORE_X_ATOM_NET_WM_USER_TIME)
-                   {
-                      bd->client.netwm.fetch.user_time = 1;
-                   }
-                 else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT)
-                   {
-                      DBG("ECORE_X_ATOM_NET_WM_STRUT");
-                      bd->client.netwm.fetch.strut = 1;
-                   }
-                 else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
-                   {
-                      DBG("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL");
-                      bd->client.netwm.fetch.strut = 1;
-                   }
-                 else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
-                   {
-     /* Ignore mwm
-        bd->client.mwm.fetch.hints = 0;
-      */
-                        bd->client.netwm.fetch.type = 1;
-                   }
-                 else if (atoms[i] == ECORE_X_ATOM_NET_WM_STATE)
-                   {
-                      bd->client.netwm.fetch.state = 1;
-                   }
-              }
-            /* other misc atoms */
-            for (i = 0; i < at_num; i++)
-              {
-     /* loop to check for own atoms */
-                  if (atoms[i] == E_ATOM_WINDOW_STATE)
-                    {
-                       bd->client.e.fetch.state = 1;
-                    }
-     /* loop to check for qtopia atoms */
-                  if (atoms[i] == ATM__QTOPIA_SOFT_MENU)
-                    bd->client.qtopia.fetch.soft_menu = 1;
-                  else if (atoms[i] == ATM__QTOPIA_SOFT_MENUS)
-                    bd->client.qtopia.fetch.soft_menus = 1;
-     /* loop to check for vkbd atoms */
-                  else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE)
-                    bd->client.vkbd.fetch.state = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD)
-                    bd->client.vkbd.fetch.vkbd = 1;
-     /* loop to check for illume atoms */
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_CONFORMANT)
-                    bd->client.illume.conformant.fetch.conformant = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE)
-                    bd->client.illume.quickpanel.fetch.state = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL)
-                    bd->client.illume.quickpanel.fetch.quickpanel = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MAJOR)
-                    bd->client.illume.quickpanel.fetch.priority.major = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MINOR)
-                    bd->client.illume.quickpanel.fetch.priority.minor = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ZONE)
-                    bd->client.illume.quickpanel.fetch.zone = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG_LOCKED)
-                    bd->client.illume.drag.fetch.locked = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG)
-                    bd->client.illume.drag.fetch.drag = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_WINDOW_STATE)
-                    bd->client.illume.win_state.fetch.state = 1;
-                  else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_PARENT)
-                    video_parent = EINA_TRUE;
-                  else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_POSITION)
-                    video_position = EINA_TRUE;
-              }
-            if (video_position && video_parent)
-              {
-                 bd->client.e.state.video = 1;
-                 bd->client.e.fetch.video_parent = 1;
-                 bd->client.e.fetch.video_position = 1;
-                 ecore_x_window_lower(bd->win);
-                 ecore_x_composite_window_events_disable(bd->win);
-                 ecore_x_window_ignore_set(bd->win, EINA_TRUE);
-                 fprintf(stderr, "We found a video window \\o/ %x\n", win);
-              }
-            free(atoms);
+           for (i = 0; i < at_num; i++)
+             {
+                if (atoms[i] == ECORE_X_ATOM_WM_NAME)
+                  bd->client.icccm.fetch.title = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_CLASS)
+                  bd->client.icccm.fetch.name_class = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_ICON_NAME)
+                  bd->client.icccm.fetch.icon_name = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_MACHINE)
+                  bd->client.icccm.fetch.machine = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_HINTS)
+                  bd->client.icccm.fetch.hints = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_NORMAL_HINTS)
+                  bd->client.icccm.fetch.size_pos_hints = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_PROTOCOLS)
+                  bd->client.icccm.fetch.protocol = 1;
+                else if (atoms[i] == ECORE_X_ATOM_MOTIF_WM_HINTS)
+                  bd->client.mwm.fetch.hints = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_TRANSIENT_FOR)
+                  {
+                     bd->client.icccm.fetch.transient_for = 1;
+                     bd->client.netwm.fetch.type = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_WM_CLIENT_LEADER)
+                  bd->client.icccm.fetch.client_leader = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_WINDOW_ROLE)
+                  bd->client.icccm.fetch.window_role = 1;
+                else if (atoms[i] == ECORE_X_ATOM_WM_STATE)
+                  bd->client.icccm.fetch.state = 1;
+             }
+           /* netwm, loop again, netwm will ignore some icccm, so we
+            * have to be sure that netwm is checked after */
+           for (i = 0; i < at_num; i++)
+             {
+                if (atoms[i] == ECORE_X_ATOM_NET_WM_NAME)
+                  {
+                     /* Ignore icccm */
+                     bd->client.icccm.fetch.title = 0;
+                     bd->client.netwm.fetch.name = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON_NAME)
+                  {
+                     /* Ignore icccm */
+                     bd->client.icccm.fetch.icon_name = 0;
+                     bd->client.netwm.fetch.icon_name = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_NET_WM_ICON)
+                  {
+                     bd->client.netwm.fetch.icon = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_NET_WM_USER_TIME)
+                  {
+                     bd->client.netwm.fetch.user_time = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT)
+                  {
+                     DBG("ECORE_X_ATOM_NET_WM_STRUT");
+                     bd->client.netwm.fetch.strut = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_NET_WM_STRUT_PARTIAL)
+                  {
+                     DBG("ECORE_X_ATOM_NET_WM_STRUT_PARTIAL");
+                     bd->client.netwm.fetch.strut = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_NET_WM_WINDOW_TYPE)
+                  {
+                     /* Ignore mwm
+                        bd->client.mwm.fetch.hints = 0;
+                      */
+                     bd->client.netwm.fetch.type = 1;
+                  }
+                else if (atoms[i] == ECORE_X_ATOM_NET_WM_STATE)
+                  {
+                     bd->client.netwm.fetch.state = 1;
+                  }
+             }
+           /* other misc atoms */
+           for (i = 0; i < at_num; i++)
+             {
+                /* loop to check for own atoms */
+                if (atoms[i] == E_ATOM_WINDOW_STATE)
+                  {
+                     bd->client.e.fetch.state = 1;
+                  }
+                /* loop to check for qtopia atoms */
+                if (atoms[i] == ATM__QTOPIA_SOFT_MENU)
+                  bd->client.qtopia.fetch.soft_menu = 1;
+                else if (atoms[i] == ATM__QTOPIA_SOFT_MENUS)
+                  bd->client.qtopia.fetch.soft_menus = 1;
+                /* loop to check for vkbd atoms */
+                else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD_STATE)
+                  bd->client.vkbd.fetch.state = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_VIRTUAL_KEYBOARD)
+                  bd->client.vkbd.fetch.vkbd = 1;
+                /* loop to check for illume atoms */
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_CONFORMANT)
+                  bd->client.illume.conformant.fetch.conformant = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_STATE)
+                  bd->client.illume.quickpanel.fetch.state = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL)
+                  bd->client.illume.quickpanel.fetch.quickpanel = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MAJOR)
+                  bd->client.illume.quickpanel.fetch.priority.major = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_PRIORITY_MINOR)
+                  bd->client.illume.quickpanel.fetch.priority.minor = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_QUICKPANEL_ZONE)
+                  bd->client.illume.quickpanel.fetch.zone = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG_LOCKED)
+                  bd->client.illume.drag.fetch.locked = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_DRAG)
+                  bd->client.illume.drag.fetch.drag = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_ILLUME_WINDOW_STATE)
+                  bd->client.illume.win_state.fetch.state = 1;
+                else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_PARENT)
+                  video_parent = EINA_TRUE;
+                else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_POSITION)
+                  video_position = EINA_TRUE;
+             }
+           if (video_position && video_parent)
+             {
+                bd->client.e.state.video = 1;
+                bd->client.e.fetch.video_parent = 1;
+                bd->client.e.fetch.video_position = 1;
+                ecore_x_window_lower(bd->win);
+                ecore_x_composite_window_events_disable(bd->win);
+                ecore_x_window_ignore_set(bd->win, EINA_TRUE);
+                fprintf(stderr, "We found a video window \\o/ %x\n", win);
+             }
+           free(atoms);
         }
    }
    bd->client.border.changed = 1;
@@ -725,8 +725,8 @@ e_border_new(E_Container   *con,
             "optimisations failing due to bizarre client behavior. will\n"
             "work around.\n"
             "bd=%p, bd->references=%i, bd->deleted=%i, bd->client.win=%x",
-               bd2, bd2->e_obj_inherit.references, bd2->e_obj_inherit.deleted,
-               bd2->client.win);
+            bd2, bd2->e_obj_inherit.references, bd2->e_obj_inherit.deleted,
+            bd2->client.win);
 #else
         printf("EEEEK! 2 borders with same client window id in them! very bad!\n");
         printf("optimisations failing due to bizarre client behavior. will\n");
@@ -746,15 +746,15 @@ e_border_new(E_Container   *con,
    ecore_x_window_prop_card32_set(win, E_ATOM_MANAGED, &managed, 1);
    ecore_x_window_prop_card32_set(win, E_ATOM_CONTAINER, &bd->zone->container->num, 1);
    ecore_x_window_prop_card32_set(win, E_ATOM_ZONE, &bd->zone->num, 1);
-     {
-        unsigned int zgeom[4];
+   {
+      unsigned int zgeom[4];
 
-        zgeom[0] = bd->zone->x;
-        zgeom[1] = bd->zone->y;
-        zgeom[2] = bd->zone->w;
-        zgeom[3] = bd->zone->h;
-        ecore_x_window_prop_card32_set(win, E_ATOM_ZONE_GEOMETRY, zgeom, 4);
-     }
+      zgeom[0] = bd->zone->x;
+      zgeom[1] = bd->zone->y;
+      zgeom[2] = bd->zone->w;
+      zgeom[3] = bd->zone->h;
+      ecore_x_window_prop_card32_set(win, E_ATOM_ZONE_GEOMETRY, zgeom, 4);
+   }
    e_desk_xy_get(bd->desk, &deskx, &desky);
    desk[0] = deskx;
    desk[1] = desky;
@@ -858,7 +858,7 @@ e_border_res_change_geometry_restore(E_Border *bd)
 
 EAPI void
 e_border_zone_set(E_Border *bd,
-                  E_Zone   *zone)
+                  E_Zone *zone)
 {
    E_Event_Border_Zone_Set *ev;
 
@@ -888,10 +888,10 @@ e_border_zone_set(E_Border *bd,
         if (!E_INTERSECTS(x, y, bd->w, bd->h, zone->x, zone->y, zone->w, zone->h))
           {
              /* still not in zone at all, so just move it to closest edge */
-              if (x < zone->x) x = zone->x;
-              if (x >= zone->x + zone->w) x = zone->x + zone->w - bd->w;
-              if (y < zone->y) y = zone->y;
-              if (y >= zone->y + zone->h) y = zone->y + zone->h - bd->h;
+             if (x < zone->x) x = zone->x;
+             if (x >= zone->x + zone->w) x = zone->x + zone->w - bd->w;
+             if (y < zone->y) y = zone->y;
+             if (y >= zone->y + zone->h) y = zone->y + zone->h - bd->h;
           }
         e_border_move(bd, x, y);
      }
@@ -914,21 +914,21 @@ e_border_zone_set(E_Border *bd,
    // XXXXXXXXXXXXXXXXXXXXXXXXX
    // XXX ZZZZZZZZZZZZZZZZZZZzz
    // need to adjust this if zone pos/size changes
-     {
-        unsigned int zgeom[4];
+   {
+      unsigned int zgeom[4];
 
-        zgeom[0] = bd->zone->x;
-        zgeom[1] = bd->zone->y;
-        zgeom[2] = bd->zone->w;
-        zgeom[3] = bd->zone->h;
-        ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ZONE_GEOMETRY, zgeom, 4);
-     }
+      zgeom[0] = bd->zone->x;
+      zgeom[1] = bd->zone->y;
+      zgeom[2] = bd->zone->w;
+      zgeom[3] = bd->zone->h;
+      ecore_x_window_prop_card32_set(bd->client.win, E_ATOM_ZONE_GEOMETRY, zgeom, 4);
+   }
    e_remember_update(bd);
 }
 
 EAPI void
 e_border_desk_set(E_Border *bd,
-                  E_Desk   *desk)
+                  E_Desk *desk)
 {
    E_Event_Border_Desk_Set *ev;
    E_Desk *old_desk;
@@ -1013,7 +1013,7 @@ e_border_show(E_Border *bd)
 
 EAPI void
 e_border_hide(E_Border *bd,
-              int       manage)
+              int manage)
 {
    unsigned int visible;
 
@@ -1079,11 +1079,14 @@ e_border_hide(E_Border *bd,
         switch (manage)
           {
            case 2: break;
+
            case 3:
              bd->hidden = 1;
+
            case 1:
              /* Make sure that this border isn't deleted */
              bd->await_hide_event++;
+
            default:
              if (!e_manager_comp_evas_get(bd->zone->container->manager))
                ecore_x_window_hide(bd->client.win);
@@ -1147,11 +1150,11 @@ _pri_adj(int pid, int set, int adj, Eina_Bool use_adj, Eina_Bool adj_children, E
                             if (ppid == pid)
                               {
                                  if (adj_children)
-                                    _pri_adj(pid2, set, adj, EINA_TRUE,
-                                             adj_children, do_children);
+                                   _pri_adj(pid2, set, adj, EINA_TRUE,
+                                            adj_children, do_children);
                                  else
-                                    _pri_adj(pid2, set, adj, use_adj,
-                                             adj_children, do_children);
+                                   _pri_adj(pid2, set, adj, use_adj,
+                                            adj_children, do_children);
                               }
                          }
                        else fclose(f);
@@ -1221,19 +1224,19 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
    /* create new frame */
    if (argb)
      bd->win = ecore_x_window_manager_argb_new(bd->zone->container->win,
-                 bd->x, bd->y, bd->w, bd->h);
+                                               bd->x, bd->y, bd->w, bd->h);
    else
      {
         bd->win = ecore_x_window_override_new(bd->zone->container->win,
-                bd->x, bd->y, bd->w, bd->h);
+                                              bd->x, bd->y, bd->w, bd->h);
         ecore_x_window_shape_events_select(bd->win, 1);
      }
 
    ecore_x_window_configure(bd->win,
-          ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-          ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-          0, 0, 0, 0, 0,
-          win, ECORE_X_WINDOW_STACK_BELOW);
+                            ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+                            ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+                            0, 0, 0, 0, 0,
+                            win, ECORE_X_WINDOW_STACK_BELOW);
 
    e_bindings_mouse_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
    e_bindings_wheel_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
@@ -1254,7 +1257,7 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
 
    /* move client with shell win over to new frame */
    ecore_x_window_reparent(bd->client.shell_win, bd->win,
-         bd->client_inset.l, bd->client_inset.t);
+                           bd->client_inset.l, bd->client_inset.t);
 
    bd->pointer = e_pointer_window_new(bd->win, 0);
 
@@ -1299,14 +1302,14 @@ _e_border_client_move_resize_send(E_Border *bd)
 }
 
 static void
-_e_border_pending_move_resize_add(E_Border    *bd,
-                                  int          move,
-                                  int          resize,
-                                  int          x,
-                                  int          y,
-                                  int          w,
-                                  int          h,
-                                  Eina_Bool    without_border,
+_e_border_pending_move_resize_add(E_Border *bd,
+                                  int move,
+                                  int resize,
+                                  int x,
+                                  int y,
+                                  int w,
+                                  int h,
+                                  Eina_Bool without_border,
                                   unsigned int serial)
 {
    E_Border_Pending_Move_Resize *pnd;
@@ -1326,8 +1329,8 @@ _e_border_pending_move_resize_add(E_Border    *bd,
 
 static void
 _e_border_move_internal(E_Border *bd,
-                        int       x,
-                        int       y,
+                        int x,
+                        int y,
                         Eina_Bool without_border)
 {
    E_Event_Border_Move *ev;
@@ -1344,25 +1347,25 @@ _e_border_move_internal(E_Border *bd,
 
    if (bd->maximized)
      {
-       if ((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH)
-         {
-            if (e_config->allow_manip)
-              bd->maximized = 0;
+        if ((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH)
+          {
+             if (e_config->allow_manip)
+               bd->maximized = 0;
 
-            if ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-              {
+             if ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
+               {
                   x = bd->x;
-              }
-            else
-            if ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-              {
+               }
+             else
+             if ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
+               {
                   y = bd->y;
-              }
-         }
-       else if (e_config->allow_manip)
-         bd->maximized = 0;
-       else
-         return;
+               }
+          }
+        else if (e_config->allow_manip)
+          bd->maximized = 0;
+        else
+          return;
      }
 
    if (without_border)
@@ -1377,7 +1380,8 @@ _e_border_move_internal(E_Border *bd,
         bd->move_intercept_cb(bd, x, y);
         if ((bd->x == px) && (bd->y == py)) return;
      }
-   else if ((x == bd->x) && (y == bd->y)) return;
+   else if ((x == bd->x) && (y == bd->y))
+     return;
    bd->pre_res_change.valid = 0;
    bd->x = x;
    bd->y = y;
@@ -1415,18 +1419,17 @@ _e_border_move_internal(E_Border *bd,
  */
 EAPI void
 e_border_move(E_Border *bd,
-              int       x,
-              int       y)
+              int x,
+              int y)
 {
    if (bd->fullscreen)
      return;
 
    _e_border_move_internal(bd, x, y, 0);
 
-   if(_e_border_lost_window_internal_get(bd))
-        _e_border_reset_lost_window(bd);
+   if (_e_border_lost_window_internal_get(bd))
+     _e_border_reset_lost_window(bd);
 }
-
 
 /**
  * Set a callback which will be called just prior to updating the
@@ -1456,8 +1459,8 @@ e_border_move_intercept_cb_set(E_Border *bd, E_Border_Move_Intercept_Cb cb)
  */
 EAPI void
 e_border_move_without_border(E_Border *bd,
-                             int       x,
-                             int       y)
+                             int x,
+                             int y)
 {
    if (bd->fullscreen)
      return;
@@ -1478,8 +1481,8 @@ e_border_center(E_Border *bd)
 
 EAPI void
 e_border_center_pos_get(E_Border *bd,
-                        int      *x,
-                        int      *y)
+                        int *x,
+                        int *y)
 {
    int zx, zy, zw, zh;
    E_OBJECT_CHECK(bd);
@@ -1492,8 +1495,8 @@ e_border_center_pos_get(E_Border *bd,
 
 EAPI void
 e_border_fx_offset(E_Border *bd,
-                   int       x,
-                   int       y)
+                   int x,
+                   int y)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -1510,10 +1513,10 @@ e_border_fx_offset(E_Border *bd,
 
 static void
 _e_border_move_resize_internal(E_Border *bd,
-                               int       x,
-                               int       y,
-                               int       w,
-                               int       h,
+                               int x,
+                               int y,
+                               int w,
+                               int h,
                                Eina_Bool without_border,
                                Eina_Bool move)
 {
@@ -1533,28 +1536,28 @@ _e_border_move_resize_internal(E_Border *bd,
 
    if (bd->maximized)
      {
-       if ((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH)
-         {
-            if (e_config->allow_manip)
-              bd->maximized = 0;
+        if ((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH)
+          {
+             if (e_config->allow_manip)
+               bd->maximized = 0;
 
-            if ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
-              {
+             if ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
+               {
                   x = bd->x;
                   w = bd->w;
-              }
-            else
-            if ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
-              {
+               }
+             else
+             if ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL)
+               {
                   y = bd->y;
                   h = bd->h;
-              }
-         }
-       else
-       if (e_config->allow_manip)
-         bd->maximized = 0;
-       else
-         return;
+               }
+          }
+        else
+        if (e_config->allow_manip)
+          bd->maximized = 0;
+        else
+          return;
      }
 
    if (without_border)
@@ -1653,10 +1656,10 @@ _e_border_move_resize_internal(E_Border *bd,
  */
 EAPI void
 e_border_move_resize(E_Border *bd,
-                     int       x,
-                     int       y,
-                     int       w,
-                     int       h)
+                     int x,
+                     int y,
+                     int w,
+                     int h)
 {
    if (bd->fullscreen)
      return;
@@ -1681,10 +1684,10 @@ e_border_move_resize(E_Border *bd,
  */
 EAPI void
 e_border_move_resize_without_border(E_Border *bd,
-                                    int       x,
-                                    int       y,
-                                    int       w,
-                                    int       h)
+                                    int x,
+                                    int y,
+                                    int w,
+                                    int h)
 {
    if (bd->fullscreen)
      return;
@@ -1707,8 +1710,8 @@ e_border_move_resize_without_border(E_Border *bd,
  */
 EAPI void
 e_border_resize(E_Border *bd,
-                int       w,
-                int       h)
+                int w,
+                int h)
 {
    if (bd->fullscreen)
      return;
@@ -1734,8 +1737,8 @@ e_border_resize(E_Border *bd,
  */
 EAPI void
 e_border_resize_without_border(E_Border *bd,
-                               int       w,
-                               int       h)
+                               int w,
+                               int h)
 {
    if (bd->fullscreen)
      return;
@@ -1745,7 +1748,7 @@ e_border_resize_without_border(E_Border *bd,
 
 EAPI void
 e_border_layer_set(E_Border *bd,
-                   E_Layer   layer)
+                   E_Layer layer)
 {
    int oldraise;
 
@@ -1862,15 +1865,15 @@ e_border_raise(E_Border *bd)
         if (above)
           {
              /* We ended up above a border */
-              ev->stack = above;
-              e_object_ref(E_OBJECT(above));
-              ev->type = E_STACKING_ABOVE;
+             ev->stack = above;
+             e_object_ref(E_OBJECT(above));
+             ev->type = E_STACKING_ABOVE;
           }
         else
           {
              /* No border to raise above, same as a lower! */
-              ev->stack = NULL;
-              ev->type = E_STACKING_ABOVE;
+             ev->stack = NULL;
+             ev->type = E_STACKING_ABOVE;
           }
      }
 
@@ -1950,15 +1953,15 @@ e_border_lower(E_Border *bd)
         if (below)
           {
              /* We ended up below a border */
-              ev->stack = below;
-              e_object_ref(E_OBJECT(below));
-              ev->type = E_STACKING_BELOW;
+             ev->stack = below;
+             e_object_ref(E_OBJECT(below));
+             ev->type = E_STACKING_BELOW;
           }
         else
           {
              /* No border to hide under, same as a raise! */
-              ev->stack = NULL;
-              ev->type = E_STACKING_BELOW;
+             ev->stack = NULL;
+             ev->type = E_STACKING_BELOW;
           }
      }
 
@@ -1971,57 +1974,57 @@ e_border_stack_above(E_Border *bd,
                      E_Border *above)
 {
    /* TODO: Should stack above allow the border to change level */
-    E_Event_Border_Stack *ev;
-    E_Border *last = NULL, *child;
-    Eina_List *l;
+   E_Event_Border_Stack *ev;
+   E_Border *last = NULL, *child;
+   Eina_List *l;
 
-    E_OBJECT_CHECK(bd);
-    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-    ecore_x_window_shadow_tree_flush();
+   ecore_x_window_shadow_tree_flush();
 
-    if (e_config->transient.raise)
-      {
-         Eina_List *list = _e_border_sub_borders_new(bd);
+   if (e_config->transient.raise)
+     {
+        Eina_List *list = _e_border_sub_borders_new(bd);
 
-         EINA_LIST_REVERSE_FOREACH(list, l, child)
-           {
-              /* Don't stack iconic transients. If the user wants these shown,
-               * thats another option.
-               */
-              if (!child->iconic)
-                {
-                   if (last)
-                     e_border_stack_below(child, last);
-                   else
-                     e_border_stack_above(child, above);
-                   last = child;
-                }
-           }
-         eina_list_free(list);
-      }
+        EINA_LIST_REVERSE_FOREACH(list, l, child)
+          {
+             /* Don't stack iconic transients. If the user wants these shown,
+              * thats another option.
+              */
+             if (!child->iconic)
+               {
+                  if (last)
+                    e_border_stack_below(child, last);
+                  else
+                    e_border_stack_above(child, above);
+                  last = child;
+               }
+          }
+        eina_list_free(list);
+     }
 
-    ev = E_NEW(E_Event_Border_Stack, 1);
-    ev->border = bd;
-    e_object_ref(E_OBJECT(bd));
+   ev = E_NEW(E_Event_Border_Stack, 1);
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
 
-    if (last)
-      {
-         e_container_border_stack_below(bd, last);
-         ev->stack = last;
-         e_object_ref(E_OBJECT(last));
-         ev->type = E_STACKING_BELOW;
-      }
-    else
-      {
-         e_container_border_stack_above(bd, above);
-         ev->stack = above;
-         e_object_ref(E_OBJECT(above));
-         ev->type = E_STACKING_ABOVE;
-      }
+   if (last)
+     {
+        e_container_border_stack_below(bd, last);
+        ev->stack = last;
+        e_object_ref(E_OBJECT(last));
+        ev->type = E_STACKING_BELOW;
+     }
+   else
+     {
+        e_container_border_stack_above(bd, above);
+        ev->stack = above;
+        e_object_ref(E_OBJECT(above));
+        ev->type = E_STACKING_ABOVE;
+     }
 
-    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
-    e_remember_update(bd);
+   ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2029,57 +2032,57 @@ e_border_stack_below(E_Border *bd,
                      E_Border *below)
 {
    /* TODO: Should stack below allow the border to change level */
-    E_Event_Border_Stack *ev;
-    E_Border *last = NULL, *child;
-    Eina_List *l;
+   E_Event_Border_Stack *ev;
+   E_Border *last = NULL, *child;
+   Eina_List *l;
 
-    E_OBJECT_CHECK(bd);
-    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   E_OBJECT_CHECK(bd);
+   E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
 
-    ecore_x_window_shadow_tree_flush();
+   ecore_x_window_shadow_tree_flush();
 
-    if (e_config->transient.lower)
-      {
-         Eina_List *list = _e_border_sub_borders_new(bd);
+   if (e_config->transient.lower)
+     {
+        Eina_List *list = _e_border_sub_borders_new(bd);
 
-         EINA_LIST_REVERSE_FOREACH(bd->transients, l, child)
-           {
-              /* Don't stack iconic transients. If the user wants these shown,
-               * thats another option.
-               */
-              if (!child->iconic)
-                {
-                   if (last)
-                     e_border_stack_below(child, last);
-                   else
-                     e_border_stack_below(child, below);
-                   last = child;
-                }
-           }
-         eina_list_free(list);
-      }
+        EINA_LIST_REVERSE_FOREACH(bd->transients, l, child)
+          {
+             /* Don't stack iconic transients. If the user wants these shown,
+              * thats another option.
+              */
+             if (!child->iconic)
+               {
+                  if (last)
+                    e_border_stack_below(child, last);
+                  else
+                    e_border_stack_below(child, below);
+                  last = child;
+               }
+          }
+        eina_list_free(list);
+     }
 
-    ev = E_NEW(E_Event_Border_Stack, 1);
-    ev->border = bd;
-    e_object_ref(E_OBJECT(bd));
+   ev = E_NEW(E_Event_Border_Stack, 1);
+   ev->border = bd;
+   e_object_ref(E_OBJECT(bd));
 
-    if (last)
-      {
-         e_container_border_stack_below(bd, last);
-         ev->stack = last;
-         e_object_ref(E_OBJECT(last));
-         ev->type = E_STACKING_BELOW;
-      }
-    else
-      {
-         e_container_border_stack_below(bd, below);
-         ev->stack = below;
-         e_object_ref(E_OBJECT(below));
-         ev->type = E_STACKING_BELOW;
-      }
+   if (last)
+     {
+        e_container_border_stack_below(bd, last);
+        ev->stack = last;
+        e_object_ref(E_OBJECT(last));
+        ev->type = E_STACKING_BELOW;
+     }
+   else
+     {
+        e_container_border_stack_below(bd, below);
+        ev->stack = below;
+        e_object_ref(E_OBJECT(below));
+        ev->type = E_STACKING_BELOW;
+     }
 
-    ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
-    e_remember_update(bd);
+   ecore_event_add(E_EVENT_BORDER_STACK, ev, _e_border_event_border_stack_free, NULL);
+   e_remember_update(bd);
 }
 
 EAPI void
@@ -2155,8 +2158,8 @@ e_border_focus_set_with_pointer(E_Border *bd)
 
 EAPI void
 e_border_focus_set(E_Border *bd,
-                   int       focus,
-                   int       set)
+                   int focus,
+                   int set)
 {
    E_Border *bd_unfocus = NULL;
    Eina_Bool focus_changed = EINA_FALSE;
@@ -2240,7 +2243,7 @@ e_border_focus_set(E_Border *bd,
                   e_grabinput_focus(bd->client.win, E_FOCUS_METHOD_PASSIVE);
                   /* e_border_focus_set(bd, 1, 0); */
                }
-            return;
+             return;
           }
 
         if (!bd->focused)
@@ -2260,7 +2263,7 @@ e_border_focus_set(E_Border *bd,
                            (bd2 != bd) &&
                            (bd2->zone == bd->zone) &&
                            ((bd2->desk == bd->desk) ||
-                               (bd2->sticky) || (bd->sticky)))
+                            (bd2->sticky) || (bd->sticky)))
                          {
                             Eina_Bool unfocus_is_parent = EINA_FALSE;
                             E_Border *bd_parent;
@@ -2319,7 +2322,7 @@ e_border_focus_set(E_Border *bd,
                        if ((bd2 != bd) &&
                            (bd2->zone == bd->zone) &&
                            ((bd2->desk == bd->desk) ||
-                               (bd2->sticky) || (bd->sticky)))
+                            (bd2->sticky) || (bd->sticky)))
                          {
                             if (bd2->parent == bd)
                               {
@@ -2407,7 +2410,7 @@ e_border_focus_set(E_Border *bd,
 }
 
 EAPI void
-e_border_shade(E_Border   *bd,
+e_border_shade(E_Border *bd,
                E_Direction dir)
 {
    E_Event_Border_Resize *ev;
@@ -2501,7 +2504,7 @@ e_border_shade(E_Border   *bd,
 }
 
 EAPI void
-e_border_unshade(E_Border   *bd,
+e_border_unshade(E_Border *bd,
                  E_Direction dir)
 {
    E_Event_Border_Resize *ev;
@@ -2658,153 +2661,153 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
    switch (max & E_MAXIMIZE_TYPE)
      {
       case E_MAXIMIZE_NONE:
-         /* Ignore */
-         break;
+        /* Ignore */
+        break;
 
       case E_MAXIMIZE_FULLSCREEN:
-         w = bd->zone->w;
-         h = bd->zone->h;
+        w = bd->zone->w;
+        h = bd->zone->h;
 
-         if (bd->bg_object)
-           {
-              edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
-              _e_border_client_inset_calc(bd);
-           }
-         e_border_resize_limit(bd, &w, &h);
-         /* center x-direction */
-         x1 = bd->zone->x + (bd->zone->w - w) / 2;
-         /* center y-direction */
-         yy1 = bd->zone->y + (bd->zone->h - h) / 2;
+        if (bd->bg_object)
+          {
+             edje_object_signal_emit(bd->bg_object, "e,action,maximize,fullscreen", "e");
+             _e_border_client_inset_calc(bd);
+          }
+        e_border_resize_limit(bd, &w, &h);
+        /* center x-direction */
+        x1 = bd->zone->x + (bd->zone->w - w) / 2;
+        /* center y-direction */
+        yy1 = bd->zone->y + (bd->zone->h - h) / 2;
 
-         switch (max & E_MAXIMIZE_DIRECTION)
-           {
-            case E_MAXIMIZE_BOTH:
-              e_border_move_resize(bd, x1, yy1, w, h);
-              break;
+        switch (max & E_MAXIMIZE_DIRECTION)
+          {
+           case E_MAXIMIZE_BOTH:
+             e_border_move_resize(bd, x1, yy1, w, h);
+             break;
 
-            case E_MAXIMIZE_VERTICAL:
-              e_border_move_resize(bd, bd->x, yy1, bd->w, h);
-              break;
+           case E_MAXIMIZE_VERTICAL:
+             e_border_move_resize(bd, bd->x, yy1, bd->w, h);
+             break;
 
-            case E_MAXIMIZE_HORIZONTAL:
-              e_border_move_resize(bd, x1, bd->y, w, bd->h);
-              break;
+           case E_MAXIMIZE_HORIZONTAL:
+             e_border_move_resize(bd, x1, bd->y, w, bd->h);
+             break;
 
-            case E_MAXIMIZE_LEFT:
-              e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h);
-              break;
+           case E_MAXIMIZE_LEFT:
+             e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h);
+             break;
 
-            case E_MAXIMIZE_RIGHT:
-              e_border_move_resize(bd, x1, bd->zone->y, w / 2, h);
-              break;
-           }
-         break;
+           case E_MAXIMIZE_RIGHT:
+             e_border_move_resize(bd, x1, bd->zone->y, w / 2, h);
+             break;
+          }
+        break;
 
       case E_MAXIMIZE_SMART:
       case E_MAXIMIZE_EXPAND:
-         if (bd->zone)
-           e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+        if (bd->zone)
+          e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
 
-         if (bd->w < zw)
-           w = bd->w;
-         else
-           w = zw;
+        if (bd->w < zw)
+          w = bd->w;
+        else
+          w = zw;
 
-         if (bd->h < zh)
-           h = bd->h;
-         else
-           h = zh;
+        if (bd->h < zh)
+          h = bd->h;
+        else
+          h = zh;
 
-         if (bd->x < zx) // window left not useful coordinates
-           x1 = zx;
-         else if (bd->x + bd->w > zx + zw) // window right not useful coordinates
-           x1 = zx + zw - bd->w;
-         else // window normal position
-           x1 = bd->x;
+        if (bd->x < zx) // window left not useful coordinates
+          x1 = zx;
+        else if (bd->x + bd->w > zx + zw) // window right not useful coordinates
+          x1 = zx + zw - bd->w;
+        else // window normal position
+          x1 = bd->x;
 
-         if (bd->y < zy) // window top not useful coordinates
-           yy1 = zy;
-         else if (bd->y + bd->h > zy + zh) // window bottom not useful coordinates
-           yy1 = zy + zh - bd->h;
-         else // window normal position
-           yy1 = bd->y;
+        if (bd->y < zy) // window top not useful coordinates
+          yy1 = zy;
+        else if (bd->y + bd->h > zy + zh) // window bottom not useful coordinates
+          yy1 = zy + zh - bd->h;
+        else // window normal position
+          yy1 = bd->y;
 
-         switch (max & E_MAXIMIZE_DIRECTION)
-           {
-            case E_MAXIMIZE_BOTH:
-              e_border_move_resize(bd, zx, zy, zw, zh);
-              break;
+        switch (max & E_MAXIMIZE_DIRECTION)
+          {
+           case E_MAXIMIZE_BOTH:
+             e_border_move_resize(bd, zx, zy, zw, zh);
+             break;
 
-            case E_MAXIMIZE_VERTICAL:
-              e_border_move_resize(bd, x1, zy, w, zh);
-              break;
+           case E_MAXIMIZE_VERTICAL:
+             e_border_move_resize(bd, x1, zy, w, zh);
+             break;
 
-            case E_MAXIMIZE_HORIZONTAL:
-              e_border_move_resize(bd, zx, yy1, zw, h);
-              break;
+           case E_MAXIMIZE_HORIZONTAL:
+             e_border_move_resize(bd, zx, yy1, zw, h);
+             break;
 
-            case E_MAXIMIZE_LEFT:
-              e_border_move_resize(bd, zx, zy, zw / 2, zh);
-              break;
+           case E_MAXIMIZE_LEFT:
+             e_border_move_resize(bd, zx, zy, zw / 2, zh);
+             break;
 
-            case E_MAXIMIZE_RIGHT:
-              e_border_move_resize(bd, zx + zw / 2, zy, zw / 2, zh);
-              break;
-           }
+           case E_MAXIMIZE_RIGHT:
+             e_border_move_resize(bd, zx + zw / 2, zy, zw / 2, zh);
+             break;
+          }
 
-         edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
-         break;
+        edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
+        break;
 
       case E_MAXIMIZE_FILL:
-         x1 = bd->zone->x;
-         yy1 = bd->zone->y;
-         x2 = bd->zone->x + bd->zone->w;
-         y2 = bd->zone->y + bd->zone->h;
+        x1 = bd->zone->x;
+        yy1 = bd->zone->y;
+        x2 = bd->zone->x + bd->zone->w;
+        y2 = bd->zone->y + bd->zone->h;
 
-         /* walk through all shelves */
-         e_maximize_border_shelf_fill(bd, &x1, &yy1, &x2, &y2, max);
+        /* walk through all shelves */
+        e_maximize_border_shelf_fill(bd, &x1, &yy1, &x2, &y2, max);
 
-         /* walk through all windows */
-         e_maximize_border_border_fill(bd, &x1, &yy1, &x2, &y2, max);
+        /* walk through all windows */
+        e_maximize_border_border_fill(bd, &x1, &yy1, &x2, &y2, max);
 
-         w = x2 - x1;
-         h = y2 - yy1;
-         pw = w;
-         ph = h;
-         e_border_resize_limit(bd, &w, &h);
-         /* center x-direction */
-         x1 = x1 + (pw - w) / 2;
-         /* center y-direction */
-         yy1 = yy1 + (ph - h) / 2;
+        w = x2 - x1;
+        h = y2 - yy1;
+        pw = w;
+        ph = h;
+        e_border_resize_limit(bd, &w, &h);
+        /* center x-direction */
+        x1 = x1 + (pw - w) / 2;
+        /* center y-direction */
+        yy1 = yy1 + (ph - h) / 2;
 
-         switch (max & E_MAXIMIZE_DIRECTION)
-           {
-            case E_MAXIMIZE_BOTH:
-              e_border_move_resize(bd, x1, yy1, w, h);
-              break;
+        switch (max & E_MAXIMIZE_DIRECTION)
+          {
+           case E_MAXIMIZE_BOTH:
+             e_border_move_resize(bd, x1, yy1, w, h);
+             break;
 
-            case E_MAXIMIZE_VERTICAL:
-              e_border_move_resize(bd, bd->x, yy1, bd->w, h);
-              break;
+           case E_MAXIMIZE_VERTICAL:
+             e_border_move_resize(bd, bd->x, yy1, bd->w, h);
+             break;
 
-            case E_MAXIMIZE_HORIZONTAL:
-              e_border_move_resize(bd, x1, bd->y, w, bd->h);
-              break;
+           case E_MAXIMIZE_HORIZONTAL:
+             e_border_move_resize(bd, x1, bd->y, w, bd->h);
+             break;
 
-            case E_MAXIMIZE_LEFT:
-              e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h);
-              break;
+           case E_MAXIMIZE_LEFT:
+             e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h);
+             break;
 
-            case E_MAXIMIZE_RIGHT:
-              e_border_move_resize(bd, x1, bd->zone->y, w / 2, h);
-              break;
-           }
-         break;
+           case E_MAXIMIZE_RIGHT:
+             e_border_move_resize(bd, x1, bd->zone->y, w / 2, h);
+             break;
+          }
+        break;
      }
 }
 
 EAPI void
-e_border_maximize(E_Border  *bd,
+e_border_maximize(E_Border *bd,
                   E_Maximize max)
 {
    E_OBJECT_CHECK(bd);
@@ -2848,7 +2851,6 @@ e_border_maximize(E_Border  *bd,
 
    _e_border_maximize(bd, max);
 
-
    /* Remove previous type */
    bd->maximized &= ~E_MAXIMIZE_TYPE;
    /* Add new maximization. It must be added, so that VERTICAL + HORIZONTAL == BOTH */
@@ -2860,7 +2862,7 @@ e_border_maximize(E_Border  *bd,
 }
 
 EAPI void
-e_border_unmaximize(E_Border  *bd,
+e_border_unmaximize(E_Border *bd,
                     E_Maximize max)
 {
    E_OBJECT_CHECK(bd);
@@ -2948,7 +2950,7 @@ e_border_unmaximize(E_Border  *bd,
 }
 
 EAPI void
-e_border_fullscreen(E_Border    *bd,
+e_border_fullscreen(E_Border *bd,
                     E_Fullscreen policy)
 {
    E_Event_Border_Fullscreen *ev;
@@ -3276,7 +3278,7 @@ e_border_unstick(E_Border *bd)
 
 EAPI void
 e_border_pinned_set(E_Border *bd,
-                    int       set)
+                    int set)
 {
    E_Layer layer;
 
@@ -3365,7 +3367,7 @@ e_border_focused_get(void)
 }
 
 static void
-_e_border_shape_input_rectangle_set(E_Border* bd)
+_e_border_shape_input_rectangle_set(E_Border *bd)
 {
    if (!bd) return;
 
@@ -3396,19 +3398,19 @@ _e_border_shape_input_rectangle_set(E_Border* bd)
         ecore_x_window_shape_input_rectangles_set(twin, rects, 4);
 
         twin2 = ecore_x_window_override_new
-           (bd->zone->container->scratch_win, 0, 0,
-               bd->w - bd->client_inset.l - bd->client_inset.r,
-               bd->h - bd->client_inset.t - bd->client_inset.b);
+            (bd->zone->container->scratch_win, 0, 0,
+            bd->w - bd->client_inset.l - bd->client_inset.r,
+            bd->h - bd->client_inset.t - bd->client_inset.b);
         x = 0;
         y = 0;
         if ((bd->shading) || (bd->shaded))
           {
              if (bd->shade.dir == E_DIRECTION_UP)
-                y = bd->h - bd->client_inset.t - bd->client_inset.b -
-                bd->client.h;
+               y = bd->h - bd->client_inset.t - bd->client_inset.b -
+                 bd->client.h;
              else if (bd->shade.dir == E_DIRECTION_LEFT)
-                x = bd->w - bd->client_inset.l - bd->client_inset.r -
-                bd->client.w;
+               x = bd->w - bd->client_inset.l - bd->client_inset.r -
+                 bd->client.w;
           }
         ecore_x_window_shape_input_window_set_xy(twin2, bd->client.win,
                                                  x, y);
@@ -3427,16 +3429,16 @@ _e_border_shape_input_rectangle_set(E_Border* bd)
         if (bd->visible) // not shaped input
           {
              if (!((bd->comp_hidden) || (bd->tmp_input_hidden > 0)))
-                ecore_x_composite_window_events_enable(bd->win);
+               ecore_x_composite_window_events_enable(bd->win);
              else
-                ecore_x_composite_window_events_disable(bd->win);
+               ecore_x_composite_window_events_disable(bd->win);
           }
         else
           {
              if (!e_manager_comp_evas_get(bd->zone->container->manager))
-                ecore_x_composite_window_events_enable(bd->win);
+               ecore_x_composite_window_events_enable(bd->win);
              else
-                ecore_x_composite_window_events_disable(bd->win);
+               ecore_x_composite_window_events_disable(bd->win);
           }
      }
 }
@@ -3731,7 +3733,7 @@ _e_border_action_move_timeout_add(void)
 static Eina_Bool
 _e_border_move_key_down(void *data __UNUSED__,
                         int type   __UNUSED__,
-                        void      *event)
+                        void *event)
 {
    Ecore_Event_Key *ev = event;
    int x, y;
@@ -3780,7 +3782,7 @@ stop:
 static Eina_Bool
 _e_border_move_mouse_down(void *data __UNUSED__,
                           int type   __UNUSED__,
-                          void      *event)
+                          void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
 
@@ -3842,7 +3844,7 @@ _e_border_action_resize_timeout_add(void)
 static Eina_Bool
 _e_border_resize_key_down(void *data __UNUSED__,
                           int type   __UNUSED__,
-                          void      *event)
+                          void *event)
 {
    Ecore_Event_Key *ev = event;
    int w, h, dx, dy;
@@ -3906,7 +3908,7 @@ stop:
 static Eina_Bool
 _e_border_resize_mouse_down(void *data __UNUSED__,
                             int type   __UNUSED__,
-                            void      *event)
+                            void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
 
@@ -3950,7 +3952,7 @@ e_border_act_resize_keyboard(E_Border *bd)
 }
 
 EAPI void
-e_border_act_move_begin(E_Border                 *bd,
+e_border_act_move_begin(E_Border *bd,
                         Ecore_Event_Mouse_Button *ev)
 {
    E_OBJECT_CHECK(bd);
@@ -3972,7 +3974,7 @@ e_border_act_move_begin(E_Border                 *bd,
 }
 
 EAPI void
-e_border_act_move_end(E_Border                    *bd,
+e_border_act_move_end(E_Border *bd,
                       Ecore_Event_Mouse_Button *ev __UNUSED__)
 {
    E_OBJECT_CHECK(bd);
@@ -3986,7 +3988,7 @@ e_border_act_move_end(E_Border                    *bd,
 }
 
 EAPI void
-e_border_act_resize_begin(E_Border                 *bd,
+e_border_act_resize_begin(E_Border *bd,
                           Ecore_Event_Mouse_Button *ev)
 {
    E_OBJECT_CHECK(bd);
@@ -4032,7 +4034,7 @@ e_border_act_resize_begin(E_Border                 *bd,
 }
 
 EAPI void
-e_border_act_resize_end(E_Border                    *bd,
+e_border_act_resize_end(E_Border *bd,
                         Ecore_Event_Mouse_Button *ev __UNUSED__)
 {
    E_OBJECT_CHECK(bd);
@@ -4048,9 +4050,9 @@ e_border_act_resize_end(E_Border                    *bd,
 }
 
 EAPI void
-e_border_act_menu_begin(E_Border                 *bd,
+e_border_act_menu_begin(E_Border *bd,
                         Ecore_Event_Mouse_Button *ev,
-                        int                       key)
+                        int key)
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -4110,7 +4112,7 @@ e_border_act_kill_begin(E_Border *bd)
 
 EAPI Evas_Object *
 e_border_icon_add(E_Border *bd,
-                  Evas     *evas)
+                  Evas *evas)
 {
    Evas_Object *o;
 
@@ -4305,9 +4307,9 @@ _e_border_lost_window_internal_get(E_Border *bd)
 {
    int loss_overlap = 5;
 
-   if(e_config->window_out_of_vscreen_limits) return EINA_FALSE;
-   if(!(bd->zone))
-      return EINA_FALSE;
+   if (e_config->window_out_of_vscreen_limits) return EINA_FALSE;
+   if (!(bd->zone))
+     return EINA_FALSE;
 
    if (!E_INTERSECTS(bd->zone->x + loss_overlap,
                      bd->zone->y + loss_overlap,
@@ -4340,16 +4342,16 @@ _e_border_lost_window_internal_get(E_Border *bd)
                                    bd->zone->h - (2 * loss_overlap),
                                    rect[i].x, rect[i].y,
                                    (int)rect[i].width, (int)rect[i].height))
-                     {
-                        ok = 1;
-                        break;
-                     }
+                    {
+                       ok = 1;
+                       break;
+                    }
                }
-               free(rect);
-               if (!ok)
-                  return EINA_TRUE;
-            }
-      }
+             free(rect);
+             if (!ok)
+               return EINA_TRUE;
+          }
+     }
 
    return EINA_FALSE;
 }
@@ -4359,10 +4361,10 @@ _e_border_reset_lost_window(E_Border *bd)
 {
    int x, y, w, h;
    E_OBJECT_CHECK(bd);
-   
-   if(bd->iconic) e_border_uniconify(bd);
-   if(!bd->moving) e_border_center(bd);
-   
+
+   if (bd->iconic) e_border_uniconify(bd);
+   if (!bd->moving) e_border_center(bd);
+
    e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
    ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
 
@@ -4372,12 +4374,12 @@ _e_border_reset_lost_window(E_Border *bd)
    warp_to = 1;
    warp_to_win = bd->zone->container->win;
 
-   if(!warp_timer)
-       warp_timer = ecore_timer_add(0.01, 
-               _e_border_pointer_warp_to_center_timer, (const void *) bd);
+   if (!warp_timer)
+     warp_timer = ecore_timer_add(0.01,
+                                  _e_border_pointer_warp_to_center_timer, (const void *)bd);
 
    e_border_raise(bd);
-   if(!bd->lock_focus_out)
+   if (!bd->lock_focus_out)
      e_border_focus_set(bd, 1, 1);
 }
 
@@ -4501,8 +4503,8 @@ e_border_name_get(const E_Border *bd)
 }
 
 EAPI void
-e_border_signal_move_begin(E_Border       *bd,
-                           const char     *sig,
+e_border_signal_move_begin(E_Border *bd,
+                           const char *sig,
                            const char *src __UNUSED__)
 {
    E_OBJECT_CHECK(bd);
@@ -4528,7 +4530,7 @@ e_border_signal_move_begin(E_Border       *bd,
 }
 
 EAPI void
-e_border_signal_move_end(E_Border       *bd,
+e_border_signal_move_end(E_Border *bd,
                          const char *sig __UNUSED__,
                          const char *src __UNUSED__)
 {
@@ -4552,9 +4554,9 @@ e_border_resizing_get(E_Border *bd)
 }
 
 EAPI void
-e_border_signal_resize_begin(E_Border       *bd,
-                             const char     *dir,
-                             const char     *sig,
+e_border_signal_resize_begin(E_Border *bd,
+                             const char *dir,
+                             const char *sig,
                              const char *src __UNUSED__)
 {
    Ecore_X_Gravity grav = ECORE_X_GRAVITY_NW;
@@ -4624,7 +4626,7 @@ e_border_signal_resize_begin(E_Border       *bd,
 }
 
 EAPI void
-e_border_signal_resize_end(E_Border       *bd,
+e_border_signal_resize_end(E_Border *bd,
                            const char *dir __UNUSED__,
                            const char *sig __UNUSED__,
                            const char *src __UNUSED__)
@@ -4642,8 +4644,8 @@ e_border_signal_resize_end(E_Border       *bd,
 
 EAPI void
 e_border_resize_limit(E_Border *bd,
-                      int      *w,
-                      int      *h)
+                      int *w,
+                      int *h)
 {
    double a;
 
@@ -4712,10 +4714,10 @@ e_border_resize_limit(E_Border *bd,
    if (*h < 1) *h = 1;
    if (*w < 1) *w = 1;
 
-   if      (*w > bd->client.icccm.max_w) *w = bd->client.icccm.max_w;
+   if (*w > bd->client.icccm.max_w) *w = bd->client.icccm.max_w;
    else if (*w < bd->client.icccm.min_w)
      *w = bd->client.icccm.min_w;
-   if      (*h > bd->client.icccm.max_h) *h = bd->client.icccm.max_h;
+   if (*h > bd->client.icccm.max_h) *h = bd->client.icccm.max_h;
    else if (*h < bd->client.icccm.min_h)
      *h = bd->client.icccm.min_h;
 
@@ -4731,8 +4733,8 @@ _e_border_free(E_Border *bd)
      {
         bd->client.e.state.video_parent_border->client.e.state.video_child =
           eina_list_remove
-          (bd->client.e.state.video_parent_border->client.e.state.video_child,
-              bd);
+            (bd->client.e.state.video_parent_border->client.e.state.video_child,
+            bd);
      }
    if (bd->client.e.state.video_child)
      {
@@ -5043,18 +5045,18 @@ _e_border_del(E_Border *bd)
 
 #ifdef PRINT_LOTS_OF_DEBUG
 static void
-_e_border_print(E_Border   *bd,
+_e_border_print(E_Border *bd,
                 const char *func)
 {
    if (!bd) return;
 
    DBG("*Window Info*"
-          "\tPointer: %p\n"
-          "\tName: %s\n"
-          "\tTitle: %s\n"
-          "\tBorderless: %s\n",
-          bd, bd->client.icccm.name, bd->client.icccm.title,
-          bd->borderless ? "TRUE" : "FALSE");
+       "\tPointer: %p\n"
+       "\tName: %s\n"
+       "\tTitle: %s\n"
+       "\tBorderless: %s\n",
+       bd, bd->client.icccm.name, bd->client.icccm.title,
+       bd->borderless ? "TRUE" : "FALSE");
 }
 
 #endif
@@ -5062,7 +5064,7 @@ _e_border_print(E_Border   *bd,
 static Eina_Bool
 _e_border_cb_window_show_request(void *data  __UNUSED__,
                                  int ev_type __UNUSED__,
-                                 void       *ev)
+                                 void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Show_Request *e;
@@ -5079,8 +5081,8 @@ _e_border_cb_window_show_request(void *data  __UNUSED__,
      {
         /* FIXME: make border "urgent" for a bit - it wants attention */
 /*	e_border_show(bd); */
-          if (!bd->lock_client_stacking)
-            e_border_raise(bd);
+        if (!bd->lock_client_stacking)
+          e_border_raise(bd);
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -5088,7 +5090,7 @@ _e_border_cb_window_show_request(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_destroy(void *data  __UNUSED__,
                             int ev_type __UNUSED__,
-                            void       *ev)
+                            void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Destroy *e;
@@ -5104,7 +5106,7 @@ _e_border_cb_window_destroy(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_hide(void *data  __UNUSED__,
                          int ev_type __UNUSED__,
-                         void       *ev)
+                         void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Hide *e;
@@ -5174,7 +5176,7 @@ _e_border_cb_window_reparent(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_configure_request(void *data  __UNUSED__,
                                       int ev_type __UNUSED__,
-                                      void       *ev)
+                                      void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Configure_Request *e;
@@ -5321,11 +5323,11 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
                        int ry = bd->y;
                        zx = zy = zw = zh = 0;
 
-     /*
-      * This code does resize and move a window on a
-      * X configure request into an useful geometry.
-      * This is really useful for size jumping file dialogs.
-      */
+                       /*
+                        * This code does resize and move a window on a
+                        * X configure request into an useful geometry.
+                        * This is really useful for size jumping file dialogs.
+                        */
 
                        if (bd->zone)
                          {
@@ -5344,22 +5346,22 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
 
                        if (e_config->geometry_auto_move == 1)
                          {
-                             /* z{x,y,w,h} are only set here; FIXME! */
-                             if (bd->zone)
-                               {
-                                  // move window horizontal if resize to not useful geometry
-                                  if (bd->x + bd->w > zx + zw)
-                                    rx = zx + zw - bd->w;
-                                  else if (bd->x < zx)
-                                    rx = zx;
+                            /* z{x,y,w,h} are only set here; FIXME! */
+                            if (bd->zone)
+                              {
+                                 // move window horizontal if resize to not useful geometry
+                                 if (bd->x + bd->w > zx + zw)
+                                   rx = zx + zw - bd->w;
+                                 else if (bd->x < zx)
+                                   rx = zx;
 
-                                  // move window vertical if resize to not useful geometry
-                                  if (bd->y + bd->h > zy + zh)
-                                    ry = zy + zh - bd->h;
-                                  else if (bd->y < zy)
-                                    ry = zy;
-                               }
-                             e_border_move(bd, rx, ry);
+                                 // move window vertical if resize to not useful geometry
+                                 if (bd->y + bd->h > zy + zh)
+                                   ry = zy + zh - bd->h;
+                                 else if (bd->y < zy)
+                                   ry = zy;
+                              }
+                            e_border_move(bd, rx, ry);
                          }
                     }
                }
@@ -5408,15 +5410,15 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
                {
-     /* FIXME: do */
+                  /* FIXME: do */
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
                {
-     /* FIXME: do */
+                  /* FIXME: do */
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
                {
-     /* FIXME: do */
+                  /* FIXME: do */
                }
           }
         else if (e->value_mask & ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE)
@@ -5431,15 +5433,15 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_TOP_IF)
                {
-     /* FIXME: do */
+                  /* FIXME: do */
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_BOTTOM_IF)
                {
-     /* FIXME: do */
+                  /* FIXME: do */
                }
              else if (e->detail == ECORE_X_WINDOW_STACK_OPPOSITE)
                {
-     /* FIXME: do */
+                  /* FIXME: do */
                }
           }
      }
@@ -5452,7 +5454,7 @@ _e_border_cb_window_configure_request(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_resize_request(void *data  __UNUSED__,
                                    int ev_type __UNUSED__,
-                                   void       *ev)
+                                   void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Resize_Request *e;
@@ -5507,13 +5509,13 @@ _e_border_cb_window_gravity(void *data  __UNUSED__,
 //   e = ev;
 //   bd = e_border_find_by_client_window(e->win);
 //   if (!bd) return 1;
-             return 1;
+   return 1;
 }
 
 static Eina_Bool
 _e_border_cb_window_stack_request(void *data  __UNUSED__,
                                   int ev_type __UNUSED__,
-                                  void       *ev)
+                                  void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Stack_Request *e;
@@ -5542,7 +5544,7 @@ _e_border_cb_window_stack_request(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_property(void *data  __UNUSED__,
                              int ev_type __UNUSED__,
-                             void       *ev)
+                             void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Property *e;
@@ -5551,8 +5553,8 @@ _e_border_cb_window_property(void *data  __UNUSED__,
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return ECORE_CALLBACK_PASS_ON;
 
-   if(_e_border_lost_window_internal_get(bd))
-        _e_border_reset_lost_window(bd);
+   if (_e_border_lost_window_internal_get(bd))
+     _e_border_reset_lost_window(bd);
 
    if (e->atom == ECORE_X_ATOM_WM_NAME)
      {
@@ -5614,11 +5616,11 @@ _e_border_cb_window_property(void *data  __UNUSED__,
             (!bd->client.netwm.fetch.type))
            {
          */
-          bd->client.mwm.fetch.hints = 1;
-          bd->changed = 1;
-          /*
-             }
-           */
+        bd->client.mwm.fetch.hints = 1;
+        bd->changed = 1;
+        /*
+           }
+         */
      }
    else if (e->atom == ECORE_X_ATOM_WM_TRANSIENT_FOR)
      {
@@ -5748,7 +5750,7 @@ _e_border_cb_window_property(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_colormap(void *data  __UNUSED__,
                              int ev_type __UNUSED__,
-                             void       *ev)
+                             void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Colormap *e;
@@ -5762,7 +5764,7 @@ _e_border_cb_window_colormap(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_shape(void *data  __UNUSED__,
                           int ev_type __UNUSED__,
-                          void       *ev)
+                          void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Shape *e;
@@ -5809,7 +5811,7 @@ _e_border_cb_window_shape(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_focus_in(void *data  __UNUSED__,
                              int ev_type __UNUSED__,
-                             void       *ev)
+                             void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Focus_In *e;
@@ -5823,35 +5825,35 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
       char *ct;
 
       const char *modes[] = {
-        "MODE_NORMAL",
-        "MODE_WHILE_GRABBED",
-        "MODE_GRAB",
-        "MODE_UNGRAB"
+         "MODE_NORMAL",
+         "MODE_WHILE_GRABBED",
+         "MODE_GRAB",
+         "MODE_UNGRAB"
       };
       const char *details[] = {
-        "DETAIL_ANCESTOR",
-        "DETAIL_VIRTUAL",
-        "DETAIL_INFERIOR",
-        "DETAIL_NON_LINEAR",
-        "DETAIL_NON_LINEAR_VIRTUAL",
-        "DETAIL_POINTER",
-        "DETAIL_POINTER_ROOT",
-        "DETAIL_DETAIL_NONE"
+         "DETAIL_ANCESTOR",
+         "DETAIL_VIRTUAL",
+         "DETAIL_INFERIOR",
+         "DETAIL_NON_LINEAR",
+         "DETAIL_NON_LINEAR_VIRTUAL",
+         "DETAIL_POINTER",
+         "DETAIL_POINTER_ROOT",
+         "DETAIL_DETAIL_NONE"
       };
       t = time(NULL);
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
       DBG("FF ->IN %i 0x%x %s md=%s dt=%s\n",
-             e->time,
-             e->win,
-             ct,
-             modes[e->mode],
-             details[e->detail]);
+          e->time,
+          e->win,
+          ct,
+          modes[e->mode],
+          details[e->detail]);
 
       DBG("%s cb focus in %d %d\n",
-             e_border_name_get(bd),
-             bd->client.icccm.accepts_focus,
-             bd->client.icccm.take_focus);
+          e_border_name_get(bd),
+          bd->client.icccm.accepts_focus,
+          bd->client.icccm.take_focus);
    }
 #endif
    _e_border_pri_raise(bd);
@@ -5877,7 +5879,7 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_focus_out(void *data  __UNUSED__,
                               int ev_type __UNUSED__,
-                              void       *ev)
+                              void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Focus_Out *e;
@@ -5891,35 +5893,35 @@ _e_border_cb_window_focus_out(void *data  __UNUSED__,
       char *ct;
 
       const char *modes[] = {
-        "MODE_NORMAL",
-        "MODE_WHILE_GRABBED",
-        "MODE_GRAB",
-        "MODE_UNGRAB"
+         "MODE_NORMAL",
+         "MODE_WHILE_GRABBED",
+         "MODE_GRAB",
+         "MODE_UNGRAB"
       };
       const char *details[] = {
-        "DETAIL_ANCESTOR",
-        "DETAIL_VIRTUAL",
-        "DETAIL_INFERIOR",
-        "DETAIL_NON_LINEAR",
-        "DETAIL_NON_LINEAR_VIRTUAL",
-        "DETAIL_POINTER",
-        "DETAIL_POINTER_ROOT",
-        "DETAIL_DETAIL_NONE"
+         "DETAIL_ANCESTOR",
+         "DETAIL_VIRTUAL",
+         "DETAIL_INFERIOR",
+         "DETAIL_NON_LINEAR",
+         "DETAIL_NON_LINEAR_VIRTUAL",
+         "DETAIL_POINTER",
+         "DETAIL_POINTER_ROOT",
+         "DETAIL_DETAIL_NONE"
       };
       t = time(NULL);
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
       DBG("FF <-OUT %i 0x%x %s md=%s dt=%s",
-             e->time,
-             e->win,
-             ct,
-             modes[e->mode],
-             details[e->detail]);
+          e->time,
+          e->win,
+          ct,
+          modes[e->mode],
+          details[e->detail]);
 
       DBG("%s cb focus out %d %d",
-             e_border_name_get(bd),
-             bd->client.icccm.accepts_focus,
-             bd->client.icccm.take_focus);
+          e_border_name_get(bd),
+          bd->client.icccm.accepts_focus,
+          bd->client.icccm.take_focus);
    }
 #endif
    _e_border_pri_norm(bd);
@@ -5978,13 +5980,13 @@ _e_border_cb_client_message(void *data  __UNUSED__,
       bd = e_border_find_by_client_window(e->win);
       if (!bd) return 1;
     */
-     return 1;
+   return 1;
 }
 
 static Eina_Bool
 _e_border_cb_window_state_request(void *data  __UNUSED__,
                                   int ev_type __UNUSED__,
-                                  void       *ev)
+                                  void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_State_Request *e;
@@ -6003,7 +6005,7 @@ _e_border_cb_window_state_request(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_window_move_resize_request(void *data  __UNUSED__,
                                         int ev_type __UNUSED__,
-                                        void       *ev)
+                                        void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Window_Move_Resize_Request *e;
@@ -6125,7 +6127,7 @@ _e_border_cb_window_move_resize_request(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_desktop_change(void *data  __UNUSED__,
                             int ev_type __UNUSED__,
-                            void       *ev)
+                            void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Desktop_Change *e;
@@ -6155,7 +6157,7 @@ _e_border_cb_desktop_change(void *data  __UNUSED__,
 static Eina_Bool
 _e_border_cb_sync_alarm(void *data  __UNUSED__,
                         int ev_type __UNUSED__,
-                        void       *ev)
+                        void *ev)
 {
    E_Border *bd;
    Ecore_X_Event_Sync_Alarm *e;
@@ -6255,9 +6257,10 @@ _e_border_cb_config_icon_theme(void *data  __UNUSED__,
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static Eina_Bool _e_border_cb_config_mode(void *data    __UNUSED__,
-                                          int   ev_type __UNUSED__,
-                                          void *ev      __UNUSED__)
+static Eina_Bool
+_e_border_cb_config_mode(void *data    __UNUSED__,
+                         int ev_type __UNUSED__,
+                         void *ev      __UNUSED__)
 {
    Eina_List *l;
    E_Border *bd;
@@ -6293,7 +6296,7 @@ static Eina_Bool _e_border_cb_config_mode(void *data    __UNUSED__,
 static Eina_Bool
 _e_border_cb_pointer_warp(void *data  __UNUSED__,
                           int ev_type __UNUSED__,
-                          void       *ev)
+                          void *ev)
 {
    E_Event_Pointer_Warp *e;
 
@@ -6304,10 +6307,10 @@ _e_border_cb_pointer_warp(void *data  __UNUSED__,
 }
 
 static void
-_e_border_cb_signal_bind(void            *data,
+_e_border_cb_signal_bind(void *data,
                          Evas_Object *obj __UNUSED__,
-                         const char      *emission,
-                         const char      *source)
+                         const char *emission,
+                         const char *source)
 {
    E_Border *bd;
 
@@ -6318,9 +6321,9 @@ _e_border_cb_signal_bind(void            *data,
 }
 
 static Eina_Bool
-_e_border_cb_mouse_in(void    *data,
+_e_border_cb_mouse_in(void *data,
                       int type __UNUSED__,
-                      void    *event)
+                      void *event)
 {
    Ecore_X_Event_Mouse_In *ev;
    E_Border *bd;
@@ -6352,10 +6355,10 @@ _e_border_cb_mouse_in(void    *data,
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
       DBG("@@ ->IN 0x%x 0x%x %s md=%s dt=%s",
-             ev->win, ev->event_win,
-             ct,
-             modes[ev->mode],
-             details[ev->detail]);
+          ev->win, ev->event_win,
+          ct,
+          modes[ev->mode],
+          details[ev->detail]);
    }
 #endif
    if (grabbed) return ECORE_CALLBACK_PASS_ON;
@@ -6384,9 +6387,9 @@ _e_border_cb_mouse_in(void    *data,
 }
 
 static Eina_Bool
-_e_border_cb_mouse_out(void    *data,
+_e_border_cb_mouse_out(void *data,
                        int type __UNUSED__,
-                       void    *event)
+                       void *event)
 {
    Ecore_X_Event_Mouse_Out *ev;
    E_Border *bd;
@@ -6418,10 +6421,10 @@ _e_border_cb_mouse_out(void    *data,
       ct = ctime(&t);
       ct[strlen(ct) - 1] = 0;
       DBG("@@ <-OUT 0x%x 0x%x %s md=%s dt=%s",
-             ev->win, ev->event_win,
-             ct,
-             modes[ev->mode],
-             details[ev->detail]);
+          ev->win, ev->event_win,
+          ct,
+          modes[ev->mode],
+          details[ev->detail]);
    }
 #endif
    if (grabbed) return ECORE_CALLBACK_PASS_ON;
@@ -6467,9 +6470,9 @@ _e_border_cb_mouse_out(void    *data,
 }
 
 static Eina_Bool
-_e_border_cb_mouse_wheel(void    *data,
+_e_border_cb_mouse_wheel(void *data,
                          int type __UNUSED__,
-                         void    *event)
+                         void *event)
 {
    Ecore_Event_Mouse_Wheel *ev;
    E_Border *bd;
@@ -6490,9 +6493,9 @@ _e_border_cb_mouse_wheel(void    *data,
 }
 
 static Eina_Bool
-_e_border_cb_mouse_down(void    *data,
+_e_border_cb_mouse_down(void *data,
                         int type __UNUSED__,
-                        void    *event)
+                        void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Border *bd;
@@ -6582,9 +6585,9 @@ _e_border_cb_mouse_down(void    *data,
 }
 
 static Eina_Bool
-_e_border_cb_mouse_up(void    *data,
+_e_border_cb_mouse_up(void *data,
                       int type __UNUSED__,
-                      void    *event)
+                      void *event)
 {
    Ecore_Event_Mouse_Button *ev;
    E_Border *bd;
@@ -6642,18 +6645,18 @@ _e_border_stay_within_container(E_Border *bd, int x, int y, int *new_x, int *new
 {
    int new_x_max, new_y_max;
    Eina_Bool lw, lh;
-    
+
    new_x_max = bd->zone->w - bd->w;
-   new_y_max = bd->zone->h - bd->h; 
+   new_y_max = bd->zone->h - bd->h;
    lw = bd->w > bd->zone->w ? EINA_TRUE : EINA_FALSE;
    lh = bd->h > bd->zone->h ? EINA_TRUE : EINA_FALSE;
 
-   if(lw)
+   if (lw)
      {
-         if (x <= new_x_max)
-           *new_x = new_x_max;
-         else if (x >= 0)
-           *new_x = 0;
+        if (x <= new_x_max)
+          *new_x = new_x_max;
+        else if (x >= 0)
+          *new_x = 0;
      }
    else
      {
@@ -6663,12 +6666,12 @@ _e_border_stay_within_container(E_Border *bd, int x, int y, int *new_x, int *new
           *new_x = 0;
      }
 
-   if(lh)
+   if (lh)
      {
-         if (y <= new_y_max)
-             *new_y = new_y_max;
-         else if (y >= 0)
-             *new_y = 0;
+        if (y <= new_y_max)
+          *new_y = new_y_max;
+        else if (y >= 0)
+          *new_y = 0;
      }
    else
      {
@@ -6678,10 +6681,11 @@ _e_border_stay_within_container(E_Border *bd, int x, int y, int *new_x, int *new
           *new_y = 0;
      }
 }
+
 static Eina_Bool
-_e_border_cb_mouse_move(void    *data,
+_e_border_cb_mouse_move(void *data,
                         int type __UNUSED__,
-                        void    *event)
+                        void *event)
 {
    Ecore_Event_Mouse_Move *ev;
    E_Border *bd;
@@ -6722,8 +6726,7 @@ _e_border_cb_mouse_move(void    *data,
         new_x = x;
         new_y = y;
 
-
-        if(e_config->window_out_of_vscreen_limits_partly)
+        if (e_config->window_out_of_vscreen_limits_partly)
           _e_border_stay_within_container(bd, x, y, &new_x, &new_y);
         else
           {
@@ -6790,35 +6793,35 @@ _e_border_cb_mouse_move(void    *data,
                   if (((dx * dx) + (dy * dy)) >
                       (e_config->drag_resist * e_config->drag_resist))
                     {
-     /* start drag! */
-                        if (bd->icon_object)
-                          {
-                             Evas_Object *o = NULL;
-                             Evas_Coord x, y, w, h;
-                             const char *drag_types[] = { "enlightenment/border" };
+                       /* start drag! */
+                       if (bd->icon_object)
+                         {
+                            Evas_Object *o = NULL;
+                            Evas_Coord x, y, w, h;
+                            const char *drag_types[] = { "enlightenment/border" };
 
-                             e_object_ref(E_OBJECT(bd));
-                             evas_object_geometry_get(bd->icon_object,
-                                                      &x, &y, &w, &h);
-                             drag_border = e_drag_new(bd->zone->container,
-                                                      bd->x + bd->fx.x + x,
-                                                      bd->y + bd->fx.y + y,
-                                                      drag_types, 1, bd, -1,
-                                                      NULL,
-                                                      _e_border_cb_drag_finished);
-                             o = e_border_icon_add(bd, drag_border->evas);
-                             if (!o)
-                               {
-     /* FIXME: fallback icon for drag */
-                                   o = evas_object_rectangle_add(drag_border->evas);
-                                   evas_object_color_set(o, 255, 255, 255, 255);
-                               }
-                             e_drag_object_set(drag_border, o);
+                            e_object_ref(E_OBJECT(bd));
+                            evas_object_geometry_get(bd->icon_object,
+                                                     &x, &y, &w, &h);
+                            drag_border = e_drag_new(bd->zone->container,
+                                                     bd->x + bd->fx.x + x,
+                                                     bd->y + bd->fx.y + y,
+                                                     drag_types, 1, bd, -1,
+                                                     NULL,
+                                                     _e_border_cb_drag_finished);
+                            o = e_border_icon_add(bd, drag_border->evas);
+                            if (!o)
+                              {
+                                 /* FIXME: fallback icon for drag */
+                                 o = evas_object_rectangle_add(drag_border->evas);
+                                 evas_object_color_set(o, 255, 255, 255, 255);
+                              }
+                            e_drag_object_set(drag_border, o);
 
-                             e_drag_resize(drag_border, w, h);
-                             e_drag_start(drag_border, bd->drag.x, bd->drag.y);
-                          }
-                        bd->drag.start = 0;
+                            e_drag_resize(drag_border, w, h);
+                            e_drag_start(drag_border, bd->drag.x, bd->drag.y);
+                         }
+                       bd->drag.start = 0;
                     }
                }
           }
@@ -6829,8 +6832,8 @@ _e_border_cb_mouse_move(void    *data,
 
 static Eina_Bool
 _e_border_cb_grab_replay(void *data __UNUSED__,
-                         int        type,
-                         void      *event)
+                         int type,
+                         void *event)
 {
    Ecore_Event_Mouse_Button *ev;
 
@@ -6839,7 +6842,7 @@ _e_border_cb_grab_replay(void *data __UNUSED__,
    if ((e_config->pass_click_on)
        || (e_config->always_click_to_raise) // this works even if not on click-to-focus
        || (e_config->always_click_to_focus) // this works even if not on click-to-focus
-      )
+       )
      {
         E_Border *bd;
 
@@ -6860,7 +6863,7 @@ _e_border_cb_grab_replay(void *data __UNUSED__,
 }
 
 static void
-_e_border_cb_drag_finished(E_Drag     *drag,
+_e_border_cb_drag_finished(E_Drag *drag,
                            int dropped __UNUSED__)
 {
    E_Border *bd;
@@ -7363,8 +7366,8 @@ _e_border_eval0(E_Border *bd)
         bd->client.netwm.icons = NULL;
         bd->client.netwm.num_icons = 0;
         if (ecore_x_netwm_icons_get(bd->client.win,
-                                     &bd->client.netwm.icons,
-                                     &bd->client.netwm.num_icons))
+                                    &bd->client.netwm.icons,
+                                    &bd->client.netwm.num_icons))
           {
              // unless the rest of e17 uses border icons OTHER than icon #0
              // then free the rest that we don't need anymore.
@@ -7489,7 +7492,7 @@ _e_border_eval0(E_Border *bd)
    if (bd->client.illume.win_state.fetch.state)
      {
         bd->client.illume.win_state.state =
-           ecore_x_e_illume_window_state_get(bd->client.win);
+          ecore_x_e_illume_window_state_get(bd->client.win);
         bd->client.illume.win_state.fetch.state = 0;
      }
    if (bd->changes.shape)
@@ -7626,8 +7629,8 @@ _e_border_eval0(E_Border *bd)
           {
              bd->client.e.state.video_parent_border->client.e.state.video_child =
                eina_list_remove
-               (bd->client.e.state.video_parent_border->client.e.state.video_child,
-                   bd);
+                 (bd->client.e.state.video_parent_border->client.e.state.video_child,
+                 bd);
           }
 
         ecore_x_window_prop_card32_get(bd->client.win,
@@ -7648,8 +7651,8 @@ _e_border_eval0(E_Border *bd)
                     bd->client.e.state.video_parent_border = tmp;
                     tmp->client.e.state.video_child = eina_list_append(tmp->client.e.state.video_child,
                                                                        bd);
-		    if (bd->desk != tmp->desk)
-		      e_border_desk_set(bd, tmp->desk);
+                    if (bd->desk != tmp->desk)
+                      e_border_desk_set(bd, tmp->desk);
                     break;
                  }
           }
@@ -7657,7 +7660,7 @@ _e_border_eval0(E_Border *bd)
         /* fprintf(stderr, "new parent %x => %p\n", bd->client.e.state.video_parent, bd->client.e.state.video_parent_border); */
 
         if (bd->client.e.state.video_parent_border) bd->client.e.fetch.video_parent = 0;
-	rem_change = 1;
+        rem_change = 1;
      }
    if (bd->client.e.fetch.video_position && bd->client.e.fetch.video_parent == 0)
      {
@@ -7731,24 +7734,24 @@ _e_border_eval0(E_Border *bd)
         if ((!bd->lock_border) || (!bd->client.border.name))
           bd->client.border.changed = 1;
 
-          {
-             char *str = NULL;
+        {
+           char *str = NULL;
 
-             if ((ecore_x_netwm_startup_id_get(bd->client.win, &str) && (str)) ||
-                 ((bd->client.icccm.client_leader > 0) &&
-                     ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str))
-                )
-               {
-                  if (!strncmp(str, "E_START|", 8))
-                    {
-                       int id;
+           if ((ecore_x_netwm_startup_id_get(bd->client.win, &str) && (str)) ||
+               ((bd->client.icccm.client_leader > 0) &&
+                ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str))
+               )
+             {
+                if (!strncmp(str, "E_START|", 8))
+                  {
+                     int id;
 
-                       id = atoi(str + 8);
-                       if (id > 0) bd->client.netwm.startup_id = id;
-                    }
-                  free(str);
-               }
-          }
+                     id = atoi(str + 8);
+                     if (id > 0) bd->client.netwm.startup_id = id;
+                  }
+                free(str);
+             }
+        }
         /* It's ok not to have fetch flag, should only be set on startup
          *     * and not changed. */
         if (!ecore_x_netwm_pid_get(bd->client.win, &bd->client.netwm.pid))
@@ -7802,7 +7805,7 @@ _e_border_eval0(E_Border *bd)
                             if (e_object_is_del(E_OBJECT(child))) continue;
                             if ((bd->client.icccm.client_leader) &&
                                 (child->client.icccm.client_leader ==
-                                    bd->client.icccm.client_leader))
+                                 bd->client.icccm.client_leader))
                               {
                                  bdl = child;
                                  break;
@@ -8079,21 +8082,21 @@ _e_border_eval(E_Border *bd)
         // TODO: temoporary limited maximize algorithm
         // ->
         /*if (bd->w > zw)
-          rw = zw;
-          else
-          rw = bd->w;
+           rw = zw;
+           else
+           rw = bd->w;
 
-          if (bd->h > zh)
-          rh = zh;
-          else
-          rh = bd->h;
+           if (bd->h > zh)
+           rh = zh;
+           else
+           rh = bd->h;
 
-          if ((rw != bd->w) || (rh != bd->h))
-          {
-          bd->w = rw;
-          bd->h = rh;
-          e_border_resize (bd, bd->w, bd->h);
-          }*/
+           if ((rw != bd->w) || (rh != bd->h))
+           {
+           bd->w = rw;
+           bd->h = rh;
+           e_border_resize (bd, bd->w, bd->h);
+           }*/
         // <-
 
         if (bd->re_manage)
@@ -8105,7 +8108,6 @@ _e_border_eval(E_Border *bd)
           }
         else if ((!bd->placed) && (bd->client.icccm.request_pos))
           {
-
              Ecore_X_Window_Attributes *att;
              int bw;
 
@@ -8114,49 +8116,49 @@ _e_border_eval(E_Border *bd)
              switch (bd->client.icccm.gravity)
                {
                 case ECORE_X_GRAVITY_N:
-                   bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
-                   bd->y = att->y;
-                   break;
+                  bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
+                  bd->y = att->y;
+                  break;
 
                 case ECORE_X_GRAVITY_NE:
-                   bd->x = (att->x - (bw)) - (bd->client_inset.l);
-                   bd->y = att->y;
-                   break;
+                  bd->x = (att->x - (bw)) - (bd->client_inset.l);
+                  bd->y = att->y;
+                  break;
 
                 case ECORE_X_GRAVITY_E:
-                   bd->x = (att->x - (bw)) - (bd->client_inset.l);
-                   bd->y = (att->y - (bw / 2)) - (bd->client_inset.t / 2);
-                   break;
+                  bd->x = (att->x - (bw)) - (bd->client_inset.l);
+                  bd->y = (att->y - (bw / 2)) - (bd->client_inset.t / 2);
+                  break;
 
                 case ECORE_X_GRAVITY_SE:
-                   bd->x = (att->x - (bw)) - (bd->client_inset.l);
-                   bd->y = (att->y - (bw)) - (bd->client_inset.t);
-                   break;
+                  bd->x = (att->x - (bw)) - (bd->client_inset.l);
+                  bd->y = (att->y - (bw)) - (bd->client_inset.t);
+                  break;
 
                 case ECORE_X_GRAVITY_S:
-                   bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
-                   bd->y = (att->y - (bw)) - (bd->client_inset.t);
-                   break;
+                  bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
+                  bd->y = (att->y - (bw)) - (bd->client_inset.t);
+                  break;
 
                 case ECORE_X_GRAVITY_SW:
-                   bd->x = att->x;
-                   bd->y = (att->y - (bw)) - (bd->client_inset.t);
-                   break;
+                  bd->x = att->x;
+                  bd->y = (att->y - (bw)) - (bd->client_inset.t);
+                  break;
 
                 case ECORE_X_GRAVITY_W:
-                   bd->x = att->x;
-                   bd->y = (att->y - (bw)) - (bd->client_inset.t);
-                   break;
+                  bd->x = att->x;
+                  bd->y = (att->y - (bw)) - (bd->client_inset.t);
+                  break;
 
                 case ECORE_X_GRAVITY_CENTER:
-                   bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
-                   bd->y = (att->y - (bw / 2)) - (bd->client_inset.t / 2);
-                   break;
+                  bd->x = (att->x - (bw / 2)) - (bd->client_inset.l / 2);
+                  bd->y = (att->y - (bw / 2)) - (bd->client_inset.t / 2);
+                  break;
 
                 case ECORE_X_GRAVITY_NW:
                 default:
-                   bd->x = att->x;
-                   bd->y = att->y;
+                  bd->x = att->x;
+                  bd->y = att->y;
                }
 
              /*
@@ -8325,7 +8327,7 @@ _e_border_eval(E_Border *bd)
                                                   bd->x,
                                                   bd->y + bd->h - 1);
            if ((zone) && (zone != bd->zone))
-	     e_border_zone_set(bd, zone);
+             e_border_zone_set(bd, zone);
         }
      }
 
@@ -8500,7 +8502,7 @@ _e_border_eval(E_Border *bd)
              int x, y;
 
              twin = ecore_x_window_override_new
-               (bd->zone->container->scratch_win, 0, 0, bd->w, bd->h);
+                 (bd->zone->container->scratch_win, 0, 0, bd->w, bd->h);
              if (bd->shaped)
                ecore_x_window_shape_window_set(twin, bd->bg_win);
              else
@@ -8526,9 +8528,9 @@ _e_border_eval(E_Border *bd)
                   ecore_x_window_shape_rectangles_set(twin, rects, 4);
                }
              twin2 = ecore_x_window_override_new
-               (bd->zone->container->scratch_win, 0, 0,
-                bd->w - bd->client_inset.l - bd->client_inset.r,
-                bd->h - bd->client_inset.t - bd->client_inset.b);
+                 (bd->zone->container->scratch_win, 0, 0,
+                 bd->w - bd->client_inset.l - bd->client_inset.r,
+                 bd->h - bd->client_inset.t - bd->client_inset.b);
              x = 0;
              y = 0;
              if ((bd->shading) || (bd->shaded))
@@ -8778,7 +8780,7 @@ _e_border_eval(E_Border *bd)
         bd->take_focus = 0;
         if ((e_config->focus_setting == E_FOCUS_NEW_WINDOW) || (bd->want_focus))
           {
-	     bd->want_focus = 0;
+             bd->want_focus = 0;
              e_border_focus_set_with_pointer(bd);
           }
         else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)
@@ -8831,16 +8833,16 @@ _e_border_eval(E_Border *bd)
 
    if (send_event) // FIXME: send only if a property changed - above need to
      { // check on that. for now - always send.
-        event = E_NEW(E_Event_Border_Property, 1);
-        event->border = bd;
-        e_object_ref(E_OBJECT(bd));
-        ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
+       event = E_NEW(E_Event_Border_Property, 1);
+       event->border = bd;
+       e_object_ref(E_OBJECT(bd));
+       ecore_event_add(E_EVENT_BORDER_PROPERTY, event, _e_border_event_border_property_free, NULL);
      }
    _e_border_hook_call(E_BORDER_HOOK_EVAL_END, bd);
 }
 
 static void
-_e_border_moveinfo_gather(E_Border   *bd,
+_e_border_moveinfo_gather(E_Border *bd,
                           const char *source)
 {
    if (e_util_glob_match(source, "mouse,*,1")) bd->moveinfo.down.button = 1;
@@ -8965,66 +8967,67 @@ _e_border_shade_animator(void *data)
    val = dt / dur;
 
    if (val < 0.0) val = 0.0;
-   else if (val > 1.0) val = 1.0;
+   else if (val > 1.0)
+     val = 1.0;
 
    if (e_config->border_shade_transition == E_TRANSITION_SINUSOIDAL)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_SINUSOIDAL, 0.0, 0.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_SINUSOIDAL, 0.0, 0.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_DECELERATE)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_DECELERATE, 0.0, 0.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_DECELERATE, 0.0, 0.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_ACCELERATE)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_ACCELERATE, 0.0, 0.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_ACCELERATE, 0.0, 0.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_LINEAR)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_LINEAR, 0.0, 0.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_LINEAR, 0.0, 0.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_ACCELERATE_LOTS)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_ACCELERATE_FACTOR, 1.7, 0.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_ACCELERATE_FACTOR, 1.7, 0.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_DECELERATE_LOTS)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_DECELERATE_FACTOR, 1.7, 0.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_DECELERATE_FACTOR, 1.7, 0.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_SINUSOIDAL_LOTS)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_SINUSOIDAL_FACTOR, 1.7, 0.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_SINUSOIDAL_FACTOR, 1.7, 0.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_BOUNCE)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_BOUNCE, 1.2, 3.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_BOUNCE, 1.2, 3.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else if (e_config->border_shade_transition == E_TRANSITION_BOUNCE_LOTS)
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_BOUNCE, 1.2, 5.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_BOUNCE, 1.2, 5.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
    else
      {
         bd->shade.val =
-           ecore_animator_pos_map(val, ECORE_POS_MAP_LINEAR, 0.0, 0.0);
+          ecore_animator_pos_map(val, ECORE_POS_MAP_LINEAR, 0.0, 0.0);
         if (!bd->shaded) bd->shade.val = 1.0 - bd->shade.val;
      }
 
@@ -9095,7 +9098,7 @@ _e_border_shade_animator(void *data)
 
 static void
 _e_border_event_border_resize_free(void *data __UNUSED__,
-                                   void      *ev)
+                                   void *ev)
 {
    E_Event_Border_Resize *e;
 
@@ -9107,7 +9110,7 @@ _e_border_event_border_resize_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_move_free(void *data __UNUSED__,
-                                 void      *ev)
+                                 void *ev)
 {
    E_Event_Border_Move *e;
 
@@ -9119,7 +9122,7 @@ _e_border_event_border_move_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_add_free(void *data __UNUSED__,
-                                void      *ev)
+                                void *ev)
 {
    E_Event_Border_Add *e;
 
@@ -9131,7 +9134,7 @@ _e_border_event_border_add_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_remove_free(void *data __UNUSED__,
-                                   void      *ev)
+                                   void *ev)
 {
    E_Event_Border_Remove *e;
 
@@ -9143,7 +9146,7 @@ _e_border_event_border_remove_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_show_free(void *data __UNUSED__,
-                                 void      *ev)
+                                 void *ev)
 {
    E_Event_Border_Show *e;
 
@@ -9155,7 +9158,7 @@ _e_border_event_border_show_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_hide_free(void *data __UNUSED__,
-                                 void      *ev)
+                                 void *ev)
 {
    E_Event_Border_Hide *e;
 
@@ -9167,7 +9170,7 @@ _e_border_event_border_hide_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_iconify_free(void *data __UNUSED__,
-                                    void      *ev)
+                                    void *ev)
 {
    E_Event_Border_Iconify *e;
 
@@ -9179,7 +9182,7 @@ _e_border_event_border_iconify_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_uniconify_free(void *data __UNUSED__,
-                                      void      *ev)
+                                      void *ev)
 {
    E_Event_Border_Uniconify *e;
 
@@ -9191,7 +9194,7 @@ _e_border_event_border_uniconify_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_stick_free(void *data __UNUSED__,
-                                  void      *ev)
+                                  void *ev)
 {
    E_Event_Border_Stick *e;
 
@@ -9203,7 +9206,7 @@ _e_border_event_border_stick_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_unstick_free(void *data __UNUSED__,
-                                    void      *ev)
+                                    void *ev)
 {
    E_Event_Border_Unstick *e;
 
@@ -9215,7 +9218,7 @@ _e_border_event_border_unstick_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_zone_set_free(void *data __UNUSED__,
-                                     void      *ev)
+                                     void *ev)
 {
    E_Event_Border_Zone_Set *e;
 
@@ -9228,7 +9231,7 @@ _e_border_event_border_zone_set_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_desk_set_free(void *data __UNUSED__,
-                                     void      *ev)
+                                     void *ev)
 {
    E_Event_Border_Desk_Set *e;
 
@@ -9241,7 +9244,7 @@ _e_border_event_border_desk_set_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_stack_free(void *data __UNUSED__,
-                                  void      *ev)
+                                  void *ev)
 {
    E_Event_Border_Stack *e;
 
@@ -9251,14 +9254,14 @@ _e_border_event_border_stack_free(void *data __UNUSED__,
    if (e->stack)
      {
 //	e_object_breadcrumb_del(E_OBJECT(e->above), "border_raise_event.above");
-          e_object_unref(E_OBJECT(e->stack));
+        e_object_unref(E_OBJECT(e->stack));
      }
    E_FREE(e);
 }
 
 static void
 _e_border_event_border_icon_change_free(void *data __UNUSED__,
-                                        void      *ev)
+                                        void *ev)
 {
    E_Event_Border_Icon_Change *e;
 
@@ -9270,7 +9273,7 @@ _e_border_event_border_icon_change_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_urgent_change_free(void *data __UNUSED__,
-                                          void      *ev)
+                                          void *ev)
 {
    E_Event_Border_Urgent_Change *e;
 
@@ -9281,7 +9284,7 @@ _e_border_event_border_urgent_change_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_focus_in_free(void *data __UNUSED__,
-                                     void      *ev)
+                                     void *ev)
 {
    E_Event_Border_Focus_In *e;
 
@@ -9292,7 +9295,7 @@ _e_border_event_border_focus_in_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_focus_out_free(void *data __UNUSED__,
-                                      void      *ev)
+                                      void *ev)
 {
    E_Event_Border_Focus_Out *e;
 
@@ -9303,7 +9306,7 @@ _e_border_event_border_focus_out_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_property_free(void *data __UNUSED__,
-                                     void      *ev)
+                                     void *ev)
 {
    E_Event_Border_Property *e;
 
@@ -9314,7 +9317,7 @@ _e_border_event_border_property_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_fullscreen_free(void *data __UNUSED__,
-                                       void      *ev)
+                                       void *ev)
 {
    E_Event_Border_Fullscreen *e;
 
@@ -9326,7 +9329,7 @@ _e_border_event_border_fullscreen_free(void *data __UNUSED__,
 
 static void
 _e_border_event_border_unfullscreen_free(void *data __UNUSED__,
-                                         void      *ev)
+                                         void *ev)
 {
    E_Event_Border_Unfullscreen *e;
 
@@ -9549,8 +9552,8 @@ _e_border_cb_kill_timer(void *data)
 // dont wait until it's hung -
 //   if (bd->hung)
 //     {
-        if (bd->client.netwm.pid > 1)
-          kill(bd->client.netwm.pid, SIGKILL);
+   if (bd->client.netwm.pid > 1)
+     kill(bd->client.netwm.pid, SIGKILL);
 //     }
    bd->kill_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -9656,7 +9659,7 @@ _e_border_hooks_clean(void)
    Eina_List *l, *ln;
    E_Border_Hook *bh;
 
-   EINA_LIST_FOREACH_SAFE(_e_border_hooks, l, ln, bh)
+   EINA_LIST_FOREACH_SAFE (_e_border_hooks, l, ln, bh)
      {
         if (bh->delete_me)
           {
@@ -9668,7 +9671,7 @@ _e_border_hooks_clean(void)
 
 static void
 _e_border_hook_call(E_Border_Hook_Point hookpoint,
-                    void               *bd)
+                    void *bd)
 {
    Eina_List *l;
    E_Border_Hook *bh;
@@ -9685,10 +9688,10 @@ _e_border_hook_call(E_Border_Hook_Point hookpoint,
 }
 
 EAPI E_Border_Hook *
-e_border_hook_add(E_Border_Hook_Point               hookpoint,
-                  void                              (*func)(void *data,
-                                              void *bd),
-                  void                             *data)
+e_border_hook_add(E_Border_Hook_Point hookpoint,
+                  void (*func)(void *data,
+                               void *bd),
+                  void *data)
 {
    E_Border_Hook *bh;
 
@@ -9727,7 +9730,7 @@ e_border_focus_track_thaw(void)
 }
 
 EAPI E_Border *
-e_border_under_pointer_get(E_Desk   *desk,
+e_border_under_pointer_get(E_Desk *desk,
                            E_Border *exclude)
 {
    E_Border *bd = NULL, *cbd;
@@ -9798,7 +9801,7 @@ _e_border_pointer_warp_to_center_timer(void *data __UNUSED__)
         ecore_x_pointer_warp(warp_to_win, warp_x, warp_y);
         return ECORE_CALLBACK_RENEW;
      }
- cleanup:
+cleanup:
    ecore_timer_del(warp_timer);
    warp_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -9851,10 +9854,10 @@ e_border_comp_hidden_set(E_Border *bd,
 
    EINA_LIST_FOREACH(bd->client.e.state.video_child, l, tmp)
      {
-       if (hidden)
-	 ecore_x_window_hide(tmp->win);
-       else
-	 ecore_x_window_show(tmp->win);
+        if (hidden)
+          ecore_x_window_hide(tmp->win);
+        else
+          ecore_x_window_show(tmp->win);
      }
 
    if (bd->comp_hidden == hidden) return;
@@ -9951,8 +9954,8 @@ e_border_activate(E_Border *bd, Eina_Bool just_do_it)
         if (!bd->lock_focus_out)
           {
              /* XXX ooffice does send this request for
-              config dialogs when the main window gets focus.
-              causing the pointer to jump back and forth.  */
+                config dialogs when the main window gets focus.
+                causing the pointer to jump back and forth.  */
              if ((e_config->focus_policy != E_FOCUS_CLICK) &&
                  !(bd->client.icccm.name && !strcmp(bd->client.icccm.name, "VCLSalFrame")))
                ecore_x_pointer_warp(bd->zone->container->win,
@@ -9961,4 +9964,5 @@ e_border_activate(E_Border *bd, Eina_Bool just_do_it)
           }
      }
 }
+
 /*vim:ts=8 sw=3 sts=3 expandtab cino=>5n-3f0^-2{2(0W1st0*/

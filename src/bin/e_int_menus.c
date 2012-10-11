@@ -19,51 +19,51 @@ struct _Main_Data
 };
 
 /* local subsystem functions */
-static void        _e_int_menus_main_del_hook(void *obj);
-static void        _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_main_del_hook(void *obj);
+static void         _e_int_menus_main_about(void *data, E_Menu *m, E_Menu_Item *mi);
 //static void _e_int_menus_fwin_favorites_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu);
-static void        _e_int_menus_apps_start(void *data, E_Menu *m);
-static void        _e_int_menus_apps_free_hook2(void *obj);
-static void        _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_config_pre_cb(void *data, E_Menu *m);
-static void        _e_int_menus_config_free_hook(void *obj);
-static void        _e_int_menus_clients_pre_cb(void *data, E_Menu *m);
-static void        _e_int_menus_clients_item_create(E_Border *bd, E_Menu *m);
-static void        _e_int_menus_clients_free_hook(void *obj);
-static void        _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_clients_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_clients_cleanup_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static int         _e_int_menus_clients_group_desk_cb(const void *d1, const void *d2);
-static int         _e_int_menus_clients_group_class_cb(const void *d1, const void *d2);
-static int         _e_int_menus_clients_sort_alpha_cb(const void *d1, const void *d2);
-static int         _e_int_menus_clients_sort_z_order_cb(const void *d1, const void *d2);
-static void        _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m);
-static void        _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *m);
-static void        _e_int_menus_clients_add_by_none(Eina_List *borders, E_Menu *m);
-static void        _e_int_menus_clients_menu_add_iconified(Eina_List *borders, E_Menu *m);
-static const char *_e_int_menus_clients_title_abbrv(const char *title);
-static void        _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m);
-static void        _e_int_menus_virtuals_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_virtuals_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_themes_about(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m);
-static void        _e_int_menus_lost_clients_free_hook(void *obj);
-static void        _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_augmentation_add(E_Menu *m, Eina_List *augmentation);
-static void        _e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation);
-static void        _e_int_menus_shelves_pre_cb(void *data, E_Menu *m);
-static void        _e_int_menus_shelves_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_config_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_desktops_free_hook(void *obj);
-static void        _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void        _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
+static void         _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu);
+static void         _e_int_menus_apps_start(void *data, E_Menu *m);
+static void         _e_int_menus_apps_free_hook2(void *obj);
+static void         _e_int_menus_apps_run(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_apps_drag(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_config_pre_cb(void *data, E_Menu *m);
+static void         _e_int_menus_config_free_hook(void *obj);
+static void         _e_int_menus_clients_pre_cb(void *data, E_Menu *m);
+static void         _e_int_menus_clients_item_create(E_Border *bd, E_Menu *m);
+static void         _e_int_menus_clients_free_hook(void *obj);
+static void         _e_int_menus_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_clients_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_clients_cleanup_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static int          _e_int_menus_clients_group_desk_cb(const void *d1, const void *d2);
+static int          _e_int_menus_clients_group_class_cb(const void *d1, const void *d2);
+static int          _e_int_menus_clients_sort_alpha_cb(const void *d1, const void *d2);
+static int          _e_int_menus_clients_sort_z_order_cb(const void *d1, const void *d2);
+static void         _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m);
+static void         _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *m);
+static void         _e_int_menus_clients_add_by_none(Eina_List *borders, E_Menu *m);
+static void         _e_int_menus_clients_menu_add_iconified(Eina_List *borders, E_Menu *m);
+static const char  *_e_int_menus_clients_title_abbrv(const char *title);
+static void         _e_int_menus_virtuals_pre_cb(void *data, E_Menu *m);
+static void         _e_int_menus_virtuals_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_virtuals_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_themes_about(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_lost_clients_pre_cb(void *data, E_Menu *m);
+static void         _e_int_menus_lost_clients_free_hook(void *obj);
+static void         _e_int_menus_lost_clients_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_augmentation_add(E_Menu *m, Eina_List *augmentation);
+static void         _e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation);
+static void         _e_int_menus_shelves_pre_cb(void *data, E_Menu *m);
+static void         _e_int_menus_shelves_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_shelves_add_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_config_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_desktops_free_hook(void *obj);
+static void         _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
+static void         _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
 static Efreet_Menu *_e_int_menus_apps_thread_new(E_Menu *m, const char *dir);
 //static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped __UNUSED__);
 
@@ -270,7 +270,7 @@ e_int_menus_apps_new(const char *dir)
    E_Menu *m;
 
    m = e_menu_new();
-   if (dir) e_object_data_set(E_OBJECT(m), (void*)eina_stringshare_add(dir));
+   if (dir) e_object_data_set(E_OBJECT(m), (void *)eina_stringshare_add(dir));
    e_menu_pre_activate_callback_set(m, _e_int_menus_apps_start, NULL);
    return m;
 }
@@ -728,7 +728,7 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
         if (_e_int_menus_app_menus)
           menu = eina_hash_find(_e_int_menus_app_menus, dir);
         else
-          _e_int_menus_app_menus = eina_hash_string_superfast_new((void*)efreet_menu_free);
+          _e_int_menus_app_menus = eina_hash_string_superfast_new((void *)efreet_menu_free);
      }
    else
      menu = _e_int_menus_app_menu_default;
@@ -792,7 +792,7 @@ _e_int_menus_apps_free_hook2(void *obj)
    m = obj;
    // XXX TODO: this should be automatic in e_menu, just get references right!
    // XXX TODO: fix references and remove me!!!
-   EINA_LIST_FOREACH_SAFE(m->items, l, l_next, mi)
+   EINA_LIST_FOREACH_SAFE (m->items, l, l_next, mi)
      {
         if (mi->submenu)
           e_object_del(E_OBJECT(mi->submenu));

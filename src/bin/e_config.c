@@ -938,11 +938,11 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, xkb.used_options, _e_config_xkb_option_edd);
    E_CONFIG_VAL(D, T, xkb.only_label, INT);
    E_CONFIG_VAL(D, T, xkb.default_model, STR);
-   E_CONFIG_VAL(D, T, xkb.selected_layout, STR);    
-   E_CONFIG_VAL(D, T, xkb.cur_layout, STR);    
-   E_CONFIG_VAL(D, T, xkb.desklock_layout, STR);    
-   //E_CONFIG_VAL(D, T, xkb.cur_group, INT);    
-   
+   E_CONFIG_VAL(D, T, xkb.selected_layout, STR);
+   E_CONFIG_VAL(D, T, xkb.cur_layout, STR);
+   E_CONFIG_VAL(D, T, xkb.desklock_layout, STR);
+   //E_CONFIG_VAL(D, T, xkb.cur_group, INT);
+
    E_CONFIG_VAL(D, T, exe_always_single_instance, UCHAR);
    e_config_load();
 
@@ -1356,7 +1356,7 @@ e_config_load(void)
      E_CONFIG_LIMIT(e_config->icon_theme_overrides, 0, 1);
      E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 3);
      E_CONFIG_LIMIT(e_config->desk_auto_switch, 0, 1);
-     
+
      E_CONFIG_LIMIT(e_config->window_out_of_vscreen_limits, 0, 1);
      E_CONFIG_LIMIT(e_config->window_out_of_vscreen_limits_partly, 0, 1);
 
@@ -1599,13 +1599,13 @@ e_config_save_block_get(void)
    return _e_config_save_block;
 }
 
-/**  
+/**
  * Loads configurations from file located in the working profile
- * The configurations are stored in a struct declated by the 
- * macros E_CONFIG_DD_NEW and E_CONFIG_<b>TYPE</b> 
+ * The configurations are stored in a struct declated by the
+ * macros E_CONFIG_DD_NEW and E_CONFIG_<b>TYPE</b>
  *
  * @param domain of the configuration file.
- * @param edd to struct definition 
+ * @param edd to struct definition
  * @return returns allocated struct on success, if unable to find config returns null
  */
 EAPI void *
@@ -1755,14 +1755,14 @@ e_config_profile_save(void)
    return ok;
 }
 
-/**  
-  * Saves configurations to file located in the working profile
- * The configurations are read from a struct declated by the 
- * macros E_CONFIG_DD_NEW and E_CONFIG_<b>TYPE</b> 
- *  
+/**
+ * Saves configurations to file located in the working profile
+ * The configurations are read from a struct declated by the
+ * macros E_CONFIG_DD_NEW and E_CONFIG_<b>TYPE</b>
+ *
  * @param domain  name of the configuration file.
  * @param edd pointer to struct definition
- * @param data struct to save as configuration file 
+ * @param data struct to save as configuration file
  * @return 1 if save success, 0 on failure
  */
 EAPI int
