@@ -1070,8 +1070,8 @@ e_border_hide(E_Border *bd,
                        else
                          {
                             e_desk_last_focused_focus(desk);
-                            if (eina_list_data_get(focus_next))
-                              e_border_pointer_warp_to_center(eina_list_data_get(focus_next));
+                            if (pbd = eina_list_data_get(focus_next))
+                              e_border_pointer_warp_to_center(pbd);
                          }
                     }
                }
