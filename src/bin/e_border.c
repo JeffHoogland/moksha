@@ -1044,12 +1044,10 @@ e_border_hide(E_Border *bd,
              if (manage != 2)
                {
                   E_Border *pbd;
-                  E_Container *con;
                   E_Zone *zone;
                   E_Desk *desk;
 
-                  con = e_container_current_get(e_manager_current_get());
-                  zone = e_zone_current_get(con);
+                  zone = e_util_zone_current_get(e_manager_current_get());
                   desk = e_desk_current_get(zone);
 
                   if ((bd->parent) &&
@@ -1070,7 +1068,7 @@ e_border_hide(E_Border *bd,
                        else
                          {
                             e_desk_last_focused_focus(desk);
-                            if (pbd = eina_list_data_get(focus_next))
+                            if ((pbd = eina_list_data_get(focus_next)))
                               e_border_pointer_warp_to_center(pbd);
                          }
                     }
