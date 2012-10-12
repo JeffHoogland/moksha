@@ -1114,7 +1114,7 @@ ACT_FN_GO(window_push, )
 
         while (cur)
           {
-             if ((bd->desk == cur->desk) && (bd != cur) && (!cur->iconic))
+             if (((bd->desk == cur->desk) || (cur->sticky)) && (bd != cur) && (!cur->iconic))
                {
                   if ((hdir < 0)
                       && (cur->x + cur->w < bd->x)
