@@ -1050,6 +1050,7 @@ ACT_FN_GO(window_push, )
      {
         E_Border *bd, *cur;
         E_Border_List *bd_list;
+        E_Desk *desk_current;
         int hdir, vdir;
         int x, y, zx, zy, zw, zh;
 
@@ -1109,12 +1110,13 @@ ACT_FN_GO(window_push, )
           y = zy + zh - bd->h;
         else y = bd->y;
 
+        desk_current = e_desk_current_get(bd->zone);
         bd_list = e_container_border_list_first(bd->zone->container);
         cur = e_container_border_list_next(bd_list);
 
         while (cur)
           {
-             if (((bd->desk == cur->desk) || (cur->sticky)) && (bd != cur) && (!cur->iconic))
+             if (((cur->desk == desk_current) || (cur->sticky)) && (bd != cur) && (!cur->iconic))
                {
                   if ((hdir < 0)
                       && (cur->x + cur->w < bd->x)
