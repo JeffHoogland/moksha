@@ -278,16 +278,19 @@ e_smart_monitor_info_set(Evas_Object *obj, E_Randr_Output_Info *output, E_Randr_
    /* fill in list of modes */
    _e_smart_monitor_modes_fill(sd);
 
-   /* get the min resolution for this monitor */
-   mode = eina_list_nth(sd->modes, 0);
-   sd->min.w = mode->width;
-   sd->min.h = mode->height;
-
-   /* get the max resolution for this monitor */
-   mode = eina_list_data_get(eina_list_last(sd->modes));
-   sd->max.w = mode->width;
-   sd->max.h = mode->height;
-   if (!crtc) sd->orig.mode = mode;
+   if (sd->modes)
+     {
+        /* get the min resolution for this monitor */
+        mode = eina_list_nth(sd->modes, 0);
+        sd->min.w = mode->width;
+        sd->min.h = mode->height;
+        
+        /* get the max resolution for this monitor */
+        mode = eina_list_data_get(eina_list_last(sd->modes));
+        sd->max.w = mode->width;
+        sd->max.h = mode->height;
+        if (!crtc) sd->orig.mode = mode;
+     }
 
    /* set monitor name */
    if (output)
@@ -415,8 +418,16 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
           }
         else
           {
-             if (w) *w = sd->current.mode->width;
-             if (h) *h = sd->current.mode->height;
+             if (sd->current.mode)
+               {
+                  if (w) *w = sd->current.mode->width;
+                  if (h) *h = sd->current.mode->height;
+               }
+             else
+               {
+                  if (w) *w = 640;
+                  if (h) *h = 640;
+               }
           }
      }
    else
