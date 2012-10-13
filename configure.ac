@@ -603,7 +603,7 @@ if test "x$want_emotion" != "xno"; then
    fi
    if test "x$have_emotion" = "xyes"; then
       AC_DEFINE([HAVE_EMOTION], 1, "Have emotion support")
-      requirements_e="${requirements_e} emotion > ${efl_version}"
+      requirements_e="${requirements_e} emotion >= ${efl_version}"
    fi
 fi
 
