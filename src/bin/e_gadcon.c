@@ -2984,14 +2984,8 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
 
    o = gcc->o_frame ? gcc->o_frame : gcc->o_base;
    if (o)
-     {
-        if (e_gadcon_layout_orientation_get(gc->o_container))
-          e_gadcon_layout_pack_request_set(o, gcc->config.pos,
-                                           gcc->config.size);
-        else
-          e_gadcon_layout_pack_request_set(o, gcc->config.pos,
-                                           gcc->config.size);
-     }
+     e_gadcon_layout_pack_request_set(o, gcc->config.pos,
+                                      gcc->config.size);
    e_gadcon_layout_thaw(gc->o_container);
    if (gc->dnd_move_cb) gc->dnd_move_cb(gc, gcc);
 }

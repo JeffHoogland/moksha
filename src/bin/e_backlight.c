@@ -491,12 +491,10 @@ _bl_sys_find(void)
    EINA_LIST_FOREACH(pdevs, l, f)
      {
         bl_devs = eina_list_append(bl_devs, eina_stringshare_add(f));
-         if (!bl_sysval)
+        if (!bl_sysval)
           {
              if ((e_config->backlight.sysdev) &&
                  (!strcmp(e_config->backlight.sysdev, f)))
-               bl_sysval = eina_stringshare_add(f);
-             else
                bl_sysval = eina_stringshare_add(f);
           }
      }
