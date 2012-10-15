@@ -662,7 +662,8 @@ _e_mod_physics_randr(void *data       __UNUSED__,
    E_Physics *p;
 
    EINA_LIST_FOREACH(physicists, l, p)
-     ephysics_world_render_geometry_set(p->world, 0, 0, p->man->w, p->man->h);
+     ephysics_world_render_geometry_set(p->world, 0, 0, -5,
+                                        p->man->w, p->man->h, 10);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -793,7 +794,6 @@ _e_mod_physics_bd_uniconify(void *data __UNUSED__,
 static E_Physics *
 _e_mod_physics_add(E_Manager *man)
 {
-   const int boundary_depth = 10;
    E_Physics *p;
    EPhysics_Body *bound;
    Eina_List *l;
@@ -806,19 +806,19 @@ _e_mod_physics_add(E_Manager *man)
    p->world = ephysics_world_new();
    /* TODO: world per zone */
    DBG("PHYS: world++ || %dx%d\n", man->w, man->h);
-   ephysics_world_render_geometry_set(p->world, 0, 0, man->w, man->h);
+   ephysics_world_render_geometry_set(p->world, 0, 0, -5, man->w, man->h, 10);
    ephysics_world_gravity_set(p->world, 0, _physics_mod->conf->gravity, 0);
 
-   bound = ephysics_body_left_boundary_add(p->world, boundary_depth);
+   bound = ephysics_body_left_boundary_add(p->world);
    ephysics_body_restitution_set(bound, 1);
    ephysics_body_friction_set(bound, 3);
-   bound = ephysics_body_right_boundary_add(p->world, boundary_depth);
+   bound = ephysics_body_right_boundary_add(p->world);
    ephysics_body_restitution_set(bound, 1);
    ephysics_body_friction_set(bound, 3);
-   bound = ephysics_body_top_boundary_add(p->world, boundary_depth);
+   bound = ephysics_body_top_boundary_add(p->world);
    ephysics_body_restitution_set(bound, 1);
    ephysics_body_friction_set(bound, 3);
-   bound = ephysics_body_bottom_boundary_add(p->world, boundary_depth);
+   bound = ephysics_body_bottom_boundary_add(p->world);
    ephysics_body_restitution_set(bound, 1);
    ephysics_body_friction_set(bound, 3);
 
