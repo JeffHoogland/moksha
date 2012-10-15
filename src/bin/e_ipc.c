@@ -15,7 +15,7 @@ EINTERN int
 e_ipc_init(void)
 {
 #ifdef USE_IPC
-   char buf[1024], buf2[128], buf3[4096];
+   char buf[4096], buf2[128], buf3[4096];
    char *tmp, *user, *disp, *base;
    int pid, trynum = 0;
 
