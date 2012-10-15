@@ -636,6 +636,7 @@ struct _E_Border
    unsigned char              post_move   : 1;
    unsigned char              post_resize : 1;
    unsigned char              post_show : 1;
+   unsigned char              during_lost : 1;
 
    Ecore_Idle_Enterer        *post_job;
 

@@ -4305,6 +4305,7 @@ _e_border_lost_window_internal_get(E_Border *bd)
 {
    int loss_overlap = 5;
 
+   if (bd->during_lost) return EINA_FALSE;
    if (e_config->window_out_of_vscreen_limits) return EINA_FALSE;
    if (!(bd->zone))
      return EINA_FALSE;
@@ -4360,6 +4361,12 @@ _e_border_reset_lost_window(E_Border *bd)
    int x, y, w, h;
    E_OBJECT_CHECK(bd);
 
+   /* Prevent infinite loop call where e_border_center call e_border_move
+      that call _e_border_reset_lost_window.
+    */
+   if (bd->during_lost) return ;
+   bd->during_lost = EINA_TRUE;
+
    if (bd->iconic) e_border_uniconify(bd);
    if (!bd->moving) e_border_center(bd);
 
@@ -4379,6 +4386,8 @@ _e_border_reset_lost_window(E_Border *bd)
    e_border_raise(bd);
    if (!bd->lock_focus_out)
      e_border_focus_set(bd, 1, 1);
+
+   bd->during_lost = EINA_FALSE;
 }
 
 EAPI void
