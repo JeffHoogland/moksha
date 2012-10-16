@@ -14,11 +14,13 @@ static void      _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
 static void      _e_module_event_update_free(void *data, void *event);
 static Eina_Bool _e_module_cb_idler(void *data);
 static int       _e_module_sort_priority(const void *d1, const void *d2);
+static void      _e_module_whitelist_check(void);
 
 /* local subsystem globals */
 static Eina_List *_e_modules = NULL;
 static Ecore_Idle_Enterer *_e_module_idler = NULL;
 static Eina_List *_e_modules_delayed = NULL;
+static Eina_Bool _e_modules_initting = EINA_FALSE;
 
 EAPI int E_EVENT_MODULE_UPDATE = 0;
 EAPI int E_EVENT_MODULE_INIT_END = 0;
@@ -72,6 +74,8 @@ e_module_all_load(void)
    E_Config_Module *em;
    char buf[128];
 
+   _e_modules_initting = EINA_TRUE;
+   
    e_config->modules =
      eina_list_sort(e_config->modules, 0, _e_module_sort_priority);
 
@@ -102,7 +106,11 @@ e_module_all_load(void)
      }
 
    if (!_e_modules_delayed)
-     ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
+     {
+        ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
+        _e_modules_initting = EINA_FALSE;
+        _e_module_whitelist_check();
+     }
 
    unsetenv("E_MODULE_LOAD");
 }
@@ -288,6 +296,8 @@ e_module_enable(E_Module *m)
                   break;
                }
           }
+        if (!_e_modules_initting)
+          _e_module_whitelist_check();
         return 1;
      }
    return 0;
@@ -564,6 +574,9 @@ _e_module_cb_idler(void *data __UNUSED__)
      }
 
    ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
+   
+   _e_modules_initting = EINA_FALSE;
+   _e_module_whitelist_check();
 
    _e_module_idler = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -589,3 +602,137 @@ _e_module_event_update_free(void *data __UNUSED__, void *event)
    E_FREE(ev);
 }
 
+static void
+_e_module_whitelist_check(void)
+{
+   Eina_List *l, *badl = NULL;
+   E_Module *m;
+   int i;
+   const char *s;
+   const char *goodmods[] = 
+     {
+        "access",
+        "backlight",
+        "battery",
+        "bluez",
+        "clock",
+        "comp",
+        "conf",
+        "conf_applications",
+        "conf_dialogs",
+        "conf_display",
+        "conf_edgebindings",
+        "conf_interaction",
+        "conf_intl",
+        "conf_keybindings",
+        "conf_menus",
+        "conf_paths",
+        "conf_performance",
+        "conf_randr",
+        "conf_shelves",
+        "conf_theme",
+        "conf_wallpaper2",
+        "conf_window_manipulation",
+        "conf_window_remembers",
+        "connman",
+        "cpufreq",
+        "dropshadow",
+        "everything",
+        "fileman",
+        "fileman_opinfo",
+        "gadman",
+        "ibar",
+        "ibox",
+        "illume2",
+        "illume-bluetooth",
+        "illume-home",
+        "illume-home-toggle",
+        "illume-indicator",
+        "illume-kbd-toggle",
+        "illume-keyboard",
+        "illume-mode-toggle",
+        "illume-softkey",
+        "layout",
+        "mixer",
+        "msgbus",
+        "notification",
+        "ofono",
+        "pager",
+        "physics",
+        "quickaccess",
+        "shot",
+        "start",
+        "syscon",
+        "systray",
+        "tasks",
+        "temperature",
+        "tiling",
+        "winlist",
+        "wizard",
+        "wl_drm",
+        "wl_screenshot",
+        "wl_shell",
+        "xkbswitch",
+        
+        NULL // end marker
+     };
+
+   EINA_LIST_FOREACH(_e_modules, l, m)
+     {
+        Eina_Bool ok;
+        
+        if (!m->name) continue;
+        ok = EINA_FALSE;
+        for (i = 0; goodmods[i]; i++)
+          {
+             if (!strcmp(m->name, goodmods[i]))
+               {
+                  ok = EINA_TRUE;
+                  break;
+               }
+          }
+        if (!ok) badl = eina_list_append(badl, m->name);
+     }
+   
+   if (badl)
+     {
+        E_Dialog *dia;
+        Eina_Strbuf *sbuf;
+        
+        dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
+                           "E", "_module_whitelist_dialog");
+        if (!dia)
+          {
+             eina_list_free(badl);
+             return;
+          }
+
+        sbuf = eina_strbuf_new();
+        if (!sbuf)
+          {
+             eina_list_free(badl);
+             e_object_del(E_OBJECT(dia));
+             return;
+          }
+        eina_strbuf_append
+          (sbuf, _("The following modules are not standard ones for<br>"
+                   "Enlightenment and may cause bugs and crashes.<br>"
+                   "Please remove them before reporting any bugs.<br>"
+                   "<br>"
+                   "The module list is as follows:<br>"
+                   "<br>"));
+        EINA_LIST_FREE(badl, s)
+          {
+             eina_strbuf_append(sbuf, s);
+             eina_strbuf_append(sbuf, "<br>");
+          }
+
+        e_dialog_title_set(dia, _("Unstable module tainting"));
+        e_dialog_icon_set(dia, "enlightenment", 64);
+        e_dialog_text_set(dia, eina_strbuf_string_get(sbuf));
+        e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+        e_win_centered_set(dia->win, 1);
+        e_dialog_show(dia);
+        eina_strbuf_free(sbuf);
+     }
+}
