@@ -381,7 +381,7 @@ msgstr "아랫쪽 데스크톱으로 이동"
 #: src/bin/e_actions.c:3108
 #, fuzzy
 msgid "Flip Desktop By..."
-msgstr "하여 바탕 화면을 뒤집 ..."
+msgstr "하여 배경 화면을 뒤집 ..."
 
 #: src/bin/e_actions.c:3114
 msgid "Show The Desktop"
@@ -390,12 +390,12 @@ msgstr "데스크톱 표시"
 #: src/bin/e_actions.c:3120
 #, fuzzy
 msgid "Show The Shelf"
-msgstr "선반을 표시"
+msgstr "셸프 표시"
 
 #: src/bin/e_actions.c:3125
 #, fuzzy
 msgid "Flip Desktop To..."
-msgstr "로 바탕 화면을 뒤집 ..."
+msgstr "로 배경 화면을 뒤집 ..."
 
 #: src/bin/e_actions.c:3131
 #, fuzzy
@@ -457,7 +457,7 @@ msgstr "데스크톱 변경..."
 #: src/bin/e_actions.c:3167
 #, fuzzy
 msgid "Flip Desktop Left (All Screens)"
-msgstr "왼쪽 플립 바탕 화면 (전체 화면."
+msgstr "왼쪽 플립 배경 화면 (전체 화면."
 
 #: src/bin/e_actions.c:3169
 #, fuzzy
@@ -472,17 +472,17 @@ msgstr "데스크톱 최대 를 (전체 화면) 뒤집기"
 #: src/bin/e_actions.c:3173
 #, fuzzy
 msgid "Flip Desktop Down (All Screens)"
-msgstr "(전체 화면) 바탕 화면을 아래로 뒤집기"
+msgstr "(전체 화면) 배경 화면을 아래로 뒤집기"
 
 #: src/bin/e_actions.c:3175
 #, fuzzy
 msgid "Flip Desktop By... (All Screens)"
-msgstr "하여 바탕 화면을 뒤집 ... (전체 화면."
+msgstr "하여 배경 화면을 뒤집 ... (전체 화면."
 
 #: src/bin/e_actions.c:3181
 #, fuzzy
 msgid "Flip Desktop To... (All Screens)"
-msgstr "로 바탕 화면을 뒤집 ... (전체 화면."
+msgstr "로 배경 화면을 뒤집 ... (전체 화면."
 
 #: src/bin/e_actions.c:3187
 #, fuzzy
@@ -492,7 +492,7 @@ msgstr "선형적으로 데스크톱을 뒤집 ... (전체 화면."
 #: src/bin/e_actions.c:3193
 #, fuzzy
 msgid "Flip Desktop In Direction..."
-msgstr "방향 에서 바탕 화면을 뒤집 ..."
+msgstr "방향 에서 배경 화면을 뒤집 ..."
 
 #: src/bin/e_actions.c:3198
 #, fuzzy
@@ -502,7 +502,7 @@ msgstr "데스크톱 0 (전체 화면) 으로 전환"
 #: src/bin/e_actions.c:3200
 #, fuzzy
 msgid "Switch To Desktop 1 (All Screens)"
-msgstr "(전체 화면) 바탕 화면 1로 전환"
+msgstr "(전체 화면) 배경 화면 1로 전환"
 
 #: src/bin/e_actions.c:3202
 #, fuzzy
@@ -527,12 +527,12 @@ msgstr "(전체 화면) 데스크톱 5 로 전환"
 #: src/bin/e_actions.c:3210
 #, fuzzy
 msgid "Switch To Desktop 6 (All Screens)"
-msgstr "(전체 화면) 바탕 화면 6으로 전환"
+msgstr "(전체 화면) 배경 화면 6으로 전환"
 
 #: src/bin/e_actions.c:3212
 #, fuzzy
 msgid "Switch To Desktop 7 (All Screens)"
-msgstr "(전체 화면) 바탕 화면 7로 전환"
+msgstr "(전체 화면) 배경 화면 7로 전환"
 
 #: src/bin/e_actions.c:3214
 #, fuzzy
@@ -547,17 +547,17 @@ msgstr "(전체 화면) 데스크톱 9 전환"
 #: src/bin/e_actions.c:3218
 #, fuzzy
 msgid "Switch To Desktop 10 (All Screens)"
-msgstr "(전체 화면) 바탕 화면 10 전환"
+msgstr "(전체 화면) 배경 화면 10 전환"
 
 #: src/bin/e_actions.c:3220
 #, fuzzy
 msgid "Switch To Desktop 11 (All Screens)"
-msgstr "(전체 화면) 바탕 화면 11 전환"
+msgstr "(전체 화면) 배경 화면 11 전환"
 
 #: src/bin/e_actions.c:3222
 #, fuzzy
 msgid "Switch To Desktop... (All Screens)"
-msgstr "바탕 화면 으로 전환 ... (전체 화면."
+msgstr "배경 화면 으로 전환 ... (전체 화면."
 
 #: src/bin/e_actions.c:3228 src/bin/e_actions.c:3232
 #: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:39
@@ -784,7 +784,7 @@ msgstr "오프라인 모드 토글"
 #: src/bin/e_actions.c:3388 src/bin/e_actions.c:3392 src/bin/e_actions.c:3396
 #, fuzzy
 msgid "Enlightenment : Module"
-msgstr "Enligtenment : 모드"
+msgstr "Enligtenment : 모듈"
 
 #: src/bin/e_actions.c:3389
 #, fuzzy
@@ -880,7 +880,7 @@ msgstr ""
 
 #: src/bin/e_bg.c:22
 msgid "Set As Background"
-msgstr "바탕 화면으로 설정"
+msgstr "배경 화면으로 설정"
 
 #: src/bin/e_color_dialog.c:26
 msgid "Color Selector"
@@ -1127,7 +1127,7 @@ msgid ""
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr ""
 "일부 응용 프로그램<br>는키보 드나마우스 또는<br>둘 모두 를 움켜 잡 으며 그들"
-"의 손잡이 가 깨져서 수 없기 때문에바탕 화면을 잠금 실패."
+"의 손잡이 가 깨져서 수 없기 때문에 배경 화면을 잠금 실패."
 
 #: src/bin/e_desklock.c:541
 msgid "Please enter your unlock password"
@@ -1197,7 +1197,7 @@ msgstr ""
 #: src/bin/e_eap_editor.c:234
 #, fuzzy
 msgid "Desktop Entry Editor"
-msgstr "바탕 화면 항목 편집기"
+msgstr "배경 화면 항목 편집기"
 
 #: src/bin/e_eap_editor.c:676 src/bin/e_int_border_prop.c:448
 #: src/bin/e_int_border_prop.c:502
@@ -2201,12 +2201,12 @@ msgstr "항상 아래로"
 #: src/bin/e_int_border_menu.c:1073
 #, fuzzy
 msgid "Pin to Desktop"
-msgstr "바탕 화면에."
+msgstr "배경 화면에."
 
 #: src/bin/e_int_border_menu.c:1084
 #, fuzzy
 msgid "Unpin from Desktop"
-msgstr "바탕 화면 에서 핀을 빼다"
+msgstr "배경 화면 에서 핀을 빼다"
 
 #: src/bin/e_int_border_menu.c:1174
 #, fuzzy
@@ -2635,7 +2635,7 @@ msgstr "창 목록 무시"
 #: src/bin/e_int_border_remember.c:737
 #, fuzzy
 msgid "Application file or name (.desktop)"
-msgstr "응용 프로그램 파일 또는 이름 (. 바탕 화면)"
+msgstr "응용 프로그램 파일 또는 이름 (. 배경 화면)"
 
 #: src/bin/e_int_border_remember.c:745
 msgid "Match only one window"
@@ -2669,7 +2669,7 @@ msgstr "파일"
 #: src/bin/e_int_config_modules.c:54 src/modules/everything/e_mod_main.c:69
 #, fuzzy
 msgid "Launcher"
-msgstr "실행"
+msgstr "실행기"
 
 #: src/bin/e_int_config_modules.c:55
 #: src/modules/conf_applications/e_int_config_defapps.c:329
@@ -2725,7 +2725,7 @@ msgstr "사용가능한 도구"
 
 #: src/bin/e_int_gadcon_config.c:785
 msgid "Shelf Contents"
-msgstr "도구모음 내용"
+msgstr "셸프 내용"
 
 #: src/bin/e_int_gadcon_config.c:791
 #, fuzzy
@@ -2809,7 +2809,7 @@ msgstr "가상"
 #: src/modules/conf_shelves/e_mod_main.c:74
 #, fuzzy
 msgid "Shelves"
-msgstr "책장"
+msgstr "셸프"
 
 #: src/bin/e_int_menus.c:304
 msgid "Show/Hide All Windows"
@@ -2834,17 +2834,17 @@ msgstr "이름 없음!!"
 #: src/bin/e_int_menus.c:1607
 #, fuzzy
 msgid "Add a Shelf"
-msgstr "Shelf 추가"
+msgstr "셸프 추가"
 
 #: src/bin/e_int_menus.c:1614
 #, fuzzy
 msgid "Delete a Shelf"
-msgstr "Shelf 삭제"
+msgstr "셸프 삭제"
 
 #: src/bin/e_int_shelf_config.c:44
 #: src/modules/conf_shelves/e_int_config_shelf.c:53
 msgid "Shelf Settings"
-msgstr "도구모음 설정"
+msgstr "셸프 설정"
 
 #: src/bin/e_int_shelf_config.c:143
 #, fuzzy
@@ -3312,7 +3312,7 @@ msgstr "가젯 관리 시스템을 설정 할 수 없습니다."
 
 #: src/bin/e_main.c:890
 msgid "Setup Wallpaper"
-msgstr "바탕화면 설정"
+msgstr "배경 화면 설정"
 
 #: src/bin/e_main.c:894
 msgid "Enlightenment cannot set up its desktop background system."
@@ -3386,17 +3386,17 @@ msgstr ""
 #: src/bin/e_main.c:1000
 #, fuzzy
 msgid "Load Modules"
-msgstr "로드 모듈"
+msgstr "모듈 추가"
 
 #: src/bin/e_main.c:1031
 #, fuzzy
 msgid "Setup Shelves"
-msgstr "설치 선반"
+msgstr "셸프 설치"
 
 #: src/bin/e_main.c:1042
 #, fuzzy
 msgid "Configure Shelves"
-msgstr "선반 구성"
+msgstr "셸프 구성"
 
 #: src/bin/e_main.c:1053
 #, fuzzy
@@ -3600,37 +3600,39 @@ msgstr ""
 
 #: src/bin/e_shelf.c:259
 msgid "Shelf #"
-msgstr ""
+msgstr "셸프 #"
 
 #: src/bin/e_shelf.c:872
 msgid "Shelf Autohide Error"
-msgstr ""
+msgstr "셸프 자동숨김 오류"
 
 #: src/bin/e_shelf.c:872
 msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
+"현재 설정으로는 셸프 자동숨김이<br>올바르게 동작하지 않습니다."
+"셸프를 Everything 아래로 설정하거나<br>자동숨김을 해제하십시오."
 
 #: src/bin/e_shelf.c:1098 src/bin/e_shelf.c:1604
 #: src/modules/conf_shelves/e_int_config_shelf.c:174
 #, fuzzy
 msgid "Shelf"
-msgstr "도구모음 크기"
+msgstr "셸프 크기"
 
 #: src/bin/e_shelf.c:1099
 #, fuzzy
 msgid "Add New Shelf"
-msgstr "Shelf 추가"
+msgstr "새로운 셸프 추가"
 
 #: src/bin/e_shelf.c:1120
 #, fuzzy
 msgid "Shelf Error"
-msgstr "꺼내기 오류"
+msgstr "셸프 오류"
 
 #: src/bin/e_shelf.c:1120
 msgid "A shelf with that name already exists!"
-msgstr ""
+msgstr "같은 이름을 가진 셸프가 이미 있습니다!"
 
 #: src/bin/e_shelf.c:1625 src/bin/e_shelf.c:2393
 #, fuzzy
@@ -3660,7 +3662,7 @@ msgstr ""
 #: src/bin/e_shelf.c:2278
 #, fuzzy
 msgid "Rename Shelf"
-msgstr "이름 변경"
+msgstr "셸프 이름 변경"
 
 #: src/bin/e_shelf.c:2350 src/modules/conf_shelves/e_int_config_shelf.c:125
 #: src/modules/ibar/e_mod_main.c:862
@@ -4153,7 +4155,7 @@ msgstr "밧데리 전원이 낮을 경우 알림 표시"
 #: src/modules/battery/e_mod_config.c:138
 #, fuzzy
 msgid "Use desktop notifications for alert"
-msgstr "경보 에 대한 바탕 화면 알림을 사용합니다."
+msgstr "경보 에 대한 배경 화면 알림을 사용합니다."
 
 #: src/modules/battery/e_mod_config.c:235
 #, fuzzy
@@ -4407,7 +4409,7 @@ msgstr "테두리"
 #: src/modules/conf_applications/e_mod_main.c:25
 #, fuzzy
 msgid "Personal Application Launchers"
-msgstr "개인 발사기 삭제"
+msgstr "개인 애플리케이션 실행기"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:74
 #: src/modules/conf_applications/e_int_config_defapps.c:303
@@ -4501,7 +4503,7 @@ msgstr "애플리케이션"
 #: src/modules/conf_applications/e_mod_main.c:21
 #, fuzzy
 msgid "Create Application Launcher"
-msgstr "실행"
+msgstr "애플리케이션 실행기 만들기"
 
 #: src/modules/conf_applications/e_mod_main.c:62
 #, fuzzy
@@ -4722,7 +4724,7 @@ msgstr "데스크톱 갯수"
 #: src/modules/conf_display/e_int_config_desks.c:153
 #, fuzzy
 msgid "Click to change wallpaper"
-msgstr "교환 배경 화면"
+msgstr "배경 화면을 변경하려면 클릭하세요."
 
 #: src/modules/conf_display/e_int_config_desks.c:160
 #: src/modules/conf_display/e_int_config_desks.c:165
@@ -4801,7 +4803,7 @@ msgstr "데스크톱 이름"
 
 #: src/modules/conf_display/e_int_config_desk.c:160
 msgid "Desktop Wallpaper"
-msgstr "데스크톱 배경화면"
+msgstr "데스크톱 배경 화면"
 
 #: src/modules/conf_display/e_int_config_desk.c:166
 #: src/modules/fileman/e_int_config_mime.c:183
@@ -4925,11 +4927,11 @@ msgstr "테마 정의됨"
 
 #: src/modules/conf_display/e_int_config_desklock.c:356
 msgid "Theme Wallpaper"
-msgstr "테마의 배경화면"
+msgstr "테마의 배경 화면"
 
 #: src/modules/conf_display/e_int_config_desklock.c:360
 msgid "Current Wallpaper"
-msgstr "현재 배경화면"
+msgstr "현재 배경 화면"
 
 #: src/modules/conf_display/e_int_config_desklock.c:386
 #: src/modules/conf_theme/e_mod_main.c:25
@@ -4937,7 +4939,7 @@ msgstr "현재 배경화면"
 #: src/modules/conf_theme/e_mod_main.c:61
 #: src/modules/conf_theme/e_mod_main.c:150
 msgid "Wallpaper"
-msgstr "배경화면"
+msgstr "배경 화면"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
@@ -5889,7 +5891,7 @@ msgstr "전원 관리"
 #: src/modules/conf_shelves/e_int_config_shelf.c:109
 #, fuzzy
 msgid "Configured Shelves: Display"
-msgstr "설정된 도구모음"
+msgstr "설정된 셸프: 화면"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:371
 #, fuzzy, c-format
@@ -5899,16 +5901,16 @@ msgstr "이 도구 막대를 삭제 하시겠습니까?"
 #: src/modules/conf_shelves/e_int_config_shelf.c:374
 #, fuzzy
 msgid "Confirm Shelf Deletion"
-msgstr "삭제 확인"
+msgstr "셸프 삭제 확인"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:105
 msgid "Wallpaper Settings"
-msgstr "배경 설정"
+msgstr "배경 화면 설정"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:501
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 msgid "Use Theme Wallpaper"
-msgstr "테마 배경 사용"
+msgstr "테마 배경 화면 사용"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:506
 #: src/modules/conf_theme/e_int_config_wallpaper.c:626
@@ -5923,7 +5925,7 @@ msgstr "온라인 ..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:648
 msgid "Where to place the Wallpaper"
-msgstr "배경을 적용할 곳"
+msgstr "배경 화면을 적용할 곳"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:649
 msgid "All Desktops"
@@ -6049,7 +6051,7 @@ msgstr "대화 배경 자료"
 #: src/modules/conf_theme/e_int_config_color_classes.c:96
 #, fuzzy
 msgid "Shelf Background Base"
-msgstr "선반 배경 자료"
+msgstr "셸프 배경 자료"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:97
 #, fuzzy
@@ -6390,7 +6392,7 @@ msgstr "Typebuf"
 #: src/modules/conf_theme/e_int_config_fonts.c:96
 #, fuzzy
 msgid "Desktop Icon"
-msgstr "바탕 화면 아이콘"
+msgstr "배경 화면 아이콘"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:99
 #: src/modules/conf_theme/e_int_config_fonts.c:258
@@ -6754,7 +6756,7 @@ msgstr "데스크톱을 소유하고 있는 그룹"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:145
 #, fuzzy
 msgid "Group with current desktop"
-msgstr "현재 바탕 화면 과 그룹"
+msgstr "현재 배경 화면 과 그룹"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:148
 #, fuzzy
@@ -7509,12 +7511,12 @@ msgstr "Dropshadow"
 #: src/modules/everything/e_mod_main.c:210
 #, fuzzy
 msgid "Everything Launcher"
-msgstr "모두"
+msgstr "Everything 실행기"
 
 #: src/modules/everything/e_mod_main.c:61
 #, fuzzy
 msgid "Show Everything Launcher"
-msgstr "모든 실행기 보기"
+msgstr "Everything 실행기 보기"
 
 #: src/modules/everything/e_mod_main.c:75
 #, fuzzy
@@ -7529,12 +7531,12 @@ msgstr "모든 대화 상자 표시"
 #: src/modules/everything/e_mod_main.c:420
 #, fuzzy
 msgid "Everything Module"
-msgstr "모두"
+msgstr "Everything 모듈"
 
 #: src/modules/everything/e_mod_main.c:620
 #, fuzzy
 msgid "Run Everything"
-msgstr "모두"
+msgstr "Everything 실행기 실행"
 
 #: src/modules/everything/evry_config.c:78
 #, fuzzy
@@ -7900,7 +7902,7 @@ msgstr "플래쉬 제목"
 #: src/modules/fileman/e_mod_config.c:339
 #, fuzzy
 msgid "Icons On Desktop"
-msgstr "바탕 화면에."
+msgstr "배경 화면에."
 
 #: src/modules/fileman/e_mod_config.c:342
 #, fuzzy
@@ -7938,7 +7940,7 @@ msgstr "대체 선택 수정자 를 사용"
 #: src/modules/fileman/e_mod_config.c:399
 #, fuzzy
 msgid "Allow Navigation On Desktop"
-msgstr "바탕 화면에 장치 아이콘 표시"
+msgstr "배경 화면에 장치 아이콘 표시"
 
 #: src/modules/fileman/e_mod_config.c:403
 msgid "Max File Size For Thumbnailing"
@@ -7967,7 +7969,7 @@ msgstr "이동"
 #: src/modules/fileman/e_mod_config.c:438
 #, fuzzy
 msgid "Show device icons on desktop"
-msgstr "바탕 화면에 장치 아이콘 표시"
+msgstr "배경 화면에 장치 아이콘 표시"
 
 #: src/modules/fileman/e_mod_config.c:441
 #, fuzzy
@@ -8252,7 +8254,7 @@ msgstr "외관"
 #: src/modules/gadman/e_mod_gadman.c:1097
 #, fuzzy
 msgid "Always on desktop"
-msgstr "항상 바탕 화면"
+msgstr "항상 배경 화면"
 
 #: src/modules/gadman/e_mod_gadman.c:1107
 #, fuzzy
@@ -8515,7 +8517,7 @@ msgstr "IBox 설정"
 #: src/modules/ibox/e_mod_config.c:98
 #, fuzzy
 msgid "Expand When On Desktop"
-msgstr "바탕 화면에."
+msgstr "배경 화면에."
 
 #: src/modules/ibox/e_mod_config.c:101
 #: src/modules/notification/e_mod_config_item.c:90
@@ -8578,7 +8580,7 @@ msgstr "마우스 휠로 화면 변경"
 #: src/modules/pager/e_mod_config.c:132 src/modules/pager/e_mod_config.c:191
 #, fuzzy
 msgid "Always show desktop names"
-msgstr "바탕 화면 이름을 표시"
+msgstr "배경 화면 이름을 표시"
 
 #: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:194
 #, fuzzy
@@ -8588,7 +8590,7 @@ msgstr "미리보기"
 #: src/modules/pager/e_mod_config.c:141 src/modules/pager/e_mod_config.c:230
 #, fuzzy
 msgid "Show popup on desktop change"
-msgstr "바탕 화면 변화에 팝업 보기"
+msgstr "배경 화면 변화에 팝업 보기"
 
 #: src/modules/pager/e_mod_config.c:144
 #, fuzzy
@@ -8866,7 +8868,7 @@ msgstr "이동"
 #: src/modules/mixer/app_mixer.c:165
 #, fuzzy
 msgid "Capture"
-msgstr "포착"
+msgstr "캡처"
 
 #: src/modules/mixer/app_mixer.c:167
 #, fuzzy
@@ -8950,7 +8952,7 @@ msgstr "세계적인 동작 을 위해 사용하는 혼합기:"
 #: src/modules/mixer/conf_module.c:117
 #, fuzzy
 msgid "Display desktop notifications on volume change"
-msgstr "볼륨 변화에 바탕 화면 알림을 Diplay"
+msgstr "볼륨 변화에 배경 화면 알림을 Diplay"
 
 #: src/modules/mixer/conf_module.c:153
 msgid "Launch mixer..."
@@ -8982,7 +8984,7 @@ msgstr "믹서 설정 업데이트"
 #: src/modules/mixer/e_mod_main.c:1328
 #, fuzzy
 msgid "Mixer Module"
-msgstr "모듈"
+msgstr "믹서 모듈"
 
 #: src/modules/connman/e_mod_main.c:237
 #, fuzzy
@@ -9131,7 +9133,7 @@ msgstr ""
 
 #: src/modules/shot/e_mod_main.c:524
 msgid "Screenshot is available at this location:"
-msgstr ""
+msgstr "스크린샷을 여기서 받으실 수 있습니다."
 
 #: src/modules/shot/e_mod_main.c:533
 #, fuzzy
@@ -9140,7 +9142,7 @@ msgstr "자동 숨기기"
 
 #: src/modules/shot/e_mod_main.c:631
 msgid "Where to put Screenshot..."
-msgstr ""
+msgstr "스크린샷을 어디에 저장할까요..."
 
 #: src/modules/shot/e_mod_main.c:687
 msgid "Perfect"
@@ -9160,7 +9162,7 @@ msgstr "설정 화면"
 #: src/modules/shot/e_mod_main.c:945 src/modules/shot/e_mod_main.c:971
 #, fuzzy
 msgid "Take Screenshot"
-msgstr "설정 화면"
+msgstr "화면 캡처"
 
 #: src/modules/tasks/e_mod_main.c:317 src/modules/tasks/e_mod_main.c:709
 #, fuzzy
@@ -9180,7 +9182,7 @@ msgstr "아이콘명 표시"
 #: src/modules/tasks/e_mod_config.c:94
 #, fuzzy
 msgid "Show text only"
-msgstr "바탕 화면 아이콘 표시"
+msgstr "배경 화면 아이콘 표시"
 
 #: src/modules/tasks/e_mod_config.c:98
 #, fuzzy
@@ -9331,11 +9333,11 @@ msgstr "화면 돌리기"
 #: src/modules/notification/e_mod_main.c:331
 #, fuzzy
 msgid "Notification Module"
-msgstr "프리젠테이션 모드"
+msgstr "알림 모듈"
 
 #: src/modules/notification/e_mod_main.c:350
 msgid "Error During DBus Init!"
-msgstr ""
+msgstr "DBus 초기화 도중 에러!"
 
 #: src/modules/notification/e_mod_main.c:351
 msgid ""
@@ -9424,7 +9426,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "(No Shelves)"
-#~ msgstr "(없음 선반."
+#~ msgstr "(셸프 없음)"
 
 #, fuzzy
 #~ msgid "By"
@@ -9436,7 +9438,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Exchange wallpapers"
-#~ msgstr "교환 배경 화면"
+#~ msgstr "배경 화면 변경"
 
 #~ msgid "Download"
 #~ msgstr "다운로드"
@@ -9837,7 +9839,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Wallpaper Import Error"
-#~ msgstr "바탕 화면 가져오기 오류"
+#~ msgstr "배경 화면 가져오기 오류"
 
 #, fuzzy
 #~ msgid "Icons override general theme"
@@ -9890,7 +9892,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Show UDisks icons on desktop"
-#~ msgstr "바탕 화면에서 UDisks 아이콘 표시"
+#~ msgstr "배경 화면에서 UDisks 아이콘 표시"
 
 #, fuzzy
 #~ msgid "Uncover"
@@ -9902,7 +9904,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "XKB Switcher Module"
-#~ msgstr "모듈"
+#~ msgstr "XKB 스위처 모듈"
 
 #, fuzzy
 #~ msgid "Popup speed"
@@ -9983,7 +9985,7 @@ msgstr ""
 #~ "메모리가 부족하지 않습니까?"
 
 #~ msgid "Enlightenment cannot set up its shelf system."
-#~ msgstr "Shelf 시스템을 설정 할 수 없습니다."
+#~ msgstr "셸프 시스템을 설정 할 수 없습니다."
 
 #~ msgid "New Application"
 #~ msgstr "새 응용프로그램"
@@ -10098,7 +10100,7 @@ msgstr ""
 #~ msgstr "화면 잠금"
 
 #~ msgid "Wallpaper Mode"
-#~ msgstr "바탕화면 상태"
+#~ msgstr "배경 화면 상태"
 
 #, fuzzy
 #~ msgid "Screensaver Timer"
@@ -10152,7 +10154,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Set as Wallpaper"
-#~ msgstr "데스크톱 배경화면"
+#~ msgstr "데스크톱 배경 화면"
 
 #~ msgid "Desktop file scan"
 #~ msgstr "아이콘 파일을 검색합니다."
@@ -10413,7 +10415,7 @@ msgstr ""
 #~ msgstr "확장된 단추 모듈"
 
 #~ msgid "Enlightenment Temperature Module"
-#~ msgstr "Enlightenment 온도 모듈"
+#~ msgstr "Enlightenment 온도계 모듈"
 
 #~ msgid "Enlightenment cannot set up its window list system."
 #~ msgstr "창 목록 시스템을 설정 할 수 없습니다."
