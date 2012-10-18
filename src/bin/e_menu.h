@@ -67,15 +67,15 @@ struct _E_Menu
       void (*func) (void *data, E_Menu *m);
    } pre_activate_cb, post_deactivate_cb;
 
-   unsigned char        realized : 1; /* 1 if it is realized */
-   unsigned char        active : 1; /* 1 if it is in active list */
-   unsigned char        changed : 1;
-   unsigned char        fast_mouse : 1;
-   unsigned char        pending_new_submenu : 1;
-   unsigned char        have_submenu : 1;
-   unsigned char        in_active_list : 1;
-   unsigned char        shaped : 1;
-   unsigned char        need_shape_export : 1;
+   Eina_Bool        realized : 1; /* 1 if it is realized */
+   Eina_Bool        active : 1; /* 1 if it is in active list */
+   Eina_Bool        changed : 1;
+   Eina_Bool        fast_mouse : 1;
+   Eina_Bool        pending_new_submenu : 1;
+   Eina_Bool        have_submenu : 1;
+   Eina_Bool        in_active_list : 1;
+   Eina_Bool        shaped : 1;
+   Eina_Bool        need_shape_export : 1;
 };
 
 struct _E_Menu_Item
@@ -140,13 +140,13 @@ struct _E_Menu_Item
       int x, y;
    } drag;
 
-   unsigned char  separator : 1;
-   unsigned char  radio : 1;
-   unsigned char  check : 1;
-   unsigned char  toggle : 1;
-   unsigned char  changed : 1;
-   unsigned char  active : 1;
-   unsigned char  disable : 1;
+   Eina_Bool  separator : 1;
+   Eina_Bool  radio : 1;
+   Eina_Bool  check : 1;
+   Eina_Bool  toggle : 1;
+   Eina_Bool  changed : 1;
+   Eina_Bool  active : 1;
+   Eina_Bool  disable : 1;
 };
 
 struct _E_Menu_Category_Callback
