@@ -50,10 +50,12 @@ static int fa = 0, fh = 0, fw = 0;
 static const char *title = NULL, *str1 = NULL, *str2 = NULL;
 static int ret = 0, sig = 0;
 static pid_t pid;
+static Eina_Bool tainted = EINA_TRUE;
 
 int
 main(int argc, char **argv)
 {
+   const char *tmp;
    int i = 0;
 
    for (i = 1; i < argc; i++)
@@ -73,6 +75,10 @@ main(int argc, char **argv)
         else if (i == 3)
           comp_win = atoi(argv[i]); // Composite Alert Window
      }
+
+   tmp = getenv("E17_TAINTED");
+   if (tmp && !strcmp(tmp, "NO"))
+     tainted = EINA_FALSE;
 
    if (!ecore_init()) return EXIT_FAILURE;
    ecore_app_args_set(argc, (const char **)argv);
@@ -447,15 +453,26 @@ _e_alert_draw_text(void)
    char warn[1024], msg[4096], line[1024];
    unsigned int i = 0, j = 0, k = 0;
 
-   snprintf(msg, sizeof(msg),
-            "This is not meant to happen and is likely a sign of \n"
-            "a bug in Enlightenment or the libraries it relies \n"
-            "on. You can gdb attach to this process (%d) now \n"
-            "to try debug it or you could exit, or just hit \n"
-            "restart to try and get your desktop back the way \n"
-            "it was.\n"
-            "\n"
-            "Please compile everything with -g in your CFLAGS.", pid);
+   if (!tainted)
+     {
+        snprintf(msg, sizeof(msg),
+                 "This is not meant to happen and is likely a sign of \n"
+                 "a bug in Enlightenment or the libraries it relies \n"
+                 "on. You can gdb attach to this process (%d) now \n"
+                 "to try debug it or you could exit, or just hit \n"
+                 "restart to try and get your desktop back the way \n"
+                 "it was.\n"
+                 "\n"
+                 "Please compile everything with -g in your CFLAGS.", pid);
+     }
+   else
+     {
+        snprintf(msg, sizeof(msg),
+                 "This is not meant to happen and is likely a sign of \n"
+                 "a bug, but you are using non supported modules. Before\n"
+                 "reporting this issue, please unload them and try to see\n"
+                 "if the bug is still there.\n");
+     }
 
    strcpy(warn, "");
 

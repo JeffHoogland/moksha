@@ -70,6 +70,7 @@ struct _E_Config
    const char *language; // GUI
    const char *desklock_language; // GUI
    Eina_List  *modules; // GUI
+   Eina_List  *bad_modules; // GUI
    Eina_List  *font_fallbacks; // GUI
    Eina_List  *font_defaults; // GUI
    Eina_List  *themes; // GUI

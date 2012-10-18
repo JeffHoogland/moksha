@@ -603,10 +603,35 @@ _e_module_event_update_free(void *data __UNUSED__, void *event)
 }
 
 static void
+_cleanup_cb(void *data, E_Dialog *dialog)
+{
+   Eina_List *badl = data;
+   const char *s;
+
+   e_object_del(E_OBJECT(dialog));
+   EINA_LIST_FREE(badl, s)
+     eina_stringshare_del(s);
+}
+
+static void
+_ignore_cb(void *data, E_Dialog *dialog)
+{
+   const char *s;
+
+   e_object_del(E_OBJECT(dialog));
+
+   EINA_LIST_FREE(e_config->bad_modules, s)
+     eina_stringshare_del(s);
+   e_config->bad_modules = data;
+   e_config_save_queue();
+}
+
+static void
 _e_module_whitelist_check(void)
 {
    Eina_List *l, *badl = NULL;
    E_Module *m;
+   unsigned int known = 0;
    int i;
    const char *s;
    const char *goodmods[] = 
@@ -691,10 +716,32 @@ _e_module_whitelist_check(void)
                   break;
                }
           }
-        if (!ok) badl = eina_list_append(badl, m->name);
+        if (!ok) badl = eina_list_append(badl, eina_stringshare_add(m->name));
      }
-   
-   if (badl)
+
+   EINA_LIST_FOREACH(badl, l, s)
+     {
+        const char *tmp;
+        Eina_List *ll;
+        Eina_Bool found = EINA_FALSE;
+
+        EINA_LIST_FOREACH(e_config->bad_modules, ll, tmp)
+          {
+             if (!strcmp(s, tmp))
+               {
+                  found = EINA_TRUE;
+                  break;
+               }
+          }
+
+        if (!found) break;
+        known++;
+     }
+
+   if (badl) e_env_set("E17_TAINTED", "YES");
+   else e_env_set("E17_TAINTED", "NO");
+
+   if (eina_list_count(badl) != known)
      {
         E_Dialog *dia;
         Eina_Strbuf *sbuf;
@@ -721,7 +768,7 @@ _e_module_whitelist_check(void)
                    "<br>"
                    "The module list is as follows:<br>"
                    "<br>"));
-        EINA_LIST_FREE(badl, s)
+        EINA_LIST_FOREACH(badl, l, s)
           {
              eina_strbuf_append(sbuf, s);
              eina_strbuf_append(sbuf, "<br>");
@@ -730,9 +777,15 @@ _e_module_whitelist_check(void)
         e_dialog_title_set(dia, _("Unstable module tainting"));
         e_dialog_icon_set(dia, "enlightenment", 64);
         e_dialog_text_set(dia, eina_strbuf_string_get(sbuf));
-        e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+        e_dialog_button_add(dia, _("OK"), NULL, _cleanup_cb, badl);
+        e_dialog_button_add(dia, _("I know"), NULL, _ignore_cb, badl);
         e_win_centered_set(dia->win, 1);
         e_dialog_show(dia);
         eina_strbuf_free(sbuf);
+     }
+   else
+     {
+        EINA_LIST_FREE(badl, s)
+          eina_stringshare_del(s);
      }
 }
