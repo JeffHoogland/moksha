@@ -464,7 +464,7 @@ e_shelf_toggle(E_Shelf *es, int show)
                  ecore_animator_add(_e_shelf_cb_hide_animator, es);
           }
      }
-   else if ((!show) && (!es->hidden) && (!es->gadcon->editing) &&
+   else if ((!show) && (!es->hidden) && ((!es->gadcon) || (!es->gadcon->editing)) &&
             (es->cfg->autohide))
      {
         edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
