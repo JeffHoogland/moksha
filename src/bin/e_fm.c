@@ -847,7 +847,7 @@ e_fm2_add(Evas *evas)
 }
 
 static Eina_Bool
-_e_fm2_cb_dnd_drop(void *data)
+_e_fm2_cb_dnd_drop(void *data, const char *type)
 {
    E_Fm2_Smart_Data *sd = data;
    Eina_Bool allow;
@@ -1556,7 +1556,7 @@ e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
                                          drop, 4,
                                          sd->x, sd->y, sd->w, sd->h);
    e_drop_handler_responsive_set(sd->drop_handler);
-   e_drop_handler_xds_set(sd->drop_handler, (Ecore_Task_Cb)_e_fm2_cb_dnd_drop);
+   e_drop_handler_xds_set(sd->drop_handler, _e_fm2_cb_dnd_drop);
 }
 
 EAPI void

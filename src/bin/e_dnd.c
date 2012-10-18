@@ -358,7 +358,7 @@ e_drag_xdnd_start(E_Drag *drag, int x, int y)
 }
 
 EAPI void
-e_drop_handler_xds_set(E_Drop_Handler *handler, Ecore_Task_Cb cb)
+e_drop_handler_xds_set(E_Drop_Handler *handler, Eina_Bool (*cb)(void *data, const char *type))
 {
    handler->cb.xds = cb;
 }
@@ -1436,7 +1436,7 @@ _e_dnd_cb_event_dnd_drop(void *data __UNUSED__, int type __UNUSED__, void *event
              if (!h->active) continue;
              if (_e_drag_win_matches(h, ev->win, 1) && h->entered && h->cb.xds)
                {
-                  req = h->cb.xds(h->cb.data);
+                  req = h->cb.xds(h->cb.data, _xdnd->type);
                }
           }
         if (req) ecore_x_selection_xdnd_request(ev->win, _xdnd->type);

@@ -186,7 +186,7 @@ out:
 }
 
 static Eina_Bool
-_box_button_cb_dnd_drop(void *data)
+_box_button_cb_dnd_drop(void *data, const char *type __UNUSED__)
 {
    Instance *inst = data;
    Eina_List *l;
@@ -331,7 +331,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_event_callback_add(inst->o_scroll, EVAS_CALLBACK_MOVE, _gc_moveresize, inst);
    evas_object_event_callback_add(inst->o_scroll, EVAS_CALLBACK_RESIZE, _gc_moveresize, inst);
    e_drop_handler_responsive_set(inst->dnd_handler);
-   e_drop_handler_xds_set(inst->dnd_handler, (Ecore_Task_Cb)_box_button_cb_dnd_drop);
+   e_drop_handler_xds_set(inst->dnd_handler, _box_button_cb_dnd_drop);
 
    instances = eina_list_append(instances, inst);
 
