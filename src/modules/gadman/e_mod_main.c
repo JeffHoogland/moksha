@@ -178,6 +178,10 @@ _gadman_desktop_menu(E_Menu *m, void *d __UNUSED__, void *icon)
 {
    E_Menu_Item *mi;
 
+   mi = eina_list_data_get(m->items);
+   /* don't add twice */
+   if (mi->cb.func == _gadman_desktop_menu_cb) return;
+
    mi = e_menu_item_new_relative(m, NULL);
    e_menu_item_label_set(mi, _("Change Gadgets"));
    e_menu_item_icon_edje_set(mi, icon, "icon");
