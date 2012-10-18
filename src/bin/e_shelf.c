@@ -35,7 +35,6 @@ static void         _e_shelf_bindings_del(E_Shelf *es);
 static Eina_Bool    _e_shelf_on_current_desk(E_Shelf *es, E_Event_Zone_Edge *ev);
 static void          _e_shelf_cb_dummy_del(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
-static Eina_Bool    _e_shelf_zone_moveresize_handler_cb(void *, int, void *);
 static Eina_Bool    _e_shelf_gadcon_populate_handler_cb(void *, int, void *);
 static Eina_Bool    _e_shelf_module_init_end_handler_cb(void *, int, void *);
 
@@ -2242,19 +2241,6 @@ _e_shelf_module_init_end_handler_cb(void *data __UNUSED__, int type __UNUSED__, 
         else if (!es->module_init_end_timer)
           es->module_init_end_timer = ecore_timer_add(1.0, _e_shelf_module_init_end_timer_cb, es);
      }
-   _e_shelf_zone_moveresize_handler = ecore_event_handler_add(E_EVENT_ZONE_MOVE_RESIZE, _e_shelf_zone_moveresize_handler_cb, NULL);
-   return ECORE_CALLBACK_RENEW;
-}
-
-static Eina_Bool
-_e_shelf_zone_moveresize_handler_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
-{
-   E_Event_Zone_Move_Resize *ev = event;
-   E_Shelf *es;
-   Eina_List *l;
-
-   EINA_LIST_FOREACH(shelves, l, es)
-     if (ev->zone == es->zone) e_shelf_position_calc(es);
    return ECORE_CALLBACK_RENEW;
 }
 
