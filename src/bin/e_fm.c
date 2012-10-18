@@ -472,7 +472,6 @@ static int _e_fm2_list_walking = 0;
 static Eina_List *_e_fm2_client_list = NULL;
 static Eina_List *_e_fm2_menu_contexts = NULL;
 static Eina_List *_e_fm_file_buffer = NULL; /* Files for copy&paste are saved here. */
-static int _e_fm_file_buffer_cutting = 0;
 static int _e_fm_file_buffer_copying = 0;
 static const char *_e_fm2_icon_desktop_str = NULL;
 static const char *_e_fm2_icon_thumb_str = NULL;
@@ -3346,7 +3345,6 @@ _e_fm_file_buffer_clear(void)
    EINA_LIST_FREE(_e_fm_file_buffer, s)
      eina_stringshare_del(s);
 
-   _e_fm_file_buffer_cutting = 0;
    _e_fm_file_buffer_copying = 0;
 }
 
@@ -3391,7 +3389,7 @@ static void
 _e_fm2_file_cut(Evas_Object *obj)
 {
    _e_fm_file_buffer_clear();
-   _e_fm_file_buffer_cutting = _e_fm2_buffer_fill(obj);
+   _e_fm2_buffer_fill(obj);
 }
 
 static void
@@ -3417,6 +3415,7 @@ _e_fm2_file_paste(Evas_Object *obj)
 
    /* Convert URI list to a list of real paths. */
    paths = e_fm2_uri_path_list_get(_e_fm_file_buffer);
+   if (!paths) return;
    EINA_LIST_FREE(paths, filepath)
      {
         /* Get file's full path. */
