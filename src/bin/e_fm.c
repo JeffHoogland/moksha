@@ -853,7 +853,7 @@ _e_fm2_cb_dnd_drop(void *data, const char *type)
    Eina_Bool allow;
    char buf[PATH_MAX];
 
-   if (sd->config->view.link_drop && (!sd->drop_icon))
+   if (sd->config->view.link_drop && (type == _e_fm2_xds))
      allow = EINA_FALSE;
    else
      {
