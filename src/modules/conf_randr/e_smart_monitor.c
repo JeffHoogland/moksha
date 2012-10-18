@@ -426,7 +426,7 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
              else
                {
                   if (w) *w = 640;
-                  if (h) *h = 640;
+                  if (h) *h = 480;
                }
           }
      }
