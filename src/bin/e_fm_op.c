@@ -286,7 +286,7 @@ main(int argc, char **argv)
                                    {
                                       /* if it's another device */
                                       if (errno == EXDEV)
-                                        type = E_FM_OP_COPY;
+                                        type = E_FM_OP_MOVE;
                                       else
                                         {
                                            _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
@@ -315,7 +315,7 @@ main(int argc, char **argv)
                                       if (st1.st_dev == st2.st_dev)
                                         type = E_FM_OP_RENAME;
                                       else
-                                        type = E_FM_OP_COPY;
+                                        type = E_FM_OP_MOVE;
                                    }
                               }
                          }
