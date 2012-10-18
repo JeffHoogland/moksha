@@ -33,7 +33,6 @@ static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj);
 static void _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj);
 static void _e_smart_randr_changed_set(Evas_Object *obj);
-static int _e_smart_randr_monitors_sort_position(const void *data1, const void *data2);
 
 static void _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
@@ -498,28 +497,4 @@ _e_smart_cb_monitor_deleted(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_O
                                   _e_smart_cb_monitor_moved);
    evas_object_smart_callback_del(obj, "monitor_toggled", 
                                   _e_smart_cb_monitor_toggled);
-}
-
-static int 
-_e_smart_randr_monitors_sort_position(const void *data1, const void *data2)
-{
-   const Evas_Object *m1 = NULL, *m2 = NULL;
-   Evas_Coord x = 0, y = 0, x2 = 0, y2 = 0;
-
-   if (!(m1 = data1)) return 1;
-   if (!(m2 = data2)) return -1;
-
-   e_layout_child_geometry_get((Evas_Object *)m1, &x, &y, NULL, NULL);
-   e_layout_child_geometry_get((Evas_Object *)m2, &x2, &y2, NULL, NULL);
-
-   if (x2 < x) return 1;
-   if (x2 > x) return -1;
-
-   if (x2 == x)
-     {
-        if (y2 < y) return 1;
-        if (y2 > y) return -1;
-     }
-
-   return 1;
 }
