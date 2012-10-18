@@ -30,10 +30,10 @@ static void _e_smart_show(Evas_Object *obj);
 static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
-static void _e_smart_reconfigure(E_Smart_Data *sd);
 static void _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj);
 static void _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj);
 static void _e_smart_randr_changed_set(Evas_Object *obj);
+static int _e_smart_randr_monitors_sort_position(const void *data1, const void *data2);
 
 static void _e_smart_cb_monitor_resized(void *data, Evas_Object *obj, void *event __UNUSED__);
 static void _e_smart_cb_monitor_rotated(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
@@ -78,6 +78,7 @@ void
 e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
 {
    E_Smart_Data *sd;
+   Evas_Coord cx, cy, cw, ch;
 
    if (!(sd = evas_object_smart_data_get(obj)))
      return;
@@ -101,13 +102,15 @@ e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
 
    /* pack this monitor into the layout */
    e_layout_pack(sd->o_layout, mon);
+
+   e_smart_monitor_crtc_geometry_get(mon, &cx, &cy, &cw, &ch);
+   e_layout_child_move(mon, cx, cy);
+   e_layout_child_resize(mon, cw, ch);
+
    e_layout_child_lower(mon);
 
    /* append this monitor to our list */
    sd->items = eina_list_append(sd->items, mon);
-
-   /* reconfigure the layout */
-   _e_smart_reconfigure(sd);
 }
 
 Eina_List *
@@ -190,7 +193,6 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
      return;
 
    evas_object_move(sd->o_scroll, x, y);
-   _e_smart_reconfigure(sd);
 }
 
 static void 
@@ -202,7 +204,6 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
      return;
 
    evas_object_resize(sd->o_scroll, w, h);
-   _e_smart_reconfigure(sd);
 }
 
 static void 
@@ -254,26 +255,6 @@ _e_smart_clip_unset(Evas_Object *obj)
 }
 
 static void 
-_e_smart_reconfigure(E_Smart_Data *sd)
-{
-   Eina_List *l;
-   Evas_Object *mon;
-
-   e_layout_freeze(sd->o_layout);
-   EINA_LIST_FOREACH(sd->items, l, mon)
-     {
-        Evas_Coord cx, cy, cw, ch;
-
-        e_smart_monitor_crtc_geometry_get(mon, &cx, &cy, &cw, &ch);
-
-        e_layout_child_move(mon, cx, cy);
-        e_layout_child_resize(mon, cw, ch);
-        e_layout_child_lower(mon);
-     }
-   e_layout_thaw(sd->o_layout);
-}
-
-static void 
 _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
 {
    Eina_List *l = NULL;
@@ -282,7 +263,7 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
 
    if (!sd) return;
 
-   /* get the geometry of this monitor */
+   /* grab the geometry of this monitor (returned in virtual coords) */
    e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
 
    /* freeze layout */
@@ -298,7 +279,7 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
         /* skip if it's the current monitor */
         if ((mon == obj)) continue;
 
-        /* get the geometry of this monitor */
+        /* grab the geometry of this monitor (returned in virtual coords) */
         e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
 
         if ((m.x >= (o.x + o.w)))
@@ -311,16 +292,6 @@ _e_smart_randr_layout_adjust(E_Smart_Data *sd, Evas_Object *obj)
              /* if this monitor is below, move it */
              e_layout_child_move(mon, m.x, (o.y + o.h));
           }
-        else if (eina_rectangles_intersect(&o, &m))
-          {
-             /* they intersect, we need to move this one */
-             /* NB: This can happen when monitors get moved manually */
-
-             if ((m.x <= (o.x + o.w)))
-               e_layout_child_move(mon, (o.x + o.w), m.y);
-             else if ((m.y <= (o.y + o.h)))
-               e_layout_child_move(mon, m.x, (o.y + o.h));
-          }
      }
 
    /* thaw layout to allow redraw */
@@ -332,23 +303,38 @@ _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj)
 {
    Eina_List *l = NULL;
    Evas_Object *mon;
-   Eina_Rectangle o;
-   Evas_Coord mx, my;
+   Eina_Rectangle o, r;
+   Evas_Coord px, py, lx, ly;
 
    if (!sd) return;
 
-   /* get this monitor geometry Before it was moved
-    * 
-    * NB: This is returned in Virtual coordinates */
-   e_smart_monitor_move_geometry_get(obj, &mx, &my, NULL, NULL);
+   /* get the layout geometry */
+   evas_object_geometry_get(sd->o_layout, &lx, &ly, NULL, NULL);
 
-   /* get the geometry of this monitor */
-   evas_object_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+   e_smart_monitor_move_geometry_get(obj, &px, &py, NULL, NULL);
+   /* we need to subtract the layout object position from the 
+    * returned values here because e_layout adds them to the 
+    * child position whenever the child gets moved */
+   if (px > 0) px -= lx;
+   if (py > 0) py -= ly;
+   /* printf("Start Position: %d %d\n", px, py); */
+
+   /* grab the geometry of this monitor (returned in virtual coords) */
+   e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+
+   /* we need to subtract the layout object position from the 
+    * returned values here because e_layout adds them to the 
+    * child position whenever the child gets moved */
+   if (o.x > 0) o.x -= lx;
+   if (o.y > 0) o.y -= ly;
+   /* printf("\tObj Pos: %d %d\n", o.x, o.y); */
+
+   /* copy the rectangle */
+   eina_rectangle_coords_from(&r, o.x, o.y, o.w, o.h);
 
    /* freeze layout */
    e_layout_freeze(sd->o_layout);
 
-   /* find any monitors that this one intersects with */
    EINA_LIST_FOREACH(sd->items, l, mon)
      {
         Eina_Rectangle m;
@@ -356,17 +342,60 @@ _e_smart_randr_layout_reposition(E_Smart_Data *sd, Evas_Object *obj)
         /* skip if it's the current monitor */
         if ((mon == obj)) continue;
 
-        /* get the geometry of this monitor */
-        evas_object_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+        /* grab the geometry of this monitor (returned in virtual coords) */
+        e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+        /* printf("\tThis Mon Position: %d %d\n", m.x, m.y); */
 
-        if (eina_rectangles_intersect(&o, &m))
+        /* we need to subtract the layout object position from the 
+         * returned values here because e_layout adds them to the 
+         * child position whenever the child gets moved */
+        if (m.x > 0) m.x -= lx;
+        if (m.y > 0) m.y -= ly;
+
+        /* this function modifies the dest rectangle, hence the copy above */
+        if (eina_rectangle_intersection(&r, &m))
           {
-             /* if these 2 monitors intersect, we need to move the second one 
-              * as the user is currently moving the first one
-              * 
-              * NB: Currently, this will move This monitor to the 
-              * position of the old one. This is probably not ideal */
-             e_layout_child_move(mon, mx, my);
+             /* printf("\tHave Intersection\n"); */
+             /* printf("\t\tMonitor At: %d %d %d %d\n", m.x, m.y, m.w, m.h); */
+             /* printf("\t\tDifference: %d %d %d %d\n", r.x, r.y, r.w, r.h); */
+
+             if ((o.x != px) && (r.x > (m.w * 0.25)))
+               {
+                  if (r.w > (m.w * 0.25))
+                    {
+                       if (r.w >= (m.x + (m.w - (m.w * 0.75))))
+                         e_layout_child_move(mon, (o.x + o.w), m.y);
+                       else
+                         e_layout_child_move(mon, (o.x - m.w), m.y);
+                    }
+               }
+             else if ((o.y != py) && (r.y > (m.h * 0.25)))
+               {
+                  if (r.h > (m.h * 0.25))
+                    {
+                       if ((r.y + r.h) >= (m.y + (m.h - (m.h * 0.25))))
+                         e_layout_child_move(mon, m.x, (o.y + o.h));
+                       else
+                         e_layout_child_move(mon, m.x, (o.y - m.h));
+                    }
+               }
+          }
+        else
+          {
+             if ((o.x > px) || (o.x < px))
+               {
+                  if (m.x < 0)
+                    e_layout_child_move(mon, (o.x - m.w), m.y);
+                  else if (m.x > (o.x + o.w))
+                    e_layout_child_move(mon, (o.x + o.w), m.y);
+               }
+             else if ((o.y > py) || (o.y < py))
+               {
+                  if (m.y < 0)
+                    e_layout_child_move(mon, m.x, (o.y - m.h));
+                  else if (m.y > (o.y + o.h))
+                    e_layout_child_move(mon, m.x, (o.y + o.h));
+               }
           }
      }
 
@@ -441,10 +470,7 @@ _e_smart_cb_monitor_moved(void *data, Evas_Object *obj, void *event __UNUSED__)
    if (!(sd = evas_object_smart_data_get(o_randr)))
      return;
 
-   if (e_smart_monitor_moving_get(obj)) 
-     _e_smart_randr_layout_reposition(sd, obj);
-   else 
-     _e_smart_randr_layout_adjust(sd, obj);
+   _e_smart_randr_layout_reposition(sd, obj);
 
    _e_smart_randr_changed_set(o_randr);
 }
@@ -472,4 +498,28 @@ _e_smart_cb_monitor_deleted(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_O
                                   _e_smart_cb_monitor_moved);
    evas_object_smart_callback_del(obj, "monitor_toggled", 
                                   _e_smart_cb_monitor_toggled);
+}
+
+static int 
+_e_smart_randr_monitors_sort_position(const void *data1, const void *data2)
+{
+   const Evas_Object *m1 = NULL, *m2 = NULL;
+   Evas_Coord x = 0, y = 0, x2 = 0, y2 = 0;
+
+   if (!(m1 = data1)) return 1;
+   if (!(m2 = data2)) return -1;
+
+   e_layout_child_geometry_get((Evas_Object *)m1, &x, &y, NULL, NULL);
+   e_layout_child_geometry_get((Evas_Object *)m2, &x2, &y2, NULL, NULL);
+
+   if (x2 < x) return 1;
+   if (x2 > x) return -1;
+
+   if (x2 == x)
+     {
+        if (y2 < y) return 1;
+        if (y2 > y) return -1;
+     }
+
+   return 1;
 }
