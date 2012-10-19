@@ -466,6 +466,14 @@ PKG_CHECK_MODULES(E_THUMB, [
   efreet >= ${efl_version}
 ])
 
+PKG_CHECK_MODULES(E_GRABBER, [
+  eina >= ${efl_version}
+  ecore >= ${efl_version}
+  eet >= ${efl_version}
+  efreet >= ${efl_version}
+  ecore-x >= ${efl_version}
+])
+
 efm_requires="\
 ecore >= 1.2.0 \
 ecore-file >= 1.2.0 \

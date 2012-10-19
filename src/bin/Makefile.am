@@ -33,7 +33,8 @@ enlightenment_fm_op \
 enlightenment_init \
 enlightenment_sys \
 enlightenment_thumb \
-enlightenment_alert
+enlightenment_alert \
+enlightenment_static_grabber
 
 if HAVE_EEZE
 internal_bin_PROGRAMS += enlightenment_backlight
@@ -425,6 +426,10 @@ enlightenment_filemanager_CFLAGS = @E_FM_CMDLINE_CFLAGS@
 enlightenment_open_SOURCES = e_open.c
 enlightenment_open_LDADD = @E_OPEN_LIBS@
 enlightenment_open_CFLAGS = @E_OPEN_CFLAGS@
+
+enlightenment_static_grabber_SOURCES = e_static_grab.c
+enlightenment_static_grabber_LDADD = @E_GRABBER_LIBS@
+enlightenment_static_grabber_CFLAGS = @E_GRABBER_CFLAGS@
 
 # HACK! why install-data-hook? install-exec-hook is run after bin_PROGRAMS
 # and before internal_bin_PROGRAMS are installed. install-data-hook is
