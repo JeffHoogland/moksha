@@ -261,14 +261,12 @@ _create_menu(Instance *inst)
 static E_Config_Syscon_Action *
 _find_action(const char *name)
 {
+   E_Config_Syscon_Action *sca;
    Eina_List *l;
 
    if (!name) return NULL;
-   for (l = e_config->syscon.actions; l; l = l->next)
+   EINA_LIST_FOREACH(e_config->syscon.actions, l, sca)
      {
-        E_Config_Syscon_Action *sca;
-
-        if (!(sca = l->data)) continue;
         if (!sca->action) continue;
         if (!strcmp(sca->action, name)) return sca;
      }
