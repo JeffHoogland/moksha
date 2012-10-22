@@ -39104,6 +39104,12 @@ CONNMAN_ICON(ethernet)
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: TASKS ***/
 
+/* NOTE:
+ * tasks gadget supports text/icon only modes
+ * text-only: text part is set to ""
+ * icon-only: no icon is swallowed
+ */
+
    group { name:"modules/tasks/item";
       images {
          image: "bt_base1.png" COMP;
