@@ -1502,7 +1502,7 @@ _e_shelf_gadcon_frame_request(void *data, E_Gadcon_Client *gcc, const char *styl
      }
    snprintf(buf, sizeof(buf), "e,state,orientation,%s",
             e_shelf_orient_string_get(es));
-   edje_object_signal_emit(es->o_base, buf, "e");
+   edje_object_signal_emit(o, buf, "e");
    edje_object_message_signal_process(o);
    return o;
 }
