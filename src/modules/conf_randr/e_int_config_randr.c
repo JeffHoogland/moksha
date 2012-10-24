@@ -256,6 +256,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
         if (!output) continue;
 
+        if (output->connection_status != 
+            ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
+          continue;
+
         if (!(m = e_smart_monitor_add(evas))) continue;
         e_smart_monitor_info_set(m, output, output->crtc);
         e_smart_randr_monitor_add(cfdata->o_scroll, m);
