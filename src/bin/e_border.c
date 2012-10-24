@@ -2706,6 +2706,13 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
         if (bd->zone)
           e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
 
+        if (bd->bg_object)
+          {
+             edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
+             _e_border_client_inset_calc(bd);
+          }
+        e_border_resize_limit(bd, &w, &h);
+        
         if (bd->w < zw)
           w = bd->w;
         else
@@ -2753,7 +2760,6 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
              break;
           }
 
-        edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
         break;
 
       case E_MAXIMIZE_FILL:
@@ -2907,6 +2913,15 @@ e_border_unmaximize(E_Border *bd,
              x = bd->x;
              y = bd->y;
 
+             if (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_SMART) ||
+                 ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_EXPAND))
+               {
+                  if (bd->bg_object)
+                    {
+                       edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
+                       _e_border_client_inset_calc(bd);
+                    }
+               }
              if (max & E_MAXIMIZE_VERTICAL)
                {
                   /* Remove vertical */
