@@ -10,7 +10,6 @@ HTML_FILE_EXTENSION    = .html
 HTML_HEADER            = @srcdir@/head.html
 HTML_FOOTER            = @srcdir@/foot.html
 HTML_STYLESHEET        = @srcdir@/e.css
-HTML_ALIGN_MEMBERS     = YES
 ENUM_VALUES_PER_LINE   = 1
 GENERATE_HTMLHELP      = NO
 CHM_FILE               = 
