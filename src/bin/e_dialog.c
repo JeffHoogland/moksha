@@ -171,6 +171,11 @@ e_dialog_icon_set(E_Dialog *dia, const char *icon, Evas_Coord size)
    edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
    edje_object_signal_emit(dia->bg_object, "e,state,icon", "e");
    evas_object_show(dia->icon_object);
+   if (icon)
+     edje_object_signal_emit(dia->bg_object, "e,icon,enabled", "e");
+   else
+     edje_object_signal_emit(dia->bg_object, "e,icon,disabled", "e");
+   edje_object_message_signal_process(dia->bg_object);
 }
 
 EAPI void
