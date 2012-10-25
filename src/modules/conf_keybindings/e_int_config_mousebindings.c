@@ -734,7 +734,7 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
         cfdata->binding.mouse = eina_list_sort(cfdata->binding.mouse,
                                                eina_list_count(cfdata->binding.mouse), _mouse_binding_sort_cb);
 
-        e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, "Mouse Buttons");
+        e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, _("Mouse Buttons"));
      }
 
    EINA_LIST_FOREACH(cfdata->binding.mouse, l, eb)
@@ -784,7 +784,7 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
         cfdata->binding.wheel = eina_list_sort(cfdata->binding.wheel,
                                                eina_list_count(cfdata->binding.wheel), _wheel_binding_sort_cb);
 
-        e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, "Mouse Wheels");
+        e_widget_ilist_header_append(cfdata->gui.o_binding_list, NULL, _("Mouse Wheels"));
      }
 
    i = 0;
@@ -1156,15 +1156,15 @@ _helper_button_name_get(E_Config_Binding_Mouse *eb)
    switch (eb->button)
      {
       case 1:
-        name = strdup("Left Button");
+        name = strdup(_("Left Button"));
         break;
 
       case 2:
-        name = strdup("Middle Button");
+        name = strdup(_("Middle Button"));
         break;
 
       case 3:
-        name = strdup("Right Button");
+        name = strdup(_("Right Button"));
         break;
 
       case 4:
@@ -1174,7 +1174,7 @@ _helper_button_name_get(E_Config_Binding_Mouse *eb)
         break;
 
       default:
-        snprintf(buf, sizeof(buf), "Extra Button (%d)", eb->button);
+        snprintf(buf, sizeof(buf), _("Extra Button (%d)"), eb->button);
         name = strdup(buf);
      }
    return name;
@@ -1190,15 +1190,15 @@ _helper_wheel_name_get(E_Config_Binding_Wheel *bw)
      {
       case 0:
 	 if (bw->z < 0) 
-	   name = strdup("Mouse Wheel Up");
+	   name = strdup(_("Mouse Wheel Up"));
 	 else
-	   name = strdup("Mouse Wheel Down");
+	   name = strdup(_("Mouse Wheel Down"));
 	 break;
       default:
 	 if (bw->z < 0) 
-	   snprintf(buf, sizeof(buf), "Extra Wheel (%d) Up", bw->direction);
+	   snprintf(buf, sizeof(buf), _("Extra Wheel (%d) Up"), bw->direction);
 	 else
-	   snprintf(buf, sizeof(buf), "Extra Wheel (%d) Down", bw->direction);
+	   snprintf(buf, sizeof(buf), _("Extra Wheel (%d) Down"), bw->direction);
 	 name = strdup(buf);
      }
    return name;
