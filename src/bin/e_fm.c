@@ -6939,13 +6939,29 @@ _e_fm_drag_key_down_cb(E_Drag *drag, Ecore_Event_Key *e)
      }
    else if (!strncmp(e->keyname, "Shift", 5))
      {
-        ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_MOVE);
-        edje_object_signal_emit(drag->object, "e,state,move", "e");
+        if (e->modifiers == ECORE_EVENT_MODIFIER_CTRL)
+          {
+             ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_ASK);
+             edje_object_signal_emit(drag->object, "e,state,ask", "e");
+          }
+        else
+          {
+             ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_MOVE);
+             edje_object_signal_emit(drag->object, "e,state,move", "e");
+          }
      }
    else if (!strncmp(e->keyname, "Control", 7))
      {
-        ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_COPY);
-        edje_object_signal_emit(drag->object, "e,state,copy", "e");
+        if (e->modifiers == ECORE_EVENT_MODIFIER_SHIFT)
+          {
+             ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_ASK);
+             edje_object_signal_emit(drag->object, "e,state,ask", "e");
+          }
+        else
+          {
+             ecore_x_dnd_source_action_set(ECORE_X_ATOM_XDND_ACTION_COPY);
+             edje_object_signal_emit(drag->object, "e,state,copy", "e");
+          }
      }
 }
 
