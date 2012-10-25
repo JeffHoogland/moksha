@@ -22598,6 +22598,18 @@ CONNMAN_ICON(ethernet)
             tag: "br" "\n";
             tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light";
          }
+         style {
+            name: "dialog_style_left";
+            base: "font=Sans font_size=10 text_class=tb_plain align=left color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
+            tag: "br" "\n";
+            tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light";
+         }
+         style {
+            name: "dialog_style_right";
+            base: "font=Sans font_size=10 text_class=tb_plain align=right color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
+            tag: "br" "\n";
+            tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light";
+         }
       }
       parts {
          part {
@@ -22614,6 +22626,47 @@ CONNMAN_ICON(ethernet)
                   min: 1 1;
                }
             }
+            description {
+               state: "left" 0.0;
+               rel1.offset: 4 4;
+               rel2.offset: -5 -5;
+               text {
+                  style: "dialog_style_left";
+                  min: 1 1;
+               }
+            }
+            description {
+               state: "right" 0.0;
+               rel1.offset: 4 4;
+               rel2.offset: -5 -5;
+               text {
+                  style: "dialog_style_right";
+                  min: 1 1;
+               }
+            }
+         }
+      }
+      programs {
+         program {
+            name: "left";
+            signal: "e,state,left";
+            source: "e";
+            action: STATE_SET "left" 0.0;
+            target: "e.textblock.message";
+         }
+         program {
+            name: "right";
+            signal: "e,state,right";
+            source: "e";
+            action: STATE_SET "right" 0.0;
+            target: "e.textblock.message";
+         }
+         program {
+            name: "center";
+            signal: "e,state,center";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "e.textblock.message";
          }
       }
    }
