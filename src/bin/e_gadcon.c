@@ -2575,7 +2575,7 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
           }
 
         /* DRAG RIGHT */
-        if (x > 0 && (cx + gcc->drag.x > gcc->config.pos + gcc->config.size / 2))
+        if (x > 0 && (cx + gcc->drag.x > gcc->config.pos))
           {
              if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_INC)
                gcc->state_info.resist = 0;
@@ -2588,7 +2588,6 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
              if (gcc->state_info.state != E_LAYOUT_ITEM_STATE_POS_DEC)
                gcc->state_info.resist = 0;
              gcc->state_info.state = E_LAYOUT_ITEM_STATE_POS_DEC;
-             cx = -cx;
              changes = 1;
           }
 
