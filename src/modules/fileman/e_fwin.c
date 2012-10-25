@@ -2617,7 +2617,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
 
    // Adding Specific Applications list into widget
    if (apps)
-     e_widget_ilist_header_append(o, NULL, _("Specific Applications"));
+     e_widget_ilist_header_append(o, NULL, _("Suggested Applications"));
    mlist = eina_list_free(mlist);
    EINA_LIST_FOREACH(apps, l, desk)
      {
