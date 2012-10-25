@@ -107,7 +107,7 @@ _pulse_info_get(Pulse *d __UNUSED__, int type __UNUSED__, Pulse_Server_Info *ev)
           break;
        }
    info = ev;
-   if (_mixer_using_default) e_mod_mixer_pulse_ready(EINA_TRUE);
+   if (!_mixer_using_default) e_mod_mixer_pulse_ready(EINA_TRUE);
 }
 
 static Eina_Bool
