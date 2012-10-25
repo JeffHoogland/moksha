@@ -1855,6 +1855,8 @@ _e_fwin_cb_all_change(void *data,
      e_widget_entry_text_set(fad->o_entry, desktop->exec);
    if (desktop)
      efreet_desktop_free(desktop);
+   else
+     e_widget_entry_text_set(fad->o_entry, fad->app2);
 }
 
 static void
@@ -2417,7 +2419,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    Evas_Coord mw, mh;
    Evas_Object *o, *of, *ol, *ot;
    Evas *evas;
-   Eina_List *l = NULL, *apps = NULL, *mlist = NULL;
+   Eina_List *l = NULL, *ll, *apps = NULL, *mlist = NULL;
    Eina_List *cats = NULL;
    Efreet_Desktop *desk = NULL;
    E_Fwin_Apps_Dialog *fad;
@@ -2619,14 +2621,23 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    if (apps)
      e_widget_ilist_header_append(o, NULL, _("Suggested Applications"));
    mlist = eina_list_free(mlist);
-   EINA_LIST_FOREACH(apps, l, desk)
+   EINA_LIST_FOREACH_SAFE(apps, l, ll, desk)
      {
         Evas_Object *icon = NULL;
+        const char *val;
 
         if (!desk) continue;
         icon = e_util_desktop_icon_add(desk, 24, evas);
-        e_widget_ilist_append(o, icon, desk->name, NULL, NULL,
-                              efreet_util_path_to_file_id(desk->orig_path));
+        val = efreet_util_path_to_file_id(desk->orig_path);
+        if (!val) val = eina_stringshare_add(desk->exec);
+        if (val)
+          e_widget_ilist_append(o, icon, desk->name, NULL, NULL, val);
+        else
+          {
+             /* not executable, don't keep in list */
+             apps = eina_list_remove_list(apps, l);
+             efreet_desktop_free(desk);
+          }
      }
 
    // Building All Applications list
