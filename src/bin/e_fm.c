@@ -6350,7 +6350,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
    E_Fm2_Smart_Data *sd;
    E_Event_Dnd_Drop *ev;
    E_Fm2_Icon *ic;
-   Eina_List *fsel, *l, *ll, *il, *isel;
+   Eina_List *fsel, *l, *ll, *il, *isel = NULL;
    char buf[PATH_MAX];
    const char *fp;
    Evas_Object *obj;
@@ -6382,8 +6382,9 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
           {
              if ((e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_MOVE) || (sd->config->view.link_drop))
                {
-                  E_FREE_LIST(fsel, eina_stringshare_del);
-                  return;
+                  if (_e_fm2_view_mode_get(sd) != E_FM2_VIEW_MODE_CUSTOM_ICONS)
+                    goto end;
+                  memerr = EINA_TRUE; // prevent actual file move op
                }
           }
      }
@@ -6473,7 +6474,8 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
              evas_object_smart_callback_call(sd->obj, "changed", NULL);
           }
 
-        args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
+        if (!memerr)
+          args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
      }
    else if (sd->drop_icon) /* into or before/after an icon */
      {
@@ -6497,18 +6499,18 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                   eina_stringshare_del(fp);
                }
 
-             if (S_ISDIR(sd->drop_icon->info.statinfo.st_mode))
-               {
-                  if (sd->drop_icon->info.link)
-                    snprintf(dirpath, sizeof(dirpath), "%s", sd->drop_icon->info.link);
-                  else
-                    snprintf(dirpath, sizeof(dirpath), "%s/%s", sd->realpath, sd->drop_icon->info.file);
-               }
-             else
-               snprintf(dirpath, sizeof(dirpath), "%s", sd->realpath);
-
              if (!memerr)
                {
+                  if (S_ISDIR(sd->drop_icon->info.statinfo.st_mode))
+                    {
+                       if (sd->drop_icon->info.link)
+                         snprintf(dirpath, sizeof(dirpath), "%s", sd->drop_icon->info.link);
+                       else
+                         snprintf(dirpath, sizeof(dirpath), "%s/%s", sd->realpath, sd->drop_icon->info.file);
+                    }
+                  else
+                    snprintf(dirpath, sizeof(dirpath), "%s", sd->realpath);
+
                   args = e_util_string_append_quoted(args, &size, &length, dirpath);
                   if (!args) memerr = EINA_TRUE;
                }
@@ -6521,9 +6523,9 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                     {
                        fp = eina_list_data_get(ll);
                        if (!fp) continue;
-                       snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ecore_file_file_get(fp));
                        if (!memerr)
                          {
+                            snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, ecore_file_file_get(fp));
                             args = e_util_string_append_quoted(args, &size, &length, fp);
                             if (!args) memerr = EINA_TRUE;
                             else
@@ -6598,7 +6600,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                e_fm2_drop_menu(sd->obj, args);
           }
      }
-
+end:
    _e_fm2_dnd_drop_hide(sd->obj);
    _e_fm2_dnd_drop_all_hide(sd->obj);
    _e_fm2_list_walking++;
