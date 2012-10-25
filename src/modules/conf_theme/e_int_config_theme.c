@@ -395,7 +395,7 @@ _create_data(E_Config_Dialog *cfd)
 
    /* Grab the "System" themes. */
    e_prefix_data_concat_static(theme_dir, "data/themes");
-   cfdata->init[1] = eio_eet_open(theme_dir, EET_FILE_MODE_READ, _open_done_cb, _open_error_cb, cfdata);
+   cfdata->init[1] = eio_file_ls(theme_dir, _eio_filter_cb, _init_main_cb, _init_done_cb, _init_error_cb, cfdata);
    return cfdata;
 }
 
