@@ -69,8 +69,8 @@ e_init_show(void)
 
    snprintf(buf, sizeof(buf),
             "%s/enlightenment/utils/enlightenment_init \'%s\' \'%i\' \'%s\' \'%s\'",
-	    e_prefix_lib_get(), theme,
-	    e_config->font_hinting, tit, ver);
+            e_prefix_lib_get(), theme,
+            e_config->font_hinting, tit, ver);
    printf("RUN INIT: %s\n", buf);
    free(theme);
    free(tit);
@@ -106,12 +106,12 @@ e_init_status_set(const char *str)
 //   printf("---STAT %p %s\n", client, str);
    if (!client)
      {
-	stats = eina_list_append(stats, eina_stringshare_add(str));
-	return;
+        stats = eina_list_append(stats, eina_stringshare_add(str));
+        return;
      }
 //   printf("---SEND\n");
    ecore_ipc_client_send(client, E_IPC_DOMAIN_INIT, 1, 0, 0, 0, (void *)str,
-			 strlen(str) + 1);
+                         strlen(str) + 1);
    ecore_ipc_client_flush(client);
 }
 
@@ -141,43 +141,43 @@ e_init_client_data(Ecore_Ipc_Event_Client_Data *e)
    if (!client) client = e->client;
    if (e->minor == 1)
      {
-	if (e->data)
-	  {
-	     int i, num;
-	     Ecore_X_Window *initwins;
+        if (e->data)
+          {
+             int i, num;
+             Ecore_X_Window *initwins;
 
-	     num = e->size / sizeof(Ecore_X_Window);
-	     initwins = e->data;
-	     for (i = 0; i < num; i+= 2)
-	       {
-		  Eina_List *l;
-		  E_Manager *man;
+             num = e->size / sizeof(Ecore_X_Window);
+             initwins = e->data;
+             for (i = 0; i < num; i += 2)
+               {
+                  Eina_List *l;
+                  E_Manager *man;
 
-		  EINA_LIST_FOREACH(e_manager_list(), l, man)
-		    {
-		       if (man->root == initwins[i + 0])
-			 {
-			    man->initwin = initwins[i + 1];
-			    ecore_x_window_raise(man->initwin);
-			 }
-		    }
-	       }
-	  }
-	while (stats)
-	  {
-	     const char *s;
+                  EINA_LIST_FOREACH(e_manager_list(), l, man)
+                    {
+                       if (man->root == initwins[i + 0])
+                         {
+                            man->initwin = initwins[i + 1];
+                            ecore_x_window_raise(man->initwin);
+                         }
+                    }
+               }
+          }
+        while (stats)
+          {
+             const char *s;
 
-	     s = stats->data;
-	     stats = eina_list_remove_list(stats, stats);
+             s = stats->data;
+             stats = eina_list_remove_list(stats, stats);
 //	     printf("---SPOOL %s\n", s);
-	     e_init_status_set(s);
-	     eina_stringshare_del(s);
-	  }
+             e_init_status_set(s);
+             eina_stringshare_del(s);
+          }
      }
    else if (e->minor == 2)
      {
-	e_config->show_splash = e->ref;
-	e_config_save_queue();
+        e_config->show_splash = e->ref;
+        e_config_save_queue();
      }
    if (done) e_init_done();
 }
@@ -188,14 +188,14 @@ e_init_client_del(Ecore_Ipc_Event_Client_Del *e)
 //   printf("---del init client\n");
    if (e->client == client)
      {
-	Eina_List *l;
-	E_Manager *man;
+        Eina_List *l;
+        E_Manager *man;
 
-	client = NULL;
-	EINA_LIST_FOREACH(e_manager_list(), l, man)
-	  {
-	     man->initwin = 0;
-	  }
+        client = NULL;
+        EINA_LIST_FOREACH(e_manager_list(), l, man)
+          {
+             man->initwin = 0;
+          }
      }
 }
 
@@ -214,9 +214,10 @@ _e_init_cb_exe_event_del(void *data __UNUSED__, int type __UNUSED__, void *event
    ev = event;
    if (ev->exe == init_exe)
      {
-	/* init exited */
+        /* init exited */
 //	ecore_exe_free(init_exe);
-	init_exe = NULL;
+        init_exe = NULL;
      }
    return ECORE_CALLBACK_RENEW;
 }
+

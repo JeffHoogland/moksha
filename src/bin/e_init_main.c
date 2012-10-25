@@ -53,17 +53,17 @@
 #undef E_TYPEDEFS
 #include "e_xinerama.h"
 
-EINTERN int e_init_init(void);
-EINTERN int e_init_shutdown(void);
-EAPI void e_init_show(void);
-EAPI void e_init_hide(void);
-EAPI void e_init_title_set(const char *str);
-EAPI void e_init_version_set(const char *str);
-EAPI void e_init_status_set(const char *str);
-EAPI void e_init_done(void);
+EINTERN int      e_init_init(void);
+EINTERN int      e_init_shutdown(void);
+EAPI void        e_init_show(void);
+EAPI void        e_init_hide(void);
+EAPI void        e_init_title_set(const char *str);
+EAPI void        e_init_version_set(const char *str);
+EAPI void        e_init_status_set(const char *str);
+EAPI void        e_init_done(void);
 
 /* local subsystem functions */
-static int _e_ipc_init(void);
+static int       _e_ipc_init(void);
 static Eina_Bool _e_ipc_cb_server_add(void *data, int type, void *event);
 static Eina_Bool _e_ipc_cb_server_del(void *data, int type, void *event);
 static Eina_Bool _e_ipc_cb_server_data(void *data, int type, void *event);
@@ -95,22 +95,26 @@ main(int argc, char **argv)
 
    for (i = 1; i < argc; i++)
      {
-	if ((i == 1) &&
-	    ((!strcmp(argv[i], "-h")) ||
-	     (!strcmp(argv[i], "-help")) ||
-	     (!strcmp(argv[i], "--help"))))
-	  {
-	     printf(
-		    "This is an internal tool for Enlightenment.\n"
-		    "do not use it.\n"
-		    );
-	     exit(0);
-	  }
-	else if (!theme) theme = argv[i];
-	else if (font_hinting < 0) font_hinting = atoi(argv[i]);
-	else if (!title) title = argv[i];
-	else if (!verstr) verstr = argv[i];
-	else fpath = eina_list_append(fpath, argv[i]);
+        if ((i == 1) &&
+            ((!strcmp(argv[i], "-h")) ||
+             (!strcmp(argv[i], "-help")) ||
+             (!strcmp(argv[i], "--help"))))
+          {
+             printf(
+               "This is an internal tool for Enlightenment.\n"
+               "do not use it.\n"
+               );
+             exit(0);
+          }
+        else if (!theme)
+          theme = argv[i];
+        else if (font_hinting < 0)
+          font_hinting = atoi(argv[i]);
+        else if (!title)
+          title = argv[i];
+        else if (!verstr)
+          verstr = argv[i];
+        else fpath = eina_list_append(fpath, argv[i]);
      }
 
    ecore_init();
@@ -128,19 +132,19 @@ main(int argc, char **argv)
 
    if (_e_ipc_init())
      {
-	e_init_init();
-	e_init_show();
-	e_init_title_set(title);
-	e_init_version_set(verstr);
-	e_init_status_set("");
-	ecore_timer_add(0.2, delayed_ok, NULL);
-	ecore_main_loop_begin();
+        e_init_init();
+        e_init_show();
+        e_init_title_set(title);
+        e_init_version_set(verstr);
+        e_init_status_set("");
+        ecore_timer_add(0.2, delayed_ok, NULL);
+        ecore_main_loop_begin();
      }
 
    if (_e_ipc_server)
      {
-	ecore_ipc_server_del(_e_ipc_server);
-	_e_ipc_server = NULL;
+        ecore_ipc_server_del(_e_ipc_server);
+        _e_ipc_server = NULL;
      }
 
    ecore_ipc_shutdown();
@@ -162,11 +166,11 @@ _e_ipc_init(void)
    sdir = getenv("E_IPC_SOCKET");
    if (!sdir)
      {
-	printf("The E_IPC_SOCKET environment variable is not set. This is\n"
-	       "exported by Enlightenment to all processes it launches.\n"
-	       "This environment variable must be set and must point to\n"
-	       "Enlightenment's IPC socket file (minus port number).\n");
-	return 0;
+        printf("The E_IPC_SOCKET environment variable is not set. This is\n"
+               "exported by Enlightenment to all processes it launches.\n"
+               "This environment variable must be set and must point to\n"
+               "Enlightenment's IPC socket file (minus port number).\n");
+        return 0;
      }
    _e_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);
    if (!_e_ipc_server) return 0;
@@ -186,10 +190,10 @@ _e_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
    e = event;
    server = e->server;
    ecore_ipc_server_send(server,
-			 7/*E_IPC_DOMAIN_INIT*/,
-			 1/*hello*/,
-			 0, 0, 0,
-			 initwins, initwins_num * sizeof(Ecore_X_Window));
+                         7 /*E_IPC_DOMAIN_INIT*/,
+                         1 /*hello*/,
+                         0, 0, 0,
+                         initwins, initwins_num * sizeof(Ecore_X_Window));
    ecore_ipc_server_flush(server);
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -208,27 +212,29 @@ _e_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Ipc_Event_Server_Data *e;
 
    e = event;
-   if (e->major != 7/*E_IPC_DOMAIN_INIT*/) return ECORE_CALLBACK_PASS_ON;
+   if (e->major != 7 /*E_IPC_DOMAIN_INIT*/) return ECORE_CALLBACK_PASS_ON;
    switch (e->minor)
      {
       case 1:
-	if (e->data) e_init_status_set(e->data);
-	break;
+        if (e->data) e_init_status_set(e->data);
+        break;
+
       case 2:
-	/* quit now */
-	e_init_done();
-	break;
+        /* quit now */
+        e_init_done();
+        break;
+
       default:
-	break;
+        break;
      }
    return ECORE_CALLBACK_PASS_ON;
 }
 
-static void _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
-static Eina_Bool _e_init_cb_window_configure(void *data, int ev_type, void *ev);
-static Eina_Bool _e_init_cb_timeout(void *data);
+static void        _e_init_cb_signal_disable(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void        _e_init_cb_signal_enable(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void        _e_init_cb_signal_done_ok(void *data, Evas_Object *obj, const char *emission, const char *source);
+static Eina_Bool   _e_init_cb_window_configure(void *data, int ev_type, void *ev);
+static Eina_Bool   _e_init_cb_timeout(void *data);
 static Ecore_Evas *_e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret);
 
 /* local subsystem globals */
@@ -254,7 +260,7 @@ e_init_init(void)
 
    _e_init_configure_handler =
      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_CONFIGURE,
-			     _e_init_cb_window_configure, NULL);
+                             _e_init_cb_window_configure, NULL);
 
    num = 0;
    roots = ecore_x_window_root_list(&num);
@@ -269,17 +275,17 @@ e_init_init(void)
    /* extra root windows/screens */
    for (i = 1; i < num; i++)
      {
-	ecore_x_window_size_get(roots[i], &w, &h);
-	_e_init_ecore_evas = _e_init_evas_new(roots[i], w, h, &_e_init_win);
-	_e_init_evas = ecore_evas_get(_e_init_ecore_evas);
-	initwins[(i * 2) + 0] = roots[i];
-	initwins[(i * 2) + 1] = _e_init_win;
+        ecore_x_window_size_get(roots[i], &w, &h);
+        _e_init_ecore_evas = _e_init_evas_new(roots[i], w, h, &_e_init_win);
+        _e_init_evas = ecore_evas_get(_e_init_ecore_evas);
+        initwins[(i * 2) + 0] = roots[i];
+        initwins[(i * 2) + 1] = _e_init_win;
 
-	o = edje_object_add(_e_init_evas);
-	edje_object_file_set(o, s, "e/init/extra_screen");
-	evas_object_move(o, 0, 0);
-	evas_object_resize(o, w, h);
-	evas_object_show(o);
+        o = edje_object_add(_e_init_evas);
+        edje_object_file_set(o, s, "e/init/extra_screen");
+        evas_object_move(o, 0, 0);
+        evas_object_resize(o, w, h);
+        evas_object_show(o);
      }
 
    /* primary screen/root */
@@ -293,41 +299,41 @@ e_init_init(void)
    screens = (Eina_List *)e_xinerama_screens_get();
    if (screens)
      {
-	E_Screen *scr;
+        E_Screen *scr;
 
-	EINA_LIST_FOREACH(screens, l, scr)
-	  {
-	     o = edje_object_add(_e_init_evas);
-	     if (l == screens)
-	       {
-		  edje_object_file_set(o, s, "e/init/splash");
-		  _e_init_object = o;
-	       }
-	     else
-	       edje_object_file_set(o, s, "e/init/extra_screen");
-	     evas_object_move(o, scr->x, scr->y);
-	     evas_object_resize(o, scr->w, scr->h);
-	     evas_object_show(o);
-	  }
+        EINA_LIST_FOREACH(screens, l, scr)
+          {
+             o = edje_object_add(_e_init_evas);
+             if (l == screens)
+               {
+                  edje_object_file_set(o, s, "e/init/splash");
+                  _e_init_object = o;
+               }
+             else
+               edje_object_file_set(o, s, "e/init/extra_screen");
+             evas_object_move(o, scr->x, scr->y);
+             evas_object_resize(o, scr->w, scr->h);
+             evas_object_show(o);
+          }
      }
    else
      {
-	o = edje_object_add(_e_init_evas);
-	edje_object_file_set(o, s, "e/init/splash");
-	_e_init_object = o;
-	evas_object_move(o, 0, 0);
-	evas_object_resize(o, w, h);
-	evas_object_show(o);
+        o = edje_object_add(_e_init_evas);
+        edje_object_file_set(o, s, "e/init/splash");
+        _e_init_object = o;
+        evas_object_move(o, 0, 0);
+        evas_object_resize(o, w, h);
+        evas_object_show(o);
      }
 
    edje_object_part_text_set(_e_init_object, "e.text.disable_text",
-			     "Disable splash screen");
+                             "Disable splash screen");
    edje_object_signal_callback_add(_e_init_object, "e,action,init,disable", "e",
-				   _e_init_cb_signal_disable, NULL);
+                                   _e_init_cb_signal_disable, NULL);
    edje_object_signal_callback_add(_e_init_object, "e,action,init,enable", "e",
-				   _e_init_cb_signal_enable, NULL);
+                                   _e_init_cb_signal_enable, NULL);
    edje_object_signal_callback_add(_e_init_object, "e,state,done_ok", "e",
-				   _e_init_cb_signal_done_ok, NULL);
+                                   _e_init_cb_signal_done_ok, NULL);
    free(roots);
 
    _e_init_timeout_timer = ecore_timer_add(240.0, _e_init_cb_timeout, NULL);
@@ -395,16 +401,15 @@ e_init_done(void)
    _e_init_timeout_timer = ecore_timer_add(60.0, _e_init_cb_timeout, NULL);
 }
 
-
 static void
 _e_init_cb_signal_disable(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    if (!server) return;
    ecore_ipc_server_send(server,
-			 7/*E_IPC_DOMAIN_INIT*/,
-			 2/*set splash*/,
-			 0, 0, 0,
-			 NULL, 0);
+                         7 /*E_IPC_DOMAIN_INIT*/,
+                         2 /*set splash*/,
+                         0, 0, 0,
+                         NULL, 0);
    ecore_ipc_server_flush(server);
 }
 
@@ -413,10 +418,10 @@ _e_init_cb_signal_enable(void *data __UNUSED__, Evas_Object *obj __UNUSED__, con
 {
    if (!server) return;
    ecore_ipc_server_send(server,
-			 7/*E_IPC_DOMAIN_INIT*/,
-			 2/*set splash*/,
-			 1, 0, 0,
-			 NULL, 0);
+                         7 /*E_IPC_DOMAIN_INIT*/,
+                         2 /*set splash*/,
+                         1, 0, 0,
+                         NULL, 0);
    ecore_ipc_server_flush(server);
 }
 
@@ -426,8 +431,8 @@ _e_init_cb_signal_done_ok(void *data __UNUSED__, Evas_Object *obj __UNUSED__, co
    e_init_hide();
    if (_e_init_timeout_timer)
      {
-	ecore_timer_del(_e_init_timeout_timer);
-	_e_init_timeout_timer = NULL;
+        ecore_timer_del(_e_init_timeout_timer);
+        _e_init_timeout_timer = NULL;
      }
    ecore_main_loop_quit();
 }
@@ -478,19 +483,19 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
 
    if (font_hinting == 0)
      {
-	if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_BYTECODE))
-	  evas_font_hinting_set(e, EVAS_FONT_HINTING_BYTECODE);
-	else if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_AUTO))
-	  evas_font_hinting_set(e, EVAS_FONT_HINTING_AUTO);
-	else
-	  evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
+        if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_BYTECODE))
+          evas_font_hinting_set(e, EVAS_FONT_HINTING_BYTECODE);
+        else if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_AUTO))
+          evas_font_hinting_set(e, EVAS_FONT_HINTING_AUTO);
+        else
+          evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
      }
    else if (font_hinting == 1)
      {
-	if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_AUTO))
-	  evas_font_hinting_set(e, EVAS_FONT_HINTING_AUTO);
-	else
-	  evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
+        if (evas_font_hinting_can_hint(e, EVAS_FONT_HINTING_AUTO))
+          evas_font_hinting_set(e, EVAS_FONT_HINTING_AUTO);
+        else
+          evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
      }
    else if (font_hinting == 2)
      evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
@@ -503,3 +508,4 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
 
    return ee;
 }
+
