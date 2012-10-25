@@ -265,7 +265,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                            &(cfdata->window_out_of_vscreen_limits));
    e_widget_list_object_append(ol, oc, 1, 1, 0.5);
 
-   oc = e_widget_check_add(evas, _("Allow windows partly out of screen limits"),
+   oc = e_widget_check_add(evas, _("Keep windows within the visual screen limits"),
                            &(cfdata->window_out_of_vscreen_limits_partly));
    e_widget_list_object_append(ol, oc, 1, 1, 0.5);
 
