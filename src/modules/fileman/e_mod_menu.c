@@ -186,12 +186,14 @@ _e_mod_menu_populate_done(void *data, Eio_File *handler __UNUSED__)
    if (!e_object_unref(data)) return;
    if (!m->items)
      {
-        e_menu_deactivate(m);
-        if (m->parent_item)
-          e_menu_item_submenu_set(m->parent_item, NULL);
-        return;
+        E_Menu_Item *mi;
+
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("0 listable items"));
+        e_menu_item_disabled_set(mi, 1);
      }
-   m->items = eina_list_sort(m->items, 0, (Eina_Compare_Cb)_e_mod_menu_populate_sort);
+   else
+     m->items = eina_list_sort(m->items, 0, (Eina_Compare_Cb)_e_mod_menu_populate_sort);
    e_menu_thaw(m);
 }
 
