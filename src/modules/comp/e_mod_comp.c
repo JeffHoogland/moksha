@@ -127,6 +127,7 @@ struct _E_Comp_Win
    Eina_Bool            hidden_override : 1;  // hidden override
    Eina_Bool            animating : 1;  // it's busy animating - defer hides/dels
    Eina_Bool            force : 1;  // force del/hide even if animating
+   Eina_Bool            defer_show : 1;  // stupid gtk apps hide windows twice, ticket #1558
    Eina_Bool            defer_hide : 1;  // flag to get hide to work on deferred hide
    Eina_Bool            delete_me : 1;  // delete me!
    Eina_Bool            visible : 1;  // is visible
@@ -2273,7 +2274,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
           }
         ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
      }
-   if ((cw->dmg_updates >= 1) && (cw->show_ready))
+   if (((cw->dmg_updates >= 1) || (cw->defer_show)) && (cw->show_ready))
      {
         cw->defer_hide = 0;
         if (!cw->hidden_override) _e_mod_comp_child_show(cw);
@@ -2695,6 +2696,22 @@ _e_mod_comp_show(void *data __UNUSED__,
    >  fixes ticket #765 and probably some others.
    >  affected apps: claws-mail, firefox
  */
+   if (cw->defer_hide)
+     {
+        /*
+         * this flag was added to further increase compatibility with such magnificent
+         * gui programming specialists as described in the above comment. another corner
+         * case of the previously-mentioned genius involves the menus of this incredible toolkit:
+         * when activating and deactivating menus quickly, gtk sends two separate hide events for
+         * the same window back-to-back. this means we end up with HIDE-SHOW-HIDE because
+         * the next activation comes between the hides. to prevent this, we set the defer_show
+         * flag, which tells comp to ignore the next hide event and to ignore the window's DAMAGE
+         * event counter when evaluating whether to show it in _e_mod_comp_win_show() below. in this
+         * way, we ensure that such menus will always be shown.
+         * ticket #1558
+         */
+        cw->defer_show = 1;
+     }
    cw->defer_hide = 0;
    if (cw->visible) return ECORE_CALLBACK_PASS_ON;
    _e_mod_comp_win_show(cw);
@@ -2710,7 +2727,8 @@ _e_mod_comp_hide(void *data __UNUSED__,
    E_Comp_Win *cw = _e_mod_comp_win_find(ev->win);
    if (!cw) return ECORE_CALLBACK_PASS_ON;
    if (!cw->visible) return ECORE_CALLBACK_PASS_ON;
-   _e_mod_comp_win_real_hide(cw);
+   if (cw->defer_show) cw->defer_show = 0;
+   else _e_mod_comp_win_real_hide(cw);
    return ECORE_CALLBACK_PASS_ON;
 }
 
