@@ -30,6 +30,8 @@ struct _E_Widget_Data
    Evas_Coord   preview_w, preview_h;
    int w, h;
    Ecore_Thread *preview_text_file_thread;
+   Eio_Monitor *monitor;
+   Eina_List *handlers;
    char        *preview_extra_text;
    char        *preview_size_text;
    char        *preview_owner_text;
@@ -712,6 +714,8 @@ _e_wid_del_hook(Evas_Object *obj)
    eina_stringshare_del(wd->mime);
    if (wd->preview_text_file_thread) ecore_thread_cancel(wd->preview_text_file_thread);
    wd->preview_text_file_thread = NULL;
+   if (wd->monitor) eio_monitor_del(wd->monitor);
+   E_FREE_LIST(wd->handlers, ecore_event_handler_del);
    free(wd);
 }
 
@@ -931,6 +935,25 @@ _e_wid_fprev_preview_fm(E_Widget_Data *wd)
    e_fm2_path_set(wd->o_preview_preview, "/", wd->path);
 }
 
+static Eina_Bool
+_e_wid_fprev_cb_del(E_Widget_Data *wd, int type __UNUSED__, Eio_Monitor_Event *ev)
+{
+   if (wd->monitor != ev->monitor) return ECORE_CALLBACK_RENEW;
+   _e_wid_fprev_clear_widgets(wd);
+   eio_monitor_del(wd->monitor);
+   wd->monitor = NULL;
+   E_FREE_LIST(wd->handlers, ecore_event_handler_del);
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_e_wid_fprev_cb_mod(E_Widget_Data *wd, int type __UNUSED__, Eio_Monitor_Event *ev)
+{
+   if (wd->monitor != ev->monitor) return ECORE_CALLBACK_RENEW;
+   _e_wid_fprev_preview_file(wd);
+   return ECORE_CALLBACK_RENEW;
+}
+
 EAPI Evas_Object *
 e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
 {
@@ -982,6 +1005,15 @@ e_widget_filepreview_path_set(Evas_Object *obj, const char *path, const char *mi
    if (!wd) return;
    eina_stringshare_replace(&wd->path, path);
    eina_stringshare_replace(&wd->mime, mime);
+   if (wd->monitor) eio_monitor_del(wd->monitor);
+   wd->monitor = eio_monitor_stringshared_add(wd->path);
+   if (!wd->handlers)
+     {
+        E_LIST_HANDLER_APPEND(wd->handlers, EIO_MONITOR_FILE_MODIFIED, _e_wid_fprev_cb_mod, wd);
+        E_LIST_HANDLER_APPEND(wd->handlers, EIO_MONITOR_FILE_DELETED, _e_wid_fprev_cb_del, wd);
+        E_LIST_HANDLER_APPEND(wd->handlers, EIO_MONITOR_ERROR, _e_wid_fprev_cb_del, wd);
+        E_LIST_HANDLER_APPEND(wd->handlers, EIO_MONITOR_SELF_DELETED, _e_wid_fprev_cb_del, wd);
+     }
    _e_wid_fprev_preview_file(wd);
 }
 
