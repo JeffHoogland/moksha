@@ -12,6 +12,8 @@ struct _E_Smart_Data
    Evas_Object  *obj;
    Evas_Object  *eventarea;
    Ecore_Timer  *timer;
+   Ecore_Timer  *guessing_animation;
+   double        last_resize;
    int           size;
    int           frame, frame_count;
    const char   *fdo;
@@ -19,6 +21,7 @@ struct _E_Smart_Data
    unsigned char scale_up : 1;
    unsigned char preload : 1;
    unsigned char loading : 1;
+   unsigned char animated : 1;
    Eina_Bool edje : 1;
 #ifdef USE_ICON_CACHE
    const char   *file;
@@ -171,7 +174,9 @@ _e_icon_obj_prepare(Evas_Object *obj, E_Smart_Data *sd)
         eina_stringshare_replace(&sd->file, NULL);
 #endif
         sd->obj = evas_object_image_add(evas_object_evas_get(obj));
-        evas_object_image_scale_hint_set(sd->obj, EVAS_IMAGE_SCALE_HINT_STATIC);
+        if (!sd->animated)
+          evas_object_image_scale_hint_set(sd->obj,
+                                           EVAS_IMAGE_SCALE_HINT_STATIC);
         evas_object_smart_member_add(sd->obj, obj);
         evas_object_event_callback_add(sd->obj, EVAS_CALLBACK_IMAGE_PRELOADED,
                                        _e_icon_preloaded, obj);
@@ -247,6 +252,8 @@ e_icon_file_set(Evas_Object *obj, const char *file)
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
+   if (sd->guessing_animation) ecore_timer_del(sd->guessing_animation);
+   sd->guessing_animation = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
    sd->edje = EINA_FALSE;
@@ -317,6 +324,8 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
+   if (sd->guessing_animation) ecore_timer_del(sd->guessing_animation);
+   sd->guessing_animation = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
    sd->edje = EINA_FALSE;
@@ -361,6 +370,8 @@ e_icon_edje_object_set(Evas_Object *obj, Evas_Object *edje)
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
+   if (sd->guessing_animation) ecore_timer_del(sd->guessing_animation);
+   sd->guessing_animation = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
    sd->edje = EINA_TRUE;
@@ -391,6 +402,8 @@ e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
+   if (sd->guessing_animation) ecore_timer_del(sd->guessing_animation);
+   sd->guessing_animation = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
    sd->edje = EINA_TRUE;
@@ -421,6 +434,8 @@ e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
+   if (sd->guessing_animation) ecore_timer_del(sd->guessing_animation);
+   sd->guessing_animation = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
    sd->edje = EINA_FALSE;
@@ -469,6 +484,8 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
 
    if (sd->timer) ecore_timer_del(sd->timer);
    sd->timer = NULL;
+   if (sd->guessing_animation) ecore_timer_del(sd->guessing_animation);
+   sd->guessing_animation = NULL;
    sd->frame = 0;
    sd->frame_count = 0;
    sd->edje = EINA_FALSE;
@@ -831,6 +848,7 @@ _e_icon_smart_del(Evas_Object *obj)
    if (sd->file) eina_stringshare_del(sd->file);
 #endif
    if (sd->timer) ecore_timer_del(sd->timer);
+   if (sd->guessing_animation) ecore_timer_del(sd->guessing_animation);
    evas_object_smart_data_set(obj, NULL);
    memset(sd, 0, sizeof(*sd));
    free(sd);
@@ -846,6 +864,28 @@ _e_icon_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd->x = x;
    sd->y = y;
    _e_icon_smart_reconfigure(sd);
+}
+
+static Eina_Bool
+_e_icon_guess_anim(void *data)
+{
+   E_Smart_Data *sd = data;
+   double t = ecore_loop_time_get();
+
+   if (t - sd->last_resize < 0.2)
+     {
+        evas_object_image_scale_hint_set(sd->obj,
+                                         EVAS_IMAGE_SCALE_HINT_DYNAMIC);
+        sd->animated = EINA_TRUE;
+     }
+   else
+     {
+        evas_object_image_scale_hint_set(sd->obj,
+                                         EVAS_IMAGE_SCALE_HINT_STATIC);
+     }
+
+   sd->guessing_animation = NULL;
+   return EINA_FALSE;
 }
 
 static void
@@ -875,6 +915,19 @@ _e_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
           }
      }
 
+   if (((sd->loading && sd->preload) ||
+        (!sd->loading && !sd->preload))
+       && !sd->animated)
+     {
+        evas_object_image_scale_hint_set(sd->obj,
+                                         EVAS_IMAGE_SCALE_HINT_DYNAMIC);
+        if (!sd->guessing_animation)
+          sd->guessing_animation = ecore_timer_add(0.3,
+                                                   _e_icon_guess_anim,
+                                                   sd);
+     }
+
+   sd->last_resize = ecore_loop_time_get();
    _e_icon_smart_reconfigure(sd);
 }
 
