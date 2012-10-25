@@ -106,7 +106,7 @@ static int           _e_fm_op_remove_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_rename_atom(E_Fm_Op_Task *task);
 static int           _e_fm_op_destroy_atom(E_Fm_Op_Task *task);
 static void          _e_fm_op_random_buf(char *buf, ssize_t len);
-static char          _e_fm_op_random_char();
+static void          _e_fm_op_random_char(char *buf, size_t len);
 
 Eina_List *_e_fm_op_work_queue = NULL, *_e_fm_op_scan_queue = NULL;
 Ecore_Idler *_e_fm_op_work_idler_p = NULL, *_e_fm_op_scan_idler_p = NULL;
@@ -311,12 +311,11 @@ main(int argc, char **argv)
                                  if ((stat(argv[i], &st1) == 0) &&
                                      (stat(buf, &st2) == 0))
                                    {
-                                      /* if files are on the same device */
-                                      if (st1.st_dev == st2.st_dev)
-                                        type = E_FM_OP_RENAME;
-                                      else
+                                      /* if files are not on the same device */
+                                      if (st1.st_dev != st2.st_dev)
                                         type = E_FM_OP_MOVE;
                                    }
+                                 else type = E_FM_OP_MOVE;
                               }
                          }
 
@@ -1661,7 +1660,6 @@ _e_fm_op_rename_atom(E_Fm_Op_Task *task)
    return 0;
 }
 
-/* EXPERIMENTAL */
 static int
 _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
 {
@@ -1691,7 +1689,7 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
 
        if (st2.st_dev != task->src.st.st_dev ||
            st2.st_ino != task->src.st.st_ino ||
-           !S_ISREG(st2.st_mode))
+           st2.st_mode != task->src.st.st_mode)
          goto finish;
 
        if ((buf = malloc(READBUFSIZE)) == NULL)
@@ -1744,32 +1742,28 @@ static void
 _e_fm_op_random_buf(char *buf, ssize_t len)
 {
    int f = -1;
-   ssize_t i;
 
    if ((f = open("/dev/urandom", O_RDONLY)) == -1)
      {
-       for (i = 0; i < len; i++)
-         {
-            buf[i] = _e_fm_op_random_char();
-         }
-       return;
+        _e_fm_op_random_char(buf, len);
+        return;
      }
 
    if (read(f, buf, len) != len)
-     {
-       for (i = 0; i < len; i++)
-         {
-            buf[i] = _e_fm_op_random_char();
-         }
-     }
+     _e_fm_op_random_char(buf, len);
 
    close(f);
    return;
 }
 
-static char
-_e_fm_op_random_char()
+static void
+_e_fm_op_random_char(char *buf, size_t len)
 {
+   size_t i;
    srand((unsigned int)time(NULL));
-   return (rand() % 256) + 'a';
+
+   for (i = 0; i < len; i++)
+     {
+        buf[i] = (rand() % 256) + 'a';
+     }
 }
