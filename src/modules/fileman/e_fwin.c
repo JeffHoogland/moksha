@@ -938,6 +938,8 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
                                     e_fm2_pan_get,
                                     e_fm2_pan_max_get,
                                     e_fm2_pan_child_size_get);
+   e_scrollframe_custom_theme_set(e_widget_scrollframe_object_get(o), "base/theme/fileman",
+                                  "e/fileman/default/scrollframe");
    evas_object_propagate_events_set(page->flist, 0);
    e_widget_can_focus_set(o, EINA_FALSE);
    e_fm2_window_object_set(page->flist, E_OBJECT(page->fwin->win));
