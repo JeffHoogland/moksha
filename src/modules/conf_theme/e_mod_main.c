@@ -7,6 +7,11 @@ static void _e_mod_menu_wallpaper_add(void *data, E_Menu *m);
 static void _e_mod_run_theme_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_mod_menu_theme_add(void *data, E_Menu *m);
 
+static Eio_File *eio_ls[2] = {NULL};
+static Eina_List *sthemes = NULL;
+static Eina_List *themes = NULL;
+static const char *cur_theme = NULL;
+
 static E_Module *conf_module = NULL;
 static E_Int_Menu_Augmentation *maug[8] = {0};
 
@@ -86,6 +91,18 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         maug[1] = NULL;
      }
 
+   if (eio_ls[0])
+     eio_file_cancel(eio_ls[0]);
+   else
+     E_FREE_LIST(themes, free);
+
+   if (eio_ls[1])
+     eio_file_cancel(eio_ls[1]);
+   else
+     E_FREE_LIST(sthemes, free);
+   eio_ls[0] = eio_ls[1] = NULL;
+   cur_theme = NULL;
+
    while ((cfd = e_config_dialog_get("E", "appearance/startup")))
      e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "appearance/scale")))
@@ -158,14 +175,154 @@ _e_mod_run_theme_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__
    e_configure_registry_call("appearance/theme", m->zone->container, NULL);
 }
 
+
+static void
+_init_main_cb(void *data __UNUSED__, Eio_File *handler, const char *file)
+{
+   if (handler == eio_ls[0])
+     themes = eina_list_append(themes, strdup(file));
+   else if (handler == eio_ls[1])
+     sthemes = eina_list_append(sthemes, strdup(file));
+}
+
+static int
+_sort_cb(const char *a, const char *b)
+{
+   const char *f1, *f2;
+
+   f1 = ecore_file_file_get(a);
+   f2 = ecore_file_file_get(b);
+   return e_util_strcasecmp(f1, f2);
+}
+
+static void
+_item_del(void *data)
+{
+   E_Menu_Item *mi = data;
+
+   free(mi->cb.data);
+}
+
+static void
+_theme_set(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Action *a;
+
+   if (!e_util_strcmp(data, cur_theme)) return;
+
+   e_theme_config_set("theme", data);
+   e_config_save_queue();
+
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+static void
+_init_error_cb(void *data __UNUSED__, Eio_File *handler, int error __UNUSED__)
+{
+   if ((!eio_ls[0]) && (!eio_ls[1])) goto out;
+   if (eio_ls[0] == handler)
+     {
+        eio_ls[0] = NULL;
+        E_FREE_LIST(themes, free);
+     }
+   else
+     {
+        eio_ls[1] = NULL;
+        E_FREE_LIST(sthemes, free);
+     }
+   return;
+out:
+   E_FREE_LIST(themes, free);
+   E_FREE_LIST(sthemes, free);
+}
+
+static void
+_item_new(char *file, E_Menu *m)
+{
+   E_Menu_Item *mi;
+   char *name, *sfx;
+   Eina_Bool used;
+
+   used = !e_util_strcmp(file, cur_theme);
+   name = (char*)ecore_file_file_get(file);
+   if (!name) return;
+   sfx = strrchr(name, '.');
+   name = strndupa(name, sfx - name);
+   mi = e_menu_item_new(m);
+   e_object_del_attach_func_set(E_OBJECT(mi), _item_del);
+   e_menu_item_label_set(mi, name);
+   if (!used) e_menu_item_callback_set(mi, _theme_set, file);
+   e_menu_item_check_set(mi, 1);
+   e_menu_item_toggle_set(mi, used);
+}
+
+static void
+_init_done_cb(void *data, Eio_File *handler)
+{
+   char *file;
+
+   if ((!eio_ls[0]) && (!eio_ls[1])) goto out;
+   if (eio_ls[0] == handler)
+     {
+        eio_ls[0] = NULL;
+        themes = eina_list_sort(themes, 0, (Eina_Compare_Cb)_sort_cb);
+     }
+   else
+     {
+        eio_ls[1] = NULL;
+        sthemes = eina_list_sort(sthemes, 0, (Eina_Compare_Cb)_sort_cb);
+     }
+   if ((eio_ls[0]) || (eio_ls[1])) return;
+
+   EINA_LIST_FREE(themes, file)
+     _item_new(file, data);
+   e_menu_item_separator_set(e_menu_item_new(data), 1);
+   EINA_LIST_FREE(sthemes, file)
+     _item_new(file, data);
+   e_menu_thaw(data);
+   return;
+out:
+   E_FREE_LIST(themes, free);   
+   E_FREE_LIST(sthemes, free);   
+}
+
+static Eina_Bool
+_eio_filter_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const char *file)
+{
+   return eina_str_has_extension(file, ".edj");
+}
+
+static void
+_e_mod_menu_theme_del(void *d __UNUSED__)
+{
+   cur_theme = NULL;
+}
+
 static void
 _e_mod_menu_theme_add(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
+   E_Config_Theme *ct;
+   char buf[PATH_MAX];
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Theme"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-theme");
    e_menu_item_callback_set(mi, _e_mod_run_theme_cb, NULL);
+   ct = e_theme_config_get("theme");
+   if (!ct) return;
+
+   cur_theme = ct->file;   
+   m = e_menu_new();
+   e_object_del_attach_func_set(E_OBJECT(m), _e_mod_menu_theme_del);
+   e_menu_freeze(m);
+   e_menu_title_set(m, "Themes");
+   e_menu_item_submenu_set(mi, m);
+   e_object_unref(E_OBJECT(m));
+   e_user_dir_concat_static(buf, "themes");
+   eio_ls[0] = eio_file_ls(buf, _eio_filter_cb, _init_main_cb, _init_done_cb, _init_error_cb, m);
+   e_prefix_data_concat_static(buf, "data/themes");
+   eio_ls[1] = eio_file_ls(buf, _eio_filter_cb, _init_main_cb, _init_done_cb, _init_error_cb, m);
 }
 
