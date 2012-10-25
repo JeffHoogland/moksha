@@ -915,7 +915,7 @@ _e_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
           }
      }
 
-   if (((sd->loading && sd->preload) ||
+   if ((!sd->edje) && ((sd->loading && sd->preload) ||
         (!sd->loading && !sd->preload))
        && !sd->animated)
      {
