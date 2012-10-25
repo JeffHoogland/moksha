@@ -4321,7 +4321,7 @@ _e_border_lost_window_internal_get(E_Border *bd)
    int loss_overlap = 5;
 
    if (bd->during_lost) return EINA_FALSE;
-   if (!e_config->window_out_of_vscreen_limits) return EINA_FALSE;
+   if (e_config->window_out_of_vscreen_limits) return EINA_FALSE;
    if (!(bd->zone))
      return EINA_FALSE;
 
@@ -6748,7 +6748,7 @@ _e_border_cb_mouse_move(void *data,
         new_x = x;
         new_y = y;
 
-        if (!e_config->window_out_of_vscreen_limits_partly)
+        if (e_config->window_out_of_vscreen_limits_partly)
           _e_border_stay_within_container(bd, x, y, &new_x, &new_y);
         else
           {
