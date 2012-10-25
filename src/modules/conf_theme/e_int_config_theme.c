@@ -300,7 +300,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    c = e_theme_config_get("theme");
    if (c)
-     cfdata->theme = eina_stringshare_add(c->file);
+     cfdata->theme = eina_stringshare_ref(c->file);
    else
      {
         e_prefix_data_concat_static(path, "data/themes/default.edj");
