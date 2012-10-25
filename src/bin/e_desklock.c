@@ -453,6 +453,8 @@ _e_desklock_popup_add(E_Zone *zone)
      }
 
    edp->popup_wnd = e_popup_new(zone, 0, 0, zone->w, zone->h);
+   e_popup_name_set(edp->popup_wnd, "_e_popup_desklock");
+   ecore_evas_title_set(edp->popup_wnd->ecore_evas, "E Desklock");
    evas_event_feed_mouse_move(edp->popup_wnd->evas, -1000000, -1000000,
                               ecore_x_current_time_get(), NULL);
 
