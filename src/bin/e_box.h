@@ -25,5 +25,6 @@ EAPI void         e_box_align_get         (Evas_Object *obj, double *ax, double 
 EAPI void         e_box_align_set         (Evas_Object *obj, double ax, double ay);
 EAPI void	  e_box_align_pixel_offset_get (Evas_Object *obj, int *x, int *y);
 EAPI Evas_Object *e_box_item_at_xy_get(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
+EAPI Eina_Bool e_box_item_size_get(Evas_Object *obj, int *w, int *h);
 #endif
 #endif

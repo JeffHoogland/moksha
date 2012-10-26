@@ -453,6 +453,18 @@ e_box_item_at_xy_get(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    return NULL;
 }
 
+EAPI Eina_Bool
+e_box_item_size_get(Evas_Object *obj, int *w, int *h)
+{
+   E_Box_Item *bi;
+
+   bi = evas_object_data_get(obj, "e_box_data");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(bi, EINA_FALSE);
+   if (w) *w = bi->w;
+   if (h) *h = bi->h;
+   return EINA_TRUE;
+}
+
 /* local subsystem functions */
 static void
 _e_box_unpack_internal(E_Smart_Data *sd, E_Box_Item *bi)
