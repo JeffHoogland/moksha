@@ -7433,6 +7433,11 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
      }
    else if (!strcmp(ev->key, "F5"))
      e_fm2_refresh(obj);
+   else if (!strcmp(ev->key, "F2"))
+     {
+        if (eina_list_count(sd->selected_icons) == 1)
+          _e_fm2_file_rename(eina_list_data_get(sd->selected_icons), NULL, NULL);
+     }
    else if (!strcmp(ev->key, "Insert"))
      {
         /* dunno what to do with this yet */
