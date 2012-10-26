@@ -578,7 +578,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    int bpl = 0, rows = 0, bpp = 0, sw, sh;
    Evas *evas, *evas2;
    Evas_Object *o, *oa, *op, *ol;
-   Evas_Coord w, h;
+   int x, y, w, h;
    Evas_Modifier_Mask mask;
    Ecore_X_Window xwin, root;
    E_Radio_Group *rg;
@@ -592,10 +592,10 @@ _shot_now(E_Zone *zone, E_Border *bd)
         scon = zone->container;
         xwin = sman->root;
         sw = sman->w, sh = sman->h;
+        x = y = 0;
      }
    else
      {
-        sw = bd->client.w, sh = bd->client.h;
         root = bd->zone->container->manager->root;
         xwin = bd->client.win;
         while (xwin != root)
@@ -604,6 +604,10 @@ _shot_now(E_Zone *zone, E_Border *bd)
              xwin = ecore_x_window_parent_get(xwin);
           }
         ecore_x_window_geometry_get(xwin, NULL, NULL, &sw, &sh);
+        x = E_CLAMP(bd->x, bd->zone->x, bd->zone->w);
+        y = E_CLAMP(bd->y, bd->zone->y, bd->zone->h);
+        sw = E_CLAMP(sw, 0, bd->zone->w - x);
+        sh = E_CLAMP(sh, 0, bd->zone->h - y);
      }
    display = ecore_x_display_get();
    scr = ecore_x_default_screen_get();
