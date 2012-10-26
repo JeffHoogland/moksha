@@ -811,7 +811,8 @@ _e_fwin_icon_popup(void *data)
      snprintf(buf, sizeof(buf), "%s", fwin->popup_icon->file);
    list = e_widget_framelist_add(fwin->popup->evas, buf, 0);
    */
-   list = e_widget_framelist_add(fwin->popup->evas, fwin->popup_icon->file, 0);
+
+   list = e_widget_framelist_add(fwin->popup->evas, fwin->popup_icon->label ?: fwin->popup_icon->file, 0);
    o = e_widget_filepreview_add(fwin->popup->evas, mw, mh, 0);
    e_widget_filepreview_path_set(o, buf, fwin->popup_icon->mime);
    e_widget_framelist_object_append(list, o);
