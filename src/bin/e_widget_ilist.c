@@ -951,6 +951,7 @@ e_widget_ilist_remove_num(Evas_Object *obj, int n)
    E_Widget_Data *wd;
    Eina_List *item;
 
+   if (n < 0) return;
    wd = e_widget_data_get(obj);
    if (!wd) return;
    e_ilist_remove_num(wd->o_ilist, n);
