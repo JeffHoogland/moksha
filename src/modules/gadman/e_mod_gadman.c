@@ -8,7 +8,7 @@ static void             _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *m
 static void             _save_widget_position(E_Gadcon_Client *gcc);
 static void             _apply_widget_position(E_Gadcon_Client *gcc);
 static E_Gadcon_Client *_gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer, E_Config_Gadcon_Client *src_cf);
-
+static Eina_Bool _gadman_module_init_end_cb(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
 static Evas_Object     *_create_mover(E_Gadcon *gc);
 static Evas_Object     *_get_mover(E_Gadcon_Client *gcc);
 static E_Gadcon        *_gadman_gadcon_new(const char *name, Gadman_Layer_Type layer, E_Zone *zone, E_Gadcon_Location *loc);
@@ -46,7 +46,7 @@ static Eina_Bool        _e_gadman_cb_zone_del(void *data __UNUSED__, int type __
 static E_Gadcon_Client *gadman_gadget_place(E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc, E_Config_Gadcon_Client *cf, Gadman_Layer_Type layer, E_Zone *zone);
 
 static E_Gadcon        *gadman_gadcon_get(const E_Zone *zone, Gadman_Layer_Type layer);
-
+static Eina_Bool gadman_locked;
 Manager *Man = NULL;
 static Eina_List *_gadman_hdls = NULL;
 static Eina_Hash *_gadman_gadgets = NULL;
@@ -111,6 +111,7 @@ gadman_reset(void)
    const Eina_List *l;
    E_Zone *zone;
 
+   if (gadman_locked) return;
    E_FREE_LIST(Man->drag_handlers, ecore_event_handler_del);   
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
@@ -146,8 +147,6 @@ gadman_reset(void)
 void
 gadman_init(E_Module *m)
 {
-   const Eina_List *l;
-   E_Zone *zone;
    E_Gadcon_Location *location;
 
    /* Create Manager */
@@ -155,6 +154,7 @@ gadman_init(E_Module *m)
    if (!Man) return;
 
    Man->module = m;
+   gadman_locked = EINA_TRUE;
    Man->container = e_container_current_get(e_manager_current_get());
    Man->width = Man->container->w;
    Man->height = Man->container->h;
@@ -179,21 +179,6 @@ gadman_init(E_Module *m)
                                     _e_gadman_client_remove, NULL);
    e_gadcon_location_set_icon_name(location, "preferences-desktop");
    e_gadcon_location_register(location);
-
-   /* iterating through zones - and making gadmans on each */
-   EINA_LIST_FOREACH(Man->container->zones, l, zone)
-     {
-        const char *layer_name[] = {"gadman", "gadman_top"};
-        unsigned int layer;
-
-        for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
-          {
-             E_Gadcon *gc;
-
-             gc = _gadman_gadcon_new(layer_name[layer], layer, zone, Man->location[layer]);
-             Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
-          }
-     }
 
    _gadman_gadgets = eina_hash_string_superfast_new(NULL);
    _e_gadman_handlers_add();
@@ -607,6 +592,7 @@ gadman_update_bg(void)
    Evas_Object *obj;
    const char *ext;
 
+   if (!Man->gc_top) return;
    obj = edje_object_part_swallow_get(Man->full_bg, "e.swallow.bg");
    if (obj)
      {
@@ -1578,12 +1564,21 @@ _e_gadman_handlers_add(void)
    E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_ZONE_ADD, _e_gadman_cb_zone_add, NULL);
    E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_ZONE_DEL, _e_gadman_cb_zone_del, NULL);
    E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_MODULE_UPDATE, _gadman_module_cb, NULL);
+   E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_MODULE_INIT_END, _gadman_module_init_end_cb, NULL);
 }
 
 static void
 _e_gadman_handler_del(void)
 {
    E_FREE_LIST(_gadman_hdls, ecore_event_handler_del);
+}
+
+static Eina_Bool
+_gadman_module_init_end_cb(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   gadman_locked = EINA_FALSE;
+   gadman_reset();
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
