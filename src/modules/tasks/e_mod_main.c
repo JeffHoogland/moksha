@@ -45,6 +45,7 @@ struct _Tasks_Item
    E_Border    *border; // The border this item points to
    Evas_Object *o_item; // The edje theme object
    Evas_Object *o_icon; // The icon
+   Eina_Bool skip_taskbar : 1;
 };
 
 static Tasks       *_tasks_new(Evas *evas, E_Zone *zone, const char *id);
@@ -430,6 +431,7 @@ _tasks_refill_border(E_Border *border)
 {
    const Eina_List *l;
    Tasks *tasks;
+   Eina_Bool found = EINA_FALSE;
 
    EINA_LIST_FOREACH(tasks_config->tasks, l, tasks)
      {
@@ -440,10 +442,12 @@ _tasks_refill_border(E_Border *border)
              if (item->border == border)
                {
                   _tasks_item_refill(item);
+                  found = EINA_TRUE;
                   break;
                }
           }
      }
+   if (!found) _tasks_refill_all();
 }
 
 static void
@@ -487,6 +491,7 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
    e_object_ref(E_OBJECT(border));
    item->tasks = tasks;
    item->border = border;
+   item->skip_taskbar = border->client.netwm.state.skip_taskbar;
    item->o_item = edje_object_add(evas_object_evas_get(tasks->o_items));
    if (tasks->horizontal)
      e_theme_edje_object_set(item->o_item,
@@ -569,6 +574,11 @@ _tasks_item_free(Tasks_Item *item)
 static void
 _tasks_item_refill(Tasks_Item *item)
 {
+   if (item->border->client.netwm.state.skip_taskbar != item->skip_taskbar)
+     {
+        _tasks_refill(item->tasks);
+        return;
+     }
    if (item->o_icon) evas_object_del(item->o_icon);
    _tasks_item_fill(item);
 }
