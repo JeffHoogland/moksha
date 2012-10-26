@@ -115,8 +115,9 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 #endif
 
    inst = gcc->data;
-   battery_config->instances =
-     eina_list_remove(battery_config->instances, inst);
+   if (battery_config)
+     battery_config->instances =
+       eina_list_remove(battery_config->instances, inst);
    evas_object_del(inst->o_battery);
    if (inst->warning)
      {
