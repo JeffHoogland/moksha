@@ -160,7 +160,7 @@ struct _E_Fm2_Smart_Data
 
    E_Fm2_Icon     *iop_icon;
 
-   Ecore_Event_Handler *icon_theme_update;
+   Eina_List *handlers;
    Ecore_Event_Handler *efreet_cache_update;
 };
 
@@ -1936,9 +1936,9 @@ _e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb cb, v
 }
 
 static Eina_Bool
-_e_fm2_icon_cache_update(E_Fm2_Smart_Data *sd, int type __UNUSED__, void *event __UNUSED__)
+_e_fm2_icon_cache_update(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
-   e_fm2_icons_update(sd->obj);
+   e_fm2_icons_update(data);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -4435,7 +4435,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
         _e_fm2_icon_desktop_load(ic);
         if (!ic->sd->efreet_cache_update)
           ic->sd->efreet_cache_update =
-            ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, (Ecore_Event_Handler_Cb)_e_fm2_icon_cache_update, ic->sd);
+            ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, (Ecore_Event_Handler_Cb)_e_fm2_icon_cache_update, ic->sd->obj);
      }
 
    if (cf)
@@ -8006,8 +8006,8 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_move(obj, 0, 0);
    evas_object_resize(obj, 0, 0);
 
-   sd->icon_theme_update = ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME,
-                                                   _e_fm2_cb_theme, sd->obj);
+   E_LIST_HANDLER_APPEND(sd->handlers, E_EVENT_CONFIG_ICON_THEME, _e_fm2_cb_theme, sd->obj);
+   E_LIST_HANDLER_APPEND(sd->handlers, EFREET_EVENT_DESKTOP_CACHE_BUILD, _e_fm2_icon_cache_update, sd->obj);
 
    _e_fm2_list = eina_list_append(_e_fm2_list, sd->obj);
 }
@@ -8020,8 +8020,7 @@ _e_fm2_smart_del(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
 
-   if (sd->icon_theme_update)
-     ecore_event_handler_del(sd->icon_theme_update);
+   E_FREE_LIST(sd->handlers, ecore_event_handler_del);
 
    if (sd->efreet_cache_update)
      ecore_event_handler_del(sd->efreet_cache_update);
