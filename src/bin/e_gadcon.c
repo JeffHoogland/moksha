@@ -3294,7 +3294,9 @@ _e_gadcon_client_cb_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
      {
         // e menu ASSUMES... EXPECTS the icon to be an.... e_icon!
         // if it's not, spankies for whoever wrote the icon callback!
-        mi->icon_object = gcc->client_class->func.icon ((E_Gadcon_Client_Class *)gcc->client_class, mi->menu->evas);
+        mi->icon_object = 
+          gcc->client_class->func.icon((E_Gadcon_Client_Class *)gcc->client_class, 
+                                       mi->menu->evas);
      }
    else
      e_util_menu_item_theme_icon_set(mi, "preferences-gadget");  // FIXME: Needs icon in theme
