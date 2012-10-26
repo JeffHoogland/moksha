@@ -271,7 +271,7 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
 #endif
 
 static void
-_e_wid_fprev_preview_fs_widgets(E_Widget_Data *wd)
+_e_wid_fprev_preview_fs_widgets(E_Widget_Data *wd, Eina_Bool mount_point)
 {
    Evas *evas = evas_object_evas_get(wd->obj);
    Evas_Object *o;
@@ -306,7 +306,8 @@ _e_wid_fprev_preview_fs_widgets(E_Widget_Data *wd)
    WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 100);
    WIDROW(_("Reserved:"), o_preview_owner, o_preview_owner_entry, 100);
    WIDROW(_("Mount status:"), o_preview_perms, o_preview_perms_entry, 100);
-   WIDROW(_("Type:"), o_preview_time, o_preview_time_entry, 100);
+   if (mount_point)
+     WIDROW(_("Type:"), o_preview_time, o_preview_time_entry, 100);
 
    e_widget_list_object_append(wd->o_preview_list,
                                wd->o_preview_properties_table,
@@ -474,7 +475,7 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
 #ifdef ST_RDONLY                                 
                             if (stfs.f_flag & ST_RDONLY) rdonly = EINA_TRUE;
 #endif                                 
-                            _e_wid_fprev_preview_fs_widgets(wd);
+                            _e_wid_fprev_preview_fs_widgets(wd, EINA_TRUE);
                             
                             //-------------------
                             if (mbused > 1024.0)
@@ -510,12 +511,11 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
                     }
                   if (!is_fs)
                     {
-                       _e_wid_fprev_preview_fs_widgets(wd);
+                       _e_wid_fprev_preview_fs_widgets(wd, EINA_FALSE);
                        e_widget_entry_text_set(wd->o_preview_extra_entry, _("Unknown"));
                        e_widget_entry_text_set(wd->o_preview_size_entry, _("Unknown"));
                        e_widget_entry_text_set(wd->o_preview_owner_entry, _("Unknown"));
                        e_widget_entry_text_set(wd->o_preview_perms_entry, _("Unmounted"));
-                       e_widget_entry_text_set(wd->o_preview_time_entry, _("Unknown"));
                        is_fs = EINA_TRUE;
                     }
                   eina_stringshare_del(file);
