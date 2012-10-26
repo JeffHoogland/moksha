@@ -90,6 +90,40 @@ _e_int_menus_augmentation_find(const char *key)
    return eina_hash_find(_e_int_menus_augmentation, key);
 }
 
+#ifdef ISCOMFITOR
+static void
+_TEST_ADD(void *data, E_Dialog *dia __UNUSED__)
+{
+   char buf[4096];
+
+   snprintf(buf, sizeof(buf), "ITEM %d", e_widget_ilist_count(data) + 1);
+   e_widget_ilist_append(data, NULL, buf, NULL, NULL, NULL);
+}
+
+static void
+_TEST_DEL(void *data, E_Dialog *dia __UNUSED__)
+{
+   e_widget_ilist_remove_num(data, e_widget_ilist_selected_get(data));
+}
+
+static void
+_TEST(void *d __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
+{
+   E_Dialog *dia;
+   Evas_Object *o_list;
+   Evas *e;
+
+   dia = e_dialog_normal_win_new(m->zone->container, "E", "_widget_playground_dialog");
+   e = e_win_evas_get(dia->win);
+   o_list = e_widget_ilist_add(e, 32, 32, NULL);
+   e_dialog_button_add(dia, "Add", NULL, _TEST_ADD, o_list);
+   e_dialog_button_add(dia, "Del", NULL, _TEST_DEL, o_list);
+   e_dialog_content_set(dia, o_list, 100, 300);
+   e_dialog_resizable_set(dia, 1);
+   e_dialog_show(dia);
+}
+#endif
+
 /* externally accessible functions */
 EAPI E_Menu *
 e_int_menus_main_new(void)
@@ -108,6 +142,12 @@ e_int_menus_main_new(void)
    e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_main_del_hook);
 
    e_menu_category_set(m, "main");
+
+#ifdef ISCOMFITOR
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, "TEST");
+   e_menu_item_callback_set(mi, _TEST, NULL);
+#endif
 
    l = _e_int_menus_augmentation_find("main/0");
    if (l) _e_int_menus_augmentation_add(m, l);
