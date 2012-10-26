@@ -1757,7 +1757,12 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
              e_util_menu_item_theme_icon_set(mi, "enlightenment/plain");
              e_menu_item_radio_group_set(mi, 1);
              e_menu_item_radio_set(mi, 1);
-             if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_PLAIN)))
+             if ((gcc->style) && 
+                 (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_PLAIN)))
+               e_menu_item_toggle_set(mi, 1);
+             else if ((gcc->client_class->default_style) && 
+                      (!strcmp(gcc->client_class->default_style, 
+                               E_GADCON_CLIENT_STYLE_PLAIN)))
                e_menu_item_toggle_set(mi, 1);
              e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_plain, gcc);
 
@@ -1766,7 +1771,12 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
              e_util_menu_item_theme_icon_set(mi, "enlightenment/inset");
              e_menu_item_radio_group_set(mi, 1);
              e_menu_item_radio_set(mi, 1);
-             if ((gcc->style) && (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_INSET)))
+             if ((gcc->style) && 
+                 (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_INSET)))
+               e_menu_item_toggle_set(mi, 1);
+             else if ((gcc->client_class->default_style) && 
+                      (!strcmp(gcc->client_class->default_style, 
+                               E_GADCON_CLIENT_STYLE_INSET)))
                e_menu_item_toggle_set(mi, 1);
              e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_style_inset, gcc);
 
