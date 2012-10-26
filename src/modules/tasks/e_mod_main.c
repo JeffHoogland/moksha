@@ -437,7 +437,11 @@ _tasks_refill_border(E_Border *border)
         Tasks_Item *item;
         EINA_LIST_FOREACH(tasks->items, m, item)
           {
-             if (item->border == border) _tasks_item_refill(item);
+             if (item->border == border)
+               {
+                  _tasks_item_refill(item);
+                  break;
+               }
           }
      }
 }
