@@ -30,6 +30,7 @@ e_widget_toolbook_add(Evas *evas, int icon_w, int icon_h)
    wd->o_tb = o;
 
    o = e_widget_toolbar_add(evas, icon_w, icon_h);
+   e_widget_toolbar_scrollable_set(o, EINA_TRUE);
    e_widget_table_object_append(wd->o_tb, o, 0, 0, 1, 1, 1, 1, 1, 0);
    wd->o_bar = o;
    evas_object_show(o);
