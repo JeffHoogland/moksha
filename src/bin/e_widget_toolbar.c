@@ -146,8 +146,15 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
    edje_object_signal_callback_add(o, "e,action,click", "e",
                                    _e_wid_signal_cb1, it);
    edje_extern_object_min_size_set(icon, wd->icon_w, wd->icon_h);
-   edje_object_part_swallow(o, "e.swallow.icon", icon);
-   evas_object_show(icon);
+   if (icon)
+     {
+        edje_object_part_swallow(o, "e.swallow.icon", icon);
+        evas_object_show(icon);
+        edje_object_signal_emit(o, "e,icon,enabled", "e");
+     }
+   else
+     edje_object_signal_emit(o, "e,icon,disabled", "e");
+   edje_object_message_signal_process(o);
    edje_object_part_text_set(o, "e.text.label", label);
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_sub_object_add(obj, o);

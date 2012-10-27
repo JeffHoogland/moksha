@@ -46,6 +46,7 @@ e_widget_toolbook_page_append(Evas_Object *toolbook, Evas_Object *icon, const ch
    wd = e_widget_data_get(toolbook);
    e_widget_toolbar_item_append(wd->o_bar, icon, label, _item_sel,
                                 toolbook, content);
+   e_widget_table_object_repack(wd->o_tb, wd->o_bar, 0, 0, 1, 1, 1, 1, 1, 0);
    e_widget_table_object_align_append(wd->o_tb, content, 0, 1, 1, 1,
                                       fill_w, fill_h, expand_w, expand_h,
                                       ax, ay);
