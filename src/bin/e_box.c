@@ -79,6 +79,7 @@ _e_box_item_nth_get(E_Smart_Data *sd, unsigned int n)
    unsigned int x;
    E_Box_Item *bi;
 
+   if (!sd->items) return NULL;
    if (n > sd->item_count / 2)
      {
         x = sd->item_count - 1;
