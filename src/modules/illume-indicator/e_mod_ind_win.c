@@ -190,7 +190,7 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
 {
    Ind_Win *iwin;
    Ecore_X_Event_Window_Property *ev;
-   Evas_Coord h = 0, mw = 0, mh = 0;
+   Evas_Coord mw = 0, mh = 0;
 
    ev = event;
 
@@ -198,8 +198,6 @@ _e_mod_ind_win_cb_win_prop(void *data, int type __UNUSED__, void *event)
    if (ev->win != iwin->win->container->manager->root) 
      return ECORE_CALLBACK_PASS_ON;
    if (ev->atom != ATM_ENLIGHTENMENT_SCALE) return ECORE_CALLBACK_PASS_ON;
-
-   h = (il_ind_cfg->height * e_scale);
 
    edje_object_size_min_calc(iwin->o_base, &mw, &mh);
 //   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
@@ -228,13 +226,12 @@ _e_mod_ind_win_cb_zone_resize(void *data, int type __UNUSED__, void *event)
 {
    Ind_Win *iwin;
    E_Event_Zone_Move_Resize *ev;
-   Evas_Coord h = 0, mw = 0, mh = 0;
+   Evas_Coord mw = 0, mh = 0;
 
    ev = event;
    if (!(iwin = data)) return ECORE_CALLBACK_PASS_ON;
    if (ev->zone != iwin->zone) return ECORE_CALLBACK_PASS_ON;
 
-   h = (il_ind_cfg->height * e_scale);
    edje_object_size_min_calc(iwin->o_base, &mw, &mh);
 //   printf("@@@@@@@@@@@@@@@@@@@@@@@ %i: %ix%i\n", h, mw, mh);
 
