@@ -39301,7 +39301,7 @@ target: "region";
  * text-only: no icon is swallowed
  */
 
-   group { name:"modules/tasks/item";
+   group { name:"e/modules/tasks/item";
       images {
          image: "bt_base1.png" COMP;
          image: "bt_base2.png" COMP;
@@ -39654,7 +39654,7 @@ target: "region";
          }
       }
    }
-   group { name:"modules/tasks/item_vert";
+   group { name:"e/modules/tasks/item_vert";
       images {
          image: "bt_base1.png" COMP;
          image: "bt_base2.png" COMP;
@@ -39966,7 +39966,7 @@ target: "region";
 
 /////////////////////////////////////////////////////////////////////////////
 /*** MOD: XKBSWITCH ***/
-   group { name: "modules/xkbswitch/main";
+   group { name: "e/modules/xkbswitch/main";
       images {
          image: "xkbshad.png" COMP;
       }
@@ -40045,7 +40045,7 @@ target: "region";
       }
    }
 
-   group { name: "modules/xkbswitch/noflag";
+   group { name: "e/modules/xkbswitch/noflag";
       max: 128 128;
       parts {
          part { name: "e.text.label"; type: TEXT;

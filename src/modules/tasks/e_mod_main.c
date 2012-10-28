@@ -496,15 +496,15 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
    if (tasks->horizontal)
      e_theme_edje_object_set(item->o_item,
                              "base/theme/modules/tasks",
-                             "modules/tasks/item");
+                             "e/modules/tasks/item");
    else
      {
         if (!e_theme_edje_object_set(item->o_item,
                                      "base/theme/modules/tasks",
-                                     "modules/tasks/item_vert"))
+                                     "e/modules/tasks/item_vert"))
           e_theme_edje_object_set(item->o_item,
                                   "base/theme/modules/tasks",
-                                  "modules/tasks/item");
+                                  "e/modules/tasks/item");
      }
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_DOWN,
                                   _tasks_cb_item_mouse_down, item);

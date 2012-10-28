@@ -160,7 +160,7 @@ _xkb_update_icon(int cur_group)
                }
              e_theme_edje_object_set(inst->o_xkbswitch,
                                      "base/theme/modules/xkbswitch",
-                                     "modules/xkbswitch/noflag");
+                                     "e/modules/xkbswitch/noflag");
              edje_object_part_text_set(inst->o_xkbswitch,
                                        "e.text.label", name);
           }
@@ -175,7 +175,7 @@ _xkb_update_icon(int cur_group)
                inst->o_xkbflag = e_icon_add(inst->gcc->gadcon->evas);
              e_theme_edje_object_set(inst->o_xkbswitch,
                                      "base/theme/modules/xkbswitch",
-                                     "modules/xkbswitch/main");
+                                     "e/modules/xkbswitch/main");
              e_xkb_e_icon_flag_setup(inst->o_xkbflag, name);
              edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
                                       inst->o_xkbflag);
@@ -207,11 +207,11 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    if (e_config->xkb.only_label)
      e_theme_edje_object_set(inst->o_xkbswitch,
                              "base/theme/modules/xkbswitch",
-                             "modules/xkbswitch/noflag");
+                             "e/modules/xkbswitch/noflag");
    else
      e_theme_edje_object_set(inst->o_xkbswitch,
                              "base/theme/modules/xkbswitch",
-                             "modules/xkbswitch/main");
+                             "e/modules/xkbswitch/main");
    edje_object_part_text_set(inst->o_xkbswitch, "e.text.label",
                              e_xkb_layout_name_reduce(name));
    /* The gadcon client */
