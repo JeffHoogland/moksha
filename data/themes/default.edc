@@ -15694,14 +15694,6 @@ CONNMAN_ICON(ethernet)
             }
          }
          part {
-            name: "e.swallow.bg";
-            type: SWALLOW;
-            mouse_events: 0;
-            description {
-               state: "default" 0.0;
-            }
-         }
-         part {
             name: "shadow";
             mouse_events: 0;
             description {
@@ -15732,6 +15724,152 @@ CONNMAN_ICON(ethernet)
                      relative: 0.0 1.0;
                      offset: 64 0;
                   }
+               }
+            }
+         }
+         part { name: "e.swallow.favorites"; type: SWALLOW;
+            description { state: "default" 0.0;
+              align: 0.0 1.0;
+               rel1.offset: 0 0;
+               rel1.to: "region";
+               rel2.offset: 0 -1;
+               rel2.relative: 0.0 1.0;
+               rel2.to: "region";
+               fixed: 1 0;
+            }
+         }
+         part { name: "e.swallow.content"; type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1.offset: 0 0;
+               rel1.to: "region";
+               rel2.offset: -1 -1;
+               rel2.to: "region";
+               align: 1.0 1.0;
+            }
+            description { state: "fav" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 1.0 0.0;
+               rel1.to_x: "e.swallow.favorites";
+            }
+         }
+         part { name: "e.swallow.toolbar"; type: SWALLOW;
+            description { state: "default" 0.0;
+            }
+            description { state: "tb_top" 0.0;
+               align: 0.5 0.0;
+               rel1.offset: 0 0;
+               rel2.offset: -1 0;
+               rel2.relative: 1.0 0.0;
+               fixed: 0 1;
+            }
+            description { state: "tb_bottom" 0.0;
+               align: 0.5 1.0;
+               rel1.offset: 0 -1;
+               rel1.relative: 0.0 1.0;
+               rel2.offset: -1 -1;
+               fixed: 0 1;
+            }
+         }
+         part { name: "region"; type: SPACER;
+            description { state: "default" 0.0;
+            }
+            description { state: "tb_top" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.0 1.0;
+               rel1.to_y: "e.swallow.toolbar";
+            }
+            description { state: "tb_bottom" 0.0;
+               inherit: "default" 0.0;
+               rel2.relative: 1.0 0.0;
+               rel2.to_y: "e.swallow.toolbar";
+            }
+            description { state: "tb_left" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 1.0 0.0;
+               rel1.to_x: "e.swallow.toolbar";
+            }
+            description { state: "tb_right" 0.0;
+               inherit: "default" 0.0;
+               rel2.relative: 0.0 1.0;
+               rel2.to_x: "e.swallow.toolbar";
+            }
+         }
+      }
+      programs {
+         program {
+signal: "e,favorites,enabled"; source: "e";
+action: STATE_SET "fav" 0.0;
+target: "e.swallow.content";
+         }
+         program {
+signal: "e,favorites,disabled"; source: "e";
+action: STATE_SET "default" 0.0;
+target: "e.swallow.content";
+         }
+         program {
+signal: "e,toolbar,left"; source: "e";
+action: STATE_SET "tb_left" 0.0;
+target: "e.swallow.toolbar";
+target: "region";
+               }
+         program {
+signal: "e,toolbar,right"; source: "e";
+action: STATE_SET "tb_right" 0.0;
+target: "e.swallow.toolbar";
+target: "region";
+               }
+         program {
+signal: "e,toolbar,top"; source: "e";
+action: STATE_SET "tb_top" 0.0;
+target: "e.swallow.toolbar";
+target: "region";
+               }
+         program {
+signal: "e,toolbar,bottom"; source: "e";
+action: STATE_SET "tb_bottom" 0.0;
+target: "e.swallow.toolbar";
+target: "region";
+               }
+         program {
+signal: "e,toolbar,disabled"; source: "e";
+action: STATE_SET "default" 0.0;
+target: "e.swallow.toolbar";
+target: "region";
+         }
+      }
+   }
+   group { name: "e/fileman/popup/default";
+      parts {
+         part { name: "base"; type: RECT; mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 160 160 160 255;
+            }
+            part { name: "e.swallow.content"; type: SWALLOW;
+               description { state: "default" 0.0;
+                  rel1.offset: 4 0;
+                  rel1.relative: 0.0 1.0;
+                  rel1.to_y: "e.text.title";
+                  rel2.offset: -5 -5;
+               }
+            }
+            part { name: "e.text.title"; type: TEXT; mouse_events: 0;
+               scale: 1;
+               effect: SHADOW BOTTOM;
+               description { state: "default" 0.0;
+                  color_class: "fileman_popup_title";
+                  rel1.relative: 0.0 0.0;
+                  rel1.offset: 1 3;
+                  rel2.relative: 1.0 0.0;
+                  rel2.offset: -2 3;
+                  align: 0.5 0.0;
+                  color: 0 0 0 255;
+                  color3: 255 255 255 128;
+                  text { font: "Sans:style=Bold"; size: 10;
+                     text_class: "fileman_popup_title";
+                     align: 0.5 0.0;
+                     min: 0 1;
+                  }
+                  fixed: 0 1;
                }
             }
          }

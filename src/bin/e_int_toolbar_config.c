@@ -66,7 +66,6 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    tbar = cfdata->tbar;
    if (!tbar) return 0;
    e_toolbar_orient(tbar, cfdata->orient);
-   e_toolbar_position_calc(tbar);
    if ((tbar->fwin) && (tbar->fwin->cb_resize))
      tbar->fwin->cb_resize(tbar->fwin);
    return 1;

@@ -12,7 +12,7 @@ struct _E_Toolbar
 {
    E_Object         e_obj_inherit;
 
-   int              x, y, w, h, id;
+   int              minw, minh, id;
    const char      *name;
 
    Evas            *evas;
@@ -33,13 +33,7 @@ EAPI void         e_toolbar_fwin_set(E_Toolbar *tbar, E_Win *fwin);
 EAPI E_Win       *e_toolbar_fwin_get(E_Toolbar *tbar);
 EAPI void         e_toolbar_fm2_set(E_Toolbar *tbar, Evas_Object *fm2);
 EAPI Evas_Object *e_toolbar_fm2_get(E_Toolbar *tbar);
-EAPI void         e_toolbar_show(E_Toolbar *tbar);
-EAPI void         e_toolbar_hide(E_Toolbar *tbar);
-EAPI void         e_toolbar_move(E_Toolbar *tbar, int x, int y);
-EAPI void         e_toolbar_resize(E_Toolbar *tbar, int w, int h);
-EAPI void         e_toolbar_move_resize(E_Toolbar *tbar, int x, int y, int w, int h);
 EAPI void         e_toolbar_orient(E_Toolbar *tbar, E_Gadcon_Orient orient);
-EAPI void         e_toolbar_position_calc(E_Toolbar *tbar);
 EAPI void         e_toolbar_populate(E_Toolbar *tbar);
 
 #endif

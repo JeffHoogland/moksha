@@ -61,7 +61,6 @@ struct _E_Fwin_Page
    E_Fwin              *fwin;
    Ecore_Event_Handler *fm_op_entry_add_handler;
 
-   Evas_Object         *box;
    Evas_Object         *flist;
    Evas_Object         *flist_frame;
    Evas_Object         *scrollframe_obj;
@@ -547,9 +546,9 @@ e_fwin_reload_all(void)
                {
                   if (!fwin->cur_page->tbar)
                     {
-                       fwin->cur_page->tbar = e_toolbar_new(e_win_evas_get(fwin->win), "toolbar",
-                                                            fwin->win, fwin->cur_page->fm_obj);
-                       e_toolbar_show(fwin->cur_page->tbar);
+                       fwin->cur_page->tbar = e_toolbar_new
+                         (e_win_evas_get(fwin->win), "toolbar",
+                             fwin->win, fwin->cur_page->fm_obj);
                     }
                }
              else
@@ -563,7 +562,11 @@ e_fwin_reload_all(void)
              if (fileman_config->view.show_sidebar)
                {
                   if (!fwin->cur_page->flist_frame)
-                    _e_fwin_page_favorites_add(fwin->cur_page);
+                    {
+                       _e_fwin_page_favorites_add(fwin->cur_page);
+                       edje_object_signal_emit(fwin->bg_obj, "e,favorites,enabled", "e");
+                       edje_object_message_signal_process(fwin->bg_obj);
+                    }
                }
              else
                {
@@ -571,6 +574,8 @@ e_fwin_reload_all(void)
                     {
                        evas_object_del(fwin->cur_page->flist_frame);
                        fwin->cur_page->flist_frame = fwin->cur_page->flist = NULL;
+                       edje_object_signal_emit(fwin->bg_obj, "e,favorites,disabled", "e");
+                       edje_object_message_signal_process(fwin->bg_obj);
                     }
                }
              _e_fwin_window_title_set(fwin->cur_page);
@@ -662,7 +667,8 @@ _e_fwin_new(E_Container *con,
 //   o = e_icon_add(e_win_evas_get(fwin->win));
 //   e_icon_scale_size_set(o, 0);
 //   e_icon_fill_inside_set(o, 0);
-   edje_object_part_swallow(e_scrollframe_edje_object_get(page->scr), "e.swallow.overlay", o);
+   edje_object_part_swallow(e_scrollframe_edje_object_get(page->scr), 
+                            "e.swallow.overlay", o);
    evas_object_pass_events_set(o, 1);
    fwin->over_obj = o;
 
@@ -685,7 +691,8 @@ _e_fwin_new(E_Container *con,
    if (fwin->win->evas_win)
      e_drop_xdnd_register_set(fwin->win->evas_win, 1);
    if (fwin->win->border)
-     eina_stringshare_replace(&fwin->win->border->internal_icon, "system-file-manager");
+     eina_stringshare_replace(&fwin->win->border->internal_icon,
+                              "system-file-manager");
 
    return fwin;
 }
@@ -698,12 +705,9 @@ _e_fwin_free(E_Fwin *fwin)
    _e_fwin_page_free(fwin->cur_page);
 
    if (fwin->zone)
-     {
-        evas_object_event_callback_del(fwin->zone->bg_event_object,
-                                       EVAS_CALLBACK_MOUSE_DOWN,
-                                       _e_fwin_zone_cb_mouse_down);
-     }
-
+     evas_object_event_callback_del(fwin->zone->bg_event_object,
+                                    EVAS_CALLBACK_MOUSE_DOWN,
+                                    _e_fwin_zone_cb_mouse_down);
    if (fwin->zone_handler)
      ecore_event_handler_del(fwin->zone_handler);
    if (fwin->zone_del_handler)
@@ -786,46 +790,29 @@ _e_fwin_icon_popup(void *data)
    fwin->popup = e_popup_new(zone, 0, 0, 1, 1);
    e_popup_ignore_events_set(fwin->popup, 1);
    ecore_x_window_shape_input_rectangle_set(fwin->popup->evas_win, 0, 0, 0, 0);
+   
    bg = edje_object_add(fwin->popup->evas);
-   e_theme_edje_object_set(bg, "base/theme/fileman", "e/fileman/default/window/main");
-   e_popup_edje_bg_object_set(fwin->popup, bg);
-   edje = edje_object_add(fwin->popup->evas);
-   e_theme_edje_object_set(edje, "base/theme/borders", "e/widgets/border/pixel/border");
-   edje_object_signal_emit(edje, "e,state,focused", "e");
+   e_theme_edje_object_set(bg, "base/theme/fileman",
+                           "e/fileman/popup/default");
    mw = zone->w * fileman_config->tooltip.size / 100.0;
    mh = zone->h * fileman_config->tooltip.size / 100.0;
-   /*
-    * NO! this causes the filename label to either take up the whole screen or be cut off!!!
-   if (fwin->popup_icon->link)
-     {
-        if (fwin->popup_icon->real_link == NULL)
-          snprintf(buf, sizeof(buf), _("%s → %s ⇒ (broken)"), fwin->popup_icon->file, fwin->popup_icon->link);
-        else if (fwin->popup_icon->real_link != fwin->popup_icon->link)
-          snprintf(buf, sizeof(buf), _("%s → %s ⇒ %s"), fwin->popup_icon->file, fwin->popup_icon->link, fwin->popup_icon->real_link);
-        else if (fwin->popup_icon->broken_link)
-          snprintf(buf, sizeof(buf), _("%s → %s (broken)"), fwin->popup_icon->file, fwin->popup_icon->link);
-        else
-          snprintf(buf, sizeof(buf), _("%s → %s"), fwin->popup_icon->file, fwin->popup_icon->link);
-     }
-   else
-     snprintf(buf, sizeof(buf), "%s", fwin->popup_icon->file);
-   list = e_widget_framelist_add(fwin->popup->evas, buf, 0);
-   */
 
-   list = e_widget_framelist_add(fwin->popup->evas, fwin->popup_icon->label ?: fwin->popup_icon->file, 0);
+   edje_object_part_text_set(bg, "e.text.title", 
+                             fwin->popup_icon->label ?
+                             fwin->popup_icon->label : fwin->popup_icon->file);
+   
+   list = e_widget_list_add(fwin->popup->evas, 0, 0);
+   
    o = e_widget_filepreview_add(fwin->popup->evas, mw, mh, 0);
    e_widget_filepreview_path_set(o, buf, fwin->popup_icon->mime);
-   e_widget_framelist_object_append(list, o);
+   e_widget_list_object_append(list, o, 1, 0, 0.5);
    e_widget_size_min_get(list, &mw, &mh);
    edje_extern_object_min_size_set(list, mw, mh);
-   edje_object_part_swallow(edje, "e.swallow.client", list);
-   edje_object_size_min_calc(edje, &mw, &mh);
-   edje_extern_object_min_size_set(edje, mw, mh);
-   edje_object_part_swallow(bg, "e.swallow.bg", edje);
+   edje_object_part_swallow(bg, "e.swallow.content", list);
+   
    edje_object_size_min_calc(bg, &mw, &mh);
    evas_object_show(o);
    evas_object_show(list);
-   evas_object_show(edje);
    evas_object_show(bg);
 
    /* prefer tooltip left of icon */
@@ -899,7 +886,7 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
 {
    E_Fm2_Config fmc;
    Evas_Object *o;
-   Evas *evas = evas_object_evas_get(page->box);
+   Evas *evas = evas_object_evas_get(page->fwin->bg_obj);
 
    o = e_fm2_add(evas);
    evas_object_data_set(o, "fm_page", page);
@@ -939,7 +926,8 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
                                     e_fm2_pan_get,
                                     e_fm2_pan_max_get,
                                     e_fm2_pan_child_size_get);
-   e_scrollframe_custom_theme_set(e_widget_scrollframe_object_get(o), "base/theme/fileman",
+   e_scrollframe_custom_theme_set(e_widget_scrollframe_object_get(o), 
+                                  "base/theme/fileman",
                                   "e/fileman/default/scrollframe");
    evas_object_propagate_events_set(page->flist, 0);
    e_widget_can_focus_set(o, EINA_FALSE);
@@ -947,8 +935,8 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
    e_widget_scrollframe_focus_object_set(o, page->flist);
 
    page->flist_frame = o;
-   e_widget_size_min_set(o, 128, 128);
-   e_widget_list_object_prepend(page->box, o, 1, 0, 0);
+   edje_extern_object_min_size_set(o, 128, 0);
+   edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.favorites", o);
 }
 
 static E_Fwin_Page *
@@ -962,10 +950,12 @@ _e_fwin_page_create(E_Fwin *fwin)
    page->fwin = fwin;
    evas = e_win_evas_get(fwin->win);
 
-   page->box = e_widget_list_add(evas, 0, 1);
-
    if (fileman_config->view.show_sidebar)
-     _e_fwin_page_favorites_add(page);
+     {
+        _e_fwin_page_favorites_add(page);
+        edje_object_signal_emit(fwin->bg_obj, "e,favorites,enabled", "e");
+        edje_object_message_signal_process(fwin->bg_obj);
+     }
 
    o = e_fm2_add(evas);
    page->fm_obj = o;
@@ -1021,24 +1011,19 @@ _e_fwin_page_create(E_Fwin *fwin)
    e_widget_can_focus_set(o, EINA_FALSE);
    page->scrollframe_obj = o;
    page->scr = e_widget_scrollframe_object_get(o);
-   e_scrollframe_custom_theme_set(page->scr, "base/theme/fileman",
+   e_scrollframe_custom_theme_set(o, "base/theme/fileman",
                                   "e/fileman/default/scrollframe");
-//   edje_object_part_swallow(fwin->bg_obj, "e.swallow.content", o);
-   e_widget_list_object_append(page->box, page->scrollframe_obj, 1, 1, 1);
-   evas_object_move(page->box, 0, 0);
-   evas_object_show(page->box);
+   edje_object_part_swallow(fwin->bg_obj, "e.swallow.content", o);
 
    if (fileman_config->view.show_toolbar)
-     {
-        page->tbar = e_toolbar_new(evas, "toolbar",
-                                   fwin->win, page->fm_obj);
-        e_toolbar_show(page->tbar);
-     }
+     page->tbar = e_toolbar_new(evas, "toolbar",
+                                fwin->win, page->fm_obj);
 
    page->fm_op_entry_add_handler =
      ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_ADD,
                              _e_fwin_op_registry_entry_add_cb, page);
    _e_fwin_op_registry_entry_iter(page);
+   _e_fwin_toolbar_resize(page);
    return page;
 }
 
@@ -1047,7 +1032,6 @@ _e_fwin_page_free(E_Fwin_Page *page)
 {
    if (page->fm_obj) evas_object_del(page->fm_obj);
    if (page->tbar) e_object_del(E_OBJECT(page->tbar));
-   if (page->box) evas_object_del(page->box);
    else evas_object_del(page->scrollframe_obj);
 
    if (page->fm_op_entry_add_handler)
@@ -1519,71 +1503,39 @@ _e_fwin_window_title_set(E_Fwin_Page *page)
 static void
 _e_fwin_toolbar_resize(E_Fwin_Page *page)
 {
-   int tx, ty, tw, th, offset = 0;
-   int x, y, w, h;
-
-   w = page->fwin->win->w;
-   h = page->fwin->win->h;
    if (!page->tbar)
      {
-        evas_object_move(page->box, 0, 0);
-        evas_object_resize(page->box, w, h);
+        edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,disabled", "e");
         return;
      }
    switch (page->tbar->gadcon->orient)
      {
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_TOP:
-        tx = 0;
-        ty = offset;
-        th = 32;
-        tw = w;
-
-        x = 0;
-        y = offset + th;
-        h = (h - offset - th);
+        edje_extern_object_min_size_set(page->tbar->o_base, 0, page->tbar->minh);
+        edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
+        edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,top", "e");
         break;
-
       case E_GADCON_ORIENT_BOTTOM:
-        tx = 0;
-        th = 32;
-        tw = w;
-        ty = h - th;
-
-        x = 0;
-        y = offset;
-        h = (h - offset - th);
+        edje_extern_object_min_size_set(page->tbar->o_base, 0, page->tbar->minh);
+        edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
+        edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,bottom", "e");
         break;
-
       case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
-        tx = 0;
-        tw = 32;
-        th = h - offset;
-        ty = offset;
-
-        x = tw;
-        y = offset;
-        w = (w - tw);
+        edje_extern_object_min_size_set(page->tbar->o_base, page->tbar->minw, 0);
+        edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
+        edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,left", "e");
         break;
-
       case E_GADCON_ORIENT_RIGHT:
-        ty = offset;
-        tw = 32;
-        tx = w - tw;
-        th = h - offset;
-
-        x = 0;
-        y = offset;
-        w = (w - tw);
+        edje_extern_object_min_size_set(page->tbar->o_base, page->tbar->minw, 0);
+        edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
+        edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,right", "e");
         break;
-
       default:
-        return;
+        break;
      }
-   e_toolbar_move_resize(page->tbar, tx, ty, tw, th);
-   evas_object_move(page->box, x, y);
-   evas_object_resize(page->box, w, h);
+   edje_object_message_signal_process(page->fwin->bg_obj);
 }
 
 /* fwin callbacks */
@@ -1733,7 +1685,8 @@ _e_fwin_changed(void *data,
           }
         if (fwin->under_obj)
           {
-             edje_object_part_swallow(fwin->bg_obj, "e.swallow.bg", fwin->under_obj);
+             edje_object_part_swallow(e_scrollframe_edje_object_get(page->scr), 
+                                      "e.swallow.bg", fwin->under_obj);
              evas_object_pass_events_set(fwin->under_obj, 1);
              evas_object_show(fwin->under_obj);
           }
@@ -1744,7 +1697,8 @@ _e_fwin_changed(void *data,
         evas_object_hide(fwin->over_obj);
         if (fwin->overlay_file)
           {
-             edje_object_file_set(fwin->over_obj, fwin->overlay_file, "e/desktop/background");
+             edje_object_file_set(fwin->over_obj, fwin->overlay_file, 
+                                  "e/desktop/background");
 //             ext = strrchr(fwin->overlay_file, '.');
 //             if (ext && !strcasecmp(ext, ".edj"))
 //               e_icon_file_edje_set(fwin->over_obj, fwin->overlay_file, "e/desktop/background");
@@ -1758,7 +1712,8 @@ _e_fwin_changed(void *data,
    if (page->scrollframe_obj)
      {
         if ((fwin->scrollframe_file) &&
-            (e_util_edje_collection_exists(fwin->scrollframe_file, "e/fileman/default/scrollframe")))
+            (e_util_edje_collection_exists(fwin->scrollframe_file, 
+                                           "e/fileman/default/scrollframe")))
           e_scrollframe_custom_edje_file_set(page->scr,
                                              (char *)fwin->scrollframe_file,
                                              "e/fileman/default/scrollframe");
