@@ -412,12 +412,11 @@ _e_static_grab_x(E_Static_Grab *grab)
 }
 
 int
-main(int argc, char **argv)
+main(int argc, char **argv EINA_UNUSED)
 {
    E_Static_Grab_Module *module;
    Eina_List *l;
    E_Static_Grab grab;
-   const char *output;
 
    if (argc != 2) exit(0);
 
@@ -435,8 +434,6 @@ main(int argc, char **argv)
 
    eina_init();
    eet_init();
-
-   output = argv[1];
 
    memset(&grab, 0, sizeof (grab));
    _e_static_grab_cpu(&grab); /* FIXME: please provide patch for more Unix */
