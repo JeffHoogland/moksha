@@ -83,15 +83,15 @@ _e_box_item_nth_get(E_Smart_Data *sd, unsigned int n)
    if (n > sd->item_count / 2)
      {
         x = sd->item_count - 1;
-        EINA_INLIST_REVERSE_FOREACH(EINA_INLIST_GET(sd->items)->last, bi)
+        EINA_INLIST_REVERSE_FOREACH(EINA_INLIST_GET(sd->items), bi)
           {
              if (n == x) return bi->obj;
-             x++;
+             x--;
           }
         return NULL;
      }
    x = 0;
-   EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items)->last, bi)
+   EINA_INLIST_FOREACH(EINA_INLIST_GET(sd->items), bi)
      {
         if (n == x) return bi->obj;
         x++;
