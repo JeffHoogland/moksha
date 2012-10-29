@@ -252,7 +252,10 @@ _item_new(char *file, E_Menu *m)
    mi = e_menu_item_new(m);
    e_object_del_attach_func_set(E_OBJECT(mi), _item_del);
    e_menu_item_label_set(mi, name);
-   if (!used) e_menu_item_callback_set(mi, _theme_set, file);
+   if (used)
+     e_menu_item_disabled_set(mi, 1);
+   else
+     e_menu_item_callback_set(mi, _theme_set, file);
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, used);
 }
