@@ -108,9 +108,12 @@ e_shelf_shutdown(void)
         es = eina_list_data_get(shelves);
         e_object_del(E_OBJECT(es));
      }
-   _e_shelf_gadcon_populate_handler = ecore_event_handler_del(_e_shelf_gadcon_populate_handler);
-   _e_shelf_module_init_end_handler = ecore_event_handler_del(_e_shelf_module_init_end_handler);
-   _e_shelf_zone_moveresize_handler = ecore_event_handler_del(_e_shelf_zone_moveresize_handler);
+   if (_e_shelf_gadcon_populate_handler)
+     _e_shelf_gadcon_populate_handler = ecore_event_handler_del(_e_shelf_gadcon_populate_handler);
+   if (_e_shelf_module_init_end_handler)
+     _e_shelf_module_init_end_handler = ecore_event_handler_del(_e_shelf_module_init_end_handler);
+   if (_e_shelf_zone_moveresize_handler)
+     _e_shelf_zone_moveresize_handler = ecore_event_handler_del(_e_shelf_zone_moveresize_handler);
 
    return 1;
 }
