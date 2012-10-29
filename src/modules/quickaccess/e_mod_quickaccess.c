@@ -983,12 +983,23 @@ _e_qa_help_activate_hook(E_Quick_Access_Entry *entry)
    switch (qa_mod->demo_state++)
      {
       case 0:
-        snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));
-        if (entry->config.hidden)
-          e_dialog_text_set((E_Dialog*)qa_mod->help_dia, _("Great! Activate the Quickaccess entry again to show it!"));
-        else
-          e_dialog_text_set((E_Dialog*)qa_mod->help_dia, _("Great! Activate the Quickaccess entry again to hide it!"));
-        break;
+        {
+           char *txt;
+
+           if (entry->config.hidden)
+             txt =  _("Great! Activate the Quickaccess entry again to show it!");
+           else
+             txt = _("Great! Activate the Quickaccess entry again to hide it!");
+           snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(qa_mod->module));
+           if (qa_mod->help_dia)
+             {
+                e_dialog_text_set((E_Dialog*)qa_mod->help_dia, txt);
+                break;
+             }
+           qa_mod->help_dia = (E_Object*)e_util_dialog_internal(_("Quickaccess Help"), txt);
+           e_object_free_attach_func_set(qa_mod->help_dia, _e_qa_dia_del);
+           break;
+        }
       case 1:
         e_object_del(qa_mod->help_dia);
         ecore_job_add((Ecore_Cb)_e_qa_help_activate_hook, entry);
