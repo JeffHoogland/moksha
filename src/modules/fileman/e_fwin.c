@@ -2971,7 +2971,7 @@ _e_fwin_op_registry_listener_cb(void *data,
              break;
 
            default:
-             snprintf(buf, sizeof(buf), _("Unknow operation from slave %d"), ere->id);
+             snprintf(buf, sizeof(buf), _("Unknown operation from slave %d"), ere->id);
           }
         E_FREE(total);
      }

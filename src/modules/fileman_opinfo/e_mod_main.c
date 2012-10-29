@@ -122,7 +122,7 @@ _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
                   snprintf(buf, sizeof(buf), _("Deleting files..."));
                break;
             default:
-               snprintf(buf, sizeof(buf), _("Unknow operation from slave %d"), ere->id);
+               snprintf(buf, sizeof(buf), _("Unknown operation from slave %d"), ere->id);
          }
          E_FREE(total);
    }
