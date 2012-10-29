@@ -433,7 +433,6 @@ e_winlist_left(E_Zone *zone)
    center = bd_orig->x + bd_orig->w / 2;
 
    desk = e_desk_current_get(zone);
-   e_border_focus_track_freeze();
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
         int center_next;
@@ -490,7 +489,6 @@ e_winlist_left(E_Zone *zone)
              delta2 = delta2_next;
           }
      }
-   e_border_focus_track_thaw();
 
    if (_bd_next)
      {
@@ -557,7 +555,6 @@ e_winlist_down(E_Zone *zone)
    center = bd_orig->y + bd_orig->h / 2;
 
    desk = e_desk_current_get(zone);
-   e_border_focus_track_freeze();
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
         int center_next;
@@ -614,7 +611,6 @@ e_winlist_down(E_Zone *zone)
              delta2 = delta2_next;
           }
      }
-   e_border_focus_track_thaw();
 
    if (_bd_next)
      {
@@ -681,7 +677,6 @@ e_winlist_up(E_Zone *zone)
    center = bd_orig->y + bd_orig->h / 2;
 
    desk = e_desk_current_get(zone);
-   e_border_focus_track_freeze();
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
         int center_next;
@@ -738,7 +733,6 @@ e_winlist_up(E_Zone *zone)
              delta2 = delta2_next;
           }
      }
-   e_border_focus_track_thaw();
 
    if (_bd_next)
      {
@@ -805,7 +799,6 @@ e_winlist_right(E_Zone *zone)
    center = bd_orig->x + bd_orig->w / 2;
 
    desk = e_desk_current_get(zone);
-   e_border_focus_track_freeze();
    EINA_LIST_FOREACH(e_border_focus_stack_get(), l, bd)
      {
         int center_next;
@@ -862,7 +855,6 @@ e_winlist_right(E_Zone *zone)
              delta2 = delta2_next;
           }
      }
-   e_border_focus_track_thaw();
 
    if (_bd_next)
      {
