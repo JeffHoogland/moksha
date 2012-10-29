@@ -2892,6 +2892,9 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
           }
         break;
 
+      case E_FM_OP_VOLUME_LIST_DONE:
+        e_fm2_device_check_desktop_icons();
+        break;
       case E_FM_OP_VOLUME_ADD:  /*volume add*/
         if ((e->data) && (e->size > 0))
           {

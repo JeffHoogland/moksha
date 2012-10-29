@@ -27,7 +27,7 @@ EAPI void         e_fm2_device_unmount_fail(E_Volume *v);
 
 EAPI void         e_fm2_device_show_desktop_icons(void);
 EAPI void         e_fm2_device_hide_desktop_icons(void);
-
+EAPI void         e_fm2_device_check_desktop_icons(void);
 EAPI Eina_List   *e_fm2_device_volume_list_get(void);
 
 #endif

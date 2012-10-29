@@ -455,20 +455,7 @@ _e_fm_main_eeze_volume_add(const char *syspath,
    }
 
    v->validated = EINA_TRUE;
-   {
-      void *msg_data;
-      int msg_size;
-
-      msg_data = _e_fm_shared_codec_volume_encode(v, &msg_size);
-      if (msg_data)
-        {
-           ecore_ipc_server_send(_e_fm_ipc_server,
-                                 6 /*E_IPC_DOMAIN_FM*/,
-                                 E_FM_OP_VOLUME_ADD,
-                                 0, 0, 0, msg_data, msg_size);
-           free(msg_data);
-        }
-   }
+   e_fm_ipc_volume_add(v);
    return v;
 }
 

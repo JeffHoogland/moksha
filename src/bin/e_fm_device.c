@@ -13,6 +13,10 @@ static void _e_fm2_device_unmount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 static Eina_List *_e_stores = NULL;
 static Eina_List *_e_vols = NULL;
 
+static Eina_Bool _check_run_show = EINA_FALSE;
+static Eina_Bool _check_run_hide = EINA_FALSE;
+static Ecore_Thread *_check_vols = NULL;
+
 static void
 _e_fm2_device_volume_setup(E_Volume *v)
 {
@@ -610,6 +614,48 @@ _e_fm2_device_unmount_fail(E_Fm2_Mount *m)
      m->unmount_fail(m->data);
 }
 
+static void
+_e_fm2_device_check_desktop_icons_cb_end(void *data __UNUSED__, Ecore_Thread *eth __UNUSED__)
+{
+   _check_vols = NULL;
+   if (_check_run_show)
+     e_fm2_device_show_desktop_icons();
+   else if (_check_run_hide)
+     e_fm2_device_hide_desktop_icons();
+   _check_run_hide = _check_run_show = EINA_FALSE;
+}
+
+static void
+_e_fm2_device_check_desktop_icons_list_cb(const char *name, const char *path, void *data)
+{
+   char buf[PATH_MAX], buf2[PATH_MAX];
+   Eina_List *l;
+   char *file;
+
+   if (path[0] != '|') return; // not e17 link
+   if (!eina_str_has_extension(name, ".desktop")) return;
+   snprintf(buf, sizeof(buf), "%s/%s", path, name);
+   if (ecore_file_size(buf) > 200) return; // unlikely that we're going to write a desktop file this long
+   e_user_dir_snprintf(buf2, sizeof(buf2), "fileman/favorites/%s", name);
+   if (!ecore_file_exists(buf2)) return;
+   EINA_LIST_FOREACH(data, l, file)
+     if (!strcmp(file, buf)) return; // valid link
+
+   ecore_file_unlink(buf);
+   ecore_file_unlink(buf2);
+}
+
+static void
+_e_fm2_device_check_desktop_icons_cb(void *data, Ecore_Thread *eth __UNUSED__)
+{
+   char buf[PATH_MAX];
+
+   e_user_homedir_concat_static(buf, _("Desktop"));
+   eina_file_dir_list(buf, EINA_FALSE, _e_fm2_device_check_desktop_icons_list_cb, data);
+
+   E_FREE_LIST(data, free);
+}
+
 EAPI void
 e_fm2_device_show_desktop_icons(void)
 {
@@ -618,6 +664,13 @@ e_fm2_device_show_desktop_icons(void)
    char buf[PATH_MAX] = {0};
    char buf2[PATH_MAX] = {0};
    const char *id;
+
+   if (_check_vols)
+     {
+        _check_run_hide = EINA_FALSE;
+        _check_run_show = EINA_TRUE;
+        return;
+     }
 
    EINA_LIST_FOREACH(_e_vols, l, v)
      {
@@ -650,6 +703,13 @@ e_fm2_device_hide_desktop_icons(void)
    char buf[PATH_MAX] = {0};
    const char *id;
 
+   if (_check_vols)
+     {
+        _check_run_show = EINA_FALSE;
+        _check_run_hide = EINA_TRUE;
+        return;
+     }
+
    EINA_LIST_FOREACH(_e_vols, l, v)
      {
         if (!v) continue;
@@ -667,6 +727,30 @@ e_fm2_device_hide_desktop_icons(void)
              _e_fm2_file_force_update(buf);
           }
      }
+}
+
+EAPI void
+e_fm2_device_check_desktop_icons(void)
+{
+   Eina_List *l, *thd = NULL;
+   E_Volume *v;
+   char buf[PATH_MAX] = {0};
+   const char *id;
+
+   if (_check_vols) return;
+   EINA_LIST_FOREACH(_e_vols, l, v)
+     {
+        if (!v) continue;
+        if (!v->storage) continue;
+
+        id = ecore_file_file_get(v->storage->udi);
+
+        e_user_homedir_snprintf(buf, sizeof(buf),
+                                "%s/|%s_%d.desktop",
+                                _("Desktop"), id, v->partition_number);
+        thd = eina_list_append(thd, strdup(buf));
+     }
+   _check_vols = ecore_thread_run(_e_fm2_device_check_desktop_icons_cb, _e_fm2_device_check_desktop_icons_cb_end, _e_fm2_device_check_desktop_icons_cb_end, thd);
 }
 
 EAPI Eina_List *

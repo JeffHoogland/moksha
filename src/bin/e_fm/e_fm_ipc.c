@@ -41,7 +41,7 @@
 #include "e_fm_op.h"
 #undef E_TYPEDEFS
 #include "e_fm_main.h"
-
+#include "e_fm_shared_codec.h"
 #define DEF_SYNC_NUM             8
 #define DEF_ROUND_TRIP           0.05
 #define DEF_ROUND_TRIP_TOLERANCE 0.01
@@ -122,6 +122,9 @@ static int _e_sync_num = 0;
 
 static Eina_List *_e_fm_ipc_slaves = NULL;
 static Eina_List *_e_fm_tasks = NULL;
+
+static Eina_Bool _init_timer_run = EINA_FALSE;
+static Ecore_Timer *_init_timer = NULL;
 
 /* local subsystem functions */
 static Eina_Bool   _e_fm_ipc_cb_server_add(void *data, int type, void *event);
@@ -1462,4 +1465,35 @@ _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
             getenv("E_LIB_DIR"), command, args);
 
    return buffer;
+}
+
+static Eina_Bool
+_e_fm_ipc_timer_cb(void *d __UNUSED__)
+{
+   ecore_ipc_server_send(_e_fm_ipc_server,
+                         6 /*E_IPC_DOMAIN_FM*/,
+                         E_FM_OP_VOLUME_LIST_DONE,
+                         0, 0, 0, "", 1);   
+   _init_timer_run = EINA_TRUE;
+   return EINA_FALSE;
+}
+
+void
+e_fm_ipc_volume_add(E_Volume *v)
+{
+   void *msg_data;
+   int msg_size;
+
+   if (_init_timer && (!_init_timer_run))
+     ecore_timer_reset(_init_timer);
+   else if ((!_init_timer) && (!_init_timer_run))
+     _init_timer = ecore_timer_add(2.0, _e_fm_ipc_timer_cb, NULL);
+
+   msg_data = _e_fm_shared_codec_volume_encode(v, &msg_size);
+   if (!msg_data) return;
+   ecore_ipc_server_send(_e_fm_ipc_server,
+                         6 /*E_IPC_DOMAIN_FM*/,
+                         E_FM_OP_VOLUME_ADD,
+                         0, 0, 0, msg_data, msg_size);
+   free(msg_data);
 }
