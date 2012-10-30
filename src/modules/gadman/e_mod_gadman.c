@@ -956,8 +956,8 @@ _apply_widget_position(E_Gadcon_Client *gcc)
    /* Obtain zone from parent gadcon */
    zone = gcc->gadcon->zone;
 
-   x = gcc->cf->geom.pos_x * zone->w;
-   y = gcc->cf->geom.pos_y * zone->h;
+   x = gcc->cf->geom.pos_x * zone->w + zone->x;
+   y = gcc->cf->geom.pos_y * zone->h + zone->y;
    w = gcc->cf->geom.size_w * zone->w;
    h = gcc->cf->geom.size_h * zone->h;
 
