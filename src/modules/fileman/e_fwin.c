@@ -765,7 +765,7 @@ static Eina_Bool
 _e_fwin_icon_popup(void *data)
 {
    E_Fwin *fwin = data;
-   Evas_Object *bg, *edje, *list, *o;
+   Evas_Object *bg, *list, *o;
    E_Zone *zone;
    char buf[4096];
    int x, y, w, h, mw, mh, fx, fy, px, py;
