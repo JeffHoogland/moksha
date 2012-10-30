@@ -1,35 +1,35 @@
 #include "e.h"
 
 /* local subsystem functions */
-static void _e_manager_free(E_Manager *man);
+static void       _e_manager_free(E_Manager *man);
 
-static Eina_Bool _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
-static Eina_Bool _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
-static Eina_Bool _e_manager_cb_key_up(void *data, int ev_type, void *ev);
-static Eina_Bool _e_manager_cb_key_down(void *data, int ev_type, void *ev);
-static Eina_Bool _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
-static Eina_Bool _e_manager_cb_ping(void *data, int ev_type, void *ev);
-static Eina_Bool _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
-static Eina_Bool _e_manager_cb_client_message(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_window_show_request(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_window_configure(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_key_up(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_key_down(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_ping(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_client_message(void *data, int ev_type, void *ev);
 
-static Eina_Bool _e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED__,
-						  const void *key __UNUSED__,
-						  void *data, void *fdata __UNUSED__);
+static Eina_Bool  _e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED__,
+                                                   const void *key __UNUSED__,
+                                                   void *data, void *fdata __UNUSED__);
 static E_Manager *_e_manager_get_for_root(Ecore_X_Window root);
-static Eina_Bool _e_manager_clear_timer(void *data);
+static Eina_Bool  _e_manager_clear_timer(void *data);
 #if 0 /* use later - maybe */
-static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_reparent(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_create(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_configure_request(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_gravity(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_stack(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_stack_request(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_property(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_colormap(void *data, int ev_type, void *ev);
-static int _e_manager_cb_window_shape(void *data, int ev_type, void *ev);
-static int _e_manager_cb_client_message(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_destroy(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_hide(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_reparent(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_create(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_configure_request(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_gravity(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_stack(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_stack_request(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_property(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_colormap(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_window_shape(void *data, int ev_type, void *ev);
+static int        _e_manager_cb_client_message(void *data, int ev_type, void *ev);
 #endif
 
 /* local subsystem globals */
@@ -61,15 +61,15 @@ e_manager_shutdown(void)
 
    if (frame_extents)
      {
-	eina_hash_foreach(frame_extents, _e_manager_frame_extents_free_cb, NULL);
-	eina_hash_free(frame_extents);
-	frame_extents = NULL;
+        eina_hash_foreach(frame_extents, _e_manager_frame_extents_free_cb, NULL);
+        eina_hash_free(frame_extents);
+        frame_extents = NULL;
      }
 
    if (timer_post_screensaver_lock)
      {
-	ecore_timer_del(timer_post_screensaver_lock);
-	timer_post_screensaver_lock = NULL;
+        ecore_timer_del(timer_post_screensaver_lock);
+        timer_post_screensaver_lock = NULL;
      }
 
    return 1;
@@ -155,165 +155,165 @@ e_manager_manage_windows(E_Manager *man)
    windows = ecore_x_window_children_get(man->root, &wnum);
    if (windows)
      {
-	int i;
-	const char *atom_names[] =
-	  {
-	     "_XEMBED_INFO",
-	       "_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR",
-	       "KWM_DOCKWINDOW"
-	  };
-	Ecore_X_Atom atoms[3];
+        int i;
+        const char *atom_names[] =
+        {
+           "_XEMBED_INFO",
+           "_KDE_NET_WM_SYSTEM_TRAY_WINDOW_FOR",
+           "KWM_DOCKWINDOW"
+        };
+        Ecore_X_Atom atoms[3];
         Ecore_X_Atom atom_xmbed, atom_kde_netwm_systray, atom_kwm_dockwindow;
-	unsigned char *data = NULL;
-	int count;
+        unsigned char *data = NULL;
+        int count;
 
-	ecore_x_atoms_get(atom_names, 3, atoms);
-	atom_xmbed = atoms[0];
-	atom_kde_netwm_systray = atoms[1];
-	atom_kwm_dockwindow = atoms[2];
-	for (i = 0; i < wnum; i++)
-	  {
-	     Ecore_X_Window_Attributes att;
-	     unsigned int ret_val, deskxy[2];
-	     int ret;
+        ecore_x_atoms_get(atom_names, 3, atoms);
+        atom_xmbed = atoms[0];
+        atom_kde_netwm_systray = atoms[1];
+        atom_kwm_dockwindow = atoms[2];
+        for (i = 0; i < wnum; i++)
+          {
+             Ecore_X_Window_Attributes att;
+             unsigned int ret_val, deskxy[2];
+             int ret;
 
              if (e_border_find_by_client_window(windows[i]))
                continue;
-	     ecore_x_window_attributes_get(windows[i], &att);
-	     if ((att.override) || (att.input_only))
-	       {
-		  if (att.override)
-		    {
-		       char *wname = NULL, *wclass = NULL;
+             ecore_x_window_attributes_get(windows[i], &att);
+             if ((att.override) || (att.input_only))
+               {
+                  if (att.override)
+                    {
+                       char *wname = NULL, *wclass = NULL;
 
-		       ecore_x_icccm_name_class_get(windows[i],
-						    &wname, &wclass);
-		       if ((wname) && (wclass) &&
-			   (!strcmp(wname, "E")) &&
-			   (!strcmp(wclass, "Init_Window")))
-			 {
-			    free(wname);
-			    free(wclass);
-			    man->initwin = windows[i];
-			 }
-		       else
-			 {
-			    if (wname) free(wname);
-			    if (wclass) free(wclass);
-			    continue;
-			 }
-		    }
-		  else
+                       ecore_x_icccm_name_class_get(windows[i],
+                                                    &wname, &wclass);
+                       if ((wname) && (wclass) &&
+                           (!strcmp(wname, "E")) &&
+                           (!strcmp(wclass, "Init_Window")))
+                         {
+                            free(wname);
+                            free(wclass);
+                            man->initwin = windows[i];
+                         }
+                       else
+                         {
+                            if (wname) free(wname);
+                            if (wclass) free(wclass);
+                            continue;
+                         }
+                    }
+                  else
                     continue;
-	       }
-	     /* XXX manage xembed windows as long as they are not override_redirect..
-	      * if (!ecore_x_window_prop_property_get(windows[i],
-	      *					   atom_xmbed,
-	      *					   atom_xmbed, 32,
-	      *					   &data, &count))
-	      *   data = NULL;
-	      * if (!data) */
-	       {
-		  if (!ecore_x_window_prop_property_get(windows[i],
-							atom_kde_netwm_systray,
-							atom_xmbed, 32,
-							&data, &count))
-		    data = NULL;
-	       }
-	     if (!data)
-	       {
-		  if (!ecore_x_window_prop_property_get(windows[i],
-							atom_kwm_dockwindow,
-							atom_kwm_dockwindow, 32,
-							&data, &count))
-		    data = NULL;
-	       }
-	     if (data)
-	       {
-		  free(data);
-		  data = NULL;
-		  continue;
-	       }
-	     ret = ecore_x_window_prop_card32_get(windows[i],
-						  E_ATOM_MANAGED,
-						  &ret_val, 1);
+               }
+             /* XXX manage xembed windows as long as they are not override_redirect..
+              * if (!ecore_x_window_prop_property_get(windows[i],
+              *					   atom_xmbed,
+              *					   atom_xmbed, 32,
+              *					   &data, &count))
+              *   data = NULL;
+              * if (!data) */
+             {
+                if (!ecore_x_window_prop_property_get(windows[i],
+                                                      atom_kde_netwm_systray,
+                                                      atom_xmbed, 32,
+                                                      &data, &count))
+                  data = NULL;
+             }
+             if (!data)
+               {
+                  if (!ecore_x_window_prop_property_get(windows[i],
+                                                        atom_kwm_dockwindow,
+                                                        atom_kwm_dockwindow, 32,
+                                                        &data, &count))
+                    data = NULL;
+               }
+             if (data)
+               {
+                  free(data);
+                  data = NULL;
+                  continue;
+               }
+             ret = ecore_x_window_prop_card32_get(windows[i],
+                                                  E_ATOM_MANAGED,
+                                                  &ret_val, 1);
 
-	     /* we have seen this window before */
-	     if ((ret > -1) && (ret_val == 1))
-	       {
-		  E_Container  *con = NULL;
-		  E_Zone       *zone = NULL;
-		  E_Desk       *desk = NULL;
-		  E_Border     *bd = NULL;
-		  unsigned int  id;
-		  char *path;
-		  Efreet_Desktop *desktop = NULL;
+             /* we have seen this window before */
+             if ((ret > -1) && (ret_val == 1))
+               {
+                  E_Container *con = NULL;
+                  E_Zone *zone = NULL;
+                  E_Desk *desk = NULL;
+                  E_Border *bd = NULL;
+                  unsigned int id;
+                  char *path;
+                  Efreet_Desktop *desktop = NULL;
 
-		  /* get all information from window before it is
-		   * reset by e_border_new */
-		  ret = ecore_x_window_prop_card32_get(windows[i],
-						       E_ATOM_CONTAINER,
-						       &id, 1);
-		  if (ret == 1)
-		    con = e_container_number_get(man, id);
-		  if (!con)
-		    con = e_container_current_get(man);
+                  /* get all information from window before it is
+                   * reset by e_border_new */
+                  ret = ecore_x_window_prop_card32_get(windows[i],
+                                                       E_ATOM_CONTAINER,
+                                                       &id, 1);
+                  if (ret == 1)
+                    con = e_container_number_get(man, id);
+                  if (!con)
+                    con = e_container_current_get(man);
 
-		  ret = ecore_x_window_prop_card32_get(windows[i],
-						       E_ATOM_ZONE,
-						       &id, 1);
-		  if (ret == 1)
-		    zone = e_container_zone_number_get(con, id);
-		  if (!zone)
-		    zone = e_zone_current_get(con);
-		  ret = ecore_x_window_prop_card32_get(windows[i],
-						       E_ATOM_DESK,
-						       deskxy, 2);
-		  if (ret == 2)
-		    desk = e_desk_at_xy_get(zone,
-					    deskxy[0],
-					    deskxy[1]);
+                  ret = ecore_x_window_prop_card32_get(windows[i],
+                                                       E_ATOM_ZONE,
+                                                       &id, 1);
+                  if (ret == 1)
+                    zone = e_container_zone_number_get(con, id);
+                  if (!zone)
+                    zone = e_zone_current_get(con);
+                  ret = ecore_x_window_prop_card32_get(windows[i],
+                                                       E_ATOM_DESK,
+                                                       deskxy, 2);
+                  if (ret == 2)
+                    desk = e_desk_at_xy_get(zone,
+                                            deskxy[0],
+                                            deskxy[1]);
 
-		  path = ecore_x_window_prop_string_get(windows[i],
-							E_ATOM_DESKTOP_FILE);
-		  if (path)
-		    {
-		       desktop = efreet_desktop_get(path);
-		       free(path);
-		    }
+                  path = ecore_x_window_prop_string_get(windows[i],
+                                                        E_ATOM_DESKTOP_FILE);
+                  if (path)
+                    {
+                       desktop = efreet_desktop_get(path);
+                       free(path);
+                    }
 
-		    {
-		       bd = e_border_new(con, windows[i], 1, 0);
-		       if (bd)
-			 {
-                            bd->ignore_first_unmap = 1;
-			    /* FIXME:
-			     * It's enough to set the desk, the zone will
-			     * be set according to the desk */
+                  {
+                     bd = e_border_new(con, windows[i], 1, 0);
+                     if (bd)
+                       {
+                          bd->ignore_first_unmap = 1;
+                          /* FIXME:
+                           * It's enough to set the desk, the zone will
+                           * be set according to the desk */
 //			    if (zone) e_border_zone_set(bd, zone);
-			    if (desk) e_border_desk_set(bd, desk);
-			    bd->desktop = desktop;
-			 }
-		    }
-	       }
-	     else if ((att.visible) && (!att.override) &&
-		      (!att.input_only))
-	       {
-		  /* We have not seen this window, and X tells us it
-		   * should be seen */
-		  E_Container *con;
-		  E_Border *bd;
+                          if (desk) e_border_desk_set(bd, desk);
+                          bd->desktop = desktop;
+                       }
+                  }
+               }
+             else if ((att.visible) && (!att.override) &&
+                      (!att.input_only))
+               {
+                  /* We have not seen this window, and X tells us it
+                   * should be seen */
+                  E_Container *con;
+                  E_Border *bd;
 
-		  con = e_container_current_get(man);
-		  bd = e_border_new(con, windows[i], 1, 0);
-		  if (bd)
+                  con = e_container_current_get(man);
+                  bd = e_border_new(con, windows[i], 1, 0);
+                  if (bd)
                     {
                        bd->ignore_first_unmap = 1;
                        e_border_show(bd);
                     }
-	       }
-	  }
-	free(windows);
+               }
+          }
+        free(windows);
      }
 }
 
@@ -328,23 +328,23 @@ e_manager_show(E_Manager *man)
    if (man->visible) return;
    EINA_LIST_FOREACH(man->containers, l, con)
      {
-	e_container_show(con);
+        e_container_show(con);
      }
    if (man->root != man->win)
      {
-	Ecore_X_Window mwin;
+        Ecore_X_Window mwin;
 
-	mwin = e_menu_grab_window_get();
-	if (!mwin) mwin = man->initwin;
-	if (!mwin)
-	  ecore_x_window_raise(man->win);
-	else
-	  ecore_x_window_configure(man->win,
-				   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-				   0, 0, 0, 0, 0,
-				   mwin, ECORE_X_WINDOW_STACK_BELOW);
-	ecore_x_window_show(man->win);
+        mwin = e_menu_grab_window_get();
+        if (!mwin) mwin = man->initwin;
+        if (!mwin)
+          ecore_x_window_raise(man->win);
+        else
+          ecore_x_window_configure(man->win,
+                                   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+                                   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+                                   0, 0, 0, 0, 0,
+                                   mwin, ECORE_X_WINDOW_STACK_BELOW);
+        ecore_x_window_show(man->win);
      }
    man->visible = 1;
 }
@@ -360,7 +360,7 @@ e_manager_hide(E_Manager *man)
    if (!man->visible) return;
    EINA_LIST_FOREACH(man->containers, l, con)
      {
-	e_container_hide(con);
+        e_container_hide(con);
      }
    if (man->root != man->win)
      ecore_x_window_hide(man->win);
@@ -375,9 +375,9 @@ e_manager_move(E_Manager *man, int x, int y)
    if ((x == man->x) && (y == man->y)) return;
    if (man->root != man->win)
      {
-	man->x = x;
-	man->y = y;
-	ecore_x_window_move(man->win, man->x, man->y);
+        man->x = x;
+        man->y = y;
+        ecore_x_window_move(man->win, man->x, man->y);
      }
 }
 
@@ -396,7 +396,7 @@ e_manager_resize(E_Manager *man, int w, int h)
 
    EINA_LIST_FOREACH(man->containers, l, con)
      {
-	e_container_resize(con, man->w, man->h);
+        e_container_resize(con, man->w, man->h);
      }
 
    ecore_x_netwm_desk_size_set(man->root, man->w, man->h);
@@ -412,8 +412,8 @@ e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (man->root != man->win)
      {
-	man->x = x;
-	man->y = y;
+        man->x = x;
+        man->y = y;
      }
    man->w = w;
    man->h = h;
@@ -421,7 +421,7 @@ e_manager_move_resize(E_Manager *man, int x, int y, int w, int h)
 
    EINA_LIST_FOREACH(man->containers, l, con)
      {
-	e_container_resize(con, man->w, man->h);
+        e_container_resize(con, man->w, man->h);
      }
 }
 
@@ -432,18 +432,18 @@ e_manager_raise(E_Manager *man)
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (man->root != man->win)
      {
-	Ecore_X_Window mwin;
+        Ecore_X_Window mwin;
 
-	mwin = e_menu_grab_window_get();
-	if (!mwin) mwin = man->initwin;
-	if (!mwin)
-	  ecore_x_window_raise(man->win);
-	else
-	  ecore_x_window_configure(man->win,
-				   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
-				   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
-				   0, 0, 0, 0, 0,
-				   mwin, ECORE_X_WINDOW_STACK_BELOW);
+        mwin = e_menu_grab_window_get();
+        if (!mwin) mwin = man->initwin;
+        if (!mwin)
+          ecore_x_window_raise(man->win);
+        else
+          ecore_x_window_configure(man->win,
+                                   ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING |
+                                   ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE,
+                                   0, 0, 0, 0, 0,
+                                   mwin, ECORE_X_WINDOW_STACK_BELOW);
      }
 }
 
@@ -466,11 +466,11 @@ e_manager_current_get(void)
    if (!managers) return NULL;
    EINA_LIST_FOREACH(managers, l, man)
      {
-	ecore_x_pointer_xy_get(man->win, &x, &y);
-	if (x == -1 && y == -1)
-	  continue;
-	if (E_INSIDE(x, y, man->x, man->y, man->w, man->h))
-	  return man;
+        ecore_x_pointer_xy_get(man->win, &x, &y);
+        if (x == -1 && y == -1)
+          continue;
+        if (E_INSIDE(x, y, man->x, man->y, man->w, man->h))
+          return man;
      }
    return eina_list_data_get(managers);
 }
@@ -484,8 +484,8 @@ e_manager_number_get(int num)
    if (!managers) return NULL;
    EINA_LIST_FOREACH(managers, l, man)
      {
-	if (man->num == num)
-	  return man;
+        if (man->num == num)
+          return man;
      }
    return NULL;
 }
@@ -498,7 +498,7 @@ e_managers_keys_grab(void)
 
    EINA_LIST_FOREACH(managers, l, man)
      {
-	e_bindings_key_grab(E_BINDING_CONTEXT_ANY, man->root);
+        e_bindings_key_grab(E_BINDING_CONTEXT_ANY, man->root);
      }
 }
 
@@ -510,15 +510,9 @@ e_managers_keys_ungrab(void)
 
    EINA_LIST_FOREACH(managers, l, man)
      {
-	e_bindings_key_ungrab(E_BINDING_CONTEXT_ANY, man->root);
+        e_bindings_key_ungrab(E_BINDING_CONTEXT_ANY, man->root);
      }
 }
-
-
-
-
-
-
 
 EAPI void
 e_manager_comp_set(E_Manager *man, E_Manager_Comp *comp)
@@ -557,13 +551,13 @@ e_manager_comp_src_list(E_Manager *man)
    return man->comp->func.src_list_get(man->comp->data, man);
 }
 
-EAPI E_Manager_Comp_Source*
+EAPI E_Manager_Comp_Source *
 e_manager_comp_border_src_get(E_Manager *man, Ecore_X_Window win)
 {
    return man->comp->func.border_src_get(man->comp->data, man, win);
 }
 
-EAPI E_Manager_Comp_Source*
+EAPI E_Manager_Comp_Source *
 e_manager_comp_src_get(E_Manager *man, Ecore_X_Window win)
 {
    return man->comp->func.src_get(man->comp->data, man, win);
@@ -635,7 +629,7 @@ e_manager_comp_event_resize_send(E_Manager *man)
 
 EAPI void
 e_manager_comp_event_src_add_send(E_Manager *man, E_Manager_Comp_Source *src,
-                                  void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src),
+                                  void (*afterfunc)(void *data, E_Manager *man, E_Manager_Comp_Source *src),
                                   void *data)
 {
    e_msg_send("comp.manager", "add.src", // name + info
@@ -647,7 +641,7 @@ e_manager_comp_event_src_add_send(E_Manager *man, E_Manager_Comp_Source *src,
 
 EAPI void
 e_manager_comp_event_src_del_send(E_Manager *man, E_Manager_Comp_Source *src,
-                                  void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src),
+                                  void (*afterfunc)(void *data, E_Manager *man, E_Manager_Comp_Source *src),
                                   void *data)
 {
    e_msg_send("comp.manager", "del.src", // name + info
@@ -659,7 +653,7 @@ e_manager_comp_event_src_del_send(E_Manager *man, E_Manager_Comp_Source *src,
 
 EAPI void
 e_manager_comp_event_src_config_send(E_Manager *man, E_Manager_Comp_Source *src,
-                                     void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src),
+                                     void (*afterfunc)(void *data, E_Manager *man, E_Manager_Comp_Source *src),
                                      void *data)
 {
    e_msg_send("comp.manager", "config.src", // name + info
@@ -671,7 +665,7 @@ e_manager_comp_event_src_config_send(E_Manager *man, E_Manager_Comp_Source *src,
 
 EAPI void
 e_manager_comp_event_src_visibility_send(E_Manager *man, E_Manager_Comp_Source *src,
-                                         void (*afterfunc) (void *data, E_Manager *man, E_Manager_Comp_Source *src),
+                                         void (*afterfunc)(void *data, E_Manager *man, E_Manager_Comp_Source *src),
                                          void *data)
 {
    e_msg_send("comp.manager", "visibility.src", // name + info
@@ -680,10 +674,6 @@ e_manager_comp_event_src_visibility_send(E_Manager *man, E_Manager_Comp_Source *
               src, // msgdata
               (void (*)(void *, E_Object *, void *))afterfunc, data); // afterfunc + afterdata
 }
-
-
-
-
 
 /* local subsystem functions */
 static void
@@ -697,7 +687,7 @@ _e_manager_free(E_Manager *man)
    E_FREE_LIST(l, e_object_del);
    if (man->root != man->win)
      {
-	ecore_x_window_free(man->win);
+        ecore_x_window_free(man->win);
      }
    if (man->pointer) e_object_del(E_OBJECT(man->pointer));
    managers = eina_list_remove(managers, man);
@@ -717,18 +707,18 @@ _e_manager_cb_window_show_request(void *data, int ev_type __UNUSED__, void *ev)
    if (ecore_x_window_parent_get(e->win) != man->root)
      return ECORE_CALLBACK_PASS_ON;  /* try other handlers for this */
 
-     {
-	E_Container *con;
-	E_Border *bd;
+   {
+      E_Container *con;
+      E_Border *bd;
 
-	con = e_container_current_get(man);
-	if (!e_border_find_by_client_window(e->win))
-	  {
-	     bd = e_border_new(con, e->win, 0, 0);
-	     if (!bd)
-	       ecore_x_window_show(e->win);
-	  }
-     }
+      con = e_container_current_get(man);
+      if (!e_border_find_by_client_window(e->win))
+        {
+           bd = e_border_new(con, e->win, 0, 0);
+           if (!bd)
+             ecore_x_window_show(e->win);
+        }
+   }
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -808,103 +798,106 @@ _e_manager_cb_frame_extents_request(void *data, int ev_type __UNUSED__, void *ev
        (!(decor & ECORE_X_MWM_HINT_DECOR_TITLE)) &&
        (!(decor & ECORE_X_MWM_HINT_DECOR_BORDER)))
      {
-	border = "borderless";
-	key = border;
+        border = "borderless";
+        key = border;
      }
 
    ok = ecore_x_netwm_window_type_get(e->win, &type);
    if ((ok) &&
        ((type == ECORE_X_WINDOW_TYPE_DESKTOP) ||
-	(type == ECORE_X_WINDOW_TYPE_DOCK)))
+        (type == ECORE_X_WINDOW_TYPE_DOCK)))
      {
-	border = "borderless";
-	key = border;
+        border = "borderless";
+        key = border;
      }
 
    sig = NULL;
    ecore_x_netwm_window_state_get(e->win, &state, &num);
    if (state)
      {
-	int maximized = 0;
+        int maximized = 0;
 
-	for (i = 0; i < num; i++)
-	  {
-	     switch (state[i])
-	       {
-		case ECORE_X_WINDOW_STATE_MAXIMIZED_VERT:
-		  maximized++;
-		  break;
-		case ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ:
-		  maximized++;
-		  break;
-		case ECORE_X_WINDOW_STATE_FULLSCREEN:
-		  border = "borderless";
-		  key = border;
-		  break;
-		case ECORE_X_WINDOW_STATE_SHADED:
-		case ECORE_X_WINDOW_STATE_SKIP_TASKBAR:
-		case ECORE_X_WINDOW_STATE_SKIP_PAGER:
-		case ECORE_X_WINDOW_STATE_HIDDEN:
-		case ECORE_X_WINDOW_STATE_ICONIFIED:
-		case ECORE_X_WINDOW_STATE_MODAL:
-		case ECORE_X_WINDOW_STATE_STICKY:
-		case ECORE_X_WINDOW_STATE_ABOVE:
-		case ECORE_X_WINDOW_STATE_BELOW:
-		case ECORE_X_WINDOW_STATE_DEMANDS_ATTENTION:
-		case ECORE_X_WINDOW_STATE_UNKNOWN:
-		  break;
-	       }
-	  }
-	if ((maximized == 2) &&
-	    (e_config->maximize_policy == E_MAXIMIZE_FULLSCREEN))
-	  {
-	     sig = "e,action,maximize,fullscreen";
-	     key = "maximize,fullscreen";
-	  }
-	free(state);
+        for (i = 0; i < num; i++)
+          {
+             switch (state[i])
+               {
+                case ECORE_X_WINDOW_STATE_MAXIMIZED_VERT:
+                  maximized++;
+                  break;
+
+                case ECORE_X_WINDOW_STATE_MAXIMIZED_HORZ:
+                  maximized++;
+                  break;
+
+                case ECORE_X_WINDOW_STATE_FULLSCREEN:
+                  border = "borderless";
+                  key = border;
+                  break;
+
+                case ECORE_X_WINDOW_STATE_SHADED:
+                case ECORE_X_WINDOW_STATE_SKIP_TASKBAR:
+                case ECORE_X_WINDOW_STATE_SKIP_PAGER:
+                case ECORE_X_WINDOW_STATE_HIDDEN:
+                case ECORE_X_WINDOW_STATE_ICONIFIED:
+                case ECORE_X_WINDOW_STATE_MODAL:
+                case ECORE_X_WINDOW_STATE_STICKY:
+                case ECORE_X_WINDOW_STATE_ABOVE:
+                case ECORE_X_WINDOW_STATE_BELOW:
+                case ECORE_X_WINDOW_STATE_DEMANDS_ATTENTION:
+                case ECORE_X_WINDOW_STATE_UNKNOWN:
+                  break;
+               }
+          }
+        if ((maximized == 2) &&
+            (e_config->maximize_policy == E_MAXIMIZE_FULLSCREEN))
+          {
+             sig = "e,action,maximize,fullscreen";
+             key = "maximize,fullscreen";
+          }
+        free(state);
      }
 
    extents = eina_hash_find(frame_extents, key);
    if (!extents)
      {
-	extents = E_NEW(Frame_Extents, 1);
-	if (extents)
-	  {
-	     Evas_Object *o;
-	     char buf[1024];
+        extents = E_NEW(Frame_Extents, 1);
+        if (extents)
+          {
+             Evas_Object *o;
+             char buf[1024];
 
-	     o = edje_object_add(con->bg_evas);
-	     snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", border);
-	     ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
-	     if (ok)
-	       {
-		  Evas_Coord x, y, w, h;
+             o = edje_object_add(con->bg_evas);
+             snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", border);
+             ok = e_theme_edje_object_set(o, "base/theme/borders", buf);
+             if (ok)
+               {
+                  Evas_Coord x, y, w, h;
 
-		  if (sig)
-		    {
-		       edje_object_signal_emit(o, sig, "e");
-		       edje_object_message_signal_process(o);
-		    }
+                  if (sig)
+                    {
+                       edje_object_signal_emit(o, sig, "e");
+                       edje_object_message_signal_process(o);
+                    }
 
-		  evas_object_resize(o, 1000, 1000);
-		  edje_object_calc_force(o);
-		  edje_object_part_geometry_get(o, "e.swallow.client",
-						&x, &y, &w, &h);
-		  extents->l = x;
-		  extents->r = 1000 - (x + w);
-		  extents->t = y;
-		  extents->b = 1000 - (y + h);
-	       }
-	     else
-	       {
-		  extents->l = 0;
-		  extents->r = 0;
-		  extents->t = 0;
-		  extents->b = 0;
-	       }
-	     evas_object_del(o);
-	     eina_hash_add(frame_extents, key, extents);
-	  }
+                  evas_object_resize(o, 1000, 1000);
+                  edje_object_calc_force(o);
+                  edje_object_part_geometry_get(o, "e.swallow.client",
+                                                &x, &y, &w, &h);
+                  extents->l = x;
+                  extents->r = 1000 - (x + w);
+                  extents->t = y;
+                  extents->b = 1000 - (y + h);
+               }
+             else
+               {
+                  extents->l = 0;
+                  extents->r = 0;
+                  extents->t = 0;
+                  extents->b = 0;
+               }
+             evas_object_del(o);
+             eina_hash_add(frame_extents, key, extents);
+          }
      }
 
    if (extents)
@@ -947,25 +940,25 @@ _e_manager_cb_screensaver_notify(void *data __UNUSED__, int ev_type __UNUSED__, 
 
    if (timer_post_screensaver_lock)
      {
-	ecore_timer_del(timer_post_screensaver_lock);
-	timer_post_screensaver_lock = NULL;
+        ecore_timer_del(timer_post_screensaver_lock);
+        timer_post_screensaver_lock = NULL;
      }
 
    if (e->on)
      {
-	if (e_config->desklock_autolock_screensaver)
-	  {
-	     if (e_config->desklock_post_screensaver_time <= 1.0)
-	       {
-		  e_desklock_show_autolocked();
-	       }
-	     else
-	       {
-		  timer_post_screensaver_lock = ecore_timer_add
-		    (e_config->desklock_post_screensaver_time,
-		     _e_manager_cb_timer_post_screensaver_lock, NULL);
-	       }
-	  }
+        if (e_config->desklock_autolock_screensaver)
+          {
+             if (e_config->desklock_post_screensaver_time <= 1.0)
+               {
+                  e_desklock_show_autolocked();
+               }
+             else
+               {
+                  timer_post_screensaver_lock = ecore_timer_add
+                      (e_config->desklock_post_screensaver_time,
+                      _e_manager_cb_timer_post_screensaver_lock, NULL);
+               }
+          }
      }
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -980,26 +973,26 @@ _e_manager_cb_client_message(void *data __UNUSED__, int ev_type __UNUSED__, void
 
    if (e->message_type == ECORE_X_ATOM_NET_ACTIVE_WINDOW)
      {
-	bd = e_border_find_by_client_window(e->win);
-	if (bd)
-	  {
+        bd = e_border_find_by_client_window(e->win);
+        if (bd)
+          {
 #if 0 /* notes */
-	     if (e->data.l[0] == 0 /* 0 == old, 1 == client, 2 == pager */)
-	       {
-		  // FIXME: need config for the below - what to do given each
-		  //  request (either do nothng, make app look urgent/want
-		  //  attention or actiually flip to app as below is the
-		  //  current default)
-		  // if 0 == just make app demand attention somehow
-		  // if 1 == just make app demand attention somehow
-		  // if 2 == activate window as below
-	       }
-	     timestamp = e->data.l[1];
-	     requestor_id e->data.l[2];
+             if (e->data.l[0] == 0 /* 0 == old, 1 == client, 2 == pager */)
+               {
+                  // FIXME: need config for the below - what to do given each
+                  //  request (either do nothng, make app look urgent/want
+                  //  attention or actiually flip to app as below is the
+                  //  current default)
+                  // if 0 == just make app demand attention somehow
+                  // if 1 == just make app demand attention somehow
+                  // if 2 == activate window as below
+               }
+             timestamp = e->data.l[1];
+             requestor_id e->data.l[2];
 #endif
              if (!bd->focused) e_border_activate(bd, EINA_FALSE);
              else e_border_raise(bd);
-	  }
+          }
      }
 
    return ECORE_CALLBACK_PASS_ON;
@@ -1007,7 +1000,7 @@ _e_manager_cb_client_message(void *data __UNUSED__, int ev_type __UNUSED__, void
 
 static Eina_Bool
 _e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__,
-				 void *data, void *fdata __UNUSED__)
+                                 void *data, void *fdata __UNUSED__)
 {
    free(data);
    return EINA_TRUE;
@@ -1022,8 +1015,8 @@ _e_manager_get_for_root(Ecore_X_Window root)
    if (!managers) return NULL;
    EINA_LIST_FOREACH(managers, l, man)
      {
-	if (man->root == root)
-	  return man;
+        if (man->root == root)
+          return man;
      }
    return eina_list_data_get(managers);
 }
@@ -1038,16 +1031,40 @@ _e_manager_clear_timer(void *data)
 }
 
 #if 0 /* use later - maybe */
-static int _e_manager_cb_window_destroy(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_hide(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_reparent(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_create(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_configure_request(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_configure(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_gravity(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_stack(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_stack_request(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_property(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_colormap(void *data, int ev_type, void *ev){return 1;}
-static int _e_manager_cb_window_shape(void *data, int ev_type, void *ev){return 1;}
+static int
+_e_manager_cb_window_destroy(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_hide(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_reparent(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_create(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_configure_request(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_configure(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_gravity(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_stack(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_stack_request(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_property(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_colormap(void *data, int ev_type, void *ev){return 1; }
+
+static int
+_e_manager_cb_window_shape(void *data, int ev_type, void *ev){return 1; }
+
 #endif
