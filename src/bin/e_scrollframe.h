@@ -30,6 +30,7 @@ EAPI Evas_Object *e_scrollframe_edje_object_get (Evas_Object *obj);
 EAPI void e_scrollframe_single_dir_set          (Evas_Object *obj, Eina_Bool single_dir);
 EAPI Eina_Bool e_scrollframe_single_dir_get     (Evas_Object *obj);
 EAPI void e_scrollframe_thumbscroll_force       (Evas_Object *obj, Eina_Bool forced);
+EAPI void e_scrollframe_key_navigation_set      (Evas_Object *obj, Eina_Bool enabled);
 
 #endif
 #endif
