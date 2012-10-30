@@ -50,6 +50,7 @@ action:   hibernate @HIBERNATE@
 action:   /bin/mount /bin/mount
 action:   /bin/umount /bin/umount
 action:   /usr/bin/eject /usr/bin/eject
+action:   gdb       gdb
 
 # on FreeBSD use this instead of the above.
 #action suspend  /usr/sbin/zzz 

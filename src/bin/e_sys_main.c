@@ -44,11 +44,13 @@ main(int argc,
    int i, gn;
    int test = 0;
    char *action = NULL, *cmd;
+   char *output = NULL;
 #ifdef HAVE_EEZE_MOUNT
    Eina_Bool mnt = EINA_FALSE;
    const char *act;
 #endif
    gid_t gid, gl[65536], egid;
+   int pid;
 
    for (i = 1; i < argc; i++)
      {
@@ -70,6 +72,20 @@ main(int argc,
              test = 1;
              action = argv[2];
           }
+	else if ((argc == 4) && (!strcmp(argv[1], "gdb")))
+	  {
+             char *end = NULL;
+
+             action = argv[1];
+             pid = strtoul(argv[2], &end, 10);
+             if (end == NULL || *end != '\0')
+               {
+                  printf("Invalid pid for '%s'.\n", argv[3]);
+                  exit(0);
+               }
+
+             output = argv[3];
+	  }
 #ifdef HAVE_EEZE_MOUNT
         else
           {
@@ -93,6 +109,7 @@ main(int argc,
      {
         exit(1);
      }
+   fprintf(stderr, "action %s %i\n", action, argc);
    if (!action) exit(1);
 
    uid = getuid();
@@ -133,6 +150,52 @@ main(int argc,
      {
         printf("ERROR: UNDEFINED ACTION: %s\n", action);
         exit(20);
+     }
+
+   if (!(strcmp(argv[1], "gdb")))
+     {
+        Eina_Prefix *pfx = NULL;
+        char buffer[4096];
+        char *tmp;
+        char *enlightenment_gdb;
+        char *batch;
+        int fd;
+        int r;
+
+        pfx = eina_prefix_new(argv[0], main,
+                              "E", "enlightenment", "AUTHORS",
+                              PACKAGE_BIN_DIR, PACKAGE_LIB_DIR,
+                              PACKAGE_DATA_DIR, LOCALE_DIR);
+        if (!pfx) exit(-1);
+
+        snprintf(buffer, 4096,
+                 "set logging file %s\nset logging on\nbacktrace full\n",
+                 output);
+        batch = strdup(buffer);
+
+        tmp = strdup("/tmp/e-gdb-XXXXXX");
+        fd = mkstemp(tmp);
+        if (fd < 0) exit(-1);
+        write(fd, batch, strlen(batch));
+        close(fd);
+
+        snprintf(buffer, 4096,
+                 "cat %s | %s %s/enlightenment %i > /dev/null 2> /dev/null",
+                 tmp,
+                 cmd,
+                 eina_prefix_bin_get(pfx),
+                 pid);
+        enlightenment_gdb = strdup(buffer);
+
+        r = system(enlightenment_gdb);
+
+        unlink(tmp);
+
+        free(enlightenment_gdb);
+        free(batch);
+        free(tmp);
+
+        exit(WEXITSTATUS(r));
      }
    if ((!test)
 #ifdef HAVE_EEZE_MOUNT
