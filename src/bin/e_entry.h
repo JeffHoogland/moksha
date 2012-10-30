@@ -7,7 +7,7 @@ EAPI Evas_Object *e_entry_add                 (Evas *evas);
 EAPI void         e_entry_text_set            (Evas_Object *entry, const char *text);
 EAPI const char  *e_entry_text_get            (Evas_Object *entry);
 EAPI void         e_entry_clear               (Evas_Object *entry);
-EAPI Evas_Object *e_entry_editable_object_get (Evas_Object *entry);
+EAPI void         e_entry_select_all          (Evas_Object *entry);
 
 EAPI void         e_entry_password_set        (Evas_Object *entry, int password_mode);
 EAPI void         e_entry_size_min_get        (Evas_Object *entry, Evas_Coord *minw, Evas_Coord *minh);

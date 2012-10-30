@@ -9760,7 +9760,6 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 static Evas_Object *
 _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
 {
-   Evas_Object *eo;
    Evas *e;
    E_Container *con;
    E_Manager *man;
@@ -9789,9 +9788,7 @@ _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
    evas_object_show(ic->entry_widget);
    e_widget_entry_text_set(ic->entry_widget, ic->info.file);
    e_widget_focus_set(ic->entry_widget, 0);
-   eo = e_widget_entry_editable_object_get(ic->entry_widget);
-   e_editable_cursor_move_to_start(eo);
-   e_editable_selection_move_to_end(eo);
+   e_widget_entry_select_all(ic->entry_widget);
    ic->sd->iop_icon = ic;
    ic->sd->typebuf.disabled = EINA_TRUE;
 

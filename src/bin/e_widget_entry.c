@@ -161,21 +161,18 @@ e_widget_entry_readonly_set(Evas_Object *entry, int readonly_mode)
 }
 
 /**
- * Gets the editable object of the entry widget. It will allow you to have
- * better control on the text, the cursor or the selection of the entry with
- * the e_editable_*() functions.
+ * Selects the content of the entry.
  *
  * @param entry an entry widget
- * @return Returns the editable object of the entry widget
  */
-EAPI Evas_Object *
-e_widget_entry_editable_object_get(Evas_Object *entry)
+EAPI void
+e_widget_entry_select_all(Evas_Object *entry)
 {
    E_Widget_Data *wd;
 
    if (!(entry) || (!(wd = e_widget_data_get(entry))))
-      return NULL;
-   return e_entry_editable_object_get(wd->o_entry);
+      return;
+   e_entry_select_all(wd->o_entry);
 }
 
 
