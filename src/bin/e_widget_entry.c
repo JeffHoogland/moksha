@@ -65,6 +65,7 @@ EAPI Evas_Object
 
    e_entry_size_min_get(o, &minw, &minh);
    e_widget_size_min_set(obj, minw, minh);
+   evas_object_size_hint_min_set(obj, minw, minh);
 
    wd->func = func;
    wd->data = data;
