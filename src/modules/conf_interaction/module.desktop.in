@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Interaction
-Name[ru]=
+Name[ru]=Взаимодействие
 Name[cs]=
 Name[de]=
 Name[eo]=
@@ -17,7 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_interaction
 Comment=Configure Mouse and Touch input.
-Comment[ru]=
+Comment[ru]=Настройка мыши и сенсорного ввода.
 Comment[cs]=
 Comment[de]=
 Comment[eo]=

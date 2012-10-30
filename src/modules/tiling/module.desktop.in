@@ -2,9 +2,11 @@
 Type=Link
 Name=Tiling
 Name[fr]=Pavage
+Name[ru]=Мозаичный режим
 Icon=e-module-tiling
 Comment=Positions/resizes your windows tilingly.
 Comment[fr]=Place/Redimensionne les fenêtres sans les superposer.
 Comment[it]=Posiziona/ridimensiona le finestre disponendole in griglia.
 Comment[pt]=Posiciona/ajusta as janelas em mosaicos
+Comment[ru]=Мозаичный режим расположения окон
 X-Enlightenment-ModuleType=core

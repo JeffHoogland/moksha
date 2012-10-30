@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Screen
-Name[ru]=Резолюция экрана
+Name[ru]=Экран
 Name[cs]=
 Name[de]=
 Name[eo]=
@@ -17,7 +17,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-display
 Comment=Used to configure your screen.
-Comment[ru]=Используется для настройки резолюции Вашего экрана.
+Comment[ru]=Используется для настройки экрана.
 Comment[cs]=
 Comment[de]=
 Comment[eo]=
