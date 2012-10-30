@@ -25,6 +25,7 @@ struct _E_Widget_Data
    void         (*chg_func)(void *data, Evas_Object *obj);
    void        *chg_data;
    int          preview;
+   Eina_Bool   nochange : 1; // block changing of entry
 };
 
 static void  _e_wid_del_hook(Evas_Object *obj);
@@ -163,7 +164,9 @@ _e_wid_fsel_files_changed(void *data, Evas_Object *obj __UNUSED__, void *event_i
    wd = data;
    if (!wd->o_files_fm) return;
    if (e_fm2_selected_count(wd->o_files_fm)) return;
+   wd->nochange = EINA_TRUE;
    e_fm2_first_sel(wd->o_files_fm);
+   wd->nochange = EINA_FALSE;
 }
 
 static void
@@ -205,6 +208,7 @@ _e_wid_fsel_sel_chg(E_Widget_Data *wd, Evas_Object *fm)
    struct stat st;
    Eina_Bool preview;
 
+   if (wd->nochange) return;
    preview = !!fm;
    fm = fm ?: wd->o_files_fm;
    selected = e_fm2_selected_list_get(fm);
@@ -477,7 +481,9 @@ e_widget_fsel_add(Evas *evas, const char *dev, const char *path, char *selected,
    evas_object_show(wd->o_entry);
    evas_object_show(wd->o_table2);
    evas_object_show(wd->o_table);
+   wd->nochange = EINA_TRUE;
    if (!selected) e_fm2_first_sel(wd->o_files_fm);
+   wd->nochange = EINA_FALSE;
    evas_object_focus_set(wd->o_files_fm, EINA_TRUE);
    return obj;
 }
