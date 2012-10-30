@@ -617,7 +617,6 @@ _e_entry_smart_add(Evas_Object *object)
    edje_object_size_min_calc(e_scrollframe_edje_object_get(sd->scroll_object),
          &sd->theme_width, &sd->theme_height);
 
-   e_scrollframe_thumbscroll_force(sd->scroll_object, EINA_TRUE);
    evas_object_smart_member_add(sd->scroll_object, object);
    evas_object_show(sd->scroll_object);
 
