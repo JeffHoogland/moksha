@@ -42,6 +42,13 @@ typedef enum _E_Focus_Policy
    E_FOCUS_SLOPPY
 } E_Focus_Policy;
 
+typedef enum _E_Urgency_Policy
+{
+   E_ACTIVEHINT_POLICY_IGNORE,
+   E_ACTIVEHINT_POLICY_ANIMATE,
+   E_ACTIVEHINT_POLICY_ACTIVATE
+} E_Urgency_Policy;
+
 typedef enum _E_Focus_Setting
 {
    E_FOCUS_NONE,

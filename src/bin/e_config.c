@@ -684,6 +684,7 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, focus_policy, INT); /**/
    E_CONFIG_VAL(D, T, focus_setting, INT); /**/
    E_CONFIG_VAL(D, T, pass_click_on, INT); /**/
+   E_CONFIG_VAL(D, T, window_activehint_policy, INT); /**/
    E_CONFIG_VAL(D, T, always_click_to_raise, INT); /**/
    E_CONFIG_VAL(D, T, always_click_to_focus, INT); /**/
    E_CONFIG_VAL(D, T, use_auto_raise, INT); /**/
@@ -1255,6 +1256,10 @@ e_config_load(void)
           e_config->xkb.desklock_layout = NULL;
           IFCFGEND;
 
+          IFCFG(0x0160);
+          e_config->window_activehint_policy = 2;
+          IFCFGEND;
+
           e_config->config_version = E_CONFIG_FILE_VERSION;
           _e_config_free(tcfg);
        }
@@ -1283,6 +1288,7 @@ e_config_load(void)
      E_CONFIG_LIMIT(e_config->focus_policy, 0, 2);
      E_CONFIG_LIMIT(e_config->focus_setting, 0, 3);
      E_CONFIG_LIMIT(e_config->pass_click_on, 0, 1);
+     E_CONFIG_LIMIT(e_config->window_activehint_policy, 0, 2);
      E_CONFIG_LIMIT(e_config->always_click_to_raise, 0, 1);
      E_CONFIG_LIMIT(e_config->always_click_to_focus, 0, 1);
      E_CONFIG_LIMIT(e_config->use_auto_raise, 0, 1);
