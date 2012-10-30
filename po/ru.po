@@ -3770,7 +3770,7 @@ msgstr "За последнюю минуту"
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
-msgstr[0] "Год назад"
+msgstr[0] "%li Год назад"
 msgstr[1] "%li года назад"
 msgstr[2] "%li лет назад"
 
@@ -3778,7 +3778,7 @@ msgstr[2] "%li лет назад"
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
-msgstr[0] "Месяц назад"
+msgstr[0] "%li Месяц назад"
 msgstr[1] "%li месяца назад"
 msgstr[2] "%li месяцев назад"
 
@@ -3786,7 +3786,7 @@ msgstr[2] "%li месяцев назад"
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
-msgstr[0] "Неделю назад"
+msgstr[0] "%liНеделю назад"
 msgstr[1] "%li недели назад"
 msgstr[2] "%li недель назад"
 
@@ -3794,7 +3794,7 @@ msgstr[2] "%li недель назад"
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
-msgstr[0] "Вчера"
+msgstr[0] "%liВчера"
 msgstr[1] "%li дня назад"
 msgstr[2] "%li дней назад"
 
@@ -3802,7 +3802,7 @@ msgstr[2] "%li дней назад"
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
-msgstr[0] "Час назад"
+msgstr[0] "%liЧас назад"
 msgstr[1] "%li часа назад"
 msgstr[2] "%li часов назад"
 
@@ -3810,7 +3810,7 @@ msgstr[2] "%li часов назад"
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
-msgstr[0] "Минуту назад"
+msgstr[0] "%liМинуту назад"
 msgstr[1] "%li минуты назад"
 msgstr[2] "%li минут назад"
 
