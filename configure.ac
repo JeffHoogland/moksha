@@ -46,11 +46,7 @@ AC_C_CONST
 AC_FUNC_ALLOCA
 AC_C___ATTRIBUTE__
 
-define([AC_LIBTOOL_LANG_CXX_CONFIG], [:])
-define([AC_LIBTOOL_LANG_GCJ_CONFIG], [:])
-define([AC_LIBTOOL_LANG_F77_CONFIG], [:])
-AC_DISABLE_STATIC
-AC_PROG_LIBTOOL
+LT_INIT([disable-static])
 
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
