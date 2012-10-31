@@ -1,5 +1,7 @@
 SUBDIRS = src data doc config
 
+ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+
 if HAVE_PO
 
 SUBDIRS += po
@@ -69,8 +71,6 @@ EXTRA_DIST = config.rpath  README AUTHORS COPYING \
 
 filesdir = $(datadir)/enlightenment/
 files_DATA = AUTHORS COPYING 
-
-ACLOCAL_AMFLAGS = -I m4
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = enlightenment.pc
