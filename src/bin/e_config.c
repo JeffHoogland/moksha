@@ -840,8 +840,7 @@ e_config_init(void)
 
    E_CONFIG_VAL(D, T, desk_auto_switch, INT);
 
-   E_CONFIG_VAL(D, T, window_out_of_vscreen_limits, INT);
-   E_CONFIG_VAL(D, T, window_out_of_vscreen_limits_partly, INT);
+   E_CONFIG_VAL(D, T, screen_limits,  INT);
 
    E_CONFIG_VAL(D, T, thumb_nice, INT);
 
@@ -1364,8 +1363,7 @@ e_config_load(void)
      E_CONFIG_LIMIT(e_config->remember_internal_windows, 0, 3);
      E_CONFIG_LIMIT(e_config->desk_auto_switch, 0, 1);
 
-     E_CONFIG_LIMIT(e_config->window_out_of_vscreen_limits, 0, 1);
-     E_CONFIG_LIMIT(e_config->window_out_of_vscreen_limits_partly, 0, 1);
+     E_CONFIG_LIMIT(e_config->screen_limits, 0, 2);
 
      E_CONFIG_LIMIT(e_config->dpms_enable, 0, 1);
      E_CONFIG_LIMIT(e_config->dpms_standby_enable, 0, 1);

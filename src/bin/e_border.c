@@ -209,7 +209,7 @@ static void      _e_border_shape_input_rectangle_set(E_Border *bd);
 static void      _e_border_show(E_Border *bd);
 static void      _e_border_hide(E_Border *bd);
 
-static Eina_Bool _e_border_lost_window_internal_get(E_Border *bd);
+static void       _e_border_move_lost_window_to_center(E_Border *bd);
 static void      _e_border_reset_lost_window(E_Border *bd);
 static Eina_Bool _e_border_pointer_warp_to_center_timer(void *data);
 /* local subsystem globals */
@@ -1424,9 +1424,6 @@ e_border_move(E_Border *bd,
      return;
 
    _e_border_move_internal(bd, x, y, 0);
-
-   if (_e_border_lost_window_internal_get(bd))
-     _e_border_reset_lost_window(bd);
 }
 
 /**
@@ -3497,6 +3494,12 @@ e_border_idler_before(void)
                        _e_border_show(bd);
                        bd->changes.visible = 0;
                     }
+
+                  if((bd->changed) && (bd->zone))
+                    {
+                       if(e_config->screen_limits == E_SCREEN_LIMITS_PARTLY)
+                          _e_border_move_lost_window_to_center(bd);
+                    }
                }
              e_container_border_list_free(bl);
 
@@ -4315,59 +4318,117 @@ e_border_lost_windows_get(E_Zone *zone)
    return list;
 }
 
-static Eina_Bool
-_e_border_lost_window_internal_get(E_Border *bd)
+static void
+_e_border_zones_layout_calc(E_Border *bd, int *zx, int *zy, int *zw, int *zh)
+{
+   int x, y, w, h;
+   E_Zone *zone_above, *zone_below, *zone_left, *zone_right;
+
+   x = bd->zone->x;
+   y = bd->zone->y;
+   w = bd->zone->w;
+   h = bd->zone->h;
+
+   if (eina_list_count(bd->zone->container->zones) == 1)
+     {
+        if (zx) *zx = x;
+        if (zy) *zy = y;
+        if (zw) *zw = w;
+        if (zh) *zh = h;
+        return;
+     }
+
+   zone_left = e_container_zone_at_point_get(bd->zone->container, (x - w + 5), y);
+   zone_right = e_container_zone_at_point_get(bd->zone->container, (x + w + 5), y);
+   zone_above = e_container_zone_at_point_get(bd->zone->container, x, (y - h + 5));
+   zone_below = e_container_zone_at_point_get(bd->zone->container, x, (y + h + 5));
+ 
+   if (!(zone_above) && (y))
+        zone_above = e_container_zone_at_point_get(bd->zone->container, x, (h - 5));
+  
+   if (!(zone_left) &&(x))
+        zone_left = e_container_zone_at_point_get(bd->zone->container, (x - 5), y);
+
+   if (zone_right)
+        w = zone_right->x + zone_right->w;
+
+   if (zone_left)
+        w = bd->zone->x + bd->zone->w;
+
+   if (zone_below)
+        h = zone_below->y + zone_below->h;
+
+   if (zone_above)
+        h = bd->zone->y + bd->zone->h;
+
+   if ((zone_left) && (zone_right))
+        w = bd->zone->w + zone_right->x;
+
+   if ((zone_above) && (zone_below))
+        h = bd->zone->h + zone_below->y;
+
+   if (x) x -= bd->zone->w;
+   if (y) y -= bd->zone->h;
+
+   if (zx) *zx = x > 0 ? x : 0;
+   if (zy) *zy = y > 0 ? y : 0;
+   if (zw) *zw = w;
+   if (zh) *zh = h;
+}
+
+static void
+_e_border_move_lost_window_to_center(E_Border *bd)
 {
    int loss_overlap = 5;
+   int zw, zh, zx, zy;
 
-   if (bd->during_lost) return EINA_FALSE;
-   if (e_config->window_out_of_vscreen_limits) return EINA_FALSE;
-   if (!(bd->zone))
-     return EINA_FALSE;
+   if (bd->during_lost) return;
+   if (!(bd->zone)) return;
 
-   if (!E_INTERSECTS(bd->zone->x + loss_overlap,
-                     bd->zone->y + loss_overlap,
-                     bd->zone->w - (2 * loss_overlap),
-                     bd->zone->h - (2 * loss_overlap),
+   _e_border_zones_layout_calc(bd, &zx, &zy, &zw, &zh);
+   
+   if (!E_INTERSECTS(zx + loss_overlap,
+                     zy + loss_overlap,
+                     zw - (2 * loss_overlap),
+                     zh - (2 * loss_overlap),
                      bd->x, bd->y, bd->w, bd->h))
      {
-        return EINA_TRUE;
-     }
-   else if ((!E_CONTAINS(bd->zone->x, bd->zone->y,
-                         bd->zone->w, bd->zone->h,
-                         bd->x, bd->y, bd->w, bd->h)) &&
-            (bd->shaped))
-     {
-        Ecore_X_Rectangle *rect;
-        int i, num;
-
-        rect = ecore_x_window_shape_rectangles_get(bd->win, &num);
-
-        if (rect)
+        if (e_config->edge_flip_dragging || bd->zone->flip.switching)
           {
-             int ok;
+             Eina_Bool lf, rf, tf, bf; 
 
-             ok = 0;
-             for (i = 0; i < num; i++)
+             lf = rf = tf = bf = EINA_TRUE;
+
+             if (bd->zone->desk_x_count <= 1) lf = rf = EINA_FALSE;
+             else if (!e_config->desk_flip_wrap)
                {
-                  if (E_INTERSECTS(bd->zone->x + loss_overlap,
-                                   bd->zone->y + loss_overlap,
-                                   bd->zone->w - (2 * loss_overlap),
-                                   bd->zone->h - (2 * loss_overlap),
-                                   rect[i].x, rect[i].y,
-                                   (int)rect[i].width, (int)rect[i].height))
-                    {
-                       ok = 1;
-                       break;
-                    }
+                  if (bd->zone->desk_x_current == 0) lf = EINA_FALSE;
+                  if (bd->zone->desk_x_current == (bd->zone->desk_x_count - 1)) rf = EINA_FALSE;
                }
-             free(rect);
-             if (!ok)
-               return EINA_TRUE;
-          }
-     }
 
-   return EINA_FALSE;
+             if (bd->zone->desk_y_count <= 1) tf = bf = EINA_FALSE;
+             else if (!e_config->desk_flip_wrap)
+               {
+                  if (bd->zone->desk_y_current == 0) tf = EINA_FALSE;
+                  if (bd->zone->desk_y_current == (bd->zone->desk_y_count - 1)) bf = EINA_FALSE;
+               }
+
+             if (!(lf) && (bd->x <= loss_overlap))
+               _e_border_reset_lost_window(bd);
+
+             if (!(rf) && (bd->x >= (bd->zone->w - loss_overlap)))
+               _e_border_reset_lost_window(bd);
+
+             if (!(tf) && (bd->y <= loss_overlap))
+               _e_border_reset_lost_window(bd);
+
+             if (!(bf) && (bd->y >= (bd->zone->h - loss_overlap)))
+               _e_border_reset_lost_window(bd); 
+          } 
+       
+       if (!e_config->edge_flip_dragging)
+         _e_border_reset_lost_window(bd); 
+     }
 }
 
 static void
@@ -5575,9 +5636,6 @@ _e_border_cb_window_property(void *data  __UNUSED__,
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return ECORE_CALLBACK_PASS_ON;
 
-   if (_e_border_lost_window_internal_get(bd))
-     _e_border_reset_lost_window(bd);
-
    if (e->atom == ECORE_X_ATOM_WM_NAME)
      {
         if ((!bd->client.netwm.name) &&
@@ -6666,13 +6724,23 @@ static void
 _e_border_stay_within_container(E_Border *bd, int x, int y, int *new_x, int *new_y)
 {
    int new_x_max, new_y_max;
+   int zw, zh;
    Eina_Bool lw, lh;
 
-   new_x_max = bd->zone->w - bd->w;
-   new_y_max = bd->zone->h - bd->h;
-   lw = bd->w > bd->zone->w ? EINA_TRUE : EINA_FALSE;
-   lh = bd->h > bd->zone->h ? EINA_TRUE : EINA_FALSE;
+   if(!bd->zone)
+     {
+        if (new_x) *new_x = x;
+        if (new_y) *new_y = y;
+        return;
+     }
 
+   _e_border_zones_layout_calc(bd, NULL, NULL, &zw, &zh);
+
+   new_x_max = zw - bd->w;
+   new_y_max = zh - bd->h;
+   lw = bd->w > zw ? EINA_TRUE : EINA_FALSE;
+   lh = bd->h > zh ? EINA_TRUE : EINA_FALSE;
+   
    if (lw)
      {
         if (x <= new_x_max)
@@ -6748,17 +6816,16 @@ _e_border_cb_mouse_move(void *data,
         new_x = x;
         new_y = y;
 
-        if (e_config->window_out_of_vscreen_limits_partly)
+        skiplist = eina_list_append(skiplist, bd);
+        e_resist_container_border_position(bd->zone->container, skiplist,
+                                           bd->x, bd->y, bd->w, bd->h,
+                                           x, y, bd->w, bd->h,
+                                           &new_x, &new_y, &new_w, &new_h);     
+        eina_list_free(skiplist);
+ 
+        if (e_config->screen_limits == E_SCREEN_LIMITS_WITHIN)
           _e_border_stay_within_container(bd, x, y, &new_x, &new_y);
-        else
-          {
-             skiplist = eina_list_append(skiplist, bd);
-             e_resist_container_border_position(bd->zone->container, skiplist,
-                                                bd->x, bd->y, bd->w, bd->h,
-                                                x, y, bd->w, bd->h,
-                                                &new_x, &new_y, &new_w, &new_h);
-             eina_list_free(skiplist);
-          }
+   
         bd->shelf_fix.x = 0;
         bd->shelf_fix.y = 0;
         bd->shelf_fix.modified = 0;

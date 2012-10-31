@@ -1,5 +1,12 @@
 #ifdef E_TYPEDEFS
 
+typedef enum _E_Screen_Limits
+{
+    E_SCREEN_LIMITS_PARTLY = 0,
+    E_SCREEN_LIMITS_COMPLETELY = 1,
+    E_SCREEN_LIMITS_WITHIN = 2
+} E_Screen_Limits;
+
 typedef enum _E_Icon_Preference
 {
    E_ICON_PREF_E_DEFAULT,
