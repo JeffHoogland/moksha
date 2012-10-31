@@ -3,7 +3,7 @@ SUBDIRS = e_fm
 MAINTAINERCLEANFILES = Makefile.in
 DISTCLEANFILES = e_fm_shared_types.h
 
-INCLUDES = \
+AM_CPPFLAGS = \
 -I$(top_builddir) \
 -I$(top_builddir)/src/bin \
 -I$(top_srcdir) \
@@ -357,7 +357,7 @@ e_xsettings.c \
 e_zone.c \
 $(ENLIGHTENMENTHEADERS)
 
-enlightenment_CPPFLAGS = -DE_LOGGING=1
+enlightenment_CPPFLAGS = $(AM_CPPFLAGS) -DE_LOGGING=1
 enlightenment_SOURCES = \
 e_main.c \
 $(enlightenment_src)
@@ -375,7 +375,7 @@ enlightenment_imc_LDADD = @E_IMC_LIBS@
 
 enlightenment_start_SOURCES = \
 e_start_main.c
-enlightenment_start_CFLAGS = $(INCLUDES) @E_START_CFLAGS@
+enlightenment_start_CFLAGS = $(AM_CPPFLAGS) @E_START_CFLAGS@
 enlightenment_start_LDADD = @dlopen_libs@ @E_START_LIBS@
 
 enlightenment_thumb_SOURCES = \
@@ -389,7 +389,6 @@ enlightenment_fm_op_SOURCES = \
 e_fm_op.c
 
 enlightenment_fm_op_LDADD = @E_FM_OP_LIBS@
-enlightenment_fm_op_CFLAGS = $(INCLUDES)
 
 enlightenment_sys_SOURCES = \
 e_sys_main.c

@@ -8,7 +8,7 @@ files_DATA = e-module-$(MODULE).edj module.desktop
 EXTRA_DIST = $(files_DATA)
 
 # the module .so file
-INCLUDES          = -I. \
+AM_CPPFLAGS          = -I. \
                     -I$(top_srcdir) \
                     -I$(top_srcdir)/src/modules/$(MODULE) \
                     -I$(top_srcdir)/src/bin \
@@ -16,7 +16,7 @@ INCLUDES          = -I. \
                     -I$(top_srcdir)/src/modules \
                     @e_cflags@ @SOUND_CFLAGS@
 if HAVE_ENOTIFY
-INCLUDES          += @ENOTIFY_CFLAGS@
+AM_CPPFLAGS          += @ENOTIFY_CFLAGS@
 endif
 
 pkgdir            = $(libdir)/enlightenment/modules/$(MODULE)/$(MODULE_ARCH)

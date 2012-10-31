@@ -5,7 +5,7 @@ MODULE = msgbus
 filesdir = $(libdir)/enlightenment/modules/$(MODULE)
 
 # the module .so file
-INCLUDES               = -I. \
+AM_CPPFLAGS               = -I. \
                          -I$(top_srcdir) \
                          -I$(top_srcdir)/src/modules/$(MODULE) \
                          -I$(top_srcdir)/src/bin \
