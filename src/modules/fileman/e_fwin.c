@@ -2893,15 +2893,10 @@ _e_fwin_op_registry_listener_cb(void *data,
    char buf[4096];
    char *total;
    int mw, mh;
-
+   Edje_Message_Float msg;
+   
    // Don't show if the operation keep less than 1 second
    if (ere->start_time + 1.0 > ecore_loop_time_get()) return;
-
-   // Update element
-   edje_object_part_drag_size_set(o, "e.gauge.bar", ((double)(ere->percent)) / 100, 1.0);
-   edje_object_size_min_get(o, &mw, &mh);
-   evas_object_resize(o, mw * e_scale, mh * e_scale);
-   evas_object_show(o);
 
    // Update icon
    switch (ere->op)
@@ -2981,6 +2976,39 @@ _e_fwin_op_registry_listener_cb(void *data,
      edje_object_signal_emit(o, "e,action,set,need_attention", "e");
    else
      edje_object_signal_emit(o, "e,action,set,normal", "e");
+
+   if ((ere->finished) || (ere->status == E_FM2_OP_STATUS_ABORTED))
+     {
+        if (!evas_object_data_get(o, "stopped"))
+          {
+             evas_object_data_set(o, "stopped", o);
+             edje_object_signal_emit(o, "e,state,busy,stop", "e");
+          }
+     }
+   if (ere->percent > 0)
+     {
+        if (!evas_object_data_get(o, "started"))
+          {
+             evas_object_data_set(o, "started", o);
+             edje_object_signal_emit(o, "e,state,busy,start", "e");
+          }
+     }
+   
+   // Update element
+   edje_object_part_drag_size_set(o, "e.gauge.bar",
+                                  ((double)(ere->percent)) / 100.0, 1.0);
+   msg.val = ((double)(ere->percent)) / 100.0;
+   edje_object_message_send(o, EDJE_MESSAGE_FLOAT, 1, &msg);
+   edje_object_size_min_get(o, &mw, &mh);
+   if ((mw == 0) || (mh == 0))
+     edje_object_size_min_calc(o, &mw, &mh);
+   else
+     {
+        mw *= e_scale;
+        mh *= e_scale;
+     }
+   evas_object_resize(o, mw, mh);
+   evas_object_show(o);
 }
 
 static void
