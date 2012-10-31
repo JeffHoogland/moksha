@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <pwd.h>
 #include <grp.h>
 #include <fnmatch.h>
@@ -50,7 +51,7 @@ main(int argc,
    const char *act;
 #endif
    gid_t gid, gl[65536], egid;
-   int pid;
+   int pid = 0;
 
    for (i = 1; i < argc; i++)
      {
@@ -72,20 +73,21 @@ main(int argc,
              test = 1;
              action = argv[2];
           }
-	else if ((argc == 4) && (!strcmp(argv[1], "gdb")))
-	  {
-             char *end = NULL;
+   else if (!strcmp(argv[1], "gdb"))
+     {
+        if (argc != 4) exit(1);
+        char *end = NULL;
 
-             action = argv[1];
-             pid = strtoul(argv[2], &end, 10);
-             if (end == NULL || *end != '\0')
-               {
-                  printf("Invalid pid for '%s'.\n", argv[3]);
-                  exit(0);
-               }
+        action = argv[1];
+        pid = strtoul(argv[2], &end, 10);
+        if (end == NULL || *end != '\0')
+          {
+             printf("Invalid pid for '%s'.\n", argv[3]);
+             exit(0);
+          }
 
-             output = argv[3];
-	  }
+        output = argv[3];
+     }
 #ifdef HAVE_EEZE_MOUNT
         else
           {
@@ -109,8 +111,8 @@ main(int argc,
      {
         exit(1);
      }
-   fprintf(stderr, "action %s %i\n", action, argc);
    if (!action) exit(1);
+   fprintf(stderr, "action %s %i\n", action, argc);
 
    uid = getuid();
    gid = getgid();
@@ -152,13 +154,12 @@ main(int argc,
         exit(20);
      }
 
-   if (!(strcmp(argv[1], "gdb")))
+   if (!strcmp(action, "gdb"))
      {
         Eina_Prefix *pfx = NULL;
         char buffer[4096];
         char *tmp;
         char *enlightenment_gdb;
-        char *batch;
         int fd;
         int r;
 
@@ -171,12 +172,11 @@ main(int argc,
         snprintf(buffer, 4096,
                  "set logging file %s\nset logging on\nbacktrace full\n",
                  output);
-        batch = strdup(buffer);
 
         tmp = strdup("/tmp/e-gdb-XXXXXX");
         fd = mkstemp(tmp);
         if (fd < 0) exit(-1);
-        write(fd, batch, strlen(batch));
+        write(fd, buffer, strlen(buffer));
         close(fd);
 
         snprintf(buffer, 4096,
@@ -192,7 +192,6 @@ main(int argc,
         unlink(tmp);
 
         free(enlightenment_gdb);
-        free(batch);
         free(tmp);
 
         exit(WEXITSTATUS(r));
