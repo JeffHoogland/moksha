@@ -200,8 +200,8 @@ _e_alert_comp_win_get(void)
    xcb_get_property_cookie_t cookie;
    xcb_get_property_reply_t *reply;
    uint32_t *v;
-   int r;
    int atom_cardinal, atom_composite_win;
+   int r;
 
    atom_cardinal = _e_alert_atom_get("CARDINAL");
    atom_composite_win = _e_alert_atom_get("_E_COMP_WINDOW");
@@ -218,6 +218,30 @@ _e_alert_comp_win_get(void)
    return r;
 }
 
+static Eina_Bool
+_e_alert_root_tainted_get(void)
+{
+   xcb_get_property_cookie_t cookie;
+   xcb_get_property_reply_t *reply;
+   uint32_t *v;
+   int atom_cardinal, atom_tainted;
+   int r;
+
+   atom_cardinal = _e_alert_atom_get("CARDINAL");
+   atom_tainted = _e_alert_atom_get("_E_TAINTED");
+
+   cookie = xcb_get_property_unchecked(conn, 0, screen->root, atom_tainted,
+                                       atom_cardinal, 0, 0x7fffffff);
+   reply = xcb_get_property_reply(conn, cookie, NULL);
+   if (!reply) return EINA_TRUE;
+
+   v = xcb_get_property_value(reply);
+   r = v[0];
+
+   free(reply);
+   return !!r;
+}
+
 static void
 _e_alert_display(void)
 {
@@ -225,6 +249,8 @@ _e_alert_display(void)
    xcb_query_text_extents_cookie_t cookie;
    xcb_query_text_extents_reply_t *reply;
    int x = 0, w = 0;
+
+   tainted = _e_alert_root_tainted_get();
 
    str = _e_alert_build_string(title);
 
@@ -501,15 +527,16 @@ _e_alert_draw_text(void)
                  "restart to try and get your desktop back the way \n"
                  "it was.\n"
                  "\n"
-                 "Please compile everything with -g in your CFLAGS.", pid);
+                 "Please compile everything with -g in your CFLAGS.\n", pid);
      }
    else
      {
         snprintf(msg, sizeof(msg),
-                 "This is not meant to happen and is likely a sign of \n"
-                 "a bug, but you are using non supported modules. Before\n"
-                 "reporting this issue, please unload them and try to see\n"
-                 "if the bug is still there.\n");
+                 "This is not meant to happen and is likely\n"
+                 "a sign of a bug, but you are using non supported\n"
+                 "modules. Before reporting this issue, please\n"
+                 "unload them and try to see if the bug is still\n"
+                 "there.\n");
      }
 
    strcpy(warn, "");
@@ -525,7 +552,7 @@ _e_alert_draw_text(void)
    xcb_image_text_8(conn, strlen(warn), win, gc,
                     4, (k + fa), warn);
    k += (2 * (fh + 2));
-   while (msg[i])
+   for (i = 0; msg[i]; )
      {
         line[j++] = msg[i++];
         if (line[j - 1] == '\n')

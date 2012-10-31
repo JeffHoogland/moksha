@@ -738,8 +738,20 @@ _e_module_whitelist_check(void)
         known++;
      }
 
-   if (badl) e_env_set("E17_TAINTED", "YES");
-   else e_env_set("E17_TAINTED", "NO");
+   {
+      Ecore_X_Atom _x_tainted;
+      char *state;
+      unsigned int _e_tainted;
+
+      state = badl ? "YES" : "NO";
+      _e_tainted = badl ? 1 : 0;
+
+      _x_tainted = ecore_x_atom_get("_E_TAINTED");
+      ecore_x_window_prop_card32_set(ecore_x_window_root_first_get(),
+                                     _x_tainted, &_e_tainted, 1);
+
+      e_env_set("E17_TAINTED", state);
+   }
 
    if (eina_list_count(badl) != known)
      {
