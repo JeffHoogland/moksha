@@ -3,5 +3,5 @@
 autoreconf --symlink --install -Wno-portability
 
 if [ -z "$NOCONFIGURE" ]; then
-	./configure -C "$@"
+	exec ./configure -C "$@"
 fi
