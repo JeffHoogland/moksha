@@ -242,8 +242,6 @@ _mixer_gadget_update(E_Mixer_Instance *inst)
    if (!inst)
      return;
 
-   e_mod_mixer_state_get(inst->sys, inst->channel, &inst->mixer_state);
-
    msg = alloca(sizeof(Edje_Message_Int_Set) + (2 * sizeof(int)));
    msg->count = 3;
    msg->val[0] = inst->mixer_state.mute;
@@ -955,8 +953,11 @@ e_mod_mixer_pulse_ready(Eina_Bool ready)
    E_Mixer_Module_Context *ctxt;
    Eina_List *l;
    Eina_Bool pulse = _mixer_using_default;
+   static Eina_Bool called = EINA_FALSE;
 
    if (!mixer_mod) return;
+
+   if (called && (ready != _mixer_using_default)) return; // prevent multiple calls
 
    if (ready) e_mixer_pulse_setup();
    else e_mixer_default_setup();
@@ -975,9 +976,14 @@ e_mod_mixer_pulse_ready(Eina_Bool ready)
              inst->sys = NULL;
              return;
           }
-        e_mod_mixer_state_get(inst->sys, inst->channel, &inst->mixer_state);
+        if ((ctxt->conf->version & 0xffff) >= 0x0004)
+          e_mod_mixer_volume_set(inst->sys, inst->channel,
+                                 inst->mixer_state.left, inst->mixer_state.right);
+        else
+          e_mod_mixer_state_get(inst->sys, inst->channel, &inst->mixer_state);
         _mixer_gadget_update(inst);
      }
+   called = EINA_TRUE;
 }
 
 void
@@ -1031,6 +1037,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst = E_NEW(E_Mixer_Instance, 1);
    inst->conf = conf;
+   inst->mixer_state.right = inst->conf->state.right;
+   inst->mixer_state.left = inst->conf->state.left;
+   inst->mixer_state.mute = inst->conf->state.mute;
    conf->instance = inst;
    if ((!_mixer_sys_setup(inst)) && (!_mixer_sys_setup_defaults(inst)))
      {
@@ -1057,7 +1066,11 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    if (inst->sys)
      {
-        e_mod_mixer_state_get(inst->sys, inst->channel, &inst->mixer_state);
+        if (_mixer_using_default && ((ctxt->conf->version & 0xffff) >= 0x0004))
+          e_mod_mixer_volume_set(inst->sys, inst->channel,
+                                 inst->mixer_state.left, inst->mixer_state.right);
+        else
+          e_mod_mixer_state_get(inst->sys, inst->channel, &inst->mixer_state);
         _mixer_gadget_update(inst);
      }
 
@@ -1092,6 +1105,9 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (!inst)
      return;
 
+   inst->conf->state.mute = inst->mixer_state.mute;
+   inst->conf->state.left = inst->mixer_state.left;
+   inst->conf->state.right = inst->mixer_state.right;
    evas_object_del(inst->ui.gadget);
    e_mod_mixer_channel_del(inst->channel);
    e_mod_mixer_del(inst->sys);
@@ -1303,6 +1319,9 @@ _mixer_gadget_configuration_descriptor_new(void)
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, card, STR);
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, channel_name, STR);
    E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, using_default, UCHAR);
+   E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, state.mute, INT);
+   E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, state.left, INT);
+   E_CONFIG_VAL(conf_edd, E_Mixer_Gadget_Config, state.right, INT);
 
    return conf_edd;
 }

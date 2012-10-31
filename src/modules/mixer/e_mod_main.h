@@ -6,7 +6,7 @@
 #include <e.h>
 
 #define MOD_CONFIG_FILE_EPOCH 0x0000
-#define MOD_CONFIG_FILE_GENERATION 0x0003
+#define MOD_CONFIG_FILE_GENERATION 0x0004
 #define MOD_CONFIG_FILE_VERSION                                 \
   ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
@@ -18,6 +18,7 @@ typedef struct E_Mixer_Gadget_Config
    const char *card;
    const char *channel_name;
    const char *id;
+   E_Mixer_Channel_State state;
    Eina_Bool using_default;
    E_Config_Dialog *dialog;
    struct E_Mixer_Instance *instance;
