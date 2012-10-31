@@ -194,8 +194,9 @@ struct _E_Fm2_Icon
    {
       Evas_Coord x, y;
       Eina_Bool  start : 1;
-      Eina_Bool  dnd : 1;
-      Eina_Bool  src : 1;
+      Eina_Bool  dnd : 1; // currently dragging
+      Eina_Bool  src : 1; // drag source
+      Eina_Bool  hidden : 1; // dropped into different dir
    } drag;
 
    double selected_time;
@@ -6048,6 +6049,7 @@ _e_fm2_dnd_finish(Evas_Object *obj, int refresh)
      {
         ic->drag.dnd = EINA_FALSE;
         ic->drag.src = EINA_FALSE;
+        if (ic->drag.hidden) continue;
         if (ic->obj) evas_object_show(ic->obj);
         if (ic->obj_icon) evas_object_show(ic->obj_icon);
      }
@@ -6476,6 +6478,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                     {
                        args = e_util_string_append_char(args, &size, &length, ' ');
                        if (!args) memerr = EINA_TRUE;
+                       else ic->drag.hidden = EINA_TRUE;
                     }
                }
              eina_stringshare_del(fp);
@@ -6513,6 +6516,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                          {
                             args = e_util_string_append_char(args, &size, &length, ' ');
                             if (!args) memerr = EINA_TRUE;
+                            else ic->drag.hidden = EINA_TRUE;
                          }
                     }
                   eina_stringshare_del(fp);
@@ -6551,6 +6555,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                               {
                                  args = e_util_string_append_char(args, &size, &length, ' ');
                                  if (!args) memerr = EINA_TRUE;
+                                 else ic->drag.hidden = EINA_TRUE;
                               }
                          }
 
@@ -6580,6 +6585,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                               {
                                  args = e_util_string_append_char(args, &size, &length, ' ');
                                  if (!args) memerr = EINA_TRUE;
+                                 else ic->drag.hidden = EINA_TRUE;
                               }
                          }
                        eina_stringshare_del(fp);
@@ -6931,8 +6937,6 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
                   file = ecore_file_file_get(uri->path);
                   ic = _e_fm2_icon_find(fm, file);
                   ic->drag.dnd = EINA_FALSE;
-                  if (ic->obj) evas_object_show(ic->obj);
-                  if (ic->obj_icon) evas_object_show(ic->obj_icon);
                   if (ic->sd->dnd_scroller) ecore_animator_del(ic->sd->dnd_scroller);
                   ic->sd->dnd_scroller = NULL;
                   evas_object_smart_callback_call(ic->sd->obj, "dnd_end", &ic->info);
