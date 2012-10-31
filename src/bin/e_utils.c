@@ -905,50 +905,32 @@ e_util_file_time_get(time_t ftime)
         else if (diff >= 31526000)
           {
              test = diff / 31526000;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("Last year"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Years ago"), test);
+             snprintf(buf, sizeof(buf), P_("Last year", "%li Years ago", test), test);
           }
         else if (diff >= 2592000)
           {
              test = diff / 2592000;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("Last month"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Months ago"), test);
+             snprintf(buf, sizeof(buf), P_("Last month", "%li Months ago", test), test);
           }
         else if (diff >= 604800)
           {
              test = diff / 604800;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("Last week"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Weeks ago"), test);
+             snprintf(buf, sizeof(buf), P_("Last week", "%li Weeks ago", test), test);
           }
         else if (diff >= 86400)
           {
              test = diff / 86400;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("Yesterday"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Days ago"), test);
+             snprintf(buf, sizeof(buf), P_("Yesterday", "%li Days ago", test), test);
           }
         else if (diff >= 3600)
           {
              test = diff / 3600;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("An hour ago"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Hours ago"), test);
+             snprintf(buf, sizeof(buf), P_("An hour ago", "%li Hours ago", test), test);
           }
         else if (diff > 60)
           {
              test = diff / 60;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("A minute ago"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Minutes ago"), test);
+             snprintf(buf, sizeof(buf), P_("A minute ago", "%li Minutes ago", test), test);
           }
      }
 
