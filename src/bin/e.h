@@ -282,7 +282,7 @@ extern EAPI Eina_Bool restart;
 extern EAPI Eina_Bool e_precache_end;
 extern EAPI Eina_Bool x_fatal;
 
-extern EAPI unsigned long e_alert_composite_win;
+EAPI void e_alert_composite_win(Ecore_X_Window root, Ecore_X_Window win);
 
 //#define SMARTERR(args...) abort()
 #define SMARTERRNR() return

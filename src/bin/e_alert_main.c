@@ -72,8 +72,6 @@ main(int argc, char **argv)
           sig = atoi(argv[i]); // signal
         else if (i == 2)
           pid = atoi(argv[i]); // E's pid
-        else if (i == 3)
-          comp_win = atoi(argv[i]); // Composite Alert Window
      }
 
    tmp = getenv("E17_TAINTED");
@@ -181,6 +179,45 @@ _e_alert_create(void)
    xcb_create_gc(conn, gc, win, mask, mask_list);
 }
 
+static int
+_e_alert_atom_get(const char *name)
+{
+   xcb_intern_atom_cookie_t cookie;
+   xcb_intern_atom_reply_t *reply;
+   int a;
+
+   cookie = xcb_intern_atom_unchecked(conn, 0, strlen(name), name);
+   reply = xcb_intern_atom_reply(conn, cookie, NULL);
+   if (!reply) return XCB_ATOM_NONE;
+   a = reply->atom;
+   free(reply);
+   return a;
+}
+
+static int
+_e_alert_comp_win_get(void)
+{
+   xcb_get_property_cookie_t cookie;
+   xcb_get_property_reply_t *reply;
+   uint32_t *v;
+   int r;
+   int atom_cardinal, atom_composite_win;
+
+   atom_cardinal = _e_alert_atom_get("CARDINAL");
+   atom_composite_win = _e_alert_atom_get("_E_COMP_WINDOW");
+
+   cookie = xcb_get_property_unchecked(conn, 0, screen->root, atom_composite_win,
+                                       atom_cardinal, 0, 0x7fffffff);
+   reply = xcb_get_property_reply(conn, cookie, NULL);
+   if (!reply) return -1;
+
+   v = xcb_get_property_value(reply);
+   r = v[0];
+
+   free(reply);
+   return r;
+}
+
 static void
 _e_alert_display(void)
 {
@@ -213,6 +250,7 @@ _e_alert_display(void)
    _e_alert_button_move_resize(btn2, x, WINDOW_HEIGHT - 20 - (fh + 20),
                                w, (fh + 20));
 
+   comp_win = _e_alert_comp_win_get();
    if (comp_win)
      {
         xcb_rectangle_t rect;

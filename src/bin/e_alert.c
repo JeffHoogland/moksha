@@ -2,7 +2,7 @@
 #include <sys/wait.h>
 
 /* public variables */
-EAPI unsigned long e_alert_composite_win = 0;
+EAPI unsigned long _e_alert_composite_win = 0;
 
 EINTERN int
 e_alert_init(void)
@@ -14,6 +14,19 @@ EINTERN int
 e_alert_shutdown(void)
 {
    return 1;
+}
+
+EAPI void
+e_alert_composite_win(Ecore_X_Window root, Ecore_X_Window comp)
+{
+   Ecore_X_Atom composite_win;
+
+   composite_win = ecore_x_atom_get("_E_COMP_WINDOW");
+
+   if (comp == 0)
+     ecore_x_window_prop_property_del(root, composite_win);
+   else
+     ecore_x_window_prop_card32_set(root, composite_win, &comp, 1);
 }
 
 EAPI void
@@ -34,8 +47,7 @@ e_alert_show(int sig)
    args[2] = alloca(21);
    snprintf(args[2], 21, "%lu", (long unsigned int)getpid());
 
-   args[3] = alloca(21);
-   snprintf(args[3], 21, "%lu", e_alert_composite_win);
+   args[3] = NULL;   
 
    pid = fork();
    if (pid < -1)

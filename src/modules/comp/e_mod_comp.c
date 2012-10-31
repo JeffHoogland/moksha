@@ -3685,7 +3685,7 @@ _e_mod_comp_add(E_Manager *man)
  */
      }
 
-   if (c->man->num == 0) e_alert_composite_win = c->win;
+   if (c->man->num == 0) e_alert_composite_win(c->man->root, c->win);
 
    if (_comp_mod->conf->engine == ENGINE_GL)
      {
@@ -3891,7 +3891,7 @@ _e_mod_comp_del(E_Comp *c)
    ecore_x_composite_unredirect_subwindows
      (c->man->root, ECORE_X_COMPOSITE_UPDATE_MANUAL);
    ecore_x_composite_render_window_disable(c->win);
-   if (c->man->num == 0) e_alert_composite_win = 0;
+   if (c->man->num == 0) e_alert_composite_win(c->man->root, 0);
    if (c->render_animator) ecore_animator_del(c->render_animator);
    if (c->new_up_timer) ecore_timer_del(c->new_up_timer);
    if (c->update_job) ecore_job_del(c->update_job);
