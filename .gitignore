@@ -98,6 +98,7 @@ default.edj
 /src/bin/enlightenment_init
 /src/bin/enlightenment_open
 /src/bin/enlightenment_start
+/src/bin/enlightenment_static_grabber
 /src/bin/enlightenment_sys
 /src/bin/enlightenment_thumb
 /src/bin/enlightenment_open
