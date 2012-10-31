@@ -22,7 +22,6 @@ src/bin/e_dialog.c
 src/bin/e_dnd.c
 src/bin/e_dpms.c
 src/bin/e_eap_editor.c
-src/bin/e_editable.c
 src/bin/e_entry.c
 src/bin/e_entry_dialog.c
 src/bin/e_error.c
