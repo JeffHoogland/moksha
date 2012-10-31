@@ -527,14 +527,14 @@ _e_alert_draw_text(void)
                  "restart to try and get your desktop back the way \n"
                  "it was.\n"
                  "\n"
-                 "Please compile everything with -g in your CFLAGS.\n", pid);
+                 "Please compile E17 and EFL with -g in your CFLAGS.\n", pid);
      }
    else
      {
         snprintf(msg, sizeof(msg),
                  "This is not meant to happen and is likely\n"
-                 "a sign of a bug, but you are using non supported\n"
-                 "modules. Before reporting this issue, please\n"
+                 "a sign of a bug, but you are using unsupported\n"
+                 "modules; before reporting this issue, please\n"
                  "unload them and try to see if the bug is still\n"
                  "there.\n");
      }
