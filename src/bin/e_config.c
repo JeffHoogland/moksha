@@ -2006,10 +2006,9 @@ _e_config_free(E_Config *ecf)
 
    if (!ecf) return;
 
-   if (e_config->xkb.default_model)
-     eina_stringshare_del(e_config->xkb.default_model);
+   eina_stringshare_del(ecf->xkb.default_model);
 
-   EINA_LIST_FREE(e_config->xkb.used_layouts, cl)
+   EINA_LIST_FREE(ecf->xkb.used_layouts, cl)
      {
         eina_stringshare_del(cl->name);
         eina_stringshare_del(cl->model);
@@ -2017,7 +2016,7 @@ _e_config_free(E_Config *ecf)
         E_FREE(cl);
      }
 
-   EINA_LIST_FREE(e_config->xkb.used_options, op)
+   EINA_LIST_FREE(ecf->xkb.used_options, op)
      {
         eina_stringshare_del(op->name);
         E_FREE(op);
