@@ -51,7 +51,7 @@ static const char *title = NULL, *str1 = NULL, *str2 = NULL;
 static int ret = 0, sig = 0;
 static pid_t pid;
 static Eina_Bool tainted = EINA_TRUE;
-static const char *backtrace = NULL;
+static const char *backtrace_str = NULL;
 
 int
 main(int argc, char **argv)
@@ -74,7 +74,7 @@ main(int argc, char **argv)
         else if (i == 2)
           pid = atoi(argv[i]); // E's pid
 	else if (i == 3)
-	  backtrace = argv[i];
+	  backtrace_str = argv[i];
      }
 
    tmp = getenv("E17_TAINTED");
@@ -522,7 +522,7 @@ _e_alert_draw_text(void)
 
    if (!tainted)
      {
-        if (backtrace)
+        if (backtrace_str)
           {
              snprintf(msg, sizeof(msg),
                       "This is not meant to happen and is likely a sign of \n"
@@ -533,7 +533,7 @@ _e_alert_draw_text(void)
                       "from svn with '-g -ggdb3' in your CFLAGS.\n"
                       "You can then report this crash on :\n"
                       "http://trac.enlightenment.org/e/.\n",
-                      pid, backtrace);
+                      pid, backtrace_str);
           }
         else
           {
