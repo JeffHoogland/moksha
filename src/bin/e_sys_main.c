@@ -156,43 +156,20 @@ main(int argc,
 
    if (!strcmp(action, "gdb"))
      {
-        Eina_Prefix *pfx = NULL;
         char buffer[4096];
-        char *tmp;
-        char *enlightenment_gdb;
-        int fd;
         int r;
 
-        pfx = eina_prefix_new(argv[0], main,
-                              "E", "enlightenment", "AUTHORS",
-                              PACKAGE_BIN_DIR, PACKAGE_LIB_DIR,
-                              PACKAGE_DATA_DIR, LOCALE_DIR);
-        if (!pfx) exit(-1);
-
-        snprintf(buffer, 4096,
-                 "set logging file %s\nset logging on\nbacktrace full\n",
-                 output);
-
-        tmp = strdup("/tmp/e-gdb-XXXXXX");
-        fd = mkstemp(tmp);
-        if (fd < 0) exit(-1);
-        write(fd, buffer, strlen(buffer));
-        close(fd);
-
-        snprintf(buffer, 4096,
-                 "cat %s | %s %s/enlightenment %i > /dev/null 2> /dev/null",
-                 tmp,
+	snprintf(buffer, 4096,
+                 "%s --pid=%i "
+		 "-ex 'set logging file %s' "
+		 "-ex 'set logging on' "
+		 "-ex 'thread apply all backtrace full' "
+		 "-ex detach -ex quit > /dev/null 2> /dev/null",
                  cmd,
-                 eina_prefix_bin_get(pfx),
-                 pid);
-        enlightenment_gdb = strdup(buffer);
+		 pid,
+		 output);
 
-        r = system(enlightenment_gdb);
-
-        unlink(tmp);
-
-        free(enlightenment_gdb);
-        free(tmp);
+        r = system(buffer);
 
         exit(WEXITSTATUS(r));
      }
