@@ -278,6 +278,7 @@ extern EAPI Eina_Bool evil;
 extern EAPI Eina_Bool starting;
 extern EAPI Eina_Bool stopping;
 extern EAPI Eina_Bool restart;
+extern EAPI Eina_Bool e_nopause;
 
 extern EAPI Eina_Bool e_precache_end;
 extern EAPI Eina_Bool x_fatal;

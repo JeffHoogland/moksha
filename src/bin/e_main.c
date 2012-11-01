@@ -122,6 +122,7 @@ EAPI Eina_Bool evil = EINA_FALSE;
 EAPI Eina_Bool starting = EINA_TRUE;
 EAPI Eina_Bool stopping = EINA_FALSE;
 EAPI Eina_Bool restart = EINA_FALSE;
+EAPI Eina_Bool e_nopause = EINA_FALSE;
 
 static void
 _xdg_data_dirs_augment(void)
@@ -1200,6 +1201,8 @@ _e_main_parse_arguments(int argc, char **argv)
           really_know = EINA_TRUE;
         else if (!strcmp(argv[i], "-locked"))
           locked = EINA_TRUE;
+	else if (!strcmp(argv[i], "-nopause"))
+	  e_nopause = EINA_TRUE;
         else if ((!strcmp(argv[i], "-h")) ||
                  (!strcmp(argv[i], "-help")) ||
                  (!strcmp(argv[i], "--help")))

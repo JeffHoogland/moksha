@@ -51,6 +51,7 @@ static const char *title = NULL, *str1 = NULL, *str2 = NULL;
 static int ret = 0, sig = 0;
 static pid_t pid;
 static Eina_Bool tainted = EINA_TRUE;
+static const char *backtrace = NULL;
 
 int
 main(int argc, char **argv)
@@ -72,6 +73,8 @@ main(int argc, char **argv)
           sig = atoi(argv[i]); // signal
         else if (i == 2)
           pid = atoi(argv[i]); // E's pid
+	else if (i == 3)
+	  backtrace = argv[i];
      }
 
    tmp = getenv("E17_TAINTED");
@@ -519,15 +522,33 @@ _e_alert_draw_text(void)
 
    if (!tainted)
      {
-        snprintf(msg, sizeof(msg),
-                 "This is not meant to happen and is likely a sign of \n"
-                 "a bug in Enlightenment or the libraries it relies \n"
-                 "on. You can gdb attach to this process (%d) now \n"
-                 "to try debug it or you could exit, or just hit \n"
-                 "restart to try and get your desktop back the way \n"
-                 "it was.\n"
-                 "\n"
-                 "Please compile E17 and EFL with -g in your CFLAGS.\n", pid);
+        if (backtrace)
+          {
+             snprintf(msg, sizeof(msg),
+                      "This is not meant to happen and is likely a sign of \n"
+                      "a bug in Enlightenment or the libraries it relies \n"
+                      "on. You will find an backtrace of E17 (%d) in :\n"
+                      "'%s'\n"
+                      "Before reporting issue, compile latest E17 and EFL\n"
+                      "from svn with '-g -ggdb3' in your CFLAGS.\n"
+                      "You can then report this crash on :\n"
+                      "http://trac.enlightenment.org/e/.\n",
+                      pid, backtrace);
+          }
+        else
+          {
+             snprintf(msg, sizeof(msg),
+                      "This is not meant to happen and is likely a sign of \n"
+                      "a bug in Enlightenment or the libraries it relies \n"
+                      "on. You can gdb attach to this process (%d) now \n"
+                      "to try debug it or you could exit, or just hit \n"
+                      "restart to try and get your desktop back the way \n"
+                      "it was.\n"
+                      "\n"
+                      "Please compile latest svn E17 and EFL with\n"
+                      "-g and -ggdb3 in your CFLAGS.\n", pid);
+
+          }
      }
    else
      {
@@ -536,7 +557,8 @@ _e_alert_draw_text(void)
                  "a sign of a bug, but you are using unsupported\n"
                  "modules; before reporting this issue, please\n"
                  "unload them and try to see if the bug is still\n"
-                 "there.\n");
+                 "there. Also update to latest svn and be sure to\n"
+		 "compile E17 and EFL with -g and -ggdb3 in your CFLAGS");
      }
 
    strcpy(warn, "");

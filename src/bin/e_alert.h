@@ -13,7 +13,7 @@ typedef enum _E_Alert_Op_Type
 EINTERN int e_alert_init(void);
 EINTERN int e_alert_shutdown(void);
 
-EAPI void e_alert_show(int sig);
+EAPI void e_alert_show(void);
 
 #endif
 #endif
