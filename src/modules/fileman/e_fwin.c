@@ -581,6 +581,7 @@ e_fwin_reload_all(void)
                }
              _e_fwin_window_title_set(fwin->cur_page);
              _e_fwin_cb_resize(fwin->win);
+             _e_fwin_toolbar_resize(fwin->cur_page);
           }
      }
 
