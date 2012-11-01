@@ -12,6 +12,9 @@
  * #define DBG(...) ERR(__VA_ARGS__) */
 
 #define MAX_ITEMS 200
+#define MAX_EXE 50
+#define DEFAULT_MATCH_PRIORITY 15
+#define PREFIX_MATCH_PRIORITY 11
 
 typedef struct _Plugin        Plugin;
 typedef struct _Module_Config Module_Config;
@@ -233,11 +236,11 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
    Eina_List *l;
    Evry_Item *eit;
    History_Types *ht;
-   unsigned int len = (input ? strlen(input) : 0);
+   unsigned int input_len = (input ? strlen(input) : 0);
    double max = 0.0;
-   const char *tmp, *file = NULL;
-   unsigned int min = 0, cnt = 0, end = len, tmp_len;
-   unsigned int query = (len >= (unsigned int)plugin->config->min_query);
+   const char *tmp, *first_match = NULL;
+   unsigned int min = 0, cnt = 0, end = input_len;
+   Eina_Bool query = (input_len >= (unsigned int)plugin->config->min_query);
    EVRY_PLUGIN_ITEMS_CLEAR(p);
 
    p->input = input;
@@ -247,45 +250,49 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
 
    if (input)
      {
+        const char *cmd;
+        
+        // begin of arguments (end of executable part)
         if ((tmp = strchr(input, ' ')))
           end = tmp - input;
 
         if ((!exe_list) && (!exe_scan_idler))
           _scan_executables();
-
-        EINA_LIST_FOREACH (exe_list, l, tmp)
+        
+        EINA_LIST_FOREACH (exe_list, l, cmd)
           {
-             tmp_len = strlen(tmp);
+             unsigned int cmd_len = strlen(cmd);
 
-             if ((end < len) && (tmp_len > end))
+             if ((end < input_len) && (cmd_len > end))
                continue;
 
-             if (!strncmp(input, tmp, end))
+             if (!strncmp(input, cmd, end))
                {
-                  if (query && (cnt++ < 50) && (len != tmp_len))
-                    _item_exe_add(p, tmp, 15);
+                  if (query && (cnt++ < MAX_EXE) && (input_len != cmd_len))
+                    _item_exe_add(p, cmd, DEFAULT_MATCH_PRIORITY);
 
-                  if ((!min) || (tmp_len < min))
+                  if ((!min) || (cmd_len < min))
                     {
-                       min = tmp_len;
-                       file = tmp;
+                       min = cmd_len;
+                       first_match = cmd;
                     }
-                  if ((!query) && (tmp_len == len))
+                  
+                  if ((!query) && (cmd_len == input_len))
                     break;
                }
           }
 
-        if (file)
+        if (first_match)
           {
              GET_ITEM(it, p->command);
 
-             if (strlen(file) < len)
-               file = input;
+             if (strlen(first_match) < input_len)
+               first_match = input;
 
-             EVRY_ITEM_LABEL_SET(it, file);
+             EVRY_ITEM_LABEL_SET(it, first_match);
              IF_RELEASE(p->command->file);
              p->command->file = eina_stringshare_ref(it->label);
-             it->fuzzy_match = 11; // prefix match
+             it->fuzzy_match = PREFIX_MATCH_PRIORITY; 
              EVRY_PLUGIN_ITEM_APPEND(p, it);
              evry->item_changed(it, 0, 0);
           }
@@ -294,7 +301,7 @@ _fetch_exe(Evry_Plugin *plugin, const char *input)
    EINA_LIST_FOREACH (plugin->items, l, eit)
      {
         evry->history_item_usage_set(eit, input, NULL);
-        if (input && (eit->usage > max) && !strncmp(input, eit->label, len))
+        if (input && (eit->usage > max) && !strncmp(input, eit->label, input_len))
           max = eit->usage;
      }
    EVRY_ITEM(p->command)->usage = (max * 2.0);

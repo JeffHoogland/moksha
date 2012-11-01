@@ -165,7 +165,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
         if (pc)
           {
-             if (cfdata->page[i].trigger[0])
+             if (cfdata->page[i].trigger && cfdata->page[i].trigger[0])
                eina_stringshare_replace(&pc->trigger, cfdata->page[i].trigger);
              else
                eina_stringshare_replace(&pc->trigger, NULL);
