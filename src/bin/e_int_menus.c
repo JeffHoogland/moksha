@@ -1360,26 +1360,28 @@ _e_int_menus_clients_pre_cb(void *data __UNUSED__, E_Menu *m)
 static const char *
 _e_int_menus_clients_title_abbrv(const char *title)
 {
-   int max_len;
+   static char abbv[E_CLIENTLIST_MAX_CAPTION_LEN + 4];
+   char *p;
+   int len, len2, max_len;
 
+   if (!e_config->clientlist_limit_caption_len) return title;
+
+   len = eina_unicode_utf8_get_len(title);
    max_len = e_config->clientlist_max_caption_len;
-   if ((e_config->clientlist_limit_caption_len) && ((int)strlen(title) > max_len))
-     {
-        char *abbv;
-        const char *left, *right;
+   if (len <= max_len) return title;
 
-        abbv = calloc(E_CLIENTLIST_MAX_CAPTION_LEN + 4, sizeof(char));
-        left = title;
-        right = title + (strlen(title) - (max_len / 2));
+   abbv[0] = 0;
+   len2 = max_len / 2;
+   p = (char*)title;
+   eina_unicode_utf8_get_prev(p, &len2);
+   strncpy(abbv, title, len2);
+   len2 = len - (max_len / 2);
+   p = (char*)title;
+   eina_unicode_utf8_get_next(p, &len2);
+   strcat(abbv, "...");
+   strncat(abbv, title + len2, len - len2);
 
-        strncpy(abbv, left, max_len / 2);
-        strncat(abbv, "...", 3);
-        strncat(abbv, right, max_len / 2);
-
-        return abbv;
-     }
-   else
-     return title;
+   return abbv;
 }
 
 static void
