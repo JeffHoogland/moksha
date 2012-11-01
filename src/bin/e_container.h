@@ -153,6 +153,8 @@ EAPI void               e_container_border_stack_below(E_Border *bd, E_Border *b
 EAPI void               e_container_all_freeze(void);
 EAPI void               e_container_all_thaw(void);
 
+EAPI E_Container *e_container_evas_object_container_get(Evas_Object *obj);
+
 extern EAPI int E_EVENT_CONTAINER_RESIZE;
 
 #endif

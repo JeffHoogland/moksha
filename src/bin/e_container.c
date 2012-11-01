@@ -880,6 +880,21 @@ e_container_all_thaw(void)
      }
 }
 
+EAPI E_Container *
+e_container_evas_object_container_get(Evas_Object *obj)
+{
+   Evas *evas;
+   Evas_Object *wobj;
+   E_Container *con;
+
+   if (!obj) return NULL;
+   evas = evas_object_evas_get(obj);
+   wobj = evas_object_name_find(evas, "e/desktop/background");
+   if (!wobj) return NULL;
+   con = evas_object_data_get(wobj, "e_container");
+   return con;
+}
+
 /* local subsystem functions */
 static void
 _e_container_free(E_Container *con)
