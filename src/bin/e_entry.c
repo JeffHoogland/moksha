@@ -457,18 +457,27 @@ static void
 _e_entry_x_selection_update(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
+   Ecore_X_Window xwin;
    E_Win *win;
+   E_Container *con;
    const char *text;
+
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
    if (!(win = e_win_evas_object_win_get(entry)))
-     return;
+     {
+        con = e_container_evas_object_container_get(entry);
+        if (!con) return;
+        xwin = ecore_evas_window_get(con->bg_ecore_evas);
+     }
+   else
+     xwin = win->evas_win;
 
    if (sd->password_mode)
       return;
 
    text = edje_object_part_text_selection_get(sd->entry_object, ENTRY_PART_NAME);
-   ecore_x_selection_primary_set(win->evas_win, text, strlen(text) + 1);
+   ecore_x_selection_primary_set(xwin, text, strlen(text) + 1);
 }
 
 static void
@@ -477,18 +486,26 @@ _entry_paste_request_signal_cb(void *data,
       const char *emission,
       const char *source EINA_UNUSED)
 {
+   Ecore_X_Window xwin;
    E_Win *win;
+   E_Container *con;
    if (!(win = e_win_evas_object_win_get(data)))
-      return;
+     {
+        con = e_container_evas_object_container_get(data);
+        if (!con) return;
+        xwin = ecore_evas_window_get(con->bg_ecore_evas);
+     }
+   else
+     xwin = win->evas_win;
 
    if (emission[sizeof("ntry,paste,request,")] == '1')
      {
-        ecore_x_selection_primary_request(win->evas_win,
+        ecore_x_selection_primary_request(xwin,
               ECORE_X_SELECTION_TARGET_UTF8_STRING);
      }
    else
      {
-        ecore_x_selection_clipboard_request(win->evas_win,
+        ecore_x_selection_clipboard_request(xwin,
               ECORE_X_SELECTION_TARGET_UTF8_STRING);
      }
 }
@@ -796,6 +813,7 @@ _e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
    const char *range;
+   Ecore_X_Window xwin;
    E_Win *win;
 
    sd = data;
@@ -803,9 +821,17 @@ _e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    range = edje_object_part_text_selection_get(sd->entry_object, ENTRY_PART_NAME);
    if (range)
      {
-        if ((win = e_win_evas_object_win_get(sd->entry_object)))
-          ecore_x_selection_clipboard_set(win->evas_win,
-                                          range, strlen(range) + 1);
+        win = e_win_evas_object_win_get(sd->entry_object);
+        if (win) xwin = win->evas_win;
+        else
+          {
+             E_Container *con;
+
+             con = e_container_evas_object_container_get(sd->entry_object);
+             if (!con) return;
+             xwin = ecore_evas_window_get(con->bg_ecore_evas);
+          }
+        ecore_x_selection_clipboard_set(xwin, range, strlen(range) + 1);
      }
 }
 
@@ -813,14 +839,23 @@ static void
 _e_entry_cb_paste(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
+   Ecore_X_Window xwin;
    E_Win *win;
 
    sd = data;
    if (!sd->enabled) return;
 
-   if ((win = e_win_evas_object_win_get(sd->entry_object)))
-     ecore_x_selection_clipboard_request(win->evas_win,
-                                         ECORE_X_SELECTION_TARGET_UTF8_STRING);
+   win = e_win_evas_object_win_get(sd->entry_object);
+   if (win) xwin = win->evas_win;
+   else
+     {
+        E_Container *con;
+
+        con = e_container_evas_object_container_get(sd->entry_object);
+        if (!con) return;
+        xwin = ecore_evas_window_get(con->bg_ecore_evas);
+     }
+   ecore_x_selection_clipboard_request(xwin, ECORE_X_SELECTION_TARGET_UTF8_STRING);
 }
 
 static void
