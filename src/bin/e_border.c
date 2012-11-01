@@ -2614,19 +2614,18 @@ e_border_unshade(E_Border *bd,
 static void
 _e_border_client_inset_calc(E_Border *bd)
 {
-   /* int w, h; */
-   Evas_Coord cx, cy, cw, ch;
+   int cx, cy, cw, ch;
 
    if (bd->bg_object)
      {
-        evas_object_resize(bd->bg_object, 1000, 1000);
+        evas_object_resize(bd->bg_object, bd->w, bd->h);
         edje_object_message_signal_process(bd->bg_object);
         edje_object_calc_force(bd->bg_object);
         edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
         bd->client_inset.l = cx;
-        bd->client_inset.r = 1000 - (cx + cw);
+        bd->client_inset.r = bd->w - (cx + cw);
         bd->client_inset.t = cy;
-        bd->client_inset.b = 1000 - (cy + ch);
+        bd->client_inset.b = bd->h - (cy + ch);
      }
    else
      {
@@ -8029,9 +8028,21 @@ _e_border_eval0(E_Border *bd)
                        if ((argb_option) && (!strcmp(argb_option, "1")))
                          use_argb = 1;
 
+                       o = bd->bg_object;
                        if (use_argb != bd->argb)
                          _e_border_frame_replace(bd, use_argb);
 
+
+                       if (bd->icon_object != o)
+                         {
+                            if (bd->bg_object)
+                              {
+                                 evas_object_show(bd->icon_object);
+                                 edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
+                              }
+                            else
+                              evas_object_hide(bd->icon_object);
+                         }
                        o = bd->bg_object;
                     }
 
@@ -8107,17 +8118,6 @@ _e_border_eval0(E_Border *bd)
                }
           }
         bd->client.border.changed = 0;
-
-        if (bd->icon_object)
-          {
-             if (bd->bg_object)
-               {
-                  evas_object_show(bd->icon_object);
-                  edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
-               }
-             else
-               evas_object_hide(bd->icon_object);
-          }
      }
 
    if (rem_change) e_remember_update(bd);
