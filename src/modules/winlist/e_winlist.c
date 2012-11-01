@@ -222,30 +222,14 @@ e_winlist_show(E_Zone *zone, E_Winlist_Filter filter)
    evas_event_thaw(_winlist->evas);
    _e_winlist_size_adjust();
 
-   _handlers = eina_list_append
-       (_handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_ADD, _e_winlist_cb_event_border_add, NULL));
-   _handlers = eina_list_append
-       (_handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_REMOVE, _e_winlist_cb_event_border_remove, NULL));
-   _handlers = eina_list_append
-       (_handlers, ecore_event_handler_add
-         (ECORE_EVENT_KEY_DOWN, _e_winlist_cb_key_down, NULL));
-   _handlers = eina_list_append
-       (_handlers, ecore_event_handler_add
-         (ECORE_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL));
-   _handlers = eina_list_append
-       (_handlers, ecore_event_handler_add
-         (ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_winlist_cb_mouse_down, NULL));
-   _handlers = eina_list_append
-       (_handlers, ecore_event_handler_add
-         (ECORE_EVENT_MOUSE_BUTTON_UP, _e_winlist_cb_mouse_up, NULL));
-   _handlers = eina_list_append
-       (_handlers, ecore_event_handler_add
-         (ECORE_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL));
-   _handlers = eina_list_append
-       (_handlers, ecore_event_handler_add
-         (ECORE_EVENT_MOUSE_MOVE, _e_winlist_cb_mouse_move, NULL));
+   E_LIST_HANDLER_APPEND(_handlers, E_EVENT_BORDER_ADD, _e_winlist_cb_event_border_add, NULL);
+   E_LIST_HANDLER_APPEND(_handlers, E_EVENT_BORDER_REMOVE, _e_winlist_cb_event_border_remove, NULL);
+   E_LIST_HANDLER_APPEND(_handlers, ECORE_EVENT_KEY_DOWN, _e_winlist_cb_key_down, NULL);
+   E_LIST_HANDLER_APPEND(_handlers, ECORE_EVENT_KEY_UP, _e_winlist_cb_key_up, NULL);
+   E_LIST_HANDLER_APPEND(_handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN, _e_winlist_cb_mouse_down, NULL);
+   E_LIST_HANDLER_APPEND(_handlers, ECORE_EVENT_MOUSE_BUTTON_UP, _e_winlist_cb_mouse_up, NULL);
+   E_LIST_HANDLER_APPEND(_handlers, ECORE_EVENT_MOUSE_WHEEL, _e_winlist_cb_mouse_wheel, NULL);
+   E_LIST_HANDLER_APPEND(_handlers, ECORE_EVENT_MOUSE_MOVE, _e_winlist_cb_mouse_move, NULL);
 
    e_popup_show(_winlist);
    return 1;
