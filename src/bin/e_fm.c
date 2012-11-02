@@ -162,6 +162,7 @@ struct _E_Fm2_Smart_Data
 
    Eina_List *handlers;
    Ecore_Event_Handler *efreet_cache_update;
+   Efreet_Desktop *desktop;
 };
 
 struct _E_Fm2_Region
@@ -361,7 +362,7 @@ static void          _e_fm2_view_menu_list_cb(void *data, E_Menu *m, E_Menu_Item
 static void          _e_fm2_view_menu_use_default_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_set_background_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_view_menu_set_overlay_cb(void *data, E_Menu *m, E_Menu_Item *mi);
-static void          _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title, void (*ok_cb)(void *data, E_Dialog *dia), void (*clear_cb)(void *data, E_Dialog *dia));
+static void          _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title, void (*ok_cb)(void *data, E_Dialog *dia));
 static void          _e_fm2_view_image_sel_close(void *data, E_Dialog *dia);
 static void          _e_fm2_refresh(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_toggle_hidden_files(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -458,7 +459,7 @@ static void          _e_fm2_volume_eject(void *data, E_Menu *m, E_Menu_Item *mi)
 
 static void          _e_fm2_icon_removable_update(E_Fm2_Icon *ic);
 static void          _e_fm2_volume_icon_update(E_Volume *v);
-
+static int            _e_fm2_desktop_open(E_Fm2_Smart_Data *sd);
 static void          _e_fm2_operation_abort_internal(E_Fm2_Op_Registry_Entry *ere);
 
 static Eina_Bool    _e_fm2_sys_suspend_hibernate(void *, int, void *);
@@ -8096,6 +8097,8 @@ _e_fm2_smart_del(Evas_Object *obj)
      _e_fm2_list = eina_list_remove(_e_fm2_list, sd->obj);
    else
      _e_fm2_list_remove = eina_list_append(_e_fm2_list_remove, sd->obj);
+   if (sd->desktop) efreet_desktop_free(sd->desktop);
+   sd->desktop = NULL;
    free(sd);
    e_fm2_custom_file_flush();
 }
@@ -9326,36 +9329,102 @@ _e_fm2_options_menu_pre(void *data, E_Menu *subm)
    e_menu_item_callback_set(mi, _e_fm2_settings_icon_item, sd);
 }
 
+
+static void
+_custom_file_key_del(E_Fm2_Smart_Data *sd, const char *key)
+{
+   Efreet_Desktop *ef;
+   char buf[PATH_MAX];
+
+   if (sd->desktop) ef = sd->desktop;
+   else
+     {
+        snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
+        ef = efreet_desktop_new(buf);
+     }
+   if (!ef) return;
+
+   if (efreet_desktop_x_field_del(ef, key))
+     efreet_desktop_save(ef);
+
+   if (!sd->desktop) efreet_desktop_free(ef);
+}
+
+static void
+_e_fm2_view_menu_del(void *data)
+{
+   E_Fm2_Smart_Data *sd = e_object_data_get(data);
+
+   if (!sd) return;
+   if (sd->image_dialog) return;
+   if (!sd->desktop) return;
+   efreet_desktop_free(sd->desktop);
+   sd->desktop = NULL;
+}
+
+static void
+_clear_background_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd;
+
+   sd = data;
+   if (!sd) return;
+
+   _custom_file_key_del(sd, "X-Enlightenment-Directory-Wallpaper");
+   evas_object_smart_callback_call(sd->obj, "dir_changed", NULL);
+}
+
+static void
+_clear_overlay_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   if (!sd) return;
+
+   _custom_file_key_del(sd, "X-Enlightenment-Directory-Overlay");
+   evas_object_smart_callback_call(sd->obj, "dir_changed", NULL);
+}
+
 static void
 _e_fm2_view_menu_pre(void *data, E_Menu *subm)
 {
-   E_Fm2_Smart_Data *sd;
+   E_Fm2_Smart_Data *sd = data;
    E_Menu_Item *mi;
-   char buf[PATH_MAX];
-   int access_ok;
-   sd = data;
 
    if (subm->items) return;
 
    _e_fm2_view_menu_common(subm, sd);
 
-   snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
-   access_ok = ecore_file_exists(buf) ? ecore_file_can_write(buf)
-     : ecore_file_can_write(sd->realpath);
-   if (access_ok)
+   if (_e_fm2_desktop_open(sd) < 0) return;
+   e_object_data_set(E_OBJECT(subm), sd);
+   e_object_del_attach_func_set(E_OBJECT(subm), _e_fm2_view_menu_del);
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Set background..."));
+   e_util_menu_item_theme_icon_set(mi, "preferences-desktop-wallpaper");
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_set_background_cb, sd);
+
+   while (sd->desktop)
      {
+        if (!eina_hash_find(sd->desktop->x, "X-Enlightenment-Directory-Wallpaper")) break;
         mi = e_menu_item_new(subm);
-        e_menu_item_separator_set(mi, 1);
-
-        mi = e_menu_item_new(subm);
-        e_menu_item_label_set(mi, _("Set background..."));
+        e_menu_item_label_set(mi, _("Clear background"));
         e_util_menu_item_theme_icon_set(mi, "preferences-desktop-wallpaper");
-        e_menu_item_callback_set(mi, _e_fm2_view_menu_set_background_cb, sd);
-
-        mi = e_menu_item_new(subm);
-        e_menu_item_label_set(mi, _("Set overlay..."));
-        e_menu_item_callback_set(mi, _e_fm2_view_menu_set_overlay_cb, sd);
+        e_menu_item_callback_set(mi, _clear_background_cb, sd);
+        break;
      }
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Set overlay..."));
+   e_menu_item_callback_set(mi, _e_fm2_view_menu_set_overlay_cb, sd);
+
+   if (!sd->desktop) return;
+   if (!eina_hash_find(sd->desktop->x, "X-Enlightenment-Directory-Overlay")) return;
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Clear overlay"));
+   e_menu_item_callback_set(mi, _clear_overlay_cb, sd);
 }
 
 static void
@@ -9433,12 +9502,13 @@ _image_sel_del(void *data)
    sd = e_object_data_get(data);
    if (!sd) return;
    sd->image_dialog = NULL;
+   if (sd->desktop) efreet_desktop_free(sd->desktop);
+   sd->desktop = NULL;
 }
 
 static void
 _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title,
-                      void (*ok_cb)(void *data, E_Dialog *dia),
-                      void (*clear_cb)(void *data, E_Dialog *dia))
+                      void (*ok_cb)(void *data, E_Dialog *dia))
 {
    E_Dialog *dia;
    Evas_Object *o;
@@ -9455,7 +9525,6 @@ _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title,
    dia->data = o;
 
    e_dialog_button_add(dia, _("OK"), NULL, ok_cb, sd);
-   e_dialog_button_add(dia, _("Clear"), NULL, clear_cb, sd);
    e_dialog_button_add(dia, _("Cancel"), NULL, _e_fm2_view_image_sel_close, sd);
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
@@ -9476,6 +9545,23 @@ _e_fm2_view_image_sel_close(void *data, E_Dialog *dia)
    sd->image_dialog = NULL;
 }
 
+static int
+_e_fm2_desktop_open(E_Fm2_Smart_Data *sd)
+{
+   Efreet_Desktop *ef;
+   char buf[PATH_MAX];
+   Eina_Bool ret;
+
+   snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
+   ret = ecore_file_exists(buf) ? ecore_file_can_write(buf)
+                                : ecore_file_can_write(sd->realpath);
+   if (!ret) return -1;
+   ef = efreet_desktop_new(buf);
+   if (!ef) return 0;
+   sd->desktop = ef;
+   return 1;
+}
+
 static void
 _custom_file_key_set(E_Fm2_Smart_Data *sd, const char *key, const char *value)
 {
@@ -9483,14 +9569,18 @@ _custom_file_key_set(E_Fm2_Smart_Data *sd, const char *key, const char *value)
    char buf[PATH_MAX];
    int len;
 
-   snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
-   ef = efreet_desktop_new(buf);
-   if (!ef)
+   if (sd->desktop) ef = sd->desktop;
+   else
      {
-        ef = efreet_desktop_empty_new(buf);
-        if (!ef) return;
-        ef->type = EFREET_DESKTOP_TYPE_DIRECTORY;
-        ef->name = strdup("Directory look and feel");
+        snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
+        ef = efreet_desktop_new(buf);
+        if (!ef)
+          {
+             ef = efreet_desktop_empty_new(buf);
+             if (!ef) return;
+             ef->type = EFREET_DESKTOP_TYPE_DIRECTORY;
+             ef->name = strdup("Directory look and feel");
+          }
      }
 
    len = strlen(sd->realpath);
@@ -9500,23 +9590,7 @@ _custom_file_key_set(E_Fm2_Smart_Data *sd, const char *key, const char *value)
      efreet_desktop_x_field_set(ef, key, value);
 
    efreet_desktop_save(ef);
-   efreet_desktop_free(ef);
-}
-
-static void
-_custom_file_key_del(E_Fm2_Smart_Data *sd, const char *key)
-{
-   Efreet_Desktop *ef;
-   char buf[PATH_MAX];
-
-   snprintf(buf, sizeof(buf), "%s/.directory.desktop", sd->realpath);
-   ef = efreet_desktop_new(buf);
-   if (!ef) return;
-
-   if (efreet_desktop_x_field_del(ef, key))
-     efreet_desktop_save(ef);
-
-   efreet_desktop_free(ef);
+   if (!sd->desktop) efreet_desktop_free(ef);
 }
 
 static void
@@ -9538,29 +9612,13 @@ _set_background_cb(void *data, E_Dialog *dia)
 }
 
 static void
-_clear_background_cb(void *data, E_Dialog *dia)
-{
-   E_Fm2_Smart_Data *sd;
-
-   sd = data;
-   if (!sd) return;
-
-   _e_fm2_view_image_sel_close(data, dia);
-
-   _custom_file_key_del(sd, "X-Enlightenment-Directory-Wallpaper");
-   evas_object_smart_callback_call(sd->obj, "dir_changed", NULL);
-}
-
-static void
 _e_fm2_view_menu_set_background_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   E_Fm2_Smart_Data *sd;
+   E_Fm2_Smart_Data *sd = data;
 
-   sd = data;
    if (sd->image_dialog) return;
 
-   _e_fm2_view_image_sel(sd, _("Set background..."), _set_background_cb,
-                         _clear_background_cb);
+   _e_fm2_view_image_sel(sd, _("Set background..."), _set_background_cb);
 }
 
 static void
@@ -9582,29 +9640,13 @@ _set_overlay_cb(void *data, E_Dialog *dia)
 }
 
 static void
-_clear_overlay_cb(void *data, E_Dialog *dia)
-{
-   E_Fm2_Smart_Data *sd;
-
-   sd = data;
-   if (!sd) return;
-
-   _e_fm2_view_image_sel_close(data, dia);
-
-   _custom_file_key_del(sd, "X-Enlightenment-Directory-Overlay");
-   evas_object_smart_callback_call(sd->obj, "dir_changed", NULL);
-}
-
-static void
 _e_fm2_view_menu_set_overlay_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   E_Fm2_Smart_Data *sd;
+   E_Fm2_Smart_Data *sd = data;
 
-   sd = data;
    if (sd->image_dialog) return;
 
-   _e_fm2_view_image_sel(sd, _("Set overlay..."), _set_overlay_cb,
-                         _clear_overlay_cb);
+   _e_fm2_view_image_sel(sd, _("Set overlay..."), _set_overlay_cb);
 }
 
 static void
@@ -11040,6 +11082,12 @@ e_fm2_uri_path_list_get(const Eina_List *uri_list)
    return path_list;
 }
 
+EAPI Efreet_Desktop *
+e_fm2_desktop_get(Evas_Object *obj)
+{
+   EFM_SMART_CHECK(NULL);
+   return sd->desktop;
+}
 
 EAPI void
 e_fm2_drop_menu(Evas_Object *e_fm, char *args)

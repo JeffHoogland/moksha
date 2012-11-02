@@ -211,6 +211,7 @@ EAPI const char      *e_fm2_desktop_url_eval(const char *val);
 EAPI E_Fm2_Icon_Info *e_fm2_drop_icon_get(Evas_Object *obj);
 EAPI void             e_fm2_drop_menu(Evas_Object *e_fm, char *args);
 EAPI Eina_List       *e_fm2_uri_path_list_get(const Eina_List *uri_list);
+EAPI Efreet_Desktop *e_fm2_desktop_get(Evas_Object *obj);
 
 EAPI int e_fm2_client_file_move(Evas_Object *e_fm, const char *args);
 EAPI int e_fm2_client_file_copy(Evas_Object *e_fm, const char *args);

@@ -1625,6 +1625,7 @@ _e_fwin_changed(void *data,
    Efreet_Desktop *ef;
    const char *dev, *path;
    char buf[PATH_MAX];
+   Eina_Bool need_free = EINA_TRUE;
 
    page = data;
    fwin = page->fwin;
@@ -1642,8 +1643,13 @@ _e_fwin_changed(void *data,
    /* FIXME: first look in E config for a special override for this dir's bg
     * or overlay
     */
-   snprintf(buf, sizeof(buf), "%s/.directory.desktop", e_fm2_real_path_get(page->fm_obj));
-   ef = efreet_desktop_new(buf);
+   ef = e_fm2_desktop_get(page->fm_obj);
+   if (ef) need_free = EINA_FALSE;
+   else
+     {
+        snprintf(buf, sizeof(buf), "%s/.directory.desktop", e_fm2_real_path_get(page->fm_obj));
+        ef = efreet_desktop_new(buf);
+     }
    //printf("EF=%p for %s\n", ef, buf);
    if (ef)
      {
@@ -1652,7 +1658,7 @@ _e_fwin_changed(void *data,
         fwin->scrollframe_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->scrollframe_file, "X-Enlightenment-Directory-Scrollframe");
         fwin->theme_file = _e_fwin_custom_file_path_eval(fwin, ef, fwin->theme_file, "X-Enlightenment-Directory-Theme");
         //printf("fwin->wallpaper_file = %s\n", fwin->wallpaper_file);
-        efreet_desktop_free(ef);
+        if (need_free) efreet_desktop_free(ef);
      }
    else
      {
@@ -1693,6 +1699,9 @@ _e_fwin_changed(void *data,
              evas_object_show(fwin->under_obj);
           }
      }
+   else
+     edje_object_part_swallow(e_scrollframe_edje_object_get(page->scr), 
+                                      "e.swallow.bg", NULL);
    if (fwin->over_obj)
      {
         //printf("over obj\n");
