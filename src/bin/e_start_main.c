@@ -422,7 +422,7 @@ main(int argc, char **argv)
                        if (WIFSTOPPED(status))
                          {
                             char buffer[4096];
-                            char *backtrace = NULL;
+                            char *backtrace_str = NULL;
                             siginfo_t sig;
                             int r;
                             int back;
@@ -463,16 +463,16 @@ main(int argc, char **argv)
                                           "%s/.xsession-errors",
                                           home);
 
-                                 backtrace = strdup(buffer);
+                                 backtrace_str = strdup(buffer);
                               }
 
                             /* call e_alert */
                             snprintf(buffer, 4096,
-                                     backtrace ? "%s/enlightenment/utils/enlightenment_alert %i %i %s" : "%s/enlightenment/utils/enlightenment_alert %i %i %s",
+                                     backtrace_str ? "%s/enlightenment/utils/enlightenment_alert %i %i %s" : "%s/enlightenment/utils/enlightenment_alert %i %i %s",
                                      eina_prefix_lib_get(pfx),
                                      sig.si_signo,
                                      child,
-                                     backtrace);
+                                     backtrace_str);
                             r = system(buffer);
 
                             /* kill e */
