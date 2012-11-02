@@ -21,6 +21,7 @@ extern "C"
 void *alloca(size_t);
 #endif
 
+#include <math.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -144,6 +145,8 @@ struct _E_Fm_Op_Task
    } dst;
 
    int          started, finished;
+   unsigned int passes;
+   off_t pos;
 
    void        *data;
 
@@ -419,6 +422,7 @@ _e_fm_op_task_new()
    t->type = E_FM_OP_NONE;
    t->overwrite = E_FM_OP_NONE;
    t->link = NULL;
+   t->pos = t->passes = 0;
 
    return t;
 }
@@ -1157,7 +1161,7 @@ _e_fm_op_handle_overwrite(E_Fm_Op_Task *task)
         else
           {
              _e_fm_op_overwrite = 1;
-             _e_fm_op_update_progress_report_simple(0.0, task->src.name, task->dst.name);
+             _e_fm_op_update_progress_report_simple(0, task->src.name, task->dst.name);
              _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_OVERWRITE, "%s", task->dst.name);
           }
      }
@@ -1221,7 +1225,7 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
      }
 
    E_FM_OP_DEBUG("Creating link from '%s' to '%s'\n", lnk_path, task->dst.name);
-   _e_fm_op_update_progress_report_simple(0.0, lnk_path, task->dst.name);
+   _e_fm_op_update_progress_report_simple(0, lnk_path, task->dst.name);
 
    if (symlink(lnk_path, task->dst.name) == -1)
      {
@@ -1581,7 +1585,7 @@ _e_fm_op_symlink_atom(E_Fm_Op_Task *task)
    if (_e_fm_op_handle_overwrite(task)) return 1;
 
    E_FM_OP_DEBUG("Symlink: %s -> %s\n", task->src.name, task->dst.name);
-   _e_fm_op_update_progress_report_simple(0.0, task->src.name, task->dst.name);
+   _e_fm_op_update_progress_report_simple(0, task->src.name, task->dst.name);
 
    if (symlink(task->src.name, task->dst.name) == -1)
      {
@@ -1646,7 +1650,7 @@ _e_fm_op_rename_atom(E_Fm_Op_Task *task)
    if (_e_fm_op_handle_overwrite(task)) return 1;
 
    E_FM_OP_DEBUG("Move: %s -> %s\n", task->src.name, task->dst.name);
-   _e_fm_op_update_progress_report_simple(0.0, task->src.name, task->dst.name);
+   _e_fm_op_update_progress_report_simple(0, task->src.name, task->dst.name);
 
    if (rename(task->src.name, task->dst.name) == -1)
      {
@@ -1666,8 +1670,6 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
    if (_e_fm_op_abort) goto finish;
    static int fd = -1;
    static char *buf = NULL;
-   static int passes = 0;
-   static off_t pos = 0;
    off_t sz;
 
    if (fd == -1)
@@ -1681,7 +1683,7 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
        if (task->src.st.st_nlink > 1)
          goto finish;
 
-       if ((fd = open(task->src.name, O_WRONLY|O_NONBLOCK|O_NOFOLLOW, 0)) == -1)
+       if ((fd = open(task->src.name, O_WRONLY|O_NOFOLLOW, 0)) == -1)
          goto finish;
 
        if (fstat(fd, &st2) == -1)
@@ -1698,7 +1700,7 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
        task->src.st.st_size = st2.st_size;
      }
 
-   if (pos + READBUFSIZE > task->src.st.st_size) sz = task->src.st.st_size - pos;
+   if (task->pos + READBUFSIZE > task->src.st.st_size) sz = task->src.st.st_size - task->pos;
    else sz = READBUFSIZE;
 
    _e_fm_op_random_buf(buf, sz);
@@ -1707,22 +1709,21 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
    if (fsync(fd) == -1)
      goto finish;
 
-   pos += sz;
+   task->pos += sz;
 
-   _e_fm_op_update_progress_report_simple((double) (pos + (passes * task->src.st.st_size)) /
-                                          (task->src.st.st_size * NB_PASS) * 100,
+   _e_fm_op_update_progress_report_simple(lround((double) ((task->pos + (task->passes * task->src.st.st_size)) /
+                                          (double)(task->src.st.st_size * NB_PASS)) * 100.),
                                           "/dev/urandom", task->src.name);
 
-   if (pos >= task->src.st.st_size)
+   if (task->pos >= task->src.st.st_size)
      {
-       passes++;
+       task->passes++;
 
-       if (passes == NB_PASS)
+       if (task->passes == NB_PASS)
          goto finish;
        if (lseek(fd, SEEK_SET, 0) == -1)
          goto finish;
 
-       pos = 0;
        return 1;
      }
 
@@ -1732,8 +1733,6 @@ finish:
    close(fd);
    fd = -1;
    E_FREE(buf);
-   passes = 0;
-   pos = 0;
    task->finished = 1;
    return 1;
 }

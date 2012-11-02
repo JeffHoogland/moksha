@@ -388,7 +388,7 @@ enlightenment_thumb_LDADD = @E_THUMB_LIBS@
 enlightenment_fm_op_SOURCES = \
 e_fm_op.c
 
-enlightenment_fm_op_LDADD = @E_FM_OP_LIBS@
+enlightenment_fm_op_LDADD = @E_FM_OP_LIBS@ -lm
 
 enlightenment_sys_SOURCES = \
 e_sys_main.c
