@@ -27,7 +27,7 @@ struct _E_Config_Dialog_Data
    Evas_Object         *o_contents;
 
    const char          *cur_shelf;
-   Ecore_Event_Handler *shelf_handler;
+   Eina_List           *handlers;
    Eina_List           *shelves;
    E_Config_Dialog     *cfd;
    E_Entry_Dialog    *dia_new_shelf;
@@ -57,6 +57,21 @@ e_int_config_shelf(E_Container *con, const char *params __UNUSED__)
 }
 
 static Eina_Bool
+_shelf_handler_rename_cb(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Shelf *ev)
+{
+   const Eina_List *l;
+   E_Ilist_Item *ili;
+
+   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->o_list), l, ili)
+     {
+        if (e_widget_ilist_item_data_get(ili) != ev->shelf) continue;
+        e_ilist_item_label_set(ili, ev->shelf->name);
+        break;
+     }
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
 _shelf_handler_cb(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Shelf_Add *ev)
 {
    E_Zone *zone;
@@ -75,7 +90,8 @@ _create_data(E_Config_Dialog *cfd)
 
    if (_cfdata) return NULL;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->shelf_handler = ecore_event_handler_add(E_EVENT_SHELF_ADD, (Ecore_Event_Handler_Cb)_shelf_handler_cb, cfdata);
+   E_LIST_HANDLER_APPEND(cfdata->handlers, E_EVENT_SHELF_ADD, _shelf_handler_cb, cfdata);
+   E_LIST_HANDLER_APPEND(cfdata->handlers, E_EVENT_SHELF_RENAME, _shelf_handler_rename_cb, cfdata);
    cfdata->cfd = cfd;
    cfd->dia->win->state.no_reopen = EINA_TRUE;
    _cfdata = cfdata;
@@ -92,7 +108,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         e_object_del_func_set(E_OBJECT(es), NULL);
         if (es->config_dialog) e_object_del_attach_func_set(E_OBJECT(es->config_dialog), NULL);
      }
-   ecore_event_handler_del(cfdata->shelf_handler);
+   E_FREE_LIST(cfdata->handlers, ecore_event_handler_del);
    E_FREE(cfdata);
    _cfdata = NULL;
 }
