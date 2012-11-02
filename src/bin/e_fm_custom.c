@@ -51,8 +51,14 @@ e_fm2_custom_file_init(void)
    DAT(prop.order_file, EET_T_UCHAR);
    DAT(prop.show_hidden_files, EET_T_UCHAR);
    DAT(prop.in_use, EET_T_UCHAR);
-#undef DAT
 
+   DAT(prop.sort.no_case, EET_T_UCHAR);
+   DAT(prop.sort.size, EET_T_UCHAR);
+   DAT(prop.sort.extension, EET_T_UCHAR);
+   DAT(prop.sort.mtime, EET_T_UCHAR);
+   DAT(prop.sort.dirs.first, EET_T_UCHAR);
+   DAT(prop.sort.dirs.last, EET_T_UCHAR);
+#undef DAT
    eddc.size = sizeof (E_Fm2_Custom_File);
    eddc.name = "e_fm_custom_file";
 

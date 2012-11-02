@@ -1247,6 +1247,12 @@ _e_fm2_dir_load_props(E_Fm2_Smart_Data *sd)
              sd->order_file = !!cf->dir->prop.order_file;
              sd->show_hidden_files = !!cf->dir->prop.show_hidden_files;
              sd->inherited_dir_props = EINA_FALSE;
+             sd->config->list.sort.no_case = cf->dir->prop.sort.no_case;
+             sd->config->list.sort.size = cf->dir->prop.sort.size;
+             sd->config->list.sort.extension = cf->dir->prop.sort.extension;
+             sd->config->list.sort.mtime = cf->dir->prop.sort.mtime;
+             sd->config->list.sort.dirs.first = cf->dir->prop.sort.dirs.first;
+             sd->config->list.sort.dirs.last = cf->dir->prop.sort.dirs.last;
              return;
           }
      }
@@ -1275,6 +1281,12 @@ _e_fm2_dir_load_props(E_Fm2_Smart_Data *sd)
         sd->icon_size = cf->dir->prop.icon_size;
         sd->order_file = !!cf->dir->prop.order_file;
         sd->show_hidden_files = !!cf->dir->prop.show_hidden_files;
+        sd->config->list.sort.no_case = cf->dir->prop.sort.no_case;
+        sd->config->list.sort.size = cf->dir->prop.sort.size;
+        sd->config->list.sort.extension = cf->dir->prop.sort.extension;
+        sd->config->list.sort.mtime = cf->dir->prop.sort.mtime;
+        sd->config->list.sort.dirs.first = cf->dir->prop.sort.dirs.first;
+        sd->config->list.sort.dirs.last = cf->dir->prop.sort.dirs.last;
      }
    else
      {
@@ -1323,6 +1335,16 @@ _e_fm2_dir_save_props(E_Fm2_Smart_Data *sd)
    cf->dir->prop.order_file = sd->order_file;
    cf->dir->prop.show_hidden_files = sd->show_hidden_files;
    cf->dir->prop.in_use = !sd->inherited_dir_props;
+
+   if (sd->config)
+     {
+        cf->dir->prop.sort.no_case = sd->config->list.sort.no_case;
+        cf->dir->prop.sort.size = sd->config->list.sort.size;
+        cf->dir->prop.sort.extension = sd->config->list.sort.extension;
+        cf->dir->prop.sort.mtime = sd->config->list.sort.mtime;
+        cf->dir->prop.sort.dirs.first = sd->config->list.sort.dirs.first;
+        cf->dir->prop.sort.dirs.last = sd->config->list.sort.dirs.last;
+     }
 
    e_fm2_custom_file_set(sd->realpath, cf);
    e_fm2_custom_file_flush();

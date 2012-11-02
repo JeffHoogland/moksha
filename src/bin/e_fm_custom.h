@@ -18,6 +18,18 @@ struct _E_Fm2_Custom_Dir
       Eina_Bool     order_file;
       Eina_Bool     show_hidden_files;
       Eina_Bool     in_use;
+      struct
+      {
+         Eina_Bool no_case;
+         Eina_Bool size;
+         Eina_Bool extension;
+         Eina_Bool mtime;
+         struct
+         {
+            Eina_Bool first;
+            Eina_Bool last;
+         } dirs;
+      } sort;
    } prop;
 };
 
