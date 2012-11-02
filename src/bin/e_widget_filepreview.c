@@ -228,8 +228,8 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    emotion_object_file_set(o, wd->path);
    emotion_object_play_set(o, EINA_TRUE);
    evas_object_size_hint_aspect_set(o, EVAS_ASPECT_CONTROL_BOTH, wd->w, wd->h);
-   /* this works through sheer because e_icon doesn't fail */
-   wd->o_preview_preview = e_widget_image_add_from_object(evas, o, wd->w, wd->h);
+   wd->o_preview_preview = e_widget_preview_add(evas, wd->w, wd->h);
+   e_widget_preview_extern_object_set(wd->o_preview_preview, o);
    e_widget_table_object_append(wd->o_preview_properties_table,
                                 wd->o_preview_preview, 0, 0, 2, 2, 1, 1, 1, 1);
    
