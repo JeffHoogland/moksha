@@ -3494,7 +3494,7 @@ e_border_idler_before(void)
                        bd->changes.visible = 0;
                     }
 
-                  if (bd->zone)
+                  if (bd->zone && (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w, bd->zone->h)) && ((!E_INSIDE(bd->w, bd->h, 0, 0, bd->zone->w, bd->zone->h))))
                     {
                        if (e_config->screen_limits != E_SCREEN_LIMITS_COMPLETELY)
                           _e_border_move_lost_window_to_center(bd);
