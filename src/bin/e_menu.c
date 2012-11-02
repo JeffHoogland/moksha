@@ -763,7 +763,17 @@ e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
    _e_menu_lock = EINA_TRUE;
    if ((mi->submenu) || (mi->submenu_pre_cb.func))
      {
-        if (mi->submenu_object) evas_object_del(mi->submenu_object);
+        if (mi->submenu_object)
+          {
+             if (!e_util_strcmp(evas_object_type_get(mi->submenu_object), "edje"))
+               {
+                  /* already have a correct submenu object, don't re-set it */
+                  _e_menu_lock = EINA_FALSE;
+                  if (sub) e_object_unref(E_OBJECT(sub));
+                  return;
+               }
+             evas_object_del(mi->submenu_object);
+          }
         o = edje_object_add(mi->menu->evas);
         if (sub && (mi->submenu != sub)) e_object_ref(E_OBJECT(sub));
         mi->submenu = sub;
@@ -776,6 +786,16 @@ e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
         edje_object_size_min_calc(mi->submenu_object, &ww, &hh);
         mi->submenu_w = ww;
         mi->submenu_h = hh;
+        edje_object_part_swallow(mi->bg_object, "e.swallow.content",
+                                 mi->container_object);
+        edje_object_size_min_calc(mi->bg_object, &ww, &hh);
+        e_box_pack_options_set(mi->bg_object,
+                               1, 1, /* fill */
+                               1, 0, /* expand */
+                               0.5, 0.5, /* align */
+                               ww, hh, /* min */
+                               -1, -1 /* max */
+                               );
      }
    else
      {
