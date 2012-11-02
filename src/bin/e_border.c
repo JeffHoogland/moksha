@@ -3494,9 +3494,9 @@ e_border_idler_before(void)
                        bd->changes.visible = 0;
                     }
 
-                  if((bd->changed) && (bd->zone))
+                  if(bd->zone)
                     {
-                       if(e_config->screen_limits == E_SCREEN_LIMITS_PARTLY)
+                       if(e_config->screen_limits != E_SCREEN_LIMITS_COMPLETELY)
                           _e_border_move_lost_window_to_center(bd);
                     }
                }
