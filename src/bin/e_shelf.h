@@ -56,9 +56,11 @@ typedef struct E_Event_Shelf
    E_Shelf *shelf;
 } E_Event_Shelf;
 
+typedef struct E_Event_Shelf E_Event_Shelf_Rename;
 typedef struct E_Event_Shelf E_Event_Shelf_Add;
 typedef struct E_Event_Shelf E_Event_Shelf_Del;
 
+EAPI extern int E_EVENT_SHELF_RENAME;
 EAPI extern int E_EVENT_SHELF_ADD;
 EAPI extern int E_EVENT_SHELF_DEL;
 
