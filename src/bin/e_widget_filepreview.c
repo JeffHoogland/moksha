@@ -132,7 +132,13 @@ _e_wid_fprev_img_update(E_Widget_Data *wd, const char *path, const char *key)
 {
    if (!path) return;
    if (wd->is_dir || wd->is_txt) return;
-   e_widget_preview_thumb_set(wd->o_preview_preview, path, key, wd->w, wd->h);
+   if (eina_str_has_extension(path, ".gif"))
+     {
+        e_widget_preview_file_set(wd->o_preview_preview, path, key);
+        _e_wid_fprev_preview_update(wd, wd->o_preview_preview, NULL);
+     }
+   else
+     e_widget_preview_thumb_set(wd->o_preview_preview, path, key, wd->w, wd->h);
 }
 
 static void
