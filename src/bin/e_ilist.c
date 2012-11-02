@@ -497,6 +497,14 @@ e_ilist_nth_label_get(Evas_Object *obj, int n)
 }
 
 EAPI void
+e_ilist_item_label_set(E_Ilist_Item *si, const char *label)
+{
+   EINA_SAFETY_ON_NULL_RETURN(si);
+   eina_stringshare_replace(&si->label, label);
+   edje_object_part_text_set(si->o_base, "e.text.label", label);
+}
+
+EAPI void
 e_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
 {
    E_Ilist_Item *si = NULL;
@@ -507,11 +515,7 @@ e_ilist_nth_label_set(Evas_Object *obj, int n, const char *label)
    API_ENTRY return;
    if (!sd->items) return;
    si = eina_list_nth(sd->items, n);
-   if (si)
-     {
-        if (eina_stringshare_replace(&si->label, label))
-          edje_object_part_text_set(si->o_base, "e.text.label", label);
-     }
+   if (si) e_ilist_item_label_set(si, label);
 }
 
 EAPI Evas_Object *
