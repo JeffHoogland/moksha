@@ -15,9 +15,9 @@ struct _E_Fm2_Custom_Dir
    struct {
       signed short      icon_size; /* -1 = unset */
       signed char       view_mode; /* -1 = unset */
-      unsigned char     order_file;
-      unsigned char     show_hidden_files;
-      unsigned char     in_use;
+      Eina_Bool     order_file;
+      Eina_Bool     show_hidden_files;
+      Eina_Bool     in_use;
    } prop;
 };
 
@@ -27,12 +27,12 @@ struct _E_Fm2_Custom_File
       int            x, y, w, h;
       int            res_w, res_h;
       double         scale;
-      unsigned char  valid;
+      Eina_Bool  valid;
    } geom;
    struct {
       int            type;
       const char    *icon;
-      unsigned char  valid;
+      Eina_Bool  valid;
    } icon;
    const char       *label;
    E_Fm2_Custom_Dir *dir;
