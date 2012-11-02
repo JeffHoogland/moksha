@@ -236,7 +236,7 @@ main(int argc, char **argv)
      {
         char **dbus_argv;
 
-        dbus_argv = alloca(argc + 3 + sizeof (char *));
+        dbus_argv = alloca((argc + 3) * sizeof (char *));
         dbus_argv[0] = "dbus-launch";
         dbus_argv[1] = "--exit-with-session";
         copy_args(dbus_argv + 2, argv, argc);
