@@ -1724,7 +1724,7 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
        if (lseek(fd, SEEK_SET, 0) == -1)
          goto finish;
 
-       return 1;
+       task->pos = 0;
      }
 
    return 1;
