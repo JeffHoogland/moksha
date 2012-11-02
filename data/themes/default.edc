@@ -15693,6 +15693,10 @@ CONNMAN_ICON(ethernet)
                }
             }
          }
+         part { name: "e.swallow.bg"; type: SWALLOW;
+            description { state: "default" 0.0;
+            }
+         }
          part {
             name: "shadow";
             mouse_events: 0;
@@ -16177,6 +16181,10 @@ target: "region";
             mouse_events: 0;
             description {
                state: "default" 0.0;
+            }
+         }
+         part { name: "e.swallow.bg"; type: SWALLOW;
+            description { state: "default" 0.0;
             }
          }
          part {
