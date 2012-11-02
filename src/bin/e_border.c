@@ -2618,14 +2618,14 @@ _e_border_client_inset_calc(E_Border *bd)
 
    if (bd->bg_object)
      {
-        evas_object_resize(bd->bg_object, bd->w, bd->h);
+        evas_object_resize(bd->bg_object, MAX(bd->w, 500), MAX(bd->h, 500));
         edje_object_message_signal_process(bd->bg_object);
         edje_object_calc_force(bd->bg_object);
         edje_object_part_geometry_get(bd->bg_object, "e.swallow.client", &cx, &cy, &cw, &ch);
         bd->client_inset.l = cx;
-        bd->client_inset.r = bd->w - (cx + cw);
+        bd->client_inset.r = MAX(bd->w, 500) - (cx + cw);
         bd->client_inset.t = cy;
-        bd->client_inset.b = bd->h - (cy + ch);
+        bd->client_inset.b = MAX(bd->h, 500) - (cy + ch);
      }
    else
      {
