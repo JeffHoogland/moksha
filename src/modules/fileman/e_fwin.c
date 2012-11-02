@@ -2924,8 +2924,12 @@ _e_fwin_op_registry_listener_cb(void *data,
         edje_object_signal_emit(o, "e,action,icon,delete", "e");
         break;
 
+      case E_FM_OP_SECURE_REMOVE:
+        edje_object_signal_emit(o, "e,action,icon,secure_delete", "e");
+        break;
+
       default:
-        edje_object_signal_emit(o, "e,action,icon,unknow", "e");
+        edje_object_signal_emit(o, "e,action,icon,unknown", "e");
      }
 
    // Update information text
@@ -2944,6 +2948,10 @@ _e_fwin_op_registry_listener_cb(void *data,
 
            case E_FM_OP_REMOVE:
              snprintf(buf, sizeof(buf), _("Deleting is aborted"));
+             break;
+
+           case E_FM_OP_SECURE_REMOVE:
+             snprintf(buf, sizeof(buf), _("Secure deletion is aborted"));
              break;
 
            default:
@@ -2974,6 +2982,13 @@ _e_fwin_op_registry_listener_cb(void *data,
                snprintf(buf, sizeof(buf), _("Delete done"));
              else
                snprintf(buf, sizeof(buf), _("Deleting files..."));
+             break;
+
+           case E_FM_OP_SECURE_REMOVE:
+             if (ere->finished)
+               snprintf(buf, sizeof(buf), _("Secure delete done"));
+             else
+               snprintf(buf, sizeof(buf), _("Securely deleting files..."));
              break;
 
            default:
@@ -3058,8 +3073,8 @@ _e_fwin_op_registry_entry_add_cb(void *data,
    E_Fwin_Page *page = data;
    Evas_Object *o;
 
-   if (!(ere->op == E_FM_OP_COPY || ere->op == E_FM_OP_MOVE ||
-         ere->op == E_FM_OP_REMOVE))
+   if ((ere->op != E_FM_OP_COPY) && (ere->op != E_FM_OP_MOVE) &&
+       (ere->op != E_FM_OP_REMOVE) && (ere->op != E_FM_OP_SECURE_REMOVE))
      return ECORE_CALLBACK_RENEW;
 
    o = edje_object_add(evas_object_evas_get(page->scrollframe_obj));

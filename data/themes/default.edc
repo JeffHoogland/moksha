@@ -16109,7 +16109,7 @@ target: "region";
          }
          program {
             name: "set_icon_unknow";
-            signal: "e,action,icon,unknow";
+            signal: "e,action,icon,unknown";
             source: "e";
             action: STATE_SET "default" 0.0;
             target: "icon";
@@ -16131,6 +16131,13 @@ target: "region";
          program {
             name: "set_icon_delete";
             signal: "e,action,icon,delete";
+            source: "e";
+            action: STATE_SET "delete" 0.0;
+            target: "icon";
+         }
+         program {
+            name: "set_icon_secure_delete";
+            signal: "e,action,icon,secure_delete";
             source: "e";
             action: STATE_SET "delete" 0.0;
             target: "icon";
