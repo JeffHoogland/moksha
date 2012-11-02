@@ -436,6 +436,7 @@ e_shelf_name_set(E_Shelf *es, const char *name)
    eina_stringshare_replace(&es->cfg->name, name);
    ev = E_NEW(E_Event_Shelf, 1);
    ev->shelf = es;
+   e_object_ref(E_OBJECT(es));
    ecore_event_add(E_EVENT_SHELF_RENAME, ev, (Ecore_End_Cb)_e_shelf_event_rename_end_cb, NULL);
    if (es->dummy) return;
    e_gadcon_name_set(es->gadcon, name);
