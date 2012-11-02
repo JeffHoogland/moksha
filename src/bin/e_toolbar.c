@@ -107,6 +107,7 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
                                       _e_toolbar_menu_items_append, tbar);
    e_gadcon_populate(tbar->gadcon);
 
+   _e_toolbar_gadcon_size_request(tbar, tbar->gadcon, 0, 0);
    toolbars = eina_list_append(toolbars, tbar);
    return tbar;
 }
