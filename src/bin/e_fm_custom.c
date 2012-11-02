@@ -43,14 +43,14 @@ e_fm2_custom_file_init(void)
    _e_fm2_custom_hash = eina_hash_string_superfast_new(NULL);
 
    _e_fm2_custom_dir_edd = eet_data_descriptor_stream_new(&eddc);
-#define DAT(x, y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(_e_fm2_custom_dir_edd, E_Fm2_Custom_Dir, x, y, z)
-   DAT("pos.x", pos.x, EET_T_DOUBLE);
-   DAT("pos.y", pos.y, EET_T_DOUBLE);
-   DAT("prop.icon_size", prop.icon_size, EET_T_SHORT);
-   DAT("prop.view_mode", prop.view_mode, EET_T_CHAR);
-   DAT("prop.order_file", prop.order_file, EET_T_UCHAR);
-   DAT("prop.show_hidden_files", prop.show_hidden_files, EET_T_UCHAR);
-   DAT("prop.in_use", prop.in_use, EET_T_UCHAR);
+#define DAT(y, z) EET_DATA_DESCRIPTOR_ADD_BASIC(_e_fm2_custom_dir_edd, E_Fm2_Custom_Dir, #y, y, z)
+   DAT(pos.x, EET_T_DOUBLE);
+   DAT(pos.y, EET_T_DOUBLE);
+   DAT(prop.icon_size, EET_T_SHORT);
+   DAT(prop.view_mode, EET_T_CHAR);
+   DAT(prop.order_file, EET_T_UCHAR);
+   DAT(prop.show_hidden_files, EET_T_UCHAR);
+   DAT(prop.in_use, EET_T_UCHAR);
 #undef DAT
 
    eddc.size = sizeof (E_Fm2_Custom_File);
