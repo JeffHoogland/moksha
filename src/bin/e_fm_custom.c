@@ -1,17 +1,17 @@
 #include "e.h"
 
-static Eina_Bool _e_fm2_custom_file_hash_foreach_list(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool  _e_fm2_custom_file_hash_foreach_list(const Eina_Hash *hash, const void *key, void *data, void *fdata);
 static Eina_List *_e_fm2_custom_hash_key_base_list(Eina_Hash *hash, const char *str);
 //static Eina_Bool _e_fm2_custom_file_hash_foreach_sub_list(Eina_Hash *hash, const char *key, void *data, void *fdata);
 //static Eina_List *_e_fm2_custom_hash_key_sub_list(Eina_Hash *hash, const char *str);
-static Eina_Bool _e_fm2_custom_file_hash_foreach(const Eina_Hash *hash, const void *key, void *data, void *fdata);
-static Eina_Bool _e_fm2_custom_file_hash_foreach_save(const Eina_Hash *hash, const void *key, void *data, void *fdata);
-static void _e_fm2_custom_file_info_load(void);
-static void _e_fm2_custom_file_info_save(void);
-static void _e_fm2_custom_file_info_free(void);
-static void _e_fm2_custom_file_cb_defer_save(void *data);
+static Eina_Bool  _e_fm2_custom_file_hash_foreach(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool  _e_fm2_custom_file_hash_foreach_save(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static void       _e_fm2_custom_file_info_load(void);
+static void       _e_fm2_custom_file_info_save(void);
+static void       _e_fm2_custom_file_info_free(void);
+static void       _e_fm2_custom_file_cb_defer_save(void *data);
 
-static E_Powersave_Deferred_Action*_e_fm2_flush_defer = NULL;
+static E_Powersave_Deferred_Action *_e_fm2_flush_defer = NULL;
 static Eet_File *_e_fm2_custom_file = NULL;
 static Eet_Data_Descriptor *_e_fm2_custom_file_edd = NULL;
 static Eet_Data_Descriptor *_e_fm2_custom_dir_edd = NULL;
@@ -36,8 +36,8 @@ e_fm2_custom_file_init(void)
 
    if (!eet_eina_stream_data_descriptor_class_set(&eddc, sizeof (eddc), "e_fm2_custom_dir", sizeof (E_Fm2_Custom_Dir)))
      {
-	_e_fm2_custom_init--;
-	return 0;
+        _e_fm2_custom_init--;
+        return 0;
      }
 
    _e_fm2_custom_hash = eina_hash_string_superfast_new(NULL);
@@ -76,7 +76,7 @@ e_fm2_custom_file_init(void)
 #undef DAT
 
    EET_DATA_DESCRIPTOR_ADD_SUB(_e_fm2_custom_file_edd, E_Fm2_Custom_File, "dir",
-			       dir, _e_fm2_custom_dir_edd);
+                               dir, _e_fm2_custom_dir_edd);
 
    return 1;
 }
@@ -168,17 +168,17 @@ e_fm2_custom_file_set(const char *path, const E_Fm2_Custom_File *cf)
    cf1 = eina_hash_find(_e_fm2_custom_hash, path);
    if ((cf1 != cf) || ((cf1) && (cf) && (cf1->dir != cf->dir)))
      {
-	E_Fm2_Custom_File *cf2 = e_fm2_custom_file_dup(cf);
-	if (cf2)
-	  {
-	     if (cf1)
-	       {
-		  eina_hash_modify(_e_fm2_custom_hash, path, cf2);
-		  _e_fm2_custom_file_del(cf1);
-	       }
-	     else
-	       eina_hash_add(_e_fm2_custom_hash, path, cf2);
-	  }
+        E_Fm2_Custom_File *cf2 = e_fm2_custom_file_dup(cf);
+        if (cf2)
+          {
+             if (cf1)
+               {
+                  eina_hash_modify(_e_fm2_custom_hash, path, cf2);
+                  _e_fm2_custom_file_del(cf1);
+               }
+             else
+               eina_hash_add(_e_fm2_custom_hash, path, cf2);
+          }
      }
    _e_fm2_custom_writes = 1;
 }
@@ -197,16 +197,16 @@ e_fm2_custom_file_del(const char *path)
    list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
    if (list)
      {
-	EINA_LIST_FOREACH(list, l, key)
-	  {
-	     cf2 = eina_hash_find(_e_fm2_custom_hash, key);
-	     if (cf2)
-	       {
-		  eina_hash_del(_e_fm2_custom_hash, key, cf2);
-		  _e_fm2_custom_file_del(cf2);
-	       }
-	  }
-	eina_list_free(list);
+        EINA_LIST_FOREACH(list, l, key)
+          {
+             cf2 = eina_hash_find(_e_fm2_custom_hash, key);
+             if (cf2)
+               {
+                  eina_hash_del(_e_fm2_custom_hash, key, cf2);
+                  _e_fm2_custom_file_del(cf2);
+               }
+          }
+        eina_list_free(list);
      }
    _e_fm2_custom_writes = 1;
 }
@@ -225,31 +225,31 @@ e_fm2_custom_file_rename(const char *path, const char *new_path)
    if (cf2)
      {
         eina_hash_del(_e_fm2_custom_hash, path, cf2);
-	cf = eina_hash_find(_e_fm2_custom_hash, new_path);
-	if (cf)
-	  _e_fm2_custom_file_del(cf);
-	eina_hash_add(_e_fm2_custom_hash, new_path, cf2);
+        cf = eina_hash_find(_e_fm2_custom_hash, new_path);
+        if (cf)
+          _e_fm2_custom_file_del(cf);
+        eina_hash_add(_e_fm2_custom_hash, new_path, cf2);
      }
    list = _e_fm2_custom_hash_key_base_list(_e_fm2_custom_hash, path);
    if (list)
      {
-	EINA_LIST_FOREACH(list, l, key)
-	  {
-	     cf2 = eina_hash_find(_e_fm2_custom_hash, key);
-	     if (cf2)
-	       {
-		  char buf[PATH_MAX];
+        EINA_LIST_FOREACH(list, l, key)
+          {
+             cf2 = eina_hash_find(_e_fm2_custom_hash, key);
+             if (cf2)
+               {
+                  char buf[PATH_MAX];
 
-		  strcpy(buf, new_path);
-		  strcat(buf, (char *)key + strlen(path));
-		  eina_hash_del(_e_fm2_custom_hash, key, cf2);
-		  cf = eina_hash_find(_e_fm2_custom_hash, buf);
-		  if (cf)
-		    _e_fm2_custom_file_del(cf);
-		  eina_hash_add(_e_fm2_custom_hash, buf, cf2);
-	       }
-	  }
-	eina_list_free(list);
+                  strcpy(buf, new_path);
+                  strcat(buf, (char *)key + strlen(path));
+                  eina_hash_del(_e_fm2_custom_hash, key, cf2);
+                  cf = eina_hash_find(_e_fm2_custom_hash, buf);
+                  if (cf)
+                    _e_fm2_custom_file_del(cf);
+                  eina_hash_add(_e_fm2_custom_hash, buf, cf2);
+               }
+          }
+        eina_list_free(list);
      }
    _e_fm2_custom_writes = 1;
 }
@@ -298,31 +298,31 @@ _e_fm2_custom_hash_key_base_list(Eina_Hash *hash, const char *str)
 }
 
 /*
-static Eina_Bool
-_e_fm2_custom_file_hash_foreach_sub_list(const Eina_Hash *hash, const void *key, void *data, void *fdata)
-{
+   static Eina_Bool
+   _e_fm2_custom_file_hash_foreach_sub_list(const Eina_Hash *hash, const void *key, void *data, void *fdata)
+   {
    struct _E_Custom_List *cl;
 
    cl = fdata;
    if (!strncmp(cl->base, key, strlen(key)))
      cl->l = eina_list_append(cl->l, key);
    return 1;
-}
-*/
+   }
+ */
 
 /*
-static Eina_List *
-_e_fm2_custom_hash_key_sub_list(const Eina_Hash *hash, const void *str)
-{
+   static Eina_List *
+   _e_fm2_custom_hash_key_sub_list(const Eina_Hash *hash, const void *str)
+   {
    struct _E_Custom_List cl;
 
    cl.l = NULL;
    cl.base = str;
    eina_hash_foreach(hash,
-		     _e_fm2_custom_file_hash_foreach_sub_list, &cl);
+                     _e_fm2_custom_file_hash_foreach_sub_list, &cl);
    return cl.l;
-}
-*/
+   }
+ */
 
 static Eina_Bool
 _e_fm2_custom_file_hash_foreach(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *data, void *fdata __UNUSED__)
@@ -356,22 +356,22 @@ _e_fm2_custom_file_info_load(void)
      _e_fm2_custom_file = eet_open(buf, EET_FILE_MODE_WRITE);
    if (_e_fm2_custom_file)
      {
-	E_Fm2_Custom_File *cf;
-	char **list;
-	int i, num;
+        E_Fm2_Custom_File *cf;
+        char **list;
+        int i, num;
 
-	list = eet_list(_e_fm2_custom_file, "*", &num);
-	if (list)
-	  {
-	     for (i = 0; i < num; i++)
-	       {
-		  cf = eet_data_read(_e_fm2_custom_file,
-				     _e_fm2_custom_file_edd, list[i]);
-		  if (cf)
-		    eina_hash_add(_e_fm2_custom_hash, list[i], cf);
-	       }
-	     free(list);
-	  }
+        list = eet_list(_e_fm2_custom_file, "*", &num);
+        if (list)
+          {
+             for (i = 0; i < num; i++)
+               {
+                  cf = eet_data_read(_e_fm2_custom_file,
+                                     _e_fm2_custom_file_edd, list[i]);
+                  if (cf)
+                    eina_hash_add(_e_fm2_custom_hash, list[i], cf);
+               }
+             free(list);
+          }
      }
 }
 
@@ -391,7 +391,7 @@ _e_fm2_custom_file_info_save(void)
    ef = eet_open(buf, EET_FILE_MODE_WRITE);
    if (!ef) return;
    eina_hash_foreach(_e_fm2_custom_hash,
-		     _e_fm2_custom_file_hash_foreach_save, ef);
+                     _e_fm2_custom_file_hash_foreach_save, ef);
    eet_close(ef);
 
    memcpy(buf2, buf, len - (sizeof(".tmp") - 1));
@@ -401,9 +401,9 @@ _e_fm2_custom_file_info_save(void)
    ret = rename(buf, buf2);
    if (ret < 0)
      {
-	/* FIXME: do we want to trap individual errno
-	 and provide a short blurp to the user? */
-	perror("rename");
+        /* FIXME: do we want to trap individual errno
+           and provide a short blurp to the user? */
+        perror("rename");
      }
 }
 
@@ -413,15 +413,15 @@ _e_fm2_custom_file_info_free(void)
    _e_fm2_custom_writes = 0;
    if (_e_fm2_custom_file)
      {
-	eet_close(_e_fm2_custom_file);
-	_e_fm2_custom_file = NULL;
+        eet_close(_e_fm2_custom_file);
+        _e_fm2_custom_file = NULL;
      }
    if (_e_fm2_custom_hash)
      {
-	eina_hash_foreach(_e_fm2_custom_hash,
-			  _e_fm2_custom_file_hash_foreach, NULL);
-	eina_hash_free(_e_fm2_custom_hash);
-	_e_fm2_custom_hash = eina_hash_string_superfast_new(NULL);
+        eina_hash_foreach(_e_fm2_custom_hash,
+                          _e_fm2_custom_file_hash_foreach, NULL);
+        eina_hash_free(_e_fm2_custom_hash);
+        _e_fm2_custom_hash = eina_hash_string_superfast_new(NULL);
      }
 }
 
@@ -432,3 +432,4 @@ _e_fm2_custom_file_cb_defer_save(void *data __UNUSED__)
    _e_fm2_custom_file_info_free();
    _e_fm2_flush_defer = NULL;
 }
+
