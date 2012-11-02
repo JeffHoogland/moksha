@@ -3494,9 +3494,9 @@ e_border_idler_before(void)
                        bd->changes.visible = 0;
                     }
 
-                  if(bd->zone)
+                  if (bd->zone)
                     {
-                       if(e_config->screen_limits != E_SCREEN_LIMITS_COMPLETELY)
+                       if (e_config->screen_limits != E_SCREEN_LIMITS_COMPLETELY)
                           _e_border_move_lost_window_to_center(bd);
                     }
                }
@@ -6726,7 +6726,7 @@ _e_border_stay_within_container(E_Border *bd, int x, int y, int *new_x, int *new
    int zw, zh;
    Eina_Bool lw, lh;
 
-   if(!bd->zone)
+   if (!bd->zone)
      {
         if (new_x) *new_x = x;
         if (new_y) *new_y = y;
