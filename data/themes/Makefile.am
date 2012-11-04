@@ -247,6 +247,7 @@ img/O/dia_grad.png \
 img/O/e17_mini_button_shadow2.png \
 img/O/everything_box.png \
 img/O/everything_item_bg.png \
+img/O/exclam.png \
 img/O/exq-bglight.png \
 img/O/exq-dot-glow.png \
 img/O/exq-dot.png \
