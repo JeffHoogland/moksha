@@ -458,7 +458,7 @@ _desktop_list_get(void)
              efreet_desktop_free(d);
              apps = eina_list_remove_list(apps, ll);
           }
-        printf("%d %s\n", d->ref, d->name);
+        //printf("%d %s\n", d->ref, d->name);
 
         efreet_desktop_free(d);
      }
@@ -1520,7 +1520,7 @@ _scan_idler(void *data __UNUSED__)
           {
              Eina_Stat st;
 
-             if (eina_file_statat(eina_iterator_container_get(exe_dir), info, &st) &&
+             if (!eina_file_statat(eina_iterator_container_get(exe_dir), info, &st) &&
                  (!S_ISDIR(st.mode)) &&
                  (!access(info->path, X_OK)))
                {
