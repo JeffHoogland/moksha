@@ -82,6 +82,11 @@ static Eina_Iterator *exe_dir = NULL;
 static Eina_List *exe_list = NULL;
 static Eina_List *exe_list2 = NULL;
 static Eina_List *apps_cache = NULL;
+
+static Eina_Bool update_path;
+static char *current_path = NULL;
+static Eina_List *dir_monitors = NULL;
+
 static void _scan_executables();
 
 #define GET_MENU(_m, _it) Item_Menu * _m = (Item_Menu *)_it
@@ -1071,6 +1076,46 @@ _desktop_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __
 
    return EINA_TRUE;
 }
+static void
+_dir_watcher(void *data  __UNUSED__, Ecore_File_Monitor *em, Ecore_File_Event event, const char *path  __UNUSED__)
+{
+   //printf("exebuf path changed\n");
+   switch (event)
+     {
+      case ECORE_FILE_EVENT_DELETED_SELF:
+         ecore_file_monitor_del(em);
+         dir_monitors = eina_list_remove(dir_monitors, em); 
+         break;
+
+      default:
+         break;
+     }
+   update_path = EINA_TRUE;
+}
+
+static void
+_dir_monitor_add()
+{
+   Eina_List *l;
+   const char *dir;
+
+   EINA_LIST_FOREACH(exe_path, l, dir)
+     {
+        Ecore_File_Monitor *dir_mon;
+        dir_mon = ecore_file_monitor_add(dir, _dir_watcher, NULL);
+        if (dir_mon)
+          dir_monitors = eina_list_append(dir_monitors, dir_mon); 
+     }
+}
+
+static void
+_dir_monitor_free()
+{
+   Ecore_File_Monitor *dir_mon;
+   
+   EINA_LIST_FREE (dir_monitors, dir_mon)
+     ecore_file_monitor_del(dir_mon);
+}
 
 static int
 _plugins_init(const Evry_API *api)
@@ -1186,6 +1231,9 @@ _plugins_init(const Evry_API *api)
          (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _desktop_cache_update, NULL));
 
    eina_stringshare_del(config_path);
+
+   update_path = EINA_TRUE;
+   
    return EINA_TRUE;
 }
 
@@ -1208,6 +1256,12 @@ _plugins_shutdown(void)
 
    EINA_LIST_FREE (handlers, h)
      ecore_event_handler_del(h);
+
+   _dir_monitor_free();
+
+   if (current_path)
+     free(current_path);
+   current_path = NULL;
 }
 
 /***************************************************************************/
@@ -1510,6 +1564,7 @@ _scan_idler(void *data __UNUSED__)
      {
         dir = exe_path->data;
         exe_dir = eina_file_direct_ls(dir);
+        //printf("scan dir: %s\n", dir);
      }
    /* if we have an opened dir - scan the next item */
    if (exe_dir)
@@ -1552,11 +1607,58 @@ _scan_idler(void *data __UNUSED__)
    return ECORE_CALLBACK_RENEW;
 }
 
+
+static Eina_Bool
+_exe_path_list()
+{
+   char *path, *pp, *last;
+   Eina_Bool changed;
+
+   path = getenv("PATH");
+
+   // nothing changed
+   if (!update_path && (current_path && path) && !strcmp(current_path, path))
+     return EINA_FALSE;
+
+   changed = (path && (!current_path || !strcmp(current_path, path)));
+
+   if (current_path)
+     {
+        free(current_path);
+        current_path = NULL;
+     }
+   
+   if (path)
+     {
+        path = strdup(path);
+        current_path = strdup(path);
+
+        last = path;
+        for (pp = path; pp[0]; pp++)
+          {
+             if (pp[0] == ':') pp[0] = '\0';
+             if (pp[0] == 0)
+               {
+                  exe_path = eina_list_append(exe_path, strdup(last));
+                  last = pp + 1;
+               }
+          }
+        if (pp > last)
+          exe_path = eina_list_append(exe_path, strdup(last));
+     }
+
+   if (changed)
+     {
+        _dir_monitor_free();
+        _dir_monitor_add();
+     }
+
+   return EINA_TRUE;
+}
+
 static void
 _scan_executables()
 {
-   /* taken from exebuf module */
-   char *path, *pp, *last;
    E_Exe_List *el;
 
    el = e_config_domain_load("exebuf_exelist_cache", exelist_edd);
@@ -1572,25 +1674,10 @@ _scan_executables()
           }
         free(el);
      }
-   path = getenv("PATH");
-   if (path)
+
+   if (_exe_path_list())
      {
-        path = strdup(path);
-        last = path;
-        for (pp = path; pp[0]; pp++)
-          {
-             if (pp[0] == ':') pp[0] = '\0';
-             if (pp[0] == 0)
-               {
-                  exe_path = eina_list_append(exe_path, strdup(last));
-                  last = pp + 1;
-               }
-          }
-        if (pp > last)
-          exe_path = eina_list_append(exe_path, strdup(last));
-        free(path);
+        exe_scan_idler = ecore_idler_add(_scan_idler, NULL);
+        update_path = EINA_FALSE;
      }
-
-   exe_scan_idler = ecore_idler_add(_scan_idler, NULL);
 }
-
