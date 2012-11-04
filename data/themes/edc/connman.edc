@@ -1,0 +1,703 @@
+group { name: "e/modules/connman/main";
+   images.image: "slot_horiz_top.png" COMP;
+   images.image: "slot_horiz_bottom.png" COMP;
+   images.image: "wifi_base.png" COMP;
+   images.image: "wifi_sig_1.png" COMP;
+   images.image: "wifi_sig_2.png" COMP;
+   images.image: "wifi_sig_3.png" COMP;
+   images.image: "eth.png" COMP;
+   images.image: "exlclam.png" COMP;
+   images.image: "hole_tiny.png" COMP;
+   images.image: "led_tiny_orange.png" COMP;
+   images.image: "led_tiny_green.png" COMP;
+   images.image: "bt_base.png" COMP;
+   images.image: "bt_sig_1.png" COMP;
+   images.image: "bt_sig_2.png" COMP;
+   images.image: "cell_base.png" COMP;
+   images.image: "cell_sig_1.png" COMP;
+   images.image: "cell_sig_2.png" COMP;
+   images.image: "cell_sig_3.png" COMP;
+   images.image: "cell_sig_4.png" COMP;
+   parts {
+      part { name: "slot_bottom"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "slot";
+            rel2.relative: 1.0 0.5;
+            rel2.to: "slot";
+            min: 0 3;
+            image.normal: "slot_horiz_bottom.png";
+            fixed: 0 1;
+         }
+      }
+///////////////////////
+      part { name: "exclam_base"; mouse_events: 0;
+         clip_to: "clip_exclam";
+         description { state: "default" 0.0;
+            aspect: (71/144) (71/144); aspect_preference: BOTH;
+            align: 0.5 1.0;
+            rel2.relative: 1.0 0.5;
+            rel2.to_y: "slot";
+            image.normal: "exlclam.png";
+         }
+      }
+///////////////////////
+      part { name: "eth_base"; mouse_events: 0;
+         clip_to: "clip_eth";
+         description { state: "default" 0.0;
+            aspect: (60/144) (60/144); aspect_preference: BOTH;
+            align: 0.5 1.0;
+            rel2.relative: 1.0 0.5;
+            rel2.to_y: "slot";
+            image.normal: "eth.png";
+         }
+      }
+///////////////////////
+      part { name: "wifi_base"; mouse_events: 0;
+         clip_to: "clip_wifi";
+         description { state: "default" 0.0;
+            aspect: (160/144) (160/144); aspect_preference: BOTH;
+            align: 0.5 1.0;
+            rel2.relative: 1.0 0.5;
+            rel2.to_y: "slot";
+            image.normal: "wifi_base.png";
+         }
+      }
+      part { name: "wifi_1"; mouse_events: 0;
+         clip_to: "clip_wifi";
+         description { state: "default" 0.0;
+            rel1.to: "wifi_base";
+            rel2.to: "wifi_base";
+            image.normal: "wifi_sig_1.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "wifi_2"; mouse_events: 0;
+         clip_to: "clip_wifi";
+         description { state: "default" 0.0;
+            rel1.to: "wifi_base";
+            rel2.to: "wifi_base";
+            image.normal: "wifi_sig_2.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "wifi_3"; mouse_events: 0;
+         clip_to: "clip_wifi";
+         description { state: "default" 0.0;
+            rel1.to: "wifi_base";
+            rel2.to: "wifi_base";
+            image.normal: "wifi_sig_3.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+///////////////////////
+      part { name: "bt_base"; mouse_events: 0;
+         clip_to: "clip_bt";
+         description { state: "default" 0.0;
+            aspect: (160/144) (160/144); aspect_preference: BOTH;
+            align: 0.5 1.0;
+            rel2.relative: 1.0 0.5;
+            rel2.to_y: "slot";
+            image.normal: "bt_base.png";
+         }
+      }
+      part { name: "bt_1"; mouse_events: 0;
+         clip_to: "clip_bt";
+         description { state: "default" 0.0;
+            rel1.to: "bt_base";
+            rel2.to: "bt_base";
+            image.normal: "bt_sig_1.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "bt_2"; mouse_events: 0;
+         clip_to: "clip_bt";
+         description { state: "default" 0.0;
+            rel1.to: "bt_base";
+            rel2.to: "bt_base";
+            image.normal: "bt_sig_2.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+///////////////////////
+      part { name: "cell_base"; mouse_events: 0;
+         clip_to: "clip_cell";
+         description { state: "default" 0.0;
+            aspect: (160/144) (160/144); aspect_preference: BOTH;
+            align: 0.5 1.0;
+            rel2.relative: 1.0 0.5;
+            rel2.to_y: "slot";
+            image.normal: "cell_base.png";
+         }
+      }
+      part { name: "cell_1"; mouse_events: 0;
+         clip_to: "clip_cell";
+         description { state: "default" 0.0;
+            rel1.to: "cell_base";
+            rel2.to: "cell_base";
+            image.normal: "cell_sig_1.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "cell_2"; mouse_events: 0;
+         clip_to: "clip_cell";
+         description { state: "default" 0.0;
+            rel1.to: "cell_base";
+            rel2.to: "cell_base";
+            image.normal: "cell_sig_2.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "cell_3"; mouse_events: 0;
+         clip_to: "clip_cell";
+         description { state: "default" 0.0;
+            rel1.to: "cell_base";
+            rel2.to: "cell_base";
+            image.normal: "cell_sig_3.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "cell_4"; mouse_events: 0;
+         clip_to: "clip_cell";
+         description { state: "default" 0.0;
+            rel1.to: "cell_base";
+            rel2.to: "cell_base";
+            image.normal: "cell_sig_4.png";
+            visible: 0;
+         }
+         description { state: "partly" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+            visible: 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+///////////////////////
+      part { name: "slot"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: 0 -1;
+            rel1.relative: (21/160) 1.0;
+            rel2.offset: -1 -1;
+            rel2.relative: (140/160) 1.0;
+            align: 0.5 1.0;
+            min: 0 6;
+            image.normal: "slot_horiz_top.png";
+            fixed: 0 1;
+         }
+      }
+      part { name: "hole"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: -4 -4;
+            rel1.relative: 1.0 1.0;
+            rel2.offset: -4 -4;
+            align: 1.0 1.0;
+            min: 4 4;
+            max: 4 4;
+            image.normal: "hole_tiny.png";
+            fixed: 1 1;
+         }
+      }
+      part { name: "clip_exclam"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 1;
+         }
+         description { state: "wifi" 0.0;
+            visible: 0;
+         }
+         description { state: "eth" 0.0;
+            visible: 0;
+         }
+         description { state: "bt" 0.0;
+            visible: 0;
+         }
+         description { state: "cell" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "clip_wifi"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "wifi" 0.0;
+            visible: 1;
+         }
+         description { state: "eth" 0.0;
+            visible: 0;
+         }
+         description { state: "bt" 0.0;
+            visible: 0;
+         }
+         description { state: "cell" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "clip_eth"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "wifi" 0.0;
+            visible: 0;
+         }
+         description { state: "eth" 0.0;
+            visible: 1;
+         }
+         description { state: "bt" 0.0;
+            visible: 0;
+         }
+         description { state: "cell" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "clip_bt"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "wifi" 0.0;
+            visible: 0;
+         }
+         description { state: "eth" 0.0;
+            visible: 0;
+         }
+         description { state: "bt" 0.0;
+            visible: 1;
+         }
+         description { state: "cell" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "clip_cell"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "wifi" 0.0;
+            visible: 0;
+         }
+         description { state: "eth" 0.0;
+            visible: 0;
+         }
+         description { state: "bt" 0.0;
+            visible: 0;
+         }
+         description { state: "cell" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "led"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "hole";
+            rel2.to: "hole";
+            min: 10 10;
+            max: 10 10;
+            image.normal: "led_tiny_orange.png";
+            fixed: 1 1;
+            visible: 0;
+         }
+         description { state: "connected" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "led_tiny_orange.png";
+            visible: 1;
+         }
+         description { state: "online" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "led_tiny_green.png";
+            visible: 1;
+         }
+      }
+      part { name: "event"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+   }
+
+#define SCRIPT_MESSAGE() \
+script { \
+public message(Msg_Type:type, id, ...) { \
+if ((type == MSG_INT_SET) && (id == 1)) { \
+new state = getarg(2), signl = getarg(3); \
+if (signl <= 14) { \
+set_state(PART:"wifi_1", "default", 0.0); \
+set_state(PART:"wifi_2", "default", 0.0); \
+set_state(PART:"wifi_3", "default", 0.0); \
+} \
+else if (signl <= 28) { \
+set_state(PART:"wifi_1", "partly", 0.0); \
+set_state(PART:"wifi_2", "default", 0.0); \
+set_state(PART:"wifi_3", "default", 0.0); \
+} \
+else if (signl <= 42) { \
+set_state(PART:"wifi_1", "visible", 0.0); \
+set_state(PART:"wifi_2", "default", 0.0); \
+set_state(PART:"wifi_3", "default", 0.0); \
+} \
+else if (signl <= 57) { \
+set_state(PART:"wifi_1", "visible", 0.0); \
+set_state(PART:"wifi_2", "partly", 0.0); \
+set_state(PART:"wifi_3", "default", 0.0); \
+} \
+else if (signl <= 71) { \
+set_state(PART:"wifi_1", "visible", 0.0); \
+set_state(PART:"wifi_2", "visible", 0.0); \
+set_state(PART:"wifi_3", "default", 0.0); \
+} \
+else if (signl <= 85) { \
+set_state(PART:"wifi_1", "visible", 0.0); \
+set_state(PART:"wifi_2", "visible", 0.0); \
+set_state(PART:"wifi_3", "partly", 0.0); \
+} \
+else { \
+set_state(PART:"wifi_1", "visible", 0.0); \
+set_state(PART:"wifi_2", "visible", 0.0); \
+set_state(PART:"wifi_3", "visible", 0.0); \
+} \
+if (signl <= 20) { \
+set_state(PART:"bt_1", "default", 0.0); \
+set_state(PART:"bt_2", "default", 0.0); \
+} \
+else if (signl <= 40) { \
+set_state(PART:"bt_1", "partly", 0.0); \
+set_state(PART:"bt_2", "default", 0.0); \
+} \
+else if (signl <= 60) { \
+set_state(PART:"bt_1", "visible", 0.0); \
+set_state(PART:"bt_2", "default", 0.0); \
+} \
+else if (signl <= 80) { \
+set_state(PART:"bt_1", "visible", 0.0); \
+set_state(PART:"bt_2", "partly", 0.0); \
+} \
+else { \
+set_state(PART:"bt_1", "visible", 0.0); \
+set_state(PART:"bt_2", "visible", 0.0); \
+} \
+if (signl <= 11) { \
+set_state(PART:"cell_1", "default", 0.0); \
+set_state(PART:"cell_2", "default", 0.0); \
+set_state(PART:"cell_3", "default", 0.0); \
+set_state(PART:"cell_4", "default", 0.0); \
+} \
+else if (signl <= 22) { \
+set_state(PART:"cell_1", "partly", 0.0); \
+set_state(PART:"cell_2", "default", 0.0); \
+set_state(PART:"cell_3", "default", 0.0); \
+set_state(PART:"cell_4", "default", 0.0); \
+} \
+else if (signl <= 33) { \
+set_state(PART:"cell_1", "visible", 0.0); \
+set_state(PART:"cell_2", "default", 0.0); \
+set_state(PART:"cell_3", "default", 0.0); \
+set_state(PART:"cell_4", "default", 0.0); \
+} \
+else if (signl <= 44) { \
+set_state(PART:"cell_1", "visible", 0.0); \
+set_state(PART:"cell_2", "partly", 0.0); \
+set_state(PART:"cell_3", "default", 0.0); \
+set_state(PART:"cell_4", "default", 0.0); \
+} \
+else if (signl <= 55) { \
+set_state(PART:"cell_1", "visible", 0.0); \
+set_state(PART:"cell_2", "visible", 0.0); \
+set_state(PART:"cell_3", "default", 0.0); \
+set_state(PART:"cell_4", "default", 0.0); \
+} \
+else if (signl <= 66) { \
+set_state(PART:"cell_1", "visible", 0.0); \
+set_state(PART:"cell_2", "visible", 0.0); \
+set_state(PART:"cell_3", "partly", 0.0); \
+set_state(PART:"cell_4", "default", 0.0); \
+} \
+else if (signl <= 77) { \
+set_state(PART:"cell_1", "visible", 0.0); \
+set_state(PART:"cell_2", "visible", 0.0); \
+set_state(PART:"cell_3", "visible", 0.0); \
+set_state(PART:"cell_4", "default", 0.0); \
+} \
+else if (signl <= 88) { \
+set_state(PART:"cell_1", "visible", 0.0); \
+set_state(PART:"cell_2", "visible", 0.0); \
+set_state(PART:"cell_3", "visible", 0.0); \
+set_state(PART:"cell_4", "partly", 0.0); \
+} \
+else { \
+set_state(PART:"cell_1", "visible", 0.0); \
+set_state(PART:"cell_2", "visible", 0.0); \
+set_state(PART:"cell_3", "visible", 0.0); \
+set_state(PART:"cell_4", "visible", 0.0); \
+} \
+if ((state == 2)) { \
+set_state(PART:"led", "default", 0.0); \
+run_program(PROGRAM:"connecting"); \
+return; } \
+else if ((state == 3)) { return; } \
+else if ((state == 4)) { set_state(PART:"led", "connected", 0.0); } \
+else if ((state == 5)) { set_state(PART:"led", "online", 0.0); } \
+else { set_state(PART:"led", "default", 0.0); \
+} } } }
+   
+   SCRIPT_MESSAGE()
+   programs {
+      program { name: "connecting";
+         action: STATE_SET "connected" 0.0;
+         target: "led";
+         in: 0.3 0.0;
+         after:  "connecting2";
+      }
+      program { name: "connecting2";
+         action: STATE_SET "default" 0.0;
+         target: "led";
+         in: 0.3 0.0;
+         after:  "connecting";
+      }
+//      program {
+//         signal: "e,available"; source: "e";
+//      }
+//      program {
+//         signal: "e,unavailable"; source: "e";
+//      }
+      program {
+         signal: "e,changed,connected,no"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+      program {
+         signal: "e,changed,technology,wifi"; source: "e";
+         action: STATE_SET "wifi" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+      program {
+         signal: "e,changed,technology,ethernet"; source: "e";
+         action: STATE_SET "eth" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+      program {
+         signal: "e,changed,technology,bluetooth"; source: "e";
+         action: STATE_SET "bt" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+      program {
+         signal: "e,changed,technology,cellular"; source: "e";
+         action: STATE_SET "cell" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+      program {
+         signal: "e,changed,technology,other"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+   }
+}
+
+group { name: "e/modules/connman/icon/wifi";
+   inherit: "e/modules/connman/main";
+   SCRIPT_MESSAGE()
+   programs {
+      program {
+         signal: "load"; source: "";
+         action: STATE_SET "wifi" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+   }
+}
+
+group { name: "e/modules/connman/icon/ethernet";
+   inherit: "e/modules/connman/main";
+   SCRIPT_MESSAGE()
+   programs {
+      program {
+         signal: "load"; source: "";
+         action: STATE_SET "eth" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+   }
+}
+
+group { name: "e/modules/connman/icon/bluetooth";
+   inherit: "e/modules/connman/main";
+   SCRIPT_MESSAGE()
+   programs {
+      program {
+         signal: "load"; source: "";
+         action: STATE_SET "bt" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+   }
+}
+
+group { name: "e/modules/connman/icon/cellular";
+   inherit: "e/modules/connman/main";
+   SCRIPT_MESSAGE()
+   programs {
+      program {
+         signal: "load"; source: "";
+         action: STATE_SET "cell" 0.0;
+         target: "clip_exclam";
+         target: "clip_wifi";
+         target: "clip_eth";
+         target: "clip_bt";
+         target: "clip_cell";
+      }
+   }
+}
+
+group { name: "e/modules/connman/end";
+   images.image: "glow_lock_locked.png" COMP;
+   images.image: "glow_lock_unlocked.png" COMP;
+   images.image: "glow_lock_double.png" COMP;
+   parts {
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "glow_lock_locked.png";
+            max: 16 16;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            visible: 0;
+         }
+         description { state: "none" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "glow_lock_unlocked.png";
+            visible: 1;
+         }
+         description { state: "wep" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "glow_lock_locked.png";
+            visible: 1;
+         }
+         description { state: "psk" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "glow_lock_double.png";
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,security,off"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "e,security,none"; source: "e";
+         action: STATE_SET "none" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "e,security,wep"; source: "e";
+         action: STATE_SET "wep" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "e,security,psk"; source: "e";
+         action: STATE_SET "psk" 0.0;
+         target: "base";
+      }
+   }
+}

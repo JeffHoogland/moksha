@@ -1,0 +1,388 @@
+   // Custom icons with actions or specific behaviours
+   images {
+      image: "O/icon_wallpaper_center_flat.png" COMP;
+      image: "O/icon_wallpaper_center.png" COMP;
+      image: "O/icon_wallpaper_screen.png" COMP;
+      image: "O/icon_wallpaper_grad_screen.png" COMP;
+   }
+   group {
+      name: "e/icons/enlightenment/wallpaper_stretch";
+      max: 24 24;
+      parts {
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "screen";
+               rel2.to: "screen";
+               image {
+                  normal: "O/icon_wallpaper_center_flat.png";
+                  border: 5 5 5 5;
+               }
+            }
+         }
+         part {
+            name: "screen";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image {
+                  normal: "O/icon_wallpaper_screen.png";
+                  border: 2 2 2 2;
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/icons/enlightenment/wallpaper_tile";
+      max: 24 24;
+      parts {
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "screen";
+               rel2.to: "screen";
+               image {
+                  normal: "O/icon_wallpaper_center_flat.png";
+                  border: 5 5 5 5;
+               }
+               fill {
+                  size {
+                     relative: 0.33 0.33;
+                  }
+               }
+            }
+         }
+         part {
+            name: "screen";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image {
+                  normal: "O/icon_wallpaper_screen.png";
+                  border: 2 2 2 2;
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/icons/enlightenment/wallpaper_center";
+      max: 24 24;
+      parts {
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "screen";
+               rel2.to: "screen";
+               rel1.relative: 0.125 0.125;
+               rel2.relative: 0.875 0.875;
+               image {
+                  normal: "O/icon_wallpaper_center.png";
+                  border: 5 5 5 5;
+               }
+            }
+         }
+         part {
+            name: "screen";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image {
+                  normal: "O/icon_wallpaper_screen.png";
+                  border: 2 2 2 2;
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/icons/enlightenment/wallpaper_scale_aspect_in";
+      max: 24 24;
+      parts {
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.5 1.5;
+               aspect_preference: BOTH;
+               rel1.to: "screen";
+               rel2.to: "screen";
+               image {
+                  normal: "O/icon_wallpaper_center.png";
+                  border: 5 5 5 5;
+               }
+            }
+         }
+         part {
+            name: "screen";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image {
+                  normal: "O/icon_wallpaper_screen.png";
+                  border: 2 2 2 2;
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/icons/enlightenment/wallpaper_scale_aspect_out";
+      max: 24 24;
+      parts {
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.5 1.5;
+               aspect_preference: NONE;
+               image {
+                  normal: "O/icon_wallpaper_center.png";
+                  border: 5 5 5 5;
+               }
+            }
+         }
+         part {
+            name: "screen";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image {
+                  normal: "O/icon_wallpaper_screen.png";
+                  border: 2 2 2 2;
+               }
+            }
+         }
+      }
+   }
+
+/////////////////////////////////////////////////////////////////////////////
+/*** ICONS ***/
+
+   #define ICON(NAME, FILE, SIZE)                     \
+   group {                                            \
+      name: "e/icons/"NAME ;                          \
+      max: SIZE SIZE;                                 \
+      parts {                                         \
+         part {                                       \
+            name: "icon";                             \
+            repeat_events: 1;                        \
+            description {                             \
+               state: "default" 0.0;                  \
+               aspect: 1.0 1.0;                       \
+               aspect_preference: BOTH;               \
+               image.image: "O/"FILE COMP;                \
+               image.normal: "O/"FILE ;                   \
+            }                                         \
+         }                                            \
+      }                                               \
+   }
+
+   #define ICONMIME(NAME, FILE, SIZE) ICON("mimetypes/"NAME, FILE, SIZE)
+   /* FreeDesktop.Org Icons
+    * http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html
+    *
+    * In the comment you can find the old e icon name.
+    *
+    * Icons marked with *** are not mentioned in the spec, but we still try to
+    * follow the naming convention.
+    *
+    * TO ADD A NEW ICON:
+    * 1. Search for a name in the spec OR
+    * 2. Search for a name in kde (oxygen) and gnome (tango - human) icon set OR
+    * 3. Try to follow the naming convention
+    */
+   //Standard Action Icons
+   ICON("help-about","logo_black_128.png",64)                      // "enlightenment/about"
+   ICON("list-add","icon_add.png",64)                              // "widget/add"
+   ICON("list-remove","icon_del.png",64)                           // "widget/del"
+   ICON("go-up","icon_up_arrow.png",64)                            // "widget/up_arrow" "widget/up_dir"
+   ICON("go-down","icon_down_arrow.png",64)                        // "widget/down_arrow"
+   ICON("go-next","icon_right_arrow.png",64)                       // "widget/new_dialog"
+   ICON("go-previous","icon_left_arrow.png",64)                    // none
+   ICON("bookmark-new","icon_add_fav.png",64)                      // "widget/add_fav"
+   ICON("edit-swap","icon_swap.png",64)                     // *** // "widget/swap"
+   ICON("edit-copy","icon_efm_copy.png",16)                        // EFMBUTTON("copy"
+   ICON("edit-cut","icon_efm_cut.png",16)                          // EFMBUTTON("cut"
+   ICON("edit-paste","icon_efm_paste.png",16)                      // EFMBUTTON("paste"
+   ICON("edit-delete","icon_efm_delete.png",16)                    // EFMBUTTON("delete"
+   ICON("edit-rename","icon_efm_rename.png",16)                    // EFMBUTTON("rename"
+   ICON("edit-select-all","icon_efm_select.png",16)                // EFMBUTTON("select"
+   ICON("document-open","icon_efm_open.png",16)                    // "widget/open" EFMBUTTON("open") EFMBUTTON("new")
+   ICON("document-new","icon_new.png",64)                          // "widget/new"
+   ICON("document-properties","icon_efm_properties.png",16)        // EFMBUTTON("properties"
+   ICON("folder-new","icon_efm_new_dir.png",16)                    // EFMBUTTON("new_dir"
+   ICON("view-sort","icon_efm_sort.png",16)                 // *** // EFMBUTTON("sort",
+   ICON("view-order","icon_efm_sort.png",16)                // *** // EFMBUTTON("ordering"
+   ICON("view-hidden-files","icon_efm_view.png",16)         // *** // EFMBUTTON("hidden_files"
+   ICON("configure","icon_config.png",64)                          // "widget/config"
+   ICON("system-run","icon_run.png",64)                            // "enlightenment/run"
+   ICON("system-shutdown","icon_halt.png",128)                     // "enlightenment/halt"
+   ICON("system-restart","icon_reboot.png",128)                    // "enlightenment/reboot"
+   ICON("system-suspend","icon_suspend.png",128)                   // "enlightenment/suspend"
+   ICON("system-suspend-hibernate","icon_hibernate.png",128)       // "enlightenment/hibernate"
+   ICON("system-log-out","icon_logout.png",128)                    // "enlightenment/logout"
+   ICON("system-lock-screen","icon_desklock_menu.png",128)         // "enlightenment/desklock_menu"
+   ICON("window-close","icon_close.png",64)                        // "widget/close"
+   ICON("dialog-ok-apply","icon_check.png",64)                     // "enlightenment/check"
+   ICON("transform-scale","icon_resize.png",64)                    // "widget/resize"
+   ICON("transform-move","icon_autoscroll.png",64)                 // "enlightenment/autoscroll"
+   ICON("view-refresh","icon_efm_refresh.png",16)                  // EFMBUTTON("refresh"
+   ICON("view-inherit","icon_dummy.png",64)                 // *** // EFMBUTTON("inherit"
+   ICON("screenshot","icon_screenshot.png",64)                     // dunno
+   //Standard Status Icons
+   ICON("dialog-warning","icon_warning.png",128)                   // "enlightenment/warning"
+   ICON("dialog-error","icon_warning.png",128)                     // "enlightenment/error"
+   ICON("dialog-ask","icon_dummy.png",64)                          // "enlightenment/unknown"
+   ICON("unknown","icon_dummy.png",64)                      // *** // "enlightenment/unknown"
+   //Standard Application Icons
+   ICON("preferences-desktop","icon_desktops.png",64)                         // "enlightenment/desktops"
+   ICON("preferences-desktop-theme","icon_theme.png",64)                      // "enlightenment/themes"
+   ICON("preferences-desktop-wallpaper","icon_wallpaper.png",64)              // "enlightenment/background"
+   ICON("preferences-desktop-color","icon_colors.png",64)                     // "enlightenment/colors"
+   ICON("preferences-desktop-font","icon_fonts.png",64)                       // "enlightenment/fonts"
+   ICON("preferences-desktop-screensaver","icon_screensaver.png",64)          // "enlightenment/screensaver"
+   ICON("preferences-desktop-display","icon_screen_setup.png",64)             // "enlightenment/screen_setup"
+   ICON("preferences-desktop-keyboard","icon_keyboard.png",64)                // "enlightenment/keys"
+   ICON("preferences-desktop-keyboard-shortcuts","icon_keys.png",64)          // "enlightenment/keys"
+   ICON("preferences-desktop-pointer","icon_mouse.png",64)             // *** // "enlightenment/mouse"
+   ICON("preferences-desktop-mouse","icon_mouse_clean.png",64)                // "enlightenment/mouse_clean"
+   ICON("preferences-desktop-mouse-left","icon_mouse_left.png",64)     // *** // "enlightenment/mouse_left"
+   ICON("preferences-desktop-mouse-right","icon_mouse_right.png",64)   // *** // "enlightenment/mouse_right"
+   ICON("preferences-desktop-mouse-middle","icon_mouse_middle.png",64) // *** // "enlightenment/mouse_middle"
+   ICON("preferences-desktop-mouse-wheel","icon_mouse_wheel.png",64)   // *** // "enlightenment/mouse_wheel"
+   ICON("preferences-desktop-mouse-extra","icon_mouse_extra.png",64)   // *** // "enlightenment/mouse_extra"
+   ICON("preferences-desktop-locale","icon_intl.png",64)                      // "enlightenment/intl"
+   ICON("preferences-desktop-mixer","icon_mixer.png",64)                      // "enlightenment/mixer"
+   ICON("preferences-desktop-shelf","icon_shelf.png",64)                        // *** // "enlightenment/shelf"
+   ICON("preferences-desktop-shelf-bottom-desk","icon_shelf_bottom_desk.png",64)// *** // "enlightenment/shelf_bottom_desk"
+   ICON("preferences-desktop-shelf-custom","icon_shelf_custom.png",64)          // *** // "enlightenment/shelf_custom"
+   ICON("preferences-desktop-shelf-dock","icon_shelf_dock.png",64)              // *** // "enlightenment/shelf_dock"
+   ICON("preferences-desktop-shelf-menu-bar","icon_shelf_menu_bar.png",64)      // *** // "enlightenment/shelf_menu_bar"
+   ICON("preferences-desktop-shelf-panel","icon_shelf_panel.png",64)            // *** // "enlightenment/shelf_panel"
+   ICON("preferences-desktop-shelf-top-desk","icon_shelf_top_desk.png",64)      // *** // "enlightenment/shelf_top_desk"
+   ICON("preferences-desktop-window-remember","icon_window_remembers.png",64)   // *** // "enlightenment/window_remembers"
+   ICON("preferences-position-bottom","icon_shelf_bottom.png",64)               // *** // "enlightenment/shelf_position_bottom"
+   ICON("preferences-position-bottom-left","icon_shelf_bottom_left.png",64)     // *** // "enlightenment/shelf_position_bottom_left"
+   ICON("preferences-position-bottom-right","icon_shelf_bottom_right.png",64)   // *** // "enlightenment/shelf_position_bottom_right"
+   ICON("preferences-position-top","icon_shelf_top.png",64)                     // *** // "enlightenment/shelf_position_top"
+   ICON("preferences-position-top-left","icon_shelf_top_left.png",64)           // *** // "enlightenment/shelf_position_top_left"
+   ICON("preferences-position-top-right","icon_shelf_top_right.png",64)         // *** // "enlightenment/shelf_position_top_right"
+   ICON("preferences-position-left","icon_shelf_left.png",64)                   // *** // "enlightenment/shelf_position_left"
+   ICON("preferences-position-left-top","icon_shelf_left_top.png",64)           // *** // "enlightenment/shelf_position_left_top"
+   ICON("preferences-position-left-bottom","icon_shelf_left_bottom.png",64)     // *** // "enlightenment/shelf_position_left_bottom"
+   ICON("preferences-position-right","icon_shelf_right.png",64)                 // *** // "enlightenment/shelf_position_right"
+   ICON("preferences-position-right-top","icon_shelf_right_top.png",64)         // *** // "enlightenment/shelf_position_right_top"
+   ICON("preferences-position-right-bottom","icon_shelf_right_bottom.png",64)   // *** // "enlightenment/shelf_position_right_bottom"
+   ICON("preferences-window-process","icon_window_process_management.png",64)    // *** // "enlightenment/window_process"
+   ICON("preferences-window-manipulation","icon_window_manipulation.png",64)    // *** // "enlightenment/window_manipulation"
+   ICON("preferences-window-maximize","icon_window_manipulation.png",64)        // *** // "enlightenment/window_maximize"
+   ICON("preferences-window-stacking","icon_winlist.png",64)                    // *** // "enlightenment/window_stacking"
+   ICON("preferences-window-geometry","icon_window_geometry.png",64)            // *** // "enlightenment/window_geometry"
+   ICON("preferences-windows-lost","icon_lost_windows.png",64)                  // *** // "enlightenment/lost_windows"
+   ICON("preferences-gradient","icon_gradient.png",64)           // *** // "enlightenment/gradient"
+   ICON("preferences-focus","icon_window_focus.png",64)          // *** // "enlightenment/focus"
+   ICON("preferences-engine","icon_engine.png",64)               // *** // "enlightenment/engine"
+   ICON("preferences-dialogs","icon_dummy.png",64)               // *** // "enlightenment/dialogs"
+   ICON("preferences-interaction","icon_interaction.png",64)     // *** // "enlightenment/interaction"
+   ICON("preferences-imc","icon_imc.png",64)                     // *** // "enlightenment/imc"
+   ICON("preferences-system-lock-screen","icon_desklock.png",64) // *** // "enlightenment/desklock"
+   ICON("preferences-icon-theme","icon_icon_theme.png",64)       // *** // "enlightenment/icon_theme"
+   ICON("preferences-transitions","icon_transitions.png",64)     // *** // "enlightenment/transitions"
+   ICON("preferences-desktop-edge-bindings","icon_shelf_right.png",64)  // *** // "enlightenment/edges"
+   ICON("preferences-toolbar","icon_toolbar.png",64)             // *** // "enlightenment/toolbar"
+   ICON("preferences-profiles","icon_profiles.png",64)           // *** // "enlightenment/profiles"
+   ICON("preferences-startup","icon_startup.png",64)             // *** // "enlightenment/startup"
+   ICON("preferences-winlist","icon_winlist.png",64)             // *** // "enlightenment/winlist"
+   ICON("preferences-menus","icon_menus.png",64)                 // *** // "enlightenment/menus"
+   ICON("preferences-menu-settings","icon_menu_settings.png",64) // *** // "enlightenment/menu_settings"
+   ICON("preferences-advanced","icon_advanced.png",64)           // *** // "enlightenment/advanced"
+   ICON("preferences-behavior","icon_behavior.png",64)           // *** // "enlightenment/behavior"
+   ICON("preferences-look","icon_look.png",64)                   // *** // "enlightenment/look"
+   ICON("preferences-utils","icon_gadget.png",64)                // *** // "enlightenment/utils"
+   ICON("preferences-extensions","icon_extensions.png",64)       // *** // "enlightenment/extensions"
+   ICON("preferences-file-icons","icon_file_icons.png",64)       // *** // "enlightenment/file_icons"
+   ICON("preferences-pager","icon_pager.png",64)                 // *** // "enlightenment/pager"
+   ICON("preferences-scale","icon_scale.png",64)                 // *** // "enlightenment/scale"
+   ICON("preferences-directories","icon_directories.png",64)     // *** // "enlightenment/directories"
+   ICON("preferences-screen-normal","icon_screen_normal.png",64) // *** // "enlightenment/screen_normal"
+   ICON("preferences-screen-around","icon_screen_around.png",64) // *** // "enlightenment/screen_around"
+   ICON("preferences-screen-left","icon_screen_left.png",64)     // *** // "enlightenment/screen_left"
+   ICON("preferences-screen-right","icon_screen_right.png",64)   // *** // "enlightenment/screen_right"
+   ICON("preferences-screen-vflip","icon_screen_vflip.png",64)   // *** // "enlightenment/screen_vflip"
+   ICON("preferences-screen-hflip","icon_screen_hflip.png",64)   // *** // "enlightenment/screen_hflip"
+   ICON("preferences-applications","icon_applications.png",64)                 // *** // "enlightenment/applications"
+   ICON("preferences-applications-add","icon_applications_new.png",64)         // *** // "enlightenment/add_application"
+   ICON("preferences-applications-ibar","icon_applications_ibar.png",64)       // *** // "enlightenment/ibar_applications"
+   ICON("preferences-applications-restart","icon_applications_restart.png",64) // *** // "enlightenment/restart_applications"
+   ICON("preferences-applications-startup","icon_applications_startup.png",64) // *** // "enlightenment/startup_applications"
+   ICON("preferences-desktop-default-applications","icon_advanced.png",64)
+   ICON("preferences-preferences","icon_config.png",64)                             // "enlightenment/configuration" "enlightenment/settings"
+   ICON("preferences-plugin","icon_modules.png",64)                                   // "enlightenment/modules"
+   ICON("preferences-system","icon_configuration.png",64)                             // "enlightenment/configuration" "enlightenment/settings"
+   ICON("preferences-system-windows","icon_windows.png",64)                           // "enlightenment/windows" "enlightenment/showhide"
+   ICON("preferences-system-performance","icon_performance.png",64)                   // "enlightenment/performance"
+   ICON("preferences-system-power-management","icon_power_management.png",64)         // "enlightenment/power_management"
+   ICON("preferences-system-screen-resolution","icon_screen_resolution.png",64)// *** // "enlightenment/screen_resolution"
+   ICON("preferences-illume","icon_illume.png",64)
+   ICON("system-file-manager","icon_efm_folder.png",64)                               // "enlightenment/fileman"
+   ICON("application-exit","icon_logout.png",64)                                      // "enlightenment/exit"
+   ICON("enlightenment","logo_white_128.png",64)                               // *** // "enlightenment/e"
+   //Standard Module Category Icons 
+   ICON("modules-utils","icon_gadget.png",64)
+   ICON("modules-system","icon_gadget.png",64)
+   ICON("modules-look","icon_look.png",64)
+   ICON("modules-files","icon_efm_folder.png",64)
+   ICON("modules-launcher","icon_run.png",64)
+   ICON("modules-core","logo_white_128.png",64)
+   ICON("modules-mobile","icon_globe.png",64)
+   ICON("modules-settings","icon_config.png",64)
+   //Standard Emblem Icons
+   ICON("emblem-symbolic-link","icon_dummy.png",64)                // EFMBUTTON("symlink")
+   //Standard Place Icons
+   ICON("start-here","logo_white_128.png",128)                     // "enlightenment/e"
+   ICON("folder","icon_efm_folder.png",64)                         // "fileman/folder"
+   ICON("user-home","icon_efm_home.png",64)                        // "fileman/home"
+   ICON("user-temp","icon_efm_tmp.png",64)                  // *** // "fileman/tmp"
+   ICON("user-desktop","icon_efm_desktop.png",64)                  // "fileman/desktop"
+   ICON("user-bookmarks","icon_favorites.png",64)                  // "enlightenment/favorites"
+   ICON("folder-image","icon_wallpaper.png",64)                    // "enlightenment/picture"
+   ICON("network-website","icon_globe.png",64)                     // "enlightenment/website"
+   ICON("system","icon_system.png",64)                      // *** // "enlightenment/system"
+   //Standard Device Icons
+   ICON("computer","icon_efm_root.png", 64)                        // "fileman/root"
+   ICON("drive-harddisk","icon_efm_hdd.png", 128)                  // "fileman/hd" "fileman/hdd"
+   ICON("drive-optical","icon_efm_cd.png", 128)                    // "fileman/??"
+   ICON("media-flash","icon_efm_flash.png", 128)                   // "fileman/??"
+   ICON("drive-removable-media","icon_efm_usbmedia.png", 128);
+   ICON("media-eject","icon_efm_eject.png", 64)
+   /* End of FreeDesktop.Org icons */
+   //E Specific icons
+   ICON("everything-launch","icon_advanced.png",64)
+   ICON("everything-clipboard","icon_evry_clipboard.png", 256)
+   //EFM Mime icons
+   ICONMIME("inode/chardevice","icon_efm_file.png",128)
+   ICONMIME("inode/blockdevice","icon_efm_file.png",128)
+   ICONMIME("inode/directory-locked","icon_efm_file.png",128)
+   ICONMIME("inode/directory","icon_efm_folder.png",128)
+   ICONMIME("inode/fifo","icon_efm_file.png",128)
+   ICONMIME("inode/socket","icon_efm_file.png",128)

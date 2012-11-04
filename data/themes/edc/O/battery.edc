@@ -1,0 +1,324 @@
+/////////////////////////////////////////////////////////////////////////////
+/*** MOD: BATTERY ***/
+
+   group {
+      name: "e/modules/battery/main";
+      images {
+         image: "O/batt_base.png" COMP;
+         image: "O/batt_level.png" COMP;
+         image: "O/batt_over.png" COMP;
+         image: "O/batt_power.png" COMP;
+      }
+      min: 16 16;
+      max: 128 128;
+      script {
+         public message(Msg_Type:type, id, ...) {
+            if ((type == MSG_FLOAT) && (id == 1)) {
+               new Float:val;
+               new r;
+               new g;
+               new b;
+               val = getfarg(2);
+               if (val < 0.35) {
+                  new Float:val1;
+                  new Float:val2;
+                  val1 = val - 0.10;
+                  if (val1 < 0.0) val1 = 0.0;
+                     val2 = 0.125 - val1;
+                  if (val2 < 0.0) val2 = 0.0;
+                     val2 = val2 / 0.125;
+                     r = round(val2 * 255.0, ROUND);
+                     val2 = val1;
+                  if (val2 > 0.125) val2 = 0.125;
+                     val2 = val2 / 0.125;
+                     g = round(val2 * 255.0, ROUND);
+                     b = 0;
+               } 
+               else {
+                  r = 0;
+                  g = 255;
+                  b = 0;
+               }
+               custom_state(PART:"fill", "default", 0.0);
+               set_state_val(PART:"fill", STATE_COLOR, r, g, b, 255);
+               set_state_val(PART:"fill", STATE_COLOR, r, g, b, 255);
+               set_state_val(PART:"fill", STATE_COLOR, r, g, b, 255);
+               set_state(PART:"fill", "custom", 0.0);
+               
+               custom_state(PART:"fill_clip", "default", 0.0);
+               set_state_val(PART:"fill_clip", STATE_REL1, 0.0, 1.0 - val);
+               set_state(PART:"fill_clip", "custom", 0.0);
+            }
+         }
+      }
+      parts {
+         part { name: "fade_clip";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "faded" 0.0;
+               color: 255 255 255 160;
+            }
+         }
+         part { name: "info_clip";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "fade_clip";
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+            }
+            description { state: "visible" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "pulse_clip";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "fade_clip";
+            description { state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "faded" 1.0;
+               color: 255 255 255 255;
+            }
+            description { state: "faded" 0.0;
+               color: 255 255 255 0;
+            }
+         }
+         part { name: "fill_region";
+            mouse_events: 0;
+            type: RECT;
+            description { state: "default" 0.0;
+               visible: 0;
+               rel1.relative: 0.0 (26/128);
+               rel2.relative: 1.0 ((128-14)/128);
+            }
+         }
+         part { name: "fill_clip";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "pulse_clip";
+            description { state: "default" 0.0;
+               rel1.to: "fill_region";
+               rel1.relative: 0.0 0.5;
+               rel2.to: "fill_region";
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "base";
+            clip_to: "pulse_clip";
+            description { state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+               image.normal: "O/batt_base.png";
+            }
+         }
+         part { name: "fill";
+            mouse_events: 0;
+            clip_to: "fill_clip";
+            description { state: "default" 0.0;
+               rel1.to: "base";
+               rel2.to: "base";
+               image.normal: "O/batt_level.png";
+            }
+         }
+         part { name: "over";
+            mouse_events: 0;
+            clip_to: "pulse_clip";
+            description { state: "default" 0.0;
+               rel1.to: "base";
+               rel2.to: "base";
+               image.normal: "O/batt_over.png";
+            }
+         }
+         part { name: "power";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1.to: "base";
+               rel2.to: "base";
+               image.normal: "O/batt_power.png";
+               visible: 0;
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         part { name: "e.text.reading";
+            mouse_events: 0;
+            type: TEXT;
+            scale: 1;
+            clip_to: "info_clip";
+            effect: OUTLINE;
+            description { state: "default" 0.0;
+               align: 1.0 0.5;
+               rel1.relative: 0.5 0.0;
+               rel2.relative: 1.0 0.3;
+               color: 0 0 0 255;
+               color2: 255 255 255 128;
+               color_class: "module_label";
+               text {
+                  font: "Sans";
+                  size: 8;
+                  min: 1 1;
+                  align: 1.0 0.5;
+                  text_class: "module_small";
+               }
+            }
+         }
+         part { name: "e.text.time";
+            mouse_events: 0;
+            type: TEXT;
+            scale: 1;
+            clip_to: "info_clip";
+            effect: OUTLINE;
+            description { state: "default" 0.0;
+               align: 1.0 0.5;
+               rel1.relative: 0.5 0.3;
+               rel2.relative: 1.0 0.6;
+               color: 0 0 0 255;
+               color2: 255 255 255 128;
+               color_class: "module_label";
+               text {
+                  font: "Sans";
+                  size: 8;
+                  min: 1 1;
+                  align: 1.0 0.5;
+                  text_class: "module_small";
+               }
+            }
+         }
+      }
+      programs {
+         program { name: "hover1";
+            signal: "mouse,in";
+            source: "base";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.3;
+            target: "info_clip";
+         }
+         program { name: "hover2";
+            signal: "mouse,out";
+            source: "base";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.3;
+            target: "info_clip";
+         }
+         program { name: "charge";
+            signal: "e,state,charging";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            target: "power";
+         }
+         program { name: "discharge";
+            signal: "e,state,discharging";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "power";
+         }
+         program { name: "unknown";
+            signal: "e,state,unknown";
+            source: "e";
+            action: STATE_SET "faded" 0.0;
+            target: "fade_clip";
+         }
+         program { name: "pulse";
+            signal: "e,action,pulse,start";
+            source: "e";
+            action: STATE_SET "faded" 0.0;
+            transition: ACCELERATE 0.3;
+            after: "pulse2";
+            target: "pulse_clip";
+         }
+         program { name: "pulse2";
+            action: STATE_SET "faded" 1.0;
+            transition: ACCELERATE 0.1;
+            target: "pulse_clip";
+         }
+         program { name: "pulsestop";
+            signal: "e,action,pulse,stop";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "pulse_clip";
+         }
+      }
+   }
+   group {
+      name: "e/modules/battery/popup";
+      min: 240 64;
+      parts {
+         part {
+            name: "battery";
+            type: SWALLOW;
+            mouse_events: 1;
+            repeat_events: 1;
+            description {
+               state: "default" 0.0;
+               min: 1 1;
+               max: 120 120;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               align: 0.0 0.5;
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 1.0 1.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "e.text.title";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 1.0 0.0;
+                  to_x: battery;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 1.0 0.5;
+                  offset: -1 -1;
+               }
+               color: 0 0 0 255;
+               text {
+                  text: "Your battery is low!";
+                  font: "Sans:style=Bold";
+                  size: 10;
+                  min: 1 1;
+                  align: 0.5 0.5;
+                  text_class: "module_large";
+               }
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 1.0 0.5;
+                  to_x: battery;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+               color: 0 0 0 255;
+               text {
+                  text: "AC power is recommended.";
+                  font: "Sans";
+                  size: 10;
+                  min: 1 1;
+                  align: 0.5 0.5;
+                  text_class: "module_normal";
+               }
+            }
+         }
+      }
+   }

@@ -1,0 +1,160 @@
+   // EFM icons //
+   /* #define EFMICON(NAME, FILE, SIZE)                    \
+    * group { name: "e/icons/fileman/"NAME;                \
+    *    max: SIZE SIZE;                                  \
+    *    parts {                                           \
+    *       part { name: "icon";                           \
+    *     mouse_events: 0;                              \
+    *     description { state: "default" 0.0;            \
+    *        aspect: 1.0 1.0;                            \
+    *        aspect_preference: BOTH;                    \
+    *        image.image: FILE COMP;                     \
+    *        image.normal: FILE ;                        \
+    *     }                                              \
+    *       }                                              \
+    *    }                                                 \
+    * } */
+   //EFMICON("folder","icon_efm_folder.png", 128)
+   //EFMICON("chrdev","icon_efm_file.png", 128)
+   //EFMICON("blkdev","icon_efm_file.png", 128)
+   //EFMICON("fifo","icon_efm_file.png", 128)
+   //EFMICON("socket","icon_efm_file.png", 128)
+   //EFMICON("executable","icon_efm_file.png", 128)
+   //EFMICON("home","icon_efm_home.png", 128)
+   //EFMICON("root","icon_efm_root.png", 128)
+   //EFMICON("tmp","icon_efm_tmp.png", 128)
+   //EFMICON("desktop","icon_efm_desktop.png", 128)
+   //EFMICON("hdd","icon_efm_hdd.png", 128)
+   //EFMICON("hd","icon_efm_hdd.png", 128)
+
+   // EFM Mime type icons //
+
+   #define MIMEICON(NAME, FILE, SIZE)                 \
+   group {                                            \
+      name: "e/icons/fileman/mime/"NAME;              \
+      max: SIZE SIZE;                                \
+      parts {                                         \
+         part {                                       \
+            name: "icon";                             \
+            mouse_events: 0;                         \
+            description {                             \
+               state: "default" 0.0;                  \
+               aspect: 1.0 1.0;                       \
+               aspect_preference: BOTH;               \
+               image.image: "O/"FILE COMP;                \
+               image.normal: "O/"FILE ;                   \
+            }                                         \
+         }                                            \
+      }                                               \
+   }
+
+   MIMEICON("application/pdf","icon_mime_pdf.png", 128);
+   MIMEICON("application/x-deb","icon_mime_deb.png", 128);
+   MIMEICON("application/x-bzip","icon_mime_package.png", 128);
+   MIMEICON("application/zip","icon_mime_package.png", 128);
+   MIMEICON("application/x-gzip","icon_mime_package.png", 128);
+   MIMEICON("application/x-bzip-compressed-tar","icon_mime_package.png", 128);
+   MIMEICON("application/x-bzip2-compressed-tar","icon_mime_package.png",128);
+   MIMEICON("application/x-compressed-tar","icon_mime_package.png",128);
+   MIMEICON("application/x-tar","icon_mime_package.png", 128);
+   MIMEICON("application/x-rar","icon_mime_package.png", 128);
+   MIMEICON("inode/chardevice","icon_efm_file.png", 128);
+   MIMEICON("inode/blockdevice","icon_efm_file.png", 128);
+   MIMEICON("inode/fifo","icon_efm_file.png", 128);
+   MIMEICON("inode/socket","icon_efm_file.png", 128);
+   MIMEICON("inode/directory","icon_efm_folder.png", 128);
+   MIMEICON("inode/file","icon_efm_file.png", 128);
+   MIMEICON("application/octet-stream","icon_efm_file.png", 128);
+   MIMEICON("application/x-executable","icon_mime_executable_generic.png", 128);
+   MIMEICON("application/x-ms-dos-executable","icon_mime_executable_generic.png", 128);
+   MIMEICON("application/x-7z-compressed","icon_mime_package.png", 128);
+   MIMEICON("application/vnd.ms-cab-compressed","icon_mime_package.png", 128);
+   
+   // Dynamic MIME Icons //
+   #define MIMEBASE(MIME, FILE, NAME, SIZE)           \
+   group {                                            \
+      name: "e/icons/fileman/mime/"MIME;              \
+      max: SIZE SIZE;                                \
+      parts {                                         \
+         part {                                       \
+            name: "base";                             \
+            mouse_events: 0;                          \
+            description {                             \
+               state: "default" 0.0;                  \
+               aspect: 1.0 1.0;                       \
+               aspect_preference: BOTH;               \
+               image.image: "O/"FILE COMP;                \
+               image.normal: "O/"FILE;                    \
+            }                                         \
+         }                                            \
+         part {                                       \
+            name: "name";                             \
+            type: TEXT;                               \
+            mouse_events: 0;                          \
+            description {                             \
+               state: "default" 0.0;                  \
+               rel1.relative: 0.2444 0.6797;          \
+               rel2.relative: 0.7478 0.8894;          \
+               color: 245 245 245 255;                \
+               text {                                 \
+                  text: NAME;                       \
+                  font: "Sans:style=Bold";          \
+                  size: 4;                          \
+                  fit: 1 1;                         \
+                  min: 1 1;                         \
+                  align: 0.5 0.0;                   \
+               }                                      \
+            }                                         \
+         }                                            \
+      }                                               \
+   }
+
+   MIMEBASE("video/mpeg","icon_mime_video_generic.png", ".MPEG", 128);
+   MIMEBASE("application/ogg","icon_mime_video_generic.png", ".OGG", 128);
+   MIMEBASE("video/x-theora+ogg","icon_mime_video_generic.png", ".OGG", 128);
+   MIMEBASE("video/x-msvideo","icon_mime_video_generic.png", ".AVI", 128);
+   MIMEBASE("video/ogg","icon_mime_video_generic.png", ".OGG", 128);
+   MIMEBASE("video/mp4","icon_mime_video_generic.png", ".MP4", 128);
+   MIMEBASE("video/quicktime","icon_mime_video_generic.png", ".MOV", 128);
+   MIMEBASE("video/x-matroska","icon_mime_video_generic.png", ".MKV", 128);
+   MIMEBASE("video/x-flv","icon_mime_video_generic.png", ".FLV", 128);
+   MIMEBASE("application/vnd.rn-realmedia","icon_mime_video_generic.png", ".REAL", 128);
+   MIMEBASE("video/x-ms-wmv","icon_mime_video_generic.png", ".WMV", 128);
+   MIMEBASE("image/png","icon_mime_image_generic.png", ".PNG", 128);
+   MIMEBASE("image/jpeg","icon_mime_image_generic.png", ".JPEG", 128);
+   MIMEBASE("image/gif","icon_mime_image_generic.png", ".GIF", 128);
+   MIMEBASE("image/bmp","icon_mime_image_generic.png", ".BMP", 128);
+   MIMEBASE("application/x-xcf","icon_mime_image_generic.png", ".XCF", 128);
+   MIMEBASE("application/x-cbz","icon_mime_image_generic.png", ".CBZ", 128);
+   MIMEBASE("application/x-cbr","icon_mime_image_generic.png", ".CBR", 128);
+   MIMEBASE("audio/mpeg","icon_mime_audio_generic.png", ".MP3", 128);
+   MIMEBASE("audio/x-wav","icon_mime_audio_generic.png", ".WAV", 128);
+   MIMEBASE("audio/x-flac","icon_mime_audio_generic.png", ".FLAC", 128);
+   MIMEBASE("audio/x-musepack","icon_mime_audio_generic.png", ".MPC", 128);
+   MIMEBASE("audio/x-vorbis+ogg","icon_mime_audio_generic.png", ".OGG", 128);
+   MIMEBASE("application/x-audacity-project","icon_mime_audio_generic.png", ".AUP", 128);
+   MIMEBASE("audio/x-ms-wma","icon_mime_audio_generic.png", ".WMA", 128);
+   MIMEBASE("text/css","icon_mime_text_generic.png", ".CSS", 128);
+   MIMEBASE("text/html","icon_mime_text_generic.png", ".HTML", 128);
+   MIMEBASE("text/x-csrc","icon_mime_text_generic.png", ".C", 128);
+   MIMEBASE("text/x-chdr","icon_mime_text_generic.png", ".H", 128);
+   MIMEBASE("text/x-c++src","icon_mime_text_generic.png", ".C++", 128);
+   MIMEBASE("text/x-csharp","icon_mime_text_generic.png", ".C#", 128);
+   MIMEBASE("text/x-patch","icon_mime_text_generic.png", ".PATCH", 128);
+   MIMEBASE("text/plain","icon_mime_text_generic.png", ".TXT", 128);
+   MIMEBASE("application/x-msword","icon_mime_text_generic.png", ".DOC", 128);
+   MIMEBASE("application/vnd.ms-powerpoint","icon_mime_text_generic.png", ".PPT", 128);
+   MIMEBASE("application/vnd.ms-excel","icon_mime_text_generic.png", ".XLS", 128);
+   MIMEBASE("application/x-abiword","icon_mime_text_generic.png", ".ABW", 128);
+   MIMEBASE("application/vnd.scribus","icon_mime_text_generic.png", ".SLA", 128);
+   MIMEBASE("text/x-python","icon_mime_text_generic.png", ".PY", 128);
+   MIMEBASE("application/x-awk","icon_mime_text_generic.png", ".AWK", 128);
+   MIMEBASE("application/x-lyx","icon_mime_text_generic.png", ".LYX", 128);
+   MIMEBASE("application/vnd.oasis.opendocument.spreadsheet","icon_mime_text_generic.png", ".ODS", 128);
+   MIMEBASE("application/vnd.oasis.opendocument.text","icon_mime_text_generic.png", ".ODT", 128);
+   MIMEBASE("application/vnd.oasis.opendocument.presentation","icon_mime_text_generic.png", ".ODP", 128);
+   MIMEBASE("application/x-object","icon_efm_file.png", "", 128);
+   MIMEBASE("application/x-shellscript","icon_applications.png", "", 128);
+   MIMEBASE("application/x-font-ttf","icon_mime_font_generic.png", ".TTF", 128);
+   MIMEBASE("application/x-font-pcf","icon_mime_font_generic.png", ".PCF", 128);
+   MIMEBASE("application/x-font-bdf","icon_mime_font_generic.png", ".BDF", 128);

@@ -1,0 +1,46 @@
+   // Window Border menu icons //
+   #define BORDERICON(NAME, FILE)                     \
+   group {                                            \
+      name: "e/widgets/border/default/"NAME ;         \
+      max: 64 64;                                     \
+      parts {                                         \
+         part {                                       \
+            name: "icon";                             \
+            mouse_events: 0;                         \
+            description {                             \
+               state: "default" 0.0;                  \
+               aspect: 1.0 1.0;                       \
+               aspect_preference: BOTH;               \
+               image.image: "O/"FILE COMP;                \
+               image.normal: "O/"FILE ;                   \
+            }                                         \
+         }                                            \
+      }                                               \
+   }
+
+   BORDERICON("basic","icon_border_more.png")
+   BORDERICON("close","icon_border_close.png")
+   BORDERICON("kill","icon_border_kill.png")
+   BORDERICON("stacking","icon_border_stack_norm.png")
+   BORDERICON("stack_on_top","icon_border_stack_top.png")
+   BORDERICON("stack_normal","icon_border_stack_norm.png")
+   BORDERICON("stack_below","icon_border_stack_bot.png")
+   BORDERICON("move_icon", "icon_win_move.png")
+   BORDERICON("resize_icon", "icon_win_resize.png");
+   BORDERICON("maximize","icon_border_maximize.png")
+   BORDERICON("fullscreen","icon_border_maximize.png")
+   BORDERICON("minimize","icon_border_minimize.png")
+   BORDERICON("stick","icon_border_pin.png")
+   BORDERICON("sendto","icon_border_sendto.png")
+   BORDERICON("skip","icon_border_skip.png")
+   BORDERICON("skip_pager","icon_border_pager.png")
+   BORDERICON("skip_taskbar","icon_border_skip.png")
+   BORDERICON("skip_winlist","icon_border_skip.png")
+   BORDERICON("borderless","icon_border_border.png")
+   BORDERICON("remember","icon_border_remember.png")
+   BORDERICON("shade","icon_border_shaded.png")
+   BORDERICON("locks","icon_border_lock.png")
+   BORDERICON("locks_user","icon_border_lock.png")
+   BORDERICON("locks_application","icon_border_lock.png")
+   BORDERICON("properties","icon_border_properties.png")
+

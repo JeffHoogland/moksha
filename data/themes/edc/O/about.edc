@@ -1,0 +1,705 @@
+/////////////////////////////////////////////////////////////////////////////
+/*** ABOUT E ***/
+
+   group {
+      name: "e/widgets/about/main";
+      images {
+         image: "O/vgrad_dark.png" COMP;
+         image: "O/about_top.png" COMP;
+         image: "O/about_mid.png" COMP;
+         image: "O/about_bot.png" COMP;
+         image: "O/dia_botshad.png" COMP;
+         image: "O/topsh.png" COMP;
+         image: "O/logo_white_128.png" COMP;
+         image: "O/bt_base1.png" COMP;
+         image: "O/bt_base2.png" COMP;
+         image: "O/bt_hilight.png" COMP;
+         image: "O/bt_shine.png" COMP;
+         image: "O/bt_glow.png" COMP;
+      }
+      // data.item: "borderless" "1";
+      // data.item: "shaped" "1";
+      styles {
+         style {
+            name: "about_style";
+            base: "font=Sans:style=Bold font_size=10 align=center text_class=tb_plain color=#e0e0e0ff style=soft_shadow shadow_color=#00000020 wrap=word";
+            tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light color=#f00 style=soft_shadow";
+            tag: "title" "+ font_size=12 font=Sans:style=Bold text_class=tb_big style=soft_shadow color=#fff shadow_color=#00000020";
+            tag: "/title" "- \n \n";
+            tag: "br" "\n";
+         }
+      }
+      min: 300 240;
+      max: 640 640;
+      parts {
+         part {
+            name: "sizer";
+            type: RECT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               min: 300 240;
+               visible: 0;
+            }
+         }
+         part {
+            name: "about_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "top";
+                  relative: 0.0 0.0;
+                  offset: 6 0;
+               }
+               rel2 {
+                  to: "top";
+                  relative: 1.0 1.0;
+                  offset: -7 -7;
+               }
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "authors_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "bot";
+                  relative: 0.0 0.0;
+                  offset: 6 6;
+               }
+               rel2 {
+                  to: "bot";
+                  relative: 1.0 1.0;
+                  offset: -7 -1;
+               }
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "background_image";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/vgrad_dark.png";
+               fill {
+                  smooth: 0;
+                  size {
+                     relative: 0 1.0;
+                     offset: 36 0;
+                  }
+               }
+            }
+         }
+         part {
+            name: "e.textblock.about";
+            type: TEXTBLOCK;
+            mouse_events: 0;
+            clip_to: "about_clip";
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               fixed: 1 1;
+               align: 0.5 0.0;
+               max: 10000 10000;
+               min: 160 0;
+               rel1 {
+                  to: "top";
+                  relative: 0.0 1.0;
+                  offset: 32 -17;
+               }
+               rel2 {
+                  to: "top";
+                  relative: 1.0 1.0;
+                  offset: -33 -17;
+               }
+               text {
+                  style: "about_style";
+                  min: 0 1;
+               }
+            }
+            description {
+               state: "up" 0.0;
+               inherit: "default" 0.0;
+               align: 0.5 1.0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 32 0;
+               }
+               rel2 {
+                  relative: 1.0 0.0;
+                  offset: -33 -1;
+               }
+            }
+         }
+         part {
+            name: "e.textblock.authors";
+            type: TEXTBLOCK;
+            mouse_events: 0;
+            clip_to: "authors_clip";
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               fixed: 1 1;
+               align: 0.5 0.0;
+               max: 10000 10000;
+               min: 160 0;
+               rel1 {
+                  to: "bot";
+                  relative: 0.0 1.0;
+                  offset: 32 0;
+               }
+               rel2 {
+                  to: "bot";
+                  relative: 1.0 1.0;
+                  offset: -33 0;
+               }
+               text {
+                  style: "about_style";
+                  min: 0 1;
+               }
+            }
+            description {
+               state: "up" 0.0;
+               inherit: "default" 0.0;
+               align: 0.5 1.0;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 32 16;
+               }
+               rel2 {
+                  relative: 1.0 0.0;
+                  offset: -33 16;
+               }
+            }
+         }
+         part {
+            name: "top";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/about_top.png";
+               image.middle: 0;
+               image.border: 28 28 0 28;
+               rel2.to_y: "e.text.title";
+               rel2.relative: 1.0 0.0;
+               rel2.offset: -1 6;
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "bot";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/about_bot.png";
+               image.middle: 0;
+               image.border: 28 28 28 0;
+               rel1.to_y: "e.text.title";
+               rel1.relative: 0.0 1.0;
+               rel1.offset: 0 -5;
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "mid";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/about_mid.png";
+               rel1 {
+                  to: "top";
+                  relative: 0.0 1.0;
+                  offset: 0 -1;
+               }
+               rel2 {
+                  to: "bot";
+                  relative: 1.0 0.0;
+                  offset: -1 0;
+               }
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "e.text.title";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 255;
+               align: 1.0 0.5;
+               rel1 {
+                  relative: 0.0 0.5;
+                  offset: 0 0;
+               }
+               rel2 {
+                  to_x: "logo";
+                  relative: 0.0 0.5;
+                  offset: 11 -1;
+               }
+               text {
+                  font: "Sans:style=Bold";
+                  size: 10;
+                  min: 1 1;
+                  align: 1.0 0.5;
+                  text_class: "about_title";
+               }
+            }
+         }
+         part {
+            name: "e.text.version";
+            type: TEXT;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 255;
+               align: 0.0 0.5;
+               rel1 {
+                  to_x: "logo";
+                  relative: 1.0 0.5;
+                  offset: -12 0;
+               }
+               rel2 {
+                  relative: 1.0 0.5;
+                  offset: -1 -1;
+               }
+               text {
+                  font: "Sans:style=Bold";
+                  size: 10;
+                  min: 1 1;
+                  align: 0.0 0.5;
+                  text_class: "about_version";
+               }
+            }
+         }
+         part {
+            name: "shadow";
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               image.normal: "O/topsh.png";
+               align: 0.0 0.0;
+               min: 1 16;
+               max: 99999 16;
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "shadow2";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.relative: 0.0 1.0;
+               rel1.offset: 0 -4;
+               image.normal: "O/dia_botshad.png";
+               fill {
+                  smooth: 0;
+                  size {
+                     relative: 0.0 1.0;
+                     offset: 64 0;
+                  }
+               }
+            }
+         }
+         part {
+            name: "logo";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               image.normal: "O/logo_white_128.png";
+               rel1 {
+                  to: "top";
+                  relative: 0.5 1.0;
+                  offset: 0 -30;
+               }
+               rel2 {
+                  to: "bot";
+                  relative: 0.5 0.0;
+                  offset: -1 29;
+               }
+            }
+         }
+         part {
+            name: "button_image";
+            mouse_events: 1;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               fixed: 1 1;
+               align: 0.5 1.0;
+               rel1.relative: 0.5 0.98;
+               rel1.offset: 0 -1;
+               rel2.relative: 0.5 0.98;
+               rel2.offset: 0 -1;
+               min: 64 32;
+               max: 64 32;
+               image {
+                  normal: "O/bt_base2.png";
+                  border: 7 7 7 7;
+               }
+            }
+            description {
+               state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "O/bt_base1.png";
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            effect: SOFT_SHADOW;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "button_image";
+                  relative: 0.0  0.0;
+                  offset: 3    3;
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+                  offset: -4   -4;
+                  to: "button_image";
+               }
+               color_class: "button_text";
+               text {
+                  text: "Close";
+                  font: "Sans";
+                  size: 10;
+                  min: 1 1;
+                  align: 0.5 0.5;
+                  text_class: "button";
+               }
+            }
+         }
+         part {
+            name: "over1";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+               rel2.relative: 1.0 0.5;
+               image {
+                  normal: "O/bt_hilight.png";
+                  border: 7 7 7 0;
+               }
+            }
+         }
+         part {
+            name: "over2";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+               image {
+                  normal: "O/bt_shine.png";
+                  border: 7 7 7 7;
+               }
+            }
+         }
+         part {
+            name: "over3";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+               visible: 0;
+               color: 255 255 255 0;
+               image {
+                  normal: "O/bt_glow.png";
+                  border: 12 12 12 12;
+               }
+               fill.smooth : 0;
+            }
+            description {
+               state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "showa";
+            signal: "show";
+            source: "";
+            action: STATE_SET "up" 0.0;
+            transition: LINEAR 45.0;
+            target: "e.textblock.about";
+            after: "showa2";
+         }
+         program {
+            name: "showa2";
+            action: STATE_SET "default" 0.0;
+            target: "e.textblock.about";
+            after: "showa";
+         }
+         program {
+            name: "showb";
+            signal: "show";
+            source: "";
+            action: STATE_SET "up" 0.0;
+            transition: LINEAR 45.0;
+            target: "e.textblock.authors";
+            after: "showb2";
+         }
+         program {
+            name: "showb2";
+            action: STATE_SET "default" 0.0;
+            target: "e.textblock.authors";
+            after: "showb";
+         }
+         program {
+            name: "button_click";
+            signal: "mouse,down,1";
+            source: "button_image";
+            action: STATE_SET "clicked" 0.0;
+            target: "button_image";
+            target: "over3";
+         }
+         program {
+            name: "button_unclick";
+            signal: "mouse,up,1";
+            source: "button_image";
+            action: STATE_SET "default" 0.0;
+            target: "button_image";
+            target: "over3";
+         }
+         program {
+            name: "button_unclick2";
+            signal: "mouse,clicked,1";
+            source: "button_image";
+            action: SIGNAL_EMIT "e,action,close" "";
+         }
+      }
+   }
+
+
+/////////////////////////////////////////////////////////////////////////////
+/*** THEME ABOUT ***/
+
+   group {
+      name: "e/theme/about";
+      images {
+         image: "O/silk.png" LOSSY 90;
+         image: "O/topsh.png" COMP;
+         image: "O/bnw.png" COMP;
+         image: "O/bt_base1.png" COMP;
+         image: "O/bt_base2.png" COMP;
+         image: "O/bt_hilight.png" COMP;
+         image: "O/bt_shine.png" COMP;
+         image: "O/bt_glow.png" COMP;
+      }
+      styles {
+         style {
+            name: "theme_about_style";
+            base: "font=Sans:style=Bold font_size=10 align=center color=#e0e0e0ff style=soft_shadow shadow_color=#0000001f wrap=word";
+            tag: "br" "\n";
+         }
+      }
+      // data.item: "borderless" "1";
+      // data.item: "shaped" "1";
+      min: 300 240;
+      max: 640 640;
+      parts {
+         part {
+            name: "background_image";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/silk.png";
+               aspect: 1.0 1.0;
+               aspect_preference: NONE;
+            }
+         }
+         part {
+            name: "shadow";
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               image.normal: "O/topsh.png";
+               align: 0.0 0.0;
+               min: 1 16;
+               max: 99999 16;
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "logo";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/bnw.png";
+               align: 0.5 0.05;
+               min: 230 110;
+               max: 460 220;
+               aspect: 2.090909091 2.090909091;
+               aspect_preference: HORIZONTAL;
+            }
+         }
+         part {
+            name: "about";
+            type: TEXTBLOCK;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to_y: "logo";
+                  relative: 0.0 1.0;
+                  offset: 8 0;
+               }
+               rel2 {
+                  to_y: "button_image";
+                  offset: -9 -19;
+                  relative: 1.0 0.0;
+               }
+               text {
+                  style: "theme_about_style";
+                  min: 1 1;
+                  text:
+                            "Smooth as silk<br>"
+                            "The default theme for<br>"
+                            "Enlightenment<br>"
+                            ;
+               }
+            }
+         }
+         part {
+            name: "button_image";
+            mouse_events: 1;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               fixed: 1 1;
+               align: 0.5 1.0;
+               rel1.relative: 0.5 0.98;
+               rel1.offset: 0 -1;
+               rel2.relative: 0.5 0.98;
+               rel2.offset: 0 -1;
+               min: 64 32;
+               max: 64 32;
+               image {
+                  normal: "O/bt_base2.png";
+                  border: 7 7 7 7;
+               }
+            }
+            description {
+               state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "O/bt_base1.png";
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            effect: SOFT_SHADOW;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "button_image";
+                  relative: 0.0  0.0;
+                  offset: 3    3;
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+                  offset: -4   -4;
+                  to: "button_image";
+               }
+               color_class: "button_text";
+               text {
+                  text: "Close";
+                  font: "Sans";
+                  size: 10;
+                  min: 1 1;
+                  align: 0.5 0.5;
+                  text_class: "button";
+               }
+            }
+         }
+         part {
+            name: "over1";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+               rel2.relative: 1.0 0.5;
+               image {
+                  normal: "O/bt_hilight.png";
+                  border: 7 7 7 0;
+               }
+            }
+         }
+         part {
+            name: "over2";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+               image {
+                  normal: "O/bt_shine.png";
+                  border: 7 7 7 7;
+               }
+            }
+         }
+         part {
+            name: "over3";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "button_image";
+               rel2.to: "button_image";
+               visible: 0;
+               color: 255 255 255 0;
+               image {
+                  normal: "O/bt_glow.png";
+                  border: 12 12 12 12;
+               }
+               fill.smooth : 0;
+            }
+            description {
+               state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "button_click";
+            signal: "mouse,down,1";
+            source: "button_image";
+            action: STATE_SET "clicked" 0.0;
+            target: "button_image";
+            target: "over3";
+         }
+         program {
+            name: "button_unclick";
+            signal: "mouse,up,1";
+            source: "button_image";
+            action: STATE_SET "default" 0.0;
+            target: "button_image";
+            target: "over3";
+         }
+         program {
+            name: "button_unclick2";
+            signal: "mouse,clicked,1";
+            source: "button_image";
+            action: SIGNAL_EMIT "e,action,close" "";
+         }
+      }
+   }
+
+

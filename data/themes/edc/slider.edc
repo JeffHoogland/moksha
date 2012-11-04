@@ -1,0 +1,451 @@
+group { name: "e/widgets/slider_horizontal";
+   images.image: "slider_run_base_horiz.png" COMP;
+   images.image: "slider_run_bevel_horiz.png" COMP;
+   images.image: "slider_run_base_light_horiz.png" COMP;
+   images.image: "horiz_glow_run.png" COMP;
+   images.image: "knob_round_small_normal.png" COMP;
+   images.image: "knob_round_small_selected.png" COMP;
+   parts {
+      part { name: "bg"; type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 42 21;
+            color: 0 0 0 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            rel2.relative: 0.0 1.0;
+            rel2.offset: -2 -1;
+            rel2.to_x: "e.text.label";
+         }
+      }
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            image.normal: "slider_run_base_horiz.png";
+            image.border: 4 4 0 0;
+            fill.smooth: 0;
+            min: 8 5;
+            max: 99999 5;
+            fixed: 0 1;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "slider_run_base_light_horiz.png";
+         }
+      }
+      part { name: "glow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "horiz_glow_run.png";
+            rel1.offset: 1 1;
+            rel1.to: "base";
+            rel2.relative: 0.5 1.0;
+            rel2.offset: -1 -2;
+            rel2.to_x: "knob";
+            rel2.to_y: "base";
+            image.border: 0 4 0 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 64;
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+            image.normal: "slider_run_bevel_horiz.png";
+            image.border: 5 5 0 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "clip1"; type: RECT;
+         description { state: "default" 0.0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         clip_to: "clip1";
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: -1 0;
+            rel1.relative: 1.0 0.0;
+            rel2.offset: -1 -1;
+            align: 1.0 0.5;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "slider_text";
+            text { font: "Sans"; size: 10;
+              min: 0 1;
+              align: 0.0 0.5;
+              text_class: "slider";
+            }
+            visible: 0;
+            max: 0 0;
+            fixed: 1 1;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            text.min: 1 1;
+            visible: 1;
+            max: 99999 99999;
+         }
+      }
+      part { name: "clip2"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "label2"; type: TEXT; mouse_events: 0;
+         clip_to: "clip2";
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.to: "e.text.label";
+            rel2.to: "e.text.label";
+            color: 21 21 21 255;
+            color3: 255 255 255 15;
+            color_class: "slider_text";
+            text { font: "Sans"; size: 10;
+              text_source: "e.text.label";
+              align: 0.0 0.5;
+              text_class: "slider";
+            }
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "knob";
+         description { state: "default" 0.0;
+            rel1.offset: -1 -1;
+            rel1.to: "e.dragable.slider";
+            rel2.offset: 0 0;
+            rel2.to: "e.dragable.slider";
+            image.normal: "knob_round_small_normal.png";
+            min: 23 23;
+            max: 23 23;
+            fixed: 1 1;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "knob_round_small_selected.png";
+         }
+      }
+      part { name: "e.swallow.bar"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.to_x: "bg";
+            rel1.offset: 1 0;
+            rel2.to_x: "bg";
+            rel2.offset: -2 -1;
+         }
+      }
+      part { name: "e.dragable.slider"; type: RECT;
+         scale: 1;
+         dragable.x: 1 1 0;
+         dragable.y: 0 0 0;
+         dragable.confine: "bg";
+         description { state: "default" 0.0;
+            min: 21 21;
+            max: 21 21;
+            rel1.relative: 0.5 0.0;
+            rel1.to_x: "bg";
+            rel2.relative: 0.5 1.0;
+            rel2.to_x: "bg";
+            color: 0 0 0 0;
+            fixed: 1 1;
+         }
+      }
+      part { name: "event"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            visible: 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "e.dragable.slider";
+         action: STATE_SET "clicked" 0.0;
+         target: "knob";
+      }
+      program {
+         signal: "mouse,up,1"; source: "e.dragable.slider";
+         action: STATE_SET "default" 0.0;
+         target: "knob";
+      }
+      program {
+         signal: "e,action,show,label"; source: "e";
+         action: STATE_SET "active" 0.0;
+         target: "bg";
+         target: "e.text.label";
+         target: "label2";
+      }
+      program {
+         signal: "e,action,hide,label"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "bg";
+         target: "e.text.label";
+         target: "label2";
+      }
+      program {
+         signal: "e,state,disabled"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "event";
+         target: "glow";
+         target: "base";
+         target: "clip1";
+         target: "clip2";
+      }
+      program {
+         signal: "e,state,enabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "event";
+         target: "glow";
+         target: "base";
+         target: "clip1";
+         target: "clip2";
+      }
+   }
+}
+
+group { name: "e/widgets/slider_vertical";
+   images.image: "slider_run_base_vert.png" COMP;
+   images.image: "slider_run_bevel_vert.png" COMP;
+   images.image: "slider_run_base_light_vert.png" COMP;
+   images.image: "vert_glow_run.png" COMP;
+   images.image: "knob_round_small_normal.png" COMP;
+   images.image: "knob_round_small_selected.png" COMP;
+   parts {
+      part { name: "bg"; type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 21 42;
+            color: 0 0 0 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 -2;
+            rel2.to_y: "e.text.label";
+         }
+      }
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            image.normal: "slider_run_base_vert.png";
+            image.border: 0 0 4 4;
+            fill.smooth: 0;
+            min: 5 8;
+            max: 5 99999;
+            fixed: 1 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "slider_run_base_light_vert.png";
+         }
+      }
+      part { name: "glow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vert_glow_run.png";
+            rel1.offset: 1 0;
+            rel1.relative: 0.0 0.5;
+            rel1.to_y: "knob";
+            rel1.to_x: "base";
+            rel2.offset: -2 -2;
+            rel2.to: "base";
+            image.border: 0 0 0 4;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 64;
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+            image.normal: "slider_run_bevel_vert.png";
+            image.border: 0 0 5 5;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "clip1"; type: RECT;
+         description { state: "default" 0.0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         clip_to: "clip1";
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: 0 -1;
+            rel1.relative: 0.0 1.0;
+            rel2.offset: -1 -1;
+            align: 0.5 1.0;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "slider_text";
+            text { font: "Sans"; size: 10;
+              min: 0 0;
+              align: 0.5 0.5;
+              text_class: "slider";
+            }
+            visible: 0;
+            max: 0 0;
+            fixed: 1 1;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            text.min: 1 1;
+            visible: 1;
+            max: 99999 99999;
+         }
+      }
+      part { name: "clip2"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "label2"; type: TEXT; mouse_events: 0;
+         clip_to: "clip2";
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.to: "e.text.label";
+            rel2.to: "e.text.label";
+            color: 21 21 21 255;
+            color3: 255 255 255 15;
+            color_class: "slider_text";
+            text { font: "Sans"; size: 10;
+              text_source: "e.text.label";
+              align: 0.5 0.5;
+              text_class: "slider";
+            }
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "knob";
+         description { state: "default" 0.0;
+            rel1.offset: -1 -1;
+            rel1.to: "e.dragable.slider";
+            rel2.offset: 0 0;
+            rel2.to: "e.dragable.slider";
+            image.normal: "knob_round_small_normal.png";
+            min: 23 23;
+            max: 23 23;
+            fixed: 1 1;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "knob_round_small_selected.png";
+         }
+      }
+      part { name: "e.swallow.bar"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.to_x: "bg";
+            rel1.offset: 0 1;
+            rel2.to_x: "bg";
+            rel2.offset: -1 -2;
+         }
+      }
+      part { name: "e.dragable.slider"; type: RECT;
+         scale: 1;
+         dragable.x: 0 0 0;
+         dragable.y: -1 1 0;
+         dragable.confine: "bg";
+         description { state: "default" 0.0;
+            min: 21 21;
+            max: 21 21;
+            rel1.relative: 0.0 0.5;
+            rel1.to_x: "bg";
+            rel2.relative: 1.0 0.5;
+            rel2.to_x: "bg";
+            color: 0 0 0 0;
+            fixed: 1 1;
+         }
+      }
+      part { name: "event"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            visible: 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "e.dragable.slider";
+         action: STATE_SET "clicked" 0.0;
+         target: "knob";
+      }
+      program {
+         signal: "mouse,up,1"; source: "e.dragable.slider";
+         action: STATE_SET "default" 0.0;
+         target: "knob";
+      }
+      program {
+         signal: "e,action,show,label"; source: "e";
+         action: STATE_SET "active" 0.0;
+         target: "bg";
+         target: "e.text.label";
+         target: "label2";
+      }
+      program {
+         signal: "e,action,hide,label"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "bg";
+         target: "e.text.label";
+         target: "label2";
+      }
+      program {
+         signal: "e,state,disabled"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "event";
+         target: "glow";
+         target: "base";
+         target: "clip1";
+         target: "clip2";
+      }
+      program {
+         signal: "e,state,enabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "event";
+         target: "glow";
+         target: "base";
+         target: "clip1";
+         target: "clip2";
+      }
+   }
+}

@@ -1,0 +1,221 @@
+/////////////////////////////////////////////////////////////////////////////
+/*** TRANSITIONS ***/
+/* The fake backgrounds used in the Transitions config dialog */
+
+   images {
+      image: "O/vgrad_dark.png" COMP;
+      image: "O/vgrad_light.png" COMP;
+      image: "O/logo_black_128.png" COMP;
+      image: "O/logo_white_128.png" COMP;
+   }
+   group {
+      name: "e/transpreview/0";
+      parts {
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               image.normal: "O/vgrad_dark.png";
+               fill {
+                  size {
+                     relative: 0 1.0;
+                     offset: 36 0;
+                  }
+               }
+            }
+         }
+         part {
+            name: "logo";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               image.normal: "O/logo_white_128.png";
+               min: 32 32;
+               max: 128 128;
+            }
+         }
+      }
+   }
+   group {
+      name: "e/transpreview/1";
+      parts {
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               image.normal: "O/vgrad_light.png";
+               fill {
+                  size {
+                     relative: 0 1.0;
+                     offset: 36 0;
+                  }
+               }
+            }
+         }
+         part {
+            name: "logo";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               image.normal: "O/logo_black_128.png";
+               min: 32 32;
+               max: 128 128;
+            }
+         }
+      }
+   }
+   /* e/transitions/* The look of transitions when swapping desks */
+   group {
+      name: "e/transitions/crossfade";
+      parts {
+         part {
+            name: "e.swallow.bg.old";
+            type: SWALLOW;
+            description {
+               state: "default" 0.0;
+            }
+         }
+         part {
+            name: "e.swallow.bg.new";
+            type: SWALLOW;
+            clip_to: "bg_new_clip";
+            description {
+               state: "default" 0.0;
+            }
+         }
+         part {
+            name: "bg_new_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+            }
+            description {
+               state: "done" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "go";
+            signal: "e,action,start";
+            source: "e";
+            action: STATE_SET "done" 0.0;
+            transition: SINUSOIDAL 1.0;
+            target: "bg_new_clip";
+            after: "go2";
+         }
+         program {
+            name: "go2";
+            action: SIGNAL_EMIT "e,state,done" "";
+         }
+      }
+   }
+   group {
+      name: "e/transitions/vswipe";
+      images.image: "O/transition_vswipe.png" COMP;
+      parts {
+         part {
+            name: "e.swallow.bg.old";
+            type: SWALLOW;
+            clip_to: "bg_prev_clip";
+            description {
+               state: "default" 0.0;
+            }
+         }
+         part {
+            name: "e.swallow.bg.new";
+            type: SWALLOW;
+            clip_to: "bg_new_clip";
+            description {
+               state: "default" 0.0;
+            }
+         }
+         part {
+            name: "bg_prev_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.offset: 0   -32;
+               rel2.offset: -1    31;
+            }
+            description {
+               state: "done" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0  1.0;
+                  offset: 0    31;
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+                  offset: -1   31;
+               }
+            }
+         }
+         part {
+            name: "bg_new_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.0  0.0;
+                  offset: 0    -32;
+               }
+               rel2 {
+                  relative: 1.0  0.0;
+                  offset: -1   -32;
+               }
+            }
+            description {
+               state: "done" 0.0;
+               rel1.offset: 0   -32;
+               rel2.offset: -1    31;
+            }
+         }
+         part {
+            name: "swipe_gap";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               min: 0 64;
+               max: 99999 64;
+               rel1 {
+                  to: "bg_prev_clip";
+                  relative: 0.0  0.0;
+                  offset: 0    0;
+               }
+               rel2 {
+                  to: "bg_prev_clip";
+                  relative: 1.0  0.0;
+                  offset: -1   0;
+               }
+               image.normal: "O/transition_vswipe.png";
+            }
+         }
+      }
+      programs {
+         program {
+            name: "go";
+            signal: "e,action,start";
+            source: "e";
+            action: STATE_SET "done" 0.0;
+            transition: SINUSOIDAL 1.0;
+            target: "bg_new_clip";
+            target: "bg_prev_clip";
+            after: "go2";
+         }
+         program {
+            name: "go2";
+            action: SIGNAL_EMIT "e,state,done" "";
+         }
+      }
+   }
+
+

@@ -1,0 +1,25 @@
+group { name: "e/widgets/textblock";
+   styles {
+      style { name: "textblock_style";
+         base: "font=Sans font_size=10 text_class=tb_plain align=left color=#ffff style=shadow,bottom shadow_color=#00000080 wrap=word";
+         tag: "br"      "\n";
+         tag: "b"       "+ font=Sans:style=Bold";
+         tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light";
+         tag: "urgent"  "+ font=Sans:style=Bold color=#f40f style=outline outline_color=#ff000080";
+         tag: "title"   "+ font=Sans:style=Bold font_size=16 underline=on underline_color=#3399ff";
+      }
+   }
+   parts {
+      part { name: "e.textblock.text"; type: TEXTBLOCK; mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: 2 2;
+            rel2.offset: -3 -3;
+            text {
+               style: "textblock_style";
+               min: 1 1;
+            }
+         }
+      }
+   }
+}

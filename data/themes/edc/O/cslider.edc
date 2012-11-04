@@ -1,0 +1,110 @@
+   /* Used to display RGB/HSV values via sliders
+      in Wallpaper Gradient Dialog               */
+   group {
+      name: "e/widgets/cslider";
+      images.image: "O/inset_sunk.png" COMP;
+      parts {
+         part {
+            name: "content_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "e.swallow.content";
+               rel2.to: "e.swallow.content";
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "e.swallow.content";
+            type: SWALLOW;
+            clip_to: "content_clip";
+            description {
+               state: "default" 0.0;
+               min: 50 20;
+               rel1.offset: 4    4;
+               rel2.offset: -5    -5;
+            }
+            description {
+               state: "vertical" 0.0;
+               inherit: "default" 0.0;
+               min: 20 50;
+            }
+         }
+         part {
+            name: "border";
+            mouse_events: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "e.swallow.content";
+                  offset: -1 -1;
+               }
+               rel2 {
+                  to: "e.swallow.content";
+                  offset: 0 0;
+               }
+               image {
+                  normal: "O/inset_sunk.png";
+                  border: 7 7 7 7;
+                  middle: 0;
+               }
+               fill.smooth : 0;
+            }
+         }
+         part {
+            name: "e.dragable.cursor";
+            type: RECT;
+            clip_to: "content_clip";
+            dragable {
+               confine: "e.swallow.content";
+               x: 1 1 0;
+               y: -1 1 0;
+            }
+            description {
+               state: "default" 0.0;
+               min: 1 24;
+               max: 1 9999;
+               fixed: 1 1;
+               rel1 {
+                  to: "e.swallow.content";
+                  relative: 0.5 0.0;
+                  offset: 0 -2;
+               }
+               rel2 {
+                  to: "e.swallow.content";
+                  relative: 0.5 1.0;
+                  offset: 0 +2;
+               }
+               color: 255 255 255 150;
+            }
+            description {
+               state: "vertical" 0.0;
+               min: 24 1;
+               max: 9999 1;
+               fixed: 1 1;
+               rel1 {
+                  to: "e.swallow.content";
+                  relative: 0.0 0.5 ;
+                  offset: -2 0;
+               }
+               rel2 {
+                  to: "e.swallow.content";
+                  relative: 1.0 0.5;
+                  offset: +2 0;
+               }
+               color: 255 255 255 150;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "go_vertical";
+            signal: "e,state,direction,v";
+            source: "e";
+            action: STATE_SET "vertical" 0.0;
+            target: "e.dragable.cursor";
+            target: "e.swallow.content";
+         }
+      }
+   }

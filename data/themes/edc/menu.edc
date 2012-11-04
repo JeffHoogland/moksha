@@ -1,0 +1,521 @@
+group { name: "e/widgets/menu/default/background";
+   images.image: "vgrad_med_lighter.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "shine.png" COMP;
+   parts {
+      part { name: "base"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 1.0;
+            rel1.to_y: "top";
+            color: 64 64 64 255;
+         }
+      }
+      part { name: "top"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vgrad_med_lighter.png";
+            rel2.to_y: "e.text.title";
+            rel2.offset: -1 0;
+            min: 0 23;
+            align: 0.0 0.0;
+            fill.smooth: 0;
+            TILED_HORIZ(120)
+            fixed: 0 1;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            min: 0 0;
+            rel2.offset: -1 1;
+         }
+      }
+      part { name: "e.text.title"; type: TEXT; mouse_events: 0;
+         scale: 1;
+         effect: SHADOW BOTTOM;
+         description { state: "default" 0.0;
+            color_class: "menu_title";
+            rel1.relative: 0.0 0.0;
+            rel1.offset: 1 0;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -2 -1;
+            align: 0.5 0.0;
+            color: 21 21 21 255;
+            color3: 255 255 255 25;
+            max: 0 0;
+            text { font: "Sans:style=Bold"; size: 10;
+               text_class: "menu_title";
+               align: 0.5 0.0;
+               min: 0 0;
+            }
+            fixed: 0 1;
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            rel1.offset: 1 3;
+            rel2.offset: -2 3;
+            max: 99999 99999;
+            text.min: 0 1;
+            visible: 1;
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel1.offset: 0 3;
+            rel1.to_y: "bevel";
+            rel2.offset: -1 -4;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 0 0;
+            rel1.to_y: "top";
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel1.to: "top";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            rel2.to: "top";
+            FIXED_SIZE(69, 5)
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,action,show,title"; source: "e";
+         action: STATE_SET "active" 0.0;
+         target: "top";
+         target: "e.text.title";
+         target: "e.swallow.content";
+      }
+      program {
+         signal: "e,action,hide,title"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "top";
+         target: "e.text.title";
+         target: "e.swallow.content";
+      }
+   }
+}
+
+group { name: "e/widgets/menu/default/separator";
+   images.image: "separator_horiz.png" COMP;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "separator_horiz.png";
+            rel1.offset: 0 2;
+            rel2.offset: -1 -3;
+            min: 0 2;
+            fill.smooth: 0;
+         }
+      }
+   }
+}
+
+group { name: "e/widgets/menu/default/item_bg";
+   alias: "e/widgets/menu/default/submenu_bg";
+   images.image: "shadow_rounded_horiz.png" COMP;
+   images.image: "vgrad_med_dark.png" COMP;
+   images.image: "bevel_horiz_out.png" COMP;
+   images.image: "shine.png" COMP;
+   parts {
+      part { name: "shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shadow_rounded_horiz.png";
+            image.border: 0 0 9 9;
+            rel1.offset: 0 -4;
+            rel2.offset: -1 5;
+            fill.smooth: 0;
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vgrad_med_dark.png";
+            fill.smooth: 0;
+            TILED_HORIZ(120)
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel1.offset: 3 3;
+            rel2.offset: -1 -4;
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_horiz_out.png";
+            image.border: 0 0 2 2;
+            image.middle: 0;
+            fill.smooth: 0;
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel1.to: "base";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            rel2.to: "base";
+            FIXED_SIZE(69, 5)
+            visible: 0;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,state,selected"; source: "e";
+         action: STATE_SET "active" 0.0;
+         target: "shadow";
+         target: "base";
+         target: "bevel";
+         target: "shine";
+      }
+      program {
+         signal: "e,state,unselected"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "shadow";
+         target: "base";
+         target: "bevel";
+         target: "shine";
+      }
+   }
+}
+
+group { name: "e/widgets/menu/default/icon";
+   parts {
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+         }
+         description { state: "disabled" 0.0;
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         clip_to: "clip";
+         description { state: "default" 0.0;
+            min: 16 16;
+            rel1.offset: 2 2;
+            rel2.offset: -3 -3;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,state,enable"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "clip";
+      }
+      program {
+         signal: "e,state,disable"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "clip";
+      }
+   }
+}
+
+group { name: "e/widgets/menu/default/label";
+   parts {
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: 5 -1;
+            rel2.offset: -4 -1;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "menu_item";
+            text { font: "Sans"; size: 10;
+               min: 1 1;
+               align: 0.0 0.5;
+               text_class: "menu_item";
+            }
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "label2"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.to: "e.text.label";
+            rel2.to: "e.text.label";
+            color: 21 21 21 255;
+            color3: 255 255 255 25;
+            color_class: "menu_item_disabled";
+            text { font: "Sans"; size: 10;
+               text_source: "e.text.label";
+               align: 0.0 0.5;
+               text_class: "menu_item";
+            }
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "label3"; type: TEXT; mouse_events: 0;
+         effect: GLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: -2 -3;
+            rel1.to: "e.text.label";
+            rel2.offset: 2 1;
+            rel2.to: "e.text.label";
+            color: 51 153 255 255;
+            color2: 51 153 255 24;
+            color3: 51 153 255 18;
+            color_class: "menu_item_active";
+            text { font: "Sans"; size: 10;
+               text_source: "e.text.label";
+               align: 0.0 0.5;
+               text_class: "menu_item";
+            }
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,state,selected"; source: "e";
+         action: STATE_SET "selected" 0.0;
+         target: "e.text.label";
+         target: "label2";
+         target: "label3";
+      }
+      program {
+         signal: "e,state,unselected"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.text.label";
+         target: "label2";
+         target: "label3";
+      }
+      program {
+         signal: "e,state,enable"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.text.label";
+         target: "label2";
+         target: "label3";
+      }
+      program {
+         signal: "e,state,disable"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "e.text.label";
+         target: "label2";
+         target: "label3";
+      }
+   }
+}
+
+group { name: "e/widgets/menu/default/submenu";
+   images.image: "sym_right_light_normal.png" COMP;
+   images.image: "sym_right_glow_normal.png" COMP;
+   images.image: "vertical_separated_bar_glow.png" COMP;
+   parts {
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "sym_right_light_normal.png";
+            rel2.offset: -2 -1;
+            min: 15 15;
+            max: 15 15;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_right_glow_normal.png";
+         }
+      }
+      part { name: "bar"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -10 -8;
+            rel2.offset: 4 7;
+            image.normal: "vertical_separated_bar_glow.png";
+            image.border: 7 7 7 7;
+            fill.smooth: 0;
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,state,selected"; source: "e";
+         action: STATE_SET "selected" 0.0;
+         target: "base";
+         target: "bar";
+      }
+      program {
+         signal: "e,state,unselected"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "bar";
+      }
+   }
+}
+
+group { name: "e/widgets/menu/default/check";
+   images.image: "inset_shadow_tiny.png" COMP;
+   images.image: "bevel_in.png" COMP;
+   images.image: "sym_check_alum.png" COMP;
+   parts {
+      part { name: "base"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: 1 1;
+            rel1.to: "inset";
+            rel2.offset: -2 -2;
+            rel2.to: "inset";
+            color: 24 24 24 255;
+         }
+      }
+      part { name: "shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "inset_shadow_tiny.png";
+            rel1.to: "base";
+            rel2.to: "base";
+         }
+      }
+      part { name: "inset"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_in.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+            min: 13 13;
+            max: 13 13;
+         }
+      }
+      part { name: "indicator"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+            image.normal: "sym_check_alum.png";
+            min: 11 11;
+            max: 11 11;
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+//      program {
+//         signal: "e,state,selected"; source: "e";
+//      }
+//      program {
+//         signal: "e,state,unselected"; source: "e";
+//      }
+      program {
+         signal: "e,state,on"; source: "e";
+         action: STATE_SET "selected" 0.0;
+         target: "indicator";
+      }
+      program {
+         signal: "e,state,off"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "indicator";
+      }
+   }
+}
+
+group { name: "e/widgets/menu/default/radio";
+   images.image: "inset_shadow_circle_tiny.png" COMP;
+   images.image: "sym_radio_alum.png" COMP;
+   parts {
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "inset_shadow_circle_tiny.png";
+            min: 13 13;
+            max: 13 13;
+         }
+      }
+      part { name: "indicator"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+            image.normal: "sym_radio_alum.png";
+            min: 11 11;
+            max: 11 11;
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+//      program {
+//         signal: "e,state,selected"; source: "e";
+//      }
+//      program {
+//         signal: "e,state,unselected"; source: "e";
+//      }
+      program {
+         signal: "e,state,on"; source: "e";
+         action: STATE_SET "selected" 0.0;
+         target: "indicator";
+      }
+      program {
+         signal: "e,state,off"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "indicator";
+      }
+   }
+}

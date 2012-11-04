@@ -1,0 +1,176 @@
+ group { name: "e/widgets/button";
+   images.image: "button_normal.png" COMP;
+   images.image: "button_clicked.png" COMP;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -1 0;
+            rel2.offset: 0 1;
+            fill.smooth: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      part { name: "icon_clip"; type: RECT;
+         description { state: "default" 0.0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 64;
+         }
+      }
+      part { name: "e.swallow.icon"; type: SWALLOW; mouse_events: 0;
+         clip_to: "icon_clip";
+         description { state: "default" 0.0;
+            align: 0.0 0.5;
+            rel1.offset: 6 5;
+            rel1.to: "base";
+            rel2.relative: 0.0 1.0;
+            rel2.offset: 6 -8;
+            rel2.to: "base";
+         }
+         description { state: "combo" 0.0;
+            inherit: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: VERTICAL;
+         }
+         description { state: "icon" 0.0;
+            inherit: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            align: 0.5 0.5;
+            rel2.relative: 1.0 1.0;
+            rel2.offset: -7 -8;
+         }
+      }
+      part { name: "label_clip"; type: RECT;
+         description { state: "default" 0.0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         clip_to: "label_clip";
+         description { state: "default" 0.0;
+            rel1.offset: 6 5;
+            rel1.to_x: "base";
+            rel1.to_y: "base";
+            rel2.offset: -7 -7;
+            rel2.to: "base";
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "button_text";
+            text { font: "Sans"; size: 10;
+               min: 1 1;
+               align: 0.5 0.5;
+               text_class: "button";
+            }
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 21 21 21 255;
+            color3: 255 255 255 25;
+            color_class: "button_text_disabled";
+         }
+         description { state: "combo" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.offset: 2 5;
+            rel1.to_x: "e.swallow.icon";
+         }
+         description { state: "icon" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "label2"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.to: "e.text.label";
+            rel2.to: "e.text.label";
+            color: 21 21 21 255;
+            color3: 255 255 255 25;
+            color_class: "button_text_disabled";
+            text { font: "Sans"; size: 10;
+               text_source: "e.text.label";
+               align: 0.5 0.5;
+               text_class: "button";
+            }
+            visible: 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "event"; type: RECT;
+         ignore_flags: ON_HOLD;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "event";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,up,1"; source: "event";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "event";
+         action: SIGNAL_EMIT "e,action,click" "";
+      }
+      program {
+         signal: "e,state,text"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.swallow.icon";
+         target: "e.text.label";
+      }
+      program {
+         signal: "e,state,icon"; source: "e";
+         action: STATE_SET "icon" 0.0;
+         target: "e.swallow.icon";
+         target: "e.text.label";
+      }
+      program {
+         signal: "e,state,combo"; source: "e";
+         action: STATE_SET "combo" 0.0;
+         target: "e.swallow.icon";
+         target: "e.text.label";
+      }
+      program {
+         signal: "e,state,disabled"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "event";
+         target: "icon_clip";
+         target: "label_clip";
+         target: "label2";
+      }
+      program {
+         signal: "e,state,enabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "event";
+         target: "icon_clip";
+         target: "label_clip";
+         target: "label2";
+      }
+   }
+}

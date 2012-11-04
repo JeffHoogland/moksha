@@ -1,0 +1,21 @@
+group { name: "e/desktop/background";
+   images.image: "bg_radgrad.png" COMP;
+   images.image: "dot_pattern.png" COMP;
+   parts {
+      part { name: "bg";
+         description { state: "default" 0.0;
+            image.normal: "bg_radgrad.png";
+            image.scale_hint: STATIC;
+            fill.smooth: 0;
+            ASPECT_FILL((1024/653))
+         }
+      }
+      part { name: "pat";
+         description { state: "default" 0.0;
+            image.normal: "dot_pattern.png";
+            TILED_PATTERN(256, 256)
+         }
+      }
+   }
+}
+

@@ -1,0 +1,96 @@
+group { name: "e/pointer/enlightenment/default/color";
+   images.image: "pointer.png" COMP;
+   images.image: "pointer_glow.png" COMP;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "pointer.png";
+         }
+      }
+      part { name: "glow";
+         description { state: "default" 0.0;
+            image.normal: "pointer_glow.png";
+            color: 255 255 255 0;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+         }
+         description { state: "faded" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "e.swallow.hotspot"; type: SWALLOW;
+         description { state: "default" 0.0;
+            visible: 0;
+            rel1.relative: (6/32) (8/32);
+            rel1.to: "base";
+            rel2.to: "base";
+            rel2.relative: (6/32) (8/32); 
+            rel2.offset: 0 0;
+        }
+      }
+   }
+   programs {
+      program {
+         signal: "e,action,mouse,down"; source: "e";
+         action: STATE_SET "visible" 0.0;
+         target: "glow";
+         after: "fade";
+      }
+      program { name: "fade";
+         action: STATE_SET "default" 0.0;
+         transition: SINUSOIDAL 0.5;
+         target: "glow";
+      }
+      program { name: "pulse";
+         signal: "e,state,mouse,idle"; source: "e";
+         in: 10.0 0.0;
+         action: STATE_SET "faded" 0.0;
+         transition: SINUSOIDAL 0.25;
+         target: "glow";
+         after: "pulse2";
+      }
+      program { name: "pulse2";
+         action: STATE_SET "default" 0.0;
+         transition: SINUSOIDAL 0.5;
+         target: "glow";
+         after: "pulse";
+      }
+      program {
+         signal: "e,state,mouse,active"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "glow";
+         after: "stop2";
+      }
+      program { name: "stop2";
+         action: ACTION_STOP;
+         target: "pulse";
+         target: "pulse2";
+      }
+   }
+}
+      
+group { name: "e/pointer/enlightenment/default/mono";
+   images.image: "pointer_mono.png" COMP;
+   parts {
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "pointer_mono.png";
+            min: 32 32;
+            max: 32 32;
+         }
+      }
+      part { name: "e.swallow.hotspot"; type: SWALLOW;
+         description { state: "default" 0.0;
+            visible: 0;
+            rel1.offset: 6 8;
+            rel1.to: "base";
+            rel2.offset: 6 8;
+            rel2.to: "base";
+            rel2.relative: 0.0 0.0;
+         }
+      }
+   }
+}

@@ -201,6 +201,10 @@ _clock_month_update(Instance *inst)
         od = edje_object_part_table_child_get(oi, "e.table.daynames", x, 0);
         edje_object_part_text_set(od, "e.text.label", inst->daynames[x]);
         edje_object_message_signal_process(od);
+        if (inst->dayweekends[x][0])
+          edje_object_signal_emit(od, "e,state,weekend", "e");
+        else
+          edje_object_signal_emit(od, "e,state,weekday", "e");
      }
 
    for (y = 0; y < 6; y++)

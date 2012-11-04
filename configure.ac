@@ -1058,7 +1058,6 @@ data/favorites/Makefile
 data/desktop/Makefile
 data/input_methods/Makefile
 data/themes/Makefile
-data/themes/images/Makefile
 data/xsession/Makefile
 data/xsession/enlightenment.desktop
 data/tools/Makefile

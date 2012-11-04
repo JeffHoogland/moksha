@@ -1,0 +1,37 @@
+group { name: "e/widgets/label";
+   parts {
+      part { name: "e.text.label"; type: TEXT;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: 2 2;
+            rel2.offset: -3 -3;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "label_text";
+            text { font: "Sans"; size: 10;
+               min: 1 1;
+               align: 0.0 0.5;
+               text_class: "label";
+            }
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 21 21 21 255;
+            color3: 255 255 255 25;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,state,disabled"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "e.text.label";
+      }
+      program {
+         signal: "e,state,enabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.text.label";
+      }
+   }
+}

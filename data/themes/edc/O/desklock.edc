@@ -1,0 +1,314 @@
+/////////////////////////////////////////////////////////////////////////////
+/*** MOD: DESKLOCK ***/
+
+   group {
+      name: "e/desklock/background";
+      images {
+         image: "O/bg_shadow.png" COMP;
+         image: "O/wizard_pattern.png" COMP;
+      }
+      parts {
+         part { name: "base";
+            description { state: "default" 0.0;
+               image.normal: "O/wizard_pattern.png";
+               fill {
+                  smooth: 0;
+                  size {
+                     relative: 0.0 0.0;
+                     offset: 200 200;
+                  }
+               }
+            }
+         }
+         part {
+            name: "e.swallow.login_box";
+            type: SWALLOW;
+            description {
+               state: "default" 0.0;
+            }
+         }
+         part { name: "shadow2";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               image.normal: "O/bg_shadow.png";
+               fill.smooth: 0;
+            }
+         }
+      }
+   }
+   group {
+      name: "e/desklock/login_box";
+      images {
+         image: "O/logo_white_128.png" COMP;
+         image: "O/inset_sunk.png" COMP;
+      }
+      parts {
+         part {
+            name: "logo";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               min: 64 64;
+               max: 64 64;
+               image.normal: "O/logo_white_128.png";
+            }
+         }
+         part {
+            name: "e.text.title";
+            type: TEXT;
+            effect: SOFT_SHADOW;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               fixed: 0 1;
+               rel1 {
+                  relative: 0.0 1.0;
+                  offset: 0 8;
+                  to_y: "logo";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 8;
+                  to_y: "logo";
+               }
+               color: 224 224 224 255;
+               color3: 0 0 0 32;
+               text {
+                  text: "Enter Password";
+                  font: "Sans:style=Bold";
+                  size: 10;
+                  align: 0.5 0.5;
+                  min: 1 1;
+                  text_class: "desklock_title";
+               }
+            }
+         }
+         part {
+            name: "pulse_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "passwd_border";
+               rel2.to: "passwd_border";
+            }
+            description {
+               state: "pulse" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 128;
+            }
+         }
+         part {
+            name: "error";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "error_clip";
+            description {
+               state: "default" 0.0;
+               rel1.to: "passwd_border";
+               rel2.to: "passwd_border";
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "error_clip";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "pulse_clip";
+            description {
+               state: "default" 0.0;
+               rel1.to: "passwd_border";
+               rel2.to: "passwd_border";
+               color: 255 255 255 255;
+            }
+            description {
+               state: "invalid" 0.0;
+               inherit: "default" 0.0;
+               color: 255 128 128 255;
+               /*FIXME: Document how this works */
+            }
+         }
+         part {
+            name: "passwd_entry_clip";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "pulse_clip";
+            description {
+               state: "default" 0.0;
+               visible: 1;
+               rel1 {
+                  offset: 6 3;
+                  to: "passwd_border";
+               }
+               rel2 {
+                  offset: -7 -4;
+                  to: "passwd_border";
+               }
+            }
+         }
+         part {
+            name: "e.text.password";
+            type: TEXT;
+            clip_to: "passwd_entry_clip";
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               fixed: 0 1;
+               align: 0.0 0.5;
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 0;
+                  to: "passwd_entry_clip";
+               }
+               rel2 {
+                  relative: 0.0 1.0;
+                  offset: 0 0;
+                  to: "passwd_entry_clip";
+               }
+               color: 0 0 0 255;
+               text {
+                  text: "****";
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  align: 0.0 0.5;
+                  min: 1 1;
+                  text_class: "desklock_passwd";
+               }
+            }
+         }
+         part {
+            name: "selection";
+            type: GROUP;
+            mouse_events: 0;
+            clip_to: "passwd_entry_clip";
+            source: "e/widgets/entry/selection";
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               rel1.to: "e.text.password";
+               rel2.to: "e.text.password";
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         part {
+            name: "cursor";
+            type: RECT;
+            mouse_events: 0;
+            clip_to: "passwd_entry_clip";
+            description {
+               state: "default" 0.0;
+               min: 1 16;
+               max: 1 16;
+               align: 0.0 0.5;
+               fixed: 1 1;
+               rel1 {
+                  relative: 1.0 0.0;
+                  offset: 0 -3;
+                  to: "e.text.password";
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: 1 1;
+                  to: "e.text.password";
+               }
+               color: 0 0 0 255;
+            }
+         }
+         part {
+            name: "passwd_border";
+            mouse_events: 0;
+            clip_to: "error_clip";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.5 1.0;
+                  offset: -80 2;
+                  to_y: "e.text.title";
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: 79 20;
+                  to_y: "e.text.title";
+               }
+               image {
+                  normal: "O/inset_sunk.png";
+                  middle: 0;
+                  border: 7 7 7 7;
+               }
+               fill.smooth: 0;
+            }
+            description {
+               state: "checking" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 128;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "pulse.1";
+            signal: "e,state,checking";
+            source: "e.desklock";
+            action: STATE_SET "pulse" 0.0;
+            target: "pulse_clip";
+            transition: SINUSOIDAL 0.5;
+            after: "pulse.2";
+         }
+         program {
+            name: "pulse.2";
+            action: STATE_SET "default" 0.0;
+            target: "pulse_clip";
+            transition: SINUSOIDAL 0.5;
+            after: "pulse.1";
+         }
+         program {
+            name: "pulse.stop";
+            signal: "e,state,invalid";
+            source: "e.desklock";
+            action: ACTION_STOP;
+            target: "pulse.1";
+            target: "pulse.2";
+            after: "pulse.reset";
+         }
+         program {
+            name: "pulse.reset";
+            action: STATE_SET "default" 0.0;
+            target: "pulse_clip";
+            transition: SINUSOIDAL 0.5;
+         }
+         program {
+            name: "go_invalid";
+            signal: "e,state,invalid";
+            source: "e.desklock";
+            action: STATE_SET "invalid" 0.0;
+            target: "error_clip";
+            transition: DECELERATE 0.5;
+         }
+         program {
+            name: "stop_invalid";
+            action: STATE_SET "default" 0.0;
+            target: "error_clip";
+            transition: DECELERATE 1.5;
+         }
+         program {
+            name: "select";
+            signal: "e,state,selected";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            target: "selection";
+         }
+         program {
+            name: "unselect";
+            signal: "e,state,unselected";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "selection";
+         }
+      }
+   }
+
+

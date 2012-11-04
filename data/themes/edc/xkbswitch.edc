@@ -1,0 +1,173 @@
+group { name: "e/modules/xkbswitch/main";
+   images.image: "shadow_square_tiny.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "shine.png" COMP;
+   max: 128 128;
+   parts {
+      part { name: "shadow";
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.flag";
+            rel1.offset: -3 -2;
+            rel2.to: "e.swallow.flag";
+            rel2.offset: 2 4;
+            image.normal: "shadow_square_tiny.png";
+            image.border: 6 6 6 6;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "e.swallow.flag"; type: SWALLOW; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: 3 3;
+            rel2.offset: -4 -4;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.flag";
+            rel1.relative: 0.0 0.5;
+            rel2.to: "e.swallow.flag";
+            rel2.relative: 1.0 0.5;
+            color: 255 255 255 0;
+            color3: 0 0 0 0;
+            text { font: "Sans"; size: 9;
+               min: 0 1;
+               text_class: "module_small";
+            }
+            fixed: 0 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.flag";
+            rel2.to: "e.swallow.flag";
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to_x: "e.swallow.flag";
+            rel2.to_x: "e.swallow.flag";
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         clip_to: "clip";
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel1.to: "e.swallow.flag";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            rel2.to: "e.swallow.flag";
+            FIXED_SIZE(69, 5)
+         }
+      }
+      part { name: "event"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,in"; source: "event";
+         action: STATE_SET "visible" 0.0;
+         transition: DECELERATE 0.25;
+         target: "e.text.label";
+      }
+      program {
+         signal: "mouse,out"; source: "event";
+         action: STATE_SET "default" 0.0;
+         transition: DECELERATE 1.0;
+         target: "e.text.label";
+      }
+   }
+}
+
+group { name: "e/modules/xkbswitch/noflag";
+   images.image: "shadow_square_tiny.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "shine.png" COMP;
+   max: 128 128;
+   parts {
+      part { name: "shadow";
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel1.offset: -3 -2;
+            rel2.to: "base";
+            rel2.offset: 2 4;
+            image.normal: "shadow_square_tiny.png";
+            image.border: 6 6 6 6;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "base"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: 3 3;
+            rel2.offset: -4 -4;
+            aspect: 1.8 1.8; aspect_preference: BOTH;
+            color: 51 153 255 255;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel1.relative: 0.0 0.5;
+            rel2.to: "base";
+            rel2.relative: 1.0 0.5;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            text { font: "Sans:style=Bold"; size: 9;
+               min: 0 1;
+               text_class: "module_small";
+            }
+            fixed: 0 1;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to_x: "base";
+            rel2.to_x: "base";
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         clip_to: "clip";
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel1.to: "base";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            rel2.to: "base";
+            FIXED_SIZE(69, 5)
+         }
+      }
+      part { name: "event"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+   }
+}

@@ -1,0 +1,118 @@
+/////////////////////////////////////////////////////////////////////////////
+/*** MOD: CONF_COLORS ***/
+
+   group {
+      name: "e/modules/conf_colors/preview/solid";
+      parts {
+         part {
+            name: "e.rect";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+               color_class: "color_preview";
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/modules/conf_colors/preview/text";
+      parts {
+         part {
+            name: "e.text";
+            type: TEXT;
+            effect: OUTLINE_SOFT_SHADOW;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+               color2: 255 255 255 255;
+               color3: 255 255 255 255;
+               color_class: "color_preview";
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+               text {
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  text: "Aa";
+                  min: 1 1;
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/modules/conf_colors/preview/unknown";
+      parts {
+         part {
+            name: "c1";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+               color_class: "color_preview_c1";
+               rel1 {
+                  relative: 0.0 0.0;
+                  offset: 0 0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -7 -1;
+               }
+            }
+         }
+         part {
+            name: "c2";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+               color_class: "color_preview_c2";
+               rel1 {
+                  relative: 1.0 0.0;
+                  offset: -6 0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -4 -1;
+               }
+            }
+         }
+         part {
+            name: "c3";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+               color_class: "color_preview_c3";
+               rel1 {
+                  relative: 1.0 0.0;
+                  offset: -3 0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -1 -1;
+               }
+            }
+         }
+      }
+   }
+
