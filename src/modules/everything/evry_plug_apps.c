@@ -1524,10 +1524,7 @@ _scan_idler(void *data __UNUSED__)
                  (!S_ISDIR(st.mode)) &&
                  (!access(info->path, X_OK)))
                {
-                  if (!exe_list)
-                    exe_list = eina_list_append(exe_list, strdup(info->path + info->name_start));
-                  else
-                    exe_list2 = eina_list_append(exe_list2, strdup(info->path + info->name_start));
+                  exe_list2 = eina_list_append(exe_list2, strdup(info->path + info->name_start));
                }
           }
         else
