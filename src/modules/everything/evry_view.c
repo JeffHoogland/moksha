@@ -495,14 +495,18 @@ _e_smart_reconfigure_do(void *data)
    if (!sd)
      return ECORE_CALLBACK_CANCEL;
 
-   sd->idle_enter = NULL;
-
    if (sd->w < 1)
-     return ECORE_CALLBACK_CANCEL;
-
+     {
+        sd->idle_enter = NULL;
+        return ECORE_CALLBACK_CANCEL;
+     }
+   
    if (sd->view->hiding)
-     return ECORE_CALLBACK_CANCEL;
-
+     {
+        sd->idle_enter = NULL;
+        return ECORE_CALLBACK_CANCEL;
+     }
+   
    if (sd->cx > (sd->cw - sd->w)) sd->cx = sd->cw - sd->w;
    if (sd->cy > (sd->ch - sd->h)) sd->cy = sd->ch - sd->h;
    if (sd->cx < 0) sd->cx = 0;
