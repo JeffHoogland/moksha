@@ -1776,6 +1776,7 @@ e_border_layer_set(E_Border *bd,
           {
              e_border_layer_set(child, layer);
           }
+        eina_list_free(list);
      }
    e_border_raise(bd);
    if (layer == E_LAYER_BELOW)
