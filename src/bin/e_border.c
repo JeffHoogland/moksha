@@ -274,32 +274,12 @@ _e_border_sub_borders_new(E_Border *bd)
 {
    Eina_List *list = NULL, *l;
    E_Border *child;
-   E_Border_List *bl;
 
    EINA_LIST_FOREACH(bd->transients, l, child)
      {
         if (!eina_list_data_find(list, child))
           list = eina_list_append(list, child);
      }
-   bl = e_container_border_list_first(bd->zone->container);
-   while ((child = e_container_border_list_next(bl)))
-     {
-        if (e_object_is_del(E_OBJECT(child))) continue;
-        if (child == bd) continue;
-/*
-        if ((bd->client.icccm.client_leader) &&
-            (child->client.icccm.client_leader ==
-                bd->client.icccm.client_leader))
-          {
-             printf("bd %s in group with %s\n",
-                    e_border_name_get(child),
-                    e_border_name_get(bd));
-             if (!eina_list_data_find(list, child))
-               list = eina_list_append(list, child);
-          }
- */
-     }
-   e_container_border_list_free(bl);
    return list;
 }
 
@@ -969,15 +949,11 @@ e_border_desk_set(E_Border *bd,
 
    if (e_config->transient.desktop)
      {
-        Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_FOREACH(list, l, child)
-          {
-             e_border_desk_set(child, bd->desk);
-          }
-        eina_list_free(list);
+        EINA_LIST_FREE(list, child)
+           e_border_desk_set(child, bd->desk);
      }
    e_remember_update(bd);
 }
@@ -1762,7 +1738,6 @@ e_border_layer_set(E_Border *bd,
    bd->layer = layer;
    if (e_config->transient.layer)
      {
-        Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
@@ -1772,11 +1747,8 @@ e_border_layer_set(E_Border *bd,
          * the transients.
          */
         e_config->transient.raise = 1;
-        EINA_LIST_FOREACH(list, l, child)
-          {
-             e_border_layer_set(child, layer);
-          }
-        eina_list_free(list);
+        EINA_LIST_FREE(list, child)
+           e_border_layer_set(child, layer);
      }
    e_border_raise(bd);
    if (layer == E_LAYER_BELOW)
@@ -1793,7 +1765,6 @@ e_border_raise(E_Border *bd)
 {
    E_Event_Border_Stack *ev;
    E_Border *last = NULL, *child;
-   Eina_List *l;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -1802,9 +1773,10 @@ e_border_raise(E_Border *bd)
 
    if (e_config->transient.raise)
      {
+        Eina_List *l, *l_prev;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_REVERSE_FOREACH(list, l, child)
+        EINA_LIST_REVERSE_FOREACH_SAFE(list, l, l_prev, child)
           {
              /* Don't stack iconic transients. If the user wants these shown,
               * thats another option.
@@ -1836,8 +1808,8 @@ e_border_raise(E_Border *bd)
                     }
                   last = child;
                }
+             list = eina_list_remove_list(list, l);
           }
-        eina_list_free(list);
      }
 
    ev = E_NEW(E_Event_Border_Stack, 1);
@@ -1882,7 +1854,6 @@ e_border_lower(E_Border *bd)
 {
    E_Event_Border_Stack *ev;
    E_Border *last = NULL, *child;
-   Eina_List *l;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -1891,9 +1862,10 @@ e_border_lower(E_Border *bd)
 
    if (e_config->transient.lower)
      {
+        Eina_List *l, *l_prev;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_REVERSE_FOREACH(list, l, child)
+        EINA_LIST_REVERSE_FOREACH_SAFE(list, l, l_prev, child)
           {
              /* Don't stack iconic transients. If the user wants these shown,
               * thats another option.
@@ -1925,8 +1897,8 @@ e_border_lower(E_Border *bd)
                     }
                   last = child;
                }
+             list = eina_list_remove_list(list, l);
           }
-        eina_list_free(list);
      }
 
    ev = E_NEW(E_Event_Border_Stack, 1);
@@ -1972,7 +1944,6 @@ e_border_stack_above(E_Border *bd,
    /* TODO: Should stack above allow the border to change level */
    E_Event_Border_Stack *ev;
    E_Border *last = NULL, *child;
-   Eina_List *l;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -1981,9 +1952,10 @@ e_border_stack_above(E_Border *bd,
 
    if (e_config->transient.raise)
      {
+        Eina_List *l, *l_prev;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_REVERSE_FOREACH(list, l, child)
+        EINA_LIST_REVERSE_FOREACH_SAFE(list, l, l_prev, child)
           {
              /* Don't stack iconic transients. If the user wants these shown,
               * thats another option.
@@ -1996,8 +1968,8 @@ e_border_stack_above(E_Border *bd,
                     e_border_stack_above(child, above);
                   last = child;
                }
+             list = eina_list_remove_list(list, l);
           }
-        eina_list_free(list);
      }
 
    ev = E_NEW(E_Event_Border_Stack, 1);
@@ -2030,7 +2002,6 @@ e_border_stack_below(E_Border *bd,
    /* TODO: Should stack below allow the border to change level */
    E_Event_Border_Stack *ev;
    E_Border *last = NULL, *child;
-   Eina_List *l;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -2039,9 +2010,10 @@ e_border_stack_below(E_Border *bd,
 
    if (e_config->transient.lower)
      {
+        Eina_List *l, *l_prev;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_REVERSE_FOREACH(bd->transients, l, child)
+        EINA_LIST_REVERSE_FOREACH_SAFE(bd->transients, l, l_prev, child)
           {
              /* Don't stack iconic transients. If the user wants these shown,
               * thats another option.
@@ -2054,8 +2026,8 @@ e_border_stack_below(E_Border *bd,
                     e_border_stack_below(child, below);
                   last = child;
                }
+             list = eina_list_remove_list(list, l);
           }
-        eina_list_free(list);
      }
 
    ev = E_NEW(E_Event_Border_Stack, 1);
@@ -3155,15 +3127,11 @@ e_border_iconify(E_Border *bd)
 
    if (e_config->transient.iconify)
      {
-        Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_FOREACH(list, l, child)
-          {
-             e_border_iconify(child);
-          }
-        eina_list_free(list);
+        EINA_LIST_FREE(list, child)
+           e_border_iconify(child);
      }
    e_remember_update(bd);
 }
@@ -3200,15 +3168,11 @@ e_border_uniconify(E_Border *bd)
 
    if (e_config->transient.iconify)
      {
-        Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_FOREACH(list, l, child)
-          {
-             e_border_uniconify(child);
-          }
-        eina_list_free(list);
+        EINA_LIST_FREE(list, child)
+           e_border_uniconify(child);
      }
    e_remember_update(bd);
 }
@@ -3227,17 +3191,15 @@ e_border_stick(E_Border *bd)
 
    if (e_config->transient.desktop)
      {
-        Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_FOREACH(list, l, child)
+        EINA_LIST_FREE(list, child)
           {
              child->sticky = 1;
              e_hints_window_sticky_set(child, 1);
              e_border_show(child);
           }
-        eina_list_free(list);
      }
 
    edje_object_signal_emit(bd->bg_object, "e,state,sticky", "e");
@@ -3263,16 +3225,14 @@ e_border_unstick(E_Border *bd)
 
    if (e_config->transient.desktop)
      {
-        Eina_List *l;
         E_Border *child;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_FOREACH(list, l, child)
+        EINA_LIST_FREE(list, child)
           {
              child->sticky = 0;
              e_hints_window_sticky_set(child, 0);
           }
-        eina_list_free(list);
      }
 
    edje_object_signal_emit(bd->bg_object, "e,state,unsticky", "e");
@@ -9749,7 +9709,7 @@ _e_border_hooks_clean(void)
    Eina_List *l, *ln;
    E_Border_Hook *bh;
 
-   EINA_LIST_FOREACH_SAFE (_e_border_hooks, l, ln, bh)
+   EINA_LIST_FOREACH_SAFE(_e_border_hooks, l, ln, bh)
      {
         if (bh->delete_me)
           {
