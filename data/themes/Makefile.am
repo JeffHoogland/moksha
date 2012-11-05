@@ -51,6 +51,7 @@ edc/xkbswitch.edc \
 edc/O/about.edc \
 edc/O/backlight.edc \
 edc/O/battery.edc \
+edc/O/border.edc \
 edc/O/border_icons.edc \
 edc/O/clock.edc \
 edc/O/colors.edc \
@@ -73,6 +74,7 @@ edc/O/spectrum.edc \
 edc/O/temperature.edc \
 edc/O/transitions.edc \
 edc/O/wallpaper.edc \
+edc/O/winlist.edc \
 edc/O/wizard.edc \
 img/ball_small_glow_intense.png \
 img/ball_small_glow.png \
@@ -207,6 +209,16 @@ img/wifi_sig_2.png \
 img/wifi_sig_3.png \
 img/win_glow.png \
 img/win_shadow.png \
+img/O/menu_sel_bg.png \
+img/O/menu_sel_fg.png \
+img/O/pager_window.png \
+img/O/pager_base2.png \
+img/O/pager_window_shaded.png \
+img/O/bd_top_hilight.png \
+img/O/bd_title_bg.png \
+img/O/menu_sep.png \
+img/O/bd_title_over.png \
+img/O/base_bg.png \
 img/O/ch-h1-2.png \
 img/O/ch-h1-3.png \
 img/O/ch-h1.png \

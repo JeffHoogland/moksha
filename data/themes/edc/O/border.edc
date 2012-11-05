@@ -1,0 +1,119 @@
+   group {
+      name: "e/widgets/border/default/move";
+      images {
+         image: "O/base_bg.png" COMP;
+         image: "O/icon_win_move.png" COMP;
+      }
+      parts {
+         part {
+            name: "base";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               image {
+                  normal: "O/base_bg.png";
+                  border: 2 2 2 2;
+               }
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "icon";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               align: 0.0 0.5;
+               min: 21 21;
+               max: 21 21;
+               fixed: 1 1;
+               rel1.offset: 2 2;
+               rel2.relative: 0.0 1.0;
+               rel2.offset: 2 -3;
+               image.normal: "O/icon_win_move.png";
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1.to_x: "icon";
+               rel1.offset: 2 4;
+               rel1.relative: 1.0 0.0;
+               rel2.offset: -5 -5;
+               color_class: "move_text";
+               color: 0 0 0 255;
+               text {
+                  text: "X Y";
+                  font: "Sans";
+                  size: 10;
+                  align: 0.5 0.5;
+                  min: 1 1;
+                  text_class: "move_text";
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/widgets/border/default/resize";
+      images {
+         image: "O/base_bg.png" COMP;
+         image: "O/icon_win_resize.png" COMP;
+      }
+      parts {
+         part {
+            name: "base";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               align: 0.5 0.0;
+               image {
+                  normal: "O/base_bg.png";
+                  border: 2 2 2 2;
+               }
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "icon";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               align: 0.0 0.5;
+               min: 21 21;
+               max: 21 21;
+               fixed: 1 1;
+               rel1.offset: 2 2;
+               rel2.relative: 0.0 1.0;
+               rel2.offset: 2 -3;
+               image.normal: "O/icon_win_resize.png";
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1.to_x: "icon";
+               rel1.offset: 2 4;
+               rel1.relative: 1.0 0.0;
+               rel2.offset: -5 -5;
+               color_class: "resize_text";
+               color: 0 0 0 255;
+               text {
+                  text: "WxH";
+                  font: "Sans";
+                  size: 10;
+                  align: 0.5 0.5;
+                  min: 1 1;
+                  text_class: "resize_text";
+               }
+            }
+         }
+      }
+   }
+
+
