@@ -423,17 +423,17 @@ _e_xsettings_error_cb(void *data, Eio_File *handler __UNUSED__, int error __UNUS
      {
         _e_xsettings_string_set(_setting_theme_name,
                               e_config->xsettings.net_theme_name);
+        _e_xsettings_update();
         return;
      }
 
    _e_xsettings_string_set(_setting_theme_name, NULL);
+   _e_xsettings_update();
 }
 
 static void
 _e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const Eina_Stat *estat __UNUSED__)
 {
-   Eina_List *l;
-   Settings_Manager *sm;
    if (reset)
      {
         /* should not happen */
@@ -444,8 +444,7 @@ _e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const 
    _setting_theme = NULL;
    eio_op = NULL;
    setting = EINA_FALSE;
-   EINA_LIST_FOREACH(managers, l, sm)
-     _e_xsettings_apply(sm);
+   _e_xsettings_update();
 }
 
 static void
