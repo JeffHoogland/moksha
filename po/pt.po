@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-11-06 00:17+0900\n"
-"PO-Revision-Date: 2012-11-01 01:31+0100\n"
+"PO-Revision-Date: 2012-11-06 12:57-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -15,8 +15,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
-"X-Poedit-Language: Portuguese\n"
-"X-Poedit-Country: Portugal\n"
 
 #: src/bin/e_about.c:14
 msgid "About Enlightenment"
@@ -1616,18 +1614,16 @@ msgid "Set background..."
 msgstr "Definir imagem de fundo..."
 
 #: src/bin/e_fm.c:9441
-#, fuzzy
 msgid "Clear background"
-msgstr "Definir imagem de fundo..."
+msgstr "Remover imagem de fundo..."
 
 #: src/bin/e_fm.c:9448 src/bin/e_fm.c:9677
 msgid "Set overlay..."
 msgstr "Definir sobreposição..."
 
 #: src/bin/e_fm.c:9454
-#, fuzzy
 msgid "Clear overlay"
-msgstr "Definir sobreposição..."
+msgstr "Remover sobreposição"
 
 #: src/bin/e_fm.c:9766
 msgid "Create a new Directory"
@@ -4844,7 +4840,7 @@ msgstr "Área de trabalho"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
 msgid "<None>"
-msgstr "<Nada>"
+msgstr "<Nenhum>"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:5
 msgid ""
@@ -7483,15 +7479,15 @@ msgid "Deleting is aborted"
 msgstr "A eliminação foi cancelada"
 
 #: src/modules/fileman/e_fwin.c:2954
-#, fuzzy, c-format
+#, c-format
 msgid "Secure deletion is aborted"
-msgstr "A eliminação foi cancelada"
+msgstr "A eliminação permanente foi cancelada"
 
 #: src/modules/fileman/e_fwin.c:2958
 #: src/modules/fileman_opinfo/e_mod_main.c:98
 #, c-format
 msgid "Unknown operation from slave is aborted"
-msgstr "Foi abortada uma operação desconhecida"
+msgstr "A operação desconhecida foi cancelada"
 
 #: src/modules/fileman/e_fwin.c:2968
 #: src/modules/fileman_opinfo/e_mod_main.c:108
@@ -7528,14 +7524,14 @@ msgid "Deleting files..."
 msgstr "A eliminar ficheiros..."
 
 #: src/modules/fileman/e_fwin.c:2989
-#, fuzzy, c-format
+#, c-format
 msgid "Secure delete done"
-msgstr "Eliminação segura"
+msgstr "Terminou a eliminação segura"
 
 #: src/modules/fileman/e_fwin.c:2991
-#, fuzzy, c-format
+#, c-format
 msgid "Securely deleting files..."
-msgstr "A eliminar ficheiros..."
+msgstr "A eliminar ficheiros permanentemente..."
 
 #: src/modules/fileman/e_fwin.c:2995
 #: src/modules/fileman_opinfo/e_mod_main.c:125
