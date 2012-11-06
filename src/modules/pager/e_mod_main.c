@@ -1140,7 +1140,7 @@ _pager_cb_event_border_stick(void *data __UNUSED__, int type __UNUSED__, void *e
         if (!pw) continue;
 
         EINA_LIST_FOREACH(p->desks, l2, pd)
-          if (ev->border->desk != pd->desk)
+          if ((ev->border->desk != pd->desk) && (!_pager_desk_window_find(pd, ev->border)))
             {
                pw = _pager_window_new(pd, ev->border);
                if (pw) pd->wins = eina_list_append(pd->wins, pw);
@@ -1250,7 +1250,7 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
           {
              /* find the pager desk it needs to go to */
              pd = _pager_desk_find(pager, bd->desk);
-             if (pd)
+             if ((pd) && (!_pager_desk_window_find(pd, bd)))
                {
                   /* create it and add it */
                   pw = _pager_window_new(pd, bd);
@@ -1277,6 +1277,7 @@ _pager_window_desk_change(Pager *pager, E_Border *bd)
              EINA_LIST_FOREACH(pager->desks, l, pd)
                {
                   /* create it and add it */
+                  if (_pager_desk_window_find(pd, bd)) continue;
                   pw = _pager_window_new(pd, bd);
                   if (pw)
                     {
@@ -1602,7 +1603,7 @@ _pager_cb_event_border_property(void *data __UNUSED__, int type __UNUSED__, void
         if (!ev->border->sticky)
           {
              pd = _pager_desk_find(p, ev->border->desk);
-             if (pd)
+             if ((pd) && (!_pager_desk_window_find(pd, ev->border)))
                {
                   pw = _pager_window_new(pd, ev->border);
                   if (pw)
@@ -1626,6 +1627,7 @@ _pager_cb_event_border_property(void *data __UNUSED__, int type __UNUSED__, void
           {
              EINA_LIST_FOREACH(p->desks, l2, pd)
                {
+                  if (_pager_desk_window_find(pd, ev->border)) continue;
                   pw = _pager_window_new(pd, ev->border);
                   if (pw)
                     {
