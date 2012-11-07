@@ -394,7 +394,7 @@ main(int argc, char **argv)
         else if (child == 0)
           {
              /* in the child */
-             ptrace(PTRACE_TRACEME, 0, NULL, NULL);
+             ptrace(PT_TRACE_ME, 0, NULL, NULL);
 
              execv(args[0], args);
              return 0; /* We failed, 0 mean normal exit from E with no restart or crash so let exit */
@@ -406,12 +406,12 @@ main(int argc, char **argv)
              int status;
              Eina_Bool done = EINA_FALSE;
 
-             ptrace(PTRACE_ATTACH, child, NULL, NULL);
+             ptrace(PT_ATTACH, child, NULL, NULL);
 
              result = waitpid(child, &status, 0);
 
              if (WIFSTOPPED(status))
-               ptrace(PTRACE_CONT, child, NULL, NULL);
+               ptrace(PT_CONTINUE, child, NULL, NULL);
 
              while (!done)
                {
@@ -454,12 +454,12 @@ main(int argc, char **argv)
                                  sig.si_signo != SIGBUS &&
                                  sig.si_signo != SIGABRT))
                               {
-                                 ptrace(PTRACE_CONT, child, NULL, back);
+                                 ptrace(PT_CONTINUE, child, NULL, back);
                                  continue ;
                               }
 
                             /* E17 should be in pause, we can detach */
-                            ptrace(PTRACE_DETACH, child, NULL, back);
+                            ptrace(PT_DETACH, child, NULL, back);
 
                             /* And call gdb if available */
                             if (home)
