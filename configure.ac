@@ -35,7 +35,7 @@ AH_BOTTOM([
 #endif /* EFL_CONFIG_H__ */
 ])
 
-AM_INIT_AUTOMAKE([1.11 dist-bzip2 subdir-objects])
+AM_INIT_AUTOMAKE([1.11 dist-bzip2 subdir-objects -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_GNU_SOURCE

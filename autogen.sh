@@ -1,6 +1,6 @@
 #!/bin/sh
 
-autoreconf --symlink --install -Wno-portability
+autoreconf --symlink --install
 
 if [ -z "$NOCONFIGURE" ]; then
 	exec ./configure -C "$@"
