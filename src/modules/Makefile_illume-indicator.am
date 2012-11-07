@@ -9,9 +9,7 @@ EXTRA_DIST += illume-indicator/e-module-illume-indicator.edc \
 EXTRA_DIST += illume-indicator/images/base_bg.png \
 	      illume-indicator/images/module_icon.png
 
-ILLUME_INDICATOR_EDJE_FLAGS = $(EDJE_FLAGS) \
-	     -id $(top_srcdir)/src/modules/illume-indicator/images \
-	     @EDJE_DEF@
+ILLUME_INDICATOR_EDJE_FLAGS = $(EDJE_FLAGS) -id illume-indicator/images
 
 illume-indicator/%.edj: illume-indicator/%.edc Makefile
 	$(EDJE_CC) $(ILLUME_INDICATOR_EDJE_FLAGS) $< $@
