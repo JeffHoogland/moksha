@@ -40,10 +40,8 @@ ILLUME_KEYBOARD_EDJE_FLAGS = $(EDJE_FLAGS) \
 	     -id $(top_srcdir)/src/modules/illume-keyboard/images \
 	     @EDJE_DEF@
 
-illume-keyboard/e-module-illume-keyboard.edj: Makefile $(top_srcdir)/src/modules/illume-keyboard/e-module-illume-keyboard.edc 
-	$(EDJE_CC) $(ILLUME_KEYBOARD_EDJE_FLAGS) \
-	$(top_srcdir)/src/modules/illume-keyboard/e-module-illume-keyboard.edc \
-	$(top_builddir)/src/modules/illume-keyboard/e-module-illume-keyboard.edj
+illume-keyboard/%.edj: illume-keyboard/%.edc Makefile
+	$(EDJE_CC) $(ILLUME_KEYBOARD_EDJE_FLAGS) $< $@
 
 illume_keyboardpkgdir = $(MDIR)/illume-keyboard/$(MODULE_ARCH)
 illume_keyboardpkg_LTLIBRARIES = illume-keyboard/module.la

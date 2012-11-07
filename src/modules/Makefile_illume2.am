@@ -42,10 +42,8 @@ ILLUME2_EDJE_FLAGS = $(EDJE_FLAGS) \
 	     -id $(top_srcdir)/src/modules/illume2/images \
 	     @EDJE_DEF@
 
-illume2/e-module-illume2.edj: Makefile $(top_srcdir)/src/modules/illume2/e-module-illume2.edc
-	$(EDJE_CC) $(ILLUME2_EDJE_FLAGS) \
-	$(top_srcdir)/src/modules/illume2/e-module-illume2.edc \
-	$(top_builddir)/src/modules/illume2/e-module-illume2.edj
+illume2/%.edj: illume2/%.edc Makefile
+	$(EDJE_CC) $(ILLUME2_EDJE_FLAGS) $< $@
 
 illume2pkgdir = $(MDIR)/illume2/$(MODULE_ARCH)
 illume2pkg_LTLIBRARIES = illume2/module.la

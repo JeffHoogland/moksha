@@ -14,10 +14,8 @@ TILING_EDJE_FLAGS = $(EDJE_FLAGS) \
 		    -id $(top_srcdir)/src/modules/tiling/images \
 		    @EDJE_DEF@
 
-tiling/e-module-tiling.edj:  tiling/e-module-tiling.edc
-	$(EDJE_CC) $(TILING_EDJE_FLAGS) 	\
-	$(top_srcdir)/src/modules/tiling/e-module-tiling.edc \
-	$(top_builddir)/src/modules/tiling/e-module-tiling.edj
+tiling/%.edj: tiling/%.edc Makefile
+	$(EDJE_CC) $(TILING_EDJE_FLAGS) $< $@
 
 tiling_module_la_SOURCES = tiling/e_mod_tiling.c \
 			   tiling/e_mod_tiling.h \
