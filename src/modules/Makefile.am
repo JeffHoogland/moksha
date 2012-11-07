@@ -1,216 +1,235 @@
 MAINTAINERCLEANFILES = Makefile.in
 
 SUBDIRS =
+CLEANFILES =
+EXTRA_DIST =
+INSTALL_DATA_HOOKS =
+
+MDIR = $(libdir)/enlightenment/modules
+MDEPENDENCIES = $(top_builddir)/config.h
+AM_LDFLAGS = -module -avoid-version
+AM_CPPFLAGS = -I. \
+	      -I$(top_srcdir) \
+	      -I$(top_srcdir)/src/bin \
+	      -I$(top_builddir)/src/bin \
+	      -I$(top_srcdir)/src/modules
+AM_CFLAGS = @e_cflags@
+AM_LIBADD = @e_libs@ @dlopen_libs@
+
+EDJE_CC = @edje_cc@
+EDJE_FLAGS_VERBOSE_ =
+EDJE_FLAGS_VERBOSE_0 =
+EDJE_FLAGS_VERBOSE_1 = -v
+EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V))
+
+if USE_MODULE_CONNMAN
+include Makefile_connman.am
+endif
 
 if USE_MODULE_IBAR
-SUBDIRS += ibar
+include Makefile_ibar.am
 endif
 
 if USE_MODULE_DROPSHADOW
-SUBDIRS += dropshadow
+include Makefile_dropshadow.am
 endif
 
 if USE_MODULE_CLOCK
-SUBDIRS += clock
+include Makefile_clock.am
 endif
 
 if USE_MODULE_PAGER
-SUBDIRS += pager
+include Makefile_pager.am
 endif
 
 if USE_MODULE_BATTERY
-SUBDIRS += battery
+include Makefile_battery.am
 endif
 
 if USE_MODULE_TEMPERATURE
-SUBDIRS += temperature
+include Makefile_temperature.am
 endif
 
 if USE_MODULE_NOTIFICATION
-SUBDIRS += notification
+include Makefile_notification.am
 endif
 
 if USE_MODULE_CPUFREQ
-SUBDIRS += cpufreq
+include Makefile_cpufreq.am
 endif
 
 if USE_MODULE_IBOX
-SUBDIRS += ibox
+include Makefile_ibox.am
 endif
 
 if USE_MODULE_START
-SUBDIRS += start
+include Makefile_start.am
 endif
 
 if USE_MODULE_WINLIST
-SUBDIRS += winlist
+include Makefile_winlist.am
 endif
 
 if USE_MODULE_FILEMAN
-SUBDIRS += fileman
+include Makefile_fileman.am
 endif
 
 if USE_MODULE_FILEMAN_OPINFO
-SUBDIRS += fileman_opinfo
+include Makefile_fileman_opinfo.am
 endif
 
 if USE_MODULE_WIZARD
-SUBDIRS += wizard
+include Makefile_wizard.am
 endif
 
 if USE_MODULE_CONF
-SUBDIRS += conf
+include Makefile_conf.am
 endif
 
 if USE_MODULE_CONF_WALLPAPER2
-SUBDIRS += conf_wallpaper2
+include Makefile_conf_wallpaper2.am
 endif
 
 if USE_MODULE_CONF_THEME
-SUBDIRS += conf_theme
+include Makefile_conf_theme.am
 endif
 
 if USE_MODULE_CONF_INTL
-SUBDIRS += conf_intl
+include Makefile_conf_intl.am
 endif
 
 if USE_MODULE_MSGBUS
-SUBDIRS += msgbus
+include Makefile_msgbus.am
 endif
 
 if USE_MODULE_CONF_APPLICATIONS
-SUBDIRS += conf_applications
+include Makefile_conf_applications.am
 endif
 
 if USE_MODULE_CONF_DISPLAY
-SUBDIRS += conf_display
+include Makefile_conf_display.am
 endif
 
 if USE_MODULE_CONF_SHELVES
-SUBDIRS += conf_shelves
+include Makefile_conf_shelves.am
 endif
 
 if USE_MODULE_CONF_KEYBINDINGS
-SUBDIRS += conf_keybindings
+include Makefile_conf_keybindings.am
 endif
 
 if USE_MODULE_CONF_EDGEBINDINGS
-SUBDIRS += conf_edgebindings
+include Makefile_conf_edgebindings.am
 endif
 
 if USE_MODULE_CONF_WINDOW_REMEMBERS
-SUBDIRS += conf_window_remembers
+include Makefile_conf_window_remembers.am
 endif
 
 if USE_MODULE_CONF_WINDOW_MANIPULATION
-SUBDIRS += conf_window_manipulation
+include Makefile_conf_window_manipulation.am
 endif
 
 if USE_MODULE_CONF_MENUS
-SUBDIRS += conf_menus
+include Makefile_conf_menus.am
 endif
 
 if USE_MODULE_CONF_DIALOGS
-SUBDIRS += conf_dialogs
+include Makefile_conf_dialogs.am
 endif
 
 if USE_MODULE_CONF_PERFORMANCE
-SUBDIRS += conf_performance
+include Makefile_conf_performance.am
 endif
 
 if USE_MODULE_CONF_PATHS
-SUBDIRS += conf_paths
+include Makefile_conf_paths.am
 endif
 
 if USE_MODULE_CONF_INTERACTION
-SUBDIRS += conf_interaction
+include Makefile_conf_interaction.am
 endif
 
 if USE_MODULE_CONF_RANDR
-SUBDIRS += conf_randr
+include Makefile_conf_randr.am
 endif
 
 if USE_MODULE_GADMAN
-SUBDIRS += gadman
+include Makefile_gadman.am
 endif
 
 if USE_MODULE_MIXER
-SUBDIRS += mixer
-endif
-
-if USE_MODULE_CONNMAN
-SUBDIRS += connman
+include Makefile_mixer.am
 endif
 
 if USE_MODULE_ILLUME2
-SUBDIRS += \
-        illume2 \
-        illume-home \
-        illume-home-toggle \
-        illume-softkey \
-        illume-keyboard \
-        illume-indicator \
-        illume-kbd-toggle \
-        illume-mode-toggle \
-        illume-bluetooth
+include Makefile_illume2.am
+include Makefile_illume-home.am
+include Makefile_illume-home-toggle.am
+include Makefile_illume-softkey.am
+include Makefile_illume-keyboard.am
+include Makefile_illume-indicator.am
+include Makefile_illume-kbd-toggle.am
+include Makefile_illume-mode-toggle.am
+include Makefile_illume-bluetooth.am
 endif
 
 if USE_MODULE_SYSCON
-SUBDIRS += syscon
+include Makefile_syscon.am
 endif
 
 if USE_MODULE_EVERYTHING
-SUBDIRS += everything
+include Makefile_everything.am
 endif
 
 if USE_MODULE_SYSTRAY
-SUBDIRS += systray
+include Makefile_systray.am
 endif
 
 if USE_MODULE_COMP
-SUBDIRS += comp
+include Makefile_comp.am
 endif
 
 if USE_MODULE_PHYSICS
-SUBDIRS += physics
+include Makefile_physics.am
 endif
 
 if USE_MODULE_QUICKACCESS
-SUBDIRS += quickaccess
+include Makefile_quickaccess.am
 endif
 
 if USE_MODULE_SHOT
-SUBDIRS += shot
+include Makefile_shot.am
 endif
 
 if USE_MODULE_BACKLIGHT
-SUBDIRS += backlight
+include Makefile_backlight.am
 endif
 
 if USE_MODULE_TASKS
-SUBDIRS += tasks
+include Makefile_tasks.am
 endif
 
 if USE_MODULE_XKBSWITCH
-SUBDIRS += xkbswitch
+include Makefile_xkbswitch.am
 endif
 
 if USE_MODULE_TILING
-SUBDIRS += tiling
+include Makefile_tiling.am
 endif
 
 if USE_MODULE_ACCESS
-SUBDIRS += access
+include Makefile_access.am
 endif
 
 #if HAVE_WAYLAND_DRM
-# SUBDIRS += wl_drm
+#include Makefile_wl_drm.am
 #endif
 
 #if HAVE_WAYLAND_SHELL
-# SUBDIRS += wl_shell
+#include Makefile_wl_shell.am
 #endif
 
 #if HAVE_WAYLAND_SCREENSHOT
-# SUBDIRS += wl_screenshot
+#include Makefile_wl_screenshot.am
 #endif

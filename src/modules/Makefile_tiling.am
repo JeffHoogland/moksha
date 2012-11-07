@@ -1,0 +1,26 @@
+tilingdir = $(MDIR)/tiling
+tiling_DATA = tiling/e-module-tiling.edj \
+	      tiling/module.desktop
+
+EXTRA_DIST += $(tiling_DATA) \
+	      tiling/e-module-tiling.edc \
+	      tiling/module.desktop.in \
+	      tiling/images/module_icon.png
+
+tilingpkgdir = $(MDIR)/tiling/$(MODULE_ARCH)
+tilingpkg_LTLIBRARIES = tiling/module.la
+
+TILING_EDJE_FLAGS = $(EDJE_FLAGS) \
+		    -id $(top_srcdir)/src/modules/tiling/images \
+		    @EDJE_DEF@
+
+tiling/e-module-tiling.edj:  tiling/e-module-tiling.edc
+	$(EDJE_CC) $(TILING_EDJE_FLAGS) 	\
+	$(top_srcdir)/src/modules/tiling/e-module-tiling.edc \
+	$(top_builddir)/src/modules/tiling/e-module-tiling.edj
+
+tiling_module_la_SOURCES = tiling/e_mod_tiling.c \
+			   tiling/e_mod_tiling.h \
+			   tiling/e_mod_config.c
+
+tiling_module_la_DEPENDENCIES = $(MDEPENDENCIES)

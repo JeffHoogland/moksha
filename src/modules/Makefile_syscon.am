@@ -1,0 +1,18 @@
+syscondir = $(MDIR)/syscon
+syscon_DATA = syscon/e-module-syscon.edj \
+	      syscon/module.desktop
+
+EXTRA_DIST += $(syscon_DATA)
+
+sysconpkgdir = $(MDIR)/syscon/$(MODULE_ARCH)
+sysconpkg_LTLIBRARIES = syscon/module.la
+
+syscon_module_la_SOURCES = syscon/e_mod_main.c \
+			   syscon/e_mod_main.h \
+			   syscon/e_int_config_syscon.c \
+			   syscon/e_int_config_syscon.h \
+			   syscon/e_syscon.c \
+			   syscon/e_syscon.h \
+			   syscon/e_syscon_gadget.c
+
+syscon_module_la_DEPENDENCIES = $(MDEPENDENCIES)

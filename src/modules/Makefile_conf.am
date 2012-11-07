@@ -1,0 +1,16 @@
+confdir = $(MDIR)/conf
+conf_DATA = conf/e-module-conf.edj \
+	    conf/module.desktop
+
+EXTRA_DIST += $(conf_DATA)
+
+confpkgdir = $(MDIR)/conf/$(MODULE_ARCH)
+confpkg_LTLIBRARIES = conf/module.la
+
+conf_module_la_SOURCES = conf/e_mod_main.c \
+			 conf/e_mod_main.h \
+			 conf/e_conf.c \
+			 conf/e_conf.h \
+			 conf/e_mod_config.c
+
+conf_module_la_DEPENDENCIES = $(MDEPENDENCIES)

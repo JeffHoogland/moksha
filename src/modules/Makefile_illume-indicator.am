@@ -1,0 +1,37 @@
+illume_indicatordir = $(MDIR)/illume-indicator
+illume_indicator_DATA = illume-indicator/e-module-illume-indicator.edj \
+			illume-indicator/module.desktop
+
+EXTRA_DIST += illume-indicator/e-module-illume-indicator.edc \
+	      illume-indicator/module.desktop.in
+
+# images
+EXTRA_DIST += illume-indicator/images/base_bg.png \
+	      illume-indicator/images/module_icon.png
+
+ILLUME_INDICATOR_EDJE_FLAGS = $(EDJE_FLAGS) \
+	     -id $(top_srcdir)/src/modules/illume-indicator/images \
+	     @EDJE_DEF@
+
+illume-indicator/e-module-illume-indicator.edj: Makefile $(top_srcdir)/src/modules/illume-indicator/e-module-illume-indicator.edc 
+	$(EDJE_CC) $(ILLUME_INDICATOR_EDJE_FLAGS) \
+	$(top_srcdir)/src/modules/illume-indicator/e-module-illume-indicator.edc \
+	$(top_builddir)/src/modules/illume-indicator/e-module-illume-indicator.edj
+
+illume_indicatorpkgdir = $(MDIR)/illume-indicator/$(MODULE_ARCH)
+illume_indicatorpkg_LTLIBRARIES = illume-indicator/module.la
+
+illume_indicator_module_la_SOURCES  = illume-indicator/e_mod_main.c \
+				      illume-indicator/e_mod_main.h \
+				      illume-indicator/e_mod_config.c \
+				      illume-indicator/e_mod_config.h \
+				      illume-indicator/e_mod_ind_win.c \
+				      illume-indicator/e_mod_ind_win.h
+
+if HAVE_ENOTIFY
+illume_indicator_module_la_SOURCES += illume-indicator/e_mod_notify.c \
+				      illume-indicator/e_mod_notify.h
+endif
+
+illume_indicator_module_la_LIBADD = $(AM_LIBADD) @ENOTIFY_LIBS@
+illume_indicator_module_la_DEPENDENCIES = $(MDEPENDENCIES)

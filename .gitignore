@@ -10,6 +10,7 @@ Makefile.in
 *~
 *.cfg
 *.desktop
+*.dirstamp
 default.edj
 /ABOUT-NLS
 /aclocal.m4

@@ -1,0 +1,13 @@
+illume_mode_toggledir = $(MDIR)/illume-mode-toggle
+illume_mode_toggle_DATA = illume-mode-toggle/e-module-illume-mode-toggle.edj \
+			 illume-mode-toggle/module.desktop
+
+EXTRA_DIST += $(illume_mode_toggle_DATA)
+
+illume_mode_togglepkgdir = $(MDIR)/illume-mode-toggle/$(MODULE_ARCH)
+illume_mode_togglepkg_LTLIBRARIES = illume-mode-toggle/module.la
+
+illume_mode_toggle_module_la_SOURCES = illume-mode-toggle/e_mod_main.c \
+				      illume-mode-toggle/e_mod_main.h
+
+illume_mode_toggle_module_la_DEPENDENCIES = $(MDEPENDENCIES)

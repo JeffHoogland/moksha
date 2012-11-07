@@ -1,0 +1,14 @@
+ibardir = $(MDIR)/ibar
+ibar_DATA = ibar/e-module-ibar.edj \
+	    ibar/module.desktop
+
+EXTRA_DIST += $(ibar_DATA)
+
+ibarpkgdir = $(MDIR)/ibar/$(MODULE_ARCH)
+ibarpkg_LTLIBRARIES = ibar/module.la
+
+ibar_module_la_SOURCES = ibar/e_mod_main.c \
+			 ibar/e_mod_main.h \
+			 ibar/e_mod_config.c
+
+ibar_module_la_DEPENDENCIES = $(MDEPENDENCIES)

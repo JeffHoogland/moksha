@@ -1,0 +1,13 @@
+fileman_opinfodir = $(MDIR)/fileman_opinfo
+fileman_opinfo_DATA = fileman_opinfo/e-module-fileman_opinfo.edj \
+		      fileman_opinfo/module.desktop
+
+EXTRA_DIST += $(fileman_opinfo_DATA)
+
+fileman_opinfopkgdir = $(MDIR)/fileman_opinfo/$(MODULE_ARCH)
+fileman_opinfopkg_LTLIBRARIES = fileman_opinfo/module.la
+
+fileman_opinfo_module_la_SOURCES = fileman_opinfo/e_mod_main.c \
+				   fileman_opinfo/e_mod_main.h
+
+fileman_opinfo_module_la_DEPENDENCIES = $(MDEPENDENCIES)

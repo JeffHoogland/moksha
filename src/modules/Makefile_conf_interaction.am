@@ -1,0 +1,17 @@
+conf_interactiondir = $(MDIR)/conf_interaction
+conf_interaction_DATA = conf_interaction/e-module-conf_interaction.edj \
+			conf_interaction/module.desktop
+
+EXTRA_DIST += $(conf_interaction_DATA)
+
+conf_interactionpkgdir = $(MDIR)/conf_interaction/$(MODULE_ARCH)
+conf_interactionpkg_LTLIBRARIES = conf_interaction/module.la
+
+conf_interaction_module_la_SOURCES = conf_interaction/e_mod_main.c \
+			     conf_interaction/e_mod_main.h \
+			     conf_interaction/e_int_config_interaction.c \
+			     conf_interaction/e_int_config_interaction.h \
+			     conf_interaction/e_int_config_mouse.c \
+			     conf_interaction/e_int_config_mouse.h
+
+conf_interaction_module_la_DEPENDENCIES = $(MDEPENDENCIES)

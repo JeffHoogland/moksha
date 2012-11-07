@@ -1,0 +1,17 @@
+quickaccessdir = $(MDIR)/quickaccess
+quickaccess_DATA = quickaccess/e-module-quickaccess.edj \
+		   quickaccess/module.desktop
+
+EXTRA_DIST += $(quickaccess_DATA)
+
+quickaccesspkgdir = $(MDIR)/quickaccess/$(MODULE_ARCH)
+quickaccesspkg_LTLIBRARIES = quickaccess/module.la
+
+quickaccess_module_la_SOURCES = quickaccess/e_mod_main.c \
+				quickaccess/e_mod_main.h \
+				quickaccess/e_mod_config.c \
+				quickaccess/e_mod_quickaccess.c \
+				quickaccess/e_quickaccess_bindings.c \
+				quickaccess/e_quickaccess_db.c
+
+quickaccess_module_la_DEPENDENCIES = $(MDEPENDENCIES)

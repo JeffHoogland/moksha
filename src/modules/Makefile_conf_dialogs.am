@@ -1,0 +1,18 @@
+conf_dialogsdir = $(MDIR)/conf_dialogs
+conf_dialogs_DATA = conf_dialogs/e-module-conf_dialogs.edj \
+		    conf_dialogs/module.desktop
+
+EXTRA_DIST += $(conf_dialogs_DATA)
+
+conf_dialogspkgdir = $(MDIR)/conf_dialogs/$(MODULE_ARCH)
+conf_dialogspkg_LTLIBRARIES = conf_dialogs/module.la
+
+conf_dialogs_module_la_SOURCES = conf_dialogs/e_mod_main.c \
+				 conf_dialogs/e_mod_main.h \
+				 conf_dialogs/e_int_config_dialogs.c \
+				 conf_dialogs/e_int_config_dialogs.h \
+				 conf_dialogs/e_int_config_profiles.c \
+				 conf_dialogs/e_int_config_profiles.h
+
+
+conf_dialogs_module_la_DEPENDENCIES = $(MDEPENDENCIES)

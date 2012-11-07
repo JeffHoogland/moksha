@@ -1,0 +1,16 @@
+xkbswitchdir = $(MDIR)/xkbswitch
+xkbswitch_DATA = xkbswitch/e-module-xkbswitch.edj \
+		 xkbswitch/module.desktop
+
+EXTRA_DIST += $(xkbswitch_DATA)
+
+xkbswitchpkgdir = $(MDIR)/xkbswitch/$(MODULE_ARCH)
+xkbswitchpkg_LTLIBRARIES = xkbswitch/module.la
+
+xkbswitch_module_la_SOURCES = xkbswitch/e_mod_main.c \
+			      xkbswitch/e_mod_main.h \
+			      xkbswitch/e_mod_config.c \
+			      xkbswitch/e_mod_parse.c \
+			      xkbswitch/e_mod_parse.h
+
+xkbswitch_module_la_DEPENDENCIES = $(MDEPENDENCIES)

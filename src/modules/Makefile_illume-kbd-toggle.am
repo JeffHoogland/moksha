@@ -1,0 +1,13 @@
+illume_kbd_toggledir = $(MDIR)/illume-kbd-toggle
+illume_kbd_toggle_DATA = illume-kbd-toggle/e-module-illume-kbd-toggle.edj \
+			 illume-kbd-toggle/module.desktop
+
+EXTRA_DIST += $(illume_kbd_toggle_DATA)
+
+illume_kbd_togglepkgdir = $(MDIR)/illume-kbd-toggle/$(MODULE_ARCH)
+illume_kbd_togglepkg_LTLIBRARIES = illume-kbd-toggle/module.la
+
+illume_kbd_toggle_module_la_SOURCES = illume-kbd-toggle/e_mod_main.c \
+				      illume-kbd-toggle/e_mod_main.h
+
+illume_kbd_toggle_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -1,0 +1,15 @@
+conf_menusdir = $(MDIR)/conf_menus
+conf_menus_DATA = conf_menus/e-module-conf_menus.edj \
+		  conf_menus/module.desktop
+
+EXTRA_DIST += $(conf_menus_DATA)
+
+conf_menuspkgdir = $(MDIR)/conf_menus/$(MODULE_ARCH)
+conf_menuspkg_LTLIBRARIES = conf_menus/module.la
+
+conf_menus_module_la_SOURCES = conf_menus/e_mod_main.c \
+			       conf_menus/e_mod_main.h \
+			       conf_menus/e_int_config_menus.c \
+			       conf_menus/e_int_config_menus.h
+
+conf_menus_module_la_DEPENDENCIES = $(MDEPENDENCIES)
