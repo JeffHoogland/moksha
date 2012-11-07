@@ -415,7 +415,10 @@ main(int argc, char **argv)
 
              while (!done)
                {
-                  result = waitpid(child, &status, 0);
+		  Eina_Bool remember_sigill = EINA_FALSE;
+		  Eina_Bool remember_sigusr1 = EINA_FALSE;
+
+		  result = waitpid(child, &status, 0);
 
                   if (result == child)
                     {
@@ -431,9 +434,22 @@ main(int argc, char **argv)
                             back = r == 0 &&
                               sig.si_signo != SIGTRAP ? sig.si_signo : 0;
 
+			    if (sig.si_signo == SIGUSR1)
+			      {
+				 if (remember_sigill)
+				   remember_sigusr1 = EINA_TRUE;
+			      }
+			    else if (sig.si_signo == SIGILL)
+			      {
+				 remember_sigill = EINA_TRUE;
+			      }
+			    else
+			      {
+			 	 remember_sigill = EINA_FALSE;
+			      }
+
                             if (r != 0 ||
                                 (sig.si_signo != SIGSEGV &&
-                                 sig.si_signo != SIGILL &&
                                  sig.si_signo != SIGFPE &&
                                  sig.si_signo != SIGBUS &&
                                  sig.si_signo != SIGABRT))
@@ -470,7 +486,7 @@ main(int argc, char **argv)
                             snprintf(buffer, 4096,
                                      backtrace_str ? "%s/enlightenment/utils/enlightenment_alert %i %i %s" : "%s/enlightenment/utils/enlightenment_alert %i %i %s",
                                      eina_prefix_lib_get(pfx),
-                                     sig.si_signo,
+                                     sig.si_signo == SIGSEGV && remember_sigusr1 ? SIGILL : sig.si_signo,
                                      child,
                                      backtrace_str);
                             r = system(buffer);
