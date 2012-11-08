@@ -109,6 +109,8 @@ wizard/e_mod_comp_cfdata.h: $(top_srcdir)/src/modules/comp/e_mod_comp_cfdata.h
 wizard/e_mod_comp_cfdata.c: $(top_srcdir)/src/modules/comp/e_mod_comp_cfdata.c wizard/e_mod_comp_main.h wizard/e_mod_comp_cfdata.h
 	$(AM_V_GEN) $(SED) 's/e_mod_main\.h/e_mod_comp_main.h/g' $< > $@
 
+$(wizard_page_150_la_OBJECTS): wizard/e_mod_comp_cfdata.c
+
 CLEANFILES += wizard/e_mod_comp_cfdata.c \
 	      wizard/e_mod_comp_cfdata.h \
 	      wizard/e_mod_comp_main.h
