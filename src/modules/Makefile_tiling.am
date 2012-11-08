@@ -10,7 +10,7 @@ EXTRA_DIST += $(tiling_DATA) \
 tilingpkgdir = $(MDIR)/tiling/$(MODULE_ARCH)
 tilingpkg_LTLIBRARIES = tiling/module.la
 
-TILING_EDJE_FLAGS = $(EDJE_FLAGS) -id tiling/images
+TILING_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/tiling/images
 
 tiling/%.edj: tiling/%.edc Makefile
 	$(EDJE_CC) $(TILING_EDJE_FLAGS) $< $@

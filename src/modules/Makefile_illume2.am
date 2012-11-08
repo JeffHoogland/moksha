@@ -38,7 +38,7 @@ illume2_policies_tablet_tablet_la_SOURCES = illume2/policies/tablet/policy.c \
 					    illume2/policies/tablet/tablet.h
 illume2_policies_tablet_tablet_la_LIBTOOLFLAGS = --tag=disable-static 
 
-ILLUME2_EDJE_FLAGS = $(EDJE_FLAGS) -id illume2/images
+ILLUME2_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/illume2/images
 
 illume2/%.edj: illume2/%.edc Makefile
 	$(EDJE_CC) $(ILLUME2_EDJE_FLAGS) $< $@

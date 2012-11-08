@@ -36,7 +36,7 @@ illumedicts_DATA = illume-keyboard/dicts/English_US.dic \
 EXTRA_DIST += $(illumedicts_DATA)
 
 
-ILLUME_KEYBOARD_EDJE_FLAGS = $(EDJE_FLAGS) -id illume-keyboard/images
+ILLUME_KEYBOARD_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/illume-keyboard/images
 
 illume-keyboard/%.edj: illume-keyboard/%.edc Makefile
 	$(EDJE_CC) $(ILLUME_KEYBOARD_EDJE_FLAGS) $< $@
