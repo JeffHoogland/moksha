@@ -28,7 +28,7 @@ mixer_module_la_SOURCES = mixer/e_mod_main.c \
 if HAVE_ALSA
 mixer_module_la_SOURCES += mixer/sys_alsa.c
 else
-	mixer_module_la_SOURCES += mixer/sys_dummy.c
+mixer_module_la_SOURCES += mixer/sys_dummy.c
 endif
 
 mixer_module_la_LIBADD += @SOUND_LIBS@
