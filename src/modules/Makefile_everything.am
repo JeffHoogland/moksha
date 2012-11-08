@@ -38,6 +38,9 @@ everything_module_la_SOURCES = $(EVRYHEADERS) \
 
 everything_module_la_DEPENDENCIES = $(MDEPENDENCIES)
 
+everything_headersdir = $(pkgincludedir)
+dist_everything_headers_DATA = $(EVRYHEADERS)
+
 everything_pkgconfigdir = $(libdir)/pkgconfig
 everything_pkgconfig_DATA = everything/everything.pc
 EXTRA_DIST += everything/everything.pc.in
