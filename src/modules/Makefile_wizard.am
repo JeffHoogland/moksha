@@ -100,11 +100,11 @@ wizard_page_130_la_DEPENDENCIES   = $(MDEPENDENCIES)
 wizard_page_140_la_SOURCES        = wizard/page_140.c
 wizard_page_140_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
-wizard/e_mod_comp_main.h: $(top_srcdir)/src/modules/comp/e_mod_main.h
-	$(AM_V_GEN) $(LN_S) -f ../$< $@
+wizard/e_mod_comp_main.h: $(abs_top_srcdir)/src/modules/comp/e_mod_main.h
+	$(AM_V_GEN) $(LN_S) -f $< $@
 
-wizard/e_mod_comp_cfdata.h: $(top_srcdir)/src/modules/comp/e_mod_comp_cfdata.h
-	$(AM_V_GEN) $(LN_S) -f ../$< $@
+wizard/e_mod_comp_cfdata.h: $(abs_top_srcdir)/src/modules/comp/e_mod_comp_cfdata.h
+	$(AM_V_GEN) $(LN_S) -f $< $@
 
 wizard/e_mod_comp_cfdata.c: $(top_srcdir)/src/modules/comp/e_mod_comp_cfdata.c wizard/e_mod_comp_main.h wizard/e_mod_comp_cfdata.h
 	$(AM_V_GEN) $(SED) 's/e_mod_main\.h/e_mod_comp_main.h/g' $< > $@
