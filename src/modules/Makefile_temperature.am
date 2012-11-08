@@ -8,12 +8,10 @@ temperaturepkgdir = $(MDIR)/temperature/$(MODULE_ARCH)
 temperaturepkg_LTLIBRARIES = temperature/module.la
 
 temperature_module_la_DEPENDENCIES = $(MDEPENDENCIES)
-temperature_module_la_CFLAGS = $(AM_CFLAGS)
-temperature_module_la_LIBADD = $(AM_LIBADD)
-temperature_module_la_SOURCES  = temperature/e_mod_main.h \
-				 temperature/e_mod_main.c \
-				 temperature/e_mod_main_private.h
+temperature_module_la_SOURCES  = temperature/e_mod_main.c \
+				 temperature/e_mod_main.h \
 				 temperature/e_mod_config.c \
+				 temperature/e_mod_main_private.h
 				 temperature/e_mod_tempget.c
 
 if HAVE_EEZE
