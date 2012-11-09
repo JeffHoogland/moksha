@@ -28,6 +28,7 @@ _e_x_composite_shutdown(void)
    _e_x_composite_shutdown_try = 0;
 }
 
+#if 0
 #define _e_write_safe(fd, buf) _e_write_safe_int(fd, buf, sizeof(buf))
 
 static void
@@ -53,6 +54,7 @@ _e_write_safe_int(int fd, const char *buf, size_t size)
 	  }
      }
 }
+#endif
 
 /* a tricky little devil, requires e and it's libs to be built
  * with the -rdynamic flag to GCC for any sort of decent output.
