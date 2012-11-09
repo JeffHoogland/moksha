@@ -239,6 +239,7 @@ src/modules/wizard/e_mod_main.c
 src/modules/wizard/e_wizard.c
 src/modules/wizard/page_000.c
 src/modules/wizard/page_010.c
+src/modules/wizard/page_011.c
 src/modules/wizard/page_020.c
 src/modules/wizard/page_030.c
 src/modules/wizard/page_040.c
@@ -246,6 +247,16 @@ src/modules/wizard/page_050.c
 src/modules/wizard/page_060.c
 src/modules/wizard/page_070.c
 src/modules/wizard/page_080.c
+src/modules/wizard/page_090.c
+src/modules/wizard/page_100.c
+src/modules/wizard/page_110.c
+src/modules/wizard/page_120.c
+src/modules/wizard/page_130.c
+src/modules/wizard/page_140.c
+src/modules/wizard/page_150.c
+src/modules/wizard/page_160.c
+src/modules/wizard/page_170.c
+src/modules/wizard/page_200.c
 src/modules/mixer/app_mixer.c
 src/modules/mixer/conf_gadget.c
 src/modules/mixer/conf_module.c
