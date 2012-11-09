@@ -101,16 +101,22 @@ e_entry_add(Evas *evas)
  * @param text the text to set
  */
 EAPI void
-e_entry_text_set(Evas_Object *entry, const char *text)
+e_entry_text_set(Evas_Object *entry, const char *_text)
 {
    E_Entry_Smart_Data *sd;
+   char *text = NULL;
 
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
 
+   text = evas_textblock_text_utf8_to_markup(
+         edje_object_part_object_get(sd->entry_object, ENTRY_PART_NAME),
+         _text);
    edje_object_part_text_set(sd->entry_object, ENTRY_PART_NAME, text);
    evas_object_smart_callback_call(entry, "changed", NULL);
+   if (text)
+      free(text);
 }
 
 /**
@@ -123,11 +129,21 @@ EAPI const char *
 e_entry_text_get(Evas_Object *entry)
 {
    E_Entry_Smart_Data *sd;
+   static char *text = NULL;
 
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERR(NULL);
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return NULL;
-   return edje_object_part_text_get(sd->entry_object, ENTRY_PART_NAME);
+
+   if (text)
+     {
+        free(text);
+        text = NULL;
+     }
+   text = evas_textblock_text_markup_to_utf8(
+         edje_object_part_object_get(sd->entry_object, ENTRY_PART_NAME),
+         edje_object_part_text_get(sd->entry_object, ENTRY_PART_NAME));
+   return text;
 }
 
 /**
