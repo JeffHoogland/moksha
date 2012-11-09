@@ -12,7 +12,9 @@
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
 #include <xcb/xcb.h>
+#include <xcb/xcb_keysyms.h>
 #include <xcb/shape.h>
+#include <X11/keysym.h>
 
 #define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 240
@@ -93,7 +95,7 @@ main(int argc, char **argv)
 
    title = "Enlightenment Error";
    str1 = "(F1) Recover";
-   str2 = "(F2) Exit";
+   str2 = "(F12) Logout";
 
    _e_alert_create();
    _e_alert_display();
@@ -422,15 +424,23 @@ _e_alert_draw(void)
 static int
 _e_alert_handle_key_press(xcb_generic_event_t *event)
 {
+   xcb_key_symbols_t *symbols;
    xcb_key_press_event_t *ev;
+   xcb_keysym_t key;
+   int r = 0;
 
    ev = (xcb_key_press_event_t *)event;
-   if (ev->detail == 67) // F1
-     return 1;
-   else if (ev->detail == 68) // F2
-     return 2;
-   else
-     return 0;
+   symbols = xcb_key_symbols_alloc(conn);
+   key = xcb_key_symbols_get_keysym(symbols, ev->detail, 0);
+
+   if (key == XK_F1)
+     r = 1;
+   else if (key == XK_F12)
+     r = 2;
+
+   xcb_key_symbols_free(symbols);
+
+   return r;
 }
 
 static int

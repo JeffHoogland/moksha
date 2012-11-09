@@ -523,6 +523,7 @@ PKG_CHECK_MODULES(E_INIT, [
 PKG_CHECK_MODULES(E_ALERT, [
   xcb
   xcb-shape
+  xcb-keysyms
   eina >= ${efl_version}
   ecore >= ${efl_version}
   ecore-ipc >= ${efl_version}
