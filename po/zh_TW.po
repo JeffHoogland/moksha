@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-06 00:17+0900\n"
+"POT-Creation-Date: 2012-11-09 23:50+0900\n"
 "PO-Revision-Date: 2007-11-06 20:25+0800\n"
 "Last-Translator: Chia-I Wu <olv@openmoko.com>\n"
 "Language-Team: none\n"
@@ -352,6 +352,7 @@ msgstr "切換固定於桌面狀態"
 #: src/bin/e_int_menus.c:190 src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:335 src/modules/ibox/e_mod_config.c:166
+#: src/modules/wizard/page_160.c:24 src/modules/wizard/page_160.c:34
 msgid "Desktop"
 msgstr "桌面"
 
@@ -2218,13 +2219,13 @@ msgid "Window List"
 msgstr "視窗列表"
 
 #: src/bin/e_int_border_menu.c:1282 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2940 src/modules/pager/e_mod_main.c:2947
-#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2956
-#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2960
-#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
-#: src/modules/pager/e_mod_main.c:2990 src/modules/pager/e_mod_main.c:2991
+#: src/modules/pager/e_mod_main.c:2942 src/modules/pager/e_mod_main.c:2949
+#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2958
+#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2962
+#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2966
 #: src/modules/pager/e_mod_main.c:2992 src/modules/pager/e_mod_main.c:2993
 #: src/modules/pager/e_mod_main.c:2994 src/modules/pager/e_mod_main.c:2995
+#: src/modules/pager/e_mod_main.c:2996 src/modules/pager/e_mod_main.c:2997
 msgid "Pager"
 msgstr "桌面切換器"
 
@@ -7128,7 +7129,7 @@ msgid "Resize by"
 msgstr "改變大小"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:257
-#: src/modules/xkbswitch/e_mod_main.c:90
+#: src/modules/wizard/page_011.c:140 src/modules/xkbswitch/e_mod_main.c:90
 #: src/modules/xkbswitch/e_mod_main.c:276
 #, fuzzy
 msgid "Keyboard"
@@ -8689,37 +8690,37 @@ msgid ""
 "works in the popup."
 msgstr "您不能使用滑鼠右鍵。<br>本程式內部已將滑鼠右鍵用於彈出式選單。"
 
-#: src/modules/pager/e_mod_main.c:2947
+#: src/modules/pager/e_mod_main.c:2949
 #, fuzzy
 msgid "Show Pager Popup"
 msgstr "桌面切換器彈出訊息設定"
 
-#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2990
+#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2992
 #, fuzzy
 msgid "Popup Desk Right"
 msgstr "切換到右方桌面"
 
-#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2991
+#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2993
 #, fuzzy
 msgid "Popup Desk Left"
 msgstr "切換到左方桌面"
 
-#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2992
+#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2994
 #, fuzzy
 msgid "Popup Desk Up"
 msgstr "切換到上方桌面"
 
-#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2993
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2995
 #, fuzzy
 msgid "Popup Desk Down"
 msgstr "切換到下方桌面"
 
-#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2994
+#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2996
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "切換到左方桌面"
 
-#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2995
+#: src/modules/pager/e_mod_main.c:2966 src/modules/pager/e_mod_main.c:2997
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "切換到左方桌面"
@@ -8834,7 +8835,8 @@ msgstr "下一步"
 msgid "Welcome to Enlightenment"
 msgstr "歡迎來到 Enlightenment 東京"
 
-#: src/modules/wizard/page_010.c:160 src/modules/wizard/page_020.c:53
+#: src/modules/wizard/page_010.c:160 src/modules/wizard/page_011.c:141
+#: src/modules/wizard/page_020.c:53
 #, fuzzy
 msgid "Select one"
 msgstr "選擇圖示"
@@ -8857,6 +8859,82 @@ msgstr ""
 #, fuzzy
 msgid "Mouse Over"
 msgstr "使用順序"
+
+#: src/modules/wizard/page_110.c:14
+#, fuzzy
+msgid "Network Management"
+msgstr "電源管理"
+
+#: src/modules/wizard/page_110.c:17
+msgid "Connman network service not found"
+msgstr ""
+
+#: src/modules/wizard/page_110.c:20
+msgid "Install Connman for network management support"
+msgstr ""
+
+#: src/modules/wizard/page_110.c:149
+msgid "Checking to see if Connman exists"
+msgstr ""
+
+#: src/modules/wizard/page_150.c:93
+#, fuzzy
+msgid "Compositing"
+msgstr "位置"
+
+#: src/modules/wizard/page_150.c:95
+msgid "Transparent windows and effects"
+msgstr ""
+
+#: src/modules/wizard/page_150.c:101
+msgid ""
+"Compositing provides translucency<br>for windows, window effects "
+"like<br>fading in and out and zooming<br>when they appear and dissapear."
+"<br>It is highly recommended to<br>enable this for a better<br>experience, "
+"but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
+"GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
+"MB to the memory needed<br>for Enlightenment."
+msgstr ""
+
+#: src/modules/wizard/page_150.c:118
+#, fuzzy
+msgid "Enable Compositing"
+msgstr "啟用 Composite"
+
+#: src/modules/wizard/page_150.c:123
+msgid "Hardware Accelerated (OpenGL)"
+msgstr ""
+
+#: src/modules/wizard/page_150.c:126
+msgid "Tear-free Rendering (OpenGL only)"
+msgstr ""
+
+#: src/modules/wizard/page_170.c:28
+#, fuzzy
+msgid "Updates"
+msgstr "狀態"
+
+#: src/modules/wizard/page_170.c:30
+msgid "Check for available updates"
+msgstr ""
+
+#: src/modules/wizard/page_170.c:36
+msgid ""
+"Enlightenment can check for new<br>versions, updates, securiity "
+"and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
+"because it lets you<br>you know about available bug fixes and<br>security "
+"fixes when they happen. As a<br>bi-product of this, Enlightenment "
+"will<br>connect to enlightenment.org and transmit<br>some information as a "
+"result much like any<br>web browser might do. No personal "
+"information<br>such as username, password or any personal<br>files will be "
+"transmitted. If you do not like<br>this, please disable this below. It is "
+"highly<br>advised that you do not disable this as it<br>may leave you "
+"vulnerable or having to live<br>with bugs."
+msgstr ""
+
+#: src/modules/wizard/page_170.c:57
+msgid "Enable update checking"
+msgstr ""
 
 #: src/modules/mixer/app_mixer.c:165
 #, fuzzy
@@ -10151,10 +10229,6 @@ msgstr ""
 
 #~ msgid "Animated flip"
 #~ msgstr "切換時以動畫方式進行"
-
-#, fuzzy
-#~ msgid "Enable Composite Support ?"
-#~ msgstr "啟用 Composite"
 
 #, fuzzy
 #~ msgid "Interaction"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-06 00:17+0900\n"
+"POT-Creation-Date: 2012-11-09 23:50+0900\n"
 "PO-Revision-Date: 2011-11-20 22:33+0200\n"
 "Last-Translator: George Koutsikos <ragecryx@yahoo.gr>\n"
 "Language-Team: Greek, Modern (1453-) <>\n"
@@ -377,6 +377,7 @@ msgstr "Εναλλαγή σε κατάσταση ακινητοποίησης"
 #: src/bin/e_int_menus.c:190 src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:335 src/modules/ibox/e_mod_config.c:166
+#: src/modules/wizard/page_160.c:24 src/modules/wizard/page_160.c:34
 msgid "Desktop"
 msgstr "Επιφάνεια εργασίας"
 
@@ -2227,13 +2228,13 @@ msgid "Window List"
 msgstr "Λίστα παραθύρων"
 
 #: src/bin/e_int_border_menu.c:1282 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2940 src/modules/pager/e_mod_main.c:2947
-#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2956
-#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2960
-#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
-#: src/modules/pager/e_mod_main.c:2990 src/modules/pager/e_mod_main.c:2991
+#: src/modules/pager/e_mod_main.c:2942 src/modules/pager/e_mod_main.c:2949
+#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2958
+#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2962
+#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2966
 #: src/modules/pager/e_mod_main.c:2992 src/modules/pager/e_mod_main.c:2993
 #: src/modules/pager/e_mod_main.c:2994 src/modules/pager/e_mod_main.c:2995
+#: src/modules/pager/e_mod_main.c:2996 src/modules/pager/e_mod_main.c:2997
 msgid "Pager"
 msgstr "Διαχειριστής επιφανειών"
 
@@ -6995,7 +6996,7 @@ msgid "Resize by"
 msgstr "Αλλαγή μεγέθους κατά:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:257
-#: src/modules/xkbswitch/e_mod_main.c:90
+#: src/modules/wizard/page_011.c:140 src/modules/xkbswitch/e_mod_main.c:90
 #: src/modules/xkbswitch/e_mod_main.c:276
 msgid "Keyboard"
 msgstr "Πληκτρολόγιο"
@@ -8478,37 +8479,37 @@ msgstr ""
 "για αυτό, δεδομένου ότι έχει ήδη ληφθεί από το εσωτερικό κωδικό για<br>μενού "
 "περιβάλλοντος.<br>Αυτό το κουμπί λειτουργεί μόνο στο αναδυόμενο παράθυρο."
 
-#: src/modules/pager/e_mod_main.c:2947
+#: src/modules/pager/e_mod_main.c:2949
 #, fuzzy
 msgid "Show Pager Popup"
 msgstr "Εμφάνιση Pager Popup"
 
-#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2990
+#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2992
 #, fuzzy
 msgid "Popup Desk Right"
 msgstr "Αναδυόμενο Δικαίωμα Οργάνωση"
 
-#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2991
+#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2993
 #, fuzzy
 msgid "Popup Desk Left"
 msgstr "Αναδυόμενο Οργάνωση Αριστερά"
 
-#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2992
+#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2994
 #, fuzzy
 msgid "Popup Desk Up"
 msgstr "Αναδυόμενο Οργάνωση Έως"
 
-#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2993
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2995
 #, fuzzy
 msgid "Popup Desk Down"
 msgstr "Αναδυόμενο Οργάνωση Down"
 
-#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2994
+#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2996
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "Αναδυόμενο Οργάνωση Επόμενη"
 
-#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2995
+#: src/modules/pager/e_mod_main.c:2966 src/modules/pager/e_mod_main.c:2997
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "Αναδυόμενο Οργάνωση Προηγούμενη"
@@ -8619,7 +8620,8 @@ msgstr "Επόμενο"
 msgid "Welcome to Enlightenment"
 msgstr "Καλώς ορίσατε στο Enlightenment"
 
-#: src/modules/wizard/page_010.c:160 src/modules/wizard/page_020.c:53
+#: src/modules/wizard/page_010.c:160 src/modules/wizard/page_011.c:141
+#: src/modules/wizard/page_020.c:53
 msgid "Select one"
 msgstr "Επιλογή ενός"
 
@@ -8641,6 +8643,83 @@ msgstr "Εστίαση από ..."
 #, fuzzy
 msgid "Mouse Over"
 msgstr "Ποντίκι"
+
+#: src/modules/wizard/page_110.c:14
+#, fuzzy
+msgid "Network Management"
+msgstr "Διαχείριση ενέργειας"
+
+#: src/modules/wizard/page_110.c:17
+#, fuzzy
+msgid "Connman network service not found"
+msgstr "Σύνδεση σε υπηρεσία δικτύου."
+
+#: src/modules/wizard/page_110.c:20
+msgid "Install Connman for network management support"
+msgstr ""
+
+#: src/modules/wizard/page_110.c:149
+msgid "Checking to see if Connman exists"
+msgstr ""
+
+#: src/modules/wizard/page_150.c:93
+#, fuzzy
+msgid "Compositing"
+msgstr "Θέση"
+
+#: src/modules/wizard/page_150.c:95
+msgid "Transparent windows and effects"
+msgstr ""
+
+#: src/modules/wizard/page_150.c:101
+msgid ""
+"Compositing provides translucency<br>for windows, window effects "
+"like<br>fading in and out and zooming<br>when they appear and dissapear."
+"<br>It is highly recommended to<br>enable this for a better<br>experience, "
+"but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
+"GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
+"MB to the memory needed<br>for Enlightenment."
+msgstr ""
+
+#: src/modules/wizard/page_150.c:118
+#, fuzzy
+msgid "Enable Compositing"
+msgstr "Ενεργοποίηση υποστήριξης composite ?"
+
+#: src/modules/wizard/page_150.c:123
+msgid "Hardware Accelerated (OpenGL)"
+msgstr ""
+
+#: src/modules/wizard/page_150.c:126
+msgid "Tear-free Rendering (OpenGL only)"
+msgstr ""
+
+#: src/modules/wizard/page_170.c:28
+#, fuzzy
+msgid "Updates"
+msgstr "Κατάσταση"
+
+#: src/modules/wizard/page_170.c:30
+msgid "Check for available updates"
+msgstr ""
+
+#: src/modules/wizard/page_170.c:36
+msgid ""
+"Enlightenment can check for new<br>versions, updates, securiity "
+"and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
+"because it lets you<br>you know about available bug fixes and<br>security "
+"fixes when they happen. As a<br>bi-product of this, Enlightenment "
+"will<br>connect to enlightenment.org and transmit<br>some information as a "
+"result much like any<br>web browser might do. No personal "
+"information<br>such as username, password or any personal<br>files will be "
+"transmitted. If you do not like<br>this, please disable this below. It is "
+"highly<br>advised that you do not disable this as it<br>may leave you "
+"vulnerable or having to live<br>with bugs."
+msgstr ""
+
+#: src/modules/wizard/page_170.c:57
+msgid "Enable update checking"
+msgstr ""
 
 #: src/modules/mixer/app_mixer.c:165
 msgid "Capture"
@@ -9382,9 +9461,6 @@ msgstr ""
 #~ msgid "Service does not exist anymore"
 #~ msgstr "Η υπηρεσία δεν υπάρχει πλέον"
 
-#~ msgid "Connect to network service."
-#~ msgstr "Σύνδεση σε υπηρεσία δικτύου."
-
 #~ msgid "Could not set service's passphrase"
 #~ msgstr "Αδύνατος ο ορισμός κωδικής φράσης για την υπηρεσία"
 
@@ -9968,9 +10044,6 @@ msgstr ""
 
 #~ msgid "Animated flip"
 #~ msgstr "Κινούμενη αναστροφή"
-
-#~ msgid "Enable Composite Support ?"
-#~ msgstr "Ενεργοποίηση υποστήριξης composite ?"
 
 #~ msgid "Interaction"
 #~ msgstr "Διάδραση"
