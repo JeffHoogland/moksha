@@ -237,3 +237,5 @@ endif
 #if HAVE_WAYLAND_SCREENSHOT
 #include Makefile_wl_screenshot.am
 #endif
+
+install-data-hook: $(INSTALL_DATA_HOOKS)
