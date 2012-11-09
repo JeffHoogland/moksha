@@ -1057,7 +1057,7 @@ e_config_load(void)
                              "files available for the given profile (normally\n"
                              "default or the last profile used or provided on the\n"
                              "command-line with -profile etc.)\n\n"
-                             "Cannot contiue without configuration to work with.\n"
+                             "Cannot continue without configuration to work with.\n"
                              "Please ensure you have system or user configuration\n"
                              "for the profile you are using before proceeeding.");
         abort();
