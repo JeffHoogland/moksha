@@ -1,0 +1,60 @@
+illume_keyboarddir = $(MDIR)/illume-keyboard
+illume_keyboard_DATA = illume-keyboard/e-module-illume-keyboard.edj \
+		       illume-keyboard/module.desktop
+
+EXTRA_DIST += $(illume_keyboard_DATA) \
+	      illume-keyboard/e-module-illume-keyboard.edj \
+	      illume-keyboard/module.desktop.in
+CLEANFILES += illume-keyboard/e-module-illume-keyboard.edj
+
+
+# keyboards
+illumekeyboardsdir = $(MDIR)/illume-keyboard/keyboards
+illumekeyboards_DATA = illume-keyboard/keyboards/ignore_built_in_keyboards \
+		       illume-keyboard/keyboards/Default.kbd \
+		       illume-keyboard/keyboards/alpha.png \
+		       illume-keyboard/keyboards/Numbers.kbd \
+		       illume-keyboard/keyboards/numeric.png \
+		       illume-keyboard/keyboards/Terminal.kbd \
+		       illume-keyboard/keyboards/qwerty.png \
+		       illume-keyboard/keyboards/up.png \
+		       illume-keyboard/keyboards/down.png \
+		       illume-keyboard/keyboards/left.png \
+		       illume-keyboard/keyboards/right.png \
+		       illume-keyboard/keyboards/shift.png \
+		       illume-keyboard/keyboards/tab.png \
+		       illume-keyboard/keyboards/enter.png \
+		       illume-keyboard/keyboards/backspace.png
+
+EXTRA_DIST += $(illumekeyboards_DATA)
+
+# dicts
+illumedictsdir = $(MDIR)/illume-keyboard/dicts
+illumedicts_DATA = illume-keyboard/dicts/English_US.dic \
+		   illume-keyboard/dicts/English_US_Small.dic
+
+EXTRA_DIST += $(illumedicts_DATA)
+
+
+ILLUME_KEYBOARD_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/illume-keyboard/images
+
+illume-keyboard/%.edj: illume-keyboard/%.edc Makefile
+	$(EDJE_CC) $(ILLUME_KEYBOARD_EDJE_FLAGS) $< $@
+
+illume_keyboardpkgdir = $(MDIR)/illume-keyboard/$(MODULE_ARCH)
+illume_keyboardpkg_LTLIBRARIES = illume-keyboard/module.la
+
+illume_keyboard_module_la_SOURCES = illume-keyboard/e_mod_main.c \
+				    illume-keyboard/e_mod_main.h \
+				    illume-keyboard/e_kbd_int.c \
+				    illume-keyboard/e_kbd_int.h \
+				    illume-keyboard/e_kbd_dict.c \
+				    illume-keyboard/e_kbd_dict.h \
+				    illume-keyboard/e_kbd_buf.c \
+				    illume-keyboard/e_kbd_buf.h \
+				    illume-keyboard/e_kbd_send.c \
+				    illume-keyboard/e_kbd_send.h \
+				    illume-keyboard/e_mod_config.c \
+				    illume-keyboard/e_mod_config.h
+
+illume_keyboard_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -1,0 +1,13 @@
+startdir = $(MDIR)/start
+start_DATA = start/e-module-start.edj \
+	     start/module.desktop
+
+EXTRA_DIST += $(start_DATA)
+
+startpkgdir = $(MDIR)/start/$(MODULE_ARCH)
+startpkg_LTLIBRARIES = start/module.la
+
+start_module_la_SOURCES = start/e_mod_main.h \
+			  start/e_mod_main.c
+
+start_module_la_DEPENDENCIES = $(MDEPENDENCIES)

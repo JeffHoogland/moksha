@@ -1,0 +1,17 @@
+conf_pathsdir = $(MDIR)/conf_paths
+conf_paths_DATA = conf_paths/e-module-conf_paths.edj \
+		  conf_paths/module.desktop
+
+EXTRA_DIST += $(conf_paths_DATA)
+
+conf_pathspkgdir = $(MDIR)/conf_paths/$(MODULE_ARCH)
+conf_pathspkg_LTLIBRARIES = conf_paths/module.la
+
+conf_paths_module_la_SOURCES = conf_paths/e_mod_main.c \
+			       conf_paths/e_mod_main.h \
+			       conf_paths/e_int_config_paths.c \
+			       conf_paths/e_int_config_paths.h \
+			       conf_paths/e_int_config_env.c \
+			       conf_paths/e_int_config_env.h
+
+conf_paths_module_la_DEPENDENCIES = $(MDEPENDENCIES)

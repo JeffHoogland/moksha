@@ -1,0 +1,17 @@
+illume_homedir = $(MDIR)/illume-home
+illume_home_DATA = illume-home/e-module-illume-home.edj \
+		   illume-home/module.desktop
+
+EXTRA_DIST += $(illume_home_DATA)
+
+illume_homepkgdir = $(MDIR)/illume-home/$(MODULE_ARCH)
+illume_homepkg_LTLIBRARIES = illume-home/module.la
+
+illume_home_module_la_SOURCES = illume-home/e_mod_main.c \
+				illume-home/e_mod_main.h \
+				illume-home/e_mod_config.c \
+				illume-home/e_mod_config.h \
+				illume-home/e_busycover.c \
+				illume-home/e_busycover.h
+
+illume_home_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -1,0 +1,25 @@
+temperaturedir = $(MDIR)/temperature
+temperature_DATA = temperature/e-module-temperature.edj \
+		   temperature/module.desktop
+
+EXTRA_DIST += $(temperature_DATA)
+
+temperaturepkgdir = $(MDIR)/temperature/$(MODULE_ARCH)
+temperaturepkg_LTLIBRARIES = temperature/module.la
+
+temperature_module_la_DEPENDENCIES = $(MDEPENDENCIES)
+temperature_module_la_SOURCES  = temperature/e_mod_main.c \
+				 temperature/e_mod_main.h \
+				 temperature/e_mod_config.c \
+				 temperature/e_mod_main_private.h \
+				 temperature/e_mod_tempget.c
+
+if HAVE_EEZE
+temperature_module_la_SOURCES += temperature/e_mod_udev.c
+endif
+
+tempgetdir = $(temperaturepkgdir)
+tempget_PROGRAMS = temperature/tempget
+
+temperature_tempget_SOURCES = temperature/tempget.c
+temperature_tempget_LDADD   = @TEMPERATURE_LIBS@

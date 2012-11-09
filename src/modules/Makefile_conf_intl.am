@@ -1,0 +1,18 @@
+conf_intldir = $(MDIR)/conf_intl
+conf_intl_DATA = conf_intl/module.desktop
+
+EXTRA_DIST += $(conf_intl_DATA)
+
+conf_intlpkgdir = $(MDIR)/conf_intl/$(MODULE_ARCH)
+conf_intlpkg_LTLIBRARIES = conf_intl/module.la
+
+conf_intl_module_la_SOURCES = conf_intl/e_mod_main.c \
+			      conf_intl/e_mod_main.h \
+			      conf_intl/e_int_config_intl.c \
+			      conf_intl/e_int_config_intl.h \
+			      conf_intl/e_int_config_imc_import.c \
+			      conf_intl/e_int_config_imc_import.h \
+			      conf_intl/e_int_config_imc.c \
+			      conf_intl/e_int_config_imc.h
+
+conf_intl_module_la_DEPENDENCIES = $(MDEPENDENCIES)

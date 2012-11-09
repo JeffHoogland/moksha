@@ -1,0 +1,20 @@
+conf_performancedir = $(MDIR)/conf_performance
+conf_performance_DATA = conf_performance/e-module-conf_performance.edj \
+			conf_performance/module.desktop
+
+EXTRA_DIST += $(conf_performance_DATA)
+
+conf_performancepkgdir = $(MDIR)/conf_performance/$(MODULE_ARCH)
+conf_performancepkg_LTLIBRARIES = conf_performance/module.la
+
+conf_performance_module_la_SOURCES = conf_performance/e_mod_main.c \
+			     conf_performance/e_mod_main.h \
+			     conf_performance/e_int_config_performance.c \
+			     conf_performance/e_int_config_performance.h \
+			     conf_performance/e_int_config_engine.c \
+			     conf_performance/e_int_config_engine.h \
+			     conf_performance/e_int_config_powermanagement.c \
+			     conf_performance/e_int_config_powermanagement.h
+
+
+conf_performance_module_la_DEPENDENCIES = $(MDEPENDENCIES)

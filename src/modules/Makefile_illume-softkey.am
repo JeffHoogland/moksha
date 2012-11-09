@@ -1,0 +1,28 @@
+illume_softkeydir = $(MDIR)/illume-softkey
+illume_softkey_DATA = illume-softkey/e-module-illume-softkey.edj \
+		      illume-softkey/module.desktop
+
+EXTRA_DIST += $(illume_softkey_DATA)
+
+# images
+EXTRA_DIST += illume-softkey/images/shelf_alt_bg.png \
+	      illume-softkey/images/shelf_alt_shine.png \
+	      illume-softkey/images/module_icon.png \
+	      illume-softkey/images/shelf_alt_over.png
+
+ILLUME_SOFTKEY_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/illume-softkey/images
+
+illume-softkey/%.edj: illume-softkey/%.edc Makefile
+	$(EDJE_CC) $(ILLUME_SOFTKEY_EDJE_FLAGS) $< $@
+
+illume_softkeypkgdir = $(MDIR)/illume-softkey/$(MODULE_ARCH)
+illume_softkeypkg_LTLIBRARIES = illume-softkey/module.la
+
+illume_softkey_module_la_SOURCES = illume-softkey/e_mod_main.c \
+				   illume-softkey/e_mod_main.h \
+				   illume-softkey/e_mod_sft_win.c \
+				   illume-softkey/e_mod_sft_win.h \
+				   illume-softkey/e_mod_config.c \
+				   illume-softkey/e_mod_config.h
+
+illume_softkey_module_la_DEPENDENCIES = $(MDEPENDENCIES)

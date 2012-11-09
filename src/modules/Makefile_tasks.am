@@ -1,0 +1,14 @@
+tasksdir = $(MDIR)/tasks
+tasks_DATA = tasks/e-module-tasks.edj \
+	     tasks/module.desktop
+
+EXTRA_DIST += $(tasks_DATA)
+
+taskspkgdir = $(MDIR)/tasks/$(MODULE_ARCH)
+taskspkg_LTLIBRARIES = tasks/module.la
+
+tasks_module_la_SOURCES = tasks/e_mod_main.c \
+			  tasks/e_mod_main.h \
+			  tasks/e_mod_config.c
+
+tasks_module_la_DEPENDENCIES = $(MDEPENDENCIES)

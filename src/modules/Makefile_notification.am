@@ -1,0 +1,18 @@
+notificationdir = $(MDIR)/notification
+notification_DATA = notification/e-module-notification.edj \
+		    notification/module.desktop
+
+EXTRA_DIST += $(notification_DATA)
+
+notificationpkgdir = $(MDIR)/notification/$(MODULE_ARCH)
+notificationpkg_LTLIBRARIES = notification/module.la
+
+notification_module_la_SOURCES  = notification/e_mod_main.h \
+				  notification/e_mod_main.c \
+				  notification/e_mod_box.c \
+				  notification/e_mod_config.c \
+				  notification/e_mod_config_item.c \
+				  notification/e_mod_popup.c
+
+notification_module_la_LIBADD = $(AM_LIBADD) @ENOTIFY_LIBS@
+notification_module_la_DEPENDENCIES = $(MDEPENDENCIES)

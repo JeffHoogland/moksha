@@ -1,0 +1,13 @@
+accessdir = $(MDIR)/access
+access_DATA = access/module.desktop
+
+EXTRA_DIST += $(access_DATA)
+
+accesspkgdir = $(MDIR)/access/$(MODULE_ARCH)
+accesspkg_LTLIBRARIES = access/module.la
+
+access_module_la_SOURCES = access/e_mod_main.c \
+			   access/e_mod_main.h \
+			   access/e_mod_config.c
+
+access_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -1,0 +1,13 @@
+illume_bluetoothdir = $(MDIR)/illume-bluetooth
+illume_bluetooth_DATA = illume-bluetooth/e-module-illume-bluetooth.edj \
+			illume-bluetooth/module.desktop
+
+EXTRA_DIST += $(illume_bluetooth_DATA)
+
+illume_bluetoothpkgdir = $(MDIR)/illume-bluetooth/$(MODULE_ARCH)
+illume_bluetoothpkg_LTLIBRARIES = illume-bluetooth/module.la
+
+illume_bluetooth_module_la_SOURCES = illume-bluetooth/e_mod_main.c \
+				     illume-bluetooth/e_mod_main.h
+
+illume_bluetooth_module_la_DEPENDENCIES = $(MDEPENDENCIES)

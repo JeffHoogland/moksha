@@ -216,6 +216,13 @@ _env_path_append(const char *env, const char *path)
      }
 }
 
+static  void
+_sigusr1(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
+{
+   /* release ptrace */
+   printf("sigusr1 -- release ptrace\n");
+}
+
 int
 main(int argc, char **argv)
 {
@@ -227,7 +234,13 @@ main(int argc, char **argv)
    const char *valgrind_log = NULL;
    Eina_Bool really_know = EINA_FALSE;
    Eina_Bool restart = EINA_TRUE;
-
+   struct sigaction action;
+   
+   action.sa_sigaction = _sigusr1;
+   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+   sigemptyset(&action.sa_mask);
+   sigaction(SIGUSR1, &action, NULL);
+   
    eina_init();
 
    /* reexcute myself with dbus-launch if dbus-launch is not running yet */
@@ -408,17 +421,24 @@ main(int argc, char **argv)
 
              ptrace(PT_ATTACH, child, NULL, NULL);
 
+             printf("a\n");
              result = waitpid(child, &status, 0);
-
+             printf("b\n");
+             
+             //ptrace(PT_DETACH, child, NULL, back);
+             
              if (WIFSTOPPED(status))
                ptrace(PT_CONTINUE, child, NULL, NULL);
+             printf("c\n");
 
              while (!done)
                {
 		  Eina_Bool remember_sigill = EINA_FALSE;
 		  Eina_Bool remember_sigusr1 = EINA_FALSE;
 
+             printf("d\n");
 		  result = waitpid(child, &status, 0);
+             printf("e\n");
 
                   if (result == child)
                     {

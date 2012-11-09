@@ -1,0 +1,14 @@
+clockdir = $(MDIR)/clock
+clock_DATA = clock/e-module-clock.edj \
+	     clock/module.desktop
+
+EXTRA_DIST += $(clock_DATA)
+
+clockpkgdir = $(MDIR)/clock/$(MODULE_ARCH)
+clockpkg_LTLIBRARIES = clock/module.la
+
+clock_module_la_SOURCES = clock/e_mod_main.h \
+			  clock/e_mod_main.c \
+			  clock/e_mod_config.c
+
+clock_module_la_DEPENDENCIES = $(MDEPENDENCIES)

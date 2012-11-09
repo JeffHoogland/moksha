@@ -1,0 +1,15 @@
+conf_window_remembersdir = $(MDIR)/conf_window_remembers
+conf_window_remembers_DATA = conf_window_remembers/e-module-conf_window_remembers.edj \
+			     conf_window_remembers/module.desktop
+
+EXTRA_DIST += $(conf_window_remembers_DATA)
+
+conf_window_rememberspkgdir = $(MDIR)/conf_window_remembers/$(MODULE_ARCH)
+conf_window_rememberspkg_LTLIBRARIES = conf_window_remembers/module.la
+
+conf_window_remembers_module_la_SOURCES = conf_window_remembers/e_mod_main.c \
+			      conf_window_remembers/e_mod_main.h \
+			      conf_window_remembers/e_int_config_remembers.c \
+			      conf_window_remembers/e_int_config_remembers.h
+
+conf_window_remembers_module_la_DEPENDENCIES = $(MDEPENDENCIES)

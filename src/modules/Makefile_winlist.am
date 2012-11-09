@@ -1,0 +1,17 @@
+winlistdir = $(MDIR)/winlist
+winlist_DATA = winlist/e-module-winlist.edj \
+	       winlist/module.desktop
+
+EXTRA_DIST += $(winlist_DATA)
+
+winlistpkgdir = $(MDIR)/winlist/$(MODULE_ARCH)
+winlistpkg_LTLIBRARIES = winlist/module.la
+
+winlist_module_la_SOURCES = winlist/e_mod_main.h \
+			    winlist/e_mod_main.c \
+			    winlist/e_int_config_winlist.h \
+			    winlist/e_int_config_winlist.c \
+			    winlist/e_winlist.h \
+			    winlist/e_winlist.c
+
+winlist_module_la_DEPENDENCIES = $(MDEPENDENCIES)

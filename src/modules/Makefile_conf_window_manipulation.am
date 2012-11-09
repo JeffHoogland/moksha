@@ -1,0 +1,21 @@
+conf_window_manipulationdir = $(MDIR)/conf_window_manipulation
+conf_window_manipulation_DATA = conf_window_manipulation/module.desktop
+
+EXTRA_DIST += $(conf_window_manipulation_DATA)
+
+conf_window_manipulationpkgdir = $(MDIR)/conf_window_manipulation/$(MODULE_ARCH)
+conf_window_manipulationpkg_LTLIBRARIES = conf_window_manipulation/module.la
+
+conf_window_manipulation_module_la_SOURCES = conf_window_manipulation/e_mod_main.c \
+		      conf_window_manipulation/e_mod_main.h \
+		      conf_window_manipulation/e_int_config_window_manip.h \
+		      conf_window_manipulation/e_int_config_window_geometry.c \
+		      conf_window_manipulation/e_int_config_window_process.c \
+		      conf_window_manipulation/e_int_config_window_display.c \
+		      conf_window_manipulation/e_int_config_window_display.h \
+		      conf_window_manipulation/e_int_config_focus.c \
+		      conf_window_manipulation/e_int_config_focus.h \
+		      conf_window_manipulation/e_int_config_clientlist.c \
+		      conf_window_manipulation/e_int_config_clientlist.h
+
+conf_window_manipulation_module_la_DEPENDENCIES = $(MDEPENDENCIES)

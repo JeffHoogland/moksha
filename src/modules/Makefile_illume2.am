@@ -1,0 +1,73 @@
+illume2dir = $(MDIR)/illume2
+illume2_DATA = illume2/e-module-illume2.edj \
+	       illume2/module.desktop
+
+EXTRA_DIST += illume2/e-module-illume2.edc \
+	      illume2/module.desktop.in
+CLEANFILES += illume2/e-module-illume2.edj
+
+# images
+EXTRA_DIST += illume2/images/module_icon.png
+
+# keyboards
+illume2keyboardsdir = $(MDIR)/keyboards
+illume2keyboards_DATA = illume2/keyboards/ignore_built_in_keyboards
+EXTRA_DIST += $(illume2keyboards_DATA)
+
+# policies
+## illume
+illume2policyillumedir = $(MDIR)/policies
+illume2policyillume_LTLIBRARIES = illume2/policies/illume/illume.la
+ILLUME2POLICYCPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/src/modules/illume2
+
+illume2_policies_illume_illume_la_CPPFLAGS = $(ILLUME2POLICYCPPFLAGS)
+illume2_policies_illume_illume_la_SOURCES = illume2/policies/illume/policy.c \
+					    illume2/policies/illume/policy.h \
+					    illume2/policies/illume/illume.c \
+					    illume2/policies/illume/illume.h
+illume2_policies_illume_illume_la_LIBTOOLFLAGS = --tag=disable-static 
+
+## tablet
+illume2policytabletdir = $(MDIR)/policies
+illume2policytablet_LTLIBRARIES = illume2/policies/tablet/tablet.la
+
+illume2_policies_tablet_tablet_la_CPPFLAGS = $(ILLUME2POLICYCPPFLAGS)
+illume2_policies_tablet_tablet_la_SOURCES = illume2/policies/tablet/policy.c \
+					    illume2/policies/tablet/policy.h \
+					    illume2/policies/tablet/tablet.c \
+					    illume2/policies/tablet/tablet.h
+illume2_policies_tablet_tablet_la_LIBTOOLFLAGS = --tag=disable-static 
+
+ILLUME2_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/illume2/images
+
+illume2/%.edj: illume2/%.edc Makefile
+	$(EDJE_CC) $(ILLUME2_EDJE_FLAGS) $< $@
+
+illume2pkgdir = $(MDIR)/illume2/$(MODULE_ARCH)
+illume2pkg_LTLIBRARIES = illume2/module.la
+
+illume2_module_la_SOURCES = illume2/e_mod_main.c \
+			    illume2/e_mod_main.h \
+			    illume2/e_illume.h \
+			    illume2/e_illume.c \
+			    illume2/e_illume_private.h \
+			    illume2/e_mod_config_policy.h \
+			    illume2/e_mod_config_policy.c \
+			    illume2/e_mod_select_window.h \
+			    illume2/e_mod_select_window.c \
+			    illume2/e_mod_config_windows.h \
+			    illume2/e_mod_config_windows.c \
+			    illume2/e_mod_config_animation.h \
+			    illume2/e_mod_config_animation.c \
+			    illume2/e_mod_quickpanel.h \
+			    illume2/e_mod_quickpanel.c \
+			    illume2/e_mod_kbd_device.h \
+			    illume2/e_mod_kbd_device.c \
+			    illume2/e_mod_kbd.h \
+			    illume2/e_mod_kbd.c \
+			    illume2/e_mod_policy.h \
+			    illume2/e_mod_policy.c \
+			    illume2/e_mod_config.h \
+			    illume2/e_mod_config.c
+
+illume2_module_la_DEPENDENCIES = $(MDEPENDENCIES)

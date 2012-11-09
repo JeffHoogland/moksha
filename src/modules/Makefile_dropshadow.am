@@ -1,0 +1,15 @@
+dropshadowdir = $(MDIR)/dropshadow
+dropshadow_DATA = dropshadow/e-module-dropshadow.edj \
+	       dropshadow/module.desktop
+
+EXTRA_DIST += $(dropshadow_DATA)
+
+dropshadowpkgdir = $(MDIR)/dropshadow/$(MODULE_ARCH)
+dropshadowpkg_LTLIBRARIES = dropshadow/module.la
+
+dropshadow_module_la_SOURCES = dropshadow/e_mod_main.h \
+			       dropshadow/e_mod_main.c \
+			       dropshadow/e_mod_config.h \
+			       dropshadow/e_mod_config.c
+
+dropshadow_module_la_DEPENDENCIES = $(MDEPENDENCIES)

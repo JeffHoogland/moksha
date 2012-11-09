@@ -1,0 +1,19 @@
+conf_randrdir = $(MDIR)/conf_randr
+conf_randr_DATA = conf_randr/e-module-conf_randr.edj \
+		  conf_randr/module.desktop
+
+EXTRA_DIST += $(conf_randr_DATA)
+
+conf_randrpkgdir = $(MDIR)/conf_randr/$(MODULE_ARCH)
+conf_randrpkg_LTLIBRARIES = conf_randr/module.la
+
+conf_randr_module_la_SOURCES = conf_randr/e_mod_main.c \
+			       conf_randr/e_mod_main.h \
+			       conf_randr/e_int_config_randr.h \
+			       conf_randr/e_int_config_randr.c \
+			       conf_randr/e_smart_randr.h \
+			       conf_randr/e_smart_randr.c \
+			       conf_randr/e_smart_monitor.h \
+			       conf_randr/e_smart_monitor.c
+
+conf_randr_module_la_DEPENDENCIES = $(MDEPENDENCIES)

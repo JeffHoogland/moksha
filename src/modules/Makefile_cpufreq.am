@@ -1,0 +1,29 @@
+cpufreqdir = $(MDIR)/cpufreq
+cpufreq_DATA = cpufreq/e-module-cpufreq.edj \
+	       cpufreq/module.desktop
+
+EXTRA_DIST += $(cpufreq_DATA)
+
+cpufreqpkgdir = $(MDIR)/cpufreq/$(MODULE_ARCH)
+cpufreqpkg_LTLIBRARIES = cpufreq/module.la
+
+cpufreq_module_la_SOURCES  = cpufreq/e_mod_main.h \
+			     cpufreq/e_mod_main.c
+
+cpufreq_module_la_DEPENDENCIES = $(MDEPENDENCIES)
+
+freqsetdir = $(cpufreqpkgdir)
+freqset_PROGRAMS = cpufreq/freqset
+
+cpufreq_freqset_SOURCES = cpufreq/freqset.c
+cpufreq_freqset_CFLAGS  = @e_cflags@ @SUID_CFLAGS@
+cpufreq_freqset_LDFLAGS = @SUID_LDFLAGS@
+
+cpufreq_setuid_root_mode = a=rx,u+xs
+cpufreq_setuid_root_user = root
+
+cpufreq-install-data-hook:
+	@chown $(cpufreq_setuid_root_user) $(DESTDIR)$(freqsetdir)/freqset$(EXEEXT) || true
+	@chmod $(cpufreq_setuid_root_mode) $(DESTDIR)$(freqsetdir)/freqset$(EXEEXT) || true
+
+INSTALL_DATA_HOOKS += cpufreq-install-data-hook

@@ -1,0 +1,47 @@
+everythingdir = $(MDIR)/everything
+everything_DATA = everything/e-module-everything.edj \
+		  everything/e-module-everything-start.edj \
+		  everything/module.desktop
+
+EXTRA_DIST += $(everything_DATA)
+
+everythingpkgdir = $(MDIR)/everything/$(MODULE_ARCH)
+everythingpkg_LTLIBRARIES = everything/module.la
+
+EVRYHEADERS = everything/evry_api.h \
+	      everything/evry_types.h
+
+everything_module_la_SOURCES = $(EVRYHEADERS) \
+			       everything/e_mod_main.c \
+			       everything/e_mod_main.h \
+			       everything/evry.c \
+			       everything/evry_config.c \
+			       everything/evry_util.c \
+			       everything/evry_history.c \
+			       everything/evry_plugin.c \
+			       everything/evry_plug_aggregator.c \
+			       everything/evry_plug_actions.c \
+			       everything/evry_view.c \
+			       everything/evry_view_tabs.c \
+			       everything/evry_view_help.c \
+			       everything/evry_plug_clipboard.c \
+			       everything/evry_plug_text.c \
+			       everything/evry_plug_collection.c \
+			       everything/evry_gadget.c \
+			       everything/md5.c \
+			       everything/md5.h \
+			       everything/evry_plug_apps.c \
+			       everything/evry_plug_files.c \
+			       everything/evry_plug_windows.c \
+			       everything/evry_plug_settings.c \
+			       everything/evry_plug_calc.c
+
+everything_module_la_DEPENDENCIES = $(MDEPENDENCIES)
+
+everything_headersdir = $(pkgincludedir)
+dist_everything_headers_DATA = $(EVRYHEADERS)
+
+everything_pkgconfigdir = $(libdir)/pkgconfig
+everything_pkgconfig_DATA = everything/everything.pc
+EXTRA_DIST += everything/everything.pc.in
+CLEANFILES += everything/everything.pc
