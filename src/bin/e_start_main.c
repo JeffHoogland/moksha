@@ -19,6 +19,7 @@
 #include <Eina.h>
 
 static Eina_Bool tainted = EINA_FALSE;
+static Eina_Bool stop_ptrace = EINA_FALSE;
 
 static void env_set(const char *var, const char *val);
 EAPI int    prefix_determine(char *argv0);
@@ -219,8 +220,15 @@ _env_path_append(const char *env, const char *path)
 static  void
 _sigusr1(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
+   struct sigaction action;
+   
    /* release ptrace */
-   printf("sigusr1 -- release ptrace\n");
+   stop_ptrace = EINA_TRUE;
+   
+   action.sa_sigaction = _sigusr1;
+   action.sa_flags = SA_RESETHAND;
+   sigemptyset(&action.sa_mask);
+   sigaction(SIGUSR1, &action, NULL);
 }
 
 int
@@ -237,7 +245,7 @@ main(int argc, char **argv)
    struct sigaction action;
    
    action.sa_sigaction = _sigusr1;
-   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+   action.sa_flags = SA_RESETHAND;
    sigemptyset(&action.sa_mask);
    sigaction(SIGUSR1, &action, NULL);
    
@@ -421,28 +429,24 @@ main(int argc, char **argv)
 
              ptrace(PT_ATTACH, child, NULL, NULL);
 
-             printf("a\n");
              result = waitpid(child, &status, 0);
-             printf("b\n");
-             
-             //ptrace(PT_DETACH, child, NULL, back);
-             
-             if (WIFSTOPPED(status))
-               ptrace(PT_CONTINUE, child, NULL, NULL);
-             printf("c\n");
+
+             if (!stop_ptrace)
+               {
+                  if (WIFSTOPPED(status))
+                    ptrace(PT_CONTINUE, child, NULL, NULL);
+               }
 
              while (!done)
                {
 		  Eina_Bool remember_sigill = EINA_FALSE;
 		  Eina_Bool remember_sigusr1 = EINA_FALSE;
 
-             printf("d\n");
 		  result = waitpid(child, &status, 0);
-             printf("e\n");
 
                   if (result == child)
                     {
-                       if (WIFSTOPPED(status))
+                       if ((WIFSTOPPED(status)) && (!stop_ptrace))
                          {
                             char buffer[4096];
                             char *backtrace_str = NULL;
@@ -523,15 +527,30 @@ main(int argc, char **argv)
                          {
                             done = EINA_TRUE;
                          }
+                       else if (stop_ptrace)
+                         {
+                            done = EINA_TRUE;
+                         }
                     }
-                  else if (result == - 1)
+                  else if (result == -1)
                     {
-                       done = EINA_TRUE;
-                       restart = EINA_FALSE;
+                       if (errno != EINTR)
+                         {
+                            done = EINA_TRUE;
+                            restart = EINA_FALSE;
+                         }
+                       else
+                         {
+                            if (stop_ptrace)
+                              {
+                                 kill(child, SIGSTOP);
+                                 usleep(200000);
+                                 ptrace(PT_DETACH, child, NULL, NULL);
+                              }
+                         }
                     }
                }
           }
-          
      }
 
    return -1;
