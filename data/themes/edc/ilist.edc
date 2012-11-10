@@ -149,7 +149,6 @@ group { name: "e/widgets/ilist";
                align: 0.0 0.5;
                text_class: "ilist_item";
             }
-            fixed: 1 1;
          }
          description { state: "selected" 0.0;
             inherit: "default" 0.0;
