@@ -1,9 +1,6 @@
-/* Ask about compositing */
+/* Ask about updates checking */
 #include "e.h"
 #include "e_mod_main.h"
-
-#define ENGINE_SW 1
-#define ENGINE_GL 2
 
 static int do_up = 1;
 
