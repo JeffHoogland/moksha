@@ -130,6 +130,9 @@ src/modules/battery/e_mod_config.c
 src/modules/battery/e_mod_main.c
 src/modules/clock/e_mod_config.c
 src/modules/clock/e_mod_main.c
+src/modules/comp/e_mod_comp.c
+src/modules/comp/e_mod_config.c
+src/modules/comp/e_mod_main.c
 src/modules/conf/e_conf.c
 src/modules/conf/e_mod_config.c
 src/modules/conf/e_mod_main.c
