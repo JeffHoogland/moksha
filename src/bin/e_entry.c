@@ -137,8 +137,7 @@ e_entry_text_get(Evas_Object *entry)
 
    if (text)
      {
-        free(text);
-        text = NULL;
+        E_FREE(text);
      }
    text = evas_textblock_text_markup_to_utf8(
          edje_object_part_object_get(sd->entry_object, ENTRY_PART_NAME),
