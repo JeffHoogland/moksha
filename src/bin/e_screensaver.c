@@ -230,8 +230,8 @@ _e_screensaver_handler_screensaver_notify_cb(void *data __UNUSED__, int type __U
      }
    else
      {
-        e_screensaver_force_update();
-        e_dpms_force_update();
+//        e_screensaver_force_update();
+//        e_dpms_force_update();
         
         _e_screensaver_on = EINA_FALSE;
         if (_e_screensaver_suspend_timer)
