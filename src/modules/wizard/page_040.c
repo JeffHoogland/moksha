@@ -46,6 +46,10 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    char buf[PATH_MAX], *file;
    int found;
 
+   e_wizard_title_set(_("Adding missing App files"));
+   e_wizard_button_next_enable_set(0);
+   e_wizard_page_show(NULL);
+   
    snprintf(buf, sizeof(buf), "%s/extra_desktops", e_wizard_dir_get());
    extra_desks = ecore_file_ls(buf);
    if (!extra_desks) return 0;

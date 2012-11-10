@@ -95,7 +95,7 @@ wizard_page_show(E_Wizard_Page *pg)
    of = e_widget_framelist_add(pg->evas, _("Transparent windows and effects"), 0);
 
    ob = e_widget_textblock_add(pg->evas);
-   e_widget_size_min_set(ob, 200 * e_scale, 180 * e_scale);
+   e_widget_size_min_set(ob, 260 * e_scale, 200 * e_scale);
    e_widget_textblock_markup_set
      (ob,
      _("Compositing provides translucency<br>"
