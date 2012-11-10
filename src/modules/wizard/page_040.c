@@ -112,7 +112,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
           }
         free(file);
      }
-   return 1; /* 1 == show ui, and wait for user, 0 == just continue */
+   return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int
