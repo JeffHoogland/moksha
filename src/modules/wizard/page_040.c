@@ -16,6 +16,8 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 {
    if (_update_handler) ecore_event_handler_del(_update_handler);
    _update_handler = NULL;
+   if (_next_timer) ecore_timer_del(_next_timer);
+   _next_timer = NULL;
    return 1;
 }
 
@@ -33,6 +35,8 @@ _next_page(void *data __UNUSED__)
 static Eina_Bool
 _cb_desktops_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
+   if (_update_handler) ecore_event_handler_del(_update_handler);
+   _update_handler = NULL;
    if (_next_timer) ecore_timer_del(_next_timer);
    _next_timer = ecore_timer_add(1.0, _next_page, NULL);
    return ECORE_CALLBACK_PASS_ON;
@@ -44,7 +48,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    Eina_List *extra_desks, *desks;
    Efreet_Desktop *desk, *extra_desk;
    char buf[PATH_MAX], *file;
-   int found;
+   int found, copies = 0;
 
    e_wizard_title_set(_("Adding missing App files"));
    e_wizard_button_next_enable_set(0);
@@ -110,13 +114,22 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
                                 "%s/applications/%s",
                                 efreet_data_home_get(), file);
                        ecore_file_cp(buf, abuf);
+                       copies++;
                     }
                }
              efreet_desktop_free(extra_desk);
           }
         free(file);
      }
-   return 0; /* 1 == show ui, and wait for user, 0 == just continue */
+   if (copies == 0)
+     {
+        if (_next_timer) ecore_timer_del(_next_timer);
+        _next_timer = NULL;
+        if (_update_handler) ecore_event_handler_del(_update_handler);
+        _update_handler = NULL;
+        return 0; /* we didnt copy anything so advance anyway */
+     }
+   return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int

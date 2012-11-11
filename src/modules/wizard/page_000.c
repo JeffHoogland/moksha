@@ -17,6 +17,8 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 {
    if (_update_handler) ecore_event_handler_del(_update_handler);
    _update_handler = NULL;
+   if (_next_timer) ecore_timer_del(_next_timer);
+   _next_timer = NULL;
    return 1;
 }
 
@@ -34,6 +36,8 @@ _next_page(void *data __UNUSED__)
 static Eina_Bool
 _cb_desktops_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
+  if (_update_handler) ecore_event_handler_del(_update_handler);
+   _update_handler = NULL;
    if (_next_timer) ecore_timer_del(_next_timer);
    _next_timer = ecore_timer_add(2.0, _next_page, NULL);
    return ECORE_CALLBACK_PASS_ON;
