@@ -90,8 +90,8 @@ _scale_preview_new(E_Config_Dialog_Data *cfdata, Evas *e, double sc, double *scp
    char buf[64];
    int v;
    
-#define SZW 110
-#define SZH 80
+#define SZW 200
+#define SZH 120
    ob = e_widget_preview_add(e, SZW, SZH);
    e_widget_preview_vsize_set(ob, SZW, SZH);
    
@@ -105,7 +105,7 @@ _scale_preview_new(E_Config_Dialog_Data *cfdata, Evas *e, double sc, double *scp
    cm = edje_object_add(e_widget_preview_evas_get(ob));
    e_theme_edje_object_set(cm, "base/theme/borders", "e/comp/default");
    evas_object_move(cm, 16, 16);
-   evas_object_resize(cm, 320, 400);
+   evas_object_resize(cm, 180 * sc, 80);
    evas_object_show(cm);
    
    bd = edje_object_add(e_widget_preview_evas_get(ob));
