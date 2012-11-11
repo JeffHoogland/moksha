@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-09 23:50+0900\n"
-"PO-Revision-Date: 2012-10-28 16:45+0400\n"
+"POT-Creation-Date: 2012-11-11 22:33+0400\n"
+"PO-Revision-Date: 2012-11-11 22:33+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <ru>\n"
 "Language: ru\n"
@@ -208,6 +208,7 @@ msgstr "Изменить размер"
 
 #: src/bin/e_actions.c:2980 src/bin/e_actions.c:3339 src/bin/e_actions.c:3341
 #: src/bin/e_actions.c:3343 src/bin/e_actions.c:3345 src/bin/e_actions.c:3347
+#: src/modules/comp/e_mod_config.c:452 src/modules/comp/e_mod_config.c:761
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:336
 msgid "Menu"
 msgstr "Меню"
@@ -361,6 +362,7 @@ msgstr "Переключить режим прикрепления"
 #: src/bin/e_fm_device.c:653 src/bin/e_fm_device.c:688
 #: src/bin/e_fm_device.c:722 src/bin/e_fm_device.c:750
 #: src/bin/e_int_menus.c:190 src/bin/e_int_shelf_config.c:267
+#: src/modules/comp/e_mod_config.c:444 src/modules/comp/e_mod_config.c:753
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:335 src/modules/ibox/e_mod_config.c:166
 #: src/modules/wizard/page_160.c:24 src/modules/wizard/page_160.c:34
@@ -895,6 +897,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:318 src/bin/e_int_border_remember.c:507
 #: src/bin/e_module.c:425 src/bin/e_module.c:792 src/bin/e_sys.c:618
 #: src/bin/e_sys.c:659 src/bin/e_utils.c:700
+#: src/modules/comp/e_mod_config.c:918
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/cpufreq/e_mod_main.c:424 src/modules/cpufreq/e_mod_main.c:453
@@ -979,7 +982,7 @@ msgstr "Функция не реализована"
 
 #: src/bin/e_config.c:2277
 msgid "PRNG was not seeded."
-msgstr "PRNG was not seeded."
+msgstr "Не удалось задать начальное значение для ГПСЧ."
 
 #: src/bin/e_config.c:2281
 msgid "Encryption failed."
@@ -1147,7 +1150,7 @@ msgid "Desktop Entry Editor"
 msgstr "Редактор записей .desktop"
 
 #: src/bin/e_eap_editor.c:676 src/bin/e_int_border_prop.c:448
-#: src/bin/e_int_border_prop.c:502
+#: src/bin/e_int_border_prop.c:502 src/modules/comp/e_mod_config.c:713
 #: src/modules/conf_intl/e_int_config_imc.c:898
 #: src/modules/conf_menus/e_int_config_menus.c:265
 #: src/modules/ibar/e_mod_config.c:130
@@ -1190,7 +1193,7 @@ msgid "Desktop file"
 msgstr "Файл .desktop"
 
 #: src/bin/e_eap_editor.c:780 src/bin/e_int_border_prop.c:453
-#: src/bin/e_int_border_prop.c:505
+#: src/bin/e_int_border_prop.c:505 src/modules/comp/e_mod_config.c:1525
 #: src/modules/conf_applications/e_int_config_defapps.c:357
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
@@ -1227,7 +1230,7 @@ msgstr "Выбрать значок для '%s'"
 msgid "Select an Executable"
 msgstr "Выбрать исполняемый файл"
 
-#: src/bin/e_entry.c:371 src/bin/e_fm.c:8765 src/bin/e_fm.c:10382
+#: src/bin/e_entry.c:386 src/bin/e_fm.c:8765 src/bin/e_fm.c:10382
 #: src/bin/e_shelf.c:1785 src/bin/e_shelf.c:2428
 #: src/modules/conf_dialogs/e_int_config_profiles.c:134
 #: src/modules/conf_dialogs/e_int_config_profiles.c:335
@@ -1242,19 +1245,19 @@ msgstr "Выбрать исполняемый файл"
 msgid "Delete"
 msgstr "Удалить"
 
-#: src/bin/e_entry.c:381 src/bin/e_fm.c:8676
+#: src/bin/e_entry.c:396 src/bin/e_fm.c:8676
 msgid "Cut"
 msgstr "Вырезать"
 
-#: src/bin/e_entry.c:389 src/bin/e_fm.c:8690 src/bin/e_fm.c:11138
+#: src/bin/e_entry.c:404 src/bin/e_fm.c:8690 src/bin/e_fm.c:11138
 msgid "Copy"
 msgstr "Копировать"
 
-#: src/bin/e_entry.c:397 src/bin/e_fm.c:8481 src/bin/e_fm.c:8703
+#: src/bin/e_entry.c:412 src/bin/e_fm.c:8481 src/bin/e_fm.c:8703
 msgid "Paste"
 msgstr "Вставить"
 
-#: src/bin/e_entry.c:407
+#: src/bin/e_entry.c:422
 msgid "Select All"
 msgstr "Выделить всё"
 
@@ -1618,18 +1621,16 @@ msgid "Set background..."
 msgstr "Установить фон..."
 
 #: src/bin/e_fm.c:9441
-#, fuzzy
 msgid "Clear background"
-msgstr "Установить фон..."
+msgstr "Очистить фон"
 
 #: src/bin/e_fm.c:9448 src/bin/e_fm.c:9677
 msgid "Set overlay..."
 msgstr "Установить перекрытие..."
 
 #: src/bin/e_fm.c:9454
-#, fuzzy
 msgid "Clear overlay"
-msgstr "Установить перекрытие..."
+msgstr "Очистить перекрытие"
 
 #: src/bin/e_fm.c:9766
 msgid "Create a new Directory"
@@ -1756,6 +1757,7 @@ msgid "Cannot change permissions: %s"
 msgstr "Не удалось сменить разрешения: %s"
 
 #: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1118 src/bin/e_shelf.c:2318
+#: src/modules/comp/e_mod_config.c:493
 #: src/modules/conf_dialogs/e_int_config_profiles.c:312
 #: src/modules/conf_display/e_int_config_desk.c:154
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
@@ -1821,7 +1823,8 @@ msgstr "Прочие:"
 msgid "Preview"
 msgstr "Предварительный просмотр"
 
-#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:426
+#: src/bin/e_fm_prop.c:527 src/modules/comp/e_mod_config.c:1118
+#: src/modules/everything/evry_config.c:426
 msgid "Default"
 msgstr "По умолчанию"
 
@@ -1864,10 +1867,10 @@ msgstr "Гладко"
 
 #: src/bin/e_gadcon.c:1770 src/modules/gadman/e_mod_gadman.c:1053
 msgid "Inset"
-msgstr "Вкладка"
+msgstr "Вклад"
 
 #: src/bin/e_gadcon.c:1784 src/bin/e_int_config_modules.c:52
-#: src/modules/conf_theme/e_mod_main.c:35
+#: src/modules/comp/e_mod_main.c:41 src/modules/conf_theme/e_mod_main.c:35
 #: src/modules/dropshadow/e_mod_main.c:89
 msgid "Look"
 msgstr "Вид"
@@ -2019,6 +2022,7 @@ msgid "Shade"
 msgstr "Свернуть"
 
 #: src/bin/e_int_border_menu.c:371 src/bin/e_int_border_prop.c:514
+#: src/modules/comp/e_mod_config.c:884
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:215
 msgid "Fullscreen"
 msgstr "На весь экран"
@@ -2095,7 +2099,8 @@ msgid "Screen %d"
 msgstr "Экран %d"
 
 #: src/bin/e_int_border_menu.c:1018 src/bin/e_int_border_prop.c:158
-#: src/bin/e_int_border_prop.c:180
+#: src/bin/e_int_border_prop.c:180 src/modules/comp/e_mod_config.c:458
+#: src/modules/comp/e_mod_config.c:767
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
 #: src/modules/notification/e_mod_config.c:98
@@ -2281,11 +2286,12 @@ msgid "ICCCM"
 msgstr "ICCCM"
 
 #: src/bin/e_int_border_prop.c:447 src/bin/e_int_border_remember.c:651
+#: src/modules/comp/e_mod_config.c:392 src/modules/comp/e_mod_config.c:702
 #: src/modules/wizard/page_050.c:95
 msgid "Title"
 msgstr "Заголовок"
 
-#: src/bin/e_int_border_prop.c:449
+#: src/bin/e_int_border_prop.c:449 src/modules/comp/e_mod_config.c:723
 msgid "Class"
 msgstr "Класс"
 
@@ -2297,7 +2303,7 @@ msgstr "Имя значка"
 msgid "Machine"
 msgstr "Машина"
 
-#: src/bin/e_int_border_prop.c:452
+#: src/bin/e_int_border_prop.c:452 src/modules/comp/e_mod_config.c:732
 msgid "Role"
 msgstr "Роль"
 
@@ -2361,7 +2367,7 @@ msgstr "Состояния"
 msgid "Take Focus"
 msgstr "Забирает фокус"
 
-#: src/bin/e_int_border_prop.c:476
+#: src/bin/e_int_border_prop.c:476 src/modules/comp/e_mod_config.c:835
 msgid "Accepts Focus"
 msgstr "Принимает фокус"
 
@@ -2396,7 +2402,7 @@ msgstr "Запрос позиции"
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/bin/e_int_border_prop.c:508
+#: src/bin/e_int_border_prop.c:508 src/modules/comp/e_mod_config.c:897
 msgid "Modal"
 msgstr "Модальное"
 
@@ -2412,7 +2418,7 @@ msgstr "Пропуск панели задач"
 msgid "Skip Pager"
 msgstr "Пропуск пейджера"
 
-#: src/bin/e_int_border_prop.c:513
+#: src/bin/e_int_border_prop.c:513 src/modules/comp/e_mod_config.c:280
 msgid "Hidden"
 msgstr "Скрытое"
 
@@ -2748,7 +2754,7 @@ msgstr "Высота (%3.0f пикс.)"
 msgid "Shrink to Content Width"
 msgstr "Ужимать под размер содержимого"
 
-#: src/bin/e_int_shelf_config.c:213
+#: src/bin/e_int_shelf_config.c:213 src/modules/comp/e_mod_config.c:912
 #: src/modules/conf_theme/e_int_config_fonts.c:647
 msgid "Style"
 msgstr "Стиль"
@@ -2767,7 +2773,7 @@ msgstr "Показывать при щелчке мышью"
 
 #: src/bin/e_int_shelf_config.c:233
 msgid "Hide timeout"
-msgstr "Время задержки до сокрытия"
+msgstr "Скрывать через"
 
 #: src/bin/e_int_shelf_config.c:237
 #: src/modules/notification/e_mod_config.c:107
@@ -2777,7 +2783,7 @@ msgstr "%.1f секунд"
 
 #: src/bin/e_int_shelf_config.c:243
 msgid "Hide duration"
-msgstr "Время сокрытия"
+msgstr "Продолжительность скрытия"
 
 #: src/bin/e_int_shelf_config.c:247
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:891
@@ -3041,11 +3047,11 @@ msgstr "Enlightenment не может настроить систему блок
 
 #: src/bin/e_main.c:737
 msgid "Setup Popups"
-msgstr "Настройка подсказок"
+msgstr "Настройка всплывающих окон"
 
 #: src/bin/e_main.c:741
 msgid "Enlightenment cannot set up its popup system."
-msgstr "Enlightenment не может настроить систему подсказок."
+msgstr "Enlightenment не может настроить систему всплывающих окон."
 
 #: src/bin/e_main.c:753
 msgid "Setup Message Bus"
@@ -3554,7 +3560,7 @@ msgstr "Расположение"
 
 #: src/bin/e_shelf.c:2408
 msgid "Autohide"
-msgstr "Автосокрытие"
+msgstr "Автоскрытие"
 
 #: src/bin/e_shelf.c:2415 src/modules/conf_display/e_int_config_display.c:405
 msgid "Refresh"
@@ -3779,7 +3785,7 @@ msgstr "За последнюю минуту"
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
-msgstr[0] "%li Год назад"
+msgstr[0] "%li год назад"
 msgstr[1] "%li года назад"
 msgstr[2] "%li лет назад"
 
@@ -3787,7 +3793,7 @@ msgstr[2] "%li лет назад"
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
-msgstr[0] "%li Месяц назад"
+msgstr[0] "%li месяц назад"
 msgstr[1] "%li месяца назад"
 msgstr[2] "%li месяцев назад"
 
@@ -3795,7 +3801,7 @@ msgstr[2] "%li месяцев назад"
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
-msgstr[0] "%liНеделю назад"
+msgstr[0] "%li неделю назад"
 msgstr[1] "%li недели назад"
 msgstr[2] "%li недель назад"
 
@@ -3803,7 +3809,7 @@ msgstr[2] "%li недель назад"
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
-msgstr[0] "%liВчера"
+msgstr[0] "%li день назад"
 msgstr[1] "%li дня назад"
 msgstr[2] "%li дней назад"
 
@@ -3811,7 +3817,7 @@ msgstr[2] "%li дней назад"
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
-msgstr[0] "%liЧас назад"
+msgstr[0] "%li час назад"
 msgstr[1] "%li часа назад"
 msgstr[2] "%li часов назад"
 
@@ -3819,11 +3825,12 @@ msgstr[2] "%li часов назад"
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
-msgstr[0] "%liМинуту назад"
+msgstr[0] "%li минуту назад"
 msgstr[1] "%li минуты назад"
 msgstr[2] "%li минут назад"
 
-#: src/bin/e_utils.c:940 src/modules/conf_dialogs/e_int_config_profiles.c:295
+#: src/bin/e_utils.c:940 src/modules/comp/e_mod_config.c:516
+#: src/modules/conf_dialogs/e_int_config_profiles.c:295
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1220
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1122
 #: src/modules/wizard/page_020.c:25
@@ -3936,7 +3943,7 @@ msgstr "Минута"
 msgid "%li Minutes"
 msgstr "%li минут"
 
-#: src/bin/e_widget_config_list.c:60
+#: src/bin/e_widget_config_list.c:60 src/modules/comp/e_mod_config.c:1096
 #: src/modules/conf_applications/e_int_config_apps.c:265
 #: src/modules/conf_applications/e_int_config_apps.c:286
 #: src/modules/conf_applications/e_int_config_apps_personal.c:91
@@ -3951,13 +3958,13 @@ msgstr "%li минут"
 msgid "Add"
 msgstr "Добавить"
 
-#: src/bin/e_widget_config_list.c:80
+#: src/bin/e_widget_config_list.c:80 src/modules/comp/e_mod_config.c:1092
 #: src/modules/conf_applications/e_int_config_apps.c:302
 #: src/modules/xkbswitch/e_mod_config.c:248
 msgid "Up"
 msgstr "Вверх"
 
-#: src/bin/e_widget_config_list.c:86
+#: src/bin/e_widget_config_list.c:86 src/modules/comp/e_mod_config.c:1094
 #: src/modules/conf_applications/e_int_config_apps.c:306
 #: src/modules/xkbswitch/e_mod_config.c:254
 msgid "Down"
@@ -4178,15 +4185,467 @@ msgstr "Начало"
 
 #: src/modules/clock/e_mod_config.c:115
 msgid "Weekend"
-msgstr "Выходной"
+msgstr "Выходные"
 
 #: src/modules/clock/e_mod_config.c:126
 msgid "Days"
-msgstr "Дни"
+msgstr "Количество дней"
 
 #: src/modules/clock/e_mod_main.c:828 src/modules/clock/e_mod_main.c:860
 msgid "Show calendar"
 msgstr "Показывать календарь"
+
+#: src/modules/comp/e_mod_comp.c:3641 src/modules/comp/e_mod_comp.c:3663
+#: src/modules/comp/e_mod_comp.c:4067 src/modules/comp/e_mod_comp.c:4077
+msgid "Compositor Error"
+msgstr "Ошибка композитного менеджера"
+
+#: src/modules/comp/e_mod_comp.c:3642
+msgid "Another compositor is already running<br>on your screen."
+msgstr "На этом экране уже запущен другой<br>композитный менеджер."
+
+#: src/modules/comp/e_mod_comp.c:3664
+msgid ""
+"Your screen does not support the compositor<br>overlay window. This is "
+"needed for it to<br>function."
+msgstr ""
+
+#: src/modules/comp/e_mod_comp.c:3738
+msgid "Compositor Warning"
+msgstr "Предупреждение композитного менеджера"
+
+#: src/modules/comp/e_mod_comp.c:3739
+msgid ""
+"Your screen does not support OpenGL.<br>Falling back to software engine."
+msgstr ""
+"Экран не поддерживает OpenGL.<br>Осуществляется возврат на программную "
+"отрисовку."
+
+#: src/modules/comp/e_mod_comp.c:4068
+msgid ""
+"Your X Display does not support the XComposite extension<br>or Ecore was "
+"built without XComposite support.<br>Note that for composite support you "
+"will also need<br>XRender and XFixes support in X11 and Ecore."
+msgstr ""
+"Ваш экран не поддерживает расширение XComposite<br>или Ecore был собран без "
+"поддержки XComposite.<br>Заметьте, что для поддержки композитного "
+"режима<br>вам также понадобится поддержка XRender и XFixes<br>в X11 и Ecore"
+
+#: src/modules/comp/e_mod_comp.c:4078
+msgid ""
+"Your screen does not support the XDamage extension<br>or Ecore was built "
+"without XDamage support."
+msgstr ""
+"Ваш экран не поддерживает расширение XDamage<br>или Ecore был собран без "
+"поддержки XDamage."
+
+#: src/modules/comp/e_mod_config.c:106
+msgid "Composite Settings"
+msgstr "Настройки композитного режима"
+
+#: src/modules/comp/e_mod_config.c:265
+msgid "Visible"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:270
+msgid "Focus-Out"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:275
+msgid "Focus-In"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:440 src/modules/comp/e_mod_config.c:470
+#: src/modules/comp/e_mod_config.c:748 src/modules/comp/e_mod_config.c:799
+msgid "Unused"
+msgstr "Не используется"
+
+#: src/modules/comp/e_mod_config.c:442 src/modules/comp/e_mod_config.c:751
+msgid "Combo"
+msgstr "Комбо"
+
+#: src/modules/comp/e_mod_config.c:446 src/modules/comp/e_mod_config.c:755
+#: src/modules/comp/e_mod_config.c:822
+msgid "Dialog"
+msgstr "Диалог"
+
+#: src/modules/comp/e_mod_config.c:448 src/modules/comp/e_mod_config.c:757
+msgid "Dock"
+msgstr "Стыковка"
+
+#: src/modules/comp/e_mod_config.c:450 src/modules/comp/e_mod_config.c:759
+msgid "Drag and Drop"
+msgstr "Перетащить"
+
+#: src/modules/comp/e_mod_config.c:454 src/modules/comp/e_mod_config.c:763
+msgid "Menu (Dropdown)"
+msgstr "Меню (выпадающее)"
+
+#: src/modules/comp/e_mod_config.c:456 src/modules/comp/e_mod_config.c:765
+msgid "Menu (Popup)"
+msgstr "Меню (подсказка)"
+
+#: src/modules/comp/e_mod_config.c:460 src/modules/comp/e_mod_config.c:769
+#: src/modules/notification/e_mod_main.c:297
+msgid "Notification"
+msgstr "Уведомления"
+
+#: src/modules/comp/e_mod_config.c:462 src/modules/comp/e_mod_config.c:771
+msgid "Splash"
+msgstr "Заставка"
+
+#: src/modules/comp/e_mod_config.c:464 src/modules/comp/e_mod_config.c:773
+#: src/modules/fileman/e_mod_config.c:342
+msgid "Toolbar"
+msgstr "Панель инструментов"
+
+#: src/modules/comp/e_mod_config.c:466 src/modules/comp/e_mod_config.c:775
+msgid "Tooltip"
+msgstr "Подсказки"
+
+#: src/modules/comp/e_mod_config.c:468 src/modules/comp/e_mod_config.c:777
+msgid "Utility"
+msgstr "Утилита"
+
+#: src/modules/comp/e_mod_config.c:481
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:151
+msgid "Title:"
+msgstr "Заголовок:"
+
+#: src/modules/comp/e_mod_config.c:483 src/modules/comp/e_mod_config.c:489
+#: src/modules/comp/e_mod_config.c:495 src/modules/comp/e_mod_config.c:501
+#: src/modules/comp/e_mod_config.c:507
+msgid " / "
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:487 src/modules/mixer/app_mixer.c:394
+msgid "Type:"
+msgstr "Тип:"
+
+#: src/modules/comp/e_mod_config.c:499
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:144
+msgid "Class:"
+msgstr "Класс:"
+
+#: src/modules/comp/e_mod_config.c:505
+#: src/modules/conf_window_remembers/e_int_config_remembers.c:158
+msgid "Role:"
+msgstr "Роль:"
+
+#: src/modules/comp/e_mod_config.c:511
+msgid "Style:"
+msgstr "Стиль:"
+
+#: src/modules/comp/e_mod_config.c:685
+msgid "Edit Match"
+msgstr "Редактировать совпадение"
+
+#: src/modules/comp/e_mod_config.c:737
+msgid "Names"
+msgstr "Имена"
+
+#: src/modules/comp/e_mod_config.c:784
+#: src/modules/conf_applications/e_int_config_defapps.c:334
+msgid "Types"
+msgstr "Типы"
+
+#: src/modules/comp/e_mod_config.c:801
+msgid "On"
+msgstr "Вкл."
+
+#: src/modules/comp/e_mod_config.c:803
+#: src/modules/conf_display/e_int_config_desks.c:187
+#: src/modules/everything/evry_config.c:495
+msgid "Off"
+msgstr "Выкл."
+
+#: src/modules/comp/e_mod_config.c:809
+msgid "Borderless"
+msgstr "Без бордюра"
+
+#: src/modules/comp/e_mod_config.c:848
+msgid "Virtual Keyboard"
+msgstr "Виртуальная клавиатура"
+
+#: src/modules/comp/e_mod_config.c:861
+msgid "Quick Panel"
+msgstr "Панель быстрого запуска"
+
+#: src/modules/comp/e_mod_config.c:872
+msgid "ARGB"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:908
+msgid "Flags"
+msgstr "Флаги"
+
+#: src/modules/comp/e_mod_config.c:1098
+msgid "Del"
+msgstr "Удалить"
+
+#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:415
+msgid "Edit"
+msgstr "Изменить"
+
+#: src/modules/comp/e_mod_config.c:1122
+#: src/modules/conf_applications/e_mod_main.c:18
+msgid "Apps"
+msgstr "Приложения"
+
+#: src/modules/comp/e_mod_config.c:1126
+msgid "E"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1130
+#, fuzzy
+msgid "Over"
+msgstr "Над"
+
+#: src/modules/comp/e_mod_config.c:1134
+#: src/modules/conf_menus/e_int_config_menus.c:277
+#: src/modules/conf_menus/e_mod_main.c:17
+msgid "Menus"
+msgstr "Меню"
+
+#: src/modules/comp/e_mod_config.c:1162
+msgid "Smooth scaling"
+msgstr "Гладкое масштабирование"
+
+#: src/modules/comp/e_mod_config.c:1165
+msgid "Styles"
+msgstr "Стили"
+
+#: src/modules/comp/e_mod_config.c:1171
+msgid "Effects"
+msgstr "Эффекты"
+
+#: src/modules/comp/e_mod_config.c:1175
+msgid "Sync windows"
+msgstr "Синхронизировать окна"
+
+#: src/modules/comp/e_mod_config.c:1177
+msgid "Loose sync"
+msgstr "Свободная синхронизация"
+
+#: src/modules/comp/e_mod_config.c:1179
+msgid "Grab Server during draw"
+msgstr "Захват сервера при прорисовке"
+
+#: src/modules/comp/e_mod_config.c:1181
+msgid "Initial draw timeout for newly mapped windows"
+msgstr "Начальный тайм-аут для отрисовки новых окон"
+
+#: src/modules/comp/e_mod_config.c:1183
+#, c-format
+msgid "%1.2f Seconds"
+msgstr "%1.2f секунд"
+
+#: src/modules/comp/e_mod_config.c:1185
+msgid "Sync"
+msgstr "Синхронизация"
+
+#: src/modules/comp/e_mod_config.c:1190 src/modules/comp/e_mod_config.c:1530
+msgid "Software"
+msgstr "Программная отрисовка"
+
+#: src/modules/comp/e_mod_config.c:1196 src/modules/comp/e_mod_config.c:1536
+msgid "OpenGL"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1199
+msgid "OpenGL options"
+msgstr "Опции OpenGL"
+
+#: src/modules/comp/e_mod_config.c:1201 src/modules/comp/e_mod_config.c:1510
+msgid "Tear-free updates (VSynced)"
+msgstr "Отрисовка без разрывов (VSync)"
+
+#: src/modules/comp/e_mod_config.c:1203
+msgid "Texture from pixmap"
+msgstr "Текстура из растрового изображения"
+
+#: src/modules/comp/e_mod_config.c:1210
+msgid "Assume swapping method:"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1213
+msgid "Auto"
+msgstr "Автоматически"
+
+#: src/modules/comp/e_mod_config.c:1215
+msgid "Invalidate (full redraw)"
+msgstr "Invalidate (полная перерисовка)"
+
+#: src/modules/comp/e_mod_config.c:1217
+msgid "Copy from back to front"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1219
+msgid "Double buffered swaps"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1221
+msgid "Triple buffered swaps"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1231
+#: src/modules/conf_performance/e_mod_main.c:19
+msgid "Engine"
+msgstr "Движок"
+
+#: src/modules/comp/e_mod_config.c:1235
+msgid "Send flush"
+msgstr "Послать flush"
+
+#: src/modules/comp/e_mod_config.c:1237
+msgid "Send dump"
+msgstr "Послать dump"
+
+#: src/modules/comp/e_mod_config.c:1239 src/modules/comp/e_mod_config.c:1516
+msgid "Don't composite fullscreen windows"
+msgstr "Не использовать композитный режим для полноэкранных окон"
+
+#: src/modules/comp/e_mod_config.c:1241
+msgid "Keep hidden windows"
+msgstr "Оставлять скрытые окна"
+
+#: src/modules/comp/e_mod_config.c:1243
+msgid "Maximum hidden pixels"
+msgstr "Максимум скрытых пикселей"
+
+#: src/modules/comp/e_mod_config.c:1246
+msgid "1M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1248
+msgid "2M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1250
+msgid "4M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1252
+msgid "8M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1254
+msgid "16M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1256
+msgid "32M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1258
+msgid "64M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1260
+msgid "128M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1262
+msgid "256M"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1265
+msgid "Memory"
+msgstr "Память"
+
+#: src/modules/comp/e_mod_config.c:1270
+#, fuzzy
+msgid "Min hidden"
+msgstr "Максимум спрятанного"
+
+#: src/modules/comp/e_mod_config.c:1273 src/modules/comp/e_mod_config.c:1291
+msgid "30 Seconds"
+msgstr "30 секунд"
+
+#: src/modules/comp/e_mod_config.c:1275 src/modules/comp/e_mod_config.c:1293
+msgid "1 Minute"
+msgstr "1 минута"
+
+#: src/modules/comp/e_mod_config.c:1277 src/modules/comp/e_mod_config.c:1295
+msgid "5 Minutes"
+msgstr "5 минут"
+
+#: src/modules/comp/e_mod_config.c:1279 src/modules/comp/e_mod_config.c:1297
+msgid "30 Minutes"
+msgstr "30 минут"
+
+#: src/modules/comp/e_mod_config.c:1281 src/modules/comp/e_mod_config.c:1299
+msgid "2 Hours"
+msgstr "2 часа"
+
+#: src/modules/comp/e_mod_config.c:1283 src/modules/comp/e_mod_config.c:1301
+msgid "10 Hours"
+msgstr "10 часов"
+
+#: src/modules/comp/e_mod_config.c:1285 src/modules/comp/e_mod_config.c:1303
+msgid "Forever"
+msgstr "Бесконечно"
+
+#: src/modules/comp/e_mod_config.c:1288
+msgid "Max hidden"
+msgstr "Максимум спрятанного"
+
+#: src/modules/comp/e_mod_config.c:1307
+msgid "Timeouts"
+msgstr "Тайм-ауты"
+
+#: src/modules/comp/e_mod_config.c:1312
+msgid "Show Framerate"
+msgstr "Показывать частоту кадров"
+
+#: src/modules/comp/e_mod_config.c:1314
+msgid "Rolling average frame count"
+msgstr "Скользящее среднее частоты кадров"
+
+#: src/modules/comp/e_mod_config.c:1316
+#, c-format
+msgid "%1.0f Frames"
+msgstr "%1.0f кадров"
+
+#: src/modules/comp/e_mod_config.c:1320
+msgid "Corner"
+msgstr "Угол"
+
+#: src/modules/comp/e_mod_config.c:1337
+msgid "Debug"
+msgstr "Отладка"
+
+#: src/modules/comp/e_mod_config.c:1513
+msgid "Smooth scaling of window content"
+msgstr "Гладкое масштабирование содержимого окон"
+
+#: src/modules/comp/e_mod_config.c:1519
+msgid "Select default style"
+msgstr "Выберите стиль по умолчанию"
+
+#: src/modules/comp/e_mod_config.c:1540
+msgid "To reset compositor:"
+msgstr "Для сброса композитного менеджера:"
+
+#: src/modules/comp/e_mod_config.c:1542
+msgid "Ctrl+Alt+Shift+Home"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1545
+msgid "Rendering"
+msgstr "Отрисовка"
+
+#: src/modules/comp/e_mod_main.c:43 src/modules/comp/e_mod_main.c:70
+msgid "Composite"
+msgstr "Композитный режим"
+
+#: src/modules/comp/e_mod_main.c:71
+msgid ""
+"Dropshadow module is incompatible<br>with compositing. Disabling "
+"the<br>Dropshadow module."
+msgstr ""
+"Модуль отброса тени несовместим<br>с композитным режимом.<br>Отключение "
+"модуля отброса тени."
 
 #: src/modules/conf/e_mod_config.c:35 src/modules/conf/e_mod_main.c:285
 msgid "Configuration Panel"
@@ -4280,53 +4739,42 @@ msgstr "Терминал"
 msgid "Selected Application"
 msgstr "Выбранные приложения"
 
-#: src/modules/conf_applications/e_int_config_defapps.c:334
-msgid "Types"
-msgstr "Типы"
-
 #: src/modules/conf_applications/e_int_config_deskenv.c:38
 #: src/modules/conf_applications/e_mod_main.c:57
 msgid "Desktop Environments"
-msgstr "Окружение рабочего стола"
+msgstr "Среды рабочего стола"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:93
-#, fuzzy
 msgid "Execution"
-msgstr "Выполнить команду"
+msgstr "Запуск"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:94
 msgid "Only launch single instances"
-msgstr ""
+msgstr "Запускать только один экземпляр"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:99
-#, fuzzy
 msgid "X11 Basics"
-msgstr "Базово"
+msgstr "X11"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:100
 msgid "Load X Resources"
-msgstr "Загрузка ресурсов X"
+msgstr "Загружать X resources"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:103
 msgid "Load X Modifier Map"
-msgstr "Загрузка X Modifier Map"
+msgstr "Загружать X Modifier Map"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:108
-#, fuzzy
 msgid "Major Desktops"
-msgstr "Рабочие столы"
+msgstr "Основные рабочие среды"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:109
 msgid "Start GNOME services on login"
-msgstr "Запустить сервис GNOME при логине"
+msgstr "Запускать сервисы GNOME при входе"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:112
 msgid "Start KDE services on login"
-msgstr "Запустить сервис KDE при логине"
-
-#: src/modules/conf_applications/e_mod_main.c:18
-msgid "Apps"
-msgstr "Приложения"
+msgstr "Запускать сервисы KDE при входе"
 
 #: src/modules/conf_applications/e_mod_main.c:21
 msgid "Create Application Launcher"
@@ -4610,11 +5058,6 @@ msgstr "Непрерывный рабочий стол (оборот вокру�
 msgid "Desktops"
 msgstr "Рабочие столы"
 
-#: src/modules/conf_display/e_int_config_desks.c:187
-#: src/modules/everything/evry_config.c:495
-msgid "Off"
-msgstr "Выкл."
-
 #: src/modules/conf_display/e_int_config_desks.c:190
 msgid "Pane"
 msgstr "Гладко"
@@ -4719,7 +5162,7 @@ msgstr "Окно входа в систему"
 
 #: src/modules/conf_display/e_int_config_desklock.c:309
 msgid "Lock after X screensaver activates"
-msgstr "Блокировать по запуску хранителя экрана"
+msgstr "Блокировать при запуске хранителя экрана"
 
 #: src/modules/conf_display/e_int_config_desklock.c:315
 #: src/modules/conf_display/e_int_config_desklock.c:340
@@ -4732,7 +5175,7 @@ msgstr "%1.0f секунд"
 
 #: src/modules/conf_display/e_int_config_desklock.c:321
 msgid "Lock when idle time exceeded"
-msgstr "Блокировать по превышению времени бездействия"
+msgstr "Блокировать при превышении времени бездействия"
 
 #: src/modules/conf_display/e_int_config_desklock.c:326
 #: src/modules/conf_display/e_int_config_screensaver.c:157
@@ -5085,7 +5528,7 @@ msgstr "X"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:197
 msgid "Idle effects"
-msgstr "Эффекты бездействия"
+msgstr "Эффекты при бездействии"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:203
 msgid "Cursor"
@@ -5189,9 +5632,8 @@ msgstr "Настройки языка"
 
 #: src/modules/conf_intl/e_int_config_intl.c:620
 #: src/modules/conf_intl/e_mod_main.c:24
-#, fuzzy
 msgid "Desklock Language Settings"
-msgstr "Настройки языка"
+msgstr "Настройки языка для блокировщика экрана"
 
 #: src/modules/conf_intl/e_int_config_intl.c:946
 #, c-format
@@ -5289,7 +5731,7 @@ msgid ""
 "Unable to set a mouse wheel binding without modifiers<br>on a window: "
 "conflict with existing edje signal bindings.<br>FIXME!!!"
 msgstr ""
-"Не удается установить привязку колеса мыши без модификаторов<br> на окне: "
+"Не удаётся установить привязку колеса мыши без модификаторов<br> на окне: "
 "конфликт с существующим сигналом привязки edje.<br> FIXME!!!"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:250
@@ -5316,7 +5758,7 @@ msgstr "Список окон"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:344
 #: src/modules/pager/e_mod_config.c:140 src/modules/pager/e_mod_config.c:260
 msgid "Popup"
-msgstr "Подсказка"
+msgstr "Всплывающее окно"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:348
 msgid "Zone"
@@ -5423,11 +5865,6 @@ msgstr "Гаджеты"
 #: src/modules/conf_menus/e_int_config_menus.c:274
 msgid "Show gadget settings in top-level"
 msgstr "Показывать настройки гаджета в меню верхнего уровня"
-
-#: src/modules/conf_menus/e_int_config_menus.c:277
-#: src/modules/conf_menus/e_mod_main.c:17
-msgid "Menus"
-msgstr "Меню"
 
 #: src/modules/conf_menus/e_int_config_menus.c:287
 msgid "Margin"
@@ -5706,13 +6143,14 @@ msgstr "Экстремальный"
 msgid "Performance"
 msgstr "Производительность"
 
-#: src/modules/conf_performance/e_mod_main.c:19
-msgid "Engine"
-msgstr "Движок"
-
 #: src/modules/conf_performance/e_mod_main.c:20
 msgid "Power Management"
 msgstr "Управление питанием"
+
+#: src/modules/conf_randr/e_int_config_randr.c:42
+#: src/modules/conf_randr/e_mod_main.c:17
+msgid "Screen Setup"
+msgstr "Настройка экрана"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:125
 msgid "Configured Shelves: Display"
@@ -6255,7 +6693,7 @@ msgstr "Настройки масштаба"
 
 #: src/modules/conf_theme/e_int_config_scale.c:229
 msgid "DPI Scaling"
-msgstr "Масштаб DPI"
+msgstr "Согласно DPI"
 
 #: src/modules/conf_theme/e_int_config_scale.c:296
 msgid "Don't Scale"
@@ -6506,11 +6944,11 @@ msgstr "Значок рамки"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:136
 msgid "User defined"
-msgstr "Предоставлена пользователем"
+msgstr "Предоставленый пользователем"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:138
 msgid "Application provided"
-msgstr "Предоставлена приложением"
+msgstr "Предоставленый приложением"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:142
 msgid "Move Geometry"
@@ -6611,21 +7049,19 @@ msgstr "Сильно пружинить"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:251
 msgid "Shading"
-msgstr "Свертывание"
+msgstr "Затенение"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:261
 msgid "Keep windows within the visual screen limits"
-msgstr "Держать окна внутри видимой области экрана"
+msgstr "Удерживать окна внутри видимой области экрана"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:264
-#, fuzzy
 msgid "Allow windows partly out of the visual screen limits"
-msgstr "Разрешить окна за границей видимости экрана"
+msgstr "Разрешить окнам находиться частично за границей видимости экрана"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:267
-#, fuzzy
 msgid "Allow windows completely out of visual screen limits"
-msgstr "Разрешить окна за границей видимости экрана"
+msgstr "Разрешить окнам находиться полностью за границей видимости экрана"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:270
 msgid "Screen Limits"
@@ -6641,16 +7077,16 @@ msgstr "Щелчок на окно для фокусировки"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:226
 msgid "Window under the Mouse"
-msgstr "Окно под мышкой"
+msgstr "Окно под указателем мыши"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:228
 msgid "Most recent Window under the Mouse"
-msgstr "Последнее окно под мышкой"
+msgstr "Последнее окно под указателем мыши"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:231
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:276
 msgid "Raise windows on mouse over"
-msgstr "Поднимать окна при проходе мышкой"
+msgstr "Поднимать окна при наведении указателя"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:250
 #: src/modules/wizard/page_060.c:34
@@ -6683,7 +7119,7 @@ msgstr "Только диалоги"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:265
 msgid "Only dialogs with focused parent"
-msgstr "Только диалоги с сфокусированным родителем"
+msgstr "Только диалоги с фокусированным родителем"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:275
 msgid "Autoraise"
@@ -6710,27 +7146,22 @@ msgid "Allow windows above fullscreen window"
 msgstr "Разрешить окна поверх полноэкранного окна"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:309
-#, fuzzy
 msgid "Active Window Hint Policy"
-msgstr "Размеры окон"
+msgstr "Политика подсказок для активных окон"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:311
-#, fuzzy
 msgid "Ignore hint"
-msgstr "Пропустить это"
+msgstr "Игнорировать подсказку"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:313
-#, fuzzy
 msgid "Animate on hint"
-msgstr "Анимация прокрутки"
+msgstr "Анимировать при появлении подсказки"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:315
-#, fuzzy
 msgid "Activate on hint"
-msgstr "Контекст исполнения"
+msgstr "Активировать при появлении подсказки"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:317
-#, fuzzy
 msgid "Hints"
 msgstr "Подсказки"
 
@@ -6760,7 +7191,7 @@ msgstr "Возвращать фокус при потере"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:344
 msgid "Slide pointer to a new focused window"
-msgstr "Перемещать указатель к сфокусированному окну"
+msgstr "Перемещать указатель к фокусированному окну"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:66
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
@@ -6836,7 +7267,7 @@ msgid "Resize by"
 msgstr "Изменять размер по"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:257
-#: src/modules/wizard/page_011.c:140 src/modules/xkbswitch/e_mod_main.c:90
+#: src/modules/wizard/page_011.c:145 src/modules/xkbswitch/e_mod_main.c:90
 #: src/modules/xkbswitch/e_mod_main.c:276
 msgid "Keyboard"
 msgstr "Клавиатура"
@@ -6941,27 +7372,15 @@ msgstr "Подробности"
 msgid "<No Name>"
 msgstr "<Без имени>"
 
-#: src/modules/conf_window_remembers/e_int_config_remembers.c:144
-msgid "Class:"
-msgstr "Класс:"
-
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:148
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:310
 msgid "<No Class>"
 msgstr "<Без класса>"
 
-#: src/modules/conf_window_remembers/e_int_config_remembers.c:151
-msgid "Title:"
-msgstr "Заголовок:"
-
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:155
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:312
 msgid "<No Title>"
 msgstr "<Без заголовка>"
-
-#: src/modules/conf_window_remembers/e_int_config_remembers.c:158
-msgid "Role:"
-msgstr "Роль:"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:162
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:314
@@ -7220,7 +7639,7 @@ msgstr "Показывать в меню верхнего уровня"
 
 #: src/modules/everything/evry_config.c:403
 msgid "Minimum characters for search"
-msgstr "Минимальное кол-во символов для поиска"
+msgstr "Минимальное количество символов для поиска"
 
 #: src/modules/everything/evry_config.c:412
 msgid "Plugin Trigger"
@@ -7277,11 +7696,11 @@ msgstr "По использованию"
 
 #: src/modules/everything/evry_config.c:511
 msgid "Most used"
-msgstr "Наиболее используемый"
+msgstr "Наиболее используемые"
 
 #: src/modules/everything/evry_config.c:514
 msgid "Last used"
-msgstr "Последний использованный"
+msgstr "Последние использованные"
 
 #: src/modules/everything/evry_config.c:526
 msgid "Subject Plugins"
@@ -7302,21 +7721,21 @@ msgstr "Плагины"
 
 #: src/modules/everything/evry_config.c:544
 msgid "Popup Size"
-msgstr "Размер подсказки"
+msgstr "Размер всплывающего окна"
 
 #: src/modules/everything/evry_config.c:545
 #: src/modules/everything/evry_config.c:578
 msgid "Popup Width"
-msgstr "Ширина подсказки"
+msgstr "Ширина всплывающего окна"
 
 #: src/modules/everything/evry_config.c:552
 #: src/modules/everything/evry_config.c:585
 msgid "Popup Height"
-msgstr "Высота подсказки"
+msgstr "Высота всплывающего окна"
 
 #: src/modules/everything/evry_config.c:560
 msgid "Popup Align"
-msgstr "Выравнивание подсказки"
+msgstr "Выравнивание всплывающего окна"
 
 #: src/modules/everything/evry_config.c:563
 #: src/modules/everything/evry_config.c:570
@@ -7428,7 +7847,7 @@ msgstr "Поиск в недавних файлах"
 
 #: src/modules/everything/evry_plug_files.c:1491
 msgid "Search cached files"
-msgstr "Искать кэшированые файлы"
+msgstr "Поиск в кэшированных файлах"
 
 #: src/modules/everything/evry_plug_files.c:1495
 msgid "Cache visited directories"
@@ -7513,9 +7932,9 @@ msgid "Deleting is aborted"
 msgstr "Удаление прервано"
 
 #: src/modules/fileman/e_fwin.c:2954
-#, fuzzy, c-format
+#, c-format
 msgid "Secure deletion is aborted"
-msgstr "Удаление прервано"
+msgstr "Безопасное удаление прервано"
 
 #: src/modules/fileman/e_fwin.c:2958
 #: src/modules/fileman_opinfo/e_mod_main.c:98
@@ -7558,14 +7977,14 @@ msgid "Deleting files..."
 msgstr "Идёт удаление файлов..."
 
 #: src/modules/fileman/e_fwin.c:2989
-#, fuzzy, c-format
+#, c-format
 msgid "Secure delete done"
-msgstr "Безопасное удаление"
+msgstr "Безопасное удаление завершено"
 
 #: src/modules/fileman/e_fwin.c:2991
-#, fuzzy, c-format
+#, c-format
 msgid "Securely deleting files..."
-msgstr "Идёт удаление файлов..."
+msgstr "Идёт безопасное удаление файлов..."
 
 #: src/modules/fileman/e_fwin.c:2995
 #: src/modules/fileman_opinfo/e_mod_main.c:125
@@ -7649,10 +8068,6 @@ msgstr "Полный путь в заголовке"
 #: src/modules/fileman/e_mod_config.c:339
 msgid "Icons On Desktop"
 msgstr "Значки на рабочем столе"
-
-#: src/modules/fileman/e_mod_config.c:342
-msgid "Toolbar"
-msgstr "Панель инструментов"
 
 #: src/modules/fileman/e_mod_config.c:345
 msgid "Sidebar"
@@ -7755,7 +8170,6 @@ msgid "Navigate"
 msgstr "Перейти"
 
 #: src/modules/fileman/e_mod_menu.c:192
-#, fuzzy
 msgid "0 listable items"
 msgstr "0 элементов"
 
@@ -8157,11 +8571,11 @@ msgstr "Параметры пейджера"
 
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:188
 msgid "Flip desktop on mouse wheel"
-msgstr "Переход по столам колесом мышки"
+msgstr "Переключать рабочие столы колесом мыши"
 
 #: src/modules/pager/e_mod_config.c:132 src/modules/pager/e_mod_config.c:191
 msgid "Always show desktop names"
-msgstr "Всегда показывать имена столов"
+msgstr "Всегда показывать имена рабочих столов"
 
 #: src/modules/pager/e_mod_config.c:135 src/modules/pager/e_mod_config.c:194
 msgid "Live preview"
@@ -8169,11 +8583,11 @@ msgstr "Динамический просмотр"
 
 #: src/modules/pager/e_mod_config.c:141 src/modules/pager/e_mod_config.c:230
 msgid "Show popup on desktop change"
-msgstr "Показывать подсказку при смене стола"
+msgstr "Показывать всплывающее окно при смене рабочего стола"
 
 #: src/modules/pager/e_mod_config.c:144
 msgid "Show popup for urgent windows"
-msgstr "Показывать подсказку для срочных окон"
+msgstr "Показывать всплывающее окно для срочных окон"
 
 #: src/modules/pager/e_mod_config.c:197
 msgid "Resistance to dragging"
@@ -8206,11 +8620,11 @@ msgstr "Тянуть весь рабочий стол"
 
 #: src/modules/pager/e_mod_config.c:234
 msgid "Popup pager height"
-msgstr "Высота подсказки пейджера"
+msgstr "Высота всплывающего окна пейджера"
 
 #: src/modules/pager/e_mod_config.c:244
 msgid "Popup duration"
-msgstr "Длительность подсказки"
+msgstr "Продолжительность показа окна"
 
 #: src/modules/pager/e_mod_config.c:248 src/modules/pager/e_mod_config.c:285
 #, c-format
@@ -8219,23 +8633,23 @@ msgstr "%1.1f секунд"
 
 #: src/modules/pager/e_mod_config.c:255
 msgid "Pager action popup height"
-msgstr "Высота подсказки действия пейджера"
+msgstr "Высота всплывающего окна для действий пейджера"
 
 #: src/modules/pager/e_mod_config.c:265
 msgid "Show popup on urgent window"
-msgstr "Показывать подсказку на срочном окне"
+msgstr "Показывать всплывающее окно для срочных окон"
 
 #: src/modules/pager/e_mod_config.c:269
 msgid "Urgent popup sticks on screen"
-msgstr "Срочная подсказка залипает на экране"
+msgstr "Срочное всплыващее окно залипает на экране"
 
 #: src/modules/pager/e_mod_config.c:275
 msgid "Show popup for focused windows"
-msgstr "Показывать подсказку для сфокусированных окон"
+msgstr "Показывать всплывающее окно для фокусированных окон"
 
 #: src/modules/pager/e_mod_config.c:281
 msgid "Urgent popup duration"
-msgstr "Продолжительность срочной подсказки"
+msgstr "Продолжительность показа срочного окна"
 
 #: src/modules/pager/e_mod_config.c:292
 msgid "Urgent Windows"
@@ -8259,11 +8673,11 @@ msgid ""
 msgstr ""
 "Вы не можете использовать в полке правую кнопку мыши<br>для этого, так как "
 "она уже занята внутренним<br>кодом для контекстных меню.<br>Эта кнопка "
-"работает только в Подсказках"
+"работает только для всплывающих окон"
 
 #: src/modules/pager/e_mod_main.c:2949
 msgid "Show Pager Popup"
-msgstr "Показывать подсказку пейджера"
+msgstr "Показывать всплывающее окно пейджера"
 
 #: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2992
 msgid "Popup Desk Right"
@@ -8319,7 +8733,7 @@ msgstr "Управление системой"
 
 #: src/modules/syscon/e_mod_main.c:37
 msgid "Syscon"
-msgstr "Syscon"
+msgstr "Управление системой"
 
 #: src/modules/syscon/e_mod_main.c:60
 msgid "System Controls"
@@ -8389,7 +8803,7 @@ msgstr "Далее"
 msgid "Welcome to Enlightenment"
 msgstr "Добро пожаловать в Enlightenment"
 
-#: src/modules/wizard/page_010.c:160 src/modules/wizard/page_011.c:141
+#: src/modules/wizard/page_010.c:160 src/modules/wizard/page_011.c:146
 #: src/modules/wizard/page_020.c:53
 msgid "Select one"
 msgstr "Выберите одно"
@@ -8397,6 +8811,10 @@ msgstr "Выберите одно"
 #: src/modules/wizard/page_020.c:52
 msgid "Profile"
 msgstr "Профиль"
+
+#: src/modules/wizard/page_040.c:49
+msgid "Adding missing App files"
+msgstr ""
 
 #: src/modules/wizard/page_050.c:130
 msgid "Select preferred size"
@@ -8411,31 +8829,28 @@ msgid "Mouse Over"
 msgstr "Под мышкой"
 
 #: src/modules/wizard/page_110.c:14
-#, fuzzy
 msgid "Network Management"
-msgstr "Управление питанием"
+msgstr "Управление сетью"
 
 #: src/modules/wizard/page_110.c:17
-#, fuzzy
 msgid "Connman network service not found"
-msgstr "Подключиться к сетевому сервису"
+msgstr "Не найден сетевой сервис Connman"
 
 #: src/modules/wizard/page_110.c:20
 msgid "Install Connman for network management support"
-msgstr ""
+msgstr "Установите Connman для поддержки управления сетью"
 
 #: src/modules/wizard/page_110.c:149
 msgid "Checking to see if Connman exists"
-msgstr ""
+msgstr "Идёт проверка наличия Connman"
 
 #: src/modules/wizard/page_150.c:93
-#, fuzzy
 msgid "Compositing"
-msgstr "Компоновка"
+msgstr "Композитный режим"
 
 #: src/modules/wizard/page_150.c:95
 msgid "Transparent windows and effects"
-msgstr ""
+msgstr "Прозрачные окна и эффекты"
 
 #: src/modules/wizard/page_150.c:101
 msgid ""
@@ -8448,28 +8863,26 @@ msgid ""
 msgstr ""
 
 #: src/modules/wizard/page_150.c:118
-#, fuzzy
 msgid "Enable Compositing"
-msgstr "Включить поддержку компоновки?"
+msgstr "Включить композитный режим"
 
 #: src/modules/wizard/page_150.c:123
 msgid "Hardware Accelerated (OpenGL)"
-msgstr ""
+msgstr "Аппаратное ускорение (OpenGL)"
 
 #: src/modules/wizard/page_150.c:126
 msgid "Tear-free Rendering (OpenGL only)"
-msgstr ""
+msgstr "Отрисовка без разрывов (только при OpenGL)"
 
-#: src/modules/wizard/page_170.c:28
-#, fuzzy
+#: src/modules/wizard/page_170.c:25
 msgid "Updates"
-msgstr "Состояния"
+msgstr "Обновления"
 
-#: src/modules/wizard/page_170.c:30
+#: src/modules/wizard/page_170.c:27
 msgid "Check for available updates"
-msgstr ""
+msgstr "Проверить доступные обновления"
 
-#: src/modules/wizard/page_170.c:36
+#: src/modules/wizard/page_170.c:33
 msgid ""
 "Enlightenment can check for new<br>versions, updates, securiity "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
@@ -8483,9 +8896,9 @@ msgid ""
 "vulnerable or having to live<br>with bugs."
 msgstr ""
 
-#: src/modules/wizard/page_170.c:57
+#: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
-msgstr ""
+msgstr "Включить проверку обновлений"
 
 #: src/modules/mixer/app_mixer.c:165
 msgid "Capture"
@@ -8515,10 +8928,6 @@ msgstr "Карта:"
 msgid "Channel:"
 msgstr "Канал:"
 
-#: src/modules/mixer/app_mixer.c:394
-msgid "Type:"
-msgstr "Тип:"
-
 #: src/modules/mixer/app_mixer.c:398
 msgid "Left:"
 msgstr "Левый:"
@@ -8534,10 +8943,6 @@ msgstr "Без звука"
 #: src/modules/mixer/app_mixer.c:411 src/modules/mixer/conf_gadget.c:195
 msgid "Lock Sliders"
 msgstr "Фиксировать каналы"
-
-#: src/modules/mixer/app_mixer.c:415
-msgid "Edit"
-msgstr "Изменить"
 
 #: src/modules/mixer/conf_gadget.c:201
 msgid "Show both sliders when locked"
@@ -8906,10 +9311,6 @@ msgstr ""
 "Режим <b>подключения к сети</b> активен. Модули, использующие сеть, "
 "продолжат работу."
 
-#: src/modules/notification/e_mod_main.c:297
-msgid "Notification"
-msgstr "Уведомления"
-
 #: src/modules/notification/e_mod_main.c:331
 msgid "Notification Module"
 msgstr "Модуль уведомлений"
@@ -8946,11 +9347,11 @@ msgstr "Критический"
 
 #: src/modules/notification/e_mod_config.c:104
 msgid "Default Timeout"
-msgstr "Таймаут по умолчанию"
+msgstr "Тайм-аут по умолчанию"
 
 #: src/modules/notification/e_mod_config.c:105
 msgid "Force timeout for all notifications"
-msgstr "Применить таймаут ко всем уведомлениям"
+msgstr "Применить тайм-аут ко всем уведомлениям"
 
 #: src/modules/notification/e_mod_config.c:122
 msgid "Popup Corner"
@@ -8974,7 +9375,7 @@ msgstr "Нижний правый"
 
 #: src/modules/notification/e_mod_config.c:142
 msgid "Ignore replace ID"
-msgstr ""
+msgstr "Запретить замещение уведомлений"
 
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
@@ -8986,7 +9387,7 @@ msgstr "Настройка области уведомлений"
 
 #: src/modules/notification/e_mod_config_item.c:92
 msgid "Show the popup on mouse over"
-msgstr "Показывать подсказку при наведении мыши"
+msgstr "Показывать всплывающее окно при наведении мыши"
 
 #: src/modules/notification/e_mod_config_item.c:94
 msgid "Focus the source window when clicking"
@@ -8995,6 +9396,9 @@ msgstr "Фокусировать окно источника при клике"
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr "Сохранять уровни срочности:"
+
+#~ msgid "Screen Saver"
+#~ msgstr "Хранитель экрана"
 
 #~ msgid "Specific Applications"
 #~ msgstr "Указаные приложения"
@@ -9010,41 +9414,6 @@ msgstr "Сохранять уровни срочности:"
 
 #~ msgid "Notification Configuration Updated"
 #~ msgstr "Настройки уведомления обновлены"
-
-#~ msgid ""
-#~ "Notification Module Configuration data needed upgrading. Your old "
-#~ "configuration<br> has been wiped and a new set of defaults initialized. "
-#~ "This<br>will happen regularly during development, so don't report "
-#~ "a<br>bug. This simply means the Notification module needs new "
-#~ "configuration<br>data by default for usable functionality that your "
-#~ "old<br>configuration simply lacks. This new set of defaults will "
-#~ "fix<br>that by adding it in. You can re-configure things now to "
-#~ "your<br>liking. Sorry for the inconvenience.<br>"
-#~ msgstr ""
-#~ "Данные настроек модуля уведомлений нуждаются в обновлении. Ваши старые "
-#~ "настройки<br> будут стерты и новые настройки будут установлены по "
-#~ "умолччанию.<br> Это будет происходить регулярно во время разработки, "
-#~ "поэтому не создавайте отчет об ошибке.<br>Это означает что модулю "
-#~ "уведомлений требуются данные новых настроек<br>установленных по умолчанию "
-#~ "для необходимой функциональности, которую<br>не обечпечивают ваши старые "
-#~ "настройки. Новые данные это исправят<br>путем добавления настроек по "
-#~ "умолчанию. Вы можете снова настроить все как<br>вам нравится. Извините за "
-#~ "продоставленные неудобства.<br>"
-
-#~ msgid ""
-#~ "Your Notification Module Configuration is NEWER than the Notification "
-#~ "Module version. This is very<br>strange. This should not happen unless "
-#~ "you downgraded<br>the Notification Module or copied the configuration "
-#~ "from a place where<br>a newer version of the Notification Module was "
-#~ "running. This is bad and<br>as a precaution your configuration has been "
-#~ "now restored to<br>defaults. Sorry for the inconvenience.<br>"
-#~ msgstr ""
-#~ "Настройки вашего модуля уведомлений НОВЕЕ чем модуль уведомлений. Это "
-#~ "очень<br>странно. Этого не должно было произойти если только вы не "
-#~ "откатывали<br>модуль уведомлений или копировали настройки из другого "
-#~ "места<br>где запущена более новая версия модуля уведомлений. Это плохо "
-#~ "и<br>на всякий случай ваши настройки установлены по<br>умолчанию. "
-#~ "Извините за предоставленные неудобства.<br>"
 
 #~ msgid "Notification Configuration"
 #~ msgstr "Настройки уведомления"
@@ -9410,9 +9779,6 @@ msgstr "Сохранять уровни срочности:"
 
 #~ msgid "Off time"
 #~ msgstr "Время выключения"
-
-#~ msgid "Screen Saver"
-#~ msgstr "Хранитель экрана"
 
 #~ msgid "Add Binding"
 #~ msgstr "Добавить привязку"
@@ -10005,120 +10371,17 @@ msgstr "Сохранять уровни срочности:"
 #~ msgid "Illume Home"
 #~ msgstr "Дом Illume"
 
-#~ msgid "Composite Settings"
-#~ msgstr "Настройки компоновки"
-
-#~ msgid "Edit Match"
-#~ msgstr "Редактировать совпадение"
-
-#~ msgid "Names"
-#~ msgstr "Имена"
-
-#~ msgid "Unused"
-#~ msgstr "Не используется"
-
-#~ msgid "Combo"
-#~ msgstr "Комбо"
-
-#~ msgid "Dock"
-#~ msgstr "Стыковаться"
-
-#~ msgid "Drag and Drop"
-#~ msgstr "Перетащить"
-
-#~ msgid "Menu (Dropdown)"
-#~ msgstr "Меню (выпадающее)"
-
-#~ msgid "Menu (Popup)"
-#~ msgstr "Меню (подсказка)"
-
-#~ msgid "On"
-#~ msgstr "Вкл."
-
-#~ msgid "Borderless"
-#~ msgstr "Без бордюра"
-
-#~ msgid "Virtual Keyboard"
-#~ msgstr "Виртуальная клавиатура"
-
-#~ msgid "Quick Panel"
-#~ msgstr "Панель быстрого запуска"
-
-#~ msgid "Flags"
-#~ msgstr "Флаги"
-
-#~ msgid "Over"
-#~ msgstr "Над"
-
 #~ msgid "Shadows"
 #~ msgstr "Тени"
 
 #~ msgid "Limit framerate"
 #~ msgstr "Ограничение частоты кадров"
 
-#~ msgid "Smooth scaling"
-#~ msgstr "Гладкое масштабирование"
-
-#~ msgid "Styles"
-#~ msgstr "Стили"
-
-#~ msgid "Effects"
-#~ msgstr "Эффекты"
-
 #~ msgid "Sync screen (VBlank)"
 #~ msgstr "Синхронизация экрана (VBlank)"
 
-#~ msgid "Sync windows"
-#~ msgstr "Синхронизировать окна"
-
-#~ msgid "Loose sync"
-#~ msgstr "Терять синхронизацию"
-
-#~ msgid "Grab Server during draw"
-#~ msgstr "Захват сервера при прорисовке"
-
-#~ msgid "Sync"
-#~ msgstr "Синхронизация"
-
-#~ msgid "Software"
-#~ msgstr "Программное обеспечение"
-
-#~ msgid "OpenGL options"
-#~ msgstr "Опции OpenGL"
-
-#~ msgid "Texture from pixmap"
-#~ msgstr "Текстура из растрового изображения"
-
 #~ msgid "Indirect OpenGL"
 #~ msgstr "Непрямой OpenGL"
-
-#~ msgid "Send flush"
-#~ msgstr "Послать flush"
-
-#~ msgid "Send dump"
-#~ msgstr "Послать dump"
-
-#~ msgid "Keep hidden windows"
-#~ msgstr "Оставлять скрытые окна"
-
-#~ msgid "Maximum hidden pixels"
-#~ msgstr "Максимум скрытых пикселей"
-
-#~ msgid "Memory"
-#~ msgstr "Память"
-
-#~ msgid "Max hidden"
-#~ msgstr "Максимум спрятанного"
-
-#~ msgid "Compositor Error"
-#~ msgstr "Ошибка компоновщика"
-
-#~ msgid ""
-#~ "Your screen does not support the XDamage extension<br>or Ecore was built "
-#~ "without XDamage support."
-#~ msgstr ""
-#~ "Ваш экран не поддерживает расширения XDamage<br>или Ecore был построенбез "
-#~ "поддержки XDamage."
 
 #~ msgid "Add Application..."
 #~ msgstr "Добавить приложение..."

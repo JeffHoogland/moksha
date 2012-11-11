@@ -2,6 +2,7 @@
 Type=Link
 Name=Physics
 Name[pt]=Física
+Name[ru]=Физика
 Icon=e-module-physics
 Comment=Enlightenment Physics Professor
 Comment[it]=Il professore di fisica di Enlightenment

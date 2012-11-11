@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Default
-Name[ru]=Заново
+Name[ru]=По умолчанию
 Name[cs]=Výchozí
 Name[it]=Predefinito
 Name[hu]=Alapértelmezett
@@ -14,7 +14,7 @@ Name[tr]=Öntanımlı
 Name[ko]=기본
 Icon=enlightenment-default
 Comment=Select this to begin the initial setup again.
-Comment[ru]=Выберите это для<br>запуска инициализации настроек (сброс).
+Comment[ru]=Выберите этот пункт, чтобы начать настройку сначала.
 Comment[cs]=Vyberte pro znovuspuštění<br>tohoto průvodce.
 Comment[it]=Selezionare questo per riprendere la<br>configurazione iniziale.
 Comment[hu]=Válaszd ezt az alap<br>beállítáok megismétléséhez.
