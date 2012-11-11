@@ -173,6 +173,8 @@ src/modules/conf_performance/e_int_config_engine.c
 src/modules/conf_performance/e_int_config_performance.c
 src/modules/conf_performance/e_int_config_powermanagement.c
 src/modules/conf_performance/e_mod_main.c
+src/modules/conf_randr/e_int_config_randr.c
+src/modules/conf_randr/e_mod_main.c
 src/modules/conf_shelves/e_int_config_shelf.c
 src/modules/conf_shelves/e_mod_main.c
 src/modules/conf_theme/e_int_config_wallpaper.c
