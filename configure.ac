@@ -565,6 +565,7 @@ eet >= ${efl_version} \
 edje >= ${efl_version} \
 efreet >= ${efl_version} \
 efreet-mime >= ${efl_version} \
+efreet-trash >= ${efl_version} \
 eina >= ${efl_version} \
 dbus-1 \
 edbus >= ${efl_version} \
