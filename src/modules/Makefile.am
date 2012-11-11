@@ -14,7 +14,7 @@ AM_CPPFLAGS = -I. \
 	      -I$(top_builddir)/src/bin \
 	      -I$(top_srcdir)/src/modules
 AM_CFLAGS = @e_cflags@
-AM_LIBADD = @e_libs@ @dlopen_libs@
+LIBS += @e_libs@ @dlopen_libs@
 
 EDJE_CC = $(EDJE_CC_$(V))
 EDJE_CC_ = $(EDJE_CC_$(AM_DEFAULT_VERBOSITY))
