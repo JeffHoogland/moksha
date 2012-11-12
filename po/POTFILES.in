@@ -107,6 +107,7 @@ src/bin/e_widget_csel.c
 src/bin/e_widget_cslider.c
 src/bin/e_widget_deskpreview.c
 src/bin/e_widget_entry.c
+src/bin/e_widget_filepreview.c
 src/bin/e_widget_font_preview.c
 src/bin/e_widget_framelist.c
 src/bin/e_widget_frametable.c
