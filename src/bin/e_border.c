@@ -3455,7 +3455,16 @@ e_border_idler_before(void)
                        bd->changes.visible = 0;
                     }
 
-                  if (bd->zone && (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w, bd->zone->h)) && ((!E_INSIDE(bd->w, bd->h, 0, 0, bd->zone->w, bd->zone->h))))
+                  if (bd->zone &&
+                      (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w, bd->zone->h)) &&
+                      /* upper left */
+                      (!E_INSIDE(bd->x, bd->y, 0 - bd->w + 5, 0 - bd->h + 5, bd->zone->w, bd->zone->h)) &&
+                      /* upper right */
+                      (!E_INSIDE(bd->x, bd->y, 0, 0 - bd->h + 5, bd->zone->w + bd->w - 5, bd->zone->h)) &&
+                      /* lower left */
+                      (!E_INSIDE(bd->x, bd->y, 0 - bd->w + 5, 0, bd->zone->w, bd->zone->h + bd->h - 5)) &&
+                      (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w + bd->w - 5, bd->zone->h + bd->h - 5))
+                     )
                     {
                        if (e_config->screen_limits != E_SCREEN_LIMITS_COMPLETELY)
                           _e_border_move_lost_window_to_center(bd);
