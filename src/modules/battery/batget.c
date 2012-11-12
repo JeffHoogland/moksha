@@ -1,17 +1,4 @@
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <limits.h>
+#include "e.h"
 
 #ifdef __FreeBSD__
 # include <sys/ioctl.h>
@@ -28,16 +15,6 @@
 # include <CFRunLoop.h>
 # include <ps/IOPSKeys.h>
 # include <ps/IOPowerSources.h>
-#endif
-
-#include <Eina.h>
-#include <Ecore.h>
-#include <Ecore_File.h>
-#include <Ecore_Con.h>
-
-/* define MAX for all OS, instead of plenty #include */
-#ifndef MAX
-# define MAX(a, b) ((a) < (b) ? (b) : (a))
 #endif
 
 /* supported batery system schemes - irrespective of OS */
