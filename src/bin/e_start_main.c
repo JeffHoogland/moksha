@@ -8,7 +8,9 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
-#include <sys/ptrace.h>
+#ifdef HAVE_SYS_PTRACE_H
+# include <sys/ptrace.h>
+#endif
 #include <limits.h>
 #include <fcntl.h>
 #ifdef HAVE_ALLOCA_H
@@ -414,9 +416,10 @@ main(int argc, char **argv)
           return -1;
         else if (child == 0)
           {
+#ifdef HAVE_SYS_PTRACE_H
              /* in the child */
              ptrace(PT_TRACE_ME, 0, NULL, NULL);
-
+#endif
              execv(args[0], args);
              return 0; /* We failed, 0 mean normal exit from E with no restart or crash so let exit */
           }
@@ -426,17 +429,17 @@ main(int argc, char **argv)
              pid_t result;
              int status;
              Eina_Bool done = EINA_FALSE;
-
+#ifdef HAVE_SYS_PTRACE_H
              ptrace(PT_ATTACH, child, NULL, NULL);
-
+#endif
              result = waitpid(child, &status, 0);
-
+#ifdef HAVE_SYS_PTRACE_H
              if (!stop_ptrace)
                {
                   if (WIFSTOPPED(status))
                     ptrace(PT_CONTINUE, child, NULL, NULL);
                }
-
+#endif
              while (!done)
                {
 		  Eina_Bool remember_sigill = EINA_FALSE;
@@ -451,10 +454,12 @@ main(int argc, char **argv)
                             char buffer[4096];
                             char *backtrace_str = NULL;
                             siginfo_t sig;
-                            int r;
+                            int r = 0;
                             int back;
 
+#ifdef HAVE_SYS_PTRACE_H
                             r = ptrace(PTRACE_GETSIGINFO, child, NULL, &sig);
+#endif
                             back = r == 0 &&
                               sig.si_signo != SIGTRAP ? sig.si_signo : 0;
 
@@ -478,13 +483,15 @@ main(int argc, char **argv)
                                  sig.si_signo != SIGBUS &&
                                  sig.si_signo != SIGABRT))
                               {
+#ifdef HAVE_SYS_PTRACE_H
                                  ptrace(PT_CONTINUE, child, NULL, back);
+#endif
                                  continue ;
                               }
-
+#ifdef HAVE_SYS_PTRACE_H
                             /* E17 should be in pause, we can detach */
                             ptrace(PT_DETACH, child, NULL, back);
-
+#endif
                             /* And call gdb if available */
                             if (home)
                               {
@@ -545,7 +552,9 @@ main(int argc, char **argv)
                               {
                                  kill(child, SIGSTOP);
                                  usleep(200000);
+#ifdef HAVE_SYS_PTRACE_H
                                  ptrace(PT_DETACH, child, NULL, NULL);
+#endif
                               }
                          }
                     }
