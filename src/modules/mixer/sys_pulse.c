@@ -24,7 +24,7 @@ static Ecore_Poller *pulse_poller = NULL;
 
 static E_DBus_Connection *dbus = NULL;
 static E_DBus_Signal_Handler *dbus_handler = NULL;
-static double last_disc = 0;
+static Ecore_Timer *disc_timer = NULL;
 
 static Eina_Bool
 _pulse_poller_cb(void *d __UNUSED__)
@@ -203,6 +203,17 @@ _pulse_connected(Pulse *d, int type __UNUSED__, Pulse *ev)
 }
 
 static Eina_Bool
+_pulse_disc_timer(void *d __UNUSED__)
+{
+   disc_timer = NULL;
+   if (pulse_connect(conn)) return EINA_FALSE;
+   e_mod_mixer_pulse_ready(EINA_FALSE);
+   e_mixer_pulse_shutdown();
+   e_mixer_pulse_init();
+   return EINA_FALSE;
+}
+
+static Eina_Bool
 _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
 {
    Pulse_Sink *sink;
@@ -219,23 +230,8 @@ _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
 
 //   printf("PULSEAUDIO: disconnected at %g\n", ecore_time_unix_get());
 
-   if (last_disc && (ecore_time_unix_get() - last_disc < 1))
-     {
-//        fprintf(stderr, "PULSEAUDIO: disconnecting too quickly, THROTTLED\n");
-        e_mixer_pulse_shutdown();
-        last_disc = 0;
-        e_mod_mixer_pulse_ready(EINA_FALSE);
-     }
-   else
-     {
-        if (!pulse_connect(conn))
-          {
-             e_mod_mixer_pulse_ready(EINA_FALSE);
-             e_mixer_pulse_shutdown();
-             e_mixer_pulse_init();
-          }
-        last_disc = ecore_time_unix_get();
-     }
+   if (disc_timer) return ECORE_CALLBACK_RENEW;
+   disc_timer = ecore_timer_add(1.5, _pulse_disc_timer, NULL);
    return ECORE_CALLBACK_RENEW;
 }
 
