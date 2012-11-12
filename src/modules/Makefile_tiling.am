@@ -5,7 +5,15 @@ tiling_DATA = tiling/e-module-tiling.edj \
 EXTRA_DIST += $(tiling_DATA) \
 	      tiling/e-module-tiling.edc \
 	      tiling/module.desktop.in \
-	      tiling/images/module_icon.png
+	      tiling/images/module_icon.png \
+	      tiling/images/arrow_e.png \
+	      tiling/images/arrow_ne.png \
+	      tiling/images/arrow_n.png \
+	      tiling/images/arrow_nw.png \
+	      tiling/images/arrow_se.png \
+	      tiling/images/arrow_s.png \
+	      tiling/images/arrow_sw.png \
+	      tiling/images/arrow_w.png
 
 tilingpkgdir = $(MDIR)/tiling/$(MODULE_ARCH)
 tilingpkg_LTLIBRARIES = tiling/module.la
