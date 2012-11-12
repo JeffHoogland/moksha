@@ -323,7 +323,7 @@ e_flowlayout_pack_object_last(Evas_Object *obj)
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
    sd = evas_object_smart_data_get(obj);
    if (!sd) return NULL;
-   return eina_list_data_get(eina_list_last(sd->items));
+   return eina_list_last_data_get(sd->items);
 }
 
 EAPI Evas_Object *

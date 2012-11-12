@@ -1426,7 +1426,7 @@ _ibar_focused_prev_find(void)
                }
              else
                {
-                  bn = eina_list_data_get(eina_list_last(tmpl));
+                  bn = eina_list_last_data_get(tmpl);
                   break;
                }
           }
@@ -1517,7 +1517,7 @@ _ibar_focus_prev(IBar *b)
         ic2 = ic;
      }
    // wrap to end
-   if ((ic1) && (!ic2)) ic2 = eina_list_data_get(eina_list_last(b->icons));
+   if ((ic1) && (!ic2)) ic2 = eina_list_last_data_get(b->icons);
    if ((ic1) && (ic2) && (ic1 != ic2))
      _ibar_icon_unfocus_focus(ic1, ic2);
 }

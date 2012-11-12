@@ -1162,7 +1162,7 @@ _e_shelf_new_dialog_ok(void *data, char *text)
    e_config->shelves = eina_list_append(e_config->shelves, cfg);
    e_config_save_queue();
 
-   es_cf = eina_list_data_get(eina_list_last(e_config->shelves));
+   es_cf = eina_list_last_data_get(e_config->shelves);
    cfg->id = es_cf->id + 1;
    es = e_shelf_config_new(zone, cfg);
    if (es && es->gadcon)

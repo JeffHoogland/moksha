@@ -286,7 +286,7 @@ e_smart_monitor_info_set(Evas_Object *obj, E_Randr_Output_Info *output, E_Randr_
         sd->min.h = mode->height;
         
         /* get the max resolution for this monitor */
-        mode = eina_list_data_get(eina_list_last(sd->modes));
+        mode = eina_list_last_data_get(sd->modes);
         sd->max.w = mode->width;
         sd->max.h = mode->height;
         if (!crtc) sd->orig.mode = mode;

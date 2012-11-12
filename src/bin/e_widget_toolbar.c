@@ -512,7 +512,7 @@ _e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
           {
 	     if (it->selected)
 	       {
-		  it2 = eina_list_data_get(eina_list_last(wd->items));
+		  it2 = eina_list_last_data_get(wd->items);
 		  break;
 	       }
           }

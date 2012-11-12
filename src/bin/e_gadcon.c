@@ -1032,7 +1032,7 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id __UNUSED__, c
    gcc->gadcon = gc;
    gcc->o_base = base_obj;
    if (gc->clients)
-     gcc->id = E_GADCON_CLIENT(eina_list_data_get(eina_list_last(gc->clients)))->id + 1;
+     gcc->id = E_GADCON_CLIENT(eina_list_last_data_get(gc->clients))->id + 1;
    gc->clients = eina_list_append(gc->clients, gcc);
    /* This must only be unique during runtime */
    if (gcc->o_base)
@@ -5136,7 +5136,7 @@ _e_gadcon_layout_smart_containers_position_adjust(E_Smart_Data *sd, E_Layout_Ite
           {
              int t;
 
-             bi = eina_list_data_get(eina_list_last(lc->items));
+             bi = eina_list_last_data_get(lc->items);
              bi2 = eina_list_data_get(lc2->items);
 
              bi2->gcc->config.pos = bi2->ask.pos = (bi2->x) = (bi->x);

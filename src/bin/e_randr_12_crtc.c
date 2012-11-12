@@ -223,7 +223,7 @@ _crtc_according_to_policy_get(E_Randr_Crtc_Info *but, Ecore_X_Randr_Output_Polic
      }
 
    // get an initial value for ret
-   ret = (E_Randr_Crtc_Info*)eina_list_data_get(eina_list_last(possible_crtcs));
+   ret = (E_Randr_Crtc_Info*)eina_list_last_data_get(possible_crtcs);
 
    switch (policy)
      {

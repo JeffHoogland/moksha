@@ -239,6 +239,10 @@ typedef struct _E_Rect         E_Rect;
        }                                                          \
   }
 
+#ifndef eina_list_last_data_get
+# define eina_list_last_data_get(X) eina_list_data_get(eina_list_last(X))
+#endif
+
 # define E_REMOTE_OPTIONS 1
 # define E_REMOTE_OUT     2
 # define E_WM_IN          3

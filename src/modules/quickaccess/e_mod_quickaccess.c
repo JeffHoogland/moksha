@@ -1041,7 +1041,7 @@ _e_qa_help_qa_added_cb(void *data __UNUSED__)
         _e_qa_help_timeout(NULL);
         return;
      }
-   entry = eina_list_data_get(eina_list_last(qa_config->transient_entries));
+   entry = eina_list_last_data_get(qa_config->transient_entries);
    entry->help_watch = EINA_TRUE;
    ecore_job_add(_e_qa_help4, NULL);
    e_object_del(qa_mod->help_dia);

@@ -4854,7 +4854,7 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
 {
    E_Fm2_Icon *prev;
    if (ic->selected) return;
-   prev = eina_list_data_get(eina_list_last(ic->sd->selected_icons));
+   prev = eina_list_last_data_get(ic->sd->selected_icons);
    if (prev) prev->last_selected = EINA_FALSE;
    ic->selected = EINA_TRUE;
    ic->sd->last_selected = ic;
@@ -5205,7 +5205,7 @@ _e_fm2_icon_sel_last(Evas_Object *obj, Eina_Bool add)
    if (!sd->icons) return;
    if ((!add) || sd->config->selection.single)
      _e_fm2_icon_desel_any(obj);
-   ic = eina_list_data_get(eina_list_last(sd->icons));
+   ic = eina_list_last_data_get(sd->icons);
    _e_fm2_icon_select(ic);
    evas_object_smart_callback_call(sd->obj, "selection_change", NULL);
    _e_fm2_icon_make_visible(ic);
@@ -6255,7 +6255,7 @@ _e_fm2_cb_dnd_move(void *data, const char *type, void *event)
              /* if there is a .order file - we can re-order files */
              if (sd->order_file)
                {
-                  ic = eina_list_data_get(eina_list_last(sd->icons));
+                  ic = eina_list_last_data_get(sd->icons);
                   if (ic)
                     {
                        if (!ic->drag.dnd)
