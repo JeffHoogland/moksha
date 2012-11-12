@@ -20,7 +20,7 @@
 #define WINDOW_HEIGHT 240
 
 #ifndef XCB_ATOM_NONE
-# define XCB_ATOM_NONE = 0
+# define XCB_ATOM_NONE 0
 #endif
 
 /* local function prototypes */
