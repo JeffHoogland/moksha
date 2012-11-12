@@ -251,6 +251,8 @@ e_desk_show(E_Desk *desk)
           }
      }
 
+   desk->zone->desk_x_prev = desk->zone->desk_x_current;
+   desk->zone->desk_y_prev = desk->zone->desk_y_current;
    desk->zone->desk_x_current = desk->x;
    desk->zone->desk_y_current = desk->y;
    desk->visible = 1;

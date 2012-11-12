@@ -1439,6 +1439,16 @@ ACT_FN_GO(desk_flip_to, )
 }
 
 /***************************************************************************/
+ACT_FN_GO(desk_flip_prev, __UNUSED__)
+{
+   E_Zone *zone;
+
+   zone = _e_actions_zone_get(obj);
+   if (!zone) return;
+   e_zone_desk_flip_to(zone, zone->desk_x_prev, zone->desk_y_prev);
+}
+
+/***************************************************************************/
 #define ACT_FLIP_LEFT(zone)       ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1)) || ((zone)->desk_x_current > 0))
 #define ACT_FLIP_RIGHT(zone)      ((e_config->desk_flip_wrap && ((zone)->desk_x_count > 1)) || (((zone)->desk_x_current + 1) < (zone)->desk_x_count))
 #define ACT_FLIP_UP(zone)         ((e_config->desk_flip_wrap && ((zone)->desk_y_count > 1)) || ((zone)->desk_y_current > 0))
@@ -3106,6 +3116,11 @@ e_actions_init(void)
    e_action_predef_name_set(N_("Desktop"), N_("Flip Desktop By..."),
                             "desk_flip_by", NULL,
                             "syntax: X-offset Y-offset, example: -1 0", 1);
+
+   /* desk_flip_prev */
+   ACT_GO(desk_flip_prev);
+   e_action_predef_name_set(N_("Desktop"), N_("Flip To Previous Desktop"),
+                            "desk_flip_prev", NULL, NULL, 0);
 
    /* desk_deskshow_toggle */
    ACT_GO(desk_deskshow_toggle);

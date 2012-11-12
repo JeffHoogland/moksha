@@ -49,6 +49,7 @@ struct _E_Zone
 
    int          desk_x_count, desk_y_count;
    int          desk_x_current, desk_y_current;
+   int          desk_x_prev, desk_y_prev;
    E_Desk     **desks;
 
    Eina_List   *handlers;
