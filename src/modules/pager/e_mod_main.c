@@ -355,12 +355,15 @@ _pager_fill(Pager *p, E_Gadcon *gc)
              E_Desk *desk;
 
              desk = e_desk_at_xy_get(p->zone, x, y);
-             pd = _pager_desk_new(p, desk, x, y, p->invert);
-             if (pd)
+             if (desk)
                {
-                  p->desks = eina_list_append(p->desks, pd);
-                  if (desk == e_desk_current_get(desk->zone))
-                    _pager_desk_select(pd);
+                  pd = _pager_desk_new(p, desk, x, y, p->invert);
+                  if (pd)
+                    {
+                       p->desks = eina_list_append(p->desks, pd);
+                       if (desk == e_desk_current_get(desk->zone))
+                         _pager_desk_select(pd);
+                    }
                }
           }
      }
@@ -412,6 +415,7 @@ _pager_desk_new(Pager *p, E_Desk *desk, int xpos, int ypos, Eina_Bool invert)
    int w, h;
    Evas *e;
 
+   if (!desk) return NULL;
    pd = E_NEW(Pager_Desk, 1);
    if (!pd) return NULL;
 
