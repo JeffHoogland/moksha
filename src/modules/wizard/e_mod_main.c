@@ -58,7 +58,7 @@ e_modapi_init(E_Module *m)
    files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);
    EINA_LIST_FREE(files, file)
      {
-        if (!strncmp(file, "page_", 5))
+        if ((!strncmp(file, "page_", 5)) && (eina_str_has_extension(file, ".so")))
           {
              void *handle;
 
