@@ -6,7 +6,6 @@ static int  _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *
 static int  _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object  *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas,
 					      E_Config_Dialog_Data *cfdata);
-static void _cb_backlight_slider_change(void *data, Evas_Object *obj);
 
 struct _E_Config_Dialog_Data
 {
@@ -86,7 +85,16 @@ _apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    e_backlight_mode_set(NULL, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(NULL, e_config->backlight.normal, -1.0);
-   
+   if (cfdata->backlight_timeout < e_config->screensaver_timeout)
+     {
+        e_config->screensaver_timeout = cfdata->backlight_timeout;
+        e_config->dpms_standby_timeout = e_config->screensaver_timeout;
+        e_config->dpms_suspend_timeout = e_config->screensaver_timeout;
+        e_config->dpms_off_timeout = e_config->screensaver_timeout;
+     }
+   e_screensaver_update();
+   e_dpms_update();
+   e_backlight_update();
    e_config_save_queue();
    return 1;
 }
@@ -151,7 +159,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    e_widget_disabled_set(ob, cfdata->enable_idle_dim); // set state from saved config
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 0.5, 90.0, 1.0, 0,
 			    &(cfdata->backlight_timeout), NULL, 100);
-   e_widget_on_change_hook_set(ob, _cb_backlight_slider_change, cfdata);
    cfdata->backlight_slider = ob;
    e_widget_disabled_set(ob, cfdata->enable_idle_dim); // set state from saved config
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
@@ -185,23 +192,4 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
         if (sel >= 0) e_widget_ilist_selected_set(ob, sel);
      }
    return o;
-}
-
-/* general functionality/callbacks */
-static void
-_cb_backlight_slider_change(void *data, Evas_Object *obj __UNUSED__)
-{
-   E_Config_Dialog_Data *cfdata = data;
-
-   /* off-slider */
-   if (cfdata->backlight_timeout < e_config->screensaver_timeout)
-     {
-        e_config->screensaver_timeout = cfdata->backlight_timeout;
-        e_config->dpms_standby_timeout = e_config->screensaver_timeout;
-        e_config->dpms_suspend_timeout = e_config->screensaver_timeout;
-        e_config->dpms_off_timeout = e_config->screensaver_timeout;
-     }
-   e_screensaver_update();
-   e_dpms_update();
-   e_backlight_update();
 }
