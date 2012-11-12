@@ -1,9 +1,447 @@
-#if 0
 group { name: "e/modules/clock/digital";
-}
-#endif
+   min: 64 16;
+   max: 512 128;
+   images.image: "digit_na.png" COMP;
+   images.image: "digit_0.png" COMP;
+   images.image: "digit_1.png" COMP;
+   images.image: "digit_2.png" COMP;
+   images.image: "digit_3.png" COMP;
+   images.image: "digit_4.png" COMP;
+   images.image: "digit_5.png" COMP;
+   images.image: "digit_6.png" COMP;
+   images.image: "digit_7.png" COMP;
+   images.image: "digit_8.png" COMP;
+   images.image: "digit_9.png" COMP;
+   images.image: "digit_am.png" COMP;
+   images.image: "digit_pm.png" COMP;
+   images.image: "hole_tiny.png" COMP;
+   script {
+      public do_seconds, do_24h, do_date;
+      new tick_timer;
 
-#if 1
+      valset(id, v) {
+         if ((v >= 0) && (v <= 9)) {
+            new buf[20];
+            snprintf(buf, 20, "%i", v);
+            set_state(id, buf, 0.0);
+         } else {
+            set_state(id, "default", 0.0);
+         }
+      }
+      apvalset(id, pm) {
+         if (pm) set_state(id, "active", 0.0);
+         else set_state(id, "default", 0.0);
+      }
+      evalsize() {
+         new do24h, dosec, v[14], i, tot, mul;
+         new parts[] = {
+            PART:"hours1", PART:"hours1",
+            PART:"hours2", PART:"hours2",
+            PART:"mins1", PART:"mins1",
+            PART:"mins2", PART:"mins2",
+            PART:"secs1", PART:"secs1",
+            PART:"secs2", PART:"secs2",
+            PART:"ampm", PART:"ampm"
+         };
+         
+         mul = 4;
+         if (get_int(do_date)) {
+            mul = 3;
+         }
+         
+         for (i = 0; i < 14; i += 2) {
+            custom_state(parts[i], "default", 0.0);
+         }
+         v[0] = 0; v[1] = 2; v[2] = 2; v[3] = 4; // hrs
+         v[4] = 5; v[5] = 7; v[6] = 7; v[7] = 9; // mins
+         tot = 9;
+         
+         dosec = get_int(do_seconds);
+         do24h = get_int(do_24h);
+         if ((dosec) && (!do24h)) { // sec + ampm
+            tot += 7;
+            v[8] = 10; v[9] = 12; v[10] = 12; v[11] = 14;
+            v[12] = 14; v[13] = 16;
+         }
+         else if ((dosec) && (do24h)) { // sec + -
+            tot += 5;
+            v[8] = 10; v[9] = 12; v[10] = 12; v[11] = 14;
+            v[12] = 0; v[13] = 0;
+         }
+         else if ((!dosec) && (!do24h)) { // - + ampm
+            tot += 2;
+            v[8] = 0; v[9] = 0; v[10] = 0; v[11] = 0;
+            v[12] = 9; v[13] = 11;
+         }
+         else if ((!dosec) && (do24h)) { // - + -
+            tot += 0;
+            v[8] = 0; v[9] = 0; v[10] = 0; v[11] = 0;
+            v[12] = 0; v[13] = 0;
+         }
+         for (i = 0; i < 14; i += 2) {
+            set_state_val(parts[i], STATE_REL1,
+                          float(v[i]) / float(tot), 0.0);
+            set_state_val(parts[i + 1], STATE_REL2,
+                          float(v[i + 1]) / float(tot), 1.0);
+         }
+         for (i = 0; i < 14; i += 2) {
+            set_state(parts[i], "custom", 0.0);
+         }
+         set_min_size(tot * mul, 16);
+         set_max_size(tot * 8 * mul, 128);
+         emit("e,state,sizing,changed", "");
+      }
+      reset() {
+         new tim;
+         
+         evalsize();
+         tim = get_int(tick_timer);
+         if (tim) {
+            cancel_timer(tim);
+            set_int(tick_timer, 0);
+         }
+         clock_cb(0);
+      }
+      
+      public clock_cb(val) {
+         new year, month, day, yearday, weekday, hour, minute;
+         new Float:second;
+         new v, dosec, do24h, tim;
+         
+         date(year, month, day, yearday, weekday, hour, minute, second);
+         dosec = get_int(do_seconds);
+         dosec = 1;
+         if (dosec) {
+            v = round(second);
+            tim = timer(1.0 - (second - v), "clock_cb", 1);
+            // set seconds to v
+            valset(PART:"s0", v / 10);
+            valset(PART:"s1", v % 10);
+         }
+         else {
+            tim = timer(60.0 - (second), "clock_cb", 1);
+         }
+         set_int(tick_timer, tim);
+         
+         // set minutes to minute
+         valset(PART:"m0", minute / 10);
+         valset(PART:"m1", minute % 10);
+         
+         // set hours to hour
+         do24h = get_int(do_24h);
+         if (do24h) {
+            valset(PART:"h0", hour / 10);
+            valset(PART:"h1", hour % 10);
+         }
+         else {
+            new pm;
+            
+            // if 12 or later, its pm
+            if (hour >= 12) {
+               pm = 1;
+               // if we are after 12 (1, 2, 3 etc.) then mod by 12
+               if (hour > 12) hour = hour % 12;
+            }
+            else {
+               pm = 0;
+               // make after midnight be 12:XX AM :)
+               if (hour == 0) hour = 12;
+            }
+            valset(PART:"h0", hour / 10);
+            valset(PART:"h1", hour % 10);
+            apvalset(PART:"ap", pm);
+         }
+      }
+   }
+   parts {
+      part { name: "secclip"; type: RECT;
+         description { state: "default" 0.0;
+         }
+         description { state: "hidden" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "ampmclip"; type: RECT;
+         description { state: "default" 0.0;
+         }
+         description { state: "hidden" 0.0;
+            visible: 0;
+         }
+      }
+      // XXX: hours1/2, mins1/2, secs1/2 and ampm SHOULD be spacers... but
+      // if they are calculations go weird. this shouldnt happen, but does.
+      part { name: "timearea"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "date" 0.0;
+            inherit: "default" 0.0;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 4;
+            rel2.to_y: "e.text.today";
+         }
+      }
+      part { name: "hours1"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: (0/16) 0.0;
+            rel2.relative: (2/16) 1.0;
+            rel1.to: "timearea";
+            rel2.to: "timearea";
+            visible: 0;
+         }
+      }
+      part { name: "hours2"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: (2/16) 0.0;
+            rel2.relative: (4/16) 1.0;
+            rel1.to: "timearea";
+            rel2.to: "timearea";
+            visible: 0;
+         }
+      }
+      part { name: "mins1"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: (5/16) 0.0;
+            rel2.relative: (7/16) 1.0;
+            rel1.to: "timearea";
+            rel2.to: "timearea";
+            visible: 0;
+         }
+      }
+      part { name: "mins2"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: (7/16) 0.0;
+            rel2.relative: (9/16) 1.0;
+            rel1.to: "timearea";
+            rel2.to: "timearea";
+            visible: 0;
+         }
+      }
+      part { name: "secs1"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: (10/16) 0.0;
+            rel2.relative: (12/16) 1.0;
+            rel1.to: "timearea";
+            rel2.to: "timearea";
+            visible: 0;
+         }
+      }
+      part { name: "secs2"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: (12/16) 0.0;
+            rel2.relative: (14/16) 1.0;
+            rel1.to: "timearea";
+            rel2.to: "timearea";
+            visible: 0;
+         }
+      }
+      part { name: "ampm"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: (14/16) 0.0;
+            rel2.relative: (16/16) 1.0;
+            rel1.to: "timearea";
+            rel2.to: "timearea";
+            visible: 0;
+         }
+      }
+      part { name: "c00";
+         description { state: "default" 0.0;
+            rel1.to: "hours2";
+            rel1.relative: 1.0 0.5;
+            rel1.offset: 0 -2;
+            rel2.to: "mins1";
+            rel2.relative: 0.0 0.5;
+            rel2.offset: 0 -2;
+            align: 0.5 1.0;
+            FIXED_SIZE(4, 4)
+            image.normal: "hole_tiny.png";
+         }
+      }
+      part { name: "c01";
+         description { state: "default" 0.0;
+            rel1.to: "hours2";
+            rel1.relative: 1.0 0.5;
+            rel1.offset: 0 1;
+            rel2.to: "mins1";
+            rel2.relative: 0.0 0.5;
+            rel2.offset: 0 1;
+            align: 0.5 0.0;
+            FIXED_SIZE(4, 4)
+            image.normal: "hole_tiny.png";
+         }
+      }
+      part { name: "c10";
+         clip_to: "secclip";
+         description { state: "default" 0.0;
+            rel1.to: "mins2";
+            rel1.relative: 1.0 0.5;
+            rel1.offset: 0 -2;
+            rel2.to: "secs1";
+            rel2.relative: 0.0 0.5;
+            rel2.offset: 0 -2;
+            align: 0.5 1.0;
+            FIXED_SIZE(4, 4)
+            image.normal: "hole_tiny.png";
+         }
+      }
+      part { name: "c11";
+         clip_to: "secclip";
+         description { state: "default" 0.0;
+            rel1.to: "mins2";
+            rel1.relative: 1.0 0.5;
+            rel1.offset: 0 1;
+            rel2.to: "secs1";
+            rel2.relative: 0.0 0.5;
+            rel2.offset: 0 1;
+            align: 0.5 0.0;
+            FIXED_SIZE(4, 4)
+            image.normal: "hole_tiny.png";
+         }
+      }
+#define DIGIT(_NAME, _TO) \
+   part { name: _NAME; \
+      description { state: "default" 0.0; \
+         rel1.to: _TO; rel2.to: _TO; \
+         aspect: (52/72) (52/72); aspect_preference: BOTH; \
+         image.normal: "digit_na.png"; \
+      } \
+      description { state: "0" 0.0; inherit: "default" 0.0; image.normal: "digit_0.png"; } \
+      description { state: "1" 0.0; inherit: "default" 0.0; image.normal: "digit_1.png"; } \
+      description { state: "2" 0.0; inherit: "default" 0.0; image.normal: "digit_2.png"; } \
+      description { state: "3" 0.0; inherit: "default" 0.0; image.normal: "digit_3.png"; } \
+      description { state: "4" 0.0; inherit: "default" 0.0; image.normal: "digit_4.png"; } \
+      description { state: "5" 0.0; inherit: "default" 0.0; image.normal: "digit_5.png"; } \
+      description { state: "6" 0.0; inherit: "default" 0.0; image.normal: "digit_6.png"; } \
+      description { state: "7" 0.0; inherit: "default" 0.0; image.normal: "digit_7.png"; } \
+      description { state: "8" 0.0; inherit: "default" 0.0; image.normal: "digit_8.png"; } \
+      description { state: "9" 0.0; inherit: "default" 0.0; image.normal: "digit_9.png"; } \
+   }
+#define DIGITC(_NAME, _TO, _CLIP) \
+   part { name: _NAME; \
+      clip_to: _CLIP; \
+      description { state: "default" 0.0; \
+         rel1.to: _TO; rel2.to: _TO; \
+         aspect: (52/72) (52/72); aspect_preference: BOTH; \
+         image.normal: "digit_na.png"; \
+      } \
+      description { state: "0" 0.0; inherit: "default" 0.0; image.normal: "digit_0.png"; } \
+      description { state: "1" 0.0; inherit: "default" 0.0; image.normal: "digit_1.png"; } \
+      description { state: "2" 0.0; inherit: "default" 0.0; image.normal: "digit_2.png"; } \
+      description { state: "3" 0.0; inherit: "default" 0.0; image.normal: "digit_3.png"; } \
+      description { state: "4" 0.0; inherit: "default" 0.0; image.normal: "digit_4.png"; } \
+      description { state: "5" 0.0; inherit: "default" 0.0; image.normal: "digit_5.png"; } \
+      description { state: "6" 0.0; inherit: "default" 0.0; image.normal: "digit_6.png"; } \
+      description { state: "7" 0.0; inherit: "default" 0.0; image.normal: "digit_7.png"; } \
+      description { state: "8" 0.0; inherit: "default" 0.0; image.normal: "digit_8.png"; } \
+      description { state: "9" 0.0; inherit: "default" 0.0; image.normal: "digit_9.png"; } \
+   }
+#define TAG(_NAME, _TO, _CLIP) \
+   part { name: _NAME; \
+      clip_to: _CLIP; \
+      description { state: "default" 0.0; \
+         rel1.to: _TO; rel2.to: _TO; \
+         aspect: (48/31) (48/31); aspect_preference: BOTH; \
+         image.normal: "digit_am.png"; \
+      } \
+      description { state: "active" 0.0; \
+         inherit: "default" 0.0; \
+         image.normal: "digit_pm.png"; \
+      } \
+   }
+      
+      DIGIT ("h0", "hours1")
+      DIGIT ("h1", "hours2")
+      DIGIT ("m0", "mins1")
+      DIGIT ("m1", "mins2")
+      DIGITC("s0", "secs1", "secclip")
+      DIGITC("s1", "secs2", "secclip")
+      TAG("ap", "ampm", "ampmclip")
+#undef TAG
+#undef DIGIT             
+
+       part { name: "e.text.today"; type: TEXT;
+          effect: GLOW;
+          description { state: "default" 0.0;
+             rel1.relative: 0.0 1.0;
+             rel1.offset: 0 1;
+             rel2.offset: -1 1;
+             align: 0.5 1.0;
+             color: 51 153 255 255;
+             color2: 51 153 255 24;
+             color3: 51 153 255 18;
+             text { font: "Sans"; size: 8;
+                text_class: "module_small";
+                align: 0.5 0.5;
+                min: 0 1;
+             }
+             fixed: 0 1;
+          }
+       }
+                       
+       part { name: "event"; type: RECT;
+          description { state: "default" 0.0;
+             color: 0 0 0 0;
+          }
+       }
+   }
+   programs {
+      program {
+         signal: "load"; source: "";
+         script {
+            clock_cb(0);
+         }
+      }
+      program {
+         signal: "e,state,date,on"; source: "e";
+         script {
+            set_int(do_date, 1);
+            set_state(PART:"timearea", "date", 0.0);
+            reset();
+         }
+      }
+      program {
+         signal: "e,state,date,off"; source: "e";
+         script {
+            set_int(do_date, 0);
+            set_state(PART:"timearea", "default", 0.0);
+            reset();
+         }
+      }
+      program {
+         signal: "e,state,seconds,on"; source: "e";
+         script {
+            set_int(do_seconds, 1);
+            set_state(PART:"secclip", "default", 0.0);
+            reset();
+         }
+      }
+      program {
+         signal: "e,state,seconds,off"; source: "e";
+         script {
+            set_int(do_seconds, 0);
+            set_state(PART:"secclip", "hidden", 0.0);
+            reset();
+         }
+      }
+      program {
+         signal: "e,state,24h,on"; source: "e";
+         script {
+            set_int(do_24h, 1);
+            set_state(PART:"ampmclip", "hidden", 0.0);
+            reset();
+         }
+      }
+      program {
+         signal: "e,state,24h,off"; source: "e";
+         script {
+            set_int(do_24h, 0);
+            set_state(PART:"ampmclip", "default", 0.0);
+            reset();
+         }
+      }
+   }
+}
+
 group { name: "e/modules/clock/main";
    images {
       image: "hole_tiny.png" COMP;
@@ -240,7 +678,6 @@ group { name: "e/modules/clock/main";
       }
    }
 }
-#endif
 
 group { name: "e/modules/clock/calendar/dayname";
    parts {

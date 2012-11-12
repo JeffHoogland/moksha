@@ -30,6 +30,7 @@ struct _Config_Item
    int digital_clock;
    int digital_24h;
    int show_seconds;
+   int show_date;
 };
 
 void e_int_config_clock_module(E_Container *con, Config_Item *ci);
