@@ -796,6 +796,7 @@ _e_fwin_icon_popup(void *data)
    bg = edje_object_add(fwin->popup->evas);
    e_theme_edje_object_set(bg, "base/theme/fileman",
                            "e/fileman/popup/default");
+   e_popup_edje_bg_object_set(fwin->popup, bg);
    mw = zone->w * fileman_config->tooltip.size / 100.0;
    mh = zone->h * fileman_config->tooltip.size / 100.0;
 
