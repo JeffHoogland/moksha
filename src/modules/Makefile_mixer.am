@@ -8,7 +8,6 @@ mixerpkgdir = $(MDIR)/mixer/$(MODULE_ARCH)
 mixerpkg_LTLIBRARIES = mixer/module.la
 
 mixer_module_la_CFLAGS = $(AM_CFLAGS)
-mixer_module_la_LIBADD = $(AM_LIBADD)
 
 mixer_module_la_SOURCES = mixer/e_mod_main.c \
 			  mixer/e_mod_main.h \
@@ -31,7 +30,7 @@ else
 mixer_module_la_SOURCES += mixer/sys_dummy.c
 endif
 
-mixer_module_la_LIBADD += @SOUND_LIBS@
+mixer_module_la_LIBADD = @SOUND_LIBS@
 
 if HAVE_ENOTIFY
 mixer_module_la_CFLAGS += @ENOTIFY_CFLAGS@

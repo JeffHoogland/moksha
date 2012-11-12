@@ -16,5 +16,5 @@ physics_module_la_SOURCES = physics/e_mod_main.c \
 			    physics/e_mod_physics.c \
 			    physics/e_mod_physics.h
 
-physics_module_la_LIBADD       = $(AM_LIBADD) @EPHYSICS_LIBS@
+physics_module_la_LIBADD       = @EPHYSICS_LIBS@
 physics_module_la_DEPENDENCIES = $(MDEPENDENCIES)

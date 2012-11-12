@@ -14,5 +14,5 @@ notification_module_la_SOURCES  = notification/e_mod_main.h \
 				  notification/e_mod_config_item.c \
 				  notification/e_mod_popup.c
 
-notification_module_la_LIBADD = $(AM_LIBADD) @ENOTIFY_LIBS@
+notification_module_la_LIBADD = @ENOTIFY_LIBS@
 notification_module_la_DEPENDENCIES = $(MDEPENDENCIES)

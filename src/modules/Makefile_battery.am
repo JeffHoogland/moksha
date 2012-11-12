@@ -9,7 +9,6 @@ batterypkg_LTLIBRARIES = battery/module.la
 
 battery_module_la_DEPENDENCIES = $(MDEPENDENCIES)
 battery_module_la_CFLAGS = $(AM_CFLAGS)
-battery_module_la_LIBADD = $(AM_LIBADD)
 battery_module_la_SOURCES  = battery/e_mod_main.h \
 			     battery/e_mod_main.c \
 			     battery/e_mod_config.c
@@ -26,7 +25,7 @@ endif
 
 if HAVE_ENOTIFY
 battery_module_la_CFLAGS += @ENOTIFY_CFLAGS@
-battery_module_la_LIBADD += @ENOTIFY_LIBS@
+battery_module_la_LIBADD = @ENOTIFY_LIBS@
 endif
 
 batgetdir = $(batterypkgdir)

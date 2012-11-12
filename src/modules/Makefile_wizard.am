@@ -87,7 +87,7 @@ wizard_page_100_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 if USE_MODULE_CONNMAN
 wizard_page_110_la_SOURCES        = wizard/page_110.c
-wizard_page_110_la_LIBADD         = $(AM_LIBADD) @ECONNMAN_LIBS@
+wizard_page_110_la_LIBADD         = @ECONNMAN_LIBS@
 wizard_page_110_la_DEPENDENCIES   = $(MDEPENDENCIES)
 endif
 

@@ -30,5 +30,5 @@ illume_indicator_module_la_SOURCES += illume-indicator/e_mod_notify.c \
 				      illume-indicator/e_mod_notify.h
 endif
 
-illume_indicator_module_la_LIBADD = $(AM_LIBADD) @ENOTIFY_LIBS@
+illume_indicator_module_la_LIBADD = @ENOTIFY_LIBS@
 illume_indicator_module_la_DEPENDENCIES = $(MDEPENDENCIES)
