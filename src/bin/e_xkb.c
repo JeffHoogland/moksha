@@ -21,6 +21,8 @@ e_xkb_init(void)
         cl = eina_list_data_get(e_config->xkb.used_layouts);
         e_xkb_layout_set(cl->name);
      }
+   else
+     e_xkb_update(-1);
    return 1;
 }
 
@@ -38,7 +40,7 @@ e_xkb_update(int cur_group)
    Eina_List *l;
    Eina_Strbuf *buf;
 
-   if (!e_config->xkb.used_layouts) return;
+   if ((!e_config->xkb.used_layouts) && (!e_config->xkb.used_options) && (!e_config->xkb.default_model)) return;
    if (cur_group != -1)
      {
         _e_xkb_cur_group = cur_group;
@@ -51,39 +53,55 @@ e_xkb_update(int cur_group)
     */
 
    buf = eina_strbuf_new();
-   eina_strbuf_append(buf, "setxkbmap -layout '");
+   eina_strbuf_append(buf, "setxkbmap ");
 
-   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+   if (e_config->xkb.used_layouts)
      {
-        if (cl->name)
+        eina_strbuf_append(buf, "-layout '");
+        EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
           {
-             eina_strbuf_append(buf, cl->name);
-             eina_strbuf_append(buf, ",");
+             if (cl->name)
+               {
+                  eina_strbuf_append(buf, cl->name);
+                  eina_strbuf_append(buf, ",");
+               }
+          }
+
+        eina_strbuf_append(buf, "' -variant '");
+        EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+          {
+             if (cl->variant)
+               {
+                  if (!strcmp(cl->variant, "basic")) continue;
+                  eina_strbuf_append(buf, cl->variant);
+                  eina_strbuf_append(buf, ",");
+               }
+             else
+               eina_strbuf_append(buf, ",");
+          }
+        eina_strbuf_append(buf, "'");
+
+        /* use first entry in used layouts */
+        cl = e_config->xkb.used_layouts->data;
+
+        if (cl->model)
+          {
+             eina_strbuf_append(buf, " -model '");
+             if (strcmp(cl->model, "default"))
+               eina_strbuf_append(buf, cl->model);
+             else if ((e_config->xkb.default_model) &&
+                      (strcmp(e_config->xkb.default_model, "default")))
+               eina_strbuf_append(buf, e_config->xkb.default_model);
+             else
+               eina_strbuf_append(buf, "default");
+             eina_strbuf_append(buf, "'");
           }
      }
-   eina_strbuf_append(buf, "' -variant '");
-
-   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
-     {
-        if (cl->variant)
-          {
-             if (!strcmp(cl->variant, "basic")) continue;
-             eina_strbuf_append(buf, cl->variant);
-             eina_strbuf_append(buf, ",");
-          }
-        else
-          eina_strbuf_append(buf, ",");
-     }
-   eina_strbuf_append(buf, "'");
-
-   /* use first entry in used layouts */
-   cl = e_config->xkb.used_layouts->data;
-
-   if (cl->model)
+   else if (e_config->xkb.default_model)
      {
         eina_strbuf_append(buf, " -model '");
-        if (strcmp(cl->model, "default"))
-          eina_strbuf_append(buf, cl->model);
+        if (strcmp(e_config->xkb.default_model, "default"))
+          eina_strbuf_append(buf, e_config->xkb.default_model);
         else if ((e_config->xkb.default_model) &&
                  (strcmp(e_config->xkb.default_model, "default")))
           eina_strbuf_append(buf, e_config->xkb.default_model);
@@ -92,17 +110,20 @@ e_xkb_update(int cur_group)
         eina_strbuf_append(buf, "'");
      }
 
-   /* clear options */
-   eina_strbuf_append(buf, " -option ");
-
-   /* add in selected options */
-   EINA_LIST_FOREACH(e_config->xkb.used_options, l, op)
+   if (e_config->xkb.used_options)
      {
-        if (op->name)
+        /* clear options */
+        eina_strbuf_append(buf, " -option ");
+
+        /* add in selected options */
+        EINA_LIST_FOREACH(e_config->xkb.used_options, l, op)
           {
-             eina_strbuf_append(buf, " -option '");
-             eina_strbuf_append(buf, op->name);
-             eina_strbuf_append(buf, "'");
+             if (op->name)
+               {
+                  eina_strbuf_append(buf, " -option '");
+                  eina_strbuf_append(buf, op->name);
+                  eina_strbuf_append(buf, "'");
+               }
           }
      }
    INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
