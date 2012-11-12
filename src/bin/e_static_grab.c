@@ -1,5 +1,4 @@
-#include <Eina.h>
-#include <Eet.h>
+#include "e.h"
 
 typedef struct _E_Static_Grab E_Static_Grab;
 typedef struct _E_Static_Grab_Module E_Static_Grab_Module;
@@ -81,6 +80,7 @@ struct _E_Static_Grab_Module
 #define COMPILED "compiled for "
 #define MODULE_CLASS "Module class"
 #define ABI_CLASS "ABI class"
+#undef VERSION
 #define VERSION ", version "
 
 static const char *
