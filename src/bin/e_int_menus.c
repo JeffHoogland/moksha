@@ -1361,26 +1361,33 @@ static const char *
 _e_int_menus_clients_title_abbrv(const char *title)
 {
    static char abbv[E_CLIENTLIST_MAX_CAPTION_LEN + 4];
-   char *p;
-   int len, len2, max_len;
+   char *abbvptr = abbv;
+   int str_len, len, len2, max_len;
 
    if (!e_config->clientlist_limit_caption_len) return title;
 
-   len = eina_unicode_utf8_get_len(title);
    max_len = e_config->clientlist_max_caption_len;
-   if (len <= max_len) return title;
+   if (eina_unicode_utf8_get_len(title) <= max_len) return title;
 
-   abbv[0] = 0;
-   len2 = max_len / 2;
-   p = (char*)title;
-   eina_unicode_utf8_get_prev(p, &len2);
-   strncpy(abbv, title, len2);
-   abbv[len2] = '\0';
-   len2 = len - (max_len / 2);
-   p = (char*)title;
-   eina_unicode_utf8_get_next(p, &len2);
-   strcat(abbv, "...");
-   strncat(abbv, title + len2, len - len2);
+   /* Advance to the end of the first half of the string. */
+   len = 0;
+   for (len2 = (max_len / 2) ; len2 ; len2--)
+      eina_unicode_utf8_get_next(title, &len);
+
+   strncat(abbvptr, title, len);
+   abbvptr += len;
+
+   /* Append the ellipsis char. */
+   strcpy(abbvptr, "\xE2\x80\xA6");
+   abbvptr += 3;
+
+   /* Advance to the start of the second half of the string */
+   len = str_len = strlen(title);
+   for (len2 = (max_len / 2) ; len2 ; len2--)
+      eina_unicode_utf8_get_prev(title, &len);
+
+   strncpy(abbvptr, title + len, str_len);
+   abbvptr[str_len] = '\0';
 
    return abbv;
 }
