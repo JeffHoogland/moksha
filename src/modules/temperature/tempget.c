@@ -343,7 +343,7 @@ init(void)
 	     break;
 	   case SENSOR_TYPE_LINUX_SYS:
 	     snprintf(path, sizeof(path),
-		      "/sys/class/thermal/thermal/%s/temp", sensor_name);
+		      "/sys/class/thermal/%s/temp", sensor_name);
 	     sensor_path = strdup(path);
 	     break;
            default:
@@ -508,6 +508,7 @@ check(void)
 	     fclose(f);
              temp = atoi(buf);
              temp /= 1000;
+             ret = 1;
 	  }
 	else
 	  goto error;
