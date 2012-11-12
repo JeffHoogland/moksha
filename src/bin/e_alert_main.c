@@ -19,6 +19,10 @@
 #define WINDOW_WIDTH 320
 #define WINDOW_HEIGHT 240
 
+#ifndef XCB_ATOM_NONE
+# define XCB_ATOM_NONE = 0
+#endif
+
 /* local function prototypes */
 static int _e_alert_connect(void);
 static void _e_alert_create(void);
