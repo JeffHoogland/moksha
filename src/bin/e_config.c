@@ -1369,11 +1369,13 @@ e_config_load(void)
      E_CONFIG_LIMIT(e_config->dpms_standby_enable, 0, 1);
      E_CONFIG_LIMIT(e_config->dpms_suspend_enable, 0, 1);
      E_CONFIG_LIMIT(e_config->dpms_off_enable, 0, 1);
-     E_CONFIG_LIMIT(e_config->dpms_standby_timeout, 0, 5400);
-     E_CONFIG_LIMIT(e_config->dpms_suspend_timeout, 0, 5400);
-     E_CONFIG_LIMIT(e_config->dpms_off_timeout, 0, 5400);
+     E_CONFIG_LIMIT(e_config->dpms_standby_timeout, 30, 5400);
+     E_CONFIG_LIMIT(e_config->dpms_suspend_timeout, 30, 5400);
+     E_CONFIG_LIMIT(e_config->dpms_off_timeout, 30, 5400);
 
-     E_CONFIG_LIMIT(e_config->screensaver_timeout, 0, 5400);
+     E_CONFIG_LIMIT(e_config->backlight.timer, 30, 5400);
+
+     E_CONFIG_LIMIT(e_config->screensaver_timeout, 30, 5400);
      E_CONFIG_LIMIT(e_config->screensaver_interval, 0, 5400);
      E_CONFIG_LIMIT(e_config->screensaver_blanking, 0, 2);
      E_CONFIG_LIMIT(e_config->screensaver_expose, 0, 2);
