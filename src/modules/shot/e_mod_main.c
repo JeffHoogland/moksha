@@ -294,20 +294,12 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
 static void
 _share_done(void)
 {
-   Ecore_Event_Handler *h;
-
-   EINA_LIST_FREE(handlers, h) ecore_event_handler_del(h);
+   E_FREE_LIST(handlers, ecore_event_handler_del);
    o_label = NULL;
-   if (url_ret)
-     {
-        E_FREE(url_ret);
-     }
-   if (url_up)
-     {
-        ecore_con_url_free(url_up);
-        url_up = NULL;
-     }
-   ecore_con_url_shutdown();
+   E_FREE(url_ret);
+   if (!url_up) return;
+   ecore_con_url_free(url_up);
+   url_up = NULL;
 }
 
 static void
@@ -316,11 +308,9 @@ _upload_ok_cb(void *data __UNUSED__, E_Dialog *dia)
    // ok just hides dialog and does background upload
    o_label = NULL;
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
-   if (win)
-     {
-        e_object_del(E_OBJECT(win));
-        win = NULL;
-     }
+   if (!win) return;
+   e_object_del(E_OBJECT(win));
+   win = NULL;
 }
 
 static void
@@ -394,10 +384,13 @@ _upload_progress_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
 }
 
 static Eina_Bool
-_upload_complete_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
+_upload_complete_cb(void *data, int ev_type __UNUSED__, void *event)
 {
    Ecore_Con_Event_Url_Complete *ev = event;
    if (ev->url_con != url_up) return EINA_TRUE;
+
+   if (data)
+     e_widget_disabled_set(data, 1);
    if (ev->status != 200)
      {
         e_util_dialog_show
@@ -412,6 +405,14 @@ _upload_complete_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
       e_widget_entry_text_set(o_entry, url_ret);
    _share_done();
    return EINA_FALSE;
+}
+
+static void
+_win_share_del(void *data __UNUSED__)
+{
+   if (handlers) ecore_event_handler_data_set(eina_list_last_data_get(handlers), NULL);
+   _upload_cancel_cb(NULL, NULL);
+   
 }
 
 static void
@@ -485,17 +486,8 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    
    _share_done();
    
-   if (!ecore_con_url_init())
-     {
-        e_util_dialog_show(_("Error - Can't initialize network"),
-                           _("Cannot initialize network"));
-        E_FREE(fdata);
-        return;
-     }
-   
    E_LIST_HANDLER_APPEND(handlers, ECORE_CON_EVENT_URL_DATA, _upload_data_cb, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_CON_EVENT_URL_PROGRESS, _upload_progress_cb, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_CON_EVENT_URL_COMPLETE, _upload_complete_cb, NULL);
    
    url_up = ecore_con_url_new("http://www.enlightenment.org/shot.php");
    // why use http 1.1? proxies like squid don't handle 1.1 posts with expect
@@ -503,7 +495,7 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    // out of the box
    ecore_con_url_http_version_set(url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
    ecore_con_url_post(url_up, fdata, fsize, "application/x-e-shot");
-   
+
    dia = e_dialog_new(scon, "E", "_e_shot_share");
    e_dialog_title_set(dia, _("Uploading screenshot"));
    
@@ -526,6 +518,8 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    e_dialog_content_set(dia, ol, mw, mh);
    e_dialog_button_add(dia, _("Hide"), NULL, _upload_ok_cb, NULL);
    e_dialog_button_add(dia, _("Cancel"), NULL, _upload_cancel_cb, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_CON_EVENT_URL_COMPLETE, _upload_complete_cb, eina_list_last_data_get(dia->buttons));
+   e_object_del_attach_func_set(E_OBJECT(dia), _win_share_del);
    e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
@@ -922,6 +916,14 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
+
+   if (!ecore_con_url_init())
+     {
+        e_util_dialog_show(_("Shot Error"),
+                           _("Cannot initialize network"));
+        return NULL;
+     }
+ 
    e_module_delayed_set(m, 1);
    
    shot_module = m;
@@ -972,6 +974,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      }
    shot_module = NULL;
    e_int_border_menu_hook_del(border_hook);
+   ecore_con_url_shutdown();
    return 1;
 }
 
