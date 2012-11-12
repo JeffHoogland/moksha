@@ -155,7 +155,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"),
-			    1.0, 90.0, 1.0, 0, &(cfdata->timeout), NULL, 100);
+			    0.5, 90.0, 1.0, 0, &(cfdata->timeout), NULL, 100);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    
