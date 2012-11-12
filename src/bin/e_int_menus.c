@@ -1375,6 +1375,7 @@ _e_int_menus_clients_title_abbrv(const char *title)
    p = (char*)title;
    eina_unicode_utf8_get_prev(p, &len2);
    strncpy(abbv, title, len2);
+   abbv[len2] = '\0';
    len2 = len - (max_len / 2);
    p = (char*)title;
    eina_unicode_utf8_get_next(p, &len2);
