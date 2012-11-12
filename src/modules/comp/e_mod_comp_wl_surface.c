@@ -181,7 +181,38 @@ e_mod_comp_wl_surface_set_input_region(struct wl_client *client __UNUSED__, stru
      pixman_region32_init_rect(&ws->input, 0, 0, ws->w, ws->h);
 
    input = e_mod_comp_wl_input_get();
-   e_mod_comp_wl_comp_repick(&input->input_device, e_mod_comp_wl_time_get());
+   e_mod_comp_wl_comp_repick(&input->seat, e_mod_comp_wl_time_get());
+}
+
+void 
+e_mod_comp_wl_surface_commit(struct wl_client *client, struct wl_resource *resource)
+{
+   Wayland_Surface *ws;
+   pixman_region32_t opaque;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   if (!(ws = resource->data)) return;
+
+   /* TODO: handle 'pending' ?? */
+
+   e_mod_comp_wl_surface_configure(ws, ws->x, ws->y, ws->w, ws->h);
+   e_mod_comp_wl_surface_damage_surface(ws);
+
+   pixman_region32_init_rect(&opaque, 0, 0, ws->w, ws->h);
+   pixman_region32_intersect(&opaque, &opaque, &ws->opaque);
+   if (!pixman_region32_equal(&opaque, &ws->opaque))
+     {
+        pixman_region32_copy(&ws->opaque, &opaque);
+        /* TODO: set dirty */
+     }
+   pixman_region32_fini(&opaque);
+
+   pixman_region32_fini(&ws->input);
+   pixman_region32_init_rect(&ws->input, 0, 0, ws->w, ws->h);
+   pixman_region32_intersect(&ws->input, &ws->input, &ws->input);
+
+   wl_list_init(&ws->frame_callbacks);
 }
 
 void
@@ -203,7 +234,7 @@ e_mod_comp_wl_surface_destroy_surface(struct wl_resource *resource)
      e_object_del(E_OBJECT(ws->win));
 
    wl_list_remove(&ws->link);
-   e_mod_comp_wl_comp_repick(&input->input_device, e_mod_comp_wl_time_get());
+   e_mod_comp_wl_comp_repick(&input->seat, e_mod_comp_wl_time_get());
 
    if (ws->texture) glDeleteTextures(1, &ws->texture);
 
@@ -274,8 +305,14 @@ e_mod_comp_wl_surface_activate(Wayland_Surface *ws, Wayland_Input *wi, uint32_t 
      }
 
    _e_mod_comp_wl_surface_raise(ws);
-   wl_input_device_set_keyboard_focus(&wi->input_device, &ws->surface);
-   wl_data_device_set_keyboard_focus(&wi->input_device);
+
+   if (wi->seat.keyboard)
+     {
+        wl_keyboard_set_focus(wi->seat.keyboard, &ws->surface);
+        wl_data_device_set_keyboard_focus(&wi->seat);
+     }
+
+   /* TODO: emit activate signal ?? */
 }
 
 void
@@ -311,7 +348,7 @@ _e_mod_comp_wl_surface_raise(Wayland_Surface *ws)
 
    wl_list_remove(&ws->link);
    wl_list_insert(&comp->surfaces, &ws->link);
-   e_mod_comp_wl_comp_repick(&input->input_device, e_mod_comp_wl_time_get());
+   e_mod_comp_wl_comp_repick(&input->seat, e_mod_comp_wl_time_get());
    e_mod_comp_wl_surface_damage_surface(ws);
 }
 
@@ -335,4 +372,3 @@ _e_mod_comp_wl_surface_frame_destroy_callback(struct wl_resource *resource)
    wl_list_remove(&cb->link);
    free(cb);
 }
-

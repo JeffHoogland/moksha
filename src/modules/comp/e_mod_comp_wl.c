@@ -10,7 +10,7 @@
 #endif
 
 /* local function prototypes */
-static Eina_Bool _e_mod_comp_wl_fd_handle(void *data, Ecore_Fd_Handler *hdl __UNUSED__);
+static Eina_Bool _e_mod_comp_wl_fd_handle(void *data, Ecore_Fd_Handler *hdl);
 
 /* private variables */
 static Ecore_Fd_Handler *_wl_fd_handler = NULL;
@@ -82,7 +82,7 @@ e_mod_comp_wl_init(void)
    fd = wl_event_loop_get_fd(loop);
 
    _wl_fd_handler =
-     ecore_main_fd_handler_add(fd, ECORE_FD_READ,
+     ecore_main_fd_handler_add(fd, ECORE_FD_READ,// | ECORE_FD_WRITE,
                                _e_mod_comp_wl_fd_handle, NULL, NULL, NULL);
 
    wl_event_loop_dispatch(loop, 0);
@@ -120,73 +120,73 @@ e_mod_comp_wl_time_get(void)
 Ecore_X_Pixmap
 e_mod_comp_wl_pixmap_get(Ecore_X_Window win)
 {
-   Wayland_Compositor *comp;
-   Wayland_Surface *ws;
-//   struct wl_list *list;
+   /* Wayland_Compositor *comp; */
+   /* Wayland_Surface *ws; */
    Ecore_X_Pixmap pmap = 0;
 
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+   /* LOGFN(__FILE__, __LINE__, __FUNCTION__); */
 
-   comp = e_mod_comp_wl_comp_get();
-   if (wl_list_empty(&comp->surfaces)) return 0;
+   /* comp = e_mod_comp_wl_comp_get(); */
+   /* if (wl_list_empty(&comp->surfaces)) return 0; */
 
-//   list = &comp->surfaces;
-   wl_list_for_each(ws, &comp->surfaces, link)
-   {
-      if (!ws->buffer) continue;
-      if (((ws->win) && (ws->win->border))
-          && (ws->win->border->win == win))
-        {
-           Ecore_X_Connection *conn;
-           Ecore_X_GC gc;
-           uint8_t *pix = 0;
-           int depth;
+   /* wl_list_for_each(ws, &comp->surfaces, link) */
+   /* { */
+   /*    if (!ws->buffer) continue; */
+   /*    if (((ws->win) && (ws->win->border)) */
+   /*        && (ws->win->border->win == win)) */
+   /*      { */
+   /*         Ecore_X_Connection *conn; */
+   /*         xcb_gc_t gc; */
+   /*         uint8_t *pix = 0; */
+   /*         int depth; */
 
-           if (ws->buffer)
-             {
-                if (wl_buffer_is_shm(ws->buffer))
-                  pix = (uint8_t *)wl_shm_buffer_get_data(ws->buffer);
-                else
-                  {
-                     if (ws->texture) pix = (uint8_t *)ws->texture;
-                     else if (ws->saved_texture)
-                       pix = (uint8_t *)ws->saved_texture;
-                  }
-             }
-           else if (ws->image)
-             {
-                if (ws->texture) pix = (uint8_t *)ws->texture;
-                else if (ws->saved_texture)
-                  pix = (uint8_t *)ws->saved_texture;
-             }
+   /*         if (ws->buffer) */
+   /*           { */
+   /*              if (wl_buffer_is_shm(ws->buffer)) */
+   /*                pix = (uint8_t *)wl_shm_buffer_get_data(ws->buffer); */
+   /*              else */
+   /*                { */
+   /*                   if (ws->texture) pix = (uint8_t *)ws->texture; */
+   /*                   else if (ws->saved_texture) */
+   /*                     pix = (uint8_t *)ws->saved_texture; */
+   /*                } */
+   /*           } */
+   /*         else if (ws->image) */
+   /*           { */
+   /*              if (ws->texture) pix = (uint8_t *)ws->texture; */
+   /*              else if (ws->saved_texture) */
+   /*                pix = (uint8_t *)ws->saved_texture; */
+   /*           } */
 
-           if (!pix) return 0;
+   /*         if (!pix) return 0; */
 
-           depth = ecore_x_window_depth_get(win);
-           conn = ecore_x_connection_get();
+   /*         depth = ecore_x_window_depth_get(win); */
+   /*         conn = ecore_x_connection_get(); */
 
-           pmap = xcb_generate_id(conn);
-           xcb_create_pixmap(conn, depth, pmap, win, ws->w, ws->h);
+   /*         pmap = xcb_generate_id(conn); */
+   /*         xcb_create_pixmap(conn, depth, pmap, win, ws->w, ws->h); */
 
-           gc = ecore_x_gc_new(pmap, 0, NULL);
-           xcb_put_image(conn, 2, pmap, gc, ws->w, ws->h,
-                         0, 0, 0, depth,
-                         (ws->w * ws->h * sizeof(int)), pix);
-           ecore_x_gc_free(gc);
-        }
-   }
+   /*         gc = xcb_generate_id(conn); */
+   /*         xcb_put_image(conn, 2, pmap, gc, ws->w, ws->h, */
+   /*                       0, 0, 0, depth, */
+   /*                       (ws->w * ws->h * sizeof(int)), pix); */
+   /*         xcb_free_gc(conn, gc); */
+   /*         xcb_free_pixmap(conn, pmap); */
+   /*      } */
+   /* } */
 
    return pmap;
 }
 
 /* local functions */
 static Eina_Bool
-_e_mod_comp_wl_fd_handle(void *data __UNUSED__, Ecore_Fd_Handler *hdl __UNUSED__)
+_e_mod_comp_wl_fd_handle(void *data __UNUSED__, Ecore_Fd_Handler *hdl)
 {
    struct wl_event_loop *loop;
 
    loop = wl_display_get_event_loop(_wl_disp);
    wl_event_loop_dispatch(loop, 0);
+
    return ECORE_CALLBACK_RENEW;
 }
 

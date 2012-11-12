@@ -19,6 +19,10 @@
 #  define LOGFN(fl, ln, fn)
 # endif
 
+#define container_of(ptr, type, member) ({ \
+   const __typeof__( ((type *)0)->member ) *__mptr = (ptr); \
+   (type *)( (char *)__mptr - offsetof(type,member) );})
+
 typedef enum _Wayland_Visual Wayland_Visual;
 typedef enum _Wayland_Shell_Surface_Type Wayland_Shell_Surface_Type;
 typedef struct _Wayland_Frame_Callback Wayland_Frame_Callback;
@@ -151,7 +155,7 @@ struct _Wayland_Output
 
 struct _Wayland_Input
 {
-   struct wl_input_device input_device;
+   struct wl_seat seat;
    int32_t hotspot_x, hotspot_y;
    struct wl_list link;
    uint32_t modifier_state;
