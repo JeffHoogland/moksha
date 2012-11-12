@@ -11,10 +11,6 @@
 #define MOD_CFG_FILE_VERSION					\
 ((MOD_CFG_FILE_EPOCH << 16) | MOD_CFG_FILE_GENERATION)
 
-#undef  MAX
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
-
-
 typedef enum   _Popup_Corner Popup_Corner;
 typedef struct _Config Config;
 typedef struct _Config_Item Config_Item;

@@ -160,6 +160,9 @@ typedef struct _E_Before_Idler E_Before_Idler;
 typedef struct _E_Rect         E_Rect;
 
 /* convenience macro to compress code and avoid typos */
+#ifndef MAX
+# define MAX(x, y) (((x) > (y)) ? (x) : (y))
+#endif
 # define E_FN_DEL(_fn, _h) if (_h) { _fn(_h); _h = NULL; }
 # define E_INTERSECTS(x, y, w, h, xx, yy, ww, hh) \
   (((x) < ((xx) + (ww))) && ((y) < ((yy) + (hh))) && (((x) + (w)) > (xx)) && (((y) + (h)) > (yy)))
