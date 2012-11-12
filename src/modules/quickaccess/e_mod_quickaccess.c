@@ -301,7 +301,7 @@ _e_qa_entry_relaunch_setup_help(void *data, E_Dialog *dia)
    entry->dia = dia = e_dialog_new(NULL, "E", "_quickaccess_cmd_help_dialog");
 
    snprintf(buf, sizeof(buf), "%s<br>%s/e-module-quickaccess.edj<br>%s<br>"
-                               "data.item: \"%s\" \"--OPT\";", _("The reopen option is meant to be used<br>"
+                               "data.item: \"%s\" \"--OPT\";", _("The relaunch option is meant to be used<br>"
                                "with terminal applications to create a persistent<br>"
                                "terminal which reopens when closed, generally seen<br>"
                                "in quake-style drop-down terminals.<br>"
