@@ -44,4 +44,4 @@ dist_everything_headers_DATA = $(EVRYHEADERS)
 everything_pkgconfigdir = $(libdir)/pkgconfig
 everything_pkgconfig_DATA = everything/everything.pc
 EXTRA_DIST += everything/everything.pc.in
-CLEANFILES += everything/everything.pc
+DISTCLEANFILES = everything/everything.pc
