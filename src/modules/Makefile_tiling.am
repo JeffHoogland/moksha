@@ -1,6 +1,7 @@
 tilingdir = $(MDIR)/tiling
 tiling_DATA = tiling/e-module-tiling.edj \
 	      tiling/module.desktop
+CLEANFILES += tiling/e-module-tiling.edj
 
 EXTRA_DIST += $(tiling_DATA) \
 	      tiling/e-module-tiling.edc \

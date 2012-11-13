@@ -1,7 +1,7 @@
 illume_indicatordir = $(MDIR)/illume-indicator
 illume_indicator_DATA = illume-indicator/e-module-illume-indicator.edj \
 			illume-indicator/module.desktop
-
+CLEANFILES += illume-indicator/e-module-illume-indicator.edj
 EXTRA_DIST += illume-indicator/e-module-illume-indicator.edc \
 	      illume-indicator/module.desktop.in
 
