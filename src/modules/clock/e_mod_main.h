@@ -31,10 +31,11 @@ struct _Config_Item
    int digital_24h;
    int show_seconds;
    int show_date;
+   Eina_Bool changed;
 };
 
 void e_int_config_clock_module(E_Container *con, Config_Item *ci);
-void e_int_clock_instances_redo(void);
+void e_int_clock_instances_redo(Eina_Bool all);
 
 extern Config *clock_config;
 

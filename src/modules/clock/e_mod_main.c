@@ -459,7 +459,7 @@ _eval_instance_size(Instance *inst)
 }
 
 void
-e_int_clock_instances_redo(void)
+e_int_clock_instances_redo(Eina_Bool all)
 {
    Eina_List *l;
    Instance *inst;
@@ -469,6 +469,7 @@ e_int_clock_instances_redo(void)
      {
         Evas_Object *o = inst->o_clock;
 
+         if ((!all) && (!inst->cfg->changed)) continue;
         _todaystr_eval(inst, todaystr, sizeof(todaystr) - 1);
         if (inst->cfg->digital_clock)
           e_theme_edje_object_set(o, "base/theme/modules/clock",
@@ -529,7 +530,7 @@ _update_today_timer(void *data __UNUSED__)
    const struct tm *now;
    struct tm today;
 
-   e_int_clock_instances_redo();
+   e_int_clock_instances_redo(EINA_TRUE);
    if (!clock_instances)
      {
         update_today = NULL;
@@ -793,7 +794,7 @@ _e_mod_action_cb_mouse(E_Object *obj __UNUSED__, const char *params, Ecore_Event
 static Eina_Bool
 _clock_eio_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   e_int_clock_instances_redo();
+   e_int_clock_instances_redo(EINA_TRUE);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -811,7 +812,7 @@ _clock_fd_update(void *d __UNUSED__, Ecore_Fd_Handler *fdh)
    char buf[64];
 
    read(ecore_main_fd_handler_fd_get(fdh), buf, sizeof(buf));
-   e_int_clock_instances_redo();
+   e_int_clock_instances_redo(EINA_TRUE);
    return EINA_TRUE;
 }
 

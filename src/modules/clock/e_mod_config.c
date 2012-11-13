@@ -161,7 +161,9 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 
    ci = cfd->data;
    memcpy(ci, &(cfdata->cfg), sizeof(Config_Item));
-   e_int_clock_instances_redo();
+   ci->changed = EINA_TRUE;
+   e_int_clock_instances_redo(EINA_FALSE);
+   ci->changed = EINA_FALSE;
    e_config_save_queue();
    return 1;
 }
