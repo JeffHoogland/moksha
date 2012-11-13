@@ -114,6 +114,8 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
                                 "%s/applications/%s",
                                 efreet_data_home_get(), file);
                        ecore_file_cp(buf, abuf);
+                       // trigger cache rebuild
+                       efreet_desktop_free(efreet_desktop_get(abuf));
                        copies++;
                     }
                }
