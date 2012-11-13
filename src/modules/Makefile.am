@@ -1,4 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
+AUTOMAKE_OPTIONS = subdir-objects
 
 SUBDIRS =
 CLEANFILES =
