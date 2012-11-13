@@ -685,7 +685,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_check_add(evas, _("Transience"),
                            &(cfdata->remember.match_transient));
    e_widget_list_object_append(of, ob, 1, 0, 0.5);
-   e_widget_toolbook_page_append(o, NULL, _("Using"), of, 1, 1, 1, 1, 0.5, 0.0);
+   e_widget_toolbook_page_append(o, NULL, _("Identifiers"), of, 1, 1, 1, 1, 0.5, 0.0);
 
 
    of = e_widget_table_add(evas, 0);
