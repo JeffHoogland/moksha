@@ -56,7 +56,7 @@ main(int argc, char *argv[])
    if (!strcmp(argv[1], "frequency"))
      {
         int new_frequency = atoi(argv[2]);
-        int len = 4;
+        size_t len = sizeof(new_frequency);
         if (sysctlbyname("dev.cpu.0.freq", NULL, 0, &new_frequency, &len) == -1)
           {
              fprintf(stderr, "Unable to open frequency interface for writing.\n");
