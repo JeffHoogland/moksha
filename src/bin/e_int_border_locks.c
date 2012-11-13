@@ -291,7 +291,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_check_add(evas, _("Do not allow the border to change on this window"), &(cfdata->keep_my_border));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Remember the Locks for this window appears"), &(cfdata->remember_locks));
+   ob = e_widget_check_add(evas, _("Remember the locks for this window"), &(cfdata->remember_locks));
    e_widget_list_object_append(o, ob, 0, 0, 0.0);
    return o;
 }
