@@ -225,7 +225,6 @@ static Eina_Bool
 _e_mod_comp_wl_comp_egl_init(void)
 {
    EGLint major, minor, n;
-   const char *extensions;
    EGLint config_attribs[] =
    {
       EGL_RED_SIZE, 8, EGL_GREEN_SIZE, 8, EGL_BLUE_SIZE, 8,
@@ -249,14 +248,6 @@ _e_mod_comp_wl_comp_egl_init(void)
    if (!eglInitialize(_wl_comp->egl.display, &major, &minor))
      {
         EINA_LOG_ERR("Failed to initialize EGL\n");
-        eglTerminate(_wl_comp->egl.display);
-        return EINA_FALSE;
-     }
-
-   extensions = eglQueryString(_wl_comp->egl.display, EGL_EXTENSIONS);
-   if (!strstr(extensions, "EGL_KHR_surfaceless_gles2"))
-     {
-        EINA_LOG_ERR("EGL_KHR_surfaceless_gles2 not supported\n");
         eglTerminate(_wl_comp->egl.display);
         return EINA_FALSE;
      }
@@ -423,6 +414,8 @@ _e_mod_comp_wl_cb_focus_out(void *data __UNUSED__, int type __UNUSED__, void *ev
 
    /* ev = event; */
    input = e_mod_comp_wl_input_get();
+   if ((!input) || (!input->seat.keyboard)) 
+     return ECORE_CALLBACK_PASS_ON;
    wl_keyboard_set_focus(input->seat.keyboard, NULL);
    wl_data_device_set_keyboard_focus(&input->seat);
 
