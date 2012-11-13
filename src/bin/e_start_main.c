@@ -20,7 +20,6 @@
 
 #include <Eina.h>
 
-static Eina_Bool tainted = EINA_FALSE;
 static Eina_Bool stop_ptrace = EINA_FALSE;
 
 static void env_set(const char *var, const char *val);
@@ -243,9 +242,12 @@ main(int argc, char **argv)
    char valgrind_path[PATH_MAX] = "";
    const char *valgrind_log = NULL;
    Eina_Bool really_know = EINA_FALSE;
-   Eina_Bool restart = EINA_TRUE;
    struct sigaction action;
-   
+#if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__FreeBSD__) && \
+    !(defined (__MACH__) && defined (__APPLE__))
+   Eina_Bool restart = EINA_TRUE;
+#endif
+
    action.sa_sigaction = _sigusr1;
    action.sa_flags = SA_RESETHAND;
    sigemptyset(&action.sa_mask);
@@ -399,17 +401,21 @@ main(int argc, char **argv)
    args[i++] = buf;
    copy_args(args + i, argv + 1, argc - 1);
    args[i + argc - 1] = NULL;
-   /* execv(args[0], args); */
+
+#if defined(__OpenBSD__) || defined(__NetBSD__) || defined(__FreeBSD__) || \
+   (defined (__MACH__) && defined (__APPLE__))
+   execv(args[0], args);
+#endif
 
    /* not run at the moment !! */
 
-
+#if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__FreeBSD__) && \
+    !(defined (__MACH__) && defined (__APPLE__))
    /* Now looping until */
    while (restart)
      {
         pid_t child;
 
-        tainted = EINA_FALSE;
         child = fork();
 
         if (child < 0) /* failed attempt */
@@ -568,6 +574,7 @@ main(int argc, char **argv)
                }
           }
      }
+#endif
 
    return -1;
 }
