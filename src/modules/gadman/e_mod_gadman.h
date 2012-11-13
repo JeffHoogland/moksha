@@ -58,6 +58,7 @@ struct _Manager
    E_Gadcon    *gc_top;
    E_Gadcon_Location *location[GADMAN_LAYER_COUNT];
    Eina_List   *gadgets[GADMAN_LAYER_COUNT];
+   Ecore_Timer *gadman_reset_timer;
    Evas_Object *movers[GADMAN_LAYER_COUNT];
    Evas_Object *full_bg;
    const char  *icon_name;

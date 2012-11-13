@@ -215,9 +215,10 @@ gadman_shutdown(void)
         eina_hash_free_cb_set(_gadman_gadgets, EINA_FREE_CB(eina_list_free));
         eina_hash_free(_gadman_gadgets);
      }
+   if (Man->gadman_reset_timer) ecore_timer_del(Man->gadman_reset_timer);
    E_FREE_LIST(Man->drag_handlers, ecore_event_handler_del);
    _gadman_gadgets = NULL;
-   E_FREE(Man);
+   free(Man);
 }
 
 void
@@ -1603,82 +1604,34 @@ _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update
 }
 
 static Eina_Bool
-_e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_gadman_reset_timer(void *d __UNUSED__)
 {
-   E_Event_Zone_Add *ev;
-   E_Zone *zone;
-   unsigned int layer;
-   const char *layer_name[] = {"gadman", "gadman_top"};
+   if (!Man) return EINA_FALSE;
 
-   ev = event;
-   zone = ev->zone;
+   Man->gadman_reset_timer = NULL;
+   gadman_reset();
+   return EINA_FALSE;
+}
 
-   if ((!zone->x) || (!zone->y))
-     {
-        /* first zone removed, need to reinit to re-place every gadget */
-        gadman_reset();
-        return ECORE_CALLBACK_RENEW;
-     }
-
-   // Not exist, then add
-   /* iterating through zones - and making gadmans on each */
-
-   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
-     {
-        E_Gadcon *gc;
-
-        gc = _gadman_gadcon_new(layer_name[layer], layer, zone, Man->location[layer]);
-        Man->gadcons[layer] = eina_list_append(Man->gadcons[layer], gc);
-     }
-   gadman_update_bg();
-
+static Eina_Bool
+_e_gadman_cb_zone_add(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   if (!Man) return ECORE_CALLBACK_RENEW;
+   if (Man->gadman_reset_timer)
+     ecore_timer_reset(Man->gadman_reset_timer);
+   else
+     Man->gadman_reset_timer = ecore_timer_add(3.0, _e_gadman_reset_timer, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_gadman_cb_zone_del(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   E_Event_Zone_Del *ev;
-   E_Zone *zone;
-   Eina_List *l, *ll;
-   E_Gadcon *gc;
-   E_Gadcon_Client *gcc;
-   unsigned int layer;
-
-   ev = event;
-   zone = ev->zone;
-
-   if ((!zone->x) || (!zone->y))
-     {
-        /* another first zone added, need to reinit to re-place every gadget */
-        gadman_reset();
-        return ECORE_CALLBACK_RENEW;
-     }
-
-   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
-     {
-        EINA_LIST_FOREACH(Man->gadcons[layer], l, gc)
-          {
-             if (gc->zone != zone) continue;
-
-             Man->gadcons[layer] = eina_list_remove(Man->gadcons[layer], gc);
-
-             EINA_LIST_FOREACH(gc->clients, ll, gcc)
-               {
-                  Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc->cf);
-                  if (gcc->gadcon->editing) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
-               }
-
-             e_gadcon_unpopulate(gc);
-             e_gadcon_custom_del(gc);
-
-             eina_stringshare_del(gc->name);
-             if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
-             if (gc->drop_handler) e_drop_handler_del(gc->drop_handler);
-             E_FREE(gc);
-          }
-     }
-
-   return ECORE_CALLBACK_PASS_ON;
+   if (!Man) return ECORE_CALLBACK_RENEW;
+   if (Man->gadman_reset_timer)
+     ecore_timer_reset(Man->gadman_reset_timer);
+   else
+     Man->gadman_reset_timer = ecore_timer_add(3.0, _e_gadman_reset_timer, NULL);
+   return ECORE_CALLBACK_RENEW;
 }
 
