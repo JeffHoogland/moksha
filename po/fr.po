@@ -8,6 +8,7 @@
 # Jérôme Pinot <ngc891@gmail.com>, 2008.
 # batden <batden@orange.fr>, 2008, 2009, 2010, 2011.
 # dazibao <dazibao@sfr.fr>, 2011, 2012.
+# rustyBSD <rustyBSD@gmx.fr>, 2012.
 # Raoul Hecky <raoul.hecky@gmail.com>, 2012.
 #
 msgid ""
