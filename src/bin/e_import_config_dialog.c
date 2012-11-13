@@ -288,7 +288,7 @@ _import_cb_edje_cc_exit(void *data, __UNUSED__ int type, void *event)
 
    if (ev->exit_code != 0)
      {
-        e_util_dialog_show(_("Picture E_Import_Config_Dialog Error"),
+        e_util_dialog_show(_("Picture Import Error"),
                            _("Enlightenment was unable to import the picture<br>"
                              "due to conversion errors."));
         r = 0;
