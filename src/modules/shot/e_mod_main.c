@@ -426,7 +426,7 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    
    if (quality == 100) snprintf(buf, sizeof(buf), "/tmp/e-shot-XXXXXX.png");
    else snprintf(buf, sizeof(buf), "/tmp/e-shot-XXXXXX.jpg");
-   if (!mkstemp(buf))
+   if (!mkstemps(buf, 4))
      {
         e_util_dialog_show(_("Error - Can't create file"),
                            _("Cannot create temporary file '%s': %s"),
