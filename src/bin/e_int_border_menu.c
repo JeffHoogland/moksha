@@ -326,7 +326,7 @@ _e_border_menu_cb_kill(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    if ((bd->lock_close) || (bd->internal)) return;
 
    a = e_action_find("window_kill");
-   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+   if ((a) && (a->func.go)) a->func.go(E_OBJECT(bd), NULL);
 }
 
 static void

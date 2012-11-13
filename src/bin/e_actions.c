@@ -344,11 +344,7 @@ ACT_FN_GO(window_kill, __UNUSED__)
 
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
-   if (obj->type != E_BORDER_TYPE)
-     {
-        obj = E_OBJECT(e_border_focused_get());
-        if (!obj) return;
-     }
+   if (obj->type != E_BORDER_TYPE) return;
    bd = (E_Border *)obj;
    if ((bd->lock_close) || (bd->internal)) return;
 
