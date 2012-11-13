@@ -47,6 +47,8 @@ static Eina_Bool _e_bl_cb_exit(void *data __UNUSED__, int type __UNUSED__, void 
 static void _bl_sys_level_set(double val);
 #endif
 
+EAPI int E_EVENT_BACKLIGHT_CHANGE = -1;
+
 EINTERN int
 e_backlight_init(void)
 {
@@ -91,6 +93,9 @@ e_backlight_init(void)
              e_backlight_level_set(NULL, e_config->backlight.normal, 1.0);
           }
      }
+
+   E_EVENT_BACKLIGHT_CHANGE = ecore_event_type_new();
+
    return 1;
 }
 
@@ -231,6 +236,7 @@ e_backlight_level_set(E_Zone *zone, double val, double tim)
    bl_val = val;
    if (e_config->backlight.mode != E_BACKLIGHT_MODE_NORMAL) return;
    if (tim < 0.0) tim = e_config->backlight.transition;
+   ecore_event_add(E_EVENT_BACKLIGHT_CHANGE, NULL, NULL, NULL);
    if (tim == 0.0)
      {
         if (bl_anim)

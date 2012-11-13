@@ -18,6 +18,8 @@ typedef enum _E_Backlight_Mode
 #ifndef E_BACKLIGHT_H
 #define E_BACKLIGHT_H
 
+extern EAPI int E_EVENT_BACKLIGHT_CHANGE;
+
 //struct _E_Screen
 //{
 //   int screen, escreen;
