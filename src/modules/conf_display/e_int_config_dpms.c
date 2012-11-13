@@ -81,7 +81,7 @@ _apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->backlight.normal = cfdata->backlight_normal / 100.0;
    e_config->backlight.dim = cfdata->backlight_dim / 100.0;
    e_config->backlight.transition = cfdata->backlight_transition;
-   e_config->backlight.timer = cfdata->backlight_timeout;
+   e_config->backlight.timer = lround(cfdata->backlight_timeout * 60.);
 
    e_backlight_mode_set(NULL, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(NULL, e_config->backlight.normal, -1.0);
