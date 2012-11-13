@@ -425,6 +425,7 @@ main(int argc, char **argv)
           }
         else
           {
+             env_set("E_RESTART", "1");
              /* in the parent */
              pid_t result;
              int status;
@@ -497,7 +498,7 @@ main(int argc, char **argv)
                               {
                                  /* call e_sys gdb */
                                  snprintf(buffer, 4096,
-                                          "%s/enlightenment/utils/enlightenment_sys gdb %i %s/.xsession-errors",
+                                          "%s/enlightenment/utils/enlightenment_sys gdb %i %s/.e-crashdump.txt",
                                           eina_prefix_lib_get(pfx),
                                           child,
                                           home);
@@ -507,7 +508,7 @@ main(int argc, char **argv)
                                          buffer, WEXITSTATUS(r));
 
                                  snprintf(buffer, 4096,
-                                          "%s/.xsession-errors",
+                                          "%s/.e-crashdump.txt",
                                           home);
 
                                  backtrace_str = strdup(buffer);
