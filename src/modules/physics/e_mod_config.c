@@ -111,7 +111,7 @@ _basic_create_widgets(E_Config_Dialog *cfd,
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_label_add(evas, _("Maximum window mass"));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%2.1f Kg"), 1, 6, 1, 0, &(cfdata->max_mass), NULL, 150);
+   ob = e_widget_slider_add(evas, 1, 0, _("%2.1f kg"), 1, 6, 1, 0, &(cfdata->max_mass), NULL, 150);
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_label_add(evas, _("Desktop gravity"));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
