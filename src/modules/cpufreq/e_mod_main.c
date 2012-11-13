@@ -1,6 +1,11 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+/* NOTE: for OpenBSD, as we cannot set the frequency but
+ *       only its percent, we store percents 25-50-75-100
+ *       in s->frequencies instead of available frequencies.
+ */
+
 #if defined (__FreeBSD__) || defined (__OpenBSD__)
 # include <sys/sysctl.h>
 #endif
@@ -38,7 +43,7 @@ static void      _cpufreq_set_frequency(int frequency);
 static Eina_Bool _cpufreq_cb_check(void *data);
 static Status   *_cpufreq_status_new(void);
 static void      _cpufreq_status_free(Status *s);
-static int       _cpufreq_status_check_available(Status *s);
+static void      _cpufreq_status_check_available(Status *s);
 static int       _cpufreq_status_check_current(Status *s);
 static int       _cpufreq_cb_sort(const void *item1, const void *item2);
 static void      _cpufreq_face_update_available(Instance *inst);
@@ -301,7 +306,6 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                              frequency / 1000000.);
 #endif
 
-                  buf[sizeof(buf) - 1] = 0;
                   e_menu_item_label_set(mi, buf);
                   e_menu_item_radio_set(mi, 1);
                   e_menu_item_radio_group_set(mi, 1);
@@ -556,7 +560,7 @@ _cpufreq_cb_sort(const void *item1, const void *item2)
    return 0;
 }
 
-static int
+static void
 _cpufreq_status_check_available(Status *s)
 {
    char buf[4096];
@@ -564,36 +568,23 @@ _cpufreq_status_check_available(Status *s)
    // FIXME: this assumes all cores accept the same freqs/ might be wrong
 
 #if defined (__OpenBSD__)
-   int freq, mib[] = {CTL_HW, HW_CPUSPEED};
-   size_t len = sizeof(freq);
    int p;
 
-   if (sysctl(mib, 2, &freq, &len, NULL, 0) == 0)
+   if (s->frequencies)
      {
-        if (s->frequencies)
-          {
-             eina_list_free(s->frequencies);
-             s->frequencies = NULL;
-          }
-
-        if (s->governors)
-          {
-             for (l = s->governors; l; l = l->next)
-               free(l->data);
-             eina_list_free(s->governors);
-             s->governors = NULL;
-          }
-
-        /* storing percents */
-        p = 100;
-        s->frequencies = eina_list_append(s->frequencies, (void *)p);
-        p = 75;
-        s->frequencies = eina_list_append(s->frequencies, (void *)p);
-        p = 50;
-        s->frequencies = eina_list_append(s->frequencies, (void *)p);
-        p = 25;
-        s->frequencies = eina_list_append(s->frequencies, (void *)p);
+        eina_list_free(s->frequencies);
+        s->frequencies = NULL;
      }
+
+   /* storing percents */
+   p = 100;
+   s->frequencies = eina_list_append(s->frequencies, (void *)p);
+   p = 75;
+   s->frequencies = eina_list_append(s->frequencies, (void *)p);
+   p = 50;
+   s->frequencies = eina_list_append(s->frequencies, (void *)p);
+   p = 25;
+   s->frequencies = eina_list_append(s->frequencies, (void *)p);
 #elif defined (__FreeBSD__)
    int freq;
    size_t len = sizeof(buf);
@@ -649,8 +640,11 @@ _cpufreq_status_check_available(Status *s)
              s->frequencies = NULL;
           }
 
-        if (fgets(buf, sizeof(buf), f) == NULL) return 1;
-        buf[sizeof(buf) - 1] = 0;
+        if (fgets(buf, sizeof(buf), f) == NULL)
+          {
+             fclose(f);
+             return;
+          }
         fclose(f);
 
         freq = strtok(buf, " ");
@@ -683,8 +677,11 @@ _cpufreq_status_check_available(Status *s)
              s->governors = NULL;
           }
 
-        if (fgets(buf, sizeof(buf), f) == NULL) return 1;
-        buf[sizeof(buf) - 1] = 0;
+        if (fgets(buf, sizeof(buf), f) == NULL)
+          {
+             fclose(f);
+             return;
+          }
         fclose(f);
 
         gov = strtok(buf, " ");
@@ -703,7 +700,6 @@ _cpufreq_status_check_available(Status *s)
                          (int (*)(const void *, const void *))strcmp);
      }
 #endif
-   return 1;
 }
 
 static int
@@ -736,6 +732,7 @@ _cpufreq_status_check_current(Status *s)
 
    s->can_set_frequency = 1;
    s->cur_governor = NULL;
+
 #elif defined (__FreeBSD__)
    size_t len = sizeof(frequency);
    s->active = 0;
@@ -752,6 +749,7 @@ _cpufreq_status_check_current(Status *s)
    /* hardcoded for testing */
    s->can_set_frequency = 1;
    s->cur_governor = NULL;
+
 #else
    char buf[4096];
    FILE *f;
@@ -770,8 +768,11 @@ _cpufreq_status_check_current(Status *s)
         f = fopen(buf, "r");
         if (f)
           {
-             if (fgets(buf, sizeof(buf), f) == NULL) continue;
-             buf[sizeof(buf) - 1] = 0;
+             if (fgets(buf, sizeof(buf), f) == NULL)
+               {
+                  fclose(f);
+                  continue;
+               }
              fclose(f);
 
              frequency = atoi(buf);
@@ -811,10 +812,13 @@ _cpufreq_status_check_current(Status *s)
      {
         char *p;
 
-        buf[0] = 0;
-        if (fgets(buf, sizeof(buf), f) == NULL) return ret; ;
-        buf[sizeof(buf) - 1] = 0;
+        if (fgets(buf, sizeof(buf), f) == NULL)
+          {
+             fclose(f);
+             return ret;
+          }
         fclose(f);
+
         for (p = buf; (*p != 0) && (isalnum(*p)); p++) ;
         *p = 0;
 
