@@ -515,7 +515,23 @@ e_hints_window_init(E_Border *bd)
         if (!bd->lock_client_maximize)
           {
              e_hints_window_size_get(bd);
-             e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_VERTICAL);
+             do
+               {
+                  if (bd->client.initial_attributes.w == (bd->zone->w / 2))
+                    {
+                       if (!bd->client.initial_attributes.x)
+                         {
+                            e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_LEFT);
+                            break;
+                         }
+                       else if (bd->client.initial_attributes.x == bd->zone->w / 2)
+                         {
+                            e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_RIGHT);
+                            break;
+                         }
+                    }
+                  e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) | E_MAXIMIZE_VERTICAL);
+               } while (0);
           }
         else
           e_hints_window_maximized_set(bd, 0, 0);
