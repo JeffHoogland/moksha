@@ -1622,8 +1622,8 @@ no_submenu_item:
         evas_object_show(o);
         mi->event_object = o;
 
-        e_box_thaw(mi->container_object);
         e_box_pack_end(mi->menu->container_object, mi->bg_object);
+        e_box_thaw(mi->container_object);
      }
    if (mi->active) e_menu_item_active_set(mi, 1);
    if (mi->toggle) e_menu_item_toggle_set(mi, 1);
