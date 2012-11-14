@@ -355,7 +355,6 @@ group { name: "e/modules/pager/window";
    images.image: "mini_box_glow.png" COMP;
    parts {
       part { name: "base"; type: SPACER;
-         repeat_events: 1;
          description { state: "default" 0.0;
          }
          description { state: "urgent" 0.0;
@@ -363,7 +362,7 @@ group { name: "e/modules/pager/window";
             rel2.offset: -1 -6;
          }
       }
-      part { name: "win";
+      part { name: "win"; mouse_events: 0;
          description { state: "default" 0.0;
             image.normal: "mini_box_bevel_shadow.png";
             image.border: 7 7 7 7;
@@ -377,7 +376,7 @@ group { name: "e/modules/pager/window";
             image.normal: "mini_box_glow.png";
          }
       }
-      part { name: "e.swallow.icon"; type: SWALLOW;
+      part { name: "e.swallow.icon"; type: SWALLOW; mouse_events: 0;
          description { state: "default" 0.0;
             rel1.to: "base";
             rel1.offset: 2 2;
@@ -392,7 +391,7 @@ group { name: "e/modules/pager/window";
             visible: 0;
          }
       }
-      part { name: "e.swallow.content"; type: SWALLOW;
+      part { name: "e.swallow.content"; type: SWALLOW; mouse_events: 0;
          description { state: "default" 0.0;
             rel1.to: "base";
             rel2.to: "base";
@@ -401,6 +400,12 @@ group { name: "e/modules/pager/window";
          description { state: "preview" 0.0;
             inherit: "default" 0.0;
             visible: 1;
+         }
+      }
+      part { name: "event"; type: RECT;
+         repeat_events: 1;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
          }
       }
    }
