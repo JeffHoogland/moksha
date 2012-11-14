@@ -6501,7 +6501,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                     {
                        args = e_util_string_append_char(args, &size, &length, ' ');
                        if (!args) memerr = EINA_TRUE;
-                       else ic->drag.hidden = EINA_TRUE;
+                       else if (ic) ic->drag.hidden = EINA_TRUE;
                     }
                }
              eina_stringshare_del(fp);
