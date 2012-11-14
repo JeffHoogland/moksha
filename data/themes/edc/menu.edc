@@ -161,7 +161,7 @@ group { name: "e/widgets/menu/default/item_bg";
          description { state: "default" 0.0;
             rel1.relative: 0.0 0.0;
             rel1.offset: 3 3;
-            rel2.offset: -1 -4;
+            rel2.offset: -3 -4;
          }
       }
       part { name: "bevel"; mouse_events: 0;
