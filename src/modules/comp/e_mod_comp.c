@@ -1012,7 +1012,7 @@ _e_mod_comp_win_release(E_Comp_Win *cw)
         cw->pw = 0;
         cw->ph = 0;
         ecore_x_e_comp_pixmap_set(cw->win, cw->pixmap);
-        cw->show_ready = 0; // hmm maybe not needed?
+        //cw->show_ready = 0; // hmm maybe not needed?
      }
    if (cw->redirected)
      {
