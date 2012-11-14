@@ -3455,7 +3455,7 @@ e_border_idler_before(void)
                        bd->changes.visible = 0;
                     }
 
-                  if (bd->zone &&
+                  if (bd->zone && (!bd->new_client) &&
                       (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w, bd->zone->h)) &&
                       /* upper left */
                       (!E_INSIDE(bd->x, bd->y, 0 - bd->w + 5, 0 - bd->h + 5, bd->zone->w, bd->zone->h)) &&
