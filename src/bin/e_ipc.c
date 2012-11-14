@@ -51,10 +51,10 @@ e_ipc_init(void)
    for (trynum = 0; trynum <= 4096; trynum++)
      {
         struct stat st;
-        int id1 = 0, id2 = 0;
+        int id1 = 0;
         
-        snprintf(buf, sizeof(buf), "%s/enlightenment-%s@%08x%08x",
-                 base, user, id1, id2);
+        snprintf(buf, sizeof(buf), "%s/e-%s@%x",
+                 base, user, id1);
         mkdir(buf, S_IRWXU);
         if (stat(buf, &st) == 0)
           {
@@ -62,7 +62,7 @@ e_ipc_init(void)
                   ((st.st_mode & (S_IFDIR | S_IRWXU | S_IRWXG | S_IRWXO)) ==
                       (S_IRWXU | S_IFDIR)))
                {
-                  snprintf(buf3, sizeof(buf3), "%s/disp-%s-%i",
+                  snprintf(buf3, sizeof(buf3), "%s/%s-%i",
                            buf, disp, pid);
                   _e_ipc_server = ecore_ipc_server_add
                     (ECORE_IPC_LOCAL_SYSTEM, buf3, 0, NULL);
@@ -70,7 +70,6 @@ e_ipc_init(void)
                }
           }
         id1 = rand();
-        id2 = rand();
      }
    if (!_e_ipc_server) return 0;
 
