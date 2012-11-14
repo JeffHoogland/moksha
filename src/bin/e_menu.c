@@ -1530,19 +1530,13 @@ no_submenu_item:
 
              if (mi->icon_bg_object)
                {
-                  edje_extern_object_min_size_set(mi->icon_object,
-                                                  icon_w, icon_h);
+                  edje_extern_object_min_size_set(mi->icon_object, 0, 0);
                   edje_object_part_swallow(mi->icon_bg_object,
                                            "e.swallow.content",
                                            mi->icon_object);
                   edje_object_size_min_calc(mi->icon_bg_object, &ww, &hh);
                   mi->icon_w = ww;
                   mi->icon_h = hh;
-
-                  edje_extern_object_min_size_set(mi->icon_object, 0, 0);
-                  edje_object_part_swallow(mi->icon_bg_object,
-                                           "e.swallow.content",
-                                           mi->icon_object);
                   e_box_pack_end(mi->container_object, mi->icon_bg_object);
                }
              else
