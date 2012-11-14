@@ -182,6 +182,8 @@ img/horiz_bar_inset.png \
 img/horiz_glow_run.png \
 img/horizontal_separated_bar_glow.png \
 img/horizontal_separated_bar_small_glow.png \
+img/ic_win_move.png \
+img/ic_win_resize.png \
 img/inset_circle_tiny.png \
 img/inset_shadow_circle_tiny.png \
 img/inset_shadow.png \

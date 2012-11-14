@@ -42,7 +42,7 @@ collections {
 #include "edc/O/about.edc"
 #include "edc/O/backlight.edc"
 #include "edc/O/battery.edc"
-#include "edc/O/border.edc"
+//#include "edc/O/border.edc"
 #include "edc/O/border_icons.edc"
 //#include "edc/O/clock.edc"
 #include "edc/O/colors.edc"

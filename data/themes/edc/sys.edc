@@ -44,10 +44,10 @@ group { name: "e/sys/logout";
             rel1.to_x: "knob";
             rel1.offset: 8 8;
             rel2.offset: -9 -9;
+            min: 20 80;
             text { style: "sys_style";
                min: 1 1;
             }
-            fixed: 1 1;
          }
       }
       part { name: "knob"; mouse_events: 0;
