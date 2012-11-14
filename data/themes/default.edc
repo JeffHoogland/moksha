@@ -11,6 +11,7 @@ collections {
 #include "edc/gadman.edc"
 #include "edc/syscon.edc"
 #include "edc/pointer.edc"
+#include "edc/sys.edc"
 // widgets
 #include "edc/menu.edc"
 #include "edc/button.edc"

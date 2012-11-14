@@ -42,6 +42,7 @@ edc/scrollframe.edc \
 edc/shelf.edc \
 edc/slider.edc \
 edc/start.edc \
+edc/sys.edc \
 edc/syscon.edc \
 edc/systray.edc \
 edc/tasks.edc \

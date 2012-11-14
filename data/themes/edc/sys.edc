@@ -1,0 +1,103 @@
+group { name: "e/sys/logout";
+   alias: "e/sys/halt";
+   alias: "e/sys/reboot";
+   alias: "e/sys/suspend";
+   alias: "e/sys/hibernate";
+   data.item: "borderless" "1";
+   
+   images.image: "vgrad_tall.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "shine.png" COMP;
+   images.image: "knob_round_busy.png" COMP;
+   images.image: "glow_round_corners.png" COMP;
+
+   styles {   
+      style { name: "sys_style";
+         base: "font=Sans font_size=10 text_class=tb_plain align=left color=#ffff style=shadow,bottom shadow_color=#00000080 wrap=word";
+         tag: "br"      "\n";
+         tag: "b"       "+ font=Sans:style=Bold";
+         tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light";
+         tag: "urgent"  "+ font=Sans:style=Bold color=#f40f style=outline outline_color=#ff000080";
+         tag: "title"   "+ font=Sans:style=Bold font_size=16 underline=on underline_color=#3399ff";
+      }
+   }
+   parts {
+      part { name: "bg"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vgrad_tall.png";
+            fill.smooth: 0;
+            TILED_HORIZ(40)
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "e.textblock.message"; type: TEXTBLOCK;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "knob";
+            rel1.offset: 8 8;
+            rel2.offset: -9 -9;
+            text { style: "sys_style";
+               min: 1 1;
+            }
+            fixed: 1 1;
+         }
+      }
+      part { name: "knob"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "knob_round_busy.png";
+            rel1.relative: 0.0 0.0;
+            rel1.offset: 7 7;
+            rel2.relative: 0.0 1.0;
+            rel2.offset: 7 -8;
+            align: 0.0 0.5;
+            FIXED_SIZE(40, 40)
+         }
+      }
+      part { name: "knob_spinner"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "knob";
+            rel2.to: "knob";
+            image.normal: "glow_round_corners.png";
+            map.on: 1;
+            map.smooth: 1;
+            map.rotation.center: "knob";
+            fixed: 1 1;
+         }
+         description { state: "spin" 0.0;
+            inherit: "default" 0.0;
+            map.rotation.z: 360;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            FIXED_SIZE(69, 5)
+         }
+      }
+   }
+   programs {
+      program { name: "spin";
+         signal: "show"; source: "";
+         action: STATE_SET "spin" 0.0;
+         transition: LINEAR 1.0;
+         target: "knob_spinner";
+         after: "spin2";
+      }
+      program { name: "spin2";
+         action: STATE_SET "default" 0.0;
+         target: "knob_spinner";
+         after: "spin";
+      }
+   }
+}
