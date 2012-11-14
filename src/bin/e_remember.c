@@ -372,7 +372,7 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
    if (rem->apply & E_REMEMBER_APPLY_POS ||
        rem->apply & E_REMEMBER_APPLY_SIZE)
      {
-        if (bd->fullscreen)
+        if (bd->fullscreen || bd->maximized)
           {
              rem->prop.pos_x = bd->saved.x;
              rem->prop.pos_y = bd->saved.y;
