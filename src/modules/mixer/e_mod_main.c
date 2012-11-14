@@ -1429,12 +1429,14 @@ _mixer_actions_unregister(E_Mixer_Module_Context *ctxt)
      {
         e_action_predef_name_del(_(_e_mixer_Name), _(_lbl_increase));
         e_action_del(_act_increase);
+        ctxt->actions.incr = NULL;
      }
 
    if (ctxt->actions.decr)
      {
         e_action_predef_name_del(_(_e_mixer_Name), _(_lbl_decrease));
         e_action_del(_act_decrease);
+        ctxt->actions.decr = NULL;
      }
 
    if (ctxt->actions.mute)
@@ -1443,6 +1445,7 @@ _mixer_actions_unregister(E_Mixer_Module_Context *ctxt)
         e_action_del(_act_mute);
         e_managers_keys_ungrab();
         e_managers_keys_grab();
+        ctxt->actions.mute = NULL;
      }
 }
 
