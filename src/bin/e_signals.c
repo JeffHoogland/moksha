@@ -17,7 +17,7 @@ _e_x_composite_shutdown(void)
 //   Ecore_X_Display *dpy;
    Ecore_X_Window root;
 
-   if (_e_x_composite_shutdown_try) return; /* we failed :-( */
+   if (_e_x_composite_shutdown_try) return;  /* we failed :-( */
    _e_x_composite_shutdown_try = 1;
 
 //   dpy = ecore_x_display_get();
@@ -36,24 +36,25 @@ _e_write_safe_int(int fd, const char *buf, size_t size)
 {
    while (size > 0)
      {
-	ssize_t done = write(fd, buf, size);
-	if (done >= 0)
-	  {
-	     buf += done;
-	     size -= done;
-	  }
-	else
-	  {
-	     if ((errno == EAGAIN) || (errno == EINTR))
-	       continue;
-	     else
-	       {
-		  perror("write");
-		  return;
-	       }
-	  }
+        ssize_t done = write(fd, buf, size);
+        if (done >= 0)
+          {
+             buf += done;
+             size -= done;
+          }
+        else
+          {
+             if ((errno == EAGAIN) || (errno == EINTR))
+               continue;
+             else
+               {
+                  perror("write");
+                  return;
+               }
+          }
      }
 }
+
 #endif
 
 /* a tricky little devil, requires e and it's libs to be built
@@ -120,3 +121,4 @@ e_sigabrt_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED_
    ecore_x_sync();
    e_alert_show();
 }
+

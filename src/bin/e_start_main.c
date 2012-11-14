@@ -218,14 +218,14 @@ _env_path_append(const char *env, const char *path)
      }
 }
 
-static  void
+static void
 _sigusr1(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
    struct sigaction action;
-   
+
    /* release ptrace */
    stop_ptrace = EINA_TRUE;
-   
+
    action.sa_sigaction = _sigusr1;
    action.sa_flags = SA_RESETHAND;
    sigemptyset(&action.sa_mask);
@@ -244,7 +244,7 @@ main(int argc, char **argv)
    Eina_Bool really_know = EINA_FALSE;
    struct sigaction action;
 #if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__FreeBSD__) && \
-    !(defined (__MACH__) && defined (__APPLE__))
+   !(defined (__MACH__) && defined (__APPLE__))
    Eina_Bool restart = EINA_TRUE;
 #endif
 
@@ -252,12 +252,12 @@ main(int argc, char **argv)
    action.sa_flags = SA_RESETHAND;
    sigemptyset(&action.sa_mask);
    sigaction(SIGUSR1, &action, NULL);
-   
+
    eina_init();
 
    /* reexcute myself with dbus-launch if dbus-launch is not running yet */
    if ((!getenv("DBUS_SESSION_BUS_ADDRESS")) &&
-       (!getenv("DBUS_LAUNCHD_SESSION_BUS_SOCKET"))) 
+       (!getenv("DBUS_LAUNCHD_SESSION_BUS_SOCKET")))
      {
         char **dbus_argv;
 
@@ -410,7 +410,7 @@ main(int argc, char **argv)
    /* not run at the moment !! */
 
 #if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__FreeBSD__) && \
-    !(defined (__MACH__) && defined (__APPLE__))
+   !(defined (__MACH__) && defined (__APPLE__))
    /* Now looping until */
    while (restart)
      {
@@ -451,10 +451,10 @@ main(int argc, char **argv)
 #endif
              while (!done)
                {
-		  Eina_Bool remember_sigill = EINA_FALSE;
-		  Eina_Bool remember_sigusr1 = EINA_FALSE;
+                  Eina_Bool remember_sigill = EINA_FALSE;
+                  Eina_Bool remember_sigusr1 = EINA_FALSE;
 
-		  result = waitpid(child, &status, 0);
+                  result = waitpid(child, &status, 0);
 
                   if (result == child)
                     {
@@ -467,25 +467,25 @@ main(int argc, char **argv)
                             int back;
 
 #ifdef HAVE_SYS_PTRACE_H
-                           if (!really_know)
-                             r = ptrace(PTRACE_GETSIGINFO, child, NULL, &sig);
+                            if (!really_know)
+                              r = ptrace(PTRACE_GETSIGINFO, child, NULL, &sig);
 #endif
                             back = r == 0 &&
                               sig.si_signo != SIGTRAP ? sig.si_signo : 0;
 
-			    if (sig.si_signo == SIGUSR1)
-			      {
-				 if (remember_sigill)
-				   remember_sigusr1 = EINA_TRUE;
-			      }
-			    else if (sig.si_signo == SIGILL)
-			      {
-				 remember_sigill = EINA_TRUE;
-			      }
-			    else
-			      {
-			 	 remember_sigill = EINA_FALSE;
-			      }
+                            if (sig.si_signo == SIGUSR1)
+                              {
+                                 if (remember_sigill)
+                                   remember_sigusr1 = EINA_TRUE;
+                              }
+                            else if (sig.si_signo == SIGILL)
+                              {
+                                 remember_sigill = EINA_TRUE;
+                              }
+                            else
+                              {
+                                 remember_sigill = EINA_FALSE;
+                              }
 
                             if (r != 0 ||
                                 (sig.si_signo != SIGSEGV &&
@@ -497,7 +497,7 @@ main(int argc, char **argv)
                                  if (!really_know)
                                    ptrace(PT_CONTINUE, child, NULL, back);
 #endif
-                                 continue ;
+                                 continue;
                               }
 #ifdef HAVE_SYS_PTRACE_H
                             if (!really_know)

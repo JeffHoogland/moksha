@@ -16,32 +16,32 @@
 #include <xcb/shape.h>
 #include <X11/keysym.h>
 
-#define WINDOW_WIDTH 320
-#define WINDOW_HEIGHT 240
+#define WINDOW_WIDTH   320
+#define WINDOW_HEIGHT  240
 
 #ifndef XCB_ATOM_NONE
 # define XCB_ATOM_NONE 0
 #endif
 
 /* local function prototypes */
-static int _e_alert_connect(void);
-static void _e_alert_create(void);
-static void _e_alert_display(void);
-static void _e_alert_button_move_resize(xcb_window_t btn, int x, int y, int w, int h);
-static void _e_alert_window_raise(xcb_window_t win);
-static void _e_alert_sync(void);
-static void _e_alert_shutdown(void);
-static void _e_alert_run(void);
-static void _e_alert_draw(void);
-static int _e_alert_handle_key_press(xcb_generic_event_t *event);
-static int _e_alert_handle_button_press(xcb_generic_event_t *event);
+static int           _e_alert_connect(void);
+static void          _e_alert_create(void);
+static void          _e_alert_display(void);
+static void          _e_alert_button_move_resize(xcb_window_t btn, int x, int y, int w, int h);
+static void          _e_alert_window_raise(xcb_window_t win);
+static void          _e_alert_sync(void);
+static void          _e_alert_shutdown(void);
+static void          _e_alert_run(void);
+static void          _e_alert_draw(void);
+static int           _e_alert_handle_key_press(xcb_generic_event_t *event);
+static int           _e_alert_handle_button_press(xcb_generic_event_t *event);
 static xcb_char2b_t *_e_alert_build_string(const char *str);
-static void _e_alert_draw_outline(void);
-static void _e_alert_draw_title_outline(void);
-static void _e_alert_draw_title(void);
-static void _e_alert_draw_text(void);
-static void _e_alert_draw_button_outlines(void);
-static void _e_alert_draw_button_text(void);
+static void          _e_alert_draw_outline(void);
+static void          _e_alert_draw_title_outline(void);
+static void          _e_alert_draw_title(void);
+static void          _e_alert_draw_text(void);
+static void          _e_alert_draw_button_outlines(void);
+static void          _e_alert_draw_button_text(void);
 
 /* local variables */
 static xcb_connection_t *conn = NULL;
@@ -71,16 +71,16 @@ main(int argc, char **argv)
             (!strcmp(argv[i], "-help")) ||
             (!strcmp(argv[i], "--help")))
           {
-	     printf("This is an internal tool for Enlightenment.\n"
-		    "do not use it.\n");
-	     exit(0);
-	  }
-	else if (i == 1)
-          sig = atoi(argv[i]); // signal
+             printf("This is an internal tool for Enlightenment.\n"
+                    "do not use it.\n");
+             exit(0);
+          }
+        else if (i == 1)
+          sig = atoi(argv[i]);  // signal
         else if (i == 2)
-          pid = atoi(argv[i]); // E's pid
-	else if (i == 3)
-	  backtrace_str = argv[i];
+          pid = atoi(argv[i]);  // E's pid
+        else if (i == 3)
+          backtrace_str = argv[i];
      }
 
    tmp = getenv("E17_TAINTED");
@@ -313,7 +313,7 @@ _e_alert_display(void)
    /* grab pointer & keyboard */
    xcb_grab_pointer_unchecked(conn, 0, win,
                               (XCB_EVENT_MASK_BUTTON_PRESS |
-                                  XCB_EVENT_MASK_BUTTON_RELEASE),
+                               XCB_EVENT_MASK_BUTTON_RELEASE),
                               XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC,
                               XCB_NONE, XCB_NONE, XCB_CURRENT_TIME);
    xcb_grab_keyboard_unchecked(conn, 0, win, XCB_CURRENT_TIME,
@@ -389,21 +389,24 @@ _e_alert_run(void)
            case XCB_BUTTON_PRESS:
              ret = _e_alert_handle_button_press(event);
              break;
+
            case XCB_KEY_PRESS:
              ret = _e_alert_handle_key_press(event);
              break;
+
            case XCB_EXPOSE:
-               {
-                  xcb_expose_event_t *ev;
+           {
+              xcb_expose_event_t *ev;
 
-                  ev = (xcb_expose_event_t *)event;
-                  if (ev->window != win) break;
+              ev = (xcb_expose_event_t *)event;
+              if (ev->window != win) break;
 
-                  _e_alert_draw();
-                  _e_alert_sync();
+              _e_alert_draw();
+              _e_alert_sync();
 
-                  break;
-               }
+              break;
+           }
+
            default:
              break;
           }
@@ -517,15 +520,16 @@ _e_alert_draw_title(void)
    xcb_image_text_8(conn, strlen(title), win, gc, x, y, title);
 }
 
-struct {
-  int signal;
-  const char *name;
+struct
+{
+   int         signal;
+   const char *name;
 } signal_name[5] = {
-  { SIGSEGV, "SEGV" },
-  { SIGILL, "SIGILL" },
-  { SIGFPE, "SIGFPE" },
-  { SIGBUS, "SIGBUS" },
-  { SIGABRT, "SIGABRT" }
+   { SIGSEGV, "SEGV" },
+   { SIGILL, "SIGILL" },
+   { SIGFPE, "SIGFPE" },
+   { SIGBUS, "SIGBUS" },
+   { SIGABRT, "SIGABRT" }
 };
 
 static void
@@ -561,7 +565,6 @@ _e_alert_draw_text(void)
                       "\n"
                       "Please compile latest svn E17 and EFL with\n"
                       "-g and -ggdb3 in your CFLAGS.\n", pid);
-
           }
      }
    else
@@ -572,7 +575,7 @@ _e_alert_draw_text(void)
                  "modules; before reporting this issue, please\n"
                  "unload them and try to see if the bug is still\n"
                  "there. Also update to latest svn and be sure to\n"
-		 "compile E17 and EFL with -g and -ggdb3 in your CFLAGS");
+                 "compile E17 and EFL with -g and -ggdb3 in your CFLAGS");
      }
 
    strcpy(warn, "");
@@ -580,8 +583,8 @@ _e_alert_draw_text(void)
    for (i = 0; i < sizeof(signal_name) / sizeof(signal_name[0]); ++i)
      if (signal_name[i].signal == sig)
        snprintf(warn, sizeof(warn),
-		"This is very bad. Enlightenment %s'd.",
-		signal_name[i].name);
+                "This is very bad. Enlightenment %s'd.",
+                signal_name[i].name);
 
    /* draw text */
    k = (fh + 12);
@@ -661,3 +664,4 @@ _e_alert_draw_button_text(void)
 
    xcb_image_text_8(conn, strlen(str2), btn2, gc, x, (10 + fa), str2);
 }
+
