@@ -1369,6 +1369,7 @@ _e_int_menus_clients_title_abbrv(const char *title)
    max_len = e_config->clientlist_max_caption_len;
    if (eina_unicode_utf8_get_len(title) <= max_len) return title;
 
+   memset(&abbv, 0, sizeof(abbv));
    /* Advance to the end of the first half of the string. */
    len = 0;
    for (len2 = (max_len / 2) ; len2 ; len2--)
