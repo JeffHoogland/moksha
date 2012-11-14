@@ -749,8 +749,9 @@ pulse_connect(Pulse *conn)
 void
 pulse_disconnect(Pulse *conn)
 {
+   Eina_Bool event = EINA_FALSE;
    EINA_SAFETY_ON_NULL_RETURN(conn);
-   if (conn->state == PA_STATE_INIT) return;
+
    conn->state = PA_STATE_INIT;
    if (conn->fdh)
      {
@@ -758,13 +759,16 @@ pulse_disconnect(Pulse *conn)
         conn->fdh = NULL;
         close(conn->fd);
         conn->fd = -1;
+        event = EINA_TRUE;
      }
    else if (conn->svr)
      {
         ecore_con_server_del(conn->svr);
         conn->svr = NULL;
+        event = EINA_TRUE;
      }
-   ecore_event_add(PULSE_EVENT_DISCONNECTED, conn, pulse_fake_free, NULL);
+   if (event)
+     ecore_event_add(PULSE_EVENT_DISCONNECTED, conn, pulse_fake_free, NULL);
 }
 
 void
