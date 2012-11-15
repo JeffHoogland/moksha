@@ -358,7 +358,7 @@ e_int_menus_favorite_apps_new(void)
 
    e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
    if (ecore_file_exists(buf)) m = e_int_menus_apps_new(buf);
-   _e_int_menus_apps_start(NULL, m);
+   if (m) _e_int_menus_apps_start(NULL, m);
    return m;
 }
 
