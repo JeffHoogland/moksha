@@ -444,14 +444,15 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_size_min_set(ob, 100, 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
-   e_widget_disabled_set(cfdata->gui.font_list, !cfdata->cur_enabled);
-   e_widget_disabled_set(cfdata->gui.size_list, !cfdata->cur_enabled);
-   ob =
-     e_widget_font_preview_add(evas, _("Basic preview text: 123: 我的天空！"));
+   ob = e_widget_font_preview_add
+     (evas, _("Basic preview text: 123: 我的天空！"));
    cfdata->gui.preview = ob;
    e_widget_table_object_append(ot, ob, 0, 2, 2, 1, 1, 0, 1, 0);
 
    _basic_init_data_fill(cfdata);
+
+   e_widget_disabled_set(cfdata->gui.font_list, !cfdata->cur_enabled);
+   e_widget_disabled_set(cfdata->gui.size_list, !cfdata->cur_enabled);
 
    e_dialog_resizable_set(cfd->dia, 1);
    return ot;
@@ -519,7 +520,10 @@ _basic_init_data_fill(E_Config_Dialog_Data *cfdata)
    else if (!strcmp(efd->text_class, "default"))
      e_widget_check_checked_set(ob, 0);
    else
-     e_widget_check_checked_set(ob, 1);
+     {
+        e_widget_check_checked_set(ob, 1);
+        cfdata->cur_enabled = 1;
+     }
 
    /* Populate font list (Select current font) */
    _font_list_load(cfdata, init_font);
