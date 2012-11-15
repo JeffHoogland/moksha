@@ -522,12 +522,15 @@ e_int_menus_menu_augmentation_point_disabled_set(const char *menu, Eina_Bool dis
 EINTERN void
 e_int_menus_init(void)
 {
-   char buf[PATH_MAX];
-
-   e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
    if (e_config->menu_apps_show)
      _e_int_menus_apps_thread_new(NULL, NULL);
-   _e_int_menus_apps_thread_new(NULL, eina_stringshare_add(buf));
+   else
+     {
+        char buf[PATH_MAX];
+
+        e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
+        _e_int_menus_apps_thread_new(NULL, eina_stringshare_add(buf));
+     }
 }
 
 EINTERN void
@@ -734,9 +737,21 @@ _e_int_menus_app_thread_notify_cb(void *data, Ecore_Thread *eth __UNUSED__, void
 }
 
 static void
-_e_int_menus_app_thread_end_cb(void *data __UNUSED__, Ecore_Thread *eth)
+_e_int_menus_app_thread_end_cb(void *data, Ecore_Thread *eth)
 {
+   char buf[PATH_MAX];
+   const char *dir;
+
    _e_int_menus_app_threads = eina_list_remove(_e_int_menus_app_threads, eth);
+   if (data || (!e_config->menu_apps_show)) return;
+
+   e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
+   dir = eina_stringshare_add(buf);
+
+   if (eina_hash_find(_e_int_menus_app_menus, dir))
+     eina_stringshare_del(dir);
+   else
+     _e_int_menus_apps_thread_new(NULL, dir);
 }
 
 static void
