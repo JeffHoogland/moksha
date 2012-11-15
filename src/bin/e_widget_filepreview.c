@@ -807,14 +807,16 @@ static void
 _e_wid_fprev_preview_txt_read(void *data __UNUSED__, Ecore_Thread *eth)
 {
    char *text;
-   char buf[FILEPREVIEW_TEXT_PREVIEW_SIZE + 1] = {0};
+   char buf[FILEPREVIEW_TEXT_PREVIEW_SIZE + 1];
    FILE *f;
+   size_t n;
 
    text = ecore_thread_global_data_find("fprev_file");
    if (!text) return;
    f = fopen(text, "r");
    if (!f) return;
-   fread(buf, sizeof(char), FILEPREVIEW_TEXT_PREVIEW_SIZE, f);
+   n = fread(buf, sizeof(char), FILEPREVIEW_TEXT_PREVIEW_SIZE, f);
+   buf[n] = 0;
    ecore_thread_feedback(eth, evas_textblock_text_utf8_to_markup(NULL, buf));
    fclose(f);
 }
