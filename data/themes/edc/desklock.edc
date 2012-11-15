@@ -45,7 +45,7 @@ group { name: "e/desklock/login_box";
             image.normal: "logo_blue_small_glow.png";
             rel1.to: "logo";
             rel2.to: "logo";
-            color: 255 255 255 192;
+            color: 255 255 255 128;
          }
          description { state: "active" 0.0;
             inherit: "default" 0.0;
