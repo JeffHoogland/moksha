@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-13 13:47+0100\n"
-"PO-Revision-Date: 2012-11-13 18:30+0100\n"
+"POT-Creation-Date: 2012-11-15 11:40+0100\n"
+"PO-Revision-Date: 2012-11-15 11:42+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -84,8 +84,8 @@ msgstr "Uccidi"
 
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2223 src/bin/e_actions.c:2286
 #: src/bin/e_actions.c:2349 src/bin/e_actions.c:2417 src/bin/e_actions.c:2485
-#: src/bin/e_confirm_dialog.c:53 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10019 src/bin/e_fm.c:10383 src/bin/e_screensaver.c:167
+#: src/bin/e_confirm_dialog.c:53 src/bin/e_desklock.c:1313
+#: src/bin/e_fm.c:10021 src/bin/e_fm.c:10385 src/bin/e_screensaver.c:167
 msgid "No"
 msgstr "No"
 
@@ -106,7 +106,7 @@ msgstr "Esci"
 
 #: src/bin/e_actions.c:2126 src/bin/e_color_dialog.c:47
 #: src/bin/e_eap_editor.c:862 src/bin/e_eap_editor.c:926
-#: src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9556 src/bin/e_fm_prop.c:625
+#: src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9558 src/bin/e_fm_prop.c:625
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:316
@@ -196,7 +196,7 @@ msgstr "Iberna"
 msgid "Window : Actions"
 msgstr "Finestre : Azioni"
 
-#: src/bin/e_actions.c:2960 src/bin/e_fm.c:11143
+#: src/bin/e_actions.c:2960 src/bin/e_fm.c:11145
 #: src/bin/e_int_border_menu.c:665
 msgid "Move"
 msgstr "Sposta"
@@ -810,7 +810,7 @@ msgstr "Iberna adesso"
 msgid "Lock"
 msgstr "Blocca"
 
-#: src/bin/e_actions.c:3451 src/bin/e_int_menus.c:1338
+#: src/bin/e_actions.c:3451 src/bin/e_int_menus.c:1343
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
@@ -903,7 +903,7 @@ msgstr ""
 #: src/bin/e_config.c:1697 src/bin/e_config.c:2323
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:608
-#: src/bin/e_fm.c:9555 src/bin/e_fm.c:10289 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:9557 src/bin/e_fm.c:10291 src/bin/e_fm_prop.c:624
 #: src/bin/e_int_border_remember.c:318 src/bin/e_int_border_remember.c:507
 #: src/bin/e_module.c:425 src/bin/e_module.c:792 src/bin/e_sys.c:618
 #: src/bin/e_sys.c:659 src/bin/e_utils.c:700
@@ -1057,8 +1057,8 @@ msgstr "Moduli"
 msgid "Preferences"
 msgstr "Preferenze"
 
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1309
-#: src/bin/e_fm.c:10022 src/bin/e_screensaver.c:165
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
+#: src/bin/e_fm.c:10024 src/bin/e_screensaver.c:165
 msgid "Yes"
 msgstr "Sì"
 
@@ -1103,11 +1103,11 @@ msgstr "Autenticazione..."
 msgid "The password you entered is invalid. Try again."
 msgstr "La password inserita non è valida. Riprovate."
 
-#: src/bin/e_desklock.c:966
+#: src/bin/e_desklock.c:968
 msgid "Authentication System Error"
 msgstr "Errore del sistema di autenticazione"
 
-#: src/bin/e_desklock.c:967
+#: src/bin/e_desklock.c:969
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1118,11 +1118,11 @@ msgstr ""
 "di autenticazione. Il codice d'errore è <hilight>%i</hilight>.<br>Questo è "
 "male e non dovrebbe succedere.<br>Si prega di riportare questo bug."
 
-#: src/bin/e_desklock.c:1300 src/bin/e_screensaver.c:156
+#: src/bin/e_desklock.c:1302 src/bin/e_screensaver.c:156
 msgid "Activate Presentation Mode?"
 msgstr "Attivare modalità presentazione?"
 
-#: src/bin/e_desklock.c:1303
+#: src/bin/e_desklock.c:1305
 msgid ""
 "You unlocked desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
@@ -1132,11 +1132,11 @@ msgstr ""
 "modalità <b>presentazione</b> e disabilitare temporaneamente lo screensaver, "
 "il bloccaschermo e la gestione energetica?"
 
-#: src/bin/e_desklock.c:1313 src/bin/e_screensaver.c:169
+#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:169
 msgid "No, but increase timeout"
 msgstr "No, ma aumenta la temporizzazione"
 
-#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:171
+#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:171
 msgid "No, and stop asking"
 msgstr "No, e non chiedere più"
 
@@ -1229,7 +1229,7 @@ msgstr "Esegui in terminale"
 msgid "Show in Menus"
 msgstr "Mostra in menù"
 
-#: src/bin/e_eap_editor.c:790 src/bin/e_fm.c:8420 src/bin/e_fm.c:8580
+#: src/bin/e_eap_editor.c:790 src/bin/e_fm.c:8422 src/bin/e_fm.c:8582
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:332
 msgid "Options"
@@ -1244,7 +1244,7 @@ msgstr "Selezionare un'icona per '%s'"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:386 src/bin/e_fm.c:8765 src/bin/e_fm.c:10382
+#: src/bin/e_entry.c:386 src/bin/e_fm.c:8767 src/bin/e_fm.c:10384
 #: src/bin/e_shelf.c:1785 src/bin/e_shelf.c:2428
 #: src/modules/conf_dialogs/e_int_config_profiles.c:134
 #: src/modules/conf_dialogs/e_int_config_profiles.c:335
@@ -1259,15 +1259,15 @@ msgstr "Seleziona un'eseguibile"
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_entry.c:396 src/bin/e_fm.c:8676
+#: src/bin/e_entry.c:396 src/bin/e_fm.c:8678
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_entry.c:404 src/bin/e_fm.c:8690 src/bin/e_fm.c:11138
+#: src/bin/e_entry.c:404 src/bin/e_fm.c:8692 src/bin/e_fm.c:11140
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_entry.c:412 src/bin/e_fm.c:8481 src/bin/e_fm.c:8703
+#: src/bin/e_entry.c:412 src/bin/e_fm.c:8483 src/bin/e_fm.c:8705
 msgid "Paste"
 msgstr "Incolla"
 
@@ -1459,263 +1459,263 @@ msgstr "Errore di espulsione"
 msgid "Can't eject device"
 msgstr "Impossibile espellere il dispositivo"
 
-#: src/bin/e_fm.c:8338 src/modules/fileman/e_mod_config.c:356
+#: src/bin/e_fm.c:8340 src/modules/fileman/e_mod_config.c:356
 msgid "Case Sensitive"
 msgstr "Sensibile a maiuscole/minuscole"
 
-#: src/bin/e_fm.c:8344 src/modules/fileman/e_mod_config.c:359
+#: src/bin/e_fm.c:8346 src/modules/fileman/e_mod_config.c:359
 msgid "Sort By Extension"
 msgstr "Ordina per estensione"
 
-#: src/bin/e_fm.c:8350 src/modules/fileman/e_mod_config.c:362
+#: src/bin/e_fm.c:8352 src/modules/fileman/e_mod_config.c:362
 msgid "Sort By Modification Time"
 msgstr "Ordina per data di modifica"
 
-#: src/bin/e_fm.c:8356 src/modules/fileman/e_mod_config.c:365
+#: src/bin/e_fm.c:8358 src/modules/fileman/e_mod_config.c:365
 msgid "Sort By Size"
 msgstr "Ordina per dimensione"
 
-#: src/bin/e_fm.c:8365 src/modules/fileman/e_mod_config.c:373
+#: src/bin/e_fm.c:8367 src/modules/fileman/e_mod_config.c:373
 msgid "Directories First"
 msgstr "Directory per prime"
 
-#: src/bin/e_fm.c:8371 src/modules/fileman/e_mod_config.c:377
+#: src/bin/e_fm.c:8373 src/modules/fileman/e_mod_config.c:377
 msgid "Directories Last"
 msgstr "Directory per ultime"
 
-#: src/bin/e_fm.c:8404 src/bin/e_fm.c:8564
+#: src/bin/e_fm.c:8406 src/bin/e_fm.c:8566
 #: src/modules/fileman/e_mod_config.c:303
 msgid "View Mode"
 msgstr "Modalità visualizzazione"
 
-#: src/bin/e_fm.c:8413 src/bin/e_fm.c:8573
+#: src/bin/e_fm.c:8415 src/bin/e_fm.c:8575
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:381
 msgid "Sorting"
 msgstr "Ordinamento"
 
-#: src/bin/e_fm.c:8431 src/bin/e_fm.c:8591
+#: src/bin/e_fm.c:8433 src/bin/e_fm.c:8593
 msgid "Refresh View"
 msgstr "Aggiorna vista"
 
-#: src/bin/e_fm.c:8442 src/bin/e_fm.c:8603
+#: src/bin/e_fm.c:8444 src/bin/e_fm.c:8605
 msgid "New..."
 msgstr "Nuovo..."
 
-#: src/bin/e_fm.c:8462 src/bin/e_fm.c:8624 src/bin/e_fm.c:8655
+#: src/bin/e_fm.c:8464 src/bin/e_fm.c:8626 src/bin/e_fm.c:8657
 msgid "Actions..."
 msgstr "Azioni..."
 
-#: src/bin/e_fm.c:8489 src/bin/e_fm.c:8711 src/bin/e_fm.c:11151
+#: src/bin/e_fm.c:8491 src/bin/e_fm.c:8713 src/bin/e_fm.c:11153
 msgid "Link"
 msgstr "Collega"
 
-#: src/bin/e_fm.c:8773 src/bin/e_fm.c:10021 src/bin/e_shelf.c:2423
+#: src/bin/e_fm.c:8775 src/bin/e_fm.c:10023 src/bin/e_shelf.c:2423
 #: src/modules/conf_shelves/e_int_config_shelf.c:138
 msgid "Rename"
 msgstr "Rinomina"
 
-#: src/bin/e_fm.c:8792
+#: src/bin/e_fm.c:8794
 msgid "Unmount"
 msgstr "Smonta"
 
-#: src/bin/e_fm.c:8797
+#: src/bin/e_fm.c:8799
 msgid "Mount"
 msgstr "Monta"
 
-#: src/bin/e_fm.c:8802
+#: src/bin/e_fm.c:8804
 msgid "Eject"
 msgstr "Espelli"
 
-#: src/bin/e_fm.c:8817 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:8819 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:871
 msgid "Properties"
 msgstr "Proprietà"
 
-#: src/bin/e_fm.c:8825
+#: src/bin/e_fm.c:8827
 msgid "Application Properties"
 msgstr "Proprietà dell'applicazione"
 
-#: src/bin/e_fm.c:8833 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:8835 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "Proprietà del file"
 
-#: src/bin/e_fm.c:9049
+#: src/bin/e_fm.c:9051
 msgid "Use default"
 msgstr "Usa predefinito"
 
-#: src/bin/e_fm.c:9079 src/modules/fileman/e_mod_config.c:308
+#: src/bin/e_fm.c:9081 src/modules/fileman/e_mod_config.c:308
 msgid "Grid Icons"
 msgstr "Icone"
 
-#: src/bin/e_fm.c:9087 src/modules/fileman/e_mod_config.c:310
+#: src/bin/e_fm.c:9089 src/modules/fileman/e_mod_config.c:310
 msgid "Custom Icons"
 msgstr "Icone personalizzabile"
 
-#: src/bin/e_fm.c:9095 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9097 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:318
 msgid "List"
 msgstr "Elenco"
 
-#: src/bin/e_fm.c:9103 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9105 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "Vista predefinita"
 
-#: src/bin/e_fm.c:9125
+#: src/bin/e_fm.c:9127
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Dimensione icona (%d)"
 
-#: src/bin/e_fm.c:9150 src/bin/e_fm.c:9228 src/bin/e_fm.c:9233
-#: src/bin/e_fm.c:9978 src/bin/e_fm.c:10190 src/bin/e_fm_prop.c:254
+#: src/bin/e_fm.c:9152 src/bin/e_fm.c:9230 src/bin/e_fm.c:9235
+#: src/bin/e_fm.c:9980 src/bin/e_fm.c:10192 src/bin/e_fm_prop.c:254
 #: src/bin/e_shelf.c:2298
 msgid "Error"
 msgstr "Errore"
 
-#: src/bin/e_fm.c:9150
+#: src/bin/e_fm.c:9152
 msgid "Could not create a file!"
 msgstr "Non riesco a creare il file!"
 
-#: src/bin/e_fm.c:9164 src/bin/e_fm.c:9182
+#: src/bin/e_fm.c:9166 src/bin/e_fm.c:9184
 msgid "New File"
 msgstr "Nuovo file"
 
-#: src/bin/e_fm.c:9228
+#: src/bin/e_fm.c:9230
 msgid "Already creating a new file for this directory!"
 msgstr "Sto già creando un file in questa directory!"
 
-#: src/bin/e_fm.c:9233
+#: src/bin/e_fm.c:9235
 #, c-format
 msgid "%s is not able to be written to!"
 msgstr "Impossibile scrivere in %s"
 
-#: src/bin/e_fm.c:9252
+#: src/bin/e_fm.c:9254
 msgid "Directory"
 msgstr "Directory"
 
-#: src/bin/e_fm.c:9257
+#: src/bin/e_fm.c:9259
 #: src/modules/conf_applications/e_int_config_defapps.c:311
 msgid "File"
 msgstr "File"
 
-#: src/bin/e_fm.c:9288
+#: src/bin/e_fm.c:9290
 msgid "Inherit parent settings"
 msgstr "Eredita impostazioni genitore"
 
-#: src/bin/e_fm.c:9297
+#: src/bin/e_fm.c:9299
 msgid "Show Hidden Files"
 msgstr "Mostra file nascosti"
 
-#: src/bin/e_fm.c:9309
+#: src/bin/e_fm.c:9311
 msgid "Remember Ordering"
 msgstr "Ricorda ordinamento"
 
-#: src/bin/e_fm.c:9318
+#: src/bin/e_fm.c:9320
 msgid "Sort Now"
 msgstr "Ordina adesso"
 
-#: src/bin/e_fm.c:9326
+#: src/bin/e_fm.c:9328
 msgid "Single Click Activation"
 msgstr "Usa clic singolo"
 
-#: src/bin/e_fm.c:9337 src/modules/fileman/e_mod_config.c:393
+#: src/bin/e_fm.c:9339 src/modules/fileman/e_mod_config.c:393
 msgid "Secure Deletion"
 msgstr "Cancellazione sicura"
 
-#: src/bin/e_fm.c:9350
+#: src/bin/e_fm.c:9352
 msgid "File Manager Settings"
 msgstr "Impostazioni del Filemanager"
 
-#: src/bin/e_fm.c:9355
+#: src/bin/e_fm.c:9357
 msgid "File Icon Settings"
 msgstr "Impostazioni per le icone dei file"
 
-#: src/bin/e_fm.c:9433 src/bin/e_fm.c:9649
+#: src/bin/e_fm.c:9435 src/bin/e_fm.c:9651
 msgid "Set background..."
 msgstr "Imposta sfondo..."
 
-#: src/bin/e_fm.c:9441
+#: src/bin/e_fm.c:9443
 msgid "Clear background"
 msgstr "Pulisci sfondo..."
 
-#: src/bin/e_fm.c:9448 src/bin/e_fm.c:9677
+#: src/bin/e_fm.c:9450 src/bin/e_fm.c:9679
 msgid "Set overlay..."
 msgstr "Imposta sfumatura..."
 
-#: src/bin/e_fm.c:9454
+#: src/bin/e_fm.c:9456
 msgid "Clear overlay"
 msgstr "Pulisci sfumatura"
 
-#: src/bin/e_fm.c:9766
+#: src/bin/e_fm.c:9768
 msgid "Create a new Directory"
 msgstr "Crea nuova directory"
 
-#: src/bin/e_fm.c:9767
+#: src/bin/e_fm.c:9769
 msgid "New Directory Name:"
 msgstr "Nome directory:"
 
-#: src/bin/e_fm.c:9822 src/bin/e_fm.c:10116
+#: src/bin/e_fm.c:9824 src/bin/e_fm.c:10118
 #, c-format
 msgid "Rename %s to:"
 msgstr "Rinomina %s in:"
 
-#: src/bin/e_fm.c:9824 src/bin/e_fm.c:10117
+#: src/bin/e_fm.c:9826 src/bin/e_fm.c:10119
 msgid "Rename File"
 msgstr "Rinomina file"
 
-#: src/bin/e_fm.c:9974 src/bin/e_fm.c:10182
+#: src/bin/e_fm.c:9976 src/bin/e_fm.c:10184
 msgid "Retry"
 msgstr "Ritenta"
 
-#: src/bin/e_fm.c:9975 src/bin/e_fm.c:10183 src/bin/e_fm.c:11159
+#: src/bin/e_fm.c:9977 src/bin/e_fm.c:10185 src/bin/e_fm.c:11161
 msgid "Abort"
 msgstr "Abortisci"
 
-#: src/bin/e_fm.c:10020
+#: src/bin/e_fm.c:10022
 msgid "No to all"
 msgstr "No a tutti"
 
-#: src/bin/e_fm.c:10023
+#: src/bin/e_fm.c:10025
 msgid "Yes to all"
 msgstr "Sì a tutti"
 
-#: src/bin/e_fm.c:10026
+#: src/bin/e_fm.c:10028
 msgid "Warning"
 msgstr "Avvertimento"
 
-#: src/bin/e_fm.c:10029
+#: src/bin/e_fm.c:10031
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Il file esiste già, lo sovrascrivo?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10185
+#: src/bin/e_fm.c:10187
 msgid "Move Source"
 msgstr "Sposta sorgente"
 
-#: src/bin/e_fm.c:10186
+#: src/bin/e_fm.c:10188
 msgid "Ignore this"
 msgstr "Ignora questo"
 
-#: src/bin/e_fm.c:10187
+#: src/bin/e_fm.c:10189
 msgid "Ignore all"
 msgstr "Ignora tutto"
 
-#: src/bin/e_fm.c:10192
+#: src/bin/e_fm.c:10194
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "C'è stato un errore nell'esecuzione di un'operazione.<br>%s"
 
-#: src/bin/e_fm.c:10385
+#: src/bin/e_fm.c:10387
 msgid "Confirm Delete"
 msgstr "Conferma eliminazione"
 
-#: src/bin/e_fm.c:10395
+#: src/bin/e_fm.c:10397
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Siete sicuri di voler eliminare<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:10400
+#: src/bin/e_fm.c:10402
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1724,7 +1724,7 @@ msgstr ""
 "Siete sicuri di voler eliminare<br><hilight>tutti</hilight>i %d file "
 "in<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:10410
+#: src/bin/e_fm.c:10412
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1951,7 +1951,7 @@ msgstr "Posizione"
 #: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:205
 #: src/modules/conf_interaction/e_int_config_mouse.c:174
 #: src/modules/conf_theme/e_int_config_fonts.c:440
-#: src/modules/conf_theme/e_int_config_fonts.c:656
+#: src/modules/conf_theme/e_int_config_fonts.c:660
 msgid "Size"
 msgstr "Dimensione"
 
@@ -2264,7 +2264,7 @@ msgstr "Statico"
 #: src/bin/e_int_border_prop.c:299 src/modules/clock/e_mod_config.c:137
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:360
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
-#: src/modules/conf_theme/e_int_config_fonts.c:683
+#: src/modules/conf_theme/e_int_config_fonts.c:689
 #: src/modules/conf_theme/e_int_config_transitions.c:199
 #: src/modules/conf_theme/e_int_config_transitions.c:258
 #: src/modules/conf_theme/e_int_config_transitions.c:290
@@ -2399,7 +2399,7 @@ msgstr "Richiede posizione"
 #: src/bin/e_int_border_prop.c:480 src/bin/e_int_border_prop.c:515
 #: src/bin/e_int_config_modules.c:57 src/bin/e_int_menus.c:276
 #: src/bin/e_shelf.c:2394 src/modules/battery/e_mod_main.c:194
-#: src/modules/clock/e_mod_main.c:358 src/modules/clock/e_mod_main.c:600
+#: src/modules/clock/e_mod_main.c:358 src/modules/clock/e_mod_main.c:601
 #: src/modules/conf/e_conf.c:136 src/modules/conf/e_conf.c:146
 #: src/modules/conf/e_mod_main.c:101 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
@@ -2676,14 +2676,14 @@ msgstr "Applicazioni preferite"
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1297
+#: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1302
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4002
 msgid "Windows"
 msgstr "Finestre"
 
-#: src/bin/e_int_menus.c:207 src/bin/e_int_menus.c:1351
+#: src/bin/e_int_menus.c:207 src/bin/e_int_menus.c:1356
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
@@ -2713,27 +2713,27 @@ msgstr "Mensole porta-gadget"
 msgid "Show/Hide All Windows"
 msgstr "Mostra/nascondi tutte le finestre"
 
-#: src/bin/e_int_menus.c:685
+#: src/bin/e_int_menus.c:690
 msgid "(No Applications)"
 msgstr "(Nessuna Applicazione)"
 
-#: src/bin/e_int_menus.c:928
+#: src/bin/e_int_menus.c:933
 msgid "Set Virtual Desktops"
 msgstr "Imposta desktop virtuali"
 
-#: src/bin/e_int_menus.c:1303 src/bin/e_int_menus.c:1494
+#: src/bin/e_int_menus.c:1308 src/bin/e_int_menus.c:1500
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:1407 src/bin/e_int_menus.c:1506
+#: src/bin/e_int_menus.c:1413 src/bin/e_int_menus.c:1512
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
-#: src/bin/e_int_menus.c:1669
+#: src/bin/e_int_menus.c:1675
 msgid "Add a Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1676
+#: src/bin/e_int_menus.c:1682
 msgid "Delete a Shelf"
 msgstr "Elimina mensola"
 
@@ -2768,7 +2768,7 @@ msgid "Shrink to Content Width"
 msgstr "Riduci alla larghezza del contenuto"
 
 #: src/bin/e_int_shelf_config.c:213 src/modules/comp/e_mod_config.c:912
-#: src/modules/conf_theme/e_int_config_fonts.c:647
+#: src/modules/conf_theme/e_int_config_fonts.c:651
 msgid "Style"
 msgstr "Stile"
 
@@ -4314,8 +4314,8 @@ msgstr "Indicatore di carica"
 msgid "Clock Settings"
 msgstr "Impostazioni dell'orologio"
 
-#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:705
-#: src/modules/clock/e_mod_main.c:862 src/modules/clock/e_mod_main.c:894
+#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:706
+#: src/modules/clock/e_mod_main.c:863 src/modules/clock/e_mod_main.c:895
 msgid "Clock"
 msgstr "Clock"
 
@@ -4368,7 +4368,7 @@ msgstr "Weekend"
 msgid "Days"
 msgstr "Giorni"
 
-#: src/modules/clock/e_mod_main.c:862 src/modules/clock/e_mod_main.c:894
+#: src/modules/clock/e_mod_main.c:863 src/modules/clock/e_mod_main.c:895
 msgid "Show calendar"
 msgstr "Mostra calendario"
 
@@ -4386,8 +4386,8 @@ msgid ""
 "Your screen does not support the compositor<br>overlay window. This is "
 "needed for it to<br>function."
 msgstr ""
-"Lo schermo non supporta la finestra<br>sovrapposta del compositor. "
-"Questa è<br>necessaria per il suo funzionamento."
+"Lo schermo non supporta la finestra<br>sovrapposta del compositor. Questa "
+"è<br>necessaria per il suo funzionamento."
 
 #: src/modules/comp/e_mod_comp.c:3738
 msgid "Compositor Warning"
@@ -4406,8 +4406,8 @@ msgid ""
 msgstr ""
 "Il vostro monitor non supporta le<br>estensioni XComposite, o Ecore è "
 "stato<br>compilato senza il supporto XComposite.<br>Notare che per "
-"XComposite è necessario<br>anche il supporto per XRender e XFixes<br>in "
-"X11 e in Ecore."
+"XComposite è necessario<br>anche il supporto per XRender e XFixes<br>in X11 "
+"e in Ecore."
 
 #: src/modules/comp/e_mod_comp.c:4078
 msgid ""
@@ -4668,11 +4668,11 @@ msgstr "Motore"
 
 #: src/modules/comp/e_mod_config.c:1235
 msgid "Send flush"
-msgstr "Invia flush"
+msgstr "Invia comando flush"
 
 #: src/modules/comp/e_mod_config.c:1237
 msgid "Send dump"
-msgstr "Invia dump"
+msgstr "Invia comando dump"
 
 #: src/modules/comp/e_mod_config.c:1239 src/modules/comp/e_mod_config.c:1516
 msgid "Don't composite fullscreen windows"
@@ -5003,7 +5003,7 @@ msgstr "Impostazioni finestre di dialogo"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
-#: src/modules/conf_theme/e_int_config_fonts.c:668
+#: src/modules/conf_theme/e_int_config_fonts.c:674
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
 #: src/modules/mixer/conf_gadget.c:192 src/modules/mixer/conf_module.c:91
 #: src/modules/notification/e_mod_config_item.c:89
@@ -5440,11 +5440,11 @@ msgstr "Retroilluminazione bassa"
 
 #: src/modules/conf_display/e_int_config_dpms.c:157
 msgid "Idle Fade Time"
-msgstr "Ritardo dissolvenza per inattività"
+msgstr "Ritardo attenuazione per inattività"
 
 #: src/modules/conf_display/e_int_config_dpms.c:166
 msgid "Fade Time"
-msgstr "Tempo di dissolvenza"
+msgstr "Tempo di attenuazione"
 
 #: src/modules/conf_display/e_mod_main.c:21
 #: src/modules/tiling/e_mod_config.c:198
@@ -6802,53 +6802,50 @@ msgstr[1] "%d pixel"
 msgid "Enable Custom Font Classes"
 msgstr "Abilita classi font personalizzate"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:450
-msgid "Basic preview text: 123: 我的天空！"
-msgstr "Testo anteprima di base: 123: 我的天空！"
+#: src/modules/conf_theme/e_int_config_fonts.c:448
+#: src/modules/conf_theme/e_int_config_fonts.c:669
+msgid "English 012 #!? 日本語 にほんご ソフト 中文 華語 한국"
+msgstr "Occidentale 012 #!? 日本語 にほんご ソフト 中文 華語 한국"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:624
+#: src/modules/conf_theme/e_int_config_fonts.c:628
 msgid "Font Classes"
 msgstr "Configurazione classi font"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:631
+#: src/modules/conf_theme/e_int_config_fonts.c:635
 msgid "Enable Font Class"
 msgstr "Abilita classe font"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:638
+#: src/modules/conf_theme/e_int_config_fonts.c:642
 msgid "Font"
 msgstr "Font"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:664
-msgid "Advanced Preview Text.. 我真的会写中文"
-msgstr "Testo anteprima avanzato.. 我真的会写中文"
-
-#: src/modules/conf_theme/e_int_config_fonts.c:672
+#: src/modules/conf_theme/e_int_config_fonts.c:678
 msgid "Hinting"
 msgstr "Hinting (ottimizzazione)"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:675
+#: src/modules/conf_theme/e_int_config_fonts.c:681
 msgid "Bytecode"
 msgstr "Bytecode"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:679
+#: src/modules/conf_theme/e_int_config_fonts.c:685
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:272
 #: src/modules/cpufreq/e_mod_main.c:229 src/modules/cpufreq/e_mod_main.c:261
 msgid "Automatic"
 msgstr "Automatico"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:688
+#: src/modules/conf_theme/e_int_config_fonts.c:694
 msgid "Font Fallbacks"
 msgstr "Font alternativi"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:689
+#: src/modules/conf_theme/e_int_config_fonts.c:695
 msgid "Fallback Name"
 msgstr "Nome font alternativo"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:701
+#: src/modules/conf_theme/e_int_config_fonts.c:707
 msgid "Enable Fallbacks"
 msgstr "Abilita font alternativi"
 
-#: src/modules/conf_theme/e_int_config_fonts.c:710
+#: src/modules/conf_theme/e_int_config_fonts.c:716
 msgid "Hinting / Fallbacks"
 msgstr "Hinting / alternative"
 

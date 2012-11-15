@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@...\n"
-"POT-Creation-Date: 2012-11-13 22:32+0000\n"
-"PO-Revision-Date: 2012-11-13 22:35+0100\n"
+"POT-Creation-Date: 2012-11-14 23:07+0000\n"
+"PO-Revision-Date: 2012-11-15 01:25+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -681,7 +681,7 @@ msgstr "Recuar o rato 1 ecrã"
 
 #: src/bin/e_actions.c:3262
 msgid "Send Mouse Forward/Back Screens..."
-msgstr "Recuar/avançar o rato nos ecrãs..."
+msgstr "Recuar ou avançar o rato nos ecrãs..."
 
 #: src/bin/e_actions.c:3267
 msgid "Dim"
@@ -852,7 +852,7 @@ msgstr "Enlightenment: Módulo"
 
 #: src/bin/e_actions.c:3398
 msgid "Enable the named module"
-msgstr "Ativar o módulo referido"
+msgstr "Ativar o módulo referenciado"
 
 #: src/bin/e_actions.c:3402
 msgid "Disable the named module"
@@ -1073,11 +1073,11 @@ msgstr "O PRNG não foi semeado"
 
 #: src/bin/e_config.c:2283
 msgid "Encryption failed."
-msgstr "Falha ao cifrar"
+msgstr "Falha ao codificar"
 
 #: src/bin/e_config.c:2287
 msgid "Decryption failed."
-msgstr "Falha ao decifrar"
+msgstr "Falha ao descodificar"
 
 #: src/bin/e_config.c:2291
 msgid "The error is unknown to Enlightenment."
@@ -1735,16 +1735,16 @@ msgstr "Definições dos ícones de ficheiros"
 #: src/bin/e_fm.c:9433
 #: src/bin/e_fm.c:9649
 msgid "Set background..."
-msgstr "Definir imagem de fundo..."
+msgstr "Definir imagem de fundo"
 
 #: src/bin/e_fm.c:9441
 msgid "Clear background"
-msgstr "Remover imagem de fundo..."
+msgstr "Remover imagem de fundo"
 
 #: src/bin/e_fm.c:9448
 #: src/bin/e_fm.c:9677
 msgid "Set overlay..."
-msgstr "Definir sobreposição..."
+msgstr "Definir sobreposição"
 
 #: src/bin/e_fm.c:9454
 msgid "Clear overlay"
@@ -1849,7 +1849,7 @@ msgstr "%s—%s"
 #: src/bin/e_fm_device.c:60
 #, c-format
 msgid "Flash Card—%s"
-msgstr "Cartão Flash - %s"
+msgstr "Cartão flash - %s"
 
 #: src/bin/e_fm_device.c:62
 #, c-format
@@ -1992,7 +1992,7 @@ msgstr "Simples"
 #: src/bin/e_gadcon.c:1770
 #: src/modules/gadman/e_mod_gadman.c:1054
 msgid "Inset"
-msgstr "Encaixar"
+msgstr "Moldura"
 
 #: src/bin/e_gadcon.c:1784
 #: src/bin/e_int_config_modules.c:52
@@ -2023,8 +2023,8 @@ msgid ""
 "A previous instance of Enlightenment is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"Já existe uma instância Enlightenment ativa neste ecrã.\n"
-"A cancelar arranque.\n"
+"Já existe uma instância Enlightenment ativa neste ecrã\n"
+"A cancelar arranque...\n"
 
 #: src/bin/e_int_border_locks.c:66
 msgid "Window Locks"
@@ -2116,7 +2116,7 @@ msgstr "Ecrã completo"
 
 #: src/bin/e_int_border_locks.c:325
 msgid "Program Locks"
-msgstr "Bloqueios de programas"
+msgstr "Bloqueios do programa"
 
 #: src/bin/e_int_border_locks.c:344
 #: src/bin/e_int_border_remember.c:704
@@ -2385,7 +2385,7 @@ msgstr "Oeste"
 #: src/bin/e_int_border_prop.c:237
 #, c-format
 msgid "Center"
-msgstr "Centrar"
+msgstr "Centro"
 
 #: src/bin/e_int_border_prop.c:241
 #, c-format
@@ -2424,7 +2424,7 @@ msgstr "Estático"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:112
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:126
 msgid "None"
-msgstr "None"
+msgstr "Nenhum"
 
 #: src/bin/e_int_border_prop.c:303
 msgid "Above"
@@ -2549,11 +2549,11 @@ msgstr "Urgente"
 
 #: src/bin/e_int_border_prop.c:478
 msgid "Request Delete"
-msgstr "Solicitar eliminação"
+msgstr "Solicita eliminação"
 
 #: src/bin/e_int_border_prop.c:479
 msgid "Request Position"
-msgstr "Solicitar posição"
+msgstr "Solicita posição"
 
 #: src/bin/e_int_border_prop.c:480
 #: src/bin/e_int_border_prop.c:515
@@ -2607,7 +2607,7 @@ msgstr "Ignorar paginador"
 #: src/bin/e_int_border_prop.c:513
 #: src/modules/comp/e_mod_config.c:280
 msgid "Hidden"
-msgstr "Oculto"
+msgstr "Oculta"
 
 #: src/bin/e_int_border_remember.c:89
 msgid "Window Remember"
@@ -2738,7 +2738,7 @@ msgstr "Móvel"
 
 #: src/bin/e_int_config_modules.c:97
 msgid "Module Settings"
-msgstr "Definições do módulo"
+msgstr "Módulos"
 
 #: src/bin/e_int_config_modules.c:175
 msgid "Load"
@@ -2799,7 +2799,7 @@ msgstr "Método de introdução"
 
 #: src/bin/e_intl.c:354
 msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
-msgstr "Ocorreu um erro ao iniciar o executável do método de introdução.<br><br>Certifique-se que o método está bem configurado e que o executável está no seu PATH<br>"
+msgstr "Ocorreu um erro ao iniciar o executável do método de introdução<br><br>Certifique-se que o método está bem configurado e que o executável está no seu PATH<br>"
 
 #: src/bin/e_int_menus.c:139
 #: src/modules/syscon/e_int_config_syscon.c:146
@@ -2870,25 +2870,25 @@ msgstr "(Sem aplicações)"
 
 #: src/bin/e_int_menus.c:928
 msgid "Set Virtual Desktops"
-msgstr "Definir área de trabalho virtuais"
+msgstr "Definir áreas de trabalho virtuais"
 
 #: src/bin/e_int_menus.c:1303
-#: src/bin/e_int_menus.c:1494
+#: src/bin/e_int_menus.c:1495
 msgid "(No Windows)"
 msgstr "(Sem janelas)"
 
-#: src/bin/e_int_menus.c:1407
-#: src/bin/e_int_menus.c:1506
+#: src/bin/e_int_menus.c:1408
+#: src/bin/e_int_menus.c:1507
 msgid "No name!!"
 msgstr "Sem nome!"
 
-#: src/bin/e_int_menus.c:1669
+#: src/bin/e_int_menus.c:1670
 msgid "Add a Shelf"
-msgstr "Adicionar um painel"
+msgstr "Adicionar painel"
 
-#: src/bin/e_int_menus.c:1676
+#: src/bin/e_int_menus.c:1677
 msgid "Delete a Shelf"
-msgstr "Eliminar um painel"
+msgstr "Eliminar painel"
 
 #: src/bin/e_int_shelf_config.c:44
 #: src/modules/conf_shelves/e_int_config_shelf.c:53
@@ -2928,7 +2928,7 @@ msgstr "Estilo"
 
 #: src/bin/e_int_shelf_config.c:219
 msgid "Auto-hide the shelf"
-msgstr "Ocultar painel automaticamente"
+msgstr "Ocultar automaticamente"
 
 #: src/bin/e_int_shelf_config.c:224
 msgid "Show on mouse in"
@@ -3186,7 +3186,7 @@ msgstr "Configurar DPMS"
 
 #: src/bin/e_main.c:697
 msgid "Enlightenment cannot configure the DPMS settings."
-msgstr "O Enlightenment não consegue configurar as definições DPMS."
+msgstr "O Enlightenment não conseguiu configurar as definições DPMS."
 
 #: src/bin/e_main.c:704
 msgid "Setup Screensaver"
@@ -3194,7 +3194,7 @@ msgstr "Configurar proteção de ecrã"
 
 #: src/bin/e_main.c:708
 msgid "Enlightenment cannot configure the X screensaver."
-msgstr "O Enlightenment não consegue configurar a proteção de ecrã do X."
+msgstr "O Enlightenment não conseguiu configurar a proteção de ecrã do X."
 
 #: src/bin/e_main.c:715
 msgid "Setup Powersave Modes"
@@ -3202,7 +3202,7 @@ msgstr "Configurar modos de energia"
 
 #: src/bin/e_main.c:719
 msgid "Enlightenment cannot set up its powersave modes."
-msgstr "O Enlightenment não consegue configurar os modos de energia."
+msgstr "O Enlightenment não conseguiu configurar os modos de energia."
 
 #: src/bin/e_main.c:726
 msgid "Setup Desklock"
@@ -3653,12 +3653,12 @@ msgstr "Orientação"
 
 #: src/bin/e_shelf.c:2408
 msgid "Autohide"
-msgstr "Sobre o Enlightenment"
+msgstr "Ocultar automaticamente"
 
 #: src/bin/e_shelf.c:2415
 #: src/modules/conf_display/e_int_config_display.c:405
 msgid "Refresh"
-msgstr "Taxa de atualização"
+msgstr "Atualizar"
 
 #: src/bin/e_startup.c:66
 msgid "Starting"
@@ -3821,22 +3821,22 @@ msgstr "%'.0f bytes"
 #: src/bin/e_utils.c:869
 #, c-format
 msgid "%'.0f KiB"
-msgstr "%'.0f KB"
+msgstr "%'.0f KiB"
 
 #: src/bin/e_utils.c:873
 #, c-format
 msgid "%'.1f MiB"
-msgstr "%'.1f MB"
+msgstr "%'.1f MiB"
 
 #: src/bin/e_utils.c:877
 #, c-format
 msgid "%'.1f GiB"
-msgstr "%'.1f GB"
+msgstr "%'.1f GiB"
 
 #: src/bin/e_utils.c:881
 #, c-format
 msgid "%'.1f TiB"
-msgstr "%'.1f TB"
+msgstr "%'.1f TiB"
 
 #: src/bin/e_utils.c:900
 #, c-format
@@ -4156,7 +4156,7 @@ msgstr "Mostrar alerta se a bateria estiver fraca"
 
 #: src/modules/battery/e_mod_config.c:138
 msgid "Use desktop notifications for alert"
-msgstr "Utlizar notificações para os alertas"
+msgstr "Utilizar notificações da área de trabalho"
 
 #: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
@@ -4358,11 +4358,11 @@ msgstr "Erro de compositor"
 
 #: src/modules/comp/e_mod_comp.c:3642
 msgid "Another compositor is already running<br>on your screen."
-msgstr "Já existe um gestor de composição em execução."
+msgstr "Já existe um gestor de composição em execução"
 
 #: src/modules/comp/e_mod_comp.c:3664
 msgid "Your screen does not support the compositor<br>overlay window. This is needed for it to<br>function."
-msgstr "O seu ecrã não tem suporte a janelas compostas.<br>Tal suporte é necessário para a função."
+msgstr "O seu ecrã não tem suporte a janelas compostas<br>Tal suporte é necessário para a função"
 
 #: src/modules/comp/e_mod_comp.c:3738
 msgid "Compositor Warning"
@@ -4370,15 +4370,15 @@ msgstr "Aviso de compositor"
 
 #: src/modules/comp/e_mod_comp.c:3739
 msgid "Your screen does not support OpenGL.<br>Falling back to software engine."
-msgstr "O seu ecrã não tem suporte a OpenGL.<br>A utilizar mecanismo alternativo."
+msgstr "O seu ecrã não tem suporte a OpenGL<br>A utilizar mecanismo alternativo"
 
 #: src/modules/comp/e_mod_comp.c:4068
 msgid "Your X Display does not support the XComposite extension<br>or Ecore was built without XComposite support.<br>Note that for composite support you will also need<br>XRender and XFixes support in X11 and Ecore."
-msgstr "O ecrã X não tem suporte à extensão XComposite<br>ou o Ecore foi compilado sem o suporte a XComposite.<br>Para ter suporte à extensão também precisa de suporte ao<br>XRender e XFixes no X11 e no Ecore."
+msgstr "O ecrã X não tem suporte à extensão XComposite<br>ou o Ecore foi compilado sem o suporte a XComposite<br>Para ter suporte à extensão também precisa de suporte ao<br>XRender e XFixes no X11 e no Ecore"
 
 #: src/modules/comp/e_mod_comp.c:4078
 msgid "Your screen does not support the XDamage extension<br>or Ecore was built without XDamage support."
-msgstr "O ecrã X não tem suporte à extensão XDamage<br>ou o Ecore foi compilado sem o suporte a XDamage.<br>"
+msgstr "O ecrã X não tem suporte à extensão XDamage<br>ou o Ecore foi compilado sem o suporte a XDamage"
 
 #: src/modules/comp/e_mod_config.c:106
 msgid "Composite Settings"
@@ -4533,7 +4533,7 @@ msgstr "Marcas"
 
 #: src/modules/comp/e_mod_config.c:1098
 msgid "Del"
-msgstr "Del"
+msgstr "Eliminar"
 
 #: src/modules/comp/e_mod_config.c:1100
 #: src/modules/mixer/app_mixer.c:415
@@ -4561,7 +4561,7 @@ msgstr "Menus"
 
 #: src/modules/comp/e_mod_config.c:1162
 msgid "Smooth scaling"
-msgstr "Escala suave"
+msgstr "Ajuste suave"
 
 #: src/modules/comp/e_mod_config.c:1165
 msgid "Styles"
@@ -4585,7 +4585,7 @@ msgstr "Capturar servidor ao criar"
 
 #: src/modules/comp/e_mod_config.c:1181
 msgid "Initial draw timeout for newly mapped windows"
-msgstr "Limite de tempo para criar as novas janelas"
+msgstr "Limite de tempo para criar novas janelas"
 
 #: src/modules/comp/e_mod_config.c:1183
 #, c-format
@@ -4617,7 +4617,7 @@ msgstr "Atualizações Tear-free (sincronização vertical)"
 
 #: src/modules/comp/e_mod_config.c:1203
 msgid "Texture from pixmap"
-msgstr "Textura do mapa de pixeis"
+msgstr "Textura do pixmap"
 
 #: src/modules/comp/e_mod_config.c:1210
 msgid "Assume swapping method:"
@@ -4650,16 +4650,16 @@ msgstr "Mecanismo"
 
 #: src/modules/comp/e_mod_config.c:1235
 msgid "Send flush"
-msgstr ""
+msgstr "Limpar cache"
 
 #: src/modules/comp/e_mod_config.c:1237
 msgid "Send dump"
-msgstr ""
+msgstr "Limpar cache drasticamente"
 
 #: src/modules/comp/e_mod_config.c:1239
 #: src/modules/comp/e_mod_config.c:1516
 msgid "Don't composite fullscreen windows"
-msgstr "Não compor de janelas em ecrã completo"
+msgstr "Não compor janelas em ecrã completo"
 
 #: src/modules/comp/e_mod_config.c:1241
 msgid "Keep hidden windows"
@@ -4804,7 +4804,7 @@ msgstr "Composição"
 
 #: src/modules/comp/e_mod_main.c:71
 msgid "Dropshadow module is incompatible<br>with compositing. Disabling the<br>Dropshadow module."
-msgstr "O módulo Sombra não é compatível<br>com o módulo Composição.<br>Desative o módulo Sombra."
+msgstr "O módulo Sombra não é compatível<br>com o módulo Composição<br>Desative o módulo Sombra"
 
 #: src/modules/conf/e_mod_config.c:35
 #: src/modules/conf/e_mod_main.c:285
@@ -4920,11 +4920,11 @@ msgstr "X11 essencial"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:100
 msgid "Load X Resources"
-msgstr "Carregar recursos do X"
+msgstr "Carregar recursos X"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:103
 msgid "Load X Modifier Map"
-msgstr "Carregar modificadores do X"
+msgstr "Carregar modificadores X"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:108
 msgid "Major Desktops"
@@ -5166,7 +5166,7 @@ msgstr "Preencher"
 
 #: src/modules/conf_display/e_int_config_desks.c:193
 msgid "Zoom"
-msgstr "Ampliação"
+msgstr "Ampliar"
 
 #: src/modules/conf_display/e_int_config_desks.c:197
 msgid "Animation speed"
@@ -5260,7 +5260,7 @@ msgstr "Mostrar no ecrã #:"
 
 #: src/modules/conf_display/e_int_config_desklock.c:304
 msgid "Login Box"
-msgstr "Caixa de início de sessão"
+msgstr "Início de sessão"
 
 #: src/modules/conf_display/e_int_config_desklock.c:309
 msgid "Lock after X screensaver activates"
@@ -5640,7 +5640,7 @@ msgstr "Velocidade"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:226
 msgid "Threshold"
-msgstr "Limiar"
+msgstr "Limite"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:233
 #: src/modules/conf_interaction/e_mod_main.c:24
@@ -5701,7 +5701,7 @@ msgstr "Escolha as definições do método de introdução..."
 #: src/modules/conf_intl/e_int_config_imc_import.c:283
 #: src/modules/conf_intl/e_int_config_imc_import.c:299
 msgid "Input Method Config Import Error"
-msgstr "Erro ao importar o método de introdução"
+msgstr "Erro ao importar método de introdução"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid "Enlightenment was unable to import the configuration.<br><br>Are you sure this is really a valid configuration?"
@@ -6104,7 +6104,7 @@ msgstr "Cache para letras"
 #: src/modules/conf_performance/e_int_config_performance.c:134
 #, c-format
 msgid "%1.1f MiB"
-msgstr "%1.1f MB"
+msgstr "%1.1f MiB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:138
 msgid "Image cache size"
@@ -6114,7 +6114,7 @@ msgstr "Cache para imagens"
 #: src/modules/fileman/e_mod_config.c:405
 #, c-format
 msgid "%1.0f MiB"
-msgstr "%1.0f MB"
+msgstr "%1.0f MiB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:144
 msgid "Caches"
@@ -6152,7 +6152,7 @@ msgstr "Níveis permitidos"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:129
 msgid "Time to defer power-hungry tasks"
-msgstr "Intervalo para adiar tarefas intensas ao nível de energia"
+msgstr "Intervalo para adiar tarefas intensas"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:140
 msgid "Min"
@@ -7239,7 +7239,7 @@ msgstr "Clicar foca a janela"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:331
 msgid "Refocus last window on desktop switch"
-msgstr "Focar a última janela ao mudar de área de trabalho"
+msgstr "Focar última janela ao mudar de área de trabalho"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
 msgid "Revert focus when it is lost"
@@ -7376,7 +7376,7 @@ msgstr "Transitoriedade"
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:39
 #: src/modules/conf_window_manipulation/e_mod_main.c:22
 msgid "Window Process Management"
-msgstr "Gestão dos processos"
+msgstr "Gestão de processos"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:95
 msgid "Kill process if unclosable"
@@ -7837,7 +7837,7 @@ msgstr "Comando do terminal"
 
 #: src/modules/everything/evry_plug_apps.c:1341
 msgid "Sudo GUI"
-msgstr "Interface Sudo"
+msgstr "Interface sudo"
 
 #: src/modules/everything/evry_plug_apps.c:1419
 #: src/modules/everything/evry_plug_files.c:1585
@@ -8097,7 +8097,7 @@ msgstr "Abrir diretórios no local"
 
 #: src/modules/fileman/e_mod_config.c:387
 msgid "Use Single Click"
-msgstr "Utilizar um clique"
+msgstr "Abrir com um clique"
 
 #: src/modules/fileman/e_mod_config.c:390
 msgid "Really Move"
@@ -8296,7 +8296,7 @@ msgstr "Imagem de fundo"
 
 #: src/modules/gadman/e_mod_config.c:305
 msgid "Background Options"
-msgstr "Opções do fundo"
+msgstr "Opções de fundo"
 
 #: src/modules/gadman/e_mod_gadman.c:1036
 msgid "Begin move/resize"
@@ -8759,7 +8759,7 @@ msgstr "Efetuar ação pré-definida após o intervalo"
 
 #: src/modules/syscon/e_int_config_syscon.c:172
 msgid "Default Action"
-msgstr "Ação pré-definida"
+msgstr "Ações"
 
 #: src/modules/syscon/e_mod_main.c:31
 msgid "System Control"
@@ -8849,7 +8849,7 @@ msgstr "Perfil"
 
 #: src/modules/wizard/page_040.c:53
 msgid "Adding missing App files"
-msgstr ""
+msgstr "Adicionar ficheiros .desktop para as aplicações que não os possuem"
 
 #: src/modules/wizard/page_050.c:130
 msgid "Select preferred size"
@@ -8857,7 +8857,7 @@ msgstr "Escolha o tamanho"
 
 #: src/modules/wizard/page_060.c:30
 msgid "Focus by ..."
-msgstr "Focar por..."
+msgstr "Focar..."
 
 #: src/modules/wizard/page_060.c:37
 msgid "Mouse Over"
@@ -8869,7 +8869,7 @@ msgstr "Gestão de rede"
 
 #: src/modules/wizard/page_110.c:17
 msgid "Connman network service not found"
-msgstr "O serviço connman não foi encontrado."
+msgstr "O serviço connman não foi encontrado"
 
 #: src/modules/wizard/page_110.c:20
 msgid "Install Connman for network management support"
@@ -8980,7 +8980,7 @@ msgstr "Placas de som"
 
 #: src/modules/mixer/conf_gadget.c:377
 msgid "Mixer Settings"
-msgstr "Definições do gestor de som"
+msgstr "Definições de som"
 
 #: src/modules/mixer/conf_module.c:93
 msgid "Mixer to use for global actions:"
@@ -9024,7 +9024,7 @@ msgstr "Aplicação inexistente"
 
 #: src/modules/connman/e_mod_main.c:238
 msgid "This module wants to execute an external application EConnMan that does not exist.<br>Please install <b>EConnMan</b> application."
-msgstr "Este módulo quer executar a aplicação EConnMan que não está disponível.<br>Por favor instale o <b>EConnMan</b>."
+msgstr "Este módulo quer executar a aplicação EConnMan que não está disponível<br>Por favor instale o <b>EConnMan</b>"
 
 #: src/modules/connman/e_mod_main.c:292
 msgid "Wifi On"
@@ -9067,7 +9067,7 @@ msgstr "Erro - Formato desconhecido"
 
 #: src/modules/shot/e_mod_main.c:219
 msgid "File has an unspecified extension.<br>Please use '.jpg' or '.png' extensions<br>only as other formats are not<br>supported currently."
-msgstr "Não especificou uma extensão.<br>Só pode utilizar a extensão .jpg ou .png se outros formatos não forem suportados."
+msgstr "Não especificou uma extensão<br>Só pode utilizar a extensão .jpg ou .png se outros formatos não forem suportados"
 
 #: src/modules/shot/e_mod_main.c:266
 msgid "Select screenshot save location"
@@ -9157,7 +9157,7 @@ msgstr "Perfeita"
 
 #: src/modules/shot/e_mod_main.c:756
 msgid "Share"
-msgstr "Partilhar"
+msgstr "Partilha"
 
 #: src/modules/shot/e_mod_main.c:893
 #: src/modules/shot/e_mod_main.c:941
@@ -9220,7 +9220,7 @@ msgstr "linhas"
 
 #: src/modules/tiling/e_mod_config.c:182
 msgid "Tile dialog windows as well"
-msgstr "Mostrar janelas de diálogo lado a lado"
+msgstr "Mostrar diálogos lado a lado"
 
 #: src/modules/tiling/e_mod_config.c:185
 msgid "Show window titles"
