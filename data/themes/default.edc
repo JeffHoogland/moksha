@@ -12,6 +12,7 @@ collections {
 #include "edc/syscon.edc"
 #include "edc/pointer.edc"
 #include "edc/sys.edc"
+#include "edc/winlist.edc"
 // widgets
 #include "edc/menu.edc"
 #include "edc/button.edc"
@@ -42,9 +43,7 @@ collections {
 #include "edc/O/about.edc"
 #include "edc/O/backlight.edc"
 #include "edc/O/battery.edc"
-//#include "edc/O/border.edc"
 #include "edc/O/border_icons.edc"
-//#include "edc/O/clock.edc"
 #include "edc/O/colors.edc"
 #include "edc/O/conf_gad.edc"
 #include "edc/O/cpufreq.edc"
@@ -65,6 +64,8 @@ collections {
 #include "edc/O/temperature.edc"
 #include "edc/O/transitions.edc"
 #include "edc/O/wallpaper.edc"
-#include "edc/O/winlist.edc"
 #include "edc/O/wizard.edc"
+//#include "edc/O/winlist.edc"
+//#include "edc/O/border.edc"
+//#include "edc/O/clock.edc"
 }
