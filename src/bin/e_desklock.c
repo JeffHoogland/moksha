@@ -935,8 +935,10 @@ _e_desklock_state_set(int state)
 
    EINA_LIST_FOREACH(edd->elock_wnd_list, l, edp)
      {
-        edje_object_signal_emit(edp->login_box, signal_desklock, "e.desklock");
-        edje_object_signal_emit(edp->bg_object, signal_desklock, "e.desklock");
+        edje_object_signal_emit(edp->login_box, signal_desklock, "e.desklock"); // compat
+        edje_object_signal_emit(edp->bg_object, signal_desklock, "e.desklock"); // compat
+        edje_object_signal_emit(edp->login_box, signal_desklock, "e");
+        edje_object_signal_emit(edp->bg_object, signal_desklock, "e");
         edje_object_part_text_set(edp->login_box, "e.text.title", text);
      }
 }
