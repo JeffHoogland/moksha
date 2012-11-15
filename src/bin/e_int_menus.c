@@ -358,6 +358,7 @@ e_int_menus_favorite_apps_new(void)
 
    e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
    if (ecore_file_exists(buf)) m = e_int_menus_apps_new(buf);
+   _e_int_menus_apps_start(NULL, m);
    return m;
 }
 
@@ -521,8 +522,12 @@ e_int_menus_menu_augmentation_point_disabled_set(const char *menu, Eina_Bool dis
 EINTERN void
 e_int_menus_init(void)
 {
+   char buf[PATH_MAX];
+
+   e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
    if (e_config->menu_apps_show)
      _e_int_menus_apps_thread_new(NULL, NULL);
+   _e_int_menus_apps_thread_new(NULL, eina_stringshare_add(buf));
 }
 
 EINTERN void
@@ -787,7 +792,7 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
    if (mn) return NULL;
    if (dir && m)
      eina_hash_add(_e_int_menus_app_menus_waiting, dir, m);
-   else
+   else if (!dir)
      _e_int_menus_app_menu_default_waiting = m;
 
    eth = ecore_thread_feedback_run(_e_int_menus_app_thread_cb, _e_int_menus_app_thread_notify_cb,
