@@ -25,6 +25,7 @@ edc/colorwell.edc \
 edc/comp.edc \
 edc/conf.edc \
 edc/connman.edc \
+edc/desklock.edc \
 edc/deskpreview.edc \
 edc/dialog.edc \
 edc/entry.edc \
@@ -208,6 +209,7 @@ img/led_dark.png \
 img/led_light.png \
 img/led_tiny_green.png \
 img/led_tiny_orange.png \
+img/logo_blue_small.png \
 img/media_busy_progress.png \
 img/mini_blue_glow_arrow_0.png \
 img/mini_blue_glow_arrow_1.png \

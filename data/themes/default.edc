@@ -13,6 +13,7 @@ collections {
 #include "edc/pointer.edc"
 #include "edc/sys.edc"
 #include "edc/winlist.edc"
+#include "edc/desklock.edc"
 // widgets
 #include "edc/menu.edc"
 #include "edc/button.edc"
@@ -48,7 +49,6 @@ collections {
 #include "edc/O/conf_gad.edc"
 #include "edc/O/cpufreq.edc"
 #include "edc/O/cslider.edc"
-#include "edc/O/desklock.edc"
 #include "edc/O/edgebindings.edc"
 #include "edc/O/efm_icons.edc"
 #include "edc/O/evrything.edc"
@@ -65,6 +65,7 @@ collections {
 #include "edc/O/transitions.edc"
 #include "edc/O/wallpaper.edc"
 #include "edc/O/wizard.edc"
+//#include "edc/O/desklock.edc"
 //#include "edc/O/winlist.edc"
 //#include "edc/O/border.edc"
 //#include "edc/O/clock.edc"

@@ -103,7 +103,7 @@ group { name: "e/widgets/border/default/border";
             rel2.to_x: "e.event.minimize";
             align: 0.5 0.0;
             color: 255 255 255 255;
-            color3: 0 0 0 128;
+            color3: 0 0 0 18;
             text { font: "Sans:style=Bold"; size: 10;
                text_source: "e.text.title";
                text_class: "title_bar";
