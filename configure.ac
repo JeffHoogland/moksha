@@ -339,8 +339,8 @@ test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable
 
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
-hal_mount="ehal >= 1.2.0, edbus >= 1.2.0"
-udisks_mount="eukit >= 1.2.0"
+hal_mount="ehal >= 1.7.0, edbus >= 1.7.0"
+udisks_mount="eukit >= 1.7.0"
 AC_ARG_ENABLE([mount-hal],
   AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
   [e_cv_want_mount_hal=$enableval],
@@ -404,7 +404,7 @@ if test "x$e_cv_want_mount_eeze" != "xno" && test -z "$dbus_mount" ; then
       LIBS="$EEZE_LIBS $LIBS"
       AC_CHECK_LIB([eeze], [eeze_disk_function],
         [
-           eeze_mount="eeze >= 1.2.0 ecore-con >= 1.2.0"
+           eeze_mount="eeze >= 1.7.0 ecore-con >= 1.7.0"
            EEZE_MOUNT_CONFIG=1
            AC_DEFINE_UNQUOTED([HAVE_EEZE_MOUNT], [1], [enable eeze mounting])
            AC_MSG_NOTICE([eeze mounting enabled])
@@ -472,13 +472,13 @@ PKG_CHECK_MODULES(E_GRABBER, [
 ])
 
 efm_requires="\
-ecore >= 1.2.0 \
-ecore-file >= 1.2.0 \
-ecore-ipc >= 1.2.0 \
-eet >= 1.6.0 \
-efreet >= 1.2.0 \
-edbus >= 1.2.0 \
-eina >= 1.2.0"
+ecore >= 1.7.0 \
+ecore-file >= 1.7.0 \
+ecore-ipc >= 1.7.0 \
+eet >= 1.7.0 \
+efreet >= 1.7.0 \
+edbus >= 1.7.0 \
+eina >= 1.7.0"
 efm_requires="$efm_requires $eeze_mount $dbus_mount $hal_mount $udisks_mount"
 
 AC_MSG_WARN([EFM requirements : $efm_requires])
@@ -670,7 +670,7 @@ AC_DEFINE(E_INTERNAL, 1, "This define can be used to wrap internal E stuff, as c
 AM_CONDITIONAL(HAVE_BATTERY, false)
 define([CHECK_MODULE_BATTERY],
 [
-  AC_E_CHECK_PKG(BATTERY, [ ecore >= 1.2.0 ecore-file >= 1.2.0 ecore-con >= 1.2.0 eina >= 1.2.0 ], [], [BATTERY=false])
+  AC_E_CHECK_PKG(BATTERY, [ ecore >= 1.7.0 ecore-file >= 1.7.0 ecore-con >= 1.7.0 eina >= 1.7.0 ], [], [BATTERY=false])
 ])
 
 have_openbsd="no"
@@ -690,7 +690,7 @@ AM_CONDITIONAL([HAVE_OPENBSD], [test "x${have_openbsd}" = "xyes"])
 AM_CONDITIONAL(HAVE_TEMPERATURE, false)
 define([CHECK_MODULE_TEMPERATURE],
 [
-  AC_E_CHECK_PKG(TEMPERATURE, [ ecore >= 1.2.0 ecore-file >= 1.2.0 eina >= 1.2.0 ], [], [TEMPERATURE=false])
+  AC_E_CHECK_PKG(TEMPERATURE, [ ecore >= 1.7.0 ecore-file >= 1.7.0 eina >= 1.7.0 ], [], [TEMPERATURE=false])
 ])
 
 ##have_exchange=no
@@ -719,7 +719,7 @@ AC_ARG_ENABLE([enotify],
   AC_CACHE_VAL([e_cv_want_enotify], [e_cv_want_enotify=yes])
 )
 if test "x$e_cv_want_enotify" != "xno" ; then
-  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= 1.2.0 enotify >= 1.2.0 ], 
+  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= 1.7.0 enotify >= 1.7.0 ], 
   [
     AC_DEFINE_UNQUOTED([HAVE_ENOTIFY], [1], [enable enotify])
   ], 
@@ -805,7 +805,7 @@ AM_CONDITIONAL(HAVE_ECONNMAN, false)
 AM_CONDITIONAL(HAVE_DUMMY, false)
 define([CHECK_MODULE_CONNMAN],
 [
-  AC_E_CHECK_PKG(ECONNMAN, [ edbus >= 1.2.0 ], [], [CONNMAN=false])
+  AC_E_CHECK_PKG(ECONNMAN, [ edbus >= 1.7.0 ], [], [CONNMAN=false])
 dnl  AC_E_CHECK_PKG(DUMMY, [ connman >= 1.0 ], [], [CONNMAN=false])
 ])
 AC_SUBST(ECONNMAN_CFLAGS)
