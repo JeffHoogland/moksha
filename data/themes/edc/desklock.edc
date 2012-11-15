@@ -28,6 +28,7 @@ group { name: "e/desklock/login_box";
    images.image: "bevel_in.png" COMP;
    images.image: "white_bar_vert_glow.png" COMP;
    images.image: "logo_blue_small.png" COMP;
+   images.image: "logo_blue_small_glow.png" COMP;
    images.image: "knob_round_busy.png" COMP;
    images.image: "glow_round_corners.png" COMP;
    parts {
@@ -37,6 +38,18 @@ group { name: "e/desklock/login_box";
             rel1.relative: 0.5 0.5;
             rel2.relative: 0.5 0.5;
             FIXED_SIZE(100, 127)
+         }
+      }
+      part { name: "logo_glow";
+         description { state: "default" 0.0;
+            image.normal: "logo_blue_small_glow.png";
+            rel1.to: "logo";
+            rel2.to: "logo";
+            color: 255 255 255 192;
+         }
+         description { state: "active" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
          }
       }
       part { name: "bg"; type: RECT;
@@ -205,6 +218,20 @@ group { name: "e/desklock/login_box";
       }
    }
    programs {
+      program { name: "logo_pulse";
+         signal: "show"; source: "";
+         in: 3.0 5.0;
+         action: STATE_SET "active" 0.0;
+         target: "logo_glow";
+         transition: BOUNCE 0.8 0.5 6;
+         after: "logo_pulse2";
+      }
+      program { name: "logo_pulse2";
+         action: STATE_SET "default" 0.0;
+         target: "logo_glow";
+         transition: SINUSOIDAL 2.4;
+         after: "logo_pulse";
+      }
       program { name: "cursor_show";
          signal: "show"; source: "";
          action: STATE_SET "visible" 0.0;

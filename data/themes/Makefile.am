@@ -210,6 +210,7 @@ img/led_light.png \
 img/led_tiny_green.png \
 img/led_tiny_orange.png \
 img/logo_blue_small.png \
+img/logo_blue_small_glow.png \
 img/media_busy_progress.png \
 img/mini_blue_glow_arrow_0.png \
 img/mini_blue_glow_arrow_1.png \
