@@ -5693,6 +5693,8 @@ _e_fm2_typebuf_match(Evas_Object *obj, int next)
                   if (!sd->typebuf.wildcard) break;
                }
           }
+        if (eina_list_count(sel) == 1)
+          ic_match = eina_list_data_get(sel);
      }
    else
      {
