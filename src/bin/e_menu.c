@@ -1134,6 +1134,13 @@ e_menu_idler_before(void)
              if (((m->cur.x) != (m->prev.x)) ||
                  ((m->cur.y) != (m->prev.y)))
                {
+                  int x, y, w, h;
+
+                  e_zone_useful_geometry_get(m->zone, &x, &y, &w, &h);
+                  if ((m->cur.x + m->cur.w) > (x + w))
+                    m->cur.x = x + w - m->cur.w;
+                  if ((m->cur.y + m->cur.h) > (y + h))
+                    m->cur.y = y + h - m->cur.h;
                   m->prev.x = m->cur.x;
                   m->prev.y = m->cur.y;
                   ecore_evas_move(m->ecore_evas, m->cur.x, m->cur.y);
