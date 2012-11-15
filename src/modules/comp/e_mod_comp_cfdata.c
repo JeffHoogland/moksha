@@ -93,10 +93,17 @@ e_mod_comp_cfdata_config_new(void)
    cfg->first_draw_delay = 0.15;
 
    cfg->match.popups = NULL;
+   
    mat = E_NEW(Match, 1);
    cfg->match.popups = eina_list_append(cfg->match.popups, mat);
    mat->name = eina_stringshare_add("shelf");
    mat->shadow_style = eina_stringshare_add("popup");
+   
+   mat = E_NEW(Match, 1);
+   cfg->match.popups = eina_list_append(cfg->match.popups, mat);
+   mat->name = eina_stringshare_add("_e_popup_desklock");
+   mat->shadow_style = eina_stringshare_add("still");
+   
    mat = E_NEW(Match, 1);
    cfg->match.popups = eina_list_append(cfg->match.popups, mat);
    mat->shadow_style = eina_stringshare_add("popup");
@@ -121,6 +128,12 @@ e_mod_comp_cfdata_config_new(void)
    mat->name = eina_stringshare_add("E");
    mat->clas = eina_stringshare_add("everything");
    mat->shadow_style = eina_stringshare_add("everything");
+   
+   mat = E_NEW(Match, 1);
+   cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
+   mat->name = eina_stringshare_add("E");
+   mat->clas = eina_stringshare_add("Init_Window");
+   mat->shadow_style = eina_stringshare_add("still");
    
    mat = E_NEW(Match, 1);
    cfg->match.overrides = eina_list_append(cfg->match.overrides, mat);
