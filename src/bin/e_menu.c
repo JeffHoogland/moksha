@@ -1642,11 +1642,6 @@ _e_menu_realize(E_Menu *m)
    eina_hash_add(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
    m->shape = e_container_shape_add(m->zone->container);
    e_container_shape_move(m->shape, m->cur.x, m->cur.y);
-   w = m->cur.w;
-   h = m->cur.h;
-   if (w > MAX_MENU_SIZE) w = MAX_MENU_SIZE;
-   if (h > MAX_MENU_SIZE) h = MAX_MENU_SIZE;
-   e_container_shape_resize(m->shape, w, h);
 
    ecore_evas_callback_resize_set(m->ecore_evas, _e_menu_cb_ecore_evas_resize);
    m->evas = ecore_evas_get(m->ecore_evas);
@@ -1664,7 +1659,6 @@ _e_menu_realize(E_Menu *m)
    evas_object_name_set(o, "menu/background");
    evas_object_data_set(o, "e_menu", m);
    evas_object_move(o, 0, 0);
-   evas_object_resize(o, w, h);
    ok = e_theme_edje_object_set(o, "base/theme/menus",
                                 "e/widgets/menu/default/background");
    if (ok)
@@ -1715,6 +1709,11 @@ _e_menu_realize(E_Menu *m)
 
    _e_menu_items_layout_update(m);
    e_box_thaw(m->container_object);
+   w = m->cur.w;
+   h = m->cur.h;
+   if (w > MAX_MENU_SIZE) w = MAX_MENU_SIZE;
+   if (h > MAX_MENU_SIZE) h = MAX_MENU_SIZE;
+   e_container_shape_resize(m->shape, w, h);
    evas_object_resize(m->bg_object, w, h);
    evas_event_thaw(m->evas);
 }
