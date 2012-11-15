@@ -445,7 +445,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 1, 1, 1, 1, 1, 1, 1, 1);
    ob = e_widget_font_preview_add
-     (evas, _("Basic preview text: 123: 我的天空！"));
+     (evas, _("English 012 #!? 日本語 にほんご ソフト 中文 華語 한국"));
    cfdata->gui.preview = ob;
    e_widget_table_object_append(ot, ob, 0, 2, 2, 1, 1, 0, 1, 0);
 
@@ -665,7 +665,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(ot, of, 2, 1, 1, 1, 1, 1, 1, 1);
 
-   ob = e_widget_font_preview_add(evas, _("Advanced Preview Text.. 我真的会写中文"));
+   ob = e_widget_font_preview_add
+     (evas, _("English 012 #!? 日本語 にほんご ソフト 中文 華語 한국"));
+   
    cfdata->gui.preview = ob;
    e_widget_table_object_append(ot, ob, 0, 2, 3, 1, 1, 0, 1, 0);
 
