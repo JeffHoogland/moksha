@@ -3,11 +3,12 @@
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
-   Evas_Object *o_entry;
+   Evas_Object *o_entry, *o_inout;
    char **text_location;
    void (*func) (void *data, void *data2);
    void *data;
    void *data2;
+   Eina_Bool have_pointer : 1;
 };
 
 /* local subsystem functions */
@@ -19,6 +20,7 @@ static void _e_wid_in(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info);
 static void _e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_wid_movresz(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 /* externally accessible functions */
 
@@ -33,8 +35,8 @@ static void _e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_in
  * The current value will be used to initialize the entry
  * @return Returns the new entry widget
  */
-EAPI Evas_Object
-*e_widget_entry_add(Evas *evas, char **text_location, void (*func) (void *data, void *data2), void *data, void *data2)
+EAPI Evas_Object *
+e_widget_entry_add(Evas *evas, char **text_location, void (*func) (void *data, void *data2), void *data, void *data2)
 {
    Evas_Object *obj, *o;
    E_Widget_Data *wd;
@@ -52,14 +54,26 @@ EAPI Evas_Object
 
    o = e_entry_add(evas);
    wd->o_entry = o;
-   evas_object_show(o);
    e_widget_sub_object_add(obj, o);
    e_widget_resize_object_set(obj, o);
+   evas_object_show(o);
+   
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_wid_keydown, obj);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE, _e_wid_movresz, obj);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE, _e_wid_movresz, obj);
+   
+   o = evas_object_rectangle_add(evas);
+   wd->o_inout = o;
+   evas_object_repeat_events_set(o, EINA_TRUE);
+   evas_object_color_set(o, 0, 0, 0, 0);
+   e_widget_sub_object_add(obj, o);
+   evas_object_show(o);
+   
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN, _e_wid_in, obj);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, _e_wid_out, obj);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_wid_keydown, obj);
 
+   o = wd->o_entry;
    if ((text_location) && (*text_location))
      e_entry_text_set(o, *text_location);
 
@@ -226,18 +240,28 @@ static void
 _e_wid_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Pointer *p;
-
+   E_Widget_Data *wd;
+   
+   if (!(data) || (!(wd = e_widget_data_get(data))))
+     return;
+   if (wd->have_pointer) return;
    p = e_widget_pointer_get(data);
    if (p) e_pointer_type_push(p, data, "entry");
+   wd->have_pointer = EINA_TRUE;
 }
 
 static void
 _e_wid_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Pointer *p;
-
+   E_Widget_Data *wd;
+   
+   if (!(data) || (!(wd = e_widget_data_get(data))))
+     return;
+   if (!wd->have_pointer) return;
    p = e_widget_pointer_get(data);
    if (p) e_pointer_type_pop(p, data, "entry");
+   wd->have_pointer = EINA_FALSE;
 }
 
 static void
@@ -265,4 +289,20 @@ static void
 _e_wid_keydown(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    evas_object_smart_callback_call(data, "key_down", event_info);
+}
+
+static void
+_e_wid_movresz(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   E_Widget_Data *wd;
+   Evas_Coord x, y, w, h;
+   
+   if (!(data) || (!(wd = e_widget_data_get(data))))
+     return;
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   if (wd->o_inout)
+     {
+        evas_object_move(wd->o_inout, x, y);
+        evas_object_resize(wd->o_inout, w, h);
+     }
 }
