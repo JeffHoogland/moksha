@@ -3,6 +3,9 @@
 #define HISTORY_MAX 8
 #define DOUBLE_DOWN_N_MOVE 0
 
+static E_Config_DD *conf_edd = NULL;
+Config *access_config = NULL;
+
 typedef struct
 {
    E_Zone         *zone;
@@ -655,13 +658,18 @@ _cb_client_message(void *data __UNUSED__,
         printf("[access module] module enable\n");
         _covers_init();
         _events_init();
+        access_config->window = EINA_TRUE;
      }
    else
      {
         printf("[access module] module disable\n");
         _covers_shutdown();
         _events_shutdown();
+        access_config->window = EINA_FALSE;
      }
+
+   /* save config value */
+   e_config_save_queue();
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -682,6 +690,31 @@ e_modapi_init(E_Module *m)
                              (ECORE_X_EVENT_CLIENT_MESSAGE, _cb_client_message, NULL);
    ecore_x_event_mask_set(ecore_x_window_root_first_get(),
                           ECORE_X_EVENT_MASK_WINDOW_PROPERTY);
+
+   /* load config value */
+   conf_edd = E_CONFIG_DD_NEW("Access_Config", Config);
+   E_CONFIG_VAL(conf_edd, Config, window, UCHAR);
+
+   access_config = e_config_domain_load("module.access", conf_edd);
+
+   if (!access_config)
+     {
+        access_config = E_NEW(Config, 1);
+        access_config->window = EINA_FALSE;
+        return m;
+     }
+
+   if (access_config->window)
+     {
+        _covers_init();
+        _events_init();
+     }
+   else
+     {
+        _covers_shutdown();
+        _events_shutdown();
+     }
+
    return m;
 }
 
@@ -700,5 +733,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
+   e_config_domain_save("module.access", conf_edd, access_config);
    return 1;
 }
