@@ -196,8 +196,7 @@ main(int argc, char **argv)
      type = E_FM_OP_RENAME;
    else return 0;
 
-   if ((type == E_FM_OP_SECURE_REMOVE) ||
-       (type == E_FM_OP_MOVE))
+   if (type == E_FM_OP_SECURE_REMOVE)
      {
         _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
         _e_fm_op_separator = _e_fm_op_work_queue;
@@ -320,6 +319,12 @@ main(int argc, char **argv)
                                    }
                                  else type = E_FM_OP_MOVE;
                               }
+                         }
+
+                       if (type == E_FM_OP_MOVE)
+                         {
+                            _e_fm_op_work_queue = eina_list_append(_e_fm_op_work_queue, NULL);
+                            _e_fm_op_separator = _e_fm_op_work_queue;
                          }
 
                        E_Fm_Op_Task *task;
