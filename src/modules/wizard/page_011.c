@@ -52,7 +52,7 @@ _layout_sort_cb(const void *data1, const void *data2)
 {
    const Layout *l1 = data1;
    const Layout *l2 = data2;
-   return strcmp(l1->name, l2->name);
+   return e_util_strcasecmp(l1->label ?: l1->name, l2->label ?: l2->name);
 }
 
 int
@@ -84,39 +84,29 @@ parse_rules(void)
      }
 err:
    fclose(f);
-   layouts = eina_list_sort(layouts, eina_list_count(layouts),
-                            _layout_sort_cb);
+   layouts = eina_list_sort(layouts, 0, _layout_sort_cb);
    return 1;
 }
 
 static void
 implement_layout(void)
 {
-   if (layout)
-     {
-        Eina_List *l;
-        E_Config_XKB_Layout *nl;
-        Eina_Bool found = EINA_FALSE;
+   Eina_List *l;
+   E_Config_XKB_Layout *nl;
+   Eina_Bool found = EINA_FALSE;
 
-        EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, nl)
+   if (!layout) return;
+
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, nl)
+     {
+        if ((nl->name) && (!strcmp(layout, nl->name)))
           {
-             if ((nl->name) && (!strcmp(layout, nl->name)))
-               {
-                  found = EINA_TRUE;
-                  break;
-               }
+             found = EINA_TRUE;
+             break;
           }
-        if (!found)
-          {
-             nl = E_NEW(E_Config_XKB_Layout, 1);
-             nl->name = eina_stringshare_add(layout);
-             nl->model = eina_stringshare_add("default");
-             nl->variant = eina_stringshare_add("basic");
-             e_config->xkb.used_layouts =
-               eina_list_append(e_config->xkb.used_layouts, nl);
-          }
-        e_xkb_layout_set(layout);
      }
+   if (!found) return;
+   e_xkb_layout_set(layout);
 }
 
 EAPI int
