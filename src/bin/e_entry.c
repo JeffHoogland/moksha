@@ -645,6 +645,12 @@ _e_entry_smart_add(Evas_Object *object)
 
    sd->scroll_object = e_scrollframe_add(evas);
    e_scrollframe_key_navigation_set(sd->scroll_object, EINA_FALSE);
+   /* We need that, as currently mouse grabbing breaks if that's not set. That's
+    * what you get when you have scrolling and selection in the same place.
+    * We can just use selection for scrolling or fix the issue. The fix would
+    * probably require using the ON_SCROLL flag instead of the ON_HOLD and
+    * actually handle it correctly. */
+   e_scrollframe_thumbscroll_force(sd->scroll_object, EINA_FALSE);
    evas_object_propagate_events_set(sd->scroll_object, EINA_TRUE);
    e_scrollframe_custom_theme_set(sd->scroll_object, "base/theme/widgets", "e/widgets/entry/scrollframe");
    edje_object_size_min_calc(e_scrollframe_edje_object_get(sd->scroll_object),
