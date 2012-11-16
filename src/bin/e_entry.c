@@ -332,7 +332,7 @@ e_entry_edit(Evas_Object *entry)
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-   if (sd->noedit)
+   if (!sd->noedit)
      return;
 
    edje_object_signal_emit(e_scrollframe_edje_object_get(sd->scroll_object),
@@ -340,7 +340,7 @@ e_entry_edit(Evas_Object *entry)
    edje_object_signal_emit(sd->entry_object, "e,state,edit", "e");
    if (sd->focused)
       edje_object_signal_emit(sd->entry_object, "e,action,show,cursor", "e");
-   sd->noedit = 1;
+   sd->noedit = 0;
 }
 
 /**
@@ -357,14 +357,14 @@ e_entry_noedit(Evas_Object *entry)
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-   if (!sd->noedit)
+   if (sd->noedit)
      return;
 
    edje_object_signal_emit(e_scrollframe_edje_object_get(sd->scroll_object),
          "e,state,noedit", "e");
    edje_object_signal_emit(sd->entry_object, "e,state,noedit", "e");
    edje_object_signal_emit(sd->entry_object, "e,action,hide,cursor", "e");
-   sd->noedit = 0;
+   sd->noedit = 1;
 }
 
 
