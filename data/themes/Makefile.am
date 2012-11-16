@@ -34,6 +34,7 @@ edc/frame.edc \
 edc/gadman.edc \
 edc/ibar-ibox.edc \
 edc/ilist.edc \
+edc/init.edc \
 edc/label.edc \
 edc/menu.edc \
 edc/pager.edc \
@@ -211,6 +212,11 @@ img/led_dark.png \
 img/led_light.png \
 img/led_tiny_green.png \
 img/led_tiny_orange.png \
+img/led_square_base.png \
+img/led_square_glow.png \
+img/led_square_shading.png \
+img/led_square_shadow.png \
+img/led_square_shine.png \
 img/logo_blue_small.png \
 img/logo_blue_small_glow.png \
 img/media_busy_progress.png \
