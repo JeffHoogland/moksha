@@ -41,7 +41,7 @@
          }
          description { state: "icon" 0.0;
             inherit: "default" 0.0;
-            min: 12 12;
+            min: 17 17;
             aspect: 1.0 1.0; aspect_preference: BOTH;
             align: 0.5 0.5;
             rel2.relative: 1.0 1.0;
