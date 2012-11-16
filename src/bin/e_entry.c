@@ -21,7 +21,6 @@ struct _E_Entry_Smart_Data
    Eina_Bool noedit : 1;
    Eina_Bool focused : 1;
    Eina_Bool password_mode : 1;
-   Eina_Bool have_preedit : 1;
 };
 
 /* local subsystem functions */
@@ -244,7 +243,7 @@ e_entry_focus(Evas_Object *entry)
    edje_object_part_text_cursor_end_set(sd->entry_object, ENTRY_PART_NAME, EDJE_CURSOR_MAIN);
    if ((sd->enabled) && (!sd->noedit))
       edje_object_signal_emit(sd->entry_object, "e,action,show,cursor", "e");
-   sd->focused = 1;
+   sd->focused = EINA_TRUE;
 }
 
 /**
@@ -268,7 +267,7 @@ e_entry_unfocus(Evas_Object *entry)
    edje_object_signal_emit(sd->entry_object, "e,state,unfocused", "e");
    evas_object_focus_set(sd->entry_object, EINA_FALSE);
    edje_object_signal_emit(sd->entry_object, "e,action,hide,cursor", "e");
-   sd->focused = 0;
+   sd->focused = EINA_FALSE;
 }
 
 /**
@@ -292,7 +291,7 @@ e_entry_enable(Evas_Object *entry)
    edje_object_signal_emit(sd->entry_object, "e,state,enabled", "e");
    if (sd->focused)
       edje_object_signal_emit(sd->entry_object, "e,action,show,cursor", "e");
-   sd->enabled = 1;
+   sd->enabled = EINA_TRUE;
 }
 
 /**
@@ -316,7 +315,7 @@ e_entry_disable(Evas_Object *entry)
          "e,state,disabled", "e");
    edje_object_signal_emit(sd->entry_object, "e,state,disabled", "e");
    edje_object_signal_emit(sd->entry_object, "e,action,hide,cursor", "e");
-   sd->enabled = 0;
+   sd->enabled = EINA_FALSE;
 }
 
 /**
@@ -340,7 +339,7 @@ e_entry_edit(Evas_Object *entry)
    edje_object_signal_emit(sd->entry_object, "e,state,edit", "e");
    if (sd->focused)
       edje_object_signal_emit(sd->entry_object, "e,action,show,cursor", "e");
-   sd->noedit = 0;
+   sd->noedit = EINA_FALSE;
 }
 
 /**
@@ -364,7 +363,7 @@ e_entry_noedit(Evas_Object *entry)
          "e,state,noedit", "e");
    edje_object_signal_emit(sd->entry_object, "e,state,noedit", "e");
    edje_object_signal_emit(sd->entry_object, "e,action,hide,cursor", "e");
-   sd->noedit = 1;
+   sd->noedit = EINA_TRUE;
 }
 
 
@@ -494,9 +493,9 @@ _e_entry_x_selection_notify_handler(void *data, int type __UNUSED__, void *event
    Ecore_X_Event_Selection_Notify *ev;
 
    if ((!(entry = data)) || (!(sd = evas_object_smart_data_get(entry))))
-     return 1;
+     return EINA_TRUE;
    if (!sd->focused)
-     return 1;
+     return EINA_TRUE;
 
    ev = event;
    if (((ev->selection == ECORE_X_SELECTION_CLIPBOARD) ||
@@ -696,9 +695,9 @@ _e_entry_smart_add(Evas_Object *object)
 
    evas_object_smart_data_set(object, sd);
 
-   sd->enabled = 1;
-   sd->noedit = 0;
-   sd->focused = 0;
+   sd->enabled = EINA_TRUE;
+   sd->noedit = EINA_FALSE;
+   sd->focused = EINA_FALSE;
 
    sd->scroll_object = e_scrollframe_add(evas);
    e_scrollframe_key_navigation_set(sd->scroll_object, EINA_FALSE);
