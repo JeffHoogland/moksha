@@ -169,9 +169,9 @@ e_widget_entry_readonly_set(Evas_Object *entry, int readonly_mode)
       return;
 
    if (readonly_mode)
-     e_entry_disable(wd->o_entry);
+     e_entry_noedit(wd->o_entry);
    else
-     e_entry_enable(wd->o_entry);
+     e_entry_edit(wd->o_entry);
 }
 
 /**

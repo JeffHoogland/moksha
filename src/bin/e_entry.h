@@ -15,6 +15,8 @@ EAPI void         e_entry_focus               (Evas_Object *entry);
 EAPI void         e_entry_unfocus             (Evas_Object *entry);
 EAPI void         e_entry_enable              (Evas_Object *entry);
 EAPI void         e_entry_disable             (Evas_Object *entry);
+EAPI void         e_entry_edit                (Evas_Object *entry);
+EAPI void         e_entry_noedit              (Evas_Object *entry);
 
 #endif
 #endif

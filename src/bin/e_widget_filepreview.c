@@ -207,20 +207,17 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    _e_wid_fprev_clear_widgets(wd);
 
    o = e_widget_table_add(evas, 0);
-   e_widget_disabled_set(o, 1);
    wd->o_preview_properties_table = o;
 
 #define WIDROW(lab, labob, entob, entw) \
    do { \
       o = e_widget_label_add(evas, lab); \
-      e_widget_disabled_set(o, 1); \
       wd->labob = o; \
       e_widget_table_object_align_append(wd->o_preview_properties_table, \
                                          wd->labob,                     \
                                          0, y, 1, 1, 0, 1, 0, 0, 1.0, 0.0); \
       o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL); \
       e_widget_entry_readonly_set(o, 1); \
-      e_widget_disabled_set(o, 1); \
       wd->entob = o; \
       e_widget_size_min_set(o, entw, -1); \
       e_widget_table_object_align_append(wd->o_preview_properties_table, \
@@ -286,20 +283,17 @@ _e_wid_fprev_preview_fs_widgets(E_Widget_Data *wd, Eina_Bool mount_point)
    _e_wid_fprev_clear_widgets(wd);
 
    o = e_widget_table_add(evas, 0);
-   e_widget_disabled_set(o, 1);
    wd->o_preview_properties_table = o;
 
 #define WIDROW(lab, labob, entob, entw) \
    do { \
       o = e_widget_label_add(evas, lab); \
-      e_widget_disabled_set(o, 1); \
       wd->labob = o; \
       e_widget_table_object_align_append(wd->o_preview_properties_table, \
                                          wd->labob,                     \
                                          0, y, 1, 1, 0, 1, 0, 0, 1.0, 0.0); \
       o = e_widget_entry_add(evas, &(wd->preview_extra_text), NULL, NULL, NULL); \
       e_widget_entry_readonly_set(o, 1); \
-      e_widget_disabled_set(o, 1); \
       wd->entob = o; \
       e_widget_size_min_set(o, entw, -1); \
       e_widget_table_object_align_append(wd->o_preview_properties_table, \
@@ -345,7 +339,6 @@ _e_wid_fprev_preview_file_widgets(E_Widget_Data *wd, Eina_Bool dir, Eina_Bool tx
    _e_wid_fprev_clear_widgets(wd);
 
    o = e_widget_table_add(evas, 0);
-   e_widget_disabled_set(o, 1);
    wd->o_preview_preview_table = o;
    e_widget_size_min_set(o, 32, 32);
 
@@ -354,7 +347,6 @@ _e_wid_fprev_preview_file_widgets(E_Widget_Data *wd, Eina_Bool dir, Eina_Bool tx
                                0, 1, 0.5);
 
    o = e_widget_table_add(evas, 0);
-   e_widget_disabled_set(o, 1);
    wd->o_preview_properties_table = o;
    wd->is_dir = dir;
    wd->is_txt = txt;
@@ -737,7 +729,6 @@ _e_wid_fprev_preview_reset(E_Widget_Data *wd)
    if (wd->is_dir || wd->is_txt) return;
    o = e_widget_preview_add(evas_object_evas_get(wd->obj), wd->w, wd->h);
    wd->prev_is_txt = wd->prev_is_fm = EINA_FALSE;
-   e_widget_disabled_set(o, 1);
    wd->o_preview_preview = o;
    evas_object_smart_callback_add(o, "preview_update",
                                   _e_wid_fprev_preview_update, wd);
@@ -979,7 +970,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    wd->w = w, wd->h = h;
 
    o = e_widget_list_add(evas, 0, horiz);
-   e_widget_disabled_set(o, 1);
    wd->o_preview_list = o;
    e_widget_resize_object_set(obj, o);
    e_widget_sub_object_add(obj, o);
@@ -999,7 +989,6 @@ e_widget_filepreview_add(Evas *evas, int w, int h, int horiz)
    evas_object_show(wd->o_preview_time_entry);
    evas_object_show(wd->o_preview_properties_table);
    evas_object_show(wd->o_preview_list);
-   e_widget_disabled_set(obj, 1);
    return obj;
 }
 

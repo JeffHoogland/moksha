@@ -100,6 +100,12 @@ group { name: "e/widgets/entry/text";
          action: STATE_SET "default" 0.0;
          target: "e.text.text";
       }
+//      program {
+//         signal: "e,state,noedit"; source: "e";
+//      }
+//      program {
+//         signal: "e,state,edit"; source: "e";
+//      }
    }
 }
 

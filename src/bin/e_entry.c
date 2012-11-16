@@ -11,14 +11,15 @@ struct _E_Entry_Smart_Data
    E_Menu *popup;
    Ecore_Event_Handler *selection_handler;
 
-   int enabled;
-   int focused;
    int min_width;
    int height;
    Evas_Coord theme_width;
    Evas_Coord theme_height;
    int preedit_start_pos;
    int preedit_end_pos;
+   Eina_Bool enabled : 1;
+   Eina_Bool noedit : 1;
+   Eina_Bool focused : 1;
    Eina_Bool password_mode : 1;
    Eina_Bool have_preedit : 1;
 };
@@ -241,7 +242,7 @@ e_entry_focus(Evas_Object *entry)
    edje_object_signal_emit(sd->entry_object, "e,state,focused", "e");
 
    edje_object_part_text_cursor_end_set(sd->entry_object, ENTRY_PART_NAME, EDJE_CURSOR_MAIN);
-   if (sd->enabled)
+   if ((sd->enabled) && (!sd->noedit))
       edje_object_signal_emit(sd->entry_object, "e,action,show,cursor", "e");
    sd->focused = 1;
 }
@@ -318,6 +319,54 @@ e_entry_disable(Evas_Object *entry)
    sd->enabled = 0;
 }
 
+/**
+ * Enables the entry object: the user will be able to type text
+ *
+ * @param entry the entry object to enable
+ */
+EAPI void
+e_entry_edit(Evas_Object *entry)
+{
+   E_Entry_Smart_Data *sd;
+
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
+     return;
+   if (sd->noedit)
+     return;
+
+   edje_object_signal_emit(e_scrollframe_edje_object_get(sd->scroll_object),
+         "e,state,edit", "e");
+   edje_object_signal_emit(sd->entry_object, "e,state,edit", "e");
+   if (sd->focused)
+      edje_object_signal_emit(sd->entry_object, "e,action,show,cursor", "e");
+   sd->noedit = 1;
+}
+
+/**
+ * Disables the entry object: the user won't be able to type anymore. Selection
+ * will still be possible (to copy the text)
+ *
+ * @param entry the entry object to disable
+ */
+EAPI void
+e_entry_noedit(Evas_Object *entry)
+{
+   E_Entry_Smart_Data *sd;
+
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
+   if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
+     return;
+   if (!sd->noedit)
+     return;
+
+   edje_object_signal_emit(e_scrollframe_edje_object_get(sd->scroll_object),
+         "e,state,noedit", "e");
+   edje_object_signal_emit(sd->entry_object, "e,state,noedit", "e");
+   edje_object_signal_emit(sd->entry_object, "e,action,hide,cursor", "e");
+   sd->noedit = 0;
+}
+
 
 /* Private functions */
 
@@ -382,20 +431,23 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
           {
              if (s_enabled)
                {
-                  mi = e_menu_item_new(sd->popup);
-                  e_menu_item_label_set(mi, _("Delete"));
-                  e_util_menu_item_theme_icon_set(mi, "edit-delete");
-                  e_menu_item_callback_set(mi, _e_entry_cb_delete, sd);
-
-                  mi = e_menu_item_new(sd->popup);
-                  e_menu_item_separator_set(mi, 1);
-
-                  if (!s_passwd)
+                  if (!sd->noedit)
                     {
                        mi = e_menu_item_new(sd->popup);
-                       e_menu_item_label_set(mi, _("Cut"));
-                       e_util_menu_item_theme_icon_set(mi, "edit-cut");
-                       e_menu_item_callback_set(mi, _e_entry_cb_cut, sd);
+                       e_menu_item_label_set(mi, _("Delete"));
+                       e_util_menu_item_theme_icon_set(mi, "edit-delete");
+                       e_menu_item_callback_set(mi, _e_entry_cb_delete, sd);
+                       
+                       mi = e_menu_item_new(sd->popup);
+                       e_menu_item_separator_set(mi, 1);
+                       
+                       if (!s_passwd)
+                         {
+                            mi = e_menu_item_new(sd->popup);
+                            e_menu_item_label_set(mi, _("Cut"));
+                            e_util_menu_item_theme_icon_set(mi, "edit-cut");
+                            e_menu_item_callback_set(mi, _e_entry_cb_cut, sd);
+                         }
                     }
                }
              if (!s_passwd)
@@ -408,10 +460,13 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
           }
         if (sd->enabled)
           {
-             mi = e_menu_item_new(sd->popup);
-             e_menu_item_label_set(mi, _("Paste"));
-             e_util_menu_item_theme_icon_set(mi, "edit-paste");
-             e_menu_item_callback_set(mi, _e_entry_cb_paste, sd);
+             if (!sd->noedit)
+               {
+                  mi = e_menu_item_new(sd->popup);
+                  e_menu_item_label_set(mi, _("Paste"));
+                  e_util_menu_item_theme_icon_set(mi, "edit-paste");
+                  e_menu_item_callback_set(mi, _e_entry_cb_paste, sd);
+               }
           }
         if (!s_empty)
           {
@@ -505,6 +560,7 @@ _entry_paste_request_signal_cb(void *data,
    Ecore_X_Window xwin;
    E_Win *win;
    E_Container *con;
+   
    if (!(win = e_win_evas_object_win_get(data)))
      {
         con = e_container_evas_object_container_get(data);
@@ -641,6 +697,7 @@ _e_entry_smart_add(Evas_Object *object)
    evas_object_smart_data_set(object, sd);
 
    sd->enabled = 1;
+   sd->noedit = 0;
    sd->focused = 0;
 
    sd->scroll_object = e_scrollframe_add(evas);
@@ -814,9 +871,9 @@ _e_entry_clip_unset(Evas_Object *object)
 static void
 _e_entry_cb_menu_post(void *data, E_Menu *m __UNUSED__)
 {
-   E_Entry_Smart_Data *sd;
+   E_Entry_Smart_Data *sd = data;
 
-   sd = data;
+   if (!sd) return;
    if (!sd->popup) return;
    e_object_del(E_OBJECT(sd->popup));
    sd->popup = NULL;
@@ -826,20 +883,21 @@ static void
 _e_entry_cb_cut(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Entry_Smart_Data *sd = data;
+   if (!sd) return;
    _e_entry_cb_copy(sd, NULL, NULL);
+   if ((!sd->enabled) || (sd->noedit)) return;
    edje_object_part_text_user_insert(sd->entry_object, ENTRY_PART_NAME, "");
 }
 
 static void
 _e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   E_Entry_Smart_Data *sd;
+   E_Entry_Smart_Data *sd = data;
    const char *range;
    Ecore_X_Window xwin;
    E_Win *win;
 
-   sd = data;
-
+   if (!sd) return;
    range = edje_object_part_text_selection_get(sd->entry_object, ENTRY_PART_NAME);
    if (range)
      {
@@ -865,7 +923,8 @@ _e_entry_cb_paste(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    E_Win *win;
 
    sd = data;
-   if (!sd->enabled) return;
+   if (!sd) return;
+   if ((!sd->enabled) || (sd->noedit)) return;
 
    win = e_win_evas_object_win_get(sd->entry_object);
    if (win) xwin = win->evas_win;
@@ -886,6 +945,7 @@ _e_entry_cb_select_all(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    E_Entry_Smart_Data *sd;
 
    sd = data;
+   if (!sd) return;
    edje_object_part_text_select_all(sd->entry_object, ENTRY_PART_NAME);
    _e_entry_x_selection_update(sd->entry_object);
 }
@@ -896,7 +956,8 @@ _e_entry_cb_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    E_Entry_Smart_Data *sd;
 
    sd = data;
+   if (!sd) return;
+   if ((!sd->enabled) || (sd->noedit)) return;
    edje_object_part_text_user_insert(sd->entry_object, ENTRY_PART_NAME, "");
-
 }
 
