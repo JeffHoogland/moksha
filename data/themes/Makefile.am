@@ -50,6 +50,7 @@ edc/tasks.edc \
 edc/textblock.edc \
 edc/toolbar.edc \
 edc/winlist.edc \
+edc/wizard.edc \
 edc/xkbswitch.edc \
 edc/O/about.edc \
 edc/O/backlight.edc \

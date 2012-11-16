@@ -14,6 +14,7 @@ collections {
 #include "edc/sys.edc"
 #include "edc/winlist.edc"
 #include "edc/desklock.edc"
+#include "edc/wizard.edc"
 // widgets
 #include "edc/menu.edc"
 #include "edc/button.edc"
@@ -64,7 +65,7 @@ collections {
 #include "edc/O/temperature.edc"
 #include "edc/O/transitions.edc"
 #include "edc/O/wallpaper.edc"
-#include "edc/O/wizard.edc"
+//#include "edc/O/wizard.edc"
 //#include "edc/O/desklock.edc"
 //#include "edc/O/winlist.edc"
 //#include "edc/O/border.edc"
