@@ -205,6 +205,7 @@ struct _E_Border
    struct
    {
       Ecore_X_Window shell_win;
+      Ecore_X_Window lock_win;
       Ecore_X_Window win;
 
       int            x, y, w, h;
@@ -566,7 +567,6 @@ struct _E_Border
       E_Layer      layer;
       int          zone;
       E_Maximize   maximized;
-      unsigned int event_mask;
    } saved;
 
    struct
