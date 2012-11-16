@@ -95,6 +95,7 @@ group { name: "e/modules/ibox/icon";
 
 group { name: "e/modules/ibox/icon_overlay";
    alias: "e/modules/ibar/icon_overlay";
+   images.image: "darken_rounded_square.png" COMP;
    script {
       public urgent;
    }
@@ -161,19 +162,35 @@ group { name: "e/modules/ibox/icon_overlay";
             rel2.to: "background";
          }
       }
-      part { name: "e.text.label"; type: TEXT;
-         effect: SOFT_SHADOW;
-         mouse_events: 0;
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: -10 -6;
+            rel1.to: "e.text.label";
+            rel2.offset: 9 5;
+            rel2.to: "e.text.label";
+            image.normal: "darken_rounded_square.png";
+            image.border: 15 15 15 15;
+            fill.smooth: 0;
+            fixed: 1 1;
+            color: 255 255 255 0;
+            visible: 0;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+            visible: 1;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
          scale: 1;
          description { state: "default" 0.0;
             rel1.relative: 0.0 1.0;
-            rel1.offset: 0 -1;
             rel2.relative: 1.0 1.0;
-            rel2.offset: -1 -1;
             color: 255 255 255 0;
             color3: 0 0 0 0;
             color_class: "module_label";
-            text { font: "Sans:style=Bold"; size: 10;
+            text { font: "Sans"; size: 10;
                min: 1 1;
                align: 0.5 0.5;
                text_class: "module_normal";
@@ -181,12 +198,10 @@ group { name: "e/modules/ibox/icon_overlay";
          }
          description { state: "visible" 0.0;
             inherit: "default" 0.0;
-            rel1.relative: 0.0 0.0;
-            rel1.offset: 0 0;
-            rel2.relative: 1.0 1.0;
-            rel2.offset: -1 -1;
+            rel1.relative: 0.0 0.5;
+            rel2.relative: 1.0 0.5;
             color: 255 255 255 255;
-            color3: 0 0 0 42;
+            color3: 0 0 0 128;
          }
       }
    }
@@ -227,12 +242,14 @@ group { name: "e/modules/ibox/icon_overlay";
          action: STATE_SET "visible" 0.0;
          transition: SINUSOIDAL 0.5;
          target: "e.text.label";
+         target: "bevel";
       }
       program {
          signal: "e,action,hide,label"; source: "e";
          action: STATE_SET "default" 0.0;
          transition: SINUSOIDAL 1.0;
          target: "e.text.label";
+         target: "bevel";
       }
       program { name: "go_passive2";
          action: STATE_SET "default" 0.0;
