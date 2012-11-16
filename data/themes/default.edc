@@ -40,6 +40,7 @@ collections {
 #include "edc/connman.edc"
 #include "edc/systray.edc"
 #include "edc/clock.edc"
+#include "edc/ibar-ibox.edc"
 
 // port unchanged stuff so this can work as a replacement
 #include "edc/O/about.edc"
@@ -55,7 +56,6 @@ collections {
 #include "edc/O/evrything.edc"
 #include "edc/O/fontpreview.edc"
 #include "edc/O/gadman.edc"
-#include "edc/O/ibarbox.edc"
 #include "edc/O/icons.edc"
 #include "edc/O/illume_gad.edc"
 #include "edc/O/init.edc"
@@ -65,6 +65,7 @@ collections {
 #include "edc/O/temperature.edc"
 #include "edc/O/transitions.edc"
 #include "edc/O/wallpaper.edc"
+//#include "edc/O/ibarbox.edc"
 //#include "edc/O/wizard.edc"
 //#include "edc/O/desklock.edc"
 //#include "edc/O/winlist.edc"

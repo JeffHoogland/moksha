@@ -32,6 +32,7 @@ edc/entry.edc \
 edc/fileman.edc \
 edc/frame.edc \
 edc/gadman.edc \
+edc/ibar-ibox.edc \
 edc/ilist.edc \
 edc/label.edc \
 edc/menu.edc \
