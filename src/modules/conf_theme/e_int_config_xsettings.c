@@ -55,7 +55,7 @@ e_int_config_xsettings(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply;
    v->basic.check_changed = _basic_check_changed;
 
-   cfd = e_config_dialog_new(con, _("Application Theme Settings"),
+   cfd = e_config_dialog_new(con, _("GTK Application Theme Settings"),
                              "E", "appearance/xsettings",
                              "preferences-desktop-theme", 0, v, NULL);
    return cfd;
@@ -211,16 +211,13 @@ _ilist_files_add(E_Config_Dialog_Data *cfdata, const char *dir)
 
    EINA_ITERATOR_FOREACH(it, file)
      {
-        if (ecore_file_is_dir(file))
+        if ((ecore_file_is_dir(file)) &&
+            (!eina_list_data_find(cfdata->widget_themes, file)))
           {
-             if (!eina_list_data_find(cfdata->widget_themes, file))
-               {
-                  cfdata->widget_themes = eina_list_append(cfdata->widget_themes, file);
-                  continue;
-               }
+             cfdata->widget_themes = eina_list_append(cfdata->widget_themes, file);
           }
-
-        eina_stringshare_del(file);
+        else
+          eina_stringshare_del(file);
      }
 
    eina_iterator_free(it);
@@ -264,19 +261,45 @@ _fill_files_ilist(void *data)
 
         EINA_LIST_FREE(cfdata->widget_themes, theme)
           {
-             char *tmp = strdup(strrchr(theme, '/') + 1);
-             const char *label;
+             const char *tmp;
+             char buf[PATH_MAX];
+             Eina_Bool gtk2 = EINA_FALSE;
+             Eina_Bool gtk3 = EINA_FALSE;
+             snprintf(buf, sizeof(buf), "%s/gtk-2.0", theme);
+             gtk2 = ecore_file_is_dir(buf);
+             snprintf(buf, sizeof(buf), "%s/gtk-3.0", theme);
+             gtk3 = ecore_file_is_dir(buf);
+             if ((!gtk2) && (!gtk3)) continue;
 
+             tmp = strrchr(theme, '/');
              if (tmp)
                {
-                  /* label pointer will exist as long as ilist item
+                  char label[256];
+                  const char *value;
+                  ssize_t len = sizeof(label);
+
+                  tmp += 1;
+                  value = eina_stringshare_add(tmp);
+                  label[0] = 0;
+                  strncpy(label, value, len);
+                  len -= strlen(label);
+                  if (gtk2 && (len > 5))
+                    {
+                       strcat(label, " (v2)");
+                       len -= 5;
+                    }
+                  if (gtk3 && (len > 5))
+                    {
+                       strcat(label, " (v3)");
+                       len -= 5;
+                    }
+                  
+                  /* value pointer will exist as long as ilist item
                      so val remains valid */
-                  label = eina_stringshare_add(tmp);
-                  e_widget_ilist_append(o, NULL, label, NULL, NULL, label /* val */);
-                  if ((e_config->xsettings.net_theme_name_detected == label) || (cfdata->widget_theme == label))
+                  e_widget_ilist_append(o, NULL, label, NULL, NULL, value);
+                  if ((e_config->xsettings.net_theme_name_detected == value) || (cfdata->widget_theme == value))
                     e_widget_ilist_selected_set(cfdata->gui.widget_list, cnt);
-                  eina_stringshare_del(label);
-                  free(tmp);
+                  eina_stringshare_del(value);
                   cnt++;
                }
 
