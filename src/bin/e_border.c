@@ -7390,10 +7390,10 @@ _e_border_eval0(E_Border *bd)
                {
                   bd->parent->modal = bd;
                   bd->parent->lock_close = 1;
-                  if (!bd->client.lock_win)
+                  if (!bd->parent->client.lock_win)
                     {
-                       bd->client.lock_win = ecore_x_window_input_new(bd->client.shell_win, 0, 0, bd->client.w, bd->client.h);
-                       ecore_x_window_show(bd->client.lock_win);
+                       bd->parent->client.lock_win = ecore_x_window_input_new(bd->parent->client.shell_win, 0, 0, bd->parent->client.w, bd->parent->client.h);
+                       ecore_x_window_show(bd->parent->client.lock_win);
                     }
                }
 
