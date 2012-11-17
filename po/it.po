@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-15 11:40+0100\n"
-"PO-Revision-Date: 2012-11-15 11:42+0100\n"
+"POT-Creation-Date: 2012-11-17 15:34+0100\n"
+"PO-Revision-Date: 2012-11-17 16:03+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -107,6 +107,7 @@ msgstr "Esci"
 #: src/bin/e_actions.c:2126 src/bin/e_color_dialog.c:47
 #: src/bin/e_eap_editor.c:862 src/bin/e_eap_editor.c:926
 #: src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9558 src/bin/e_fm_prop.c:625
+#: src/bin/e_import_dialog.c:189 src/bin/e_import_config_dialog.c:531
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:316
@@ -185,6 +186,7 @@ msgstr ""
 "Avete chiesto di ibernare il computer.<br><br>Siete sicuri di volerlo fare?"
 
 #: src/bin/e_actions.c:2483 src/bin/e_actions.c:3434
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
 msgstr "Iberna"
 
@@ -810,7 +812,7 @@ msgstr "Iberna adesso"
 msgid "Lock"
 msgstr "Blocca"
 
-#: src/bin/e_actions.c:3451 src/bin/e_int_menus.c:1343
+#: src/bin/e_actions.c:3451 src/bin/e_int_menus.c:1358
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
@@ -904,10 +906,10 @@ msgstr ""
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:608
 #: src/bin/e_fm.c:9557 src/bin/e_fm.c:10291 src/bin/e_fm_prop.c:624
-#: src/bin/e_int_border_remember.c:318 src/bin/e_int_border_remember.c:507
-#: src/bin/e_module.c:425 src/bin/e_module.c:792 src/bin/e_sys.c:618
-#: src/bin/e_sys.c:659 src/bin/e_utils.c:700
-#: src/modules/comp/e_mod_config.c:918
+#: src/bin/e_import_config_dialog.c:530 src/bin/e_int_border_remember.c:318
+#: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:425
+#: src/bin/e_module.c:792 src/bin/e_sys.c:618 src/bin/e_sys.c:659
+#: src/bin/e_utils.c:700 src/modules/comp/e_mod_config.c:918
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/cpufreq/e_mod_main.c:428 src/modules/cpufreq/e_mod_main.c:457
@@ -1249,6 +1251,7 @@ msgstr "Seleziona un'eseguibile"
 #: src/modules/conf_dialogs/e_int_config_profiles.c:134
 #: src/modules/conf_dialogs/e_int_config_profiles.c:335
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:315
@@ -1829,7 +1832,8 @@ msgstr "Gruppo:"
 msgid "Others:"
 msgstr "Altri:"
 
-#: src/bin/e_fm_prop.c:480 src/bin/e_widget_fsel.c:343
+#: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:468
+#: src/bin/e_widget_fsel.c:343
 #: src/modules/conf_theme/e_int_config_transitions.c:218
 #: src/modules/conf_theme/e_int_config_theme.c:1135
 #: src/modules/conf_theme/e_int_config_xsettings.c:474
@@ -1902,6 +1906,33 @@ msgstr "Elimina"
 msgid "Stop moving"
 msgstr "Ferma spostamento"
 
+#: src/bin/e_grab_dialog.c:3
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:4
+msgid ""
+"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
+msgstr ""
+"Premere la combinazione di tasti,<br><br>o <hilight>Escape</hilight> per "
+"abortire"
+
+#: src/bin/e_grab_dialog.c:5
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
+msgid ""
+"Please hold any modifier you want<br>and press any button on your mouse,<br> "
+"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
+"highlight> to abort."
+msgstr ""
+"Tenere premuto il modificatore desiderato<br>e premere un bottone del mouse, "
+"o girare<br>una rotella, per assegnare un'associazione.<br>Premere "
+"<hilight>Escape</highlight> per abortire."
+
+#: src/bin/e_grab_dialog.c:128
+msgid "Mouse Binding Sequence"
+msgstr "Sequenza del mouse"
+
+#: src/bin/e_grab_dialog.c:135
+msgid "Key Binding Sequence"
+msgstr "Sequenza di tastiera"
+
 #: src/bin/e_hints.c:152
 msgid ""
 "A previous instance of Enlightenment is still active\n"
@@ -1909,6 +1940,88 @@ msgid ""
 msgstr ""
 "Un'istanza precedente di Enlightenment è ancora\n"
 "attiva su questo schermo. Abortisco l'avvio.\n"
+
+#: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
+#: src/bin/e_import_config_dialog.c:348 src/bin/e_import_config_dialog.c:358
+msgid "Import Error"
+msgstr "Errore d'importazione"
+
+#: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:349
+msgid "Enlightenment was unable to import the image<br>due to a copy error."
+msgstr "Enlightenment non ha potuto importare l'immagine<br>a causa di un errore di copia."
+
+#: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:359
+msgid ""
+"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"valid image?"
+msgstr "Enlightenment non ha potuto importare l'immagine.<br>Siete sicuri che sia un'immagine valida?"
+
+#: src/bin/e_import_dialog.c:156
+msgid "Select a Picture..."
+msgstr "Selezionare un'immagine..."
+
+#: src/bin/e_import_dialog.c:188
+msgid "Use"
+msgstr "Usa"
+
+#: src/bin/e_import_config_dialog.c:291
+msgid "Picture Import Error"
+msgstr "Errore importazione foto"
+
+#: src/bin/e_import_config_dialog.c:292
+msgid ""
+"Enlightenment was unable to import the picture<br>due to conversion errors."
+msgstr "Enlightenment non ha potuto importare la foto<br>a causa di errori di conversione."
+
+#: src/bin/e_import_config_dialog.c:448
+msgid "Import Settings..."
+msgstr "Impostazioni importazione..."
+
+#: src/bin/e_import_config_dialog.c:482
+msgid "Fill and Stretch Options"
+msgstr "Opzioni riempimento"
+
+#: src/bin/e_import_config_dialog.c:484
+msgid "Stretch"
+msgstr "Stira"
+
+#: src/bin/e_import_config_dialog.c:488 src/bin/e_int_border_prop.c:237
+#, c-format
+msgid "Center"
+msgstr "Centra"
+
+#: src/bin/e_import_config_dialog.c:492
+msgid "Tile"
+msgstr "Affianca"
+
+#: src/bin/e_import_config_dialog.c:496
+msgid "Within"
+msgstr "Adatta"
+
+#: src/bin/e_import_config_dialog.c:500
+msgid "Fill"
+msgstr "Riempi"
+
+#: src/bin/e_import_config_dialog.c:504
+msgid "Pan"
+msgstr "Ritaglia"
+
+#: src/bin/e_import_config_dialog.c:512
+msgid "File Quality"
+msgstr "Qualità file"
+
+#: src/bin/e_import_config_dialog.c:513
+msgid "Use original file"
+msgstr "Usa file originale"
+
+#: src/bin/e_import_config_dialog.c:515
+#, c-format
+msgid "%3.0f%%"
+msgstr "%3.0f%%"
+
+#: src/bin/e_import_config_dialog.c:520
+msgid "Fill Color"
+msgstr "Colore riempimento"
 
 #: src/bin/e_int_border_locks.c:66
 msgid "Window Locks"
@@ -2231,11 +2344,6 @@ msgstr "Nordest"
 msgid "West"
 msgstr "Ovest"
 
-#: src/bin/e_int_border_prop.c:237
-#, c-format
-msgid "Center"
-msgstr "Centro"
-
 #: src/bin/e_int_border_prop.c:241
 #, c-format
 msgid "East"
@@ -2404,11 +2512,13 @@ msgstr "Richiede posizione"
 #: src/modules/conf/e_mod_main.c:101 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
 #: src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:379 src/modules/ibar/e_mod_main.c:864
-#: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:875 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:776 src/modules/connman/e_mod_main.c:441
-#: src/modules/tasks/e_mod_main.c:716 src/modules/xkbswitch/e_mod_main.c:327
+#: src/modules/everything/evry_gadget.c:511
+#: src/modules/everything/evry_gadget.c:696 src/modules/ibar/e_mod_main.c:379
+#: src/modules/ibar/e_mod_main.c:864 src/modules/ibox/e_mod_main.c:302
+#: src/modules/ibox/e_mod_main.c:678 src/modules/pager/e_mod_main.c:875
+#: src/modules/temperature/e_mod_main.c:230 src/modules/mixer/e_mod_main.c:776
+#: src/modules/connman/e_mod_main.c:441 src/modules/tasks/e_mod_main.c:716
+#: src/modules/xkbswitch/e_mod_main.c:327
 #: src/modules/xkbswitch/e_mod_main.c:369
 #: src/modules/notification/e_mod_box.c:477
 #: src/modules/notification/e_mod_box.c:616
@@ -2497,7 +2607,7 @@ msgid "Size, Position and Locks"
 msgstr "Dimensione, posizione e blocchi"
 
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/everything/evry_gadget.c:645 src/modules/shot/e_mod_main.c:703
 msgid "All"
 msgstr "Tutto"
 
@@ -2676,14 +2786,14 @@ msgstr "Applicazioni preferite"
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1302
+#: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1317
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4002
 msgid "Windows"
 msgstr "Finestre"
 
-#: src/bin/e_int_menus.c:207 src/bin/e_int_menus.c:1356
+#: src/bin/e_int_menus.c:207 src/bin/e_int_menus.c:1371
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
@@ -2713,27 +2823,27 @@ msgstr "Mensole porta-gadget"
 msgid "Show/Hide All Windows"
 msgstr "Mostra/nascondi tutte le finestre"
 
-#: src/bin/e_int_menus.c:690
+#: src/bin/e_int_menus.c:693
 msgid "(No Applications)"
 msgstr "(Nessuna Applicazione)"
 
-#: src/bin/e_int_menus.c:933
+#: src/bin/e_int_menus.c:948
 msgid "Set Virtual Desktops"
 msgstr "Imposta desktop virtuali"
 
-#: src/bin/e_int_menus.c:1308 src/bin/e_int_menus.c:1500
+#: src/bin/e_int_menus.c:1323 src/bin/e_int_menus.c:1515
 msgid "(No Windows)"
 msgstr "(Nessuna Finestra)"
 
-#: src/bin/e_int_menus.c:1413 src/bin/e_int_menus.c:1512
+#: src/bin/e_int_menus.c:1428 src/bin/e_int_menus.c:1527
 msgid "No name!!"
 msgstr "Nessun nome!!"
 
-#: src/bin/e_int_menus.c:1675
+#: src/bin/e_int_menus.c:1690
 msgid "Add a Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1682
+#: src/bin/e_int_menus.c:1697
 msgid "Delete a Shelf"
 msgstr "Elimina mensola"
 
@@ -3914,6 +4024,7 @@ msgstr[1] "%li minuti fa"
 #: src/modules/comp/e_mod_config.c:516
 #: src/modules/conf_dialogs/e_int_config_profiles.c:295
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1220
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1122
 #: src/modules/wizard/page_020.c:25
 msgid "Unknown"
@@ -4035,6 +4146,7 @@ msgstr "%li Minuti"
 #: src/modules/conf_applications/e_int_config_apps_personal.c:91
 #: src/modules/conf_dialogs/e_int_config_profiles.c:132
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:197
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:243
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:292
 #: src/modules/conf_paths/e_int_config_env.c:309
@@ -4282,6 +4394,7 @@ msgid "Hardware"
 msgstr "Hardware"
 
 #: src/modules/battery/e_mod_main.c:152 src/modules/battery/e_mod_main.c:455
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Battery"
 
@@ -5469,6 +5582,7 @@ msgstr "Desktop"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:11
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:462
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
@@ -5515,6 +5629,7 @@ msgid "Restore Default Bindings"
 msgstr "Ripristina associazioni predefinite"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:209
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:263
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:312
 msgid "Action"
@@ -5525,6 +5640,7 @@ msgid "Mouse Button"
 msgstr "Pulsanti del mouse"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:216
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:270
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:319
 msgid "Action Params"
@@ -5848,12 +5964,109 @@ msgstr "Localizzazione"
 msgid "Language"
 msgstr "Lingua"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:4
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
+#: src/modules/conf_keybindings/e_mod_main.c:29
+msgid "ACPI Bindings"
+msgstr "Associazioni ACPI"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:349
+msgid "AC Adapter Unplugged"
+msgstr "Disinserimento AC"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:350
+msgid "AC Adapter Plugged"
+msgstr "Inserimento AC"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:351
+msgid "Ac Adapter"
+msgstr "Alimentazione AC"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:356
+msgid "Button"
+msgstr "Bottone"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:358
+msgid "Fan"
+msgstr "Ventola"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:361
+msgid "Lid Unknown"
+msgstr "Coperchio (ignoto)"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:362
+msgid "Lid Closed"
+msgstr "Coperchio chiuso"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:363
+msgid "Lid Opened"
+msgstr "Coperchio aperto"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:364
+msgid "Lid"
+msgstr "Coperchio"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:367
+msgid "Power Button"
+msgstr "Pulsante accensione"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:369
+msgid "Processor"
+msgstr "Processore"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:371
+msgid "Sleep Button"
+msgstr "Pulsante sospensione"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:373
+msgid "Thermal"
+msgstr "Termica"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:375
+msgid "Video"
+msgstr "Video"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:377
+msgid "Wifi"
+msgstr "Wifi"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:381
+msgid "Zoom Out"
+msgstr "Zoom avanti"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:383
+msgid "Zoom In"
+msgstr "Zoom indietro"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:385
+msgid "Brightness Down"
+msgstr "Diminuisci luminosità"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:387
+msgid "Brightness Up"
+msgstr "Aumenta luminosità"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
+msgid "Assist"
+msgstr "Assist"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:391
+msgid "S1"
+msgstr "S1"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:393
+msgid "Vaio"
+msgstr "Vaio"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:497
+msgid "ACPI Binding"
+msgstr "Associazioni ACPI"
+
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:500
 msgid ""
-"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
-msgstr ""
-"Premere la combinazione di tasti,<br><br>o <hilight>Escape</hilight> per "
-"abortire"
+"Please trigger the ACPI event you wish to bind to, <br><br>or "
+"<hilight>Escape</hilight> to abort."
+msgstr "Causare l'evento ACPI che si desidera impostare,<br><br>o <hilight>Escape</hilight> per abortire"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
 msgid "Single key"
@@ -5880,16 +6093,6 @@ msgid ""
 msgstr ""
 "La combinazione di tasti che avete scelto è già usata<br>dall'azione "
 "<hilight>%s</hilight>.<br>Si prega di scegliere una combinazione diversa."
-
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
-msgid ""
-"Please hold any modifier you want<br>and press any button on your mouse,<br> "
-"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"highlight> to abort."
-msgstr ""
-"Tenere premuto il modificatore desiderato<br>e premere un bottone del mouse, "
-"o girare<br>una rotella, per assegnare un'associazione.<br>Premere "
-"<hilight>Escape</highlight> per abortire."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
 msgid "Mouse Bindings Settings"
@@ -5984,10 +6187,6 @@ msgstr "Rotella extra (%d) su"
 #, c-format
 msgid "Extra Wheel (%d) Down"
 msgstr "Rotella extra (%d) giù"
-
-#: src/modules/conf_keybindings/e_mod_main.c:29
-msgid "ACPI Bindings"
-msgstr "Associazioni ACPI"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -7927,6 +8126,18 @@ msgstr "Geometria"
 #: src/modules/everything/evry_config.c:632
 msgid "Everything Collection"
 msgstr "Raccolta di Everything"
+
+#: src/modules/everything/evry_gadget.c:169
+msgid "Everything Starter"
+msgstr "Avvio Everything"
+
+#: src/modules/everything/evry_gadget.c:587
+msgid "Everything Gadgets"
+msgstr "Gadget di Everything"
+
+#: src/modules/everything/evry_gadget.c:686
+msgid "Plugin"
+msgstr "Plugin"
 
 #: src/modules/everything/evry_plug_aggregator.c:122
 #, c-format
