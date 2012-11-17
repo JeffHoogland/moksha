@@ -37,11 +37,14 @@ src/bin/e_fm_prop.c
 src/bin/e_focus.c
 src/bin/e_font.c
 src/bin/e_gadcon.c
+src/bin/e_grab_dialog.c
 src/bin/e_grabinput.c
 src/bin/e_hints.c
 src/bin/e_icon.c
 src/bin/e_ilist.c
 src/bin/e_imc_main.c
+src/bin/e_import_dialog.c
+src/bin/e_import_config_dialog.c
 src/bin/e_init.c
 src/bin/e_int_border_locks.c
 src/bin/e_int_border_menu.c
@@ -162,6 +165,7 @@ src/modules/conf_intl/e_int_config_imc.c
 src/modules/conf_intl/e_int_config_imc_import.c
 src/modules/conf_intl/e_int_config_intl.c
 src/modules/conf_intl/e_mod_main.c
+src/modules/conf_keybindings/e_int_config_acpibindings.c
 src/modules/conf_keybindings/e_int_config_keybindings.c
 src/modules/conf_keybindings/e_int_config_mousebindings.c
 src/modules/conf_keybindings/e_mod_main.c
@@ -204,6 +208,7 @@ src/modules/dropshadow/e_mod_main.c
 src/modules/everything/e_mod_main.c
 src/modules/everything/evry.c
 src/modules/everything/evry_config.c
+src/modules/everything/evry_gadget.c
 src/modules/everything/evry_plug_actions.c
 src/modules/everything/evry_plug_aggregator.c
 src/modules/everything/evry_plug_clipboard.c
