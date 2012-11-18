@@ -9,5 +9,3 @@ startpkg_LTLIBRARIES = start/module.la
 
 start_module_la_SOURCES = start/e_mod_main.h \
 			  start/e_mod_main.c
-
-start_module_la_DEPENDENCIES = $(MDEPENDENCIES)

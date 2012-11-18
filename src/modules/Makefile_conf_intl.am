@@ -14,5 +14,3 @@ conf_intl_module_la_SOURCES = conf_intl/e_mod_main.c \
 			      conf_intl/e_int_config_imc_import.h \
 			      conf_intl/e_int_config_imc.c \
 			      conf_intl/e_int_config_imc.h
-
-conf_intl_module_la_DEPENDENCIES = $(MDEPENDENCIES)

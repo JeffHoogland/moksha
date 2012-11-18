@@ -7,7 +7,6 @@ EXTRA_DIST =
 INSTALL_DATA_HOOKS =
 
 MDIR = $(libdir)/enlightenment/modules
-MDEPENDENCIES = $(top_builddir)/config.h
 AM_LDFLAGS = -module -avoid-version -no-undefined
 AM_CPPFLAGS = -I. \
 	      -I$(top_srcdir) \

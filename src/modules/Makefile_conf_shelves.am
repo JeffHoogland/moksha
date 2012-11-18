@@ -11,5 +11,3 @@ conf_shelves_module_la_SOURCES = conf_shelves/e_mod_main.c \
 				 conf_shelves/e_mod_main.h \
 				 conf_shelves/e_int_config_shelf.c \
 				 conf_shelves/e_int_config_shelf.h
-
-conf_shelves_module_la_DEPENDENCIES = $(MDEPENDENCIES)

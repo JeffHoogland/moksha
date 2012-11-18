@@ -14,5 +14,3 @@ syscon_module_la_SOURCES = syscon/e_mod_main.c \
 			   syscon/e_syscon.c \
 			   syscon/e_syscon.h \
 			   syscon/e_syscon_gadget.c
-
-syscon_module_la_DEPENDENCIES = $(MDEPENDENCIES)

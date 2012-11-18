@@ -31,4 +31,3 @@ illume_indicator_module_la_SOURCES += illume-indicator/e_mod_notify.c \
 endif
 
 illume_indicator_module_la_LIBADD = @ENOTIFY_LIBS@
-illume_indicator_module_la_DEPENDENCIES = $(MDEPENDENCIES)

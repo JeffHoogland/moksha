@@ -12,5 +12,3 @@ xkbswitch_module_la_SOURCES = xkbswitch/e_mod_main.c \
 			      xkbswitch/e_mod_config.c \
 			      xkbswitch/e_mod_parse.c \
 			      xkbswitch/e_mod_parse.h
-
-xkbswitch_module_la_DEPENDENCIES = $(MDEPENDENCIES)

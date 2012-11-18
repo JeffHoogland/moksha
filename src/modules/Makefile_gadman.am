@@ -13,5 +13,3 @@ gadman_module_la_SOURCES = gadman/e_mod_main.c \
 			   gadman/e_mod_config.h \
 			   gadman/e_mod_gadman.c \
 			   gadman/e_mod_gadman.h
-
-gadman_module_la_DEPENDENCIES = $(MDEPENDENCIES)

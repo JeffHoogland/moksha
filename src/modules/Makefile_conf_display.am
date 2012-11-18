@@ -22,5 +22,3 @@ conf_display_module_la_SOURCES = conf_display/e_mod_main.c \
 				 conf_display/e_int_config_desks.h \
 				 conf_display/e_int_config_desk.c \
 				 conf_display/e_int_config_desk.h
-
-conf_display_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -9,5 +9,3 @@ systraypkg_LTLIBRARIES = systray/module.la
 
 systray_module_la_SOURCES = systray/e_mod_main.h \
 			    systray/e_mod_main.c
-
-systray_module_la_DEPENDENCIES = $(MDEPENDENCIES)

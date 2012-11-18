@@ -13,5 +13,3 @@ illume_home_module_la_SOURCES = illume-home/e_mod_main.c \
 				illume-home/e_mod_config.h \
 				illume-home/e_busycover.c \
 				illume-home/e_busycover.h
-
-illume_home_module_la_DEPENDENCIES = $(MDEPENDENCIES)

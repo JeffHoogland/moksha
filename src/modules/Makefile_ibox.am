@@ -10,5 +10,3 @@ iboxpkg_LTLIBRARIES = ibox/module.la
 ibox_module_la_SOURCES = ibox/e_mod_main.c \
 			 ibox/e_mod_main.h \
 			 ibox/e_mod_config.c
-
-ibox_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -69,5 +69,3 @@ illume2_module_la_SOURCES = illume2/e_mod_main.c \
 			    illume2/e_mod_policy.c \
 			    illume2/e_mod_config.h \
 			    illume2/e_mod_config.c
-
-illume2_module_la_DEPENDENCIES = $(MDEPENDENCIES)

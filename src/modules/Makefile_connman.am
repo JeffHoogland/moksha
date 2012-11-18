@@ -18,4 +18,3 @@ connman_module_la_SOURCES = connman/e_mod_main.h \
 
 connman_module_la_CFLAGS = $(AM_CFLAGS) -Wno-unused-parameter
 connman_module_la_LIBADD = @ECONNMAN_LIBS@
-connman_module_la_DEPENDENCIES = $(MDEPENDENCIES)

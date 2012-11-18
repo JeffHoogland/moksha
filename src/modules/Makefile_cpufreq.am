@@ -10,8 +10,6 @@ cpufreqpkg_LTLIBRARIES = cpufreq/module.la
 cpufreq_module_la_SOURCES  = cpufreq/e_mod_main.h \
 			     cpufreq/e_mod_main.c
 
-cpufreq_module_la_DEPENDENCIES = $(MDEPENDENCIES)
-
 freqsetdir = $(cpufreqpkgdir)
 freqset_PROGRAMS = cpufreq/freqset
 

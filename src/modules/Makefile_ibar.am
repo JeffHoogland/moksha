@@ -10,5 +10,3 @@ ibarpkg_LTLIBRARIES = ibar/module.la
 ibar_module_la_SOURCES = ibar/e_mod_main.c \
 			 ibar/e_mod_main.h \
 			 ibar/e_mod_config.c
-
-ibar_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -20,5 +20,3 @@ fileman_module_la_SOURCES = fileman/e_mod_main.c \
 			    fileman/e_mod_dbus.c \
 			    fileman/e_mod_dbus.h \
 			    fileman/e_mod_menu.c
-
-fileman_module_la_DEPENDENCIES = $(MDEPENDENCIES)

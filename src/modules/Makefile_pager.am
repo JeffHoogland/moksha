@@ -10,5 +10,3 @@ pagerpkg_LTLIBRARIES = pager/module.la
 pager_module_la_SOURCES = pager/e_mod_main.h \
 			  pager/e_mod_main.c \
 			  pager/e_mod_config.c
-
-pager_module_la_DEPENDENCIES = $(MDEPENDENCIES)

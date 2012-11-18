@@ -15,6 +15,3 @@ conf_performance_module_la_SOURCES = conf_performance/e_mod_main.c \
 			     conf_performance/e_int_config_engine.h \
 			     conf_performance/e_int_config_powermanagement.c \
 			     conf_performance/e_int_config_powermanagement.h
-
-
-conf_performance_module_la_DEPENDENCIES = $(MDEPENDENCIES)

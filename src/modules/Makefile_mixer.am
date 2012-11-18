@@ -36,5 +36,3 @@ if HAVE_ENOTIFY
 mixer_module_la_CFLAGS += @ENOTIFY_CFLAGS@
 mixer_module_la_LIBADD += @ENOTIFY_LIBS@
 endif
-
-mixer_module_la_DEPENDENCIES = $(MDEPENDENCIES)

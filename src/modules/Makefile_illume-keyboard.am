@@ -56,5 +56,3 @@ illume_keyboard_module_la_SOURCES = illume-keyboard/e_mod_main.c \
 				    illume-keyboard/e_kbd_send.h \
 				    illume-keyboard/e_mod_config.c \
 				    illume-keyboard/e_mod_config.h
-
-illume_keyboard_module_la_DEPENDENCIES = $(MDEPENDENCIES)

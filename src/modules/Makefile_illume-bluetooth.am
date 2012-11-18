@@ -9,5 +9,3 @@ illume_bluetoothpkg_LTLIBRARIES = illume-bluetooth/module.la
 
 illume_bluetooth_module_la_SOURCES = illume-bluetooth/e_mod_main.c \
 				     illume-bluetooth/e_mod_main.h
-
-illume_bluetooth_module_la_DEPENDENCIES = $(MDEPENDENCIES)

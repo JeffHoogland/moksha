@@ -7,7 +7,6 @@ EXTRA_DIST += $(battery_DATA)
 batterypkgdir = $(MDIR)/battery/$(MODULE_ARCH)
 batterypkg_LTLIBRARIES = battery/module.la
 
-battery_module_la_DEPENDENCIES = $(MDEPENDENCIES)
 battery_module_la_CFLAGS = $(AM_CFLAGS)
 battery_module_la_SOURCES  = battery/e_mod_main.h \
 			     battery/e_mod_main.c \

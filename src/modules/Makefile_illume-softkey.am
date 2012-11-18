@@ -24,5 +24,3 @@ illume_softkey_module_la_SOURCES = illume-softkey/e_mod_main.c \
 				   illume-softkey/e_mod_sft_win.h \
 				   illume-softkey/e_mod_config.c \
 				   illume-softkey/e_mod_config.h
-
-illume_softkey_module_la_DEPENDENCIES = $(MDEPENDENCIES)

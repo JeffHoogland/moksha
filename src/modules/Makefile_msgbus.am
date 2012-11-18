@@ -12,5 +12,3 @@ msgbus_module_la_SOURCES = msgbus/e_mod_main.h \
 			   msgbus/msgbus_audit.c \
 			   msgbus/msgbus_desktop.c \
 			   msgbus/msgbus_lang.c
-
-msgbus_module_la_DEPENDENCIES = $(MDEPENDENCIES)

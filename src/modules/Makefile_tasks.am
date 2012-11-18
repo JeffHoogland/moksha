@@ -10,5 +10,3 @@ taskspkg_LTLIBRARIES = tasks/module.la
 tasks_module_la_SOURCES = tasks/e_mod_main.c \
 			  tasks/e_mod_main.h \
 			  tasks/e_mod_config.c
-
-tasks_module_la_DEPENDENCIES = $(MDEPENDENCIES)

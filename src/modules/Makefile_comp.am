@@ -38,4 +38,3 @@ comp_module_la_SOURCES += comp/e_mod_comp_wl.h \
 endif
 
 comp_module_la_LIBADD       = @WAYLAND_LIBS@
-comp_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -36,8 +36,6 @@ everything_module_la_SOURCES = $(EVRYHEADERS) \
 			       everything/evry_plug_settings.c \
 			       everything/evry_plug_calc.c
 
-everything_module_la_DEPENDENCIES = $(MDEPENDENCIES)
-
 everything_headersdir = $(pkgincludedir)
 dist_everything_headers_DATA = $(EVRYHEADERS)
 

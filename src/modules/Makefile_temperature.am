@@ -7,7 +7,6 @@ EXTRA_DIST += $(temperature_DATA)
 temperaturepkgdir = $(MDIR)/temperature/$(MODULE_ARCH)
 temperaturepkg_LTLIBRARIES = temperature/module.la
 
-temperature_module_la_DEPENDENCIES = $(MDEPENDENCIES)
 temperature_module_la_SOURCES  = temperature/e_mod_main.c \
 				 temperature/e_mod_main.h \
 				 temperature/e_mod_config.c \

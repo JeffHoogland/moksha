@@ -9,5 +9,3 @@ backlightpkg_LTLIBRARIES = backlight/module.la
 
 backlight_module_la_SOURCES = backlight/e_mod_main.c \
 			      backlight/e_mod_main.h
-
-backlight_module_la_DEPENDENCIES = $(MDEPENDENCIES)

@@ -9,5 +9,3 @@ illume_home_togglepkg_LTLIBRARIES = illume-home-toggle/module.la
 
 illume_home_toggle_module_la_SOURCES = illume-home-toggle/e_mod_main.c \
 				       illume-home-toggle/e_mod_main.h
-
-illume_home_toggle_module_la_DEPENDENCIES = $(MDEPENDENCIES)

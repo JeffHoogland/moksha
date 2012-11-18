@@ -9,5 +9,3 @@ illume_kbd_togglepkg_LTLIBRARIES = illume-kbd-toggle/module.la
 
 illume_kbd_toggle_module_la_SOURCES = illume-kbd-toggle/e_mod_main.c \
 				      illume-kbd-toggle/e_mod_main.h
-
-illume_kbd_toggle_module_la_DEPENDENCIES = $(MDEPENDENCIES)

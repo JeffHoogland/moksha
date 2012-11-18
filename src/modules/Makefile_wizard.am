@@ -46,59 +46,41 @@ wizard_module_la_SOURCES = wizard/e_mod_main.h \
 			   wizard/e_mod_main.c \
 			   wizard/e_wizard.c \
 			   wizard/e_wizard.h
-wizard_module_la_DEPENDENCIES = $(MDEPENDENCIES)
 
 wizard_page_000_la_SOURCES        = wizard/page_000.c
-wizard_page_000_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_010_la_SOURCES        = wizard/page_010.c
-wizard_page_010_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_011_la_SOURCES        = wizard/page_011.c
-wizard_page_011_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_020_la_SOURCES        = wizard/page_020.c
-wizard_page_020_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_030_la_SOURCES        = wizard/page_030.c
-wizard_page_030_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_040_la_SOURCES        = wizard/page_040.c
-wizard_page_040_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_050_la_SOURCES        = wizard/page_050.c
-wizard_page_050_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_060_la_SOURCES        = wizard/page_060.c
-wizard_page_060_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_070_la_SOURCES        = wizard/page_070.c
-wizard_page_070_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_080_la_SOURCES        = wizard/page_080.c
-wizard_page_080_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_090_la_SOURCES        = wizard/page_090.c
 
-wizard_page_090_la_DEPENDENCIES   = $(MDEPENDENCIES)
-
 wizard_page_100_la_SOURCES        = wizard/page_100.c
-wizard_page_100_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 if USE_MODULE_CONNMAN
 wizard_page_110_la_SOURCES        = wizard/page_110.c
 wizard_page_110_la_LIBADD         = @ECONNMAN_LIBS@
-wizard_page_110_la_DEPENDENCIES   = $(MDEPENDENCIES)
 endif
 
 wizard_page_120_la_SOURCES        = wizard/page_120.c
-wizard_page_120_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_130_la_SOURCES        = wizard/page_130.c
-wizard_page_130_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_140_la_SOURCES        = wizard/page_140.c
-wizard_page_140_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard/e_mod_comp_main.h: $(abs_top_srcdir)/src/modules/comp/e_mod_main.h
 	$(AM_V_GEN) $(LN_S) -f $< $@
@@ -121,13 +103,9 @@ nodist_wizard_page_150_la_SOURCES = wizard/e_mod_comp_cfdata.c \
 				    wizard/e_mod_comp_cfdata.h \
 				    wizard/e_mod_comp_main.h
 
-wizard_page_150_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_160_la_SOURCES        = wizard/page_160.c
-wizard_page_160_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_170_la_SOURCES        = wizard/page_170.c
-wizard_page_170_la_DEPENDENCIES   = $(MDEPENDENCIES)
 
 wizard_page_200_la_SOURCES        = wizard/page_200.c
-wizard_page_200_la_DEPENDENCIES   = $(MDEPENDENCIES)
