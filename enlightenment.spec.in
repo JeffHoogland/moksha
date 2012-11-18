@@ -13,12 +13,9 @@ Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project 
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 Prefix: %{_prefix}
 #BuildSuggests: xorg-x11-devel, XFree86-devel, libX11-devel
-BuildRequires: evas-devel, edje-devel, edje-bin, ecore-devel, eet-devel
-BuildRequires: embryo-devel, embryo-bin, eeze-devel
-Requires: evas-module_loader_eet evas-module_saver_eet
-Requires: evas-module_loader_png evas-module_saver_png
-Requires: evas-module_loader_jpeg evas-module_saver_jpeg
-Requires: evas-module_engine_software_x11 evas-module_engine_buffer
+BuildRequires: efl-devel, edje-devel, edje-bin, ecore-devel
+BuildRequires: eeze-devel
+Requires: efl
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -28,7 +25,7 @@ Enlightenment is a window manager.
 Summary: Development headers for Enlightenment. 
 Group: User Interface/Desktops
 Requires: %{name} = %{version}
-Requires: evas-devel, edje-devel, ecore-devel, eet-devel, embryo-devel
+Requires: efl-devel, edje-devel, ecore-devel
 
 %description devel
 Development headers for Enlightenment.
@@ -37,7 +34,7 @@ Development headers for Enlightenment.
 %setup -q
 
 %build
-%{configure} --prefix=%{_prefix}
+%{configure} --prefix=%{_prefix} --with-profile=FAST_PC
 %{__make} %{?_smp_mflags} %{?mflags}
 
 %install
