@@ -1241,8 +1241,8 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop,
    selected = e_fm2_selected_list_get(page->fm_obj);
    if (!selected) return;
 
-   getcwd(pcwd, sizeof(pcwd));
-   chdir(e_fm2_real_path_get(page->fm_obj));
+   if (!getcwd(pcwd, sizeof(pcwd))) return;
+   if (0 > chdir(e_fm2_real_path_get(page->fm_obj))) return;
 
    EINA_LIST_FOREACH(selected, l, ici)
      {
