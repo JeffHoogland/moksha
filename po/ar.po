@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-11-12 22:54+0100\n"
-"PO-Revision-Date: 2012-11-15 14:06+0300\n"
+"PO-Revision-Date: 2012-11-18 15:06+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
 "Language: ar\n"
@@ -124,7 +124,6 @@ msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 msgstr "أنت على وشك تسجيل الخروج.<br><br>هل أنت متأكد من أنك تريد فعل ذلك؟"
 
 #: src/bin/e_actions.c:2225
-#, fuzzy
 msgid "Log out"
 msgstr "أخرج"
 
@@ -234,27 +233,24 @@ msgid "Sticky Mode Toggle"
 msgstr "تحويل إلى وضع اﻹلتصاق"
 
 #: src/bin/e_actions.c:3018
-#, fuzzy
 msgid "Sticky Mode Enable"
-msgstr "تحويل إلى وضع اﻹلتصاق"
+msgstr "تمكين وضع اﻹلتصاق"
 
 #: src/bin/e_actions.c:3023
 msgid "Iconic Mode Toggle"
 msgstr "تحويل إلى وضع اﻷيقونات"
 
 #: src/bin/e_actions.c:3027
-#, fuzzy
 msgid "Iconic Mode Enable"
-msgstr "تحويل إلى وضع اﻷيقونات"
+msgstr "تمكين وضع اﻷيقونات"
 
 #: src/bin/e_actions.c:3032
 msgid "Fullscreen Mode Toggle"
 msgstr "تحويل إلى نمط كامل الشاشة"
 
 #: src/bin/e_actions.c:3036
-#, fuzzy
 msgid "Fullscreen Mode Enable"
-msgstr "تحويل إلى نمط كامل الشاشة"
+msgstr "تمكين وضع كامل الشاشة"
 
 #: src/bin/e_actions.c:3042 src/bin/e_int_border_menu.c:384
 #: src/bin/e_int_border_menu.c:640
@@ -270,14 +266,12 @@ msgid "Maximize Horizontally"
 msgstr "تكبير أفقي"
 
 #: src/bin/e_actions.c:3050
-#, fuzzy
 msgid "Maximize Left"
-msgstr "تكبير"
+msgstr "كبِّر لليسار"
 
 #: src/bin/e_actions.c:3053
-#, fuzzy
 msgid "Maximize Right"
-msgstr "تكبير"
+msgstr "كبِّر لليمين"
 
 #: src/bin/e_actions.c:3056
 msgid "Maximize Fullscreen"
@@ -316,9 +310,8 @@ msgid "Shade Mode Toggle"
 msgstr "تحويل إلى وضع الظل"
 
 #: src/bin/e_actions.c:3081
-#, fuzzy
 msgid "Set Shaded State"
-msgstr "حالة مضللة"
+msgstr "اضبظ المنطقة مضللة"
 
 #: src/bin/e_actions.c:3082
 msgid "syntax: \"(0|1) (up|down|left|right)\""
@@ -329,14 +322,12 @@ msgid "Toggle Borderless State"
 msgstr "حوّل إلى حالة بدون حدود"
 
 #: src/bin/e_actions.c:3091
-#, fuzzy
 msgid "Set Border"
 msgstr "اضبط العنوان"
 
 #: src/bin/e_actions.c:3097
-#, fuzzy
 msgid "Cycle between Borders"
-msgstr "دورة بين حدود"
+msgstr "بدل بين حدود"
 
 #: src/bin/e_actions.c:3103
 msgid "Toggle Pinned State"
@@ -390,9 +381,8 @@ msgid "Flip Desktop By..."
 msgstr "قلب سطح المكتبة بواسطة..."
 
 #: src/bin/e_actions.c:3122
-#, fuzzy
 msgid "Flip To Previous Desktop"
-msgstr "سطح المكتب السابق"
+msgstr "اقفز إلى سطح المكتب السابق"
 
 #: src/bin/e_actions.c:3127
 msgid "Show The Desktop"
@@ -560,9 +550,8 @@ msgid "Window : List"
 msgstr "نافذة : قائمة"
 
 #: src/bin/e_actions.c:3241
-#, fuzzy
 msgid "Jump to window..."
-msgstr "إقفز إلى المكتب"
+msgstr "إقفز إلى نافذة....."
 
 #: src/bin/e_actions.c:3245
 msgid "Jump to window... or start..."
@@ -645,9 +634,8 @@ msgid "Move To Center"
 msgstr "حرِّك إلى الوسط"
 
 #: src/bin/e_actions.c:3299
-#, fuzzy
 msgid "Move To Coordinates..."
-msgstr "حرِّك إلى الوسط"
+msgstr "تحرك إلى الإحداثيات...."
 
 #: src/bin/e_actions.c:3304
 msgid "Move By Coordinate Offset..."
@@ -687,14 +675,12 @@ msgid "To Desktop..."
 msgstr "إلى سطح المكتب..."
 
 #: src/bin/e_actions.c:3343
-#, fuzzy
 msgid "To Next Screen"
-msgstr "ضبط الشاشات"
+msgstr "إلى الشاشة التالية"
 
 #: src/bin/e_actions.c:3345
-#, fuzzy
 msgid "To Previous Screen"
-msgstr "سطح المكتب السابق"
+msgstr "إلى الشاشة السابقة"
 
 #: src/bin/e_actions.c:3350
 msgid "Show Main Menu"
@@ -757,14 +743,12 @@ msgid "Offline Mode Toggle"
 msgstr "التحول لوضع دون اتصال"
 
 #: src/bin/e_actions.c:3401 src/bin/e_actions.c:3405 src/bin/e_actions.c:3409
-#, fuzzy
 msgid "Enlightenment : Module"
-msgstr "إنلايتنمينت : النمط"
+msgstr "إنلايتنمينت : الوحدات"
 
 #: src/bin/e_actions.c:3402
-#, fuzzy
 msgid "Enable the named module"
-msgstr "وحدة  %s ﻹنلايتنمينت"
+msgstr "مكِّن اسم الوحدة"
 
 #: src/bin/e_actions.c:3406
 msgid "Disable the named module"
@@ -810,9 +794,8 @@ msgid "Suspend Now"
 msgstr "علّق اﻵن"
 
 #: src/bin/e_actions.c:3442
-#, fuzzy
 msgid "Hibernate Now"
-msgstr "أسبِت"
+msgstr "أسبِت اﻵن"
 
 #: src/bin/e_actions.c:3450
 msgid "Lock"
@@ -831,19 +814,16 @@ msgid "Delayed Action"
 msgstr "الحدث المتأخر"
 
 #: src/bin/e_actions.c:3468 src/bin/e_actions.c:3472 src/bin/e_actions.c:3476
-#, fuzzy
 msgid "Keyboard Layouts"
-msgstr "لوحة المفاتيح"
+msgstr "مخططات لوحة المفاتيح"
 
 #: src/bin/e_actions.c:3469
-#, fuzzy
 msgid "Use keyboard layout"
-msgstr "انشئ إختصار لوحة المفاتيح"
+msgstr "استخدم مخطط لوحة المفاتيح"
 
 #: src/bin/e_actions.c:3473
-#, fuzzy
 msgid "Next keyboard layout"
-msgstr "انشئ إختصار لوحة المفاتيح"
+msgstr "مخطط لوحة المفاتيح التالي"
 
 #: src/bin/e_actions.c:3477
 msgid "Previous keyboard layout"
@@ -858,9 +838,8 @@ msgid "Color Selector"
 msgstr "منتقي اﻵلوان"
 
 #: src/bin/e_color_dialog.c:46
-#, fuzzy
 msgid "Select"
-msgstr "إختيار"
+msgstr "حدد"
 
 #: src/bin/e_config.c:1005 src/bin/e_config.c:1038
 msgid ""
@@ -897,13 +876,13 @@ msgid "Enlightenment Settings Write Problems"
 msgstr "خلل في كتابة أعدادات إنلايتنمينت"
 
 #: src/bin/e_config.c:1687
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
-"حصل إنلايتنمينت على خطأ أثناء نقل ملفات اﻹعداد<br>من:<br>%s<br><br>إلى:<br>"
+"حصل إنلايتنمينت على خطأ أثناء نقل ملفات اﻹعداد<br>من :<br>%s<br><br>إلى :<br>"
 "%s<br><br>بقية الكتابة أُلغيت ﻷجل سلامة الملفات<br>"
 
 #: src/bin/e_config.c:1697 src/bin/e_config.c:2323
@@ -996,16 +975,14 @@ msgid "Feature not implemented."
 msgstr "ميزة لم تنفّذ"
 
 #: src/bin/e_config.c:2279
-#, fuzzy
 msgid "PRNG was not seeded."
-msgstr "ولم يكن المصنف مولد الأعداد العشوائية المزيفة."
+msgstr "لم يُصَنَّف مولد الأعداد العشوائية المزيفة "
 
 #: src/bin/e_config.c:2283
 msgid "Encryption failed."
 msgstr "فشل التشفير."
 
 #: src/bin/e_config.c:2287
-#, fuzzy
 msgid "Decryption failed."
 msgstr "فشل فك التشفير."
 
@@ -1014,14 +991,14 @@ msgid "The error is unknown to Enlightenment."
 msgstr "الخطأ مجهول لدى إنلايتنمينت"
 
 #: src/bin/e_config.c:2313
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
-"حصل إنلايتنمينت على خطأ أثناء <br>كتابة ملف إعداداته<br>%s<br>الملف اللذي "
-"حدث فيه الخلل:<br>%s<br>تم حذف هذا الملف لتفادي تعليق أو افساد البيانات<br>"
+"حصل إنلايتنمينت على خطأ أثناء كتابة <br>ملف إعداداته<br>%s<br>الملف الذي حدث "
+"فيه الخلل :<br>%s<br>تم حذف هذا الملف لتفادي تعليق أو افساد البيانات<br>"
 
 #: src/bin/e_config_dialog.c:226 src/modules/battery/e_mod_main.c:814
 #: src/modules/conf/e_mod_main.c:283
@@ -1045,13 +1022,8 @@ msgstr "طبق"
 #: src/modules/gadman/e_mod_main.c:26 src/modules/mixer/e_mod_main.c:1270
 #: src/modules/connman/e_mod_main.c:616
 #: src/modules/notification/e_mod_main.c:294
-#, fuzzy
 msgid "Extensions"
-msgstr ""
-"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
-"اﻹمتدادات\n"
-"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
-"الملحقات"
+msgstr "اﻹضافات"
 
 #: src/bin/e_configure.c:30 src/bin/e_configure.c:33 src/bin/e_configure.c:280
 #: src/modules/conf_paths/e_int_config_paths.c:80
@@ -1101,9 +1073,8 @@ msgid "Please enter your unlock password"
 msgstr "ادخل كلمة مرور فك القفل"
 
 #: src/bin/e_desklock.c:926
-#, fuzzy
 msgid "Authenticating..."
-msgstr "تطبيق آخر..."
+msgstr "مصادقة..."
 
 #: src/bin/e_desklock.c:931
 msgid "The password you entered is invalid. Try again."
@@ -1162,9 +1133,8 @@ msgstr ""
 "فقط <br> في حالة أن عنوان النافذة نفسه <br> وقت عمل النافذة , و لم<br>يتغير."
 
 #: src/bin/e_eap_editor.c:234
-#, fuzzy
 msgid "Desktop Entry Editor"
-msgstr "سطح المكتب دخول محرر"
+msgstr "محرر دخول سطح المكتب"
 
 #: src/bin/e_eap_editor.c:676 src/bin/e_int_border_prop.c:448
 #: src/bin/e_int_border_prop.c:502 src/modules/comp/e_mod_config.c:713
@@ -1239,9 +1209,9 @@ msgid "Options"
 msgstr "خيارات"
 
 #: src/bin/e_eap_editor.c:822
-#, fuzzy, c-format
+#, c-format
 msgid "Select an Icon for '%s'"
-msgstr "اختر أيقونة"
+msgstr "اختر أيقونة لـ '%s'"
 
 #: src/bin/e_eap_editor.c:889
 msgid "Select an Executable"
@@ -1300,9 +1270,9 @@ msgid "Enlightenment was unable to restore to directory:<br><br>%s"
 msgstr "لا يستطيع إنلايتنمينت اﻹستعادة إلى المجلد:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:469
-#, fuzzy, c-format
+#, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s"
-msgstr "لا يستطيع إنلايتنمينت إنشاء عمليات فرعية:<br><br>%s<br>"
+msgstr "لم يستطع إنلايتنمينت إنشاء تفرع من عملية الطفل :<br><br>%s<br>"
 
 #: src/bin/e_exec.c:599
 msgid "Application run error"
@@ -1429,11 +1399,15 @@ msgid "%s doesn't exist."
 msgstr "%s غير موجود."
 
 #: src/bin/e_fm.c:2795 src/bin/e_fm.c:3724
-#, fuzzy, c-format
+#, c-format
 msgid "%u file"
 msgid_plural "%u files"
-msgstr[0] "%u ملف"
-msgstr[1] "%u ملفات"
+msgstr[0] "لا يوجد"
+msgstr[1] "ملف واحد"
+msgstr[2] "ملفين"
+msgstr[3] "%u ملفات"
+msgstr[4] "%u ملفا"
+msgstr[5] "%u ملف"
 
 #: src/bin/e_fm.c:3012
 msgid "Mount Error"
@@ -1464,28 +1438,24 @@ msgid "Case Sensitive"
 msgstr "حساس لحالة اﻷحرف"
 
 #: src/bin/e_fm.c:8344 src/modules/fileman/e_mod_config.c:359
-#, fuzzy
 msgid "Sort By Extension"
-msgstr "اعرض امتداد اﻷيقونة"
+msgstr "رتب بواسطة اﻹضافة"
 
 #: src/bin/e_fm.c:8350 src/modules/fileman/e_mod_config.c:362
 msgid "Sort By Modification Time"
 msgstr ""
 
 #: src/bin/e_fm.c:8356 src/modules/fileman/e_mod_config.c:365
-#, fuzzy
 msgid "Sort By Size"
-msgstr "رتب بواسطة التاريخ"
+msgstr "رتب بواسطة الحجم"
 
 #: src/bin/e_fm.c:8365 src/modules/fileman/e_mod_config.c:373
-#, fuzzy
 msgid "Directories First"
-msgstr "ابحث في المجلدات"
+msgstr "المجلدات أولا"
 
 #: src/bin/e_fm.c:8371 src/modules/fileman/e_mod_config.c:377
-#, fuzzy
 msgid "Directories Last"
-msgstr "ابحث في المجلدات"
+msgstr "المجلدات آخرا"
 
 #: src/bin/e_fm.c:8404 src/bin/e_fm.c:8564
 #: src/modules/fileman/e_mod_config.c:303
@@ -1507,9 +1477,8 @@ msgid "New..."
 msgstr ""
 
 #: src/bin/e_fm.c:8462 src/bin/e_fm.c:8624 src/bin/e_fm.c:8655
-#, fuzzy
 msgid "Actions..."
-msgstr "اﻹجراءات"
+msgstr "اﻹجراءات....."
 
 #: src/bin/e_fm.c:8489 src/bin/e_fm.c:8711 src/bin/e_fm.c:11151
 msgid "Link"
@@ -1579,14 +1548,12 @@ msgid "Error"
 msgstr "خلل"
 
 #: src/bin/e_fm.c:9150
-#, fuzzy
 msgid "Could not create a file!"
-msgstr "خلل في تحميل الوحدة"
+msgstr "لا يمكن انشاء ملف!"
 
 #: src/bin/e_fm.c:9164 src/bin/e_fm.c:9182
-#, fuzzy
 msgid "New File"
-msgstr "الملف:"
+msgstr "ملف جديد"
 
 #: src/bin/e_fm.c:9228
 msgid "Already creating a new file for this directory!"
@@ -1598,20 +1565,17 @@ msgid "%s is not able to be written to!"
 msgstr ""
 
 #: src/bin/e_fm.c:9252
-#, fuzzy
 msgid "Directory"
-msgstr "مجلد جديد"
+msgstr "مجلد"
 
 #: src/bin/e_fm.c:9257
 #: src/modules/conf_applications/e_int_config_defapps.c:311
-#, fuzzy
 msgid "File"
-msgstr "الملف:"
+msgstr "ملف"
 
 #: src/bin/e_fm.c:9288
-#, fuzzy
 msgid "Inherit parent settings"
-msgstr "ترث إعدادات الوالدين"
+msgstr "اتباع إعدادات الوالدين"
 
 #: src/bin/e_fm.c:9297
 msgid "Show Hidden Files"
@@ -1626,42 +1590,36 @@ msgid "Sort Now"
 msgstr "رتب اﻵن"
 
 #: src/bin/e_fm.c:9326
-#, fuzzy
 msgid "Single Click Activation"
-msgstr "استخدم نقرة واحدة"
+msgstr "تفعيل النقرة واحدة"
 
 #: src/bin/e_fm.c:9337 src/modules/fileman/e_mod_config.c:393
-#, fuzzy
 msgid "Secure Deletion"
-msgstr "دقة الشاشة"
+msgstr "احم المحو"
 
 #: src/bin/e_fm.c:9350
-#, fuzzy
 msgid "File Manager Settings"
 msgstr "إعدادات مدير الملفات"
 
 #: src/bin/e_fm.c:9355
-#, fuzzy
 msgid "File Icon Settings"
-msgstr "إعدادات مدير الملفات"
+msgstr "إعدادات أيقونة الملف"
 
 #: src/bin/e_fm.c:9433 src/bin/e_fm.c:9649
 msgid "Set background..."
 msgstr "عين خلفية..."
 
 #: src/bin/e_fm.c:9441
-#, fuzzy
 msgid "Clear background"
-msgstr "عين خلفية..."
+msgstr "خلفية صافية"
 
 #: src/bin/e_fm.c:9448 src/bin/e_fm.c:9677
 msgid "Set overlay..."
 msgstr "عين غطاء..."
 
 #: src/bin/e_fm.c:9454
-#, fuzzy
 msgid "Clear overlay"
-msgstr "عين غطاء..."
+msgstr "غطاء صافٍ"
 
 #: src/bin/e_fm.c:9766
 msgid "Create a new Directory"
@@ -1706,9 +1664,8 @@ msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "الملف موجود من قبل, اكتب عليه؟<br><hilight>%s</hilight>"
 
 #: src/bin/e_fm.c:10185
-#, fuzzy
 msgid "Move Source"
-msgstr "انقل إلى"
+msgstr "انقل مصدرا"
 
 #: src/bin/e_fm.c:10186
 msgid "Ignore this"
@@ -1728,20 +1685,21 @@ msgid "Confirm Delete"
 msgstr "أكِّد المحو"
 
 #: src/bin/e_fm.c:10395
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
-msgstr "هل أنت متأكد من أنك تريد محو<br><hilight>%s</hilight> ؟"
+msgstr "هل تريد تأكيد محو<br><hilight>%s</hilight> ؟"
 
 #: src/bin/e_fm.c:10400
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"هل تريد تأكيد محو<br>الملفات %d التي إخترتها في:<br><hilight>%s</hilight> ?"
+"هل تريد تأكيد محو<br><hilight>كل</hilight> الملفات الـ %d في <br><hilight>"
+"%s</hilight>?"
 
 #: src/bin/e_fm.c:10410
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
 "hilight>?"
@@ -1749,9 +1707,18 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"هل تريد تأكيد محو<br>الملف %d الذي إخترته في:<br><hilight>%s</hilight> ?"
+"هل تريد تأكيد محو<br>الملف %d الذي إخترته في:<br><hilight>%s</hilight> ؟"
 msgstr[1] ""
-"هل تريد تأكيد محو<br>الملفات %d التي إخترتها في:<br><hilight>%s</hilight> ?"
+"هل تريد تأكيد محو<br>الملف %d الذي إخترته في:<br><hilight>%s</hilight> ؟"
+msgstr[2] ""
+"هل تريد تأكيد محو<br> %d الملفين الذين إخترتاهما في:<br><hilight>%s</"
+"hilight> ؟"
+msgstr[3] ""
+"هل تريد تأكيد محو<br> %d الملفات التي إخترتها في:<br><hilight>%s</hilight> ؟"
+msgstr[4] ""
+"هل تريد تأكيد محو<br> %d ملفا التي إخترتها في:<br><hilight>%s</hilight> ؟"
+msgstr[5] ""
+"هل تريد تأكيد محو<br> %d ملف التي إخترتها في:<br><hilight>%s</hilight> ؟"
 
 #: src/bin/e_fm_device.c:41
 #, c-format
@@ -1791,9 +1758,8 @@ msgid "Name:"
 msgstr "اﻹسم:"
 
 #: src/bin/e_fm_prop.c:397
-#, fuzzy
 msgid "Location:"
-msgstr "الدوران"
+msgstr "الموقع :"
 
 #: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:252
 #: src/bin/e_widget_filepreview.c:312 src/bin/e_widget_filepreview.c:366
@@ -1805,18 +1771,16 @@ msgid "Occuped blocks on disk:"
 msgstr ""
 
 #: src/bin/e_fm_prop.c:418
-#, fuzzy
 msgid "Last Accessed:"
-msgstr "آخر استخدام"
+msgstr "آخر دخول :"
 
 #: src/bin/e_fm_prop.c:425
 msgid "Last Modified:"
 msgstr "آخر تعديل:"
 
 #: src/bin/e_fm_prop.c:432
-#, fuzzy
 msgid "Last Modified Permissions:"
-msgstr "آخر تعديل:"
+msgstr "آخر صلاحيات تعديل :"
 
 #: src/bin/e_fm_prop.c:439
 msgid "File Type:"
@@ -1827,28 +1791,24 @@ msgid "Permissions"
 msgstr "الصلاحيات"
 
 #: src/bin/e_fm_prop.c:451 src/bin/e_fm_prop.c:460 src/bin/e_fm_prop.c:469
-#, fuzzy
 msgid "read"
-msgstr "استعد"
+msgstr "اقرأ"
 
 #: src/bin/e_fm_prop.c:453 src/bin/e_fm_prop.c:462 src/bin/e_fm_prop.c:471
 msgid "write"
 msgstr ""
 
 #: src/bin/e_fm_prop.c:455 src/bin/e_fm_prop.c:464 src/bin/e_fm_prop.c:473
-#, fuzzy
 msgid "execute"
-msgstr "تنفيذي"
+msgstr "نفِّذ"
 
 #: src/bin/e_fm_prop.c:458
-#, fuzzy
 msgid "Group:"
-msgstr "المجموعة بواسطة"
+msgstr "مجموعة :"
 
 #: src/bin/e_fm_prop.c:467
-#, fuzzy
 msgid "Others:"
-msgstr "أخرى"
+msgstr "أخرى :"
 
 #: src/bin/e_fm_prop.c:480 src/bin/e_widget_fsel.c:343
 #: src/modules/conf_theme/e_int_config_transitions.c:218
@@ -1920,9 +1880,8 @@ msgid "Remove"
 msgstr "أزل"
 
 #: src/bin/e_gadcon.c:2428
-#, fuzzy
 msgid "Stop moving"
-msgstr "يتوقف عن الحركة"
+msgstr "توقف عن الحركة"
 
 #: src/bin/e_hints.c:152
 msgid ""
@@ -1941,28 +1900,24 @@ msgid "Generic Locks"
 msgstr "اﻷقفال العامة"
 
 #: src/bin/e_int_border_locks.c:285
-#, fuzzy
 msgid "Prevent this window from moving on its own"
-msgstr "أحمِ هذه النافذة من أن اغيرها بالخطأ"
+msgstr "امنع تحريك هذه النافذة من قبل نفسها"
 
 #: src/bin/e_int_border_locks.c:287
-#, fuzzy
 msgid "Prevent this window from being changed by me"
-msgstr "أحمِ هذه النافذة من أن اغيرها بالخطأ"
+msgstr "امنع تغيير هذه النافذة من بواسطتي"
 
 #: src/bin/e_int_border_locks.c:289
-#, fuzzy
 msgid "Prevent this window from being closed"
-msgstr "النافذة السابقة من نفس الصنف"
+msgstr "امنع إغلاق هذه النافذة"
 
 #: src/bin/e_int_border_locks.c:291
 msgid "Do not allow the border to change on this window"
 msgstr "لا تسمح للحدود بالتغير في هذه النافذة"
 
 #: src/bin/e_int_border_locks.c:294
-#, fuzzy
 msgid "Remember the Locks for this window appears"
-msgstr "تذكر هذه اﻷقفال لهذه النافذة وقت ظهورها اﻵخر"
+msgstr "تذكر هذه اﻷقفال لهذه النافذة وقت ظهورها"
 
 #: src/bin/e_int_border_locks.c:308 src/bin/e_int_border_locks.c:327
 msgid "Prevent Changes In:"
@@ -1989,7 +1944,6 @@ msgid "Stacking"
 msgstr "ترصيص"
 
 #: src/bin/e_int_border_locks.c:315 src/bin/e_int_border_locks.c:334
-#, fuzzy
 msgid "Iconified state"
 msgstr "حالة أيقونية"
 
@@ -2021,28 +1975,24 @@ msgid "Border style"
 msgstr "اسلوب الحدود"
 
 #: src/bin/e_int_border_locks.c:346
-#, fuzzy
 msgid "User Locks"
-msgstr "اﻷقفال العامة"
+msgstr "أقفال المستخدم"
 
 #: src/bin/e_int_border_locks.c:348
-#, fuzzy
 msgid "Prevent:"
-msgstr "معاينة"
+msgstr "منع :"
 
 #: src/bin/e_int_border_locks.c:349
 msgid "Closing the window"
 msgstr "جار إغلاق النافذة"
 
 #: src/bin/e_int_border_locks.c:351
-#, fuzzy
 msgid "Logging out while this window is open"
-msgstr "الخروج من حسابي مع فتح هذه النافذة"
+msgstr "تسجيل الخروج عندما تكون هذه النافذة مفتوحة"
 
 #: src/bin/e_int_border_locks.c:353
-#, fuzzy
 msgid "Behavior Locks"
-msgstr "السلوك"
+msgstr "أقفال السلوك"
 
 #: src/bin/e_int_border_locks.c:357
 msgid "Remember these Locks"
@@ -2080,14 +2030,12 @@ msgid "Maximize horizontally"
 msgstr "كبر افقياً"
 
 #: src/bin/e_int_border_menu.c:417
-#, fuzzy
 msgid "Maximize left"
-msgstr "تكبير"
+msgstr "كبِّر لليسار"
 
 #: src/bin/e_int_border_menu.c:428
-#, fuzzy
 msgid "Maximize right"
-msgstr "تكبير"
+msgstr "كبِّر لليمين"
 
 #: src/bin/e_int_border_menu.c:439
 msgid "Unmaximize"
@@ -2136,9 +2084,8 @@ msgid "Remember"
 msgstr "تذكر"
 
 #: src/bin/e_int_border_menu.c:754
-#, fuzzy
 msgid "ICCCM/NetWM"
-msgstr "NetWM"
+msgstr "ICCCM/NetWM"
 
 #: src/bin/e_int_border_menu.c:927
 #, c-format
@@ -2173,14 +2120,12 @@ msgid "Select Border Style"
 msgstr "اختر أسلوب الحدود"
 
 #: src/bin/e_int_border_menu.c:1186
-#, fuzzy
 msgid "Use Enlightenment Default Icon Preference"
-msgstr "استخدم تفضيلات اﻷيقونات اﻹفتراضية لـE17"
+msgstr "استخدم تفضيلات اﻷيقونات اﻹفتراضية لإنلايتنمينت"
 
 #: src/bin/e_int_border_menu.c:1194
-#, fuzzy
 msgid "Use Application Provided Icon"
-msgstr "استخدم أيقونة التطبيق المقدمة"
+msgstr "استخدم أيقونة التطبيق نفسه"
 
 #: src/bin/e_int_border_menu.c:1202
 msgid "Use User Defined Icon"
@@ -2234,14 +2179,14 @@ msgid "%1.3f–%1.3f"
 msgstr ""
 
 #: src/bin/e_int_border_prop.c:154 src/bin/e_int_border_prop.c:176
-#, fuzzy, c-format
+#, c-format
 msgid "Withdrawn"
-msgstr "داخل"
+msgstr "مسقطة"
 
 #: src/bin/e_int_border_prop.c:162 src/bin/e_int_border_prop.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Iconic"
-msgstr "اﻷيقونة"
+msgstr "أيقونية"
 
 #: src/bin/e_int_border_prop.c:217
 #, c-format
@@ -2294,9 +2239,9 @@ msgid "Southeast"
 msgstr ""
 
 #: src/bin/e_int_border_prop.c:257
-#, fuzzy, c-format
+#, c-format
 msgid "Static"
-msgstr "الحالة"
+msgstr "ثابت"
 
 #: src/bin/e_int_border_prop.c:299 src/modules/clock/e_mod_config.c:137
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:360
@@ -2410,9 +2355,8 @@ msgid "Gravity"
 msgstr "الجاذبية"
 
 #: src/bin/e_int_border_prop.c:472
-#, fuzzy
 msgid "States"
-msgstr "الحالة"
+msgstr "الحالات"
 
 #: src/bin/e_int_border_prop.c:475
 msgid "Take Focus"
@@ -2450,13 +2394,8 @@ msgstr "أطلب الموضع"
 #: src/modules/xkbswitch/e_mod_main.c:369
 #: src/modules/notification/e_mod_box.c:477
 #: src/modules/notification/e_mod_box.c:616
-#, fuzzy
 msgid "Settings"
-msgstr ""
-"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
-"إعدادات\n"
-"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
-"اﻹعدادات"
+msgstr "اﻹعدادات"
 
 #: src/bin/e_int_border_prop.c:508 src/modules/comp/e_mod_config.c:897
 msgid "Modal"
@@ -2512,7 +2451,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:498
 #, fuzzy
 msgid "No match properties set"
-msgstr "لا خصائص مباراة تحديد"
+msgstr "لا يوجد ضبط تفضيلات متطابق"
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
@@ -2562,16 +2501,15 @@ msgstr "نوع النافذة"
 #: src/bin/e_int_border_remember.c:683
 #, fuzzy
 msgid "wildcard matches are allowed"
-msgstr "ويسمح لل مباريات البدل"
+msgstr "تطابق حرف البدل مسموح به"
 
 #: src/bin/e_int_border_remember.c:685
 msgid "Transience"
 msgstr "وقتية"
 
 #: src/bin/e_int_border_remember.c:688
-#, fuzzy
 msgid "Using"
-msgstr "استخدام القوائم"
+msgstr "استخدام"
 
 #: src/bin/e_int_border_remember.c:707
 msgid "Icon Preference"
@@ -2658,9 +2596,8 @@ msgid "Remove Gadget"
 msgstr "إزالة أداة"
 
 #: src/bin/e_int_gadcon_config.c:701
-#, fuzzy
 msgid "Loaded Gadgets"
-msgstr "إضافة أداة"
+msgstr "أدوات محمَّلَة"
 
 #: src/bin/e_int_gadcon_config.c:716 src/bin/e_int_gadcon_config.c:750
 msgid "Add Gadget"
@@ -2775,12 +2712,10 @@ msgid "No name!!"
 msgstr "لا اسم!!"
 
 #: src/bin/e_int_menus.c:1669
-#, fuzzy
 msgid "Add a Shelf"
 msgstr "أضف رفًّا"
 
 #: src/bin/e_int_menus.c:1676
-#, fuzzy
 msgid "Delete a Shelf"
 msgstr "احذف رفًّا"
 
@@ -2868,9 +2803,8 @@ msgid "Enlightenment cannot initialize Eina!\n"
 msgstr "لا يستطيع إنلايتنمينت بدء Eina!\n"
 
 #: src/bin/e_main.c:231
-#, fuzzy
 msgid "Enlightenment could not create a logging domain!\n"
-msgstr "لا يستطيع إنلايتنمينت بدء Eina!\n"
+msgstr "لا يستطيع إنلايتنمينت ضبط نظام معالجة أنتزاع المدخلات.\n"
 
 #: src/bin/e_main.c:279
 msgid "Enlightenment cannot initialize Eet!\n"
@@ -2881,9 +2815,8 @@ msgid "Enlightenment cannot initialize Ecore!\n"
 msgstr "لا يستطيع إنلايتنمينت بدء Ecore!\n"
 
 #: src/bin/e_main.c:297
-#, fuzzy
 msgid "Enlightenment cannot initialize EIO!\n"
-msgstr "لا يستطيع إنلايتنمينت بدء Eet!\n"
+msgstr "لا يستطيع إنلايتنمينت بدء EIO!\n"
 
 #: src/bin/e_main.c:309
 msgid ""
@@ -2934,36 +2867,32 @@ msgid "Enlightenment cannot initialize Ecore_Evas!\n"
 msgstr "لا يستطيع إنلايتنمينت بدء Ecore_Evas!\n"
 
 #: src/bin/e_main.c:393
-#, fuzzy
 msgid "Enlightenment cannot initialize Elementary!\n"
-msgstr "لا يستطيع إنلايتنمينت بدء Eet!\n"
+msgstr "لا يستطيع إنلايتنمينت بدء Elementary!\n"
 
 #: src/bin/e_main.c:404
-#, fuzzy
 msgid "Enlightenment cannot initialize Emotion!\n"
-msgstr "لا يستطيع إنلايتنمينت بدء Eina!\n"
+msgstr "لا يستطيع إنلايتنمينت بدء Emotion!\n"
 
 #: src/bin/e_main.c:419
-#, fuzzy
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
-"عثر إنلايتنمينت على أن ecore_evas لا تدعم أداء برمجية  X11\n"
+"عثر إنلايتنمينت على أن ecore_evas لا تدعم أداء برمجية تصيير  X11\n"
 "في Evas. رجاء تفقد تثبيت Evas و Ecore \n"
-"و تفقد دعمهما ﻷداء محرك X11 ."
+"و تفقد دعمهما ﻷداء محرك برمجية تصيير X11 ."
 
 #: src/bin/e_main.c:427
-#, fuzzy
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
-"rendering in Evas. Please check your installation of Evas and\n"
-"Ecore and check they support the Software Buffer rendering engine."
+"عثر إنلايتنمينت على أن ecore_evas لا تدعم أداء برمجية تصيير  الصوان\n"
+"في Evas. رجاء تفقد تثبيت Evas و Ecore \n"
+"و تفقد دعمهما ﻷداء محرك برمجية تصيير الصوان ."
 
 #: src/bin/e_main.c:437
 msgid "Enlightenment cannot initialize Edje!\n"
@@ -2974,7 +2903,6 @@ msgid "Enlightenment cannot initialize E_Intl!\n"
 msgstr "لا يستطيع إنلايتنمينت بدء E_Intl!.\n"
 
 #: src/bin/e_main.c:459
-#, fuzzy
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3007,7 +2935,6 @@ msgid "Enlightenment cannot initialize E_Randr!\n"
 msgstr "لا يستطيع إنلايتنمينت بدء E_Randr!.\n"
 
 #: src/bin/e_main.c:528
-#, fuzzy
 msgid "Enlightenment cannot set up its environment."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام بيئته."
 
@@ -3016,9 +2943,8 @@ msgid "Enlightenment cannot set up its scale system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام المسطرة."
 
 #: src/bin/e_main.c:553
-#, fuzzy
 msgid "Enlightenment cannot set up its pointer system."
-msgstr "لا يستطيع إنلايتنمينت على ضبط نظام المؤشر."
+msgstr "لا يستطيع إنلايتنمينت ضبط نظام المؤشر."
 
 #: src/bin/e_main.c:562
 msgid ""
@@ -3037,7 +2963,6 @@ msgid "Enlightenment cannot set up its theme system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام السمات."
 
 #: src/bin/e_main.c:612
-#, fuzzy
 msgid "Enlightenment cannot set up its init screen."
 msgstr "لا يستطيع إنلايتنمينت ضبط شاشة init."
 
@@ -3046,7 +2971,6 @@ msgid "Starting International Support"
 msgstr "جاري بدء الدعم الدولي"
 
 #: src/bin/e_main.c:631
-#, fuzzy
 msgid "Enlightenment cannot set up its intl system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام intl الخاص به."
 
@@ -3125,9 +3049,8 @@ msgid "Enlightenment cannot set up its popup system."
 msgstr "لا يستطيع إنلايتنمينت ضبط نظام النوافذ المنبثقة"
 
 #: src/bin/e_main.c:753
-#, fuzzy
 msgid "Setup Message Bus"
-msgstr "إعداد رسالة حافلة"
+msgstr "إعداد ناقل الرسالة"
 
 #: src/bin/e_main.c:760
 msgid "Setup Paths"
@@ -3184,12 +3107,11 @@ msgstr "لا يستطيع إنلايتنمينت ضبط نظام dnd."
 #: src/bin/e_main.c:836
 #, fuzzy
 msgid "Setup Grab Input Handling"
-msgstr "التعامل مع الإعداد الاستيلاء على الإدخال"
+msgstr "Setup Grab Input Handling"
 
 #: src/bin/e_main.c:840
-#, fuzzy
 msgid "Enlightenment cannot set up its grab input handling system."
-msgstr "لا يستطيع إنلايتنمينت ضبط نظام معالجة أنتزاع المدخلات."
+msgstr ""
 
 #: src/bin/e_main.c:847
 msgid "Setup Modules"
@@ -3241,9 +3163,8 @@ msgid "Enlightenment cannot configure the mouse settings."
 msgstr "لا يستطيع إنلايتنمينت إعداد خيارات ضبط الفأرة"
 
 #: src/bin/e_main.c:913
-#, fuzzy
 msgid "Enlightenment cannot setup XKB Keyboard layouts."
-msgstr "لا يستطيع إنلايتنمينت ضبط نظام ترتيب الملفات."
+msgstr "لا يستطيع إنلايتنمينت ضبط مخططات لوحة مفاتيح XKB"
 
 #: src/bin/e_main.c:919
 msgid "Setup Bindings"
@@ -3270,9 +3191,8 @@ msgid "Enlightenment cannot initialize the XSettings system.\n"
 msgstr "لا يستطيع إنلايتنمينت بدء نظام إعدادات X\n"
 
 #: src/bin/e_main.c:961
-#, fuzzy
 msgid "Enlightenment cannot initialize the Update system.\n"
-msgstr "لا يستطيع إنلايتنمينت بدء نظام الذاكرة المخبئية اﻷيقوني \n"
+msgstr "لا يستطيع إنلايتنمينت بدء نظام التحديثات \n"
 
 #: src/bin/e_main.c:970
 msgid "Setup Desktop Environment"
@@ -3350,7 +3270,6 @@ msgid "Testing Format Support"
 msgstr "جاري فحص دعم الصيغة"
 
 #: src/bin/e_main.c:1550
-#, fuzzy
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3493,9 +3412,8 @@ msgid "Enlightenment %s Module"
 msgstr "وحدة  %s ﻹنلايتنمينت"
 
 #: src/bin/e_module.c:523
-#, fuzzy
 msgid "What action should be taken with this module?<br>"
-msgstr "هل ترغب في إلغاء تحميل هذه الوحدة؟<br>"
+msgstr "ما نوع العملية التي يجب اتخاذها مع هذه الوحدة؟<br>"
 
 #: src/bin/e_module.c:529 src/bin/e_shelf.c:1785
 #: src/modules/conf_dialogs/e_int_config_profiles.c:335
@@ -3516,9 +3434,8 @@ msgid "Unstable module tainting"
 msgstr ""
 
 #: src/bin/e_module.c:793
-#, fuzzy
 msgid "I know"
-msgstr "غير معروف"
+msgstr "أعلم ذلك"
 
 #: src/bin/e_screensaver.c:159
 msgid ""
@@ -3549,28 +3466,24 @@ msgid "Shelf"
 msgstr "الدرج"
 
 #: src/bin/e_shelf.c:1117
-#, fuzzy
 msgid "Add New Shelf"
-msgstr "أضف رفًّا"
+msgstr "أضف رفًّا جديدا"
 
 #: src/bin/e_shelf.c:1138
-#, fuzzy
 msgid "Shelf Error"
-msgstr "الرف #"
+msgstr "خطأ بالرف"
 
 #: src/bin/e_shelf.c:1138
 msgid "A shelf with that name already exists!"
 msgstr ""
 
 #: src/bin/e_shelf.c:1650 src/bin/e_shelf.c:2439
-#, fuzzy
 msgid "Stop Moving Gadgets"
-msgstr "أوقف تحريك/تحجيم اﻷدوات"
+msgstr "أوقف تحريك اﻷدوات"
 
 #: src/bin/e_shelf.c:1652 src/bin/e_shelf.c:2441
-#, fuzzy
 msgid "Begin Moving Gadgets"
-msgstr "إبدأ تحريك/تحجيم اﻷدوات"
+msgstr "إبدأ تحريك اﻷدوات"
 
 #: src/bin/e_shelf.c:1780
 msgid "Are you sure you want to delete this shelf?"
@@ -3587,9 +3500,8 @@ msgid "A shelf with that name and id already exists!"
 msgstr ""
 
 #: src/bin/e_shelf.c:2317
-#, fuzzy
 msgid "Rename Shelf"
-msgstr "أعد تسمية الملف"
+msgstr "أعد تسمية الرف"
 
 #: src/bin/e_shelf.c:2389 src/modules/conf_shelves/e_int_config_shelf.c:141
 #: src/modules/ibar/e_mod_main.c:858
@@ -3597,12 +3509,10 @@ msgid "Contents"
 msgstr "المحتويات"
 
 #: src/bin/e_shelf.c:2399
-#, fuzzy
 msgid "Orientation"
-msgstr "عرض تقديمي"
+msgstr "توجيه"
 
 #: src/bin/e_shelf.c:2408
-#, fuzzy
 msgid "Autohide"
 msgstr "إخفاء تلقائي"
 
@@ -3786,46 +3696,50 @@ msgstr ""
 "قفل حفظ عمر البطارية .<br>"
 
 #: src/bin/e_utils.c:865
-#, fuzzy, c-format
+#, c-format
 msgid "%'.0f bytes"
-msgstr "%'.0f بايتات"
+msgstr "%'.0f بايت/بايتات"
 
 #: src/bin/e_utils.c:869
-#, fuzzy, c-format
+#, c-format
 msgid "%'.0f KiB"
-msgstr "%'.0f ك.ب."
+msgstr "%'.0f كيلو بايت"
 
 #: src/bin/e_utils.c:873
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f MiB"
-msgstr "%'.1f جيجابايت"
+msgstr "%'.1f ميجا بايت"
 
 #: src/bin/e_utils.c:877
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f GiB"
-msgstr "%'.1f جيجابايت"
+msgstr "%'.1f جيجا بايت"
 
 #: src/bin/e_utils.c:881
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f TiB"
-msgstr "%'.1f جيجابايت"
+msgstr "%'.1f تيرا بايت"
 
 #: src/bin/e_utils.c:900
-#, fuzzy, c-format
+#, c-format
 msgid "In the future"
 msgstr "في المستقبل"
 
 #: src/bin/e_utils.c:904
-#, fuzzy, c-format
+#, c-format
 msgid "In the last minute"
 msgstr "في الدقيقة اﻷخيرة"
 
 #: src/bin/e_utils.c:908
-#, fuzzy, c-format
+#, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
-msgstr[0] "السنة الماضية"
-msgstr[1] "%li السنوات الماضية"
+msgstr[0] "لا يوجد"
+msgstr[1] "السنة الماضية"
+msgstr[2] "السنتين الماضيتين"
+msgstr[3] "%li سنوات مضت"
+msgstr[4] "%li سنة مضت"
+msgstr[5] "%li سنة مضت"
 
 #: src/bin/e_utils.c:913
 #, c-format
@@ -3839,11 +3753,15 @@ msgstr[4] "%li شهرا الماضية"
 msgstr[5] "%li شهرا الماضية"
 
 #: src/bin/e_utils.c:918
-#, fuzzy, c-format
+#, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
-msgstr[0] "الأسبوع الماضي"
-msgstr[1] "%li الأسابيع الماضية"
+msgstr[0] "لا يوجد"
+msgstr[1] "الأسبوع الماضي"
+msgstr[2] "الأسبوعين الماضيين"
+msgstr[3] "%li أسابيع مضت"
+msgstr[4] "%li أسبوعا مضت"
+msgstr[5] "%li أسبوعا مضت"
 
 #: src/bin/e_utils.c:923
 #, c-format
@@ -3857,18 +3775,26 @@ msgstr[4] "%li يوما الماضية"
 msgstr[5] "%li يوما الماضي"
 
 #: src/bin/e_utils.c:928
-#, fuzzy, c-format
+#, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
-msgstr[0] "منذ ساعة مضت"
-msgstr[1] "%li الساعات الماضية"
+msgstr[0] "لا يوجد"
+msgstr[1] "الساعة الماضية"
+msgstr[2] "الساعتين الماضيتين"
+msgstr[3] "%li ساعات مضت"
+msgstr[4] "%li ساعة مضت"
+msgstr[5] "%li ساعة مضت"
 
 #: src/bin/e_utils.c:933
-#, fuzzy, c-format
+#, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
-msgstr[0] "منذ دقيقة مضت"
-msgstr[1] "%li الدقائق الماضية"
+msgstr[0] "لا يوجد"
+msgstr[1] "الدقيقة الماضية"
+msgstr[2] "الدقيقتين الماضيتين"
+msgstr[3] "%li دقائق مضت"
+msgstr[4] "%li دقيقة مضت"
+msgstr[5] "%li دقيقة مضت"
 
 #: src/bin/e_utils.c:940 src/bin/e_widget_filepreview.c:521
 #: src/bin/e_widget_filepreview.c:522 src/bin/e_widget_filepreview.c:523
@@ -3882,7 +3808,6 @@ msgid "Unknown"
 msgstr "غير معروف"
 
 #: src/bin/e_utils.c:1177
-#, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -3893,12 +3818,12 @@ msgid ""
 "the hiccup in your configuration.<br>"
 msgstr ""
 "إعدادات الضبط تحتاج للترقية. إعداداتك القديمة <br>قد تم محوها ، ومجموعة "
-"جديدة من اﻹعدادات الافتراضية تم تهيئتها. <br>هذا  يحدث بشكل منتظم خلال "
-"التطوير ، وبالتالي لا ترسل تقرير <br>بخطأ. هذا يعني ببساطة أن الوحدة هذه "
-"تحتاج ﻹعدادات جديدة <br>كما يمكنك بكل بساطة استخدام البيانات اﻷساسية للوظائف "
-"المستخدمة <br>في اﻹعدادات القديمة . هذه مجموعة جديدة من اﻷعدادات اﻹفتراضية "
-"التي ستقوم باﻹصلاح <br>عبر إضافتها يمكنك اﻵن إعادة إعداد اﻷشياء  <br>حسب "
-"رغبتك. نأسف للتدخل في اﻹعدادات الخاصة بك. <br>"
+"جديدة من اﻹعدادات الافتراضية تم تهيئتها. <br>سيحدث هذ بشكل منتظم خلال "
+"التطوير ، لذا لا ترسل تقرير <br>بخطأ. هذا يعني أن الوحدة تحتاج لبيانات "
+"إعدادات جديدة افتراضيا<br>لتحصل على أداء أفضل كانت <br>إعداداتك القديمة "
+"تفتقر إليه . و هذه اﻷعدادات الجديدة ستصلح <br>ذلك عبر إضافتها إليها . يمكنك "
+"اﻵن إعادة إعداد اﻷشياء  <br>حسب رغبتك. نأسف للتدخل في اﻹعدادات الخاصة بك. "
+"<br>"
 
 #: src/bin/e_utils.c:1186 src/bin/e_utils.c:1210
 #, c-format
@@ -3924,9 +3849,9 @@ msgid "Never"
 msgstr ""
 
 #: src/bin/e_utils.c:1296
-#, fuzzy, c-format
+#, c-format
 msgid "%li Seconds"
-msgstr "%.1f ثواني"
+msgstr "%li ثانية/ثوان"
 
 #: src/bin/e_utils.c:1301
 #, c-format
@@ -3934,9 +3859,9 @@ msgid "One year"
 msgstr ""
 
 #: src/bin/e_utils.c:1303
-#, fuzzy, c-format
+#, c-format
 msgid "%li Years"
-msgstr "قبل %li سنة\\سنوات"
+msgstr "%li سنة/سنوات"
 
 #: src/bin/e_utils.c:1309
 #, c-format
@@ -3944,9 +3869,9 @@ msgid "One month"
 msgstr ""
 
 #: src/bin/e_utils.c:1311
-#, fuzzy, c-format
+#, c-format
 msgid "%li Months"
-msgstr "قبل %li شهر\\أشهر"
+msgstr "%li شهر/شهور"
 
 #: src/bin/e_utils.c:1317
 #, c-format
@@ -3954,9 +3879,9 @@ msgid "One week"
 msgstr ""
 
 #: src/bin/e_utils.c:1319
-#, fuzzy, c-format
+#, c-format
 msgid "%li Weeks"
-msgstr "قبل %li اسبوع\\اسابيع"
+msgstr "%li اسبوع/أسابيع"
 
 #: src/bin/e_utils.c:1325
 #, c-format
@@ -3964,9 +3889,9 @@ msgid "One day"
 msgstr ""
 
 #: src/bin/e_utils.c:1327
-#, fuzzy, c-format
+#, c-format
 msgid "%li Days"
-msgstr "قبل %li يوم\\أيام"
+msgstr "%li يوم/أيام"
 
 #: src/bin/e_utils.c:1333
 #, c-format
@@ -3974,19 +3899,19 @@ msgid "An hour"
 msgstr ""
 
 #: src/bin/e_utils.c:1335
-#, fuzzy, c-format
+#, c-format
 msgid "%li Hours"
-msgstr "قبل %li ساعة\\ساعات"
+msgstr "%li ساعة/ساعات"
 
 #: src/bin/e_utils.c:1341
-#, fuzzy, c-format
+#, c-format
 msgid "A minute"
-msgstr "%1.0f دقائق"
+msgstr "دقيقة"
 
 #: src/bin/e_utils.c:1343
-#, fuzzy, c-format
+#, c-format
 msgid "%li Minutes"
-msgstr "قبل %li دقيقة\\دقائق"
+msgstr "%li دقيقة/دقائق"
 
 #: src/bin/e_widget_config_list.c:60 src/modules/comp/e_mod_config.c:1096
 #: src/modules/conf_applications/e_int_config_apps.c:265
@@ -4024,9 +3949,8 @@ msgid "G"
 msgstr ""
 
 #: src/bin/e_widget_csel.c:198
-#, fuzzy
 msgid "B"
-msgstr "بواسطة"
+msgstr "B"
 
 #: src/bin/e_widget_csel.c:198
 msgid "H"
@@ -4098,14 +4022,12 @@ msgid "Read Only"
 msgstr "للقراءة فقط"
 
 #: src/bin/e_widget_filepreview.c:510
-#, fuzzy
 msgid "Read / Write"
-msgstr "قراءة-كتابة"
+msgstr "قراءة / كتابة"
 
 #: src/bin/e_widget_filepreview.c:513 src/bin/e_widget_filepreview.c:524
-#, fuzzy
 msgid "Unmounted"
-msgstr "افصل"
+msgstr "مفصول"
 
 #: src/bin/e_widget_filepreview.c:623
 #, c-format
@@ -4150,9 +4072,8 @@ msgid "Show alert when battery is low"
 msgstr "أظهر تنبيه عندما تكون البطارية ضعيفة"
 
 #: src/modules/battery/e_mod_config.c:138
-#, fuzzy
 msgid "Use desktop notifications for alert"
-msgstr "استخدام سطح المكتب لل إخطارات في حالة تأهب."
+msgstr "استخدام تنبيهات سطح المكتب للتنبيه"
 
 #: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
@@ -4167,19 +4088,16 @@ msgid "%1.0f ticks"
 msgstr "%1.0f لحظات"
 
 #: src/modules/battery/e_mod_config.c:242
-#, fuzzy
 msgid "Suspend when below:"
-msgstr "تعليق عندما أدناه؛"
+msgstr "علِّق عند كونه أقل من :"
 
 #: src/modules/battery/e_mod_config.c:245
-#, fuzzy
 msgid "Hibernate when below:"
-msgstr "السبات عندما أدناه؛"
+msgstr "اسبت عند كونه أقل من :"
 
 #: src/modules/battery/e_mod_config.c:248
-#, fuzzy
 msgid "Shutdown when below:"
-msgstr "اغلاق عندما أدناه؛"
+msgstr "أوقف التشغيل عند كونه أقل من :"
 
 #: src/modules/battery/e_mod_config.c:251
 #: src/modules/battery/e_mod_config.c:270
@@ -4210,7 +4128,7 @@ msgstr "خروج تلقائي خلال..."
 
 #: src/modules/battery/e_mod_config.c:279
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:101
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f s"
 msgstr "%1.0f ثانية"
 
@@ -4253,9 +4171,8 @@ msgid "Battery"
 msgstr "البطارية"
 
 #: src/modules/battery/e_mod_main.c:200
-#, fuzzy
 msgid "Power Management Timing"
-msgstr "إدارة الطاقة"
+msgstr "توقيت إدارة الطاقة"
 
 #: src/modules/battery/e_mod_main.c:458 src/modules/battery/e_mod_main.c:490
 msgid "Your battery is low!"
@@ -4279,9 +4196,8 @@ msgid "Battery Meter"
 msgstr "مقياس البطارية"
 
 #: src/modules/clock/e_mod_config.c:36
-#, fuzzy
 msgid "Clock Settings"
-msgstr "خيارات البؤرة"
+msgstr "أعدادات الساعة"
 
 #: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:705
 #: src/modules/clock/e_mod_main.c:862 src/modules/clock/e_mod_main.c:894
@@ -4289,12 +4205,10 @@ msgid "Clock"
 msgstr "الساعة"
 
 #: src/modules/clock/e_mod_config.c:86
-#, fuzzy
 msgid "Analog"
-msgstr "الحوارات"
+msgstr "ساعة عادية (محورية)"
 
 #: src/modules/clock/e_mod_config.c:88
-#, fuzzy
 msgid "Digital"
 msgstr "ساعة رقمية"
 
@@ -4307,9 +4221,8 @@ msgid "24 h"
 msgstr ""
 
 #: src/modules/clock/e_mod_config.c:97
-#, fuzzy
 msgid "Seconds"
-msgstr "%.1f ثواني"
+msgstr "ثانية/ثوان"
 
 #: src/modules/clock/e_mod_config.c:101
 msgid "No Date"
@@ -4346,9 +4259,8 @@ msgstr "اعرض التقويم"
 
 #: src/modules/comp/e_mod_comp.c:3641 src/modules/comp/e_mod_comp.c:3663
 #: src/modules/comp/e_mod_comp.c:4067 src/modules/comp/e_mod_comp.c:4077
-#, fuzzy
 msgid "Compositor Error"
-msgstr "خطأ في الفصل"
+msgstr "خطأ مدير التأثيرات"
 
 #: src/modules/comp/e_mod_comp.c:3642
 msgid "Another compositor is already running<br>on your screen."
@@ -4361,9 +4273,8 @@ msgid ""
 msgstr ""
 
 #: src/modules/comp/e_mod_comp.c:3738
-#, fuzzy
 msgid "Compositor Warning"
-msgstr "التأثيرات"
+msgstr "تحذير مدير التأثيرات"
 
 #: src/modules/comp/e_mod_comp.c:3739
 msgid ""
@@ -4384,23 +4295,20 @@ msgid ""
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:106
-#, fuzzy
 msgid "Composite Settings"
-msgstr "التأثيرات"
+msgstr "إعدادات التأثيرات"
 
 #: src/modules/comp/e_mod_config.c:265
 msgid "Visible"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:270
-#, fuzzy
 msgid "Focus-Out"
-msgstr "البؤرة"
+msgstr "غير نشطة"
 
 #: src/modules/comp/e_mod_config.c:275
-#, fuzzy
 msgid "Focus-In"
-msgstr "البؤرة"
+msgstr "نشطة"
 
 #: src/modules/comp/e_mod_config.c:440 src/modules/comp/e_mod_config.c:470
 #: src/modules/comp/e_mod_config.c:748 src/modules/comp/e_mod_config.c:799
@@ -4413,7 +4321,6 @@ msgstr ""
 
 #: src/modules/comp/e_mod_config.c:446 src/modules/comp/e_mod_config.c:755
 #: src/modules/comp/e_mod_config.c:822
-#, fuzzy
 msgid "Dialog"
 msgstr "الحوارات"
 
@@ -4422,18 +4329,16 @@ msgid "Dock"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:450 src/modules/comp/e_mod_config.c:759
-#, fuzzy
 msgid "Drag and Drop"
-msgstr "اسحب و أفلت زرا"
+msgstr "اسحب و أفلت"
 
 #: src/modules/comp/e_mod_config.c:454 src/modules/comp/e_mod_config.c:763
 msgid "Menu (Dropdown)"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:456 src/modules/comp/e_mod_config.c:765
-#, fuzzy
 msgid "Menu (Popup)"
-msgstr "ضبط النوافذ المنبثقة"
+msgstr "قائمة (منبثقة)"
 
 #: src/modules/comp/e_mod_config.c:460 src/modules/comp/e_mod_config.c:769
 #: src/modules/notification/e_mod_main.c:297
@@ -4443,7 +4348,7 @@ msgstr "تنبيه"
 #: src/modules/comp/e_mod_config.c:462 src/modules/comp/e_mod_config.c:771
 #, fuzzy
 msgid "Splash"
-msgstr "نص الشاشة الترحيبية"
+msgstr "الشاشة الترحيبية"
 
 #: src/modules/comp/e_mod_config.c:464 src/modules/comp/e_mod_config.c:773
 #: src/modules/fileman/e_mod_config.c:342
@@ -4453,12 +4358,11 @@ msgstr "شريط اﻷدوات"
 #: src/modules/comp/e_mod_config.c:466 src/modules/comp/e_mod_config.c:775
 #, fuzzy
 msgid "Tooltip"
-msgstr "اعرض المصغرة"
+msgstr "مصغرة"
 
 #: src/modules/comp/e_mod_config.c:468 src/modules/comp/e_mod_config.c:777
-#, fuzzy
 msgid "Utility"
-msgstr "خدمات"
+msgstr "فائدة"
 
 #: src/modules/comp/e_mod_config.c:481
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:151
@@ -4482,9 +4386,8 @@ msgid "Role:"
 msgstr "دور:"
 
 #: src/modules/comp/e_mod_config.c:511
-#, fuzzy
 msgid "Style:"
-msgstr "مظهر"
+msgstr "مظهر :"
 
 #: src/modules/comp/e_mod_config.c:685
 #, fuzzy
@@ -4492,20 +4395,17 @@ msgid "Edit Match"
 msgstr "عدل اﻷيقونة"
 
 #: src/modules/comp/e_mod_config.c:737
-#, fuzzy
 msgid "Names"
-msgstr "اﻹسم"
+msgstr "اﻻسماء"
 
 #: src/modules/comp/e_mod_config.c:784
 #: src/modules/conf_applications/e_int_config_defapps.c:334
-#, fuzzy
 msgid "Types"
-msgstr "نوع:"
+msgstr "اﻷنواع :"
 
 #: src/modules/comp/e_mod_config.c:801
-#, fuzzy
 msgid "On"
-msgstr "افتح"
+msgstr "يعمل"
 
 #: src/modules/comp/e_mod_config.c:803
 #: src/modules/conf_display/e_int_config_desks.c:187
@@ -4514,14 +4414,12 @@ msgid "Off"
 msgstr "لا يعمل"
 
 #: src/modules/comp/e_mod_config.c:809
-#, fuzzy
 msgid "Borderless"
-msgstr "الحدود"
+msgstr "بدون حدود"
 
 #: src/modules/comp/e_mod_config.c:848
-#, fuzzy
 msgid "Virtual Keyboard"
-msgstr "لوحة المفاتيح"
+msgstr "لوحة مفاتيح وهمية"
 
 #: src/modules/comp/e_mod_config.c:861
 msgid "Quick Panel"
@@ -4536,7 +4434,6 @@ msgid "Flags"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1098
-#, fuzzy
 msgid "Del"
 msgstr "امح"
 
@@ -4564,23 +4461,20 @@ msgid "Menus"
 msgstr "القوائم"
 
 #: src/modules/comp/e_mod_config.c:1162
-#, fuzzy
 msgid "Smooth scaling"
-msgstr "تحجيم"
+msgstr "تحجيم سلس"
 
 #: src/modules/comp/e_mod_config.c:1165
 msgid "Styles"
 msgstr "أنماط"
 
 #: src/modules/comp/e_mod_config.c:1171
-#, fuzzy
 msgid "Effects"
-msgstr "تأثيرات الخمول"
+msgstr "التأثيرات"
 
 #: src/modules/comp/e_mod_config.c:1175
-#, fuzzy
 msgid "Sync windows"
-msgstr "جميع النوافذ"
+msgstr "زامن النوافذ"
 
 #: src/modules/comp/e_mod_config.c:1177
 msgid "Loose sync"
@@ -4595,9 +4489,9 @@ msgid "Initial draw timeout for newly mapped windows"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1183
-#, fuzzy, c-format
+#, c-format
 msgid "%1.2f Seconds"
-msgstr "%.2f ثواني"
+msgstr "%1.2f ثانية/ثوان"
 
 #: src/modules/comp/e_mod_config.c:1185
 msgid "Sync"
@@ -4608,14 +4502,12 @@ msgid "Software"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1196 src/modules/comp/e_mod_config.c:1536
-#, fuzzy
 msgid "OpenGL"
-msgstr "افتح"
+msgstr "OpenGL"
 
 #: src/modules/comp/e_mod_config.c:1199
-#, fuzzy
 msgid "OpenGL options"
-msgstr "خيارات"
+msgstr "خيارات OpenGL"
 
 #: src/modules/comp/e_mod_config.c:1201 src/modules/comp/e_mod_config.c:1510
 msgid "Tear-free updates (VSynced)"
@@ -4630,9 +4522,8 @@ msgid "Assume swapping method:"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1213
-#, fuzzy
 msgid "Auto"
-msgstr "إخفاء تلقائي"
+msgstr "تلقائي"
 
 #: src/modules/comp/e_mod_config.c:1215
 msgid "Invalidate (full redraw)"
@@ -4664,19 +4555,16 @@ msgid "Send dump"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1239 src/modules/comp/e_mod_config.c:1516
-#, fuzzy
 msgid "Don't composite fullscreen windows"
-msgstr "اسمح للنوافذ بالبروز فوق النافذة المستخدمة لعرض ملء الشاشة"
+msgstr "لا تسمح بالتأثيرات على نوافذ ملء الشاشة"
 
 #: src/modules/comp/e_mod_config.c:1241
-#, fuzzy
 msgid "Keep hidden windows"
-msgstr "نوافذ أخرى"
+msgstr "أبق على النوافذ المخفية"
 
 #: src/modules/comp/e_mod_config.c:1243
-#, fuzzy
 msgid "Maximum hidden pixels"
-msgstr "أقصى طول"
+msgstr "أقصى مقدار للبكسلات المخفية"
 
 #: src/modules/comp/e_mod_config.c:1246
 msgid "1M"
@@ -4719,72 +4607,61 @@ msgid "Memory"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1270
-#, fuzzy
 msgid "Min hidden"
-msgstr "مخفي"
+msgstr "أقل مقدار للإخفاء"
 
 #: src/modules/comp/e_mod_config.c:1273 src/modules/comp/e_mod_config.c:1291
-#, fuzzy
 msgid "30 Seconds"
-msgstr "%.1f ثواني"
+msgstr "30 ثانية"
 
 #: src/modules/comp/e_mod_config.c:1275 src/modules/comp/e_mod_config.c:1293
-#, fuzzy
 msgid "1 Minute"
-msgstr "%1.0f دقائق"
+msgstr "دقيقة واحدة"
 
 #: src/modules/comp/e_mod_config.c:1277 src/modules/comp/e_mod_config.c:1295
-#, fuzzy
 msgid "5 Minutes"
-msgstr "قبل %li دقيقة\\دقائق"
+msgstr "5 دقائق"
 
 #: src/modules/comp/e_mod_config.c:1279 src/modules/comp/e_mod_config.c:1297
-#, fuzzy
 msgid "30 Minutes"
-msgstr "قبل %li دقيقة\\دقائق"
+msgstr "30 دقيقة"
 
 #: src/modules/comp/e_mod_config.c:1281 src/modules/comp/e_mod_config.c:1299
-#, fuzzy
 msgid "2 Hours"
-msgstr "قبل %li ساعة\\ساعات"
+msgstr "2 ساعة"
 
 #: src/modules/comp/e_mod_config.c:1283 src/modules/comp/e_mod_config.c:1301
-#, fuzzy
 msgid "10 Hours"
-msgstr "قبل %li ساعة\\ساعات"
+msgstr "10 ساعات"
 
 #: src/modules/comp/e_mod_config.c:1285 src/modules/comp/e_mod_config.c:1303
 msgid "Forever"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1288
-#, fuzzy
 msgid "Max hidden"
-msgstr "مخفي"
+msgstr "أقصى مقدار للإخفاء"
 
 #: src/modules/comp/e_mod_config.c:1307
-#, fuzzy
 msgid "Timeouts"
-msgstr "أخف المهلة"
+msgstr "المهلة الزمنية"
 
 #: src/modules/comp/e_mod_config.c:1312
-#, fuzzy
 msgid "Show Framerate"
-msgstr "معدل اﻹطار"
+msgstr "اعرض معدل اﻹطار"
 
 #: src/modules/comp/e_mod_config.c:1314
 msgid "Rolling average frame count"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1316
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f Frames"
-msgstr "%1.0f فهرنهايتية"
+msgstr "%1.0f إطار/أطر"
 
 #: src/modules/comp/e_mod_config.c:1320
-#, fuzzy
 msgid "Corner"
-msgstr "ركن المنبثقة"
+msgstr "الركن"
 
 #: src/modules/comp/e_mod_config.c:1337
 msgid "Debug"
@@ -4795,9 +4672,8 @@ msgid "Smooth scaling of window content"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1519
-#, fuzzy
 msgid "Select default style"
-msgstr "اختر أسلوب الحدود"
+msgstr "اختر الشكل الإفتراضي"
 
 #: src/modules/comp/e_mod_config.c:1540
 msgid "To reset compositor:"
@@ -4808,12 +4684,10 @@ msgid "Ctrl+Alt+Shift+Home"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:1545
-#, fuzzy
 msgid "Rendering"
-msgstr "تذكر الترتيب"
+msgstr "تصيير"
 
 #: src/modules/comp/e_mod_main.c:43 src/modules/comp/e_mod_main.c:70
-#, fuzzy
 msgid "Composite"
 msgstr "التأثيرات"
 
@@ -4828,9 +4702,8 @@ msgid "Configuration Panel"
 msgstr "لوحة اﻹعدادات"
 
 #: src/modules/conf/e_mod_config.c:65
-#, fuzzy
 msgid "Show configurations in menu"
-msgstr "أعرض التطبيقات في القائمة الرئيسية"
+msgstr "أعرض اﻹعدادات في القائمة الرئيسية"
 
 #: src/modules/conf/e_mod_main.c:272 src/modules/conf/e_mod_main.c:276
 #: src/modules/conf/e_mod_main.c:345 src/modules/conf/e_mod_main.c:452
@@ -4868,15 +4741,13 @@ msgstr "أعد تشغيل البرامج"
 
 #: src/modules/conf_applications/e_int_config_apps.c:144
 #: src/modules/conf_applications/e_mod_main.c:37
-#, fuzzy
 msgid "Screen Lock Applications"
-msgstr "البرامج المحددة"
+msgstr "تطبيقات قفل الشاشة"
 
 #: src/modules/conf_applications/e_int_config_apps.c:159
 #: src/modules/conf_applications/e_mod_main.c:41
-#, fuzzy
 msgid "Screen Unlock Applications"
-msgstr "البرامج المحددة"
+msgstr "تطبيقات فتح قفل الشاشة"
 
 #: src/modules/conf_applications/e_int_config_apps.c:314
 msgid "Order"
@@ -4884,9 +4755,8 @@ msgstr "أمر"
 
 #: src/modules/conf_applications/e_int_config_apps_personal.c:39
 #: src/modules/conf_applications/e_mod_main.c:25
-#, fuzzy
 msgid "Personal Application Launchers"
-msgstr "امحِ المُطْلِقات الشخصية"
+msgstr "مُطْلِقات مخصصة للتطبيقات"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:74
 #: src/modules/conf_applications/e_int_config_defapps.c:303
@@ -4895,9 +4765,8 @@ msgid "Default Applications"
 msgstr "التطبيقات اﻹفتراضية"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:296
-#, fuzzy
 msgid "Custom Browser Command"
-msgstr "أمر مخصص"
+msgstr "أمر مستعرض مخصص"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:309
 msgid "Browser"
@@ -4912,15 +4781,13 @@ msgid "Trash"
 msgstr ""
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#, fuzzy
 msgid "Terminal"
-msgstr "شغل في الطرفية"
+msgstr "الطرفية"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:321
 #: src/modules/conf_applications/e_int_config_defapps.c:349
-#, fuzzy
 msgid "Selected Application"
-msgstr "البرامج المحددة"
+msgstr "البرنامج المحدد"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:38
 #: src/modules/conf_applications/e_mod_main.c:57
@@ -4928,7 +4795,6 @@ msgid "Desktop Environments"
 msgstr "بيئات سطح المكتب"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:93
-#, fuzzy
 msgid "Execution"
 msgstr "نفذ اﻷمر"
 
@@ -4937,39 +4803,32 @@ msgid "Only launch single instances"
 msgstr ""
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:99
-#, fuzzy
 msgid "X11 Basics"
-msgstr "أساسي"
+msgstr "أساسيات X11"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:100
-#, fuzzy
 msgid "Load X Resources"
-msgstr "تحميل الوحدات"
+msgstr "حمّل موارد و اعتماديات X"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:103
-#, fuzzy
 msgid "Load X Modifier Map"
-msgstr "آخر تعديل:"
+msgstr "حمّل خريطة X المتغيرة"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:108
-#, fuzzy
 msgid "Major Desktops"
-msgstr "أسطح المكتب"
+msgstr "أسطح المكاتب الرئيسية"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:109
-#, fuzzy
 msgid "Start GNOME services on login"
-msgstr "إبدأ هذا البرنامج عند تسجيل الدخول"
+msgstr "شغّل خدمات جنوم عند تسجيل الدخول"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:112
-#, fuzzy
 msgid "Start KDE services on login"
-msgstr "إبدأ هذا البرنامج عند تسجيل الدخول"
+msgstr "شغّل خدمات كي.دي.إي عند تسجيل الدخول"
 
 #: src/modules/conf_applications/e_mod_main.c:21
-#, fuzzy
 msgid "Create Application Launcher"
-msgstr "انشء مقلع"
+msgstr "انشء مطلق تطبيق"
 
 #: src/modules/conf_applications/e_mod_main.c:62
 msgid "IBar Other"
@@ -5011,9 +4870,8 @@ msgid "You want to delete the \"%s\" profile.<br><br>Are you sure?"
 msgstr "هل تريد تأكيد مسح حساب <br><br>\"%s\"؟"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:334
-#, fuzzy
 msgid "Are you sure you want to delete this profile?"
-msgstr "هل أنت متأكد أنك تريد حذف هذا الرف؟"
+msgstr "هل تريد تأكيد حذف هذا الحساب؟"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:38
 msgid "Dialog Settings"
@@ -5039,7 +4897,7 @@ msgstr "النوافذ العادية"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:120
 #, fuzzy
 msgid "Default Settings Dialogs Mode"
-msgstr "الوضع الافتراضي إعدادات الحوارات"
+msgstr "وضع حوارات الضبط اﻻفتراضي"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:122
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:166
@@ -5068,7 +4926,7 @@ msgid "Profiles"
 msgstr "حسابات"
 
 #: src/modules/conf_display/e_int_config_display.c:124
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
@@ -5078,16 +4936,32 @@ msgid_plural ""
 "<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
 "will be restored in %d seconds."
 msgstr[0] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان صحيحا، أو قم باﻹستعادة "
-"إذا كان لا.<br>إذا لم تقم بضغط زر, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d "
-"هيرتز سيتم اسعادتها خلال %d ثوان."
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
+"سيتم اسعادتها اﻵن"
 msgstr[1] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان صحيحا، أو قم باﻹستعادة "
-"إذا كان لا.<br>إذا لم تقم بضغط زر, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d "
-"هيرتز سيتم اسعادتها خلال %d ثوان."
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
+"سيتم اسعادتها خلال ثانية"
+msgstr[2] ""
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
+"سيتم اسعادتها خلال ثانيتين"
+msgstr[3] ""
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
+"سيتم اسعادتها خلال %d ثوان"
+msgstr[4] ""
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
+"سيتم اسعادتها خلال %d ثانية"
+msgstr[5] ""
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
+"سيتم اسعادتها خلال %d ثانية"
 
 #: src/modules/conf_display/e_int_config_display.c:134
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
@@ -5097,34 +4971,50 @@ msgid_plural ""
 "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
 "restored in %d seconds."
 msgstr[0] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان صحيحا، أو قم باﻹستعادة "
-"إذا كان لا.<br>إذا لم تقم بضغط زر, فإن اﻷبعاد القديمة لـ<br>%dx%d سيتم "
-"اسعادتها خلال %d ثوان."
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
+"اسعادتها اﻵن"
 msgstr[1] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان صحيحا، أو قم باﻹستعادة "
-"إذا كان لا.<br>إذا لم تقم بضغط زر, فإن اﻷبعاد القديمة لـ<br>%dx%d سيتم "
-"اسعادتها خلال %d ثوان."
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
+"اسعادتها خلال ثانية"
+msgstr[2] ""
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
+"اسعادتها خلال ثانيتين"
+msgstr[3] ""
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
+"اسعادتها خلال %d ثوان"
+msgstr[4] ""
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
+"اسعادتها خلال %d ثانية"
+msgstr[5] ""
+"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
+"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
+"اسعادتها خلال %d ثانية"
 
 #: src/modules/conf_display/e_int_config_display.c:147
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
 "will be restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان صحيحا، أو قم باﻹستعادة "
-"إذا كان لا.<br>إذا لم تقم بضغط زر, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d "
+"هل يبدو هذا صحيحا ؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+"إذا لم يكن كذلك.<br>إذا لم تضغط زرا ، فإن اﻷبعاد القديمة لـ<br>%dx%d على %d "
 "هيرتز سيتم اسعادتها <hilight>حالا</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:154
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
 "restored <hilight>IMMEDIATELY</hilight>."
 msgstr ""
-"هل يبدو هذا صحيحا ؟ <hilight>إحفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
-"إذا لم يكن كذلك.<br>إذا لم تضغط زرا , فإن اﻷبعاد الرئيسية لـ<br>%dx%d سيتم "
+"هل يبدو هذا صحيحا ؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+"إذا لم يكن كذلك.<br>إذا لم تضغط زرا ، فإن اﻷبعاد القديمة لـ<br>%dx%d سيتم "
 "إستعادتها <hilight>حالا</hilight>."
 
 #: src/modules/conf_display/e_int_config_display.c:191
