@@ -406,8 +406,7 @@ e_smart_monitor_crtc_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y
          * any existing monitors */
 
         /* NB: For now, I am just returning the geometry of the 
-         * 'possible' crtc, and the width of the mode. This Will Be Fixed 
-         * Very Shortly so please do not report/bitch/etc, etc */
+         * 'possible' crtc, and the width of the mode. */
 
         if (crtc)
           {
@@ -1658,10 +1657,18 @@ _e_smart_monitor_menu_cb_resolution_pre(void *data, E_Menu *mn, E_Menu_Item *mi)
    EINA_LIST_FOREACH(sd->modes, m, mode)
      {
         E_Menu_Item *submi = NULL;
+        char name[1024];
+        double rate = 0.0;
 
         /* create menu item for this mode, and set the label */
+        if ((mode->hTotal) && (mode->vTotal))
+          rate = (((float)mode->dotClock / 
+                   ((float)mode->hTotal * (float)mode->vTotal)));
+
+        snprintf(name, sizeof(name), "%s@%.1fHz", mode->name, rate);
+
         submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, mode->name);
+        e_menu_item_label_set(submi, name);
         e_menu_item_radio_set(submi, EINA_TRUE);
         e_menu_item_radio_group_set(submi, 1);
         e_menu_item_callback_set(submi, 
@@ -1672,7 +1679,8 @@ _e_smart_monitor_menu_cb_resolution_pre(void *data, E_Menu *mn, E_Menu_Item *mi)
         if (sd->current.mode)
           {
              if ((mode->width == sd->current.mode->width) && 
-                 (mode->height == sd->current.mode->height))
+                 (mode->height == sd->current.mode->height) && 
+                 (rate == sd->current.refresh_rate))
                e_menu_item_toggle_set(submi, EINA_TRUE);
           }
      }
