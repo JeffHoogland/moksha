@@ -10,13 +10,13 @@ CLEANFILES += illume2/e-module-illume2.edj
 EXTRA_DIST += illume2/images/module_icon.png
 
 # keyboards
-illume2keyboardsdir = $(MDIR)/illume2//keyboards
+illume2keyboardsdir = $(MDIR)/illume2/keyboards
 illume2keyboards_DATA = illume2/keyboards/ignore_built_in_keyboards
 EXTRA_DIST += $(illume2keyboards_DATA)
 
 # policies
 ## illume
-illume2policyillumedir = $(MDIR)/illume2//policies
+illume2policyillumedir = $(MDIR)/illume2/policies
 illume2policyillume_LTLIBRARIES = illume2/policies/illume/illume.la
 ILLUME2POLICYCPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/src/modules/illume2
 
@@ -28,7 +28,7 @@ illume2_policies_illume_illume_la_SOURCES = illume2/policies/illume/policy.c \
 illume2_policies_illume_illume_la_LIBTOOLFLAGS = --tag=disable-static 
 
 ## tablet
-illume2policytabletdir = $(MDIR)/illume2//policies
+illume2policytabletdir = $(MDIR)/illume2/policies
 illume2policytablet_LTLIBRARIES = illume2/policies/tablet/tablet.la
 
 illume2_policies_tablet_tablet_la_CPPFLAGS = $(ILLUME2POLICYCPPFLAGS)
