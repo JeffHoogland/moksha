@@ -38,3 +38,7 @@ comp_module_la_SOURCES += comp/e_mod_comp_wl.h \
 endif
 
 comp_module_la_LIBADD       = @WAYLAND_LIBS@
+
+,PHONY: comp install-comp
+comp: $(comppkg_LTLIBRARIES) $(comp_DATA)
+install-comp: install-compDATA install-comppkgLTLIBRARIES

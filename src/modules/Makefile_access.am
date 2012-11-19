@@ -9,3 +9,7 @@ accesspkg_LTLIBRARIES = access/module.la
 access_module_la_SOURCES = access/e_mod_main.c \
 			   access/e_mod_main.h \
 			   access/e_mod_config.c
+
+,PHONY: access install-access
+access: $(accesspkg_LTLIBRARIES) $(access_DATA)
+install-access: install-accessDATA install-accesspkgLTLIBRARIES

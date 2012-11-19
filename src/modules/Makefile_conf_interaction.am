@@ -13,3 +13,7 @@ conf_interaction_module_la_SOURCES = conf_interaction/e_mod_main.c \
 			     conf_interaction/e_int_config_interaction.h \
 			     conf_interaction/e_int_config_mouse.c \
 			     conf_interaction/e_int_config_mouse.h
+
+,PHONY: conf_interaction install-conf_interaction
+conf_interaction: $(conf_interactionpkg_LTLIBRARIES) $(conf_interaction_DATA)
+install-conf_interaction: install-conf_interactionDATA install-conf_interactionpkgLTLIBRARIES

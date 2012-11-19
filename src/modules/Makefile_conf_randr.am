@@ -15,3 +15,7 @@ conf_randr_module_la_SOURCES = conf_randr/e_mod_main.c \
 			       conf_randr/e_smart_randr.c \
 			       conf_randr/e_smart_monitor.h \
 			       conf_randr/e_smart_monitor.c
+
+,PHONY: conf_randr install-conf_randr
+conf_randr: $(conf_randrpkg_LTLIBRARIES) $(conf_randr_DATA)
+install-conf_randr: install-conf_randrDATA install-conf_randrpkgLTLIBRARIES

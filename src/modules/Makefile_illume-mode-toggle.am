@@ -9,3 +9,7 @@ illume_mode_togglepkg_LTLIBRARIES = illume-mode-toggle/module.la
 
 illume_mode_toggle_module_la_SOURCES = illume-mode-toggle/e_mod_main.c \
 				      illume-mode-toggle/e_mod_main.h
+
+,PHONY: illume_mode_toggle install-illume_mode_toggle
+illume_mode_toggle: $(illume_mode_togglepkg_LTLIBRARIES) $(illume_mode_toggle_DATA)
+install-illume_mode_toggle: install-illume_mode_toggleDATA install-illume_mode_togglepkgLTLIBRARIES

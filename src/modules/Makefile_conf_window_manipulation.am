@@ -17,3 +17,7 @@ conf_window_manipulation_module_la_SOURCES = conf_window_manipulation/e_mod_main
 		      conf_window_manipulation/e_int_config_focus.h \
 		      conf_window_manipulation/e_int_config_clientlist.c \
 		      conf_window_manipulation/e_int_config_clientlist.h
+
+,PHONY: conf_window_manipulation install-conf_window_manipulation
+conf_window_manipulation: $(conf_window_manipulationpkg_LTLIBRARIES) $(conf_window_manipulation_DATA)
+install-conf_window_manipulation: install-conf_window_manipulationDATA install-conf_window_manipulationpkgLTLIBRARIES

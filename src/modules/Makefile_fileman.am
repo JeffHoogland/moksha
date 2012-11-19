@@ -20,3 +20,7 @@ fileman_module_la_SOURCES = fileman/e_mod_main.c \
 			    fileman/e_mod_dbus.c \
 			    fileman/e_mod_dbus.h \
 			    fileman/e_mod_menu.c
+
+,PHONY: fileman install-fileman
+fileman: $(filemanpkg_LTLIBRARIES) $(fileman_DATA)
+install-fileman: install-filemanDATA install-filemanpkgLTLIBRARIES

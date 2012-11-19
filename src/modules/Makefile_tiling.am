@@ -27,3 +27,7 @@ tiling/%.edj: tiling/%.edc Makefile
 tiling_module_la_SOURCES = tiling/e_mod_tiling.c \
 			   tiling/e_mod_tiling.h \
 			   tiling/e_mod_config.c
+
+,PHONY: tiling install-tiling
+tiling: $(tilingpkg_LTLIBRARIES) $(tiling_DATA)
+install-tiling: install-tilingDATA install-tilingpkgLTLIBRARIES

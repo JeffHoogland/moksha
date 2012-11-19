@@ -25,3 +25,7 @@ cpufreq-install-data-hook:
 	@chmod $(cpufreq_setuid_root_mode) $(DESTDIR)$(freqsetdir)/freqset$(EXEEXT) || true
 
 INSTALL_DATA_HOOKS += cpufreq-install-data-hook
+
+,PHONY: cpufreq install-cpufreq
+cpufreq: $(cpufreqpkg_LTLIBRARIES) $(cpufreq_DATA) $(freqset_PROGRAMS)
+install-cpufreq: install-cpufreqDATA install-cpufreqpkgLTLIBRARIES install-freqsetPROGRAMS

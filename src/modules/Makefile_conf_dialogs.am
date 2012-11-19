@@ -13,3 +13,7 @@ conf_dialogs_module_la_SOURCES = conf_dialogs/e_mod_main.c \
 				 conf_dialogs/e_int_config_dialogs.h \
 				 conf_dialogs/e_int_config_profiles.c \
 				 conf_dialogs/e_int_config_profiles.h
+
+,PHONY: conf_dialogs install-conf_dialogs
+conf_dialogs: $(conf_dialogspkg_LTLIBRARIES) $(conf_dialogs_DATA)
+install-conf_dialogs: install-conf_dialogsDATA install-conf_dialogspkgLTLIBRARIES

@@ -109,3 +109,7 @@ wizard_page_160_la_SOURCES        = wizard/page_160.c
 wizard_page_170_la_SOURCES        = wizard/page_170.c
 
 wizard_page_200_la_SOURCES        = wizard/page_200.c
+
+,PHONY: wizard install-wizard
+wizard: $(wizardpkg_LTLIBRARIES) $(wizard_DATA)
+install-wizard: install-wizardDATA install-wizardpkgLTLIBRARIES

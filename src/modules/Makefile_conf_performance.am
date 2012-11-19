@@ -15,3 +15,7 @@ conf_performance_module_la_SOURCES = conf_performance/e_mod_main.c \
 			     conf_performance/e_int_config_engine.h \
 			     conf_performance/e_int_config_powermanagement.c \
 			     conf_performance/e_int_config_powermanagement.h
+
+,PHONY: conf_performance install-conf_performance
+conf_performance: $(conf_performancepkg_LTLIBRARIES) $(conf_performance_DATA)
+install-conf_performance: install-conf_performanceDATA install-conf_performancepkgLTLIBRARIES

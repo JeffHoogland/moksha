@@ -13,3 +13,7 @@ gadman_module_la_SOURCES = gadman/e_mod_main.c \
 			   gadman/e_mod_config.h \
 			   gadman/e_mod_gadman.c \
 			   gadman/e_mod_gadman.h
+
+,PHONY: gadman install-gadman
+gadman: $(gadmanpkg_LTLIBRARIES) $(gadman_DATA)
+install-gadman: install-gadmanDATA install-gadmanpkgLTLIBRARIES

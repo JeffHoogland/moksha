@@ -10,3 +10,7 @@ clockpkg_LTLIBRARIES = clock/module.la
 clock_module_la_SOURCES = clock/e_mod_main.h \
 			  clock/e_mod_main.c \
 			  clock/e_mod_config.c
+
+,PHONY: clock install-clock
+clock: $(clockpkg_LTLIBRARIES) $(clock_DATA)
+install-clock: install-clockDATA install-clockpkgLTLIBRARIES

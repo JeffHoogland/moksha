@@ -13,3 +13,7 @@ winlist_module_la_SOURCES = winlist/e_mod_main.h \
 			    winlist/e_int_config_winlist.c \
 			    winlist/e_winlist.h \
 			    winlist/e_winlist.c
+
+,PHONY: winlist install-winlist
+winlist: $(winlistpkg_LTLIBRARIES) $(winlist_DATA)
+install-winlist: install-winlistDATA install-winlistpkgLTLIBRARIES

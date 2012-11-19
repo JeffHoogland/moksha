@@ -12,3 +12,7 @@ conf_module_la_SOURCES = conf/e_mod_main.c \
 			 conf/e_conf.c \
 			 conf/e_conf.h \
 			 conf/e_mod_config.c
+
+,PHONY: conf install-conf
+conf: $(confpkg_LTLIBRARIES) $(conf_DATA)
+install-conf: install-confDATA install-confpkgLTLIBRARIES

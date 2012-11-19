@@ -11,3 +11,7 @@ conf_menus_module_la_SOURCES = conf_menus/e_mod_main.c \
 			       conf_menus/e_mod_main.h \
 			       conf_menus/e_int_config_menus.c \
 			       conf_menus/e_int_config_menus.h
+
+,PHONY: conf_menus install-conf_menus
+conf_menus: $(conf_menuspkg_LTLIBRARIES) $(conf_menus_DATA)
+install-conf_menus: install-conf_menusDATA install-conf_menuspkgLTLIBRARIES

@@ -33,3 +33,7 @@ batget_PROGRAMS = battery/batget
 battery_batget_SOURCES = battery/batget.c
 battery_batget_LDADD   = @BATTERY_LIBS@
 battery_batget_LDFLAGS = @BATTERY_LDFLAGS@
+
+,PHONY: battery install-battery
+battery: $(batterypkg_LTLIBRARIES) $(battery_DATA) $(batget_PROGRAMS)
+install-battery: install-batteryDATA install-batterypkgLTLIBRARIES install-batgetPROGRAMS
