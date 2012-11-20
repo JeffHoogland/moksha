@@ -44,6 +44,6 @@ everything_pkgconfig_DATA = everything/everything.pc
 EXTRA_DIST += everything/everything.pc.in
 DISTCLEANFILES = everything/everything.pc
 
-,PHONY: everything install-everything
+.PHONY: everything install-everything
 everything: $(everythingpkg_LTLIBRARIES) $(everything_DATA)
 install-everything: install-everythingDATA install-everythingpkgLTLIBRARIES install-everything_pkgconfig_DATA

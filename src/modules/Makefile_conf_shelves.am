@@ -12,6 +12,6 @@ conf_shelves_module_la_SOURCES = conf_shelves/e_mod_main.c \
 				 conf_shelves/e_int_config_shelf.c \
 				 conf_shelves/e_int_config_shelf.h
 
-,PHONY: conf_shelves install-conf_shelves
+.PHONY: conf_shelves install-conf_shelves
 conf_shelves: $(conf_shelvespkg_LTLIBRARIES) $(conf_shelves_DATA)
 install-conf_shelves: install-conf_shelvesDATA install-conf_shelvespkgLTLIBRARIES

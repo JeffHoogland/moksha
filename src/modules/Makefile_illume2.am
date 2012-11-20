@@ -71,6 +71,6 @@ illume2_module_la_SOURCES = illume2/e_mod_main.c \
 			    illume2/e_mod_config.c
 
 # TODO: incomplete
-,PHONY: illume2 install-illume2
+.PHONY: illume2 install-illume2
 illume2: $(illume2pkg_LTLIBRARIES) $(illume2_DATA)
 install-illume2: install-illume2DATA install-illume2pkgLTLIBRARIES

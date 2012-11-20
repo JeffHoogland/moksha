@@ -10,6 +10,6 @@ startpkg_LTLIBRARIES = start/module.la
 start_module_la_SOURCES = start/e_mod_main.h \
 			  start/e_mod_main.c
 
-,PHONY: start install-start
+.PHONY: start install-start
 start: $(startpkg_LTLIBRARIES) $(start_DATA)
 install-start: install-startDATA install-startpkgLTLIBRARIES

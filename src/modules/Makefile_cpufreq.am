@@ -26,6 +26,6 @@ cpufreq-install-data-hook:
 
 INSTALL_DATA_HOOKS += cpufreq-install-data-hook
 
-,PHONY: cpufreq install-cpufreq
+.PHONY: cpufreq install-cpufreq
 cpufreq: $(cpufreqpkg_LTLIBRARIES) $(cpufreq_DATA) $(freqset_PROGRAMS)
 install-cpufreq: install-cpufreqDATA install-cpufreqpkgLTLIBRARIES install-freqsetPROGRAMS

@@ -18,6 +18,6 @@ physics_module_la_SOURCES = physics/e_mod_main.c \
 
 physics_module_la_LIBADD       = @EPHYSICS_LIBS@
 
-,PHONY: physics install-physics
+.PHONY: physics install-physics
 physics: $(physicspkg_LTLIBRARIES) $(physics_DATA)
 install-physics: install-physicsDATA install-physicspkgLTLIBRARIES

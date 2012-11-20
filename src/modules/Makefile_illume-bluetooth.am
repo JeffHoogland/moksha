@@ -10,6 +10,6 @@ illume_bluetoothpkg_LTLIBRARIES = illume-bluetooth/module.la
 illume_bluetooth_module_la_SOURCES = illume-bluetooth/e_mod_main.c \
 				     illume-bluetooth/e_mod_main.h
 
-,PHONY: illume_bluetooth install-illume_bluetooth
+.PHONY: illume_bluetooth install-illume_bluetooth
 illume_bluetooth: $(illume_bluetoothpkg_LTLIBRARIES) $(illume_bluetooth_DATA)
 install-illume_bluetooth: install-illume_bluetoothDATA install-illume_bluetoothpkgLTLIBRARIES

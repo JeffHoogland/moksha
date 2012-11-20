@@ -25,6 +25,6 @@ illume_softkey_module_la_SOURCES = illume-softkey/e_mod_main.c \
 				   illume-softkey/e_mod_config.c \
 				   illume-softkey/e_mod_config.h
 
-,PHONY: illume_softkey install-illume_softkey
+.PHONY: illume_softkey install-illume_softkey
 illume_softkey: $(illume_softkeypkg_LTLIBRARIES) $(illume_softkey_DATA)
 install-illume_softkey: install-illume_softkeyDATA install-illume_softkeypkgLTLIBRARIES

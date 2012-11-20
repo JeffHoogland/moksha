@@ -11,6 +11,6 @@ pager_module_la_SOURCES = pager/e_mod_main.h \
 			  pager/e_mod_main.c \
 			  pager/e_mod_config.c
 
-,PHONY: pager install-pager
+.PHONY: pager install-pager
 pager: $(pagerpkg_LTLIBRARIES) $(pager_DATA)
 install-pager: install-pagerDATA install-pagerpkgLTLIBRARIES

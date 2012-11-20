@@ -15,6 +15,6 @@ syscon_module_la_SOURCES = syscon/e_mod_main.c \
 			   syscon/e_syscon.h \
 			   syscon/e_syscon_gadget.c
 
-,PHONY: syscon install-syscon
+.PHONY: syscon install-syscon
 syscon: $(sysconpkg_LTLIBRARIES) $(syscon_DATA)
 install-syscon: install-sysconDATA install-sysconpkgLTLIBRARIES

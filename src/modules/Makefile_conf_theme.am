@@ -28,6 +28,6 @@ conf_theme_module_la_SOURCES = conf_theme/e_mod_main.c \
 			       conf_theme/e_int_config_wallpaper.h \
 			       conf_theme/e_int_config_xsettings.c
 
-,PHONY: conf_theme install-conf_theme
+.PHONY: conf_theme install-conf_theme
 conf_theme: $(conf_themepkg_LTLIBRARIES) $(conf_theme_DATA)
 install-conf_theme: install-conf_themeDATA install-conf_themepkgLTLIBRARIES

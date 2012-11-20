@@ -10,6 +10,6 @@ illume_kbd_togglepkg_LTLIBRARIES = illume-kbd-toggle/module.la
 illume_kbd_toggle_module_la_SOURCES = illume-kbd-toggle/e_mod_main.c \
 				      illume-kbd-toggle/e_mod_main.h
 
-,PHONY: illume_kbd_toggle install-illume_kbd_toggle
+.PHONY: illume_kbd_toggle install-illume_kbd_toggle
 illume_kbd_toggle: $(illume_kbd_togglepkg_LTLIBRARIES) $(illume_kbd_toggle_DATA)
 install-illume_kbd_toggle: install-illume_kbd_toggleDATA install-illume_kbd_togglepkgLTLIBRARIES

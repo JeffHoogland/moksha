@@ -23,6 +23,6 @@ conf_display_module_la_SOURCES = conf_display/e_mod_main.c \
 				 conf_display/e_int_config_desk.c \
 				 conf_display/e_int_config_desk.h
 
-,PHONY: conf_display install-conf_display
+.PHONY: conf_display install-conf_display
 conf_display: $(conf_displaypkg_LTLIBRARIES) $(conf_display_DATA)
 install-conf_display: install-conf_displayDATA install-conf_displaypkgLTLIBRARIES

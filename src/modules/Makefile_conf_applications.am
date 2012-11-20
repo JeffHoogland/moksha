@@ -18,6 +18,6 @@ conf_applications_module_la_SOURCES = conf_applications/e_mod_main.c \
 			      conf_applications/e_int_config_apps_personal.c \
 			      conf_applications/e_int_config_apps_personal.h
 
-,PHONY: conf_applications install-conf_applications
+.PHONY: conf_applications install-conf_applications
 conf_applications: $(conf_applicationspkg_LTLIBRARIES) $(conf_applications_DATA)
 install-conf_applications: install-conf_applicationsDATA install-conf_applicationspkgLTLIBRARIES

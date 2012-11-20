@@ -37,6 +37,6 @@ mixer_module_la_CFLAGS += @ENOTIFY_CFLAGS@
 mixer_module_la_LIBADD += @ENOTIFY_LIBS@
 endif
 
-,PHONY: mixer install-mixer
+.PHONY: mixer install-mixer
 mixer: $(mixerpkg_LTLIBRARIES) $(mixer_DATA)
 install-mixer: install-mixerDATA install-mixerpkgLTLIBRARIES

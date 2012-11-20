@@ -11,6 +11,6 @@ ibox_module_la_SOURCES = ibox/e_mod_main.c \
 			 ibox/e_mod_main.h \
 			 ibox/e_mod_config.c
 
-,PHONY: ibox install-ibox
+.PHONY: ibox install-ibox
 ibox: $(iboxpkg_LTLIBRARIES) $(ibox_DATA)
 install-ibox: install-iboxDATA install-iboxpkgLTLIBRARIES

@@ -12,6 +12,6 @@ dropshadow_module_la_SOURCES = dropshadow/e_mod_main.h \
 			       dropshadow/e_mod_config.h \
 			       dropshadow/e_mod_config.c
 
-,PHONY: dropshadow install-dropshadow
+.PHONY: dropshadow install-dropshadow
 dropshadow: $(dropshadowpkg_LTLIBRARIES) $(dropshadow_DATA)
 install-dropshadow: install-dropshadowDATA install-dropshadowpkgLTLIBRARIES

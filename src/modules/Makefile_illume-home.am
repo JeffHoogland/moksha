@@ -14,6 +14,6 @@ illume_home_module_la_SOURCES = illume-home/e_mod_main.c \
 				illume-home/e_busycover.c \
 				illume-home/e_busycover.h
 
-,PHONY: illume_home install-illume_home
+.PHONY: illume_home install-illume_home
 illume_home: $(illume_homepkg_LTLIBRARIES) $(illume_home_DATA)
 install-illume_home: install-illume_homeDATA install-illume_homepkgLTLIBRARIES

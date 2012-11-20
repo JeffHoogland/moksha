@@ -13,6 +13,6 @@ xkbswitch_module_la_SOURCES = xkbswitch/e_mod_main.c \
 			      xkbswitch/e_mod_parse.c \
 			      xkbswitch/e_mod_parse.h
 
-,PHONY: xkbswitch install-xkbswitch
+.PHONY: xkbswitch install-xkbswitch
 xkbswitch: $(xkbswitchpkg_LTLIBRARIES) $(xkbswitch_DATA)
 install-xkbswitch: install-xkbswitchDATA install-xkbswitchpkgLTLIBRARIES

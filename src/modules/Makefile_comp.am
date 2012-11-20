@@ -39,6 +39,6 @@ endif
 
 comp_module_la_LIBADD       = @WAYLAND_LIBS@
 
-,PHONY: comp install-comp
+.PHONY: comp install-comp
 comp: $(comppkg_LTLIBRARIES) $(comp_DATA)
 install-comp: install-compDATA install-comppkgLTLIBRARIES

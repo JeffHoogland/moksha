@@ -16,6 +16,6 @@ notification_module_la_SOURCES  = notification/e_mod_main.h \
 
 notification_module_la_LIBADD = @ENOTIFY_LIBS@
 
-,PHONY: notification install-notification
+.PHONY: notification install-notification
 notification: $(notificationpkg_LTLIBRARIES) $(notification_DATA)
 install-notification: install-notificationDATA install-notificationpkgLTLIBRARIES

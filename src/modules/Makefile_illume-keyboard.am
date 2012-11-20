@@ -58,6 +58,6 @@ illume_keyboard_module_la_SOURCES = illume-keyboard/e_mod_main.c \
 				    illume-keyboard/e_mod_config.h
 
 # TODO: incomplete
-,PHONY: illume_keyboard install-illume_keyboard
+.PHONY: illume_keyboard install-illume_keyboard
 illume_keyboard: $(illume_keyboardpkg_LTLIBRARIES) $(illume_keyboard_DATA)
 install-illume_keyboard: install-illume_keyboardDATA install-illume_keyboardpkgLTLIBRARIES

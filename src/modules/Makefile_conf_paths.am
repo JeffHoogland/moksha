@@ -14,6 +14,6 @@ conf_paths_module_la_SOURCES = conf_paths/e_mod_main.c \
 			       conf_paths/e_int_config_env.c \
 			       conf_paths/e_int_config_env.h
 
-,PHONY: conf_paths install-conf_paths
+.PHONY: conf_paths install-conf_paths
 conf_paths: $(conf_pathspkg_LTLIBRARIES) $(conf_paths_DATA)
 install-conf_paths: install-conf_pathsDATA install-conf_pathspkgLTLIBRARIES
