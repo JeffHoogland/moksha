@@ -164,6 +164,7 @@ img/digit_8.png \
 img/digit_9.png \
 img/digit_am.png \
 img/digit_na.png \
+img/digit_nm.png \
 img/digit_pm.png \
 img/dot_pattern.png \
 img/downlight_glow.png \
