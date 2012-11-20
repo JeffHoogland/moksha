@@ -235,7 +235,7 @@ e_int_menus_main_new(void)
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
    mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Theme"));
+   e_menu_item_label_set(mi, _("About Theme"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-theme");
    e_menu_item_callback_set(mi, _e_int_menus_themes_about, NULL);
 
