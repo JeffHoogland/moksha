@@ -36,7 +36,7 @@ group { name: "e/modules/clock/digital";
             mul = 3;
          }
          
-         for (i = 12; i < 14; i += 2) {
+         for (i = 0; i < 14; i += 2) {
             custom_state(parts[i], "default", 0.0);
          }
          v[0] = 0; v[1] = 2; v[2] = 2; v[3] = 4; // hrs
