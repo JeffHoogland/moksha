@@ -9,14 +9,6 @@ EAPI E_Path *path_modules = NULL;
 EAPI E_Path *path_backgrounds = NULL;
 EAPI E_Path *path_messages = NULL;
 
-typedef struct _E_Util_Fake_Mouse_Up_Info    E_Util_Fake_Mouse_Up_Info;
-
-struct _E_Util_Fake_Mouse_Up_Info
-{
-   Evas *evas;
-   int   button;
-};
-
 /* local subsystem functions */
 static Eina_Bool    _e_util_cb_delayed_del(void *data);
 static Eina_Bool    _e_util_wakeup_cb(void *data);
