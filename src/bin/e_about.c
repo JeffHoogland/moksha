@@ -19,21 +19,41 @@ e_about_new(E_Container *con)
    e_obj_dialog_obj_part_text_set(od, "e.text.version", VERSION);
    e_obj_dialog_obj_part_text_set
      (od, "e.textblock.about",
+         /* note: if translating this, ONLY translate down until (but not
+          * including) "All rights reserved". - this is a legal document
+          * and should remain in its original form */
      _(
-       "<title>Copyright &copy; 1999-2012, by the Enlightenment "
+       "<title>Copyright &copy; 2000-2012, by the Enlightenment "
        "Development Team</><br>"
        "<br>"
        "We hope you enjoy using this software as much as we enjoyed "
        "writing it.<br>"
        "<br>"
-       "This software is provided as-is with no explicit or implied "
-       "warranty. This software is governed by licensing conditions, "
-       "so please see the COPYING and COPYING-PLAIN licence files "
-       "installed on your system.<br>"
+       "All rights reserved.<br>"
        "<br>"
-       "Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and it "
-       "is not stable. Many features are incomplete or even non-existent "
-       "yet and may have many bugs. You have been <hilight>WARNED!</>"
+       "Redistribution and use in source and binary forms, with or without "
+       "modification, are permitted provided that the following conditions "
+       "are met:<br>"
+       "<br>"
+       "1. Redistributions of source code must retain the above copyright "
+       "notice, this list of conditions and the following disclaimer.<br>"
+       "2. Redistributions in binary form must reproduce the above copyright "
+       "notice, this list of conditions and the following disclaimer in the "
+       "documentation and/or other materials provided with the "
+       "distribution.<br>"
+       "<br>"
+       "<hilight>THIS SOFTWARE IS PROVIDED \"AS IS\" AND ANY EXPRESS OR "
+       "IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED "
+       "WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE "
+       "ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR "
+       "CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, "
+       "SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT "
+       "LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF "
+       "USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED "
+       "AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT "
+       "LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN "
+       "ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE "
+       "POSSIBILITY OF SUCH DAMAGE.</><br>"
        )
      );
 
