@@ -597,6 +597,7 @@
                image.normal: "O/bt_base1.png";
             }
          }
+         // also have e.text.theme for theme settings
          part {
             name: "e.text.label";
             type: TEXT;
@@ -698,6 +699,8 @@
             signal: "mouse,clicked,1";
             source: "button_image";
             action: SIGNAL_EMIT "e,action,close" "";
+            // also have "e,action,settings,theme" ""
+            // for theme settings
          }
       }
    }
