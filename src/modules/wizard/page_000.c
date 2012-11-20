@@ -55,7 +55,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    e_wizard_page_show(o);
 
    _update_handler =
-     ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE,
+     ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_BUILD,
                              _cb_desktops_update, NULL);
 
    /* advance in 15 sec anyway if no efreet update comes */
