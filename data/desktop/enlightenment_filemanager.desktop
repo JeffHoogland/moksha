@@ -1,9 +1,13 @@
 [Desktop Entry]
 Type=Application
 Name=Enlightenment File Manager
+Name[es]=Administrador de archivos de Enlightenment
+Name[gl]=Xestor de ficheiros de Enlightenment
 Name[it]=Filemanager di Enlightenment
 Name[pt]=Gestor de ficheiros do Enlightenment
 Comment=File Manager provided by Enlightenment
+Comment[es]=El administrador de ficheros proporcionado por Enlightenment
+Comment[gl]=O xestor de ficheiros fornecido por Enlightenment
 Comment[it]=Il filemanager fornito da Enlightenment
 Comment[pt]=Gestor de ficheiros para o Enlightenment
 Exec=enlightenment_filemanager %U

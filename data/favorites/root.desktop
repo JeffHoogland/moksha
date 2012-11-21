@@ -1,8 +1,10 @@
 [Desktop Entry]
 Name=Root
 Comment=The Root Filesystem base
-Comment[it]=Il filesystem principale
+Comment[es]=El sistema de archivos root
 Comment[fr]=Le système de fichiers à la base
+Comment[gl]=O sistema de ficheiros root
+Comment[it]=Il filesystem principale
 Comment[pt]=O sistema de ficheiros root
 Type=Link
 X-Enlightenment-Type=Mount

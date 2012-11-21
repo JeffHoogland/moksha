@@ -2,8 +2,10 @@
 Name=Temp
 Name[pt]=Temporários
 Comment=Temporary files
-Comment[it]=File temporanei
+Comment[es]=Archivos temporales
 Comment[fr]=Les fichiers temporaires
+Comment[gl]=Ficheiros temporais
+Comment[it]=File temporanei
 Comment[pt]=Ficheiros temporários
 Type=Link
 X-Enlightenment-Type=Mount

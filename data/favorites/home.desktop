@@ -1,9 +1,13 @@
 [Desktop Entry]
 Name=Home
+Name[es]=Carpeta personal
+Name[gl]=Cartafol persoal
 Name[pt]=Pasta pessoal
 Comment=The Directory containing all your personal files
-Comment[it]=La directory contenente i vostri file personali
+Comment[es]=El directorio que contiene todos sus archivos personales
 Comment[fr]=Le dossier contenant vos fichiers personnels
+Comment[gl]=O directorio que contén tódolos seus ficheiros persoais
+Comment[it]=La directory contenente i vostri file personali
 Comment[pt]=O diretório com os ficheiros do utilizador
 Type=Link
 X-Enlightenment-Type=Mount

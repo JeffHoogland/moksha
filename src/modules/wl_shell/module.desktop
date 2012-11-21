@@ -3,4 +3,5 @@ Type=Link
 Name=Wayland Shell
 Icon=e-module-wl_shell
 Comment=Enlightenment Wayland Shell
+Comment[it]=Shell di Enlightenment per Wayland
 X-Enlightenment-ModuleType=look

@@ -2,8 +2,12 @@
 Type=Application
 Name=MPlayer
 GenericName=Movie Player
+GenericName[es]=Reproductor de vídeo
+GenericName[gl]=Reprodutor de vídeo
 GenericName[pt]=Reprodutor multimédia
 Comment=Watch movies and videos
+Comment[es]=Para ver películas y vídeos
+Comment[gl]=Para ver películas e vídeos
 Comment[it]=Per guardare filmati e video
 Comment[pt]=Ver filmes e ouvir músicas
 Exec=mplayer %U

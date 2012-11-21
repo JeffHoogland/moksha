@@ -1,10 +1,14 @@
 [Desktop Entry]
 Name=Desktop
+Name[es]=Escritorio
 Name[fr]=Bureau
+Name[gl]=Escritorio
 Name[pt]=Área de trabalho
 Comment=Files on your Desktop
-Comment[it]=I file sul vostro desktop
+Comment[es]=Los archivos en su escritorio
 Comment[fr]=Les fichiers sur votre bureau
+Comment[gl]=Os ficheiros no seu escritorio
+Comment[it]=I file sul vostro desktop
 Comment[pt]=Os ficheiros da área de trabalho
 Type=Link
 X-Enlightenment-Type=Mount
