@@ -17,6 +17,7 @@ EXTRA_DIST = \
 default.edc \
 macros.edc \
 edc/about-e.edc \
+edc/about-theme.edc \
 edc/background.edc \
 edc/border.edc \
 edc/button.edc \

@@ -1,0 +1,189 @@
+group { name: "e/theme/about";
+   // data.item: "borderless" "1";
+   // data.item: "shaped" "1";
+   images.image: "bevel_dark_out.png" COMP;
+   images.image: "screen_circular_shadow.png" COMP;
+   images.image: "button_normal.png" COMP;
+   images.image: "button_clicked.png" COMP;
+   min: 220 220;
+   max: 220 220;
+   parts {
+      part { name: "sizer"; type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 220 220;
+         }
+      }
+      part { name: "bg";
+         description { state: "default" 0.0;
+            image.normal: "bg_radgrad.png";
+            image.scale_hint: STATIC;
+            fill.smooth: 0;
+            ASPECT_FILL((1024/653))
+         }
+      }
+      part { name: "name"; type: TEXT; mouse_events: 0;
+         effect: GLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 1 1;
+            color: 51 153 255 255;
+            color2: 51 153 255 24;
+            color3: 51 153 255 18;
+            rel1.relative: 0.5 0.5;
+            rel2.relative: 0.5 0.5;
+            text { font: "Sans:style=Bold"; size: 64;
+               text: "Dark";
+               min: 1 1;
+               align: 0.5 0.5;
+            }
+         }
+      }
+      part { name: "name2"; type: TEXT; mouse_events: 0;
+         effect: GLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 1 1;
+            color: 51 153 255 255;
+            color2: 51 153 255 24;
+            color3: 51 153 255 18;
+            rel1.relative: 0.5 0.9;
+            rel1.to: "name";
+            rel2.relative: 0.5 0.9;
+            rel2.to: "name";
+            align: 0.5 1.0;
+            text { font: "Sans"; size: 10;
+               text: "The default theme for Enlightenment";
+               min: 1 1;
+               align: 0.5 1.0;
+            }
+         }
+      }
+      part { name: "shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel2.relative: 1.0 1.0;
+            image.normal: "screen_circular_shadow.png";
+            fill.smooth: 0;
+         }
+      }
+      part { name: "bevel";
+         description { state: "default" 0.0;
+            image.normal: "bevel_dark_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -6 -6;
+            rel1.to: "e.text.label";
+            rel2.offset: 5 5;
+            rel2.to: "e.text.label";
+            fill.smooth: 0;
+                     }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: -14 -14;
+            rel1.relative: 1.0 1.0;
+            rel2.offset: -14 -14;
+            rel2.relative: 1.0 1.0;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "button_text";
+            align: 1.0 1.0;
+            min: 85 0;
+            text { font: "Sans"; size: 10;
+               min: 1 1;
+               align: 0.5 0.5;
+               text_class: "button";
+            }
+            fixed: 1 1;
+         }
+      }
+      part { name: "base2";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -6 -6;
+            rel1.to: "e.text.theme";
+            rel2.offset: 5 5;
+            rel2.to: "e.text.theme";
+            fill.smooth: 0;
+                     }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      part { name: "e.text.theme"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: 13 -14;
+            rel1.relative: 0.0 1.0;
+            rel2.offset: 13 -14;
+            rel2.relative: 0.0 1.0;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "button_text";
+            align: 0.0 1.0;
+            min: 85 0;
+            text { font: "Sans"; size: 10;
+               min: 1 1;
+               align: 0.5 0.5;
+               text_class: "button";
+            }
+            fixed: 1 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1*"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+         target: "e.text.label";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "e.text.label";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,close" "";
+      }
+      program {
+         signal: "mouse,down,1*"; source: "base2";
+         action: STATE_SET "clicked" 0.0;
+         target: "base2";
+         target: "e.text.theme";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base2";
+         action: STATE_SET "default" 0.0;
+         target: "base2";
+         target: "e.text.theme";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base2";
+         action: SIGNAL_EMIT "e,action,settings,theme" "";
+      }
+   }
+}

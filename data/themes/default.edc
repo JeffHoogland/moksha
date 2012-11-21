@@ -17,6 +17,7 @@ collections {
 #include "edc/wizard.edc"
 #include "edc/init.edc"
 #include "edc/about-e.edc"
+#include "edc/about-theme.edc"
 // widgets
 #include "edc/menu.edc"
 #include "edc/button.edc"
@@ -45,7 +46,6 @@ collections {
 #include "edc/ibar-ibox.edc"
 
 // port unchanged stuff so this can work as a replacement
-#include "edc/O/about.edc"
 #include "edc/O/backlight.edc"
 #include "edc/O/battery.edc"
 #include "edc/O/border_icons.edc"
@@ -66,6 +66,7 @@ collections {
 #include "edc/O/temperature.edc"
 #include "edc/O/transitions.edc"
 #include "edc/O/wallpaper.edc"
+//#include "edc/O/about.edc"
 //#include "edc/O/init.edc"
 //#include "edc/O/ibarbox.edc"
 //#include "edc/O/wizard.edc"
