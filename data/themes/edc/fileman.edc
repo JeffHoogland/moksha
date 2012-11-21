@@ -256,7 +256,6 @@ group { name: "e/fileman/default/list/variable";
          }
       }
       part { name: "label_event"; type: RECT;
-         repeat_events: 1;
          ignore_flags: ON_HOLD;
          description { state: "default" 0.0;
             color: 0 0 0 0;
@@ -642,7 +641,6 @@ group { name: "e/fileman/default/icon/fixed";
          }
       }
       part { name: "label_event"; type: RECT;
-         repeat_events: 1;
          ignore_flags: ON_HOLD;
          description { state: "default" 0.0;
             color: 0 0 0 0;
