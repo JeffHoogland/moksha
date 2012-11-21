@@ -4641,7 +4641,6 @@ _e_fm2_icon_label_click(void *data, Evas_Object *obj __UNUSED__, const char *emi
    if (ic->sd->config->view.no_click_rename) return;
    if (eina_list_count(ic->sd->selected_icons) != 1) return;
    if (eina_list_data_get(ic->sd->selected_icons) != ic) return;
-   printf("rename\n");
    _e_fm2_file_rename(ic, NULL, NULL);
 }
 
