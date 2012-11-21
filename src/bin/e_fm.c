@@ -4636,12 +4636,13 @@ _e_fm2_icon_label_click(void *data, Evas_Object *obj __UNUSED__, const char *emi
    E_Fm2_Icon *ic = data;
    if (ic->entry_widget || ic->entry_dialog) return;
    if (!ic->selected) return;
-   if (ecore_loop_time_get() - ic->selected_time < 0.1) return;
+   if (ecore_loop_time_get() - ic->selected_time < 0.2) return;
 
    if (ic->sd->config->view.no_click_rename) return;
    if (eina_list_count(ic->sd->selected_icons) != 1) return;
    if (eina_list_data_get(ic->sd->selected_icons) != ic) return;
-   _e_fm2_file_rename(data, NULL, NULL);
+   printf("rename\n");
+   _e_fm2_file_rename(ic, NULL, NULL);
 }
 
 static void
@@ -6918,14 +6919,17 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 
    ic = data;
    ev = event_info;
-
-   if (ic->entry_widget) return;
+   
+   edje_object_message_signal_process(ic->obj);
+   edje_object_message_signal_process(ic->obj);
 
    _e_fm2_typebuf_hide(ic->sd->obj);
    if ((ev->button == 1) && (!ic->drag.dnd))
      {
         if (!(ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD))
-          _e_fm2_mouse_1_handler(ic, 1, ev);
+          {
+             if (!ic->entry_widget) _e_fm2_mouse_1_handler(ic, 1, ev);
+          }
         ic->drag.start = EINA_FALSE;
         ic->drag.dnd = EINA_FALSE;
         ic->drag.src = EINA_FALSE;
@@ -9858,6 +9862,7 @@ _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
    ic->entry_widget = e_widget_entry_add(e, NULL, NULL, NULL, NULL);
    evas_object_event_callback_add(ic->entry_widget, EVAS_CALLBACK_KEY_DOWN,
                                   _e_fm2_icon_entry_widget_cb_key_down, ic);
+   evas_event_feed_mouse_out(evas_object_evas_get(ic->obj), ecore_x_current_time_get(), NULL);
    if (ic->keygrab)
      e_grabinput_get(0, 0, ic->keygrab);
    edje_object_part_swallow(ic->obj, "e.swallow.entry", ic->entry_widget);
@@ -9867,6 +9872,7 @@ _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
    e_widget_entry_select_all(ic->entry_widget);
    ic->sd->iop_icon = ic;
    ic->sd->typebuf.disabled = EINA_TRUE;
+   evas_event_feed_mouse_in(evas_object_evas_get(ic->obj), ecore_x_current_time_get(), NULL);
 
    return ic->entry_widget;
 }
