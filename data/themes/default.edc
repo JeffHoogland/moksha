@@ -16,6 +16,7 @@ collections {
 #include "edc/desklock.edc"
 #include "edc/wizard.edc"
 #include "edc/init.edc"
+#include "edc/about-e.edc"
 // widgets
 #include "edc/menu.edc"
 #include "edc/button.edc"

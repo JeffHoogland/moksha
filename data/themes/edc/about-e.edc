@@ -1,0 +1,284 @@
+group { name: "e/widgets/about/main";
+   // data.item: "borderless" "1";
+   // data.item: "shaped" "1";
+   images.image: "bg_radgrad.png" COMP;
+   images.image: "dot_pattern.png" COMP;
+   images.image: "bevel_dark_out.png" COMP;
+   images.image: "vgrad_med_lighter.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "shine.png" COMP;
+   images.image: "shadow_square_tiny.png" COMP;
+   images.image: "screen_circular_shadow.png" COMP;
+   images.image: "logo_blue_bottom.png" COMP;
+   images.image: "button_normal.png" COMP;
+   images.image: "button_clicked.png" COMP;
+   styles {
+      style { name: "about_style";
+         base: "font=Sans font_size=10 align=center text_class=tb_plain color=#ffff style=shadow,bottom shadow_color=#00000080 wrap=word";
+         tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light style=glow color=#3399ffff glow_color=#3399ff18 align=center glow2_color=#3399ff12";
+         tag: "title" "+ font_size=16 font=Sans:style=Bold text_class=tb_big";
+         tag: "/title" "- \n \n";
+         tag: "br" "\n";
+      }
+      style { name: "authors_style";
+         base: "font=San:style=Bolds font_size=16 align=left text_class=tb_plain color=#00000044 wrap=none";
+         tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light color=#3399ff44";
+         tag: "title" "+ font_size=24 font=Sans:style=Bold text_class=tb_big";
+         tag: "/title" "- \n \n";
+         tag: "br" "\n";
+      }
+   }
+   min: 220 260;
+   max: 800 600;
+   parts {
+      part { name: "sizer"; type: SPACER;
+         scale: 1;
+         description { state: "default" 0.0;
+            min: 220 260;
+         }
+      }
+      part { name: "bg";
+         description { state: "default" 0.0;
+            image.normal: "bg_radgrad.png";
+            image.scale_hint: STATIC;
+            fill.smooth: 0;
+            ASPECT_FILL((1024/653))
+         }
+      }
+      part { name: "pat";
+         description { state: "default" 0.0;
+            image.normal: "dot_pattern.png";
+            TILED_PATTERN(256, 256)
+         }
+      }
+      part { name: "e.textblock.authors"; type: TEXTBLOCK; mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 1 1;
+            max: 20000 20000;
+            min: 160 0;
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 4 4;
+            rel2.relative: 1.0 1.0;
+            rel2.offset: -5 4;
+            align: 0.5 0.0;
+            text { style: "authors_style";
+               min: 0 1;
+               align: 0.5 0.0;
+            }
+         }
+         description { state: "up" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel1.offset: 4 -5;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -5 -5;
+            align: 0.5 1.0;
+         }
+      }
+      part { name: "e.textblock.about"; type: TEXTBLOCK; mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+            fixed: 1 1;
+            max: 20000 20000;
+            min: 160 0;
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 4 4;
+            rel2.relative: 1.0 1.0;
+            rel2.offset: -5 4;
+            align: 0.5 0.0;
+            text { style: "about_style";
+               min: 0 1;
+               align: 0.5 0.0;
+            }
+         }
+         description { state: "up" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel1.offset: 4 -5;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -5 -5;
+            align: 0.5 1.0;
+         }
+      }
+      part { name: "shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel2.relative: 1.0 1.0;
+            image.normal: "screen_circular_shadow.png";
+            fill.smooth: 0;
+         }
+      }
+      part { name: "bevel";
+         description { state: "default" 0.0;
+            image.normal: "bevel_dark_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "top_shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: -3 -2;
+            rel1.to: "top_base";
+            rel2.offset: 3 4;
+            rel2.to: "top_base";
+            image.normal: "shadow_square_tiny.png";
+            image.border: 6 6 6 6;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "logo";
+         description { state: "default" 0.0;
+            image.normal: "logo_blue_bottom.png";
+            image.scale_hint: STATIC;
+            FIXED_SIZE(263,100);
+            rel1.to: "top_base";
+            rel2.to: "top_base";
+            align: 0.5 0.25;
+         }
+      }
+      part { name: "top_base";
+         description { state: "default" 0.0;
+            image.normal: "vgrad_med_lighter.png";
+            rel2.to_y: "e.text.title";
+            rel2.offset: -1 3;
+            fill.smooth: 0;
+            TILED_HORIZ(120)
+         }
+      }
+      part { name: "top_bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "top_base";
+            rel2.to: "top_base";
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "e.text.title"; type: TEXT;
+         scale: 1;
+         effect: SHADOW BOTTOM;
+         description { state: "default" 0.0;
+            align: 0.0 0.0;
+            rel1.offset: 3 3;
+            rel2.relative: 0.0 0.0;
+            rel2.offset: 3 3;
+            text { font: "Sans"; size: 10;
+               min: 1 1;
+               align: 0.0 0.0;
+               text_class: "about_title";
+            }
+            fixed: 1 1;
+         }
+      }
+      part { name: "e.text.version"; type: TEXT;
+         scale: 1;
+         effect: SHADOW BOTTOM;
+         description { state: "default" 0.0;
+            align: 1.0 0.0;
+            rel1.relative: 0.0 0.0;
+            rel1.offset: -4 3;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -4 3;
+            text { font: "Sans"; size: 10;
+               min: 1 1;
+               align: 1.0 0.0;
+               text_class: "about_version";
+            }
+            fixed: 1 1;
+         }
+      }
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -6 -6;
+            rel1.to: "e.text.label";
+            rel2.offset: 5 5;
+            rel2.to: "e.text.label";
+            fill.smooth: 0;
+                     }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: 0 -14;
+            rel1.relative: 0.5 1.0;
+            rel2.offset: -1 -14;
+            rel2.relative: 0.5 1.0;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "button_text";
+            align: 0.5 1.0;
+            text { font: "Sans"; size: 10;
+               min: 1 1;
+               align: 0.5 0.5;
+               text_class: "button";
+            }
+            fixed: 1 1;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel1.to: "top_base";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            rel2.to: "top_base";
+            FIXED_SIZE(69, 5)
+         }
+      }
+   }
+   programs {
+      program { name: "show1";
+         signal: "show"; source: "";
+         action: STATE_SET "up" 0.0;
+         transition: LINEAR 45.0;
+         target: "e.textblock.about";
+         after: "show2";
+      }
+      program { name: "show2";
+         action: STATE_SET "default" 0.0;
+         target: "e.textblock.about";
+         after: "show1";
+      }
+      program { name: "show3";
+         signal: "show"; source: "";
+         action: STATE_SET "up" 0.0;
+         transition: LINEAR 120.0;
+         target: "e.textblock.authors";
+         after: "show4";
+      }
+      program { name: "show4";
+         action: STATE_SET "default" 0.0;
+         target: "e.textblock.authors";
+         after: "show3";
+      }
+      program {
+         signal: "mouse,down,1*"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+         target: "e.text.label";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "e.text.label";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,close" "";
+      }
+   }
+}

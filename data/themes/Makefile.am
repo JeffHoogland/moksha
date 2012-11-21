@@ -16,6 +16,7 @@ files_DATA = default.edj
 EXTRA_DIST = \
 default.edc \
 macros.edc \
+edc/about-e.edc \
 edc/background.edc \
 edc/border.edc \
 edc/button.edc \
@@ -218,6 +219,7 @@ img/led_square_glow.png \
 img/led_square_shading.png \
 img/led_square_shadow.png \
 img/led_square_shine.png \
+img/logo_blue_bottom.png \
 img/logo_blue_small.png \
 img/logo_blue_small_glow.png \
 img/media_busy_progress.png \
