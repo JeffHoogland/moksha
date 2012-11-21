@@ -87,26 +87,30 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
    ob = e_widget_radio_add(evas, _("Digital"), 1, rg);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_label_add(evas, "");
-   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 0, 1, 0, 0);
+   ob = e_widget_check_add(evas, _("Seconds"), &(cfdata->cfg.show_seconds));
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->cfg.digital_24h));
    ob = e_widget_radio_add(evas, _("12 h"), 0, rg);
    e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 0, 0);
    ob = e_widget_radio_add(evas, _("24 h"), 1, rg);
    e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_check_add(evas, _("Seconds"), &(cfdata->cfg.show_seconds));
-   e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 1, 0, 0);
    
-   rg = e_widget_radio_group_new(&(cfdata->cfg.show_date));
-   ob = e_widget_radio_add(evas, _("No Date"), 0, rg);
-   e_widget_frametable_object_append(of, ob, 0, 7, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_radio_add(evas, _("Words"), 1, rg);
-   e_widget_frametable_object_append(of, ob, 0, 8, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_radio_add(evas, _("Numbers"), 2, rg);
-   e_widget_frametable_object_append(of, ob, 0, 9, 1, 1, 1, 1, 0, 0);
-
    e_widget_table_object_append(tab, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
+   of = e_widget_frametable_add(evas, _("Date"), 0);
+   
+   rg = e_widget_radio_group_new(&(cfdata->cfg.show_date));
+   ob = e_widget_radio_add(evas, _("None"), 0, rg);
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_radio_add(evas, _("Full"), 1, rg);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_radio_add(evas, _("Numbers"), 2, rg);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_radio_add(evas, _("Date Only"), 3, rg);
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 0, 0);
+
+   e_widget_table_object_append(tab, of, 0, 1, 1, 1, 1, 1, 1, 1);
+   
    of = e_widget_frametable_add(evas, _("Week"), 0);
 
    ob = e_widget_label_add(evas, _("Start"));
@@ -118,7 +122,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
         e_widget_frametable_object_append(of, ob, 0, i + 1, 1, 1, 1, 1, 0, 0);
      }
 
-   e_widget_table_object_append(tab, of, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(tab, of, 1, 0, 1, 2, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Weekend"), 0);
 
@@ -149,7 +153,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    ob = e_widget_radio_add(evas, "6", 6, rg);
    e_widget_frametable_object_append(of, ob, 1, 7, 1, 1, 1, 1, 0, 0);
 
-   e_widget_table_object_append(tab, of, 2, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(tab, of, 2, 0, 1, 2, 1, 1, 1, 1);
    return tab;
 }
 
