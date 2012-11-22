@@ -18,6 +18,7 @@ collections {
 #include "edc/init.edc"
 #include "edc/about-e.edc"
 #include "edc/about-theme.edc"
+#include "edc/transitions.edc"
 // widgets
 #include "edc/menu.edc"
 #include "edc/button.edc"
@@ -64,8 +65,8 @@ collections {
 #include "edc/O/randr.edc"
 #include "edc/O/spectrum.edc"
 #include "edc/O/temperature.edc"
-#include "edc/O/transitions.edc"
 #include "edc/O/wallpaper.edc"
+//#include "edc/O/transitions.edc"
 //#include "edc/O/about.edc"
 //#include "edc/O/init.edc"
 //#include "edc/O/ibarbox.edc"

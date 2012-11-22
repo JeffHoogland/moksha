@@ -53,6 +53,7 @@ edc/systray.edc \
 edc/tasks.edc \
 edc/textblock.edc \
 edc/toolbar.edc \
+edc/transitions.edc \
 edc/winlist.edc \
 edc/wizard.edc \
 edc/xkbswitch.edc \
@@ -196,6 +197,8 @@ img/inset_circle_tiny.png \
 img/inset_shadow_circle_tiny.png \
 img/inset_shadow.png \
 img/inset_shadow_tiny.png \
+img/img_example_1.png \
+img/img_example_2.png \
 img/knob_round_busy.png \
 img/knob_round_small_busy.png \
 img/knob_round_small_normal.png \
@@ -287,6 +290,7 @@ img/vgrad_med_darker.png \
 img/vgrad_med_dark.png \
 img/vgrad_med_lighter.png \
 img/vgrad_med.png \
+img/vgrad_shadow_bi.png \
 img/vgrad_tall.png \
 img/white_bar_vert_glow.png \
 img/wifi_base.png \

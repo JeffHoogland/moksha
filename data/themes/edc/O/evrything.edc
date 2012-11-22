@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
    group {
+      images.image: "O/vgrad_light.png" COMP;
       name: "e/modules/everything/list";
       parts {
          part {
