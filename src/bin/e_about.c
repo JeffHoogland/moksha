@@ -10,6 +10,7 @@ EAPI E_About *
 e_about_new(E_Container *con)
 {
    E_Obj_Dialog *od;
+   char buf[16384];
 
    od = e_obj_dialog_new(con, _("About Enlightenment"), "E", "_about");
    if (!od) return NULL;
@@ -17,11 +18,8 @@ e_about_new(E_Container *con)
    e_obj_dialog_obj_part_text_set(od, "e.text.label", _("Close"));
    e_obj_dialog_obj_part_text_set(od, "e.text.title", _("Enlightenment"));
    e_obj_dialog_obj_part_text_set(od, "e.text.version", VERSION);
-   e_obj_dialog_obj_part_text_set
-     (od, "e.textblock.about",
-         /* note: if translating this, ONLY translate down until (but not
-          * including) "All rights reserved". - this is a legal document
-          * and should remain in its original form */
+   snprintf
+     (buf, sizeof(buf), "%s%s",
      _(
        "<title>Copyright &copy; 2000-2012, by the Enlightenment "
        "Development Team</><br>"
@@ -32,6 +30,7 @@ e_about_new(E_Container *con)
        "To contact us please visit:<br>"
        "<hilight>http://www.enlightenment.org</><br>"
        "<br>"
+      ),
        "All rights reserved.<br>"
        "<br>"
        "Redistribution and use in source and binary forms, with or without "
@@ -57,9 +56,8 @@ e_about_new(E_Container *con)
        "LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN "
        "ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE "
        "POSSIBILITY OF SUCH DAMAGE.</><br>"
-       )
      );
-
+   e_obj_dialog_obj_part_text_set(od, "e.textblock.about", buf);
    {
       FILE *f;
       char buf[4096];
