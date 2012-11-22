@@ -126,7 +126,7 @@ e_xkb_update(int cur_group)
                }
           }
      }
-   INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
+   fprintf(stderr, "SET XKB RUN: %s\n", eina_strbuf_string_get(buf));
    ecore_exe_run(eina_strbuf_string_get(buf), NULL);
    eina_strbuf_free(buf);
 }
