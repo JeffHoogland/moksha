@@ -1,0 +1,156 @@
+group { name: "e/modules/conf_colors/preview/solid";
+   images.image: "inset_shadow.png" COMP;
+   images.image: "bevel_in.png" COMP;
+   images.image: "dot_pattern.png" COMP;
+   parts {
+      part { name: "bg"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.offset: 3 3;
+            rel2.offset: -4 -4;
+            color: 48 48 48 255;
+            min: 18 18;
+         }
+      }
+      part { name: "pat";
+         description { state: "default" 0.0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            image.normal: "dot_pattern.png";
+            TILED_PATTERN(256, 256)
+         }
+      }
+      part { name: "e.rect"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+            color_class: "color_preview";
+            rel1.to: "bg";
+            rel2.to: "bg";
+         }
+      }
+      part { name: "shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "inset_shadow.png";
+            image.border: 5 5 7 3;
+            image.middle: 0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            fill.smooth: 0;
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "inset";
+         description { state: "default" 0.0;
+            image.normal: "bevel_in.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            rel1.to: "bg";
+            rel1.offset: -1 -1;
+            rel2.to: "bg";
+            rel2.offset: 0 0;
+            fill.smooth: 0;
+         }
+      }
+   }
+}
+
+group { name: "e/modules/conf_colors/preview/text";
+   parts {
+      part { name: "shadow"; type: TEXT; mouse_events: 0;
+         description { state: "default" 0.0;
+            color: 255 255 255 32;
+            text { font: "Sans"; size: 10;
+               text: "Text";
+               min: 1 1;
+            }
+         }
+      }
+      part { name: "e.text"; type: TEXT; mouse_events: 0;
+         effect: OUTLINE_SHADOW;
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+            color2: 255 255 255 255;
+            color3: 255 255 255 255;
+            color_class: "color_preview";
+            text { font: "Sans:style=Bold"; size: 16;
+               text: "Ab";
+               min: 1 1;
+            }
+         }
+      }
+   }
+}
+
+group { name: "e/modules/conf_colors/preview/unknown";
+   images.image: "inset_shadow.png" COMP;
+   images.image: "bevel_in.png" COMP;
+   images.image: "dot_pattern.png" COMP;
+   parts {
+      part { name: "bg"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.offset: 3 3;
+            rel2.offset: -4 -4;
+            color: 48 48 48 255;
+            min: 18 18;
+         }
+      }
+      part { name: "pat";
+         description { state: "default" 0.0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            image.normal: "dot_pattern.png";
+            TILED_PATTERN(256, 256)
+         }
+      }
+      part { name: "c1"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            color: 255 0 0 128;
+            color_class: "color_preview_c1";
+            rel1.to: "bg";
+            rel2.to: "bg";
+            rel2.relative: 0.333 1.0;
+         }
+      }
+      part { name: "c2"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            color: 0 255 0 128;
+            color_class: "color_preview_c2";
+            rel1.to: "c1";
+            rel1.relative: 1.0 0.0;
+            rel2.to: "bg";
+            rel2.relative: 0.667 1.0;
+         }
+      }
+      part { name: "c3"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            color: 0 0 255 128;
+            color_class: "color_preview_c3";
+            rel1.to: "c2";
+            rel1.relative: 1.0 0.0;
+            rel2.to: "bg";
+         }
+      }
+      part { name: "shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "inset_shadow.png";
+            image.border: 5 5 7 3;
+            image.middle: 0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            fill.smooth: 0;
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "inset";
+         description { state: "default" 0.0;
+            image.normal: "bevel_in.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            rel1.to: "bg";
+            rel1.offset: -1 -1;
+            rel2.to: "bg";
+            rel2.offset: 0 0;
+            fill.smooth: 0;
+         }
+      }
+   }
+}

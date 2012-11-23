@@ -7,7 +7,7 @@ group { name: "e/widgets/spectrum";
    images.image: "col_sel_end_left.png" COMP;
    images.image: "col_sel_end_right.png" COMP;
    parts {
-      part {       name: "bg"; type: RECT;
+      part { name: "bg"; type: RECT;
          description { state: "default" 0.0;
             rel1.to: "e.swallow.content";
             rel2.to: "e.swallow.content";

@@ -23,6 +23,7 @@ edc/border.edc \
 edc/button.edc \
 edc/check.edc \
 edc/clock.edc \
+edc/colors.edc \
 edc/colorwell.edc \
 edc/comp.edc \
 edc/conf.edc \
@@ -31,6 +32,7 @@ edc/cslider.edc \
 edc/desklock.edc \
 edc/deskpreview.edc \
 edc/dialog.edc \
+edc/edgebindings.edc \
 edc/entry.edc \
 edc/fileman.edc \
 edc/fontpreview.edc\
@@ -178,6 +180,9 @@ img/digit_nm.png \
 img/digit_pm.png \
 img/dot_pattern.png \
 img/downlight_glow.png \
+img/downlight_glow_left.png \
+img/downlight_glow_right.png \
+img/downlight_glow_up.png \
 img/eth.png \
 img/exlclam.png \
 img/glow_lock_double.png \
