@@ -113,6 +113,8 @@ e_entry_text_set(Evas_Object *entry, const char *_text)
    text = evas_textblock_text_utf8_to_markup(
          edje_object_part_object_get(sd->entry_object, ENTRY_PART_NAME),
          _text);
+   if ((text) && (_text) && (!strcmp(text, _text))) return;
+   if ((!text) && (!_text)) return;
    edje_object_part_text_set(sd->entry_object, ENTRY_PART_NAME, text);
    evas_object_smart_callback_call(entry, "changed", NULL);
    if (text)
@@ -631,7 +633,7 @@ static void
 _entry_recalc_size(Evas_Object *object)
 {
    E_Entry_Smart_Data *sd;
-   Evas_Coord vw, vh, w, h;
+   Evas_Coord vw, vh, w, h, pw = 0, ph = 0;
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
@@ -639,7 +641,8 @@ _entry_recalc_size(Evas_Object *object)
    e_scrollframe_child_viewport_size_get(sd->scroll_object, &vw, &vh);
    w = (sd->min_width < vw) ? vw : sd->min_width;
    h = (sd->height < vh) ? vh : sd->height;
-
+   evas_object_geometry_get(sd->entry_object, NULL, NULL, &pw, &ph);
+   if ((w == pw) && (h == ph)) return;
    evas_object_resize(sd->entry_object, w, h);
 }
 
