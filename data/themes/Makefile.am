@@ -156,6 +156,10 @@ img/clock_ss5.png \
 img/clock_ss6.png \
 img/clock_ss7.png \
 img/clock_ss.png \
+img/col_sel_end_bottom.png \
+img/col_sel_end_left.png \
+img/col_sel_end_right.png \
+img/col_sel_end_top.png \
 img/darken_rounded_square.png \
 img/diagonal_stripes.png \
 img/digit_0.png \
