@@ -27,11 +27,13 @@ edc/colorwell.edc \
 edc/comp.edc \
 edc/conf.edc \
 edc/connman.edc \
+edc/cslider.edc \
 edc/desklock.edc \
 edc/deskpreview.edc \
 edc/dialog.edc \
 edc/entry.edc \
 edc/fileman.edc \
+edc/fontpreview.edc\
 edc/frame.edc \
 edc/gadman.edc \
 edc/ibar-ibox.edc \
@@ -46,6 +48,7 @@ edc/radio.edc \
 edc/scrollframe.edc \
 edc/shelf.edc \
 edc/slider.edc \
+edc/spectrum.edc \
 edc/start.edc \
 edc/sys.edc \
 edc/syscon.edc \

@@ -1,9 +1,9 @@
-group { name: "e/widgets/color_well";
+group { name: "e/widgets/spectrum";
    images.image: "inset_shadow.png" COMP;
    images.image: "bevel_in.png" COMP;
    images.image: "dot_pattern.png" COMP;
    parts {
-      part { name: "bg"; type: RECT;
+      part {       name: "bg"; type: RECT;
          description { state: "default" 0.0;
             rel1.to: "e.swallow.content";
             rel2.to: "e.swallow.content";
@@ -58,21 +58,46 @@ group { name: "e/widgets/color_well";
             fill.smooth: 0;
          }
       }
-   }
-   programs {
-      program {
-         signal: "mouse,clicked,1"; source: "inset";
-         action: SIGNAL_EMIT "e,action,click" "";
+      part { name: "e.dragable.cursor"; type: RECT;
+         dragable.confine: "e.swallow.content";
+         dragable.x: 1 1 0;
+         dragable.y: 1 1 0;
+         description { state: "default" 0.0;
+            min: 1 1;
+            max: 1 1;
+            fixed: 1 1;
+            visible: 0;
+            rel1.to: "e.swallow.content";
+            rel1.relative: 0.5 0.5;
+            rel2.to: "e.swallow.content";
+            rel2.relative: 0.5 0.5;
+         }
       }
-      program {
-         signal: "e,state,disabled"; source: "e";
-         action: STATE_SET "disabled" 0.0;
-         target: "clipper";
+      part { name: "cursor_x"; type: RECT;
+         description { state: "default" 0.0;
+            rel1 {
+to_x: "e.dragable.cursor";
+to_y: "e.swallow.content";
+            }
+            rel2 {
+to_x: "e.dragable.cursor";
+to_y: "e.swallow.content";
+            }
+color: 255 255 255 150;
+         }
       }
-      program {
-         signal: "e,state,enabled"; source: "e";
-         action: STATE_SET "default" 0.0;
-         target: "clipper";
+      part { name: "cursor_y"; type: RECT;
+         description { state: "default" 0.0;
+            rel1 {
+to_x: "e.swallow.content";
+to_y: "e.dragable.cursor";
+            }
+            rel2 {
+to_x: "e.swallow.content";
+to_y: "e.dragable.cursor";
+            }
+color: 255 255 255 150;
+         }
       }
    }
 }
