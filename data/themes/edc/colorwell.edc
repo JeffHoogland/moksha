@@ -37,7 +37,7 @@ group { name: "e/widgets/color_well";
             color: 255 255 255 128;
          }
       }
-      part { name: "inset"; mouse_events: 0;
+      part { name: "inset";
          description { state: "default" 0.0;
             image.normal: "bevel_in.png";
             image.border: 1 1 1 1;
@@ -52,7 +52,7 @@ group { name: "e/widgets/color_well";
    }
    programs {
       program {
-         signal: "mouse,clicked,1"; source: "bg";
+         signal: "mouse,clicked,1"; source: "inset";
          action: SIGNAL_EMIT "e,action,click" "";
       }
       program {
