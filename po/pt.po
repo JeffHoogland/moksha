@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@...\n"
-"POT-Creation-Date: 2012-11-18 01:43+0000\n"
-"PO-Revision-Date: 2012-11-18 03:04+0100\n"
+"POT-Creation-Date: 2012-11-22 22:04+0000\n"
+"PO-Revision-Date: 2012-11-22 22:08+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: src/bin/e_about.c:14
+#: src/bin/e_about.c:15
 msgid "About Enlightenment"
 msgstr "Sobre o Enlightenment"
 
-#: src/bin/e_about.c:17
+#: src/bin/e_about.c:18
 #: src/bin/e_actions.c:3000
 #: src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1029
 #: src/bin/e_int_border_menu.c:194
 #: src/bin/e_int_border_prop.c:81
-#: src/bin/e_theme_about.c:17
+#: src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/fileman/e_fwin.c:2510
@@ -34,7 +34,7 @@ msgstr "Sobre o Enlightenment"
 msgid "Close"
 msgstr "Fechar"
 
-#: src/bin/e_about.c:18
+#: src/bin/e_about.c:19
 #: src/bin/e_actions.c:3375
 #: src/bin/e_actions.c:3379
 #: src/bin/e_actions.c:3383
@@ -46,11 +46,11 @@ msgstr "Fechar"
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_about.c:23
-msgid "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</><br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>This software is provided as-is with no explicit or implied warranty. This software is governed by licensing conditions, so please see the COPYING and COPYING-PLAIN licence files installed on your system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and it is not stable. Many features are incomplete or even non-existent yet and may have many bugs. You have been <hilight>WARNED!</>"
-msgstr "<title>Direitos de autor &copy; 1999-2012, pela equipa de desenvolvimento do Enlightenment.</><br><br>Esperamos que goste de utilizar esta aplicação tanto quanto nós gostámos de a desenvolver.<br><br>A aplicação é disponibilizada no modo \"AS-IS\" e não possui qualquer garantia, explicita ou implícita. A aplicação está restringida às condições de licenciamento, por isso não se esqueça de ler os ficheiros COPYING e COPYING-PLAIN instalados no seu sistema.<br><br>O Enlightenment <hilight>ainda está em desenvolvimento</> e não é estável. Algumas funcionalidades não estão concluídas e podem existir diversos erros. Considere-se <hilight>AVISADO!</>"
+#: src/bin/e_about.c:24
+msgid "<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</><br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment.org</><br><br>"
+msgstr "<title>Direitos de autor &copy; 2000-2012, pela equipa de desenvolvimento do Enlightenment</><br><br>Esperamos que goste de utilizar esta aplicação tanto quanto nós gostamos de a desenvolver<br><br>Para nos contactar, consulte:<br><hilight>http://www.enlightenment.org</><br><br>"
 
-#: src/bin/e_about.c:50
+#: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
 msgstr "<title>A equipa</><br><br>"
 
@@ -77,8 +77,8 @@ msgstr "Fechar"
 #: src/bin/e_actions.c:2485
 #: src/bin/e_confirm_dialog.c:53
 #: src/bin/e_desklock.c:1313
-#: src/bin/e_fm.c:10021
-#: src/bin/e_fm.c:10385
+#: src/bin/e_fm.c:10026
+#: src/bin/e_fm.c:10390
 #: src/bin/e_screensaver.c:167
 msgid "No"
 msgstr "Não"
@@ -102,7 +102,7 @@ msgstr "Sair"
 #: src/bin/e_eap_editor.c:862
 #: src/bin/e_eap_editor.c:926
 #: src/bin/e_entry_dialog.c:64
-#: src/bin/e_fm.c:9558
+#: src/bin/e_fm.c:9561
 #: src/bin/e_fm_prop.c:625
 #: src/bin/e_import_dialog.c:189
 #: src/bin/e_import_config_dialog.c:531
@@ -196,7 +196,7 @@ msgid "Window : Actions"
 msgstr "Janela: Ações"
 
 #: src/bin/e_actions.c:2960
-#: src/bin/e_fm.c:11145
+#: src/bin/e_fm.c:11150
 #: src/bin/e_int_border_menu.c:665
 msgid "Move"
 msgstr "Mover"
@@ -985,8 +985,8 @@ msgstr "O Enlightenment produziu um erro ao mover os ficheiros de configuração
 #: src/bin/e_eap_editor.c:924
 #: src/bin/e_entry_dialog.c:63
 #: src/bin/e_exec.c:608
-#: src/bin/e_fm.c:9557
-#: src/bin/e_fm.c:10291
+#: src/bin/e_fm.c:9560
+#: src/bin/e_fm.c:10296
 #: src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:530
 #: src/bin/e_int_border_remember.c:318
@@ -995,7 +995,7 @@ msgstr "O Enlightenment produziu um erro ao mover os ficheiros de configuração
 #: src/bin/e_module.c:792
 #: src/bin/e_sys.c:618
 #: src/bin/e_sys.c:659
-#: src/bin/e_utils.c:700
+#: src/bin/e_utils.c:692
 #: src/modules/comp/e_mod_config.c:918
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
@@ -1137,7 +1137,7 @@ msgstr "Preferências"
 
 #: src/bin/e_confirm_dialog.c:52
 #: src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10024
+#: src/bin/e_fm.c:10029
 #: src/bin/e_screensaver.c:165
 msgid "Yes"
 msgstr "Sim"
@@ -1291,8 +1291,8 @@ msgid "Show in Menus"
 msgstr "Mostrar no menu"
 
 #: src/bin/e_eap_editor.c:790
-#: src/bin/e_fm.c:8422
-#: src/bin/e_fm.c:8582
+#: src/bin/e_fm.c:8425
+#: src/bin/e_fm.c:8585
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:332
 msgid "Options"
@@ -1308,8 +1308,8 @@ msgid "Select an Executable"
 msgstr "Escolha o executável"
 
 #: src/bin/e_entry.c:436
-#: src/bin/e_fm.c:8767
-#: src/bin/e_fm.c:10384
+#: src/bin/e_fm.c:8770
+#: src/bin/e_fm.c:10389
 #: src/bin/e_shelf.c:1785
 #: src/bin/e_shelf.c:2428
 #: src/modules/conf_dialogs/e_int_config_profiles.c:134
@@ -1328,19 +1328,19 @@ msgid "Delete"
 msgstr "Eliminar"
 
 #: src/bin/e_entry.c:446
-#: src/bin/e_fm.c:8678
+#: src/bin/e_fm.c:8681
 msgid "Cut"
 msgstr "Cortar"
 
 #: src/bin/e_entry.c:455
-#: src/bin/e_fm.c:8692
-#: src/bin/e_fm.c:11140
+#: src/bin/e_fm.c:8695
+#: src/bin/e_fm.c:11145
 msgid "Copy"
 msgstr "Copiar"
 
 #: src/bin/e_entry.c:465
-#: src/bin/e_fm.c:8483
-#: src/bin/e_fm.c:8705
+#: src/bin/e_fm.c:8486
+#: src/bin/e_fm.c:8708
 msgid "Paste"
 msgstr "Colar"
 
@@ -1352,7 +1352,7 @@ msgstr "Selecionar tudo"
 #: src/bin/e_exec.c:405
 #: src/bin/e_exec.c:416
 #: src/bin/e_exec.c:468
-#: src/bin/e_utils.c:196
+#: src/bin/e_utils.c:188
 #: src/modules/conf_intl/e_int_config_imc.c:273
 #: src/modules/conf_intl/e_int_config_imc.c:522
 msgid "Run Error"
@@ -1537,303 +1537,303 @@ msgstr "Erro de ejeção"
 msgid "Can't eject device"
 msgstr "Não foi possível ejetar o dispositivo"
 
-#: src/bin/e_fm.c:8340
+#: src/bin/e_fm.c:8343
 #: src/modules/fileman/e_mod_config.c:356
 msgid "Case Sensitive"
 msgstr "Sensível a maiúsculas"
 
-#: src/bin/e_fm.c:8346
+#: src/bin/e_fm.c:8349
 #: src/modules/fileman/e_mod_config.c:359
 msgid "Sort By Extension"
 msgstr "Ordenar por extensão"
 
-#: src/bin/e_fm.c:8352
+#: src/bin/e_fm.c:8355
 #: src/modules/fileman/e_mod_config.c:362
 msgid "Sort By Modification Time"
 msgstr "Ordenar por data de modificação"
 
-#: src/bin/e_fm.c:8358
+#: src/bin/e_fm.c:8361
 #: src/modules/fileman/e_mod_config.c:365
 msgid "Sort By Size"
 msgstr "Ordenar por tamanho"
 
-#: src/bin/e_fm.c:8367
+#: src/bin/e_fm.c:8370
 #: src/modules/fileman/e_mod_config.c:373
 msgid "Directories First"
 msgstr "Diretórios no inicio"
 
-#: src/bin/e_fm.c:8373
+#: src/bin/e_fm.c:8376
 #: src/modules/fileman/e_mod_config.c:377
 msgid "Directories Last"
 msgstr "Diretórios no fim"
 
-#: src/bin/e_fm.c:8406
-#: src/bin/e_fm.c:8566
+#: src/bin/e_fm.c:8409
+#: src/bin/e_fm.c:8569
 #: src/modules/fileman/e_mod_config.c:303
 msgid "View Mode"
 msgstr "Modo de visualização"
 
-#: src/bin/e_fm.c:8415
-#: src/bin/e_fm.c:8575
+#: src/bin/e_fm.c:8418
+#: src/bin/e_fm.c:8578
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:381
 msgid "Sorting"
 msgstr "Ordenação"
 
-#: src/bin/e_fm.c:8433
-#: src/bin/e_fm.c:8593
+#: src/bin/e_fm.c:8436
+#: src/bin/e_fm.c:8596
 msgid "Refresh View"
 msgstr "Atualizar visualização"
 
-#: src/bin/e_fm.c:8444
-#: src/bin/e_fm.c:8605
+#: src/bin/e_fm.c:8447
+#: src/bin/e_fm.c:8608
 msgid "New..."
 msgstr "Novo..."
 
-#: src/bin/e_fm.c:8464
-#: src/bin/e_fm.c:8626
-#: src/bin/e_fm.c:8657
+#: src/bin/e_fm.c:8467
+#: src/bin/e_fm.c:8629
+#: src/bin/e_fm.c:8660
 msgid "Actions..."
 msgstr "Ações..."
 
-#: src/bin/e_fm.c:8491
-#: src/bin/e_fm.c:8713
-#: src/bin/e_fm.c:11153
+#: src/bin/e_fm.c:8494
+#: src/bin/e_fm.c:8716
+#: src/bin/e_fm.c:11158
 msgid "Link"
 msgstr "Ligação"
 
-#: src/bin/e_fm.c:8775
-#: src/bin/e_fm.c:10023
+#: src/bin/e_fm.c:8778
+#: src/bin/e_fm.c:10028
 #: src/bin/e_shelf.c:2423
 #: src/modules/conf_shelves/e_int_config_shelf.c:138
 msgid "Rename"
 msgstr "Renomear"
 
-#: src/bin/e_fm.c:8794
+#: src/bin/e_fm.c:8797
 msgid "Unmount"
 msgstr "Desmontar"
 
-#: src/bin/e_fm.c:8799
+#: src/bin/e_fm.c:8802
 msgid "Mount"
 msgstr "Montar"
 
-#: src/bin/e_fm.c:8804
+#: src/bin/e_fm.c:8807
 msgid "Eject"
 msgstr "Ejetar"
 
-#: src/bin/e_fm.c:8819
+#: src/bin/e_fm.c:8822
 #: src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:871
 msgid "Properties"
 msgstr "Propriedades"
 
-#: src/bin/e_fm.c:8827
+#: src/bin/e_fm.c:8830
 msgid "Application Properties"
 msgstr "Propriedades da aplicação"
 
-#: src/bin/e_fm.c:8835
+#: src/bin/e_fm.c:8838
 #: src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "Propriedades do ficheiro"
 
-#: src/bin/e_fm.c:9051
+#: src/bin/e_fm.c:9054
 msgid "Use default"
 msgstr "Utilizar predefinições"
 
-#: src/bin/e_fm.c:9081
+#: src/bin/e_fm.c:9084
 #: src/modules/fileman/e_mod_config.c:308
 msgid "Grid Icons"
 msgstr "Grelha"
 
-#: src/bin/e_fm.c:9089
+#: src/bin/e_fm.c:9092
 #: src/modules/fileman/e_mod_config.c:310
 msgid "Custom Icons"
 msgstr "Personalizada"
 
-#: src/bin/e_fm.c:9097
+#: src/bin/e_fm.c:9100
 #: src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:318
 msgid "List"
 msgstr "Lista"
 
-#: src/bin/e_fm.c:9105
+#: src/bin/e_fm.c:9108
 #: src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "Visualização pré-definida"
 
-#: src/bin/e_fm.c:9127
+#: src/bin/e_fm.c:9130
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Tamanho dos ícones (%d)"
 
-#: src/bin/e_fm.c:9152
-#: src/bin/e_fm.c:9230
-#: src/bin/e_fm.c:9235
-#: src/bin/e_fm.c:9980
-#: src/bin/e_fm.c:10192
+#: src/bin/e_fm.c:9155
+#: src/bin/e_fm.c:9233
+#: src/bin/e_fm.c:9238
+#: src/bin/e_fm.c:9985
+#: src/bin/e_fm.c:10197
 #: src/bin/e_fm_prop.c:254
 #: src/bin/e_shelf.c:2298
 msgid "Error"
 msgstr "Erro"
 
-#: src/bin/e_fm.c:9152
+#: src/bin/e_fm.c:9155
 msgid "Could not create a file!"
 msgstr "Não foi possível criar o ficheiro!"
 
-#: src/bin/e_fm.c:9166
-#: src/bin/e_fm.c:9184
+#: src/bin/e_fm.c:9169
+#: src/bin/e_fm.c:9187
 msgid "New File"
 msgstr "Novo ficheiro"
 
-#: src/bin/e_fm.c:9230
+#: src/bin/e_fm.c:9233
 msgid "Already creating a new file for this directory!"
 msgstr "Já está a criar o novo ficheiro neste diretório!"
 
-#: src/bin/e_fm.c:9235
+#: src/bin/e_fm.c:9238
 #, c-format
 msgid "%s is not able to be written to!"
 msgstr "Não pode escrever em %s!"
 
-#: src/bin/e_fm.c:9254
+#: src/bin/e_fm.c:9257
 msgid "Directory"
 msgstr "Diretório"
 
-#: src/bin/e_fm.c:9259
+#: src/bin/e_fm.c:9262
 #: src/modules/conf_applications/e_int_config_defapps.c:311
 msgid "File"
 msgstr "Ficheiro"
 
-#: src/bin/e_fm.c:9290
+#: src/bin/e_fm.c:9293
 msgid "Inherit parent settings"
 msgstr "Herdar definições da janela principal"
 
-#: src/bin/e_fm.c:9299
+#: src/bin/e_fm.c:9302
 msgid "Show Hidden Files"
 msgstr "Mostrar ficheiros ocultos"
 
-#: src/bin/e_fm.c:9311
+#: src/bin/e_fm.c:9314
 msgid "Remember Ordering"
 msgstr "Memorizar ordenação"
 
-#: src/bin/e_fm.c:9320
+#: src/bin/e_fm.c:9323
 msgid "Sort Now"
 msgstr "Ordenar agora"
 
-#: src/bin/e_fm.c:9328
+#: src/bin/e_fm.c:9331
 msgid "Single Click Activation"
 msgstr "Ativar com um clique"
 
-#: src/bin/e_fm.c:9339
+#: src/bin/e_fm.c:9342
 #: src/modules/fileman/e_mod_config.c:393
 msgid "Secure Deletion"
 msgstr "Eliminação segura"
 
-#: src/bin/e_fm.c:9352
+#: src/bin/e_fm.c:9355
 msgid "File Manager Settings"
 msgstr "Definições do gestor de ficheiros"
 
-#: src/bin/e_fm.c:9357
+#: src/bin/e_fm.c:9360
 msgid "File Icon Settings"
 msgstr "Definições dos ícones de ficheiros"
 
-#: src/bin/e_fm.c:9435
-#: src/bin/e_fm.c:9651
+#: src/bin/e_fm.c:9438
+#: src/bin/e_fm.c:9654
 msgid "Set background..."
 msgstr "Definir imagem de fundo"
 
-#: src/bin/e_fm.c:9443
+#: src/bin/e_fm.c:9446
 msgid "Clear background"
 msgstr "Remover imagem de fundo"
 
-#: src/bin/e_fm.c:9450
-#: src/bin/e_fm.c:9679
+#: src/bin/e_fm.c:9453
+#: src/bin/e_fm.c:9682
 msgid "Set overlay..."
 msgstr "Definir sobreposição"
 
-#: src/bin/e_fm.c:9456
+#: src/bin/e_fm.c:9459
 msgid "Clear overlay"
 msgstr "Remover sobreposição"
 
-#: src/bin/e_fm.c:9768
+#: src/bin/e_fm.c:9771
 msgid "Create a new Directory"
 msgstr "Criar novo diretório"
 
-#: src/bin/e_fm.c:9769
+#: src/bin/e_fm.c:9772
 msgid "New Directory Name:"
 msgstr "Nome do novo diretório:"
 
-#: src/bin/e_fm.c:9824
-#: src/bin/e_fm.c:10118
+#: src/bin/e_fm.c:9827
+#: src/bin/e_fm.c:10123
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renomear %s para:"
 
-#: src/bin/e_fm.c:9826
-#: src/bin/e_fm.c:10119
+#: src/bin/e_fm.c:9829
+#: src/bin/e_fm.c:10124
 msgid "Rename File"
 msgstr "Renomear ficheiro"
 
-#: src/bin/e_fm.c:9976
-#: src/bin/e_fm.c:10184
+#: src/bin/e_fm.c:9981
+#: src/bin/e_fm.c:10189
 msgid "Retry"
 msgstr "Tentar novamente"
 
-#: src/bin/e_fm.c:9977
-#: src/bin/e_fm.c:10185
-#: src/bin/e_fm.c:11161
+#: src/bin/e_fm.c:9982
+#: src/bin/e_fm.c:10190
+#: src/bin/e_fm.c:11166
 msgid "Abort"
 msgstr "Abortar"
 
-#: src/bin/e_fm.c:10022
+#: src/bin/e_fm.c:10027
 msgid "No to all"
 msgstr "Não a tudo"
 
-#: src/bin/e_fm.c:10025
+#: src/bin/e_fm.c:10030
 msgid "Yes to all"
 msgstr "Sim a tudo"
 
-#: src/bin/e_fm.c:10028
+#: src/bin/e_fm.c:10033
 msgid "Warning"
 msgstr "Aviso"
 
-#: src/bin/e_fm.c:10031
+#: src/bin/e_fm.c:10036
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "O ficheiro já existe. Substituir?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10187
+#: src/bin/e_fm.c:10192
 msgid "Move Source"
 msgstr "Mover fonte"
 
-#: src/bin/e_fm.c:10188
+#: src/bin/e_fm.c:10193
 msgid "Ignore this"
 msgstr "Ignorar"
 
-#: src/bin/e_fm.c:10189
+#: src/bin/e_fm.c:10194
 msgid "Ignore all"
 msgstr "Ignorar tudo"
 
-#: src/bin/e_fm.c:10194
+#: src/bin/e_fm.c:10199
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Ocorreu um erro ao executar a operação<br>%s"
 
-#: src/bin/e_fm.c:10387
+#: src/bin/e_fm.c:10392
 msgid "Confirm Delete"
 msgstr "Confirmação"
 
-#: src/bin/e_fm.c:10397
+#: src/bin/e_fm.c:10402
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Tem a certeza que quer eliminar<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:10402
+#: src/bin/e_fm.c:10407
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>all</hilight> the %d files in<br><hilight>%s</hilight>?"
 msgstr "Tem a certeza que quer eliminar<br><hilight>estes</hilight> %d ficheiros de<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:10412
+#: src/bin/e_fm.c:10417
 #, c-format
 msgid "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</hilight>?"
 msgid_plural "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</hilight>?"
@@ -2516,7 +2516,8 @@ msgid "Static"
 msgstr "Estático"
 
 #: src/bin/e_int_border_prop.c:299
-#: src/modules/clock/e_mod_config.c:137
+#: src/modules/clock/e_mod_config.c:103
+#: src/modules/clock/e_mod_config.c:141
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:360
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:689
@@ -2664,8 +2665,8 @@ msgstr "Solicita posição"
 #: src/bin/e_int_menus.c:276
 #: src/bin/e_shelf.c:2394
 #: src/modules/battery/e_mod_main.c:194
-#: src/modules/clock/e_mod_main.c:358
-#: src/modules/clock/e_mod_main.c:601
+#: src/modules/clock/e_mod_main.c:360
+#: src/modules/clock/e_mod_main.c:603
 #: src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146
 #: src/modules/conf/e_mod_main.c:101
@@ -2948,12 +2949,9 @@ msgid "About"
 msgstr "Sobre"
 
 #: src/bin/e_int_menus.c:238
-#: src/modules/conf_interaction/e_int_config_mouse.c:183
-#: src/modules/conf_theme/e_mod_main.c:163
-#: src/modules/conf_theme/e_mod_main.c:234
-#: src/modules/conf_theme/e_mod_main.c:263
-msgid "Theme"
-msgstr "Tema"
+#: src/bin/e_theme_about.c:21
+msgid "About Theme"
+msgstr "Sobre o tema"
 
 #: src/bin/e_int_menus.c:329
 msgid "Virtual"
@@ -3884,9 +3882,9 @@ msgstr "A hibernar"
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "A hibernar.<br><hilight>Por favor aguarde.</hilight>"
 
-#: src/bin/e_theme_about.c:14
-msgid "About Theme"
-msgstr "Sobre o tema"
+#: src/bin/e_theme_about.c:25
+msgid "Select Theme"
+msgstr "Escolha o tema"
 
 #: src/bin/e_theme.c:37
 msgid "Set As Theme"
@@ -3904,99 +3902,99 @@ msgstr "Mover/redimensionar itens"
 msgid "Set Toolbar Contents"
 msgstr "Definir conteúdo da barra de ferramentas"
 
-#: src/bin/e_utils.c:197
+#: src/bin/e_utils.c:189
 #: src/modules/conf_intl/e_int_config_imc.c:274
 #: src/modules/conf_intl/e_int_config_imc.c:523
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr "O Enlightenment não conseguiu derivar o processo:<br><br>%s<br>"
 
-#: src/bin/e_utils.c:250
+#: src/bin/e_utils.c:242
 msgid "Cannot exit - immortal windows."
 msgstr "Não pode sair - janelas não termináveis"
 
-#: src/bin/e_utils.c:251
+#: src/bin/e_utils.c:243
 msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Enlightenment will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr "Ainda existem alguma janelas com o bloqueio \"lifespan\" ativo.<br>Isto significa que não pode sair do Enlightenment até que essas janelas sejam fechadas ou que o bloqueio seja removido.<br>"
 
-#: src/bin/e_utils.c:865
+#: src/bin/e_utils.c:857
 #, c-format
 msgid "%'.0f bytes"
 msgstr "%'.0f bytes"
 
-#: src/bin/e_utils.c:869
+#: src/bin/e_utils.c:861
 #, c-format
 msgid "%'.0f KiB"
 msgstr "%'.0f KiB"
 
-#: src/bin/e_utils.c:873
+#: src/bin/e_utils.c:865
 #, c-format
 msgid "%'.1f MiB"
 msgstr "%'.1f MiB"
 
-#: src/bin/e_utils.c:877
+#: src/bin/e_utils.c:869
 #, c-format
 msgid "%'.1f GiB"
 msgstr "%'.1f GiB"
 
-#: src/bin/e_utils.c:881
+#: src/bin/e_utils.c:873
 #, c-format
 msgid "%'.1f TiB"
 msgstr "%'.1f TiB"
 
-#: src/bin/e_utils.c:900
+#: src/bin/e_utils.c:892
 #, c-format
 msgid "In the future"
 msgstr "No futuro"
 
-#: src/bin/e_utils.c:904
+#: src/bin/e_utils.c:896
 #, c-format
 msgid "In the last minute"
 msgstr "No último minuto"
 
-#: src/bin/e_utils.c:908
+#: src/bin/e_utils.c:900
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
 msgstr[0] "Último ano"
 msgstr[1] "%li anos atrás"
 
-#: src/bin/e_utils.c:913
+#: src/bin/e_utils.c:905
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
 msgstr[0] "Último mês"
 msgstr[1] "%li meses atrás"
 
-#: src/bin/e_utils.c:918
+#: src/bin/e_utils.c:910
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
 msgstr[0] "Última semana"
 msgstr[1] "%li semanas atrás"
 
-#: src/bin/e_utils.c:923
+#: src/bin/e_utils.c:915
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
 msgstr[0] "Ontem"
 msgstr[1] "%li dias atrás"
 
-#: src/bin/e_utils.c:928
+#: src/bin/e_utils.c:920
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
 msgstr[0] "Uma hora atrás"
 msgstr[1] "%li horas atrás"
 
-#: src/bin/e_utils.c:933
+#: src/bin/e_utils.c:925
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
 msgstr[0] "Um minuto atrás"
 msgstr[1] "%li minutos atrás"
 
-#: src/bin/e_utils.c:940
+#: src/bin/e_utils.c:932
 #: src/bin/e_widget_filepreview.c:513
 #: src/bin/e_widget_filepreview.c:514
 #: src/bin/e_widget_filepreview.c:515
@@ -4011,86 +4009,86 @@ msgstr[1] "%li minutos atrás"
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: src/bin/e_utils.c:1177
+#: src/bin/e_utils.c:1169
 msgid "Configuration data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration lacked. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
 msgstr "As definições precisam de ser atualizadas. As suas antigas definições serão apagadas e serão iniciados novos valores pré-definidos.<br>Isto irá ocorrer recorrentemente durante o desenvolvimento e não deve reportar qualquer erro.<br>Isto significa que o Enlightenment precisa de dados que as suas antigas definições não possuem.<br>Este conjunto de valores corrije a situação.<br> Mais tarde poderá configurar o Enlightenment ao seu gosto.<br>Desculpe qualquer inconveniente.<br>"
 
-#: src/bin/e_utils.c:1186
-#: src/bin/e_utils.c:1210
+#: src/bin/e_utils.c:1178
+#: src/bin/e_utils.c:1202
 #, c-format
 msgid "%s Configuration Updated"
 msgstr "Configuração de %s atualizada"
 
-#: src/bin/e_utils.c:1199
+#: src/bin/e_utils.c:1191
 msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr "A configuração do seu módulo é mais recente que a versão do módulo.<br>Isto é muito estranho e só acontece se reverter o módulo ou se tiver copiado a configuração de um local em que está instalada uma versão mais recente do módulo.<br>Isto é mau e por precaução, as suas definições originais foram restauradas.<b>Desculpe qualquer inconveniente.<br>"
 
-#: src/bin/e_utils.c:1292
+#: src/bin/e_utils.c:1284
 #, c-format
 msgid "Never"
 msgstr "Nunca"
 
-#: src/bin/e_utils.c:1296
+#: src/bin/e_utils.c:1288
 #, c-format
 msgid "%li Seconds"
 msgstr "%li segundos"
 
-#: src/bin/e_utils.c:1301
+#: src/bin/e_utils.c:1293
 #, c-format
 msgid "One year"
 msgstr "Um ano"
 
-#: src/bin/e_utils.c:1303
+#: src/bin/e_utils.c:1295
 #, c-format
 msgid "%li Years"
 msgstr "%li anos"
 
-#: src/bin/e_utils.c:1309
+#: src/bin/e_utils.c:1301
 #, c-format
 msgid "One month"
 msgstr "Um mês"
 
-#: src/bin/e_utils.c:1311
+#: src/bin/e_utils.c:1303
 #, c-format
 msgid "%li Months"
 msgstr "%li meses"
 
-#: src/bin/e_utils.c:1317
+#: src/bin/e_utils.c:1309
 #, c-format
 msgid "One week"
 msgstr "Uma semana"
 
-#: src/bin/e_utils.c:1319
+#: src/bin/e_utils.c:1311
 #, c-format
 msgid "%li Weeks"
 msgstr "%li semanas"
 
-#: src/bin/e_utils.c:1325
+#: src/bin/e_utils.c:1317
 #, c-format
 msgid "One day"
 msgstr "Um dia"
 
-#: src/bin/e_utils.c:1327
+#: src/bin/e_utils.c:1319
 #, c-format
 msgid "%li Days"
 msgstr "%li dias"
 
-#: src/bin/e_utils.c:1333
+#: src/bin/e_utils.c:1325
 #, c-format
 msgid "An hour"
 msgstr "Uma hora"
 
-#: src/bin/e_utils.c:1335
+#: src/bin/e_utils.c:1327
 #, c-format
 msgid "%li Hours"
 msgstr "%li horas"
 
-#: src/bin/e_utils.c:1341
+#: src/bin/e_utils.c:1333
 #, c-format
 msgid "A minute"
 msgstr "Um minuto"
 
-#: src/bin/e_utils.c:1343
+#: src/bin/e_utils.c:1335
 #, c-format
 msgid "%li Minutes"
 msgstr "%li minutos"
@@ -4397,9 +4395,9 @@ msgid "Clock Settings"
 msgstr "Definições do relógio"
 
 #: src/modules/clock/e_mod_config.c:83
-#: src/modules/clock/e_mod_main.c:706
-#: src/modules/clock/e_mod_main.c:863
-#: src/modules/clock/e_mod_main.c:895
+#: src/modules/clock/e_mod_main.c:708
+#: src/modules/clock/e_mod_main.c:865
+#: src/modules/clock/e_mod_main.c:897
 msgid "Clock"
 msgstr "Relógio"
 
@@ -4411,6 +4409,10 @@ msgstr "Analógico"
 msgid "Digital"
 msgstr "Digital"
 
+#: src/modules/clock/e_mod_config.c:90
+msgid "Seconds"
+msgstr "Segundos"
+
 #: src/modules/clock/e_mod_config.c:93
 msgid "12 h"
 msgstr "12 h."
@@ -4419,42 +4421,42 @@ msgstr "12 h."
 msgid "24 h"
 msgstr "24 h."
 
-#: src/modules/clock/e_mod_config.c:97
-msgid "Seconds"
-msgstr "Segundos"
-
-#: src/modules/clock/e_mod_config.c:101
-msgid "No Date"
-msgstr "Sem data"
-
-#: src/modules/clock/e_mod_config.c:103
-msgid "Words"
-msgstr "Palavras"
+#: src/modules/clock/e_mod_config.c:100
+msgid "Date"
+msgstr "Data"
 
 #: src/modules/clock/e_mod_config.c:105
+msgid "Full"
+msgstr "Completo"
+
+#: src/modules/clock/e_mod_config.c:107
 msgid "Numbers"
 msgstr "Números"
 
-#: src/modules/clock/e_mod_config.c:110
+#: src/modules/clock/e_mod_config.c:109
+msgid "Date Only"
+msgstr "Só data"
+
+#: src/modules/clock/e_mod_config.c:114
 msgid "Week"
 msgstr "Semana"
 
-#: src/modules/clock/e_mod_config.c:112
-#: src/modules/clock/e_mod_config.c:125
+#: src/modules/clock/e_mod_config.c:116
+#: src/modules/clock/e_mod_config.c:129
 #: src/modules/start/e_mod_main.c:158
 msgid "Start"
 msgstr "Iniciar"
 
-#: src/modules/clock/e_mod_config.c:123
+#: src/modules/clock/e_mod_config.c:127
 msgid "Weekend"
 msgstr "Fim de semana"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:138
 msgid "Days"
 msgstr "Dias"
 
-#: src/modules/clock/e_mod_main.c:863
-#: src/modules/clock/e_mod_main.c:895
+#: src/modules/clock/e_mod_main.c:865
+#: src/modules/clock/e_mod_main.c:897
 msgid "Show calendar"
 msgstr "Mostrar calendário"
 
@@ -5726,6 +5728,13 @@ msgstr "Definições"
 msgid "Show Cursor"
 msgstr "Mostrar cursor"
 
+#: src/modules/conf_interaction/e_int_config_mouse.c:183
+#: src/modules/conf_theme/e_mod_main.c:163
+#: src/modules/conf_theme/e_mod_main.c:234
+#: src/modules/conf_theme/e_mod_main.c:263
+msgid "Theme"
+msgstr "Tema"
+
 #: src/modules/conf_interaction/e_int_config_mouse.c:187
 msgid "X"
 msgstr "X"
@@ -5953,7 +5962,7 @@ msgstr "Aumentar brilho"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
 msgid "Assist"
-msgstr ""
+msgstr "Assistente"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:391
 msgid "S1"
@@ -9604,6 +9613,78 @@ msgstr "Focar a janela original ao clicar "
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr "Níveis de urgência a guardar:"
+
+#~ msgid ""
+#~ "<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+#~ "><br><br>We hope you enjoy using this software as much as we enjoyed "
+#~ "writing it.<br><br>To contact us please visit:<br><hilight>http://www."
+#~ "enlightenment.org</><br><br>All rights reserved.<br><br>Redistribution "
+#~ "and use in source and binary forms, with or without modification, are "
+#~ "permitted provided that the following conditions are met:<br><br>1. "
+#~ "Redistributions of source code must retain the above copyright notice, "
+#~ "this list of conditions and the following disclaimer.<br>2. "
+#~ "Redistributions in binary form must reproduce the above copyright notice, "
+#~ "this list of conditions and the following disclaimer in the documentation "
+#~ "and/or other materials provided with the distribution."
+#~ "<br><br><hilight>THIS SOFTWARE IS PROVIDED \"AS IS\" AND ANY EXPRESS OR "
+#~ "IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES "
+#~ "OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. "
+#~ "IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY "
+#~ "DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL "
+#~ "DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS "
+#~ "OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) "
+#~ "HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, "
+#~ "STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN "
+#~ "ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE "
+#~ "POSSIBILITY OF SUCH DAMAGE.</><br>"
+#~ msgstr ""
+#~ "<title>Direitos de autor &copy; 2000-2012, pela equipa de desenvolvimento "
+#~ "do Enlightenment</><br><br>Esperamos que goste de utilizar esta aplicação "
+#~ "tanto quanto nós gostamos de a desenvolver.<br><br>Para nos contactar "
+#~ "consulte:<br><hilight>http://www.enlightenment.org</><br><br>Todos os "
+#~ "direitos reservados.<br><br>A distribuição e a utilização da aplicação, "
+#~ "tanto o código fonte como os ficheiros binários, com ou sem modificação, "
+#~ "são permitidos desde que as seguintes conições sejam cumpridas:<br><br>1. "
+#~ "A redistribuição do código fonte devem manter o aviso de direitos de "
+#~ "autor acima referido, esta lista de condições e a seguinte declaração."
+#~ "<br>2. A redistribuição do código fonte devem manter o aviso de direitos "
+#~ "de autor acima referido, esta lista de condições e a seguinte declaração "
+#~ "na documentação e/ou outros materiais disponibilizados pela distribuição."
+#~ "<br><br><hilight>THIS SOFTWARE IS PROVIDED \"AS IS\" AND ANY EXPRESS OR "
+#~ "IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES "
+#~ "OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. "
+#~ "IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY "
+#~ "DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL "
+#~ "DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS "
+#~ "OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) "
+#~ "HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, "
+#~ "STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN "
+#~ "ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE "
+#~ "POSSIBILITY OF SUCH DAMAGE.</><br>"
+
+#~ msgid "Words"
+#~ msgstr "Palavras"
+
+#~ msgid ""
+#~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
+#~ "><br><br>We hope you enjoy using this software as much as we enjoyed "
+#~ "writing it.<br><br>This software is provided as-is with no explicit or "
+#~ "implied warranty. This software is governed by licensing conditions, so "
+#~ "please see the COPYING and COPYING-PLAIN licence files installed on your "
+#~ "system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and "
+#~ "it is not stable. Many features are incomplete or even non-existent yet "
+#~ "and may have many bugs. You have been <hilight>WARNED!</>"
+#~ msgstr ""
+#~ "<title>Direitos de autor &copy; 1999-2012, pela equipa de desenvolvimento "
+#~ "do Enlightenment.</><br><br>Esperamos que goste de utilizar esta "
+#~ "aplicação tanto quanto nós gostámos de a desenvolver.<br><br>A aplicação "
+#~ "é disponibilizada no modo \"AS-IS\" e não possui qualquer garantia, "
+#~ "explicita ou implícita. A aplicação está restringida às condições de "
+#~ "licenciamento, por isso não se esqueça de ler os ficheiros COPYING e "
+#~ "COPYING-PLAIN instalados no seu sistema.<br><br>O Enlightenment "
+#~ "<hilight>ainda está em desenvolvimento</> e não é estável. Algumas "
+#~ "funcionalidades não estão concluídas e podem existir diversos erros. "
+#~ "Considere-se <hilight>AVISADO!</>"
 
 #~ msgid "Basic preview text: 123: 我的天空！"
 #~ msgstr "Antevisão básica do texto: 123: 我的天空！"
