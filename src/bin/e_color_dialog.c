@@ -39,7 +39,7 @@ e_color_dialog_new(E_Container *con, const E_Color *color, Eina_Bool alpha_enabl
    o = e_widget_csel_add(dia->dia->win->evas, dia->color, alpha_enabled);
    evas_object_show(o);
    e_widget_size_min_get(o, &mw, &mh);
-   e_dialog_content_set(dia->dia, o, 460, 260);
+   e_dialog_content_set(dia->dia, o, mw, mh);
    e_widget_on_change_hook_set(o, _e_color_dialog_cb_csel_change, dia);
 
    /* buttons at the bottom */

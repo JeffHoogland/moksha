@@ -68,9 +68,9 @@ e_widget_spectrum_add(Evas *evas, E_Color_Component mode, E_Color *cv)
    evas_object_show(o);
    wd->o_spectrum = o;
    edje_object_part_swallow(wd->o_edje, "e.swallow.content", o);
-   edje_extern_object_min_size_set(o, 100, 100);
 
    o = evas_object_rectangle_add(evas);
+   evas_object_repeat_events_set(o, EINA_TRUE);
    evas_object_color_set(o, 0, 0, 0, 0);
    e_widget_sub_object_add(obj, o);
    evas_object_show(o);

@@ -17,6 +17,7 @@ struct _E_Entry_Smart_Data
    Evas_Coord theme_height;
    int preedit_start_pos;
    int preedit_end_pos;
+   int changing;
    Eina_Bool enabled : 1;
    Eina_Bool noedit : 1;
    Eina_Bool focused : 1;
@@ -105,6 +106,7 @@ e_entry_text_set(Evas_Object *entry, const char *_text)
 {
    E_Entry_Smart_Data *sd;
    char *text = NULL;
+   const char *otext;
 
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
@@ -113,12 +115,15 @@ e_entry_text_set(Evas_Object *entry, const char *_text)
    text = evas_textblock_text_utf8_to_markup(
          edje_object_part_object_get(sd->entry_object, ENTRY_PART_NAME),
          _text);
-   if ((text) && (_text) && (!strcmp(text, _text))) return;
-   if ((!text) && (!_text)) return;
+   otext = edje_object_part_text_get(sd->entry_object, ENTRY_PART_NAME);
+   if ((text) && (otext) && (!strcmp(text, otext))) return;
+   if ((!text) && (!otext)) return;
    edje_object_part_text_set(sd->entry_object, ENTRY_PART_NAME, text);
+   sd->changing++;
+   edje_object_message_signal_process(sd->entry_object);
+   sd->changing--;
    evas_object_smart_callback_call(entry, "changed", NULL);
-   if (text)
-      free(text);
+   if (text) free(text);
 }
 
 /**
@@ -657,7 +662,7 @@ _entry_changed_signal_cb(void *data,
 
    if ((!object) || !(sd = evas_object_smart_data_get(object)))
      return;
-
+   if (sd->changing) return;
    evas_object_smart_callback_call(object, "changed", NULL);
    edje_object_size_min_calc(sd->entry_object, &sd->min_width, &sd->height);
    _entry_recalc_size(object);
