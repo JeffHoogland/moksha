@@ -127,6 +127,10 @@ init(void)
 			sensor_type = SENSOR_TYPE_OPENBSD;
 			sensor_name = strdup("cpu0");
 			break;
+		} else if (strcmp(snsrdev.xname, "km0") == 0) {
+			sensor_type = SENSOR_TYPE_OPENBSD;
+			sensor_name = strdup("km0");
+			break;
 		}
 	}
 #else
