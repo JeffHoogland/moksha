@@ -668,6 +668,7 @@ msgstr ""
 #: src/bin/e_actions.c:3282
 #: src/bin/e_actions.c:3284
 #: src/bin/e_actions.c:3286
+#: src/bin/e_actions.c:3282 src/bin/e_actions.c:3284 src/bin/e_actions.c:3286
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:15
 #: src/modules/ibox/e_mod_config.c:135
@@ -1270,7 +1271,7 @@ msgstr "Editor de entrada de escritorio"
 
 #: src/bin/e_eap_editor.c:676
 #: src/bin/e_int_border_prop.c:448
-#: src/bin/e_int_border_prop.c:502
+#: src/bin/e_int_border_prop.c:502 src/modules/comp/e_mod_config.c:713
 #: src/modules/comp/e_mod_config.c:713
 #: src/modules/conf_intl/e_int_config_imc.c:898
 #: src/modules/conf_menus/e_int_config_menus.c:265
@@ -1319,7 +1320,7 @@ msgstr "Archivo de escritorio"
 
 #: src/bin/e_eap_editor.c:780
 #: src/bin/e_int_border_prop.c:453
-#: src/bin/e_int_border_prop.c:505
+#: src/bin/e_int_border_prop.c:505 src/modules/comp/e_mod_config.c:1525
 #: src/modules/comp/e_mod_config.c:1525
 #: src/modules/conf_applications/e_int_config_defapps.c:357
 #: src/modules/conf_performance/e_int_config_performance.c:122
@@ -1939,6 +1940,7 @@ msgstr "No se pueden cambiar los permisos: %s"
 #: src/bin/e_shelf.c:1118
 #: src/bin/e_shelf.c:2318
 #: src/modules/comp/e_mod_config.c:493
+#: src/modules/comp/e_mod_config.c:493
 #: src/modules/conf_dialogs/e_int_config_profiles.c:312
 #: src/modules/conf_display/e_int_config_desk.c:154
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
@@ -1949,7 +1951,8 @@ msgstr "Nombre:"
 msgid "Location:"
 msgstr "Localización:"
 
-#: src/bin/e_fm_prop.c:404
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:249
+#: src/bin/e_widget_filepreview.c:306 src/bin/e_widget_filepreview.c:358
 #: src/bin/e_widget_filepreview.c:249
 #: src/bin/e_widget_filepreview.c:306
 #: src/bin/e_widget_filepreview.c:358
@@ -2353,6 +2356,7 @@ msgstr "Sombreado"
 #: src/bin/e_int_border_menu.c:371
 #: src/bin/e_int_border_prop.c:514
 #: src/modules/comp/e_mod_config.c:884
+#: src/modules/comp/e_mod_config.c:884
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:215
 msgid "Fullscreen"
 msgstr "Pantalla completa"
@@ -2432,7 +2436,8 @@ msgstr "Pantalla %d"
 
 #: src/bin/e_int_border_menu.c:1018
 #: src/bin/e_int_border_prop.c:158
-#: src/bin/e_int_border_prop.c:180
+#: src/bin/e_int_border_prop.c:180 src/modules/comp/e_mod_config.c:458
+#: src/modules/comp/e_mod_config.c:767
 #: src/modules/comp/e_mod_config.c:458
 #: src/modules/comp/e_mod_config.c:767
 #: src/modules/conf_theme/e_int_config_fonts.c:100
@@ -2497,6 +2502,8 @@ msgstr "Lista de ventanas"
 #: src/modules/pager/e_mod_main.c:2999
 #: src/modules/pager/e_mod_main.c:3000
 #: src/modules/pager/e_mod_main.c:3001
+#: src/modules/pager/e_mod_main.c:2998 src/modules/pager/e_mod_main.c:2999
+#: src/modules/pager/e_mod_main.c:3000 src/modules/pager/e_mod_main.c:3001
 msgid "Pager"
 msgstr "Paginador"
 
@@ -2508,7 +2515,7 @@ msgstr "Barra de tareas"
 #: src/bin/e_int_border_prop.c:118
 #: src/bin/e_int_border_prop.c:125
 #: src/bin/e_moveresize.c:96
-#: src/bin/e_moveresize.c:153
+#: src/bin/e_moveresize.c:153 src/bin/e_widget_filepreview.c:82
 #: src/bin/e_widget_filepreview.c:82
 #: src/modules/conf_display/e_int_config_display.c:536
 #, c-format
@@ -2635,11 +2642,12 @@ msgstr "ICCCM"
 #: src/bin/e_int_border_remember.c:651
 #: src/modules/comp/e_mod_config.c:392
 #: src/modules/comp/e_mod_config.c:702
+#: src/modules/comp/e_mod_config.c:392 src/modules/comp/e_mod_config.c:702
 #: src/modules/wizard/page_050.c:95
 msgid "Title"
 msgstr "Título"
 
-#: src/bin/e_int_border_prop.c:449
+#: src/bin/e_int_border_prop.c:449 src/modules/comp/e_mod_config.c:723
 #: src/modules/comp/e_mod_config.c:723
 msgid "Class"
 msgstr "Clase"
@@ -2653,7 +2661,7 @@ msgstr "Nombre del icono"
 msgid "Machine"
 msgstr "Máquina"
 
-#: src/bin/e_int_border_prop.c:452
+#: src/bin/e_int_border_prop.c:452 src/modules/comp/e_mod_config.c:732
 #: src/modules/comp/e_mod_config.c:732
 msgid "Role"
 msgstr "Rol"
@@ -2720,7 +2728,7 @@ msgstr "Estados"
 msgid "Take Focus"
 msgstr "Tomar foco"
 
-#: src/bin/e_int_border_prop.c:476
+#: src/bin/e_int_border_prop.c:476 src/modules/comp/e_mod_config.c:835
 #: src/modules/comp/e_mod_config.c:835
 msgid "Accepts Focus"
 msgstr "Aceptar el foco"
@@ -2769,7 +2777,7 @@ msgstr "Pedir posición"
 msgid "Settings"
 msgstr "Preferencias"
 
-#: src/bin/e_int_border_prop.c:508
+#: src/bin/e_int_border_prop.c:508 src/modules/comp/e_mod_config.c:897
 #: src/modules/comp/e_mod_config.c:897
 msgid "Modal"
 msgstr "Modal"
@@ -2788,7 +2796,7 @@ msgstr "Ignorar la barra de tareas"
 msgid "Skip Pager"
 msgstr "Ignorar paginador"
 
-#: src/bin/e_int_border_prop.c:513
+#: src/bin/e_int_border_prop.c:513 src/modules/comp/e_mod_config.c:280
 #: src/modules/comp/e_mod_config.c:280
 msgid "Hidden"
 msgstr "Oculto"
@@ -4206,7 +4214,7 @@ msgstr "Un minuto"
 msgid "%li Minutes"
 msgstr "%li Minutos"
 
-#: src/bin/e_widget_config_list.c:60
+#: src/bin/e_widget_config_list.c:60 src/modules/comp/e_mod_config.c:1096
 #: src/modules/comp/e_mod_config.c:1096
 #: src/modules/conf_applications/e_int_config_apps.c:265
 #: src/modules/conf_applications/e_int_config_apps.c:286
@@ -4223,14 +4231,14 @@ msgstr "%li Minutos"
 msgid "Add"
 msgstr "Añadir"
 
-#: src/bin/e_widget_config_list.c:80
+#: src/bin/e_widget_config_list.c:80 src/modules/comp/e_mod_config.c:1092
 #: src/modules/comp/e_mod_config.c:1092
 #: src/modules/conf_applications/e_int_config_apps.c:302
 #: src/modules/xkbswitch/e_mod_config.c:248
 msgid "Up"
 msgstr "Arriba"
 
-#: src/bin/e_widget_config_list.c:86
+#: src/bin/e_widget_config_list.c:86 src/modules/comp/e_mod_config.c:1094
 #: src/modules/comp/e_mod_config.c:1094
 #: src/modules/conf_applications/e_int_config_apps.c:306
 #: src/modules/xkbswitch/e_mod_config.c:254
@@ -4470,6 +4478,7 @@ msgstr "Hardware"
 
 #: src/modules/battery/e_mod_main.c:152
 #: src/modules/battery/e_mod_main.c:455
+#: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Batería"
