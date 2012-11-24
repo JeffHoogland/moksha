@@ -140,8 +140,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    e_widget_ilist_selected_label_get(cfdata->gui.widget_list);
 
-   eina_stringshare_del(e_config->xsettings.net_icon_theme_name);
-   e_config->xsettings.net_theme_name = eina_stringshare_ref(cfdata->widget_theme);
+   eina_stringshare_replace(&e_config->xsettings.net_theme_name, cfdata->widget_theme);
 
 //   e_config->xsettings.match_e17_icon_theme = cfdata->match_e17_icon_theme;
    e_config->xsettings.match_e17_theme = cfdata->match_e17_theme;
