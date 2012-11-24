@@ -215,6 +215,7 @@ e_win_new(E_Container *con)
    win = E_OBJECT_ALLOC(E_Win, E_WIN_TYPE, _e_win_free);
    if (!win) return NULL;
    e_object_del_func_set(E_OBJECT(win), _e_win_del);
+   e_object_delay_del_set(E_OBJECT(win), e_win_hide);
    win->container = con;
    win->ecore_evas = e_canvas_new(con->manager->root,
                                   0, 0, 1, 1, 1, 0,

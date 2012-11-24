@@ -63,8 +63,10 @@ struct _E_Object
    E_Object_Cleanup_Func    cleanup_func;
    E_Object_Cleanup_Func    free_att_func;
    E_Object_Cleanup_Func    del_att_func;
+   E_Object_Cleanup_Func    del_delay_func;
    Eina_Inlist             *del_fn_list;
    void                    *data;
+   Ecore_Job               *delay_del_job;
    int                      walking_list;
    Eina_Bool                deleted : 1;
 };
@@ -80,6 +82,7 @@ struct _E_Object_Delfn
 
 EAPI void *e_object_alloc               (int size, int type, E_Object_Cleanup_Func cleanup_func);
 EAPI void  e_object_del                 (E_Object *obj);
+EAPI void  e_object_delay_del_set       (E_Object *obj, void *func);
 EAPI int   e_object_is_del              (E_Object *obj);
 EAPI void  e_object_del_func_set        (E_Object *obj, E_Object_Cleanup_Func del_func);
 EAPI void  e_object_type_set            (E_Object *obj, int type);

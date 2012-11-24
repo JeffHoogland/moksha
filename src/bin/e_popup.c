@@ -41,6 +41,7 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 
    pop = E_OBJECT_ALLOC(E_Popup, E_POPUP_TYPE, _e_popup_free);
    if (!pop) return NULL;
+   e_object_delay_del_set(E_OBJECT(pop), e_popup_hide);
    pop->zone = zone;
    pop->zx = pop->zone->x;
    pop->zy = pop->zone->y;

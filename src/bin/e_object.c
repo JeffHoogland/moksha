@@ -26,15 +26,41 @@ e_object_alloc(int size, int type, E_Object_Cleanup_Func cleanup_func)
    return obj;
 }
 
+static void
+_delay_del(void *data)
+{
+   E_Object *obj = data;
+   
+   obj->delay_del_job = NULL;
+   if (obj->del_att_func) obj->del_att_func(obj);
+   if (obj->del_func) obj->del_func(obj);
+   e_object_unref(obj);
+}
+
 EAPI void
 e_object_del(E_Object *obj)
 {
    E_OBJECT_CHECK(obj);
    if (obj->deleted) return;
+   if (obj->del_delay_func)
+     {
+        obj->del_delay_func(obj);
+        if (!obj->delay_del_job)
+          obj->delay_del_job = ecore_job_add(_delay_del, obj);
+        obj->deleted = 1;
+        return;
+     }
    obj->deleted = 1;
    if (obj->del_att_func) obj->del_att_func(obj);
    if (obj->del_func) obj->del_func(obj);
    e_object_unref(obj);
+}
+
+EAPI void
+e_object_delay_del_set(E_Object *obj, void *func)
+{
+   E_OBJECT_CHECK(obj);
+   obj->del_delay_func = func;
 }
 
 EAPI int
