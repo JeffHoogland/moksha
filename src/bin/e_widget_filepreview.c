@@ -190,7 +190,7 @@ _e_wid_fprev_preview_video_opened(E_Widget_Data *wd, Evas_Object *obj, void *eve
 static void
 _e_wid_fprev_preview_video_change(void *data, Evas_Object *obj)
 {
-   double pos, tot;
+   double pos, tot, t;
 
    tot = emotion_object_play_length_get(data);
    t = emotion_object_position_get(data);
