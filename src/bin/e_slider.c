@@ -354,10 +354,10 @@ _e_smart_signal_cb_drag(void *data, Evas_Object *obj __UNUSED__, const char *emi
    E_Smart_Data *sd = data;
    double pval = sd->val;
 
-   if (sd->changing) return;
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);
+   if (sd->changing) return;
    if (sd->val != pval)
      evas_object_smart_callback_call(sd->smart_obj, "changed", NULL);
 }
@@ -368,10 +368,10 @@ _e_smart_signal_cb_drag_start(void *data, Evas_Object *obj __UNUSED__, const cha
    E_Smart_Data *sd = data;
    double pval = sd->val;
 
-   if (sd->changing) return;
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);
+   if (sd->changing) return;
    if (sd->val != pval)
      evas_object_smart_callback_call(sd->smart_obj, "changed", NULL);
 }
@@ -382,11 +382,11 @@ _e_smart_signal_cb_drag_stop(void *data, Evas_Object *obj __UNUSED__, const char
    E_Smart_Data *sd = data;
    double pval = sd->val;
 
-   if (sd->changing) return;
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);
    _e_smart_value_update(sd);
+   if (sd->changing) return;
    if (sd->val != pval)
      evas_object_smart_callback_call(sd->smart_obj, "changed", NULL);
 }
