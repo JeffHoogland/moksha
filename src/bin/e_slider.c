@@ -18,6 +18,7 @@ struct _E_Smart_Data
    double         val, val_min, val_max, val_range, step_size;
    int            reversed, step_count, horizontal;
    int            direction;
+   int            changing;
    const char    *format;
    Evas_Coord     minw, minh;
    Ecore_Timer   *set_timer;
@@ -253,7 +254,10 @@ _e_smart_set_timer(void *data)
    if (pos < 0.0) pos = 0.0;
    else if (pos > 1.0) pos = 1.0;
    if (sd->reversed) pos = 1.0 - pos;
+   sd->changing++;
    edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.slider", pos, pos);
+   edje_object_message_signal_process(sd->edje_obj);
+   sd->changing--;
    sd->set_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
@@ -350,6 +354,7 @@ _e_smart_signal_cb_drag(void *data, Evas_Object *obj __UNUSED__, const char *emi
    E_Smart_Data *sd = data;
    double pval = sd->val;
 
+   if (sd->changing) return;
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);
@@ -363,6 +368,7 @@ _e_smart_signal_cb_drag_start(void *data, Evas_Object *obj __UNUSED__, const cha
    E_Smart_Data *sd = data;
    double pval = sd->val;
 
+   if (sd->changing) return;
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);
@@ -376,6 +382,7 @@ _e_smart_signal_cb_drag_stop(void *data, Evas_Object *obj __UNUSED__, const char
    E_Smart_Data *sd = data;
    double pval = sd->val;
 
+   if (sd->changing) return;
    _e_smart_value_fetch(sd);
    _e_smart_value_limit(sd);
    _e_smart_format_update(sd);

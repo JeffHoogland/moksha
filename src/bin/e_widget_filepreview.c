@@ -177,9 +177,8 @@ _e_wid_fprev_preview_video_position(E_Widget_Data *wd, Evas_Object *obj, void *e
 
    tot = emotion_object_play_length_get(obj);
    if (!tot) return;
-   t = emotion_object_position_get(obj) / emotion_object_play_length_get(obj) * 100;
-   if (t - wd->vid_pct < 1.0) return;
-   e_widget_slider_value_double_set(wd->o_preview_time, wd->vid_pct = t);
+   wd->vid_pct = t = (emotion_object_position_get(obj) * 100.0) / emotion_object_play_length_get(obj);
+   e_widget_slider_value_double_set(wd->o_preview_time, t);
 }
 
 static void
@@ -191,10 +190,15 @@ _e_wid_fprev_preview_video_opened(E_Widget_Data *wd, Evas_Object *obj, void *eve
 static void
 _e_wid_fprev_preview_video_change(void *data, Evas_Object *obj)
 {
-   double pos;
+   double pos, tot;
 
+   tot = emotion_object_play_length_get(data);
+   t = emotion_object_position_get(data);
    e_widget_slider_value_double_get(obj, &pos);
-   emotion_object_position_set(data, pos / 100. * emotion_object_play_length_get(data));
+   pos = (pos * tot) / 100.0;
+   t = pos - t;
+   if (t < 0.0) t = -t;
+   if (t > 0.25) emotion_object_position_set(data, pos);
 }
 
 static void
