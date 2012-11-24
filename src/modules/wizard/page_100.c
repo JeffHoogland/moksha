@@ -7,6 +7,7 @@
 #include <sys/sysctl.h>
 #endif
 
+#ifndef __FreeBSD__
 static char *
 read_file(const char *file)
 {
@@ -28,6 +29,7 @@ read_file(const char *file)
    fclose(f);
    return strdup(buf);
 }
+#endif
 
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__)
