@@ -50,6 +50,7 @@ collections {
 #include "edc/ibar-ibox.edc"
 #include "edc/colors.edc"
 #include "edc/edgebindings.edc"
+#include "edc/randr.edc"
 
 // port unchanged stuff so this can work as a replacement
 #include "edc/O/backlight.edc"
@@ -63,9 +64,9 @@ collections {
 #include "edc/O/icons.edc"
 #include "edc/O/illume_gad.edc"
 #include "edc/O/mixer.edc"
-#include "edc/O/randr.edc"
 #include "edc/O/temperature.edc"
 #include "edc/O/wallpaper.edc"
+//#include "edc/O/randr.edc"
 //#include "edc/O/edgebindings.edc"
 //#include "edc/O/colors.edc"
 //#include "edc/O/spectrum.edc"

@@ -47,6 +47,7 @@ edc/pager.edc \
 edc/pointer.edc \
 edc/preview.edc \
 edc/radio.edc \
+edc/randr.edc \
 edc/scrollframe.edc \
 edc/shelf.edc \
 edc/slider.edc \
@@ -252,7 +253,10 @@ img/runner_glow_horiz.png \
 img/runner_glow_vert.png \
 img/runner_horiz.png \
 img/runner_vert.png \
+img/screen_base.png \
+img/screen_bg.png \
 img/screen_circular_shadow.png \
+img/screen_fg.png \
 img/separator_horiz.png \
 img/shadow_angled_in_light.png \
 img/shadow_angled_in_sides.png \
