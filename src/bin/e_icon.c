@@ -11,7 +11,7 @@ struct _E_Smart_Data
    Evas_Coord    x, y, w, h;
    Evas_Object  *obj;
    Evas_Object  *eventarea;
-   Ecore_Timer  *timer;
+   Ecore_Timer  *timer, *fdo_reload_timer;
    Ecore_Timer  *guessing_animation;
    double        last_resize;
    int           size;
@@ -847,6 +847,7 @@ _e_icon_smart_del(Evas_Object *obj)
 #ifdef USE_ICON_CACHE
    if (sd->file) eina_stringshare_del(sd->file);
 #endif
+   if (sd->fdo_reload_timer) ecore_timer_del(sd->fdo_reload_timer);
    if (sd->timer) ecore_timer_del(sd->timer);
    if (sd->guessing_animation) ecore_timer_del(sd->guessing_animation);
    evas_object_smart_data_set(obj, NULL);
@@ -888,6 +889,28 @@ _e_icon_guess_anim(void *data)
    return EINA_FALSE;
 }
 
+static Eina_Bool
+_e_icon_fdo_reload(void *data)
+{
+   E_Smart_Data *sd = data;
+   const char *path;
+
+   sd->fdo_reload_timer = NULL;
+   sd->size = MAX(sd->w, sd->h);
+   path = efreet_icon_path_find(e_config->icon_theme, sd->fdo, sd->size);
+   if (!path) return EINA_FALSE;
+   
+   /* smart code here */
+   evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
+   evas_object_image_file_set(sd->obj, path, NULL);
+   if (sd->preload)
+     {
+        sd->loading = 1;
+        evas_object_image_preload(sd->obj, 0);
+     }
+   return EINA_FALSE;
+}
+
 static void
 _e_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
@@ -899,20 +922,8 @@ _e_icon_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->h = h;
    if (sd->fdo)
      {
-        const char *path;
-
-        sd->size = MAX(w, h);
-        path = efreet_icon_path_find(e_config->icon_theme, sd->fdo, sd->size);
-        if (!path) return;
-
-        /* smart code here */
-        evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
-        evas_object_image_file_set(sd->obj, path, NULL);
-        if (sd->preload)
-          {
-             sd->loading = 1;
-             evas_object_image_preload(sd->obj, 0);
-          }
+        if (sd->fdo_reload_timer) ecore_timer_del(sd->fdo_reload_timer);
+        sd->fdo_reload_timer = ecore_timer_add(0.1, _e_icon_fdo_reload, sd);
      }
 
    if ((!sd->edje) && ((sd->loading && sd->preload) ||
