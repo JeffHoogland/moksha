@@ -1,0 +1,464 @@
+group { name: "e/conf/randr/main/monitor";
+   parts {
+      part { name: "e.swallow.stand"; type: SWALLOW;
+         description { state: "default" 0.0;
+            align: 0.5 1.0;
+            rel1.relative: 0.0 0.5;
+            rel2.offset: -1 30;
+         }
+      }
+      part { name: "e.swallow.frame"; type: SWALLOW;
+         description { state: "default" 0.0;
+         }
+      }
+   }
+}
+
+group { name: "e/conf/randr/main/frame";
+   images.image: "hole_tiny.png" COMP;
+   images.image: "led_tiny_orange.png" COMP;
+   images.image: "led_tiny_green.png" COMP;
+   images.image: "screen_bg.png" COMP;
+   images.image: "screen_fg.png" COMP;
+   images.image: "shine.png" COMP;
+   images.image: "mini_blue_glow_arrow_0.png" COMP;
+   images.image: "mini_blue_glow_arrow_2.png" COMP;
+   images.image: "sym_down_light_normal.png" COMP;
+   images.image: "sym_down_light_selected.png" COMP;
+   images.image: "sym_up_light_normal.png" COMP;
+   images.image: "sym_up_light_selected.png" COMP;
+   styles {
+      style { name: "randr_monitor_style";
+         base: "font=Sans font_size=10 text_class=randr_monitor align=center color=#ffff style=shadow,bottom shadow_color=#00000080 wrap=word";
+         tag: "br" "\n";
+         tag: "hilight" "+ font=Sans:style=Bold";
+      }
+      style { name: "randr_resolution_style";
+         base: "font=Sans font_size=10 text_class=randr_resolution align=center color=#3399ffff wrap=mixed style=glow glow_color=#3399ff18 align=center glow2_color=#3399ff12";
+         tag: "br" "\n";
+         tag: "hilight" "+ font=Sans:style=Bold";
+      }
+   }
+   script {
+      public refresh_open;
+   }
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "screen_bg.png";
+            image.border: 4 4 4 4;
+         }
+      }
+      part { name: "e.swallow.preview"; type: SWALLOW;
+         clip_to: "clip";
+         description { state: "default" 0.0;
+            rel1.offset: 5 5;
+            rel2.offset: -6 -11;
+         }
+      }
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.preview";
+            rel2.to: "e.swallow.preview";
+         }
+      }
+      part { name: "hole"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: 4 -5;
+            rel1.relative: 0.0 1.0;
+            rel2.offset: 4 -5;
+            rel2.relative: 0.0 1.0;
+            align: 0.0 1.0;
+            min: 4 4;
+            max: 4 4;
+            image.normal: "hole_tiny.png";
+            fixed: 1 1;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "screen_fg.png";
+            image.border: 4 4 4 4;
+         }
+      }
+      part { name: "led"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "hole";
+            rel2.to: "hole";
+            min: 10 10;
+            max: 10 10;
+            image.normal: "led_tiny_green.png";
+            fixed: 1 1;
+         }
+         description { state: "pulse" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 128;
+         }
+         description { state: "off" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "e.text.name"; type: TEXTBLOCK; mouse_events: 0;
+         clip_to: "clip";
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.relative: 0.5 0.5;
+            rel1.to: "e.swallow.preview";
+            rel2.relative: 0.5 0.5;
+            rel2.to: "e.swallow.preview";
+            align: 0.5 1.0;
+            text { style: "randr_monitor_style";
+               min: 1.0 1.0;
+            }
+         }
+      }
+      part { name: "e.text.resolution"; type: TEXTBLOCK; mouse_events: 0;
+         clip_to: "clip";
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.relative: 0.5 0.5;
+            rel1.to: "e.swallow.preview";
+            rel2.relative: 0.5 0.5;
+            rel2.to: "e.swallow.preview";
+            align: 0.5 0.0;
+            text { style: "randr_resolution_style";
+               min: 1.0 1.0;
+            }
+         }
+      }
+      part { name: "scr_shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -1;
+            rel1.to: "base";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 3;
+            rel2.to: "base";
+            FIXED_SIZE(69, 5)
+         }
+      }
+      part { name: "rsz1"; mouse_events: 0;
+         description { state: "default" 0.0;
+            align: 0.0 0.0;
+            rel1.relative: 0.0 0.0;
+            rel2.relative: 0.0 0.0;
+            rel1.to: "e.event.resize";
+            rel2.to: "e.event.resize";
+            image.normal: "mini_blue_glow_arrow_2.png";
+            FIXED_SIZE(10, 10)
+         }
+         description { state: "pulse" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: -1.0 -1.0;
+            rel2.relative: -1.0 -1.0;
+            color: 255 255 255 0;
+         }
+      }
+      part { name: "rsz2"; mouse_events: 0;
+         description { state: "default" 0.0;
+            align: 1.0 1.0;
+            rel1.relative: 1.0 1.0;
+            rel2.relative: 1.0 1.0;
+            rel1.to: "e.event.resize";
+            rel2.to: "e.event.resize";
+            image.normal: "mini_blue_glow_arrow_0.png";
+            FIXED_SIZE(10, 10)
+         }
+         description { state: "pulse" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 2.0 2.0;
+            rel2.relative: 2.0 2.0;
+            color: 255 255 255 0;
+         }
+      } 
+      part { name: "rotc"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            rel1.offset: 16 16;
+            rel2.offset: -17 -17;
+            max: 1 1;
+            align: 0.9 0.1;
+         }
+      }
+      part { name: "rot1"; mouse_events: 0;
+         description { state: "default" 0.0;
+            align: 0.0 0.0;
+            rel1.relative: 0.0 0.0;
+            rel2.relative: 0.0 0.0;
+            rel1.to: "e.event.rotate";
+            rel2.to: "e.event.rotate";
+            image.normal: "mini_blue_glow_arrow_2.png";
+            FIXED_SIZE(10, 10)
+            map.on: 1;
+            map.smooth: 1;
+            map.rotation.center: "rotc";
+         }
+         description { state: "pulse" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 0;
+            map.rotation.z: -60;
+         }
+      }
+      part { name: "rot2"; mouse_events: 0;
+         description { state: "default" 0.0;
+            align: 1.0 1.0;
+            rel1.relative: 1.0 1.0;
+            rel2.relative: 1.0 1.0;
+            rel1.to: "e.event.rotate";
+            rel2.to: "e.event.rotate";
+            image.normal: "mini_blue_glow_arrow_0.png";
+            FIXED_SIZE(10, 10)
+            map.on: 1;
+            map.smooth: 1;
+            map.rotation.center: "rotc";
+         }
+         description { state: "pulse" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 0;
+            map.rotation.z: 60;
+         }
+      }
+      part { name: "e.swallow.refresh"; type: SWALLOW;
+         clip_to: "clip";
+         description { state: "default" 0.0;
+            rel1.to_y: "e.swallow.preview";
+            rel1.to_x: "e.event.arrow.show";
+            rel1.relative: 1.0 0.0;
+            rel2.to: "e.swallow.preview";
+            rel2.relative: 0.0 0.0;
+            align: 0.0 1.0;
+         }
+         description { state: "expanded" 0.0;
+            inherit: "default" 0.0;
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "arrow1clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "e.event.arrow.show";
+            rel2.to: "e.event.arrow.show";
+         }
+         description { state: "expanded" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "arrow2clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "e.event.arrow.show";
+            rel2.to: "e.event.arrow.show";
+            visible: 0;
+         }
+         description { state: "expanded" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "arrow1"; mouse_events: 0;
+         clip_to: "arrow1clip";
+         description { state: "default" 0.0;
+            rel1.to: "e.event.arrow.show";
+            rel2.to: "e.event.arrow.show";
+            image.normal: "sym_down_light_normal.png";
+            FIXED_SIZE(15, 15)
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_down_light_selected.png";
+         }
+      }
+      part { name: "arrow2"; mouse_events: 0;
+         clip_to: "arrow2clip";
+         description { state: "default" 0.0;
+            rel1.to: "e.event.arrow.show";
+            rel2.to: "e.event.arrow.show";
+            image.normal: "sym_up_light_normal.png";
+            FIXED_SIZE(15, 15)
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_up_light_selected.png";
+         }
+      }
+      part { name: "e.event.arrow.show"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            max: 21 21;
+            align: 0.0 0.0;
+         }
+      }
+      part { name: "e.event.rotate"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            max: 21 21;
+            align: 1.0 0.0;
+         }
+      }
+      part { name: "e.event.indicator"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            max: 21 21;
+            align: 0.0 1.0;
+         }
+      }
+      part { name: "e.event.resize"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            max: 21 21;
+            align: 1.0 1.0;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "e.event.arrow.show";
+         action: STATE_SET "clicked" 0.0;
+         target: "arrow1";
+         target: "arrow2";
+      }
+      program {
+         signal: "mouse,up,1"; source: "e.event.arrow.show";
+         action: STATE_SET "default" 0.0;
+         target: "arrow1";
+         target: "arrow2";
+      }
+      program {
+         signal: "mouse,clicked,1"; source: "e.event.arrow.show";
+         script {
+            new shown;
+            
+            shown = get_int(refresh_open);
+            if (shown) {
+               run_program(PROGRAM:"refresh_hide");
+               set_state(PART:"arrow1clip", "default", 0.0);
+               set_state(PART:"arrow2clip", "default", 0.0);
+            } else {
+               run_program(PROGRAM:"refresh_show");
+               set_state(PART:"arrow1clip", "expanded", 0.0);
+               set_state(PART:"arrow2clip", "expanded", 0.0);
+            }
+            set_int(refresh_open, 1 - shown);
+         }
+      }
+      program { name: "refresh_show";
+         action: STATE_SET "expanded" 0.0;
+         transition: BOUNCE 1.0 0.5 4;
+         target: "e.swallow.refresh";
+      }
+      program { name: "refresh_hide";
+         action: STATE_SET "default" 0.0;
+         transition: ACCELERATE 0.5;
+         target: "e.swallow.refresh";
+      }
+      program { name: "rrpulse1";
+         signal: "show"; source: "";
+         action: STATE_SET "pulse" 0.0;
+         transition: DECELERATE 1.0;
+         target: "rsz1";
+         target: "rsz2";
+         target: "rot1";
+         target: "rot2";
+         after: "rrpulse2";
+      }
+      program { name: "rrpulse2";
+         action: STATE_SET "default" 0.0;
+         target: "rsz1";
+         target: "rsz2";
+         target: "rot1";
+         target: "rot2";
+         after: "rrpulse1";
+      }
+      program { name: "pulse1";
+         signal: "show"; source: "";
+         action: STATE_SET "pulse" 0.0;
+         transition: SINUSOIDAL 0.3;
+         target: "led";
+         after: "pulse2";
+      }
+      program { name: "pulse2";
+         action: STATE_SET "default" 0.0;
+         transition: SINUSOIDAL 0.3;
+         target: "led";
+         after: "pulse1";
+      }
+      program {
+         signal: "e,state,enabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "led";
+         after: "pulse1";
+      }
+      program {
+         signal: "e,state,disabled"; source: "e";
+         action: ACTION_STOP;
+         target: "pulse1";
+         target: "pulse2";
+         after: "off";
+      }
+      program { name: "off";
+         signal: "e,state,disabled"; source: "e";
+         action: STATE_SET "off" 0.0;
+         target: "led";
+      }
+      
+      program {
+         signal: "mouse,in"; source: "e.event.resize";
+         action: SIGNAL_EMIT "e,action,resize,in" "e";
+      }
+      program {
+         signal: "mouse,out"; source: "e.event.resize";
+         action: SIGNAL_EMIT "e,action,resize,out" "e";
+      }
+      program {
+         signal: "mouse,down,1"; source: "e.event.resize";
+         action: SIGNAL_EMIT "e,action,resize,start" "e";
+      }
+      program {
+         signal: "mouse,up,1"; source: "e.event.resize";
+         action: SIGNAL_EMIT "e,action,resize,stop" "e";
+      }
+      program {
+         signal: "mouse,in"; source: "e.event.rotate";
+         action: SIGNAL_EMIT "e,action,rotate,in" "e";
+      }
+      program {
+         signal: "mouse,out"; source: "e.event.rotate";
+         action: SIGNAL_EMIT "e,action,rotate,out" "e";
+      }
+      program {
+         signal: "mouse,down,1"; source: "e.event.rotate";
+         action: SIGNAL_EMIT "e,action,rotate,start" "e";
+      }
+      program {
+         signal: "mouse,up,1"; source: "e.event.rotate";
+         action: SIGNAL_EMIT "e,action,rotate,stop" "e";
+      }
+      program {
+         signal: "mouse,in"; source: "e.event.indicator";
+         action: SIGNAL_EMIT "e,action,indicator,in" "e";
+      }
+      program {
+         signal: "mouse,out"; source: "e.event.indicator";
+         action: SIGNAL_EMIT "e,action,indicator,out" "e";
+      }
+      program {
+         signal: "mouse,clicked,1"; source: "e.event.indicator";
+         action: SIGNAL_EMIT "e,action,indicator,toggle" "e";
+      }
+   }
+}
+
+group { name: "e/conf/randr/main/stand";
+   images.image: "screen_base.png" COMP;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            min: 64 50;
+            max: 64 99999;
+            image.normal: "screen_base.png";
+            image.border: 0 0 0 48;
+            fill.smooth: 0;
+         }
+      }
+   }
+}

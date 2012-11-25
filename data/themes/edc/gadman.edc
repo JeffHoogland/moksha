@@ -35,3 +35,126 @@ group { name: "e/gadman/popup";
       }
    }
 }
+
+group { name: "e/gadman/full_bg";
+   parts {
+      part { name: "bg"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            visible: 0;
+         }
+         description { state: "visible" 0.0;
+            color: 0 0 0 192;
+         }
+      }
+      part { name: "custom_bg"; type: RECT;
+         description { state: "default" 0.0;
+            color: 255 255 255 0;
+            visible: 0;
+         }
+         description { state: "visible" 0.0;
+            color: 255 255 255 200;
+         }
+      }
+      part { name: "e.swallow.bg"; type: SWALLOW;
+         clip_to: "custom_bg";
+         description { state: "default" 0.0;
+         }
+      }
+      part { name: "grabber"; type: RECT; repeat_events: 1;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+   }
+   programs {   
+      program {
+         signal: "e,state,visibility,show"; source: "e";
+         action: STATE_SET "visible" 0.0;
+         transition: DECELERATE 0.4;
+         target: "bg";
+      }
+      program {
+         signal: "e,state,visibility,show,now"; source: "e";
+         action: STATE_SET "visible" 0.0;
+         target: "bg";
+      }
+      program {
+         signal: "e,state,visibility,hide"; source: "e";
+         action: STATE_SET "default" 0.0;
+         transition: DECELERATE 0.4;
+         target: "bg";
+         after: "hide_stop";
+      }
+      program {
+         signal: "e,state,visibility,hide,now"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "bg";
+         after: "hide_stop";
+      }
+      program {
+         signal: "e,state,visibility,show,custom"; source: "e";
+         action: STATE_SET "visible" 0.0;
+         transition: DECELERATE 0.4;
+         target: "custom_bg";
+      }
+      program {
+         signal: "e,state,visibility,show,custom,now"; source: "e";
+         action: STATE_SET "visible" 0.0;
+         target: "custom_bg";
+      }
+      program {
+         signal: "e,state,visibility,hide,custom"; source: "e";
+         action: STATE_SET "default" 0.0;
+         transition: DECELERATE 0.4;
+         target: "custom_bg";
+         after: "hide_stop";
+      }
+      program {
+         signal: "e,state,visibility,hide,custom,now"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "custom_bg";
+         after: "hide_stop";
+      }
+      program { name: "hide_stop";
+         action: SIGNAL_EMIT "e,action,hide,stop" "";
+      }
+   }
+}
+
+group { name: "e/gadman/frame";
+   parts {
+      part { name: "e.swallow.content"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.offset: 4 4;
+            rel2.offset: -5 -5;
+         }
+      }
+   }
+}
+
+group { name: "e/gadman/control";
+   images.image: "outline_glow.png" COMP;
+   images.image: "diagonal_stripes.png" COMP;
+   parts {
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "outline_glow.png";
+            image.border: 4 4 4 4;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "pat"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel1.offset: 1 1;
+            rel2.offset: -2 -2;
+            rel2.to: "base";
+            image.normal: "diagonal_stripes.png";
+            TILED_PATTERN(240, 240)
+            visible: 0;
+         }
+      }
+   }
+}
