@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-22 19:49+0100\n"
-"PO-Revision-Date: 2012-11-22 19:51+0100\n"
+"POT-Creation-Date: 2012-11-25 20:14+0100\n"
+"PO-Revision-Date: 2012-11-25 20:49+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -25,6 +25,7 @@ msgstr "Informazioni su Enlightenment"
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
+#: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2510 src/modules/mixer/app_mixer.c:521
 msgid "Close"
 msgstr "Chiudi"
@@ -44,10 +45,10 @@ msgid ""
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2012, dell'Enlightenment Development Team.</>"
-"<br><br>Ci auguriamo che vi piacerà usare questo software tanto quanto a noi "
-"è piaciuto scriverlo.<br><br>Per contattarci visitate:<br><hilight>"
-"http://www.enlightenment.org</><br><br>"
+"<title>Copyright &copy; 2000-2012, dell'Enlightenment Development Team.</"
+"><br><br>Ci auguriamo che vi piacerà usare questo software tanto quanto a "
+"noi è piaciuto scriverlo.<br><br>Per contattarci visitate:"
+"<br><hilight>http://www.enlightenment.org</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -120,7 +121,7 @@ msgstr ""
 
 #: src/bin/e_actions.c:2221
 msgid "Log out"
-msgstr "Esci"
+msgstr "Termina sessione"
 
 #: src/bin/e_actions.c:2278 src/bin/e_actions.c:2409
 msgid "Are you sure you want to turn off?"
@@ -706,6 +707,7 @@ msgstr "Mostra menù..."
 
 #: src/bin/e_actions.c:3361 src/bin/e_actions.c:3366 src/bin/e_actions.c:3371
 #: src/modules/conf/e_mod_main.c:272 src/modules/conf/e_mod_main.c:345
+#: src/modules/everything/evry_plug_apps.c:1169
 #: src/modules/fileman/e_mod_main.c:58 src/modules/fileman/e_mod_main.c:136
 msgid "Launch"
 msgstr "Lancia"
@@ -781,7 +783,7 @@ msgstr "Sistema"
 
 #: src/bin/e_actions.c:3410
 msgid "Log Out"
-msgstr "Esci"
+msgstr "Termina sessione"
 
 #: src/bin/e_actions.c:3414
 msgid "Power Off Now"
@@ -1214,7 +1216,7 @@ msgstr "Impostazioni generali"
 msgid "Startup Notify"
 msgstr "Notifica avvio"
 
-#: src/bin/e_eap_editor.c:785
+#: src/bin/e_eap_editor.c:785 src/modules/everything/evry_plug_apps.c:1183
 msgid "Run in Terminal"
 msgstr "Esegui in terminale"
 
@@ -1237,7 +1239,7 @@ msgstr "Selezionare un'icona per '%s'"
 msgid "Select an Executable"
 msgstr "Seleziona un'eseguibile"
 
-#: src/bin/e_entry.c:436 src/bin/e_fm.c:8770 src/bin/e_fm.c:10389
+#: src/bin/e_entry.c:443 src/bin/e_fm.c:8770 src/bin/e_fm.c:10389
 #: src/bin/e_shelf.c:1785 src/bin/e_shelf.c:2428
 #: src/modules/conf_dialogs/e_int_config_profiles.c:134
 #: src/modules/conf_dialogs/e_int_config_profiles.c:335
@@ -1253,19 +1255,19 @@ msgstr "Seleziona un'eseguibile"
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_entry.c:446 src/bin/e_fm.c:8681
+#: src/bin/e_entry.c:453 src/bin/e_fm.c:8681
 msgid "Cut"
 msgstr "Taglia"
 
-#: src/bin/e_entry.c:455 src/bin/e_fm.c:8695 src/bin/e_fm.c:11145
+#: src/bin/e_entry.c:462 src/bin/e_fm.c:8695 src/bin/e_fm.c:11145
 msgid "Copy"
 msgstr "Copia"
 
-#: src/bin/e_entry.c:465 src/bin/e_fm.c:8486 src/bin/e_fm.c:8708
+#: src/bin/e_entry.c:472 src/bin/e_fm.c:8486 src/bin/e_fm.c:8708
 msgid "Paste"
 msgstr "Incolla"
 
-#: src/bin/e_entry.c:476
+#: src/bin/e_entry.c:483
 msgid "Select All"
 msgstr "Seleziona tutto"
 
@@ -1774,8 +1776,8 @@ msgstr "Nome:"
 msgid "Location:"
 msgstr "Posizione:"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:249
-#: src/bin/e_widget_filepreview.c:306 src/bin/e_widget_filepreview.c:358
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:274
+#: src/bin/e_widget_filepreview.c:331 src/bin/e_widget_filepreview.c:383
 msgid "Size:"
 msgstr "Dimensione:"
 
@@ -1827,7 +1829,7 @@ msgstr "Altri:"
 #: src/bin/e_widget_fsel.c:343
 #: src/modules/conf_theme/e_int_config_transitions.c:218
 #: src/modules/conf_theme/e_int_config_theme.c:1135
-#: src/modules/conf_theme/e_int_config_xsettings.c:497
+#: src/modules/conf_theme/e_int_config_xsettings.c:496
 msgid "Preview"
 msgstr "Anteprima"
 
@@ -2191,6 +2193,7 @@ msgid "Create Keyboard Shortcut"
 msgstr "Crea scorciatoia di tastiera"
 
 #: src/bin/e_int_border_menu.c:652
+#: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "Iconifica"
 
@@ -2511,12 +2514,13 @@ msgstr "Richiede posizione"
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
 #: src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/everything/evry_gadget.c:511
-#: src/modules/everything/evry_gadget.c:696 src/modules/ibar/e_mod_main.c:379
-#: src/modules/ibar/e_mod_main.c:864 src/modules/ibox/e_mod_main.c:302
-#: src/modules/ibox/e_mod_main.c:678 src/modules/pager/e_mod_main.c:875
-#: src/modules/temperature/e_mod_main.c:230 src/modules/mixer/e_mod_main.c:776
-#: src/modules/connman/e_mod_main.c:441 src/modules/tasks/e_mod_main.c:716
-#: src/modules/xkbswitch/e_mod_main.c:327
+#: src/modules/everything/evry_gadget.c:696
+#: src/modules/everything/evry_plug_settings.c:183
+#: src/modules/ibar/e_mod_main.c:379 src/modules/ibar/e_mod_main.c:864
+#: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
+#: src/modules/pager/e_mod_main.c:875 src/modules/temperature/e_mod_main.c:230
+#: src/modules/mixer/e_mod_main.c:776 src/modules/connman/e_mod_main.c:441
+#: src/modules/tasks/e_mod_main.c:716 src/modules/xkbswitch/e_mod_main.c:327
 #: src/modules/xkbswitch/e_mod_main.c:369
 #: src/modules/notification/e_mod_box.c:477
 #: src/modules/notification/e_mod_box.c:616
@@ -2605,7 +2609,9 @@ msgid "Size, Position and Locks"
 msgstr "Dimensione, posizione e blocchi"
 
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
-#: src/modules/everything/evry_gadget.c:645 src/modules/shot/e_mod_main.c:703
+#: src/modules/everything/evry_gadget.c:645
+#: src/modules/everything/evry_plug_aggregator.c:313
+#: src/modules/shot/e_mod_main.c:703
 msgid "All"
 msgstr "Tutto"
 
@@ -2678,6 +2684,8 @@ msgid "Utilities"
 msgstr "Utilità"
 
 #: src/bin/e_int_config_modules.c:53
+#: src/modules/everything/evry_plug_files.c:1346
+#: src/modules/everything/evry_plug_files.c:1359
 #: src/modules/everything/evry_plug_files.c:1585
 #: src/modules/fileman/e_mod_main.c:42
 msgid "Files"
@@ -2778,8 +2786,10 @@ msgstr "Applicazioni preferite"
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/conf_menus/e_int_config_menus.c:283
 #: src/modules/conf_theme/e_int_config_fonts.c:58
-#: src/modules/conf_theme/e_int_config_xsettings.c:485
+#: src/modules/conf_theme/e_int_config_xsettings.c:484
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
+#: src/modules/everything/evry_plug_apps.c:1140
+#: src/modules/everything/evry_plug_apps.c:1156
 #: src/modules/everything/evry_plug_apps.c:1419
 msgid "Applications"
 msgstr "Applicazioni"
@@ -2787,6 +2797,7 @@ msgstr "Applicazioni"
 #: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1317
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
+#: src/modules/everything/evry_plug_windows.c:425
 #: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4002
 msgid "Windows"
 msgstr "Finestre"
@@ -3784,7 +3795,7 @@ msgstr "Problemi chiusura sessione"
 
 #: src/bin/e_sys.c:500
 msgid "Logout now"
-msgstr "Esci adesso"
+msgstr "Termina sessione adesso"
 
 #: src/bin/e_sys.c:502
 msgid "Wait longer"
@@ -4012,9 +4023,9 @@ msgid_plural "%li Minutes ago"
 msgstr[0] "%li minuto fa"
 msgstr[1] "%li minuti fa"
 
-#: src/bin/e_utils.c:932 src/bin/e_widget_filepreview.c:513
-#: src/bin/e_widget_filepreview.c:514 src/bin/e_widget_filepreview.c:515
-#: src/bin/e_widget_filepreview.c:546 src/bin/e_widget_filepreview.c:557
+#: src/bin/e_utils.c:932 src/bin/e_widget_filepreview.c:538
+#: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
+#: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/comp/e_mod_config.c:516
 #: src/modules/conf_dialogs/e_int_config_profiles.c:295
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1220
@@ -4162,35 +4173,35 @@ msgstr "Su"
 msgid "Down"
 msgstr "Giù"
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "R"
 msgstr "R"
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "G"
 msgstr "G"
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "B"
 msgstr "B"
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "H"
 msgstr "H"
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "S"
 msgstr "S"
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "V"
 msgstr "V"
 
-#: src/bin/e_widget_csel.c:272
+#: src/bin/e_widget_csel.c:274
 msgid "Alpha"
 msgstr "Alpha"
 
-#: src/bin/e_widget_filepreview.c:81 src/bin/e_widget_filepreview.c:357
+#: src/bin/e_widget_filepreview.c:81 src/bin/e_widget_filepreview.c:382
 msgid "Resolution:"
 msgstr "Risoluzione:"
 
@@ -4198,74 +4209,74 @@ msgstr "Risoluzione:"
 msgid "Mime-type:"
 msgstr "Tipi Mime:"
 
-#: src/bin/e_widget_filepreview.c:242
+#: src/bin/e_widget_filepreview.c:267
 #, c-format
 msgid "%3.1f%%"
 msgstr "%3.1f%%"
 
-#: src/bin/e_widget_filepreview.c:248
+#: src/bin/e_widget_filepreview.c:273
 msgid "Length:"
 msgstr "Lunghezza:"
 
-#: src/bin/e_widget_filepreview.c:305
+#: src/bin/e_widget_filepreview.c:330
 msgid "Used:"
 msgstr "Usato:"
 
-#: src/bin/e_widget_filepreview.c:307
+#: src/bin/e_widget_filepreview.c:332
 msgid "Reserved:"
 msgstr "Riservato:"
 
-#: src/bin/e_widget_filepreview.c:308
+#: src/bin/e_widget_filepreview.c:333
 msgid "Mount status:"
 msgstr "Stato del montaggio:"
 
-#: src/bin/e_widget_filepreview.c:310 src/modules/comp/e_mod_config.c:487
+#: src/bin/e_widget_filepreview.c:335 src/modules/comp/e_mod_config.c:487
 #: src/modules/mixer/app_mixer.c:394
 msgid "Type:"
 msgstr "Tipo:"
 
-#: src/bin/e_widget_filepreview.c:360
+#: src/bin/e_widget_filepreview.c:385
 msgid "Owner:"
 msgstr "Proprietario:"
 
-#: src/bin/e_widget_filepreview.c:361
+#: src/bin/e_widget_filepreview.c:386
 msgid "Permissions:"
 msgstr "Permessi:"
 
-#: src/bin/e_widget_filepreview.c:362
+#: src/bin/e_widget_filepreview.c:387
 msgid "Modified:"
 msgstr "Ultima modifica:"
 
-#: src/bin/e_widget_filepreview.c:500 src/bin/e_widget_filepreview.c:666
-#: src/bin/e_widget_filepreview.c:675 src/bin/e_widget_filepreview.c:684
+#: src/bin/e_widget_filepreview.c:525 src/bin/e_widget_filepreview.c:691
+#: src/bin/e_widget_filepreview.c:700 src/bin/e_widget_filepreview.c:709
 #, c-format
 msgid "Read Only"
 msgstr "Sola lettura"
 
-#: src/bin/e_widget_filepreview.c:502
+#: src/bin/e_widget_filepreview.c:527
 msgid "Read / Write"
 msgstr "Lettura/scrittura"
 
-#: src/bin/e_widget_filepreview.c:505 src/bin/e_widget_filepreview.c:516
+#: src/bin/e_widget_filepreview.c:530 src/bin/e_widget_filepreview.c:541
 msgid "Unmounted"
 msgstr "Non montato"
 
-#: src/bin/e_widget_filepreview.c:615
+#: src/bin/e_widget_filepreview.c:640
 #, c-format
 msgid "You"
 msgstr "Tu"
 
-#: src/bin/e_widget_filepreview.c:664
+#: src/bin/e_widget_filepreview.c:689
 #, c-format
 msgid "Protected"
 msgstr "Protetto"
 
-#: src/bin/e_widget_filepreview.c:673 src/bin/e_widget_filepreview.c:682
+#: src/bin/e_widget_filepreview.c:698 src/bin/e_widget_filepreview.c:707
 #, c-format
 msgid "Forbidden"
 msgstr "Proibito"
 
-#: src/bin/e_widget_filepreview.c:691
+#: src/bin/e_widget_filepreview.c:716
 msgid "Read-Write"
 msgstr "Lettura-scrittura"
 
@@ -6323,7 +6334,7 @@ msgid "Themes"
 msgstr "Temi"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 msgid "Icons"
@@ -7202,19 +7213,19 @@ msgstr ""
 msgid "GTK Application Theme Settings"
 msgstr "Impostazioni tema applicazioni GTK"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:472
+#: src/modules/conf_theme/e_int_config_xsettings.c:471
 msgid "Match Enlightenment theme if possible"
 msgstr "Corrispondente al tema di Enlightenment se possibile"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:481
+#: src/modules/conf_theme/e_int_config_xsettings.c:480
 msgid "Enable Settings Daemon"
 msgstr "Abilita demone impostazioni"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:516
+#: src/modules/conf_theme/e_int_config_xsettings.c:515
 msgid "Enable icon theme for applications"
 msgstr "Abilita tema icone per le applicazioni"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:520
+#: src/modules/conf_theme/e_int_config_xsettings.c:519
 msgid "Enable icon theme for Enlightenment"
 msgstr "Abilita tema icone per Enlightenment"
 
@@ -8146,6 +8157,10 @@ msgstr "Gadget di Everything"
 msgid "Plugin"
 msgstr "Plugin"
 
+#: src/modules/everything/evry_plug_actions.c:172
+msgid "Actions"
+msgstr "Azioni"
+
 #: src/modules/everything/evry_plug_aggregator.c:122
 #, c-format
 msgid "%d item"
@@ -8156,6 +8171,10 @@ msgstr[1] "%d oggetti"
 #: src/modules/everything/evry_plug_aggregator.c:302
 msgid "No plugins loaded"
 msgstr "Nessun plugin caricato"
+
+#: src/modules/everything/evry_plug_clipboard.c:33
+msgid "Copy to Clipboard"
+msgstr "Copia negli appunti"
 
 #: src/modules/everything/evry_view_help.c:67
 msgid ""
@@ -8195,6 +8214,43 @@ msgstr ""
 "hilight> cambia visualizzazione a elenco<br>    <hilight>&lt;ctrl+3&gt;</"
 "hilight> cambia visualizzazione a miniature"
 
+#: src/modules/everything/evry_plug_apps.c:1148
+msgid "Exebuf"
+msgstr "Comando"
+
+#: src/modules/everything/evry_plug_apps.c:1163
+msgid "Open With..."
+msgstr "Apri con..."
+
+#: src/modules/everything/evry_plug_apps.c:1176
+msgid "Open File..."
+msgstr "Apri file..."
+
+#: src/modules/everything/evry_plug_apps.c:1190
+msgid "Edit Application Entry"
+msgstr "Modifica applicazione"
+
+#: src/modules/everything/evry_plug_apps.c:1197
+msgid "New Application Entry"
+msgstr "Crea applicazione"
+
+#: src/modules/everything/evry_plug_apps.c:1204
+msgid "Run with Sudo"
+msgstr "Esegui con sudo"
+
+#: src/modules/everything/evry_plug_apps.c:1210
+#: src/modules/fileman/e_fwin.c:2146 src/modules/fileman/e_fwin.c:2506
+msgid "Open with..."
+msgstr "Apri con..."
+
+#: src/modules/everything/evry_plug_apps.c:1217
+msgid "Open Terminal here"
+msgstr "Esegui terminale qui"
+
+#: src/modules/everything/evry_plug_apps.c:1223
+msgid "Run Executable"
+msgstr "Avvia eseguibile"
+
 #: src/modules/everything/evry_plug_apps.c:1303
 #: src/modules/everything/evry_plug_apps.c:1438
 msgid "Everything Applications"
@@ -8216,6 +8272,15 @@ msgstr "Interfaccia sudo"
 #: src/modules/everything/evry_plug_files.c:1585
 msgid "Everything Plugin"
 msgstr "Plugin di Everything"
+
+#: src/modules/everything/evry_plug_calc.c:252
+msgid "Calculator"
+msgstr "Calcolatrice"
+
+#: src/modules/everything/evry_plug_files.c:1372
+#: src/modules/everything/evry_plug_files.c:1384
+msgid "Recent Files"
+msgstr "File recenti"
 
 #: src/modules/everything/evry_plug_files.c:1456
 #: src/modules/everything/evry_plug_files.c:1607
@@ -8241,6 +8306,22 @@ msgstr "Cache per directory visitate"
 #: src/modules/everything/evry_plug_files.c:1499
 msgid "Clear cache"
 msgstr "Svuota cache"
+
+#: src/modules/everything/evry_plug_settings.c:187
+msgid "Show Dialog"
+msgstr "Mostra finestre di dialogo"
+
+#: src/modules/everything/evry_plug_windows.c:430
+msgid "Switch to Window"
+msgstr "Passa alla finestra"
+
+#: src/modules/everything/evry_plug_windows.c:445
+msgid "Toggle Fullscreen"
+msgstr "Commuta schermo pieno"
+
+#: src/modules/everything/evry_plug_windows.c:459
+msgid "Send to Desktop"
+msgstr "Invia al desktop"
 
 #: src/modules/fileman/e_fwin.c:251
 msgid "Open Terminal Here"
@@ -8269,10 +8350,6 @@ msgstr "Esegui"
 #: src/modules/fileman/e_fwin.c:2139 src/modules/fileman/e_fwin.c:2508
 msgid "Open"
 msgstr "Apri"
-
-#: src/modules/fileman/e_fwin.c:2146 src/modules/fileman/e_fwin.c:2506
-msgid "Open with..."
-msgstr "Apri con..."
 
 #: src/modules/fileman/e_fwin.c:2537 src/modules/fileman/e_fwin.c:2562
 #, c-format
