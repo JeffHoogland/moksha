@@ -182,5 +182,8 @@ group { name: "e/modules/notification/main";
 //      program {
 //         signal: "notification,del"; source: "notification";
 //      }
+//      program {
+//         signal: "notification,deleted"; source: "notification";
+//      }
    }
 }
