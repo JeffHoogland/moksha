@@ -2851,6 +2851,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
    gc = data;
    //INF("DND ENTER");
    gcc = gc->drag_gcc;
+   if (!gcc) return; // dnd from efm or something
    if ((!gcc->hidden) && (gcc->gadcon == gc))
      {
         if (gc->dnd_enter_cb) gc->dnd_enter_cb(gc, gc->drag_gcc);
