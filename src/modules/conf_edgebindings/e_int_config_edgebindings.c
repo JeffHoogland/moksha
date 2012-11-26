@@ -946,6 +946,7 @@ _edge_grab_wnd_cb_apply(void *data, E_Dialog *dia __UNUSED__)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
+   if (!cfdata->locals.edge) return;
    _edge_grab_wnd_selection_apply(cfdata);
    _edge_grab_wnd_hide(cfdata);
 }
