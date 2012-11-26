@@ -1647,9 +1647,7 @@ _e_gadcon_gadget_move_to_pre_cb(void *data, E_Menu *m)
    int n = 0;
 
    gcc = data;
-   printf("gcc = %p, magic = %x\n", gcc, gcc->e_obj_inherit.magic);
    e_menu_pre_activate_callback_set(m, NULL, NULL);
-   printf("gcc = %p, magic = %x\n", gcc, gcc->e_obj_inherit.magic);
 
    if (!gcc->client_class->func.is_site || gcc->client_class->func.is_site(E_GADCON_SITE_SHELF))
      _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_SHELF, &n);
@@ -1661,8 +1659,6 @@ _e_gadcon_gadget_move_to_pre_cb(void *data, E_Menu *m)
      _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_EFM_TOOLBAR, &n);
    _e_gadcon_add_locations_menu_for_site(m, gcc, E_GADCON_SITE_UNKNOWN, &n);
 }
-
-extern void *eobj_watch;
 
 EAPI void
 e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu)
@@ -1680,11 +1676,8 @@ e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu)
         e_menu_item_label_set(mi, _("Move to"));
         e_util_menu_item_theme_icon_set(mi, "preferences-look");
         e_menu_item_submenu_set(mi, mn);
-        printf("add menu gcc = %p, magic = %x\n", gcc, gcc->e_obj_inherit.magic);
-        eobj_watch = gcc;
         e_menu_pre_activate_callback_set(mn, _e_gadcon_gadget_move_to_pre_cb, gcc);
         e_object_unref(E_OBJECT(mn));
-        printf("add menu gcc = %p, magic = %x\n", gcc, gcc->e_obj_inherit.magic);
      }
 }
 
@@ -1723,7 +1716,6 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
    e_menu_post_deactivate_callback_set(menu_main, _e_gadcon_client_cb_menu_post, gcc);
    gcc->menu = menu_main;
 
-   printf("new menu = %p\n", gcc->menu);
    if ((gcc->gadcon->shelf) || (gcc->gadcon->toolbar))
      {
         if (e_menu_item_nth(menu_gadget, 0))
@@ -2095,7 +2087,6 @@ _e_gadcon_client_free(E_Gadcon_Client *gcc)
    eina_stringshare_del(gcc->style);
    if (gcc->menu)
      {
-        printf("free active menu %p\n", gcc->menu);
         e_menu_deactivate(gcc->menu);
         e_object_del(E_OBJECT(gcc->menu));
      }
