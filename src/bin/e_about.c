@@ -11,6 +11,8 @@ e_about_new(E_Container *con)
 {
    E_Obj_Dialog *od;
    char buf[16384];
+   FILE *f;
+   Eina_Strbuf *tbuf;
 
    od = e_obj_dialog_new(con, _("About Enlightenment"), "E", "_about");
    if (!od) return NULL;
@@ -58,58 +60,53 @@ e_about_new(E_Container *con)
        "POSSIBILITY OF SUCH DAMAGE.</><br>"
      );
    e_obj_dialog_obj_part_text_set(od, "e.textblock.about", buf);
-   {
-      FILE *f;
-      char buf[4096];
-      Eina_Strbuf *tbuf;
 
-      e_prefix_data_concat_static(buf, "AUTHORS");
-      f = fopen(buf, "r");
-      if (f)
-        {
-           tbuf = eina_strbuf_new();
-           eina_strbuf_append(tbuf, _("<title>The Team</><br><br>"));
-           while (fgets(buf, sizeof(buf), f))
-             {
-                int len;
+   e_prefix_data_concat_static(buf, "AUTHORS");
+   f = fopen(buf, "r");
+   if (f)
+     {
+        tbuf = eina_strbuf_new();
+        eina_strbuf_append(tbuf, _("<title>The Team</><br><br>"));
+        while (fgets(buf, sizeof(buf), f))
+          {
+             int len;
 
-                len = strlen(buf);
-                if (len > 0)
-                  {
-                     if (buf[len - 1] == '\n')
-                       {
-                          buf[len - 1] = 0;
-                          len--;
-                       }
-                     if (len > 0)
-                       {
-                          char *p;
+             len = strlen(buf);
+             if (len > 0)
+               {
+                  if (buf[len - 1] == '\n')
+                    {
+                       buf[len - 1] = 0;
+                       len--;
+                    }
+                  if (len > 0)
+                    {
+                       char *p;
 
-                          do
-                            {
-                               p = strchr(buf, '<');
-                               if (p) *p = 0;
-                            }
-                          while (p);
-                          do
-                            {
-                               p = strchr(buf, '>');
-                               if (p) *p = 0;
-                            }
-                          while (p);
-                          eina_strbuf_append_printf(tbuf, "%s<br>", buf);
-                       }
-                  }
-             }
-           fclose(f);
-           if (tbuf)
-             {
-                e_obj_dialog_obj_part_text_set(od, "e.textblock.authors",
-                                               eina_strbuf_string_get(tbuf));
-                eina_strbuf_free(tbuf);
-             }
-        }
-   }
+                       do
+                         {
+                            p = strchr(buf, '<');
+                            if (p) *p = 0;
+                         }
+                       while (p);
+                       do
+                         {
+                            p = strchr(buf, '>');
+                            if (p) *p = 0;
+                         }
+                       while (p);
+                       eina_strbuf_append_printf(tbuf, "%s<br>", buf);
+                    }
+               }
+          }
+        fclose(f);
+        if (tbuf)
+          {
+             e_obj_dialog_obj_part_text_set(od, "e.textblock.authors",
+                                            eina_strbuf_string_get(tbuf));
+             eina_strbuf_free(tbuf);
+          }
+     }
    return (E_About *)od;
 }
 
