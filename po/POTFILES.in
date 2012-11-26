@@ -267,6 +267,7 @@ src/modules/wizard/page_140.c
 src/modules/wizard/page_150.c
 src/modules/wizard/page_160.c
 src/modules/wizard/page_170.c
+src/modules/wizard/page_180.c
 src/modules/wizard/page_200.c
 src/modules/mixer/app_mixer.c
 src/modules/mixer/conf_gadget.c
