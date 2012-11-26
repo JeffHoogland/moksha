@@ -331,7 +331,7 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
    ob = e_widget_check_add(evas, _("Refocus last window on desktop switch"), 
                            &(cfdata->focus_last_focused_per_desktop));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_check_add(evas, _("Revert focus when it is lost"), 
+   ob = e_widget_check_add(evas, _("Focus last focused window on lost focus"), 
                            &(cfdata->focus_revert_on_hide_or_close));
    e_widget_framelist_object_append(of, ob);
    /* NOTE/TODO:
