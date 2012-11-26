@@ -183,6 +183,7 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
         py = gy;
         if (py + pop->h >= (zy + zh))
           py = gy + gh - pop->h;
+        px = MIN(zx + zw - gw - pop->w - 3, px);
         break;
 
       case E_GADCON_ORIENT_LEFT:
@@ -192,6 +193,7 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
         py = gy;
         if (py + pop->h >= (zy + zh))
           py = gy + gh - pop->h;
+        px = MAX(zx + zw - gw - pop->w + 3, px);
         break;
 
       case E_GADCON_ORIENT_TOP:
@@ -203,6 +205,7 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
           px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
+        py = MAX(zy + zh - gh - pop->h + 3, py);
         break;
 
       case E_GADCON_ORIENT_BOTTOM:
@@ -214,6 +217,7 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
           px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
+        py = MIN(zy + zh - gh - pop->h - 3, py);
         break;
 
       case E_GADCON_ORIENT_FLOAT:
