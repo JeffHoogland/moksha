@@ -110,7 +110,7 @@ implement_layout(void)
 }
 
 EAPI int
-wizard_page_init(E_Wizard_Page *pg __UNUSED__)
+wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
 {
    // parse kbd rules here
    find_rules();

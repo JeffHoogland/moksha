@@ -3,8 +3,9 @@
 #include "e_mod_main.h"
 
 EAPI int
-wizard_page_init(E_Wizard_Page *pg __UNUSED__)
+wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons)
 {
+   *need_xdg_icons = EINA_TRUE;
    return 1;
 }
 
@@ -67,4 +68,3 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
-

@@ -29,7 +29,7 @@ _profile_change(void *data __UNUSED__, Evas_Object *obj __UNUSED__)
 }
 
 EAPI int
-wizard_page_init(E_Wizard_Page *pg __UNUSED__)
+wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
 {
    return 1;
 }

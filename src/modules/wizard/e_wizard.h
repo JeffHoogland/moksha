@@ -10,12 +10,11 @@ struct _E_Wizard_Page
 {
    void *handle;
    Evas *evas;
-   int (*init)     (E_Wizard_Page *pg);
+   int (*init)     (E_Wizard_Page *pg, Eina_Bool *need_xdg_desktops, Eina_Bool *need_xdg_icons);
    int (*shutdown) (E_Wizard_Page *pg);
    int (*show)     (E_Wizard_Page *pg);
    int (*hide)     (E_Wizard_Page *pg);
    int (*apply)    (E_Wizard_Page *pg);
-   void *data;
 };
 
 EAPI int e_wizard_init(void);
@@ -25,7 +24,7 @@ EAPI void e_wizard_apply(void);
 EAPI void e_wizard_next(void);
 EAPI void e_wizard_page_show(Evas_Object *obj);
 EAPI E_Wizard_Page *e_wizard_page_add(void *handle,
-                                      int (*init)     (E_Wizard_Page *pg),
+                                      int (*init)     (E_Wizard_Page *pg, Eina_Bool *need_xdg_desktops, Eina_Bool *need_xdg_icons),
                                       int (*shutdown) (E_Wizard_Page *pg),
                                       int (*show)     (E_Wizard_Page *pg),
                                       int (*hide)     (E_Wizard_Page *pg),
@@ -36,6 +35,7 @@ EAPI void e_wizard_button_next_enable_set(int enable);
 EAPI void e_wizard_title_set(const char *title);
 EAPI void e_wizard_labels_update(void);
 EAPI const char *e_wizard_dir_get(void);
+EAPI void e_wizard_xdg_desktops_reset(void);
 
 #endif
 #endif

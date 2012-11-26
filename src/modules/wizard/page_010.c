@@ -82,7 +82,7 @@ _basic_lang_list_sort(const void *data1, const void *data2)
 }
 
 EAPI int
-wizard_page_init(E_Wizard_Page *pg __UNUSED__)
+wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
 {
    FILE *output;
 
@@ -210,7 +210,10 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 /* special - language inits its stuff the moment it goes away */
    eina_stringshare_del(e_config->language);
    e_config->language = eina_stringshare_ref(lang);
-   /* TODO: This can trigger a efreet cache rebuild, need to wait until it is done */
+   /* TODO:
+    * This should be on lang select,
+    * so if next page needs xdg we can't press next */
+   e_wizard_xdg_desktops_reset();
    e_intl_language_set(e_config->language);
    e_wizard_labels_update();
    return 1;

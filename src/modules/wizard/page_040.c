@@ -2,20 +2,18 @@
 #include "e.h"
 #include "e_mod_main.h"
 
-static Ecore_Event_Handler *_update_handler = NULL;
 static Ecore_Timer *_next_timer = NULL;
 
 EAPI int
-wizard_page_init(E_Wizard_Page *pg __UNUSED__)
+wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops, Eina_Bool *need_xdg_icons __UNUSED__)
 {
+   *need_xdg_desktops = EINA_TRUE;
    return 1;
 }
 
 EAPI int
 wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 {
-   if (_update_handler) ecore_event_handler_del(_update_handler);
-   _update_handler = NULL;
    if (_next_timer) ecore_timer_del(_next_timer);
    _next_timer = NULL;
    return 1;
@@ -25,21 +23,9 @@ static Eina_Bool
 _next_page(void *data __UNUSED__)
 {
    _next_timer = NULL;
-   if (_update_handler) ecore_event_handler_del(_update_handler);
-   _update_handler = NULL;
    e_wizard_button_next_enable_set(1);
    e_wizard_next();
    return ECORE_CALLBACK_CANCEL;
-}
-
-static Eina_Bool
-_cb_desktops_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
-{
-   if (_update_handler) ecore_event_handler_del(_update_handler);
-   _update_handler = NULL;
-   if (_next_timer) ecore_timer_del(_next_timer);
-   _next_timer = ecore_timer_add(0.1, _next_page, NULL);
-   return ECORE_CALLBACK_PASS_ON;
 }
 
 EAPI int
@@ -57,13 +43,8 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    snprintf(buf, sizeof(buf), "%s/extra_desktops", e_wizard_dir_get());
    extra_desks = ecore_file_ls(buf);
 
-   _update_handler =
-     ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE,
-                             _cb_desktops_update, NULL);
-   
-   /* advance in 15 sec anyway if no efreet update comes */
-   _next_timer = ecore_timer_add(15.0, _next_page, NULL);
-   if (!extra_desks) return 1;
+   /* advance in 1 sec */
+   _next_timer = ecore_timer_add(1.0, _next_page, NULL);
    
    EINA_LIST_FREE(extra_desks, file)
      {
@@ -127,8 +108,6 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
      {
         if (_next_timer) ecore_timer_del(_next_timer);
         _next_timer = NULL;
-        if (_update_handler) ecore_event_handler_del(_update_handler);
-        _update_handler = NULL;
         return 0; /* we didnt copy anything so advance anyway */
      }
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
