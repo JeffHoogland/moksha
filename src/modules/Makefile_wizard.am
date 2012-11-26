@@ -37,6 +37,7 @@ wizardpkg_LTLIBRARIES  = wizard/module.la \
 			 wizard/page_150.la \
 			 wizard/page_160.la \
 			 wizard/page_170.la \
+			 wizard/page_180.la \
 			 wizard/page_200.la
 
 wizard_module_la_SOURCES = wizard/e_mod_main.h \
@@ -104,6 +105,8 @@ nodist_wizard_page_150_la_SOURCES = wizard/e_mod_comp_cfdata.c \
 wizard_page_160_la_SOURCES        = wizard/page_160.c
 
 wizard_page_170_la_SOURCES        = wizard/page_170.c
+
+wizard_page_180_la_SOURCES        = wizard/page_180.c
 
 wizard_page_200_la_SOURCES        = wizard/page_200.c
 
