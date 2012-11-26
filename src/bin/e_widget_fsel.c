@@ -26,6 +26,7 @@ struct _E_Widget_Data
    void        *chg_data;
    int          preview;
    Eina_Bool   nochange : 1; // block changing of entry
+   Eina_Bool   fprev : 1; // current fprev is dir
 };
 
 static void  _e_wid_del_hook(Evas_Object *obj);
@@ -211,6 +212,7 @@ _e_wid_fsel_sel_chg(E_Widget_Data *wd, Evas_Object *fm)
    if (wd->nochange) return;
    preview = !!fm;
    fm = fm ?: wd->o_files_fm;
+   wd->fprev = (fm != wd->o_files_fm);
    selected = e_fm2_selected_list_get(fm);
    if (!selected) return;
    ici = eina_list_data_get(selected);
@@ -507,6 +509,7 @@ e_widget_fsel_selection_path_get(Evas_Object *obj)
 
    if (!obj) return NULL;
    wd = e_widget_data_get(obj);
+   if (wd->fprev) return wd->path;
    s = e_widget_entry_text_get(wd->o_entry);
    dir = e_fm2_real_path_get(wd->o_files_fm);
    if ((dir) && (s) && (s[0] == '/'))
