@@ -38,8 +38,6 @@ static void _opinfo_op_registry_listener         (void *data, const E_Fm2_Op_Reg
 static void _opinfo_op_registry_free_data        (void *data);
 static Eina_Bool  _opinfo_op_registry_free_data_delayed(void *data);
 static void _opinfo_op_registry_abort_cb         (void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _opinfo_op_registry_summary_cb       (void *data, Evas_Object *obj, const char *emission, const char *source);
-static void _opinfo_op_registry_detailed_cb      (void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _opinfo_op_registry_window_jump_cb   (void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _opinfo_op_registry_update_status    (Instance *inst);
 
@@ -54,23 +52,35 @@ _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
 {
    Evas_Object *o = data;
    char *total, buf[4096];
+   Edje_Message_Float msg;
+   int mw, mh;
 
    if (!o || !ere) return;
+
+   // Don't show if the operation keep less than 1 second
+   if (ere->start_time + 1.0 > ecore_loop_time_get()) return;
    
    // Update icon
    switch (ere->op)
    {
       case E_FM_OP_COPY:
-         edje_object_signal_emit(o, "e,action,icon,copy", "e");
-         break;
+        edje_object_signal_emit(o, "e,action,icon,copy", "e");
+        break;
+
       case E_FM_OP_MOVE:
-         edje_object_signal_emit(o, "e,action,icon,move", "e");
-         break;
+        edje_object_signal_emit(o, "e,action,icon,move", "e");
+        break;
+
       case E_FM_OP_REMOVE:
-         edje_object_signal_emit(o, "e,action,icon,delete", "e");
-         break;
+        edje_object_signal_emit(o, "e,action,icon,delete", "e");
+        break;
+
+      case E_FM_OP_SECURE_REMOVE:
+        edje_object_signal_emit(o, "e,action,icon,secure_delete", "e");
+        break;
+
       default:
-         edje_object_signal_emit(o, "e,action,icon,unknow", "e");
+        edje_object_signal_emit(o, "e,action,icon,unknown", "e");
    }
    
    // Update has/none linked efm window
@@ -81,82 +91,106 @@ _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
    
    // Update information text
    switch (ere->status)
-   {
+     {
       case E_FM2_OP_STATUS_ABORTED:
-         switch (ere->op)
-         {
-            case E_FM_OP_COPY:
-               snprintf(buf, sizeof(buf), _("Copying is aborted"));
-               break;
-            case E_FM_OP_MOVE:
-               snprintf(buf, sizeof(buf), _("Moving is aborted"));
-               break;
-            case E_FM_OP_REMOVE:
-               snprintf(buf, sizeof(buf), _("Deleting is aborted"));
-               break;
-            default:
-               snprintf(buf, sizeof(buf), _("Unknown operation from slave is aborted"));
-         }
-         break;
+        switch (ere->op)
+          {
+           case E_FM_OP_COPY:
+             snprintf(buf, sizeof(buf), _("Copying is aborted"));
+             break;
+
+           case E_FM_OP_MOVE:
+             snprintf(buf, sizeof(buf), _("Moving is aborted"));
+             break;
+
+           case E_FM_OP_REMOVE:
+             snprintf(buf, sizeof(buf), _("Deleting is aborted"));
+             break;
+
+           case E_FM_OP_SECURE_REMOVE:
+             snprintf(buf, sizeof(buf), _("Secure deletion is aborted"));
+             break;
+
+           default:
+             snprintf(buf, sizeof(buf), _("Unknown operation from slave is aborted"));
+          }
+        break;
 
       default:
-         total = e_util_size_string_get(ere->total);
-         switch (ere->op)
-         {
-            case E_FM_OP_COPY:
-               if (ere->finished)
-                  snprintf(buf, sizeof(buf), _("Copy of %s done"), total);
-               else
-                  snprintf(buf, sizeof(buf), _("Copying %s (eta: %d s)"), total, ere->eta);
-               break;
-            case E_FM_OP_MOVE:
-               if (ere->finished)
-                  snprintf(buf, sizeof(buf), _("Move of %s done"), total);
-               else
-                  snprintf(buf, sizeof(buf), _("Moving %s (eta: %d s)"), total, ere->eta);
-               break;
-            case E_FM_OP_REMOVE:
-               if (ere->finished)
-                  snprintf(buf, sizeof(buf), _("Delete done"));
-               else
-                  snprintf(buf, sizeof(buf), _("Deleting files..."));
-               break;
-            default:
-               snprintf(buf, sizeof(buf), _("Unknown operation from slave %d"), ere->id);
-         }
-         E_FREE(total);
-   }
+        total = e_util_size_string_get(ere->total);
+        switch (ere->op)
+          {
+           case E_FM_OP_COPY:
+             if (ere->finished)
+               snprintf(buf, sizeof(buf), _("Copy of %s done"), total);
+             else
+               snprintf(buf, sizeof(buf), _("Copying %s (eta: %s)"),
+                             total, e_util_time_str_get(ere->eta));
+             break;
+
+           case E_FM_OP_MOVE:
+             if (ere->finished)
+               snprintf(buf, sizeof(buf), _("Move of %s done"), total);
+             else
+               snprintf(buf, sizeof(buf), _("Moving %s (eta: %s)"),
+                             total, e_util_time_str_get(ere->eta));
+             break;
+
+           case E_FM_OP_REMOVE:
+             if (ere->finished)
+               snprintf(buf, sizeof(buf), _("Delete done"));
+             else
+               snprintf(buf, sizeof(buf), _("Deleting files..."));
+             break;
+
+           case E_FM_OP_SECURE_REMOVE:
+             if (ere->finished)
+               snprintf(buf, sizeof(buf), _("Secure delete done"));
+             else
+               snprintf(buf, sizeof(buf), _("Securely deleting files..."));
+             break;
+
+           default:
+             snprintf(buf, sizeof(buf), _("Unknown operation from slave %d"), ere->id);
+          }
+        E_FREE(total);
+     }
    edje_object_part_text_set(o, "e.text.info", buf);
-   
-   // Update detailed information
-   if (!ere->src)
-      edje_object_part_text_set(o, "e.text.src", _("(no information)"));
-   else
+
+   // Update spinner wheel
+   if ((ere->finished) || (ere->status == E_FM2_OP_STATUS_ABORTED))
      {
-        if (ere->op == E_FM_OP_REMOVE)
-           snprintf(buf, sizeof(buf), _("File: %s"), ere->src);
-        else
-           snprintf(buf, sizeof(buf), _("From: %s"), ere->src);
-        edje_object_part_text_set(o, "e.text.src", buf);
+        if (!evas_object_data_get(o, "stopped"))
+          {
+             evas_object_data_set(o, "stopped", o);
+             edje_object_signal_emit(o, "e,state,busy,stop", "e");
+          }
      }
-   if (!ere->dst || ere->op == E_FM_OP_REMOVE)
-      edje_object_part_text_set(o, "e.text.dest", _("(no information)"));
-   else
+   if (ere->percent > 0)
      {
-        snprintf(buf, sizeof(buf), _("To: %s"), ere->dst);
-        edje_object_part_text_set(o, "e.text.dest", buf);
+        if (!evas_object_data_get(o, "started"))
+          {
+             evas_object_data_set(o, "started", o);
+             edje_object_signal_emit(o, "e,state,busy,start", "e");
+          }
      }
-   
-   // Update gauge
-   edje_object_part_drag_size_set(o, "e.gauge.bar", ere->percent / 100.0, 1.0);
-   snprintf(buf, sizeof(buf), "%3i%%", ere->percent);
-   edje_object_part_text_set(o, "e.text.percent", buf);
-   
+
    // Update attention
    if (ere->needs_attention)
       edje_object_signal_emit(o, "e,action,set,need_attention", "e");
    else
       edje_object_signal_emit(o, "e,action,set,normal", "e");
+
+   // Update gauge
+   edje_object_part_drag_size_set(o, "e.gauge.bar",
+                                  ((double)(ere->percent)) / 100.0, 1.0);
+   msg.val = ((double)(ere->percent)) / 100.0;
+   edje_object_message_send(o, EDJE_MESSAGE_FLOAT, 1, &msg);
+
+   // resize element to fit the box
+   edje_object_size_min_calc(o, &mw, &mh);
+   e_box_pack_options_set(o, 1, 0, 1, 0, 0.0, 0.0, mw, mh, 9999, mh);
+   evas_object_show(o);
 }
 
 static void
@@ -188,29 +222,6 @@ _opinfo_op_registry_abort_cb(void *data, Evas_Object *obj __UNUSED__, const char
    if (!id) return;
    
    e_fm2_operation_abort(id);
-}
-
-static void 
-_opinfo_op_registry_summary_cb(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
-{
-   int mw, mh;
-   
-   edje_object_signal_emit(obj, "state,set,summary", "fileman_opinfo");
-
-   edje_object_size_min_get(obj, &mw, &mh);
-   e_box_pack_options_set(obj, 1, 0, 1, 0, 0.0, 0.0, mw, mh, 9999, mh);
-}
-
-static void 
-_opinfo_op_registry_detailed_cb(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
-{
-   int mw, xh;
-
-   edje_object_signal_emit(obj, "state,set,detailed", "fileman_opinfo");
-
-   edje_object_size_min_calc(obj, &mw, NULL);
-   edje_object_size_max_get(obj, NULL, &xh);
-   e_box_pack_options_set(obj, 1, 0, 1, 0, 0.0, 0.0, mw, xh, 9999, xh);
 }
 
 static void 
@@ -262,22 +273,10 @@ _opinfo_op_registry_entry_add_cb(void *data, __UNUSED__ int type, void *event)
       return ECORE_CALLBACK_RENEW;
    
    o = edje_object_add(evas_object_evas_get(inst->o_box));
-   if (!e_theme_edje_object_set(o, "base/theme/modules/fileman_opinfo", 
-                                "modules/fileman_opinfo/main"))
-      edje_object_file_set(o, inst->theme_file, "modules/fileman_opinfo/main");
-   _opinfo_op_registry_listener(o, ere);
-   e_box_pack_before(inst->o_box, o, inst->o_status);
-   evas_object_show(o);
-   _opinfo_op_registry_summary_cb(inst, o, NULL, NULL);
-   
+   e_theme_edje_object_set(o, "base/theme/fileman", "e/fileman/default/progress");
    edje_object_signal_callback_add(o, "e,fm,operation,abort", "",
                                    _opinfo_op_registry_abort_cb, (void*)(long)ere->id);
-   edje_object_signal_callback_add(o, "state,request,summary", "fileman_opinfo",
-                                   _opinfo_op_registry_summary_cb, inst);
-   edje_object_signal_callback_add(o, "state,request,detailed", "fileman_opinfo",
-                                   _opinfo_op_registry_detailed_cb, inst);
-   edje_object_signal_callback_add(o, "e,fm,window,jump", "",
-                                   _opinfo_op_registry_window_jump_cb, (void*)(long)ere->id);
+   e_box_pack_end(inst->o_box, o);
    
    e_fm2_op_registry_entry_listener_add(ere, _opinfo_op_registry_listener,
                                         o, _opinfo_op_registry_free_data);
@@ -374,7 +373,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst->fm_op_entry_add_handler =
       ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_ADD,
-			      _opinfo_op_registry_entry_add_cb, inst);
+                              _opinfo_op_registry_entry_add_cb, inst);
    inst->fm_op_entry_del_handler =
       ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_DEL,
                               _opinfo_op_registry_entry_del_cb, inst);
