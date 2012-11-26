@@ -407,21 +407,26 @@ e_mod_fileman_path_find(E_Zone *zone)
 {
    Eina_List *l;
    Fileman_Path *path;
-   char buf[256];
 
    EINA_LIST_FOREACH(fileman_config->paths, l, path)
-     if (path->zone == zone->container->num + zone->num) return path;
-   path = E_NEW(Fileman_Path, 1);
-   path->zone = zone->container->num + zone->num;
-   path->dev = eina_stringshare_add("desktop");
+     if (path->zone == zone->container->num + zone->num) break;
+   if (l && fileman_config->view.desktop_navigation) return path;
+   if (l)
+     {
+        eina_stringshare_replace(&path->path, NULL);
+        eina_stringshare_replace(&path->dev, NULL);
+     }
+   else
+     {
+        path = E_NEW(Fileman_Path, 1);
+        path->zone = zone->container->num + zone->num;
+        path->dev = eina_stringshare_add("desktop");
+        fileman_config->paths = eina_list_append(fileman_config->paths, path);
+     }
    path->desktop_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
    if ((zone->container->num == 0) && (zone->num == 0))
      path->path = eina_stringshare_add("/");
    else
-     {
-        snprintf(buf, sizeof(buf), "%i", (zone->container->num + zone->num));
-        path->path = eina_stringshare_add(buf);
-     }
-   fileman_config->paths = eina_list_append(fileman_config->paths, path);
+     path->path = eina_stringshare_printf("%d", (zone->container->num + zone->num));
    return path;
 }
