@@ -220,30 +220,31 @@ static void
 _cb_entry_ok(void *data, char *text)
 {
    char buf[4096];
-   char tmp[4096];
+   char tmp[4096] = {0};
    FILE *f;
    size_t len;
 
    len = e_user_dir_snprintf(buf, sizeof(buf), "applications/bar/%s", text);
    if (len + sizeof("/.order") >= sizeof(buf)) return;
-   if (!ecore_file_exists(buf))
+   while (!ecore_file_exists(buf))
      {
         ecore_file_mkdir(buf);
         memcpy(buf + len, "/.order", sizeof("/.order"));
+        e_user_dir_concat_static(tmp, "applications/bar/default/.order");
+        if (ecore_file_cp(tmp, buf)) break;
         f = fopen(buf, "w");
-        if (f)
-          {
-             /* Populate this .order file with some defaults */
-             snprintf(tmp, sizeof(tmp), 
-                      "terminology.desktop\n"
-                      "sylpheed.desktop\n"
-                      "firefox.desktop\n"
-                      "openoffice.desktop\n" 
-                      "xchat.desktop\n"
-                      "gimp.desktop\n");
-             fwrite(tmp, sizeof(char), strlen(tmp), f);
-             fclose(f);
-          }
+        if (!f) break;
+        /* Populate this .order file with some defaults */
+        snprintf(tmp, sizeof(tmp), 
+                 "terminology.desktop\n"
+                 "sylpheed.desktop\n"
+                 "firefox.desktop\n"
+                 "openoffice.desktop\n" 
+                 "xchat.desktop\n"
+                 "gimp.desktop\n");
+        fwrite(tmp, sizeof(char), strlen(tmp), f);
+        fclose(f);
+        break;
      }
 
    _load_tlist(data);
