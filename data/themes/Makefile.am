@@ -43,6 +43,7 @@ edc/ilist.edc \
 edc/init.edc \
 edc/label.edc \
 edc/menu.edc \
+edc/notification.edc \
 edc/pager.edc \
 edc/pointer.edc \
 edc/preview.edc \
@@ -186,6 +187,7 @@ img/downlight_glow_right.png \
 img/downlight_glow_up.png \
 img/eth.png \
 img/exlclam.png \
+img/glow_exclam.png \
 img/glow_lock_double.png \
 img/glow_lock_locked.png \
 img/glow_lock_unlocked.png \

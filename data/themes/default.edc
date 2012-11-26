@@ -51,6 +51,7 @@ collections {
 #include "edc/colors.edc"
 #include "edc/edgebindings.edc"
 #include "edc/randr.edc"
+#include "edc/notification.edc"
 
 // port unchanged stuff so this can work as a replacement
 #include "edc/O/backlight.edc"
