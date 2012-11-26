@@ -13,11 +13,19 @@ _recommend_connman(E_Wizard_Page *pg)
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Network Management"));
 
+#ifdef HAVE_ECONNMAN
    of = e_widget_framelist_add(pg->evas,
                                _("Connman network service not found"), 0);
 
    ob = e_widget_label_add
        (pg->evas, _("Install Connman for network management support"));
+#else
+   of = e_widget_framelist_add(pg->evas,
+                               _("Connman support disabled"), 0);
+
+   ob = e_widget_label_add
+       (pg->evas, _("Install/Enable Connman for network management support"));
+#endif
    e_widget_framelist_object_append(of, ob);
    evas_object_show(ob);
 
@@ -105,12 +113,12 @@ EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
    int have_connman = 0;
+#ifdef HAVE_ECONNMAN
    E_DBus_Connection *c;
 
    c = e_dbus_bus_get(DBUS_BUS_SYSTEM);
    if (c)
      {
-#ifdef HAVE_ECONNMAN
         if (pending_connman)
           dbus_pending_call_cancel(pending_connman);
 
@@ -124,8 +132,8 @@ wizard_page_show(E_Wizard_Page *pg)
              have_connman = 1;
              e_wizard_button_next_enable_set(0);
           }
-#endif
      }
+#endif
    if (!have_connman)
      {
         E_Config_Module *em;
