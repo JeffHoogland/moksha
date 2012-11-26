@@ -210,6 +210,7 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 /* special - language inits its stuff the moment it goes away */
    eina_stringshare_del(e_config->language);
    e_config->language = eina_stringshare_ref(lang);
+   /* TODO: This can trigger a efreet cache rebuild, need to wait until it is done */
    e_intl_language_set(e_config->language);
    e_wizard_labels_update();
    return 1;
