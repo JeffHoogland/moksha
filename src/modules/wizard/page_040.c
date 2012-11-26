@@ -38,7 +38,7 @@ _cb_desktops_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UN
    if (_update_handler) ecore_event_handler_del(_update_handler);
    _update_handler = NULL;
    if (_next_timer) ecore_timer_del(_next_timer);
-   _next_timer = ecore_timer_add(1.0, _next_page, NULL);
+   _next_timer = ecore_timer_add(0.1, _next_page, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -56,7 +56,6 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    
    snprintf(buf, sizeof(buf), "%s/extra_desktops", e_wizard_dir_get());
    extra_desks = ecore_file_ls(buf);
-   if (!extra_desks) return 0;
 
    _update_handler =
      ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE,
@@ -64,6 +63,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    
    /* advance in 15 sec anyway if no efreet update comes */
    _next_timer = ecore_timer_add(15.0, _next_page, NULL);
+   if (!extra_desks) return 1;
    
    EINA_LIST_FREE(extra_desks, file)
      {
