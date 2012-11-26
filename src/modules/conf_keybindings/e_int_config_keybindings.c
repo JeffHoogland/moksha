@@ -621,12 +621,6 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "d",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "desk_deskshow_toggle", NULL);
-   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Left",
-                    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
-                    "screen_send_by", "-1");
-   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Right",
-                    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
-                    "screen_send_by", "1");
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "F1",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
                     "screen_send_to", "0");
