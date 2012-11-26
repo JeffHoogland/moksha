@@ -838,7 +838,7 @@ group { name: "e/widgets/border/pixel/border";
    parts {
       part { name: "e.swallow.client"; type: SWALLOW;
          description { state: "default" 0.0;
-            rel1.offset: -2 -2;
+            rel1.offset: 1 1;
             rel2.offset: -2 -2;
          }
       }
