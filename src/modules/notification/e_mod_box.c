@@ -312,6 +312,7 @@ _notification_box_icon_fill(Notification_Box_Icon *ic,
    Evas_Object *dummy = NULL;
    int w, h = 0;
 
+   // XXX: this is horrible.
    if ((icon_path = e_notification_app_icon_get(n)) && *icon_path)
      {
         if (!memcmp(icon_path, "file://", 7)) icon_path += 7;
@@ -354,7 +355,7 @@ _notification_box_icon_fill(Notification_Box_Icon *ic,
    evas_object_show(ic->o_icon2);
 
    if (dummy) evas_object_del(dummy);
-   evas_object_del(app_icon);
+   else evas_object_del(app_icon);
    _notification_box_icon_fill_label(ic);
 }
 
