@@ -30,6 +30,7 @@ struct _E_Config_Dialog_Data
    Evas_Object *b_load, *b_unload;
    Evas_Object *o_desc;
    Eina_List   *types;
+   Ecore_Event_Handler *module_update;
    struct
    {
       Eina_List   *loaded, *unloaded;
@@ -143,7 +144,29 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    eina_list_free(cfdata->selected.loaded);
    eina_list_free(cfdata->selected.unloaded);
-   E_FREE(cfdata);
+   if (cfdata->module_update) ecore_event_handler_del(cfdata->module_update);
+   free(cfdata);
+}
+
+static Eina_Bool
+_module_update(E_Config_Dialog_Data *cfdata, int type __UNUSED__, E_Event_Module_Update *ev)
+{
+   CFType *cft;
+   Eina_List *l, *ll;
+   CFModule *cfm;
+
+   EINA_LIST_FOREACH(cfdata->types, l, cft)
+     {
+        EINA_LIST_FOREACH(cft->modules, ll, cfm)
+          if (cfm->short_name == ev->name)
+            {
+               cfm->enabled = ev->enabled;
+               _module_end_state_apply(cfm);
+               return ECORE_CALLBACK_RENEW;
+            }
+     }
+
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Evas_Object *
@@ -193,6 +216,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    e_widget_focus_set(cfdata->o_toolbar, 1);
    e_widget_toolbar_item_select(cfdata->o_toolbar, 0);
+
+   cfdata->module_update = ecore_event_handler_add(E_EVENT_MODULE_UPDATE, (Ecore_Event_Handler_Cb)_module_update, cfdata);
 
    return of;
 }
