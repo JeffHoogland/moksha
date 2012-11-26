@@ -289,7 +289,7 @@ e_module_enable(E_Module *m)
                   e_config_save_queue();
 
                   ev = E_NEW(E_Event_Module_Update, 1);
-                  ev->name = strdup(em->name);
+                  ev->name = eina_stringshare_ref(em->name);
                   ev->enabled = 1;
                   ecore_event_add(E_EVENT_MODULE_UPDATE, ev,
                                   _e_module_event_update_free, NULL);
@@ -326,7 +326,7 @@ e_module_disable(E_Module *m)
              e_config_save_queue();
 
              ev = E_NEW(E_Event_Module_Update, 1);
-             ev->name = strdup(em->name);
+             ev->name = eina_stringshare_ref(em->name);
              ev->enabled = 0;
              ecore_event_add(E_EVENT_MODULE_UPDATE, ev,
                              _e_module_event_update_free, NULL);
@@ -598,7 +598,7 @@ _e_module_event_update_free(void *data __UNUSED__, void *event)
    E_Event_Module_Update *ev;
 
    if (!(ev = event)) return;
-   E_FREE(ev->name);
+   eina_stringshare_del(ev->name);
    E_FREE(ev);
 }
 

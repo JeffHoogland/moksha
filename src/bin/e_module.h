@@ -18,8 +18,8 @@ extern EAPI int E_EVENT_MODULE_INIT_END;
 
 struct _E_Event_Module_Update
 {
-   char *name;
-   unsigned char enabled : 1;
+   const char *name;
+   Eina_Bool enabled : 1;
 };
 
 struct _E_Module
