@@ -414,7 +414,7 @@ e_mod_fileman_path_find(E_Zone *zone)
    if (l)
      {
         eina_stringshare_replace(&path->path, NULL);
-        eina_stringshare_replace(&path->dev, NULL);
+        eina_stringshare_replace(&path->dev, "desktop");
      }
    else
      {
