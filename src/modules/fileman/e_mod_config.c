@@ -402,7 +402,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
 
    ob = e_widget_label_add(evas, _("Max File Size For Thumbnailing"));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MiB"), 0, 1024, 16, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f MiB"), 0, 512, 1, 0,
                             NULL, &(cfdata->icon.max_thumb_size), 150);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
