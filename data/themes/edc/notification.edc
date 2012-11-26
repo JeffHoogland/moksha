@@ -176,11 +176,11 @@ group { name: "e/modules/notification/main";
          signal: "mouse,clicked,1"; source: "base";
          action: SIGNAL_EMIT "notification,find" "theme";
       }
-      program {
-         signal: "notification,new"; source: "notification";
-      }
-      program {
-         signal: "notification,del"; source: "notification";
-      }
+//      program {
+//         signal: "notification,new"; source: "notification";
+//      }
+//      program {
+//         signal: "notification,del"; source: "notification";
+//      }
    }
 }
