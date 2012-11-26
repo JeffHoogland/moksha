@@ -61,18 +61,16 @@ e_modapi_init(E_Module *m)
 
    /* XXX: disabled dropshadow module when comp is running */
    {
-      Eina_List *l;
       E_Module *m2;
-      EINA_LIST_FOREACH(e_module_list(), l, m2)
+
+      m2 = e_module_find("dropshadow");
+      if (m2 && m2->enabled)
         {
-           if (m2->enabled && (!strcmp(m2->name, "dropshadow")))
-             {
-                e_util_dialog_internal(_("Composite"),
-                                       _("Dropshadow module is incompatible<br>"
-                                         "with compositing. Disabling the<br>"
-                                         "Dropshadow module."));
-                e_module_disable(m2);
-             }
+           e_util_dialog_internal(_("Composite"),
+                                  _("Dropshadow module is incompatible<br>"
+                                    "with compositing. Disabling the<br>"
+                                    "Dropshadow module."));
+           e_module_disable(m2);
         }
    }
 
