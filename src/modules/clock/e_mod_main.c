@@ -862,7 +862,7 @@ e_modapi_init(E_Module *m)
         act->func.go_mouse = _e_mod_action_cb_mouse;
         act->func.go_edge = _e_mod_action_cb_edge;
 
-        e_action_predef_name_set(_("Clock"), _("Show calendar"), "clock", "show_calendar", NULL, 0);
+        e_action_predef_name_set(_("Clock"), _("Toggle calendar"), "clock", "show_calendar", NULL, 0);
      }
 
    clock_config->module = m;
