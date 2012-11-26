@@ -890,7 +890,7 @@ _create_mover(E_Gadcon *gc)
 
    edje_object_signal_callback_add(mover, "e,action,move,start", "",
                                    on_move, (void *)DRAG_START);
-   edje_object_signal_callback_add(mover, "mouse,down,3", "overlay",
+   edje_object_signal_callback_add(mover, "mouse,down,3", "*",
                                    gadman_gadget_edit_end, NULL);
 
    edje_object_signal_callback_add(mover, "e,action,resize,left,start", "",
