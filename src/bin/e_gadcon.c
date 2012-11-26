@@ -2299,7 +2299,7 @@ _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
 {
    Eina_List *l;
    E_Gadcon_Client *gcc2;
-   Evas_Coord cx, cy, cw, ch;
+   Evas_Coord cx = 0, cy = 0, cw = 0, ch = 0;
    int seq = 1;
 
    /* Check if the gadcon client is in place */
@@ -2957,7 +2957,7 @@ _e_gadcon_cb_dnd_move(void *data, const char *type __UNUSED__, void *event)
    E_Event_Dnd_Move *ev;
    E_Gadcon *gc;
    E_Gadcon_Client *gcc = NULL;
-   int dx, dy = 0;
+   int dx = 0, dy = 0;
    Evas_Object *o;
 
    ev = event;
