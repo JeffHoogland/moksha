@@ -3487,20 +3487,14 @@ e_border_idler_before(void)
                        bd->changes.visible = 0;
                     }
 
-                  if (bd->zone && (!bd->new_client) &&
-                      (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w, bd->zone->h)) &&
-                      /* upper left */
-                      (!E_INSIDE(bd->x, bd->y, 0 - bd->w + 5, 0 - bd->h + 5, bd->zone->w, bd->zone->h)) &&
-                      /* upper right */
-                      (!E_INSIDE(bd->x, bd->y, 0, 0 - bd->h + 5, bd->zone->w + bd->w - 5, bd->zone->h)) &&
-                      /* lower left */
-                      (!E_INSIDE(bd->x, bd->y, 0 - bd->w + 5, 0, bd->zone->w, bd->zone->h + bd->h - 5)) &&
-                      (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w + bd->w - 5, bd->zone->h + bd->h - 5))
-                     )
-                    {
+                   if (bd->zone && (!bd->new_client) &&
+                     (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w - 5, bd->zone->h - 5)) &&
+                     (!E_INSIDE(bd->x, bd->y, 0 - bd->w + 5, 0 - bd->h + 5, bd->zone->w - 5, bd->zone->h - 5))
+                      )
+                     {
                        if (e_config->screen_limits != E_SCREEN_LIMITS_COMPLETELY)
                           _e_border_move_lost_window_to_center(bd);
-                    }
+                     }
                }
              e_container_border_list_free(bl);
 
@@ -4387,14 +4381,14 @@ _e_border_move_lost_window_to_center(E_Border *bd)
    if (!(bd->zone)) return;
 
    _e_border_zones_layout_calc(bd, &zx, &zy, &zw, &zh);
-   
+
    if (!E_INTERSECTS(zx + loss_overlap,
                      zy + loss_overlap,
                      zw - (2 * loss_overlap),
                      zh - (2 * loss_overlap),
                      bd->x, bd->y, bd->w, bd->h))
      {
-        if (e_config->edge_flip_dragging || bd->zone->flip.switching)
+        if (e_config->edge_flip_dragging)
           {
              Eina_Bool lf, rf, tf, bf; 
 
@@ -4413,17 +4407,17 @@ _e_border_move_lost_window_to_center(E_Border *bd)
                   if (bd->zone->desk_y_current == 0) tf = EINA_FALSE;
                   if (bd->zone->desk_y_current == (bd->zone->desk_y_count - 1)) bf = EINA_FALSE;
                }
-
-             if (!(lf) && (bd->x <= loss_overlap))
+             
+             if (!(lf) && (bd->x <= loss_overlap) && !(bd->zone->flip.switching))
                _e_border_reset_lost_window(bd);
 
-             if (!(rf) && (bd->x >= (bd->zone->w - loss_overlap)))
+             if (!(rf) && (bd->x >= (bd->zone->w - loss_overlap)) && !(bd->zone->flip.switching))
                _e_border_reset_lost_window(bd);
 
-             if (!(tf) && (bd->y <= loss_overlap))
+             if (!(tf) && (bd->y <= loss_overlap) && !(bd->zone->flip.switching))
                _e_border_reset_lost_window(bd);
 
-             if (!(bf) && (bd->y >= (bd->zone->h - loss_overlap)))
+             if (!(bf) && (bd->y >= (bd->zone->h - loss_overlap)) && !(bd->zone->flip.switching))
                _e_border_reset_lost_window(bd); 
           } 
        
@@ -4438,9 +4432,6 @@ _e_border_reset_lost_window(E_Border *bd)
    int x, y, w, h;
    E_OBJECT_CHECK(bd);
 
-   /* Prevent infinite loop call where e_border_center call e_border_move
-      that call _e_border_reset_lost_window.
-    */
    if (bd->during_lost) return ;
    bd->during_lost = EINA_TRUE;
 
@@ -4450,8 +4441,8 @@ _e_border_reset_lost_window(E_Border *bd)
    e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
    ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
 
-   warp_to_x = bd->w + x + ((w / 2) - (bd->w / 2)) + ((warp_x - bd->w) - bd->x);
-   warp_to_y = bd->h + y + ((h / 2) - (bd->h / 2)) + ((warp_y - bd->h) - bd->y);
+   warp_to_x = x + ((w / 2) - (bd->w / 2)) + (warp_x - bd->x);
+   warp_to_y = y + ((h / 2) - (bd->h / 2)) + (warp_y - bd->y);
 
    warp_to = 1;
    warp_to_win = bd->zone->container->win;
