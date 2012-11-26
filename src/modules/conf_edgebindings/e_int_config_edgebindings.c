@@ -860,7 +860,6 @@ static void
 _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *obg, *os;
-   E_Manager *man;
    Evas *evas;
    Evas_Coord minw, minh;
    const char *bgfile;
@@ -869,11 +868,9 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
 
    if (cfdata->locals.dia != 0) return;
 
-   man = e_manager_current_get();
-
-   cfdata->locals.dia = e_dialog_normal_win_new(e_container_current_get(man),
-                                                "E", "_edgebind_getedge_dialog");
+   cfdata->locals.dia = e_dialog_normal_win_new(NULL, "E", "_edgebind_getedge_dialog");
    if (!cfdata->locals.dia) return;
+   e_dialog_parent_set(cfdata->locals.dia, cfdata->cfd->dia->win);
    e_dialog_title_set(cfdata->locals.dia, _("Edge Binding Sequence"));
    e_dialog_icon_set(cfdata->locals.dia, "enlightenment/edges", 48);
    e_dialog_button_add(cfdata->locals.dia, _("Apply"), NULL, _edge_grab_wnd_cb_apply, cfdata);
