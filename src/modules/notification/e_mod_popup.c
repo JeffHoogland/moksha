@@ -297,8 +297,11 @@ _notification_popup_new(E_Notification *n)
 
    if (!e_theme_edje_object_set(popup->theme,
                                 "base/theme/modules/notification",
-                                "modules/notification/main"))
-     edje_object_file_set(popup->theme, buf, "modules/notification/main");
+                                "e/modules/notification/main"))
+     if (!e_theme_edje_object_set(popup->theme,
+                                  "base/theme/modules/notification",
+                                  "modules/notification/main"))
+       edje_object_file_set(popup->theme, buf, "modules/notification/main");
 
    e_popup_edje_bg_object_set(popup->win, popup->theme);
 
@@ -488,9 +491,12 @@ _notification_popup_refresh(Popup_Data *popup)
         popup->app_icon = edje_object_add(popup->e);
         if (!e_theme_edje_object_set(popup->app_icon, 
                                      "base/theme/modules/notification",
-                                     "modules/notification/logo"))
-          edje_object_file_set(popup->app_icon, buf, 
-                               "modules/notification/logo");
+                                     "e/modules/notification/logo"))
+          if (!e_theme_edje_object_set(popup->app_icon, 
+                                       "base/theme/modules/notification",
+                                       "modules/notification/logo"))
+            edje_object_file_set(popup->app_icon, buf, 
+                                 "modules/notification/logo");
         w = width;
         h = height;
      }

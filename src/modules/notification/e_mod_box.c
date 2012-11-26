@@ -333,8 +333,10 @@ _notification_box_icon_fill(Notification_Box_Icon *ic,
         snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", notification_mod->dir);
         dummy = edje_object_add(evas_object_evas_get(ic->n_box->o_box));
         if (!e_theme_edje_object_set(dummy, "base/theme/modules/notification",
+                                     "e/modules/notification/logo"))
+          if (!e_theme_edje_object_set(dummy, "base/theme/modules/notification",
                                      "modules/notification/logo"))
-          edje_object_file_set(dummy, buf, "modules/notification/logo");
+            edje_object_file_set(dummy, buf, "modules/notification/logo");
         evas_object_resize(dummy, 80, 80);
         app_icon = (Evas_Object*)edje_object_part_object_get(dummy, "image");
      }
