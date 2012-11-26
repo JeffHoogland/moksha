@@ -21,8 +21,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    char buf[PATH_MAX], buf2[PATH_MAX], *file;
 
    // make desktop dir
-   e_user_homedir_concat(buf, sizeof(buf), _("Desktop"));
-   ecore_file_mkpath(buf);
+   ecore_file_mkpath(efreet_desktop_dir_get());
    snprintf(buf, sizeof(buf), "%s/desktop", e_wizard_dir_get());
    files = ecore_file_ls(buf);
    if (!files) return 0;
@@ -30,8 +29,8 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
      {
         snprintf(buf, sizeof(buf), "%s/desktop/%s",
                  e_wizard_dir_get(), file);
-        snprintf(buf2, sizeof(buf2), "%s/%s/%s",
-                 e_user_homedir_get(), _("Desktop"), file);
+        snprintf(buf2, sizeof(buf2), "%s/%s",
+                 efreet_desktop_dir_get(), file);
         ecore_file_cp(buf, buf2);
         free(file);
      }
