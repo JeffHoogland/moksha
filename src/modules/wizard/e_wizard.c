@@ -232,8 +232,16 @@ _e_wizard_next_eval(void)
    if (!next_ok) ok = 0;
    if (next_prev != ok)
      {
-        if (ok) edje_object_signal_emit(o_bg, "e,state,next,enable", "e");
-        else edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
+        if (ok)
+        {
+            edje_object_part_text_set(o_bg, "e.text.label", _("Next"));
+            edje_object_signal_emit(o_bg, "e,state,next,enable", "e");
+        }
+        else
+        {
+            edje_object_part_text_set(o_bg, "e.text.label", _("Please Wait..."));
+            edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
+        }
         next_prev = ok;
      }
 }
