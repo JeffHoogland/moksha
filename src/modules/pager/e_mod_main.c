@@ -2318,13 +2318,7 @@ _pager_desk_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
         drag = e_drag_new(pd->pager->zone->container,
                           x, y, drag_types, 1, pd, -1,
                           NULL, _pager_desk_cb_drag_finished);
-
-        /* set a background to the drag icon */
-        o = evas_object_rectangle_add(drag->evas);
-        evas_object_color_set(o, 255, 255, 255, 255);
-        evas_object_resize(o, w, h);
-        evas_object_show(o);
-
+        
         /* redraw the desktop theme above */
         o = edje_object_add(drag->evas);
         e_theme_edje_object_set(o, "base/theme/modules/pager",
