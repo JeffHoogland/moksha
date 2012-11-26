@@ -534,7 +534,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 2;
+                    value "state_info.seq" int: 1;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -550,7 +550,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 3;
+                    value "state_info.seq" int: 2;
                     value "state_info.flags" int: 0;
                     value "style" string: "inset";
                     value "autoscroll" uchar: 0;
@@ -566,7 +566,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 4;
+                    value "state_info.seq" int: 3;
                     value "state_info.flags" int: 0;
                     value "style" string: "inset";
                     value "autoscroll" uchar: 0;
@@ -582,7 +582,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 5;
+                    value "state_info.seq" int: 4;
                     value "state_info.flags" int: 0;
                     value "style" string: "inset";
                     value "autoscroll" uchar: 0;
@@ -598,7 +598,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 6;
+                    value "state_info.seq" int: 5;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -614,7 +614,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 7;
+                    value "state_info.seq" int: 6;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -630,7 +630,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 8;
+                    value "state_info.seq" int: 7;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -646,7 +646,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 9;
+                    value "state_info.seq" int: 8;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -662,7 +662,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 10;
+                    value "state_info.seq" int: 9;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -678,7 +678,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 11;
+                    value "state_info.seq" int: 10;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -694,7 +694,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 12;
+                    value "state_info.seq" int: 11;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -710,7 +710,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 13;
+                    value "state_info.seq" int: 12;
                     value "state_info.flags" int: 0;
                     value "style" string: "inset";
                     value "autoscroll" uchar: 1;
@@ -726,7 +726,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 14;
+                    value "state_info.seq" int: 13;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "autoscroll" uchar: 0;
@@ -748,7 +748,7 @@ group "E_Config" struct {
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 2;
+                    value "state_info.seq" int: 1;
                     value "state_info.flags" int: 0;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
