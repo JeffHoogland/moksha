@@ -28,6 +28,7 @@ edc/colorwell.edc \
 edc/comp.edc \
 edc/conf.edc \
 edc/connman.edc \
+edc/cpufreq.edc \
 edc/cslider.edc \
 edc/desklock.edc \
 edc/deskpreview.edc \
@@ -209,6 +210,9 @@ img/horizontal_separated_bar_small_glow.png \
 img/ic_win_move.png \
 img/ic_win_resize.png \
 img/inset_circle_tiny.png \
+img/inset_round_hilight.png \
+img/inset_round_shading.png \
+img/inset_round_shadow.png \
 img/inset_shadow_circle_tiny.png \
 img/inset_shadow.png \
 img/inset_shadow_tiny.png \
@@ -300,6 +304,12 @@ img/sym_up_dark_selected.png \
 img/sym_up_glow_normal.png \
 img/sym_up_light_normal.png \
 img/sym_up_light_selected.png \
+img/tacho_base.png \
+img/tacho_hand_big.png \
+img/tacho_hand_big_shadow.png \
+img/tacho_hand_small_max.png \
+img/tacho_hand_small_min.png \
+img/tacho_hand_small_shadow.png \
 img/vert_bar_inset.png \
 img/vert_glow_run.png \
 img/vertical_separated_bar_glow.png \
