@@ -477,8 +477,8 @@ e_import_config_dialog_show(E_Container *con, const char *path, Ecore_End_Cb ok,
    preview = e_widget_preview_add(evas, tw, th);
    e_widget_preview_thumb_set(preview, path, NULL, tw, th);
 
-   e_widget_frametable_object_append(frame, preview, 0, 0, 1, 1, 1, 1, 1, 0);
-   e_widget_list_object_append(ot, frame, 1, 1, 0);
+   e_widget_frametable_object_append(frame, preview, 0, 0, 1, 1, 0, 0, 1, 1);
+   e_widget_list_object_append(ot, frame, 1, 1, 0.5);
    of = e_widget_frametable_add(evas, _("Fill and Stretch Options"), 1);
    rg = e_widget_radio_group_new(&import->method);
    ord = e_widget_radio_icon_add(evas, _("Stretch"),
@@ -493,19 +493,20 @@ e_import_config_dialog_show(E_Container *con, const char *path, Ecore_End_Cb ok,
                                  "enlightenment/wallpaper_tile",
                                  24, 24, IMPORT_TILE, rg);
    e_widget_frametable_object_append(of, ord, 2, 0, 1, 1, 1, 0, 1, 0);
+   
    ord = e_widget_radio_icon_add(evas, _("Within"),
                                  "enlightenment/wallpaper_scale_aspect_in",
                                  24, 24, IMPORT_SCALE_ASPECT_IN, rg);
-   e_widget_frametable_object_append(of, ord, 3, 0, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ord, 0, 1, 1, 1, 1, 0, 1, 0);
    ord = e_widget_radio_icon_add(evas, _("Fill"),
                                  "enlightenment/wallpaper_scale_aspect_out",
                                  24, 24, IMPORT_SCALE_ASPECT_OUT, rg);
-   e_widget_frametable_object_append(of, ord, 4, 0, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ord, 1, 1, 1, 1, 1, 0, 1, 0);
    ord = e_widget_radio_icon_add(evas, _("Pan"),
                                  "enlightenment/wallpaper_pan",
                                  24, 24, IMPORT_PAN, rg);
-   e_widget_frametable_object_append(of, ord, 5, 0, 1, 1, 1, 0, 1, 0);
-   e_widget_list_object_append(ot, of, 1, 1, 0);
+   e_widget_frametable_object_append(of, ord, 2, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_list_object_append(ot, of, 1, 1, 0.5);
 
    ol = e_widget_list_add(evas, 0, 1);
 
