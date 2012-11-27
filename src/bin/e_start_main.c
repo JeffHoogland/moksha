@@ -248,6 +248,7 @@ main(int argc, char **argv)
    Eina_Bool restart = EINA_TRUE;
 #endif
 
+   /* Setup USR1 to detach from the child process and let it get gdb by advanced users */
    action.sa_sigaction = _sigusr1;
    action.sa_flags = SA_RESETHAND;
    sigemptyset(&action.sa_mask);
@@ -505,6 +506,7 @@ main(int argc, char **argv)
                               ptrace(PT_DETACH, child, NULL, back);
 #endif
                             /* And call gdb if available */
+                            r = 0;
                             if (home)
                               {
                                  /* call e_sys gdb */
@@ -523,15 +525,19 @@ main(int argc, char **argv)
                                           home);
 
                                  backtrace_str = strdup(buffer);
+                                 r = WEXITSTATUS(r);
                               }
 
                             /* call e_alert */
                             snprintf(buffer, 4096,
-                                     backtrace_str ? "%s/enlightenment/utils/enlightenment_alert %i %i %s" : "%s/enlightenment/utils/enlightenment_alert %i %i %s",
+                                     backtrace_str ?
+                                     "%s/enlightenment/utils/enlightenment_alert %i %i '%s' %i" :
+                                     "%s/enlightenment/utils/enlightenment_alert %i %i '%s' %i",
                                      eina_prefix_lib_get(pfx),
                                      sig.si_signo == SIGSEGV && remember_sigusr1 ? SIGILL : sig.si_signo,
                                      child,
-                                     backtrace_str);
+                                     backtrace_str,
+                                     r);
                             r = system(buffer);
 
                             /* kill e */

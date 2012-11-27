@@ -58,6 +58,7 @@ static int ret = 0, sig = 0;
 static pid_t pid;
 static Eina_Bool tainted = EINA_TRUE;
 static const char *backtrace_str = NULL;
+static int exit_gdb = 0;
 
 int
 main(int argc, char **argv)
@@ -81,7 +82,11 @@ main(int argc, char **argv)
           pid = atoi(argv[i]);  // E's pid
         else if (i == 3)
           backtrace_str = argv[i];
+	else if (i == 4)
+	  exit_gdb = atoi(argv[i]);
      }
+
+   fprintf(stderr, "exit_gdb: %i\n", exit_gdb);
 
    tmp = getenv("E17_TAINTED");
    if (tmp && !strcmp(tmp, "NO"))
@@ -540,7 +545,18 @@ _e_alert_draw_text(void)
 
    if (!tainted)
      {
-        if (backtrace_str)
+        if (exit_gdb)
+          {
+             snprintf(msg, sizeof(msg),
+                      "This is not meant to happen and is likely a sign of \n"
+                      "a bug in Enlightenment or the libraries it relies \n"
+                      "on. We were not able to generate a backtrace, check \n"
+                      "if your 'sysactions.conf' has an 'gdb' action line.\n"
+                      "\n"
+                      "Please compile latest svn E17 and EFL with\n"
+                      "-g and -ggdb3 in your CFLAGS.\n");
+          }
+        else if (backtrace_str)
           {
              snprintf(msg, sizeof(msg),
                       "This is not meant to happen and is likely a sign of \n"
@@ -559,8 +575,8 @@ _e_alert_draw_text(void)
                       "This is not meant to happen and is likely a sign of \n"
                       "a bug in Enlightenment or the libraries it relies \n"
                       "on. You can gdb attach to this process (%d) now \n"
-                      "to try debug it or you could exit, or just hit \n"
-                      "restart to try and get your desktop back the way \n"
+                      "to try debug it or you could logout, or just hit \n"
+                      "recover to try and get your desktop back the way \n"
                       "it was.\n"
                       "\n"
                       "Please compile latest svn E17 and EFL with\n"
