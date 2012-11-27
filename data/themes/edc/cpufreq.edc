@@ -10,12 +10,6 @@ group { name: "e/modules/cpufreq/main";
       image { image: "tacho_hand_big4.png" COMP; size: 0 0 18 18; }
    }
    images.image: "tacho_hand_big_shadow.png" COMP;
-   set { name: "tacho_hand_small_max";
-      image { image: "tacho_hand_small_max.png" COMP; size: 73 73 99999 99999; }
-      image { image: "tacho_hand_small_max2.png" COMP; size: 37 37 72 72; }
-      image { image: "tacho_hand_small_max3.png" COMP; size: 19 19 36 36; }
-      image { image: "tacho_hand_small_max4.png" COMP; size: 0 0 18 18; }
-   }
    set { name: "tacho_hand_small_min";
       image { image: "tacho_hand_small_min.png" COMP; size: 73 73 99999 99999; }
       image { image: "tacho_hand_small_min2.png" COMP; size: 37 37 72 72; }
@@ -251,6 +245,7 @@ group { name: "e/modules/cpufreq/main";
          clip_to: "fade_clip";
          description { state: "default" 0.0;
             image.normal: "tacho_hand_small_min";
+            color: 51 153 255 255;
             rel1.to: "base";
             rel2.to: "base";
             map {
@@ -265,7 +260,6 @@ group { name: "e/modules/cpufreq/main";
             image.normal: "tacho_hand_small_shadow.png";
             rel1.to: "meter_sh";
             rel2.to: "meter_sh";
-            rel2.relative: 1.0+(2.0/64.0) 1.0+(2.0/64.0);
             map {
                on: 1;
                rotation.center: "meter_max_sh";
@@ -275,7 +269,8 @@ group { name: "e/modules/cpufreq/main";
       part { name: "meter_max"; mouse_events: 0;
          clip_to: "fade_clip";
          description { state: "default" 0.0;
-            image.normal: "tacho_hand_small_max";
+            image.normal: "tacho_hand_small_min";
+            color: 255 153 51 255;
             rel1.to: "base";
             rel2.to: "base";
             map {
@@ -303,6 +298,7 @@ group { name: "e/modules/cpufreq/main";
       part { name: "meter"; mouse_events: 0;
          clip_to: "fade_clip";
          description { state: "default" 0.0000;
+            color: 255 0 0 255;
             image.normal: "tacho_hand_big";
             rel1.to: "base";
             rel2.to: "base";

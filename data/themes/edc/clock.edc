@@ -530,39 +530,35 @@ group { name: "e/modules/clock/digital";
 }
 
 group { name: "e/modules/clock/main";
-   images {
-      image: "hole_tiny.png" COMP;
-      image: "hole_pixel.png" COMP;
-#define SET(_NAME) \
-      set { name: _NAME; \
-         image { image: _NAME".png"  COMP; size: 26 83 99999 99999; } \
-         image { image: _NAME"2.png" COMP; size: 23 71 26 82; } \
-         image { image: _NAME"3.png" COMP; size: 19 58 22 70; } \
-         image { image: _NAME"4.png" COMP; size: 15 45 18 57; } \
-         image { image: _NAME"5.png" COMP; size: 11 33 14 44; } \
-         image { image: _NAME"6.png" COMP; size:  7 20 10 32; } \
-         image { image: _NAME"7.png" COMP; size:  0  0  6 19; } \
-      }
-      SET("clock_h")
-      SET("clock_hs")
-      SET("clock_m")
-      SET("clock_ms")
-      SET("clock_s")
-      SET("clock_ss")
-#undef SET
-      set { name: "knob";
-         image { image: "knob_sz_24.png"  COMP; size: 31 31 32 32; }
-         image { image: "knob_sz_22.png"  COMP; size: 29 29 30 30; }
-         image { image: "knob_sz_20.png"  COMP; size: 27 27 28 28; }
-         image { image: "knob_sz_18.png"  COMP; size: 25 25 26 26; }
-         image { image: "knob_sz_16.png"  COMP; size: 23 23 24 24; }
-         image { image: "knob_sz_14.png"  COMP; size: 21 21 22 22; }
-         image { image: "knob_sz_12.png"  COMP; size: 19 19 20 20; }
-         image { image: "knob_sz_10.png"  COMP; size: 17 17 18 18; }
-         image { image: "knob_sz_08.png"  COMP; size: 15 15 16 16; }
-         image { image: "knob_sz_06.png"  COMP; size: 13 13 14 14; }
-         image { image: "knob_sz_04.png"  COMP; size:  0  0 12 12; }
-      }
+   images.image: "clock_base.png" COMP;
+   images.image: "inset_round_hilight.png" COMP;
+   images.image: "inset_round_shadow.png" COMP;
+   images.image: "inset_round_shading.png" COMP;
+   set { name: "tacho_hand_big";
+      image { image: "tacho_hand_big.png" COMP; size: 73 73 99999 99999; }
+      image { image: "tacho_hand_big2.png" COMP; size: 37 37 72 72; }
+      image { image: "tacho_hand_big3.png" COMP; size: 19 19 36 36; }
+      image { image: "tacho_hand_big4.png" COMP; size: 0 0 18 18; }
+   }
+   images.image: "tacho_hand_big_shadow.png" COMP;
+   set { name: "tacho_hand_small_min";
+      image { image: "tacho_hand_small_min.png" COMP; size: 73 73 99999 99999; }
+      image { image: "tacho_hand_small_min2.png" COMP; size: 37 37 72 72; }
+      image { image: "tacho_hand_small_min3.png" COMP; size: 19 19 36 36; }
+      image { image: "tacho_hand_small_min4.png" COMP; size: 0 0 18 18; }
+   }
+   set { name: "knob";
+      image { image: "knob_sz_24.png"  COMP; size: 31 31 32 32; }
+      image { image: "knob_sz_22.png"  COMP; size: 29 29 30 30; }
+      image { image: "knob_sz_20.png"  COMP; size: 27 27 28 28; }
+      image { image: "knob_sz_18.png"  COMP; size: 25 25 26 26; }
+      image { image: "knob_sz_16.png"  COMP; size: 23 23 24 24; }
+      image { image: "knob_sz_14.png"  COMP; size: 21 21 22 22; }
+      image { image: "knob_sz_12.png"  COMP; size: 19 19 20 20; }
+      image { image: "knob_sz_10.png"  COMP; size: 17 17 18 18; }
+      image { image: "knob_sz_08.png"  COMP; size: 15 15 16 16; }
+      image { image: "knob_sz_06.png"  COMP; size: 13 13 14 14; }
+      image { image: "knob_sz_04.png"  COMP; size:  0  0 12 12; }
    }
    min: 16 16;
    max: 160 160;
@@ -616,88 +612,125 @@ group { name: "e/modules/clock/main";
             color: 0 0 0 0;
          }
       }
-      part { name: "base"; type: SPACER;
+      part { name: "base-sh";
          description { state: "default" 0.0;
-            rel1.offset: -1 -1;
-            rel2.offset: 0 0;
-            aspect: 1.0 1.0;
-         }
-      }
-      part { name: "base-sh"; type: SPACER;
-         description { state: "default" 0.0;
-            rel1.offset: 0 1;
             rel1.to: "base";
-            rel2.offset: -1 0;
+            rel1.offset: 0 -1;
             rel2.to: "base";
+            rel2.offset: -1 -2;
+            image.normal: "inset_round_shadow.png";
          }
       }
-#define POINT(_NAME, _SZ, _IMG, _X, _Y) \
-      part { name: _NAME; \
-         description { state: "default" 0.0; \
-            rel1.relative: _X _Y; \
-            rel1.to: "base"; \
-            rel2.relative: _X _Y; \
-            rel2.to: "base"; \
-            min: _SZ _SZ; \
-            max: _SZ _SZ; \
-            fixed: 1 1; \
-            image.normal: "hole_"_IMG".png"; \
-         } \
+      part { name: "base-hi";
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel1.offset: 0 1;
+            rel2.to: "base";
+            rel2.offset: -1 0;
+            image.normal: "inset_round_hilight.png";
+         }
       }
-      POINT("h-12", 4, "tiny",  0.500, 0.100)
-      POINT("h-01", 3, "pixel", 0.700, 0.154)
-      POINT("h-02", 3, "pixel", 0.846, 0.300)
-      POINT("h-03", 4, "tiny",  0.900, 0.500)
-      POINT("h-04", 3, "pixel", 0.846, 0.700)
-      POINT("h-05", 3, "pixel", 0.700, 0.846)
-      POINT("h-06", 4, "tiny",  0.500, 0.900)
-      POINT("h-07", 3, "pixel", 0.300, 0.846)
-      POINT("h-08", 3, "pixel", 0.154, 0.700)
-      POINT("h-09", 4, "tiny",  0.100, 0.500)
-      POINT("h-10", 3, "pixel", 0.154, 0.300)
-      POINT("h-11", 3, "pixel", 0.300, 0.154)
-#undef POINT      
-#define HAND(_NAME, _IMG) \
-      part { name: _NAME"-sh"; mouse_events: 0; \
-         description { state: "default" 0.0; \
-            rel1.to: "base-sh"; \
-            rel1.relative: (65/160) 0; \
-            rel2.to: "base-sh"; \
-            rel2.relative: (95/160) (95/160); \
-            image.normal: _IMG"s"; \
-            map.on: 1; \
-            map.rotation.center: "base-sh"; \
-            color: 255 255 255 128; \
-         } \
-         description { state: "hidden" 0.0; \
-            inherit: "default" 0.0; \
-            visible: 0; \
-         } \
-      } \
-      part { name: _NAME; mouse_events: 0; \
-         description { state: "default" 0.0; \
-            rel1.to: "base"; \
-            rel1.relative: (65/160) 0; \
-            rel2.to: "base"; \
-            rel2.relative: (95/160) (95/160); \
-            image.normal: _IMG; \
-            map.on: 1; \
-            map.rotation.center: "base"; \
-         } \
-         description { state: "hidden" 0.0; \
-            inherit: "default" 0.0; \
-            visible: 0; \
-         } \
+      part { name: "base";
+         description { state: "default" 0.0;
+            rel1.relative: (25/380) (25/380);
+            rel2.relative: (365/380) (365/380);
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            image.normal: "clock_base.png";
+         }
       }
-      HAND("seconds", "clock_s")
-      HAND("minutes", "clock_m")
-      HAND("hours", "clock_h")
-#undef HAND
+      part { name: "seconds-sh"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "tacho_hand_big_shadow.png";
+            rel1.to: "hours-sh";
+            rel2.to: "hours-sh";
+            map {
+               on: 1;
+               rotation.center: "seconds-sh";
+            }
+         }
+         description { state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "seconds"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "tacho_hand_big";
+            color: 255 0 0 255;
+            rel1.to: "base";
+            rel2.to: "base";
+            map {
+               on: 1;
+               rotation.center: "base";
+            }
+         }
+         description { state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "minutes-sh"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "tacho_hand_big_shadow.png";
+            rel1.to: "hours-sh";
+            rel2.to: "hours-sh";
+            map {
+               on: 1;
+               rotation.center: "minutes-sh";
+            }
+         }
+      }
+      part { name: "minutes"; mouse_events: 0;
+         description { state: "default" 0.0000;
+            color: 255 255 255 255;
+            image.normal: "tacho_hand_big";
+            rel1.to: "base";
+            rel2.to: "base";
+            map {
+               on: 1;
+               rotation.center: "base";
+            }
+         }
+      }
+      part { name: "hours-sh"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "tacho_hand_small_shadow.png";
+            rel1.to: "hours";
+            rel1.relative: 0.0 (15/380);
+            rel1.offset: 0 1;
+            rel2.to: "hours";
+            rel2.relative: 1.0 (395/380);
+            rel2.offset: -1 0;
+            map {
+               on: 1;
+               rotation.center: "hours-sh";
+            }
+         }
+      }
+      part { name: "hours"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "tacho_hand_small_min";
+            color: 255 255 255 255;
+            rel1.to: "base";
+            rel2.to: "base";
+            map {
+               on: 1;
+               rotation.center: "base";
+            }
+         }
+      }
+      part { name: "over"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+            image.normal: "inset_round_shading.png";
+                  }
+            }
       part { name: "knob"; type: SPACER;
          description { state: "default" 0.0;
-            rel1.relative: (18/40) (18/40);
+            rel1.relative: (140/340) (140/340);
             rel1.to: "base";
-            rel2.relative: (22/40) (22/40);
+            rel2.relative: (205/340) (205/340);
             rel2.to: "base";
             min: 4 4;
             step: 2 2;
