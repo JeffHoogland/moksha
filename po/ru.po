@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-26 19:17+0400\n"
+"POT-Creation-Date: 2012-11-27 22:00+0100\n"
 "PO-Revision-Date: 2012-11-26 19:17+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -102,7 +102,7 @@ msgstr "Выход"
 #: src/bin/e_actions.c:2126 src/bin/e_color_dialog.c:47
 #: src/bin/e_eap_editor.c:862 src/bin/e_eap_editor.c:926
 #: src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9561 src/bin/e_fm_prop.c:625
-#: src/bin/e_import_dialog.c:189 src/bin/e_import_config_dialog.c:531
+#: src/bin/e_import_dialog.c:189 src/bin/e_import_config_dialog.c:532
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:316
@@ -890,7 +890,7 @@ msgstr ""
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:608
 #: src/bin/e_fm.c:9560 src/bin/e_fm.c:10296 src/bin/e_fm_prop.c:624
-#: src/bin/e_import_config_dialog.c:530 src/bin/e_int_border_remember.c:318
+#: src/bin/e_import_config_dialog.c:531 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:425
 #: src/bin/e_module.c:792 src/bin/e_sys.c:618 src/bin/e_sys.c:659
 #: src/bin/e_utils.c:692 src/modules/comp/e_mod_config.c:918
@@ -1981,32 +1981,32 @@ msgstr "По центру"
 msgid "Tile"
 msgstr "Замостить"
 
-#: src/bin/e_import_config_dialog.c:496
+#: src/bin/e_import_config_dialog.c:497
 msgid "Within"
 msgstr "Вложить"
 
-#: src/bin/e_import_config_dialog.c:500
+#: src/bin/e_import_config_dialog.c:501
 msgid "Fill"
 msgstr "Заполнить"
 
-#: src/bin/e_import_config_dialog.c:504
+#: src/bin/e_import_config_dialog.c:505
 msgid "Pan"
 msgstr "Панорамировать"
 
-#: src/bin/e_import_config_dialog.c:512
+#: src/bin/e_import_config_dialog.c:513
 msgid "File Quality"
 msgstr "Качество файла"
 
-#: src/bin/e_import_config_dialog.c:513
+#: src/bin/e_import_config_dialog.c:514
 msgid "Use original file"
 msgstr "Использовать оригинальный файл"
 
-#: src/bin/e_import_config_dialog.c:515
+#: src/bin/e_import_config_dialog.c:516
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
-#: src/bin/e_import_config_dialog.c:520
+#: src/bin/e_import_config_dialog.c:521
 msgid "Fill Color"
 msgstr "Цвет заполнения"
 
@@ -8302,80 +8302,85 @@ msgid "Custom Command"
 msgstr "Пользовательская команда"
 
 #: src/modules/fileman/e_fwin.c:2943
-#: src/modules/fileman_opinfo/e_mod_main.c:89
+#: src/modules/fileman_opinfo/e_mod_main.c:99
 #, c-format
 msgid "Copying is aborted"
 msgstr "Копирование прервано"
 
 #: src/modules/fileman/e_fwin.c:2947
-#: src/modules/fileman_opinfo/e_mod_main.c:92
+#: src/modules/fileman_opinfo/e_mod_main.c:103
 #, c-format
 msgid "Moving is aborted"
 msgstr "Перемещение прервано"
 
 #: src/modules/fileman/e_fwin.c:2951
-#: src/modules/fileman_opinfo/e_mod_main.c:95
+#: src/modules/fileman_opinfo/e_mod_main.c:107
 #, c-format
 msgid "Deleting is aborted"
 msgstr "Удаление прервано"
 
 #: src/modules/fileman/e_fwin.c:2955
+#: src/modules/fileman_opinfo/e_mod_main.c:111
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr "Безопасное удаление прервано"
 
 #: src/modules/fileman/e_fwin.c:2959
-#: src/modules/fileman_opinfo/e_mod_main.c:98
+#: src/modules/fileman_opinfo/e_mod_main.c:115
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Неизвестная операция от ведомого прервана"
 
 #: src/modules/fileman/e_fwin.c:2969
-#: src/modules/fileman_opinfo/e_mod_main.c:108
+#: src/modules/fileman_opinfo/e_mod_main.c:125
 #, c-format
 msgid "Copy of %s done"
 msgstr "Копирование %s завершено"
 
 #: src/modules/fileman/e_fwin.c:2971
+#: src/modules/fileman_opinfo/e_mod_main.c:127
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "Копирование %s (рвп: %s)"
 
 #: src/modules/fileman/e_fwin.c:2976
-#: src/modules/fileman_opinfo/e_mod_main.c:114
+#: src/modules/fileman_opinfo/e_mod_main.c:133
 #, c-format
 msgid "Move of %s done"
 msgstr "Перемещение %s завершено"
 
 #: src/modules/fileman/e_fwin.c:2978
+#: src/modules/fileman_opinfo/e_mod_main.c:135
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "Перемещение %s (рвп: %s)"
 
 #: src/modules/fileman/e_fwin.c:2983
-#: src/modules/fileman_opinfo/e_mod_main.c:120
+#: src/modules/fileman_opinfo/e_mod_main.c:141
 #, c-format
 msgid "Delete done"
 msgstr "Удаление завершено"
 
 #: src/modules/fileman/e_fwin.c:2985
-#: src/modules/fileman_opinfo/e_mod_main.c:122
+#: src/modules/fileman_opinfo/e_mod_main.c:143
 #, c-format
 msgid "Deleting files..."
 msgstr "Идёт удаление файлов..."
 
 #: src/modules/fileman/e_fwin.c:2990
+#: src/modules/fileman_opinfo/e_mod_main.c:148
 #, c-format
 msgid "Secure delete done"
 msgstr "Безопасное удаление завершено"
 
 #: src/modules/fileman/e_fwin.c:2992
+#: src/modules/fileman_opinfo/e_mod_main.c:150
 #, c-format
 msgid "Securely deleting files..."
 msgstr "Идёт безопасное удаление файлов..."
 
 #: src/modules/fileman/e_fwin.c:2996
-#: src/modules/fileman_opinfo/e_mod_main.c:125
+#: src/modules/fileman_opinfo/e_mod_main.c:154
 #, c-format
 msgid "Unknown operation from slave %d"
 msgstr "Неизвестная операция от ведомого %d"
@@ -8581,37 +8586,7 @@ msgstr "Корневой"
 msgid "Navigate..."
 msgstr "Перейти..."
 
-#: src/modules/fileman_opinfo/e_mod_main.c:110
-#, c-format
-msgid "Copying %s (eta: %d s)"
-msgstr "Копирование %s (рвп: %d с)"
-
-#: src/modules/fileman_opinfo/e_mod_main.c:116
-#, c-format
-msgid "Moving %s (eta: %d s)"
-msgstr "Перемещение %s (рвп: %d с)"
-
-#: src/modules/fileman_opinfo/e_mod_main.c:133
-#: src/modules/fileman_opinfo/e_mod_main.c:143
-msgid "(no information)"
-msgstr "(нет данных)"
-
-#: src/modules/fileman_opinfo/e_mod_main.c:137
-#, c-format
-msgid "File: %s"
-msgstr "Файл: %s"
-
-#: src/modules/fileman_opinfo/e_mod_main.c:139
-#, c-format
-msgid "From: %s"
-msgstr "Из: %s"
-
-#: src/modules/fileman_opinfo/e_mod_main.c:146
-#, c-format
-msgid "To: %s"
-msgstr "В: %s"
-
-#: src/modules/fileman_opinfo/e_mod_main.c:324
+#: src/modules/fileman_opinfo/e_mod_main.c:323
 #, c-format
 msgid "Processing %d operation"
 msgid_plural "Processing %d operations"
@@ -8619,11 +8594,11 @@ msgstr[0] "Выполняется %d операция"
 msgstr[1] "Выполняется %d операции"
 msgstr[2] "Выполняется %d операций"
 
-#: src/modules/fileman_opinfo/e_mod_main.c:328
+#: src/modules/fileman_opinfo/e_mod_main.c:327
 msgid "Filemanager is idle"
 msgstr "Файловый менеджер бездействует"
 
-#: src/modules/fileman_opinfo/e_mod_main.c:415
+#: src/modules/fileman_opinfo/e_mod_main.c:414
 msgid "EFM Operation Info"
 msgstr "Информация о работе EFM"
 
@@ -9182,15 +9157,15 @@ msgstr "Температуры"
 msgid "Temperature"
 msgstr "Температура"
 
-#: src/modules/wizard/e_wizard.c:249 src/modules/wizard/e_wizard.c:290
+#: src/modules/wizard/e_wizard.c:242 src/modules/wizard/e_wizard.c:268
 msgid "Next"
 msgstr "Далее"
 
-#: src/modules/wizard/e_wizard.c:296
+#: src/modules/wizard/e_wizard.c:273
 msgid "Please Wait..."
 msgstr "Пожалуйста подождите..."
 
-#: src/modules/wizard/e_wizard.c:346
+#: src/modules/wizard/e_wizard.c:321
 msgid "Welcome to Enlightenment"
 msgstr "Добро пожаловать в Enlightenment"
 
@@ -9815,6 +9790,24 @@ msgstr "Фокусировать окно источника при клике"
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr "Сохранять уровни срочности:"
+
+#~ msgid "Copying %s (eta: %d s)"
+#~ msgstr "Копирование %s (рвп: %d с)"
+
+#~ msgid "Moving %s (eta: %d s)"
+#~ msgstr "Перемещение %s (рвп: %d с)"
+
+#~ msgid "(no information)"
+#~ msgstr "(нет данных)"
+
+#~ msgid "File: %s"
+#~ msgstr "Файл: %s"
+
+#~ msgid "From: %s"
+#~ msgstr "Из: %s"
+
+#~ msgid "To: %s"
+#~ msgstr "В: %s"
 
 #~ msgid ""
 #~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"

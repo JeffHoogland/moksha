@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Marc Furtià  i Puig<br>\\\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-19 10:25+0900\n"
+"POT-Creation-Date: 2012-11-27 22:00+0100\n"
 "PO-Revision-Date: 2010-01-29 18:45+0100\n"
 "Last-Translator: marc furtià puig <marc.furtia@gmail.com>\n"
 "Language-Team: \n"
@@ -11,51 +11,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/bin/e_about.c:14
+#: src/bin/e_about.c:17
 msgid "About Enlightenment"
 msgstr "Sobre Enlightenment"
 
-#: src/bin/e_about.c:17 src/bin/e_actions.c:3000 src/bin/e_config_dialog.c:288
+#: src/bin/e_about.c:20 src/bin/e_actions.c:3000 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1029 src/bin/e_int_border_menu.c:194
-#: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:17
+#: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2510 src/modules/mixer/app_mixer.c:521
 msgid "Close"
 msgstr "Tanca"
 
-#: src/bin/e_about.c:18 src/bin/e_actions.c:3375 src/bin/e_actions.c:3379
+#: src/bin/e_about.c:21 src/bin/e_actions.c:3375 src/bin/e_actions.c:3379
 #: src/bin/e_actions.c:3383 src/bin/e_int_menus.c:228 src/bin/e_main.c:620
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:221
-#: src/modules/wizard/page_000.c:51
+#: src/modules/wizard/page_000.c:36
 msgid "Enlightenment"
 msgstr "Enlightenment"
 
-#: src/bin/e_about.c:23
-#, fuzzy
+#: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
-"it.<br><br>This software is provided as-is with no explicit or implied "
-"warranty. This software is governed by licensing conditions, so please see "
-"the COPYING and COPYING-PLAIN licence files installed on your system."
-"<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and it is not "
-"stable. Many features are incomplete or even non-existent yet and may have "
-"many bugs. You have been <hilight>WARNED!</>"
+"it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
+"org</><br><br>"
 msgstr ""
-"Copyright &copy; 1999-2007, per l'equip de Desenvolupadors d'Enlightenment ."
-"<br><br>Nosaltres esperam que disfruti utilitzant aquest software tan com "
-"nosaltres hem disfrutat escriguen-l'ho.<br><br>Aquest programari es proveeix "
-"tal com és, sense una garantia explícita o implementada. Aquest software "
-"està  governat per les condicions de llicència, per tan, si us plau, mira "
-"els fitxers de llicències COPYING I COPYING-PLAIN instal·lats en el teu "
-"sistema.<br><br>Enlightenment està  sota <hilight>FORT DESENVOLUPAMENT</"
-"hilight>i no és estable. Algunes de les característiques són incompletes o "
-"fins i tot inexistents degut a que encara deuen tenir algun \"bug\". Se "
-"l'ha<hilight>AVISA'T!!!</hilight>"
 
-#: src/bin/e_about.c:50
+#: src/bin/e_about.c:69
 #, fuzzy
 msgid "<title>The Team</><br><br>"
 msgstr "<title>L'Equip</title>"
@@ -83,7 +69,7 @@ msgstr "Mata"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2223 src/bin/e_actions.c:2286
 #: src/bin/e_actions.c:2349 src/bin/e_actions.c:2417 src/bin/e_actions.c:2485
 #: src/bin/e_confirm_dialog.c:53 src/bin/e_desklock.c:1313
-#: src/bin/e_fm.c:10021 src/bin/e_fm.c:10385 src/bin/e_screensaver.c:167
+#: src/bin/e_fm.c:10026 src/bin/e_fm.c:10390 src/bin/e_screensaver.c:167
 msgid "No"
 msgstr "No"
 
@@ -104,8 +90,8 @@ msgstr "Surt"
 
 #: src/bin/e_actions.c:2126 src/bin/e_color_dialog.c:47
 #: src/bin/e_eap_editor.c:862 src/bin/e_eap_editor.c:926
-#: src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9558 src/bin/e_fm_prop.c:625
-#: src/bin/e_import_dialog.c:189 src/bin/e_import_config_dialog.c:531
+#: src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9561 src/bin/e_fm_prop.c:625
+#: src/bin/e_import_dialog.c:189 src/bin/e_import_config_dialog.c:532
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_theme_import.c:124
 #: src/modules/fileman/e_int_config_mime_edit.c:316
@@ -194,7 +180,7 @@ msgstr "Hiberna"
 msgid "Window : Actions"
 msgstr "Finestra : Accions"
 
-#: src/bin/e_actions.c:2960 src/bin/e_fm.c:11145
+#: src/bin/e_actions.c:2960 src/bin/e_fm.c:11150
 #: src/bin/e_int_border_menu.c:665
 msgid "Move"
 msgstr "Mou "
@@ -363,15 +349,11 @@ msgstr "Estat de la Tanca Clavada "
 #: src/bin/e_actions.c:3217 src/bin/e_actions.c:3219 src/bin/e_actions.c:3221
 #: src/bin/e_actions.c:3223 src/bin/e_actions.c:3225 src/bin/e_actions.c:3227
 #: src/bin/e_actions.c:3229 src/bin/e_actions.c:3231 src/bin/e_actions.c:3446
-#: src/bin/e_actions.c:3451 src/bin/e_fm_device.c:324
-#: src/bin/e_fm_device.c:345 src/bin/e_fm_device.c:653
-#: src/bin/e_fm_device.c:688 src/bin/e_fm_device.c:722
-#: src/bin/e_fm_device.c:750 src/bin/e_int_menus.c:190
+#: src/bin/e_actions.c:3451 src/bin/e_int_menus.c:190
 #: src/bin/e_int_shelf_config.c:267 src/modules/comp/e_mod_config.c:444
 #: src/modules/comp/e_mod_config.c:753
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:335 src/modules/ibox/e_mod_config.c:166
-#: src/modules/wizard/page_160.c:24 src/modules/wizard/page_160.c:34
 msgid "Desktop"
 msgstr "Taula de Treball"
 
@@ -737,11 +719,12 @@ msgstr "Mostra Menú ..."
 
 #: src/bin/e_actions.c:3361 src/bin/e_actions.c:3366 src/bin/e_actions.c:3371
 #: src/modules/conf/e_mod_main.c:272 src/modules/conf/e_mod_main.c:345
+#: src/modules/everything/evry_plug_apps.c:1169
 #: src/modules/fileman/e_mod_main.c:58 src/modules/fileman/e_mod_main.c:136
 msgid "Launch"
 msgstr "Executa"
 
-#: src/bin/e_actions.c:3361 src/bin/e_int_border_prop.c:471
+#: src/bin/e_actions.c:3361 src/bin/e_int_border_prop.c:469
 msgid "Command"
 msgstr "Comanda"
 
@@ -798,7 +781,7 @@ msgstr ""
 #: src/bin/e_actions.c:3410 src/bin/e_actions.c:3414 src/bin/e_actions.c:3418
 #: src/bin/e_actions.c:3422 src/bin/e_actions.c:3426 src/bin/e_actions.c:3430
 #: src/bin/e_actions.c:3434 src/bin/e_actions.c:3438 src/bin/e_configure.c:411
-#: src/bin/e_int_config_modules.c:51
+#: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:274
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:820
@@ -942,11 +925,11 @@ msgstr ""
 #: src/bin/e_config.c:1697 src/bin/e_config.c:2323
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:608
-#: src/bin/e_fm.c:9557 src/bin/e_fm.c:10291 src/bin/e_fm_prop.c:624
-#: src/bin/e_import_config_dialog.c:530 src/bin/e_int_border_remember.c:318
+#: src/bin/e_fm.c:9560 src/bin/e_fm.c:10296 src/bin/e_fm_prop.c:624
+#: src/bin/e_import_config_dialog.c:531 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:425
 #: src/bin/e_module.c:792 src/bin/e_sys.c:618 src/bin/e_sys.c:659
-#: src/bin/e_utils.c:700 src/modules/comp/e_mod_config.c:918
+#: src/bin/e_utils.c:692 src/modules/comp/e_mod_config.c:918
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:120
 #: src/modules/cpufreq/e_mod_main.c:428 src/modules/cpufreq/e_mod_main.c:457
@@ -1091,7 +1074,7 @@ msgid "Basic"
 msgstr "Bàsic"
 
 #: src/bin/e_config_dialog.c:280
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:879
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:876
 msgid "Apply"
 msgstr "Aplica"
 
@@ -1116,7 +1099,7 @@ msgid "Preferences"
 msgstr "Preferència d' Icona"
 
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10024 src/bin/e_screensaver.c:165
+#: src/bin/e_fm.c:10029 src/bin/e_screensaver.c:165
 msgid "Yes"
 msgstr "Si"
 
@@ -1220,8 +1203,8 @@ msgstr ""
 msgid "Desktop Entry Editor"
 msgstr "Editor de l'Entrada de Taula de Treball"
 
-#: src/bin/e_eap_editor.c:676 src/bin/e_int_border_prop.c:448
-#: src/bin/e_int_border_prop.c:502 src/modules/comp/e_mod_config.c:713
+#: src/bin/e_eap_editor.c:676 src/bin/e_int_border_prop.c:446
+#: src/bin/e_int_border_prop.c:500 src/modules/comp/e_mod_config.c:713
 #: src/modules/conf_intl/e_int_config_imc.c:898
 #: src/modules/conf_menus/e_int_config_menus.c:265
 #: src/modules/ibar/e_mod_config.c:130
@@ -1265,8 +1248,8 @@ msgstr "Tipus de fitxers"
 msgid "Desktop file"
 msgstr "Fitxer de Taula de Treball"
 
-#: src/bin/e_eap_editor.c:780 src/bin/e_int_border_prop.c:453
-#: src/bin/e_int_border_prop.c:505 src/modules/comp/e_mod_config.c:1525
+#: src/bin/e_eap_editor.c:780 src/bin/e_int_border_prop.c:451
+#: src/bin/e_int_border_prop.c:503 src/modules/comp/e_mod_config.c:1525
 #: src/modules/conf_applications/e_int_config_defapps.c:357
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
@@ -1280,7 +1263,7 @@ msgstr "General"
 msgid "Startup Notify"
 msgstr "Notificació d'Inici"
 
-#: src/bin/e_eap_editor.c:785
+#: src/bin/e_eap_editor.c:785 src/modules/everything/evry_plug_apps.c:1183
 msgid "Run in Terminal"
 msgstr "Executa en una Terminal"
 
@@ -1288,7 +1271,7 @@ msgstr "Executa en una Terminal"
 msgid "Show in Menus"
 msgstr "Mostra en els Menús"
 
-#: src/bin/e_eap_editor.c:790 src/bin/e_fm.c:8422 src/bin/e_fm.c:8582
+#: src/bin/e_eap_editor.c:790 src/bin/e_fm.c:8425 src/bin/e_fm.c:8585
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:332
 msgid "Options"
@@ -1303,7 +1286,7 @@ msgstr "Seleccioneu una Icona"
 msgid "Select an Executable"
 msgstr "Seleccioneu un Executable "
 
-#: src/bin/e_entry.c:436 src/bin/e_fm.c:8767 src/bin/e_fm.c:10384
+#: src/bin/e_entry.c:443 src/bin/e_fm.c:8770 src/bin/e_fm.c:10389
 #: src/bin/e_shelf.c:1785 src/bin/e_shelf.c:2428
 #: src/modules/conf_dialogs/e_int_config_profiles.c:134
 #: src/modules/conf_dialogs/e_int_config_profiles.c:335
@@ -1319,24 +1302,24 @@ msgstr "Seleccioneu un Executable "
 msgid "Delete"
 msgstr "Elimina"
 
-#: src/bin/e_entry.c:446 src/bin/e_fm.c:8678
+#: src/bin/e_entry.c:453 src/bin/e_fm.c:8681
 msgid "Cut"
 msgstr "Talla"
 
-#: src/bin/e_entry.c:455 src/bin/e_fm.c:8692 src/bin/e_fm.c:11140
+#: src/bin/e_entry.c:462 src/bin/e_fm.c:8695 src/bin/e_fm.c:11145
 msgid "Copy"
 msgstr "Còpia "
 
-#: src/bin/e_entry.c:465 src/bin/e_fm.c:8483 src/bin/e_fm.c:8705
+#: src/bin/e_entry.c:472 src/bin/e_fm.c:8486 src/bin/e_fm.c:8708
 msgid "Paste"
 msgstr "Enganxa"
 
-#: src/bin/e_entry.c:476
+#: src/bin/e_entry.c:483
 msgid "Select All"
 msgstr "Selecciona-ho Tot"
 
 #: src/bin/e_exec.c:397 src/bin/e_exec.c:405 src/bin/e_exec.c:416
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:196
+#: src/bin/e_exec.c:468 src/bin/e_utils.c:188
 #: src/modules/conf_intl/e_int_config_imc.c:273
 #: src/modules/conf_intl/e_int_config_imc.c:522
 msgid "Run Error"
@@ -1525,295 +1508,295 @@ msgstr "Error en Extreure"
 msgid "Can't eject device"
 msgstr "No es pot expulsar el dispositiu"
 
-#: src/bin/e_fm.c:8340 src/modules/fileman/e_mod_config.c:356
+#: src/bin/e_fm.c:8343 src/modules/fileman/e_mod_config.c:356
 #, fuzzy
 msgid "Case Sensitive"
 msgstr "Mida Bàsica"
 
-#: src/bin/e_fm.c:8346 src/modules/fileman/e_mod_config.c:359
+#: src/bin/e_fm.c:8349 src/modules/fileman/e_mod_config.c:359
 #, fuzzy
 msgid "Sort By Extension"
 msgstr "Mostra icona d'Extensió"
 
-#: src/bin/e_fm.c:8352 src/modules/fileman/e_mod_config.c:362
+#: src/bin/e_fm.c:8355 src/modules/fileman/e_mod_config.c:362
 msgid "Sort By Modification Time"
 msgstr ""
 
-#: src/bin/e_fm.c:8358 src/modules/fileman/e_mod_config.c:365
+#: src/bin/e_fm.c:8361 src/modules/fileman/e_mod_config.c:365
 #, fuzzy
 msgid "Sort By Size"
 msgstr "Ordena Ara"
 
-#: src/bin/e_fm.c:8367 src/modules/fileman/e_mod_config.c:373
+#: src/bin/e_fm.c:8370 src/modules/fileman/e_mod_config.c:373
 #, fuzzy
 msgid "Directories First"
 msgstr "Directoris de Cerca :"
 
-#: src/bin/e_fm.c:8373 src/modules/fileman/e_mod_config.c:377
+#: src/bin/e_fm.c:8376 src/modules/fileman/e_mod_config.c:377
 #, fuzzy
 msgid "Directories Last"
 msgstr "Directoris de Cerca :"
 
-#: src/bin/e_fm.c:8406 src/bin/e_fm.c:8566
+#: src/bin/e_fm.c:8409 src/bin/e_fm.c:8569
 #: src/modules/fileman/e_mod_config.c:303
 msgid "View Mode"
 msgstr "Mode de Vista"
 
-#: src/bin/e_fm.c:8415 src/bin/e_fm.c:8575
+#: src/bin/e_fm.c:8418 src/bin/e_fm.c:8578
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:381
 #, fuzzy
 msgid "Sorting"
 msgstr "Arrancant "
 
-#: src/bin/e_fm.c:8433 src/bin/e_fm.c:8593
+#: src/bin/e_fm.c:8436 src/bin/e_fm.c:8596
 msgid "Refresh View"
 msgstr "Refresca la Vista"
 
-#: src/bin/e_fm.c:8444 src/bin/e_fm.c:8605
+#: src/bin/e_fm.c:8447 src/bin/e_fm.c:8608
 msgid "New..."
 msgstr ""
 
-#: src/bin/e_fm.c:8464 src/bin/e_fm.c:8626 src/bin/e_fm.c:8657
+#: src/bin/e_fm.c:8467 src/bin/e_fm.c:8629 src/bin/e_fm.c:8660
 #, fuzzy
 msgid "Actions..."
 msgstr "Acció"
 
-#: src/bin/e_fm.c:8491 src/bin/e_fm.c:8713 src/bin/e_fm.c:11153
+#: src/bin/e_fm.c:8494 src/bin/e_fm.c:8716 src/bin/e_fm.c:11158
 msgid "Link"
 msgstr "Enllaça"
 
-#: src/bin/e_fm.c:8775 src/bin/e_fm.c:10023 src/bin/e_shelf.c:2423
+#: src/bin/e_fm.c:8778 src/bin/e_fm.c:10028 src/bin/e_shelf.c:2423
 #: src/modules/conf_shelves/e_int_config_shelf.c:138
 msgid "Rename"
 msgstr "Canvia el Nom"
 
-#: src/bin/e_fm.c:8794
+#: src/bin/e_fm.c:8797
 #, fuzzy
 msgid "Unmount"
 msgstr "desmuntar"
 
-#: src/bin/e_fm.c:8799
+#: src/bin/e_fm.c:8802
 msgid "Mount"
 msgstr "Monta"
 
-#: src/bin/e_fm.c:8804
+#: src/bin/e_fm.c:8807
 #, fuzzy
 msgid "Eject"
 msgstr "expulsar"
 
-#: src/bin/e_fm.c:8819 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:8822 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:871
 msgid "Properties"
 msgstr "Propietats"
 
-#: src/bin/e_fm.c:8827
+#: src/bin/e_fm.c:8830
 #, fuzzy
 msgid "Application Properties"
 msgstr "Categories d'Aplicacions"
 
-#: src/bin/e_fm.c:8835 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:8838 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "Propietats del Fitxer"
 
-#: src/bin/e_fm.c:9051
+#: src/bin/e_fm.c:9054
 #, fuzzy
 msgid "Use default"
 msgstr "Ajusta a Predeterminat"
 
-#: src/bin/e_fm.c:9081 src/modules/fileman/e_mod_config.c:308
+#: src/bin/e_fm.c:9084 src/modules/fileman/e_mod_config.c:308
 #, fuzzy
 msgid "Grid Icons"
 msgstr "Fitxers d'Icones"
 
-#: src/bin/e_fm.c:9089 src/modules/fileman/e_mod_config.c:310
+#: src/bin/e_fm.c:9092 src/modules/fileman/e_mod_config.c:310
 #, fuzzy
 msgid "Custom Icons"
 msgstr "Costum"
 
-#: src/bin/e_fm.c:9097 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9100 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:318
 msgid "List"
 msgstr "Llista"
 
-#: src/bin/e_fm.c:9105 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9108 src/modules/everything/evry_config.c:458
 #, fuzzy
 msgid "Default View"
 msgstr "Motor Defecte"
 
-#: src/bin/e_fm.c:9127
+#: src/bin/e_fm.c:9130
 #, fuzzy, c-format
 msgid "Icon Size (%d)"
 msgstr "Nom d'Icona"
 
-#: src/bin/e_fm.c:9152 src/bin/e_fm.c:9230 src/bin/e_fm.c:9235
-#: src/bin/e_fm.c:9980 src/bin/e_fm.c:10192 src/bin/e_fm_prop.c:254
+#: src/bin/e_fm.c:9155 src/bin/e_fm.c:9233 src/bin/e_fm.c:9238
+#: src/bin/e_fm.c:9985 src/bin/e_fm.c:10197 src/bin/e_fm_prop.c:254
 #: src/bin/e_shelf.c:2298
 msgid "Error"
 msgstr "Error "
 
-#: src/bin/e_fm.c:9152
+#: src/bin/e_fm.c:9155
 #, fuzzy
 msgid "Could not create a file!"
 msgstr "Error Carregant el Mòdul "
 
-#: src/bin/e_fm.c:9166 src/bin/e_fm.c:9184
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:9187
 #, fuzzy
 msgid "New File"
 msgstr "Fitxer"
 
-#: src/bin/e_fm.c:9230
+#: src/bin/e_fm.c:9233
 msgid "Already creating a new file for this directory!"
 msgstr ""
 
-#: src/bin/e_fm.c:9235
+#: src/bin/e_fm.c:9238
 #, c-format
 msgid "%s is not able to be written to!"
 msgstr ""
 
-#: src/bin/e_fm.c:9254
+#: src/bin/e_fm.c:9257
 #, fuzzy
 msgid "Directory"
 msgstr "Nou Directori"
 
-#: src/bin/e_fm.c:9259
+#: src/bin/e_fm.c:9262
 #: src/modules/conf_applications/e_int_config_defapps.c:311
 #, fuzzy
 msgid "File"
 msgstr "Fitxer"
 
-#: src/bin/e_fm.c:9290
+#: src/bin/e_fm.c:9293
 #, fuzzy
 msgid "Inherit parent settings"
 msgstr "Heretar configuració de"
 
-#: src/bin/e_fm.c:9299
+#: src/bin/e_fm.c:9302
 msgid "Show Hidden Files"
 msgstr "Mostra els Fitxers Ocults"
 
-#: src/bin/e_fm.c:9311
+#: src/bin/e_fm.c:9314
 msgid "Remember Ordering"
 msgstr "Recorda l'Ordre"
 
-#: src/bin/e_fm.c:9320
+#: src/bin/e_fm.c:9323
 msgid "Sort Now"
 msgstr "Ordena Ara"
 
-#: src/bin/e_fm.c:9328
+#: src/bin/e_fm.c:9331
 #, fuzzy
 msgid "Single Click Activation"
 msgstr "Utilitza sol clic"
 
-#: src/bin/e_fm.c:9339 src/modules/fileman/e_mod_config.c:393
+#: src/bin/e_fm.c:9342 src/modules/fileman/e_mod_config.c:393
 #, fuzzy
 msgid "Secure Deletion"
 msgstr "Resolució de Pantalla"
 
-#: src/bin/e_fm.c:9352
+#: src/bin/e_fm.c:9355
 #, fuzzy
 msgid "File Manager Settings"
 msgstr "Paràmetres de Menú"
 
-#: src/bin/e_fm.c:9357
+#: src/bin/e_fm.c:9360
 #, fuzzy
 msgid "File Icon Settings"
 msgstr "Paràmetres de Menú"
 
-#: src/bin/e_fm.c:9435 src/bin/e_fm.c:9651
+#: src/bin/e_fm.c:9438 src/bin/e_fm.c:9654
 msgid "Set background..."
 msgstr "Fons de Pantalla ..."
 
-#: src/bin/e_fm.c:9443
+#: src/bin/e_fm.c:9446
 #, fuzzy
 msgid "Clear background"
 msgstr "Fons de Pantalla ..."
 
-#: src/bin/e_fm.c:9450 src/bin/e_fm.c:9679
+#: src/bin/e_fm.c:9453 src/bin/e_fm.c:9682
 #, fuzzy
 msgid "Set overlay..."
 msgstr "Continguts de la LLeixa"
 
-#: src/bin/e_fm.c:9456
+#: src/bin/e_fm.c:9459
 #, fuzzy
 msgid "Clear overlay"
 msgstr "Continguts de la LLeixa"
 
-#: src/bin/e_fm.c:9768
+#: src/bin/e_fm.c:9771
 msgid "Create a new Directory"
 msgstr "Creeu un nou Directori"
 
-#: src/bin/e_fm.c:9769
+#: src/bin/e_fm.c:9772
 msgid "New Directory Name:"
 msgstr "Nom Nou del Directori:"
 
-#: src/bin/e_fm.c:9824 src/bin/e_fm.c:10118
+#: src/bin/e_fm.c:9827 src/bin/e_fm.c:10123
 #, c-format
 msgid "Rename %s to:"
 msgstr "Canvia el nom %s a : "
 
-#: src/bin/e_fm.c:9826 src/bin/e_fm.c:10119
+#: src/bin/e_fm.c:9829 src/bin/e_fm.c:10124
 msgid "Rename File"
 msgstr "Canvia el nom del Fitxer"
 
-#: src/bin/e_fm.c:9976 src/bin/e_fm.c:10184
+#: src/bin/e_fm.c:9981 src/bin/e_fm.c:10189
 msgid "Retry"
 msgstr "Re-intentar"
 
-#: src/bin/e_fm.c:9977 src/bin/e_fm.c:10185 src/bin/e_fm.c:11161
+#: src/bin/e_fm.c:9982 src/bin/e_fm.c:10190 src/bin/e_fm.c:11166
 msgid "Abort"
 msgstr "Aborta"
 
-#: src/bin/e_fm.c:10022
+#: src/bin/e_fm.c:10027
 #, fuzzy
 msgid "No to all"
 msgstr "No a tot"
 
-#: src/bin/e_fm.c:10025
+#: src/bin/e_fm.c:10030
 #, fuzzy
 msgid "Yes to all"
 msgstr "Sí a tots els"
 
-#: src/bin/e_fm.c:10028
+#: src/bin/e_fm.c:10033
 #, fuzzy
 msgid "Warning"
 msgstr "Carregant %s"
 
-#: src/bin/e_fm.c:10031
+#: src/bin/e_fm.c:10036
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Fitxer ja existeix, sobrescriure'l ? <br> <hilight> %s</hilight>?"
 
-#: src/bin/e_fm.c:10187
+#: src/bin/e_fm.c:10192
 #, fuzzy
 msgid "Move Source"
 msgstr "Mou Text"
 
-#: src/bin/e_fm.c:10188
+#: src/bin/e_fm.c:10193
 #, fuzzy
 msgid "Ignore this"
 msgstr "no feu cas d'aquest"
 
-#: src/bin/e_fm.c:10189
+#: src/bin/e_fm.c:10194
 #, fuzzy
 msgid "Ignore all"
 msgstr "no feu cas de totes les"
 
-#: src/bin/e_fm.c:10194
+#: src/bin/e_fm.c:10199
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:10387
+#: src/bin/e_fm.c:10392
 msgid "Confirm Delete"
 msgstr "Confirmació de Borrar"
 
-#: src/bin/e_fm.c:10397
+#: src/bin/e_fm.c:10402
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Estàs segur que vol borrar <br> <hilight> %s</hilight>?"
 
-#: src/bin/e_fm.c:10402
+#: src/bin/e_fm.c:10407
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1822,7 +1805,7 @@ msgstr ""
 "Estàs  segur que vol borrar <br> els %d fitxers seleccionats en: "
 "<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:10412
+#: src/bin/e_fm.c:10417
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1879,8 +1862,8 @@ msgstr "Nom:"
 msgid "Location:"
 msgstr "Rotació:"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:249
-#: src/bin/e_widget_filepreview.c:306 src/bin/e_widget_filepreview.c:358
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:274
+#: src/bin/e_widget_filepreview.c:331 src/bin/e_widget_filepreview.c:383
 msgid "Size:"
 msgstr "Mida"
 
@@ -1934,10 +1917,10 @@ msgid "Others:"
 msgstr "Altre IBar"
 
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:468
-#: src/bin/e_widget_fsel.c:343
+#: src/bin/e_widget_fsel.c:345
 #: src/modules/conf_theme/e_int_config_transitions.c:218
 #: src/modules/conf_theme/e_int_config_theme.c:1135
-#: src/modules/conf_theme/e_int_config_xsettings.c:497
+#: src/modules/conf_theme/e_int_config_xsettings.c:496
 msgid "Preview"
 msgstr "Vista prèvia"
 
@@ -1971,31 +1954,31 @@ msgstr ""
 msgid "Select an Image"
 msgstr "Seleccioneu una Imatge"
 
-#: src/bin/e_gadcon.c:1675 src/bin/e_int_border_menu.c:140
+#: src/bin/e_gadcon.c:1676 src/bin/e_int_border_menu.c:140
 #, fuzzy
 msgid "Move to"
 msgstr "Mou Text"
 
-#: src/bin/e_gadcon.c:1743
+#: src/bin/e_gadcon.c:1744
 msgid "Automatically scroll contents"
 msgstr "Mostra automàticament els continguts"
 
-#: src/bin/e_gadcon.c:1756 src/modules/gadman/e_mod_gadman.c:1046
+#: src/bin/e_gadcon.c:1757 src/modules/gadman/e_mod_gadman.c:1046
 msgid "Plain"
 msgstr "Text Pla"
 
-#: src/bin/e_gadcon.c:1770 src/modules/gadman/e_mod_gadman.c:1054
+#: src/bin/e_gadcon.c:1771 src/modules/gadman/e_mod_gadman.c:1054
 msgid "Inset"
 msgstr "Sagnat"
 
-#: src/bin/e_gadcon.c:1784 src/bin/e_int_config_modules.c:52
+#: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
 #: src/modules/comp/e_mod_main.c:41 src/modules/conf_theme/e_mod_main.c:229
 #: src/modules/dropshadow/e_mod_main.c:89
 #, fuzzy
 msgid "Look"
 msgstr "Bloquejos "
 
-#: src/bin/e_gadcon.c:1796 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1797 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:269
 #: src/modules/conf_applications/e_int_config_apps.c:290
 #: src/modules/conf_applications/e_int_config_apps.c:310
@@ -2005,7 +1988,7 @@ msgstr "Bloquejos "
 msgid "Remove"
 msgstr "Borra"
 
-#: src/bin/e_gadcon.c:2428
+#: src/bin/e_gadcon.c:2435
 #, fuzzy
 msgid "Stop moving"
 msgstr "deixi de moure"
@@ -2106,35 +2089,35 @@ msgstr "Centre"
 msgid "Tile"
 msgstr "Teula"
 
-#: src/bin/e_import_config_dialog.c:496
+#: src/bin/e_import_config_dialog.c:497
 #, fuzzy
 msgid "Within"
 msgstr "dins d'"
 
-#: src/bin/e_import_config_dialog.c:500
+#: src/bin/e_import_config_dialog.c:501
 #, fuzzy
 msgid "Fill"
 msgstr "omplir"
 
-#: src/bin/e_import_config_dialog.c:504
+#: src/bin/e_import_config_dialog.c:505
 #, fuzzy
 msgid "Pan"
 msgstr "Vidre"
 
-#: src/bin/e_import_config_dialog.c:512
+#: src/bin/e_import_config_dialog.c:513
 msgid "File Quality"
 msgstr "Qualitat de Fitxer"
 
-#: src/bin/e_import_config_dialog.c:513
+#: src/bin/e_import_config_dialog.c:514
 msgid "Use original file"
 msgstr "Usa el fitxer original"
 
-#: src/bin/e_import_config_dialog.c:515
+#: src/bin/e_import_config_dialog.c:516
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
-#: src/bin/e_import_config_dialog.c:520
+#: src/bin/e_import_config_dialog.c:521
 #, fuzzy
 msgid "Fill Color"
 msgstr "Colors"
@@ -2191,7 +2174,7 @@ msgid "Size"
 msgstr "Mida"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:693 src/bin/e_int_border_prop.c:504
+#: src/bin/e_int_border_menu.c:693 src/bin/e_int_border_prop.c:502
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:305
 msgid "Stacking"
@@ -2267,7 +2250,7 @@ msgstr "Finestres"
 msgid "Always on Top"
 msgstr "Sempre en primer pla"
 
-#: src/bin/e_int_border_menu.c:164 src/bin/e_int_border_prop.c:509
+#: src/bin/e_int_border_menu.c:164 src/bin/e_int_border_prop.c:507
 msgid "Sticky"
 msgstr "﻿Enganxós"
 
@@ -2276,7 +2259,7 @@ msgstr "﻿Enganxós"
 msgid "Shade"
 msgstr "Ombrejat"
 
-#: src/bin/e_int_border_menu.c:371 src/bin/e_int_border_prop.c:514
+#: src/bin/e_int_border_menu.c:371 src/bin/e_int_border_prop.c:512
 #: src/modules/comp/e_mod_config.c:884
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:215
 msgid "Fullscreen"
@@ -2328,6 +2311,7 @@ msgid "Create Keyboard Shortcut"
 msgstr "Crear un accés directe del teclat"
 
 #: src/bin/e_int_border_menu.c:652
+#: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "Iconifica"
 
@@ -2411,17 +2395,17 @@ msgid "Window List"
 msgstr "Llista de Finestres"
 
 #: src/bin/e_int_border_menu.c:1282 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2946 src/modules/pager/e_mod_main.c:2953
-#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2962
-#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2966
-#: src/modules/pager/e_mod_main.c:2968 src/modules/pager/e_mod_main.c:2970
-#: src/modules/pager/e_mod_main.c:2996 src/modules/pager/e_mod_main.c:2997
-#: src/modules/pager/e_mod_main.c:2998 src/modules/pager/e_mod_main.c:2999
-#: src/modules/pager/e_mod_main.c:3000 src/modules/pager/e_mod_main.c:3001
+#: src/modules/pager/e_mod_main.c:2940 src/modules/pager/e_mod_main.c:2947
+#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2956
+#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2960
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
+#: src/modules/pager/e_mod_main.c:2990 src/modules/pager/e_mod_main.c:2991
+#: src/modules/pager/e_mod_main.c:2992 src/modules/pager/e_mod_main.c:2993
+#: src/modules/pager/e_mod_main.c:2994 src/modules/pager/e_mod_main.c:2995
 msgid "Pager"
 msgstr "Paginador"
 
-#: src/bin/e_int_border_menu.c:1292
+#: src/bin/e_int_border_menu.c:1292 src/modules/wizard/page_180.c:25
 #, fuzzy
 msgid "Taskbar"
 msgstr "Salta Taskbar"
@@ -2509,7 +2493,8 @@ msgstr ""
 msgid "Static"
 msgstr "Estat"
 
-#: src/bin/e_int_border_prop.c:299 src/modules/clock/e_mod_config.c:137
+#: src/bin/e_int_border_prop.c:299 src/modules/clock/e_mod_config.c:103
+#: src/modules/clock/e_mod_config.c:141
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:360
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:689
@@ -2546,145 +2531,146 @@ msgstr "Propietats NetWM"
 msgid "ICCCM"
 msgstr "ICCCM"
 
-#: src/bin/e_int_border_prop.c:447 src/bin/e_int_border_remember.c:651
+#: src/bin/e_int_border_prop.c:445 src/bin/e_int_border_remember.c:651
 #: src/modules/comp/e_mod_config.c:392 src/modules/comp/e_mod_config.c:702
 #: src/modules/wizard/page_050.c:95
 msgid "Title"
 msgstr "Títol"
 
-#: src/bin/e_int_border_prop.c:449 src/modules/comp/e_mod_config.c:723
+#: src/bin/e_int_border_prop.c:447 src/modules/comp/e_mod_config.c:723
 msgid "Class"
 msgstr "Classe"
 
-#: src/bin/e_int_border_prop.c:450 src/bin/e_int_border_prop.c:503
+#: src/bin/e_int_border_prop.c:448 src/bin/e_int_border_prop.c:501
 msgid "Icon Name"
 msgstr "Nom d'Icona"
 
-#: src/bin/e_int_border_prop.c:451
+#: src/bin/e_int_border_prop.c:449
 msgid "Machine"
 msgstr "Màquina"
 
-#: src/bin/e_int_border_prop.c:452 src/modules/comp/e_mod_config.c:732
+#: src/bin/e_int_border_prop.c:450 src/modules/comp/e_mod_config.c:732
 msgid "Role"
 msgstr "Paper"
 
-#: src/bin/e_int_border_prop.c:456
+#: src/bin/e_int_border_prop.c:454
 msgid "Minimum Size"
 msgstr "Mida Mínima"
 
-#: src/bin/e_int_border_prop.c:457
+#: src/bin/e_int_border_prop.c:455
 msgid "Maximum Size"
 msgstr "Mida Màxima"
 
-#: src/bin/e_int_border_prop.c:458
+#: src/bin/e_int_border_prop.c:456
 msgid "Base Size"
 msgstr "Mida Bàsica"
 
-#: src/bin/e_int_border_prop.c:459
+#: src/bin/e_int_border_prop.c:457
 msgid "Resize Steps"
 msgstr "Passos de Re-dimensió "
 
-#: src/bin/e_int_border_prop.c:460 src/modules/wizard/page_050.c:128
+#: src/bin/e_int_border_prop.c:458 src/modules/wizard/page_050.c:128
 #, fuzzy
 msgid "Sizing"
 msgstr "aprest"
 
-#: src/bin/e_int_border_prop.c:463
+#: src/bin/e_int_border_prop.c:461
 msgid "Aspect Ratio"
 msgstr "Raó d'Aspecte"
 
-#: src/bin/e_int_border_prop.c:464
+#: src/bin/e_int_border_prop.c:462
 msgid "Initial State"
 msgstr "Estat Inicial"
 
-#: src/bin/e_int_border_prop.c:465
+#: src/bin/e_int_border_prop.c:463
 msgid "State"
 msgstr "Estat"
 
-#: src/bin/e_int_border_prop.c:466
+#: src/bin/e_int_border_prop.c:464
 msgid "Window ID"
 msgstr "Identificació de Finestra"
 
-#: src/bin/e_int_border_prop.c:467
+#: src/bin/e_int_border_prop.c:465
 msgid "Window Group"
 msgstr "Grup de Finestra"
 
-#: src/bin/e_int_border_prop.c:468
+#: src/bin/e_int_border_prop.c:466
 msgid "Transient For"
 msgstr "Transaent per a "
 
-#: src/bin/e_int_border_prop.c:469
+#: src/bin/e_int_border_prop.c:467
 msgid "Client Leader"
 msgstr "﻿Líder de Client"
 
-#: src/bin/e_int_border_prop.c:470
+#: src/bin/e_int_border_prop.c:468
 msgid "Gravity"
 msgstr "﻿Gravetat"
 
-#: src/bin/e_int_border_prop.c:472
+#: src/bin/e_int_border_prop.c:470
 #, fuzzy
 msgid "States"
 msgstr "Estat"
 
-#: src/bin/e_int_border_prop.c:475
+#: src/bin/e_int_border_prop.c:473
 msgid "Take Focus"
 msgstr "Agafa el Focus"
 
-#: src/bin/e_int_border_prop.c:476 src/modules/comp/e_mod_config.c:835
+#: src/bin/e_int_border_prop.c:474 src/modules/comp/e_mod_config.c:835
 msgid "Accepts Focus"
 msgstr "Accepta Focus"
 
-#: src/bin/e_int_border_prop.c:477
+#: src/bin/e_int_border_prop.c:475
 msgid "Urgent"
 msgstr "Urgent"
 
-#: src/bin/e_int_border_prop.c:478
+#: src/bin/e_int_border_prop.c:476
 msgid "Request Delete"
 msgstr "Elimina"
 
-#: src/bin/e_int_border_prop.c:479
+#: src/bin/e_int_border_prop.c:477
 msgid "Request Position"
 msgstr "Recorda Posició"
 
-#: src/bin/e_int_border_prop.c:480 src/bin/e_int_border_prop.c:515
-#: src/bin/e_int_config_modules.c:57 src/bin/e_int_menus.c:276
+#: src/bin/e_int_border_prop.c:478 src/bin/e_int_border_prop.c:513
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:276
 #: src/bin/e_shelf.c:2394 src/modules/battery/e_mod_main.c:194
-#: src/modules/clock/e_mod_main.c:358 src/modules/clock/e_mod_main.c:601
+#: src/modules/clock/e_mod_main.c:360 src/modules/clock/e_mod_main.c:603
 #: src/modules/conf/e_conf.c:136 src/modules/conf/e_conf.c:146
 #: src/modules/conf/e_mod_main.c:101 src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
 #: src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/everything/evry_gadget.c:511
-#: src/modules/everything/evry_gadget.c:696 src/modules/ibar/e_mod_main.c:379
-#: src/modules/ibar/e_mod_main.c:864 src/modules/ibox/e_mod_main.c:302
-#: src/modules/ibox/e_mod_main.c:678 src/modules/pager/e_mod_main.c:875
-#: src/modules/temperature/e_mod_main.c:230 src/modules/mixer/e_mod_main.c:776
-#: src/modules/connman/e_mod_main.c:441 src/modules/tasks/e_mod_main.c:716
-#: src/modules/xkbswitch/e_mod_main.c:327
+#: src/modules/everything/evry_gadget.c:696
+#: src/modules/everything/evry_plug_settings.c:183
+#: src/modules/ibar/e_mod_main.c:379 src/modules/ibar/e_mod_main.c:864
+#: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
+#: src/modules/pager/e_mod_main.c:875 src/modules/temperature/e_mod_main.c:230
+#: src/modules/mixer/e_mod_main.c:776 src/modules/connman/e_mod_main.c:441
+#: src/modules/tasks/e_mod_main.c:716 src/modules/xkbswitch/e_mod_main.c:327
 #: src/modules/xkbswitch/e_mod_main.c:369
-#: src/modules/notification/e_mod_box.c:477
-#: src/modules/notification/e_mod_box.c:616
+#: src/modules/notification/e_mod_box.c:480
+#: src/modules/notification/e_mod_box.c:619
 #, fuzzy
 msgid "Settings"
 msgstr "Paràmetres de Pantalla"
 
-#: src/bin/e_int_border_prop.c:508 src/modules/comp/e_mod_config.c:897
+#: src/bin/e_int_border_prop.c:506 src/modules/comp/e_mod_config.c:897
 msgid "Modal"
 msgstr "Modal"
 
-#: src/bin/e_int_border_prop.c:510
+#: src/bin/e_int_border_prop.c:508
 msgid "Shaded"
 msgstr "Ombrejat"
 
-#: src/bin/e_int_border_prop.c:511 src/bin/e_int_border_remember.c:731
+#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:731
 msgid "Skip Taskbar"
 msgstr "Salta Taskbar"
 
-#: src/bin/e_int_border_prop.c:512 src/bin/e_int_border_remember.c:728
+#: src/bin/e_int_border_prop.c:510 src/bin/e_int_border_remember.c:728
 msgid "Skip Pager"
 msgstr "Salta Paginador"
 
-#: src/bin/e_int_border_prop.c:513 src/modules/comp/e_mod_config.c:280
+#: src/bin/e_int_border_prop.c:511 src/modules/comp/e_mod_config.c:280
 msgid "Hidden"
 msgstr "Ocult"
 
@@ -2749,7 +2735,9 @@ msgid "Size, Position and Locks"
 msgstr "Mida, Posició i Presentació"
 
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
-#: src/modules/everything/evry_gadget.c:645 src/modules/shot/e_mod_main.c:703
+#: src/modules/everything/evry_gadget.c:645
+#: src/modules/everything/evry_plug_aggregator.c:313
+#: src/modules/shot/e_mod_main.c:703
 #, fuzzy
 msgid "All"
 msgstr "Autoritza"
@@ -2826,54 +2814,56 @@ msgstr "Mantenir les propietats actuals"
 msgid "Start this program on login"
 msgstr "Arrenca aquest programa al iniciar"
 
-#: src/bin/e_int_config_modules.c:50
+#: src/bin/e_int_config_modules.c:51
 #, fuzzy
 msgid "Utilities"
 msgstr "Filipines "
 
-#: src/bin/e_int_config_modules.c:53
+#: src/bin/e_int_config_modules.c:54
+#: src/modules/everything/evry_plug_files.c:1346
+#: src/modules/everything/evry_plug_files.c:1359
 #: src/modules/everything/evry_plug_files.c:1585
 #: src/modules/fileman/e_mod_main.c:42
 msgid "Files"
 msgstr "Fitxers"
 
-#: src/bin/e_int_config_modules.c:54 src/modules/everything/e_mod_main.c:69
+#: src/bin/e_int_config_modules.c:55 src/modules/everything/e_mod_main.c:69
 #, fuzzy
 msgid "Launcher"
 msgstr "Executa"
 
-#: src/bin/e_int_config_modules.c:55
+#: src/bin/e_int_config_modules.c:56
 #: src/modules/conf_applications/e_int_config_defapps.c:329
 #: src/modules/conf_theme/e_int_config_fonts.c:57
 #, fuzzy
 msgid "Core"
 msgstr "nucli"
 
-#: src/bin/e_int_config_modules.c:56
+#: src/bin/e_int_config_modules.c:57
 #, fuzzy
 msgid "Mobile"
 msgstr "Mosambic "
 
-#: src/bin/e_int_config_modules.c:97
+#: src/bin/e_int_config_modules.c:98
 msgid "Module Settings"
 msgstr "Configuració del Mòdul"
 
-#: src/bin/e_int_config_modules.c:175
+#: src/bin/e_int_config_modules.c:198
 #, fuzzy
 msgid "Load"
 msgstr "Locals"
 
-#: src/bin/e_int_config_modules.c:180 src/bin/e_module.c:528
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:528
 #, fuzzy
 msgid "Unload"
 msgstr "Mòduls Descarregats "
 
-#: src/bin/e_int_config_modules.c:312 src/bin/e_int_config_modules.c:600
+#: src/bin/e_int_config_modules.c:337 src/bin/e_int_config_modules.c:625
 #, fuzzy
 msgid "No modules selected."
 msgstr "No hi ha mòduls seleccionats."
 
-#: src/bin/e_int_config_modules.c:598
+#: src/bin/e_int_config_modules.c:623
 #, fuzzy
 msgid "More than one module selected."
 msgstr "Més d'un mòdul seleccionat."
@@ -2943,8 +2933,10 @@ msgstr "Aplicacions Preferents"
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/conf_menus/e_int_config_menus.c:283
 #: src/modules/conf_theme/e_int_config_fonts.c:58
-#: src/modules/conf_theme/e_int_config_xsettings.c:485
+#: src/modules/conf_theme/e_int_config_xsettings.c:484
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
+#: src/modules/everything/evry_plug_apps.c:1140
+#: src/modules/everything/evry_plug_apps.c:1156
 #: src/modules/everything/evry_plug_apps.c:1419
 msgid "Applications"
 msgstr "Aplicacions"
@@ -2952,6 +2944,7 @@ msgstr "Aplicacions"
 #: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1317
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
+#: src/modules/everything/evry_plug_windows.c:425
 #: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4002
 msgid "Windows"
 msgstr "Finestres"
@@ -2964,13 +2957,9 @@ msgstr "Finestres Perdudes"
 msgid "About"
 msgstr "Quant a..."
 
-#: src/bin/e_int_menus.c:238
-#: src/modules/conf_interaction/e_int_config_mouse.c:183
-#: src/modules/conf_theme/e_mod_main.c:163
-#: src/modules/conf_theme/e_mod_main.c:234
-#: src/modules/conf_theme/e_mod_main.c:263
-msgid "Theme"
-msgstr "Tema"
+#: src/bin/e_int_menus.c:238 src/bin/e_theme_about.c:21
+msgid "About Theme"
+msgstr "Sobre Tema"
 
 #: src/bin/e_int_menus.c:329
 msgid "Virtual"
@@ -3076,7 +3065,7 @@ msgid "Hide duration"
 msgstr "Durada de l'ocultació "
 
 #: src/bin/e_int_shelf_config.c:247
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:891
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, fuzzy, c-format
 msgid "%.2f seconds"
 msgstr "%2.2f segons"
@@ -4056,9 +4045,10 @@ msgstr "Hibernant"
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Hibernant.<br><hilight>Espera, si us plau.</hilight>"
 
-#: src/bin/e_theme_about.c:14
-msgid "About Theme"
-msgstr "Sobre Tema"
+#: src/bin/e_theme_about.c:25
+#, fuzzy
+msgid "Select Theme"
+msgstr "Escull un Tema"
 
 #: src/bin/e_theme.c:37
 #, fuzzy
@@ -4078,113 +4068,113 @@ msgstr "Començar a Moure/Re-dimensionar Elements"
 msgid "Set Toolbar Contents"
 msgstr "Establir Contingut de la barra"
 
-#: src/bin/e_utils.c:197 src/modules/conf_intl/e_int_config_imc.c:274
+#: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:274
 #: src/modules/conf_intl/e_int_config_imc.c:523
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr "Enlightenment no ha pogut crear un procés fill:<br><br> %s<br>"
 
-#: src/bin/e_utils.c:250
+#: src/bin/e_utils.c:242
 msgid "Cannot exit - immortal windows."
 msgstr "No es pot sortir - Finestres immortals"
 
-#: src/bin/e_utils.c:251
+#: src/bin/e_utils.c:243
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 
-#: src/bin/e_utils.c:865
+#: src/bin/e_utils.c:857
 #, fuzzy, c-format
 msgid "%'.0f bytes"
 msgstr "%'.0f Bytes"
 
-#: src/bin/e_utils.c:869
+#: src/bin/e_utils.c:861
 #, fuzzy, c-format
 msgid "%'.0f KiB"
 msgstr "%'.0f KB"
 
-#: src/bin/e_utils.c:873
+#: src/bin/e_utils.c:865
 #, fuzzy, c-format
 msgid "%'.1f MiB"
 msgstr "%'.1f GB"
 
-#: src/bin/e_utils.c:877
+#: src/bin/e_utils.c:869
 #, fuzzy, c-format
 msgid "%'.1f GiB"
 msgstr "%'.1f GB"
 
-#: src/bin/e_utils.c:881
+#: src/bin/e_utils.c:873
 #, fuzzy, c-format
 msgid "%'.1f TiB"
 msgstr "%'.1f GB"
 
-#: src/bin/e_utils.c:900
+#: src/bin/e_utils.c:892
 #, fuzzy, c-format
 msgid "In the future"
 msgstr "En el Futur"
 
-#: src/bin/e_utils.c:904
+#: src/bin/e_utils.c:896
 #, fuzzy, c-format
 msgid "In the last minute"
 msgstr "En aquest últim Minut"
 
-#: src/bin/e_utils.c:908
+#: src/bin/e_utils.c:900
 #, fuzzy, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
 msgstr[0] "Última Modificació"
 msgstr[1] "Última Modificació"
 
-#: src/bin/e_utils.c:913
+#: src/bin/e_utils.c:905
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:918
+#: src/bin/e_utils.c:910
 #, fuzzy, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
 msgstr[0] "Última Modificació"
 msgstr[1] "Última Modificació"
 
-#: src/bin/e_utils.c:923
+#: src/bin/e_utils.c:915
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:928
+#: src/bin/e_utils.c:920
 #, fuzzy, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
 msgstr[0] "%li Hores"
 msgstr[1] "%li Hores"
 
-#: src/bin/e_utils.c:933
+#: src/bin/e_utils.c:925
 #, fuzzy, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
 msgstr[0] "%li Minuts"
 msgstr[1] "%li Minuts"
 
-#: src/bin/e_utils.c:940 src/bin/e_widget_filepreview.c:513
-#: src/bin/e_widget_filepreview.c:514 src/bin/e_widget_filepreview.c:515
-#: src/bin/e_widget_filepreview.c:546 src/bin/e_widget_filepreview.c:557
+#: src/bin/e_utils.c:932 src/bin/e_widget_filepreview.c:538
+#: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
+#: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/comp/e_mod_config.c:516
 #: src/modules/conf_dialogs/e_int_config_profiles.c:295
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1220
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1122
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1116
 #: src/modules/wizard/page_020.c:25
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: src/bin/e_utils.c:1177
+#: src/bin/e_utils.c:1169
 #, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
@@ -4203,12 +4193,12 @@ msgstr ""
 "configuració.<br>Pot re-configurar les coses ara. Disculpa per les molèsties "
 "per la teva configuració<br>"
 
-#: src/bin/e_utils.c:1186 src/bin/e_utils.c:1210
+#: src/bin/e_utils.c:1178 src/bin/e_utils.c:1202
 #, fuzzy, c-format
 msgid "%s Configuration Updated"
 msgstr "Configuració Actualitzada"
 
-#: src/bin/e_utils.c:1199
+#: src/bin/e_utils.c:1191
 #, fuzzy
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
@@ -4224,72 +4214,72 @@ msgstr ""
 "fitxers de configuració han estat <br> restaurats per defecte. Perdona els "
 "inconvenients.<br>"
 
-#: src/bin/e_utils.c:1292
+#: src/bin/e_utils.c:1284
 #, c-format
 msgid "Never"
 msgstr ""
 
-#: src/bin/e_utils.c:1296
+#: src/bin/e_utils.c:1288
 #, fuzzy, c-format
 msgid "%li Seconds"
 msgstr "%.1f segons"
 
-#: src/bin/e_utils.c:1301
+#: src/bin/e_utils.c:1293
 #, c-format
 msgid "One year"
 msgstr ""
 
-#: src/bin/e_utils.c:1303
+#: src/bin/e_utils.c:1295
 #, fuzzy, c-format
 msgid "%li Years"
 msgstr "%li anys"
 
-#: src/bin/e_utils.c:1309
+#: src/bin/e_utils.c:1301
 #, c-format
 msgid "One month"
 msgstr ""
 
-#: src/bin/e_utils.c:1311
+#: src/bin/e_utils.c:1303
 #, fuzzy, c-format
 msgid "%li Months"
 msgstr "%li Mesos "
 
-#: src/bin/e_utils.c:1317
+#: src/bin/e_utils.c:1309
 #, c-format
 msgid "One week"
 msgstr ""
 
-#: src/bin/e_utils.c:1319
+#: src/bin/e_utils.c:1311
 #, fuzzy, c-format
 msgid "%li Weeks"
 msgstr "%li Setmanes"
 
-#: src/bin/e_utils.c:1325
+#: src/bin/e_utils.c:1317
 #, c-format
 msgid "One day"
 msgstr ""
 
-#: src/bin/e_utils.c:1327
+#: src/bin/e_utils.c:1319
 #, fuzzy, c-format
 msgid "%li Days"
 msgstr "%li Dies"
 
-#: src/bin/e_utils.c:1333
+#: src/bin/e_utils.c:1325
 #, c-format
 msgid "An hour"
 msgstr ""
 
-#: src/bin/e_utils.c:1335
+#: src/bin/e_utils.c:1327
 #, fuzzy, c-format
 msgid "%li Hours"
 msgstr "%li Hores"
 
-#: src/bin/e_utils.c:1341
+#: src/bin/e_utils.c:1333
 #, fuzzy, c-format
 msgid "A minute"
 msgstr "%1.0f minuts"
 
-#: src/bin/e_utils.c:1343
+#: src/bin/e_utils.c:1335
 #, fuzzy, c-format
 msgid "%li Minutes"
 msgstr "%li Minuts"
@@ -4322,36 +4312,36 @@ msgstr "Amunt"
 msgid "Down"
 msgstr "Avall "
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "R"
 msgstr ""
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "G"
 msgstr ""
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 #, fuzzy
 msgid "B"
 msgstr "per"
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "H"
 msgstr ""
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "S"
 msgstr ""
 
-#: src/bin/e_widget_csel.c:198
+#: src/bin/e_widget_csel.c:195
 msgid "V"
 msgstr ""
 
-#: src/bin/e_widget_csel.c:272
+#: src/bin/e_widget_csel.c:274
 msgid "Alpha"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:81 src/bin/e_widget_filepreview.c:357
+#: src/bin/e_widget_filepreview.c:81 src/bin/e_widget_filepreview.c:382
 #, fuzzy
 msgid "Resolution:"
 msgstr "Resolució"
@@ -4361,85 +4351,85 @@ msgstr "Resolució"
 msgid "Mime-type:"
 msgstr "Tipus de fitxers"
 
-#: src/bin/e_widget_filepreview.c:242
+#: src/bin/e_widget_filepreview.c:267
 #, c-format
 msgid "%3.1f%%"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:248
+#: src/bin/e_widget_filepreview.c:273
 msgid "Length:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:305
+#: src/bin/e_widget_filepreview.c:330
 msgid "Used:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:307
+#: src/bin/e_widget_filepreview.c:332
 msgid "Reserved:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:308
+#: src/bin/e_widget_filepreview.c:333
 msgid "Mount status:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:310 src/modules/comp/e_mod_config.c:487
+#: src/bin/e_widget_filepreview.c:335 src/modules/comp/e_mod_config.c:487
 #: src/modules/mixer/app_mixer.c:394
 #, fuzzy
 msgid "Type:"
 msgstr "Tipus de Fitxer"
 
-#: src/bin/e_widget_filepreview.c:360
+#: src/bin/e_widget_filepreview.c:385
 msgid "Owner:"
 msgstr "Propietari"
 
-#: src/bin/e_widget_filepreview.c:361
+#: src/bin/e_widget_filepreview.c:386
 msgid "Permissions:"
 msgstr "Permisos"
 
-#: src/bin/e_widget_filepreview.c:362
+#: src/bin/e_widget_filepreview.c:387
 msgid "Modified:"
 msgstr "Modificat:"
 
-#: src/bin/e_widget_filepreview.c:500 src/bin/e_widget_filepreview.c:666
-#: src/bin/e_widget_filepreview.c:675 src/bin/e_widget_filepreview.c:684
+#: src/bin/e_widget_filepreview.c:525 src/bin/e_widget_filepreview.c:691
+#: src/bin/e_widget_filepreview.c:700 src/bin/e_widget_filepreview.c:709
 #, c-format
 msgid "Read Only"
 msgstr "Només lectura"
 
-#: src/bin/e_widget_filepreview.c:502
+#: src/bin/e_widget_filepreview.c:527
 #, fuzzy
 msgid "Read / Write"
 msgstr "Escriptura-Lectura"
 
-#: src/bin/e_widget_filepreview.c:505 src/bin/e_widget_filepreview.c:516
+#: src/bin/e_widget_filepreview.c:530 src/bin/e_widget_filepreview.c:541
 #, fuzzy
 msgid "Unmounted"
 msgstr "desmuntar"
 
-#: src/bin/e_widget_filepreview.c:615
+#: src/bin/e_widget_filepreview.c:640
 #, c-format
 msgid "You"
 msgstr "Tu"
 
-#: src/bin/e_widget_filepreview.c:664
+#: src/bin/e_widget_filepreview.c:689
 #, c-format
 msgid "Protected"
 msgstr "Protegit"
 
-#: src/bin/e_widget_filepreview.c:673 src/bin/e_widget_filepreview.c:682
+#: src/bin/e_widget_filepreview.c:698 src/bin/e_widget_filepreview.c:707
 #, c-format
 msgid "Forbidden"
 msgstr "Oblidat"
 
-#: src/bin/e_widget_filepreview.c:691
+#: src/bin/e_widget_filepreview.c:716
 msgid "Read-Write"
 msgstr "Escriptura-Lectura"
 
-#: src/bin/e_widget_fsel.c:329
+#: src/bin/e_widget_fsel.c:331
 msgid "Add to Favorites"
 msgstr "Afegeix a Aplicacions Preferents"
 
-#: src/bin/e_widget_fsel.c:334
+#: src/bin/e_widget_fsel.c:336
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:827
 #: src/modules/conf_theme/e_int_config_wallpaper.c:469
@@ -4607,8 +4597,8 @@ msgstr "Bateria"
 msgid "Clock Settings"
 msgstr "Configuració del Focus"
 
-#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:706
-#: src/modules/clock/e_mod_main.c:863 src/modules/clock/e_mod_main.c:895
+#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:708
+#: src/modules/clock/e_mod_main.c:865 src/modules/clock/e_mod_main.c:897
 msgid "Clock"
 msgstr "Rellotge"
 
@@ -4622,6 +4612,11 @@ msgstr "Diàlegs "
 msgid "Digital"
 msgstr "Rellotge Digital"
 
+#: src/modules/clock/e_mod_config.c:90
+#, fuzzy
+msgid "Seconds"
+msgstr "%.1f segons"
+
 #: src/modules/clock/e_mod_config.c:93
 msgid "12 h"
 msgstr ""
@@ -4630,41 +4625,46 @@ msgstr ""
 msgid "24 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:97
-#, fuzzy
-msgid "Seconds"
-msgstr "%.1f segons"
-
-#: src/modules/clock/e_mod_config.c:101
-msgid "No Date"
-msgstr ""
-
-#: src/modules/clock/e_mod_config.c:103
-msgid "Words"
+#: src/modules/clock/e_mod_config.c:100
+msgid "Date"
 msgstr ""
 
 #: src/modules/clock/e_mod_config.c:105
+msgid "Full"
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:107
 msgid "Numbers"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:110
+#: src/modules/clock/e_mod_config.c:109
+#, fuzzy
+msgid "Date Only"
+msgstr "Només lectura"
+
+#: src/modules/clock/e_mod_config.c:114
 msgid "Week"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:112 src/modules/clock/e_mod_config.c:125
+#: src/modules/clock/e_mod_config.c:116 src/modules/clock/e_mod_config.c:129
 #: src/modules/start/e_mod_main.c:158
 msgid "Start"
 msgstr "Inici"
 
-#: src/modules/clock/e_mod_config.c:123
+#: src/modules/clock/e_mod_config.c:127
 msgid "Weekend"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:138
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:863 src/modules/clock/e_mod_main.c:895
+#: src/modules/clock/e_mod_main.c:865
+#, fuzzy
+msgid "Toggle calendar"
+msgstr "Color d'Ombra"
+
+#: src/modules/clock/e_mod_main.c:897
 #, fuzzy
 msgid "Show calendar"
 msgstr "Color d'Ombra"
@@ -5144,12 +5144,12 @@ msgstr ""
 msgid "Rendering"
 msgstr "Recorda l'Ordre"
 
-#: src/modules/comp/e_mod_main.c:43 src/modules/comp/e_mod_main.c:70
+#: src/modules/comp/e_mod_main.c:43 src/modules/comp/e_mod_main.c:69
 #, fuzzy
 msgid "Composite"
 msgstr "Posició"
 
-#: src/modules/comp/e_mod_main.c:71
+#: src/modules/comp/e_mod_main.c:70
 msgid ""
 "Dropshadow module is incompatible<br>with compositing. Disabling "
 "the<br>Dropshadow module."
@@ -5941,22 +5941,22 @@ msgstr "Permetre l'activació d'unió amb les finestres de pantalla completa"
 msgid "Allow binding activation with multiple screens (DANGEROUS!)"
 msgstr "Permetre l'activació d'unió amb les finestres de pantalla completa"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:874
 #, fuzzy
 msgid "Edge Binding Sequence"
 msgstr "Enquadernació per la vora de seqüència"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:896
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:893
 #, fuzzy
 msgid "Clickable edge"
 msgstr "Feu clic a la vora"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1216
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1214
 #, fuzzy
 msgid "Edge Binding Error"
 msgstr "Bindatje del Ratolí "
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1217
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1215
 #, fuzzy, c-format
 msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
@@ -5965,71 +5965,71 @@ msgstr ""
 "El Seqüència de Bindatge de tecles que ha escollit està  essent usat per "
 "l'acció <br> <hilight>%s</hilight>. Si us plau tria una altra seqüència."
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1352
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1269
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1301
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1350
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1263
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1295
 msgid "CTRL"
 msgstr "CTRL"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1357
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1274
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1306
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1268
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1300
 msgid "ALT"
 msgstr "ALT"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1363
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1280
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1312
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1274
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1306
 msgid "SHIFT"
 msgstr "SHIFT"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1369
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1286
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1318
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1280
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1312
 msgid "WIN"
 msgstr "WIN"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1379
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1377
 #, fuzzy
 msgid "Left Edge"
 msgstr "Elimina Tecla"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1383
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1381
 #, fuzzy
 msgid "Top Edge"
 msgstr "Modificar Tecla"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1387
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1385
 #, fuzzy
 msgid "Right Edge"
 msgstr "Lluminós"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1391
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1389
 msgid "Bottom Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1395
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1393
 msgid "Top Left Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1399
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1397
 msgid "Top Right Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1403
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1401
 msgid "Bottom Right Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1407
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1405
 msgid "Bottom Left Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1421
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1419
 #, c-format
 msgid "(left clickable)"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1423
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1421
 #, fuzzy, c-format
 msgid "(clickable)"
 msgstr "Feu clic a la vora"
@@ -6104,6 +6104,13 @@ msgstr "Configuració del Mòdul"
 #, fuzzy
 msgid "Show Cursor"
 msgstr "Color d'Ombra"
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:183
+#: src/modules/conf_theme/e_mod_main.c:163
+#: src/modules/conf_theme/e_mod_main.c:234
+#: src/modules/conf_theme/e_mod_main.c:263
+msgid "Theme"
+msgstr "Tema"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:187
 #, fuzzy
@@ -6406,11 +6413,11 @@ msgstr "Configuració de dreceres de teclat"
 msgid "Key Bindings"
 msgstr "Bindatje de tecles"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1117
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1111
 msgid "Binding Key Error"
 msgstr "Error de Bindatge de Tecles"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1118
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1112
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -6666,7 +6673,7 @@ msgid "Themes"
 msgstr "Temes"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:524
+#: src/modules/conf_theme/e_int_config_xsettings.c:523
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 msgid "Icons"
@@ -7642,22 +7649,22 @@ msgstr ""
 msgid "GTK Application Theme Settings"
 msgstr "Preferències de Tema d'Icona"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:472
+#: src/modules/conf_theme/e_int_config_xsettings.c:471
 #, fuzzy
 msgid "Match Enlightenment theme if possible"
 msgstr "Mòdul de Bateria de l'Enlightenment"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:481
+#: src/modules/conf_theme/e_int_config_xsettings.c:480
 #, fuzzy
 msgid "Enable Settings Daemon"
 msgstr "Configuració de Diàlegs"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:516
+#: src/modules/conf_theme/e_int_config_xsettings.c:515
 #, fuzzy
 msgid "Enable icon theme for applications"
 msgstr "Utilitzeu tema d'icones per a aplicacions"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:520
+#: src/modules/conf_theme/e_int_config_xsettings.c:519
 #, fuzzy
 msgid "Enable icon theme for Enlightenment"
 msgstr "Sobre Enlightenment"
@@ -8062,8 +8069,8 @@ msgstr "Centrar finestra per última vegada l'interruptor d'escriptori"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
 #, fuzzy
-msgid "Revert focus when it is lost"
-msgstr "Revertir el focus quan es perd"
+msgid "Focus last focused window on lost focus"
+msgstr "Centrar finestra per última vegada l'interruptor d'escriptori"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:344
 #, fuzzy
@@ -8744,6 +8751,11 @@ msgstr "Tot"
 msgid "Plugin"
 msgstr "Text Pla"
 
+#: src/modules/everything/evry_plug_actions.c:172
+#, fuzzy
+msgid "Actions"
+msgstr "Acció"
+
 #: src/modules/everything/evry_plug_aggregator.c:122
 #, c-format
 msgid "%d item"
@@ -8755,6 +8767,10 @@ msgstr[1] ""
 #, fuzzy
 msgid "No plugins loaded"
 msgstr "No hi ha plugins carregats"
+
+#: src/modules/everything/evry_plug_clipboard.c:33
+msgid "Copy to Clipboard"
+msgstr ""
 
 #: src/modules/everything/evry_view_help.c:67
 msgid ""
@@ -8776,6 +8792,50 @@ msgid ""
 "</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
 "toggle thumb view modes"
 msgstr ""
+
+#: src/modules/everything/evry_plug_apps.c:1148
+#, fuzzy
+msgid "Exebuf"
+msgstr "Typebuf"
+
+#: src/modules/everything/evry_plug_apps.c:1163
+#, fuzzy
+msgid "Open With..."
+msgstr "Obre amb ..."
+
+#: src/modules/everything/evry_plug_apps.c:1176
+#, fuzzy
+msgid "Open File..."
+msgstr "Obre amb ..."
+
+#: src/modules/everything/evry_plug_apps.c:1190
+#, fuzzy
+msgid "Edit Application Entry"
+msgstr "Afegeix Aplicació"
+
+#: src/modules/everything/evry_plug_apps.c:1197
+#, fuzzy
+msgid "New Application Entry"
+msgstr "Nova Aplicació "
+
+#: src/modules/everything/evry_plug_apps.c:1204
+msgid "Run with Sudo"
+msgstr ""
+
+#: src/modules/everything/evry_plug_apps.c:1210
+#: src/modules/fileman/e_fwin.c:2146 src/modules/fileman/e_fwin.c:2506
+msgid "Open with..."
+msgstr "Obre amb ..."
+
+#: src/modules/everything/evry_plug_apps.c:1217
+#, fuzzy
+msgid "Open Terminal here"
+msgstr "Executa en una Terminal"
+
+#: src/modules/everything/evry_plug_apps.c:1223
+#, fuzzy
+msgid "Run Executable"
+msgstr "Executable"
 
 #: src/modules/everything/evry_plug_apps.c:1303
 #: src/modules/everything/evry_plug_apps.c:1438
@@ -8803,6 +8863,16 @@ msgstr "sudo interfície gràfica d'usuari"
 #, fuzzy
 msgid "Everything Plugin"
 msgstr "Tot"
+
+#: src/modules/everything/evry_plug_calc.c:252
+msgid "Calculator"
+msgstr ""
+
+#: src/modules/everything/evry_plug_files.c:1372
+#: src/modules/everything/evry_plug_files.c:1384
+#, fuzzy
+msgid "Recent Files"
+msgstr "Canvia el nom del Fitxer"
 
 #: src/modules/everything/evry_plug_files.c:1456
 #: src/modules/everything/evry_plug_files.c:1607
@@ -8834,6 +8904,25 @@ msgstr "Memòria cau de directoris visitats"
 #, fuzzy
 msgid "Clear cache"
 msgstr "Neteja"
+
+#: src/modules/everything/evry_plug_settings.c:187
+#, fuzzy
+msgid "Show Dialog"
+msgstr "Diàlegs "
+
+#: src/modules/everything/evry_plug_windows.c:430
+#, fuzzy
+msgid "Switch to Window"
+msgstr "Canviar a l'escriptori de la nova finestra"
+
+#: src/modules/everything/evry_plug_windows.c:445
+#, fuzzy
+msgid "Toggle Fullscreen"
+msgstr "Pantalla Completa"
+
+#: src/modules/everything/evry_plug_windows.c:459
+msgid "Send to Desktop"
+msgstr "Envia a la Taula de Treball"
 
 #: src/modules/fileman/e_fwin.c:251
 #, fuzzy
@@ -8869,10 +8958,6 @@ msgstr "Rus"
 msgid "Open"
 msgstr "Obre"
 
-#: src/modules/fileman/e_fwin.c:2146 src/modules/fileman/e_fwin.c:2506
-msgid "Open with..."
-msgstr "Obre amb ..."
-
 #: src/modules/fileman/e_fwin.c:2537 src/modules/fileman/e_fwin.c:2562
 #, fuzzy, c-format
 msgid "%d file"
@@ -8900,80 +8985,85 @@ msgid "Custom Command"
 msgstr "Executa Comanda"
 
 #: src/modules/fileman/e_fwin.c:2943
-#: src/modules/fileman_opinfo/e_mod_main.c:89
+#: src/modules/fileman_opinfo/e_mod_main.c:99
 #, fuzzy, c-format
 msgid "Copying is aborted"
 msgstr "La còpia s'avorta"
 
 #: src/modules/fileman/e_fwin.c:2947
-#: src/modules/fileman_opinfo/e_mod_main.c:92
+#: src/modules/fileman_opinfo/e_mod_main.c:103
 #, fuzzy, c-format
 msgid "Moving is aborted"
 msgstr "Moure s'avorta"
 
 #: src/modules/fileman/e_fwin.c:2951
-#: src/modules/fileman_opinfo/e_mod_main.c:95
+#: src/modules/fileman_opinfo/e_mod_main.c:107
 #, fuzzy, c-format
 msgid "Deleting is aborted"
 msgstr "Esborrar es cancel·la"
 
 #: src/modules/fileman/e_fwin.c:2955
+#: src/modules/fileman_opinfo/e_mod_main.c:111
 #, fuzzy, c-format
 msgid "Secure deletion is aborted"
 msgstr "Esborrar es cancel·la"
 
 #: src/modules/fileman/e_fwin.c:2959
-#: src/modules/fileman_opinfo/e_mod_main.c:98
+#: src/modules/fileman_opinfo/e_mod_main.c:115
 #, fuzzy, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "L'operació desconeguda d'esclau s'avorta"
 
 #: src/modules/fileman/e_fwin.c:2969
-#: src/modules/fileman_opinfo/e_mod_main.c:108
+#: src/modules/fileman_opinfo/e_mod_main.c:125
 #, c-format
 msgid "Copy of %s done"
 msgstr ""
 
 #: src/modules/fileman/e_fwin.c:2971
+#: src/modules/fileman_opinfo/e_mod_main.c:127
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr ""
 
 #: src/modules/fileman/e_fwin.c:2976
-#: src/modules/fileman_opinfo/e_mod_main.c:114
+#: src/modules/fileman_opinfo/e_mod_main.c:133
 #, c-format
 msgid "Move of %s done"
 msgstr ""
 
 #: src/modules/fileman/e_fwin.c:2978
+#: src/modules/fileman_opinfo/e_mod_main.c:135
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr ""
 
 #: src/modules/fileman/e_fwin.c:2983
-#: src/modules/fileman_opinfo/e_mod_main.c:120
+#: src/modules/fileman_opinfo/e_mod_main.c:141
 #, fuzzy, c-format
 msgid "Delete done"
 msgstr "Elimina Tecla"
 
 #: src/modules/fileman/e_fwin.c:2985
-#: src/modules/fileman_opinfo/e_mod_main.c:122
+#: src/modules/fileman_opinfo/e_mod_main.c:143
 #, fuzzy, c-format
 msgid "Deleting files..."
 msgstr "Fitxer de Taula de Treball"
 
 #: src/modules/fileman/e_fwin.c:2990
+#: src/modules/fileman_opinfo/e_mod_main.c:148
 #, fuzzy, c-format
 msgid "Secure delete done"
 msgstr "Resolució de Pantalla"
 
 #: src/modules/fileman/e_fwin.c:2992
+#: src/modules/fileman_opinfo/e_mod_main.c:150
 #, fuzzy, c-format
 msgid "Securely deleting files..."
 msgstr "Fitxer de Taula de Treball"
 
 #: src/modules/fileman/e_fwin.c:2996
-#: src/modules/fileman_opinfo/e_mod_main.c:125
+#: src/modules/fileman_opinfo/e_mod_main.c:154
 #, fuzzy, c-format
 msgid "Unknown operation from slave %d"
 msgstr "L'operació desconeguda d'esclau s'avorta"
@@ -9206,50 +9296,19 @@ msgstr "Re-iniciar l'ordinador"
 msgid "Navigate..."
 msgstr ""
 
-#: src/modules/fileman_opinfo/e_mod_main.c:110
-#, fuzzy, c-format
-msgid "Copying %s (eta: %d s)"
-msgstr "La còpia s'avorta"
-
-#: src/modules/fileman_opinfo/e_mod_main.c:116
-#, c-format
-msgid "Moving %s (eta: %d s)"
-msgstr ""
-
-#: src/modules/fileman_opinfo/e_mod_main.c:133
-#: src/modules/fileman_opinfo/e_mod_main.c:143
-#, fuzzy
-msgid "(no information)"
-msgstr "Informació d'Enllaç "
-
-#: src/modules/fileman_opinfo/e_mod_main.c:137
-#, fuzzy, c-format
-msgid "File: %s"
-msgstr "Fitxer"
-
-#: src/modules/fileman_opinfo/e_mod_main.c:139
-#, c-format
-msgid "From: %s"
-msgstr ""
-
-#: src/modules/fileman_opinfo/e_mod_main.c:146
-#, c-format
-msgid "To: %s"
-msgstr ""
-
-#: src/modules/fileman_opinfo/e_mod_main.c:324
+#: src/modules/fileman_opinfo/e_mod_main.c:323
 #, fuzzy, c-format
 msgid "Processing %d operation"
 msgid_plural "Processing %d operations"
 msgstr[0] "Durada de l'ocultació "
 msgstr[1] "Durada de l'ocultació "
 
-#: src/modules/fileman_opinfo/e_mod_main.c:328
+#: src/modules/fileman_opinfo/e_mod_main.c:327
 #, fuzzy
 msgid "Filemanager is idle"
 msgstr "Gestor de fitxers està inactiu"
 
-#: src/modules/fileman_opinfo/e_mod_main.c:415
+#: src/modules/fileman_opinfo/e_mod_main.c:414
 #, fuzzy
 msgid "EFM Operation Info"
 msgstr "EFM Informació Operació"
@@ -9758,37 +9817,37 @@ msgstr ""
 "que està sent utilitzat pel codi<br>intern per als menús contextuals."
 "<br>Aquest botó només funciona en la finestra emergent."
 
-#: src/modules/pager/e_mod_main.c:2953
+#: src/modules/pager/e_mod_main.c:2947
 #, fuzzy
 msgid "Show Pager Popup"
 msgstr "Mostra Pager Popup"
 
-#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2996
+#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2990
 #, fuzzy
 msgid "Popup Desk Right"
 msgstr "Dret Informació Popup"
 
-#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2997
+#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2991
 #, fuzzy
 msgid "Popup Desk Left"
 msgstr "Informació emergent esquerra"
 
-#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2998
+#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2992
 #, fuzzy
 msgid "Popup Desk Up"
 msgstr "Informació emergent fins"
 
-#: src/modules/pager/e_mod_main.c:2966 src/modules/pager/e_mod_main.c:2999
+#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2993
 #, fuzzy
 msgid "Popup Desk Down"
 msgstr "Informació emergent de Down"
 
-#: src/modules/pager/e_mod_main.c:2968 src/modules/pager/e_mod_main.c:3000
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2994
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "Informació emergent Següent"
 
-#: src/modules/pager/e_mod_main.c:2970 src/modules/pager/e_mod_main.c:3001
+#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2995
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "Informació anterior Popup"
@@ -9896,12 +9955,16 @@ msgstr "Temperatura"
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: src/modules/wizard/e_wizard.c:217
+#: src/modules/wizard/e_wizard.c:242 src/modules/wizard/e_wizard.c:268
 #, fuzzy
 msgid "Next"
 msgstr "NetWM"
 
-#: src/modules/wizard/e_wizard.c:282
+#: src/modules/wizard/e_wizard.c:273
+msgid "Please Wait..."
+msgstr ""
+
+#: src/modules/wizard/e_wizard.c:321
 #, fuzzy
 msgid "Welcome to Enlightenment"
 msgstr "Sobre Enlightenment"
@@ -9917,7 +9980,7 @@ msgstr "Seleccioneu una Icona"
 msgid "Profile"
 msgstr "Perfils"
 
-#: src/modules/wizard/page_040.c:53
+#: src/modules/wizard/page_040.c:39
 msgid "Adding missing App files"
 msgstr ""
 
@@ -9941,16 +10004,24 @@ msgstr "Les més usades"
 msgid "Network Management"
 msgstr "Manegament d'Energia"
 
-#: src/modules/wizard/page_110.c:17
+#: src/modules/wizard/page_110.c:18
 #, fuzzy
 msgid "Connman network service not found"
 msgstr "Connectar a servei de xarxa."
 
-#: src/modules/wizard/page_110.c:20
+#: src/modules/wizard/page_110.c:21
 msgid "Install Connman for network management support"
 msgstr ""
 
-#: src/modules/wizard/page_110.c:149
+#: src/modules/wizard/page_110.c:24
+msgid "Connman support disabled"
+msgstr ""
+
+#: src/modules/wizard/page_110.c:27
+msgid "Install/Enable Connman for network management support"
+msgstr ""
+
+#: src/modules/wizard/page_110.c:157
 msgid "Checking to see if Connman exists"
 msgstr ""
 
@@ -10011,6 +10082,20 @@ msgstr ""
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
 msgstr ""
+
+#: src/modules/wizard/page_180.c:27
+#, fuzzy
+msgid "Information"
+msgstr "Informació d'Enllaç "
+
+#: src/modules/wizard/page_180.c:33
+msgid "A taskbar can be added to<br>show open windows and applications."
+msgstr ""
+
+#: src/modules/wizard/page_180.c:39
+#, fuzzy
+msgid "Enable Taskbar"
+msgstr "Salta Taskbar"
 
 #: src/modules/mixer/app_mixer.c:165
 #, fuzzy
@@ -10566,6 +10651,44 @@ msgstr ""
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
+#~ "><br><br>We hope you enjoy using this software as much as we enjoyed "
+#~ "writing it.<br><br>This software is provided as-is with no explicit or "
+#~ "implied warranty. This software is governed by licensing conditions, so "
+#~ "please see the COPYING and COPYING-PLAIN licence files installed on your "
+#~ "system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and "
+#~ "it is not stable. Many features are incomplete or even non-existent yet "
+#~ "and may have many bugs. You have been <hilight>WARNED!</>"
+#~ msgstr ""
+#~ "Copyright &copy; 1999-2007, per l'equip de Desenvolupadors "
+#~ "d'Enlightenment .<br><br>Nosaltres esperam que disfruti utilitzant aquest "
+#~ "software tan com nosaltres hem disfrutat escriguen-l'ho.<br><br>Aquest "
+#~ "programari es proveeix tal com és, sense una garantia explícita o "
+#~ "implementada. Aquest software està  governat per les condicions de "
+#~ "llicència, per tan, si us plau, mira els fitxers de llicències COPYING I "
+#~ "COPYING-PLAIN instal·lats en el teu sistema.<br><br>Enlightenment està  "
+#~ "sota <hilight>FORT DESENVOLUPAMENT</hilight>i no és estable. Algunes de "
+#~ "les característiques són incompletes o fins i tot inexistents degut a que "
+#~ "encara deuen tenir algun \"bug\". Se l'ha<hilight>AVISA'T!!!</hilight>"
+
+#, fuzzy
+#~ msgid "Revert focus when it is lost"
+#~ msgstr "Revertir el focus quan es perd"
+
+#, fuzzy
+#~ msgid "Copying %s (eta: %d s)"
+#~ msgstr "La còpia s'avorta"
+
+#, fuzzy
+#~ msgid "(no information)"
+#~ msgstr "Informació d'Enllaç "
+
+#, fuzzy
+#~ msgid "File: %s"
+#~ msgstr "Fitxer"
 
 #, fuzzy
 #~ msgid "Using"
@@ -11203,43 +11326,8 @@ msgstr ""
 #~ msgstr "Motor Defecte"
 
 #, fuzzy
-#~ msgid "Open With..."
-#~ msgstr "Obre amb ..."
-
-#, fuzzy
-#~ msgid "Open File..."
-#~ msgstr "Obre amb ..."
-
-#, fuzzy
-#~ msgid "Edit Application Entry"
-#~ msgstr "Afegeix Aplicació"
-
-#, fuzzy
-#~ msgid "New Application Entry"
-#~ msgstr "Nova Aplicació "
-
-#, fuzzy
-#~ msgid "Run Executable"
-#~ msgstr "Executable"
-
-#, fuzzy
 #~ msgid "Move To ..."
 #~ msgstr "Més..."
-
-#, fuzzy
-#~ msgid "Recent Files"
-#~ msgstr "Canvia el nom del Fitxer"
-
-#, fuzzy
-#~ msgid "Show Dialog"
-#~ msgstr "Diàlegs "
-
-#, fuzzy
-#~ msgid "Toggle Fullscreen"
-#~ msgstr "Pantalla Completa"
-
-#~ msgid "Send to Desktop"
-#~ msgstr "Envia a la Taula de Treball"
 
 #, fuzzy
 #~ msgid "Select application menu"
