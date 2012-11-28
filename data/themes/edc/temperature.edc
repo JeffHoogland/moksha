@@ -1,0 +1,118 @@
+group { name: "e/modules/temperature/main";
+   images.image: "therm_content.png" COMP;
+   images.image: "therm_shadow.png" COMP;
+   images.image: "therm_shine.png" COMP;
+   min: 16 16;
+   max: 128 128;
+   script {
+    public message(Msg_Type:type, id, ...) {
+       if ((type == MSG_FLOAT) && (id == 1)) {
+          new Float:val;
+          val = getfarg(2);
+          set_drag(PART:"temp_top", 0.0, val);
+       }
+    }
+   }
+   parts {
+      part { name: "shadow";
+         description { state: "default" 0.0;
+            aspect: 0.5 0.5; aspect_preference: BOTH;
+            align: 0.5 0.5;
+            max: 80 160;
+            image.normal: "therm_shadow.png";
+         }
+      }
+      part { name: "temp";
+         clip_to: "temp_clip";
+         description { state: "default" 0.0;
+            rel1.to: "shadow";
+            rel2.to: "shadow";
+            image.normal: "therm_content.png";
+         }
+      }
+      part { name: "overlay";
+         description { state: "default" 0.0;
+            rel1.to: "shadow";
+            rel2.to: "shadow";
+            image.normal: "therm_shine.png";
+         }
+      }
+      part { name: "e.text.reading"; type: TEXT;
+         scale: 1;
+         effect: SHADOW BOTTOM;
+         clip_to: "fade_clip";
+         description { state: "default" 0.0;
+            color: 255 255 255 0;
+            color3: 0 0 0 0;
+            color_class: "module_label";
+            text { font: "Sans"; size: 6;
+               min: 1 1;
+               text_class: "module_small";
+            }
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+         }
+      }
+      part { name: "fade_clip"; type: RECT;
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+         }
+         description { state: "faded" 0.0;
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "temp_clip"; type: RECT;
+         clip_to: "fade_clip";
+         description { state: "default" 0.0;
+            rel1.to_y: "temp_top";
+         }
+      }
+      part { name: "temp_top"; type: SPACER;
+         dragable.x: 0 0 0;
+         dragable.y: -1 1 0;
+         dragable.confine: "temp_limit";
+         description { state: "default" 0.0;
+         }
+      }
+      part { name: "temp_limit"; type: SPACER;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 0.1;
+            rel2.relative: 1.0 0.9;
+         }
+      }
+      part { name: "over"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,in"; source: "over";
+         action: STATE_SET "visible" 0.0;
+         transition: LINEAR 0.3;
+         target: "e.text.reading";
+      }
+      program {
+         signal: "mouse,out"; source: "over";
+         action: STATE_SET "default" 0.0;
+         transition: LINEAR 1.0;
+         target: "e.text.reading";
+      }
+      program {
+         signal: "e,state,known"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "fade_clip";
+      }
+      program {
+         signal: "e,state,unknown"; source: "e";
+         action: STATE_SET "faded" 0.0;
+         target: "fade_clip";
+      }
+   }
+}
+
+

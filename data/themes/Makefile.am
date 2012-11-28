@@ -59,6 +59,7 @@ edc/sys.edc \
 edc/syscon.edc \
 edc/systray.edc \
 edc/tasks.edc \
+edc/temperature.edc \
 edc/textblock.edc \
 edc/toolbar.edc \
 edc/transitions.edc \
@@ -274,6 +275,9 @@ img/tacho_hand_small_min2.png \
 img/tacho_hand_small_min3.png \
 img/tacho_hand_small_min4.png \
 img/tacho_hand_small_shadow.png \
+img/therm_content.png \
+img/therm_shadow.png \
+img/therm_shine.png \
 img/vert_bar_inset.png \
 img/vert_glow_run.png \
 img/vertical_separated_bar_glow.png \

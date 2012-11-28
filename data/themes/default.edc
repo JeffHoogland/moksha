@@ -53,6 +53,7 @@ collections {
 #include "edc/randr.edc"
 #include "edc/notification.edc"
 #include "edc/cpufreq.edc"
+#include "edc/temperature.edc"
 
 // port unchanged stuff so this can work as a replacement
 #include "edc/O/backlight.edc"
@@ -64,8 +65,8 @@ collections {
 #include "edc/O/icons.edc"
 #include "edc/O/illume_gad.edc"
 #include "edc/O/mixer.edc"
-#include "edc/O/temperature.edc"
 #include "edc/O/wallpaper.edc"
+//#include "edc/O/temperature.edc"
 //#include "edc/O/cpufreq.edc"
 //#include "edc/O/gadman.edc"
 //#include "edc/O/randr.edc"
