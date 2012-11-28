@@ -339,7 +339,7 @@ test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable
 
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
-hal_mount="ehal >= 1.7.0, e_dbus >= 1.7.0"
+hal_mount="ehal >= 1.7.0, edbus >= 1.7.0"
 udisks_mount="eukit >= 1.7.0"
 AC_ARG_ENABLE([mount-hal],
   AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
@@ -477,7 +477,7 @@ ecore-file >= 1.7.0 \
 ecore-ipc >= 1.7.0 \
 eet >= 1.7.0 \
 efreet >= 1.7.0 \
-e_dbus >= 1.7.0 \
+edbus >= 1.7.0 \
 eina >= 1.7.0"
 efm_requires="$efm_requires $eeze_mount $dbus_mount $hal_mount $udisks_mount"
 
@@ -488,7 +488,7 @@ PKG_CHECK_MODULES(E_FM, [$efm_requires])
 PKG_CHECK_MODULES(E_FM_CMDLINE, [
   ecore >= ${efl_version}
   ecore-file >= ${efl_version}
-  e_dbus >= ${efl_version}
+  edbus >= ${efl_version}
   dbus-1
 ])
 
@@ -546,7 +546,7 @@ PKG_CHECK_MODULES(E, [
   efreet-trash >= ${efl_version}
   eina >= ${efl_version}
   dbus-1
-  e_dbus >= ${efl_version}
+  edbus >= ${efl_version}
   eio >= ${efl_version}
   $hal_mount
   $eeze_mount
@@ -568,7 +568,7 @@ efreet-mime >= ${efl_version} \
 efreet-trash >= ${efl_version} \
 eina >= ${efl_version} \
 dbus-1 \
-e_dbus >= ${efl_version} \
+edbus >= ${efl_version} \
 eio >= ${efl_version} \
 $hal_mount \
 $udisks_mount \
@@ -719,7 +719,7 @@ AC_ARG_ENABLE([enotify],
   AC_CACHE_VAL([e_cv_want_enotify], [e_cv_want_enotify=yes])
 )
 if test "x$e_cv_want_enotify" != "xno" ; then
-  AC_E_CHECK_PKG(ENOTIFY, [ e_dbus >= 1.7.0 enotify >= 1.7.0 ], 
+  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= 1.7.0 enotify >= 1.7.0 ], 
   [
     AC_DEFINE_UNQUOTED([HAVE_ENOTIFY], [1], [enable enotify])
   ], 
@@ -805,7 +805,7 @@ AM_CONDITIONAL(HAVE_ECONNMAN, false)
 AM_CONDITIONAL(HAVE_DUMMY, false)
 define([CHECK_MODULE_CONNMAN],
 [
-  AC_E_CHECK_PKG(ECONNMAN, [ edbus >= 1.7.0 ], [], [CONNMAN=false])
+  AC_E_CHECK_PKG(ECONNMAN, [ edbus2 ], [], [CONNMAN=false])
 dnl  AC_E_CHECK_PKG(DUMMY, [ connman >= 1.0 ], [], [CONNMAN=false])
 ])
 AC_SUBST(ECONNMAN_CFLAGS)
