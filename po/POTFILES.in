@@ -284,7 +284,5 @@ src/modules/tiling/e_mod_tiling.h
 src/modules/xkbswitch/e_mod_main.c
 src/modules/xkbswitch/e_mod_config.c
 src/modules/xkbswitch/e_mod_parse.c
-src/modules/notification/e_mod_box.c
 src/modules/notification/e_mod_main.c
 src/modules/notification/e_mod_config.c
-src/modules/notification/e_mod_config_item.c
