@@ -1,16 +1,5 @@
 #include "e_mod_main.h"
 
-/* Gadcon function protos */
-static E_Gadcon_Client *_gc_init(E_Gadcon   *gc,
-                                 const char *name,
-                                 const char *id,
-                                 const char *style);
-static void         _gc_shutdown(E_Gadcon_Client *gcc);
-static const char  *_gc_label(const E_Gadcon_Client_Class *client_class);
-static Evas_Object *_gc_icon(const E_Gadcon_Client_Class *client_class,
-                             Evas                  *evas);
-static const char  *_gc_id_new(const E_Gadcon_Client_Class *client_class);
-
 /* Callback function protos */
 static int  _notification_cb_notify(E_Notification_Daemon *daemon,
                                     E_Notification        *n);
@@ -26,141 +15,6 @@ E_Module *notification_mod = NULL;
 Config *notification_cfg = NULL;
 
 static E_Config_DD *conf_edd = NULL;
-static E_Config_DD *conf_item_edd = NULL;
-
-/* Gadcon Api Functions */
-const E_Gadcon_Client_Class _gc_class =
-{
-   GADCON_CLIENT_CLASS_VERSION, "notification",
-   {
-      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
-      e_gadcon_site_is_not_toolbar
-   },
-   E_GADCON_CLIENT_STYLE_PLAIN
-};
-
-static E_Gadcon_Client *
-_gc_init(E_Gadcon   *gc,
-         const char *name,
-         const char *id,
-         const char *style)
-{
-   Notification_Box *b;
-   E_Gadcon_Client *gcc;
-   Config_Item *ci;
-   Instance *inst;
-
-   inst = E_NEW(Instance, 1);
-   ci = notification_box_config_item_get(id);
-   b = notification_box_get(ci->id, gc->evas);
-
-   inst->ci = ci;
-   b->inst = inst;
-   inst->n_box = b;
-
-   gcc = e_gadcon_client_new(gc, name, id, style, b->o_box);
-   gcc->data = inst;
-   inst->gcc = gcc;
-
-   evas_object_event_callback_add(b->o_box, EVAS_CALLBACK_MOVE,
-                                  notification_box_cb_obj_moveresize, inst);
-   evas_object_event_callback_add(b->o_box, EVAS_CALLBACK_RESIZE,
-                                  notification_box_cb_obj_moveresize, inst);
-   notification_cfg->instances = eina_list_append(notification_cfg->instances, inst);
-   _gc_orient(gcc, gc->orient);
-   return gcc;
-}
-
-static void
-_gc_shutdown(E_Gadcon_Client *gcc)
-{
-   Instance *inst;
-   Notification_Box_Icon *ic;
-   
-   inst = gcc->data;
-   EINA_LIST_FREE(inst->n_box->icons, ic)
-     {
-        evas_object_del(ic->o_holder);
-        evas_object_del(ic->o_holder2);
-        if (ic->border) e_object_unref(E_OBJECT(ic->border));
-        if (ic->notif) e_notification_unref(ic->notif);
-        free(ic);
-     }
-   if (inst->n_box->o_empty) evas_object_del(inst->n_box->o_empty);
-   if (inst->n_box->o_box) evas_object_del(inst->n_box->o_box);
-   inst->n_box->o_box = inst->n_box->o_empty = NULL;
-   notification_cfg->instances = eina_list_remove(notification_cfg->instances, inst);
-   free(inst);
-}
-
-void
-_gc_orient(E_Gadcon_Client *gcc,
-           E_Gadcon_Orient  orient)
-{
-   Instance *inst;
-
-   inst = gcc->data;
-   switch (orient)
-     {
-      case E_GADCON_ORIENT_FLOAT:
-      case E_GADCON_ORIENT_HORIZ:
-      case E_GADCON_ORIENT_TOP:
-      case E_GADCON_ORIENT_BOTTOM:
-      case E_GADCON_ORIENT_CORNER_TL:
-      case E_GADCON_ORIENT_CORNER_TR:
-      case E_GADCON_ORIENT_CORNER_BL:
-      case E_GADCON_ORIENT_CORNER_BR:
-        notification_box_orient_set(inst->n_box, 1);
-        e_gadcon_client_aspect_set(gcc, MAX(eina_list_count(inst->n_box->icons), 1) * 16, 16);
-        break;
-
-      case E_GADCON_ORIENT_VERT:
-      case E_GADCON_ORIENT_LEFT:
-      case E_GADCON_ORIENT_RIGHT:
-      case E_GADCON_ORIENT_CORNER_LT:
-      case E_GADCON_ORIENT_CORNER_RT:
-      case E_GADCON_ORIENT_CORNER_LB:
-      case E_GADCON_ORIENT_CORNER_RB:
-        notification_box_orient_set(inst->n_box, 0);
-        e_gadcon_client_aspect_set(gcc, 16, MAX(eina_list_count(inst->n_box->icons), 1) * 16);
-        break;
-
-      default:
-        break;
-     }
-   e_gadcon_client_min_size_set(gcc, 16, 16);
-}
-
-static const char *
-_gc_label(const E_Gadcon_Client_Class *client_class __UNUSED__)
-{
-   return _("Notification Box");
-}
-
-static Evas_Object *
-_gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__,
-         Evas                  *evas)
-{
-   Evas_Object *o;
-   char buf[4096];
-
-   o = edje_object_add(evas);
-   snprintf(buf, sizeof(buf), "%s/e-module-notification.edj",
-            e_module_dir_get(notification_mod));
-   if (!e_theme_edje_object_set(o, "base/theme/modules/notification",
-                                "icon"))
-     edje_object_file_set(o, buf, "icon");
-   return o;
-}
-
-static const char *
-_gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
-{
-   Config_Item *ci;
-
-   ci = notification_box_config_item_get(NULL);
-   return ci->id;
-}
 
 static unsigned int
 _notification_notify(E_Notification *n)
@@ -176,8 +30,6 @@ _notification_notify(E_Notification *n)
    e_notification_id_set(n, new_id);
 
    popuped = notification_popup_notify(n, replaces_id, appname);
-   notification_box_notify(n, replaces_id, new_id);
-
    if (!popuped)
      {
         e_notification_hint_urgency_set(n, 4);
@@ -297,18 +149,6 @@ e_modapi_init(E_Module *m)
                                  _("Notification"), NULL,
                                  buf, e_int_config_notification_module);
 
-   conf_item_edd = E_CONFIG_DD_NEW("Notification_Config_Item", Config_Item);
-#undef T
-#undef D
-#define T Config_Item
-#define D conf_item_edd
-   E_CONFIG_VAL(D, T, id, STR);
-   E_CONFIG_VAL(D, T, show_label, INT);
-   E_CONFIG_VAL(D, T, show_popup, INT);
-   E_CONFIG_VAL(D, T, focus_window, INT);
-   E_CONFIG_VAL(D, T, store_low, INT);
-   E_CONFIG_VAL(D, T, store_normal, INT);
-   E_CONFIG_VAL(D, T, store_critical, INT);
 
    conf_edd = E_CONFIG_DD_NEW("Notification_Config", Config);
 #undef T
@@ -324,7 +164,6 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, force_timeout, INT);
    E_CONFIG_VAL(D, T, ignore_replacement, INT);
    E_CONFIG_VAL(D, T, dual_screen, INT);
-   E_CONFIG_LIST(D, T, items, conf_item_edd);
 
    notification_cfg = e_config_domain_load("module.notification", conf_edd);
    if (notification_cfg &&
@@ -359,54 +198,34 @@ e_modapi_init(E_Module *m)
 
    notification_cfg->last_config_mode.presentation = e_config->mode.presentation;
    notification_cfg->last_config_mode.offline = e_config->mode.offline;
-   notification_cfg->handlers = eina_list_append
-       (notification_cfg->handlers, ecore_event_handler_add
+   notification_cfg->handler = ecore_event_handler_add
          (E_EVENT_CONFIG_MODE_CHANGED, (Ecore_Event_Handler_Cb)_notification_cb_config_mode_changed,
-         notification_cfg));
+         notification_cfg);
    notification_cfg->initial_mode_timer = ecore_timer_add
        (0.1, (Ecore_Task_Cb)_notification_cb_initial_mode_timer, notification_cfg);
 
-   /* set up the borders events callbacks */
-   notification_cfg->handlers = eina_list_append
-       (notification_cfg->handlers, ecore_event_handler_add
-         (E_EVENT_BORDER_REMOVE, (Ecore_Event_Handler_Cb)notification_box_cb_border_remove, NULL));
-
    notification_mod = m;
-   e_gadcon_provider_register(&_gc_class);
    return m;
 }
 
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
-   Ecore_Event_Handler *h;
-   Config_Item *ci;
-
-   e_gadcon_provider_unregister(&_gc_class);
-
    if (notification_cfg->initial_mode_timer)
      ecore_timer_del(notification_cfg->initial_mode_timer);
 
-   EINA_LIST_FREE(notification_cfg->handlers, h)
-     ecore_event_handler_del(h);
+   if (notification_cfg->handler)
+     ecore_event_handler_del(notification_cfg->handler);
 
    if (notification_cfg->cfd) e_object_del(E_OBJECT(notification_cfg->cfd));
    e_configure_registry_item_del("extensions/notification");
    e_configure_registry_category_del("extensions");
 
-   EINA_LIST_FREE(notification_cfg->items, ci)
-     {
-        eina_stringshare_del(ci->id);
-        free(ci);
-     }
-
-   notification_box_shutdown();
    notification_popup_shutdown();
 
    e_notification_daemon_free(notification_cfg->daemon);
    e_notification_daemon_shutdown();
    _notification_cfg_free(notification_cfg);
-   E_CONFIG_DD_FREE(conf_item_edd);
    E_CONFIG_DD_FREE(conf_edd);
    notification_mod = NULL;
 
@@ -416,9 +235,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
-   int ret;
-   ret = e_config_domain_save("module.notification", conf_edd, notification_cfg);
-   return ret;
+   return e_config_domain_save("module.notification", conf_edd, notification_cfg);
 }
 
 /* Callbacks */
@@ -459,6 +276,6 @@ _notification_cfg_new(void)
 static void
 _notification_cfg_free(Config *cfg)
 {
-   E_FREE(cfg);
+   free(cfg);
 }
 

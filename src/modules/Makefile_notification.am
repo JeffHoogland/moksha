@@ -9,9 +9,7 @@ notificationpkg_LTLIBRARIES = notification/module.la
 
 notification_module_la_SOURCES  = notification/e_mod_main.h \
 				  notification/e_mod_main.c \
-				  notification/e_mod_box.c \
 				  notification/e_mod_config.c \
-				  notification/e_mod_config_item.c \
 				  notification/e_mod_popup.c
 
 notification_module_la_LIBADD = @ENOTIFY_LIBS@
