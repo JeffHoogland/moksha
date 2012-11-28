@@ -58,7 +58,8 @@ _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
    if (!o || !ere) return;
 
    // Don't show if the operation keep less than 1 second
-   if (ere->start_time + 1.0 > ecore_loop_time_get()) return;
+   if (!ere->needs_attention && (ere->start_time + 1.0 > ecore_loop_time_get()))
+     return;
    
    // Update icon
    switch (ere->op)
@@ -82,13 +83,7 @@ _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
       default:
         edje_object_signal_emit(o, "e,action,icon,unknown", "e");
    }
-   
-   // Update has/none linked efm window
-   if (e_win_evas_object_win_get(ere->e_fm))
-      edje_object_signal_emit(o, "state,set,window,exist", "fileman_opinfo");
-   else
-      edje_object_signal_emit(o, "state,set,window,absent", "fileman_opinfo");
-   
+
    // Update information text
    switch (ere->status)
      {
@@ -175,11 +170,27 @@ _opinfo_op_registry_listener(void *data, const E_Fm2_Op_Registry_Entry *ere)
           }
      }
 
-   // Update attention
+   // Show/hide the red attention led
    if (ere->needs_attention)
-      edje_object_signal_emit(o, "e,action,set,need_attention", "e");
+     {
+        if (!evas_object_data_get(o, "attention_started"))
+          {
+             evas_object_data_set(o, "attention_started", o);
+             edje_object_signal_emit(o, "e,state,attention,start", "e");
+             if (evas_object_data_get(o, "attention_stopped"))
+               evas_object_data_del(o, "attention_stopped");
+          }
+     }
    else
-      edje_object_signal_emit(o, "e,action,set,normal", "e");
+     {
+        if (!evas_object_data_get(o, "attention_stopped"))
+          {
+             evas_object_data_set(o, "attention_stopped", o);
+             edje_object_signal_emit(o, "e,state,attention,stop", "e");
+             if (evas_object_data_get(o, "attention_started"))
+               evas_object_data_del(o, "attention_started");
+          }
+     }
 
    // Update gauge
    edje_object_part_drag_size_set(o, "e.gauge.bar",
@@ -276,6 +287,8 @@ _opinfo_op_registry_entry_add_cb(void *data, __UNUSED__ int type, void *event)
    e_theme_edje_object_set(o, "base/theme/fileman", "e/fileman/default/progress");
    edje_object_signal_callback_add(o, "e,fm,operation,abort", "",
                                    _opinfo_op_registry_abort_cb, (void*)(long)ere->id);
+   edje_object_signal_callback_add(o, "e,fm,window,jump", "", 
+                                   _opinfo_op_registry_window_jump_cb, (void*)(long)ere->id); 
    e_box_pack_end(inst->o_box, o);
    
    e_fm2_op_registry_entry_listener_add(ere, _opinfo_op_registry_listener,

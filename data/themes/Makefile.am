@@ -200,6 +200,8 @@ img/knob_sz_22.png \
 img/knob_sz_24.png \
 img/led_dark.png \
 img/led_light.png \
+img/led_red_light.png \
+img/led_strobe.png \
 img/led_tiny_green.png \
 img/led_tiny_orange.png \
 img/led_square_base.png \
