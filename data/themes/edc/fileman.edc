@@ -1650,7 +1650,6 @@ group { name: "e/fileman/default/rubberband";
 }
 
 group { name: "e/fileman/default/progress";
-//   min: 250 40; // this sucketh :(
    images.image: "darken_rounded_square.png" COMP;
    images.image: "knob_round_busy.png" COMP;
    images.image: "glow_round_corners.png" COMP;
@@ -1662,10 +1661,9 @@ group { name: "e/fileman/default/progress";
    parts {
       part { name: "base"; type: SPACER;
          description { state: "default" 0.0;
-            rel1.to_x: "knob";
-            rel1.relative: 1.0 0.0;
-            rel2.offset: -4 -1;
-            min: 12 12;
+            rel1.to_x: "e.text.info";
+            rel2.to_x: "e.text.info";
+            min: 0 35;
          }
       }
       part { name: "bevel"; mouse_events: 0;
@@ -1683,15 +1681,13 @@ group { name: "e/fileman/default/progress";
          scale: 1;
          description { state: "default" 0.0;
             color_class: "fileman_icon";
-            color: 255 255 255 255;
-            color3: 0 0 0 128;
             rel1.relative: 1.0 0.0;
             rel1.to_x: "knob";
             rel2.relative: 0.0 1.0;
             rel2.to_x: "close_event";
-            min: 160 0;
+            rel2.offset: -3 -1;
             text { font: "Sans"; size: 10;
-               min: 0 1;
+               min: 1 0;
                align: 0.0 0.5;
                text_class: "fileman_icon";
             }
@@ -1699,8 +1695,7 @@ group { name: "e/fileman/default/progress";
       }
       part { name: "busy_clip"; type: RECT;
          description { state: "default" 0.0;
-            rel1.offset: -20 -20;
-            rel2.offset: 19 19;
+            rel1.offset: -20 0;
             color: 255 255 255 0;
             visible: 0;
          }
@@ -1712,8 +1707,7 @@ group { name: "e/fileman/default/progress";
       }
       part { name: "led_clip"; type: RECT;
          description { state: "default" 0.0;
-            rel1.offset: -20 -20;
-            rel2.offset: 19 19;
+            rel1.offset: -20 0;
             color: 255 255 255 0;
             visible: 0;
          }
@@ -1729,9 +1723,7 @@ group { name: "e/fileman/default/progress";
             image.normal: "knob_round_busy.png";
             min: 40 40;
             max: 40 40;
-            rel1.offset: -4 -4;
-            rel2.relative: 0.0 1.0;
-            rel2.offset: -4 3;
+            fixed: 1 1;
             align: 0.0 0.5;
          }
       }
@@ -1741,10 +1733,12 @@ group { name: "e/fileman/default/progress";
             rel1.to: "knob";
             rel2.to: "knob";
             image.normal: "glow_round_corners.png";
-            map.on: 1;
-            map.smooth: 1;
-            map.rotation.center: "knob";
             fixed: 1 1;
+            map {
+               on: 1;
+               smooth: 1;
+               rotation.center: "knob";
+            }
          }
          description { state: "spin" 0.0;
             inherit: "default" 0.0;
@@ -1769,6 +1763,7 @@ group { name: "e/fileman/default/progress";
             min: 30 30;
             max: 30 30;
             fixed: 1 1;
+            rel1.offset: 5 0;
             align: 0.0 0.5;
          }
       }
@@ -1777,13 +1772,15 @@ group { name: "e/fileman/default/progress";
          description { state: "default" 0.0;
             rel1.to: "led";
             rel2.to: "led";
-            min: 45 45;
-            max: 45 45;
+            min: 40 40;
+            max: 40 40;
             fixed: 1 1;
             image.normal: "led_strobe.png";
-            map.on: 1;
-            map.smooth: 1;
-            map.rotation.center: "led";
+            map {
+               on: 1;
+               smooth: 1;
+               rotation.center: "led";
+            }
          }
          description { state: "spin" 0.0;
             inherit: "default" 0.0;
@@ -1795,8 +1792,6 @@ group { name: "e/fileman/default/progress";
             image.normal: "sym_close_light_normal.png";
             rel1.to: "close_event";
             rel2.to: "close_event";
-            min: 15 15;
-            max: 15 15;
             fixed: 1 1;
          }
          description { state: "selected" 0.0;
