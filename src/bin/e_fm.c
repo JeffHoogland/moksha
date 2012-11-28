@@ -6414,7 +6414,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
 
    fsel = e_fm2_uri_path_list_get(ev->data);
    fp = eina_list_data_get(fsel);
-   if (fp && sd->realpath)
+   if (fp && sd->realpath && ((sd->drop_all) || (!sd->drop_icon)))
      {
         const char *f;
 
@@ -6434,7 +6434,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                }
           }
      }
-
+   
    isel = _e_fm2_uri_icon_list_get(fsel);
    if (!isel) return;
    ox = 0; oy = 0;
