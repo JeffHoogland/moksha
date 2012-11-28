@@ -6963,11 +6963,17 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
                   E_Fm2_Icon *ic;
 
                   file = ecore_file_file_get(uri->path);
-                  ic = _e_fm2_icon_find(fm, file);
-                  ic->drag.dnd = EINA_FALSE;
-                  if (ic->sd->dnd_scroller) ecore_animator_del(ic->sd->dnd_scroller);
-                  ic->sd->dnd_scroller = NULL;
-                  evas_object_smart_callback_call(ic->sd->obj, "dnd_end", &ic->info);
+                  if (file)
+                    {
+                       ic = _e_fm2_icon_find(fm, file);
+                       if (ic)
+                         {
+                            ic->drag.dnd = EINA_FALSE;
+                            if (ic->sd->dnd_scroller) ecore_animator_del(ic->sd->dnd_scroller);
+                            ic->sd->dnd_scroller = NULL;
+                            evas_object_smart_callback_call(ic->sd->obj, "dnd_end", &ic->info);
+                         }
+                    }
                }
 
              if (uri->hostname) eina_stringshare_del(uri->hostname);
