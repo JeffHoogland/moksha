@@ -4,7 +4,7 @@ group { name: "e/modules/backlight/main";
    images.image: "bulb_on.png" COMP;
    images.image: "bulb_over.png" COMP;
    min: 16 16;
-   max: 152 152;
+   max: 160 160;
    script {
       public message(Msg_Type:type, id, ...) {
          if ((type == MSG_FLOAT) && (id == 0)) {
@@ -39,6 +39,7 @@ group { name: "e/modules/backlight/main";
             rel2.relative: (156/160) (156/160);
             aspect: 1.0 1.0; aspect_preference: BOTH;
             image.normal: "bulb_off.png";
+            max: 152 152;
          }
       }
       part { name: "glow2";
