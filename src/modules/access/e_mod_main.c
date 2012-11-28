@@ -1,7 +1,15 @@
 #include "e.h"
 #include "e_mod_main.h"
 #define HISTORY_MAX 8
-#define DOUBLE_DOWN_N_MOVE 0
+#define DEBUG_INFO 0
+
+#if DEBUG_INFO
+  #define INFO(cov, txt) \
+    evas_object_text_text_set(cov->text, txt); \
+    EINA_LOG_INFO("%s", txt)
+#else
+  #define INFO(cov, txt) EINA_LOG_INFO("%s", txt)
+#endif
 
 static E_Config_DD *conf_edd = NULL;
 Config *access_config = NULL;
@@ -12,6 +20,8 @@ typedef struct
    Ecore_X_Window  win;
    Ecore_Timer    *timer;
    Ecore_Timer    *double_down_timer;
+   Evas_Object    *info;
+   Evas_Object    *text;
    int             x, y, dx, dy, mx, my;
    int             mouse_history[HISTORY_MAX];
    unsigned int    dt;
@@ -26,6 +36,8 @@ typedef struct
    EINA_INLIST;
    int             device;
 } Multi;
+
+static Ecore_X_Atom _atom_access = 0;
 
 static Eina_List *covers = NULL;
 static Eina_List *handlers = NULL;
@@ -69,45 +81,6 @@ _mouse_win_fake_tap(Cover *cov, Ecore_Event_Mouse_Button *ev)
    ecore_x_mouse_out_send(inwin, x, y);
 }
 
-//FIXME: one finger cannot come here
-#if 0
-static void
-_record_mouse_history(Cover *cov, void *event)
-{
-   Ecore_Event_Mouse_Move *ev = event;
-   int i = 0;
-
-   for (i = 0; i < HISTORY_MAX; i++)
-     {
-        if (cov->mouse_history[i] == -1)
-          {
-             cov->mouse_history[i] = ev->multi.device;
-             break;
-          }
-     }
-
-   // if there is not enough space to save device number, shift!
-   if (i == HISTORY_MAX)
-     {
-        for (i = 0; i < HISTORY_MAX - 1; i++)
-          cov->mouse_history[i] = cov->mouse_history[i + 1];
-
-        cov->mouse_history[HISTORY_MAX - 1] = ev->multi.device;
-     }
-}
-
-static Eina_Bool
-_check_mouse_history(Cover *cov)
-{
-   int i = 0;
-   for (i = 0; i < HISTORY_MAX; i++)
-     if (cov->mouse_history[i] != multi_device[0] && cov->mouse_history[i] != -1)
-       return EINA_FALSE;
-
-   return EINA_TRUE;
-}
-#endif
-
 static Eina_Bool
 _mouse_longpress(void *data)
 {
@@ -123,12 +96,7 @@ _mouse_longpress(void *data)
         E_Border *bd = e_border_focused_get();
 
         cov->longpressed = EINA_TRUE;
-        printf("longpress\n");
-
-#if DOUBLE_DOWN_N_MOVE
-        if (bd)
-          ecore_x_e_illume_access_action_read_send(bd->client.win);
-#endif
+        INFO(cov, "longpress");
 
         if (bd)
           ecore_x_client_message32_send(bd->client.win, ECORE_X_ATOM_E_ILLUME_ACCESS_CONTROL,
@@ -140,7 +108,6 @@ _mouse_longpress(void *data)
    return EINA_FALSE;
 }
 
-#if DOUBLE_DOWN_N_MOVE
 static Eina_Bool
 _mouse_double_down(void *data)
 {
@@ -182,7 +149,6 @@ _mouse_double_down_timeout(Cover *cov)
 
    cov->double_down_timer = ecore_timer_add(short_time, _mouse_double_down, cov);
 }
-#endif
 
 static void
 _mouse_down(Cover *cov, Ecore_Event_Mouse_Button *ev)
@@ -199,8 +165,8 @@ _mouse_down(Cover *cov, Ecore_Event_Mouse_Button *ev)
    cov->longpressed = EINA_FALSE;
    cov->timer = ecore_timer_add(longtime, _mouse_longpress, cov);
 
-   // 2nd finger comes...
-   //_mouse_double_down_timeout(cov);
+   /* check mouse double down - not two fingers, refer to double click */
+   _mouse_double_down_timeout(cov);
 }
 
 static void
@@ -241,14 +207,15 @@ _mouse_up(Cover *cov, Ecore_Event_Mouse_Button *ev)
    dy = ev->y - cov->dy;
    if (((dx * dx) + (dy * dy)) < (distance * distance))
      {
-        if ((ev->timestamp - cov->dt) > (timeout * 1000))
+        if ((ev->timestamp - cov->dt) > (timeout * 1000) &&
+            (ev->timestamp - cov->dt) < (2 * timeout * 1000))
           {
-             printf("tap\n");
+             INFO(cov, "tap");
              _mouse_win_fake_tap(cov, ev);
           }
         else if (ev->double_click)
           {
-             printf("double click\n");
+             INFO(cov, "double_click");
              if (bd)
                ecore_x_e_illume_access_action_activate_send(bd->client.win);
           }
@@ -260,13 +227,13 @@ _mouse_up(Cover *cov, Ecore_Event_Mouse_Button *ev)
           {
              if (dx > 0) // right
                {
-                  printf("single flick right\n");
+                  INFO(cov, "single flick right");
                   if (bd)
                     ecore_x_e_illume_access_action_read_next_send(bd->client.win);
                }
              else // left
                {
-                  printf("single flick left\n");
+                  INFO(cov, "single flick left");
                   if (bd)
                     ecore_x_e_illume_access_action_read_prev_send(bd->client.win);
                }
@@ -275,13 +242,13 @@ _mouse_up(Cover *cov, Ecore_Event_Mouse_Button *ev)
           {
              if (dy > 0) // down
                {
-                  printf("single flick down\n");
+                  INFO(cov, "single flick down");
                   if (bd)
                     ecore_x_e_illume_access_action_next_send(bd->client.win);
                }
              else // up
                {
-                  printf("single flick up\n");
+                  INFO(cov, "single flick up");
                   if (bd)
                     ecore_x_e_illume_access_action_prev_send(bd->client.win);
                }
@@ -309,47 +276,6 @@ _mouse_move(Cover *cov, Ecore_Event_Mouse_Move *ev)
 
    ecore_x_pointer_xy_get(bd->client.win, &x, &y);
    ecore_x_mouse_move_send(bd->client.win, x, y);
-
-   // for panning, without check two_finger_down, there will be several  down_send()
-#if DOUBLE_DOWN_N_MOVE
-   int distance = 5;
-   int dx, dy;
-
-   if (ev->multi.device == multi_device[0] && cov->mouse_double_down)
-     {
-        dx = ev->x - cov->mx;
-        dy = ev->y - cov->my;
-        if (((dx * dx) + (dy * dy)) > (distance * distance))
-          {
-
-             if (abs(dx) > abs(dy)) // left or right
-               {
-                  if (dx > 0) // right
-                    {
-                       printf("mouse double down and moving - right\n");
-                    }
-                  else // left
-                    {
-                       printf("mouse double down and moving - left\n");
-                    }
-               }
-             else // up or down
-               {
-                  if (dy > 0) // down
-                    {
-                       printf("mouse double down and moving - down\n");
-                    }
-                  else // up
-                    {
-                       printf("mouse double down and moving - up\n");
-                    }
-                }
-
-             cov->mx = ev->x;
-             cov->my = ev->y;
-          }
-     }
-#endif
 }
 
 static void
@@ -460,6 +386,9 @@ _cb_mouse_move(void    *data __UNUSED__,
    Ecore_Event_Mouse_Move *ev = event;
    Eina_List *l;
    Cover *cov;
+
+   E_Border *bd = e_border_focused_get();
+
    EINA_LIST_FOREACH(covers, l, cov)
      {
         if (ev->window == cov->win)
@@ -470,13 +399,62 @@ _cb_mouse_move(void    *data __UNUSED__,
              else if (cov->longpressed && // client message for moving is available only after long press is detected
                       !(cov->two_finger_down) && ev->multi.device == multi_device[0])
                {
-                  E_Border *bd = e_border_focused_get();
+                  INFO(cov, "read");
                   if (bd)
                     ecore_x_client_message32_send(bd->client.win, ECORE_X_ATOM_E_ILLUME_ACCESS_CONTROL,
                                                   ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
                                                   bd->client.win,
                                                   ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ,
                                                   ev->x, ev->y, 0);
+               }
+             else if (cov->mouse_double_down && // client message for moving is available only after long press is detected
+                      !(cov->two_finger_down) && ev->multi.device == multi_device[0])
+               {
+                  int distance = 5;
+                  int dx, dy;
+
+                  if (ev->multi.device == multi_device[0] && cov->mouse_double_down)
+                    {
+                       dx = ev->x - cov->mx;
+                       dy = ev->y - cov->my;
+                       if (((dx * dx) + (dy * dy)) > (distance * distance))
+                         {
+
+                            if (abs(dx) > abs(dy)) // left or right
+                              {
+                                 if (dx > 0) // right
+                                   {
+                                      INFO(cov, "mouse double down and move - right");
+                                      if (bd)
+                                      ecore_x_e_illume_access_action_up_send(bd->client.win);
+                                   }
+                                 else // left
+                                   {
+                                      INFO(cov, "mouse double down and move - left");
+                                      if (bd)
+                                      ecore_x_e_illume_access_action_down_send(bd->client.win);
+                                   }
+                              }
+                            else // up or down
+                              {
+                                 if (dy > 0) // down
+                                   {
+                                      INFO(cov, "mouse double down and move - down");
+                                      if (bd)
+                                      ecore_x_e_illume_access_action_down_send(bd->client.win);
+                                   }
+                                 else // up
+                                   {
+                                      INFO(cov, "mouse double down and move - up");
+                                      if (bd)
+                                      ecore_x_e_illume_access_action_up_send(bd->client.win);
+                                   }
+                               }
+
+                            cov->mx = ev->x;
+                            cov->my = ev->y;
+                         }
+                    }
                }
 
              return ECORE_CALLBACK_PASS_ON;
@@ -513,10 +491,42 @@ _cover_new(E_Zone *zone)
    cov = E_NEW(Cover, 1);
    if (!cov) return NULL;
    cov->zone = zone;
+
+#if DEBUG_INFO
+   Ecore_Evas *ee;
+   ee = ecore_evas_new(NULL,
+                       zone->container->x + zone->x,
+                       zone->container->y + zone->y,
+                       zone->w, zone->h,
+                       NULL);
+   ecore_evas_alpha_set(ee, EINA_TRUE);
+   cov->win = (Ecore_X_Window)ecore_evas_window_get(ee);
+
+   /* create infomation */
+   Evas *e;
+   e = ecore_evas_get(ee);
+   cov->info = evas_object_rectangle_add(e);
+   evas_object_color_set(cov->info, 255, 255, 255, 100);
+   evas_object_move(cov->info, zone->container->x + zone->x, zone->container->y + zone->y);
+   evas_object_resize(cov->info, zone->w, 30);
+   evas_object_show(cov->info);
+
+   cov->text = evas_object_text_add(e);
+   evas_object_text_style_set(cov->text, EVAS_TEXT_STYLE_PLAIN);
+   evas_object_text_font_set(cov->text, "DejaVu", 14);
+   evas_object_text_text_set(cov->text, "access module");
+
+   evas_object_color_set(cov->text, 0, 0, 0, 255);
+   evas_object_resize(cov->text, (zone->w / 8), 20);
+   evas_object_move(cov->text, zone->container->x + zone->x + 5, zone->container->y + zone->y + 5);
+   evas_object_show(cov->text);
+
+#else
    cov->win = ecore_x_window_input_new(zone->container->manager->root,
                                        zone->container->x + zone->x,
                                        zone->container->y + zone->y,
                                        zone->w, zone->h);
+#endif
 
    ecore_x_input_multi_select(cov->win);
 
@@ -568,11 +578,21 @@ _covers_shutdown(void)
      {
         ecore_x_window_ignore_set(cov->win, 0);
         ecore_x_window_free(cov->win);
+        evas_object_del(cov->info);
+        evas_object_del(cov->text);
+
         if (cov->timer)
           {
              ecore_timer_del(cov->timer);
              cov->timer = NULL;
           }
+
+        if (cov->double_down_timer)
+          {
+             ecore_timer_del(cov->double_down_timer);
+             cov->double_down_timer = NULL;
+          }
+
         free(cov);
      }
 }
@@ -650,19 +670,19 @@ _cb_client_message(void *data __UNUSED__,
 {
    Ecore_X_Event_Client_Message *event = ev;
 
-   if (event->message_type != ecore_x_atom_get("_E_MOD_ACC_SCR_READER_"))
+   if (event->message_type != _atom_access)
      return ECORE_CALLBACK_PASS_ON;
 
    if ((Eina_Bool)event->data.l[0])
      {
-        printf("[access module] module enable\n");
+        EINA_LOG_INFO("[access module] module enable");
         _covers_init();
         _events_init();
         access_config->window = EINA_TRUE;
      }
    else
      {
-        printf("[access module] module disable\n");
+        EINA_LOG_INFO("[access module] module disable");
         _covers_shutdown();
         _events_shutdown();
         access_config->window = EINA_FALSE;
@@ -684,6 +704,9 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
+   if (!_atom_access)
+     _atom_access = ecore_x_atom_get("_E_MOD_ACC_SCR_READER_");
+
    ecore_x_event_mask_set(ecore_x_window_root_first_get(),
                           ECORE_X_EVENT_MASK_WINDOW_CONFIGURE);
    client_message_handler = ecore_event_handler_add
@@ -721,7 +744,7 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
-   printf("[access module] module shutdown\n");
+   EINA_LOG_INFO("[access module] module shutdown");
    ecore_event_handler_del(client_message_handler);
 
    _covers_shutdown();
