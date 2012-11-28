@@ -19,6 +19,7 @@ macros.edc \
 edc/about-e.edc \
 edc/about-theme.edc \
 edc/background.edc \
+edc/backlight.edc \
 edc/border.edc \
 edc/button.edc \
 edc/check.edc \
@@ -110,6 +111,10 @@ img/big_arrow_right.png \
 img/big_arrow_right_shadow.png \
 img/big_arrow_up.png \
 img/big_arrow_up_shadow.png \
+img/bulb_glow.png \
+img/bulb_off.png \
+img/bulb_on.png \
+img/bulb_over.png \
 img/bt_base.png \
 img/bt_sig_1.png \
 img/bt_sig_2.png \
