@@ -2263,7 +2263,7 @@ _e_shelf_module_init_end_handler_cb(void *data __UNUSED__, int type __UNUSED__, 
                e_shelf_show(es);
           }
         else if (!es->module_init_end_timer)
-          es->module_init_end_timer = ecore_timer_add(1.0, _e_shelf_module_init_end_timer_cb, es);
+          es->module_init_end_timer = ecore_timer_add(3.0, _e_shelf_module_init_end_timer_cb, es);
      }
    return ECORE_CALLBACK_RENEW;
 }
