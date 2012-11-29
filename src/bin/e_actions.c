@@ -2112,18 +2112,15 @@ ACT_FN_GO(exit, )
         return;
      }
 
-   exit_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_exit_dialog");
+   exit_dialog = e_dialog_new(NULL, "E", "_exit_dialog");
    if (!exit_dialog) return;
    e_win_delete_callback_set(exit_dialog->win, _e_actions_cb_exit_dialog_delete);
-   e_dialog_title_set(exit_dialog, _("Are you sure you want to exit?"));
-   e_dialog_text_set(exit_dialog,
-                     _("You requested to exit Enlightenment.<br>"
-                       "<br>"
-                       "Are you sure you want to exit?"));
+   e_dialog_title_set(exit_dialog, _("Exit"));
+   e_dialog_text_set(exit_dialog, _("Are you sure you want to exit Enlightenment?"));
    e_dialog_icon_set(exit_dialog, "application-exit", 64);
-   e_dialog_button_add(exit_dialog, _("Exit"), NULL,
+   e_dialog_button_add(exit_dialog, _("Yes"), NULL,
                        _e_actions_cb_exit_dialog_ok, NULL);
-   e_dialog_button_add(exit_dialog, _("Cancel"), NULL,
+   e_dialog_button_add(exit_dialog, _("No"), NULL,
                        _e_actions_cb_exit_dialog_cancel, NULL);
    e_dialog_button_focus_num(exit_dialog, 1);
    e_win_centered_set(exit_dialog->win, 1);
@@ -2209,16 +2206,13 @@ ACT_FN_GO(logout, )
         return;
      }
 
-   logout_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_logout_dialog");
+   logout_dialog = e_dialog_new(NULL, "E", "_logout_dialog");
    if (!logout_dialog) return;
    e_win_delete_callback_set(logout_dialog->win, _e_actions_cb_logout_dialog_delete);
-   e_dialog_title_set(logout_dialog, _("Are you sure you want to log out?"));
-   e_dialog_text_set(logout_dialog,
-                     _("You are about to log out.<br>"
-                       "<br>"
-                       "Are you sure you want to do this?"));
+   e_dialog_title_set(logout_dialog, _("Logout"));
+   e_dialog_text_set(logout_dialog, _("Are you sure you want to logout?"));
    e_dialog_icon_set(logout_dialog, "system-log-out", 64);
-   e_dialog_button_add(logout_dialog, _("Log out"), NULL,
+   e_dialog_button_add(logout_dialog, _("Yes"), NULL,
                        _e_actions_cb_logout_dialog_ok, NULL);
    e_dialog_button_add(logout_dialog, _("No"), NULL,
                        _e_actions_cb_logout_dialog_cancel, NULL);
@@ -2249,12 +2243,11 @@ _e_actions_cb_halt_dialog_cancel(void *data __UNUSED__, E_Dialog *dia __UNUSED__
 }
 
 static void
-_e_actions_cb_halt_dialog_delete(E_Win *win)
+_e_actions_cb_halt_dialog_delete(E_Win *win __UNUSED__)
 {
-   E_Dialog *dia;
-
-   dia = win->data;
-   _e_actions_cb_halt_dialog_cancel(NULL, dia);
+   if (!halt_dialog) return;
+   e_object_del(E_OBJECT(halt_dialog));
+   halt_dialog = NULL;
 }
 
 ACT_FN_GO(halt, )
@@ -2272,16 +2265,14 @@ ACT_FN_GO(halt, )
         return;
      }
 
-   halt_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_halt_dialog");
+   halt_dialog = e_dialog_new(NULL, "E", "_halt_dialog");
    if (!halt_dialog) return;
    e_win_delete_callback_set(halt_dialog->win, _e_actions_cb_halt_dialog_delete);
-   e_dialog_title_set(halt_dialog, _("Are you sure you want to turn off?"));
+   e_dialog_title_set(halt_dialog, _("Power off"));
    e_dialog_text_set(halt_dialog,
-                     _("You requested to turn off your Computer.<br>"
-                       "<br>"
-                       "Are you sure you want to shut down?"));
+                     _("Are you sure you want to power off your computer?"));
    e_dialog_icon_set(halt_dialog, "system-shutdown", 64);
-   e_dialog_button_add(halt_dialog, _("Power off"), NULL,
+   e_dialog_button_add(halt_dialog, _("Yes"), NULL,
                        _e_actions_cb_halt_dialog_ok, NULL);
    e_dialog_button_add(halt_dialog, _("No"), NULL,
                        _e_actions_cb_halt_dialog_cancel, NULL);
@@ -2335,16 +2326,13 @@ ACT_FN_GO(reboot, )
         return;
      }
 
-   reboot_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_reboot_dialog");
+   reboot_dialog = e_dialog_new(NULL, "E", "_reboot_dialog");
    if (!reboot_dialog) return;
    e_win_delete_callback_set(reboot_dialog->win, _e_actions_cb_reboot_dialog_delete);
-   e_dialog_title_set(reboot_dialog, _("Are you sure you want to reboot?"));
-   e_dialog_text_set(reboot_dialog,
-                     _("You requested to reboot your Computer.<br>"
-                       "<br>"
-                       "Are you sure you want to restart it?"));
+   e_dialog_title_set(reboot_dialog, _("Reboot"));
+   e_dialog_text_set(reboot_dialog, _("Are you sure you want to reboot your computer?"));
    e_dialog_icon_set(reboot_dialog, "system-restart", 64);
-   e_dialog_button_add(reboot_dialog, _("Reboot"), NULL,
+   e_dialog_button_add(reboot_dialog, _("Yes"), NULL,
                        _e_actions_cb_reboot_dialog_ok, NULL);
    e_dialog_button_add(reboot_dialog, _("No"), NULL,
                        _e_actions_cb_reboot_dialog_cancel, NULL);
@@ -2403,16 +2391,13 @@ ACT_FN_GO(suspend, )
         return;
      }
 
-   suspend_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_suspend_dialog");
+   suspend_dialog = e_dialog_new(NULL, "E", "_suspend_dialog");
    if (!suspend_dialog) return;
    e_win_delete_callback_set(suspend_dialog->win, _e_actions_cb_suspend_dialog_delete);
-   e_dialog_title_set(suspend_dialog, _("Are you sure you want to turn off?"));
-   e_dialog_text_set(suspend_dialog,
-                     _("You requested to suspend your Computer.<br>"
-                       "<br>"
-                       "Are you sure you want to suspend?"));
+   e_dialog_title_set(suspend_dialog, _("Suspend"));
+   e_dialog_text_set(suspend_dialog, _("Are you sure you want to suspend your computer?"));
    e_dialog_icon_set(suspend_dialog, "system-suspend", 64);
-   e_dialog_button_add(suspend_dialog, _("Suspend"), NULL,
+   e_dialog_button_add(suspend_dialog, _("Yes"), NULL,
                        _e_actions_cb_suspend_dialog_ok, NULL);
    e_dialog_button_add(suspend_dialog, _("No"), NULL,
                        _e_actions_cb_suspend_dialog_cancel, NULL);
@@ -2471,16 +2456,13 @@ ACT_FN_GO(hibernate, )
         return;
      }
 
-   hibernate_dialog = e_dialog_new(e_container_current_get(e_manager_current_get()), "E", "_hibernate_dialog");
+   hibernate_dialog = e_dialog_new(NULL, "E", "_hibernate_dialog");
    if (!hibernate_dialog) return;
    e_win_delete_callback_set(hibernate_dialog->win, _e_actions_cb_hibernate_dialog_delete);
-   e_dialog_title_set(hibernate_dialog, _("Are you sure you want to hibernate?"));
-   e_dialog_text_set(hibernate_dialog,
-                     _("You requested to hibernate your Computer.<br>"
-                       "<br>"
-                       "Are you sure you want to suspend to disk?"));
+   e_dialog_title_set(hibernate_dialog, _("Hibernate"));
+   e_dialog_text_set(hibernate_dialog, _("Are you sure you want to hibernate your computer?"));
    e_dialog_icon_set(hibernate_dialog, "system-suspend-hibernate", 64);
-   e_dialog_button_add(hibernate_dialog, _("Hibernate"), NULL,
+   e_dialog_button_add(hibernate_dialog, _("Yes"), NULL,
                        _e_actions_cb_hibernate_dialog_ok, NULL);
    e_dialog_button_add(hibernate_dialog, _("No"), NULL,
                        _e_actions_cb_hibernate_dialog_cancel, NULL);
