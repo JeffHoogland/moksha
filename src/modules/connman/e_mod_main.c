@@ -342,10 +342,10 @@ _econnman_popup_new(E_Connman_Instance *inst)
    e_widget_list_object_append(list, bt, 1, 0, 0.5);
 
    e_widget_size_min_get(list, &mw, &mh);
-   if (mh < 220)
-     mh = 220;
-   if (mw < 200)
-     mw = 200;
+   if (mh < 280)
+     mh = 280;
+   if (mw < 240)
+     mw = 240;
    e_widget_size_min_set(list, mw, mh);
 
    e_gadcon_popup_content_set(inst->popup, list);
