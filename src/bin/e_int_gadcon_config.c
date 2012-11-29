@@ -514,6 +514,8 @@ _cb_del_advanced(void *data, void *data2 __UNUSED__)
                     {
                        if (gcc->cf != cf_gcc) continue;
                        gcc->cf = NULL;
+                       if (gcc->gadcon->drag_gcc == gcc)
+                         e_object_unref(E_OBJECT(gcc));
                        e_object_del(E_OBJECT(gcc));
                        break;
                     }
@@ -580,6 +582,8 @@ _cb_del(void *data, void *data2 __UNUSED__)
                {
                   if (gcc->cf != cf_gcc) continue;
                   gcc->cf = NULL;
+                  if (gcc->gadcon->drag_gcc == gcc)
+                    e_object_unref(E_OBJECT(gcc));
                   e_object_del(E_OBJECT(gcc));
                   break;
                }
