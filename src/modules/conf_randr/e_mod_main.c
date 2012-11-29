@@ -14,7 +14,7 @@ e_modapi_init(E_Module *m)
 {
    e_configure_registry_category_add("screen", 30, _("Screen"), 
                                      NULL, "preferences-desktop-display");
-   e_configure_registry_item_add("screen/randr", 20, _("Screen Setup"), NULL, 
+   e_configure_registry_item_add("screen/screen_setup", 20, _("Screen Setup"), NULL, 
                                  "preferences-system-screen-resolution", 
                                  e_int_config_randr);
    e_module_delayed_set(m, 1);
@@ -31,10 +31,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    if (mod_dir) eina_stringshare_del(mod_dir);
    mod_dir = NULL;
 
-   while ((cfd = e_config_dialog_get("E", "screen/randr")))
+   while ((cfd = e_config_dialog_get("E", "screen/screen_setup")))
      e_object_del(E_OBJECT(cfd));
 
-   e_configure_registry_item_del("screen/randr");
+   e_configure_registry_item_del("screen/screen_setup");
    e_configure_registry_category_del("screen");
 
    return 1;
