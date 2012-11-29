@@ -1126,8 +1126,6 @@ e_menu_idler_before(void)
                   m->prev.h = m->cur.h;
                   w = m->cur.w;
                   h = m->cur.h;
-                  if (w > MAX_MENU_SIZE) w = MAX_MENU_SIZE;
-                  if (h > MAX_MENU_SIZE) h = MAX_MENU_SIZE;
                   ecore_evas_resize(m->ecore_evas, w, h);
                   e_container_shape_resize(m->shape, w, h);
                }
@@ -1721,8 +1719,6 @@ _e_menu_realize(E_Menu *m)
    e_box_thaw(m->container_object);
    w = m->cur.w;
    h = m->cur.h;
-   if (w > MAX_MENU_SIZE) w = MAX_MENU_SIZE;
-   if (h > MAX_MENU_SIZE) h = MAX_MENU_SIZE;
    e_container_shape_resize(m->shape, w, h);
    evas_object_resize(m->bg_object, w, h);
    evas_event_thaw(m->evas);
@@ -1743,6 +1739,7 @@ _e_menu_items_layout_update(E_Menu *m)
    int min_submenu_w = 0, min_submenu_h = 0;
    int min_toggle_w = 0, min_toggle_h = 0;
    int min_w = 0, min_h = 0;
+   unsigned int cur_items = 0, max_items = -1;
 
    e_box_freeze(m->container_object);
    EINA_LIST_FOREACH(m->items, l, mi)
@@ -1808,8 +1805,14 @@ _e_menu_items_layout_update(E_Menu *m)
         min_w = min_toggle_w + min_submenu_w;
         min_h = min_toggle_h;
      }
+   max_items = MAX_MENU_SIZE / min_h;
    EINA_LIST_FOREACH(m->items, l, mi)
      {
+        if (cur_items >= max_items)
+          {
+             _e_menu_item_unrealize(mi);
+             continue;
+          }
         if (mi->separator)
           {
              e_box_pack_options_set(mi->separator_object,
@@ -1912,6 +1915,7 @@ _e_menu_items_layout_update(E_Menu *m)
                                     );
              e_box_thaw(mi->container_object);
           }
+        cur_items++;
      }
    e_box_size_min_get(m->container_object, &bw, &bh);
    edje_extern_object_min_size_set(m->container_object, bw, bh);
