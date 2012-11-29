@@ -2071,6 +2071,8 @@ _e_gadcon_client_delfn(void *d __UNUSED__, void *o)
    if ((gcc->client_class->func.id_del) && (gcc->cf))
      gcc->client_class->func.id_del((E_Gadcon_Client_Class *)gcc->client_class,
                                     gcc->cf->id);
+   if (gcc->drag.drag)
+     e_object_del(E_OBJECT(gcc->drag.drag));
    gcc->gadcon->clients = eina_list_remove(gcc->gadcon->clients, gcc);
    if (gcc->scroll_timer) ecore_timer_del(gcc->scroll_timer);
    if (gcc->scroll_animator) ecore_animator_del(gcc->scroll_animator);
