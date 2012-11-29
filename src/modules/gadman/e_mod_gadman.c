@@ -4,6 +4,7 @@
 #include "e_mod_config.h"
 
 /* local protos */
+static Eina_Bool _e_gadman_reset_timer(void *d);
 static void             _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu);
 static void             _save_widget_position(E_Gadcon_Client *gcc);
 static void             _apply_widget_position(E_Gadcon_Client *gcc);
@@ -1117,12 +1118,7 @@ _attach_menu(void *data __UNUSED__, E_Gadcon_Client *gcc, E_Menu *menu)
 static void
 on_shape_change(void *data __UNUSED__, E_Container_Shape *es, E_Container_Shape_Change ch __UNUSED__)
 {
-   const Eina_List *l, *g, *ll;
-   E_Gadcon *gc;
-   E_Config_Gadcon_Client *cf_gcc;
    E_Container *con;
-   E_Gadcon_Client *gcc;
-   unsigned int layer;
 
    con = e_container_shape_container_get(es);
    if ((con->w == Man->width) && (con->h == Man->height)) return;
@@ -1130,24 +1126,10 @@ on_shape_change(void *data __UNUSED__, E_Container_Shape *es, E_Container_Shape_
    /* The screen size is changed */
    Man->width = con->w;
    Man->height = con->h;
-
-   /* ReStart gadgets */
-
-   for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
-     {
-        EINA_LIST_FOREACH(Man->gadcons[layer], g, gc)
-          {
-             EINA_LIST_FOREACH(gc->clients, ll, gcc)
-               {
-                  Man->gadgets[layer] = eina_list_remove(Man->gadgets[layer], gcc->cf);
-                  if (gcc->gadcon->editing) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
-               }
-
-             e_gadcon_unpopulate(gc);
-             EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
-               gadman_gadget_place(NULL, NULL, cf_gcc, layer, gc->zone);
-          }
-     }
+   if (Man->gadman_reset_timer)
+     ecore_timer_reset(Man->gadman_reset_timer);
+   else
+     Man->gadman_reset_timer = ecore_timer_add(3.0, _e_gadman_reset_timer, NULL);
 }
 
 static void
