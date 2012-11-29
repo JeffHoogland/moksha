@@ -2857,6 +2857,7 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
    if ((!gcc->hidden) && (gcc->gadcon == gc))
      {
         if (gc->dnd_enter_cb) gc->dnd_enter_cb(gc, gc->drag_gcc);
+        evas_object_hide(gc->drag_gcc->drag.drag->object);
         return;
      }
    if (gcc->gadcon != gc)
