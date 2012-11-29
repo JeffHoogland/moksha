@@ -1549,8 +1549,7 @@ _e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord width, Evas_Coord h
 static Ecore_X_Randr_Orientation 
 _e_smart_monitor_orientation_get(int rotation)
 {
-   if (rotation < 0) rotation += 360;
-   else if (rotation > 360) rotation -= 360;
+   rotation %= 360;
 
    /* find the closest rotation of rotation within 'fuzziness' tolerance */
    if (((rotation - ROTATE_SNAP_FUZZINESS) <= 0) || 
@@ -1565,8 +1564,8 @@ _e_smart_monitor_orientation_get(int rotation)
    else if (((rotation - ROTATE_SNAP_FUZZINESS) <=  270) || 
             ((rotation + ROTATE_SNAP_FUZZINESS) <= 270))
      return ECORE_X_RANDR_ORIENTATION_ROT_270;
-   else if (((rotation - ROTATE_SNAP_FUZZINESS) <= 360) || 
-            ((rotation + ROTATE_SNAP_FUZZINESS) <= 360))
+   else if (((rotation - ROTATE_SNAP_FUZZINESS) < 360) || 
+            ((rotation + ROTATE_SNAP_FUZZINESS) < 360))
      return ECORE_X_RANDR_ORIENTATION_ROT_0;
 
    return -1;
