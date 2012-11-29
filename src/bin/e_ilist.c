@@ -261,17 +261,12 @@ e_ilist_size_min_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 EAPI void
 e_ilist_unselect(Evas_Object *obj)
 {
-   E_Ilist_Item *si = NULL;
-
    API_ENTRY return;
 
    if (!sd->items) return;
    if (sd->selected < 0) return;
-   EINA_LIST_FREE(sd->selected_items, si)
-     {
-        if (!si) continue;
-        _item_unselect(si);
-     }
+   while (sd->selected_items)
+     _item_unselect(sd->selected_items->data);
    sd->selected = -1;
 }
 
