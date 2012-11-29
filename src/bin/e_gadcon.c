@@ -5532,7 +5532,7 @@ _e_gadcon_custom_populate_job(void *data __UNUSED__)
 {
    const E_Gadcon_Client_Class *cc;
    E_Config_Gadcon_Client *cf_gcc;
-   const Eina_List *l;
+   Eina_List *l, *ll;
    E_Gadcon *gc;
 
 #ifndef E17_RELEASE_BUILD
@@ -5544,8 +5544,13 @@ _e_gadcon_custom_populate_job(void *data __UNUSED__)
      {
         if (!gc->cf) continue;
         e_gadcon_layout_freeze(gc->o_container);
-        EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
+        EINA_LIST_FOREACH_SAFE(gc->cf->clients, l, ll, cf_gcc)
           {
+             if ((!cf_gcc->name) || (!cf_gcc->name[0]) || (!cf_gcc->id) || (!cf_gcc->id[0]))
+               {
+                  e_gadcon_client_config_del(gc->cf, cf_gcc);
+                  continue;
+               }
              cc = eina_hash_find(providers, cf_gcc->name);
              if (!cc) continue;
              if (gc->populate_class.func)
