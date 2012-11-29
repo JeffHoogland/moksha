@@ -2059,6 +2059,11 @@ _e_shelf_cb_hide_animator(void *data)
    int step, hide_max = 0;
 
    es = data;
+   if (!es->gadcon)
+     {
+        es->hide_animator = NULL;
+        return EINA_FALSE;
+     }
    switch (es->gadcon->orient)
      {
       case E_GADCON_ORIENT_TOP:
