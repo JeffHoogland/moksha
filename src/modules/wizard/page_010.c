@@ -22,7 +22,7 @@ const E_Intl_Pair basic_language_predefined_pairs[] =
    {"da_DK.UTF-8", "dk_flag.png", "Dansk"},
    {"de_DE.UTF-8", "de_flag.png", "Deutsch"},
    {"en_US.UTF-8", "us_flag.png", "English"},
-   {"en_GB.UTF-8", "bg_flag.png", "British English"},
+   {"en_GB.UTF-8", "gb_flag.png", "British English"},
    {"el_GR.UTF-8", "gr_flag.png", "Ελληνικά"},
    {"eo.UTF-8", "epo_flag.png", "Esperanto"},
    {"es_AR.UTF-8", "ar_flag.png", "Español"},
