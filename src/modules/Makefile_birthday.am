@@ -1,0 +1,13 @@
+birthdaydir = $(MDIR)/birthday
+birthday_DATA = birthday/e-module-birthday.edj \
+	     birthday/module.desktop
+
+EXTRA_DIST += $(birthday_DATA)
+
+birthdaypkgdir = $(MDIR)/birthday/$(MODULE_ARCH)
+birthdaypkg_LTLIBRARIES = birthday/module.la
+birthday_module_la_SOURCES = birthday/e_mod_main.c
+
+.PHONY: birthday install-birthday
+birthday: $(birthdaypkg_LTLIBRARIES) $(birthday_DATA)
+install-birthday: install-birthdayDATA install-birthdaypkgLTLIBRARIES
