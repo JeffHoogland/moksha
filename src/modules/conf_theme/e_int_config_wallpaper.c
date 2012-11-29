@@ -48,9 +48,6 @@ struct _E_Config_Dialog_Data
 
    /* dialogs */
    E_Import_Dialog *win_import;
-#ifdef HAVE_EXCHANGE
-   E_Dialog        *dia_web;
-#endif
 };
 
 E_Config_Dialog *
@@ -131,18 +128,6 @@ _bg_set(E_Config_Dialog_Data *cfdata)
                                   "e/desktop/background");
      }
 }
-
-#ifdef HAVE_EXCHANGE
-void
-e_int_config_wallpaper_web_done(E_Config_Dialog *dia)
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = dia->cfdata;
-   cfdata->dia_web = NULL;
-}
-
-#endif
 
 static void
 _cb_button_up(void *data1, void *data2 __UNUSED__)
@@ -336,21 +321,6 @@ _cb_import(void *data1, void *data2 __UNUSED__)
    e_object_del_attach_func_set(E_OBJECT(cfdata->win_import), _cb_import_del);
 }
 
-#ifdef HAVE_EXCHANGE
-static void
-_cb_web(void *data1, void *data2 __UNUSED__)
-{
-   E_Config_Dialog_Data *cfdata;
-
-   cfdata = data1;
-   if (cfdata->dia_web)
-     e_win_raise(cfdata->dia_web->win);
-   else
-     cfdata->dia_web = e_int_config_wallpaper_web(cfdata->cfd);
-}
-
-#endif
-
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
@@ -427,10 +397,6 @@ static void
 _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->win_import) e_object_del(E_OBJECT(cfdata->win_import));
-#ifdef HAVE_EXCHANGE
-   if (cfdata->dia_web)
-     e_int_config_wallpaper_web_del(cfdata->dia_web);
-#endif
    eina_stringshare_del(cfdata->bg);
    E_FREE(cfd->data);
    E_FREE(cfdata);
@@ -506,15 +472,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
                             _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
-
-#ifdef HAVE_EXCHANGE
-   if (online)
-     {
-        ow = e_widget_button_add(evas, _("Online..."), "network-website",
-                                 _cb_web, cfdata, NULL);
-        e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
-     }
-#endif
 
    mw = 320;
    mh = (320 * zone->h) / zone->w;
@@ -626,15 +583,6 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
                             _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
-
-#ifdef HAVE_EXCHANGE
-   if (online)
-     {
-        ow = e_widget_button_add(evas, _("Online..."), "network-website",
-                                 _cb_web, cfdata, NULL);
-        e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 0, 0, 0);
-     }
-#endif
 
    mw = 320;
    mh = (320 * zone->h) / zone->w;
