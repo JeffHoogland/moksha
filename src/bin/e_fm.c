@@ -2814,6 +2814,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
                      }
                    break;
                 }
+              free(evdir);
 //                       printf(" ...\n");
               if ((sd->id != e->ref_to) || (path[0] != 0)) break;
 //                            printf(" end response = %i\n", e->response);
