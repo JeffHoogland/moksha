@@ -221,8 +221,8 @@ gadman_gadget_add_handler(void *d __UNUSED__, int type __UNUSED__, E_Event_Gadco
    if (!Man->waiting) return ECORE_CALLBACK_RENEW;
    l = eina_list_data_find_list(Man->waiting, ev->gcc->gadcon);
    if (!l) return ECORE_CALLBACK_RENEW;
-   if (ev->gcc->cf != eina_list_last_data_get(ev->gcc->gadcon->cf->clients)) return ECORE_CALLBACK_RENEW;
-   Man->drag_gcc[ev->gcc->gadcon->id - ID_GADMAN_LAYER_BASE] = ev->gcc;
+   if (ev->gcc->cf->geom.pos_x || ev->gcc->cf->geom.pos_y || ev->gcc->cf->geom.size_w || ev->gcc->cf->geom.size_h)
+     return ECORE_CALLBACK_RENEW;
    ev->gcc->cf->style = eina_stringshare_add(ev->gcc->client_class->default_style ?: E_GADCON_CLIENT_STYLE_INSET);
    ev->gcc->style = eina_stringshare_ref(ev->gcc->cf->style);
    ev->gcc->cf->geom.pos_x = DEFAULT_POS_X;

@@ -43,15 +43,6 @@ typedef enum
 #define ID_GADMAN_LAYER_BG (ID_GADMAN_LAYER_BASE + GADMAN_LAYER_BG)
 #define ID_GADMAN_LAYER_TOP (ID_GADMAN_LAYER_BASE + GADMAN_LAYER_TOP)
 
-typedef struct Gadman_Popup
-{
-   EINA_INLIST;
-   E_Gadcon_Client *gcc;
-   E_Gadcon_Popup *pop;
-   Ecore_Timer *timer;
-   Ecore_Event_Handler *eh;
-} Gadman_Popup;
-
 struct _Manager
 {
    Eina_List   *gadcons[GADMAN_LAYER_COUNT];
@@ -65,8 +56,6 @@ struct _Manager
    E_Gadcon_Client *drag_gcc[GADMAN_LAYER_COUNT];
 
    Eina_List *drag_handlers;
-
-   Eina_Inlist *gadman_popups;
 
    Eina_List *waiting;
    Ecore_Event_Handler *add;
@@ -87,6 +76,8 @@ struct _Manager
 
    E_Config_DD    *conf_edd;
    Config         *conf;
+
+   Eina_Bool dnd_entered : 1;
 };
 
 extern Manager *Man;

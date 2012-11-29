@@ -52,57 +52,6 @@ Manager *Man = NULL;
 static Eina_List *_gadman_hdls = NULL;
 static Eina_Hash *_gadman_gadgets = NULL;
 
-static void
-gadman_popup_free(Gadman_Popup *gp)
-{
-   if (!gp) return;
-   if (gp->timer) ecore_timer_del(gp->timer);
-   e_object_data_set(E_OBJECT(gp->gcc), NULL);
-   e_object_del_attach_func_set(E_OBJECT(gp->gcc), NULL);
-   ecore_event_handler_del(gp->eh);
-   Man->gadman_popups = eina_inlist_remove(Man->gadman_popups, EINA_INLIST_GET(gp));
-   e_object_del(E_OBJECT(gp->pop));
-   free(gp);
-}
-
-static void
-_gadman_popup_del(void *obj)
-{
-   gadman_popup_free(e_object_data_get(obj));
-}
-
-static Eina_Bool
-_gadman_popup_timer(Gadman_Popup *gp)
-{
-   gadman_popup_free(gp);
-   return EINA_FALSE;
-}
-
-static Eina_Bool
-_gadman_popup_mouse(Gadman_Popup *gp, int type __UNUSED__, Ecore_Event_Mouse_Button *ev)
-{
-   if (ev->event_window != gp->pop->win->evas_win) return ECORE_CALLBACK_RENEW;
-   gadman_popup_free(gp);
-   return ECORE_CALLBACK_RENEW;
-}
-
-static Gadman_Popup *
-gadman_popup_new(E_Gadcon_Client *gcc)
-{
-   Gadman_Popup *gp;
-
-   gp = E_NEW(Gadman_Popup, 1);
-   gp->gcc = gcc;
-   gp->pop = e_gadcon_popup_new(gcc);
-   gp->timer = ecore_timer_add(5.0, (Ecore_Task_Cb)_gadman_popup_timer, gp);
-   e_object_data_set(E_OBJECT(gcc), gp);
-   e_object_del_attach_func_set(E_OBJECT(gcc), _gadman_popup_del);
-   Man->gadman_popups = eina_inlist_append(Man->gadman_popups, EINA_INLIST_GET(gp));
-   gp->eh = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, (Ecore_Event_Handler_Cb)_gadman_popup_mouse, gp);
-
-   return gp;
-}
-
 /* Implementation */
 void
 gadman_reset(void)
@@ -201,6 +150,7 @@ gadman_shutdown(void)
         E_FREE_LIST(Man->gadcons[layer], e_object_del);
         evas_object_del(Man->movers[layer]);
         Man->gadgets[layer] = eina_list_free(Man->gadgets[layer]);
+        e_gadcon_location_free(Man->location[layer]);
      }
 
    eina_stringshare_del(Man->icon_name);
@@ -433,6 +383,10 @@ gadman_gadget_edit_start(E_Gadcon_Client *gcc)
    Eina_List *l;
    int x, y, w, h;
 
+   if (Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE] == gcc) return;
+   else if (Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE])
+     gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
+
    EINA_LIST_FOREACH(Man->gadcons[gcc->gadcon->id - ID_GADMAN_LAYER_BASE], l, gc)
      gc->editing = 1;
    gc = gcc->gadcon;
@@ -459,6 +413,7 @@ gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
    unsigned int layer;
    E_Gadcon_Client *drag_gcc = NULL;
 
+   Man->dnd_entered = 0;
    for (layer = GADMAN_LAYER_COUNT - 1; layer < UINT_MAX; layer--)
      {
         const Eina_List *l;
@@ -477,8 +432,10 @@ gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
         break;
      }
    if (!drag_gcc) return;
+   drag_gcc->gadcon->drag_gcc = NULL;
    _save_widget_position(drag_gcc);
-   e_object_unref(E_OBJECT(drag_gcc));
+   if (!e_object_is_del(E_OBJECT(drag_gcc)))
+     e_object_unref(E_OBJECT(drag_gcc));
 }
 
 void
@@ -668,7 +625,11 @@ _gadman_gadcon_dnd_enter_cb(E_Gadcon *gc, E_Gadcon_Client *gcc)
 
    /* only use this for dragging gadcons around the desktop */
    if (gc != gcc->gadcon) return;
-   gadman_gadget_edit_start(gcc);
+   if (Man->dnd_entered && (Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE] == gcc))
+     e_object_ref(E_OBJECT(gcc));
+   else
+     gadman_gadget_edit_start(gcc);
+   Man->dnd_entered = 1;
 }
 
 static void
@@ -746,7 +707,6 @@ _gadman_gadcon_dnd_drop_cb(E_Gadcon *gc, E_Gadcon_Client *gcc)
      {
         unsigned int layer = gcc->gadcon->id - ID_GADMAN_LAYER_BASE;
         cf = gcc->cf;
-
         gcc->gadcon->cf->clients = eina_list_remove(gcc->gadcon->cf->clients, cf);
         dst_gadcon = gadman_gadcon_get(dst_zone, layer);
         if (dst_gadcon)
@@ -966,25 +926,19 @@ _apply_widget_position(E_Gadcon_Client *gcc)
    /* something broke the config's geom, make it visible so it can be
     * resized/deleted
     */
-   if ((!x) && (!y) && (!w) && (!h))
+   if ((!gcc->cf->geom.pos_x) && (!gcc->cf->geom.pos_y) && (!gcc->cf->geom.size_w) && (!gcc->cf->geom.size_h))
      {
-        Gadman_Popup *pop;
-        Evas_Object *o;
-        char buf[4096];
-
+        gcc->cf->style = eina_stringshare_add(gcc->client_class->default_style ?: E_GADCON_CLIENT_STYLE_INSET);
+        gcc->style = eina_stringshare_ref(gcc->cf->style);
         gcc->cf->geom.pos_x = DEFAULT_POS_X;
         gcc->cf->geom.pos_y = DEFAULT_POS_Y;
         gcc->cf->geom.size_w = DEFAULT_SIZE_W;
         gcc->cf->geom.size_h = DEFAULT_SIZE_H;
+        if (!strcmp(gcc->style, E_GADCON_CLIENT_STYLE_INSET))
+          edje_object_signal_emit(gcc->o_frame, "e,state,visibility,inset", "e");
+        else
+          edje_object_signal_emit(gcc->o_frame, "e,state,visibility,plain", "e");
         _apply_widget_position(gcc);
-        pop = gadman_popup_new(gcc);
-        o = edje_object_add(pop->pop->win->evas);
-        e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/text");
-        snprintf(buf, sizeof(buf), "A gadget of type '%s' was detected without any stored geometry.<ps>"
-                 "It has been relocated and resized for you.", gcc->client_class->name);
-        edje_object_part_text_set(o, "e.textblock.message", buf);
-        e_gadcon_popup_content_set(pop->pop, o);
-        e_gadcon_popup_show(pop->pop);
         gadman_gadget_edit_start(gcc);
         return;
      }
@@ -1249,8 +1203,6 @@ on_frame_click(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
 
    gcc = data;
 
-   if (gcc->gadcon->editing) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
-
    if (ev->button == 5)
      {
         E_Menu *m;
@@ -1478,17 +1430,17 @@ on_move(void *data, Evas_Object *o __UNUSED__, const char *em __UNUSED__, const 
    E_Drag *drag;
    const char *drag_types[] = { "enlightenment/gadcon_client" };
 
-   gc = eina_list_data_get(Man->gadcons[Man->visible]);
-   drag_gcc = Man->drag_gcc[Man->visible];
-   if (!drag_gcc) return;
-   mover = _get_mover(drag_gcc);
-
    /* DRAG_START */
    if (action != DRAG_START) return;
+   drag_gcc = Man->drag_gcc[Man->visible];
+   if (!drag_gcc) return;
+   gc = drag_gcc->gadcon;
+   mover = _get_mover(drag_gcc);
 
    drag_gcc->moving = 1;
    gc->cf->clients = eina_list_remove(gc->cf->clients, drag_gcc->cf);
    e_gadcon_client_drag_set(drag_gcc);
+   e_object_ref(E_OBJECT(drag_gcc));
    evas_pointer_output_xy_get(gc->evas, &mx, &my);
    evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
 
