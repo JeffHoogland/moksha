@@ -116,14 +116,18 @@ e_entry_text_set(Evas_Object *entry, const char *_text)
          edje_object_part_object_get(sd->entry_object, ENTRY_PART_NAME),
          _text);
    otext = edje_object_part_text_get(sd->entry_object, ENTRY_PART_NAME);
-   if ((text) && (otext) && (!strcmp(text, otext))) return;
+   if ((text) && (otext) && (!strcmp(text, otext)))
+     {
+        free(text);
+        return;
+     }
    if ((!text) && (!otext)) return;
    edje_object_part_text_set(sd->entry_object, ENTRY_PART_NAME, text);
    sd->changing++;
    edje_object_message_signal_process(sd->entry_object);
    sd->changing--;
    evas_object_smart_callback_call(entry, "changed", NULL);
-   if (text) free(text);
+   free(text);
 }
 
 /**
