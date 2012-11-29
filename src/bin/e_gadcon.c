@@ -5624,7 +5624,7 @@ _e_gadcon_provider_populate_job(void *data __UNUSED__)
              x++;
           }
           if (freeze) e_gadcon_layout_thaw(gc->o_container);
-          if (x) _e_gadcon_event_populate(gc);
+          if (x && _modules_loaded) _e_gadcon_event_populate(gc);
        }
 //out:
 #ifndef E17_RELEASE_BUILD
