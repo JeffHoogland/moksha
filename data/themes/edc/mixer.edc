@@ -1,5 +1,6 @@
 group { name: "e/modules/mixer/main";
    images.image: "speaker.png" COMP;
+   images.image: "speaker_shadow.png" COMP;
    images.image: "led_dot_white.png" COMP;
    max: 160 160;
    min: 16 16;
@@ -97,6 +98,17 @@ group { name: "e/modules/mixer/main";
       }
    }
    parts {
+      part { name: "speaker_shadow";
+         description { state: "default" 0.0;
+            rel1.to: "speaker";
+            rel1.relative: 0.0 (4/160);
+            rel1.offset: 0 1;
+            rel2.to: "speaker";
+            rel2.relative: 1.0 (164/160);
+            rel2.offset: -1 0;
+            image.normal: "speaker_shadow.png";
+         }
+      }
       part { name: "speaker";
          description { state: "default" 0.0;
             aspect: 1 1; aspect_preference: BOTH;

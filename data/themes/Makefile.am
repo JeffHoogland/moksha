@@ -250,6 +250,7 @@ img/slider_run_bevel_vert.png \
 img/slot_horiz_bottom.png \
 img/slot_horiz_top.png \
 img/speaker.png \
+img/speaker_shadow.png \
 img/sym_check_alum.png \
 img/sym_close_dark_normal.png \
 img/sym_close_dark_selected.png \
