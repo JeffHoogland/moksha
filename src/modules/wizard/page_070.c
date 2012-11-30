@@ -1,6 +1,5 @@
 /* Setup of default icon theme */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons)

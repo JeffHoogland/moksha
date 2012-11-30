@@ -1,5 +1,14 @@
+/**
+ * @addtogroup Optional_Layouts
+ * @{
+ *
+ * @defgroup Module_Layout Layout Policy Enforcement
+ *
+ * Enforces window layout policies.
+ *
+ * @}
+ */
 #include "e.h"
-#include "e_mod_main.h"
 
 /***************************************************************************/
 /**/

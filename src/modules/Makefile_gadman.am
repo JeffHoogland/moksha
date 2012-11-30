@@ -8,9 +8,7 @@ gadmanpkgdir = $(MDIR)/gadman/$(MODULE_ARCH)
 gadmanpkg_LTLIBRARIES = gadman/module.la
 
 gadman_module_la_SOURCES = gadman/e_mod_main.c \
-			   gadman/e_mod_main.h \
 			   gadman/e_mod_config.c \
-			   gadman/e_mod_config.h \
 			   gadman/e_mod_gadman.c \
 			   gadman/e_mod_gadman.h
 

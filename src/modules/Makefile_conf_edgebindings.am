@@ -10,8 +10,7 @@ conf_edgebindingspkg_LTLIBRARIES = conf_edgebindings/module.la
 conf_edgebindings_module_la_SOURCES = conf_edgebindings/e_mod_main.c \
 			      conf_edgebindings/e_mod_main.h \
 			      conf_edgebindings/e_int_config_edgebindings.c \
-			      conf_edgebindings/e_int_config_signalbindings.c \
-			      conf_edgebindings/e_int_config_edgebindings.h
+			      conf_edgebindings/e_int_config_signalbindings.c
 
 .PHONY: conf_edgebindings install-conf_edgebindings
 conf_edgebindings: $(conf_edgebindingspkg_LTLIBRARIES) $(conf_edgebindings_DATA)

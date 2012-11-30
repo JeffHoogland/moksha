@@ -1,7 +1,4 @@
-#include <e.h>
-#include "e_mod_main.h"
 #include "e_mod_gadman.h"
-#include "e_mod_config.h"
 
 /* local protos */
 static Eina_Bool _e_gadman_reset_timer(void *d);

@@ -1,6 +1,5 @@
 /* Profile chooser */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 static const char *profile = NULL;
 static Evas_Object *textblock = NULL;

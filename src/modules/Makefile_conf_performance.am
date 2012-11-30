@@ -10,11 +10,8 @@ conf_performancepkg_LTLIBRARIES = conf_performance/module.la
 conf_performance_module_la_SOURCES = conf_performance/e_mod_main.c \
 			     conf_performance/e_mod_main.h \
 			     conf_performance/e_int_config_performance.c \
-			     conf_performance/e_int_config_performance.h \
 			     conf_performance/e_int_config_engine.c \
-			     conf_performance/e_int_config_engine.h \
-			     conf_performance/e_int_config_powermanagement.c \
-			     conf_performance/e_int_config_powermanagement.h
+			     conf_performance/e_int_config_powermanagement.c
 
 .PHONY: conf_performance install-conf_performance
 conf_performance: $(conf_performancepkg_LTLIBRARIES) $(conf_performance_DATA)

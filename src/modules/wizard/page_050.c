@@ -1,6 +1,5 @@
 /* Ask about Scaling */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 static double scale = 1.0;
 static Eina_List *obs = NULL;

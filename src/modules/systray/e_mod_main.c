@@ -1,4 +1,17 @@
 /**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_Systray Systray (System Icons Tray)
+ *
+ * Shows system icons in a box.
+ *
+ * The icons come from the FreeDesktop.Org systray specification.
+ *
+ * @see http://standards.freedesktop.org/systemtray-spec/systemtray-spec-latest.html
+ * @}
+ */
+/**
  * systray implementation following freedesktop.org specification.
  *
  * @see: http://standards.freedesktop.org/systemtray-spec/latest/
@@ -10,7 +23,6 @@
  */
 
 #include "e.h"
-#include "e_mod_main.h"
 
 #define RETRY_TIMEOUT                     2.0
 

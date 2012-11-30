@@ -1,7 +1,6 @@
+#include "e_mod_system.h"
 #include <alsa/asoundlib.h>
 #include <poll.h>
-#include "e_mod_system.h"
-#include "e.h"
 
 struct e_mixer_callback_desc
 {

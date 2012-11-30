@@ -1,5 +1,5 @@
 #include "e_illume_private.h"
-#include "e_mod_kbd_device.h"
+#include "e_mod_main.h"
 
 /* local function prototypes */
 static void _e_mod_kbd_device_ignore_load(void);

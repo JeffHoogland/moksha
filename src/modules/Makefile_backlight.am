@@ -7,8 +7,7 @@ EXTRA_DIST += $(backlight_DATA)
 backlightpkgdir = $(MDIR)/backlight/$(MODULE_ARCH)
 backlightpkg_LTLIBRARIES = backlight/module.la
 
-backlight_module_la_SOURCES = backlight/e_mod_main.c \
-			      backlight/e_mod_main.h
+backlight_module_la_SOURCES = backlight/e_mod_main.c
 
 .PHONY: backlight install-backlight
 backlight: $(backlightpkg_LTLIBRARIES) $(backlight_DATA)

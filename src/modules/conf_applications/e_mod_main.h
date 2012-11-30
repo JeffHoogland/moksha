@@ -1,23 +1,20 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#define E_TYPEDEFS 1
-#include "e_int_config_apps.h"
-#include "e_int_config_defapps.h"
-#include "e_int_config_deskenv.h"
-#include "e_int_config_apps_personal.h"
+E_Config_Dialog *e_int_config_apps_favs(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_apps_add(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_apps_ibar(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_apps_ibar_other(E_Container *con, const char *path);
+E_Config_Dialog *e_int_config_apps_startup(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_apps_restart(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_apps_desk_lock(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_apps_desk_unlock(E_Container *con, const char *params __UNUSED__);
 
-#undef E_TYPEDEFS
-#include "e_int_config_apps.h"
-#include "e_int_config_defapps.h"
-#include "e_int_config_deskenv.h"
-#include "e_int_config_apps_personal.h"
+E_Config_Dialog *e_int_config_defapps(E_Container *con, const char *params __UNUSED__);
 
-EAPI extern E_Module_Api e_modapi;
+E_Config_Dialog *e_int_config_apps_personal(E_Container *con, const char *params __UNUSED__);
 
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
+E_Config_Dialog *e_int_config_deskenv(E_Container *con, const char *params __UNUSED__);
 
 /**
  * @addtogroup Optional_Conf

@@ -7,8 +7,7 @@ EXTRA_DIST += $(fileman_opinfo_DATA)
 fileman_opinfopkgdir = $(MDIR)/fileman_opinfo/$(MODULE_ARCH)
 fileman_opinfopkg_LTLIBRARIES = fileman_opinfo/module.la
 
-fileman_opinfo_module_la_SOURCES = fileman_opinfo/e_mod_main.c \
-				   fileman_opinfo/e_mod_main.h
+fileman_opinfo_module_la_SOURCES = fileman_opinfo/e_mod_main.c
 
 .PHONY: fileman_opinfo install-fileman_opinfo
 fileman_opinfo: $(fileman_opinfopkg_LTLIBRARIES) $(fileman_opinfo_DATA)

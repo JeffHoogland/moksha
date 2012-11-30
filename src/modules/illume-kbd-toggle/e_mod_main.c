@@ -1,5 +1,4 @@
 #include "e.h"
-#include "e_mod_main.h"
 
 /* local structures */
 typedef struct _Instance Instance;

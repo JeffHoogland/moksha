@@ -1,6 +1,5 @@
 /* Ask about focus mode */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 static int focus_mode = 1;
 /*

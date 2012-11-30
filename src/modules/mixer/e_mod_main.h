@@ -1,9 +1,8 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#include "config.h"
+#include "e.h"
 #include "e_mod_system.h"
-#include <e.h>
 
 #define MOD_CONFIG_FILE_EPOCH 0x0000
 #define MOD_CONFIG_FILE_GENERATION 0x0004

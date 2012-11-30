@@ -10,13 +10,9 @@ conf_applicationspkg_LTLIBRARIES = conf_applications/module.la
 conf_applications_module_la_SOURCES = conf_applications/e_mod_main.c \
 			      conf_applications/e_mod_main.h \
 			      conf_applications/e_int_config_apps.c \
-			      conf_applications/e_int_config_apps.h \
 			      conf_applications/e_int_config_defapps.c \
-			      conf_applications/e_int_config_defapps.h \
 			      conf_applications/e_int_config_deskenv.c \
-			      conf_applications/e_int_config_deskenv.h \
-			      conf_applications/e_int_config_apps_personal.c \
-			      conf_applications/e_int_config_apps_personal.h
+			      conf_applications/e_int_config_apps_personal.c
 
 .PHONY: conf_applications install-conf_applications
 conf_applications: $(conf_applicationspkg_LTLIBRARIES) $(conf_applications_DATA)

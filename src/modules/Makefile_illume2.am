@@ -51,23 +51,14 @@ illume2_module_la_SOURCES = illume2/e_mod_main.c \
 			    illume2/e_illume.h \
 			    illume2/e_illume.c \
 			    illume2/e_illume_private.h \
-			    illume2/e_mod_config_policy.h \
 			    illume2/e_mod_config_policy.c \
-			    illume2/e_mod_select_window.h \
 			    illume2/e_mod_select_window.c \
-			    illume2/e_mod_config_windows.h \
 			    illume2/e_mod_config_windows.c \
-			    illume2/e_mod_config_animation.h \
 			    illume2/e_mod_config_animation.c \
-			    illume2/e_mod_quickpanel.h \
 			    illume2/e_mod_quickpanel.c \
-			    illume2/e_mod_kbd_device.h \
 			    illume2/e_mod_kbd_device.c \
-			    illume2/e_mod_kbd.h \
 			    illume2/e_mod_kbd.c \
-			    illume2/e_mod_policy.h \
 			    illume2/e_mod_policy.c \
-			    illume2/e_mod_config.h \
 			    illume2/e_mod_config.c
 
 # TODO: incomplete

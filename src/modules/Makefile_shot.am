@@ -7,8 +7,7 @@ EXTRA_DIST += $(shot_DATA)
 shotpkgdir = $(MDIR)/shot/$(MODULE_ARCH)
 shotpkg_LTLIBRARIES = shot/module.la
 
-shot_module_la_SOURCES = shot/e_mod_main.c \
-			 shot/e_mod_main.h
+shot_module_la_SOURCES = shot/e_mod_main.c
 
 .PHONY: shot install-shot
 shot: $(shotpkg_LTLIBRARIES) $(shot_DATA)

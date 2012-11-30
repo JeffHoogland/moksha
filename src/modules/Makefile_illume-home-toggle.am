@@ -7,8 +7,7 @@ EXTRA_DIST += $(illume_home_toggle_DATA)
 illume_home_togglepkgdir = $(MDIR)/illume-home-toggle/$(MODULE_ARCH)
 illume_home_togglepkg_LTLIBRARIES = illume-home-toggle/module.la
 
-illume_home_toggle_module_la_SOURCES = illume-home-toggle/e_mod_main.c \
-				       illume-home-toggle/e_mod_main.h
+illume_home_toggle_module_la_SOURCES = illume-home-toggle/e_mod_main.c
 
 .PHONY: illume_home_toggle install-illume_home_toggle
 illume_home_toggle: $(illume_home_togglepkg_LTLIBRARIES) $(illume_home_toggle_DATA)

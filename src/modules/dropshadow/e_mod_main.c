@@ -1,6 +1,5 @@
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_mod_config.h"
 
 /* i measure a mere 9% speedup using mmx for simd sums. :(
  * need to detect mmx capbale cpu's to enable this though

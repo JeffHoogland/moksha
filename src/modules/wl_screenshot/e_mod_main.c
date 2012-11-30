@@ -1,5 +1,6 @@
 #include "e.h"
-#include "e_mod_main.h"
+#include <wayland-client.h>
+#include "e_screenshooter_client_protocol.h"
 
 typedef struct _Instance Instance;
 struct _Instance

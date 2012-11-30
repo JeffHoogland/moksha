@@ -28,4 +28,6 @@ EAPI int   e_modapi_info(E_Module *m);
 void       _e_mod_config_new(E_Module *m);
 void       _e_mod_config_free(E_Module *m);
 
+E_Config_Dialog *e_int_config_physics_module(E_Container *con, const char *params __UNUSED__);
+
 #endif

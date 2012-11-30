@@ -1,6 +1,5 @@
 /* Setup if we need connman? */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 static int do_tasks = 1;
 /*

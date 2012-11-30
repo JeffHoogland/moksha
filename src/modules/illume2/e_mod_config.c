@@ -1,8 +1,5 @@
 #include "e_illume_private.h"
-#include "e_mod_config.h"
-#include "e_mod_config_animation.h"
-#include "e_mod_config_windows.h"
-#include "e_mod_config_policy.h"
+#include "e_mod_main.h"
 
 /* local function prototypes */
 static void _e_mod_illume_config_free(void);

@@ -8,8 +8,7 @@ conf_wallpaper2pkg_LTLIBRARIES = conf_wallpaper2/module.la
 
 conf_wallpaper2_module_la_SOURCES = conf_wallpaper2/e_mod_main.c \
 				    conf_wallpaper2/e_mod_main.h \
-				    conf_wallpaper2/e_int_config_wallpaper.c \
-				    conf_wallpaper2/e_int_config_wallpaper.h
+				    conf_wallpaper2/e_int_config_wallpaper.c
 
 .PHONY: conf_wallpaper2 install-conf_wallpaper2
 conf_wallpaper2: $(conf_wallpaper2pkg_LTLIBRARIES) $(conf_wallpaper2_DATA)

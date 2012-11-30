@@ -1,5 +1,4 @@
 #include "e_illume_private.h"
-#include "e_mod_config_policy.h"
 
 /* local function prototypes */
 static void *_e_mod_illume_config_policy_create(E_Config_Dialog *cfd);

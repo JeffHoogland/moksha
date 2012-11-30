@@ -1,6 +1,5 @@
 /* Extra desktop files setup */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 static Ecore_Timer *_next_timer = NULL;
 

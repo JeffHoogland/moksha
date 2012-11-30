@@ -1,6 +1,4 @@
-#include "e.h"
 #include "e_mod_main.h"
-#include "e_widget_filepreview.h"
 
 /* FIXME: fwin - the fm2 filemanager wrapped with a window and scrollframe.
  * primitive BUT enough to test generic dnd and fm stuff more easily. don't

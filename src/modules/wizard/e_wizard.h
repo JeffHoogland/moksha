@@ -1,10 +1,10 @@
-#ifdef E_TYPEDEFS
+#ifndef E_WIZARD_H
+
+#include "e.h"
+
+extern E_Module *wiz_module;
 
 typedef struct _E_Wizard_Page E_Wizard_Page;
-
-#else
-#ifndef E_WIZARD_H
-#define E_WIZARD_H
 
 typedef enum
 {
@@ -46,5 +46,18 @@ EAPI void e_wizard_labels_update(void);
 EAPI const char *e_wizard_dir_get(void);
 EAPI void e_wizard_xdg_desktops_reset(void);
 
-#endif
+/**
+ * @addtogroup Optional_Conf
+ * @{
+ *
+ * @defgroup Module_Wizard Wizard
+ *
+ * Configures the whole Enlightenment in a nice walk-through wizard.
+ *
+ * Usually is presented on the first run of Enlightenment. The wizard
+ * pages are configurable and should be extended by distributions that
+ * want to ship Enlightenment as the default window manager.
+ *
+ * @}
+ */
 #endif

@@ -1,5 +1,5 @@
 #include "e.h"
-#include "e_winlist.h"
+#include "e_mod_main.h"
 
 /* local subsystem functions */
 typedef struct _E_Winlist_Win E_Winlist_Win;

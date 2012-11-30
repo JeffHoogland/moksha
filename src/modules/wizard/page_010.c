@@ -1,6 +1,5 @@
 /* Language chooser */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 typedef struct _E_Intl_Pair E_Intl_Pair;
 

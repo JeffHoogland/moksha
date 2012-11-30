@@ -1,7 +1,4 @@
-#include <e.h>
-#include "e_mod_main.h"
 #include "e_mod_gadman.h"
-#include "e_mod_config.h"
 
 /* local protos */
 static void _gadman_maug_cb(void *data, E_Menu *m, E_Menu_Item *mi);

@@ -40,8 +40,7 @@ wizardpkg_LTLIBRARIES  = wizard/module.la \
 			 wizard/page_180.la \
 			 wizard/page_200.la
 
-wizard_module_la_SOURCES = wizard/e_mod_main.h \
-			   wizard/e_mod_main.c \
+wizard_module_la_SOURCES = wizard/e_mod_main.c \
 			   wizard/e_wizard.c \
 			   wizard/e_wizard.h
 

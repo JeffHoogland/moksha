@@ -1,9 +1,4 @@
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-#include "e_mod_system.h"
 #include "e_mod_main.h"
-#include <Ecore.h>
 #include "Pulse.h"
 
 //#define BAD_CH_MAPPING 1

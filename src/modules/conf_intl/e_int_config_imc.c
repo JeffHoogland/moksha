@@ -1,6 +1,5 @@
 #include "e.h"
-#include "e_int_config_imc.h"
-#include "e_int_config_imc_import.h"
+#include "e_mod_main.h"
 
 typedef struct _E_Imc_Update_Data E_Imc_Update_Data;
 

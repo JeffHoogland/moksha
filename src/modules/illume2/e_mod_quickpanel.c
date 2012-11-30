@@ -1,5 +1,5 @@
 #include "e_illume_private.h"
-#include "e_mod_quickpanel.h"
+#include "e_mod_main.h"
 
 /* local function prototypes */
 static Eina_Bool _e_mod_quickpanel_cb_client_message(void *data __UNUSED__, int type __UNUSED__, void *event);

@@ -1,10 +1,7 @@
 #ifndef E_MOD_SYSTEM_H
 #define E_MOD_SYSTEM_H
 
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
-#include <Evas.h>
+#include "e.h"
 
 typedef void E_Mixer_System;
 typedef void E_Mixer_Channel;

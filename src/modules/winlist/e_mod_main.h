@@ -1,22 +1,11 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#define E_TYPEDEFS 1
 #include "e_winlist.h"
-#include "e_int_config_winlist.h"
-
-#undef E_TYPEDEFS
-#include "e_winlist.h"
-#include "e_int_config_winlist.h"
 
 extern const char *_winlist_act;
 extern E_Action *_act_winlist;
-EAPI extern E_Module_Api e_modapi;
-
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
-
+E_Config_Dialog *e_int_config_winlist(E_Container *con, const char *params __UNUSED__);
 /**
  * @addtogroup Optional_Control
  * @{

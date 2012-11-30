@@ -109,7 +109,7 @@ EAPI int   e_modapi_info     (E_Module *m);
 
 void  _dropshadow_cb_config_updated(void *data);
 
-
+E_Config_Dialog *e_int_config_dropshadow_module(E_Container *con, const char *params __UNUSED__);
 /**
  * @addtogroup Optional_Look
  * @{

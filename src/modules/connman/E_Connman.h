@@ -1,15 +1,8 @@
 #ifndef E_CONNMAN_H
 #define E_CONNMAN_H
 
+#include "e.h"
 #include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-
-#include <Eina.h>
-#include <Ecore.h>
-#include <E_DBus.h>
-
-#include "log.h"
 
 typedef struct _E_Connman_Agent E_Connman_Agent;
 
@@ -122,5 +115,18 @@ void econnman_mod_services_changed(struct Connman_Manager *cm);
 
 const char *econnman_state_to_str(enum Connman_State state);
 const char *econnman_service_type_to_str(enum Connman_Service_Type type);
+
+/* Log */
+extern int _e_connman_log_dom;
+
+#undef DBG
+#undef INF
+#undef WRN
+#undef ERR
+
+#define DBG(...) EINA_LOG_DOM_DBG(_e_connman_log_dom, __VA_ARGS__)
+#define INF(...) EINA_LOG_DOM_INFO(_e_connman_log_dom, __VA_ARGS__)
+#define WRN(...) EINA_LOG_DOM_WARN(_e_connman_log_dom, __VA_ARGS__)
+#define ERR(...) EINA_LOG_DOM_ERR(_e_connman_log_dom, __VA_ARGS__)
 
 #endif /* E_CONNMAN_H */

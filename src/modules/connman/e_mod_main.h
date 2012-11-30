@@ -1,11 +1,11 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#include "config.h"
 #include <e.h>
-#include <eina_log.h>
 
 #include "E_Connman.h"
+
+#define AGENT_PATH "/org/enlightenment/connman/agent"
 
 #define MOD_CONF_VERSION 3
 
@@ -67,6 +67,9 @@ void econnman_popup_del(E_Connman_Instance *inst);
 const char *e_connman_theme_path(void);
 E_Config_Dialog *e_connman_config_dialog_new(E_Container *con,
                                              E_Connman_Module_Context *ctxt);
+
+E_Connman_Agent *econnman_agent_new(E_DBus_Connection *edbus_conn) EINA_ARG_NONNULL(1);
+void econnman_agent_del(E_Connman_Agent *agent);
 
 /**
  * @addtogroup Optional_Devices

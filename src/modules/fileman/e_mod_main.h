@@ -1,6 +1,8 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+#include "e.h"
+
 /* Increment for Major Changes */
 #define MOD_CONFIG_FILE_EPOCH      0x0001
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
@@ -8,16 +10,6 @@
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
 typedef struct _Config Config;
-
-#define E_TYPEDEFS                 1
-#include "e_fwin.h"
-#include "e_int_config_mime_edit.h"
-#include "e_int_config_mime.h"
-
-#undef E_TYPEDEFS
-#include "e_fwin.h"
-#include "e_int_config_mime_edit.h"
-#include "e_int_config_mime.h"
 
 typedef struct Fileman_Path
 {
@@ -112,18 +104,30 @@ struct _Config
    Eina_List *paths; // Fileman_Path
 };
 
-EAPI extern E_Module_Api e_modapi;
-
-EAPI void *e_modapi_init(E_Module *m);
-EAPI int   e_modapi_shutdown(E_Module *m);
-EAPI int   e_modapi_save(E_Module *m);
-
 extern Config *fileman_config;
 Fileman_Path *e_mod_fileman_path_find(E_Zone *zone);
 
 E_Menu *e_mod_menu_add(E_Menu *m, const char *path);
 
 E_Config_Dialog *e_int_config_fileman(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_mime_edit(E_Config_Mime_Icon *data, void *data2);
+E_Config_Dialog *e_int_config_mime(E_Container *con, const char *params __UNUSED__);
+void e_int_config_mime_edit_done(void *data);
+
+void e_fileman_dbus_init(void);
+void e_fileman_dbus_shutdown(void);
+
+int  e_fwin_init          (void);
+int  e_fwin_shutdown      (void);
+void e_fwin_new           (E_Container *con, const char *dev, const char *path);
+void e_fwin_zone_new      (E_Zone *zone, void *path);
+void e_fwin_zone_shutdown (E_Zone *zone);
+void e_fwin_all_unsel     (void *data);
+void e_fwin_reload_all    (void);
+int  e_fwin_zone_find     (E_Zone *zone);
+
+Eina_Bool e_fwin_nav_init(void);
+Eina_Bool e_fwin_nav_shutdown(void);
 
 /**
  * @addtogroup Optional_Fileman

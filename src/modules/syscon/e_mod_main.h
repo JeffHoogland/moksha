@@ -1,17 +1,13 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#define E_TYPEDEFS 1
-#include "e_syscon.h"
-#include "e_int_config_syscon.h"
+int e_syscon_init(void);
+int e_syscon_shutdown(void);
 
-#undef E_TYPEDEFS
-#include "e_syscon.h"
-#include "e_int_config_syscon.h"
+int  e_syscon_show(E_Zone *zone, const char *defact);
+void e_syscon_hide(void);
 
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
+E_Config_Dialog *e_int_config_syscon(E_Container *con, const char *params __UNUSED__);
 
 void e_syscon_gadget_init(E_Module *m);
 void e_syscon_gadget_shutdown(void);

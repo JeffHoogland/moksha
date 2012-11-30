@@ -1,6 +1,5 @@
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_mod_config.h"
 #include "e_mod_physics.h"
 
 struct _E_Config_Dialog_Data

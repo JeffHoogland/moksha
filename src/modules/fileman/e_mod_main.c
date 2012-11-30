@@ -1,7 +1,4 @@
-#include "e.h"
-#include "e_fm_device.h"
 #include "e_mod_main.h"
-#include "e_mod_dbus.h"
 
 /* actual module specifics */
 static void _e_mod_action_fileman_cb(E_Object   *obj,

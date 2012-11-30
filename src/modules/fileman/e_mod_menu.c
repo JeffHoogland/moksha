@@ -1,6 +1,5 @@
-#include "e.h"
-#include "e_fm_device.h"
 #include "e_mod_main.h"
+#include "e_fm_device.h"
 
 static void _e_mod_menu_populate(void *d, E_Menu *m __UNUSED__, E_Menu_Item *mi);
 

@@ -1,5 +1,4 @@
-#include "e.h"
-#include "e_int_config_mime_edit.h"
+#include "e_mod_main.h"
 
 typedef struct _Config_Glob Config_Glob;
 typedef struct _Config_Mime Config_Mime;

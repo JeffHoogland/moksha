@@ -10,7 +10,6 @@ physicspkg_LTLIBRARIES = physics/module.la
 physics_module_la_SOURCES = physics/e_mod_main.c \
 			    physics/e_mod_main.h \
 			    physics/e_mod_config.c \
-			    physics/e_mod_config.h \
 			    physics/e_mod_physics_cfdata.c \
 			    physics/e_mod_physics_cfdata.h \
 			    physics/e_mod_physics.c \

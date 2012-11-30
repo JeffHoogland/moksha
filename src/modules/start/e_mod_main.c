@@ -1,5 +1,15 @@
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_Start Start Button
+ *
+ * Shows a "start here" button or icon.
+ *
+ * @}
+ */
+
 #include "e.h"
-#include "e_mod_main.h"
 
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);

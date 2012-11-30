@@ -1,6 +1,4 @@
-#include "e.h"
 #include "e_mod_main.h"
-#include "e_mod_dbus.h"
 
 static const char E_FILEMAN_BUS_NAME[] = "org.enlightenment.FileManager";
 static const char E_FILEMAN_INTERFACE[] = "org.enlightenment.FileManager";

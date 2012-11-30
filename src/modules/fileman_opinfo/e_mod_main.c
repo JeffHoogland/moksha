@@ -1,5 +1,16 @@
+/**
+ * @addtogroup Optional_Fileman
+ * @{
+ *
+ * @defgroup Module_Fileman_Opinfo File Manager Operation Information
+ *
+ * Shows information about file manager operations such as copy, move
+ * and delete.
+ *
+ * @}
+ */
+
 #include "e.h"
-#include "e_mod_main.h"
 
 typedef struct _Instance
 {

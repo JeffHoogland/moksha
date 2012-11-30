@@ -1,5 +1,5 @@
 #include "e_illume_private.h"
-#include "e_mod_select_window.h"
+#include "e_mod_main.h"
 
 /* local function prototypes */
 static void *_e_mod_illume_config_select_window_create_data(E_Config_Dialog *cfd);

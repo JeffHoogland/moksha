@@ -1,10 +1,5 @@
-#ifdef E_TYPEDEFS
-
-#else
 #ifndef E_WINLIST_H
 #define E_WINLIST_H
-
-#include "e_mod_main.h"
 
 int e_winlist_init(void);
 int e_winlist_shutdown(void);
@@ -25,5 +20,4 @@ void e_winlist_down(E_Zone *zone);
 void e_winlist_up(E_Zone *zone);
 void e_winlist_modifiers_set(int mod);
 
-#endif
 #endif

@@ -1,5 +1,5 @@
 #include "e.h"
-#include "e_int_config_imc.h"
+#include "e_mod_main.h"
 
 typedef struct _Import Import;
 

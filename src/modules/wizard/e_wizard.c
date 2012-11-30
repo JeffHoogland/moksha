@@ -1,5 +1,4 @@
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 static void     _e_wizard_next_eval(void);
 static E_Popup *_e_wizard_main_new(E_Zone *zone);

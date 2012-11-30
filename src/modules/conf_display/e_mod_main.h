@@ -1,29 +1,15 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#define E_TYPEDEFS 1
-#include "e_int_config_display.h"
-#include "e_int_config_screensaver.h"
-#include "e_int_config_dpms.h"
-#include "e_int_config_desklock.h"
-#include "e_int_config_desklock_fsel.h"
-#include "e_int_config_desks.h"
-#include "e_int_config_desk.h"
-
-#undef E_TYPEDEFS
-#include "e_int_config_display.h"
-#include "e_int_config_screensaver.h"
-#include "e_int_config_dpms.h"
-#include "e_int_config_desklock.h"
-#include "e_int_config_desklock_fsel.h"
-#include "e_int_config_desks.h"
-#include "e_int_config_desk.h"
-
-EAPI extern E_Module_Api e_modapi;
-
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
+E_Config_Dialog *e_int_config_desk(E_Container *con, const char *params);
+E_Config_Dialog *e_int_config_screensaver(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_dpms(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_display(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_desks(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_desklock(E_Container *con, const char *params __UNUSED__);
+void e_int_config_desklock_fsel_done(E_Config_Dialog *cfd, Evas_Object *bg, const char *bg_file);
+E_Config_Dialog *e_int_config_desklock_fsel(E_Config_Dialog *parent, Evas_Object *bg);
+void e_int_config_desklock_fsel_del(E_Config_Dialog *cfd);
 
 /**
  * @addtogroup Optional_Conf

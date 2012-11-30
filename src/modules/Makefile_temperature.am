@@ -10,7 +10,6 @@ temperaturepkg_LTLIBRARIES = temperature/module.la
 temperature_module_la_SOURCES  = temperature/e_mod_main.c \
 				 temperature/e_mod_main.h \
 				 temperature/e_mod_config.c \
-				 temperature/e_mod_main_private.h \
 				 temperature/e_mod_tempget.c
 
 if HAVE_EEZE

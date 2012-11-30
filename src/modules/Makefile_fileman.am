@@ -10,15 +10,11 @@ filemanpkg_LTLIBRARIES = fileman/module.la
 fileman_module_la_SOURCES = fileman/e_mod_main.c \
 			    fileman/e_mod_main.h \
 			    fileman/e_fwin.c \
-			    fileman/e_fwin.h \
 			    fileman/e_fwin_nav.c \
 			    fileman/e_mod_config.c \
 			    fileman/e_int_config_mime.c \
-			    fileman/e_int_config_mime.h \
 			    fileman/e_int_config_mime_edit.c \
-			    fileman/e_int_config_mime_edit.h \
 			    fileman/e_mod_dbus.c \
-			    fileman/e_mod_dbus.h \
 			    fileman/e_mod_menu.c
 
 .PHONY: fileman install-fileman

@@ -1,5 +1,5 @@
 #include "e_illume_private.h"
-#include "e_mod_config.h"
+#include "e_mod_main.h"
 
 /**
  * @addtogroup Module_Illume2

@@ -1,5 +1,4 @@
 #include "e_mod_main.h"
-#include "e_mod_system.h"
 #ifdef HAVE_ENOTIFY
 #include <E_Notify.h>
 #endif

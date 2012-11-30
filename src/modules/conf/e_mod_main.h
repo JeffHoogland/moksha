@@ -1,12 +1,6 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#define E_TYPEDEFS 1
-#include "e_conf.h"
-
-#undef E_TYPEDEFS
-#include "e_conf.h"
-
 #define MOD_CONFIG_FILE_EPOCH 0x0001
 #define MOD_CONFIG_FILE_GENERATION 0x008d
 #define MOD_CONFIG_FILE_VERSION \
@@ -22,11 +16,8 @@ struct _Config
    int menu_augmentation;
 };
 
-EAPI extern E_Module_Api e_modapi;
-
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
+void e_configure_show(E_Container *con, const char *params);
+void e_configure_del(void);
 
 E_Config_Dialog *e_int_config_conf_module(E_Container *con, const char *params);
 void e_mod_config_menu_add(void *data, E_Menu *m);

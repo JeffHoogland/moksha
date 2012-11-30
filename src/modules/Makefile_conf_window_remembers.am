@@ -9,8 +9,7 @@ conf_window_rememberspkg_LTLIBRARIES = conf_window_remembers/module.la
 
 conf_window_remembers_module_la_SOURCES = conf_window_remembers/e_mod_main.c \
 			      conf_window_remembers/e_mod_main.h \
-			      conf_window_remembers/e_int_config_remembers.c \
-			      conf_window_remembers/e_int_config_remembers.h
+			      conf_window_remembers/e_int_config_remembers.c
 
 .PHONY: conf_window_remembers install-conf_window_remembers
 conf_window_remembers: $(conf_window_rememberspkg_LTLIBRARIES) $(conf_window_remembers_DATA)

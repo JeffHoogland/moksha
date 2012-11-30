@@ -1,9 +1,5 @@
 #include "e_illume_private.h"
 #include "e_mod_main.h"
-#include "e_mod_config.h"
-#include "e_mod_policy.h"
-#include "e_mod_kbd.h"
-#include "e_mod_quickpanel.h"
 
 /* NB: Initially I had done this rewrite with eina_logging enabled, but it 
  * degraded performance so much that it was just not worth it. So now this 

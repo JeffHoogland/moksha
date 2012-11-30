@@ -12,8 +12,6 @@ connman_module_la_SOURCES = connman/e_mod_main.h \
 			    connman/e_mod_config.c \
 			    connman/e_connman.c \
 			    connman/agent.c \
-			    connman/agent.h \
-			    connman/log.h \
 			    connman/E_Connman.h
 
 connman_module_la_CFLAGS = $(AM_CFLAGS) -Wno-unused-parameter

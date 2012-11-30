@@ -9,23 +9,14 @@ conf_themepkg_LTLIBRARIES = conf_theme/module.la
 conf_theme_module_la_SOURCES = conf_theme/e_mod_main.c \
 			       conf_theme/e_mod_main.h \
 			       conf_theme/e_int_config_borders.c \
-			       conf_theme/e_int_config_borders.h \
 			       conf_theme/e_int_config_color_classes.c \
-			       conf_theme/e_int_config_color_classes.h \
 			       conf_theme/e_int_config_fonts.c \
-			       conf_theme/e_int_config_fonts.h \
 			       conf_theme/e_int_config_scale.c \
-			       conf_theme/e_int_config_scale.h \
 			       conf_theme/e_int_config_startup.c \
-			       conf_theme/e_int_config_startup.h \
 			       conf_theme/e_int_config_theme.c \
-			       conf_theme/e_int_config_theme.h \
 			       conf_theme/e_int_config_theme_import.c \
-			       conf_theme/e_int_config_theme_import.h \
 			       conf_theme/e_int_config_transitions.c \
-			       conf_theme/e_int_config_transitions.h \
 			       conf_theme/e_int_config_wallpaper.c \
-			       conf_theme/e_int_config_wallpaper.h \
 			       conf_theme/e_int_config_xsettings.c
 
 .PHONY: conf_theme install-conf_theme

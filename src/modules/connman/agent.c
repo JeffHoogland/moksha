@@ -7,7 +7,6 @@
 #include <string.h>
 
 #include "e.h"
-#include "agent.h"
 #include "E_Connman.h"
 #include "e_mod_main.h"
 #define AGENT_IFACE "net.connman.Agent"

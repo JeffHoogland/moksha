@@ -1,13 +1,4 @@
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "E_Connman.h"
-#include "agent.h"
+#include "e_mod_main.h"
 
 #define CONNMAN_BUS_NAME "net.connman"
 #define CONNMAN_MANAGER_IFACE CONNMAN_BUS_NAME ".Manager"

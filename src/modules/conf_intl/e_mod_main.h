@@ -1,19 +1,15 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#define E_TYPEDEFS 1
-#include "e_int_config_intl.h"
-#include "e_int_config_imc.h"
+E_Config_Dialog *e_int_config_imc(E_Container *con, const char *params __UNUSED__);
+void e_int_config_imc_import_done(E_Config_Dialog *dia);
+void e_int_config_imc_update(E_Config_Dialog *dia, const char *file);
 
-#undef E_TYPEDEFS
-#include "e_int_config_intl.h"
-#include "e_int_config_imc.h"
+E_Win *e_int_config_imc_import(E_Config_Dialog *parent);
+void e_int_config_imc_import_del(E_Win *win);
 
-EAPI extern E_Module_Api e_modapi;
-
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
+E_Config_Dialog *e_int_config_intl(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_desklock_intl(E_Container *con, const char *params __UNUSED__);
 
 /**
  * @addtogroup Optional_Conf

@@ -1,6 +1,5 @@
 /* Delete previous copy of config profile and save new one */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 
 #if 0
 EAPI int

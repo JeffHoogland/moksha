@@ -1,6 +1,5 @@
 /* Ask about compositing */
-#include "e.h"
-#include "e_mod_main.h"
+#include "e_wizard.h"
 #include "e_mod_comp_cfdata.h"
 
 #define ENGINE_SW 1

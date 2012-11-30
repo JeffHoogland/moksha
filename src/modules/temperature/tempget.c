@@ -1,6 +1,3 @@
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -22,8 +19,7 @@
 #include <Eina.h>
 #include <Ecore.h>
 #include <Ecore_File.h>
-
-#include "e_mod_main_private.h"
+#include "e_mod_main.h"
 
 static int sensor_type = SENSOR_TYPE_NONE;
 static char *sensor_name = NULL;

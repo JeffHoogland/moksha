@@ -9,7 +9,6 @@ winlistpkg_LTLIBRARIES = winlist/module.la
 
 winlist_module_la_SOURCES = winlist/e_mod_main.h \
 			    winlist/e_mod_main.c \
-			    winlist/e_int_config_winlist.h \
 			    winlist/e_int_config_winlist.c \
 			    winlist/e_winlist.h \
 			    winlist/e_winlist.c

@@ -1,23 +1,14 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#define E_TYPEDEFS 1
-#include "e_int_config_window_manip.h"
-#include "e_int_config_window_display.h"
-#include "e_int_config_focus.h"
-#include "e_int_config_clientlist.h"
+E_Config_Dialog *e_int_config_window_geometry(E_Container *con, const char *params __UNUSED__);
+E_Config_Dialog *e_int_config_window_process(E_Container *con, const char *params __UNUSED__);
 
-#undef E_TYPEDEFS
-#include "e_int_config_window_manip.h"
-#include "e_int_config_window_display.h"
-#include "e_int_config_focus.h"
-#include "e_int_config_clientlist.h"
+E_Config_Dialog *e_int_config_window_display(E_Container *con, const char *params __UNUSED__);
 
-EAPI extern E_Module_Api e_modapi;
+E_Config_Dialog *e_int_config_focus(E_Container *con, const char *params __UNUSED__);
 
-EAPI void *e_modapi_init     (E_Module *m);
-EAPI int   e_modapi_shutdown (E_Module *m);
-EAPI int   e_modapi_save     (E_Module *m);
+E_Config_Dialog *e_int_config_clientlist(E_Container *con, const char *params __UNUSED__);
 
 /**
  * @addtogroup Optional_Conf

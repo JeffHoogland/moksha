@@ -1,6 +1,5 @@
 #include "e.h"
 #include "e_mod_main.h"
-#include "e_int_config_randr.h"
 #include "e_smart_randr.h"
 #include "e_smart_monitor.h"
 

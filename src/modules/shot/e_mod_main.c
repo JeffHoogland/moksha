@@ -1,5 +1,14 @@
+/**
+ * @addtogroup Optional_Look
+ * @{
+ *
+ * @defgroup Module_Shot Screenshot
+ *
+ * Takes screen shots and can submit them to http://enlightenment.org
+ *
+ * @}
+ */
 #include "e.h"
-#include "e_mod_main.h"
 #include <time.h>
 
 static E_Module *shot_module = NULL;

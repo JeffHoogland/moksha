@@ -10,9 +10,7 @@ sysconpkg_LTLIBRARIES = syscon/module.la
 syscon_module_la_SOURCES = syscon/e_mod_main.c \
 			   syscon/e_mod_main.h \
 			   syscon/e_int_config_syscon.c \
-			   syscon/e_int_config_syscon.h \
 			   syscon/e_syscon.c \
-			   syscon/e_syscon.h \
 			   syscon/e_syscon_gadget.c
 
 .PHONY: syscon install-syscon

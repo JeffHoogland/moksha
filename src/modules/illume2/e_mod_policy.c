@@ -1,5 +1,5 @@
 #include "e_illume_private.h"
-#include "e_mod_policy.h"
+#include "e_mod_main.h"
 
 /* local function prototypes */
 static char *_e_mod_policy_find(void);
