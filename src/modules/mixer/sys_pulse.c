@@ -337,11 +337,11 @@ e_mixer_pulse_shutdown(void)
 
    pulse_free(conn);
    conn = NULL;
-   ecore_event_handler_del(ph);
+   if (ph) ecore_event_handler_del(ph);
    ph = NULL;
-   ecore_event_handler_del(pch);
+   if (pch) ecore_event_handler_del(pch);
    pch = NULL;
-   ecore_event_handler_del(pdh);
+   if (pdh) ecore_event_handler_del(pdh);
    pdh = NULL;
    if (dbus_handler)
      {
