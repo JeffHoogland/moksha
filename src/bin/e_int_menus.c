@@ -65,6 +65,7 @@ static void         _e_int_menus_desktops_free_hook(void *obj);
 static void         _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
 static Efreet_Menu *_e_int_menus_apps_thread_new(E_Menu *m, const char *dir);
+static Eina_Bool   _e_int_menus_efreet_desktop_cache_update(void *d, int type, void *e);
 //static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped __UNUSED__);
 
 /* local subsystem globals */
@@ -76,6 +77,7 @@ static Eina_Hash *_e_int_menus_app_menus_waiting = NULL;
 static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
 static E_Menu *_e_int_menus_app_menu_default_waiting = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
+static Eina_List *handlers = NULL;
 
 static Eina_List *
 _e_int_menus_augmentation_find(const char *key)
@@ -531,6 +533,8 @@ e_int_menus_init(void)
         e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
         _e_int_menus_apps_thread_new(NULL, eina_stringshare_add(buf));
      }
+   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_DESKTOP_CACHE_UPDATE, _e_int_menus_efreet_desktop_cache_update, NULL);
+   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_DESKTOP_CACHE_BUILD, _e_int_menus_efreet_desktop_cache_update, NULL);
 }
 
 EINTERN void
@@ -542,9 +546,18 @@ e_int_menus_shutdown(void)
    eina_hash_free(_e_int_menus_app_menus_waiting);
    _e_int_menus_app_menus_waiting = NULL;
    _e_int_menus_app_menu_default_waiting = NULL;
+   E_FREE_LIST(handlers, ecore_event_handler_del);
 }
 
 /* local subsystem functions */
+static Eina_Bool
+_e_int_menus_efreet_desktop_cache_update(void *d __UNUSED__, int type __UNUSED__, void *e __UNUSED__)
+{
+   e_int_menus_shutdown();
+   e_int_menus_init();
+   return ECORE_CALLBACK_RENEW;
+}
+
 static void
 _e_int_menus_main_del_hook(void *obj)
 {
