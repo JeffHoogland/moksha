@@ -76,8 +76,6 @@ struct _Manager
 
    E_Config_DD    *conf_edd;
    Config         *conf;
-
-   Eina_Bool dnd_entered : 1;
 };
 
 extern Manager *Man;

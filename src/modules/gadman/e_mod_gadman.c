@@ -385,13 +385,14 @@ gadman_gadget_edit_start(E_Gadcon_Client *gcc)
 
    if (Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE] == gcc) return;
    else if (Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE])
-     gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
+     e_object_unref(E_OBJECT(Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE]));
 
    EINA_LIST_FOREACH(Man->gadcons[gcc->gadcon->id - ID_GADMAN_LAYER_BASE], l, gc)
      gc->editing = 1;
    gc = gcc->gadcon;
 
    e_object_ref(E_OBJECT(gcc));
+   //INF("START: %u", e_object_ref_get((void*)gcc));
 
    /* Move/resize the correct mover */
    mover = _get_mover(gcc);
@@ -413,7 +414,6 @@ gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
    unsigned int layer;
    E_Gadcon_Client *drag_gcc = NULL;
 
-   Man->dnd_entered = 0;
    for (layer = GADMAN_LAYER_COUNT - 1; layer < UINT_MAX; layer--)
      {
         const Eina_List *l;
@@ -436,6 +436,7 @@ gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
    _save_widget_position(drag_gcc);
    if (!e_object_is_del(E_OBJECT(drag_gcc)))
      e_object_unref(E_OBJECT(drag_gcc));
+   //INF("END: %d:%u", e_object_is_del(E_OBJECT(drag_gcc)), e_object_ref_get((void*)drag_gcc));
 }
 
 void
@@ -625,11 +626,8 @@ _gadman_gadcon_dnd_enter_cb(E_Gadcon *gc, E_Gadcon_Client *gcc)
 
    /* only use this for dragging gadcons around the desktop */
    if (gc != gcc->gadcon) return;
-   if (Man->dnd_entered && (Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE] == gcc))
-     e_object_ref(E_OBJECT(gcc));
-   else
-     gadman_gadget_edit_start(gcc);
-   Man->dnd_entered = 1;
+   //INF("ENTER: %u", e_object_ref_get((void*)gcc));
+   gadman_gadget_edit_start(gcc);
 }
 
 static void
@@ -640,6 +638,8 @@ _gadman_gadcon_dnd_leave_cb(E_Gadcon *gc, E_Gadcon_Client *gcc)
 
    /* only use this for dragging gadcons around the desktop */
    if (gc != gcc->gadcon) return;
+   //INF("LEAVE: %u", e_object_ref_get((void*)gcc));
+   Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE] = NULL;
    for (layer = 0; layer < GADMAN_LAYER_COUNT; layer++)
      {
         const Eina_List *l;
