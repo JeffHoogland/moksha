@@ -385,12 +385,24 @@ _e_wizard_check_xdg(void)
      }
    if ((need_xdg_icons) && (!got_icons))
      {
-        /* Advance within 15 secs if no xdg event */
-        if (!next_timer)
-          next_timer = ecore_timer_add(7.0, _e_wizard_cb_next_page, NULL);
-        next_can = 0;
-        _e_wizard_next_eval();
-        return 0;
+        char path[PATH_MAX];
+
+        /* Check if cache already exists */
+        snprintf(path, sizeof(path), "%s/efreet/icon_themes_%s.eet",
+             efreet_cache_home_get(), efreet_hostname_get());
+        if (ecore_file_is_dir(path))
+          {
+             got_icons = EINA_TRUE;
+          }
+        else
+          {
+             /* Advance within 15 secs if no xdg event */
+             if (!next_timer)
+               next_timer = ecore_timer_add(7.0, _e_wizard_cb_next_page, NULL);
+             next_can = 0;
+             _e_wizard_next_eval();
+             return 0;
+          }
      }
    next_can = 1;
    need_xdg_desktops = EINA_FALSE;

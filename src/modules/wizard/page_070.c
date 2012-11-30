@@ -17,7 +17,6 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
-   /* TODO: Wait until icon theme list is built */
    Eina_List *l, *themes = efreet_icon_theme_list_get();
    Efreet_Icon_Theme *th;
    int i;
