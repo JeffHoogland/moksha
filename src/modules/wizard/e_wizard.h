@@ -16,6 +16,7 @@ typedef enum
 
 struct _E_Wizard_Page
 {
+   EINA_INLIST;
    void *handle;
    Evas *evas;
    int (*init)     (E_Wizard_Page *pg, Eina_Bool *need_xdg_desktops, Eina_Bool *need_xdg_icons);

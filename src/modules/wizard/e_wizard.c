@@ -16,7 +16,7 @@ static E_Popup *pop = NULL;
 static Eina_List *pops = NULL;
 static Evas_Object *o_bg = NULL;
 static Evas_Object *o_content = NULL;
-static Eina_List *pages = NULL;
+static E_Wizard_Page *pages = NULL;
 static E_Wizard_Page *curpage = NULL;
 static int next_ok = 1;
 static int next_prev = 0;
@@ -67,7 +67,6 @@ e_wizard_init(void)
 EAPI int
 e_wizard_shutdown(void)
 {
-   E_Wizard_Page *pg;
    E_Object *eo;
 
    if (pop)
@@ -78,8 +77,8 @@ e_wizard_shutdown(void)
 
    EINA_LIST_FREE(pops, eo)
      e_object_del(eo);
-   EINA_LIST_FREE(pages, pg)
-     e_wizard_page_del(pg);
+   while (pages)
+     e_wizard_page_del(pages);
 
    if (next_timer) ecore_timer_del(next_timer);
    next_timer = NULL;
@@ -91,12 +90,7 @@ EAPI void
 e_wizard_go(void)
 {
    if (!curpage)
-     {
-        if (pages)
-          {
-             curpage = pages->data;
-          }
-     }
+     curpage = pages;
    if (curpage)
      {
         if (curpage->init) curpage->init(curpage, &need_xdg_desktops, &need_xdg_icons);
@@ -118,58 +112,44 @@ e_wizard_go(void)
 EAPI void
 e_wizard_apply(void)
 {
-   Eina_List *l;
    E_Wizard_Page *pg;
 
-   EINA_LIST_FOREACH(pages, l, pg)
+   EINA_INLIST_FOREACH(EINA_INLIST_GET(pages), pg)
      if (pg->apply) pg->apply(pg);
 }
 
 EAPI void
 e_wizard_next(void)
 {
-   E_Wizard_Page *page;
-   Eina_List *l;
-
-   EINA_LIST_FOREACH(pages, l, page)
+   if (!curpage)
      {
-        if (page == curpage)
-          {
-             if (eina_list_next(l))
-               {
-                  if (curpage)
-                    {
-                       if (curpage->hide)
-                         curpage->hide(curpage);
-                       curpage->state++;
-                    }
-                  curpage = eina_list_data_get(eina_list_next(l));
-                  e_wizard_button_next_enable_set(1);
-                  need_xdg_desktops = EINA_FALSE;
-                  need_xdg_icons = EINA_FALSE;
-                  if (curpage->init)
-                    curpage->init(curpage, &need_xdg_desktops, &need_xdg_icons);
-                  curpage->state++;
-                  if (!_e_wizard_check_xdg())
-                    break;
-
-                  _e_wizard_next_eval();
-                  if ((curpage->show) && (curpage->show(curpage)))
-                    {
-                       curpage->state++;
-                       break;
-                    }
-                  curpage->state++;
-               }
-             else
-               {
-                  /* FINISH */
-                  e_wizard_apply();
-                  e_wizard_shutdown();
-                  return;
-               }
-          }
+        /* FINISH */
+        e_wizard_apply();
+        e_wizard_shutdown();
+        return;
      }
+   if (curpage->hide)
+     curpage->hide(curpage);
+   curpage->state++;
+   curpage = EINA_INLIST_CONTAINER_GET(EINA_INLIST_GET(curpage)->next, E_Wizard_Page);
+   if (!curpage)
+     {
+        e_wizard_next();
+        return;
+     }
+
+   e_wizard_button_next_enable_set(1);
+   need_xdg_desktops = EINA_FALSE;
+   need_xdg_icons = EINA_FALSE;
+   if (curpage->init)
+     curpage->init(curpage, &need_xdg_desktops, &need_xdg_icons);
+   curpage->state++;
+   if (!_e_wizard_check_xdg()) return;
+
+   _e_wizard_next_eval();
+   curpage->state++;
+   if (curpage->show && curpage->show(curpage)) return;
+   e_wizard_next();
 }
 
 EAPI void
@@ -213,7 +193,7 @@ e_wizard_page_add(void *handle,
    pg->hide = hide_cb;
    pg->apply = apply_cb;
 
-   pages = eina_list_append(pages, pg);
+   pages = (E_Wizard_Page*)eina_inlist_append(EINA_INLIST_GET(pages), EINA_INLIST_GET(pg));
 
    return pg;
 }
@@ -226,7 +206,7 @@ e_wizard_page_del(E_Wizard_Page *pg)
 // once only then e restarts itself with final wizard page
 //   if (pg->handle) dlclose(pg->handle);
    if (pg->shutdown) pg->shutdown(pg);
-   pages = eina_list_remove(pages, pg);
+   pages = (E_Wizard_Page*)eina_inlist_remove(EINA_INLIST_GET(pages), EINA_INLIST_GET(pg));
    free(pg);
 }
 
