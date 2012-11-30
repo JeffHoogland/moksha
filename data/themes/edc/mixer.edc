@@ -107,6 +107,7 @@ group { name: "e/modules/mixer/main";
             rel2.relative: 1.0 (164/160);
             rel2.offset: -1 0;
             image.normal: "speaker_shadow.png";
+            color: 255 255 255 128;
          }
       }
       part { name: "speaker";
