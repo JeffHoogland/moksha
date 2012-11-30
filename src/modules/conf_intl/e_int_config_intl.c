@@ -941,7 +941,11 @@ _lc_check(void)
    if (getenv("LC_MESSAGES")) strcat(buf2, "<br>LC_MESSAGES");
    if (getenv("LC_ALL")) strcat(buf2, "<br>LC_ALL");
 
-   if (!buf2[0]) return;
+   if (!buf2[0])
+     {
+        _lc_check_del(NULL);
+        return;
+     }
 
    snprintf(buf, sizeof(buf), _("You have some extra locale environment<br>"
                                  "variables set that may interfere with<br>"
