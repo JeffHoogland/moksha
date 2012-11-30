@@ -124,6 +124,7 @@ _mixer_gadget_configuration_defaults(E_Mixer_Gadget_Config *conf)
    conf->lock_sliders = 1;
    conf->show_locked = 0;
    conf->keybindings_popup = 0;
+   conf->state.left = conf->state.right = conf->state.mute = -1;
 
    return 1;
 }
@@ -976,7 +977,7 @@ e_mod_mixer_pulse_ready(Eina_Bool ready)
              inst->sys = NULL;
              return;
           }
-        if ((ctxt->conf->version & 0xffff) >= 0x0004)
+        if ((inst->mixer_state.left > -1) && (inst->mixer_state.right > -1) && (inst->mixer_state.mute > -1))
           e_mod_mixer_volume_set(inst->sys, inst->channel,
                                  inst->mixer_state.left, inst->mixer_state.right);
         else
@@ -1066,7 +1067,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    if (inst->sys)
      {
-        if (_mixer_using_default && ((ctxt->conf->version & 0xffff) >= 0x0004))
+        if (_mixer_using_default &&
+             ((inst->mixer_state.left > -1) && (inst->mixer_state.right > -1) && (inst->mixer_state.mute > -1)))
           e_mod_mixer_volume_set(inst->sys, inst->channel,
                                  inst->mixer_state.left, inst->mixer_state.right);
         else
