@@ -445,6 +445,8 @@ fallback:
         cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_PLUS);
       else if (!strcmp(type, "hand"))
         cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_HAND1);
+      else if (!strcmp(type, "rotate"))
+        cursor = ecore_x_cursor_shape_get(ECORE_X_CURSOR_EXCHANGE);
       else
         {
            printf("Unknown pointer type: %s\n", type);
