@@ -1246,7 +1246,7 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
    if (gcc->moving)
      {
         gcc->moving = 0;
-        _e_gadcon_client_save(gcc);
+        if (gcc->cf) _e_gadcon_client_save(gcc);
      }
    if (gcc->o_event) evas_object_del(gcc->o_event);
    gcc->o_event = NULL;
