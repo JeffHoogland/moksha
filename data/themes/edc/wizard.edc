@@ -185,17 +185,33 @@ group { name: "e/wizard/main";
       }
       program {
          signal: "mouse,down,1"; source: "base";
-         action: STATE_SET "clicked" 0.0;
-         target: "base";
+         script {
+            new st[31];
+            new Float:vl;
+            get_state(PART:"block", st, 30, vl);
+            if (!strcmp(st, "default"))
+              set_state(PART:"base", "clicked", 0.0);
+         }
       }
       program {
          signal: "mouse,up,1"; source: "base";
-         action: STATE_SET "default" 0.0;
-         target: "base";
+         script {
+            new st[31];
+            new Float:vl;
+            get_state(PART:"block", st, 30, vl);
+            if (!strcmp(st, "default"))
+              set_state(PART:"base", "default", 0.0);
+         }
       }
       program {
          signal: "mouse,clicked,1"; source: "base";
-         action: SIGNAL_EMIT "e,action,next" "";
+         script {
+            new st[31];
+            new Float:vl;
+            get_state(PART:"block", st, 30, vl);
+            if (!strcmp(st, "default"))
+              emit("e,action,next", "");
+         }
       }
       program {
          signal: "e,state,next,enable"; source: "e";
