@@ -45,6 +45,7 @@ edc/ilist.edc \
 edc/init.edc \
 edc/label.edc \
 edc/menu.edc \
+edc/mixer.edc \
 edc/notification.edc \
 edc/pager.edc \
 edc/pointer.edc \
@@ -199,6 +200,7 @@ img/knob_sz_20.png \
 img/knob_sz_22.png \
 img/knob_sz_24.png \
 img/led_dark.png \
+img/led_dot_white.png \
 img/led_light.png \
 img/led_red_light.png \
 img/led_strobe.png \
@@ -247,6 +249,7 @@ img/slider_run_bevel_horiz.png \
 img/slider_run_bevel_vert.png \
 img/slot_horiz_bottom.png \
 img/slot_horiz_top.png \
+img/speaker.png \
 img/sym_check_alum.png \
 img/sym_close_dark_normal.png \
 img/sym_close_dark_selected.png \

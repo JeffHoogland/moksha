@@ -55,6 +55,7 @@ collections {
 #include "edc/cpufreq.edc"
 #include "edc/temperature.edc"
 #include "edc/backlight.edc"
+#include "edc/mixer.edc"
 
 // port unchanged stuff so this can work as a replacement
 #include "edc/O/battery.edc"
@@ -64,8 +65,8 @@ collections {
 #include "edc/O/evrything.edc"
 #include "edc/O/icons.edc"
 #include "edc/O/illume_gad.edc"
-#include "edc/O/mixer.edc"
 #include "edc/O/wallpaper.edc"
+//#include "edc/O/mixer.edc"
 //#include "edc/O/backlight.edc"
 //#include "edc/O/temperature.edc"
 //#include "edc/O/cpufreq.edc"
