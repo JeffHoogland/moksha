@@ -836,7 +836,6 @@ AM_CONDITIONAL([HAVE_WAYLAND_CLIENTS], [test "x${have_wayland_clients}" = "xyes"
 
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([dropshadow], true)
-AC_E_OPTIONAL_MODULE([birthday], true)
 AC_E_OPTIONAL_MODULE([clock], true)
 AC_E_OPTIONAL_MODULE([pager], true)
 AC_E_OPTIONAL_MODULE([battery], true, [CHECK_MODULE_BATTERY])
@@ -917,8 +916,6 @@ m4_ifdef([v_mic],
     EFL_COMPILER_FLAG([-W])
    ])
 
-EFL_COMPILER_FLAG([-Wno-trigraphs])
-EFL_COMPILER_FLAG([-trigraphs])
 SUID_CFLAGS=-fPIE
 SUID_LDFLAGS=-pie
 AC_SUBST([SUID_CFLAGS])
@@ -935,7 +932,6 @@ src/bin/e_fm/Makefile
 src/modules/Makefile
 src/modules/ibar/module.desktop
 src/modules/dropshadow/module.desktop
-src/modules/birthday/module.desktop
 src/modules/clock/module.desktop
 src/modules/pager/module.desktop
 src/modules/battery/module.desktop

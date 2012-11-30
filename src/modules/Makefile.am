@@ -42,10 +42,6 @@ if USE_MODULE_CLOCK
 include Makefile_clock.am
 endif
 
-if USE_MODULE_BIRTHDAY
-include Makefile_birthday.am
-endif
-
 if USE_MODULE_PAGER
 include Makefile_pager.am
 endif
