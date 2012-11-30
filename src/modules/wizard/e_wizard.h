@@ -6,6 +6,14 @@ typedef struct _E_Wizard_Page E_Wizard_Page;
 #ifndef E_WIZARD_H
 #define E_WIZARD_H
 
+typedef enum
+{
+   E_WIZARD_PAGE_STATE_INIT,
+   E_WIZARD_PAGE_STATE_SHOW,
+   E_WIZARD_PAGE_STATE_HIDE,
+   E_WIZARD_PAGE_STATE_SHUTDOWN
+} E_Wizard_Page_State;
+
 struct _E_Wizard_Page
 {
    void *handle;
@@ -15,6 +23,7 @@ struct _E_Wizard_Page
    int (*show)     (E_Wizard_Page *pg);
    int (*hide)     (E_Wizard_Page *pg);
    int (*apply)    (E_Wizard_Page *pg);
+   E_Wizard_Page_State state;
 };
 
 EAPI int e_wizard_init(void);

@@ -53,6 +53,10 @@ e_modapi_init(E_Module *m)
    wiz_module = m;
    e_wizard_init();
 
+   e_config->scale.use_dpi = 0;
+   e_config->scale.use_custom = 1;
+   e_config->scale.factor = 1.2;
+   e_scale_update();
    snprintf(buf, sizeof(buf), "%s/%s", e_module_dir_get(m), MODULE_ARCH);
    files = ecore_file_ls(buf);
    files = eina_list_sort(files, 0, (Eina_Compare_Cb)_cb_sort_files);

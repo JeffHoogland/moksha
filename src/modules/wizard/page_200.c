@@ -2,6 +2,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 
+#if 0
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
 {
@@ -25,7 +26,7 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
-
+#endif
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {

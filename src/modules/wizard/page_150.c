@@ -46,7 +46,7 @@ match_xorg_log(const char *globbing)
      }
    return 0;
 }
-
+/*
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
 {
@@ -58,7 +58,7 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
-
+*/
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
@@ -205,10 +205,10 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 //   if (pg->data) evas_object_del(pg->data);
    return 1;
 }
-
+/*
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
-
+*/

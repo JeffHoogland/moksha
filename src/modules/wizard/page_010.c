@@ -139,14 +139,14 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UN
      }
    return 1;
 }
-
+/*
 EAPI int
 wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 {
    // FIXME: free blang_list
    return 1;
 }
-
+*/
 EAPI int
 wizard_page_show(E_Wizard_Page *pg)
 {
@@ -193,6 +193,10 @@ wizard_page_show(E_Wizard_Page *pg)
         e_widget_ilist_selected_set(ob, sel);
         e_widget_ilist_nth_show(ob, sel, 0);
      }
+   else if (e_widget_ilist_count(ob) == 2) // default and one other
+     e_widget_ilist_selected_set(ob, 1);
+   else
+     e_widget_ilist_selected_set(ob, 0);
 
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);

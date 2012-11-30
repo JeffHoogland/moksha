@@ -101,13 +101,17 @@ e_wizard_go(void)
    if (curpage)
      {
         if (curpage->init) curpage->init(curpage, &need_xdg_desktops, &need_xdg_icons);
+        curpage->state++;
         _e_wizard_next_eval();
         if (_e_wizard_check_xdg())
           {
              if ((curpage->show) && (!curpage->show(curpage)))
                {
+                  curpage->state++;
                   e_wizard_next();
                }
+             else
+               curpage->state++;
           }
      }
 }
@@ -116,14 +120,10 @@ EAPI void
 e_wizard_apply(void)
 {
    Eina_List *l;
+   E_Wizard_Page *pg;
 
-   for (l = pages; l; l = l->next)
-     {
-        E_Wizard_Page *pg;
-
-        pg = l->data;
-        if (pg->apply) pg->apply(pg);
-     }
+   EINA_LIST_FOREACH(pages, l, pg)
+     if (pg->apply) pg->apply(pg);
 }
 
 EAPI void
@@ -142,18 +142,25 @@ e_wizard_next(void)
                     {
                        if (curpage->hide)
                          curpage->hide(curpage);
+                       curpage->state++;
                     }
                   curpage = eina_list_data_get(eina_list_next(l));
+                  e_wizard_button_next_enable_set(1);
                   need_xdg_desktops = EINA_FALSE;
                   need_xdg_icons = EINA_FALSE;
                   if (curpage->init)
                     curpage->init(curpage, &need_xdg_desktops, &need_xdg_icons);
+                  curpage->state++;
                   if (!_e_wizard_check_xdg())
                     break;
 
                   _e_wizard_next_eval();
                   if ((curpage->show) && (curpage->show(curpage)))
-                    break;
+                    {
+                       curpage->state++;
+                       break;
+                    }
+                  curpage->state++;
                }
              else
                {
@@ -219,6 +226,7 @@ e_wizard_page_del(E_Wizard_Page *pg)
 // ther page seq.. we cant REALLY dlclose... not a problem as wizard runs
 // once only then e restarts itself with final wizard page
 //   if (pg->handle) dlclose(pg->handle);
+   if (pg->shutdown) pg->shutdown(pg);
    pages = eina_list_remove(pages, pg);
    free(pg);
 }
@@ -391,7 +399,7 @@ _e_wizard_check_xdg(void)
      {
         /* Advance within 15 secs if no xdg event */
         if (!next_timer)
-          next_timer = ecore_timer_add(15.0, _e_wizard_cb_next_page, NULL);
+          next_timer = ecore_timer_add(7.0, _e_wizard_cb_next_page, NULL);
         next_can = 0;
         _e_wizard_next_eval();
         return 0;
@@ -400,7 +408,7 @@ _e_wizard_check_xdg(void)
      {
         /* Advance within 15 secs if no xdg event */
         if (!next_timer)
-          next_timer = ecore_timer_add(15.0, _e_wizard_cb_next_page, NULL);
+          next_timer = ecore_timer_add(7.0, _e_wizard_cb_next_page, NULL);
         next_can = 0;
         _e_wizard_next_eval();
         return 0;
@@ -419,8 +427,18 @@ _e_wizard_next_xdg(void)
 
    if (next_timer) ecore_timer_del(next_timer);
    next_timer = NULL;
-   if ((curpage->show) && (!curpage->show(curpage)))
-     e_wizard_next();
+   if (curpage->state != E_WIZARD_PAGE_STATE_SHOW)
+     {
+        if (next_ok) return; // waiting for user
+        e_wizard_next();
+     }
+   else if ((curpage->show) && (!curpage->show(curpage)))
+     {
+        curpage->state++;
+        e_wizard_next();
+     }
+   else
+     curpage->state++;
 }
 
 static Eina_Bool
