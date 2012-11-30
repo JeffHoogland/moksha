@@ -9242,7 +9242,7 @@ _e_fm2_new_file(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
      }
    if (!ecore_file_can_write(sd->realpath))
      {
-        e_util_dialog_show(_("Error"), _("%s is not able to be written to!"), sd->realpath);
+        e_util_dialog_show(_("Error"), _("%s can't be written to!"), sd->realpath);
         return;
      }
    sd->new_file.thread = ecore_thread_feedback_run(_e_fm2_new_file_thread, (Ecore_Thread_Notify_Cb)_e_fm2_new_file_notify,

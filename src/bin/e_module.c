@@ -139,7 +139,7 @@ e_module_new(const char *name)
    if (!modpath)
      {
         snprintf(body, sizeof(body),
-                 _("There was an error loading module named: %s<br>"
+                 _("There was an error loading the module named: %s<br>"
                    "No module named %s could be found in the<br>"
                    "module search directories.<br>"), name, buf);
         _e_module_dialog_disable_show(_("Error loading Module"), body, m);
@@ -150,7 +150,7 @@ e_module_new(const char *name)
    if (!m->handle)
      {
         snprintf(body, sizeof(body),
-                 _("There was an error loading module named: %s<br>"
+                 _("There was an error loading the module named: %s<br>"
                    "The full path to this module is:<br>"
                    "%s<br>"
                    "The error reported was:<br>"
@@ -167,7 +167,7 @@ e_module_new(const char *name)
    if ((!m->func.init) || (!m->func.shutdown) || (!m->func.save) || (!m->api))
      {
         snprintf(body, sizeof(body),
-                 _("There was an error loading module named: %s<br>"
+                 _("There was an error loading the module named: %s<br>"
                    "The full path to this module is:<br>"
                    "%s<br>"
                    "The error reported was:<br>"

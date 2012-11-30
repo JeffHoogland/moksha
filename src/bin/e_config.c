@@ -2244,11 +2244,11 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
         break;
 
       case EET_ERROR_WRITE_ERROR_OUT_OF_SPACE:
-        erstr = _("You ran out of space while writing the file");
+        erstr = _("You ran out of space while writing the file.");
         break;
 
       case EET_ERROR_WRITE_ERROR_FILE_CLOSED:
-        erstr = _("The file was closed on it while writing.");
+        erstr = _("The file was closed while writing.");
         break;
 
       case EET_ERROR_MMAP_FAILED:

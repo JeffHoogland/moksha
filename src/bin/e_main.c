@@ -494,7 +494,7 @@ main(int argc, char **argv)
    TS("E_Filereg Init");
    if (!e_filereg_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its file registry system."));
+        e_error_message_show(_("Enlightenment cannot set up its file registry system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Filereg Init Done");
@@ -503,7 +503,7 @@ main(int argc, char **argv)
    TS("E_Config Init");
    if (!e_config_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its config system."));
+        e_error_message_show(_("Enlightenment cannot set up its config system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Config Init Done");
@@ -525,7 +525,7 @@ main(int argc, char **argv)
    TS("E_Env Init");
    if (!e_env_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its environment."));
+        e_error_message_show(_("Enlightenment cannot set up its environment.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Env Init Done");
@@ -541,7 +541,7 @@ main(int argc, char **argv)
    TS("E_Scale Init");
    if (!e_scale_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its scale system."));
+        e_error_message_show(_("Enlightenment cannot set up its scale system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Scale Init Done");
@@ -550,7 +550,7 @@ main(int argc, char **argv)
    TS("E_Pointer Init");
    if (!e_pointer_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its pointer system."));
+        e_error_message_show(_("Enlightenment cannot set up its pointer system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Pointer Init Done");
@@ -576,7 +576,7 @@ main(int argc, char **argv)
    TS("E_Font Init");
    if (!e_font_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its font system."));
+        e_error_message_show(_("Enlightenment cannot set up its font system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Font Init Done");
@@ -593,7 +593,7 @@ main(int argc, char **argv)
    TS("E_Theme Init");
    if (!e_theme_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its theme system."));
+        e_error_message_show(_("Enlightenment cannot set up its theme system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Theme Init Done");
@@ -609,7 +609,7 @@ main(int argc, char **argv)
         TS("E_Splash Init");
         if (!e_init_init())
           {
-             e_error_message_show(_("Enlightenment cannot set up its init screen."));
+             e_error_message_show(_("Enlightenment cannot set up its init screen.\n"));
              _e_main_shutdown(-1);
           }
         TS("E_Splash Init Done");
@@ -628,7 +628,7 @@ main(int argc, char **argv)
    TS("E_Intl Post Init");
    if (!e_intl_post_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its intl system."));
+        e_error_message_show(_("Enlightenment cannot set up its intl system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Intl Post Init Done");
@@ -683,7 +683,7 @@ main(int argc, char **argv)
    TS("E_Backlight Init");
    if (!e_backlight_init())
      {
-        e_error_message_show(_("Enlightenment cannot configure the backlight."));
+        e_error_message_show(_("Enlightenment cannot configure the backlight.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Backlight Init Done");
@@ -694,7 +694,7 @@ main(int argc, char **argv)
    TS("E_Dpms Init");
    if (!e_dpms_init())
      {
-        e_error_message_show(_("Enlightenment cannot configure the DPMS settings."));
+        e_error_message_show(_("Enlightenment cannot configure the DPMS settings.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Dpms Init Done");
@@ -705,7 +705,7 @@ main(int argc, char **argv)
    TS("E_Screensaver Init");
    if (!e_screensaver_init())
      {
-        e_error_message_show(_("Enlightenment cannot configure the X screensaver."));
+        e_error_message_show(_("Enlightenment cannot configure the X screensaver.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Screensaver Init Done");
@@ -716,7 +716,7 @@ main(int argc, char **argv)
    TS("E_Powersave Init");
    if (!e_powersave_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its powersave modes."));
+        e_error_message_show(_("Enlightenment cannot set up its powersave modes.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Powersave Init Done");
@@ -727,7 +727,7 @@ main(int argc, char **argv)
    TS("E_Desklock Init");
    if (!e_desklock_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its desk locking system."));
+        e_error_message_show(_("Enlightenment cannot set up its desk locking system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Desklock Init Done");
@@ -738,7 +738,7 @@ main(int argc, char **argv)
    TS("E_Popups Init");
    if (!e_popup_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its popup system."));
+        e_error_message_show(_("Enlightenment cannot set up its popup system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Popups Init Done");
@@ -778,7 +778,7 @@ main(int argc, char **argv)
    TS("E_Actions Init");
    if (!e_actions_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its actions system."));
+        e_error_message_show(_("Enlightenment cannot set up its actions system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Actions Init Done");
@@ -789,7 +789,7 @@ main(int argc, char **argv)
    TS("E_Exec Init");
    if (!e_exec_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its exec system."));
+        e_error_message_show(_("Enlightenment cannot set up its exec system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Exec Init Done");
@@ -815,7 +815,7 @@ main(int argc, char **argv)
    TS("E_Msg Init");
    if (!e_msg_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its msg system."));
+        e_error_message_show(_("Enlightenment cannot set up its msg system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Msg Init Done");
@@ -826,7 +826,7 @@ main(int argc, char **argv)
    TS("E_Dnd Init");
    if (!e_dnd_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its dnd system."));
+        e_error_message_show(_("Enlightenment cannot set up its dnd system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Dnd Init Done");
@@ -837,7 +837,7 @@ main(int argc, char **argv)
    TS("E_Grabinput Init");
    if (!e_grabinput_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its grab input handling system."));
+        e_error_message_show(_("Enlightenment cannot set up its grab input handling system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Grabinput Init Done");
@@ -848,7 +848,7 @@ main(int argc, char **argv)
    TS("E_Module Init");
    if (!e_module_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its module system."));
+        e_error_message_show(_("Enlightenment cannot set up its module system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Module Init Done");
@@ -859,7 +859,7 @@ main(int argc, char **argv)
    TS("E_Remember Init");
    if (!e_remember_init(after_restart ? E_STARTUP_RESTART : E_STARTUP_START))
      {
-        e_error_message_show(_("Enlightenment cannot setup remember settings."));
+        e_error_message_show(_("Enlightenment cannot setup remember settings.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Remember Init Done");
@@ -870,7 +870,7 @@ main(int argc, char **argv)
    TS("E_Color_Class Init");
    if (!e_color_class_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its color class system."));
+        e_error_message_show(_("Enlightenment cannot set up its color class system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Color_Class Init Done");
@@ -881,7 +881,7 @@ main(int argc, char **argv)
    TS("E_Gadcon Init");
    if (!e_gadcon_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its gadget control system."));
+        e_error_message_show(_("Enlightenment cannot set up its gadget control system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Gadcon Init Done");
@@ -892,7 +892,7 @@ main(int argc, char **argv)
    TS("E_Bg Init");
    if (!e_bg_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its desktop background system."));
+        e_error_message_show(_("Enlightenment cannot set up its desktop background system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Bg Init Done");
@@ -903,14 +903,14 @@ main(int argc, char **argv)
    TS("E_Mouse Init");
    if (!e_mouse_update())
      {
-        e_error_message_show(_("Enlightenment cannot configure the mouse settings."));
+        e_error_message_show(_("Enlightenment cannot configure the mouse settings.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Mouse Init Done");
    TS("E_Xkb Init");
    if (!e_xkb_init())
      {
-        e_error_message_show(_("Enlightenment cannot setup XKB Keyboard layouts."));
+        e_error_message_show(_("Enlightenment cannot setup XKB Keyboard layouts.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Xkb Init Done");
@@ -920,7 +920,7 @@ main(int argc, char **argv)
    TS("E_Bindings Init");
    if (!e_bindings_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its bindings system."));
+        e_error_message_show(_("Enlightenment cannot set up its bindings system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Bindings Init Done");
@@ -983,7 +983,7 @@ main(int argc, char **argv)
    TS("E_Order Init");
    if (!e_order_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its order file system."));
+        e_error_message_show(_("Enlightenment cannot set up its order file system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Order Init Done");
@@ -1033,7 +1033,7 @@ main(int argc, char **argv)
    TS("E_Shelf Init");
    if (!e_shelf_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its module system."));
+        e_error_message_show(_("Enlightenment cannot set up its module system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Shelf Init Done");
@@ -1144,7 +1144,7 @@ _e_main_shutdown_push(int (*func)(void))
    if (_e_main_lvl > MAX_LEVEL)
      {
         _e_main_lvl--;
-        e_error_message_show("WARNING: too many init levels. MAX = %i",
+        e_error_message_show("WARNING: too many init levels. MAX = %i\n",
                              MAX_LEVEL);
         return;
      }
@@ -1275,7 +1275,7 @@ _e_main_parse_arguments(int argc, char **argv)
 static void
 _e_main_cb_x_fatal(void *data __UNUSED__)
 {
-   e_error_message_show("Lost X Connection.");
+   e_error_message_show("Lost X Connection.\n");
    ecore_main_loop_quit();
    if (!x_fatal)
      {
@@ -1360,7 +1360,7 @@ _e_main_dirs_init(void)
    if (ecore_file_mksubdirs(base, dirs) != sizeof(dirs) / sizeof(dirs[0]) - 1)
      {
         e_error_message_show("Could not create one of the required "
-                             "subdirectories of '%s'", base);
+                             "subdirectories of '%s'\n", base);
         return 0;
      }
 
@@ -1795,13 +1795,13 @@ _e_main_modules_load(Eina_Bool safe_mode)
              e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
              e_error_message_show
                (_("Enlightenment crashed early on start and has<br>"
-                  "been restarted. There was an error loading<br>"
+                  "been restarted. There was an error loading the<br>"
                   "module named: %s. This module has been disabled<br>"
                   "and will not be loaded."), crashmodule);
              e_util_dialog_show
                (_("Enlightenment crashed early on start and has been restarted"),
                _("Enlightenment crashed early on start and has been restarted.<br>"
-                 "There was an error loading module named: %s<br><br>"
+                 "There was an error loading the module named: %s<br><br>"
                  "This module has been disabled and will not be loaded."), crashmodule);
              e_module_all_load();
           }
@@ -1814,7 +1814,7 @@ _e_main_modules_load(Eina_Bool safe_mode)
                   "and will not be loaded to help remove any problem<br>"
                   "modules from your configuration. The module<br>"
                   "configuration dialog should let you select your<br>"
-                  "modules again."));
+                  "modules again.\n"));
              e_util_dialog_show
                (_("Enlightenment crashed early on start and has been restarted"),
                _("Enlightenment crashed early on start and has been restarted.<br>"

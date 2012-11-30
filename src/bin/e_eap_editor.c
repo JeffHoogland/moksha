@@ -178,9 +178,7 @@ e_desktop_border_edit(E_Container *con, E_Border *bd)
         e_util_dialog_show(_("Incomplete Window Properties"),
                            _("The window you are creating an icon for<br>"
                              "does not contain window name and class<br>"
-                             "properties, so the needed properties for<br>"
-                             "the icon so that it will be used for this<br>"
-                             "window cannot be guessed. You will need to<br>"
+                             "properties. Without these, you will have to<br>"
                              "use the window title instead. This will only<br>"
                              "work if the window title is the same at<br>"
                              "the time the window starts up, and does not<br>"

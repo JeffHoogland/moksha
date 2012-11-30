@@ -156,7 +156,7 @@ _e_screensaver_ask_presentation_mode(void)
    e_dialog_title_set(dia, _("Activate Presentation Mode?"));
    e_dialog_icon_set(dia, "dialog-ask", 64);
    e_dialog_text_set(dia,
-		     _("You disabled screensaver too fast.<br><br>"
+		     _("You disabled the screensaver too fast.<br><br>"
 		       "Would you like to enable <b>presentation</b> mode and "
 		       "temporarily disable screen saver, lock and power saving?"));
 
