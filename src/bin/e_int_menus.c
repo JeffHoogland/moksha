@@ -1,9 +1,5 @@
 #include "e.h"
 
-/*
- * TODO: Listen to EFREET_EVENT_DESKTOP_CACHE_UPDATE
- */
-
 typedef struct _Main_Data Main_Data;
 
 struct _Main_Data
