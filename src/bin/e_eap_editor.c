@@ -141,9 +141,12 @@ e_desktop_border_create(E_Border *bd)
          * - Find the icon with the best size
          * - Should use mkstemp
          */
-        snprintf(path, sizeof(path), "%s/%s-%.6f.png", icon_dir, bname, ecore_time_get());
+        char file[PATH_MAX];
+
+        snprintf(file, sizeof(file), "%s-%.6f.png", bname, ecore_time_get());
+        snprintf(path, sizeof(path), "%s/%s", icon_dir, file);
         if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
-          desktop->icon = strdup(path);
+          desktop->icon = strdup(file);
         else
           fprintf(stderr, "Could not save file from ARGB: %s\n", path);
      }
@@ -950,12 +953,55 @@ _e_desktop_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
 {
    E_Config_Dialog_Data *cfdata;
    const char *file;
+   char *dir;
+   const char *icon_dir;
 
    cfdata = data;
    file = e_widget_fsel_selection_path_get(cfdata->editor->icon_fsel);
+   dir = ecore_file_dir_get(file);
 
    IFFREE(cfdata->icon);
-   IFDUP(file, cfdata->icon);
+
+   /* TODO: Check for theme icon */
+   icon_dir = e_user_icon_dir_get();
+   if ((icon_dir) && (e_util_dir_check(icon_dir)) && (!e_util_strcmp(dir, icon_dir)))
+     {
+        cfdata->icon = strdup(ecore_file_file_get(file));
+     }
+   else
+     {
+        Eina_List *xdg_dirs, *l;
+        char buf[PATH_MAX];
+
+        xdg_dirs = efreet_data_dirs_get();
+
+        EINA_LIST_FOREACH(xdg_dirs, l, icon_dir)
+          {
+             snprintf(buf, sizeof(buf), "%s/icons", icon_dir);
+             if (!e_util_dir_check(buf)) continue;
+             if (!e_util_strcmp(dir, buf))
+               {
+                  cfdata->icon = strdup(ecore_file_file_get(file));
+                  break;
+               }
+          }
+     }
+   if (!cfdata->icon)
+     {
+        IFDUP(file, cfdata->icon);
+     }
+   else
+     {
+        /* strip ext */
+        char *p;
+        p = strrchr(cfdata->icon, '.');
+        if (p)
+          {
+             /* TODO: Check if known extension */
+             *p = '\0';
+          }
+     }
+   E_FREE(dir);
    e_widget_entry_text_set(cfdata->icon_entry, cfdata->icon);
 
    _e_desktop_edit_cb_icon_select_cancel(data, dia);
