@@ -390,7 +390,7 @@ _e_wizard_check_xdg(void)
         /* Check if cache already exists */
         snprintf(path, sizeof(path), "%s/efreet/icon_themes_%s.eet",
              efreet_cache_home_get(), efreet_hostname_get());
-        if (ecore_file_is_dir(path))
+        if (ecore_file_exists(path))
           {
              got_icons = EINA_TRUE;
           }
