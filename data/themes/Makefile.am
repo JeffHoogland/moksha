@@ -20,6 +20,7 @@ edc/about-e.edc \
 edc/about-theme.edc \
 edc/background.edc \
 edc/backlight.edc \
+edc/battery.edc \
 edc/border.edc \
 edc/button.edc \
 edc/check.edc \
@@ -98,6 +99,13 @@ edc/O/winlist.edc \
 edc/O/wizard.edc \
 img/ball_small_glow_intense.png \
 img/ball_small_glow.png \
+img/bat_base.png \
+img/bat_bottom0.png \
+img/bat_bottom1.png \
+img/bat_shadow.png \
+img/bat_shine.png \
+img/bat_top0.png \
+img/bat_top1.png \
 img/bevel_curved_horiz_out.png \
 img/bevel_dark_out.png \
 img/bevel_horiz_out.png \
@@ -158,6 +166,7 @@ img/glow_exclam.png \
 img/glow_lock_double.png \
 img/glow_lock_locked.png \
 img/glow_lock_unlocked.png \
+img/glow_med_white.png \
 img/glow_round_corners.png \
 img/glow_round_corners_small.png \
 img/glow_small.png \

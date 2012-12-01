@@ -1,0 +1,342 @@
+group { name: "e/modules/battery/main";
+   images.image: "bat_shadow.png" COMP;
+   images.image: "bat_base.png" COMP;
+   images.image: "bat_shine.png" COMP;
+   images.image: "bat_bottom0.png" COMP;
+   images.image: "bat_bottom1.png" COMP;
+   images.image: "bat_top0.png" COMP;
+   images.image: "bat_top1.png" COMP;
+   images.image: "glow_med_white.png" COMP;
+   min: 16 16;
+   max: 160 160;
+   script {
+      public message(Msg_Type:type, id, ...) {
+         if ((type == MSG_FLOAT) && (id == 1)) {
+            new Float:val;
+            new r = 51, g = 153, b = 255;
+            new lr = 255, lg = 0, lb = 0;
+            
+            val = getfarg(2);
+            if (val < 0.35) {
+               new Float:val1, Float:val2;
+               
+               val1 = (val - 0.10) / 0.25;
+               val2 = 1.0 - val1;
+               r = round((r * val1) + (lr * val2), ROUND);
+               g = round((g * val1) + (lg * val2), ROUND);
+               b = round((b * val1) + (lb * val2), ROUND);
+            } 
+            custom_state(PART:"fill", "default", 0.0);
+            set_state_val(PART:"fill", STATE_COLOR, r, g, b, 255);
+            set_state_val(PART:"fill", STATE_COLOR, r, g, b, 255);
+            set_state_val(PART:"fill", STATE_COLOR, r, g, b, 255);
+            set_state_val(PART:"fill", STATE_REL1, 0.0, 1.0 - val);
+            set_state(PART:"fill", "custom", 0.0);
+         }
+      }
+   }
+   parts {
+      part { name: "fade_clip"; type: RECT;
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+         }
+         description { state: "faded" 0.0;
+            color: 128 128 128 255;
+         }
+      }
+      part { name: "info_clip"; type: RECT;
+         clip_to: "fade_clip";
+         description { state: "default" 0.0;
+            color: 255 255 255 0;
+         }
+         description { state: "visible" 0.0;
+            color: 255 255 255 255;
+         }
+      }
+      part { name: "pulse_clip"; type: RECT;
+         clip_to: "fade_clip";
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+         }
+         description { state: "faded" 1.0;
+            color: 255 255 255 255;
+         }
+         description { state: "faded" 0.0;
+            color: 255 255 255 64;
+         }
+      }
+      part { name: "fill_region"; type: SPACER;
+         description { state: "default" 0.0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+         }
+      }
+      part { name: "pwr"; type: SPACER;
+         description { state: "default" 0.0;
+            rel1.to: "bg";
+            rel1.relative: 0.40 0.40;
+            rel2.to: "bg";
+            rel2.relative: 0.60 0.60;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            min: 5 5;
+            step: 5 5;
+         }
+      }
+      part { name: "base"; type: SPACER;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+         }
+      }
+      part { name: "shadow";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel1.relative: (15/160) (15/160);
+            rel2.to: "base";
+            rel2.relative: (145/160) (160/160);
+            image.normal: "bat_shadow.png";
+         }
+      }
+      part { name: "bg";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "top";
+            rel1.relative: 0.0 1.0;
+            rel2.to: "bottom";
+            rel2.relative: 1.0 0.0;
+            image.normal: "bat_base.png";
+            fill.smooth: 0;
+         }
+      }
+      part { name: "top";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel1.relative: (24/160) (16/160);
+            rel2.to: "base";
+            rel2.relative: (136/160) (40/160);
+            image.normal: "bat_top0.png";
+         }
+      }
+      part { name: "bottom";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel1.relative: (24/160) (132/160);
+            rel2.to: "base";
+            rel2.relative: (136/160) (144/160);
+            image.normal: "bat_bottom0.png";
+         }
+      }
+      part { name: "fill"; mouse_events: 0;
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "fill_region";
+            rel1.offset: -5 -5;
+            rel2.to: "fill_region";
+            rel2.offset: 4 4;
+            image.normal: "glow_med_white.png";
+            image.border: 10 10 10 10;
+            color: 51 153 255 255;
+         }
+      }
+      part { name: "top-shine";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "top";
+            rel2.to: "top";
+            image.normal: "bat_top1.png";
+         }
+      }
+      part { name: "bottom-shine";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "bottom";
+            rel2.to: "bottom";
+            image.normal: "bat_bottom1.png";
+         }
+      }
+      part { name: "shine";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "bg";
+            rel1.offset: 0 -6;
+            rel2.to: "bg";
+            rel2.offset: -1 5;
+            image.normal: "bat_shine.png";
+            image.border: 0 0 7 7;
+         }
+      }
+      part { name: "pwr1";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "pwr";
+            rel1.relative: (2/5) 0.0;
+            rel1.offset: -5 -5;
+            rel2.to: "pwr";
+            rel2.relative: (3/5) 1.0;
+            rel2.offset: 4 4;
+            image.normal: "glow_med_white.png";
+            image.border: 5 5 5 5;
+            fill.smooth: 0;
+            visible: 0;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "pwr2";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "pwr";
+            rel1.relative: 0.0 (2/5);
+            rel1.offset: -5 -5;
+            rel2.to: "pwr";
+            rel2.relative: 1.0 (3/5);
+            rel2.offset: 4 4;
+            image.normal: "glow_med_white.png";
+            image.border: 5 5 5 5;
+            fill.smooth: 0;
+            visible: 0;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "e.text.reading"; type: TEXT; mouse_events: 0;
+         scale: 1;
+         clip_to: "info_clip";
+         description { state: "default" 0.0;
+            align: 0.5 0.0;
+            rel1.to: "bg";
+            rel1.offset: 0 -2;
+            rel2.relative: 1.0 0.0;
+            rel2.to_x: "bg";
+            rel2.to_y: "pwr";
+            color: 255 255 255 255;
+            color_class: "module_label";
+            text { font: "Sans"; size: 6;
+               min: 0 1;
+               text_class: "module_small";
+            }
+         }
+      }
+      part { name: "e.text.time"; type: TEXT; mouse_events: 0;
+         scale: 1;
+         clip_to: "info_clip";
+         description { state: "default" 0.0;
+            align: 0.5 1.0;
+            rel1.relative: 0.0 1.0;
+            rel1.to_x: "bg";
+            rel1.to_y: "pwr";
+            rel2.offset: -1 1;
+            rel2.to: "bg";
+            color: 255 255 255 255;
+            color_class: "module_label";
+            text { font: "Sans"; size: 6;
+               min: 0 1;
+               text_class: "module_small";
+            }
+         }
+      }
+      part { name: "over"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,in"; source: "over";
+         action: STATE_SET "visible" 0.0;
+         transition: LINEAR 0.3;
+         target: "info_clip";
+      }
+      program {
+         signal: "mouse,out"; source: "over";
+         action: STATE_SET "default" 0.0;
+         transition: LINEAR 0.3;
+         target: "info_clip";
+      }
+      program {
+         signal: "e,state,charging"; source: "e";
+         action: STATE_SET "visible" 0.0;
+         target: "pwr1";
+         target: "pwr2";
+      }
+      program {
+         signal: "e,state,discharging"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "pwr1";
+         target: "pwr2";
+      }
+      program {
+         signal: "e,state,unknown"; source: "e";
+         action: STATE_SET "faded" 0.0;
+         target: "fade_clip";
+      }
+      program { name: "pulse";
+         signal: "e,action,pulse,start"; source: "e";
+         action: STATE_SET "faded" 0.0;
+         transition: ACCELERATE 0.3;
+         after: "pulse2";
+         target: "pulse_clip";
+      }
+      program { name: "pulse2";
+         action: STATE_SET "faded" 1.0; transition: ACCELERATE 0.1;
+         target: "pulse_clip";
+      }
+      program {
+         signal: "e,action,pulse,stop"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "pulse_clip";
+      }
+   }
+}
+
+group { name: "e/modules/battery/popup";
+   min: 240 60;
+   parts {
+      part { name: "e.swallow.battery"; type: SWALLOW;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: VERTICAL;
+            min: 1 1;
+            max: 160 160;
+            align: 0.0 0.5;
+         }
+      }
+      part { name: "e.text.title"; type: TEXT;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "e.swallow.battery";
+            rel2.relative: 1.0 0.5;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            text { font: "Sans:style=Bold"; size: 10;
+               text: "Your battery is low!";
+               min: 1 1;
+               text_class: "module_large";
+            }
+         }
+      }
+      part { name: "e.text.label"; type: TEXT;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.relative: 1.0 0.5;
+            rel1.to_x: "e.swallow.battery";
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            text { font: "Sans"; size: 10;
+               text: "AC power is recommended.";
+               min: 1 1;
+               text_class: "module_normal";
+            }
+         }
+      }
+   }
+}
