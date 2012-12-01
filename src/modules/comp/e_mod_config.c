@@ -396,7 +396,7 @@ _style_selector(Evas *evas,
 
         orec = evas_object_rectangle_add(e_livethumb_evas_get(ob));
         ds_it->client = orec;
-        evas_object_color_set(orec, 255, 255, 255, 255);
+        evas_object_color_set(orec, 0, 0, 0, 128);
         edje_object_part_swallow(obd, "e.swallow.client", orec);
         evas_object_show(orec);
 
