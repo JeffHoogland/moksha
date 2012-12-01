@@ -95,7 +95,7 @@ init(void)
    Eina_List *therms;
    char path[PATH_MAX];
 #ifdef __FreeBSD__
-   int len;
+   size_t len;
 #endif
 
    if ((!sensor_type) || ((!sensor_name) || (sensor_name[0] == 0)))
@@ -360,7 +360,7 @@ check(void)
    int temp = 0;
    char buf[4096];
 #ifdef __FreeBSD__
-   int len;
+   size_t len;
    size_t ftemp = 0;
 #endif
 
