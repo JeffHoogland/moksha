@@ -231,7 +231,9 @@ _gadman_gadget_free(void *data __UNUSED__, void *obj)
         gcc->cf = NULL;
      }
    edit = (gcc == gcc->gadcon->drag_gcc) || (Man->drag_gcc[gcc->gadcon->id - ID_GADMAN_LAYER_BASE] == gcc);
-   if (edit) gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
+   if (!edit) return;
+   gcc->gadcon->editing = 1; // may get unset from a dialog, force here to prevent crash
+   gadman_gadget_edit_end(NULL, NULL, NULL, NULL);
 }
 
 static E_Gadcon_Client *
