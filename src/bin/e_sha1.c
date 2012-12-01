@@ -1,6 +1,13 @@
 #include "e_sha1.h"
 #include <string.h>
-#include <arpa/inet.h>
+
+#ifdef HAVE_ARPA_INET_H
+# include <arpa/inet.h>
+#endif
+
+#ifdef HAVE_NETINET_IN_H
+# include <netinet/in.h>
+#endif
 
 /* externally accessible functions */
 

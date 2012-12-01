@@ -5,6 +5,14 @@
 # include "config.h"
 #endif
 
+#ifdef HAVE_ARPA_INET_H
+# include <arpa/inet.h>
+#endif
+
+#ifdef HAVE_NETINET_IN_H
+# include <netinet/in.h>
+#endif
+
 #include <Ecore.h>
 #include <Ecore_Con.h>
 #include <inttypes.h>

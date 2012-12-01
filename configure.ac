@@ -76,7 +76,7 @@ AC_CHECK_FUNCS(unsetenv)
 
 efl_version="1.7.0"
 
-AC_CHECK_HEADERS([sys/timerfd.h sys/ptrace.h])
+AC_CHECK_HEADERS([sys/timerfd.h sys/ptrace.h arpa/inet.h netinet/in.h])
 
 dnl AC_CHECK_HEADERS(X11/extensions/shape.h,, AC_MSG_ERROR([Cannot find X11/extensions/shape.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
 
