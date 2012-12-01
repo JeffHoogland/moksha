@@ -3823,8 +3823,7 @@ _container_resize_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Conta
     int x, y, i;
 
     EINA_LIST_FOREACH(ev->container->zones, l, zone) {
-        for (x = 0; x < zone->desk_x_count; x++)
-        {
+        for (x = 0; x < zone->desk_x_count; x++) {
             for (y = 0; y < zone->desk_y_count; y++) {
                 E_Desk *desk = zone->desks[x + (y * zone->desk_x_count)];
                 Eina_List *wins = NULL;
@@ -4053,9 +4052,58 @@ e_modapi_init(E_Module *m)
     return m;
 }
 
+static void
+_disable_desk(E_Desk *desk)
+{
+    Eina_List *l;
+    int i;
+
+    check_tinfo(desk);
+    if (!_G.tinfo->conf || !_G.tinfo->conf->nb_stacks) {
+        return;
+    }
+
+    for (i = 0; i < TILING_MAX_STACKS; i++) {
+        for (l = _G.tinfo->stacks[i]; l; l = l->next) {
+            E_Border *bd = l->data;
+
+            _restore_border(bd);
+        }
+        eina_list_free(_G.tinfo->stacks[i]);
+        _G.tinfo->stacks[i] = NULL;
+    }
+}
+
+static void
+_disable_all_tiling(void)
+{
+    Eina_List *l, *ll, *lll;
+    E_Manager *man;
+    E_Container *con;
+    E_Zone *zone;
+    E_Desk *desk;
+    int x, y;
+
+    EINA_LIST_FOREACH(e_manager_list(), l, man) {
+        EINA_LIST_FOREACH(man->containers, ll, con) {
+            EINA_LIST_FOREACH(con->zones, lll, zone) {
+                for (x = 0; x < zone->desk_x_count; x++) {
+                    for (y = 0; y < zone->desk_y_count; y++) {
+                        desk = zone->desks[x + (y * zone->desk_x_count)];
+
+                        _disable_desk(desk);
+                    }
+                }
+                e_place_zone_region_smart_cleanup(zone);
+            }
+        }
+    }
+}
+
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
+    _disable_all_tiling();
 
     if (tiling_g.log_domain >= 0) {
         eina_log_domain_unregister(tiling_g.log_domain);
