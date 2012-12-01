@@ -484,7 +484,10 @@ _battery_warning_popup(Instance *inst, int t, double percent)
                            "e/modules/battery/popup");
    e_theme_edje_object_set(inst->popup_battery, "base/theme/modules/battery",
                            "e/modules/battery/main");
-   edje_object_part_swallow(popup_bg, "battery", inst->popup_battery);
+   if (edje_object_part_exists(popup_bg, "e.swallow.battery"))
+     edje_object_part_swallow(popup_bg, "e.swallow.battery", inst->popup_battery);
+   else
+     edje_object_part_swallow(popup_bg, "battery", inst->popup_battery);
 
    edje_object_part_text_set(popup_bg, "e.text.title",
                              _("Your battery is low!"));
