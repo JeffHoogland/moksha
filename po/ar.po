@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-27 22:00+0100\n"
-"PO-Revision-Date: 2012-11-26 11:27+0300\n"
+"POT-Creation-Date: 2012-11-27 13:52+0100\n"
+"PO-Revision-Date: 2012-12-01 11:25+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
 "Language: ar\n"
@@ -1757,7 +1757,6 @@ msgid "Size:"
 msgstr "الحجم:"
 
 #: src/bin/e_fm_prop.c:411
-#, fuzzy
 msgid "Occupied blocks on disk:"
 msgstr "المساحات مشغولة على السطح :"
 
@@ -1895,7 +1894,7 @@ msgstr ""
 #: src/bin/e_grab_dialog.c:128
 #, fuzzy
 msgid "Mouse Binding Sequence"
-msgstr "تسلسل الماوس تجليد"
+msgstr "تسلسل ترابط الفأرة"
 
 #: src/bin/e_grab_dialog.c:135
 msgid "Key Binding Sequence"
@@ -1911,31 +1910,27 @@ msgstr ""
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
 #: src/bin/e_import_config_dialog.c:348 src/bin/e_import_config_dialog.c:358
-#, fuzzy
 msgid "Import Error"
-msgstr "حلل في استيراد السمة"
+msgstr "حلل في الاستيراد"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:349
-#, fuzzy
 msgid "Enlightenment was unable to import the image<br>due to a copy error."
-msgstr "لا يستطيع إنلايتنمينت استيراد السمة<br>جراء خلل في النسخ."
+msgstr "لا يستطيع إنلايتنمينت استيراد الصورة<br>جراء خلل في النسخ."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:359
-#, fuzzy
 msgid ""
 "Enlightenment was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
-"لا يستطيع إنلايتنمينت استيراد السمة.<br><br>هل تأكدت من صحة هذه السمة ؟"
+"لا يستطيع إنلايتنمينت استيراد الصورة.<br><br>هل تأكدت من صحة هذه الصورة ؟"
 
 #: src/bin/e_import_dialog.c:156
 msgid "Select a Picture..."
 msgstr "اختر صورة..."
 
 #: src/bin/e_import_dialog.c:188
-#, fuzzy
 msgid "Use"
-msgstr "مستخدم :"
+msgstr "استخدم"
 
 #: src/bin/e_import_config_dialog.c:291
 msgid "Picture Import Error"
@@ -1947,9 +1942,8 @@ msgid ""
 msgstr "عجز إنلايتنمينت عن إستيراد الصورة<br>لسبب أخطاء التحويل"
 
 #: src/bin/e_import_config_dialog.c:448
-#, fuzzy
 msgid "Import Settings..."
-msgstr "إعدادات استيراد الصورة"
+msgstr "استورد إعدادات ..."
 
 #: src/bin/e_import_config_dialog.c:482
 msgid "Fill and Stretch Options"
@@ -1969,18 +1963,16 @@ msgid "Tile"
 msgstr "بلاط"
 
 #: src/bin/e_import_config_dialog.c:497
-#, fuzzy
 msgid "Within"
-msgstr "مسقطة"
+msgstr "ضمن"
 
 #: src/bin/e_import_config_dialog.c:501
 msgid "Fill"
 msgstr "ملﺀ"
 
 #: src/bin/e_import_config_dialog.c:505
-#, fuzzy
 msgid "Pan"
-msgstr "لوح"
+msgstr ""
 
 #: src/bin/e_import_config_dialog.c:513
 msgid "File Quality"
@@ -1996,9 +1988,8 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_import_config_dialog.c:521
-#, fuzzy
 msgid "Fill Color"
-msgstr "اﻷلوان"
+msgstr "إملأ لون"
 
 #: src/bin/e_int_border_locks.c:66
 msgid "Window Locks"
@@ -3781,9 +3772,8 @@ msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "جاري التنويم.<br><hilight>يرجى اﻹنتظار.</hilight>"
 
 #: src/bin/e_theme_about.c:25
-#, fuzzy
 msgid "Select Theme"
-msgstr "اختر أيقونة"
+msgstr "اختر سمة"
 
 #: src/bin/e_theme.c:37
 msgid "Set As Theme"
@@ -4287,7 +4277,7 @@ msgstr "وضع مبهم"
 
 #: src/modules/battery/e_mod_config.c:306
 msgid "HAL"
-msgstr "\"هال\""
+msgstr "HAL"
 
 #: src/modules/battery/e_mod_config.c:311
 #: src/modules/temperature/e_mod_config.c:273
@@ -4354,9 +4344,8 @@ msgid "24 h"
 msgstr "٢٤ س"
 
 #: src/modules/clock/e_mod_config.c:100
-#, fuzzy
 msgid "Date"
-msgstr "بدون تاريخ"
+msgstr "تاريخ"
 
 #: src/modules/clock/e_mod_config.c:105
 msgid "Full"
@@ -4367,9 +4356,8 @@ msgid "Numbers"
 msgstr "أرقام"
 
 #: src/modules/clock/e_mod_config.c:109
-#, fuzzy
 msgid "Date Only"
-msgstr "للقراءة فقط"
+msgstr "تاريخ فقط"
 
 #: src/modules/clock/e_mod_config.c:114
 msgid "Week"
@@ -5690,7 +5678,7 @@ msgid "Bottom Left Edge"
 msgstr "الحد السفلي اﻷيسر"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1419
-#, fuzzy, c-format
+#, c-format
 msgid "(left clickable)"
 msgstr "(قابل للنقر اﻷيسر)"
 
@@ -5708,7 +5696,6 @@ msgid "Input"
 msgstr "إدخال"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:25
-#, fuzzy
 msgid "Signal Bindings"
 msgstr "ارتباطات فردية"
 
@@ -5940,14 +5927,12 @@ msgid "Ac Adapter"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:356
-#, fuzzy
 msgid "Button"
-msgstr "اﻷزرار"
+msgstr "زر"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:358
-#, fuzzy
 msgid "Fan"
-msgstr "بعيد"
+msgstr "مروحة"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:361
 #, fuzzy
@@ -5968,62 +5953,52 @@ msgid "Lid"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:367
-#, fuzzy
 msgid "Power Button"
-msgstr "زر الفأرة"
+msgstr "زر التشغيل"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:369
 msgid "Processor"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:371
-#, fuzzy
 msgid "Sleep Button"
-msgstr "الزر اﻷوسط"
+msgstr "زر النوم"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:373
-#, fuzzy
 msgid "Thermal"
-msgstr "عادي"
+msgstr "حراري"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:375
 msgid "Video"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:377
-#, fuzzy
 msgid "Wifi"
-msgstr "اﻹتصال اللاسيلكي يعمل"
+msgstr "اﻹتصال اللاسيلكي"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:381
-#, fuzzy
 msgid "Zoom Out"
-msgstr "أخرج"
+msgstr "بعِّد"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:383
-#, fuzzy
 msgid "Zoom In"
-msgstr "تكبير"
+msgstr "قرِّب"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:385
-#, fuzzy
 msgid "Brightness Down"
-msgstr "تقليل اﻹضاءة الخلفية"
+msgstr "تقليل اﻹضاءة"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:387
-#, fuzzy
 msgid "Brightness Up"
-msgstr "تقليل اﻹضاءة الخلفية"
+msgstr "زيادة اﻹضاءة"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
-#, fuzzy
 msgid "Assist"
-msgstr "تعيينن"
+msgstr "مساعدة"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:391
-#, fuzzy
 msgid "S1"
-msgstr "S"
+msgstr "S1"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:393
 msgid "Vaio"
@@ -6035,12 +6010,10 @@ msgid "ACPI Binding"
 msgstr "ارتباطات واجهة اعدادات الطاقة المتقدمة"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:500
-#, fuzzy
 msgid ""
 "Please trigger the ACPI event you wish to bind to, <br><br>or "
 "<hilight>Escape</hilight> to abort."
 msgstr ""
-"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
 msgid "Single key"
@@ -6798,9 +6771,8 @@ msgid "Shadow:"
 msgstr "ظل:"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:600
-#, fuzzy
 msgid "Text with applied colors."
-msgstr "نص مع الألوان تطبيقها."
+msgstr "نص مع ألوان مختارة"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:606
 msgid "Colors depend on theme capabilities."
@@ -6947,17 +6919,14 @@ msgid "Large"
 msgstr "كبير"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:102
-#, fuzzy
 msgid "Small Styled"
 msgstr "سمة صغيرة"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:103
-#, fuzzy
 msgid "Normal Styled"
 msgstr "سمة عادية"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:104
-#, fuzzy
 msgid "Large Styled"
 msgstr "سمة كبيرة"
 
@@ -6982,11 +6951,15 @@ msgid "Huge"
 msgstr "ضخم"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
-msgstr[0] "%d بكسل"
-msgstr[1] "%d بكسل"
+msgstr[0] "لا يوجد"
+msgstr[1] "بكسل واحد"
+msgstr[2] "بكسلين"
+msgstr[3] "%d بكسلات"
+msgstr[4] "%d بكسلا"
+msgstr[5] "%d بكسل"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:426
 msgid "Enable Custom Font Classes"
@@ -7048,19 +7021,16 @@ msgid "Scale Settings"
 msgstr "إعدادات النطاق"
 
 #: src/modules/conf_theme/e_int_config_scale.c:229
-#, fuzzy
 msgid "DPI Scaling"
-msgstr "تحجيم"
+msgstr "تحجيم DPI"
 
 #: src/modules/conf_theme/e_int_config_scale.c:296
-#, fuzzy
 msgid "Don't Scale"
-msgstr "لا تجدول"
+msgstr "لا تحجِّم"
 
 #: src/modules/conf_theme/e_int_config_scale.c:299
-#, fuzzy
 msgid "Scale relative to screen DPI"
-msgstr "بالنسبة ل إدارة شؤون الإعلام و شاشة مقياس"
+msgstr ""
 
 #: src/modules/conf_theme/e_int_config_scale.c:304
 #, c-format
@@ -7073,14 +7043,13 @@ msgid "%1.0f DPI"
 msgstr "%1.0f DPI"
 
 #: src/modules/conf_theme/e_int_config_scale.c:312
-#, fuzzy
 msgid "Custom scaling factor"
-msgstr "عرف عامل القياس"
+msgstr "عامل تحجيم مخصص"
 
 #: src/modules/conf_theme/e_int_config_scale.c:315
-#, fuzzy, c-format
+#, c-format
 msgid "%1.2f x"
-msgstr "%1.2f"
+msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:319
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
@@ -7185,34 +7154,28 @@ msgid "Enlightenment was unable to import the theme<br>due to a copy error."
 msgstr "لا يستطيع إنلايتنمينت استيراد السمة<br>جراء خلل في النسخ."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:58
-#, fuzzy
 msgid "GTK Application Theme Settings"
-msgstr "إعدادات سمة اﻷيقونات"
+msgstr "ضبط سمة تطبيق GTK"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:471
-#, fuzzy
 msgid "Match Enlightenment theme if possible"
-msgstr "وحدة  %s ﻹنلايتنمينت"
+msgstr "طابق سمة إنلايتنمينت إن أمكن"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:480
-#, fuzzy
 msgid "Enable Settings Daemon"
-msgstr "إعدادات النطاق"
+msgstr "مكِّن مساعد الضبط"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:515
-#, fuzzy
 msgid "Enable icon theme for applications"
-msgstr "إختر سمة أيقونات للتطبيقات"
+msgstr "مكِّن سمة أيقونات التطبيقات"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:519
-#, fuzzy
 msgid "Enable icon theme for Enlightenment"
-msgstr "مرحبا بك في إنلايتنمينت"
+msgstr "مكِّن سمة أيقونات إنلايتنمينت"
 
 #: src/modules/conf_theme/e_mod_main.c:237
-#, fuzzy
 msgid "GTK Application Theme"
-msgstr "التطبيق"
+msgstr "سمة تطبيق GTK"
 
 #: src/modules/conf_theme/e_mod_main.c:246
 msgid "Borders"
@@ -7223,9 +7186,8 @@ msgid "Scaling"
 msgstr "تحجيم"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:36
-#, fuzzy
 msgid "Window List Menu Settings"
-msgstr "نافذة إعدادات قائمة القائمة"
+msgstr "ضبط قائمة النافذة"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:97
 msgid "Group By"
@@ -7236,7 +7198,6 @@ msgid "Include windows from other screens"
 msgstr "تضمن نوافذ من شاشات أخرى"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:110
-#, fuzzy
 msgid "Separate Groups By"
 msgstr "افصل المجموعات حسب"
 
@@ -7315,7 +7276,6 @@ msgid "User defined"
 msgstr "تعريف المستخدم"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:138
-#, fuzzy
 msgid "Application provided"
 msgstr "التطبيق مدعوم"
 
@@ -7337,7 +7297,7 @@ msgstr "اتبع النافذة"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:153
 #, fuzzy
 msgid "Resize Geometry"
-msgstr "تحجيم هندسي"
+msgstr "إعادة تحجيم هندسي"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
 #: src/modules/fileman/e_mod_config.c:351
@@ -7347,13 +7307,8 @@ msgid "Display"
 msgstr "العرض"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:168
-#, fuzzy
 msgid "Placement"
-msgstr ""
-"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
-"التموضع\n"
-"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
-"الموضع"
+msgstr "التموضع"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:170
 msgid "Smart Placement"
@@ -7412,19 +7367,16 @@ msgid "Pronounced Decelerate"
 msgstr "تباطؤ واضح"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:236
-#, fuzzy
 msgid "Pronounced Accelerate, then decelerate"
-msgstr "تسارع ، ثم تباطأ بوضوح"
+msgstr "تسارع بوضوح ، ثم تباطأ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:241
-#, fuzzy
 msgid "Bounce"
-msgstr "وثب"
+msgstr "ارتداد"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:246
-#, fuzzy
 msgid "Bounce more"
-msgstr "ترتد أكثر"
+msgstr "ارتد أكثر"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:251
 msgid "Shading"
@@ -7435,19 +7387,16 @@ msgid "Keep windows within the visual screen limits"
 msgstr "ابق النوافذ في حدود الشاشة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:264
-#, fuzzy
 msgid "Allow windows partly out of the visual screen limits"
-msgstr "اسمح للنوافذ بالبروز فوق النافذة المستخدمة لعرض ملء الشاشة"
+msgstr "اسمح للنوافذ بالخروج جزئيا عن حدود الشاشة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:267
-#, fuzzy
 msgid "Allow windows completely out of visual screen limits"
-msgstr "اسمح للنوافذ بالبروز فوق النافذة المستخدمة لعرض ملء الشاشة"
+msgstr "اسمح للنوافذ بالخروج كليا عن حدود الشاشة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:270
-#, fuzzy
 msgid "Screen Limits"
-msgstr "قفل الشاشة"
+msgstr "حدود الشاشة"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:59
 msgid "Focus Settings"
@@ -7520,9 +7469,8 @@ msgid "Raise when starting to move or resize"
 msgstr "كبر عند بدء الحركة أو التحجيم"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:298
-#, fuzzy
 msgid "Raise when focusing"
-msgstr "كبر عند النقر ﻷجل التركيز"
+msgstr "كبر عند التركيز"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:301
 msgid "Allow windows above fullscreen window"
@@ -7531,27 +7479,26 @@ msgstr "اسمح للنوافذ بالبروز فوق النافذة المست�
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:309
 #, fuzzy
 msgid "Active Window Hint Policy"
-msgstr "طيقة و اسلوب تكبير نافذة"
+msgstr "فعِّل طريقة تلميح النافذة"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:311
 #, fuzzy
 msgid "Ignore hint"
-msgstr "تجاهل هذا"
+msgstr "تجاهل التلميح"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:313
 #, fuzzy
 msgid "Animate on hint"
-msgstr "قلب متحرك"
+msgstr "حرّك عند التلميح"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:315
 #, fuzzy
 msgid "Activate on hint"
-msgstr "سياق اﻹجراء"
+msgstr "فعل عند التلميح"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:317
-#, fuzzy
 msgid "Hints"
-msgstr "التلميح"
+msgstr "التلميحات"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:321
 msgid "Other Settings"
@@ -7577,7 +7524,7 @@ msgstr "أعد التركيز على النافذة اﻷخيرة عند تغي�
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
 #, fuzzy
 msgid "Focus last focused window on lost focus"
-msgstr "أعد التركيز على النافذة اﻷخيرة عند تغير سطح المكتب"
+msgstr "أعد التركيز على النافذة اﻷخيرة عند فقدان التركيز"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:344
 msgid "Slide pointer to a new focused window"
@@ -7617,13 +7564,8 @@ msgid "Fill available space"
 msgstr "عبئ ما توفر من فراغ "
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
-#, fuzzy
 msgid "Direction"
-msgstr ""
-"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
-"اتجاه\n"
-"#-#-#-#-#  ar.po (enlightenment HEAD)  #-#-#-#-#\n"
-"الإتجاه"
+msgstr "اتجاه"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 #: src/modules/everything/evry_config.c:568
@@ -7642,12 +7584,10 @@ msgid "Both"
 msgstr "كلاهما"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:234
-#, fuzzy
 msgid "Allow manipulation of maximized windows"
-msgstr "السماح لل تلاعب من ويندوز مكبر"
+msgstr "السماح بالتلاعب بالنوافذ  المكبرة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Maximization"
 msgstr "تكبير"
 
@@ -7725,7 +7665,7 @@ msgstr "وقتية"
 #: src/modules/conf_window_manipulation/e_mod_main.c:22
 #, fuzzy
 msgid "Window Process Management"
-msgstr "نافذة عملية إدارة"
+msgstr "إدارة عملية النافذة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:95
 msgid "Kill process if unclosable"
@@ -7736,14 +7676,13 @@ msgid "Kill process instead of client"
 msgstr "أقتل العملية بدلا من العميل"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:99
-#, fuzzy
 msgid "Kill timeout:"
-msgstr "أخف المهلة"
+msgstr "انه المهلة :"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:105
 #, fuzzy
 msgid "Ping clients"
-msgstr "استخدام القوائم"
+msgstr "عملاء الرنين"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:107
 #, fuzzy
@@ -7758,7 +7697,7 @@ msgstr "التركيز على النافذة"
 #: src/modules/conf_window_manipulation/e_mod_main.c:21
 #, fuzzy
 msgid "Window List Menu"
-msgstr "نافذة قائمة القائمة"
+msgstr "قائمة النافذة"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:33
 #: src/modules/conf_window_remembers/e_mod_main.c:17
@@ -7773,7 +7712,7 @@ msgstr "تذكر الحوارات الداخلية"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:122
 #, fuzzy
 msgid "Remember file manager windows"
-msgstr "تذكر ملف مدير ويندوز"
+msgstr "تذكر نوافذ مدير الملفات"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:136
 msgid "Details"
@@ -7853,9 +7792,9 @@ msgid "%i MHz"
 msgstr "%i ميجا هيرتز"
 
 #: src/modules/cpufreq/e_mod_main.c:305
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f GHz"
-msgstr "%'.1f جيجابايت"
+msgstr "%'.1f جيجا هيرتز"
 
 #: src/modules/cpufreq/e_mod_main.c:326
 msgid "Time Between Updates"
@@ -8045,14 +7984,13 @@ msgstr "اعرض في \"الكل\""
 #: src/modules/everything/evry_config.c:397
 #, fuzzy
 msgid "Show in top-level"
-msgstr "وتظهر في المستوى الأعلى"
+msgstr "اعرض في المستوى الأعلى"
 
 #: src/modules/everything/evry_config.c:403
 msgid "Minimum characters for search"
 msgstr "أقل أحرف للبحث"
 
 #: src/modules/everything/evry_config.c:412
-#, fuzzy
 msgid "Plugin Trigger"
 msgstr "مطلق الملحق"
 
@@ -8161,7 +8099,7 @@ msgstr "%1.2f"
 #: src/modules/everything/evry_config.c:577
 #, fuzzy
 msgid "Edge Popup Size"
-msgstr "الحجم حافة قافزة"
+msgstr "حجم حافة المنبثقة"
 
 #: src/modules/everything/evry_config.c:594
 #: src/modules/winlist/e_int_config_winlist.c:286
@@ -8173,24 +8111,20 @@ msgid "Everything Collection"
 msgstr "مجموعة كل شيء"
 
 #: src/modules/everything/evry_gadget.c:169
-#, fuzzy
 msgid "Everything Starter"
-msgstr "إعدادات كل شيء"
+msgstr "مطلق كل شيء"
 
 #: src/modules/everything/evry_gadget.c:587
-#, fuzzy
 msgid "Everything Gadgets"
-msgstr "ملفات كل شيء"
+msgstr "أدوات كل شيء"
 
 #: src/modules/everything/evry_gadget.c:686
-#, fuzzy
 msgid "Plugin"
-msgstr "ملحقات"
+msgstr "ملحق"
 
 #: src/modules/everything/evry_plug_actions.c:172
-#, fuzzy
 msgid "Actions"
-msgstr "اﻹجراء"
+msgstr "إجراءات"
 
 #: src/modules/everything/evry_plug_aggregator.c:122
 #, c-format
@@ -8208,12 +8142,10 @@ msgid "No plugins loaded"
 msgstr "لم يتم تحميل ملحقات"
 
 #: src/modules/everything/evry_plug_clipboard.c:33
-#, fuzzy
 msgid "Copy to Clipboard"
 msgstr "إنسخ إلى لوحة الصور"
 
 #: src/modules/everything/evry_view_help.c:67
-#, fuzzy
 msgid ""
 "  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  "
 "Just type a few letters of the thing you are looking for. <br>  Use cursor "
@@ -8237,16 +8169,19 @@ msgstr ""
 "قليلة من الشيء الذي تبحث عنه. <br>  إستخدم مؤشر الفأرة <hilight>&lt;أعلى/"
 "أسفل&gt;</hilight> لتختر من قائمة اﻷشياء.<br>  اضغط  <hilight>&lt;TAB&gt;</"
 "hilight> ﻹختيار اﻷمر, ثم اضغط  <hilight>&lt;ENTER&gt;</hilight>.<br> لن تظهر "
-"هذه القائمة المرة القادمة لتشغيل <hilight>أي شيء</hilight>.<br>    "
+"هذه الصفحة المرة القادمة لتشغيل <hilight>أي شيء</hilight>.<br>    "
 "<hilight>&lt;ESC&gt;</hilight> ﻹغلاق صفحة الحوار هذه <br>    <hilight>&lt;؟"
 "&gt;</hilight> إعرض هذه الصفحة<br>    <hilight>&lt;ENTER&gt;</hilight> تشغيل "
 "اﻷمر<br>    <hilight>&lt;CTRL+ENTER&gt;</hilight> تشغيل اﻷمر و "
 "استمرار<br>    <hilight>&lt;TAB&gt;</hilight> للتبديل بين المخيرات<br>    "
 "<hilight>&lt;CTRL+TAB&gt;</hilight> ﻹكمال اﻹدخال (تعتمد على الملحق)<br>    "
-"<hilight>&lt;CTRL+'X'&gt;</hilight> للقفز لملحق يبدأ بالحرف 'X' 'x'<br>    "
-"<hilight>&lt;CTRL+يمين/يسار &gt;</hilight> لدورة من خلال الملحقات<br>    "
+"<hilight>&lt;CTRL+'X'&gt;</hilight> للقفز لملحق يبدأ بالحرف  'x'<br>    "
+"<hilight>&lt;CTRL+يمين/يسار &gt;</hilight> للتجول بين الملحقات<br>    "
 "<hilight>&lt;CTRL+أعلى/أسفل&gt;</hilight> للانتقال إلى أول/آخر عنصر<br>    "
-"<hilight>&lt;CTRL+1&gt;</hilight> لتبديل أوضاع العرض (أخر"
+"<hilight>&lt;CTRL+1&gt;</hilight> <hilight>&lt;ctrl+1&gt;</hilight> لتبديل "
+"أوضاع العرض (أخرج من هذه الصفحة ;)<br>    <hilight>&lt;CTRL+2&gt;</hilight> "
+"لتبديل أوضاع عرض القائمة <br>    <hilight>&lt;CTRL+3&gt;</hilight> لتبديل "
+"أوضاع عرض المصغرات"
 
 #: src/modules/everything/evry_plug_apps.c:1148
 msgid "Exebuf"
@@ -8278,14 +8213,12 @@ msgid "Open with..."
 msgstr "فتح بـ..."
 
 #: src/modules/everything/evry_plug_apps.c:1217
-#, fuzzy
 msgid "Open Terminal here"
 msgstr "إفتح الطرفية هنا"
 
 #: src/modules/everything/evry_plug_apps.c:1223
-#, fuzzy
 msgid "Run Executable"
-msgstr "تنفيذي"
+msgstr "شغل الملف التنفيذي"
 
 #: src/modules/everything/evry_plug_apps.c:1303
 #: src/modules/everything/evry_plug_apps.c:1438
@@ -8360,7 +8293,6 @@ msgid "Send to Desktop"
 msgstr "أرسل لسطح المكتب"
 
 #: src/modules/fileman/e_fwin.c:251
-#, fuzzy
 msgid "Open Terminal Here"
 msgstr "إفتح الطرفية هنا"
 
@@ -8369,14 +8301,12 @@ msgid "Other application..."
 msgstr "تطبيق آخر..."
 
 #: src/modules/fileman/e_fwin.c:2100
-#, fuzzy
 msgid "Go To Parent Directory"
 msgstr "اذهب للمجلد اﻷم"
 
 #: src/modules/fileman/e_fwin.c:2110
-#, fuzzy
 msgid "Clone Window"
-msgstr "تنظيف النوافذ"
+msgstr "استنسخ نافذة"
 
 #: src/modules/fileman/e_fwin.c:2116
 msgid "Copy Path"
@@ -8676,7 +8606,6 @@ msgid "File Manager"
 msgstr "مدير الملفات"
 
 #: src/modules/fileman/e_mod_main.c:61
-#, fuzzy
 msgid "Navigate"
 msgstr "ابحث"
 
@@ -8701,7 +8630,6 @@ msgid "Root"
 msgstr "الجذر"
 
 #: src/modules/fileman/e_mod_menu.c:397
-#, fuzzy
 msgid "Navigate..."
 msgstr "ابحث..."
 
@@ -9330,9 +9258,8 @@ msgid "Connman support disabled"
 msgstr ""
 
 #: src/modules/wizard/page_110.c:27
-#, fuzzy
 msgid "Install/Enable Connman for network management support"
-msgstr "نصِّب مدير الإتصال لدعم إدارة الشبكة"
+msgstr "نصِّب/مكّن مدير الإتصال لدعم إدارة الشبكة"
 
 #: src/modules/wizard/page_110.c:157
 msgid "Checking to see if Connman exists"
@@ -9396,18 +9323,16 @@ msgid "Enable update checking"
 msgstr "تمكين التفقد عن التحديثات"
 
 #: src/modules/wizard/page_180.c:27
-#, fuzzy
 msgid "Information"
-msgstr "معلومات اﻹرتباط"
+msgstr "معلومات"
 
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
 msgstr ""
 
 #: src/modules/wizard/page_180.c:39
-#, fuzzy
 msgid "Enable Taskbar"
-msgstr "شريط المهام"
+msgstr "تمكين شريط المهام"
 
 #: src/modules/mixer/app_mixer.c:165
 msgid "Capture"
@@ -9862,19 +9787,19 @@ msgstr "ركن المنبثقة"
 
 #: src/modules/notification/e_mod_config.c:124
 msgid "Top left"
-msgstr "اليسار العلوي"
+msgstr "الركن اﻷيسر العلوي"
 
 #: src/modules/notification/e_mod_config.c:126
 msgid "Top right"
-msgstr "اليمين العلوي"
+msgstr "الركن اﻷيمن العلوي"
 
 #: src/modules/notification/e_mod_config.c:128
 msgid "Bottom left"
-msgstr "الأسفل اﻷيسر"
+msgstr "الركن اﻷيسر السفلي"
 
 #: src/modules/notification/e_mod_config.c:130
 msgid "Bottom right"
-msgstr "اﻷسفل اﻷيمن"
+msgstr "الركن اﻷيمن السفلي"
 
 #: src/modules/notification/e_mod_config.c:142
 msgid "Ignore replace ID"
@@ -9899,6 +9824,27 @@ msgstr ""
 #: src/modules/notification/e_mod_config_item.c:99
 msgid "Levels of urgency to store:"
 msgstr "مستويات المستعجَلات للتخزين :"
+
+#~ msgid "Revert focus when it is lost"
+#~ msgstr "أعد التركيز عند فقدانه"
+
+#~ msgid "Copying %s (eta: %d s)"
+#~ msgstr "نسخ %s (في: %d ثانية)"
+
+#~ msgid "Moving %s (eta: %d s)"
+#~ msgstr "نقل %s (في: %d ثواني)"
+
+#~ msgid "(no information)"
+#~ msgstr "(لا معلومات)"
+
+#~ msgid "File: %s"
+#~ msgstr "الملف: %s"
+
+#~ msgid "From: %s"
+#~ msgstr "من: %s"
+
+#~ msgid "To: %s"
+#~ msgstr "إلى: %s"
 
 #~ msgid ""
 #~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
@@ -9930,27 +9876,6 @@ msgstr "مستويات المستعجَلات للتخزين :"
 
 #~ msgid "Advanced Preview Text.. 我真的会写中文"
 #~ msgstr "نص عرض متقدم.. Advanced Preview Text.. 我真的会写中文"
-
-#~ msgid "Revert focus when it is lost"
-#~ msgstr "أعد التركيز عند فقدانه"
-
-#~ msgid "Copying %s (eta: %d s)"
-#~ msgstr "نسخ %s (في: %d ثانية)"
-
-#~ msgid "Moving %s (eta: %d s)"
-#~ msgstr "نقل %s (في: %d ثواني)"
-
-#~ msgid "(no information)"
-#~ msgstr "(لا معلومات)"
-
-#~ msgid "File: %s"
-#~ msgstr "الملف: %s"
-
-#~ msgid "From: %s"
-#~ msgstr "من: %s"
-
-#~ msgid "To: %s"
-#~ msgstr "إلى: %s"
 
 #~ msgid "%li Years ago"
 #~ msgstr "قبل %li سنة\\سنوات"
