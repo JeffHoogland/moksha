@@ -101,5 +101,9 @@ sudo make install
 @author Thanatermesis <thanatermesis.ecvs@gmail.com>
 @author Bruno Dilly <bdilly@profusion.mobi>
 @author Lucas De Marchi <lucas.demarchi@profusion.mobi>
+@author Samuel Mendes <heka.lok@gmail.com>
+@author Boris Faure <billiob@gmail.com>
+@author Michael Stapelberg <michael+e17@stapelberg.de>
+@author Stefan Sperling <stsp@openbsd.org>
 
 */
