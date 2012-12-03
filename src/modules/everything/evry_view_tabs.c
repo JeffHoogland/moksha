@@ -114,7 +114,7 @@ _tabs_update(Tab_View *v)
    Evry_Plugin *p;
    const Evry_State *s = v->state;
    Tab *tab;
-   Evas_Coord w, x;
+   Evas_Coord w, x, mw;
    Evas_Object *o;
    unsigned int cur = 0, i = 0;
 
@@ -149,8 +149,6 @@ _tabs_update(Tab_View *v)
 
         if (!(tab = eina_list_data_get(v->tabs)))
           {
-             Evas_Coord mw;
-             
              tab = _add_tab(v, NULL);
 
              o = tab->o_tab;
@@ -158,7 +156,7 @@ _tabs_update(Tab_View *v)
              e_box_pack_end(v->o_tabs, o);
              mw = tab->cw;
              if (mw < tab->mw) mw = tab->mw;
-             e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, mw, 1, mw, 9999);
+             e_box_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, mw, 1, 99999, 99999);
           }
      }
 
@@ -189,7 +187,9 @@ _tabs_update(Tab_View *v)
         o = tab->o_tab;
         evas_object_show(o);
         e_box_pack_end(v->o_tabs, o);
-        e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w / 4, 10, w / 3, 9999);
+        mw = tab->cw;
+        if (mw < tab->mw) mw = tab->mw;
+        e_box_pack_options_set(o, 1, 1, 1, 1, 0.5, 0.5, mw, 1, 99999, 99999);
 
         if (s->plugin == p)
           edje_object_signal_emit(o, "e,state,selected", "e");
