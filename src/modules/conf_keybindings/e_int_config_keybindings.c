@@ -1133,7 +1133,7 @@ _grab_key_down_cb(void *data,
 static void
 _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 {
-   int n, g, a, ok;
+   int n, g, a, ok = 0;
    E_Config_Binding_Key *bi;
    E_Action_Group *actg;
    E_Action_Description *actd;
@@ -1154,23 +1154,19 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
 
    eina_stringshare_replace(&bi->action, actd->act_cmd);
    eina_stringshare_replace(&bi->params, actd->act_params);
-   if (!bi->params)
+   if (bi->params) return;
+   if (cfdata->locals.params)
      {
         ok = 1;
-        if (cfdata->locals.params)
-          {
-             if (!e_util_strcmp(cfdata->locals.params, TEXT_NO_PARAMS))
-               ok = 0;
-
-             if ((actd->param_example) && (!e_util_strcmp(cfdata->locals.params, actd->param_example)))
-               ok = 0;
-          }
-        else
+        if (!e_util_strcmp(cfdata->locals.params, TEXT_NO_PARAMS))
           ok = 0;
 
-        if (ok)
-          bi->params = eina_stringshare_add(cfdata->locals.params);
+        if ((actd->param_example) && (!e_util_strcmp(cfdata->locals.params, actd->param_example)))
+          ok = 0;
      }
+
+   if (ok)
+     bi->params = eina_stringshare_add(cfdata->locals.params);
 }
 
 static void
