@@ -344,7 +344,11 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
 
         penv_display_length = strlen(penv_display);
         /* Check for insane length for DISPLAY env */
-        if (penv_display_length + 32 > 4096) return NULL;
+        if (penv_display_length + 32 > 4096)
+          {
+             E_FREE(inst);
+             return NULL;
+          }
 
         /* buf2 = '.%i' */
         *buf2 = '.';

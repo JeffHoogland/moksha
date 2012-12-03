@@ -330,7 +330,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 static void
 _open_test_cb(void *file)
 {
-   edje_file_group_exists(eet_file_get(file), "e/desktop/background");
+   if (!edje_file_group_exists(eet_file_get(file), "e/desktop/background"))
+     e_util_dialog_show(_("Theme File Error"),
+                        _("%s file does not contain e/desktop/background group!"),
+                        (char*)file);
 }
 
 static void

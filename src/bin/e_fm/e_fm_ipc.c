@@ -801,7 +801,11 @@ _e_fm_ipc_slave_run(E_Fm_Op_Type type, const char *args, int id)
    if (!slave) return 0;
 
    command = eina_stringshare_add(_e_fm_ipc_prepare_command(type, args));
-   if (!command) return 0;
+   if (!command)
+     {
+        free(slave);
+        return 0;
+     }
 
    slave->id = id;
    slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave);
@@ -1318,8 +1322,8 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
    if (trash_dir) eina_stringshare_del(trash_dir);
    eina_stringshare_del(fop->src);
    eina_stringshare_del(fop->dst);
-   free(fop);
    _e_fops = eina_list_remove(_e_fops, fop);
+   free(fop);
    return ECORE_CALLBACK_CANCEL;
 }
 

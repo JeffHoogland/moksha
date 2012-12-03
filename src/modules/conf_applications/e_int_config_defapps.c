@@ -429,7 +429,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      {
         EINA_LIST_FOREACH(e_config->env_vars, l, evr)
           {
-             if (!strcmp(evr->var, "BROWSER"))
+             if (!e_util_strcmp(evr->var, "BROWSER"))
                {
                   e_config->env_vars = eina_list_remove_list(e_config->env_vars, l);
                   if (evr->val) eina_stringshare_del(evr->val);

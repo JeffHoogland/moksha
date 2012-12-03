@@ -96,7 +96,7 @@ e_randr_11_serialized_setup_free(E_Randr_Serialized_Setup_11 *ss_11)
 Eina_Bool
 _11_try_restore_configuration(void)
 {
-   Ecore_X_Randr_Screen_Size_MM *stored_size, *sizes;
+   Ecore_X_Randr_Screen_Size_MM *stored_size, *sizes = NULL;
    int i = 0, nsizes;
 
 #define SIZE_EQUAL(size) \
@@ -132,6 +132,8 @@ _11_try_restore_configuration(void)
           }
      }
 #undef SIZE_EQUAL
+
+   free(sizes);
 
    return EINA_FALSE;
 }

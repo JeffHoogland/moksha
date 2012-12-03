@@ -545,7 +545,6 @@ static Eina_Bool
 _output_property_change_event_cb(void *data __UNUSED__, int type, void *ev)
 {
    Ecore_X_Event_Randr_Output_Property_Notify *opce = (Ecore_X_Event_Randr_Output_Property_Notify *)ev;
-   E_Randr_Output_Info *output_info;
 
    EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_12_NO, ECORE_CALLBACK_RENEW);
    EINA_SAFETY_ON_TRUE_RETURN_VAL((type != ECORE_X_EVENT_RANDR_OUTPUT_PROPERTY_NOTIFY), ECORE_CALLBACK_RENEW);
@@ -557,7 +556,7 @@ _output_property_change_event_cb(void *data __UNUSED__, int type, void *ev)
       Ecore_X_Time                  time;
       Ecore_X_Randr_Property_Change state;
     */
-   EINA_SAFETY_ON_FALSE_RETURN_VAL((output_info = _12_screen_info_output_info_get(opce->output)), ECORE_CALLBACK_RENEW);
+   EINA_SAFETY_ON_FALSE_RETURN_VAL((_12_screen_info_output_info_get(opce->output)), ECORE_CALLBACK_RENEW);
 
    return ECORE_CALLBACK_RENEW;
 }

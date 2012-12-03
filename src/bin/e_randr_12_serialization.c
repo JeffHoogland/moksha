@@ -353,8 +353,8 @@ _12_serialized_setup_update(Eina_List *setups_12)
         if ((ss_12 = _matching_serialized_setup_get(setups_12)))
           {
              INF("E_RANDR: Found stored configuration that matches current setup. It was created at %f. Freeing it...", ss_12->timestamp);
-             _12_serialized_setup_free(ss_12);
              setups_12 = eina_list_remove(setups_12, ss_12);
+             _12_serialized_setup_free(ss_12);
           }
      }
    ss_12 = _12_serialized_setup_new();

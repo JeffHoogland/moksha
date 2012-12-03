@@ -147,6 +147,8 @@ _cb_config(void *data, void *data2 __UNUSED__)
    E_Gadcon *gc;
 
    x = e_widget_ilist_selected_get(cfdata->o_avail);
+   if (x < 0) return;
+
    EINA_LIST_FOREACH(Man->gadcons[x], l, gc)
      {
         if (gc->zone != cfdata->cfd->dia->win->border->zone) continue;

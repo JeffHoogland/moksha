@@ -166,7 +166,7 @@ _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj)
 static void
 _e_gadcon_popup_position(E_Gadcon_Popup *pop)
 {
-   Evas_Coord gx, gy, gw, gh, zw, zh, zx, zy, px, py;
+   Evas_Coord gx = 0, gy = 0, gw, gh, zw, zh, zx, zy, px, py;
 
    /* Popup positioning */
    e_gadcon_client_geometry_get(pop->gcc, &gx, &gy, &gw, &gh);

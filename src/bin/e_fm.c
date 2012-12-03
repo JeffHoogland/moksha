@@ -10171,6 +10171,7 @@ _e_fm_error_dialog(int pid, const char *str)
 
    id = (intptr_t*)(long)pid;
    ere = e_fm2_op_registry_entry_get(pid);
+   if (!ere) return NULL;
    sd = evas_object_smart_data_get(ere->e_fm);
    while (sd->realpath)
      {

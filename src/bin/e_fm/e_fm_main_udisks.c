@@ -158,7 +158,7 @@ _e_fm_main_udisks_test(void *data       __UNUSED__,
                                E_UDISKS_PATH,
                                E_UDISKS_BUS,
                                "DeviceRemoved", (E_DBus_Signal_Cb)_e_fm_main_udisks_cb_dev_del, NULL);
-   if (!_udisks_del)
+   if (!_udisks_chg)
      _udisks_chg = e_dbus_signal_handler_add(_e_fm_main_udisks_conn, E_UDISKS_BUS,
                                E_UDISKS_PATH,
                                E_UDISKS_BUS,

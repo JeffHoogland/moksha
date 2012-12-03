@@ -453,8 +453,6 @@ e_import_config_dialog_show(E_Container *con, const char *path, Ecore_End_Cb ok,
    e_object_del_attach_func_set(E_OBJECT(dia), _e_import_config_dia_del);
    e_win_delete_callback_set(dia->win, _e_import_config_dialog_win_del);
 
-   evas = e_win_evas_get(dia->win);
-
    import->method = IMPORT_SCALE_ASPECT_OUT;
    import->external = 0;
    import->quality = 90;
