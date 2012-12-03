@@ -5606,7 +5606,7 @@ _e_fm2_inplace_open(const E_Fm2_Icon *ic)
    char buf[PATH_MAX];
 
    if (((!S_ISDIR(ic->info.statinfo.st_mode)) ||
-         (ic->info.link) ||
+         (ic->info.link && (!S_ISDIR(ic->info.statinfo.st_mode))) ||
          (!ic->sd->config->view.open_dirs_in_place) ||
          (ic->sd->config->view.no_subdir_jump)))
      return 0;
