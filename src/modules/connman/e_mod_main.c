@@ -308,11 +308,34 @@ _refresh_cb(void *data)
 }
 
 static void
+_e_connman_widget_size_set(E_Connman_Instance *inst, Evas_Object *widget, Evas_Coord percent_w, Evas_Coord percent_h, Evas_Coord min_w, Evas_Coord min_h, Evas_Coord max_w, Evas_Coord max_h)
+{
+   Evas_Coord w, h, zw, zh;
+   E_Zone *zone;
+
+   zone = e_gadcon_client_zone_get(inst->gcc);
+   e_zone_useful_geometry_get(zone, NULL, NULL, &zw, &zh);
+
+   w = zw * percent_w / 100.0;
+   h = zh * percent_h / 100.0;
+
+   if (w < min_w)
+     w = min_w;
+   else if (w > max_w)
+     w = max_w;
+   if (h < min_h)
+     h = min_h;
+   else if (h > max_h)
+     h = max_h;
+
+   e_widget_size_min_set(widget, w, h);
+}
+
+static void
 _econnman_popup_new(E_Connman_Instance *inst)
 {
    E_Connman_Module_Context *ctxt = inst->ctxt;
    Evas_Object *list, *bt, *ck;
-   Evas_Coord mw, mh;
    Evas *evas;
 
    EINA_SAFETY_ON_FALSE_RETURN(inst->popup == NULL);
@@ -341,13 +364,8 @@ _econnman_popup_new(E_Connman_Instance *inst)
                             _econnman_configure_cb, inst, NULL);
    e_widget_list_object_append(list, bt, 1, 0, 0.5);
 
-   e_widget_size_min_get(list, &mw, &mh);
-   if (mh < 280)
-     mh = 280;
-   if (mw < 240)
-     mw = 240;
-   e_widget_size_min_set(list, mw, mh);
-
+   /* 30,40 % -- min vga, max uvga */
+   _e_connman_widget_size_set(inst, list, 30, 40, 192, 192, 384, 384);
    e_gadcon_popup_content_set(inst->popup, list);
    e_gadcon_popup_show(inst->popup);
    _econnman_popup_input_window_create(inst);
