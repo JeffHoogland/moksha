@@ -72,6 +72,7 @@ struct _E_Config_Dialog_Data
       const char    *binding, *action, *cur;
       char          *params;
       int            cur_act, add;
+      Eina_Bool     changed : 1;
 
       E_Grab_Dialog *eg;
    } locals;
@@ -355,14 +356,15 @@ _binding_change_cb(void *data)
 
    cfdata = data;
 
-   _auto_apply_changes(cfdata);
+   if (cfdata->locals.changed) _auto_apply_changes(cfdata);
    eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
    cfdata->locals.cur_act = -1;
 
+   cfdata->locals.changed = 0;
    if ((!cfdata->locals.binding) || (!cfdata->locals.binding[0])) return;
 
-   cfdata->locals.cur = eina_stringshare_add(cfdata->locals.binding);
+   cfdata->locals.cur = eina_stringshare_ref(cfdata->locals.binding);
 
    _update_buttons(cfdata);
    _update_action_list(cfdata);
@@ -376,6 +378,7 @@ _action_change_cb(void *data)
    cfdata = data;
    _update_action_params(cfdata);
    cfdata->locals.cur_act = e_widget_ilist_selected_get(cfdata->gui.o_action_list);
+   cfdata->locals.changed = 1;
 }
 
 static void
@@ -1161,7 +1164,7 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
         if (!e_util_strcmp(cfdata->locals.params, TEXT_NO_PARAMS))
           ok = 0;
 
-        if ((actd->param_example) && (!e_util_strcmp(cfdata->locals.params, actd->param_example)))
+        else if ((actd->param_example) && (!e_util_strcmp(cfdata->locals.params, actd->param_example)))
           ok = 0;
      }
 
