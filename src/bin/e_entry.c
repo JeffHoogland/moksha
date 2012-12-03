@@ -44,7 +44,7 @@ static void _e_entry_cb_copy(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_paste(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_select_all(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_delete(void *data, E_Menu *m , E_Menu_Item *mi );
-
+static void _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 /* local subsystem globals */
 static Evas_Smart *_e_entry_smart = NULL;
 static int _e_entry_smart_use = 0;
@@ -396,6 +396,16 @@ e_entry_noedit(Evas_Object *entry)
    sd->noedit = EINA_TRUE;
 }
 
+/**
+ * Disable right click menu for an entry
+ */
+EAPI void
+e_entry_nomenu(Evas_Object *entry)
+{
+   if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
+   evas_object_event_callback_del_full(entry, EVAS_CALLBACK_MOUSE_DOWN,
+     _e_entry_mouse_down_cb, entry);
+}
 
 /* Private functions */
 
