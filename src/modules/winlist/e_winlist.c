@@ -1162,7 +1162,7 @@ _e_winlist_activate(void)
           e_border_raise(ww->border);
         if ((!ww->border->lock_focus_out) &&
             (e_config->winlist_list_focus_while_selecting))
-          e_border_focus_set(ww->border, 1, 1);
+          e_border_focus_set(ww->border, 1, 0);
      }
    edje_object_part_text_set(_bg_object, "e.text.label",
                              e_border_name_get(ww->border));
