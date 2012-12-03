@@ -1152,17 +1152,9 @@ _auto_apply_changes(E_Config_Dialog_Data *cfdata)
    actd = eina_list_nth(actg->acts, a);
    if (!actd) return;
 
-   eina_stringshare_del(bi->action);
-   bi->action = NULL;
-
-   if (actd->act_cmd) bi->action = eina_stringshare_add(actd->act_cmd);
-
-   eina_stringshare_del(bi->params);
-   bi->params = NULL;
-
-   if (actd->act_params)
-     bi->params = eina_stringshare_add(actd->act_params);
-   else
+   eina_stringshare_replace(&bi->action, actd->act_cmd);
+   eina_stringshare_replace(&bi->params, actd->act_params);
+   if (!bi->params)
      {
         ok = 1;
         if (cfdata->locals.params)
