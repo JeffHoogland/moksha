@@ -1,4 +1,4 @@
-#include "e_sha1.h"
+#include "e.h"
 #include <string.h>
 
 #ifdef HAVE_ARPA_INET_H
