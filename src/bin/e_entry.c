@@ -575,9 +575,13 @@ _e_entry_x_selection_update(Evas_Object *entry)
      return;
    if (!(win = e_win_evas_object_win_get(entry)))
      {
-        con = e_container_evas_object_container_get(entry);
-        if (!con) return;
-        xwin = ecore_evas_window_get(con->bg_ecore_evas);
+        xwin = e_grabinput_key_win_get();
+        if (!xwin)
+          {
+             con = e_container_evas_object_container_get(sd->entry_object);
+             if (!con) return;
+             xwin = ecore_evas_window_get(con->bg_ecore_evas);
+          }
      }
    else
      xwin = win->evas_win;
@@ -602,9 +606,13 @@ _entry_paste_request_signal_cb(void *data,
    
    if (!(win = e_win_evas_object_win_get(data)))
      {
-        con = e_container_evas_object_container_get(data);
-        if (!con) return;
-        xwin = ecore_evas_window_get(con->bg_ecore_evas);
+        xwin = e_grabinput_key_win_get();
+        if (!xwin)
+          {
+             con = e_container_evas_object_container_get(data);
+             if (!con) return;
+             xwin = ecore_evas_window_get(con->bg_ecore_evas);
+          }
      }
    else
      xwin = win->evas_win;
@@ -945,11 +953,15 @@ _e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
         if (win) xwin = win->evas_win;
         else
           {
-             E_Container *con;
+             xwin = e_grabinput_key_win_get();
+             if (!xwin)
+               {
+                  E_Container *con;
 
-             con = e_container_evas_object_container_get(sd->entry_object);
-             if (!con) return;
-             xwin = ecore_evas_window_get(con->bg_ecore_evas);
+                  con = e_container_evas_object_container_get(sd->entry_object);
+                  if (!con) return;
+                  xwin = ecore_evas_window_get(con->bg_ecore_evas);
+               }
           }
         ecore_x_selection_clipboard_set(xwin, range, strlen(range) + 1);
      }
@@ -970,11 +982,15 @@ _e_entry_cb_paste(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    if (win) xwin = win->evas_win;
    else
      {
-        E_Container *con;
+        xwin = e_grabinput_key_win_get();
+        if (!xwin)
+          {
+             E_Container *con;
 
-        con = e_container_evas_object_container_get(sd->entry_object);
-        if (!con) return;
-        xwin = ecore_evas_window_get(con->bg_ecore_evas);
+             con = e_container_evas_object_container_get(sd->entry_object);
+             if (!con) return;
+             xwin = ecore_evas_window_get(con->bg_ecore_evas);
+          }
      }
    ecore_x_selection_clipboard_request(xwin, ECORE_X_SELECTION_TARGET_UTF8_STRING);
 }
