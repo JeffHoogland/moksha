@@ -149,12 +149,16 @@ _tabs_update(Tab_View *v)
 
         if (!(tab = eina_list_data_get(v->tabs)))
           {
+             Evas_Coord mw;
+             
              tab = _add_tab(v, NULL);
 
              o = tab->o_tab;
              evas_object_show(o);
              e_box_pack_end(v->o_tabs, o);
-             e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, w / 4, 10, w / 3, 9999);
+             mw = tab->cw;
+             if (mw < tab->mw) mw = tab->mw;
+             e_box_pack_options_set(o, 1, 1, 0, 0, 0.0, 0.5, mw, 1, mw, 9999);
           }
      }
 
