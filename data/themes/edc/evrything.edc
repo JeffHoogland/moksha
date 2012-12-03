@@ -719,7 +719,9 @@ group { name: "e/modules/everything/tab_item";
    images.image: "horizontal_separated_bar_small_glow.png" COMP;
    parts {
       part { name: "shadow1"; mouse_events: 0;
+         scale: 1;
          description { state: "default" 0.0;
+            min: 80 10;
             image.normal: "shadow_inset_bevels.png";
             image.border: 2 2 0 1;
             visible: 0;
