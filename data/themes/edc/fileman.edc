@@ -840,7 +840,7 @@ group { name: "e/fileman/default/scrollframe";
    inherit: "e/widgets/scrollframe";
    parts {
       part { name: "e.swallow.bg"; type: SWALLOW;
-         insert_before: "e.swallow.content";
+         insert_before: "clipper";
          clip_to: "clipper";
          description { state: "default" 0.0;
             rel1.to: "bg";
@@ -848,7 +848,7 @@ group { name: "e/fileman/default/scrollframe";
          }
       }
       part { name: "e.swallow.overlay"; type: SWALLOW;
-         insert_before: "shadow";
+         insert_after: "e.swallow.content";
          clip_to: "clipper";
          description { state: "default" 0.0;
             rel1.to: "bg";
@@ -856,7 +856,7 @@ group { name: "e/fileman/default/scrollframe";
          }
       }
       part { name: "e.box.operations"; type: BOX;
-         insert_after: "shadow";
+         insert_before: "inset";
          description { state: "default" 0.0;
             rel1.offset: 3 3;
             rel1.to: "bg";
