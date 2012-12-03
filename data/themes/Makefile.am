@@ -37,6 +37,7 @@ edc/deskpreview.edc \
 edc/dialog.edc \
 edc/edgebindings.edc \
 edc/entry.edc \
+edc/evrything.edc \
 edc/fileman.edc \
 edc/fontpreview.edc\
 edc/frame.edc \

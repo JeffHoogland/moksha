@@ -177,22 +177,6 @@ group { name: "e/widgets/scrollframe";
          action: DRAG_VAL_PAGE  0.0 1.0;
          target: "e.dragable.vbar";
       }
-      program {
-         signal: "mouse,down,1*"; source: "e.dragable.vbar";
-         action: STATE_SET "clicked" 0.0;
-         target: "e.dragable.vbar";
-         target: "shadow_vbar";
-         target: "glow_vbar";
-         target: "center_glow_vbar";
-      }
-      program {
-         signal: "mouse,up,1"; source: "e.dragable.vbar";
-         action: STATE_SET "default" 0.0;
-         target: "e.dragable.vbar";
-         target: "shadow_vbar";
-         target: "glow_vbar";
-         target: "center_glow_vbar";
-      }
 
 // horiz bar /////////////////////////////////////////////////////////////
       part { name: "sb_hbar_show"; type: RECT;
@@ -348,22 +332,6 @@ group { name: "e/widgets/scrollframe";
          signal: "mouse,down,1*"; source: "sb_hbar_p2";
          action: DRAG_VAL_PAGE  1.0 0.0;
          target: "e.dragable.hbar";
-      }
-      program {
-         signal: "mouse,down,1*"; source: "e.dragable.hbar";
-         action: STATE_SET "clicked" 0.0;
-         target: "e.dragable.hbar";
-         target: "shadow_hbar";
-         target: "glow_hbar";
-         target: "center_glow_hbar";
-      }
-      program {
-         signal: "mouse,up,1"; source: "e.dragable.hbar";
-         action: STATE_SET "default" 0.0;
-         target: "e.dragable.hbar";
-         target: "shadow_hbar";
-         target: "glow_hbar";
-         target: "center_glow_hbar";
       }
 
       part { name: "bg"; type: RECT;
@@ -704,6 +672,40 @@ group { name: "e/widgets/scrollframe";
             inherit: "default" 0.0;
             visible: 1;
          }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1*"; source: "e.dragable.vbar";
+         action: STATE_SET "clicked" 0.0;
+         target: "e.dragable.vbar";
+         target: "shadow_vbar";
+         target: "glow_vbar";
+         target: "center_glow_vbar";
+      }
+      program {
+         signal: "mouse,up,1"; source: "e.dragable.vbar";
+         action: STATE_SET "default" 0.0;
+         target: "e.dragable.vbar";
+         target: "shadow_vbar";
+         target: "glow_vbar";
+         target: "center_glow_vbar";
+      }
+      program {
+         signal: "mouse,down,1*"; source: "e.dragable.hbar";
+         action: STATE_SET "clicked" 0.0;
+         target: "e.dragable.hbar";
+         target: "shadow_hbar";
+         target: "glow_hbar";
+         target: "center_glow_hbar";
+      }
+      program {
+         signal: "mouse,up,1"; source: "e.dragable.hbar";
+         action: STATE_SET "default" 0.0;
+         target: "e.dragable.hbar";
+         target: "shadow_hbar";
+         target: "glow_hbar";
+         target: "center_glow_hbar";
       }
    }
 }
