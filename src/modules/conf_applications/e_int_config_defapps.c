@@ -359,7 +359,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_toolbook_page_show(otb, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    e_win_centered_set(cfd->dia->win, 1);
    return otb;
 }

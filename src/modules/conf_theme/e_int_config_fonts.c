@@ -413,7 +413,7 @@ _font_hash_cb(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ot, *ob, *of;
 
@@ -454,7 +454,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_disabled_set(cfdata->gui.font_list, !cfdata->cur_enabled);
    e_widget_disabled_set(cfdata->gui.size_list, !cfdata->cur_enabled);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    return ot;
 }
 
@@ -613,7 +612,7 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ot, *ob, *of, *otb;
    E_Radio_Group *rg;
@@ -717,7 +716,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
                                  ot, 1, 0, 1, 0, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
-   e_dialog_resizable_set(cfd->dia, 1);
    return otb;
 }
 

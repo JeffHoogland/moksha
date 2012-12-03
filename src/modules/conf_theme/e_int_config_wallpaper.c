@@ -481,7 +481,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    evas_object_show(ow);
    e_widget_table_object_append(ot, ow, 0, 2, 2 + online, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
-   e_dialog_resizable_set(cfd->dia, 0);
    return o;
 }
 
@@ -606,7 +605,6 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ot, of, 0, 3, 2 + online, 1, 1, 0, 1, 0);
 
    e_widget_list_object_append(o, ot, 1, 1, 0.0);
-   e_dialog_resizable_set(cfd->dia, 0);
 
    return o;
 }

@@ -512,7 +512,6 @@ e_mixer_app_dialog_new(E_Container *con, void (*func)(E_Dialog *dialog, void *da
    app->del.func = func;
 
    e_dialog_title_set(dialog, _(_e_mixer_Name));
-   e_dialog_resizable_set(dialog, 1);
 
    e_win_delete_callback_set(dialog->win, _cb_win_del);
 

@@ -319,7 +319,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    if (cfdata->fill_delay) ecore_timer_del(cfdata->fill_delay);
    cfdata->fill_delay = ecore_timer_add(0.2, _cb_fill_delay, cfdata);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    e_win_centered_set(cfd->dia->win, 1);
    return otb;
 }

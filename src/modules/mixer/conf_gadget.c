@@ -377,7 +377,6 @@ e_mixer_config_dialog_new(E_Container *con, E_Mixer_Gadget_Config *conf)
    dialog = e_config_dialog_new(con, _("Mixer Settings"),
                                 _e_mixer_Name, "e_mixer_config_dialog_new",
                                 e_mixer_theme_path(), 0, view, conf);
-   e_dialog_resizable_set(dialog->dia, 1);
 
    return dialog;
 }

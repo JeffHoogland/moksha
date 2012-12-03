@@ -74,7 +74,6 @@ _xkb_cfg_dialog(E_Container *con, const char *params __UNUSED__)
                              "keyboard_and_mouse/xkbswitch",
                              "preferences-desktop-keyboard",
                              0, v, NULL);
-   e_dialog_resizable_set(cfd->dia, 1);
    _xkb.cfd = cfd;
    return cfd;
 }
@@ -526,7 +525,6 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
    e_dialog_button_disable_num_set(dlg, 0, 1);
    e_dialog_button_disable_num_set(dlg, 1, 0);
 
-   e_dialog_resizable_set(dlg, 1);
    e_dialog_show(dlg);
 
    return dlg;

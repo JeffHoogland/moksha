@@ -279,7 +279,7 @@ _e_imc_setup_cb(void *data, void *data2 __UNUSED__)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
    Eina_List *imc_basic_list;
@@ -384,7 +384,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
@@ -797,7 +796,7 @@ e_int_config_imc_update(E_Config_Dialog *dia, const char *file)
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *rt, *ot;
    Evas_Object *ow, *of;
@@ -949,7 +948,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 
    e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
 
    _e_imc_form_fill(cfdata);
 

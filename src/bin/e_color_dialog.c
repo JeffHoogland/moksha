@@ -45,7 +45,6 @@ e_color_dialog_new(E_Container *con, const E_Color *color, Eina_Bool alpha_enabl
    /* buttons at the bottom */
    e_dialog_button_add(dia->dia, _("Select"), NULL, _e_color_dialog_button1_click, dia);
    e_dialog_button_add(dia->dia, _("Cancel"), NULL, _e_color_dialog_button2_click, dia);
-   e_dialog_resizable_set(dia->dia, 1);
    e_win_centered_set(dia->dia->win, 1);
 
    dia->dia->data = dia;

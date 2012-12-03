@@ -164,7 +164,7 @@ _cb_config(void *data, void *data2 __UNUSED__)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ol, *ob, *ow, *ft, *of, *otb;
    E_Radio_Group *rg;
@@ -199,7 +199,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
                                          );
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
-   e_dialog_resizable_set(cfd->dia, 1);
 
    e_widget_toolbook_page_append(otb, NULL, _("Layers"), o, 1, 1, 1, 1, 0.5, 0.0);
    /////////////////////////////////////////////////////////////////////
@@ -299,12 +298,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(of, cfdata->o_sf, 0, 2, 2, 1, 1, 1, 1, 1);
    e_widget_table_object_append(ft, of, 2, 0, 1, 3, 1, 1, 1, 1);
 
-   e_dialog_resizable_set(cfd->dia, 0);
 
    e_widget_toolbook_page_append(otb, NULL, _("Background Options"), ft, 0, 0, 0, 0, 0.5, 0.0);
    e_widget_toolbook_page_show(otb, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    return otb;
 }
 

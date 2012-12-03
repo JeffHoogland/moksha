@@ -210,7 +210,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_desc = ol;
    e_widget_table_object_append(of, ol, 0, 3, 2, 1, 1, 0, 1, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    e_util_win_auto_resize_fill(cfd->dia->win);
    e_win_centered_set(cfd->dia->win, 1);
 

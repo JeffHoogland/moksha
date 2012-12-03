@@ -69,7 +69,6 @@ e_connman_config_dialog_new(E_Container *con,
        (con, _("Connection Manager"),
        _e_connman_Name, "e_connman_config_dialog_new",
        e_connman_theme_path(), 0, view, ctxt);
-   e_dialog_resizable_set(dialog->dia, 1);
 
    return dialog;
 }

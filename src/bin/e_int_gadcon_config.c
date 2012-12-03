@@ -71,7 +71,6 @@ _create_dialog(E_Gadcon *gc, const char *title, E_Gadcon_Site site)
      e_config_dialog_new(con, title, "E", "_gadcon_config_dialog",
                          "preferences-desktop-shelf", 0, v, gc);
    if (site) gc->config_dialog->cfdata->site = site;
-   e_dialog_resizable_set(gc->config_dialog->dia, EINA_TRUE);
    e_win_centered_set(gc->config_dialog->dia->win, EINA_TRUE);
 }
 
@@ -728,7 +727,6 @@ _advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
    cfdata->load_timer = ecore_timer_add(0.01, _cb_load_timer, cfdata);
 
-   e_dialog_resizable_set(cfd->dia, EINA_TRUE);
    e_win_centered_set(cfd->dia->win, EINA_TRUE);
 
    return otb;
@@ -763,7 +761,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
    cfdata->load_timer = ecore_timer_add(0.01, _cb_load_timer, cfdata);
 
-   e_dialog_resizable_set(cfd->dia, EINA_TRUE);
    e_win_centered_set(cfd->dia->win, EINA_TRUE);
 
    return ot;

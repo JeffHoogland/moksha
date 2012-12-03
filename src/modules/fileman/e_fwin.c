@@ -2502,7 +2502,6 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    else return;  /* make clang happy */
 
    e_dialog_title_set(dia, _("Open with..."));
-   e_dialog_resizable_set(dia, 1);
    e_dialog_button_add(dia, _("Open"), "document-open",
                        _e_fwin_cb_open, fad);
    e_dialog_button_add(dia, _("Close"), "window-close",

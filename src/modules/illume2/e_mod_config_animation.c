@@ -33,7 +33,6 @@ e_mod_illume_config_animation_show(E_Container *con, const char *params __UNUSED
                              "enlightenment/animation_settings", 0, v, NULL);
    if (!cfd) return;
 
-   e_dialog_resizable_set(cfd->dia, 1);
 }
 
 /* local function prototypes */

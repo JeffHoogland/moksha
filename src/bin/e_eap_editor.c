@@ -792,7 +792,6 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas
 
    e_widget_toolbook_page_show(otb, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    e_util_win_auto_resize_fill(cfd->dia->win);
    e_win_centered_set(cfd->dia->win, 1);
 
@@ -862,7 +861,6 @@ _e_desktop_editor_cb_icon_select(void *data1, void *data2)
                        _e_desktop_edit_cb_icon_select_ok, cfdata);
    e_dialog_button_add(dia, _("Cancel"), NULL,
                        _e_desktop_edit_cb_icon_select_cancel, cfdata);
-   e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
    editor->icon_fsel_dia = dia;
@@ -926,7 +924,6 @@ _e_desktop_editor_cb_exec_select(void *data1, void *data2)
                        _e_desktop_edit_cb_exec_select_ok, cfdata);
    e_dialog_button_add(dia, _("Cancel"), NULL,
                        _e_desktop_edit_cb_exec_select_cancel, cfdata);
-   e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
    editor->exec_fsel_dia = dia;

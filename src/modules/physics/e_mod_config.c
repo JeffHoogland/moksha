@@ -147,7 +147,6 @@ _basic_create_widgets(E_Config_Dialog *cfd,
 
    e_widget_toolbook_page_show(otb, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
 
    e_widget_table_object_append(tab, otb, 0, 0, 1, 1, 1, 1, 1, 1);
    return tab;

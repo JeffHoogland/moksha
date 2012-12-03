@@ -37,7 +37,6 @@ e_mod_illume_config_select_window(E_Illume_Select_Window_Type type)
                              "_config_illume_select_window", 
                              "enlightenment/windows", 0, v, NULL);
    if (!cfd) return;
-   e_dialog_resizable_set(cfd->dia, 1);
 }
 
 static void *

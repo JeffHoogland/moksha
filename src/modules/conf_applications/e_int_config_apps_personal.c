@@ -97,7 +97,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_disabled_set(ob, 1);
    e_widget_table_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    e_win_centered_set(cfd->dia->win, 1);
    return of;
 }

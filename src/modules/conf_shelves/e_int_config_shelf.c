@@ -114,7 +114,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ol, *ow, *ot, *of;
    char buf[64];
@@ -151,7 +151,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    _ilist_fill(cfdata);
    e_widget_disabled_set(cfdata->o_add, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
 
    return ol;
 }

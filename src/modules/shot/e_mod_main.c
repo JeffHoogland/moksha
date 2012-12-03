@@ -288,7 +288,6 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
                        _file_select_ok_cb, NULL);
    e_dialog_button_add(dia, _("Cancel"), NULL,
                        _file_select_cancel_cb, NULL);
-   e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    o = evas_object_rectangle_add(dia->win->evas);
    if (!evas_object_key_grab(o, "Return", mask, ~mask, 0)) printf("grab err\n");
@@ -529,7 +528,6 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    e_dialog_button_add(dia, _("Cancel"), NULL, _upload_cancel_cb, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_CON_EVENT_URL_COMPLETE, _upload_complete_cb, eina_list_last_data_get(dia->buttons));
    e_object_del_attach_func_set(E_OBJECT(dia), _win_share_del);
-   e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 }

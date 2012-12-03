@@ -273,7 +273,7 @@ _unset_cb(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ol, *oe, *ob, *oc;
    Eina_List *l;
@@ -315,6 +315,5 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    ob = e_widget_button_add(evas, _("Delete"), "list-remove", _del_cb, cfdata, NULL);
    e_widget_table_object_append(o, ob, 2, 2, 1, 1, 1, 1, 0, 0);
    
-   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }

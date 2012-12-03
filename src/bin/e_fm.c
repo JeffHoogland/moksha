@@ -9566,7 +9566,6 @@ _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title,
 
    e_dialog_button_add(dia, _("OK"), NULL, ok_cb, sd);
    e_dialog_button_add(dia, _("Cancel"), NULL, _e_fm2_view_image_sel_close, sd);
-   e_dialog_resizable_set(dia, 1);
    e_win_centered_set(dia->win, 1);
    e_object_data_set(E_OBJECT(dia), sd);
    e_object_del_attach_func_set(E_OBJECT(dia), _image_sel_del);

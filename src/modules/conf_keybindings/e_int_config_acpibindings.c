@@ -179,7 +179,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd,
+_basic_create(E_Config_Dialog *cfd EINA_UNUSED,
               Evas *evas,
               E_Config_Dialog_Data *cfdata)
 {
@@ -221,7 +221,6 @@ _basic_create(E_Config_Dialog *cfd,
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 1, 0);
    e_widget_list_object_append(ol, ot, 1, 1, 0.5);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    return ol;
 }
 

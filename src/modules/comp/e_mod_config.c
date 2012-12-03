@@ -1338,7 +1338,6 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
 
    e_widget_toolbook_page_show(otb, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
 
    e_widget_table_object_append(tab, otb, 0, 0, 1, 1, 1, 1, 1, 1);
    return tab;
@@ -1489,7 +1488,7 @@ _advanced_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd,
+_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED,
                       Evas *evas,
                       E_Config_Dialog_Data *cfdata)
 {
@@ -1546,7 +1545,6 @@ _basic_create_widgets(E_Config_Dialog *cfd,
 
    e_widget_toolbook_page_show(otb, 0);
 
-   e_dialog_resizable_set(cfd->dia, 1);
 
    e_widget_table_object_append(tab, otb, 0, 0, 1, 1, 1, 1, 1, 1);
    return tab;

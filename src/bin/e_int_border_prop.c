@@ -82,7 +82,6 @@ e_int_border_prop(E_Border *bd)
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
    e_dialog_border_icon_set(dia, "preferences-system-windows");
-   e_dialog_resizable_set(dia, 1);
 }
 
 static void

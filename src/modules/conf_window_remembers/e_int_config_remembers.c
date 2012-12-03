@@ -33,7 +33,6 @@ e_int_config_remembers(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con, _("Window Remembers"), "E", 
                              "windows/window_remembers", 
                              "preferences-desktop-window-remember", 0, v, NULL);
-   e_dialog_resizable_set(cfd->dia, 1);
    return cfd;
 }
 

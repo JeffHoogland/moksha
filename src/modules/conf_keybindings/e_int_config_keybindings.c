@@ -226,7 +226,7 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd,
+_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED,
                       Evas *evas,
                       E_Config_Dialog_Data *cfdata)
 {
@@ -278,7 +278,6 @@ _basic_create_widgets(E_Config_Dialog *cfd,
    _update_key_binding_list(cfdata, NULL);
    _fill_actions_list(cfdata);
 
-   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 

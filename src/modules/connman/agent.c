@@ -275,7 +275,6 @@ _dialog_new(E_Connman_Agent *agent)
      mh = 130;
    e_dialog_content_set(dialog, toolbook, mw, mh);
    e_dialog_show(dialog);
-   e_dialog_resizable_set(dialog, 1);
 
    evas_object_event_callback_add(dialog->bg_object, EVAS_CALLBACK_KEY_DOWN,
                                   _dialog_key_down_cb, agent);

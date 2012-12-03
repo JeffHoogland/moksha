@@ -1303,7 +1303,6 @@ _conf_dialog(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con, _("Everything Applications"), "everything-apps",
                              "launcher/everything-apps", _module_icon, 0, v, NULL);
 
-   /* e_dialog_resizable_set(cfd->dia, 1); */
    _conf->cfd = cfd;
    return cfd;
 }

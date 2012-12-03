@@ -587,7 +587,6 @@ _conf_dialog(Instance *inst)
    inst->cfd = e_config_dialog_new(con, _("Everything Gadgets"), "everything-gadgets",
                                    "launcher/everything-gadgets", NULL, 0, v, inst);
 
-   e_dialog_resizable_set(inst->cfd->dia, 0);
    /* _conf->cfd = cfd; */
 }
 

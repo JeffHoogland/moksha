@@ -110,7 +110,6 @@ il_home_config_show(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con, _("Home Settings"), "E", 
                              "_config_illume_home_settings", 
                              "enlightenment/launcher_settings", 0, v, NULL);
-   e_dialog_resizable_set(cfd->dia, 1);
    il_home_cfg->cfd = cfd;
 }
 

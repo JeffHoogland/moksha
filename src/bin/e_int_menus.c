@@ -117,7 +117,6 @@ _TEST(void *d __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
    e_dialog_button_add(dia, "Add", NULL, _TEST_ADD, o_list);
    e_dialog_button_add(dia, "Del", NULL, _TEST_DEL, o_list);
    e_dialog_content_set(dia, o_list, 100, 300);
-   e_dialog_resizable_set(dia, 1);
    e_dialog_show(dia);
 }
 #endif
