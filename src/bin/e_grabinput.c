@@ -128,6 +128,12 @@ e_grabinput_last_focus_win_get(void)
    return focus_fix_win;
 }
 
+EAPI Ecore_X_Window
+e_grabinput_key_win_get(void)
+{
+   return grab_key_win;
+}
+
 static Eina_Bool
 _e_grabinput_focus_check(void *data __UNUSED__)
 {
