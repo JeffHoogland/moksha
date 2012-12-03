@@ -759,11 +759,11 @@ group { name: "e/modules/everything/tab_item";
             color3: 0 0 0 128;
             color_class: "menu_item";
             text { font: "Sans"; size: 10;
-               min: 1 1;
+               min: 0 1;
                align: 0.5 0.5;
                text_class: "menu_item";
             }
-            fixed: 0 1;
+            fixed: 1 1;
          }
          description { state: "selected" 0.0;
             inherit: "default" 0.0;
