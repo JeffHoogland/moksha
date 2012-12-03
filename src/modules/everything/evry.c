@@ -19,6 +19,7 @@
 #define DBG(...)
 #endif
 
+static Eina_Bool     _evry_cb_desklock(Evry_Window *win, int type __UNUSED__, E_Event_Desklock *ev);
 static void           _evry_matches_update(Evry_Selector *sel, int async);
 static void           _evry_plugin_action(Evry_Selector *sel, int finished);
 static void           _evry_plugin_select(Evry_State *s, Evry_Plugin *p);
@@ -215,6 +216,7 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
        (win->handlers, ecore_event_handler_add
          (ECORE_EVENT_MOUSE_BUTTON_UP,
          _evry_cb_mouse, win));
+   E_LIST_HANDLER_APPEND(win->handlers, E_EVENT_DESKLOCK, _evry_cb_desklock, win);
 #if 0
    win->handlers = eina_list_append
        (win->handlers, ecore_event_handler_add
@@ -890,6 +892,13 @@ _evry_cb_drag_finished(E_Drag *drag, int dropped)
 }
 
 #endif
+
+static Eina_Bool
+_evry_cb_desklock(Evry_Window *win, int type __UNUSED__, E_Event_Desklock *ev)
+{
+   if (ev->on) evry_hide(win, 0);
+   return ECORE_CALLBACK_RENEW;
+}
 
 static Eina_Bool
 _evry_cb_mouse(void *data, int type, void *event)
