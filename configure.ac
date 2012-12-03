@@ -486,6 +486,7 @@ AC_MSG_WARN([EFM requirements : $efm_requires])
 PKG_CHECK_MODULES(E_FM, [$efm_requires])
 
 PKG_CHECK_MODULES(E_FM_CMDLINE, [
+  eina >= ${efl_version}
   ecore >= ${efl_version}
   ecore-file >= ${efl_version}
   edbus >= ${efl_version}
@@ -499,11 +500,11 @@ PKG_CHECK_MODULES(E_FM_OP, [
 ])
 
 PKG_CHECK_MODULES(E_FM_OPEN, [
+  eina >= ${efl_version}
+  eet >= ${efl_version}
   ecore >= ${efl_version}
   ecore-ipc >= ${efl_version}
   ecore-con >= ${efl_version}
-  eet >= ${efl_version}
-  eina >= ${efl_version}
 ])
 
 PKG_CHECK_MODULES(E_SYS, [
