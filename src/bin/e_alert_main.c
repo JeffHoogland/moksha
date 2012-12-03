@@ -208,14 +208,14 @@ _e_alert_atom_get(const char *name)
    return a;
 }
 
-static int
+static xcb_window_t
 _e_alert_comp_win_get(void)
 {
    xcb_get_property_cookie_t cookie;
    xcb_get_property_reply_t *reply;
    uint32_t *v;
    int atom_cardinal, atom_composite_win;
-   int r;
+   xcb_window_t r = 0;
 
    atom_cardinal = _e_alert_atom_get("CARDINAL");
    atom_composite_win = _e_alert_atom_get("_E_COMP_WINDOW");
@@ -223,10 +223,10 @@ _e_alert_comp_win_get(void)
    cookie = xcb_get_property_unchecked(conn, 0, screen->root, atom_composite_win,
                                        atom_cardinal, 0, 0x7fffffff);
    reply = xcb_get_property_reply(conn, cookie, NULL);
-   if (!reply) return -1;
+   if (!reply) return 0;
 
    v = xcb_get_property_value(reply);
-   r = v[0];
+   if (v) r = v[0];
 
    free(reply);
    return r;
@@ -239,7 +239,7 @@ _e_alert_root_tainted_get(void)
    xcb_get_property_reply_t *reply;
    uint32_t *v;
    int atom_cardinal, atom_tainted;
-   int r;
+   int r = 0;
 
    atom_cardinal = _e_alert_atom_get("CARDINAL");
    atom_tainted = _e_alert_atom_get("_E_TAINTED");
@@ -250,7 +250,7 @@ _e_alert_root_tainted_get(void)
    if (!reply) return EINA_TRUE;
 
    v = xcb_get_property_value(reply);
-   r = v[0];
+   if (v) r = v[0];
 
    free(reply);
    return !!r;
