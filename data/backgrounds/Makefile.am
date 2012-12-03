@@ -22,6 +22,10 @@ Skywall.edj \
 Stringflower.edj \
 Wetgrass.edj \
 Wetleaf.edj \
-Whiterock.edj
+Whiterock.edj \
+Hills.edj \
+Light.edj \
+Temple.edj \
+Train.edj
 
 EXTRA_DIST = $(files_DATA)
