@@ -2230,18 +2230,21 @@ _e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
    if (fwin->win->border->placed) return;
 
    class = eina_stringshare_printf("e_fwin::%s", e_fm2_real_path_get(fwin->cur_page->fm_obj));
+   e_zone_useful_geometry_get(fwin->win->border->zone,
+                              NULL, NULL, &zw, &zh);
    EINA_LIST_FOREACH(e_config->remembers, ll, rem)
-     if (rem->class && (rem->class == class))
+     if (rem->class == class)
        {
           found = 1;
+          rem->prop.w = E_CLAMP(rem->prop.w, DEFAULT_WIDTH, zw);
+          rem->prop.h = E_CLAMP(rem->prop.h, DEFAULT_HEIGHT, zh);
+          rem->prop.pos_x = E_CLAMP(rem->prop.pos_x, 0, zw - rem->prop.w);
+          rem->prop.pos_y = E_CLAMP(rem->prop.pos_y, 0, zh - rem->prop.h);
           break;
        }
    eina_stringshare_del(class);
 
    if (found) return;
-
-   e_zone_useful_geometry_get(fwin->win->border->zone,
-                              NULL, NULL, &zw, &zh);
 
    /* No custom info, so just put window near icon */
    e_fm2_icon_geometry_get(ici->ic, &ix, &iy, &iw, &ih);
