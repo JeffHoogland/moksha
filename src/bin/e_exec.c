@@ -551,7 +551,7 @@ _e_exec_instance_free(E_Exec_Instance *inst)
              if (instances)
                eina_hash_modify(e_exec_instances, inst->key, instances);
              else
-               eina_hash_del(e_exec_instances, inst->key, NULL);
+               eina_hash_del_by_key(e_exec_instances, inst->key);
           }
         eina_stringshare_del(inst->key);
      }
