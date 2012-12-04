@@ -348,6 +348,8 @@ e_scrollframe_policy_set(Evas_Object *obj, E_Scrollframe_Policy hbar, E_Scrollfr
    if ((sd->hbar_flags == hbar) && (sd->vbar_flags == vbar)) return;
    sd->hbar_flags = hbar;
    sd->vbar_flags = vbar;
+   sd->vbar_visible = !sd->vbar_visible;
+   sd->hbar_visible = !sd->hbar_visible;
    _e_smart_scrollbar_size_adjust(sd);
 }
 
@@ -1016,8 +1018,6 @@ _e_smart_add(Evas_Object *obj)
    sd->page.y = -50;
    sd->hbar_flags = E_SCROLLFRAME_POLICY_AUTO;
    sd->vbar_flags = E_SCROLLFRAME_POLICY_AUTO;
-   sd->hbar_visible = 1;
-   sd->vbar_visible = 1;
    sd->key_nav = EINA_TRUE;
 
    evas_object_event_callback_add(obj, EVAS_CALLBACK_KEY_DOWN,
