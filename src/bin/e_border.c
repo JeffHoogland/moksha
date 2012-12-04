@@ -4462,9 +4462,8 @@ _e_border_reset_lost_window(E_Border *bd)
    warp_to = 1;
    warp_to_win = bd->zone->container->win;
 
-   if (!warp_timer)
-     warp_timer = ecore_timer_add(0.01,
-                                  _e_border_pointer_warp_to_center_timer, (const void *)bd);
+   if (warp_timer) ecore_timer_del(warp_timer);
+   warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, bd);
 
    e_border_raise(bd);
    if (!bd->lock_focus_out)
