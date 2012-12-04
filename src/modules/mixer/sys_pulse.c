@@ -21,6 +21,8 @@ static E_DBus_Connection *dbus = NULL;
 static E_DBus_Signal_Handler *dbus_handler = NULL;
 static Ecore_Timer *disc_timer = NULL;
 
+static unsigned int disc_count = 0;
+
 static Eina_Bool
 _pulse_poller_cb(void *d __UNUSED__)
 {
@@ -201,10 +203,14 @@ static Eina_Bool
 _pulse_disc_timer(void *d __UNUSED__)
 {
    disc_timer = NULL;
-   if (pulse_connect(conn)) return EINA_FALSE;
+   if (disc_count < 5)
+     {
+        if (pulse_connect(conn)) return EINA_FALSE;
+     }
    e_mod_mixer_pulse_ready(EINA_FALSE);
    e_mixer_pulse_shutdown();
    e_mixer_pulse_init();
+   disc_count = 0;
    return EINA_FALSE;
 }
 
@@ -225,6 +231,7 @@ _pulse_disconnected(Pulse *d, int type __UNUSED__, Pulse *ev)
 
 //   printf("PULSEAUDIO: disconnected at %g\n", ecore_time_unix_get());
 
+   disc_count++;
    if (disc_timer) return ECORE_CALLBACK_RENEW;
    disc_timer = ecore_timer_add(1.5, _pulse_disc_timer, NULL);
    return ECORE_CALLBACK_RENEW;
