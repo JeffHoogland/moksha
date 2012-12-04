@@ -479,7 +479,6 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
    /* reset env vars */
    if ((launch->launch_method) && (!desktop))
      e_exehist_add(launch->launch_method, exec);
-   free(exec);
    /* 20 lines at start and end, 20x100 limit on bytes at each end. */
 //// FIXME: seem to be some issues with the pipe and filling up ram - need to
 //// check. for now disable.
@@ -516,6 +515,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
         if (launch->zone) e_object_unref(E_OBJECT(launch->zone));
         free(launch);
      }
+   free(exec);
    return inst;
 }
 
