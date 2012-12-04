@@ -1047,22 +1047,15 @@ e_border_hide(E_Border *bd,
                     e_border_focus_set(bd->parent, 1, 1);
                   else if (e_config->focus_revert_on_hide_or_close)
                     {
-                       /* When using pointer focus, the border under the
-                        * pointer (if any) gets focused, in sloppy/click
-                        * focus the last focused window on the current
-                        * desk gets focus */
-                       if (e_config->focus_policy == E_FOCUS_MOUSE)
-                         {
-                            pbd = e_border_under_pointer_get(desk, bd);
-                            if (pbd)
-                              e_border_focus_set(pbd, 1, 1);
-                         }
-                       else
-                         {
-                            e_desk_last_focused_focus(desk);
-                            if ((pbd = eina_list_data_get(focus_next)))
-                              e_border_pointer_warp_to_center(pbd);
-                         }
+                       e_desk_last_focused_focus(desk);
+                       if ((pbd = eina_list_data_get(focus_next)))
+                         e_border_pointer_warp_to_center(pbd);
+                    }
+                  else if (e_config->focus_policy == E_FOCUS_MOUSE)
+                    {
+                       pbd = e_border_under_pointer_get(desk, bd);
+                       if (pbd)
+                         e_border_focus_set(pbd, 1, 1);
                     }
                }
           }
@@ -4470,6 +4463,7 @@ _e_border_reset_lost_window(E_Border *bd)
      e_border_focus_set(bd, 1, 1);
 
    bd->during_lost = EINA_FALSE;
+   e_border_focus_lock_set(EINA_TRUE);
 }
 
 EAPI void
@@ -9910,6 +9904,7 @@ _e_border_pointer_warp_to_center_timer(void *data __UNUSED__)
 cleanup:
    ecore_timer_del(warp_timer);
    warp_timer = NULL;
+   e_border_focus_lock_set(EINA_FALSE);
    return ECORE_CALLBACK_CANCEL;
 }
 
@@ -9945,6 +9940,7 @@ e_border_pointer_warp_to_center(E_Border *bd)
    ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
    if (warp_timer) ecore_timer_del(warp_timer);
    warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, (const void *)bd);
+   e_border_focus_lock_set(EINA_TRUE);
    return 1;
 }
 
