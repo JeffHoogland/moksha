@@ -276,7 +276,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ot, *ob;
    E_Radio_Group *rg;
@@ -367,6 +367,7 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dia
    _update_mouse_binding_list(cfdata);
    _fill_actions_list(cfdata);
 
+   e_dialog_resizable_set(cfd->dia, 1);
    return o;
 }
 
