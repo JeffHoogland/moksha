@@ -1015,6 +1015,7 @@ _e_fwin_page_create(E_Fwin *fwin)
    e_scrollframe_custom_theme_set(o, "base/theme/fileman",
                                   "e/fileman/default/scrollframe");
    edje_object_part_swallow(fwin->bg_obj, "e.swallow.content", o);
+   e_widget_scrollframe_focus_object_set(o, page->fm_obj);
 
    if (fileman_config->view.show_toolbar)
      page->tbar = e_toolbar_new(evas, "toolbar",
