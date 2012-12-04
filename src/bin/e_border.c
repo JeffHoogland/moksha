@@ -230,6 +230,8 @@ static int grabbed = 0;
 static Eina_List *focus_stack = NULL;
 static Eina_List *raise_stack = NULL;
 
+static Eina_Bool focus_locked = EINA_FALSE;
+
 static Ecore_X_Randr_Screen_Size screen_size = { -1, -1 };
 static int screen_size_index = -1;
 
@@ -374,8 +376,21 @@ e_border_shutdown(void)
    if (borders_hash) eina_hash_free(borders_hash);
    borders_hash = NULL;
    e_int_border_menu_hooks_clear();
+   focus_locked = EINA_FALSE;
 
    return 1;
+}
+
+EAPI void
+e_border_focus_lock_set(Eina_Bool lock)
+{
+   focus_locked = !!lock;
+}
+
+EAPI Eina_Bool
+e_border_focus_lock_get(void)
+{
+   return focus_locked;
 }
 
 EAPI E_Border *
@@ -6437,6 +6452,7 @@ _e_border_cb_mouse_in(void *data,
    }
 #endif
    if (grabbed) return ECORE_CALLBACK_PASS_ON;
+   if (focus_locked) return ECORE_CALLBACK_RENEW;
    if (ev->event_win == bd->win)
      {
         if (!bd->iconic)
@@ -9928,8 +9944,8 @@ e_border_pointer_warp_to_center(E_Border *bd)
    warp_to = 1;
    warp_to_win = bd->zone->container->win;
    ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
-   if (!warp_timer)
-     warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, (const void *)bd);
+   if (warp_timer) ecore_timer_del(warp_timer);
+   warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, (const void *)bd);
    return 1;
 }
 
