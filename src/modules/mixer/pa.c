@@ -540,7 +540,7 @@ pulse_sink_channel_volume_set(Pulse *conn, Pulse_Sink *sink, uint32_t id, double
    tag->data = malloc(tag->dsize);
    tag->tag_count = conn->tag_count;
    if (vol <= 0.0) sink->volume.values[id] = PA_VOLUME_MUTED;
-   else sink->volume.values[id] = ((vol * PA_VOLUME_NORM) - (PA_VOLUME_NORM / 2)) / 100;
+   else sink->volume.values[id] = (vol * PA_VOLUME_NORM) / 100;
    tag_simple_init(conn, tag, type, PA_TAG_U32);
    tag_uint32(tag, sink->index);
    tag_string(tag, NULL);
