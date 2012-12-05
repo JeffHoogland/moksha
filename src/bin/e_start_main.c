@@ -17,6 +17,7 @@
 # include <alloca.h>
 #endif
 #include <signal.h>
+#include <errno.h>
 
 #include <Eina.h>
 

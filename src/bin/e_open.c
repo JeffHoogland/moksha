@@ -7,6 +7,7 @@
 #include <Efreet_Mime.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <errno.h>
 
 static const char *
 xdg_defaults_get(const char *path, const char *mime)

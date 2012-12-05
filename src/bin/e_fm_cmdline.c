@@ -7,6 +7,7 @@
 #include <Ecore_Getopt.h>
 #include <E_DBus.h>
 #include <unistd.h>
+#include <errno.h>
 
 static E_DBus_Connection *conn = NULL;
 static int retval = EXIT_SUCCESS;
