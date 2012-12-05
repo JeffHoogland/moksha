@@ -160,8 +160,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
                              cfdata->desk_x, cfdata->desk_y);
    e_desk_window_profile_add(cfdata->con_num, cfdata->zone_num, 
                              cfdata->desk_x, cfdata->desk_y, cfdata->profile);
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    e_desk_window_profile_update();
-   
+#endif
    e_bg_del(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
    e_bg_add(cfdata->con_num, cfdata->zone_num, 
             cfdata->desk_x, cfdata->desk_y, cfdata->bg);

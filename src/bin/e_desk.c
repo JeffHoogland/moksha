@@ -18,7 +18,9 @@ static Eina_Bool _e_desk_show_animator(void *data);
 static void      _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy);
 static void      _e_desk_hide_end(E_Desk *desk);
 static Eina_Bool _e_desk_hide_animator(void *data);
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 static void      _e_desk_window_profile_change_protocol_set(void);
+#endif
 
 EAPI int E_EVENT_DESK_SHOW = 0;
 EAPI int E_EVENT_DESK_BEFORE_SHOW = 0;
@@ -605,6 +607,7 @@ e_desk_window_profile_del(int container,
      }
 }
 
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 EAPI void
 e_desk_window_profile_update(void)
 {
@@ -658,6 +661,7 @@ e_desk_window_profile_update(void)
           }
      }
 }
+#endif
 
 static void
 _e_desk_free(E_Desk *desk)
@@ -1057,6 +1061,7 @@ _e_desk_hide_animator(void *data)
    return ECORE_CALLBACK_RENEW;
 }
 
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 static void
 _e_desk_window_profile_change_protocol_set(void)
 {
@@ -1069,3 +1074,4 @@ _e_desk_window_profile_change_protocol_set(void)
           (man->root, e_config->use_desktop_window_profile);
      }
 }
+#endif

@@ -79,7 +79,9 @@ EAPI void         e_desk_col_remove(E_Zone *zone);
 EAPI void         e_desk_window_profile_set(E_Desk *desk, const char *profile);
 EAPI void         e_desk_window_profile_add(int container, int zone, int desk_x, int desk_y, const char *profile);
 EAPI void         e_desk_window_profile_del(int container, int zone, int desk_x, int desk_y);
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 EAPI void         e_desk_window_profile_update(void);
+#endif
 
 extern EAPI int E_EVENT_DESK_SHOW;
 extern EAPI int E_EVENT_DESK_BEFORE_SHOW;

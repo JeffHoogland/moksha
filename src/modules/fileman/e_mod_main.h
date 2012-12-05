@@ -6,7 +6,7 @@
 /* Increment for Major Changes */
 #define MOD_CONFIG_FILE_EPOCH      0x0001
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
-#define MOD_CONFIG_FILE_GENERATION 0x0116
+#define MOD_CONFIG_FILE_GENERATION 0x0117
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
 typedef struct _Config Config;
