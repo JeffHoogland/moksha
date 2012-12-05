@@ -2580,7 +2580,9 @@ _e_shelf_bindings_add(E_Shelf *es)
    _e_shelf_bindings_del(es);
 
    /* Don't need edge binding if we don't hide shelf */
-   if ((!es->cfg->autohide) && (!es->cfg->autohide_show_action)) return;
+   if ((es->cfg) && (!es->cfg->autohide) &&
+       (!es->cfg->autohide_show_action))
+     return;
 
    snprintf(buf, sizeof(buf), "shelf.%d", es->id);
    switch (es->gadcon->orient)

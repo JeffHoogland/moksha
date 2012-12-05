@@ -578,6 +578,7 @@ _e_qa_event_border_remove_cb(void *data __UNUSED__, int type __UNUSED__, E_Event
      {
         DBG("closed transient qa border: deleting keybind and entry");
         e_qa_entry_free(entry);
+        return ECORE_CALLBACK_RENEW;
      }
    else if (entry->config.relaunch) _e_qa_border_new(entry);
    entry->border = NULL;

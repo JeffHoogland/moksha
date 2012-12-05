@@ -384,7 +384,7 @@ e_theme_config_remove(const char *category)
    /* search for the category */
    EINA_LIST_FOREACH(e_config->themes, next, ect)
      {
-        if (!strcmp(ect->category, category))
+        if (!e_util_strcmp(ect->category, category))
           {
              e_config->themes = eina_list_remove_list(e_config->themes, next);
              if (ect->category) eina_stringshare_del(ect->category);

@@ -143,6 +143,10 @@ _queue_timer(void *data)
                                        _e_wid_cb_item_sel, _e_wid_cb_item_hilight, wd, wcb);
                     }
                }
+             else
+               {
+                  E_FREE(wcb);
+               }
              if (qi->icon) evas_object_show(qi->icon);
              if (qi->end) evas_object_show(qi->end);
           }

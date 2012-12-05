@@ -2193,7 +2193,7 @@ e_fm2_icon_get(Evas *evas, E_Fm2_Icon *ic,
      ic->thumb_failed = EINA_TRUE;
 
    /* create thumbnails for edje files */
-   if (_e_fm2_file_is_edje(ic->info.file))
+   if ((ic->info.file) && (_e_fm2_file_is_edje(ic->info.file)))
      {
         o = _e_fm2_icon_thumb_edje_get
             (evas, ic, gen_func, data, force_gen, type_ret);
@@ -4296,7 +4296,7 @@ _e_fm2_uri_parse(const char *val)
    hostname[i] = '\0';
 
    /* See http://www.faqs.org/rfcs/rfc1738.html for the escaped chars */
-   for (i = 0; *p != '\0' && i < PATH_MAX; i++, p++)
+   for (i = 0; (*p != '\0') && (i < (PATH_MAX-1)); i++, p++)
      {
         if (*p == '%')
           {

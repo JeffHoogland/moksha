@@ -3103,7 +3103,10 @@ _do_transition_overlay(void)
 
                 trov->overlay.popup = e_popup_new(bd->zone, 0, 0, 1, 1);
                 if (!trov->overlay.popup)
-                    continue;
+                  {
+                     E_FREE(trov);
+                     continue;
+                  }
 
                 e_popup_layer_set(trov->overlay.popup, E_LAYER_NORMAL);
                 trov->overlay.obj = edje_object_add(trov->overlay.popup->evas);

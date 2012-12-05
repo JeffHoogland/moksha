@@ -1463,8 +1463,9 @@ ACT_FN_GO_EDGE(desk_flip_in_direction, )
 
    if (!ev) return;  // with flip on _e_zone_cb_edge_timer we don't have ev!!!
    zone = _e_actions_zone_get(obj);
+   if (!zone) return;
    wev = E_NEW(E_Event_Pointer_Warp, 1);
-   if ((!wev) || (!zone)) return;
+   if (!wev) return;
    ecore_x_pointer_xy_get(zone->container->win, &x, &y);
    wev->prev.x = x;
    wev->prev.y = y;

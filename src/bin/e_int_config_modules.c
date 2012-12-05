@@ -527,6 +527,7 @@ _load_modules(const char *dir, Eina_Hash *types_hash)
         if (!cft->modules_hash)
           {
              if (new_type) _cftype_free(cft);
+             _module_free(cfm);
              goto end_desktop;
           }
         eina_hash_direct_add(cft->modules_hash, cfm->short_name, cfm);

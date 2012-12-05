@@ -402,7 +402,7 @@ _e_desktop_edit_user_local_desktop_filename_generate(E_Config_Dialog_Data *cfdat
    if (name)
      {
         const char *s = name;
-        for (i = 0; i < sizeof(buf) && s[i]; i++)
+        for (i = 0; i < sizeof(buf) - 1 && s[i]; i++)
           {
              if (isalnum(s[i]))
                buf[i] = s[i];

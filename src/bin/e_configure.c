@@ -333,7 +333,7 @@ _e_configure_efreet_desktop_update(void)
    /* get desktops */
    settings_desktops = efreet_util_desktop_category_list("Settings");
    system_desktops = efreet_util_desktop_category_list("System");
-   if ((!settings_desktops) && (!system_desktops))
+   if ((!settings_desktops) || (!system_desktops))
      {
         EINA_LIST_FREE(settings_desktops, desktop)
           efreet_desktop_free(desktop);

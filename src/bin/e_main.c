@@ -1643,11 +1643,23 @@ _e_main_screens_init(void)
         return 0;
      }
    TS("\tscreens: focus");
-   if (!e_focus_init()) return 0;
+   if (!e_focus_init())
+     {
+        free(roots);
+        return 0;
+     }
    TS("\tscreens: border");
-   if (!e_border_init()) return 0;
+   if (!e_border_init())
+     {
+        free(roots);
+        return 0;
+     }
    TS("\tscreens: win");
-   if (!e_win_init()) return 0;
+   if (!e_win_init())
+     {
+        free(roots);
+        return 0;
+     }
    TS("\tscreens: manage roots");
    for (i = 0; i < num; i++)
      {

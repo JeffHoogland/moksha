@@ -465,6 +465,8 @@ e_fm2_device_mount_find(const char *path)
    Eina_List *l;
    E_Volume *v;
 
+   if (!path) return NULL;
+
    EINA_LIST_FOREACH(_e_vols, l, v)
      {
         if (v->mounted
