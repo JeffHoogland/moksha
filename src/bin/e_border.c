@@ -7078,13 +7078,12 @@ _e_border_cb_drag_finished(E_Drag *drag,
 static Eina_Bool
 _e_border_cb_desk_window_profile_change(void *data  __UNUSED__,
                                         int ev_type __UNUSED__,
-                                        void       *ev)
+                                        void *ev __UNUSED__)
 {
-   E_Event_Desk_Window_Profile_Change *e;
+//   E_Event_Desk_Window_Profile_Change *e = ev;
    Eina_List *l = NULL;
    E_Border *bd;
 
-   e = (E_Event_Desk_Window_Profile_Change *)ev;
    EINA_LIST_FOREACH(borders, l, bd)
      {
         if (!e_object_is_del(E_OBJECT(bd)))
@@ -7190,7 +7189,10 @@ _e_border_eval0(E_Border *bd)
 {
    int change_urgent = 0;
    int rem_change = 0;
-
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
+   Eina_Bool need_desk_set = EINA_FALSE;
+#endif
+   
    if (e_object_is_del(E_OBJECT(bd)))
      {
         CRI("_e_border_eval(%p) with deleted border!\n", bd);
@@ -7321,7 +7323,6 @@ _e_border_eval0(E_Border *bd)
 #if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    if (bd->client.e.fetch.profile)
      {
-        Eina_Bool need_desk_set = EINA_FALSE;
         const char **list = NULL;
         int n, i, res;
         unsigned int use;
