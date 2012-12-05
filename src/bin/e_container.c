@@ -360,6 +360,36 @@ e_container_zone_id_get(E_Container *con, int id)
    return NULL;
 }
 
+EAPI E_Desk *
+e_container_desk_window_profile_get(E_Container *con,
+                                    const char  *profile)
+{
+   Eina_List *l = NULL;
+   E_Zone *zone = NULL;
+   int x, y;
+
+   E_OBJECT_CHECK_RETURN(con, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(con, E_CONTAINER_TYPE, NULL);
+
+   EINA_LIST_FOREACH(con->zones, l, zone)
+     {
+        for (x = 0; x < zone->desk_x_count; x++)
+          {
+             for (y = 0; y < zone->desk_y_count; y++)
+               {
+                  E_Desk *desk = e_desk_at_xy_get(zone, x, y);
+                  if ((desk->window_profile) &&
+                      strcmp(desk->window_profile, profile) == 0)
+                    {
+                       return desk;
+                    }
+               }
+          }
+     }
+
+   return NULL;
+}
+
 EAPI E_Container_Shape *
 e_container_shape_add(E_Container *con)
 {

@@ -3,6 +3,7 @@ group "E_Config" struct {
     value "show_splash" int: 1;
     value "init_default_theme" string: "default.edj";
     value "desktop_default_name" string: "%i-%i";
+    value "desktop_default_window_profile" string: "standard";
     value "menus_scroll_speed" double: 1000.0;
     value "menus_fast_mouse_move_threshhold" double: 300.0;
     value "menus_click_drag_timeout" double: 0.25;
@@ -2021,4 +2022,5 @@ group "E_Config" struct {
     value "xkb.only_label" int: 0;
     value "xkb.default_model" string: "default";
     value "exe_always_single_instance" uchar: 0;
+    value "use_desktop_window_profile" int: 0;
 }

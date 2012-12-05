@@ -125,6 +125,8 @@ EAPI E_Zone      *e_container_zone_at_point_get(E_Container *con, int x, int y);
 EAPI E_Zone      *e_container_zone_number_get(E_Container *con, int num);
 EAPI E_Zone      *e_container_zone_id_get(E_Container *con, int id);
 
+EAPI E_Desk            *e_container_desk_window_profile_get(E_Container *con, const char *profile);
+
 EAPI E_Container_Shape *e_container_shape_add(E_Container *con);
 EAPI void               e_container_shape_show(E_Container_Shape *es);
 EAPI void               e_container_shape_hide(E_Container_Shape *es);

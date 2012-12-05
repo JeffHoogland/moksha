@@ -393,6 +393,14 @@ struct _E_Border
             Ecore_X_Window video_parent;
             E_Border      *video_parent_border;
             Eina_List     *video_child;
+            struct
+            {
+               const char     *name;
+               const char    **available_list;
+               int             num;
+               unsigned char   wait_for_done : 1;
+               unsigned char   use : 1;
+            } profile;
 
             unsigned char  centered : 1;
             unsigned char  video : 1;
@@ -403,6 +411,7 @@ struct _E_Border
             unsigned char state : 1;
             unsigned char video_parent : 1;
             unsigned char video_position : 1;
+            unsigned char profile : 1;
          } fetch;
       } e;
 

@@ -1680,6 +1680,8 @@ _e_main_screens_init(void)
              free(roots);
              return 0;
           }
+        ecore_x_e_window_profile_supported_set(roots[i],
+                                               e_config->use_desktop_window_profile);
      }
    free(roots);
 

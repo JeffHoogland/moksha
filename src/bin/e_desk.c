@@ -11,18 +11,21 @@ static void      _e_desk_event_desk_before_show_free(void *data, void *ev);
 static void      _e_desk_event_desk_after_show_free(void *data, void *ev);
 static void      _e_desk_event_desk_deskshow_free(void *data, void *ev);
 static void      _e_desk_event_desk_name_change_free(void *data, void *ev);
+static void      _e_desk_event_desk_window_profile_change_free(void *data, void *ev);
 static void      _e_desk_show_begin(E_Desk *desk, int mode, int x, int dy);
 static void      _e_desk_show_end(E_Desk *desk);
 static Eina_Bool _e_desk_show_animator(void *data);
 static void      _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy);
 static void      _e_desk_hide_end(E_Desk *desk);
 static Eina_Bool _e_desk_hide_animator(void *data);
+static void      _e_desk_window_profile_change_protocol_set(void);
 
 EAPI int E_EVENT_DESK_SHOW = 0;
 EAPI int E_EVENT_DESK_BEFORE_SHOW = 0;
 EAPI int E_EVENT_DESK_AFTER_SHOW = 0;
 EAPI int E_EVENT_DESK_DESKSHOW = 0;
 EAPI int E_EVENT_DESK_NAME_CHANGE = 0;
+EAPI int E_EVENT_DESK_WINDOW_PROFILE_CHANGE = 0;
 
 EINTERN int
 e_desk_init(void)
@@ -32,6 +35,7 @@ e_desk_init(void)
    E_EVENT_DESK_AFTER_SHOW = ecore_event_type_new();
    E_EVENT_DESK_DESKSHOW = ecore_event_type_new();
    E_EVENT_DESK_NAME_CHANGE = ecore_event_type_new();
+   E_EVENT_DESK_WINDOW_PROFILE_CHANGE = ecore_event_type_new();
    return 1;
 }
 
@@ -47,6 +51,7 @@ e_desk_new(E_Zone *zone, int x, int y)
    E_Desk *desk;
    Eina_List *l;
    E_Config_Desktop_Name *cfname;
+   E_Config_Desktop_Window_Profile *cfprof;
    char name[40];
    int ok = 0;
 
@@ -78,6 +83,27 @@ e_desk_new(E_Zone *zone, int x, int y)
      {
         snprintf(name, sizeof(name), _(e_config->desktop_default_name), x, y);
         desk->name = eina_stringshare_add(name);
+     }
+
+   /* Get window profile name for current desktop */
+   ok = 0;
+   EINA_LIST_FOREACH(e_config->desktop_window_profiles, l, cfprof)
+     {
+        if ((cfprof->container >= 0) &&
+            ((int)zone->container->num != cfprof->container)) continue;
+        if ((cfprof->zone >= 0) &&
+            ((int)zone->num != cfprof->zone)) continue;
+        if ((cfprof->desk_x != desk->x) || (cfprof->desk_y != desk->y))
+          continue;
+        desk->window_profile = eina_stringshare_add(cfprof->profile);
+        ok = 1;
+        break;
+     }
+
+   if (!ok)
+     {
+        desk->window_profile = eina_stringshare_add
+          (e_config->desktop_default_window_profile);
      }
 
    return desk;
@@ -515,6 +541,124 @@ e_desk_prev(E_Zone *zone)
    e_desk_show(e_desk_at_xy_get(zone, x, y));
 }
 
+EAPI void
+e_desk_window_profile_set(E_Desk     *desk,
+                          const char *profile)
+{
+   E_Event_Desk_Window_Profile_Change *ev;
+
+   E_OBJECT_CHECK(desk);
+   E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
+
+   eina_stringshare_replace(&desk->window_profile, profile);
+
+   ev = E_NEW(E_Event_Desk_Window_Profile_Change, 1);
+   ev->desk = desk;
+   e_object_ref(E_OBJECT(desk));
+   ecore_event_add(E_EVENT_DESK_WINDOW_PROFILE_CHANGE, ev,
+                   _e_desk_event_desk_window_profile_change_free, NULL);
+}
+
+EAPI void
+e_desk_window_profile_add(int         container,
+                          int         zone,
+                          int         desk_x,
+                          int         desk_y,
+                          const char *profile)
+{
+   E_Config_Desktop_Window_Profile *cfprof;
+
+   e_desk_window_profile_del(container, zone, desk_x, desk_y);
+
+   cfprof = E_NEW(E_Config_Desktop_Window_Profile, 1);
+   cfprof->container = container;
+   cfprof->zone = zone;
+   cfprof->desk_x = desk_x;
+   cfprof->desk_y = desk_y;
+   if (profile) cfprof->profile = eina_stringshare_add(profile);
+   else cfprof->profile = NULL;
+   e_config->desktop_window_profiles = eina_list_append(e_config->desktop_window_profiles, cfprof);
+}
+
+EAPI void
+e_desk_window_profile_del(int container,
+                          int zone,
+                          int desk_x,
+                          int desk_y)
+{
+   Eina_List *l = NULL;
+   E_Config_Desktop_Window_Profile *cfprof = NULL;
+
+   EINA_LIST_FOREACH(e_config->desktop_window_profiles, l, cfprof)
+     {
+        if (!((cfprof->container == container) &&
+              (cfprof->zone == zone) &&
+              (cfprof->desk_x == desk_x) &&
+              (cfprof->desk_y == desk_y)))
+          continue;
+
+        e_config->desktop_window_profiles =
+          eina_list_remove_list(e_config->desktop_window_profiles, l);
+        if (cfprof->profile) eina_stringshare_del(cfprof->profile);
+        E_FREE(cfprof);
+        break;
+     }
+}
+
+EAPI void
+e_desk_window_profile_update(void)
+{
+   Eina_List *m, *c, *z, *l;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   E_Desk *desk;
+   E_Config_Desktop_Window_Profile *cfprof;
+   int d_x, d_y, ok;
+
+   _e_desk_window_profile_change_protocol_set();
+
+   if (!(e_config->use_desktop_window_profile))
+     return;
+
+   EINA_LIST_FOREACH(e_manager_list(), m, man)
+     {
+        EINA_LIST_FOREACH(man->containers, c, con)
+          {
+             EINA_LIST_FOREACH(con->zones, z, zone)
+               {
+                  for (d_x = 0; d_x < zone->desk_x_count; d_x++)
+                    {
+                       for (d_y = 0; d_y < zone->desk_y_count; d_y++)
+                         {
+                            desk = zone->desks[d_x + zone->desk_x_count * d_y];
+                            ok = 0;
+
+                            EINA_LIST_FOREACH(e_config->desktop_window_profiles, l, cfprof)
+                              {
+                                 if ((cfprof->container >= 0) &&
+                                     ((int)con->num != cfprof->container)) continue;
+                                 if ((cfprof->zone >= 0) &&
+                                     ((int)zone->num != cfprof->zone)) continue;
+                                 if ((cfprof->desk_x != d_x) ||
+                                     (cfprof->desk_y != d_y)) continue;
+                                 e_desk_window_profile_set(desk, cfprof->profile);
+                                 ok = 1;
+                                 break;
+                              }
+
+                            if (!ok)
+                              {
+                                 e_desk_window_profile_set
+                                   (desk, e_config->desktop_default_window_profile);
+                              }
+                         }
+                    }
+               }
+          }
+     }
+}
+
 static void
 _e_desk_free(E_Desk *desk)
 {
@@ -573,6 +717,15 @@ _e_desk_event_desk_name_change_free(void *data __UNUSED__, void *event)
    ev = event;
    e_object_unref(E_OBJECT(ev->desk));
    free(ev);
+}
+
+static void
+_e_desk_event_desk_window_profile_change_free(void *data __UNUSED__, void *event)
+{
+   E_Event_Desk_Window_Profile_Change *ev;
+   ev = event;
+   e_object_unref(E_OBJECT(ev->desk));
+   E_FREE(ev);
 }
 
 static void
@@ -902,4 +1055,17 @@ _e_desk_hide_animator(void *data)
      desk->animating = EINA_FALSE;
 
    return ECORE_CALLBACK_RENEW;
+}
+
+static void
+_e_desk_window_profile_change_protocol_set(void)
+{
+   Eina_List *l = NULL;
+   E_Manager *man;
+
+   EINA_LIST_FOREACH(e_manager_list(), l, man)
+     {
+        ecore_x_e_window_profile_supported_set
+          (man->root, e_config->use_desktop_window_profile);
+     }
 }

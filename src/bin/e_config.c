@@ -41,6 +41,7 @@ static E_Config_DD *_e_config_path_append_edd = NULL;
 static E_Config_DD *_e_config_desktop_bg_edd = NULL;
 static E_Config_DD *_e_config_desklock_bg_edd = NULL;
 static E_Config_DD *_e_config_desktop_name_edd = NULL;
+static E_Config_DD *_e_config_desktop_window_profile_edd = NULL;
 static E_Config_DD *_e_config_remember_edd = NULL;
 static E_Config_DD *_e_config_color_class_edd = NULL;
 static E_Config_DD *_e_config_gadcon_edd = NULL;
@@ -273,6 +274,17 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, desk_x, INT);
    E_CONFIG_VAL(D, T, desk_y, INT);
    E_CONFIG_VAL(D, T, name, STR);
+
+   _e_config_desktop_window_profile_edd = E_CONFIG_DD_NEW("E_Config_Desktop_Window_Profile", E_Config_Desktop_Window_Profile);
+#undef T
+#undef D
+#define T E_Config_Desktop_Window_Profile
+#define D _e_config_desktop_window_profile_edd
+   E_CONFIG_VAL(D, T, container, INT);
+   E_CONFIG_VAL(D, T, zone, INT);
+   E_CONFIG_VAL(D, T, desk_x, INT);
+   E_CONFIG_VAL(D, T, desk_y, INT);
+   E_CONFIG_VAL(D, T, profile, STR);
 
    _e_config_path_append_edd = E_CONFIG_DD_NEW("E_Path_Dir", E_Path_Dir);
 #undef T
@@ -638,8 +650,10 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, init_default_theme, STR); /**/
    E_CONFIG_VAL(D, T, desktop_default_background, STR); /**/
    E_CONFIG_VAL(D, T, desktop_default_name, STR); /**/
+   E_CONFIG_VAL(D, T, desktop_default_window_profile, STR); /**/
    E_CONFIG_LIST(D, T, desktop_backgrounds, _e_config_desktop_bg_edd); /**/
    E_CONFIG_LIST(D, T, desktop_names, _e_config_desktop_name_edd); /**/
+   E_CONFIG_LIST(D, T, desktop_window_profiles, _e_config_desktop_window_profile_edd);
    E_CONFIG_VAL(D, T, menus_scroll_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE); /**/
@@ -945,6 +959,8 @@ e_config_init(void)
    //E_CONFIG_VAL(D, T, xkb.cur_group, INT);
 
    E_CONFIG_VAL(D, T, exe_always_single_instance, UCHAR);
+
+   E_CONFIG_VAL(D, T, use_desktop_window_profile, INT);
    e_config_load();
 
    e_config_save_queue();
@@ -970,6 +986,7 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_desktop_bg_edd);
    E_CONFIG_DD_FREE(_e_config_desklock_bg_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
+   E_CONFIG_DD_FREE(_e_config_desktop_window_profile_edd);
    E_CONFIG_DD_FREE(_e_config_remember_edd);
    E_CONFIG_DD_FREE(_e_config_gadcon_edd);
    E_CONFIG_DD_FREE(_e_config_gadcon_client_edd);
@@ -1257,6 +1274,11 @@ e_config_load(void)
 
           IFCFG(0x0160);
           e_config->window_activehint_policy = 2;
+          IFCFGEND;
+
+          IFCFG(0x0162);
+          COPYSTR(desktop_default_window_profile);
+          COPYVAL(use_desktop_window_profile);
           IFCFGEND;
 
           e_config->config_version = E_CONFIG_FILE_VERSION;
@@ -2005,8 +2027,15 @@ _e_config_free(E_Config *ecf)
    E_Config_Env_Var *evr;
    E_Config_XKB_Layout *cl;
    E_Config_XKB_Option *op;
+   E_Config_Desktop_Window_Profile *wp;
 
    if (!ecf) return;
+
+   EINA_LIST_FREE(ecf->desktop_window_profiles, wp)
+     {
+        eina_stringshare_del(wp->profile);
+        E_FREE(wp);
+     }
 
    eina_stringshare_del(ecf->xkb.default_model);
 
@@ -2148,6 +2177,7 @@ _e_config_free(E_Config *ecf)
    if (ecf->init_default_theme) eina_stringshare_del(ecf->init_default_theme);
    if (ecf->desktop_default_background) eina_stringshare_del(ecf->desktop_default_background);
    if (ecf->desktop_default_name) eina_stringshare_del(ecf->desktop_default_name);
+   if (ecf->desktop_default_window_profile) eina_stringshare_del(ecf->desktop_default_window_profile);
    if (ecf->language) eina_stringshare_del(ecf->language);
    eina_stringshare_del(ecf->desklock_language);
    eina_stringshare_del(ecf->xkb.selected_layout);
