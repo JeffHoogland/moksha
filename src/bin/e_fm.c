@@ -8591,11 +8591,11 @@ _e_fm2_icon_menu(E_Fm2_Icon *ic, Evas_Object *obj, unsigned int timestamp)
    e_menu_category_set(mn, "e/fileman/action");
 
    if (sd->icon_menu.replace.func)
-     sd->icon_menu.replace.func(sd->icon_menu.replace.data, sd->obj, mn, NULL);
+     sd->icon_menu.replace.func(sd->icon_menu.replace.data, sd->obj, mn, &ic->info);
    else
      {
         if (sd->icon_menu.start.func)
-          sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, NULL);
+          sd->icon_menu.start.func(sd->icon_menu.start.data, sd->obj, mn, &ic->info);
         if (!(sd->icon_menu.flags & E_FM2_MENU_NO_VIEW_MENU))
           {
              mi = e_menu_item_new(mn);
