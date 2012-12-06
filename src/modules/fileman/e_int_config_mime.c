@@ -164,7 +164,7 @@ _basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data
    Evas_Object *o, *of, *ol;
    Evas_Object *ob;
    
-   o = e_widget_list_add(evas, 0, 1);
+   o = e_widget_list_add(evas, 1, 1);
    of  = e_widget_framelist_add(evas, _("Categories"), 0);
    ol = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_type));
    cfdata->gui.tlist = ol;
