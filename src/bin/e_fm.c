@@ -194,6 +194,7 @@ struct _E_Fm2_Icon
    struct
    {
       Evas_Coord x, y;
+      Ecore_Timer *dnd_end_timer; //we need this for XDirectSave drops so we don't lose the icon
       Eina_Bool  start : 1;
       Eina_Bool  dnd : 1; // currently dragging
       Eina_Bool  src : 1; // drag source
@@ -4619,6 +4620,8 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
      }
    if (ic->selected)
      ic->sd->selected_icons = eina_list_remove(ic->sd->selected_icons, ic);
+   if (ic->drag.dnd_end_timer)
+     ecore_timer_del(ic->drag.dnd_end_timer);
    eina_stringshare_del(ic->info.file);
    eina_stringshare_del(ic->info.mime);
    eina_stringshare_del(ic->info.label);
@@ -6441,7 +6444,13 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
    ox = 0; oy = 0;
    EINA_LIST_FOREACH(isel, l, ic)
      {
-        if (ic && ic->drag.src)
+        if (!ic) continue;
+        if (ic->drag.dnd_end_timer)
+          {
+             ecore_timer_del(ic->drag.dnd_end_timer);
+             ic->drag.dnd_end_timer = NULL;
+          }
+        if (ic->drag.src)
           {
              ox = ic->x;
              oy = ic->y;
@@ -6670,7 +6679,12 @@ end:
           }
      }
    eina_list_free(fsel);
-   eina_list_free(isel);
+   EINA_LIST_FREE(isel, ic)
+     if (ic->drag.dnd_end_timer)
+       {
+          ecore_timer_del(ic->drag.dnd_end_timer);
+          ic->drag.dnd_end_timer = NULL;
+       }
 }
 
 static void
@@ -6937,6 +6951,16 @@ _e_fm2_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
      }
 }
 
+static Eina_Bool
+_e_fm2_cb_drag_finished_show(E_Fm2_Icon *ic)
+{
+   ic->drag.dnd = ic->drag.src = EINA_FALSE;
+   if (ic->obj) evas_object_show(ic->obj);
+   if (ic->obj_icon) evas_object_show(ic->obj_icon);
+   ic->drag.dnd_end_timer = NULL;
+   return EINA_FALSE;
+}
+
 static void
 _e_fm2_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
 {
@@ -6973,6 +6997,8 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
                             if (ic->sd->dnd_scroller) ecore_animator_del(ic->sd->dnd_scroller);
                             ic->sd->dnd_scroller = NULL;
                             evas_object_smart_callback_call(ic->sd->obj, "dnd_end", &ic->info);
+                            if (ic->drag.dnd_end_timer) ecore_timer_reset(ic->drag.dnd_end_timer);
+                            else ic->drag.dnd_end_timer = ecore_timer_add(0.2, (Ecore_Task_Cb)_e_fm2_cb_drag_finished_show, ic);
                          }
                     }
                }
