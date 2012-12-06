@@ -2078,20 +2078,23 @@ static void
 _e_fwin_cb_menu_extend_start(void *data,
                              Evas_Object *obj,
                              E_Menu *m,
-                             E_Fm2_Icon_Info *info __UNUSED__)
+                             E_Fm2_Icon_Info *info)
 {
    E_Menu_Item *mi = NULL;
    E_Fwin_Page *page;
    E_Menu *subm;
    Eina_List *selected = NULL;
    Eina_Bool set = EINA_FALSE;
+   char buf[PATH_MAX];
 
    page = data;
 
    selected = e_fm2_selected_list_get(page->fm_obj);
 
 #ifdef ENABLE_FILES
-   subm = e_mod_menu_add(m, e_fm2_real_path_get(page->fm_obj));
+   if (info && info->file)
+     snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), info->file);
+   subm = e_mod_menu_add(m, (info && info->file) ? buf : e_fm2_real_path_get(page->fm_obj));
 
    if (((!page->fwin->zone) || fileman_config->view.desktop_navigation) && e_fm2_has_parent_get(obj))
      {

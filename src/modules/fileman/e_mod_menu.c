@@ -314,7 +314,7 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 
    if (path)
      {
-        mi = e_menu_item_new(m);
+        mi = e_menu_item_new_relative(m, NULL);
         e_menu_item_label_set(mi, _("Current Directory"));
         e_util_menu_item_theme_icon_set(mi, "folder");
         e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_ref(path));
@@ -398,7 +398,7 @@ e_mod_menu_add(E_Menu *m, const char *path)
    sub = e_menu_new();
    e_menu_item_submenu_set(mi, sub);
    e_object_unref(E_OBJECT(sub)); //allow deletion whenever main menu deletes
-   e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, (void*)eina_stringshare_ref(path));
+   e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, (void*)eina_stringshare_add(path));
    return sub;
 #else
    (void)m;
