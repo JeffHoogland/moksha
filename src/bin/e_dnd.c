@@ -1467,6 +1467,13 @@ _e_dnd_cb_event_dnd_selection(void *data __UNUSED__, int type __UNUSED__, void *
    if (!eina_hash_find(_drop_win_hash, id)) return ECORE_CALLBACK_PASS_ON;
    if (ev->selection != ECORE_X_SELECTION_XDND) return ECORE_CALLBACK_PASS_ON;
 
+   if (!_xdnd)
+     {
+        /* something crazy happened */
+        ecore_x_dnd_send_finished();
+        return ECORE_CALLBACK_RENEW;
+     }
+
    if (_type_text_uri_list == _xdnd->type)
      {
         Ecore_X_Selection_Data_Files *files;
