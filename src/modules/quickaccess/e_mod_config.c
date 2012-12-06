@@ -319,10 +319,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ob, *ol, *otb, *tab;
 
+   e_dialog_resizable_set(cfd->dia, 1);
    cfdata->o_list_entry = cfdata->o_list_transient = NULL;
 
    tab = e_widget_table_add(evas, 0);
