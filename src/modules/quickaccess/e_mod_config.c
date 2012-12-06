@@ -231,11 +231,12 @@ _list_rename(void *data, void *list)
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ob, *ol, *otb, *tab;
    int w, h;
 
+   e_dialog_resizable_set(cfd->dia, 1);
    tab = e_widget_table_add(evas, 0);
    evas_object_name_set(tab, "dia_table");
 

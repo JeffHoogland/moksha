@@ -94,12 +94,13 @@ _apply_cfdata(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ot, *ob;
    Evas_Coord mw, mh;
    char buf[PATH_MAX];
 
+   e_dialog_resizable_set(cfd->dia, 1);
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Available Profiles"), 0);

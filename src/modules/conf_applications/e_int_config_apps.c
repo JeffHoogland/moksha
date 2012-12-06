@@ -240,11 +240,12 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ot;
    int mw;
 
+   e_dialog_resizable_set(cfd->dia, 1);
    otb = e_widget_toolbook_add(evas, 24, 24);
 
    if (cfdata->data->show_autostart)

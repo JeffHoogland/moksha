@@ -215,10 +215,13 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
+   Evas_Object *mainn;
+
    /* Holds the dialog contents, displays a toolbar on the top */
-   Evas_Object *mainn = e_widget_toolbook_add(evas, 24, 24);
+   e_dialog_resizable_set(cfd->dia, 1);
+   mainn = e_widget_toolbook_add(evas, 24, 24);
    {
       /* Holds the used layouts ilist and the button table */
       Evas_Object *layoutss;

@@ -448,7 +448,7 @@ _icon_theme_changed(void *data, Evas_Object *o __UNUSED__)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *otb, *ol, *ilist, *of, *ow;
    struct _fill_icon_themes_data *d;
@@ -524,7 +524,7 @@ _basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data
                                  1, 1, 1, 1, 0.5, 0.0);
 
    e_widget_toolbook_page_show(otb, 0);
-
+   e_dialog_resizable_set(cfd->dia, 1);
 
    _fill_files_ilist(cfdata);
 

@@ -1014,7 +1014,7 @@ _advanced_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 }
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ic;
    char *cur_sig_loc;
@@ -1023,6 +1023,7 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dia
    char buf[PATH_MAX];
 
    cfdata->evas = evas;
+   e_dialog_resizable_set(cfd->dia, 1);
    o = e_widget_table_add(evas, 0);
    of = e_widget_framelist_add(evas, _("Language Selector"), 0);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_blang));
@@ -1104,13 +1105,13 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dia
 }
 
 static Evas_Object *
-_advanced_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob;
    const char *lang, *reg, *cs, *mod;
 
    cfdata->evas = evas;
-
+   e_dialog_resizable_set(cfd->dia, 1);
    _intl_current_locale_setup(cfdata);
 
    o = e_widget_table_add(evas, 0);
