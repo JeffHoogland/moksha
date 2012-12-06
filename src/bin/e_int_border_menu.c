@@ -392,7 +392,7 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
                                   "e/widgets/border/default/maximize");
 
         submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Maximize vertically"));
+        e_menu_item_label_set(submi, _("Maximize Vertically"));
         e_menu_item_radio_set(submi, 1);
         e_menu_item_radio_group_set(submi, 3);
         e_menu_item_toggle_set(submi, (bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_VERTICAL);
@@ -403,7 +403,7 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
                                   "e/widgets/border/default/maximize");
 
         submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Maximize horizontally"));
+        e_menu_item_label_set(submi, _("Maximize Horizontally"));
         e_menu_item_radio_set(submi, 1);
         e_menu_item_radio_group_set(submi, 3);
         e_menu_item_toggle_set(submi, (bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL);
@@ -414,7 +414,7 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
                                   "e/widgets/border/default/maximize");
 
         submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Maximize left"));
+        e_menu_item_label_set(submi, _("Maximize Left"));
         e_menu_item_radio_set(submi, 1);
         e_menu_item_radio_group_set(submi, 3);
         e_menu_item_toggle_set(submi, (bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT);
@@ -425,7 +425,7 @@ _e_border_menu_cb_maximize_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi
                                   "e/widgets/border/default/maximize");
 
         submi = e_menu_item_new(subm);
-        e_menu_item_label_set(submi, _("Maximize right"));
+        e_menu_item_label_set(submi, _("Maximize Right"));
         e_menu_item_radio_set(submi, 1);
         e_menu_item_radio_group_set(submi, 3);
         e_menu_item_toggle_set(submi, (bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_RIGHT);
