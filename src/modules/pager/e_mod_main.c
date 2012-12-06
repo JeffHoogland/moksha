@@ -239,7 +239,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    pager_config->instances = eina_list_remove(pager_config->instances, inst);
    e_drop_handler_del(inst->pager->drop_handler);
    _pager_free(inst->pager);
-   E_FREE(inst);
+   free(inst);
 }
 
 static void
@@ -310,7 +310,7 @@ _pager_free(Pager *p)
    _pager_empty(p);
    evas_object_del(p->o_table);
    pagers = eina_list_remove(pagers, p);
-   E_FREE(p);
+   free(p);
 }
 
 static void
@@ -496,7 +496,7 @@ _pager_desk_free(Pager_Desk *pd)
    EINA_LIST_FREE(pd->wins, w)
      _pager_window_free(w);
    e_object_unref(E_OBJECT(pd->desk));
-   E_FREE(pd);
+   free(pd);
 }
 
 static Pager_Desk *
@@ -716,7 +716,7 @@ _pager_window_free(Pager_Win *pw)
    if (pw->o_window) evas_object_del(pw->o_window);
    if (pw->o_icon) evas_object_del(pw->o_icon);
    e_object_unref(E_OBJECT(pw->border));
-   E_FREE(pw);
+   free(pw);
 }
 
 static void
@@ -771,7 +771,7 @@ _pager_popup_new(E_Zone *zone, int keyaction)
    pp->popup = e_popup_new(zone, 0, 0, 1, 1);
    if (!pp->popup)
      {
-        E_FREE(pp);
+        free(pp);
         return NULL;
      }
    e_popup_layer_set(pp->popup, E_LAYER_POPUP);
@@ -832,7 +832,7 @@ _pager_popup_free(Pager_Popup *pp)
    e_bindings_mouse_ungrab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
    e_bindings_wheel_ungrab(E_BINDING_CONTEXT_POPUP, pp->popup->evas_win);
    e_object_del(E_OBJECT(pp->popup));
-   E_FREE(pp);
+   free(pp);
 }
 
 static Pager_Popup *
