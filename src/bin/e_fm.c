@@ -6889,6 +6889,7 @@ _e_fm2_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
      {
         /* if its a directory && open dirs in-place is set then change the dir
          * to be the dir + file */
+        if (ic->sd->config->view.single_click) return;
         if (_e_fm2_inplace_open(ic) == 0)
           evas_object_smart_callback_call(ic->sd->obj, "selected", NULL);
         /* if its in file selector mode then signal that a selection has
