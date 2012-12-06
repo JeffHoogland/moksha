@@ -3704,7 +3704,12 @@ _iconify_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Iconify
 {
     E_Border *bd = event->border;
 
+    DBG("iconify hook: %p", bd);
+
     end_special_input();
+
+    if (bd->deskshow)
+        return true;
 
     check_tinfo(bd->desk);
     if (!_G.tinfo->conf)
@@ -3731,6 +3736,9 @@ _uniconify_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Unico
     {
         end_special_input();
     }
+
+    if (bd->deskshow)
+        return true;
 
     check_tinfo(bd->desk);
     if (!_G.tinfo->conf || !_G.tinfo->conf->nb_stacks) {
