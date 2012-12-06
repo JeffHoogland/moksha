@@ -72,6 +72,11 @@ parse_rules(void)
    model->description = eina_stringshare_add("Automatic");
    models = eina_list_append(models, model);
 
+   model = E_NEW(E_XKB_Model, 1);
+   model->name = eina_stringshare_add("evdev");
+   model->description = eina_stringshare_add("evdev");
+   models = eina_list_append(models, model);
+
    /* read models here */
    for (;; )
      {
