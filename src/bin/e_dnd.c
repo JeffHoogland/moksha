@@ -87,43 +87,18 @@ e_dnd_init(void)
    _drop_win_hash = eina_hash_string_superfast_new(NULL);
    _drop_handlers_responsives = eina_hash_string_superfast_new(NULL);
 
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-                                                              _e_dnd_cb_mouse_up, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
-                                                              _e_dnd_cb_mouse_move, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_WINDOW_SHAPE,
-                                                              _e_dnd_cb_window_shape, NULL));
-
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_XDND_ENTER,
-                                                              _e_dnd_cb_event_dnd_enter, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_XDND_LEAVE,
-                                                              _e_dnd_cb_event_dnd_leave, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_XDND_POSITION,
-                                                              _e_dnd_cb_event_dnd_position, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_XDND_STATUS,
-                                                              _e_dnd_cb_event_dnd_status, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_XDND_FINISHED,
-                                                              _e_dnd_cb_event_dnd_finished, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_XDND_DROP,
-                                                              _e_dnd_cb_event_dnd_drop, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_X_EVENT_SELECTION_NOTIFY,
-                                                              _e_dnd_cb_event_dnd_selection, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
-                                                              _e_dnd_cb_key_down, NULL));
-   _event_handlers = eina_list_append(_event_handlers,
-                                      ecore_event_handler_add(ECORE_EVENT_KEY_UP,
-                                                              _e_dnd_cb_key_up, NULL));
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_EVENT_MOUSE_BUTTON_UP, _e_dnd_cb_mouse_up, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_EVENT_MOUSE_MOVE, _e_dnd_cb_mouse_move, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_X_EVENT_WINDOW_SHAPE, _e_dnd_cb_window_shape, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_X_EVENT_XDND_ENTER, _e_dnd_cb_event_dnd_enter, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_X_EVENT_XDND_LEAVE, _e_dnd_cb_event_dnd_leave, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_X_EVENT_XDND_POSITION, _e_dnd_cb_event_dnd_position, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_X_EVENT_XDND_STATUS, _e_dnd_cb_event_dnd_status, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_X_EVENT_XDND_FINISHED, _e_dnd_cb_event_dnd_finished, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_X_EVENT_XDND_DROP, _e_dnd_cb_event_dnd_drop, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_X_EVENT_SELECTION_NOTIFY, _e_dnd_cb_event_dnd_selection, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_EVENT_KEY_DOWN, _e_dnd_cb_key_down, NULL);
+   E_LIST_HANDLER_APPEND(_event_handlers, ECORE_EVENT_KEY_UP, _e_dnd_cb_key_up, NULL);
 
    _action = ECORE_X_ATOM_XDND_ACTION_PRIVATE;
    return 1;
