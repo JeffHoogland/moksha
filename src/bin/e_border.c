@@ -2186,7 +2186,7 @@ e_border_focus_set(E_Border *bd,
    /* dont focus an iconified window. that's silly! */
    if (focus)
      {
-        if (bd->iconic)
+        if ((bd->iconic) && (!bd->deskshow))
           {
              e_border_uniconify(bd);
              if (!focus_track_frozen)

@@ -370,16 +370,19 @@ e_desk_deskshow(E_Zone *zone)
           {
              if (desk->deskshow_toggle)
                {
-                  if (bd->deskshow) e_border_uniconify(bd);
-                  bd->deskshow = 0;
+                  if (bd->deskshow)
+                    {
+                        bd->deskshow = 0;
+                        e_border_uniconify(bd);
+                    }
                }
              else
                {
                   if (bd->iconic) continue;
                   if (bd->client.netwm.state.skip_taskbar) continue;
                   if (bd->user_skip_winlist) continue;
-                  e_border_iconify(bd);
                   bd->deskshow = 1;
+                  e_border_iconify(bd);
                }
           }
      }
