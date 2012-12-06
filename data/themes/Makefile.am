@@ -44,6 +44,7 @@ edc/frame.edc \
 edc/gadman.edc \
 edc/ibar-ibox.edc \
 edc/ilist.edc \
+edc/illume.edc \
 edc/init.edc \
 edc/label.edc \
 edc/menu.edc \
