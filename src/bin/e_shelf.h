@@ -37,6 +37,7 @@ struct _E_Shelf
    int                  interrupted;
    float                instant_delay;
    Ecore_Timer         *instant_timer;
+   Ecore_Timer         *autohide_timer;
    Ecore_Timer         *module_init_end_timer;
    Eina_List           *handlers;
    Ecore_Event_Handler *autohide;

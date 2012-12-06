@@ -449,6 +449,8 @@ e_shelf_toggle(E_Shelf *es, int show)
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
    es->toggle = show;
+   if (es->autohide_timer) ecore_timer_del(es->autohide_timer);
+   es->autohide_timer = NULL;
    if (es->locked) return;
    es->interrupted = -1;
    es->urgent_show = 0;
@@ -1293,6 +1295,8 @@ _e_shelf_free(E_Shelf *es)
           }
         e_object_del(E_OBJECT(es->popup));
      }
+   if (es->autohide_timer) ecore_timer_del(es->autohide_timer);
+   es->autohide_timer = NULL;
    es->popup = NULL;
 
    ev = E_NEW(E_Event_Shelf, 1);
@@ -1832,6 +1836,21 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
 }
 
 static Eina_Bool
+_e_shelf_cb_mouse_move_autohide_fuck_systray(E_Shelf *es)
+{
+   int x, y;
+   Ecore_Event_Mouse_Move ev;
+
+   memset(&ev, 0, sizeof(Ecore_Event_Mouse_Move));
+   ecore_x_pointer_xy_get(es->zone->container->manager->root, &x, &y);
+   ev.root.x = x, ev.root.y = y;
+   _e_shelf_cb_mouse_in(es, ECORE_EVENT_MOUSE_MOVE, &ev);
+   if (es->autohide_timer) ecore_timer_del(es->autohide_timer);
+   es->autohide_timer = NULL;
+   return EINA_FALSE;
+}
+
+static Eina_Bool
 _e_shelf_cb_mouse_in(void *data, int type, void *event)
 {
    E_Shelf *es;
@@ -1953,6 +1972,13 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
                          (E_INSIDE(ev->root.x, ev->root.y, es->x - 2, es->y - 2, es->w + 4, es->h + 4)) ||
                          (E_INSIDE(ev->root.x, ev->root.y, es->x + 2, es->y + 2, es->w + 4, es->h + 4)))
                         );
+             if (inside && es->popup)
+               {
+                  if (es->autohide_timer)
+                    ecore_timer_reset(es->autohide_timer);
+                  else
+                    es->autohide_timer = ecore_timer_add(0.5, (Ecore_Task_Cb)_e_shelf_cb_mouse_move_autohide_fuck_systray, es);
+               }
           }
         if (inside)
           {
