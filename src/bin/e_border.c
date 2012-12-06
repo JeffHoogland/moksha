@@ -4763,9 +4763,12 @@ e_border_resize_limit(E_Border *bd,
                       int *h)
 {
    double a;
+   Eina_Bool inc_h;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+
+   inc_h = (*h - bd->h > 0);
    *w -= bd->client_inset.l + bd->client_inset.r;
    *h -= bd->client_inset.t + bd->client_inset.b;
    if (*h < 1) *h = 1;
@@ -4783,7 +4786,11 @@ e_border_resize_limit(E_Border *bd,
         if ((bd->client.icccm.min_aspect != 0.0) &&
             (a < bd->client.icccm.min_aspect))
           {
-             th = tw / bd->client.icccm.max_aspect;
+             if (inc_h)
+               tw = th * bd->client.icccm.min_aspect;
+             else
+               th = tw / bd->client.icccm.max_aspect;
+             *w = tw + bd->client.icccm.base_w;
              *h = th + bd->client.icccm.base_h;
           }
         else if ((bd->client.icccm.max_aspect != 0.0) &&
@@ -4798,7 +4805,12 @@ e_border_resize_limit(E_Border *bd,
         a = (double)*w / (double)*h;
         if ((bd->client.icccm.min_aspect != 0.0) &&
             (a < bd->client.icccm.min_aspect))
-          *h = *w / bd->client.icccm.min_aspect;
+          {
+             if (inc_h)
+               *w = *h * bd->client.icccm.min_aspect;
+             else
+               *h = *w / bd->client.icccm.min_aspect;
+          }
         else if ((bd->client.icccm.max_aspect != 0.0) &&
                  (a > bd->client.icccm.max_aspect))
           *w = *h * bd->client.icccm.max_aspect;
