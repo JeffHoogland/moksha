@@ -52,3 +52,91 @@ group { name: "e/widgets/configure/main";
       }
    }
 }
+
+group { name: "e/modules/conf/main";
+   images.image: "button_normal.png" COMP;
+   images.image: "button_clicked.png" COMP;
+   images.image: "spanner_inset.png" COMP;
+   images.image: "spanner_hilight.png" COMP;
+   images.image: "spanner_glow.png" COMP;
+   min: 16 16;
+   max: 80 80;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -1 0;
+            rel2.offset: 0 1;
+            fill.smooth: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      part { name: "spanner_hilight"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 0 1;
+            rel1.to: "spanner";
+            rel2.offset: -1 0;
+            rel2.to: "spanner";
+            image.normal: "spanner_hilight.png";
+         }
+      }
+      part { name: "spanner"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 4 4;
+            rel2.offset: -5 -5;
+            image.normal: "spanner_inset.png";
+         }
+      }
+      part { name: "spanner_glow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.to: "spanner";
+            rel2.to: "spanner";
+            image.normal: "spanner_glow.png";
+            visible: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "spanner_glow";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,conf" "";
+      }
+      program {
+         signal: "mouse,in"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "spanner_glow";
+      }
+      program {
+         signal: "mouse,out"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "spanner_glow";
+      }
+   }
+}

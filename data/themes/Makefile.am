@@ -259,6 +259,9 @@ img/slider_run_bevel_horiz.png \
 img/slider_run_bevel_vert.png \
 img/slot_horiz_bottom.png \
 img/slot_horiz_top.png \
+img/spanner_glow.png \
+img/spanner_hilight.png \
+img/spanner_inset.png \
 img/speaker.png \
 img/speaker_shadow.png \
 img/sym_check_alum.png \
