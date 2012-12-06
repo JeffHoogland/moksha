@@ -235,6 +235,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                     e_menu_item_label_set(mi, _("Minimum Speed"));
                   else if (!strcmp(l->data, "performance"))
                     e_menu_item_label_set(mi, _("Maximum Speed"));
+                  else
+                    e_menu_item_label_set(mi, l->data);
                   e_menu_item_radio_set(mi, 1);
                   e_menu_item_radio_group_set(mi, 1);
                   if (!strcmp(cpufreq_config->status->cur_governor, l->data))
@@ -269,6 +271,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                     e_menu_item_label_set(mi, _("Minimum Speed"));
                   else if (!strcmp(l->data, "performance"))
                     e_menu_item_label_set(mi, _("Maximum Speed"));
+                  else
+                    e_menu_item_label_set(mi, l->data);
 
                   e_menu_item_radio_set(mi, 1);
                   e_menu_item_radio_group_set(mi, 1);
