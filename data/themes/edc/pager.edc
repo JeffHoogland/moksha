@@ -71,7 +71,7 @@ group { name: "e/modules/pager/desk";
    images.image: "mini_blue_glow_arrow_2.png" COMP;
    images.image: "mini_blue_glow_arrow_3.png" COMP;
    parts {
-      part { name: "base"; mouse_events: 0;
+      part { name: "base";
          description { state: "default" 0.0;
             image.normal: "vgrad_med_darker.png";
             rel1.to: "inset";
