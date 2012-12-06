@@ -229,6 +229,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                     e_menu_item_label_set(mi, _("Automatic"));
                   else if (!strcmp(l->data, "conservative"))
                     e_menu_item_label_set(mi, _("Lower Power Automatic"));
+                  else if (!strcmp(l->data, "interactive"))
+                    e_menu_item_label_set(mi, _("Automatic Interactive"));
                   else if (!strcmp(l->data, "powersave"))
                     e_menu_item_label_set(mi, _("Minimum Speed"));
                   else if (!strcmp(l->data, "performance"))
@@ -261,6 +263,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                     e_menu_item_label_set(mi, _("Automatic"));
                   else if (!strcmp(l->data, "conservative"))
                     e_menu_item_label_set(mi, _("Lower Power Automatic"));
+                  else if (!strcmp(l->data, "interactive"))
+                    e_menu_item_label_set(mi, _("Automatic Interactive"));
                   else if (!strcmp(l->data, "powersave"))
                     e_menu_item_label_set(mi, _("Minimum Speed"));
                   else if (!strcmp(l->data, "performance"))
@@ -964,6 +968,8 @@ _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event)
         if (!strcmp(l->data, "conservative"))
           has_conservative = EINA_TRUE;
         else if (!strcmp(l->data, "powersave"))
+          has_powersave = EINA_TRUE;
+        else if (!strcmp(l->data, "interactive"))
           has_powersave = EINA_TRUE;
      }
 
