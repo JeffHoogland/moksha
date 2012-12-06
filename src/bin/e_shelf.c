@@ -1848,6 +1848,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
         if (es->zone != ev->zone) return ECORE_CALLBACK_PASS_ON;
         if (!_e_shelf_on_current_desk(es, ev)) return ECORE_CALLBACK_PASS_ON;
 
+        ev->x -= es->zone->x, ev->y -= es->zone->y;
         switch (es->gadcon->orient)
           {
            case E_GADCON_ORIENT_LEFT:
@@ -1943,12 +1944,16 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
          */
         inside = (es->popup && ((ev->event_window == es->popup->evas_win)));
         if (!inside)
-          inside = (
-                    (E_INSIDE(ev->root.x, ev->root.y, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4)) &&
-                    ((E_INSIDE(ev->root.x, ev->root.y, es->x, es->y, es->w, es->h)) ||
-                    (E_INSIDE(ev->root.x, ev->root.y, es->x - 2, es->y - 2, es->w + 4, es->h + 4)) ||
-                    (E_INSIDE(ev->root.x, ev->root.y, es->x + 2, es->y + 2, es->w + 4, es->h + 4)))
-                   );
+          {
+             inside = E_INSIDE(ev->root.x, ev->root.y, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4);
+             ev->root.x -= es->zone->x, ev->root.y -= es->zone->y;
+             if (inside)
+               inside = (
+                         ((E_INSIDE(ev->root.x, ev->root.y, es->x, es->y, es->w, es->h)) ||
+                         (E_INSIDE(ev->root.x, ev->root.y, es->x - 2, es->y - 2, es->w + 4, es->h + 4)) ||
+                         (E_INSIDE(ev->root.x, ev->root.y, es->x + 2, es->y + 2, es->w + 4, es->h + 4)))
+                        );
+          }
         if (inside)
           {
              if (es->hidden || (!es->toggle))
