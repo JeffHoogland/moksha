@@ -956,7 +956,7 @@ e_border_desk_set(E_Border *bd,
        (bd->client.e.state.profile.use))
      {
         if (bd->client.e.state.profile.wait_for_done) return;
-        if (strcmp(bd->client.e.state.profile.name, desk->window_profile) != 0)
+        if (e_util_strcmp(bd->client.e.state.profile.name, desk->window_profile))
           {
              ecore_x_e_window_profile_change_request_send(bd->client.win,
                                                           desk->window_profile);
