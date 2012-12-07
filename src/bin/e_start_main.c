@@ -473,7 +473,7 @@ main(int argc, char **argv)
 
 #ifdef HAVE_SYS_PTRACE_H
                             if (!really_know)
-                              r = ptrace(PTRACE_GETSIGINFO, child, NULL, &sig);
+                              r = ptrace(PT_GETSIGINFO, child, NULL, &sig);
 #endif
                             back = r == 0 &&
                               sig.si_signo != SIGTRAP ? sig.si_signo : 0;
