@@ -365,7 +365,7 @@ _e_qa_entry_relaunch_setup(E_Quick_Access_Entry *entry)
         entry->dia = dia = e_dialog_new(NULL, "E", "_quickaccess_cmd_dialog");
 
         snprintf(buf, sizeof(buf), "%s<br>%s<br>%s<br>%s<br>%s", _("The selected window created with name:"),
-                 entry->name, _("and class:"), entry->class, _("could not be found in the quicklaunch app database<br"
+                 entry->name, _("and class:"), entry->class, _("could not be found in the Quickaccess app database<br"
                                                                "This means that either the app is unknown to us<br>"
                                                                "or it is not intended for use with this option.<br>"
                                                                "Please choose an action to take:"));
