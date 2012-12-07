@@ -224,6 +224,8 @@ _mixer_popup_update(E_Mixer_Instance *inst)
 {
    E_Mixer_Channel_State *state;
 
+   if (!inst->popup) return;
+
    state = &inst->mixer_state;
 
    if (inst->ui.left)
