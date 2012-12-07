@@ -545,13 +545,18 @@ e_mixer_pulse_set_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int lef
    n = pulse_sink_channels_count((void *)self);
    for (x = 0; x < n; x++)
      {
+        double vol;
+
+        vol = lround(pulse_sink_channel_volume_get(self, x));
         if (x == 0)
           {
-             id |= pulse_sink_channel_volume_set(conn, (void *)self, x, left);
+             if (vol != left)
+               id |= pulse_sink_channel_volume_set(conn, (void *)self, x, left);
           }
         else if (x == 1)
           {
-             id |= pulse_sink_channel_volume_set(conn, (void *)self, x, right);
+             if (vol != right)
+               id |= pulse_sink_channel_volume_set(conn, (void *)self, x, right);
           }
      }
 #endif
