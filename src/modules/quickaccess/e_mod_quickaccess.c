@@ -803,7 +803,7 @@ _e_qa_bd_menu_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_item_callback_set(mi, _e_qa_bd_menu_jump, entry);
 
    /* can't set relaunch for internal E dialogs; safety #1 */
-   if (strcmp(entry->name, "E"))
+   if (entry->name && strcmp(entry->name, "E"))
      {
         mi = e_menu_item_new(subm);
         e_menu_item_check_set(mi, 1);
