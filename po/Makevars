@@ -11,6 +11,7 @@ top_builddir = ..
 XGETTEXT_OPTIONS = --keyword=_ --keyword=d_:1 --keyword=P_:1,2 \
 	--keyword=dP_:1,2 --keyword=N_ --keyword=NP_:1,2 \
 	--keyword=EVRY_PLUGIN_BASE:1 --keyword=EVRY_ACTION_NEW:1 \
+	--keyword=ACTION_NEW:1 \
 	--from-code=UTF-8 --foreign-user
 
 # This is the copyright holder that gets inserted into the header of the

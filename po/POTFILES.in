@@ -212,6 +212,7 @@ src/modules/everything/evry_gadget.c
 src/modules/everything/evry_plug_actions.c
 src/modules/everything/evry_plug_aggregator.c
 src/modules/everything/evry_plug_clipboard.c
+src/modules/everything/evry_plugin.c
 src/modules/everything/evry_view_help.c
 src/modules/everything/evry_util.c
 src/modules/everything/evry_plug_apps.c
