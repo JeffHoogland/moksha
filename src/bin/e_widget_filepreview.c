@@ -524,7 +524,7 @@ _e_wid_fprev_preview_file(E_Widget_Data *wd)
                                  if (rdonly) 
                                    e_widget_entry_text_set(wd->o_preview_perms_entry, _("Read Only"));
                                  else
-                                   e_widget_entry_text_set(wd->o_preview_perms_entry, _("Read / Write"));
+                                   e_widget_entry_text_set(wd->o_preview_perms_entry, _("Read-Write"));
                               }
                             else
                               e_widget_entry_text_set(wd->o_preview_perms_entry, _("Unmounted"));

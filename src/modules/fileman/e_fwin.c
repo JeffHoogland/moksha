@@ -246,7 +246,7 @@ e_fwin_init(void)
 {
    tdesktop = e_util_terminal_desktop_get();
    if (!tdesktop) return 1;
-   dir_handler = e_fm2_mime_handler_new(_("Open Terminal Here"),
+   dir_handler = e_fm2_mime_handler_new(_("Open Terminal here"),
                                    tdesktop->icon,
                                    _e_fwin_cb_dir_handler, NULL,
                                    _e_fwin_cb_dir_handler_test, NULL);
