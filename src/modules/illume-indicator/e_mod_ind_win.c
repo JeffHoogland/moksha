@@ -94,7 +94,7 @@ e_mod_ind_win_new(E_Zone *zone)
    /*                                    _e_mod_ind_win_cb_size_request, iwin); */
    e_gadcon_frame_request_callback_set(iwin->gadcon, 
                                        _e_mod_ind_win_cb_frame_request, iwin);
-   e_gadcon_orient(iwin->gadcon, E_GADCON_ORIENT_FLOAT);
+   e_gadcon_orient(iwin->gadcon, E_GADCON_ORIENT_TOP);
    e_gadcon_zone_set(iwin->gadcon, zone);
    e_gadcon_ecore_evas_set(iwin->gadcon, iwin->win->ecore_evas);
 
