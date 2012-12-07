@@ -111,21 +111,18 @@ _messsage_read_send(Ecore_X_Window client_win)
                                  x, y, 0);
 
 #if DEBUG_INFO
-   char *ret;
+   Eina_List *l;
+   Cover *cov;
    Eina_Strbuf *buf;
 
    buf = eina_strbuf_new();
    eina_strbuf_append_printf(buf, "read x:%d, y:%d", x, y);
-   ret = eina_strbuf_string_steal(buf);
-   eina_strbuf_free(buf);
-
-   Eina_List *l;
-   Cover *cov;
 
    EINA_LIST_FOREACH(covers, l, cov)
      {
-       INFO(cov, ret);
+       INFO(cov, eina_strbuf_string_get(buf));
      }
+   eina_strbuf_free(buf);
 #endif
 }
 
