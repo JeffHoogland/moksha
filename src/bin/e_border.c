@@ -3007,6 +3007,7 @@ e_border_fullscreen(E_Border *bd,
                     E_Fullscreen policy)
 {
    E_Event_Border_Fullscreen *ev;
+   int x, y, w, h;
 
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
@@ -3022,15 +3023,31 @@ e_border_fullscreen(E_Border *bd,
      {
         bd->pre_res_change.valid = 0;
 
-        bd->saved.x = bd->x - bd->zone->x;
-        bd->saved.y = bd->y - bd->zone->y;
-        bd->saved.w = bd->client.w;
-        bd->saved.h = bd->client.h;
+        if (bd->maximized)
+          {
+             x = bd->saved.x;
+             y = bd->saved.y;
+             w = bd->saved.w;
+             h = bd->saved.h;
+          }
+        else
+          {
+             bd->saved.x = bd->x - bd->zone->x;
+             bd->saved.y = bd->y - bd->zone->y;
+             bd->saved.w = bd->client.w;
+             bd->saved.h = bd->client.h;
+          }
         bd->saved.maximized = bd->maximized;
         bd->saved.zone = bd->zone->num;
 
         if (bd->maximized)
-          e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+          {
+             e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+             bd->saved.x = x;
+             bd->saved.y = y;
+             bd->saved.w = w;
+             bd->saved.h = h;
+          }
         e_hints_window_size_set(bd);
 
         bd->client_inset.l = 0;
