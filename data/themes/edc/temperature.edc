@@ -43,9 +43,10 @@ group { name: "e/modules/temperature/main";
          clip_to: "fade_clip";
          description { state: "default" 0.0;
             color: 255 255 255 0;
+            color2: 0 0 0 255;
             color3: 0 0 0 0;
             color_class: "module_label";
-            text { font: "Sans"; size: 6;
+            text { font: "Sans"; size: 10;
                min: 1 1;
                text_class: "module_small";
             }
