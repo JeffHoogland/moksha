@@ -489,7 +489,7 @@ _e_qa_toggle_cb(E_Object *obj __UNUSED__, const char *params)
      {
         if (entry->help_watch)
           _e_qa_help_activate_hook(entry);
-        if ((!entry->config.jump) && (entry->border->focused || entry->config.hide_when_behind))
+        if ((!entry->config.jump) && (entry->border->visible || (entry->border->client.icccm.accepts_focus && entry->border->focused) || entry->config.hide_when_behind))
           {
              _e_qa_border_deactivate(entry);
              return;
@@ -610,7 +610,7 @@ _e_qa_entry_transient_new(E_Border *bd)
    E_Quick_Access_Entry *entry;
    char buf[8192];
 
-   snprintf(buf, sizeof(buf), "%s:%u:%s", bd->client.icccm.name, bd->client.win, bd->client.icccm.class);
+   snprintf(buf, sizeof(buf), "%s:%u:%s", bd->client.icccm.name ?: "", bd->client.win, bd->client.icccm.class ?: "");
 
    entry = e_qa_entry_new(buf, EINA_TRUE);
    entry->win = bd->client.win;
