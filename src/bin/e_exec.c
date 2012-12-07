@@ -578,7 +578,12 @@ _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
    E_Exec_Instance *inst;
 
    ev = event;
-   if (!ev->exe) return ECORE_CALLBACK_PASS_ON;
+   if (!ev->exe)
+     {
+        inst = e_exec_startup_id_pid_instance_find(-1, ev->pid);
+        if (!inst) return ECORE_CALLBACK_PASS_ON;
+        ev->exe = inst->exe;
+     }
 //   if (ecore_exe_tag_get(ev->exe)) printf("  tag %s\n", ecore_exe_tag_get(ev->exe));
    if (!(ecore_exe_tag_get(ev->exe) &&
          (!strcmp(ecore_exe_tag_get(ev->exe), "E/exec"))))
