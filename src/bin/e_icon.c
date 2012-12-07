@@ -11,22 +11,22 @@ struct _E_Smart_Data
    Evas_Coord    x, y, w, h;
    Evas_Object  *obj;
    Evas_Object  *eventarea;
-   Ecore_Timer  *timer, *fdo_reload_timer;
+   const char   *fdo;
    Ecore_Timer  *guessing_animation;
+   Ecore_Timer  *timer, *fdo_reload_timer;
+#ifdef USE_ICON_CACHE
+   const char   *file;
+   Cache_Item   *ci;
+#endif
    double        last_resize;
    int           size;
    int           frame, frame_count;
-   const char   *fdo;
    unsigned char fill_inside : 1;
    unsigned char scale_up : 1;
    unsigned char preload : 1;
    unsigned char loading : 1;
    unsigned char animated : 1;
    Eina_Bool edje : 1;
-#ifdef USE_ICON_CACHE
-   const char   *file;
-   Cache_Item   *ci;
-#endif
 };
 
 struct _Cache_Item
