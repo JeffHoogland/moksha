@@ -124,6 +124,7 @@ _mixer_callback_del(E_Mixer_System *self,
 
    snd_mixer_set_callback_private(self, NULL);
 
+   memset(desc, 0, sizeof(*desc));
    free(desc);
 
    return 1;
