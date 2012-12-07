@@ -879,11 +879,17 @@ e_modapi_init(E_Module *m)
 
 #ifdef HAVE_SYS_TIMERFD_H
    int timer_fd;
+   int flags;
 
    /* on old systems, flags must be 0, so we'll play nice and do it always */
    timer_fd = timerfd_create(CLOCK_REALTIME, 0);
    if (timer_fd < 0) return m;
-   fcntl(timer_fd, F_SETFL, O_NONBLOCK | FD_CLOEXEC);
+   fcntl(timer_fd, F_SETFL, O_NONBLOCK);
+
+   flags = fcntl(timer_fd, F_GETFD);
+   flags |= FD_CLOEXEC;   
+   fcntl(timer_fd, F_SETFD, flags);
+
    timerfd_handler = ecore_main_fd_handler_add(timer_fd, ECORE_FD_READ, _clock_fd_update, NULL, NULL, NULL);
 #endif
    return m;
