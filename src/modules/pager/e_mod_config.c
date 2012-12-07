@@ -141,7 +141,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ow = e_widget_check_add(evas, _("Show popup on desktop change"),
                            &(cfdata->popup.show));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Show popup on urgent windows"),
+   ow = e_widget_check_add(evas, _("Show popup for urgent windows"),
                            &(cfdata->popup.urgent_show));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
@@ -262,7 +262,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    /* Urgent Page */
    ol = e_widget_list_add(evas, 0, 0);
-   uc = e_widget_check_add(evas, _("Show popup on urgent window"),
+   uc = e_widget_check_add(evas, _("Show popup for urgent window"),
                            &(cfdata->popup.urgent_show));
    e_widget_list_object_append(ol, uc, 1, 0, 0.5);
 
