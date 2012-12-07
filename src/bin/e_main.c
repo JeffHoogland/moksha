@@ -964,19 +964,16 @@ main(int argc, char **argv)
    TS("E_Update Init Done");
    _e_main_shutdown_push(e_update_shutdown);
 
-   if (!after_restart)
+   if (e_config->show_splash)
+     e_init_status_set(_("Setup Desktop Environment"));
+   TS("E_Deskenv Init");
+   if (!e_deskenv_init())
      {
-        if (e_config->show_splash)
-          e_init_status_set(_("Setup Desktop Environment"));
-        TS("E_Deskenv Init");
-        if (!e_deskenv_init())
-          {
-             e_error_message_show(_("Enlightenment cannot initialize its desktop environment.\n"));
-             _e_main_shutdown(-1);
-          }
-        TS("E_Deskenv Init Done");
-        _e_main_shutdown_push(e_deskenv_shutdown);
+        e_error_message_show(_("Enlightenment cannot initialize its desktop environment.\n"));
+        _e_main_shutdown(-1);
      }
+   TS("E_Deskenv Init Done");
+   _e_main_shutdown_push(e_deskenv_shutdown);
 
    if (e_config->show_splash)
      e_init_status_set(_("Setup File Ordering"));
