@@ -25,6 +25,9 @@ static int next_can = 0;
 static Eina_List *handlers = NULL;
 static Eina_Bool got_desktops = EINA_FALSE;
 static Eina_Bool got_icons = EINA_FALSE;
+#if (EFREET_VERSION_MAJOR > 1) || (EFREET_VERSION_MINOR >= 8)
+static Eina_Bool xdg_error = EINA_FALSE;
+#endif
 static Eina_Bool need_xdg_desktops = EINA_FALSE;
 static Eina_Bool need_xdg_icons = EINA_FALSE;
 
@@ -238,6 +241,9 @@ e_wizard_dir_get(void)
 EAPI void
 e_wizard_xdg_desktops_reset(void)
 {
+#if (EFREET_VERSION_MAJOR > 1) || (EFREET_VERSION_MINOR >= 8)
+   if (xdg_error) return;
+#endif
    got_desktops = EINA_FALSE;
 }
 
@@ -442,8 +448,15 @@ _e_wizard_cb_next_page(void *data __UNUSED__)
 
 
 static Eina_Bool
-_e_wizard_cb_desktops_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
+_e_wizard_cb_desktops_update(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
 {
+#if (EFREET_VERSION_MAJOR > 1) || (EFREET_VERSION_MINOR >= 8)
+   Efreet_Event_Cache_Update *e;
+
+   e = ev;
+   xdg_error = !!e->error;
+
+#endif
    got_desktops = EINA_TRUE;
    if (_e_wizard_check_xdg())
      _e_wizard_next_xdg();
