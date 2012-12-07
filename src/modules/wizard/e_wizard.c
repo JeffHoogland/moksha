@@ -454,6 +454,7 @@ _e_wizard_cb_desktops_update(void *data __UNUSED__, int ev_type __UNUSED__, void
    Efreet_Event_Cache_Update *e;
 
    e = ev;
+   /* TODO: Tell user he should fix his dbus setup */
    xdg_error = !!e->error;
 
 #endif
