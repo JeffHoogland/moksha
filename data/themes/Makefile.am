@@ -180,6 +180,9 @@ img/holes_tiny_vert.png \
 img/holes_vert.png \
 img/hole_pixel.png \
 img/hole_tiny.png \
+img/home_glow.png \
+img/home_hilight.png \
+img/home_inset.png \
 img/horiz_bar_inset.png \
 img/horiz_glow_run.png \
 img/horizontal_separated_bar_glow.png \
@@ -195,6 +198,9 @@ img/inset_shadow.png \
 img/inset_shadow_tiny.png \
 img/img_example_1.png \
 img/img_example_2.png \
+img/kbd_glow.png \
+img/kbd_hilight.png \
+img/kbd_inset.png \
 img/knob_round_busy.png \
 img/knob_round_small_busy.png \
 img/knob_round_small_normal.png \
@@ -265,6 +271,15 @@ img/spanner_hilight.png \
 img/spanner_inset.png \
 img/speaker.png \
 img/speaker_shadow.png \
+img/split_h_glow.png \
+img/split_h_hilight.png \
+img/split_h_inset.png \
+img/split_none_glow.png \
+img/split_none_hilight.png \
+img/split_none_inset.png \
+img/split_v_glow.png \
+img/split_v_hilight.png \
+img/split_v_inset.png \
 img/sym_check_alum.png \
 img/sym_close_dark_normal.png \
 img/sym_close_dark_selected.png \
