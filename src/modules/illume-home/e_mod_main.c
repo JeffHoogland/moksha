@@ -618,7 +618,6 @@ _il_home_cb_border_del(void *data __UNUSED__, int type __UNUSED__, void *event)
      {
         if (exe->border == ev->border) 
           {
-             if (exe->exec) ecore_exe_free(exe->exec);
              exe->exec = NULL;
              if (exe->handle) e_busycover_pop(exe->cover, exe->handle);
              exe->handle = NULL;
