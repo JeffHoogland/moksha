@@ -1,15 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 #define HISTORY_MAX 8
-#define DEBUG_INFO 0
-
-#if DEBUG_INFO
-  #define INFO(cov, txt) \
-    evas_object_text_text_set(cov->text, txt); \
-    EINA_LOG_INFO("%s", txt)
-#else
-  #define INFO(cov, txt) EINA_LOG_INFO("%s", txt)
-#endif
+#define DEBUG_INFO 1
 
 static E_Config_DD *conf_edd = NULL;
 Config *access_config = NULL;
@@ -30,6 +22,32 @@ typedef struct
    Eina_Bool       two_finger_down : 1;
    Eina_Bool       mouse_double_down : 1;
 } Cover;
+
+#if DEBUG_INFO
+  static Ecore_Timer    *dbg_timer = NULL;
+  static Eina_Bool
+  _reset_text(void *data)
+  {
+     Cover *cov = data;
+     if(!cov) return EINA_FALSE;
+
+     ecore_timer_del(dbg_timer);
+     dbg_timer = NULL;
+     evas_object_text_text_set(cov->text, "Screen Reader Mode");
+     return EINA_FALSE;
+  }
+  #define INFO(cov, txt) \
+    evas_object_text_text_set(cov->text, txt); \
+    EINA_LOG_INFO("%s", txt); \
+    if (dbg_timer) \
+      { \
+         ecore_timer_del(dbg_timer); \
+         dbg_timer = NULL; \
+      } \
+     dbg_timer = ecore_timer_add(1.0, _reset_text, cov);
+#else
+  #define INFO(cov, txt) EINA_LOG_INFO("%s", txt)
+#endif
 
 typedef struct
 {
@@ -81,6 +99,36 @@ _mouse_win_fake_tap(Cover *cov, Ecore_Event_Mouse_Button *ev)
    ecore_x_mouse_out_send(inwin, x, y);
 }
 
+static void
+_messsage_read_send(Ecore_X_Window client_win)
+{
+   int x, y;
+   ecore_x_pointer_xy_get(client_win, &x, &y);
+   ecore_x_client_message32_send(client_win, ECORE_X_ATOM_E_ILLUME_ACCESS_CONTROL,
+                                 ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
+                                 client_win,
+                                 ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ,
+                                 x, y, 0);
+
+#if DEBUG_INFO
+   char *ret;
+   Eina_Strbuf *buf;
+
+   buf = eina_strbuf_new();
+   eina_strbuf_append_printf(buf, "read x:%d, y:%d", x, y);
+   ret = eina_strbuf_string_steal(buf);
+   eina_strbuf_free(buf);
+
+   Eina_List *l;
+   Cover *cov;
+
+   EINA_LIST_FOREACH(covers, l, cov)
+     {
+       INFO(cov, ret);
+     }
+#endif
+}
+
 static Eina_Bool
 _mouse_longpress(void *data)
 {
@@ -98,12 +146,7 @@ _mouse_longpress(void *data)
         cov->longpressed = EINA_TRUE;
         INFO(cov, "longpress");
 
-        if (bd)
-          ecore_x_client_message32_send(bd->client.win, ECORE_X_ATOM_E_ILLUME_ACCESS_CONTROL,
-                                        ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
-                                        bd->client.win,
-                                        ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ,
-                                        cov->x, cov->y, 0);
+        if (bd) _messsage_read_send(bd->client.win);
      }
    return EINA_FALSE;
 }
@@ -400,12 +443,7 @@ _cb_mouse_move(void    *data __UNUSED__,
                       !(cov->two_finger_down) && ev->multi.device == multi_device[0])
                {
                   INFO(cov, "read");
-                  if (bd)
-                    ecore_x_client_message32_send(bd->client.win, ECORE_X_ATOM_E_ILLUME_ACCESS_CONTROL,
-                                                  ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
-                                                  bd->client.win,
-                                                  ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_READ,
-                                                  ev->x, ev->y, 0);
+                  if (bd) _messsage_read_send(bd->client.win);
                }
              else if (cov->mouse_double_down && // client message for moving is available only after long press is detected
                       !(cov->two_finger_down) && ev->multi.device == multi_device[0])
@@ -514,7 +552,7 @@ _cover_new(E_Zone *zone)
    cov->text = evas_object_text_add(e);
    evas_object_text_style_set(cov->text, EVAS_TEXT_STYLE_PLAIN);
    evas_object_text_font_set(cov->text, "DejaVu", 14);
-   evas_object_text_text_set(cov->text, "access module");
+   INFO(cov, "Screen Reader Mode");
 
    evas_object_color_set(cov->text, 0, 0, 0, 255);
    evas_object_resize(cov->text, (zone->w / 8), 20);
@@ -529,6 +567,9 @@ _cover_new(E_Zone *zone)
 #endif
 
    ecore_x_input_multi_select(cov->win);
+
+   ecore_x_icccm_title_set(cov->win, "access-screen-reader");
+   ecore_x_netwm_name_set(cov->win, "access-screen-reader");
 
    ecore_x_window_ignore_set(cov->win, 1);
    ecore_x_window_configure(cov->win,
