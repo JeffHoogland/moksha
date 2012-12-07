@@ -345,6 +345,7 @@ con(Pulse *conn, int type __UNUSED__, Ecore_Con_Event_Server_Add *ev)
 {
    int on = 1;
    int fd;
+   int flags;
 
    if (conn != ecore_con_server_data_get(ev->server)) return ECORE_CALLBACK_PASS_ON;
    INF("connected to %s", ecore_con_server_name_get(ev->server));
@@ -360,7 +361,12 @@ con(Pulse *conn, int type __UNUSED__, Ecore_Con_Event_Server_Add *ev)
    setsockopt(conn->fd, SOL_SOCKET, SO_PASSCRED, &on, sizeof(on));
 #endif
    setsockopt(conn->fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
-   fcntl(conn->fd, F_SETFL, O_NONBLOCK | FD_CLOEXEC);
+   fcntl(conn->fd, F_SETFL, O_NONBLOCK);
+
+   flags = fcntl(conn->fd, F_GETFD);
+   flags |= FD_CLOEXEC;
+   fcntl(conn->fd, F_SETFD, flags);
+
    conn->fdh = ecore_main_fd_handler_add(conn->fd, ECORE_FD_WRITE, (Ecore_Fd_Cb)fdh_func, conn, NULL, NULL);
    ecore_con_server_del(conn->svr);
    conn->svr = NULL;
