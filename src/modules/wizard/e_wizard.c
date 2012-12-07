@@ -455,7 +455,8 @@ _e_wizard_cb_desktops_update(void *data __UNUSED__, int ev_type __UNUSED__, void
 
    e = ev;
    /* TODO: Tell user he should fix his dbus setup */
-   xdg_error = !!e->error;
+   if ((e) && (e->error))
+     xdg_error = EINA_TRUE;
 
 #endif
    got_desktops = EINA_TRUE;

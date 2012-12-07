@@ -75,10 +75,18 @@ _e_startup_next_cb(void *data __UNUSED__)
 }
 
 static Eina_Bool
-_e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev __UNUSED__)
+_e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
 {
    char *buf;
+#if (EFREET_VERSION_MAJOR > 1) || (EFREET_VERSION_MINOR >= 8)
+   Efreet_Event_Cache_Update *e;
 
+   e = ev;
+   /* TODO: Tell user he should fix his dbus setup */
+   if ((e) && (e->error))
+     fprintf(stderr, "E: efreet couldn't build cache\n");
+
+#endif
    ecore_event_handler_del(desktop_cache_update_handler);
    buf = data;
    startup_apps = e_order_new(buf);
