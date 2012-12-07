@@ -1160,7 +1160,7 @@ _plugins_init(const Evry_API *api)
    evry->plugin_register(p, EVRY_PLUGIN_OBJECT, 1);
    _plugins = eina_list_append(_plugins, p);
 
-   p = EVRY_PLUGIN_BASE("Open With...", _module_icon, EVRY_TYPE_APP,
+   p = EVRY_PLUGIN_BASE("Open with...", _module_icon, EVRY_TYPE_APP,
                         _begin_mime, _finish_mime, _fetch_mime);
    p->config_path = eina_stringshare_ref(config_path);
    evry->plugin_register(p, EVRY_PLUGIN_ACTION, 1);
