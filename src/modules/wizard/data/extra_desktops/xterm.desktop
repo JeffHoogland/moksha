@@ -2,11 +2,13 @@
 Type=Application
 Name=XTerm
 GenericName=Terminal
+GenericName[ru]=Терминал
 Comment=Run commands in a shell
 Comment[es]=Ejecute comandos en una consola
 Comment[gl]=Execute comandos nunha consola
 Comment[it]=Esegue comandi in una shell
 Comment[pt]=Execução de comandos na consola
+Comment[ru]=Запуск команд в командной оболочке
 Exec=xterm
 Icon=xterm
 StartupWMClass=XTerm

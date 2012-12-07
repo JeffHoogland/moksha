@@ -1,11 +1,13 @@
 [Desktop Entry]
 Name=Root
+Name[ru]=Корневой каталог
 Comment=The Root Filesystem base
 Comment[es]=El sistema de archivos root
 Comment[fr]=Le système de fichiers à la base
 Comment[gl]=O sistema de ficheiros root
 Comment[it]=Il filesystem principale
 Comment[pt]=Sistema de ficheiros root
+Comment[ru]=Корень файловой системы
 Type=Link
 X-Enlightenment-Type=Mount
 URL=file:/
