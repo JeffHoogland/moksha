@@ -1788,8 +1788,10 @@ _check_moving_anims(const E_Border *bd, const Border_Extra *extra, int stack)
 
     /* move left */
     overlay = &_G.move_overlays[MOVE_LEFT];
-    if ((!_G.tinfo->conf->use_rows && stack > 0)
-    ||  (_G.tinfo->conf->use_rows && l->prev)) {
+    if ((_G.tinfo->conf->use_rows && l->prev)
+    || (!_G.tinfo->conf->use_rows && !_G.tinfo->stacks[TILING_MAX_STACKS -1]
+        && (bd != _G.tinfo->stacks[0]->data || _G.tinfo->stacks[0]->next)))
+    {
         if (overlay->popup) {
             Evas_Coord ew, eh;
 
@@ -1890,7 +1892,9 @@ _check_moving_anims(const E_Border *bd, const Border_Extra *extra, int stack)
     /* move up */
     overlay = &_G.move_overlays[MOVE_UP];
     if ((!_G.tinfo->conf->use_rows && l->prev)
-    ||  (_G.tinfo->conf->use_rows && stack > 0)) {
+    ||  (_G.tinfo->conf->use_rows && !_G.tinfo->stacks[TILING_MAX_STACKS -1]
+        && (bd != _G.tinfo->stacks[0]->data || _G.tinfo->stacks[0]->next)))
+    {
         if (overlay->popup) {
             Evas_Coord ew, eh;
 
@@ -2103,10 +2107,75 @@ _move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
     Border_Extra *extra;
     int stack;
     int i;
+    int nb_stacks;
 
     stack = get_stack(bd);
-    if (stack <= 0)
+    assert(stack >= 0);
+    nb_stacks = get_stack_count();
+
+    extra = eina_hash_find(_G.border_extras, &bd);
+    if (!extra) {
+        ERR("No extra for %p", bd);
         return;
+    }
+
+    if (stack == 0) {
+        int x, y, w, h;
+        int width = 0;
+
+        if (nb_stacks >= TILING_MAX_STACKS)
+            return;
+        if (_G.tinfo->stacks[0]->data == bd && !_G.tinfo->stacks[0]->next)
+            return;
+
+        EINA_LIST_REMOVE(_G.tinfo->stacks[0], bd);
+        for (i = TILING_MAX_STACKS; i -- > 0;) {
+            _G.tinfo->stacks[i] = _G.tinfo->stacks[i-1];
+        }
+        _G.tinfo->stacks[0] = NULL;
+        EINA_LIST_APPEND(_G.tinfo->stacks[0], bd);
+
+        e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
+
+        width = w / (nb_stacks + 1);
+        _G.tinfo->pos[0] = x;
+        _G.tinfo->size[0] = width;
+        extra->expected.x = x;
+        extra->expected.y = y;
+        extra->expected.w = width;
+        extra->expected.h = h;
+
+        w -= width;
+        x += width;
+
+        for (i = 1; i <= nb_stacks; i++) {
+            width = w / (nb_stacks + 1 - i);
+
+            _set_stack_geometry(i, x, width);
+
+            w -= width;
+            x += width;
+        }
+        _reorganize_stack(1);
+
+        _e_border_move_resize(bd,
+                              extra->expected.x,
+                              extra->expected.y,
+                              extra->expected.w,
+                              extra->expected.h);
+        _e_border_maximize(bd, E_MAXIMIZE_EXPAND | E_MAXIMIZE_VERTICAL);
+
+        if (nb_stacks + 1 > _G.tinfo->conf->nb_stacks) {
+            _G.tinfo->conf->nb_stacks = nb_stacks + 1;
+            e_config_save_queue();
+        }
+        if (check_moving_anims)
+            _check_moving_anims(bd, extra, 0);
+        ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
+                             extra->expected.x + extra->expected.w/2,
+                             extra->expected.y + extra->expected.h/2);
+        return;
+    }
 
 
     EINA_LIST_REMOVE(_G.tinfo->stacks[stack], bd);
@@ -2114,12 +2183,8 @@ _move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
 
     if (!_G.tinfo->stacks[stack]) {
         int x, y, w, h;
-        int width = 0;
-        int nb_stacks;
 
         /* Remove stack */
-        nb_stacks = get_stack_count();
-
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
         for (i = stack; i < nb_stacks; i++) {
@@ -2127,8 +2192,9 @@ _move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
         }
         _G.tinfo->stacks[nb_stacks] = NULL;
         for (i = 0; i < nb_stacks; i++) {
+            int width;
 
-            width = w / (nb_stacks - i);
+            width = w / (nb_stacks - 1 - i);
 
             _set_stack_geometry(i, x, width);
 
@@ -2139,12 +2205,6 @@ _move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
     } else {
         _reorganize_stack(stack);
         _reorganize_stack(stack - 1);
-    }
-
-    extra = eina_hash_find(_G.border_extras, &bd);
-    if (!extra) {
-        ERR("No extra for %p", bd);
-        return;
     }
 
     if (check_moving_anims)
@@ -2369,10 +2429,75 @@ _move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
     Border_Extra *extra;
     int stack;
     int i;
+    int nb_stacks;
 
     stack = get_stack(bd);
-    if (stack <= 0)
+    assert(stack >= 0);
+    nb_stacks = get_stack_count();
+
+    extra = eina_hash_find(_G.border_extras, &bd);
+    if (!extra) {
+        ERR("No extra for %p", bd);
         return;
+    }
+
+    if (stack <= 0) {
+        int x, y, w, h;
+        int height = 0;
+
+        if (nb_stacks >= TILING_MAX_STACKS)
+            return;
+        if (_G.tinfo->stacks[0]->data == bd && !_G.tinfo->stacks[0]->next)
+            return;
+
+        EINA_LIST_REMOVE(_G.tinfo->stacks[0], bd);
+        for (i = TILING_MAX_STACKS; i -- > 0;) {
+            _G.tinfo->stacks[i] = _G.tinfo->stacks[i-1];
+        }
+        _G.tinfo->stacks[0] = NULL;
+        EINA_LIST_APPEND(_G.tinfo->stacks[0], bd);
+
+        e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
+
+        height = h / (nb_stacks + 1);
+        _G.tinfo->pos[0] = y;
+        _G.tinfo->size[0] = height;
+        extra->expected.x = x;
+        extra->expected.y = y;
+        extra->expected.w = w;
+        extra->expected.h = height;
+
+        h -= height;
+        y += height;
+
+        for (i = 1; i <= nb_stacks; i++) {
+            height = h / (nb_stacks + 1 - i);
+
+            _set_stack_geometry(i, y, height);
+
+            h -= height;
+            y += height;
+        }
+        _reorganize_stack(1);
+
+        _e_border_move_resize(bd,
+                              extra->expected.x,
+                              extra->expected.y,
+                              extra->expected.w,
+                              extra->expected.h);
+        _e_border_maximize(bd, E_MAXIMIZE_EXPAND | E_MAXIMIZE_VERTICAL);
+
+        if (nb_stacks + 1 > _G.tinfo->conf->nb_stacks) {
+            _G.tinfo->conf->nb_stacks = nb_stacks + 1;
+            e_config_save_queue();
+        }
+        if (check_moving_anims)
+            _check_moving_anims(bd, extra, 0);
+        ecore_x_pointer_warp(_G.tinfo->desk->zone->container->win,
+                             extra->expected.x + extra->expected.w/2,
+                             extra->expected.y + extra->expected.h/2);
+        return;
+    }
 
 
     EINA_LIST_REMOVE(_G.tinfo->stacks[stack], bd);
@@ -2380,11 +2505,8 @@ _move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
 
     if (!_G.tinfo->stacks[stack]) {
         int x, y, w, h;
-        int nb_stacks;
 
         /* Remove stack */
-        nb_stacks = get_stack_count();
-
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
         for (i = stack; i < nb_stacks; i++) {
@@ -2392,9 +2514,9 @@ _move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
         }
         _G.tinfo->stacks[nb_stacks] = NULL;
         for (i = 0; i < nb_stacks; i++) {
-            int height = 0;
+            int height;
 
-            height = h / (nb_stacks - i);
+            height = h / (nb_stacks - 1 - i);
 
             _set_stack_geometry(i, y, height);
 
@@ -2405,12 +2527,6 @@ _move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
     } else {
         _reorganize_stack(stack);
         _reorganize_stack(stack - 1);
-    }
-
-    extra = eina_hash_find(_G.border_extras, &bd);
-    if (!extra) {
-        ERR("No extra for %p", bd);
-        return;
     }
 
     if (check_moving_anims)
