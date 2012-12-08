@@ -113,7 +113,6 @@ group { name: "e/modules/clock/digital";
          
          date(year, month, day, yearday, weekday, hour, minute, second);
          dosec = get_int(do_seconds);
-         dosec = 1;
          if (dosec) {
             v = round(second);
             tim = timer(1.0 - (second - v), "clock_cb", 1);

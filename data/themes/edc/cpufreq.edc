@@ -153,7 +153,7 @@ group { name: "e/modules/cpufreq/main";
             
             ani = get_int(cur_freq_anim);
             if (ani > 0) cancel_anim(ani);
-            ani = anim(1.0, "slide_cur_freq", 0);
+            ani = anim(0.25, "slide_cur_freq", 0);
             set_int(cur_freq_anim, ani);
             
             f = getarg(2);
