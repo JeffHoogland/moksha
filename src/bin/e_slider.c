@@ -464,7 +464,10 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj __UNUSED__, void
    Evas_Coord x, y, w, h;
    E_Smart_Data *sd = data;
    double pos;
+   static int in_md = 0;
 
+   if (in_md > 0) return;
+   in_md++;
    evas_object_geometry_get(sd->event, &x, &y, &w, &h);
    if (sd->horizontal)
      {
@@ -487,6 +490,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj __UNUSED__, void
    edje_object_message_signal_process(sd->edje_obj); /* really needed or go in infinite loop */
    evas_event_feed_mouse_cancel(e, 0, NULL);
    evas_event_feed_mouse_down(e, 1, EVAS_BUTTON_NONE, ev->timestamp, NULL);
+   in_md--;
 }
 
 static void
