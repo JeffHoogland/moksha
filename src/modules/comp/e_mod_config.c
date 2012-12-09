@@ -1320,16 +1320,16 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
    of = e_widget_frametable_add(evas, _("Corner"), 0);
    e_widget_frametable_content_align_set(of, 0.5, 0.5);
    rg = e_widget_radio_group_new(&(cfdata->fps_corner));
-   ob = e_widget_radio_icon_add(evas, "Top Left", "preferences-position-top-left",
+   ob = e_widget_radio_icon_add(evas, _("Top Left"), "preferences-position-top-left",
                                 24, 24, 0, rg);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, "Top Right", "preferences-position-top-right",
+   ob = e_widget_radio_icon_add(evas, _("Top Right"), "preferences-position-top-right",
                                 24, 24, 1, rg);
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, "Bottom Left", "preferences-position-bottom-left",
+   ob = e_widget_radio_icon_add(evas, _("Bottom Left"), "preferences-position-bottom-left",
                                 24, 24, 2, rg);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
-   ob = e_widget_radio_icon_add(evas, "Bottom Right", "preferences-position-bottom-right",
+   ob = e_widget_radio_icon_add(evas, _("Bottom Right"), "preferences-position-bottom-right",
                                 24, 24, 3, rg);
    e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);

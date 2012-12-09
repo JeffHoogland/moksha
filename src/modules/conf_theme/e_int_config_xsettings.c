@@ -55,7 +55,7 @@ e_int_config_xsettings(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply;
    v->basic.check_changed = _basic_check_changed;
 
-   cfd = e_config_dialog_new(con, _("GTK Application Theme Settings"),
+   cfd = e_config_dialog_new(con, _("Application Theme Settings"),
                              "E", "appearance/xsettings",
                              "preferences-desktop-theme", 0, v, NULL);
    return cfd;

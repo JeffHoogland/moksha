@@ -30,10 +30,10 @@ wizard_page_show(E_Wizard_Page *pg)
    e_widget_textblock_markup_set
      (ob,
      _("Enlightenment can check for new<br>"
-       "versions, updates, securiity and<br>"
+       "versions, updates, security and<br>"
        "bugfixes, as well as available add-ons.<br>"
        "<br>"
-       "This is very useful, because it lets you<br>"
+       "This is very useful, because it lets<br>"
        "you know about available bug fixes and<br>"
        "security fixes when they happen. As a<br>"
        "bi-product of this, Enlightenment will<br>"
