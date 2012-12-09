@@ -130,6 +130,7 @@ src/bin/e_win.c
 src/bin/e_xinerama.c
 src/bin/e_xkb.c
 src/bin/e_zone.c
+src/modules/backlight/e_mod_main.c
 src/modules/battery/e_mod_config.c
 src/modules/battery/e_mod_main.c
 src/modules/clock/e_mod_config.c

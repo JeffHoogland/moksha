@@ -1381,9 +1381,9 @@ _mixer_module_configuration_setup(E_Mixer_Module_Context *ctxt)
 static const char _act_increase[] = "volume_increase";
 static const char _act_decrease[] = "volume_decrease";
 static const char _act_mute[] = "volume_mute";
-static const char _lbl_increase[] = "Increase Volume";
-static const char _lbl_decrease[] = "Decrease Volume";
-static const char _lbl_mute[] = "Mute Volume";
+static const char _lbl_increase[] = N_("Increase Volume");
+static const char _lbl_decrease[] = N_("Decrease Volume");
+static const char _lbl_mute[] = N_("Mute Volume");
 
 static void
 _mixer_actions_register(E_Mixer_Module_Context *ctxt)
