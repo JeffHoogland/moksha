@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@...\n"
 "POT-Creation-Date: 2012-12-07 23:27+0000\n"
-"PO-Revision-Date: 2012-12-08 00:22+0100\n"
+"PO-Revision-Date: 2012-12-09 01:39+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
 "Language: pt\n"
@@ -828,15 +828,15 @@ msgstr "Enlightenment: Módulo"
 
 #: src/bin/e_actions.c:3381
 msgid "Enable the named module"
-msgstr "Ativar o módulo referenciado"
+msgstr "Ativar módulo referenciado"
 
 #: src/bin/e_actions.c:3385
 msgid "Disable the named module"
-msgstr "Desativar o módulo referenciado"
+msgstr "Desativar módulo referenciado"
 
 #: src/bin/e_actions.c:3389
 msgid "Toggle the named module"
-msgstr "Alternar o módulo referenciado"
+msgstr "Alternar módulo referenciado"
 
 #: src/bin/e_actions.c:3393
 #: src/bin/e_actions.c:3397
@@ -954,11 +954,11 @@ msgstr "Cancelar"
 #: src/bin/e_config.c:1022
 #: src/bin/e_config.c:1055
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
-msgstr "As definições precisam de ser atualizadas. As suas antigas definições serão apagadas e serão iniciados novos valores pré-definidos.<br>Isto irá ocorrer repetidamente durante o desenvolvimento e não deve reportar qualquer erro.<br>Isto significa que o Enlightenment precisa de dados que as suas antigas definições não possuem.<br>Este conjunto de valores corrige a situação.<br> Mais tarde poderá configurar o Enlightenment ao seu gosto.<br>Desculpe qualquer inconveniente.<br>"
+msgstr "As definições precisam de ser atualizadas. As suas antigas definições serão apagadas e serão iniciados novos valores padrão.<br>Isto irá ocorrer repetidamente durante o desenvolvimento e não deve reportar qualquer erro.<br>Isto significa que o Enlightenment precisa de dados que as suas antigas definições não possuem.<br>Este conjunto de valores corrige a situação.<br> Mais tarde poderá configurar o Enlightenment ao seu gosto.<br>Desculpe qualquer inconveniente.<br>"
 
 #: src/bin/e_config.c:1039
 msgid "Your settings are NEWER than Enlightenment. This is very<br>strange. This should not happen unless you downgraded<br>Enlightenment or copied the settings from a place where<br>a newer version of Enlightenment was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr "As suas definições são mais recentes que as do Enlightenment.<br>Isto é muito estranho e só acontece se reverter a versão do Enlightenment ou se copiar as definições de um local em que está instalada uma versão mais recente do Enlightenment.<br>Isto é mau e por precaução, as definições originais foram restauradas.<br>Desculpe qualquer inconveniente.<br>"
+msgstr "As suas definições são mais recentes que as do Enlightenment.<br>Isto é muito estranho e só acontece se reverter a versão do Enlightenment ou se copiar as definições de um local em que está instalada uma versão mais recente do Enlightenment.<br>Isto é mau e, por precaução, as definições originais foram restauradas.<br>Desculpe qualquer inconveniente.<br>"
 
 #: src/bin/e_config.c:1706
 #: src/bin/e_config.c:2340
@@ -1154,7 +1154,7 @@ msgstr "Por favor indique a senha de desbloqueio"
 
 #: src/bin/e_desklock.c:926
 msgid "Authenticating..."
-msgstr "A autenticar..."
+msgstr "Autenticação..."
 
 #: src/bin/e_desklock.c:931
 msgid "The password you entered is invalid. Try again."
@@ -1646,7 +1646,7 @@ msgstr "Lista"
 #: src/bin/e_fm.c:9142
 #: src/modules/everything/evry_config.c:458
 msgid "Default View"
-msgstr "Visualização pré-definida"
+msgstr "Visualização padrão"
 
 #: src/bin/e_fm.c:9164
 #, c-format
@@ -1940,7 +1940,7 @@ msgstr "Pré-visualização"
 #: src/modules/comp/e_mod_config.c:1118
 #: src/modules/everything/evry_config.c:426
 msgid "Default"
-msgstr "Pré-definido"
+msgstr "Padrão"
 
 #: src/bin/e_fm_prop.c:530
 msgid "Thumbnail"
@@ -2018,15 +2018,15 @@ msgstr "Por favor escolha a combinação<br><br>ou <hilight>Escape</hilight> par
 #: src/bin/e_grab_dialog.c:5
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid "Please hold any modifier you want<br>and press any button on your mouse,<br> or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</highlight> to abort."
-msgstr "Prima o modificador que pretende utilizar e prima qualquer botão do rato ou mexa na roda para atribuir uma associação ao rato.<br>Prima <hilight>Escape</highlight> para abortar."
+msgstr "Prima o modificador que quer utilizar<br>e prima qualquer botão do rato ou<br>mexa na roda para atribuir uma associação.<br>Prima <hilight>Escape</highlight> para abortar."
 
 #: src/bin/e_grab_dialog.c:128
 msgid "Mouse Binding Sequence"
-msgstr "Combinação dos atalhos do rato"
+msgstr "Combinação de atalho do rato"
 
 #: src/bin/e_grab_dialog.c:135
 msgid "Key Binding Sequence"
-msgstr "Combinação dos atalhos do teclado"
+msgstr "Combinação de atalho do teclado"
 
 #: src/bin/e_hints.c:152
 msgid ""
@@ -2775,7 +2775,7 @@ msgstr "Nome ou ficheiro da aplicação (.desktop)"
 
 #: src/bin/e_int_border_remember.c:745
 msgid "Match only one window"
-msgstr "Corresponder com uma janela"
+msgstr "Coincidente com uma janela"
 
 #: src/bin/e_int_border_remember.c:749
 msgid "Always focus on start"
@@ -2836,7 +2836,7 @@ msgstr "Nenhum módulo selecionado"
 
 #: src/bin/e_int_config_modules.c:624
 msgid "More than one module selected."
-msgstr "Mais que um módulo selecionado"
+msgstr "Mais do que um módulo selecionado"
 
 #: src/bin/e_int_gadcon_config.c:699
 #: src/bin/e_int_gadcon_config.c:757
@@ -3738,7 +3738,7 @@ msgstr "Ocultar automaticamente"
 #: src/bin/e_shelf.c:2451
 #: src/modules/conf_display/e_int_config_display.c:405
 msgid "Refresh"
-msgstr "Atualizar"
+msgstr "Atualização"
 
 #: src/bin/e_startup.c:66
 msgid "Starting"
@@ -4187,7 +4187,7 @@ msgstr "Só leitura"
 #: src/bin/e_widget_filepreview.c:527
 #: src/bin/e_widget_filepreview.c:716
 msgid "Read-Write"
-msgstr "Leitura/Escrita"
+msgstr "Leitura-Escrita"
 
 #: src/bin/e_widget_filepreview.c:530
 #: src/bin/e_widget_filepreview.c:541
@@ -4227,7 +4227,7 @@ msgstr "Subir um diretório"
 
 #: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
-msgstr "Definições de monitorização da bateria"
+msgstr "Definições de bateria"
 
 #: src/modules/battery/e_mod_config.c:134
 msgid "Show alert when battery is low"
@@ -4400,7 +4400,7 @@ msgstr "Data"
 
 #: src/modules/clock/e_mod_config.c:105
 msgid "Full"
-msgstr "Completo"
+msgstr "Completa"
 
 #: src/modules/clock/e_mod_config.c:107
 msgid "Numbers"
@@ -4704,7 +4704,7 @@ msgstr "Atualizações Tear-free (sincronização vertical)"
 
 #: src/modules/comp/e_mod_config.c:1203
 msgid "Texture from pixmap"
-msgstr "Textura do pixmap"
+msgstr "Textura pixmap"
 
 #: src/modules/comp/e_mod_config.c:1210
 msgid "Assume swapping method:"
@@ -4870,7 +4870,7 @@ msgstr "Ajuste suave do conteúdo da janela"
 
 #: src/modules/comp/e_mod_config.c:1518
 msgid "Select default style"
-msgstr "Escolha o estilo pré-definido"
+msgstr "Escolha o estilo padrão"
 
 #: src/modules/comp/e_mod_config.c:1539
 msgid "To reset compositor:"
@@ -4961,7 +4961,7 @@ msgstr "Lançadores de aplicações"
 #: src/modules/conf_applications/e_int_config_defapps.c:304
 #: src/modules/conf_applications/e_mod_main.c:53
 msgid "Default Applications"
-msgstr "Aplicações pré-definidas"
+msgstr "Aplicações padrão"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:297
 msgid "Custom Browser Command"
@@ -5339,7 +5339,7 @@ msgstr "Utilizar comando de bloqueio personalizado"
 
 #: src/modules/conf_display/e_int_config_desklock.c:236
 msgid "Locking"
-msgstr "Bloquear"
+msgstr "Bloqueio"
 
 #: src/modules/conf_display/e_int_config_desklock.c:278
 msgid "Keyboard Layout"
@@ -5359,7 +5359,7 @@ msgstr "Mostrar no ecrã #:"
 
 #: src/modules/conf_display/e_int_config_desklock.c:304
 msgid "Login Box"
-msgstr "Início de sessão"
+msgstr "Caixa de sessão"
 
 #: src/modules/conf_display/e_int_config_desklock.c:309
 msgid "Lock after X screensaver activates"
@@ -5507,11 +5507,11 @@ msgstr "Área de trabalho"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
 msgid "<None>"
-msgstr "<Nenhum>"
+msgstr "<None>"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:5
 msgid "Please select an edge,<br>or click <hilight>Close</hilight> to abort.<br><br>You can either specify a delay of this<br> action using the slider, or make it<br>respond to edge clicks:"
-msgstr "Selecione uma margem ou clique em <hilight>Fechar</hilight> para abortar.<br><br>Pode também especificar um atraso para esta ação utilizando o cursor ou fazê-lo responder aos cliques nas margens:"
+msgstr "Selecione uma margem<br>ou clique em <hilight>Fechar</hilight> para abortar.<br><br>Pode também especificar<br>um atrasopara esta ação utilizando o cursor<br>ou fazê-lo responder aos cliques nas margens:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Bindings Settings"
@@ -5539,7 +5539,7 @@ msgstr "Eliminar tudo"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:306
 msgid "Restore Default Bindings"
-msgstr "Restaurar associações pré-definidas"
+msgstr "Restaurar associações padrão"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:209
@@ -5573,7 +5573,7 @@ msgstr "Permitir ativação de associações em vários ecrãs (PERIGOSO)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:874
 msgid "Edge Binding Sequence"
-msgstr "Sequência da associação das margens"
+msgstr "Combinação de associação das margens"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:893
 msgid "Clickable edge"
@@ -5586,7 +5586,7 @@ msgstr "Erro na associação da margem"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1215
 #, c-format
 msgid "The edge binding that you chose is already used by<br><hilight>%s</hilight> action.<br>Please choose another edge to bind."
-msgstr "A associação da margem escolhida já está a ser utilizada pela ação<br><hilight>%s</hilight>.<br>Por favor escolha outra margem."
+msgstr "A associação da margem escolhida já está a ser<br>utilizada pela ação<br><hilight>%s</hilight>.<br>Por favor escolha outra margem."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1350
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1254
@@ -5833,7 +5833,7 @@ msgstr "Definições de idioma do bloqueio do sistema"
 #: src/modules/conf_intl/e_int_config_intl.c:950
 #, c-format
 msgid "You have some extra locale environment<br>variables set that may interfere with<br>correct display of your chosen language.<br>If you don't want these affected, use the<br>Environment variable settings to unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
-msgstr "Definiu algumas variáveis de ambiente<br>que podem interferir com o idioma escolhido.<br>Se não as quiser afetar, utilize as definições das variáveis de ambiente para não as utilizar. <br>As variáveis de ambiente que podem afetar o seu idioma são as seguintes:<br><br>%s."
+msgstr "Definiu algumas variáveis de ambiente<br>que podem interferir com o idioma escolhido.<br>Se não as quiser afetar, utilize as<br>definições das variáveis de ambiente para <br>não as utilizar. <br>As variáveis de ambiente que podem afetar o seu idioma são:<br>%s."
 
 #: src/modules/conf_intl/e_int_config_intl.c:958
 msgid "Possible Locale problems"
@@ -5854,12 +5854,12 @@ msgstr "Definições do sistema"
 #: src/modules/conf_intl/e_int_config_intl.c:1093
 #: src/modules/conf_intl/e_int_config_intl.c:1170
 msgid "Locale Selected"
-msgstr "Idioma selecionado"
+msgstr "Configuração regional escolhida"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1094
 #: src/modules/conf_intl/e_int_config_intl.c:1171
 msgid "Locale"
-msgstr "Idioma"
+msgstr "Configuração regional"
 
 #: src/modules/conf_intl/e_mod_main.c:17
 #: src/modules/wizard/page_010.c:158
@@ -6051,7 +6051,7 @@ msgstr "Botão esquerdo"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1163
 msgid "Middle Button"
-msgstr "Botão central"
+msgstr "Roda"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1167
 msgid "Right Button"
@@ -6087,11 +6087,11 @@ msgstr "Definições do menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
 msgid "Enlightenment Default"
-msgstr "Predefinições do Enlightenment"
+msgstr "Padrões do Enlightenment"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Personal Default"
-msgstr "Predefinições pessoais"
+msgstr "Padrões do utilizador"
 
 #: src/modules/conf_menus/e_int_config_menus.c:257
 msgid "Main Menu"
@@ -6185,7 +6185,7 @@ msgstr "%2.2f seg."
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:348
 #: src/modules/notification/e_mod_config.c:141
 msgid "Miscellaneous"
-msgstr "Diversos"
+msgstr "Outras"
 
 #: src/modules/conf_paths/e_int_config_paths.c:59
 msgid "Search Path Settings"
@@ -6227,15 +6227,15 @@ msgstr "Mensagens"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
 msgid "Enlightenment Paths"
-msgstr "Caminhos do Enlightenment"
+msgstr "Caminhos Enlightenment"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
-msgstr "Diretórios pré-definidos"
+msgstr "Diretórios padrão"
 
 #: src/modules/conf_paths/e_int_config_paths.c:204
 msgid "User Defined Directories"
-msgstr "Diretórios definidos pelo utilizador"
+msgstr "Diretórios do utilizador"
 
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
@@ -6248,7 +6248,7 @@ msgstr "Variáveis de ambiente"
 
 #: src/modules/conf_paths/e_int_config_env.c:304
 msgid "Unset"
-msgstr "Não definidos"
+msgstr "Não definidas"
 
 #: src/modules/conf_paths/e_mod_main.c:20
 msgid "Search Directories"
@@ -6265,7 +6265,7 @@ msgstr "Utilizar ARGB em vez da cor das janelas criadas"
 
 #: src/modules/conf_performance/e_int_config_engine.c:110
 msgid "You have chosen to enable ARGB composite support,<br>but your current screen does not support composite.<br><br>Are you sure you wish to enable ARGB support?"
-msgstr "Optou por ativar o suporte à composição ARGB<br>mas o seu ecrã atual não possui suporte a essa opção.<br><br>Tem a certeza que quer ativar o suporte ARGB?"
+msgstr "Optou por ativar o suporte à composição ARGB mas o<br> seu ecrã atual não possui suporte a essa opção.<br><br>Tem a certeza que quer ativar o suporte ARGB?"
 
 #: src/modules/conf_performance/e_int_config_engine.c:114
 msgid "Enable"
@@ -6763,7 +6763,7 @@ msgstr "Diálogo de erro"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:75
 msgid "Exebuf Command"
-msgstr "Comando Exebuf"
+msgstr "Comando exebuf"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:76
 msgid "Splash Title"
@@ -6860,7 +6860,7 @@ msgstr "Definições do tipo de letra"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:252
 msgid "Tiny"
-msgstr "Pequena"
+msgstr "Mínima"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:270
 msgid "Big"
@@ -6927,7 +6927,7 @@ msgstr "Nome do recurso"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:707
 msgid "Enable Fallbacks"
-msgstr "Ativar alternativas"
+msgstr "Ativar recursos"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:716
 msgid "Hinting / Fallbacks"
@@ -6943,7 +6943,7 @@ msgstr "Definições de escala"
 
 #: src/modules/conf_theme/e_int_config_scale.c:229
 msgid "DPI Scaling"
-msgstr "Escala de PPP"
+msgstr "Escala PPP"
 
 #: src/modules/conf_theme/e_int_config_scale.c:296
 msgid "Don't Scale"
@@ -7048,7 +7048,7 @@ msgstr "Importar..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:1108
 msgid "Theme Categories"
-msgstr "Categorias de temas"
+msgstr "Categorias do tema"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1126
 msgid "Assign"
@@ -8138,7 +8138,7 @@ msgstr "Mover para o lixo"
 
 #: src/modules/everything/evry_plug_files.c:1330
 msgid "Open Folder (EFM)"
-msgstr "Abrir pasta (EFM)"
+msgstr "Abrir diretório"
 
 #: src/modules/everything/evry_plug_files.c:1334
 msgid "Sort by Date"
@@ -8656,7 +8656,7 @@ msgstr "Ir para a área de trabalho"
 
 #: src/modules/winlist/e_int_config_winlist.c:230
 msgid "Selecting"
-msgstr "Selecionar"
+msgstr "Seleção"
 
 #: src/modules/winlist/e_int_config_winlist.c:234
 msgid "Warp speed"
@@ -8905,7 +8905,7 @@ msgstr "Mostrar alerta ao trocar de área de trabalho"
 
 #: src/modules/pager/e_mod_config.c:144
 msgid "Show popup for urgent windows"
-msgstr "Mostrar alerta para janelas urgentes"
+msgstr "Mostrar alerta nas janelas urgentes"
 
 #: src/modules/pager/e_mod_config.c:197
 msgid "Resistance to dragging"
@@ -9045,7 +9045,7 @@ msgstr "Tamanho dos ícones"
 
 #: src/modules/syscon/e_int_config_syscon.c:165
 msgid "Do default action after timeout"
-msgstr "Do default action after timeout"
+msgstr "Ação predefinida após o tempo limite"
 
 #: src/modules/syscon/e_int_config_syscon.c:172
 msgid "Default Action"
