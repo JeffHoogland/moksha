@@ -262,7 +262,6 @@ main(int argc, char **argv)
    if (getenv("DESKTOP_STARTUP_ID"))
      e_util_env_set("DESKTOP_STARTUP_ID", NULL);
    e_util_env_set("E_RESTART_OK", NULL);
-   e_util_env_set("E_RESTART", "1");
    e_util_env_set("PANTS", "ON");
    e_util_env_set("DESKTOP", "Enlightenment-0.17.0");
    TS("Environment Variables Done");
@@ -659,6 +658,8 @@ main(int argc, char **argv)
         efreet_icon_extension_add(".edj");
      }
 
+   e_screensaver_preinit();
+   
    if (e_config->show_splash)
      e_init_status_set(_("Setup Screens"));
    TS("Screens Init");
@@ -690,17 +691,6 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_backlight_shutdown);
 
    if (e_config->show_splash)
-     e_init_status_set(_("Setup DPMS"));
-   TS("E_Dpms Init");
-   if (!e_dpms_init())
-     {
-        e_error_message_show(_("Enlightenment cannot configure the DPMS settings.\n"));
-        _e_main_shutdown(-1);
-     }
-   TS("E_Dpms Init Done");
-   _e_main_shutdown_push(e_dpms_shutdown);
-
-   if (e_config->show_splash)
      e_init_status_set(_("Setup Screensaver"));
    TS("E_Screensaver Init");
    if (!e_screensaver_init())
@@ -710,6 +700,17 @@ main(int argc, char **argv)
      }
    TS("E_Screensaver Init Done");
    _e_main_shutdown_push(e_screensaver_shutdown);
+
+   if (e_config->show_splash)
+     e_init_status_set(_("Setup DPMS"));
+   TS("E_Dpms Init");
+   if (!e_dpms_init())
+     {
+        e_error_message_show(_("Enlightenment cannot configure the DPMS settings.\n"));
+        _e_main_shutdown(-1);
+     }
+   TS("E_Dpms Init Done");
+   _e_main_shutdown_push(e_dpms_shutdown);
 
    if (e_config->show_splash)
      e_init_status_set(_("Setup Powersave Modes"));
@@ -1053,6 +1054,8 @@ main(int argc, char **argv)
    starting = EINA_FALSE;
    inloop = EINA_TRUE;
 
+   e_util_env_set("E_RESTART", "1");
+   
    TS("MAIN LOOP AT LAST");
    if (!setjmp(x_fatal_buff))
      ecore_main_loop_begin();

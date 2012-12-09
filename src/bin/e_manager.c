@@ -9,7 +9,8 @@ static Eina_Bool  _e_manager_cb_key_up(void *data, int ev_type, void *ev);
 static Eina_Bool  _e_manager_cb_key_down(void *data, int ev_type, void *ev);
 static Eina_Bool  _e_manager_cb_frame_extents_request(void *data, int ev_type, void *ev);
 static Eina_Bool  _e_manager_cb_ping(void *data, int ev_type, void *ev);
-static Eina_Bool  _e_manager_cb_screensaver_notify(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_screensaver_on(void *data, int ev_type, void *ev);
+static Eina_Bool  _e_manager_cb_screensaver_off(void *data, int ev_type, void *ev);
 static Eina_Bool  _e_manager_cb_client_message(void *data, int ev_type, void *ev);
 
 static Eina_Bool  _e_manager_frame_extents_free_cb(const Eina_Hash *hash __UNUSED__,
@@ -127,8 +128,13 @@ e_manager_new(Ecore_X_Window root, int num)
                                               man));
    man->handlers =
      eina_list_append(man->handlers,
-                      ecore_event_handler_add(ECORE_X_EVENT_SCREENSAVER_NOTIFY,
-                                              _e_manager_cb_screensaver_notify,
+                      ecore_event_handler_add(E_EVENT_SCREENSAVER_ON,
+                                              _e_manager_cb_screensaver_on,
+                                              man));
+   man->handlers =
+     eina_list_append(man->handlers,
+                      ecore_event_handler_add(E_EVENT_SCREENSAVER_OFF,
+                                              _e_manager_cb_screensaver_off,
                                               man));
    man->handlers =
      eina_list_append(man->handlers,
@@ -934,31 +940,32 @@ _e_manager_cb_timer_post_screensaver_lock(void *data __UNUSED__)
 }
 
 static Eina_Bool
-_e_manager_cb_screensaver_notify(void *data __UNUSED__, int ev_type __UNUSED__, void *ev)
+_e_manager_cb_screensaver_on(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
 {
-   Ecore_X_Event_Screensaver_Notify *e = ev;
+   if (e_config->desklock_autolock_screensaver)
+     {
+        if (timer_post_screensaver_lock)
+          {
+             ecore_timer_del(timer_post_screensaver_lock);
+             timer_post_screensaver_lock = NULL;
+          }
+        if (e_config->desklock_post_screensaver_time <= 1.0)
+          e_desklock_show_autolocked();
+        else
+          timer_post_screensaver_lock = ecore_timer_add
+          (e_config->desklock_post_screensaver_time,
+              _e_manager_cb_timer_post_screensaver_lock, NULL);
+     }
+   return ECORE_CALLBACK_PASS_ON;
+}
 
+static Eina_Bool
+_e_manager_cb_screensaver_off(void *data __UNUSED__, int ev_type __UNUSED__, void *ev __UNUSED__)
+{
    if (timer_post_screensaver_lock)
      {
         ecore_timer_del(timer_post_screensaver_lock);
         timer_post_screensaver_lock = NULL;
-     }
-
-   if (e->on)
-     {
-        if (e_config->desklock_autolock_screensaver)
-          {
-             if (e_config->desklock_post_screensaver_time <= 1.0)
-               {
-                  e_desklock_show_autolocked();
-               }
-             else
-               {
-                  timer_post_screensaver_lock = ecore_timer_add
-                      (e_config->desklock_post_screensaver_time,
-                      _e_manager_cb_timer_post_screensaver_lock, NULL);
-               }
-          }
      }
    return ECORE_CALLBACK_PASS_ON;
 }

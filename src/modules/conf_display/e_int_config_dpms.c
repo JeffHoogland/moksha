@@ -81,11 +81,12 @@ _apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->backlight.normal = cfdata->backlight_normal / 100.0;
    e_config->backlight.dim = cfdata->backlight_dim / 100.0;
    e_config->backlight.transition = cfdata->backlight_transition;
-   e_config->backlight.timer = lround(cfdata->backlight_timeout * 60.);
+   e_config->backlight.timer = lround(cfdata->backlight_timeout);
+   e_config->backlight.idle_dim = cfdata->enable_idle_dim;
 
    e_backlight_mode_set(NULL, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(NULL, e_config->backlight.normal, -1.0);
-   if (cfdata->backlight_timeout < e_config->screensaver_timeout)
+   if (cfdata->backlight_timeout > (e_config->screensaver_timeout))
      {
         e_config->screensaver_timeout = cfdata->backlight_timeout;
         e_config->dpms_standby_timeout = e_config->screensaver_timeout;
@@ -103,10 +104,12 @@ _apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+   e_widget_disabled_set(cfdata->backlight_slider, !cfdata->enable_idle_dim); // set state from saved config
    return (e_config->backlight.normal * 100.0 != cfdata->backlight_normal) ||
           (e_config->backlight.dim * 100.0 != cfdata->backlight_dim) ||
           (e_config->backlight.transition != cfdata->backlight_transition) ||
-          (e_config->backlight.timer != cfdata->backlight_timeout);
+          (e_config->backlight.timer != cfdata->backlight_timeout) ||
+          (e_config->backlight.idle_dim != cfdata->enable_idle_dim);
 }
 
 static int
@@ -156,16 +159,15 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    
    ob = e_widget_check_add(evas, _("Idle Fade Time"), &(cfdata->enable_idle_dim));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   e_widget_disabled_set(ob, cfdata->enable_idle_dim); // set state from saved config
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f minutes"), 0.5, 90.0, 1.0, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f second(s)"), 5.0, 300.0, 1.0, 0,
 			    &(cfdata->backlight_timeout), NULL, 100);
    cfdata->backlight_slider = ob;
-   e_widget_disabled_set(ob, cfdata->enable_idle_dim); // set state from saved config
+   e_widget_disabled_set(ob, !cfdata->enable_idle_dim); // set state from saved config
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    
    ob = e_widget_label_add(evas, _("Fade Time"));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f s"), 0.0, 5.0, 0.1, 0,
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f second(s)"), 0.0, 5.0, 0.1, 0,
 			    &(cfdata->backlight_transition), NULL, 100);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    

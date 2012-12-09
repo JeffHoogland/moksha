@@ -72,6 +72,8 @@ struct _E_Comp_Zone
    int             container_num;
    int             zone_num;
    int             x, y, w, h;
+   double          bl;
+   Eina_Bool       bloff;
 };
 
 struct _E_Comp_Win
@@ -3033,12 +3035,38 @@ _e_mod_comp_override_push(E_Comp *c)
    if ((c->nocomp_override > 0) && (c->nocomp)) _e_mod_comp_cb_nocomp_end(c);
 }
 
-static Eina_Bool
-_e_mod_comp_screensaver(void *data __UNUSED__,
-                        int type   __UNUSED__,
-                        void *event)
+static void
+_e_mod_comp_fade_handle(E_Comp_Zone *cz, int out, double tim)
 {
-   Ecore_X_Event_Screensaver_Notify *ev = event;
+   if (out == 1)
+     {
+        if (e_backlight_exists())
+          {
+             e_backlight_update();
+             cz->bloff = EINA_TRUE;
+             cz->bl = e_backlight_level_get(cz->zone);
+             e_backlight_level_set(cz->zone, 0.0, tim);
+          }
+     }
+   else
+     {
+        if (e_backlight_exists())
+          {
+             cz->bloff = EINA_FALSE;
+             e_backlight_update();
+             if (e_backlight_mode_get(cz->zone) != E_BACKLIGHT_MODE_NORMAL)
+               e_backlight_mode_set(cz->zone, E_BACKLIGHT_MODE_NORMAL);
+             else
+               e_backlight_level_set(cz->zone, e_config->backlight.normal, tim);
+          }
+     }
+}
+
+static Eina_Bool
+_e_mod_comp_screensaver_on(void *data __UNUSED__,
+                           int type   __UNUSED__,
+                           void *event __UNUSED__)
+{
    Eina_List *l, *ll;
    E_Comp_Zone *cz;
    E_Comp *c;
@@ -3046,27 +3074,46 @@ _e_mod_comp_screensaver(void *data __UNUSED__,
    // fixme: use hash if compositors list > 4
    EINA_LIST_FOREACH(compositors, l, c)
      {
-        if (ev->on != c->saver)
+        if (!c->saver)
           {
-             c->saver = ev->on;
+             c->saver = EINA_TRUE;
              EINA_LIST_FOREACH(c->zones, ll, cz)
                {
-                  if (c->saver)
-                    {
-                       _e_mod_comp_override_push(c);
-                       edje_object_signal_emit(cz->base, 
-                                               "e,state,screensaver,on", "e");
-                       edje_object_signal_emit(cz->over, 
-                                               "e,state,screensaver,on", "e");
-                    }
-                  else
-                    {
-                       _e_mod_comp_override_timed_pop(c);
-                       edje_object_signal_emit(cz->base, 
-                                               "e,state,screensaver,off", "e");
-                       edje_object_signal_emit(cz->over, 
-                                               "e,state,screensaver,off", "e");
-                    }
+                  _e_mod_comp_override_push(c);
+                  _e_mod_comp_fade_handle(cz, 1, 3.0);
+                  edje_object_signal_emit(cz->base, 
+                                          "e,state,screensaver,on", "e");
+                  edje_object_signal_emit(cz->over, 
+                                          "e,state,screensaver,on", "e");
+               }
+          }
+     }
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_e_mod_comp_screensaver_off(void *data __UNUSED__,
+                            int type   __UNUSED__,
+                            void *event __UNUSED__)
+{
+   Eina_List *l, *ll;
+   E_Comp_Zone *cz;
+   E_Comp *c;
+
+   // fixme: use hash if compositors list > 4
+   EINA_LIST_FOREACH(compositors, l, c)
+     {
+        if (c->saver)
+          {
+             c->saver = EINA_FALSE;
+             EINA_LIST_FOREACH(c->zones, ll, cz)
+               {
+                  edje_object_signal_emit(cz->base, 
+                                          "e,state,screensaver,off", "e");
+                  edje_object_signal_emit(cz->over, 
+                                          "e,state,screensaver,off", "e");
+                  _e_mod_comp_fade_handle(cz, 0, 0.5);
+                  _e_mod_comp_override_timed_pop(c);
                }
           }
      }
@@ -3108,6 +3155,12 @@ _e_mod_comp_screens_eval(E_Comp *c)
      {
         evas_object_del(cz->base);
         evas_object_del(cz->over);
+        if (cz->bloff)
+          {
+             if (e_backlight_mode_get(cz->zone) != E_BACKLIGHT_MODE_NORMAL)
+               e_backlight_mode_set(cz->zone, E_BACKLIGHT_MODE_NORMAL);
+             e_backlight_level_set(cz->zone, e_config->backlight.normal, 0.0);
+          }
         free(cz);
      }
    cn = 0;
@@ -3882,6 +3935,12 @@ _e_mod_comp_del(E_Comp *c)
      {
         evas_object_del(cz->base);
         evas_object_del(cz->over);
+        if (cz->bloff)
+          {
+             if (e_backlight_mode_get(cz->zone) != E_BACKLIGHT_MODE_NORMAL)
+               e_backlight_mode_set(cz->zone, E_BACKLIGHT_MODE_NORMAL);
+             e_backlight_level_set(cz->zone, e_config->backlight.normal, 0.0);
+          }
         free(cz);
      }
 
@@ -3937,6 +3996,8 @@ _e_mod_comp_sys_emit_cb_wait(E_Sys_Action a, const char *sig, const char *rep, E
         else _e_mod_comp_override_timed_pop(c);
         EINA_LIST_FOREACH(c->zones, ll, cz)
           {
+             if (nocomp_push) _e_mod_comp_fade_handle(cz, 1, 0.5);
+             else _e_mod_comp_fade_handle(cz, 0, 0.5);
              edje_object_signal_emit(cz->base, sig, "e");
              edje_object_signal_emit(cz->over, sig, "e");
              if ((rep) && (first))
@@ -4021,8 +4082,6 @@ e_mod_comp_init(void)
    borders = eina_hash_string_superfast_new(NULL);
    damages = eina_hash_string_superfast_new(NULL);
 
-   ecore_x_screensaver_custom_blanking_enable();
-
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_CREATE, _e_mod_comp_create, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_DESTROY, _e_mod_comp_destroy, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHOW, _e_mod_comp_show, NULL);
@@ -4035,7 +4094,9 @@ e_mod_comp_init(void)
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_SHAPE, _e_mod_comp_shape, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_DAMAGE_NOTIFY, _e_mod_comp_damage, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_DAMAGE, _e_mod_comp_damage_win, NULL);
-   E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_mod_comp_screensaver, NULL);
+   
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_SCREENSAVER_ON, _e_mod_comp_screensaver_on, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_SCREENSAVER_OFF, _e_mod_comp_screensaver_off, NULL);
 
    E_LIST_HANDLER_APPEND(handlers, ECORE_EVENT_KEY_DOWN, _e_mod_comp_key_down, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_EVENT_SIGNAL_USER, _e_mod_comp_signal_user, NULL);
@@ -4108,8 +4169,6 @@ e_mod_comp_shutdown(void)
    e_mod_comp_wl_shutdown();
 #endif
    
-   ecore_x_screensaver_custom_blanking_disable();
-
    if (damages) eina_hash_free(damages);
    if (windows) eina_hash_free(windows);
    if (borders) eina_hash_free(borders);

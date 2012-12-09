@@ -22,9 +22,9 @@ e_dpms_update(void)
    int enabled;
    Eina_Bool changed = EINA_FALSE;
 
-   enabled = ((e_config->dpms_enable) && (!e_config->mode.presentation) &&
+   enabled = ((e_config->screensaver_enable) &&
+              (!e_config->mode.presentation) &&
               (!e_util_fullscreen_current_any()));
-
    if (_e_dpms_enabled != enabled)
      {
         _e_dpms_enabled = enabled;
@@ -32,36 +32,28 @@ e_dpms_update(void)
      }
    if (!enabled) return;
 
-   if (e_config->dpms_standby_enable)
+   if (e_config->screensaver_enable)
      {
-        standby = e_config->dpms_standby_timeout;
-        if (_e_dpms_timeout_standby != standby)
-          {
-             _e_dpms_timeout_standby = standby;
-             changed = EINA_TRUE;
-          }
+        off = suspend = standby = e_screensaver_timeout_get(EINA_FALSE);
+        standby += 5;
+        suspend += 6;
+        off += 7;
      }
-
-   if (e_config->dpms_suspend_enable)
+   if (_e_dpms_timeout_standby != standby)
      {
-        suspend = e_config->dpms_suspend_timeout;
-        if (_e_dpms_timeout_suspend != suspend)
-          {
-             _e_dpms_timeout_suspend = suspend;
-             changed = EINA_TRUE;
-          }
+        _e_dpms_timeout_standby = standby;
+        changed = EINA_TRUE;
      }
-
-   if (e_config->dpms_off_enable)
+   if (_e_dpms_timeout_suspend != suspend)
      {
-        off = e_config->dpms_off_timeout;
-        if (_e_dpms_timeout_off != off)
-          {
-             _e_dpms_timeout_off = off;
-             changed = EINA_TRUE;
-          }
+        _e_dpms_timeout_suspend = suspend;
+        changed = EINA_TRUE;
      }
-
+   if (_e_dpms_timeout_off != off)
+     {
+        _e_dpms_timeout_off = off;
+        changed = EINA_TRUE;
+     }
    if (changed) ecore_x_dpms_timeouts_set(standby, suspend, off);
 }
 
@@ -71,16 +63,19 @@ e_dpms_force_update(void)
    unsigned int standby = 0, suspend = 0, off = 0;
    int enabled;
 
-   enabled = ((e_config->dpms_enable) && (!e_config->mode.presentation) &&
+   enabled = ((e_config->screensaver_enable) && 
+              (!e_config->mode.presentation) &&
               (!e_util_fullscreen_current_any()));
    ecore_x_dpms_enabled_set(enabled);
    if (!enabled) return;
-   if (e_config->dpms_standby_enable)
-     standby = e_config->dpms_standby_timeout;
-   if (e_config->dpms_suspend_enable)
-     suspend = e_config->dpms_suspend_timeout;
-   if (e_config->dpms_off_enable)
-     off = e_config->dpms_off_timeout;
+   
+   if (e_config->screensaver_enable)
+     {
+        off = suspend = standby = e_screensaver_timeout_get(EINA_FALSE);
+        standby += 5;
+        suspend += 6;
+        off += 7;
+     }
    ecore_x_dpms_timeouts_set(standby + 10, suspend + 10, off + 10);
    ecore_x_dpms_timeouts_set(standby, suspend, off);
 }
@@ -144,7 +139,7 @@ e_dpms_init(void)
    ecore_x_dpms_timeouts_get
      (&_e_dpms_timeout_standby, &_e_dpms_timeout_suspend, &_e_dpms_timeout_off);
 
-   e_dpms_update();
+   e_dpms_force_update();
 
    return 1;
 }

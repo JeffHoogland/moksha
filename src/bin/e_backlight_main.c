@@ -113,7 +113,9 @@ main(int argc, char **argv)
    if (maxlevel <= 0) maxlevel = 255;
    if (curlevel >= 0)
      {
-        curlevel = ((maxlevel * level) + (500 / maxlevel)) / 1000;
+        curlevel = ((maxlevel * level) + 500) / 1000;
+        if (curlevel > maxlevel) curlevel = maxlevel;
+        else if (curlevel < 0) curlevel = 0;
         snprintf(buf, sizeof(buf), "%s/brightness", f);
         return _bl_write_file(buf, curlevel);
      }

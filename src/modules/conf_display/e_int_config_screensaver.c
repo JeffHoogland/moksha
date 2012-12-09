@@ -65,7 +65,7 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->enable_screensaver = e_config->screensaver_enable;
-   cfdata->timeout = (double)e_config->screensaver_timeout / 60.;
+   cfdata->timeout = (double)e_config->screensaver_timeout / 60.0;
    cfdata->ask_presentation = e_config->screensaver_ask_presentation;
    cfdata->presentation_mode = e_config->mode.presentation;
    cfdata->ask_presentation_timeout = e_config->screensaver_ask_presentation_timeout;
@@ -96,7 +96,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->screensaver_enable = cfdata->enable_screensaver;
-   e_config->screensaver_timeout = lround(cfdata->timeout * 60);
+   e_config->screensaver_timeout = lround(cfdata->timeout * 60.0);
    e_config->screensaver_ask_presentation = cfdata->ask_presentation;
    e_config->mode.presentation = cfdata->presentation_mode;
    e_config->screensaver_ask_presentation_timeout = cfdata->ask_presentation_timeout;
@@ -105,14 +105,14 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->screensaver_suspend_delay = cfdata->screensaver_suspend_delay;
 
    // enough of dpms vs screensaver being different! useless
-   e_config->dpms_enable = e_config->screensaver_enable;
-   e_config->dpms_standby_enable = e_config->dpms_enable;
-   e_config->dpms_suspend_enable = e_config->dpms_enable;
-   e_config->dpms_off_enable = e_config->dpms_enable;
+//   e_config->dpms_enable = e_config->screensaver_enable;
+//   e_config->dpms_standby_enable = e_config->dpms_enable;
+//   e_config->dpms_suspend_enable = e_config->dpms_enable;
+//   e_config->dpms_off_enable = e_config->dpms_enable;
    // XXX: 5 seconds after screenblank until dpms - enough for most anims;
-   e_config->dpms_standby_timeout = e_config->screensaver_timeout + 5;
-   e_config->dpms_suspend_timeout = e_config->screensaver_timeout + 6;
-   e_config->dpms_off_timeout = e_config->screensaver_timeout + 7;
+//   e_config->dpms_standby_timeout = e_config->screensaver_timeout;
+//   e_config->dpms_suspend_timeout = e_config->screensaver_timeout;
+//   e_config->dpms_off_timeout = e_config->screensaver_timeout;
 
    e_config->screensaver_interval = 0;
    
@@ -128,7 +128,7 @@ static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    return ((e_config->screensaver_enable != cfdata->enable_screensaver) ||
-	   (e_config->screensaver_timeout != lround(cfdata->timeout * 60)) ||
+	   (e_config->screensaver_timeout != lround(cfdata->timeout * 60.0)) ||
 	   (e_config->screensaver_ask_presentation != cfdata->ask_presentation) ||
            (e_config->mode.presentation != cfdata->presentation_mode) ||
 	   (e_config->screensaver_ask_presentation_timeout != cfdata->ask_presentation_timeout) ||
