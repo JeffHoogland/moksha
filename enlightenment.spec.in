@@ -13,7 +13,7 @@ Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project 
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 Prefix: %{_prefix}
 #BuildSuggests: xorg-x11-devel, XFree86-devel, libX11-devel
-BuildRequires: efl-devel, edje-devel, edje-bin, ecore-devel
+BuildRequires: efl-devel, edje-devel, edje-bin
 BuildRequires: eeze-devel
 Requires: efl
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -25,7 +25,7 @@ Enlightenment is a window manager.
 Summary: Development headers for Enlightenment. 
 Group: User Interface/Desktops
 Requires: %{name} = %{version}
-Requires: efl-devel, edje-devel, ecore-devel
+Requires: efl-devel, edje-devel
 
 %description devel
 Development headers for Enlightenment.
