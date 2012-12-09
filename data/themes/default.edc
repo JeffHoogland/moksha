@@ -60,6 +60,7 @@ collections {
 #include "edc/evrything.edc"
 #include "edc/illume.edc"
 // icons
+#include "edc/icons.edc"
 #include "edc/border-icons.edc"
 
 // port unchanged stuff so this can work as a replacement

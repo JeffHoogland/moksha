@@ -44,6 +44,7 @@ edc/fontpreview.edc\
 edc/frame.edc \
 edc/gadman.edc \
 edc/ibar-ibox.edc \
+edc/icons.edc \
 edc/ilist.edc \
 edc/illume.edc \
 edc/init.edc \
@@ -207,6 +208,13 @@ img/icon_border_skip.png \
 img/icon_border_stack_bot.png \
 img/icon_border_stack_norm.png \
 img/icon_border_stack_top.png \
+img/icon_system-lock-screen.png \
+img/icon_system-log-out.png \
+img/icon_system.png \
+img/icon_system-restart.png \
+img/icon_system-shutdown.png \
+img/icon_system-suspend-hibernate.png \
+img/icon_system-suspend.png \
 img/ic_win_move.png \
 img/ic_win_resize.png \
 img/inset_circle_tiny.png \
