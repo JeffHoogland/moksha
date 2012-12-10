@@ -410,10 +410,9 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    E_Zone *zone = NULL;
    E_Radio_Group *rg;
    char path[PATH_MAX];
-   int mw, mh, online;
+   int mw, mh;
 
    e_dialog_resizable_set(cfd->dia, 1);
-   online = ecore_file_download_protocol_available("http://");
 
    zone = e_zone_current_get(cfd->con);
    o = e_widget_list_add(evas, 0, 1);
@@ -469,7 +468,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                            &cfdata->use_theme_bg);
    cfdata->o_theme_bg = ow;
    evas_object_smart_callback_add(ow, "changed", _cb_theme_wallpaper, cfdata);
-   e_widget_table_object_append(ot, ow, 0, 0, 2 + online, 1, 1, 0, 0, 0);
+   e_widget_table_object_append(ot, ow, 0, 0, 2, 1, 1, 0, 0, 0);
    ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
                             _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
@@ -480,7 +479,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->o_preview = ow;
    _bg_set(cfdata);
    evas_object_show(ow);
-   e_widget_table_object_append(ot, ow, 0, 2, 2 + online, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, ow, 0, 2, 2, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, ot, 1, 1, 0.5);
    return o;
 }
@@ -528,10 +527,9 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    E_Zone *zone = NULL;
    E_Radio_Group *rg;
    char path[PATH_MAX];
-   int mw, mh, online;
+   int mw, mh;
 
    e_dialog_resizable_set(cfd->dia, 1);
-   online = ecore_file_download_protocol_available("http://");
 
    zone = e_zone_current_get(cfd->con);
    o = e_widget_list_add(evas, 0, 1);
@@ -580,7 +578,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                            &cfdata->use_theme_bg);
    cfdata->o_theme_bg = ow;
    evas_object_smart_callback_add(ow, "changed", _cb_theme_wallpaper, cfdata);
-   e_widget_table_object_append(ot, ow, 0, 0, 2 + online, 1, 1, 0, 0, 0);
+   e_widget_table_object_append(ot, ow, 0, 0, 2, 1, 1, 0, 0, 0);
    ow = e_widget_button_add(evas, _("Picture..."), "folder-image",
                             _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
@@ -591,7 +589,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    evas_object_size_hint_aspect_set(ow, EVAS_ASPECT_CONTROL_BOTH, zone->w, zone->h);
    cfdata->o_preview = ow;
    _bg_set(cfdata);
-   e_widget_table_object_append(ot, ow, 0, 2, 2 + online, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(ot, ow, 0, 2, 2, 1, 1, 1, 1, 1);
 
    rg = e_widget_radio_group_new(&(cfdata->all_this_desk_screen));
    of = e_widget_frametable_add(evas, _("Where to place the Wallpaper"), 0);
@@ -604,7 +602,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
          (e_util_container_zone_number_get(1, 0))))
      e_widget_disabled_set(ow, 1);
    e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 0, 1, 0);
-   e_widget_table_object_append(ot, of, 0, 3, 2 + online, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(ot, of, 0, 3, 2, 1, 1, 0, 1, 0);
 
    e_widget_list_object_append(o, ot, 1, 1, 0.0);
 
