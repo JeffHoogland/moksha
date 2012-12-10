@@ -2,6 +2,16 @@
 
 typedef struct _Instance Instance;
 
+typedef struct Nav_Item
+{
+   EINA_INLIST;
+   Instance *inst;
+   Evas_Object *o;
+   Eina_List *handlers;
+   Eio_Monitor *monitor;
+   const char *path;
+} Nav_Item;
+
 struct _Instance
 {
    E_Gadcon_Client    *gcc;
@@ -9,13 +19,14 @@ struct _Instance
    E_Toolbar          *tbar;
 
    E_Drop_Handler    *dnd_handler;
-   Evas_Object *dnd_obj, *sel_obj;
+   Evas_Object *dnd_obj;
    char *dnd_path;
 
    Evas_Object        *o_base, *o_box, *o_fm, *o_scroll;
 
    // buttons
-   Eina_List          *l_buttons;
+   Nav_Item          *sel_ni;
+   Eina_Inlist       *l_buttons;
    Eina_List          *history, *current;
    int                 ignore_dir;
 
@@ -43,6 +54,7 @@ static void             _cb_dir_changed(void *data, Evas_Object *obj, void *even
 static void             _cb_button_click(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void             _cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void             _box_button_append(Instance *inst, const char *label, Edje_Signal_Cb func);
+static void             _box_button_free(Nav_Item *ni);
 
 static Eina_List *instances = NULL;
 static const char *_nav_mod_dir = NULL;
@@ -61,7 +73,6 @@ Eina_Bool
 e_fwin_nav_init(void)
 {
    e_gadcon_provider_register(&_gc_class);
-
    return EINA_TRUE;
 }
 
@@ -69,8 +80,36 @@ Eina_Bool
 e_fwin_nav_shutdown(void)
 {
    e_gadcon_provider_unregister(&_gc_class);
-
    return EINA_TRUE;
+}
+
+static Eina_Bool
+_event_deleted(Nav_Item *ni, int type, void *e)
+{
+   Eio_Monitor_Error *me = me;
+   Eio_Monitor_Event *ev = e;
+   const char *dir;
+
+   if (type == EIO_MONITOR_ERROR)
+     dir = eio_monitor_path_get(me->monitor);
+   else
+     dir = ev->filename;
+   
+   if (ni->path != dir) return ECORE_CALLBACK_RENEW;
+   if (ni == ni->inst->sel_ni)
+     {
+        Nav_Item *nip;
+
+        if (EINA_INLIST_GET(ni)->prev)
+          {
+             nip = (Nav_Item*)EINA_INLIST_GET(ni)->prev;
+             _cb_button_click(ni->inst, nip->o, NULL, NULL);
+          }
+     }
+   while (EINA_INLIST_GET(ni)->next)
+     _box_button_free((Nav_Item*)EINA_INLIST_GET(ni)->next);
+   _box_button_free(ni);
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -112,7 +151,7 @@ _box_button_cb_dnd_leave(void *data, const char *type __UNUSED__, void *event __
    if (!inst->dnd_obj) return;
    edje_object_signal_emit(inst->dnd_obj, "e,state,default", "e");
    inst->dnd_obj = NULL;
-   if (inst->sel_obj) edje_object_signal_emit(inst->sel_obj, "e,state,selected", "e");
+   if (inst->sel_ni) edje_object_signal_emit(inst->sel_ni->o, "e,state,selected", "e");
 }
 
 static void
@@ -131,8 +170,8 @@ _box_button_cb_dnd_move(void *data, const char *type, void *event)
      }
    e_drop_handler_action_set(ev->action);
    if (obj == inst->dnd_obj) return;
-   if (inst->sel_obj)
-     edje_object_signal_emit(inst->sel_obj, "e,state,default", "e");
+   if (inst->sel_ni)
+     edje_object_signal_emit(inst->sel_ni->o, "e,state,default", "e");
    if (inst->dnd_obj)
      edje_object_signal_emit(inst->dnd_obj, "e,state,default", "e");
    inst->dnd_obj = obj;
@@ -188,17 +227,16 @@ static Eina_Bool
 _box_button_cb_dnd_drop(void *data, const char *type __UNUSED__)
 {
    Instance *inst = data;
-   Eina_List *l;
-   Evas_Object *btn;
+   Nav_Item *ni;
    Eina_Bool allow;
    char path[PATH_MAX] = {0};
 
    if (!inst->dnd_obj) return EINA_FALSE;
 
-   EINA_LIST_FOREACH(inst->l_buttons, l, btn)
+   EINA_INLIST_FOREACH(inst->l_buttons, ni)
      {
-        strcat(path, edje_object_part_text_get(btn, "e.text.label"));
-        if (btn == inst->dnd_obj) break;
+        strcat(path, edje_object_part_text_get(ni->o, "e.text.label"));
+        if (ni->o == inst->dnd_obj) break;
         if (path[1]) strcat(path, "/");
      }
    allow = ecore_file_can_write(path);
@@ -344,7 +382,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst = NULL;
    const char *s;
-   Evas_Object *btn;
 
    inst = gcc->data;
    if (!inst) return;
@@ -365,11 +402,8 @@ _gc_shutdown(E_Gadcon_Client *gcc)
                                          EVAS_CALLBACK_RESIZE,
                                          _cb_resize, inst);
 
-   EINA_LIST_FREE(inst->l_buttons, btn)
-     {
-        e_box_unpack(btn);
-        evas_object_del(btn);
-     }
+   while (inst->l_buttons)
+     _box_button_free((Nav_Item*)inst->l_buttons);
 
    if (inst->o_base) evas_object_del(inst->o_base);
    if (inst->o_box) evas_object_del(inst->o_box);
@@ -564,14 +598,13 @@ static void
 _cb_button_click(void *data, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Instance *inst = data;
-   Eina_List *l;
-   Evas_Object *btn;
+   Nav_Item *ni;
    char path[PATH_MAX] = "";
 
-   EINA_LIST_FOREACH(inst->l_buttons, l, btn)
+   EINA_INLIST_FOREACH(inst->l_buttons, ni)
      {
-        strcat(path, edje_object_part_text_get(btn, "e.text.label"));
-        if (btn == obj) break;
+        strcat(path, edje_object_part_text_get(ni->o, "e.text.label"));
+        if (ni->o == obj) break;
         strcat(path, "/");
      }
    e_fm2_path_set(inst->o_fm, "/", path);
@@ -589,13 +622,30 @@ _cb_scroll_resize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, v
 }
 
 static void
+_box_button_free(Nav_Item *ni)
+{
+   if (!ni) return;
+   ni->inst->l_buttons = eina_inlist_remove(ni->inst->l_buttons, EINA_INLIST_GET(ni));
+   e_box_unpack(ni->o);
+   evas_object_del(ni->o);
+   E_FREE_LIST(ni->handlers, ecore_event_handler_del);
+   eio_monitor_del(ni->monitor);
+   eina_stringshare_del(ni->path);
+   free(ni);
+}
+
+static void
 _box_button_append(Instance *inst, const char *label, Edje_Signal_Cb func)
 {
    Evas_Object *o;
    Evas_Coord mw = 0, mh = 0;
+   char path[PATH_MAX] = {0};
+   Nav_Item *ni, *nil;
 
    if (!inst || !label || !*label || !func)
      return;
+
+   ni = E_NEW(Nav_Item, 1);
 
    o = edje_object_add(evas_object_evas_get(inst->o_box));
 
@@ -611,8 +661,19 @@ _box_button_append(Instance *inst, const char *label, Edje_Signal_Cb func)
    e_box_size_min_get(inst->o_box, &mw, NULL);
    evas_object_geometry_get(inst->o_scroll, NULL, NULL, NULL, &mh);
    evas_object_resize(inst->o_box, mw, mh);
-
-   inst->l_buttons = eina_list_append(inst->l_buttons, o);
+   ni->o = o;
+   ni->inst = inst;
+   inst->l_buttons = eina_inlist_append(inst->l_buttons, EINA_INLIST_GET(ni));
+   EINA_INLIST_FOREACH(inst->l_buttons, nil)
+     {
+        strcat(path, edje_object_part_text_get(nil->o, "e.text.label"));
+        if (path[1]) strcat(path, "/");
+     }
+   ni->path = eina_stringshare_add(path);
+   ni->monitor = eio_monitor_stringshared_add(ni->path);
+   E_LIST_HANDLER_APPEND(ni->handlers, EIO_MONITOR_SELF_DELETED, _event_deleted, ni);
+   E_LIST_HANDLER_APPEND(ni->handlers, EIO_MONITOR_SELF_RENAME, _event_deleted, ni);
+   E_LIST_HANDLER_APPEND(ni->handlers, EIO_MONITOR_ERROR, _event_deleted, ni);
 }
 
 static void
@@ -621,8 +682,8 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
    Instance *inst;
    const char *real_path;
    char *path, *dir, *p;
-   Eina_List *l, *ll, *sel = NULL;
-   Evas_Object *btn;
+   Nav_Item *ni, *sel;
+   Eina_Inlist *l;
    int mw, sw, changed = 0;
 
    inst = data;
@@ -633,8 +694,8 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
    if (!inst->l_buttons)
      _box_button_append(inst, "/", _cb_button_click);
 
-   sel = inst->l_buttons;
-   l = eina_list_next(sel);
+   sel = (Nav_Item*)inst->l_buttons;
+   l = EINA_INLIST_GET(sel)->next;
    p = path = ecore_file_realpath(real_path);
 
    while (p)
@@ -643,34 +704,27 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
 
         if (!(*dir)) continue;
 
-        if (l && (btn = eina_list_data_get(l)))
+        if (l)
           {
-             if (strcmp(dir, edje_object_part_text_get(btn, "e.text.label")))
+             ni = EINA_INLIST_CONTAINER_GET(l, Nav_Item);
+             if (strcmp(dir, edje_object_part_text_get(ni->o, "e.text.label")))
                {
                   changed = 1;
 
-                  while (l)
-                    {
-                       e_box_unpack(btn);
-                       evas_object_del(btn);
-                       ll = l;
-                       l = eina_list_next(l);
-                       btn = eina_list_data_get(l);
-
-                       inst->l_buttons =
-                         eina_list_remove_list(inst->l_buttons, ll);
-                    }
+                  while (l->next)
+                    _box_button_free((Nav_Item*)l->next);
+                  _box_button_free((Nav_Item*)l);
                }
              else
                {
-                  if (!p) sel = l;
-                  l = eina_list_next(l);
+                  if (!p) sel = ni;
+                  l = l->next;
                   continue;
                }
           }
 
         _box_button_append(inst, dir, _cb_button_click);
-        if (!p) sel = eina_list_last(inst->l_buttons);
+        if (!p) sel = (Nav_Item*)inst->l_buttons->last;
         changed = 1;
      }
 
@@ -684,33 +738,32 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
         evas_object_size_hint_max_set(inst->o_scroll, mw + sw, 32);
      }
 
-   EINA_LIST_FOREACH(inst->l_buttons, l, btn)
-     if (l == sel)
+   EINA_INLIST_FOREACH(inst->l_buttons, ni)
+     if (ni == sel)
        {
-          edje_object_signal_emit(btn, "e,state,selected", "e");
-          inst->sel_obj = btn;
+          edje_object_signal_emit(ni->o, "e,state,selected", "e");
+          inst->sel_ni = ni;
        }
      else
-       edje_object_signal_emit(btn, "e,state,default", "e");
+       edje_object_signal_emit(ni->o, "e,state,default", "e");
 
    /* scroll to selected button */
    if (sel)
      {
         Evas_Coord x, y, w, h, xx, yy, ww = 1;
-        btn = eina_list_data_get(sel);
-        evas_object_geometry_get(btn, &x, &y, &w, &h);
+        evas_object_geometry_get(sel->o, &x, &y, &w, &h);
 
         /* show buttons around selected */
-        if (sel->next)
+        if (EINA_INLIST_GET(sel)->next)
           {
-             btn = eina_list_data_get(sel->next);
-             evas_object_geometry_get(btn, NULL, NULL, &ww, NULL);
+             ni = (Nav_Item*)EINA_INLIST_GET(sel)->next;
+             evas_object_geometry_get(ni->o, NULL, NULL, &ww, NULL);
              w += ww;
           }
-        if (sel->prev)
+        if (EINA_INLIST_GET(sel)->prev)
           {
-             btn = eina_list_data_get(sel->prev);
-             evas_object_geometry_get(btn, NULL, NULL, &ww, NULL);
+             ni = (Nav_Item*)EINA_INLIST_GET(sel)->prev;
+             evas_object_geometry_get(ni->o, NULL, NULL, &ww, NULL);
              x -= ww;
              w += ww;
           }
