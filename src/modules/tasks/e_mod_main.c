@@ -558,7 +558,6 @@ _tasks_item_remove(Tasks_Item *item)
 {
    item->tasks->items = eina_list_remove(item->tasks->items, item);
    e_box_unpack(item->o_item);
-   evas_object_del(item->o_item);
    _tasks_item_free(item);
 }
 
