@@ -1054,6 +1054,8 @@ _e_smart_add(Evas_Object *obj)
    sd->pan_func.child_size_get = e_pan_child_size_get;
 
    _e_smart_scrollbar_reset(sd);
+   edje_object_signal_emit(sd->edje_obj, "e,action,hide,hbar", "e");
+   edje_object_signal_emit(sd->edje_obj, "e,action,hide,vbar", "e");
 }
 
 static void
