@@ -412,6 +412,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    char path[PATH_MAX];
    int mw, mh, online;
 
+   e_dialog_resizable_set(cfd->dia, 1);
    online = ecore_file_download_protocol_available("http://");
 
    zone = e_zone_current_get(cfd->con);
@@ -529,6 +530,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    char path[PATH_MAX];
    int mw, mh, online;
 
+   e_dialog_resizable_set(cfd->dia, 1);
    online = ecore_file_download_protocol_available("http://");
 
    zone = e_zone_current_get(cfd->con);
