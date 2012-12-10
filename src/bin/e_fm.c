@@ -4330,14 +4330,13 @@ _e_fm2_uri_icon_list_get(Eina_List *uri)
      {
         Evas_Object *fm;
         E_Fm2_Icon *ic;
+        const char *file;
 
         ic = NULL;
         fm = _e_fm2_file_fm2_find(path);
-        if (fm)
-          {
-             const char *file = ecore_file_file_get(path);
-             ic = _e_fm2_icon_find(fm, file);
-          }
+        if (!fm) continue;
+        file = ecore_file_file_get(path);
+        ic = _e_fm2_icon_find(fm, file);
         icons = eina_list_append(icons, ic);
      }
    return icons;
@@ -6441,7 +6440,6 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
      }
    
    isel = _e_fm2_uri_icon_list_get(fsel);
-   if (!isel) return;
    ox = 0; oy = 0;
    EINA_LIST_FOREACH(isel, l, ic)
      {
@@ -6464,7 +6462,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
    if (sd->drop_all) /* drop arbitrarily into the dir */
      {
         /* move file into this fm dir */
-        for (ll = fsel, il = isel; ll && il; ll = eina_list_next(ll), il = eina_list_next(il))
+        for (ll = fsel, il = isel; ll; ll = eina_list_next(ll), il = eina_list_next(il))
           {
              ic = eina_list_data_get(il);
              fp = eina_list_data_get(ll);
