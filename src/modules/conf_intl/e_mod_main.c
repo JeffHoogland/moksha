@@ -22,7 +22,7 @@ e_modapi_init(E_Module *m)
                                  e_int_config_intl);
    e_configure_registry_item_add("language/desklock_language_settings", 10,
                                  _("Desklock Language Settings"), NULL,
-                                 "preferences-desktop-locale",
+                                 "preferences-desklock-locale",
                                  e_int_config_desklock_intl);
    e_configure_registry_item_add("language/input_method_settings", 20,
                                  _("Input Method Settings"), NULL,

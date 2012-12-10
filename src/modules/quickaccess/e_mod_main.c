@@ -33,7 +33,7 @@ e_modapi_init(E_Module *m)
 
    snprintf(buf, sizeof(buf), "%s/e-module-quickaccess.edj", e_module_dir_get(m));
    e_configure_registry_category_add("launcher", 80, _("Launcher"), NULL,
-                                     "preferences-extensions");
+                                     "modules-launcher");
    e_configure_registry_item_add("launcher/quickaccess", 1, _("Quickaccess"), NULL,
                                  buf, e_int_config_qa_module);
 
