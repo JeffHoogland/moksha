@@ -9202,7 +9202,7 @@ _e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
         f = fopen(buf, "w");
         if (f)
           {
-             fwrite("", 1, 1, f);
+             fwrite("\n", 1, 1, f);
              fclose(f);
              ecore_thread_feedback(eth, strdup(buf));
              return;
@@ -9220,7 +9220,7 @@ _e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
              f = fopen(buf, "w");
              if (f)
                {
-                  fwrite("", 1, 1, f);
+                  fwrite("\n", 1, 1, f);
                   fclose(f);
                   ecore_thread_feedback(eth, strdup(buf));
                   return;
