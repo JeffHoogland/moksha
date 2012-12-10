@@ -111,7 +111,8 @@ init(void)
         mib[0] = CTL_HW;
         mib[1] = HW_SENSORS;
 
-        for (dev = 0;; dev++) {
+        for (dev = 0;; dev++)
+          {
              mib[2] = dev;
              if (sysctl(mib, 3, &snsrdev, &sdlen, NULL, 0) == -1)
                {
