@@ -471,6 +471,7 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
 
    if (!(dlg = e_dialog_new(_xkb.cfd->con, "E", "xkbswitch_config_add_dialog"))) return NULL;
 
+   e_dialog_resizable_set(dlg, 1);
    dlg->data = cfdata;
 
    e_object_del_attach_func_set(E_OBJECT(dlg), _dlg_add_cb_del);
