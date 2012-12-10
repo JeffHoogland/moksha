@@ -335,11 +335,34 @@ _systray_icon_add(Instance *inst, const Ecore_X_Window win)
      h = w;
 
    /* assuming systray must be on a shelf here */
-   sz = MIN(inst->gcc->gadcon->shelf->w, inst->gcc->gadcon->shelf->h);
+   switch (inst->gcc->gadcon->orient)
+     {
+      case E_GADCON_ORIENT_HORIZ:
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
+        sz = inst->gcc->gadcon->shelf->h;
+        break;
+
+      case E_GADCON_ORIENT_VERT:
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_RIGHT:
+      case E_GADCON_ORIENT_CORNER_LT:
+      case E_GADCON_ORIENT_CORNER_RT:
+      case E_GADCON_ORIENT_CORNER_LB:
+      case E_GADCON_ORIENT_CORNER_RB:
+      default:
+        sz = inst->gcc->gadcon->shelf->w;
+     }
    if ((w < 16) && (sz > 16))
      w = h = sz - 5;
 
    w = h = e_util_icon_size_normalize(w);
+   if (w > sz - 5)
+     w = h = e_util_icon_size_normalize(sz - 5);
 
    o = evas_object_rectangle_add(inst->evas);
    if (!o)
