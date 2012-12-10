@@ -39,7 +39,7 @@ e_modapi_init(E_Module *m)
                                  e_int_config_apps_desk_lock);
    e_configure_registry_item_add("applications/screen_unlock_applications", 46,
                                  _("Screen Unlock Applications"), NULL,
-                                 "preferences-applications-screen-lock",
+                                 "preferences-applications-screen-unlock",
                                  e_int_config_apps_desk_unlock);
    e_configure_registry_item_add("applications/restart_applications", 50,
                                  _("Restart Applications"), NULL,
