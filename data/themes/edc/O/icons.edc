@@ -212,7 +212,6 @@
     * 3. Try to follow the naming convention
     */
    //Standard Action Icons
-   ICON("help-about","logo_black_128.png",64)                      // "enlightenment/about"
    ICON("list-add","icon_add.png",64)                              // "widget/add"
    ICON("list-remove","icon_del.png",64)                           // "widget/del"
    ICON("go-up","icon_up_arrow.png",64)                            // "widget/up_arrow" "widget/up_dir"
@@ -339,7 +338,6 @@
    ICON("preferences-system-screen-resolution","icon_screen_resolution.png",64)// *** // "enlightenment/screen_resolution"
    ICON("preferences-illume","icon_illume.png",64)
    ICON("system-file-manager","icon_efm_folder.png",64)                               // "enlightenment/fileman"
-   ICON("enlightenment","logo_white_128.png",64)                               // *** // "enlightenment/e"
    //Standard Module Category Icons 
    ICON("modules-utils","icon_gadget.png",64)
    ICON("modules-system","icon_gadget.png",64)

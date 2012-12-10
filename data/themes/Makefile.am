@@ -208,6 +208,11 @@ img/icon_border_skip.png \
 img/icon_border_stack_bot.png \
 img/icon_border_stack_norm.png \
 img/icon_border_stack_top.png \
+img/icon_enlightenment.png \
+img/icon_preferences-applications-personal.png \
+img/icon_preferences-applications-screen-lock.png \
+img/icon_preferences-applications-screen-unlock.png \
+img/icon_preferences-desktop-environments.png \
 img/icon_system-lock-screen.png \
 img/icon_system-log-out.png \
 img/icon_system.png \
