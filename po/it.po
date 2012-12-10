@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-09 09:08+0100\n"
-"PO-Revision-Date: 2012-12-09 09:09+0100\n"
+"POT-Creation-Date: 2012-12-10 21:49+0100\n"
+"PO-Revision-Date: 2012-12-10 21:50+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -517,6 +517,8 @@ msgstr "Salta alla finestra... o avvia..."
 #: src/bin/e_actions.c:3250 src/bin/e_actions.c:3253 src/bin/e_actions.c:3256
 #: src/bin/e_actions.c:3258 src/bin/e_actions.c:3260 src/bin/e_actions.c:3262
 #: src/bin/e_actions.c:3265 src/bin/e_actions.c:3267 src/bin/e_actions.c:3269
+#: src/modules/backlight/e_mod_main.c:486
+#: src/modules/backlight/e_mod_main.c:496
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:14 src/modules/ibox/e_mod_config.c:135
 #: src/modules/shot/e_mod_main.c:706 src/modules/shot/e_mod_main.c:941
@@ -2447,10 +2449,11 @@ msgstr "Richiede posizione"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:273
-#: src/bin/e_shelf.c:2430 src/modules/battery/e_mod_main.c:194
-#: src/modules/clock/e_mod_main.c:360 src/modules/clock/e_mod_main.c:603
-#: src/modules/conf/e_conf.c:136 src/modules/conf/e_conf.c:146
-#: src/modules/conf/e_mod_main.c:101 src/modules/conf_dialogs/e_mod_main.c:17
+#: src/bin/e_shelf.c:2430 src/modules/backlight/e_mod_main.c:308
+#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:360
+#: src/modules/clock/e_mod_main.c:603 src/modules/conf/e_conf.c:136
+#: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
+#: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
 #: src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/everything/evry_gadget.c:511
@@ -2549,7 +2552,7 @@ msgstr "Dimensione, posizione e blocchi"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/shot/e_mod_main.c:710
+#: src/modules/everything/evry_view.c:1606 src/modules/shot/e_mod_main.c:710
 msgid "All"
 msgstr "Tutto"
 
@@ -3626,6 +3629,72 @@ msgstr ""
 "modalità <b>presentazione</b> e disabilitare temporaneamente lo screensaver, "
 "il bloccaschermo e la gestione energetica?"
 
+#: src/bin/e_shelf.c:67
+msgid "Float"
+msgstr "Fluttuante"
+
+#: src/bin/e_shelf.c:68
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
+#: src/modules/everything/evry_config.c:568
+#: src/modules/gadman/e_mod_gadman.c:1028
+msgid "Horizontal"
+msgstr "Orizzontale"
+
+#: src/bin/e_shelf.c:69
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:229
+#: src/modules/everything/evry_config.c:561
+#: src/modules/gadman/e_mod_gadman.c:1036
+msgid "Vertical"
+msgstr "Verticale"
+
+#: src/bin/e_shelf.c:70
+msgid "Left"
+msgstr "A sinistra"
+
+#: src/bin/e_shelf.c:71
+msgid "Right"
+msgstr "A destra"
+
+#: src/bin/e_shelf.c:72
+msgid "Top"
+msgstr "In alto"
+
+#: src/bin/e_shelf.c:73
+msgid "Bottom"
+msgstr "In basso"
+
+#: src/bin/e_shelf.c:74
+msgid "Top-left Corner"
+msgstr "In alto a sinistra"
+
+#: src/bin/e_shelf.c:75
+msgid "Top-right Corner"
+msgstr "In alto a destra"
+
+#: src/bin/e_shelf.c:76
+msgid "Bottom-left Corner"
+msgstr "In basso a sinistra"
+
+#: src/bin/e_shelf.c:77
+msgid "Bottom-right Corner"
+msgstr "In basso a destra"
+
+#: src/bin/e_shelf.c:78
+msgid "Left-top Corner"
+msgstr "A sinistra in alto"
+
+#: src/bin/e_shelf.c:79
+msgid "Right-top Corner"
+msgstr "A destra in alto"
+
+#: src/bin/e_shelf.c:80
+msgid "Left-bottom Corner"
+msgstr "A sinistra in basso"
+
+#: src/bin/e_shelf.c:81
+msgid "Right-bottom Corner"
+msgstr "A destra in basso"
+
 #: src/bin/e_shelf.c:267
 msgid "Shelf #"
 msgstr "Mensola #"
@@ -4232,6 +4301,16 @@ msgstr "Aggiungi ai preferiti"
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "Directory superiore"
+
+#: src/modules/backlight/e_mod_main.c:430
+#: src/modules/conf_display/e_mod_main.c:36
+msgid "Backlight"
+msgstr "Retroilluminazione"
+
+#: src/modules/backlight/e_mod_main.c:486
+#: src/modules/backlight/e_mod_main.c:496
+msgid "Backlight Controls"
+msgstr "Controlli retroilluminazione"
 
 #: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
@@ -4846,6 +4925,22 @@ msgstr "%1.0f Frame"
 #: src/modules/comp/e_mod_config.c:1320
 msgid "Corner"
 msgstr "Angolo"
+
+#: src/modules/comp/e_mod_config.c:1323
+msgid "Top Left"
+msgstr "Superiore sinistro"
+
+#: src/modules/comp/e_mod_config.c:1326
+msgid "Top Right"
+msgstr "Superiore destro"
+
+#: src/modules/comp/e_mod_config.c:1329
+msgid "Bottom Left"
+msgstr "Inferiore sinistro"
+
+#: src/modules/comp/e_mod_config.c:1332
+msgid "Bottom Right"
+msgstr "Inferiore destro"
 
 #: src/modules/comp/e_mod_config.c:1337
 msgid "Debug"
@@ -5542,10 +5637,6 @@ msgstr "Risoluzione dello schermo"
 #: src/modules/conf_display/e_mod_main.c:28
 msgid "Screen Lock"
 msgstr "Bloccaschermo"
-
-#: src/modules/conf_display/e_mod_main.c:36
-msgid "Backlight"
-msgstr "Retroilluminazione"
 
 #: src/modules/conf_display/e_mod_main.c:44
 msgid "Desk"
@@ -7175,8 +7266,8 @@ msgstr ""
 "copia."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:58
-msgid "GTK Application Theme Settings"
-msgstr "Impostazioni tema applicazioni GTK"
+msgid "Application Theme Settings"
+msgstr "Impostazioni tema applicazioni"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:471
 msgid "Match Enlightenment theme if possible"
@@ -7579,18 +7670,6 @@ msgstr "Riempitiva"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 msgid "Direction"
 msgstr "Direzione"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
-#: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:1028
-msgid "Horizontal"
-msgstr "Orizzontale"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:229
-#: src/modules/everything/evry_config.c:561
-#: src/modules/gadman/e_mod_gadman.c:1036
-msgid "Vertical"
-msgstr "Verticale"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:231
 msgid "Both"
@@ -8142,63 +8221,6 @@ msgstr[1] "%d oggetti"
 msgid "No plugins loaded"
 msgstr "Nessun plugin caricato"
 
-#: src/modules/everything/evry_plug_clipboard.c:33
-msgid "Copy to Clipboard"
-msgstr "Copia negli appunti"
-
-#: src/modules/everything/evry_plugin.c:178
-#: src/modules/everything/evry_plugin.c:211
-#, c-format
-msgid "Show %s Plugin"
-msgstr "Mostra plugin %s"
-
-#: src/modules/everything/evry_plugin.c:188
-#, c-format
-msgid "Browse %s"
-msgstr "Esplora %s"
-
-#: src/modules/everything/evry_plugin.c:213
-msgid "Everything"
-msgstr "Everything"
-
-#: src/modules/everything/evry_view_help.c:67
-msgid ""
-"  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  "
-"Just type a few letters of the thing you are looking for. <br>  Use cursor "
-"<hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  "
-"Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  "
-"<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
-"you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
-"close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
-msgstr ""
-"  Ok, ecco la spiegazione di <hilight>Everything</hilight>...<br>  Digitate "
-"semplicemente alcune lettere di ciò che state<br>  cercando. Usate i tasti "
-"<hilight>&lt;su/giù&gt;</hilight> per selezionare<br>  dall'elenco. Premete "
-"il tasto <hilight>&lt;tab&gt;</hilight> per selezionare<br>  un'azione, "
-"quindi <hilight>&lt;invio&gt;</hilight>. Questa pagina non<br>  apparirà "
-"alla prossima esecuzione di <hilight>Everything</hilight><br>    "
-"<hilight>&lt;?&gt;</hilight> mostra questa pagina<br>    <hilight>&lt;"
-"invio&gt;</hilight> esegue l'azione<br>    <hilight>&lt;ctrl+invio&gt;</"
-"hilight> esegue l'azione e continua<br>    <hilight>&lt;tab&gt;</hilight> "
-"cambia selettore<br>    <hilight>&lt;ctrl+tab&gt;</hilight> completa l'input "
-"(dipende dal plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> va al plugin "
-"che inizia con 'x'<br>    <hilight>&lt;ctrl+sinistra/destra&gt;</hilight> "
-"cicla tra i plugin<br>    <hilight>&lt;ctrl+su/giù&gt;</hilight> va alla "
-"prima/ultima voce<br>    <hilight>&lt;ctrl+1&gt;</hilight> cambia "
-"visualizzazione (esce da questa pagina ;)<br>    <hilight>&lt;ctrl+2&gt;</"
-"hilight> cambia visualizzazione a elenco<br>    <hilight>&lt;ctrl+3&gt;</"
-"hilight> cambia visualizzazione a miniature"
-
 #: src/modules/everything/evry_plug_apps.c:1148
 msgid "Exebuf"
 msgstr "Comando"
@@ -8252,6 +8274,7 @@ msgid "Sudo GUI"
 msgstr "Interfaccia sudo"
 
 #: src/modules/everything/evry_plug_apps.c:1418
+#: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1585
 msgid "Everything Plugin"
 msgstr "Plugin di Everything"
@@ -8259,6 +8282,10 @@ msgstr "Plugin di Everything"
 #: src/modules/everything/evry_plug_calc.c:252
 msgid "Calculator"
 msgstr "Calcolatrice"
+
+#: src/modules/everything/evry_plug_clipboard.c:33
+msgid "Copy to Clipboard"
+msgstr "Copia negli appunti"
 
 #: src/modules/everything/evry_plug_files.c:1316
 msgid "Copy To ..."
@@ -8318,6 +8345,11 @@ msgstr "Svuota cache"
 msgid "Show Dialog"
 msgstr "Mostra finestre di dialogo"
 
+#: src/modules/everything/evry_plug_text.c:63
+#: src/modules/everything/evry_plug_text.c:66
+msgid "Text"
+msgstr "Testo"
+
 #: src/modules/everything/evry_plug_windows.c:430
 msgid "Switch to Window"
 msgstr "Passa alla finestra"
@@ -8329,6 +8361,63 @@ msgstr "Commuta schermo pieno"
 #: src/modules/everything/evry_plug_windows.c:459
 msgid "Send to Desktop"
 msgstr "Invia al desktop"
+
+#: src/modules/everything/evry_plugin.c:178
+#: src/modules/everything/evry_plugin.c:211
+#, c-format
+msgid "Show %s Plugin"
+msgstr "Mostra plugin %s"
+
+#: src/modules/everything/evry_plugin.c:188
+#, c-format
+msgid "Browse %s"
+msgstr "Esplora %s"
+
+#: src/modules/everything/evry_plugin.c:213
+msgid "Everything"
+msgstr "Everything"
+
+#: src/modules/everything/evry_view_help.c:67
+msgid ""
+"  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  "
+"Just type a few letters of the thing you are looking for. <br>  Use cursor "
+"<hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  "
+"Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  "
+"<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
+"you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
+"close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
+"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
+"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
+"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
+"toggle thumb view modes"
+msgstr ""
+"  Ok, ecco la spiegazione di <hilight>Everything</hilight>...<br>  Digitate "
+"semplicemente alcune lettere di ciò che state<br>  cercando. Usate i tasti "
+"<hilight>&lt;su/giù&gt;</hilight> per selezionare<br>  dall'elenco. Premete "
+"il tasto <hilight>&lt;tab&gt;</hilight> per selezionare<br>  un'azione, "
+"quindi <hilight>&lt;invio&gt;</hilight>. Questa pagina non<br>  apparirà "
+"alla prossima esecuzione di <hilight>Everything</hilight><br>    "
+"<hilight>&lt;?&gt;</hilight> mostra questa pagina<br>    <hilight>&lt;"
+"invio&gt;</hilight> esegue l'azione<br>    <hilight>&lt;ctrl+invio&gt;</"
+"hilight> esegue l'azione e continua<br>    <hilight>&lt;tab&gt;</hilight> "
+"cambia selettore<br>    <hilight>&lt;ctrl+tab&gt;</hilight> completa l'input "
+"(dipende dal plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> va al plugin "
+"che inizia con 'x'<br>    <hilight>&lt;ctrl+sinistra/destra&gt;</hilight> "
+"cicla tra i plugin<br>    <hilight>&lt;ctrl+su/giù&gt;</hilight> va alla "
+"prima/ultima voce<br>    <hilight>&lt;ctrl+1&gt;</hilight> cambia "
+"visualizzazione (esce da questa pagina ;)<br>    <hilight>&lt;ctrl+2&gt;</"
+"hilight> cambia visualizzazione a elenco<br>    <hilight>&lt;ctrl+3&gt;</"
+"hilight> cambia visualizzazione a miniature"
+
+#: src/modules/everything/evry_view_tabs.c:93
+msgid "Back"
+msgstr "Indietro"
 
 #: src/modules/fileman/e_fwin.c:2039
 msgid "Other application..."
@@ -9338,16 +9427,16 @@ msgstr "Controlla aggiornamenti disponibili"
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, securiity "
+"Enlightenment can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
-"because it lets you<br>you know about available bug fixes and<br>security "
-"fixes when they happen. As a<br>bi-product of this, Enlightenment "
-"will<br>connect to enlightenment.org and transmit<br>some information as a "
-"result much like any<br>web browser might do. No personal "
-"information<br>such as username, password or any personal<br>files will be "
-"transmitted. If you do not like<br>this, please disable this below. It is "
-"highly<br>advised that you do not disable this as it<br>may leave you "
-"vulnerable or having to live<br>with bugs."
+"because it lets<br>you know about available bug fixes and<br>security fixes "
+"when they happen. As a<br>bi-product of this, Enlightenment will<br>connect "
+"to enlightenment.org and transmit<br>some information as a result much like "
+"any<br>web browser might do. No personal information<br>such as username, "
+"password or any personal<br>files will be transmitted. If you do not "
+"like<br>this, please disable this below. It is highly<br>advised that you do "
+"not disable this as it<br>may leave you vulnerable or having to live<br>with "
+"bugs."
 msgstr ""
 "Enlightenement può controllare<br>l'esistenza di nuove versioni,"
 "<br>aggiornamenti, bugfix e add-on<br>disponibili.<br><br>Questo è molto "
@@ -9473,6 +9562,18 @@ msgstr "Impostazioni di Mixer aggiornate"
 #: src/modules/mixer/e_mod_main.c:1349
 msgid "Mixer Module"
 msgstr "Modulo Mixer"
+
+#: src/modules/mixer/e_mod_main.c:1384
+msgid "Increase Volume"
+msgstr "Aumenta volume"
+
+#: src/modules/mixer/e_mod_main.c:1385
+msgid "Decrease Volume"
+msgstr "Diminuisce volume"
+
+#: src/modules/mixer/e_mod_main.c:1386
+msgid "Mute Volume"
+msgstr "Silenzia audio"
 
 #: src/modules/connman/e_mod_main.c:252
 msgid "Missing Application"
