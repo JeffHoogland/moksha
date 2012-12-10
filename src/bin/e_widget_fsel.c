@@ -211,7 +211,8 @@ _e_wid_fsel_sel_chg(E_Widget_Data *wd, Evas_Object *fm)
    struct stat st;
    Eina_Bool preview;
 
-   if (wd->nochange && wd->path) return;
+   rp = e_widget_entry_text_get(wd->o_entry);
+   if (wd->nochange && rp && rp[0]) return;
    preview = !!fm;
    fm = fm ?: wd->o_files_fm;
    wd->fprev = (fm != wd->o_files_fm);
