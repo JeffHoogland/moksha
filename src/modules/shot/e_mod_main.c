@@ -431,10 +431,21 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    Evas_Coord mw, mh;
    char buf[PATH_MAX];
    FILE *f;
+   int i, fd = -1;
    
-   if (quality == 100) snprintf(buf, sizeof(buf), "/tmp/e-shot-XXXXXX.png");
-   else snprintf(buf, sizeof(buf), "/tmp/e-shot-XXXXXX.jpg");
-   if (!mkstemps(buf, 4))
+   srand(time(NULL));
+   for (i = 0; i < 10240; i++)
+     {
+        int v = rand();
+        
+        if (quality == 100)
+          snprintf(buf, sizeof(buf), "/tmp/e-shot-%x.png", v);
+        else
+          snprintf(buf, sizeof(buf), "/tmp/e-shot-%x.jpg", v);
+        fd = open(buf, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
+        if (fd >= 0) break;
+     }
+   if (fd < 0)
      {
         e_util_dialog_show(_("Error - Can't create file"),
                            _("Cannot create temporary file '%s': %s"),
@@ -452,7 +463,7 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
         e_object_del(E_OBJECT(win));
         win = NULL;
      }
-   f = fopen(buf, "rb");
+   f = fdopen(fd, "rb");
    if (!f)
      {
         e_util_dialog_show(_("Error - Can't open file"),
