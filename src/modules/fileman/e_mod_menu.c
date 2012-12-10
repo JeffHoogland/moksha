@@ -190,6 +190,8 @@ _e_mod_menu_populate_done(void *data, Eio_File *handler __UNUSED__)
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, _("0 listable items"));
         e_menu_item_disabled_set(mi, 1);
+        /* avoid crash during cleanup_cb later */
+        eina_stringshare_ref(e_object_data_get(data));
      }
    else
      m->items = eina_list_sort(m->items, 0, (Eina_Compare_Cb)_e_mod_menu_populate_sort);
