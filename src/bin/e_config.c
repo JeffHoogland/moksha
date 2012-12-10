@@ -1448,6 +1448,9 @@ e_config_load(void)
 
      E_CONFIG_LIMIT(e_config->multiscreen_flip, 0, 1);
 
+     if (!e_config->icon_theme)
+       e_config->icon_theme = eina_stringshare_add("hicolor"); // FDO default
+
      /* FIXME: disabled auto apply because it causes problems */
      e_config->cfgdlg_auto_apply = 0;
      /* FIXME: desklock personalized password id disabled for security reasons */

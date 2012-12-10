@@ -150,7 +150,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->icon_overrides || cfdata->match_e17_icon_theme)
      e_config->icon_theme = eina_stringshare_ref(cfdata->icon_theme);
    else
-     e_config->icon_theme = NULL;
+     e_config->icon_theme = eina_stringshare_add("hicolor"); // FDO default
 
    e_config->icon_theme_overrides = !!cfdata->icon_overrides;
    e_config->xsettings.match_e17_icon_theme = cfdata->match_e17_icon_theme;
