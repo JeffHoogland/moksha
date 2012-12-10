@@ -386,7 +386,7 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    ob = e_widget_check_add(evas, _("Use Single Click"),
                            &(cfdata->view.single_click));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_check_add(evas, _("Really Move"),
+   ob = e_widget_check_add(evas, _("'cp+rm' instead of 'mv'"),
                            &(cfdata->copy));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Secure Deletion"),
