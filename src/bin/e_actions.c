@@ -543,6 +543,7 @@ ACT_FN_GO(window_fullscreen, )
 ACT_FN_GO(window_maximized_toggle, )
 {
    E_Border *bd;
+   Eina_Bool resize = EINA_FALSE;
 
    if (!obj) obj = E_OBJECT(e_border_focused_get());
    if (!obj) return;
@@ -553,8 +554,11 @@ ACT_FN_GO(window_maximized_toggle, )
      }
    bd = (E_Border *)obj;
 
+   /* internal dialog which is resizable */
+   if (bd->internal && (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))
+     resize = (bd->client.icccm.max_w != bd->client.icccm.min_w);
    if ((!bd->lock_user_maximize) && (!bd->fullscreen) &&
-       ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+       (resize || (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
         (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN)))
      {
         if ((bd->maximized & E_MAXIMIZE_TYPE) != E_MAXIMIZE_NONE)

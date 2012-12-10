@@ -619,6 +619,7 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    E_Menu *subm;
    E_Menu_Item *submi;
    E_Border *bd;
+   Eina_Bool resize = EINA_FALSE;
 
    if (!(bd = data)) return;
 
@@ -627,7 +628,10 @@ _e_border_menu_cb_window_pre(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    e_menu_item_submenu_set(mi, subm);
    e_object_unref(E_OBJECT(subm));
 
-   if ((bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
+   /* internal dialog which is resizable */
+   if (bd->internal && (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG))
+     resize = (bd->client.icccm.max_w != bd->client.icccm.min_w);
+   if (resize || (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_NORMAL) ||
        (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
      {
         if (!(((bd->client.icccm.min_w == bd->client.icccm.max_w) &&
