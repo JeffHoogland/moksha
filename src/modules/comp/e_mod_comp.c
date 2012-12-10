@@ -3693,7 +3693,7 @@ _e_mod_comp_add(E_Manager *man)
         e_util_dialog_internal
           (_("Compositor Error"),
           _("Another compositor is already running<br>"
-            "on your screen."));
+            "on your display server."));
         free(c);
         return NULL;
      }
@@ -3714,9 +3714,9 @@ _e_mod_comp_add(E_Manager *man)
      {
         e_util_dialog_internal
           (_("Compositor Error"),
-          _("Your screen does not support the compositor<br>"
-            "overlay window. This is needed for it to<br>"
-            "function."));
+          _("Your display server does not support the<br>"
+            "compositor overlay window. This is needed<br>"
+            "for it to function."));
         free(c);
         return NULL;
      }
@@ -3789,8 +3789,9 @@ _e_mod_comp_add(E_Manager *man)
           {
              e_util_dialog_internal
                (_("Compositor Warning"),
-               _("Your screen does not support OpenGL.<br>"
-                 "Falling back to software engine."));
+               _("Your display driver does not support OpenGL, or<br>"
+                 "no OpenGL engines were compiled or installed for<br>"
+                 "Evas or Ecore-Evas. Falling back to software engine."));
           }
 
         c->ee = ecore_evas_software_x11_new(NULL, c->win, 0, 0, man->w, man->h);
@@ -4126,8 +4127,8 @@ e_mod_comp_init(void)
      {
         e_util_dialog_internal
           (_("Compositor Error"),
-          _("Your X Display does not support the XComposite extension<br>"
-            "or Ecore was built without XComposite support.<br>"
+          _("Your display server does not support XComposite,<br>"
+            "or Ecore-X was built without XComposite support.<br>"
             "Note that for composite support you will also need<br>"
             "XRender and XFixes support in X11 and Ecore."));
         return 0;
@@ -4136,7 +4137,7 @@ e_mod_comp_init(void)
      {
         e_util_dialog_internal
           (_("Compositor Error"),
-          _("Your screen does not support the XDamage extension<br>"
+          _("Your display server does not support XDamage<br>"
             "or Ecore was built without XDamage support."));
         return 0;
      }
