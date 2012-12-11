@@ -85,7 +85,8 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
    /* TODO: Tell user he should fix his dbus setup */
    if ((e) && (e->error))
      fprintf(stderr, "E: efreet couldn't build cache\n");
-
+#else
+   (void)ev;
 #endif
    ecore_event_handler_del(desktop_cache_update_handler);
    buf = data;
