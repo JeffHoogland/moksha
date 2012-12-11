@@ -32,7 +32,7 @@ e_mod_comp_cfdata_edd_init(E_Config_DD **conf_edd, E_Config_DD **match_edd)
 #define D *conf_edd
    E_CONFIG_VAL(D, T, shadow_style, STR);
    E_CONFIG_VAL(D, T, engine, INT);
-   E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
+   //E_CONFIG_VAL(D, T, max_unmapped_pixels, INT);
    E_CONFIG_VAL(D, T, max_unmapped_time, INT);
    E_CONFIG_VAL(D, T, min_unmapped_time, INT);
    E_CONFIG_VAL(D, T, fps_average_range, INT);
@@ -46,7 +46,7 @@ e_mod_comp_cfdata_edd_init(E_Config_DD **conf_edd, E_Config_DD **match_edd)
    E_CONFIG_VAL(D, T, grab, UCHAR);
    E_CONFIG_VAL(D, T, vsync, UCHAR);
    E_CONFIG_VAL(D, T, swap_mode, UCHAR);
-   E_CONFIG_VAL(D, T, keep_unmapped, UCHAR);
+   //E_CONFIG_VAL(D, T, keep_unmapped, UCHAR);
    E_CONFIG_VAL(D, T, send_flush, UCHAR);
    E_CONFIG_VAL(D, T, send_dump, UCHAR);
    E_CONFIG_VAL(D, T, nocomp_fs, UCHAR);

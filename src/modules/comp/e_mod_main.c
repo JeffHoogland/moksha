@@ -47,7 +47,12 @@ e_modapi_init(E_Module *m)
                               &(mod->conf_match_edd));
 
    mod->conf = e_config_domain_load("module.comp", mod->conf_edd);
-   if (!mod->conf) _e_mod_config_new(m);
+   if (mod->conf)
+     {
+        mod->conf->max_unmapped_pixels = 32 * 1024;
+        mod->conf->keep_unmapped = 1;
+     }
+   else _e_mod_config_new(m);
    
    /* force some config vals off */
    mod->conf->lock_fps = 0;
