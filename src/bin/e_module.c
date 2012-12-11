@@ -115,6 +115,12 @@ e_module_all_load(void)
    unsetenv("E_MODULE_LOAD");
 }
 
+EAPI Eina_Bool
+e_module_loading_get(void)
+{
+   return _e_modules_initting;
+}
+
 EAPI E_Module *
 e_module_new(const char *name)
 {

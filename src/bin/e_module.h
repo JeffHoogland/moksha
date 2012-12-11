@@ -67,6 +67,6 @@ EAPI Eina_List   *e_module_list(void);
 EAPI void         e_module_dialog_show(E_Module *m, const char *title, const char *body);
 EAPI void         e_module_delayed_set(E_Module *m, int delayed);
 EAPI void         e_module_priority_set(E_Module *m, int priority);
-
+EAPI Eina_Bool   e_module_loading_get(void);
 #endif
 #endif
