@@ -1238,6 +1238,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Don't composite fullscreen windows"), &(cfdata->nocomp_fs));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
+/*   
    ob = e_widget_check_add(evas, _("Keep hidden windows"), &(cfdata->keep_unmapped));
    e_widget_list_object_append(ol, ob, 1, 1, 0.5);
    of = e_widget_frametable_add(evas, _("Maximum hidden pixels"), 0);
@@ -1262,9 +1263,11 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
    ob = e_widget_radio_add(evas, _("256M"), 256 * 1024, rg);
    e_widget_frametable_object_append(of, ob, 2, 2, 1, 1, 1, 1, 0, 0);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
+ */
    e_widget_toolbook_page_append(otb, NULL, _("Memory"), ol, 0, 0, 0, 0, 0.5, 0.0);
 
    ///////////////////////////////////////////
+/*   
    ol = e_widget_list_add(evas, 0, 0);
    ol2 = e_widget_list_add(evas, 1, 1);
    of = e_widget_framelist_add(evas, _("Min hidden"), 0);
@@ -1305,7 +1308,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
    e_widget_list_object_append(ol2, of, 1, 1, 0.5);
    e_widget_list_object_append(ol, ol2, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Timeouts"), ol, 0, 0, 0, 0, 0.5, 0.0);
-
+ */
    ///////////////////////////////////////////
    ol = e_widget_list_add(evas, 0, 0);
 
