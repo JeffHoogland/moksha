@@ -22,7 +22,7 @@ e_modapi_init(E_Module *m)
                                  e_int_config_paths);
    e_configure_registry_item_add("advanced/environment_variables", 120,
                                  _("Environment Variables"), NULL, 
-                                 "preferences-system", 
+                                 "preferences-variables", 
                                  e_int_config_env);
    conf_module = m;
    e_module_delayed_set(m, 1);
