@@ -267,7 +267,8 @@ e_entry_focus(Evas_Object *entry)
    if (sd->focused)
      return;
 
-   evas_object_focus_set(sd->entry_object, EINA_TRUE);
+   if ((sd->enabled) && (!sd->noedit))
+     evas_object_focus_set(sd->entry_object, EINA_TRUE);
    edje_object_signal_emit(sd->entry_object, "e,state,focused", "e");
 
    edje_object_part_text_cursor_end_set(sd->entry_object, ENTRY_PART_NAME, EDJE_CURSOR_MAIN);
@@ -364,12 +365,15 @@ e_entry_edit(Evas_Object *entry)
    if (!sd->noedit)
      return;
 
+   sd->noedit = EINA_FALSE;
    edje_object_signal_emit(e_scrollframe_edje_object_get(sd->scroll_object),
          "e,state,edit", "e");
    edje_object_signal_emit(sd->entry_object, "e,state,edit", "e");
    if (sd->focused)
-      edje_object_signal_emit(sd->entry_object, "e,action,show,cursor", "e");
-   sd->noedit = EINA_FALSE;
+     {
+        edje_object_signal_emit(sd->entry_object, "e,action,show,cursor", "e");
+        evas_object_focus_set(sd->entry_object, EINA_TRUE);
+     }
 }
 
 /**
@@ -389,11 +393,11 @@ e_entry_noedit(Evas_Object *entry)
    if (sd->noedit)
      return;
 
+   sd->noedit = EINA_TRUE;
    edje_object_signal_emit(e_scrollframe_edje_object_get(sd->scroll_object),
          "e,state,noedit", "e");
    edje_object_signal_emit(sd->entry_object, "e,state,noedit", "e");
    edje_object_signal_emit(sd->entry_object, "e,action,hide,cursor", "e");
-   sd->noedit = EINA_TRUE;
 }
 
 /**
