@@ -2068,13 +2068,9 @@ _pager_update_drop_position(Pager *p, Evas_Coord x, Evas_Coord y)
 }
 
 static void
-_pager_drop_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
+_pager_drop_cb_enter(void *data, const char *type __UNUSED__, void *event_info EINA_UNUSED)
 {
-   E_Event_Dnd_Enter *ev;
-   Pager *p;
-
-   ev = event_info;
-   p = data;
+   Pager *p = data;
 
    /* FIXME this fixes a segv, but the case is not easy
     * reproduceable. this makes no sense either since
@@ -2083,13 +2079,8 @@ _pager_drop_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
     * so this must be an issue with e_dnd code... i guess */
    if (act_popup) p = act_popup->pager;
 
-   _pager_update_drop_position(p, ev->x, ev->y);
-
    if (p->inst)
-     {
-        e_gadcon_client_autoscroll_cb_set(p->inst->gcc, _pager_inst_cb_scroll, p);
-        e_gadcon_client_autoscroll_update(p->inst->gcc, ev->x, ev->y);
-     }
+     e_gadcon_client_autoscroll_cb_set(p->inst->gcc, _pager_inst_cb_scroll, p);
 }
 
 static void
