@@ -773,7 +773,7 @@ _e_desktop_edit_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas
 
    o = e_widget_entry_add(evas, NULL, NULL, NULL, NULL);
    e_widget_table_object_append(ot, o, 1, 4, 1, 1, 1, 1, 1, 0);
-   e_widget_disabled_set(o, 1);
+   e_widget_entry_readonly_set(o, 1);
    cfdata->orig_path_entry = o;
    _e_desktop_edit_update_orig_path(cfdata);
 
