@@ -2204,7 +2204,6 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
      }
 
    EINA_LIST_FOREACH(p->desks, l, pd)
-   for (l = p->desks; l && p->active_drop_pd; l = l->next)
      {
         if (!p->active_drop_pd) break;
         if (pd == p->active_drop_pd)
