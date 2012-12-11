@@ -9216,7 +9216,7 @@ _e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
         errno = 0;
         if (stat(buf, &st) && (errno == ENOENT))
           {
-             fd = creat(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
+             fd = open(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
              if (fd)
                {
                   close(fd);
