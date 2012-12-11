@@ -296,7 +296,6 @@
    ICON("preferences-focus","icon_window_focus.png",64)          // *** // "enlightenment/focus"
    ICON("preferences-engine","icon_engine.png",64)               // *** // "enlightenment/engine"
    ICON("preferences-dialogs","icon_dummy.png",64)               // *** // "enlightenment/dialogs"
-   ICON("preferences-interaction","icon_interaction.png",64)     // *** // "enlightenment/interaction"
    ICON("preferences-imc","icon_imc.png",64)                     // *** // "enlightenment/imc"
    ICON("preferences-system-lock-screen","icon_desklock.png",64) // *** // "enlightenment/desklock"
    ICON("preferences-icon-theme","icon_icon_theme.png",64)       // *** // "enlightenment/icon_theme"

@@ -212,7 +212,11 @@ img/icon_enlightenment.png \
 img/icon_preferences-applications-personal.png \
 img/icon_preferences-applications-screen-lock.png \
 img/icon_preferences-applications-screen-unlock.png \
+img/icon_preferences-desklock-locale.png \
 img/icon_preferences-desktop-environments.png \
+img/icon_preferences-desktop-signal-bindings.png \
+img/icon_preferences-interaction.png \
+img/icon_preferences-variables.png \
 img/icon_system-lock-screen.png \
 img/icon_system-log-out.png \
 img/icon_system.png \
