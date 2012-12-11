@@ -19,11 +19,13 @@ static E_Config_DD *conf_edd = NULL;
 static unsigned int
 _notification_notify(E_Notification *n)
 {
-   const char *appname = e_notification_app_name_get(n);
-   unsigned int replaces_id = e_notification_replaces_id_get(n);
-   unsigned int new_id;
+   const char *appname;
+   unsigned int replaces_id, new_id;
    int popuped;
 
+   if (e_desklock_state_get()) return 0;
+   appname = e_notification_app_name_get(n);
+   replaces_id = e_notification_replaces_id_get(n);
    if (replaces_id) new_id = replaces_id;
    else new_id = notification_cfg->next_id++;
 
