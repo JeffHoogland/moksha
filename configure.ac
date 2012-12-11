@@ -75,6 +75,7 @@ AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 
 efl_version="1.7.3"
+AC_SUBST(efl_version)
 
 AC_CHECK_HEADERS([sys/timerfd.h sys/ptrace.h arpa/inet.h netinet/in.h])
 

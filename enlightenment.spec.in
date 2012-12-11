@@ -13,9 +13,9 @@ Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project 
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 Prefix: %{_prefix}
 #BuildSuggests: xorg-x11-devel, XFree86-devel, libX11-devel
-BuildRequires: efl-devel, edje-devel, edje-bin
+BuildRequires: efl-devel >= @efl_version@, edje-devel, edje-bin
 BuildRequires: eeze-devel
-Requires: efl
+Requires: efl >= @efl_version@
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
