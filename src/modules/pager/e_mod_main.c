@@ -2099,22 +2099,13 @@ _pager_drop_cb_move(void *data, const char *type __UNUSED__, void *event_info)
 static void
 _pager_drop_cb_leave(void *data, const char *type __UNUSED__, void *event_info __UNUSED__)
 {
-   Pager *p;
-   Pager_Desk *pd;
-   Eina_List *l;
-
-   p = data;
+   Pager *p = data;
 
    if (act_popup) p = act_popup->pager;
 
-   EINA_LIST_FOREACH(p->desks, l, pd)
-     {
-        if (pd == p->active_drop_pd)
-          {
-             edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
-             p->active_drop_pd = NULL;
-          }
-     }
+   if (p->active_drop_pd)
+     edje_object_signal_emit(p->active_drop_pd->o_desk, "e,action,drag,out", "e");
+   p->active_drop_pd = NULL;
 
    if (p->inst) e_gadcon_client_autoscroll_cb_set(p->inst->gcc, NULL, NULL);
 }
