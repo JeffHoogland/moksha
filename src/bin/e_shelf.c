@@ -1953,6 +1953,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
    else if (type == ECORE_EVENT_MOUSE_MOVE)
      {
         Ecore_Event_Mouse_Move *ev;
+        int x, y;
         Eina_Bool inside = EINA_FALSE;
 
         ev = event;
@@ -1965,12 +1966,12 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
         if (!inside)
           {
              inside = E_INSIDE(ev->root.x, ev->root.y, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4);
-             ev->root.x -= es->zone->x, ev->root.y -= es->zone->y;
+             x = ev->root.x - es->zone->x, y = ev->root.y - es->zone->x;
              if (inside)
                inside = (
-                         ((E_INSIDE(ev->root.x, ev->root.y, es->x, es->y, es->w, es->h)) ||
-                         (E_INSIDE(ev->root.x, ev->root.y, es->x - 2, es->y - 2, es->w + 4, es->h + 4)) ||
-                         (E_INSIDE(ev->root.x, ev->root.y, es->x + 2, es->y + 2, es->w + 4, es->h + 4)))
+                         ((E_INSIDE(x, y, es->x, es->y, es->w, es->h)) ||
+                         (E_INSIDE(x, y, es->x - 2, es->y - 2, es->w + 4, es->h + 4)) ||
+                         (E_INSIDE(x, y, es->x + 2, es->y + 2, es->w + 4, es->h + 4)))
                         );
              if (inside && es->popup)
                {
