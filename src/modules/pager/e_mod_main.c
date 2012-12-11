@@ -2050,20 +2050,16 @@ _pager_inst_cb_scroll(void *data)
 static void
 _pager_update_drop_position(Pager *p, Evas_Coord x, Evas_Coord y)
 {
-   Pager_Desk *pd, *pd2;
-   Eina_List *l;
+   Pager_Desk *pd;
 
    p->dnd_x = x;
    p->dnd_y = y;
    pd = _pager_desk_at_coord(p, x, y);
    if (pd == p->active_drop_pd) return;
-   EINA_LIST_FOREACH(p->desks, l, pd2)
-     {
-        if (pd == pd2)
-          edje_object_signal_emit(pd2->o_desk, "e,action,drag,in", "e");
-        else if (pd2 == p->active_drop_pd)
-          edje_object_signal_emit(pd2->o_desk, "e,action,drag,out", "e");
-     }
+   if (pd)
+     edje_object_signal_emit(pd->o_desk, "e,action,drag,in", "e");
+   if (p->active_drop_pd)
+     edje_object_signal_emit(p->active_drop_pd->o_desk, "e,action,drag,out", "e");
    p->active_drop_pd = pd;
 }
 
