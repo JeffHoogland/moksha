@@ -493,6 +493,9 @@ _systray_base_create(Instance *inst)
    unsigned short r, g, b;
    const char *color;
 
+   if (inst->gcc->gadcon->shelf && (!e_util_strcmp(inst->gcc->gadcon->shelf->style, "invisible")))
+     e_util_dialog_internal (_("Systray Error"),
+       _("Systray cannot set its background invisible to match its shelf."));
    color = edje_object_data_get(inst->ui.gadget, inst->gcc->style);
    if (!color)
      color = edje_object_data_get(inst->ui.gadget, "default");
