@@ -9192,18 +9192,17 @@ _e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
    const char *path;
    struct stat st;
    unsigned int x;
-   FILE *f;
+   int fd;
 
    path = ecore_thread_global_data_wait("path", 2.0);
    snprintf(buf, sizeof(buf), "%s/%s", path, _("New File"));
    errno = 0;
    if (stat(buf, &st) && (errno == ENOENT))
      {
-        f = fopen(buf, "w");
-        if (f)
+        fd = open(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
+        if (fd)
           {
-             fwrite("\n", 1, 1, f);
-             fclose(f);
+             close(fd);
              ecore_thread_feedback(eth, strdup(buf));
              return;
           }
@@ -9217,11 +9216,10 @@ _e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
         errno = 0;
         if (stat(buf, &st) && (errno == ENOENT))
           {
-             f = fopen(buf, "w");
-             if (f)
+             fd = creat(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
+             if (fd)
                {
-                  fwrite("\n", 1, 1, f);
-                  fclose(f);
+                  close(fd);
                   ecore_thread_feedback(eth, strdup(buf));
                   return;
                }
