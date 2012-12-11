@@ -1571,7 +1571,7 @@ e_fm2_window_object_get(Evas_Object *obj)
 EAPI void
 e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
 {
-   const char *drop[] = { "enlightenment/desktop", "enlightenment/border", "text/uri-list", "XdndDirectSave0"};
+   const char *drop[] = {"text/uri-list", "XdndDirectSave0"};
 
    EFM_SMART_CHECK();
    sd->eobj = eobj;
@@ -1582,7 +1582,7 @@ e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
                                          _e_fm2_cb_dnd_move,
                                          _e_fm2_cb_dnd_leave,
                                          _e_fm2_cb_dnd_selection_notify,
-                                         drop, 4,
+                                         drop, 2,
                                          sd->x, sd->y, sd->w, sd->h);
    e_drop_handler_responsive_set(sd->drop_handler);
    e_drop_handler_xds_set(sd->drop_handler, _e_fm2_cb_dnd_drop);
