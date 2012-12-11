@@ -2057,9 +2057,8 @@ _pager_update_drop_position(Pager *p, Evas_Coord x, Evas_Coord y)
    p->dnd_y = y;
    pd = _pager_desk_at_coord(p, x, y);
    if (pd == p->active_drop_pd) return;
-   for (l = p->desks; l; l = l->next)
+   EINA_LIST_FOREACH(p->desks, l, pd2)
      {
-        pd2 = l->data;
         if (pd == pd2)
           edje_object_signal_emit(pd2->o_desk, "e,action,drag,in", "e");
         else if (pd2 == p->active_drop_pd)
@@ -2114,17 +2113,15 @@ static void
 _pager_drop_cb_leave(void *data, const char *type __UNUSED__, void *event_info __UNUSED__)
 {
    Pager *p;
+   Pager_Desk *pd;
    Eina_List *l;
 
    p = data;
 
    if (act_popup) p = act_popup->pager;
 
-   for (l = p->desks; l && p->active_drop_pd; l = l->next)
+   EINA_LIST_FOREACH(p->desks, l, pd)
      {
-        Pager_Desk *pd;
-
-        pd = l->data;
         if (pd == p->active_drop_pd)
           {
              edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
@@ -2215,9 +2212,10 @@ _pager_drop_cb_drop(void *data, const char *type, void *event_info)
           }
      }
 
+   EINA_LIST_FOREACH(p->desks, l, pd)
    for (l = p->desks; l && p->active_drop_pd; l = l->next)
      {
-        pd = l->data;
+        if (!p->active_drop_pd) break;
         if (pd == p->active_drop_pd)
           {
              edje_object_signal_emit(pd->o_desk, "e,action,drag,out", "e");
@@ -2384,10 +2382,10 @@ _pager_desk_cb_drag_finished(E_Drag *drag, int dropped)
         if (!pd->desk) return;
         zone = e_util_zone_current_get(e_manager_current_get());
         desk = e_desk_current_get(zone);
-        for (l = pagers; l && !pd2; l = l->next)
+        EINA_LIST_FOREACH(pagers, l, p)
           {
-             p = l->data;
              pd2 = _pager_desk_find(p, desk);
+             if (pd2) break;
           }
         _pager_desk_switch(pd, pd2);
      }
