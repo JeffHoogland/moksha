@@ -66,7 +66,7 @@ gadman_reset(void)
           e_object_del(E_OBJECT(gc));
         Man->gadgets[layer] = eina_list_free(Man->gadgets[layer]);
 
-        evas_object_del(Man->movers[layer]);
+        if (Man->movers[layer]) evas_object_del(Man->movers[layer]);
         Man->movers[layer] = NULL;
      }
    Man->gc_top = NULL;
@@ -101,7 +101,7 @@ gadman_init(E_Module *m)
    if (!Man) return;
 
    Man->module = m;
-   gadman_locked = EINA_TRUE;
+   gadman_locked = e_module_loading_get();
    Man->container = e_container_current_get(e_manager_current_get());
    Man->width = Man->container->w;
    Man->height = Man->container->h;
@@ -127,8 +127,8 @@ gadman_init(E_Module *m)
    e_gadcon_location_set_icon_name(location, "preferences-desktop");
    e_gadcon_location_register(location);
 
-   _gadman_gadgets = eina_hash_string_superfast_new(NULL);
    _e_gadman_handlers_add();
+   Man->gadman_reset_timer = ecore_timer_add(0.1, _e_gadman_reset_timer, NULL);
 }
 
 void
@@ -419,6 +419,7 @@ gadman_gadget_edit_end(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
         E_Gadcon *gc;
 
         gc = eina_list_data_get(Man->gadcons[layer]);
+        if (!gc) continue;
         if (!gc->editing) continue;
 
         evas_object_event_callback_del(Man->movers[layer], EVAS_CALLBACK_HIDE, gadman_edit);
@@ -828,6 +829,7 @@ _gadman_gadcon_new(const char *name, Gadman_Layer_Type layer, E_Zone *zone, E_Ga
      }
 
    e_gadcon_custom_new(gc);
+   e_gadcon_custom_populate_request(gc);
 
    if (!Man->movers[layer])
      Man->movers[layer] = _create_mover(gc);
