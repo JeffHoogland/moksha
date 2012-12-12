@@ -9330,7 +9330,7 @@ _e_fm2_new_thread_helper(Ecore_Thread *eth, Eina_Bool dir)
      goto error;
    for (x = 0; x < UINT_MAX; x++)
      {
-        snprintf(buf, sizeof(buf), "%s/%s %u", path, _("New File"), x);
+        snprintf(buf, sizeof(buf), "%s/%s %u", path, dir ? _("New Directory") : _("New File"), x);
         errno = 0;
         if (stat(buf, &st) && (errno == ENOENT))
           {
