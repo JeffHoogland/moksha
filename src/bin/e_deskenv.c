@@ -23,18 +23,7 @@ e_deskenv_init(void)
           }
      }
 
-   // load ~/.Xmodmap
-   // NOTE: one day we should replace this with an e based config + service
-   if (e_config->deskenv.load_xmodmap)
-     {
-        e_user_homedir_concat(buf, sizeof(buf), ".Xmodmap");
-        if (ecore_file_exists(buf))
-          {
-             snprintf(buf2, sizeof(buf2), "xmodmap %s", buf);
-             ecore_exe_run(buf2, NULL);
-          }
-     }
-
+   e_deskenv_xmodmap_run();
    // make gnome apps happy
    // NOTE: one day we should replace this with an e based config + service
    if (e_config->deskenv.load_gnome)
@@ -55,4 +44,17 @@ EINTERN int
 e_deskenv_shutdown(void)
 {
    return 1;
+}
+
+EAPI void
+e_deskenv_xmodmap_run(void)
+{
+   char buf[PATH_MAX], buf2[PATH_MAX + sizeof("xmodmap ")];
+   // load ~/.Xmodmap
+   // NOTE: one day we should replace this with an e based config + service
+   if (!e_config->deskenv.load_xmodmap) return;
+   e_user_homedir_concat(buf, sizeof(buf), ".Xmodmap");
+   if (!ecore_file_exists(buf)) return;
+   snprintf(buf2, sizeof(buf2), "xmodmap %s", buf);
+   ecore_exe_run(buf2, NULL);
 }
