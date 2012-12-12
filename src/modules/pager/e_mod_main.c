@@ -869,6 +869,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    inst = data;
    ev = event_info;
    if (ev->button != 3) return;
+   if (inst->gcc->menu) return;
 
    m = e_menu_new();
    mi = e_menu_item_new(m);
