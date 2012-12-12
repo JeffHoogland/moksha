@@ -964,7 +964,7 @@ _e_wid_fprev_cb_del(E_Widget_Data *wd, int type __UNUSED__, Eio_Monitor_Event *e
 {
    if (wd->monitor != ev->monitor) return ECORE_CALLBACK_RENEW;
    _e_wid_fprev_clear_widgets(wd);
-   eio_monitor_del(wd->monitor);
+   if (wd->monitor) eio_monitor_del(wd->monitor);
    wd->monitor = NULL;
    E_FREE_LIST(wd->handlers, ecore_event_handler_del);
    return ECORE_CALLBACK_RENEW;

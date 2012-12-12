@@ -629,7 +629,7 @@ _box_button_free(Nav_Item *ni)
    e_box_unpack(ni->o);
    evas_object_del(ni->o);
    E_FREE_LIST(ni->handlers, ecore_event_handler_del);
-   eio_monitor_del(ni->monitor);
+   if (ni->monitor) eio_monitor_del(ni->monitor);
    eina_stringshare_del(ni->path);
    free(ni);
 }
