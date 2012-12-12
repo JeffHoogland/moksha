@@ -1460,6 +1460,13 @@ no_submenu_item:
              edje_object_size_min_calc(mi->toggle_object, &ww, &hh);
              mi->toggle_w = ww;
              mi->toggle_h = hh;
+             e_box_pack_options_set(mi->toggle_object,
+                                    1, 1, /* fill */
+                                    0, 1, /* expand */
+                                    0.5, 0.5, /* align */
+                                    ww, hh, /* min */
+                                    -1, -1 /* max */
+                                   );
           }
         else if (mi->radio)
           {
@@ -1473,6 +1480,13 @@ no_submenu_item:
              edje_object_size_min_calc(mi->toggle_object, &ww, &hh);
              mi->toggle_w = ww;
              mi->toggle_h = hh;
+             e_box_pack_options_set(mi->toggle_object,
+                                    1, 1, /* fill */
+                                    0, 1, /* expand */
+                                    0.5, 0.5, /* align */
+                                    ww, hh, /* min */
+                                    -1, -1 /* max */
+                                   );
           }
         else
           {
@@ -1561,6 +1575,13 @@ no_submenu_item:
                   mi->icon_w = ww;
                   mi->icon_h = hh;
                   e_box_pack_end(mi->container_object, mi->icon_bg_object);
+                  e_box_pack_options_set(mi->icon_bg_object,
+                                         1, 1, /* fill */
+                                         0, 1, /* expand */
+                                         0.5, 0.5, /* align */
+                                         ww, hh, /* min */
+                                         -1, -1 /* max */
+                                        );
                }
              else
                {
@@ -1569,6 +1590,13 @@ no_submenu_item:
                   mi->icon_w = icon_w;
                   mi->icon_h = icon_h;
                   e_box_pack_end(mi->container_object, o);
+                  e_box_pack_options_set(mi->icon_object,
+                                         1, 1, /* fill */
+                                         0, 1, /* expand */
+                                         0.5, 0.5, /* align */
+                                         ww, hh, /* min */
+                                         -1, -1 /* max */
+                                        );
                }
           }
         else
@@ -1594,6 +1622,13 @@ no_submenu_item:
              edje_object_size_min_calc(mi->label_object, &ww, &hh);
              mi->label_w = ww;
              mi->label_h = hh;
+             e_box_pack_options_set(mi->label_object,
+                                    1, 1, /* fill */
+                                    1, 1, /* expand */
+                                    0.5, 0.5, /* align */
+                                    ww, hh, /* min */
+                                    -1, -1 /* max */
+                                   );
           }
         else
           {
@@ -1615,6 +1650,13 @@ no_submenu_item:
              edje_object_size_min_calc(mi->submenu_object, &ww, &hh);
              mi->submenu_w = ww;
              mi->submenu_h = hh;
+             e_box_pack_options_set(mi->submenu_object,
+                                    1, 1, /* fill */
+                                    0, 1, /* expand */
+                                    0.5, 0.5, /* align */
+                                    ww, hh, /* min */
+                                    -1, -1 /* max */
+                                   );
           }
         else
           {
@@ -1764,6 +1806,7 @@ _e_menu_items_layout_update(E_Menu *m)
         if (mi->icon_object) icons_on = 1;
         if (mi->label) labels_on = 1;
         if (mi->submenu) submenus_on = 1;
+        if (mi->submenu_pre_cb.func) submenus_on = 1;
         if (mi->check) toggles_on = 1;
         if (mi->radio) toggles_on = 1;
 
