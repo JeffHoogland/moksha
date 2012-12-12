@@ -376,9 +376,6 @@ static void          _e_fm2_toggle_secure_rm(void *data, E_Menu *m, E_Menu_Item 
 static void          _e_fm2_toggle_ordering(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_sort(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_new_directory(void *data, E_Menu *m, E_Menu_Item *mi);
-static void          _e_fm2_new_directory_delete_cb(void *obj);
-static void          _e_fm2_new_directory_yes_cb(void *data, char *text);
-static void          _e_fm2_new_directory_no_cb(void *data);
 static void          _e_fm2_file_rename(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_file_rename_delete_cb(void *obj);
 static void          _e_fm2_file_rename_yes_cb(void *data, char *text);
@@ -450,7 +447,7 @@ static int           _e_fm2_client_monitor_add(const char *path);
 static void          _e_fm2_client_monitor_del(int id, const char *path);
 static int           _e_fm_client_file_del(const char *files, Eina_Bool secure, Evas_Object *e_fm);
 //static int _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm);
-static int           _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
+//static int           _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, int y, int res_w, int res_h, Evas_Object *e_fm);
 
 static void          _e_fm2_sel_rect_update(void *data);
 static void          _e_fm2_context_menu_append(E_Fm2_Smart_Data *sd, const char *path, const Eina_List *l, E_Menu *mn, E_Fm2_Icon *ic);
@@ -2482,8 +2479,6 @@ _e_fm2_client_file_trash(const char *path, Evas_Object *e_fm)
    return id;
 }
 
-#endif
-
 static int
 _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, int y, int res_w __UNUSED__, int res_h __UNUSED__, Evas_Object *e_fm)
 {
@@ -2504,6 +2499,8 @@ _e_fm2_client_file_mkdir(const char *path, const char *rel, int rel_to, int x, i
    e_fm2_op_registry_entry_add(id, e_fm, E_FM_OP_MKDIR, _e_fm2_operation_abort_internal);
    return id;
 }
+
+#endif
 
 EAPI int
 e_fm2_client_file_move(Evas_Object *e_fm, const char *args)
@@ -9275,6 +9272,18 @@ _e_fm2_icon_view_menu_pre(void *data, E_Menu *subm)
 }
 
 static void
+_e_fm2_new_dir_notify(void *data, Ecore_Thread *eth __UNUSED__, char *filename)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   if (filename)
+     sd->new_file.filename = eina_stringshare_add(ecore_file_file_get(filename));
+   else
+     e_util_dialog_internal(_("Error"), _("Could not create a directory!"));
+   free(filename);
+}
+
+static void
 _e_fm2_new_file_notify(void *data, Ecore_Thread *eth __UNUSED__, char *filename)
 {
    E_Fm2_Smart_Data *sd = data;
@@ -9287,7 +9296,7 @@ _e_fm2_new_file_notify(void *data, Ecore_Thread *eth __UNUSED__, char *filename)
 }
 
 static void
-_e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
+_e_fm2_new_thread_helper(Ecore_Thread *eth, Eina_Bool dir)
 {
    char buf[PATH_MAX];
    const char *path;
@@ -9296,16 +9305,24 @@ _e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
    int fd;
 
    path = ecore_thread_global_data_wait("path", 2.0);
-   snprintf(buf, sizeof(buf), "%s/%s", path, _("New File"));
+   snprintf(buf, sizeof(buf), "%s/%s", path, dir ? _("New Directory") : _("New File"));
    errno = 0;
    if (stat(buf, &st) && (errno == ENOENT))
      {
-        fd = open(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
-        if (fd)
+        if (dir && ecore_file_mkdir(buf))
           {
-             close(fd);
              ecore_thread_feedback(eth, strdup(buf));
              return;
+          }
+        else
+          {
+             fd = open(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
+             if (fd)
+               {
+                  close(fd);
+                  ecore_thread_feedback(eth, strdup(buf));
+                  return;
+               }
           }
         goto error;
      }
@@ -9317,12 +9334,20 @@ _e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
         errno = 0;
         if (stat(buf, &st) && (errno == ENOENT))
           {
-             fd = open(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
-             if (fd)
+             if (dir && ecore_file_mkdir(buf))
                {
-                  close(fd);
                   ecore_thread_feedback(eth, strdup(buf));
                   return;
+               }
+             else
+               {
+                  fd = open(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
+                  if (fd)
+                    {
+                       close(fd);
+                       ecore_thread_feedback(eth, strdup(buf));
+                       return;
+                    }
                }
              goto error;
           }
@@ -9331,6 +9356,17 @@ _e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
      }
 error:
    ecore_thread_feedback(eth, NULL);
+}
+
+static void
+_e_fm2_new_file_thread(void *data __UNUSED__, Ecore_Thread *eth)
+{
+   _e_fm2_new_thread_helper(eth, EINA_FALSE);
+}
+static void
+_e_fm2_new_dir_thread(void *data __UNUSED__, Ecore_Thread *eth)
+{
+   _e_fm2_new_thread_helper(eth, EINA_TRUE);
 }
 
 static void
@@ -9367,6 +9403,27 @@ _e_fm2_new_file(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
         return;
      }
    sd->new_file.thread = ecore_thread_feedback_run(_e_fm2_new_file_thread, (Ecore_Thread_Notify_Cb)_e_fm2_new_file_notify,
+                                                   _e_fm2_new_file_end, _e_fm2_new_file_cancel, sd, EINA_FALSE);
+   ecore_thread_global_data_add("path", (void*)eina_stringshare_ref(sd->realpath), (void*)eina_stringshare_del, EINA_FALSE);
+   evas_object_ref(sd->obj);
+}
+
+static void
+_e_fm2_new_directory(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Fm2_Smart_Data *sd = data;
+
+   if (sd->new_file.thread || sd->new_file.filename)
+     {
+        e_util_dialog_internal(_("Error"), _("Already creating a new file for this directory!"));
+        return;
+     }
+   if (!ecore_file_can_write(sd->realpath))
+     {
+        e_util_dialog_show(_("Error"), _("%s can't be written to!"), sd->realpath);
+        return;
+     }
+   sd->new_file.thread = ecore_thread_feedback_run(_e_fm2_new_dir_thread, (Ecore_Thread_Notify_Cb)_e_fm2_new_dir_notify,
                                                    _e_fm2_new_file_end, _e_fm2_new_file_cancel, sd, EINA_FALSE);
    ecore_thread_global_data_add("path", (void*)eina_stringshare_ref(sd->realpath), (void*)eina_stringshare_del, EINA_FALSE);
    evas_object_ref(sd->obj);
@@ -9885,57 +9942,6 @@ _e_fm2_sort(void *data, E_Menu *m, E_Menu_Item *mi)
    sd->icons = eina_list_sort(sd->icons, eina_list_count(sd->icons),
                               _e_fm2_cb_icon_sort);
    _e_fm2_refresh(data, m, mi);
-}
-
-static void
-_e_fm2_new_directory(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
-{
-   E_Fm2_Smart_Data *sd;
-
-   sd = data;
-   if (sd->entry_dialog) return;
-
-   sd->entry_dialog = e_entry_dialog_show(_("Create a new Directory"), "folder",
-                                          _("New Directory Name:"),
-                                          "", NULL, NULL,
-                                          _e_fm2_new_directory_yes_cb,
-                                          _e_fm2_new_directory_no_cb, sd);
-   E_OBJECT(sd->entry_dialog)->data = sd;
-   e_object_del_attach_func_set(E_OBJECT(sd->entry_dialog), _e_fm2_new_directory_delete_cb);
-}
-
-static void
-_e_fm2_new_directory_delete_cb(void *obj)
-{
-   E_Fm2_Smart_Data *sd;
-
-   sd = E_OBJECT(obj)->data;
-   sd->entry_dialog = NULL;
-}
-
-static void
-_e_fm2_new_directory_yes_cb(void *data, char *text)
-{
-   E_Fm2_Smart_Data *sd;
-   char buf[PATH_MAX];
-
-   sd = data;
-   sd->entry_dialog = NULL;
-   if ((text) && (text[0]))
-     {
-        snprintf(buf, sizeof(buf), "%s/%s", sd->realpath, text);
-
-        _e_fm2_client_file_mkdir(buf, "", 0, 0, 0, sd->w, sd->h, sd->obj);
-     }
-}
-
-static void
-_e_fm2_new_directory_no_cb(void *data)
-{
-   E_Fm2_Smart_Data *sd;
-
-   sd = data;
-   sd->entry_dialog = NULL;
 }
 
 static void
