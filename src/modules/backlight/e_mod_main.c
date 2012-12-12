@@ -47,6 +47,8 @@ struct _Instance
 static Eina_List *backlight_instances = NULL;
 static E_Module *backlight_module = NULL;
 static E_Action *act = NULL;
+static Ecore_Event_Handler *handler = NULL;
+
 
 static void _backlight_popup_free(Instance *inst);
 
@@ -223,7 +225,6 @@ _slider_cb(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
    Instance *inst = data;
    e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(inst->gcc->gadcon->zone, inst->val, 0.0);
-   _backlight_gadget_update(inst);
 }
 
 static void
@@ -338,9 +339,7 @@ _backlight_level_increase(Instance *inst)
 static void
 _backlight_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
-   Eina_List *l;
    Evas_Event_Mouse_Wheel *ev = event;
-   double v;
    Instance *inst = data;
 
    inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
@@ -348,13 +347,6 @@ _backlight_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __
      _backlight_level_decrease(inst);
    else if (ev->z < 0)
      _backlight_level_increase(inst);
-   v = inst->val;
-
-   EINA_LIST_FOREACH(backlight_instances, l, inst)
-     {
-        inst->val = v;
-        _backlight_gadget_update(inst);
-     }
 }
 
 static E_Gadcon_Client *
@@ -467,6 +459,20 @@ _e_mod_action_cb(E_Object *obj __UNUSED__,
      }
 }
 
+static Eina_Bool
+_backlight_cb_changed(void *d EINA_UNUSED, int type EINA_UNUSED, void *ev EINA_UNUSED)
+{
+   Eina_List *l;
+   Instance *inst;
+
+   EINA_LIST_FOREACH(backlight_instances, l, inst)
+     {
+        inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
+        _backlight_gadget_update(inst);
+     }
+   return ECORE_CALLBACK_RENEW;
+}
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -479,6 +485,7 @@ e_modapi_init(E_Module *m)
 {
    backlight_module = m;
    e_gadcon_provider_register(&_gadcon_class);
+   handler = ecore_event_handler_add(E_EVENT_BACKLIGHT_CHANGE, _backlight_cb_changed, NULL);
    act = e_action_add("backlight");
    if (act)
      {
@@ -497,6 +504,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_action_del("backlight");
         act = NULL;
      }
+   if (handler) handler = ecore_event_handler_del(handler);
    backlight_module = NULL;
    e_gadcon_provider_unregister(&_gadcon_class);
    return 1;
