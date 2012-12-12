@@ -10,6 +10,8 @@ typedef struct _E_Manager_Comp_Source E_Manager_Comp_Source;
 
 #define E_MANAGER_TYPE (int) 0xE0b01008
 
+extern EAPI int E_EVENT_MANAGER_KEYS_GRAB;
+
 struct _E_Manager
 {
    E_Object             e_obj_inherit;

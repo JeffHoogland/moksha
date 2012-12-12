@@ -42,6 +42,8 @@ struct _Frame_Extents
    int l, r, t, b;
 };
 
+EAPI int E_EVENT_MANAGER_KEYS_GRAB = -1;
+
 static Eina_List *managers = NULL;
 static Eina_Hash *frame_extents = NULL;
 static Ecore_Timer *timer_post_screensaver_lock = NULL;
@@ -52,6 +54,7 @@ e_manager_init(void)
 {
    ecore_x_screensaver_event_listen_set(1);
    frame_extents = eina_hash_string_superfast_new(NULL);
+   E_EVENT_MANAGER_KEYS_GRAB = ecore_event_type_new();
    return 1;
 }
 
@@ -506,6 +509,7 @@ e_managers_keys_grab(void)
      {
         e_bindings_key_grab(E_BINDING_CONTEXT_ANY, man->root);
      }
+   ecore_event_add(E_EVENT_MANAGER_KEYS_GRAB, NULL, NULL, NULL);
 }
 
 EAPI void
