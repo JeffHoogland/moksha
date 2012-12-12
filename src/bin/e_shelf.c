@@ -2409,6 +2409,7 @@ _e_shelf_menu_orientation_pre_cb(void *data, E_Menu *m)
         e_menu_item_callback_set(mi, _e_shelf_cb_menu_orient, es);
         if (es->cfg->orient == orient)
           e_menu_item_toggle_set(mi, 1);
+        e_menu_item_disabled_set(mi, es->cfg->orient == orient);
      }
 }
 
