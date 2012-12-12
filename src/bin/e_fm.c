@@ -10151,8 +10151,19 @@ _e_fm_overwrite_dialog(int pid, const char *str)
    E_Dialog *dialog;
    void *id;
    char text[4096 + PATH_MAX];
+   E_Fm2_Op_Registry_Entry *ere;
 
    id = (intptr_t*)(long)pid;
+   ere = e_fm2_op_registry_entry_get(pid);
+   if (ere)
+     {
+        E_Fm2_Smart_Data *sd;
+
+        sd = evas_object_smart_data_get(_e_fm2_file_fm2_find(ere->src));
+        if (sd)
+          E_LIST_FOREACH(sd->icons, _e_fm2_cb_drag_finished_show);
+     }
+   
 
    dialog = e_dialog_new(NULL, "E", "_fm_overwrite_dialog");
    E_OBJECT(dialog)->data = id;
