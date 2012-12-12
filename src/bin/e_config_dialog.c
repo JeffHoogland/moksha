@@ -156,7 +156,7 @@ _e_config_dialog_free(E_Config_Dialog *cfd)
    if (cfd->name) eina_stringshare_del(cfd->name);
    if (cfd->class) eina_stringshare_del(cfd->class);
    if (cfd->icon) eina_stringshare_del(cfd->icon);
-   if (cfd->cfdata)
+   if (cfd->view->free_cfdata)
      {
         cfd->view->free_cfdata(cfd, cfd->cfdata);
         cfd->cfdata = NULL;
@@ -205,7 +205,7 @@ _e_config_dialog_go(E_Config_Dialog *cfd, E_Config_Dialog_CFData_Type type)
    cfd->dia->data = cfd;
    e_dialog_title_set(cfd->dia, cfd->title);
    cfdata = cfd->cfdata;
-   if (!cfd->cfdata) cfd->cfdata = cfd->view->create_cfdata(cfd);
+   if (cfd->view->create_cfdata && (!cfd->cfdata)) cfd->cfdata = cfd->view->create_cfdata(cfd);
 
    evas = e_win_evas_get(cfd->dia->win);
    if (type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
