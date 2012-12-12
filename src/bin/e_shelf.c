@@ -2381,6 +2381,7 @@ _e_shelf_cb_menu_orient(void *data, E_Menu *m, E_Menu_Item *mi)
              cf_es = es->cfg;
              cfd = es->config_dialog;
              es->config_dialog = NULL;
+             e_gadcon_unpopulate(es->gadcon);
              e_object_del(E_OBJECT(es));
              es = e_shelf_config_new(zone, cf_es);
              es->config_dialog = cfd;
