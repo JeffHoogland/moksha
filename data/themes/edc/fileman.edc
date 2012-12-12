@@ -402,7 +402,7 @@ group { name: "e/fileman/default/icon/fixed";
    images.image: "shadow_square_tiny.png" COMP;
    styles {
       style { name: "fileman_icon_name";
-         base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#ffffffff wrap=mixed style=shadow,below shadow_color=#00000080 align=center ellipsis=1.0";
+         base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#ffffffff wrap=mixed style=shadow,bottom shadow_color=#00000080 align=center ellipsis=1.0";
       }
       style { name: "fileman_icon_name_selected";
          base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#3399ffff wrap=mixed style=glow glow_color=#3399ff18 align=center glow2_color=#3399ff12 ellipsis=1.0";
@@ -769,7 +769,7 @@ group { name: "e/fileman/desktop/icon/fixed";
    images.image: "darken_rounded_square.png" COMP;
    styles {
       style { name: "fileman_icon_full";
-         base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#ff00ffff wrap=mixed style=shadow,below shadow_color=#00000080 align=center";
+         base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#ff00ffff wrap=mixed style=shadow,bottom shadow_color=#00000080 align=center";
       }
    }
    parts {
