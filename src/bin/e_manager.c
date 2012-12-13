@@ -552,7 +552,7 @@ e_manager_comp_evas_update(E_Manager *man)
    E_OBJECT_CHECK(man);
    E_OBJECT_TYPE_CHECK(man, E_MANAGER_TYPE);
    if (!man->comp) return;
-   return man->comp->func.update(man->comp->data, man);
+   man->comp->func.update(man->comp->data, man);
 }
 
 EAPI const Eina_List *
@@ -600,7 +600,7 @@ e_manager_comp_src_visible_get(E_Manager *man, E_Manager_Comp_Source *src)
 EAPI void
 e_manager_comp_src_hidden_set(E_Manager *man, E_Manager_Comp_Source *src, Eina_Bool hidden)
 {
-   return man->comp->func.src_hidden_set(man->comp->data, man, src, hidden);
+   man->comp->func.src_hidden_set(man->comp->data, man, src, hidden);
 }
 
 EAPI Eina_Bool
