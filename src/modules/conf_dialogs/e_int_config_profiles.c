@@ -198,7 +198,8 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         if (!desk)
           {
              e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s/", prof);
-             pdir = strdupa(buf);
+             free(pdir);
+             pdir = strdup(buf);
              if (pdir)
                {
                   snprintf(buf, sizeof(buf), "%s/profile.desktop", pdir);
@@ -222,6 +223,7 @@ _ilist_fill(E_Config_Dialog_Data *cfdata)
         ic = e_util_icon_add(buf, evas);
         e_widget_ilist_append(cfdata->o_list, ic, label, _ilist_cb_selected, cfdata, prof);
         free(prof);
+        free(pdir);
         if (desk) efreet_desktop_free(desk);
      }
    if (profiles) eina_list_free(profiles);
