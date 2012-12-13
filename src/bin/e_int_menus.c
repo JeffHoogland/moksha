@@ -1187,7 +1187,7 @@ _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m)
              free(class);
              class = strdup(bd->client.icccm.class);
           }
-        if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU)
+        if (subm && (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU))
           _e_int_menus_clients_item_create(bd, subm);
         else
           _e_int_menus_clients_item_create(bd, m);
