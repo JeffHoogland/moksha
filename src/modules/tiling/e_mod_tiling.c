@@ -1267,6 +1267,7 @@ _add_border(E_Border *bd)
 
             DBG("add stack");
 
+            assert((0 <= nb_stacks) && (nb_stacks < TILING_MAX_STACKS));
             e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
             if (_G.tinfo->conf->use_rows) {
@@ -1378,6 +1379,8 @@ _remove_border(E_Border *bd)
             /* Remove stack */
 
             nb_stacks--;
+
+            assert((0 <= nb_stacks) && (nb_stacks < TILING_MAX_STACKS - 1));
 
             for (i = stack; i < nb_stacks; i++) {
                 _G.tinfo->stacks[i] = _G.tinfo->stacks[i+1];
@@ -2110,7 +2113,9 @@ _move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
     int nb_stacks;
 
     stack = get_stack(bd);
-    assert(stack >= 0);
+    if (stack < 0)
+        return;
+
     nb_stacks = get_stack_count();
 
     extra = eina_hash_find(_G.border_extras, &bd);
@@ -2129,8 +2134,8 @@ _move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
             return;
 
         EINA_LIST_REMOVE(_G.tinfo->stacks[0], bd);
-        for (i = TILING_MAX_STACKS; i -- > 0;) {
-            _G.tinfo->stacks[i] = _G.tinfo->stacks[i-1];
+        for (i = TILING_MAX_STACKS - 1; i > 0; i--) {
+            _G.tinfo->stacks[i] = _G.tinfo->stacks[i - 1];
         }
         _G.tinfo->stacks[0] = NULL;
         EINA_LIST_APPEND(_G.tinfo->stacks[0], bd);
@@ -2224,10 +2229,12 @@ _move_right_cols(E_Border *bd, Eina_Bool check_moving_anims)
     int i;
 
     stack = get_stack(bd);
+    assert(stack >= 0);
     if (stack == TILING_MAX_STACKS - 1)
         return;
 
     nb_stacks = get_stack_count();
+    assert((0 < nb_stacks) && (nb_stacks < TILING_MAX_STACKS));
     if (stack == nb_stacks - 1 && !_G.tinfo->stacks[stack]->next)
         return;
 
@@ -2250,6 +2257,8 @@ _move_right_cols(E_Border *bd, Eina_Bool check_moving_anims)
         /* Add stack */
         int x, y, w, h;
         int width = 0;
+
+        assert(nb_stacks < TILING_MAX_STACKS);
 
         _reorganize_stack(stack);
 
@@ -2326,8 +2335,7 @@ _move_left_rows(E_Border *bd, Eina_Bool check_moving_anims)
     int stack;
 
     stack = get_stack(bd);
-    if (stack < 0)
-        return;
+    assert(stack >= 0);
 
     if (_G.tinfo->stacks[stack]->data == bd)
         return;
@@ -2382,8 +2390,7 @@ _move_right_rows(E_Border *bd, Eina_Bool check_moving_anims)
     int stack;
 
     stack = get_stack(bd);
-    if (stack < 0)
-        return;
+    assert(stack >= 0);
 
     l_1 = eina_list_data_find_list(_G.tinfo->stacks[stack], bd_1);
     if (!l_1 || !l_1->next)
@@ -2433,6 +2440,7 @@ _move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
 
     stack = get_stack(bd);
     assert(stack >= 0);
+
     nb_stacks = get_stack_count();
 
     extra = eina_hash_find(_G.border_extras, &bd);
@@ -2451,7 +2459,7 @@ _move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
             return;
 
         EINA_LIST_REMOVE(_G.tinfo->stacks[0], bd);
-        for (i = TILING_MAX_STACKS; i -- > 0;) {
+        for (i = TILING_MAX_STACKS - 1; i > 0; i--) {
             _G.tinfo->stacks[i] = _G.tinfo->stacks[i-1];
         }
         _G.tinfo->stacks[0] = NULL;
@@ -2546,10 +2554,12 @@ _move_down_rows(E_Border *bd, Eina_Bool check_moving_anims)
     int i;
 
     stack = get_stack(bd);
+    assert(stack >= 0);
     if (stack == TILING_MAX_STACKS - 1)
         return;
 
     nb_stacks = get_stack_count();
+    assert(nb_stacks >= 1);
     if (stack == nb_stacks - 1 && !_G.tinfo->stacks[stack]->next)
         return;
 
@@ -2572,6 +2582,8 @@ _move_down_rows(E_Border *bd, Eina_Bool check_moving_anims)
         /* Add stack */
         int x, y, w, h;
         int height = 0;
+
+        assert(nb_stacks < TILING_MAX_STACKS);
 
         _reorganize_stack(stack);
 
@@ -3284,7 +3296,9 @@ _do_transition_overlay(void)
                 e_popup_show(trov->overlay.popup);
             }
         }
-        if (i != TILING_MAX_STACKS && _G.tinfo->stacks[i+1] && n < nmax) {
+        if (i != (TILING_MAX_STACKS - 1) &&
+            _G.tinfo->stacks[i+1] && n < nmax)
+        {
             Evas_Coord ew, eh;
             transition_overlay_t *trov;
 
