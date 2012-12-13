@@ -475,6 +475,7 @@ _e_fm_op_remove_link_task(E_Fm_Op_Task *task)
 {
    E_Fm_Op_Task *ltask;
 
+   if (!task) return;
    if (task->link)
      {
         ltask = eina_list_data_get(task->link);
