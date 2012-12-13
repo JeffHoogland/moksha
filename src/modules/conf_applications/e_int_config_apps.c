@@ -345,14 +345,15 @@ _load_menu(const char *path)
    Eina_List *apps = NULL, *l;
 
    menu = efreet_menu_parse(path);
-   if ((!menu) || (!menu->entries)) return NULL;
+   if ((!menu) || (!menu->entries)) goto end;
    EINA_LIST_FOREACH(menu->entries, l, entry)
      {
         if (entry->type != EFREET_MENU_ENTRY_DESKTOP) continue;
         efreet_desktop_ref(entry->desktop);
         apps = eina_list_append(apps, entry->desktop);
      }
-   efreet_menu_free(menu);
+end:
+   if (menu) efreet_menu_free(menu);
    return apps;
 }
 
