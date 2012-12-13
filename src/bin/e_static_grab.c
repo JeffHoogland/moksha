@@ -241,11 +241,15 @@ _e_static_grab_x(E_Static_Grab *grab)
    Eina_Iterator *it;
    Eina_File *f;
 
-   module = calloc(1, sizeof (E_Static_Grab_Module));
-   if (!module) return ;
-
    f = eina_file_open("/var/log/Xorg.0.log", EINA_FALSE);
    if (!f) return ;
+
+   module = calloc(1, sizeof (E_Static_Grab_Module));
+   if (!module)
+     {
+        eina_file_close(f);
+        return ;
+     }
 
    it = eina_file_map_lines(f);
    EINA_ITERATOR_FOREACH(it, line)
