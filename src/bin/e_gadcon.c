@@ -4621,6 +4621,7 @@ _e_gadcon_layout_smart_gadcons_position(E_Smart_Data *sd, Eina_List **list)
 
    if (!lc_moving)
      {
+        if (lc_back) LC_FREE(lc_back);
         _e_gadcon_layout_smart_gadcons_position_static(sd, list);
         return;
      }
