@@ -199,6 +199,7 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
         e_config_domain_save("module.comp", conf_edd, cfg);
         E_CONFIG_DD_FREE(conf_match_edd);
         E_CONFIG_DD_FREE(conf_edd);
+        e_mod_cfdata_config_free(cfg);
      }
    e_config_save_queue();
 //   if (pg->data) evas_object_del(pg->data);
