@@ -1262,7 +1262,7 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *
                     }
                   desk = bd->desk;
                }
-             if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU)
+             if (subm && (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU))
                _e_int_menus_clients_item_create(bd, subm);
              else
                _e_int_menus_clients_item_create(bd, m);
