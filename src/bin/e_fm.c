@@ -6748,7 +6748,10 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
         else if (e_drop_handler_action_get() == ECORE_X_ATOM_XDND_ACTION_ASK)
           {
              if (sd->config->view.link_drop && (!sd->drop_icon))
-               lnk = EINA_TRUE, e_fm2_client_file_symlink(sd->obj, args);
+               {
+                  lnk = EINA_TRUE, e_fm2_client_file_symlink(sd->obj, args);
+                  free(args);
+               }
              else
                e_fm2_drop_menu(sd->obj, args);
           }
