@@ -2499,7 +2499,6 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
           }
      }
 
-   fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    if (fwin->win)
      dia = e_dialog_new(fwin->win->border->zone->container,
                         "E", "_fwin_open_apps");
@@ -2508,6 +2507,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
                         "E", "_fwin_open_apps");
    else return;  /* make clang happy */
 
+   fad = E_NEW(E_Fwin_Apps_Dialog, 1);
    e_dialog_title_set(dia, _("Open with..."));
    e_dialog_button_add(dia, _("Open"), "document-open",
                        _e_fwin_cb_open, fad);
