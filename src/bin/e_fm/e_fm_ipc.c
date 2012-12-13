@@ -1251,10 +1251,9 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
 {
    E_Fop *fop = NULL;
    FILE *info = NULL;
-   const char *trash_dir = NULL;
-   const char *filename = NULL;
+   const char *filename;
    const char *escname = NULL;
-   const char *dest = NULL;
+   char *dest, *trash_dir;
    char buf[4096];
    unsigned int i = 0;
    struct tm *lt;
@@ -1268,15 +1267,19 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
 
    /* Check that 'home trash' and subsequesnt dirs exists, create if not */
    snprintf(buf, sizeof(buf), "%s/Trash", efreet_data_home_get());
-   trash_dir = eina_stringshare_add(buf);
+   trash_dir = strdup(buf);
    snprintf(buf, sizeof(buf), "%s/files", trash_dir);
    if (!ecore_file_mkpath(buf)) return 0;
    snprintf(buf, sizeof(buf), "%s/info", trash_dir);
    if (!ecore_file_mkpath(buf)) return 0;
 
-   filename = eina_stringshare_add(strrchr(fop->src, '/'));
+   filename = strrchr(fop->src, '/');
+   if (!filename)
+     {
+        free(trash_dir);
+        return 0;
+     }
    escname = ecore_file_escape_name(filename);
-   eina_stringshare_del(filename);
 
    /* Find path for info file. Pointer address is part of the filename to
     * alleviate some of the looping in case of multiple filenames with the
@@ -1287,7 +1290,7 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
                  fop, i++);
      }
    while (ecore_file_exists(buf));
-   dest = eina_stringshare_add(buf);
+   dest = strdup(buf);
 
    /* Try to move the file */
    if (rename(fop->src, dest))
@@ -1295,6 +1298,8 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
         if (errno == EXDEV)
           {
              /* Move failed. Spec says delete files that can't be trashed */
+             free(dest);
+             free(trash_dir);
              ecore_file_unlink(fop->src);
              return ECORE_CALLBACK_CANCEL;
           }
@@ -1320,8 +1325,8 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
      /* Could not create info file. Spec says to put orig file back */
      rename(dest, fop->src);
 
-   if (dest) eina_stringshare_del(dest);
-   if (trash_dir) eina_stringshare_del(trash_dir);
+   free(dest);
+   free(trash_dir);
    eina_stringshare_del(fop->src);
    eina_stringshare_del(fop->dst);
    _e_fops = eina_list_remove(_e_fops, fop);
