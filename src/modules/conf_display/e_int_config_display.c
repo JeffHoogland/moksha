@@ -358,6 +358,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
              sb->cfd = cfd;
              sb->cfdata = cfdata;
              _surebox_dialog_cb_yes(sb, NULL);
+             free(sb);
           }
         else
           _surebox_new(cfd, cfdata);
