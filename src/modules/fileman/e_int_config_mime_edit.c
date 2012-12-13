@@ -52,12 +52,11 @@ e_int_config_mime_edit(E_Config_Mime_Icon *data, void *data2)
    E_Container *con;
    E_Config_Dialog_Data *cfdata;
    
+   if (e_config_dialog_find("E", "fileman/mime_edit_dialog")) return NULL;
+
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->data = data;
    cfdata->data2 = data2;
-   
-   if (e_config_dialog_find("E", "fileman/mime_edit_dialog")) return NULL;
-
    con = e_container_current_get(e_manager_current_get());
    
    v = E_NEW(E_Config_Dialog_View, 1);
