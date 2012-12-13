@@ -1638,6 +1638,7 @@ _e_main_screens_init(void)
    roots = ecore_x_window_root_list(&num);
    if ((!roots) || (num <= 0))
      {
+        free(roots);
         e_error_message_show("X reports there are no root windows and %i screens!\n",
                              num);
         return 0;
