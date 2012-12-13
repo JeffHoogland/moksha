@@ -996,6 +996,7 @@ linux_acpi_init(void)
                   char buf[PATH_MAX];
                   FILE *f;
 
+                  if (info->name_length + sizeof("/state") >= sizeof(buf)) continue;
                   strcpy(buf, info->path);
                   strcat(buf, "/state");
                   f = fopen(buf, "r");
