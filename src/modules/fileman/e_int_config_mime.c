@@ -423,12 +423,18 @@ _fill_types(E_Config_Dialog_Data *cfdata)
      {
         Config_Type *tmp;
         Eina_List *ll;
-        char *tok;
+        char *tok, *str;
         int found = 0;
 
         if (!m) continue;
-        tok = strtok(strdup(m->mime), "/");
-        if (!tok) continue;
+        str = strdup(m->mime);
+        if (!str) continue;
+        tok = strtok(str, "/");
+        if (!tok)
+          {
+             free(str);
+             continue;
+          }
 
         EINA_LIST_FOREACH(types, ll, tmp)
           {
@@ -450,6 +456,7 @@ _fill_types(E_Config_Dialog_Data *cfdata)
 
              types = eina_list_append(types, tmp);
           }
+        free(str);
      }
 }
 
