@@ -154,7 +154,7 @@ msg_send_creds(Pulse *conn, Pulse_Tag *tag)
    int r;
 
    INF("trying to send 20 byte auth header");
-   r = send(ecore_main_fd_handler_fd_get(conn->fdh), &tag->header[tag->pos], sizeof(tag->header) - tag->pos, MSG_NOSIGNAL);
+   r = send(ecore_main_fd_handler_fd_get(conn->fdh), &tag->header[tag->pos], PA_PSTREAM_DESCRIPTOR_MAX - tag->pos, MSG_NOSIGNAL);
    INF("%i bytes sent!", r);
    if ((!r) || (r == (int)sizeof(tag->header))) tag->auth = EINA_TRUE;
    else if (r < 0)
