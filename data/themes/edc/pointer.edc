@@ -94,3 +94,21 @@ group { name: "e/pointer/enlightenment/default/mono";
       }
    }
 }
+
+// XXX:
+// 
+// can handle these too
+// 
+// e/pointer/enlightenment/move/color
+// e/pointer/enlightenment/resize_tl/color
+// e/pointer/enlightenment/resize_t/color
+// e/pointer/enlightenment/resize_tr/color
+// e/pointer/enlightenment/resize_r/color
+// e/pointer/enlightenment/resize_br/color
+// e/pointer/enlightenment/resize_b/color
+// e/pointer/enlightenment/resize_bl/color
+// e/pointer/enlightenment/resize_l/color
+// e/pointer/enlightenment/entry/color
+// e/pointer/enlightenment/plus/color
+// e/pointer/enlightenment/hand/color
+// e/pointer/enlightenment/rotate/color

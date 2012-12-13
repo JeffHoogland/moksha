@@ -69,6 +69,7 @@ group { name: "e/widgets/entry/text";
          source4: "e/widgets/entry/cursor"; // cursorover
          description { state: "default" 0.0;
             color_class: "entry_text";
+            align: 0.0 0.5;
             text {
                text: "";
                style: "entry_textblock_style";
