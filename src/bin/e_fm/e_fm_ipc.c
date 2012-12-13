@@ -479,7 +479,7 @@ _e_fm_ipc_task_remove(E_Fm_Task *task)
 static void
 _e_fm_ipc_mkdir_try(E_Fm_Task *task)
 {
-   char buf[PATH_MAX + 4096];
+   char buf[PATH_MAX + 4096], *dir;
 
    if (mkdir(task->src, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) < 0)
      {
@@ -488,8 +488,10 @@ _e_fm_ipc_mkdir_try(E_Fm_Task *task)
      }
    else
      {
-        _e_fm_ipc_reorder(ecore_file_file_get(task->src), ecore_file_dir_get(task->src), task->rel, task->rel_to);
+        dir = ecore_file_dir_get(task->src);
+        _e_fm_ipc_reorder(ecore_file_file_get(task->src), dir, task->rel, task->rel_to);
         _e_fm_ipc_task_remove(task);
+        free(dir);
      }
 }
 
