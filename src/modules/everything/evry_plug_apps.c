@@ -1648,6 +1648,7 @@ _exe_path_list()
           }
         if (pp > last)
           exe_path = eina_list_append(exe_path, strdup(last));
+        free(path);
      }
 
    if (changed)
