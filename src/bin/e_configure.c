@@ -470,40 +470,37 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
    E_Configure_Cat *ecat;
    Eina_Bool external;
 
+   EINA_SAFETY_ON_NULL_RETURN(path);
+   EINA_SAFETY_ON_NULL_RETURN(label);
    /* path is "category/item" */
    cat = ecore_file_dir_get(path);
    if (!cat) return;
-   item = ecore_file_file_get(path);
-   eci = E_NEW(E_Configure_It, 1);
-   if (!eci) goto done;
-
-   eci->item = eina_stringshare_add(item);
-   eci->pri = pri;
-   eci->label = eina_stringshare_add(label);
-   if (icon_file) eci->icon_file = eina_stringshare_add(icon_file);
-   if (icon) eci->icon = eina_stringshare_add(icon);
-   if (params) eci->params = eina_stringshare_add(params);
-   eci->func = func;
-   eci->generic_func = generic_func;
-   eci->desktop = desktop;
-   if (eci->desktop) efreet_desktop_ref(eci->desktop);
-   external = !strncmp(path, "preferences/", sizeof("preferences/") - 1);
-   if (!external) external = !strncmp(path, "system/", sizeof("system/") - 1);
 
    EINA_LIST_FOREACH(e_configure_registry, l, ecat)
-     if (!strcmp(cat, ecat->cat))
-       {
-          if (external)
-            {
-               ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_cb), eci);
-               goto done; /* This was a break before, but sounds like it could lead to a double insert */
-            }
-          ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_pri_cb), eci);
-          break;
-       }
+     {
+        if (strcmp(cat, ecat->cat)) continue;
+        item = ecore_file_file_get(path);
+        eci = E_NEW(E_Configure_It, 1);
 
-done:
-   free(cat);
+        eci->item = eina_stringshare_add(item);
+        eci->pri = pri;
+        eci->label = eina_stringshare_add(label);
+        if (icon_file) eci->icon_file = eina_stringshare_add(icon_file);
+        if (icon) eci->icon = eina_stringshare_add(icon);
+        if (params) eci->params = eina_stringshare_add(params);
+        eci->func = func;
+        eci->generic_func = generic_func;
+        eci->desktop = desktop;
+        if (eci->desktop) efreet_desktop_ref(eci->desktop);
+        external = !strncmp(path, "preferences/", sizeof("preferences/") - 1);
+        if (!external) external = !strncmp(path, "system/", sizeof("system/") - 1);
+        if (external)
+          ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_cb), eci);
+        else
+          ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_pri_cb), eci);
+        free(cat);
+        break;
+     }
 }
 
 static void
