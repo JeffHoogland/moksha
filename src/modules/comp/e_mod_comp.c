@@ -1959,6 +1959,9 @@ _e_mod_comp_win_add(E_Comp *c,
    memset((&att), 0, sizeof(Ecore_X_Window_Attributes));
    if (!ecore_x_window_attributes_get(cw->win, &att))
      {
+        free(cw->name);
+        free(cw->clas);
+        free(cw->role);
         free(cw);
         if (_comp_mod->conf->grab) ecore_x_ungrab();
         return NULL;
