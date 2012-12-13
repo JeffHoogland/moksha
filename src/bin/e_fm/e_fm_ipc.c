@@ -163,7 +163,7 @@ static char       *_e_str_list_remove(Eina_List **list, const char *str, int len
 static void        _e_fm_ipc_reorder(const char *file, const char *dst, const char *relative, int after);
 static void        _e_fm_ipc_dir_del(E_Dir *ed);
 
-static const char *_e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args);
+static char *_e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args);
 
 /* local subsystem functions */
 int
@@ -796,13 +796,13 @@ static int
 _e_fm_ipc_slave_run(E_Fm_Op_Type type, const char *args, int id)
 {
    E_Fm_Slave *slave;
-   const char *command;
+   char *command;
 
    slave = malloc(sizeof(E_Fm_Slave));
 
    if (!slave) return 0;
 
-   command = eina_stringshare_add(_e_fm_ipc_prepare_command(type, args));
+   command = _e_fm_ipc_prepare_command(type, args);
    if (!command)
      {
         free(slave);
@@ -813,7 +813,7 @@ _e_fm_ipc_slave_run(E_Fm_Op_Type type, const char *args, int id)
    slave->exe = ecore_exe_pipe_run(command, ECORE_EXE_PIPE_WRITE | ECORE_EXE_PIPE_READ | ECORE_EXE_PIPE_ERROR, slave);
 //   printf("EFM command: %s\n", command);
 
-   eina_stringshare_del(command);
+   free(command);
 
    _e_fm_ipc_slaves = eina_list_append(_e_fm_ipc_slaves, slave);
 
@@ -1440,7 +1440,7 @@ _e_fm_ipc_dir_del(E_Dir *ed)
    free(ed);
 }
 
-static const char *
+static char *
 _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
 {
    char *buffer;
