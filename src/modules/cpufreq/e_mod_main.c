@@ -1115,6 +1115,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
+   struct stat st;
    char buf[PATH_MAX];
    Eina_List *l;
 
@@ -1150,6 +1151,28 @@ e_modapi_init(E_Module *m)
    snprintf(buf, sizeof(buf), "%s/%s/freqset",
             e_module_dir_get(m), MODULE_ARCH);
    cpufreq_config->set_exe_path = strdup(buf);
+   
+   if (stat(buf, &st) < 0)
+     {
+        e_util_dialog_show(_("Cpufreq Error"),
+                           _("The freqset binary in the cpufreq module<br>"
+                             "directory cannot be found (stat failed)"));
+     }
+   else if ((st.st_uid != 0) ||
+            ((st.st_mode & (S_ISUID)) != (S_ISUID)) ||
+            ((st.st_mode & (S_IXOTH)) != (S_IXOTH)))
+     {
+        e_util_dialog_show(_("Cpufreq Permissions Error"),
+                           _("The freqset binary in the cpufreq module<br>"
+                             "is not owned by root or does not have the<br>"
+                             "setuid bit set. Please ensure this is the<br"
+                             "case. For example:<br>"
+                             "<br>"
+                             "sudo chown root %s<br>"
+                             "sudo chmod u+s,a+x %s<br>"),
+                           buf, buf);
+     }
+   
    cpufreq_config->frequency_check_poller =
      ecore_poller_add(ECORE_POLLER_CORE, cpufreq_config->poll_interval,
                       _cpufreq_cb_check, NULL);
