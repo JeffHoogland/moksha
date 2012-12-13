@@ -1242,17 +1242,30 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
 
    if (symlink(lnk_path, task->dst.name) == -1)
      {
+        char buf[PATH_MAX];
+
         if (errno == EEXIST)
           {
              if (unlink(task->dst.name) == -1)
-               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
+               {
+                  free(lnk_path);
+                  _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
+               }
              if (symlink(lnk_path, task->dst.name) == -1)
-               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
+               {
+                  strncat(buf, lnk_path, sizeof(buf));
+                  free(lnk_path);
+                  _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", buf, task->dst.name);
+               }
           }
         else
-          _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
+          {
+             strncat(buf, lnk_path, sizeof(buf));
+             free(lnk_path);
+             _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", buf, task->dst.name);
+          }
      }
-   E_FREE(lnk_path);
+   free(lnk_path);
 
    task->dst.done += task->src.st.st_size;
 
