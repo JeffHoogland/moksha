@@ -367,7 +367,8 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                 e_module_dir_get(opinfo_module));
    if (r < 0)
      {
-        E_FREE(inst);
+        free(inst->theme_file);
+        free(inst);
         return NULL;
      }
 
