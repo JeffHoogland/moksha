@@ -276,6 +276,7 @@ _ilist_cb_selected(void *data)
         else
           e_widget_disabled_set(cfdata->o_reset, 1);
 
+        free(pdir);
         pdir = strdup(buf);
         if (pdir)
           {
@@ -296,6 +297,7 @@ _ilist_cb_selected(void *data)
    else
      e_widget_textblock_markup_set(cfdata->o_text, _("Unknown"));
    if (desk) efreet_desktop_free(desk);
+   free(pdir);
 }
 
 static void
@@ -325,10 +327,10 @@ _cb_delete(void *data, void *data2 __UNUSED__)
    Del_Profile_Confirm_Data *d;
    char buf[4096];
 
+   if (!data) return;
+
    d = E_NEW(Del_Profile_Confirm_Data, 1);
-   if (!d) return;
    d->cfdata = data;
-   if (!d->cfdata) return;
 
    snprintf(buf, sizeof(buf),
             _("You want to delete the \"%s\" profile.<br><br>"
