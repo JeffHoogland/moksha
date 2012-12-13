@@ -264,7 +264,11 @@ e_init_init(void)
 
    num = 0;
    roots = ecore_x_window_root_list(&num);
-   if ((!roots) || (num <= 0)) return 0;
+   if ((!roots) || (num <= 0))
+     {
+        free(roots);
+        return 0;
+     }
    root = roots[0];
    _e_init_root_win = root;
 
