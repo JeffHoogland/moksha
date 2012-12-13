@@ -2739,6 +2739,7 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
       case E_MAXIMIZE_EXPAND:
         if (bd->zone)
           e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+        w = zw, h = zh;
 
         if (bd->bg_object)
           {
