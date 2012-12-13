@@ -17,13 +17,11 @@ _11_screen_info_new(void)
 
    EINA_SAFETY_ON_TRUE_RETURN_VAL(E_RANDR_11_NO, NULL);
 
-   randr_info_11 = malloc(sizeof(E_Randr_Screen_Info_11));
+   randr_info_11 = E_NEW(E_Randr_Screen_Info_11, 1);
 
-   randr_info_11->sizes = NULL;
    randr_info_11->csize_index = Ecore_X_Randr_Unset;
    randr_info_11->corientation = Ecore_X_Randr_Unset;
    randr_info_11->orientations = Ecore_X_Randr_Unset;
-   randr_info_11->rates = NULL;
    randr_info_11->current_rate = Ecore_X_Randr_Unset;
 
    if (!(sizes = ecore_x_randr_screen_primary_output_sizes_get(e_randr_screen_info.root, &nsizes)))
@@ -45,6 +43,11 @@ _11_screen_info_new(void)
    return randr_info_11;
 
 _info_11_new_fail:
+   if (randr_info_11)
+     {
+        free(randr_info_11->rates);
+        free(randr_info_11->nrates);
+     }
    free(sizes);
    free(randr_info_11);
    return NULL;
