@@ -100,9 +100,8 @@ init(void)
 
    if ((!sensor_type) || ((!sensor_name) || (sensor_name[0] == 0)))
      {
-        if (sensor_name) free(sensor_name);
-        if (sensor_path) free(sensor_path);
-        sensor_path = NULL;
+        E_FREE(sensor_name);
+        E_FREE(sensor_path);
 #ifdef __FreeBSD__
         /* TODO: FreeBSD can also have more temperature sensors! */
         sensor_type = SENSOR_TYPE_FREEBSD;
@@ -244,6 +243,7 @@ init(void)
                                            if (len > 6) path[len - 6] = '\0';
                                            sensor_type = SENSOR_TYPE_LINUX_PCI;
                                            sensor_path = strdup(name);
+                                           free(sensor_name);
                                            sensor_name = strdup(path);
                                            printf("sensor type = pci\n"
                                                   "sensor path = %s\n"
@@ -605,10 +605,7 @@ main(int argc, char *argv[])
    sensor_type = atoi(argv[1]);
    sensor_name = strdup(argv[2]);
    if (!strcmp(sensor_name, "-null-"))
-     {
-        free(sensor_name);
-        sensor_name = NULL;
-     }
+     E_FREE(sensor_name);
    poll_interval = atoi(argv[3]);
    cur_poll_interval = poll_interval;
 
