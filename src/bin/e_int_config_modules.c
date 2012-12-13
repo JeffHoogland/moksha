@@ -463,9 +463,7 @@ _cftype_new_from_key(const char *key)
    memcpy(name, key, key_len + 1);
    name[0] = toupper(name[0]);
 
-   memcpy(icon, "enlightenment/", sizeof("enlightenment/") - 1);
-   memcpy(icon + sizeof("enlightenment/") - 1, key, key_len + 1);
-
+   snprintf(icon, sizeof(icon), "enlightenment/%s", key);
    return _cftype_new(key, name, icon);
 }
 
