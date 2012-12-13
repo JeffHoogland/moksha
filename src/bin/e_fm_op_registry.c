@@ -105,9 +105,9 @@ _e_fm2_op_registry_entry_listeners_call(const E_Fm2_Op_Registry_Entry_Internal *
    E_Fm2_Op_Registry_Entry_Listener *listener;
    Eina_Inlist *l;
 
-   if (eina_inlist_count(e->listeners) < 1) return;
+   if (!e->listeners) return;
 
-   EINA_INLIST_FOREACH_SAFE (e->listeners, l, listener)
+   EINA_INLIST_FOREACH_SAFE(e->listeners, l, listener)
      listener->cb(listener->data, &e->entry);
 }
 
