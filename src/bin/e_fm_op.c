@@ -268,8 +268,11 @@ main(int argc, char **argv)
                               goto skip_arg;
 
                             if (buf[0] != '/')
-                              _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
-                                                       "Unknown destination '%s': %s.", buf);
+                              {
+                                 free(p2);
+                                 _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
+                                                          "Unknown destination '%s': %s.", buf);
+                              }
                          }
                        else if (type == E_FM_OP_RENAME)
                          {
@@ -277,8 +280,11 @@ main(int argc, char **argv)
                               goto skip_arg;
 
                             if (buf[0] != '/')
-                              _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
-                                                       "Unknown destination '%s': %s.", buf);
+                              {
+                                 free(p2);
+                                 _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
+                                                          "Unknown destination '%s': %s.", buf);
+                              }
 
                             if (access(buf, F_OK) == -1)
                               {
@@ -291,6 +297,7 @@ main(int argc, char **argv)
                                         type = E_FM_OP_MOVE;
                                       else
                                         {
+                                           free(p2);
                                            _E_FM_OP_ERROR_SEND_SCAN(0, E_FM_OP_ERROR,
                                                                     "Cannot move '%s' to '%s': %s.",
                                                                     argv[i], buf);
