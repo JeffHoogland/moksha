@@ -98,6 +98,31 @@ e_widget_frametable_object_append_full(Evas_Object *obj, Evas_Object *sobj, int 
 }
 
 EAPI void
+e_widget_frametable_object_repack(Evas_Object *obj, Evas_Object *sobj, int col, int row, int colspan, int rowspan, int fill_w, int fill_h, int expand_w, int expand_h)
+{
+   E_Widget_Data *wd;
+   Evas_Coord mw = 0, mh = 0;
+
+   wd = e_widget_data_get(obj);
+
+   e_table_unpack(sobj);
+   e_table_pack(wd->o_table, sobj, col, row, colspan, rowspan);
+   e_widget_size_min_get(sobj, &mw, &mh);
+   e_table_pack_options_set(sobj,
+                            fill_w, fill_h, /* fill */
+                            expand_w, expand_h, /* expand */
+                            0.5, 0.5, /* align */
+                            mw, mh, /* min */
+                            99999, 99999 /* max */
+                            );
+   e_table_size_min_get(wd->o_table, &mw, &mh);
+   edje_extern_object_min_size_set(wd->o_table, mw, mh);
+   edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->o_table);
+   edje_object_size_min_calc(wd->o_frame, &mw, &mh);
+   e_widget_size_min_set(obj, mw, mh);
+}
+
+EAPI void
 e_widget_frametable_content_align_set(Evas_Object *obj, double halign, double valign)
 {
    E_Widget_Data *wd;
