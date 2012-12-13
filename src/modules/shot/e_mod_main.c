@@ -592,6 +592,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    Ecore_X_Display *display;
    Ecore_X_Screen *scr;
 
+   if ((!zone) && (!bd)) return;
    if (zone)
      {
         sman = zone->container->manager;
