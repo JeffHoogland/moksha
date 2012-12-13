@@ -993,7 +993,7 @@ linux_acpi_init(void)
           {
              EINA_ITERATOR_FOREACH(powers, info)
                {
-                  char buf[4096];
+                  char buf[PATH_MAX];
                   FILE *f;
 
                   strcpy(buf, info->path);
