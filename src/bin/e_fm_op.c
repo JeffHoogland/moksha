@@ -1097,7 +1097,8 @@ _e_fm_op_update_progress(E_Fm_Op_Task *task, off_t _plus_e_fm_op_done, off_t _pl
              eta = (int)(eta + 0.5);
           }
 
-        if ((percent != ppercent) || (eta != peta) || ((task) && (task != ptask)))
+        if (!task) return;
+        if ((percent != ppercent) || (eta != peta) || (task != ptask))
           {
              ppercent = percent;
              peta = eta;
