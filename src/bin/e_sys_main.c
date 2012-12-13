@@ -586,7 +586,7 @@ auth_etc_enlightenment_sysactions_perm(char *path)
    if ((st.st_mode & S_IWGRP) || (st.st_mode & S_IXGRP) ||
        (st.st_mode & S_IWOTH) || (st.st_mode & S_IXOTH))
      {
-        printf("ERROR: CONFIGURATION FILE HAS BAD PERMISSIONS\n");
+        printf("ERROR: CONFIGURATION FILE HAS BAD PERMISSIONS (writable by group and/or others)\n");
         exit(10);
      }
 }
