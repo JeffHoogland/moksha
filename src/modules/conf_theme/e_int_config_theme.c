@@ -72,6 +72,269 @@ static const char *parts_list[] =
    NULL
 };
 
+static void
+_e_int_theme_preview_clear(Evas_Object *preview)
+{
+   Eina_List *objs = evas_object_data_get(preview, "objects");
+   Evas_Object *o;
+
+   e_widget_preview_extern_object_set(preview, NULL);
+   EINA_LIST_FREE(objs, o) evas_object_del(o);
+   evas_object_data_del(preview, "objects");
+}
+
+static Eina_Bool
+_e_int_theme_preview_group_set(Evas_Object *preview, const char *file, const char *group)
+{
+   _e_int_theme_preview_clear(preview);
+   return e_widget_preview_edje_set(preview, file, group);
+}
+
+static Eina_Bool
+_e_int_theme_preview_set(Evas_Object *preview, const char *file)
+{
+   Evas *e;
+   Evas_Coord w = 320, h = 240, mw = 0, mh = 0;
+   Eina_List *objs = NULL;
+   Evas_Object *o, *po, *po2, *po3;
+   
+   _e_int_theme_preview_clear(preview);
+   e = e_widget_preview_evas_get(preview);
+   evas_object_size_hint_min_get(preview, &w, &h);
+   w *= 2; h *= 2;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/desktop/background");
+   evas_object_move(o, 0, 0);
+   evas_object_resize(o, w, h);
+   evas_object_show(o);
+   objs = eina_list_append(objs, o);
+
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/comp/popup");
+   evas_object_move(o, (w - (400 * e_scale)) / 2, h - (40 * e_scale));
+   evas_object_resize(o, 400 * e_scale, (40 * e_scale));
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,shadow,on", "e");
+   edje_object_signal_emit(o, "e,state,visible,on", "e");
+   objs = eina_list_append(objs, o);
+   po = o;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/shelf/default/base");
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,orientation,bottom", "e");
+   edje_object_part_swallow(po, "e.swallow.content", o);
+   objs = eina_list_append(objs, o);
+   po = o;
+   po2 = po;
+   
+   o = e_box_add(e);
+   e_box_orientation_set(o, 1);
+   evas_object_show(o);
+   edje_object_part_swallow(po, "e.swallow.content", o);
+   objs = eina_list_append(objs, o);
+   po = o;
+   
+   mh = 42 * e_scale;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/start/main");
+   evas_object_show(o);
+   e_box_pack_end(po, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/shelf/default/inset");
+   evas_object_show(o);
+   e_box_pack_end(po, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 4 * mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+   po2 = o;
+
+   o = e_box_add(e);
+   e_box_orientation_set(o, 1);
+   evas_object_show(o);
+   edje_object_part_swallow(po2, "e.swallow.content", o);
+   objs = eina_list_append(objs, o);
+   po3 = o;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/pager/desk");
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,selected", "e");
+   e_box_pack_end(po3, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/pager/desk");
+   evas_object_show(o);
+   e_box_pack_end(po3, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/pager/desk");
+   evas_object_show(o);
+   e_box_pack_end(po3, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/pager/desk");
+   evas_object_show(o);
+   e_box_pack_end(po3, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/backlight/main");
+   evas_object_show(o);
+   e_box_pack_end(po, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/mixer/main");
+   evas_object_show(o);
+   e_box_pack_end(po, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/battery/main");
+   evas_object_show(o);
+   e_box_pack_end(po, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/modules/clock/main");
+   evas_object_show(o);
+   e_box_pack_end(po, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
+   objs = eina_list_append(objs, o);
+   
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/comp/default");
+   evas_object_move(o, w / 2, h / 9);
+   evas_object_resize(o, w / 3, h / 3);
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,shadow,on", "e");
+   edje_object_signal_emit(o, "e,state,visible,on", "e");
+   edje_object_signal_emit(o, "e,state,focus,off", "e");
+   objs = eina_list_append(objs, o);
+   po = o;
+   po2 = po;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/widgets/border/default/border");
+   edje_object_part_text_set(o, "e.text.title", "Title");
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,unfocused", "e");
+   edje_object_part_swallow(po, "e.swallow.content", o);
+   objs = eina_list_append(objs, o);
+   po = o;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/theme/about");
+   edje_object_size_min_get(o, &mw, &mh);
+   if (mw > 0) evas_object_resize(po2, mw, mh);
+   edje_object_part_text_set(o, "e.text.label", "Close");
+   edje_object_part_text_set(o, "e.text.theme", "Select Theme");
+   evas_object_show(o);
+   edje_object_part_swallow(po, "e.swallow.client", o);
+   objs = eina_list_append(objs, o);
+
+   
+   
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/comp/default");
+   evas_object_move(o, w / 10, h / 5);
+   evas_object_resize(o, w / 2, h / 3);
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,shadow,on", "e");
+   edje_object_signal_emit(o, "e,state,visible,on", "e");
+   edje_object_signal_emit(o, "e,state,focus,on", "e");
+   objs = eina_list_append(objs, o);
+   po = o;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/widgets/border/default/border");
+   edje_object_part_text_set(o, "e.text.title", "Title");
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,focused", "e");
+   edje_object_part_swallow(po, "e.swallow.content", o);
+   objs = eina_list_append(objs, o);
+   po = o;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/widgets/dialog/main");
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,icon,enabled", "e");
+   edje_object_part_swallow(po, "e.swallow.client", o);
+   objs = eina_list_append(objs, o);
+   po = o;
+   po2 = po;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/widgets/dialog/text");
+   edje_object_part_text_set(o, "e.textblock.message", 
+                             "<hilight>Welcome to enlightenment.</hilight><br>"
+                             "<br>"
+                             "This is a sample set of content for a<br>"
+                             "theme to test to see what it looks like.");
+   evas_object_show(o);
+   edje_object_part_swallow(po, "e.swallow.content", o);
+   objs = eina_list_append(objs, o);
+   
+   o = e_icon_add(e);
+   e_util_icon_theme_set(o, "dialog-warning");
+   evas_object_show(o);
+   edje_extern_object_min_size_set(o, 64 * e_scale, 64 * e_scale);
+   edje_object_part_swallow(po, "e.swallow.icon", o);
+   objs = eina_list_append(objs, o);
+
+   o = e_box_add(e);
+   e_box_orientation_set(o, 1);
+   e_box_homogenous_set(o, 1);
+   evas_object_show(o);
+   edje_object_part_swallow(po, "e.swallow.buttons", o);
+   objs = eina_list_append(objs, o);
+   po = o;
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/widgets/button");
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,text", "e");
+   edje_object_part_text_set(o, "e.text.label", "OK");
+   e_box_pack_end(po, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 50, 20, 9999, 9999);
+   objs = eina_list_append(objs, o);
+   
+   o = edje_object_add(e);
+   edje_object_file_set(o, file, "e/widgets/button");
+   evas_object_show(o);
+   edje_object_signal_emit(o, "e,state,text", "e");
+   edje_object_part_text_set(o, "e.text.label", "Cancel");
+   e_box_pack_end(po, o);
+   e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 50, 20, 9999, 9999);
+   objs = eina_list_append(objs, o);
+
+   e_box_size_min_get(po, &mw, &mh);
+   edje_extern_object_min_size_set(po, mw, mh);
+   edje_object_part_swallow(po2, "e.swallow.buttons", po);
+
+   evas_object_data_set(preview, "objects", objs);
+   
+//   e_widget_preview_edje_set(preview, file, "e/desktop/background");
+   return EINA_TRUE;
+}
+
 E_Config_Dialog *
 e_int_config_theme(E_Container *con, const char *params __UNUSED__)
 {
@@ -123,8 +386,7 @@ e_int_config_theme_update(E_Config_Dialog *dia, char *file)
      e_widget_flist_path_set(cfdata->o_fm, path, "/");
 
    if (cfdata->o_preview)
-     e_widget_preview_edje_set(cfdata->o_preview, cfdata->theme,
-                               "e/desktop/background");
+     _e_int_theme_preview_set(cfdata->o_preview, cfdata->theme);
    if (cfdata->o_fm) e_widget_change(cfdata->o_fm);
 }
 
@@ -183,7 +445,7 @@ _cb_files_selection_change(void *data, Evas_Object *obj __UNUSED__, void *event_
    eina_stringshare_del(cfdata->theme);
    cfdata->theme = eina_stringshare_add(buf);
    if (cfdata->o_preview)
-     e_widget_preview_edje_set(cfdata->o_preview, buf, "e/desktop/background");
+     _e_int_theme_preview_set(cfdata->o_preview, buf);
    if (cfdata->o_fm) e_widget_change(cfdata->o_fm);
 }
 
@@ -510,7 +772,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
       evas_object_size_hint_min_set(o, mw, mh);
       cfdata->o_preview = o;
       if (cfdata->theme)
-        e_widget_preview_edje_set(o, cfdata->theme, "e/desktop/background");
+        _e_int_theme_preview_set(o, cfdata->theme);
       e_widget_aspect_child_set(oa, o);
       e_widget_list_object_append(of, oa, 1, 1, 0);
       evas_object_show(o);
@@ -686,11 +948,10 @@ _preview_set(void *data)
           if (strstr(parts_list[i], c_label)) break;
 
         if (parts_list[i])
-          ret = e_widget_preview_edje_set(cfdata->o_preview, theme,
-                                          parts_list[i] + strlen(c_label));
+          ret = _e_int_theme_preview_group_set(cfdata->o_preview, theme,
+                                               parts_list[i] + strlen(c_label));
         if (!ret)
-          e_widget_preview_edje_set(cfdata->o_preview, theme,
-                                    "e/desktop/background");
+          _e_int_theme_preview_set(cfdata->o_preview, theme);
         eina_stringshare_del(theme);
      }
 }
@@ -1143,7 +1404,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    ob = e_widget_preview_add(evas, mw, mh);
    cfdata->o_preview = ob;
    if (cfdata->theme)
-     e_widget_preview_edje_set(ob, cfdata->theme, "e/desktop/background");
+     _e_int_theme_preview_set(ob, cfdata->theme);
    e_widget_aspect_child_set(oa, ob);
    e_widget_framelist_object_append(of, oa);
    e_widget_table_object_append(ot, of, 2, 0, 1, 1, 1, 1, 1, 1);
