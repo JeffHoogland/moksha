@@ -1158,7 +1158,6 @@ _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m)
    E_Menu_Item *mi = NULL;
    char *class = NULL;
 
-   class = strdup("");
    EINA_LIST_FOREACH(borders, l, bd)
      {
         if ((bd->iconic) &&
@@ -1168,7 +1167,7 @@ _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m)
              continue;
           }
 
-        if (((strcmp(class, bd->client.icccm.class) != 0) &&
+        if (((e_util_strcmp(class, bd->client.icccm.class)) &&
              e_config->clientlist_separate_with != E_CLIENTLIST_GROUP_SEP_NONE))
           {
              if (e_config->clientlist_separate_with == E_CLIENTLIST_GROUP_SEP_MENU)
@@ -1198,6 +1197,7 @@ _e_int_menus_clients_add_by_class(Eina_List *borders, E_Menu *m)
      e_menu_item_submenu_set(mi, subm);
 
    _e_int_menus_clients_menu_add_iconified(ico, m);
+   free(class);
 }
 
 static void
