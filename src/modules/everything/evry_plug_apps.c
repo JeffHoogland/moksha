@@ -1031,17 +1031,18 @@ _open_term_action(Evry_Action *act)
 
    if (dir)
      {
-        if (!getcwd(cwd, sizeof(cwd)))
-          return 0;
-        if (chdir(dir))
-          return 0;
+        if ((!getcwd(cwd, sizeof(cwd))) || (chdir(dir)))
+          {
+             free(dir);
+             return 0;
+          }
 
         tmp = E_NEW(Evry_Item_App, 1);
         tmp->file = _conf->cmd_terminal;
 
         ret = evry->util_exec_app(EVRY_ITEM(tmp), NULL);
-        E_FREE(tmp);
-        E_FREE(dir);
+        free(tmp);
+        free(dir);
         if (chdir(cwd))
           return 0;
      }
