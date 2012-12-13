@@ -252,8 +252,11 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
                   alias++;
                }
              uri = efreet_uri_decode(line);
-             if ((!uri) || (!uri->path)) continue;
-             if (!ecore_file_exists(uri->path)) continue;
+             if ((!uri) || (!uri->path) || (!ecore_file_exists(uri->path)))
+               {
+                  if (uri) efreet_uri_free(uri);
+                  continue;
+               }
              if (!subm)
                {
                   if (need_separator)
