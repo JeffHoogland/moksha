@@ -26,7 +26,7 @@ struct _E_Kbd_Dict
       int         size;
    } file;
    struct {
-      const char *tuples[128][128];
+      const char *tuples[256][256];
    } lookup;
    struct {
       Ecore_Timer *flush_timer;
