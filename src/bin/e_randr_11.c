@@ -37,7 +37,7 @@ _11_screen_info_new(void)
    for (i = 0; i < nsizes; i++)
      {
         if (!(rates = ecore_x_randr_screen_primary_output_refresh_rates_get(e_randr_screen_info.root, i, &randr_info_11->nrates[i])))
-          return EINA_FALSE;
+          goto _info_11_new_fail;
         randr_info_11->rates[i] = rates;
      }
    randr_info_11->current_rate = ecore_x_randr_screen_primary_output_current_refresh_rate_get(e_randr_screen_info.root);
@@ -45,6 +45,7 @@ _11_screen_info_new(void)
    return randr_info_11;
 
 _info_11_new_fail:
+   free(sizes);
    free(randr_info_11);
    return NULL;
 }
