@@ -484,6 +484,7 @@ _e_intl_language_path_find(char *language)
                {
                   directory = strdup(epd->dir);
                   found = 1;
+                  break;
                }
           }
      }
