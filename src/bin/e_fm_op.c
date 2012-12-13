@@ -1254,14 +1254,14 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
                }
              if (symlink(lnk_path, task->dst.name) == -1)
                {
-                  strncat(buf, lnk_path, sizeof(buf));
+                  strncpy(buf, lnk_path, sizeof(buf) - 1);
                   free(lnk_path);
                   _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", buf, task->dst.name);
                }
           }
         else
           {
-             strncat(buf, lnk_path, sizeof(buf));
+             strncpy(buf, lnk_path, sizeof(buf) - 1);
              free(lnk_path);
              _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", buf, task->dst.name);
           }
