@@ -71,7 +71,7 @@ _e_mod_illume_config_policy_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Co
      {
         EINA_LIST_FREE(policies, p) 
           {
-             e_widget_ilist_append(ow, NULL, strdup(p->api->label), 
+             e_widget_ilist_append(ow, NULL, p->api->label, 
                                    _e_mod_illume_config_policy_list_changed, NULL, 
                                    strdup(p->api->name));
 
