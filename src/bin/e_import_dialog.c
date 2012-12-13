@@ -139,7 +139,7 @@ e_import_dialog_show(E_Container *con, const char *dev, const char *path, Ecore_
    Evas_Object *ofm;
    int w, h;
    const char *fdev, *fpath;
-   char buf[PATH_MAX];
+   char buf[PATH_MAX], *rpath;
    E_Dialog *dia;
 
    id = E_OBJECT_ALLOC(E_Import_Dialog, E_IMPORT_DIALOG_TYPE, _e_import_dialog_del);
@@ -163,10 +163,12 @@ e_import_dialog_show(E_Container *con, const char *dev, const char *path, Ecore_
    else
      snprintf(buf, sizeof(buf), "%s", path);
 
-   if (!ecore_file_exists(ecore_file_realpath(buf)))
+   rpath = ecore_file_realpath(buf);
+   if (!ecore_file_exists(rpath))
      fpath = "/";
    else
      fpath = path ?: e_config->wallpaper_import_last_path;
+   free(rpath);
 
    if ((!fdev) && (!fpath))
      {
