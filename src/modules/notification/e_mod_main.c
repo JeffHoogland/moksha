@@ -174,6 +174,7 @@ e_modapi_init(E_Module *m)
                                     MOD_CFG_FILE_VERSION)))
      {
         _notification_cfg_free(notification_cfg);
+        notification_cfg = NULL;
      }
 
    if (!notification_cfg)
