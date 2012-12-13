@@ -347,6 +347,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
         if (penv_display_length + 32 > 4096)
           {
              free(inst);
+             free(penv_display);
              return NULL;
           }
 
