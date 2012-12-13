@@ -86,7 +86,7 @@ e_fwin_nav_shutdown(void)
 static Eina_Bool
 _event_deleted(Nav_Item *ni, int type, void *e)
 {
-   Eio_Monitor_Error *me = me;
+   Eio_Monitor_Error *me = e;
    Eio_Monitor_Event *ev = e;
    const char *dir;
 
