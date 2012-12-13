@@ -707,6 +707,7 @@ _ds_shadow_recalc(Shadow *sh)
      {
         Eina_List *l, *ll;
         Shpix *sp;
+        Tilebuf *tb;
         int shw, shh, bsz;
         int x1, yy1, x2, y2;
 
@@ -726,22 +727,41 @@ _ds_shadow_recalc(Shadow *sh)
           }
 
         sp = _ds_shpix_new(shw + (bsz * 2), shh + (bsz * 2));
-        if (sp)
+        if (!sp) return;
+        _ds_shadow_obj_shutdown(sh);
+        if (!rects)
           {
-             Tilebuf *tb;
+             _ds_shpix_fill(sp, 0, 0, shw + (bsz * 2), bsz, 0);
+             _ds_shpix_fill(sp, 0, bsz + shh, shw + (bsz * 2), bsz, 0);
+             _ds_shpix_fill(sp, 0, bsz, bsz, shh, 0);
+             _ds_shpix_fill(sp, bsz + shw, bsz, bsz, shh, 0);
+             _ds_shpix_fill(sp, bsz, bsz, shw, shh, 255);
+          }
+        else
+          {
+             _ds_shpix_fill(sp, 0, 0, shw + (bsz * 2), shh + (bsz * 2), 0);
+             for (l = rects; l; l = l->next)
+               {
+                  E_Rect *r;
 
-             _ds_shadow_obj_shutdown(sh);
-             if (!rects)
-               {
-                  _ds_shpix_fill(sp, 0, 0, shw + (bsz * 2), bsz, 0);
-                  _ds_shpix_fill(sp, 0, bsz + shh, shw + (bsz * 2), bsz, 0);
-                  _ds_shpix_fill(sp, 0, bsz, bsz, shh, 0);
-                  _ds_shpix_fill(sp, bsz + shw, bsz, bsz, shh, 0);
-                  _ds_shpix_fill(sp, bsz, bsz, shw, shh, 255);
+                  r = l->data;
+                  x1 = bsz + r->x;
+                  yy1 = bsz + r->y;
+                  x2 = bsz + r->x + r->w - 1;
+                  y2 = bsz + r->y + r->h - 1;
+                  _ds_shpix_fill(sp, x1, yy1, (x2 - x1) + 1, (y2 - yy1) + 1, 255);
                }
-             else
+          }
+
+        tb = _tilebuf_new(shw + (bsz * 2), shh + (bsz * 2));
+        if (tb)
+          {
+             Eina_List *brects;
+
+             _tilebuf_set_tile_size(tb, 16, 16);
+             /* find edges */
+             if (rects)
                {
-                  _ds_shpix_fill(sp, 0, 0, shw + (bsz * 2), shh + (bsz * 2), 0);
                   for (l = rects; l; l = l->next)
                     {
                        E_Rect *r;
@@ -751,111 +771,87 @@ _ds_shadow_recalc(Shadow *sh)
                        yy1 = bsz + r->y;
                        x2 = bsz + r->x + r->w - 1;
                        y2 = bsz + r->y + r->h - 1;
-                       _ds_shpix_fill(sp, x1, yy1, (x2 - x1) + 1, (y2 - yy1) + 1, 255);
+                       if (x1 < 1) x1 = 1;
+                       if (x1 >= (sp->w - 1)) x1 = (sp->w - 1) - 1;
+                       if (x2 < 1) x1 = 1;
+                       if (x2 >= (sp->w - 1)) x2 = (sp->w - 1) - 1;
+                       if (yy1 < 1) yy1 = 1;
+                       if (yy1 >= (sp->h - 1)) yy1 = (sp->h - 1) - 1;
+                       if (y2 < 1) yy1 = 1;
+                       if (y2 >= (sp->h - 1)) y2 = (sp->h - 1) - 1;
+                       _ds_edge_scan(sp, tb, bsz, x1, yy1, x2 + 1, yy1);
+                       _ds_edge_scan(sp, tb, bsz, x1, y2 + 1, x2 + 1, y2 + 1);
+                       _ds_edge_scan(sp, tb, bsz, x1, yy1, x1, y2 + 1);
+                       _ds_edge_scan(sp, tb, bsz, x2 + 1, yy1, x2 + 1, y2 + 1);
                     }
                }
-
-             tb = _tilebuf_new(shw + (bsz * 2), shh + (bsz * 2));
-             if (tb)
+             /* its a rect - just add the rect outline */
+             else
                {
-                  Eina_List *brects;
-
-                  _tilebuf_set_tile_size(tb, 16, 16);
-                  /* find edges */
-                  if (rects)
-                    {
-                       for (l = rects; l; l = l->next)
-                         {
-                            E_Rect *r;
-
-                            r = l->data;
-                            x1 = bsz + r->x;
-                            yy1 = bsz + r->y;
-                            x2 = bsz + r->x + r->w - 1;
-                            y2 = bsz + r->y + r->h - 1;
-                            if (x1 < 1) x1 = 1;
-                            if (x1 >= (sp->w - 1)) x1 = (sp->w - 1) - 1;
-                            if (x2 < 1) x1 = 1;
-                            if (x2 >= (sp->w - 1)) x2 = (sp->w - 1) - 1;
-                            if (yy1 < 1) yy1 = 1;
-                            if (yy1 >= (sp->h - 1)) yy1 = (sp->h - 1) - 1;
-                            if (y2 < 1) yy1 = 1;
-                            if (y2 >= (sp->h - 1)) y2 = (sp->h - 1) - 1;
-                            _ds_edge_scan(sp, tb, bsz, x1, yy1, x2 + 1, yy1);
-                            _ds_edge_scan(sp, tb, bsz, x1, y2 + 1, x2 + 1, y2 + 1);
-                            _ds_edge_scan(sp, tb, bsz, x1, yy1, x1, y2 + 1);
-                            _ds_edge_scan(sp, tb, bsz, x2 + 1, yy1, x2 + 1, y2 + 1);
-                         }
-                    }
-                  /* its a rect - just add the rect outline */
-                  else
-                    {
-                       _tilebuf_add_redraw(tb,
-                                           0,
-                                           0,
-                                           shw + (bsz * 2),
-                                           (bsz + 1) * 2);
-                       _tilebuf_add_redraw(tb,
-                                           0,
-                                           (bsz + 1) * 2,
-                                           (bsz + 1) * 2,
-                                           sp->h - (2 * ((bsz + 1) * 2)));
-                       _tilebuf_add_redraw(tb,
-                                           sp->w - ((bsz + 1) * 2),
-                                           (bsz + 1) * 2,
-                                           (bsz + 1) * 2,
-                                           sp->h - (2 * ((bsz + 1) * 2)));
-                       _tilebuf_add_redraw(tb,
-                                           0,
-                                           sp->h - ((bsz + 1) * 2),
-                                           shw + (bsz * 2),
-                                           (bsz + 1) * 2);
-                    }
-                  brects = _tilebuf_get_render_rects(tb);
-#if 0 /* enable this to see how dropshadow minimises what it has to go blur */
-                  printf("BRTECTS:\n");
-                  for (l = brects; l; l = l->next)
-                    {
-                       E_Rect *r;
-                       r = l->data;
-                       _ds_shpix_fill(sp, r->x, r->y, r->w, r->h, 255);
-/*		       printf("  %i,%i %ix%i\n", r->x, r->y, r->w, r->h);*/
-                    }
-                  printf("done\n");
-#else
-                  _ds_shpix_blur_rects(sp, brects,
-                                       sh->ds->table.gauss2, bsz, sh->ds->conf->quality);
-#endif
-                  _ds_shadow_obj_init_rects(sh, brects);
-                  for (l = brects, ll = sh->object_list;
-                       l && ll;
-                       l = l->next, ll = ll->next)
-                    {
-                       Shadow_Object *so;
-                       E_Rect *r;
-
-                       r = l->data;
-                       so = ll->data;
-                       evas_object_image_smooth_scale_set(so->obj, 1);
-                       evas_object_move(so->obj,
-                                        sh->x + so->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
-                                        sh->y + so->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
-                       evas_object_resize(so->obj,
-                                          r->w, r->h);
-                       evas_object_image_fill_set(so->obj,
-                                                  0, 0,
-                                                  r->w, r->h);
-                       if (sh->visible)
-                         evas_object_show(so->obj);
-                       _ds_shpix_object_set(sp, so->obj,
-                                            r->x, r->y, r->w, r->h);
-                    }
-                  _ds_shpix_free(sp);
-
-                  _tilebuf_free_render_rects(brects);
-                  _tilebuf_free(tb);
+                  _tilebuf_add_redraw(tb,
+                                      0,
+                                      0,
+                                      shw + (bsz * 2),
+                                      (bsz + 1) * 2);
+                  _tilebuf_add_redraw(tb,
+                                      0,
+                                      (bsz + 1) * 2,
+                                      (bsz + 1) * 2,
+                                      sp->h - (2 * ((bsz + 1) * 2)));
+                  _tilebuf_add_redraw(tb,
+                                      sp->w - ((bsz + 1) * 2),
+                                      (bsz + 1) * 2,
+                                      (bsz + 1) * 2,
+                                      sp->h - (2 * ((bsz + 1) * 2)));
+                  _tilebuf_add_redraw(tb,
+                                      0,
+                                      sp->h - ((bsz + 1) * 2),
+                                      shw + (bsz * 2),
+                                      (bsz + 1) * 2);
                }
+             brects = _tilebuf_get_render_rects(tb);
+#if 0 /* enable this to see how dropshadow minimises what it has to go blur */
+             printf("BRTECTS:\n");
+             for (l = brects; l; l = l->next)
+               {
+                  E_Rect *r;
+                  r = l->data;
+                  _ds_shpix_fill(sp, r->x, r->y, r->w, r->h, 255);
+/*		       printf("  %i,%i %ix%i\n", r->x, r->y, r->w, r->h);*/
+               }
+             printf("done\n");
+#else
+             _ds_shpix_blur_rects(sp, brects,
+                                  sh->ds->table.gauss2, bsz, sh->ds->conf->quality);
+#endif
+             _ds_shadow_obj_init_rects(sh, brects);
+             for (l = brects, ll = sh->object_list;
+                  l && ll;
+                  l = l->next, ll = ll->next)
+               {
+                  Shadow_Object *so;
+                  E_Rect *r;
+
+                  r = l->data;
+                  so = ll->data;
+                  evas_object_image_smooth_scale_set(so->obj, 1);
+                  evas_object_move(so->obj,
+                                   sh->x + so->x + sh->ds->conf->shadow_x - sh->ds->conf->blur_size,
+                                   sh->y + so->y + sh->ds->conf->shadow_y - sh->ds->conf->blur_size);
+                  evas_object_resize(so->obj,
+                                     r->w, r->h);
+                  evas_object_image_fill_set(so->obj,
+                                             0, 0,
+                                             r->w, r->h);
+                  if (sh->visible)
+                    evas_object_show(so->obj);
+                  _ds_shpix_object_set(sp, so->obj,
+                                       r->x, r->y, r->w, r->h);
+               }
+             _tilebuf_free_render_rects(brects);
+             _tilebuf_free(tb);
           }
+        _ds_shpix_free(sp);
      }
    else
      {
