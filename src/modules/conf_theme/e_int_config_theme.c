@@ -90,6 +90,20 @@ _e_int_theme_preview_group_set(Evas_Object *preview, const char *file, const cha
    return e_widget_preview_edje_set(preview, file, group);
 }
 
+static void
+_e_int_theme_edje_file_set(Evas_Object *o, const char *file, const char *group)
+{
+   if (!edje_object_file_set(o, file, group))
+     {
+        file = e_path_find(path_themes, "default.edj");
+        if (file)
+          {
+             edje_object_file_set(o, file, group);
+             eina_stringshare_del(file);
+          }
+     }
+}
+
 static Eina_Bool
 _e_int_theme_preview_set(Evas_Object *preview, const char *file)
 {
@@ -104,14 +118,14 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    w *= 2; h *= 2;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/desktop/background");
+   _e_int_theme_edje_file_set(o, file, "e/desktop/background");
    evas_object_move(o, 0, 0);
    evas_object_resize(o, w, h);
    evas_object_show(o);
    objs = eina_list_append(objs, o);
 
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/comp/popup");
+   _e_int_theme_edje_file_set(o, file, "e/comp/popup");
    evas_object_move(o, (w - (400 * e_scale)) / 2, h - (40 * e_scale));
    evas_object_resize(o, 400 * e_scale, (40 * e_scale));
    evas_object_show(o);
@@ -121,7 +135,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    po = o;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/shelf/default/base");
+   _e_int_theme_edje_file_set(o, file, "e/shelf/default/base");
    evas_object_show(o);
    edje_object_signal_emit(o, "e,state,orientation,bottom", "e");
    edje_object_part_swallow(po, "e.swallow.content", o);
@@ -139,14 +153,14 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    mh = 42 * e_scale;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/start/main");
+   _e_int_theme_edje_file_set(o, file, "e/modules/start/main");
    evas_object_show(o);
    e_box_pack_end(po, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
    objs = eina_list_append(objs, o);
 
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/shelf/default/inset");
+   _e_int_theme_edje_file_set(o, file, "e/shelf/default/inset");
    evas_object_show(o);
    e_box_pack_end(po, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, 4 * mh, 0, 9999, 9999);
@@ -161,7 +175,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    po3 = o;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/pager/desk");
+   _e_int_theme_edje_file_set(o, file, "e/modules/pager/desk");
    evas_object_show(o);
    edje_object_signal_emit(o, "e,state,selected", "e");
    e_box_pack_end(po3, o);
@@ -169,49 +183,49 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    objs = eina_list_append(objs, o);
 
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/pager/desk");
+   _e_int_theme_edje_file_set(o, file, "e/modules/pager/desk");
    evas_object_show(o);
    e_box_pack_end(po3, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
    objs = eina_list_append(objs, o);
 
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/pager/desk");
+   _e_int_theme_edje_file_set(o, file, "e/modules/pager/desk");
    evas_object_show(o);
    e_box_pack_end(po3, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
    objs = eina_list_append(objs, o);
 
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/pager/desk");
+   _e_int_theme_edje_file_set(o, file, "e/modules/pager/desk");
    evas_object_show(o);
    e_box_pack_end(po3, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
    objs = eina_list_append(objs, o);
 
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/backlight/main");
+   _e_int_theme_edje_file_set(o, file, "e/modules/backlight/main");
    evas_object_show(o);
    e_box_pack_end(po, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
    objs = eina_list_append(objs, o);
 
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/mixer/main");
+   _e_int_theme_edje_file_set(o, file, "e/modules/mixer/main");
    evas_object_show(o);
    e_box_pack_end(po, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
    objs = eina_list_append(objs, o);
 
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/battery/main");
+   _e_int_theme_edje_file_set(o, file, "e/modules/battery/main");
    evas_object_show(o);
    e_box_pack_end(po, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
    objs = eina_list_append(objs, o);
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/modules/clock/main");
+   _e_int_theme_edje_file_set(o, file, "e/modules/clock/main");
    evas_object_show(o);
    e_box_pack_end(po, o);
    e_box_pack_options_set(o, 1, 1, 0, 0, 0.5, 0.5, mh, 0, 9999, 9999);
@@ -219,7 +233,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/comp/default");
+   _e_int_theme_edje_file_set(o, file, "e/comp/default");
    evas_object_move(o, w / 2, h / 9);
    evas_object_resize(o, w / 3, h / 3);
    evas_object_show(o);
@@ -231,7 +245,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    po2 = po;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/widgets/border/default/border");
+   _e_int_theme_edje_file_set(o, file, "e/widgets/border/default/border");
    edje_object_part_text_set(o, "e.text.title", "Title");
    evas_object_show(o);
    edje_object_signal_emit(o, "e,state,unfocused", "e");
@@ -240,7 +254,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    po = o;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/theme/about");
+   _e_int_theme_edje_file_set(o, file, "e/theme/about");
    edje_object_size_min_get(o, &mw, &mh);
    if (mw > 0) evas_object_resize(po2, mw, mh);
    edje_object_part_text_set(o, "e.text.label", "Close");
@@ -253,7 +267,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/comp/default");
+   _e_int_theme_edje_file_set(o, file, "e/comp/default");
    evas_object_move(o, w / 10, h / 5);
    evas_object_resize(o, w / 2, h / 3);
    evas_object_show(o);
@@ -264,7 +278,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    po = o;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/widgets/border/default/border");
+   _e_int_theme_edje_file_set(o, file, "e/widgets/border/default/border");
    edje_object_part_text_set(o, "e.text.title", "Title");
    evas_object_show(o);
    edje_object_signal_emit(o, "e,state,focused", "e");
@@ -273,7 +287,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    po = o;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/widgets/dialog/main");
+   _e_int_theme_edje_file_set(o, file, "e/widgets/dialog/main");
    evas_object_show(o);
    edje_object_signal_emit(o, "e,icon,enabled", "e");
    edje_object_part_swallow(po, "e.swallow.client", o);
@@ -282,7 +296,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    po2 = po;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/widgets/dialog/text");
+   _e_int_theme_edje_file_set(o, file, "e/widgets/dialog/text");
    edje_object_part_text_set(o, "e.textblock.message", 
                              "<hilight>Welcome to enlightenment.</hilight><br>"
                              "<br>"
@@ -308,7 +322,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    po = o;
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/widgets/button");
+   _e_int_theme_edje_file_set(o, file, "e/widgets/button");
    evas_object_show(o);
    edje_object_signal_emit(o, "e,state,text", "e");
    edje_object_part_text_set(o, "e.text.label", "OK");
@@ -317,7 +331,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    objs = eina_list_append(objs, o);
    
    o = edje_object_add(e);
-   edje_object_file_set(o, file, "e/widgets/button");
+   _e_int_theme_edje_file_set(o, file, "e/widgets/button");
    evas_object_show(o);
    edje_object_signal_emit(o, "e,state,text", "e");
    edje_object_part_text_set(o, "e.text.label", "Cancel");
