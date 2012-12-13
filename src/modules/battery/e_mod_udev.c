@@ -207,7 +207,10 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
    if (!bat)
      {
         if (!(bat = _battery_battery_find(syspath)))
-          return _battery_udev_battery_add(syspath);
+          {
+             _battery_udev_battery_add(syspath);
+             return;
+          }
      }
    /* update the poller interval */
    ecore_poller_poller_interval_set(bat->poll, battery_config->poll_interval);
@@ -291,7 +294,10 @@ _battery_udev_ac_update(const char *syspath, Ac_Adapter *ac)
    if (!ac)
      {
         if (!(ac = _battery_ac_adapter_find(syspath)))
-          return _battery_udev_ac_add(syspath);
+          {
+             _battery_udev_ac_add(syspath);
+             return;
+          }
      }
 
    GET_NUM(ac, present, POWER_SUPPLY_ONLINE);
