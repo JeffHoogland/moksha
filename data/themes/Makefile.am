@@ -329,6 +329,9 @@ img/sym_down_light_normal.png \
 img/sym_down_light_selected.png \
 img/sym_heart_glow_normal.png \
 img/sym_heart_light_normal.png \
+img/sym_icon_op_ask.png \
+img/sym_icon_op_move.png \
+img/sym_icon_op_copy.png \
 img/sym_left_glow_normal.png \
 img/sym_left_light_normal.png \
 img/sym_radio_alum.png \

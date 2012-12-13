@@ -11,6 +11,9 @@ group { name: "e/fileman/default/list/variable";
    images.image: "shadow_square_tiny.png" COMP;
    images.image: "ball_small_glow.png" COMP;
    images.image: "ball_small_glow_intense.png" COMP;
+   images.image: "sym_icon_op_ask.png" COMP;
+   images.image: "sym_icon_op_copy.png" COMP;
+   images.image: "sym_icon_op_move.png" COMP;
    script {
       public longpressed;
    }
@@ -229,6 +232,33 @@ group { name: "e/fileman/default/list/variable";
             visible: 1;
          }
       }
+      part { name: "op";
+         description { state: "default" 0.0;
+            align: 1.0 0.5;
+            aspect: 1.0 1.0; aspect_preference: VERTICAL;
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -5 4;
+            rel2.offset: -5 -5;
+            image.normal: "sym_icon_op_ask.png";
+            max: 32 32;
+            visible: 0;
+         }
+         description { state: "ask" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_icon_op_ask.png";
+            visible: 1;
+         }
+         description { state: "copy" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_icon_op_copy.png";
+            visible: 1;
+         }
+         description { state: "move" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_icon_op_move.png";
+            visible: 1;
+         }
+      }
 //////////////////////////
       part { name: "sel_shine"; mouse_events: 0;
          description { state: "default" 0.0;
@@ -336,19 +366,21 @@ group { name: "e/fileman/default/list/variable";
          transition: SPRING 0.7 2.0 4;
          target: "icon";
       }
-
-      /* XXX: need imagery to show a copy will happen, a move or an "ask"
       program {
          signal: "e,state,ask"; source: "e";
+         action: STATE_SET "ask" 0.0;
+         target: "op";
       }
       program {
          signal: "e,state,move"; source: "e";
+         action: STATE_SET "move" 0.0;
+         target: "op";
       }
       program {
          signal: "e,state,copy"; source: "e";
+         action: STATE_SET "copy" 0.0;
+         target: "op";
       }
-      */
-      
       program {
          signal: "e,state,volume,off"; source: "e";
          action: STATE_SET "default" 0.0;
@@ -400,6 +432,9 @@ group { name: "e/fileman/default/icon/fixed";
    images.image: "shine.png" COMP;
    images.image: "glow_small.png" COMP;
    images.image: "shadow_square_tiny.png" COMP;
+   images.image: "sym_icon_op_ask.png" COMP;
+   images.image: "sym_icon_op_copy.png" COMP;
+   images.image: "sym_icon_op_move.png" COMP;
    styles {
       style { name: "fileman_icon_name";
          base: "font=Sans font_size=10 text_class=fileman_icon align=center color=#ffffffff wrap=mixed style=shadow,bottom shadow_color=#00000080 align=center ellipsis=1.0";
@@ -616,6 +651,34 @@ group { name: "e/fileman/default/icon/fixed";
             visible: 1;
          }
       }
+      part { name: "op";
+         description { state: "default" 0.0;
+            align: 1.0 0.0;
+            aspect: 1.0 1.0; aspect_preference: VERTICAL;
+            rel1.relative: 0.5 0.0;
+            rel1.offset: 0 4;
+            rel2.relative: 1.0 0.5;
+            rel2.offset: -5 -1;
+            image.normal: "sym_icon_op_ask.png";
+            max: 32 32;
+            visible: 0;
+         }
+         description { state: "ask" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_icon_op_ask.png";
+            visible: 1;
+         }
+         description { state: "copy" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_icon_op_copy.png";
+            visible: 1;
+         }
+         description { state: "move" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_icon_op_move.png";
+            visible: 1;
+         }
+      }
 //////////////////////////////      
       part { name: "sel_shine"; mouse_events: 0;
          description { state: "default" 0.0;
@@ -732,19 +795,21 @@ group { name: "e/fileman/default/icon/fixed";
          transition: SPRING 0.7 2.0 4;
          target: "icon";
       }
-
-      /* XXX: need imagery to show a copy will happen, a move or an "ask"
       program {
          signal: "e,state,ask"; source: "e";
+         action: STATE_SET "ask" 0.0;
+         target: "op";
       }
       program {
          signal: "e,state,move"; source: "e";
+         action: STATE_SET "move" 0.0;
+         target: "op";
       }
       program {
          signal: "e,state,copy"; source: "e";
+         action: STATE_SET "copy" 0.0;
+         target: "op";
       }
-      */
-      
       program {
          signal: "e,state,volume,off"; source: "e";
          action: STATE_SET "default" 0.0;
