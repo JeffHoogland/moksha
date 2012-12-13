@@ -999,8 +999,6 @@ _new_app_action(Evry_Action *act)
           desktop->comment = strdup(app->desktop->comment);
         if (app->desktop->generic_name)
           desktop->generic_name = strdup(app->desktop->generic_name);
-        if (app->desktop->generic_name)
-          desktop->generic_name = strdup(app->desktop->generic_name);
         if (app->desktop->exec)
           desktop->exec = strdup(app->desktop->exec);
         if (app->desktop->icon)
