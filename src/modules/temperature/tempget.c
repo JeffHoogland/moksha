@@ -373,7 +373,7 @@ init(void)
 static int
 check(void)
 {
-   FILE *f;
+   FILE *f = NULL;
    int ret = 0;
    int temp = 0;
    char buf[4096];
@@ -424,13 +424,13 @@ check(void)
              char dummy[4096];
 
              if (fgets(buf, sizeof(buf), f) == NULL) goto error;
-
+             fclose(f);
+             f = NULL;
              buf[sizeof(buf) - 1] = 0;
              if (sscanf(buf, "%s %s %i", dummy, dummy, &temp) == 3)
                ret = 1;
              else
                goto error;
-             fclose(f);
           }
         else
           goto error;
@@ -442,8 +442,8 @@ check(void)
         if (f)
           {
              if (fgets(buf, sizeof(buf), f) == NULL) goto error;
-
              fclose(f);
+             f = NULL;
              buf[sizeof(buf) - 1] = 0;
              if (sscanf(buf, "%i", &temp) == 1)
                ret = 1;
@@ -461,9 +461,9 @@ check(void)
         if (f)
           {
              if (fgets(buf, sizeof(buf), f) == NULL) goto error;
-
+             fclose(f);
+             f = NULL;
              buf[sizeof(buf) - 1] = 0;
-
              /* actually read the temp */
              if (sscanf(buf, "%i", &temp) == 1)
                ret = 1;
@@ -471,7 +471,6 @@ check(void)
                goto error;
              /* Hack for temp */
              temp = temp / 1000;
-             fclose(f);
           }
         else
           goto error;
@@ -482,9 +481,9 @@ check(void)
         if (f)
           {
              if (fgets(buf, sizeof(buf), f) == NULL) goto error;
-
+             fclose(f);
+             f = NULL;
              buf[sizeof(buf) - 1] = 0;
-
              /* actually read the temp */
              if (sscanf(buf, "%i", &temp) == 1)
                ret = 1;
@@ -492,7 +491,6 @@ check(void)
                goto error;
              /* Hack for temp */
              temp = temp / 1000;
-             fclose(f);
           }
         else
           goto error;
@@ -505,9 +503,9 @@ check(void)
              char *p, *q;
 
              if (fgets(buf, sizeof(buf), f) == NULL) goto error;
-
-             buf[sizeof(buf) - 1] = 0;
              fclose(f);
+             f = NULL;
+             buf[sizeof(buf) - 1] = 0;
              p = strchr(buf, ':');
              if (p)
                {
@@ -531,9 +529,9 @@ check(void)
         if (f)
           {
              if (fgets(buf, sizeof(buf), f) == NULL) goto error;
-
-             buf[sizeof(buf) - 1] = 0;
              fclose(f);
+             f = NULL;
+             buf[sizeof(buf) - 1] = 0;
              temp = atoi(buf);
              temp /= 1000;
              ret = 1;
@@ -550,6 +548,8 @@ check(void)
 
    return -999;
 error:
+   if (f) fclose(f);
+   f = NULL;
    sensor_type = SENSOR_TYPE_NONE;
    if (sensor_name) free(sensor_name);
    sensor_name = NULL;
