@@ -1267,18 +1267,14 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
 
    /* Check that 'home trash' and subsequesnt dirs exists, create if not */
    snprintf(buf, sizeof(buf), "%s/Trash", efreet_data_home_get());
-   trash_dir = strdup(buf);
+   trash_dir = strdupa(buf);
    snprintf(buf, sizeof(buf), "%s/files", trash_dir);
    if (!ecore_file_mkpath(buf)) return 0;
    snprintf(buf, sizeof(buf), "%s/info", trash_dir);
    if (!ecore_file_mkpath(buf)) return 0;
 
    filename = strrchr(fop->src, '/');
-   if (!filename)
-     {
-        free(trash_dir);
-        return 0;
-     }
+   if (!filename) return 0;
    escname = ecore_file_escape_name(filename);
 
    /* Find path for info file. Pointer address is part of the filename to
@@ -1299,7 +1295,6 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
           {
              /* Move failed. Spec says delete files that can't be trashed */
              free(dest);
-             free(trash_dir);
              ecore_file_unlink(fop->src);
              return ECORE_CALLBACK_CANCEL;
           }
@@ -1326,7 +1321,6 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
      rename(dest, fop->src);
 
    free(dest);
-   free(trash_dir);
    eina_stringshare_del(fop->src);
    eina_stringshare_del(fop->dst);
    _e_fops = eina_list_remove(_e_fops, fop);
