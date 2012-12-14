@@ -139,10 +139,10 @@ deserialize_tag(Pulse *conn, PA_Commands command, Pulse_Tag *tag)
         if (!cb) return EINA_TRUE;
         ev = NULL;
         ev = deserialize_server_info(conn, tag);
-        if (!cb) pulse_server_info_free(ev);
         break;
       case PA_COMMAND_GET_SINK_INFO_LIST:
       case PA_COMMAND_GET_SOURCE_INFO_LIST:
+        if (!cb) return EINA_TRUE;
         ev = NULL;
         while (tag->size < tag->dsize - PA_TAG_SIZE_STRING_NULL)
           {
@@ -155,16 +155,13 @@ deserialize_tag(Pulse *conn, PA_Commands command, Pulse_Tag *tag)
                     pulse_sink_free(sink);
                   break;
                }
-             if (!cb) pulse_sink_free(sink);
-             else
-               ev = eina_list_append(ev, sink);
+             if (cb) ev = eina_list_append(ev, sink);
           }
         break;
       case PA_COMMAND_GET_SINK_INFO:
       case PA_COMMAND_GET_SOURCE_INFO:
         if ((!cb) && (!conn->watching)) return EINA_TRUE;
         ev = deserialize_sink(conn, tag, (command == PA_COMMAND_GET_SOURCE_INFO));
-        if (!cb) pulse_sink_free(ev);
         break;
       case 0:
         deserialize_sinks_watcher(conn, tag);

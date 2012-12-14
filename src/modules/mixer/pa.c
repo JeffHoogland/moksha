@@ -174,12 +174,13 @@ login_setup(Pulse *conn)
    return tag;
 }
 
-static Pulse_Tag *
-pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh)
+static Eina_Bool
+pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh, Pulse_Tag **ret_tag)
 {
    Pulse_Tag *tag;
    uint32_t x;
 
+   if (ret_tag) *ret_tag = NULL;
    tag = eina_list_data_get(conn->iq);
    if (!tag)
      {
@@ -189,7 +190,7 @@ pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh)
    if (!tag->auth)
      {
         msg_recv_creds(conn, tag);
-        if (!tag->auth) return NULL;
+        if (!tag->auth) return EINA_FALSE;
      }
    if (!tag->data)
      {
@@ -198,14 +199,14 @@ pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh)
           {
              ERR("Kicked!");
              pulse_disconnect(conn);
-             return NULL;
+             return EINA_FALSE;
           }
         tag->data = malloc(tag->dsize);
      }
    if (tag->pos < tag->dsize)
      {
         if (!msg_recv(conn, tag))
-          return NULL;
+          return EINA_FALSE;
      }
    untag_uint32(tag, &x);
    EINA_SAFETY_ON_TRUE_GOTO((x != PA_COMMAND_REPLY) && (x != PA_COMMAND_SUBSCRIBE_EVENT), error);
@@ -218,13 +219,14 @@ pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh)
      {
         ecore_main_fd_handler_active_set(fdh, ECORE_FD_WRITE);
         pulse_tag_free(tag);
-        return (void*)1;
      }
-   return tag;
+   else if (ret_tag)
+     *ret_tag = tag;
+   return EINA_TRUE;
 error:
    ERR("Received error command %"PRIu32"!", x);
    pulse_tag_free(tag);
-   return NULL;
+   return EINA_FALSE;
 }
 
 static void
@@ -281,7 +283,7 @@ fdh_func(Pulse *conn, Ecore_Fd_Handler *fdh)
           }
         break;
       case PA_STATE_AUTH:
-        if (pulse_recv(conn, fdh))
+        if (pulse_recv(conn, fdh, NULL))
           login_finish(conn, fdh);
         break;
       case PA_STATE_MOREAUTH:
@@ -291,7 +293,7 @@ fdh_func(Pulse *conn, Ecore_Fd_Handler *fdh)
                ecore_main_fd_handler_active_set(fdh, ECORE_FD_READ);
              break;
           }
-        if (pulse_recv(conn, fdh))
+        if (pulse_recv(conn, fdh, NULL))
           {
              conn->state++;
              INF("Login complete!");
@@ -323,8 +325,7 @@ fdh_func(Pulse *conn, Ecore_Fd_Handler *fdh)
                {
                   Pulse_Tag *tag;
                   PA_Commands command;
-                  tag = pulse_recv(conn, fdh);
-                  if (!tag) break;
+                  if (!pulse_recv(conn, fdh, &tag)) break;
                        
                   command = (uintptr_t)eina_hash_find(conn->tag_handlers, &tag->tag_count);
                   eina_hash_del_by_key(conn->tag_handlers, &tag->tag_count);
