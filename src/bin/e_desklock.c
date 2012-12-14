@@ -567,7 +567,7 @@ _e_desklock_popup_free(E_Desklock_Popup_Data *edp)
    evas_event_thaw(edp->popup_wnd->evas);
 
    e_object_del(E_OBJECT(edp->popup_wnd));
-   E_FREE(edp);
+   free(edp);
 }
 
 static Eina_Bool
