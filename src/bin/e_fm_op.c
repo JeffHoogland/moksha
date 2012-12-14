@@ -21,6 +21,10 @@ extern "C"
 void *alloca(size_t);
 #endif
 
+#ifndef strdupa
+# define strdupa(str) strcpy(alloca(strlen(str) + 1), str)
+#endif
+
 #include <math.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -111,12 +115,6 @@ static void          _e_fm_op_random_char(char *buf, size_t len);
 
 Eina_List *_e_fm_op_work_queue = NULL, *_e_fm_op_scan_queue = NULL;
 Ecore_Idler *_e_fm_op_work_idler_p = NULL, *_e_fm_op_scan_idler_p = NULL;
-
-off_t _e_fm_op_done, _e_fm_op_total; /* Type long long should be 64 bits wide everywhere,
-                                            this means that it's max value is 2^63 - 1, which
-                                            is 8 388 608 terabytes, and this should be enough.
-                                            Well, we'll be multipling _e_fm_op_done by 100, but
-                                            still, it is big enough. */
 
 int _e_fm_op_abort = 0; /* Abort mark. */
 int _e_fm_op_scan_error = 0;
@@ -1064,6 +1062,12 @@ _e_fm_op_update_progress_report_simple(int percent, const char *src, const char 
 static void
 _e_fm_op_update_progress(E_Fm_Op_Task *task, off_t _plus_e_fm_op_done, off_t _plus_e_fm_op_total)
 {
+   /* Type long long should be 64 bits wide everywhere, this means
+    * that its max value is 2^63 - 1, which is 8 388 608 terabytes,
+    * and this should be enough. Well, we'll be multipling _e_fm_op_done
+    * by 100, but still, it is big enough. */
+   static off_t _e_fm_op_done = 0, _e_fm_op_total = 0;
+
    static int ppercent = -1;
    int percent;
    static double c_time = 0;
