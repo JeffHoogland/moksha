@@ -522,6 +522,9 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "s",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "window_sticky_toggle", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "f",
+                    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+                    "window_fullscreen_toggle", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "i",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "window_iconic_toggle", NULL);
@@ -602,7 +605,7 @@ _restore_key_binding_defaults_cb(void *data,
                     "menu_show", "favorites");
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Insert",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-                    "exec", "Eterm");
+                    "exec", "terminology");
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Tab",
                     E_BINDING_MODIFIER_ALT, 0,
                     "winlist", "next");
@@ -614,7 +617,7 @@ _restore_key_binding_defaults_cb(void *data,
                     "restart", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Delete",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-                    "logout", NULL);
+                    "syscon", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Escape",
                     E_BINDING_MODIFIER_ALT, 0,
                     "everything", NULL);
@@ -636,6 +639,54 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "F4",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
                     "screen_send_to", "3");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86AudioLowerVolume",
+                    0, 0,
+                    "volume_decrease", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86AudioRaiseVolume",
+                    0, 0,
+                    "volume_increase", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86AudioMute",
+                    0, 0,
+                    "volume_mute", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Print",
+                    0, 0,
+                    "shot", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86Standby",
+                    0, 0,
+                    "suspend", "now");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86Start",
+                    0, 0,
+                    "menu_show", "all");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86PowerDown",
+                    0, 0,
+                    "hibernate", "now");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86PowerOff",
+                    0, 0,
+                    "halt", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86Sleep",
+                    0, 0,
+                    "suspend", "now");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86Suspend",
+                    0, 0,
+                    "suspend", "now");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86Hibernate",
+                    0, 0,
+                    "hibernate", "now");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Execute",
+                    0, 0,
+                    "everything", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86MonBrightnessUp",
+                    0, 0,
+                    "backlight_adjust", "0.1");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86MonBrightnessDown",
+                    0, 0,
+                    "backlight_adjust", "-0.1");
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86LightBulb",
+                    0, 0,
+                    "backlight", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86BrightnessAdjust",
+                    0, 0,
+                    "backlight", NULL);
 
    eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
