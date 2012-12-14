@@ -7093,9 +7093,12 @@ _e_fm2_cb_drag_finished(E_Drag *drag, int dropped __UNUSED__)
                             ic->drag.dnd = EINA_FALSE;
                             if (ic->sd->dnd_scroller) ecore_animator_del(ic->sd->dnd_scroller);
                             ic->sd->dnd_scroller = NULL;
-                            evas_object_smart_callback_call(ic->sd->obj, "dnd_end", &ic->info);
                             if (ic->drag.dnd_end_timer) ecore_timer_reset(ic->drag.dnd_end_timer);
                             else ic->drag.dnd_end_timer = ecore_timer_add(0.2, (Ecore_Task_Cb)_e_fm2_cb_drag_finished_show, ic);
+                            /* NOTE:
+                             * do not touch ic after this callback; it's possible that it may have been deleted
+                             */
+                            evas_object_smart_callback_call(ic->sd->obj, "dnd_end", &ic->info);
                          }
                     }
                }
