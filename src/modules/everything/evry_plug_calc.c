@@ -29,7 +29,6 @@ static Evry_Item *cur_item = NULL;
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 {
-   Evry_Item *it;
    Plugin *p;
 
    if (active)
@@ -37,22 +36,6 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
 
    EVRY_PLUGIN_INSTANCE(p, plugin)
 
-   if (history)
-     {
-        const char *result;
-
-        EINA_LIST_FREE (history, result)
-          {
-             it = EVRY_ITEM_NEW(Evry_Item, p, result, NULL, NULL);
-             it->context = eina_stringshare_ref(p->base.name);
-             p->base.items = eina_list_prepend(p->base.items, it);
-             eina_stringshare_del(result);
-          }
-     }
-
-   it = EVRY_ITEM_NEW(Evry_Item, p, "0", NULL, NULL);
-   it->context = eina_stringshare_ref(p->base.name);
-   cur_item = it;
    active = EINA_TRUE;
 
    return EVRY_PLUGIN(p);
@@ -94,9 +77,18 @@ _finish(Evry_Plugin *plugin)
         if ((items++ > 1) && (items < 10))
           history = eina_list_prepend(history, eina_stringshare_add(it->label));
 
+        if (it == cur_item)
+          cur_item = NULL;
+        
         EVRY_ITEM_FREE(it);
      }
 
+   if (cur_item)
+     {
+        EVRY_ITEM_FREE(cur_item);
+        cur_item = NULL;        
+     }
+   
    EINA_LIST_FREE (handlers, h)
      ecore_event_handler_del(h);
 
@@ -160,11 +152,32 @@ _fetch(Evry_Plugin *plugin, const char *input)
    GET_PLUGIN(p, plugin);
 
    char buf[1024];
+   Evry_Item *it;
 
    if (!input) return 0;
 
    if (!exe && !_run_bc(p)) return 0;
 
+   if (!cur_item)
+     {
+        it = EVRY_ITEM_NEW(Evry_Item, p, "0", NULL, NULL);
+        it->context = eina_stringshare_ref(p->base.name);
+        cur_item = it;
+     }
+
+   if (history)
+     {
+        const char *result;
+
+        EINA_LIST_FREE (history, result)
+          {
+             it = EVRY_ITEM_NEW(Evry_Item, p, result, NULL, NULL);
+             it->context = eina_stringshare_ref(p->base.name);
+             p->base.items = eina_list_prepend(p->base.items, it);
+             eina_stringshare_del(result);
+          }
+     }
+   
    if (!strncmp(input, "scale=", 6))
      snprintf(buf, 1024, "%s\n", input);
    else
