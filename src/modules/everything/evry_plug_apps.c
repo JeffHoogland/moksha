@@ -1506,20 +1506,27 @@ _scan_idler(void *data __UNUSED__)
    /* no more path items left - stop scanning */
    if (!exe_path)
      {
-        Eina_List *l, *l2;
-        int different = 0;
+        Eina_Bool different = EINA_FALSE;
 
-        /* FIXME: check wheter they match or not */
-        for (l = exe_list, l2 = exe_files; l && l2; l = l->next, l2 = l2->next)
+        if (eina_list_count(exe_list) == eina_list_count(exe_files))
           {
-             E_Exe *ee = l->data;
-             if (ee->path != l2->data)
+             E_Exe *ee;
+             Eina_List *l, *l2 = exe_files;
+             
+             EINA_LIST_FOREACH(exe_list, l ,ee)
                {
-                  different = 1;
-                  break;
+                  if (ee->path != l2->data)
+                    {
+                       different = EINA_TRUE;
+                       break;
+                    }
+                  l2 = l2->next;
                }
           }
-        if ((l) || (l2)) different = 1;
+        else
+          {
+             different = EINA_TRUE;
+          }
 
         if (different)
           {
@@ -1550,7 +1557,8 @@ _scan_idler(void *data __UNUSED__)
                }
 
              e_config_domain_save(_exebuf_cache_file, exelist_edd, el);
-
+             INF("plugin exebuf save: %s, %d", _exebuf_cache_file, eina_list_count(el->list));
+             
              exe_list = el->list;
              free(el);
           }
@@ -1569,7 +1577,8 @@ _scan_idler(void *data __UNUSED__)
      {
         dir = exe_path->data;
         exe_dir = eina_file_direct_ls(dir);
-        //printf("scan dir: %s\n", dir);
+        INF("scan dir: %s", dir);
+        
      }
    /* if we have an opened dir - scan the next item */
    if (exe_dir)
@@ -1583,7 +1592,8 @@ _scan_idler(void *data __UNUSED__)
              if (!eina_file_statat(eina_iterator_container_get(exe_dir), info, &st) &&
                  (!S_ISDIR(st.mode)) &&
                  (!access(info->path, X_OK)))
-               exe_files = eina_list_append(exe_files, eina_stringshare_add(info->path + info->name_start));
+               exe_files = eina_list_append(exe_files,
+                                            eina_stringshare_add(info->path + info->name_start));
           }
         else
           {
@@ -1648,6 +1658,7 @@ _exe_path_list()
           }
         if (pp > last)
           exe_path = eina_list_append(exe_path, strdup(last));
+        
         free(path);
      }
 
@@ -1669,6 +1680,8 @@ _scan_executables()
    if (el)
      {
         exe_list = el->list;
+        INF("plugin exebuf load: %s, %d", _exebuf_cache_file, eina_list_count(el->list));
+             
         free(el);
      }
 
