@@ -5054,11 +5054,11 @@ msgstr "Selezionare un profilo"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:138
 msgid "Scratch"
-msgstr "Riparti da zero"
+msgstr "Reinizializza"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:141
 msgid "Reset"
-msgstr "Riavvia"
+msgstr "Reimposta"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:292
 #, c-format
