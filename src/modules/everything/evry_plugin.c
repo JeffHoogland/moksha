@@ -33,7 +33,6 @@ _evry_plugin_free(Evry_Item *it)
 
    evry_plugin_unregister(p);
 
-   DBG("%s", p->name);
    if (p->config) p->config->plugin = NULL;
    if (p->name) eina_stringshare_del(p->name);
 
@@ -202,8 +201,6 @@ void
 evry_plugin_unregister(Evry_Plugin *p)
 {
    Eina_List *l = evry_conf->conf_subjects;
-
-   DBG("%s", p->name);
 
    if (l && eina_list_data_find_list(l, p->config))
      {

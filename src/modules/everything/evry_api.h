@@ -3,7 +3,7 @@
 
 #include "evry_types.h"
 
-#define EVRY_API_VERSION     30
+#define EVRY_API_VERSION     31
 
 #define EVRY_ACTION_OTHER    0
 #define EVRY_ACTION_FINISHED 1
@@ -120,8 +120,6 @@ struct _Evry_API
   int  (*history_item_usage_set)(Evry_Item *it, const char *input, const char *ctxt);
 
   Ecore_Event_Handler *(*event_handler_add)(int type, Eina_Bool (*func) (void *data, int type, void *event), const void *data);
-
-  int log_dom;
 };
 
 struct _Evry_Event_Item_Changed
@@ -302,20 +300,5 @@ struct _Evry_Event_Action_Performed
      (x) = NULL;						\
   } while (0)
 
-
-
-#ifndef EINA_LOG_DEFAULT_COLOR
-#define EINA_LOG_DEFAULT_COLOR EINA_COLOR_CYAN
-#endif
-
-#undef DBG
-#undef INF
-#undef WRN
-#undef ERR
-
-#define DBG(...) EINA_LOG_DOM_DBG(evry->log_dom , __VA_ARGS__)
-#define INF(...) EINA_LOG_DOM_INFO(evry->log_dom , __VA_ARGS__)
-#define WRN(...) EINA_LOG_DOM_WARN(evry->log_dom , __VA_ARGS__)
-#define ERR(...) EINA_LOG_DOM_ERR(evry->log_dom , __VA_ARGS__)
 
 #endif

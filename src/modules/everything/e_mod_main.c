@@ -17,7 +17,6 @@ static const char *module_icon = NULL;
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *plugin_conf_edd = NULL;
 static E_Config_DD *gadget_conf_edd = NULL;
-static int _e_module_evry_log_dom = -1;
 
 Evry_API *evry = NULL;
 Evry_Config *evry_conf = NULL;
@@ -37,16 +36,6 @@ e_modapi_init(E_Module *m)
    Eina_List *l;
    Evry_Module *em;
    char buf[4096];
-
-   _e_module_evry_log_dom = eina_log_domain_register
-       ("e_module_everything", EINA_LOG_DEFAULT_COLOR);
-
-   if (_e_module_evry_log_dom < 0)
-     {
-        EINA_LOG_ERR
-          ("impossible to create a log domain for everything module");
-        return NULL;
-     }
 
    _mod_evry = m;
 
@@ -94,7 +83,6 @@ e_modapi_init(E_Module *m)
    _evry_events[EVRY_EVENT_PLUGIN_SELECTED] = ecore_event_type_new();
 
    evry = E_NEW(Evry_API, 1);
-   evry->log_dom = _e_module_evry_log_dom;
 #define SET(func) (evry->func = &evry_##func);
    SET(api_version_check);
    SET(item_new);
