@@ -626,7 +626,7 @@ _pan_add(Evas *evas)
    static Evas_Smart *smart = NULL;
    static const Evas_Smart_Class sc =
    {
-      "wp_pan",
+      "evry_items",
       EVAS_SMART_CLASS_VERSION,
       _e_smart_add,
       _e_smart_del,
@@ -645,7 +645,10 @@ _pan_add(Evas *evas)
       NULL,
       NULL
    };
-   smart = evas_smart_class_new(&sc);
+
+   if (smart == NULL)
+     smart = evas_smart_class_new(&sc);
+
    return evas_object_smart_add(evas, smart);
 }
 
