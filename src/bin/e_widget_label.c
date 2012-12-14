@@ -62,6 +62,7 @@ e_widget_label_text_set(Evas_Object *obj, const char *text)
    edje_object_part_text_set(wd->text, "e.text.label", text);
    edje_object_size_min_calc(wd->text, &mw, &mh);
    edje_extern_object_min_size_set(wd->text, mw, mh);
+   e_widget_size_min_set(obj, mw, mh);
 }
 
 static void
