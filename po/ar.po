@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-11-27 13:52+0100\n"
-"PO-Revision-Date: 2012-12-01 11:25+0300\n"
+"PO-Revision-Date: 2012-12-14 16:49+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
 "Language: ar\n"
@@ -1565,7 +1565,7 @@ msgstr "ملف"
 
 #: src/bin/e_fm.c:9293
 msgid "Inherit parent settings"
-msgstr "اتباع إعدادات الوالدين"
+msgstr "استخدم إعدادات المجلد اﻷم"
 
 #: src/bin/e_fm.c:9302
 msgid "Show Hidden Files"
