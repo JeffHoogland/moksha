@@ -1165,7 +1165,7 @@ e_modapi_init(E_Module *m)
         e_util_dialog_show(_("Cpufreq Permissions Error"),
                            _("The freqset binary in the cpufreq module<br>"
                              "is not owned by root or does not have the<br>"
-                             "setuid bit set. Please ensure this is the<br"
+                             "setuid bit set. Please ensure this is the<br>"
                              "case. For example:<br>"
                              "<br>"
                              "sudo chown root %s<br>"
