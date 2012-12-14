@@ -632,6 +632,14 @@ _restore_mouse_binding_defaults_cb(void *data, void *data2 __UNUSED__)
                       "desk_linear_flip_by", "1");
    CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_WINDOW, 1, 1, E_BINDING_MODIFIER_ALT, 0,
                       "desk_linear_flip_by", "1");
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 0, -1, E_BINDING_MODIFIER_ALT, 0,
+                      "desk_linear_flip_by", "-1");
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 1, -1, E_BINDING_MODIFIER_ALT, 0,
+                      "desk_linear_flip_by", "-1");
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 0, 1, E_BINDING_MODIFIER_ALT, 0,
+                      "desk_linear_flip_by", "1");
+   CFG_WHEELBIND_DFLT(E_BINDING_CONTEXT_POPUP, 1, 1, E_BINDING_MODIFIER_ALT, 0,
+                      "desk_linear_flip_by", "1");
 
    eina_stringshare_del(cfdata->locals.cur);
    cfdata->locals.cur = NULL;
