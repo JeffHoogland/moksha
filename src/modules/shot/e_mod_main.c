@@ -17,6 +17,7 @@ static E_Action *border_act = NULL, *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 static Ecore_Timer *timer, *border_timer = NULL;
 static E_Win *win = NULL;
+E_Confirm_Dialog *cd = NULL;
 static Evas_Object *o_bg = NULL, *o_box = NULL, *o_content = NULL;
 static Evas_Object *o_event = NULL, *o_img = NULL, *o_hlist = NULL;
 static E_Manager *sman = NULL;
@@ -420,7 +421,7 @@ _win_share_del(void *data __UNUSED__)
 {
    if (handlers) ecore_event_handler_data_set(eina_list_last_data_get(handlers), NULL);
    _upload_cancel_cb(NULL, NULL);
-   
+   if (cd) e_object_del(E_OBJECT(cd));
 }
 
 static void
@@ -541,6 +542,29 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    e_object_del_attach_func_set(E_OBJECT(dia), _win_share_del);
    e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
+}
+
+static void
+_win_share_confirm_del(void *d EINA_UNUSED)
+{
+   cd = NULL;
+}
+
+static void
+_win_share_confirm_yes(void *d EINA_UNUSED)
+{
+   _win_share_cb(NULL, NULL);
+}
+
+static void
+_win_share_confirm_cb(void *d EINA_UNUSED, void *d2 EINA_UNUSED)
+{
+   if (cd) return;
+   cd = e_confirm_dialog_show(_("Confirm Share"), NULL,
+                                _("This image will be uploaded<br>"
+                                  "to enlightenment.org. It will be publicly visible."),
+                                _("Confirm"), _("Cancel"), _win_share_confirm_yes, NULL,
+                                NULL, NULL, _win_share_confirm_del, NULL);
 }
 
 static void
@@ -772,7 +796,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
 
    o = e_widget_button_add(evas, _("Save"), NULL, _win_save_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
-   o = e_widget_button_add(evas, _("Share"), NULL, _win_share_cb, win, NULL);
+   o = e_widget_button_add(evas, _("Share"), NULL, _win_share_confirm_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Cancel"), NULL, _win_cancel_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
@@ -975,6 +999,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_object_del(E_OBJECT(win));
         win = NULL;
      }
+   E_FN_DEL(e_object_del, cd);
    if (timer)
      {
         ecore_timer_del(timer);
