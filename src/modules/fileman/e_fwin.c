@@ -325,7 +325,6 @@ _e_fwin_dnd_end_cb(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event_info _
    /* NOTE: closing the drop target window here WILL break things */
    fwin = drag_fwin->spring_parent;
    if (!fwin) return;
-   e_fm2_refresh(fwin->cur_page->fm_obj);
 
    fwin->spring_child->spring_parent = NULL;
    fwin->spring_child = NULL;
