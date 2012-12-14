@@ -1008,6 +1008,7 @@ _evry_window_free(Evry_Window *win)
    evas_event_freeze(win->evas);
    evas_object_del(win->o_main);
    e_object_del(E_OBJECT(win->ewin));
+   E_FREE(win);
 }
 
 static void
