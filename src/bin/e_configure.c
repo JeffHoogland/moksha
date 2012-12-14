@@ -498,9 +498,9 @@ _e_configure_registry_item_full_add(const char *path, int pri, const char *label
           ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_cb), eci);
         else
           ecat->items = eina_list_sorted_insert(ecat->items, EINA_COMPARE_CB(_e_configure_compare_pri_cb), eci);
-        free(cat);
         break;
      }
+   free(cat);
 }
 
 static void
