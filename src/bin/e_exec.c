@@ -397,7 +397,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
      {
         if (!getcwd(buf, sizeof(buf)))
           {
-             E_FREE(inst);
+             free(inst);
              e_util_dialog_show
                (_("Run Error"),
                    _("Enlightenment was unable to get current directory"));
@@ -405,7 +405,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
           }
         if (chdir(desktop->path))
           {
-             E_FREE(inst);
+             free(inst);
              e_util_dialog_show
                (_("Run Error"),
                    _("Enlightenment was unable to change to directory:<br>"
@@ -423,7 +423,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
                      "<br>"
                      "%s"),
                    buf);
-             E_FREE(inst);
+             free(inst);
              return NULL;
           }
      }
@@ -469,7 +469,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
      }
    if (!exe)
      {
-        E_FREE(inst);
+        free(inst);
         e_util_dialog_show(_("Run Error"),
                            _("Enlightenment was unable to fork a child process:<br>"
                              "<br>"
