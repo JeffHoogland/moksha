@@ -46,7 +46,7 @@ e_about_new(E_Container *con)
        "documentation and/or other materials provided with the "
        "distribution.<br>"
        "<br>"
-       "<hilight>THIS SOFTWARE IS PROVIDED \"AS IS\" AND ANY EXPRESS OR "
+       "<hilight>THIS SOFTWARE IS PROVIDED “AS IS” AND ANY EXPRESS OR "
        "IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED "
        "WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE "
        "ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR "
