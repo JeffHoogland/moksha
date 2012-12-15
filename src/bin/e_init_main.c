@@ -317,7 +317,7 @@ e_init_init(void)
                }
              else
                edje_object_file_set(o, s, "e/init/extra_screen");
-             fprintf(stderr, "screen region screen %p: %ix%i for %x\n", scr, scr->x, scr->y, scr->w, scr->h);
+             fprintf(stderr, "screen region screen %p: %i %i   %ix%i\n", scr, scr->x, scr->y, scr->w, scr->h);
              evas_object_move(o, scr->x, scr->y);
              evas_object_resize(o, scr->w, scr->h);
              evas_object_show(o);
