@@ -3,6 +3,7 @@
 /* function protos */
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int  _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static int  _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static void _fill_remembers(E_Config_Dialog_Data *cfdata);
@@ -29,6 +30,7 @@ e_int_config_remembers(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.create_widgets = _basic_create;
+   v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Window Remembers"), "E", 
                              "windows/window_remembers", 
@@ -91,6 +93,19 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static int
+_basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+{
+   return ((cfdata->remember_dialogs) &&
+	   !(e_config->remember_internal_windows & E_REMEMBER_INTERNAL_DIALOGS)) ||
+          ((!cfdata->remember_dialogs) &&
+	   (e_config->remember_internal_windows & E_REMEMBER_INTERNAL_DIALOGS)) ||
+          ((cfdata->remember_fm_wins) &&
+	   !(e_config->remember_internal_windows & E_REMEMBER_INTERNAL_FM_WINS)) ||
+          ((!cfdata->remember_fm_wins) &&
+	   (e_config->remember_internal_windows & E_REMEMBER_INTERNAL_FM_WINS));
+}
+
+static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->remember_dialogs)
@@ -138,28 +153,32 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_size_min_get(ow, &mw, &mh);
    e_widget_frametable_object_append_full
      (of2, ow, 0, 0, 1, 1, 0, 0, 0, 0, 1.0, 1.0, mw, mh, 9999, 9999);
-   ow = e_widget_label_add(evas, _("<No Name>"));
+   ow = e_widget_label_add(evas, NULL);
+   e_widget_disabled_set(ow, 1);
    cfdata->name = ow;
    e_widget_frametable_object_append(of2, cfdata->name, 1, 0, 1, 1, 1, 1, 1, 0);
    ow = e_widget_label_add(evas, _("Class:"));
    e_widget_size_min_get(ow, &mw, &mh);
    e_widget_frametable_object_append_full
      (of2, ow, 0, 1, 1, 1, 0, 0, 0, 0, 1.0, 1.0, mw, mh, 9999, 9999);
-   ow = e_widget_label_add(evas, _("<No Class>"));
+   ow = e_widget_label_add(evas, NULL);
+   e_widget_disabled_set(ow, 1);
    cfdata->class = ow;
    e_widget_frametable_object_append(of2, cfdata->class, 1, 1, 1, 1, 1, 1, 1, 0);
    ow = e_widget_label_add(evas, _("Title:"));
    e_widget_size_min_get(ow, &mw, &mh);
    e_widget_frametable_object_append_full
      (of2, ow, 0, 2, 1, 1, 0, 0, 0, 0, 1.0, 1.0, mw, mh, 9999, 9999);
-   ow = e_widget_label_add(evas, _("<No Title>"));
+   ow = e_widget_label_add(evas, NULL);
+   e_widget_disabled_set(ow, 1);
    cfdata->title = ow;
    e_widget_frametable_object_append(of2, cfdata->title, 1, 2, 1, 1, 1, 1, 1, 0);
    ow = e_widget_label_add(evas, _("Role:"));
    e_widget_size_min_get(ow, &mw, &mh);
    e_widget_frametable_object_append_full
      (of2, ow, 0, 3, 1, 1, 0, 0, 0, 0, 1.0, 1.0, mw, mh, 9999, 9999);
-   ow = e_widget_label_add(evas, _("<No Role>"));
+   ow = e_widget_label_add(evas, NULL);
+   e_widget_disabled_set(ow, 1);
    cfdata->role = ow;
    e_widget_frametable_object_append(of2, cfdata->role, 1, 3, 1, 1, 1, 1, 1, 0);
 
@@ -167,7 +186,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(ol, of2, 1, 0, 0.0);
    e_widget_list_object_append(ol, cfdata->btn, 1, 0, 0.0);
 
-   e_widget_disabled_set(cfdata->btn, 1);
+   _cb_list_change(cfdata, NULL);
    return ol;
 }
 
@@ -290,6 +309,10 @@ _cb_delete(void *data, void *data2 __UNUSED__)
    _fill_remembers(cfdata);
    if (last_selected >= 0)
      e_widget_ilist_selected_set(cfdata->list, last_selected - deleted + 1);
+
+   /* This is harmless if an item is being selected by the previous line,
+    * and will fill data correctly if there is no window remembers anymore. */
+   _cb_list_change(cfdata, NULL);
 }
 
 static void
@@ -297,21 +320,45 @@ _cb_list_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    E_Remember *rem = NULL;
-   int n = 0;
+   const Eina_List *selected = NULL;
+   E_Ilist_Item *item = NULL;
 
    if (!(cfdata = data)) return;
 
-   n = e_widget_ilist_selected_get(cfdata->list);
-   if ((rem = e_widget_ilist_nth_data_get(cfdata->list, n)))
+   if ((selected = e_widget_ilist_selected_items_get(cfdata->list)))
      {
-	e_widget_label_text_set(cfdata->name, rem->name ? 
-                                rem->name : _("<No Name>"));
-	e_widget_label_text_set(cfdata->class, rem->class ? 
-                                rem->class : _("<No Class>"));
-	e_widget_label_text_set(cfdata->title, rem->title ? 
-                                rem->title : _("<No Title>"));
-	e_widget_label_text_set(cfdata->role, rem->role ? 
-                                rem->role : _("<No Role>"));
+	if ((item = eina_list_last_data_get(selected)))
+	  rem = e_widget_ilist_item_data_get(item);
+     }
+
+   if (!rem)
+     {
+	e_widget_label_text_set(cfdata->name, _("No selection"));
+	e_widget_disabled_set(cfdata->name, 1);
+	e_widget_label_text_set(cfdata->class, _("No selection"));
+	e_widget_disabled_set(cfdata->class, 1);
+	e_widget_label_text_set(cfdata->title, _("No selection"));
+	e_widget_disabled_set(cfdata->title, 1);
+	e_widget_label_text_set(cfdata->role, _("No selection"));
+	e_widget_disabled_set(cfdata->role, 1);
+     }
+   else
+     {
+	e_widget_label_text_set(cfdata->name,
+				rem->name ? rem->name : _("Any"));
+	e_widget_disabled_set(cfdata->name, !rem->name);
+
+	e_widget_label_text_set(cfdata->class,
+				rem->class ? rem->class : _("Any"));
+	e_widget_disabled_set(cfdata->class, !rem->class);
+
+	e_widget_label_text_set(cfdata->title,
+				rem->title ? rem->title : _("Any"));
+	e_widget_disabled_set(cfdata->title, !rem->title);
+
+	e_widget_label_text_set(cfdata->role,
+				rem->role ? rem->role : _("Any"));
+	e_widget_disabled_set(cfdata->role, !rem->role);
      }
 
    if (e_widget_ilist_selected_count_get(cfdata->list) < 1)
