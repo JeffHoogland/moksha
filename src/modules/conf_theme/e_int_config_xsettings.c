@@ -481,7 +481,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                            &(cfdata->enable_xsettings));
    /* e_widget_on_change_hook_set(ow, _settings_changed, cfdata); */
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
-   e_widget_toolbook_page_append(otb, NULL, _("Applications"), ol, 
+   e_widget_toolbook_page_append(otb, NULL, _("GTK Applications"), ol, 
                                  1, 1, 1, 1, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
