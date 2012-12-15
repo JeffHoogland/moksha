@@ -345,8 +345,7 @@ _e_acpi_lid_status_get(const char *device, const char *bus)
      }
 
    /* read the line from state file */
-   buff[0] = '\0';
-   ret = fgets(buff, 1024, f);
+   ret = fgets(buff, sizeof(buff), f);
    fclose(f);
 
    /* parse out state file */
