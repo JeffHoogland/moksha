@@ -851,36 +851,19 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 static void 
 _e_smart_cb_rotate_mouse_in(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Smart_Data *sd;
-   Ecore_Evas *ee;
-   Ecore_X_Window win;
-   Ecore_X_Cursor cur;
+   E_Manager *man;
 
-   if (!(sd = data)) return;
-
-   /* changing cursors for rotate is done this way because e_pointer 
-    * does not support all available X cursors */
-   ee = ecore_evas_ecore_evas_get(evas_object_evas_get(sd->o_frame));
-   win = (Ecore_X_Window)ecore_evas_window_get(ee);
-
-   cur = ecore_x_cursor_shape_get(ECORE_X_CURSOR_EXCHANGE);
-   ecore_x_window_cursor_set(win, cur);
-   ecore_x_cursor_free(cur);
+   man = e_manager_current_get();
+   e_pointer_type_push(man->pointer, obj, "rotate");
 }
 
 static void 
 _e_smart_cb_rotate_mouse_out(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Smart_Data *sd;
-   Ecore_Evas *ee;
-   Ecore_X_Window win;
+   E_Manager *man;
 
-   if (!(sd = data)) return;
-
-   /* reset cursor back to default */
-   ee = ecore_evas_ecore_evas_get(evas_object_evas_get(sd->o_frame));
-   win = (Ecore_X_Window)ecore_evas_window_get(ee);
-   ecore_x_window_cursor_set(win, 0);
+   man = e_manager_current_get();
+   e_pointer_type_pop(man->pointer, obj, "rotate");
 }
 
 static void 
