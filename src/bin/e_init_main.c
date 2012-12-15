@@ -281,6 +281,7 @@ e_init_init(void)
      {
         ecore_x_window_size_get(roots[i], &w, &h);
         _e_init_ecore_evas = _e_init_evas_new(roots[i], w, h, &_e_init_win);
+        fprintf(stderr, "init win: %ix%i for %x\n", w, h, roots[i]);
         _e_init_evas = ecore_evas_get(_e_init_ecore_evas);
         initwins[(i * 2) + 0] = roots[i];
         initwins[(i * 2) + 1] = _e_init_win;
@@ -295,6 +296,7 @@ e_init_init(void)
    /* primary screen/root */
    ecore_x_window_size_get(root, &w, &h);
    _e_init_ecore_evas = _e_init_evas_new(root, w, h, &_e_init_win);
+   fprintf(stderr, "main init win: %ix%i for %x\n", w, h, root);
    _e_init_evas = ecore_evas_get(_e_init_ecore_evas);
    initwins[0] = root;
    initwins[1] = _e_init_win;
@@ -315,6 +317,7 @@ e_init_init(void)
                }
              else
                edje_object_file_set(o, s, "e/init/extra_screen");
+             fprintf(stderr, "screen region screen %p: %ix%i for %x\n", scr, scr->x, scr->y, scr->w, scr->h);
              evas_object_move(o, scr->x, scr->y);
              evas_object_resize(o, scr->w, scr->h);
              evas_object_show(o);
@@ -325,6 +328,7 @@ e_init_init(void)
         o = edje_object_add(_e_init_evas);
         edje_object_file_set(o, s, "e/init/splash");
         _e_init_object = o;
+        fprintf(stderr, "screen region fill\n", w, h);
         evas_object_move(o, 0, 0);
         evas_object_resize(o, w, h);
         evas_object_show(o);

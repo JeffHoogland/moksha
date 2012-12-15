@@ -1238,30 +1238,42 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
 
    lnk_path = ecore_file_readlink(task->src.name);
    if (!lnk_path)
-     _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR,
-                              "Cannot read link '%s'.", task->src.name);
+     {
+        _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot read link '%s'.", task->src.name);
+     }
 
    E_FM_OP_DEBUG("Creating link from '%s' to '%s'\n", lnk_path, task->dst.name);
    _e_fm_op_update_progress_report_simple(0, lnk_path, task->dst.name);
 
    if (symlink(lnk_path, task->dst.name) == -1)
      {
+        char *buf;
+
         if (errno == EEXIST)
           {
              if (unlink(task->dst.name) == -1)
-               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, 
-                                        "Cannot unlink '%s': %s.", task->dst.name);
-             else if (symlink(lnk_path, task->dst.name) == -1)
-               _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, 
-                                        "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
+               {
+                  free(lnk_path);
+                  _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot unlink '%s': %s.", task->dst.name);
+               }
+             if (symlink(lnk_path, task->dst.name) == -1)
+               {
+                  buf = strdupa(lnk_path);
+                  free(lnk_path);
+                  _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", buf, task->dst.name);
+               }
           }
         else
-          _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, 
-                                   "Cannot create link from '%s' to '%s': %s.", lnk_path, task->dst.name);
+          {
+             buf = strdupa(lnk_path);
+             free(lnk_path);
+             _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot create link from '%s' to '%s': %s.", buf, task->dst.name);
+          }
      }
    free(lnk_path);
 
    task->dst.done += task->src.st.st_size;
+
    _e_fm_op_update_progress(task, task->src.st.st_size, 0);
 
    task->finished = 1;
