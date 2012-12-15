@@ -790,22 +790,42 @@ _e_smart_cb_bg_update(void *data, int type, void *event)
    return ECORE_CALLBACK_PASS_ON;
 }
 
+static void
+_pointer_push(Evas_Object *obj, const char *ptr)
+{
+   Evas_Object *ow;
+   E_Win *win;
+   
+   if (!(ow = evas_object_name_find(evas_object_evas_get(obj), "E_Win")))
+     return;
+   if (!(win = evas_object_data_get(ow, "E_Win")))
+     return;
+   e_pointer_type_push(win->pointer, obj, ptr);
+}
+
+static void
+_pointer_pop(Evas_Object *obj, const char *ptr)
+{
+   Evas_Object *ow;
+   E_Win *win;
+   
+   if (!(ow = evas_object_name_find(evas_object_evas_get(obj), "E_Win")))
+     return;
+   if (!(win = evas_object_data_get(ow, "E_Win")))
+     return;
+   e_pointer_type_pop(win->pointer, obj, ptr);
+}
+
 static void 
 _e_smart_cb_resize_mouse_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Manager *man;
-
-   man = e_manager_current_get();
-   e_pointer_type_push(man->pointer, obj, "resize_br");
+   _pointer_push(obj, "resize_br");
 }
 
 static void 
 _e_smart_cb_resize_mouse_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Manager *man;
-
-   man = e_manager_current_get();
-   e_pointer_type_pop(man->pointer, obj, "resize_br");
+   _pointer_pop(obj, "resize_br");
 }
 
 static void 
@@ -849,21 +869,15 @@ _e_smart_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 }
 
 static void 
-_e_smart_cb_rotate_mouse_in(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_cb_rotate_mouse_in(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Manager *man;
-
-   man = e_manager_current_get();
-   e_pointer_type_push(man->pointer, obj, "rotate");
+   _pointer_push(obj, "rotate");
 }
 
 static void 
-_e_smart_cb_rotate_mouse_out(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_cb_rotate_mouse_out(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Manager *man;
-
-   man = e_manager_current_get();
-   e_pointer_type_pop(man->pointer, obj, "rotate");
+   _pointer_pop(obj, "rotate");
 }
 
 static void 
@@ -932,19 +946,13 @@ _e_smart_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emi
 static void 
 _e_smart_cb_indicator_mouse_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Manager *man;
-
-   man = e_manager_current_get();
-   e_pointer_type_push(man->pointer, obj, "hand");
+   _pointer_push(obj, "plus");
 }
 
 static void 
 _e_smart_cb_indicator_mouse_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Manager *man;
-
-   man = e_manager_current_get();
-   e_pointer_type_pop(man->pointer, obj, "hand");
+   _pointer_pop(obj, "plus");
 }
 
 static void 
@@ -1001,19 +1009,13 @@ _e_smart_cb_frame_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj
 static void 
 _e_smart_cb_thumb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
 {
-   E_Manager *man;
-
-   man = e_manager_current_get();
-   e_pointer_type_push(man->pointer, obj, "hand");
+   _pointer_push(obj, "hand");
 }
 
 static void 
 _e_smart_cb_thumb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
 {
-   E_Manager *man;
-
-   man = e_manager_current_get();
-   e_pointer_type_pop(man->pointer, obj, "hand");
+   _pointer_pop(obj, "hand");
 }
 
 static void 
@@ -1029,11 +1031,8 @@ _e_smart_cb_thumb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj
    ev = event;
    if (ev->button == 1)
      {
-        E_Manager *man;
-
-        man = e_manager_current_get();
-        e_pointer_type_push(man->pointer, obj, "move");
-
+        _pointer_push(obj, "move");
+        
         /* record this monitors geometry before moving */
         e_layout_child_geometry_get(mon, &sd->mx, &sd->my, &sd->mw, &sd->mh);
 
@@ -1088,11 +1087,8 @@ _e_smart_cb_thumb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, 
      }
    else if (ev->button == 1)
      {
-        E_Manager *man;
-
-        man = e_manager_current_get();
-        e_pointer_type_pop(man->pointer, obj, "move");
-
+        _pointer_pop(obj, "move");
+        
         /* update moving state */
         sd->moving = EINA_FALSE;
 
