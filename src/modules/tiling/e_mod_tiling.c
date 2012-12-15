@@ -3656,7 +3656,7 @@ static void _move_or_resize(E_Border *bd)
         bool changed = false;
 
         if (_G.tinfo->conf->use_rows) {
-            if (stack > 0 && bd->maximized & E_MAXIMIZE_VERTICAL) {
+            if (bd->maximized & E_MAXIMIZE_VERTICAL) {
                  _e_border_unmaximize(bd, E_MAXIMIZE_VERTICAL);
                  _e_border_move_resize(bd,
                                        extra->expected.x,
@@ -3676,7 +3676,7 @@ static void _move_or_resize(E_Border *bd)
                  changed = true;
             }
         } else {
-            if (stack > 0 && bd->maximized & E_MAXIMIZE_HORIZONTAL) {
+            if (bd->maximized & E_MAXIMIZE_HORIZONTAL) {
                  _e_border_unmaximize(bd, E_MAXIMIZE_HORIZONTAL);
                  _e_border_move_resize(bd,
                                        extra->expected.x,
