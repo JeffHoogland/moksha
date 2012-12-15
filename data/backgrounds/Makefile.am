@@ -26,6 +26,15 @@ Whiterock.edj \
 Hills.edj \
 Light.edj \
 Temple.edj \
-Train.edj
+Train.edj \
+Curly_Leaves.edj \
+Flower_Petals.edj \
+Go_Away.edj \
+Green_Stem.edj \
+Leafy_Red.edj \
+Ramen.edj \
+Shady_Leaves.edj \
+Windy_Palm.edj
+
 
 EXTRA_DIST = $(files_DATA)
