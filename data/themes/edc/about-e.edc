@@ -21,7 +21,7 @@ group { name: "e/widgets/about/main";
          tag: "br" "\n";
       }
       style { name: "authors_style";
-         base: "font=San:style=Bolds font_size=16 align=left text_class=tb_plain color=#00000044 wrap=none";
+         base: "font=Sans:style=Bold font_size=16 align=left text_class=tb_plain color=#00000044 wrap=none";
          tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light color=#3399ff44";
          tag: "title" "+ font_size=24 font=Sans:style=Bold text_class=tb_big";
          tag: "/title" "- \n \n";
