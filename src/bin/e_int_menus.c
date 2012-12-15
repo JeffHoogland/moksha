@@ -698,7 +698,8 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
    else
      {
         mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("(No Applications)"));
+        e_menu_item_label_set(mi, _("No applications"));
+        e_menu_item_disabled_set(mi, 1);
      }
 }
 
@@ -1329,7 +1330,8 @@ _e_int_menus_clients_pre_cb(void *data __UNUSED__, E_Menu *m)
      {
         /* FIXME here we want nothing, but that crashes!!! */
         mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("(No Windows)"));
+        e_menu_item_label_set(mi, _("No windows"));
+        e_menu_item_disabled_set(mi, 1);
      }
 
    if (borders)
@@ -1434,7 +1436,7 @@ _e_int_menus_clients_item_create(E_Border *bd, E_Menu *m)
    if ((title) && (title[0]))
      e_menu_item_label_set(mi, title);
    else
-     e_menu_item_label_set(mi, _("No name!!"));
+     e_menu_item_label_set(mi, _("Untitled window"));
    /* ref the border as we implicitly unref it in the callback */
    e_object_ref(E_OBJECT(bd));
 /*   e_object_breadcrumb_add(E_OBJECT(bd), "clients_menu");*/
@@ -1521,7 +1523,8 @@ _e_int_menus_lost_clients_pre_cb(void *data __UNUSED__, E_Menu *m)
      {
         /* FIXME here we want nothing, but that crashes!!! */
         mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("(No Windows)"));
+        e_menu_item_label_set(mi, _("No windows"));
+        e_menu_item_disabled_set(mi, 1);
         return;
      }
    EINA_LIST_FOREACH(borders, l, bd)
@@ -1533,7 +1536,7 @@ _e_int_menus_lost_clients_pre_cb(void *data __UNUSED__, E_Menu *m)
         if ((title) && (title[0]))
           e_menu_item_label_set(mi, title);
         else
-          e_menu_item_label_set(mi, _("No name!!"));
+          e_menu_item_label_set(mi, _("Untitled window"));
         /* ref the border as we implicitly unref it in the callback */
         e_object_ref(E_OBJECT(bd));
         e_menu_item_callback_set(mi, _e_int_menus_lost_clients_item_cb, bd);
