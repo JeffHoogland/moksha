@@ -414,6 +414,7 @@ group { name: "e/modules/clock/digital";
 
        part { name: "e.text.today"; type: TEXT;
           effect: GLOW;
+          scale: 1;
           description { state: "default" 0.0;
              rel1.relative: 0.0 1.0;
              rel1.offset: 0 1;
