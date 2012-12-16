@@ -43,7 +43,8 @@ static int          _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Conf
 static Evas_Object *_adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int          _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static int          _adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
-static void         _update_btn_lbl(E_Config_Dialog_Data *cfdata);
+static void         _update_btns(E_Config_Dialog_Data *cfdata);
+static void         _update_btn(E_Config_Dialog_Data *cfdata, Evas_Object *button, const int mouse_button);
 static void         _grab_window_show(void *data1, void *data2);
 static Eina_Bool    _grab_cb_mouse_down(void *data, int type, void *event);
 static Eina_Bool    _grab_cb_key_down(void *data, int type, void *event);
@@ -221,7 +222,7 @@ _adv_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                             _grab_window_show, (void *)BUTTON_DESK, cfdata);
    cfdata->gui.ob3 = ow;
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   _update_btn_lbl(cfdata);
+   _update_btns(cfdata);
    e_widget_toolbook_page_append(otb, NULL, _("General"), ol, 1, 0, 1, 0,
                                  0.5, 0.0);
 
@@ -344,24 +345,78 @@ _adv_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata
 }
 
 static void
-_update_btn_lbl(E_Config_Dialog_Data *cfdata)
+_update_btns(E_Config_Dialog_Data *cfdata)
+{
+#if 0
+   _update_btn(cfdata, cfdata->gui.ob1, cfdata->btn.drag);
+#endif
+
+   _update_btn(cfdata, cfdata->gui.ob2, cfdata->btn.noplace);
+   _update_btn(cfdata, cfdata->gui.ob3, cfdata->btn.desk);
+}
+
+static void
+_update_btn(E_Config_Dialog_Data *cfdata, Evas_Object *button, const int mouse_button)
 {
    char lbl[256];
+   char *icon = NULL;
+   Evas_Object *ic = NULL;
 
-#if 0
-   snprintf(lbl, sizeof(lbl), _("Click to set"));
-   if (cfdata->btn.drag)
-     snprintf(lbl, sizeof(lbl), _("Button %i"), cfdata->btn.drag);
-   e_widget_button_label_set(cfdata->gui.ob1, lbl);
-#endif
-   snprintf(lbl, sizeof(lbl), _("Click to set"));
-   if (cfdata->btn.noplace)
-     snprintf(lbl, sizeof(lbl), _("Button %i"), cfdata->btn.noplace);
-   e_widget_button_label_set(cfdata->gui.ob2, lbl);
-   snprintf(lbl, sizeof(lbl), _("Click to set"));
-   if (cfdata->btn.desk)
-     snprintf(lbl, sizeof(lbl), _("Button %i"), cfdata->btn.desk);
-   e_widget_button_label_set(cfdata->gui.ob3, lbl);
+   switch (mouse_button)
+     {
+      case 0:
+        snprintf(lbl, sizeof(lbl), _("Click to set"));
+        break;
+      case 1:
+        if (e_config->mouse_hand == E_MOUSE_HAND_RIGHT)
+          {
+             snprintf(lbl, sizeof(lbl), _("Left button"));
+             icon = "preferences-desktop-mouse-left";
+          }
+        else if (e_config->mouse_hand == E_MOUSE_HAND_LEFT)
+          {
+             snprintf(lbl, sizeof(lbl), _("Right button"));
+             icon = "preferences-desktop-mouse-right";
+          }
+        else
+          {
+             snprintf(lbl, sizeof(lbl), _("Button %i"), mouse_button);
+             icon = "preferences-desktop-mouse-extra";
+          }
+        break;
+      case 2:
+        snprintf(lbl, sizeof(lbl), _("Middle button"));
+        icon = "preferences-desktop-mouse-middle";
+        break;
+      case 3:
+        if (e_config->mouse_hand == E_MOUSE_HAND_RIGHT)
+          {
+             snprintf(lbl, sizeof(lbl), _("Right button"));
+             icon = "preferences-desktop-mouse-right";
+          }
+        else if (e_config->mouse_hand == E_MOUSE_HAND_LEFT)
+          {
+             snprintf(lbl, sizeof(lbl), _("Left button"));
+             icon = "preferences-desktop-mouse-left";
+          }
+        else
+          {
+             snprintf(lbl, sizeof(lbl), _("Button %i"), mouse_button);
+             icon = "preferences-desktop-mouse-extra";
+          }
+        break;
+      default:
+        snprintf(lbl, sizeof(lbl), _("Button %i"), mouse_button);
+        icon = "preferences-desktop-mouse-extra";
+        break;
+     }
+   e_widget_button_label_set(button, lbl);
+   if (icon)
+     {
+        ic = e_icon_add(evas_object_evas_get(button));
+        e_util_icon_theme_set(ic, icon);
+     }
+   e_widget_button_icon_set(button, ic);
 }
 
 static void
@@ -372,7 +427,7 @@ _grab_window_del(void *data)
    cfdata = e_object_data_get(data);
    if (!cfdata) return;
    cfdata->grab.dia = NULL;
-   _update_btn_lbl(cfdata);
+   _update_btns(cfdata);
 }
 
 static void
