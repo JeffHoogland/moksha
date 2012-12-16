@@ -130,6 +130,7 @@ src/bin/e_win.c
 src/bin/e_xinerama.c
 src/bin/e_xkb.c
 src/bin/e_zone.c
+src/modules/access/e_mod_config.c
 src/modules/backlight/e_mod_main.c
 src/modules/battery/e_mod_config.c
 src/modules/battery/e_mod_main.c
@@ -247,6 +248,8 @@ src/modules/ibox/e_mod_config.c
 src/modules/ibox/e_mod_main.c
 src/modules/pager/e_mod_config.c
 src/modules/pager/e_mod_main.c
+src/modules/physics/e_mod_config.c
+src/modules/physics/e_mod_main.c
 src/modules/start/e_mod_main.c
 src/modules/syscon/e_int_config_syscon.c
 src/modules/syscon/e_mod_main.c
@@ -281,6 +284,9 @@ src/modules/mixer/conf_gadget.c
 src/modules/mixer/conf_module.c
 src/modules/mixer/e_mod_main.c
 src/modules/connman/e_mod_main.c
+src/modules/quickaccess/e_mod_config.c
+src/modules/quickaccess/e_mod_main.c
+src/modules/quickaccess/e_mod_quickaccess.c
 src/modules/systray/e_mod_main.c
 src/modules/shot/e_mod_main.c
 src/modules/tasks/e_mod_main.c
