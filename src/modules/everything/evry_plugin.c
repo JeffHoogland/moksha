@@ -207,7 +207,7 @@ evry_plugin_unregister(Evry_Plugin *p)
         char buf[256];
         snprintf(buf, sizeof(buf), _("Show %s Plugin"), p->name);
 
-        e_action_predef_name_del(_("Everything"), buf);
+        e_action_predef_name_del(_("Everything Launcher"), buf);
      }
 }
 

@@ -196,7 +196,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    if (act)
      {
         e_action_predef_name_del(_("Everything Launcher"),
-                                 _("Show Everything Dialog"));
+                                 _("Show Everything Launcher"));
         e_action_del("everything");
      }
 
