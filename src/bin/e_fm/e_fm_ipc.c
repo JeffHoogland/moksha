@@ -47,6 +47,10 @@
 #define DEF_ROUND_TRIP_TOLERANCE 0.01
 #define DEF_MOD_BACKOFF          0.2
 
+#ifndef strdupa
+# define strdupa(str) strcpy(alloca(strlen(str) + 1), str)
+#endif
+
 typedef struct _E_Dir          E_Dir;
 typedef struct _E_Fop          E_Fop;
 typedef struct _E_Mod          E_Mod;

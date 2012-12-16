@@ -21,10 +21,6 @@ extern "C"
 void *alloca(size_t);
 #endif
 
-#ifndef strdupa
-# define strdupa(str) strcpy(alloca(strlen(str) + 1), str)
-#endif
-
 #include <math.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -47,6 +43,10 @@ void *alloca(size_t);
 #include "e_fm_op.h"
 #undef E_TYPEDEFS
 #include "e_fm_op.h"
+
+#ifndef strdupa
+# define strdupa(str) strcpy(alloca(strlen(str) + 1), str)
+#endif
 
 #define READBUFSIZE     65536
 #define COPYBUFSIZE     16384
