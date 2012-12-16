@@ -3653,7 +3653,6 @@ static void _move_or_resize(E_Border *bd)
         return;
     }
     if (bd->maximized) {
-        bool changed = false;
 
         if (_G.tinfo->conf->use_rows) {
             if (bd->maximized & E_MAXIMIZE_VERTICAL) {
@@ -3663,7 +3662,6 @@ static void _move_or_resize(E_Border *bd)
                                        extra->expected.y,
                                        extra->expected.w,
                                        extra->expected.h);
-                 changed = true;
             }
             if (bd->maximized & E_MAXIMIZE_HORIZONTAL
             && eina_list_count(_G.tinfo->stacks[stack]) > 1) {
@@ -3673,7 +3671,6 @@ static void _move_or_resize(E_Border *bd)
                                        extra->expected.y,
                                        extra->expected.w,
                                        extra->expected.h);
-                 changed = true;
             }
         } else {
             if (bd->maximized & E_MAXIMIZE_HORIZONTAL) {
@@ -3683,7 +3680,6 @@ static void _move_or_resize(E_Border *bd)
                                        extra->expected.y,
                                        extra->expected.w,
                                        extra->expected.h);
-                 changed = true;
             }
             if (bd->maximized & E_MAXIMIZE_VERTICAL
             && eina_list_count(_G.tinfo->stacks[stack]) > 1) {
@@ -3693,21 +3689,8 @@ static void _move_or_resize(E_Border *bd)
                                        extra->expected.y,
                                        extra->expected.w,
                                        extra->expected.h);
-                 changed = true;
             }
         }
-        if (changed)
-            return;
-    }
-
-    if ((bd->changes.border && bd->changes.size)
-        || bd->x <= 0 || bd->y <= 0) {
-        _e_border_move_resize(bd,
-                              extra->expected.x,
-                              extra->expected.y,
-                              extra->expected.w,
-                              extra->expected.h);
-        return;
     }
 
     if (abs(extra->expected.w - bd->w) >= bd->client.icccm.step_w) {
