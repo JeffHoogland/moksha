@@ -762,7 +762,12 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
         switch (eb->button)
           {
            case 1:
-             icon = "preferences-desktop-mouse-left";
+             if (e_config->mouse_hand == E_MOUSE_HAND_RIGHT)
+               icon = "preferences-desktop-mouse-left";
+             else if (e_config->mouse_hand == E_MOUSE_HAND_LEFT)
+               icon = "preferences-desktop-mouse-right";
+             else
+               icon = "preferences-desktop-mouse-extra";
              break;
 
            case 2:
@@ -770,7 +775,12 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
              break;
 
            case 3:
-             icon = "preferences-desktop-mouse-right";
+             if (e_config->mouse_hand == E_MOUSE_HAND_RIGHT)
+               icon = "preferences-desktop-mouse-right";
+             else if (e_config->mouse_hand == E_MOUSE_HAND_LEFT)
+               icon = "preferences-desktop-mouse-left";
+             else
+               icon = "preferences-desktop-mouse-extra";
              break;
 
            default:
@@ -1159,20 +1169,36 @@ static char *
 _helper_button_name_get(E_Config_Binding_Mouse *eb)
 {
    char *name = NULL;
-   char buf[1024] = "";
+   char buf[1024];
 
    switch (eb->button)
      {
       case 1:
-        name = strdup(_("Left Button"));
+        if (e_config->mouse_hand == E_MOUSE_HAND_RIGHT)
+          name = strdup(_("Left button"));
+        else if (e_config->mouse_hand == E_MOUSE_HAND_LEFT)
+          name = strdup(_("Right button"));
+        else
+          {
+             snprintf(buf, sizeof(buf), _("Button %i"), eb->button);
+             name = strdup(buf);
+          }
         break;
 
       case 2:
-        name = strdup(_("Middle Button"));
+        name = strdup(_("Middle button"));
         break;
 
       case 3:
-        name = strdup(_("Right Button"));
+        if (e_config->mouse_hand == E_MOUSE_HAND_RIGHT)
+          name = strdup(_("Right button"));
+        else if (e_config->mouse_hand == E_MOUSE_HAND_LEFT)
+          name = strdup(_("Left button"));
+        else
+          {
+             snprintf(buf, sizeof(buf), _("Button %i"), eb->button);
+             name = strdup(buf);
+          }
         break;
 
       case 4:
@@ -1182,7 +1208,7 @@ _helper_button_name_get(E_Config_Binding_Mouse *eb)
         break;
 
       default:
-        snprintf(buf, sizeof(buf), _("Extra Button (%d)"), eb->button);
+        snprintf(buf, sizeof(buf), _("Extra button (%d)"), eb->button);
         name = strdup(buf);
      }
    return name;
