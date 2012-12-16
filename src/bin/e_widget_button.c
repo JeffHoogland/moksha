@@ -94,7 +94,7 @@ e_widget_button_label_set(Evas_Object *obj, const char *label)
    if ((label) && (label[0] != 0))
      wd->type |= E_WIDGET_BUTTON_TEXT;
    else
-     wd->type = ~(wd->type & E_WIDGET_BUTTON_TEXT);
+     wd->type &= ~E_WIDGET_BUTTON_TEXT;
    _e_wid_button_state_send(wd);
    edje_object_size_min_calc(wd->o_button, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
