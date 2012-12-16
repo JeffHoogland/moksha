@@ -328,7 +328,7 @@ e_init_init(void)
         o = edje_object_add(_e_init_evas);
         edje_object_file_set(o, s, "e/init/splash");
         _e_init_object = o;
-        fprintf(stderr, "screen region fill\n", w, h);
+        fprintf(stderr, "screen region fill %ix%i\n", w, h);
         evas_object_move(o, 0, 0);
         evas_object_resize(o, w, h);
         evas_object_show(o);
