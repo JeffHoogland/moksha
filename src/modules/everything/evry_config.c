@@ -217,7 +217,7 @@ _fill_list(Eina_List *plugins, Evas_Object *obj, int enabled __UNUSED__)
          *      evas_object_del(end);
          *      end = NULL;
          *   } */
-        e_widget_ilist_append(obj, NULL, pc->name, NULL, pc, NULL);
+        e_widget_ilist_append(obj, NULL, _(pc->name), NULL, pc, NULL);
      }
 
    e_widget_ilist_go(obj);
