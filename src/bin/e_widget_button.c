@@ -125,7 +125,7 @@ e_widget_button_icon_set(Evas_Object *obj, Evas_Object *icon)
         wd->type |= E_WIDGET_BUTTON_ICON;
      }
    else
-     wd->type = ~(wd->type & E_WIDGET_BUTTON_ICON);
+     wd->type &= ~E_WIDGET_BUTTON_ICON;
    _e_wid_button_state_send(wd);
    edje_object_size_min_calc(wd->o_button, &mw, &mh);
    e_widget_size_min_set(obj, mw, mh);
