@@ -285,7 +285,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    for (i = 5; i < 21; i++)
      {
-        char str[16];
+        char str[256];
 
         str[0] = 0;
         snprintf(str, sizeof(str), P_("%d pixel", "%d pixels", i), i);
