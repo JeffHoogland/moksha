@@ -9,7 +9,7 @@ E_Module *connman_mod = NULL;
 static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
 const char _e_connman_name[] = "connman";
-const char _e_connman_Name[] = "Connection Manager";
+const char _e_connman_Name[] = N_("Connection Manager");
 int _e_connman_log_dom = -1;
 
 static Eina_Bool _refresh_cb(void *data);
