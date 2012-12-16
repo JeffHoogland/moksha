@@ -289,7 +289,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_size_min_set(ob, 200, 200);
    e_widget_frametable_object_append(ot, ob, 0, 0, 2, 1, 1, 1, 1, 1);
 
-   ob = e_widget_button_add(evas, _("Add"), "list-all", _add_mouse_binding_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Add"), "list-add", _add_mouse_binding_cb, cfdata, NULL);
    e_widget_frametable_object_append(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Delete"), "list-remove", _delete_mouse_binding_cb, cfdata, NULL);
    cfdata->gui.o_del = ob;
