@@ -974,14 +974,14 @@ e_modapi_init(E_Module *m)
    if (act)
      {
         act->func.go = _e_mod_action_cb;
-        e_action_predef_name_set(_("Screen"), _("Take Screenshot"),
+        e_action_predef_name_set(N_("Screen"), N_("Take Screenshot"),
                                  "shot", NULL, NULL, 0);
      }
    border_act = e_action_add("border_shot");
    if (border_act)
      {
         border_act->func.go = _e_mod_action_border_cb;
-        e_action_predef_name_set(_("Window : Actions"), _("Take Shot"),
+        e_action_predef_name_set(N_("Window : Actions"), N_("Take Shot"),
                                  "border_shot", NULL, NULL, 0);
      }
    maug = e_int_menus_menu_augmentation_add_sorted
@@ -1012,7 +1012,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      }
    if (act)
      {
-        e_action_predef_name_del(_("Screen"), _("Take Screenshot"));
+        e_action_predef_name_del("Screen", "Take Screenshot");
         e_action_del("shot");
         act = NULL;
      }

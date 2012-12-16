@@ -3221,11 +3221,11 @@ e_actions_init(void)
 
    /* window_jump_to */
    ACT_GO(window_jump_to);
-   e_action_predef_name_set(_("Window : List"), _("Jump to window..."),
+   e_action_predef_name_set(N_("Window : List"), N_("Jump to window..."),
                             "window_jump_to", NULL, "syntax: icccm window name, example: urxvt-mutt", 1);
 
    ACT_GO(window_jump_to_or_start);
-   e_action_predef_name_set(_("Window : List"), _("Jump to window... or start..."),
+   e_action_predef_name_set(N_("Window : List"), N_("Jump to window... or start..."),
                             "window_jump_to_or_start", NULL, "syntax: icccm_window_name application", 1);
 
 

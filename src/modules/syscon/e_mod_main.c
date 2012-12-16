@@ -28,7 +28,7 @@ e_modapi_init(E_Module *m)
    if (act)
      {
         act->func.go = _e_mod_action_syscon_cb;
-        e_action_predef_name_set(_("System"), _("System Controls"), "syscon",
+        e_action_predef_name_set(N_("System"), N_("System Controls"), "syscon",
                                  NULL, NULL, 0);
      }
    maug = e_int_menus_menu_augmentation_add_sorted
@@ -57,7 +57,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied action */
    if (act)
      {
-        e_action_predef_name_del(_("System"), _("System Controls"));
+        e_action_predef_name_del("System", "System Controls");
         e_action_del("syscon");
         act = NULL;
      }

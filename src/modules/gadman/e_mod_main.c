@@ -80,7 +80,7 @@ e_modapi_init(E_Module *m)
    if (Man->action)
      {
         Man->action->func.go = _gadman_action_cb;
-        e_action_predef_name_set(_("Gadgets"), _("Show/hide gadgets"),
+        e_action_predef_name_set(N_("Gadgets"), N_("Show/hide gadgets"),
                                  "gadman_toggle", NULL, NULL, 0);
      }
 
@@ -106,7 +106,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
      }
    if (Man->action)
      {
-        e_action_predef_name_del(_("Gadgets"), _("Show/hide gadgets"));
+        e_action_predef_name_del("Gadgets", "Show/hide gadgets");
         e_action_del("gadman_toggle");
         Man->action = NULL;
      }

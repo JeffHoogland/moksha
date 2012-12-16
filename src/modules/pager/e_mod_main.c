@@ -2963,12 +2963,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_action_del("pager_show");
    e_action_del("pager_switch");
 
-   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Right"));
-   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Left"));
-   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Up"));
-   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Down"));
-   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Next"));
-   e_action_predef_name_del(N_("Pager"), N_("Popup Desk Previous"));
+   e_action_predef_name_del("Pager", "Popup Desk Right");
+   e_action_predef_name_del("Pager", "Popup Desk Left");
+   e_action_predef_name_del("Pager", "Popup Desk Up");
+   e_action_predef_name_del("Pager", "Popup Desk Down");
+   e_action_predef_name_del("Pager", "Popup Desk Next");
+   e_action_predef_name_del("Pager", "Popup Desk Previous");
 
    E_FREE(pager_config);
    E_CONFIG_DD_FREE(conf_edd);

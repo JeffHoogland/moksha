@@ -269,7 +269,7 @@ e_modapi_init(E_Module *m)
    if (act)
      {
         act->func.go = _e_mod_action_conf_cb;
-        e_action_predef_name_set(_("Launch"), _("Settings Panel"),
+        e_action_predef_name_set(N_("Launch"), N_("Settings Panel"),
                                  "configuration", NULL, NULL, 0);
      }
    maug =
@@ -342,7 +342,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied action */
    if (act)
      {
-        e_action_predef_name_del(_("Launch"), _("Settings Panel"));
+        e_action_predef_name_del("Launch", "Settings Panel");
         e_action_del("configuration");
         act = NULL;
      }

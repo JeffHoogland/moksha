@@ -34,29 +34,29 @@ e_modapi_init(E_Module *m)
         _act_winlist->func.go = _e_mod_action_winlist_cb;
         _act_winlist->func.go_mouse = _e_mod_action_winlist_mouse_cb;
         _act_winlist->func.go_key = _e_mod_action_winlist_key_cb;
-        e_action_predef_name_set(_("Window : List"), _("Next Window"),
+        e_action_predef_name_set(N_("Window : List"), N_("Next Window"),
                                  "winlist", "next", NULL, 0);
-        e_action_predef_name_set(_("Window : List"), _("Previous Window"),
+        e_action_predef_name_set(N_("Window : List"), N_("Previous Window"),
                                  "winlist", "prev", NULL, 0);
-        e_action_predef_name_set(_("Window : List"),
-                                 _("Next window of same class"), "winlist",
+        e_action_predef_name_set(N_("Window : List"),
+                                 N_("Next window of same class"), "winlist",
                                  "class-next", NULL, 0);
-        e_action_predef_name_set(_("Window : List"),
-                                 _("Previous window of same class"),
+        e_action_predef_name_set(N_("Window : List"),
+                                 N_("Previous window of same class"),
                                  "winlist", "class-prev", NULL, 0);
-        e_action_predef_name_set(_("Window : List"),
-                                 _("Next window class"), "winlist",
+        e_action_predef_name_set(N_("Window : List"),
+                                 N_("Next window class"), "winlist",
                                  "classes-next", NULL, 0);
-        e_action_predef_name_set(_("Window : List"),
-                                 _("Previous window class"),
+        e_action_predef_name_set(N_("Window : List"),
+                                 N_("Previous window class"),
                                  "winlist", "classes-prev", NULL, 0);
-        e_action_predef_name_set(_("Window : List"), _("Window on the Left"),
+        e_action_predef_name_set(N_("Window : List"), N_("Window on the Left"),
                                  "winlist", "left", NULL, 0);
-        e_action_predef_name_set(_("Window : List"), _("Window Down"),
+        e_action_predef_name_set(N_("Window : List"), N_("Window Down"),
                                  "winlist", "down", NULL, 0);
-        e_action_predef_name_set(_("Window : List"), _("Window Up"),
+        e_action_predef_name_set(N_("Window : List"), N_("Window Up"),
                                  "winlist", "up", NULL, 0);
-        e_action_predef_name_set(_("Window : List"), _("Window on the Right"),
+        e_action_predef_name_set(N_("Window : List"), N_("Window on the Right"),
                                  "winlist", "right", NULL, 0);
      }
    e_module_delayed_set(m, 1);
@@ -71,16 +71,16 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied action */
    if (_act_winlist)
      {
-        e_action_predef_name_del(_("Window : List"), _("Previous Window"));
-        e_action_predef_name_del(_("Window : List"), _("Next Window"));
-        e_action_predef_name_del(_("Window : List"),
-                                 _("Previous window of same class"));
-        e_action_predef_name_del(_("Window : List"),
-                                 _("Next window of same class"));
-        e_action_predef_name_del(_("Window : List"), _("Window on the Left"));
-        e_action_predef_name_del(_("Window : List"), _("Window Down"));
-        e_action_predef_name_del(_("Window : List"), _("Window Up"));
-        e_action_predef_name_del(_("Window : List"), _("Window on the Right"));
+        e_action_predef_name_del("Window : List", "Previous Window");
+        e_action_predef_name_del("Window : List", "Next Window");
+        e_action_predef_name_del("Window : List",
+                                 "Previous window of same class");
+        e_action_predef_name_del("Window : List",
+                                 "Next window of same class");
+        e_action_predef_name_del("Window : List", "Window on the Left");
+        e_action_predef_name_del("Window : List", "Window Down");
+        e_action_predef_name_del("Window : List", "Window Up");
+        e_action_predef_name_del("Window : List", "Window on the Right");
         e_action_del("winlist");
         _act_winlist = NULL;
      }

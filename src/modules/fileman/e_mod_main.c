@@ -52,7 +52,7 @@ e_modapi_init(E_Module *m)
    if (act)
      {
         act->func.go = _e_mod_action_fileman_cb;
-        e_action_predef_name_set(_("Launch"), _("File Manager"),
+        e_action_predef_name_set(N_("Launch"), N_("File Manager"),
                                  "fileman", NULL, "syntax: /path/to/dir or ~/path/to/dir or favorites or desktop, examples: /boot/grub, ~/downloads", 1);
      }
    maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Navigate"), _e_mod_menu_add, NULL, NULL, NULL);
@@ -130,7 +130,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied action */
    if (act)
      {
-        e_action_predef_name_del(_("Launch"), _("File Manager"));
+        e_action_predef_name_del("Launch", "File Manager");
         e_action_del("fileman");
         act = NULL;
      }

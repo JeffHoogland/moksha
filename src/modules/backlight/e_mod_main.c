@@ -490,7 +490,7 @@ e_modapi_init(E_Module *m)
    if (act)
      {
         act->func.go = _e_mod_action_cb;
-        e_action_predef_name_set(_("Screen"), _("Backlight Controls"), "backlight", NULL, NULL, 0);
+        e_action_predef_name_set(N_("Screen"), N_("Backlight Controls"), "backlight", NULL, NULL, 0);
      }
    return m;
 }
@@ -500,7 +500,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    if (act)
      {
-        e_action_predef_name_del(_("Screen"), _("Backlight Controls"));
+        e_action_predef_name_del("Screen", "Backlight Controls");
         e_action_del("backlight");
         act = NULL;
      }

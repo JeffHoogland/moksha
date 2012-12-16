@@ -1814,7 +1814,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    _ibar_go_unfocus();
    
    e_action_del("ibar_focus");
-   e_action_predef_name_del(N_("IBar"), N_("Focus IBar"));
+   e_action_predef_name_del("IBar", "Focus IBar");
    act_ibar_focus = NULL;
    
    e_gadcon_provider_unregister(&_gadcon_class);

@@ -46,8 +46,8 @@ e_modapi_init(E_Module *m)
         act->func.go = _e_mod_action_cb;
         act->func.go_edge = _e_mod_action_cb_edge;
         e_action_predef_name_set
-          (_("Everything Launcher"),
-          _("Show Everything Launcher"),
+          (N_("Everything Launcher"),
+          N_("Show Everything Launcher"),
           "everything", "", NULL, 0);
      }
 
@@ -195,8 +195,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 
    if (act)
      {
-        e_action_predef_name_del(_("Everything Launcher"),
-                                 _("Show Everything Launcher"));
+        e_action_predef_name_del("Everything Launcher",
+                                 "Show Everything Launcher");
         e_action_del("everything");
      }
 
