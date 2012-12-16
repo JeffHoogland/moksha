@@ -237,8 +237,11 @@ _e_wid_do(Evas_Object *obj)
                     }
                }
           }
-        if (!toggled) return;
         wd = e_widget_data_get(obj);
+        if (!toggled)
+          {
+             if (wd->valnum == *(wd->group->valptr)) return;
+          }
         *(wd->group->valptr) = wd->valnum;
         edje_object_signal_emit(wd->o_radio, "e,state,on", "e");
      }
