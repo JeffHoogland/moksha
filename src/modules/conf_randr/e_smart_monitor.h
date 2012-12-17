@@ -27,6 +27,7 @@ void e_smart_monitor_changes_reset(Evas_Object *obj);
 void e_smart_monitor_current_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 Ecore_X_Randr_Orientation e_smart_monitor_current_orientation_get(Evas_Object *mon);
 Ecore_X_Randr_Mode_Info *e_smart_monitor_current_mode_get(Evas_Object *obj);
+Eina_Bool e_smart_monitor_current_enabled_get(Evas_Object *obj);
 
 void e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon);
 void e_smart_monitor_clone_del(Evas_Object *obj, Evas_Object *mon);
