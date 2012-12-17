@@ -1,5 +1,5 @@
-#include "e_randr.h"
 #include "e_randr_private.h"
+#include "e_randr.h"
 
 #define ECORE_X_RANDR_1_1   ((1 << 16) | 1)
 #define ECORE_X_RANDR_1_2   ((1 << 16) | 2)
@@ -36,14 +36,8 @@ e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
    e_config_save_queue();
 }
 
-EINTERN E_Randr_Serialized_Setup *
-e_randr_serialized_setup_new(void)
-{
-    return E_NEW(E_Randr_Serialized_Setup, 1);
-}
-
-Eina_Bool
-_try_restore_configuration(void)
+EAPI Eina_Bool 
+e_randr_try_restore_configuration(void)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(e_config, EINA_FALSE);
    if (!e_config->randr_serialized_setup) return EINA_FALSE;
@@ -57,13 +51,14 @@ _try_restore_configuration(void)
    return EINA_FALSE;
 }
 
-EINTERN Eina_Bool 
-e_randr_try_restore_configuration(void)
+EINTERN E_Randr_Serialized_Setup *
+e_randr_serialized_setup_new(void)
 {
-   return _try_restore_configuration();
+    return E_NEW(E_Randr_Serialized_Setup, 1);
 }
 
-EINTERN void e_randr_serialized_setup_free(E_Randr_Serialized_Setup *ss)
+EINTERN void 
+e_randr_serialized_setup_free(E_Randr_Serialized_Setup *ss)
 {
    E_Randr_Serialized_Setup_12 *serialized_setup_12 = NULL;
    E_Randr_Serialized_Output_Policy *serialized_output_policy = NULL;
