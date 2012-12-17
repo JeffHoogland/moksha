@@ -566,6 +566,9 @@ static void
 _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd)
 {
    E_Radio_Group *rg;
+   Eina_List *m = NULL;
+   Ecore_X_Randr_Mode_Info *mode = NULL;
+   Evas_Coord mw = 0, mh = 0;
 
    if (sd->o_refresh)
      {
@@ -579,6 +582,40 @@ _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd)
 
    /* create radio group for rates */
    rg = e_widget_radio_group_new(&sd->refresh_rate);
+
+   /* loop the modes and find the current one */
+   EINA_LIST_FOREACH(sd->modes, m, mode)
+     {
+        /* compare mode names */
+        if (!strcmp(mode->name, sd->output->crtc->current_mode->name))
+          {
+             printf("Mode Match !!\n");
+             if ((mode->hTotal) && (mode->vTotal))
+               {
+                  Evas_Object *ow;
+                  double rate = 0.0;
+                  char buff[1024];
+
+                  /* calculate rate */
+                  rate = ((float)mode->dotClock / 
+                          ((float)mode->hTotal * (float)mode->vTotal));
+
+                  snprintf(buff, sizeof(buff), "%.1fHz", rate);
+
+                  /* create the radio widget */
+                  ow = e_widget_radio_add(sd->evas, buff, (int)rate, rg);
+                  e_widget_list_object_append(sd->o_refresh, ow, 1, 0, 0.5);
+               }
+          }
+     }
+
+   /* calculate minimum size for refresh list and set it */
+   e_widget_size_min_get(sd->o_refresh, &mw, &mh);
+   edje_extern_object_min_size_set(sd->o_refresh, mw, mh);
+
+   /* swallow refresh list into frame and show it */
+   edje_object_part_swallow(sd->o_frame, "e.swallow.refresh", sd->o_refresh);
+   evas_object_show(sd->o_refresh);
 }
 
 static void 
@@ -593,8 +630,8 @@ _e_smart_monitor_modes_fill(E_Smart_Data *sd)
    /* if we have an assigned monitor, copy the modes from that */
    if (sd->output->monitor)
      sd->modes = eina_list_clone(sd->output->monitor->modes);
-
-   /* FIXME: NB: TODO: Test/check for Common Modes */
+   else if (sd->output->crtc)
+     sd->modes = eina_list_clone(sd->output->crtc->outputs_common_modes);
 
    /* sort the mode list (smallest to largest) */
    sd->modes = eina_list_sort(sd->modes, 0, _e_smart_monitor_modes_sort);
