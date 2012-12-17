@@ -47,9 +47,6 @@ e_int_config_randr(E_Container *con, const char *params __UNUSED__)
                              "preferences-system-screen-resolution", 
                              0, v, NULL);
 
-   /* set dialog to be resizable */
-   e_dialog_resizable_set(cfd->dia, EINA_TRUE);
-
    return cfd;
 }
 
@@ -99,6 +96,13 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
         /* add randr widget to the base widget */
         e_widget_list_object_append(o, cfdata->o_randr, 1, 1, 0.5);
      }
+
+   /* set a minimum size */
+   e_widget_size_min_set(o, (E_RANDR_12->current_size.width / 10), 
+                         (E_RANDR_12->current_size.height / 10));
+
+   /* set this dialog to be resizable */
+   e_dialog_resizable_set(cfd->dia, EINA_TRUE);
 
    /* return the base widget */
    return o;
