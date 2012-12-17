@@ -28,9 +28,6 @@ typedef enum _E_Randr_Configuration_Store_Modifier
          | E_RANDR_CONFIGURATION_STORE_ORIENTATIONS)
 } E_Randr_Configuration_Store_Modifier;
 
-EAPI void e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier);
-EAPI void e_randr_11_store_configuration(E_Randr_Configuration_Store_Modifier modifier);
-
 #else
 #ifndef E_RANDR_H
 #define E_RANDR_H
@@ -183,6 +180,7 @@ struct _E_Randr_Serialized_Setup
 
 EAPI Eina_Bool e_randr_screen_info_refresh(void);
 EAPI void e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier);
+EAPI void e_randr_11_store_configuration(E_Randr_Configuration_Store_Modifier modifier);
 
 EINTERN Eina_Bool e_randr_init(void);
 EINTERN int e_randr_shutdown(void);
