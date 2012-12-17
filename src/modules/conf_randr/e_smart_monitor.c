@@ -454,8 +454,6 @@ e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon)
    /* try to get the objects smart data */
    if (!(msd = evas_object_smart_data_get(mon))) return;
 
-   /* printf("Clone Add\n"); */
-
    /* set cloned flag */
    msd->cloned = EINA_TRUE;
 
@@ -464,10 +462,9 @@ e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon)
 
    /* grab size of monitor's frame */
    evas_object_geometry_get(msd->o_frame, NULL, NULL, &mw, &mh);
-   /* printf("\tFrame Size: %d %d\n", mw, mh); */
 
    /* hide this monitor */
-   evas_object_hide(mon);
+   if (msd->visible) evas_object_hide(mon);
 
    /* use 1/4 of the size 
     * 
@@ -583,17 +580,7 @@ e_smart_monitor_clone_del(Evas_Object *obj, Evas_Object *mon)
     * NB: Needed in the case that we have no previous setup, we are in a clone 
     * situation (from X), and we were not manually moved */
    if ((msd->cw == 0) || (msd->ch == 0))
-     {
-        if ((msd->output->crtc))
-          {
-             x = msd->output->crtc->geometry.x + msd->layout.x;
-             y = msd->output->crtc->geometry.y + msd->layout.y;
-             w = msd->output->crtc->geometry.w;
-             h = msd->output->crtc->geometry.h;
-          }
-     }
-
-   /* printf("Unclone To: %d %d %d %d\n", x, y, w, h); */
+     e_layout_child_geometry_get(mon, &x, &y, &w, &h);
 
    /* restore to starting size */
    e_layout_child_resize(mon, w, h);
@@ -794,9 +781,6 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 
    if ((sd->x == x) && (sd->y == y)) return;
 
-   /* if ((sd->output) && (sd->output->crtc)) */
-   /*   printf("Smart Mon Move: %d\n", sd->output->crtc->xid); */
-
    sd->x = x;
    sd->y = y;
 
@@ -819,9 +803,6 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    if ((sd->w == h) && (sd->w == h)) return;
-
-   /* if ((sd->output) && (sd->output->crtc)) */
-   /*   printf("Smart Mon Resize: %d\n", sd->output->crtc->xid); */
 
    sd->w = w;
    sd->h = h;
@@ -861,6 +842,9 @@ _e_smart_show(Evas_Object *obj)
 
    /* set visibility flag */
    sd->visible = EINA_TRUE;
+
+   /* apply any existing rotation */
+   _e_smart_monitor_map_apply(sd->o_frame, sd->current.rotation);
 }
 
 static void 
