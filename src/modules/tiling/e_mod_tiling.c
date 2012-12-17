@@ -2192,6 +2192,9 @@ _move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
         /* Remove stack */
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
+        nb_stacks--;
+
+        assert((0 <= nb_stacks) && (nb_stacks < TILING_MAX_STACKS - 1));
         for (i = stack; i < nb_stacks; i++) {
             _G.tinfo->stacks[i] = _G.tinfo->stacks[i+1];
         }
@@ -2265,7 +2268,6 @@ _move_right_cols(E_Border *bd, Eina_Bool check_moving_anims)
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
         for (i = 0; i < nb_stacks; i++) {
-
             width = w / (nb_stacks + 1 - i);
 
             _set_stack_geometry(i, x, width);
@@ -2295,14 +2297,19 @@ _move_right_cols(E_Border *bd, Eina_Bool check_moving_anims)
             _check_moving_anims(bd, extra, stack + 1);
     } else {
         int x, y, w, h;
-        int width;
 
+        /* Remove stack */
         e_zone_useful_geometry_get(_G.tinfo->desk->zone, &x, &y, &w, &h);
+
+        nb_stacks--;
+
+        assert((0 <= nb_stacks) && (nb_stacks < TILING_MAX_STACKS - 1));
         for (i = stack; i < nb_stacks; i++) {
              _G.tinfo->stacks[i] = _G.tinfo->stacks[i + 1];
         }
-        nb_stacks--;
         for (i = 0; i < nb_stacks; i++) {
+            int width;
+
             width = w / (nb_stacks - i);
 
             _set_stack_geometry(i, x, width);
@@ -2517,6 +2524,9 @@ _move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
         /* Remove stack */
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
+        nb_stacks--;
+
+        assert((0 <= nb_stacks) && (nb_stacks < TILING_MAX_STACKS - 1));
         for (i = stack; i < nb_stacks; i++) {
             _G.tinfo->stacks[i] = _G.tinfo->stacks[i+1];
         }
@@ -2590,7 +2600,6 @@ _move_down_rows(E_Border *bd, Eina_Bool check_moving_anims)
         e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
 
         for (i = 0; i < nb_stacks; i++) {
-
             height = h / (nb_stacks + 1 - i);
 
             _set_stack_geometry(i, y, height);
@@ -2621,11 +2630,15 @@ _move_down_rows(E_Border *bd, Eina_Bool check_moving_anims)
     } else {
         int x, y, w, h;
 
-        e_zone_useful_geometry_get(_G.tinfo->desk->zone, &x, &y, &w, &h);
+        /* Remove stack */
+        e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
+
+        nb_stacks--;
+
+        assert((0 <= nb_stacks) && (nb_stacks < TILING_MAX_STACKS - 1));
         for (i = stack; i < nb_stacks; i++) {
              _G.tinfo->stacks[i] = _G.tinfo->stacks[i + 1];
         }
-        nb_stacks--;
         for (i = 0; i < nb_stacks; i++) {
             int height;
 
