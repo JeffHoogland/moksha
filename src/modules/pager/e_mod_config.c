@@ -356,7 +356,7 @@ _update_btns(E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_update_btn(E_Config_Dialog_Data *cfdata, Evas_Object *button, const int mouse_button)
+_update_btn(E_Config_Dialog_Data *cfdata EINA_UNUSED, Evas_Object *button, const int mouse_button)
 {
    char lbl[256];
    char *icon = NULL;
