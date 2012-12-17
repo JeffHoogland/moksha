@@ -3706,13 +3706,13 @@ static void _move_or_resize(E_Border *bd)
         }
     }
 
-    if (abs(extra->expected.w - bd->w) >= bd->client.icccm.step_w) {
+    if (abs(extra->expected.w - bd->w) >= MAX(bd->client.icccm.step_w, 1)) {
         if (_G.tinfo->conf->use_rows)
             _move_resize_border_in_stack(bd, extra, stack, TILING_RESIZE);
         else
             _move_resize_border_stack(bd, extra, stack, TILING_RESIZE);
     }
-    if (abs(extra->expected.h - bd->h) >= bd->client.icccm.step_h) {
+    if (abs(extra->expected.h - bd->h) >= MAX(bd->client.icccm.step_h, 1)) {
         if (_G.tinfo->conf->use_rows)
             _move_resize_border_stack(bd, extra, stack, TILING_RESIZE);
         else
