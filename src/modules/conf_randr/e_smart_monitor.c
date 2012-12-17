@@ -582,7 +582,11 @@ e_smart_monitor_clone_del(Evas_Object *obj, Evas_Object *mon)
     * NB: Needed in the case that we have no previous setup, we are in a clone 
     * situation (from X), and we were not manually moved */
    if ((msd->cw == 0) || (msd->ch == 0))
-     e_layout_child_geometry_get(mon, &x, &y, &w, &h);
+     {
+        e_layout_child_geometry_get(mon, &x, &y, &w, &h);
+        msd->current.x = x;
+        msd->current.y = y;
+     }
 
    /* restore to starting size */
    e_layout_child_resize(mon, w, h);
