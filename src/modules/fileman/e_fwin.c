@@ -2084,16 +2084,16 @@ _e_fwin_cb_menu_extend_start(void *data,
    E_Menu *subm;
    Eina_List *selected = NULL;
    Eina_Bool set = EINA_FALSE;
-   char buf[PATH_MAX];
+   char buf[PATH_MAX] = {0};
 
    page = data;
 
    selected = e_fm2_selected_list_get(page->fm_obj);
 
 #ifdef ENABLE_FILES
-   if (info && info->file)
+   if (info && info->file && (info->link || S_ISDIR(info->statinfo.st_mode)))
      snprintf(buf, sizeof(buf), "%s/%s", e_fm2_real_path_get(page->fm_obj), info->file);
-   subm = e_mod_menu_add(m, (info && info->file) ? buf : e_fm2_real_path_get(page->fm_obj));
+   subm = e_mod_menu_add(m, (buf[0]) ? buf : e_fm2_real_path_get(page->fm_obj));
 
    if (((!page->fwin->zone) || fileman_config->view.desktop_navigation) && e_fm2_has_parent_get(obj))
      {
