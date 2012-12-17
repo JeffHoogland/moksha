@@ -1160,6 +1160,10 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* check for valid smart data */
    if (!sd) return;
 
+   /* if this monitor is cloned into another one, then do not process 
+    * any mouse move events */
+   if (sd->cloned) return;
+
    ev = event;
 
    /* calculate the difference in mouse movement */
@@ -1173,7 +1177,7 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    e_layout_coord_canvas_to_virtual(sd->layout.obj, (sd->layout.x + dx), 
                                     (sd->layout.y + dy), &nx, &ny);
 
-   /* factor in mouse movement */
+   /* factor monitor size into mouse movement */
    nx += mx;
    ny += my;
 
@@ -1220,6 +1224,13 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    Evas_Coord mw = 0, mh = 0;
    Evas_Coord nw = 0, nh = 0;
    Ecore_X_Randr_Mode_Info *mode = NULL;
+
+   /* check for valid smart data */
+   if (!sd) return;
+
+   /* if this monitor is cloned into another one, then do not process 
+    * any mouse move events */
+   if (sd->cloned) return;
 
    ev = event;
 
@@ -1353,9 +1364,15 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, vo
    Evas_Map *map;
    int rotation = 0;
    Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
-   ev = event;
 
-   /* if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return; */
+   /* check for valid smart data */
+   if (!sd) return;
+
+   /* if this monitor is cloned into another one, then do not process 
+    * any mouse move events */
+   if (sd->cloned) return;
+
+   ev = event;
 
    /* get amount of rotation from the mouse event */
    rotation = _e_smart_monitor_rotation_amount_get(sd, ev);
@@ -1407,8 +1424,6 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, vo
 
    /* update rotation value */
    sd->current.rotation = rotation;
-
-   /* ev->event_flags |= EVAS_EVENT_FLAG_ON_HOLD; */
 
    /* NB: The 'snapping' of this rotation (in relation to other monitors) 
     * occurs in the randr widget so we will just 
