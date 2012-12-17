@@ -695,9 +695,15 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+   Eina_List *l;
+   Evas_Object *mclone;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* delete any existing clones */
+   EINA_LIST_FOREACH(sd->clones, l, mclone)
+     evas_object_del(mclone);
 
    /* delete the list of modes */
    if (sd->modes) eina_list_free(sd->modes);
