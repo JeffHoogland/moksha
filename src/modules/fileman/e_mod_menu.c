@@ -119,6 +119,7 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler __UNUSED__, const Eina_F
    E_Menu *m = data;
    E_Menu_Item *mi;
    const char *dev, *path;
+   Efreet_Desktop *ed = NULL;
 
    mi = m->parent_item;
    dev = e_object_data_get(E_OBJECT(m));
@@ -130,12 +131,11 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler __UNUSED__, const Eina_F
         if (info->type != EINA_FILE_DIR)
           {
              const char *mime = NULL;
-             Efreet_Desktop *ed = NULL;
              char group[1024];
 
              if (eina_str_has_extension(mi->label, "desktop"))
                {
-                  ed = efreet_desktop_new(info->path);
+                  ed = efreet_desktop_get(info->path);
                   if (ed)
                     {
                        e_util_menu_item_theme_icon_set(mi, ed->icon);
@@ -157,12 +157,59 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler __UNUSED__, const Eina_F
              return;
           }
      }
-   e_util_menu_item_theme_icon_set(mi, "folder");
-   e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s/%s", path ?: "/", info->path + info->name_start));
+     
+   if (eina_str_has_extension(info->path + info->name_start, "desktop"))
+     ed = efreet_desktop_get(info->path);
+   if (ed)
+     {
+        /* FIXME: need to loop here for idiots who link desktops to other desktops */
+        const char *type;
+        const char *uri;
+
+        e_util_menu_item_theme_icon_set(mi, ed->icon);
+        uri = ed->url;
+        if (ed->type == EFREET_DESKTOP_TYPE_LINK)
+          {
+             type = efreet_desktop_x_field_get(ed, "X-Enlightenment-Type");
+             if (!strncmp(ed->url, "file://", 7))
+               uri += 6; // need first slash
+             if (e_util_strcmp(type, "Removable"))
+               {
+                  dev = eina_stringshare_add("/");
+                  e_object_data_set(E_OBJECT(mi), eina_stringshare_add(uri));
+               }
+             else
+               {
+                  E_Volume *vol;
+
+                  vol = e_fm2_device_volume_find(uri);
+                  if (vol)
+                    {
+                       dev = eina_stringshare_printf("removable:%s", uri);
+                       e_menu_item_callback_set(mi, _e_mod_menu_volume_cb, vol);
+                    }
+                  //FIXME: else
+               }
+          }
+        else
+          {
+             eina_stringshare_ref(dev);
+             if (!strncmp(ed->url, "file://", 7))
+               uri += 6; // need first slash
+             e_object_data_set(E_OBJECT(mi), eina_stringshare_add(uri));
+          }
+        efreet_desktop_free(ed);
+     }
+   else
+     {
+        e_util_menu_item_theme_icon_set(mi, "folder");
+        eina_stringshare_ref(dev);
+        e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s/%s", path ?: "/", info->path + info->name_start));
+     }
+   e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, dev);
    //fprintf(stderr, "PATH SET: %s\n", e_object_data_get(E_OBJECT(mi)));
    e_object_free_attach_func_set(E_OBJECT(mi), _e_mod_menu_cleanup_cb);
    e_menu_item_callback_set(mi, _e_mod_menu_populate_cb, dev);
-   e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_ref(dev));
 }
 
 static void
@@ -207,6 +254,10 @@ _e_mod_menu_populate(void *d, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 
    subm = mi->submenu;
    if (subm && subm->items) return;
+   dev = d;
+   path = mi ? e_object_data_get(E_OBJECT(mi)) : NULL;
+   rp = e_fm2_real_path_map(dev, path ?: "/");
+   if (!rp) return; //probably a device
    if (!subm)
      {
         subm = e_menu_new();
@@ -215,9 +266,6 @@ _e_mod_menu_populate(void *d, E_Menu *m __UNUSED__, E_Menu_Item *mi)
         e_menu_item_submenu_set(mi, subm);
         e_menu_freeze(subm);
      }
-   dev = d;
-   path = mi ? e_object_data_get(E_OBJECT(mi)) : NULL;
-   rp = e_fm2_real_path_map(dev, path ?: "/");
    ls = eio_file_stat_ls(rp, _e_mod_menu_populate_filter, _e_mod_menu_populate_item, _e_mod_menu_populate_done, _e_mod_menu_populate_err, subm);
    EINA_SAFETY_ON_NULL_RETURN(ls);
    e_object_ref(E_OBJECT(subm));
@@ -319,10 +367,48 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 
    if (path)
      {
+        /* FIXME: need to loop here for idiots who link desktops to other desktops */
+        Efreet_Desktop *ed = NULL;
+
         mi = e_menu_item_new_relative(m, NULL);
+        if (eina_str_has_extension(path, "desktop"))
+          ed = efreet_desktop_get(path);
+        if (ed)
+          {
+             const char *type;
+
+             e_util_menu_item_theme_icon_set(mi, ed->icon);
+             if (ed->type == EFREET_DESKTOP_TYPE_LINK)
+               {
+                  const char *uri;
+
+                  type = efreet_desktop_x_field_get(ed, "X-Enlightenment-Type");
+                  uri = ed->url;
+                  if (!strncmp(ed->url, "file://", 7))
+                    uri += 6; // need first slash
+                  if (e_util_strcmp(type, "Removable"))
+                    e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_add(uri));
+                  else
+                    {
+                       vol = e_fm2_device_volume_find(uri);
+                       if (vol)
+                         {
+                            e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_printf("removable:%s", uri));
+                            e_menu_item_callback_set(mi, _e_mod_menu_volume_cb, vol);
+                         }
+                       //FIXME: else
+                    }
+               }
+             else
+               e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_ref(path));
+             efreet_desktop_free(ed);
+          }
+        else
+          {
+             e_util_menu_item_theme_icon_set(mi, "folder");
+             e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_ref(path));
+          }
         e_menu_item_label_set(mi, _("Current Directory"));
-        e_util_menu_item_theme_icon_set(mi, "folder");
-        e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, eina_stringshare_ref(path));
      }
    eina_stringshare_del(path);
 
