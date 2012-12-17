@@ -100,6 +100,8 @@ static void _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void
 static void _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static void _e_smart_monitor_frame_cb_resize_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_monitor_frame_cb_rotate_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_monitor_frame_cb_rotate_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_monitor_frame_cb_indicator_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
@@ -365,6 +367,10 @@ _e_smart_add(Evas_Object *obj)
                                    _e_smart_monitor_frame_cb_resize_in, NULL);
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,out", "e", 
                                    _e_smart_monitor_frame_cb_resize_out, NULL);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,resize,start", "e", 
+                                   _e_smart_monitor_frame_cb_resize_start, NULL);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,resize,stop", "e", 
+                                   _e_smart_monitor_frame_cb_resize_stop, NULL);
 
    /* add callbacks for rotate signals */
    edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,in", "e", 
@@ -434,6 +440,12 @@ _e_smart_del(Evas_Object *obj)
         edje_object_signal_callback_del(sd->o_frame, 
                                         "e,action,resize,out", "e", 
                                         _e_smart_monitor_frame_cb_resize_out);
+        edje_object_signal_callback_del(sd->o_frame, 
+                                        "e,action,resize,start", "e", 
+                                        _e_smart_monitor_frame_cb_resize_start);
+        edje_object_signal_callback_del(sd->o_frame, 
+                                        "e,action,resize,stop", "e", 
+                                        _e_smart_monitor_frame_cb_resize_stop);
         edje_object_signal_callback_del(sd->o_frame, 
                                         "e,action,rotate,in", "e", 
                                         _e_smart_monitor_frame_cb_rotate_in);
@@ -817,6 +829,18 @@ _e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, co
 
    if ((man = e_manager_current_get()))
      e_pointer_type_pop(man->pointer, obj, "resize_br");
+}
+
+static void 
+_e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+
+}
+
+static void 
+_e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+
 }
 
 static void 
