@@ -22,9 +22,6 @@
 #define E_RANDR_12_NO_MODES          (E_RANDR_12_NO || !e_randr_screen_info.rrvd_info.randr_info_12->modes)
 #define E_RANDR_12_NO_MODE(mode)     (E_RANDR_12_NO || !e_randr_screen_info.rrvd_info.randr_info_12->modes || (mode == Ecore_X_Randr_None))
 
-// Generic
-Eina_Bool               _try_restore_configuration(void);
-
 // RandRR == 1.1
 E_Randr_Screen_Info_11 *_11_screen_info_new(void);
 void                    _11_screen_info_free(E_Randr_Screen_Info_11 *screen_info_11);
