@@ -357,7 +357,6 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
      {
         E_Randr_Output_Info *output;
         E_Randr_Crtc_Info *crtc;
-
         E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
 
         /* get the changes for this monitor */
