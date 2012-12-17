@@ -577,8 +577,6 @@ _e_smart_del(Evas_Object *obj)
    if (sd->idle_enter)
      ecore_idle_enterer_del(sd->idle_enter);
 
-   _animator_del(obj);
-
    free(sd);
    evas_object_smart_data_set(obj, NULL);
 }
@@ -953,7 +951,7 @@ _update_frame(Evas_Object *obj)
    e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
 
    sd->place = EINA_TRUE;
-   _e_smart_reconfigure_do(obj);
+   _e_smart_reconfigure(obj);
 
    _pan_item_select(obj, sd->cur_item, 0);
 
