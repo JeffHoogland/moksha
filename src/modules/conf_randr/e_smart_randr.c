@@ -176,7 +176,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                          }
                     }
 
-                  /* printf("\t\tConnected\n"); */
                   if ((mon = e_smart_monitor_add(evas)))
                     {
                        Evas_Coord cx = 0, cy = 0;
