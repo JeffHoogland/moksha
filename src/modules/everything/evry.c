@@ -283,6 +283,7 @@ evry_hide(Evry_Window *win, int clear)
 
    if (!win) return;
 
+   e_win_hide(win->ewin);
    _evry_state_clear(win);
 
    if ((clear && CUR_SEL) &&
@@ -764,6 +765,7 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
    e_win_borderless_set(win->ewin, 1);
    e_win_no_remember_set(win->ewin, 1);
    e_win_placed_set(win->ewin, 1);
+   e_object_delay_del_set(E_OBJECT(win->ewin), NULL); //prevent deferred delete
    ecore_evas_override_set(win->ewin->ecore_evas, 1);
    win->evas = e_win_evas_get(win->ewin);
    win->zone = zone;
@@ -1007,7 +1009,8 @@ _evry_window_free(Evry_Window *win)
 
    evas_event_freeze(win->evas);
    evas_object_del(win->o_main);
-   e_object_del(E_OBJECT(win->ewin));
+   if (!e_object_is_del(E_OBJECT(win->ewin)))
+     e_object_del(E_OBJECT(win->ewin));
    E_FREE(win);
 }
 
