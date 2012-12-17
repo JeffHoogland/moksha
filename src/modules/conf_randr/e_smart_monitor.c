@@ -95,6 +95,7 @@ static void _e_smart_monitor_background_set(E_Smart_Data *sd, Evas_Coord dx, Eva
 static Eina_Bool _e_smart_monitor_background_update(void *data, int type, void *event);
 
 static void _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
+static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
 /* local callback prototypes */
 static void _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
@@ -368,9 +369,9 @@ _e_smart_add(Evas_Object *obj)
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,out", "e", 
                                    _e_smart_monitor_frame_cb_resize_out, NULL);
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,start", "e", 
-                                   _e_smart_monitor_frame_cb_resize_start, NULL);
+                                   _e_smart_monitor_frame_cb_resize_start, obj);
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,stop", "e", 
-                                   _e_smart_monitor_frame_cb_resize_stop, NULL);
+                                   _e_smart_monitor_frame_cb_resize_stop, obj);
 
    /* add callbacks for rotate signals */
    edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,in", "e", 
@@ -797,6 +798,35 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* TODO: handle changes */
 }
 
+static void 
+_e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
+{
+   Evas_Event_Mouse_Move *ev;
+   Evas_Coord dx = 0, dy = 0;
+   Evas_Coord cw = 0, ch = 0;
+   Evas_Coord mw = 0, mh = 0;
+   Evas_Coord nw = 0, nh = 0;
+
+   ev = event;
+
+   /* calculate resize difference based on mouse movement */
+   dx = (ev->cur.output.x - ev->prev.output.x);
+   dy = (ev->cur.output.y - ev->prev.output.y);
+
+   /* get size of monitor object */
+   e_layout_child_geometry_get(mon, NULL, NULL, &cw, &ch);
+
+   /* convert size to canvas coords */
+   e_layout_coord_virtual_to_canvas(sd->layout.obj, cw, ch, &mw, &mh);
+
+   /* factor in the resize difference and convert to virtual coords */
+   e_layout_coord_canvas_to_virtual(sd->layout.obj, 
+                                    (mw + dx), (mh + dy), &nw, &nh);
+
+   /* actually resize the monitor */
+   e_layout_child_resize(mon, nw, nh);
+}
+
 /* local callbacks */
 static void 
 _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
@@ -811,6 +841,8 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Obj
    /* TODO: handle moving, resize, rotating */
    if (sd->moving)
      _e_smart_monitor_move_event(sd, mon, event);
+   else if (sd->resizing)
+     _e_smart_monitor_resize_event(sd, mon, event);
 }
 
 static void 
@@ -834,13 +866,32 @@ _e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, co
 static void 
 _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
+   Evas_Object *mon;
+   E_Smart_Data *sd;
 
+   /* try to get the objects smart data */
+   if (!(mon = data)) return;
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* set resizing flag */
+   sd->resizing = EINA_TRUE;
+
+   /* raise this monitor */
+   e_layout_child_raise(mon);
 }
 
 static void 
 _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
+   Evas_Object *mon;
+   E_Smart_Data *sd;
 
+   /* try to get the objects smart data */
+   if (!(mon = data)) return;
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* set resizing flag */
+   sd->resizing = EINA_FALSE;
 }
 
 static void 
@@ -940,7 +991,7 @@ _e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Obj
         if (!(mon = data)) return;
         if (!(sd = evas_object_smart_data_get(mon))) return;
 
-        /* set moving state */
+        /* set moving flag */
         sd->moving = EINA_TRUE;
 
         /* raise this monitor */
