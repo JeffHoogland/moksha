@@ -181,8 +181,10 @@ struct _E_Randr_Serialized_Setup
    Eina_List *outputs_policies;
 };
 
-EINTERN Eina_Bool e_randr_init(void);
 EAPI Eina_Bool e_randr_screen_info_refresh(void);
+EAPI void e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier);
+
+EINTERN Eina_Bool e_randr_init(void);
 EINTERN int e_randr_shutdown(void);
 EINTERN Eina_Bool e_randr_try_restore_configuration(void);
 EINTERN E_Randr_Serialized_Setup *e_randr_serialized_setup_new(void);
