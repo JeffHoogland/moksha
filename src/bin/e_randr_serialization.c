@@ -12,12 +12,6 @@
  **********************************************************************
  */
 
-EINTERN E_Randr_Serialized_Setup *
-e_randr_serialized_setup_new(void)
-{
-    return E_NEW(E_Randr_Serialized_Setup, 1);
-}
-
 EAPI void
 e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
 {
@@ -42,6 +36,12 @@ e_randr_store_configuration(E_Randr_Configuration_Store_Modifier modifier)
    e_config_save_queue();
 }
 
+EINTERN E_Randr_Serialized_Setup *
+e_randr_serialized_setup_new(void)
+{
+    return E_NEW(E_Randr_Serialized_Setup, 1);
+}
+
 Eina_Bool
 _try_restore_configuration(void)
 {
@@ -57,7 +57,8 @@ _try_restore_configuration(void)
    return EINA_FALSE;
 }
 
-EINTERN Eina_Bool e_randr_try_restore_configuration(void)
+EINTERN Eina_Bool 
+e_randr_try_restore_configuration(void)
 {
    return _try_restore_configuration();
 }
