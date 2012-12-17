@@ -13,8 +13,8 @@ struct _E_Config_Dialog_Data
 static void *_create_data(E_Config_Dialog *cfd EINA_UNUSED);
 static void _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
-static void _randr_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
+static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static void _randr_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED);
 
 /* public functions */
 E_Config_Dialog *
@@ -69,7 +69,14 @@ _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 {
    /* if we have the randr smart widget, delete it */
    if (cfdata->o_randr)
-     evas_object_del(cfdata->o_randr);
+     {
+        /* delete the hook into randr widget changed signal */
+        evas_object_smart_callback_del(cfdata->o_randr, "changed", 
+                                       _randr_cb_changed);
+
+        /* delete the randr object */
+        evas_object_del(cfdata->o_randr);
+     }
 
    /* free the config data structure */
    E_FREE(cfdata);
@@ -105,6 +112,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
         /* tell randr widget to create monitors */
         e_smart_randr_monitors_create(cfdata->o_randr);
 
+        /* hook into randr widget changed signal */
+        evas_object_smart_callback_add(cfdata->o_randr, "changed", 
+                                       _randr_cb_changed, cfd);
+
         /* add randr widget to the base widget */
         e_widget_list_object_append(o, cfdata->o_randr, 1, 1, 0.5);
      }
@@ -121,13 +132,26 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   /* tell randr widget to apply changes */
+   e_smart_randr_changes_apply(cfdata->o_randr, cfd->con->manager->root);
+
+   /* return success */
    return 1;
 }
 
 static void 
-_randr_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+_randr_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED)
 {
+   E_Config_Dialog *cfd;
+   Eina_Bool changed = EINA_FALSE;
 
+   if (!(cfd = data)) return;
+
+   /* get randr widget changed state */
+   changed = e_smart_randr_changed_get(obj);
+
+   /* update dialog with changed state */
+   e_config_dialog_changed_set(cfd, changed);
 }
