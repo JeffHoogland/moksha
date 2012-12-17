@@ -68,6 +68,28 @@ e_smart_randr_add(Evas *evas)
 }
 
 void 
+e_smart_randr_layout_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Smart_Data *sd;
+   Eina_List *l;
+   E_Randr_Crtc_Info *crtc;
+   Evas_Coord mw = 0, mh = 0;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* loop the crtcs, checking for valid output */
+   EINA_LIST_FOREACH(E_RANDR_12->crtcs, l, crtc)
+     {
+        mw += crtc->geometry.w;
+        mh += crtc->geometry.h;
+     }
+
+   if (w) *w = mw;
+   if (h) *h = mh;
+}
+
+void 
 e_smart_randr_current_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;

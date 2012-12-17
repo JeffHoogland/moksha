@@ -94,6 +94,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    /* try to create randr smart widget */
    if ((cfdata->o_randr = e_smart_randr_add(evas)))
      {
+        Evas_Coord lw = 0, lh = 0;
+
+        /* ask randr widget to compute best layout size based on the 
+         * size of available crtcs */
+        e_smart_randr_layout_size_get(cfdata->o_randr, &lw, &lh);
+
         /* calculate virtual size
          * 
          * NB: Get which size is larger. This is done so that the 
@@ -101,10 +107,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
          * repositioned easily in a horizontal or vertical layout.
          * Without using MAX (and just using current size) than a 
          * horizontal layout cannot be changed into a vertical layout */
-        cw = MAX(E_RANDR_12->current_size.width, 
-                 E_RANDR_12->current_size.height);
-        ch = MAX(E_RANDR_12->current_size.width, 
-                 E_RANDR_12->current_size.height);
+        cw = MAX(lw, lh);
+        ch = MAX(lw, lh);
 
         /* set the virtual size for the randr widget */
         e_smart_randr_current_size_set(cfdata->o_randr, cw, ch);
@@ -120,7 +124,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
         e_widget_list_object_append(o, cfdata->o_randr, 1, 1, 0.5);
      }
 
-   /* set a minimum size to 1/10th scale */
+   /* set a minimum size to 1/10th */
    e_widget_size_min_set(o, (E_RANDR_12->current_size.width / 10), 
                          (E_RANDR_12->current_size.height / 10));
 
@@ -134,6 +138,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
+   /* TODO: Store settings into E_Randr_Serialized_Setup */
+
    /* tell randr widget to apply changes */
    e_smart_randr_changes_apply(cfdata->o_randr, cfd->con->manager->root);
 
