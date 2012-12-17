@@ -92,8 +92,8 @@ static void _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void
 static void _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static void _e_smart_monitor_frame_cb_resize_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_rotate_in(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_rotate_out(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_rotate_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_rotate_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_monitor_frame_cb_indicator_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_monitor_frame_cb_indicator_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
 static void _e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
@@ -755,38 +755,21 @@ _e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, co
 }
 
 static void 
-_e_smart_monitor_frame_cb_rotate_in(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_rotate_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Smart_Data *sd;
-   Ecore_Evas *ee;
-   Ecore_X_Window win;
-   Ecore_X_Cursor cur;
+   E_Manager *man;
 
-   if (!(sd = data)) return;
-
-   /* changing cursors for rotate is done this way because e_pointer 
-    * does not support all available X cursors */
-   ee = ecore_evas_ecore_evas_get(evas_object_evas_get(sd->o_frame));
-   win = (Ecore_X_Window)ecore_evas_window_get(ee);
-
-   cur = ecore_x_cursor_shape_get(ECORE_X_CURSOR_EXCHANGE);
-   ecore_x_window_cursor_set(win, cur);
-   ecore_x_cursor_free(cur);
+   if ((man = e_manager_current_get()))
+     e_pointer_type_push(man->pointer, obj, "rotate");
 }
 
 static void 
-_e_smart_monitor_frame_cb_rotate_out(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_rotate_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   E_Smart_Data *sd;
-   Ecore_Evas *ee;
-   Ecore_X_Window win;
+   E_Manager *man;
 
-   if (!(sd = data)) return;
-
-   /* reset cursor back to default */
-   ee = ecore_evas_ecore_evas_get(evas_object_evas_get(sd->o_frame));
-   win = (Ecore_X_Window)ecore_evas_window_get(ee);
-   ecore_x_window_cursor_set(win, 0);
+   if ((man = e_manager_current_get()))
+     e_pointer_type_pop(man->pointer, obj, "rotate");
 }
 
 static void 
