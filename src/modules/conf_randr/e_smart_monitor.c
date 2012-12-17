@@ -441,6 +441,19 @@ e_smart_monitor_current_mode_get(Evas_Object *obj)
    return sd->current.mode;
 }
 
+Eina_Bool 
+e_smart_monitor_current_enabled_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) 
+     return EINA_FALSE;
+
+   /* return the current enabled mode */
+   return sd->current.enabled;
+}
+
 void 
 e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon)
 {
