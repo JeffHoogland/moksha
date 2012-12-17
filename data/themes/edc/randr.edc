@@ -16,18 +16,6 @@ group { name: "e/conf/randr/main/monitor";
          }
       }
    }
-   programs {
-      program {
-         signal: "e,state,cloned"; source: "e";
-         action: STATE_SET "cloned" 0.0;
-         target: "e.swallow.stand";
-      }
-      program {
-         signal: "e,state,uncloned"; source: "e";
-         action: STATE_SET "default" 0.0;
-         target: "e.swallow.stand";
-      }
-   }
 }
 
 group { name: "e/conf/randr/main/frame";
