@@ -145,6 +145,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                  ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
                {
                   Evas_Object *mon = NULL, *pmon = NULL;
+                  E_Randr_Crtc_Info *pcrtc;
 
                   /* if we do not have a saved config yet, and the 
                    * policy of this output is 'none' then this could be a 
@@ -157,8 +158,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   if ((!e_config->randr_serialized_setup) && 
                       (output->policy == ECORE_X_RANDR_OUTPUT_POLICY_NONE))
                     {
-                       E_Randr_Crtc_Info *pcrtc;
-
                        /* if we have a previous crtc, then we can use that 
                         * to see if we are in a clone situation. If not, 
                         * then this is the first one and we don't need 
@@ -171,7 +170,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                                 (crtc->geometry.w == pcrtc->geometry.w) && 
                                 (crtc->geometry.h == pcrtc->geometry.h))
                               {
-                                 /* printf("\tHave Clone !!\n"); */
                                  pmon = 
                                    _e_smart_randr_monitor_find(sd, pcrtc->xid);
                               }
@@ -181,6 +179,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   /* printf("\t\tConnected\n"); */
                   if ((mon = e_smart_monitor_add(evas)))
                     {
+                       Evas_Coord cx = 0, cy = 0;
+                       Evas_Coord cw = 0, ch = 0;
+
                        /* add this monitor to the layout */
                        e_smart_randr_monitor_add(obj, mon);
 
@@ -198,13 +199,23 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                         * all the graphical stuff */
                        e_smart_monitor_setup(mon);
 
-                       /* move this monitor to it's current location */
-                       e_layout_child_move(mon, crtc->geometry.x, 
-                                           crtc->geometry.y);
+                       cx = crtc->geometry.x;
+                       cy = crtc->geometry.y;
+                       cw = crtc->geometry.w;
+                       ch = crtc->geometry.h;
+
+                       if (pmon)
+                         {
+                            /* set geometry so that when we "unclone" this 
+                             * one, it will unclone to the right */
+                            if (pcrtc) cx += pcrtc->geometry.w;
+                         }
 
                        /* resize this monitor to it's current size */
-                       e_layout_child_resize(mon, crtc->geometry.w, 
-                                             crtc->geometry.h);
+                       e_layout_child_resize(mon, cw, ch);
+
+                       /* move this monitor to it's current location */
+                       e_layout_child_move(mon, cx, cy);
 
                        /* if we are cloned, then tell randr */
                        if (pmon)
