@@ -1,5 +1,5 @@
-#include "e_randr_private.h"
 #include "e_randr.h"
+#include "e_randr_private.h"
 
 #define ECORE_X_RANDR_1_1   ((1 << 16) | 1)
 #define ECORE_X_RANDR_1_2   ((1 << 16) | 2)
