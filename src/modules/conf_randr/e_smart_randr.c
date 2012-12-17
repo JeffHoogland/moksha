@@ -98,7 +98,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
         /* loop the outputs on this crtc */
         EINA_LIST_FOREACH(crtc->outputs, ll, output)
           {
-             printf("\tChecking Output: %d\n", output->xid);
+             printf("\tChecking Output: %d %s\n", output->xid, output->name);
+
+             printf("\tOutput Policy: %d\n", output->policy);
 
              if (output->wired_clones)
                printf("\tHAS WIRED CLONES !!\n");
@@ -106,27 +108,24 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              if (output->connection_status == 
                  ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
                {
-                  Evas_Object *m;
+                  Evas_Object *mon;
 
                   printf("\t\tConnected\n");
-                  if ((m = e_smart_monitor_add(evas)))
+                  if ((mon = e_smart_monitor_add(evas)))
                     {
-                       /* tell the monitor what layout it belongs to
-                        * NB: This is needed so we can calculate best 
-                        * thumbnail size (among other things) */
-                       e_smart_monitor_layout_set(m, sd->o_layout);
+                       /* add this monitor to the layout */
+                       e_smart_randr_monitor_add(obj, mon);
 
                        /* tell the monitor which output it references */
-                       e_smart_monitor_output_set(m, output);
+                       e_smart_monitor_output_set(mon, output);
 
-                       /* add monitor to layout */
-                       e_layout_pack(sd->o_layout, m);
-                       e_layout_child_move(m, crtc->geometry.x, 
-                                           crtc->geometry.y);
-                       e_layout_child_resize(m, crtc->geometry.w, 
-                                             crtc->geometry.h);
+                       /* move this monitor to it's current location */
+                       e_smart_monitor_move(mon, crtc->geometry.x, 
+                                            crtc->geometry.y);
 
-                       sd->monitors = eina_list_append(sd->monitors, m);
+                       /* resize this monitor to it's current size */
+                       e_smart_monitor_resize(mon, crtc->geometry.w, 
+                                              crtc->geometry.h);
                     }
                }
 
@@ -149,8 +148,40 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                printf("\t\tDisconnected\n");
              else
                printf("\t\tUnknown\n");
+
+             if (output->monitor)
+               printf("\tHas Monitor\n");
           }
      }
+}
+
+void 
+e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* tell the monitor what layout it belongs to
+    * 
+    * NB: This is needed so we can calculate best thumbnail size */
+   e_smart_monitor_layout_set(mon, sd->o_layout);
+
+   /* TODO: Add evas callbacks for monitor resize, rotate, move */
+
+   /* TODO: Add listener for delete event */
+
+   /* add monitor to layout */
+   e_layout_pack(sd->o_layout, mon);
+
+   /* show the monitor
+    * 
+    * NB: Needed. Do Not Remove */
+   evas_object_show(mon);
+
+   /* add this monitor to our list */
+   sd->monitors = eina_list_append(sd->monitors, mon);
 }
 
 /* local functions */
