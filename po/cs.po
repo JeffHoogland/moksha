@@ -1669,10 +1669,17 @@ msgstr "Opravdu chcete smazat<br><hilight>%s</hilight> ?"
 #: src/bin/e_fm.c:10558
 #, c-format
 msgid ""
+"Are you sure you want to delete<br><hilight>all</hilight> the %d file "
+"in<br><hilight>%s</hilight>?"
+msgid_plural ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
-msgstr ""
+msgstr[0] ""
 "Opravdu chcete smazat<br>všech %d souborů v:<br><hilight>%s</hilight> ?"
+msgstr[1] ""
+"Opravdu chcete smazat<br>%d vybraných souborů v:<br><hilight>%s</hilight> ?"
+msgstr[2] ""
+"Opravdu chcete smazat<br>%d vybraných souborů v:<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:10568
 #, c-format
@@ -5062,7 +5069,7 @@ msgstr[2] ""
 "%d Hz bude obnoveno za %d sekund."
 
 #: src/modules/conf_display/e_int_config_display.c:134
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
