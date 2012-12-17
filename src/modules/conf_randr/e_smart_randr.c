@@ -33,6 +33,15 @@ static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 
+static void _e_smart_randr_monitor_adjacent_move(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip);
+
+/* local callbacks prototypes for monitors */
+static void _e_smart_randr_monitor_cb_moving(void *data, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_rotated(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_deleted(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
+
 /* external functions exposed by this widget */
 Evas_Object *
 e_smart_randr_add(Evas *evas)
@@ -68,6 +77,7 @@ e_smart_randr_current_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    e_layout_virtual_size_set(sd->o_layout, w, h);
 
    /* resize the layout widget
+    * 
     * NB: This is using an arbitrary scale of 1/10th the screen size */
    evas_object_resize(sd->o_layout, (w / 10), (h / 10));
 }
@@ -83,6 +93,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
+   /* get the canvas of the layout widget */
    evas = evas_object_evas_get(sd->o_layout);
 
    /* loop the crtcs, checking for valid output */
@@ -116,16 +127,27 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                        /* add this monitor to the layout */
                        e_smart_randr_monitor_add(obj, mon);
 
+                       /* tell the monitor which layout it references */
+                       e_smart_monitor_layout_set(mon, sd->o_layout);
+
                        /* tell the monitor which output it references */
                        e_smart_monitor_output_set(mon, output);
 
+                       /* with the layout and output assigned, we can 
+                        * tell the monitor to setup
+                        * 
+                        * NB: This means filling resolutions, getting 
+                        * refresh rates, displaying monitor name, etc...
+                        * all the graphical stuff */
+                       e_smart_monitor_setup(mon);
+
                        /* move this monitor to it's current location */
-                       e_smart_monitor_move(mon, crtc->geometry.x, 
-                                            crtc->geometry.y);
+                       e_layout_child_move(mon, crtc->geometry.x, 
+                                           crtc->geometry.y);
 
                        /* resize this monitor to it's current size */
-                       e_smart_monitor_resize(mon, crtc->geometry.w, 
-                                              crtc->geometry.h);
+                       e_layout_child_resize(mon, crtc->geometry.w, 
+                                             crtc->geometry.h);
                     }
                }
 
@@ -163,25 +185,59 @@ e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   /* tell the monitor what layout it belongs to
-    * 
-    * NB: This is needed so we can calculate best thumbnail size */
-   e_smart_monitor_layout_set(mon, sd->o_layout);
+   /* add evas callbacks for monitor resize, rotate */
+   evas_object_smart_callback_add(mon, "monitor_moving", 
+                                  _e_smart_randr_monitor_cb_moving, obj);
+   evas_object_smart_callback_add(mon, "monitor_moved", 
+                                  _e_smart_randr_monitor_cb_moved, obj);
+   evas_object_smart_callback_add(mon, "monitor_resized", 
+                                  _e_smart_randr_monitor_cb_resized, obj);
+   evas_object_smart_callback_add(mon, "monitor_rotated", 
+                                  _e_smart_randr_monitor_cb_rotated, obj);
 
-   /* TODO: Add evas callbacks for monitor resize, rotate, move */
-
-   /* TODO: Add listener for delete event */
+   /* add listener for monitor delete event */
+   evas_object_event_callback_add(mon, EVAS_CALLBACK_DEL, 
+                                  _e_smart_randr_monitor_cb_deleted, NULL);
 
    /* add monitor to layout */
    e_layout_pack(sd->o_layout, mon);
+
+   /* add this monitor to our list */
+   sd->monitors = eina_list_append(sd->monitors, mon);
 
    /* show the monitor
     * 
     * NB: Needed. Do Not Remove */
    evas_object_show(mon);
+}
+
+void 
+e_smart_randr_monitor_del(Evas_Object *obj, Evas_Object *mon)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* delete evas callbacks for monitor resize, rotate */
+   evas_object_smart_callback_del(mon, "monitor_moving", 
+                                  _e_smart_randr_monitor_cb_moving);
+   evas_object_smart_callback_del(mon, "monitor_moved", 
+                                  _e_smart_randr_monitor_cb_moved);
+   evas_object_smart_callback_del(mon, "monitor_resized", 
+                                  _e_smart_randr_monitor_cb_resized);
+   evas_object_smart_callback_del(mon, "monitor_rotated", 
+                                  _e_smart_randr_monitor_cb_rotated);
+
+   /* delete listener for monitor delete event */
+   evas_object_event_callback_del(mon, EVAS_CALLBACK_DEL, 
+                                  _e_smart_randr_monitor_cb_deleted);
+
+   /* remove monitor from layout */
+   e_layout_unpack(mon);
 
    /* add this monitor to our list */
-   sd->monitors = eina_list_append(sd->monitors, mon);
+   sd->monitors = eina_list_remove(sd->monitors, mon);
 }
 
 /* local functions */
@@ -317,4 +373,244 @@ _e_smart_clip_unset(Evas_Object *obj)
 
    /* unset the clip */
    if (sd->o_scroll) evas_object_clip_unset(sd->o_scroll);
+}
+
+static void 
+_e_smart_randr_monitor_adjacent_move(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip)
+{
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+   Eina_Rectangle o;
+
+   /* get the current geometry of the monitor we were passed in */
+   e_smart_monitor_current_geometry_get(obj, &o.x, &o.y, NULL, NULL);
+   e_layout_child_geometry_get(obj, NULL, NULL, &o.w, &o.h);
+
+   /* loop the list of monitors */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        Eina_Rectangle m;
+
+        /* if this monitor is the one we want to skip, than skip it */
+        if (((skip) && (mon == skip)) || (mon == obj))
+          continue;
+
+        /* get the current geometry of this monitor */
+        e_smart_monitor_current_geometry_get(mon, &m.x, &m.y, NULL, NULL);
+        e_layout_child_geometry_get(mon, NULL, NULL, &m.w, &m.h);
+
+        /* check if this monitor is adjacent to the original one, 
+         * if it is, then we need to move it */
+        if ((m.x == o.x) || (m.y == o.y))
+        /* if ((m.x == (o.x + o.w)) || (m.y == (o.y + o.h))) */
+          {
+             if ((m.x == o.x))
+               {
+                  if ((m.y >= o.y))
+                    {
+                       /* vertical positioning */
+                       e_layout_child_move(mon, m.x, (o.y + o.h));
+                    }
+               }
+             else if ((m.y == o.y))
+               {
+                  if ((m.x >= o.x))
+                    {
+                       /* horizontal positioning */
+                       e_layout_child_move(mon, (o.x + o.w), m.y);
+                    }
+               }
+          }
+     }
+}
+
+/* local callbacks for monitors */
+
+/* callback received from a monitor object to let us know that it is moving, 
+ * and we now have to check for a drop zone */
+static void 
+_e_smart_randr_monitor_cb_moving(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   Evas_Object *o_randr = NULL;
+   E_Smart_Data *sd;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+   Eina_Rectangle o;
+
+   /* data is the randr object */
+   if (!(o_randr = data)) return;
+
+   /* try to get the RandR objects smart data */
+   if (!(sd = evas_object_smart_data_get(o_randr))) return;
+
+   /* get the current geometry of the monitor we were passed in */
+   e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+
+   /* loop the list of monitors */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        Eina_Rectangle m;
+
+        /* if this monitor is the one we want to skip, than skip it */
+        if (mon == obj) continue;
+
+        /* get the current geometry of this monitor */
+        e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+
+        /* check if the moved monitor is inside an existing one */
+        if (E_CONTAINS(m.x, m.y, m.w, m.h, o.x, o.y, o.w, o.h))
+          {
+             /* turn on the drop zone so tell user they can drop here */
+             e_smart_monitor_drop_zone_set(mon, EINA_TRUE);
+             break;
+          }
+        else
+          {
+             /* moving monitor is outside the drop zone of this monitor. 
+              * turn off drop zone hilighting */
+             e_smart_monitor_drop_zone_set(mon, EINA_FALSE);
+          }
+     }
+}
+
+/* callback received from a monitor object to let us know that it was moved, 
+ * and we now have to adjust the position of any adjacent monitors */
+static void 
+_e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   Evas_Object *o_randr = NULL;
+   E_Smart_Data *sd;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+   Eina_Rectangle o;
+
+   /* data is the randr object */
+   if (!(o_randr = data)) return;
+
+   /* try to get the RandR objects smart data */
+   if (!(sd = evas_object_smart_data_get(o_randr))) return;
+
+   /* get the current geometry of the monitor we were passed in */
+   e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+
+   /* loop the list of monitors */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        Eina_Rectangle m;
+
+        /* if this monitor is the one we want to skip, than skip it */
+        if (mon == obj) continue;
+
+        /* get the current geometry of this monitor */
+        e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+
+        /* check if the moved monitor is inside an existing one */
+        if (E_CONTAINS(m.x, m.y, m.w, m.h, o.x, o.y, o.w, o.h))
+          {
+             /* clone this monitor into the obj monitor */
+             e_smart_monitor_clone_add(mon, obj);
+
+             /* emit signal to turn off drop zone */
+             e_smart_monitor_drop_zone_set(mon, EINA_FALSE);
+             break;
+          }
+     }
+}
+
+/* callback received from a monitor object to let us know that it was resized, 
+ * and we now have to adjust the position of any adjacent monitors */
+static void 
+_e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   Evas_Object *o_randr = NULL;
+   E_Smart_Data *sd;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+
+   /* data is the randr object */
+   if (!(o_randr = data)) return;
+
+   /* try to get the RandR objects smart data */
+   if (!(sd = evas_object_smart_data_get(o_randr))) return;
+
+   /* freeze the layout widget from redrawing while we shuffle things around */
+   e_layout_freeze(sd->o_layout);
+
+   /* move any monitors which are adjacent to this one to their new 
+    * positions because of the resize, specifying the resized monitor 
+    * as the one to skip */
+   _e_smart_randr_monitor_adjacent_move(sd, obj, obj);
+
+   /* move any Other monitors to their new positions */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        /* skip the current monitor */
+        if (mon == obj) continue;
+
+        /* move any monitors which are adjacent to this one to their new 
+         * positions because of the resize, specifying the resized monitor 
+         * as the one to skip */
+        _e_smart_randr_monitor_adjacent_move(sd, mon, obj);
+     }
+
+   /* thaw the layout widget, allowing redraws again */
+   e_layout_thaw(sd->o_layout);
+}
+
+/* callback received from a monitor object to let us know that it was rotated, 
+ * and we now have to adjust the position of any adjacent monitors */
+static void 
+_e_smart_randr_monitor_cb_rotated(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   printf("RandR Monitor Rotated\n");
+
+   Evas_Object *o_randr = NULL;
+   E_Smart_Data *sd;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+
+   /* data is the randr object */
+   if (!(o_randr = data)) return;
+
+   /* try to get the RandR objects smart data */
+   if (!(sd = evas_object_smart_data_get(o_randr))) return;
+
+   /* freeze the layout widget from redrawing while we shuffle things around */
+   e_layout_freeze(sd->o_layout);
+
+   /* move any monitors which are adjacent to this one to their new 
+    * positions because of the resize, specifying the resized monitor 
+    * as the one to skip */
+   _e_smart_randr_monitor_adjacent_move(sd, obj, obj);
+
+   /* move any Other monitors to their new positions */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        /* skip the current monitor */
+        if (mon == obj) continue;
+
+        /* move any monitors which are adjacent to this one to their new 
+         * positions because of the resize, specifying the resized monitor 
+         * as the one to skip */
+        _e_smart_randr_monitor_adjacent_move(sd, mon, obj);
+     }
+
+   /* thaw the layout widget, allowing redraws again */
+   e_layout_thaw(sd->o_layout);
+
+   /* TODO: code me */
+}
+
+static void 
+_e_smart_randr_monitor_cb_deleted(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   /* delete the smart callbacks we were listening on */
+   evas_object_smart_callback_del(obj, "monitor_moving", 
+                                  _e_smart_randr_monitor_cb_moving);
+   evas_object_smart_callback_del(obj, "monitor_moved", 
+                                  _e_smart_randr_monitor_cb_moved);
+   evas_object_smart_callback_del(obj, "monitor_resized", 
+                                  _e_smart_randr_monitor_cb_resized);
+   evas_object_smart_callback_del(obj, "monitor_rotated", 
+                                  _e_smart_randr_monitor_cb_rotated);
 }

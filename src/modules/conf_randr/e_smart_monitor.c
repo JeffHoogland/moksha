@@ -2,6 +2,9 @@
 #include "e_mod_main.h"
 #include "e_smart_monitor.h"
 
+#define RESIZE_FUZZ 60
+#define ROTATE_FUZZ 45
+
 /* local structure */
 typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
@@ -45,6 +48,9 @@ struct _E_Smart_Data
    /* rotating flag */
    Eina_Bool rotating : 1;
 
+   /* cloned flag */
+   Eina_Bool cloned : 1;
+
    /* handler for bg updates */
    Ecore_Event_Handler *bg_update_hdl;
 
@@ -57,8 +63,22 @@ struct _E_Smart_Data
         int w, h;
      } min, max;
 
-   /* refresh rate */
-   int refresh_rate;
+   /* original and current values */
+   struct
+     {
+        Evas_Coord x, y, w, h; /* NB: these are virtual coordinates */
+        Ecore_X_Randr_Mode_Info *mode;
+        Ecore_X_Randr_Orientation orientation;
+        int refresh_rate;
+        int rotation;
+        Eina_Bool enabled : 1;
+     } orig, current;
+
+   /* store where user clicked during resize */
+   struct 
+     {
+        Evas_Coord x, y;
+     } resize;
 
    /* reference to the RandR Output Info */
    E_Randr_Output_Info *output;
@@ -71,11 +91,14 @@ struct _E_Smart_Data
         Evas_Coord vw, vh; /* the layout widget's virtual size */
      } layout;
 
-   /* reference to the Container number */
-   int con_num;
+   /* reference to the Container */
+   E_Container *con;
 
    /* reference to the Zone number */
    int zone_num;
+
+   /* record what changed */
+   E_Smart_Monitor_Changes changes;
 };
 
 /* local function prototypes */
@@ -89,32 +112,41 @@ static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 
 static void _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd);
+static double _e_smart_monitor_refresh_rate_get(Ecore_X_Randr_Mode_Info *mode);
 static void _e_smart_monitor_modes_fill(E_Smart_Data *sd);
 static int _e_smart_monitor_modes_sort(const void *data1, const void *data2);
 static void _e_smart_monitor_background_set(E_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy);
 static Eina_Bool _e_smart_monitor_background_update(void *data, int type, void *event);
+static Ecore_X_Randr_Mode_Info *_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bool skip_rate_check);
+static void _e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height);
+static int _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient);
+static int _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev);
+static Ecore_X_Randr_Orientation _e_smart_monitor_orientation_get(int rotation);
 
 static void _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
+static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
 /* local callback prototypes */
-static void _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
-static void _e_smart_monitor_frame_cb_resize_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_rotate_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_rotate_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_indicator_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_indicator_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
-static void _e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event);
+static void _e_smart_monitor_frame_cb_resize_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_resize_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_rotate_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_rotate_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_indicator_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 
-static void _e_smart_monitor_thumb_cb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
-static void _e_smart_monitor_thumb_cb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
-static void _e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
-static void _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
+static void _e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event);
+static void _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event);
 
-static void _e_smart_monitor_layout_cb_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
+static void _e_smart_monitor_layout_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -143,140 +175,12 @@ void
 e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
 {
    E_Smart_Data *sd;
-   Evas_Coord mw = 0, mh = 0;
-   Evas_Coord cx = 0, cy = 0;
-   Evas_Coord fw = 0, fh = 0;
-   E_Container *con;
-   E_Zone *zone;
-   E_Desk *desk;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* set this monitor's output reference */
    sd->output = output;
-
-   /* fill the list of 'modes' for this monitor
-    * 
-    * NB: This clears old modes and also sets the min & max resolutions */
-   _e_smart_monitor_modes_fill(sd);
-
-   if (sd->layout.obj)
-     {
-        /* with the min & max resolutions, we can now set the thumbnail size.
-         * get largest resolution and convert to largest canvas size */
-        e_layout_coord_virtual_to_canvas(sd->layout.obj, 
-                                         sd->max.w, sd->max.h, &mw, &mh);
-     }
-
-   /* set thumbnail size based on largest canvas size */
-   mh = (mw * mh) / mw;
-   if (sd->o_thumb) 
-     e_livethumb_vsize_set(sd->o_thumb, mw, mh);
-
-   /* if we have a crtc, get the x/y location of it and current refresh rate
-    * 
-    * NB: Used to determine the proper container */
-   if ((sd->output) && (sd->output->crtc))
-     {
-        Ecore_X_Randr_Mode_Info *mode = NULL;
-
-        cx = sd->output->crtc->geometry.x;
-        cy = sd->output->crtc->geometry.y;
-
-        if ((mode = sd->output->crtc->current_mode))
-          {
-             if ((mode->hTotal) && (mode->vTotal))
-               {
-                  /* calculate rate */
-                  sd->refresh_rate = 
-                    (int)((float)mode->dotClock / 
-                          ((float)mode->hTotal * (float)mode->vTotal));
-               }
-          }
-     }
-   else
-     {
-        /* FIXME: NB: TODO: Handle case of output not having crtc */
-     }
-
-   /* fill in list of refresh rates
-    * 
-    * NB: This has to be done after the 'current' refresh rate is calculated 
-    * above or else the radio widgets do not get properly selected */
-   _e_smart_monitor_refresh_rates_fill(sd);
-
-   /* get the current desktop at this crtc coordinate */
-   con = e_container_current_get(e_manager_current_get());
-   zone = e_container_zone_at_point_get(con, cx, cy);
-   if (!(desk = e_desk_at_xy_get(zone, cx, cy)))
-     desk = e_desk_current_get(zone);
-
-   /* set references to the container & zone number
-    * 
-    * NB: Used later if background gets updated */
-   sd->con_num = con->num;
-   sd->zone_num = zone->num;
-
-   /* set the background image */
-   _e_smart_monitor_background_set(sd, desk->x, desk->y);
-
-   /* if we have an output, set the monitor name */
-   if (sd->output) 
-     {
-        E_Randr_Monitor_Info *monitor = NULL;
-        const char *name = NULL;
-
-        if ((monitor = sd->output->monitor))
-          name = ecore_x_randr_edid_display_name_get(monitor->edid, 
-                                                     monitor->edid_length);
-        if (!name) name = sd->output->name;
-        edje_object_part_text_set(sd->o_frame, "e.text.name", name);
-     }
-
-   /* if we have an output, set the resolution name */
-   if ((sd->output) && (sd->output->crtc))
-     {
-        Ecore_X_Randr_Mode_Info *mode;
-
-        if ((mode = sd->output->crtc->current_mode))
-          {
-             char buff[1024];
-
-             snprintf(buff, sizeof(buff), "%d x %d", 
-                      mode->width, mode->height);
-             edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
-          }
-     }
-
-   /* check if enabled */
-   if ((sd->output) && (sd->output->crtc))
-     {
-        if (sd->output->crtc->current_mode)
-          sd->enabled = EINA_TRUE;
-     }
-
-   /* send enabled/disabled signals */
-   if (sd->enabled)
-     edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
-   else
-     edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
-
-   /* with everything all setup, calculate the smallest frame width */
-   edje_object_size_min_get(sd->o_frame, &fw, &fh);
-
-   if (sd->layout.obj)
-     {
-        /* get smallest resolution and convert to smallest canvas size */
-        e_layout_coord_virtual_to_canvas(sd->layout.obj, 
-                                         sd->min.w, sd->min.h, &mw, &mh);
-     }
-
-   /* if min resolution is smaller than the frame, then set the 
-    * objects min size to frame size */
-   if (mw < fw) mw = fw;
-   if (mh < fh) mh = fh;
-   evas_object_size_hint_min_set(obj, mw, mh);
 }
 
 E_Randr_Output_Info *
@@ -302,9 +206,13 @@ e_smart_monitor_layout_set(Evas_Object *obj, Evas_Object *layout)
    /* set this monitor's layout reference */
    sd->layout.obj = layout;
 
+   /* get out if this is not a valid layout */
+   if (!layout) return;
+
    /* get the layout's virtual size */
    e_layout_virtual_size_get(layout, &sd->layout.vw, &sd->layout.vh);
 
+   /* setup callback to be notified when this layout moves */
    evas_object_event_callback_add(layout, EVAS_CALLBACK_MOVE, 
                                   _e_smart_monitor_layout_cb_move, sd);
 }
@@ -322,17 +230,255 @@ e_smart_monitor_layout_get(Evas_Object *obj)
 }
 
 void 
-e_smart_monitor_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
+e_smart_monitor_setup(Evas_Object *obj)
 {
-   if (!obj) return;
-   e_layout_child_move(obj, x, y);
+   Evas_Coord mw = 0, mh = 0;
+   Evas_Coord fw = 0, fh = 0;
+   /* E_Container *con; */
+   E_Zone *zone;
+   E_Desk *desk;
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* if we have a crtc, get the x/y location of it and current refresh rate
+    * 
+    * NB: Used to determine the proper container */
+   if ((sd->output) && (sd->output->crtc))
+     {
+        /* set original geometry */
+        sd->orig.x = sd->output->crtc->geometry.x;
+        sd->orig.y = sd->output->crtc->geometry.y;
+        sd->orig.w = sd->output->crtc->geometry.w;
+        sd->orig.h = sd->output->crtc->geometry.h;
+
+        /* set original mode */
+        sd->orig.mode = sd->output->crtc->current_mode;
+
+        /* set the original orientation */
+        sd->orig.orientation = sd->output->crtc->current_orientation;
+     }
+   else
+     {
+        /* FIXME: NB: TODO: Handle case of output not having crtc */
+     }
+
+   /* set the original rotation */
+   sd->orig.rotation = _e_smart_monitor_rotation_get(sd->orig.orientation);
+
+   /* set original refresh rate */
+   sd->orig.refresh_rate = _e_smart_monitor_refresh_rate_get(sd->orig.mode);
+
+   /* get the current zone at this crtc coordinate */
+   sd->con = e_container_current_get(e_manager_current_get());
+   zone = e_container_zone_at_point_get(sd->con, sd->orig.x, sd->orig.y);
+
+   /* set references to the container & zone number
+    * 
+    * NB: Used later if background gets updated */
+   sd->zone_num = zone->num;
+
+   /* fill the list of 'modes' for this monitor
+    * 
+    * NB: This clears old modes and also sets the min & max resolutions */
+   _e_smart_monitor_modes_fill(sd);
+
+   /* with the min & max resolutions, we can now set the thumbnail size.
+    * get largest resolution and convert to largest canvas size */
+   if (sd->layout.obj)
+     e_layout_coord_virtual_to_canvas(sd->layout.obj, 
+                                      sd->max.w, sd->max.h, &mw, &mh);
+
+   /* set thumbnail size based on largest canvas size */
+   mh = (mw * mh) / mw;
+   if (sd->o_thumb) e_livethumb_vsize_set(sd->o_thumb, mw, mh);
+
+   /* try to get the desktop at these coordinates. fallback to current */
+   if (!(desk = e_desk_at_xy_get(zone, sd->orig.x, sd->orig.y)))
+     desk = e_desk_current_get(zone);
+
+   /* set the background image */
+   _e_smart_monitor_background_set(sd, desk->x, desk->y);
+
+   /* if we have an output, set the monitor name */
+   if (sd->output) 
+     {
+        E_Randr_Monitor_Info *monitor = NULL;
+        const char *name = NULL;
+
+        if ((monitor = sd->output->monitor))
+          name = ecore_x_randr_edid_display_name_get(monitor->edid, 
+                                                     monitor->edid_length);
+        if (!name) name = sd->output->name;
+        edje_object_part_text_set(sd->o_frame, "e.text.name", name);
+     }
+
+   /* if we have an output, set the resolution name */
+   _e_smart_monitor_resolution_set(sd, sd->orig.mode->width, 
+                                   sd->orig.mode->height);
+
+   /* check if enabled */
+   if ((sd->output) && (sd->output->crtc))
+     {
+        if (sd->output->crtc->current_mode)
+          sd->orig.enabled = EINA_TRUE;
+     }
+
+   /* send enabled/disabled signals */
+   if (sd->orig.enabled)
+     edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
+   else
+     edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
+
+   /* set the 'current' values to be equal to the original ones */
+   sd->current.x = sd->orig.x;
+   sd->current.y = sd->orig.y;
+   sd->current.w = sd->orig.w;
+   sd->current.h = sd->orig.h;
+   sd->current.orientation = sd->orig.orientation;
+   sd->current.rotation = sd->orig.rotation;
+   sd->current.mode = sd->orig.mode;
+   sd->current.refresh_rate = sd->orig.refresh_rate;
+   sd->current.enabled = sd->orig.enabled;
+
+   /* fill in list of refresh rates
+    * 
+    * NB: This has to be done after the 'current' refresh rate is calculated 
+    * above or else the radio widgets do not get properly selected */
+   _e_smart_monitor_refresh_rates_fill(sd);
+
+   /* with everything all setup, calculate the smallest frame width */
+   edje_object_size_min_get(sd->o_frame, &fw, &fh);
+
+   if (sd->layout.obj)
+     {
+        /* get smallest resolution and convert to smallest canvas size */
+        e_layout_coord_virtual_to_canvas(sd->layout.obj, 
+                                         sd->min.w, sd->min.h, &mw, &mh);
+     }
+
+   /* if min resolution is smaller than the frame, then set the 
+    * objects min size to frame size */
+   if (mw < fw) mw = fw;
+   if (mh < fh) mh = fh;
+   evas_object_size_hint_min_set(obj, mw, mh);
+}
+
+E_Smart_Monitor_Changes 
+e_smart_monitor_changes_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) 
+     return E_SMART_MONITOR_CHANGED_NONE;
+
+   /* return the changes for this monitor */
+   return sd->changes;
 }
 
 void 
-e_smart_monitor_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
+e_smart_monitor_changes_reset(Evas_Object *obj)
 {
-   if (!obj) return;
-   e_layout_child_resize(obj, w, h);
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* reset the changes variable */
+   sd->changes = E_SMART_MONITOR_CHANGED_NONE;
+
+   /* update the original values to match current state */
+   sd->orig.x = sd->current.x;
+   sd->orig.y = sd->current.y;
+   sd->orig.w = sd->current.w;
+   sd->orig.h = sd->current.h;
+   sd->orig.mode = sd->current.mode;
+   sd->orig.orientation = sd->current.orientation;
+   sd->orig.refresh_rate = sd->current.refresh_rate;
+   sd->orig.rotation = sd->current.rotation;
+   sd->orig.enabled = sd->current.enabled;
+}
+
+void 
+e_smart_monitor_current_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   if (x) *x = sd->current.x;
+   if (y) *y = sd->current.y;
+   if (w) *w = sd->current.w;
+   if (h) *h = sd->current.h;
+}
+
+void 
+e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon)
+{
+   E_Smart_Data *osd, *msd;
+   Evas_Object *o;
+   Evas_Coord mw = 0, mh = 0;
+
+   /* try to get the objects smart data */
+   if (!(osd = evas_object_smart_data_get(obj))) return;
+
+   /* try to get the objects smart data */
+   if (!(msd = evas_object_smart_data_get(mon))) return;
+
+   /* remove this monitor from the layout */
+   e_layout_unpack(mon);
+
+   /* tell monitor to hide stand */
+   edje_object_signal_emit(msd->o_base, "e,state,cloned", "e");
+   edje_object_signal_emit(msd->o_frame, "e,state,cloned", "e");
+
+   /* grab size of swallowed monitor's frame */
+   evas_object_geometry_get(msd->o_frame, NULL, NULL, &mw, &mh);
+
+   /* use 1/4 of the size */
+   mw *= 0.25;
+   mh *= 0.25;
+
+   /* set minimum size */
+   evas_object_size_hint_min_set(mon, mw, mh);
+
+   /* resize the monitor */
+   evas_object_resize(mon, mw, mh);
+
+   /* add this clone to the monitor */
+   edje_object_part_box_append(osd->o_frame, "e.box.clone", mon);
+
+   /* set cloned flag */
+   msd->cloned = EINA_TRUE;
+
+   /* adjust clone box size */
+   if ((o = (Evas_Object *)
+        edje_object_part_object_get(osd->o_frame, "e.box.clone")))
+     {
+        evas_object_size_hint_min_get(o, &mw, &mh);
+        if (mw < 1) mw = 1;
+        if (mh < 1) mh = 1;
+        evas_object_resize(o, mw, mh);
+     }
+}
+
+void 
+e_smart_monitor_drop_zone_set(Evas_Object *obj, Eina_Bool can_drop)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* if we can drop here, emit signal to turn on hilighting, else 
+    * emit signal to turn it off */
+   if (can_drop)
+     edje_object_signal_emit(sd->o_frame, "e,state,drop,on", "e");
+   else
+     edje_object_signal_emit(sd->o_frame, "e,state,drop,off", "e");
 }
 
 /* local functions */
@@ -358,6 +504,7 @@ _e_smart_add(Evas_Object *obj)
    e_theme_edje_object_set(sd->o_frame, "base/theme/widgets", 
                            "e/conf/randr/main/frame");
    edje_object_part_swallow(sd->o_base, "e.swallow.frame", sd->o_frame);
+
    evas_object_event_callback_add(sd->o_frame, EVAS_CALLBACK_MOUSE_MOVE, 
                                   _e_smart_monitor_frame_cb_mouse_move, obj);
 
@@ -391,9 +538,13 @@ _e_smart_add(Evas_Object *obj)
 
    /* add callbacks for rotate signals */
    edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,in", "e", 
-                                   _e_smart_monitor_frame_cb_rotate_in, sd);
+                                   _e_smart_monitor_frame_cb_rotate_in, NULL);
    edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,out", "e", 
-                                   _e_smart_monitor_frame_cb_rotate_out, sd);
+                                   _e_smart_monitor_frame_cb_rotate_out, NULL);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,start", "e", 
+                                   _e_smart_monitor_frame_cb_rotate_start, obj);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,stop", "e", 
+                                   _e_smart_monitor_frame_cb_rotate_stop, obj);
 
    /* add callbacks for indicator signals */
    edje_object_signal_callback_add(sd->o_frame, "e,action,indicator,in", "e", 
@@ -404,9 +555,6 @@ _e_smart_add(Evas_Object *obj)
                                    "e,action,indicator,toggle", "e", 
                                    _e_smart_monitor_frame_cb_indicator_toggle, 
                                    obj);
-
-   /* NB: Not entirely sure this is needed */
-   /* evas_object_stack_below(sd->o_stand, sd->o_frame); */
 
    /* add handler for bg updates */
    sd->bg_update_hdl = 
@@ -470,6 +618,12 @@ _e_smart_del(Evas_Object *obj)
                                         "e,action,rotate,out", "e", 
                                         _e_smart_monitor_frame_cb_rotate_out);
         edje_object_signal_callback_del(sd->o_frame, 
+                                        "e,action,rotate,start", "e", 
+                                        _e_smart_monitor_frame_cb_rotate_start);
+        edje_object_signal_callback_del(sd->o_frame, 
+                                        "e,action,rotate,stop", "e", 
+                                        _e_smart_monitor_frame_cb_rotate_stop);
+        edje_object_signal_callback_del(sd->o_frame, 
                                         "e,action,indicator,in", "e", 
                                         _e_smart_monitor_frame_cb_indicator_in);
         edje_object_signal_callback_del(sd->o_frame, 
@@ -497,6 +651,8 @@ static void
 _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    E_Smart_Data *sd;
+   Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
+   static Evas_Map *map = NULL;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -508,12 +664,38 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 
    /* move the base object */
    if (sd->o_base) evas_object_move(sd->o_base, x, y);
+
+   /* check for valid frame object */
+   if (!sd->o_frame) return;
+
+   /* get the geometry of the frame */
+   evas_object_geometry_get(sd->o_frame, &fx, &fy, &fw, &fh);
+
+   /* create a new evas map */
+   if (!map) map = evas_map_new(4);
+
+   /* set map properties */
+   evas_map_smooth_set(map, EINA_TRUE);
+   evas_map_alpha_set(map, EINA_TRUE);
+   evas_map_util_points_populate_from_object_full(map, 
+                                                  sd->o_frame, 
+                                                  sd->current.rotation);
+
+   /* apply current rotation */
+   evas_map_util_rotate(map, sd->current.rotation, 
+                        (fx + (fw / 2)), (fy + (fh / 2)));
+
+   /* tell object to use this map */
+   evas_object_map_set(sd->o_frame, map);
+   evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
 }
 
 static void 
 _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;
+   Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
+   static Evas_Map *map = NULL;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -525,6 +707,30 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    /* resize the base object */
    if (sd->o_base) evas_object_resize(sd->o_base, w, h);
+
+   /* check for valid frame object */
+   if (!sd->o_frame) return;
+
+   /* get the geometry of the frame */
+   evas_object_geometry_get(sd->o_frame, &fx, &fy, &fw, &fh);
+
+   /* create a new evas map */
+   if (!map) map = evas_map_new(4);
+
+   /* set map properties */
+   evas_map_smooth_set(map, EINA_TRUE);
+   evas_map_alpha_set(map, EINA_TRUE);
+   evas_map_util_points_populate_from_object_full(map, 
+                                                  sd->o_frame, 
+                                                  sd->current.rotation);
+
+   /* apply current rotation */
+   evas_map_util_rotate(map, sd->current.rotation, 
+                        (fx + (fw / 2)), (fy + (fh / 2)));
+
+   /* tell object to use this map */
+   evas_object_map_set(sd->o_frame, map);
+   evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
 }
 
 static void 
@@ -538,7 +744,7 @@ _e_smart_show(Evas_Object *obj)
    /* if it is already visible, get out */
    if (sd->visible) return;
 
-   /* show the grid */
+   /* show the base object */
    if (sd->o_base) evas_object_show(sd->o_base);
 
    /* set visibility flag */
@@ -556,7 +762,7 @@ _e_smart_hide(Evas_Object *obj)
    /* if it is not visible, we have nothing to do */
    if (!sd->visible) return;
 
-   /* hide the grid */
+   /* hide the base object */
    if (sd->o_base) evas_object_hide(sd->o_base);
 
    /* set visibility flag */
@@ -594,7 +800,7 @@ _e_smart_clip_unset(Evas_Object *obj)
 static void 
 _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd)
 {
-   E_Radio_Group *rg;
+   E_Radio_Group *rg = NULL;
    Eina_List *m = NULL;
    Ecore_X_Randr_Mode_Info *mode = NULL;
    Evas_Coord mw = 0, mh = 0;
@@ -609,15 +815,15 @@ _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd)
    /* create new refresh list widget */
    sd->o_refresh = e_widget_list_add(sd->evas, 0, 0);
 
-   /* create radio group for rates */
-   rg = e_widget_radio_group_new(&sd->refresh_rate);
-
    /* loop the modes and find the current one */
    EINA_LIST_FOREACH(sd->modes, m, mode)
      {
         /* compare mode names */
-        if (!strcmp(mode->name, sd->output->crtc->current_mode->name))
+        if (!strcmp(mode->name, sd->current.mode->name))
           {
+             /* create radio group for rates */
+             if (!rg) rg = e_widget_radio_group_new(&sd->current.refresh_rate);
+
              if ((mode->hTotal) && (mode->vTotal))
                {
                   Evas_Object *ow;
@@ -625,9 +831,7 @@ _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd)
                   char buff[1024];
 
                   /* calculate rate */
-                  rate = ((float)mode->dotClock / 
-                          ((float)mode->hTotal * (float)mode->vTotal));
-
+                  rate = _e_smart_monitor_refresh_rate_get(mode);
                   snprintf(buff, sizeof(buff), "%.1fHz", rate);
 
                   /* create the radio widget */
@@ -644,6 +848,21 @@ _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd)
    /* swallow refresh list into frame and show it */
    edje_object_part_swallow(sd->o_frame, "e.swallow.refresh", sd->o_refresh);
    evas_object_show(sd->o_refresh);
+}
+
+static double 
+_e_smart_monitor_refresh_rate_get(Ecore_X_Randr_Mode_Info *mode)
+{
+   double rate = 0.0;
+
+   if (!mode) return 0.0;
+
+   /* calculate rate */
+   if ((mode->hTotal) && (mode->vTotal))
+     rate = ((float)mode->dotClock / 
+             ((float)mode->hTotal * (float)mode->vTotal));
+
+   return rate;
 }
 
 static void 
@@ -715,7 +934,7 @@ _e_smart_monitor_background_set(E_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy)
    if (!sd->o_thumb) return;
 
    /* try to get the bg file for this desktop */
-   if ((bg = e_bg_file_get(sd->con_num, sd->zone_num, dx, dy)))
+   if ((bg = e_bg_file_get(sd->con->num, sd->zone_num, dx, dy)))
      {
         Evas_Object *o;
 
@@ -742,28 +961,191 @@ _e_smart_monitor_background_update(void *data, int type, void *event)
 
    ev = event;
 
-   if (((ev->container < 0) || (ev->container == sd->con_num)) && 
+   /* check this bg event happened on our container */
+   if (((ev->container < 0) || (ev->container == (int)sd->con->num)) && 
        ((ev->zone < 0) || (ev->zone == sd->zone_num)))
      {
-        Evas_Coord cx = 0, cy = 0;
-
-        /* if we have a crtc, get the x/y location of it */
-        if ((sd->output) && (sd->output->crtc))
+        /* check this bg event happened on our desktop */
+        if (((ev->desk_x < 0) || (ev->desk_x == sd->current.x)) && 
+            ((ev->desk_y < 0) || (ev->desk_y == sd->current.y)))
           {
-             cx = sd->output->crtc->geometry.x;
-             cy = sd->output->crtc->geometry.y;
+             /* set the livethumb preview to the background of this desktop */
+             _e_smart_monitor_background_set(sd, ev->desk_x, ev->desk_y);
           }
-        else
-          {
-             /* FIXME: NB: TODO: Handle case of output not having crtc */
-          }
-
-        if (((ev->desk_x < 0) || (ev->desk_x == cx)) && 
-            ((ev->desk_y < 0) || (ev->desk_y == cy)))
-          _e_smart_monitor_background_set(sd, ev->desk_x, ev->desk_y);
      }
 
    return ECORE_CALLBACK_PASS_ON;
+}
+
+static void 
+_e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord width, Evas_Coord height)
+{
+   char buff[1024];
+
+   if (!sd) return;
+
+   snprintf(buff, sizeof(buff), "%d x %d", width, height);
+
+   /* set the frame's resolution text */
+   edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
+}
+
+static Ecore_X_Randr_Mode_Info *
+_e_smart_monitor_resolution_get(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bool skip_rate_check)
+{
+   Ecore_X_Randr_Mode_Info *mode = NULL;
+   Eina_List *l;
+
+   if (!sd) return NULL;
+
+   /* find the closest resolution to this size */
+   if (!skip_rate_check)
+     {
+        EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
+          {
+             if ((((int)mode->width - RESIZE_FUZZ) <= w) || 
+                 (((int)mode->width + RESIZE_FUZZ) <= w))
+               {
+                  if ((((int)mode->height - RESIZE_FUZZ) <= h) || 
+                      (((int)mode->height + RESIZE_FUZZ) <= h))
+                    {
+                       if ((mode->hTotal) && (mode->vTotal))
+                         {
+                            double rate = 0.0;
+
+                            /* get the refresh rate for this mode */
+                            rate = _e_smart_monitor_refresh_rate_get(mode);
+
+                            /* compare this mode rate to current rate */
+                            if (((int)rate == sd->current.refresh_rate))
+                              return mode;
+                         }
+                    }
+               }
+          }
+     }
+
+   /* if we got here, then we found no mode which matches the current 
+    * refresh rate and size. Search again, ignoring refresh rate */
+   EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
+     {
+        if ((((int)mode->width - RESIZE_FUZZ) <= w) || 
+            (((int)mode->width + RESIZE_FUZZ) <= w))
+          {
+             if ((((int)mode->height - RESIZE_FUZZ) <= h) || 
+                 (((int)mode->height + RESIZE_FUZZ) <= h))
+               return mode;
+          }
+     }
+
+   return NULL;
+}
+
+static int 
+_e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient)
+{
+   /* return numerical rotation degree based on orientation */
+   switch (orient)
+     {
+      case ECORE_X_RANDR_ORIENTATION_ROT_90:
+        return 90;
+      case ECORE_X_RANDR_ORIENTATION_ROT_180:
+        return 180;
+      case ECORE_X_RANDR_ORIENTATION_ROT_270:
+        return 270;
+      case ECORE_X_RANDR_ORIENTATION_ROT_0:
+      default:
+        return 0;
+     }
+}
+
+static int 
+_e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev)
+{
+   Evas_Coord cx = 0, cy = 0;
+   double a = 0.0, b = 0.0, c = 0.0, r = 0.0;
+   double ax = 0.0, ay = 0.0, bx = 0.0, by = 0.0;
+   double dotprod = 0.0;
+
+   /* return a single rotation amount based on 
+    * mouse movement in both directions */
+
+   /* if there was no movement, return 0
+    * 
+    * NB: This smells quite odd to me. How can we get a mouse_move event 
+    * (and end up in here) when the coordinates say otherwise ??
+    * Must be a synthetic event and we are not interested in those */
+   if ((ev->cur.canvas.x == ev->prev.canvas.x) && 
+       (ev->cur.canvas.y == ev->prev.canvas.y))
+     return 0;
+
+   /* if the mouse is moved outside the monitor then get out
+    * 
+    * NB: This could be coded into one giant OR statement, but I am feeling 
+    * lazy today ;) */
+   if ((ev->cur.canvas.x > (sd->x + sd->w))) return 0;
+   else if ((ev->cur.canvas.x < sd->x)) return 0;
+   if ((ev->cur.canvas.y > (sd->y + sd->h))) return 0;
+   else if ((ev->cur.canvas.y < sd->y)) return 0;
+
+   /* get center point
+    * 
+    * NB: This COULD be used to provide a greater amount of rotation 
+    * depending on distance of movement from center */
+   cx = (sd->x + (sd->w / 2));
+   cy = (sd->y + (sd->h / 2));
+
+   ax = ((sd->x + sd->w) - cx);
+   ay = (sd->y - cy);
+
+   bx = (ev->cur.canvas.x - cx);
+   by = (ev->cur.canvas.y - cy);
+
+   /* calculate degrees of rotation
+    * 
+    * NB: A HUGE Thank You to Daniel for the help here !! */
+   a = sqrt((ax * ax) + (ay * ay));
+   b = sqrt((bx * bx) + (by * by));
+   if ((a < 1) || (b < 1)) return 0;
+
+   c = sqrt((ev->cur.canvas.x - (sd->x + sd->w)) * 
+            (ev->cur.canvas.x - (sd->x + sd->w)) +
+            (ev->cur.canvas.y - sd->y) * 
+            (ev->cur.canvas.y - sd->y));
+
+   r = acos(((a * a) + (b * b) - (c * c)) / (2 * (a * b)));
+   r = r * 180 / M_PI;
+
+   dotprod = ((ay * bx) + (-ax * by));
+   if (dotprod > 0) r = 360 - r;
+
+   return r;
+}
+
+static Ecore_X_Randr_Orientation 
+_e_smart_monitor_orientation_get(int rotation)
+{
+   rotation %= 360;
+
+   /* find the closest orientation based on rotation within fuziness */
+   if (((rotation - ROTATE_FUZZ) <= 0) ||
+       ((rotation + ROTATE_FUZZ) <= 0))
+     return ECORE_X_RANDR_ORIENTATION_ROT_0;
+   else if (((rotation - ROTATE_FUZZ) <= 90) ||
+            ((rotation + ROTATE_FUZZ) <= 90))
+     return ECORE_X_RANDR_ORIENTATION_ROT_90;
+   else if (((rotation - ROTATE_FUZZ) <= 180) ||
+            ((rotation + ROTATE_FUZZ) <=180))
+     return ECORE_X_RANDR_ORIENTATION_ROT_180;
+   else if (((rotation - ROTATE_FUZZ) <= 270) ||
+            ((rotation + ROTATE_FUZZ) <= 270))
+     return ECORE_X_RANDR_ORIENTATION_ROT_270;
+   else if (((rotation - ROTATE_FUZZ) < 360) ||
+            ((rotation + ROTATE_FUZZ) < 360))
+     return ECORE_X_RANDR_ORIENTATION_ROT_0;
+
+   /* return a default */
+   return ECORE_X_RANDR_ORIENTATION_ROT_0;
 }
 
 static void 
@@ -781,37 +1163,53 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    ev = event;
 
    /* calculate the difference in mouse movement */
-   dx = (ev->cur.canvas.x - ev->prev.canvas.x);
-   dy = (ev->cur.canvas.y - ev->prev.canvas.y);
+   dx = (ev->cur.output.x - ev->prev.output.x);
+   dy = (ev->cur.output.y - ev->prev.output.y);
+
+   /* get monitors current geometry */
+   e_layout_child_geometry_get(mon, &mx, &my, &mw, &mh);
 
    /* convert these coords to virtual space */
    e_layout_coord_canvas_to_virtual(sd->layout.obj, (sd->layout.x + dx), 
                                     (sd->layout.y + dy), &nx, &ny);
 
-   /* get monitors current geometry */
-   e_layout_child_geometry_get(mon, &mx, &my, &mw, &mh);
+   /* factor in mouse movement */
    nx += mx;
    ny += my;
 
+   if ((sd->current.orientation == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+       (sd->current.orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
+     {
+        /* constrain to the layout bounds */
+        if (nx < 0) nx = 0;
+        if (ny < 0) ny = 0;
+     }
+   else if ((sd->current.orientation == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+            (sd->current.orientation == ECORE_X_RANDR_ORIENTATION_ROT_270))
+     {
+        int sx = 0, sy = 0;
+
+        sx = -(((mh - mw) / 2) + sd->layout.x);
+        sy = -(((mw - mh) / 2) - sd->layout.y);
+
+        /* constrain to the layout bounds */
+        if (nx < sx) nx = sx;
+        if (ny < sy) ny = sy;
+     }
+
    /* constrain to the layout bounds */
-   if (nx < sd->layout.x) 
-     nx = sd->layout.x;
-   else if (nx > (sd->layout.x + sd->layout.vw) - mw)
-     nx = (sd->layout.x + sd->layout.vw) - mw;
+   if ((nx + mw) > sd->layout.vw)
+     nx = (sd->layout.vw - mw);
+   if ((ny + mh) > sd->layout.vh)
+     ny = (sd->layout.vh - mh);
 
-   if (ny < sd->layout.y) 
-     ny = sd->layout.y;
-   else if (ny > (sd->layout.y + sd->layout.vh) - mh)
-     ny = (sd->layout.y + sd->layout.vh) - mh;
-
-   /* actually do the move */
    if ((nx != mx) || (ny != my))
      {
         e_layout_child_move(mon, nx, ny);
-        evas_object_smart_callback_call(mon, "monitor_moved", NULL);
-     }
 
-   /* TODO: handle changes */
+        /* send monitor moving signal */
+        evas_object_smart_callback_call(mon, "monitor_moving", NULL);
+     }
 }
 
 static void 
@@ -819,39 +1217,213 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
    Evas_Coord dx = 0, dy = 0;
-   Evas_Coord cw = 0, ch = 0;
    Evas_Coord mw = 0, mh = 0;
    Evas_Coord nw = 0, nh = 0;
+   Ecore_X_Randr_Mode_Info *mode = NULL;
 
    ev = event;
 
+   /* factor in drag resistance to movement and if we have not moved the 
+    * mouse enough, then get out */
+   dx = (sd->resize.x - ev->cur.canvas.x);
+   dy = (sd->resize.y - ev->cur.canvas.y);
+   if (((dx * dx) + (dy * dy)) < 
+       (e_config->drag_resist * e_config->drag_resist)) 
+     return;
+
+   /* TODO: NB: Hmmm, want to badly enable the below code to stop 
+    * extra processing when the mouse moves outside of the monitor, 
+    * HOWEVER when enabled it creates a torrent of problems for 
+    * resizing with snap mode :( */
+
+   /* don't process mouse movements that are outside the object
+    * 
+    * NB: We add a few pixels of 'fuzziness' here to help with monitor resize 
+    * hit detection when at the lowest resolution */
+   /* if (!E_INSIDE(ev->cur.canvas.x, ev->cur.canvas.y,  */
+   /*               (sd->x - 10), (sd->y - 10), (sd->w + 10), (sd->h + 10))) */
+   /*   return; */
+
    /* calculate resize difference based on mouse movement */
-   dx = (ev->cur.output.x - ev->prev.output.x);
-   dy = (ev->cur.output.y - ev->prev.output.y);
+   dx = (ev->cur.canvas.x - ev->prev.canvas.x);
+   dy = (ev->cur.canvas.y - ev->prev.canvas.y);
 
-   /* get size of monitor object */
-   e_layout_child_geometry_get(mon, NULL, NULL, &cw, &ch);
+   /* TODO: FIXME: Handle case where monitor is rotated */
 
-   /* convert size to canvas coords */
-   e_layout_coord_virtual_to_canvas(sd->layout.obj, cw, ch, &mw, &mh);
+   /* convert monitor size to canvas coords */
+   e_layout_coord_virtual_to_canvas(sd->layout.obj, sd->current.w, 
+                                    sd->current.h, &mw, &mh);
 
    /* factor in the resize difference and convert to virtual coords */
    e_layout_coord_canvas_to_virtual(sd->layout.obj, 
                                     (mw + dx), (mh + dy), &nw, &nh);
 
-   /* make sure we cannot resize below the min */
-   if ((nw < sd->min.w) || (nh < sd->min.h)) return;
+   /* don't process mouse movements that are outside the object
+    * 
+    * NB: This is a different 'hack' to the E_INSIDE code above */
+   if (dx < 0)
+     {
+        /* while trying to resize smaller, if the mouse is outside the 
+         * monitor then get out */
+        if ((ev->cur.canvas.x > (sd->x + sd->w))) return;
 
-   /* make sure we cannot resize beyond the max */
-   if ((nw > sd->max.w) || (nh > sd->max.h)) return;
+        /* make sure the min requested width is not smaller than the 
+         * smallest resolution */
+        if (nw < sd->min.w) nw = sd->min.w;
+     }
+   if (dy < 0)
+     {
+        /* while trying to resize smaller, if the mouse is outside the 
+         * monitor then get out */
+        if ((ev->cur.canvas.y > (sd->y + sd->h))) return;
 
-   /* actually resize the monitor */
+        /* make sure the min requested height is not smaller than the 
+         * smallest resolution */
+        if (nh < sd->min.h) nh = sd->min.h;
+     }
+
+   if (dx > 0)
+     {
+        /* while trying to resize larger, if the mouse is outside the 
+         * monitor then get out */
+        if (ev->cur.canvas.x < sd->x) return;
+
+        /* make sure the max requested width is not larger than the 
+         * largest resolution */
+        if (nw > sd->max.w) nw = sd->max.w;
+     }
+   if (dy > 0)
+     {
+        /* while trying to resize larger, if the mouse is outside the 
+         * monitor then get out */
+        if (ev->cur.canvas.y < sd->y) return;
+
+        /* make sure the max requested height is not larger than the 
+         * largest resolution */
+        if (nh > sd->max.h) nh = sd->max.h;
+     }
+
+   /* check if size already matches, if so we have nothing to do */
+   if ((nw == sd->current.w) && (nh == sd->current.h)) return;
+
+   /* TODO: Make both types of resizing here (freeform and snap) a 
+    * checkbox option on the dialog maybe ?? */
+
+// ************************* BEGIN FREEFORM RESIZING ************************
+#if 0
+   /* actually resize the monitor (freeform) */
    e_layout_child_resize(mon, nw, nh);
+#endif
+// ************************* END FREEFORM RESIZING **************************
+
+   /* reset current size to match */
+   sd->current.w = nw;
+   sd->current.h = nh;
+
+// ************************* BEGIN SNAP RESIZING ************************
+
+   /* find the next nearest resolution to this new size */
+   if ((mode = _e_smart_monitor_resolution_get(sd, nw, nh, EINA_TRUE)))
+     {
+        if (sd->current.mode != mode)
+          {
+             /* reset current mode to match */
+             sd->current.mode = mode;
+
+             /* actually resize the monitor (snap) */
+             e_layout_child_resize(mon, mode->width, mode->height);
+
+             /* reset current size to match */
+             sd->current.w = mode->width;
+             sd->current.h = mode->height;
+
+             /* set the resolution text */
+             _e_smart_monitor_resolution_set(sd, sd->current.mode->width, 
+                                            sd->current.mode->height);
+          }
+     }
+
+// ************************* END SNAP RESIZING **************************
+}
+
+static void 
+_e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, void *event)
+{
+   Evas_Event_Mouse_Move *ev;
+   Evas_Map *map;
+   int rotation = 0;
+   Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
+   ev = event;
+
+   /* if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return; */
+
+   /* get amount of rotation from the mouse event */
+   rotation = _e_smart_monitor_rotation_amount_get(sd, ev);
+
+   /* if we have no rotation to map, get out */
+   if (rotation == 0) return;
+
+   /* factor in any existing rotation */
+   rotation += sd->current.rotation;
+
+   /* get current frame geometry */
+   evas_object_geometry_get(sd->o_frame, &fx, &fy, &fw, &fh);
+
+   /* try to duplicate any existing map. if not, create a new one */
+   if ((map = evas_map_dup(evas_object_map_get(mon))))
+     {
+        /* apply new rotation */
+        evas_map_util_rotate(map, rotation, 
+                             (fx + (fw / 2)), (fy + (fh / 2)));
+
+        /* tell object to use this map */
+        evas_object_map_set(sd->o_frame, map);
+
+        /* free the map after it has been assigned to the object */
+        evas_map_free(map);
+     }
+   else
+     {
+        /* no existing map. create a new one */
+        map = evas_map_new(4);
+
+        /* set map properties */
+        evas_map_smooth_set(map, EINA_TRUE);
+        evas_map_alpha_set(map, EINA_TRUE);
+        evas_map_util_points_populate_from_object_full(map, 
+                                                       sd->o_frame, rotation);
+
+        /* apply new rotation */
+        evas_map_util_rotate(map, rotation, 
+                             (fx + (fw / 2)), (fy + (fh / 2)));
+
+        /* tell object to use this map */
+        evas_object_map_set(sd->o_frame, map);
+        evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
+
+        /* free the map after it has been assigned to the object */
+        evas_map_free(map);
+     }
+
+   /* update rotation value */
+   sd->current.rotation = rotation;
+
+   /* ev->event_flags |= EVAS_EVENT_FLAG_ON_HOLD; */
+
+   /* NB: The 'snapping' of this rotation (in relation to other monitors) 
+    * occurs in the randr widget so we will just 
+    * raise a signal here to tell it that we rotated */
+
+   /* NB: For now, don't send this signal here. We will send it when the 
+    * user is finished rotating */
+
+   /* send monitor rotated signal */
+   /* evas_object_smart_callback_call(mon, "monitor_rotated", NULL); */
 }
 
 /* local callbacks */
 static void 
-_e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
+_e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -860,33 +1432,37 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Obj
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
-   /* TODO: handle moving, resize, rotating */
+   /* call appropriate functions based on current action */
    if (sd->moving)
      _e_smart_monitor_move_event(sd, mon, event);
    else if (sd->resizing)
      _e_smart_monitor_resize_event(sd, mon, event);
+   else if (sd->rotating)
+     _e_smart_monitor_rotate_event(sd, mon, event);
 }
 
 static void 
-_e_smart_monitor_frame_cb_resize_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_resize_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    E_Manager *man;
 
+   /* try to set the pointer to indicate we can be resized */
    if ((man = e_manager_current_get()))
      e_pointer_type_push(man->pointer, obj, "resize_br");
 }
 
 static void 
-_e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_resize_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    E_Manager *man;
 
+   /* try to reset the pointer back to default */
    if ((man = e_manager_current_get()))
      e_pointer_type_pop(man->pointer, obj, "resize_br");
 }
 
 static void 
-_e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -895,15 +1471,22 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, 
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
-   /* set resizing flag */
-   sd->resizing = EINA_TRUE;
+   /* record mouse position for drag resistance */
+   evas_pointer_canvas_xy_get(sd->evas, &sd->resize.x, &sd->resize.y);
+
+   /* get monitor geometry */
+   e_layout_child_geometry_get(mon, NULL, NULL, 
+                               &sd->current.w, &sd->current.h);
 
    /* raise this monitor */
    e_layout_child_raise(mon);
+
+   /* set resizing flag */
+   sd->resizing = EINA_TRUE;
 }
 
 static void 
-_e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -914,89 +1497,287 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, c
 
    /* set resizing flag */
    sd->resizing = EINA_FALSE;
+
+   /* update the changes flag */
+   if (sd->orig.mode->xid != sd->current.mode->xid)
+     sd->changes |= E_SMART_MONITOR_CHANGED_RESOLUTION;
+   else
+     sd->changes &= ~(E_SMART_MONITOR_CHANGED_RESOLUTION);
+
+   /* NB: The 'snapping' of this resize (in relation to other monitors) 
+    * occurs in the randr widget so we will just 
+    * raise a signal here to tell it that we resized */
+
+   /* send monitor resized signal */
+   evas_object_smart_callback_call(mon, "monitor_resized", NULL);
 }
 
 static void 
-_e_smart_monitor_frame_cb_rotate_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_rotate_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    E_Manager *man;
 
+   /* try to set the pointer to indicate rotation */
    if ((man = e_manager_current_get()))
      e_pointer_type_push(man->pointer, obj, "rotate");
 }
 
 static void 
-_e_smart_monitor_frame_cb_rotate_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_rotate_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    E_Manager *man;
 
+   /* try to reset the pointer back to default */
    if ((man = e_manager_current_get()))
      e_pointer_type_pop(man->pointer, obj, "rotate");
 }
 
 static void 
-_e_smart_monitor_frame_cb_indicator_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
-{
-   E_Manager *man;
-
-   if ((man = e_manager_current_get()))
-     e_pointer_type_push(man->pointer, obj, "hand");
-}
-
-static void 
-_e_smart_monitor_frame_cb_indicator_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
-{
-   E_Manager *man;
-
-   if ((man = e_manager_current_get()))
-     e_pointer_type_pop(man->pointer, obj, "hand");
-}
-
-static void 
-_e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+_e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
 
+   /* try to get the objects smart data */
    if (!(mon = data)) return;
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
-   if (sd->enabled)
-     {
-        sd->enabled = EINA_FALSE;
-        edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
-     }
-   else
-     {
-        sd->enabled = EINA_TRUE;
-        edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
-     }
+   /* raise this monitor */
+   e_layout_child_raise(mon);
 
-   /* TODO: Record changes */
-
-   evas_object_smart_callback_call(mon, "monitor_toggled", NULL);
+   /* set rotating flag */
+   sd->rotating = EINA_TRUE;
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
+_e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+{
+   Evas_Object *mon;
+   E_Smart_Data *sd;
+   Ecore_X_Randr_Orientation orient;
+   Evas_Coord nw = 0, nh = 0;
+   int rot = 0;
+
+   /* try to get the objects smart data */
+   if (!(mon = data)) return;
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* set rotating flag */
+   sd->rotating = EINA_FALSE;
+
+   /* get the orientation that this monitor would be in */
+   orient = _e_smart_monitor_orientation_get(sd->current.rotation);
+
+   /* if the orientation matches, then no changes have occured and we can 
+    * get out of here */
+   if (sd->current.orientation == orient) return;
+
+   /* grab the current geometry */
+   e_layout_child_geometry_get(mon, NULL, NULL, &nw, &nh);
+
+   /* get the degrees of rotation based on this orient
+    * 
+    * NB: I know this seems redundant but it is needed however. The 
+    * above orientation_get call will return the proper orientation 
+    * for the amount which the user has rotated. Because of this, we need 
+    * to take that orient and get the proper rotation angle.
+    * 
+    * EX: User manually rotates to 80 degrees. We take that 80 and 
+    * factor in some fuziness to get 90 degrees. We need to take that 90 
+    * and return an 'orientation' */
+   rot = _e_smart_monitor_rotation_get(orient);
+   if (rot != sd->current.rotation)
+     {
+        Evas_Map *map;
+        Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
+
+        /* get frame geometry */
+        evas_object_geometry_get(sd->o_frame, &fx, &fy, &fw, &fh);
+
+        /* try to duplicate any existing map */
+        if ((map = evas_map_dup(evas_object_map_get(mon))))
+          {
+             /* apply new rotation */
+             evas_map_util_rotate(map, rot, 
+                                  (fx + (fw / 2)), (fy + (fh / 2)));
+
+             /* tell object to use this map */
+             evas_object_map_set(sd->o_frame, map);
+
+             /* free the map after it has been assigned to the object */
+             evas_map_free(map);
+          }
+        else
+          {
+             /* no existing map. create a new one */
+             map = evas_map_new(4);
+
+             /* set map properties */
+             evas_map_smooth_set(map, EINA_TRUE);
+             evas_map_alpha_set(map, EINA_TRUE);
+             evas_map_util_points_populate_from_object_full(map, 
+                                                            sd->o_frame, rot);
+
+             /* apply new rotation */
+             evas_map_util_rotate(map, rot, 
+                                  (fx + (fw / 2)), (fy + (fh / 2)));
+
+             /* tell object to use this map */
+             evas_object_map_set(sd->o_frame, map);
+             evas_object_map_enable_set(sd->o_frame, EINA_TRUE);
+
+             /* free the map after it has been assigned to the object */
+             evas_map_free(map);
+          }
+
+        /* update rotation value */
+        sd->current.rotation = rot;
+     }
+
+   /* snap the monitor to this rotation */
+
+   /* check orientation */
+   if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+       (orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
+     {
+        if ((sd->current.orientation != ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+            (sd->current.orientation != ECORE_X_RANDR_ORIENTATION_ROT_270))
+          {
+             Evas_Coord nx = 0, ny = 0;
+             int sx = 0, sy = 0;
+
+             /* resize monitor object based on rotation */
+             e_layout_child_resize(mon, nh, nw);
+
+             /* set the resolution text */
+             _e_smart_monitor_resolution_set(sd, sd->current.mode->height, 
+                                            sd->current.mode->width);
+
+             /* grab the current geometry */
+             e_layout_child_geometry_get(mon, &nx, &ny, &nw, &nh);
+
+             sx = ((nh - nw) / 2);
+             sy = ((nw - nh) / 2);
+
+             nx -= (sx + sd->layout.x);
+             ny -= (sy - sd->layout.y);
+
+             /* NB: Hmmm, should this also raise a moved signal ?? */
+             e_layout_child_move(mon, nx, ny);
+          }
+     }
+   else if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
+     {
+        if ((sd->current.orientation != ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (sd->current.orientation != ECORE_X_RANDR_ORIENTATION_ROT_180))
+          {
+             /* resize monitor object based on rotation */
+             e_layout_child_resize(mon, nh, nw);
+
+             /* set the resolution text */
+             _e_smart_monitor_resolution_set(sd, sd->current.mode->width, 
+                                            sd->current.mode->height);
+
+             /* NB: Hmmm, should this also raise a moved signal ?? */
+             e_layout_child_move(mon, sd->current.x, sd->current.y);
+          }
+     }
+
+   /* update current orientation */
+   sd->current.orientation = orient;
+
+   /* update the changes flag */
+   if (sd->orig.orientation != sd->current.orientation)
+     sd->changes |= E_SMART_MONITOR_CHANGED_ROTATION;
+   else
+     sd->changes &= ~(E_SMART_MONITOR_CHANGED_ROTATION);
+
+   /* NB: The 'snapping' of this rotation occurs in the randr widget 
+    * so we will just raise a signal here to tell it that we rotated */
+
+   /* send monitor rotated signal */
+   evas_object_smart_callback_call(mon, "monitor_rotated", NULL);
+}
+
+static void 
+_e_smart_monitor_frame_cb_indicator_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    E_Manager *man;
 
+   /* try to set the pointer to indicate we can be clicked */
    if ((man = e_manager_current_get()))
      e_pointer_type_push(man->pointer, obj, "hand");
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
+_e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    E_Manager *man;
 
+   /* try to reset the pointer back to default */
    if ((man = e_manager_current_get()))
      e_pointer_type_pop(man->pointer, obj, "hand");
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event)
+_e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+{
+   Evas_Object *mon;
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(mon = data)) return;
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   if (sd->current.enabled)
+     {
+        /* if we Were enabled, switch to disabled and tell the edj object */
+        sd->current.enabled = EINA_FALSE;
+        edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
+     }
+   else
+     {
+        /* if we Were disabled, switch to enabled and tell the edj object */
+        sd->current.enabled = EINA_TRUE;
+        edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
+     }
+
+   /* update the changes flag */
+   if (sd->orig.enabled != sd->current.enabled)
+     sd->changes |= E_SMART_MONITOR_CHANGED_ENABLED;
+   else
+     sd->changes &= ~(E_SMART_MONITOR_CHANGED_ENABLED);
+
+   /* NB: The 'enabling' of this monitor occurs in the randr widget 
+    * so we will just raise a signal here to tell it that we toggled */
+
+   /* send monitor toggled signal */
+   evas_object_smart_callback_call(mon, "monitor_toggled", NULL);
+}
+
+static void 
+_e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   E_Manager *man;
+
+   /* try to set the pointer to indicate we can be clicked */
+   if ((man = e_manager_current_get()))
+     e_pointer_type_push(man->pointer, obj, "hand");
+}
+
+static void 
+_e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   E_Manager *man;
+
+   /* try to reset the pointer back to default */
+   if ((man = e_manager_current_get()))
+     e_pointer_type_pop(man->pointer, obj, "hand");
+}
+
+static void 
+_e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
 {
    Evas_Event_Mouse_Down *ev;
 
@@ -1007,22 +1788,28 @@ _e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Obj
         Evas_Object *mon;
         E_Smart_Data *sd;
 
-        if ((man = e_manager_current_get()))
-          e_pointer_type_push(man->pointer, obj, "move");
-
+        /* try to get the objects smart data */
         if (!(mon = data)) return;
         if (!(sd = evas_object_smart_data_get(mon))) return;
 
-        /* set moving flag */
-        sd->moving = EINA_TRUE;
+        /* try to set the mouse pointer to indicate moving */
+        if ((man = e_manager_current_get()))
+          e_pointer_type_push(man->pointer, obj, "move");
 
-        /* raise this monitor */
-        e_layout_child_raise(mon);
+        /* if this event is not on a cloned monitor */
+        if (!sd->cloned)
+          {
+             /* set moving flag */
+             sd->moving = EINA_TRUE;
+
+             /* raise this monitor */
+             e_layout_child_raise(mon);
+          }
      }
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event)
+_e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
 {
    Evas_Event_Mouse_Up *ev;
 
@@ -1033,14 +1820,42 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Objec
         Evas_Object *mon;
         E_Smart_Data *sd;
 
-        if ((man = e_manager_current_get()))
-          e_pointer_type_pop(man->pointer, obj, "move");
-
+        /* try to get the objects smart data */
         if (!(mon = data)) return;
         if (!(sd = evas_object_smart_data_get(mon))) return;
 
+        /* try to set the mouse pointer to indicate moving is done */
+        if ((man = e_manager_current_get()))
+          e_pointer_type_pop(man->pointer, obj, "move");
+
         /* set moving state */
         sd->moving = EINA_FALSE;
+
+        if ((sd->current.orientation == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (sd->current.orientation == ECORE_X_RANDR_ORIENTATION_ROT_180))
+          {
+             Evas_Coord nx = 0, ny = 0;
+
+             /* get current geometry */
+             e_layout_child_geometry_get(mon, &nx, &ny, NULL, NULL);
+
+             /* check if geometry has actually been changed */
+             if ((sd->current.x != nx) || (sd->current.y != ny))
+               {
+                  /* update current geometry */
+                  sd->current.x = nx;
+                  sd->current.y = ny;
+
+                  /* update the changes flag */
+                  /* if (sd->orig.mode->xid != sd->current.mode->xid) */
+                  /*   sd->changes |= E_SMART_MONITOR_CHANGED_POSITION; */
+                  /* else */
+                  /*   sd->changes &= ~(E_SMART_MONITOR_CHANGED_POSITION); */
+               }
+          }
+
+        /* NB: The 'snapping' of this movement occurs in the randr widget 
+         * so we will just raise a signal here to tell it that we moved */
 
         /* send monitor moved signal */
         evas_object_smart_callback_call(mon, "monitor_moved", NULL);
@@ -1048,13 +1863,13 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Objec
 }
 
 static void 
-_e_smart_monitor_layout_cb_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_e_smart_monitor_layout_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
 {
    E_Smart_Data *sd;
 
    if (!(sd = data)) return;
 
-   /* get the layout's geometry */
+   /* get the layout's geometry and store it in our smart data structure */
    evas_object_geometry_get(sd->layout.obj, 
                             &sd->layout.x, &sd->layout.y, NULL, NULL);
 }

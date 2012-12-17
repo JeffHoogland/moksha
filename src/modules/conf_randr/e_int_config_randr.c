@@ -10,14 +10,15 @@ struct _E_Config_Dialog_Data
 };
 
 /* local function prototypes */
-static void *_create_data(E_Config_Dialog *cfd __UNUSED__);
-static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd EINA_UNUSED);
+static void _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
+static void _randr_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 
 /* public functions */
 E_Config_Dialog *
-e_int_config_randr(E_Container *con, const char *params __UNUSED__)
+e_int_config_randr(E_Container *con, const char *params EINA_UNUSED)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -52,7 +53,7 @@ e_int_config_randr(E_Container *con, const char *params __UNUSED__)
 
 /* local functions */
 static void *
-_create_data(E_Config_Dialog *cfd __UNUSED__)
+_create_data(E_Config_Dialog *cfd EINA_UNUSED)
 {
    E_Config_Dialog_Data *cfdata;
 
@@ -64,7 +65,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 }
 
 static void 
-_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 {
    /* if we have the randr smart widget, delete it */
    if (cfdata->o_randr)
@@ -78,6 +79,7 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o;
+   Evas_Coord cw = 0, ch = 0;
 
    /* create the base list widget */
    o = e_widget_list_add(evas, 0, 0);
@@ -85,10 +87,20 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    /* try to create randr smart widget */
    if ((cfdata->o_randr = e_smart_randr_add(evas)))
      {
+        /* calculate virtual size
+         * 
+         * NB: Get which size is larger. This is done so that the 
+         * virtual canvas size can be set such that monitors may be 
+         * repositioned easily in a horizontal or vertical layout.
+         * Without using MAX (and just using current size) than a 
+         * horizontal layout cannot be changed into a vertical layout */
+        cw = MAX(E_RANDR_12->current_size.width, 
+                 E_RANDR_12->current_size.height);
+        ch = MAX(E_RANDR_12->current_size.width, 
+                 E_RANDR_12->current_size.height);
+
         /* set the virtual size for the randr widget */
-        e_smart_randr_current_size_set(cfdata->o_randr, 
-                                       E_RANDR_12->current_size.width, 
-                                       E_RANDR_12->current_size.height);
+        e_smart_randr_current_size_set(cfdata->o_randr, cw, ch);
 
         /* tell randr widget to create monitors */
         e_smart_randr_monitors_create(cfdata->o_randr);
@@ -97,7 +109,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
         e_widget_list_object_append(o, cfdata->o_randr, 1, 1, 0.5);
      }
 
-   /* set a minimum size */
+   /* set a minimum size to 1/10th scale */
    e_widget_size_min_set(o, (E_RANDR_12->current_size.width / 10), 
                          (E_RANDR_12->current_size.height / 10));
 
@@ -109,7 +121,13 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 {
    return 1;
+}
+
+static void 
+_randr_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+{
+
 }
