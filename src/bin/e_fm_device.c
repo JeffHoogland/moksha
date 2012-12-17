@@ -4,7 +4,6 @@
 
 static void _e_fm2_volume_write(E_Volume *v) EINA_ARG_NONNULL(1);
 static void _e_fm2_volume_erase(E_Volume *v) EINA_ARG_NONNULL(1);
-static void _e_fm2_device_mount_free(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 static void _e_fm2_device_mount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 static void _e_fm2_device_mount_fail(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 static void _e_fm2_device_unmount_ok(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
@@ -280,7 +279,7 @@ e_fm2_device_volume_del(E_Volume *v)
    EINA_LIST_FREE(v->mounts, m)
      {
         _e_fm2_device_unmount_ok(m);
-        _e_fm2_device_mount_free(m);
+        e_fm2_device_mount_free(m);
      }
    _e_fm_shared_device_volume_free(v);
 }
@@ -444,17 +443,17 @@ e_fm2_device_mount_del(E_Volume *v)
    EINA_LIST_FREE(v->mounts, m)
      {
         _e_fm2_device_unmount_ok(m);
-        _e_fm2_device_mount_free(m);
+        e_fm2_device_mount_free(m);
      }
 }
 
 EAPI void
-_e_fm2_device_mount_free(E_Fm2_Mount *m)
+e_fm2_device_mount_free(E_Fm2_Mount *m)
 {
    if (!m) return;
 
-   if (m->udi) eina_stringshare_del(m->udi);
-   if (m->mount_point) eina_stringshare_del(m->mount_point);
+   eina_stringshare_del(m->udi);
+   eina_stringshare_del(m->mount_point);
 
    free(m);
 }
@@ -534,7 +533,7 @@ e_fm2_device_mount_fail(E_Volume *v)
    EINA_LIST_FREE(v->mounts, m)
      {
         _e_fm2_device_mount_fail(m);
-        _e_fm2_device_mount_free(m);
+        e_fm2_device_mount_free(m);
      }
 }
 
@@ -545,7 +544,7 @@ e_fm2_device_unmount(E_Fm2_Mount *m)
 
    if (!(v = m->volume)) return;
    v->mounts = eina_list_remove(v->mounts, m);
-   _e_fm2_device_mount_free(m);
+   e_fm2_device_mount_free(m);
 
    if (v->auto_unmount && v->mounted && !eina_list_count(v->mounts))
      {
