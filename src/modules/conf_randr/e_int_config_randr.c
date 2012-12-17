@@ -127,10 +127,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    /* set a minimum size to 1/10th */
    e_widget_size_min_set(o, (cw / 10), (ch / 10));
 
-   /* set this dialog to be resizable */
-   e_dialog_resizable_set(cfd->dia, EINA_TRUE);
-
-   /* return the base widget */
    return o;
 }
 
