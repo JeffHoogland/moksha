@@ -158,6 +158,9 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
     * NB: This clears old modes and also sets the min & max resolutions */
    _e_smart_monitor_modes_fill(sd);
 
+   /* fill in list of refresh rates */
+   _e_smart_monitor_refresh_rates_fill(sd);
+
    if (sd->layout.obj)
      {
         /* with the min & max resolutions, we can now set the thumbnail size.
@@ -199,7 +202,7 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
    /* set the background image */
    _e_smart_monitor_background_set(sd, desk->x, desk->y);
 
-   /* if we have an output, lets set the monitor name */
+   /* if we have an output, set the monitor name */
    if (sd->output) 
      {
         E_Randr_Monitor_Info *monitor = NULL;
@@ -212,7 +215,7 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
         edje_object_part_text_set(sd->o_frame, "e.text.name", name);
      }
 
-   /* if we have an output, lets set the resolution name */
+   /* if we have an output, set the resolution name */
    if ((sd->output) && (sd->output->crtc))
      {
         Ecore_X_Randr_Mode_Info *mode;
@@ -239,9 +242,6 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
      edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
    else
      edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
-
-   /* fill in list of refresh rates */
-   _e_smart_monitor_refresh_rates_fill(sd);
 
    /* with everything all setup, calculate the smallest frame width */
    edje_object_size_min_get(sd->o_frame, &fw, &fh);
