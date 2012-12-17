@@ -10317,6 +10317,7 @@ _e_fm_error_dialog(int pid, const char *str)
    ere = e_fm2_op_registry_entry_get(pid);
    if (!ere) return NULL;
    sd = evas_object_smart_data_get(ere->e_fm);
+   E_LIST_FOREACH(sd->icons, _e_fm2_cb_drag_finished_show);
    while (sd->realpath)
      {
         /* trying to make or move a link onto a device will fail, create button for
