@@ -402,6 +402,32 @@ e_smart_monitor_changes_reset(Evas_Object *obj)
 }
 
 void 
+e_smart_monitor_changes_apply(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   E_Randr_Crtc_Info *crtc;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   if (!(crtc = sd->output->crtc)) 
+     {
+        /* FIXME: What to do in this case ?? */
+        ERR("NO CRTC FOR MONITOR !!\n");
+
+        return;
+     }
+
+   crtc->geometry.x = sd->current.x;
+   crtc->geometry.y = sd->current.y;
+   crtc->geometry.w = sd->current.w;
+   crtc->geometry.h = sd->current.h;
+
+   crtc->current_mode = sd->current.mode;
+   crtc->current_orientation = sd->current.orientation;
+}
+
+void 
 e_smart_monitor_current_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
 {
    E_Smart_Data *sd;
