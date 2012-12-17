@@ -478,6 +478,8 @@ e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon)
    e_theme_edje_object_set(msd->o_clone, "base/theme/widgets", 
                            "e/conf/randr/main/mini");
 
+   evas_object_data_set(msd->o_clone, "smart_data", msd);
+
    edje_object_part_unswallow(msd->o_frame, msd->o_thumb);
    evas_object_hide(msd->o_thumb);
 
@@ -775,6 +777,8 @@ static void
 _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    E_Smart_Data *sd;
+   Eina_List *l;
+   Evas_Object *mclone;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -792,12 +796,27 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 
    /* apply any existing rotation */
    _e_smart_monitor_map_apply(sd->o_frame, sd->current.rotation);
+
+   /* loop the clones and update their rotation */
+   EINA_LIST_FOREACH(sd->clones, l, mclone)
+     {
+        E_Smart_Data *msd;
+
+        /* try to get the clones smart data */
+        if (!(msd = evas_object_data_get(mclone, "smart_data")))
+          continue;
+
+        /* apply existing rotation to mini */
+        _e_smart_monitor_map_apply(mclone, msd->current.rotation);
+     }
 }
 
 static void 
 _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;
+   Eina_List *l;
+   Evas_Object *mclone;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -815,6 +834,19 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    /* apply any existing rotation */
    _e_smart_monitor_map_apply(sd->o_frame, sd->current.rotation);
+
+   /* loop the clones and update their rotation */
+   EINA_LIST_FOREACH(sd->clones, l, mclone)
+     {
+        E_Smart_Data *msd;
+
+        /* try to get the clones smart data */
+        if (!(msd = evas_object_data_get(mclone, "smart_data")))
+          continue;
+
+        /* apply existing rotation to mini */
+        _e_smart_monitor_map_apply(mclone, msd->current.rotation);
+     }
 }
 
 static void 
