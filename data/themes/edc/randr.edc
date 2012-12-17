@@ -504,3 +504,60 @@ group { name: "e/conf/randr/main/stand";
       }
    }
 }
+
+group { name: "e/conf/randr/main/mini";
+   images.image: "hole_tiny.png" COMP;
+   images.image: "led_tiny_green.png" COMP;
+   images.image: "screen_bg.png" COMP;
+   images.image: "screen_fg.png" COMP;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "screen_bg.png";
+            image.border: 4 4 4 4;
+         }
+      }
+      part { name: "e.swallow.preview"; type: SWALLOW;
+         clip_to: "clip";
+         description { state: "default" 0.0;
+            rel1.offset: 5 5;
+            rel2.offset: -6 -11;
+         }
+      }
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.preview";
+            rel2.to: "e.swallow.preview";
+         }
+      }
+      part { name: "hole"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: 4 -5;
+            rel1.relative: 0.0 1.0;
+            rel2.offset: 4 -5;
+            rel2.relative: 0.0 1.0;
+            align: 0.0 1.0;
+            min: 4 4;
+            max: 4 4;
+            image.normal: "hole_tiny.png";
+            fixed: 1 1;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "screen_fg.png";
+            image.border: 4 4 4 4;
+         }
+      }
+      part { name: "led"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.to: "hole";
+            rel2.to: "hole";
+            min: 10 10;
+            max: 10 10;
+            image.normal: "led_tiny_green.png";
+            fixed: 1 1;
+         }
+      }
+   }
+}
