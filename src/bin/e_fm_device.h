@@ -15,6 +15,7 @@ EAPI E_Volume    *e_fm2_device_volume_find_fast(const char *udi);
 EAPI const char  *e_fm2_device_volume_mountpoint_get(E_Volume *v);
 
 EAPI void         e_fm2_device_mount_add(E_Volume *v, const char *mountpoint);
+EAPI E_Fm2_Device_Mount_Op *e_fm2_device_mount_op_add(E_Fm2_Mount *m, char *args, size_t size, size_t length);
 EAPI void e_fm2_device_mount_free(E_Fm2_Mount *m) EINA_ARG_NONNULL(1);
 EAPI void         e_fm2_device_mount_del(E_Volume *v);
 EAPI E_Fm2_Mount *e_fm2_device_mount_find(const char *path);

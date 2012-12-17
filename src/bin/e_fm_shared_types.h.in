@@ -34,6 +34,16 @@ typedef enum
   E_VOLUME_OP_TYPE_EJECT
 } E_Volume_Op_Type;
 
+typedef struct E_Fm2_Device_Mount_Op
+{
+   EINA_INLIST;
+   unsigned int action;
+   char *args;
+   void *ic;
+   E_Fm2_Mount *mnt;
+   size_t size, length;
+} E_Fm2_Device_Mount_Op;
+
 struct _E_Storage
 {
    int type;
@@ -91,6 +101,8 @@ struct _E_Volume
    E_Volume_Op_Type optype;
    Efm_Mode efm_mode;
 
+   Eina_Inlist *mount_ops;  // E_Fm2_Device_Mount_Op
+
    Eina_Bool encrypted;
    Eina_Bool unlocked;
 
@@ -117,6 +129,7 @@ struct _E_Fm2_Mount
    E_Volume *volume;
 
    Eina_Bool mounted : 1;
+   Eina_Bool deleted : 1;
 };
 
 #endif

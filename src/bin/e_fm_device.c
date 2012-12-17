@@ -16,6 +16,26 @@ static Eina_Bool _check_run_show = EINA_FALSE;
 static Eina_Bool _check_run_hide = EINA_FALSE;
 static Ecore_Thread *_check_vols = NULL;
 
+static inline E_Fm2_Device_Mount_Op *
+_e_fm2_device_mount_op_new(char *args, size_t size, size_t length)
+{
+   E_Fm2_Device_Mount_Op *mop;
+
+   mop = E_NEW(E_Fm2_Device_Mount_Op, 1);
+   mop->args = args;
+   mop->size = size;
+   mop->length = length;
+   return mop;
+}
+
+static inline void
+_e_fm2_device_mount_op_free(E_Fm2_Device_Mount_Op *mop)
+{
+   if (!mop) return;
+   free(mop->args);
+   free(mop);
+}
+
 static void
 _e_fm2_device_volume_setup(E_Volume *v)
 {
@@ -281,6 +301,14 @@ e_fm2_device_volume_del(E_Volume *v)
         _e_fm2_device_unmount_ok(m);
         e_fm2_device_mount_free(m);
      }
+   while (v->mount_ops)
+     {
+        E_Fm2_Device_Mount_Op *mop;
+
+        mop = (E_Fm2_Device_Mount_Op*)v->mount_ops;
+        v->mount_ops = eina_inlist_remove(v->mount_ops, v->mount_ops);
+        _e_fm2_device_mount_op_free(mop);
+     }
    _e_fm_shared_device_volume_free(v);
 }
 
@@ -411,19 +439,32 @@ e_fm2_device_volume_mountpoint_get(E_Volume *v)
    return eina_stringshare_add(buf);
 }
 
+EAPI E_Fm2_Device_Mount_Op *
+e_fm2_device_mount_op_add(E_Fm2_Mount *m, char *args, size_t size, size_t length)
+{
+   E_Fm2_Device_Mount_Op *mop;
+
+   mop = _e_fm2_device_mount_op_new(args, size, length);
+   m->volume->mount_ops = eina_inlist_append(m->volume->mount_ops, EINA_INLIST_GET(mop));
+   return mop;
+}
+
 EAPI void
 e_fm2_device_mount_add(E_Volume   *v,
                        const char *mountpoint)
 {
-   Eina_List *l;
+   Eina_List *l, *ll;
    E_Fm2_Mount *m;
 
    v->mounted = EINA_TRUE;
    if (mountpoint && (mountpoint[0]))
      eina_stringshare_replace(&v->mount_point, mountpoint);
 
-   EINA_LIST_FOREACH(v->mounts, l, m)
-     _e_fm2_device_mount_ok(m);
+   EINA_LIST_FOREACH_SAFE(v->mounts, l, ll, m)
+     {
+        _e_fm2_device_mount_ok(m);
+        if (m->deleted) v->mounts = eina_list_remove_list(v->mounts, l);
+     }
 
 //   printf("MOUNT %s %s\n", v->udi, v->mount_point);
 }
@@ -543,6 +584,11 @@ e_fm2_device_unmount(E_Fm2_Mount *m)
    E_Volume *v;
 
    if (!(v = m->volume)) return;
+   if (v->mount_ops)
+     {
+        m->deleted = EINA_TRUE;
+        return;
+     }
    v->mounts = eina_list_remove(v->mounts, m);
    e_fm2_device_mount_free(m);
 
