@@ -203,7 +203,7 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
    /* fill in list of refresh rates
     * 
     * NB: This has to be done after the 'current' refresh rate is calculated 
-    * above */
+    * above or else the radio widgets do not get properly selected */
    _e_smart_monitor_refresh_rates_fill(sd);
 
    /* get the current desktop at this crtc coordinate */
