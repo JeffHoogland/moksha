@@ -839,7 +839,10 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    e_layout_coord_canvas_to_virtual(sd->layout.obj, 
                                     (mw + dx), (mh + dy), &nw, &nh);
 
-   /* max sure we cannot resize beyond the max */
+   /* make sure we cannot resize below the min */
+   if ((nw < sd->min.w) || (nh < sd->min.h)) return;
+
+   /* make sure we cannot resize beyond the max */
    if ((nw > sd->max.w) || (nh > sd->max.h)) return;
 
    /* actually resize the monitor */
