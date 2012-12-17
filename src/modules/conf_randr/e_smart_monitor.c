@@ -1807,13 +1807,13 @@ _e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas EINA_UNUSED, Evas_Ob
         if (!(mon = data)) return;
         if (!(sd = evas_object_smart_data_get(mon))) return;
 
-        /* try to set the mouse pointer to indicate moving */
-        if ((man = e_manager_current_get()))
-          e_pointer_type_push(man->pointer, obj, "move");
-
         /* if this event is not on a cloned monitor */
         if (!sd->cloned)
           {
+             /* try to set the mouse pointer to indicate moving */
+             if ((man = e_manager_current_get()))
+               e_pointer_type_push(man->pointer, obj, "move");
+
              /* set moving flag */
              sd->moving = EINA_TRUE;
 
