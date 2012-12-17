@@ -994,7 +994,7 @@ msgstr "Seleccionar"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/bin/e_config.c:1022
+#: src/bin/e_config.c:1039
 #: src/bin/e_config.c:1055
 msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Enlightenment needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
 msgstr "Los datos de configuración necesitaban una actualización. Su vieja configuración ha<br>sido eliminada y se han establecido nuevos valores por defecto. Esto<br>ocurrirá regularmente durante el desarrollo, así que no envíe un informe de<br>error. Se debe simplemente a que Enlightment necesita nuevos parámetros<br>por defecto para alguna característica cuya<br>configuración anterior no tenía. Esta nueva configuración por defecto arreglará<br>ese fallo añadiendo esos parámentros. Ahora podrá reconfigurar las cosas a su<br>gusto"
@@ -6333,46 +6333,46 @@ msgstr "Contenedor"
 msgid "Manager"
 msgstr "Gestor"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:737
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:745
 msgid "Mouse Buttons"
 msgstr "Botones del ratón"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:787
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:795
 msgid "Mouse Wheels"
 msgstr "Ruedas del ratón"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1159
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1167
 msgid "Left Button"
 msgstr "Botón izquierdo"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1163
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1171
 msgid "Middle Button"
 msgstr "Botón del medio"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1167
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1175
 msgid "Right Button"
 msgstr "Botón derecho"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1177
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1185
 #, fuzzy, c-format
 msgid "Extra Button (%d)"
 msgstr "Botón Extra (%d)"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1193
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1201
 msgid "Mouse Wheel Up"
 msgstr "Rueda del ratón arriba"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1195
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1203
 #, fuzzy
 msgid "Mouse Wheel Down"
 msgstr "Rueda del ratón abajo"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1199
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1207
 #, c-format
 msgid "Extra Wheel (%d) Up"
 msgstr "Rueda Extra (%d) arriba"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1201
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1209
 #, c-format
 msgid "Extra Wheel (%d) Down"
 msgstr "Rueda Extra (%d) abajo"

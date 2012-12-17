@@ -7,11 +7,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
-"Report-Msgid-Bugs-To: $MSGID_BUGS_ADDRESS\n"
-"POT-Creation-Date: 2012-12-07 09:55+0100\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-12-15 23:23+0900\n"
 "PO-Revision-Date: 2012-12-08 23:27+1200\n"
 "Last-Translator: Sam Lin <semin2006@gmail.com>\n"
 "Language-Team: none\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,18 +24,18 @@ msgstr ""
 msgid "About Enlightenment"
 msgstr "關於 Enlightenment"
 
-#: src/bin/e_about.c:20 src/bin/e_actions.c:2983 src/bin/e_config_dialog.c:288
-#: src/bin/e_fm.c:1030 src/bin/e_int_border_menu.c:194
+#: src/bin/e_about.c:20 src/bin/e_actions.c:2987 src/bin/e_config_dialog.c:288
+#: src/bin/e_fm.c:1051 src/bin/e_int_border_menu.c:194
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2514 src/modules/mixer/app_mixer.c:520
+#: src/modules/fileman/e_fwin.c:2513 src/modules/mixer/app_mixer.c:520
 msgid "Close"
 msgstr "關閉"
 
-#: src/bin/e_about.c:21 src/bin/e_actions.c:3358 src/bin/e_actions.c:3362
-#: src/bin/e_actions.c:3366 src/bin/e_int_menus.c:225 src/bin/e_main.c:620
+#: src/bin/e_about.c:21 src/bin/e_actions.c:3362 src/bin/e_actions.c:3366
+#: src/bin/e_actions.c:3370 src/bin/e_int_menus.c:225 src/bin/e_main.c:619
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:221
 #: src/modules/wizard/page_000.c:34
@@ -65,430 +66,430 @@ msgstr ""
 msgid "Are you sure you want to kill this window?"
 msgstr "您是否確定強制結束此視窗？"
 
-#: src/bin/e_actions.c:375 src/bin/e_actions.c:2988
-#: src/bin/e_int_border_menu.c:745
+#: src/bin/e_actions.c:375 src/bin/e_actions.c:2992
+#: src/bin/e_int_border_menu.c:749
 msgid "Kill"
 msgstr "強制結束"
 
-#: src/bin/e_actions.c:377 src/bin/e_actions.c:2124 src/bin/e_actions.c:2218
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:2338 src/bin/e_actions.c:2403
-#: src/bin/e_actions.c:2468 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10059 src/bin/e_fm.c:10424
-#: src/bin/e_screensaver.c:167
+#: src/bin/e_actions.c:377 src/bin/e_actions.c:2128 src/bin/e_actions.c:2222
+#: src/bin/e_actions.c:2282 src/bin/e_actions.c:2342 src/bin/e_actions.c:2407
+#: src/bin/e_actions.c:2472 src/bin/e_confirm_dialog.c:53
+#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10176 src/bin/e_fm.c:10541
+#: src/bin/e_screensaver.c:191
 msgid "No"
 msgstr "否"
 
-#: src/bin/e_actions.c:2119 src/bin/e_actions.c:3362 src/bin/e_int_menus.c:254
+#: src/bin/e_actions.c:2123 src/bin/e_actions.c:3366 src/bin/e_int_menus.c:254
 msgid "Exit"
 msgstr "退出"
 
-#: src/bin/e_actions.c:2120
+#: src/bin/e_actions.c:2124
 msgid "Are you sure you want to exit Enlightenment?"
 msgstr "您是否確定要退出Enlightenment?"
 
-#: src/bin/e_actions.c:2122 src/bin/e_actions.c:2216 src/bin/e_actions.c:2276
-#: src/bin/e_actions.c:2336 src/bin/e_actions.c:2401 src/bin/e_actions.c:2466
+#: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
+#: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10062 src/bin/e_screensaver.c:165
+#: src/bin/e_fm.c:10179 src/bin/e_screensaver.c:189
 msgid "Yes"
 msgstr "是"
 
-#: src/bin/e_actions.c:2213
+#: src/bin/e_actions.c:2217
 msgid "Logout"
 msgstr "登出"
 
-#: src/bin/e_actions.c:2214
+#: src/bin/e_actions.c:2218
 msgid "Are you sure you want to logout?"
 msgstr "您是否確定要登出?"
 
-#: src/bin/e_actions.c:2272 src/bin/e_sys.c:749
+#: src/bin/e_actions.c:2276 src/bin/e_sys.c:749
 msgid "Power off"
 msgstr "關機"
 
-#: src/bin/e_actions.c:2274
+#: src/bin/e_actions.c:2278
 msgid "Are you sure you want to power off your computer?"
 msgstr "您是否確定要關閉您的電腦?"
 
-#: src/bin/e_actions.c:2333 src/bin/e_actions.c:3405
+#: src/bin/e_actions.c:2337 src/bin/e_actions.c:3409
 msgid "Reboot"
 msgstr "重新開機"
 
-#: src/bin/e_actions.c:2334
+#: src/bin/e_actions.c:2338
 msgid "Are you sure you want to reboot your computer?"
 msgstr "您是否確定要重新啟動您的電腦?"
 
-#: src/bin/e_actions.c:2398 src/bin/e_actions.c:3413
+#: src/bin/e_actions.c:2402 src/bin/e_actions.c:3417
 msgid "Suspend"
 msgstr "待機"
 
-#: src/bin/e_actions.c:2399
+#: src/bin/e_actions.c:2403
 msgid "Are you sure you want to suspend your computer?"
 msgstr "您是否確定要讓您的電腦進入待機狀態?"
 
-#: src/bin/e_actions.c:2463 src/bin/e_actions.c:3417
+#: src/bin/e_actions.c:2467 src/bin/e_actions.c:3421
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
 msgstr "休眠"
 
-#: src/bin/e_actions.c:2464
+#: src/bin/e_actions.c:2468
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "您是否確定要讓您的電腦進入休眠狀態?"
 
-#: src/bin/e_actions.c:2943 src/bin/e_actions.c:2954 src/bin/e_actions.c:2973
-#: src/bin/e_actions.c:2978 src/bin/e_actions.c:2983 src/bin/e_actions.c:2988
-#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3278 src/bin/e_actions.c:3283
-#: src/bin/e_actions.c:3289 src/bin/e_actions.c:3295 src/bin/e_actions.c:3301
-#: src/modules/shot/e_mod_main.c:948
+#: src/bin/e_actions.c:2947 src/bin/e_actions.c:2958 src/bin/e_actions.c:2977
+#: src/bin/e_actions.c:2982 src/bin/e_actions.c:2987 src/bin/e_actions.c:2992
+#: src/bin/e_actions.c:3278 src/bin/e_actions.c:3282 src/bin/e_actions.c:3287
+#: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3305
+#: src/modules/shot/e_mod_main.c:984
 msgid "Window : Actions"
 msgstr "視窗: 動作"
 
-#: src/bin/e_actions.c:2943 src/bin/e_fm.c:11184
-#: src/bin/e_int_border_menu.c:665
+#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11301
+#: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "移動"
 
-#: src/bin/e_actions.c:2954 src/bin/e_int_border_menu.c:679
+#: src/bin/e_actions.c:2958 src/bin/e_int_border_menu.c:683
 msgid "Resize"
 msgstr "改變大小"
 
-#: src/bin/e_actions.c:2965 src/bin/e_actions.c:3329 src/bin/e_actions.c:3331
-#: src/bin/e_actions.c:3333 src/bin/e_actions.c:3335 src/bin/e_actions.c:3337
+#: src/bin/e_actions.c:2969 src/bin/e_actions.c:3333 src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3337 src/bin/e_actions.c:3339 src/bin/e_actions.c:3341
 #: src/modules/comp/e_mod_config.c:452 src/modules/comp/e_mod_config.c:761
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:336
 msgid "Menu"
 msgstr "選單"
 
-#: src/bin/e_actions.c:2965
+#: src/bin/e_actions.c:2969
 msgid "Window Menu"
 msgstr "視窗選單"
 
-#: src/bin/e_actions.c:2973 src/bin/e_int_border_menu.c:1047
+#: src/bin/e_actions.c:2977 src/bin/e_int_border_menu.c:1051
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "上移"
 
-#: src/bin/e_actions.c:2978 src/bin/e_int_border_menu.c:1055
+#: src/bin/e_actions.c:2982 src/bin/e_int_border_menu.c:1059
 msgid "Lower"
 msgstr "下移"
 
-#: src/bin/e_actions.c:2993 src/bin/e_actions.c:2997 src/bin/e_actions.c:3002
-#: src/bin/e_actions.c:3006 src/bin/e_actions.c:3011 src/bin/e_actions.c:3015
-#: src/bin/e_actions.c:3021 src/bin/e_actions.c:3023 src/bin/e_actions.c:3026
-#: src/bin/e_actions.c:3029 src/bin/e_actions.c:3032 src/bin/e_actions.c:3035
-#: src/bin/e_actions.c:3037 src/bin/e_actions.c:3039 src/bin/e_actions.c:3041
-#: src/bin/e_actions.c:3048 src/bin/e_actions.c:3050 src/bin/e_actions.c:3052
-#: src/bin/e_actions.c:3054 src/bin/e_actions.c:3056 src/bin/e_actions.c:3060
-#: src/bin/e_actions.c:3065 src/bin/e_actions.c:3070 src/bin/e_actions.c:3076
-#: src/bin/e_actions.c:3082
+#: src/bin/e_actions.c:2997 src/bin/e_actions.c:3001 src/bin/e_actions.c:3006
+#: src/bin/e_actions.c:3010 src/bin/e_actions.c:3015 src/bin/e_actions.c:3019
+#: src/bin/e_actions.c:3025 src/bin/e_actions.c:3027 src/bin/e_actions.c:3030
+#: src/bin/e_actions.c:3033 src/bin/e_actions.c:3036 src/bin/e_actions.c:3039
+#: src/bin/e_actions.c:3041 src/bin/e_actions.c:3043 src/bin/e_actions.c:3045
+#: src/bin/e_actions.c:3052 src/bin/e_actions.c:3054 src/bin/e_actions.c:3056
+#: src/bin/e_actions.c:3058 src/bin/e_actions.c:3060 src/bin/e_actions.c:3064
+#: src/bin/e_actions.c:3069 src/bin/e_actions.c:3074 src/bin/e_actions.c:3080
+#: src/bin/e_actions.c:3086
 msgid "Window : State"
 msgstr "視窗: 狀態"
 
-#: src/bin/e_actions.c:2993
+#: src/bin/e_actions.c:2997
 msgid "Sticky Mode Toggle"
 msgstr "切換相黏模式"
 
-#: src/bin/e_actions.c:2997
+#: src/bin/e_actions.c:3001
 msgid "Sticky Mode Enable"
 msgstr "開啟相黏模式"
 
-#: src/bin/e_actions.c:3002
+#: src/bin/e_actions.c:3006
 msgid "Iconic Mode Toggle"
 msgstr "切換圖示化"
 
-#: src/bin/e_actions.c:3006
+#: src/bin/e_actions.c:3010
 msgid "Iconic Mode Enable"
 msgstr "開機圖示化模式"
 
-#: src/bin/e_actions.c:3011
+#: src/bin/e_actions.c:3015
 msgid "Fullscreen Mode Toggle"
 msgstr "切換全螢幕模式"
 
-#: src/bin/e_actions.c:3015
+#: src/bin/e_actions.c:3019
 msgid "Fullscreen Mode Enable"
 msgstr "開啟全螢幕模式"
 
-#: src/bin/e_actions.c:3021 src/bin/e_int_border_menu.c:384
-#: src/bin/e_int_border_menu.c:640
+#: src/bin/e_actions.c:3025 src/bin/e_int_border_menu.c:384
+#: src/bin/e_int_border_menu.c:644
 msgid "Maximize"
 msgstr "最大化"
 
-#: src/bin/e_actions.c:3023 src/bin/e_int_border_menu.c:395
+#: src/bin/e_actions.c:3027 src/bin/e_int_border_menu.c:395
 msgid "Maximize Vertically"
 msgstr "垂直最大化"
 
-#: src/bin/e_actions.c:3026 src/bin/e_int_border_menu.c:406
+#: src/bin/e_actions.c:3030 src/bin/e_int_border_menu.c:406
 msgid "Maximize Horizontally"
 msgstr "水平最大化"
 
-#: src/bin/e_actions.c:3029 src/bin/e_int_border_menu.c:417
+#: src/bin/e_actions.c:3033 src/bin/e_int_border_menu.c:417
 msgid "Maximize Left"
 msgstr "左側最大化"
 
-#: src/bin/e_actions.c:3032 src/bin/e_int_border_menu.c:428
+#: src/bin/e_actions.c:3036 src/bin/e_int_border_menu.c:428
 msgid "Maximize Right"
 msgstr "右側最大化"
 
-#: src/bin/e_actions.c:3035
+#: src/bin/e_actions.c:3039
 msgid "Maximize Fullscreen"
 msgstr "全螢幕最大化"
 
-#: src/bin/e_actions.c:3037
+#: src/bin/e_actions.c:3041
 msgid "Maximize Mode \"Smart\""
 msgstr "「智慧型」最大化模式"
 
-#: src/bin/e_actions.c:3039
+#: src/bin/e_actions.c:3043
 msgid "Maximize Mode \"Expand\""
 msgstr "「展開」最大化模式"
 
-#: src/bin/e_actions.c:3041
+#: src/bin/e_actions.c:3045
 msgid "Maximize Mode \"Fill\""
 msgstr "「填滿」最大化模式"
 
-#: src/bin/e_actions.c:3048
+#: src/bin/e_actions.c:3052
 msgid "Shade Up Mode Toggle"
 msgstr "切換上捲模式"
 
-#: src/bin/e_actions.c:3050
+#: src/bin/e_actions.c:3054
 msgid "Shade Down Mode Toggle"
 msgstr "切換下捲模式"
 
-#: src/bin/e_actions.c:3052
+#: src/bin/e_actions.c:3056
 msgid "Shade Left Mode Toggle"
 msgstr "切換左捲模式"
 
-#: src/bin/e_actions.c:3054
+#: src/bin/e_actions.c:3058
 msgid "Shade Right Mode Toggle"
 msgstr "切換右捲模式"
 
-#: src/bin/e_actions.c:3056
+#: src/bin/e_actions.c:3060
 msgid "Shade Mode Toggle"
 msgstr "切換捲起模式"
 
-#: src/bin/e_actions.c:3060
+#: src/bin/e_actions.c:3064
 msgid "Set Shaded State"
 msgstr ""
 
-#: src/bin/e_actions.c:3061
+#: src/bin/e_actions.c:3065
 msgid "syntax: \"(0|1) (up|down|left|right)\""
 msgstr ""
 
-#: src/bin/e_actions.c:3065
+#: src/bin/e_actions.c:3069
 msgid "Toggle Borderless State"
 msgstr "切換無邊框狀態"
 
-#: src/bin/e_actions.c:3070
+#: src/bin/e_actions.c:3074
 msgid "Set Border"
 msgstr "設定邊框"
 
-#: src/bin/e_actions.c:3076
+#: src/bin/e_actions.c:3080
 #, fuzzy
 msgid "Cycle between Borders"
 msgstr "以循迴方式切換邊框"
 
-#: src/bin/e_actions.c:3082
+#: src/bin/e_actions.c:3086
 msgid "Toggle Pinned State"
 msgstr "切換固定於桌面狀態"
 
-#: src/bin/e_actions.c:3087 src/bin/e_actions.c:3089 src/bin/e_actions.c:3091
-#: src/bin/e_actions.c:3093 src/bin/e_actions.c:3095 src/bin/e_actions.c:3101
-#: src/bin/e_actions.c:3106 src/bin/e_actions.c:3112 src/bin/e_actions.c:3117
-#: src/bin/e_actions.c:3123 src/bin/e_actions.c:3129 src/bin/e_actions.c:3131
-#: src/bin/e_actions.c:3133 src/bin/e_actions.c:3135 src/bin/e_actions.c:3137
-#: src/bin/e_actions.c:3139 src/bin/e_actions.c:3141 src/bin/e_actions.c:3143
-#: src/bin/e_actions.c:3145 src/bin/e_actions.c:3147 src/bin/e_actions.c:3149
-#: src/bin/e_actions.c:3151 src/bin/e_actions.c:3153 src/bin/e_actions.c:3159
-#: src/bin/e_actions.c:3161 src/bin/e_actions.c:3163 src/bin/e_actions.c:3165
-#: src/bin/e_actions.c:3167 src/bin/e_actions.c:3173 src/bin/e_actions.c:3179
-#: src/bin/e_actions.c:3185 src/bin/e_actions.c:3190 src/bin/e_actions.c:3192
-#: src/bin/e_actions.c:3194 src/bin/e_actions.c:3196 src/bin/e_actions.c:3198
-#: src/bin/e_actions.c:3200 src/bin/e_actions.c:3202 src/bin/e_actions.c:3204
-#: src/bin/e_actions.c:3206 src/bin/e_actions.c:3208 src/bin/e_actions.c:3210
-#: src/bin/e_actions.c:3212 src/bin/e_actions.c:3214 src/bin/e_actions.c:3429
-#: src/bin/e_actions.c:3434 src/bin/e_int_menus.c:187
+#: src/bin/e_actions.c:3091 src/bin/e_actions.c:3093 src/bin/e_actions.c:3095
+#: src/bin/e_actions.c:3097 src/bin/e_actions.c:3099 src/bin/e_actions.c:3105
+#: src/bin/e_actions.c:3110 src/bin/e_actions.c:3116 src/bin/e_actions.c:3121
+#: src/bin/e_actions.c:3127 src/bin/e_actions.c:3133 src/bin/e_actions.c:3135
+#: src/bin/e_actions.c:3137 src/bin/e_actions.c:3139 src/bin/e_actions.c:3141
+#: src/bin/e_actions.c:3143 src/bin/e_actions.c:3145 src/bin/e_actions.c:3147
+#: src/bin/e_actions.c:3149 src/bin/e_actions.c:3151 src/bin/e_actions.c:3153
+#: src/bin/e_actions.c:3155 src/bin/e_actions.c:3157 src/bin/e_actions.c:3163
+#: src/bin/e_actions.c:3165 src/bin/e_actions.c:3167 src/bin/e_actions.c:3169
+#: src/bin/e_actions.c:3171 src/bin/e_actions.c:3177 src/bin/e_actions.c:3183
+#: src/bin/e_actions.c:3189 src/bin/e_actions.c:3194 src/bin/e_actions.c:3196
+#: src/bin/e_actions.c:3198 src/bin/e_actions.c:3200 src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3204 src/bin/e_actions.c:3206 src/bin/e_actions.c:3208
+#: src/bin/e_actions.c:3210 src/bin/e_actions.c:3212 src/bin/e_actions.c:3214
+#: src/bin/e_actions.c:3216 src/bin/e_actions.c:3218 src/bin/e_actions.c:3433
+#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:187
 #: src/bin/e_int_shelf_config.c:267 src/modules/comp/e_mod_config.c:444
 #: src/modules/comp/e_mod_config.c:753
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
-#: src/modules/fileman/e_mod_menu.c:334 src/modules/ibox/e_mod_config.c:166
+#: src/modules/fileman/e_mod_menu.c:339 src/modules/ibox/e_mod_config.c:166
 msgid "Desktop"
 msgstr "桌面"
 
-#: src/bin/e_actions.c:3087
+#: src/bin/e_actions.c:3091
 msgid "Flip Desktop Left"
 msgstr "切換到左方桌面"
 
-#: src/bin/e_actions.c:3089
+#: src/bin/e_actions.c:3093
 msgid "Flip Desktop Right"
 msgstr "切換到右方桌面"
 
-#: src/bin/e_actions.c:3091
+#: src/bin/e_actions.c:3095
 msgid "Flip Desktop Up"
 msgstr "切換到上方桌面"
 
-#: src/bin/e_actions.c:3093
+#: src/bin/e_actions.c:3097
 msgid "Flip Desktop Down"
 msgstr "切換到下方桌面"
 
-#: src/bin/e_actions.c:3095
+#: src/bin/e_actions.c:3099
 msgid "Flip Desktop By..."
 msgstr "切換到目前桌面之..."
 
-#: src/bin/e_actions.c:3101
+#: src/bin/e_actions.c:3105
 msgid "Flip To Previous Desktop"
 msgstr "切換到之前的桌面"
 
-#: src/bin/e_actions.c:3106
+#: src/bin/e_actions.c:3110
 msgid "Show The Desktop"
 msgstr "顯示桌面"
 
-#: src/bin/e_actions.c:3112
+#: src/bin/e_actions.c:3116
 msgid "Show The Shelf"
 msgstr "顯示櫥櫃"
 
-#: src/bin/e_actions.c:3117
+#: src/bin/e_actions.c:3121
 msgid "Flip Desktop To..."
 msgstr "二維切換桌面到..."
 
-#: src/bin/e_actions.c:3123
+#: src/bin/e_actions.c:3127
 msgid "Flip Desktop Linearly..."
 msgstr "切換到目前桌面之..."
 
-#: src/bin/e_actions.c:3129
+#: src/bin/e_actions.c:3133
 msgid "Switch To Desktop 0"
 msgstr "切換到桌面 0"
 
-#: src/bin/e_actions.c:3131
+#: src/bin/e_actions.c:3135
 msgid "Switch To Desktop 1"
 msgstr "切換到桌面 1"
 
-#: src/bin/e_actions.c:3133
+#: src/bin/e_actions.c:3137
 msgid "Switch To Desktop 2"
 msgstr "切換到桌面 2"
 
-#: src/bin/e_actions.c:3135
+#: src/bin/e_actions.c:3139
 msgid "Switch To Desktop 3"
 msgstr "切換到桌面 3"
 
-#: src/bin/e_actions.c:3137
+#: src/bin/e_actions.c:3141
 msgid "Switch To Desktop 4"
 msgstr "切換到桌面 4"
 
-#: src/bin/e_actions.c:3139
+#: src/bin/e_actions.c:3143
 msgid "Switch To Desktop 5"
 msgstr "切換到桌面 5"
 
-#: src/bin/e_actions.c:3141
+#: src/bin/e_actions.c:3145
 msgid "Switch To Desktop 6"
 msgstr "切換到桌面 6"
 
-#: src/bin/e_actions.c:3143
+#: src/bin/e_actions.c:3147
 msgid "Switch To Desktop 7"
 msgstr "切換到桌面 7"
 
-#: src/bin/e_actions.c:3145
+#: src/bin/e_actions.c:3149
 msgid "Switch To Desktop 8"
 msgstr "切換到桌面 8"
 
-#: src/bin/e_actions.c:3147
+#: src/bin/e_actions.c:3151
 msgid "Switch To Desktop 9"
 msgstr "切換到桌面 9"
 
-#: src/bin/e_actions.c:3149
+#: src/bin/e_actions.c:3153
 msgid "Switch To Desktop 10"
 msgstr "切換到桌面 10"
 
-#: src/bin/e_actions.c:3151
+#: src/bin/e_actions.c:3155
 msgid "Switch To Desktop 11"
 msgstr "切換到桌面 11"
 
-#: src/bin/e_actions.c:3153
+#: src/bin/e_actions.c:3157
 msgid "Switch To Desktop..."
 msgstr "切換桌面到..."
 
-#: src/bin/e_actions.c:3159
+#: src/bin/e_actions.c:3163
 msgid "Flip Desktop Left (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:3161
+#: src/bin/e_actions.c:3165
 msgid "Flip Desktop Right (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:3163
+#: src/bin/e_actions.c:3167
 msgid "Flip Desktop Up (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:3165
+#: src/bin/e_actions.c:3169
 msgid "Flip Desktop Down (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3171
 msgid "Flip Desktop By... (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:3173
+#: src/bin/e_actions.c:3177
 msgid "Flip Desktop To... (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:3179
+#: src/bin/e_actions.c:3183
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr ""
 
-#: src/bin/e_actions.c:3185
+#: src/bin/e_actions.c:3189
 msgid "Flip Desktop In Direction..."
 msgstr ""
 
-#: src/bin/e_actions.c:3190
+#: src/bin/e_actions.c:3194
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "切換到桌面0 (全螢幕)"
 
-#: src/bin/e_actions.c:3192
+#: src/bin/e_actions.c:3196
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "切換到桌面1 (全螢幕)"
 
-#: src/bin/e_actions.c:3194
+#: src/bin/e_actions.c:3198
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "切換到桌面2 (全螢幕)"
 
-#: src/bin/e_actions.c:3196
+#: src/bin/e_actions.c:3200
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "切換到桌面3 (全螢幕)"
 
-#: src/bin/e_actions.c:3198
+#: src/bin/e_actions.c:3202
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "切換到桌面4 (全螢幕)"
 
-#: src/bin/e_actions.c:3200
+#: src/bin/e_actions.c:3204
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "切換到桌面5 (全螢幕)"
 
-#: src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3206
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "切換到桌面6 (全螢幕)"
 
-#: src/bin/e_actions.c:3204
+#: src/bin/e_actions.c:3208
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "切換到桌面7 (全螢幕)"
 
-#: src/bin/e_actions.c:3206
+#: src/bin/e_actions.c:3210
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "切換到桌面8 (全螢幕)"
 
-#: src/bin/e_actions.c:3208
+#: src/bin/e_actions.c:3212
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "切換到桌面9 (全螢幕)"
 
-#: src/bin/e_actions.c:3210
+#: src/bin/e_actions.c:3214
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "切換到桌面10 (全螢幕)"
 
-#: src/bin/e_actions.c:3212
+#: src/bin/e_actions.c:3216
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "切換到桌面11 (全螢幕)"
 
-#: src/bin/e_actions.c:3214
+#: src/bin/e_actions.c:3218
 msgid "Switch To Desktop... (All Screens)"
 msgstr "切換到桌面... (全螢幕)"
 
-#: src/bin/e_actions.c:3220 src/bin/e_actions.c:3224
+#: src/bin/e_actions.c:3224 src/bin/e_actions.c:3228
 #: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:39
 #: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:44
 #: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:50
@@ -501,284 +502,286 @@ msgstr "切換到桌面... (全螢幕)"
 msgid "Window : List"
 msgstr "視窗: 列表"
 
-#: src/bin/e_actions.c:3220
+#: src/bin/e_actions.c:3224
 msgid "Jump to window..."
 msgstr "跳到桌面..."
 
-#: src/bin/e_actions.c:3224
+#: src/bin/e_actions.c:3228
 msgid "Jump to window... or start..."
 msgstr "跳到桌面... 或開始..."
 
-#: src/bin/e_actions.c:3231 src/bin/e_actions.c:3233 src/bin/e_actions.c:3235
-#: src/bin/e_actions.c:3241 src/bin/e_actions.c:3243 src/bin/e_actions.c:3245
-#: src/bin/e_actions.c:3250 src/bin/e_actions.c:3253 src/bin/e_actions.c:3256
-#: src/bin/e_actions.c:3258 src/bin/e_actions.c:3260 src/bin/e_actions.c:3262
-#: src/bin/e_actions.c:3265 src/bin/e_actions.c:3267 src/bin/e_actions.c:3269
+#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3239
+#: src/bin/e_actions.c:3245 src/bin/e_actions.c:3247 src/bin/e_actions.c:3249
+#: src/bin/e_actions.c:3254 src/bin/e_actions.c:3257 src/bin/e_actions.c:3260
+#: src/bin/e_actions.c:3262 src/bin/e_actions.c:3264 src/bin/e_actions.c:3266
+#: src/bin/e_actions.c:3269 src/bin/e_actions.c:3271 src/bin/e_actions.c:3273
+#: src/modules/backlight/e_mod_main.c:493
+#: src/modules/backlight/e_mod_main.c:503
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:14 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:706 src/modules/shot/e_mod_main.c:941
-#: src/modules/shot/e_mod_main.c:978
+#: src/modules/shot/e_mod_main.c:742 src/modules/shot/e_mod_main.c:977
+#: src/modules/shot/e_mod_main.c:1015
 msgid "Screen"
 msgstr "螢幕"
 
-#: src/bin/e_actions.c:3231
+#: src/bin/e_actions.c:3235
 msgid "Send Mouse To Screen 0"
 msgstr "將滑鼠送到螢幕 0"
 
-#: src/bin/e_actions.c:3233
+#: src/bin/e_actions.c:3237
 msgid "Send Mouse To Screen 1"
 msgstr "將滑鼠送到螢幕 1"
 
-#: src/bin/e_actions.c:3235
+#: src/bin/e_actions.c:3239
 msgid "Send Mouse To Screen..."
 msgstr "將滑鼠送到其它螢幕..."
 
-#: src/bin/e_actions.c:3241
+#: src/bin/e_actions.c:3245
 msgid "Send Mouse Forward 1 Screen"
 msgstr "將滑鼠送到下一螢幕"
 
-#: src/bin/e_actions.c:3243
+#: src/bin/e_actions.c:3247
 msgid "Send Mouse Back 1 Screen"
 msgstr "將滑鼠送到上一螢幕"
 
-#: src/bin/e_actions.c:3245
+#: src/bin/e_actions.c:3249
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "將滑鼠送到目前螢幕之..."
 
-#: src/bin/e_actions.c:3250
+#: src/bin/e_actions.c:3254
 msgid "Dim"
 msgstr ""
 
-#: src/bin/e_actions.c:3253
+#: src/bin/e_actions.c:3257
 msgid "Undim"
 msgstr ""
 
-#: src/bin/e_actions.c:3256
+#: src/bin/e_actions.c:3260
 msgid "Backlight Set"
 msgstr ""
 
-#: src/bin/e_actions.c:3258
+#: src/bin/e_actions.c:3262
 msgid "Backlight Min"
 msgstr ""
 
-#: src/bin/e_actions.c:3260
+#: src/bin/e_actions.c:3264
 msgid "Backlight Mid"
 msgstr ""
 
-#: src/bin/e_actions.c:3262
+#: src/bin/e_actions.c:3266
 msgid "Backlight Max"
 msgstr ""
 
-#: src/bin/e_actions.c:3265
+#: src/bin/e_actions.c:3269
 msgid "Backlight Adjust"
 msgstr ""
 
-#: src/bin/e_actions.c:3267
+#: src/bin/e_actions.c:3271
 msgid "Backlight Up"
 msgstr ""
 
-#: src/bin/e_actions.c:3269
+#: src/bin/e_actions.c:3273
 msgid "Backlight Down"
 msgstr ""
 
-#: src/bin/e_actions.c:3274
+#: src/bin/e_actions.c:3278
 msgid "Move To Center"
 msgstr ""
 
-#: src/bin/e_actions.c:3278
+#: src/bin/e_actions.c:3282
 msgid "Move To Coordinates..."
 msgstr ""
 
-#: src/bin/e_actions.c:3283
+#: src/bin/e_actions.c:3287
 msgid "Move By Coordinate Offset..."
 msgstr ""
 
-#: src/bin/e_actions.c:3289
+#: src/bin/e_actions.c:3293
 msgid "Resize By..."
 msgstr ""
 
-#: src/bin/e_actions.c:3295
+#: src/bin/e_actions.c:3299
 msgid "Push in Direction..."
 msgstr ""
 
-#: src/bin/e_actions.c:3301
+#: src/bin/e_actions.c:3305
 msgid "Drag Icon..."
 msgstr "拖曳圖示..."
 
-#: src/bin/e_actions.c:3306 src/bin/e_actions.c:3308 src/bin/e_actions.c:3310
-#: src/bin/e_actions.c:3316 src/bin/e_actions.c:3322 src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3310 src/bin/e_actions.c:3312 src/bin/e_actions.c:3314
+#: src/bin/e_actions.c:3320 src/bin/e_actions.c:3326 src/bin/e_actions.c:3328
 msgid "Window : Moving"
 msgstr "視窗: 移動"
 
-#: src/bin/e_actions.c:3306
+#: src/bin/e_actions.c:3310
 msgid "To Next Desktop"
 msgstr "送到下一桌面"
 
-#: src/bin/e_actions.c:3308
+#: src/bin/e_actions.c:3312
 msgid "To Previous Desktop"
 msgstr "送到上一桌面"
 
-#: src/bin/e_actions.c:3310
+#: src/bin/e_actions.c:3314
 msgid "By Desktop #..."
 msgstr "目前桌面之..."
 
-#: src/bin/e_actions.c:3316
+#: src/bin/e_actions.c:3320
 msgid "To Desktop..."
 msgstr "送到桌面..."
 
-#: src/bin/e_actions.c:3322
+#: src/bin/e_actions.c:3326
 msgid "To Next Screen"
 msgstr "送到下一個螢幕"
 
-#: src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3328
 msgid "To Previous Screen"
 msgstr "送到前一個螢幕"
 
-#: src/bin/e_actions.c:3329
+#: src/bin/e_actions.c:3333
 msgid "Show Main Menu"
 msgstr "顯示主選單"
 
-#: src/bin/e_actions.c:3331
+#: src/bin/e_actions.c:3335
 msgid "Show Favorites Menu"
 msgstr "顯示「我的最愛」選單"
 
-#: src/bin/e_actions.c:3333
+#: src/bin/e_actions.c:3337
 msgid "Show All Applications Menu"
 msgstr "顯示「應用程式」選單"
 
-#: src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3339
 msgid "Show Clients Menu"
 msgstr "顯示「視窗列表」選單"
 
-#: src/bin/e_actions.c:3337
+#: src/bin/e_actions.c:3341
 msgid "Show Menu..."
 msgstr "顯示選單..."
 
-#: src/bin/e_actions.c:3344 src/bin/e_actions.c:3349 src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3353 src/bin/e_actions.c:3358
 #: src/modules/conf/e_mod_main.c:272 src/modules/conf/e_mod_main.c:345
-#: src/modules/everything/evry_plug_apps.c:1169
+#: src/modules/everything/evry_plug_apps.c:1168
 #: src/modules/fileman/e_mod_main.c:55 src/modules/fileman/e_mod_main.c:133
 msgid "Launch"
 msgstr "啟動"
 
-#: src/bin/e_actions.c:3344 src/bin/e_int_border_prop.c:468
+#: src/bin/e_actions.c:3348 src/bin/e_int_border_prop.c:468
 msgid "Command"
 msgstr "命令"
 
-#: src/bin/e_actions.c:3349 src/bin/e_eap_editor.c:698
+#: src/bin/e_actions.c:3353 src/bin/e_eap_editor.c:698
 #: src/bin/e_int_border_menu.c:118
 #, c-format
 msgid "Application"
 msgstr "應用程式"
 
-#: src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3358
 msgid "New Instance of Focused App"
 msgstr ""
 
-#: src/bin/e_actions.c:3358 src/bin/e_int_menus.c:249
+#: src/bin/e_actions.c:3362 src/bin/e_int_menus.c:249
 msgid "Restart"
 msgstr "重新啟動"
 
-#: src/bin/e_actions.c:3366
+#: src/bin/e_actions.c:3370
 msgid "Exit Now"
 msgstr "現在立即退出"
 
-#: src/bin/e_actions.c:3370 src/bin/e_actions.c:3375
+#: src/bin/e_actions.c:3374 src/bin/e_actions.c:3379
 msgid "Enlightenment : Mode"
 msgstr "Emlightenment: 模式"
 
-#: src/bin/e_actions.c:3371
+#: src/bin/e_actions.c:3375
 msgid "Presentation Mode Toggle"
 msgstr "切換展示模式"
 
-#: src/bin/e_actions.c:3376
+#: src/bin/e_actions.c:3380
 msgid "Offline Mode Toggle"
 msgstr "切換離線模式"
 
-#: src/bin/e_actions.c:3380 src/bin/e_actions.c:3384 src/bin/e_actions.c:3388
+#: src/bin/e_actions.c:3384 src/bin/e_actions.c:3388 src/bin/e_actions.c:3392
 msgid "Enlightenment : Module"
 msgstr "Enlightenment: 模組"
 
-#: src/bin/e_actions.c:3381
+#: src/bin/e_actions.c:3385
 msgid "Enable the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3389
 msgid "Disable the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3389
+#: src/bin/e_actions.c:3393
 msgid "Toggle the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3397 src/bin/e_actions.c:3401
-#: src/bin/e_actions.c:3405 src/bin/e_actions.c:3409 src/bin/e_actions.c:3413
-#: src/bin/e_actions.c:3417 src/bin/e_actions.c:3421 src/bin/e_configure.c:411
+#: src/bin/e_actions.c:3397 src/bin/e_actions.c:3401 src/bin/e_actions.c:3405
+#: src/bin/e_actions.c:3409 src/bin/e_actions.c:3413 src/bin/e_actions.c:3417
+#: src/bin/e_actions.c:3421 src/bin/e_actions.c:3425 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:275
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:818
 #: src/modules/conf_theme/e_int_config_wallpaper.c:429
-#: src/modules/conf_theme/e_int_config_wallpaper.c:546
+#: src/modules/conf_theme/e_int_config_wallpaper.c:549
 #: src/modules/conf_theme/e_int_config_startup.c:258
-#: src/modules/conf_theme/e_int_config_theme.c:455
-#: src/modules/conf_theme/e_int_config_theme.c:830
-#: src/modules/conf_theme/e_int_config_theme.c:844
+#: src/modules/conf_theme/e_int_config_theme.c:732
+#: src/modules/conf_theme/e_int_config_theme.c:1106
+#: src/modules/conf_theme/e_int_config_theme.c:1120
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:60
 #: src/modules/syscon/e_mod_main.c:129
 msgid "System"
 msgstr "系統"
 
-#: src/bin/e_actions.c:3393
+#: src/bin/e_actions.c:3397
 msgid "Log Out"
 msgstr "登入"
 
-#: src/bin/e_actions.c:3397
+#: src/bin/e_actions.c:3401
 msgid "Power Off Now"
 msgstr "現在立即關機"
 
-#: src/bin/e_actions.c:3401
+#: src/bin/e_actions.c:3405
 msgid "Power Off"
 msgstr "關機"
 
-#: src/bin/e_actions.c:3409
+#: src/bin/e_actions.c:3413
 msgid "Suspend Now"
 msgstr "現在立即進入待機狀態"
 
-#: src/bin/e_actions.c:3421
+#: src/bin/e_actions.c:3425
 msgid "Hibernate Now"
 msgstr "現在立即休眠"
 
-#: src/bin/e_actions.c:3429
+#: src/bin/e_actions.c:3433
 msgid "Lock"
 msgstr "鎖住電腦"
 
-#: src/bin/e_actions.c:3434 src/bin/e_int_menus.c:1367
+#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1367
 msgid "Cleanup Windows"
 msgstr "排列視窗"
 
-#: src/bin/e_actions.c:3439
+#: src/bin/e_actions.c:3443
 msgid "Generic : Actions"
 msgstr ""
 
-#: src/bin/e_actions.c:3439
+#: src/bin/e_actions.c:3443
 msgid "Delayed Action"
 msgstr ""
 
-#: src/bin/e_actions.c:3447 src/bin/e_actions.c:3451 src/bin/e_actions.c:3455
+#: src/bin/e_actions.c:3451 src/bin/e_actions.c:3455 src/bin/e_actions.c:3459
 msgid "Keyboard Layouts"
 msgstr ""
 
-#: src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3452
 msgid "Use keyboard layout"
 msgstr ""
 
-#: src/bin/e_actions.c:3452
+#: src/bin/e_actions.c:3456
 msgid "Next keyboard layout"
 msgstr ""
 
-#: src/bin/e_actions.c:3456
+#: src/bin/e_actions.c:3460
 msgid "Previous keyboard layout"
 msgstr ""
 
@@ -795,15 +798,15 @@ msgid "Select"
 msgstr "選取"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9595
-#: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:189
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9752
+#: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:191
 #: src/bin/e_import_config_dialog.c:534
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_theme_import.c:123
-#: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/syscon/e_syscon.c:122 src/modules/shot/e_mod_main.c:289
-#: src/modules/shot/e_mod_main.c:528 src/modules/shot/e_mod_main.c:765
-#: src/modules/xkbswitch/e_mod_config.c:526
+#: src/modules/fileman/e_int_config_mime_edit.c:314
+#: src/modules/syscon/e_syscon.c:122 src/modules/shot/e_mod_main.c:290
+#: src/modules/shot/e_mod_main.c:540 src/modules/shot/e_mod_main.c:566
+#: src/modules/shot/e_mod_main.c:801 src/modules/xkbswitch/e_mod_config.c:527
 msgid "Cancel"
 msgstr "取消"
 
@@ -827,11 +830,11 @@ msgid ""
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1706 src/bin/e_config.c:2340
+#: src/bin/e_config.c:1709 src/bin/e_config.c:2343
 msgid "Enlightenment Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1709
+#: src/bin/e_config.c:1712
 #, c-format
 msgid ""
 "Enlightenment has had an error while moving config files<br>from:<br>"
@@ -839,108 +842,108 @@ msgid ""
 "<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1719 src/bin/e_config.c:2353
+#: src/bin/e_config.c:1722 src/bin/e_config.c:2356
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
-#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:612
-#: src/bin/e_fm.c:9594 src/bin/e_fm.c:10330 src/bin/e_fm_prop.c:624
+#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:613
+#: src/bin/e_fm.c:9751 src/bin/e_fm.c:10447 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:533 src/bin/e_int_border_remember.c:318
-#: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:425
-#: src/bin/e_module.c:792 src/bin/e_sys.c:618 src/bin/e_sys.c:659
+#: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:431
+#: src/bin/e_module.c:798 src/bin/e_sys.c:618 src/bin/e_sys.c:659
 #: src/bin/e_utils.c:692 src/modules/comp/e_mod_config.c:918
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:436 src/modules/cpufreq/e_mod_main.c:465
 #: src/modules/cpufreq/e_mod_main.c:492
-#: src/modules/fileman/e_int_config_mime_edit.c:314
-#: src/modules/xkbswitch/e_mod_config.c:525
+#: src/modules/fileman/e_int_config_mime_edit.c:313
+#: src/modules/xkbswitch/e_mod_config.c:526
 msgid "OK"
 msgstr "確定"
 
-#: src/bin/e_config.c:2231
+#: src/bin/e_config.c:2234
 msgid "Settings Upgraded"
 msgstr "設定已更新"
 
-#: src/bin/e_config.c:2249
+#: src/bin/e_config.c:2252
 msgid "The EET file handle is bad."
 msgstr ""
 
-#: src/bin/e_config.c:2253
+#: src/bin/e_config.c:2256
 msgid "The file data is empty."
 msgstr "該檔案日期為空白。"
 
-#: src/bin/e_config.c:2257
+#: src/bin/e_config.c:2260
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
 msgstr "無法寫入該檔案。有可能是該磁碟為唯讀<br>或者您喪失了該檔案的權限。"
 
-#: src/bin/e_config.c:2261
+#: src/bin/e_config.c:2264
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "準備進行寫入時記憶體耗盡。<br>請清出記憶體。"
 
-#: src/bin/e_config.c:2265
+#: src/bin/e_config.c:2268
 msgid "This is a generic error."
 msgstr ""
 
-#: src/bin/e_config.c:2269
+#: src/bin/e_config.c:2272
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr "該設定檔太大。該檔案大小應該很小(頂多數百KB)。"
 
-#: src/bin/e_config.c:2273
+#: src/bin/e_config.c:2276
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2277
+#: src/bin/e_config.c:2280
 msgid "You ran out of space while writing the file."
 msgstr ""
 
-#: src/bin/e_config.c:2281
+#: src/bin/e_config.c:2284
 msgid "The file was closed while writing."
 msgstr ""
 
-#: src/bin/e_config.c:2285
+#: src/bin/e_config.c:2288
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr ""
 
-#: src/bin/e_config.c:2289
+#: src/bin/e_config.c:2292
 msgid "X509 Encoding failed."
 msgstr "X509編碼失敗。"
 
-#: src/bin/e_config.c:2293
+#: src/bin/e_config.c:2296
 msgid "Signature failed."
 msgstr "簽署失敗。"
 
-#: src/bin/e_config.c:2297
+#: src/bin/e_config.c:2300
 msgid "The signature was invalid."
 msgstr "該簽署無效。"
 
-#: src/bin/e_config.c:2301
+#: src/bin/e_config.c:2304
 msgid "Not signed."
 msgstr "尚未簽署。"
 
-#: src/bin/e_config.c:2305
+#: src/bin/e_config.c:2308
 msgid "Feature not implemented."
 msgstr ""
 
-#: src/bin/e_config.c:2309
+#: src/bin/e_config.c:2312
 msgid "PRNG was not seeded."
 msgstr ""
 
-#: src/bin/e_config.c:2313
+#: src/bin/e_config.c:2316
 msgid "Encryption failed."
 msgstr "加密失敗。"
 
-#: src/bin/e_config.c:2317
+#: src/bin/e_config.c:2320
 msgid "Decryption failed."
 msgstr "解碼失敗。"
 
-#: src/bin/e_config.c:2321
+#: src/bin/e_config.c:2324
 msgid "The error is unknown to Enlightenment."
 msgstr ""
 
-#: src/bin/e_config.c:2343
+#: src/bin/e_config.c:2346
 #, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config file.<br>"
@@ -967,9 +970,9 @@ msgid "Apply"
 msgstr "套用"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1270
+#: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1281
 #: src/modules/connman/e_mod_main.c:681
-#: src/modules/notification/e_mod_main.c:146
+#: src/modules/notification/e_mod_main.c:148
 msgid "Extensions"
 msgstr "擴充套件"
 
@@ -1036,7 +1039,7 @@ msgstr ""
 "PAM 認證階段設定失敗。<br>錯誤代碼為 <hilight>%i</hilight>。<br>這很糟糕而且"
 "不應該發生，請回報這個錯誤。"
 
-#: src/bin/e_desklock.c:1302 src/bin/e_screensaver.c:156
+#: src/bin/e_desklock.c:1302 src/bin/e_screensaver.c:180
 msgid "Activate Presentation Mode?"
 msgstr "是否要啟動展示模式?"
 
@@ -1047,11 +1050,11 @@ msgid ""
 "power saving?"
 msgstr ""
 
-#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:169
+#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:193
 msgid "No, but increase timeout"
 msgstr ""
 
-#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:171
+#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:195
 msgid "No, and stop asking"
 msgstr "不要，並且往後不要再詢問"
 
@@ -1089,7 +1092,7 @@ msgstr "URL"
 
 #: src/bin/e_eap_editor.c:732 src/bin/e_eap_editor.c:741
 #: src/bin/e_fm_prop.c:495 src/modules/conf_theme/e_int_config_fonts.c:95
-#: src/modules/fileman/e_int_config_mime_edit.c:146
+#: src/modules/fileman/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr "圖示"
 
@@ -1115,7 +1118,7 @@ msgid "Desktop file"
 msgstr "桌面檔"
 
 #: src/bin/e_eap_editor.c:781 src/bin/e_int_border_prop.c:450
-#: src/bin/e_int_border_prop.c:502 src/modules/comp/e_mod_config.c:1524
+#: src/bin/e_int_border_prop.c:502 src/modules/comp/e_mod_config.c:1527
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
@@ -1129,7 +1132,7 @@ msgstr "一般資訊"
 msgid "Startup Notify"
 msgstr "啟動通知"
 
-#: src/bin/e_eap_editor.c:786 src/modules/everything/evry_plug_apps.c:1183
+#: src/bin/e_eap_editor.c:786 src/modules/everything/evry_plug_apps.c:1182
 msgid "Run in Terminal"
 msgstr "執行於終端機"
 
@@ -1137,7 +1140,7 @@ msgstr "執行於終端機"
 msgid "Show in Menus"
 msgstr "在選單中顯示"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8459 src/bin/e_fm.c:8619
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8558 src/bin/e_fm.c:8718
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:334
 msgid "Options"
@@ -1152,10 +1155,10 @@ msgstr "請替 '%s' 選取一個圖示"
 msgid "Select an Executable"
 msgstr "選擇一個執行檔"
 
-#: src/bin/e_entry.c:476 src/bin/e_fm.c:8804 src/bin/e_fm.c:10423
-#: src/bin/e_shelf.c:1789 src/bin/e_shelf.c:2464
+#: src/bin/e_entry.c:480 src/bin/e_fm.c:8903 src/bin/e_fm.c:10540
+#: src/bin/e_shelf.c:1789 src/bin/e_shelf.c:2467
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
-#: src/modules/conf_dialogs/e_int_config_profiles.c:335
+#: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:247
@@ -1168,467 +1171,470 @@ msgstr "選擇一個執行檔"
 msgid "Delete"
 msgstr "刪除"
 
-#: src/bin/e_entry.c:486 src/bin/e_fm.c:8715
+#: src/bin/e_entry.c:490 src/bin/e_fm.c:8814
 msgid "Cut"
 msgstr "剪下"
 
-#: src/bin/e_entry.c:495 src/bin/e_fm.c:8729 src/bin/e_fm.c:11179
+#: src/bin/e_entry.c:499 src/bin/e_fm.c:8828 src/bin/e_fm.c:11296
 msgid "Copy"
 msgstr "複製"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:8520 src/bin/e_fm.c:8742
+#: src/bin/e_entry.c:509 src/bin/e_fm.c:8619 src/bin/e_fm.c:8841
 msgid "Paste"
 msgstr "貼上"
 
-#: src/bin/e_entry.c:516
+#: src/bin/e_entry.c:520
 msgid "Select All"
 msgstr "全選"
 
-#: src/bin/e_exec.c:401 src/bin/e_exec.c:409 src/bin/e_exec.c:420
-#: src/bin/e_exec.c:472 src/bin/e_utils.c:188
+#: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
+#: src/bin/e_exec.c:468 src/bin/e_utils.c:188
 #: src/modules/conf_intl/e_int_config_imc.c:272
 #: src/modules/conf_intl/e_int_config_imc.c:520
 msgid "Run Error"
 msgstr "執行錯誤"
 
-#: src/bin/e_exec.c:402
+#: src/bin/e_exec.c:401
 msgid "Enlightenment was unable to get current directory"
 msgstr ""
 
-#: src/bin/e_exec.c:410
+#: src/bin/e_exec.c:409
 #, c-format
 msgid "Enlightenment was unable to change to directory:<br><br>%s"
 msgstr "Enlightenment無法切換至資料夾:<br><br>%s "
 
-#: src/bin/e_exec.c:421
+#: src/bin/e_exec.c:420
 #, c-format
 msgid "Enlightenment was unable to restore to directory:<br><br>%s"
 msgstr "Enlightenment無法恢復至資料夾:<br><br>%s "
 
-#: src/bin/e_exec.c:473
+#: src/bin/e_exec.c:469
 #, c-format
 msgid "Enlightenment was unable to fork a child process:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:603
+#: src/bin/e_exec.c:604
 msgid "Application run error"
 msgstr "應用程式執行錯誤"
 
-#: src/bin/e_exec.c:605
+#: src/bin/e_exec.c:606
 #, c-format
 msgid ""
 "Enlightenment was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr "Enlightment 無法執行應用程式:<br><br>%s<br><br>此程式無法啟動。"
 
-#: src/bin/e_exec.c:712
+#: src/bin/e_exec.c:713
 msgid "Application Execution Error"
 msgstr "應用程式執行錯誤"
 
-#: src/bin/e_exec.c:725 src/bin/e_exec.c:727
+#: src/bin/e_exec.c:726 src/bin/e_exec.c:728
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s 無預警地停止執行。"
 
-#: src/bin/e_exec.c:733
+#: src/bin/e_exec.c:734
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "錯誤代碼 %i 被 %s 傳回。"
 
-#: src/bin/e_exec.c:741
+#: src/bin/e_exec.c:742
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s 被 Interrupt Signal 中斷。"
 
-#: src/bin/e_exec.c:744
+#: src/bin/e_exec.c:745
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s 被 Quit Signal 中斷。"
 
-#: src/bin/e_exec.c:748
+#: src/bin/e_exec.c:749
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s 被 Abort Signal 中斷。"
 
-#: src/bin/e_exec.c:751
+#: src/bin/e_exec.c:752
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s 被 FPE Signal 中斷。"
 
-#: src/bin/e_exec.c:755
+#: src/bin/e_exec.c:756
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s 被 Kill Signal 中斷。"
 
-#: src/bin/e_exec.c:759
+#: src/bin/e_exec.c:760
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s 被 Segmentation Fault 中斷。"
 
-#: src/bin/e_exec.c:763
+#: src/bin/e_exec.c:764
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s 被 Broken Pipe 中斷。"
 
-#: src/bin/e_exec.c:766
+#: src/bin/e_exec.c:767
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s 被 Terminal Signal 中斷。"
 
-#: src/bin/e_exec.c:770
+#: src/bin/e_exec.c:771
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s 被 Bus Error 中斷。"
 
-#: src/bin/e_exec.c:773
+#: src/bin/e_exec.c:774
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s 被 Signal %i 中斷。"
 
-#: src/bin/e_exec.c:829
+#: src/bin/e_exec.c:830
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "*** 剩下的輸出被刪節了。儲存輸出以供檢視。***\n"
 
-#: src/bin/e_exec.c:888 src/bin/e_exec.c:966 src/bin/e_exec.c:973
+#: src/bin/e_exec.c:889 src/bin/e_exec.c:967 src/bin/e_exec.c:974
 msgid "Error Logs"
 msgstr "錯誤紀錄檔"
 
-#: src/bin/e_exec.c:894 src/bin/e_exec.c:974
+#: src/bin/e_exec.c:895 src/bin/e_exec.c:975
 msgid "There was no error message."
 msgstr "沒有錯誤訊息。"
 
-#: src/bin/e_exec.c:898 src/bin/e_exec.c:981
+#: src/bin/e_exec.c:899 src/bin/e_exec.c:982
 msgid "Save This Message"
 msgstr "儲存訊息"
 
-#: src/bin/e_exec.c:903 src/bin/e_exec.c:906 src/bin/e_exec.c:986
-#: src/bin/e_exec.c:989
+#: src/bin/e_exec.c:904 src/bin/e_exec.c:907 src/bin/e_exec.c:987
+#: src/bin/e_exec.c:990
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "錯誤紀錄檔已被儲存到 %s/%s.log"
 
-#: src/bin/e_exec.c:932
+#: src/bin/e_exec.c:933
 msgid "Error Information"
 msgstr "錯誤資訊"
 
-#: src/bin/e_exec.c:940
+#: src/bin/e_exec.c:941
 msgid "Error Signal Information"
 msgstr "錯誤 Signal 資訊"
 
-#: src/bin/e_exec.c:950 src/bin/e_exec.c:957
+#: src/bin/e_exec.c:951 src/bin/e_exec.c:958
 msgid "Output Data"
 msgstr "輸出資料"
 
-#: src/bin/e_exec.c:958
+#: src/bin/e_exec.c:959
 msgid "There was no output."
 msgstr "沒有輸入。"
 
-#: src/bin/e_fm.c:1032
+#: src/bin/e_fm.c:1053
 msgid "Nonexistent path"
 msgstr "不存在的路徑"
 
-#: src/bin/e_fm.c:1035
+#: src/bin/e_fm.c:1056
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s不存在。"
 
-#: src/bin/e_fm.c:2796 src/bin/e_fm.c:3726
+#: src/bin/e_fm.c:2817 src/bin/e_fm.c:3774
 #, c-format
 msgid "%u file"
 msgid_plural "%u files"
 msgstr[0] "%u 檔案"
 
-#: src/bin/e_fm.c:3014
+#: src/bin/e_fm.c:3035
 msgid "Mount Error"
 msgstr "掛載錯誤"
 
-#: src/bin/e_fm.c:3014
+#: src/bin/e_fm.c:3035
 msgid "Can't mount device"
 msgstr "無法掛載裝置"
 
-#: src/bin/e_fm.c:3030
+#: src/bin/e_fm.c:3051
 msgid "Unmount Error"
 msgstr "卸載失敗"
 
-#: src/bin/e_fm.c:3030
+#: src/bin/e_fm.c:3051
 msgid "Can't unmount device"
 msgstr "無法卸載裝置"
 
-#: src/bin/e_fm.c:3045
+#: src/bin/e_fm.c:3066
 #, fuzzy
 msgid "Eject Error"
 msgstr "退出錯誤"
 
-#: src/bin/e_fm.c:3045
+#: src/bin/e_fm.c:3066
 #, fuzzy
 msgid "Can't eject device"
 msgstr "無法退出裝置"
 
-#: src/bin/e_fm.c:8377 src/modules/fileman/e_mod_config.c:355
+#: src/bin/e_fm.c:8476 src/modules/fileman/e_mod_config.c:355
 msgid "Case Sensitive"
 msgstr "區分大小寫"
 
-#: src/bin/e_fm.c:8383 src/modules/fileman/e_mod_config.c:358
+#: src/bin/e_fm.c:8482 src/modules/fileman/e_mod_config.c:358
 msgid "Sort By Extension"
 msgstr "依照附檔名排序"
 
-#: src/bin/e_fm.c:8389 src/modules/fileman/e_mod_config.c:361
+#: src/bin/e_fm.c:8488 src/modules/fileman/e_mod_config.c:361
 msgid "Sort By Modification Time"
 msgstr "依照變更時間排序"
 
-#: src/bin/e_fm.c:8395 src/modules/fileman/e_mod_config.c:364
+#: src/bin/e_fm.c:8494 src/modules/fileman/e_mod_config.c:364
 msgid "Sort By Size"
 msgstr "依照大小排序"
 
-#: src/bin/e_fm.c:8404 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8503 src/modules/fileman/e_mod_config.c:372
 msgid "Directories First"
 msgstr "資料夾優先"
 
-#: src/bin/e_fm.c:8410 src/modules/fileman/e_mod_config.c:376
+#: src/bin/e_fm.c:8509 src/modules/fileman/e_mod_config.c:376
 msgid "Directories Last"
 msgstr "資料夾在最後"
 
-#: src/bin/e_fm.c:8443 src/bin/e_fm.c:8603
+#: src/bin/e_fm.c:8542 src/bin/e_fm.c:8702
 #: src/modules/fileman/e_mod_config.c:302
 msgid "View Mode"
 msgstr "顯式模式"
 
-#: src/bin/e_fm.c:8452 src/bin/e_fm.c:8612
+#: src/bin/e_fm.c:8551 src/bin/e_fm.c:8711
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:380
 msgid "Sorting"
 msgstr "正在排序"
 
-#: src/bin/e_fm.c:8470 src/bin/e_fm.c:8630
+#: src/bin/e_fm.c:8569 src/bin/e_fm.c:8729
 msgid "Refresh View"
 msgstr "重新整理"
 
-#: src/bin/e_fm.c:8481 src/bin/e_fm.c:8642
+#: src/bin/e_fm.c:8580 src/bin/e_fm.c:8741
 msgid "New..."
 msgstr ""
 
-#: src/bin/e_fm.c:8501 src/bin/e_fm.c:8663 src/bin/e_fm.c:8694
+#: src/bin/e_fm.c:8600 src/bin/e_fm.c:8762 src/bin/e_fm.c:8793
 msgid "Actions..."
 msgstr ""
 
-#: src/bin/e_fm.c:8528 src/bin/e_fm.c:8750 src/bin/e_fm.c:11192
+#: src/bin/e_fm.c:8627 src/bin/e_fm.c:8849 src/bin/e_fm.c:11309
 msgid "Link"
 msgstr "連結"
 
-#: src/bin/e_fm.c:8812 src/bin/e_fm.c:10061 src/bin/e_shelf.c:2459
+#: src/bin/e_fm.c:8911 src/bin/e_fm.c:10178 src/bin/e_shelf.c:2462
 #: src/modules/conf_shelves/e_int_config_shelf.c:138
 msgid "Rename"
 msgstr "重新命名"
 
-#: src/bin/e_fm.c:8831
+#: src/bin/e_fm.c:8930
 msgid "Unmount"
 msgstr "卸載"
 
-#: src/bin/e_fm.c:8836
+#: src/bin/e_fm.c:8935
 msgid "Mount"
 msgstr "掛載"
 
-#: src/bin/e_fm.c:8841
+#: src/bin/e_fm.c:8940
 msgid "Eject"
 msgstr "退出"
 
-#: src/bin/e_fm.c:8856 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:8955 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:871
 msgid "Properties"
 msgstr "屬性"
 
-#: src/bin/e_fm.c:8864
+#: src/bin/e_fm.c:8963
 msgid "Application Properties"
 msgstr "應用程式屬性"
 
-#: src/bin/e_fm.c:8872 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:8971 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "檔案屬性"
 
-#: src/bin/e_fm.c:9088
+#: src/bin/e_fm.c:9187
 msgid "Use default"
 msgstr "使用預設值"
 
-#: src/bin/e_fm.c:9118 src/modules/fileman/e_mod_config.c:307
+#: src/bin/e_fm.c:9217 src/modules/fileman/e_mod_config.c:307
 msgid "Grid Icons"
 msgstr "對齊圖示"
 
-#: src/bin/e_fm.c:9126 src/modules/fileman/e_mod_config.c:309
+#: src/bin/e_fm.c:9225 src/modules/fileman/e_mod_config.c:309
 msgid "Custom Icons"
 msgstr "自訂圖示"
 
-#: src/bin/e_fm.c:9134 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9233 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:317
 msgid "List"
 msgstr "列表"
 
-#: src/bin/e_fm.c:9142 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9241 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr ""
 
-#: src/bin/e_fm.c:9164
+#: src/bin/e_fm.c:9263
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "圖示大小(%d)"
 
-#: src/bin/e_fm.c:9189 src/bin/e_fm.c:9267 src/bin/e_fm.c:9272
-#: src/bin/e_fm.c:10018 src/bin/e_fm.c:10231 src/bin/e_fm_prop.c:254
-#: src/bin/e_shelf.c:2334
+#: src/bin/e_fm.c:9288 src/bin/e_fm.c:9300 src/bin/e_fm.c:9403
+#: src/bin/e_fm.c:9408 src/bin/e_fm.c:9424 src/bin/e_fm.c:9429
+#: src/bin/e_fm.c:10124 src/bin/e_fm.c:10348 src/bin/e_fm_prop.c:254
+#: src/bin/e_shelf.c:2335
 msgid "Error"
 msgstr "錯誤"
 
-#: src/bin/e_fm.c:9189
+#: src/bin/e_fm.c:9288
+#, fuzzy
+msgid "Could not create a directory!"
+msgstr "無法開啟新檔!"
+
+#: src/bin/e_fm.c:9300
 msgid "Could not create a file!"
 msgstr "無法開啟新檔!"
 
-#: src/bin/e_fm.c:9203 src/bin/e_fm.c:9221
+#: src/bin/e_fm.c:9314 src/bin/e_fm.c:9339
+#: src/modules/conf_paths/e_int_config_paths.c:206
+msgid "New Directory"
+msgstr "新目錄"
+
+#: src/bin/e_fm.c:9314 src/bin/e_fm.c:9339
 msgid "New File"
 msgstr "新檔案"
 
-#: src/bin/e_fm.c:9267
+#: src/bin/e_fm.c:9403 src/bin/e_fm.c:9424
 msgid "Already creating a new file for this directory!"
 msgstr "已為此資料夾開啟一個新檔!"
 
-#: src/bin/e_fm.c:9272
+#: src/bin/e_fm.c:9408 src/bin/e_fm.c:9429
 #, c-format
 msgid "%s can't be written to!"
 msgstr "不能寫入至%s !"
 
-#: src/bin/e_fm.c:9291
+#: src/bin/e_fm.c:9448
 msgid "Directory"
 msgstr "資料夾"
 
-#: src/bin/e_fm.c:9296
+#: src/bin/e_fm.c:9453
 #: src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "檔案"
 
-#: src/bin/e_fm.c:9327
+#: src/bin/e_fm.c:9484
 msgid "Inherit parent settings"
 msgstr ""
 
-#: src/bin/e_fm.c:9336
+#: src/bin/e_fm.c:9493
 msgid "Show Hidden Files"
 msgstr "顯示隱藏的檔案"
 
-#: src/bin/e_fm.c:9348
+#: src/bin/e_fm.c:9505
 msgid "Remember Ordering"
 msgstr "記住順序"
 
-#: src/bin/e_fm.c:9357
+#: src/bin/e_fm.c:9514
 msgid "Sort Now"
 msgstr "排列檔案"
 
-#: src/bin/e_fm.c:9365
+#: src/bin/e_fm.c:9522
 msgid "Single Click Activation"
 msgstr ""
 
-#: src/bin/e_fm.c:9376 src/modules/fileman/e_mod_config.c:392
+#: src/bin/e_fm.c:9533 src/modules/fileman/e_mod_config.c:392
 msgid "Secure Deletion"
 msgstr ""
 
-#: src/bin/e_fm.c:9389
+#: src/bin/e_fm.c:9546
 msgid "File Manager Settings"
 msgstr ""
 
-#: src/bin/e_fm.c:9394
+#: src/bin/e_fm.c:9551
 msgid "File Icon Settings"
 msgstr "檔案圖示設定"
 
-#: src/bin/e_fm.c:9472 src/bin/e_fm.c:9687
+#: src/bin/e_fm.c:9629 src/bin/e_fm.c:9844
 msgid "Set background..."
 msgstr "設定背景..."
 
-#: src/bin/e_fm.c:9480
+#: src/bin/e_fm.c:9637
 msgid "Clear background"
 msgstr "清除背景"
 
-#: src/bin/e_fm.c:9487 src/bin/e_fm.c:9715
+#: src/bin/e_fm.c:9644 src/bin/e_fm.c:9872
 msgid "Set overlay..."
 msgstr ""
 
-#: src/bin/e_fm.c:9493
+#: src/bin/e_fm.c:9650
 msgid "Clear overlay"
 msgstr ""
 
-#: src/bin/e_fm.c:9804
-msgid "Create a new Directory"
-msgstr "建立新目錄"
-
-#: src/bin/e_fm.c:9805
-msgid "New Directory Name:"
-msgstr "新目錄名稱"
-
-#: src/bin/e_fm.c:9860 src/bin/e_fm.c:10156
+#: src/bin/e_fm.c:9966 src/bin/e_fm.c:10273
 #, c-format
 msgid "Rename %s to:"
 msgstr "重新命名 %s 成:"
 
-#: src/bin/e_fm.c:9862 src/bin/e_fm.c:10157
+#: src/bin/e_fm.c:9968 src/bin/e_fm.c:10274
 msgid "Rename File"
 msgstr "重新命名檔案"
 
-#: src/bin/e_fm.c:10014 src/bin/e_fm.c:10223
+#: src/bin/e_fm.c:10120 src/bin/e_fm.c:10340
 msgid "Retry"
 msgstr "重試"
 
-#: src/bin/e_fm.c:10015 src/bin/e_fm.c:10224 src/bin/e_fm.c:11200
+#: src/bin/e_fm.c:10121 src/bin/e_fm.c:10341 src/bin/e_fm.c:11317
 msgid "Abort"
 msgstr "中止"
 
-#: src/bin/e_fm.c:10060
+#: src/bin/e_fm.c:10177
 msgid "No to all"
 msgstr "不套用至全部"
 
-#: src/bin/e_fm.c:10063
+#: src/bin/e_fm.c:10180
 msgid "Yes to all"
 msgstr "套用至全部"
 
-#: src/bin/e_fm.c:10066
+#: src/bin/e_fm.c:10183
 msgid "Warning"
 msgstr "警告"
 
-#: src/bin/e_fm.c:10069
+#: src/bin/e_fm.c:10186
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr ""
 
-#: src/bin/e_fm.c:10226
+#: src/bin/e_fm.c:10343
 msgid "Move Source"
 msgstr ""
 
-#: src/bin/e_fm.c:10227
+#: src/bin/e_fm.c:10344
 msgid "Ignore this"
 msgstr "忽略此項目"
 
-#: src/bin/e_fm.c:10228
+#: src/bin/e_fm.c:10345
 msgid "Ignore all"
 msgstr "忽略全部"
 
-#: src/bin/e_fm.c:10233
+#: src/bin/e_fm.c:10350
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:10426
+#: src/bin/e_fm.c:10543
 msgid "Confirm Delete"
 msgstr "確定刪除"
 
-#: src/bin/e_fm.c:10436
+#: src/bin/e_fm.c:10553
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr ""
 
-#: src/bin/e_fm.c:10441
+#: src/bin/e_fm.c:10558
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
 
-#: src/bin/e_fm.c:10451
+#: src/bin/e_fm.c:10568
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1668,9 +1674,9 @@ msgstr ""
 msgid "Cannot change permissions: %s"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1120 src/bin/e_shelf.c:2354
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1120 src/bin/e_shelf.c:2355
 #: src/modules/comp/e_mod_config.c:493
-#: src/modules/conf_dialogs/e_int_config_profiles.c:312
+#: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:186
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
 msgid "Name:"
@@ -1730,9 +1736,9 @@ msgid "Others:"
 msgstr "其他:"
 
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:470
-#: src/bin/e_widget_fsel.c:347
+#: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:218
-#: src/modules/conf_theme/e_int_config_theme.c:1137
+#: src/modules/conf_theme/e_int_config_theme.c:1414
 #: src/modules/conf_theme/e_int_config_xsettings.c:496
 msgid "Preview"
 msgstr "預覽"
@@ -1776,11 +1782,11 @@ msgstr "移至"
 msgid "Automatically scroll contents"
 msgstr "自動捲動內容"
 
-#: src/bin/e_gadcon.c:1759 src/modules/gadman/e_mod_gadman.c:1000
+#: src/bin/e_gadcon.c:1759 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "一般"
 
-#: src/bin/e_gadcon.c:1773 src/modules/gadman/e_mod_gadman.c:1008
+#: src/bin/e_gadcon.c:1773 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "嵌入"
 
@@ -1795,7 +1801,7 @@ msgstr ""
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
 #: src/modules/conf_applications/e_int_config_apps_personal.c:95
-#: src/modules/gadman/e_mod_gadman.c:1056 src/modules/ibar/e_mod_main.c:876
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:876
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "移除"
@@ -1853,7 +1859,7 @@ msgstr ""
 msgid "Select a Picture..."
 msgstr "選擇圖片..."
 
-#: src/bin/e_import_dialog.c:188
+#: src/bin/e_import_dialog.c:190
 msgid "Use"
 msgstr "使用"
 
@@ -1962,7 +1968,7 @@ msgid "Size"
 msgstr "大小"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:693 src/bin/e_int_border_prop.c:501
+#: src/bin/e_int_border_menu.c:697 src/bin/e_int_border_prop.c:501
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:305
 msgid "Stacking"
@@ -2028,7 +2034,7 @@ msgstr "記住這些鎖定值"
 msgid "Window"
 msgstr "視窗"
 
-#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1007
+#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1011
 msgid "Always on Top"
 msgstr ""
 
@@ -2070,39 +2076,39 @@ msgstr "新增至IBar"
 msgid "Create Keyboard Shortcut"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:652
+#: src/bin/e_int_border_menu.c:656
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "圖示化"
 
-#: src/bin/e_int_border_menu.c:702
+#: src/bin/e_int_border_menu.c:706
 msgid "Skip"
 msgstr "略過"
 
-#: src/bin/e_int_border_menu.c:712 src/modules/conf_theme/e_mod_main.c:226
+#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:226
 msgid "Border"
 msgstr "邊框"
 
-#: src/bin/e_int_border_menu.c:724 src/bin/e_int_border_remember.c:605
+#: src/bin/e_int_border_menu.c:728 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
 msgid "Locks"
 msgstr "鎖定值"
 
-#: src/bin/e_int_border_menu.c:732
+#: src/bin/e_int_border_menu.c:736
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "記住"
 
-#: src/bin/e_int_border_menu.c:754
+#: src/bin/e_int_border_menu.c:758
 msgid "ICCCM/NetWM"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:927
+#: src/bin/e_int_border_menu.c:931
 #, c-format
 msgid "Screen %d"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1018 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1022 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179 src/modules/comp/e_mod_config.c:458
 #: src/modules/comp/e_mod_config.c:767
 #: src/modules/conf_theme/e_int_config_fonts.c:100
@@ -2112,61 +2118,61 @@ msgstr ""
 msgid "Normal"
 msgstr "正常"
 
-#: src/bin/e_int_border_menu.c:1029
+#: src/bin/e_int_border_menu.c:1033
 msgid "Always Below"
 msgstr "最下層顯示"
 
-#: src/bin/e_int_border_menu.c:1073
+#: src/bin/e_int_border_menu.c:1077
 msgid "Pin to Desktop"
 msgstr "固定於桌面"
 
-#: src/bin/e_int_border_menu.c:1084
+#: src/bin/e_int_border_menu.c:1088
 msgid "Unpin from Desktop"
 msgstr "解除固定於桌面"
 
-#: src/bin/e_int_border_menu.c:1174
+#: src/bin/e_int_border_menu.c:1178
 msgid "Select Border Style"
 msgstr "選擇邊框樣式"
 
-#: src/bin/e_int_border_menu.c:1186
+#: src/bin/e_int_border_menu.c:1190
 msgid "Use Enlightenment Default Icon Preference"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1194
+#: src/bin/e_int_border_menu.c:1198
 msgid "Use Application Provided Icon"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1202
+#: src/bin/e_int_border_menu.c:1206
 msgid "Use User Defined Icon"
 msgstr "使用使用者自訂圖示"
 
-#: src/bin/e_int_border_menu.c:1211 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1215 src/bin/e_int_border_remember.c:734
 msgid "Offer Resistance"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1272
+#: src/bin/e_int_border_menu.c:1276
 msgid "Window List"
 msgstr "視窗列表"
 
-#: src/bin/e_int_border_menu.c:1282 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2940 src/modules/pager/e_mod_main.c:2947
-#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2956
-#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2960
-#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
-#: src/modules/pager/e_mod_main.c:2990 src/modules/pager/e_mod_main.c:2991
-#: src/modules/pager/e_mod_main.c:2992 src/modules/pager/e_mod_main.c:2993
-#: src/modules/pager/e_mod_main.c:2994 src/modules/pager/e_mod_main.c:2995
+#: src/bin/e_int_border_menu.c:1286 src/modules/pager/e_mod_main.c:265
+#: src/modules/pager/e_mod_main.c:2916 src/modules/pager/e_mod_main.c:2923
+#: src/modules/pager/e_mod_main.c:2930 src/modules/pager/e_mod_main.c:2932
+#: src/modules/pager/e_mod_main.c:2934 src/modules/pager/e_mod_main.c:2936
+#: src/modules/pager/e_mod_main.c:2938 src/modules/pager/e_mod_main.c:2940
+#: src/modules/pager/e_mod_main.c:2966 src/modules/pager/e_mod_main.c:2967
+#: src/modules/pager/e_mod_main.c:2968 src/modules/pager/e_mod_main.c:2969
+#: src/modules/pager/e_mod_main.c:2970 src/modules/pager/e_mod_main.c:2971
 msgid "Pager"
 msgstr "桌面切換器"
 
-#: src/bin/e_int_border_menu.c:1292 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1296 src/modules/wizard/page_180.c:24
 msgid "Taskbar"
 msgstr ""
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:96
 #: src/bin/e_moveresize.c:153 src/bin/e_widget_filepreview.c:82
-#: src/modules/conf_display/e_int_config_display.c:535
+#: src/modules/conf_display/e_int_config_display.c:536
 #, c-format
 msgid "%i×%i"
 msgstr ""
@@ -2384,10 +2390,11 @@ msgstr "要求位置"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:273
-#: src/bin/e_shelf.c:2430 src/modules/battery/e_mod_main.c:194
-#: src/modules/clock/e_mod_main.c:360 src/modules/clock/e_mod_main.c:603
-#: src/modules/conf/e_conf.c:136 src/modules/conf/e_conf.c:146
-#: src/modules/conf/e_mod_main.c:101 src/modules/conf_dialogs/e_mod_main.c:17
+#: src/bin/e_shelf.c:2433 src/modules/backlight/e_mod_main.c:309
+#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:360
+#: src/modules/clock/e_mod_main.c:603 src/modules/conf/e_conf.c:136
+#: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
+#: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
 #: src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/everything/evry_gadget.c:511
@@ -2395,9 +2402,9 @@ msgstr "要求位置"
 #: src/modules/everything/evry_plug_settings.c:183
 #: src/modules/ibar/e_mod_main.c:379 src/modules/ibar/e_mod_main.c:864
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:875 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:775 src/modules/connman/e_mod_main.c:506
-#: src/modules/tasks/e_mod_main.c:716 src/modules/xkbswitch/e_mod_main.c:327
+#: src/modules/pager/e_mod_main.c:876 src/modules/temperature/e_mod_main.c:230
+#: src/modules/mixer/e_mod_main.c:777 src/modules/connman/e_mod_main.c:506
+#: src/modules/tasks/e_mod_main.c:715 src/modules/xkbswitch/e_mod_main.c:327
 #: src/modules/xkbswitch/e_mod_main.c:369
 msgid "Settings"
 msgstr ""
@@ -2480,7 +2487,7 @@ msgstr "大小、位置與鎖定值"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/shot/e_mod_main.c:710
+#: src/modules/everything/evry_view.c:1609 src/modules/shot/e_mod_main.c:746
 msgid "All"
 msgstr ""
 
@@ -2560,7 +2567,7 @@ msgstr ""
 msgid "Files"
 msgstr "檔案"
 
-#: src/bin/e_int_config_modules.c:55 src/modules/everything/e_mod_main.c:69
+#: src/bin/e_int_config_modules.c:55 src/modules/everything/e_mod_main.c:58
 msgid "Launcher"
 msgstr ""
 
@@ -2582,15 +2589,15 @@ msgstr "設定模組"
 msgid "Load"
 msgstr ""
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:528
+#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:534
 msgid "Unload"
 msgstr ""
 
-#: src/bin/e_int_config_modules.c:337 src/bin/e_int_config_modules.c:626
+#: src/bin/e_int_config_modules.c:337 src/bin/e_int_config_modules.c:624
 msgid "No modules selected."
 msgstr ""
 
-#: src/bin/e_int_config_modules.c:624
+#: src/bin/e_int_config_modules.c:622
 msgid "More than one module selected."
 msgstr ""
 
@@ -2656,9 +2663,9 @@ msgstr "我的最愛"
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_theme/e_int_config_xsettings.c:484
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:194
-#: src/modules/everything/evry_plug_apps.c:1140
-#: src/modules/everything/evry_plug_apps.c:1156
-#: src/modules/everything/evry_plug_apps.c:1418
+#: src/modules/everything/evry_plug_apps.c:1139
+#: src/modules/everything/evry_plug_apps.c:1155
+#: src/modules/everything/evry_plug_apps.c:1417
 msgid "Applications"
 msgstr "應用程式"
 
@@ -2666,7 +2673,7 @@ msgstr "應用程式"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4012
+#: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4142
 msgid "Windows"
 msgstr "視窗"
 
@@ -2807,19 +2814,19 @@ msgstr ""
 msgid "Enlightenment could not create a logging domain!\n"
 msgstr ""
 
-#: src/bin/e_main.c:279
+#: src/bin/e_main.c:278
 msgid "Enlightenment cannot initialize Eet!\n"
 msgstr ""
 
-#: src/bin/e_main.c:288
+#: src/bin/e_main.c:287
 msgid "Enlightenment cannot initialize Ecore!\n"
 msgstr ""
 
-#: src/bin/e_main.c:297
+#: src/bin/e_main.c:296
 msgid "Enlightenment cannot initialize EIO!\n"
 msgstr ""
 
-#: src/bin/e_main.c:309
+#: src/bin/e_main.c:308
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2827,7 +2834,7 @@ msgstr ""
 "Enlightenment 無法建立 exit signal handler。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:316
+#: src/bin/e_main.c:315
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2835,45 +2842,45 @@ msgstr ""
 "Enlightenment 無法建立 HUP signal handler。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:323
+#: src/bin/e_main.c:322
 msgid ""
 "Enlightenment cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
-#: src/bin/e_main.c:332
+#: src/bin/e_main.c:331
 msgid "Enlightenment cannot initialize Ecore_File!\n"
 msgstr ""
 
-#: src/bin/e_main.c:341
+#: src/bin/e_main.c:340
 msgid "Enlightenment cannot initialize Ecore_Con!\n"
 msgstr ""
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:349
 msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
 msgstr ""
 
-#: src/bin/e_main.c:361
+#: src/bin/e_main.c:360
 msgid "Enlightenment cannot initialize Ecore_X!\n"
 msgstr ""
 
-#: src/bin/e_main.c:373
+#: src/bin/e_main.c:372
 msgid "Enlightenment cannot initialize Ecore_IMF!\n"
 msgstr ""
 
-#: src/bin/e_main.c:383
+#: src/bin/e_main.c:382
 msgid "Enlightenment cannot initialize Ecore_Evas!\n"
 msgstr ""
 
-#: src/bin/e_main.c:393
+#: src/bin/e_main.c:392
 msgid "Enlightenment cannot initialize Elementary!\n"
 msgstr ""
 
-#: src/bin/e_main.c:404
+#: src/bin/e_main.c:403
 msgid "Enlightenment cannot initialize Emotion!\n"
 msgstr ""
 
-#: src/bin/e_main.c:419
+#: src/bin/e_main.c:418
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2882,7 +2889,7 @@ msgstr ""
 "Enlightenment 發現 ecore_evas 不支援 Evas Software X11 繪圖。\n"
 "請檢查您的 Evas 和 Ecore 是否正確安裝且支援 Software X11 繪圖引擎。"
 
-#: src/bin/e_main.c:427
+#: src/bin/e_main.c:426
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2891,15 +2898,15 @@ msgstr ""
 "Enlightenment 發現 ecore_evas 不支援 Evas Software Buffer 繪圖。\n"
 "請檢查您的 Evas 和 Ecore 是否正確安裝且支援 Software Buffer 繪圖引擎。"
 
-#: src/bin/e_main.c:437
+#: src/bin/e_main.c:436
 msgid "Enlightenment cannot initialize Edje!\n"
 msgstr ""
 
-#: src/bin/e_main.c:449
+#: src/bin/e_main.c:448
 msgid "Enlightenment cannot initialize E_Intl!\n"
 msgstr ""
 
-#: src/bin/e_main.c:459
+#: src/bin/e_main.c:458
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -2907,11 +2914,11 @@ msgstr ""
 "Enlightenment 無法初始化緊急警報系統。\n"
 "您是否已設定 DISPLAY 環境變數？"
 
-#: src/bin/e_main.c:469
+#: src/bin/e_main.c:468
 msgid "Enlightenment cannot initialize E_Xinerama!\n"
 msgstr ""
 
-#: src/bin/e_main.c:487
+#: src/bin/e_main.c:486
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -2919,31 +2926,31 @@ msgstr ""
 "Enlightenment 無法在你的家目錄建立目錄。\n"
 "可能你沒有家目錄或是磁碟已滿？"
 
-#: src/bin/e_main.c:497
+#: src/bin/e_main.c:496
 msgid "Enlightenment cannot set up its file registry system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:506
+#: src/bin/e_main.c:505
 msgid "Enlightenment cannot set up its config system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:519
+#: src/bin/e_main.c:518
 msgid "Enlightenment cannot initialize E_Randr!\n"
 msgstr ""
 
-#: src/bin/e_main.c:528
+#: src/bin/e_main.c:527
 msgid "Enlightenment cannot set up its environment.\n"
 msgstr ""
 
-#: src/bin/e_main.c:544
+#: src/bin/e_main.c:543
 msgid "Enlightenment cannot set up its scale system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:553
+#: src/bin/e_main.c:552
 msgid "Enlightenment cannot set up its pointer system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:562
+#: src/bin/e_main.c:561
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -2951,38 +2958,38 @@ msgstr ""
 "Enlightenment 無法為找到的文件建立路徑。\n"
 "可能是記憶體不足？"
 
-#: src/bin/e_main.c:579
+#: src/bin/e_main.c:578
 msgid "Enlightenment cannot set up its font system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:596
+#: src/bin/e_main.c:595
 msgid "Enlightenment cannot set up its theme system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:612
+#: src/bin/e_main.c:611
 msgid "Enlightenment cannot set up its init screen.\n"
 msgstr ""
 
-#: src/bin/e_main.c:627
+#: src/bin/e_main.c:626
 msgid "Starting International Support"
 msgstr "開始國際化支援"
 
-#: src/bin/e_main.c:631
+#: src/bin/e_main.c:630
 msgid "Enlightenment cannot set up its intl system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:640
+#: src/bin/e_main.c:639
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
 
-#: src/bin/e_main.c:663
+#: src/bin/e_main.c:664
 msgid "Setup Screens"
 msgstr "設定螢幕"
 
-#: src/bin/e_main.c:667
+#: src/bin/e_main.c:668
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -2990,235 +2997,235 @@ msgstr ""
 "Enlightenment 在你所有的screen上建立視窗管理都失敗。\n"
 "可能有另一個視窗管理程式正在執行？\n"
 
-#: src/bin/e_main.c:675
+#: src/bin/e_main.c:676
 msgid "Setup ACPI"
 msgstr ""
 
-#: src/bin/e_main.c:682
+#: src/bin/e_main.c:683
 msgid "Setup Backlight"
 msgstr ""
 
-#: src/bin/e_main.c:686
+#: src/bin/e_main.c:687
 msgid "Enlightenment cannot configure the backlight.\n"
 msgstr ""
 
-#: src/bin/e_main.c:693
-msgid "Setup DPMS"
-msgstr "設定 DPMS"
-
-#: src/bin/e_main.c:697
-msgid "Enlightenment cannot configure the DPMS settings.\n"
-msgstr ""
-
-#: src/bin/e_main.c:704
+#: src/bin/e_main.c:694
 msgid "Setup Screensaver"
 msgstr "設定螢幕保護程式"
 
-#: src/bin/e_main.c:708
+#: src/bin/e_main.c:698
 msgid "Enlightenment cannot configure the X screensaver.\n"
 msgstr ""
 
-#: src/bin/e_main.c:715
+#: src/bin/e_main.c:705
+msgid "Setup DPMS"
+msgstr "設定 DPMS"
+
+#: src/bin/e_main.c:709
+msgid "Enlightenment cannot configure the DPMS settings.\n"
+msgstr ""
+
+#: src/bin/e_main.c:716
 msgid "Setup Powersave Modes"
 msgstr ""
 
-#: src/bin/e_main.c:719
+#: src/bin/e_main.c:720
 msgid "Enlightenment cannot set up its powersave modes.\n"
 msgstr ""
 
-#: src/bin/e_main.c:726
+#: src/bin/e_main.c:727
 msgid "Setup Desklock"
 msgstr "設定桌面鎖定"
 
-#: src/bin/e_main.c:730
+#: src/bin/e_main.c:731
 msgid "Enlightenment cannot set up its desk locking system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:737
+#: src/bin/e_main.c:738
 msgid "Setup Popups"
 msgstr "設定彈出視窗"
 
-#: src/bin/e_main.c:741
+#: src/bin/e_main.c:742
 msgid "Enlightenment cannot set up its popup system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:753
+#: src/bin/e_main.c:754
 msgid "Setup Message Bus"
 msgstr ""
 
-#: src/bin/e_main.c:760
+#: src/bin/e_main.c:761
 msgid "Setup Paths"
 msgstr ""
 
-#: src/bin/e_main.c:766
+#: src/bin/e_main.c:767
 msgid "Setup System Controls"
 msgstr "設定系統控制"
 
-#: src/bin/e_main.c:770
+#: src/bin/e_main.c:771
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "Enlightenment 無法初始化系統命令系統。\n"
 
-#: src/bin/e_main.c:777
+#: src/bin/e_main.c:778
 msgid "Setup Actions"
 msgstr "設定行動"
 
-#: src/bin/e_main.c:781
+#: src/bin/e_main.c:782
 msgid "Enlightenment cannot set up its actions system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:788
+#: src/bin/e_main.c:789
 msgid "Setup Execution System"
 msgstr "設定執行系統"
 
-#: src/bin/e_main.c:792
+#: src/bin/e_main.c:793
 msgid "Enlightenment cannot set up its exec system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:803
+#: src/bin/e_main.c:804
 msgid "Setup Filemanager"
 msgstr ""
 
-#: src/bin/e_main.c:807
+#: src/bin/e_main.c:808
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "Enlightenment 無法初始文件管理器。\n"
 
-#: src/bin/e_main.c:814
+#: src/bin/e_main.c:815
 msgid "Setup Message System"
 msgstr "設定訊息系統"
 
-#: src/bin/e_main.c:818
+#: src/bin/e_main.c:819
 msgid "Enlightenment cannot set up its msg system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:825
+#: src/bin/e_main.c:826
 msgid "Setup DND"
 msgstr "設定拖放"
 
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:830
 msgid "Enlightenment cannot set up its dnd system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:836
+#: src/bin/e_main.c:837
 msgid "Setup Grab Input Handling"
 msgstr ""
 
-#: src/bin/e_main.c:840
+#: src/bin/e_main.c:841
 msgid "Enlightenment cannot set up its grab input handling system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:847
+#: src/bin/e_main.c:848
 msgid "Setup Modules"
 msgstr "設定模組"
 
-#: src/bin/e_main.c:851 src/bin/e_main.c:1033
+#: src/bin/e_main.c:852 src/bin/e_main.c:1034
 msgid "Enlightenment cannot set up its module system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:858
+#: src/bin/e_main.c:859
 msgid "Setup Remembers"
 msgstr "設定記憶值"
 
-#: src/bin/e_main.c:862
+#: src/bin/e_main.c:863
 msgid "Enlightenment cannot setup remember settings.\n"
 msgstr ""
 
-#: src/bin/e_main.c:869
+#: src/bin/e_main.c:870
 msgid "Setup Color Classes"
 msgstr "設定顏色類別"
 
-#: src/bin/e_main.c:873
+#: src/bin/e_main.c:874
 msgid "Enlightenment cannot set up its color class system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:880
+#: src/bin/e_main.c:881
 msgid "Setup Gadcon"
 msgstr "設定小工具控制"
 
-#: src/bin/e_main.c:884
+#: src/bin/e_main.c:885
 msgid "Enlightenment cannot set up its gadget control system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:891
+#: src/bin/e_main.c:892
 msgid "Setup Wallpaper"
 msgstr "設定桌布"
 
-#: src/bin/e_main.c:895
+#: src/bin/e_main.c:896
 msgid "Enlightenment cannot set up its desktop background system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:902
+#: src/bin/e_main.c:903
 msgid "Setup Mouse"
 msgstr "設定滑鼠"
 
-#: src/bin/e_main.c:906
+#: src/bin/e_main.c:907
 msgid "Enlightenment cannot configure the mouse settings.\n"
 msgstr ""
 
-#: src/bin/e_main.c:913
+#: src/bin/e_main.c:914
 msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
 msgstr ""
 
-#: src/bin/e_main.c:919
+#: src/bin/e_main.c:920
 msgid "Setup Bindings"
 msgstr "設定快速鍵"
 
-#: src/bin/e_main.c:923
+#: src/bin/e_main.c:924
 msgid "Enlightenment cannot set up its bindings system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:930
+#: src/bin/e_main.c:931
 msgid "Setup Thumbnailer"
 msgstr "設定縮圖"
 
-#: src/bin/e_main.c:934
+#: src/bin/e_main.c:935
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "Enlightenment 無法初始化縮圖系統。\n"
 
-#: src/bin/e_main.c:943
+#: src/bin/e_main.c:944
 msgid "Enlightenment cannot initialize the Icon Cache system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:952
+#: src/bin/e_main.c:953
 msgid "Enlightenment cannot initialize the XSettings system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:961
+#: src/bin/e_main.c:962
 msgid "Enlightenment cannot initialize the Update system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:968
+#: src/bin/e_main.c:969
 msgid "Setup Desktop Environment"
 msgstr ""
 
-#: src/bin/e_main.c:972
+#: src/bin/e_main.c:973
 msgid "Enlightenment cannot initialize its desktop environment.\n"
 msgstr ""
 
-#: src/bin/e_main.c:979
+#: src/bin/e_main.c:980
 msgid "Setup File Ordering"
 msgstr ""
 
-#: src/bin/e_main.c:983
+#: src/bin/e_main.c:984
 msgid "Enlightenment cannot set up its order file system.\n"
 msgstr ""
 
-#: src/bin/e_main.c:998
+#: src/bin/e_main.c:999
 msgid "Load Modules"
 msgstr "載入模組"
 
-#: src/bin/e_main.c:1029
+#: src/bin/e_main.c:1030
 msgid "Setup Shelves"
 msgstr "設定置物架"
 
-#: src/bin/e_main.c:1040
+#: src/bin/e_main.c:1041
 msgid "Configure Shelves"
 msgstr "設定置物架"
 
-#: src/bin/e_main.c:1051
+#: src/bin/e_main.c:1052
 msgid "Almost Done"
 msgstr "快好了"
 
-#: src/bin/e_main.c:1209
+#: src/bin/e_main.c:1212
 #, c-format
 msgid ""
 "Options:\n"
@@ -3247,7 +3254,7 @@ msgid ""
 "\t\tIf you need this help, you don't need this option.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1262
+#: src/bin/e_main.c:1265
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3257,11 +3264,11 @@ msgid ""
 "before enlightenment itself begins running.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1543
+#: src/bin/e_main.c:1546
 msgid "Testing Format Support"
 msgstr "測試格式支援"
 
-#: src/bin/e_main.c:1547
+#: src/bin/e_main.c:1550
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3269,38 +3276,38 @@ msgstr ""
 "Enlightment 發現 Evas 無法創造緩衝畫面。請確認\n"
 "Evas 支援軟體緩衝引擎。\n"
 
-#: src/bin/e_main.c:1559
+#: src/bin/e_main.c:1562
 msgid ""
 "Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1569
+#: src/bin/e_main.c:1572
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1579
+#: src/bin/e_main.c:1582
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1589
+#: src/bin/e_main.c:1592
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1603
+#: src/bin/e_main.c:1606
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1810
+#: src/bin/e_main.c:1814
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. There was an "
@@ -3308,11 +3315,11 @@ msgid ""
 "will not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1815 src/bin/e_main.c:1832
+#: src/bin/e_main.c:1819 src/bin/e_main.c:1836
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "Enlightment 在啟動途中當機，已經重新啟動。"
 
-#: src/bin/e_main.c:1816
+#: src/bin/e_main.c:1820
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>There was an "
@@ -3320,7 +3327,7 @@ msgid ""
 "will not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1825
+#: src/bin/e_main.c:1829
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -3328,7 +3335,7 @@ msgid ""
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1833
+#: src/bin/e_main.c:1837
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -3344,29 +3351,29 @@ msgstr ""
 msgid "Loading Module: %s"
 msgstr ""
 
-#: src/bin/e_module.c:142
+#: src/bin/e_module.c:148
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
 "be found in the<br>module search directories.<br>"
 msgstr ""
 
-#: src/bin/e_module.c:145 src/bin/e_module.c:158 src/bin/e_module.c:176
+#: src/bin/e_module.c:151 src/bin/e_module.c:164 src/bin/e_module.c:182
 msgid "Error loading Module"
 msgstr "載入模組時發生錯誤"
 
-#: src/bin/e_module.c:153 src/bin/e_module.c:170
+#: src/bin/e_module.c:159 src/bin/e_module.c:176
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
 
-#: src/bin/e_module.c:175
+#: src/bin/e_module.c:181
 msgid "Module does not contain all needed functions"
 msgstr "模組並末包含所有必需之功能"
 
-#: src/bin/e_module.c:190
+#: src/bin/e_module.c:196
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3376,42 +3383,110 @@ msgstr ""
 "模組 API 錯誤<br>模組初始化錯誤: %s<br>要求最小的模組 API 版本號: %i。"
 "<br>Enlightenment給的模組版本化: %i。<br>"
 
-#: src/bin/e_module.c:195
+#: src/bin/e_module.c:201
 #, c-format
 msgid "Enlightenment %s Module"
 msgstr "Enlightenment %s 模組"
 
-#: src/bin/e_module.c:523
+#: src/bin/e_module.c:529
 msgid "What action should be taken with this module?<br>"
 msgstr ""
 
-#: src/bin/e_module.c:529 src/bin/e_shelf.c:1789
-#: src/modules/conf_dialogs/e_int_config_profiles.c:335
+#: src/bin/e_module.c:535 src/bin/e_shelf.c:1789
+#: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:390
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Keep"
 msgstr ""
 
-#: src/bin/e_module.c:777
+#: src/bin/e_module.c:783
 msgid ""
 "The following modules are not standard ones for<br>Enlightenment and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
 
-#: src/bin/e_module.c:789
+#: src/bin/e_module.c:795
 msgid "Unstable module tainting"
 msgstr ""
 
-#: src/bin/e_module.c:793
+#: src/bin/e_module.c:799
 msgid "I know"
 msgstr ""
 
-#: src/bin/e_screensaver.c:159
+#: src/bin/e_screensaver.c:183
 msgid ""
 "You disabled the screensaver too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
+msgstr ""
+
+#: src/bin/e_shelf.c:67
+msgid "Float"
+msgstr ""
+
+#: src/bin/e_shelf.c:68
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
+#: src/modules/everything/evry_config.c:568
+#: src/modules/gadman/e_mod_gadman.c:1030
+msgid "Horizontal"
+msgstr "水平"
+
+#: src/bin/e_shelf.c:69
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:229
+#: src/modules/everything/evry_config.c:561
+#: src/modules/gadman/e_mod_gadman.c:1038
+msgid "Vertical"
+msgstr "垂直"
+
+#: src/bin/e_shelf.c:70
+#, fuzzy
+msgid "Left"
+msgstr "左:"
+
+#: src/bin/e_shelf.c:71
+#, fuzzy
+msgid "Right"
+msgstr "右:"
+
+#: src/bin/e_shelf.c:72
+msgid "Top"
+msgstr ""
+
+#: src/bin/e_shelf.c:73
+msgid "Bottom"
+msgstr ""
+
+#: src/bin/e_shelf.c:74
+msgid "Top-left Corner"
+msgstr ""
+
+#: src/bin/e_shelf.c:75
+msgid "Top-right Corner"
+msgstr ""
+
+#: src/bin/e_shelf.c:76
+msgid "Bottom-left Corner"
+msgstr ""
+
+#: src/bin/e_shelf.c:77
+msgid "Bottom-right Corner"
+msgstr ""
+
+#: src/bin/e_shelf.c:78
+msgid "Left-top Corner"
+msgstr ""
+
+#: src/bin/e_shelf.c:79
+msgid "Right-top Corner"
+msgstr ""
+
+#: src/bin/e_shelf.c:80
+msgid "Left-bottom Corner"
+msgstr ""
+
+#: src/bin/e_shelf.c:81
+msgid "Right-bottom Corner"
 msgstr ""
 
 #: src/bin/e_shelf.c:267
@@ -3445,11 +3520,11 @@ msgstr ""
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1654 src/bin/e_shelf.c:2475
+#: src/bin/e_shelf.c:1654 src/bin/e_shelf.c:2478
 msgid "Stop Moving Gadgets"
 msgstr ""
 
-#: src/bin/e_shelf.c:1656 src/bin/e_shelf.c:2477
+#: src/bin/e_shelf.c:1656 src/bin/e_shelf.c:2480
 msgid "Begin Moving Gadgets"
 msgstr ""
 
@@ -3463,28 +3538,28 @@ msgid ""
 "it?"
 msgstr "您要求移除此置物架。<br><br>您是否確定移除？"
 
-#: src/bin/e_shelf.c:2334
+#: src/bin/e_shelf.c:2335
 msgid "A shelf with that name and id already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:2353
+#: src/bin/e_shelf.c:2354
 msgid "Rename Shelf"
 msgstr ""
 
-#: src/bin/e_shelf.c:2425 src/modules/conf_shelves/e_int_config_shelf.c:141
+#: src/bin/e_shelf.c:2428 src/modules/conf_shelves/e_int_config_shelf.c:141
 #: src/modules/ibar/e_mod_main.c:858
 msgid "Contents"
 msgstr ""
 
-#: src/bin/e_shelf.c:2435
+#: src/bin/e_shelf.c:2438
 msgid "Orientation"
 msgstr ""
 
-#: src/bin/e_shelf.c:2444
+#: src/bin/e_shelf.c:2447
 msgid "Autohide"
 msgstr "自動隱藏"
 
-#: src/bin/e_shelf.c:2451 src/modules/conf_display/e_int_config_display.c:405
+#: src/bin/e_shelf.c:2454 src/modules/conf_display/e_int_config_display.c:406
 msgid "Refresh"
 msgstr "更新頻率"
 
@@ -3729,10 +3804,10 @@ msgstr[0] ""
 #: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
 #: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/comp/e_mod_config.c:516
-#: src/modules/conf_dialogs/e_int_config_profiles.c:295
+#: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1119
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1170
 #: src/modules/wizard/page_020.c:24
 msgid "Unknown"
 msgstr "未知"
@@ -3940,9 +4015,9 @@ msgstr "修改日期:"
 msgid "Read Only"
 msgstr "唯讀"
 
-#: src/bin/e_widget_filepreview.c:527
-msgid "Read / Write"
-msgstr "可讀/寫"
+#: src/bin/e_widget_filepreview.c:527 src/bin/e_widget_filepreview.c:716
+msgid "Read-Write"
+msgstr "讀寫"
 
 #: src/bin/e_widget_filepreview.c:530 src/bin/e_widget_filepreview.c:541
 msgid "Unmounted"
@@ -3963,24 +4038,32 @@ msgstr "受保護的"
 msgid "Forbidden"
 msgstr "禁止讀寫"
 
-#: src/bin/e_widget_filepreview.c:716
-msgid "Read-Write"
-msgstr "讀寫"
-
-#: src/bin/e_widget_fsel.c:333
+#: src/bin/e_widget_fsel.c:334
 msgid "Add to Favorites"
 msgstr "加入「我的最愛」選單"
 
-#: src/bin/e_widget_fsel.c:338
+#: src/bin/e_widget_fsel.c:339
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:825
 #: src/modules/conf_theme/e_int_config_wallpaper.c:435
-#: src/modules/conf_theme/e_int_config_wallpaper.c:552
+#: src/modules/conf_theme/e_int_config_wallpaper.c:555
 #: src/modules/conf_theme/e_int_config_startup.c:266
-#: src/modules/conf_theme/e_int_config_theme.c:462
+#: src/modules/conf_theme/e_int_config_theme.c:739
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "到上一層目錄"
+
+#: src/modules/backlight/e_mod_main.c:422
+#: src/modules/conf_display/e_mod_main.c:36
+#, fuzzy
+msgid "Backlight"
+msgstr "背光"
+
+#: src/modules/backlight/e_mod_main.c:493
+#: src/modules/backlight/e_mod_main.c:503
+#, fuzzy
+msgid "Backlight Controls"
+msgstr "背光"
 
 #: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
@@ -4121,7 +4204,7 @@ msgid "Clock Settings"
 msgstr "時鐘設定"
 
 #: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:708
-#: src/modules/clock/e_mod_main.c:865 src/modules/clock/e_mod_main.c:897
+#: src/modules/clock/e_mod_main.c:865 src/modules/clock/e_mod_main.c:903
 msgid "Clock"
 msgstr "時鐘"
 
@@ -4182,45 +4265,47 @@ msgstr ""
 msgid "Toggle calendar"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:897
+#: src/modules/clock/e_mod_main.c:903
 msgid "Show calendar"
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:3641 src/modules/comp/e_mod_comp.c:3663
-#: src/modules/comp/e_mod_comp.c:4067 src/modules/comp/e_mod_comp.c:4077
+#: src/modules/comp/e_mod_comp.c:3697 src/modules/comp/e_mod_comp.c:3719
+#: src/modules/comp/e_mod_comp.c:4132 src/modules/comp/e_mod_comp.c:4142
 msgid "Compositor Error"
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:3642
-msgid "Another compositor is already running<br>on your screen."
+#: src/modules/comp/e_mod_comp.c:3698
+msgid "Another compositor is already running<br>on your display server."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:3664
+#: src/modules/comp/e_mod_comp.c:3720
 msgid ""
-"Your screen does not support the compositor<br>overlay window. This is "
-"needed for it to<br>function."
+"Your display server does not support the<br>compositor overlay window. This "
+"is needed<br>for it to function."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:3738
+#: src/modules/comp/e_mod_comp.c:3794
 msgid "Compositor Warning"
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:3739
+#: src/modules/comp/e_mod_comp.c:3795
 msgid ""
-"Your screen does not support OpenGL.<br>Falling back to software engine."
+"Your display driver does not support OpenGL, or<br>no OpenGL engines were "
+"compiled or installed for<br>Evas or Ecore-Evas. Falling back to software "
+"engine."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:4068
+#: src/modules/comp/e_mod_comp.c:4133
 msgid ""
-"Your X Display does not support the XComposite extension<br>or Ecore was "
-"built without XComposite support.<br>Note that for composite support you "
-"will also need<br>XRender and XFixes support in X11 and Ecore."
+"Your display server does not support XComposite,<br>or Ecore-X was built "
+"without XComposite support.<br>Note that for composite support you will also "
+"need<br>XRender and XFixes support in X11 and Ecore."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:4078
+#: src/modules/comp/e_mod_comp.c:4143
 msgid ""
-"Your screen does not support the XDamage extension<br>or Ecore was built "
-"without XDamage support."
+"Your display server does not support XDamage<br>or Ecore was built without "
+"XDamage support."
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:106
@@ -4270,7 +4355,7 @@ msgid "Menu (Popup)"
 msgstr ""
 
 #: src/modules/comp/e_mod_config.c:460 src/modules/comp/e_mod_config.c:769
-#: src/modules/notification/e_mod_main.c:149
+#: src/modules/notification/e_mod_main.c:151
 msgid "Notification"
 msgstr ""
 
@@ -4423,11 +4508,11 @@ msgstr "%1.2f 秒"
 msgid "Sync"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1190 src/modules/comp/e_mod_config.c:1529
+#: src/modules/comp/e_mod_config.c:1190 src/modules/comp/e_mod_config.c:1532
 msgid "Software"
 msgstr "軟體"
 
-#: src/modules/comp/e_mod_config.c:1196 src/modules/comp/e_mod_config.c:1535
+#: src/modules/comp/e_mod_config.c:1196 src/modules/comp/e_mod_config.c:1538
 msgid "OpenGL"
 msgstr "OpenGL"
 
@@ -4435,7 +4520,7 @@ msgstr "OpenGL"
 msgid "OpenGL options"
 msgstr "OpenGL 選項"
 
-#: src/modules/comp/e_mod_config.c:1201 src/modules/comp/e_mod_config.c:1509
+#: src/modules/comp/e_mod_config.c:1201 src/modules/comp/e_mod_config.c:1512
 msgid "Tear-free updates (VSynced)"
 msgstr ""
 
@@ -4480,144 +4565,78 @@ msgstr ""
 msgid "Send dump"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1239 src/modules/comp/e_mod_config.c:1515
+#: src/modules/comp/e_mod_config.c:1239 src/modules/comp/e_mod_config.c:1518
 msgid "Don't composite fullscreen windows"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1241
-msgid "Keep hidden windows"
-msgstr ""
-
-#: src/modules/comp/e_mod_config.c:1243
-msgid "Maximum hidden pixels"
-msgstr ""
-
-#: src/modules/comp/e_mod_config.c:1246
-msgid "1M"
-msgstr "1M"
-
-#: src/modules/comp/e_mod_config.c:1248
-msgid "2M"
-msgstr "2M"
-
-#: src/modules/comp/e_mod_config.c:1250
-msgid "4M"
-msgstr "4M"
-
-#: src/modules/comp/e_mod_config.c:1252
-msgid "8M"
-msgstr "8M"
-
-#: src/modules/comp/e_mod_config.c:1254
-msgid "16M"
-msgstr "16M"
-
-#: src/modules/comp/e_mod_config.c:1256
-msgid "32M"
-msgstr "32M"
-
-#: src/modules/comp/e_mod_config.c:1258
-msgid "64M"
-msgstr "64M"
-
-#: src/modules/comp/e_mod_config.c:1260
-msgid "128M"
-msgstr "128M"
-
-#: src/modules/comp/e_mod_config.c:1262
-msgid "256M"
-msgstr "256M"
-
-#: src/modules/comp/e_mod_config.c:1265
+#: src/modules/comp/e_mod_config.c:1267
 msgid "Memory"
 msgstr "記憶體"
 
-#: src/modules/comp/e_mod_config.c:1270
-msgid "Min hidden"
-msgstr ""
-
-#: src/modules/comp/e_mod_config.c:1273 src/modules/comp/e_mod_config.c:1291
-msgid "30 Seconds"
-msgstr "30 秒"
-
-#: src/modules/comp/e_mod_config.c:1275 src/modules/comp/e_mod_config.c:1293
-msgid "1 Minute"
-msgstr "1 分鐘"
-
-#: src/modules/comp/e_mod_config.c:1277 src/modules/comp/e_mod_config.c:1295
-msgid "5 Minutes"
-msgstr "5 分鐘"
-
-#: src/modules/comp/e_mod_config.c:1279 src/modules/comp/e_mod_config.c:1297
-msgid "30 Minutes"
-msgstr "30 分鐘"
-
-#: src/modules/comp/e_mod_config.c:1281 src/modules/comp/e_mod_config.c:1299
-msgid "2 Hours"
-msgstr "2 小時"
-
-#: src/modules/comp/e_mod_config.c:1283 src/modules/comp/e_mod_config.c:1301
-msgid "10 Hours"
-msgstr "10 小時"
-
-#: src/modules/comp/e_mod_config.c:1285 src/modules/comp/e_mod_config.c:1303
-msgid "Forever"
-msgstr "無限期"
-
-#: src/modules/comp/e_mod_config.c:1288
-msgid "Max hidden"
-msgstr ""
-
-#: src/modules/comp/e_mod_config.c:1307
-msgid "Timeouts"
-msgstr ""
-
-#: src/modules/comp/e_mod_config.c:1312
+#: src/modules/comp/e_mod_config.c:1315
 msgid "Show Framerate"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1314
+#: src/modules/comp/e_mod_config.c:1317
 msgid "Rolling average frame count"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1316
+#: src/modules/comp/e_mod_config.c:1319
 #, c-format
 msgid "%1.0f Frames"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1320
+#: src/modules/comp/e_mod_config.c:1323
 msgid "Corner"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1337
+#: src/modules/comp/e_mod_config.c:1326
+#, fuzzy
+msgid "Top Left"
+msgstr "左:"
+
+#: src/modules/comp/e_mod_config.c:1329
+#, fuzzy
+msgid "Top Right"
+msgstr "右:"
+
+#: src/modules/comp/e_mod_config.c:1332
+msgid "Bottom Left"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1335
+msgid "Bottom Right"
+msgstr ""
+
+#: src/modules/comp/e_mod_config.c:1340
 msgid "Debug"
 msgstr "除錯"
 
-#: src/modules/comp/e_mod_config.c:1512
+#: src/modules/comp/e_mod_config.c:1515
 msgid "Smooth scaling of window content"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1518
+#: src/modules/comp/e_mod_config.c:1521
 msgid "Select default style"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1539
+#: src/modules/comp/e_mod_config.c:1542
 msgid "To reset compositor:"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1541
+#: src/modules/comp/e_mod_config.c:1544
 msgid "Ctrl+Alt+Shift+Home"
 msgstr "Ctrl+Alt+Shift+Home"
 
-#: src/modules/comp/e_mod_config.c:1544
+#: src/modules/comp/e_mod_config.c:1547
 msgid "Rendering"
 msgstr ""
 
-#: src/modules/comp/e_mod_main.c:43 src/modules/comp/e_mod_main.c:69
+#: src/modules/comp/e_mod_main.c:43 src/modules/comp/e_mod_main.c:74
 msgid "Composite"
 msgstr ""
 
-#: src/modules/comp/e_mod_main.c:70
+#: src/modules/comp/e_mod_main.c:75
 msgid ""
 "Dropshadow module is incompatible<br>with compositing. Disabling "
 "the<br>Dropshadow module."
@@ -4637,7 +4656,7 @@ msgid "Settings Panel"
 msgstr "設定面板"
 
 #: src/modules/conf/e_mod_main.c:421
-#: src/modules/conf_display/e_int_config_screensaver.c:197
+#: src/modules/conf_display/e_int_config_screensaver.c:206
 msgid "Presentation"
 msgstr "展示"
 
@@ -4784,21 +4803,21 @@ msgstr ""
 msgid "Reset"
 msgstr "重置"
 
-#: src/modules/conf_dialogs/e_int_config_profiles.c:289
+#: src/modules/conf_dialogs/e_int_config_profiles.c:292
 #, fuzzy, c-format
 msgid "Selected profile: %s"
 msgstr "選取一個profile: %s"
 
-#: src/modules/conf_dialogs/e_int_config_profiles.c:311
+#: src/modules/conf_dialogs/e_int_config_profiles.c:315
 msgid "Add New Profile"
 msgstr "新增 Profile"
 
-#: src/modules/conf_dialogs/e_int_config_profiles.c:332
+#: src/modules/conf_dialogs/e_int_config_profiles.c:336
 #, c-format
 msgid "You want to delete the \"%s\" profile.<br><br>Are you sure?"
 msgstr ""
 
-#: src/modules/conf_dialogs/e_int_config_profiles.c:334
+#: src/modules/conf_dialogs/e_int_config_profiles.c:338
 msgid "Are you sure you want to delete this profile?"
 msgstr "您是否確定刪除此 profile？"
 
@@ -4900,7 +4919,7 @@ msgid "Resolution change"
 msgstr "改變解析度"
 
 #: src/modules/conf_display/e_int_config_display.c:195
-#: src/modules/shot/e_mod_main.c:287 src/modules/shot/e_mod_main.c:761
+#: src/modules/shot/e_mod_main.c:288 src/modules/shot/e_mod_main.c:797
 msgid "Save"
 msgstr "存檔"
 
@@ -4912,27 +4931,27 @@ msgstr ""
 msgid "Screen Resolution Settings"
 msgstr "螢幕解析度設定"
 
-#: src/modules/conf_display/e_int_config_display.c:394
+#: src/modules/conf_display/e_int_config_display.c:395
 msgid "Resolution"
 msgstr "解析度"
 
-#: src/modules/conf_display/e_int_config_display.c:401
+#: src/modules/conf_display/e_int_config_display.c:402
 msgid "Restore on login"
 msgstr "登入時復原"
 
-#: src/modules/conf_display/e_int_config_display.c:465
+#: src/modules/conf_display/e_int_config_display.c:466
 msgid "Rotation"
 msgstr "旋轉"
 
-#: src/modules/conf_display/e_int_config_display.c:484
+#: src/modules/conf_display/e_int_config_display.c:485
 msgid "Mirroring"
 msgstr "鏡射"
 
-#: src/modules/conf_display/e_int_config_display.c:629
+#: src/modules/conf_display/e_int_config_display.c:630
 msgid "Missing Features"
 msgstr "缺少的功能"
 
-#: src/modules/conf_display/e_int_config_display.c:630
+#: src/modules/conf_display/e_int_config_display.c:631
 msgid ""
 "Your X Display Server is missing support for<br>the <hilight>XRandR</"
 "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
@@ -4941,11 +4960,11 @@ msgid ""
 "XRandR support detected."
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_display.c:642
+#: src/modules/conf_display/e_int_config_display.c:643
 msgid "No Refresh Rates Found"
 msgstr "找不到可用之更新頻率"
 
-#: src/modules/conf_display/e_int_config_display.c:643
+#: src/modules/conf_display/e_int_config_display.c:644
 msgid ""
 "No refresh rates were reported by your X Display Server.<br>If you are "
 "running a nested X Display Server, then<br>this is to be expected. However, "
@@ -4958,7 +4977,7 @@ msgstr ""
 "的螢幕造成<hilight>傷害</hilight>。"
 
 #: src/modules/conf_display/e_int_config_desks.c:52
-#: src/modules/pager/e_mod_main.c:883
+#: src/modules/pager/e_mod_main.c:884
 msgid "Virtual Desktops Settings"
 msgstr "虛擬桌面設定"
 
@@ -5027,7 +5046,6 @@ msgid "Animation speed"
 msgstr "動畫速度"
 
 #: src/modules/conf_display/e_int_config_desks.c:226
-#: src/modules/conf_display/e_int_config_dpms.c:168
 #: src/modules/conf_performance/e_int_config_powermanagement.c:204
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:283
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:244
@@ -5068,11 +5086,11 @@ msgstr "選取一個背景..."
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
 #: src/modules/conf_intl/e_int_config_imc.c:813
 #: src/modules/conf_theme/e_int_config_wallpaper.c:425
-#: src/modules/conf_theme/e_int_config_wallpaper.c:542
+#: src/modules/conf_theme/e_int_config_wallpaper.c:545
 #: src/modules/conf_theme/e_int_config_startup.c:253
-#: src/modules/conf_theme/e_int_config_theme.c:451
-#: src/modules/conf_theme/e_int_config_theme.c:827
-#: src/modules/conf_theme/e_int_config_theme.c:836
+#: src/modules/conf_theme/e_int_config_theme.c:728
+#: src/modules/conf_theme/e_int_config_theme.c:1103
+#: src/modules/conf_theme/e_int_config_theme.c:1112
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "個人"
@@ -5127,8 +5145,8 @@ msgstr ""
 
 #: src/modules/conf_display/e_int_config_desklock.c:315
 #: src/modules/conf_display/e_int_config_desklock.c:340
-#: src/modules/conf_display/e_int_config_screensaver.c:174
-#: src/modules/conf_display/e_int_config_screensaver.c:191
+#: src/modules/conf_display/e_int_config_screensaver.c:183
+#: src/modules/conf_display/e_int_config_screensaver.c:200
 #: src/modules/fileman/e_mod_config.c:410
 #, c-format
 msgid "%1.0f seconds"
@@ -5139,8 +5157,7 @@ msgid "Lock when idle time exceeded"
 msgstr "當超過閒置時間時鎖定"
 
 #: src/modules/conf_display/e_int_config_desklock.c:326
-#: src/modules/conf_display/e_int_config_screensaver.c:157
-#: src/modules/conf_display/e_int_config_dpms.c:160
+#: src/modules/conf_display/e_int_config_screensaver.c:166
 #, c-format
 msgid "%1.0f minutes"
 msgstr "%1.0f 分鐘"
@@ -5150,7 +5167,7 @@ msgid "Timers"
 msgstr ""
 
 #: src/modules/conf_display/e_int_config_desklock.c:336
-#: src/modules/conf_display/e_int_config_screensaver.c:186
+#: src/modules/conf_display/e_int_config_screensaver.c:195
 msgid "Suggest if deactivated before"
 msgstr ""
 
@@ -5183,33 +5200,33 @@ msgstr "桌布"
 msgid "Screen Saver Settings"
 msgstr "螢幕保護程式設定"
 
-#: src/modules/conf_display/e_int_config_screensaver.c:149
+#: src/modules/conf_display/e_int_config_screensaver.c:158
 msgid "Enable screen blanking"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_screensaver.c:154
+#: src/modules/conf_display/e_int_config_screensaver.c:163
 #: src/modules/syscon/e_int_config_syscon.c:167
 msgid "Timeout"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_screensaver.c:162
+#: src/modules/conf_display/e_int_config_screensaver.c:171
 msgid "Suspend on blank"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_screensaver.c:166
+#: src/modules/conf_display/e_int_config_screensaver.c:175
 msgid "Suspend even if AC"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_screensaver.c:171
+#: src/modules/conf_display/e_int_config_screensaver.c:180
 msgid "Suspend delay"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_screensaver.c:179
+#: src/modules/conf_display/e_int_config_screensaver.c:188
 #: src/modules/conf_display/e_mod_main.c:32
 msgid "Blanking"
 msgstr "空白"
 
-#: src/modules/conf_display/e_int_config_screensaver.c:183
+#: src/modules/conf_display/e_int_config_screensaver.c:192
 msgid "Presentation mode enabled"
 msgstr ""
 
@@ -5217,27 +5234,37 @@ msgstr ""
 msgid "Backlight Settings"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_dpms.c:145
+#: src/modules/conf_display/e_int_config_dpms.c:150
 msgid "Normal Backlight"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_dpms.c:147
-#: src/modules/conf_display/e_int_config_dpms.c:153
+#: src/modules/conf_display/e_int_config_dpms.c:152
+#: src/modules/conf_display/e_int_config_dpms.c:158
 #, c-format
 msgid "%3.0f"
 msgstr "%3.0f"
 
-#: src/modules/conf_display/e_int_config_dpms.c:151
+#: src/modules/conf_display/e_int_config_dpms.c:156
 msgid "Dim Backlight"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_dpms.c:157
+#: src/modules/conf_display/e_int_config_dpms.c:162
 msgid "Idle Fade Time"
 msgstr ""
 
-#: src/modules/conf_display/e_int_config_dpms.c:166
+#: src/modules/conf_display/e_int_config_dpms.c:164
+#, fuzzy, c-format
+msgid "%1.0f second(s)"
+msgstr "%1.0f 秒"
+
+#: src/modules/conf_display/e_int_config_dpms.c:170
 msgid "Fade Time"
 msgstr ""
+
+#: src/modules/conf_display/e_int_config_dpms.c:172
+#, fuzzy, c-format
+msgid "%1.1f second(s)"
+msgstr "%1.1f 秒"
 
 #: src/modules/conf_display/e_mod_main.c:21
 #: src/modules/tiling/e_mod_config.c:198
@@ -5251,11 +5278,6 @@ msgstr "螢幕解析度"
 #: src/modules/conf_display/e_mod_main.c:28
 msgid "Screen Lock"
 msgstr "螢幕鎖定"
-
-#: src/modules/conf_display/e_mod_main.c:36
-#, fuzzy
-msgid "Backlight"
-msgstr "背光"
 
 #: src/modules/conf_display/e_mod_main.c:44
 msgid "Desk"
@@ -5355,26 +5377,26 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1350
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1254
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1286
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1305
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1337
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1259
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1291
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1310
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1342
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1265
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1297
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1348
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1271
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1303
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1354
 msgid "WIN"
 msgstr "WIN"
 
@@ -5757,11 +5779,11 @@ msgstr ""
 msgid "Key Bindings"
 msgstr "快速鍵"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1114
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1165
 msgid "Binding Key Error"
 msgstr "設定快速鍵時發生錯誤"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1115
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1166
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -5818,45 +5840,45 @@ msgstr "容器"
 msgid "Manager"
 msgstr "管理員"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:737
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:745
 msgid "Mouse Buttons"
 msgstr "滑鼠按鍵"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:787
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:795
 msgid "Mouse Wheels"
 msgstr "滑鼠滾輪"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1159
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1167
 msgid "Left Button"
 msgstr "左鍵"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1163
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1171
 msgid "Middle Button"
 msgstr "中鍵"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1167
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1175
 msgid "Right Button"
 msgstr "右鍵"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1177
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1185
 #, c-format
 msgid "Extra Button (%d)"
 msgstr "其他額外按鍵(%d)"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1193
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1201
 msgid "Mouse Wheel Up"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1195
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1203
 msgid "Mouse Wheel Down"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1199
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1207
 #, c-format
 msgid "Extra Wheel (%d) Up"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1201
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1209
 #, c-format
 msgid "Extra Wheel (%d) Down"
 msgstr ""
@@ -5879,7 +5901,7 @@ msgid "Main Menu"
 msgstr "主選單"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
-#: src/modules/fileman/e_mod_menu.c:342
+#: src/modules/fileman/e_mod_menu.c:347
 msgid "Favorites"
 msgstr ""
 
@@ -5984,7 +6006,7 @@ msgid "Fonts"
 msgstr "字型"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1117
+#: src/modules/conf_theme/e_int_config_theme.c:1394
 msgid "Themes"
 msgstr "佈景主題"
 
@@ -6014,10 +6036,6 @@ msgstr "預設目錄"
 #: src/modules/conf_paths/e_int_config_paths.c:204
 msgid "User Defined Directories"
 msgstr "使用者自訂目錄"
-
-#: src/modules/conf_paths/e_int_config_paths.c:206
-msgid "New Directory"
-msgstr "新目錄"
 
 #: src/modules/conf_paths/e_int_config_env.c:36
 #: src/modules/conf_paths/e_mod_main.c:24
@@ -6151,13 +6169,13 @@ msgid "e.g. Saving to disk"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:692
+#: src/modules/shot/e_mod_main.c:728
 #: src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "低"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:690
+#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:726
 msgid "Medium"
 msgstr "中"
 
@@ -6169,7 +6187,7 @@ msgid "%.0f s"
 msgstr "%.0f 秒"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:688
+#: src/modules/shot/e_mod_main.c:724
 msgid "High"
 msgstr "高"
 
@@ -6209,28 +6227,28 @@ msgid "Wallpaper Settings"
 msgstr "桌布設定"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:467
-#: src/modules/conf_theme/e_int_config_wallpaper.c:577
+#: src/modules/conf_theme/e_int_config_wallpaper.c:580
 msgid "Use Theme Wallpaper"
 msgstr "使用佈景主題桌布"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:472
-#: src/modules/conf_theme/e_int_config_wallpaper.c:582
+#: src/modules/conf_theme/e_int_config_wallpaper.c:585
 msgid "Picture..."
 msgstr "圖片..."
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:595
+#: src/modules/conf_theme/e_int_config_wallpaper.c:601
 msgid "Where to place the Wallpaper"
 msgstr "將桌布置於"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:596
+#: src/modules/conf_theme/e_int_config_wallpaper.c:602
 msgid "All Desktops"
 msgstr "所有桌面"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:598
+#: src/modules/conf_theme/e_int_config_wallpaper.c:604
 msgid "This Desktop"
 msgstr "此桌面"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:600
+#: src/modules/conf_theme/e_int_config_wallpaper.c:606
 msgid "This Screen"
 msgstr "此螢幕"
 
@@ -6810,36 +6828,36 @@ msgstr "背景改變"
 msgid "Transitions"
 msgstr "轉換"
 
-#: src/modules/conf_theme/e_int_config_theme.c:92
+#: src/modules/conf_theme/e_int_config_theme.c:369
 msgid "Theme Selector"
 msgstr "佈景主題選擇器"
 
-#: src/modules/conf_theme/e_int_config_theme.c:334
+#: src/modules/conf_theme/e_int_config_theme.c:610
 msgid "Theme File Error"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:335
+#: src/modules/conf_theme/e_int_config_theme.c:611
 #, c-format
 msgid "%s is probably not an E17 theme!"
 msgstr "%s 可能不是E17 的佈景主題!"
 
-#: src/modules/conf_theme/e_int_config_theme.c:496
+#: src/modules/conf_theme/e_int_config_theme.c:773
 msgid " Import..."
 msgstr "輸入..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1108
+#: src/modules/conf_theme/e_int_config_theme.c:1385
 msgid "Theme Categories"
 msgstr "佈景主題分類"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1403
 msgid "Assign"
 msgstr "指定"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1129
+#: src/modules/conf_theme/e_int_config_theme.c:1406
 msgid "Clear"
 msgstr "清除"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1132
+#: src/modules/conf_theme/e_int_config_theme.c:1409
 msgid "Clear All"
 msgstr "全部清除"
 
@@ -6864,7 +6882,8 @@ msgid "Enlightenment was unable to import the theme<br>due to a copy error."
 msgstr "複製檔案時發生錯誤，Enlightenment 無法匯入此佈景主題。"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:58
-msgid "GTK Application Theme Settings"
+#, fuzzy
+msgid "Application Theme Settings"
 msgstr "GTK 應用程式佈景主題設定"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:471
@@ -7269,18 +7288,6 @@ msgstr "填滿可用空間"
 msgid "Direction"
 msgstr "方向"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
-#: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:1028
-msgid "Horizontal"
-msgstr "水平"
-
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:229
-#: src/modules/everything/evry_config.c:561
-#: src/modules/gadman/e_mod_gadman.c:1036
-msgid "Vertical"
-msgstr "垂直"
-
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:231
 msgid "Both"
 msgstr "兩者"
@@ -7525,11 +7532,35 @@ msgid ""
 "module's<br>setfreq utility."
 msgstr "試著經由模組的 setfreq 功能來設定 CPU 頻率<br>時發生錯誤。"
 
+#: src/modules/cpufreq/e_mod_main.c:1157
+#, fuzzy
+msgid "Cpufreq Error"
+msgstr "CPU 頻率"
+
+#: src/modules/cpufreq/e_mod_main.c:1158
+msgid ""
+"The freqset binary in the cpufreq module<br>directory cannot be found (stat "
+"failed)"
+msgstr ""
+
+#: src/modules/cpufreq/e_mod_main.c:1165
+#, fuzzy
+msgid "Cpufreq Permissions Error"
+msgstr "權限"
+
+#: src/modules/cpufreq/e_mod_main.c:1166
+#, c-format
+msgid ""
+"The freqset binary in the cpufreq module<br>is not owned by root or does not "
+"have the<br>setuid bit set. Please ensure this is the<br>case. For example:"
+"<br><br>sudo chown root %s<br>sudo chmod u+s,a+x %s<br>"
+msgstr ""
+
 #: src/modules/dropshadow/e_mod_config.c:38
 msgid "Dropshadow Settings"
 msgstr ""
 
-#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:682
+#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:718
 msgid "Quality"
 msgstr "品質"
 
@@ -7617,28 +7648,29 @@ msgstr "很亮"
 msgid "Dropshadow"
 msgstr "視窗陰影"
 
-#: src/modules/everything/e_mod_main.c:60
-#: src/modules/everything/e_mod_main.c:210
+#: src/modules/everything/e_mod_main.c:49
+#: src/modules/everything/e_mod_main.c:198
+#: src/modules/everything/evry_plugin.c:179
 msgid "Everything Launcher"
 msgstr ""
 
-#: src/modules/everything/e_mod_main.c:61
+#: src/modules/everything/e_mod_main.c:50
 msgid "Show Everything Launcher"
 msgstr ""
 
-#: src/modules/everything/e_mod_main.c:75
+#: src/modules/everything/e_mod_main.c:64
 msgid "Everything Configuration"
 msgstr ""
 
-#: src/modules/everything/e_mod_main.c:211
+#: src/modules/everything/e_mod_main.c:199
 msgid "Show Everything Dialog"
 msgstr ""
 
-#: src/modules/everything/e_mod_main.c:420
+#: src/modules/everything/e_mod_main.c:408
 msgid "Everything Module"
 msgstr ""
 
-#: src/modules/everything/e_mod_main.c:620
+#: src/modules/everything/e_mod_main.c:608
 msgid "Run Everything"
 msgstr ""
 
@@ -7825,93 +7857,99 @@ msgstr[1] ""
 msgid "No plugins loaded"
 msgstr ""
 
-#: src/modules/everything/evry_plug_clipboard.c:33
-msgid "Copy to Clipboard"
-msgstr ""
-
-#: src/modules/everything/evry_view_help.c:67
-msgid ""
-"  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  "
-"Just type a few letters of the thing you are looking for. <br>  Use cursor "
-"<hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  "
-"Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  "
-"<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
-"you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
-"close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
-msgstr ""
-
-#: src/modules/everything/evry_plug_apps.c:1148
+#: src/modules/everything/evry_plug_apps.c:1147
 msgid "Exebuf"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1163
-msgid "Open With..."
-msgstr "以特定程式開啟..."
-
-#: src/modules/everything/evry_plug_apps.c:1176
-msgid "Open File..."
-msgstr "開啟舊檔..."
-
-#: src/modules/everything/evry_plug_apps.c:1190
-msgid "Edit Application Entry"
-msgstr ""
-
-#: src/modules/everything/evry_plug_apps.c:1197
-msgid "New Application Entry"
-msgstr ""
-
-#: src/modules/everything/evry_plug_apps.c:1204
-msgid "Run with Sudo"
-msgstr ""
-
-#: src/modules/everything/evry_plug_apps.c:1210
-#: src/modules/fileman/e_fwin.c:2148 src/modules/fileman/e_fwin.c:2511
+#: src/modules/everything/evry_plug_apps.c:1162
+#: src/modules/everything/evry_plug_apps.c:1209
+#: src/modules/fileman/e_fwin.c:2147 src/modules/fileman/e_fwin.c:2510
 msgid "Open with..."
 msgstr "以特定程式開啟..."
 
-#: src/modules/everything/evry_plug_apps.c:1217
+#: src/modules/everything/evry_plug_apps.c:1175
+msgid "Open File..."
+msgstr "開啟舊檔..."
+
+#: src/modules/everything/evry_plug_apps.c:1189
+msgid "Edit Application Entry"
+msgstr ""
+
+#: src/modules/everything/evry_plug_apps.c:1196
+msgid "New Application Entry"
+msgstr ""
+
+#: src/modules/everything/evry_plug_apps.c:1203
+msgid "Run with Sudo"
+msgstr ""
+
+#: src/modules/everything/evry_plug_apps.c:1216
+#: src/modules/fileman/e_fwin.c:249
 msgid "Open Terminal here"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1223
+#: src/modules/everything/evry_plug_apps.c:1222
 msgid "Run Executable"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1303
-#: src/modules/everything/evry_plug_apps.c:1437
+#: src/modules/everything/evry_plug_apps.c:1302
+#: src/modules/everything/evry_plug_apps.c:1436
 msgid "Everything Applications"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1334
+#: src/modules/everything/evry_plug_apps.c:1333
 msgid "Commands"
 msgstr "指令"
 
-#: src/modules/everything/evry_plug_apps.c:1335
+#: src/modules/everything/evry_plug_apps.c:1334
 msgid "Terminal Command"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1340
+#: src/modules/everything/evry_plug_apps.c:1339
 msgid "Sudo GUI"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1418
+#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1585
 msgid "Everything Plugin"
 msgstr ""
 
-#: src/modules/everything/evry_plug_calc.c:252
+#: src/modules/everything/evry_plug_calc.c:265
 msgid "Calculator"
 msgstr "計算機"
+
+#: src/modules/everything/evry_plug_clipboard.c:33
+msgid "Copy to Clipboard"
+msgstr ""
+
+#: src/modules/everything/evry_plug_files.c:1316
+msgid "Copy To ..."
+msgstr ""
+
+#: src/modules/everything/evry_plug_files.c:1321
+#, fuzzy
+msgid "Move To ..."
+msgstr "移至"
+
+#: src/modules/everything/evry_plug_files.c:1326
+#, fuzzy
+msgid "Move to Trash"
+msgstr "移至"
+
+#: src/modules/everything/evry_plug_files.c:1330
+msgid "Open Folder (EFM)"
+msgstr ""
+
+#: src/modules/everything/evry_plug_files.c:1334
+#, fuzzy
+msgid "Sort by Date"
+msgstr "依照大小排序"
+
+#: src/modules/everything/evry_plug_files.c:1339
+#, fuzzy
+msgid "Sort by Name"
+msgstr "依照大小排序"
 
 #: src/modules/everything/evry_plug_files.c:1372
 #: src/modules/everything/evry_plug_files.c:1384
@@ -7947,6 +7985,12 @@ msgstr "清除緩存"
 msgid "Show Dialog"
 msgstr ""
 
+#: src/modules/everything/evry_plug_text.c:63
+#: src/modules/everything/evry_plug_text.c:66
+#, fuzzy
+msgid "Text"
+msgstr "移動文字"
+
 #: src/modules/everything/evry_plug_windows.c:430
 msgid "Switch to Window"
 msgstr ""
@@ -7959,141 +8003,179 @@ msgstr ""
 msgid "Send to Desktop"
 msgstr "送到桌面"
 
-#: src/modules/fileman/e_fwin.c:249
-msgid "Open Terminal Here"
+#: src/modules/everything/evry_plugin.c:177
+#: src/modules/everything/evry_plugin.c:208
+#, fuzzy, c-format
+msgid "Show %s Plugin"
+msgstr "滑鼠移過時顯示"
+
+#: src/modules/everything/evry_plugin.c:187
+#, fuzzy, c-format
+msgid "Browse %s"
+msgstr "列"
+
+#: src/modules/everything/evry_plugin.c:210
+#, fuzzy
+msgid "Everything"
+msgstr "最上層顯示"
+
+#: src/modules/everything/evry_view_help.c:67
+msgid ""
+"  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  "
+"Just type a few letters of the thing you are looking for. <br>  Use cursor "
+"<hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  "
+"Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  "
+"<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
+"you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
+"close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
+"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
+"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
+"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
+"toggle thumb view modes"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2039
+#: src/modules/everything/evry_view_tabs.c:93
+#, fuzzy
+msgid "Back"
+msgstr "背光"
+
+#: src/modules/fileman/e_fwin.c:2038
 msgid "Other application..."
 msgstr "其他應用程式..."
 
-#: src/modules/fileman/e_fwin.c:2102
+#: src/modules/fileman/e_fwin.c:2101
 msgid "Go To Parent Directory"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2112
+#: src/modules/fileman/e_fwin.c:2111
 msgid "Clone Window"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2118
+#: src/modules/fileman/e_fwin.c:2117
 msgid "Copy Path"
 msgstr "複製路徑"
 
-#: src/modules/fileman/e_fwin.c:2134
+#: src/modules/fileman/e_fwin.c:2133
 msgid "Run"
 msgstr "執行"
 
-#: src/modules/fileman/e_fwin.c:2141 src/modules/fileman/e_fwin.c:2512
+#: src/modules/fileman/e_fwin.c:2140 src/modules/fileman/e_fwin.c:2511
 msgid "Open"
 msgstr "開啟"
 
-#: src/modules/fileman/e_fwin.c:2541 src/modules/fileman/e_fwin.c:2566
+#: src/modules/fileman/e_fwin.c:2540 src/modules/fileman/e_fwin.c:2565
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d 檔案"
 
-#: src/modules/fileman/e_fwin.c:2584
+#: src/modules/fileman/e_fwin.c:2583
 msgid "Known Applications"
 msgstr "已知的應用程式"
 
-#: src/modules/fileman/e_fwin.c:2594
+#: src/modules/fileman/e_fwin.c:2593
 msgid "Suggested Applications"
 msgstr "建議的應用程式"
 
-#: src/modules/fileman/e_fwin.c:2629
+#: src/modules/fileman/e_fwin.c:2628
 msgid "All Applications"
 msgstr "全部應用程式"
 
-#: src/modules/fileman/e_fwin.c:2652
+#: src/modules/fileman/e_fwin.c:2651
 msgid "Custom Command"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2947
+#: src/modules/fileman/e_fwin.c:2946
 #: src/modules/fileman_opinfo/e_mod_main.c:105
 #, c-format
 msgid "Copying is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2951
+#: src/modules/fileman/e_fwin.c:2950
 #: src/modules/fileman_opinfo/e_mod_main.c:109
 #, c-format
 msgid "Moving is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2955
+#: src/modules/fileman/e_fwin.c:2954
 #: src/modules/fileman_opinfo/e_mod_main.c:113
 #, c-format
 msgid "Deleting is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2959
+#: src/modules/fileman/e_fwin.c:2958
 #: src/modules/fileman_opinfo/e_mod_main.c:117
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2963
+#: src/modules/fileman/e_fwin.c:2962
 #: src/modules/fileman_opinfo/e_mod_main.c:121
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2973
+#: src/modules/fileman/e_fwin.c:2972
 #: src/modules/fileman_opinfo/e_mod_main.c:131
 #, c-format
 msgid "Copy of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2975
+#: src/modules/fileman/e_fwin.c:2974
 #: src/modules/fileman_opinfo/e_mod_main.c:133
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2980
+#: src/modules/fileman/e_fwin.c:2979
 #: src/modules/fileman_opinfo/e_mod_main.c:139
 #, c-format
 msgid "Move of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2982
+#: src/modules/fileman/e_fwin.c:2981
 #: src/modules/fileman_opinfo/e_mod_main.c:141
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2987
+#: src/modules/fileman/e_fwin.c:2986
 #: src/modules/fileman_opinfo/e_mod_main.c:147
 #, c-format
 msgid "Delete done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2989
+#: src/modules/fileman/e_fwin.c:2988
 #: src/modules/fileman_opinfo/e_mod_main.c:149
 #, c-format
 msgid "Deleting files..."
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2994
+#: src/modules/fileman/e_fwin.c:2993
 #: src/modules/fileman_opinfo/e_mod_main.c:154
 #, c-format
 msgid "Secure delete done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2996
+#: src/modules/fileman/e_fwin.c:2995
 #: src/modules/fileman_opinfo/e_mod_main.c:156
 #, c-format
 msgid "Securely deleting files..."
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3000
+#: src/modules/fileman/e_fwin.c:2999
 #: src/modules/fileman_opinfo/e_mod_main.c:160
 #, c-format
 msgid "Unknown operation from slave %d"
 msgstr ""
 
-#: src/modules/fileman/e_fwin_nav.c:412
+#: src/modules/fileman/e_fwin_nav.c:446
 msgid "EFM Navigation"
 msgstr ""
 
@@ -8106,43 +8188,43 @@ msgstr "檔案圖示"
 msgid "File Types"
 msgstr "檔案類型"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:70
+#: src/modules/fileman/e_int_config_mime_edit.c:69
 msgid "File Icon"
 msgstr "檔案圖示"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:137
+#: src/modules/fileman/e_int_config_mime_edit.c:136
 msgid "Basic Info"
 msgstr "基本資訊"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:138
+#: src/modules/fileman/e_int_config_mime_edit.c:137
 msgid "Mime:"
 msgstr "Mime:"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:148
+#: src/modules/fileman/e_int_config_mime_edit.c:147
 msgid "Use Generated Thumbnail"
 msgstr "使用產生的縮圖"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:151
+#: src/modules/fileman/e_int_config_mime_edit.c:150
 msgid "Use Theme Icon"
 msgstr "使用佈景主題圖示"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:154
+#: src/modules/fileman/e_int_config_mime_edit.c:153
 msgid "Use Edje File"
 msgstr "使用 Edje 檔"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:157
+#: src/modules/fileman/e_int_config_mime_edit.c:156
 msgid "Use Image"
 msgstr "使用圖片"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:160
+#: src/modules/fileman/e_int_config_mime_edit.c:159
 msgid "Use Default"
 msgstr "使用預設值"
 
-#: src/modules/fileman/e_int_config_mime_edit.c:300
+#: src/modules/fileman/e_int_config_mime_edit.c:299
 msgid "Select an Edje file"
 msgstr ""
 
-#: src/modules/fileman/e_int_config_mime_edit.c:302
+#: src/modules/fileman/e_int_config_mime_edit.c:301
 msgid "Select an image"
 msgstr ""
 
@@ -8187,7 +8269,7 @@ msgid "Use Single Click"
 msgstr "使用單擊"
 
 #: src/modules/fileman/e_mod_config.c:389
-msgid "Really Move"
+msgid "'cp+rm' instead of 'mv'"
 msgstr ""
 
 #: src/modules/fileman/e_mod_config.c:395
@@ -8274,23 +8356,23 @@ msgstr ""
 msgid "0 listable items"
 msgstr ""
 
-#: src/modules/fileman/e_mod_menu.c:264
+#: src/modules/fileman/e_mod_menu.c:269
 msgid "GTK Bookmarks"
 msgstr ""
 
-#: src/modules/fileman/e_mod_menu.c:318
+#: src/modules/fileman/e_mod_menu.c:323
 msgid "Current Directory"
 msgstr ""
 
-#: src/modules/fileman/e_mod_menu.c:326
+#: src/modules/fileman/e_mod_menu.c:331
 msgid "Home"
 msgstr ""
 
-#: src/modules/fileman/e_mod_menu.c:356
+#: src/modules/fileman/e_mod_menu.c:361
 msgid "Root"
 msgstr ""
 
-#: src/modules/fileman/e_mod_menu.c:396
+#: src/modules/fileman/e_mod_menu.c:401
 msgid "Navigate..."
 msgstr ""
 
@@ -8305,7 +8387,7 @@ msgstr[1] ""
 msgid "Filemanager is idle"
 msgstr ""
 
-#: src/modules/fileman_opinfo/e_mod_main.c:438
+#: src/modules/fileman_opinfo/e_mod_main.c:439
 msgid "EFM Operation Info"
 msgstr ""
 
@@ -8351,19 +8433,19 @@ msgstr ""
 msgid "Background Options"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:990
+#: src/modules/gadman/e_mod_gadman.c:992
 msgid "Begin move/resize"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:1020
+#: src/modules/gadman/e_mod_gadman.c:1022
 msgid "Free"
 msgstr ""
 
-#: src/modules/gadman/e_mod_gadman.c:1044
+#: src/modules/gadman/e_mod_gadman.c:1046
 msgid "Appearance"
 msgstr "外觀"
 
-#: src/modules/gadman/e_mod_gadman.c:1065
+#: src/modules/gadman/e_mod_gadman.c:1067
 msgid "Add other gadgets"
 msgstr ""
 
@@ -8432,6 +8514,7 @@ msgid "Scroll speed"
 msgstr ""
 
 #: src/modules/winlist/e_int_config_winlist.c:260
+#: src/modules/tasks/e_mod_config.c:98
 msgid "Minimum width"
 msgstr ""
 
@@ -8448,6 +8531,7 @@ msgid "Maximum width"
 msgstr ""
 
 #: src/modules/winlist/e_int_config_winlist.c:273
+#: src/modules/tasks/e_mod_config.c:103
 msgid "Minimum height"
 msgstr ""
 
@@ -8652,7 +8736,7 @@ msgid "Show popup on desktop change"
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:144
-msgid "Show popup on urgent windows"
+msgid "Show popup for urgent windows"
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:197
@@ -8702,7 +8786,7 @@ msgid "Pager action popup height"
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:265
-msgid "Show popup on urgent window"
+msgid "Show popup for urgent window"
 msgstr ""
 
 #: src/modules/pager/e_mod_config.c:269
@@ -8738,31 +8822,31 @@ msgid ""
 "works in the popup."
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2947
+#: src/modules/pager/e_mod_main.c:2923
 msgid "Show Pager Popup"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2954 src/modules/pager/e_mod_main.c:2990
+#: src/modules/pager/e_mod_main.c:2930 src/modules/pager/e_mod_main.c:2966
 msgid "Popup Desk Right"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2956 src/modules/pager/e_mod_main.c:2991
+#: src/modules/pager/e_mod_main.c:2932 src/modules/pager/e_mod_main.c:2967
 msgid "Popup Desk Left"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2958 src/modules/pager/e_mod_main.c:2992
+#: src/modules/pager/e_mod_main.c:2934 src/modules/pager/e_mod_main.c:2968
 msgid "Popup Desk Up"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2960 src/modules/pager/e_mod_main.c:2993
+#: src/modules/pager/e_mod_main.c:2936 src/modules/pager/e_mod_main.c:2969
 msgid "Popup Desk Down"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2994
+#: src/modules/pager/e_mod_main.c:2938 src/modules/pager/e_mod_main.c:2970
 msgid "Popup Desk Next"
 msgstr ""
 
-#: src/modules/pager/e_mod_main.c:2964 src/modules/pager/e_mod_main.c:2995
+#: src/modules/pager/e_mod_main.c:2940 src/modules/pager/e_mod_main.c:2971
 msgid "Popup Desk Previous"
 msgstr ""
 
@@ -8858,15 +8942,15 @@ msgstr "溫度"
 msgid "Temperature"
 msgstr "溫度"
 
-#: src/modules/wizard/e_wizard.c:229 src/modules/wizard/e_wizard.c:255
+#: src/modules/wizard/e_wizard.c:232 src/modules/wizard/e_wizard.c:261
 msgid "Next"
 msgstr "下一步"
 
-#: src/modules/wizard/e_wizard.c:260
+#: src/modules/wizard/e_wizard.c:266
 msgid "Please Wait..."
 msgstr "請稍候..."
 
-#: src/modules/wizard/e_wizard.c:308
+#: src/modules/wizard/e_wizard.c:314
 msgid "Welcome to Enlightenment"
 msgstr "歡迎使用Enlightenment"
 
@@ -8959,16 +9043,16 @@ msgstr "檢測是否有可用的更新檔"
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, securiity "
+"Enlightenment can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
-"because it lets you<br>you know about available bug fixes and<br>security "
-"fixes when they happen. As a<br>bi-product of this, Enlightenment "
-"will<br>connect to enlightenment.org and transmit<br>some information as a "
-"result much like any<br>web browser might do. No personal "
-"information<br>such as username, password or any personal<br>files will be "
-"transmitted. If you do not like<br>this, please disable this below. It is "
-"highly<br>advised that you do not disable this as it<br>may leave you "
-"vulnerable or having to live<br>with bugs."
+"because it lets<br>you know about available bug fixes and<br>security fixes "
+"when they happen. As a<br>bi-product of this, Enlightenment will<br>connect "
+"to enlightenment.org and transmit<br>some information as a result much like "
+"any<br>web browser might do. No personal information<br>such as username, "
+"password or any personal<br>files will be transmitted. If you do not "
+"like<br>this, please disable this below. It is highly<br>advised that you do "
+"not disable this as it<br>may leave you vulnerable or having to live<br>with "
+"bugs."
 msgstr ""
 
 #: src/modules/wizard/page_170.c:53
@@ -9023,7 +9107,7 @@ msgstr "左:"
 msgid "Right:"
 msgstr "右:"
 
-#: src/modules/mixer/app_mixer.c:408 src/modules/mixer/e_mod_main.c:695
+#: src/modules/mixer/app_mixer.c:408 src/modules/mixer/e_mod_main.c:697
 msgid "Mute"
 msgstr "靜音"
 
@@ -9079,8 +9163,20 @@ msgstr ""
 msgid "Mixer Settings Updated"
 msgstr ""
 
-#: src/modules/mixer/e_mod_main.c:1347
+#: src/modules/mixer/e_mod_main.c:1358
 msgid "Mixer Module"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:1393
+msgid "Increase Volume"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:1394
+msgid "Decrease Volume"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:1395
+msgid "Mute Volume"
 msgstr ""
 
 #: src/modules/connman/e_mod_main.c:252
@@ -9097,153 +9193,173 @@ msgstr ""
 msgid "Wifi On"
 msgstr "開啟無線網路"
 
-#: src/modules/systray/e_mod_main.c:914
-msgid "Another systray exists"
-msgstr ""
-
-#: src/modules/systray/e_mod_main.c:915
-msgid "There can be only one systray gadget and another one already exists."
-msgstr ""
-
-#: src/modules/systray/e_mod_main.c:923
+#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:935
 msgid "Systray Error"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:924
+#: src/modules/systray/e_mod_main.c:498
+msgid "Systray cannot set its background invisible to match its shelf."
+msgstr ""
+
+#: src/modules/systray/e_mod_main.c:926
+msgid "Another systray exists"
+msgstr ""
+
+#: src/modules/systray/e_mod_main.c:927
+msgid "There can be only one systray gadget and another one already exists."
+msgstr ""
+
+#: src/modules/systray/e_mod_main.c:936
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:1135
+#: src/modules/systray/e_mod_main.c:1147
 msgid "Systray"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:175 src/modules/shot/e_mod_main.c:209
+#: src/modules/shot/e_mod_main.c:176 src/modules/shot/e_mod_main.c:210
 msgid "Error saving screenshot file"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:176 src/modules/shot/e_mod_main.c:210
+#: src/modules/shot/e_mod_main.c:177 src/modules/shot/e_mod_main.c:211
 #, c-format
 msgid "Path: %s"
 msgstr "路徑: %s"
 
-#: src/modules/shot/e_mod_main.c:227
+#: src/modules/shot/e_mod_main.c:228
 msgid "Error - Unknown format"
 msgstr "錯誤 - 未知的格式"
 
-#: src/modules/shot/e_mod_main.c:228
+#: src/modules/shot/e_mod_main.c:229
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:275
+#: src/modules/shot/e_mod_main.c:276
 msgid "Select screenshot save location"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:385
+#: src/modules/shot/e_mod_main.c:386
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "已上載 %s / %s"
 
-#: src/modules/shot/e_mod_main.c:405
+#: src/modules/shot/e_mod_main.c:406
 msgid "Error - Upload Failed"
 msgstr "錯誤 - 上載失敗"
 
-#: src/modules/shot/e_mod_main.c:406
+#: src/modules/shot/e_mod_main.c:407
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:439
+#: src/modules/shot/e_mod_main.c:451
 msgid "Error - Can't create file"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:440
+#: src/modules/shot/e_mod_main.c:452
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:458
+#: src/modules/shot/e_mod_main.c:470
 msgid "Error - Can't open file"
 msgstr "錯誤 - 無法開啟檔案"
 
-#: src/modules/shot/e_mod_main.c:459
+#: src/modules/shot/e_mod_main.c:471
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:467
+#: src/modules/shot/e_mod_main.c:479
 msgid "Error - Bad size"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:468
+#: src/modules/shot/e_mod_main.c:480
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:478
+#: src/modules/shot/e_mod_main.c:490
 msgid "Error - Can't allocate memory"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:479
+#: src/modules/shot/e_mod_main.c:491
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:486
+#: src/modules/shot/e_mod_main.c:498
 msgid "Error - Can't read picture"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:487
+#: src/modules/shot/e_mod_main.c:499
 msgid "Cannot read picture"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:508
+#: src/modules/shot/e_mod_main.c:520
 msgid "Uploading screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:513
+#: src/modules/shot/e_mod_main.c:525
 msgid "Uploading ..."
 msgstr "上載中..."
 
-#: src/modules/shot/e_mod_main.c:518
+#: src/modules/shot/e_mod_main.c:530
 msgid "Screenshot is available at this location:"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:527
+#: src/modules/shot/e_mod_main.c:539
 msgid "Hide"
 msgstr "隱藏"
 
-#: src/modules/shot/e_mod_main.c:630
+#: src/modules/shot/e_mod_main.c:563
+#, fuzzy
+msgid "Confirm Share"
+msgstr "確定刪除"
+
+#: src/modules/shot/e_mod_main.c:564
+msgid ""
+"This image will be uploaded<br>to enlightenment.org. It will be publicly "
+"visible."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:566
+#, fuzzy
+msgid "Confirm"
+msgstr "設定"
+
+#: src/modules/shot/e_mod_main.c:666
 msgid "Where to put Screenshot..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:686
+#: src/modules/shot/e_mod_main.c:722
 msgid "Perfect"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:763
+#: src/modules/shot/e_mod_main.c:799
 msgid "Share"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:900 src/modules/shot/e_mod_main.c:948
+#: src/modules/shot/e_mod_main.c:936 src/modules/shot/e_mod_main.c:984
 msgid "Take Shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:911 src/modules/shot/e_mod_main.c:941
-#: src/modules/shot/e_mod_main.c:952 src/modules/shot/e_mod_main.c:978
+#: src/modules/shot/e_mod_main.c:947 src/modules/shot/e_mod_main.c:977
+#: src/modules/shot/e_mod_main.c:988 src/modules/shot/e_mod_main.c:1015
 msgid "Take Screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:929
+#: src/modules/shot/e_mod_main.c:965
 msgid "Shot Error"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:930
+#: src/modules/shot/e_mod_main.c:966
 msgid "Cannot initialize network"
 msgstr ""
 
-#: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:723
+#: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:722
 msgid "Tasks"
 msgstr ""
 
@@ -9259,18 +9375,10 @@ msgstr "只顯示圖示"
 msgid "Show text only"
 msgstr "只顯示文字"
 
-#: src/modules/tasks/e_mod_config.c:98
-msgid "Minimum Width"
-msgstr ""
-
 #: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
 #, c-format
 msgid "%1.0f px"
 msgstr "%1.0f 相素"
-
-#: src/modules/tasks/e_mod_config.c:103
-msgid "Minimum Height"
-msgstr ""
 
 #: src/modules/tiling/e_mod_config.c:135
 msgid "columns"
@@ -9300,9 +9408,9 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:3950
-#: src/modules/tiling/e_mod_tiling.c:4014
-#: src/modules/tiling/e_mod_tiling.c:4152
+#: src/modules/tiling/e_mod_tiling.c:4080
+#: src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/tiling/e_mod_tiling.c:4282
 msgid "Tiling"
 msgstr ""
 
@@ -9322,72 +9430,72 @@ msgstr "模式"
 msgid "Label only"
 msgstr ""
 
-#: src/modules/xkbswitch/e_mod_config.c:480
+#: src/modules/xkbswitch/e_mod_config.c:481
 msgid "Add New Configuration"
 msgstr ""
 
-#: src/modules/xkbswitch/e_mod_config.c:493
+#: src/modules/xkbswitch/e_mod_config.c:494
 msgid "Available"
 msgstr ""
 
-#: src/modules/xkbswitch/e_mod_config.c:500
+#: src/modules/xkbswitch/e_mod_config.c:501
 msgid "Model"
 msgstr "模式"
 
-#: src/modules/xkbswitch/e_mod_config.c:507
+#: src/modules/xkbswitch/e_mod_config.c:508
 msgid "Variant"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:64
+#: src/modules/notification/e_mod_main.c:66
 msgid "Enter Presentation Mode"
 msgstr "進入展示模式"
 
-#: src/modules/notification/e_mod_main.c:65
+#: src/modules/notification/e_mod_main.c:67
 msgid ""
 "Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:71
+#: src/modules/notification/e_mod_main.c:73
 msgid "Exited Presentation Mode"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:72
+#: src/modules/notification/e_mod_main.c:74
 msgid ""
 "Presentation mode is over.<br>Now screen saver, lock and power saving "
 "settings will be restored."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:87
+#: src/modules/notification/e_mod_main.c:89
 msgid "Enter Offline Mode"
 msgstr "進入離線模式"
 
-#: src/modules/notification/e_mod_main.c:88
+#: src/modules/notification/e_mod_main.c:90
 msgid ""
 "Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:94
+#: src/modules/notification/e_mod_main.c:96
 msgid "Exited Offline Mode"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:95
+#: src/modules/notification/e_mod_main.c:97
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:170
+#: src/modules/notification/e_mod_main.c:172
 msgid "Notification Module"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:189
+#: src/modules/notification/e_mod_main.c:192
 msgid "Error During DBus Init!"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:190
+#: src/modules/notification/e_mod_main.c:193
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -9444,3 +9552,63 @@ msgstr ""
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
 msgstr ""
+
+#~ msgid "Create a new Directory"
+#~ msgstr "建立新目錄"
+
+#~ msgid "New Directory Name:"
+#~ msgstr "新目錄名稱"
+
+#~ msgid "Read / Write"
+#~ msgstr "可讀/寫"
+
+#~ msgid "1M"
+#~ msgstr "1M"
+
+#~ msgid "2M"
+#~ msgstr "2M"
+
+#~ msgid "4M"
+#~ msgstr "4M"
+
+#~ msgid "8M"
+#~ msgstr "8M"
+
+#~ msgid "16M"
+#~ msgstr "16M"
+
+#~ msgid "32M"
+#~ msgstr "32M"
+
+#~ msgid "64M"
+#~ msgstr "64M"
+
+#~ msgid "128M"
+#~ msgstr "128M"
+
+#~ msgid "256M"
+#~ msgstr "256M"
+
+#~ msgid "30 Seconds"
+#~ msgstr "30 秒"
+
+#~ msgid "1 Minute"
+#~ msgstr "1 分鐘"
+
+#~ msgid "5 Minutes"
+#~ msgstr "5 分鐘"
+
+#~ msgid "30 Minutes"
+#~ msgstr "30 分鐘"
+
+#~ msgid "2 Hours"
+#~ msgstr "2 小時"
+
+#~ msgid "10 Hours"
+#~ msgstr "10 小時"
+
+#~ msgid "Forever"
+#~ msgstr "無限期"
+
+#~ msgid "Open With..."
+#~ msgstr "以特定程式開啟..."

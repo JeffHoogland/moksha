@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-14 14:01-0300\n"
+"POT-Creation-Date: 2012-12-15 23:23+0900\n"
 "PO-Revision-Date: 2012-12-14 14:35-0300\n"
 "Last-Translator: Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -2628,7 +2628,7 @@ msgstr "Utilitários"
 msgid "Files"
 msgstr "Arquivos"
 
-#: src/bin/e_int_config_modules.c:55 src/modules/everything/e_mod_main.c:69
+#: src/bin/e_int_config_modules.c:55 src/modules/everything/e_mod_main.c:58
 msgid "Launcher"
 msgstr "Iniciador"
 
@@ -3974,7 +3974,7 @@ msgstr[1] "%li minutos atrás"
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1119
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1170
 #: src/modules/wizard/page_020.c:24
 msgid "Unknown"
 msgstr "Desconhecido"
@@ -5585,26 +5585,26 @@ msgstr ""
 "ação<br><hilight>%s</hilight>.<br>Por favor escolha outra margem."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1350
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1254
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1286
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1305
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1337
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1259
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1291
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1310
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1342
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1265
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1297
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1348
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1271
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1303
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1354
 msgid "WIN"
 msgstr "WIN"
 
@@ -5993,11 +5993,11 @@ msgstr "Definições da associação do teclado"
 msgid "Key Bindings"
 msgstr "Associações do teclado"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1114
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1165
 msgid "Binding Key Error"
 msgstr "Erro na associação de tecla"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1115
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1166
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -6056,45 +6056,45 @@ msgstr "Contentor"
 msgid "Manager"
 msgstr "Gerenciador"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:737
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:745
 msgid "Mouse Buttons"
 msgstr "Botões do mouse"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:787
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:795
 msgid "Mouse Wheels"
 msgstr "Rodas do mouse"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1159
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1167
 msgid "Left Button"
 msgstr "Botão esquerdo"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1163
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1171
 msgid "Middle Button"
 msgstr "Botão central"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1167
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1175
 msgid "Right Button"
 msgstr "Botão direito"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1177
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1185
 #, c-format
 msgid "Extra Button (%d)"
 msgstr "Botão extra (%d)"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1193
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1201
 msgid "Mouse Wheel Up"
 msgstr "Roda do mouse para cima"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1195
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1203
 msgid "Mouse Wheel Down"
 msgstr "Roda do mouse para baixo"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1199
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1207
 #, c-format
 msgid "Extra Wheel (%d) Up"
 msgstr "Roda extra (%d) para cima"
 
-#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1201
+#: src/modules/conf_keybindings/e_int_config_mousebindings.c:1209
 #, c-format
 msgid "Extra Wheel (%d) Down"
 msgstr "Roda extra (%d) para baixo"
@@ -7773,7 +7773,7 @@ msgstr "Erro de Permissões Cpufreq"
 #, c-format
 msgid ""
 "The freqset binary in the cpufreq module<br>is not owned by root or does not "
-"have the<br>setuid bit set. Please ensure this is the<brcase. For example:"
+"have the<br>setuid bit set. Please ensure this is the<br>case. For example:"
 "<br><br>sudo chown root %s<br>sudo chmod u+s,a+x %s<br>"
 msgstr ""
 
@@ -7869,29 +7869,29 @@ msgstr "Muito leve"
 msgid "Dropshadow"
 msgstr "Sombra"
 
-#: src/modules/everything/e_mod_main.c:60
-#: src/modules/everything/e_mod_main.c:210
-#: src/modules/everything/evry_plugin.c:180
+#: src/modules/everything/e_mod_main.c:49
+#: src/modules/everything/e_mod_main.c:198
+#: src/modules/everything/evry_plugin.c:179
 msgid "Everything Launcher"
 msgstr "Everything - Lançador"
 
-#: src/modules/everything/e_mod_main.c:61
+#: src/modules/everything/e_mod_main.c:50
 msgid "Show Everything Launcher"
 msgstr "Mostrar Everything - Lançador"
 
-#: src/modules/everything/e_mod_main.c:75
+#: src/modules/everything/e_mod_main.c:64
 msgid "Everything Configuration"
 msgstr "Everything - Configuração"
 
-#: src/modules/everything/e_mod_main.c:211
+#: src/modules/everything/e_mod_main.c:199
 msgid "Show Everything Dialog"
 msgstr "Mostrar diálogos Everything"
 
-#: src/modules/everything/e_mod_main.c:420
+#: src/modules/everything/e_mod_main.c:408
 msgid "Everything Module"
 msgstr "Módulo Everything"
 
-#: src/modules/everything/e_mod_main.c:620
+#: src/modules/everything/e_mod_main.c:608
 msgid "Run Everything"
 msgstr "Executar Everything"
 
@@ -8219,18 +8219,18 @@ msgstr "Tela cheia"
 msgid "Send to Desktop"
 msgstr "Enviar para a área de trabalho"
 
-#: src/modules/everything/evry_plugin.c:178
-#: src/modules/everything/evry_plugin.c:211
+#: src/modules/everything/evry_plugin.c:177
+#: src/modules/everything/evry_plugin.c:208
 #, c-format
 msgid "Show %s Plugin"
 msgstr "Mostrar plugin %s"
 
-#: src/modules/everything/evry_plugin.c:188
+#: src/modules/everything/evry_plugin.c:187
 #, c-format
 msgid "Browse %s"
 msgstr "Explorar %s"
 
-#: src/modules/everything/evry_plugin.c:213
+#: src/modules/everything/evry_plugin.c:210
 msgid "Everything"
 msgstr "Everything"
 
