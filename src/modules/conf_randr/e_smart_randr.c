@@ -371,7 +371,6 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
     * 
     * This current apply routine does NOT account for:
     * 
-    * toggle enabled state
     * unassigned output, crtc
     * cloning
     * use e_randr_serialized_setup
