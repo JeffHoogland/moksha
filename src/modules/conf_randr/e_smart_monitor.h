@@ -21,8 +21,12 @@ void e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output);
 E_Randr_Output_Info *e_smart_monitor_output_get(Evas_Object *obj);
 void e_smart_monitor_layout_set(Evas_Object *obj, Evas_Object *layout);
 Evas_Object *e_smart_monitor_layout_get(Evas_Object *obj);
-void e_smart_monitor_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
-void e_smart_monitor_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
+void e_smart_monitor_setup(Evas_Object *obj);
+E_Smart_Monitor_Changes e_smart_monitor_changes_get(Evas_Object *obj);
+void e_smart_monitor_changes_reset(Evas_Object *obj);
+void e_smart_monitor_current_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
+void e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon);
+void e_smart_monitor_drop_zone_set(Evas_Object *obj, Eina_Bool can_drop);
 
 # endif
 #endif
