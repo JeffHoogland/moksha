@@ -2,8 +2,10 @@
 Type=Application
 Name=XTerm
 GenericName=Terminal
+GenericName[eo]=Terminalo
 GenericName[ru]=Терминал
 Comment=Run commands in a shell
+Comment[eo]=Lanĉi komandojn en ĉelo
 Comment[es]=Ejecute comandos en una consola
 Comment[gl]=Execute comandos nunha consola
 Comment[it]=Esegue comandi in una shell

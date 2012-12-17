@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=Default
-Name[ru]=По умолчанию
 Name[cs]=Výchozí
+Name[eo]=Default
 Name[es]=Predefinido
 Name[gl]=Predefinido
 Name[it]=Predefinito
@@ -12,12 +12,14 @@ Name[el]=Προκαθορισμένο
 Name[eo]=Pravaloroj
 Name[zh_CN]=默认
 Name[pt]=Predefinições
+Name[ru]=По умолчанию
 Name[tr]=Öntanımlı
 Name[ko]=기본
 Icon=enlightenment-default
 Comment=Select this to begin the initial setup again.
 Comment[ru]=Выберите этот пункт, чтобы начать настройку сначала.
 Comment[cs]=Vyberte pro znovuspuštění<br>tohoto průvodce.
+Comment[eo]=Elektu tiun ĉi por ekigi komencan agordadon.
 Comment[es]=Seleccione esto para volver a la configuración inicial.
 Comment[gl]=Seleccione isto para voltar á configuración inicial.
 Comment[it]=Selezionare questo per riprendere la<br>configurazione iniziale.

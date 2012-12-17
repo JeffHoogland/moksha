@@ -2,11 +2,13 @@
 Type=Application
 Name=MPlayer
 GenericName=Movie Player
+GenericName[eo]=Ludilo de videoj
 GenericName[es]=Reproductor de vídeo
 GenericName[gl]=Reprodutor de vídeo
 GenericName[pt]=Reprodutor multimédia
 GenericName[ru]=Видеоплеер
 Comment=Watch movies and videos
+Comment[eo]=Por spekti filmojn kaj videojn
 Comment[es]=Para ver películas y vídeos
 Comment[gl]=Para ver películas e vídeos
 Comment[it]=Per guardare filmati e video

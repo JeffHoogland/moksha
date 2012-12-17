@@ -1,8 +1,10 @@
 [Desktop Entry]
 Name=Temp
+Name[eo]=Dumtempaj
 Name[pt]=Temporários
 Name[ru]=Временный каталог
 Comment=Temporary files
+Comment[eo]=Dumtempaj dosieroj
 Comment[es]=Archivos temporales
 Comment[fr]=Les fichiers temporaires
 Comment[gl]=Ficheiros temporais

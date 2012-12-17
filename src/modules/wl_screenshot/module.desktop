@@ -1,11 +1,13 @@
 [Desktop Entry]
 Type=Link
 Name=Wayland Screenshot
+Name[eo]=Ekrankopiilo de Wayland
 Name[es]=Wayland Capturador de pantalla
 Name[gl]=Wayland Capturador de pantalla
 Name[pt]=Wayland - Captura de ecrã
 Icon=e-module-wl_screenshot.edj
 Comment=Enlightenment Wayland Screenshot Module
+Comment[eo]=Modulo de Enlightenment por ekrankopii en Wayland
 Comment[es]=Módulo de Enlightenment para capturar la pantalla en Wayland
 Comment[gl]=Módulo de Enlightenment para capturar a pantalla en Wayland
 Comment[it]=Modulo di Enlightenment per screenshot in Wayland

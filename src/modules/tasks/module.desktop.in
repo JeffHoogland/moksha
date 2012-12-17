@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Tasks
+Name[eo]=Taskoj
 Name[es]=Tareas
 Name[fr]=Tâches
 Name[gl]=Tarefas
@@ -9,6 +10,7 @@ Name[ru]=Задачи
 Icon=e-module-tasks
 X-Enlightenment-ModuleType=utils
 Comment=Gadget to allow you to switch tasks
+Comment[eo]=Akcesoraĵo kiu permesas baskuli taskojn
 Comment[es]=Módulo que le permite el cambio entre tareas.
 Comment[fr]=Ce gadget vous permet de passer d'une tâche à une autre.
 Comment[gl]=Módulo que lle permite o troco de tarefas.

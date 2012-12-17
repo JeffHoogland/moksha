@@ -1,7 +1,9 @@
 [Desktop Entry]
 Name=Root
+Name[eo]=Radiko
 Name[ru]=Корневой каталог
 Comment=The Root Filesystem base
+Comment[eo]=La radika dosiersistemo
 Comment[es]=El sistema de archivos root
 Comment[fr]=Le système de fichiers à la base
 Comment[gl]=O sistema de ficheiros root

@@ -1,11 +1,13 @@
 [Desktop Entry]
 Name=Desktop
+Name[eo]=Labortablo
 Name[es]=Escritorio
 Name[fr]=Bureau
 Name[gl]=Escritorio
 Name[pt]=Área de trabalho
 Name[ru]=Рабочий стол
 Comment=Files on your Desktop
+Comment[eo]=Dosieroj sur via labortablo
 Comment[es]=Los archivos en su escritorio
 Comment[fr]=Les fichiers sur votre bureau
 Comment[gl]=Os ficheiros no seu escritorio

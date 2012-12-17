@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Computer (Standard Enlightenment)
+Name[eo]=Komputilo (kutima Enlightenment)
 Name[es]=Ordenador (Enlightenment estándar)
 Name[fr]=Ordinateur (Enlightenment standard)
 Name[gl]=Ordenador (Enlightenment estándar)
@@ -10,6 +11,7 @@ Name[ru]=Компьютер (Стандартный Enlightenment)
 Name[ko]=컴퓨터 (표준 Enlightenment)
 Icon=enlightenment-standard
 Comment=Configuration for devices with keyboards and mice<br>like your average PC Desktop, Laptop or Netbook<br>with Enlightenment's traditional keyboard bindings<br>and mouse controls.
+Comment[eo]=Agordoj por aparatoj kun klavaro kaj muso<br>samkiel via kutima PC aŭ portebla komputilo<br>kun kutima klavaraj bindaĵoj de Enlightenment kaj musaj kontroloj. 
 Comment[es]=Configuración para dispositivos con teclado y<br>ratón, como puede ser un PC de escritorio, portátil o Netbook,<br>con las asociaciones de teclado y ratón<br>tradicionales de Enlightenment. 
 Comment[fr]=Configuration pour les machines avec clavier et<br>souris comme les PC de bureau et les portables,<br>offrant raccourcis et contrôles traditionnels.
 Comment[gl]=Configuración para dispositivos con teclado e<br>rato, tal como un PC de escritorio, portátil ou Netbook,<br>coas asociacións de teclado e rato<br>tradicionais de Enlightenment.

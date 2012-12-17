@@ -1,10 +1,12 @@
 [Desktop Entry]
 Name=Home
+Name[eo]=Hejmo
 Name[es]=Carpeta personal
 Name[gl]=Cartafol persoal
 Name[pt]=Pasta pessoal
 Name[ru]=Домашний каталог
 Comment=The Directory containing all your personal files
+Comment[eo]=La dosierujo enhavante viajn proprajn dosieroj
 Comment[es]=El directorio que contiene todos sus archivos personales
 Comment[fr]=Le dossier contenant vos fichiers personnels
 Comment[gl]=O directorio que contén tódolos seus ficheiros persoais
