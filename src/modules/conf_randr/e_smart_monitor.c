@@ -6,6 +6,9 @@
 typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
 {
+   /* reference to the actual canvas */
+   Evas *evas;
+
    /* object geometry */
    Evas_Coord x, y, w, h;
 
@@ -20,6 +23,9 @@ struct _E_Smart_Data
 
    /* thumbnail object */
    Evas_Object *o_thumb;
+
+   /* refresh rate object */
+   Evas_Object *o_refresh;
 
    /* changed flag */
    Eina_Bool changed : 1;
@@ -51,6 +57,9 @@ struct _E_Smart_Data
         int w, h;
      } min, max;
 
+   /* refresh rate */
+   int refresh_rate;
+
    /* reference to the RandR Output Info */
    E_Randr_Output_Info *output;
 
@@ -61,8 +70,6 @@ struct _E_Smart_Data
         Evas_Coord x, y; /* the layout widget's position */
         Evas_Coord vw, vh; /* the layout widget's virtual size */
      } layout;
-
-   /* Evas_Object *o_layout; */
 
    /* reference to the Container number */
    int con_num;
@@ -81,6 +88,7 @@ static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 
+static void _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd);
 static void _e_smart_monitor_modes_fill(E_Smart_Data *sd);
 static int _e_smart_monitor_modes_sort(const void *data1, const void *data2);
 static void _e_smart_monitor_background_set(E_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy);
@@ -232,7 +240,10 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
    else
      edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
 
-   /* with the background all setup, calculate the smallest frame width */
+   /* fill in list of refresh rates */
+   _e_smart_monitor_refresh_rates_fill(sd);
+
+   /* with everything all setup, calculate the smallest frame width */
    edje_object_size_min_get(sd->o_frame, &fw, &fh);
 
    if (sd->layout.obj)
@@ -310,22 +321,21 @@ static void
 _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   Evas *evas;
 
    /* try to allocate the smart data structure */
    if (!(sd = E_NEW(E_Smart_Data, 1))) return;
 
    /* grab the canvas */
-   evas = evas_object_evas_get(obj);
+   sd->evas = evas_object_evas_get(obj);
 
    /* create the base object */
-   sd->o_base = edje_object_add(evas);
+   sd->o_base = edje_object_add(sd->evas);
    e_theme_edje_object_set(sd->o_base, "base/theme/widgets", 
                            "e/conf/randr/main/monitor");
    evas_object_smart_member_add(sd->o_base, obj);
 
    /* create monitor 'frame' */
-   sd->o_frame = edje_object_add(evas);
+   sd->o_frame = edje_object_add(sd->evas);
    e_theme_edje_object_set(sd->o_frame, "base/theme/widgets", 
                            "e/conf/randr/main/frame");
    edje_object_part_swallow(sd->o_base, "e.swallow.frame", sd->o_frame);
@@ -333,7 +343,7 @@ _e_smart_add(Evas_Object *obj)
                                   _e_smart_monitor_frame_cb_mouse_move, obj);
 
    /* create the preview */
-   sd->o_thumb = e_livethumb_add(evas);
+   sd->o_thumb = e_livethumb_add(sd->evas);
    edje_object_part_swallow(sd->o_frame, "e.swallow.preview", sd->o_thumb);
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_IN, 
                                   _e_smart_monitor_thumb_cb_mouse_in, NULL);
@@ -345,7 +355,7 @@ _e_smart_add(Evas_Object *obj)
                                   _e_smart_monitor_thumb_cb_mouse_down, obj);
 
    /* create monitor stand */
-   sd->o_stand = edje_object_add(evas);
+   sd->o_stand = edje_object_add(sd->evas);
    e_theme_edje_object_set(sd->o_stand, "base/theme/widgets", 
                            "e/conf/randr/main/stand");
    edje_object_part_swallow(sd->o_base, "e.swallow.stand", sd->o_stand);
@@ -550,6 +560,25 @@ _e_smart_clip_unset(Evas_Object *obj)
    if (sd->o_stand) evas_object_clip_unset(sd->o_stand);
    if (sd->o_frame) evas_object_clip_unset(sd->o_frame);
    if (sd->o_base) evas_object_clip_unset(sd->o_base);
+}
+
+static void 
+_e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd)
+{
+   E_Radio_Group *rg;
+
+   if (sd->o_refresh)
+     {
+        /* remove the old refresh list */
+        edje_object_part_unswallow(sd->o_frame, sd->o_refresh);
+        evas_object_del(sd->o_refresh);
+     }
+
+   /* create new refresh list widget */
+   sd->o_refresh = e_widget_list_add(sd->evas, 0, 0);
+
+   /* create radio group for rates */
+   rg = e_widget_radio_group_new(&sd->refresh_rate);
 }
 
 static void 
