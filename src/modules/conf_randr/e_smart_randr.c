@@ -104,26 +104,26 @@ e_smart_randr_monitors_create(Evas_Object *obj)
         Eina_List *ll;
         E_Randr_Output_Info *output;
 
-        printf("Checking Crtc: %d\n", crtc->xid);
-        printf("\tGeom: %d %d %d %d\n", crtc->geometry.x, 
-               crtc->geometry.y, crtc->geometry.w, crtc->geometry.h);
+        /* printf("Checking Crtc: %d\n", crtc->xid); */
+        /* printf("\tGeom: %d %d %d %d\n", crtc->geometry.x,  */
+        /*        crtc->geometry.y, crtc->geometry.w, crtc->geometry.h); */
 
         /* loop the outputs on this crtc */
         EINA_LIST_FOREACH(crtc->outputs, ll, output)
           {
-             printf("\tChecking Output: %d %s\n", output->xid, output->name);
+             /* printf("\tChecking Output: %d %s\n", output->xid, output->name); */
 
-             printf("\tOutput Policy: %d\n", output->policy);
+             /* printf("\tOutput Policy: %d\n", output->policy); */
 
-             if (output->wired_clones)
-               printf("\tHAS WIRED CLONES !!\n");
+             /* if (output->wired_clones) */
+             /*   printf("\tHAS WIRED CLONES !!\n"); */
 
              if (output->connection_status == 
                  ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
                {
                   Evas_Object *mon;
 
-                  printf("\t\tConnected\n");
+                  /* printf("\t\tConnected\n"); */
                   if ((mon = e_smart_monitor_add(evas)))
                     {
                        /* add this monitor to the layout */
@@ -152,30 +152,24 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                                              crtc->geometry.h);
                     }
                }
-
-             /* else if (output->connection_status ==  */
-             /*          ECORE_X_RANDR_CONNECTION_STATUS_DISCONNECTED) */
-             /*   printf("\t\tDisconnected\n"); */
-             /* else */
-             /*   printf("\t\tUnknown\n"); */
           }
 
         /* loop possible outputs on this crtc */
-        EINA_LIST_FOREACH(crtc->possible_outputs, ll, output)
-          {
-             printf("\tChecking Possible Output: %d\n", output->xid);
-             if (output->connection_status == 
-                 ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
-               printf("\t\tConnected\n");
-             else if (output->connection_status == 
-                      ECORE_X_RANDR_CONNECTION_STATUS_DISCONNECTED)
-               printf("\t\tDisconnected\n");
-             else
-               printf("\t\tUnknown\n");
+        /* EINA_LIST_FOREACH(crtc->possible_outputs, ll, output) */
+        /*   { */
+        /*      printf("\tChecking Possible Output: %d\n", output->xid); */
+        /*      if (output->connection_status ==  */
+        /*          ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED) */
+        /*        printf("\t\tConnected\n"); */
+        /*      else if (output->connection_status ==  */
+        /*               ECORE_X_RANDR_CONNECTION_STATUS_DISCONNECTED) */
+        /*        printf("\t\tDisconnected\n"); */
+        /*      else */
+        /*        printf("\t\tUnknown\n"); */
 
-             if (output->monitor)
-               printf("\tHas Monitor\n");
-          }
+        /*      if (output->monitor) */
+        /*        printf("\tHas Monitor\n"); */
+        /*   } */
      }
 }
 
