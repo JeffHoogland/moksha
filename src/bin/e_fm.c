@@ -1619,6 +1619,7 @@ e_fm2_icons_update(Evas_Object *obj)
 
    EFM_SMART_CHECK();
 
+   if ((!sd->realpath) || (!sd->icons)) return;
    bufused = eina_strlcpy(buf, sd->realpath, sizeof(buf));
    if (bufused >= (int)(sizeof(buf) - 2))
      return;
