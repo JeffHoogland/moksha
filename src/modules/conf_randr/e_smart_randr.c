@@ -33,6 +33,8 @@ static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_randr_changed_set(Evas_Object *obj);
+static int _e_smart_randr_modes_sort(const void *data1, const void *data2);
+
 static Evas_Object *_e_smart_randr_monitor_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc xid);
 
 static void _e_smart_randr_monitor_adjacent_move(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip);
@@ -82,8 +84,33 @@ e_smart_randr_layout_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    /* loop the crtcs, checking for valid output */
    EINA_LIST_FOREACH(E_RANDR_12->crtcs, l, crtc)
      {
-        mw += crtc->geometry.w;
-        mh += crtc->geometry.h;
+        Eina_List *ll;
+        E_Randr_Output_Info *output;
+
+        /* loop the outputs on this crtc */
+        EINA_LIST_FOREACH(crtc->outputs, ll, output)
+          {
+             Eina_List *modes = NULL;
+             Ecore_X_Randr_Mode_Info *mode = NULL;
+
+             /* check for valid monitor */
+             if (!output->monitor) continue;
+
+             /* try to get the list of modes */
+             if (!(modes = eina_list_clone(output->monitor->modes)))
+               continue;
+
+             /* sort the list of modes */
+             modes = eina_list_sort(modes, 0, _e_smart_randr_modes_sort);
+
+             /* get last mode */
+             if ((mode = eina_list_last_data_get(modes)))
+               {
+                  /* grab max mode size and add to return value */
+                  mw += mode->width;
+                  mh += mode->height;
+               }
+          }
      }
 
    if (w) *w = mw;
@@ -347,6 +374,7 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
     * toggle enabled state
     * unassigned output, crtc
     * cloning
+    * use e_randr_serialized_setup
     */
 
    /* try to get the objects smart data */
@@ -608,6 +636,28 @@ _e_smart_randr_changed_set(Evas_Object *obj)
 
    /* send changed signal to main dialog */
    evas_object_smart_callback_call(obj, "changed", NULL);
+}
+
+static int 
+_e_smart_randr_modes_sort(const void *data1, const void *data2)
+{
+   const Ecore_X_Randr_Mode_Info *m1, *m2 = NULL;
+
+   if (!(m1 = data1)) return 1;
+   if (!(m2 = data2)) return -1;
+
+   /* second one compares to previous to determine position */
+   if (m2->width < m1->width) return 1;
+   if (m2->width > m1->width) return -1;
+
+   /* width are same, compare heights */
+   if ((m2->width == m1->width))
+     {
+        if (m2->height < m1->height) return 1;
+        if (m2->height > m1->height) return -1;
+     }
+
+   return 1;
 }
 
 static Evas_Object *
