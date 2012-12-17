@@ -129,9 +129,7 @@ _e_event_config_loaded_cb(void *data __UNUSED__, int type, void *ev __UNUSED__)
 {
    if (type != E_EVENT_CONFIG_LOADED) return EINA_TRUE;
 
-   _try_restore_configuration();
-
-   return EINA_FALSE;
+   return e_randr_try_restore_configuration();
 }
 
 static void
