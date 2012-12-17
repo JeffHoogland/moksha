@@ -454,6 +454,8 @@ e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon)
    /* try to get the objects smart data */
    if (!(msd = evas_object_smart_data_get(mon))) return;
 
+   /* printf("Clone Add\n"); */
+
    /* set cloned flag */
    msd->cloned = EINA_TRUE;
 
@@ -462,6 +464,7 @@ e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon)
 
    /* grab size of monitor's frame */
    evas_object_geometry_get(msd->o_frame, NULL, NULL, &mw, &mh);
+   /* printf("\tFrame Size: %d %d\n", mw, mh); */
 
    /* hide this monitor */
    evas_object_hide(mon);
@@ -528,6 +531,7 @@ e_smart_monitor_clone_del(Evas_Object *obj, Evas_Object *mon)
 {
    E_Smart_Data *osd, *msd;
    Evas_Object *o;
+   Evas_Coord x = 0, y = 0, w = 0, h = 0;
 
    /* try to get the objects smart data */
    if (!(osd = evas_object_smart_data_get(obj))) return;
@@ -560,6 +564,7 @@ e_smart_monitor_clone_del(Evas_Object *obj, Evas_Object *mon)
         evas_object_resize(o, mw, mh);
      }
 
+   /* show the monitor */
    evas_object_show(mon);
 
    /* set cloned flag */
@@ -568,11 +573,33 @@ e_smart_monitor_clone_del(Evas_Object *obj, Evas_Object *mon)
    /* set parent object */
    msd->parent = NULL;
 
+   x = msd->cx;
+   y = msd->cy;
+   w = msd->cw;
+   h = msd->ch;
+
+   /* safety check for valid values.
+    * 
+    * NB: Needed in the case that we have no previous setup, we are in a clone 
+    * situation (from X), and we were not manually moved */
+   if ((msd->cw == 0) || (msd->ch == 0))
+     {
+        if ((msd->output->crtc))
+          {
+             x = msd->output->crtc->geometry.x + msd->layout.x;
+             y = msd->output->crtc->geometry.y + msd->layout.y;
+             w = msd->output->crtc->geometry.w;
+             h = msd->output->crtc->geometry.h;
+          }
+     }
+
+   /* printf("Unclone To: %d %d %d %d\n", x, y, w, h); */
+
    /* restore to starting size */
-   e_layout_child_resize(mon, msd->cw, msd->ch);
+   e_layout_child_resize(mon, w, h);
 
    /* restore to starting position */
-   e_layout_child_move(mon, msd->cx, msd->cy);
+   e_layout_child_move(mon, x, y);
 }
 
 void 
@@ -767,12 +794,16 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 
    if ((sd->x == x) && (sd->y == y)) return;
 
+   /* if ((sd->output) && (sd->output->crtc)) */
+   /*   printf("Smart Mon Move: %d\n", sd->output->crtc->xid); */
+
    sd->x = x;
    sd->y = y;
 
    /* move the base object */
    if (sd->o_base) evas_object_move(sd->o_base, x, y);
 
+   /* if we are not visible, no need to update map */
    if (!sd->visible) return;
 
    /* apply any existing rotation */
@@ -789,12 +820,16 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    if ((sd->w == h) && (sd->w == h)) return;
 
+   /* if ((sd->output) && (sd->output->crtc)) */
+   /*   printf("Smart Mon Resize: %d\n", sd->output->crtc->xid); */
+
    sd->w = w;
    sd->h = h;
 
    /* resize the base object */
    if (sd->o_base) evas_object_resize(sd->o_base, w, h);
 
+   /* if we are not visible, no need to update map */
    if (!sd->visible) return;
 
    /* apply any existing rotation */
@@ -810,7 +845,10 @@ _e_smart_show(Evas_Object *obj)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* if it is already visible, get out */
-   if (sd->visible) return;
+//   if (sd->visible) return;
+
+   /* if ((sd->output) && (sd->output->crtc)) */
+   /*   printf("Smart Mon Show: %d\n", sd->output->crtc->xid); */
 
    /* show the stand */
    if (sd->o_stand) evas_object_show(sd->o_stand);
@@ -834,7 +872,10 @@ _e_smart_hide(Evas_Object *obj)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* if it is not visible, we have nothing to do */
-   if (!sd->visible) return;
+//   if (!sd->visible) return;
+
+   /* if ((sd->output) && (sd->output->crtc)) */
+   /*   printf("Smart Mon Hide: %d\n", sd->output->crtc->xid); */
 
    /* hide the stand */
    if (sd->o_stand) evas_object_hide(sd->o_stand);
