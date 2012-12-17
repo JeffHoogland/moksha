@@ -32,6 +32,7 @@ static void _e_smart_show(Evas_Object *obj);
 static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
+static void _e_smart_randr_changed_set(Evas_Object *obj);
 
 static void _e_smart_randr_monitor_adjacent_move(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip);
 
@@ -41,6 +42,7 @@ static void _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *
 static void _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA_UNUSED);
 static void _e_smart_randr_monitor_cb_rotated(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 static void _e_smart_randr_monitor_cb_deleted(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -194,6 +196,8 @@ e_smart_randr_monitor_add(Evas_Object *obj, Evas_Object *mon)
                                   _e_smart_randr_monitor_cb_resized, obj);
    evas_object_smart_callback_add(mon, "monitor_rotated", 
                                   _e_smart_randr_monitor_cb_rotated, obj);
+   evas_object_smart_callback_add(mon, "monitor_changed", 
+                                  _e_smart_randr_monitor_cb_changed, obj);
 
    /* add listener for monitor delete event */
    evas_object_event_callback_add(mon, EVAS_CALLBACK_DEL, 
@@ -228,6 +232,8 @@ e_smart_randr_monitor_del(Evas_Object *obj, Evas_Object *mon)
                                   _e_smart_randr_monitor_cb_resized);
    evas_object_smart_callback_del(mon, "monitor_rotated", 
                                   _e_smart_randr_monitor_cb_rotated);
+   evas_object_smart_callback_del(mon, "monitor_changed", 
+                                  _e_smart_randr_monitor_cb_changed);
 
    /* delete listener for monitor delete event */
    evas_object_event_callback_del(mon, EVAS_CALLBACK_DEL, 
@@ -238,6 +244,131 @@ e_smart_randr_monitor_del(Evas_Object *obj, Evas_Object *mon)
 
    /* add this monitor to our list */
    sd->monitors = eina_list_remove(sd->monitors, mon);
+}
+
+Eina_Bool 
+e_smart_randr_changed_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
+
+   return sd->changed;
+}
+
+void 
+e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
+{
+   E_Smart_Data *sd;
+   Eina_List *l = NULL;
+   Evas_Object *mon = NULL;
+   Eina_Bool reset = EINA_FALSE;
+
+   /* TODO: FIXME: !!!
+    * 
+    * This current apply routine does NOT account for:
+    * 
+    * toggle enabled state
+    * unassigned output, crtc
+    * cloning
+    */
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* loop the list of monitors */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        E_Randr_Output_Info *output;
+        E_Randr_Crtc_Info *crtc;
+
+        E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
+
+        /* get the changes for this monitor */
+        changes = e_smart_monitor_changes_get(mon);
+
+        /* if nothing changed, skip it */
+        if (changes <= E_SMART_MONITOR_CHANGED_NONE) continue;
+
+        /* get the monitors output */
+        output = e_smart_monitor_output_get(mon);
+
+        /* get the outputs crtc */
+        crtc = output->crtc;
+
+        /* apply any changes to position */
+        if (changes & E_SMART_MONITOR_CHANGED_POSITION)
+          {
+             if (crtc)
+               {
+                  Evas_Coord mx = 0, my = 0;
+
+                  /* get current position */
+                  e_smart_monitor_current_geometry_get(mon, &mx, &my, 
+                                                       NULL, NULL);
+
+                  /* apply new position */
+                  ecore_x_randr_crtc_pos_set(root, crtc->xid, mx, my);
+
+                  /* set reset flag */
+                  reset = EINA_TRUE;
+               }
+          }
+
+        /* apply any changes to rotation */
+        if (changes & E_SMART_MONITOR_CHANGED_ROTATION)
+          {
+             if (crtc)
+               {
+                  Ecore_X_Randr_Orientation orient;
+
+                  /* get the current orientation */
+                  orient = e_smart_monitor_current_orientation_get(mon);
+
+                  /* apply orientation change */
+                  ecore_x_randr_crtc_orientation_set(root, crtc->xid, orient);
+
+                  /* set reset flag */
+                  reset = EINA_TRUE;
+               }
+          }
+
+        /* apply any changes to refresh rate or resolution */
+        if ((changes & E_SMART_MONITOR_CHANGED_REFRESH) || 
+            (changes & E_SMART_MONITOR_CHANGED_RESOLUTION))
+          {
+             if (crtc)
+               {
+                  Ecore_X_Randr_Mode_Info *mode = NULL;
+                  Ecore_X_Randr_Output *outputs = NULL;
+                  int noutputs = -1;
+
+                  if (output) outputs = &output->xid;
+                  if ((crtc) && (crtc->outputs))
+                    noutputs = eina_list_count(crtc->outputs);
+
+                  /* get the current mode */
+                  if (!(mode = e_smart_monitor_current_mode_get(mon)))
+                    continue;
+
+                  /* apply mode change */
+                  ecore_x_randr_crtc_mode_set(root, crtc->xid, 
+                                              outputs, noutputs, mode->xid);
+
+                  /* set reset flag */
+                  reset = EINA_TRUE;
+               }
+          }
+
+        /* monitors changes have been sent. Signal this monitor so that 
+         * we can reset the 'original' values to the 'current' values 
+         * and reset the 'changes' variable */
+        if (reset) e_smart_monitor_changes_reset(mon);
+     }
+
+   /* tell ecore_x to reset the screen */
+   if (reset) ecore_x_randr_screen_reset(root);
 }
 
 /* local functions */
@@ -376,6 +507,36 @@ _e_smart_clip_unset(Evas_Object *obj)
 }
 
 static void 
+_e_smart_randr_changed_set(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   Evas_Object *mon = NULL;
+   Eina_List *l = NULL;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* default changed flag */
+   sd->changed = EINA_FALSE;
+
+   /* loop list of monitors */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
+
+        changes = e_smart_monitor_changes_get(mon);
+        if (changes > E_SMART_MONITOR_CHANGED_NONE)
+          {
+             sd->changed = EINA_TRUE;
+             break;
+          }
+     }
+
+   /* send changed signal to main dialog */
+   evas_object_smart_callback_call(obj, "changed", NULL);
+}
+
+static void 
 _e_smart_randr_monitor_adjacent_move(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip)
 {
    Eina_List *l = NULL;
@@ -402,7 +563,6 @@ _e_smart_randr_monitor_adjacent_move(E_Smart_Data *sd, Evas_Object *obj, Evas_Ob
         /* check if this monitor is adjacent to the original one, 
          * if it is, then we need to move it */
         if ((m.x == o.x) || (m.y == o.y))
-        /* if ((m.x == (o.x + o.w)) || (m.y == (o.y + o.h))) */
           {
              if ((m.x == o.x))
                {
@@ -443,6 +603,9 @@ _e_smart_randr_monitor_cb_moving(void *data, Evas_Object *obj, void *event EINA_
    /* try to get the RandR objects smart data */
    if (!(sd = evas_object_smart_data_get(o_randr))) return;
 
+   /* NB FIXME: Hmmmm, this may need to use the geometry of the actual 
+    * frame object for comparison */
+
    /* get the current geometry of the monitor we were passed in */
    e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
 
@@ -458,7 +621,7 @@ _e_smart_randr_monitor_cb_moving(void *data, Evas_Object *obj, void *event EINA_
         e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
 
         /* check if the moved monitor is inside an existing one */
-        if (E_CONTAINS(m.x, m.y, m.w, m.h, o.x, o.y, o.w, o.h))
+        if (E_INSIDE(o.x, o.y, m.x, m.y, m.w, m.h))
           {
              /* turn on the drop zone so tell user they can drop here */
              e_smart_monitor_drop_zone_set(mon, EINA_TRUE);
@@ -505,16 +668,20 @@ _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_U
         e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
 
         /* check if the moved monitor is inside an existing one */
-        if (E_CONTAINS(m.x, m.y, m.w, m.h, o.x, o.y, o.w, o.h))
+        if (E_INSIDE(o.x, o.y, m.x, m.y, m.w, m.h))
           {
              /* clone this monitor into the obj monitor */
              e_smart_monitor_clone_add(mon, obj);
 
-             /* emit signal to turn off drop zone */
+             /* emit signal to turn off drop zone hilight */
              e_smart_monitor_drop_zone_set(mon, EINA_FALSE);
+
              break;
           }
      }
+
+   /* tell randr widget about changes */
+   _e_smart_randr_changed_set(o_randr);
 }
 
 /* callback received from a monitor object to let us know that it was resized, 
@@ -555,6 +722,9 @@ _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA
 
    /* thaw the layout widget, allowing redraws again */
    e_layout_thaw(sd->o_layout);
+
+   /* tell randr widget about changes */
+   _e_smart_randr_changed_set(o_randr);
 }
 
 /* callback received from a monitor object to let us know that it was rotated, 
@@ -562,8 +732,6 @@ _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA
 static void 
 _e_smart_randr_monitor_cb_rotated(void *data, Evas_Object *obj, void *event EINA_UNUSED)
 {
-   printf("RandR Monitor Rotated\n");
-
    Evas_Object *o_randr = NULL;
    E_Smart_Data *sd;
    Eina_List *l = NULL;
@@ -598,7 +766,8 @@ _e_smart_randr_monitor_cb_rotated(void *data, Evas_Object *obj, void *event EINA
    /* thaw the layout widget, allowing redraws again */
    e_layout_thaw(sd->o_layout);
 
-   /* TODO: code me */
+   /* tell randr widget about changes */
+   _e_smart_randr_changed_set(o_randr);
 }
 
 static void 
@@ -613,4 +782,18 @@ _e_smart_randr_monitor_cb_deleted(void *data EINA_UNUSED, Evas *evas EINA_UNUSED
                                   _e_smart_randr_monitor_cb_resized);
    evas_object_smart_callback_del(obj, "monitor_rotated", 
                                   _e_smart_randr_monitor_cb_rotated);
+   evas_object_smart_callback_del(obj, "monitor_changed", 
+                                  _e_smart_randr_monitor_cb_changed);
+}
+
+static void 
+_e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+{
+   Evas_Object *o_randr = NULL;
+
+   /* data is the randr object */
+   if (!(o_randr = data)) return;
+
+   /* tell randr widget about changes */
+   _e_smart_randr_changed_set(o_randr);
 }
