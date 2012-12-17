@@ -246,6 +246,18 @@ e_smart_randr_monitor_del(Evas_Object *obj, Evas_Object *mon)
    sd->monitors = eina_list_remove(sd->monitors, mon);
 }
 
+Eina_List *
+e_smart_randr_monitors_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return NULL;
+
+   /* return the list of monitors */
+   return sd->monitors;
+}
+
 Eina_Bool 
 e_smart_randr_changed_get(Evas_Object *obj)
 {
