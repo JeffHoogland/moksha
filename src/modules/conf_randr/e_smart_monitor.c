@@ -161,9 +161,6 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
     * NB: This clears old modes and also sets the min & max resolutions */
    _e_smart_monitor_modes_fill(sd);
 
-   /* fill in list of refresh rates */
-   _e_smart_monitor_refresh_rates_fill(sd);
-
    if (sd->layout.obj)
      {
         /* with the min & max resolutions, we can now set the thumbnail size.
@@ -177,18 +174,37 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output)
    if (sd->o_thumb) 
      e_livethumb_vsize_set(sd->o_thumb, mw, mh);
 
-   /* if we have a crtc, get the x/y location of it
+   /* if we have a crtc, get the x/y location of it and current refresh rate
     * 
     * NB: Used to determine the proper container */
    if ((sd->output) && (sd->output->crtc))
      {
+        Ecore_X_Randr_Mode_Info *mode = NULL;
+
         cx = sd->output->crtc->geometry.x;
         cy = sd->output->crtc->geometry.y;
+
+        if ((mode = sd->output->crtc->current_mode))
+          {
+             if ((mode->hTotal) && (mode->vTotal))
+               {
+                  /* calculate rate */
+                  sd->refresh_rate = 
+                    (int)((float)mode->dotClock / 
+                          ((float)mode->hTotal * (float)mode->vTotal));
+               }
+          }
      }
    else
      {
         /* FIXME: NB: TODO: Handle case of output not having crtc */
      }
+
+   /* fill in list of refresh rates
+    * 
+    * NB: This has to be done after the 'current' refresh rate is calculated 
+    * above */
+   _e_smart_monitor_refresh_rates_fill(sd);
 
    /* get the current desktop at this crtc coordinate */
    con = e_container_current_get(e_manager_current_get());
