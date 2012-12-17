@@ -424,8 +424,7 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
                     {
                        E_Randr_Output_Info *oinfo;
 
-                       oinfo = 
-                         eina_list_data_get(eina_list_nth(crtc->outputs, i));
+                       oinfo = eina_list_nth(crtc->outputs, i);
 
                        outputs[i] = oinfo->xid;
                     }
