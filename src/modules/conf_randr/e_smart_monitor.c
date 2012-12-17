@@ -589,7 +589,6 @@ _e_smart_monitor_refresh_rates_fill(E_Smart_Data *sd)
         /* compare mode names */
         if (!strcmp(mode->name, sd->output->crtc->current_mode->name))
           {
-             printf("Mode Match !!\n");
              if ((mode->hTotal) && (mode->vTotal))
                {
                   Evas_Object *ow;
