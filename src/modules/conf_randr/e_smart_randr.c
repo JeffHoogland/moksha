@@ -33,6 +33,7 @@ static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_randr_changed_set(Evas_Object *obj);
+static Evas_Object *_e_smart_randr_monitor_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc xid);
 
 static void _e_smart_randr_monitor_adjacent_move(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip);
 
@@ -143,7 +144,39 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              if (output->connection_status == 
                  ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
                {
-                  Evas_Object *mon;
+                  Evas_Object *mon = NULL, *pmon = NULL;
+
+                  /* if we do not have a saved config yet, and the 
+                   * policy of this output is 'none' then this could be a 
+                   * first run situation. Because ecore_x_randr does not 
+                   * tell us proper output policies 
+                   * (as in ECORE_X_RANDR_OUTPUT_POLICY_CLONE) due to 
+                   * X not setting them, we need to determine manually 
+                   * if we are in a cloned situation here, and what output 
+                   * we are cloned to */
+                  if ((!e_config->randr_serialized_setup) && 
+                      (output->policy == ECORE_X_RANDR_OUTPUT_POLICY_NONE))
+                    {
+                       E_Randr_Crtc_Info *pcrtc;
+
+                       /* if we have a previous crtc, then we can use that 
+                        * to see if we are in a clone situation. If not, 
+                        * then this is the first one and we don't need 
+                        * to check for clones */
+                       if ((pcrtc = eina_list_data_get(eina_list_prev(l))))
+                         {
+                            /* we have a previous crtc. compare geometry */
+                            if ((crtc->geometry.x == pcrtc->geometry.x) && 
+                                (crtc->geometry.y == pcrtc->geometry.y) && 
+                                (crtc->geometry.w == pcrtc->geometry.w) && 
+                                (crtc->geometry.h == pcrtc->geometry.h))
+                              {
+                                 /* printf("\tHave Clone !!\n"); */
+                                 pmon = 
+                                   _e_smart_randr_monitor_find(sd, pcrtc->xid);
+                              }
+                         }
+                    }
 
                   /* printf("\t\tConnected\n"); */
                   if ((mon = e_smart_monitor_add(evas)))
@@ -172,6 +205,10 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                        /* resize this monitor to it's current size */
                        e_layout_child_resize(mon, crtc->geometry.w, 
                                              crtc->geometry.h);
+
+                       /* if we are cloned, then tell randr */
+                       if (pmon)
+                         e_smart_monitor_clone_add(pmon, mon);
                     }
                }
           }
@@ -562,6 +599,29 @@ _e_smart_randr_changed_set(Evas_Object *obj)
 
    /* send changed signal to main dialog */
    evas_object_smart_callback_call(obj, "changed", NULL);
+}
+
+static Evas_Object *
+_e_smart_randr_monitor_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc xid)
+{
+   Eina_List *l;
+   Evas_Object *mon;
+
+   /* loop the monitor list */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        E_Randr_Output_Info *output;
+
+        /* try to grab this monitors output */
+        if ((output = e_smart_monitor_output_get(mon)))
+          {
+             /* compare the output's crtc id to the one passed in */
+             if ((output->crtc) && (output->crtc->xid == xid))
+               return mon;
+          }
+     }
+
+   return NULL;
 }
 
 static void 
