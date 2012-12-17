@@ -386,6 +386,11 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
         E_Randr_Output_Info *output;
         E_Randr_Crtc_Info *crtc;
         E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
+        Ecore_X_Randr_Orientation orient;
+        Ecore_X_Randr_Mode_Info *mode = NULL;
+        Evas_Coord mx = 0, my = 0;
+        Ecore_X_Randr_Output *outputs = NULL;
+        int noutputs = -1;
 
         /* get the changes for this monitor */
         changes = e_smart_monitor_changes_get(mon);
@@ -399,17 +404,79 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
         /* get the outputs crtc */
         crtc = output->crtc;
 
+        /* setup apply outputs */
+        if ((crtc) && (crtc->outputs))
+          noutputs = eina_list_count(crtc->outputs);
+
+        if (noutputs < 1)
+          {
+             outputs = calloc(1, sizeof(Ecore_X_Randr_Output));
+             outputs[0] = output->xid;
+             noutputs = 1;
+          }
+        else
+          {
+             if ((crtc) && (crtc->outputs))
+               {
+                  int i = 0;
+
+                  outputs = calloc(noutputs, sizeof(Ecore_X_Randr_Output));
+                  for (i = 0; i < noutputs; i++)
+                    {
+                       E_Randr_Output_Info *oinfo;
+
+                       oinfo = 
+                         eina_list_data_get(eina_list_nth(crtc->outputs, i));
+
+                       outputs[i] = oinfo->xid;
+                    }
+               }
+          }
+
+        /* get current orientation */
+        orient = e_smart_monitor_current_orientation_get(mon);
+
+        /* get the current mode */
+        mode = e_smart_monitor_current_mode_get(mon);
+
+        /* get current position */
+        e_smart_monitor_current_geometry_get(mon, &mx, &my, NULL, NULL);
+
+        /* apply any changes to enabled */
+        if (changes & E_SMART_MONITOR_CHANGED_ENABLED)
+          {
+             if (e_smart_monitor_current_enabled_get(mon))
+               {
+                  if (crtc)
+                    {
+                       /* apply enabled state */
+                       ecore_x_randr_crtc_settings_set(root, crtc->xid, 
+                                                       outputs, noutputs, 
+                                                       mx, my, 
+                                                       mode->xid, orient);
+                       /* set reset flag */
+                       reset = EINA_TRUE;
+                    }
+               }
+             else
+               {
+                  if (crtc)
+                    {
+                       /* apply disabled state */
+                       ecore_x_randr_crtc_settings_set(root, crtc->xid, 
+                                                       NULL, 0, 0, 0, 0, 
+                                                       ECORE_X_RANDR_ORIENTATION_ROT_0);
+                       /* set reset flag */
+                       reset = EINA_TRUE;
+                    }
+               }
+          }
+
         /* apply any changes to position */
         if (changes & E_SMART_MONITOR_CHANGED_POSITION)
           {
              if (crtc)
                {
-                  Evas_Coord mx = 0, my = 0;
-
-                  /* get current position */
-                  e_smart_monitor_current_geometry_get(mon, &mx, &my, 
-                                                       NULL, NULL);
-
                   /* apply new position */
                   ecore_x_randr_crtc_pos_set(root, crtc->xid, mx, my);
 
@@ -423,11 +490,6 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
           {
              if (crtc)
                {
-                  Ecore_X_Randr_Orientation orient;
-
-                  /* get the current orientation */
-                  orient = e_smart_monitor_current_orientation_get(mon);
-
                   /* apply orientation change */
                   ecore_x_randr_crtc_orientation_set(root, crtc->xid, orient);
 
@@ -442,18 +504,6 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
           {
              if (crtc)
                {
-                  Ecore_X_Randr_Mode_Info *mode = NULL;
-                  Ecore_X_Randr_Output *outputs = NULL;
-                  int noutputs = -1;
-
-                  if (output) outputs = &output->xid;
-                  if ((crtc) && (crtc->outputs))
-                    noutputs = eina_list_count(crtc->outputs);
-
-                  /* get the current mode */
-                  if (!(mode = e_smart_monitor_current_mode_get(mon)))
-                    continue;
-
                   /* apply mode change */
                   ecore_x_randr_crtc_mode_set(root, crtc->xid, 
                                               outputs, noutputs, mode->xid);
@@ -462,6 +512,9 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
                   reset = EINA_TRUE;
                }
           }
+
+        /* free allocated outputs */
+        if (outputs) free(outputs);
 
         /* monitors changes have been sent. Signal this monitor so that 
          * we can reset the 'original' values to the 'current' values 
