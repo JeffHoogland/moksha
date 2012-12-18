@@ -278,7 +278,7 @@ e_smart_monitor_setup(Evas_Object *obj)
    else
      {
         /* FIXME: NB: TODO: Handle case of output not having crtc */
-        printf("Output Has NO Crtc !!\n");
+        ERR("Output Has NO Crtc !!\n");
      }
 
    /* set the original rotation */
@@ -420,9 +420,6 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
         return;
      }
 
-   /* if nothing changed, we have nothing to apply */
-   if (sd->changes == 0) return;
-
    /* check if it changed position and update values */
    if (sd->changes & E_SMART_MONITOR_CHANGED_POSITION)
      {
@@ -449,13 +446,16 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
    /* if this monitor is cloned, use the parent geometry */
    if (sd->cloned)
      {
+        /* set output policy to cloned */
+        sd->output->policy = ECORE_X_RANDR_OUTPUT_POLICY_CLONE;
+
         e_smart_monitor_current_geometry_get(sd->parent, &crtc->geometry.x, 
                                              &crtc->geometry.y, 
                                              &crtc->geometry.w, 
                                              &crtc->geometry.h);
      }
-
-   /* TODO: Handle enabled and crtc change */
+   else
+     sd->output->policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
 }
 
 void 
