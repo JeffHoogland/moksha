@@ -327,6 +327,10 @@ group { name: "e/conf/randr/main/frame";
             max: 21 21;
             align: 1.0 0.0;
          }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
       }
       part { name: "e.event.indicator"; type: RECT;
          description { state: "default" 0.0;
@@ -442,6 +446,11 @@ group { name: "e/conf/randr/main/frame";
          signal: "e,state,drop,off"; source: "e";
          action: STATE_SET "default" 0.0;
          target: "drop_zone";
+      }
+      program { name: "off";
+         signal: "e,state,rotate_disabled"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "e.event.rotate";
       }
       program {
          signal: "mouse,in"; source: "e.event.resize";
