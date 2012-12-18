@@ -538,7 +538,6 @@ _e_intl_locale_alias_get(const char *language)
    Eina_Hash *alias_hash;
    char *alias;
    char *lower_language;
-   unsigned int i;
 
    if ((!language) || (!strncmp(language, "POSIX", strlen("POSIX"))))
      return strdup("C");
@@ -547,13 +546,10 @@ _e_intl_locale_alias_get(const char *language)
    if (!alias_hash) /* No alias file available */
      return strdup(language);
 
-   lower_language = malloc(strlen(language) + 1);
-   for (i = 0; i < strlen(language); i++)
-     lower_language[i] = tolower(language[i]);
-   lower_language[i] = 0;
+   lower_language = strdupa(language);
+   eina_str_tolower(&lower_language);
 
    alias = eina_hash_find(alias_hash, lower_language);
-   free(lower_language);
 
    if (alias)
      alias = strdup(alias);
