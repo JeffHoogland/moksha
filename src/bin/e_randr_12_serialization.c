@@ -262,9 +262,7 @@ _12_serialized_setup_new(void)
    //Add CRTCs and their configuration
    EINA_LIST_FOREACH(e_randr_screen_info.rrvd_info.randr_info_12->crtcs, iter, ci)
      {
-        sc = _serialized_crtc_new(ci);
-        if (!sc)
-          continue;
+        if (!(sc = _serialized_crtc_new(ci))) continue;
         ss->crtcs = eina_list_append(ss->crtcs, sc);
         INF("E_RANDR: Serialized CRTC %d (index %d) in mode %s.", ci->xid, sc->index, (sc->mode_info ? sc->mode_info->name : "(disabled)"));
      }
@@ -278,7 +276,8 @@ _12_serialized_setup_new(void)
      {
         if (oi->connection_status != ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
           continue;
-        edid_hash = _monitor_edid_hash_clone(oi->monitor);
+        if (!(edid_hash = _monitor_edid_hash_clone(oi->monitor)))
+          continue;
         ss->edid_hashes = eina_list_append(ss->edid_hashes, edid_hash);
      }
 
