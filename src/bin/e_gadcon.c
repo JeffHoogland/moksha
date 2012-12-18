@@ -3224,8 +3224,7 @@ _e_gadcon_client_cb_menu_style_plain(void *data, E_Menu *m __UNUSED__, E_Menu_It
 
    gcc = data;
    gc = gcc->gadcon;
-   if (gcc->style) eina_stringshare_del(gcc->style);
-   gcc->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_PLAIN);
+   eina_stringshare_replace(&gcc->style, E_GADCON_CLIENT_STYLE_PLAIN);
    _e_gadcon_client_save(gcc);
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
@@ -3239,8 +3238,7 @@ _e_gadcon_client_cb_menu_style_inset(void *data, E_Menu *m __UNUSED__, E_Menu_It
 
    gcc = data;
    gc = gcc->gadcon;
-   if (gcc->style) eina_stringshare_del(gcc->style);
-   gcc->style = eina_stringshare_add(E_GADCON_CLIENT_STYLE_INSET);
+   eina_stringshare_replace(&gcc->style, E_GADCON_CLIENT_STYLE_INSET);
    _e_gadcon_client_save(gcc);
    e_gadcon_unpopulate(gc);
    e_gadcon_populate(gc);
