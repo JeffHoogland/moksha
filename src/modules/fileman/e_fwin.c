@@ -425,6 +425,8 @@ e_fwin_zone_new(E_Zone *zone, void *p)
 
    e_fm2_custom_theme_content_set(o, "desktop");
 
+   evas_object_smart_callback_add(o, "changed",
+                                  _e_fwin_icon_mouse_out, fwin);
    evas_object_smart_callback_add(o, "dir_changed",
                                   _e_fwin_changed, page);
    evas_object_smart_callback_add(o, "dir_deleted",
@@ -912,7 +914,6 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
    fmc.view.no_click_rename = 1;
    e_fm2_config_set(o, &fmc);
    e_fm2_icon_menu_flags_set(o, E_FM2_MENU_NO_NEW | E_FM2_MENU_NO_ACTIVATE_CHANGE | E_FM2_MENU_NO_VIEW_CHANGE);
-   //evas_object_smart_callback_add(o, "changed", _cb, fwin);
    evas_object_smart_callback_add(o, "selected", _e_fwin_favorite_selected, page);
    evas_object_smart_callback_add(o, "dnd_enter", (Evas_Smart_Cb)_e_fwin_dnd_enter_cb, page->fwin);
    evas_object_smart_callback_add(o, "dnd_leave", (Evas_Smart_Cb)_e_fwin_dnd_leave_cb, page->fwin);
@@ -962,6 +963,7 @@ _e_fwin_page_create(E_Fwin *fwin)
    e_fm2_view_flags_set(o, E_FM2_VIEW_DIR_CUSTOM);
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _e_fwin_cb_key_down, page);
 
+   evas_object_smart_callback_add(o, "changed", _e_fwin_icon_mouse_out, fwin);
    evas_object_smart_callback_add(o, "dir_changed",
                                   _e_fwin_changed, page);
    evas_object_smart_callback_add(o, "dir_deleted",
@@ -1630,6 +1632,7 @@ _e_fwin_changed(void *data,
    fwin = page->fwin;
    if (!fwin) return;  //safety
 
+   _e_fwin_icon_mouse_out(fwin, NULL, NULL);
    cfg = e_fm2_config_get(page->fm_obj);
    e_fm2_path_get(page->fm_obj, &dev, NULL);
    e_user_dir_concat_static(buf, "fileman/favorites");
