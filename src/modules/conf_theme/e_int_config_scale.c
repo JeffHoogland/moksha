@@ -31,6 +31,7 @@ struct _E_Config_Dialog_Data
       } adv;
    } gui;
    Eina_List *obs;
+   E_Config_Dialog *cfd;
 };
 
 static void
@@ -51,6 +52,7 @@ _scale_preview_sel_set(Evas_Object *ob, int sel)
         v = (int)(unsigned long)evas_object_data_get(ob, "scale");
         scl = (double)v / 1000.0;
         if (sc) *sc = scl;
+        e_config_dialog_changed_set(cfdata->cfd, (scl != e_config->scale.factor));
         if (evas_object_data_get(ob, "dpi"))
           {
              cfdata->use_dpi = EINA_TRUE;
@@ -176,18 +178,18 @@ e_int_config_scale(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Scale Settings"), "E", "appearance/scale",
                              "preferences-scale", 0, v, NULL);
-   e_config_dialog_changed_auto_set(cfd, 0);
-   e_config_dialog_changed_set(cfd, 1);
+   e_config_dialog_changed_auto_set(cfd, 1);
    return cfd;
 }
 
 /* local function prototypes */
 static void *
-_create_data(E_Config_Dialog *cfd __UNUSED__)
+_create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   cfdata->cfd = cfd;
    _fill_data(cfdata);
    return cfdata;
 }
