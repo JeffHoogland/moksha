@@ -138,8 +138,9 @@ void
 e_smart_randr_monitors_create(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   Eina_List *l;
+   Eina_List *l, *ll, *deferred = NULL;
    E_Randr_Crtc_Info *crtc;
+   E_Randr_Output_Info *output;
    Evas *evas;
 
    /* try to get the objects smart data */
@@ -151,9 +152,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
    /* loop the crtcs, checking for valid output */
    EINA_LIST_FOREACH(E_RANDR_12->crtcs, l, crtc)
      {
-        Eina_List *ll;
-        E_Randr_Output_Info *output;
-
         /* printf("Checking Crtc: %d\n", crtc->xid); */
         /* printf("\tGeom: %d %d %d %d\n", crtc->geometry.x,  */
         /*        crtc->geometry.y, crtc->geometry.w, crtc->geometry.h); */
@@ -162,7 +160,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
         EINA_LIST_FOREACH(crtc->outputs, ll, output)
           {
              /* printf("\tChecking Output: %d %s\n", output->xid, output->name); */
-
              /* printf("\tOutput Policy: %d\n", output->policy); */
 
              /* if (output->wired_clones) */
@@ -185,10 +182,8 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   if ((!e_config->randr_serialized_setup) && 
                       (output->policy == ECORE_X_RANDR_OUTPUT_POLICY_NONE))
                     {
-                       /* if we have a previous crtc, then we can use that 
-                        * to see if we are in a clone situation. If not, 
-                        * then this is the first one and we don't need 
-                        * to check for clones */
+                       /* if we have a previous crtc, check if that is the 
+                        * one we are cloned to */
                        if ((pcrtc = eina_list_data_get(eina_list_prev(l))))
                          {
                             /* we have a previous crtc. compare geometry */
@@ -200,6 +195,35 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                                  pmon = 
                                    _e_smart_randr_monitor_find(sd, pcrtc->xid);
                               }
+                         }
+                    }
+                  /* else if we have an existing configuration and this 
+                   * output is set to cloned, then see if we can create the 
+                   * cloned representation */
+                  else if ((e_config->randr_serialized_setup) && 
+                           (output->policy == ECORE_X_RANDR_OUTPUT_POLICY_CLONE))
+                    {
+                       /* if we have a previous crtc, check if that is the 
+                        * one we are cloned to */
+                       if ((pcrtc = eina_list_data_get(eina_list_prev(l))))
+                         {
+                            /* we have a previous crtc. compare geometry */
+                            if ((crtc->geometry.x == pcrtc->geometry.x) && 
+                                (crtc->geometry.y == pcrtc->geometry.y) && 
+                                (crtc->geometry.w == pcrtc->geometry.w) && 
+                                (crtc->geometry.h == pcrtc->geometry.h))
+                              {
+                                 pmon = 
+                                   _e_smart_randr_monitor_find(sd, pcrtc->xid);
+                              }
+                         }
+                       else
+                         {
+                            /* we have no previous monitor to clone this to yet
+                             * add it to the deferred list and we will check it 
+                             * after everything has been setup */
+                            deferred = eina_list_append(deferred, output);
+                            continue;
                          }
                     }
 
@@ -249,23 +273,71 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                     }
                }
           }
+     }
 
-        /* loop possible outputs on this crtc */
-        /* EINA_LIST_FOREACH(crtc->possible_outputs, ll, output) */
-        /*   { */
-        /*      printf("\tChecking Possible Output: %d\n", output->xid); */
-        /*      if (output->connection_status ==  */
-        /*          ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED) */
-        /*        printf("\t\tConnected\n"); */
-        /*      else if (output->connection_status ==  */
-        /*               ECORE_X_RANDR_CONNECTION_STATUS_DISCONNECTED) */
-        /*        printf("\t\tDisconnected\n"); */
-        /*      else */
-        /*        printf("\t\tUnknown\n"); */
+   /* all main monitors should be setup now */
 
-        /*      if (output->monitor) */
-        /*        printf("\tHas Monitor\n"); */
-        /*   } */
+   /* loop any outputs we have deferred */
+   EINA_LIST_FOREACH(deferred, l, output)
+     {
+        Evas_Object *mon = NULL, *pmon = NULL;
+
+        if (!output->crtc) continue;
+
+        /* find a crtc that matches the geometry of this output's crtc */
+        EINA_LIST_FOREACH(E_RANDR_12->crtcs, ll, crtc)
+          {
+             if ((crtc->geometry.x == output->crtc->geometry.x) && 
+                 (crtc->geometry.y == output->crtc->geometry.y) && 
+                 (crtc->geometry.w == output->crtc->geometry.w) && 
+                 (crtc->geometry.h == output->crtc->geometry.h))
+               {
+                  if ((pmon = _e_smart_randr_monitor_find(sd, crtc->xid)))
+                    break;
+               }
+          }
+
+        if ((mon = e_smart_monitor_add(evas)))
+          {
+             Evas_Coord cx = 0, cy = 0;
+             Evas_Coord cw = 0, ch = 0;
+
+             /* add this monitor to the layout */
+             e_smart_randr_monitor_add(obj, mon);
+
+             /* tell the monitor which layout it references */
+             e_smart_monitor_layout_set(mon, sd->o_layout);
+
+             /* tell the monitor which output it references */
+             e_smart_monitor_output_set(mon, output);
+
+             /* with the layout and output assigned, we can 
+              * tell the monitor to setup
+              * 
+              * NB: This means filling resolutions, getting 
+              * refresh rates, displaying monitor name, etc...
+              * all the graphical stuff */
+             e_smart_monitor_setup(mon);
+
+             cx = output->crtc->geometry.x;
+             cy = output->crtc->geometry.y;
+             cw = output->crtc->geometry.w;
+             ch = output->crtc->geometry.h;
+
+             /* set geometry so that when we "unclone" this 
+              * one, it will unclone to the right */
+             if ((pmon) && (crtc)) cx += crtc->geometry.w;
+
+             /* resize this monitor to it's current size */
+             e_layout_child_resize(mon, cw, ch);
+
+             /* move this monitor to it's current location */
+             e_layout_child_move(mon, cx, cy);
+
+             /* if we are cloned, then tell randr */
+             if (pmon)
+               e_smart_monitor_clone_add(pmon, mon);
+          }
      }
 }
 
@@ -365,16 +437,6 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
    E_Smart_Data *sd;
    Eina_List *l = NULL;
    Evas_Object *mon = NULL;
-   Eina_Bool reset = EINA_FALSE;
-
-   /* TODO: FIXME: !!!
-    * 
-    * This current apply routine does NOT account for:
-    * 
-    * unassigned output, crtc
-    * cloning
-    * use e_randr_serialized_setup
-    */
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -382,146 +444,18 @@ e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
    /* loop the list of monitors */
    EINA_LIST_FOREACH(sd->monitors, l, mon)
      {
-        E_Randr_Output_Info *output;
-        E_Randr_Crtc_Info *crtc;
-        E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
-        Ecore_X_Randr_Orientation orient;
-        Ecore_X_Randr_Mode_Info *mode = NULL;
-        Evas_Coord mx = 0, my = 0;
-        Ecore_X_Randr_Output *outputs = NULL;
-        int noutputs = -1;
+        /* tell the monitor to apply these changes */
+        e_smart_monitor_changes_apply(mon);
 
-        /* get the changes for this monitor */
-        changes = e_smart_monitor_changes_get(mon);
-
-        /* if nothing changed, skip it */
-        if (changes <= E_SMART_MONITOR_CHANGED_NONE) continue;
-
-        /* get the monitors output */
-        output = e_smart_monitor_output_get(mon);
-
-        /* get the outputs crtc */
-        crtc = output->crtc;
-
-        /* setup apply outputs */
-        if ((crtc) && (crtc->outputs))
-          noutputs = eina_list_count(crtc->outputs);
-
-        if (noutputs < 1)
-          {
-             outputs = calloc(1, sizeof(Ecore_X_Randr_Output));
-             outputs[0] = output->xid;
-             noutputs = 1;
-          }
-        else
-          {
-             if ((crtc) && (crtc->outputs))
-               {
-                  int i = 0;
-
-                  outputs = calloc(noutputs, sizeof(Ecore_X_Randr_Output));
-                  for (i = 0; i < noutputs; i++)
-                    {
-                       E_Randr_Output_Info *oinfo;
-
-                       oinfo = eina_list_nth(crtc->outputs, i);
-
-                       outputs[i] = oinfo->xid;
-                    }
-               }
-          }
-
-        /* get current orientation */
-        orient = e_smart_monitor_current_orientation_get(mon);
-
-        /* get the current mode */
-        mode = e_smart_monitor_current_mode_get(mon);
-
-        /* get current position */
-        e_smart_monitor_current_geometry_get(mon, &mx, &my, NULL, NULL);
-
-        /* apply any changes to enabled */
-        if (changes & E_SMART_MONITOR_CHANGED_ENABLED)
-          {
-             if (e_smart_monitor_current_enabled_get(mon))
-               {
-                  if (crtc)
-                    {
-                       /* apply enabled state */
-                       ecore_x_randr_crtc_settings_set(root, crtc->xid, 
-                                                       outputs, noutputs, 
-                                                       mx, my, 
-                                                       mode->xid, orient);
-                       /* set reset flag */
-                       reset = EINA_TRUE;
-                    }
-               }
-             else
-               {
-                  if (crtc)
-                    {
-                       /* apply disabled state */
-                       ecore_x_randr_crtc_settings_set(root, crtc->xid, 
-                                                       NULL, 0, 0, 0, 0, 
-                                                       ECORE_X_RANDR_ORIENTATION_ROT_0);
-                       /* set reset flag */
-                       reset = EINA_TRUE;
-                    }
-               }
-          }
-
-        /* apply any changes to position */
-        if (changes & E_SMART_MONITOR_CHANGED_POSITION)
-          {
-             if (crtc)
-               {
-                  /* apply new position */
-                  ecore_x_randr_crtc_pos_set(root, crtc->xid, mx, my);
-
-                  /* set reset flag */
-                  reset = EINA_TRUE;
-               }
-          }
-
-        /* apply any changes to rotation */
-        if (changes & E_SMART_MONITOR_CHANGED_ROTATION)
-          {
-             if (crtc)
-               {
-                  /* apply orientation change */
-                  ecore_x_randr_crtc_orientation_set(root, crtc->xid, orient);
-
-                  /* set reset flag */
-                  reset = EINA_TRUE;
-               }
-          }
-
-        /* apply any changes to refresh rate or resolution */
-        if ((changes & E_SMART_MONITOR_CHANGED_REFRESH) || 
-            (changes & E_SMART_MONITOR_CHANGED_RESOLUTION))
-          {
-             if (crtc)
-               {
-                  /* apply mode change */
-                  ecore_x_randr_crtc_mode_set(root, crtc->xid, 
-                                              outputs, noutputs, mode->xid);
-
-                  /* set reset flag */
-                  reset = EINA_TRUE;
-               }
-          }
-
-        /* free allocated outputs */
-        if (outputs) free(outputs);
-
-        /* monitors changes have been sent. Signal this monitor so that 
-         * we can reset the 'original' values to the 'current' values 
-         * and reset the 'changes' variable */
-        if (reset) e_smart_monitor_changes_reset(mon);
+        /* tell monitor to reset changes */
+        e_smart_monitor_changes_reset(mon);
      }
 
-   /* tell ecore_x to reset the screen */
-   if (reset) ecore_x_randr_screen_reset(root);
+   /* tell randr to save this config */
+   e_randr_store_configuration(E_RANDR_CONFIGURATION_STORE_ALL);
+
+   /* tell randr to send to X */
+   e_randr_try_restore_configuration();
 }
 
 /* local functions */
