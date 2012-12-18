@@ -573,18 +573,18 @@ e_config_init(void)
 #define T Ecore_X_Randr_Mode_Info
 #define D _e_config_randr_mode_info_edd
    E_CONFIG_VAL(D, T, xid, INT);
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, height, INT);
+   E_CONFIG_VAL(D, T, width, UINT);
+   E_CONFIG_VAL(D, T, height, UINT);
    E_CONFIG_VAL(D, T, dotClock, LL);
-   E_CONFIG_VAL(D, T, hSyncStart, INT);
-   E_CONFIG_VAL(D, T, hSyncEnd, INT);
-   E_CONFIG_VAL(D, T, hTotal, INT);
-   E_CONFIG_VAL(D, T, hSkew, INT);
-   E_CONFIG_VAL(D, T, vSyncStart, INT);
-   E_CONFIG_VAL(D, T, vSyncEnd, INT);
-   E_CONFIG_VAL(D, T, vTotal, INT);
+   E_CONFIG_VAL(D, T, hSyncStart, UINT);
+   E_CONFIG_VAL(D, T, hSyncEnd, UINT);
+   E_CONFIG_VAL(D, T, hTotal, UINT);
+   E_CONFIG_VAL(D, T, hSkew, UINT);
+   E_CONFIG_VAL(D, T, vSyncStart, UINT);
+   E_CONFIG_VAL(D, T, vSyncEnd, UINT);
+   E_CONFIG_VAL(D, T, vTotal, UINT);
    E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, nameLength, INT);
+   E_CONFIG_VAL(D, T, nameLength, UINT);
    /* Work around a possible ABI break due to poor type choice. */
    if (sizeof (int) == sizeof (unsigned long))
      E_CONFIG_VAL(D, T, modeFlags, INT);
