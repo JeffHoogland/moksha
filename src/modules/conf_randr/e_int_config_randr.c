@@ -135,7 +135,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    /* tell randr widget to apply changes */
-   e_smart_randr_changes_apply(cfdata->o_randr, cfd->con->manager->root);
+   e_smart_randr_changes_apply(cfdata->o_randr);
 
    /* return success */
    return 1;
