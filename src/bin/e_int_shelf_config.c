@@ -369,6 +369,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           }
      }
 
+   e_gadcon_unpopulate(cfdata->es->gadcon);
    if (recreate)
      {
         E_Zone *zone;
@@ -377,11 +378,14 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         zone = cfdata->es->zone;
         cf_es = cfdata->es->cfg;
         cfdata->es->config_dialog = NULL;
+        e_shelf_hide(cfdata->es);
         e_object_del(E_OBJECT(cfdata->es));
 
         cfdata->es = e_shelf_config_new(zone, cf_es);
         cfdata->es->config_dialog = cfd;
      }
+   else
+     e_gadcon_populate(cfdata->es->gadcon);
 
    if (cfdata->escfg->desk_show_mode)
      {
