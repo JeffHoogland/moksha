@@ -47,6 +47,7 @@ e_int_config_randr(E_Container *con, const char *params EINA_UNUSED)
                              "E", "screen/screen_setup",
                              "preferences-system-screen-resolution", 
                              0, v, NULL);
+   e_dialog_resizable_set(cfd->dia, 1);
 
    return cfd;
 }
