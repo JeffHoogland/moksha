@@ -10292,22 +10292,20 @@ _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
    size_t size = 0;
    size_t length = 0;
 
-   if ((text) && (strcmp(text, ic->info.file)))
-     {
-        _e_fm2_icon_realpath(ic, oldpath, sizeof(oldpath));
-        snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
-        if (e_filereg_file_protected(oldpath)) return;
+   if ((!text) || (!strcmp(text, ic->info.file))) return;
+   _e_fm2_icon_realpath(ic, oldpath, sizeof(oldpath));
+   snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
+   if (e_filereg_file_protected(oldpath)) return;
 
-        args = e_util_string_append_quoted(args, &size, &length, oldpath);
-        if (!args) return;
-        args = e_util_string_append_char(args, &size, &length, ' ');
-        if (!args) return;
-        args = e_util_string_append_quoted(args, &size, &length, newpath);
-        if (!args) return;
+   args = e_util_string_append_quoted(args, &size, &length, oldpath);
+   if (!args) return;
+   args = e_util_string_append_char(args, &size, &length, ' ');
+   if (!args) return;
+   args = e_util_string_append_quoted(args, &size, &length, newpath);
+   if (!args) return;
 
-        e_fm2_client_file_move(ic->sd->obj, args);
-        free(args);
-     }
+   e_fm2_client_file_move(ic->sd->obj, args);
+   free(args);
 }
 
 static E_Dialog *
