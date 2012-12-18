@@ -71,7 +71,6 @@ static Eina_List *_e_int_menus_app_threads = NULL;
 static Eina_Hash *_e_int_menus_app_menus = NULL;
 static Eina_Hash *_e_int_menus_app_menus_waiting = NULL;
 static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
-static E_Menu *_e_int_menus_app_menu_default_waiting = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
 static Eina_List *handlers = NULL;
 
@@ -520,7 +519,7 @@ EINTERN void
 e_int_menus_init(void)
 {
    if (e_config->menu_apps_show)
-     _e_int_menus_apps_thread_new(NULL, NULL);
+     _e_int_menus_app_menu_default = efreet_menu_get();
    else
      {
         char buf[PATH_MAX];
@@ -540,7 +539,6 @@ e_int_menus_shutdown(void)
    _e_int_menus_app_cleaner = NULL;
    eina_hash_free(_e_int_menus_app_menus_waiting);
    _e_int_menus_app_menus_waiting = NULL;
-   _e_int_menus_app_menu_default_waiting = NULL;
    E_FREE_LIST(handlers, ecore_event_handler_del);
 }
 
@@ -719,17 +717,8 @@ _e_int_menus_app_thread_notify_cb(void *data, Ecore_Thread *eth __UNUSED__, void
    const char *dir = data;
 
    if (!msg) return;
-   if (dir)
-     {
-        eina_hash_add(_e_int_menus_app_menus, dir, menu);
-        m = eina_hash_set(_e_int_menus_app_menus_waiting, dir, NULL);
-     }
-   else
-     {
-        _e_int_menus_app_menu_default = menu;
-        m = _e_int_menus_app_menu_default_waiting;
-        _e_int_menus_app_menu_default_waiting = NULL;
-     }
+   eina_hash_add(_e_int_menus_app_menus, dir, menu);
+   m = eina_hash_set(_e_int_menus_app_menus_waiting, dir, NULL);
    if (!m) return;
    e_object_del_attach_func_set(E_OBJECT(m), NULL);
 
@@ -769,10 +758,7 @@ _e_int_menus_app_thread_cb(void *data, Ecore_Thread *eth)
    const char *dir = data;
    Efreet_Menu *menu;
 
-   if (dir)
-     menu = efreet_menu_parse(dir);
-   else
-     menu = efreet_menu_get();
+   menu = efreet_menu_parse(dir);
    ecore_thread_feedback(eth, menu);
 }
 
@@ -810,14 +796,11 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
         else
           _e_int_menus_app_menus_waiting = eina_hash_string_superfast_new(NULL);
      }
-   else
-     mn = _e_int_menus_app_menu_default_waiting;
+   else return NULL;
 
    if (mn) return NULL;
    if (dir && m)
      eina_hash_add(_e_int_menus_app_menus_waiting, dir, m);
-   else if (!dir)
-     _e_int_menus_app_menu_default_waiting = m;
 
    eth = ecore_thread_feedback_run(_e_int_menus_app_thread_cb, _e_int_menus_app_thread_notify_cb,
                                    _e_int_menus_app_thread_end_cb, _e_int_menus_app_thread_end_cb, dir, EINA_FALSE);
