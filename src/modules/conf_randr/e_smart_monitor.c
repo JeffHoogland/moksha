@@ -432,6 +432,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
      {
         crtc->geometry.w = sd->current.w;
         crtc->geometry.h = sd->current.h;
+        crtc->current_mode = sd->current.mode;
      }
 
    /* check if it changed mode or refresh rate and update values */
