@@ -432,7 +432,7 @@ e_smart_randr_changed_get(Evas_Object *obj)
 }
 
 void 
-e_smart_randr_changes_apply(Evas_Object *obj, Ecore_X_Window root)
+e_smart_randr_changes_apply(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Eina_List *l = NULL;
