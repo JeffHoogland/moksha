@@ -624,7 +624,7 @@ e_intl_locale_parts_get(const char *locale)
    /* Parse Results */
    E_Locale_Parts *locale_parts;
    char language[4];
-   char territory[4];
+   char territory[4] = {0};
    char codeset[32];
    char modifier[32];
 
@@ -655,6 +655,12 @@ e_intl_locale_parts_get(const char *locale)
                }
              else if ((tmp_idx < 2) && (islower(locale_char)))
                language[tmp_idx++] = locale_char;
+             else if (locale_char == '.') // no territory
+               {
+                  state = 2;
+                  language[tmp_idx] = 0;
+                  tmp_idx = 0;
+               }
              else
                return NULL;
              break;
