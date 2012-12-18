@@ -111,6 +111,7 @@ const E_Intl_Pair basic_language_predefined_pairs[] = {
    {"en_US.UTF-8", "us_flag.png", "English"},
    {"en_GB.UTF-8", "gb_flag.png", "British English"},
    {"el_GR.UTF-8", "gr_flag.png", "Ελληνικά"},
+   {"eo_US.UTF-8", "epo_flag.png", "Esperanto"},
    {"eo.UTF-8", "epo_flag.png", "Esperanto"},
    {"es_AR.UTF-8", "ar_flag.png", "Español"},
    {"et_ET.UTF-8", "ee_flag.png", "Eesti keel"},
