@@ -344,9 +344,11 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    ob = e_widget_check_add(evas, _("Sidebar"),
                            &(cfdata->view.show_sidebar));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
+/* FIXME: this sucks
    ob = e_widget_check_add(evas, _("Regular Files In Menu (SLOW)"),
                            &(cfdata->view.menu_shows_files));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
+*/
    e_widget_toolbook_page_append(otb, NULL, _("Display"), o, 0, 0, 0, 0, 0.5, 0.0);
 
    /////////////////////////////////////////////////////////////

@@ -360,6 +360,7 @@ _e_mod_fileman_config_load(void)
     E_CONFIG_LIMIT(fileman_config->view.spring_delay, 1, 10);
     E_CONFIG_LIMIT(fileman_config->icon.max_thumb_size, 0, 1024);
 
+    fileman_config->view.menu_shows_files = 0;
     e_config_save_queue();
 }
 
