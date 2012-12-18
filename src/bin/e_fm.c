@@ -386,7 +386,7 @@ static void          _e_fm2_file_rename_no_cb(void *data);
 static void          _e_fm2_file_application_properties(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void          _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *mi);
 static void          _e_fm2_file_properties_delete_cb(void *obj);
-static void          _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic);
+static int           _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic);
 
 static Evas_Object  *_e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic);
@@ -10250,7 +10250,22 @@ _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object
 static void
 _e_fm2_icon_entry_widget_accept(E_Fm2_Icon *ic)
 {
-   _e_fm2_file_do_rename(e_widget_entry_text_get(ic->entry_widget), ic);
+   const char *txt;
+
+   txt = e_widget_entry_text_get(ic->entry_widget);
+   switch (_e_fm2_file_do_rename(txt, ic))
+     {
+      case -2:
+        e_util_dialog_show(_("Error"), _("%s already exists!"), txt);
+        return;
+      case -1:
+        e_util_dialog_show(_("Error"), _("%s could not be renamed because it is protected"), ic->info.file);
+        break;
+      case 0:
+        e_util_dialog_show(_("Error"), _("Internal filemanager error :("));
+      default: /* success! */
+        break;
+     }
    _e_fm2_icon_entry_widget_del(ic);
 }
 
@@ -10271,7 +10286,20 @@ _e_fm2_file_rename_yes_cb(void *data, char *text)
    ic = data;
    ic->entry_dialog = NULL;
 
-   _e_fm2_file_do_rename(text, ic);
+   switch (_e_fm2_file_do_rename(text, ic))
+     {
+      case -2:
+        e_util_dialog_show(_("Error"), _("%s already exists!"), text);
+        _e_fm2_file_rename(ic, NULL, NULL);
+        break;
+      case -1:
+        e_util_dialog_show(_("Error"), _("%s could not be renamed because it is protected"), ic->info.file);
+        break;
+      case 0:
+        e_util_dialog_show(_("Error"), _("Internal filemanager error :("));
+      default: /* success! */
+        break;
+     }
 }
 
 static void
@@ -10283,7 +10311,7 @@ _e_fm2_file_rename_no_cb(void *data)
    ic->entry_dialog = NULL;
 }
 
-static void
+static int
 _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
 {
    char oldpath[PATH_MAX];
@@ -10292,20 +10320,23 @@ _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic)
    size_t size = 0;
    size_t length = 0;
 
-   if ((!text) || (!strcmp(text, ic->info.file))) return;
+   if (!text) return 0;
+   if (!strcmp(text, ic->info.file)) return EINA_TRUE;
    _e_fm2_icon_realpath(ic, oldpath, sizeof(oldpath));
    snprintf(newpath, sizeof(newpath), "%s/%s", ic->sd->realpath, text);
-   if (e_filereg_file_protected(oldpath)) return;
+   if (e_filereg_file_protected(oldpath)) return -1;
+   if (ecore_file_exists(newpath)) return -2;
 
    args = e_util_string_append_quoted(args, &size, &length, oldpath);
-   if (!args) return;
+   if (!args) return 0;
    args = e_util_string_append_char(args, &size, &length, ' ');
-   if (!args) return;
+   if (!args) return 0;
    args = e_util_string_append_quoted(args, &size, &length, newpath);
-   if (!args) return;
+   if (!args) return 0;
 
    e_fm2_client_file_move(ic->sd->obj, args);
    free(args);
+   return 1;
 }
 
 static E_Dialog *
