@@ -273,7 +273,9 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
            e_config->scale.use_dpi, e_config->scale.use_custom,
            e_config->scale.min, e_config->scale.max, e_config->scale.factor,
            e_config->scale.base_dpi);
-   
+
+   cfd->dia->win->border->internal_no_reopen = 1;
+   e_remember_update(cfd->dia->win->border);
    e_config_save_queue();
 
    a = e_action_find("restart");
@@ -346,7 +348,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
 }
 
 static int
-_adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
+_adv_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Action *a;
    
@@ -364,6 +366,8 @@ _adv_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->scale.factor = cfdata->factor;
    e_config->scale.base_dpi = cfdata->base_dpi;
 
+   cfd->dia->win->border->internal_no_reopen = 1;
+   e_remember_update(cfd->dia->win->border);
    e_config_save_queue();
    
    a = e_action_find("restart");
