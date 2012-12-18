@@ -172,6 +172,18 @@ _e_toolbar_free(E_Toolbar *tbar)
 {
    toolbars = eina_list_remove(toolbars, tbar);
 
+   evas_object_smart_callback_del_full(tbar->fm2, "changed",
+                                  _e_toolbar_fm2_changed, tbar);
+   evas_object_smart_callback_del_full(tbar->fm2, "dir_changed",
+                                  _e_toolbar_fm2_dir_changed, tbar);
+   evas_object_smart_callback_del_full(tbar->fm2, "dir_deleted",
+                                  _e_toolbar_fm2_dir_deleted, tbar);
+   evas_object_smart_callback_del_full(tbar->fm2, "files_deleted",
+                                  _e_toolbar_fm2_files_deleted, tbar);
+   evas_object_smart_callback_del_full(tbar->fm2, "selected",
+                                  _e_toolbar_fm2_selected, tbar);
+   evas_object_smart_callback_del_full(tbar->fm2, "selection_change",
+                                  _e_toolbar_fm2_selection_changed, tbar);
    if (tbar->menu)
      {
         e_menu_post_deactivate_callback_set(tbar->menu, NULL, NULL);
