@@ -288,6 +288,7 @@ _notification_popup_new(E_Notification *n)
 
    /* Create the popup window */
    popup->win = e_popup_new(zone, 0, 0, 0, 0);
+   e_popup_name_set(popup->win, "_e_popup_notification");
    popup->e = popup->win->evas;
 
    /* Setup the theme */
