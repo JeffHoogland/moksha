@@ -712,6 +712,7 @@ _cb_dir_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUS
                   while (l->next)
                     _box_button_free((Nav_Item*)l->next);
                   _box_button_free((Nav_Item*)l);
+                  l = NULL;
                }
              else
                {
