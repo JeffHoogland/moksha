@@ -453,19 +453,11 @@ EAPI void
 e_fm2_device_mount_add(E_Volume   *v,
                        const char *mountpoint)
 {
-   Eina_List *l, *ll;
-   E_Fm2_Mount *m;
-
    v->mounted = EINA_TRUE;
    if (mountpoint && (mountpoint[0]))
      eina_stringshare_replace(&v->mount_point, mountpoint);
 
-   EINA_LIST_FOREACH_SAFE(v->mounts, l, ll, m)
-     {
-        _e_fm2_device_mount_ok(m);
-        if (m->deleted) v->mounts = eina_list_remove_list(v->mounts, l);
-     }
-
+   E_LIST_FOREACH(v->mounts, _e_fm2_device_mount_ok);
 //   printf("MOUNT %s %s\n", v->udi, v->mount_point);
 }
 
@@ -620,6 +612,7 @@ _e_fm2_device_mount_ok(E_Fm2_Mount *m)
      m->mount_point = eina_stringshare_add(m->volume->mount_point);
    if (m->mount_ok)
      m->mount_ok(m->data);
+   if (m->deleted) ecore_job_add((Ecore_Cb)e_fm2_device_unmount, m);
    //printf("MOUNT OK '%s'\n", m->mount_point);
 }
 
