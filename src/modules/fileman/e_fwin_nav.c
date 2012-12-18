@@ -541,13 +541,11 @@ _cb_forward_click(void *data, Evas_Object *obj __UNUSED__, const char *emission 
 static void
 _cb_refresh_click(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
-   Instance *inst;
-
-   inst = data;
+   Instance *inst = data;
 
    // Don't destroy forward history when refreshing
    inst->ignore_dir = 1;
-   e_fm2_path_set(inst->o_fm, NULL, e_fm2_real_path_get(inst->o_fm));
+   e_fm2_refresh(inst->o_fm);
 }
 
 static void
