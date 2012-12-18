@@ -880,7 +880,7 @@ _e_intl_locale_validate(const char *locale)
    Eina_List *all_locales;
    E_Locale_Parts *locale_parts;
    char *locale_next;
-   char *locale_lr;
+   char *locale_lr = NULL;
    char *locale_cs_canonic;
    int found;
 
@@ -889,9 +889,13 @@ _e_intl_locale_validate(const char *locale)
    locale_parts = e_intl_locale_parts_get(locale);
 
    /* Gather the search information */
-   locale_lr =
-     e_intl_locale_parts_combine(locale_parts,
-                                 E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+   if (locale_parts)
+     {
+        if (locale_parts->mask & E_INTL_LOC_REGION)
+          locale_lr = e_intl_locale_parts_combine(locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+        else if (locale_parts->lang)
+          locale_lr = strdup(locale_parts->lang);
+     }
    if (!locale_lr)
      {
         /* Not valid locale, maybe its an alias */
@@ -915,12 +919,17 @@ _e_intl_locale_validate(const char *locale)
         if (found == 0)
           {
              E_Locale_Parts *locale_parts_next;
-             char *locale_lr_next;
+             char *locale_lr_next = NULL;
 
              locale_parts_next = e_intl_locale_parts_get(locale_next);
-             locale_lr_next = e_intl_locale_parts_combine(locale_parts_next,
-                                                          E_INTL_LOC_LANG | E_INTL_LOC_REGION);
-
+             if (locale_parts_next)
+               {
+                  if (locale_parts_next->mask & E_INTL_LOC_REGION)
+                    locale_lr_next = e_intl_locale_parts_combine(locale_parts_next,
+                                                                 E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+                  else if (locale_parts_next->lang)
+                    locale_lr_next = strdup(locale_parts_next->lang);
+               }
              if ((locale_parts) && (locale_lr_next) &&
                  (!strcmp(locale_lr, locale_lr_next)))
                {

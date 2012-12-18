@@ -101,11 +101,13 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UN
              locale_parts = e_intl_locale_parts_get(line);
              if (locale_parts)
                {
-                  char *basic_language;
+                  char *basic_language = NULL;
 
-                  basic_language =
-                    e_intl_locale_parts_combine
-                      (locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+                  if (locale_parts->mask & E_INTL_LOC_REGION)
+                    basic_language = e_intl_locale_parts_combine(locale_parts,
+                      E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+                  else if (locale_parts->lang)
+                    basic_language = strdup(locale_parts->lang);
                   if (basic_language)
                     {
                        int i = 0;

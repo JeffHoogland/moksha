@@ -1047,8 +1047,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
         locale_parts = e_intl_locale_parts_get(cfdata->cur_language);
         if (locale_parts)
           {
-             cur_sig_loc = e_intl_locale_parts_combine(locale_parts,
-                                                       E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+             if (locale_parts->mask & E_INTL_LOC_REGION)
+               cur_sig_loc = e_intl_locale_parts_combine(locale_parts,
+                                                         E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+             else if (locale_parts->lang)
+               cur_sig_loc = strdup(locale_parts->lang);
 
              e_intl_locale_parts_free(locale_parts);
           }
