@@ -278,6 +278,7 @@ e_smart_monitor_setup(Evas_Object *obj)
    else
      {
         /* FIXME: NB: TODO: Handle case of output not having crtc */
+        printf("Output Has NO Crtc !!\n");
      }
 
    /* set the original rotation */
@@ -419,13 +420,42 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
         return;
      }
 
-   crtc->geometry.x = sd->current.x;
-   crtc->geometry.y = sd->current.y;
-   crtc->geometry.w = sd->current.w;
-   crtc->geometry.h = sd->current.h;
+   /* if nothing changed, we have nothing to apply */
+   if (sd->changes == 0) return;
 
-   crtc->current_mode = sd->current.mode;
-   crtc->current_orientation = sd->current.orientation;
+   /* check if it changed position and update values */
+   if (sd->changes & E_SMART_MONITOR_CHANGED_POSITION)
+     {
+        crtc->geometry.x = sd->current.x;
+        crtc->geometry.y = sd->current.y;
+     }
+
+   /* check if it changed size and update values */
+   if (sd->changes & E_SMART_MONITOR_CHANGED_RESOLUTION)
+     {
+        crtc->geometry.w = sd->current.w;
+        crtc->geometry.h = sd->current.h;
+     }
+
+   /* check if it changed mode or refresh rate and update values */
+   if ((sd->changes & E_SMART_MONITOR_CHANGED_MODE) || 
+       (sd->changes & E_SMART_MONITOR_CHANGED_REFRESH))
+     crtc->current_mode = sd->current.mode;
+
+   /* check if it changed orientation and update values */
+   if (sd->changes & E_SMART_MONITOR_CHANGED_ROTATION)
+     crtc->current_orientation = sd->current.orientation;
+
+   /* if this monitor is cloned, use the parent geometry */
+   if (sd->cloned)
+     {
+        e_smart_monitor_current_geometry_get(sd->parent, &crtc->geometry.x, 
+                                             &crtc->geometry.y, 
+                                             &crtc->geometry.w, 
+                                             &crtc->geometry.h);
+     }
+
+   /* TODO: Handle enabled and crtc change */
 }
 
 void 
