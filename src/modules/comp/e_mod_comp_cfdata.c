@@ -23,6 +23,8 @@ e_mod_comp_cfdata_edd_init(E_Config_DD **conf_edd, E_Config_DD **match_edd)
    E_CONFIG_VAL(D, T, argb, CHAR);
    E_CONFIG_VAL(D, T, fullscreen, CHAR);
    E_CONFIG_VAL(D, T, modal, CHAR);
+   E_CONFIG_VAL(D, T, focus, CHAR);
+   E_CONFIG_VAL(D, T, urgent, CHAR);
    E_CONFIG_VAL(D, T, shadow_style, STR);
 
    *conf_edd = E_CONFIG_DD_NEW("Comp_Config", Config);
@@ -103,6 +105,12 @@ e_mod_comp_cfdata_config_new(void)
    cfg->match.popups = eina_list_append(cfg->match.popups, mat);
    mat->name = eina_stringshare_add("_e_popup_desklock");
    mat->shadow_style = eina_stringshare_add("still");
+   
+   mat = E_NEW(Match, 1);
+   cfg->match.popups = eina_list_append(cfg->match.popups, mat);
+   mat->name = eina_stringshare_add("_e_popup_notification");
+   mat->shadow_style = eina_stringshare_add("still");
+   mat->focus = 1;
    
    mat = E_NEW(Match, 1);
    cfg->match.popups = eina_list_append(cfg->match.popups, mat);

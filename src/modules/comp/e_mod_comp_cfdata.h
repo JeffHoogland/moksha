@@ -56,6 +56,8 @@ struct _Match
    char        argb; // used for borders, overrides, popups, menus, 0 == don't use, 1 == is argb, -1 == not argb
    char        fullscreen; // used for borders, 0 == don't use, 1 == is fullscreen, -1 == not fullscreen
    char        modal; // used for borders, 0 == don't use, 1 == is modal, -1 == not modal
+   char        focus; // used for setting focus state (on popups): 1 is focused, unset is use regular logic
+   char        urgent; // used for setting urgent state (on popups): 1 is urgent, unset is use regular logic
 };
 
 EAPI void    e_mod_comp_cfdata_edd_init(E_Config_DD **conf_edd, E_Config_DD **match_edd);

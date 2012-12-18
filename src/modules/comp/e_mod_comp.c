@@ -1618,6 +1618,7 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
    char buf[4096];
    Eina_List *list = NULL, *l;
    Match *m;
+   Eina_Bool focus = EINA_FALSE, urgent = EINA_FALSE;
    const char *title = NULL, *name = NULL, *clas = NULL, *role = NULL;
    Ecore_X_Window_Type primary_type = ECORE_X_WINDOW_TYPE_UNKNOWN;
 
@@ -1757,6 +1758,8 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
                     continue;
                }
           }
+        focus = m->focus;
+        urgent = m->urgent;
         if (m->shadow_style)
           {
              snprintf(buf, sizeof(buf), "e/comp/%s",
@@ -1797,11 +1800,11 @@ _e_mod_comp_win_shadow_setup(E_Comp_Win *cw)
           edje_object_signal_emit(cw->shobj, "e,state,shadow,off", "e");
      }
 
-   if (cw->bd)
+   if (cw->bd || focus || urgent)
      {
-        if (cw->bd->focused)
+        if (focus || (cw->bd && cw->bd->focused))
           edje_object_signal_emit(cw->shobj, "e,state,focus,on", "e");
-        if (cw->bd->client.icccm.urgent)
+        if (urgent || (cw->bd && cw->bd->client.icccm.urgent))
           edje_object_signal_emit(cw->shobj, "e,state,urgent,on", "e");
      }
    if (cw->visible)
