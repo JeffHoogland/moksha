@@ -266,6 +266,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, tooltip.size, DOUBLE);
    E_CONFIG_VAL(D, T, tooltip.enable, UCHAR);
    E_CONFIG_VAL(D, T, view.spring_delay, INT);
+   E_CONFIG_VAL(D, T, view.toolbar_orient, UINT);
    E_CONFIG_LIST(D, T, paths, paths_edd);
 
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
@@ -344,6 +345,10 @@ _e_mod_fileman_config_load(void)
 
     IFMODCFG(0x0116);
     fileman_config->icon.max_thumb_size = 0;
+    IFMODCFGEND;
+
+    IFMODCFG(0x0118);
+    fileman_config->view.toolbar_orient = E_GADCON_ORIENT_TOP;
     IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;

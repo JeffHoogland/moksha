@@ -549,12 +549,14 @@ e_fwin_reload_all(void)
                        fwin->cur_page->tbar = e_toolbar_new
                          (e_win_evas_get(fwin->win), "toolbar",
                              fwin->win, fwin->cur_page->fm_obj);
+                       e_toolbar_orient(fwin->cur_page->tbar, fileman_config->view.toolbar_orient);
                     }
                }
              else
                {
                   if (fwin->cur_page->tbar)
                     {
+                       fileman_config->view.toolbar_orient = fwin->cur_page->tbar->gadcon->orient;
                        e_object_del(E_OBJECT(fwin->cur_page->tbar));
                        fwin->cur_page->tbar = NULL;
                     }
@@ -1019,8 +1021,11 @@ _e_fwin_page_create(E_Fwin *fwin)
    e_widget_scrollframe_focus_object_set(o, page->fm_obj);
 
    if (fileman_config->view.show_toolbar)
-     page->tbar = e_toolbar_new(evas, "toolbar",
-                                fwin->win, page->fm_obj);
+     {
+        page->tbar = e_toolbar_new(evas, "toolbar",
+                                   fwin->win, page->fm_obj);
+        e_toolbar_orient(page->tbar, fileman_config->view.toolbar_orient);
+     }
 
    page->fm_op_entry_add_handler =
      ecore_event_handler_add(E_EVENT_FM_OP_REGISTRY_ADD,
@@ -1034,7 +1039,11 @@ static void
 _e_fwin_page_free(E_Fwin_Page *page)
 {
    if (page->fm_obj) evas_object_del(page->fm_obj);
-   if (page->tbar) e_object_del(E_OBJECT(page->tbar));
+   if (page->tbar)
+     {
+        fileman_config->view.toolbar_orient = page->tbar->gadcon->orient;
+        e_object_del(E_OBJECT(page->tbar));
+     }
    else evas_object_del(page->scrollframe_obj);
 
    if (page->fm_op_entry_add_handler)
