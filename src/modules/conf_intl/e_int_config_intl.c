@@ -660,7 +660,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
                {
                   char *basic_language;
 
-                  basic_language = e_intl_locale_parts_combine(locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+                  if (locale_parts->mask & E_INTL_LOC_REGION)
+                    basic_language = e_intl_locale_parts_combine(locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
+                  else if (locale_parts->lang)
+                    basic_language = strdup(locale_parts->lang);
                   if (basic_language)
                     {
                        int i;
