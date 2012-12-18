@@ -4759,7 +4759,7 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    /* actually create evas objects etc. */
    ic->realized = EINA_TRUE;
    evas_event_freeze(evas_object_evas_get(ic->sd->obj));
-   ic->obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
+   ic->info.obj = ic->obj = edje_object_add(evas_object_evas_get(ic->sd->obj));
    edje_object_freeze(ic->obj);
    evas_object_smart_member_add(ic->obj, ic->sd->obj);
    evas_object_stack_below(ic->obj, ic->sd->drop);
@@ -4861,7 +4861,7 @@ _e_fm2_icon_unrealize(E_Fm2_Icon *ic)
    /* delete evas objects */
    ic->realized = EINA_FALSE;
    evas_object_del(ic->obj);
-   ic->obj = NULL;
+   ic->info.obj = ic->obj = NULL;
    evas_object_del(ic->obj_icon);
    ic->obj_icon = NULL;
 }
