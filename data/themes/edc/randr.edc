@@ -447,7 +447,7 @@ group { name: "e/conf/randr/main/frame";
          action: STATE_SET "default" 0.0;
          target: "drop_zone";
       }
-      program { name: "off";
+      program { name: "rotate_off";
          signal: "e,state,rotate_disabled"; source: "e";
          action: STATE_SET "disabled" 0.0;
          target: "e.event.rotate";
