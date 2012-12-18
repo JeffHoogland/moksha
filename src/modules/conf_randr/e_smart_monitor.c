@@ -288,7 +288,8 @@ e_smart_monitor_setup(Evas_Object *obj)
 
    /* get the current zone at this crtc coordinate */
    sd->con = e_container_current_get(e_manager_current_get());
-   zone = e_container_zone_at_point_get(sd->con, sd->orig.x, sd->orig.y);
+   if (!(zone = e_container_zone_at_point_get(sd->con, sd->orig.x, sd->orig.y)))
+     zone = e_util_zone_current_get(e_manager_current_get());
 
    /* set references to the container & zone number
     * 
