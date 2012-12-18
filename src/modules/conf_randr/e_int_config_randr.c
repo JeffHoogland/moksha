@@ -13,7 +13,7 @@ struct _E_Config_Dialog_Data
 static void *_create_data(E_Config_Dialog *cfd EINA_UNUSED);
 static void _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
 static void _randr_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED);
 
 /* public functions */
@@ -132,7 +132,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 {
    /* tell randr widget to apply changes */
    e_smart_randr_changes_apply(cfdata->o_randr);
