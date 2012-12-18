@@ -10068,7 +10068,7 @@ msgstr "Take Shot"
 #: src/modules/shot/e_mod_main.c:988
 #: src/modules/shot/e_mod_main.c:1015
 msgid "Take Screenshot"
-msgstr "Tomar una captura de pantalla"
+msgstr "Capturar Pantalla"
 
 #: src/modules/shot/e_mod_main.c:965
 msgid "Shot Error"
