@@ -525,7 +525,12 @@ _e_fm2_icon_realpath(const E_Fm2_Icon *ic, char *buf, int buflen)
 static inline Eina_Bool
 _e_fm2_icon_path(const E_Fm2_Icon *ic, char *buf, int buflen)
 {
-   int r = snprintf(buf, buflen, "%s/%s", ic->sd->path, ic->info.file);
+   int r;
+
+   if (ic->info.link)
+     snprintf(buf, buflen, "%s", ic->info.link);
+   else
+     r = snprintf(buf, buflen, "%s/%s", ic->sd->path, ic->info.file);
    return r < buflen;
 }
 
