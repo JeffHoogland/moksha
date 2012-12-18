@@ -349,6 +349,14 @@ e_smart_monitor_setup(Evas_Object *obj)
    else
      edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
 
+   /* check if rotation is supported */
+   if ((sd->output) && (sd->output->crtc))
+     {
+        /* if no rotation is supported, disable rotate in frame */
+        if (sd->output->crtc->orientations <= ECORE_X_RANDR_ORIENTATION_ROT_0)
+          edje_object_signal_emit(sd->o_frame, "e,state,rotate_disabled", "e");
+     }
+
    /* set the 'current' values to be equal to the original ones */
    sd->current.x = sd->orig.x;
    sd->current.y = sd->orig.y;
@@ -450,6 +458,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
         /* set output policy to cloned */
         sd->output->policy = ECORE_X_RANDR_OUTPUT_POLICY_CLONE;
 
+        /* use the geometry from the parent (since we are cloned to it) */
         e_smart_monitor_current_geometry_get(sd->parent, &crtc->geometry.x, 
                                              &crtc->geometry.y, 
                                              &crtc->geometry.w, 
