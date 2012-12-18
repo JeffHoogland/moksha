@@ -528,7 +528,7 @@ _e_fm2_icon_path(const E_Fm2_Icon *ic, char *buf, int buflen)
    int r;
 
    if (ic->info.link)
-     snprintf(buf, buflen, "%s", ic->info.link);
+     r = snprintf(buf, buflen, "%s", ic->info.link);
    else
      r = snprintf(buf, buflen, "%s/%s", ic->sd->path, ic->info.file);
    return r < buflen;
