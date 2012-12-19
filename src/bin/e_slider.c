@@ -255,10 +255,11 @@ _e_smart_set_timer(void *data)
    else if (pos > 1.0) pos = 1.0;
    if (sd->reversed) pos = 1.0 - pos;
    sd->changing++;
+   if (sd->set_timer) ecore_timer_del(sd->set_timer);
+   sd->set_timer = NULL;
    edje_object_part_drag_value_set(sd->edje_obj, "e.dragable.slider", pos, pos);
    edje_object_message_signal_process(sd->edje_obj);
    sd->changing--;
-   sd->set_timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
 
