@@ -1930,7 +1930,7 @@ _e_fwin_zone_focus_in(void *data,
    E_Fwin *fwin;
 
    fwin = data;
-   if (!fwin) return;
+   if ((!fwin) || (!fwin->cur_page) || (!fwin->cur_page->fm_obj)) return;
    evas_object_focus_set(fwin->cur_page->fm_obj, EINA_TRUE);
 }
 
