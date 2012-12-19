@@ -1015,6 +1015,7 @@ _e_fwin_page_create(E_Fwin *fwin)
    e_widget_can_focus_set(o, EINA_FALSE);
    page->scrollframe_obj = o;
    page->scr = e_widget_scrollframe_object_get(o);
+   e_scrollframe_key_navigation_set(o, EINA_FALSE);
    e_scrollframe_custom_theme_set(o, "base/theme/fileman",
                                   "e/fileman/default/scrollframe");
    edje_object_part_swallow(fwin->bg_obj, "e.swallow.content", o);

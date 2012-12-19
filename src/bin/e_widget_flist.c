@@ -69,7 +69,7 @@ e_widget_flist_add(Evas *evas)
    evas_object_smart_callback_add(wd->o_fm, "files_deleted",
                                   _e_wid_cb_file_deleted, obj);
 
-   e_scrollframe_child_set(wd->o_scroll, o);
+   e_scrollframe_key_navigation_set(wd->o_scroll, EINA_FALSE);
    e_scrollframe_extern_pan_set(wd->o_scroll, o, e_fm2_pan_set,
                                 e_fm2_pan_get, e_fm2_pan_max_get,
                                 e_fm2_pan_child_size_get);
