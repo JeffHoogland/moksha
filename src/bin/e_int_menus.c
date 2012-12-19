@@ -539,6 +539,8 @@ e_int_menus_shutdown(void)
    _e_int_menus_app_cleaner = NULL;
    eina_hash_free(_e_int_menus_app_menus_waiting);
    _e_int_menus_app_menus_waiting = NULL;
+   efreet_menu_free(_e_int_menus_app_menu_default);
+   _e_int_menus_app_menu_default = NULL;
    E_FREE_LIST(handlers, ecore_event_handler_del);
 }
 
