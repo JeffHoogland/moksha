@@ -568,7 +568,7 @@ _output_property_change_event_cb(void *data __UNUSED__, int type, void *ev)
  * - try to share the output of a CRTC with other outputs already using it
  *   (clone).
  */
-EAPI Eina_Bool
+EINTERN Eina_Bool
 e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Output_Policy policy, Eina_Bool force)
 {
    Eina_List *iter, *outputs_list = NULL, *common_modes = NULL;
