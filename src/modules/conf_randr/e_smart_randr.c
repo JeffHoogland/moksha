@@ -516,11 +516,10 @@ e_smart_randr_changes_apply(Evas_Object *obj)
         e_smart_monitor_changes_reset(mon);
      }
 
+   /* FIXME: This should maybe go into a "restore on login" option ?? */
+
    /* tell randr to save this config */
    e_randr_store_configuration(E_RANDR_CONFIGURATION_STORE_ALL);
-
-   /* tell randr to send to X */
-   e_randr_try_restore_configuration();
 }
 
 /* local functions */
