@@ -3,16 +3,12 @@
 
 #include "E_Connman.h"
 
-#define REFRESH_TIME (5)
-
 E_Module *connman_mod = NULL;
 static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
 const char _e_connman_name[] = "connman";
 const char _e_connman_Name[] = N_("Connection Manager");
 int _e_connman_log_dom = -1;
-
-static Eina_Bool _refresh_cb(void *data);
 
 const char *
 e_connman_theme_path(void)
@@ -143,17 +139,6 @@ _econnman_popup_update(struct Connman_Manager *cm, E_Connman_Instance *inst)
 
    EINA_SAFETY_ON_NULL_RETURN(cm);
 
-   if (inst->popup_locked)
-     {
-        inst->popup_dirty = EINA_TRUE;
-        return;
-     }
-
-   inst->popup_dirty = EINA_FALSE;
-   inst->popup_locked = EINA_TRUE;
-   if (!inst->refresh_timer)
-     inst->refresh_timer = ecore_timer_add(REFRESH_TIME, _refresh_cb, inst);
-
    e_widget_ilist_freeze(list);
    e_widget_ilist_clear(list);
 
@@ -283,30 +268,6 @@ _econnman_powered_changed(void *data, Evas_Object *obj, void *info __UNUSED__)
    econnman_powered_set(ctxt->cm, ctxt->powered);
 }
 
-static Eina_Bool
-_refresh_cb(void *data)
-{
-   E_Connman_Instance *inst = data;
-   E_Connman_Module_Context *ctxt = inst->ctxt;
-
-   if ((!inst->popup) || (!ctxt->cm))
-     {
-        inst->refresh_timer = NULL;
-        return EINA_FALSE;
-     }
-
-   if (inst->popup_dirty)
-     {
-        _econnman_popup_update(ctxt->cm, inst);
-        return EINA_TRUE;
-     }
-
-   inst->popup_locked = EINA_FALSE;
-   inst->refresh_timer = NULL;
-
-   return EINA_FALSE;
-}
-
 static void
 _e_connman_widget_size_set(E_Connman_Instance *inst, Evas_Object *widget, Evas_Coord percent_w, Evas_Coord percent_h, Evas_Coord min_w, Evas_Coord min_h, Evas_Coord max_w, Evas_Coord max_h)
 {
@@ -357,7 +318,6 @@ _econnman_popup_new(E_Connman_Instance *inst)
    evas_object_smart_callback_add(ck, "changed",
                                   _econnman_powered_changed, inst);
 
-   inst->popup_locked = EINA_FALSE;
    _econnman_popup_update(ctxt->cm, inst);
 
    bt = e_widget_button_add(evas, _("Configure"), NULL,
@@ -375,13 +335,6 @@ void
 econnman_popup_del(E_Connman_Instance *inst)
 {
    if (!inst->popup) return;
-
-   if (inst->refresh_timer)
-     {
-        ecore_timer_del(inst->refresh_timer);
-        inst->refresh_timer = NULL;
-     }
-
    _econnman_popup_input_window_destroy(inst);
    e_object_del(E_OBJECT(inst->popup));
    inst->popup = NULL;

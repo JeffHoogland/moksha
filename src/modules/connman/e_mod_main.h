@@ -35,11 +35,6 @@ struct E_Connman_Instance
              Ecore_Event_Handler *input_mouse_up;
           } popup;
      } ui;
-
-   Ecore_Timer *refresh_timer;
-
-   Eina_Bool popup_dirty:1;
-   Eina_Bool popup_locked:1;
 };
 
 struct E_Connman_Module_Context
