@@ -559,7 +559,6 @@ e_gadcon_populate(E_Gadcon *gc)
 {
    Eina_List *l;
    E_Config_Gadcon_Client *cf_gcc;
-   Eina_Bool ret = EINA_TRUE;
 
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
@@ -579,10 +578,7 @@ e_gadcon_populate(E_Gadcon *gc)
                }
           }
         if (cc)
-          {
-             ret = _e_gadcon_client_populate(gc, cc, cf_gcc);
-             if (!ret) break;
-          }
+          _e_gadcon_client_populate(gc, cc, cf_gcc);
         else
           e_gadcon_client_queue(gc, cf_gcc);
      }
