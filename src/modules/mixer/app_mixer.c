@@ -53,6 +53,7 @@ typedef struct E_Mixer_App_Dialog_Data
 
 struct channel_info
 {
+   int                      is_mono;
    int                      has_capture;
    const char              *name;
    E_Mixer_Channel         *id;
@@ -169,7 +170,9 @@ _populate_channel_editor(E_Mixer_App_Dialog_Data *app)
    e_mod_mixer_state_get(app->sys, app->channel_info->id, &state);
    _update_channel_editor_state(app, state);
 
-   app->lock_sliders = (state.left == state.right);
+   e_widget_disabled_set(ui->right, app->channel_info->is_mono);
+   app->lock_sliders = ( (state.left == state.right) && !app->channel_info->is_mono );
+   e_widget_disabled_set(ui->lock_sliders, app->channel_info->is_mono);
    e_widget_check_checked_set(ui->lock_sliders, app->lock_sliders);
 }
 
@@ -211,6 +214,7 @@ _channels_info_new(E_Mixer_System *sys)
         info = malloc(sizeof(*info));
         info->id = l->data;
         info->name = e_mod_mixer_channel_name_get(sys, info->id);
+        info->is_mono = e_mod_mixer_mono_get(sys, info->id);
         info->has_capture = e_mod_mixer_capture_get(sys, info->id);
 
         channels_infos = eina_list_append(channels_infos, info);
