@@ -6573,7 +6573,7 @@ _e_fm2_cb_dnd_selection_notify_post_mount_fail(E_Volume *vol)
 static void
 _e_fm2_cb_dnd_selection_notify_post_mount(E_Volume *vol)
 {
-   E_Fm2_Device_Mount_Op *mop;
+   E_Fm2_Device_Mount_Op *mop = NULL;
    const char *mp;
    Eina_Inlist *l;
 
