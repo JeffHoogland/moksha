@@ -448,22 +448,16 @@ e_bg_update(void)
 static void
 e_bg_handler_set(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *path)
 {
-   E_Container *con;
    char buf[4096];
    int copy = 1;
-   E_Zone *zone;
-   E_Desk *desk;
 
    if (!path) return;
 
-   con = e_container_current_get(e_manager_current_get());
    if (!eina_str_has_extension(path, "edj"))
      {
-        e_import_config_dialog_show(con, path, (Ecore_End_Cb)_e_bg_handler_image_imported, NULL);
+        e_import_config_dialog_show(NULL, path, (Ecore_End_Cb)_e_bg_handler_image_imported, NULL);
         return;
      }
-   zone = e_zone_current_get(con);
-   desk = e_desk_current_get(zone);
 
    /* if not in system dir or user dir, copy to user dir */
    e_prefix_data_concat_static(buf, "data/backgrounds");
@@ -489,13 +483,13 @@ e_bg_handler_set(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char 
         if (!ecore_file_exists(buf))
           {
              ecore_file_cp(path, buf);
-             e_bg_add(con->num, zone->num, desk->x, desk->y, buf);
+             e_bg_default_set(buf);
           }
         else
-          e_bg_add(con->num, zone->num, desk->x, desk->y, path);
+          e_bg_default_set(path);
      }
    else
-     e_bg_add(con->num, zone->num, desk->x, desk->y, path);
+     e_bg_default_set(path);
 
    e_bg_update();
    e_config_save_queue();
@@ -559,11 +553,8 @@ _e_bg_event_bg_update_free(void *data __UNUSED__, void *event)
 static void
 _e_bg_handler_image_imported(const char *image_path, void *data __UNUSED__)
 {
-   E_Container *con = e_container_current_get(e_manager_current_get());
-   E_Zone *zone = e_zone_current_get(con);
-   E_Desk *desk = e_desk_current_get(zone);
 
-   e_bg_add(con->num, zone->num, desk->x, desk->y, image_path);
+   e_bg_default_set(image_path);
    e_bg_update();
    e_config_save_queue();
 }
