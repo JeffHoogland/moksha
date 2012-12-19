@@ -94,7 +94,7 @@ EAPI void             e_shelf_popup_set(E_Shelf *es, int popup);
 EAPI E_Shelf         *e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es);
 EAPI void             e_shelf_name_set(E_Shelf *es, const char *name);
 EAPI void             e_shelf_rename_dialog(E_Shelf *es);
-EAPI void             e_shelf_autohide_set(E_Shelf *es, Eina_Bool autohide);
+EAPI void             e_shelf_autohide_set(E_Shelf *es, int autohide_type);
 EAPI Eina_Bool       e_shelf_desk_visible(E_Shelf *es, E_Desk *desk);
 #endif
 #endif

@@ -326,7 +326,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
 
    cfdata->escfg->overlap = cfdata->overlap;
-   e_shelf_autohide_set(cfdata->es, cfdata->autohide);
+   e_shelf_autohide_set(cfdata->es, cfdata->autohide + (cfdata->autohide * cfdata->autohide_action));
    cfdata->escfg->autohide_show_action = cfdata->autohide_action;
    cfdata->escfg->hide_timeout = cfdata->hide_timeout;
    cfdata->escfg->hide_duration = cfdata->hide_duration;
