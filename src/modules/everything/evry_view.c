@@ -392,6 +392,8 @@ _place_items(Smart_Data *sd)
    int divider;
    Evas_Coord x = 0, y = 0, ww, hh, mw = 0, mh = 0;
 
+   sd->place = EINA_FALSE;
+
    if (sd->view->mode == VIEW_MODE_LIST)
      {
         ww = sd->w;
@@ -514,7 +516,6 @@ _e_smart_reconfigure_do(void *data)
 
    if (sd->place && _place_items(sd))
      {
-        sd->place = EINA_FALSE;
         evas_object_smart_callback_call(obj, "changed", NULL);
         return ECORE_CALLBACK_RENEW;
      }
@@ -950,8 +951,16 @@ _update_frame(Evas_Object *obj)
 
    e_scrollframe_child_pos_set(sd->view->sframe, 0, sd->scroll_align);
 
+
+   if (sd->idle_enter)
+     {
+        ecore_idler_del(sd->idle_enter);
+        sd->idle_enter = NULL;
+     }
+   
    sd->place = EINA_TRUE;
-   _e_smart_reconfigure(obj);
+   
+   _e_smart_reconfigure_do(obj);
 
    _pan_item_select(obj, sd->cur_item, 0);
 
@@ -1461,6 +1470,8 @@ _view_cb_mouse_wheel(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj
      }
 }
 
+// FIXME: 'drag into' make mouse input hang after some trials 
+#if 0
 static void
 _view_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
@@ -1514,7 +1525,7 @@ _view_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
         edje_object_signal_emit(sd->view->bg, "e,action,hide,back", "e");
         goto end;
      }
-
+   
    if ((sel->states->next) || (sel != sel->win->selectors[0]))
      edje_object_signal_emit(sd->view->bg, "e,action,show,back", "e");
 
@@ -1530,7 +1541,6 @@ _view_cb_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
              _pan_item_select(data, sd->it_down, 0);
           }
      }
-
    if (sd->mouse_button == 1)
      {
         if (ev->cur.canvas.x - sd->mouse_x > SLIDE_RESISTANCE)
@@ -1570,6 +1580,7 @@ end:
    sd->mouse_x = 0;
    sd->mouse_y = 0;
 }
+#endif
 
 static void
 _cb_list_hide(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
@@ -1631,14 +1642,14 @@ _view_create(Evry_View *ev, const Evry_State *s, const Evas_Object *swallow)
    _pan_view_set(v->span, v);
    evas_object_event_callback_add(v->span, EVAS_CALLBACK_MOUSE_WHEEL,
                                   _view_cb_mouse_wheel, NULL);
-
+#if 0
    evas_object_event_callback_add(v->bg, EVAS_CALLBACK_MOUSE_MOVE,
                                   _view_cb_mouse_move, v->span);
    evas_object_event_callback_add(v->bg, EVAS_CALLBACK_MOUSE_DOWN,
                                   _view_cb_mouse_down, v->span);
    evas_object_event_callback_add(v->bg, EVAS_CALLBACK_MOUSE_UP,
                                   _view_cb_mouse_up, v->span);
-
+#endif
    // the scrollframe holding the scrolled thumbs
    v->sframe = e_scrollframe_add(v->evas);
    e_scrollframe_custom_theme_set(v->sframe, "base/theme/modules/everything",
