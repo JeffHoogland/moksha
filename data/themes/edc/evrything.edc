@@ -941,8 +941,8 @@ group { name: "e/modules/everything/thumbview/main/scrollframe";
          }
          description { state: "hidden" 0.0;
             inherit: "default" 0.0;
-            min: 0 0;
-            max: 0 99999;
+            min: 15 0;
+            max: 15 99999;
          }
       }
       part { name: "sb_vbar_base"; type: RECT;
