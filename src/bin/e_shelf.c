@@ -1845,9 +1845,7 @@ _e_shelf_cb_mouse_move_autohide_fuck_systray(E_Shelf *es)
    ecore_x_pointer_xy_get(es->zone->container->manager->root, &x, &y);
    ev.root.x = x, ev.root.y = y;
    _e_shelf_cb_mouse_in(es, ECORE_EVENT_MOUSE_MOVE, &ev);
-   if (es->autohide_timer) ecore_timer_del(es->autohide_timer);
-   es->autohide_timer = NULL;
-   return EINA_FALSE;
+   return EINA_TRUE;
 }
 
 static Eina_Bool
