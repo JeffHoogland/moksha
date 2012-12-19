@@ -1607,7 +1607,7 @@ _e_int_menus_shelves_pre_cb(void *data __UNUSED__, E_Menu *m)
    shelves = e_shelf_list();
    EINA_LIST_FOREACH(shelves, l, es)
      {
-        char buf[256];
+        char buf[1024];
 
         if (!es) continue;
         if (es->zone->num != zone->num) continue;
