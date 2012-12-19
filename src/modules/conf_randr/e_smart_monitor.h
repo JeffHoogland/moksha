@@ -19,6 +19,7 @@ enum _E_Smart_Monitor_Changes
 Evas_Object *e_smart_monitor_add(Evas *evas);
 void e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Info *output);
 E_Randr_Output_Info *e_smart_monitor_output_get(Evas_Object *obj);
+void e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc);
 void e_smart_monitor_layout_set(Evas_Object *obj, Evas_Object *layout);
 Evas_Object *e_smart_monitor_layout_get(Evas_Object *obj);
 void e_smart_monitor_setup(Evas_Object *obj);
