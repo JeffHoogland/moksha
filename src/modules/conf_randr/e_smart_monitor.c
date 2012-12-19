@@ -450,81 +450,121 @@ void
 e_smart_monitor_changes_apply(Evas_Object *obj)
 {
    E_Smart_Data *sd;
-   E_Randr_Crtc_Info *crtc;
+   Eina_Bool reset = EINA_FALSE;
+   Ecore_X_Window root;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   if (!(crtc = sd->crtc)) 
-     {
-        /* FIXME: What to do in this case ?? */
-        ERR("NO CRTC FOR MONITOR !!\n");
+   root = sd->con->manager->root;
 
-        return;
-     }
-
-   /* check if it changed position and update values */
-   if (sd->changes & E_SMART_MONITOR_CHANGED_POSITION)
-     {
-        crtc->geometry.x = sd->current.x;
-        crtc->geometry.y = sd->current.y;
-     }
-
-   /* check if it changed size and update values */
-   if (sd->changes & E_SMART_MONITOR_CHANGED_RESOLUTION)
-     {
-        crtc->geometry.w = sd->current.w;
-        crtc->geometry.h = sd->current.h;
-        crtc->current_mode = sd->current.mode;
-     }
-
-   /* check if it changed mode or refresh rate and update values */
-   if ((sd->changes & E_SMART_MONITOR_CHANGED_MODE) || 
-       (sd->changes & E_SMART_MONITOR_CHANGED_REFRESH))
-     crtc->current_mode = sd->current.mode;
-
-   /* check if it changed orientation and update values */
-   if (sd->changes & E_SMART_MONITOR_CHANGED_ROTATION)
-     crtc->current_orientation = sd->current.orientation;
-
-   /* check if it changed enabled state and update values */
    if (sd->changes & E_SMART_MONITOR_CHANGED_ENABLED)
      {
-        printf("Monitor Enabled: %d\n", sd->current.enabled);
-        if (!sd->current.enabled)
+        if (sd->current.enabled)
           {
-             printf("Try DisAble Crtc: %d\n", crtc->xid);
-             crtc->current_mode = NULL;
+             if (sd->crtc)
+               {
+                  Ecore_X_Randr_Output *outputs;
+                  Evas_Coord mx, my;
+                  int noutputs = -1;
+
+                  mx = sd->current.x;
+                  my = sd->current.y;
+
+                  noutputs = eina_list_count(sd->crtc->outputs);
+                  if (noutputs < 1)
+                    {
+                       outputs = calloc(1, sizeof(Ecore_X_Randr_Output));
+                       outputs[0] = sd->output->xid;
+                       noutputs = 1;
+                    }
+                  else
+                    {
+                       int i = 0;
+
+                       outputs = 
+                         calloc(noutputs, sizeof(Ecore_X_Randr_Output));
+                       for (i = 0; i < noutputs; i++)
+                         {
+                            E_Randr_Output_Info *ero;
+
+                            ero = eina_list_nth(sd->crtc->outputs, i);
+                            outputs[i] = ero->xid;
+                         }
+                    }
+
+                  ecore_x_randr_crtc_settings_set(root, sd->crtc->xid, 
+                                                  outputs, 
+                                                  noutputs, mx, my,
+                                                  sd->current.mode->xid, 
+                                                  sd->current.orientation);
+                  if (outputs) free(outputs);
+               }
           }
         else
-          {
-             printf("Try ReEnable Crtc: %d\n", crtc->xid);
-             if (sd->output) printf("HAVE OUTPUT: %d\n", sd->output->xid);
-             else printf("NO OUTPUT\n");
-             if (sd->crtc) printf("HAVE CRTC: %d\n", sd->crtc->xid);
-             else printf("NO CRTC\n");
+          ecore_x_randr_crtc_settings_set(root, sd->crtc->xid, 
+                                          NULL, 0, 0, 0, 0, 
+                                          ECORE_X_RANDR_ORIENTATION_ROT_0);
 
-             if (sd->output) sd->output->crtc = crtc;
-             e_randr_12_try_enable_output(sd->output, 
-                                          ECORE_X_RANDR_OUTPUT_POLICY_NONE, 
-                                          EINA_FALSE);
+        reset = EINA_TRUE;
+     }
+
+   if (sd->changes & E_SMART_MONITOR_CHANGED_POSITION)
+     {
+        if (sd->crtc)
+          {
+             Evas_Coord mx, my;
+             Evas_Coord cx, cy;
+
+             mx = sd->current.x;
+             my = sd->current.y;
+
+             ecore_x_randr_crtc_pos_get(root, sd->crtc->xid, &cx, &cy);
+             if ((cx != mx) || (cy != my))
+               {
+                  ecore_x_randr_crtc_pos_set(root, sd->crtc->xid, mx, my);
+                  reset = EINA_TRUE;
+               }
           }
      }
 
-   /* if this monitor is cloned, use the parent geometry */
-   if (sd->cloned)
+   if (sd->changes & E_SMART_MONITOR_CHANGED_ROTATION)
      {
-        /* set output policy to cloned */
-        sd->output->policy = ECORE_X_RANDR_OUTPUT_POLICY_CLONE;
+        if (sd->crtc)
+          {
+             Ecore_X_Randr_Orientation orient;
 
-        /* use the geometry from the parent (since we are cloned to it) */
-        e_smart_monitor_current_geometry_get(sd->parent, &crtc->geometry.x, 
-                                             &crtc->geometry.y, 
-                                             &crtc->geometry.w, 
-                                             &crtc->geometry.h);
+             orient = sd->current.orientation;
+             if ((sd->crtc) && (orient != sd->crtc->current_orientation))
+               {
+                  ecore_x_randr_crtc_orientation_set(root, 
+                                                     sd->crtc->xid, orient);
+                  reset = EINA_TRUE;
+               }
+          }
      }
-   else
-     sd->output->policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
+
+   if ((sd->changes & E_SMART_MONITOR_CHANGED_REFRESH) || 
+       (sd->changes & E_SMART_MONITOR_CHANGED_RESOLUTION))
+     {
+        if (sd->crtc)
+          {
+             Ecore_X_Randr_Output *outputs = NULL;
+             int noutputs = -1;
+
+             if (sd->output) outputs = &sd->output->xid;
+
+             if ((sd->crtc) && (sd->crtc->outputs))
+               noutputs = eina_list_count(sd->crtc->outputs);
+
+             ecore_x_randr_crtc_mode_set(root, sd->crtc->xid, 
+                                         outputs, noutputs, 
+                                         sd->current.mode->xid);
+             reset = EINA_TRUE;
+          }
+     }
+
+   if (reset) ecore_x_randr_screen_reset(root);
 }
 
 void 
