@@ -48,6 +48,7 @@ struct _E_Config_Dialog_Data
 
    /* dialogs */
    E_Import_Dialog *win_import;
+   E_Import_Config_Dialog *import;
 };
 
 E_Config_Dialog *
@@ -487,12 +488,45 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    return o;
 }
 
+static void
+_apply_import_ok(const char *file, E_Import_Config_Dialog *import)
+{
+   E_Config_Dialog *cfd;
+
+   cfd = e_object_data_get(E_OBJECT(import));
+   eina_stringshare_replace(&cfd->cfdata->bg, file);
+   if (cfd->view_type == E_CONFIG_DIALOG_CFDATA_TYPE_BASIC)
+     _basic_apply(cfd, cfd->cfdata);
+   else
+     _adv_apply(cfd, cfd->cfdata);
+}
+
+static void
+_apply_import_del(void *import)
+{
+   E_Config_Dialog *cfd;
+
+   cfd = e_object_data_get(import);
+   cfd->cfdata->import = NULL;
+   e_object_delfn_clear(E_OBJECT(cfd)); // get rid of idler delete function
+   e_object_unref(E_OBJECT(cfd));
+}
+
 static int
 _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Wallpaper *cw;
 
    cw = cfd->data;
+   if (!eina_str_has_extension(cfdata->bg, ".edj"))
+     {
+        cfdata->import = e_import_config_dialog_show(NULL, cfdata->bg, (Ecore_End_Cb)_apply_import_ok, NULL);
+        e_dialog_parent_set(cfdata->import->dia, cfd->dia->win);
+        e_object_del_attach_func_set(E_OBJECT(cfdata->import), _apply_import_del);
+        e_object_data_set(E_OBJECT(cfdata->import), cfd);
+        e_object_ref(E_OBJECT(cfd));
+        return 1;
+     }
    if (cw->specific_config)
      {
         /* update a specific config */
