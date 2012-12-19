@@ -489,7 +489,7 @@ _e_qa_toggle_cb(E_Object *obj __UNUSED__, const char *params)
      {
         if (entry->help_watch)
           _e_qa_help_activate_hook(entry);
-        if ((!entry->config.jump) && (entry->border->visible || (entry->border->client.icccm.accepts_focus && entry->border->focused) || entry->config.hide_when_behind))
+        if ((!entry->config.jump) && entry->border->visible && ((entry->border->client.icccm.accepts_focus && entry->border->focused) || entry->config.hide_when_behind))
           {
              _e_qa_border_deactivate(entry);
              return;
