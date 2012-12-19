@@ -5,6 +5,7 @@
  * Give list some icons.
  */
 
+/*
 #define RANDR_11 ((1 << 16) | 1)
 
 static void         _fill_data(E_Config_Dialog_Data *cfdata);
@@ -93,8 +94,8 @@ _surebox_dialog_cb_yes(void *data, E_Dialog *dia)
 
    _fill_data(sb->cfdata);
    _load_resolutions(sb->cfdata);
-   /* No need to load rates as the currently selected resolution has not been
-    * changed since last selection. */
+   // No need to load rates as the currently selected resolution has not been
+   // changed since last selection.
    if (dia) _surebox_dialog_cb_delete(dia->win);
 }
 
@@ -649,3 +650,4 @@ _deferred_norates_error(void *data __UNUSED__)
    return ECORE_CALLBACK_CANCEL;
 }
 
+*/

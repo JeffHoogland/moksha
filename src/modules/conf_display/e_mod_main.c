@@ -20,10 +20,10 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("screen/virtual_desktops", 10,
                                  _("Virtual Desktops"), NULL,
                                  "preferences-desktop", e_int_config_desks);
-   e_configure_registry_item_add("screen/screen_resolution", 20, 
-                                 _("Screen Resolution"), NULL, 
-                                 "preferences-system-screen-resolution", 
-                                 e_int_config_display);
+//   e_configure_registry_item_add("screen/screen_resolution", 20, 
+//                                 _("Screen Resolution"), NULL, 
+//                                 "preferences-system-screen-resolution", 
+//                                 e_int_config_display);
    e_configure_registry_item_add("screen/screen_lock", 30,
                                  _("Screen Lock"), NULL,
                                  "preferences-system-lock-screen",
@@ -68,15 +68,15 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
       e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "screen/screen_lock")))
       e_object_del(E_OBJECT(cfd));
-   while ((cfd = e_config_dialog_get("E", "screen/screen_resolution"))) 
-      e_object_del(E_OBJECT(cfd));
+//   while ((cfd = e_config_dialog_get("E", "screen/screen_resolution"))) 
+//      e_object_del(E_OBJECT(cfd));
    while ((cfd = e_config_dialog_get("E", "screen/virtual_desktops")))
       e_object_del(E_OBJECT(cfd));
 
    e_configure_registry_item_del("screen/power_management");
    e_configure_registry_item_del("screen/screen_saver");
    e_configure_registry_item_del("screen/screen_lock");
-   e_configure_registry_item_del("screen/screen_resolution");
+//   e_configure_registry_item_del("screen/screen_resolution");
    e_configure_registry_item_del("screen/virtual_desktops");
    
    e_configure_registry_category_del("screen");
