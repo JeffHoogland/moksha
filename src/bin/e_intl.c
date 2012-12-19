@@ -729,6 +729,7 @@ e_intl_locale_parts_get(const char *locale)
         break;
      }
 
+   if ((!language[0]) && (!territory[0]) && (!codeset[0]) && (!modifier[0])) return NULL;
    locale_parts = E_NEW(E_Locale_Parts, 1);
 
    /* Put the parts of the string together */
