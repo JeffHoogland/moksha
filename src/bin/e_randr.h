@@ -191,7 +191,7 @@ EINTERN void e_randr_11_serialized_setup_free(E_Randr_Serialized_Setup_11 *ss_11
 EINTERN void e_randr_12_serialized_setup_free(E_Randr_Serialized_Setup_12 *ss_12);
 EINTERN void e_randr_12_serialized_output_policy_free(E_Randr_Serialized_Output_Policy *policy);
 
-EINTERN Eina_Bool e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Output_Policy policy, Eina_Bool force);
+EAPI Eina_Bool e_randr_12_try_enable_output(E_Randr_Output_Info *output_info, Ecore_X_Randr_Output_Policy policy, Eina_Bool force);
 EINTERN void e_randr_12_ask_dialog_new(E_Randr_Output_Info *oi);
 
 EAPI extern E_Randr_Screen_Info e_randr_screen_info;
