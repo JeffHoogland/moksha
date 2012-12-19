@@ -7594,10 +7594,11 @@ static void
 _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Fm2_Icon *ic;
+   const char *file;
 
    ic = data;
 
-   if (e_icon_file_get(obj))
+   if (e_icon_file_get(obj, &file, NULL))
      {
         Evas_Coord w = 0, h = 0;
         int have_alpha;

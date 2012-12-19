@@ -390,7 +390,7 @@ _cb_up(void *data, void *data2 __UNUSED__)
    void *nddata;
    Evas_Object *ic;
    Eina_List *l;
-   const char *lbl;
+   const char *lbl, *file;
    int n;
 
    if (!(cfdata = data)) return;
@@ -409,7 +409,8 @@ _cb_up(void *data, void *data2 __UNUSED__)
    e_widget_ilist_freeze(cfdata->used_list);
 
    ic = e_icon_add(cfdata->evas);
-   e_icon_file_set(ic, e_icon_file_get(e_widget_ilist_nth_icon_get(cfdata->used_list, n)));
+   e_icon_file_get(e_widget_ilist_nth_icon_get(cfdata->used_list, n), &file, NULL);
+   e_icon_file_set(ic, file);
    lbl = e_widget_ilist_nth_label_get(cfdata->used_list, n);
    e_widget_ilist_prepend_relative_full(cfdata->used_list, ic, NULL, lbl, _cb_used_select, cfdata, NULL, (n - 1));
    e_widget_ilist_remove_num(cfdata->used_list, n);
@@ -429,7 +430,7 @@ _cb_dn(void *data, void *data2 __UNUSED__)
    void *nddata;
    Evas_Object *ic;
    Eina_List *l;
-   const char *lbl;
+   const char *lbl, *file;
    int n;
 
    if (!(cfdata = data)) return;
@@ -448,7 +449,8 @@ _cb_dn(void *data, void *data2 __UNUSED__)
    e_widget_ilist_freeze(cfdata->used_list);
 
    ic = e_icon_add(cfdata->evas);
-   e_icon_file_set(ic, e_icon_file_get(e_widget_ilist_nth_icon_get(cfdata->used_list, n)));
+   e_icon_file_get(e_widget_ilist_nth_icon_get(cfdata->used_list, n), &file, NULL);
+   e_icon_file_set(ic, file);
    lbl = e_widget_ilist_nth_label_get(cfdata->used_list, n);
    e_widget_ilist_append_relative_full(cfdata->used_list, ic, NULL, lbl, _cb_used_select, cfdata, NULL, n);
    e_widget_ilist_remove_num(cfdata->used_list, n);

@@ -499,24 +499,30 @@ e_icon_object_set(Evas_Object *obj, Evas_Object *o)
    _e_icon_smart_reconfigure(sd);
 }
 
-EAPI const char *
-e_icon_file_get(const Evas_Object *obj)
+EAPI Eina_Bool
+e_icon_file_get(const Evas_Object *obj, const char **file, const char **group)
 {
    E_Smart_Data *sd;
-   const char *file;
 
-   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
-   if (!(sd = evas_object_smart_data_get(obj))) return NULL;
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(EINA_FALSE);
+   if ((!file) && (!group)) return EINA_FALSE;
+   if (file) *file = NULL;
+   if (group) *group = NULL;
+   if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
 #ifdef USE_ICON_CACHE
-   if (sd->file) return sd->file;
+   if (sd->file)
+     {
+         if (file) *file = sd->file;
+         return EINA_TRUE;
+     }
 #endif
    if (sd->edje)
      {
-        edje_object_file_get(sd->obj, &file, NULL);
-        return file;
+        edje_object_file_get(sd->obj, file, group);
+        return file || group;
      }
-   evas_object_image_file_get(sd->obj, &file, NULL);
-   return file;
+   evas_object_image_file_get(sd->obj, file, group);
+   return file || group;
 }
 
 EAPI void

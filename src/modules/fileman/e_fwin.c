@@ -2238,9 +2238,9 @@ _e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
      }
    else
      {
-        file = e_icon_file_get(oic);
-        fwin->win->border->internal_icon =
-          eina_stringshare_add(file);
+        e_icon_file_get(oic, &file, &group);
+        fwin->win->border->internal_icon = eina_stringshare_add(file);
+        fwin->win->border->internal_icon_key = eina_stringshare_add(group);
      }
    evas_object_del(oic);
    if (fwin->win->border->placed) return;
