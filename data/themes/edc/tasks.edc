@@ -115,7 +115,7 @@ group { name:"e/modules/tasks/item";
          description { state: "default" 0.0;
             rel1.relative: 1.0 0.0;
             rel1.offset: 2 3;
-            rel1.to_x: "icon";
+            rel1.to_x: "icon2";
             rel1.to_y: "sel_base";
             rel2.offset: -5 -5;
             rel2.to: "sel_base";
@@ -143,6 +143,31 @@ group { name:"e/modules/tasks/item";
             rel2.relative: 0.0 1.0;
             rel2.offset: 3 -4;
             rel2.to: "sel_base";
+         }
+         description { state: "icon_only" 0.0;
+            inherit: "default" 0.0;
+            align: 0.5 0.5;
+            rel1.offset: 2 2;
+            rel2.relative: 1.0 1.0;
+            rel2.offset: -3 -3;
+         }
+         description { state: "text_only" 0.0;
+            inherit: "default" 0.0;
+            fixed: 1 1;
+         }
+      }
+      part { name: "icon2"; type: SPACER;
+         description { state: "default" 0.0;
+            rel1.to: "icon";
+            rel2.to: "icon";
+         }
+         description { state: "icon_only" 0.0;
+            inherit: "default" 0.0;
+         }
+         description { state: "text_only" 0.0;
+            inherit: "default" 0.0;
+            fixed: 1 1;
+            rel2.relative: 0.0 1.0;
          }
       }
       part { name: "icon_clip"; type: RECT;
@@ -316,6 +341,18 @@ group { name:"e/modules/tasks/item";
          action: STATE_SET "default" 0.0;
          target: "e.text.label";
          target: "icon_clip";
+      }
+      program {
+         signal: "e,state,icon_only"; source: "e";
+         action: STATE_SET "icon_only" 0.0;
+         target: "icon";
+         target: "icon2";
+      }
+      program {
+         signal: "e,state,text_only"; source: "e";
+         action: STATE_SET "text_only" 0.0;
+         target: "icon";
+         target: "icon2";
       }
    }
 }

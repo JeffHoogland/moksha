@@ -390,13 +390,16 @@ _tasks_refill(Tasks *tasks)
      {
         item = tasks->items->data;
         edje_object_size_min_calc(item->o_item, &w, &h);
-        if (tasks->horizontal)
+        if (!tasks->config->icon_only)
           {
-             if (w < tasks->config->minw) w = tasks->config->minw;
-          }
-        else
-          {
-             if (h < tasks->config->minh) h = tasks->config->minh;
+             if (tasks->horizontal)
+               {
+                  if (w < tasks->config->minw) w = tasks->config->minw;
+               }
+             else
+               {
+                  if (h < tasks->config->minh) h = tasks->config->minh;
+               }
           }
         if (!tasks->gcc->resizable)
           {
@@ -505,6 +508,16 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
           e_theme_edje_object_set(item->o_item,
                                   "base/theme/modules/tasks",
                                   "e/modules/tasks/item");
+     }
+   if (tasks->config->text_only)
+     {
+        edje_object_signal_emit(item->o_item, "e,state,text_only", "e");
+        edje_object_message_signal_process(item->o_item);
+     }
+   else if (tasks->config->icon_only)
+     {
+        edje_object_signal_emit(item->o_item, "e,state,icon_only", "e");
+        edje_object_message_signal_process(item->o_item);
      }
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_DOWN,
                                   _tasks_cb_item_mouse_down, item);
