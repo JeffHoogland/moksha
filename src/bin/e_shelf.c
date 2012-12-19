@@ -964,10 +964,6 @@ e_shelf_style_set(E_Shelf *es, const char *style)
      es->instant_delay = -1.0;
 
    if (es->popup) e_popup_edje_bg_object_set(es->popup, es->o_base);
-   
-   if (!es->gadcon) return;
-   e_gadcon_unpopulate(es->gadcon);
-   e_gadcon_populate(es->gadcon);
 }
 
 EAPI void
