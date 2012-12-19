@@ -86,12 +86,16 @@ e_fwin_nav_shutdown(void)
 static Eina_Bool
 _event_deleted(Nav_Item *ni, int type, void *e)
 {
-   Eio_Monitor_Error *me = e;
    Eio_Monitor_Event *ev = e;
    const char *dir;
 
    if (type == EIO_MONITOR_ERROR)
-     dir = eio_monitor_path_get(me->monitor);
+     {
+        //donteven.jpg
+        eio_monitor_del(ni->monitor);
+        ni->monitor = eio_monitor_stringshared_add(ni->path);
+        return ECORE_CALLBACK_RENEW;
+     }
    else
      dir = ev->filename;
    
