@@ -94,6 +94,9 @@ struct _E_Smart_Data
         Evas_Coord x, y;
      } resize;
 
+   /* reference to the Crtc Info */
+   E_Randr_Crtc_Info *crtc;
+
    /* reference to the RandR Output Info */
    E_Randr_Output_Info *output;
 
@@ -214,6 +217,18 @@ e_smart_monitor_output_get(Evas_Object *obj)
 }
 
 void 
+e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Info *crtc)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* set this monitor's crtc reference */
+   sd->crtc = crtc;
+}
+
+void 
 e_smart_monitor_layout_set(Evas_Object *obj, Evas_Object *layout)
 {
    E_Smart_Data *sd;
@@ -258,34 +273,61 @@ e_smart_monitor_setup(Evas_Object *obj)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
+
+   /* fill the list of 'modes' for this monitor
+    * 
+    * NB: This clears old modes and also sets the min & max resolutions */
+   _e_smart_monitor_modes_fill(sd);
+
    /* if we have a crtc, get the x/y location of it and current refresh rate
     * 
     * NB: Used to determine the proper container */
-   if ((sd->output) && (sd->output->crtc))
+   if (sd->crtc)
      {
         /* set original geometry */
-        sd->orig.x = sd->output->crtc->geometry.x;
-        sd->orig.y = sd->output->crtc->geometry.y;
-        sd->orig.w = sd->output->crtc->geometry.w;
-        sd->orig.h = sd->output->crtc->geometry.h;
+        sd->orig.x = sd->crtc->geometry.x;
+        sd->orig.y = sd->crtc->geometry.y;
 
-        /* set original mode */
-        sd->orig.mode = sd->output->crtc->current_mode;
+        if (!sd->crtc->current_mode)
+          {
+             if (!sd->orig.mode)
+               {
+                  sd->orig.w = 640;
+                  sd->orig.h = 480;
+                  sd->orig.refresh_rate = 60;
+               }
+             else
+               {
+                  sd->orig.w = sd->orig.mode->width;
+                  sd->orig.h = sd->orig.mode->height;
+
+                  /* set original refresh rate */
+                  sd->orig.refresh_rate = 
+                    _e_smart_monitor_refresh_rate_get(sd->orig.mode);
+               }
+          }
+        else
+          {
+             /* set original mode */
+             sd->orig.mode = sd->crtc->current_mode;
+
+             /* sd->orig.w = sd->crtc->geometry.w; */
+             /* sd->orig.h = sd->crtc->geometry.h; */
+
+             sd->orig.w = sd->orig.mode->width;
+             sd->orig.h = sd->orig.mode->height;
+
+             /* set original refresh rate */
+             sd->orig.refresh_rate = 
+               _e_smart_monitor_refresh_rate_get(sd->orig.mode);
+          }
 
         /* set the original orientation */
-        sd->orig.orientation = sd->output->crtc->current_orientation;
-     }
-   else
-     {
-        /* FIXME: NB: TODO: Handle case of output not having crtc */
-        ERR("Output Has NO Crtc !!\n");
+        sd->orig.orientation = sd->crtc->current_orientation;
      }
 
    /* set the original rotation */
    sd->orig.rotation = _e_smart_monitor_rotation_get(sd->orig.orientation);
-
-   /* set original refresh rate */
-   sd->orig.refresh_rate = _e_smart_monitor_refresh_rate_get(sd->orig.mode);
 
    /* get the current zone at this crtc coordinate */
    sd->con = e_container_current_get(e_manager_current_get());
@@ -296,11 +338,6 @@ e_smart_monitor_setup(Evas_Object *obj)
     * 
     * NB: Used later if background gets updated */
    sd->zone_num = zone->num;
-
-   /* fill the list of 'modes' for this monitor
-    * 
-    * NB: This clears old modes and also sets the min & max resolutions */
-   _e_smart_monitor_modes_fill(sd);
 
    /* with the min & max resolutions, we can now set the thumbnail size.
     * get largest resolution and convert to largest canvas size */
@@ -332,16 +369,12 @@ e_smart_monitor_setup(Evas_Object *obj)
         edje_object_part_text_set(sd->o_frame, "e.text.name", name);
      }
 
-   /* if we have an output, set the resolution name */
-   _e_smart_monitor_resolution_set(sd, sd->orig.mode->width, 
-                                   sd->orig.mode->height);
+   /* set the resolution name */
+   _e_smart_monitor_resolution_set(sd, sd->orig.w, sd->orig.h);
 
    /* check if enabled */
-   if ((sd->output) && (sd->output->crtc))
-     {
-        if (sd->output->crtc->current_mode)
-          sd->orig.enabled = EINA_TRUE;
-     }
+   if ((sd->crtc) && (sd->crtc->current_mode))
+     sd->orig.enabled = EINA_TRUE;
 
    /* send enabled/disabled signals */
    if (sd->orig.enabled)
@@ -350,10 +383,10 @@ e_smart_monitor_setup(Evas_Object *obj)
      edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
 
    /* check if rotation is supported */
-   if ((sd->output) && (sd->output->crtc))
+   if (sd->crtc)
      {
         /* if no rotation is supported, disable rotate in frame */
-        if (sd->output->crtc->orientations <= ECORE_X_RANDR_ORIENTATION_ROT_0)
+        if (sd->crtc->orientations <= ECORE_X_RANDR_ORIENTATION_ROT_0)
           edje_object_signal_emit(sd->o_frame, "e,state,rotate_disabled", "e");
      }
 
@@ -420,7 +453,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   if (!(crtc = sd->output->crtc)) 
+   if (!(crtc = sd->crtc)) 
      {
         /* FIXME: What to do in this case ?? */
         ERR("NO CRTC FOR MONITOR !!\n");
@@ -451,6 +484,55 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
    /* check if it changed orientation and update values */
    if (sd->changes & E_SMART_MONITOR_CHANGED_ROTATION)
      crtc->current_orientation = sd->current.orientation;
+
+   /* check if it changed enabled state and update values */
+   if (sd->changes & E_SMART_MONITOR_CHANGED_ENABLED)
+     {
+        if (!sd->current.enabled)
+          crtc->current_mode = NULL;
+        else
+          {
+             /* FIXME: NB: HACK ALERT !! HACK ALERT !!!
+              * 
+              * There is currently no way with e_randr to re-enable a 
+              * previously disabled monitor.
+              * Just setting the crtc->current_mode does not work.
+              * So for now, we will directly re-enable it via ecore_x calls */
+             Ecore_X_Randr_Output *outputs;
+             int noutputs = -1;
+
+             crtc->current_mode = sd->current.mode;
+
+             noutputs = eina_list_count(crtc->outputs);
+             if (noutputs < 1)
+               {
+                  outputs = calloc(1, sizeof(Ecore_X_Randr_Output));
+                  outputs[0] = sd->output->xid;
+                  noutputs = 1;
+               }
+             else
+               {
+                  int i = 0;
+
+                  outputs = calloc(noutputs, sizeof(Ecore_X_Randr_Output));
+                  for (i = 0; i < noutputs; i++)
+                    {
+                       E_Randr_Output_Info *ero;
+
+                       ero = eina_list_nth(crtc->outputs, i);
+                       outputs[i] = ero->xid;
+                    }
+               }
+
+             ecore_x_randr_crtc_settings_set(sd->con->manager->root, crtc->xid, 
+                                             outputs, noutputs, 
+                                             crtc->geometry.x, crtc->geometry.y, 
+                                             crtc->current_mode->xid, 
+                                             sd->current.orientation);
+
+             if (outputs) free(outputs);
+          }
+     }
 
    /* if this monitor is cloned, use the parent geometry */
    if (sd->cloned)
@@ -950,9 +1032,6 @@ _e_smart_show(Evas_Object *obj)
    /* if it is already visible, get out */
 //   if (sd->visible) return;
 
-   /* if ((sd->output) && (sd->output->crtc)) */
-   /*   printf("Smart Mon Show: %d\n", sd->output->crtc->xid); */
-
    /* show the stand */
    if (sd->o_stand) evas_object_show(sd->o_stand);
 
@@ -979,9 +1058,6 @@ _e_smart_hide(Evas_Object *obj)
 
    /* if it is not visible, we have nothing to do */
 //   if (!sd->visible) return;
-
-   /* if ((sd->output) && (sd->output->crtc)) */
-   /*   printf("Smart Mon Hide: %d\n", sd->output->crtc->xid); */
 
    /* hide the stand */
    if (sd->o_stand) evas_object_hide(sd->o_stand);
@@ -1049,6 +1125,8 @@ _e_smart_monitor_refresh_rates_fill(Evas_Object *obj)
    /* loop the modes and find the current one */
    EINA_LIST_FOREACH(sd->modes, m, mode)
      {
+        if (!sd->current.mode) continue;
+
         /* compare mode names */
         if (!strcmp(mode->name, sd->current.mode->name))
           {
@@ -1108,17 +1186,15 @@ _e_smart_monitor_modes_fill(E_Smart_Data *sd)
    /* clear out any old modes */
    if (sd->modes) eina_list_free(sd->modes);
 
-   /* make sure we have a valid output */
-   if (!sd->output) return;
-
    /* if we have an assigned monitor, copy the modes from that */
-   if (sd->output->monitor)
+   if ((sd->output) && (sd->output->monitor))
      sd->modes = eina_list_clone(sd->output->monitor->modes);
-   else if (sd->output->crtc)
-     sd->modes = eina_list_clone(sd->output->crtc->outputs_common_modes);
+   else if (sd->crtc)
+     sd->modes = eina_list_clone(sd->crtc->outputs_common_modes);
 
    /* sort the mode list (smallest to largest) */
-   sd->modes = eina_list_sort(sd->modes, 0, _e_smart_monitor_modes_sort);
+   if (sd->modes)
+     sd->modes = eina_list_sort(sd->modes, 0, _e_smart_monitor_modes_sort);
 
    /* try to determine the min & max resolutions */
    if (sd->modes)
@@ -1808,10 +1884,15 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    sd->resizing = EINA_FALSE;
 
    /* update the changes flag */
-   if (sd->orig.mode->xid != sd->current.mode->xid)
-     sd->changes |= E_SMART_MONITOR_CHANGED_RESOLUTION;
+   if (sd->orig.mode)
+     {
+        if (sd->orig.mode->xid != sd->current.mode->xid)
+          sd->changes |= E_SMART_MONITOR_CHANGED_RESOLUTION;
+        else
+          sd->changes &= ~(E_SMART_MONITOR_CHANGED_RESOLUTION);
+     }
    else
-     sd->changes &= ~(E_SMART_MONITOR_CHANGED_RESOLUTION);
+     sd->changes |= E_SMART_MONITOR_CHANGED_RESOLUTION;
 
    /* NB: The 'snapping' of this resize (in relation to other monitors) 
     * occurs in the randr widget so we will just 
@@ -2010,8 +2091,8 @@ _e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj EINA_UNU
    /* NB: The 'enabling' of this monitor occurs in the randr widget 
     * so we will just raise a signal here to tell it that we toggled */
 
-   /* send monitor toggled signal */
-   evas_object_smart_callback_call(mon, "monitor_toggled", NULL);
+   /* send monitor changed signal */
+   evas_object_smart_callback_call(mon, "monitor_changed", NULL);
 }
 
 static void 
