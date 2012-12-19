@@ -84,31 +84,51 @@ e_smart_randr_layout_size_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    /* loop the crtcs, checking for valid output */
    EINA_LIST_FOREACH(E_RANDR_12->crtcs, l, crtc)
      {
-        Eina_List *ll;
         E_Randr_Output_Info *output;
+        Eina_List *outputs = NULL, *ll;
+
+        EINA_LIST_FOREACH(crtc->outputs, ll, output)
+          outputs = eina_list_append(outputs, output);
+
+        /* if this crtc is disabled, then no output will be assigned to it.
+         * 
+         * We need to check the possible outputs and assign one */
+        if (!crtc->current_mode)
+          {
+             EINA_LIST_FOREACH(crtc->possible_outputs, ll, output)
+               {
+                  if (!(eina_list_data_find(outputs, output) == output))
+                    {
+                       if (!output->crtc) output->crtc = crtc;
+                       if (output->crtc != crtc) continue;
+                       outputs = eina_list_append(outputs, output);
+                    }
+               }
+          }
 
         /* loop the outputs on this crtc */
-        EINA_LIST_FOREACH(crtc->outputs, ll, output)
+        EINA_LIST_FOREACH(outputs, ll, output)
           {
              Eina_List *modes = NULL;
              Ecore_X_Randr_Mode_Info *mode = NULL;
 
              /* check for valid monitor */
-             if (!output->monitor) continue;
-
-             /* try to get the list of modes */
-             if (!(modes = eina_list_clone(output->monitor->modes)))
-               continue;
-
-             /* sort the list of modes */
-             modes = eina_list_sort(modes, 0, _e_smart_randr_modes_sort);
-
-             /* get last mode */
-             if ((mode = eina_list_last_data_get(modes)))
+             if (output->monitor)
                {
-                  /* grab max mode size and add to return value */
-                  mw += mode->width;
-                  mh += mode->height;
+                  /* try to get the list of modes */
+                  if (!(modes = eina_list_clone(output->monitor->modes)))
+                    continue;
+
+                  /* sort the list of modes */
+                  modes = eina_list_sort(modes, 0, _e_smart_randr_modes_sort);
+
+                  /* get last mode */
+                  if ((mode = eina_list_last_data_get(modes)))
+                    {
+                       /* grab max mode size and add to return value */
+                       mw += mode->width;
+                       mh += mode->height;
+                    }
                }
           }
      }
@@ -152,15 +172,38 @@ e_smart_randr_monitors_create(Evas_Object *obj)
    /* loop the crtcs, checking for valid output */
    EINA_LIST_FOREACH(E_RANDR_12->crtcs, l, crtc)
      {
+        Eina_List *outputs = NULL;
+
         /* printf("Checking Crtc: %d\n", crtc->xid); */
         /* printf("\tGeom: %d %d %d %d\n", crtc->geometry.x,  */
         /*        crtc->geometry.y, crtc->geometry.w, crtc->geometry.h); */
 
-        /* loop the outputs on this crtc */
         EINA_LIST_FOREACH(crtc->outputs, ll, output)
+          outputs = eina_list_append(outputs, output);
+
+        /* if this crtc is disabled, then no output will be assigned to it.
+         * 
+         * We need to check the possible outputs and assign one */
+        if (!crtc->current_mode)
+          {
+             EINA_LIST_FOREACH(crtc->possible_outputs, ll, output)
+               {
+                  if (!(eina_list_data_find(outputs, output) == output))
+                    {
+                       if (!output->crtc) output->crtc = crtc;
+                       if ((output->crtc) && 
+                           (output->crtc != crtc)) continue;
+                       outputs = eina_list_append(outputs, output);
+                    }
+               }
+          }
+
+        /* loop the outputs on this crtc */
+        EINA_LIST_FOREACH(outputs, ll, output)
           {
              /* printf("\tChecking Output: %d %s\n", output->xid, output->name); */
              /* printf("\tOutput Policy: %d\n", output->policy); */
+             /* printf("\tOutput Status: %d\n", output->connection_status); */
 
              /* if (output->wired_clones) */
              /*   printf("\tHAS WIRED CLONES !!\n"); */
@@ -241,6 +284,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                        /* tell the monitor which output it references */
                        e_smart_monitor_output_set(mon, output);
 
+                       /* tell the monitor which crtc it references */
+                       e_smart_monitor_crtc_set(mon, crtc);
+
                        /* with the layout and output assigned, we can 
                         * tell the monitor to setup
                         * 
@@ -253,6 +299,10 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                        cy = crtc->geometry.y;
                        cw = crtc->geometry.w;
                        ch = crtc->geometry.h;
+
+                       if ((cw == 0) || (ch == 0))
+                         e_smart_monitor_current_geometry_get(mon, NULL, NULL, 
+                                                              &cw, &ch);
 
                        if (pmon)
                          {
@@ -323,6 +373,12 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              cy = output->crtc->geometry.y;
              cw = output->crtc->geometry.w;
              ch = output->crtc->geometry.h;
+
+             if ((cw == 0) || (ch == 0))
+               {
+                  cw = 640;
+                  ch = 480;
+               }
 
              /* set geometry so that when we "unclone" this 
               * one, it will unclone to the right */
