@@ -174,9 +174,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
      {
         Eina_List *outputs = NULL;
 
-        /* printf("Checking Crtc: %d\n", crtc->xid); */
-        /* printf("\tGeom: %d %d %d %d\n", crtc->geometry.x,  */
-        /*        crtc->geometry.y, crtc->geometry.w, crtc->geometry.h); */
+        printf("Checking Crtc: %d\n", crtc->xid);
+        printf("\tGeom: %d %d %d %d\n", crtc->geometry.x, 
+               crtc->geometry.y, crtc->geometry.w, crtc->geometry.h);
 
         EINA_LIST_FOREACH(crtc->outputs, ll, output)
           outputs = eina_list_append(outputs, output);
@@ -186,13 +186,19 @@ e_smart_randr_monitors_create(Evas_Object *obj)
          * We need to check the possible outputs and assign one */
         if (!crtc->current_mode)
           {
+             /* loop the possible outputs */
              EINA_LIST_FOREACH(crtc->possible_outputs, ll, output)
                {
                   if (!(eina_list_data_find(outputs, output) == output))
                     {
-                       if (!output->crtc) output->crtc = crtc;
+                       E_Randr_Crtc_Info *pcrtc;
+
+                       pcrtc = eina_list_last_data_get(output->possible_crtcs);
+                       if (!output->crtc) output->crtc = pcrtc;
                        if ((output->crtc) && 
-                           (output->crtc != crtc)) continue;
+                           (output->crtc != pcrtc)) continue;
+                       printf("\tAssigned Crtc %d To Output: %d\n", 
+                              pcrtc->xid, output->xid);
                        outputs = eina_list_append(outputs, output);
                     }
                }
@@ -503,7 +509,10 @@ e_smart_randr_changes_apply(Evas_Object *obj)
         /* tell the monitor to apply these changes */
         e_smart_monitor_changes_apply(mon);
 
-        /* tell monitor to reset changes */
+        /* tell monitor to reset changes
+         * 
+         * NB: This updates the monitor's "original" values with those 
+         * that are "current" */
         e_smart_monitor_changes_reset(mon);
      }
 
