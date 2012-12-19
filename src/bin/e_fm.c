@@ -2877,7 +2877,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
                   _e_fm2_live_file_del
                     (obj, ecore_file_file_get(path));
                }
-             if (evdir) free(evdir);
+             free(evdir);
              break;
 
            case E_FM_OP_MONITOR_END: /*mon dir del*/

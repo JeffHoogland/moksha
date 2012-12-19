@@ -1154,8 +1154,8 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
    bsz = p - buf;
    ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, op, 0, ed->id,
                          listing, buf, bsz);
-   if (lnk) free(lnk);
-   if (rlnk) free(rlnk);
+   free(lnk);
+   free(rlnk);
 }
 
 static void

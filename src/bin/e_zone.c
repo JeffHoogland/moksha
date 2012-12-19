@@ -660,7 +660,7 @@ e_zone_desk_count_set(E_Zone *zone,
                }
           }
      }
-   if (zone->desks) free(zone->desks);
+   free(zone->desks);
    zone->desks = new_desks;
 
    zone->desk_x_count = xx;

@@ -220,8 +220,8 @@ _e_ipc_cb_server_data(void *data __UNUSED__,
              if (eth->objid == e->ref)
                {
                   _thumblist = eina_list_remove_list(_thumblist, l);
-                  if (eth->file) free(eth->file);
-                  if (eth->key) free(eth->key);
+                  free(eth->file);
+                  free(eth->key);
                   free(eth);
                   break;
                }
@@ -253,8 +253,8 @@ _e_cb_timer(void *data __UNUSED__)
         eth = eina_list_data_get(_thumblist);
         _thumblist = eina_list_remove_list(_thumblist, _thumblist);
         _e_thumb_generate(eth);
-        if (eth->file) free(eth->file);
-        if (eth->key) free(eth->key);
+        free(eth->file);
+        free(eth->key);
         free(eth);
 
         if (_thumblist) _timer = ecore_timer_add(0.01, _e_cb_timer, NULL);

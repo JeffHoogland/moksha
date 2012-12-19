@@ -31,8 +31,7 @@ e_order_init(void)
           {
              char buf[PATH_MAX];
 
-             free(menu_file);
-             menu_file = NULL;
+             E_FREE(menu_file);
              snprintf(buf, sizeof(buf), "/etc/xdg/menus/enlightenment.menu");
              if (ecore_file_exists(buf)) menu_file = strdup(buf);
              else
@@ -45,7 +44,7 @@ e_order_init(void)
           }
      }
    efreet_menu_file_set(menu_file);
-   if (menu_file) free(menu_file);
+   free(menu_file);
    return 1;
 }
 

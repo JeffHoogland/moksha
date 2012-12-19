@@ -308,12 +308,12 @@ _e_backlight_update(E_Zone *zone)
                   x_bl = ecore_x_randr_output_backlight_level_get(root, out[i]);
                   gotten = EINA_TRUE;
                }
-             if (name) free(name);
+             free(name);
           }
         if (!gotten)
           x_bl = ecore_x_randr_output_backlight_level_get(root, out[0]);
      }
-   if (out) free(out);
+   free(out);
    if (x_bl >= 0.0)
      {
         bl_val = x_bl;
@@ -366,7 +366,7 @@ _e_backlight_set(E_Zone *zone, double val)
                     ecore_x_randr_output_backlight_level_set(root, out[i], val);
                }
           }
-        if (out) free(out);
+        free(out);
      }
 #ifdef HAVE_EEZE
    else if (sysmode == MODE_SYS)

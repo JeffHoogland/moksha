@@ -5037,8 +5037,7 @@ _e_border_free(E_Border *bd)
           free(bd->client.netwm.icons[i].data);
         free(bd->client.netwm.icons);
      }
-   if (bd->client.netwm.extra_types)
-     free(bd->client.netwm.extra_types);
+   free(bd->client.netwm.extra_types);
    if (bd->client.border.name)
      eina_stringshare_del(bd->client.border.name);
    if (bd->bordername)
@@ -6201,8 +6200,7 @@ _e_border_cb_client_message(void *data  __UNUSED__,
           }
      }
 
-   if (profile)
-     free(profile);
+   free(profile);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -7297,7 +7295,7 @@ _e_border_eval0(E_Border *bd)
      {
         char *title = ecore_x_icccm_title_get(bd->client.win);
         eina_stringshare_replace(&bd->client.icccm.title, title);
-        if (title) free(title);
+        free(title);
 
         if (bd->bg_object)
           edje_object_part_text_set(bd->bg_object, "e.text.title",
@@ -7310,7 +7308,7 @@ _e_border_eval0(E_Border *bd)
         char *name;
         ecore_x_netwm_name_get(bd->client.win, &name);
         eina_stringshare_replace(&bd->client.netwm.name, name);
-        if (name) free(name);
+        free(name);
 
         if (bd->bg_object)
           edje_object_part_text_set(bd->bg_object, "e.text.title",
@@ -7330,8 +7328,8 @@ _e_border_eval0(E_Border *bd)
         bd->client.icccm.class = eina_stringshare_add(nclass);
         if (bd->client.icccm.class && (!strcmp(bd->client.icccm.class, "Vmplayer")))
           e_bindings_mapping_change_enable(EINA_FALSE);
-        if (nname) free(nname);
-        if (nclass) free(nclass);
+        free(nname);
+        free(nclass);
 
         if (!((bd->client.icccm.name == pname) &&
               (bd->client.icccm.class == pclass)))
@@ -7412,9 +7410,7 @@ _e_border_eval0(E_Border *bd)
                }
              need_desk_set = EINA_TRUE;
              bd->client.e.state.profile.use = 1;
-
-             if (list)
-               free(list);
+             free(list);
           }
 
         bd->client.e.fetch.profile = 0;
@@ -7449,7 +7445,7 @@ _e_border_eval0(E_Border *bd)
           machine = ecore_x_icccm_client_machine_get(bd->client.icccm.client_leader);
 
         eina_stringshare_replace(&bd->client.icccm.machine, machine);
-        if (machine) free(machine);
+        free(machine);
 
         bd->client.icccm.fetch.machine = 0;
         rem_change = 1;
@@ -7652,7 +7648,7 @@ _e_border_eval0(E_Border *bd)
      {
         char *role = ecore_x_icccm_window_role_get(bd->client.win);
         eina_stringshare_replace(&bd->client.icccm.window_role, role);
-        if (role) free(role);
+        free(role);
 
         bd->client.icccm.fetch.window_role = 0;
         rem_change = 1;
@@ -7661,7 +7657,7 @@ _e_border_eval0(E_Border *bd)
      {
         char *icon_name = ecore_x_icccm_icon_name_get(bd->client.win);
         eina_stringshare_replace(&bd->client.icccm.icon_name, icon_name);
-        if (icon_name) free(icon_name);
+        free(icon_name);
 
         bd->client.icccm.fetch.icon_name = 0;
         rem_change = 1;
@@ -7671,7 +7667,7 @@ _e_border_eval0(E_Border *bd)
         char *icon_name;
         ecore_x_netwm_icon_name_get(bd->client.win, &icon_name);
         eina_stringshare_replace(&bd->client.netwm.icon_name, icon_name);
-        if (icon_name) free(icon_name);
+        free(icon_name);
 
         bd->client.netwm.fetch.icon_name = 0;
         rem_change = 1;

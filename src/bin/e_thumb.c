@@ -100,8 +100,7 @@ e_thumb_icon_file_set(Evas_Object *obj, const char *file, const char *key)
    if (!eth) return;
    eina_stringshare_replace(&eth->file, file);
    eina_stringshare_replace(&eth->key, key);
-   if (eth->sort_id) free(eth->sort_id);
-   eth->sort_id = NULL;
+   E_FREE(eth->sort_id);
 }
 
 EAPI void
@@ -344,7 +343,7 @@ _e_thumb_del_hook(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, v
      _thumb_queue = eina_list_remove(_thumb_queue, eth);
    if (eth->file) eina_stringshare_del(eth->file);
    if (eth->key) eina_stringshare_del(eth->key);
-   if (eth->sort_id) free(eth->sort_id);
+   free(eth->sort_id);
    free(eth);
 }
 

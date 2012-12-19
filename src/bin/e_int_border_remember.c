@@ -274,12 +274,12 @@ static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* Free the cfdata */
-   if (cfdata->name) free(cfdata->name);
-   if (cfdata->class) free(cfdata->class);
-   if (cfdata->title) free(cfdata->title);
-   if (cfdata->role) free(cfdata->role);
-   if (cfdata->command) free(cfdata->command);
-   if (cfdata->desktop) free(cfdata->desktop);
+   free(cfdata->name);
+   free(cfdata->class);
+   free(cfdata->title);
+   free(cfdata->role);
+   free(cfdata->command);
+   free(cfdata->desktop);
 
    if (!cfdata->applied && cfdata->border->remember)
      {

@@ -207,8 +207,8 @@ e_manager_manage_windows(E_Manager *man)
                          }
                        else
                          {
-                            if (wname) free(wname);
-                            if (wclass) free(wclass);
+                            free(wname);
+                            free(wclass);
                             continue;
                          }
                     }
@@ -239,8 +239,7 @@ e_manager_manage_windows(E_Manager *man)
                }
              if (data)
                {
-                  free(data);
-                  data = NULL;
+                  E_FREE(data);
                   continue;
                }
              ret = ecore_x_window_prop_card32_get(windows[i],
