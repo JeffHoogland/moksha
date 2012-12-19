@@ -18,7 +18,7 @@ static void         _ilist_region_cb_change(void *data, Evas_Object *obj);
 static void         _ilist_codeset_cb_change(void *data, Evas_Object *obj);
 static void         _ilist_modifier_cb_change(void *data, Evas_Object *obj);
 static int          _lang_list_sort(const void *data1, const void *data2);
-static void         _lang_list_load(void *data);
+static void         _lang_list_load(void *data, int *sel);
 static int          _region_list_sort(const void *data1, const void *data2);
 static void         _region_list_load(void *data);
 static int          _basic_lang_list_sort(const void *data1, const void *data2);
@@ -1021,7 +1021,7 @@ static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *of, *ob, *ic;
-   char *cur_sig_loc;
+   char *cur_sig_loc = NULL;
    Eina_List *next;
    int i = 0;
    char buf[PATH_MAX];
@@ -1116,6 +1116,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
 {
    Evas_Object *o, *of, *ob;
    const char *lang, *reg, *cs, *mod;
+   int sel = -1;
 
    cfdata->evas = evas;
    e_dialog_resizable_set(cfd->dia, 1);
@@ -1138,13 +1139,13 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
         cfdata->lang_list =
           eina_list_sort(cfdata->lang_list, eina_list_count(cfdata->lang_list),
                          _lang_list_sort);
-        _lang_list_load(cfdata);
+        _lang_list_load(cfdata, &sel);
      }
 
    e_widget_ilist_go(ob);
    e_widget_size_min_set(ob, 140, 200);
    e_widget_framelist_object_append(of, ob);
-   e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
+   e_widget_ilist_selected_set(ob, sel);
 
    /* Region List */
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_reg));
@@ -1153,7 +1154,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data 
    e_widget_ilist_go(ob);
    e_widget_size_min_set(ob, 100, 100);
    e_widget_framelist_object_append(of, ob);
-   e_widget_ilist_selected_set(ob, e_widget_ilist_selected_get(ob));
+   e_widget_ilist_selected_set(ob, sel);
 
    /* Codeset List */
    ob = e_widget_ilist_add(evas, 0, 0, &(cfdata->cur_cs));
@@ -1493,7 +1494,7 @@ _lang_list_sort(const void *data1, const void *data2)
 }
 
 static void
-_lang_list_load(void *data)
+_lang_list_load(void *data, int *sel)
 {
    E_Config_Dialog_Data *cfdata;
    Eina_List *l;
@@ -1535,13 +1536,10 @@ _lang_list_load(void *data)
         e_widget_ilist_append(cfdata->gui.lang_list, ic, trans, NULL, NULL, ln->lang_code);
 
         if (cfdata->cur_lang && !strcmp(cfdata->cur_lang, ln->lang_code))
-          {
-             int count;
-
-             count = e_widget_ilist_count(cfdata->gui.lang_list);
-             e_widget_ilist_selected_set(cfdata->gui.lang_list, count - 1);
-          }
+          *sel = e_widget_ilist_count(cfdata->gui.lang_list) - 1;
      }
+   if (*sel > -1)
+     e_widget_ilist_selected_set(cfdata->gui.lang_list, *sel);
    e_widget_ilist_thaw(cfdata->gui.lang_list);
    edje_thaw();
    evas_event_thaw(evas_object_evas_get(cfdata->gui.lang_list));
