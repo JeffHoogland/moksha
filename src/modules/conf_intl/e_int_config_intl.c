@@ -1055,11 +1055,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
              e_intl_locale_parts_free(locale_parts);
           }
-        else
-          cur_sig_loc = NULL;
      }
-   else
-     cur_sig_loc = NULL;
 
    e_prefix_data_snprintf(buf, sizeof(buf), "data/flags/%s", "lang-system.png");
    ic = e_util_icon_add(buf, evas);
