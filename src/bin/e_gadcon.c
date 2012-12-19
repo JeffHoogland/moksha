@@ -1397,7 +1397,7 @@ e_gadcon_client_autoscroll_set(E_Gadcon_Client *gcc, int autoscroll)
 
    if (gcc->autoscroll_disabled && (!autoscroll))
      {
-        e_util_dialog_show("Gadget error", "%s does not support disabling autoscrolling", gcc->name);
+        e_util_dialog_show(_("Gadget error"), _("%s does not support disabling autoscrolling"), gcc->name);
         return;
      }
    gcc->autoscroll = autoscroll;
@@ -3081,8 +3081,8 @@ _e_gadcon_client_class_feature_check(const E_Gadcon_Client_Class *cc, const char
 {
    if (!feature)
      {
-        e_util_dialog_show("Insufficent gadcon support",
-                           "Module %s needs to support %s",
+        e_util_dialog_show(_("Insufficent gadcon support"),
+                           _("Module %s needs to support %s"),
                            cc->name, name);
         return 0;
      }

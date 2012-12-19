@@ -1003,7 +1003,7 @@ e_util_dir_check(const char *dir)
      {
         if (!ecore_file_mkpath(dir))
           {
-             e_util_dialog_show("Error creating directory", "Failed to create directory: %s .<br>Check that you have correct permissions set.", dir);
+             e_util_dialog_show(_("Error creating directory"), _("Failed to create directory: %s .<br>Check that you have correct permissions set."), dir);
              return 0;
           }
      }
@@ -1011,7 +1011,7 @@ e_util_dir_check(const char *dir)
      {
         if (!ecore_file_is_dir(dir))
           {
-             e_util_dialog_show("Error creating directory", "Failed to create directory: %s .<br>A file of that name already exists.", dir);
+             e_util_dialog_show(_("Error creating directory"), _("Failed to create directory: %s .<br>A file of that name already exists."), dir);
              return 0;
           }
      }

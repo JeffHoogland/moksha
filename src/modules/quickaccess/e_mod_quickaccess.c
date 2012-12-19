@@ -648,7 +648,7 @@ _grab_key_down_cb(void *data, int type __UNUSED__, void *event)
 
    if (e_util_binding_match(NULL, ev, NULL, NULL))
      {
-        e_util_dialog_show("Keybind Error", "The keybinding you have entered is already in use!");
+        e_util_dialog_show(_("Keybind Error"), _("The keybinding you have entered is already in use!"));
         e_object_del(E_OBJECT(eg));
         return ECORE_CALLBACK_RENEW;
      }
