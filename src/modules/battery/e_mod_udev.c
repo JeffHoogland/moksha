@@ -233,14 +233,19 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
      test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_CHARGE_NOW");
    if (test)
      {
+        double charge_rate = 0;
 
         charge = strtod(test, NULL);
         eina_stringshare_del(test);
         t = ecore_time_get();
-        if ((bat->got_prop) && (charge != bat->current_charge))
-          bat->charge_rate = ((charge - bat->current_charge) / (t - bat->last_update));
-        bat->last_update = t;
-        bat->current_charge = charge;
+        if ((bat->got_prop) && (charge != bat->current_charge) && bat->current_charge != 0)
+          charge_rate = ((charge - bat->current_charge) / (t - bat->last_update));
+        if (charge_rate != 0 || bat->last_update == 0 || bat->current_charge == 0)
+	  {
+	    bat->last_update = t;
+	    bat->current_charge = charge;
+	    bat->charge_rate = charge_rate;
+	  }
         bat->percent = 100 * (bat->current_charge / bat->last_full_charge);
         if (bat->got_prop)
           {
