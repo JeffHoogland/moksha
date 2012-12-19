@@ -1052,14 +1052,14 @@ _e_smart_monitor_refresh_rates_fill(Evas_Object *obj)
         /* compare mode names */
         if (!strcmp(mode->name, sd->current.mode->name))
           {
-             /* create radio group for rates */
-             if (!rg) rg = e_widget_radio_group_new(&sd->current.refresh_rate);
-
              if ((mode->hTotal) && (mode->vTotal))
                {
                   Evas_Object *ow;
                   double rate = 0.0;
                   char buff[1024];
+
+                  /* create radio group for rates */
+                  if (!rg) rg = e_widget_radio_group_new(&sd->current.refresh_rate);
 
                   /* calculate rate */
                   rate = _e_smart_monitor_refresh_rate_get(mode);
