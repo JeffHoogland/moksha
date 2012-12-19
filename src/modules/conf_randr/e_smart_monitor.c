@@ -273,11 +273,15 @@ e_smart_monitor_setup(Evas_Object *obj)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-
    /* fill the list of 'modes' for this monitor
     * 
     * NB: This clears old modes and also sets the min & max resolutions */
    _e_smart_monitor_modes_fill(sd);
+
+   /* check if enabled */
+   sd->orig.enabled = EINA_FALSE;
+   if ((sd->crtc) && (sd->crtc->current_mode))
+     sd->orig.enabled = EINA_TRUE;
 
    /* if we have a crtc, get the x/y location of it and current refresh rate
     * 
@@ -290,6 +294,11 @@ e_smart_monitor_setup(Evas_Object *obj)
 
         if (!sd->crtc->current_mode)
           {
+             sd->crtc->current_mode = eina_list_last_data_get(sd->modes);
+
+             /* set original mode */
+             sd->orig.mode = sd->crtc->current_mode;
+
              if (!sd->orig.mode)
                {
                   sd->orig.w = 640;
@@ -310,9 +319,6 @@ e_smart_monitor_setup(Evas_Object *obj)
           {
              /* set original mode */
              sd->orig.mode = sd->crtc->current_mode;
-
-             /* sd->orig.w = sd->crtc->geometry.w; */
-             /* sd->orig.h = sd->crtc->geometry.h; */
 
              sd->orig.w = sd->orig.mode->width;
              sd->orig.h = sd->orig.mode->height;
@@ -371,10 +377,6 @@ e_smart_monitor_setup(Evas_Object *obj)
 
    /* set the resolution name */
    _e_smart_monitor_resolution_set(sd, sd->orig.w, sd->orig.h);
-
-   /* check if enabled */
-   if ((sd->crtc) && (sd->crtc->current_mode))
-     sd->orig.enabled = EINA_TRUE;
 
    /* send enabled/disabled signals */
    if (sd->orig.enabled)
@@ -488,49 +490,24 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
    /* check if it changed enabled state and update values */
    if (sd->changes & E_SMART_MONITOR_CHANGED_ENABLED)
      {
+        printf("Monitor Enabled: %d\n", sd->current.enabled);
         if (!sd->current.enabled)
-          crtc->current_mode = NULL;
+          {
+             printf("Try DisAble Crtc: %d\n", crtc->xid);
+             crtc->current_mode = NULL;
+          }
         else
           {
-             /* FIXME: NB: HACK ALERT !! HACK ALERT !!!
-              * 
-              * There is currently no way with e_randr to re-enable a 
-              * previously disabled monitor.
-              * Just setting the crtc->current_mode does not work.
-              * So for now, we will directly re-enable it via ecore_x calls */
-             Ecore_X_Randr_Output *outputs;
-             int noutputs = -1;
+             printf("Try ReEnable Crtc: %d\n", crtc->xid);
+             if (sd->output) printf("HAVE OUTPUT: %d\n", sd->output->xid);
+             else printf("NO OUTPUT\n");
+             if (sd->crtc) printf("HAVE CRTC: %d\n", sd->crtc->xid);
+             else printf("NO CRTC\n");
 
-             crtc->current_mode = sd->current.mode;
-
-             noutputs = eina_list_count(crtc->outputs);
-             if (noutputs < 1)
-               {
-                  outputs = calloc(1, sizeof(Ecore_X_Randr_Output));
-                  outputs[0] = sd->output->xid;
-                  noutputs = 1;
-               }
-             else
-               {
-                  int i = 0;
-
-                  outputs = calloc(noutputs, sizeof(Ecore_X_Randr_Output));
-                  for (i = 0; i < noutputs; i++)
-                    {
-                       E_Randr_Output_Info *ero;
-
-                       ero = eina_list_nth(crtc->outputs, i);
-                       outputs[i] = ero->xid;
-                    }
-               }
-
-             ecore_x_randr_crtc_settings_set(sd->con->manager->root, crtc->xid, 
-                                             outputs, noutputs, 
-                                             crtc->geometry.x, crtc->geometry.y, 
-                                             crtc->current_mode->xid, 
-                                             sd->current.orientation);
-
-             if (outputs) free(outputs);
+             if (sd->output) sd->output->crtc = crtc;
+             e_randr_12_try_enable_output(sd->output, 
+                                          ECORE_X_RANDR_OUTPUT_POLICY_NONE, 
+                                          EINA_FALSE);
           }
      }
 
