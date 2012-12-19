@@ -167,8 +167,10 @@ _pulse_sinks_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
 }
 
 static void
-_pulse_sources_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev __UNUSED__)
+_pulse_sources_get(Pulse *p __UNUSED__, Pulse_Tag_Id id __UNUSED__, Eina_List *ev)
 {
+   eina_list_free(sources);
+   sources = ev;
 /*
    Eina_List *l;
    Pulse_Sink *sink;
