@@ -19,7 +19,6 @@ E_Mixer_Mute_Get_Cb e_mod_mixer_mute_get;
 E_Mixer_Mute_Set_Cb e_mod_mixer_mute_set;
 E_Mixer_Capture_Cb e_mod_mixer_mutable_get;
 E_Mixer_State_Get_Cb e_mod_mixer_state_get;
-E_Mixer_Capture_Cb e_mod_mixer_mono_get;
 E_Mixer_Capture_Cb e_mod_mixer_capture_get;
 E_Mixer_Cb e_mod_mixer_new;
 E_Mixer_Cb e_mod_mixer_del;
@@ -1470,7 +1469,6 @@ e_mixer_default_setup(void)
    e_mod_mixer_mute_set = (void *)e_mixer_system_set_mute;
    e_mod_mixer_mutable_get = (void *)e_mixer_system_can_mute;
    e_mod_mixer_state_get = (void *)e_mixer_system_get_state;
-   e_mod_mixer_mono_get = (void *)e_mixer_system_is_mono;
    e_mod_mixer_capture_get = (void *)e_mixer_system_has_capture;
    e_mod_mixer_new = (void *)e_mixer_system_new;
    e_mod_mixer_del = (void *)e_mixer_system_del;
@@ -1501,7 +1499,6 @@ e_mixer_pulse_setup(void)
    e_mod_mixer_mute_set = (void *)e_mixer_pulse_set_mute;
    e_mod_mixer_mutable_get = (void *)e_mixer_pulse_can_mute;
    e_mod_mixer_state_get = (void *)e_mixer_pulse_get_state;
-   e_mod_mixer_mono_get = (void *)e_mixer_pulse_is_mono;
    e_mod_mixer_capture_get = (void *)e_mixer_pulse_has_capture;
    e_mod_mixer_new = (void *)e_mixer_pulse_new;
    e_mod_mixer_del = (void *)e_mixer_pulse_del;

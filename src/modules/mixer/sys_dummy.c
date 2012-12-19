@@ -179,12 +179,6 @@ e_mixer_system_set_state(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *chann
 }
 
 int
-e_mixer_system_is_mono(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__)
-{
-   return 0;
-}
-
-int
 e_mixer_system_has_capture(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__)
 {
    return 0;

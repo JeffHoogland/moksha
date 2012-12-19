@@ -595,12 +595,6 @@ e_mixer_pulse_set_volume(E_Mixer_System *self, E_Mixer_Channel *channel, int lef
 }
 
 int
-e_mixer_pulse_is_mono(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__)
-{
-   return 0;
-}
-
-int
 e_mixer_pulse_can_mute(E_Mixer_System *self __UNUSED__, E_Mixer_Channel *channel __UNUSED__)
 {
    return 1;

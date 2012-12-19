@@ -473,15 +473,14 @@ e_mixer_system_get_volume(E_Mixer_System *self,
    else
      lvol = min;
 
-   if (snd_mixer_selem_is_playback_mono(channel))
-     rvol = min;
-   else if (snd_mixer_selem_has_playback_volume_joined(channel))
-     rvol = lvol;
-   else if (snd_mixer_selem_has_playback_channel(channel, 1))
+   if (snd_mixer_selem_has_playback_channel(channel, 1))
      snd_mixer_selem_get_playback_volume(channel, 1, &rvol);
    else
      rvol = min;
 
+   if (snd_mixer_selem_is_playback_mono(channel) ||
+       snd_mixer_selem_has_playback_volume_joined(channel))
+     rvol = lvol;
 
    *left = rint((double)(lvol - min) * 100 / (double)range);
    *right = rint((double)(rvol - min) * 100 / (double)range);
@@ -626,22 +625,12 @@ e_mixer_system_set_state(E_Mixer_System *self,
 }
 
 int
-e_mixer_system_is_mono(E_Mixer_System *self,
-                        E_Mixer_Channel *channel)
-{
-   if ((!self) || (!channel))
-     return 0;
-
-   return snd_mixer_selem_is_playback_mono(channel);
-}
-
-int
 e_mixer_system_has_capture(E_Mixer_System *self,
                            E_Mixer_Channel *channel)
 {
    if ((!self) || (!channel))
      return 0;
 
-   return snd_mixer_selem_has_capture_volume(channel);
+   return snd_mixer_selem_has_capture_switch(channel);
 }
 

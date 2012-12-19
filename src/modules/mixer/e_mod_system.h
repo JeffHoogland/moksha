@@ -43,7 +43,6 @@ int e_mixer_system_set_volume(E_Mixer_System *self, E_Mixer_Channel *channel, in
 int e_mixer_system_get_mute(E_Mixer_System *self, E_Mixer_Channel *channel, int *mute);
 int e_mixer_system_set_mute(E_Mixer_System *self, E_Mixer_Channel *channel, int mute);
 int e_mixer_system_can_mute(E_Mixer_System *self, E_Mixer_Channel *channel);
-int e_mixer_system_is_mono(E_Mixer_System *self, E_Mixer_Channel *channel);
 int e_mixer_system_has_capture(E_Mixer_System *self, E_Mixer_Channel *channel);
 
 int pulse_init(void);
@@ -71,7 +70,6 @@ int e_mixer_pulse_get_mute(E_Mixer_System *self, E_Mixer_Channel *channel, int *
 int e_mixer_pulse_set_mute(E_Mixer_System *self, E_Mixer_Channel *channel, int mute);
 int e_mixer_pulse_get_state(E_Mixer_System *self, E_Mixer_Channel *channel, E_Mixer_Channel_State *state);
 int e_mixer_pulse_set_state(E_Mixer_System *self, E_Mixer_Channel *channel, const E_Mixer_Channel_State *state);
-int e_mixer_pulse_is_mono(E_Mixer_System *self, E_Mixer_Channel *channel);
 int e_mixer_pulse_has_capture(E_Mixer_System *self, E_Mixer_Channel *channel);
 
 #endif /* E_MOD_SYSTEM_H */

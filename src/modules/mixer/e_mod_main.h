@@ -111,7 +111,6 @@ extern E_Mixer_Mute_Get_Cb e_mod_mixer_mute_get;
 extern E_Mixer_Mute_Set_Cb e_mod_mixer_mute_set;
 extern E_Mixer_Capture_Cb e_mod_mixer_mutable_get;
 extern E_Mixer_State_Get_Cb e_mod_mixer_state_get;
-extern E_Mixer_Capture_Cb e_mod_mixer_mono_get;
 extern E_Mixer_Capture_Cb e_mod_mixer_capture_get;
 extern E_Mixer_Cb e_mod_mixer_new;
 extern E_Mixer_Cb e_mod_mixer_del;
