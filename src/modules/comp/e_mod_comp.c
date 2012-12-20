@@ -1003,7 +1003,6 @@ _e_mod_comp_win_release(E_Comp_Win *cw)
           {
              evas_object_image_size_set(o, 1, 1);
              evas_object_image_data_set(o, NULL);
-             evas_object_image_data_set(o, NULL);
           }
         evas_object_image_native_surface_set(o, NULL);
      }
