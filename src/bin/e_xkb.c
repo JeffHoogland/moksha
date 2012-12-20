@@ -6,23 +6,30 @@ static int _e_xkb_cur_group = -1;
 
 EAPI int E_EVENT_XKB_CHANGED = 0;
 
+static Eina_Bool
+_e_xkb_init_timer(void *data)
+{
+   e_xkb_layout_set(data);
+   return EINA_FALSE;
+}
+
 /* externally accessible functions */
 EAPI int
 e_xkb_init(void)
 {
    E_EVENT_XKB_CHANGED = ecore_event_type_new();
    e_xkb_update(-1);
-   if (e_config->xkb.cur_layout) e_xkb_layout_set(e_config->xkb.cur_layout);
-   else if (e_config->xkb.selected_layout) e_xkb_layout_set(e_config->xkb.selected_layout);
+   if (e_config->xkb.cur_layout)
+     ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.cur_layout);
+   else if (e_config->xkb.selected_layout)
+     ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.selected_layout);
    else if (e_config->xkb.used_layouts)
      {
         E_Config_XKB_Layout *cl;
 
         cl = eina_list_data_get(e_config->xkb.used_layouts);
-        e_xkb_layout_set(cl->name);
+        ecore_timer_add(1.5, _e_xkb_init_timer, cl->name);
      }
-   else
-     e_xkb_update(-1);
    return 1;
 }
 
