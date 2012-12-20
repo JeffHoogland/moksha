@@ -1400,7 +1400,7 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
         else KEY_CHECK(WIN, "Super_R");
         else KEY_CHECK(WIN, "Mode_switch");
 
-        if (_hold_count <= 0)
+        if ((_hold_count <= 0) || ((!_hold_mod) && (_activate_type == E_WINLIST_ACTIVATE_TYPE_KEY)))
           {
              e_winlist_hide();
              return 1;
