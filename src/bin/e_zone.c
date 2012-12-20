@@ -760,7 +760,6 @@ e_zone_desk_linear_flip_by(E_Zone *zone,
    while (dx < 0)
      dx += (zone->desk_x_count * zone->desk_y_count);
    e_zone_desk_linear_flip_to(zone, dx);
-   e_zone_edge_flip_eval(zone);
 }
 
 EAPI void
