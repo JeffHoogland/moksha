@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-20 19:27+0900\n"
+"POT-Creation-Date: 2012-12-20 19:42+0900\n"
 "PO-Revision-Date: 2011-03-12 13:51-0800\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -10709,8 +10709,8 @@ msgstr "글자만 표시"
 
 #: src/modules/tasks/e_mod_config.c:98
 #, fuzzy
-msgid "Width"
-msgstr "너비."
+msgid "Item width"
+msgstr "항목 너비"
 
 #: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
 #, fuzzy, c-format
@@ -10719,8 +10719,8 @@ msgstr "%1.0f 분"
 
 #: src/modules/tasks/e_mod_config.c:103
 #, fuzzy
-msgid "Height"
-msgstr "높이"
+msgid "Item height"
+msgstr "항목 높이"
 
 #: src/modules/tiling/e_mod_config.c:135
 msgid "columns"
@@ -10989,6 +10989,14 @@ msgstr ""
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Width"
+#~ msgstr "너비."
+
+#, fuzzy
+#~ msgid "Height"
+#~ msgstr "높이"
 
 #~ msgid "(No Windows)"
 #~ msgstr "(창 없음)"
