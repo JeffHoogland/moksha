@@ -3,10 +3,11 @@
 
 /* actual module specifics */
 static void _e_mod_action_winlist_cb(E_Object *obj, const char *params);
-static void _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params,
-                                           Ecore_Event_Mouse_Button *ev);
-static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params,
-                                         Ecore_Event_Key *ev);
+static void _e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev);
+static void _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key *ev);
+static void _e_mod_action_winlist_edge_cb(E_Object *obj, const char *params, E_Event_Zone_Edge *ev);
+static void _e_mod_action_winlist_signal_cb(E_Object *obj, const char *params, const char *sig, const char *src);
+static void _e_mod_action_winlist_acpi_cb(E_Object *obj, const char *params, E_Event_Acpi *ev);
 
 static E_Module *conf_module = NULL;
 const char *_winlist_act = NULL;
@@ -34,6 +35,9 @@ e_modapi_init(E_Module *m)
         _act_winlist->func.go = _e_mod_action_winlist_cb;
         _act_winlist->func.go_mouse = _e_mod_action_winlist_mouse_cb;
         _act_winlist->func.go_key = _e_mod_action_winlist_key_cb;
+        _act_winlist->func.go_edge = _e_mod_action_winlist_edge_cb;
+        _act_winlist->func.go_signal = _e_mod_action_winlist_signal_cb;
+        _act_winlist->func.go_acpi = _e_mod_action_winlist_acpi_cb;
         e_action_predef_name_set(N_("Window : List"), N_("Next Window"),
                                  "winlist", "next", NULL, 0);
         e_action_predef_name_set(N_("Window : List"), N_("Previous Window"),
@@ -199,3 +203,20 @@ _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key 
    _e_mod_action_winlist_cb_helper(obj, params, ev->modifiers, E_WINLIST_ACTIVATE_TYPE_KEY);
 }
 
+static void
+_e_mod_action_winlist_edge_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED, E_Event_Zone_Edge *ev EINA_UNUSED)
+{
+   e_util_dialog_show(_("Winlist Error"), _("Winlist cannot be activated from an edge binding"));
+}
+
+static void
+_e_mod_action_winlist_signal_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED, const char *sig EINA_UNUSED, const char *src EINA_UNUSED)
+{
+   e_util_dialog_show(_("Winlist Error"), _("Winlist cannot be activated from a signal binding"));
+}
+
+static void
+_e_mod_action_winlist_acpi_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED, E_Event_Acpi *ev EINA_UNUSED)
+{
+   e_util_dialog_show(_("Winlist Error"), _("Winlist cannot be activated from an ACPI binding"));
+}
