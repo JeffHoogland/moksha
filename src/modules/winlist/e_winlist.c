@@ -1381,36 +1381,25 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (!_winlist) return ECORE_CALLBACK_PASS_ON;
    if (_hold_mod)
      {
-        if ((_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) && (!strcmp(ev->key, "Shift_L")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) && (!strcmp(ev->key, "Shift_R")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_CTRL) && (!strcmp(ev->key, "Control_L")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_CTRL) && (!strcmp(ev->key, "Control_R")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Alt_L")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Alt_R")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Meta_L")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Meta_R")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Super_L")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_ALT) && (!strcmp(ev->key, "Super_R")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Super_L")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Super_R")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Mode_switch")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Meta_L")))
-          _hold_count--;
-        else if ((_hold_mod & ECORE_EVENT_MODIFIER_WIN) && (!strcmp(ev->key, "Meta_R")))
-          _hold_count--;
+#define KEY_CHECK(MOD, NAME) \
+        if ((_hold_mod & ECORE_EVENT_MODIFIER_##MOD) && (!strcmp(ev->key, NAME))) \
+          _hold_count--, _hold_mod &= ~ECORE_EVENT_MODIFIER_##MOD
+        KEY_CHECK(SHIFT, "Shift_L");
+        else KEY_CHECK(SHIFT, "Shift_R");
+        else KEY_CHECK(CTRL, "Control_L");
+        else KEY_CHECK(CTRL, "Control_R");
+        else KEY_CHECK(ALT, "Alt_L");
+        else KEY_CHECK(ALT, "Alt_R");
+        else KEY_CHECK(ALT, "Meta_L");
+        else KEY_CHECK(ALT, "Meta_R");
+        else KEY_CHECK(WIN, "Meta_L");
+        else KEY_CHECK(WIN, "Meta_R");
+        else KEY_CHECK(ALT, "Super_L");
+        else KEY_CHECK(ALT, "Super_R");
+        else KEY_CHECK(WIN, "Super_L");
+        else KEY_CHECK(WIN, "Super_R");
+        else KEY_CHECK(WIN, "Mode_switch");
+
         if (_hold_count <= 0)
           {
              e_winlist_hide();
