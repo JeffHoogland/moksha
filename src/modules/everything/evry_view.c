@@ -954,7 +954,7 @@ _update_frame(Evas_Object *obj)
 
    if (sd->idle_enter)
      {
-        ecore_idler_del(sd->idle_enter);
+        ecore_idle_enterer_del(sd->idle_enter);
         sd->idle_enter = NULL;
      }
    
