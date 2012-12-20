@@ -74,6 +74,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    conf_edd = e_qa_config_dd_free();
    eina_log_domain_unregister(_e_quick_access_log_dom);
    _e_quick_access_log_dom = -1;
+
+   e_configure_registry_item_del("launcher/quickaccess");
+   e_configure_registry_category_del("launcher");
+
    e_qa_config_free(qa_config);
    E_FREE(qa_mod);
    qa_config = NULL;
