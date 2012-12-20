@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-20 15:39+0900\n"
-"PO-Revision-Date: 2012-12-19 22:00+0400\n"
+"POT-Creation-Date: 2012-12-20 19:07+0400\n"
+"PO-Revision-Date: 2012-12-20 19:10+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
 "Language: ru\n"
@@ -31,7 +31,7 @@ msgstr "Об Enlightenment"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2526 src/modules/mixer/app_mixer.c:520
+#: src/modules/fileman/e_fwin.c:2528 src/modules/mixer/app_mixer.c:520
 msgid "Close"
 msgstr "Закрыть"
 
@@ -81,7 +81,7 @@ msgstr "Убить"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2128 src/bin/e_actions.c:2222
 #: src/bin/e_actions.c:2282 src/bin/e_actions.c:2342 src/bin/e_actions.c:2407
 #: src/bin/e_actions.c:2472 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10410 src/bin/e_fm.c:10776
+#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10411 src/bin/e_fm.c:10777
 #: src/bin/e_screensaver.c:191
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "No"
@@ -98,7 +98,7 @@ msgstr "Действительно хотите выйти из Enlightenment?"
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10413 src/bin/e_screensaver.c:189
+#: src/bin/e_fm.c:10414 src/bin/e_screensaver.c:189
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "Yes"
 msgstr "Да"
@@ -148,11 +148,11 @@ msgstr "Действительно хотите перевести систем�
 #: src/bin/e_actions.c:2982 src/bin/e_actions.c:2987 src/bin/e_actions.c:2992
 #: src/bin/e_actions.c:3278 src/bin/e_actions.c:3282 src/bin/e_actions.c:3287
 #: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3305
-#: src/modules/shot/e_mod_main.c:984
+#: src/modules/shot/e_mod_main.c:986
 msgid "Window : Actions"
 msgstr "Окно : Действия"
 
-#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11541
+#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11542
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "Переместить"
@@ -498,11 +498,11 @@ msgid "Switch To Desktop... (All Screens)"
 msgstr "Переключиться на стол... (все экраны)"
 
 #: src/bin/e_actions.c:3224 src/bin/e_actions.c:3228
-#: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:39
-#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:44
-#: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:50
-#: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:55
+#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
+#: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
+#: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
 #: src/modules/winlist/e_mod_main.c:57 src/modules/winlist/e_mod_main.c:59
+#: src/modules/winlist/e_mod_main.c:61 src/modules/winlist/e_mod_main.c:63
 msgid "Window : List"
 msgstr "Окно : Список"
 
@@ -522,7 +522,7 @@ msgstr "Перейти к окну... или запуск..."
 #: src/modules/backlight/e_mod_main.c:493
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:742 src/modules/shot/e_mod_main.c:977
+#: src/modules/shot/e_mod_main.c:744 src/modules/shot/e_mod_main.c:979
 msgid "Screen"
 msgstr "Экран"
 
@@ -799,17 +799,18 @@ msgid "Select"
 msgstr "Выбрать"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9957
-#: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:191
-#: src/bin/e_import_config_dialog.c:534
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9958
+#: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:194
+#: src/bin/e_import_config_dialog.c:537
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_theme_import.c:123
-#: src/modules/fileman/e_int_config_mime_edit.c:314
+#: src/modules/fileman/e_int_config_mime_edit.c:316
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:378
-#: src/modules/shot/e_mod_main.c:290 src/modules/shot/e_mod_main.c:540
-#: src/modules/shot/e_mod_main.c:566 src/modules/shot/e_mod_main.c:801
+#: src/modules/shot/e_mod_main.c:291 src/modules/shot/e_mod_main.c:542
+#: src/modules/shot/e_mod_main.c:568 src/modules/shot/e_mod_main.c:803
 #: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Отменить"
@@ -862,16 +863,17 @@ msgstr ""
 #: src/bin/e_config.c:1732 src/bin/e_config.c:2366
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:613
-#: src/bin/e_fm.c:9956 src/bin/e_fm.c:10682 src/bin/e_fm_prop.c:624
-#: src/bin/e_import_config_dialog.c:533 src/bin/e_int_border_remember.c:318
+#: src/bin/e_fm.c:9957 src/bin/e_fm.c:10683 src/bin/e_fm_prop.c:624
+#: src/bin/e_import_config_dialog.c:536 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:431
 #: src/bin/e_module.c:798 src/bin/e_sys.c:618 src/bin/e_sys.c:659
 #: src/bin/e_utils.c:695 src/modules/comp/e_mod_config.c:918
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:436 src/modules/cpufreq/e_mod_main.c:465
 #: src/modules/cpufreq/e_mod_main.c:492
-#: src/modules/fileman/e_int_config_mime_edit.c:313
+#: src/modules/fileman/e_int_config_mime_edit.c:315
 #: src/modules/xkbswitch/e_mod_config.c:528
 msgid "OK"
 msgstr "ОК"
@@ -1141,7 +1143,7 @@ msgstr "Стандартное имя"
 msgid "Window Class"
 msgstr "Класс окна"
 
-#: src/bin/e_eap_editor.c:757 src/modules/fileman/e_int_config_mime.c:168
+#: src/bin/e_eap_editor.c:757 src/modules/fileman/e_int_config_mime.c:170
 msgid "Categories"
 msgstr "Категории"
 
@@ -1155,7 +1157,7 @@ msgstr "Файл .desktop"
 
 #: src/bin/e_eap_editor.c:781 src/bin/e_int_border_prop.c:450
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
-#: src/modules/comp/e_mod_config.c:1527
+#: src/modules/comp/e_mod_config.c:1531
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
@@ -1193,17 +1195,18 @@ msgstr "Выбрать значок для '%s'"
 msgid "Select an Executable"
 msgstr "Выбрать исполняемый файл"
 
-#: src/bin/e_entry.c:480 src/bin/e_fm.c:9108 src/bin/e_fm.c:10775
+#: src/bin/e_entry.c:480 src/bin/e_fm.c:9108 src/bin/e_fm.c:10776
 #: src/bin/e_shelf.c:1792 src/bin/e_shelf.c:2475
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:247
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
-#: src/modules/conf_paths/e_int_config_env.c:315
-#: src/modules/conf_shelves/e_int_config_shelf.c:135
-#: src/modules/conf_shelves/e_int_config_shelf.c:390
+#: src/modules/conf_paths/e_int_config_env.c:317
+#: src/modules/conf_shelves/e_int_config_shelf.c:137
+#: src/modules/conf_shelves/e_int_config_shelf.c:392
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
 #: src/modules/ibar/e_mod_config.c:112 src/modules/ibar/e_mod_config.c:199
 #: src/modules/quickaccess/e_mod_config.c:277
@@ -1215,7 +1218,7 @@ msgstr "Удалить"
 msgid "Cut"
 msgstr "Вырезать"
 
-#: src/bin/e_entry.c:499 src/bin/e_fm.c:9033 src/bin/e_fm.c:11536
+#: src/bin/e_entry.c:499 src/bin/e_fm.c:9033 src/bin/e_fm.c:11537
 msgid "Copy"
 msgstr "Копировать"
 
@@ -1412,10 +1415,10 @@ msgstr "Не удалось извлечь устройство"
 
 #: src/bin/e_fm.c:6565 src/bin/e_fm.c:6598 src/bin/e_fm.c:9493
 #: src/bin/e_fm.c:9505 src/bin/e_fm.c:9608 src/bin/e_fm.c:9613
-#: src/bin/e_fm.c:9629 src/bin/e_fm.c:9634 src/bin/e_fm.c:10260
-#: src/bin/e_fm.c:10263 src/bin/e_fm.c:10266 src/bin/e_fm.c:10293
-#: src/bin/e_fm.c:10297 src/bin/e_fm.c:10300 src/bin/e_fm.c:10358
-#: src/bin/e_fm.c:10583 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
+#: src/bin/e_fm.c:9629 src/bin/e_fm.c:9634 src/bin/e_fm.c:10261
+#: src/bin/e_fm.c:10264 src/bin/e_fm.c:10267 src/bin/e_fm.c:10294
+#: src/bin/e_fm.c:10298 src/bin/e_fm.c:10301 src/bin/e_fm.c:10359
+#: src/bin/e_fm.c:10584 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
 msgid "Error"
 msgstr "Ошибка"
 
@@ -1471,12 +1474,12 @@ msgstr "Новый..."
 msgid "Actions..."
 msgstr "Действия..."
 
-#: src/bin/e_fm.c:8832 src/bin/e_fm.c:9054 src/bin/e_fm.c:11549
+#: src/bin/e_fm.c:8832 src/bin/e_fm.c:9054 src/bin/e_fm.c:11550
 msgid "Link"
 msgstr "Ссылка"
 
-#: src/bin/e_fm.c:9116 src/bin/e_fm.c:10412 src/bin/e_shelf.c:2470
-#: src/modules/conf_shelves/e_int_config_shelf.c:138
+#: src/bin/e_fm.c:9116 src/bin/e_fm.c:10413 src/bin/e_shelf.c:2470
+#: src/modules/conf_shelves/e_int_config_shelf.c:140
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
 #: src/modules/quickaccess/e_mod_config.c:304
@@ -1602,7 +1605,7 @@ msgstr "Настройки файлового менеджера"
 msgid "File Icon Settings"
 msgstr "Настройки значков файлов"
 
-#: src/bin/e_fm.c:9834 src/bin/e_fm.c:10049
+#: src/bin/e_fm.c:9834 src/bin/e_fm.c:10050
 msgid "Set background..."
 msgstr "Установить фон..."
 
@@ -1610,7 +1613,7 @@ msgstr "Установить фон..."
 msgid "Clear background"
 msgstr "Очистить фон"
 
-#: src/bin/e_fm.c:9849 src/bin/e_fm.c:10077
+#: src/bin/e_fm.c:9849 src/bin/e_fm.c:10078
 msgid "Set overlay..."
 msgstr "Установить перекрытие..."
 
@@ -1618,81 +1621,81 @@ msgstr "Установить перекрытие..."
 msgid "Clear overlay"
 msgstr "Очистить перекрытие"
 
-#: src/bin/e_fm.c:10171 src/bin/e_fm.c:10507
+#: src/bin/e_fm.c:10172 src/bin/e_fm.c:10508
 #, c-format
 msgid "Rename %s to:"
 msgstr "Переименовать %s в:"
 
-#: src/bin/e_fm.c:10173 src/bin/e_fm.c:10508
+#: src/bin/e_fm.c:10174 src/bin/e_fm.c:10509
 msgid "Rename File"
 msgstr "Переименовать файл"
 
-#: src/bin/e_fm.c:10260 src/bin/e_fm.c:10293
+#: src/bin/e_fm.c:10261 src/bin/e_fm.c:10294
 #, c-format
 msgid "%s already exists!"
 msgstr "%s уже существует!"
 
-#: src/bin/e_fm.c:10263 src/bin/e_fm.c:10297
+#: src/bin/e_fm.c:10264 src/bin/e_fm.c:10298
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr "%s не может быть переименован, так как он защищён"
 
-#: src/bin/e_fm.c:10266 src/bin/e_fm.c:10300
+#: src/bin/e_fm.c:10267 src/bin/e_fm.c:10301
 msgid "Internal filemanager error :("
 msgstr "Внутренняя ошибка файлового менеджера :("
 
-#: src/bin/e_fm.c:10354 src/bin/e_fm.c:10575
+#: src/bin/e_fm.c:10355 src/bin/e_fm.c:10576
 msgid "Retry"
 msgstr "Повторить"
 
-#: src/bin/e_fm.c:10355 src/bin/e_fm.c:10576 src/bin/e_fm.c:11557
+#: src/bin/e_fm.c:10356 src/bin/e_fm.c:10577 src/bin/e_fm.c:11558
 msgid "Abort"
 msgstr "Отменить"
 
-#: src/bin/e_fm.c:10411
+#: src/bin/e_fm.c:10412
 msgid "No to all"
 msgstr "Нет для всего"
 
-#: src/bin/e_fm.c:10414
+#: src/bin/e_fm.c:10415
 msgid "Yes to all"
 msgstr "Да для всего"
 
-#: src/bin/e_fm.c:10417
+#: src/bin/e_fm.c:10418
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: src/bin/e_fm.c:10420
+#: src/bin/e_fm.c:10421
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Файл уже существует, переписать?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10578
+#: src/bin/e_fm.c:10579
 msgid "Move Source"
 msgstr "Переместить источник"
 
-#: src/bin/e_fm.c:10579
+#: src/bin/e_fm.c:10580
 msgid "Ignore this"
 msgstr "Пропустить это"
 
-#: src/bin/e_fm.c:10580
+#: src/bin/e_fm.c:10581
 msgid "Ignore all"
 msgstr "Пропустить все"
 
-#: src/bin/e_fm.c:10585
+#: src/bin/e_fm.c:10586
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Во время исполнения произошла ошибка.<br>%s"
 
-#: src/bin/e_fm.c:10778
+#: src/bin/e_fm.c:10779
 msgid "Confirm Delete"
 msgstr "Подтвердите удаление"
 
-#: src/bin/e_fm.c:10788
+#: src/bin/e_fm.c:10789
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Вы действительно хотите удалить<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:10793
+#: src/bin/e_fm.c:10794
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1701,7 +1704,7 @@ msgstr ""
 "Вы действительно хотите удалить<br><hilight>все</hilight> %d выбранных "
 "файлов из:<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:10803
+#: src/bin/e_fm.c:10804
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1751,7 +1754,7 @@ msgstr "Не удалось изменить права доступа: %s"
 #: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1123 src/bin/e_shelf.c:2363
 #: src/modules/comp/e_mod_config.c:493
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
-#: src/modules/conf_display/e_int_config_desk.c:186
+#: src/modules/conf_display/e_int_config_desk.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
 msgid "Name:"
 msgstr "Имя:"
@@ -1809,7 +1812,7 @@ msgstr "Группа:"
 msgid "Others:"
 msgstr "Прочие:"
 
-#: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:470
+#: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:473
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:218
 #: src/modules/conf_theme/e_int_config_theme.c:1414
@@ -1882,7 +1885,7 @@ msgstr "Вид"
 #: src/modules/conf_applications/e_int_config_apps.c:270
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
-#: src/modules/conf_applications/e_int_config_apps_personal.c:95
+#: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:876
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
@@ -1954,11 +1957,11 @@ msgstr ""
 "Enlightenment не смог импортировать изображение.<br><br>Вы уверены, что это "
 "допустимое изображение?"
 
-#: src/bin/e_import_dialog.c:156
+#: src/bin/e_import_dialog.c:159
 msgid "Select a Picture..."
 msgstr "Выберите изображение..."
 
-#: src/bin/e_import_dialog.c:190
+#: src/bin/e_import_dialog.c:193
 msgid "Use"
 msgstr "Использовать"
 
@@ -1973,53 +1976,53 @@ msgstr ""
 "Enlightenment не смог импортировать изображение<br>из-за ошибок при "
 "конвертации."
 
-#: src/bin/e_import_config_dialog.c:452
+#: src/bin/e_import_config_dialog.c:455
 msgid "Import Settings..."
 msgstr "Настройки импорта..."
 
-#: src/bin/e_import_config_dialog.c:484
+#: src/bin/e_import_config_dialog.c:487
 msgid "Fill and Stretch Options"
 msgstr "Опции заполнения и растягивания"
 
-#: src/bin/e_import_config_dialog.c:486
+#: src/bin/e_import_config_dialog.c:489
 msgid "Stretch"
 msgstr "Растянуть"
 
-#: src/bin/e_import_config_dialog.c:490 src/bin/e_int_border_prop.c:236
+#: src/bin/e_import_config_dialog.c:493 src/bin/e_int_border_prop.c:236
 #, c-format
 msgid "Center"
 msgstr "По центру"
 
-#: src/bin/e_import_config_dialog.c:494
+#: src/bin/e_import_config_dialog.c:497
 msgid "Tile"
 msgstr "Замостить"
 
-#: src/bin/e_import_config_dialog.c:499
+#: src/bin/e_import_config_dialog.c:502
 msgid "Within"
 msgstr "Вложить"
 
-#: src/bin/e_import_config_dialog.c:503
+#: src/bin/e_import_config_dialog.c:506
 msgid "Fill"
 msgstr "Заполнить"
 
-#: src/bin/e_import_config_dialog.c:507
+#: src/bin/e_import_config_dialog.c:510
 msgid "Pan"
 msgstr "Панорамировать"
 
-#: src/bin/e_import_config_dialog.c:515
+#: src/bin/e_import_config_dialog.c:518
 msgid "File Quality"
 msgstr "Качество файла"
 
-#: src/bin/e_import_config_dialog.c:516
+#: src/bin/e_import_config_dialog.c:519
 msgid "Use original file"
 msgstr "Использовать оригинальный файл"
 
-#: src/bin/e_import_config_dialog.c:518
+#: src/bin/e_import_config_dialog.c:521
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
-#: src/bin/e_import_config_dialog.c:523
+#: src/bin/e_import_config_dialog.c:526
 msgid "Fill Color"
 msgstr "Цвет заполнения"
 
@@ -2493,7 +2496,7 @@ msgstr "Запрос позиции"
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
-#: src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/conf_shelves/e_int_config_shelf.c:147
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
@@ -2591,7 +2594,7 @@ msgstr "Размер, позицию и замки"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:746
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:748
 msgid "All"
 msgstr "Все"
 
@@ -2690,19 +2693,19 @@ msgstr "Мобильные"
 msgid "Module Settings"
 msgstr "Настройки модулей"
 
-#: src/bin/e_int_config_modules.c:198
+#: src/bin/e_int_config_modules.c:200
 msgid "Load"
 msgstr "Загрузить"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:534
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:534
 msgid "Unload"
 msgstr "Выгрузить"
 
-#: src/bin/e_int_config_modules.c:337 src/bin/e_int_config_modules.c:624
+#: src/bin/e_int_config_modules.c:339 src/bin/e_int_config_modules.c:626
 msgid "No modules selected."
 msgstr "Не выбран ни один модуль."
 
-#: src/bin/e_int_config_modules.c:622
+#: src/bin/e_int_config_modules.c:624
 msgid "More than one module selected."
 msgstr "Выбрано более одного модуля."
 
@@ -2778,7 +2781,7 @@ msgstr "Приложения"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4138
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4138
 msgid "Windows"
 msgstr "Окна"
 
@@ -2826,7 +2829,7 @@ msgid "Untitled window"
 msgstr "Окно без заголовка"
 
 #: src/bin/e_int_menus.c:1618 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
-#: src/modules/conf_shelves/e_int_config_shelf.c:189
+#: src/modules/conf_shelves/e_int_config_shelf.c:191
 msgid "Shelf"
 msgstr "Полка"
 
@@ -3570,7 +3573,7 @@ msgstr "Какие действия следует применить к это�
 
 #: src/bin/e_module.c:535 src/bin/e_shelf.c:1792
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
-#: src/modules/conf_shelves/e_int_config_shelf.c:390
+#: src/modules/conf_shelves/e_int_config_shelf.c:392
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Keep"
 msgstr "Оставить"
@@ -3725,7 +3728,7 @@ msgstr "Полка с этим именем и id уже существует!"
 msgid "Rename Shelf"
 msgstr "Переименовать полку"
 
-#: src/bin/e_shelf.c:2436 src/modules/conf_shelves/e_int_config_shelf.c:141
+#: src/bin/e_shelf.c:2436 src/modules/conf_shelves/e_int_config_shelf.c:143
 #: src/modules/ibar/e_mod_main.c:858
 msgid "Contents"
 msgstr "Содержимое"
@@ -4011,6 +4014,7 @@ msgstr[2] "%li минут назад"
 #: src/modules/comp/e_mod_config.c:516
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1170
 #: src/modules/wizard/page_020.c:24
@@ -4143,14 +4147,15 @@ msgstr "%li минут"
 #: src/bin/e_widget_config_list.c:60 src/modules/comp/e_mod_config.c:1096
 #: src/modules/conf_applications/e_int_config_apps.c:266
 #: src/modules/conf_applications/e_int_config_apps.c:287
-#: src/modules/conf_applications/e_int_config_apps_personal.c:91
+#: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:809
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:197
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:244
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:292
-#: src/modules/conf_paths/e_int_config_env.c:309
-#: src/modules/conf_shelves/e_int_config_shelf.c:133
+#: src/modules/conf_paths/e_int_config_env.c:311
+#: src/modules/conf_shelves/e_int_config_shelf.c:135
 #: src/modules/ibar/e_mod_config.c:110
 #: src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
@@ -4707,162 +4712,162 @@ msgstr "Над"
 msgid "Menus"
 msgstr "Меню"
 
-#: src/modules/comp/e_mod_config.c:1162
+#: src/modules/comp/e_mod_config.c:1164
 msgid "Smooth scaling"
 msgstr "Гладкое масштабирование"
 
-#: src/modules/comp/e_mod_config.c:1165
+#: src/modules/comp/e_mod_config.c:1167
 msgid "Styles"
 msgstr "Стили"
 
-#: src/modules/comp/e_mod_config.c:1171
+#: src/modules/comp/e_mod_config.c:1173
 msgid "Effects"
 msgstr "Эффекты"
 
-#: src/modules/comp/e_mod_config.c:1175
+#: src/modules/comp/e_mod_config.c:1177
 msgid "Sync windows"
 msgstr "Синхронизировать окна"
 
-#: src/modules/comp/e_mod_config.c:1177
+#: src/modules/comp/e_mod_config.c:1179
 msgid "Loose sync"
 msgstr "Свободная синхронизация"
 
-#: src/modules/comp/e_mod_config.c:1179
+#: src/modules/comp/e_mod_config.c:1181
 msgid "Grab Server during draw"
 msgstr "Захват сервера при прорисовке"
 
-#: src/modules/comp/e_mod_config.c:1181
+#: src/modules/comp/e_mod_config.c:1183
 msgid "Initial draw timeout for newly mapped windows"
 msgstr "Начальный тайм-аут для отрисовки новых окон"
 
-#: src/modules/comp/e_mod_config.c:1183
+#: src/modules/comp/e_mod_config.c:1185
 #, c-format
 msgid "%1.2f Seconds"
 msgstr "%1.2f секунд"
 
-#: src/modules/comp/e_mod_config.c:1185
+#: src/modules/comp/e_mod_config.c:1187
 msgid "Sync"
 msgstr "Синхронизация"
 
-#: src/modules/comp/e_mod_config.c:1190 src/modules/comp/e_mod_config.c:1532
+#: src/modules/comp/e_mod_config.c:1192 src/modules/comp/e_mod_config.c:1536
 msgid "Software"
 msgstr "Программная отрисовка"
 
-#: src/modules/comp/e_mod_config.c:1196 src/modules/comp/e_mod_config.c:1538
+#: src/modules/comp/e_mod_config.c:1198 src/modules/comp/e_mod_config.c:1542
 msgid "OpenGL"
 msgstr "OpenGL"
 
-#: src/modules/comp/e_mod_config.c:1199
+#: src/modules/comp/e_mod_config.c:1201
 msgid "OpenGL options"
 msgstr "Опции OpenGL"
 
-#: src/modules/comp/e_mod_config.c:1201 src/modules/comp/e_mod_config.c:1512
+#: src/modules/comp/e_mod_config.c:1203 src/modules/comp/e_mod_config.c:1516
 msgid "Tear-free updates (VSynced)"
 msgstr "Отрисовка без разрывов (VSync)"
 
-#: src/modules/comp/e_mod_config.c:1203
+#: src/modules/comp/e_mod_config.c:1205
 msgid "Texture from pixmap"
 msgstr "Текстура из растрового изображения"
 
-#: src/modules/comp/e_mod_config.c:1210
+#: src/modules/comp/e_mod_config.c:1212
 msgid "Assume swapping method:"
 msgstr "Метод смены буферов:"
 
-#: src/modules/comp/e_mod_config.c:1213
+#: src/modules/comp/e_mod_config.c:1215
 msgid "Auto"
 msgstr "Автоматически"
 
-#: src/modules/comp/e_mod_config.c:1215
+#: src/modules/comp/e_mod_config.c:1217
 msgid "Invalidate (full redraw)"
 msgstr "Invalidate (полная перерисовка)"
 
-#: src/modules/comp/e_mod_config.c:1217
+#: src/modules/comp/e_mod_config.c:1219
 msgid "Copy from back to front"
 msgstr "Копирование из вторичного в первичный "
 
-#: src/modules/comp/e_mod_config.c:1219
+#: src/modules/comp/e_mod_config.c:1221
 msgid "Double buffered swaps"
 msgstr "Двойная буферизация"
 
-#: src/modules/comp/e_mod_config.c:1221
+#: src/modules/comp/e_mod_config.c:1223
 msgid "Triple buffered swaps"
 msgstr "Тройная буферизация"
 
-#: src/modules/comp/e_mod_config.c:1231
+#: src/modules/comp/e_mod_config.c:1233
 #: src/modules/conf_performance/e_mod_main.c:19
 msgid "Engine"
 msgstr "Движок"
 
-#: src/modules/comp/e_mod_config.c:1235
+#: src/modules/comp/e_mod_config.c:1237
 msgid "Send flush"
 msgstr "Послать flush"
 
-#: src/modules/comp/e_mod_config.c:1237
+#: src/modules/comp/e_mod_config.c:1239
 msgid "Send dump"
 msgstr "Послать dump"
 
-#: src/modules/comp/e_mod_config.c:1239 src/modules/comp/e_mod_config.c:1518
+#: src/modules/comp/e_mod_config.c:1241 src/modules/comp/e_mod_config.c:1522
 msgid "Don't composite fullscreen windows"
 msgstr "Не использовать композитный режим для полноэкранных окон"
 
-#: src/modules/comp/e_mod_config.c:1267
+#: src/modules/comp/e_mod_config.c:1269
 msgid "Memory"
 msgstr "Память"
 
-#: src/modules/comp/e_mod_config.c:1315
+#: src/modules/comp/e_mod_config.c:1317
 msgid "Show Framerate"
 msgstr "Показывать частоту кадров"
 
-#: src/modules/comp/e_mod_config.c:1317
+#: src/modules/comp/e_mod_config.c:1319
 msgid "Rolling average frame count"
 msgstr "Скользящее среднее частоты кадров"
 
-#: src/modules/comp/e_mod_config.c:1319
+#: src/modules/comp/e_mod_config.c:1321
 #, c-format
 msgid "%1.0f Frames"
 msgstr "%1.0f кадров"
 
-#: src/modules/comp/e_mod_config.c:1323
+#: src/modules/comp/e_mod_config.c:1325
 msgid "Corner"
 msgstr "Угол"
 
-#: src/modules/comp/e_mod_config.c:1326
+#: src/modules/comp/e_mod_config.c:1328
 msgid "Top Left"
 msgstr "Верхний левый"
 
-#: src/modules/comp/e_mod_config.c:1329
+#: src/modules/comp/e_mod_config.c:1331
 msgid "Top Right"
 msgstr "Верхний правый"
 
-#: src/modules/comp/e_mod_config.c:1332
+#: src/modules/comp/e_mod_config.c:1334
 msgid "Bottom Left"
 msgstr "Нижний левый"
 
-#: src/modules/comp/e_mod_config.c:1335
+#: src/modules/comp/e_mod_config.c:1337
 msgid "Bottom Right"
 msgstr "Нижний правый"
 
-#: src/modules/comp/e_mod_config.c:1340
+#: src/modules/comp/e_mod_config.c:1342
 msgid "Debug"
 msgstr "Отладка"
 
-#: src/modules/comp/e_mod_config.c:1515
+#: src/modules/comp/e_mod_config.c:1519
 msgid "Smooth scaling of window content"
 msgstr "Гладкое масштабирование содержимого окон"
 
-#: src/modules/comp/e_mod_config.c:1521
+#: src/modules/comp/e_mod_config.c:1525
 msgid "Select default style"
 msgstr "Выберите стиль по умолчанию"
 
-#: src/modules/comp/e_mod_config.c:1542
+#: src/modules/comp/e_mod_config.c:1546
 msgid "To reset compositor:"
 msgstr "Для сброса композитного менеджера:"
 
-#: src/modules/comp/e_mod_config.c:1544
+#: src/modules/comp/e_mod_config.c:1548
 msgid "Ctrl+Alt+Shift+Home"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1547
+#: src/modules/comp/e_mod_config.c:1551
 msgid "Rendering"
 msgstr "Отрисовка"
 
@@ -5149,7 +5154,7 @@ msgid "Wrap desktops around when flipping"
 msgstr "Непрерывный рабочий стол (циклический переход)"
 
 #: src/modules/conf_display/e_int_config_desks.c:200
-#: src/modules/conf_display/e_int_config_desk.c:192
+#: src/modules/conf_display/e_int_config_desk.c:198
 msgid "Desktop Window Profile"
 msgstr "Профиль окна рабочего стола"
 
@@ -5185,24 +5190,24 @@ msgstr "%1.1f с"
 msgid "Flip Animation"
 msgstr "Анимация перехода"
 
-#: src/modules/conf_display/e_int_config_desk.c:53
+#: src/modules/conf_display/e_int_config_desk.c:54
 msgid "Desk Settings"
 msgstr "Настройки стола"
 
-#: src/modules/conf_display/e_int_config_desk.c:185
+#: src/modules/conf_display/e_int_config_desk.c:191
 msgid "Desktop Name"
 msgstr "Имя рабочего стола"
 
-#: src/modules/conf_display/e_int_config_desk.c:193
+#: src/modules/conf_display/e_int_config_desk.c:199
 msgid "Profile Name:"
 msgstr "Имя профиля:"
 
-#: src/modules/conf_display/e_int_config_desk.c:200
+#: src/modules/conf_display/e_int_config_desk.c:206
 msgid "Desktop Wallpaper"
 msgstr "Обои рабочего стола"
 
-#: src/modules/conf_display/e_int_config_desk.c:206
-#: src/modules/fileman/e_int_config_mime.c:182
+#: src/modules/conf_display/e_int_config_desk.c:212
+#: src/modules/fileman/e_int_config_mime.c:184
 msgid "Set"
 msgstr "Установить"
 
@@ -5408,6 +5413,7 @@ msgstr "Стол"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:11
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:3
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:462
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
@@ -5437,23 +5443,26 @@ msgstr "Привязки к краям"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:251
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:298
-#: src/modules/conf_paths/e_int_config_env.c:312
+#: src/modules/conf_paths/e_int_config_env.c:314
 msgid "Modify"
 msgstr "Изменить"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:816
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:255
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:302
 msgid "Delete All"
 msgstr "Удалить все"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:820
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:306
 msgid "Restore Default Bindings"
 msgstr "Восстановить привязки по умолчанию"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:825
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:209
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:264
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:312
@@ -5465,6 +5474,7 @@ msgid "Mouse Button"
 msgstr "Кнопка мыши"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:832
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:216
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:271
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:319
@@ -5571,6 +5581,45 @@ msgstr "(кликабельно левой)"
 msgid "(clickable)"
 msgstr "(кликабельно)"
 
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
+msgid "Signal Binding Error"
+msgstr "Ошибка Привязки сигналов"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
+msgid "Signal and Source must NOT be blank!"
+msgstr "Сигнал и Источник не могут быть пустыми!"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:585
+#, c-format
+msgid ""
+"The signal and source that you entered are already used by<br><hilight>%s</"
+"hilight> action.<br>"
+msgstr ""
+"Введённые сигнал и источник уже используются<br>действием <hilight>%s</"
+"hilight>."
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
+msgid "Add Signal Binding"
+msgstr "Добавить привязку сигнала"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:645
+msgid "Source:"
+msgstr "Источник:"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:650
+msgid "Signal:"
+msgstr "Сигнал:"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:804
+#: src/modules/conf_edgebindings/e_mod_main.c:25
+msgid "Signal Bindings"
+msgstr "Привязки сигналов"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:865
+msgid "Signal Bindings Settings"
+msgstr "Настройки привязок сигналов"
+
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
@@ -5578,10 +5627,6 @@ msgstr "(кликабельно)"
 #: src/modules/xkbswitch/e_mod_main.c:71
 msgid "Input"
 msgstr "Ввод"
-
-#: src/modules/conf_edgebindings/e_mod_main.c:25
-msgid "Signal Bindings"
-msgstr "Привязки сигналов"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:36
 msgid "Interaction Settings"
@@ -6200,7 +6245,7 @@ msgstr "Каталоги установленные пользователем"
 msgid "Environment Variables"
 msgstr "Переменные среды"
 
-#: src/modules/conf_paths/e_int_config_env.c:304
+#: src/modules/conf_paths/e_int_config_env.c:306
 msgid "Unset"
 msgstr "Сбросить"
 
@@ -6330,13 +6375,13 @@ msgid "e.g. Saving to disk"
 msgstr "(например, сохранение на диск)"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:728
+#: src/modules/shot/e_mod_main.c:730
 #: src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "Низкий"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:726
+#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:728
 msgid "Medium"
 msgstr "Средний"
 
@@ -6348,7 +6393,7 @@ msgid "%.0f s"
 msgstr "%.0f с"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:724
+#: src/modules/shot/e_mod_main.c:726
 msgid "High"
 msgstr "Высокий"
 
@@ -6369,16 +6414,16 @@ msgstr "Управление питанием"
 msgid "Screen Setup"
 msgstr "Настройка экрана"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:125
+#: src/modules/conf_shelves/e_int_config_shelf.c:127
 msgid "Configured Shelves: Display"
 msgstr "Настроенные полки: Показ"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:386
+#: src/modules/conf_shelves/e_int_config_shelf.c:388
 #, c-format
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Вы действительно хотите удалить \"%s\"?"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:389
+#: src/modules/conf_shelves/e_int_config_shelf.c:391
 msgid "Confirm Shelf Deletion"
 msgstr "Подтвердите удаление полки"
 
@@ -7482,7 +7527,7 @@ msgid "Resize by"
 msgstr "Изменять размер по"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:257
-#: src/modules/wizard/page_011.c:134 src/modules/xkbswitch/e_mod_main.c:74
+#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:74
 #: src/modules/xkbswitch/e_mod_main.c:258
 msgid "Keyboard"
 msgstr "Клавиатура"
@@ -7726,7 +7771,7 @@ msgstr ""
 msgid "Dropshadow Settings"
 msgstr "Параметры отброса тени"
 
-#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:718
+#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:720
 msgid "Quality"
 msgstr "Уровень качества"
 
@@ -8025,7 +8070,7 @@ msgstr ""
 
 #: src/modules/everything/evry_plug_apps.c:1162
 #: src/modules/everything/evry_plug_apps.c:1209
-#: src/modules/fileman/e_fwin.c:2160 src/modules/fileman/e_fwin.c:2523
+#: src/modules/fileman/e_fwin.c:2160 src/modules/fileman/e_fwin.c:2525
 msgid "Open with..."
 msgstr "Открыть с помощью..."
 
@@ -8234,11 +8279,11 @@ msgstr "Копировать путь"
 msgid "Run"
 msgstr "Запустить"
 
-#: src/modules/fileman/e_fwin.c:2153 src/modules/fileman/e_fwin.c:2524
+#: src/modules/fileman/e_fwin.c:2153 src/modules/fileman/e_fwin.c:2526
 msgid "Open"
 msgstr "Открыть"
 
-#: src/modules/fileman/e_fwin.c:2553 src/modules/fileman/e_fwin.c:2578
+#: src/modules/fileman/e_fwin.c:2555 src/modules/fileman/e_fwin.c:2580
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
@@ -8246,101 +8291,101 @@ msgstr[0] "%d файл"
 msgstr[1] "%d файла"
 msgstr[2] "%d файлов"
 
-#: src/modules/fileman/e_fwin.c:2596
+#: src/modules/fileman/e_fwin.c:2598
 msgid "Known Applications"
 msgstr "Известные приложения"
 
-#: src/modules/fileman/e_fwin.c:2606
+#: src/modules/fileman/e_fwin.c:2608
 msgid "Suggested Applications"
 msgstr "Выбранные приложения"
 
-#: src/modules/fileman/e_fwin.c:2641
+#: src/modules/fileman/e_fwin.c:2643
 msgid "All Applications"
 msgstr "Все приложения"
 
-#: src/modules/fileman/e_fwin.c:2664
+#: src/modules/fileman/e_fwin.c:2666
 msgid "Custom Command"
 msgstr "Пользовательская команда"
 
-#: src/modules/fileman/e_fwin.c:2959
+#: src/modules/fileman/e_fwin.c:2961
 #: src/modules/fileman_opinfo/e_mod_main.c:105
 #, c-format
 msgid "Copying is aborted"
 msgstr "Копирование прервано"
 
-#: src/modules/fileman/e_fwin.c:2963
+#: src/modules/fileman/e_fwin.c:2965
 #: src/modules/fileman_opinfo/e_mod_main.c:109
 #, c-format
 msgid "Moving is aborted"
 msgstr "Перемещение прервано"
 
-#: src/modules/fileman/e_fwin.c:2967
+#: src/modules/fileman/e_fwin.c:2969
 #: src/modules/fileman_opinfo/e_mod_main.c:113
 #, c-format
 msgid "Deleting is aborted"
 msgstr "Удаление прервано"
 
-#: src/modules/fileman/e_fwin.c:2971
+#: src/modules/fileman/e_fwin.c:2973
 #: src/modules/fileman_opinfo/e_mod_main.c:117
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr "Безопасное удаление прервано"
 
-#: src/modules/fileman/e_fwin.c:2975
+#: src/modules/fileman/e_fwin.c:2977
 #: src/modules/fileman_opinfo/e_mod_main.c:121
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Неизвестная операция от ведомого прервана"
 
-#: src/modules/fileman/e_fwin.c:2985
+#: src/modules/fileman/e_fwin.c:2987
 #: src/modules/fileman_opinfo/e_mod_main.c:131
 #, c-format
 msgid "Copy of %s done"
 msgstr "Копирование %s завершено"
 
-#: src/modules/fileman/e_fwin.c:2987
+#: src/modules/fileman/e_fwin.c:2989
 #: src/modules/fileman_opinfo/e_mod_main.c:133
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "Копирование %s (рвп: %s)"
 
-#: src/modules/fileman/e_fwin.c:2992
+#: src/modules/fileman/e_fwin.c:2994
 #: src/modules/fileman_opinfo/e_mod_main.c:139
 #, c-format
 msgid "Move of %s done"
 msgstr "Перемещение %s завершено"
 
-#: src/modules/fileman/e_fwin.c:2994
+#: src/modules/fileman/e_fwin.c:2996
 #: src/modules/fileman_opinfo/e_mod_main.c:141
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "Перемещение %s (рвп: %s)"
 
-#: src/modules/fileman/e_fwin.c:2999
+#: src/modules/fileman/e_fwin.c:3001
 #: src/modules/fileman_opinfo/e_mod_main.c:147
 #, c-format
 msgid "Delete done"
 msgstr "Удаление завершено"
 
-#: src/modules/fileman/e_fwin.c:3001
+#: src/modules/fileman/e_fwin.c:3003
 #: src/modules/fileman_opinfo/e_mod_main.c:149
 #, c-format
 msgid "Deleting files..."
 msgstr "Идёт удаление файлов..."
 
-#: src/modules/fileman/e_fwin.c:3006
+#: src/modules/fileman/e_fwin.c:3008
 #: src/modules/fileman_opinfo/e_mod_main.c:154
 #, c-format
 msgid "Secure delete done"
 msgstr "Безопасное удаление завершено"
 
-#: src/modules/fileman/e_fwin.c:3008
+#: src/modules/fileman/e_fwin.c:3010
 #: src/modules/fileman_opinfo/e_mod_main.c:156
 #, c-format
 msgid "Securely deleting files..."
 msgstr "Идёт безопасное удаление файлов..."
 
-#: src/modules/fileman/e_fwin.c:3012
+#: src/modules/fileman/e_fwin.c:3014
 #: src/modules/fileman_opinfo/e_mod_main.c:160
 #, c-format
 msgid "Unknown operation from slave %d"
@@ -8355,7 +8400,7 @@ msgstr "Навигация EFM"
 msgid "File Icons"
 msgstr "Значки файлов"
 
-#: src/modules/fileman/e_int_config_mime.c:175
+#: src/modules/fileman/e_int_config_mime.c:177
 msgid "File Types"
 msgstr "Типы файлов"
 
@@ -8683,7 +8728,6 @@ msgid "Scroll speed"
 msgstr "Скорость прокрутки"
 
 #: src/modules/winlist/e_int_config_winlist.c:260
-#: src/modules/tasks/e_mod_config.c:98
 msgid "Minimum width"
 msgstr "Минимальная ширина"
 
@@ -8700,7 +8744,6 @@ msgid "Maximum width"
 msgstr "Максимальная ширина"
 
 #: src/modules/winlist/e_int_config_winlist.c:273
-#: src/modules/tasks/e_mod_config.c:103
 msgid "Minimum height"
 msgstr "Минимальная высота"
 
@@ -8720,51 +8763,69 @@ msgstr "Вертикальное выравнивание"
 msgid "Alignment"
 msgstr "Выравнивание"
 
-#: src/modules/winlist/e_mod_main.c:27
+#: src/modules/winlist/e_mod_main.c:28
 msgid "Window Switcher"
 msgstr "Переключатель окон"
 
-#: src/modules/winlist/e_mod_main.c:37
+#: src/modules/winlist/e_mod_main.c:41
 msgid "Next Window"
 msgstr "Следующее окно"
 
-#: src/modules/winlist/e_mod_main.c:39
+#: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "Предыдущее окно"
 
-#: src/modules/winlist/e_mod_main.c:42
+#: src/modules/winlist/e_mod_main.c:46
 msgid "Next window of same class"
 msgstr "Следующее окно одного класса"
 
-#: src/modules/winlist/e_mod_main.c:45
+#: src/modules/winlist/e_mod_main.c:49
 msgid "Previous window of same class"
 msgstr "Предыдущее окно одного класса"
 
-#: src/modules/winlist/e_mod_main.c:48
+#: src/modules/winlist/e_mod_main.c:52
 msgid "Next window class"
 msgstr "Следующий класс окна"
 
-#: src/modules/winlist/e_mod_main.c:51
+#: src/modules/winlist/e_mod_main.c:55
 msgid "Previous window class"
 msgstr "Предыдущий класс окна"
 
-#: src/modules/winlist/e_mod_main.c:53
+#: src/modules/winlist/e_mod_main.c:57
 msgid "Window on the Left"
 msgstr "Окно слева"
 
-#: src/modules/winlist/e_mod_main.c:55
+#: src/modules/winlist/e_mod_main.c:59
 msgid "Window Down"
 msgstr "Окно снизу"
 
-#: src/modules/winlist/e_mod_main.c:57
+#: src/modules/winlist/e_mod_main.c:61
 msgid "Window Up"
 msgstr "Окно сверху"
 
-#: src/modules/winlist/e_mod_main.c:59
+#: src/modules/winlist/e_mod_main.c:63
 msgid "Window on the Right"
 msgstr "Окно справа"
 
-#: src/modules/winlist/e_winlist.c:170
+#: src/modules/winlist/e_mod_main.c:209 src/modules/winlist/e_mod_main.c:215
+#: src/modules/winlist/e_mod_main.c:221
+msgid "Winlist Error"
+msgstr "Ошибка Списка переключения окон"
+
+#: src/modules/winlist/e_mod_main.c:209
+msgid "Winlist cannot be activated from an edge binding"
+msgstr "Список переключения окон не может быть активирован из привязки к краю"
+
+#: src/modules/winlist/e_mod_main.c:215
+msgid "Winlist cannot be activated from a signal binding"
+msgstr "Список переключения окон не может быть активирован из привязки сигнала"
+
+#: src/modules/winlist/e_mod_main.c:221
+msgid "Winlist cannot be activated from an ACPI binding"
+msgstr ""
+"Список переключения окон не может быть активирован из привязки для ACPI"
+
+#: src/modules/winlist/e_winlist.c:171
 msgid "Select a window"
 msgstr "Выбор окна"
 
@@ -9196,7 +9257,7 @@ msgstr "Пожалуйста подождите..."
 msgid "Welcome to Enlightenment"
 msgstr "Добро пожаловать в Enlightenment"
 
-#: src/modules/wizard/page_010.c:161 src/modules/wizard/page_011.c:135
+#: src/modules/wizard/page_010.c:161 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
 msgid "Select one"
 msgstr "Выберите одно"
@@ -9769,93 +9830,93 @@ msgstr ""
 "расширения<br>'.jpg' или '.png', так как другие форматы<br>пока не "
 "поддерживаются."
 
-#: src/modules/shot/e_mod_main.c:276
+#: src/modules/shot/e_mod_main.c:277
 msgid "Select screenshot save location"
 msgstr "Выберите место сохранения снимка"
 
-#: src/modules/shot/e_mod_main.c:288 src/modules/shot/e_mod_main.c:797
+#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:799
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/modules/shot/e_mod_main.c:386
+#: src/modules/shot/e_mod_main.c:387
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "Загружено %s / %s"
 
-#: src/modules/shot/e_mod_main.c:406
+#: src/modules/shot/e_mod_main.c:407
 msgid "Error - Upload Failed"
 msgstr "Ошибка — сбой при загрузке"
 
-#: src/modules/shot/e_mod_main.c:407
+#: src/modules/shot/e_mod_main.c:408
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Загрузка не удалась — код статуса:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:451
+#: src/modules/shot/e_mod_main.c:452
 msgid "Error - Can't create file"
 msgstr "Ошибка — не удалось создать файл"
 
-#: src/modules/shot/e_mod_main.c:452
+#: src/modules/shot/e_mod_main.c:453
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Не удалось создать временный файл '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:470
+#: src/modules/shot/e_mod_main.c:471
 msgid "Error - Can't open file"
 msgstr "Ошибка — не удалось открыть файл"
 
-#: src/modules/shot/e_mod_main.c:471
+#: src/modules/shot/e_mod_main.c:472
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Не удалось открыть временный файл '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:479
+#: src/modules/shot/e_mod_main.c:480
 msgid "Error - Bad size"
 msgstr "Ошибка — неправильный размер"
 
-#: src/modules/shot/e_mod_main.c:480
+#: src/modules/shot/e_mod_main.c:481
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Не удалось получить размер файла '%s'"
 
-#: src/modules/shot/e_mod_main.c:490
+#: src/modules/shot/e_mod_main.c:491
 msgid "Error - Can't allocate memory"
 msgstr "Ошибка — не удалось выделить память"
 
-#: src/modules/shot/e_mod_main.c:491
+#: src/modules/shot/e_mod_main.c:492
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Не удалось выделить память для изображения: %s"
 
-#: src/modules/shot/e_mod_main.c:498
+#: src/modules/shot/e_mod_main.c:499
 msgid "Error - Can't read picture"
 msgstr "Ошибка — не удалось прочитать изображение"
 
-#: src/modules/shot/e_mod_main.c:499
+#: src/modules/shot/e_mod_main.c:500
 msgid "Cannot read picture"
 msgstr "Не удалось прочитать изображение"
 
-#: src/modules/shot/e_mod_main.c:520
+#: src/modules/shot/e_mod_main.c:522
 msgid "Uploading screenshot"
 msgstr "Загрузка снимка экрана"
 
-#: src/modules/shot/e_mod_main.c:525
+#: src/modules/shot/e_mod_main.c:527
 msgid "Uploading ..."
 msgstr "Загрузка..."
 
-#: src/modules/shot/e_mod_main.c:530
+#: src/modules/shot/e_mod_main.c:532
 msgid "Screenshot is available at this location:"
 msgstr "Снимок доступен по этому адресу:"
 
-#: src/modules/shot/e_mod_main.c:539
+#: src/modules/shot/e_mod_main.c:541
 msgid "Hide"
 msgstr "Скрыть"
 
-#: src/modules/shot/e_mod_main.c:563
+#: src/modules/shot/e_mod_main.c:565
 msgid "Confirm Share"
 msgstr "Подтвердите отправку"
 
-#: src/modules/shot/e_mod_main.c:564
+#: src/modules/shot/e_mod_main.c:566
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9863,36 +9924,36 @@ msgstr ""
 "Это изображение будет загружено на<br>enlightenment.org. Оно будет в "
 "публичном доступе"
 
-#: src/modules/shot/e_mod_main.c:566
+#: src/modules/shot/e_mod_main.c:568
 msgid "Confirm"
 msgstr "Подтвердить"
 
-#: src/modules/shot/e_mod_main.c:666
+#: src/modules/shot/e_mod_main.c:668
 msgid "Where to put Screenshot..."
 msgstr "Где разместить снимок..."
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:724
 msgid "Perfect"
 msgstr "Идеальный"
 
-#: src/modules/shot/e_mod_main.c:799
+#: src/modules/shot/e_mod_main.c:801
 msgid "Share"
 msgstr "Поделиться"
 
-#: src/modules/shot/e_mod_main.c:936 src/modules/shot/e_mod_main.c:984
+#: src/modules/shot/e_mod_main.c:938 src/modules/shot/e_mod_main.c:986
 msgid "Take Shot"
 msgstr "Сделать снимок"
 
-#: src/modules/shot/e_mod_main.c:947 src/modules/shot/e_mod_main.c:977
-#: src/modules/shot/e_mod_main.c:988
+#: src/modules/shot/e_mod_main.c:949 src/modules/shot/e_mod_main.c:979
+#: src/modules/shot/e_mod_main.c:990
 msgid "Take Screenshot"
 msgstr "Сделать снимок экрана"
 
-#: src/modules/shot/e_mod_main.c:965
+#: src/modules/shot/e_mod_main.c:967
 msgid "Shot Error"
 msgstr "Ошибка снимка"
 
-#: src/modules/shot/e_mod_main.c:966
+#: src/modules/shot/e_mod_main.c:968
 msgid "Cannot initialize network"
 msgstr "Не удалось инициализировать сеть"
 
@@ -9912,10 +9973,18 @@ msgstr "Показывать только значки"
 msgid "Show text only"
 msgstr "Показывать только текст"
 
+#: src/modules/tasks/e_mod_config.c:98
+msgid "Item width"
+msgstr "Ширина элементов"
+
 #: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
 #, c-format
 msgid "%1.0f px"
 msgstr "%1.0f пикс."
+
+#: src/modules/tasks/e_mod_config.c:103
+msgid "Item height"
+msgstr "Высота элементов"
 
 #: src/modules/tiling/e_mod_config.c:135
 msgid "columns"

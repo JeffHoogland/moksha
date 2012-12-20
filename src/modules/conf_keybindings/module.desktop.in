@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Input Control Settings
-Name[ru]=
+Name[ru]=Настройки управления вводом
 Name[cs]=
 Name[de]=
 Name[eo]=
@@ -18,7 +18,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=preferences-desktop-keyboard-shortcuts
 Comment=Key, Mouse and Button control settings
-Comment[ru]=
+Comment[ru]=Настройки управления мышью, клавишами и кнопками.
 Comment[cs]=
 Comment[de]=
 Comment[eo]=

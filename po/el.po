@@ -1,25 +1,25 @@
 # translation of el.po to Ελληνικά
 # Greek translation for Enlightenment17.
 # This file is put in the public domain.
-# 
+#
 # Geo Kou <ragecryx@yahoo.gr>, 2008.
 # Aron Xu <aronmalache@163.com>, 2008.
 # Giorgos RageCryX Koutsikos <ragecryx@yahoo.gr>, 2009.
 # George Koutsikos <ragecryx@yahoo.gr>, 2011.
 # Efstathios Iosifidis <iosifidis@opensuse.org>, 2012.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-20 15:39+0900\n"
-"PO-Revision-Date: 2012-12-19 15:28+0200\n"
+"POT-Creation-Date: 2012-12-17 18:33+0200\n"
+"PO-Revision-Date: 2012-12-20 18:52+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
 "Language: el_GR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Gtranslator 2.91.5\n"
 
@@ -96,9 +96,8 @@ msgid "Exit"
 msgstr "Έξοδος"
 
 #: src/bin/e_actions.c:2124
-#, fuzzy
 msgid "Are you sure you want to exit Enlightenment?"
-msgstr "Σίγουρα επιθυμείτε την έξοδο;"
+msgstr "Σίγουρα επιθυμείτε την έξοδο από το Enlightenmet;"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
@@ -121,27 +120,24 @@ msgid "Power off"
 msgstr "Τερματισμός"
 
 #: src/bin/e_actions.c:2278
-#, fuzzy
 msgid "Are you sure you want to power off your computer?"
-msgstr "Επιθυμείτε σίγουρα να αποσυνδεθείτε?"
+msgstr "Επιθυμείτε σίγουρα να τερματίσετε τον υπολογιστή σας;"
 
 #: src/bin/e_actions.c:2337 src/bin/e_actions.c:3409
 msgid "Reboot"
 msgstr "Επανεκκίνηση"
 
 #: src/bin/e_actions.c:2338
-#, fuzzy
 msgid "Are you sure you want to reboot your computer?"
-msgstr "Είστε σίγουροι ότι θέλετε να κάνετε επανεκκίνηση;"
+msgstr "Επιθυμείτε σίγουρα την επανεκκίνηση του υπολογιστή σας;"
 
 #: src/bin/e_actions.c:2402 src/bin/e_actions.c:3417
 msgid "Suspend"
 msgstr "Αναστολή"
 
 #: src/bin/e_actions.c:2403
-#, fuzzy
 msgid "Are you sure you want to suspend your computer?"
-msgstr "Επιθυμείτε σίγουρα να αποσυνδεθείτε?"
+msgstr "Επιθυμείτε σίγουρα την αναστολή του υπολογιστή σας;"
 
 #: src/bin/e_actions.c:2467 src/bin/e_actions.c:3421
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
@@ -149,9 +145,8 @@ msgid "Hibernate"
 msgstr "Αδρανοποίηση"
 
 #: src/bin/e_actions.c:2468
-#, fuzzy
 msgid "Are you sure you want to hibernate your computer?"
-msgstr "Είστε σίγουροι ότι θέλετε να κάνετε αδρανοποίηση;"
+msgstr "Είστε σίγουροι ότι θέλετε την αδρανοποίηση του υπολογιστή σας;"
 
 #: src/bin/e_actions.c:2947 src/bin/e_actions.c:2958 src/bin/e_actions.c:2977
 #: src/bin/e_actions.c:2982 src/bin/e_actions.c:2987 src/bin/e_actions.c:2992
@@ -322,7 +317,7 @@ msgstr "Εναλλαγή σε κατάσταση ακινητοποίησης"
 #: src/bin/e_actions.c:3204 src/bin/e_actions.c:3206 src/bin/e_actions.c:3208
 #: src/bin/e_actions.c:3210 src/bin/e_actions.c:3212 src/bin/e_actions.c:3214
 #: src/bin/e_actions.c:3216 src/bin/e_actions.c:3218 src/bin/e_actions.c:3433
-#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:186
+#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:187
 #: src/bin/e_int_shelf_config.c:267 src/modules/comp/e_mod_config.c:444
 #: src/modules/comp/e_mod_config.c:753
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
@@ -614,7 +609,7 @@ msgstr "Αλλαγή μεγέθους ανά..."
 #: src/bin/e_actions.c:3299
 #, fuzzy
 msgid "Push in Direction..."
-msgstr "Σπρώξτε προς την κατεύθυνση ..."
+msgstr "Προώθηση προς την κατεύθυνση ..."
 
 #: src/bin/e_actions.c:3305
 msgid "Drag Icon..."
@@ -688,7 +683,7 @@ msgstr "Εφαρμογή"
 
 #: src/bin/e_actions.c:3358
 msgid "New Instance of Focused App"
-msgstr ""
+msgstr "Νέο Στιγμιότυπο της Εστιασμένης Εφαρμογής"
 
 #: src/bin/e_actions.c:3362 src/bin/e_int_menus.c:248
 msgid "Restart"
@@ -1091,15 +1086,14 @@ msgid "Activate Presentation Mode?"
 msgstr "Ενεργοποίηση λειτουργίας παρουσίασης?"
 
 #: src/bin/e_desklock.c:1305
-#, fuzzy
 msgid ""
 "You unlocked your desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
 "Ξεκλειδώσατε την επιφάνεια εργασίας σας πολύ γρήγορα.<br><br>Θα θέλατε να "
-"ενεργοποιήσετε την λειτουργία <b>παρουσίασης</b> ώστε να απενεργοποιηθεί η "
-"λειτουργία προστασίας οθόνης, κλειδώματος και εξοικονόμησης ενέργειας;"
+"ενεργοποιήσετε την κατάσταση <b>παρουσίασης</b> ώστε να απενεργοποιηθεί "
+"προσωρινά η προστασία οθόνη, το κλείδωμα και η εξοικονόμηση ενέργειας;"
 
 #: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:193
 msgid "No, but increase timeout"
@@ -1114,7 +1108,6 @@ msgid "Incomplete Window Properties"
 msgstr "Ελλιπείς Ιδιότητες Παραθύρου"
 
 #: src/bin/e_eap_editor.c:182
-#, fuzzy
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties. Without these, you will have to<br>use the window title "
@@ -1561,7 +1554,7 @@ msgstr "Μέγεθος Εικονιδίου (%d)"
 #: src/bin/e_fm.c:9493
 #, fuzzy
 msgid "Could not create a directory!"
-msgstr "Αδυναμία δημιουργίας αρχείου!"
+msgstr "Αδυναμία δημιουργίας καταλόγου!"
 
 #: src/bin/e_fm.c:9505
 msgid "Could not create a file!"
@@ -2558,7 +2551,6 @@ msgid "Window Remember"
 msgstr "Απομνημόνευση Παραθύρου"
 
 #: src/bin/e_int_border_remember.c:301
-#, fuzzy
 msgid "Window properties are not a unique match"
 msgstr "Οι ιδιότητες του παραθύρου δεν είναι συσχετίζονται μοναδικά"
 
@@ -3729,7 +3721,7 @@ msgstr "Αριστερά-κάτω Γωνία"
 
 #: src/bin/e_shelf.c:81
 msgid "Right-bottom Corner"
-msgstr "Δεξιά0κάτω Γωνία"
+msgstr "Δεξιά-κάτω Γωνία"
 
 #: src/bin/e_shelf.c:267
 msgid "Shelf #"
@@ -4358,7 +4350,6 @@ msgid "Backlight"
 msgstr "Οπίσθιος Φωτισμός"
 
 #: src/modules/backlight/e_mod_main.c:493
-#, fuzzy
 msgid "Backlight Controls"
 msgstr "Ρυθμίσεις Οπίσθιου Φωτισμού"
 
@@ -4990,13 +4981,11 @@ msgstr "Επανεκκίνηση εφαρμογών"
 
 #: src/modules/conf_applications/e_int_config_apps.c:144
 #: src/modules/conf_applications/e_mod_main.c:37
-#, fuzzy
 msgid "Screen Lock Applications"
 msgstr "Εφαρμογές Κλειδώματος Οθόνης"
 
 #: src/modules/conf_applications/e_int_config_apps.c:159
 #: src/modules/conf_applications/e_mod_main.c:41
-#, fuzzy
 msgid "Screen Unlock Applications"
 msgstr "Εφαρμογές Ξεκλειδώματος Οθόνης"
 
@@ -6203,9 +6192,8 @@ msgid "%4.0f pixels/s"
 msgstr "%4.0f pixels/s"
 
 #: src/modules/conf_menus/e_int_config_menus.c:311
-#, fuzzy
 msgid "Click Drag Timeout"
-msgstr "Λήξη χρόνου "
+msgstr "Λήξη χρόνου Κλικ Μεταφοράς"
 
 #: src/modules/conf_menus/e_int_config_menus.c:313
 #, c-format
@@ -6297,9 +6285,9 @@ msgid ""
 "does not support composite.<br><br>Are you sure you wish to enable ARGB "
 "support?"
 msgstr ""
-"Έχετε επιλέξει να ενεργοποιήσετε την υποστήριξη ARGB σύνθετο , "
-"αλλά<br>τρέχουσα οθόνη σας δεν υποστηρίζει σύνθετα.<br><br>Είστε βέβαιοι ότι "
-"θέλετε να ενεργοποιήσετε την υποστήριξη ARGB."
+"Έχετε επιλέξει να ενεργοποιήσετε την υποστήριξη ARGB, αλλά<br>τρέχουσα οθόνη "
+"σας δεν υποστηρίζει σύνθετα.<br><br>Είστε βέβαιοι ότι θέλετε να "
+"ενεργοποιήσετε την υποστήριξη ARGB."
 
 #: src/modules/conf_performance/e_int_config_engine.c:114
 msgid "Enable"
@@ -9094,25 +9082,21 @@ msgstr "Αναδυόμενη Επιφάνεια Εργασίας Δεξιά"
 #: src/modules/pager/e_mod_main.c:2932
 #, fuzzy
 msgid "Popup Desk Left"
-msgstr "Αναδυόμενη Επιφάνεια Εργασίας  Αριστερά"
+msgstr "Αναδυόμενη Επιφάνεια Εργασίας Αριστερά"
 
 #: src/modules/pager/e_mod_main.c:2934
-#, fuzzy
 msgid "Popup Desk Up"
 msgstr "Αναδυόμενη Επιφάνεια Εργασίας Επάνω"
 
 #: src/modules/pager/e_mod_main.c:2936
-#, fuzzy
 msgid "Popup Desk Down"
 msgstr "Αναδυόμενη Επιφάνεια Εργασίας Κάτω"
 
 #: src/modules/pager/e_mod_main.c:2938
-#, fuzzy
 msgid "Popup Desk Next"
 msgstr "Επόμενη Αναδυόμενη Επιφάνεια Εργασίας"
 
 #: src/modules/pager/e_mod_main.c:2940
-#, fuzzy
 msgid "Popup Desk Previous"
 msgstr "Προηγούμενη Αναδυόμενη Επιφάνεια Εργασίας"
 
@@ -9453,12 +9437,10 @@ msgid "Lock Sliders"
 msgstr "Κλείδωμα Μπάρας Κύλισης"
 
 #: src/modules/mixer/conf_gadget.c:201
-#, fuzzy
 msgid "Show both sliders when locked"
-msgstr "Εμφάνιση και των δυο ρυθμιστικών κύλισης όταν είναι κλειδωμένες"
+msgstr "Εμφάνιση και των δυο διακοπτών κύλισης όταν είναι κλειδωμένοι"
 
 #: src/modules/mixer/conf_gadget.c:206
-#, fuzzy
 msgid "Show Popup on volume change via keybindings"
 msgstr ""
 "Εμφάνιση αναδυόμενου για την αλλαγή της έντασης μέσω συντομεύσεων πλήκτρων"
@@ -9756,11 +9738,12 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1201
 msgid "Quickaccess Demo"
-msgstr ""
+msgstr "Επίδειξη Quickaccess"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1202
 msgid "This is a demo dialog used in the Quickaccess tutorial"
-msgstr ""
+msgstr "Αυτό είναι ένα παράθυρο επίδειξης που χρησιμοποιείται στο εγχειρίδιο του "
+"Quickaccess"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1224
 msgid ""
@@ -9780,7 +9763,8 @@ msgstr ""
 msgid ""
 "This appears to be your first time using the Quickaccess module.<br>Would "
 "you like some usage tips?"
-msgstr ""
+msgstr "Φαίνεται ότι είναι η πρώτη σας φορά που χρησιμοποιείτε το άρθρωμα "
+"Quickaccess.<br>Θέλετε να δείτε μερικές συμβουλές χρήσης;"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1309
 msgid "quick access name/identifier"
@@ -9934,7 +9918,7 @@ msgstr "Επιβεβαίωση"
 
 #: src/modules/shot/e_mod_main.c:666
 msgid "Where to put Screenshot..."
-msgstr "Τποθεσία Αποθήκευσης Στιγμιοτύπου..."
+msgstr "Τοποθεσία Αποθήκευσης Στιγμιοτύπου..."
 
 #: src/modules/shot/e_mod_main.c:722
 msgid "Perfect"
@@ -10128,7 +10112,7 @@ msgid ""
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
-"Το Enlightenment είναι σε κατάσταση <b>Παρουσίασης</b>.<br>κατά την "
+"Το Enlightenment είναι σε κατάσταση <b>Παρουσίασης</b>.<br>Κατά την "
 "λειτουργία παρουσίασης, η προφύλαξη οθόνης, το κλείδωμα και η εξοικονόμηση "
 "ενέργειας θα απενεργοποιηθούν ώστε να μην σας διακόψουν."
 
@@ -10175,14 +10159,14 @@ msgstr "Άρθρωμα Ειδοποιήσεων"
 
 #: src/modules/notification/e_mod_main.c:192
 msgid "Error During DBus Init!"
-msgstr "Λάθος κατά την αρχικοποίηση του DBus!"
+msgstr "Σφάλμα κατά την αρχικοποίηση του DBus!"
 
 #: src/modules/notification/e_mod_main.c:193
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
-"Λάθος κατά την αρχικοποίηση του DBus! Παρακαλούμε ελέγξτε αν το dbus είναι "
+"Σφάλμα κατά την αρχικοποίηση του DBus! Παρακαλούμε ελέγξτε αν το dbus είναι "
 "σωστά εγκατεστημένο και εκτελείται."
 
 #: src/modules/notification/e_mod_config.c:45
