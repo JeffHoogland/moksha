@@ -246,8 +246,8 @@ static int focus_track_frozen = 0;
 static int warp_to = 0;
 static int warp_to_x = 0;
 static int warp_to_y = 0;
-static int warp_x = 0;
-static int warp_y = 0;
+static int warp_x[2] = {0}; //{cur,prev}
+static int warp_y[2] = {0}; //{cur,prev}
 static Ecore_X_Window warp_to_win;
 static Ecore_Timer *warp_timer = NULL;
 
@@ -2145,7 +2145,7 @@ e_border_focus_set_with_pointer(E_Border *bd)
    if ((!bd->client.icccm.accepts_focus) &&
        (!bd->client.icccm.take_focus)) return;
    if (bd->lock_focus_out) return;
-
+   if (bd == focused) return;
    e_border_focus_set(bd, 1, 1);
 
    if (e_config->focus_policy == E_FOCUS_CLICK) return;
@@ -4496,10 +4496,10 @@ _e_border_reset_lost_window(E_Border *bd)
    if (!bd->moving) e_border_center(bd);
 
    e_zone_useful_geometry_get(bd->zone, &x, &y, &w, &h);
-   ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
+   ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x[0], &warp_y[0]);
 
-   warp_to_x = x + ((w / 2) - (bd->w / 2)) + (warp_x - bd->x);
-   warp_to_y = y + ((h / 2) - (bd->h / 2)) + (warp_y - bd->y);
+   warp_to_x = x + ((w / 2) - (bd->w / 2)) + (warp_x[0] - bd->x);
+   warp_to_y = y + ((h / 2) - (bd->h / 2)) + (warp_y[0] - bd->y);
 
    warp_to = 1;
    warp_to_win = bd->zone->container->win;
@@ -10154,8 +10154,9 @@ _e_border_pointer_warp_to_center_timer(void *data __UNUSED__)
         double spd;
 
         ecore_x_pointer_xy_get(warp_to_win, &x, &y);
-        if ((x - warp_x) > 5 || (x - warp_x) < -5 ||
-            (y - warp_y) > 5 || (y - warp_y) < -5)
+        /* move hasn't happened yet */
+        if ((x == warp_x[1]) && (y == warp_y[1])) return EINA_TRUE;
+        if ((abs(x - warp_x[0]) > 5) || (abs(y - warp_y[0]) > 5))
           {
              /* User moved the mouse, so stop warping */
              warp_to = 0;
@@ -10165,18 +10166,18 @@ _e_border_pointer_warp_to_center_timer(void *data __UNUSED__)
         /* We just use the same warp speed as configured
          * for the windowlist */
         spd = e_config->winlist_warp_speed;
-        x = warp_x;
-        y = warp_y;
-        warp_x = (x * (1.0 - spd)) + (warp_to_x * spd);
-        warp_y = (y * (1.0 - spd)) + (warp_to_y * spd);
-        if (warp_x == x && warp_y == y)
+        warp_x[1] = x = warp_x[0];
+        warp_y[1] = y = warp_y[0];
+        warp_x[0] = (x * (1.0 - spd)) + (warp_to_x * spd);
+        warp_y[0] = (y * (1.0 - spd)) + (warp_to_y * spd);
+        if ((warp_x[0] == x) && (warp_y[0] == y))
           {
-             warp_x = warp_to_x;
-             warp_y = warp_to_y;
+             warp_x[0] = warp_to_x;
+             warp_y[0] = warp_to_y;
              warp_to = 0;
              goto cleanup;
           }
-        ecore_x_pointer_warp(warp_to_win, warp_x, warp_y);
+        ecore_x_pointer_warp(warp_to_win, warp_x[0], warp_y[0]);
         return ECORE_CALLBACK_RENEW;
      }
 cleanup:
@@ -10216,7 +10217,7 @@ e_border_pointer_warp_to_center(E_Border *bd)
 
    warp_to = 1;
    warp_to_win = bd->zone->container->win;
-   ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x, &warp_y);
+   ecore_x_pointer_xy_get(bd->zone->container->win, &warp_x[0], &warp_y[0]);
    if (warp_timer) ecore_timer_del(warp_timer);
    warp_timer = ecore_timer_add(0.01, _e_border_pointer_warp_to_center_timer, bd);
    warp_timer_border = bd;
