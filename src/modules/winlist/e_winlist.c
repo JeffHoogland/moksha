@@ -49,6 +49,7 @@ static int _last_pointer_y = 0;
 static E_Border *_last_border = NULL;
 static int _hold_count = 0;
 static int _hold_mod = 0;
+static E_Winlist_Activate_Type _activate_type = 0;
 static Eina_List *_handlers = NULL;
 static Ecore_X_Window _input_window = 0;
 static int _warp_to = 0;
@@ -278,6 +279,7 @@ e_winlist_hide(void)
    _winlist = NULL;
    _hold_count = 0;
    _hold_mod = 0;
+   _activate_type = 0;
 
    EINA_LIST_FREE(_handlers, handler)
      ecore_event_handler_del(handler);
@@ -884,11 +886,12 @@ e_winlist_right(E_Zone *zone)
 }
 
 void
-e_winlist_modifiers_set(int mod)
+e_winlist_modifiers_set(int mod, E_Winlist_Activate_Type type)
 {
    if (!_winlist) return;
    _hold_mod = mod;
    _hold_count = 0;
+   _activate_type = type;
    if (_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) _hold_count++;
    if (_hold_mod & ECORE_EVENT_MODIFIER_CTRL) _hold_count++;
    if (_hold_mod & ECORE_EVENT_MODIFIER_ALT) _hold_count++;

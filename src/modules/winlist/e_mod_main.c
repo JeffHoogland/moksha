@@ -103,9 +103,13 @@ e_modapi_save(E_Module *m __UNUSED__)
 
 /* action callback */
 static void
-_e_mod_action_winlist_cb(E_Object *obj, const char *params)
+_e_mod_action_winlist_cb_helper(E_Object *obj, const char *params, int modifiers, E_Winlist_Activate_Type type)
 {
    E_Zone *zone = NULL;
+   E_Winlist_Filter filter = E_WINLIST_FILTER_NONE;
+   int direction = 0; // -1 for prev, 1 for next;
+   int udlr = -1; // 0 for up, 1 for down, 2 for left, 3 for right
+   Eina_Bool ok = EINA_TRUE;
 
    if (obj)
      {
@@ -119,243 +123,79 @@ _e_mod_action_winlist_cb(E_Object *obj, const char *params)
           zone = e_util_zone_current_get(e_manager_current_get());
      }
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-   if (zone)
+   if (!zone) return;
+   if (params)
      {
-        if (params)
-          {
-             if (!strcmp(params, "next"))
-               {
-                  if (!e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "prev"))
-               {
-                  if (!e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "class-next"))
-               {
-                  if (!e_winlist_show(zone, E_WINLIST_FILTER_CLASS_WINDOWS))
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "class-prev"))
-               {
-                  if (!e_winlist_show(zone, E_WINLIST_FILTER_CLASS_WINDOWS))
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "classes-next"))
-               {
-                  if (!e_winlist_show(zone, E_WINLIST_FILTER_CLASSES))
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "classes-prev"))
-               {
-                  if (!e_winlist_show(zone, E_WINLIST_FILTER_CLASSES))
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "left"))
-               {
-                  e_winlist_left(zone);
-               }
-             else if (!strcmp(params, "down"))
-               {
-                  e_winlist_down(zone);
-               }
-             else if (!strcmp(params, "up"))
-               {
-                  e_winlist_up(zone);
-               }
-             else if (!strcmp(params, "right"))
-               {
-                  e_winlist_right(zone);
-               }
-          }
-        else
-          {
-             if (!e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-               e_winlist_next();
-          }
+        if (!strcmp(params, "next"))
+          direction = 1;
+        else if (!strcmp(params, "prev"))
+          direction = -1;
+        else if (!strcmp(params, "class-next"))
+          direction = 1, filter = E_WINLIST_FILTER_CLASS_WINDOWS;
+        else if (!strcmp(params, "class-prev"))
+          direction = -1, filter = E_WINLIST_FILTER_CLASS_WINDOWS;
+        else if (!strcmp(params, "classes-next"))
+          direction = 1, filter = E_WINLIST_FILTER_CLASSES;
+        else if (!strcmp(params, "classes-prev"))
+          direction = -1, filter = E_WINLIST_FILTER_CLASSES;
+        else if (!strcmp(params, "up"))
+          udlr = 0;
+        else if (!strcmp(params, "down"))
+          udlr = 1;
+        else if (!strcmp(params, "left"))
+          udlr = 2;
+        else if (!strcmp(params, "right"))
+          udlr = 3;
+        else return;
+     }
+   else
+     direction = 1;
+   if (direction)
+     ok = !e_winlist_show(zone, filter);
+   if (!ok)
+     {
+        if (!type) return;
+        if (!direction) return;
+        e_winlist_modifiers_set(modifiers, type);
+        return;
+     }
+   if (direction == 1)
+     e_winlist_next();
+   else if (direction == -1)
+     e_winlist_prev();
+   if (direction) return;
+   switch (udlr)
+     {
+      case 0:
+        e_winlist_up(zone);
+        break;
+      case 1:
+        e_winlist_down(zone);
+        break;
+      case 2:
+        e_winlist_left(zone);
+        break;
+      case 3:
+        e_winlist_right(zone);
+        break;
      }
 }
 
 static void
-_e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params,
-                               Ecore_Event_Mouse_Button *ev)
+_e_mod_action_winlist_cb(E_Object *obj, const char *params)
 {
-   E_Zone *zone = NULL;
+   _e_mod_action_winlist_cb_helper(obj, params, 0, 0);
+}
 
-   if (obj)
-     {
-        if (obj->type == E_MANAGER_TYPE)
-          zone = e_util_zone_current_get((E_Manager *)obj);
-        else if (obj->type == E_CONTAINER_TYPE)
-          zone = e_util_zone_current_get(((E_Container *)obj)->manager);
-        else if (obj->type == E_ZONE_TYPE)
-          zone = e_util_zone_current_get(((E_Zone *)obj)->container->manager);
-        else
-          zone = e_util_zone_current_get(e_manager_current_get());
-     }
-   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-   if (zone)
-     {
-        if (params)
-          {
-             if (!strcmp(params, "next"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "prev"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "class-next"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_CLASS_WINDOWS))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "class-prev"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_CLASS_WINDOWS))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "classes-next"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_CLASSES))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "classes-prev"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_CLASSES))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "left"))
-               {
-                  e_winlist_left(zone);
-               }
-             else if (!strcmp(params, "down"))
-               {
-                  e_winlist_down(zone);
-               }
-             else if (!strcmp(params, "up"))
-               {
-                  e_winlist_up(zone);
-               }
-             else if (!strcmp(params, "right"))
-               {
-                  e_winlist_right(zone);
-               }
-          }
-        else
-          {
-             if (e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-               e_winlist_modifiers_set(ev->modifiers);
-             else
-               e_winlist_next();
-          }
-     }
+static void
+_e_mod_action_winlist_mouse_cb(E_Object *obj, const char *params, Ecore_Event_Mouse_Button *ev)
+{
+   _e_mod_action_winlist_cb_helper(obj, params, ev->modifiers, E_WINLIST_ACTIVATE_TYPE_MOUSE);
 }
 
 static void
 _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key *ev)
 {
-   E_Zone *zone = NULL;
-
-   if (obj)
-     {
-        if (obj->type == E_MANAGER_TYPE)
-          zone = e_util_zone_current_get((E_Manager *)obj);
-        else if (obj->type == E_CONTAINER_TYPE)
-          zone = e_util_zone_current_get(((E_Container *)obj)->manager);
-        else if (obj->type == E_ZONE_TYPE)
-          zone = e_util_zone_current_get(((E_Zone *)obj)->container->manager);
-        else
-          zone = e_util_zone_current_get(e_manager_current_get());
-     }
-   if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
-   if (zone)
-     {
-        if (params)
-          {
-             if (!strcmp(params, "next"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "prev"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "class-next"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_CLASS_WINDOWS))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "class-prev"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_CLASS_WINDOWS))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "classes-next"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_CLASSES))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_next();
-               }
-             else if (!strcmp(params, "classes-prev"))
-               {
-                  if (e_winlist_show(zone, E_WINLIST_FILTER_CLASSES))
-                    e_winlist_modifiers_set(ev->modifiers);
-                  else
-                    e_winlist_prev();
-               }
-             else if (!strcmp(params, "left"))
-               {
-                  e_winlist_left(zone);
-               }
-             else if (!strcmp(params, "down"))
-               {
-                  e_winlist_down(zone);
-               }
-             else if (!strcmp(params, "up"))
-               {
-                  e_winlist_up(zone);
-               }
-             else if (!strcmp(params, "right"))
-               {
-                  e_winlist_right(zone);
-               }
-          }
-        else
-          {
-             if (e_winlist_show(zone, E_WINLIST_FILTER_NONE))
-               e_winlist_modifiers_set(ev->modifiers);
-             else
-               e_winlist_next();
-          }
-     }
+   _e_mod_action_winlist_cb_helper(obj, params, ev->modifiers, E_WINLIST_ACTIVATE_TYPE_KEY);
 }
 

@@ -10,6 +10,14 @@ typedef enum _E_Winlist_Filter {
   E_WINLIST_FILTER_CLASSES = 2 /* loop through classes (last selected win) */
 } E_Winlist_Filter;
 
+typedef enum E_Winlist_Activate_Type
+{
+   E_WINLIST_ACTIVATE_TYPE_NONE,
+   E_WINLIST_ACTIVATE_TYPE_KEY,
+   E_WINLIST_ACTIVATE_TYPE_MOUSE,
+   E_WINLIST_ACTIVATE_TYPE_EDGE,
+} E_Winlist_Activate_Type;
+
 int  e_winlist_show(E_Zone *zone, E_Winlist_Filter filter);
 void e_winlist_hide(void);
 void e_winlist_next(void);
@@ -18,6 +26,6 @@ void e_winlist_left(E_Zone *zone);
 void e_winlist_right(E_Zone *zone);
 void e_winlist_down(E_Zone *zone);
 void e_winlist_up(E_Zone *zone);
-void e_winlist_modifiers_set(int mod);
+void e_winlist_modifiers_set(int mod, E_Winlist_Activate_Type type);
 
 #endif
