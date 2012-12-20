@@ -11,7 +11,6 @@ static void      _e_desk_event_desk_before_show_free(void *data, void *ev);
 static void      _e_desk_event_desk_after_show_free(void *data, void *ev);
 static void      _e_desk_event_desk_deskshow_free(void *data, void *ev);
 static void      _e_desk_event_desk_name_change_free(void *data, void *ev);
-static void      _e_desk_event_desk_window_profile_change_free(void *data, void *ev);
 static void      _e_desk_show_begin(E_Desk *desk, int mode, int x, int dy);
 static void      _e_desk_show_end(E_Desk *desk);
 static Eina_Bool _e_desk_show_animator(void *data);
@@ -19,6 +18,7 @@ static void      _e_desk_hide_begin(E_Desk *desk, int mode, int dx, int dy);
 static void      _e_desk_hide_end(E_Desk *desk);
 static Eina_Bool _e_desk_hide_animator(void *data);
 #if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
+static void      _e_desk_event_desk_window_profile_change_free(void *data, void *ev);
 static void      _e_desk_window_profile_change_protocol_set(void);
 #endif
 
@@ -53,7 +53,9 @@ e_desk_new(E_Zone *zone, int x, int y)
    E_Desk *desk;
    Eina_List *l;
    E_Config_Desktop_Name *cfname;
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    E_Config_Desktop_Window_Profile *cfprof;
+#endif
    char name[40];
    int ok = 0;
 
@@ -86,7 +88,7 @@ e_desk_new(E_Zone *zone, int x, int y)
         snprintf(name, sizeof(name), _(e_config->desktop_default_name), x, y);
         desk->name = eina_stringshare_add(name);
      }
-
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    /* Get window profile name for current desktop */
    ok = 0;
    EINA_LIST_FOREACH(e_config->desktop_window_profiles, l, cfprof)
@@ -107,7 +109,7 @@ e_desk_new(E_Zone *zone, int x, int y)
         desk->window_profile = eina_stringshare_add
           (e_config->desktop_default_window_profile);
      }
-
+#endif
    return desk;
 }
 
@@ -546,6 +548,7 @@ e_desk_prev(E_Zone *zone)
    e_desk_show(e_desk_at_xy_get(zone, x, y));
 }
 
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 EAPI void
 e_desk_window_profile_set(E_Desk     *desk,
                           const char *profile)
@@ -610,7 +613,6 @@ e_desk_window_profile_del(int container,
      }
 }
 
-#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 EAPI void
 e_desk_window_profile_update(void)
 {
@@ -725,7 +727,7 @@ _e_desk_event_desk_name_change_free(void *data __UNUSED__, void *event)
    e_object_unref(E_OBJECT(ev->desk));
    free(ev);
 }
-
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 static void
 _e_desk_event_desk_window_profile_change_free(void *data __UNUSED__, void *event)
 {
@@ -734,7 +736,7 @@ _e_desk_event_desk_window_profile_change_free(void *data __UNUSED__, void *event
    e_object_unref(E_OBJECT(ev->desk));
    E_FREE(ev);
 }
-
+#endif
 static void
 _e_desk_show_begin(E_Desk *desk, int mode, int dx, int dy)
 {
