@@ -1079,8 +1079,6 @@ e_border_hide(E_Border *bd,
                   else if (e_config->focus_revert_on_hide_or_close)
                     {
                        e_desk_last_focused_focus(desk);
-                       if ((pbd = eina_list_data_get(focus_next)))
-                         e_border_pointer_warp_to_center(pbd);
                     }
                   else if (e_config->focus_policy == E_FOCUS_MOUSE)
                     {
