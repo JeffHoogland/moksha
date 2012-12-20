@@ -743,7 +743,8 @@ e_zone_desk_flip_to(E_Zone *zone,
           y = zone->desk_y_count - 1;
      }
    desk = e_desk_at_xy_get(zone, x, y);
-   if (desk) e_desk_show(desk);
+   if (!desk) return;
+   e_desk_show(desk);
    e_zone_edge_flip_eval(zone);
 }
 
@@ -774,7 +775,6 @@ e_zone_desk_linear_flip_to(E_Zone *zone,
    y = x / zone->desk_x_count;
    x = x - (y * zone->desk_x_count);
    e_zone_desk_flip_to(zone, x, y);
-   e_zone_edge_flip_eval(zone);
 }
 
 EAPI void
