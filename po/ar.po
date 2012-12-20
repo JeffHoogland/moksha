@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@...\n"
-"POT-Creation-Date: 2012-12-18 08:25+0000\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-12-20 15:39+0900\n"
 "PO-Revision-Date: 2012-12-19 20:49+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -25,17 +25,17 @@ msgid "About Enlightenment"
 msgstr "عن إنلايتنمينت"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2987 src/bin/e_config_dialog.c:288
-#: src/bin/e_fm.c:1054 src/bin/e_int_border_menu.c:194
+#: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
 #: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2513 src/modules/mixer/app_mixer.c:520
+#: src/modules/fileman/e_fwin.c:2526 src/modules/mixer/app_mixer.c:520
 msgid "Close"
 msgstr "إغلاق"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:3362 src/bin/e_actions.c:3366
-#: src/bin/e_actions.c:3370 src/bin/e_int_menus.c:225 src/bin/e_main.c:619
+#: src/bin/e_actions.c:3370 src/bin/e_int_menus.c:224 src/bin/e_main.c:619
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -80,13 +80,13 @@ msgstr "اقتل"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2128 src/bin/e_actions.c:2222
 #: src/bin/e_actions.c:2282 src/bin/e_actions.c:2342 src/bin/e_actions.c:2407
 #: src/bin/e_actions.c:2472 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10375 src/bin/e_fm.c:10741
+#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10410 src/bin/e_fm.c:10776
 #: src/bin/e_screensaver.c:191
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "No"
 msgstr "لا"
 
-#: src/bin/e_actions.c:2123 src/bin/e_actions.c:3366 src/bin/e_int_menus.c:254
+#: src/bin/e_actions.c:2123 src/bin/e_actions.c:3366 src/bin/e_int_menus.c:253
 msgid "Exit"
 msgstr "اخرج"
 
@@ -97,7 +97,7 @@ msgstr "أتريد بالفعل الخروج من إنلايتنمينت؟"
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10378 src/bin/e_screensaver.c:189
+#: src/bin/e_fm.c:10413 src/bin/e_screensaver.c:189
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "Yes"
 msgstr "نعم"
@@ -151,7 +151,7 @@ msgstr "أتريد بالفعل إسبات حاسبك؟"
 msgid "Window : Actions"
 msgstr "النوافذ : اﻹجراءات"
 
-#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11506
+#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11541
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "حرّك"
@@ -312,7 +312,7 @@ msgstr "التحول لحالة الثقب"
 #: src/bin/e_actions.c:3204 src/bin/e_actions.c:3206 src/bin/e_actions.c:3208
 #: src/bin/e_actions.c:3210 src/bin/e_actions.c:3212 src/bin/e_actions.c:3214
 #: src/bin/e_actions.c:3216 src/bin/e_actions.c:3218 src/bin/e_actions.c:3433
-#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:187
+#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:186
 #: src/bin/e_int_shelf_config.c:267 src/modules/comp/e_mod_config.c:444
 #: src/modules/comp/e_mod_config.c:753
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
@@ -679,7 +679,7 @@ msgstr "التطبيق"
 msgid "New Instance of Focused App"
 msgstr ""
 
-#: src/bin/e_actions.c:3362 src/bin/e_int_menus.c:249
+#: src/bin/e_actions.c:3362 src/bin/e_int_menus.c:248
 msgid "Restart"
 msgstr "إعِد التشغيل"
 
@@ -722,8 +722,8 @@ msgstr "بدل الوحدة المسماة"
 #: src/modules/conf_applications/e_int_config_apps.c:275
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:818
-#: src/modules/conf_theme/e_int_config_wallpaper.c:429
-#: src/modules/conf_theme/e_int_config_wallpaper.c:549
+#: src/modules/conf_theme/e_int_config_wallpaper.c:430
+#: src/modules/conf_theme/e_int_config_wallpaper.c:583
 #: src/modules/conf_theme/e_int_config_startup.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:732
 #: src/modules/conf_theme/e_int_config_theme.c:1106
@@ -757,7 +757,7 @@ msgstr "أسبِت اﻵن"
 msgid "Lock"
 msgstr "اقفل"
 
-#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1369
+#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1354
 msgid "Cleanup Windows"
 msgstr "تنظيف النوافذ"
 
@@ -798,7 +798,7 @@ msgid "Select"
 msgstr "حدد"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9951
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9957
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:191
 #: src/bin/e_import_config_dialog.c:534
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
@@ -809,7 +809,7 @@ msgstr "حدد"
 #: src/modules/quickaccess/e_mod_quickaccess.c:378
 #: src/modules/shot/e_mod_main.c:290 src/modules/shot/e_mod_main.c:540
 #: src/modules/shot/e_mod_main.c:566 src/modules/shot/e_mod_main.c:801
-#: src/modules/xkbswitch/e_mod_config.c:527
+#: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "ألغ"
 
@@ -860,17 +860,17 @@ msgstr ""
 #: src/bin/e_config.c:1732 src/bin/e_config.c:2366
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:613
-#: src/bin/e_fm.c:9950 src/bin/e_fm.c:10647 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:9956 src/bin/e_fm.c:10682 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:533 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:431
 #: src/bin/e_module.c:798 src/bin/e_sys.c:618 src/bin/e_sys.c:659
-#: src/bin/e_utils.c:692 src/modules/comp/e_mod_config.c:918
+#: src/bin/e_utils.c:695 src/modules/comp/e_mod_config.c:918
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:436 src/modules/cpufreq/e_mod_main.c:465
 #: src/modules/cpufreq/e_mod_main.c:492
 #: src/modules/fileman/e_int_config_mime_edit.c:313
-#: src/modules/xkbswitch/e_mod_config.c:526
+#: src/modules/xkbswitch/e_mod_config.c:528
 msgid "OK"
 msgstr "موافق"
 
@@ -992,7 +992,7 @@ msgstr "طبق"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1281
-#: src/modules/connman/e_mod_main.c:681
+#: src/modules/connman/e_mod_main.c:634
 #: src/modules/notification/e_mod_main.c:148
 msgid "Extensions"
 msgstr "اﻹضافات"
@@ -1170,7 +1170,7 @@ msgstr "شغل في الطرفية"
 msgid "Show in Menus"
 msgstr "اظهر في قوائم"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8757 src/bin/e_fm.c:8917
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8763 src/bin/e_fm.c:8923
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:334
 msgid "Options"
@@ -1185,8 +1185,8 @@ msgstr "اختر أيقونة لـ '%s'"
 msgid "Select an Executable"
 msgstr "اختر ملف تنفيذي"
 
-#: src/bin/e_entry.c:480 src/bin/e_fm.c:9102 src/bin/e_fm.c:10740
-#: src/bin/e_shelf.c:1789 src/bin/e_shelf.c:2467
+#: src/bin/e_entry.c:480 src/bin/e_fm.c:9108 src/bin/e_fm.c:10775
+#: src/bin/e_shelf.c:1792 src/bin/e_shelf.c:2475
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1203,15 +1203,15 @@ msgstr "اختر ملف تنفيذي"
 msgid "Delete"
 msgstr "امح"
 
-#: src/bin/e_entry.c:490 src/bin/e_fm.c:9013
+#: src/bin/e_entry.c:490 src/bin/e_fm.c:9019
 msgid "Cut"
 msgstr "قص"
 
-#: src/bin/e_entry.c:499 src/bin/e_fm.c:9027 src/bin/e_fm.c:11501
+#: src/bin/e_entry.c:499 src/bin/e_fm.c:9033 src/bin/e_fm.c:11536
 msgid "Copy"
 msgstr "انسخ"
 
-#: src/bin/e_entry.c:509 src/bin/e_fm.c:8818 src/bin/e_fm.c:9040
+#: src/bin/e_entry.c:509 src/bin/e_fm.c:8824 src/bin/e_fm.c:9046
 msgid "Paste"
 msgstr "الصق"
 
@@ -1360,16 +1360,16 @@ msgstr "بيانات المخرجات"
 msgid "There was no output."
 msgstr "لا يوجد مُخرج."
 
-#: src/bin/e_fm.c:1056
+#: src/bin/e_fm.c:1061
 msgid "Nonexistent path"
 msgstr "مسار غير موجود"
 
-#: src/bin/e_fm.c:1059
+#: src/bin/e_fm.c:1064
 #, c-format
 msgid "%s doesn't exist."
 msgstr "%s غير موجود."
 
-#: src/bin/e_fm.c:2821 src/bin/e_fm.c:3778
+#: src/bin/e_fm.c:2826 src/bin/e_fm.c:3783
 #, c-format
 msgid "%u file"
 msgid_plural "%u files"
@@ -1380,94 +1380,96 @@ msgstr[3] "%u ملفات"
 msgstr[4] "%u ملفا"
 msgstr[5] "%u ملف"
 
-#: src/bin/e_fm.c:3039
+#: src/bin/e_fm.c:3044
 msgid "Mount Error"
 msgstr "خطأ توصيل"
 
-#: src/bin/e_fm.c:3039
+#: src/bin/e_fm.c:3044
 msgid "Can't mount device"
 msgstr "لا يمكن توصيل الجهاز"
 
-#: src/bin/e_fm.c:3055
+#: src/bin/e_fm.c:3060
 msgid "Unmount Error"
 msgstr "خطأ في الفصل"
 
-#: src/bin/e_fm.c:3055
+#: src/bin/e_fm.c:3060
 msgid "Can't unmount device"
 msgstr "لا يمكن فصل الجهاز"
 
-#: src/bin/e_fm.c:3070
+#: src/bin/e_fm.c:3075
 msgid "Eject Error"
 msgstr "خطأ في اﻹخراج"
 
-#: src/bin/e_fm.c:3070
+#: src/bin/e_fm.c:3075
 msgid "Can't eject device"
 msgstr "لا يمكن إخراج الجهاز"
 
-#: src/bin/e_fm.c:6560 src/bin/e_fm.c:6593 src/bin/e_fm.c:9487
-#: src/bin/e_fm.c:9499 src/bin/e_fm.c:9602 src/bin/e_fm.c:9607
-#: src/bin/e_fm.c:9623 src/bin/e_fm.c:9628 src/bin/e_fm.c:10323
-#: src/bin/e_fm.c:10548 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2335
+#: src/bin/e_fm.c:6565 src/bin/e_fm.c:6598 src/bin/e_fm.c:9493
+#: src/bin/e_fm.c:9505 src/bin/e_fm.c:9608 src/bin/e_fm.c:9613
+#: src/bin/e_fm.c:9629 src/bin/e_fm.c:9634 src/bin/e_fm.c:10260
+#: src/bin/e_fm.c:10263 src/bin/e_fm.c:10266 src/bin/e_fm.c:10293
+#: src/bin/e_fm.c:10297 src/bin/e_fm.c:10300 src/bin/e_fm.c:10358
+#: src/bin/e_fm.c:10583 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
 msgid "Error"
 msgstr "خلل"
 
-#: src/bin/e_fm.c:6560 src/bin/e_fm.c:6593
+#: src/bin/e_fm.c:6565 src/bin/e_fm.c:6598
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr "فشلت عملية DND السابقة و المطلوبة لـ '%s' ."
 
-#: src/bin/e_fm.c:8675 src/modules/fileman/e_mod_config.c:355
+#: src/bin/e_fm.c:8681 src/modules/fileman/e_mod_config.c:357
 msgid "Case Sensitive"
 msgstr "حساس لحالة اﻷحرف"
 
-#: src/bin/e_fm.c:8681 src/modules/fileman/e_mod_config.c:358
+#: src/bin/e_fm.c:8687 src/modules/fileman/e_mod_config.c:360
 msgid "Sort By Extension"
 msgstr "رتب بواسطة اﻹضافة"
 
-#: src/bin/e_fm.c:8687 src/modules/fileman/e_mod_config.c:361
+#: src/bin/e_fm.c:8693 src/modules/fileman/e_mod_config.c:363
 msgid "Sort By Modification Time"
 msgstr "رتِّب بحسب تاريخ التعديل"
 
-#: src/bin/e_fm.c:8693 src/modules/fileman/e_mod_config.c:364
+#: src/bin/e_fm.c:8699 src/modules/fileman/e_mod_config.c:366
 msgid "Sort By Size"
 msgstr "رتب بواسطة الحجم"
 
-#: src/bin/e_fm.c:8702 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8708 src/modules/fileman/e_mod_config.c:374
 msgid "Directories First"
 msgstr "المجلدات أولا"
 
-#: src/bin/e_fm.c:8708 src/modules/fileman/e_mod_config.c:376
+#: src/bin/e_fm.c:8714 src/modules/fileman/e_mod_config.c:378
 msgid "Directories Last"
 msgstr "المجلدات آخرا"
 
-#: src/bin/e_fm.c:8741 src/bin/e_fm.c:8901
+#: src/bin/e_fm.c:8747 src/bin/e_fm.c:8907
 #: src/modules/fileman/e_mod_config.c:302
 msgid "View Mode"
 msgstr "وضع العرض"
 
-#: src/bin/e_fm.c:8750 src/bin/e_fm.c:8910
+#: src/bin/e_fm.c:8756 src/bin/e_fm.c:8916
 #: src/modules/everything/evry_config.c:503
-#: src/modules/fileman/e_mod_config.c:380
+#: src/modules/fileman/e_mod_config.c:382
 msgid "Sorting"
 msgstr "ترتيب"
 
-#: src/bin/e_fm.c:8768 src/bin/e_fm.c:8928
+#: src/bin/e_fm.c:8774 src/bin/e_fm.c:8934
 msgid "Refresh View"
 msgstr "حدِّث العرض"
 
-#: src/bin/e_fm.c:8779 src/bin/e_fm.c:8940
+#: src/bin/e_fm.c:8785 src/bin/e_fm.c:8946
 msgid "New..."
 msgstr "جديد..."
 
-#: src/bin/e_fm.c:8799 src/bin/e_fm.c:8961 src/bin/e_fm.c:8992
+#: src/bin/e_fm.c:8805 src/bin/e_fm.c:8967 src/bin/e_fm.c:8998
 msgid "Actions..."
 msgstr "اﻹجراءات....."
 
-#: src/bin/e_fm.c:8826 src/bin/e_fm.c:9048 src/bin/e_fm.c:11514
+#: src/bin/e_fm.c:8832 src/bin/e_fm.c:9054 src/bin/e_fm.c:11549
 msgid "Link"
 msgstr "ارتباط"
 
-#: src/bin/e_fm.c:9110 src/bin/e_fm.c:10377 src/bin/e_shelf.c:2462
+#: src/bin/e_fm.c:9116 src/bin/e_fm.c:10412 src/bin/e_shelf.c:2470
 #: src/modules/conf_shelves/e_int_config_shelf.c:138
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1475,202 +1477,217 @@ msgstr "ارتباط"
 msgid "Rename"
 msgstr "أعد التسمية"
 
-#: src/bin/e_fm.c:9129
+#: src/bin/e_fm.c:9135
 msgid "Unmount"
 msgstr "افصل"
 
-#: src/bin/e_fm.c:9134
+#: src/bin/e_fm.c:9140
 msgid "Mount"
 msgstr "أوصل"
 
-#: src/bin/e_fm.c:9139
+#: src/bin/e_fm.c:9145
 msgid "Eject"
 msgstr "اخرج"
 
-#: src/bin/e_fm.c:9154 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:9160 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:871
 msgid "Properties"
 msgstr "الخصائص"
 
-#: src/bin/e_fm.c:9162
+#: src/bin/e_fm.c:9168
 msgid "Application Properties"
 msgstr "خصائص التطبيق"
 
-#: src/bin/e_fm.c:9170 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9176 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "خصائص الملف"
 
-#: src/bin/e_fm.c:9386
+#: src/bin/e_fm.c:9392
 msgid "Use default"
 msgstr "استخدم اﻹفتراضي"
 
-#: src/bin/e_fm.c:9416 src/modules/fileman/e_mod_config.c:307
+#: src/bin/e_fm.c:9422 src/modules/fileman/e_mod_config.c:307
 msgid "Grid Icons"
 msgstr "شيكة أيقونات"
 
-#: src/bin/e_fm.c:9424 src/modules/fileman/e_mod_config.c:309
+#: src/bin/e_fm.c:9430 src/modules/fileman/e_mod_config.c:309
 msgid "Custom Icons"
 msgstr "أيقونات مخصصة"
 
-#: src/bin/e_fm.c:9432 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9438 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:317
 msgid "List"
 msgstr "قائمة"
 
-#: src/bin/e_fm.c:9440 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9446 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "عرض افتراضي"
 
-#: src/bin/e_fm.c:9462
+#: src/bin/e_fm.c:9468
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "حجم اﻷيقونة (%d)"
 
-#: src/bin/e_fm.c:9487
+#: src/bin/e_fm.c:9493
 msgid "Could not create a directory!"
 msgstr "لا يمكن انشاء مجلد!"
 
-#: src/bin/e_fm.c:9499
+#: src/bin/e_fm.c:9505
 msgid "Could not create a file!"
 msgstr "لا يمكن انشاء ملف!"
 
-#: src/bin/e_fm.c:9513 src/bin/e_fm.c:9538
+#: src/bin/e_fm.c:9519 src/bin/e_fm.c:9544
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
 msgstr "مجلد جديد"
 
-#: src/bin/e_fm.c:9513 src/bin/e_fm.c:9538
+#: src/bin/e_fm.c:9519 src/bin/e_fm.c:9544
 msgid "New File"
 msgstr "ملف جديد"
 
-#: src/bin/e_fm.c:9602 src/bin/e_fm.c:9623
+#: src/bin/e_fm.c:9608 src/bin/e_fm.c:9629
 msgid "Already creating a new file for this directory!"
 msgstr "قد سبق إنشاء ملف جديد لهذا المجلد!"
 
-#: src/bin/e_fm.c:9607 src/bin/e_fm.c:9628
+#: src/bin/e_fm.c:9613 src/bin/e_fm.c:9634
 #, c-format
 msgid "%s can't be written to!"
 msgstr "%s لايمكن كتابته إلى!"
 
-#: src/bin/e_fm.c:9647
+#: src/bin/e_fm.c:9653
 msgid "Directory"
 msgstr "مجلد"
 
-#: src/bin/e_fm.c:9652
+#: src/bin/e_fm.c:9658
 #: src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "ملف"
 
-#: src/bin/e_fm.c:9683
+#: src/bin/e_fm.c:9689
 msgid "Inherit parent settings"
 msgstr "استخدم إعدادات المجلد اﻷم"
 
-#: src/bin/e_fm.c:9692
+#: src/bin/e_fm.c:9698
 msgid "Show Hidden Files"
 msgstr "اعرض الملفات المخفية"
 
-#: src/bin/e_fm.c:9704
+#: src/bin/e_fm.c:9710
 msgid "Remember Ordering"
 msgstr "تذكر الترتيب"
 
-#: src/bin/e_fm.c:9713
+#: src/bin/e_fm.c:9719
 msgid "Sort Now"
 msgstr "رتب اﻵن"
 
-#: src/bin/e_fm.c:9721
+#: src/bin/e_fm.c:9727
 msgid "Single Click Activation"
 msgstr "تفعيل النقرة واحدة"
 
-#: src/bin/e_fm.c:9732 src/modules/fileman/e_mod_config.c:392
+#: src/bin/e_fm.c:9738 src/modules/fileman/e_mod_config.c:394
 msgid "Secure Deletion"
 msgstr "احم المحو"
 
-#: src/bin/e_fm.c:9745
+#: src/bin/e_fm.c:9751
 msgid "File Manager Settings"
 msgstr "إعدادات مدير الملفات"
 
-#: src/bin/e_fm.c:9750
+#: src/bin/e_fm.c:9756
 msgid "File Icon Settings"
 msgstr "إعدادات أيقونة الملف"
 
-#: src/bin/e_fm.c:9828 src/bin/e_fm.c:10043
+#: src/bin/e_fm.c:9834 src/bin/e_fm.c:10049
 msgid "Set background..."
 msgstr "عين خلفية..."
 
-#: src/bin/e_fm.c:9836
+#: src/bin/e_fm.c:9842
 msgid "Clear background"
 msgstr "خلفية صافية"
 
-#: src/bin/e_fm.c:9843 src/bin/e_fm.c:10071
+#: src/bin/e_fm.c:9849 src/bin/e_fm.c:10077
 msgid "Set overlay..."
 msgstr "عين غطاء..."
 
-#: src/bin/e_fm.c:9849
+#: src/bin/e_fm.c:9855
 msgid "Clear overlay"
 msgstr "غطاء صافٍ"
 
-#: src/bin/e_fm.c:10165 src/bin/e_fm.c:10472
+#: src/bin/e_fm.c:10171 src/bin/e_fm.c:10507
 #, c-format
 msgid "Rename %s to:"
 msgstr "أعد تسمية %s إلى:"
 
-#: src/bin/e_fm.c:10167 src/bin/e_fm.c:10473
+#: src/bin/e_fm.c:10173 src/bin/e_fm.c:10508
 msgid "Rename File"
 msgstr "أعد تسمية الملف"
 
-#: src/bin/e_fm.c:10319 src/bin/e_fm.c:10540
+#: src/bin/e_fm.c:10260 src/bin/e_fm.c:10293
+#, fuzzy, c-format
+msgid "%s already exists!"
+msgstr "هنالك رف بنفس اﻹسم"
+
+#: src/bin/e_fm.c:10263 src/bin/e_fm.c:10297
+#, c-format
+msgid "%s could not be renamed because it is protected"
+msgstr ""
+
+#: src/bin/e_fm.c:10266 src/bin/e_fm.c:10300
+#, fuzzy
+msgid "Internal filemanager error :("
+msgstr "إفتح مدير الملفات عند الوصل"
+
+#: src/bin/e_fm.c:10354 src/bin/e_fm.c:10575
 msgid "Retry"
 msgstr "أعد المحاولة"
 
-#: src/bin/e_fm.c:10320 src/bin/e_fm.c:10541 src/bin/e_fm.c:11522
+#: src/bin/e_fm.c:10355 src/bin/e_fm.c:10576 src/bin/e_fm.c:11557
 msgid "Abort"
 msgstr "إحباط"
 
-#: src/bin/e_fm.c:10376
+#: src/bin/e_fm.c:10411
 msgid "No to all"
 msgstr "لا للكل"
 
-#: src/bin/e_fm.c:10379
+#: src/bin/e_fm.c:10414
 msgid "Yes to all"
 msgstr "نعم للكل"
 
-#: src/bin/e_fm.c:10382
+#: src/bin/e_fm.c:10417
 msgid "Warning"
 msgstr "تحذير"
 
-#: src/bin/e_fm.c:10385
+#: src/bin/e_fm.c:10420
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "الملف موجود من قبل, اكتب عليه؟<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10543
+#: src/bin/e_fm.c:10578
 msgid "Move Source"
 msgstr "انقل مصدرا"
 
-#: src/bin/e_fm.c:10544
+#: src/bin/e_fm.c:10579
 msgid "Ignore this"
 msgstr "تجاهل هذا"
 
-#: src/bin/e_fm.c:10545
+#: src/bin/e_fm.c:10580
 msgid "Ignore all"
 msgstr "تجاهل الكل"
 
-#: src/bin/e_fm.c:10550
+#: src/bin/e_fm.c:10585
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "حدث خلل أثناء تنفيذ عملية.<br>%s"
 
-#: src/bin/e_fm.c:10743
+#: src/bin/e_fm.c:10778
 msgid "Confirm Delete"
 msgstr "أكِّد المحو"
 
-#: src/bin/e_fm.c:10753
+#: src/bin/e_fm.c:10788
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "هل تريد تأكيد محو<br><hilight>%s</hilight> ؟"
 
-#: src/bin/e_fm.c:10758
+#: src/bin/e_fm.c:10793
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1679,7 +1696,7 @@ msgstr ""
 "هل تريد تأكيد محو<br><hilight>كل</hilight> الملفات الـ %d في <br><hilight>"
 "%s</hilight>?"
 
-#: src/bin/e_fm.c:10768
+#: src/bin/e_fm.c:10803
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1730,7 +1747,7 @@ msgstr "جهاز قابل للازالة"
 msgid "Cannot change permissions: %s"
 msgstr "لا يمكن تغيير الصلاحيات : %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1120 src/bin/e_shelf.c:2355
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1123 src/bin/e_shelf.c:2363
 #: src/modules/comp/e_mod_config.c:493
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:186
@@ -1829,29 +1846,39 @@ msgstr "هذا الرابط غير صالح."
 msgid "Select an Image"
 msgstr "اختر صورة"
 
-#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:140
+#: src/bin/e_gadcon.c:1400
+#, fuzzy
+msgid "Gadget error"
+msgstr "مدير اﻷدوات"
+
+#: src/bin/e_gadcon.c:1400
+#, c-format
+msgid "%s does not support disabling autoscrolling"
+msgstr ""
+
+#: src/bin/e_gadcon.c:1674 src/bin/e_int_border_menu.c:140
 msgid "Move to"
 msgstr "انقل إلى"
 
-#: src/bin/e_gadcon.c:1746
+#: src/bin/e_gadcon.c:1742
 msgid "Automatically scroll contents"
 msgstr "لف المحتويات في لفافة تلقائياً"
 
-#: src/bin/e_gadcon.c:1759 src/modules/gadman/e_mod_gadman.c:1002
+#: src/bin/e_gadcon.c:1755 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "بارز"
 
-#: src/bin/e_gadcon.c:1773 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1768 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "داخلي"
 
-#: src/bin/e_gadcon.c:1787 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1781 src/bin/e_int_config_modules.c:53
 #: src/modules/comp/e_mod_main.c:41 src/modules/conf_theme/e_mod_main.c:229
 #: src/modules/dropshadow/e_mod_main.c:88 src/modules/physics/e_mod_main.c:45
 msgid "Look"
 msgstr "المظهر"
 
-#: src/bin/e_gadcon.c:1799 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1793 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:270
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
@@ -1861,9 +1888,18 @@ msgstr "المظهر"
 msgid "Remove"
 msgstr "أزل"
 
-#: src/bin/e_gadcon.c:2439
+#: src/bin/e_gadcon.c:2433
 msgid "Stop moving"
 msgstr "توقف عن الحركة"
+
+#: src/bin/e_gadcon.c:3084
+msgid "Insufficent gadcon support"
+msgstr ""
+
+#: src/bin/e_gadcon.c:3085
+#, c-format
+msgid "Module %s needs to support %s"
+msgstr ""
 
 #: src/bin/e_grab_dialog.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:4
@@ -2229,7 +2265,6 @@ msgstr "شريط المهام"
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:96
 #: src/bin/e_moveresize.c:153 src/bin/e_widget_filepreview.c:82
-#: src/modules/conf_display/e_int_config_display.c:536
 #, c-format
 msgid "%i×%i"
 msgstr "%i×%i"
@@ -2446,8 +2481,8 @@ msgid "Request Position"
 msgstr "أطلب الموضع"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:273
-#: src/bin/e_shelf.c:2433 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:272
+#: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:360
 #: src/modules/clock/e_mod_main.c:603 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
@@ -2460,8 +2495,8 @@ msgstr "أطلب الموضع"
 #: src/modules/ibar/e_mod_main.c:379 src/modules/ibar/e_mod_main.c:864
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:876 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:777 src/modules/connman/e_mod_main.c:506
-#: src/modules/tasks/e_mod_main.c:715 src/modules/xkbswitch/e_mod_main.c:327
+#: src/modules/mixer/e_mod_main.c:777 src/modules/connman/e_mod_main.c:459
+#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:327
 #: src/modules/xkbswitch/e_mod_main.c:369
 msgid "Settings"
 msgstr "اﻹعدادات"
@@ -2550,7 +2585,7 @@ msgstr "الحجم, المكان واﻷقفال"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1607 src/modules/shot/e_mod_main.c:746
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:746
 msgid "All"
 msgstr "الكل"
 
@@ -2689,7 +2724,7 @@ msgstr "محتويات الرف"
 msgid "Toolbar Contents"
 msgstr "محتويات شريط اﻷدوات"
 
-#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:243
+#: src/bin/e_int_toolbar_config.c:30 src/bin/e_toolbar.c:255
 msgid "Toolbar Settings"
 msgstr "خيارات شريط اﻷدوات"
 
@@ -2711,17 +2746,17 @@ msgstr ""
 "input<br>method configuration is correct and<br>that your "
 "configuration's<br>executable is in your PATH<br>"
 
-#: src/bin/e_int_menus.c:136 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:135 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "الرئيسية"
 
-#: src/bin/e_int_menus.c:159
+#: src/bin/e_int_menus.c:158
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "البرامج المفضلة"
 
-#: src/bin/e_int_menus.c:170
+#: src/bin/e_int_menus.c:169
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/conf_menus/e_int_config_menus.c:283
@@ -2733,7 +2768,7 @@ msgstr "البرامج المفضلة"
 msgid "Applications"
 msgstr "التطبيقات"
 
-#: src/bin/e_int_menus.c:194 src/bin/e_int_menus.c:1327
+#: src/bin/e_int_menus.c:193 src/bin/e_int_menus.c:1312
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2741,30 +2776,30 @@ msgstr "التطبيقات"
 msgid "Windows"
 msgstr "النوافذ"
 
-#: src/bin/e_int_menus.c:204 src/bin/e_int_menus.c:1382
+#: src/bin/e_int_menus.c:203 src/bin/e_int_menus.c:1367
 msgid "Lost Windows"
 msgstr "النوافذ المفقودة"
 
-#: src/bin/e_int_menus.c:230
+#: src/bin/e_int_menus.c:229
 msgid "About"
 msgstr "عن"
 
-#: src/bin/e_int_menus.c:235 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:234 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "عن السمة"
 
-#: src/bin/e_int_menus.c:326
+#: src/bin/e_int_menus.c:325
 msgid "Virtual"
 msgstr "وهمي"
 
-#: src/bin/e_int_menus.c:333 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:332 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 #: src/modules/physics/e_mod_config.c:132
 msgid "Shelves"
 msgstr "الرفوف"
 
-#: src/bin/e_int_menus.c:342
+#: src/bin/e_int_menus.c:341
 msgid "Show/Hide All Windows"
 msgstr "أظهر\\أخفي"
 
@@ -2772,28 +2807,28 @@ msgstr "أظهر\\أخفي"
 msgid "No applications"
 msgstr "بلا برامج"
 
-#: src/bin/e_int_menus.c:957
+#: src/bin/e_int_menus.c:942
 msgid "Set Virtual Desktops"
 msgstr "عين أسطح مكتب إفتراضية"
 
-#: src/bin/e_int_menus.c:1333 src/bin/e_int_menus.c:1526
+#: src/bin/e_int_menus.c:1318 src/bin/e_int_menus.c:1511
 msgid "No windows"
 msgstr "بلا نوافذ"
 
-#: src/bin/e_int_menus.c:1439 src/bin/e_int_menus.c:1539
+#: src/bin/e_int_menus.c:1424 src/bin/e_int_menus.c:1524
 msgid "Untitled window"
 msgstr "نافذة غير معنونة"
 
-#: src/bin/e_int_menus.c:1633 src/bin/e_shelf.c:1118 src/bin/e_shelf.c:1633
+#: src/bin/e_int_menus.c:1618 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:189
 msgid "Shelf"
 msgstr "الرف"
 
-#: src/bin/e_int_menus.c:1701
+#: src/bin/e_int_menus.c:1686
 msgid "Add a Shelf"
 msgstr "أضف رفًّا"
 
-#: src/bin/e_int_menus.c:1708
+#: src/bin/e_int_menus.c:1693
 msgid "Delete a Shelf"
 msgstr "احذف رفًّا"
 
@@ -3497,7 +3532,7 @@ msgstr "وحدة  %s ﻹنلايتنمينت"
 msgid "What action should be taken with this module?<br>"
 msgstr "ما نوع العملية التي يجب اتخاذها مع هذه الوحدة؟<br>"
 
-#: src/bin/e_module.c:535 src/bin/e_shelf.c:1789
+#: src/bin/e_module.c:535 src/bin/e_shelf.c:1792
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:390
 #: src/modules/ibar/e_mod_config.c:199
@@ -3613,58 +3648,58 @@ msgstr ""
 "لربما لن يعمل اﻹخفاء التلقائي للرف<br>في ظل وجود اﻹعدادات الحالية; لذا اضبط "
 "الرف للوضع<br>\"أسفل كل شيء\" أو عطِّل اﻹخفاء التلقائي."
 
-#: src/bin/e_shelf.c:1119
+#: src/bin/e_shelf.c:1122
 msgid "Add New Shelf"
 msgstr "أضف رفًّا جديدا"
 
-#: src/bin/e_shelf.c:1140
+#: src/bin/e_shelf.c:1143
 msgid "Shelf Error"
 msgstr "خطأ بالرف"
 
-#: src/bin/e_shelf.c:1140
+#: src/bin/e_shelf.c:1143
 msgid "A shelf with that name already exists!"
 msgstr "هنالك رف بنفس اﻹسم"
 
-#: src/bin/e_shelf.c:1654 src/bin/e_shelf.c:2478
+#: src/bin/e_shelf.c:1657 src/bin/e_shelf.c:2486
 msgid "Stop Moving Gadgets"
 msgstr "أوقف تحريك اﻷدوات"
 
-#: src/bin/e_shelf.c:1656 src/bin/e_shelf.c:2480
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2488
 msgid "Begin Moving Gadgets"
 msgstr "إبدأ تحريك اﻷدوات"
 
-#: src/bin/e_shelf.c:1784
+#: src/bin/e_shelf.c:1787
 msgid "Are you sure you want to delete this shelf?"
 msgstr "هل أنت متأكد أنك تريد حذف هذا الرف؟"
 
-#: src/bin/e_shelf.c:1786
+#: src/bin/e_shelf.c:1789
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "لقد طلبت حذف هذا الرف.<br><br>هل أنت متاكد أنك تريد حذفه؟"
 
-#: src/bin/e_shelf.c:2335
+#: src/bin/e_shelf.c:2343
 msgid "A shelf with that name and id already exists!"
 msgstr "هنالك رف بنفس اﻹسم و المعرف"
 
-#: src/bin/e_shelf.c:2354
+#: src/bin/e_shelf.c:2362
 msgid "Rename Shelf"
 msgstr "أعد تسمية الرف"
 
-#: src/bin/e_shelf.c:2428 src/modules/conf_shelves/e_int_config_shelf.c:141
+#: src/bin/e_shelf.c:2436 src/modules/conf_shelves/e_int_config_shelf.c:141
 #: src/modules/ibar/e_mod_main.c:858
 msgid "Contents"
 msgstr "المحتويات"
 
-#: src/bin/e_shelf.c:2438
+#: src/bin/e_shelf.c:2446
 msgid "Orientation"
 msgstr "توجيه"
 
-#: src/bin/e_shelf.c:2447 src/modules/quickaccess/e_mod_quickaccess.c:789
+#: src/bin/e_shelf.c:2455 src/modules/quickaccess/e_mod_quickaccess.c:789
 msgid "Autohide"
 msgstr "إخفاء تلقائي"
 
-#: src/bin/e_shelf.c:2454 src/modules/conf_display/e_int_config_display.c:406
+#: src/bin/e_shelf.c:2462
 msgid "Refresh"
 msgstr "تحديث"
 
@@ -3811,15 +3846,15 @@ msgstr "اختر سمة"
 msgid "Set As Theme"
 msgstr "استخدمه كسمة"
 
-#: src/bin/e_toolbar.c:233
+#: src/bin/e_toolbar.c:245
 msgid "Stop Moving/Resizing Items"
 msgstr "أوقف تحريك\\تحجيم العناصر"
 
-#: src/bin/e_toolbar.c:235
+#: src/bin/e_toolbar.c:247
 msgid "Begin Moving/Resizing Items"
 msgstr "إبدء تحريك\\تحجيم العناصر"
 
-#: src/bin/e_toolbar.c:248
+#: src/bin/e_toolbar.c:260
 msgid "Set Toolbar Contents"
 msgstr "تعيين محتويات شريط اﻷدوات"
 
@@ -3829,11 +3864,11 @@ msgstr "تعيين محتويات شريط اﻷدوات"
 msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
 msgstr "لا يستطيع إنلايتنمينت إنشاء عمليات فرعية:<br><br>%s<br>"
 
-#: src/bin/e_utils.c:242
+#: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
 msgstr "لا يمكن الخروج - نوافذ خالدة."
 
-#: src/bin/e_utils.c:243
+#: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Enlightenment will not allow itself to exit until these "
@@ -3843,42 +3878,42 @@ msgstr ""
 "إنلايتنمينت سيمنع نفسه من الخروج حتى يتم إغلاق<br>هذه النوافذ أو يتم إزالة "
 "قفل حفظ عمر البطارية .<br>"
 
-#: src/bin/e_utils.c:857
+#: src/bin/e_utils.c:860
 #, c-format
 msgid "%'.0f bytes"
 msgstr "%'.0f بايت/بايتات"
 
-#: src/bin/e_utils.c:861
+#: src/bin/e_utils.c:864
 #, c-format
 msgid "%'.0f KiB"
 msgstr "%'.0f كيلو بايت"
 
-#: src/bin/e_utils.c:865
+#: src/bin/e_utils.c:868
 #, c-format
 msgid "%'.1f MiB"
 msgstr "%'.1f ميجا بايت"
 
-#: src/bin/e_utils.c:869
+#: src/bin/e_utils.c:872
 #, c-format
 msgid "%'.1f GiB"
 msgstr "%'.1f جيجا بايت"
 
-#: src/bin/e_utils.c:873
+#: src/bin/e_utils.c:876
 #, c-format
 msgid "%'.1f TiB"
 msgstr "%'.1f تيرا بايت"
 
-#: src/bin/e_utils.c:892
+#: src/bin/e_utils.c:895
 #, c-format
 msgid "In the future"
 msgstr "في المستقبل"
 
-#: src/bin/e_utils.c:896
+#: src/bin/e_utils.c:899
 #, c-format
 msgid "In the last minute"
 msgstr "في الدقيقة اﻷخيرة"
 
-#: src/bin/e_utils.c:900
+#: src/bin/e_utils.c:903
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
@@ -3889,7 +3924,7 @@ msgstr[3] "%li سنوات مضت"
 msgstr[4] "%li سنة مضت"
 msgstr[5] "%li سنة مضت"
 
-#: src/bin/e_utils.c:905
+#: src/bin/e_utils.c:908
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
@@ -3900,7 +3935,7 @@ msgstr[3] "%li اﻷشهر الماضية"
 msgstr[4] "%li شهرا الماضية"
 msgstr[5] "%li شهرا الماضية"
 
-#: src/bin/e_utils.c:910
+#: src/bin/e_utils.c:913
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
@@ -3911,7 +3946,7 @@ msgstr[3] "%li أسابيع مضت"
 msgstr[4] "%li أسبوعا مضت"
 msgstr[5] "%li أسبوعا مضت"
 
-#: src/bin/e_utils.c:915
+#: src/bin/e_utils.c:918
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
@@ -3922,7 +3957,7 @@ msgstr[3] "%li أيام الماضية"
 msgstr[4] "%li يوما الماضية"
 msgstr[5] "%li يوما الماضي"
 
-#: src/bin/e_utils.c:920
+#: src/bin/e_utils.c:923
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
@@ -3933,7 +3968,7 @@ msgstr[3] "%li ساعات مضت"
 msgstr[4] "%li ساعة مضت"
 msgstr[5] "%li ساعة مضت"
 
-#: src/bin/e_utils.c:925
+#: src/bin/e_utils.c:928
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
@@ -3944,7 +3979,7 @@ msgstr[3] "%li دقائق مضت"
 msgstr[4] "%li دقيقة مضت"
 msgstr[5] "%li دقيقة مضت"
 
-#: src/bin/e_utils.c:932 src/bin/e_widget_filepreview.c:538
+#: src/bin/e_utils.c:935 src/bin/e_widget_filepreview.c:538
 #: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
 #: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/comp/e_mod_config.c:516
@@ -3956,7 +3991,24 @@ msgstr[5] "%li دقيقة مضت"
 msgid "Unknown"
 msgstr "غير معروف"
 
-#: src/bin/e_utils.c:1169
+#: src/bin/e_utils.c:1006 src/bin/e_utils.c:1014
+#, fuzzy
+msgid "Error creating directory"
+msgstr "لا يمكن انشاء مجلد!"
+
+#: src/bin/e_utils.c:1006
+#, c-format
+msgid ""
+"Failed to create directory: %s .<br>Check that you have correct permissions "
+"set."
+msgstr ""
+
+#: src/bin/e_utils.c:1014
+#, c-format
+msgid "Failed to create directory: %s .<br>A file of that name already exists."
+msgstr ""
+
+#: src/bin/e_utils.c:1172
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -3974,12 +4026,12 @@ msgstr ""
 "اﻵن إعادة إعداد اﻷشياء  <br>حسب رغبتك. نأسف للتدخل في اﻹعدادات الخاصة بك. "
 "<br>"
 
-#: src/bin/e_utils.c:1178 src/bin/e_utils.c:1202
+#: src/bin/e_utils.c:1181 src/bin/e_utils.c:1205
 #, c-format
 msgid "%s Configuration Updated"
 msgstr "%s تم تحديث اﻹعدادات"
 
-#: src/bin/e_utils.c:1191
+#: src/bin/e_utils.c:1194
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -3992,72 +4044,72 @@ msgstr ""
 "<br>يحتوي على إصدارة جديدة من الوحدة تعمل عليه. هذا سيء<br>و كإحتياط فإن "
 "إعداداتك قد تم استعادتها إلى  <br>اﻹفتراضيات. نأسف لهذا اﻹزعاج.<br>"
 
-#: src/bin/e_utils.c:1284
+#: src/bin/e_utils.c:1287
 #, c-format
 msgid "Never"
 msgstr "أبدا"
 
-#: src/bin/e_utils.c:1288
+#: src/bin/e_utils.c:1291
 #, c-format
 msgid "%li Seconds"
 msgstr "%li ثانية/ثوان"
 
-#: src/bin/e_utils.c:1293
+#: src/bin/e_utils.c:1296
 #, c-format
 msgid "One year"
 msgstr "سنة واحدة"
 
-#: src/bin/e_utils.c:1295
+#: src/bin/e_utils.c:1298
 #, c-format
 msgid "%li Years"
 msgstr "%li سنة/سنوات"
 
-#: src/bin/e_utils.c:1301
+#: src/bin/e_utils.c:1304
 #, c-format
 msgid "One month"
 msgstr "شهر واحد"
 
-#: src/bin/e_utils.c:1303
+#: src/bin/e_utils.c:1306
 #, c-format
 msgid "%li Months"
 msgstr "%li شهر/شهور"
 
-#: src/bin/e_utils.c:1309
+#: src/bin/e_utils.c:1312
 #, c-format
 msgid "One week"
 msgstr "اسبوع"
 
-#: src/bin/e_utils.c:1311
+#: src/bin/e_utils.c:1314
 #, c-format
 msgid "%li Weeks"
 msgstr "%li اسبوع/أسابيع"
 
-#: src/bin/e_utils.c:1317
+#: src/bin/e_utils.c:1320
 #, c-format
 msgid "One day"
 msgstr "يوم واحد"
 
-#: src/bin/e_utils.c:1319
+#: src/bin/e_utils.c:1322
 #, c-format
 msgid "%li Days"
 msgstr "%li يوم/أيام"
 
-#: src/bin/e_utils.c:1325
+#: src/bin/e_utils.c:1328
 #, c-format
 msgid "An hour"
 msgstr "ساعة"
 
-#: src/bin/e_utils.c:1327
+#: src/bin/e_utils.c:1330
 #, c-format
 msgid "%li Hours"
 msgstr "%li ساعة/ساعات"
 
-#: src/bin/e_utils.c:1333
+#: src/bin/e_utils.c:1336
 #, c-format
 msgid "A minute"
 msgstr "دقيقة"
 
-#: src/bin/e_utils.c:1335
+#: src/bin/e_utils.c:1338
 #, c-format
 msgid "%li Minutes"
 msgstr "%li دقيقة/دقائق"
@@ -4201,8 +4253,6 @@ msgstr "أضف إلى المفضلات"
 #: src/bin/e_widget_fsel.c:339
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:825
-#: src/modules/conf_theme/e_int_config_wallpaper.c:435
-#: src/modules/conf_theme/e_int_config_wallpaper.c:555
 #: src/modules/conf_theme/e_int_config_startup.c:266
 #: src/modules/conf_theme/e_int_config_theme.c:739
 #: src/modules/gadman/e_mod_config.c:256
@@ -4422,16 +4472,16 @@ msgstr "أيام"
 msgid "Toggle calendar"
 msgstr "اعرض التقويم"
 
-#: src/modules/comp/e_mod_comp.c:3697 src/modules/comp/e_mod_comp.c:3719
-#: src/modules/comp/e_mod_comp.c:4132 src/modules/comp/e_mod_comp.c:4142
+#: src/modules/comp/e_mod_comp.c:3700 src/modules/comp/e_mod_comp.c:3722
+#: src/modules/comp/e_mod_comp.c:4135 src/modules/comp/e_mod_comp.c:4145
 msgid "Compositor Error"
 msgstr "خطأ مدير التأثيرات"
 
-#: src/modules/comp/e_mod_comp.c:3698
+#: src/modules/comp/e_mod_comp.c:3701
 msgid "Another compositor is already running<br>on your display server."
 msgstr "هنالك مدير تأثيرات آخر لا زال يعمل<br>على شاشة حاسبك."
 
-#: src/modules/comp/e_mod_comp.c:3720
+#: src/modules/comp/e_mod_comp.c:3723
 msgid ""
 "Your display server does not support the<br>compositor overlay window. This "
 "is needed<br>for it to function."
@@ -4439,11 +4489,11 @@ msgstr ""
 "شاشة حاسبك لا تدعم التأثير<br>overlay window. و الذي يحتاجه مدير "
 "التأثيرات<br>ليعمل."
 
-#: src/modules/comp/e_mod_comp.c:3794
+#: src/modules/comp/e_mod_comp.c:3797
 msgid "Compositor Warning"
 msgstr "تحذير مدير التأثيرات"
 
-#: src/modules/comp/e_mod_comp.c:3795
+#: src/modules/comp/e_mod_comp.c:3798
 msgid ""
 "Your display driver does not support OpenGL, or<br>no OpenGL engines were "
 "compiled or installed for<br>Evas or Ecore-Evas. Falling back to software "
@@ -4452,7 +4502,7 @@ msgstr ""
 "التعريف الرسومي لا يدعم تقنية OpenGL , أو<br>لم تُبنَ محركات OpenGL أو تنصب "
 "لـ<br>Evas أو Ecore-Evas. لذا سيعاد استخدام المحرك البرمجي."
 
-#: src/modules/comp/e_mod_comp.c:4133
+#: src/modules/comp/e_mod_comp.c:4136
 msgid ""
 "Your display server does not support XComposite,<br>or Ecore-X was built "
 "without XComposite support.<br>Note that for composite support you will also "
@@ -4462,7 +4512,7 @@ msgstr ""
 "للملحقة XComposite .<br>تنبه إلى أنه حتى تكون التأثيرات مدعومة ستحتاج "
 "أيضا<br>لدعم كلا من XRender و XFixes support في X11 و Ecore"
 
-#: src/modules/comp/e_mod_comp.c:4143
+#: src/modules/comp/e_mod_comp.c:4146
 msgid ""
 "Your display server does not support XDamage<br>or Ecore was built without "
 "XDamage support."
@@ -5028,165 +5078,6 @@ msgstr "الحوارات"
 msgid "Profiles"
 msgstr "حسابات"
 
-#: src/modules/conf_display/e_int_config_display.c:124
-#, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
-"will be restored in %d second."
-msgid_plural ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
-"will be restored in %d seconds."
-msgstr[0] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
-"سيتم اسعادتها اﻵن"
-msgstr[1] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
-"سيتم اسعادتها خلال ثانية"
-msgstr[2] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
-"سيتم اسعادتها خلال ثانيتين"
-msgstr[3] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
-"سيتم اسعادتها خلال %d ثوان"
-msgstr[4] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
-"سيتم اسعادتها خلال %d ثانية"
-msgstr[5] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على %d هيرتز "
-"سيتم اسعادتها خلال %d ثانية"
-
-#: src/modules/conf_display/e_int_config_display.c:134
-#, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%d×%d will be "
-"restored in %d second."
-msgid_plural ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%d×%d will be "
-"restored in %d seconds."
-msgstr[0] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
-"اسعادتها اﻵن"
-msgstr[1] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
-"اسعادتها خلال ثانية"
-msgstr[2] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
-"اسعادتها خلال ثانيتين"
-msgstr[3] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
-"اسعادتها خلال %d ثوان"
-msgstr[4] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
-"اسعادتها خلال %d ثانية"
-msgstr[5] ""
-"هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة إذا "
-"لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز سيتم "
-"اسعادتها خلال %d ثانية"
-
-#: src/modules/conf_display/e_int_config_display.c:147
-#, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
-"will be restored <hilight>IMMEDIATELY</hilight>."
-msgstr ""
-"هل يبدو هذا صحيحا ؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
-"إذا لم يكن كذلك.<br>إذا لم تضغط زرا ، فإن اﻷبعاد القديمة لـ<br>%dx%d على %d "
-"هيرتز سيتم اسعادتها <hilight>حالا</hilight>."
-
-#: src/modules/conf_display/e_int_config_display.c:154
-#, c-format
-msgid ""
-"Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
-"<br>If you do not press a button, the old resolution of<br>%d×%d will be "
-"restored <hilight>IMMEDIATELY</hilight>."
-msgstr ""
-"هل يبدو هذا صحيحا ؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
-"إذا لم يكن كذلك.<br>إذا لم تضغط زرا ، فإن اﻷبعاد القديمة لـ<br>%dx%d سيتم "
-"إستعادتها <hilight>حالا</hilight>."
-
-#: src/modules/conf_display/e_int_config_display.c:191
-msgid "Resolution change"
-msgstr "تغيير الدقة"
-
-#: src/modules/conf_display/e_int_config_display.c:195
-#: src/modules/shot/e_mod_main.c:288 src/modules/shot/e_mod_main.c:797
-msgid "Save"
-msgstr "حفظ"
-
-#: src/modules/conf_display/e_int_config_display.c:196
-msgid "Restore"
-msgstr "إسترجاع"
-
-#: src/modules/conf_display/e_int_config_display.c:229
-msgid "Screen Resolution Settings"
-msgstr "إعدادات دقة الشاشة"
-
-#: src/modules/conf_display/e_int_config_display.c:395
-msgid "Resolution"
-msgstr "الدقة"
-
-#: src/modules/conf_display/e_int_config_display.c:402
-msgid "Restore on login"
-msgstr "استعد قبل تسجيل الدخول"
-
-#: src/modules/conf_display/e_int_config_display.c:466
-msgid "Rotation"
-msgstr "الدوران"
-
-#: src/modules/conf_display/e_int_config_display.c:485
-msgid "Mirroring"
-msgstr "اﻹنعكاس"
-
-#: src/modules/conf_display/e_int_config_display.c:630
-msgid "Missing Features"
-msgstr "مميزات مفقودة"
-
-#: src/modules/conf_display/e_int_config_display.c:631
-msgid ""
-"Your X Display Server is missing support for<br>the <hilight>XRandR</"
-"hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
-"resolutions without<br>the support of this extension. It could also "
-"be<br>that at the time <hilight>ecore</hilight> was built, there<br>was no "
-"XRandR support detected."
-msgstr ""
-"خادم X الذي لديك يفتقر لدعم<br>إضافة <hilight>XRandR</hilight> ( إعادة "
-"التحجيم و الدوران في X ).<br>لن تستطيع تغيير أبعاد الشاشة بدون<br>دعم من هذه "
-"اﻹضافة. و من الممكن أن يكون<br>في الوقت الذي بنيت فيه <hilight>ecore</"
-"hilight> لم يتم اكتشاف<br>دعم لـ XRandR ."
-
-#: src/modules/conf_display/e_int_config_display.c:643
-msgid "No Refresh Rates Found"
-msgstr "لا يوجد معدلات تحديث"
-
-#: src/modules/conf_display/e_int_config_display.c:644
-msgid ""
-"No refresh rates were reported by your X Display Server.<br>If you are "
-"running a nested X Display Server, then<br>this is to be expected. However, "
-"if you are not, then<br>the current refresh rate will be used when "
-"setting<br>the resolution, which may cause <hilight>damage</hilight> to your "
-"screen."
-msgstr ""
-"لم يتم التبليغ عن معدلات التحديث بواسطة خادم العرض X.<br>إذا كنت تعمل على "
-"خادم X متداخل, عندها<br>فإن هذا أمر متوقع. ومع ذلك, إذا كنت لا تعمل على ذلك, "
-"عندها<br>سيتم إستخدام معدل التحديث عند ضبط<br>اﻷبعاد, التي ربما تسبب "
-"<hilight>ضررا</hilight> لشاشتك."
-
 #: src/modules/conf_display/e_int_config_desks.c:52
 #: src/modules/pager/e_mod_main.c:884
 msgid "Virtual Desktops Settings"
@@ -5295,8 +5186,8 @@ msgstr "تعيين الخلفية..."
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
 #: src/modules/conf_intl/e_int_config_imc.c:813
-#: src/modules/conf_theme/e_int_config_wallpaper.c:425
-#: src/modules/conf_theme/e_int_config_wallpaper.c:545
+#: src/modules/conf_theme/e_int_config_wallpaper.c:426
+#: src/modules/conf_theme/e_int_config_wallpaper.c:579
 #: src/modules/conf_theme/e_int_config_startup.c:253
 #: src/modules/conf_theme/e_int_config_theme.c:728
 #: src/modules/conf_theme/e_int_config_theme.c:1103
@@ -5357,7 +5248,7 @@ msgstr "اقفل عند تفعيل حافظة الشاشة أكس"
 #: src/modules/conf_display/e_int_config_desklock.c:340
 #: src/modules/conf_display/e_int_config_screensaver.c:183
 #: src/modules/conf_display/e_int_config_screensaver.c:200
-#: src/modules/fileman/e_mod_config.c:410
+#: src/modules/fileman/e_mod_config.c:412
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f ثواني"
@@ -5482,10 +5373,6 @@ msgstr "%1.1f ثواني"
 #: src/modules/tiling/e_mod_config.c:198
 msgid "Virtual Desktops"
 msgstr "أسطح المكتب اﻹفتراضية"
-
-#: src/modules/conf_display/e_mod_main.c:24
-msgid "Screen Resolution"
-msgstr "دقة الشاشة"
 
 #: src/modules/conf_display/e_mod_main.c:28
 msgid "Screen Lock"
@@ -5830,17 +5717,17 @@ msgid ""
 "Enlightenment was unable to import the configuration<br>due to a copy error."
 msgstr "لا يستطيع إنلايتنمينت إستيراد اﻹعداد<br>نتيجة لخطأ في النسخ."
 
-#: src/modules/conf_intl/e_int_config_intl.c:597
+#: src/modules/conf_intl/e_int_config_intl.c:598
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "إعدادات اللغة"
 
-#: src/modules/conf_intl/e_int_config_intl.c:620
+#: src/modules/conf_intl/e_int_config_intl.c:621
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "إعدادات لغة قفل المكتب"
 
-#: src/modules/conf_intl/e_int_config_intl.c:950
+#: src/modules/conf_intl/e_int_config_intl.c:954
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5852,33 +5739,33 @@ msgstr ""
 "النظام المختارة.<br>إذا كنت ترغب في تحاشي هذه التدخلات, استخدم<br>إعدادات "
 "تلك البيئة لتعطيل تلك المجموعة.<br>و المتغيرات هي<br>كما يلي  :<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:958
+#: src/modules/conf_intl/e_int_config_intl.c:962
 msgid "Possible Locale problems"
 msgstr "مشكلات محلية محتملة"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1028
-#: src/modules/conf_intl/e_int_config_intl.c:1119
+#: src/modules/conf_intl/e_int_config_intl.c:1032
+#: src/modules/conf_intl/e_int_config_intl.c:1123
 msgid "Language Selector"
 msgstr "إختيار اللغة"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1059
-#: src/modules/conf_intl/e_int_config_intl.c:1507
+#: src/modules/conf_intl/e_int_config_intl.c:1062
+#: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:169
-#: src/modules/wizard/page_010.c:167
+#: src/modules/wizard/page_010.c:169
 msgid "System Default"
 msgstr "النظام اﻹفتراضي"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1093
-#: src/modules/conf_intl/e_int_config_intl.c:1170
+#: src/modules/conf_intl/e_int_config_intl.c:1096
+#: src/modules/conf_intl/e_int_config_intl.c:1174
 msgid "Locale Selected"
 msgstr "اللغة المحلية المُختارة"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1094
-#: src/modules/conf_intl/e_int_config_intl.c:1171
+#: src/modules/conf_intl/e_int_config_intl.c:1097
+#: src/modules/conf_intl/e_int_config_intl.c:1175
 msgid "Locale"
 msgstr "المحليات"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:158
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:160
 msgid "Language"
 msgstr "اللغة"
 
@@ -6358,7 +6245,7 @@ msgid "Image cache size"
 msgstr "حجم الذاكرة المؤقتة للصور"
 
 #: src/modules/conf_performance/e_int_config_performance.c:140
-#: src/modules/fileman/e_mod_config.c:404
+#: src/modules/fileman/e_mod_config.c:406
 #, c-format
 msgid "%1.0f MiB"
 msgstr "%1.0f ميجا بايت"
@@ -6470,33 +6357,39 @@ msgstr "هل تريد تأكيد حذف \"%s\"؟"
 msgid "Confirm Shelf Deletion"
 msgstr "أكِّد حذف الرف"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:102
+#: src/modules/conf_theme/e_int_config_wallpaper.c:103
 msgid "Wallpaper Settings"
 msgstr "خيارات الخلفية"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:467
-#: src/modules/conf_theme/e_int_config_wallpaper.c:580
+#: src/modules/conf_theme/e_int_config_wallpaper.c:436
+#: src/modules/conf_theme/e_int_config_wallpaper.c:589
+#, fuzzy
+msgid "Go up a directory"
+msgstr "أذهب أعلى مجلد"
+
+#: src/modules/conf_theme/e_int_config_wallpaper.c:468
+#: src/modules/conf_theme/e_int_config_wallpaper.c:614
 msgid "Use Theme Wallpaper"
 msgstr "استخدم خلفية السمة"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:472
-#: src/modules/conf_theme/e_int_config_wallpaper.c:585
+#: src/modules/conf_theme/e_int_config_wallpaper.c:473
+#: src/modules/conf_theme/e_int_config_wallpaper.c:619
 msgid "Picture..."
 msgstr "الصورة..."
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:601
+#: src/modules/conf_theme/e_int_config_wallpaper.c:635
 msgid "Where to place the Wallpaper"
 msgstr "إلى حيث توضع الخلفية"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:602
+#: src/modules/conf_theme/e_int_config_wallpaper.c:636
 msgid "All Desktops"
 msgstr "كلّ أسطح المكتب"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:604
+#: src/modules/conf_theme/e_int_config_wallpaper.c:638
 msgid "This Desktop"
 msgstr "سطح المكتب هذا"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:606
+#: src/modules/conf_theme/e_int_config_wallpaper.c:640
 msgid "This Screen"
 msgstr "هذه الشاشة"
 
@@ -6990,65 +6883,65 @@ msgstr "مكِّن التراجعات"
 msgid "Hinting / Fallbacks"
 msgstr "تلميح / تراجعات"
 
-#: src/modules/conf_theme/e_int_config_scale.c:129
+#: src/modules/conf_theme/e_int_config_scale.c:131
 msgid "Factor"
 msgstr "عامل"
 
-#: src/modules/conf_theme/e_int_config_scale.c:177
+#: src/modules/conf_theme/e_int_config_scale.c:179
 msgid "Scale Settings"
 msgstr "إعدادات التحجيم"
 
-#: src/modules/conf_theme/e_int_config_scale.c:229
+#: src/modules/conf_theme/e_int_config_scale.c:231
 msgid "DPI Scaling"
 msgstr "تحجيم DPI"
 
-#: src/modules/conf_theme/e_int_config_scale.c:296
+#: src/modules/conf_theme/e_int_config_scale.c:300
 msgid "Don't Scale"
 msgstr "لا تحجِّم"
 
-#: src/modules/conf_theme/e_int_config_scale.c:299
+#: src/modules/conf_theme/e_int_config_scale.c:303
 msgid "Scale relative to screen DPI"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_scale.c:304
+#: src/modules/conf_theme/e_int_config_scale.c:308
 #, c-format
 msgid "Base DPI (Currently %i DPI)"
 msgstr "DPI القياسية (الحالية %i DPI)"
 
-#: src/modules/conf_theme/e_int_config_scale.c:308
+#: src/modules/conf_theme/e_int_config_scale.c:312
 #, c-format
 msgid "%1.0f DPI"
 msgstr "%1.0f DPI"
 
-#: src/modules/conf_theme/e_int_config_scale.c:312
+#: src/modules/conf_theme/e_int_config_scale.c:316
 msgid "Custom scaling factor"
 msgstr "عامل تحجيم مخصص"
 
-#: src/modules/conf_theme/e_int_config_scale.c:315
+#: src/modules/conf_theme/e_int_config_scale.c:319
 #, c-format
 msgid "%1.2f x"
 msgstr "%1.2f x"
 
-#: src/modules/conf_theme/e_int_config_scale.c:319
+#: src/modules/conf_theme/e_int_config_scale.c:323
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
 msgid "Policy"
 msgstr "سياسة"
 
-#: src/modules/conf_theme/e_int_config_scale.c:324
+#: src/modules/conf_theme/e_int_config_scale.c:328
 msgid "Minimum"
 msgstr "اﻷدنى"
 
-#: src/modules/conf_theme/e_int_config_scale.c:327
-#: src/modules/conf_theme/e_int_config_scale.c:334
+#: src/modules/conf_theme/e_int_config_scale.c:331
+#: src/modules/conf_theme/e_int_config_scale.c:338
 #, c-format
 msgid "%1.2f times"
 msgstr "%1.2f مرات"
 
-#: src/modules/conf_theme/e_int_config_scale.c:331
+#: src/modules/conf_theme/e_int_config_scale.c:335
 msgid "Maximum"
 msgstr "اﻷقصى"
 
-#: src/modules/conf_theme/e_int_config_scale.c:338
+#: src/modules/conf_theme/e_int_config_scale.c:342
 msgid "Constraints"
 msgstr "القيود"
 
@@ -7290,7 +7183,7 @@ msgid "Resize Geometry"
 msgstr "إعادة تحجيم هندسي"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
-#: src/modules/fileman/e_mod_config.c:350
+#: src/modules/fileman/e_mod_config.c:352
 #: src/modules/winlist/e_int_config_winlist.c:210
 #: src/modules/tasks/e_mod_config.c:86
 msgid "Display"
@@ -7950,7 +7843,7 @@ msgid "Move Down"
 msgstr "حرّك ﻷسفل"
 
 #: src/modules/everything/evry_config.c:379
-#: src/modules/connman/e_mod_main.c:363
+#: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "إضبط"
 
@@ -8126,7 +8019,7 @@ msgstr "Exebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1162
 #: src/modules/everything/evry_plug_apps.c:1209
-#: src/modules/fileman/e_fwin.c:2147 src/modules/fileman/e_fwin.c:2510
+#: src/modules/fileman/e_fwin.c:2160 src/modules/fileman/e_fwin.c:2523
 msgid "Open with..."
 msgstr "فتح بـ..."
 
@@ -8314,31 +8207,31 @@ msgstr ""
 msgid "Back"
 msgstr "عودة"
 
-#: src/modules/fileman/e_fwin.c:2038
+#: src/modules/fileman/e_fwin.c:2051
 msgid "Other application..."
 msgstr "تطبيق آخر..."
 
-#: src/modules/fileman/e_fwin.c:2101
+#: src/modules/fileman/e_fwin.c:2114
 msgid "Go To Parent Directory"
 msgstr "اذهب للمجلد اﻷم"
 
-#: src/modules/fileman/e_fwin.c:2111
+#: src/modules/fileman/e_fwin.c:2124
 msgid "Clone Window"
 msgstr "استنسخ نافذة"
 
-#: src/modules/fileman/e_fwin.c:2117
+#: src/modules/fileman/e_fwin.c:2130
 msgid "Copy Path"
 msgstr "انسخ المسار"
 
-#: src/modules/fileman/e_fwin.c:2133
+#: src/modules/fileman/e_fwin.c:2146
 msgid "Run"
 msgstr "شغِّل"
 
-#: src/modules/fileman/e_fwin.c:2140 src/modules/fileman/e_fwin.c:2511
+#: src/modules/fileman/e_fwin.c:2153 src/modules/fileman/e_fwin.c:2524
 msgid "Open"
 msgstr "افتح"
 
-#: src/modules/fileman/e_fwin.c:2540 src/modules/fileman/e_fwin.c:2565
+#: src/modules/fileman/e_fwin.c:2553 src/modules/fileman/e_fwin.c:2578
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
@@ -8349,107 +8242,107 @@ msgstr[3] "%d ملفات"
 msgstr[4] "%d ملفا"
 msgstr[5] "%d ملف"
 
-#: src/modules/fileman/e_fwin.c:2583
+#: src/modules/fileman/e_fwin.c:2596
 msgid "Known Applications"
 msgstr "التطبيقات المعروفة"
 
-#: src/modules/fileman/e_fwin.c:2593
+#: src/modules/fileman/e_fwin.c:2606
 msgid "Suggested Applications"
 msgstr "التطبيقات المقترحة"
 
-#: src/modules/fileman/e_fwin.c:2628
+#: src/modules/fileman/e_fwin.c:2641
 msgid "All Applications"
 msgstr "كل التطبيقات"
 
-#: src/modules/fileman/e_fwin.c:2651
+#: src/modules/fileman/e_fwin.c:2664
 msgid "Custom Command"
 msgstr "أمر مخصص"
 
-#: src/modules/fileman/e_fwin.c:2946
+#: src/modules/fileman/e_fwin.c:2959
 #: src/modules/fileman_opinfo/e_mod_main.c:105
 #, c-format
 msgid "Copying is aborted"
 msgstr "تم رفض النسخ"
 
-#: src/modules/fileman/e_fwin.c:2950
+#: src/modules/fileman/e_fwin.c:2963
 #: src/modules/fileman_opinfo/e_mod_main.c:109
 #, c-format
 msgid "Moving is aborted"
 msgstr "تم رفض النقل"
 
-#: src/modules/fileman/e_fwin.c:2954
+#: src/modules/fileman/e_fwin.c:2967
 #: src/modules/fileman_opinfo/e_mod_main.c:113
 #, c-format
 msgid "Deleting is aborted"
 msgstr "تم رفض الحذف"
 
-#: src/modules/fileman/e_fwin.c:2958
+#: src/modules/fileman/e_fwin.c:2971
 #: src/modules/fileman_opinfo/e_mod_main.c:117
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr "أُلغي الحذف اﻵمن"
 
-#: src/modules/fileman/e_fwin.c:2962
+#: src/modules/fileman/e_fwin.c:2975
 #: src/modules/fileman_opinfo/e_mod_main.c:121
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "عملية غير معروفة من الثانوي تم إلغاؤها"
 
-#: src/modules/fileman/e_fwin.c:2972
+#: src/modules/fileman/e_fwin.c:2985
 #: src/modules/fileman_opinfo/e_mod_main.c:131
 #, c-format
 msgid "Copy of %s done"
 msgstr "تم نسخ %s بنجاح"
 
-#: src/modules/fileman/e_fwin.c:2974
+#: src/modules/fileman/e_fwin.c:2987
 #: src/modules/fileman_opinfo/e_mod_main.c:133
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "نسخ %s (في: %s)"
 
-#: src/modules/fileman/e_fwin.c:2979
+#: src/modules/fileman/e_fwin.c:2992
 #: src/modules/fileman_opinfo/e_mod_main.c:139
 #, c-format
 msgid "Move of %s done"
 msgstr "تم نقل %s بنجاح"
 
-#: src/modules/fileman/e_fwin.c:2981
+#: src/modules/fileman/e_fwin.c:2994
 #: src/modules/fileman_opinfo/e_mod_main.c:141
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "نقل %s (في: %s)"
 
-#: src/modules/fileman/e_fwin.c:2986
+#: src/modules/fileman/e_fwin.c:2999
 #: src/modules/fileman_opinfo/e_mod_main.c:147
 #, c-format
 msgid "Delete done"
 msgstr "تم الحذف"
 
-#: src/modules/fileman/e_fwin.c:2988
+#: src/modules/fileman/e_fwin.c:3001
 #: src/modules/fileman_opinfo/e_mod_main.c:149
 #, c-format
 msgid "Deleting files..."
 msgstr "جاري حذف الملفات..."
 
-#: src/modules/fileman/e_fwin.c:2993
+#: src/modules/fileman/e_fwin.c:3006
 #: src/modules/fileman_opinfo/e_mod_main.c:154
 #, c-format
 msgid "Secure delete done"
 msgstr "تمت الحذف اﻵمن"
 
-#: src/modules/fileman/e_fwin.c:2995
+#: src/modules/fileman/e_fwin.c:3008
 #: src/modules/fileman_opinfo/e_mod_main.c:156
 #, c-format
 msgid "Securely deleting files..."
 msgstr "حذف الملفات بشكل آمن ..."
 
-#: src/modules/fileman/e_fwin.c:2999
+#: src/modules/fileman/e_fwin.c:3012
 #: src/modules/fileman_opinfo/e_mod_main.c:160
 #, c-format
 msgid "Unknown operation from slave %d"
 msgstr "عملية غير معروفة من %d"
 
-#: src/modules/fileman/e_fwin_nav.c:446
+#: src/modules/fileman/e_fwin_nav.c:450
 msgid "EFM Navigation"
 msgstr "بحث مدير الملفات"
 
@@ -8530,93 +8423,89 @@ msgstr "أيقونات على سطح المكتب"
 msgid "Sidebar"
 msgstr "الشريط الجانبي"
 
-#: src/modules/fileman/e_mod_config.c:347
-msgid "Regular Files In Menu (SLOW)"
-msgstr "ملفات منتظمة في قائمة (بطيء)"
-
-#: src/modules/fileman/e_mod_config.c:383
+#: src/modules/fileman/e_mod_config.c:385
 msgid "Open Dirs In Place"
 msgstr "إفتح مسارات في مكان"
 
-#: src/modules/fileman/e_mod_config.c:386
+#: src/modules/fileman/e_mod_config.c:388
 msgid "Use Single Click"
 msgstr "استخدم نقرة واحدة"
 
-#: src/modules/fileman/e_mod_config.c:389
+#: src/modules/fileman/e_mod_config.c:391
 msgid "'cp+rm' instead of 'mv'"
 msgstr "'cp+rm' بدلا من 'mv'"
 
-#: src/modules/fileman/e_mod_config.c:395
+#: src/modules/fileman/e_mod_config.c:397
 msgid "Use Alternate Selection Modifiers"
 msgstr "استخدم معدلات اﻹختيار البديلة"
 
-#: src/modules/fileman/e_mod_config.c:398
+#: src/modules/fileman/e_mod_config.c:400
 msgid "Allow Navigation On Desktop"
 msgstr "اسمح بالبحث على سطح المكتب"
 
-#: src/modules/fileman/e_mod_config.c:402
+#: src/modules/fileman/e_mod_config.c:404
 msgid "Max File Size For Thumbnailing"
 msgstr "كبر حجم الملف للمصغرات"
 
-#: src/modules/fileman/e_mod_config.c:408
+#: src/modules/fileman/e_mod_config.c:410
 #, fuzzy
 msgid "Spring Delay"
 msgstr "تأخير"
 
-#: src/modules/fileman/e_mod_config.c:413
+#: src/modules/fileman/e_mod_config.c:415
 #: src/modules/quickaccess/e_mod_config.c:252
 #: src/modules/quickaccess/e_mod_config.c:348
 msgid "Behavior"
 msgstr "السلوك"
 
-#: src/modules/fileman/e_mod_config.c:422
-#: src/modules/fileman/e_mod_config.c:425
-#: src/modules/fileman/e_mod_config.c:428
-#: src/modules/fileman/e_mod_config.c:431
+#: src/modules/fileman/e_mod_config.c:424
+#: src/modules/fileman/e_mod_config.c:427
+#: src/modules/fileman/e_mod_config.c:430
+#: src/modules/fileman/e_mod_config.c:433
 #: src/modules/gadman/e_mod_config.c:208
 msgid "Mode"
 msgstr "الوضع"
 
-#: src/modules/fileman/e_mod_config.c:437
+#: src/modules/fileman/e_mod_config.c:439
 msgid "Show device icons on desktop"
 msgstr "اظهر أيقونات الجهاز على سطح المكتب"
 
-#: src/modules/fileman/e_mod_config.c:440
+#: src/modules/fileman/e_mod_config.c:442
 msgid "Mount volumes on insert"
 msgstr "أوصل اﻷقراص عند اﻹدخال"
 
-#: src/modules/fileman/e_mod_config.c:443
+#: src/modules/fileman/e_mod_config.c:445
 msgid "Open filemanager on mount"
 msgstr "إفتح مدير الملفات عند الوصل"
 
-#: src/modules/fileman/e_mod_config.c:447
+#: src/modules/fileman/e_mod_config.c:449
 msgid "Device"
 msgstr "الجهاز"
 
-#: src/modules/fileman/e_mod_config.c:451
+#: src/modules/fileman/e_mod_config.c:453
 msgid "Show tooltip"
 msgstr "اعرض المصغرة"
 
-#: src/modules/fileman/e_mod_config.c:455
+#: src/modules/fileman/e_mod_config.c:457
 msgid "Tooltip delay"
 msgstr "تأخير التلميح"
 
-#: src/modules/fileman/e_mod_config.c:457
+#: src/modules/fileman/e_mod_config.c:459
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
 msgstr "%1.1f"
 
-#: src/modules/fileman/e_mod_config.c:461
+#: src/modules/fileman/e_mod_config.c:463
 msgid "Tooltip size (Screen percentage)"
 msgstr "حجم التلميح (نسبة للشاشة)"
 
-#: src/modules/fileman/e_mod_config.c:463
+#: src/modules/fileman/e_mod_config.c:465
 #, c-format
 msgid "%2.0f"
 msgstr "%2.0f"
 
-#: src/modules/fileman/e_mod_config.c:467
+#: src/modules/fileman/e_mod_config.c:469
 msgid "Tooltips"
 msgstr "تلميحات"
 
@@ -9306,7 +9195,7 @@ msgstr "رجاء انتظر..."
 msgid "Welcome to Enlightenment"
 msgstr "مرحبا بك في إنلايتنمينت"
 
-#: src/modules/wizard/page_010.c:159 src/modules/wizard/page_011.c:135
+#: src/modules/wizard/page_010.c:161 src/modules/wizard/page_011.c:135
 #: src/modules/wizard/page_020.c:52
 msgid "Select one"
 msgstr "إختر واحدا"
@@ -9537,21 +9426,21 @@ msgstr ""
 msgid "Mute Volume"
 msgstr "أسكت الصوت"
 
-#: src/modules/connman/e_mod_main.c:12
+#: src/modules/connman/e_mod_main.c:10
 msgid "Connection Manager"
 msgstr "مدير الاتصال"
 
-#: src/modules/connman/e_mod_main.c:252
+#: src/modules/connman/e_mod_main.c:237
 msgid "Missing Application"
 msgstr "تطبيق مفقود"
 
-#: src/modules/connman/e_mod_main.c:253
+#: src/modules/connman/e_mod_main.c:238
 msgid ""
 "This module wants to execute an external application EConnMan that does not "
 "exist.<br>Please install <b>EConnMan</b> application."
 msgstr ""
 
-#: src/modules/connman/e_mod_main.c:354
+#: src/modules/connman/e_mod_main.c:315
 msgid "Wifi On"
 msgstr "اﻹتصال اللاسيلكي يعمل"
 
@@ -9680,6 +9569,15 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:484
 msgid "The requested Quickaccess entry does not exist!"
+msgstr ""
+
+#: src/modules/quickaccess/e_mod_quickaccess.c:651
+#, fuzzy
+msgid "Keybind Error"
+msgstr "خطأ في ترابط الحدود"
+
+#: src/modules/quickaccess/e_mod_quickaccess.c:651
+msgid "The keybinding you have entered is already in use!"
 msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:795
@@ -9835,6 +9733,10 @@ msgstr ""
 msgid "Select screenshot save location"
 msgstr "حدد مكان حفظ صورة الشاشة"
 
+#: src/modules/shot/e_mod_main.c:288 src/modules/shot/e_mod_main.c:797
+msgid "Save"
+msgstr "حفظ"
+
 #: src/modules/shot/e_mod_main.c:386
 #, c-format
 msgid "Uploaded %s / %s"
@@ -9952,7 +9854,7 @@ msgstr "خطأ في التصوير"
 msgid "Cannot initialize network"
 msgstr "لا يمكن بدء اﻹتصال الشبكي"
 
-#: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:722
+#: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:735
 msgid "Tasks"
 msgstr "المهام"
 
@@ -10087,19 +9989,19 @@ msgstr "نماذج"
 msgid "Label only"
 msgstr "للتسمية فقط"
 
-#: src/modules/xkbswitch/e_mod_config.c:481
+#: src/modules/xkbswitch/e_mod_config.c:483
 msgid "Add New Configuration"
 msgstr "أضف إعدادات جديدة"
 
-#: src/modules/xkbswitch/e_mod_config.c:494
+#: src/modules/xkbswitch/e_mod_config.c:496
 msgid "Available"
 msgstr "متاح و متوفر"
 
-#: src/modules/xkbswitch/e_mod_config.c:501
+#: src/modules/xkbswitch/e_mod_config.c:503
 msgid "Model"
 msgstr "نموذج"
 
-#: src/modules/xkbswitch/e_mod_config.c:508
+#: src/modules/xkbswitch/e_mod_config.c:510
 msgid "Variant"
 msgstr "متنوع"
 
@@ -10218,6 +10120,147 @@ msgstr "تجاهل هوية التبديل"
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
 msgstr "استخدم قياسات الشاشة المتعددة"
+
+#~ msgid ""
+#~ "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+#~ "<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
+#~ "will be restored in %d second."
+#~ msgid_plural ""
+#~ "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+#~ "<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
+#~ "will be restored in %d seconds."
+#~ msgstr[0] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على "
+#~ "%d هيرتز سيتم اسعادتها اﻵن"
+#~ msgstr[1] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على "
+#~ "%d هيرتز سيتم اسعادتها خلال ثانية"
+#~ msgstr[2] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على "
+#~ "%d هيرتز سيتم اسعادتها خلال ثانيتين"
+#~ msgstr[3] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على "
+#~ "%d هيرتز سيتم اسعادتها خلال %d ثوان"
+#~ msgstr[4] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على "
+#~ "%d هيرتز سيتم اسعادتها خلال %d ثانية"
+#~ msgstr[5] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d على "
+#~ "%d هيرتز سيتم اسعادتها خلال %d ثانية"
+
+#~ msgid ""
+#~ "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+#~ "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
+#~ "restored in %d second."
+#~ msgid_plural ""
+#~ "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+#~ "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
+#~ "restored in %d seconds."
+#~ msgstr[0] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز "
+#~ "سيتم اسعادتها اﻵن"
+#~ msgstr[1] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز "
+#~ "سيتم اسعادتها خلال ثانية"
+#~ msgstr[2] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز "
+#~ "سيتم اسعادتها خلال ثانيتين"
+#~ msgstr[3] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز "
+#~ "سيتم اسعادتها خلال %d ثوان"
+#~ msgstr[4] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز "
+#~ "سيتم اسعادتها خلال %d ثانية"
+#~ msgstr[5] ""
+#~ "هل يبدو هذا صحيحا؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا, فإن اﻷبعاد القديمة لـ<br>%dx%d هيرتز "
+#~ "سيتم اسعادتها خلال %d ثانية"
+
+#~ msgid ""
+#~ "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+#~ "<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
+#~ "will be restored <hilight>IMMEDIATELY</hilight>."
+#~ msgstr ""
+#~ "هل يبدو هذا صحيحا ؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا ، فإن اﻷبعاد القديمة لـ<br>%dx%d على "
+#~ "%d هيرتز سيتم اسعادتها <hilight>حالا</hilight>."
+
+#~ msgid ""
+#~ "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
+#~ "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
+#~ "restored <hilight>IMMEDIATELY</hilight>."
+#~ msgstr ""
+#~ "هل يبدو هذا صحيحا ؟ <hilight>احفظ</hilight> إذا كان كذلك، أو قم باﻹستعادة "
+#~ "إذا لم يكن كذلك.<br>إذا لم تضغط زرا ، فإن اﻷبعاد القديمة لـ<br>%dx%d سيتم "
+#~ "إستعادتها <hilight>حالا</hilight>."
+
+#~ msgid "Resolution change"
+#~ msgstr "تغيير الدقة"
+
+#~ msgid "Restore"
+#~ msgstr "إسترجاع"
+
+#~ msgid "Screen Resolution Settings"
+#~ msgstr "إعدادات دقة الشاشة"
+
+#~ msgid "Resolution"
+#~ msgstr "الدقة"
+
+#~ msgid "Restore on login"
+#~ msgstr "استعد قبل تسجيل الدخول"
+
+#~ msgid "Rotation"
+#~ msgstr "الدوران"
+
+#~ msgid "Mirroring"
+#~ msgstr "اﻹنعكاس"
+
+#~ msgid "Missing Features"
+#~ msgstr "مميزات مفقودة"
+
+#~ msgid ""
+#~ "Your X Display Server is missing support for<br>the <hilight>XRandR</"
+#~ "hilight> (X Resize and Rotate) extension.<br>You cannot change screen "
+#~ "resolutions without<br>the support of this extension. It could also "
+#~ "be<br>that at the time <hilight>ecore</hilight> was built, there<br>was "
+#~ "no XRandR support detected."
+#~ msgstr ""
+#~ "خادم X الذي لديك يفتقر لدعم<br>إضافة <hilight>XRandR</hilight> ( إعادة "
+#~ "التحجيم و الدوران في X ).<br>لن تستطيع تغيير أبعاد الشاشة بدون<br>دعم من "
+#~ "هذه اﻹضافة. و من الممكن أن يكون<br>في الوقت الذي بنيت فيه <hilight>ecore</"
+#~ "hilight> لم يتم اكتشاف<br>دعم لـ XRandR ."
+
+#~ msgid "No Refresh Rates Found"
+#~ msgstr "لا يوجد معدلات تحديث"
+
+#~ msgid ""
+#~ "No refresh rates were reported by your X Display Server.<br>If you are "
+#~ "running a nested X Display Server, then<br>this is to be expected. "
+#~ "However, if you are not, then<br>the current refresh rate will be used "
+#~ "when setting<br>the resolution, which may cause <hilight>damage</hilight> "
+#~ "to your screen."
+#~ msgstr ""
+#~ "لم يتم التبليغ عن معدلات التحديث بواسطة خادم العرض X.<br>إذا كنت تعمل على "
+#~ "خادم X متداخل, عندها<br>فإن هذا أمر متوقع. ومع ذلك, إذا كنت لا تعمل على "
+#~ "ذلك, عندها<br>سيتم إستخدام معدل التحديث عند ضبط<br>اﻷبعاد, التي ربما تسبب "
+#~ "<hilight>ضررا</hilight> لشاشتك."
+
+#~ msgid "Screen Resolution"
+#~ msgstr "دقة الشاشة"
+
+#~ msgid "Regular Files In Menu (SLOW)"
+#~ msgstr "ملفات منتظمة في قائمة (بطيء)"
 
 #~ msgid "Left Button"
 #~ msgstr "الزر اﻷيسر"
@@ -10544,9 +10587,6 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 
 #~ msgid "Exchange themes"
 #~ msgstr "تبادل السمات"
-
-#~ msgid "Gadgets Manager"
-#~ msgstr "مدير اﻷدوات"
 
 #~ msgid "Display App Name"
 #~ msgstr "أعرض اسم التطبيق"

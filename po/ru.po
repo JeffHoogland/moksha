@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-19 19:29+0400\n"
+"POT-Creation-Date: 2012-12-20 15:39+0900\n"
 "PO-Revision-Date: 2012-12-19 22:00+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -31,7 +31,7 @@ msgstr "Об Enlightenment"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2526 src/modules/mixer/app_mixer.c:524
+#: src/modules/fileman/e_fwin.c:2526 src/modules/mixer/app_mixer.c:520
 msgid "Close"
 msgstr "Закрыть"
 
@@ -81,7 +81,7 @@ msgstr "Убить"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2128 src/bin/e_actions.c:2222
 #: src/bin/e_actions.c:2282 src/bin/e_actions.c:2342 src/bin/e_actions.c:2407
 #: src/bin/e_actions.c:2472 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10409 src/bin/e_fm.c:10775
+#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10410 src/bin/e_fm.c:10776
 #: src/bin/e_screensaver.c:191
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "No"
@@ -98,7 +98,7 @@ msgstr "Действительно хотите выйти из Enlightenment?"
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10412 src/bin/e_screensaver.c:189
+#: src/bin/e_fm.c:10413 src/bin/e_screensaver.c:189
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "Yes"
 msgstr "Да"
@@ -152,7 +152,7 @@ msgstr "Действительно хотите перевести систем�
 msgid "Window : Actions"
 msgstr "Окно : Действия"
 
-#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11540
+#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11541
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "Переместить"
@@ -799,7 +799,7 @@ msgid "Select"
 msgstr "Выбрать"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9956
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9957
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:191
 #: src/bin/e_import_config_dialog.c:534
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
@@ -810,7 +810,7 @@ msgstr "Выбрать"
 #: src/modules/quickaccess/e_mod_quickaccess.c:378
 #: src/modules/shot/e_mod_main.c:290 src/modules/shot/e_mod_main.c:540
 #: src/modules/shot/e_mod_main.c:566 src/modules/shot/e_mod_main.c:801
-#: src/modules/xkbswitch/e_mod_config.c:527
+#: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -862,7 +862,7 @@ msgstr ""
 #: src/bin/e_config.c:1732 src/bin/e_config.c:2366
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:613
-#: src/bin/e_fm.c:9955 src/bin/e_fm.c:10681 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:9956 src/bin/e_fm.c:10682 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:533 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:431
 #: src/bin/e_module.c:798 src/bin/e_sys.c:618 src/bin/e_sys.c:659
@@ -872,7 +872,7 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:436 src/modules/cpufreq/e_mod_main.c:465
 #: src/modules/cpufreq/e_mod_main.c:492
 #: src/modules/fileman/e_int_config_mime_edit.c:313
-#: src/modules/xkbswitch/e_mod_config.c:526
+#: src/modules/xkbswitch/e_mod_config.c:528
 msgid "OK"
 msgstr "ОК"
 
@@ -995,8 +995,8 @@ msgid "Apply"
 msgstr "Применить"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1282
-#: src/modules/connman/e_mod_main.c:681
+#: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1281
+#: src/modules/connman/e_mod_main.c:634
 #: src/modules/notification/e_mod_main.c:148
 msgid "Extensions"
 msgstr "Расширения"
@@ -1178,7 +1178,7 @@ msgstr "Запускать в терминале"
 msgid "Show in Menus"
 msgstr "Показывать в меню"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8762 src/bin/e_fm.c:8922
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8763 src/bin/e_fm.c:8923
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:334
 msgid "Options"
@@ -1193,7 +1193,7 @@ msgstr "Выбрать значок для '%s'"
 msgid "Select an Executable"
 msgstr "Выбрать исполняемый файл"
 
-#: src/bin/e_entry.c:480 src/bin/e_fm.c:9107 src/bin/e_fm.c:10774
+#: src/bin/e_entry.c:480 src/bin/e_fm.c:9108 src/bin/e_fm.c:10775
 #: src/bin/e_shelf.c:1792 src/bin/e_shelf.c:2475
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1211,15 +1211,15 @@ msgstr "Выбрать исполняемый файл"
 msgid "Delete"
 msgstr "Удалить"
 
-#: src/bin/e_entry.c:490 src/bin/e_fm.c:9018
+#: src/bin/e_entry.c:490 src/bin/e_fm.c:9019
 msgid "Cut"
 msgstr "Вырезать"
 
-#: src/bin/e_entry.c:499 src/bin/e_fm.c:9032 src/bin/e_fm.c:11535
+#: src/bin/e_entry.c:499 src/bin/e_fm.c:9033 src/bin/e_fm.c:11536
 msgid "Copy"
 msgstr "Копировать"
 
-#: src/bin/e_entry.c:509 src/bin/e_fm.c:8823 src/bin/e_fm.c:9045
+#: src/bin/e_entry.c:509 src/bin/e_fm.c:8824 src/bin/e_fm.c:9046
 msgid "Paste"
 msgstr "Вставить"
 
@@ -1410,12 +1410,12 @@ msgstr "Ошибка извлечения"
 msgid "Can't eject device"
 msgstr "Не удалось извлечь устройство"
 
-#: src/bin/e_fm.c:6565 src/bin/e_fm.c:6598 src/bin/e_fm.c:9492
-#: src/bin/e_fm.c:9504 src/bin/e_fm.c:9607 src/bin/e_fm.c:9612
-#: src/bin/e_fm.c:9628 src/bin/e_fm.c:9633 src/bin/e_fm.c:10259
-#: src/bin/e_fm.c:10262 src/bin/e_fm.c:10265 src/bin/e_fm.c:10292
-#: src/bin/e_fm.c:10296 src/bin/e_fm.c:10299 src/bin/e_fm.c:10357
-#: src/bin/e_fm.c:10582 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
+#: src/bin/e_fm.c:6565 src/bin/e_fm.c:6598 src/bin/e_fm.c:9493
+#: src/bin/e_fm.c:9505 src/bin/e_fm.c:9608 src/bin/e_fm.c:9613
+#: src/bin/e_fm.c:9629 src/bin/e_fm.c:9634 src/bin/e_fm.c:10260
+#: src/bin/e_fm.c:10263 src/bin/e_fm.c:10266 src/bin/e_fm.c:10293
+#: src/bin/e_fm.c:10297 src/bin/e_fm.c:10300 src/bin/e_fm.c:10358
+#: src/bin/e_fm.c:10583 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
 msgid "Error"
 msgstr "Ошибка"
 
@@ -1424,58 +1424,58 @@ msgstr "Ошибка"
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr "Не удалось выполнить запрошенную для '%s' операцию перетаскивания."
 
-#: src/bin/e_fm.c:8680 src/modules/fileman/e_mod_config.c:357
+#: src/bin/e_fm.c:8681 src/modules/fileman/e_mod_config.c:357
 msgid "Case Sensitive"
 msgstr "С учётом регистра"
 
-#: src/bin/e_fm.c:8686 src/modules/fileman/e_mod_config.c:360
+#: src/bin/e_fm.c:8687 src/modules/fileman/e_mod_config.c:360
 msgid "Sort By Extension"
 msgstr "Сортировать по расширению"
 
-#: src/bin/e_fm.c:8692 src/modules/fileman/e_mod_config.c:363
+#: src/bin/e_fm.c:8693 src/modules/fileman/e_mod_config.c:363
 msgid "Sort By Modification Time"
 msgstr "Сортировать по времени изменения"
 
-#: src/bin/e_fm.c:8698 src/modules/fileman/e_mod_config.c:366
+#: src/bin/e_fm.c:8699 src/modules/fileman/e_mod_config.c:366
 msgid "Sort By Size"
 msgstr "Сортировать по размеру"
 
-#: src/bin/e_fm.c:8707 src/modules/fileman/e_mod_config.c:374
+#: src/bin/e_fm.c:8708 src/modules/fileman/e_mod_config.c:374
 msgid "Directories First"
 msgstr "Каталоги в начале"
 
-#: src/bin/e_fm.c:8713 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8714 src/modules/fileman/e_mod_config.c:378
 msgid "Directories Last"
 msgstr "Каталоги в конце"
 
-#: src/bin/e_fm.c:8746 src/bin/e_fm.c:8906
+#: src/bin/e_fm.c:8747 src/bin/e_fm.c:8907
 #: src/modules/fileman/e_mod_config.c:302
 msgid "View Mode"
 msgstr "Режим отображения"
 
-#: src/bin/e_fm.c:8755 src/bin/e_fm.c:8915
+#: src/bin/e_fm.c:8756 src/bin/e_fm.c:8916
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:382
 msgid "Sorting"
 msgstr "Сортировка"
 
-#: src/bin/e_fm.c:8773 src/bin/e_fm.c:8933
+#: src/bin/e_fm.c:8774 src/bin/e_fm.c:8934
 msgid "Refresh View"
 msgstr "Обновить вид"
 
-#: src/bin/e_fm.c:8784 src/bin/e_fm.c:8945
+#: src/bin/e_fm.c:8785 src/bin/e_fm.c:8946
 msgid "New..."
 msgstr "Новый..."
 
-#: src/bin/e_fm.c:8804 src/bin/e_fm.c:8966 src/bin/e_fm.c:8997
+#: src/bin/e_fm.c:8805 src/bin/e_fm.c:8967 src/bin/e_fm.c:8998
 msgid "Actions..."
 msgstr "Действия..."
 
-#: src/bin/e_fm.c:8831 src/bin/e_fm.c:9053 src/bin/e_fm.c:11548
+#: src/bin/e_fm.c:8832 src/bin/e_fm.c:9054 src/bin/e_fm.c:11549
 msgid "Link"
 msgstr "Ссылка"
 
-#: src/bin/e_fm.c:9115 src/bin/e_fm.c:10411 src/bin/e_shelf.c:2470
+#: src/bin/e_fm.c:9116 src/bin/e_fm.c:10412 src/bin/e_shelf.c:2470
 #: src/modules/conf_shelves/e_int_config_shelf.c:138
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1483,216 +1483,216 @@ msgstr "Ссылка"
 msgid "Rename"
 msgstr "Переименовать"
 
-#: src/bin/e_fm.c:9134
+#: src/bin/e_fm.c:9135
 msgid "Unmount"
 msgstr "Отключить"
 
-#: src/bin/e_fm.c:9139
+#: src/bin/e_fm.c:9140
 msgid "Mount"
 msgstr "Подключить"
 
-#: src/bin/e_fm.c:9144
+#: src/bin/e_fm.c:9145
 msgid "Eject"
 msgstr "Извлечь"
 
-#: src/bin/e_fm.c:9159 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:9160 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:871
 msgid "Properties"
 msgstr "Свойства"
 
-#: src/bin/e_fm.c:9167
+#: src/bin/e_fm.c:9168
 msgid "Application Properties"
 msgstr "Свойства приложения"
 
-#: src/bin/e_fm.c:9175 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9176 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "Свойства файла"
 
-#: src/bin/e_fm.c:9391
+#: src/bin/e_fm.c:9392
 msgid "Use default"
 msgstr "По умолчанию"
 
-#: src/bin/e_fm.c:9421 src/modules/fileman/e_mod_config.c:307
+#: src/bin/e_fm.c:9422 src/modules/fileman/e_mod_config.c:307
 msgid "Grid Icons"
 msgstr "Сетка значков"
 
-#: src/bin/e_fm.c:9429 src/modules/fileman/e_mod_config.c:309
+#: src/bin/e_fm.c:9430 src/modules/fileman/e_mod_config.c:309
 msgid "Custom Icons"
 msgstr "Пользовательские значки"
 
-#: src/bin/e_fm.c:9437 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9438 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:317
 msgid "List"
 msgstr "Список"
 
-#: src/bin/e_fm.c:9445 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9446 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "Вид по умолчанию"
 
-#: src/bin/e_fm.c:9467
+#: src/bin/e_fm.c:9468
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Размер значка (%d)"
 
-#: src/bin/e_fm.c:9492
+#: src/bin/e_fm.c:9493
 msgid "Could not create a directory!"
 msgstr "Не удалось создать каталог!"
 
-#: src/bin/e_fm.c:9504
+#: src/bin/e_fm.c:9505
 msgid "Could not create a file!"
 msgstr "Не удалось создать файл!"
 
-#: src/bin/e_fm.c:9518 src/bin/e_fm.c:9543
+#: src/bin/e_fm.c:9519 src/bin/e_fm.c:9544
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
 msgstr "Новый каталог"
 
-#: src/bin/e_fm.c:9518 src/bin/e_fm.c:9543
+#: src/bin/e_fm.c:9519 src/bin/e_fm.c:9544
 msgid "New File"
 msgstr "Новый файл"
 
-#: src/bin/e_fm.c:9607 src/bin/e_fm.c:9628
+#: src/bin/e_fm.c:9608 src/bin/e_fm.c:9629
 msgid "Already creating a new file for this directory!"
 msgstr "Уже создается новый файл для этого каталога!"
 
-#: src/bin/e_fm.c:9612 src/bin/e_fm.c:9633
+#: src/bin/e_fm.c:9613 src/bin/e_fm.c:9634
 #, c-format
 msgid "%s can't be written to!"
 msgstr "%s не может быть записан!"
 
-#: src/bin/e_fm.c:9652
+#: src/bin/e_fm.c:9653
 msgid "Directory"
 msgstr "Каталог"
 
-#: src/bin/e_fm.c:9657
+#: src/bin/e_fm.c:9658
 #: src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "Файл"
 
-#: src/bin/e_fm.c:9688
+#: src/bin/e_fm.c:9689
 msgid "Inherit parent settings"
 msgstr "Наследовать родительские настройки"
 
-#: src/bin/e_fm.c:9697
+#: src/bin/e_fm.c:9698
 msgid "Show Hidden Files"
 msgstr "Показывать скрытые файлы"
 
-#: src/bin/e_fm.c:9709
+#: src/bin/e_fm.c:9710
 msgid "Remember Ordering"
 msgstr "Запомнить очередность"
 
-#: src/bin/e_fm.c:9718
+#: src/bin/e_fm.c:9719
 msgid "Sort Now"
 msgstr "Сортировать"
 
-#: src/bin/e_fm.c:9726
+#: src/bin/e_fm.c:9727
 msgid "Single Click Activation"
 msgstr "Использовать одинарный щелчок"
 
-#: src/bin/e_fm.c:9737 src/modules/fileman/e_mod_config.c:394
+#: src/bin/e_fm.c:9738 src/modules/fileman/e_mod_config.c:394
 msgid "Secure Deletion"
 msgstr "Безопасное удаление"
 
-#: src/bin/e_fm.c:9750
+#: src/bin/e_fm.c:9751
 msgid "File Manager Settings"
 msgstr "Настройки файлового менеджера"
 
-#: src/bin/e_fm.c:9755
+#: src/bin/e_fm.c:9756
 msgid "File Icon Settings"
 msgstr "Настройки значков файлов"
 
-#: src/bin/e_fm.c:9833 src/bin/e_fm.c:10048
+#: src/bin/e_fm.c:9834 src/bin/e_fm.c:10049
 msgid "Set background..."
 msgstr "Установить фон..."
 
-#: src/bin/e_fm.c:9841
+#: src/bin/e_fm.c:9842
 msgid "Clear background"
 msgstr "Очистить фон"
 
-#: src/bin/e_fm.c:9848 src/bin/e_fm.c:10076
+#: src/bin/e_fm.c:9849 src/bin/e_fm.c:10077
 msgid "Set overlay..."
 msgstr "Установить перекрытие..."
 
-#: src/bin/e_fm.c:9854
+#: src/bin/e_fm.c:9855
 msgid "Clear overlay"
 msgstr "Очистить перекрытие"
 
-#: src/bin/e_fm.c:10170 src/bin/e_fm.c:10506
+#: src/bin/e_fm.c:10171 src/bin/e_fm.c:10507
 #, c-format
 msgid "Rename %s to:"
 msgstr "Переименовать %s в:"
 
-#: src/bin/e_fm.c:10172 src/bin/e_fm.c:10507
+#: src/bin/e_fm.c:10173 src/bin/e_fm.c:10508
 msgid "Rename File"
 msgstr "Переименовать файл"
 
-#: src/bin/e_fm.c:10259 src/bin/e_fm.c:10292
+#: src/bin/e_fm.c:10260 src/bin/e_fm.c:10293
 #, c-format
 msgid "%s already exists!"
 msgstr "%s уже существует!"
 
-#: src/bin/e_fm.c:10262 src/bin/e_fm.c:10296
+#: src/bin/e_fm.c:10263 src/bin/e_fm.c:10297
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr "%s не может быть переименован, так как он защищён"
 
-#: src/bin/e_fm.c:10265 src/bin/e_fm.c:10299
+#: src/bin/e_fm.c:10266 src/bin/e_fm.c:10300
 msgid "Internal filemanager error :("
 msgstr "Внутренняя ошибка файлового менеджера :("
 
-#: src/bin/e_fm.c:10353 src/bin/e_fm.c:10574
+#: src/bin/e_fm.c:10354 src/bin/e_fm.c:10575
 msgid "Retry"
 msgstr "Повторить"
 
-#: src/bin/e_fm.c:10354 src/bin/e_fm.c:10575 src/bin/e_fm.c:11556
+#: src/bin/e_fm.c:10355 src/bin/e_fm.c:10576 src/bin/e_fm.c:11557
 msgid "Abort"
 msgstr "Отменить"
 
-#: src/bin/e_fm.c:10410
+#: src/bin/e_fm.c:10411
 msgid "No to all"
 msgstr "Нет для всего"
 
-#: src/bin/e_fm.c:10413
+#: src/bin/e_fm.c:10414
 msgid "Yes to all"
 msgstr "Да для всего"
 
-#: src/bin/e_fm.c:10416
+#: src/bin/e_fm.c:10417
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: src/bin/e_fm.c:10419
+#: src/bin/e_fm.c:10420
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Файл уже существует, переписать?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10577
+#: src/bin/e_fm.c:10578
 msgid "Move Source"
 msgstr "Переместить источник"
 
-#: src/bin/e_fm.c:10578
+#: src/bin/e_fm.c:10579
 msgid "Ignore this"
 msgstr "Пропустить это"
 
-#: src/bin/e_fm.c:10579
+#: src/bin/e_fm.c:10580
 msgid "Ignore all"
 msgstr "Пропустить все"
 
-#: src/bin/e_fm.c:10584
+#: src/bin/e_fm.c:10585
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Во время исполнения произошла ошибка.<br>%s"
 
-#: src/bin/e_fm.c:10777
+#: src/bin/e_fm.c:10778
 msgid "Confirm Delete"
 msgstr "Подтвердите удаление"
 
-#: src/bin/e_fm.c:10787
+#: src/bin/e_fm.c:10788
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Вы действительно хотите удалить<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:10792
+#: src/bin/e_fm.c:10793
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1701,7 +1701,7 @@ msgstr ""
 "Вы действительно хотите удалить<br><hilight>все</hilight> %d выбранных "
 "файлов из:<br><hilight>%s</hilight>?"
 
-#: src/bin/e_fm.c:10802
+#: src/bin/e_fm.c:10803
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -2500,7 +2500,7 @@ msgstr "Запрос позиции"
 #: src/modules/ibar/e_mod_main.c:379 src/modules/ibar/e_mod_main.c:864
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:876 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:778 src/modules/connman/e_mod_main.c:506
+#: src/modules/mixer/e_mod_main.c:777 src/modules/connman/e_mod_main.c:459
 #: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:327
 #: src/modules/xkbswitch/e_mod_main.c:369
 msgid "Settings"
@@ -2591,7 +2591,7 @@ msgstr "Размер, позицию и замки"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1607 src/modules/shot/e_mod_main.c:746
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:746
 msgid "All"
 msgstr "Все"
 
@@ -4226,7 +4226,7 @@ msgid "Mount status:"
 msgstr "Статус:"
 
 #: src/bin/e_widget_filepreview.c:335 src/modules/comp/e_mod_config.c:487
-#: src/modules/mixer/app_mixer.c:398
+#: src/modules/mixer/app_mixer.c:394
 msgid "Type:"
 msgstr "Тип:"
 
@@ -4683,7 +4683,7 @@ msgstr "Флаги"
 msgid "Del"
 msgstr "Удалить"
 
-#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:419
+#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:415
 msgid "Edit"
 msgstr "Изменить"
 
@@ -5574,7 +5574,7 @@ msgstr "(кликабельно)"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:285 src/modules/mixer/app_mixer.c:303
+#: src/modules/mixer/app_mixer.c:281 src/modules/mixer/app_mixer.c:299
 #: src/modules/xkbswitch/e_mod_main.c:71
 msgid "Input"
 msgstr "Ввод"
@@ -7852,7 +7852,7 @@ msgid "Move Down"
 msgstr "Переместить вниз"
 
 #: src/modules/everything/evry_config.c:379
-#: src/modules/connman/e_mod_main.c:363
+#: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "Настроить"
 
@@ -9332,47 +9332,47 @@ msgstr ""
 msgid "Enable Taskbar"
 msgstr "Включить панель задач"
 
-#: src/modules/mixer/app_mixer.c:166
+#: src/modules/mixer/app_mixer.c:165
 msgid "Capture"
 msgstr "Захват"
 
-#: src/modules/mixer/app_mixer.c:168
+#: src/modules/mixer/app_mixer.c:167
 msgid "Playback"
 msgstr "Воспроизведение"
 
-#: src/modules/mixer/app_mixer.c:291
+#: src/modules/mixer/app_mixer.c:287
 msgid "Output"
 msgstr "Выход"
 
-#: src/modules/mixer/app_mixer.c:367
+#: src/modules/mixer/app_mixer.c:363
 msgid "Cards"
 msgstr "Карты"
 
-#: src/modules/mixer/app_mixer.c:380 src/modules/mixer/conf_gadget.c:279
+#: src/modules/mixer/app_mixer.c:376 src/modules/mixer/conf_gadget.c:279
 msgid "Channels"
 msgstr "Каналы"
 
-#: src/modules/mixer/app_mixer.c:390
+#: src/modules/mixer/app_mixer.c:386
 msgid "Card:"
 msgstr "Карта:"
 
-#: src/modules/mixer/app_mixer.c:394
+#: src/modules/mixer/app_mixer.c:390
 msgid "Channel:"
 msgstr "Канал:"
 
-#: src/modules/mixer/app_mixer.c:402
+#: src/modules/mixer/app_mixer.c:398
 msgid "Left:"
 msgstr "Левый:"
 
-#: src/modules/mixer/app_mixer.c:407
+#: src/modules/mixer/app_mixer.c:403
 msgid "Right:"
 msgstr "Правый:"
 
-#: src/modules/mixer/app_mixer.c:412 src/modules/mixer/e_mod_main.c:698
+#: src/modules/mixer/app_mixer.c:408 src/modules/mixer/e_mod_main.c:697
 msgid "Mute"
 msgstr "Без звука"
 
-#: src/modules/mixer/app_mixer.c:415 src/modules/mixer/conf_gadget.c:195
+#: src/modules/mixer/app_mixer.c:411 src/modules/mixer/conf_gadget.c:195
 msgid "Lock Sliders"
 msgstr "Фиксировать каналы"
 
@@ -9408,47 +9408,47 @@ msgstr "Запустить микшер..."
 msgid "Mixer Module Settings"
 msgstr "Настройки модуля микшера"
 
-#: src/modules/mixer/e_mod_main.c:14 src/modules/mixer/e_mod_main.c:70
+#: src/modules/mixer/e_mod_main.c:14 src/modules/mixer/e_mod_main.c:69
 msgid "Mixer"
 msgstr "Микшер"
 
-#: src/modules/mixer/e_mod_main.c:57
+#: src/modules/mixer/e_mod_main.c:56
 msgid "New volume"
 msgstr "Новая громкость"
 
-#: src/modules/mixer/e_mod_main.c:70
+#: src/modules/mixer/e_mod_main.c:69
 msgid "Volume changed"
 msgstr "Громкость изменена"
 
-#: src/modules/mixer/e_mod_main.c:189
+#: src/modules/mixer/e_mod_main.c:188
 msgid "Mixer Settings Updated"
 msgstr "Настройки микшера обновлены"
 
-#: src/modules/mixer/e_mod_main.c:1359
+#: src/modules/mixer/e_mod_main.c:1358
 msgid "Mixer Module"
 msgstr "Модуль Микшера"
 
-#: src/modules/mixer/e_mod_main.c:1394
+#: src/modules/mixer/e_mod_main.c:1393
 msgid "Increase Volume"
 msgstr "Прибавить звук"
 
-#: src/modules/mixer/e_mod_main.c:1395
+#: src/modules/mixer/e_mod_main.c:1394
 msgid "Decrease Volume"
 msgstr "Убавить звук"
 
-#: src/modules/mixer/e_mod_main.c:1396
+#: src/modules/mixer/e_mod_main.c:1395
 msgid "Mute Volume"
 msgstr "Без звука"
 
-#: src/modules/connman/e_mod_main.c:12
+#: src/modules/connman/e_mod_main.c:10
 msgid "Connection Manager"
 msgstr "Управление подключениями"
 
-#: src/modules/connman/e_mod_main.c:252
+#: src/modules/connman/e_mod_main.c:237
 msgid "Missing Application"
 msgstr "Приложение не найдено"
 
-#: src/modules/connman/e_mod_main.c:253
+#: src/modules/connman/e_mod_main.c:238
 msgid ""
 "This module wants to execute an external application EConnMan that does not "
 "exist.<br>Please install <b>EConnMan</b> application."
@@ -9456,7 +9456,7 @@ msgstr ""
 "Этот модуль вызывает стороннее приложение EConnMan, которое<br>не "
 "обнаружено. Пожалуйста установите приложение <b>EConnMan</b>."
 
-#: src/modules/connman/e_mod_main.c:354
+#: src/modules/connman/e_mod_main.c:315
 msgid "Wifi On"
 msgstr "Wifi включен"
 
@@ -10033,19 +10033,19 @@ msgstr "Модели"
 msgid "Label only"
 msgstr "Только метка"
 
-#: src/modules/xkbswitch/e_mod_config.c:481
+#: src/modules/xkbswitch/e_mod_config.c:483
 msgid "Add New Configuration"
 msgstr "Добавить новую конфигурацию"
 
-#: src/modules/xkbswitch/e_mod_config.c:494
+#: src/modules/xkbswitch/e_mod_config.c:496
 msgid "Available"
 msgstr "Доступно"
 
-#: src/modules/xkbswitch/e_mod_config.c:501
+#: src/modules/xkbswitch/e_mod_config.c:503
 msgid "Model"
 msgstr "Модель"
 
-#: src/modules/xkbswitch/e_mod_config.c:508
+#: src/modules/xkbswitch/e_mod_config.c:510
 msgid "Variant"
 msgstr "Вариант"
 

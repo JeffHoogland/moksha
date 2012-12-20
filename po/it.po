@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-19 18:45+0100\n"
+"POT-Creation-Date: 2012-12-20 15:39+0900\n"
 "PO-Revision-Date: 2012-12-19 18:51+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -1000,7 +1000,7 @@ msgstr "Applica"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1281
-#: src/modules/connman/e_mod_main.c:681
+#: src/modules/connman/e_mod_main.c:634
 #: src/modules/notification/e_mod_main.c:148
 msgid "Extensions"
 msgstr "Estensioni"
@@ -2504,7 +2504,7 @@ msgstr "Richiede posizione"
 #: src/modules/ibar/e_mod_main.c:379 src/modules/ibar/e_mod_main.c:864
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:876 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:777 src/modules/connman/e_mod_main.c:506
+#: src/modules/mixer/e_mod_main.c:777 src/modules/connman/e_mod_main.c:459
 #: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:327
 #: src/modules/xkbswitch/e_mod_main.c:369
 msgid "Settings"
@@ -2596,7 +2596,7 @@ msgstr "Dimensione, posizione e blocchi"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1607 src/modules/shot/e_mod_main.c:746
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:746
 msgid "All"
 msgstr "Tutto"
 
@@ -4100,12 +4100,16 @@ msgstr "Errore nella creazione della directory"
 msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
 "set."
-msgstr "Ho fallito la creazione della directory: %s.<br>Controllate di avere i necessari permessi."
+msgstr ""
+"Ho fallito la creazione della directory: %s.<br>Controllate di avere i "
+"necessari permessi."
 
 #: src/bin/e_utils.c:1014
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
-msgstr "Ho fallito la creazione della directory: %s.<br>Esiste già un file con lo stesso nome."
+msgstr ""
+"Ho fallito la creazione della directory: %s.<br>Esiste già un file con lo "
+"stesso nome."
 
 #: src/bin/e_utils.c:1172
 msgid ""
@@ -7937,7 +7941,7 @@ msgid "Move Down"
 msgstr "Sposta giù"
 
 #: src/modules/everything/evry_config.c:379
-#: src/modules/connman/e_mod_main.c:363
+#: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "Configura"
 
@@ -9520,15 +9524,15 @@ msgstr "Diminuisce volume"
 msgid "Mute Volume"
 msgstr "Silenzia audio"
 
-#: src/modules/connman/e_mod_main.c:12
+#: src/modules/connman/e_mod_main.c:10
 msgid "Connection Manager"
 msgstr "Gestore connessioni"
 
-#: src/modules/connman/e_mod_main.c:252
+#: src/modules/connman/e_mod_main.c:237
 msgid "Missing Application"
 msgstr "Applicazione mancante"
 
-#: src/modules/connman/e_mod_main.c:253
+#: src/modules/connman/e_mod_main.c:238
 msgid ""
 "This module wants to execute an external application EConnMan that does not "
 "exist.<br>Please install <b>EConnMan</b> application."
@@ -9536,7 +9540,7 @@ msgstr ""
 "Questo modulo vuole eseguire l'applicazione esterna EConnMan che non esiste."
 "<br>Si prega di installare l'applicazione <b>EConnMan</b>."
 
-#: src/modules/connman/e_mod_main.c:354
+#: src/modules/connman/e_mod_main.c:315
 msgid "Wifi On"
 msgstr "Wifi attivo"
 
