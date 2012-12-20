@@ -678,7 +678,7 @@ _e_fwin_new(E_Container *con,
    e_fm2_path_set(page->fm_obj, dev, path);
    _e_fwin_window_title_set(page);
 
-   e_win_size_min_set(fwin->win, 24, 24);
+   e_win_size_min_set(fwin->win, 360, 250);
 
    zone = e_util_zone_current_get(e_manager_current_get());
    if ((zone) && (zone->w < DEFAULT_WIDTH))
