@@ -642,12 +642,12 @@ _signal_add_show(E_Config_Dialog_Data *cfdata)
    evas = e_win_evas_get(cfdata->locals.dia->win);
    obg = e_widget_list_add(evas, 1, 0);
 
-   ol = e_widget_framelist_add(evas, "Source:", 0);
+   ol = e_widget_framelist_add(evas, _("Source:"), 0);
    entry = o = e_widget_entry_add(evas, &cfdata->locals.dia_source, NULL, NULL, NULL);
    e_widget_framelist_object_append(ol, o);
    e_widget_list_object_append(obg, ol, 1, 0, 0.5);
    
-   ol = e_widget_framelist_add(evas, "Signal:", 0);
+   ol = e_widget_framelist_add(evas, _("Signal:"), 0);
    o = e_widget_entry_add(evas, &cfdata->locals.dia_signal, NULL, NULL, NULL);
    e_widget_framelist_object_append(ol, o);
    e_widget_list_object_append(obg, ol, 1, 0, 0.5);
