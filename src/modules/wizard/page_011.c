@@ -104,7 +104,15 @@ implement_layout(void)
              break;
           }
      }
-   if (!found) return;
+   if (!found)
+     {
+        nl = E_NEW(E_Config_XKB_Layout, 1);
+        nl->name = eina_stringshare_ref(layout);
+        nl->variant = eina_stringshare_add("basic");
+        nl->model = eina_stringshare_add("default");
+        e_config->xkb.used_layouts = eina_list_prepend(e_config->xkb.used_layouts, nl);
+        e_xkb_update(-1);
+     }
    e_xkb_layout_set(layout);
 }
 
