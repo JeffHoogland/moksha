@@ -38,7 +38,7 @@ msgstr "닫기"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
 msgid "Enlightenment"
-msgstr ""
+msgstr "Enlightenment"
 
 #: src/bin/e_about.c:26
 msgid ""
@@ -10641,13 +10641,14 @@ msgstr "자동 숨기기"
 #: src/modules/shot/e_mod_main.c:563
 #, fuzzy
 msgid "Confirm Share"
-msgstr "삭제 확인"
+msgstr "공유 확인"
 
 #: src/modules/shot/e_mod_main.c:564
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
+"이 이미지는 enlightenment.org에 업로드되며 누구나 이 이미지를 볼 수 있습니다."
 
 #: src/modules/shot/e_mod_main.c:566
 #, fuzzy
@@ -10665,7 +10666,7 @@ msgstr ""
 #: src/modules/shot/e_mod_main.c:799
 #, fuzzy
 msgid "Share"
-msgstr "세밀하게"
+msgstr "공유"
 
 #: src/modules/shot/e_mod_main.c:936 src/modules/shot/e_mod_main.c:984
 #, fuzzy
@@ -10681,12 +10682,12 @@ msgstr "화면 캡처"
 #: src/modules/shot/e_mod_main.c:965
 #, fuzzy
 msgid "Shot Error"
-msgstr "마운트 오류"
+msgstr "화면 캡처 오류"
 
 #: src/modules/shot/e_mod_main.c:966
 #, fuzzy
 msgid "Cannot initialize network"
-msgstr "파일 관리자를 초기화 할 수 없습니다.\n"
+msgstr "네트워크를 초기화 할 수 없습니다.\n"
 
 #: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:735
 #, fuzzy
@@ -10701,12 +10702,12 @@ msgstr "IBar 설정"
 #: src/modules/tasks/e_mod_config.c:90
 #, fuzzy
 msgid "Show icon only"
-msgstr "아이콘명 표시"
+msgstr "아이콘만 표시"
 
 #: src/modules/tasks/e_mod_config.c:94
 #, fuzzy
 msgid "Show text only"
-msgstr "배경 화면 아이콘 표시"
+msgstr "글자만 표시"
 
 #: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
 #, fuzzy, c-format
@@ -10728,7 +10729,7 @@ msgstr ""
 #: src/modules/tiling/e_mod_config.c:185
 #, fuzzy
 msgid "Show window titles"
-msgstr "숨김 파일 표시"
+msgstr "창제목 표시"
 
 #: src/modules/tiling/e_mod_config.c:189
 #, fuzzy
@@ -10742,13 +10743,13 @@ msgstr ""
 #: src/modules/tiling/e_mod_config.c:353
 #, fuzzy
 msgid "Tiling Configuration"
-msgstr "페이저 설정"
+msgstr "타일링 설정"
 
 #: src/modules/tiling/e_mod_tiling.c:4076
 #: src/modules/tiling/e_mod_tiling.c:4140
 #, fuzzy
 msgid "Tiling"
-msgstr "투표"
+msgstr "타일링"
 
 #: src/modules/tiling/e_mod_tiling.c:4083
 #, fuzzy
@@ -10837,17 +10838,17 @@ msgstr "설정"
 #: src/modules/xkbswitch/e_mod_config.c:285
 #, fuzzy
 msgid "Models"
-msgstr "모드"
+msgstr "모델"
 
 #: src/modules/xkbswitch/e_mod_config.c:300
 #, fuzzy
 msgid "Label only"
-msgstr "라벨"
+msgstr "글자만"
 
 #: src/modules/xkbswitch/e_mod_config.c:483
 #, fuzzy
 msgid "Add New Configuration"
-msgstr "IBar 설정"
+msgstr "새로운 설정 추가"
 
 #: src/modules/xkbswitch/e_mod_config.c:496
 #, fuzzy
@@ -10878,7 +10879,7 @@ msgstr ""
 #: src/modules/notification/e_mod_main.c:73
 #, fuzzy
 msgid "Exited Presentation Mode"
-msgstr "프리젠테이션 모드"
+msgstr "프리젠테이션 모드 종료"
 
 #: src/modules/notification/e_mod_main.c:74
 msgid ""
@@ -10900,7 +10901,7 @@ msgstr ""
 #: src/modules/notification/e_mod_main.c:96
 #, fuzzy
 msgid "Exited Offline Mode"
-msgstr "오프라인 모드"
+msgstr "오프라인 모드 종료"
 
 #: src/modules/notification/e_mod_main.c:97
 msgid ""
