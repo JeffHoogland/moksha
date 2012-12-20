@@ -190,7 +190,6 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
-   _fill_data(cfdata);
    return cfdata;
 }
 
@@ -222,6 +221,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    double sc = 1.0;
    int dpi, x = 0, y = 0;
 
+   _fill_data(cfdata);
    o = e_widget_table_add(evas, 1);
 
    dpi = ecore_x_dpi_get();
@@ -238,7 +238,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 #define SCALE_OP(v) do { \
    ob = _scale_preview_new(cfdata, evas, v, &(cfdata->factor), NULL, EINA_FALSE); \
    e_widget_table_object_align_append(o, ob, x, y, 1, 1, 0, 0, 0, 0, 0.5, 0.5); \
-   if ((cfdata->factor >= (v - 0.05)) && (cfdata->factor < v + 0.05)) \
+   if (cfdata->use_custom && ((cfdata->factor >= (v - 0.05)) && (cfdata->factor < v + 0.05))) \
      _scale_preview_sel_set(ob, 1); \
    x++; if (x >= COL) { x = 0; y++; } \
 } while (0)
@@ -291,6 +291,7 @@ _adv_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *c
    E_Radio_Group *rg;
    char buff[256];
 
+   _fill_data(cfdata);
    if (cfdata->obs) cfdata->obs = eina_list_free(cfdata->obs);
    otb = e_widget_toolbook_add(evas, 24, 24);
 
