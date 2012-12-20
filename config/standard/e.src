@@ -194,8 +194,8 @@ group "E_Config" struct {
     value "backlight.transition" double: 0.5;
     value "deskenv.load_xrdb" uchar: 1;
     value "deskenv.load_xmodmap" uchar: 1;
-    value "deskenv.load_gnome" uchar: 1;
-    value "deskenv.load_kde" uchar: 1;
+    value "deskenv.load_gnome" uchar: 0;
+    value "deskenv.load_kde" uchar: 0;
     value "device_desktop" int: 1;
     value "device_auto_mount" int: 0;
     value "device_auto_open" int: 0;
