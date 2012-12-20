@@ -81,12 +81,12 @@ msgstr "아니요"
 
 #: src/bin/e_actions.c:2123 src/bin/e_actions.c:3366 src/bin/e_int_menus.c:253
 msgid "Exit"
-msgstr "종료"
+msgstr "나가기"
 
 #: src/bin/e_actions.c:2124
 #, fuzzy
 msgid "Are you sure you want to exit Enlightenment?"
-msgstr "정말 종료 하시겠습니까?"
+msgstr "정말 끝내시겠습니까?"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
@@ -739,11 +739,11 @@ msgstr ""
 
 #: src/bin/e_actions.c:3362 src/bin/e_int_menus.c:248
 msgid "Restart"
-msgstr "재시작"
+msgstr "다시 시작"
 
 #: src/bin/e_actions.c:3370
 msgid "Exit Now"
-msgstr "지금 종료"
+msgstr "지금 나가기"
 
 #: src/bin/e_actions.c:3374 src/bin/e_actions.c:3379
 msgid "Enlightenment : Mode"
@@ -894,8 +894,8 @@ msgid ""
 msgstr ""
 "이전의 설정이 새로운 설정으로 갱신되었습니다. <br> 현재 Enlightment는 개발 중"
 "에 있기 때문에 <br>이런 일이 발생할 수도 있으니 버그로 여기지 마십시오.<br>새"
-"로운 기능을 위한 의도로 이해해주시기 바랍니다. <br>번거로우시겠지만, 원하시는"
-"데로 다시 설정해주시길 바랍니다."
+"로운 기능을 위한 의도로 이해해주십시오. <br>번거로우시겠지만, 원하시는데로 다"
+"시 설정해주시길 바랍니다."
 
 #: src/bin/e_config.c:1039
 msgid ""
@@ -1088,7 +1088,7 @@ msgstr "모듈"
 
 #: src/bin/e_configure.c:403
 msgid "Preferences"
-msgstr "환경 설정"
+msgstr "기본 설정"
 
 #: src/bin/e_container.c:124
 #, c-format
@@ -1119,7 +1119,7 @@ msgstr ""
 
 #: src/bin/e_desklock.c:541
 msgid "Please enter your unlock password"
-msgstr "비밀번호를 입력해주세요."
+msgstr "암호를 입력해주세요."
 
 #: src/bin/e_desklock.c:926
 #, fuzzy
@@ -1360,22 +1360,22 @@ msgstr "코드 %i을(를) %s 프로그램이 남겼습니다."
 #: src/bin/e_exec.c:742
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
-msgstr "%s가 인터럽트 시그널에 의해 중단되었습니다."
+msgstr "%s이(가) 인터럽트 시그널에 의해 중단되었습니다."
 
 #: src/bin/e_exec.c:745
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
-msgstr "%s가 종료 시그널에 의해 중단되었습니다."
+msgstr "%s이(가) 종료 시그널에 의해 중단되었습니다."
 
 #: src/bin/e_exec.c:749
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
-msgstr "%s가 중단 시그널에 의해 중단되었습니다."
+msgstr "%s이(가) 중단 시그널에 의해 중단되었습니다."
 
 #: src/bin/e_exec.c:752
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
-msgstr "%s가 부동소수점 오류에 의해 중단되었습니다."
+msgstr "%s이(가) 부동소수점 오류에 의해 중단되었습니다."
 
 #: src/bin/e_exec.c:756
 #, c-format
@@ -1385,7 +1385,7 @@ msgstr ""
 #: src/bin/e_exec.c:760
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
-msgstr "%s가 세그먼테이션 오류에 의해 중단되었습니다."
+msgstr "%s이(가) 세그먼테이션 오류에 의해 중단되었습니다."
 
 #: src/bin/e_exec.c:764
 #, c-format
@@ -1400,12 +1400,12 @@ msgstr ""
 #: src/bin/e_exec.c:771
 #, c-format
 msgid "%s was interrupted by a Bus Error."
-msgstr "%s가 버스 오류에 의해 중단되었습니다."
+msgstr "%s이(가) 버스 오류에 의해 중단되었습니다."
 
 #: src/bin/e_exec.c:774
 #, c-format
 msgid "%s was interrupted by the signal number %i."
-msgstr "%s가 %i번 시그널에 의해 중단되었습니다."
+msgstr "%s이(가) %i번 시그널에 의해 중단되었습니다."
 
 #: src/bin/e_exec.c:830
 msgid ""
@@ -1453,7 +1453,7 @@ msgstr "존재하지 않는 경로"
 #: src/bin/e_fm.c:1064
 #, c-format
 msgid "%s doesn't exist."
-msgstr "%s는 존재하지 않음."
+msgstr "%s은(는) 존재하지 않음."
 
 #: src/bin/e_fm.c:2826 src/bin/e_fm.c:3783
 #, fuzzy, c-format
@@ -1523,12 +1523,12 @@ msgstr "정렬"
 #: src/bin/e_fm.c:8708 src/modules/fileman/e_mod_config.c:374
 #, fuzzy
 msgid "Directories First"
-msgstr "디렉토리 검색"
+msgstr "디렉터리 검색"
 
 #: src/bin/e_fm.c:8714 src/modules/fileman/e_mod_config.c:378
 #, fuzzy
 msgid "Directories Last"
-msgstr "디렉토리 검색"
+msgstr "디렉터리 검색"
 
 #: src/bin/e_fm.c:8747 src/bin/e_fm.c:8907
 #: src/modules/fileman/e_mod_config.c:302
@@ -1635,7 +1635,7 @@ msgstr "모듈 읽기 오류"
 #: src/bin/e_fm.c:9519 src/bin/e_fm.c:9544
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
-msgstr "새 디렉토리"
+msgstr "새 디렉터리"
 
 #: src/bin/e_fm.c:9519 src/bin/e_fm.c:9544
 #, fuzzy
@@ -1654,7 +1654,7 @@ msgstr ""
 #: src/bin/e_fm.c:9653
 #, fuzzy
 msgid "Directory"
-msgstr "새 디렉토리"
+msgstr "새 디렉터리"
 
 #: src/bin/e_fm.c:9658
 #: src/modules/conf_applications/e_int_config_defapps.c:312
@@ -2161,7 +2161,7 @@ msgstr "같은 클래스의 이전."
 
 #: src/bin/e_int_border_locks.c:291
 msgid "Do not allow the border to change on this window"
-msgstr "이 창의 테두리 변경을 허용하지 않음"
+msgstr "이 창의 테두리를 바꿀 수 없음"
 
 #: src/bin/e_int_border_locks.c:294
 #, fuzzy
@@ -2289,12 +2289,12 @@ msgstr "아이콘 편집"
 
 #: src/bin/e_int_border_menu.c:589
 msgid "Create Icon"
-msgstr "아이콘 생성"
+msgstr "아이콘 만들기"
 
 #: src/bin/e_int_border_menu.c:597
 #, fuzzy
 msgid "Add to Favorites Menu"
-msgstr "즐겨찾기 메뉴 에 추가"
+msgstr "즐겨찾기 메뉴에 추가"
 
 #: src/bin/e_int_border_menu.c:602
 msgid "Add to IBar"
@@ -3125,7 +3125,7 @@ msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment이 종료 시그널 관리자를 설정 할 수 없습니다.\n"
+"Enlightenment이 나가기 시그널 관리자를 설정 할 수 없습니다.\n"
 "메모리가 부족합니까?"
 
 #: src/bin/e_main.c:315
@@ -3955,7 +3955,7 @@ msgstr "자동 숨기기"
 
 #: src/bin/e_shelf.c:2462
 msgid "Refresh"
-msgstr "주파수"
+msgstr "새로 고침"
 
 #: src/bin/e_startup.c:66
 #, fuzzy
@@ -4136,7 +4136,7 @@ msgstr "자식 프로세스 오류:<br><br>%s<Br>"
 
 #: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
-msgstr "종료할 수 없음 - 이모탈 창."
+msgstr "끝낼 수 없음 - 이모탈 창."
 
 #: src/bin/e_utils.c:246
 msgid ""
@@ -4232,7 +4232,7 @@ msgstr[1] "%li 분전"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1170
 #: src/modules/wizard/page_020.c:24
 msgid "Unknown"
-msgstr "알수없음"
+msgstr "알 수 없음"
 
 #: src/bin/e_utils.c:1006 src/bin/e_utils.c:1014
 #, fuzzy
@@ -4502,7 +4502,7 @@ msgstr "즐겨찾기에 추가"
 #: src/modules/conf_theme/e_int_config_theme.c:739
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
-msgstr "상위 디렉토리로"
+msgstr "상위 디렉터리로"
 
 #: src/modules/access/e_mod_config.c:33
 #, fuzzy
@@ -5191,7 +5191,7 @@ msgstr "시작 응용프로그램"
 #: src/modules/conf_applications/e_int_config_apps.c:129
 #: src/modules/conf_applications/e_mod_main.c:45
 msgid "Restart Applications"
-msgstr "응용프로그램 재시작"
+msgstr "응용프로그램 다시 시작"
 
 #: src/modules/conf_applications/e_int_config_apps.c:144
 #: src/modules/conf_applications/e_mod_main.c:37
@@ -6564,11 +6564,11 @@ msgstr "Enlightenment IBar 모듈"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
-msgstr "기본 디렉토리"
+msgstr "기본 디렉터리"
 
 #: src/modules/conf_paths/e_int_config_paths.c:204
 msgid "User Defined Directories"
-msgstr "사용자 정의 디렉토리"
+msgstr "사용자 정의 디렉터리"
 
 #: src/modules/conf_paths/e_int_config_env.c:36
 #: src/modules/conf_paths/e_mod_main.c:24
@@ -6583,7 +6583,7 @@ msgstr "삽입된 페이지"
 
 #: src/modules/conf_paths/e_mod_main.c:20
 msgid "Search Directories"
-msgstr "디렉토리 검색"
+msgstr "디렉터리 검색"
 
 #: src/modules/conf_performance/e_int_config_engine.c:37
 msgid "Engine Settings"
@@ -6783,7 +6783,7 @@ msgstr "배경 화면 설정"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:589
 #, fuzzy
 msgid "Go up a directory"
-msgstr "상위 디렉토리로"
+msgstr "상위 디렉터리로"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:468
 #: src/modules/conf_theme/e_int_config_wallpaper.c:614
@@ -7294,7 +7294,7 @@ msgstr "대형 스타일"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:167
 msgid "Font Settings"
-msgstr "폰트 설정"
+msgstr "글꼴 설정"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:252
 msgid "Tiny"
@@ -7470,11 +7470,11 @@ msgstr "시작"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:182
 msgid "Desk Change"
-msgstr "데스크톱 변경"
+msgstr "데스크톱 바꾸기"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:183
 msgid "Background Change"
-msgstr "배경 변경"
+msgstr "배경 바꾸기"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:191
 #: src/modules/conf_theme/e_mod_main.c:249
@@ -7720,7 +7720,7 @@ msgstr "창 크기 변경 정보"
 #: src/modules/winlist/e_int_config_winlist.c:210
 #: src/modules/tasks/e_mod_config.c:86
 msgid "Display"
-msgstr "화면"
+msgstr "표시"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:168
 #, fuzzy
@@ -8678,12 +8678,12 @@ msgstr "Typebuf"
 #: src/modules/everything/evry_plug_apps.c:1209
 #: src/modules/fileman/e_fwin.c:2160 src/modules/fileman/e_fwin.c:2523
 msgid "Open with..."
-msgstr "다른 프로그램으로 열기.."
+msgstr "다른 프로그램으로 열기..."
 
 #: src/modules/everything/evry_plug_apps.c:1175
 #, fuzzy
 msgid "Open File..."
-msgstr "다른 프로그램으로 열기.."
+msgstr "다른 프로그램으로 열기..."
 
 #: src/modules/everything/evry_plug_apps.c:1189
 #, fuzzy
@@ -8804,7 +8804,7 @@ msgstr "캐시된 파일을 검색"
 #: src/modules/everything/evry_plug_files.c:1495
 #, fuzzy
 msgid "Cache visited directories"
-msgstr "캐시 디렉토리를 방문한"
+msgstr "캐시 디렉터리를 방문한"
 
 #: src/modules/everything/evry_plug_files.c:1499
 #, fuzzy
@@ -8882,7 +8882,7 @@ msgstr "다른 응용 프로그램에 ..."
 #: src/modules/fileman/e_fwin.c:2114
 #, fuzzy
 msgid "Go To Parent Directory"
-msgstr "상위 디렉토리로 이동"
+msgstr "상위 디렉터리로 이동"
 
 #: src/modules/fileman/e_fwin.c:2124
 #, fuzzy
@@ -9217,7 +9217,7 @@ msgstr ""
 #: src/modules/fileman/e_mod_menu.c:411
 #, fuzzy
 msgid "Current Directory"
-msgstr "새 디렉토리"
+msgstr "새 디렉터리"
 
 #: src/modules/fileman/e_mod_menu.c:417
 #, fuzzy
@@ -9562,7 +9562,7 @@ msgstr "IBar"
 
 #: src/modules/ibar/e_mod_main.c:847
 msgid "Create new Icon"
-msgstr "새 아이콘 생성"
+msgstr "새 아이콘 만들기"
 
 #: src/modules/ibar/e_mod_main.c:881
 #, fuzzy, c-format
@@ -10187,7 +10187,7 @@ msgstr "볼륨 변화에 배경 화면 알림을 Diplay"
 
 #: src/modules/mixer/conf_module.c:153
 msgid "Launch mixer..."
-msgstr "믹서를 시작 ..."
+msgstr "믹서 실행..."
 
 #: src/modules/mixer/conf_module.c:188
 msgid "Mixer Module Settings"
@@ -10631,7 +10631,7 @@ msgstr ""
 
 #: src/modules/shot/e_mod_main.c:530
 msgid "Screenshot is available at this location:"
-msgstr "스크린샷을 여기서 받으실 수 있습니다."
+msgstr "스크린샷을 여기서 받으실 수 있습니다:"
 
 #: src/modules/shot/e_mod_main.c:539
 #, fuzzy
@@ -11082,10 +11082,10 @@ msgstr ""
 #~ msgstr "시스템을 대기 상태로 전환하시겠습니까?"
 
 #~ msgid "Create a new Directory"
-#~ msgstr "새 디렉토리 작성"
+#~ msgstr "새 디렉터리 작성"
 
 #~ msgid "New Directory Name:"
-#~ msgstr "디렉토리 명:"
+#~ msgstr "디렉터리 명:"
 
 #~ msgid "Maximize vertically"
 #~ msgstr "수직으로 최대화"
