@@ -9945,6 +9945,7 @@ _e_fm2_view_image_sel(E_Fm2_Smart_Data *sd, const char *title,
 
    dia = e_dialog_new(NULL, "E", "_fm2_view_image_select_dialog");
    if (!dia) return;
+   e_dialog_resizable_set(dia, 1);
    e_dialog_title_set(dia, title);
 
    o = e_widget_fsel_add(dia->win->evas, "/", sd->realpath, NULL, NULL, NULL, sd, NULL, sd, 1);

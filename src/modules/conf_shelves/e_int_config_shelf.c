@@ -114,12 +114,14 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *ol, *ow, *ot, *of;
    char buf[64];
    E_Zone *zone;
 
+   e_dialog_resizable_set(cfd->dia, 1);
+   
    ol = e_widget_list_add(evas, 0, 0);
    zone = cfdata->cfd->dia->win->border ? cfdata->cfd->dia->win->border->zone : e_zone_current_get(cfdata->cfd->con);
    snprintf(buf, sizeof(buf), "%s %d", _("Configured Shelves: Display"), zone->num);

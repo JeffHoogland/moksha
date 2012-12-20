@@ -449,6 +449,9 @@ e_import_config_dialog_show(E_Container *con, const char *path, Ecore_End_Cb ok,
    if (!import) return NULL;
 
    dia = e_dialog_new(con, "E", "_import_config_dialog");
+   if (!dia) return NULL;
+   e_dialog_resizable_set(dia, 1);
+   
    e_dialog_title_set(dia, _("Import Settings..."));
    dia->data = import;
    import->dia = dia;

@@ -146,6 +146,9 @@ e_import_dialog_show(E_Container *con, const char *dev, const char *path, Ecore_
    if (!id) return NULL;
 
    dia = e_dialog_new(con, "E", "_import_fsel_dialog");
+   if (!dia) return NULL;
+   e_dialog_resizable_set(dia, 1);
+   
    dia->data = id;
    id->dia = dia;
    id->ok = ok, id->cancel = cancel;

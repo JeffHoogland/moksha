@@ -273,6 +273,7 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    else
      strftime(buf, sizeof(buf), "shot-%Y-%m-%d_%H-%M-%S.jpg", tm);
    fsel_dia = dia = e_dialog_new(scon, "E", "_e_shot_fsel");
+   e_dialog_resizable_set(dia, 1);
    e_dialog_title_set(dia, _("Select screenshot save location"));
    o = e_widget_fsel_add(dia->win->evas, "desktop", "/", 
                          buf,
@@ -517,6 +518,7 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    ecore_con_url_post(url_up, fdata, fsize, "application/x-e-shot");
 
    dia = e_dialog_new(scon, "E", "_e_shot_share");
+   e_dialog_resizable_set(dia, 1);
    e_dialog_title_set(dia, _("Uploading screenshot"));
    
    o = e_widget_list_add(dia->win->evas, 0, 0);

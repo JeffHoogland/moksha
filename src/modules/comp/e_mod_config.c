@@ -1146,6 +1146,8 @@ _advanced_create_widgets(E_Config_Dialog *cfd,
    Evas_Object *ob,*ol, *of, *otb, *oi, *orec0, *tab;
    E_Radio_Group *rg;
 
+   e_dialog_resizable_set(cfd->dia, 1);
+   
    orec0 = evas_object_rectangle_add(evas);
    evas_object_name_set(orec0, "style_shadows");
 

@@ -691,74 +691,74 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    of = e_widget_table_add(evas, 0);
    ob = e_widget_check_add(evas, _("Position"),
                            &(cfdata->remember.apply_pos));
-   e_widget_table_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Size"),
                            &(cfdata->remember.apply_size));
-   e_widget_table_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Stacking"),
                            &(cfdata->remember.apply_layer));
-   e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Locks"),
                            &(cfdata->remember.apply_locks));
-   e_widget_table_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 3, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Border style"),
                            &(cfdata->remember.apply_border));
-   e_widget_table_object_append(of, ob, 0, 4, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 4, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Icon Preference"),
                            &(cfdata->remember.apply_icon_pref));
-   e_widget_table_object_append(of, ob, 0, 5, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 5, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Stickiness"),
                            &(cfdata->remember.apply_sticky));
-   e_widget_table_object_append(of, ob, 0, 6, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 6, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Virtual Desktop"),
                            &(cfdata->remember.apply_desktop));
-   e_widget_table_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 0, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Shaded state"),
                            &(cfdata->remember.apply_shade));
-   e_widget_table_object_append(of, ob, 1, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Fullscreen state"),
                            &(cfdata->remember.apply_fullscreen));
-   e_widget_table_object_append(of, ob, 1, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Current Screen"),
                            &(cfdata->remember.apply_zone));
-   e_widget_table_object_append(of, ob, 1, 3, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 3, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Skip Window List"),
                            &(cfdata->remember.apply_skip_winlist));
-   e_widget_table_object_append(of, ob, 1, 4, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 4, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Skip Pager"),
                            &(cfdata->remember.apply_skip_pager));
-   e_widget_table_object_append(of, ob, 1, 5, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 5, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Skip Taskbar"),
                            &(cfdata->remember.apply_skip_taskbar));
-   e_widget_table_object_append(of, ob, 1, 6, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 6, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Offer Resistance"),
                            &(cfdata->remember.offer_resistance));
-   e_widget_table_object_append(of, ob, 1, 7, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 1, 7, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Application file or name (.desktop)"),
                            &(cfdata->remember.apply_desktop_file));
-   e_widget_table_object_append(of, ob, 0, 7, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 7, 1, 1, 1, 0, 1, 0);
    ob = e_widget_entry_add(evas, &cfdata->desktop, NULL, NULL, NULL);
-   e_widget_table_object_append(of, ob, 0, 8, 2, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 8, 2, 1, 1, 0, 1, 0);
    e_widget_toolbook_page_append(o, NULL, _("Properties"), of, 1, 1, 1, 1, 0.5, 0.0);
 
    of = e_widget_table_add(evas, 0);
    ob = e_widget_check_add(evas, _("Match only one window"),
                            &(cfdata->remember.apply_first_only));
-   e_widget_table_object_append(of, ob, 0, 0, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 0, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_check_add(evas, _("Always focus on start"),
                            &(cfdata->remember.set_focus_on_start));
-   e_widget_table_object_append(of, ob, 0, 1, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_check_add(evas, _("Keep current properties"),
                            &(cfdata->remember.keep_settings));
-   e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 1);
+   e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
 
    if (cfdata->command)
      {
         ob = e_widget_check_add(evas, _("Start this program on login"),
                                 &(cfdata->remember.apply_run));
-        e_widget_table_object_append(of, ob, 0, 3, 1, 1, 1, 1, 1, 1);
+        e_widget_table_object_append(of, ob, 0, 3, 1, 1, 1, 0, 1, 0);
      }
    e_widget_toolbook_page_append(o, NULL, _("Options"), of, 1, 1, 1, 1, 0.5, 0.0);
    e_widget_toolbook_page_show(o, 0);
