@@ -892,6 +892,7 @@ e_winlist_modifiers_set(int mod, E_Winlist_Activate_Type type)
    _hold_mod = mod;
    _hold_count = 0;
    _activate_type = type;
+   if (type == E_WINLIST_ACTIVATE_TYPE_MOUSE) _hold_count++;
    if (_hold_mod & ECORE_EVENT_MODIFIER_SHIFT) _hold_count++;
    if (_hold_mod & ECORE_EVENT_MODIFIER_CTRL) _hold_count++;
    if (_hold_mod & ECORE_EVENT_MODIFIER_ALT) _hold_count++;
@@ -1464,8 +1465,10 @@ _e_winlist_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    ev = event;
    if (ev->window != _input_window) return ECORE_CALLBACK_PASS_ON;
-   e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_WINLIST,
-                                    E_OBJECT(_winlist->zone), ev);
+   if (e_bindings_mouse_up_event_handle(E_BINDING_CONTEXT_WINLIST, E_OBJECT(_winlist->zone), ev))
+     return ECORE_CALLBACK_RENEW;
+   if (_activate_type != E_WINLIST_ACTIVATE_TYPE_MOUSE) return ECORE_CALLBACK_RENEW;
+   if (!--_hold_count) e_winlist_hide();
    return ECORE_CALLBACK_PASS_ON;
 }
 
