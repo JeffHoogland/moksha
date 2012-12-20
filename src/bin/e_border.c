@@ -2153,10 +2153,10 @@ e_border_focus_set_with_pointer(E_Border *bd)
 
    if (e_config->focus_policy == E_FOCUS_SLOPPY)
      {
-        if (bd != e_border_under_pointer_get(bd->desk, bd))
-          {
-             e_border_pointer_warp_to_center(bd);
-          }
+        E_Border *pbd;
+        pbd = e_border_under_pointer_get(bd->desk, bd);
+        if (pbd && (pbd != bd)) e_border_pointer_warp_to_center(bd);
+        else e_border_focus_set(bd, 1, 0);
      }
    else
      {
