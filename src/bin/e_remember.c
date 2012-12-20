@@ -806,6 +806,20 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
         //		    bd->x = (rem->prop.pos_x * bd->zone->w) / rem->prop.res_x;
         //		  if (bd->zone->h != rem->prop.res_y)
         //		    bd->y = (rem->prop.pos_y * bd->zone->h) / rem->prop.res_y;
+        if (
+            /* upper left */
+            (!E_INSIDE(bd->x, bd->y, 0, 0, bd->zone->w, bd->zone->h)) &&
+            /* upper right */
+            (!E_INSIDE(bd->x + bd->w, bd->y, 0, 0, bd->zone->w, bd->zone->h)) &&
+            /* lower left */
+            (!E_INSIDE(bd->x, bd->y + bd->h, 0, 0, bd->zone->w, bd->zone->h)) &&
+            /* lower right */
+            (!E_INSIDE(bd->x + bd->w, bd->y + bd->h, 0, 0, bd->zone->w, bd->zone->h))
+           )
+          {
+             e_border_center_pos_get(bd, &bd->x, &bd->y);
+             rem->prop.pos_x = bd->x, rem->prop.pos_y = bd->y;
+          }
         bd->x += bd->zone->x;
         bd->y += bd->zone->y;
         bd->placed = 1;
