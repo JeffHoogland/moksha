@@ -68,6 +68,8 @@ static Eina_Bool      _evry_cb_key_down(void *data, int type, void *event);
 static Eina_Bool      _evry_cb_selection_notify(void *data, int type, void *event);
 static Eina_Bool      _evry_cb_mouse(void *data, int type, void *event);
 
+static Eina_Bool      _evry_delay_hide_timer(void *data);
+
 static Eina_List *windows = NULL;
 
 #ifdef CHECK_TIME
@@ -161,6 +163,15 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
    E_OBJECT_CHECK_RETURN(zone, 0);
    E_OBJECT_TYPE_CHECK_RETURN(zone, E_ZONE_TYPE, 0);
 
+   if (popup)
+     {
+        // only one popup please
+        Eina_List *l;
+        EINA_LIST_FOREACH(windows, l, win)
+          if (win->grab)
+            return NULL;
+     }
+   
    if (!(win = _evry_window_new(zone, edge)))
      return NULL;
 
@@ -265,7 +276,18 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
 
    win->func.hide = &_evry_hide_func;
 
+   win->delay_hide_action = ecore_timer_add(0.2, _evry_delay_hide_timer, win);
+
    return win;
+}
+
+static Eina_Bool
+_evry_delay_hide_timer(void *data)
+{
+   Evry_Window *win = data;
+   win->delay_hide_action = NULL;
+
+   return ECORE_CALLBACK_CANCEL;   
 }
 
 static void
@@ -343,6 +365,9 @@ evry_hide(Evry_Window *win, int clear)
 
    EINA_LIST_FREE (win->handlers, ev)
      ecore_event_handler_del(ev);
+
+   if (win->delay_hide_action)
+     ecore_timer_del(win->delay_hide_action);
 
    if (win->grab)
      e_grabinput_release(win->ewin->evas_win,
@@ -1951,7 +1976,7 @@ _evry_cb_key_down(void *data, int type __UNUSED__, void *event)
         return ECORE_CALLBACK_PASS_ON;
      }
 #endif
-   else if (ev->modifiers)
+   else if ((ev->modifiers) && (!win->delay_hide_action))
      {
         Eina_List *l;
         E_Config_Binding_Key *binding;

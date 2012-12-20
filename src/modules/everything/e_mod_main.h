@@ -53,6 +53,8 @@ struct _Evry_Window
 
   /* only to be used by creator of win */
   void *data;
+
+  Ecore_Timer *delay_hide_action;
 };
 
 struct _Evry_Selector
