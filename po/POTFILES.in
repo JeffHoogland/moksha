@@ -159,6 +159,7 @@ src/modules/conf_display/e_int_config_screensaver.c
 src/modules/conf_display/e_int_config_dpms.c
 src/modules/conf_display/e_mod_main.c
 src/modules/conf_edgebindings/e_int_config_edgebindings.c
+src/modules/conf_edgebindings/e_int_config_signalbindings.c
 src/modules/conf_edgebindings/e_mod_main.c
 src/modules/conf_interaction/e_int_config_interaction.c
 src/modules/conf_interaction/e_int_config_mouse.c
