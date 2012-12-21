@@ -2682,7 +2682,7 @@ msgstr "Schwerkraft"
 
 #: src/bin/e_int_border_prop.c:469
 msgid "States"
-msgstr "Stati"
+msgstr "Zustände"
 
 #: src/bin/e_int_border_prop.c:472
 msgid "Take Focus"
