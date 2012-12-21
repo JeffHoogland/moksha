@@ -225,6 +225,12 @@ img/icon_system-restart.png \
 img/icon_system-shutdown.png \
 img/icon_system-suspend-hibernate.png \
 img/icon_system-suspend.png \
+img/icon_wallpaper_center.png \
+img/icon_wallpaper_fill.png \
+img/icon_wallpaper_pan.png \
+img/icon_wallpaper_stretch.png \
+img/icon_wallpaper_tile.png \
+img/icon_wallpaper_within.png \
 img/ic_win_move.png \
 img/ic_win_resize.png \
 img/inset_circle_tiny.png \

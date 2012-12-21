@@ -32,6 +32,13 @@
    ICON("preferences-desktop-signal-bindings",    80, "icon_preferences-desktop-signal-bindings.png")
    ICON("preferences-variables",                  80, "icon_preferences-variables.png")
    ICON("preferences-interaction",                80, "icon_preferences-interaction.png")
+
+   ICON("enlightenment/wallpaper_stretch",          80, "icon_wallpaper_stretch.png")
+   ICON("enlightenment/wallpaper_center",           80, "icon_wallpaper_center.png")
+   ICON("enlightenment/wallpaper_tile",             80, "icon_wallpaper_tile.png")
+   ICON("enlightenment/wallpaper_scale_aspect_in",  80, "icon_wallpaper_within.png")
+   ICON("enlightenment/wallpaper_scale_aspect_out", 80, "icon_wallpaper_fill.png")
+   ICON("enlightenment/wallpaper_pan",              80, "icon_wallpaper_pan.png")
 #if 0
 //   ICON("", 80, "")
 #endif
