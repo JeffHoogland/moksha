@@ -125,9 +125,33 @@ _cb_changed_lock_sliders(void *data, Evas_Object *obj __UNUSED__)
 }
 
 static void
+_disable_channel_editor(E_Mixer_App_Dialog_Data *app)
+{
+   struct e_mixer_app_ui_channel_editor *ui = &app->ui.channel_editor;
+
+   e_widget_entry_text_set(ui->card, "");
+   e_widget_entry_text_set(ui->channel, "");
+   e_widget_entry_text_set(ui->type, "");
+
+   e_widget_slider_value_int_set(ui->left, 0);
+   e_widget_slider_value_int_set(ui->right, 0);
+   e_widget_check_checked_set(ui->mute, 0);
+   e_widget_check_checked_set(ui->lock_sliders, 0);
+
+   e_widget_disabled_set(ui->left, 1);
+   e_widget_disabled_set(ui->right, 1);
+   e_widget_disabled_set(ui->mute, 1);
+   e_widget_disabled_set(ui->lock_sliders, 1);
+}
+
+static void
 _update_channel_editor_state(E_Mixer_App_Dialog_Data *app, const E_Mixer_Channel_State state)
 {
    struct e_mixer_app_ui_channel_editor *ui = &app->ui.channel_editor;
+
+   e_widget_disabled_set(ui->left, 0);
+   e_widget_disabled_set(ui->right, 0);
+   e_widget_disabled_set(ui->lock_sliders, 0);
 
    e_widget_slider_value_int_set(ui->left, state.left);
    e_widget_slider_value_int_set(ui->right, state.right);
@@ -154,7 +178,10 @@ _populate_channel_editor(E_Mixer_App_Dialog_Data *app)
    card_name = e_mod_mixer_card_name_get(app->card);
    
    if (!card_name)
-     return;
+     {
+        _disable_channel_editor(app);
+        return;
+     }
    
    e_widget_entry_text_set(ui->card, card_name);
    eina_stringshare_del(card_name);
@@ -321,7 +348,10 @@ static void
 select_card(E_Mixer_App_Dialog_Data *app)
 {
    _populate_channels(app);
-   e_widget_ilist_selected_set(app->ui.channels.list, 1);
+   if (e_widget_ilist_count(app->ui.channels.list) > 0)
+     e_widget_ilist_selected_set(app->ui.channels.list, 1);
+   else
+     _disable_channel_editor(app);
 }
 
 static void
