@@ -994,6 +994,7 @@ _e_int_menus_virtuals_icon_cb(void *data, E_Menu *m, E_Menu_Item *mi)
    bgfile = e_bg_file_get(desk->zone->container->num, desk->zone->num, desk->x, desk->y);
    o = e_thumb_icon_add(m->evas);
    e_thumb_icon_file_set(o, bgfile, "e/desktop/background");
+   eina_stringshare_del(bgfile);
    e_thumb_icon_size_set(o, tw, th);
    e_thumb_icon_begin(o);
    mi->icon_object = o;

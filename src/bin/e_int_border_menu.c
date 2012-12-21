@@ -898,6 +898,7 @@ _e_border_menu_cb_sendto_icon_pre(void *data, E_Menu *m, E_Menu_Item *mi)
                           desk->x, desk->y);
    o = e_thumb_icon_add(m->evas);
    e_thumb_icon_file_set(o, bgfile, "e/desktop/background");
+   eina_stringshare_del(bgfile);
    e_thumb_icon_size_set(o, tw, th);
    e_thumb_icon_begin(o);
    mi->icon_object = o;

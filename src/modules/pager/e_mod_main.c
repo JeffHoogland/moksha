@@ -403,6 +403,7 @@ _pager_desk_livethumb_setup(Pager_Desk *pd)
    bgfile = e_bg_file_get(pd->desk->zone->container->num, pd->desk->zone->num, pd->desk->x, pd->desk->y);
    edje_object_file_set(o, bgfile, "e/desktop/background");
    e_livethumb_thumb_set(pd->o_bg, o);
+   eina_stringshare_del(bgfile);
 }
 
 static Pager_Desk *

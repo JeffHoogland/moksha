@@ -221,7 +221,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
         const char *pfile = "";
 
         edje_object_file_get(zone->bg_object, &pfile, NULL);
-        if (!e_util_strcmp(pfile, bgfile)) return;
+        if (!e_util_strcmp(pfile, bgfile)) goto end;
      }
 
    if (transition == E_BG_TRANSITION_NONE)
@@ -296,6 +296,8 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
                                  zone->bg_object);
         edje_object_signal_emit(zone->transition_object, "e,action,start", "e");
      }
+end:
+   eina_stringshare_del(bgfile);
 }
 
 EAPI void

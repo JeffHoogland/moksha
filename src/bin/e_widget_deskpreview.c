@@ -84,6 +84,7 @@ e_widget_deskpreview_desk_add(Evas_Object *obj, E_Zone *zone, int x, int y, int 
    dd->thumb = e_icon_add(evas_object_evas_get(obj));
    e_icon_fill_inside_set(dd->thumb, EINA_FALSE);
    e_icon_file_edje_set(dd->thumb, bgfile, "e/desktop/background");
+   eina_stringshare_del(bgfile);
    evas_object_show(dd->thumb);
    edje_object_part_swallow(dd->icon, "e.swallow.content", dd->thumb);
 
@@ -265,6 +266,7 @@ _e_wid_cb_bg_update(void *data, int type, void *event)
 
         bgfile = e_bg_file_get(dd->con, dd->zone, dd->x, dd->y);
         e_icon_file_edje_set(dd->thumb, bgfile, "e/desktop/background");
+        eina_stringshare_del(bgfile);
      }
 
    return ECORE_CALLBACK_PASS_ON;

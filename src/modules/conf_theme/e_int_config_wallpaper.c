@@ -332,11 +332,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cw = cfdata->cfd->data;
    if (cw->specific_config)
      {
-        const char *bg;
-
         /* specific config passed in. set for that only */
-        bg = e_bg_file_get(cw->con_num, cw->zone_num, cw->desk_x, cw->desk_y);
-        if (bg) cfdata->bg = eina_stringshare_add(bg);
+        cfdata->bg = e_bg_file_get(cw->con_num, cw->zone_num, cw->desk_x, cw->desk_y);
      }
    else
      {
