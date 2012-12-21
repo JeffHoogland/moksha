@@ -144,7 +144,7 @@ e_bg_config_get(int container_num, int zone_num, int desk_x, int desk_y)
    return bg;
 }
 
-EAPI const char *
+EAPI Eina_Stringshare *
 e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
    const E_Config_Desktop_Background *cfbg;
@@ -188,8 +188,8 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
         else if ((bgfile) && (bgfile[0]))
           ok = 1;
         if (!ok)
-          bgfile = e_theme_edje_file_get("base/theme/background",
-                                         "e/desktop/background");
+          bgfile = eina_stringshare_add(e_theme_edje_file_get("base/theme/background",
+                                         "e/desktop/background"));
      }
 
    return bgfile;
