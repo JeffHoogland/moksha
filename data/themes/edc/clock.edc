@@ -429,6 +429,12 @@ group { name: "e/modules/clock/digital";
                 min: 0 1;
              }
              fixed: 0 1;
+             visible: 0;
+          }
+          description { state: "date" 0.0;
+             inherit: "default" 0.0;
+             visible: 1;
+             fixed: 1 1;
           }
        }
                        
@@ -450,6 +456,7 @@ group { name: "e/modules/clock/digital";
          script {
             set_int(do_date, 1);
             set_state(PART:"timearea", "date", 0.0);
+            set_state(PART:"e.text.today", "date", 0.0);
             reset();
          }
       }
@@ -458,6 +465,7 @@ group { name: "e/modules/clock/digital";
          script {
             set_int(do_date, 0);
             set_state(PART:"timearea", "default", 0.0);
+            set_state(PART:"e.text.today", "default", 0.0);
             reset();
          }
       }
