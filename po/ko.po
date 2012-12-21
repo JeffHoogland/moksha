@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-21 22:10+0900\n"
+"POT-Creation-Date: 2012-12-21 19:02+0100\n"
 "PO-Revision-Date: 2012-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -518,7 +518,7 @@ msgstr "다른 창으로 건너뛰거나 시작..."
 #: src/bin/e_actions.c:3254 src/bin/e_actions.c:3257 src/bin/e_actions.c:3260
 #: src/bin/e_actions.c:3262 src/bin/e_actions.c:3264 src/bin/e_actions.c:3266
 #: src/bin/e_actions.c:3269 src/bin/e_actions.c:3271 src/bin/e_actions.c:3273
-#: src/modules/backlight/e_mod_main.c:493
+#: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
 #: src/modules/shot/e_mod_main.c:745 src/modules/shot/e_mod_main.c:980
@@ -757,7 +757,7 @@ msgstr "지금 최대 절전모드로 전환"
 msgid "Lock"
 msgstr "잠그기"
 
-#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1355
+#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1357
 msgid "Cleanup Windows"
 msgstr "창 정리"
 
@@ -2757,7 +2757,7 @@ msgstr "자주 실행하는 프로그램"
 msgid "Applications"
 msgstr "프로그램"
 
-#: src/bin/e_int_menus.c:193 src/bin/e_int_menus.c:1313
+#: src/bin/e_int_menus.c:193 src/bin/e_int_menus.c:1315
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2765,7 +2765,7 @@ msgstr "프로그램"
 msgid "Windows"
 msgstr "창"
 
-#: src/bin/e_int_menus.c:203 src/bin/e_int_menus.c:1368
+#: src/bin/e_int_menus.c:203 src/bin/e_int_menus.c:1370
 msgid "Lost Windows"
 msgstr "잃어버린 창"
 
@@ -2792,32 +2792,32 @@ msgstr "서랍"
 msgid "Show/Hide All Windows"
 msgstr "모든 창 표시/숨기기"
 
-#: src/bin/e_int_menus.c:701
+#: src/bin/e_int_menus.c:699
 msgid "No applications"
 msgstr "프로그램 없음"
 
-#: src/bin/e_int_menus.c:942
+#: src/bin/e_int_menus.c:944
 msgid "Set Virtual Desktops"
 msgstr "가상 데스크톱 설정"
 
-#: src/bin/e_int_menus.c:1319 src/bin/e_int_menus.c:1512
+#: src/bin/e_int_menus.c:1321 src/bin/e_int_menus.c:1514
 msgid "No windows"
 msgstr "창 없음"
 
-#: src/bin/e_int_menus.c:1425 src/bin/e_int_menus.c:1525
+#: src/bin/e_int_menus.c:1427 src/bin/e_int_menus.c:1527
 msgid "Untitled window"
 msgstr "이름 없는 창"
 
-#: src/bin/e_int_menus.c:1619 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1621 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:191
 msgid "Shelf"
 msgstr "서랍"
 
-#: src/bin/e_int_menus.c:1687
+#: src/bin/e_int_menus.c:1689
 msgid "Add a Shelf"
 msgstr "서랍 추가"
 
-#: src/bin/e_int_menus.c:1694
+#: src/bin/e_int_menus.c:1696
 msgid "Delete a Shelf"
 msgstr "서랍 삭제"
 
@@ -4268,7 +4268,7 @@ msgstr "접근 설정"
 msgid "Backlight"
 msgstr "백라이트"
 
-#: src/modules/backlight/e_mod_main.c:493
+#: src/modules/backlight/e_mod_main.c:509
 msgid "Backlight Controls"
 msgstr "백라이트 제어"
 
@@ -9731,7 +9731,7 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "빠른 접근 이름/식별자"
 
-#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:935
+#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
 msgstr "시스템 표시줄 오류"
 
@@ -9740,23 +9740,23 @@ msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "시스템 표시줄의 서랍에 꼭 맞게 배경을 보이지 않도록 설정할 수 없습니다."
 
-#: src/modules/systray/e_mod_main.c:926
+#: src/modules/systray/e_mod_main.c:940
 msgid "Another systray exists"
 msgstr "다른 시스템 표시줄이 존재합니다"
 
-#: src/modules/systray/e_mod_main.c:927
+#: src/modules/systray/e_mod_main.c:941
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "단 하나의 시스템 표시줄만 존재할 수 있으며 이미 다른 시스템 표시줄이 존재합니"
 "다."
 
-#: src/modules/systray/e_mod_main.c:936
+#: src/modules/systray/e_mod_main.c:950
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Everything 아래로 배치하도록 설정한 시스템 표시줄은 서랍에서 동작하지 않습니"
 "다."
 
-#: src/modules/systray/e_mod_main.c:1147
+#: src/modules/systray/e_mod_main.c:1161
 msgid "Systray"
 msgstr "시스템 표시줄"
 
