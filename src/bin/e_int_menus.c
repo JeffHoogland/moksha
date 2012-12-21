@@ -518,9 +518,7 @@ e_int_menus_menu_augmentation_point_disabled_set(const char *menu, Eina_Bool dis
 EINTERN void
 e_int_menus_init(void)
 {
-   if (e_config->menu_apps_show)
-     _e_int_menus_app_menu_default = efreet_menu_get();
-   else
+   if (!e_config->menu_apps_show)
      {
         char buf[PATH_MAX];
 
@@ -788,7 +786,11 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
           _e_int_menus_app_menus = eina_hash_string_superfast_new((void *)efreet_menu_free);
      }
    else
-     menu = _e_int_menus_app_menu_default;
+     {
+        menu = _e_int_menus_app_menu_default;
+        if (!menu)
+          menu = _e_int_menus_app_menu_default = efreet_menu_get();
+     }
 
    if (menu) return menu;
    if (dir)
