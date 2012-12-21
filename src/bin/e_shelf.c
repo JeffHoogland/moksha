@@ -1967,7 +1967,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
         if (!inside)
           {
              inside = E_INSIDE(ev->root.x, ev->root.y, es->zone->x, es->zone->y, es->zone->w + 4, es->zone->h + 4);
-             x = ev->root.x - es->zone->x, y = ev->root.y - es->zone->x;
+             x = ev->root.x - es->zone->x, y = ev->root.y - es->zone->y;
              if (inside)
                inside = (
                          ((E_INSIDE(x, y, es->x, es->y, es->w, es->h)) ||
