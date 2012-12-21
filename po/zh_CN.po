@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-20 15:39+0900\n"
+"POT-Creation-Date: 2012-12-21 08:39+0100\n"
 "PO-Revision-Date: 2011-03-18 13:15+0800\n"
 "Last-Translator: TeliuTe <teliute@163.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -29,7 +29,7 @@ msgstr "关于 Enlightenment"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2526 src/modules/mixer/app_mixer.c:520
+#: src/modules/fileman/e_fwin.c:2528 src/modules/mixer/app_mixer.c:550
 msgid "Close"
 msgstr "关闭"
 
@@ -83,7 +83,7 @@ msgstr "杀死"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2128 src/bin/e_actions.c:2222
 #: src/bin/e_actions.c:2282 src/bin/e_actions.c:2342 src/bin/e_actions.c:2407
 #: src/bin/e_actions.c:2472 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10410 src/bin/e_fm.c:10776
+#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10411 src/bin/e_fm.c:10777
 #: src/bin/e_screensaver.c:191
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "No"
@@ -101,7 +101,7 @@ msgstr "您确定要退出吗？"
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10413 src/bin/e_screensaver.c:189
+#: src/bin/e_fm.c:10414 src/bin/e_screensaver.c:189
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "Yes"
 msgstr "是"
@@ -156,11 +156,11 @@ msgstr "您确定要休眠吗？"
 #: src/bin/e_actions.c:2982 src/bin/e_actions.c:2987 src/bin/e_actions.c:2992
 #: src/bin/e_actions.c:3278 src/bin/e_actions.c:3282 src/bin/e_actions.c:3287
 #: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3305
-#: src/modules/shot/e_mod_main.c:984
+#: src/modules/shot/e_mod_main.c:987
 msgid "Window : Actions"
 msgstr "窗口：动作"
 
-#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11541
+#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11542
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "移动"
@@ -514,11 +514,11 @@ msgid "Switch To Desktop... (All Screens)"
 msgstr "切换到桌面 ...(全部屏幕)"
 
 #: src/bin/e_actions.c:3224 src/bin/e_actions.c:3228
-#: src/modules/winlist/e_mod_main.c:37 src/modules/winlist/e_mod_main.c:39
-#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:44
-#: src/modules/winlist/e_mod_main.c:47 src/modules/winlist/e_mod_main.c:50
-#: src/modules/winlist/e_mod_main.c:53 src/modules/winlist/e_mod_main.c:55
+#: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
+#: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
+#: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
 #: src/modules/winlist/e_mod_main.c:57 src/modules/winlist/e_mod_main.c:59
+#: src/modules/winlist/e_mod_main.c:61 src/modules/winlist/e_mod_main.c:63
 msgid "Window : List"
 msgstr "窗口：列表"
 
@@ -539,7 +539,7 @@ msgstr ""
 #: src/modules/backlight/e_mod_main.c:493
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:742 src/modules/shot/e_mod_main.c:977
+#: src/modules/shot/e_mod_main.c:745 src/modules/shot/e_mod_main.c:980
 msgid "Screen"
 msgstr "屏幕"
 
@@ -832,17 +832,18 @@ msgid "Select"
 msgstr "选择"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9957
-#: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:191
-#: src/bin/e_import_config_dialog.c:534
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9958
+#: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:194
+#: src/bin/e_import_config_dialog.c:537
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
 #: src/modules/conf_intl/e_int_config_imc_import.c:124
 #: src/modules/conf_theme/e_int_config_theme_import.c:123
-#: src/modules/fileman/e_int_config_mime_edit.c:314
+#: src/modules/fileman/e_int_config_mime_edit.c:316
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:378
-#: src/modules/shot/e_mod_main.c:290 src/modules/shot/e_mod_main.c:540
-#: src/modules/shot/e_mod_main.c:566 src/modules/shot/e_mod_main.c:801
+#: src/modules/shot/e_mod_main.c:291 src/modules/shot/e_mod_main.c:542
+#: src/modules/shot/e_mod_main.c:568 src/modules/shot/e_mod_main.c:804
 #: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "取消"
@@ -891,16 +892,17 @@ msgstr ""
 #: src/bin/e_config.c:1732 src/bin/e_config.c:2366
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:613
-#: src/bin/e_fm.c:9956 src/bin/e_fm.c:10682 src/bin/e_fm_prop.c:624
-#: src/bin/e_import_config_dialog.c:533 src/bin/e_int_border_remember.c:318
+#: src/bin/e_fm.c:9957 src/bin/e_fm.c:10683 src/bin/e_fm_prop.c:624
+#: src/bin/e_import_config_dialog.c:536 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:431
 #: src/bin/e_module.c:798 src/bin/e_sys.c:618 src/bin/e_sys.c:659
 #: src/bin/e_utils.c:695 src/modules/comp/e_mod_config.c:918
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:436 src/modules/cpufreq/e_mod_main.c:465
 #: src/modules/cpufreq/e_mod_main.c:492
-#: src/modules/fileman/e_int_config_mime_edit.c:313
+#: src/modules/fileman/e_int_config_mime_edit.c:315
 #: src/modules/xkbswitch/e_mod_config.c:528
 msgid "OK"
 msgstr "确定"
@@ -1165,7 +1167,7 @@ msgstr "常规名称"
 msgid "Window Class"
 msgstr "窗口类"
 
-#: src/bin/e_eap_editor.c:757 src/modules/fileman/e_int_config_mime.c:168
+#: src/bin/e_eap_editor.c:757 src/modules/fileman/e_int_config_mime.c:170
 msgid "Categories"
 msgstr "分类"
 
@@ -1179,7 +1181,7 @@ msgstr "桌面文件"
 
 #: src/bin/e_eap_editor.c:781 src/bin/e_int_border_prop.c:450
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
-#: src/modules/comp/e_mod_config.c:1527
+#: src/modules/comp/e_mod_config.c:1531
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
@@ -1217,17 +1219,18 @@ msgstr "选择一个图标"
 msgid "Select an Executable"
 msgstr "选择一个可执行文件"
 
-#: src/bin/e_entry.c:480 src/bin/e_fm.c:9108 src/bin/e_fm.c:10775
+#: src/bin/e_entry.c:480 src/bin/e_fm.c:9108 src/bin/e_fm.c:10776
 #: src/bin/e_shelf.c:1792 src/bin/e_shelf.c:2475
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:247
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
-#: src/modules/conf_paths/e_int_config_env.c:315
-#: src/modules/conf_shelves/e_int_config_shelf.c:135
-#: src/modules/conf_shelves/e_int_config_shelf.c:390
+#: src/modules/conf_paths/e_int_config_env.c:317
+#: src/modules/conf_shelves/e_int_config_shelf.c:137
+#: src/modules/conf_shelves/e_int_config_shelf.c:392
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
 #: src/modules/ibar/e_mod_config.c:112 src/modules/ibar/e_mod_config.c:199
 #: src/modules/quickaccess/e_mod_config.c:277
@@ -1239,7 +1242,7 @@ msgstr "删除"
 msgid "Cut"
 msgstr "剪切"
 
-#: src/bin/e_entry.c:499 src/bin/e_fm.c:9033 src/bin/e_fm.c:11536
+#: src/bin/e_entry.c:499 src/bin/e_fm.c:9033 src/bin/e_fm.c:11537
 msgid "Copy"
 msgstr "复制"
 
@@ -1434,10 +1437,10 @@ msgstr "无法弹出设备"
 
 #: src/bin/e_fm.c:6565 src/bin/e_fm.c:6598 src/bin/e_fm.c:9493
 #: src/bin/e_fm.c:9505 src/bin/e_fm.c:9608 src/bin/e_fm.c:9613
-#: src/bin/e_fm.c:9629 src/bin/e_fm.c:9634 src/bin/e_fm.c:10260
-#: src/bin/e_fm.c:10263 src/bin/e_fm.c:10266 src/bin/e_fm.c:10293
-#: src/bin/e_fm.c:10297 src/bin/e_fm.c:10300 src/bin/e_fm.c:10358
-#: src/bin/e_fm.c:10583 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
+#: src/bin/e_fm.c:9629 src/bin/e_fm.c:9634 src/bin/e_fm.c:10261
+#: src/bin/e_fm.c:10264 src/bin/e_fm.c:10267 src/bin/e_fm.c:10294
+#: src/bin/e_fm.c:10298 src/bin/e_fm.c:10301 src/bin/e_fm.c:10359
+#: src/bin/e_fm.c:10584 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
 msgid "Error"
 msgstr "错误"
 
@@ -1498,12 +1501,12 @@ msgstr ""
 msgid "Actions..."
 msgstr "动作"
 
-#: src/bin/e_fm.c:8832 src/bin/e_fm.c:9054 src/bin/e_fm.c:11549
+#: src/bin/e_fm.c:8832 src/bin/e_fm.c:9054 src/bin/e_fm.c:11550
 msgid "Link"
 msgstr "连接"
 
-#: src/bin/e_fm.c:9116 src/bin/e_fm.c:10412 src/bin/e_shelf.c:2470
-#: src/modules/conf_shelves/e_int_config_shelf.c:138
+#: src/bin/e_fm.c:9116 src/bin/e_fm.c:10413 src/bin/e_shelf.c:2470
+#: src/modules/conf_shelves/e_int_config_shelf.c:140
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
 #: src/modules/quickaccess/e_mod_config.c:304
@@ -1638,7 +1641,7 @@ msgstr "Fileman 设置"
 msgid "File Icon Settings"
 msgstr "Fileman 设置"
 
-#: src/bin/e_fm.c:9834 src/bin/e_fm.c:10049
+#: src/bin/e_fm.c:9834 src/bin/e_fm.c:10050
 msgid "Set background..."
 msgstr "设置背景..."
 
@@ -1647,7 +1650,7 @@ msgstr "设置背景..."
 msgid "Clear background"
 msgstr "设置背景..."
 
-#: src/bin/e_fm.c:9849 src/bin/e_fm.c:10077
+#: src/bin/e_fm.c:9849 src/bin/e_fm.c:10078
 msgid "Set overlay..."
 msgstr "设定覆盖..."
 
@@ -1656,83 +1659,83 @@ msgstr "设定覆盖..."
 msgid "Clear overlay"
 msgstr "设定覆盖..."
 
-#: src/bin/e_fm.c:10171 src/bin/e_fm.c:10507
+#: src/bin/e_fm.c:10172 src/bin/e_fm.c:10508
 #, c-format
 msgid "Rename %s to:"
 msgstr "重命名 %s 为："
 
-#: src/bin/e_fm.c:10173 src/bin/e_fm.c:10508
+#: src/bin/e_fm.c:10174 src/bin/e_fm.c:10509
 msgid "Rename File"
 msgstr "重命名文件"
 
-#: src/bin/e_fm.c:10260 src/bin/e_fm.c:10293
+#: src/bin/e_fm.c:10261 src/bin/e_fm.c:10294
 #, c-format
 msgid "%s already exists!"
 msgstr ""
 
-#: src/bin/e_fm.c:10263 src/bin/e_fm.c:10297
+#: src/bin/e_fm.c:10264 src/bin/e_fm.c:10298
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr ""
 
-#: src/bin/e_fm.c:10266 src/bin/e_fm.c:10300
+#: src/bin/e_fm.c:10267 src/bin/e_fm.c:10301
 #, fuzzy
 msgid "Internal filemanager error :("
 msgstr "挂载后，打开文件管理器"
 
-#: src/bin/e_fm.c:10354 src/bin/e_fm.c:10575
+#: src/bin/e_fm.c:10355 src/bin/e_fm.c:10576
 msgid "Retry"
 msgstr "重试"
 
-#: src/bin/e_fm.c:10355 src/bin/e_fm.c:10576 src/bin/e_fm.c:11557
+#: src/bin/e_fm.c:10356 src/bin/e_fm.c:10577 src/bin/e_fm.c:11558
 msgid "Abort"
 msgstr "关于"
 
-#: src/bin/e_fm.c:10411
+#: src/bin/e_fm.c:10412
 msgid "No to all"
 msgstr "全部选否"
 
-#: src/bin/e_fm.c:10414
+#: src/bin/e_fm.c:10415
 msgid "Yes to all"
 msgstr "全部选是"
 
-#: src/bin/e_fm.c:10417
+#: src/bin/e_fm.c:10418
 msgid "Warning"
 msgstr "警告"
 
-#: src/bin/e_fm.c:10420
+#: src/bin/e_fm.c:10421
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "文件已经存在，覆盖吗？<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10578
+#: src/bin/e_fm.c:10579
 #, fuzzy
 msgid "Move Source"
 msgstr "移动到"
 
-#: src/bin/e_fm.c:10579
+#: src/bin/e_fm.c:10580
 msgid "Ignore this"
 msgstr "忽略"
 
-#: src/bin/e_fm.c:10580
+#: src/bin/e_fm.c:10581
 msgid "Ignore all"
 msgstr "忽略所有"
 
-#: src/bin/e_fm.c:10585
+#: src/bin/e_fm.c:10586
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "执行操作时产生一个错误。<br>%s"
 
-#: src/bin/e_fm.c:10778
+#: src/bin/e_fm.c:10779
 msgid "Confirm Delete"
 msgstr "确认删除"
 
-#: src/bin/e_fm.c:10788
+#: src/bin/e_fm.c:10789
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "您确定要删除 <br><hilight>%s</hilight> 吗？"
 
-#: src/bin/e_fm.c:10793
+#: src/bin/e_fm.c:10794
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1741,7 +1744,7 @@ msgstr ""
 "您确定要删除 <br>被选中的 %d 个文件吗？它们位于：<br><hilight>%s</hilight> "
 "中。"
 
-#: src/bin/e_fm.c:10803
+#: src/bin/e_fm.c:10804
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1788,7 +1791,7 @@ msgstr ""
 #: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1123 src/bin/e_shelf.c:2363
 #: src/modules/comp/e_mod_config.c:493
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
-#: src/modules/conf_display/e_int_config_desk.c:186
+#: src/modules/conf_display/e_int_config_desk.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
 msgid "Name:"
 msgstr "名字："
@@ -1852,7 +1855,7 @@ msgstr "分组"
 msgid "Others:"
 msgstr "其它"
 
-#: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:470
+#: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:473
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:218
 #: src/modules/conf_theme/e_int_config_theme.c:1414
@@ -1926,7 +1929,7 @@ msgstr "外观"
 #: src/modules/conf_applications/e_int_config_apps.c:270
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
-#: src/modules/conf_applications/e_int_config_apps_personal.c:95
+#: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:876
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
@@ -1995,11 +1998,11 @@ msgid ""
 "valid image?"
 msgstr "Elightenment 无法导入该主题。<br><br>您确定那是一个有效的主题吗？"
 
-#: src/bin/e_import_dialog.c:156
+#: src/bin/e_import_dialog.c:159
 msgid "Select a Picture..."
 msgstr "选择图片..."
 
-#: src/bin/e_import_dialog.c:190
+#: src/bin/e_import_dialog.c:193
 #, fuzzy
 msgid "Use"
 msgstr "用户"
@@ -2013,56 +2016,56 @@ msgid ""
 "Enlightenment was unable to import the picture<br>due to conversion errors."
 msgstr "由于转换出错，Enlightenment 未能导入图片。"
 
-#: src/bin/e_import_config_dialog.c:452
+#: src/bin/e_import_config_dialog.c:455
 #, fuzzy
 msgid "Import Settings..."
 msgstr "图像导入设定"
 
-#: src/bin/e_import_config_dialog.c:484
+#: src/bin/e_import_config_dialog.c:487
 msgid "Fill and Stretch Options"
 msgstr "填充拉伸选项"
 
-#: src/bin/e_import_config_dialog.c:486
+#: src/bin/e_import_config_dialog.c:489
 msgid "Stretch"
 msgstr "拉伸"
 
-#: src/bin/e_import_config_dialog.c:490 src/bin/e_int_border_prop.c:236
+#: src/bin/e_import_config_dialog.c:493 src/bin/e_int_border_prop.c:236
 #, c-format
 msgid "Center"
 msgstr "居中"
 
-#: src/bin/e_import_config_dialog.c:494
+#: src/bin/e_import_config_dialog.c:497
 msgid "Tile"
 msgstr "平铺"
 
-#: src/bin/e_import_config_dialog.c:499
+#: src/bin/e_import_config_dialog.c:502
 #, fuzzy
 msgid "Within"
 msgstr "内部"
 
-#: src/bin/e_import_config_dialog.c:503
+#: src/bin/e_import_config_dialog.c:506
 msgid "Fill"
 msgstr "填充"
 
-#: src/bin/e_import_config_dialog.c:507
+#: src/bin/e_import_config_dialog.c:510
 #, fuzzy
 msgid "Pan"
 msgstr "框"
 
-#: src/bin/e_import_config_dialog.c:515
+#: src/bin/e_import_config_dialog.c:518
 msgid "File Quality"
 msgstr "文件质量"
 
-#: src/bin/e_import_config_dialog.c:516
+#: src/bin/e_import_config_dialog.c:519
 msgid "Use original file"
 msgstr "使用源文件"
 
-#: src/bin/e_import_config_dialog.c:518
+#: src/bin/e_import_config_dialog.c:521
 #, c-format
 msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
-#: src/bin/e_import_config_dialog.c:523
+#: src/bin/e_import_config_dialog.c:526
 #, fuzzy
 msgid "Fill Color"
 msgstr "颜色"
@@ -2555,7 +2558,7 @@ msgstr "请求位置"
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
-#: src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/conf_shelves/e_int_config_shelf.c:147
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
@@ -2649,7 +2652,7 @@ msgstr "尺寸、位置和锁定"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:746
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:749
 msgid "All"
 msgstr "全部"
 
@@ -2751,19 +2754,19 @@ msgstr "模块"
 msgid "Module Settings"
 msgstr "模块设置"
 
-#: src/bin/e_int_config_modules.c:198
+#: src/bin/e_int_config_modules.c:200
 msgid "Load"
 msgstr "加载"
 
-#: src/bin/e_int_config_modules.c:203 src/bin/e_module.c:534
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:534
 msgid "Unload"
 msgstr "卸载"
 
-#: src/bin/e_int_config_modules.c:337 src/bin/e_int_config_modules.c:624
+#: src/bin/e_int_config_modules.c:339 src/bin/e_int_config_modules.c:626
 msgid "No modules selected."
 msgstr "没有选择模块"
 
-#: src/bin/e_int_config_modules.c:622
+#: src/bin/e_int_config_modules.c:624
 msgid "More than one module selected."
 msgstr "选中了多个模块。"
 
@@ -2839,7 +2842,7 @@ msgstr "应用程序"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:26 src/modules/tiling/e_mod_tiling.c:4138
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4138
 msgid "Windows"
 msgstr "窗口"
 
@@ -2890,7 +2893,7 @@ msgid "Untitled window"
 msgstr "其他窗口"
 
 #: src/bin/e_int_menus.c:1618 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
-#: src/modules/conf_shelves/e_int_config_shelf.c:189
+#: src/modules/conf_shelves/e_int_config_shelf.c:191
 msgid "Shelf"
 msgstr "书架"
 
@@ -3679,7 +3682,7 @@ msgstr "您是否要卸载这个模块？<br>"
 
 #: src/bin/e_module.c:535 src/bin/e_shelf.c:1792
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
-#: src/modules/conf_shelves/e_int_config_shelf.c:390
+#: src/modules/conf_shelves/e_int_config_shelf.c:392
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Keep"
 msgstr ""
@@ -3839,7 +3842,7 @@ msgstr ""
 msgid "Rename Shelf"
 msgstr "重命名文件"
 
-#: src/bin/e_shelf.c:2436 src/modules/conf_shelves/e_int_config_shelf.c:141
+#: src/bin/e_shelf.c:2436 src/modules/conf_shelves/e_int_config_shelf.c:143
 #: src/modules/ibar/e_mod_main.c:858
 msgid "Contents"
 msgstr "内容"
@@ -4111,6 +4114,7 @@ msgstr[1] "%li 分钟前"
 #: src/modules/comp/e_mod_config.c:516
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1170
 #: src/modules/wizard/page_020.c:24
@@ -4241,14 +4245,15 @@ msgstr "%li 分钟前"
 #: src/bin/e_widget_config_list.c:60 src/modules/comp/e_mod_config.c:1096
 #: src/modules/conf_applications/e_int_config_apps.c:266
 #: src/modules/conf_applications/e_int_config_apps.c:287
-#: src/modules/conf_applications/e_int_config_apps_personal.c:91
+#: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:809
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:197
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:244
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:292
-#: src/modules/conf_paths/e_int_config_env.c:309
-#: src/modules/conf_shelves/e_int_config_shelf.c:133
+#: src/modules/conf_paths/e_int_config_env.c:311
+#: src/modules/conf_shelves/e_int_config_shelf.c:135
 #: src/modules/ibar/e_mod_config.c:110
 #: src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
@@ -4327,7 +4332,7 @@ msgid "Mount status:"
 msgstr ""
 
 #: src/bin/e_widget_filepreview.c:335 src/modules/comp/e_mod_config.c:487
-#: src/modules/mixer/app_mixer.c:394
+#: src/modules/mixer/app_mixer.c:424
 msgid "Type:"
 msgstr "类型："
 
@@ -4610,42 +4615,42 @@ msgstr ""
 msgid "Toggle calendar"
 msgstr "显示工具栏"
 
-#: src/modules/comp/e_mod_comp.c:3700 src/modules/comp/e_mod_comp.c:3722
-#: src/modules/comp/e_mod_comp.c:4135 src/modules/comp/e_mod_comp.c:4145
+#: src/modules/comp/e_mod_comp.c:3710 src/modules/comp/e_mod_comp.c:3732
+#: src/modules/comp/e_mod_comp.c:4145 src/modules/comp/e_mod_comp.c:4155
 #, fuzzy
 msgid "Compositor Error"
 msgstr "卸载错误"
 
-#: src/modules/comp/e_mod_comp.c:3701
+#: src/modules/comp/e_mod_comp.c:3711
 msgid "Another compositor is already running<br>on your display server."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:3723
+#: src/modules/comp/e_mod_comp.c:3733
 msgid ""
 "Your display server does not support the<br>compositor overlay window. This "
 "is needed<br>for it to function."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:3797
+#: src/modules/comp/e_mod_comp.c:3807
 #, fuzzy
 msgid "Compositor Warning"
 msgstr "位置"
 
-#: src/modules/comp/e_mod_comp.c:3798
+#: src/modules/comp/e_mod_comp.c:3808
 msgid ""
 "Your display driver does not support OpenGL, or<br>no OpenGL engines were "
 "compiled or installed for<br>Evas or Ecore-Evas. Falling back to software "
 "engine."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:4136
+#: src/modules/comp/e_mod_comp.c:4146
 msgid ""
 "Your display server does not support XComposite,<br>or Ecore-X was built "
 "without XComposite support.<br>Note that for composite support you will also "
 "need<br>XRender and XFixes support in X11 and Ecore."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:4146
+#: src/modules/comp/e_mod_comp.c:4156
 msgid ""
 "Your display server does not support XDamage<br>or Ecore was built without "
 "XDamage support."
@@ -4809,7 +4814,7 @@ msgstr ""
 msgid "Del"
 msgstr "删除"
 
-#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:415
+#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:445
 msgid "Edit"
 msgstr "编辑"
 
@@ -4832,175 +4837,175 @@ msgstr ""
 msgid "Menus"
 msgstr "菜单"
 
-#: src/modules/comp/e_mod_config.c:1162
+#: src/modules/comp/e_mod_config.c:1164
 #, fuzzy
 msgid "Smooth scaling"
 msgstr "缩放"
 
-#: src/modules/comp/e_mod_config.c:1165
+#: src/modules/comp/e_mod_config.c:1167
 msgid "Styles"
 msgstr "样式"
 
-#: src/modules/comp/e_mod_config.c:1171
+#: src/modules/comp/e_mod_config.c:1173
 #, fuzzy
 msgid "Effects"
 msgstr "空闲效果"
 
-#: src/modules/comp/e_mod_config.c:1175
+#: src/modules/comp/e_mod_config.c:1177
 #, fuzzy
 msgid "Sync windows"
 msgstr "所有窗口"
 
-#: src/modules/comp/e_mod_config.c:1177
+#: src/modules/comp/e_mod_config.c:1179
 msgid "Loose sync"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1179
+#: src/modules/comp/e_mod_config.c:1181
 msgid "Grab Server during draw"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1181
+#: src/modules/comp/e_mod_config.c:1183
 msgid "Initial draw timeout for newly mapped windows"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1183
+#: src/modules/comp/e_mod_config.c:1185
 #, fuzzy, c-format
 msgid "%1.2f Seconds"
 msgstr "%.2f 秒"
 
-#: src/modules/comp/e_mod_config.c:1185
+#: src/modules/comp/e_mod_config.c:1187
 msgid "Sync"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1190 src/modules/comp/e_mod_config.c:1532
+#: src/modules/comp/e_mod_config.c:1192 src/modules/comp/e_mod_config.c:1536
 msgid "Software"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1196 src/modules/comp/e_mod_config.c:1538
+#: src/modules/comp/e_mod_config.c:1198 src/modules/comp/e_mod_config.c:1542
 #, fuzzy
 msgid "OpenGL"
 msgstr "打开"
 
-#: src/modules/comp/e_mod_config.c:1199
+#: src/modules/comp/e_mod_config.c:1201
 #, fuzzy
 msgid "OpenGL options"
 msgstr "选项"
 
-#: src/modules/comp/e_mod_config.c:1201 src/modules/comp/e_mod_config.c:1512
+#: src/modules/comp/e_mod_config.c:1203 src/modules/comp/e_mod_config.c:1516
 msgid "Tear-free updates (VSynced)"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1203
+#: src/modules/comp/e_mod_config.c:1205
 msgid "Texture from pixmap"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1210
+#: src/modules/comp/e_mod_config.c:1212
 msgid "Assume swapping method:"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1213
+#: src/modules/comp/e_mod_config.c:1215
 #, fuzzy
 msgid "Auto"
 msgstr "自动隐藏"
 
-#: src/modules/comp/e_mod_config.c:1215
+#: src/modules/comp/e_mod_config.c:1217
 msgid "Invalidate (full redraw)"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1217
+#: src/modules/comp/e_mod_config.c:1219
 msgid "Copy from back to front"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1219
+#: src/modules/comp/e_mod_config.c:1221
 msgid "Double buffered swaps"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1221
+#: src/modules/comp/e_mod_config.c:1223
 msgid "Triple buffered swaps"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1231
+#: src/modules/comp/e_mod_config.c:1233
 #: src/modules/conf_performance/e_mod_main.c:19
 msgid "Engine"
 msgstr "引擎"
 
-#: src/modules/comp/e_mod_config.c:1235
+#: src/modules/comp/e_mod_config.c:1237
 msgid "Send flush"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1237
+#: src/modules/comp/e_mod_config.c:1239
 #, fuzzy
 msgid "Send dump"
 msgstr "发送到"
 
-#: src/modules/comp/e_mod_config.c:1239 src/modules/comp/e_mod_config.c:1518
+#: src/modules/comp/e_mod_config.c:1241 src/modules/comp/e_mod_config.c:1522
 #, fuzzy
 msgid "Don't composite fullscreen windows"
 msgstr "允许窗口位于全屏窗口之上"
 
-#: src/modules/comp/e_mod_config.c:1267
+#: src/modules/comp/e_mod_config.c:1269
 msgid "Memory"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1315
+#: src/modules/comp/e_mod_config.c:1317
 #, fuzzy
 msgid "Show Framerate"
 msgstr "帧速率"
 
-#: src/modules/comp/e_mod_config.c:1317
+#: src/modules/comp/e_mod_config.c:1319
 msgid "Rolling average frame count"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1319
+#: src/modules/comp/e_mod_config.c:1321
 #, fuzzy, c-format
 msgid "%1.0f Frames"
 msgstr "%1.0f F"
 
-#: src/modules/comp/e_mod_config.c:1323
+#: src/modules/comp/e_mod_config.c:1325
 #, fuzzy
 msgid "Corner"
 msgstr "弹出尺寸"
 
-#: src/modules/comp/e_mod_config.c:1326
+#: src/modules/comp/e_mod_config.c:1328
 #, fuzzy
 msgid "Top Left"
 msgstr "修改边缘"
 
-#: src/modules/comp/e_mod_config.c:1329
+#: src/modules/comp/e_mod_config.c:1331
 #, fuzzy
 msgid "Top Right"
 msgstr "弹出高度"
 
-#: src/modules/comp/e_mod_config.c:1332
+#: src/modules/comp/e_mod_config.c:1334
 msgid "Bottom Left"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1335
+#: src/modules/comp/e_mod_config.c:1337
 msgid "Bottom Right"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1340
+#: src/modules/comp/e_mod_config.c:1342
 msgid "Debug"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1515
+#: src/modules/comp/e_mod_config.c:1519
 msgid "Smooth scaling of window content"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1521
+#: src/modules/comp/e_mod_config.c:1525
 #, fuzzy
 msgid "Select default style"
 msgstr "选择边框样式"
 
-#: src/modules/comp/e_mod_config.c:1542
+#: src/modules/comp/e_mod_config.c:1546
 msgid "To reset compositor:"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1544
+#: src/modules/comp/e_mod_config.c:1548
 msgid "Ctrl+Alt+Shift+Home"
 msgstr ""
 
-#: src/modules/comp/e_mod_config.c:1547
+#: src/modules/comp/e_mod_config.c:1551
 #, fuzzy
 msgid "Rendering"
 msgstr "记住顺序"
@@ -5306,7 +5311,7 @@ msgid "Wrap desktops around when flipping"
 msgstr "翻转时反转桌面？"
 
 #: src/modules/conf_display/e_int_config_desks.c:200
-#: src/modules/conf_display/e_int_config_desk.c:192
+#: src/modules/conf_display/e_int_config_desk.c:198
 #, fuzzy
 msgid "Desktop Window Profile"
 msgstr "桌面文件"
@@ -5343,25 +5348,25 @@ msgstr "%1.1f 秒"
 msgid "Flip Animation"
 msgstr "翻转动画"
 
-#: src/modules/conf_display/e_int_config_desk.c:53
+#: src/modules/conf_display/e_int_config_desk.c:54
 msgid "Desk Settings"
 msgstr "桌面设置"
 
-#: src/modules/conf_display/e_int_config_desk.c:185
+#: src/modules/conf_display/e_int_config_desk.c:191
 msgid "Desktop Name"
 msgstr "桌面名称"
 
-#: src/modules/conf_display/e_int_config_desk.c:193
+#: src/modules/conf_display/e_int_config_desk.c:199
 #, fuzzy
 msgid "Profile Name:"
 msgstr "配置文件"
 
-#: src/modules/conf_display/e_int_config_desk.c:200
+#: src/modules/conf_display/e_int_config_desk.c:206
 msgid "Desktop Wallpaper"
 msgstr "桌面壁纸"
 
-#: src/modules/conf_display/e_int_config_desk.c:206
-#: src/modules/fileman/e_int_config_mime.c:182
+#: src/modules/conf_display/e_int_config_desk.c:212
+#: src/modules/fileman/e_int_config_mime.c:184
 msgid "Set"
 msgstr "设定"
 
@@ -5576,6 +5581,7 @@ msgstr "桌面"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:11
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:3
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:462
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
@@ -5604,23 +5610,26 @@ msgstr "边缘绑定"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:251
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:298
-#: src/modules/conf_paths/e_int_config_env.c:312
+#: src/modules/conf_paths/e_int_config_env.c:314
 msgid "Modify"
 msgstr "修改"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:816
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:255
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:302
 msgid "Delete All"
 msgstr "全部删除"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:820
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:306
 msgid "Restore Default Bindings"
 msgstr "恢复默认绑定"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:825
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:209
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:264
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:312
@@ -5633,6 +5642,7 @@ msgid "Mouse Button"
 msgstr "鼠标设置"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:832
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:216
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:271
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:319
@@ -5743,18 +5753,57 @@ msgstr ""
 msgid "(clickable)"
 msgstr "可点击的边"
 
-#: src/modules/conf_edgebindings/e_mod_main.c:17
-#: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:281 src/modules/mixer/app_mixer.c:299
-#: src/modules/xkbswitch/e_mod_main.c:71
-msgid "Input"
-msgstr "输入"
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
+#, fuzzy
+msgid "Signal Binding Error"
+msgstr "边缘绑定"
 
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
+msgid "Signal and Source must NOT be blank!"
+msgstr ""
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:585
+#, fuzzy, c-format
+msgid ""
+"The signal and source that you entered are already used by<br><hilight>%s</"
+"hilight> action.<br>"
+msgstr ""
+"您选择的绑定键序列已被 <br><hilight>%s</hilight> 使用。<br>请选择其他边缘绑定"
+"序列。"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
+#, fuzzy
+msgid "Add Signal Binding"
+msgstr "边缘绑定"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:645
+#, fuzzy
+msgid "Source:"
+msgstr "移动到"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:650
+msgid "Signal:"
+msgstr ""
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:804
 #: src/modules/conf_edgebindings/e_mod_main.c:25
 #, fuzzy
 msgid "Signal Bindings"
 msgstr "边缘绑定"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:865
+#, fuzzy
+msgid "Signal Bindings Settings"
+msgstr "边缘绑定设置"
+
+#: src/modules/conf_edgebindings/e_mod_main.c:17
+#: src/modules/conf_interaction/e_mod_main.c:17
+#: src/modules/conf_keybindings/e_mod_main.c:17
+#: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
+#: src/modules/xkbswitch/e_mod_main.c:71
+msgid "Input"
+msgstr "输入"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:36
 msgid "Interaction Settings"
@@ -6390,7 +6439,7 @@ msgstr "用户自定义目录"
 msgid "Environment Variables"
 msgstr "导出环境变量"
 
-#: src/modules/conf_paths/e_int_config_env.c:304
+#: src/modules/conf_paths/e_int_config_env.c:306
 #, fuzzy
 msgid "Unset"
 msgstr "插入"
@@ -6525,13 +6574,13 @@ msgid "e.g. Saving to disk"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:728
+#: src/modules/shot/e_mod_main.c:731
 #: src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "低"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:726
+#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:729
 msgid "Medium"
 msgstr "中等"
 
@@ -6543,7 +6592,7 @@ msgid "%.0f s"
 msgstr "%1.0f 秒"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:724
+#: src/modules/shot/e_mod_main.c:727
 msgid "High"
 msgstr "高"
 
@@ -6566,17 +6615,17 @@ msgstr "电源管理"
 msgid "Screen Setup"
 msgstr "屏幕保护程序"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:125
+#: src/modules/conf_shelves/e_int_config_shelf.c:127
 #, fuzzy
 msgid "Configured Shelves: Display"
 msgstr "配置书架"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:386
+#: src/modules/conf_shelves/e_int_config_shelf.c:388
 #, fuzzy, c-format
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "确定要删除此书架？"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:389
+#: src/modules/conf_shelves/e_int_config_shelf.c:391
 #, fuzzy
 msgid "Confirm Shelf Deletion"
 msgstr "确认删除"
@@ -7111,53 +7160,53 @@ msgstr "缩放设置"
 msgid "DPI Scaling"
 msgstr "缩放"
 
-#: src/modules/conf_theme/e_int_config_scale.c:300
+#: src/modules/conf_theme/e_int_config_scale.c:301
 msgid "Don't Scale"
 msgstr "不缩放"
 
-#: src/modules/conf_theme/e_int_config_scale.c:303
+#: src/modules/conf_theme/e_int_config_scale.c:304
 msgid "Scale relative to screen DPI"
 msgstr "按屏幕 DPI 比例缩放"
 
-#: src/modules/conf_theme/e_int_config_scale.c:308
+#: src/modules/conf_theme/e_int_config_scale.c:309
 #, c-format
 msgid "Base DPI (Currently %i DPI)"
 msgstr "基准 DPI(当前 %i DPI)"
 
-#: src/modules/conf_theme/e_int_config_scale.c:312
+#: src/modules/conf_theme/e_int_config_scale.c:313
 #, c-format
 msgid "%1.0f DPI"
 msgstr "%1.0f DPI"
 
-#: src/modules/conf_theme/e_int_config_scale.c:316
+#: src/modules/conf_theme/e_int_config_scale.c:317
 msgid "Custom scaling factor"
 msgstr "自定义缩放系数"
 
-#: src/modules/conf_theme/e_int_config_scale.c:319
+#: src/modules/conf_theme/e_int_config_scale.c:320
 #, fuzzy, c-format
 msgid "%1.2f x"
 msgstr "%1.2f"
 
-#: src/modules/conf_theme/e_int_config_scale.c:323
+#: src/modules/conf_theme/e_int_config_scale.c:324
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
 msgid "Policy"
 msgstr "策略"
 
-#: src/modules/conf_theme/e_int_config_scale.c:328
+#: src/modules/conf_theme/e_int_config_scale.c:329
 msgid "Minimum"
 msgstr "最小"
 
-#: src/modules/conf_theme/e_int_config_scale.c:331
-#: src/modules/conf_theme/e_int_config_scale.c:338
+#: src/modules/conf_theme/e_int_config_scale.c:332
+#: src/modules/conf_theme/e_int_config_scale.c:339
 #, c-format
 msgid "%1.2f times"
 msgstr "%1.0f 次"
 
-#: src/modules/conf_theme/e_int_config_scale.c:335
+#: src/modules/conf_theme/e_int_config_scale.c:336
 msgid "Maximum"
 msgstr "最大"
 
-#: src/modules/conf_theme/e_int_config_scale.c:342
+#: src/modules/conf_theme/e_int_config_scale.c:343
 msgid "Constraints"
 msgstr "约束"
 
@@ -7711,7 +7760,7 @@ msgid "Resize by"
 msgstr "改变大小，按照"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:257
-#: src/modules/wizard/page_011.c:134 src/modules/xkbswitch/e_mod_main.c:74
+#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:74
 #: src/modules/xkbswitch/e_mod_main.c:258
 msgid "Keyboard"
 msgstr "键盘"
@@ -7960,7 +8009,7 @@ msgstr ""
 msgid "Dropshadow Settings"
 msgstr "投影设置"
 
-#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:718
+#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:721
 msgid "Quality"
 msgstr "质量"
 
@@ -8264,7 +8313,7 @@ msgstr "Exebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1162
 #: src/modules/everything/evry_plug_apps.c:1209
-#: src/modules/fileman/e_fwin.c:2160 src/modules/fileman/e_fwin.c:2523
+#: src/modules/fileman/e_fwin.c:2160 src/modules/fileman/e_fwin.c:2525
 msgid "Open with..."
 msgstr "打开方式..."
 
@@ -8478,113 +8527,113 @@ msgstr "E 路径"
 msgid "Run"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2153 src/modules/fileman/e_fwin.c:2524
+#: src/modules/fileman/e_fwin.c:2153 src/modules/fileman/e_fwin.c:2526
 msgid "Open"
 msgstr "打开"
 
-#: src/modules/fileman/e_fwin.c:2553 src/modules/fileman/e_fwin.c:2578
+#: src/modules/fileman/e_fwin.c:2555 src/modules/fileman/e_fwin.c:2580
 #, fuzzy, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%1.0f 个文件"
 msgstr[1] "%1.0f 个文件"
 
-#: src/modules/fileman/e_fwin.c:2596
+#: src/modules/fileman/e_fwin.c:2598
 msgid "Known Applications"
 msgstr "已知应用程序"
 
-#: src/modules/fileman/e_fwin.c:2606
+#: src/modules/fileman/e_fwin.c:2608
 #, fuzzy
 msgid "Suggested Applications"
 msgstr "已选择的应用程序"
 
-#: src/modules/fileman/e_fwin.c:2641
+#: src/modules/fileman/e_fwin.c:2643
 msgid "All Applications"
 msgstr "所有应用程序"
 
-#: src/modules/fileman/e_fwin.c:2664
+#: src/modules/fileman/e_fwin.c:2666
 msgid "Custom Command"
 msgstr "自定义命令"
 
-#: src/modules/fileman/e_fwin.c:2959
+#: src/modules/fileman/e_fwin.c:2961
 #: src/modules/fileman_opinfo/e_mod_main.c:105
 #, c-format
 msgid "Copying is aborted"
 msgstr "复制操作被取消"
 
-#: src/modules/fileman/e_fwin.c:2963
+#: src/modules/fileman/e_fwin.c:2965
 #: src/modules/fileman_opinfo/e_mod_main.c:109
 #, c-format
 msgid "Moving is aborted"
 msgstr "移动操作被取消"
 
-#: src/modules/fileman/e_fwin.c:2967
+#: src/modules/fileman/e_fwin.c:2969
 #: src/modules/fileman_opinfo/e_mod_main.c:113
 #, c-format
 msgid "Deleting is aborted"
 msgstr "删除操作被取消"
 
-#: src/modules/fileman/e_fwin.c:2971
+#: src/modules/fileman/e_fwin.c:2973
 #: src/modules/fileman_opinfo/e_mod_main.c:117
 #, fuzzy, c-format
 msgid "Secure deletion is aborted"
 msgstr "删除操作被取消"
 
-#: src/modules/fileman/e_fwin.c:2975
+#: src/modules/fileman/e_fwin.c:2977
 #: src/modules/fileman_opinfo/e_mod_main.c:121
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "从设备的无效操作，已中止。"
 
-#: src/modules/fileman/e_fwin.c:2985
+#: src/modules/fileman/e_fwin.c:2987
 #: src/modules/fileman_opinfo/e_mod_main.c:131
 #, c-format
 msgid "Copy of %s done"
 msgstr "复制 %s 完成"
 
-#: src/modules/fileman/e_fwin.c:2987
+#: src/modules/fileman/e_fwin.c:2989
 #: src/modules/fileman_opinfo/e_mod_main.c:133
 #, fuzzy, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "正在复制 %s (剩余时间：%d 秒)"
 
-#: src/modules/fileman/e_fwin.c:2992
+#: src/modules/fileman/e_fwin.c:2994
 #: src/modules/fileman_opinfo/e_mod_main.c:139
 #, c-format
 msgid "Move of %s done"
 msgstr "移动 %s 完成"
 
-#: src/modules/fileman/e_fwin.c:2994
+#: src/modules/fileman/e_fwin.c:2996
 #: src/modules/fileman_opinfo/e_mod_main.c:141
 #, fuzzy, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "正在移动 %s (剩余时间：%d 秒)"
 
-#: src/modules/fileman/e_fwin.c:2999
+#: src/modules/fileman/e_fwin.c:3001
 #: src/modules/fileman_opinfo/e_mod_main.c:147
 #, c-format
 msgid "Delete done"
 msgstr "删除完成"
 
-#: src/modules/fileman/e_fwin.c:3001
+#: src/modules/fileman/e_fwin.c:3003
 #: src/modules/fileman_opinfo/e_mod_main.c:149
 #, c-format
 msgid "Deleting files..."
 msgstr "正在删除文件..."
 
-#: src/modules/fileman/e_fwin.c:3006
+#: src/modules/fileman/e_fwin.c:3008
 #: src/modules/fileman_opinfo/e_mod_main.c:154
 #, fuzzy, c-format
 msgid "Secure delete done"
 msgstr "屏幕分辨率"
 
-#: src/modules/fileman/e_fwin.c:3008
+#: src/modules/fileman/e_fwin.c:3010
 #: src/modules/fileman_opinfo/e_mod_main.c:156
 #, fuzzy, c-format
 msgid "Securely deleting files..."
 msgstr "正在删除文件..."
 
-#: src/modules/fileman/e_fwin.c:3012
+#: src/modules/fileman/e_fwin.c:3014
 #: src/modules/fileman_opinfo/e_mod_main.c:160
 #, fuzzy, c-format
 msgid "Unknown operation from slave %d"
@@ -8600,7 +8649,7 @@ msgstr "快速访问"
 msgid "File Icons"
 msgstr "文件图标"
 
-#: src/modules/fileman/e_int_config_mime.c:175
+#: src/modules/fileman/e_int_config_mime.c:177
 msgid "File Types"
 msgstr "文件类型"
 
@@ -8941,7 +8990,6 @@ msgid "Scroll speed"
 msgstr "滚屏速度"
 
 #: src/modules/winlist/e_int_config_winlist.c:260
-#: src/modules/tasks/e_mod_config.c:98
 msgid "Minimum width"
 msgstr "最小宽度"
 
@@ -8958,7 +9006,6 @@ msgid "Maximum width"
 msgstr "最大宽度"
 
 #: src/modules/winlist/e_int_config_winlist.c:273
-#: src/modules/tasks/e_mod_config.c:103
 msgid "Minimum height"
 msgstr "最小高度"
 
@@ -8978,54 +9025,72 @@ msgstr "垂直排列"
 msgid "Alignment"
 msgstr "对齐"
 
-#: src/modules/winlist/e_mod_main.c:27
+#: src/modules/winlist/e_mod_main.c:28
 #, fuzzy
 msgid "Window Switcher"
 msgstr "窗口标题"
 
-#: src/modules/winlist/e_mod_main.c:37
+#: src/modules/winlist/e_mod_main.c:41
 msgid "Next Window"
 msgstr "下一窗口"
 
-#: src/modules/winlist/e_mod_main.c:39
+#: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "前一窗口"
 
-#: src/modules/winlist/e_mod_main.c:42
+#: src/modules/winlist/e_mod_main.c:46
 msgid "Next window of same class"
 msgstr "窗口的名字和类"
 
-#: src/modules/winlist/e_mod_main.c:45
+#: src/modules/winlist/e_mod_main.c:49
 msgid "Previous window of same class"
 msgstr "同一类的上一窗口"
 
-#: src/modules/winlist/e_mod_main.c:48
+#: src/modules/winlist/e_mod_main.c:52
 #, fuzzy
 msgid "Next window class"
 msgstr "窗口的名字和类"
 
-#: src/modules/winlist/e_mod_main.c:51
+#: src/modules/winlist/e_mod_main.c:55
 #, fuzzy
 msgid "Previous window class"
 msgstr "同一类的上一窗口"
 
-#: src/modules/winlist/e_mod_main.c:53
+#: src/modules/winlist/e_mod_main.c:57
 msgid "Window on the Left"
 msgstr "左边的窗口"
 
-#: src/modules/winlist/e_mod_main.c:55
+#: src/modules/winlist/e_mod_main.c:59
 msgid "Window Down"
 msgstr "下移窗口"
 
-#: src/modules/winlist/e_mod_main.c:57
+#: src/modules/winlist/e_mod_main.c:61
 msgid "Window Up"
 msgstr "上移窗口"
 
-#: src/modules/winlist/e_mod_main.c:59
+#: src/modules/winlist/e_mod_main.c:63
 msgid "Window on the Right"
 msgstr "右边的窗口"
 
-#: src/modules/winlist/e_winlist.c:170
+#: src/modules/winlist/e_mod_main.c:209 src/modules/winlist/e_mod_main.c:215
+#: src/modules/winlist/e_mod_main.c:221
+#, fuzzy
+msgid "Winlist Error"
+msgstr "挂载错误"
+
+#: src/modules/winlist/e_mod_main.c:209
+msgid "Winlist cannot be activated from an edge binding"
+msgstr ""
+
+#: src/modules/winlist/e_mod_main.c:215
+msgid "Winlist cannot be activated from a signal binding"
+msgstr ""
+
+#: src/modules/winlist/e_mod_main.c:221
+msgid "Winlist cannot be activated from an ACPI binding"
+msgstr ""
+
+#: src/modules/winlist/e_winlist.c:171
 msgid "Select a window"
 msgstr "选择一个窗口"
 
@@ -9479,7 +9544,7 @@ msgstr ""
 msgid "Welcome to Enlightenment"
 msgstr "欢迎光临Enlightenment"
 
-#: src/modules/wizard/page_010.c:161 src/modules/wizard/page_011.c:135
+#: src/modules/wizard/page_010.c:161 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
 msgid "Select one"
 msgstr "选择一个"
@@ -9606,47 +9671,47 @@ msgstr ""
 msgid "Enable Taskbar"
 msgstr "任务栏"
 
-#: src/modules/mixer/app_mixer.c:165
+#: src/modules/mixer/app_mixer.c:192
 msgid "Capture"
 msgstr "捕捉"
 
-#: src/modules/mixer/app_mixer.c:167
+#: src/modules/mixer/app_mixer.c:194
 msgid "Playback"
 msgstr "回放"
 
-#: src/modules/mixer/app_mixer.c:287
+#: src/modules/mixer/app_mixer.c:314
 msgid "Output"
 msgstr "输出"
 
-#: src/modules/mixer/app_mixer.c:363
+#: src/modules/mixer/app_mixer.c:393
 msgid "Cards"
 msgstr "卡"
 
-#: src/modules/mixer/app_mixer.c:376 src/modules/mixer/conf_gadget.c:279
+#: src/modules/mixer/app_mixer.c:406 src/modules/mixer/conf_gadget.c:279
 msgid "Channels"
 msgstr "频道"
 
-#: src/modules/mixer/app_mixer.c:386
+#: src/modules/mixer/app_mixer.c:416
 msgid "Card:"
 msgstr "卡："
 
-#: src/modules/mixer/app_mixer.c:390
+#: src/modules/mixer/app_mixer.c:420
 msgid "Channel:"
 msgstr "频道："
 
-#: src/modules/mixer/app_mixer.c:398
+#: src/modules/mixer/app_mixer.c:428
 msgid "Left:"
 msgstr "左："
 
-#: src/modules/mixer/app_mixer.c:403
+#: src/modules/mixer/app_mixer.c:433
 msgid "Right:"
 msgstr "右："
 
-#: src/modules/mixer/app_mixer.c:408 src/modules/mixer/e_mod_main.c:697
+#: src/modules/mixer/app_mixer.c:438 src/modules/mixer/e_mod_main.c:697
 msgid "Mute"
 msgstr "静音"
 
-#: src/modules/mixer/app_mixer.c:411 src/modules/mixer/conf_gadget.c:195
+#: src/modules/mixer/app_mixer.c:441 src/modules/mixer/conf_gadget.c:195
 msgid "Lock Sliders"
 msgstr "锁定滚动条"
 
@@ -10032,139 +10097,139 @@ msgid ""
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:276
+#: src/modules/shot/e_mod_main.c:277
 msgid "Select screenshot save location"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:288 src/modules/shot/e_mod_main.c:797
+#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:800
 msgid "Save"
 msgstr "保存"
 
-#: src/modules/shot/e_mod_main.c:386
+#: src/modules/shot/e_mod_main.c:387
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:406
+#: src/modules/shot/e_mod_main.c:407
 #, fuzzy
 msgid "Error - Upload Failed"
 msgstr "载入模块时出错"
 
-#: src/modules/shot/e_mod_main.c:407
+#: src/modules/shot/e_mod_main.c:408
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:451
+#: src/modules/shot/e_mod_main.c:452
 #, fuzzy
 msgid "Error - Can't create file"
 msgstr "载入模块时出错"
 
-#: src/modules/shot/e_mod_main.c:452
+#: src/modules/shot/e_mod_main.c:453
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:470
+#: src/modules/shot/e_mod_main.c:471
 msgid "Error - Can't open file"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:471
+#: src/modules/shot/e_mod_main.c:472
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:479
+#: src/modules/shot/e_mod_main.c:480
 #, fuzzy
 msgid "Error - Bad size"
 msgstr "载入模块时出错"
 
-#: src/modules/shot/e_mod_main.c:480
+#: src/modules/shot/e_mod_main.c:481
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:490
+#: src/modules/shot/e_mod_main.c:491
 msgid "Error - Can't allocate memory"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:491
+#: src/modules/shot/e_mod_main.c:492
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:498
+#: src/modules/shot/e_mod_main.c:499
 msgid "Error - Can't read picture"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:499
+#: src/modules/shot/e_mod_main.c:500
 #, fuzzy
 msgid "Cannot read picture"
 msgstr "不能加入图标"
 
-#: src/modules/shot/e_mod_main.c:520
+#: src/modules/shot/e_mod_main.c:522
 msgid "Uploading screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:525
+#: src/modules/shot/e_mod_main.c:527
 msgid "Uploading ..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:530
+#: src/modules/shot/e_mod_main.c:532
 msgid "Screenshot is available at this location:"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:539
+#: src/modules/shot/e_mod_main.c:541
 #, fuzzy
 msgid "Hide"
 msgstr "自动隐藏"
 
-#: src/modules/shot/e_mod_main.c:563
+#: src/modules/shot/e_mod_main.c:565
 #, fuzzy
 msgid "Confirm Share"
 msgstr "确认删除"
 
-#: src/modules/shot/e_mod_main.c:564
+#: src/modules/shot/e_mod_main.c:566
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:566
+#: src/modules/shot/e_mod_main.c:568
 #, fuzzy
 msgid "Confirm"
 msgstr "配置"
 
-#: src/modules/shot/e_mod_main.c:666
+#: src/modules/shot/e_mod_main.c:669
 msgid "Where to put Screenshot..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:725
 msgid "Perfect"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:799
+#: src/modules/shot/e_mod_main.c:802
 #, fuzzy
 msgid "Share"
 msgstr "清晰"
 
-#: src/modules/shot/e_mod_main.c:936 src/modules/shot/e_mod_main.c:984
+#: src/modules/shot/e_mod_main.c:939 src/modules/shot/e_mod_main.c:987
 #, fuzzy
 msgid "Take Shot"
 msgstr "设置屏幕"
 
-#: src/modules/shot/e_mod_main.c:947 src/modules/shot/e_mod_main.c:977
-#: src/modules/shot/e_mod_main.c:988
+#: src/modules/shot/e_mod_main.c:950 src/modules/shot/e_mod_main.c:980
+#: src/modules/shot/e_mod_main.c:991
 #, fuzzy
 msgid "Take Screenshot"
 msgstr "设置屏幕"
 
-#: src/modules/shot/e_mod_main.c:965
+#: src/modules/shot/e_mod_main.c:968
 #, fuzzy
 msgid "Shot Error"
 msgstr "挂载错误"
 
-#: src/modules/shot/e_mod_main.c:966
+#: src/modules/shot/e_mod_main.c:969
 #, fuzzy
 msgid "Cannot initialize network"
 msgstr "Enlightenment 无法启动文件管理器。\n"
@@ -10189,10 +10254,20 @@ msgstr "显示图标标签"
 msgid "Show text only"
 msgstr "显示桌面图标"
 
+#: src/modules/tasks/e_mod_config.c:98
+#, fuzzy
+msgid "Item width"
+msgstr "最小宽度"
+
 #: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
 #, fuzzy, c-format
 msgid "%1.0f px"
 msgstr "%.0f 像素"
+
+#: src/modules/tasks/e_mod_config.c:103
+#, fuzzy
+msgid "Item height"
+msgstr "最小高度"
 
 #: src/modules/tiling/e_mod_config.c:135
 msgid "columns"

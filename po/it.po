@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-20 20:53+0100\n"
+"POT-Creation-Date: 2012-12-21 08:39+0100\n"
 "PO-Revision-Date: 2012-12-20 20:53+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgstr "Informazioni su Enlightenment"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2528 src/modules/mixer/app_mixer.c:520
+#: src/modules/fileman/e_fwin.c:2528 src/modules/mixer/app_mixer.c:550
 msgid "Close"
 msgstr "Chiudi"
 
@@ -4312,7 +4312,7 @@ msgid "Mount status:"
 msgstr "Stato del montaggio:"
 
 #: src/bin/e_widget_filepreview.c:335 src/modules/comp/e_mod_config.c:487
-#: src/modules/mixer/app_mixer.c:394
+#: src/modules/mixer/app_mixer.c:424
 msgid "Type:"
 msgstr "Tipo:"
 
@@ -4582,16 +4582,16 @@ msgstr "Giorni"
 msgid "Toggle calendar"
 msgstr "Commuta calendario"
 
-#: src/modules/comp/e_mod_comp.c:3699 src/modules/comp/e_mod_comp.c:3721
-#: src/modules/comp/e_mod_comp.c:4134 src/modules/comp/e_mod_comp.c:4144
+#: src/modules/comp/e_mod_comp.c:3710 src/modules/comp/e_mod_comp.c:3732
+#: src/modules/comp/e_mod_comp.c:4145 src/modules/comp/e_mod_comp.c:4155
 msgid "Compositor Error"
 msgstr "Errore del compositor"
 
-#: src/modules/comp/e_mod_comp.c:3700
+#: src/modules/comp/e_mod_comp.c:3711
 msgid "Another compositor is already running<br>on your display server."
 msgstr "Un altro compositor è in<br>esecuzione sul server grafico."
 
-#: src/modules/comp/e_mod_comp.c:3722
+#: src/modules/comp/e_mod_comp.c:3733
 msgid ""
 "Your display server does not support the<br>compositor overlay window. This "
 "is needed<br>for it to function."
@@ -4599,11 +4599,11 @@ msgstr ""
 "Il server grafico non supporta la finestra<br>sovrapposta del compositor. "
 "Questa è<br>necessaria per il suo funzionamento."
 
-#: src/modules/comp/e_mod_comp.c:3796
+#: src/modules/comp/e_mod_comp.c:3807
 msgid "Compositor Warning"
 msgstr "Avvertimento del compositor"
 
-#: src/modules/comp/e_mod_comp.c:3797
+#: src/modules/comp/e_mod_comp.c:3808
 msgid ""
 "Your display driver does not support OpenGL, or<br>no OpenGL engines were "
 "compiled or installed for<br>Evas or Ecore-Evas. Falling back to software "
@@ -4614,7 +4614,7 @@ msgstr ""
 "installato per Evas o Ecore-Evas. Si ripiega<br>\n"
 "sul motore software."
 
-#: src/modules/comp/e_mod_comp.c:4135
+#: src/modules/comp/e_mod_comp.c:4146
 msgid ""
 "Your display server does not support XComposite,<br>or Ecore-X was built "
 "without XComposite support.<br>Note that for composite support you will also "
@@ -4625,7 +4625,7 @@ msgstr ""
 "XComposite è necessario<br>anche il supporto per XRender e XFixes<br>in X11 "
 "e in Ecore."
 
-#: src/modules/comp/e_mod_comp.c:4145
+#: src/modules/comp/e_mod_comp.c:4156
 msgid ""
 "Your display server does not support XDamage<br>or Ecore was built without "
 "XDamage support."
@@ -4773,7 +4773,7 @@ msgstr "Flag"
 msgid "Del"
 msgstr "Elimina"
 
-#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:415
+#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:445
 msgid "Edit"
 msgstr "Modifica"
 
@@ -5709,7 +5709,7 @@ msgstr "Impostazione associazioni con segnali"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:281 src/modules/mixer/app_mixer.c:299
+#: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
 #: src/modules/xkbswitch/e_mod_main.c:71
 msgid "Input"
 msgstr "Input"
@@ -9481,47 +9481,47 @@ msgstr ""
 msgid "Enable Taskbar"
 msgstr "Abilita taskbar"
 
-#: src/modules/mixer/app_mixer.c:165
+#: src/modules/mixer/app_mixer.c:192
 msgid "Capture"
 msgstr "Cattura"
 
-#: src/modules/mixer/app_mixer.c:167
+#: src/modules/mixer/app_mixer.c:194
 msgid "Playback"
 msgstr "Riproduzione"
 
-#: src/modules/mixer/app_mixer.c:287
+#: src/modules/mixer/app_mixer.c:314
 msgid "Output"
 msgstr "Output"
 
-#: src/modules/mixer/app_mixer.c:363
+#: src/modules/mixer/app_mixer.c:393
 msgid "Cards"
 msgstr "Schede"
 
-#: src/modules/mixer/app_mixer.c:376 src/modules/mixer/conf_gadget.c:279
+#: src/modules/mixer/app_mixer.c:406 src/modules/mixer/conf_gadget.c:279
 msgid "Channels"
 msgstr "Canali"
 
-#: src/modules/mixer/app_mixer.c:386
+#: src/modules/mixer/app_mixer.c:416
 msgid "Card:"
 msgstr "Scheda:"
 
-#: src/modules/mixer/app_mixer.c:390
+#: src/modules/mixer/app_mixer.c:420
 msgid "Channel:"
 msgstr "Canale:"
 
-#: src/modules/mixer/app_mixer.c:398
+#: src/modules/mixer/app_mixer.c:428
 msgid "Left:"
 msgstr "Sinistro:"
 
-#: src/modules/mixer/app_mixer.c:403
+#: src/modules/mixer/app_mixer.c:433
 msgid "Right:"
 msgstr "Destro:"
 
-#: src/modules/mixer/app_mixer.c:408 src/modules/mixer/e_mod_main.c:697
+#: src/modules/mixer/app_mixer.c:438 src/modules/mixer/e_mod_main.c:697
 msgid "Mute"
 msgstr "Muto"
 
-#: src/modules/mixer/app_mixer.c:411 src/modules/mixer/conf_gadget.c:195
+#: src/modules/mixer/app_mixer.c:441 src/modules/mixer/conf_gadget.c:195
 msgid "Lock Sliders"
 msgstr "Blocca cursori"
 

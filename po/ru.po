@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-20 19:07+0400\n"
+"POT-Creation-Date: 2012-12-21 08:39+0100\n"
 "PO-Revision-Date: 2012-12-20 19:10+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -31,7 +31,7 @@ msgstr "Об Enlightenment"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2528 src/modules/mixer/app_mixer.c:520
+#: src/modules/fileman/e_fwin.c:2528 src/modules/mixer/app_mixer.c:550
 msgid "Close"
 msgstr "Закрыть"
 
@@ -148,7 +148,7 @@ msgstr "Действительно хотите перевести систем�
 #: src/bin/e_actions.c:2982 src/bin/e_actions.c:2987 src/bin/e_actions.c:2992
 #: src/bin/e_actions.c:3278 src/bin/e_actions.c:3282 src/bin/e_actions.c:3287
 #: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3305
-#: src/modules/shot/e_mod_main.c:986
+#: src/modules/shot/e_mod_main.c:987
 msgid "Window : Actions"
 msgstr "Окно : Действия"
 
@@ -522,7 +522,7 @@ msgstr "Перейти к окну... или запуск..."
 #: src/modules/backlight/e_mod_main.c:493
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:744 src/modules/shot/e_mod_main.c:979
+#: src/modules/shot/e_mod_main.c:745 src/modules/shot/e_mod_main.c:980
 msgid "Screen"
 msgstr "Экран"
 
@@ -810,7 +810,7 @@ msgstr "Выбрать"
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:378
 #: src/modules/shot/e_mod_main.c:291 src/modules/shot/e_mod_main.c:542
-#: src/modules/shot/e_mod_main.c:568 src/modules/shot/e_mod_main.c:803
+#: src/modules/shot/e_mod_main.c:568 src/modules/shot/e_mod_main.c:804
 #: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Отменить"
@@ -2594,7 +2594,7 @@ msgstr "Размер, позицию и замки"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:748
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:749
 msgid "All"
 msgstr "Все"
 
@@ -4231,7 +4231,7 @@ msgid "Mount status:"
 msgstr "Статус:"
 
 #: src/bin/e_widget_filepreview.c:335 src/modules/comp/e_mod_config.c:487
-#: src/modules/mixer/app_mixer.c:394
+#: src/modules/mixer/app_mixer.c:424
 msgid "Type:"
 msgstr "Тип:"
 
@@ -4501,26 +4501,26 @@ msgstr "Количество дней"
 msgid "Toggle calendar"
 msgstr "Переключить календарь"
 
-#: src/modules/comp/e_mod_comp.c:3700 src/modules/comp/e_mod_comp.c:3722
-#: src/modules/comp/e_mod_comp.c:4135 src/modules/comp/e_mod_comp.c:4145
+#: src/modules/comp/e_mod_comp.c:3710 src/modules/comp/e_mod_comp.c:3732
+#: src/modules/comp/e_mod_comp.c:4145 src/modules/comp/e_mod_comp.c:4155
 msgid "Compositor Error"
 msgstr "Ошибка композитного менеджера"
 
-#: src/modules/comp/e_mod_comp.c:3701
+#: src/modules/comp/e_mod_comp.c:3711
 msgid "Another compositor is already running<br>on your display server."
 msgstr "На этом экране уже запущен другой<br>композитный менеджер."
 
-#: src/modules/comp/e_mod_comp.c:3723
+#: src/modules/comp/e_mod_comp.c:3733
 msgid ""
 "Your display server does not support the<br>compositor overlay window. This "
 "is needed<br>for it to function."
 msgstr ""
 
-#: src/modules/comp/e_mod_comp.c:3797
+#: src/modules/comp/e_mod_comp.c:3807
 msgid "Compositor Warning"
 msgstr "Предупреждение композитного менеджера"
 
-#: src/modules/comp/e_mod_comp.c:3798
+#: src/modules/comp/e_mod_comp.c:3808
 msgid ""
 "Your display driver does not support OpenGL, or<br>no OpenGL engines were "
 "compiled or installed for<br>Evas or Ecore-Evas. Falling back to software "
@@ -4530,7 +4530,7 @@ msgstr ""
 "собран<br>или установлен для Evas или Ecore-Evas<br>Осуществляется возврат "
 "на программную отрисовку."
 
-#: src/modules/comp/e_mod_comp.c:4136
+#: src/modules/comp/e_mod_comp.c:4146
 msgid ""
 "Your display server does not support XComposite,<br>or Ecore-X was built "
 "without XComposite support.<br>Note that for composite support you will also "
@@ -4540,7 +4540,7 @@ msgstr ""
 "без поддержки XComposite.<br>Заметьте, что для поддержки композитного "
 "режима<br>вам также понадобится поддержка XRender и XFixes<br>в X11 и Ecore"
 
-#: src/modules/comp/e_mod_comp.c:4146
+#: src/modules/comp/e_mod_comp.c:4156
 msgid ""
 "Your display server does not support XDamage<br>or Ecore was built without "
 "XDamage support."
@@ -4688,7 +4688,7 @@ msgstr "Флаги"
 msgid "Del"
 msgstr "Удалить"
 
-#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:415
+#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:445
 msgid "Edit"
 msgstr "Изменить"
 
@@ -5623,7 +5623,7 @@ msgstr "Настройки привязок сигналов"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:281 src/modules/mixer/app_mixer.c:299
+#: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
 #: src/modules/xkbswitch/e_mod_main.c:71
 msgid "Input"
 msgstr "Ввод"
@@ -6375,13 +6375,13 @@ msgid "e.g. Saving to disk"
 msgstr "(например, сохранение на диск)"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:730
+#: src/modules/shot/e_mod_main.c:731
 #: src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "Низкий"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:728
+#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:729
 msgid "Medium"
 msgstr "Средний"
 
@@ -6393,7 +6393,7 @@ msgid "%.0f s"
 msgstr "%.0f с"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:726
+#: src/modules/shot/e_mod_main.c:727
 msgid "High"
 msgstr "Высокий"
 
@@ -6954,53 +6954,53 @@ msgstr "Настройки масштаба"
 msgid "DPI Scaling"
 msgstr "Согласно DPI"
 
-#: src/modules/conf_theme/e_int_config_scale.c:300
+#: src/modules/conf_theme/e_int_config_scale.c:301
 msgid "Don't Scale"
 msgstr "Не масштабировать"
 
-#: src/modules/conf_theme/e_int_config_scale.c:303
+#: src/modules/conf_theme/e_int_config_scale.c:304
 msgid "Scale relative to screen DPI"
 msgstr "Масштабировать относительно разрешения экрана"
 
-#: src/modules/conf_theme/e_int_config_scale.c:308
+#: src/modules/conf_theme/e_int_config_scale.c:309
 #, c-format
 msgid "Base DPI (Currently %i DPI)"
 msgstr "Базовое разрешение (Текущее %i DPI)"
 
-#: src/modules/conf_theme/e_int_config_scale.c:312
+#: src/modules/conf_theme/e_int_config_scale.c:313
 #, c-format
 msgid "%1.0f DPI"
 msgstr "%1.0f DPI"
 
-#: src/modules/conf_theme/e_int_config_scale.c:316
+#: src/modules/conf_theme/e_int_config_scale.c:317
 msgid "Custom scaling factor"
 msgstr "Пользовательский масштабный коэффициент"
 
-#: src/modules/conf_theme/e_int_config_scale.c:319
+#: src/modules/conf_theme/e_int_config_scale.c:320
 #, c-format
 msgid "%1.2f x"
 msgstr "%1.2f x"
 
-#: src/modules/conf_theme/e_int_config_scale.c:323
+#: src/modules/conf_theme/e_int_config_scale.c:324
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
 msgid "Policy"
 msgstr "Политика"
 
-#: src/modules/conf_theme/e_int_config_scale.c:328
+#: src/modules/conf_theme/e_int_config_scale.c:329
 msgid "Minimum"
 msgstr "Минимум"
 
-#: src/modules/conf_theme/e_int_config_scale.c:331
-#: src/modules/conf_theme/e_int_config_scale.c:338
+#: src/modules/conf_theme/e_int_config_scale.c:332
+#: src/modules/conf_theme/e_int_config_scale.c:339
 #, c-format
 msgid "%1.2f times"
 msgstr "%1.2f x"
 
-#: src/modules/conf_theme/e_int_config_scale.c:335
+#: src/modules/conf_theme/e_int_config_scale.c:336
 msgid "Maximum"
 msgstr "Максимум"
 
-#: src/modules/conf_theme/e_int_config_scale.c:342
+#: src/modules/conf_theme/e_int_config_scale.c:343
 msgid "Constraints"
 msgstr "Ограничения"
 
@@ -7771,7 +7771,7 @@ msgstr ""
 msgid "Dropshadow Settings"
 msgstr "Параметры отброса тени"
 
-#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:720
+#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:721
 msgid "Quality"
 msgstr "Уровень качества"
 
@@ -9393,47 +9393,47 @@ msgstr ""
 msgid "Enable Taskbar"
 msgstr "Включить панель задач"
 
-#: src/modules/mixer/app_mixer.c:165
+#: src/modules/mixer/app_mixer.c:192
 msgid "Capture"
 msgstr "Захват"
 
-#: src/modules/mixer/app_mixer.c:167
+#: src/modules/mixer/app_mixer.c:194
 msgid "Playback"
 msgstr "Воспроизведение"
 
-#: src/modules/mixer/app_mixer.c:287
+#: src/modules/mixer/app_mixer.c:314
 msgid "Output"
 msgstr "Выход"
 
-#: src/modules/mixer/app_mixer.c:363
+#: src/modules/mixer/app_mixer.c:393
 msgid "Cards"
 msgstr "Карты"
 
-#: src/modules/mixer/app_mixer.c:376 src/modules/mixer/conf_gadget.c:279
+#: src/modules/mixer/app_mixer.c:406 src/modules/mixer/conf_gadget.c:279
 msgid "Channels"
 msgstr "Каналы"
 
-#: src/modules/mixer/app_mixer.c:386
+#: src/modules/mixer/app_mixer.c:416
 msgid "Card:"
 msgstr "Карта:"
 
-#: src/modules/mixer/app_mixer.c:390
+#: src/modules/mixer/app_mixer.c:420
 msgid "Channel:"
 msgstr "Канал:"
 
-#: src/modules/mixer/app_mixer.c:398
+#: src/modules/mixer/app_mixer.c:428
 msgid "Left:"
 msgstr "Левый:"
 
-#: src/modules/mixer/app_mixer.c:403
+#: src/modules/mixer/app_mixer.c:433
 msgid "Right:"
 msgstr "Правый:"
 
-#: src/modules/mixer/app_mixer.c:408 src/modules/mixer/e_mod_main.c:697
+#: src/modules/mixer/app_mixer.c:438 src/modules/mixer/e_mod_main.c:697
 msgid "Mute"
 msgstr "Без звука"
 
-#: src/modules/mixer/app_mixer.c:411 src/modules/mixer/conf_gadget.c:195
+#: src/modules/mixer/app_mixer.c:441 src/modules/mixer/conf_gadget.c:195
 msgid "Lock Sliders"
 msgstr "Фиксировать каналы"
 
@@ -9834,7 +9834,7 @@ msgstr ""
 msgid "Select screenshot save location"
 msgstr "Выберите место сохранения снимка"
 
-#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:799
+#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:800
 msgid "Save"
 msgstr "Сохранить"
 
@@ -9928,32 +9928,32 @@ msgstr ""
 msgid "Confirm"
 msgstr "Подтвердить"
 
-#: src/modules/shot/e_mod_main.c:668
+#: src/modules/shot/e_mod_main.c:669
 msgid "Where to put Screenshot..."
 msgstr "Где разместить снимок..."
 
-#: src/modules/shot/e_mod_main.c:724
+#: src/modules/shot/e_mod_main.c:725
 msgid "Perfect"
 msgstr "Идеальный"
 
-#: src/modules/shot/e_mod_main.c:801
+#: src/modules/shot/e_mod_main.c:802
 msgid "Share"
 msgstr "Поделиться"
 
-#: src/modules/shot/e_mod_main.c:938 src/modules/shot/e_mod_main.c:986
+#: src/modules/shot/e_mod_main.c:939 src/modules/shot/e_mod_main.c:987
 msgid "Take Shot"
 msgstr "Сделать снимок"
 
-#: src/modules/shot/e_mod_main.c:949 src/modules/shot/e_mod_main.c:979
-#: src/modules/shot/e_mod_main.c:990
+#: src/modules/shot/e_mod_main.c:950 src/modules/shot/e_mod_main.c:980
+#: src/modules/shot/e_mod_main.c:991
 msgid "Take Screenshot"
 msgstr "Сделать снимок экрана"
 
-#: src/modules/shot/e_mod_main.c:967
+#: src/modules/shot/e_mod_main.c:968
 msgid "Shot Error"
 msgstr "Ошибка снимка"
 
-#: src/modules/shot/e_mod_main.c:968
+#: src/modules/shot/e_mod_main.c:969
 msgid "Cannot initialize network"
 msgstr "Не удалось инициализировать сеть"
 

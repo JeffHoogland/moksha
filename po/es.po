@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-20 13:59+0100\n"
+"POT-Creation-Date: 2012-12-21 08:39+0100\n"
 "PO-Revision-Date: 2012-12-20 14:55+0100\n"
 "Last-Translator: Adrián Arévalo <adri58@gmail.com>\n"
 "Language-Team: Spanish <>\n"
@@ -32,7 +32,7 @@ msgstr "Acerca de Enlightenment"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2528 src/modules/mixer/app_mixer.c:520
+#: src/modules/fileman/e_fwin.c:2528 src/modules/mixer/app_mixer.c:550
 msgid "Close"
 msgstr "Cerrar"
 
@@ -150,7 +150,7 @@ msgstr "¿Está seguro de que desea hibernar el equipo?"
 #: src/bin/e_actions.c:2982 src/bin/e_actions.c:2987 src/bin/e_actions.c:2992
 #: src/bin/e_actions.c:3278 src/bin/e_actions.c:3282 src/bin/e_actions.c:3287
 #: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3305
-#: src/modules/shot/e_mod_main.c:986
+#: src/modules/shot/e_mod_main.c:987
 msgid "Window : Actions"
 msgstr "Ventana: Acciones"
 
@@ -524,7 +524,7 @@ msgstr "Saltar a la ventana... o al inicio..."
 #: src/modules/backlight/e_mod_main.c:493
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:744 src/modules/shot/e_mod_main.c:979
+#: src/modules/shot/e_mod_main.c:745 src/modules/shot/e_mod_main.c:980
 msgid "Screen"
 msgstr "Pantalla"
 
@@ -812,7 +812,7 @@ msgstr "Seleccionar"
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:378
 #: src/modules/shot/e_mod_main.c:291 src/modules/shot/e_mod_main.c:542
-#: src/modules/shot/e_mod_main.c:568 src/modules/shot/e_mod_main.c:803
+#: src/modules/shot/e_mod_main.c:568 src/modules/shot/e_mod_main.c:804
 #: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1758,7 +1758,7 @@ msgstr "No se pueden cambiar los permisos: %s"
 #: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1123 src/bin/e_shelf.c:2363
 #: src/modules/comp/e_mod_config.c:493
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
-#: src/modules/conf_display/e_int_config_desk.c:186
+#: src/modules/conf_display/e_int_config_desk.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
 msgid "Name:"
 msgstr "Nombre:"
@@ -2598,7 +2598,7 @@ msgstr "Tamaño, posición y bloqueos"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:748
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:749
 msgid "All"
 msgstr "Todo"
 
@@ -4227,7 +4227,7 @@ msgid "Mount status:"
 msgstr "Estado de montaje"
 
 #: src/bin/e_widget_filepreview.c:335 src/modules/comp/e_mod_config.c:487
-#: src/modules/mixer/app_mixer.c:394
+#: src/modules/mixer/app_mixer.c:424
 msgid "Type:"
 msgstr "Tipo:"
 
@@ -4497,26 +4497,26 @@ msgstr "Días"
 msgid "Toggle calendar"
 msgstr "ALternar calendario"
 
-#: src/modules/comp/e_mod_comp.c:3700 src/modules/comp/e_mod_comp.c:3722
-#: src/modules/comp/e_mod_comp.c:4135 src/modules/comp/e_mod_comp.c:4145
+#: src/modules/comp/e_mod_comp.c:3710 src/modules/comp/e_mod_comp.c:3732
+#: src/modules/comp/e_mod_comp.c:4145 src/modules/comp/e_mod_comp.c:4155
 msgid "Compositor Error"
 msgstr "Error de composición"
 
-#: src/modules/comp/e_mod_comp.c:3701
+#: src/modules/comp/e_mod_comp.c:3711
 msgid "Another compositor is already running<br>on your display server."
 msgstr "Ya hay otro compositor de ventanas ejecutándose"
 
-#: src/modules/comp/e_mod_comp.c:3723
+#: src/modules/comp/e_mod_comp.c:3733
 msgid ""
 "Your display server does not support the<br>compositor overlay window. This "
 "is needed<br>for it to function."
 msgstr "Su tarjeta gráfica no soporta la composición de ventanas."
 
-#: src/modules/comp/e_mod_comp.c:3797
+#: src/modules/comp/e_mod_comp.c:3807
 msgid "Compositor Warning"
 msgstr "Error de composición"
 
-#: src/modules/comp/e_mod_comp.c:3798
+#: src/modules/comp/e_mod_comp.c:3808
 msgid ""
 "Your display driver does not support OpenGL, or<br>no OpenGL engines were "
 "compiled or installed for<br>Evas or Ecore-Evas. Falling back to software "
@@ -4525,7 +4525,7 @@ msgstr ""
 "O el controlador de vídeo no soporta OpenGL, <br>o Evas/Ecore-Evas fué "
 "compilado sin soporte para OpenGL."
 
-#: src/modules/comp/e_mod_comp.c:4136
+#: src/modules/comp/e_mod_comp.c:4146
 msgid ""
 "Your display server does not support XComposite,<br>or Ecore-X was built "
 "without XComposite support.<br>Note that for composite support you will also "
@@ -4535,7 +4535,7 @@ msgstr ""
 "con soporte para esa característica. También necesitará soporte para XRender "
 "y XFixes en Ecore y X11."
 
-#: src/modules/comp/e_mod_comp.c:4146
+#: src/modules/comp/e_mod_comp.c:4156
 msgid ""
 "Your display server does not support XDamage<br>or Ecore was built without "
 "XDamage support."
@@ -4685,7 +4685,7 @@ msgstr "Marcas"
 msgid "Del"
 msgstr "Eliminar"
 
-#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:415
+#: src/modules/comp/e_mod_config.c:1100 src/modules/mixer/app_mixer.c:445
 msgid "Edit"
 msgstr "Editar"
 
@@ -5150,7 +5150,7 @@ msgid "Wrap desktops around when flipping"
 msgstr "Envolver escritorios cuando se voltean"
 
 #: src/modules/conf_display/e_int_config_desks.c:200
-#: src/modules/conf_display/e_int_config_desk.c:192
+#: src/modules/conf_display/e_int_config_desk.c:198
 msgid "Desktop Window Profile"
 msgstr "Perfil de ventana de escritorio"
 
@@ -5186,23 +5186,23 @@ msgstr "%1.1f s"
 msgid "Flip Animation"
 msgstr "Animación de cambio"
 
-#: src/modules/conf_display/e_int_config_desk.c:53
+#: src/modules/conf_display/e_int_config_desk.c:54
 msgid "Desk Settings"
 msgstr "Opciones de escritorio"
 
-#: src/modules/conf_display/e_int_config_desk.c:185
+#: src/modules/conf_display/e_int_config_desk.c:191
 msgid "Desktop Name"
 msgstr "Nombre de escritorio"
 
-#: src/modules/conf_display/e_int_config_desk.c:193
+#: src/modules/conf_display/e_int_config_desk.c:199
 msgid "Profile Name:"
 msgstr "Nombre del perfil:"
 
-#: src/modules/conf_display/e_int_config_desk.c:200
+#: src/modules/conf_display/e_int_config_desk.c:206
 msgid "Desktop Wallpaper"
 msgstr "Fondo de pantalla"
 
-#: src/modules/conf_display/e_int_config_desk.c:206
+#: src/modules/conf_display/e_int_config_desk.c:212
 #: src/modules/fileman/e_int_config_mime.c:184
 msgid "Set"
 msgstr "Asignar"
@@ -5600,6 +5600,15 @@ msgstr ""
 msgid "Add Signal Binding"
 msgstr "Atajos de los bordes"
 
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:645
+#, fuzzy
+msgid "Source:"
+msgstr "Mover origen"
+
+#: src/modules/conf_edgebindings/e_int_config_signalbindings.c:650
+msgid "Signal:"
+msgstr ""
+
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:804
 #: src/modules/conf_edgebindings/e_mod_main.c:25
 msgid "Signal Bindings"
@@ -5613,7 +5622,7 @@ msgstr "Configuración de atajos de los bordes"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:281 src/modules/mixer/app_mixer.c:299
+#: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
 #: src/modules/xkbswitch/e_mod_main.c:71
 msgid "Input"
 msgstr "Entrada"
@@ -6357,13 +6366,13 @@ msgid "e.g. Saving to disk"
 msgstr "por ejemplo: Guardar al disco"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:730
+#: src/modules/shot/e_mod_main.c:731
 #: src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "Baja"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:728
+#: src/modules/dropshadow/e_mod_config.c:124 src/modules/shot/e_mod_main.c:729
 msgid "Medium"
 msgstr "Medio"
 
@@ -6375,7 +6384,7 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:726
+#: src/modules/shot/e_mod_main.c:727
 msgid "High"
 msgstr "Alta"
 
@@ -6946,53 +6955,53 @@ msgstr "Opciones de escalado"
 msgid "DPI Scaling"
 msgstr "Escalado DPI"
 
-#: src/modules/conf_theme/e_int_config_scale.c:300
+#: src/modules/conf_theme/e_int_config_scale.c:301
 msgid "Don't Scale"
 msgstr "No escalar"
 
-#: src/modules/conf_theme/e_int_config_scale.c:303
+#: src/modules/conf_theme/e_int_config_scale.c:304
 msgid "Scale relative to screen DPI"
 msgstr "Escalar en relación a los DPI de la pantalla"
 
-#: src/modules/conf_theme/e_int_config_scale.c:308
+#: src/modules/conf_theme/e_int_config_scale.c:309
 #, c-format
 msgid "Base DPI (Currently %i DPI)"
 msgstr "DPI base (Actualmente %i DPI)"
 
-#: src/modules/conf_theme/e_int_config_scale.c:312
+#: src/modules/conf_theme/e_int_config_scale.c:313
 #, c-format
 msgid "%1.0f DPI"
 msgstr "%1.0f DPI"
 
-#: src/modules/conf_theme/e_int_config_scale.c:316
+#: src/modules/conf_theme/e_int_config_scale.c:317
 msgid "Custom scaling factor"
 msgstr "Factor de escalado personalizado"
 
-#: src/modules/conf_theme/e_int_config_scale.c:319
+#: src/modules/conf_theme/e_int_config_scale.c:320
 #, c-format
 msgid "%1.2f x"
 msgstr "%1.2f x"
 
-#: src/modules/conf_theme/e_int_config_scale.c:323
+#: src/modules/conf_theme/e_int_config_scale.c:324
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
 msgid "Policy"
 msgstr "Política"
 
-#: src/modules/conf_theme/e_int_config_scale.c:328
+#: src/modules/conf_theme/e_int_config_scale.c:329
 msgid "Minimum"
 msgstr "Minima"
 
-#: src/modules/conf_theme/e_int_config_scale.c:331
-#: src/modules/conf_theme/e_int_config_scale.c:338
+#: src/modules/conf_theme/e_int_config_scale.c:332
+#: src/modules/conf_theme/e_int_config_scale.c:339
 #, c-format
 msgid "%1.2f times"
 msgstr "%1.2f veces"
 
-#: src/modules/conf_theme/e_int_config_scale.c:335
+#: src/modules/conf_theme/e_int_config_scale.c:336
 msgid "Maximum"
 msgstr "Maxima"
 
-#: src/modules/conf_theme/e_int_config_scale.c:342
+#: src/modules/conf_theme/e_int_config_scale.c:343
 msgid "Constraints"
 msgstr "Restricciones"
 
@@ -7767,7 +7776,7 @@ msgstr ""
 msgid "Dropshadow Settings"
 msgstr "Preferencias de sombreado"
 
-#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:720
+#: src/modules/dropshadow/e_mod_config.c:106 src/modules/shot/e_mod_main.c:721
 msgid "Quality"
 msgstr "Calidad"
 
@@ -9384,47 +9393,47 @@ msgstr ""
 msgid "Enable Taskbar"
 msgstr "Activar barra de tareas"
 
-#: src/modules/mixer/app_mixer.c:165
+#: src/modules/mixer/app_mixer.c:192
 msgid "Capture"
 msgstr "Captura"
 
-#: src/modules/mixer/app_mixer.c:167
+#: src/modules/mixer/app_mixer.c:194
 msgid "Playback"
 msgstr "Reproducción"
 
-#: src/modules/mixer/app_mixer.c:287
+#: src/modules/mixer/app_mixer.c:314
 msgid "Output"
 msgstr "Salida"
 
-#: src/modules/mixer/app_mixer.c:363
+#: src/modules/mixer/app_mixer.c:393
 msgid "Cards"
 msgstr "Tarjetas"
 
-#: src/modules/mixer/app_mixer.c:376 src/modules/mixer/conf_gadget.c:279
+#: src/modules/mixer/app_mixer.c:406 src/modules/mixer/conf_gadget.c:279
 msgid "Channels"
 msgstr "Canales"
 
-#: src/modules/mixer/app_mixer.c:386
+#: src/modules/mixer/app_mixer.c:416
 msgid "Card:"
 msgstr "Tarjeta:"
 
-#: src/modules/mixer/app_mixer.c:390
+#: src/modules/mixer/app_mixer.c:420
 msgid "Channel:"
 msgstr "Canal:"
 
-#: src/modules/mixer/app_mixer.c:398
+#: src/modules/mixer/app_mixer.c:428
 msgid "Left:"
 msgstr "Izquierda:"
 
-#: src/modules/mixer/app_mixer.c:403
+#: src/modules/mixer/app_mixer.c:433
 msgid "Right:"
 msgstr "Derecha:"
 
-#: src/modules/mixer/app_mixer.c:408 src/modules/mixer/e_mod_main.c:697
+#: src/modules/mixer/app_mixer.c:438 src/modules/mixer/e_mod_main.c:697
 msgid "Mute"
 msgstr "Silenciar"
 
-#: src/modules/mixer/app_mixer.c:411 src/modules/mixer/conf_gadget.c:195
+#: src/modules/mixer/app_mixer.c:441 src/modules/mixer/conf_gadget.c:195
 msgid "Lock Sliders"
 msgstr "Bloquear deslizadores"
 
@@ -9832,7 +9841,7 @@ msgstr ""
 msgid "Select screenshot save location"
 msgstr "Seleccione donde guardar la captura de pantalla "
 
-#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:799
+#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:800
 msgid "Save"
 msgstr "Guardar"
 
@@ -9925,32 +9934,32 @@ msgstr ""
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: src/modules/shot/e_mod_main.c:668
+#: src/modules/shot/e_mod_main.c:669
 msgid "Where to put Screenshot..."
 msgstr "Dónde poner la captura de pantalla..."
 
-#: src/modules/shot/e_mod_main.c:724
+#: src/modules/shot/e_mod_main.c:725
 msgid "Perfect"
 msgstr "Perfecto"
 
-#: src/modules/shot/e_mod_main.c:801
+#: src/modules/shot/e_mod_main.c:802
 msgid "Share"
 msgstr "Compartir"
 
-#: src/modules/shot/e_mod_main.c:938 src/modules/shot/e_mod_main.c:986
+#: src/modules/shot/e_mod_main.c:939 src/modules/shot/e_mod_main.c:987
 msgid "Take Shot"
 msgstr "Take Shot"
 
-#: src/modules/shot/e_mod_main.c:949 src/modules/shot/e_mod_main.c:979
-#: src/modules/shot/e_mod_main.c:990
+#: src/modules/shot/e_mod_main.c:950 src/modules/shot/e_mod_main.c:980
+#: src/modules/shot/e_mod_main.c:991
 msgid "Take Screenshot"
 msgstr "Capturar Pantalla"
 
-#: src/modules/shot/e_mod_main.c:967
+#: src/modules/shot/e_mod_main.c:968
 msgid "Shot Error"
 msgstr "Error"
 
-#: src/modules/shot/e_mod_main.c:968
+#: src/modules/shot/e_mod_main.c:969
 msgid "Cannot initialize network"
 msgstr "No se puede inicializar la red"
 
