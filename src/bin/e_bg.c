@@ -148,9 +148,7 @@ EAPI const char *
 e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
    const E_Config_Desktop_Background *cfbg;
-   Eina_List *l, *entries;
    const char *bgfile = "";
-   char *entry;
    int ok = 0;
 
    cfbg = e_bg_config_get(container_num, zone_num, desk_x, desk_y);
@@ -185,19 +183,7 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
           }
         if (bgfile && eina_str_has_extension(bgfile, ".edj"))
           {
-             entries = edje_file_collection_list(bgfile);
-             if (entries)
-               {
-                  EINA_LIST_FOREACH(entries, l, entry)
-                    {
-                       if (!strcmp(entry, "e/desktop/background"))
-                         {
-                            ok = 1;
-                            break;
-                         }
-                    }
-                  edje_file_collection_list_free(entries);
-               }
+             ok = edje_file_group_exists(bgfile, "e/desktop/background");
           }
         else if ((bgfile) && (bgfile[0]))
           ok = 1;
