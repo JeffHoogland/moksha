@@ -928,9 +928,8 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
                                   _edge_grab_wnd_selected_edge_cb, cfdata);
-
+   e_dialog_parent_set(cfdata->locals.dia, cfdata->cfd->dia->win);
    e_dialog_show(cfdata->locals.dia);
-   ecore_x_icccm_transient_for_set(cfdata->locals.dia->win->evas_win, cfdata->cfd->dia->win->evas_win);
 }
 
 static void
