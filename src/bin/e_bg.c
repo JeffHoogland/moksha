@@ -148,7 +148,7 @@ EAPI Eina_Stringshare *
 e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
 {
    const E_Config_Desktop_Background *cfbg;
-   const char *bgfile = "";
+   const char *bgfile = NULL;
    int ok = 0;
 
    cfbg = e_bg_config_get(container_num, zone_num, desk_x, desk_y);
@@ -156,7 +156,7 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
    /* fall back to default */
    if (cfbg)
      {
-        bgfile = cfbg->file;
+        bgfile = eina_stringshare_ref(cfbg->file);
         if (bgfile)
           {
              if (bgfile[0] != '/')
@@ -164,13 +164,14 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
                   const char *bf;
 
                   bf = e_path_find(path_backgrounds, bgfile);
-                  if (bf) bgfile = bf;
+                  if (bf)
+                    eina_stringshare_replace(&bgfile, bf);
                }
           }
      }
    else
      {
-        bgfile = e_config->desktop_default_background;
+        bgfile = eina_stringshare_ref(e_config->desktop_default_background);
         if (bgfile)
           {
              if (bgfile[0] != '/')
@@ -178,7 +179,8 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
                   const char *bf;
 
                   bf = e_path_find(path_backgrounds, bgfile);
-                  if (bf) bgfile = bf;
+                  if (bf)
+                    eina_stringshare_replace(&bgfile, bf);
                }
           }
         if (bgfile && eina_str_has_extension(bgfile, ".edj"))
@@ -188,8 +190,8 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
         else if ((bgfile) && (bgfile[0]))
           ok = 1;
         if (!ok)
-          bgfile = eina_stringshare_add(e_theme_edje_file_get("base/theme/background",
-                                         "e/desktop/background"));
+          eina_stringshare_replace(&bgfile, e_theme_edje_file_get("base/theme/background",
+                                            "e/desktop/background"));
      }
 
    return bgfile;
