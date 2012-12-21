@@ -124,9 +124,9 @@ _e_kbd_int_layout_buf_update(E_Kbd_Int *ki)
                s3 = strdup(_e_kbd_int_str_unquote(out_capslock));
              e_kbd_buf_layout_key_add(ki->kbuf, s1, s2, s3, 
                                       ky->x, ky->y, ky->w, ky->h);
-             if (s1) free(s1);
-             if (s2) free(s2);
-             if (s3) free(s3);
+             free(s1);
+             free(s2);
+             free(s3);
           }
      }
 }
@@ -913,7 +913,7 @@ _e_kbd_int_layout_free(E_Kbd_Int *ki)
 {
    E_Kbd_Int_Key *ky;
 
-   if (ki->layout.directory) free(ki->layout.directory);
+   free(ki->layout.directory);
    if (ki->layout.file) eina_stringshare_del(ki->layout.file);
    ki->layout.directory = NULL;
    ki->layout.file = NULL;
@@ -999,8 +999,7 @@ _e_kbd_int_layout_parse(E_Kbd_Int *ki, const char *layout)
              if (!ky) continue;
              if (sscanf(buf, "%*s %i %i %i %i\n", &(ky->x), &(ky->orig_y), &(ky->w), &(ky->orig_h)) != 4)
                {
-                  free(ky);
-                  ky = NULL;
+                  E_FREE(ky);
                   continue;
                }
              ki->layout.keys = eina_list_append(ki->layout.keys, ky);

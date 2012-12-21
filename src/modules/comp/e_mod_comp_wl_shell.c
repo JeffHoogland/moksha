@@ -414,7 +414,7 @@ _e_mod_comp_wl_shell_surface_set_title(struct wl_client *client, struct wl_resou
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    wss = resource->data;
-   if (wss->title) free(wss->title);
+   free(wss->title);
    wss->title = strdup(title);
 }
 
@@ -426,7 +426,7 @@ _e_mod_comp_wl_shell_surface_set_class(struct wl_client *client, struct wl_resou
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    wss = resource->data;
-   if (wss->clas) free(wss->clas);
+   free(wss->clas);
    wss->clas = strdup(clas);
 }
 

@@ -77,8 +77,8 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         if (evr->val) eina_stringshare_del(evr->val);
         E_FREE(evr);
      }
-   if (cfdata->var_str) free(cfdata->var_str);
-   if (cfdata->val_str) free(cfdata->val_str);
+   free(cfdata->var_str);
+   free(cfdata->val_str);
    E_FREE(cfdata);
 }
 

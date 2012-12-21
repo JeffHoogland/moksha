@@ -134,9 +134,9 @@ _e_mod_illume_config_select_window_list_changed(void *data)
         break;
      }
 
-   if (title) free(title);
-   if (name) free(name);
-   if (class) free(class);
+   free(title);
+   free(name);
+   free(class);
 
    if (_sw_change_timer) ecore_timer_del(_sw_change_timer);
    _sw_change_timer = 
@@ -235,9 +235,9 @@ _e_mod_illume_config_select_window_match(E_Border *bd)
         break;
      }
 
-   if (title) free(title);
-   if (name) free(name);
-   if (class) free(class);
+   free(title);
+   free(name);
+   free(class);
 
    return match;
 }

@@ -567,8 +567,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                }
              if (!_e_mod_comp_win_shaped_check(cw, cw->rects, cw->rects_num))
                {
-                  free(cw->rects);
-                  cw->rects = NULL;
+                  E_FREE(cw->rects);
                   cw->rects_num = 0;
                }
              if ((cw->rects) && (!cw->shaped))
@@ -1941,7 +1940,7 @@ _e_mod_comp_win_add(E_Comp *c,
         cw->title = ecore_x_icccm_title_get(cw->win);
         if (ecore_x_netwm_name_get(cw->win, &netwm_title))
           {
-             if (cw->title) free(cw->title);
+             free(cw->title);
              cw->title = netwm_title;
           }
         ecore_x_icccm_name_class_get(cw->win, &cw->name, &cw->clas);
@@ -2092,11 +2091,7 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
 
    e_mod_comp_update_free(cw->up);
    DBG("  [0x%x] del\n", cw->win);
-   if (cw->rects)
-     {
-        free(cw->rects);
-        cw->rects = NULL;
-     }
+   E_FREE(cw->rects);
    if (cw->update_timeout)
      {
         ecore_timer_del(cw->update_timeout);
@@ -2159,10 +2154,10 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
    if (cw->inhash)
      eina_hash_del(windows, e_util_winid_str_get(cw->win), cw);
    
-   if (cw->title) free(cw->title);
-   if (cw->name) free(cw->name);
-   if (cw->clas) free(cw->clas);
-   if (cw->role) free(cw->role);
+   free(cw->title);
+   free(cw->name);
+   free(cw->clas);
+   free(cw->role);
    cw->c->wins_invalid = 1;
    cw->c->wins = eina_inlist_remove(cw->c->wins, EINA_INLIST_GET(cw));
    pending_count = cw->pending_count;
@@ -3836,8 +3831,8 @@ _e_mod_comp_add(E_Manager *man)
                   ecore_x_sync();
                   continue;
                }
-             if (wname) free(wname);
-             if (wclass) free(wclass);
+             free(wname);
+             free(wclass);
              wname = wclass = NULL;
              cw = _e_mod_comp_win_add(c, wins[i]);
              if (!cw) continue;

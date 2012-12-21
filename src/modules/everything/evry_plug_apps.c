@@ -1262,9 +1262,7 @@ _plugins_shutdown(void)
 
    _dir_monitor_free();
 
-   if (current_path)
-     free(current_path);
-   current_path = NULL;
+   E_FREE(current_path);
 }
 
 /***************************************************************************/

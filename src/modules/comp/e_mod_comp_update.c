@@ -28,7 +28,7 @@ e_mod_comp_update_new(void)
 void
 e_mod_comp_update_free(E_Update *up)
 {
-   if (up->tiles) free(up->tiles);
+   free(up->tiles);
    free(up);
 }
 

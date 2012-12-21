@@ -46,7 +46,7 @@ e_mod_policy_init(void)
      {
         /* loading policy failed, bail out */
         printf("Cannot load policy: %s\n", file);
-        if (file) free(file);
+        free(file);
         return 0;
      }
 
@@ -493,7 +493,7 @@ _e_mod_policy_cb_policy_change(void *data __UNUSED__, int type, void *event __UN
    /* try to load the policy */
    _e_mod_policy_load(file);
 
-   if (file) free(file);
+   free(file);
 
    return ECORE_CALLBACK_PASS_ON;
 }

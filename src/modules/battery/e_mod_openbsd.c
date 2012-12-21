@@ -78,8 +78,7 @@ _battery_openbsd_start(void)
 void
 _battery_openbsd_stop(void)
 {
-   if (ac)
-     free(ac);
+   free(ac);
    if (bat)
      {
         eina_stringshare_del(bat->udi);

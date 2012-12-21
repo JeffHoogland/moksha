@@ -175,8 +175,8 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
    eina_stringshare_del(cfdata->locals.binding);
    eina_stringshare_del(cfdata->locals.action);
 
-   if (cfdata->locals.params) free(cfdata->locals.params);
-   if (cfdata->params) free(cfdata->params);
+   free(cfdata->locals.params);
+   free(cfdata->params);
    E_FREE(cfdata);
 }
 
@@ -785,7 +785,7 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
         else
           {
              e_widget_ilist_unselect(cfdata->gui.o_action_list);
-             if (cfdata->locals.action) free(cfdata->locals.action);
+             free(cfdata->locals.action);
              cfdata->locals.action = strdup("");
              e_widget_entry_clear(cfdata->gui.o_params);
           }

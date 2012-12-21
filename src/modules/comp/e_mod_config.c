@@ -206,10 +206,10 @@ _match_free(Match_Config *m)
    if (m->match.clas) eina_stringshare_del(m->match.clas);
    if (m->match.role) eina_stringshare_del(m->match.role);
    if (m->match.shadow_style) eina_stringshare_del(m->match.shadow_style);
-   if (m->title) free(m->title);
-   if (m->name) free(m->name);
-   if (m->clas) free(m->clas);
-   if (m->role) free(m->role);
+   free(m->title);
+   free(m->name);
+   free(m->clas);
+   free(m->role);
    free(m);
 }
 
@@ -615,32 +615,28 @@ _edit_ok(void *d1,
    if (m->title)
      {
         if (m->title[0]) m->match.title = eina_stringshare_add(m->title);
-        free(m->title);
-        m->title = NULL;
+        E_FREE(m->title);
      }
    if (m->match.name) eina_stringshare_del(m->match.name);
    m->match.name = NULL;
    if (m->name)
      {
         if (m->name[0]) m->match.name = eina_stringshare_add(m->name);
-        free(m->name);
-        m->name = NULL;
+        E_FREE(m->name);
      }
    if (m->match.clas) eina_stringshare_del(m->match.clas);
    m->match.clas = NULL;
    if (m->clas)
      {
         if (m->clas[0]) m->match.clas = eina_stringshare_add(m->clas);
-        free(m->clas);
-        m->clas = NULL;
+        E_FREE(m->clas);
      }
    if (m->match.role) eina_stringshare_del(m->match.role);
    m->match.role = NULL;
    if (m->role)
      {
         if (m->role[0]) m->match.role = eina_stringshare_add(m->role);
-        free(m->role);
-        m->role = NULL;
+        E_FREE(m->role);
      }
    m->match.borderless = m->borderless;
    m->match.dialog = m->dialog;

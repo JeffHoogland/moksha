@@ -356,7 +356,7 @@ _il_home_desktop_find_border(E_Zone *zone, Efreet_Desktop *desktop)
         if (e_exec_startup_id_pid_find(bd->client.netwm.pid, 
                                        bd->client.netwm.startup_id) == desktop) 
           {
-             if (exe) free(exe);
+             free(exe);
              return bd;
           }
         if (exe) 
@@ -381,7 +381,7 @@ _il_home_desktop_find_border(E_Zone *zone, Efreet_Desktop *desktop)
                }
           }
      }
-   if (exe) free(exe);
+   free(exe);
    return NULL;
 }
 

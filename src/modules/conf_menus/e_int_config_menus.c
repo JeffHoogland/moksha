@@ -233,8 +233,8 @@ _create_menus_list(Evas *evas, E_Config_Dialog_Data *cfdata)
                }
           }
         e_widget_ilist_append(ob, NULL, label, NULL, NULL, file);
-        if (tlabel) free(tlabel);
-        if (tdesc) free(tdesc);
+        free(tlabel);
+        free(tdesc);
         free(file);
         i++;
      }

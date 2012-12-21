@@ -126,11 +126,9 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (cfdata->hdl)
      ecore_event_handler_del(cfdata->hdl);
    eina_stringshare_del(cfdata->bg);
-   if (cfdata->name)
-     E_FREE(cfdata->name);
+   E_FREE(cfdata->name);
 #if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
-   if (cfdata->profile)
-     E_FREE(cfdata->profile);
+   E_FREE(cfdata->profile);
 #endif
    E_FREE(cfdata);
 }

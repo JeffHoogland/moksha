@@ -498,7 +498,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
                                                   noutputs, mx, my,
                                                   sd->current.mode->xid, 
                                                   sd->current.orientation);
-                  if (outputs) free(outputs);
+                  free(outputs);
                }
           }
         else

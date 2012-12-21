@@ -153,7 +153,7 @@ _e_mod_illume_config_policy_policies_get(void)
              e_object_del(E_OBJECT(p));
              continue;
           }
-        if (file) free(file);
+        free(file);
         l = eina_list_append(l, p);
      }
 

@@ -178,7 +178,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    eina_stringshare_del(cfdata->locals.binding);
    eina_stringshare_del(cfdata->locals.action);
 
-   if (cfdata->locals.params) free(cfdata->locals.params);
+   free(cfdata->locals.params);
    E_FREE(cfdata);
 }
 
@@ -644,7 +644,7 @@ _update_action_list(E_Config_Dialog_Data *cfdata)
         else
           {
              e_widget_ilist_unselect(cfdata->gui.o_action_list);
-             if (cfdata->locals.action) free(cfdata->locals.action);
+             free(cfdata->locals.action);
              cfdata->locals.action = strdup("");
              e_widget_entry_clear(cfdata->gui.o_params);
           }
@@ -924,7 +924,7 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
      {
         label = _edge_binding_text_get(cfdata->locals.edge, ((float)cfdata->locals.delay), cfdata->locals.modifiers);
         edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
-        if (label) E_FREE(label);
+        E_FREE(label);
      }
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
@@ -971,7 +971,7 @@ _edge_grab_wnd_slider_changed_cb(void *data, Evas_Object *obj __UNUSED__)
                                   ((float)cfdata->locals.delay),
                                   cfdata->locals.modifiers);
    edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
-   if (label) E_FREE(label);
+   E_FREE(label);
 }
 
 static void
@@ -994,7 +994,7 @@ _edge_grab_wnd_check_changed_cb(void *data, Evas_Object *obj __UNUSED__)
      }
 
    edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
-   if (label) E_FREE(label);
+   E_FREE(label);
 }
 
 static void
@@ -1078,7 +1078,7 @@ stop:
                                   cfdata->locals.click ? (-1.0 * cfdata->locals.button) : ((float)cfdata->locals.delay),
                                   cfdata->locals.modifiers);
    edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
-   if (label) E_FREE(label);
+   E_FREE(label);
 }
 
 static void

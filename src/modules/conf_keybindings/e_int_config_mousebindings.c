@@ -191,7 +191,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    eina_stringshare_del(cfdata->locals.action);
    eina_stringshare_del(cfdata->locals.cur);
 
-   if (cfdata->locals.params) free(cfdata->locals.params);
+   free(cfdata->locals.params);
    E_FREE(cfdata);
 }
 
@@ -756,8 +756,8 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
           snprintf(label, sizeof(label), "%s + %s", button ? button : "", mods);
         else
           snprintf(label, sizeof(label), "%s", button ? button : "");
-        if (button) free(button);
-        if (mods) free(mods);
+        free(button);
+        free(mods);
 
         switch (eb->button)
           {
@@ -817,8 +817,8 @@ _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
           snprintf(label, sizeof(label), "%s + %s", button ? button : "", mods);
         else
           snprintf(label, sizeof(label), "%s", button ? button : "");
-        if (button) free(button);
-        if (mods) free(mods);
+        free(button);
+        free(mods);
 
         snprintf(val, sizeof(val), "w%d", i);
 

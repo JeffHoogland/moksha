@@ -691,7 +691,7 @@ _pan_sel(Evas_Object *obj, Item *it)
              if (it2->selected) it2->selected = 0;
           }
         it->selected = EINA_TRUE;
-        if (sd->info->bg_file) free(sd->info->bg_file);
+        free(sd->info->bg_file);
         evas_object_hide(sd->info->mini);
         if (it->file)
           {
@@ -710,7 +710,7 @@ _pan_sel(Evas_Object *obj, Item *it)
                   if (p) *p = 0;
                }
              edje_object_part_text_set(sd->info->bg, "e.text.filename", name);
-             if (name) free(name);
+             free(name);
           }
         else
           {
@@ -947,7 +947,7 @@ _pan_file_add(Evas_Object *obj, const char *file, Eina_Bool remote, Eina_Bool th
                        if (p) *p = 0;
                     }
                   edje_object_part_text_set(sd->info->bg, "e.text.filename", name);
-                  if (name) free(name);
+                  free(name);
                }
           }
      }
@@ -1074,8 +1074,7 @@ _idler(void *data)
      }
    if (!eina_iterator_next(info->dir, (void**) &st))
      {
-        free(info->curdir);
-        info->curdir = NULL;
+        E_FREE(info->curdir);
         eina_iterator_free(info->dir);
         info->dir = NULL;
         info->idler = NULL;
@@ -1108,7 +1107,7 @@ _scan(Info *info)
              edje_object_part_text_set(info->bg, "e.text.busy_label",
                                        _("Loading files..."));
           }
-        if (info->curdir) free(info->curdir);
+        free(info->curdir);
         info->curdir = info->dirs->data;
         info->dirs = eina_list_remove_list(info->dirs, info->dirs);
         if (!info->dir) info->dir = eina_file_stat_ls(info->curdir);
@@ -1162,8 +1161,7 @@ wp_browser_new(E_Container *con)
    win = e_win_new(con);
    if (!win)
      {
-        free(info);
-        info = NULL;
+        E_FREE(info);
         return NULL;
      }
    info->win = win;
@@ -1328,8 +1326,7 @@ wp_broser_free(Info *info)
      free(s);
    if (info->idler) ecore_idler_del(info->idler);
    // del other stuff
-   free(info);
-   info = NULL;
+   E_FREE(info);
 }
 
 E_Config_Dialog *

@@ -484,7 +484,7 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
         return;
      }
    rewind(f);
-   if (fdata) free(fdata);
+   free(fdata);
    fdata = malloc(fsize);
    if (!fdata)
      {

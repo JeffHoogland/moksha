@@ -212,8 +212,8 @@ _ds_shutdown(Dropshadow *ds)
         _ds_shadow_del(sh);
      }
    if (ds->idler_before) e_main_idler_before_del(ds->idler_before);
-   if (ds->table.gauss) free(ds->table.gauss);
-   if (ds->table.gauss2) free(ds->table.gauss2);
+   free(ds->table.gauss);
+   free(ds->table.gauss2);
    _ds_shared_free(ds);
    free(ds);
 }
@@ -1083,7 +1083,7 @@ _ds_blur_init(Dropshadow *ds)
 {
    int i;
 
-   if (ds->table.gauss) free(ds->table.gauss);
+   free(ds->table.gauss);
    ds->table.gauss_size = (ds->conf->blur_size * 2) - 1;
    ds->table.gauss = calloc(1, ds->table.gauss_size * sizeof(unsigned char));
 
@@ -1098,7 +1098,7 @@ _ds_blur_init(Dropshadow *ds)
             _ds_gauss_int(-1.5 + (v * 3.0)) * 255.0;
      }
 
-   if (ds->table.gauss2) free(ds->table.gauss2);
+   free(ds->table.gauss2);
    ds->table.gauss2_size = (ds->conf->blur_size * 2) - 1;
    ds->table.gauss2 = calloc(1, ds->table.gauss2_size * sizeof(unsigned char));
 
@@ -1484,7 +1484,7 @@ static void
 _ds_shpix_free(Shpix *sp)
 {
    if (!sp) return;
-   if (sp->pix) free(sp->pix);
+   free(sp->pix);
    free(sp);
 }
 
@@ -1968,8 +1968,7 @@ _tilebuf_intersect(int tsize, int tlen, int tnum, int x, int w, int *x1, int *x2
 static void
 _tilebuf_setup(Tilebuf *tb)
 {
-   if (tb->tiles.tiles) free(tb->tiles.tiles);
-   tb->tiles.tiles = NULL;
+   E_FREE(tb->tiles.tiles);
 
    tb->tiles.w = (tb->outbuf_w + (tb->tile_size.w - 1)) / tb->tile_size.w;
    tb->tiles.h = (tb->outbuf_h + (tb->tile_size.h - 1)) / tb->tile_size.h;
@@ -2004,7 +2003,7 @@ _tilebuf_new(int w, int h)
 static void
 _tilebuf_free(Tilebuf *tb)
 {
-   if (tb->tiles.tiles) free(tb->tiles.tiles);
+   free(tb->tiles.tiles);
    free(tb);
 }
 
