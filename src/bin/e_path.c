@@ -226,7 +226,7 @@ e_path_user_path_clear(E_Path *ep)
    _e_path_cache_free(ep);
 }
 
-EAPI const char *
+EAPI Eina_Stringshare *
 e_path_find(E_Path *ep, const char *file)
 {
    Eina_List *l;
