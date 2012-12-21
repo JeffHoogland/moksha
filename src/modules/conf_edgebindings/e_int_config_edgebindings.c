@@ -913,6 +913,7 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
    obg = e_thumb_icon_add(evas);
    e_icon_fill_inside_set(obg, 0);
    e_thumb_icon_file_set(obg, bgfile, "e/desktop/background");
+   eina_stringshare_del(bgfile);
    edje_object_part_geometry_get(o, "e.swallow.background", NULL, NULL, &tw, &th);
    e_thumb_icon_size_set(obg, tw, th);
    edje_object_part_swallow(o, "e.swallow.background", obg);
