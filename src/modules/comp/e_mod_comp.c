@@ -322,6 +322,7 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw,
                   return;
                }
 
+             evas_sync(evas_object_evas_get(cw->obj));
              evas_object_image_native_surface_set(cw->obj, NULL);
              evas_object_image_alpha_set(cw->obj, 1);
              EINA_LIST_FOREACH(cw->obj_mirror, l, o)
@@ -400,6 +401,7 @@ _e_mod_comp_win_shape_rectangles_apply(E_Comp_Win *cw,
                        return;
                     }
 
+                  evas_sync(evas_object_evas_get(cw->obj));
                   evas_object_image_alpha_set(cw->obj, 0);
                   EINA_LIST_FOREACH(cw->obj_mirror, l, o)
                     {
@@ -612,6 +614,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
                   cw->pw = 0;
                   cw->ph = 0;
                }
+             evas_sync(evas_object_evas_get(cw->obj));
              DBG("REND [0x%x] pixmap = [0x%x], %ix%i\n", cw->win, cw->pixmap, cw->pw, cw->ph);
              if ((cw->pw <= 0) || (cw->ph <= 0))
                {
@@ -680,6 +683,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
 /*         DBG("DEBUG - pm now %x\n", e_mod_comp_wl_pixmap_get(cw->win)); */
 /* #endif */
         /* DBG("DEBUG - pm now %x\n", ecore_x_composite_name_window_pixmap_get(cw->win)); */
+        evas_sync(evas_object_evas_get(cw->obj));
         evas_object_image_size_set(cw->obj, cw->pw, cw->ph);
         EINA_LIST_FOREACH(cw->obj_mirror, l, o)
           {
@@ -728,6 +732,7 @@ _e_mod_comp_win_update(E_Comp_Win *cw)
      }
    else if (cw->pixmap)
      {
+        evas_sync(evas_object_evas_get(cw->obj));
         if (cw->native)
           {
              evas_object_image_native_surface_set(cw->obj, NULL);
@@ -988,6 +993,7 @@ _e_mod_comp_win_release(E_Comp_Win *cw)
    Eina_List *l;
    Evas_Object *o;
  
+   evas_sync(evas_object_evas_get(cw->obj));
    if (cw->xim)
      {
         evas_object_image_size_set(cw->obj, 1, 1);
@@ -2139,6 +2145,7 @@ _e_mod_comp_win_del(E_Comp_Win *cw)
      {
         EINA_LIST_FREE(cw->obj_mirror, o)
           {
+             evas_sync(evas_object_evas_get(o));
              if (cw->xim) evas_object_image_data_set(o, NULL);
              evas_object_event_callback_del(o, EVAS_CALLBACK_DEL,
                                             _e_mod_comp_cb_win_mirror_del);
@@ -2198,6 +2205,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
      {
         DBG("  [0x%x] real hid - fix\n", cw->win);
         cw->real_hid = 0;
+        evas_sync(evas_object_evas_get(cw->obj));
         if (cw->native)
           {
              evas_object_image_native_surface_set(cw->obj, NULL);
@@ -2243,6 +2251,7 @@ _e_mod_comp_win_show(E_Comp_Win *cw)
 
    if ((!cw->redirected) || (!cw->pixmap))
      {
+        evas_sync(evas_object_evas_get(cw->obj));
         // we redirect all subwindows anyway
         //        ecore_x_composite_redirect_window(cw->win, ECORE_X_COMPOSITE_UPDATE_MANUAL);
 /* #ifdef HAVE_WAYLAND_CLIENTS */
@@ -2368,6 +2377,8 @@ _e_mod_comp_win_hide(E_Comp_Win *cw)
         ecore_timer_del(cw->ready_timeout);
         cw->ready_timeout = NULL;
      }
+   
+   evas_sync(evas_object_evas_get(cw->obj));
 
    if (cw->native)
      {
