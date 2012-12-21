@@ -34,7 +34,9 @@ Green_Stem.edj \
 Leafy_Red.edj \
 Ramen.edj \
 Shady_Leaves.edj \
-Windy_Palm.edj
+Windy_Palm.edj \
+Lantern_Cluster.edj \
+Wall_Lanterns.edj
 
 
 EXTRA_DIST = $(files_DATA)
