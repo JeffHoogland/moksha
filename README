@@ -1,17 +1,14 @@
-Enlightenment 0.17.0 - IN DEVELOPMENT... not a RELEASE.
+Enlightenment 0.17.0
 
 Requirements:
 -------------
 
 Must:
   libc libm libX11 libXext evas ecore ecore-evas ecore-file ecore-ipc ecore-con
-  ecore-job ecore-imf ecore-img-evas edje eet embryo efreet efreet-mime
-  edbus ecore-txt
+  ecore-imf ecore-x edje eet embryo efreet e_dbus eio
+  xcb xcb-shape xcb-keysyms
   [png loader in evas, jpeg loader in evas, eet loader in evas, software_x11
   engine in evas, buffer engine in evas]
-
-Recommended:
-  libpam [xrender engine in evas]
 
 NOTE: Users of DR16 will need to rename the $prefix/bin/enlightenment
 file prior to installing DR17 or it will be overwritten.
@@ -21,21 +18,17 @@ of its own (recommended) like:
 
   ./configure --prefix=/usr/local/e17
 
-You will, as usual need to add the subsequent bin dir to your $PATH etc.
+You will, as usual, need to add the subsequent bin dir to your $PATH etc.
 
 
 NOTES:
 
-* do NOT use -mfpmath=sse in CFLAGS - we are not sure, but it may have bugds
+* do NOT use -mfpmath=sse in CFLAGS - we are not sure, but it may have bugs
 and screws up things in edje, evas and e17. if your gcc uses this by default
 (which apparently gcc4.x does on amd64), turn it off with a -fpmath=387 in
 your CFLAGS.
 
 * your freetype2 version must be > 2.1.7
-
-* i remember hearing of bugs with later versions of freetype on some
-distributions (2.1.9 and 2.1.10) with certain patches or missing certain
-patches. be aware of this as a possible font problem.
 
 * if you do not want security issues make sure sysactions.conf is in
 /etc/enlightenment (not PREFIX/etc/enlightenment) as this is the first place
