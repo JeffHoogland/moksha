@@ -44,8 +44,9 @@ static void _e_xsettings_apply(Settings_Manager *sm);
 
 static Ecore_X_Atom _atom_manager = 0;
 static Ecore_X_Atom _atom_xsettings = 0;
+static Ecore_X_Atom _atom_gtk_iconthemes = 0;
+static Ecore_X_Atom _atom_gtk_rcfiles = 0;
 static Eina_List *managers = NULL;
-static Eina_List *handlers = NULL;
 static Eina_List *settings = NULL;
 static Eina_Bool running = EINA_FALSE;
 static Eio_File *eio_op = NULL;
@@ -56,6 +57,7 @@ static const char _setting_theme_name[]      = "Net/ThemeName";
 static const char _setting_font_name[]       = "Gtk/FontName";
 static const char _setting_xft_dpi[]         = "Xft/DPI";
 static const char *_setting_theme = NULL;
+static unsigned int event_ignore = 0;
 
 static void _e_xsettings_done_cb(void *data, Eio_File *handler, const Eina_Stat *stat);
 
@@ -362,21 +364,25 @@ _e_xsettings_update(void)
      if (sm->selection) _e_xsettings_apply(sm);
 }
 
-static Eina_Bool
-_cb_icon_theme_change(void *data __UNUSED__, int type __UNUSED__, void *event)
+static void
+_e_xsettings_gtk_icon_update(void)
 {
-   E_Event_Config_Icon_Theme *ev = event;
+   Eina_List *l;
+   E_Border *bd;
 
-   if (e_config->xsettings.match_e17_icon_theme)
-     {
-        _e_xsettings_string_set(_setting_icon_theme_name,
-                              ev->icon_theme);
-        _e_xsettings_update();
-     }
-
-   return ECORE_CALLBACK_PASS_ON;
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     if (bd->client.icccm.state) ecore_x_client_message8_send(bd->client.win, _atom_gtk_iconthemes, NULL, 0);
 }
 
+static void
+_e_xsettings_gtk_rcfiles_update(void)
+{
+   Eina_List *l;
+   E_Border *bd;
+
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     if (bd->client.icccm.state) ecore_x_client_message8_send(bd->client.win, _atom_gtk_rcfiles, NULL, 0);
+}
 
 static void
 _e_xsettings_icon_theme_set(void)
@@ -420,15 +426,11 @@ _e_xsettings_error_cb(void *data, Eio_File *handler __UNUSED__, int error __UNUS
    _setting_theme = NULL;
 
    if (e_config->xsettings.net_theme_name)
-     {
-        _e_xsettings_string_set(_setting_theme_name,
-                              e_config->xsettings.net_theme_name);
-        _e_xsettings_update();
-        return;
-     }
-
-   _e_xsettings_string_set(_setting_theme_name, NULL);
+     _e_xsettings_string_set(_setting_theme_name, e_config->xsettings.net_theme_name);
+   else
+     _e_xsettings_string_set(_setting_theme_name, NULL);
    _e_xsettings_update();
+   _e_xsettings_gtk_rcfiles_update();
 }
 
 static void
@@ -445,6 +447,7 @@ _e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const 
    eio_op = NULL;
    setting = EINA_FALSE;
    _e_xsettings_update();
+   _e_xsettings_gtk_rcfiles_update();
 }
 
 static void
@@ -586,9 +589,6 @@ _e_xsettings_start(void)
         managers = eina_list_append(managers, sm);
      }
 
-   handlers = eina_list_append(handlers, ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME,
-                                                                 _cb_icon_theme_change, NULL));
-
    running = EINA_TRUE;
 }
 
@@ -596,7 +596,6 @@ static void
 _e_xsettings_stop(void)
 {
    Settings_Manager *sm;
-   Ecore_Event_Handler *h;
    Setting *s;
 
    if (!running) return;
@@ -618,9 +617,6 @@ _e_xsettings_stop(void)
         E_FREE(s);
      }
 
-   EINA_LIST_FREE(handlers, h)
-     ecore_event_handler_del(h);
-
    running = EINA_FALSE;
 }
 
@@ -629,6 +625,8 @@ e_xsettings_init(void)
 {
    _atom_manager = ecore_x_atom_get("MANAGER");
    _atom_xsettings = ecore_x_atom_get("_XSETTINGS_SETTINGS");
+   _atom_gtk_iconthemes = ecore_x_atom_get("_GTK_LOAD_ICONTHEMES");
+   _atom_gtk_rcfiles = ecore_x_atom_get("_GTK_READ_RCFILES");
 
    if (e_config->xsettings.enabled)
      _e_xsettings_start();
@@ -643,6 +641,7 @@ e_xsettings_shutdown(void)
    if (eio_op) eio_file_cancel(eio_op);
    eio_op = NULL;
    setting = EINA_FALSE;
+   event_ignore = 0;
 
    return 1;
 }
@@ -668,6 +667,9 @@ e_xsettings_config_update(void)
         _e_xsettings_icon_theme_set();
         _e_xsettings_font_set();
         _e_xsettings_update();
+        _e_xsettings_gtk_icon_update();
+        _e_xsettings_gtk_rcfiles_update();
         reset = EINA_TRUE;
      }
+   event_ignore++;
 }
