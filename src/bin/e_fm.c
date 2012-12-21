@@ -255,7 +255,7 @@ struct _E_Fm2_Context_Menu_Data
    E_Fm2_Smart_Data *sd;
    E_Fm2_Mime_Handler *handler;
 };
-
+static Eina_Bool    _e_fm2_cb_drag_finished_show(E_Fm2_Icon *ic);
 static const char   *_e_fm2_dev_path_map(E_Fm2_Smart_Data *sd, const char *dev, const char *path);
 static void          _e_fm2_file_add(Evas_Object *obj, const char *file, int unique, Eina_Stringshare *file_rel, int after, E_Fm2_Finfo *finf);
 static void          _e_fm2_file_del(Evas_Object *obj, const char *file);
@@ -6955,6 +6955,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
              e_fm2_drop_menu(sd->obj, args);
              if (mnt && mop)
                evas_object_data_set(sd->obj, "drop_menu_data", mop);
+             E_LIST_FOREACH(isel, _e_fm2_cb_drag_finished_show);
           }
         if (((!mnt) && (!mop)) && (do_lnk || do_copy || do_move))
           free(args);
