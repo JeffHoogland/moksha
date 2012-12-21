@@ -1,5 +1,5 @@
 group "E_Config" struct {
-    value "config_version" int: 65865;
+    value "config_version" int: 1000000;
     value "show_splash" int: 1;
     value "init_default_theme" string: "default.edj";
     value "desktop_default_name" string: "%i-%i";
@@ -214,7 +214,7 @@ group "E_Config" struct {
     value "powersave.extreme" double: 1200.0;
     value "powersave.min" int: 0;
     value "powersave.max" int: 5;
-    value "no_module_delay" int: 1;
+    value "no_module_delay" int: 0;
     group "syscon.actions" list {
         group "E_Config_Syscon_Action" struct {
             value "action" string: "halt";

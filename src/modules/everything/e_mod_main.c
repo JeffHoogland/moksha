@@ -413,68 +413,59 @@ _config_init()
    if (!evry_conf)
      {
         evry_conf = E_NEW(Evry_Config, 1);
-        evry_conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
+
+        /* setup defaults */
+        evry_conf->rel_x = 0.5;
+        evry_conf->rel_y = 0.43;
+        evry_conf->width = 455;
+        evry_conf->height = 430;
+        evry_conf->scroll_animate = 1;
+        evry_conf->scroll_speed = 10.0;
+        evry_conf->hide_input = 0;
+        evry_conf->hide_list = 0;
+        evry_conf->quick_nav = 1;
+        evry_conf->view_mode = VIEW_MODE_DETAIL;
+        evry_conf->view_zoom = 0;
+        evry_conf->cycle_mode = 0;
+        evry_conf->history_sort_mode = 0;
+        evry_conf->edge_width = 340;
+        evry_conf->edge_height = 385;
+        evry_conf->first_run = EINA_TRUE;
+
+        pcc = E_NEW(Plugin_Config, 1);
+        pcc->name = eina_stringshare_add("Start");
+        pcc->enabled = EINA_FALSE;
+        pcc->aggregate = EINA_FALSE;
+        pcc->top_level = EINA_TRUE;
+        pcc->view_mode = VIEW_MODE_THUMB;
+        evry_conf->collections = eina_list_append(evry_conf->collections, pcc);
+
+        pc = E_NEW(Plugin_Config, 1);
+        pc->name = eina_stringshare_add("Windows");
+        pc->enabled = EINA_TRUE;
+        pc->view_mode = VIEW_MODE_NONE;
+        pcc->plugins = eina_list_append(pcc->plugins, pc);
+
+        pc = E_NEW(Plugin_Config, 1);
+        pc->name = eina_stringshare_add("Settings");
+        pc->enabled = EINA_TRUE;
+        pc->view_mode = VIEW_MODE_NONE;
+        pcc->plugins = eina_list_append(pcc->plugins, pc);
+
+        pc = E_NEW(Plugin_Config, 1);
+        pc->name = eina_stringshare_add("Files");
+        pc->enabled = EINA_TRUE;
+        pc->view_mode = VIEW_MODE_NONE;
+        pcc->plugins = eina_list_append(pcc->plugins, pc);
+
+        pc = E_NEW(Plugin_Config, 1);
+        pc->name = eina_stringshare_add("Applications");
+        pc->enabled = EINA_TRUE;
+        pc->view_mode = VIEW_MODE_NONE;
+        pcc->plugins = eina_list_append(pcc->plugins, pc);
+        evry_conf->width = 464;
+        evry_conf->height = 366;
      }
-
-#define IFMODCFG(v) if ((evry_conf->version & 0xffff) < v) {
-#define IFMODCFGEND }
-
-    /* setup defaults */
-    IFMODCFG(0x0001);
-    evry_conf->rel_x = 0.5;
-    evry_conf->rel_y = 0.43;
-    evry_conf->width = 455;
-    evry_conf->height = 430;
-    evry_conf->scroll_animate = 1;
-    evry_conf->scroll_speed = 10.0;
-    evry_conf->hide_input = 0;
-    evry_conf->hide_list = 0;
-    evry_conf->quick_nav = 1;
-    evry_conf->view_mode = VIEW_MODE_DETAIL;
-    evry_conf->view_zoom = 0;
-    evry_conf->cycle_mode = 0;
-    evry_conf->history_sort_mode = 0;
-    evry_conf->edge_width = 340;
-    evry_conf->edge_height = 385;
-    evry_conf->first_run = EINA_TRUE;
-
-    pcc = E_NEW(Plugin_Config, 1);
-    pcc->name = eina_stringshare_add("Start");
-    pcc->enabled = EINA_FALSE;
-    pcc->aggregate = EINA_FALSE;
-    pcc->top_level = EINA_TRUE;
-    pcc->view_mode = VIEW_MODE_THUMB;
-    evry_conf->collections = eina_list_append(evry_conf->collections, pcc);
-
-    pc = E_NEW(Plugin_Config, 1);
-    pc->name = eina_stringshare_add("Windows");
-    pc->enabled = EINA_TRUE;
-    pc->view_mode = VIEW_MODE_NONE;
-    pcc->plugins = eina_list_append(pcc->plugins, pc);
-
-    pc = E_NEW(Plugin_Config, 1);
-    pc->name = eina_stringshare_add("Settings");
-    pc->enabled = EINA_TRUE;
-    pc->view_mode = VIEW_MODE_NONE;
-    pcc->plugins = eina_list_append(pcc->plugins, pc);
-
-    pc = E_NEW(Plugin_Config, 1);
-    pc->name = eina_stringshare_add("Files");
-    pc->enabled = EINA_TRUE;
-    pc->view_mode = VIEW_MODE_NONE;
-    pcc->plugins = eina_list_append(pcc->plugins, pc);
-
-    pc = E_NEW(Plugin_Config, 1);
-    pc->name = eina_stringshare_add("Applications");
-    pc->enabled = EINA_TRUE;
-    pc->view_mode = VIEW_MODE_NONE;
-    pcc->plugins = eina_list_append(pcc->plugins, pc);
-    IFMODCFGEND;
-
-    IFMODCFG(0x0003);
-    evry_conf->width = 464;
-    evry_conf->height = 366;
-    IFMODCFGEND;
 
     evry_conf->version = MOD_CONFIG_FILE_VERSION;
 }

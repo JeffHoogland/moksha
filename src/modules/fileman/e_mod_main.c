@@ -279,77 +279,24 @@ _e_mod_fileman_config_load(void)
    if (!fileman_config)
      {
         fileman_config = E_NEW(Config, 1);
-        fileman_config->config_version = (MOD_CONFIG_FILE_EPOCH << 16);
+        fileman_config->view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
+        fileman_config->view.show_desktop_icons = 1;
+        fileman_config->icon.icon.w = 48;
+        fileman_config->icon.icon.h = 48;
+        fileman_config->icon.extension.show = 1;
+        fileman_config->list.sort.no_case = 1;
+        fileman_config->list.sort.dirs.first = 1;
+        fileman_config->view.show_toolbar = 1;
+        fileman_config->view.open_dirs_in_place = 1;
+        fileman_config->tooltip.delay = 1.0;
+        fileman_config->tooltip.size = 30.0;
+        fileman_config->view.show_sidebar = 1;
+        fileman_config->tooltip.enable = 1;
+        fileman_config->view.spring_delay = 1;
+        fileman_config->icon.max_thumb_size = 5;
+        fileman_config->view.toolbar_orient = E_GADCON_ORIENT_TOP;
      }
-#define IFMODCFG(v) \
-  if ((fileman_config->config_version & 0xffff) < (v)) {
-#define IFMODCFGEND }
 
-    IFMODCFG(0x008d);
-    fileman_config->view.mode = E_FM2_VIEW_MODE_GRID_ICONS;
-    fileman_config->view.open_dirs_in_place = 0;
-    fileman_config->view.selector = 0;
-    fileman_config->view.single_click = 0;
-    fileman_config->view.no_subdir_jump = 0;
-    fileman_config->view.show_full_path = 0;
-    fileman_config->view.show_desktop_icons = 1;
-    fileman_config->icon.icon.w = 48;
-    fileman_config->icon.icon.h = 48;
-    fileman_config->icon.fixed.w = 0;
-    fileman_config->icon.fixed.h = 0;
-    fileman_config->icon.extension.show = 1;
-    fileman_config->list.sort.no_case = 1;
-    fileman_config->list.sort.dirs.first = 1;
-    fileman_config->list.sort.dirs.last = 0;
-    fileman_config->selection.single = 0;
-    fileman_config->selection.windows_modifiers = 0;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0101);
-    fileman_config->view.show_toolbar = 1;
-    fileman_config->view.open_dirs_in_place = 1;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0104);
-    fileman_config->tooltip.delay = 1.0;
-    fileman_config->tooltip.size = 30.0;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0105);
-    e_config->filemanager_single_click = fileman_config->view.single_click;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0107);
-    fileman_config->view.show_sidebar = 1;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0108);
-    fileman_config->view.menu_shows_files = 0;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0109);
-    fileman_config->view.desktop_navigation = 0;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0110);
-    fileman_config->tooltip.enable = 1;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0114);
-    fileman_config->view.spring_delay = 1;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0115);
-    fileman_config->icon.max_thumb_size = 5;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0116);
-    fileman_config->icon.max_thumb_size = 0;
-    IFMODCFGEND;
-
-    IFMODCFG(0x0118);
-    fileman_config->view.toolbar_orient = E_GADCON_ORIENT_TOP;
-    IFMODCFGEND;
 
     fileman_config->config_version = MOD_CONFIG_FILE_VERSION;
 

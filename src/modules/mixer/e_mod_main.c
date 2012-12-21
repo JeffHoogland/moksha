@@ -197,8 +197,7 @@ _mixer_module_configuration_new(void)
    E_Mixer_Module_Config *conf;
 
    conf = E_NEW(E_Mixer_Module_Config, 1);
-   if (!conf)
-     return NULL;
+   conf->desktop_notification = 1;
 
    return conf;
 }
@@ -1376,15 +1375,8 @@ _mixer_module_configuration_setup(E_Mixer_Module_Context *ctxt)
    ctxt->module_conf_edd = module_edd;
    ctxt->conf = _mixer_module_configuration_load(module_edd);
 
-#define IFMODCFG(v) if ((ctxt->conf->version & 0xffff) < v) {
-#define IFMODCFGEND }
-
-    IFMODCFG(0x0003);
-    ctxt->conf->desktop_notification = 1;
-    IFMODCFGEND;
-
-    ctxt->conf->version = MOD_CONFIG_FILE_VERSION;
-    ctxt->desktop_notification = ctxt->conf->desktop_notification;
+   ctxt->conf->version = MOD_CONFIG_FILE_VERSION;
+   ctxt->desktop_notification = ctxt->conf->desktop_notification;
 }
 
 static const char _act_increase[] = "volume_increase";

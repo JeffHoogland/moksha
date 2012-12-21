@@ -19,7 +19,6 @@ static void      _e_config_save_cb(void *data);
 static void      _e_config_free(E_Config *cfg);
 static Eina_Bool _e_config_cb_timer(void *data);
 static int       _e_config_eet_close_handle(Eet_File *ef, char *file);
-static void      _e_config_acpi_bindings_add(void);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
@@ -1005,14 +1004,13 @@ EAPI void
 e_config_load(void)
 {
    E_Config *tcfg = NULL;
+   int reload = 0;
 
    e_config = e_config_domain_load("e", _e_config_edd);
    if (e_config)
      {
-        int reload = 0;
-
         /* major version change - that means wipe and restart */
-        if ((e_config->config_version >> 16) < E_CONFIG_FILE_EPOCH)
+        if ((e_config->config_version) < E_CONFIG_FILE_EPOCH * 1000000)
           {
              /* your config is too old - need new defaults */
              _e_config_free(e_config);
@@ -1043,51 +1041,19 @@ e_config_load(void)
                                "as a precaution your settings have been now restored to<br>"
                                "defaults. Sorry for the inconvenience.<br>"));
           }
-        /* oldest minor version supported */
-        else if ((e_config->config_version & 0xffff) < 0x0124)
-          {
-             /* your config is so old - we don't even bother supporting an
-              * upgrade path - brand new config for you! */
-             _e_config_free(e_config);
-             e_config = NULL;
-             reload = 1;
-             ecore_timer_add(1.0, _e_config_cb_timer,
-                             _("Settings data needed upgrading. Your old settings have<br>"
-                               "been wiped and a new set of defaults initialized. This<br>"
-                               "will happen regularly during development, so don't report a<br>"
-                               "bug. This simply means Enlightenment needs new settings<br>"
-                               "data by default for usable functionality that your old<br>"
-                               "settings simply lack. This new set of defaults will fix<br>"
-                               "that by adding it in. You can re-configure things now to your<br>"
-                               "liking. Sorry for the hiccup in your settings.<br>"));
-          }
         if (reload)
           {
              e_config_profile_del(e_config_profile_get());
+             e_config_profile_set("default");
              e_config = e_config_domain_load("e", _e_config_edd);
           }
      }
    if (!e_config)
      {
-        E_Action *a;
-
         e_config_profile_set("default");
-        e_config_profile_del(e_config_profile_get());
+        if (!reload) e_config_profile_del(e_config_profile_get());
         e_config_save_block_set(1);
-        a = e_action_find("restart");
-        if ((a) && (a->func.go)) a->func.go(NULL, NULL);
-        else
-          {
-             ERR("EEEK! no config of any sort! abort abort abort!");
-             e_error_message_show("Enlightenment was started without any configuration\n"
-                                  "files available for the given profile (normally\n"
-                                  "default or the last profile used or provided on the\n"
-                                  "command-line with -profile etc.)\n\n"
-                                  "Cannot contiue without configuration to work with.\n"
-                                  "Please ensure you have system or user configuration\n"
-                                  "for the profile you are using before proceeeding.");
-             abort();
-          }
+        e_sys_action_do(E_SYS_RESTART, NULL);
      }
    if (e_config->config_version < E_CONFIG_FILE_VERSION)
      {
@@ -1108,192 +1074,14 @@ e_config_load(void)
          * a wipe */
         if (!tcfg)
           {
-             E_Action *a;
-
              e_config_profile_set("default");
              e_config_profile_del(e_config_profile_get());
              e_config_save_block_set(1);
-             a = e_action_find("restart");
-             if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+             e_sys_action_do(E_SYS_RESTART, NULL);
           }
      }
-#define IFCFG(v)   if ((e_config->config_version & 0xffff) < (v)) {
-#define IFCFGELSE } else {
-#define IFCFGEND  }
-#define COPYVAL(x) do {e_config->x = tcfg->x; } while (0)
-#define COPYPTR(x) do {e_config->x = tcfg->x; tcfg->x = NULL; } while (0)
-#define COPYSTR(x) COPYPTR(x)
-     if (tcfg)
-       {
-          /* some sort of upgrade is needed */
-          IFCFG(0x0124);
-          COPYVAL(thumbscroll_enable);
-          COPYVAL(thumbscroll_threshhold);
-          COPYVAL(thumbscroll_momentum_threshhold);
-          COPYVAL(thumbscroll_friction);
-          IFCFGEND;
 
-          IFCFG(0x0125);
-          COPYVAL(mouse_hand);
-          IFCFGEND;
-
-          IFCFG(0x0126);
-          COPYVAL(border_keyboard.timeout);
-          COPYVAL(border_keyboard.move.dx);
-          COPYVAL(border_keyboard.move.dy);
-          COPYVAL(border_keyboard.resize.dx);
-          COPYVAL(border_keyboard.resize.dy);
-          IFCFGEND;
-
-          IFCFG(0x0127);
-          COPYVAL(scale.min);
-          COPYVAL(scale.max);
-          COPYVAL(scale.factor);
-          COPYVAL(scale.base_dpi);
-          COPYVAL(scale.use_dpi);
-          COPYVAL(scale.use_custom);
-          IFCFGEND;
-
-          IFCFG(0x0128);
-          COPYVAL(show_cursor);
-          COPYVAL(idle_cursor);
-          IFCFGEND;
-
-          IFCFG(0x0129);
-          COPYSTR(default_system_menu);
-          IFCFGEND;
-
-          IFCFG(0x012a);
-          COPYVAL(desklock_start_locked);
-          IFCFGEND;
-
-          IFCFG(0x012b);
-          COPYVAL(cfgdlg_normal_wins);
-          IFCFGEND;
-
-          IFCFG(0x012c);
-          COPYVAL(syscon.main.icon_size);
-          COPYVAL(syscon.secondary.icon_size);
-          COPYVAL(syscon.extra.icon_size);
-          COPYVAL(syscon.timeout);
-          COPYVAL(syscon.do_input);
-          COPYPTR(syscon.actions);
-          IFCFGEND;
-
-          IFCFG(0x012d);
-          COPYVAL(priority);
-          IFCFGEND;
-
-          IFCFG(0x012e);
-          COPYVAL(fullscreen_flip);
-          IFCFGEND;
-
-          IFCFG(0x012f);
-          COPYVAL(icon_theme_overrides);
-          IFCFGEND;
-
-          IFCFG(0x0130);
-          COPYVAL(mode.presentation);
-          COPYVAL(mode.offline);
-          IFCFGEND;
-
-          IFCFG(0x0131);
-          COPYVAL(desklock_post_screensaver_time);
-          IFCFGEND;
-
-          IFCFG(0x0132);
-          COPYVAL(desklock_ask_presentation);
-          COPYVAL(desklock_ask_presentation_timeout);
-          COPYVAL(screensaver_ask_presentation);
-          COPYVAL(screensaver_ask_presentation_timeout);
-          IFCFGEND;
-
-          IFCFG(0x0134);
-          COPYVAL(exec.expire_timeout);
-          COPYVAL(exec.show_run_dialog);
-          COPYVAL(exec.show_exit_dialog);
-          IFCFGEND;
-          IFCFG(0x0136);
-          _e_config_acpi_bindings_add();
-          IFCFGEND;
-
-          IFCFG(0x0137);
-          COPYVAL(desklock_on_suspend);
-          IFCFGEND;
-
-          IFCFG(0x0138);
-          COPYVAL(geometry_auto_resize_limit);
-          COPYVAL(geometry_auto_move);
-          IFCFGEND;
-
-          IFCFG(0x0142);
-          COPYVAL(backlight.normal);
-          COPYVAL(backlight.dim);
-          COPYVAL(backlight.transition);
-          COPYVAL(backlight.idle_dim);
-          COPYVAL(backlight.timer);
-          IFCFGEND;
-
-          IFCFG(0x0145);
-          COPYVAL(xsettings.enabled);
-          COPYVAL(xsettings.match_e17_theme);
-          COPYVAL(xsettings.match_e17_icon_theme);
-          IFCFGEND;
-
-          IFCFG(0x0147);
-          COPYVAL(update.check);
-          COPYVAL(update.later);
-          IFCFGEND;
-
-          IFCFG(0x0149);
-          COPYVAL(powersave.none);
-          COPYVAL(powersave.low);
-          COPYVAL(powersave.medium);
-          COPYVAL(powersave.high);
-          COPYVAL(powersave.extreme);
-          COPYVAL(powersave.min);
-          COPYVAL(powersave.max);
-          IFCFGEND;
-
-          IFCFG(0x0150);
-          COPYVAL(multiscreen_flip);
-          IFCFGEND;
-
-          IFCFG(0x0151);
-          if (tcfg->desklock_background)
-            {
-               E_Config_Desklock_Background *cbg;
-               cbg = E_NEW(E_Config_Desklock_Background, 1);
-               cbg->file = tcfg->desklock_background;
-               e_config->desklock_backgrounds = eina_list_append(e_config->desklock_backgrounds, cbg);
-            }
-          if (e_config->desklock_backgrounds && (!e_config->desklock_backgrounds->data))
-            e_config->desklock_backgrounds = eina_list_free(e_config->desklock_backgrounds);
-          tcfg->desklock_background = NULL;
-          IFCFGEND;
-
-          IFCFG(0x0152);
-          COPYVAL(window_grouping);
-          IFCFGEND;
-
-          IFCFG(0x0157);
-          e_config->xkb.selected_layout = NULL;
-          e_config->xkb.cur_layout = NULL;
-          e_config->xkb.desklock_layout = NULL;
-          IFCFGEND;
-
-          IFCFG(0x0160);
-          e_config->window_activehint_policy = 2;
-          IFCFGEND;
-
-          IFCFG(0x0162);
-          COPYSTR(desktop_default_window_profile);
-          COPYVAL(use_desktop_window_profile);
-          IFCFGEND;
-
-          e_config->config_version = E_CONFIG_FILE_VERSION;
-          _e_config_free(tcfg);
-       }
+     e_config->config_version = E_CONFIG_FILE_VERSION;
 
      /* limit values so they are sane */
      E_CONFIG_LIMIT(e_config->menus_scroll_speed, 1.0, 20000.0);
@@ -2376,50 +2164,3 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
      }
    return 1;
 }
-
-static void
-_e_config_acpi_bindings_add(void)
-{
-   E_Config_Binding_Acpi *binding;
-
-   binding = E_NEW(E_Config_Binding_Acpi, 1);
-   binding->context = E_BINDING_CONTEXT_NONE;
-   binding->type = E_ACPI_TYPE_AC_ADAPTER;
-   binding->status = 0;
-   binding->action = eina_stringshare_add("dim_screen");
-   binding->params = NULL;
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
-
-   binding = E_NEW(E_Config_Binding_Acpi, 1);
-   binding->context = E_BINDING_CONTEXT_NONE;
-   binding->type = E_ACPI_TYPE_AC_ADAPTER;
-   binding->status = 1;
-   binding->action = eina_stringshare_add("undim_screen");
-   binding->params = NULL;
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
-
-   binding = E_NEW(E_Config_Binding_Acpi, 1);
-   binding->context = E_BINDING_CONTEXT_NONE;
-   binding->type = E_ACPI_TYPE_LID;
-   binding->status = 0;
-   binding->action = eina_stringshare_add("suspend");
-   binding->params = eina_stringshare_add("now");
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
-
-   binding = E_NEW(E_Config_Binding_Acpi, 1);
-   binding->context = E_BINDING_CONTEXT_NONE;
-   binding->type = E_ACPI_TYPE_POWER;
-   binding->status = -1;
-   binding->action = eina_stringshare_add("halt_now");
-   binding->params = eina_stringshare_add("now");
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
-
-   binding = E_NEW(E_Config_Binding_Acpi, 1);
-   binding->context = E_BINDING_CONTEXT_NONE;
-   binding->type = E_ACPI_TYPE_SLEEP;
-   binding->status = -1;
-   binding->action = eina_stringshare_add("suspend");
-   binding->params = eina_stringshare_add("now");
-   e_config->acpi_bindings = eina_list_append(e_config->acpi_bindings, binding);
-}
-

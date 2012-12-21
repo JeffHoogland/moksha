@@ -464,17 +464,10 @@ static void
 _conf_new(void)
 {
    conf = E_NEW(Config, 1);
-   conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
+   conf->menu_augmentation = 1;
 
-#define IFMODCFG(v) if ((conf->version & 0xffff) < v) {
-#define IFMODCFGEND }
-
-    IFMODCFG(0x008d);
-    conf->menu_augmentation = 1;
-    IFMODCFGEND;
-
-    conf->version = MOD_CONFIG_FILE_VERSION;
-    e_config_save_queue();
+   conf->version = MOD_CONFIG_FILE_VERSION;
+   e_config_save_queue();
 }
 
 static void

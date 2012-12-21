@@ -1212,14 +1212,16 @@ _e_util_conf_timer_new(void *data)
 EAPI Eina_Bool
 e_util_module_config_check(const char *module_name, int loaded, int current)
 {
-   if ((loaded >> 16) < (current >> 16))
-     {
-        ecore_timer_add(1.0, _e_util_conf_timer_old, strdup(module_name));
-        return EINA_FALSE;
-     }
-   else if (loaded > current)
+   int rem;
+   if (loaded > current)
      {
         ecore_timer_add(1.0, _e_util_conf_timer_new, strdup(module_name));
+        return EINA_FALSE;
+     }
+   loaded -= loaded % 1000000, current -= current % 1000000;
+   if (loaded < current)
+     {
+        ecore_timer_add(1.0, _e_util_conf_timer_old, strdup(module_name));
         return EINA_FALSE;
      }
 

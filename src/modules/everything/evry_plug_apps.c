@@ -1,10 +1,11 @@
 #include "e.h"
 #include "evry_api.h"
 
-#define MOD_CONFIG_FILE_EPOCH      0x0001
-#define MOD_CONFIG_FILE_GENERATION 0x009d
-#define MOD_CONFIG_FILE_VERSION \
-  ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
+/* Increment for Major Changes */
+#define MOD_CONFIG_FILE_EPOCH      1
+/* Increment for Minor Changes (ie: user doesn't need a new config) */
+#define MOD_CONFIG_FILE_GENERATION 0
+#define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
 
 // FIXME clear cache on .desktop chage event
 
@@ -1380,17 +1381,10 @@ _conf_new(void)
    if (!_conf)
      {
         _conf = E_NEW(Module_Config, 1);
-        _conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
+        /* setup defaults */
+        _conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm -hold -e");
+        _conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
      }
-
-#define IFMODCFG(v) if ((_conf->version & 0xffff) < v) {
-#define IFMODCFGEND }
-
-    /* setup defaults */
-    IFMODCFG(0x009d);
-    _conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm -hold -e");
-    _conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
-    IFMODCFGEND;
 
     _conf->version = MOD_CONFIG_FILE_VERSION;
 

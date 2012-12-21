@@ -8,10 +8,11 @@
 #include "evry_api.h"
 #include <Efreet_Trash.h>
 
-#define MOD_CONFIG_FILE_EPOCH      0x0001
-#define MOD_CONFIG_FILE_GENERATION 0x008d
-#define MOD_CONFIG_FILE_VERSION \
-  ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
+/* Increment for Major Changes */
+#define MOD_CONFIG_FILE_EPOCH      1
+/* Increment for Minor Changes (ie: user doesn't need a new config) */
+#define MOD_CONFIG_FILE_GENERATION 0
+#define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
 
 #define MAX_ITEMS                  10
 #define MAX_SHOWN                  300
@@ -1554,21 +1555,13 @@ static void
 _conf_new(void)
 {
    _conf = E_NEW(Module_Config, 1);
-   _conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
+   _conf->show_recent = 0;
+   _conf->show_homedir = 1;
+   _conf->search_recent = 1;
+   _conf->cache_dirs = 0;
+   _conf->search_cache = 0;
 
-#define IFMODCFG(v) if ((_conf->version & 0xffff) < v) {
-#define IFMODCFGEND }
-
-    /* setup defaults */
-    IFMODCFG(0x008d);
-    _conf->show_recent = 0;
-    _conf->show_homedir = 1;
-    _conf->search_recent = 1;
-    _conf->cache_dirs = 0;
-    _conf->search_cache = 0;
-    IFMODCFGEND;
-
-    _conf->version = MOD_CONFIG_FILE_VERSION;
+   _conf->version = MOD_CONFIG_FILE_VERSION;
 }
 
 static void

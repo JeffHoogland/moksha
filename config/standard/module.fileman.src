@@ -1,7 +1,7 @@
 group "Fileman_Config" struct {
-  value "config_version" int: 65793;
+  value "config_version" int: 1000000;
   value "view.mode" int: 1;
-  value "view.open_dirs_in_place" uchar: 0;
+  value "view.open_dirs_in_place" uchar: 1;
   value "view.selector" uchar: 0;
   value "view.single_click" uchar: 0;
   value "view.no_subdir_jump" uchar: 0;
@@ -12,6 +12,7 @@ group "Fileman_Config" struct {
   value "view.show_full_path" uchar: 0;
   value "view.show_desktop_icons" uchar: 1;
   value "view.show_toolbar" uchar: 0;
+  value "view.show_sidebar" uchar: 0;
   value "icon.icon.w" int: 48;
   value "icon.icon.h" int: 48;
   value "icon.list.w" int: 16;
@@ -25,4 +26,10 @@ group "Fileman_Config" struct {
   value "selection.single" uchar: 0;
   value "selection.windows_modifiers" uchar: 0;
   value "theme.fixed" uchar: 0;
+  value "tooltip.enable" uchar: 1;
+  value "tooltip.delay" double: 1.0;
+  value "tooltip.size" double: 30.0;
+  value "view.spring_delay" int: 1;
+  value "icon.max_thumb_size" uint: 0;
+  value "view.toolbar_orient" uint: 5;
 }

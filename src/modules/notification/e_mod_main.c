@@ -171,7 +171,7 @@ e_modapi_init(E_Module *m)
    if (notification_cfg &&
        !(e_util_module_config_check(_("Notification Module"),
                                     notification_cfg->version,
-                                    MOD_CFG_FILE_VERSION)))
+                                    MOD_CONFIG_FILE_VERSION)))
      {
         _notification_cfg_free(notification_cfg);
         notification_cfg = NULL;
@@ -263,7 +263,7 @@ _notification_cfg_new(void)
 
    cfg = E_NEW(Config, 1);
    cfg->cfd = NULL;
-   cfg->version = MOD_CFG_FILE_VERSION;
+   cfg->version = MOD_CONFIG_FILE_VERSION;
    cfg->show_low = 0;
    cfg->show_normal = 1;
    cfg->show_critical = 1;
