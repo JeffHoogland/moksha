@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-21 16:14+0900\n"
-"PO-Revision-Date: 2012-12-21 16:04+0900\n"
-"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
+"POT-Creation-Date: 2012-12-21 17:40+0900\n"
+"PO-Revision-Date: 2012-12-21 17:41+0900\n"
+"Last-Translator: Daniel Juyung Seo <seojuyung2@gmali.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgstr "강제 종료"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2128 src/bin/e_actions.c:2222
 #: src/bin/e_actions.c:2282 src/bin/e_actions.c:2342 src/bin/e_actions.c:2407
 #: src/bin/e_actions.c:2472 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10411 src/bin/e_fm.c:10777
+#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10412 src/bin/e_fm.c:10778
 #: src/bin/e_screensaver.c:191
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "No"
@@ -97,7 +97,7 @@ msgstr "정말 인라이튼먼트를 끝내시겠습니까?"
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10414 src/bin/e_screensaver.c:189
+#: src/bin/e_fm.c:10415 src/bin/e_screensaver.c:189
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "Yes"
 msgstr "예"
@@ -151,7 +151,7 @@ msgstr "정말로 컴퓨터를 최대 절전 모드로 전환하시겠습니까?
 msgid "Window : Actions"
 msgstr "창 : 동작"
 
-#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11542
+#: src/bin/e_actions.c:2947 src/bin/e_fm.c:11543
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "이동"
@@ -798,7 +798,7 @@ msgid "Select"
 msgstr "선택"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9958
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9959
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:194
 #: src/bin/e_import_config_dialog.c:537
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -863,7 +863,7 @@ msgstr ""
 #: src/bin/e_config.c:1732 src/bin/e_config.c:2366
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:613
-#: src/bin/e_fm.c:9957 src/bin/e_fm.c:10683 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:9958 src/bin/e_fm.c:10684 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:536 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:431
 #: src/bin/e_module.c:798 src/bin/e_sys.c:618 src/bin/e_sys.c:659
@@ -1177,7 +1177,7 @@ msgstr "터미널에서 실행"
 msgid "Show in Menus"
 msgstr "메뉴에 표시"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8763 src/bin/e_fm.c:8923
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8764 src/bin/e_fm.c:8924
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:334
 msgid "Options"
@@ -1192,7 +1192,7 @@ msgstr "'%s'에 대한 아이콘 선택"
 msgid "Select an Executable"
 msgstr "실행 파일 선택"
 
-#: src/bin/e_entry.c:480 src/bin/e_fm.c:9108 src/bin/e_fm.c:10776
+#: src/bin/e_entry.c:480 src/bin/e_fm.c:9109 src/bin/e_fm.c:10777
 #: src/bin/e_shelf.c:1792 src/bin/e_shelf.c:2475
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1211,15 +1211,15 @@ msgstr "실행 파일 선택"
 msgid "Delete"
 msgstr "삭제"
 
-#: src/bin/e_entry.c:490 src/bin/e_fm.c:9019
+#: src/bin/e_entry.c:490 src/bin/e_fm.c:9020
 msgid "Cut"
 msgstr "잘라내기"
 
-#: src/bin/e_entry.c:499 src/bin/e_fm.c:9033 src/bin/e_fm.c:11537
+#: src/bin/e_entry.c:499 src/bin/e_fm.c:9034 src/bin/e_fm.c:11538
 msgid "Copy"
 msgstr "복사"
 
-#: src/bin/e_entry.c:509 src/bin/e_fm.c:8824 src/bin/e_fm.c:9046
+#: src/bin/e_entry.c:509 src/bin/e_fm.c:8825 src/bin/e_fm.c:9047
 msgid "Paste"
 msgstr "붙여넣기"
 
@@ -1409,12 +1409,12 @@ msgstr "꺼내기 오류"
 msgid "Can't eject device"
 msgstr "장치를 꺼낼 수 없습니다"
 
-#: src/bin/e_fm.c:6565 src/bin/e_fm.c:6598 src/bin/e_fm.c:9493
-#: src/bin/e_fm.c:9505 src/bin/e_fm.c:9608 src/bin/e_fm.c:9613
-#: src/bin/e_fm.c:9629 src/bin/e_fm.c:9634 src/bin/e_fm.c:10261
-#: src/bin/e_fm.c:10264 src/bin/e_fm.c:10267 src/bin/e_fm.c:10294
-#: src/bin/e_fm.c:10298 src/bin/e_fm.c:10301 src/bin/e_fm.c:10359
-#: src/bin/e_fm.c:10584 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
+#: src/bin/e_fm.c:6565 src/bin/e_fm.c:6598 src/bin/e_fm.c:9494
+#: src/bin/e_fm.c:9506 src/bin/e_fm.c:9609 src/bin/e_fm.c:9614
+#: src/bin/e_fm.c:9630 src/bin/e_fm.c:9635 src/bin/e_fm.c:10262
+#: src/bin/e_fm.c:10265 src/bin/e_fm.c:10268 src/bin/e_fm.c:10295
+#: src/bin/e_fm.c:10299 src/bin/e_fm.c:10302 src/bin/e_fm.c:10360
+#: src/bin/e_fm.c:10585 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
 msgid "Error"
 msgstr "오류"
 
@@ -1423,58 +1423,58 @@ msgstr "오류"
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr "최근 '%s'에 대해 요청받은 DND 처리에 실패했습니다."
 
-#: src/bin/e_fm.c:8681 src/modules/fileman/e_mod_config.c:357
+#: src/bin/e_fm.c:8682 src/modules/fileman/e_mod_config.c:357
 msgid "Case Sensitive"
 msgstr "대소문자 구분"
 
-#: src/bin/e_fm.c:8687 src/modules/fileman/e_mod_config.c:360
+#: src/bin/e_fm.c:8688 src/modules/fileman/e_mod_config.c:360
 msgid "Sort By Extension"
 msgstr "확장자 기준 정렬"
 
-#: src/bin/e_fm.c:8693 src/modules/fileman/e_mod_config.c:363
+#: src/bin/e_fm.c:8694 src/modules/fileman/e_mod_config.c:363
 msgid "Sort By Modification Time"
 msgstr "수정시간 순 정렬"
 
-#: src/bin/e_fm.c:8699 src/modules/fileman/e_mod_config.c:366
+#: src/bin/e_fm.c:8700 src/modules/fileman/e_mod_config.c:366
 msgid "Sort By Size"
 msgstr "크기순 정렬"
 
-#: src/bin/e_fm.c:8708 src/modules/fileman/e_mod_config.c:374
+#: src/bin/e_fm.c:8709 src/modules/fileman/e_mod_config.c:374
 msgid "Directories First"
 msgstr "디렉터리 먼저"
 
-#: src/bin/e_fm.c:8714 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8715 src/modules/fileman/e_mod_config.c:378
 msgid "Directories Last"
 msgstr "디렉터리 나중"
 
-#: src/bin/e_fm.c:8747 src/bin/e_fm.c:8907
+#: src/bin/e_fm.c:8748 src/bin/e_fm.c:8908
 #: src/modules/fileman/e_mod_config.c:302
 msgid "View Mode"
 msgstr "보기 모드"
 
-#: src/bin/e_fm.c:8756 src/bin/e_fm.c:8916
+#: src/bin/e_fm.c:8757 src/bin/e_fm.c:8917
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:382
 msgid "Sorting"
 msgstr "정렬"
 
-#: src/bin/e_fm.c:8774 src/bin/e_fm.c:8934
+#: src/bin/e_fm.c:8775 src/bin/e_fm.c:8935
 msgid "Refresh View"
 msgstr "새로 고침"
 
-#: src/bin/e_fm.c:8785 src/bin/e_fm.c:8946
+#: src/bin/e_fm.c:8786 src/bin/e_fm.c:8947
 msgid "New..."
 msgstr "새로 만들기..."
 
-#: src/bin/e_fm.c:8805 src/bin/e_fm.c:8967 src/bin/e_fm.c:8998
+#: src/bin/e_fm.c:8806 src/bin/e_fm.c:8968 src/bin/e_fm.c:8999
 msgid "Actions..."
 msgstr "동작..."
 
-#: src/bin/e_fm.c:8832 src/bin/e_fm.c:9054 src/bin/e_fm.c:11550
+#: src/bin/e_fm.c:8833 src/bin/e_fm.c:9055 src/bin/e_fm.c:11551
 msgid "Link"
 msgstr "링크"
 
-#: src/bin/e_fm.c:9116 src/bin/e_fm.c:10413 src/bin/e_shelf.c:2470
+#: src/bin/e_fm.c:9117 src/bin/e_fm.c:10414 src/bin/e_shelf.c:2470
 #: src/modules/conf_shelves/e_int_config_shelf.c:140
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1482,216 +1482,216 @@ msgstr "링크"
 msgid "Rename"
 msgstr "이름 바꾸기"
 
-#: src/bin/e_fm.c:9135
+#: src/bin/e_fm.c:9136
 msgid "Unmount"
 msgstr "마운트 해제"
 
-#: src/bin/e_fm.c:9140
+#: src/bin/e_fm.c:9141
 msgid "Mount"
 msgstr "마운트"
 
-#: src/bin/e_fm.c:9145
+#: src/bin/e_fm.c:9146
 msgid "Eject"
 msgstr "꺼내기"
 
-#: src/bin/e_fm.c:9160 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:9161 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:871
 msgid "Properties"
 msgstr "속성"
 
-#: src/bin/e_fm.c:9168
+#: src/bin/e_fm.c:9169
 msgid "Application Properties"
 msgstr "프로그램 속성"
 
-#: src/bin/e_fm.c:9176 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9177 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "파일 속성"
 
-#: src/bin/e_fm.c:9392
+#: src/bin/e_fm.c:9393
 msgid "Use default"
 msgstr "기본값 사용"
 
-#: src/bin/e_fm.c:9422 src/modules/fileman/e_mod_config.c:307
+#: src/bin/e_fm.c:9423 src/modules/fileman/e_mod_config.c:307
 msgid "Grid Icons"
 msgstr "그리드 아이콘"
 
-#: src/bin/e_fm.c:9430 src/modules/fileman/e_mod_config.c:309
+#: src/bin/e_fm.c:9431 src/modules/fileman/e_mod_config.c:309
 msgid "Custom Icons"
 msgstr "사용자 정의 아이콘"
 
-#: src/bin/e_fm.c:9438 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9439 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:317
 msgid "List"
 msgstr "목록"
 
-#: src/bin/e_fm.c:9446 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9447 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "기본 보기"
 
-#: src/bin/e_fm.c:9468
+#: src/bin/e_fm.c:9469
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "아이콘 크기 (%d)"
 
-#: src/bin/e_fm.c:9493
+#: src/bin/e_fm.c:9494
 msgid "Could not create a directory!"
 msgstr "디렉터리를 만들 수 없습니다!"
 
-#: src/bin/e_fm.c:9505
+#: src/bin/e_fm.c:9506
 msgid "Could not create a file!"
 msgstr "파일을 만들 수 없습니다!"
 
-#: src/bin/e_fm.c:9519 src/bin/e_fm.c:9544
+#: src/bin/e_fm.c:9520 src/bin/e_fm.c:9545
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
 msgstr "새 디렉터리"
 
-#: src/bin/e_fm.c:9519 src/bin/e_fm.c:9544
+#: src/bin/e_fm.c:9520 src/bin/e_fm.c:9545
 msgid "New File"
 msgstr "새 파일 만들기"
 
-#: src/bin/e_fm.c:9608 src/bin/e_fm.c:9629
+#: src/bin/e_fm.c:9609 src/bin/e_fm.c:9630
 msgid "Already creating a new file for this directory!"
 msgstr "이 디렉터리에 이미 새 파일을 만들었습니다!"
 
-#: src/bin/e_fm.c:9613 src/bin/e_fm.c:9634
+#: src/bin/e_fm.c:9614 src/bin/e_fm.c:9635
 #, c-format
 msgid "%s can't be written to!"
 msgstr "%s에 기록할 수 없습니다!"
 
-#: src/bin/e_fm.c:9653
+#: src/bin/e_fm.c:9654
 msgid "Directory"
 msgstr "디렉터리"
 
-#: src/bin/e_fm.c:9658
+#: src/bin/e_fm.c:9659
 #: src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "파일"
 
-#: src/bin/e_fm.c:9689
+#: src/bin/e_fm.c:9690
 msgid "Inherit parent settings"
 msgstr "상위 설정 가져오기"
 
-#: src/bin/e_fm.c:9698
+#: src/bin/e_fm.c:9699
 msgid "Show Hidden Files"
 msgstr "숨김 파일 표시"
 
-#: src/bin/e_fm.c:9710
+#: src/bin/e_fm.c:9711
 msgid "Remember Ordering"
 msgstr "정렬 순서 기억"
 
-#: src/bin/e_fm.c:9719
+#: src/bin/e_fm.c:9720
 msgid "Sort Now"
 msgstr "지금 정렬"
 
-#: src/bin/e_fm.c:9727
+#: src/bin/e_fm.c:9728
 msgid "Single Click Activation"
 msgstr "클릭 한 번으로 활성화"
 
-#: src/bin/e_fm.c:9738 src/modules/fileman/e_mod_config.c:394
+#: src/bin/e_fm.c:9739 src/modules/fileman/e_mod_config.c:394
 msgid "Secure Deletion"
 msgstr "보안 삭제"
 
-#: src/bin/e_fm.c:9751
+#: src/bin/e_fm.c:9752
 msgid "File Manager Settings"
 msgstr "파일 관리자 설정"
 
-#: src/bin/e_fm.c:9756
+#: src/bin/e_fm.c:9757
 msgid "File Icon Settings"
 msgstr "파일 아이콘 설정"
 
-#: src/bin/e_fm.c:9834 src/bin/e_fm.c:10050
+#: src/bin/e_fm.c:9835 src/bin/e_fm.c:10051
 msgid "Set background..."
 msgstr "배경 설정..."
 
-#: src/bin/e_fm.c:9842
+#: src/bin/e_fm.c:9843
 msgid "Clear background"
 msgstr "배경 지우기"
 
-#: src/bin/e_fm.c:9849 src/bin/e_fm.c:10078
+#: src/bin/e_fm.c:9850 src/bin/e_fm.c:10079
 msgid "Set overlay..."
 msgstr "오버레이 설정..."
 
-#: src/bin/e_fm.c:9855
+#: src/bin/e_fm.c:9856
 msgid "Clear overlay"
 msgstr "오버레이 지우기"
 
-#: src/bin/e_fm.c:10172 src/bin/e_fm.c:10508
+#: src/bin/e_fm.c:10173 src/bin/e_fm.c:10509
 #, c-format
 msgid "Rename %s to:"
 msgstr "%s 이름 변경:"
 
-#: src/bin/e_fm.c:10174 src/bin/e_fm.c:10509
+#: src/bin/e_fm.c:10175 src/bin/e_fm.c:10510
 msgid "Rename File"
 msgstr "파일 이름 바꾸기"
 
-#: src/bin/e_fm.c:10261 src/bin/e_fm.c:10294
+#: src/bin/e_fm.c:10262 src/bin/e_fm.c:10295
 #, c-format
 msgid "%s already exists!"
 msgstr "%s은(는) 이미 존재합니다"
 
-#: src/bin/e_fm.c:10264 src/bin/e_fm.c:10298
+#: src/bin/e_fm.c:10265 src/bin/e_fm.c:10299
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr "보호상태이기 때문에 %s의 이름을 바꿀 수 있습니다."
 
-#: src/bin/e_fm.c:10267 src/bin/e_fm.c:10301
+#: src/bin/e_fm.c:10268 src/bin/e_fm.c:10302
 msgid "Internal filemanager error :("
 msgstr "내부 파일 관리자 오류 :("
 
-#: src/bin/e_fm.c:10355 src/bin/e_fm.c:10576
+#: src/bin/e_fm.c:10356 src/bin/e_fm.c:10577
 msgid "Retry"
 msgstr "재시도"
 
-#: src/bin/e_fm.c:10356 src/bin/e_fm.c:10577 src/bin/e_fm.c:11558
+#: src/bin/e_fm.c:10357 src/bin/e_fm.c:10578 src/bin/e_fm.c:11559
 msgid "Abort"
 msgstr "중지"
 
-#: src/bin/e_fm.c:10412
+#: src/bin/e_fm.c:10413
 msgid "No to all"
 msgstr "전부 아니요"
 
-#: src/bin/e_fm.c:10415
+#: src/bin/e_fm.c:10416
 msgid "Yes to all"
 msgstr "전부 예"
 
-#: src/bin/e_fm.c:10418
+#: src/bin/e_fm.c:10419
 msgid "Warning"
 msgstr "경고"
 
-#: src/bin/e_fm.c:10421
+#: src/bin/e_fm.c:10422
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "파일이 이미 존재합니다, 덮어쓰기겠습니까?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10579
+#: src/bin/e_fm.c:10580
 msgid "Move Source"
 msgstr "원본 이동"
 
-#: src/bin/e_fm.c:10580
+#: src/bin/e_fm.c:10581
 msgid "Ignore this"
 msgstr "이번만 무시"
 
-#: src/bin/e_fm.c:10581
+#: src/bin/e_fm.c:10582
 msgid "Ignore all"
 msgstr "전부 무시"
 
-#: src/bin/e_fm.c:10586
+#: src/bin/e_fm.c:10587
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "동작을 수행하는 동안 오류가 발생했습니다.<br>%s"
 
-#: src/bin/e_fm.c:10779
+#: src/bin/e_fm.c:10780
 msgid "Confirm Delete"
 msgstr "삭제 확인"
 
-#: src/bin/e_fm.c:10789
+#: src/bin/e_fm.c:10790
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "정말로<br><hilight>%s</hilight>을(를) 삭제하시겠습니까?"
 
-#: src/bin/e_fm.c:10794
+#: src/bin/e_fm.c:10795
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1700,7 +1700,7 @@ msgstr ""
 "정말로<br><hilight>%2$s</hilight>의<br><hilight>모든</hilight> %1$d개의 파일"
 "을 삭제하시겠습니까?"
 
-#: src/bin/e_fm.c:10804
+#: src/bin/e_fm.c:10805
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -4471,16 +4471,16 @@ msgstr "일"
 msgid "Toggle calendar"
 msgstr "달력 전환"
 
-#: src/modules/comp/e_mod_comp.c:3699 src/modules/comp/e_mod_comp.c:3721
-#: src/modules/comp/e_mod_comp.c:4134 src/modules/comp/e_mod_comp.c:4144
+#: src/modules/comp/e_mod_comp.c:3710 src/modules/comp/e_mod_comp.c:3732
+#: src/modules/comp/e_mod_comp.c:4145 src/modules/comp/e_mod_comp.c:4155
 msgid "Compositor Error"
 msgstr "콤포지터 오류"
 
-#: src/modules/comp/e_mod_comp.c:3700
+#: src/modules/comp/e_mod_comp.c:3711
 msgid "Another compositor is already running<br>on your display server."
 msgstr "다른 콤포지터가 디스플레이 서버에서<br>실행중입니다."
 
-#: src/modules/comp/e_mod_comp.c:3722
+#: src/modules/comp/e_mod_comp.c:3733
 msgid ""
 "Your display server does not support the<br>compositor overlay window. This "
 "is needed<br>for it to function."
@@ -4488,11 +4488,11 @@ msgstr ""
 "디스플레이 서버에서 콤포지터 오버레이<br>창을 지원하지 않습니다. 제 기능을 하"
 "려면<br>이것이 필요합니다."
 
-#: src/modules/comp/e_mod_comp.c:3796
+#: src/modules/comp/e_mod_comp.c:3807
 msgid "Compositor Warning"
 msgstr "콤포지터 경고"
 
-#: src/modules/comp/e_mod_comp.c:3797
+#: src/modules/comp/e_mod_comp.c:3808
 msgid ""
 "Your display driver does not support OpenGL, or<br>no OpenGL engines were "
 "compiled or installed for<br>Evas or Ecore-Evas. Falling back to software "
@@ -4502,7 +4502,7 @@ msgstr ""
 "OpenGL 엔진을 컴파일하고<br>설치하지 않았습니다. 소프트웨어 엔진으로 대체합니"
 "다."
 
-#: src/modules/comp/e_mod_comp.c:4135
+#: src/modules/comp/e_mod_comp.c:4146
 msgid ""
 "Your display server does not support XComposite,<br>or Ecore-X was built "
 "without XComposite support.<br>Note that for composite support you will also "
@@ -4512,7 +4512,7 @@ msgstr ""
 "XComposite 지원을 뺐습니다.<br>합성 효과 지원을 위해 X11과 Ecore에서 XRender"
 "와<br>XFixes 또한 필요함을 참고하십시오."
 
-#: src/modules/comp/e_mod_comp.c:4145
+#: src/modules/comp/e_mod_comp.c:4156
 msgid ""
 "Your display server does not support XDamage<br>or Ecore was built without "
 "XDamage support."
@@ -8010,7 +8010,6 @@ msgid "Plugin"
 msgstr "플러그인"
 
 #: src/modules/everything/evry_plug_actions.c:172
-#, fuzzy
 msgid "Actions"
 msgstr "동작"
 
@@ -8025,9 +8024,8 @@ msgid "No plugins loaded"
 msgstr "불러온 플러그인이 없습니다"
 
 #: src/modules/everything/evry_plug_apps.c:1147
-#, fuzzy
 msgid "Exebuf"
-msgstr "Typebuf"
+msgstr "Exebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1162
 #: src/modules/everything/evry_plug_apps.c:1209
@@ -8036,23 +8034,20 @@ msgid "Open with..."
 msgstr "다른 프로그램으로 열기..."
 
 #: src/modules/everything/evry_plug_apps.c:1175
-#, fuzzy
 msgid "Open File..."
-msgstr "다른 프로그램으로 열기..."
+msgstr "파일 열기..."
 
 #: src/modules/everything/evry_plug_apps.c:1189
-#, fuzzy
 msgid "Edit Application Entry"
-msgstr "프로그램 우선순위"
+msgstr "프로그램 항목 편집"
 
 #: src/modules/everything/evry_plug_apps.c:1196
-#, fuzzy
 msgid "New Application Entry"
-msgstr "프로그램"
+msgstr "새 프로그램 항목"
 
 #: src/modules/everything/evry_plug_apps.c:1203
 msgid "Run with Sudo"
-msgstr ""
+msgstr "Sudo로 실행"
 
 #: src/modules/everything/evry_plug_apps.c:1216
 #: src/modules/fileman/e_fwin.c:249
@@ -8060,9 +8055,8 @@ msgid "Open Terminal here"
 msgstr "여기에 터미널 열기"
 
 #: src/modules/everything/evry_plug_apps.c:1222
-#, fuzzy
 msgid "Run Executable"
-msgstr "실행 파일 선택"
+msgstr "실행 가능 파일 실행"
 
 #: src/modules/everything/evry_plug_apps.c:1302
 #: src/modules/everything/evry_plug_apps.c:1436
@@ -8089,45 +8083,40 @@ msgstr "Everything 플러그인"
 
 #: src/modules/everything/evry_plug_calc.c:265
 msgid "Calculator"
-msgstr ""
+msgstr "계산기"
 
 #: src/modules/everything/evry_plug_clipboard.c:33
 msgid "Copy to Clipboard"
-msgstr ""
+msgstr "클립보드에 복사"
 
 #: src/modules/everything/evry_plug_files.c:1316
 msgid "Copy To ..."
-msgstr ""
+msgstr "다음으로 복사..."
 
 #: src/modules/everything/evry_plug_files.c:1321
-#, fuzzy
 msgid "Move To ..."
-msgstr "다음 좌표로 이동..."
+msgstr "다음으로 이동..."
 
 #: src/modules/everything/evry_plug_files.c:1326
-#, fuzzy
 msgid "Move to Trash"
-msgstr "이동"
+msgstr "휴지통으로 이동"
 
 #: src/modules/everything/evry_plug_files.c:1330
 msgid "Open Folder (EFM)"
-msgstr ""
+msgstr "폴더 열기 (EFM)"
 
 #: src/modules/everything/evry_plug_files.c:1334
-#, fuzzy
 msgid "Sort by Date"
-msgstr "크기순 정렬"
+msgstr "날짜순 정렬"
 
 #: src/modules/everything/evry_plug_files.c:1339
-#, fuzzy
 msgid "Sort by Name"
-msgstr "크기순 정렬"
+msgstr "이름순 정렬"
 
 #: src/modules/everything/evry_plug_files.c:1372
 #: src/modules/everything/evry_plug_files.c:1384
-#, fuzzy
 msgid "Recent Files"
-msgstr "파일 이름 바꾸기"
+msgstr "최근 파일"
 
 #: src/modules/everything/evry_plug_files.c:1456
 #: src/modules/everything/evry_plug_files.c:1607
@@ -8155,30 +8144,25 @@ msgid "Clear cache"
 msgstr "캐시 지우기"
 
 #: src/modules/everything/evry_plug_settings.c:187
-#, fuzzy
 msgid "Show Dialog"
-msgstr "대화 상자"
+msgstr "대화 상자 보이기"
 
 #: src/modules/everything/evry_plug_text.c:63
 #: src/modules/everything/evry_plug_text.c:66
-#, fuzzy
 msgid "Text"
-msgstr "텍스트 이동"
+msgstr "텍스트"
 
 #: src/modules/everything/evry_plug_windows.c:430
-#, fuzzy
 msgid "Switch to Window"
-msgstr "새 창의 데스크톱으로 전환"
+msgstr "창으로 전환"
 
 #: src/modules/everything/evry_plug_windows.c:445
-#, fuzzy
 msgid "Toggle Fullscreen"
-msgstr "전체 화면 무시"
+msgstr "전체 화면 전환"
 
 #: src/modules/everything/evry_plug_windows.c:459
-#, fuzzy
 msgid "Send to Desktop"
-msgstr "바탕 화면에 고정"
+msgstr "바탕 화면에 보내기"
 
 #: src/modules/everything/evry_plugin.c:177
 #: src/modules/everything/evry_plugin.c:208
@@ -9888,8 +9872,8 @@ msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
-"이 그림을 enlightenment.org<br>에 업로드할 것입니다. 여러 사람들이 볼 수 있"
-"습니다."
+"이 그림을 enlightenment.org<br>에 업로드할 것입니다. 여러 사람들이 볼 수 있습"
+"니다."
 
 #: src/modules/shot/e_mod_main.c:568
 msgid "Confirm"
