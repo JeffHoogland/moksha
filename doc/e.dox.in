@@ -105,6 +105,5 @@ sudo make install
 @author Boris Faure <billiob@gmail.com>
 @author Michael Stapelberg <michael+e17@stapelberg.de>
 @author Stefan Sperling <stsp@openbsd.org>
-@author Seong-ho Cho (DarkCircle) <darkcircle.0426@gmail.com>
 
 */
