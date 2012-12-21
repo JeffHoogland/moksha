@@ -232,6 +232,7 @@ e_path_find(E_Path *ep, const char *file)
    Eina_List *l;
    E_Path_Dir *epd;
    char *str;
+   Eina_Stringshare *ret;
    char buf[PATH_MAX] = "";
 
    E_OBJECT_CHECK_RETURN(ep, NULL);
@@ -239,7 +240,7 @@ e_path_find(E_Path *ep, const char *file)
 
    if (!file) return NULL;
    str = eina_hash_find(ep->hash, file);
-   if (str) return eina_stringshare_add(str);
+   if (str) return eina_stringshare_ref(str);
    /* Look in the default dir list */
    EINA_LIST_FOREACH(ep->default_dir_list, l, epd)
      {
@@ -252,9 +253,9 @@ e_path_find(E_Path *ep, const char *file)
                     ep->hash = eina_hash_string_superfast_new(NULL);
                   if (eina_hash_population(ep->hash) >= 512)
                     _e_path_cache_free(ep);
-                  eina_hash_add(ep->hash, file,
-                                eina_stringshare_add(buf));
-                  return eina_stringshare_add(buf);
+                  ret = eina_stringshare_add(buf);
+                  eina_hash_add(ep->hash, file, ret);
+                  return eina_stringshare_ref(ret);
                }
           }
      }
@@ -270,9 +271,9 @@ e_path_find(E_Path *ep, const char *file)
                     ep->hash = eina_hash_string_superfast_new(NULL);
                   if (eina_hash_population(ep->hash) >= 512)
                     _e_path_cache_free(ep);
-                  eina_hash_add(ep->hash, file,
-                                eina_stringshare_add(buf));
-                  return eina_stringshare_add(buf);
+                  ret = eina_stringshare_add(buf);
+                  eina_hash_add(ep->hash, file, ret);
+                  return eina_stringshare_ref(ret);
                }
           }
      }
