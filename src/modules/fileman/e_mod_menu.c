@@ -110,6 +110,7 @@ _e_mod_menu_populate_filter(void *data __UNUSED__, Eio_File *handler __UNUSED__,
    if (fileman_config->view.menu_shows_files)
      return (info->path[info->name_start] != '.');
    if (lstat(info->path, &st)) return EINA_FALSE;
+   /* don't show links to prevent infinite submenus */
    return (info->path[info->name_start] != '.') && (info->type == EINA_FILE_DIR) && (!S_ISLNK(st.st_mode));
 }
 
