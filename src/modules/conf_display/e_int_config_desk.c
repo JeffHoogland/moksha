@@ -13,7 +13,7 @@ struct _E_Config_Dialog_Data
    int                  zone_num;
    int                  desk_x;
    int                  desk_y;
-   char                *bg;
+   Eina_Stringshare  *bg;
    char                *name;
 #if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    char                *profile;
@@ -60,16 +60,12 @@ static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
    Eina_List *l;
-   const char *bg;
    char name[40];
    int ok = 0;
 #if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    E_Config_Desktop_Window_Profile *prof;
 #endif
-   bg = e_bg_file_get(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
-   if (!bg)
-     bg = e_theme_edje_file_get("base/theme/backgrounds", "e/desktop/background");
-   cfdata->bg = strdup(bg);
+   cfdata->bg = e_bg_file_get(cfdata->con_num, cfdata->zone_num, cfdata->desk_x, cfdata->desk_y);
 
    for (l = e_config->desktop_names; l; l = l->next)
      {
@@ -129,8 +125,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->hdl)
      ecore_event_handler_del(cfdata->hdl);
-   if (cfdata->bg)
-     E_FREE(cfdata->bg);
+   eina_stringshare_del(cfdata->bg);
    if (cfdata->name)
      E_FREE(cfdata->name);
 #if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
@@ -145,10 +140,11 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    char name[40];
 
-   if (!cfdata->name[0])
+   if ((!cfdata->name) || (!cfdata->name[0]))
      {
         snprintf(name, sizeof(name), _(e_config->desktop_default_name),
                  cfdata->desk_x, cfdata->desk_y);
+        free(cfdata->name);
         cfdata->name = strdup(name);
      }
 
@@ -254,8 +250,7 @@ _cb_bg_change(void *data, int type, void *event)
 
    file = e_bg_file_get(cfdata->con_num, cfdata->zone_num,
                         cfdata->desk_x, cfdata->desk_y);
-   E_FREE(cfdata->bg);
-   cfdata->bg = strdup(file);
+   eina_stringshare_replace(&cfdata->bg, file);
    e_widget_preview_edje_set(cfdata->preview, cfdata->bg,
                              "e/desktop/background");
 
