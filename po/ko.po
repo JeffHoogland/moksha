@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-21 17:40+0900\n"
-"PO-Revision-Date: 2012-12-21 17:41+0900\n"
-"Last-Translator: Daniel Juyung Seo <seojuyung2@gmali.com>\n"
+"POT-Creation-Date: 2012-12-21 22:10+0900\n"
+"PO-Revision-Date: 2012-12-21 22:14+0900\n"
+"Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -171,12 +171,12 @@ msgstr "메뉴"
 msgid "Window Menu"
 msgstr "창 메뉴"
 
-#: src/bin/e_actions.c:2977 src/bin/e_int_border_menu.c:1051
+#: src/bin/e_actions.c:2977 src/bin/e_int_border_menu.c:1052
 #: src/modules/winlist/e_int_config_winlist.c:216
 msgid "Raise"
 msgstr "말아 올림"
 
-#: src/bin/e_actions.c:2982 src/bin/e_int_border_menu.c:1059
+#: src/bin/e_actions.c:2982 src/bin/e_int_border_menu.c:1060
 msgid "Lower"
 msgstr "아래로"
 
@@ -316,7 +316,7 @@ msgstr "고정 상태 전환"
 #: src/bin/e_int_shelf_config.c:267 src/modules/comp/e_mod_config.c:444
 #: src/modules/comp/e_mod_config.c:753
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
-#: src/modules/fileman/e_mod_menu.c:425 src/modules/ibox/e_mod_config.c:166
+#: src/modules/fileman/e_mod_menu.c:426 src/modules/ibox/e_mod_config.c:166
 msgid "Desktop"
 msgstr "데스크톱"
 
@@ -722,8 +722,8 @@ msgstr "지정한 모듈 전환"
 #: src/modules/conf_applications/e_int_config_apps.c:275
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:818
-#: src/modules/conf_theme/e_int_config_wallpaper.c:430
-#: src/modules/conf_theme/e_int_config_wallpaper.c:583
+#: src/modules/conf_theme/e_int_config_wallpaper.c:427
+#: src/modules/conf_theme/e_int_config_wallpaper.c:580
 #: src/modules/conf_theme/e_int_config_startup.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:732
 #: src/modules/conf_theme/e_int_config_theme.c:1106
@@ -757,7 +757,7 @@ msgstr "지금 최대 절전모드로 전환"
 msgid "Lock"
 msgstr "잠그기"
 
-#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1354
+#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1355
 msgid "Cleanup Windows"
 msgstr "창 정리"
 
@@ -1744,7 +1744,7 @@ msgstr "권한을 바꿀 수 없습니다: %s"
 #: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1123 src/bin/e_shelf.c:2363
 #: src/modules/comp/e_mod_config.c:493
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
-#: src/modules/conf_display/e_int_config_desk.c:192
+#: src/modules/conf_display/e_int_config_desk.c:188
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
 msgid "Name:"
 msgstr "이름:"
@@ -1806,7 +1806,7 @@ msgstr "기타:"
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:218
 #: src/modules/conf_theme/e_int_config_theme.c:1414
-#: src/modules/conf_theme/e_int_config_xsettings.c:496
+#: src/modules/conf_theme/e_int_config_xsettings.c:513
 msgid "Preview"
 msgstr "미리 보기"
 
@@ -2124,7 +2124,7 @@ msgstr "잠금 상태 기억"
 msgid "Window"
 msgstr "창"
 
-#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1011
+#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1012
 msgid "Always on Top"
 msgstr "항상 위"
 
@@ -2193,12 +2193,12 @@ msgstr "기억"
 msgid "ICCCM/NetWM"
 msgstr "ICCCM/NetWM"
 
-#: src/bin/e_int_border_menu.c:931
+#: src/bin/e_int_border_menu.c:932
 #, c-format
 msgid "Screen %d"
 msgstr "%d번 화면"
 
-#: src/bin/e_int_border_menu.c:1022 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1023 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179 src/modules/comp/e_mod_config.c:458
 #: src/modules/comp/e_mod_config.c:767
 #: src/modules/conf_theme/e_int_config_fonts.c:100
@@ -2208,51 +2208,51 @@ msgstr "%d번 화면"
 msgid "Normal"
 msgstr "보통"
 
-#: src/bin/e_int_border_menu.c:1033
+#: src/bin/e_int_border_menu.c:1034
 msgid "Always Below"
 msgstr "항상 아래로"
 
-#: src/bin/e_int_border_menu.c:1077
+#: src/bin/e_int_border_menu.c:1078
 msgid "Pin to Desktop"
 msgstr "바탕 화면에 고정"
 
-#: src/bin/e_int_border_menu.c:1088
+#: src/bin/e_int_border_menu.c:1089
 msgid "Unpin from Desktop"
 msgstr "바탕 화면에서 고정 해제"
 
-#: src/bin/e_int_border_menu.c:1178
+#: src/bin/e_int_border_menu.c:1179
 msgid "Select Border Style"
 msgstr "테두리 모양새 선택"
 
-#: src/bin/e_int_border_menu.c:1190
+#: src/bin/e_int_border_menu.c:1191
 msgid "Use Enlightenment Default Icon Preference"
 msgstr "인라이튼먼트 기본 아이콘 설정 사용"
 
-#: src/bin/e_int_border_menu.c:1198
+#: src/bin/e_int_border_menu.c:1199
 msgid "Use Application Provided Icon"
 msgstr "프로그램에서 제공하는 아이콘 사용"
 
-#: src/bin/e_int_border_menu.c:1206
+#: src/bin/e_int_border_menu.c:1207
 msgid "Use User Defined Icon"
 msgstr "사용자 정의 아이콘 사용"
 
-#: src/bin/e_int_border_menu.c:1215 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1216 src/bin/e_int_border_remember.c:734
 msgid "Offer Resistance"
 msgstr "저항 효과"
 
-#: src/bin/e_int_border_menu.c:1276
+#: src/bin/e_int_border_menu.c:1277
 msgid "Window List"
 msgstr "창 목록"
 
-#: src/bin/e_int_border_menu.c:1286 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2916 src/modules/pager/e_mod_main.c:2923
-#: src/modules/pager/e_mod_main.c:2930 src/modules/pager/e_mod_main.c:2932
-#: src/modules/pager/e_mod_main.c:2934 src/modules/pager/e_mod_main.c:2936
-#: src/modules/pager/e_mod_main.c:2938 src/modules/pager/e_mod_main.c:2940
+#: src/bin/e_int_border_menu.c:1287 src/modules/pager/e_mod_main.c:265
+#: src/modules/pager/e_mod_main.c:2917 src/modules/pager/e_mod_main.c:2924
+#: src/modules/pager/e_mod_main.c:2931 src/modules/pager/e_mod_main.c:2933
+#: src/modules/pager/e_mod_main.c:2935 src/modules/pager/e_mod_main.c:2937
+#: src/modules/pager/e_mod_main.c:2939 src/modules/pager/e_mod_main.c:2941
 msgid "Pager"
 msgstr "페이저"
 
-#: src/bin/e_int_border_menu.c:1296 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1297 src/modules/wizard/page_180.c:24
 msgid "Taskbar"
 msgstr "작업 표시줄"
 
@@ -2378,7 +2378,7 @@ msgstr "ICCCM"
 
 #: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
 #: src/modules/comp/e_mod_config.c:392 src/modules/comp/e_mod_config.c:702
-#: src/modules/wizard/page_050.c:94
+#: src/modules/wizard/page_050.c:95
 msgid "Title"
 msgstr "제목"
 
@@ -2414,7 +2414,7 @@ msgstr "기본 크기"
 msgid "Resize Steps"
 msgstr "크기 변경 단계"
 
-#: src/bin/e_int_border_prop.c:457 src/modules/wizard/page_050.c:127
+#: src/bin/e_int_border_prop.c:457 src/modules/wizard/page_050.c:128
 msgid "Sizing"
 msgstr "크기 조절"
 
@@ -2488,7 +2488,7 @@ msgstr "위치 지정 요청"
 #: src/modules/everything/evry_plug_settings.c:183
 #: src/modules/ibar/e_mod_main.c:379 src/modules/ibar/e_mod_main.c:864
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:876 src/modules/temperature/e_mod_main.c:230
+#: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
 #: src/modules/mixer/e_mod_main.c:777 src/modules/connman/e_mod_main.c:459
 #: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:327
 #: src/modules/xkbswitch/e_mod_main.c:369
@@ -2757,7 +2757,7 @@ msgstr "자주 실행하는 프로그램"
 msgid "Applications"
 msgstr "프로그램"
 
-#: src/bin/e_int_menus.c:193 src/bin/e_int_menus.c:1312
+#: src/bin/e_int_menus.c:193 src/bin/e_int_menus.c:1313
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2765,7 +2765,7 @@ msgstr "프로그램"
 msgid "Windows"
 msgstr "창"
 
-#: src/bin/e_int_menus.c:203 src/bin/e_int_menus.c:1367
+#: src/bin/e_int_menus.c:203 src/bin/e_int_menus.c:1368
 msgid "Lost Windows"
 msgstr "잃어버린 창"
 
@@ -2800,24 +2800,24 @@ msgstr "프로그램 없음"
 msgid "Set Virtual Desktops"
 msgstr "가상 데스크톱 설정"
 
-#: src/bin/e_int_menus.c:1318 src/bin/e_int_menus.c:1511
+#: src/bin/e_int_menus.c:1319 src/bin/e_int_menus.c:1512
 msgid "No windows"
 msgstr "창 없음"
 
-#: src/bin/e_int_menus.c:1424 src/bin/e_int_menus.c:1524
+#: src/bin/e_int_menus.c:1425 src/bin/e_int_menus.c:1525
 msgid "Untitled window"
 msgstr "이름 없는 창"
 
-#: src/bin/e_int_menus.c:1618 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1619 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:191
 msgid "Shelf"
 msgstr "서랍"
 
-#: src/bin/e_int_menus.c:1686
+#: src/bin/e_int_menus.c:1687
 msgid "Add a Shelf"
 msgstr "서랍 추가"
 
-#: src/bin/e_int_menus.c:1693
+#: src/bin/e_int_menus.c:1694
 msgid "Delete a Shelf"
 msgstr "서랍 삭제"
 
@@ -5082,7 +5082,7 @@ msgid "Profiles"
 msgstr "프로파일"
 
 #: src/modules/conf_display/e_int_config_desks.c:52
-#: src/modules/pager/e_mod_main.c:884
+#: src/modules/pager/e_mod_main.c:885
 msgid "Virtual Desktops Settings"
 msgstr "가상 데스크톱 설정"
 
@@ -5126,7 +5126,7 @@ msgid "Wrap desktops around when flipping"
 msgstr "전환할 때 데스크톱 주변 말기"
 
 #: src/modules/conf_display/e_int_config_desks.c:200
-#: src/modules/conf_display/e_int_config_desk.c:198
+#: src/modules/conf_display/e_int_config_desk.c:194
 msgid "Desktop Window Profile"
 msgstr "데스크톱 창 프로파일"
 
@@ -5166,19 +5166,19 @@ msgstr "전환 움직임"
 msgid "Desk Settings"
 msgstr "데스크 설정"
 
-#: src/modules/conf_display/e_int_config_desk.c:191
+#: src/modules/conf_display/e_int_config_desk.c:187
 msgid "Desktop Name"
 msgstr "데스크톱 이름"
 
-#: src/modules/conf_display/e_int_config_desk.c:199
+#: src/modules/conf_display/e_int_config_desk.c:195
 msgid "Profile Name:"
 msgstr "프로파일 이름:"
 
-#: src/modules/conf_display/e_int_config_desk.c:206
+#: src/modules/conf_display/e_int_config_desk.c:202
 msgid "Desktop Wallpaper"
 msgstr "데스크톱 바탕 화면"
 
-#: src/modules/conf_display/e_int_config_desk.c:212
+#: src/modules/conf_display/e_int_config_desk.c:208
 #: src/modules/fileman/e_int_config_mime.c:184
 msgid "Set"
 msgstr "설정"
@@ -5189,8 +5189,8 @@ msgstr "배경 선택..."
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:84
 #: src/modules/conf_intl/e_int_config_imc.c:813
-#: src/modules/conf_theme/e_int_config_wallpaper.c:426
-#: src/modules/conf_theme/e_int_config_wallpaper.c:579
+#: src/modules/conf_theme/e_int_config_wallpaper.c:423
+#: src/modules/conf_theme/e_int_config_wallpaper.c:576
 #: src/modules/conf_theme/e_int_config_startup.c:253
 #: src/modules/conf_theme/e_int_config_theme.c:728
 #: src/modules/conf_theme/e_int_config_theme.c:1103
@@ -6071,7 +6071,7 @@ msgid "Main Menu"
 msgstr "주 메뉴"
 
 #: src/modules/conf_menus/e_int_config_menus.c:258
-#: src/modules/fileman/e_mod_menu.c:433
+#: src/modules/fileman/e_mod_menu.c:434
 msgid "Favorites"
 msgstr "즐겨찾기"
 
@@ -6181,7 +6181,7 @@ msgid "Themes"
 msgstr "테마"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:523
+#: src/modules/conf_theme/e_int_config_xsettings.c:540
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 msgid "Icons"
@@ -6397,34 +6397,34 @@ msgstr "서랍 삭제 확인"
 msgid "Wallpaper Settings"
 msgstr "배경 설정"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:436
-#: src/modules/conf_theme/e_int_config_wallpaper.c:589
+#: src/modules/conf_theme/e_int_config_wallpaper.c:433
+#: src/modules/conf_theme/e_int_config_wallpaper.c:586
 msgid "Go up a directory"
 msgstr "상위 디렉터리로 이동"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:468
-#: src/modules/conf_theme/e_int_config_wallpaper.c:614
+#: src/modules/conf_theme/e_int_config_wallpaper.c:465
+#: src/modules/conf_theme/e_int_config_wallpaper.c:611
 msgid "Use Theme Wallpaper"
 msgstr "테마 배경 사용"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:473
-#: src/modules/conf_theme/e_int_config_wallpaper.c:619
+#: src/modules/conf_theme/e_int_config_wallpaper.c:470
+#: src/modules/conf_theme/e_int_config_wallpaper.c:616
 msgid "Picture..."
 msgstr "사진..."
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:635
+#: src/modules/conf_theme/e_int_config_wallpaper.c:632
 msgid "Where to place the Wallpaper"
 msgstr "배경을 적용할 위치"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:636
+#: src/modules/conf_theme/e_int_config_wallpaper.c:633
 msgid "All Desktops"
 msgstr "모든 데스크톱"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:638
+#: src/modules/conf_theme/e_int_config_wallpaper.c:635
 msgid "This Desktop"
 msgstr "이 데스크톱"
 
-#: src/modules/conf_theme/e_int_config_wallpaper.c:640
+#: src/modules/conf_theme/e_int_config_wallpaper.c:637
 msgid "This Screen"
 msgstr "이 화면"
 
@@ -6906,65 +6906,65 @@ msgstr "대체 활성화"
 msgid "Hinting / Fallbacks"
 msgstr "힌팅 / 대체"
 
-#: src/modules/conf_theme/e_int_config_scale.c:131
+#: src/modules/conf_theme/e_int_config_scale.c:132
 msgid "Factor"
 msgstr "계수"
 
-#: src/modules/conf_theme/e_int_config_scale.c:179
+#: src/modules/conf_theme/e_int_config_scale.c:180
 msgid "Scale Settings"
 msgstr "스케일 설정"
 
-#: src/modules/conf_theme/e_int_config_scale.c:231
+#: src/modules/conf_theme/e_int_config_scale.c:232
 msgid "DPI Scaling"
 msgstr "DPI 스케일링"
 
-#: src/modules/conf_theme/e_int_config_scale.c:301
+#: src/modules/conf_theme/e_int_config_scale.c:302
 msgid "Don't Scale"
 msgstr "크기 조절하지 않음"
 
-#: src/modules/conf_theme/e_int_config_scale.c:304
+#: src/modules/conf_theme/e_int_config_scale.c:305
 msgid "Scale relative to screen DPI"
 msgstr "화면 DPI에 따라 크기 조절"
 
-#: src/modules/conf_theme/e_int_config_scale.c:309
+#: src/modules/conf_theme/e_int_config_scale.c:310
 #, c-format
 msgid "Base DPI (Currently %i DPI)"
 msgstr "기준 DPI (현재 %i DPI)"
 
-#: src/modules/conf_theme/e_int_config_scale.c:313
+#: src/modules/conf_theme/e_int_config_scale.c:314
 #, c-format
 msgid "%1.0f DPI"
 msgstr "%1.0f DPI"
 
-#: src/modules/conf_theme/e_int_config_scale.c:317
+#: src/modules/conf_theme/e_int_config_scale.c:318
 msgid "Custom scaling factor"
 msgstr "사용자 정의 크기 조절 계수"
 
-#: src/modules/conf_theme/e_int_config_scale.c:320
+#: src/modules/conf_theme/e_int_config_scale.c:321
 #, c-format
 msgid "%1.2f x"
 msgstr "%1.2f배"
 
-#: src/modules/conf_theme/e_int_config_scale.c:324
+#: src/modules/conf_theme/e_int_config_scale.c:325
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:213
 msgid "Policy"
 msgstr "정책"
 
-#: src/modules/conf_theme/e_int_config_scale.c:329
+#: src/modules/conf_theme/e_int_config_scale.c:330
 msgid "Minimum"
 msgstr "최소"
 
-#: src/modules/conf_theme/e_int_config_scale.c:332
-#: src/modules/conf_theme/e_int_config_scale.c:339
+#: src/modules/conf_theme/e_int_config_scale.c:333
+#: src/modules/conf_theme/e_int_config_scale.c:340
 #, c-format
 msgid "%1.2f times"
 msgstr "%1.2f번"
 
-#: src/modules/conf_theme/e_int_config_scale.c:336
+#: src/modules/conf_theme/e_int_config_scale.c:337
 msgid "Maximum"
 msgstr "최대"
 
-#: src/modules/conf_theme/e_int_config_scale.c:343
+#: src/modules/conf_theme/e_int_config_scale.c:344
 msgid "Constraints"
 msgstr "제한"
 
@@ -7055,27 +7055,27 @@ msgstr ""
 msgid "Enlightenment was unable to import the theme<br>due to a copy error."
 msgstr "인라이튼먼트가 복사 오류로 인해 테마를 가져올<br>수 없습니다."
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:58
+#: src/modules/conf_theme/e_int_config_xsettings.c:61
 msgid "Application Theme Settings"
 msgstr "프로그램 테마 설정"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:471
+#: src/modules/conf_theme/e_int_config_xsettings.c:488
 msgid "Match Enlightenment theme if possible"
 msgstr "가능한 경우 인라이튼먼트 테마 비교"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:480
-msgid "Enable Settings Daemon"
-msgstr "설정 데몬 활성화"
+#: src/modules/conf_theme/e_int_config_xsettings.c:497
+msgid "Enable X Application Settings"
+msgstr "X 프로그램 설정 활성화"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:484
+#: src/modules/conf_theme/e_int_config_xsettings.c:501
 msgid "GTK Applications"
 msgstr "GTK 프로그램"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:515
+#: src/modules/conf_theme/e_int_config_xsettings.c:532
 msgid "Enable icon theme for applications"
 msgstr "프로그램용 아이콘 테마 활성화"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:519
+#: src/modules/conf_theme/e_int_config_xsettings.c:536
 msgid "Enable icon theme for Enlightenment"
 msgstr "인라이트먼트용 아이콘 테마 활성화"
 
@@ -8519,27 +8519,27 @@ msgstr "파일 관리자"
 msgid "Navigate"
 msgstr "탐색"
 
-#: src/modules/fileman/e_mod_menu.c:238
+#: src/modules/fileman/e_mod_menu.c:239
 msgid "No listable items"
 msgstr "나열할 수 있는 항목이 없습니다"
 
-#: src/modules/fileman/e_mod_menu.c:317
+#: src/modules/fileman/e_mod_menu.c:318
 msgid "GTK Bookmarks"
 msgstr "GTK 즐겨찾기"
 
-#: src/modules/fileman/e_mod_menu.c:411
+#: src/modules/fileman/e_mod_menu.c:412
 msgid "Current Directory"
 msgstr "현재 디렉터리"
 
-#: src/modules/fileman/e_mod_menu.c:417
+#: src/modules/fileman/e_mod_menu.c:418
 msgid "Home"
 msgstr "홈"
 
-#: src/modules/fileman/e_mod_menu.c:447
+#: src/modules/fileman/e_mod_menu.c:448
 msgid "Root"
 msgstr "루트"
 
-#: src/modules/fileman/e_mod_menu.c:487
+#: src/modules/fileman/e_mod_menu.c:488
 msgid "Navigate..."
 msgstr "탐색..."
 
@@ -9003,31 +9003,31 @@ msgstr ""
 "상태 메뉴에 대한 내부 코드때문에 서랍에서<br>오른쪽 마우스 버튼을 사용할 수 "
 "없습니다.<br>이 버튼은 팝업에 대해서만 동작합니다."
 
-#: src/modules/pager/e_mod_main.c:2923
+#: src/modules/pager/e_mod_main.c:2924
 msgid "Show Pager Popup"
 msgstr "페이저 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2930
+#: src/modules/pager/e_mod_main.c:2931
 msgid "Popup Desk Right"
 msgstr "데스크 오른쪽에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2932
+#: src/modules/pager/e_mod_main.c:2933
 msgid "Popup Desk Left"
 msgstr "데스크 왼쪽에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2934
+#: src/modules/pager/e_mod_main.c:2935
 msgid "Popup Desk Up"
 msgstr "데스크 상단에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2936
+#: src/modules/pager/e_mod_main.c:2937
 msgid "Popup Desk Down"
 msgstr "데스크 하단에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2938
+#: src/modules/pager/e_mod_main.c:2939
 msgid "Popup Desk Next"
 msgstr "다음 데스크에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2940
+#: src/modules/pager/e_mod_main.c:2941
 msgid "Popup Desk Previous"
 msgstr "이전 데스크에 팝업 표시"
 
@@ -9219,7 +9219,7 @@ msgstr "프로파일"
 msgid "Adding missing App files"
 msgstr "빠진 프로그램 파일 추가"
 
-#: src/modules/wizard/page_050.c:129
+#: src/modules/wizard/page_050.c:130
 msgid "Select preferred size"
 msgstr "원하는 크기를 선택하십시오"
 
@@ -10183,6 +10183,9 @@ msgstr "바뀐 ID 무시"
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
 msgstr "다중 모니터 공간 사용"
+
+#~ msgid "Enable Settings Daemon"
+#~ msgstr "설정 데몬 활성화"
 
 #~ msgid ""
 #~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
