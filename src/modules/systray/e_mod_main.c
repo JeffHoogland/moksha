@@ -752,13 +752,27 @@ _systray_cb_window_destroy(void *data, int type __UNUSED__, void *event)
    Instance *inst = data;
    Icon *icon;
    Eina_List *l;
+   Eina_Bool found = EINA_FALSE;
 
    EINA_LIST_FOREACH(inst->icons, l, icon)
      if (icon->win == ev->win)
        {
           _systray_icon_del_list(inst, l, icon);
+          found = EINA_TRUE;
           break;
        }
+   if (found)
+     {
+        _systray_deactivate(inst);
+        if (!_systray_activate(inst))
+          {
+             if (!inst->timer.retry)
+               inst->timer.retry = ecore_timer_add
+                   (0.1, _systray_activate_retry_first, inst);
+             else
+               edje_object_signal_emit(inst->ui.gadget, _sig_disable, _sig_source);
+          }
+     }
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -1170,7 +1184,7 @@ static const E_Gadcon_Client_Class _gc_class =
       _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
       _systray_site_is_safe
    },
-   E_GADCON_CLIENT_STYLE_INSET
+   E_GADCON_CLIENT_STYLE_PLAIN
 };
 
 EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _Name};
