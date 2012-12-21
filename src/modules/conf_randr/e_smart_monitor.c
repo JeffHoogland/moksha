@@ -1277,6 +1277,7 @@ _e_smart_monitor_background_set(E_Smart_Data *sd, Evas_Coord dx, Evas_Coord dy)
 
         /* tell the thumbnail to use this object for preview */
         e_livethumb_thumb_set(sd->o_thumb, o);
+        eina_stringshare_del(bg);
      }
 }
 
