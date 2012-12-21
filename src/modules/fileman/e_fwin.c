@@ -2166,6 +2166,7 @@ _e_fwin_cb_menu_extend_start(void *data,
 
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
+   eina_list_free(selected);
 }
 
 static void
