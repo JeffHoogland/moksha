@@ -47,7 +47,7 @@ struct _Instance
 static Eina_List *backlight_instances = NULL;
 static E_Module *backlight_module = NULL;
 static E_Action *act = NULL;
-static Ecore_Event_Handler *handler = NULL;
+static Eina_List *handlers;
 
 
 static void _backlight_popup_free(Instance *inst);
@@ -460,6 +460,21 @@ _e_mod_action_cb(E_Object *obj __UNUSED__,
 }
 
 static Eina_Bool
+_backlight_cb_mod_init_end(void *d EINA_UNUSED, int type EINA_UNUSED, void *ev EINA_UNUSED)
+{
+   Eina_List *l;
+   Instance *inst;
+
+   e_backlight_update();
+   EINA_LIST_FOREACH(backlight_instances, l, inst)
+     {
+        inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
+        _backlight_gadget_update(inst);
+     }
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
 _backlight_cb_changed(void *d EINA_UNUSED, int type EINA_UNUSED, void *ev EINA_UNUSED)
 {
    Eina_List *l;
@@ -485,7 +500,8 @@ e_modapi_init(E_Module *m)
 {
    backlight_module = m;
    e_gadcon_provider_register(&_gadcon_class);
-   handler = ecore_event_handler_add(E_EVENT_BACKLIGHT_CHANGE, _backlight_cb_changed, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_BACKLIGHT_CHANGE, _backlight_cb_changed, NULL);
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_MODULE_INIT_END, _backlight_cb_mod_init_end, NULL);
    act = e_action_add("backlight");
    if (act)
      {
@@ -504,8 +520,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_action_del("backlight");
         act = NULL;
      }
-   if (handler) handler = ecore_event_handler_del(handler);
-   backlight_module = NULL;
+   E_FREE_LIST(handlers, ecore_event_handler_del);
    e_gadcon_provider_unregister(&_gadcon_class);
    return 1;
 }
