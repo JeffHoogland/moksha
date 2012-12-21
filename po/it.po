@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-21 13:59+0100\n"
-"PO-Revision-Date: 2012-12-21 14:01+0100\n"
+"POT-Creation-Date: 2012-12-21 19:02+0100\n"
+"PO-Revision-Date: 2012-12-21 22:21+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -515,7 +515,7 @@ msgstr "Salta alla finestra... o avvia..."
 #: src/bin/e_actions.c:3254 src/bin/e_actions.c:3257 src/bin/e_actions.c:3260
 #: src/bin/e_actions.c:3262 src/bin/e_actions.c:3264 src/bin/e_actions.c:3266
 #: src/bin/e_actions.c:3269 src/bin/e_actions.c:3271 src/bin/e_actions.c:3273
-#: src/modules/backlight/e_mod_main.c:493
+#: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
 #: src/modules/shot/e_mod_main.c:745 src/modules/shot/e_mod_main.c:980
@@ -754,7 +754,7 @@ msgstr "Iberna adesso"
 msgid "Lock"
 msgstr "Blocca"
 
-#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1355
+#: src/bin/e_actions.c:3438 src/bin/e_int_menus.c:1357
 msgid "Cleanup Windows"
 msgstr "Ordina Finestre"
 
@@ -2782,7 +2782,7 @@ msgstr "Applicazioni preferite"
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: src/bin/e_int_menus.c:193 src/bin/e_int_menus.c:1313
+#: src/bin/e_int_menus.c:193 src/bin/e_int_menus.c:1315
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2790,7 +2790,7 @@ msgstr "Applicazioni"
 msgid "Windows"
 msgstr "Finestre"
 
-#: src/bin/e_int_menus.c:203 src/bin/e_int_menus.c:1368
+#: src/bin/e_int_menus.c:203 src/bin/e_int_menus.c:1370
 msgid "Lost Windows"
 msgstr "Finestre perse"
 
@@ -2817,32 +2817,32 @@ msgstr "Mensole porta-gadget"
 msgid "Show/Hide All Windows"
 msgstr "Mostra/nascondi tutte le finestre"
 
-#: src/bin/e_int_menus.c:701
+#: src/bin/e_int_menus.c:699
 msgid "No applications"
 msgstr "Nessuna applicazione"
 
-#: src/bin/e_int_menus.c:942
+#: src/bin/e_int_menus.c:944
 msgid "Set Virtual Desktops"
 msgstr "Imposta desktop virtuali"
 
-#: src/bin/e_int_menus.c:1319 src/bin/e_int_menus.c:1512
+#: src/bin/e_int_menus.c:1321 src/bin/e_int_menus.c:1514
 msgid "No windows"
 msgstr "Nessuna finestra"
 
-#: src/bin/e_int_menus.c:1425 src/bin/e_int_menus.c:1525
+#: src/bin/e_int_menus.c:1427 src/bin/e_int_menus.c:1527
 msgid "Untitled window"
 msgstr "Finestra senza titolo"
 
-#: src/bin/e_int_menus.c:1619 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1621 src/bin/e_shelf.c:1121 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:191
 msgid "Shelf"
 msgstr "Mensola"
 
-#: src/bin/e_int_menus.c:1687
+#: src/bin/e_int_menus.c:1689
 msgid "Add a Shelf"
 msgstr "Aggiungi mensola"
 
-#: src/bin/e_int_menus.c:1694
+#: src/bin/e_int_menus.c:1696
 msgid "Delete a Shelf"
 msgstr "Elimina mensola"
 
@@ -4379,7 +4379,7 @@ msgstr "Impostazioni di Access"
 msgid "Backlight"
 msgstr "Retroilluminazione"
 
-#: src/modules/backlight/e_mod_main.c:493
+#: src/modules/backlight/e_mod_main.c:509
 msgid "Backlight Controls"
 msgstr "Controlli retroilluminazione"
 
@@ -7191,7 +7191,7 @@ msgstr "Corrispondente al tema di Enlightenment se possibile"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
 msgid "Enable X Application Settings"
-msgstr "Abilita impostazioni applicazioni di X"
+msgstr "Abilita il supporto per Xsettings"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:501
 msgid "GTK Applications"
@@ -9884,7 +9884,7 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "Nome/identificatore Quickaccess"
 
-#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:935
+#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
 msgstr "Errore di Systray"
 
@@ -9892,23 +9892,23 @@ msgstr "Errore di Systray"
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr "Systray non può impostare uno sfondo invisibile come la mensola."
 
-#: src/modules/systray/e_mod_main.c:926
+#: src/modules/systray/e_mod_main.c:940
 msgid "Another systray exists"
 msgstr "Esiste un'altra istanza di Systray"
 
-#: src/modules/systray/e_mod_main.c:927
+#: src/modules/systray/e_mod_main.c:941
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Può esserci una sola istanza di Systray, e attualmente ne esiste già "
 "un'altra."
 
-#: src/modules/systray/e_mod_main.c:936
+#: src/modules/systray/e_mod_main.c:950
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systray non può funzionare in una mensola impostata per stare sotto le "
 "finestre."
 
-#: src/modules/systray/e_mod_main.c:1147
+#: src/modules/systray/e_mod_main.c:1161
 msgid "Systray"
 msgstr "Systray"
 
