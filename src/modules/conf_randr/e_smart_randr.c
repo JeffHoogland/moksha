@@ -218,7 +218,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                  ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
                {
                   Evas_Object *mon = NULL, *pmon = NULL;
-                  E_Randr_Crtc_Info *pcrtc;
+                  E_Randr_Crtc_Info *pcrtc = NULL;
 
                   /* if we do not have a saved config yet, and the 
                    * policy of this output is 'none' then this could be a 
