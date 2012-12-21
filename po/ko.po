@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-12-21 08:39+0100\n"
+"POT-Creation-Date: 2012-12-21 16:14+0900\n"
 "PO-Revision-Date: 2012-12-21 16:04+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -703,15 +703,15 @@ msgstr "인라이튼먼트 : 모듈"
 
 #: src/bin/e_actions.c:3385
 msgid "Enable the named module"
-msgstr "이름을 가진 모듈 활성화"
+msgstr "지정한 모듈 활성화"
 
 #: src/bin/e_actions.c:3389
 msgid "Disable the named module"
-msgstr "이름 있는 모듈 비활성화"
+msgstr "지정한 모듈 비활성화"
 
 #: src/bin/e_actions.c:3393
 msgid "Toggle the named module"
-msgstr "이름 있는 모듈 전환"
+msgstr "지정한 모듈 전환"
 
 #: src/bin/e_actions.c:3397 src/bin/e_actions.c:3401 src/bin/e_actions.c:3405
 #: src/bin/e_actions.c:3409 src/bin/e_actions.c:3413 src/bin/e_actions.c:3417
@@ -1836,7 +1836,7 @@ msgstr "이 링크는 깨졌습니다."
 
 #: src/bin/e_fm_prop.c:613
 msgid "Select an Image"
-msgstr "이미지 선택"
+msgstr "그림 선택"
 
 #: src/bin/e_gadcon.c:1400
 msgid "Gadget error"
@@ -1941,7 +1941,7 @@ msgid ""
 "Enlightenment was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
-"인라이튼먼트가 그림을 가져올 수 없습니다.<br><br>정말로 올바른 이미지입니까?"
+"인라이튼먼트가 그림을 가져올 수 없습니다.<br><br>정말로 올바른 그림입니까?"
 
 #: src/bin/e_import_dialog.c:159
 msgid "Select a Picture..."
@@ -4469,16 +4469,16 @@ msgstr "일"
 msgid "Toggle calendar"
 msgstr "달력 전환"
 
-#: src/modules/comp/e_mod_comp.c:3710 src/modules/comp/e_mod_comp.c:3732
-#: src/modules/comp/e_mod_comp.c:4145 src/modules/comp/e_mod_comp.c:4155
+#: src/modules/comp/e_mod_comp.c:3699 src/modules/comp/e_mod_comp.c:3721
+#: src/modules/comp/e_mod_comp.c:4134 src/modules/comp/e_mod_comp.c:4144
 msgid "Compositor Error"
 msgstr "콤포지터 오류"
 
-#: src/modules/comp/e_mod_comp.c:3711
+#: src/modules/comp/e_mod_comp.c:3700
 msgid "Another compositor is already running<br>on your display server."
 msgstr "다른 콤포지터가 디스플레이 서버에서<br>실행중입니다."
 
-#: src/modules/comp/e_mod_comp.c:3733
+#: src/modules/comp/e_mod_comp.c:3722
 msgid ""
 "Your display server does not support the<br>compositor overlay window. This "
 "is needed<br>for it to function."
@@ -4486,11 +4486,11 @@ msgstr ""
 "디스플레이 서버에서 콤포지터 오버레이<br>창을 지원하지 않습니다. 제 기능을 하"
 "려면<br>이것이 필요합니다."
 
-#: src/modules/comp/e_mod_comp.c:3807
+#: src/modules/comp/e_mod_comp.c:3796
 msgid "Compositor Warning"
 msgstr "콤포지터 경고"
 
-#: src/modules/comp/e_mod_comp.c:3808
+#: src/modules/comp/e_mod_comp.c:3797
 msgid ""
 "Your display driver does not support OpenGL, or<br>no OpenGL engines were "
 "compiled or installed for<br>Evas or Ecore-Evas. Falling back to software "
@@ -4500,7 +4500,7 @@ msgstr ""
 "OpenGL 엔진을 컴파일하고<br>설치하지 않았습니다. 소프트웨어 엔진으로 대체합니"
 "다."
 
-#: src/modules/comp/e_mod_comp.c:4146
+#: src/modules/comp/e_mod_comp.c:4135
 msgid ""
 "Your display server does not support XComposite,<br>or Ecore-X was built "
 "without XComposite support.<br>Note that for composite support you will also "
@@ -4510,7 +4510,7 @@ msgstr ""
 "XComposite 지원을 뺐습니다.<br>합성 효과 지원을 위해 X11과 Ecore에서 XRender"
 "와<br>XFixes 또한 필요함을 참고하십시오."
 
-#: src/modules/comp/e_mod_comp.c:4156
+#: src/modules/comp/e_mod_comp.c:4145
 msgid ""
 "Your display server does not support XDamage<br>or Ecore was built without "
 "XDamage support."
@@ -4720,7 +4720,7 @@ msgstr "동기화"
 
 #: src/modules/comp/e_mod_config.c:1192 src/modules/comp/e_mod_config.c:1536
 msgid "Software"
-msgstr "프로그램"
+msgstr "소프트웨어"
 
 #: src/modules/comp/e_mod_config.c:1198 src/modules/comp/e_mod_config.c:1542
 msgid "OpenGL"
@@ -6039,7 +6039,7 @@ msgstr "마우스 휠 위로 굴리기"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1229
 msgid "Mouse Wheel Down"
-msgstr "마우스 휠 버튼"
+msgstr "마우스 휠 아래로 굴리기"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1233
 #, c-format
@@ -6165,7 +6165,7 @@ msgstr "데이터"
 
 #: src/modules/conf_paths/e_int_config_paths.c:72
 msgid "Images"
-msgstr "이미지"
+msgstr "그림"
 
 #: src/modules/conf_paths/e_int_config_paths.c:74
 #: src/modules/conf_theme/e_int_config_fonts.c:433
@@ -6276,7 +6276,7 @@ msgstr "%1.1f MiB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:138
 msgid "Image cache size"
-msgstr "이미지 캐시 크기"
+msgstr "그림 캐시 크기"
 
 #: src/modules/conf_performance/e_int_config_performance.c:140
 #: src/modules/fileman/e_mod_config.c:406
@@ -7011,7 +7011,7 @@ msgstr "테마 파일 오류"
 #: src/modules/conf_theme/e_int_config_theme.c:611
 #, c-format
 msgid "%s is probably not an E17 theme!"
-msgstr "%s은(는) 아마도 E17테마가 아닌 것 같습니다!"
+msgstr "%s은(는) 아마도 E17 테마가 아닌 것 같습니다!"
 
 #: src/modules/conf_theme/e_int_config_theme.c:773
 msgid " Import..."
@@ -8398,7 +8398,7 @@ msgstr "Edje 파일 사용"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:156
 msgid "Use Image"
-msgstr "이미지 사용"
+msgstr "그림 사용"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:159
 msgid "Use Default"
@@ -8410,7 +8410,7 @@ msgstr "Edje 파일 선택"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:301
 msgid "Select an image"
-msgstr "이미지 선택"
+msgstr "그림 선택"
 
 #: src/modules/fileman/e_mod_config.c:120
 msgid "Fileman Settings"
@@ -8590,7 +8590,7 @@ msgstr "레이어"
 
 #: src/modules/gadman/e_mod_config.c:213 src/modules/gadman/e_mod_config.c:245
 msgid "Custom Image"
-msgstr "사용자 정의 이미지"
+msgstr "사용자 정의 그림"
 
 #: src/modules/gadman/e_mod_config.c:217 src/modules/gadman/e_mod_config.c:238
 msgid "Custom Color"
@@ -9110,7 +9110,7 @@ msgid ""
 "windows. There can be only one!"
 msgstr ""
 "창을 다루기 위해 비굴하게<br>타일링 모듈과 씨름하는 것을<br>거부하지 마십시"
-"오. 하나밖에 있을 수 없습니다!"
+"오. 창 관리 방법은 하나밖에 있을 수 없습니다!"
 
 #: src/modules/physics/e_mod_main.c:68
 msgid "Physics Error"
@@ -9886,7 +9886,7 @@ msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
-"이 이미지는 enlightenment.org<br>에 업로드할 것입니다. 여러 사람들이 볼 수 있"
+"이 그림을 enlightenment.org<br>에 업로드할 것입니다. 여러 사람들이 볼 수 있"
 "습니다."
 
 #: src/modules/shot/e_mod_main.c:568
@@ -10473,7 +10473,7 @@ msgstr "다중 모니터 공간 사용"
 #~ msgstr "<규칙 없음>"
 
 #~ msgid "Show Everything Dialog"
-#~ msgstr "모든 대화 상자 표시"
+#~ msgstr "Everything 대화 상자 표시"
 
 #~ msgid ""
 #~ "Fileman Module Settings data needed upgrading. Your old "
