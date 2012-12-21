@@ -156,43 +156,38 @@ e_bg_file_get(int container_num, int zone_num, int desk_x, int desk_y)
    /* fall back to default */
    if (cfbg)
      {
+        const char *bf;
+
         bgfile = eina_stringshare_ref(cfbg->file);
-        if (bgfile)
-          {
-             if (bgfile[0] != '/')
-               {
-                  const char *bf;
-
-                  bf = e_path_find(path_backgrounds, bgfile);
-                  if (bf)
-                    eina_stringshare_replace(&bgfile, bf);
-               }
-          }
+        if (!bgfile) return NULL;
+        if (bgfile[0] == '/') return bgfile;
+        bf = e_path_find(path_backgrounds, bgfile);
+        if (!bf) return bgfile;
+        eina_stringshare_del(bgfile);
+        return bf;
      }
-   else
+   bgfile = e_config->desktop_default_background;
+   if (bgfile)
      {
-        bgfile = eina_stringshare_ref(e_config->desktop_default_background);
-        if (bgfile)
+        if (bgfile[0] != '/')
           {
-             if (bgfile[0] != '/')
-               {
-                  const char *bf;
+             const char *bf;
 
-                  bf = e_path_find(path_backgrounds, bgfile);
-                  if (bf)
-                    eina_stringshare_replace(&bgfile, bf);
-               }
+             bf = e_path_find(path_backgrounds, bgfile);
+             if (bf) bgfile = bf;
           }
-        if (bgfile && eina_str_has_extension(bgfile, ".edj"))
-          {
-             ok = edje_file_group_exists(bgfile, "e/desktop/background");
-          }
-        else if ((bgfile) && (bgfile[0]))
-          ok = 1;
-        if (!ok)
-          eina_stringshare_replace(&bgfile, e_theme_edje_file_get("base/theme/background",
-                                            "e/desktop/background"));
+        else
+          eina_stringshare_ref(bgfile);
      }
+   if (bgfile && eina_str_has_extension(bgfile, ".edj"))
+     {
+        ok = edje_file_group_exists(bgfile, "e/desktop/background");
+     }
+   else if ((bgfile) && (bgfile[0]))
+     ok = 1;
+   if (!ok)
+     eina_stringshare_replace(&bgfile, e_theme_edje_file_get("base/theme/background",
+                                       "e/desktop/background"));
 
    return bgfile;
 }
