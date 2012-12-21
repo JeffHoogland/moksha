@@ -27,6 +27,7 @@ group "E_Config" struct {
     value "focus_policy" int: 2;
     value "focus_setting" int: 3;
     value "pass_click_on" int: 1;
+    value "window_activehint_policy" int: 2;
     value "always_click_to_raise" int: 0;
     value "always_click_to_focus" int: 0;
     value "use_auto_raise" int: 0;
