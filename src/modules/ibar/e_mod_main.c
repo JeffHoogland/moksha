@@ -176,6 +176,7 @@ _ibar_order_refresh(IBar *b, const char *path)
           {
              if (b->io) _ibar_order_del(b);
              io->bars = eina_list_append(io->bars, b);
+             b->io = io;
           }
         /* else same order, refresh all users */
      }

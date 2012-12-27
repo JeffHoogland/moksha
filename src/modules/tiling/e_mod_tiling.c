@@ -2202,7 +2202,7 @@ _move_left_cols(E_Border *bd, Eina_Bool check_moving_anims)
         for (i = 0; i < nb_stacks; i++) {
             int width;
 
-            width = w / (nb_stacks - 1 - i);
+            width = w / (nb_stacks - i);
 
             _set_stack_geometry(i, x, width);
 
@@ -2534,7 +2534,7 @@ _move_up_rows(E_Border *bd, Eina_Bool check_moving_anims)
         for (i = 0; i < nb_stacks; i++) {
             int height;
 
-            height = h / (nb_stacks - 1 - i);
+            height = h / (nb_stacks - i);
 
             _set_stack_geometry(i, y, height);
 

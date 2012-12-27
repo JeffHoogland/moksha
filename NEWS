@@ -1,0 +1,14 @@
+Changes since 0.17.0:
+---------------------
+
+Additions:
+
+Deprecations:
+
+Removed:
+
+Improvements:
+
+Fixes:
+    * Fixed crash when changing ibar source
+    * Fixed SIGFPE in tiling module and functionality of toggle_rows_count
