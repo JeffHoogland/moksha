@@ -78,9 +78,8 @@ e_xkb_update(int cur_group)
         eina_strbuf_append(buf, "' -variant '");
         EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
           {
-             if (cl->variant)
+             if ((cl->variant) && (strcmp(cl->variant, "basic")))
                {
-                  if (!strcmp(cl->variant, "basic")) continue;
                   eina_strbuf_append(buf, cl->variant);
                   eina_strbuf_append(buf, ",");
                }
