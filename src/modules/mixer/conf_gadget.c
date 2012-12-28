@@ -331,11 +331,12 @@ _basic_create_cards(Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    if (!cfdata)
      return NULL;
 
+   e_dialog_resizable_set(cfd->dia, 1);
    cfdata->ui.table = e_widget_table_add(evas, 0);
    _basic_create_general(evas, cfdata);
    _basic_create_cards(evas, cfdata);

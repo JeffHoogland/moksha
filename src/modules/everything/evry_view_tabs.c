@@ -121,7 +121,6 @@ _tabs_update(Tab_View *v)
    if (s->delete_me)
      return;
 
-   edje_object_calc_force(v->o_tabs);
    evas_object_geometry_get(v->o_tabs, &x, NULL, &w, NULL);
 
    if (!w && !v->timer)
