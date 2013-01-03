@@ -15,3 +15,4 @@ Fixes:
     * Fixed SIGFPE in tiling module and functionality of toggle_rows_count
     * Fixed error in Evry when trying to call edje functions on non-edje object
     * Fix construction of variant list for setxkbmap
+    * Fix E17 restart after manually monitoring it

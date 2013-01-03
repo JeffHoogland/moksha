@@ -421,6 +421,8 @@ main(int argc, char **argv)
      {
         pid_t child;
 
+	stop_ptrace = EINA_FALSE;
+
         child = fork();
 
         if (child < 0) /* failed attempt */
