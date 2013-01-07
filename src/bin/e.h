@@ -92,7 +92,7 @@ void *alloca (size_t);
 #  include <memcheck.h>
 # endif
 
-# ifdef __GLIBC__
+# ifdef HAVE_EXECINFO_H
 #  include <execinfo.h>
 # endif
 

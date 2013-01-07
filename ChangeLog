@@ -1,8 +1,12 @@
-2013-01-03 Cedric Bail
+2013-01-07  Thomas Petazzoni
+
+	* Fix build with uClibc.
+
+2013-01-03  Cedric Bail
 
 	* Fix E17 restart after manually monitoring it
 
-2012-12-28 Tomas Cech
+2012-12-28  Tomas Cech
 
         * Fix construction of variant list for setxkbmap
 
