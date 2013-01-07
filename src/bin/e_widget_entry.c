@@ -67,6 +67,7 @@ e_widget_entry_add(Evas *evas, char **text_location, void (*func) (void *data, v
    evas_object_repeat_events_set(o, EINA_TRUE);
    evas_object_color_set(o, 0, 0, 0, 0);
    e_widget_sub_object_add(obj, o);
+   evas_object_smart_member_add(o, obj);
    evas_object_show(o);
    
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);

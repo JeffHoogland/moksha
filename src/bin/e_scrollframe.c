@@ -1035,6 +1035,7 @@ _e_smart_add(Evas_Object *obj)
    evas_object_smart_member_add(o, obj);
 
    o = evas_object_rectangle_add(evas_object_evas_get(obj));
+   evas_object_smart_member_add(o, obj);
    sd->event_obj = o;
    evas_object_color_set(o, 0, 0, 0, 0);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_WHEEL,
