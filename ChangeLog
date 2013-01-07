@@ -1,3 +1,6 @@
+2013-01-07 Tom "TAsn" Hacohen
+	* e_entry + e_scrollable: Fixed issues with smart members.
+
 2013-01-07 Mike Blumenkrantz
  
         * Restore default keybindings no longer restores two bindings for ctrl+alt+f
