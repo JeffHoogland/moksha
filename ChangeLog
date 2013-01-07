@@ -1,3 +1,7 @@
+2013-01-07 Mike Blumenkrantz
+ 
+        * Restore default keybindings no longer restores two bindings for ctrl+alt+f
+
 2013-01-07  Thomas Petazzoni
 
 	* Fix build with uClibc.

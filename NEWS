@@ -17,3 +17,4 @@ Fixes:
     * Fix construction of variant list for setxkbmap
     * Fix E17 restart after manually monitoring it
     * Fix build with uClibc
+    * Restore default keybindings no longer restores two bindings for ctrl+alt+f
