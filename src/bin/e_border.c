@@ -3789,10 +3789,8 @@ _e_border_action_move_timeout(void *data __UNUSED__)
 static void
 _e_border_action_move_timeout_add(void)
 {
-   if (!e_config->border_keyboard.timeout) return;
-   if (action_timer)
-     ecore_timer_reset(action_timer);
-   else
+   E_FN_DEL(ecore_timer_del, action_timer);
+   if (e_config->border_keyboard.timeout)
      action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_move_timeout, NULL);
 }
 
@@ -3902,9 +3900,9 @@ _e_border_action_resize_timeout(void *data __UNUSED__)
 static void
 _e_border_action_resize_timeout_add(void)
 {
-   if (action_timer)
-     ecore_timer_del(action_timer);
-   action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_resize_timeout, NULL);
+   E_FN_DEL(ecore_timer_del, action_timer);
+   if (e_config->border_keyboard.timeout)
+     action_timer = ecore_timer_add(e_config->border_keyboard.timeout, _e_border_action_resize_timeout, NULL);
 }
 
 static Eina_Bool
