@@ -229,7 +229,7 @@ e_modapi_save(E_Module *m __UNUSED__)
 /**************************************************************/
 
 static E_Gadcon_Client *
-_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style __UNUSED__)
+_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    Tasks *tasks;
    Evas_Object *o;
@@ -240,7 +240,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style __UNU
    tasks = _tasks_new(gc->evas, gc->zone, id);
 
    o = tasks->o_items;
-   gcc = e_gadcon_client_new(gc, name, id, E_GADCON_CLIENT_STYLE_INSET, o);
+   gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = tasks;
    tasks->gcc = gcc;
 
