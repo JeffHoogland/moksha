@@ -20,3 +20,4 @@ Fixes:
     * Restore default keybindings no longer restores two bindings for ctrl+alt+f
     * entry/scrollframe: Fixed issues with submembers.
     * Fixed bug where keyboard resizing of windows would not be possible if timeout was set to zero
+    * Fixed crash when clicking apply in wallpaper settings dialog and no wallpaper is selected

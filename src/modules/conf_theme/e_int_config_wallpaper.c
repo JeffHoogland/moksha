@@ -514,6 +514,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Wallpaper *cw;
 
+   if (!cfdata->bg) return 0;
    cw = cfd->data;
    if (!eina_str_has_extension(cfdata->bg, ".edj"))
      {

@@ -1,6 +1,7 @@
-2013-01-07 Mike Blumenkrantz
+2013-01-08 Mike Blumenkrantz
 
         * Fixed bug where keyboard resizing of windows would not be possible if timeout was set to zero
+        * Fixed crash when clicking apply in wallpaper settings dialog and no wallpaper is selected
 
 2013-01-07 Tom "TAsn" Hacohen
 	* e_entry + e_scrollable: Fixed issues with smart members.
