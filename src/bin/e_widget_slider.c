@@ -230,9 +230,12 @@ static void
 _e_wid_disable_hook(Evas_Object *obj)
 {
    E_Widget_Data *wd;
+   Eina_Bool disable;
 
    wd = e_widget_data_get(obj);
-   if (e_widget_disabled_get(obj))
+   disable = e_widget_disabled_get(obj);
+   e_slider_disabled_set(wd->o_slider, disable);
+   if (disable)
      edje_object_signal_emit(e_slider_edje_object_get(wd->o_slider),
 			     "e,state,disabled", "e");
    else

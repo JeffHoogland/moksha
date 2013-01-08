@@ -23,6 +23,7 @@ struct _E_Smart_Data
    Evas_Coord     minw, minh;
    Ecore_Timer   *set_timer;
    Eina_List     *special_values;
+   Eina_Bool      disabled : 1;
 };
 
 struct _E_Slider_Special_Value
@@ -203,6 +204,13 @@ e_slider_direction_set(Evas_Object *obj, int reversed)
    API_ENTRY return;
    sd->reversed = reversed;
    _e_smart_value_update_now(sd);
+}
+
+EAPI void
+e_slider_disabled_set(Evas_Object *obj, Eina_Bool disable)
+{
+   API_ENTRY return;
+   sd->disabled = disable;
 }
 
 EAPI int
@@ -397,6 +405,7 @@ _e_smart_signal_cb_wheel_up(void *data, Evas_Object *obj __UNUSED__, const char 
 {
    E_Smart_Data *sd = data;
 
+   if (sd->disabled) return;
    edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", -0.05, -0.05);
    sd->direction = -1;
 }
@@ -406,6 +415,7 @@ _e_smart_signal_cb_wheel_down(void *data, Evas_Object *obj __UNUSED__, const cha
 {
    E_Smart_Data *sd = data;
 
+   if (sd->disabled) return;
    edje_object_part_drag_step(sd->edje_obj, "e.dragable.slider", 0.05, 0.05);
    sd->direction = 1;
 }
@@ -416,6 +426,7 @@ _e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    Evas_Event_Key_Down *ev = event_info;
    E_Smart_Data *sd = data;
 
+   if (sd->disabled) return;
    if ((!strcmp(ev->keyname, "Up")) ||
        (!strcmp(ev->keyname, "KP_Up")) ||
        (!strcmp(ev->keyname, "Left")) ||
@@ -467,6 +478,7 @@ _e_smart_event_mouse_down(void *data, Evas *e, Evas_Object *obj __UNUSED__, void
    double pos;
    static int in_md = 0;
 
+   if (sd->disabled) return;
    if (in_md > 0) return;
    in_md++;
    evas_object_geometry_get(sd->event, &x, &y, &w, &h);

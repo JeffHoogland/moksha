@@ -2,6 +2,8 @@
 
         * Fixed bug where keyboard resizing of windows would not be possible if timeout was set to zero
         * Fixed crash when clicking apply in wallpaper settings dialog and no wallpaper is selected
+        * Fixed bug where disabled slider widgets could be changed with mouse wheel
+        * Fixed bug where fileman config slider widgets were not properly disabled
 
 2013-01-07 Tom "TAsn" Hacohen
 	* e_entry + e_scrollable: Fixed issues with smart members.

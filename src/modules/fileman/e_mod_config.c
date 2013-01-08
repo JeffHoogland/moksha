@@ -28,7 +28,9 @@ struct _E_Config_Dialog_Data
       double delay;
       double size;
       Eina_Bool enable;
+      Evas_Object *delay_slider_text;
       Evas_Object *delay_slider;
+      Evas_Object *size_slider_text;
       Evas_Object *size_slider;
    } tooltip;
     /* display of icons */
@@ -283,7 +285,9 @@ _tooltip_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
 
+   e_widget_disabled_set(cfdata->tooltip.delay_slider_text, !cfdata->tooltip.enable);
    e_widget_disabled_set(cfdata->tooltip.delay_slider, !cfdata->tooltip.enable);
+   e_widget_disabled_set(cfdata->tooltip.size_slider_text, !cfdata->tooltip.enable);
    e_widget_disabled_set(cfdata->tooltip.size_slider, !cfdata->tooltip.enable);
 }
 
@@ -454,15 +458,15 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
                            (int*)&(cfdata->tooltip.enable));
    e_widget_on_change_hook_set(ob, _tooltip_changed, cfdata);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   cfdata->tooltip.delay_slider = ob = e_widget_label_add(evas, _("Tooltip delay"));
+   cfdata->tooltip.delay_slider_text = ob = e_widget_label_add(evas, _("Tooltip delay"));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), 0.0, 5.0, 0.5, 0,
+   cfdata->tooltip.delay_slider = ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), 0.0, 5.0, 0.5, 0,
                             &cfdata->tooltip.delay, NULL, 150);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
-   cfdata->tooltip.size_slider = ob = e_widget_label_add(evas, _("Tooltip size (Screen percentage)"));
+   cfdata->tooltip.size_slider_text = ob = e_widget_label_add(evas, _("Tooltip size (Screen percentage)"));
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 10.0, 75.0, 5.0, 0,
+   cfdata->tooltip.size_slider = ob = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 10.0, 75.0, 5.0, 0,
                             &cfdata->tooltip.size, NULL, 150);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    _tooltip_changed(cfdata, NULL);

@@ -21,3 +21,5 @@ Fixes:
     * entry/scrollframe: Fixed issues with submembers.
     * Fixed bug where keyboard resizing of windows would not be possible if timeout was set to zero
     * Fixed crash when clicking apply in wallpaper settings dialog and no wallpaper is selected
+    * Fixed bug where disabled slider widgets could be changed with mouse wheel
+    * Fixed bug where fileman config slider widgets were not properly disabled
