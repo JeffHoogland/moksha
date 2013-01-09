@@ -24,3 +24,4 @@ Fixes:
     * Fixed bug where disabled slider widgets could be changed with mouse wheel
     * Fixed bug where fileman config slider widgets were not properly disabled
     * Tasks gadgets now apply the selected style
+    * fixed bug where window border insets were not applied to initial positioning geometry, causing them to be placed incorrectly

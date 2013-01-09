@@ -8563,6 +8563,7 @@ _e_border_eval(E_Border *bd)
                   bd->changes.pos = 1;
                   bd->placed = 1;
                }
+             _e_border_move_internal(bd, bd->x, bd->y, 1);
           }
         if (!bd->placed)
           {
