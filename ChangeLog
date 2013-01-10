@@ -1,3 +1,7 @@
+2013-01-10 Deon Thomas
+
+        * Fixed bug with desktop config profile where conf module version variable was misnamed
+
 2013-01-09 Mike Blumenkrantz
 
         * fixed bug where window border insets were not applied to initial positioning geometry, causing them to be placed incorrectly
