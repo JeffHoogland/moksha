@@ -27,3 +27,4 @@ Fixes:
     * fixed bug where window border insets were not applied to initial positioning geometry, causing them to be placed incorrectly
     * Fixed bug with desktop config profile where conf module version variable was misnamed
     * fixed bug where internal dialogs would not redraw after unfullscreening
+    * fixed bug where starting with a nonexistent config could cause a crash instead of simply restarting
