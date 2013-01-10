@@ -28,3 +28,4 @@ Fixes:
     * Fixed bug with desktop config profile where conf module version variable was misnamed
     * fixed bug where internal dialogs would not redraw after unfullscreening
     * fixed bug where starting with a nonexistent config could cause a crash instead of simply restarting
+    * fixed window border hide bug where after iconification hides leave ghosts
