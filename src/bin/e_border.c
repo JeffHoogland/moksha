@@ -1091,17 +1091,16 @@ e_border_hide(E_Border *bd,
         switch (manage)
           {
            case 2: break;
-
            case 3:
              bd->hidden = 1;
-
            case 1:
-             /* Make sure that this border isn't deleted */
-             bd->await_hide_event++;
-
            default:
-             if (!e_manager_comp_evas_get(bd->zone->container->manager))
-               ecore_x_window_hide(bd->client.win);
+               if (!e_manager_comp_evas_get(bd->zone->container->manager))
+                 {
+                    /* Make sure that this border isn't deleted */
+                    bd->await_hide_event++;
+                    ecore_x_window_hide(bd->client.win);
+                 }
           }
      }
 

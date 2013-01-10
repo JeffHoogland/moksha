@@ -1,7 +1,7 @@
-
 2013-01-10 Carsten Haitzler
 
         * fixed bug where starting with a nonexistent config could cause a crash instead of simply restarting
+        * fixed window border hide bug where after iconification hides leave ghosts
 
 2013-01-10 Mike Blumenkrantz
 
