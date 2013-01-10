@@ -8,6 +8,7 @@ static void _e_win_state_update(E_Win *win);
 static void _e_win_cb_move(Ecore_Evas *ee);
 static void _e_win_cb_resize(Ecore_Evas *ee);
 static void _e_win_cb_delete(Ecore_Evas *ee);
+static void _e_win_cb_state(Ecore_Evas *ee);
 
 /* local subsystem globals */
 static Eina_List *wins = NULL;
@@ -225,6 +226,7 @@ e_win_new(E_Container *con)
    ecore_evas_callback_move_set(win->ecore_evas, _e_win_cb_move);
    ecore_evas_callback_resize_set(win->ecore_evas, _e_win_cb_resize);
    ecore_evas_callback_delete_request_set(win->ecore_evas, _e_win_cb_delete);
+   ecore_evas_callback_state_change_set(win->ecore_evas, _e_win_cb_state);
    win->evas = ecore_evas_get(win->ecore_evas);
    ecore_evas_name_class_set(win->ecore_evas, "E", "_e_internal_window");
    ecore_evas_title_set(win->ecore_evas, "E");
@@ -698,3 +700,13 @@ _e_win_cb_delete(Ecore_Evas *ee)
    if (win->cb_delete) win->cb_delete(win);
 }
 
+static void
+_e_win_cb_state(Ecore_Evas *ee)
+{
+   E_Win *win;
+
+   win = ecore_evas_data_get(ee, "E_Win");
+   if (!win) return;
+   if (!win->border) return;
+   win->border->changed = win->border->changes.size = 1;
+}

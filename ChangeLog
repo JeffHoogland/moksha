@@ -1,3 +1,7 @@
+2013-01-10 Mike Blumenkrantz
+
+        * fixed bug where internal dialogs would not redraw after unfullscreening
+
 2013-01-10 Deon Thomas
 
         * Fixed bug with desktop config profile where conf module version variable was misnamed

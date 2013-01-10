@@ -26,3 +26,4 @@ Fixes:
     * Tasks gadgets now apply the selected style
     * fixed bug where window border insets were not applied to initial positioning geometry, causing them to be placed incorrectly
     * Fixed bug with desktop config profile where conf module version variable was misnamed
+    * fixed bug where internal dialogs would not redraw after unfullscreening
