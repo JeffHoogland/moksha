@@ -1,3 +1,7 @@
+2013-01-11 Mike Blumenkrantz
+
+        * fixed bug where backlight settings would try to update dummy backlight devices
+
 2013-01-10 Carsten Haitzler
 
         * fixed bug where starting with a nonexistent config could cause a crash instead of simply restarting

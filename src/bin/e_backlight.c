@@ -507,12 +507,19 @@ _bl_sys_level_get(void)
 
    maxval = atoi(str);
    eina_stringshare_del(str);
-   if (maxval <= 0) maxval = 255;
+   if (maxval < 0) maxval = 255;
    str = eeze_udev_syspath_get_sysattr(bl_sysval, "brightness");
    if (!str) return;
 
    val = atoi(str);
    eina_stringshare_del(str);
+   if ((!maxval) && (!val))
+     {
+        bl_val = 0;
+        sysmode = MODE_NONE;
+        return;
+     }
+   if (!maxval) maxval = 255;
    if ((val >= 0) && (val <= maxval))
      bl_val = (double)val / (double)maxval;
 //   fprintf(stderr, "GET: %i/%i (%1.3f)\n", val, maxval, bl_val);
