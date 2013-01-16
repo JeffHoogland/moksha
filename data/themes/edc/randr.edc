@@ -38,6 +38,11 @@ group { name: "e/conf/randr/main/frame";
          tag: "br" "\n";
          tag: "hilight" "+ font=Sans:style=Bold";
       }
+      style { name: "randr_position_style";
+         base: "font=Sans font_size=10 text_class=randr_position align=center color=#3399ffff wrap=mixed style=glow glow_color=#3399ff18 align=center glow2_color=#3399ff12";
+         tag: "br" "\n";
+         tag: "hilight" "+ font=Sans:style=Bold";
+      }
    }
    script {
       public refresh_open;
@@ -156,6 +161,20 @@ group { name: "e/conf/randr/main/frame";
             rel2.to: "e.swallow.preview";
             align: 0.5 0.0;
             text { style: "randr_resolution_style";
+               min: 1.0 1.0;
+            }
+         }
+      }
+      part { name: "e.text.position"; type: TEXTBLOCK; mouse_events: 0;
+         clip_to: "clip";
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.relative: 0.5 0.5;
+            rel1.to: "e.swallow.preview";
+            rel2.relative: 0.5 0.5;
+            rel2.to: "e.swallow.preview";
+            align: 0.5 0.0;
+            text { style: "randr_position_style";
                min: 1.0 1.0;
             }
          }
