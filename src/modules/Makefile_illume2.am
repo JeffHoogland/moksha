@@ -2,12 +2,8 @@ illume2dir = $(MDIR)/illume2
 illume2_DATA = illume2/e-module-illume2.edj \
 	       illume2/module.desktop
 
-EXTRA_DIST += illume2/e-module-illume2.edc \
+EXTRA_DIST += illume2/e-module-illume2.edj \
 	      illume2/module.desktop.in
-CLEANFILES += illume2/e-module-illume2.edj
-
-# images
-EXTRA_DIST += illume2/images/module_icon.png
 
 # keyboards
 illume2keyboardsdir = $(MDIR)/illume2/keyboards
@@ -37,11 +33,6 @@ illume2_policies_tablet_tablet_la_SOURCES = illume2/policies/tablet/policy.c \
 					    illume2/policies/tablet/tablet.c \
 					    illume2/policies/tablet/tablet.h
 illume2_policies_tablet_tablet_la_LIBTOOLFLAGS = --tag=disable-static 
-
-ILLUME2_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/illume2/images
-
-illume2/%.edj: illume2/%.edc Makefile
-	$(EDJE_CC) $(ILLUME2_EDJE_FLAGS) $< $@
 
 illume2pkgdir = $(MDIR)/illume2/$(MODULE_ARCH)
 illume2pkg_LTLIBRARIES = illume2/module.la

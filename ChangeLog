@@ -1,3 +1,7 @@
+2013-01-22 Mike Blumenkrantz
+
+        * No longer build illume edj files
+
 2013-01-11 Mike Blumenkrantz
 
         * fixed bug where backlight settings would try to update dummy backlight devices

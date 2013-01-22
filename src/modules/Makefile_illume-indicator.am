@@ -1,19 +1,8 @@
 illume_indicatordir = $(MDIR)/illume-indicator
 illume_indicator_DATA = illume-indicator/e-module-illume-indicator.edj \
 			illume-indicator/module.desktop
-CLEANFILES += illume-indicator/e-module-illume-indicator.edj
-EXTRA_DIST += illume-indicator/e-module-illume-indicator.edc \
-	      illume-indicator/module.desktop.in
-
-# images
-EXTRA_DIST += illume-indicator/images/base_bg.png \
-	      illume-indicator/images/module_icon.png
-
-ILLUME_INDICATOR_EDJE_FLAGS = $(EDJE_FLAGS) \
-			      -id $(srcdir)/illume-indicator/images
-
-illume-indicator/%.edj: illume-indicator/%.edc Makefile
-	$(EDJE_CC) $(ILLUME_INDICATOR_EDJE_FLAGS) $< $@
+EXTRA_DIST += illume-indicator/module.desktop.in \
+	      illume-indicator/e-module-illume-indicator.edj
 
 illume_indicatorpkgdir = $(MDIR)/illume-indicator/$(MODULE_ARCH)
 illume_indicatorpkg_LTLIBRARIES = illume-indicator/module.la

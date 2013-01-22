@@ -2,10 +2,8 @@ illume_keyboarddir = $(MDIR)/illume-keyboard
 illume_keyboard_DATA = illume-keyboard/e-module-illume-keyboard.edj \
 		       illume-keyboard/module.desktop
 
-EXTRA_DIST += $(illume_keyboard_DATA) \
-	      illume-keyboard/e-module-illume-keyboard.edj \
+EXTRA_DIST += illume-keyboard/e-module-illume-keyboard.edj \
 	      illume-keyboard/module.desktop.in
-CLEANFILES += illume-keyboard/e-module-illume-keyboard.edj
 
 
 # keyboards
@@ -35,11 +33,6 @@ illumedicts_DATA = illume-keyboard/dicts/English_US.dic \
 
 EXTRA_DIST += $(illumedicts_DATA)
 
-
-ILLUME_KEYBOARD_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/illume-keyboard/images
-
-illume-keyboard/%.edj: illume-keyboard/%.edc Makefile
-	$(EDJE_CC) $(ILLUME_KEYBOARD_EDJE_FLAGS) $< $@
 
 illume_keyboardpkgdir = $(MDIR)/illume-keyboard/$(MODULE_ARCH)
 illume_keyboardpkg_LTLIBRARIES = illume-keyboard/module.la
