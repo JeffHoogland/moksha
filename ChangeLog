@@ -14,6 +14,7 @@
 
 2013-01-22 Mike Blumenkrantz
 
+        * Desktop->Shelves menu now shows shelf names
         * No longer build illume edj files
         * fixed gadget dragging on desktop near screen edges
         * fixed bug where backlight settings would try to update dummy backlight devices

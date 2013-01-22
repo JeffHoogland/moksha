@@ -12,6 +12,7 @@ Improvements:
     * No longer build illume edj files
     * Better messages in UI
     * Added three more files for input methods used in asian countries
+    * Desktop->Shelves menu now shows shelf names
 
 Fixes:
     * Fixed crash when changing ibar source

@@ -1613,16 +1613,22 @@ _e_int_menus_shelves_pre_cb(void *data __UNUSED__, E_Menu *m)
    EINA_LIST_FOREACH(shelves, l, es)
      {
         char buf[1024];
+        const char *name;
 
         if (!es) continue;
         if (es->zone->num != zone->num) continue;
         if (es->cfg->container != (int)con->num) continue;
 
-        snprintf(buf, sizeof(buf), _("Shelf %s"),
-                 e_shelf_orient_string_get(es));
+        if (es->name)
+          name = es->name;
+        else
+          {
+             name = buf;
+             snprintf(buf, sizeof(buf), _("Shelf %s"), e_shelf_orient_string_get(es));
+          }
 
         mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, buf);
+        e_menu_item_label_set(mi, name);
         e_menu_item_callback_set(mi, _e_int_menus_shelves_item_cb, es);
         switch (es->cfg->orient)
           {
