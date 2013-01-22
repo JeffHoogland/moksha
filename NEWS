@@ -31,3 +31,4 @@ Fixes:
     * fixed bug where starting with a nonexistent config could cause a crash instead of simply restarting
     * fixed window border hide bug where after iconification hides leave ghosts
     * fixed bug where backlight settings would try to update dummy backlight devices
+    * fixed gadget dragging on desktop near screen edges

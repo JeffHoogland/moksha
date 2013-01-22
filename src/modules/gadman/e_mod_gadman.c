@@ -673,10 +673,8 @@ _gadman_gadcon_dnd_move_cb(E_Gadcon *gc, E_Gadcon_Client *gcc)
    evas_object_geometry_get(mover, &ox, &oy, &ow, &oh);
 
    /* don't go out of the screen */
-   if (x < 0) x = 0;
-   if (x > (Man->width - ow)) x = Man->width - ow;
-   if (y < 0) y = 0;
-   if (y > (Man->height - oh)) y = Man->height - oh;
+   x = MAX(x, gcc->dx), y = MAX(y, gcc->dy);
+   x = MIN(x, Man->width - ow + gcc->dx), y = MIN(y, Man->height - ow + gcc->dy);
 
    evas_object_move(gcc->o_frame, x - gcc->dx, y - gcc->dy);
    evas_object_move(mover, x - gcc->dx, y - gcc->dy);
