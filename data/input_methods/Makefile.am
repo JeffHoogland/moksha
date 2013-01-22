@@ -4,6 +4,9 @@ files_DATA = \
 scim.imc \
 uim.imc \
 iiimf.imc \
-ibus.imc
+ibus.imc \
+gcin.imc \
+hime.imc \
+fcitx.imc
 
 EXTRA_DIST = $(files_DATA)

@@ -11,6 +11,7 @@ Improvements:
     * Mixer settings dialog is now resizable
     * No longer build illume edj files
     * Better messages in UI
+    * Added three more files for input methods used in asian countries
 
 Fixes:
     * Fixed crash when changing ibar source
