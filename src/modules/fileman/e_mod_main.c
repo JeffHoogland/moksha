@@ -272,7 +272,7 @@ _e_mod_fileman_config_load(void)
    fileman_config = e_config_domain_load("module.fileman", conf_edd);
    if (fileman_config)
      {
-        if (!e_util_module_config_check("Fileman", fileman_config->config_version, MOD_CONFIG_FILE_VERSION))
+        if (!e_util_module_config_check(_("Fileman"), fileman_config->config_version, MOD_CONFIG_FILE_VERSION))
           _e_mod_fileman_config_free();
      }
 

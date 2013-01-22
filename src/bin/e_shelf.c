@@ -202,7 +202,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, E
 {
    E_Shelf *es;
    char buf[1024];
-   const char *locname;
 
    es = E_OBJECT_ALLOC(E_Shelf, E_SHELF_TYPE, _e_shelf_free);
    if (!es) return NULL;
@@ -263,9 +262,10 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, E
 
    es->gadcon = 
      e_gadcon_swallowed_new(es->name, es->id, es->o_base, "e.swallow.content");
-   locname = es->name;
-   if (!name) locname = _("Shelf #");
-   snprintf(buf, sizeof(buf), "%s %i", locname, es->id);
+   if (es->name)
+     snprintf(buf, sizeof(buf), "%s", es->name);
+   else
+     snprintf(buf, sizeof(buf), _("Shelf #%d"), es->id);
    es->gadcon->location = 
      e_gadcon_location_new(buf, E_GADCON_SITE_SHELF, 
                            _e_shelf_gadcon_client_add, es, 
@@ -1118,7 +1118,7 @@ e_shelf_new_dialog(E_Zone *zone)
 {
    char buf[256];
 
-   snprintf(buf, sizeof(buf), "%s #%d", _("Shelf"), eina_list_count(e_config->shelves));
+   snprintf(buf, sizeof(buf), _("Shelf #%d"), eina_list_count(e_config->shelves));
    return e_entry_dialog_show(_("Add New Shelf"), "preferences-desktop-shelf",
                                _("Name:"), buf, NULL, NULL,
                                _e_shelf_new_dialog_ok, NULL, zone);
@@ -1633,7 +1633,7 @@ _e_shelf_menu_append(E_Shelf *es, E_Menu *mn)
    if (es->name)
      snprintf(buf, sizeof(buf), "%s", es->name);
    else
-     snprintf(buf, sizeof(buf), "%s %s", _("Shelf"), 
+     snprintf(buf, sizeof(buf), _("Shelf %s"),
               e_shelf_orient_string_get(es));
 
    e_shelf_locked_set(es, 1);

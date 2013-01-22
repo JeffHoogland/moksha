@@ -63,7 +63,7 @@ _e_startup(void)
         return;
      }
    e_exec(NULL, desktop, NULL, NULL, NULL);
-   snprintf(buf, sizeof(buf), "%s %s", _("Starting"), desktop->name);
+   snprintf(buf, sizeof(buf), _("Starting %s"), desktop->name);
    e_init_status_set(buf);
    ecore_job_add(_e_startup_next_cb, NULL);
 }

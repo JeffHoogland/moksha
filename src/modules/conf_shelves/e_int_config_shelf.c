@@ -124,7 +124,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    
    ol = e_widget_list_add(evas, 0, 0);
    zone = cfdata->cfd->dia->win->border ? cfdata->cfd->dia->win->border->zone : e_zone_current_get(cfdata->cfd->con);
-   snprintf(buf, sizeof(buf), "%s %d", _("Configured Shelves: Display"), zone->num);
+   snprintf(buf, sizeof(buf), _("Configured Shelves: Display %d"), zone->num);
    of = e_widget_framelist_add(evas, buf, 0);
    cfdata->o_list = e_widget_ilist_add(evas, 24, 24, &(cfdata->cur_shelf));
    e_widget_size_min_set(cfdata->o_list, (140 * e_scale), (80 * e_scale));
@@ -188,7 +188,7 @@ _ilist_item_new(E_Config_Dialog_Data *cfdata, Eina_Bool append, E_Shelf *es)
    if (es->name)
      snprintf(buf, sizeof(buf), "%s", es->name);
    else
-     snprintf(buf, sizeof(buf), "%s %s", _("Shelf"), e_shelf_orient_string_get(es));
+     snprintf(buf, sizeof(buf), _("Shelf %s"), e_shelf_orient_string_get(es));
    e_object_del_func_set(E_OBJECT(es), (E_Object_Cleanup_Func)_ilist_refresh);
 
    ob = e_icon_add(evas_object_evas_get(cfdata->o_list));

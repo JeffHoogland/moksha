@@ -18,8 +18,8 @@ struct _E_Config_Dialog_Data
 
 static const char *gadman_layer_names[] =
 {
-   "Background",
-   "Hover (Key Toggle)",
+   N_("Background"),
+   N_("Hover (Key Toggle)"),
    NULL
 };
 

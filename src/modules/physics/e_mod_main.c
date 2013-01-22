@@ -51,7 +51,7 @@ e_modapi_init(E_Module *m)
    mod->conf = e_config_domain_load("module.physics", mod->conf_edd);
    if (mod->conf)
      {
-        if (!e_util_module_config_check("Physics", mod->conf->config_version, MOD_CONFIG_FILE_VERSION))
+        if (!e_util_module_config_check(_("Physics"), mod->conf->config_version, MOD_CONFIG_FILE_VERSION))
           {
              e_mod_cfdata_config_free(mod->conf);
              mod->conf = NULL;

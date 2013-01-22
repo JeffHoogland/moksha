@@ -44,7 +44,7 @@ e_modapi_init(E_Module *m)
    qa_config = e_config_domain_load("module.quickaccess", conf_edd);
    if (qa_config)
      {
-        if (!e_util_module_config_check("Quickaccess", qa_config->config_version, MOD_CONFIG_FILE_VERSION))
+        if (!e_util_module_config_check(_("Quickaccess"), qa_config->config_version, MOD_CONFIG_FILE_VERSION))
           {
              e_qa_config_free(qa_config);
              qa_config = NULL;

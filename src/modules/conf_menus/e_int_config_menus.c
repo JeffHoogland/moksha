@@ -303,7 +303,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_slider_add(evas, 1, 0, _("%5.0f pixels/s"), 0, 20000, 100, 
                             0, &(cfdata->scroll_speed), NULL, 100);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_label_add(evas, _("Fast Mouse Move Threshhold"));
+   ow = e_widget_label_add(evas, _("Fast Mouse Move Threshold"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/s"), 0, 2000, 10, 
                             0, &(cfdata->fast_mouse_move_threshhold), NULL, 100);

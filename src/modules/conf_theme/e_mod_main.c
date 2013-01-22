@@ -169,7 +169,7 @@ _e_mod_menu_theme_add(void *data __UNUSED__, E_Menu *m)
    cur_theme = ct->file;   
    m = e_menu_new();
    e_object_del_attach_func_set(E_OBJECT(m), _e_mod_menu_theme_del);
-   e_menu_title_set(m, "Themes");
+   e_menu_title_set(m, _("Themes"));
    e_menu_item_submenu_set(mi, m);
    e_object_unref(E_OBJECT(m));
 

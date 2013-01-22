@@ -296,7 +296,7 @@ e_modapi_init(E_Module *m)
    conf = e_config_domain_load("module.conf", conf_edd);
    if (conf)
      {
-        if (!e_util_module_config_check("Configuration Panel", conf->version, MOD_CONFIG_FILE_VERSION))
+        if (!e_util_module_config_check(_("Configuration Panel"), conf->version, MOD_CONFIG_FILE_VERSION))
           _conf_free();
      }
 

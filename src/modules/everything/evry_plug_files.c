@@ -1328,7 +1328,7 @@ _plugins_init(const Evry_API *api)
               _file_trash_action, NULL, 1);
    EVRY_ITEM_DATA_INT_SET(act, ACT_TRASH);
 
-   ACTION_NEW("Open Folder (EFM)", 0, "folder-open",
+   ACTION_NEW("Open Directory", 0, "folder-open",
               _open_folder_action, _open_folder_check, 1);
    act->remember_context = EINA_TRUE;
 

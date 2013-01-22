@@ -1,3 +1,9 @@
+2013-01-22 Igor Murzov
+
+        * Marked some messages for translation
+        * Better gettext usage in a few places
+        * Fixed some typos and improved some messages a bit
+
 2013-01-22 Mike Blumenkrantz
 
         * No longer build illume edj files

@@ -10,6 +10,7 @@ Removed:
 Improvements:
     * Mixer settings dialog is now resizable
     * No longer build illume edj files
+    * Better messages in UI
 
 Fixes:
     * Fixed crash when changing ibar source

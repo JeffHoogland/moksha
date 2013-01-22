@@ -1202,7 +1202,7 @@ _e_util_conf_timer_new(void *data)
        "restored to<br>defaults. Sorry for the "
        "inconvenience.<br>");
 
-   snprintf(buf, sizeof(buf), N_("%s Configuration Updated"), module_name);
+   snprintf(buf, sizeof(buf), _("%s Configuration Updated"), module_name);
    e_util_dialog_internal(buf, msg);
    E_FREE(module_name);
 
@@ -1290,54 +1290,36 @@ e_util_time_str_get(long int seconds)
    else
      {
         if (seconds <= 60)
-          snprintf(buf, sizeof(buf), _("%li Seconds"), seconds);
+          snprintf(buf, sizeof(buf), P_("A second", "%li Seconds", seconds), seconds);
         else if (seconds >= 31526000)
           {
              test = seconds / 31526000;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("One year"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Years"), test);
+             snprintf(buf, sizeof(buf), P_("One year", "%li Years", test), test);
           }
         else if (seconds >= 2592000)
           {
              test = seconds / 2592000;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("One month"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Months"), test);
+             snprintf(buf, sizeof(buf), P_("One month", "%li Months", test), test);
           }
         else if (seconds >= 604800)
           {
              test = seconds / 604800;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("One week"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Weeks"), test);
+             snprintf(buf, sizeof(buf), P_("One week", "%li Weeks", test), test);
           }
         else if (seconds >= 86400)
           {
              test = seconds / 86400;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("One day"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Days"), test);
+             snprintf(buf, sizeof(buf), P_("One day", "%li Days", test), test);
           }
         else if (seconds >= 3600)
           {
              test = seconds / 3600;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("An hour"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Hours"), test);
+             snprintf(buf, sizeof(buf), P_("An hour", "%li Hours", test), test);
           }
         else if (seconds > 60)
           {
              test = seconds / 60;
-             if (test == 1)
-               snprintf(buf, sizeof(buf), _("A minute"));
-             else
-               snprintf(buf, sizeof(buf), _("%li Minutes"), test);
+             snprintf(buf, sizeof(buf), P_("A minute", "%li Minutes", test), test);
           }
      }
    return buf;
