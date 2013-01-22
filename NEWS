@@ -35,3 +35,4 @@ Fixes:
     * fixed bug where backlight settings would try to update dummy backlight devices
     * fixed gadget dragging on desktop near screen edges
     * fixed bug where "don't composite fullscreen windows" option would cause some windows to stop appearing
+    * Fixed crash when changing desktops configuration

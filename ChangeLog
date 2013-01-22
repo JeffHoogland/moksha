@@ -1,3 +1,7 @@
+2013-01-22 Lucas De Marchi
+
+        * Fixed crash when changing desktops configuration
+
 2013-01-22 Massimo Maiurana
 
         * Added three more files for input methods used in asian countries
