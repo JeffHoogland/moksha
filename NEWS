@@ -40,3 +40,4 @@ Fixes:
     * module error dialog is no longer remembered across restarts
     * fix small leak in efm when performing dnd onto mounted drive icon
     * fixed small leak in e_import_config_dialog_show during failure case
+    * fixed small leak in e_import_dialog_show during failure case
