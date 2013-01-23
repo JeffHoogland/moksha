@@ -6957,7 +6957,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                evas_object_data_set(sd->obj, "drop_menu_data", mop);
              E_LIST_FOREACH(isel, _e_fm2_cb_drag_finished_show);
           }
-        if (((!mnt) && (!mop)) && (do_lnk || do_copy || do_move))
+        if (((!mnt) || (!mop)) && (do_lnk || do_copy || do_move))
           free(args);
      }
 end:

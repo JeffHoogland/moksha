@@ -38,3 +38,4 @@ Fixes:
     * fixed gadget dragging on desktop near screen edges
     * fixed bug where "don't composite fullscreen windows" option would cause some windows to stop appearing
     * module error dialog is no longer remembered across restarts
+    * fix small leak in efm when performing dnd onto mounted drive icon

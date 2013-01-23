@@ -1,6 +1,7 @@
 2013-01-23 Mike Blumenkrantz
 
         * module error dialog is no longer remembered across restarts
+        * fix small leak in efm when performing dnd onto mounted drive icon
 
 2013-01-22 Massimo Maiurana
 
