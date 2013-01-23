@@ -167,7 +167,7 @@ main(int argc,
 		 "-ex detach -ex quit > /dev/null 2> /dev/null",
                  cmd,
 		 pid,
-		 output);
+		 output ?: "e-output.txt");
 
         r = system(buffer);
 

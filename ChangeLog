@@ -7,6 +7,7 @@
         * fixed small leak in illume2 policy config
         * fixed path setting in import dialog
         * fixed possible NULL deref in desktop editor
+        * fixed possible NULL deref in e_sys when debugging
 
 2013-01-22 Massimo Maiurana
 
