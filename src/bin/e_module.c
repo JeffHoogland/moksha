@@ -521,9 +521,8 @@ _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
    char buf[4096];
 
    printf("MODULE ERR:\n%s\n", body);
-   dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
-                      "E", "_module_unload_dialog");
-   if (!dia) return;
+   dia = e_dialog_new(NULL, "E", "_module_unload_dialog");
+   EINA_SAFETY_ON_NULL_RETURN(dia);
 
    snprintf(buf, sizeof(buf), "%s<br>%s", body,
             _("What action should be taken with this module?<br>"));
@@ -534,6 +533,7 @@ _e_module_dialog_disable_show(const char *title, const char *body, E_Module *m)
    e_dialog_button_add(dia, _("Unload"), NULL, _e_module_cb_dialog_disable, m);
    e_dialog_button_add(dia, _("Keep"), NULL, NULL, NULL);
    e_win_centered_set(dia->win, 1);
+   dia->win->state.no_remember = 1;
    e_dialog_show(dia);
 }
 

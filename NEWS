@@ -28,6 +28,7 @@ Fixes:
     * Fixed bug where disabled slider widgets could be changed with mouse wheel
     * Fixed bug where fileman config slider widgets were not properly disabled
     * Tasks gadgets now apply the selected style
+    * Fixed crash when changing desktops configuration
     * fixed bug where window border insets were not applied to initial positioning geometry, causing them to be placed incorrectly
     * Fixed bug with desktop config profile where conf module version variable was misnamed
     * fixed bug where internal dialogs would not redraw after unfullscreening
@@ -36,4 +37,4 @@ Fixes:
     * fixed bug where backlight settings would try to update dummy backlight devices
     * fixed gadget dragging on desktop near screen edges
     * fixed bug where "don't composite fullscreen windows" option would cause some windows to stop appearing
-    * Fixed crash when changing desktops configuration
+    * module error dialog is no longer remembered across restarts

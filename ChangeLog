@@ -1,6 +1,6 @@
-2013-01-22 Lucas De Marchi
+2013-01-23 Mike Blumenkrantz
 
-        * Fixed crash when changing desktops configuration
+        * module error dialog is no longer remembered across restarts
 
 2013-01-22 Massimo Maiurana
 
@@ -59,6 +59,10 @@
 2013-01-07  Thomas Petazzoni
 
 	* Fix build with uClibc.
+
+2013-01-04 Lucas De Marchi
+
+        * Fixed crash when changing desktops configuration
 
 2013-01-03  Cedric Bail
 
