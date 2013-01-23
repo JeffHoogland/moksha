@@ -143,7 +143,7 @@ e_desktop_border_create(E_Border *bd)
          */
         char file[PATH_MAX];
 
-        snprintf(file, sizeof(file), "%s-%.6f.png", bname, ecore_time_get());
+        snprintf(file, sizeof(file), "%s-%.6f.png", bname ?: "", ecore_time_get());
         snprintf(path, sizeof(path), "%s/%s", icon_dir, file);
         if (e_util_icon_save(&(bd->client.netwm.icons[0]), path))
           desktop->icon = strdup(file);

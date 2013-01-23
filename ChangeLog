@@ -6,6 +6,7 @@
         * fixed small leak in e_import_dialog_show during failure case
         * fixed small leak in illume2 policy config
         * fixed path setting in import dialog
+        * fixed possible NULL deref in desktop editor
 
 2013-01-22 Massimo Maiurana
 
